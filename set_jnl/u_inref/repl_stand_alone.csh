@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -35,7 +38,7 @@ $grep -qE '.dat.*(File is in use|File already open) by another process' ${output
 if ($status) then
 	echo "SETJNL-E-ERROR : Expected File is in use or File already open error from the above command, but did not find it in ${output}x"
 endif
-$grep -v 'GTM-E-MUNOFINISH' ${output}x >&! $output
+$grep -v 'YDB-E-MUNOFINISH' ${output}x >&! $output
 echo "Journal States:(expected ON) : Replication States (expected ON):"
 $gtm_tst/$tst/u_inref/check_jnl_state.csh "Journal State"
 $gtm_tst/$tst/u_inref/check_repl_state.csh
@@ -48,7 +51,7 @@ $grep -qE '.dat.*(File is in use|File already open) by another process' ${output
 if ($status) then
 	echo "SETJNL-E-ERROR : Expected File is in use or File already open error from the above command, but did not find it in ${output}x"
 endif
-$grep -v 'GTM-E-MUNOFINISH' ${output}x >&! $output
+$grep -v 'YDB-E-MUNOFINISH' ${output}x >&! $output
 echo "Journal States:(expected ON) : Replication States (expected ON):"
 $gtm_tst/$tst/u_inref/check_jnl_state.csh "Journal State"
 $gtm_tst/$tst/u_inref/check_repl_state.csh
@@ -116,7 +119,7 @@ $grep -qE '.dat.*(File is in use|File already open) by another process' ${output
 if ($status) then
 	echo "SETJNL-E-ERROR : Expected File is in use or File already open error from the above command, but did not find it in ${output}x"
 endif
-$grep -v 'GTM-E-MUNOFINISH' ${output}x >&! $output
+$grep -v 'YDB-E-MUNOFINISH' ${output}x >&! $output
 echo "Journal States:(expected ON) : Replication States (expected OFF):"
 $gtm_tst/$tst/u_inref/check_jnl_state.csh "Journal State"
 $gtm_tst/$tst/u_inref/check_repl_state.csh
@@ -127,7 +130,7 @@ $grep -qE '.dat.*(File is in use|File already open) by another process' ${output
 if ($status) then
 	echo "SETJNL-E-ERROR : Expected File is in use or File already open error from the above command, but did not find it in ${output}x"
 endif
-$grep -v 'GTM-E-MUNOFINISH' ${output}x >&! $output
+$grep -v 'YDB-E-MUNOFINISH' ${output}x >&! $output
 echo "Journal States:(expected ON) : Replication States (expected OFF):"
 $gtm_tst/$tst/u_inref/check_jnl_state.csh "Journal State"
 $gtm_tst/$tst/u_inref/check_repl_state.csh

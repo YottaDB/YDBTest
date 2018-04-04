@@ -1,3 +1,14 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 errors ;
 		;;;
 		; NOTE: BADCHSET and BADCASECODE are compile time errors unlike run time
@@ -62,7 +73,7 @@ bommismatch ;
 		quit
 errortrap ;
 		use $P
-		if (($FIND($zstatus,"GTM-E-BADCHSET")=0)&($FIND($zstatus,"GTM-E-BADCASECODE")=0)&($FIND($zstatus,"GTM-E-DLRZCTOOBIG")=0)&($FIND($zstatus,"GTM-E-BOMMISMATCH")=0)) set $ZTRAP="" w "TEST-E-UNEXPECTED "_$zstatus_" ERROR " quit
+		if (($FIND($zstatus,"YDB-E-BADCHSET")=0)&($FIND($zstatus,"YDB-E-BADCASECODE")=0)&($FIND($zstatus,"YDB-E-DLRZCTOOBIG")=0)&($FIND($zstatus,"YDB-E-BOMMISMATCH")=0)) set $ZTRAP="" w "TEST-E-UNEXPECTED "_$zstatus_" ERROR " quit
 		write $ZSTATUS,!
                 set lab=$PIECE(errpos,"+",1)
                 set offset=$PIECE($PIECE(errpos,"+",2),"^",1)+1

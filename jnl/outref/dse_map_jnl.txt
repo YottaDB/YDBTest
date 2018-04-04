@@ -25,25 +25,25 @@ Integ of region DEFAULT
 Block:Offset Level
 %GTM-W-DBLOCMBINC, 
        0:0     FF  Local bit map incorrect
-%GTM-E-DBMRKFREE, 
+%YDB-E-DBMRKFREE, 
       20:0     FF  Block incorrectly marked free
-%GTM-E-DBMRKFREE, 
+%YDB-E-DBMRKFREE, 
       22:0     FF  Block incorrectly marked free
 %GTM-W-DBMBPFRDLBM, 
        0:0     FF  Master bit map shows this map has space, agreeing with disk local map
 %GTM-W-DBLOCMBINC, 
      200:0     FF  Local bit map incorrect
-%GTM-E-DBMRKFREE, 
+%YDB-E-DBMRKFREE, 
      210:0     FF  Block incorrectly marked free
-%GTM-E-DBMRKFREE, 
+%YDB-E-DBMRKFREE, 
      212:0     FF  Block incorrectly marked free
 %GTM-W-DBMBPFRDLBM, 
      200:0     FF  Master bit map shows this map has space, agreeing with disk local map
 %GTM-W-DBLOCMBINC, 
      400:0     FF  Local bit map incorrect
-%GTM-E-DBMRKFREE, 
+%YDB-E-DBMRKFREE, 
      410:0     FF  Block incorrectly marked free
-%GTM-E-DBMRKFREE, 
+%YDB-E-DBMRKFREE, 
      411:0     FF  Block incorrectly marked free
 
 Total error count from integ:		11.
@@ -55,7 +55,7 @@ Index              11            1210          81.989             1
 Data             1200            1200          54.356          1200
 Free               87              NA              NA            NA
 Total            1300            2412              NA          1201
-%GTM-E-INTEGERRS, Database integrity errors
+%YDB-E-INTEGERRS, Database integrity errors
 
 ##SOURCE_PATH##/mupip journal -recov -backward mumps.mjl -NOAPPLY_AFTER_IMAGE -since=time1
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
@@ -99,25 +99,25 @@ Integ of region DEFAULT
 Block:Offset Level
 %GTM-W-DBLOCMBINC, 
        0:0     FF  Local bit map incorrect
-%GTM-E-DBMRKFREE, 
+%YDB-E-DBMRKFREE, 
       20:0     FF  Block incorrectly marked free
-%GTM-E-DBMRKFREE, 
+%YDB-E-DBMRKFREE, 
       22:0     FF  Block incorrectly marked free
 %GTM-W-DBMBPFLINT, 
        0:0     FF  Master bit map shows this map full, agreeing with MUPIP INTEG
 %GTM-W-DBLOCMBINC, 
      200:0     FF  Local bit map incorrect
-%GTM-E-DBMRKFREE, 
+%YDB-E-DBMRKFREE, 
      210:0     FF  Block incorrectly marked free
-%GTM-E-DBMRKFREE, 
+%YDB-E-DBMRKFREE, 
      212:0     FF  Block incorrectly marked free
 %GTM-W-DBMBPFLINT, 
      200:0     FF  Master bit map shows this map full, agreeing with MUPIP INTEG
 %GTM-W-DBLOCMBINC, 
      400:0     FF  Local bit map incorrect
-%GTM-E-DBMRKFREE, 
+%YDB-E-DBMRKFREE, 
      410:0     FF  Block incorrectly marked free
-%GTM-E-DBMRKFREE, 
+%YDB-E-DBMRKFREE, 
      411:0     FF  Block incorrectly marked free
 
 Total error count from integ:		11.
@@ -129,7 +129,7 @@ Index              11            1210          81.989             1
 Data             1200            1200          54.356          1200
 Free               87              NA              NA            NA
 Total            1300            2412              NA          1201
-%GTM-E-INTEGERRS, Database integrity errors
+%YDB-E-INTEGERRS, Database integrity errors
 %GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 Forward recovery does not apply AIMG by default
 ##SOURCE_PATH##/mupip journal -recov -forward mumps.mjl
@@ -180,25 +180,25 @@ Integ of region DEFAULT
 Block:Offset Level
 %GTM-W-DBLOCMBINC, 
        0:0     FF  Local bit map incorrect
-%GTM-E-DBMRKFREE, 
+%YDB-E-DBMRKFREE, 
       20:0     FF  Block incorrectly marked free
-%GTM-E-DBMRKFREE, 
+%YDB-E-DBMRKFREE, 
       22:0     FF  Block incorrectly marked free
 %GTM-W-DBMBPFRDLBM, 
        0:0     FF  Master bit map shows this map has space, agreeing with disk local map
 %GTM-W-DBLOCMBINC, 
      200:0     FF  Local bit map incorrect
-%GTM-E-DBMRKFREE, 
+%YDB-E-DBMRKFREE, 
      210:0     FF  Block incorrectly marked free
-%GTM-E-DBMRKFREE, 
+%YDB-E-DBMRKFREE, 
      212:0     FF  Block incorrectly marked free
 %GTM-W-DBMBPFRDLBM, 
      200:0     FF  Master bit map shows this map has space, agreeing with disk local map
 %GTM-W-DBLOCMBINC, 
      400:0     FF  Local bit map incorrect
-%GTM-E-DBMRKFREE, 
+%YDB-E-DBMRKFREE, 
      410:0     FF  Block incorrectly marked free
-%GTM-E-DBMRKFREE, 
+%YDB-E-DBMRKFREE, 
      411:0     FF  Block incorrectly marked free
 
 Total error count from integ:		11.
@@ -210,7 +210,7 @@ Index              11            1210          81.989             1
 Data             1200            1200          54.356          1200
 Free               87              NA              NA            NA
 Total            1300            2412              NA          1201
-%GTM-E-INTEGERRS, Database integrity errors
+%YDB-E-INTEGERRS, Database integrity errors
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT

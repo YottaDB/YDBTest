@@ -23,7 +23,7 @@ Now try to start source server  which should error out
 ##FILTERED##... ... .. ..:..:.. 20.. : Source server startup failed. See source server log file
 ##FILTERED##... ... .. ..:..:.. 20.. : Journal pool shared memory removed
 ##FILTERED##... ... .. ..:..:.. 20.. : Journal pool semaphore removed
-%GTM-E-REPLOFFJNLON, Replication state for database file ##TEST_PATH##/a.dat is OFF but journaling state is enabled
+%YDB-E-REPLOFFJNLON, Replication state for database file ##TEST_PATH##/a.dat is OFF but journaling state is enabled
 ----------------------------------------------------------------------
 Journal State : a.dat->OFF, b->OFF, Replic State: mumps->ON
 mupip set -journal=enable,off,nobefore -file a.dat
@@ -41,7 +41,7 @@ Now try to start source server  which should error out
 ##FILTERED##... ... .. ..:..:.. 20.. : Source server startup failed. See source server log file
 ##FILTERED##... ... .. ..:..:.. 20.. : Journal pool shared memory removed
 ##FILTERED##... ... .. ..:..:.. 20.. : Journal pool semaphore removed
-%GTM-E-REPLOFFJNLON, Replication state for database file ##TEST_PATH##/a.dat is OFF but journaling state is enabled
+%YDB-E-REPLOFFJNLON, Replication state for database file ##TEST_PATH##/a.dat is OFF but journaling state is enabled
 ----------------------------------------------------------------------
 Journal State : a.dat->OFF, b->DISABLED, Replic State: mumps->ON
 mupip set -journal=enable,off,nobefore -file a.dat
@@ -59,7 +59,7 @@ Now try to start source server  which should error out
 ##FILTERED##... ... .. ..:..:.. 20.. : Source server startup failed. See source server log file
 ##FILTERED##... ... .. ..:..:.. 20.. : Journal pool shared memory removed
 ##FILTERED##... ... .. ..:..:.. 20.. : Journal pool semaphore removed
-%GTM-E-REPLOFFJNLON, Replication state for database file ##TEST_PATH##/a.dat is OFF but journaling state is enabled
+%YDB-E-REPLOFFJNLON, Replication state for database file ##TEST_PATH##/a.dat is OFF but journaling state is enabled
 ----------------------------------------------------------------------
 Journal State : a.dat->DISABLED, b->OFF, Replic State: mumps->ON
 mupip set -journal=disable -file a.dat
@@ -77,7 +77,7 @@ Now try to start source server  which should error out
 ##FILTERED##... ... .. ..:..:.. 20.. : Source server startup failed. See source server log file
 ##FILTERED##... ... .. ..:..:.. 20.. : Journal pool shared memory removed
 ##FILTERED##... ... .. ..:..:.. 20.. : Journal pool semaphore removed
-%GTM-E-REPLOFFJNLON, Replication state for database file ##TEST_PATH##/b.dat is OFF but journaling state is enabled
+%YDB-E-REPLOFFJNLON, Replication state for database file ##TEST_PATH##/b.dat is OFF but journaling state is enabled
 ----------------------------------------------------------------------
 Journal State : a.dat->DISABLED, b->DISABLED, mumps->DISABLED
 mupip set -journal=disable -file a.dat
@@ -112,7 +112,7 @@ Shut down the source server
 ----------------------------------------------------------------------
 Journal State : b->DISABLED, Replic State: a->ON,mumps->ON
 mupip set -replication=on -file a.dat
-%GTM-E-CLIERR, Too many parameters
+%YDB-E-CLIERR, Too many parameters
 mupip set -journal=disable -file b.dat
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/b.dat is now DISABLED
 mupip set -replication=on -file mumps.dat

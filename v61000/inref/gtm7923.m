@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-;	Copyright 2013 Fidelity Information Services, Inc	;
+; Copyright 2013 Fidelity Information Services, Inc		;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -20,7 +23,7 @@ gtm7923	; Test that long patterns give PATMAXLEN error (not SIG-11)
 	quit
 
 child	;
-	; 150373546,pattern+6^pattern,%GTM-E-PATMAXLEN, Pattern code exceeds maximum length
+	; 150373546,pattern+6^pattern,%YDB-E-PATMAXLEN, Pattern code exceeds maximum length
 	set $etrap="do etrap"
 	for  quit:^stop=1  do
 	.	set pattern=$$getPattern()
@@ -70,6 +73,6 @@ getPattern()
 
 etrap
 	set mnemonic=$piece($zstatus,",",3)
-	if ("%GTM-E-PATMAXLEN"'=mnemonic) set ^error($j)=1 zshow "*" halt
+	if ("%YDB-E-PATMAXLEN"'=mnemonic) set ^error($j)=1 zshow "*" halt
 	else  set $ecode=""
 	quit

@@ -25,7 +25,7 @@ TEST DSE - FIND COMMAND
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-DSE> DSE> %GTM-E-CANTBITMAP, Can't perform this operation on a bit map (block at a 200 hexadecimal boundary)
+DSE> DSE> %YDB-E-CANTBITMAP, Can't perform this operation on a bit map (block at a 200 hexadecimal boundary)
 DSE> 
     Directory path
     Path--blk:off
@@ -34,7 +34,7 @@ DSE>
     Path--blk:off
 	4
 
-DSE> %GTM-E-BLKINVALID, 00000232 is not a valid block as database file ##TEST_PATH##/a.dat has 00000065 total blocks
+DSE> %YDB-E-BLKINVALID, 00000232 is not a valid block as database file ##TEST_PATH##/a.dat has 00000065 total blocks
 DSE> DSE> 
 File  	##TEST_PATH##/a.dat
 Region	AREG
@@ -45,7 +45,7 @@ Next free block is 2B.
 DSE> 
 Next free block is 2B.
 
-DSE> %GTM-E-BLKINVALID, 00000232 is not a valid block as database file ##TEST_PATH##/a.dat has 00000065 total blocks
+DSE> %YDB-E-BLKINVALID, 00000232 is not a valid block as database file ##TEST_PATH##/a.dat has 00000065 total blocks
 DSE> DSE> 
 File  	##TEST_PATH##/a.dat
 Region	AREG
@@ -113,7 +113,7 @@ DSE>
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-DSE> %GTM-E-NOREGION, REGION not found: NOREG
+DSE> %YDB-E-NOREGION, REGION not found: NOREG
 DSE> DSE> 
 File  	##TEST_PATH##/a.dat
 Region	AREG
@@ -134,8 +134,8 @@ DSE> DSE>
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-DSE> DSE> %GTM-E-CANTBITMAP, Can't perform this operation on a bit map (block at a 200 hexadecimal boundary)
-DSE> %GTM-E-BLKINVALID, 00000230 is not a valid block as database file ##TEST_PATH##/a.dat has 00000065 total blocks
+DSE> DSE> %YDB-E-CANTBITMAP, Can't perform this operation on a bit map (block at a 200 hexadecimal boundary)
+DSE> %YDB-E-BLKINVALID, 00000230 is not a valid block as database file ##TEST_PATH##/a.dat has 00000065 total blocks
 DSE> DSE> 
 File  	##TEST_PATH##/a.dat
 Region	AREG
@@ -209,7 +209,7 @@ No errors detected by integ.
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-DSE> %GTM-E-NOGTCMDB, DSE does not support operation on GT.CM database region: DEFAULT
+DSE> %YDB-E-NOGTCMDB, DSE does not support operation on GT.CM database region: DEFAULT
 DSE> DSE> %GDE-I-LOADGD, Loading Global Directory file 
 	##TEST_PATH##/mumps.gld
 %GDE-I-VERIFY, Verification OK
@@ -218,11 +218,11 @@ DSE> DSE> %GDE-I-LOADGD, Loading Global Directory file
 
 %GDE-I-GDUPDATE, Updating Global Directory file 
 	##TEST_PATH##/mumps.gld
-%GTM-E-DBFILERR, Error with database file /testarea1/foo.dat
+%YDB-E-DBFILERR, Error with database file /testarea1/foo.dat
 %SYSTEM-E-ENO2, No such file or directory
 
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-DSE> %GTM-E-DSENOTOPEN, DSE could not open region DEFAULT - see DSE startup error message for cause
+DSE> %YDB-E-DSENOTOPEN, DSE could not open region DEFAULT - see DSE startup error message for cause
 DSE> DSE> 

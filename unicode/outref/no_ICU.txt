@@ -4,7 +4,7 @@ unset echo
 Expected NONUTF8LOCALE or DLLNOOPEN error because of locale or ICU absence
 ----------
 ##TEST_AWKError (DLLNOOPEN|NONUTF8LOCALE|ICUSYMNOTFOUND) seen in nonutf8locale.out as expected:
-##TEST_AWK(%GTM-E-DLLNOOPEN|%GTM-E-NONUTF8LOCALE|%GTM-E-ICUSYMNOTFOUND),.*
+##TEST_AWK(%YDB-E-DLLNOOPEN|%YDB-E-NONUTF8LOCALE|%YDB-E-ICUSYMNOTFOUND),.*
 ----------
 set verbose
 setenv gtm_chset M

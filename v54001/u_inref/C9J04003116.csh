@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2013, 2014 Fidelity Information Services, Inc	#
+# Copyright 2013, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -13,10 +16,10 @@
 # This is what one would get:
 # > mupip set -journal="enable,on,before" -reg "*"
 # %GTM-I-JNLFNF, Journal file ##PATH##/mumps.mjl not found
-# %GTM-E-JNLFILOPN, Error opening journal file ##PATH##/mumps.mjl for database file ##PATH##/mumps.dat
-# %GTM-E-JNLFILOPN, Error opening journal file  for database file
-# %GTM-E-JNLNOCREATE, Journal file ##PATH##/mumps.mjl not created
-# %GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+# %YDB-E-JNLFILOPN, Error opening journal file ##PATH##/mumps.mjl for database file ##PATH##/mumps.dat
+# %YDB-E-JNLFILOPN, Error opening journal file  for database file
+# %YDB-E-JNLNOCREATE, Journal file ##PATH##/mumps.mjl not created
+# %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 # This is a situation where we know the journal file state is not good and we need to switch to a new journal file but yet
 # MUPIP SET JOURNAL does not work.
 # The following test ensures that V5.4-0001 onwards, this is fixed
@@ -67,7 +70,7 @@ set syslog_before1 = `date +"%b %e %H:%M:%S"`
 echo
 echo
 $echoline
-echo "Attempt to do journal activity by a new process should result in GTM-E-JNLOPNERR"
+echo "Attempt to do journal activity by a new process should result in YDB-E-JNLOPNERR"
 $echoline
 $GTM << GTM_EOF
 set ^x=2

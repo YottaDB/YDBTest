@@ -4,7 +4,7 @@
 # Copyright (c) 2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -101,10 +101,10 @@ else
 	echo "Experiment #5 passed."
 endif
 
-# Use check_error_exist.csh to filter out the GTM-E-CRYPTKEYFETCHFAILED error message from the output file. This error is expected in the output
+# Use check_error_exist.csh to filter out the YDB-E-CRYPTKEYFETCHFAILED error message from the output file. This error is expected in the output
 # file as the above test first tries to write a global with a wrong password and hence will result in the above error. Also, we can safely
 # redirect the output of check_error_exist.csh to /dev/null as the output is anyway saved in experiment_5.outx.
-$gtm_tst/com/check_error_exist.csh experiment_5.out "GTM-E-CRYPTKEYFETCHFAILED" >&! /dev/null
+$gtm_tst/com/check_error_exist.csh experiment_5.out "YDB-E-CRYPTKEYFETCHFAILED" >&! /dev/null
 setenv gtm_passwd $gtm_passwd_masked
 $gtm_tst/com/reset_gpg_agent.csh
 $gtm_tst/com/dbcheck.csh

@@ -55,17 +55,17 @@ zbreak +1^auto#1#A :      a.gld :
 ## use region disambiguator. (a.gld)
 ## various zprint cases
 zprint ^TRIG#/AREG      :      a.gld :  do ^trigger("AGLD.TRG")
-zprint ^TRIG#/BREG      :      a.gld : STAT=zprint+58^zprint,%GTM-E-TRIGNAMENF, Trigger name TRIG# not found with the current default global directory
+zprint ^TRIG#/BREG      :      a.gld : STAT=zprint+58^zprint,%YDB-E-TRIGNAMENF, Trigger name TRIG# not found with the current default global directory
 zprint ^TRIG#A/AREG     :      a.gld :  do ^trigger("AGLD.TRG")
-zprint ^TRIG#A/BREG     :      a.gld : STAT=zprint+60^zprint,%GTM-E-TRIGNAMENF, Trigger name TRIG#A not found with the current default global directory
+zprint ^TRIG#A/BREG     :      a.gld : STAT=zprint+60^zprint,%YDB-E-TRIGNAMENF, Trigger name TRIG#A not found with the current default global directory
 zprint ^trig#/AREG      :      a.gld :  do ^trigger("agld.trg")
-zprint ^trig#/BREG      :      a.gld : STAT=zprint+62^zprint,%GTM-E-TRIGNAMENF, Trigger name trig# not found with the current default global directory
+zprint ^trig#/BREG      :      a.gld : STAT=zprint+62^zprint,%YDB-E-TRIGNAMENF, Trigger name trig# not found with the current default global directory
 zprint ^trig#A/AREG     :      a.gld :  do ^trigger("agld.trg")
-zprint ^trig#A/BREG     :      a.gld : STAT=zprint+64^zprint,%GTM-E-TRIGNAMENF, Trigger name trig#A not found with the current default global directory
+zprint ^trig#A/BREG     :      a.gld : STAT=zprint+64^zprint,%YDB-E-TRIGNAMENF, Trigger name trig#A not found with the current default global directory
 zprint ^auto#1#/AREG    :      a.gld :  do ^trigger("agld.trg")
-zprint ^auto#1#/BREG    :      a.gld : STAT=zprint+66^zprint,%GTM-E-TRIGNAMENF, Trigger name auto#1# not found with the current default global directory
+zprint ^auto#1#/BREG    :      a.gld : STAT=zprint+66^zprint,%YDB-E-TRIGNAMENF, Trigger name auto#1# not found with the current default global directory
 zprint ^auto#1#A/AREG   :      a.gld :  do ^trigger("agld.trg")
-zprint ^auto#1#A/BREG   :      a.gld : STAT=zprint+68^zprint,%GTM-E-TRIGNAMENF, Trigger name auto#1#A not found with the current default global directory
+zprint ^auto#1#A/BREG   :      a.gld : STAT=zprint+68^zprint,%YDB-E-TRIGNAMENF, Trigger name auto#1#A not found with the current default global directory
 zprint +1^auto#1#A/AREG :      a.gld :  do ^trigger("agld.trg")
 
 ## $text() using the same region disambiguator as zprint above
@@ -84,28 +84,28 @@ $text(^auto#1#A/BREG)   :      a.gld :
 $text(+1^auto#1#A/AREG) :      a.gld :  do ^trigger("agld.trg")
 
 ## zbreak using the same region disambiguator as zprint above
-zbreak ^TRIG#/AREG      :      a.gld : zbreak ^TRIG#/BREG      :      a.gld : STAT=zprint+88^zprint,%GTM-E-TRIGNAMENF, Trigger name TRIG# not found with the current default global directory
-zbreak ^TRIG#A/AREG     :      a.gld : zbreak ^TRIG#A/BREG     :      a.gld : STAT=zprint+90^zprint,%GTM-E-TRIGNAMENF, Trigger name TRIG#A not found with the current default global directory
-zbreak ^trig#/AREG      :      a.gld : zbreak ^trig#/BREG      :      a.gld : STAT=zprint+92^zprint,%GTM-E-TRIGNAMENF, Trigger name trig# not found with the current default global directory
-zbreak ^trig#A/AREG     :      a.gld : zbreak ^trig#A/BREG     :      a.gld : STAT=zprint+94^zprint,%GTM-E-TRIGNAMENF, Trigger name trig#A not found with the current default global directory
-zbreak ^auto#1#/AREG    :      a.gld : zbreak ^auto#1#/BREG    :      a.gld : STAT=zprint+96^zprint,%GTM-E-TRIGNAMENF, Trigger name auto#1# not found with the current default global directory
-zbreak ^auto#1#A/AREG   :      a.gld : zbreak ^auto#1#A/BREG   :      a.gld : STAT=zprint+98^zprint,%GTM-E-TRIGNAMENF, Trigger name auto#1#A not found with the current default global directory
+zbreak ^TRIG#/AREG      :      a.gld : zbreak ^TRIG#/BREG      :      a.gld : STAT=zprint+88^zprint,%YDB-E-TRIGNAMENF, Trigger name TRIG# not found with the current default global directory
+zbreak ^TRIG#A/AREG     :      a.gld : zbreak ^TRIG#A/BREG     :      a.gld : STAT=zprint+90^zprint,%YDB-E-TRIGNAMENF, Trigger name TRIG#A not found with the current default global directory
+zbreak ^trig#/AREG      :      a.gld : zbreak ^trig#/BREG      :      a.gld : STAT=zprint+92^zprint,%YDB-E-TRIGNAMENF, Trigger name trig# not found with the current default global directory
+zbreak ^trig#A/AREG     :      a.gld : zbreak ^trig#A/BREG     :      a.gld : STAT=zprint+94^zprint,%YDB-E-TRIGNAMENF, Trigger name trig#A not found with the current default global directory
+zbreak ^auto#1#/AREG    :      a.gld : zbreak ^auto#1#/BREG    :      a.gld : STAT=zprint+96^zprint,%YDB-E-TRIGNAMENF, Trigger name auto#1# not found with the current default global directory
+zbreak ^auto#1#A/AREG   :      a.gld : zbreak ^auto#1#A/BREG   :      a.gld : STAT=zprint+98^zprint,%YDB-E-TRIGNAMENF, Trigger name auto#1#A not found with the current default global directory
 zbreak +1^auto#1#A/AREG :      a.gld : 
 ## use region disambiguator. (b.gld)
 ## various zprint cases
-zprint ^TRIG#/AREG      :      b.gld : STAT=zprint+57^zprint,%GTM-E-TRIGNAMENF, Trigger name TRIG# not found with the current default global directory
+zprint ^TRIG#/AREG      :      b.gld : STAT=zprint+57^zprint,%YDB-E-TRIGNAMENF, Trigger name TRIG# not found with the current default global directory
 zprint ^TRIG#/BREG      :      b.gld :  do ^trigger("BGLD.TRG")
-zprint ^TRIG#A/AREG     :      b.gld : STAT=zprint+59^zprint,%GTM-E-TRIGNAMENF, Trigger name TRIG#A not found with the current default global directory
-zprint ^TRIG#A/BREG     :      b.gld : STAT=zprint+60^zprint,%GTM-E-TRIGNAMENF, Trigger name TRIG#A not found with the current default global directory
-zprint ^trig#/AREG      :      b.gld : STAT=zprint+61^zprint,%GTM-E-TRIGNAMENF, Trigger name trig# not found with the current default global directory
+zprint ^TRIG#A/AREG     :      b.gld : STAT=zprint+59^zprint,%YDB-E-TRIGNAMENF, Trigger name TRIG#A not found with the current default global directory
+zprint ^TRIG#A/BREG     :      b.gld : STAT=zprint+60^zprint,%YDB-E-TRIGNAMENF, Trigger name TRIG#A not found with the current default global directory
+zprint ^trig#/AREG      :      b.gld : STAT=zprint+61^zprint,%YDB-E-TRIGNAMENF, Trigger name trig# not found with the current default global directory
 zprint ^trig#/BREG      :      b.gld :  do ^trigger("bgld.trg")
-zprint ^trig#A/AREG     :      b.gld : STAT=zprint+63^zprint,%GTM-E-TRIGNAMENF, Trigger name trig#A not found with the current default global directory
-zprint ^trig#A/BREG     :      b.gld : STAT=zprint+64^zprint,%GTM-E-TRIGNAMENF, Trigger name trig#A not found with the current default global directory
-zprint ^auto#1#/AREG    :      b.gld : STAT=zprint+65^zprint,%GTM-E-TRIGNAMENF, Trigger name auto#1# not found with the current default global directory
+zprint ^trig#A/AREG     :      b.gld : STAT=zprint+63^zprint,%YDB-E-TRIGNAMENF, Trigger name trig#A not found with the current default global directory
+zprint ^trig#A/BREG     :      b.gld : STAT=zprint+64^zprint,%YDB-E-TRIGNAMENF, Trigger name trig#A not found with the current default global directory
+zprint ^auto#1#/AREG    :      b.gld : STAT=zprint+65^zprint,%YDB-E-TRIGNAMENF, Trigger name auto#1# not found with the current default global directory
 zprint ^auto#1#/BREG    :      b.gld :  do ^trigger("bgld.trg")
-zprint ^auto#1#A/AREG   :      b.gld : STAT=zprint+67^zprint,%GTM-E-TRIGNAMENF, Trigger name auto#1#A not found with the current default global directory
-zprint ^auto#1#A/BREG   :      b.gld : STAT=zprint+68^zprint,%GTM-E-TRIGNAMENF, Trigger name auto#1#A not found with the current default global directory
-zprint +1^auto#1#A/AREG :      b.gld : STAT=zprint+69^zprint,%GTM-E-TRIGNAMENF, Trigger name auto#1#A not found with the current default global directory
+zprint ^auto#1#A/AREG   :      b.gld : STAT=zprint+67^zprint,%YDB-E-TRIGNAMENF, Trigger name auto#1#A not found with the current default global directory
+zprint ^auto#1#A/BREG   :      b.gld : STAT=zprint+68^zprint,%YDB-E-TRIGNAMENF, Trigger name auto#1#A not found with the current default global directory
+zprint +1^auto#1#A/AREG :      b.gld : STAT=zprint+69^zprint,%YDB-E-TRIGNAMENF, Trigger name auto#1#A not found with the current default global directory
 
 ## $text() using the same region disambiguator as zprint above
 $text(^TRIG#/AREG)      :      b.gld : 
@@ -123,31 +123,31 @@ $text(^auto#1#A/BREG)   :      b.gld :
 $text(+1^auto#1#A/AREG) :      b.gld : 
 
 ## zbreak using the same region disambiguator as zprint above
-zbreak ^TRIG#/AREG      :      b.gld : STAT=zprint+87^zprint,%GTM-E-TRIGNAMENF, Trigger name TRIG# not found with the current default global directory
-zbreak ^TRIG#/BREG      :      b.gld : zbreak ^TRIG#A/AREG     :      b.gld : STAT=zprint+89^zprint,%GTM-E-TRIGNAMENF, Trigger name TRIG#A not found with the current default global directory
-zbreak ^TRIG#A/BREG     :      b.gld : STAT=zprint+90^zprint,%GTM-E-TRIGNAMENF, Trigger name TRIG#A not found with the current default global directory
-zbreak ^trig#/AREG      :      b.gld : STAT=zprint+91^zprint,%GTM-E-TRIGNAMENF, Trigger name trig# not found with the current default global directory
-zbreak ^trig#/BREG      :      b.gld : zbreak ^trig#A/AREG     :      b.gld : STAT=zprint+93^zprint,%GTM-E-TRIGNAMENF, Trigger name trig#A not found with the current default global directory
-zbreak ^trig#A/BREG     :      b.gld : STAT=zprint+94^zprint,%GTM-E-TRIGNAMENF, Trigger name trig#A not found with the current default global directory
-zbreak ^auto#1#/AREG    :      b.gld : STAT=zprint+95^zprint,%GTM-E-TRIGNAMENF, Trigger name auto#1# not found with the current default global directory
-zbreak ^auto#1#/BREG    :      b.gld : zbreak ^auto#1#A/AREG   :      b.gld : STAT=zprint+97^zprint,%GTM-E-TRIGNAMENF, Trigger name auto#1#A not found with the current default global directory
-zbreak ^auto#1#A/BREG   :      b.gld : STAT=zprint+98^zprint,%GTM-E-TRIGNAMENF, Trigger name auto#1#A not found with the current default global directory
-zbreak +1^auto#1#A/AREG :      b.gld : STAT=zprint+99^zprint,%GTM-E-TRIGNAMENF, Trigger name auto#1#A not found with the current default global directory
+zbreak ^TRIG#/AREG      :      b.gld : STAT=zprint+87^zprint,%YDB-E-TRIGNAMENF, Trigger name TRIG# not found with the current default global directory
+zbreak ^TRIG#/BREG      :      b.gld : zbreak ^TRIG#A/AREG     :      b.gld : STAT=zprint+89^zprint,%YDB-E-TRIGNAMENF, Trigger name TRIG#A not found with the current default global directory
+zbreak ^TRIG#A/BREG     :      b.gld : STAT=zprint+90^zprint,%YDB-E-TRIGNAMENF, Trigger name TRIG#A not found with the current default global directory
+zbreak ^trig#/AREG      :      b.gld : STAT=zprint+91^zprint,%YDB-E-TRIGNAMENF, Trigger name trig# not found with the current default global directory
+zbreak ^trig#/BREG      :      b.gld : zbreak ^trig#A/AREG     :      b.gld : STAT=zprint+93^zprint,%YDB-E-TRIGNAMENF, Trigger name trig#A not found with the current default global directory
+zbreak ^trig#A/BREG     :      b.gld : STAT=zprint+94^zprint,%YDB-E-TRIGNAMENF, Trigger name trig#A not found with the current default global directory
+zbreak ^auto#1#/AREG    :      b.gld : STAT=zprint+95^zprint,%YDB-E-TRIGNAMENF, Trigger name auto#1# not found with the current default global directory
+zbreak ^auto#1#/BREG    :      b.gld : zbreak ^auto#1#A/AREG   :      b.gld : STAT=zprint+97^zprint,%YDB-E-TRIGNAMENF, Trigger name auto#1#A not found with the current default global directory
+zbreak ^auto#1#A/BREG   :      b.gld : STAT=zprint+98^zprint,%YDB-E-TRIGNAMENF, Trigger name auto#1#A not found with the current default global directory
+zbreak +1^auto#1#A/AREG :      b.gld : STAT=zprint+99^zprint,%YDB-E-TRIGNAMENF, Trigger name auto#1#A not found with the current default global directory
 
 ## use region disambiguator. (3reg.gld)
 ## various zprint cases
-zprint ^TRIG#/AREG      :   3reg.gld : STAT=zprint+57^zprint,%GTM-E-TRIGNAMENF, Trigger name TRIG# not found with the current default global directory
-zprint ^TRIG#/BREG      :   3reg.gld : STAT=zprint+58^zprint,%GTM-E-TRIGNAMENF, Trigger name TRIG# not found with the current default global directory
-zprint ^TRIG#A/AREG     :   3reg.gld : STAT=zprint+59^zprint,%GTM-E-TRIGNAMENF, Trigger name TRIG#A not found with the current default global directory
-zprint ^TRIG#A/BREG     :   3reg.gld : STAT=zprint+60^zprint,%GTM-E-TRIGNAMENF, Trigger name TRIG#A not found with the current default global directory
+zprint ^TRIG#/AREG      :   3reg.gld : STAT=zprint+57^zprint,%YDB-E-TRIGNAMENF, Trigger name TRIG# not found with the current default global directory
+zprint ^TRIG#/BREG      :   3reg.gld : STAT=zprint+58^zprint,%YDB-E-TRIGNAMENF, Trigger name TRIG# not found with the current default global directory
+zprint ^TRIG#A/AREG     :   3reg.gld : STAT=zprint+59^zprint,%YDB-E-TRIGNAMENF, Trigger name TRIG#A not found with the current default global directory
+zprint ^TRIG#A/BREG     :   3reg.gld : STAT=zprint+60^zprint,%YDB-E-TRIGNAMENF, Trigger name TRIG#A not found with the current default global directory
 zprint ^trig#/AREG      :   3reg.gld :  do ^trigger("agld.trg")
 zprint ^trig#/BREG      :   3reg.gld :  do ^trigger("bgld.trg")
 zprint ^trig#A/AREG     :   3reg.gld :  do ^trigger("agld.trg")
-zprint ^trig#A/BREG     :   3reg.gld : STAT=zprint+64^zprint,%GTM-E-TRIGNAMENF, Trigger name trig#A not found with the current default global directory
+zprint ^trig#A/BREG     :   3reg.gld : STAT=zprint+64^zprint,%YDB-E-TRIGNAMENF, Trigger name trig#A not found with the current default global directory
 zprint ^auto#1#/AREG    :   3reg.gld :  do ^trigger("agld.trg")
-zprint ^auto#1#/BREG    :   3reg.gld : STAT=zprint+66^zprint,%GTM-E-TRIGNAMENF, Trigger name auto#1# not found with the current default global directory
+zprint ^auto#1#/BREG    :   3reg.gld : STAT=zprint+66^zprint,%YDB-E-TRIGNAMENF, Trigger name auto#1# not found with the current default global directory
 zprint ^auto#1#A/AREG   :   3reg.gld :  do ^trigger("agld.trg")
-zprint ^auto#1#A/BREG   :   3reg.gld : STAT=zprint+68^zprint,%GTM-E-TRIGNAMENF, Trigger name auto#1#A not found with the current default global directory
+zprint ^auto#1#A/BREG   :   3reg.gld : STAT=zprint+68^zprint,%YDB-E-TRIGNAMENF, Trigger name auto#1#A not found with the current default global directory
 zprint +1^auto#1#A/AREG :   3reg.gld :  do ^trigger("agld.trg")
 
 ## $text() using the same region disambiguator as zprint above
@@ -166,13 +166,13 @@ $text(^auto#1#A/BREG)   :   3reg.gld :
 $text(+1^auto#1#A/AREG) :   3reg.gld :  do ^trigger("agld.trg")
 
 ## zbreak using the same region disambiguator as zprint above
-zbreak ^TRIG#/AREG      :   3reg.gld : STAT=zprint+87^zprint,%GTM-E-TRIGNAMENF, Trigger name TRIG# not found with the current default global directory
-zbreak ^TRIG#/BREG      :   3reg.gld : STAT=zprint+88^zprint,%GTM-E-TRIGNAMENF, Trigger name TRIG# not found with the current default global directory
-zbreak ^TRIG#A/AREG     :   3reg.gld : STAT=zprint+89^zprint,%GTM-E-TRIGNAMENF, Trigger name TRIG#A not found with the current default global directory
-zbreak ^TRIG#A/BREG     :   3reg.gld : STAT=zprint+90^zprint,%GTM-E-TRIGNAMENF, Trigger name TRIG#A not found with the current default global directory
-zbreak ^trig#/AREG      :   3reg.gld : zbreak ^trig#/BREG      :   3reg.gld : zbreak ^trig#A/AREG     :   3reg.gld : zbreak ^trig#A/BREG     :   3reg.gld : STAT=zprint+94^zprint,%GTM-E-TRIGNAMENF, Trigger name trig#A not found with the current default global directory
-zbreak ^auto#1#/AREG    :   3reg.gld : zbreak ^auto#1#/BREG    :   3reg.gld : STAT=zprint+96^zprint,%GTM-E-TRIGNAMENF, Trigger name auto#1# not found with the current default global directory
-zbreak ^auto#1#A/AREG   :   3reg.gld : zbreak ^auto#1#A/BREG   :   3reg.gld : STAT=zprint+98^zprint,%GTM-E-TRIGNAMENF, Trigger name auto#1#A not found with the current default global directory
+zbreak ^TRIG#/AREG      :   3reg.gld : STAT=zprint+87^zprint,%YDB-E-TRIGNAMENF, Trigger name TRIG# not found with the current default global directory
+zbreak ^TRIG#/BREG      :   3reg.gld : STAT=zprint+88^zprint,%YDB-E-TRIGNAMENF, Trigger name TRIG# not found with the current default global directory
+zbreak ^TRIG#A/AREG     :   3reg.gld : STAT=zprint+89^zprint,%YDB-E-TRIGNAMENF, Trigger name TRIG#A not found with the current default global directory
+zbreak ^TRIG#A/BREG     :   3reg.gld : STAT=zprint+90^zprint,%YDB-E-TRIGNAMENF, Trigger name TRIG#A not found with the current default global directory
+zbreak ^trig#/AREG      :   3reg.gld : zbreak ^trig#/BREG      :   3reg.gld : zbreak ^trig#A/AREG     :   3reg.gld : zbreak ^trig#A/BREG     :   3reg.gld : STAT=zprint+94^zprint,%YDB-E-TRIGNAMENF, Trigger name trig#A not found with the current default global directory
+zbreak ^auto#1#/AREG    :   3reg.gld : zbreak ^auto#1#/BREG    :   3reg.gld : STAT=zprint+96^zprint,%YDB-E-TRIGNAMENF, Trigger name auto#1# not found with the current default global directory
+zbreak ^auto#1#A/AREG   :   3reg.gld : zbreak ^auto#1#A/BREG   :   3reg.gld : STAT=zprint+98^zprint,%YDB-E-TRIGNAMENF, Trigger name auto#1#A not found with the current default global directory
 zbreak +1^auto#1#A/AREG :   3reg.gld : 
 
 # Test for the below : @TC2
@@ -186,5 +186,5 @@ zbreak +1^auto#1#A/AREG :   3reg.gld :
 # ^a maps to AREG and hence the below should print the trigger
 # @TC2 : zprint ^trig#A/AREG :  do ^trigger("agld.trg")
 # ^A maps to DEFAULT and hence the below should error
-# @TC2 : zprint ^TRIG#A/AREG : STAT=zprint+115^zprint,%GTM-E-TRIGNAMENF, Trigger name TRIG#A not found with the current default global directory
+# @TC2 : zprint ^TRIG#A/AREG : STAT=zprint+115^zprint,%YDB-E-TRIGNAMENF, Trigger name TRIG#A not found with the current default global directory
 ## end ##

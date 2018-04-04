@@ -2,7 +2,7 @@ Case1
 Killed
 ----------
 Error MUUSERECOV seen in rundown1a.out as expected:
-%GTM-E-MUUSERECOV, Abnormal shutdown of journaled database ##TEST_PATH##/mumps.dat detected
+%YDB-E-MUUSERECOV, Abnormal shutdown of journaled database ##TEST_PATH##/mumps.dat detected
 ----------
 ----------
 Error MUNOTALLSEC seen in rundown1a.out as expected:
@@ -19,7 +19,7 @@ Case2
 Killed
 ----------
 Error REQRECOV seen in gtm2.out as expected:
-%GTM-E-REQRECOV, Error accessing database ##TEST_PATH##/mumps.dat.  Must be recovered on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+%YDB-E-REQRECOV, Error accessing database ##TEST_PATH##/mumps.dat.  Must be recovered on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
 ----------
 ----------
 Error ENO seen in gtm2.out as expected:
@@ -27,7 +27,7 @@ Error ENO seen in gtm2.out as expected:
 ----------
 ----------
 Error MUUSERECOV seen in rundown2a.out as expected:
-%GTM-E-MUUSERECOV, Abnormal shutdown of journaled database ##TEST_PATH##/mumps.dat detected
+%YDB-E-MUUSERECOV, Abnormal shutdown of journaled database ##TEST_PATH##/mumps.dat detected
 ----------
 ----------
 Error MUNOTALLSEC seen in rundown2a.out as expected:
@@ -54,8 +54,8 @@ TEST-E-MULTISITE replic action failed.Pls. check msr_execute_##FILTERED##NO.csh 
 
 ----------
 Error REPLREQROLLBACK seen in ##REMOTE_TEST_PATH##/instance2/##FILTERED##START_##TIMESTAMP##.out as expected:
-%GTM-E-REPLREQROLLBACK, Replication instance file ##REMOTE_TEST_PATH##/instance2/mumps.repl indicates abnormal shutdown or an incomplete ROLLBACK. Run MUPIP JOURNAL ROLLBACK first
-%GTM-E-REPLREQROLLBACK, Replication instance file ##REMOTE_TEST_PATH##/instance2/mumps.repl indicates abnormal shutdown or an incomplete ROLLBACK. Run MUPIP JOURNAL ROLLBACK first
+%YDB-E-REPLREQROLLBACK, Replication instance file ##REMOTE_TEST_PATH##/instance2/mumps.repl indicates abnormal shutdown or an incomplete ROLLBACK. Run MUPIP JOURNAL ROLLBACK first
+%YDB-E-REPLREQROLLBACK, Replication instance file ##REMOTE_TEST_PATH##/instance2/mumps.repl indicates abnormal shutdown or an incomplete ROLLBACK. Run MUPIP JOURNAL ROLLBACK first
 ----------
 ----------
 Error ENO seen in ##REMOTE_TEST_PATH##/instance2/##FILTERED##START_##TIMESTAMP##.out as expected:
@@ -68,7 +68,7 @@ Error JNL_ON-E-MUPIP seen in ##REMOTE_TEST_PATH##/instance2/##FILTERED##START_##
 ----------
 ----------
 Error REQROLLBACK seen in ##REMOTE_TEST_PATH##/instance2/jnl.log as expected:
-%GTM-E-REQROLLBACK, Error accessing database ##REMOTE_TEST_PATH##/instance2/mumps.dat.  Run MUPIP JOURNAL -ROLLBACK -NOONLINE on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+%YDB-E-REQROLLBACK, Error accessing database ##REMOTE_TEST_PATH##/instance2/mumps.dat.  Run MUPIP JOURNAL -ROLLBACK -NOONLINE on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
 ----------
 ----------
 Error ENO seen in ##REMOTE_TEST_PATH##/instance2/jnl.log as expected:
@@ -76,7 +76,7 @@ Error ENO seen in ##REMOTE_TEST_PATH##/instance2/jnl.log as expected:
 ----------
 ----------
 Error MUNOFINISH seen in ##REMOTE_TEST_PATH##/instance2/jnl.log as expected:
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ----------
 ----------
 Error JNL_ON-E-MUPIP seen in ##REMOTE_TEST_PATH##/instance2/jnl.log as expected:
@@ -88,7 +88,7 @@ TEST-E-MULTISITE replic action failed.Pls. check msr_execute_##FILTERED##NO.csh 
 
 ----------
 Error MUUSERLBK seen in ##REMOTE_TEST_PATH##/instance2/rundown3a.out as expected:
-%GTM-E-MUUSERLBK, Abnormal shutdown of replication-enabled database ##REMOTE_TEST_PATH##/instance2/mumps.dat detected
+%YDB-E-MUUSERLBK, Abnormal shutdown of replication-enabled database ##REMOTE_TEST_PATH##/instance2/mumps.dat detected
 ----------
 ----------
 Error MUNOTALLSEC seen in ##REMOTE_TEST_PATH##/instance2/rundown3a.out as expected:
@@ -131,8 +131,8 @@ TEST-E-MULTISITE replic action failed.Pls. check msr_execute_##FILTERED##NO.csh 
 
 ----------
 Error REPLREQROLLBACK seen in ##REMOTE_TEST_PATH##/instance2/##FILTERED##START_##TIMESTAMP##.out as expected:
-%GTM-E-REPLREQROLLBACK, Replication instance file ##REMOTE_TEST_PATH##/instance2/mumps.repl indicates abnormal shutdown or an incomplete ROLLBACK. Run MUPIP JOURNAL ROLLBACK first
-%GTM-E-REPLREQROLLBACK, Replication instance file ##REMOTE_TEST_PATH##/instance2/mumps.repl indicates abnormal shutdown or an incomplete ROLLBACK. Run MUPIP JOURNAL ROLLBACK first
+%YDB-E-REPLREQROLLBACK, Replication instance file ##REMOTE_TEST_PATH##/instance2/mumps.repl indicates abnormal shutdown or an incomplete ROLLBACK. Run MUPIP JOURNAL ROLLBACK first
+%YDB-E-REPLREQROLLBACK, Replication instance file ##REMOTE_TEST_PATH##/instance2/mumps.repl indicates abnormal shutdown or an incomplete ROLLBACK. Run MUPIP JOURNAL ROLLBACK first
 ----------
 ----------
 Error ENO seen in ##REMOTE_TEST_PATH##/instance2/##FILTERED##START_##TIMESTAMP##.out as expected:
@@ -145,7 +145,7 @@ Error JNL_ON-E-MUPIP seen in ##REMOTE_TEST_PATH##/instance2/##FILTERED##START_##
 ----------
 ----------
 Error REQROLLBACK seen in ##REMOTE_TEST_PATH##/instance2/jnl.log as expected:
-%GTM-E-REQROLLBACK, Error accessing database ##REMOTE_TEST_PATH##/instance2/mumps.dat.  Run MUPIP JOURNAL -ROLLBACK -NOONLINE on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+%YDB-E-REQROLLBACK, Error accessing database ##REMOTE_TEST_PATH##/instance2/mumps.dat.  Run MUPIP JOURNAL -ROLLBACK -NOONLINE on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
 ----------
 ----------
 Error ENO seen in ##REMOTE_TEST_PATH##/instance2/jnl.log as expected:
@@ -153,7 +153,7 @@ Error ENO seen in ##REMOTE_TEST_PATH##/instance2/jnl.log as expected:
 ----------
 ----------
 Error MUNOFINISH seen in ##REMOTE_TEST_PATH##/instance2/jnl.log as expected:
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ----------
 ----------
 Error JNL_ON-E-MUPIP seen in ##REMOTE_TEST_PATH##/instance2/jnl.log as expected:
@@ -165,7 +165,7 @@ TEST-E-MULTISITE replic action failed.Pls. check msr_execute_##FILTERED##NO.csh 
 
 ----------
 Error MUUSERLBK seen in ##REMOTE_TEST_PATH##/instance2/rundown4a.out as expected:
-%GTM-E-MUUSERLBK, Abnormal shutdown of replication-enabled database ##REMOTE_TEST_PATH##/instance2/mumps.dat detected
+%YDB-E-MUUSERLBK, Abnormal shutdown of replication-enabled database ##REMOTE_TEST_PATH##/instance2/mumps.dat detected
 ----------
 ----------
 Error MUNOTALLSEC seen in ##REMOTE_TEST_PATH##/instance2/rundown4a.out as expected:

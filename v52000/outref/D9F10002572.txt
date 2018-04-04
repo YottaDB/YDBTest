@@ -9,14 +9,10 @@ i=0:x=ok1
 ------------------------------------------------------
 i=0:x=error2
 ------------------------------------------------------
-ZSTATUS=outpandindr+7^d002572,%GTM-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=outpandindr+7^d002572,%YDB-E-RPARENMISSING, Right parenthesis expected
 i=0:x=error2
 ------------------------------------------------------
-ZSTATUS=outpandindr+7^d002572,%GTM-E-RPARENMISSING, Right parenthesis expected
-i=0:x=error2
-------------------------------------------------------
-i=0:x=ok1
-------------------------------------------------------
+ZSTATUS=outpandindr+7^d002572,%YDB-E-RPARENMISSING, Right parenthesis expected
 i=0:x=error2
 ------------------------------------------------------
 i=0:x=ok1
@@ -63,16 +59,20 @@ i=0:x=ok1
 ------------------------------------------------------
 i=0:x=error2
 ------------------------------------------------------
-ZSTATUS=outpandindr+7^d002572,%GTM-E-RPARENMISSING, Right parenthesis expected
+i=0:x=ok1
+------------------------------------------------------
 i=0:x=error2
 ------------------------------------------------------
-ZSTATUS=outpandindr+7^d002572,%GTM-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=outpandindr+7^d002572,%YDB-E-RPARENMISSING, Right parenthesis expected
 i=0:x=error2
 ------------------------------------------------------
-ZSTATUS=outpandindr+7^d002572,%GTM-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=outpandindr+7^d002572,%YDB-E-RPARENMISSING, Right parenthesis expected
 i=0:x=error2
 ------------------------------------------------------
-ZSTATUS=outpandindr+7^d002572,%GTM-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=outpandindr+7^d002572,%YDB-E-RPARENMISSING, Right parenthesis expected
+i=0:x=error2
+------------------------------------------------------
+ZSTATUS=outpandindr+7^d002572,%YDB-E-RPARENMISSING, Right parenthesis expected
 i=0:x=error2
 ------------------------------------------------------
 i=0:x=ok1
@@ -121,250 +121,250 @@ i=0:x=ok1
 		set i=0,x="error1" set:"" x=$zu(10)  set x="ok1"
 		                             ^-----
 		At column 31, line 4, source module ##TEST_PATH##/test01.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=0,x="error2" if "" set x=$zu(10)  set x="ok2"
 		                                ^-----
 		At column 34, line 6, source module ##TEST_PATH##/test01.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=0,x="error1" set:"" x=$ZU(abcd,$length($piece("()))",")",2)))  set x="ok1"
 		                             ^-----
 		At column 31, line 8, source module ##TEST_PATH##/test01.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=0,x="error2" if "" set x=$ZU(abcd,$length($piece("()))",")",2)))  set x="ok2"
 		                                ^-----
 		At column 34, line 10, source module ##TEST_PATH##/test01.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=0,x="error1" set:"" x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok1"
 		                             ^-----
 		At column 31, line 12, source module ##TEST_PATH##/test01.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=0,x="error1" set:"" x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok1"
 		                                                                  ^-----
 		At column 68, line 12, source module ##TEST_PATH##/test01.m
-%GTM-E-RPARENMISSING, Right parenthesis expected
+%YDB-E-RPARENMISSING, Right parenthesis expected
 		set i=0,x="error2" if "" set x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok2"
 		                                ^-----
 		At column 34, line 14, source module ##TEST_PATH##/test01.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=0,x="error2" if "" set x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok2"
 		                                                                     ^-----
 		At column 71, line 14, source module ##TEST_PATH##/test01.m
-%GTM-E-RPARENMISSING, Right parenthesis expected
+%YDB-E-RPARENMISSING, Right parenthesis expected
 		set i=0,x="error1" set:"" x=$zlkid(abcd)  set x="ok1"
 		                             ^-----
 		At column 31, line 16, source module ##TEST_PATH##/test01.m
-%GTM-E-FNOTONSYS, Function or special variable is not supported by this operating system
+%YDB-E-FNOTONSYS, Function or special variable is not supported by this operating system
 		set i=0,x="error2" if "" set x=$zlkid(abcd)  set x="ok2"
 		                                ^-----
 		At column 34, line 18, source module ##TEST_PATH##/test01.m
-%GTM-E-FNOTONSYS, Function or special variable is not supported by this operating system
+%YDB-E-FNOTONSYS, Function or special variable is not supported by this operating system
 		set i=0,x="error1" set:"" x=$zu  set x="ok1"
 		                             ^-----
 		At column 31, line 20, source module ##TEST_PATH##/test01.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error2" if "" set x=$zu  set x="ok2"
 		                                ^-----
 		At column 34, line 22, source module ##TEST_PATH##/test01.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error1" set:"" x($zu,1)=i  set x="ok1"
 		                             ^-----
 		At column 31, line 24, source module ##TEST_PATH##/test01.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error2" if "" set x($zu,1)=i  set x="ok2"
 		                                ^-----
 		At column 34, line 26, source module ##TEST_PATH##/test01.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error1" set:"" x=$piece($zu,",",3,4)  set x="ok1"
 		                                    ^-----
 		At column 38, line 28, source module ##TEST_PATH##/test01.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error2" if "" set x=$piece($zu,",",3,4)  set x="ok2"
 		                                       ^-----
 		At column 41, line 30, source module ##TEST_PATH##/test01.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error1" set:"" x=$zu,y=i  set x="ok1"
 		                             ^-----
 		At column 31, line 32, source module ##TEST_PATH##/test01.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error2" if "" set x=$zu,y=i  set x="ok2"
 		                                ^-----
 		At column 34, line 34, source module ##TEST_PATH##/test01.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error1" set:"" (x,$TEST)=1  set x="ok1"
 		                              ^-----
 		At column 32, line 36, source module ##TEST_PATH##/test01.m
-%GTM-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
 		set i=0,x="error2" if "" set (x,$TEST)=1  set x="ok2"
 		                                 ^-----
 		At column 35, line 38, source module ##TEST_PATH##/test01.m
-%GTM-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
 		set i=0,x="error1" set:"" $ZY=1  set x="ok1"
 		                           ^-----
 		At column 29, line 40, source module ##TEST_PATH##/test01.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error2" if "" set $ZY=1  set x="ok2"
 		                              ^-----
 		At column 32, line 42, source module ##TEST_PATH##/test01.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error1" set:"" $ZY=x  set x="ok1"
 		                           ^-----
 		At column 29, line 44, source module ##TEST_PATH##/test01.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error2" if "" set $ZY=x  set x="ok2"
 		                              ^-----
 		At column 32, line 46, source module ##TEST_PATH##/test01.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error1" set:"" $ZY=x+1  set x="ok1"
 		                           ^-----
 		At column 29, line 48, source module ##TEST_PATH##/test01.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error2" if "" set $ZY=x+1  set x="ok2"
 		                              ^-----
 		At column 32, line 50, source module ##TEST_PATH##/test01.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error1" set:"" (x,$ZY)=($piece($h,",",2)*0)+15  set x="ok1"
 		                              ^-----
 		At column 32, line 52, source module ##TEST_PATH##/test01.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error2" if "" set (x,$ZY)=($piece($h,",",2)*0)+15  set x="ok2"
 		                                 ^-----
 		At column 35, line 54, source module ##TEST_PATH##/test01.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error1" set:"" ($ZY,x)=($piece($h,",",2)*0)+15  set x="ok1"
 		                            ^-----
 		At column 30, line 56, source module ##TEST_PATH##/test01.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error2" if "" set ($ZY,x)=($piece($h,",",2)*0)+15  set x="ok2"
 		                               ^-----
 		At column 33, line 58, source module ##TEST_PATH##/test01.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error1" set:"" (x,$ZY,z)=($piece($h,",",2)*0)+15  set x="ok1"
 		                              ^-----
 		At column 32, line 60, source module ##TEST_PATH##/test01.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error2" if "" set (x,$ZY,z)=($piece($h,",",2)*0)+15  set x="ok2"
 		                                 ^-----
 		At column 35, line 62, source module ##TEST_PATH##/test01.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error1" set:"" $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                           ^-----
 		At column 29, line 64, source module ##TEST_PATH##/test01.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=0,x="error1" set:"" $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                                                                  ^-----
 		At column 68, line 64, source module ##TEST_PATH##/test01.m
-%GTM-E-RPARENMISSING, Right parenthesis expected
+%YDB-E-RPARENMISSING, Right parenthesis expected
 		set i=0,x="error2" if "" set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                              ^-----
 		At column 32, line 66, source module ##TEST_PATH##/test01.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=0,x="error2" if "" set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                                                                     ^-----
 		At column 71, line 66, source module ##TEST_PATH##/test01.m
-%GTM-E-RPARENMISSING, Right parenthesis expected
+%YDB-E-RPARENMISSING, Right parenthesis expected
 		set i=0,x="error1" set:"" $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                           ^-----
 		At column 29, line 68, source module ##TEST_PATH##/test01.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=0,x="error1" set:"" $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                                                                  ^-----
 		At column 68, line 68, source module ##TEST_PATH##/test01.m
-%GTM-E-RPARENMISSING, Right parenthesis expected
+%YDB-E-RPARENMISSING, Right parenthesis expected
 		set i=0,x="error2" if "" set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                              ^-----
 		At column 32, line 70, source module ##TEST_PATH##/test01.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=0,x="error2" if "" set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                                                                     ^-----
 		At column 71, line 70, source module ##TEST_PATH##/test01.m
-%GTM-E-RPARENMISSING, Right parenthesis expected
+%YDB-E-RPARENMISSING, Right parenthesis expected
 		set i=0,x="error1" new:"" $zu  set x="ok1"
 		                           ^-----
 		At column 29, line 72, source module ##TEST_PATH##/test01.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error1" new:"" $TEST  set x="ok1"
 		                           ^-----
 		At column 29, line 74, source module ##TEST_PATH##/test01.m
-%GTM-E-SVNONEW, Cannot NEW this special variable
+%YDB-E-SVNONEW, Cannot NEW this special variable
 		set i=0,x="error1" open:"" "t.t":afoo  set x="ok1"
 		                                 ^-----
 		At column 35, line 76, source module ##TEST_PATH##/test01.m
-%GTM-E-DEVPARINAP, Device parameter inappropriate to this command
+%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
 		set i=0,x="error1" use:"" "t.t":afoo  set x="ok1"
 		                                ^-----
 		At column 34, line 78, source module ##TEST_PATH##/test01.m
-%GTM-E-DEVPARINAP, Device parameter inappropriate to this command
+%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
 		set i=0,x="error1" close:"" "t.t":afoo  set x="ok1"
 		                                      ^-----
 		At column 40, line 80, source module ##TEST_PATH##/test01.m
-%GTM-E-DEVPARVALREQ, A value is required for this device parameter
+%YDB-E-DEVPARVALREQ, A value is required for this device parameter
 		set i=0,x="error1" open:"" "t.t":(zzzzzz)  set x="ok1"
 		                                  ^-----
 		At column 36, line 82, source module ##TEST_PATH##/test01.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=0,x="error1" use:"" "t.t":(zzzzzz)  set x="ok1"
 		                                 ^-----
 		At column 35, line 84, source module ##TEST_PATH##/test01.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=0,x="error1" close:"" "t.t":(zzzzzz)  set x="ok1"
 		                                   ^-----
 		At column 37, line 86, source module ##TEST_PATH##/test01.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=0,x="error1" open:"" "t.t":(exception  set x="ok1"
 		                                           ^-----
 		At column 45, line 88, source module ##TEST_PATH##/test01.m
-%GTM-E-DEVPARVALREQ, A value is required for this device parameter
+%YDB-E-DEVPARVALREQ, A value is required for this device parameter
 		set i=0,x="error1" use:"" "t.t":(exception  set x="ok1"
 		                                          ^-----
 		At column 44, line 90, source module ##TEST_PATH##/test01.m
-%GTM-E-DEVPARVALREQ, A value is required for this device parameter
+%YDB-E-DEVPARVALREQ, A value is required for this device parameter
 		set i=0,x="error1" close:"" "t.t":(exception  set x="ok1"
 		                                            ^-----
 		At column 46, line 92, source module ##TEST_PATH##/test01.m
-%GTM-E-DEVPARVALREQ, A value is required for this device parameter
+%YDB-E-DEVPARVALREQ, A value is required for this device parameter
 		set i=0,x="error1" open:"" "t.t":(rewind:zzzzzz)  set x="ok1"
 		                                         ^-----
 		At column 43, line 94, source module ##TEST_PATH##/test01.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=0,x="error1" use:"" "t.t":(rewind:zzzzzz)  set x="ok1"
 		                                        ^-----
 		At column 42, line 96, source module ##TEST_PATH##/test01.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=0,x="error1" close:"" "t.t":(rewind:zzzzzz)  set x="ok1"
 		                                          ^-----
 		At column 44, line 98, source module ##TEST_PATH##/test01.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=0,x="error1" open:"" "t.t":(rewind:exception="x":zzzzzz)  set x="ok1"
 		                                                       ^-----
 		At column 57, line 100, source module ##TEST_PATH##/test01.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=0,x="error1" use:"" "t.t":(rewind:exception="x":zzzzzz)  set x="ok1"
 		                                                      ^-----
 		At column 56, line 102, source module ##TEST_PATH##/test01.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=0,x="error1" close:"" "t.t":(rewind:exception="x":zzzzzz)  set x="ok1"
 		                                                        ^-----
 		At column 58, line 104, source module ##TEST_PATH##/test01.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=0,x="error1" open:"" "t.t":(rewind:zzzzzz:exception="x")  set x="ok1"
 		                                         ^-----
 		At column 43, line 106, source module ##TEST_PATH##/test01.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=0,x="error1" use:"" "t.t":(rewind:zzzzzz:exception="x")  set x="ok1"
 		                                        ^-----
 		At column 42, line 108, source module ##TEST_PATH##/test01.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=0,x="error1" close:"" "t.t":(rewind:zzzzzz:exception="x")  set x="ok1"
 		                                          ^-----
 		At column 44, line 110, source module ##TEST_PATH##/test01.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 i=0:x=ok1
 i=0:x=error2
 i=0:x=ok1
 i=0:x=error2
-ZSTATUS=test01+11^test01,%GTM-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=test01+11^test01,%YDB-E-RPARENMISSING, Right parenthesis expected
 i=0:x=error1
-ZSTATUS=test01+13^test01,%GTM-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=test01+13^test01,%YDB-E-RPARENMISSING, Right parenthesis expected
 i=0:x=error2
 i=0:x=ok1
 i=0:x=error2
@@ -390,13 +390,13 @@ i=0:x=ok1
 i=0:x=error2
 i=0:x=ok1
 i=0:x=error2
-ZSTATUS=test01+63^test01,%GTM-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=test01+63^test01,%YDB-E-RPARENMISSING, Right parenthesis expected
 i=0:x=error1
-ZSTATUS=test01+65^test01,%GTM-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=test01+65^test01,%YDB-E-RPARENMISSING, Right parenthesis expected
 i=0:x=error2
-ZSTATUS=test01+67^test01,%GTM-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=test01+67^test01,%YDB-E-RPARENMISSING, Right parenthesis expected
 i=0:x=error1
-ZSTATUS=test01+69^test01,%GTM-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=test01+69^test01,%YDB-E-RPARENMISSING, Right parenthesis expected
 i=0:x=error2
 i=0:x=ok1
 i=0:x=ok1
@@ -425,250 +425,250 @@ i=0:x=ok1
 		set i=0,x="error1" set:0 x=$zu(10)  set x="ok1"
 		                            ^-----
 		At column 30, line 4, source module ##TEST_PATH##/test02.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=0,x="error2" if 0 set x=$zu(10)  set x="ok2"
 		                               ^-----
 		At column 33, line 6, source module ##TEST_PATH##/test02.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=0,x="error1" set:0 x=$ZU(abcd,$length($piece("()))",")",2)))  set x="ok1"
 		                            ^-----
 		At column 30, line 8, source module ##TEST_PATH##/test02.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=0,x="error2" if 0 set x=$ZU(abcd,$length($piece("()))",")",2)))  set x="ok2"
 		                               ^-----
 		At column 33, line 10, source module ##TEST_PATH##/test02.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=0,x="error1" set:0 x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok1"
 		                            ^-----
 		At column 30, line 12, source module ##TEST_PATH##/test02.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=0,x="error1" set:0 x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok1"
 		                                                                 ^-----
 		At column 67, line 12, source module ##TEST_PATH##/test02.m
-%GTM-E-RPARENMISSING, Right parenthesis expected
+%YDB-E-RPARENMISSING, Right parenthesis expected
 		set i=0,x="error2" if 0 set x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok2"
 		                               ^-----
 		At column 33, line 14, source module ##TEST_PATH##/test02.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=0,x="error2" if 0 set x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok2"
 		                                                                    ^-----
 		At column 70, line 14, source module ##TEST_PATH##/test02.m
-%GTM-E-RPARENMISSING, Right parenthesis expected
+%YDB-E-RPARENMISSING, Right parenthesis expected
 		set i=0,x="error1" set:0 x=$zlkid(abcd)  set x="ok1"
 		                            ^-----
 		At column 30, line 16, source module ##TEST_PATH##/test02.m
-%GTM-E-FNOTONSYS, Function or special variable is not supported by this operating system
+%YDB-E-FNOTONSYS, Function or special variable is not supported by this operating system
 		set i=0,x="error2" if 0 set x=$zlkid(abcd)  set x="ok2"
 		                               ^-----
 		At column 33, line 18, source module ##TEST_PATH##/test02.m
-%GTM-E-FNOTONSYS, Function or special variable is not supported by this operating system
+%YDB-E-FNOTONSYS, Function or special variable is not supported by this operating system
 		set i=0,x="error1" set:0 x=$zu  set x="ok1"
 		                            ^-----
 		At column 30, line 20, source module ##TEST_PATH##/test02.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error2" if 0 set x=$zu  set x="ok2"
 		                               ^-----
 		At column 33, line 22, source module ##TEST_PATH##/test02.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error1" set:0 x($zu,1)=i  set x="ok1"
 		                            ^-----
 		At column 30, line 24, source module ##TEST_PATH##/test02.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error2" if 0 set x($zu,1)=i  set x="ok2"
 		                               ^-----
 		At column 33, line 26, source module ##TEST_PATH##/test02.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error1" set:0 x=$piece($zu,",",3,4)  set x="ok1"
 		                                   ^-----
 		At column 37, line 28, source module ##TEST_PATH##/test02.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error2" if 0 set x=$piece($zu,",",3,4)  set x="ok2"
 		                                      ^-----
 		At column 40, line 30, source module ##TEST_PATH##/test02.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error1" set:0 x=$zu,y=i  set x="ok1"
 		                            ^-----
 		At column 30, line 32, source module ##TEST_PATH##/test02.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error2" if 0 set x=$zu,y=i  set x="ok2"
 		                               ^-----
 		At column 33, line 34, source module ##TEST_PATH##/test02.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error1" set:0 (x,$TEST)=1  set x="ok1"
 		                             ^-----
 		At column 31, line 36, source module ##TEST_PATH##/test02.m
-%GTM-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
 		set i=0,x="error2" if 0 set (x,$TEST)=1  set x="ok2"
 		                                ^-----
 		At column 34, line 38, source module ##TEST_PATH##/test02.m
-%GTM-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
 		set i=0,x="error1" set:0 $ZY=1  set x="ok1"
 		                          ^-----
 		At column 28, line 40, source module ##TEST_PATH##/test02.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error2" if 0 set $ZY=1  set x="ok2"
 		                             ^-----
 		At column 31, line 42, source module ##TEST_PATH##/test02.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error1" set:0 $ZY=x  set x="ok1"
 		                          ^-----
 		At column 28, line 44, source module ##TEST_PATH##/test02.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error2" if 0 set $ZY=x  set x="ok2"
 		                             ^-----
 		At column 31, line 46, source module ##TEST_PATH##/test02.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error1" set:0 $ZY=x+1  set x="ok1"
 		                          ^-----
 		At column 28, line 48, source module ##TEST_PATH##/test02.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error2" if 0 set $ZY=x+1  set x="ok2"
 		                             ^-----
 		At column 31, line 50, source module ##TEST_PATH##/test02.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error1" set:0 (x,$ZY)=($piece($h,",",2)*0)+15  set x="ok1"
 		                             ^-----
 		At column 31, line 52, source module ##TEST_PATH##/test02.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error2" if 0 set (x,$ZY)=($piece($h,",",2)*0)+15  set x="ok2"
 		                                ^-----
 		At column 34, line 54, source module ##TEST_PATH##/test02.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error1" set:0 ($ZY,x)=($piece($h,",",2)*0)+15  set x="ok1"
 		                           ^-----
 		At column 29, line 56, source module ##TEST_PATH##/test02.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error2" if 0 set ($ZY,x)=($piece($h,",",2)*0)+15  set x="ok2"
 		                              ^-----
 		At column 32, line 58, source module ##TEST_PATH##/test02.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error1" set:0 (x,$ZY,z)=($piece($h,",",2)*0)+15  set x="ok1"
 		                             ^-----
 		At column 31, line 60, source module ##TEST_PATH##/test02.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error2" if 0 set (x,$ZY,z)=($piece($h,",",2)*0)+15  set x="ok2"
 		                                ^-----
 		At column 34, line 62, source module ##TEST_PATH##/test02.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error1" set:0 $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                          ^-----
 		At column 28, line 64, source module ##TEST_PATH##/test02.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=0,x="error1" set:0 $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                                                                 ^-----
 		At column 67, line 64, source module ##TEST_PATH##/test02.m
-%GTM-E-RPARENMISSING, Right parenthesis expected
+%YDB-E-RPARENMISSING, Right parenthesis expected
 		set i=0,x="error2" if 0 set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                             ^-----
 		At column 31, line 66, source module ##TEST_PATH##/test02.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=0,x="error2" if 0 set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                                                                    ^-----
 		At column 70, line 66, source module ##TEST_PATH##/test02.m
-%GTM-E-RPARENMISSING, Right parenthesis expected
+%YDB-E-RPARENMISSING, Right parenthesis expected
 		set i=0,x="error1" set:0 $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                          ^-----
 		At column 28, line 68, source module ##TEST_PATH##/test02.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=0,x="error1" set:0 $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                                                                 ^-----
 		At column 67, line 68, source module ##TEST_PATH##/test02.m
-%GTM-E-RPARENMISSING, Right parenthesis expected
+%YDB-E-RPARENMISSING, Right parenthesis expected
 		set i=0,x="error2" if 0 set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                             ^-----
 		At column 31, line 70, source module ##TEST_PATH##/test02.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=0,x="error2" if 0 set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                                                                    ^-----
 		At column 70, line 70, source module ##TEST_PATH##/test02.m
-%GTM-E-RPARENMISSING, Right parenthesis expected
+%YDB-E-RPARENMISSING, Right parenthesis expected
 		set i=0,x="error1" new:0 $zu  set x="ok1"
 		                          ^-----
 		At column 28, line 72, source module ##TEST_PATH##/test02.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error1" new:0 $TEST  set x="ok1"
 		                          ^-----
 		At column 28, line 74, source module ##TEST_PATH##/test02.m
-%GTM-E-SVNONEW, Cannot NEW this special variable
+%YDB-E-SVNONEW, Cannot NEW this special variable
 		set i=0,x="error1" open:0 "t.t":afoo  set x="ok1"
 		                                ^-----
 		At column 34, line 76, source module ##TEST_PATH##/test02.m
-%GTM-E-DEVPARINAP, Device parameter inappropriate to this command
+%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
 		set i=0,x="error1" use:0 "t.t":afoo  set x="ok1"
 		                               ^-----
 		At column 33, line 78, source module ##TEST_PATH##/test02.m
-%GTM-E-DEVPARINAP, Device parameter inappropriate to this command
+%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
 		set i=0,x="error1" close:0 "t.t":afoo  set x="ok1"
 		                                     ^-----
 		At column 39, line 80, source module ##TEST_PATH##/test02.m
-%GTM-E-DEVPARVALREQ, A value is required for this device parameter
+%YDB-E-DEVPARVALREQ, A value is required for this device parameter
 		set i=0,x="error1" open:0 "t.t":(zzzzzz)  set x="ok1"
 		                                 ^-----
 		At column 35, line 82, source module ##TEST_PATH##/test02.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=0,x="error1" use:0 "t.t":(zzzzzz)  set x="ok1"
 		                                ^-----
 		At column 34, line 84, source module ##TEST_PATH##/test02.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=0,x="error1" close:0 "t.t":(zzzzzz)  set x="ok1"
 		                                  ^-----
 		At column 36, line 86, source module ##TEST_PATH##/test02.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=0,x="error1" open:0 "t.t":(exception  set x="ok1"
 		                                          ^-----
 		At column 44, line 88, source module ##TEST_PATH##/test02.m
-%GTM-E-DEVPARVALREQ, A value is required for this device parameter
+%YDB-E-DEVPARVALREQ, A value is required for this device parameter
 		set i=0,x="error1" use:0 "t.t":(exception  set x="ok1"
 		                                         ^-----
 		At column 43, line 90, source module ##TEST_PATH##/test02.m
-%GTM-E-DEVPARVALREQ, A value is required for this device parameter
+%YDB-E-DEVPARVALREQ, A value is required for this device parameter
 		set i=0,x="error1" close:0 "t.t":(exception  set x="ok1"
 		                                           ^-----
 		At column 45, line 92, source module ##TEST_PATH##/test02.m
-%GTM-E-DEVPARVALREQ, A value is required for this device parameter
+%YDB-E-DEVPARVALREQ, A value is required for this device parameter
 		set i=0,x="error1" open:0 "t.t":(rewind:zzzzzz)  set x="ok1"
 		                                        ^-----
 		At column 42, line 94, source module ##TEST_PATH##/test02.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=0,x="error1" use:0 "t.t":(rewind:zzzzzz)  set x="ok1"
 		                                       ^-----
 		At column 41, line 96, source module ##TEST_PATH##/test02.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=0,x="error1" close:0 "t.t":(rewind:zzzzzz)  set x="ok1"
 		                                         ^-----
 		At column 43, line 98, source module ##TEST_PATH##/test02.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=0,x="error1" open:0 "t.t":(rewind:exception="x":zzzzzz)  set x="ok1"
 		                                                      ^-----
 		At column 56, line 100, source module ##TEST_PATH##/test02.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=0,x="error1" use:0 "t.t":(rewind:exception="x":zzzzzz)  set x="ok1"
 		                                                     ^-----
 		At column 55, line 102, source module ##TEST_PATH##/test02.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=0,x="error1" close:0 "t.t":(rewind:exception="x":zzzzzz)  set x="ok1"
 		                                                       ^-----
 		At column 57, line 104, source module ##TEST_PATH##/test02.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=0,x="error1" open:0 "t.t":(rewind:zzzzzz:exception="x")  set x="ok1"
 		                                        ^-----
 		At column 42, line 106, source module ##TEST_PATH##/test02.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=0,x="error1" use:0 "t.t":(rewind:zzzzzz:exception="x")  set x="ok1"
 		                                       ^-----
 		At column 41, line 108, source module ##TEST_PATH##/test02.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=0,x="error1" close:0 "t.t":(rewind:zzzzzz:exception="x")  set x="ok1"
 		                                         ^-----
 		At column 43, line 110, source module ##TEST_PATH##/test02.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 i=0:x=ok1
 i=0:x=error2
 i=0:x=ok1
 i=0:x=error2
-ZSTATUS=test02+11^test02,%GTM-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=test02+11^test02,%YDB-E-RPARENMISSING, Right parenthesis expected
 i=0:x=error1
-ZSTATUS=test02+13^test02,%GTM-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=test02+13^test02,%YDB-E-RPARENMISSING, Right parenthesis expected
 i=0:x=error2
 i=0:x=ok1
 i=0:x=error2
@@ -694,13 +694,13 @@ i=0:x=ok1
 i=0:x=error2
 i=0:x=ok1
 i=0:x=error2
-ZSTATUS=test02+63^test02,%GTM-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=test02+63^test02,%YDB-E-RPARENMISSING, Right parenthesis expected
 i=0:x=error1
-ZSTATUS=test02+65^test02,%GTM-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=test02+65^test02,%YDB-E-RPARENMISSING, Right parenthesis expected
 i=0:x=error2
-ZSTATUS=test02+67^test02,%GTM-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=test02+67^test02,%YDB-E-RPARENMISSING, Right parenthesis expected
 i=0:x=error1
-ZSTATUS=test02+69^test02,%GTM-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=test02+69^test02,%YDB-E-RPARENMISSING, Right parenthesis expected
 i=0:x=error2
 i=0:x=ok1
 i=0:x=ok1
@@ -729,248 +729,248 @@ i=0:x=ok1
 		set i=0,x="error1" set:i x=$zu(10)  set x="ok1"
 		                            ^-----
 		At column 30, line 4, source module ##TEST_PATH##/test03.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=0,x="error2" if i set x=$zu(10)  set x="ok2"
 		                               ^-----
 		At column 33, line 6, source module ##TEST_PATH##/test03.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=0,x="error1" set:i x=$ZU(abcd,$length($piece("()))",")",2)))  set x="ok1"
 		                            ^-----
 		At column 30, line 8, source module ##TEST_PATH##/test03.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=0,x="error2" if i set x=$ZU(abcd,$length($piece("()))",")",2)))  set x="ok2"
 		                               ^-----
 		At column 33, line 10, source module ##TEST_PATH##/test03.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=0,x="error1" set:i x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok1"
 		                            ^-----
 		At column 30, line 12, source module ##TEST_PATH##/test03.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=0,x="error1" set:i x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok1"
 		                                                                 ^-----
 		At column 67, line 12, source module ##TEST_PATH##/test03.m
-%GTM-E-RPARENMISSING, Right parenthesis expected
+%YDB-E-RPARENMISSING, Right parenthesis expected
 		set i=0,x="error2" if i set x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok2"
 		                               ^-----
 		At column 33, line 14, source module ##TEST_PATH##/test03.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=0,x="error2" if i set x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok2"
 		                                                                    ^-----
 		At column 70, line 14, source module ##TEST_PATH##/test03.m
-%GTM-E-RPARENMISSING, Right parenthesis expected
+%YDB-E-RPARENMISSING, Right parenthesis expected
 		set i=0,x="error1" set:i x=$zlkid(abcd)  set x="ok1"
 		                            ^-----
 		At column 30, line 16, source module ##TEST_PATH##/test03.m
-%GTM-E-FNOTONSYS, Function or special variable is not supported by this operating system
+%YDB-E-FNOTONSYS, Function or special variable is not supported by this operating system
 		set i=0,x="error2" if i set x=$zlkid(abcd)  set x="ok2"
 		                               ^-----
 		At column 33, line 18, source module ##TEST_PATH##/test03.m
-%GTM-E-FNOTONSYS, Function or special variable is not supported by this operating system
+%YDB-E-FNOTONSYS, Function or special variable is not supported by this operating system
 		set i=0,x="error1" set:i x=$zu  set x="ok1"
 		                            ^-----
 		At column 30, line 20, source module ##TEST_PATH##/test03.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error2" if i set x=$zu  set x="ok2"
 		                               ^-----
 		At column 33, line 22, source module ##TEST_PATH##/test03.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error1" set:i x($zu,1)=i  set x="ok1"
 		                            ^-----
 		At column 30, line 24, source module ##TEST_PATH##/test03.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error2" if i set x($zu,1)=i  set x="ok2"
 		                               ^-----
 		At column 33, line 26, source module ##TEST_PATH##/test03.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error1" set:i x=$piece($zu,",",3,4)  set x="ok1"
 		                                   ^-----
 		At column 37, line 28, source module ##TEST_PATH##/test03.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error2" if i set x=$piece($zu,",",3,4)  set x="ok2"
 		                                      ^-----
 		At column 40, line 30, source module ##TEST_PATH##/test03.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error1" set:i x=$zu,y=i  set x="ok1"
 		                            ^-----
 		At column 30, line 32, source module ##TEST_PATH##/test03.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error2" if i set x=$zu,y=i  set x="ok2"
 		                               ^-----
 		At column 33, line 34, source module ##TEST_PATH##/test03.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error1" set:i (x,$TEST)=1  set x="ok1"
 		                             ^-----
 		At column 31, line 36, source module ##TEST_PATH##/test03.m
-%GTM-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
 		set i=0,x="error2" if i set (x,$TEST)=1  set x="ok2"
 		                                ^-----
 		At column 34, line 38, source module ##TEST_PATH##/test03.m
-%GTM-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
 		set i=0,x="error1" set:i $ZY=1  set x="ok1"
 		                          ^-----
 		At column 28, line 40, source module ##TEST_PATH##/test03.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error2" if i set $ZY=1  set x="ok2"
 		                             ^-----
 		At column 31, line 42, source module ##TEST_PATH##/test03.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error1" set:i $ZY=x  set x="ok1"
 		                          ^-----
 		At column 28, line 44, source module ##TEST_PATH##/test03.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error2" if i set $ZY=x  set x="ok2"
 		                             ^-----
 		At column 31, line 46, source module ##TEST_PATH##/test03.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error1" set:i $ZY=x+1  set x="ok1"
 		                          ^-----
 		At column 28, line 48, source module ##TEST_PATH##/test03.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error2" if i set $ZY=x+1  set x="ok2"
 		                             ^-----
 		At column 31, line 50, source module ##TEST_PATH##/test03.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error1" set:i (x,$ZY)=($piece($h,",",2)*0)+15  set x="ok1"
 		                             ^-----
 		At column 31, line 52, source module ##TEST_PATH##/test03.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error2" if i set (x,$ZY)=($piece($h,",",2)*0)+15  set x="ok2"
 		                                ^-----
 		At column 34, line 54, source module ##TEST_PATH##/test03.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error1" set:i ($ZY,x)=($piece($h,",",2)*0)+15  set x="ok1"
 		                           ^-----
 		At column 29, line 56, source module ##TEST_PATH##/test03.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error2" if i set ($ZY,x)=($piece($h,",",2)*0)+15  set x="ok2"
 		                              ^-----
 		At column 32, line 58, source module ##TEST_PATH##/test03.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error1" set:i (x,$ZY,z)=($piece($h,",",2)*0)+15  set x="ok1"
 		                             ^-----
 		At column 31, line 60, source module ##TEST_PATH##/test03.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error2" if i set (x,$ZY,z)=($piece($h,",",2)*0)+15  set x="ok2"
 		                                ^-----
 		At column 34, line 62, source module ##TEST_PATH##/test03.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error1" set:i $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                          ^-----
 		At column 28, line 64, source module ##TEST_PATH##/test03.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=0,x="error1" set:i $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                                                                 ^-----
 		At column 67, line 64, source module ##TEST_PATH##/test03.m
-%GTM-E-RPARENMISSING, Right parenthesis expected
+%YDB-E-RPARENMISSING, Right parenthesis expected
 		set i=0,x="error2" if i set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                             ^-----
 		At column 31, line 66, source module ##TEST_PATH##/test03.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=0,x="error2" if i set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                                                                    ^-----
 		At column 70, line 66, source module ##TEST_PATH##/test03.m
-%GTM-E-RPARENMISSING, Right parenthesis expected
+%YDB-E-RPARENMISSING, Right parenthesis expected
 		set i=0,x="error1" set:i $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                          ^-----
 		At column 28, line 68, source module ##TEST_PATH##/test03.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=0,x="error1" set:i $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                                                                 ^-----
 		At column 67, line 68, source module ##TEST_PATH##/test03.m
-%GTM-E-RPARENMISSING, Right parenthesis expected
+%YDB-E-RPARENMISSING, Right parenthesis expected
 		set i=0,x="error2" if i set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                             ^-----
 		At column 31, line 70, source module ##TEST_PATH##/test03.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=0,x="error2" if i set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                                                                    ^-----
 		At column 70, line 70, source module ##TEST_PATH##/test03.m
-%GTM-E-RPARENMISSING, Right parenthesis expected
+%YDB-E-RPARENMISSING, Right parenthesis expected
 		set i=0,x="error1" new:i $zu  set x="ok1"
 		                          ^-----
 		At column 28, line 72, source module ##TEST_PATH##/test03.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=0,x="error1" new:i $TEST  set x="ok1"
 		                          ^-----
 		At column 28, line 74, source module ##TEST_PATH##/test03.m
-%GTM-E-SVNONEW, Cannot NEW this special variable
+%YDB-E-SVNONEW, Cannot NEW this special variable
 		set i=0,x="error1" open:i "t.t":afoo  set x="ok1"
 		                                ^-----
 		At column 34, line 76, source module ##TEST_PATH##/test03.m
-%GTM-E-DEVPARINAP, Device parameter inappropriate to this command
+%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
 		set i=0,x="error1" use:i "t.t":afoo  set x="ok1"
 		                               ^-----
 		At column 33, line 78, source module ##TEST_PATH##/test03.m
-%GTM-E-DEVPARINAP, Device parameter inappropriate to this command
+%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
 		set i=0,x="error1" close:i "t.t":afoo  set x="ok1"
 		                                     ^-----
 		At column 39, line 80, source module ##TEST_PATH##/test03.m
-%GTM-E-DEVPARVALREQ, A value is required for this device parameter
+%YDB-E-DEVPARVALREQ, A value is required for this device parameter
 		set i=0,x="error1" open:i "t.t":(zzzzzz)  set x="ok1"
 		                                 ^-----
 		At column 35, line 82, source module ##TEST_PATH##/test03.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=0,x="error1" use:i "t.t":(zzzzzz)  set x="ok1"
 		                                ^-----
 		At column 34, line 84, source module ##TEST_PATH##/test03.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=0,x="error1" close:i "t.t":(zzzzzz)  set x="ok1"
 		                                  ^-----
 		At column 36, line 86, source module ##TEST_PATH##/test03.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=0,x="error1" open:i "t.t":(exception  set x="ok1"
 		                                          ^-----
 		At column 44, line 88, source module ##TEST_PATH##/test03.m
-%GTM-E-DEVPARVALREQ, A value is required for this device parameter
+%YDB-E-DEVPARVALREQ, A value is required for this device parameter
 		set i=0,x="error1" use:i "t.t":(exception  set x="ok1"
 		                                         ^-----
 		At column 43, line 90, source module ##TEST_PATH##/test03.m
-%GTM-E-DEVPARVALREQ, A value is required for this device parameter
+%YDB-E-DEVPARVALREQ, A value is required for this device parameter
 		set i=0,x="error1" close:i "t.t":(exception  set x="ok1"
 		                                           ^-----
 		At column 45, line 92, source module ##TEST_PATH##/test03.m
-%GTM-E-DEVPARVALREQ, A value is required for this device parameter
+%YDB-E-DEVPARVALREQ, A value is required for this device parameter
 		set i=0,x="error1" open:i "t.t":(rewind:zzzzzz)  set x="ok1"
 		                                        ^-----
 		At column 42, line 94, source module ##TEST_PATH##/test03.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=0,x="error1" use:i "t.t":(rewind:zzzzzz)  set x="ok1"
 		                                       ^-----
 		At column 41, line 96, source module ##TEST_PATH##/test03.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=0,x="error1" close:i "t.t":(rewind:zzzzzz)  set x="ok1"
 		                                         ^-----
 		At column 43, line 98, source module ##TEST_PATH##/test03.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=0,x="error1" open:i "t.t":(rewind:exception="x":zzzzzz)  set x="ok1"
 		                                                      ^-----
 		At column 56, line 100, source module ##TEST_PATH##/test03.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=0,x="error1" use:i "t.t":(rewind:exception="x":zzzzzz)  set x="ok1"
 		                                                     ^-----
 		At column 55, line 102, source module ##TEST_PATH##/test03.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=0,x="error1" close:i "t.t":(rewind:exception="x":zzzzzz)  set x="ok1"
 		                                                       ^-----
 		At column 57, line 104, source module ##TEST_PATH##/test03.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=0,x="error1" open:i "t.t":(rewind:zzzzzz:exception="x")  set x="ok1"
 		                                        ^-----
 		At column 42, line 106, source module ##TEST_PATH##/test03.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=0,x="error1" use:i "t.t":(rewind:zzzzzz:exception="x")  set x="ok1"
 		                                       ^-----
 		At column 41, line 108, source module ##TEST_PATH##/test03.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=0,x="error1" close:i "t.t":(rewind:zzzzzz:exception="x")  set x="ok1"
 		                                         ^-----
 		At column 43, line 110, source module ##TEST_PATH##/test03.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 i=0:x=ok1
 i=0:x=error2
 i=0:x=ok1
 i=0:x=error2
-ZSTATUS=test03+11^test03,%GTM-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=test03+11^test03,%YDB-E-RPARENMISSING, Right parenthesis expected
 i=0:x=error1
 i=0:x=error2
 i=0:x=ok1
@@ -997,10 +997,10 @@ i=0:x=ok1
 i=0:x=error2
 i=0:x=ok1
 i=0:x=error2
-ZSTATUS=test03+63^test03,%GTM-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=test03+63^test03,%YDB-E-RPARENMISSING, Right parenthesis expected
 i=0:x=error1
 i=0:x=error2
-ZSTATUS=test03+67^test03,%GTM-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=test03+67^test03,%YDB-E-RPARENMISSING, Right parenthesis expected
 i=0:x=error1
 i=0:x=error2
 i=0:x=ok1
@@ -1030,250 +1030,250 @@ i=0:x=ok1
 		set i=1,x="error1" set:"" x=$zu(10)  set x="ok1"
 		                             ^-----
 		At column 31, line 4, source module ##TEST_PATH##/test11.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=1,x="error2" if "" set x=$zu(10)  set x="ok2"
 		                                ^-----
 		At column 34, line 6, source module ##TEST_PATH##/test11.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=1,x="error1" set:"" x=$ZU(abcd,$length($piece("()))",")",2)))  set x="ok1"
 		                             ^-----
 		At column 31, line 8, source module ##TEST_PATH##/test11.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=1,x="error2" if "" set x=$ZU(abcd,$length($piece("()))",")",2)))  set x="ok2"
 		                                ^-----
 		At column 34, line 10, source module ##TEST_PATH##/test11.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=1,x="error1" set:"" x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok1"
 		                             ^-----
 		At column 31, line 12, source module ##TEST_PATH##/test11.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=1,x="error1" set:"" x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok1"
 		                                                                  ^-----
 		At column 68, line 12, source module ##TEST_PATH##/test11.m
-%GTM-E-RPARENMISSING, Right parenthesis expected
+%YDB-E-RPARENMISSING, Right parenthesis expected
 		set i=1,x="error2" if "" set x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok2"
 		                                ^-----
 		At column 34, line 14, source module ##TEST_PATH##/test11.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=1,x="error2" if "" set x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok2"
 		                                                                     ^-----
 		At column 71, line 14, source module ##TEST_PATH##/test11.m
-%GTM-E-RPARENMISSING, Right parenthesis expected
+%YDB-E-RPARENMISSING, Right parenthesis expected
 		set i=1,x="error1" set:"" x=$zlkid(abcd)  set x="ok1"
 		                             ^-----
 		At column 31, line 16, source module ##TEST_PATH##/test11.m
-%GTM-E-FNOTONSYS, Function or special variable is not supported by this operating system
+%YDB-E-FNOTONSYS, Function or special variable is not supported by this operating system
 		set i=1,x="error2" if "" set x=$zlkid(abcd)  set x="ok2"
 		                                ^-----
 		At column 34, line 18, source module ##TEST_PATH##/test11.m
-%GTM-E-FNOTONSYS, Function or special variable is not supported by this operating system
+%YDB-E-FNOTONSYS, Function or special variable is not supported by this operating system
 		set i=1,x="error1" set:"" x=$zu  set x="ok1"
 		                             ^-----
 		At column 31, line 20, source module ##TEST_PATH##/test11.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error2" if "" set x=$zu  set x="ok2"
 		                                ^-----
 		At column 34, line 22, source module ##TEST_PATH##/test11.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error1" set:"" x($zu,1)=i  set x="ok1"
 		                             ^-----
 		At column 31, line 24, source module ##TEST_PATH##/test11.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error2" if "" set x($zu,1)=i  set x="ok2"
 		                                ^-----
 		At column 34, line 26, source module ##TEST_PATH##/test11.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error1" set:"" x=$piece($zu,",",3,4)  set x="ok1"
 		                                    ^-----
 		At column 38, line 28, source module ##TEST_PATH##/test11.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error2" if "" set x=$piece($zu,",",3,4)  set x="ok2"
 		                                       ^-----
 		At column 41, line 30, source module ##TEST_PATH##/test11.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error1" set:"" x=$zu,y=i  set x="ok1"
 		                             ^-----
 		At column 31, line 32, source module ##TEST_PATH##/test11.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error2" if "" set x=$zu,y=i  set x="ok2"
 		                                ^-----
 		At column 34, line 34, source module ##TEST_PATH##/test11.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error1" set:"" (x,$TEST)=1  set x="ok1"
 		                              ^-----
 		At column 32, line 36, source module ##TEST_PATH##/test11.m
-%GTM-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
 		set i=1,x="error2" if "" set (x,$TEST)=1  set x="ok2"
 		                                 ^-----
 		At column 35, line 38, source module ##TEST_PATH##/test11.m
-%GTM-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
 		set i=1,x="error1" set:"" $ZY=1  set x="ok1"
 		                           ^-----
 		At column 29, line 40, source module ##TEST_PATH##/test11.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error2" if "" set $ZY=1  set x="ok2"
 		                              ^-----
 		At column 32, line 42, source module ##TEST_PATH##/test11.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error1" set:"" $ZY=x  set x="ok1"
 		                           ^-----
 		At column 29, line 44, source module ##TEST_PATH##/test11.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error2" if "" set $ZY=x  set x="ok2"
 		                              ^-----
 		At column 32, line 46, source module ##TEST_PATH##/test11.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error1" set:"" $ZY=x+1  set x="ok1"
 		                           ^-----
 		At column 29, line 48, source module ##TEST_PATH##/test11.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error2" if "" set $ZY=x+1  set x="ok2"
 		                              ^-----
 		At column 32, line 50, source module ##TEST_PATH##/test11.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error1" set:"" (x,$ZY)=($piece($h,",",2)*0)+15  set x="ok1"
 		                              ^-----
 		At column 32, line 52, source module ##TEST_PATH##/test11.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error2" if "" set (x,$ZY)=($piece($h,",",2)*0)+15  set x="ok2"
 		                                 ^-----
 		At column 35, line 54, source module ##TEST_PATH##/test11.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error1" set:"" ($ZY,x)=($piece($h,",",2)*0)+15  set x="ok1"
 		                            ^-----
 		At column 30, line 56, source module ##TEST_PATH##/test11.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error2" if "" set ($ZY,x)=($piece($h,",",2)*0)+15  set x="ok2"
 		                               ^-----
 		At column 33, line 58, source module ##TEST_PATH##/test11.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error1" set:"" (x,$ZY,z)=($piece($h,",",2)*0)+15  set x="ok1"
 		                              ^-----
 		At column 32, line 60, source module ##TEST_PATH##/test11.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error2" if "" set (x,$ZY,z)=($piece($h,",",2)*0)+15  set x="ok2"
 		                                 ^-----
 		At column 35, line 62, source module ##TEST_PATH##/test11.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error1" set:"" $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                           ^-----
 		At column 29, line 64, source module ##TEST_PATH##/test11.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=1,x="error1" set:"" $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                                                                  ^-----
 		At column 68, line 64, source module ##TEST_PATH##/test11.m
-%GTM-E-RPARENMISSING, Right parenthesis expected
+%YDB-E-RPARENMISSING, Right parenthesis expected
 		set i=1,x="error2" if "" set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                              ^-----
 		At column 32, line 66, source module ##TEST_PATH##/test11.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=1,x="error2" if "" set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                                                                     ^-----
 		At column 71, line 66, source module ##TEST_PATH##/test11.m
-%GTM-E-RPARENMISSING, Right parenthesis expected
+%YDB-E-RPARENMISSING, Right parenthesis expected
 		set i=1,x="error1" set:"" $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                           ^-----
 		At column 29, line 68, source module ##TEST_PATH##/test11.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=1,x="error1" set:"" $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                                                                  ^-----
 		At column 68, line 68, source module ##TEST_PATH##/test11.m
-%GTM-E-RPARENMISSING, Right parenthesis expected
+%YDB-E-RPARENMISSING, Right parenthesis expected
 		set i=1,x="error2" if "" set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                              ^-----
 		At column 32, line 70, source module ##TEST_PATH##/test11.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=1,x="error2" if "" set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                                                                     ^-----
 		At column 71, line 70, source module ##TEST_PATH##/test11.m
-%GTM-E-RPARENMISSING, Right parenthesis expected
+%YDB-E-RPARENMISSING, Right parenthesis expected
 		set i=1,x="error1" new:"" $zu  set x="ok1"
 		                           ^-----
 		At column 29, line 72, source module ##TEST_PATH##/test11.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error1" new:"" $TEST  set x="ok1"
 		                           ^-----
 		At column 29, line 74, source module ##TEST_PATH##/test11.m
-%GTM-E-SVNONEW, Cannot NEW this special variable
+%YDB-E-SVNONEW, Cannot NEW this special variable
 		set i=1,x="error1" open:"" "t.t":afoo  set x="ok1"
 		                                 ^-----
 		At column 35, line 76, source module ##TEST_PATH##/test11.m
-%GTM-E-DEVPARINAP, Device parameter inappropriate to this command
+%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
 		set i=1,x="error1" use:"" "t.t":afoo  set x="ok1"
 		                                ^-----
 		At column 34, line 78, source module ##TEST_PATH##/test11.m
-%GTM-E-DEVPARINAP, Device parameter inappropriate to this command
+%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
 		set i=1,x="error1" close:"" "t.t":afoo  set x="ok1"
 		                                      ^-----
 		At column 40, line 80, source module ##TEST_PATH##/test11.m
-%GTM-E-DEVPARVALREQ, A value is required for this device parameter
+%YDB-E-DEVPARVALREQ, A value is required for this device parameter
 		set i=1,x="error1" open:"" "t.t":(zzzzzz)  set x="ok1"
 		                                  ^-----
 		At column 36, line 82, source module ##TEST_PATH##/test11.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=1,x="error1" use:"" "t.t":(zzzzzz)  set x="ok1"
 		                                 ^-----
 		At column 35, line 84, source module ##TEST_PATH##/test11.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=1,x="error1" close:"" "t.t":(zzzzzz)  set x="ok1"
 		                                   ^-----
 		At column 37, line 86, source module ##TEST_PATH##/test11.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=1,x="error1" open:"" "t.t":(exception  set x="ok1"
 		                                           ^-----
 		At column 45, line 88, source module ##TEST_PATH##/test11.m
-%GTM-E-DEVPARVALREQ, A value is required for this device parameter
+%YDB-E-DEVPARVALREQ, A value is required for this device parameter
 		set i=1,x="error1" use:"" "t.t":(exception  set x="ok1"
 		                                          ^-----
 		At column 44, line 90, source module ##TEST_PATH##/test11.m
-%GTM-E-DEVPARVALREQ, A value is required for this device parameter
+%YDB-E-DEVPARVALREQ, A value is required for this device parameter
 		set i=1,x="error1" close:"" "t.t":(exception  set x="ok1"
 		                                            ^-----
 		At column 46, line 92, source module ##TEST_PATH##/test11.m
-%GTM-E-DEVPARVALREQ, A value is required for this device parameter
+%YDB-E-DEVPARVALREQ, A value is required for this device parameter
 		set i=1,x="error1" open:"" "t.t":(rewind:zzzzzz)  set x="ok1"
 		                                         ^-----
 		At column 43, line 94, source module ##TEST_PATH##/test11.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=1,x="error1" use:"" "t.t":(rewind:zzzzzz)  set x="ok1"
 		                                        ^-----
 		At column 42, line 96, source module ##TEST_PATH##/test11.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=1,x="error1" close:"" "t.t":(rewind:zzzzzz)  set x="ok1"
 		                                          ^-----
 		At column 44, line 98, source module ##TEST_PATH##/test11.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=1,x="error1" open:"" "t.t":(rewind:exception="x":zzzzzz)  set x="ok1"
 		                                                       ^-----
 		At column 57, line 100, source module ##TEST_PATH##/test11.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=1,x="error1" use:"" "t.t":(rewind:exception="x":zzzzzz)  set x="ok1"
 		                                                      ^-----
 		At column 56, line 102, source module ##TEST_PATH##/test11.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=1,x="error1" close:"" "t.t":(rewind:exception="x":zzzzzz)  set x="ok1"
 		                                                        ^-----
 		At column 58, line 104, source module ##TEST_PATH##/test11.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=1,x="error1" open:"" "t.t":(rewind:zzzzzz:exception="x")  set x="ok1"
 		                                         ^-----
 		At column 43, line 106, source module ##TEST_PATH##/test11.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=1,x="error1" use:"" "t.t":(rewind:zzzzzz:exception="x")  set x="ok1"
 		                                        ^-----
 		At column 42, line 108, source module ##TEST_PATH##/test11.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=1,x="error1" close:"" "t.t":(rewind:zzzzzz:exception="x")  set x="ok1"
 		                                          ^-----
 		At column 44, line 110, source module ##TEST_PATH##/test11.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 i=1:x=ok1
 i=1:x=error2
 i=1:x=ok1
 i=1:x=error2
-ZSTATUS=test11+11^test11,%GTM-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=test11+11^test11,%YDB-E-RPARENMISSING, Right parenthesis expected
 i=1:x=error1
-ZSTATUS=test11+13^test11,%GTM-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=test11+13^test11,%YDB-E-RPARENMISSING, Right parenthesis expected
 i=1:x=error2
 i=1:x=ok1
 i=1:x=error2
@@ -1299,13 +1299,13 @@ i=1:x=ok1
 i=1:x=error2
 i=1:x=ok1
 i=1:x=error2
-ZSTATUS=test11+63^test11,%GTM-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=test11+63^test11,%YDB-E-RPARENMISSING, Right parenthesis expected
 i=1:x=error1
-ZSTATUS=test11+65^test11,%GTM-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=test11+65^test11,%YDB-E-RPARENMISSING, Right parenthesis expected
 i=1:x=error2
-ZSTATUS=test11+67^test11,%GTM-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=test11+67^test11,%YDB-E-RPARENMISSING, Right parenthesis expected
 i=1:x=error1
-ZSTATUS=test11+69^test11,%GTM-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=test11+69^test11,%YDB-E-RPARENMISSING, Right parenthesis expected
 i=1:x=error2
 i=1:x=ok1
 i=1:x=ok1
@@ -1334,250 +1334,250 @@ i=1:x=ok1
 		set i=1,x="error1" set:0 x=$zu(10)  set x="ok1"
 		                            ^-----
 		At column 30, line 4, source module ##TEST_PATH##/test12.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=1,x="error2" if 0 set x=$zu(10)  set x="ok2"
 		                               ^-----
 		At column 33, line 6, source module ##TEST_PATH##/test12.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=1,x="error1" set:0 x=$ZU(abcd,$length($piece("()))",")",2)))  set x="ok1"
 		                            ^-----
 		At column 30, line 8, source module ##TEST_PATH##/test12.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=1,x="error2" if 0 set x=$ZU(abcd,$length($piece("()))",")",2)))  set x="ok2"
 		                               ^-----
 		At column 33, line 10, source module ##TEST_PATH##/test12.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=1,x="error1" set:0 x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok1"
 		                            ^-----
 		At column 30, line 12, source module ##TEST_PATH##/test12.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=1,x="error1" set:0 x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok1"
 		                                                                 ^-----
 		At column 67, line 12, source module ##TEST_PATH##/test12.m
-%GTM-E-RPARENMISSING, Right parenthesis expected
+%YDB-E-RPARENMISSING, Right parenthesis expected
 		set i=1,x="error2" if 0 set x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok2"
 		                               ^-----
 		At column 33, line 14, source module ##TEST_PATH##/test12.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=1,x="error2" if 0 set x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok2"
 		                                                                    ^-----
 		At column 70, line 14, source module ##TEST_PATH##/test12.m
-%GTM-E-RPARENMISSING, Right parenthesis expected
+%YDB-E-RPARENMISSING, Right parenthesis expected
 		set i=1,x="error1" set:0 x=$zlkid(abcd)  set x="ok1"
 		                            ^-----
 		At column 30, line 16, source module ##TEST_PATH##/test12.m
-%GTM-E-FNOTONSYS, Function or special variable is not supported by this operating system
+%YDB-E-FNOTONSYS, Function or special variable is not supported by this operating system
 		set i=1,x="error2" if 0 set x=$zlkid(abcd)  set x="ok2"
 		                               ^-----
 		At column 33, line 18, source module ##TEST_PATH##/test12.m
-%GTM-E-FNOTONSYS, Function or special variable is not supported by this operating system
+%YDB-E-FNOTONSYS, Function or special variable is not supported by this operating system
 		set i=1,x="error1" set:0 x=$zu  set x="ok1"
 		                            ^-----
 		At column 30, line 20, source module ##TEST_PATH##/test12.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error2" if 0 set x=$zu  set x="ok2"
 		                               ^-----
 		At column 33, line 22, source module ##TEST_PATH##/test12.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error1" set:0 x($zu,1)=i  set x="ok1"
 		                            ^-----
 		At column 30, line 24, source module ##TEST_PATH##/test12.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error2" if 0 set x($zu,1)=i  set x="ok2"
 		                               ^-----
 		At column 33, line 26, source module ##TEST_PATH##/test12.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error1" set:0 x=$piece($zu,",",3,4)  set x="ok1"
 		                                   ^-----
 		At column 37, line 28, source module ##TEST_PATH##/test12.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error2" if 0 set x=$piece($zu,",",3,4)  set x="ok2"
 		                                      ^-----
 		At column 40, line 30, source module ##TEST_PATH##/test12.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error1" set:0 x=$zu,y=i  set x="ok1"
 		                            ^-----
 		At column 30, line 32, source module ##TEST_PATH##/test12.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error2" if 0 set x=$zu,y=i  set x="ok2"
 		                               ^-----
 		At column 33, line 34, source module ##TEST_PATH##/test12.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error1" set:0 (x,$TEST)=1  set x="ok1"
 		                             ^-----
 		At column 31, line 36, source module ##TEST_PATH##/test12.m
-%GTM-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
 		set i=1,x="error2" if 0 set (x,$TEST)=1  set x="ok2"
 		                                ^-----
 		At column 34, line 38, source module ##TEST_PATH##/test12.m
-%GTM-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
 		set i=1,x="error1" set:0 $ZY=1  set x="ok1"
 		                          ^-----
 		At column 28, line 40, source module ##TEST_PATH##/test12.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error2" if 0 set $ZY=1  set x="ok2"
 		                             ^-----
 		At column 31, line 42, source module ##TEST_PATH##/test12.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error1" set:0 $ZY=x  set x="ok1"
 		                          ^-----
 		At column 28, line 44, source module ##TEST_PATH##/test12.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error2" if 0 set $ZY=x  set x="ok2"
 		                             ^-----
 		At column 31, line 46, source module ##TEST_PATH##/test12.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error1" set:0 $ZY=x+1  set x="ok1"
 		                          ^-----
 		At column 28, line 48, source module ##TEST_PATH##/test12.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error2" if 0 set $ZY=x+1  set x="ok2"
 		                             ^-----
 		At column 31, line 50, source module ##TEST_PATH##/test12.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error1" set:0 (x,$ZY)=($piece($h,",",2)*0)+15  set x="ok1"
 		                             ^-----
 		At column 31, line 52, source module ##TEST_PATH##/test12.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error2" if 0 set (x,$ZY)=($piece($h,",",2)*0)+15  set x="ok2"
 		                                ^-----
 		At column 34, line 54, source module ##TEST_PATH##/test12.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error1" set:0 ($ZY,x)=($piece($h,",",2)*0)+15  set x="ok1"
 		                           ^-----
 		At column 29, line 56, source module ##TEST_PATH##/test12.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error2" if 0 set ($ZY,x)=($piece($h,",",2)*0)+15  set x="ok2"
 		                              ^-----
 		At column 32, line 58, source module ##TEST_PATH##/test12.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error1" set:0 (x,$ZY,z)=($piece($h,",",2)*0)+15  set x="ok1"
 		                             ^-----
 		At column 31, line 60, source module ##TEST_PATH##/test12.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error2" if 0 set (x,$ZY,z)=($piece($h,",",2)*0)+15  set x="ok2"
 		                                ^-----
 		At column 34, line 62, source module ##TEST_PATH##/test12.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error1" set:0 $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                          ^-----
 		At column 28, line 64, source module ##TEST_PATH##/test12.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=1,x="error1" set:0 $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                                                                 ^-----
 		At column 67, line 64, source module ##TEST_PATH##/test12.m
-%GTM-E-RPARENMISSING, Right parenthesis expected
+%YDB-E-RPARENMISSING, Right parenthesis expected
 		set i=1,x="error2" if 0 set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                             ^-----
 		At column 31, line 66, source module ##TEST_PATH##/test12.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=1,x="error2" if 0 set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                                                                    ^-----
 		At column 70, line 66, source module ##TEST_PATH##/test12.m
-%GTM-E-RPARENMISSING, Right parenthesis expected
+%YDB-E-RPARENMISSING, Right parenthesis expected
 		set i=1,x="error1" set:0 $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                          ^-----
 		At column 28, line 68, source module ##TEST_PATH##/test12.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=1,x="error1" set:0 $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                                                                 ^-----
 		At column 67, line 68, source module ##TEST_PATH##/test12.m
-%GTM-E-RPARENMISSING, Right parenthesis expected
+%YDB-E-RPARENMISSING, Right parenthesis expected
 		set i=1,x="error2" if 0 set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                             ^-----
 		At column 31, line 70, source module ##TEST_PATH##/test12.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=1,x="error2" if 0 set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                                                                    ^-----
 		At column 70, line 70, source module ##TEST_PATH##/test12.m
-%GTM-E-RPARENMISSING, Right parenthesis expected
+%YDB-E-RPARENMISSING, Right parenthesis expected
 		set i=1,x="error1" new:0 $zu  set x="ok1"
 		                          ^-----
 		At column 28, line 72, source module ##TEST_PATH##/test12.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error1" new:0 $TEST  set x="ok1"
 		                          ^-----
 		At column 28, line 74, source module ##TEST_PATH##/test12.m
-%GTM-E-SVNONEW, Cannot NEW this special variable
+%YDB-E-SVNONEW, Cannot NEW this special variable
 		set i=1,x="error1" open:0 "t.t":afoo  set x="ok1"
 		                                ^-----
 		At column 34, line 76, source module ##TEST_PATH##/test12.m
-%GTM-E-DEVPARINAP, Device parameter inappropriate to this command
+%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
 		set i=1,x="error1" use:0 "t.t":afoo  set x="ok1"
 		                               ^-----
 		At column 33, line 78, source module ##TEST_PATH##/test12.m
-%GTM-E-DEVPARINAP, Device parameter inappropriate to this command
+%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
 		set i=1,x="error1" close:0 "t.t":afoo  set x="ok1"
 		                                     ^-----
 		At column 39, line 80, source module ##TEST_PATH##/test12.m
-%GTM-E-DEVPARVALREQ, A value is required for this device parameter
+%YDB-E-DEVPARVALREQ, A value is required for this device parameter
 		set i=1,x="error1" open:0 "t.t":(zzzzzz)  set x="ok1"
 		                                 ^-----
 		At column 35, line 82, source module ##TEST_PATH##/test12.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=1,x="error1" use:0 "t.t":(zzzzzz)  set x="ok1"
 		                                ^-----
 		At column 34, line 84, source module ##TEST_PATH##/test12.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=1,x="error1" close:0 "t.t":(zzzzzz)  set x="ok1"
 		                                  ^-----
 		At column 36, line 86, source module ##TEST_PATH##/test12.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=1,x="error1" open:0 "t.t":(exception  set x="ok1"
 		                                          ^-----
 		At column 44, line 88, source module ##TEST_PATH##/test12.m
-%GTM-E-DEVPARVALREQ, A value is required for this device parameter
+%YDB-E-DEVPARVALREQ, A value is required for this device parameter
 		set i=1,x="error1" use:0 "t.t":(exception  set x="ok1"
 		                                         ^-----
 		At column 43, line 90, source module ##TEST_PATH##/test12.m
-%GTM-E-DEVPARVALREQ, A value is required for this device parameter
+%YDB-E-DEVPARVALREQ, A value is required for this device parameter
 		set i=1,x="error1" close:0 "t.t":(exception  set x="ok1"
 		                                           ^-----
 		At column 45, line 92, source module ##TEST_PATH##/test12.m
-%GTM-E-DEVPARVALREQ, A value is required for this device parameter
+%YDB-E-DEVPARVALREQ, A value is required for this device parameter
 		set i=1,x="error1" open:0 "t.t":(rewind:zzzzzz)  set x="ok1"
 		                                        ^-----
 		At column 42, line 94, source module ##TEST_PATH##/test12.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=1,x="error1" use:0 "t.t":(rewind:zzzzzz)  set x="ok1"
 		                                       ^-----
 		At column 41, line 96, source module ##TEST_PATH##/test12.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=1,x="error1" close:0 "t.t":(rewind:zzzzzz)  set x="ok1"
 		                                         ^-----
 		At column 43, line 98, source module ##TEST_PATH##/test12.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=1,x="error1" open:0 "t.t":(rewind:exception="x":zzzzzz)  set x="ok1"
 		                                                      ^-----
 		At column 56, line 100, source module ##TEST_PATH##/test12.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=1,x="error1" use:0 "t.t":(rewind:exception="x":zzzzzz)  set x="ok1"
 		                                                     ^-----
 		At column 55, line 102, source module ##TEST_PATH##/test12.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=1,x="error1" close:0 "t.t":(rewind:exception="x":zzzzzz)  set x="ok1"
 		                                                       ^-----
 		At column 57, line 104, source module ##TEST_PATH##/test12.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=1,x="error1" open:0 "t.t":(rewind:zzzzzz:exception="x")  set x="ok1"
 		                                        ^-----
 		At column 42, line 106, source module ##TEST_PATH##/test12.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=1,x="error1" use:0 "t.t":(rewind:zzzzzz:exception="x")  set x="ok1"
 		                                       ^-----
 		At column 41, line 108, source module ##TEST_PATH##/test12.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=1,x="error1" close:0 "t.t":(rewind:zzzzzz:exception="x")  set x="ok1"
 		                                         ^-----
 		At column 43, line 110, source module ##TEST_PATH##/test12.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 i=1:x=ok1
 i=1:x=error2
 i=1:x=ok1
 i=1:x=error2
-ZSTATUS=test12+11^test12,%GTM-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=test12+11^test12,%YDB-E-RPARENMISSING, Right parenthesis expected
 i=1:x=error1
-ZSTATUS=test12+13^test12,%GTM-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=test12+13^test12,%YDB-E-RPARENMISSING, Right parenthesis expected
 i=1:x=error2
 i=1:x=ok1
 i=1:x=error2
@@ -1603,13 +1603,13 @@ i=1:x=ok1
 i=1:x=error2
 i=1:x=ok1
 i=1:x=error2
-ZSTATUS=test12+63^test12,%GTM-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=test12+63^test12,%YDB-E-RPARENMISSING, Right parenthesis expected
 i=1:x=error1
-ZSTATUS=test12+65^test12,%GTM-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=test12+65^test12,%YDB-E-RPARENMISSING, Right parenthesis expected
 i=1:x=error2
-ZSTATUS=test12+67^test12,%GTM-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=test12+67^test12,%YDB-E-RPARENMISSING, Right parenthesis expected
 i=1:x=error1
-ZSTATUS=test12+69^test12,%GTM-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=test12+69^test12,%YDB-E-RPARENMISSING, Right parenthesis expected
 i=1:x=error2
 i=1:x=ok1
 i=1:x=ok1
@@ -1638,350 +1638,350 @@ i=1:x=ok1
 		set i=1,x="error1" set:i x=$zu(10)  set x="ok1"
 		                            ^-----
 		At column 30, line 4, source module ##TEST_PATH##/test13.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=1,x="error2" if i set x=$zu(10)  set x="ok2"
 		                               ^-----
 		At column 33, line 6, source module ##TEST_PATH##/test13.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=1,x="error1" set:i x=$ZU(abcd,$length($piece("()))",")",2)))  set x="ok1"
 		                            ^-----
 		At column 30, line 8, source module ##TEST_PATH##/test13.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=1,x="error2" if i set x=$ZU(abcd,$length($piece("()))",")",2)))  set x="ok2"
 		                               ^-----
 		At column 33, line 10, source module ##TEST_PATH##/test13.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=1,x="error1" set:i x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok1"
 		                            ^-----
 		At column 30, line 12, source module ##TEST_PATH##/test13.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=1,x="error1" set:i x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok1"
 		                                                                 ^-----
 		At column 67, line 12, source module ##TEST_PATH##/test13.m
-%GTM-E-RPARENMISSING, Right parenthesis expected
+%YDB-E-RPARENMISSING, Right parenthesis expected
 		set i=1,x="error2" if i set x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok2"
 		                               ^-----
 		At column 33, line 14, source module ##TEST_PATH##/test13.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=1,x="error2" if i set x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok2"
 		                                                                    ^-----
 		At column 70, line 14, source module ##TEST_PATH##/test13.m
-%GTM-E-RPARENMISSING, Right parenthesis expected
+%YDB-E-RPARENMISSING, Right parenthesis expected
 		set i=1,x="error1" set:i x=$zlkid(abcd)  set x="ok1"
 		                            ^-----
 		At column 30, line 16, source module ##TEST_PATH##/test13.m
-%GTM-E-FNOTONSYS, Function or special variable is not supported by this operating system
+%YDB-E-FNOTONSYS, Function or special variable is not supported by this operating system
 		set i=1,x="error2" if i set x=$zlkid(abcd)  set x="ok2"
 		                               ^-----
 		At column 33, line 18, source module ##TEST_PATH##/test13.m
-%GTM-E-FNOTONSYS, Function or special variable is not supported by this operating system
+%YDB-E-FNOTONSYS, Function or special variable is not supported by this operating system
 		set i=1,x="error1" set:i x=$zu  set x="ok1"
 		                            ^-----
 		At column 30, line 20, source module ##TEST_PATH##/test13.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error2" if i set x=$zu  set x="ok2"
 		                               ^-----
 		At column 33, line 22, source module ##TEST_PATH##/test13.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error1" set:i x($zu,1)=i  set x="ok1"
 		                            ^-----
 		At column 30, line 24, source module ##TEST_PATH##/test13.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error2" if i set x($zu,1)=i  set x="ok2"
 		                               ^-----
 		At column 33, line 26, source module ##TEST_PATH##/test13.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error1" set:i x=$piece($zu,",",3,4)  set x="ok1"
 		                                   ^-----
 		At column 37, line 28, source module ##TEST_PATH##/test13.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error2" if i set x=$piece($zu,",",3,4)  set x="ok2"
 		                                      ^-----
 		At column 40, line 30, source module ##TEST_PATH##/test13.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error1" set:i x=$zu,y=i  set x="ok1"
 		                            ^-----
 		At column 30, line 32, source module ##TEST_PATH##/test13.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error2" if i set x=$zu,y=i  set x="ok2"
 		                               ^-----
 		At column 33, line 34, source module ##TEST_PATH##/test13.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error1" set:i (x,$TEST)=1  set x="ok1"
 		                             ^-----
 		At column 31, line 36, source module ##TEST_PATH##/test13.m
-%GTM-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
 		set i=1,x="error2" if i set (x,$TEST)=1  set x="ok2"
 		                                ^-----
 		At column 34, line 38, source module ##TEST_PATH##/test13.m
-%GTM-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
 		set i=1,x="error1" set:i $ZY=1  set x="ok1"
 		                          ^-----
 		At column 28, line 40, source module ##TEST_PATH##/test13.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error2" if i set $ZY=1  set x="ok2"
 		                             ^-----
 		At column 31, line 42, source module ##TEST_PATH##/test13.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error1" set:i $ZY=x  set x="ok1"
 		                          ^-----
 		At column 28, line 44, source module ##TEST_PATH##/test13.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error2" if i set $ZY=x  set x="ok2"
 		                             ^-----
 		At column 31, line 46, source module ##TEST_PATH##/test13.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error1" set:i $ZY=x+1  set x="ok1"
 		                          ^-----
 		At column 28, line 48, source module ##TEST_PATH##/test13.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error2" if i set $ZY=x+1  set x="ok2"
 		                             ^-----
 		At column 31, line 50, source module ##TEST_PATH##/test13.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error1" set:i (x,$ZY)=($piece($h,",",2)*0)+15  set x="ok1"
 		                             ^-----
 		At column 31, line 52, source module ##TEST_PATH##/test13.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error2" if i set (x,$ZY)=($piece($h,",",2)*0)+15  set x="ok2"
 		                                ^-----
 		At column 34, line 54, source module ##TEST_PATH##/test13.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error1" set:i ($ZY,x)=($piece($h,",",2)*0)+15  set x="ok1"
 		                           ^-----
 		At column 29, line 56, source module ##TEST_PATH##/test13.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error2" if i set ($ZY,x)=($piece($h,",",2)*0)+15  set x="ok2"
 		                              ^-----
 		At column 32, line 58, source module ##TEST_PATH##/test13.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error1" set:i (x,$ZY,z)=($piece($h,",",2)*0)+15  set x="ok1"
 		                             ^-----
 		At column 31, line 60, source module ##TEST_PATH##/test13.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error2" if i set (x,$ZY,z)=($piece($h,",",2)*0)+15  set x="ok2"
 		                                ^-----
 		At column 34, line 62, source module ##TEST_PATH##/test13.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error1" set:i $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                          ^-----
 		At column 28, line 64, source module ##TEST_PATH##/test13.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=1,x="error1" set:i $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                                                                 ^-----
 		At column 67, line 64, source module ##TEST_PATH##/test13.m
-%GTM-E-RPARENMISSING, Right parenthesis expected
+%YDB-E-RPARENMISSING, Right parenthesis expected
 		set i=1,x="error2" if i set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                             ^-----
 		At column 31, line 66, source module ##TEST_PATH##/test13.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=1,x="error2" if i set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                                                                    ^-----
 		At column 70, line 66, source module ##TEST_PATH##/test13.m
-%GTM-E-RPARENMISSING, Right parenthesis expected
+%YDB-E-RPARENMISSING, Right parenthesis expected
 		set i=1,x="error1" set:i $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                          ^-----
 		At column 28, line 68, source module ##TEST_PATH##/test13.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=1,x="error1" set:i $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                                                                 ^-----
 		At column 67, line 68, source module ##TEST_PATH##/test13.m
-%GTM-E-RPARENMISSING, Right parenthesis expected
+%YDB-E-RPARENMISSING, Right parenthesis expected
 		set i=1,x="error2" if i set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                             ^-----
 		At column 31, line 70, source module ##TEST_PATH##/test13.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		set i=1,x="error2" if i set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                                                                    ^-----
 		At column 70, line 70, source module ##TEST_PATH##/test13.m
-%GTM-E-RPARENMISSING, Right parenthesis expected
+%YDB-E-RPARENMISSING, Right parenthesis expected
 		set i=1,x="error1" new:i $zu  set x="ok1"
 		                          ^-----
 		At column 28, line 72, source module ##TEST_PATH##/test13.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		set i=1,x="error1" new:i $TEST  set x="ok1"
 		                          ^-----
 		At column 28, line 74, source module ##TEST_PATH##/test13.m
-%GTM-E-SVNONEW, Cannot NEW this special variable
+%YDB-E-SVNONEW, Cannot NEW this special variable
 		set i=1,x="error1" open:i "t.t":afoo  set x="ok1"
 		                                ^-----
 		At column 34, line 76, source module ##TEST_PATH##/test13.m
-%GTM-E-DEVPARINAP, Device parameter inappropriate to this command
+%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
 		set i=1,x="error1" use:i "t.t":afoo  set x="ok1"
 		                               ^-----
 		At column 33, line 78, source module ##TEST_PATH##/test13.m
-%GTM-E-DEVPARINAP, Device parameter inappropriate to this command
+%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
 		set i=1,x="error1" close:i "t.t":afoo  set x="ok1"
 		                                     ^-----
 		At column 39, line 80, source module ##TEST_PATH##/test13.m
-%GTM-E-DEVPARVALREQ, A value is required for this device parameter
+%YDB-E-DEVPARVALREQ, A value is required for this device parameter
 		set i=1,x="error1" open:i "t.t":(zzzzzz)  set x="ok1"
 		                                 ^-----
 		At column 35, line 82, source module ##TEST_PATH##/test13.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=1,x="error1" use:i "t.t":(zzzzzz)  set x="ok1"
 		                                ^-----
 		At column 34, line 84, source module ##TEST_PATH##/test13.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=1,x="error1" close:i "t.t":(zzzzzz)  set x="ok1"
 		                                  ^-----
 		At column 36, line 86, source module ##TEST_PATH##/test13.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=1,x="error1" open:i "t.t":(exception  set x="ok1"
 		                                          ^-----
 		At column 44, line 88, source module ##TEST_PATH##/test13.m
-%GTM-E-DEVPARVALREQ, A value is required for this device parameter
+%YDB-E-DEVPARVALREQ, A value is required for this device parameter
 		set i=1,x="error1" use:i "t.t":(exception  set x="ok1"
 		                                         ^-----
 		At column 43, line 90, source module ##TEST_PATH##/test13.m
-%GTM-E-DEVPARVALREQ, A value is required for this device parameter
+%YDB-E-DEVPARVALREQ, A value is required for this device parameter
 		set i=1,x="error1" close:i "t.t":(exception  set x="ok1"
 		                                           ^-----
 		At column 45, line 92, source module ##TEST_PATH##/test13.m
-%GTM-E-DEVPARVALREQ, A value is required for this device parameter
+%YDB-E-DEVPARVALREQ, A value is required for this device parameter
 		set i=1,x="error1" open:i "t.t":(rewind:zzzzzz)  set x="ok1"
 		                                        ^-----
 		At column 42, line 94, source module ##TEST_PATH##/test13.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=1,x="error1" use:i "t.t":(rewind:zzzzzz)  set x="ok1"
 		                                       ^-----
 		At column 41, line 96, source module ##TEST_PATH##/test13.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=1,x="error1" close:i "t.t":(rewind:zzzzzz)  set x="ok1"
 		                                         ^-----
 		At column 43, line 98, source module ##TEST_PATH##/test13.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=1,x="error1" open:i "t.t":(rewind:exception="x":zzzzzz)  set x="ok1"
 		                                                      ^-----
 		At column 56, line 100, source module ##TEST_PATH##/test13.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=1,x="error1" use:i "t.t":(rewind:exception="x":zzzzzz)  set x="ok1"
 		                                                     ^-----
 		At column 55, line 102, source module ##TEST_PATH##/test13.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=1,x="error1" close:i "t.t":(rewind:exception="x":zzzzzz)  set x="ok1"
 		                                                       ^-----
 		At column 57, line 104, source module ##TEST_PATH##/test13.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=1,x="error1" open:i "t.t":(rewind:zzzzzz:exception="x")  set x="ok1"
 		                                        ^-----
 		At column 42, line 106, source module ##TEST_PATH##/test13.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=1,x="error1" use:i "t.t":(rewind:zzzzzz:exception="x")  set x="ok1"
 		                                       ^-----
 		At column 41, line 108, source module ##TEST_PATH##/test13.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=1,x="error1" close:i "t.t":(rewind:zzzzzz:exception="x")  set x="ok1"
 		                                         ^-----
 		At column 43, line 110, source module ##TEST_PATH##/test13.m
-%GTM-E-DEVPARUNK, Deviceparameter unknown
-ZSTATUS=test13+3^test13,%GTM-E-INVFCN, Invalid function name
+%YDB-E-DEVPARUNK, Deviceparameter unknown
+ZSTATUS=test13+3^test13,%YDB-E-INVFCN, Invalid function name
 i=1:x=error1
-ZSTATUS=test13+5^test13,%GTM-E-INVFCN, Invalid function name
+ZSTATUS=test13+5^test13,%YDB-E-INVFCN, Invalid function name
 i=1:x=error2
-ZSTATUS=test13+7^test13,%GTM-E-INVFCN, Invalid function name
+ZSTATUS=test13+7^test13,%YDB-E-INVFCN, Invalid function name
 i=1:x=error1
-ZSTATUS=test13+9^test13,%GTM-E-INVFCN, Invalid function name
+ZSTATUS=test13+9^test13,%YDB-E-INVFCN, Invalid function name
 i=1:x=error2
-ZSTATUS=test13+11^test13,%GTM-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=test13+11^test13,%YDB-E-RPARENMISSING, Right parenthesis expected
 i=1:x=error1
-ZSTATUS=test13+13^test13,%GTM-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=test13+13^test13,%YDB-E-RPARENMISSING, Right parenthesis expected
 i=1:x=error2
-ZSTATUS=test13+15^test13,%GTM-E-FNOTONSYS, Function or special variable is not supported by this operating system
+ZSTATUS=test13+15^test13,%YDB-E-FNOTONSYS, Function or special variable is not supported by this operating system
 i=1:x=error1
-ZSTATUS=test13+17^test13,%GTM-E-FNOTONSYS, Function or special variable is not supported by this operating system
+ZSTATUS=test13+17^test13,%YDB-E-FNOTONSYS, Function or special variable is not supported by this operating system
 i=1:x=error2
-ZSTATUS=test13+19^test13,%GTM-E-INVSVN, Invalid special variable name
+ZSTATUS=test13+19^test13,%YDB-E-INVSVN, Invalid special variable name
 i=1:x=error1
-ZSTATUS=test13+21^test13,%GTM-E-INVSVN, Invalid special variable name
+ZSTATUS=test13+21^test13,%YDB-E-INVSVN, Invalid special variable name
 i=1:x=error2
-ZSTATUS=test13+23^test13,%GTM-E-INVSVN, Invalid special variable name
+ZSTATUS=test13+23^test13,%YDB-E-INVSVN, Invalid special variable name
 i=1:x=error1
-ZSTATUS=test13+25^test13,%GTM-E-INVSVN, Invalid special variable name
+ZSTATUS=test13+25^test13,%YDB-E-INVSVN, Invalid special variable name
 i=1:x=error2
-ZSTATUS=test13+27^test13,%GTM-E-INVSVN, Invalid special variable name
+ZSTATUS=test13+27^test13,%YDB-E-INVSVN, Invalid special variable name
 i=1:x=error1
-ZSTATUS=test13+29^test13,%GTM-E-INVSVN, Invalid special variable name
+ZSTATUS=test13+29^test13,%YDB-E-INVSVN, Invalid special variable name
 i=1:x=error2
-ZSTATUS=test13+31^test13,%GTM-E-INVSVN, Invalid special variable name
+ZSTATUS=test13+31^test13,%YDB-E-INVSVN, Invalid special variable name
 i=1:x=error1
-ZSTATUS=test13+33^test13,%GTM-E-INVSVN, Invalid special variable name
+ZSTATUS=test13+33^test13,%YDB-E-INVSVN, Invalid special variable name
 i=1:x=error2
-ZSTATUS=test13+35^test13,%GTM-E-SVNOSET, Cannot SET this special variable
+ZSTATUS=test13+35^test13,%YDB-E-SVNOSET, Cannot SET this special variable
 i=1:x=1
-ZSTATUS=test13+37^test13,%GTM-E-SVNOSET, Cannot SET this special variable
+ZSTATUS=test13+37^test13,%YDB-E-SVNOSET, Cannot SET this special variable
 i=1:x=1
-ZSTATUS=test13+39^test13,%GTM-E-INVSVN, Invalid special variable name
+ZSTATUS=test13+39^test13,%YDB-E-INVSVN, Invalid special variable name
 i=1:x=error1
-ZSTATUS=test13+41^test13,%GTM-E-INVSVN, Invalid special variable name
+ZSTATUS=test13+41^test13,%YDB-E-INVSVN, Invalid special variable name
 i=1:x=error2
-ZSTATUS=test13+43^test13,%GTM-E-INVSVN, Invalid special variable name
+ZSTATUS=test13+43^test13,%YDB-E-INVSVN, Invalid special variable name
 i=1:x=error1
-ZSTATUS=test13+45^test13,%GTM-E-INVSVN, Invalid special variable name
+ZSTATUS=test13+45^test13,%YDB-E-INVSVN, Invalid special variable name
 i=1:x=error2
-ZSTATUS=test13+47^test13,%GTM-E-INVSVN, Invalid special variable name
+ZSTATUS=test13+47^test13,%YDB-E-INVSVN, Invalid special variable name
 i=1:x=error1
-ZSTATUS=test13+49^test13,%GTM-E-INVSVN, Invalid special variable name
+ZSTATUS=test13+49^test13,%YDB-E-INVSVN, Invalid special variable name
 i=1:x=error2
-ZSTATUS=test13+51^test13,%GTM-E-INVSVN, Invalid special variable name
+ZSTATUS=test13+51^test13,%YDB-E-INVSVN, Invalid special variable name
 i=1:x=15
-ZSTATUS=test13+53^test13,%GTM-E-INVSVN, Invalid special variable name
+ZSTATUS=test13+53^test13,%YDB-E-INVSVN, Invalid special variable name
 i=1:x=15
-ZSTATUS=test13+55^test13,%GTM-E-INVSVN, Invalid special variable name
+ZSTATUS=test13+55^test13,%YDB-E-INVSVN, Invalid special variable name
 i=1:x=error1
-ZSTATUS=test13+57^test13,%GTM-E-INVSVN, Invalid special variable name
+ZSTATUS=test13+57^test13,%YDB-E-INVSVN, Invalid special variable name
 i=1:x=error2
-ZSTATUS=test13+59^test13,%GTM-E-INVSVN, Invalid special variable name
+ZSTATUS=test13+59^test13,%YDB-E-INVSVN, Invalid special variable name
 i=1:x=15
-ZSTATUS=test13+61^test13,%GTM-E-INVSVN, Invalid special variable name
+ZSTATUS=test13+61^test13,%YDB-E-INVSVN, Invalid special variable name
 i=1:x=15
-ZSTATUS=test13+63^test13,%GTM-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=test13+63^test13,%YDB-E-RPARENMISSING, Right parenthesis expected
 i=1:x=error1
-ZSTATUS=test13+65^test13,%GTM-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=test13+65^test13,%YDB-E-RPARENMISSING, Right parenthesis expected
 i=1:x=error2
-ZSTATUS=test13+67^test13,%GTM-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=test13+67^test13,%YDB-E-RPARENMISSING, Right parenthesis expected
 i=1:x=error1
-ZSTATUS=test13+69^test13,%GTM-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=test13+69^test13,%YDB-E-RPARENMISSING, Right parenthesis expected
 i=1:x=error2
-ZSTATUS=test13+71^test13,%GTM-E-INVSVN, Invalid special variable name
+ZSTATUS=test13+71^test13,%YDB-E-INVSVN, Invalid special variable name
 i=1:x=error1
-ZSTATUS=test13+73^test13,%GTM-E-SVNONEW, Cannot NEW this special variable
+ZSTATUS=test13+73^test13,%YDB-E-SVNONEW, Cannot NEW this special variable
 i=1:x=error1
-ZSTATUS=test13+75^test13,%GTM-E-DEVPARINAP, Device parameter inappropriate to this command
+ZSTATUS=test13+75^test13,%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
 i=1:x=error1
-ZSTATUS=test13+77^test13,%GTM-E-DEVPARINAP, Device parameter inappropriate to this command
+ZSTATUS=test13+77^test13,%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
 i=1:x=error1
-ZSTATUS=test13+79^test13,%GTM-E-DEVPARVALREQ, A value is required for this device parameter
+ZSTATUS=test13+79^test13,%YDB-E-DEVPARVALREQ, A value is required for this device parameter
 i=1:x=error1
-ZSTATUS=test13+81^test13,%GTM-E-DEVPARUNK, Deviceparameter unknown
+ZSTATUS=test13+81^test13,%YDB-E-DEVPARUNK, Deviceparameter unknown
 i=1:x=error1
-ZSTATUS=test13+83^test13,%GTM-E-DEVPARUNK, Deviceparameter unknown
+ZSTATUS=test13+83^test13,%YDB-E-DEVPARUNK, Deviceparameter unknown
 i=1:x=error1
-ZSTATUS=test13+85^test13,%GTM-E-DEVPARUNK, Deviceparameter unknown
+ZSTATUS=test13+85^test13,%YDB-E-DEVPARUNK, Deviceparameter unknown
 i=1:x=error1
-ZSTATUS=test13+87^test13,%GTM-E-DEVPARVALREQ, A value is required for this device parameter
+ZSTATUS=test13+87^test13,%YDB-E-DEVPARVALREQ, A value is required for this device parameter
 i=1:x=error1
-ZSTATUS=test13+89^test13,%GTM-E-DEVPARVALREQ, A value is required for this device parameter
+ZSTATUS=test13+89^test13,%YDB-E-DEVPARVALREQ, A value is required for this device parameter
 i=1:x=error1
-ZSTATUS=test13+91^test13,%GTM-E-DEVPARVALREQ, A value is required for this device parameter
+ZSTATUS=test13+91^test13,%YDB-E-DEVPARVALREQ, A value is required for this device parameter
 i=1:x=error1
-ZSTATUS=test13+93^test13,%GTM-E-DEVPARUNK, Deviceparameter unknown
+ZSTATUS=test13+93^test13,%YDB-E-DEVPARUNK, Deviceparameter unknown
 i=1:x=error1
-ZSTATUS=test13+95^test13,%GTM-E-DEVPARUNK, Deviceparameter unknown
+ZSTATUS=test13+95^test13,%YDB-E-DEVPARUNK, Deviceparameter unknown
 i=1:x=error1
-ZSTATUS=test13+97^test13,%GTM-E-DEVPARUNK, Deviceparameter unknown
+ZSTATUS=test13+97^test13,%YDB-E-DEVPARUNK, Deviceparameter unknown
 i=1:x=error1
-ZSTATUS=test13+99^test13,%GTM-E-DEVPARUNK, Deviceparameter unknown
+ZSTATUS=test13+99^test13,%YDB-E-DEVPARUNK, Deviceparameter unknown
 i=1:x=error1
-ZSTATUS=test13+101^test13,%GTM-E-DEVPARUNK, Deviceparameter unknown
+ZSTATUS=test13+101^test13,%YDB-E-DEVPARUNK, Deviceparameter unknown
 i=1:x=error1
-ZSTATUS=test13+103^test13,%GTM-E-DEVPARUNK, Deviceparameter unknown
+ZSTATUS=test13+103^test13,%YDB-E-DEVPARUNK, Deviceparameter unknown
 i=1:x=error1
-ZSTATUS=test13+105^test13,%GTM-E-DEVPARUNK, Deviceparameter unknown
+ZSTATUS=test13+105^test13,%YDB-E-DEVPARUNK, Deviceparameter unknown
 i=1:x=error1
-ZSTATUS=test13+107^test13,%GTM-E-DEVPARUNK, Deviceparameter unknown
+ZSTATUS=test13+107^test13,%YDB-E-DEVPARUNK, Deviceparameter unknown
 i=1:x=error1
-ZSTATUS=test13+109^test13,%GTM-E-DEVPARUNK, Deviceparameter unknown
+ZSTATUS=test13+109^test13,%YDB-E-DEVPARUNK, Deviceparameter unknown
 i=1:x=error1
 
 GTM>

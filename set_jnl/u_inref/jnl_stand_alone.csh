@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -31,7 +34,7 @@ $grep -qE '.dat.*(File is in use|File already open) by another process' ${output
 if ($status) then
 	echo "SETJNL-E-ERROR : Expected File is in use or File already open error from the above command, but did not find it in ${output}x"
 endif
-$grep -v 'GTM-E-MUNOFINISH' ${output}x >&! $output
+$grep -v 'YDB-E-MUNOFINISH' ${output}x >&! $output
 echo "Journal States:(expected DISABLED):"
 $gtm_tst/$tst/u_inref/check_jnl_state.csh "Journal State "
 #
@@ -42,7 +45,7 @@ $grep -qE '.dat.*(File is in use|File already open) by another process' ${output
 if ($status) then
 	echo "SETJNL-E-ERROR : Expected File is in use or File already open error from the above command, but did not find it in ${output}x"
 endif
-$grep -v 'GTM-E-MUNOFINISH' ${output}x >&! $output
+$grep -v 'YDB-E-MUNOFINISH' ${output}x >&! $output
 echo "Journal States:(expected DISABLED):"
 $gtm_tst/$tst/u_inref/check_jnl_state.csh "Journal State "
 echo "Try 0 to 0: $MUPIP set -journal=disable -reg *"
@@ -98,7 +101,7 @@ $grep -qE '.dat.*(File is in use|File already open) by another process' ${output
 if ($status) then
 	echo "SETJNL-E-ERROR : Expected File is in use or File already open error from the above command, but did not find it in ${output}x"
 endif
-$grep -v 'GTM-E-MUNOFINISH' ${output}x >&! $output
+$grep -v 'YDB-E-MUNOFINISH' ${output}x >&! $output
 echo "Journal States:(expected OFF):"
 $gtm_tst/$tst/u_inref/check_jnl_state.csh "Journal State "
 #
@@ -137,7 +140,7 @@ $grep -qE '.dat.*(File is in use|File already open) by another process' ${output
 if ($status) then
 	echo "SETJNL-E-ERROR : Expected File is in use or File already open error from the above command, but did not find it in ${output}x"
 endif
-$grep -v 'GTM-E-MUNOFINISH' ${output}x >&! $output
+$grep -v 'YDB-E-MUNOFINISH' ${output}x >&! $output
 echo "Journal States:(expected ON):"
 $gtm_tst/$tst/u_inref/check_jnl_state.csh "Journal State "
 #
@@ -169,7 +172,7 @@ $grep -qE '.dat.*(File is in use|File already open) by another process' ${output
 if ($status) then
 	echo "SETJNL-E-ERROR : Expected File is in use or File already open error from the above command, but did not find it in ${output}x"
 endif
-$grep -v 'GTM-E-MUNOFINISH' ${output}x >&! $output
+$grep -v 'YDB-E-MUNOFINISH' ${output}x >&! $output
 #
 set output = "set_jnl_buff_bdat.out"
 $MUPIP set -journal=before,bu=256 -file b.dat >&! ${output}x
@@ -177,7 +180,7 @@ $grep -qE '.dat.*(File is in use|File already open) by another process' ${output
 if ($status) then
 	echo "SETJNL-E-ERROR : Expected File is in use or File already open error from the above command, but did not find it in ${output}x"
 endif
-$grep -v 'GTM-E-MUNOFINISH' ${output}x >&! $output
+$grep -v 'YDB-E-MUNOFINISH' ${output}x >&! $output
 #
 set output = "set_jnl_buff_creg.out"
 $MUPIP set -journal=before,bu=256 -reg CREG >&! ${output}x
@@ -185,7 +188,7 @@ $grep -qE '.dat.*(File is in use|File already open) by another process' ${output
 if ($status) then
 	echo "SETJNL-E-ERROR : Expected File is in use or File already open error from the above command, but did not find it in ${output}x"
 endif
-$grep -v 'GTM-E-MUNOFINISH' ${output}x >&! $output
+$grep -v 'YDB-E-MUNOFINISH' ${output}x >&! $output
 #
 set output = "set_jnl_buff_mumpsdat.out"
 $MUPIP set -journal=before,bu=1024 -file mumps.dat >&! ${output}x
@@ -193,7 +196,7 @@ $grep -qE '.dat.*(File is in use|File already open) by another process' ${output
 if ($status) then
 	echo "SETJNL-E-ERROR : Expected File is in use or File already open error from the above command, but did not find it in ${output}x"
 endif
-$grep -v 'GTM-E-MUNOFINISH' ${output}x >&! $output
+$grep -v 'YDB-E-MUNOFINISH' ${output}x >&! $output
 #
 echo "Journal Buffer Size:(expected 2308)"
 $gtm_tst/$tst/u_inref/wait_for_update.csh

@@ -21,7 +21,7 @@ YDB>use $Principal:(CTRAP=$char(3):exception="do gotctrlc^ctrlchandler":CENABLE)
 
 YDB>write "Hit ^C now",!  hang 15
 Hit ^C now
-%GTM-E-CTRAP, Character trap $C(3) encountered
+%YDB-E-CTRAP, Character trap $C(3) encountered
 
 YDB>zshow "S"
 +1^GTM$DMOD    (Direct mode) 
@@ -32,7 +32,7 @@ YDB>use $Principal:(CTRAP=$char(3):exception="do gotctrlc^ctrlchandler":CENABLE)
 
 YDB>write "Hit ^C now",!  hang 15
 Hit ^C now
-%GTM-E-CTRAP, Character trap $C(3) encountered
+%YDB-E-CTRAP, Character trap $C(3) encountered
 
 YDB>zshow "S"
 +1^GTM$DMOD    (Direct mode) 
@@ -59,7 +59,7 @@ YDB>use $Principal:(CTRAP=$char(3):exception="do gotctrlc^ctrlchandler":NOCENABL
 
 YDB>write "Hit ^C now",!  hang 15
 Hit ^C now
-%GTM-E-CTRAP, Character trap $C(3) encountered
+%YDB-E-CTRAP, Character trap $C(3) encountered
 
 YDB>zshow "S"
 +1^GTM$DMOD    (Direct mode) 
@@ -70,7 +70,7 @@ YDB>use $Principal:(CTRAP=$char(3):exception="do gotctrlc^ctrlchandler":NOCENABL
 
 YDB>write "Hit ^C now",!  hang 15
 Hit ^C now
-%GTM-E-CTRAP, Character trap $C(3) encountered
+%YDB-E-CTRAP, Character trap $C(3) encountered
 
 YDB>zshow "S"
 +1^GTM$DMOD    (Direct mode) 

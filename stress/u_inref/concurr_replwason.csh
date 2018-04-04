@@ -4,7 +4,7 @@
 # Copyright (c) 2007-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -66,12 +66,12 @@ unsetenv gtm_test_jnlpool_sync
 echo "# Bump up the tst_buffsize to ensure the INST1->INST2 does not error out with REPLBRKNTRANS"		>> settings.csh
 echo "setenv tst_buffsize $tst_buffsize" 									>> settings.csh
 
-# Since we are intentionally introducing a GTM-E-REPLBRKNTRANS error,
+# Since we are intentionally introducing a YDB-E-REPLBRKNTRANS error,
 # use a white box test case to prevent an assert failure in gtmsource_readfiles.c.
 setenv gtm_white_box_test_case_enable 1
 setenv gtm_white_box_test_case_number 28
 
-echo "# Since we are intentionally introducing a GTM-E-REPLBRKNTRANS error,"			>> settings.csh
+echo "# Since we are intentionally introducing a YDB-E-REPLBRKNTRANS error,"			>> settings.csh
 echo "# use a white box test case to prevent an assert failure in gtmsource_readfiles.c"	>> settings.csh
 echo "setenv gtm_white_box_test_case_enable $gtm_white_box_test_case_enable"			>> settings.csh
 echo "setenv gtm_white_box_test_case_number $gtm_white_box_test_case_number"			>> settings.csh
@@ -244,7 +244,7 @@ echo '=>Check for absence of REPLJNLCLOSED error in any *.mjo* has been deferred
 # Check that a checkhealth at this point indicates the REPLJNLCLOSED error
 echo "=>Check that checkhealth now indicates REPLJNLCLOSED error"
 $MSR RUN SRC=INST1 RCV=INST2 'set msr_dont_chk_stat ; $MUPIP replic -source -checkhealth -instsecondary=__RCV_INSTNAME__'
-$gtm_tst/com/knownerror.csh $msr_execute_last_out "GTM-E-REPLJNLCLOSED"
+$gtm_tst/com/knownerror.csh $msr_execute_last_out "YDB-E-REPLJNLCLOSED"
 
 # Start reorg AFTER REPLJNLCLOSED message was generated
 # This is necessary to avoid the case where reorg encounters permission errors in CRE_JNL_FILE.C
@@ -424,7 +424,7 @@ xyz
 # Application level check on INST3 (should FAIL)
 echo "=>Application level check on INST3 : Should FAIL since replication from INST1 was incomplete due to jnl_file_lost error"
 $MSR RUN INST3 "$gtm_exe/mumps -run allverify^replwason"
-$gtm_tst/com/knownerror.csh $msr_execute_last_out "GTM-E-GVUNDEF"
+$gtm_tst/com/knownerror.csh $msr_execute_last_out "YDB-E-GVUNDEF"
 
 # Replicate remaining transactions from INST2 to INST3 (since INST2 does not have REPLJNLCLOSED issues)
 echo ""

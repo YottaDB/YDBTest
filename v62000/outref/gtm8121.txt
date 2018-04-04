@@ -54,7 +54,7 @@ DSE> DSE> DSE>
 Try to start GT.M. Expect DBFLCORRP error
 
 GTM>
-%GTM-E-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
+%YDB-E-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
 
 GTM>
 Kill backgrounded GT.M process
@@ -62,16 +62,16 @@ Remove database semaphore to induce REQRUNDOWN situation
 Try to start GT.M. Expect REQRUNDOWN error now
 
 GTM>
-%GTM-E-REQRUNDOWN, Error accessing database ##TEST_PATH##/mumps.dat.  Must be rundown on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+%YDB-E-REQRUNDOWN, Error accessing database ##TEST_PATH##/mumps.dat.  Must be rundown on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
 %GTM-I-TEXT, Error with database control semaphore (IPC_STAT)
 ##TEST_AWK%SYSTEM-E-ENO(22|43).*
 
 GTM>
 Try to start DSE. Should get REQRUNDOWN error
-%GTM-E-REQRUNDOWN, Error accessing database ##TEST_PATH##/mumps.dat.  Must be rundown on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+%YDB-E-REQRUNDOWN, Error accessing database ##TEST_PATH##/mumps.dat.  Must be rundown on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
 %GTM-I-TEXT, Error with database control semaphore (IPC_STAT)
 ##TEST_AWK%SYSTEM-E-ENO(22|43).*
-%GTM-E-DBNOREGION, None of the database regions accessible
+%YDB-E-DBNOREGION, None of the database regions accessible
 
 Start MUPIP RUNDOWN. Should work fine without DBFLCORRP error. Should also fix REQRUNDOWN error.
 ##TEST_AWK%GTM-I-SHMREMOVED, Removed Shared Memory id [0-9]* corresponding to file ##TEST_PATH##/mumps.dat
@@ -79,7 +79,7 @@ Start MUPIP RUNDOWN. Should work fine without DBFLCORRP error. Should also fix R
 Try to start GT.M. Expect DBFLCORRP error still
 
 GTM>
-%GTM-E-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
+%YDB-E-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
 
 GTM>
 Try to start DSE. Should NOT get REQRUNDOWN error. Fix DBFLCORRP error
@@ -112,7 +112,7 @@ DSE> DSE> DSE>
 Try to start GT.M. Expect DBFLCORRP error
 
 GTM>
-%GTM-E-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
+%YDB-E-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
 
 GTM>
 Kill backgrounded GT.M process
@@ -120,19 +120,19 @@ Remove database semaphore to induce REQRECOV situation
 Try to start GT.M. Expect REQRECOV error now
 
 GTM>
-%GTM-E-REQRECOV, Error accessing database ##TEST_PATH##/mumps.dat.  Must be recovered on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+%YDB-E-REQRECOV, Error accessing database ##TEST_PATH##/mumps.dat.  Must be recovered on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
 %GTM-I-TEXT, Error with database control semaphore (IPC_STAT)
 ##TEST_AWK%SYSTEM-E-ENO(22|43).*
 
 GTM>
 Try to start DSE. Should get REQRECOV error
-%GTM-E-REQRECOV, Error accessing database ##TEST_PATH##/mumps.dat.  Must be recovered on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+%YDB-E-REQRECOV, Error accessing database ##TEST_PATH##/mumps.dat.  Must be recovered on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
 %GTM-I-TEXT, Error with database control semaphore (IPC_STAT)
 ##TEST_AWK%SYSTEM-E-ENO(22|43).*
-%GTM-E-DBNOREGION, None of the database regions accessible
+%YDB-E-DBNOREGION, None of the database regions accessible
 
 Start MUPIP RUNDOWN. Should issue error saying run MUPIP JOURNAL -RECOVER
-%GTM-E-MUUSERECOV, Abnormal shutdown of journaled database ##TEST_PATH##/mumps.dat detected
+%YDB-E-MUUSERECOV, Abnormal shutdown of journaled database ##TEST_PATH##/mumps.dat detected
 %GTM-I-TEXT, Run MUPIP JOURNAL RECOVER
 %GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
 
@@ -142,7 +142,7 @@ Start MUPIP RUNDOWN -OVERRIDE. Should work fine without DBFLCORRP error. Should 
 Try to start GT.M. Expect DBFLCORRP error still
 
 GTM>
-%GTM-E-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
+%YDB-E-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
 
 GTM>
 Try to start DSE. Should NOT get REQRECOV error. Fix DBFLCORRP error
@@ -187,7 +187,7 @@ DSE> DSE> DSE>
 Try to start GT.M. Expect DBFLCORRP error
 
 GTM>
-%GTM-E-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
+%YDB-E-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
 
 GTM>
 Kill backgrounded GT.M process
@@ -198,19 +198,19 @@ Remove database semaphore to induce REQROLLBACK situation
 Try to start GT.M. Expect REQROLLBACK error now
 
 GTM>
-%GTM-E-REQROLLBACK, Error accessing database ##TEST_PATH##/mumps.dat.  Run MUPIP JOURNAL -ROLLBACK -NOONLINE on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+%YDB-E-REQROLLBACK, Error accessing database ##TEST_PATH##/mumps.dat.  Run MUPIP JOURNAL -ROLLBACK -NOONLINE on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
 %GTM-I-TEXT, Error with database control semaphore (IPC_STAT)
 ##TEST_AWK%SYSTEM-E-ENO(22|43).*
 
 GTM>
 Try to start DSE. Should get REQROLLBACK error
-%GTM-E-REQROLLBACK, Error accessing database ##TEST_PATH##/mumps.dat.  Run MUPIP JOURNAL -ROLLBACK -NOONLINE on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+%YDB-E-REQROLLBACK, Error accessing database ##TEST_PATH##/mumps.dat.  Run MUPIP JOURNAL -ROLLBACK -NOONLINE on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
 %GTM-I-TEXT, Error with database control semaphore (IPC_STAT)
 ##TEST_AWK%SYSTEM-E-ENO(22|43).*
-%GTM-E-DBNOREGION, None of the database regions accessible
+%YDB-E-DBNOREGION, None of the database regions accessible
 
 Start MUPIP RUNDOWN. Should issue error saying run MUPIP JOURNAL -ROLLBACK
-%GTM-E-MUUSERLBK, Abnormal shutdown of replication-enabled database ##TEST_PATH##/mumps.dat detected
+%YDB-E-MUUSERLBK, Abnormal shutdown of replication-enabled database ##TEST_PATH##/mumps.dat detected
 ##TEST_AWK%GTM-I-MUJPOOLRNDWNSUC, Jnlpool section \(id = [0-9]*\) belonging to the replication instance ##TEST_PATH##/mumps.repl successfully rundown
 ##TEST_AWK%GTM-I-MUJPOOLRNDWNSUC, Jnlpool section \(id = [0-9]*\) belonging to the replication instance ##TEST_PATH##/mumps.repl successfully rundown
 ##TEST_AWK%GTM-I-SEMREMOVED, Semaphore id [1-9][0-9]* removed from the system
@@ -223,7 +223,7 @@ Start MUPIP RUNDOWN -OVERRIDE. Should work fine without DBFLCORRP error. Should 
 Try to start GT.M. Expect DBFLCORRP error still
 
 GTM>
-%GTM-E-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
+%YDB-E-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
 
 GTM>
 Try to start DSE. Should NOT get REQROLLBACK error. Fix DBFLCORRP error
@@ -274,7 +274,7 @@ DSE> DSE> DSE>
 Try to start GT.M. Expect DBFLCORRP error
 
 GTM>
-%GTM-E-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
+%YDB-E-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
 
 GTM>
 Kill backgrounded GT.M process
@@ -285,19 +285,19 @@ Remove database semaphore to induce REQROLLBACK situation
 Try to start GT.M. Expect REQROLLBACK error now
 
 GTM>
-%GTM-E-REQROLLBACK, Error accessing database ##TEST_PATH##/mumps.dat.  Run MUPIP JOURNAL -ROLLBACK -NOONLINE on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+%YDB-E-REQROLLBACK, Error accessing database ##TEST_PATH##/mumps.dat.  Run MUPIP JOURNAL -ROLLBACK -NOONLINE on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
 %GTM-I-TEXT, Error with database control semaphore (IPC_STAT)
 ##TEST_AWK%SYSTEM-E-ENO(22|43).*
 
 GTM>
 Try to start DSE. Should get REQROLLBACK error
-%GTM-E-REQROLLBACK, Error accessing database ##TEST_PATH##/mumps.dat.  Run MUPIP JOURNAL -ROLLBACK -NOONLINE on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+%YDB-E-REQROLLBACK, Error accessing database ##TEST_PATH##/mumps.dat.  Run MUPIP JOURNAL -ROLLBACK -NOONLINE on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
 %GTM-I-TEXT, Error with database control semaphore (IPC_STAT)
 ##TEST_AWK%SYSTEM-E-ENO(22|43).*
-%GTM-E-DBNOREGION, None of the database regions accessible
+%YDB-E-DBNOREGION, None of the database regions accessible
 
 Start MUPIP RUNDOWN. Should issue error saying run MUPIP JOURNAL -ROLLBACK
-%GTM-E-MUUSERLBK, Abnormal shutdown of replication-enabled database ##TEST_PATH##/mumps.dat detected
+%YDB-E-MUUSERLBK, Abnormal shutdown of replication-enabled database ##TEST_PATH##/mumps.dat detected
 ##TEST_AWK%GTM-I-MUJPOOLRNDWNSUC, Jnlpool section \(id = [0-9]*\) belonging to the replication instance ##TEST_PATH##/mumps.repl successfully rundown
 ##TEST_AWK%GTM-I-MUJPOOLRNDWNSUC, Jnlpool section \(id = [0-9]*\) belonging to the replication instance ##TEST_PATH##/mumps.repl successfully rundown
 ##TEST_AWK%GTM-I-SEMREMOVED, Semaphore id [1-9][0-9]* removed from the system

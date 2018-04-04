@@ -1,48 +1,48 @@
 ##SUSPEND_OUTPUT UNICODE_MODE
 ##TEST_HOST_SHORT##:##TEST_PATH##/gtm_badchar/gtm_badchar_DBCERTIFY.log
-%GTM-E-BADDBVER, Incorrect database version: 
+%YDB-E-BADDBVER, Incorrect database version: 
 ##TEST_HOST_SHORT##:##TEST_PATH##/gtm_badchar/gtm_badchar_GTCM_GNP_SERVER2.log
 %GTM-F-FORCEDHALT, Image HALTed by MUPIP STOP
 ##TEST_HOST_SHORT##:##TEST_PATH##/gtm_badchar/gtm_badchar_MUPIP_DOWNGRADE.log
-##TEST_AWK%GTM-E-SYSCALL, Error received from system call ftok.. -- called from module .*/mu_all_version_standalone.c at line [1-9][0-9]*
+##TEST_AWK%YDB-E-SYSCALL, Error received from system call ftok.. -- called from module .*/mu_all_version_standalone.c at line [1-9][0-9]*
 ##TEST_AWK.*No such file or directory.*
 ##TEST_HOST_SHORT##:##TEST_PATH##/gtm_badchar/gtm_badchar_MUPIP_JOURNAL_ROLLBACK.log
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##TEST_HOST_SHORT##:##TEST_PATH##/gtm_badchar/gtm_badchar_MUPIP_RUNDOWN.log
 %GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
 ##TEST_HOST_SHORT##:##TEST_PATH##/gtm_badchar/gtm_badchar_MUPIP_UPGRADE.log
-##TEST_AWK%GTM-E-SYSCALL, Error received from system call ftok.. -- called from module .*/mu_all_version_standalone.c at line [1-9][0-9]*
+##TEST_AWK%YDB-E-SYSCALL, Error received from system call ftok.. -- called from module .*/mu_all_version_standalone.c at line [1-9][0-9]*
 ##TEST_AWK.*No such file or directory.*
 ##ALLOW_OUTPUT UNICODE_MODE
 ##SUSPEND_OUTPUT NONUNICODE_MODE
 ##TEST_HOST_SHORT##:##TEST_PATH##/gtm_badchar/gtm_badchar_DBCERTIFY.log
-##TEST_AWK%GTM-E-LOGTOOLONG, Environment variable .gtm_badchar is too long. Maximum length allowed is [0-9][0-9]* bytes.
+##TEST_AWK%YDB-E-LOGTOOLONG, Environment variable .gtm_badchar is too long. Maximum length allowed is [0-9][0-9]* bytes.
 ##TEST_HOST_SHORT##:##TEST_PATH##/gtm_badchar/gtm_badchar_DSE.log
-##TEST_AWK%GTM-E-LOGTOOLONG, Environment variable .gtm_badchar is too long. Maximum length allowed is [0-9][0-9]* bytes.
+##TEST_AWK%YDB-E-LOGTOOLONG, Environment variable .gtm_badchar is too long. Maximum length allowed is [0-9][0-9]* bytes.
 ##TEST_HOST_SHORT##:##TEST_PATH##/gtm_badchar/gtm_badchar_GTCM_GNP_SERVER.log
-##TEST_AWK%GTM-E-LOGTOOLONG, Environment variable .gtm_badchar is too long. Maximum length allowed is [0-9][0-9]* bytes.
+##TEST_AWK%YDB-E-LOGTOOLONG, Environment variable .gtm_badchar is too long. Maximum length allowed is [0-9][0-9]* bytes.
 ##TEST_HOST_SHORT##:##TEST_PATH##/gtm_badchar/gtm_badchar_GTCM_SERVER.log
-##TEST_AWK%GTM-E-LOGTOOLONG, Environment variable .gtm_badchar is too long. Maximum length allowed is [0-9][0-9]* bytes.
+##TEST_AWK%YDB-E-LOGTOOLONG, Environment variable .gtm_badchar is too long. Maximum length allowed is [0-9][0-9]* bytes.
 ##TEST_HOST_SHORT##:##TEST_PATH##/gtm_badchar/gtm_badchar_GTM.log
-##TEST_AWK%GTM-E-LOGTOOLONG, Environment variable .gtm_badchar is too long. Maximum length allowed is [0-9][0-9]* bytes.
+##TEST_AWK%YDB-E-LOGTOOLONG, Environment variable .gtm_badchar is too long. Maximum length allowed is [0-9][0-9]* bytes.
 ##TEST_HOST_SHORT##:##TEST_PATH##/gtm_badchar/gtm_badchar_LKE.log
-##TEST_AWK%GTM-E-LOGTOOLONG, Environment variable .gtm_badchar is too long. Maximum length allowed is [0-9][0-9]* bytes.
+##TEST_AWK%YDB-E-LOGTOOLONG, Environment variable .gtm_badchar is too long. Maximum length allowed is [0-9][0-9]* bytes.
 ##TEST_HOST_SHORT##:##TEST_PATH##/gtm_badchar/gtm_badchar_MUPIP_BACKUP.log
-##TEST_AWK%GTM-E-LOGTOOLONG, Environment variable .gtm_badchar is too long. Maximum length allowed is [0-9][0-9]* bytes.
+##TEST_AWK%YDB-E-LOGTOOLONG, Environment variable .gtm_badchar is too long. Maximum length allowed is [0-9][0-9]* bytes.
 ##TEST_HOST_SHORT##:##TEST_PATH##/gtm_badchar/gtm_badchar_MUPIP_DOWNGRADE.log
-##TEST_AWK%GTM-E-LOGTOOLONG, Environment variable .gtm_badchar is too long. Maximum length allowed is [0-9][0-9]* bytes.
+##TEST_AWK%YDB-E-LOGTOOLONG, Environment variable .gtm_badchar is too long. Maximum length allowed is [0-9][0-9]* bytes.
 ##TEST_HOST_SHORT##:##TEST_PATH##/gtm_badchar/gtm_badchar_MUPIP_EXTRACT.log
-##TEST_AWK%GTM-E-LOGTOOLONG, Environment variable .gtm_badchar is too long. Maximum length allowed is [0-9][0-9]* bytes.
+##TEST_AWK%YDB-E-LOGTOOLONG, Environment variable .gtm_badchar is too long. Maximum length allowed is [0-9][0-9]* bytes.
 ##TEST_HOST_SHORT##:##TEST_PATH##/gtm_badchar/gtm_badchar_MUPIP_INTEG.log
-##TEST_AWK%GTM-E-LOGTOOLONG, Environment variable .gtm_badchar is too long. Maximum length allowed is [0-9][0-9]* bytes.
+##TEST_AWK%YDB-E-LOGTOOLONG, Environment variable .gtm_badchar is too long. Maximum length allowed is [0-9][0-9]* bytes.
 ##TEST_HOST_SHORT##:##TEST_PATH##/gtm_badchar/gtm_badchar_MUPIP_JOURNAL_ROLLBACK.log
-##TEST_AWK%GTM-E-LOGTOOLONG, Environment variable .gtm_badchar is too long. Maximum length allowed is [0-9][0-9]* bytes.
+##TEST_AWK%YDB-E-LOGTOOLONG, Environment variable .gtm_badchar is too long. Maximum length allowed is [0-9][0-9]* bytes.
 ##TEST_HOST_SHORT##:##TEST_PATH##/gtm_badchar/gtm_badchar_MUPIP_REORG.log
-##TEST_AWK%GTM-E-LOGTOOLONG, Environment variable .gtm_badchar is too long. Maximum length allowed is [0-9][0-9]* bytes.
+##TEST_AWK%YDB-E-LOGTOOLONG, Environment variable .gtm_badchar is too long. Maximum length allowed is [0-9][0-9]* bytes.
 ##TEST_HOST_SHORT##:##TEST_PATH##/gtm_badchar/gtm_badchar_MUPIP_REPLIC_SHOWBACKLOG.log
-##TEST_AWK%GTM-E-LOGTOOLONG, Environment variable .gtm_badchar is too long. Maximum length allowed is [0-9][0-9]* bytes.
+##TEST_AWK%YDB-E-LOGTOOLONG, Environment variable .gtm_badchar is too long. Maximum length allowed is [0-9][0-9]* bytes.
 ##TEST_HOST_SHORT##:##TEST_PATH##/gtm_badchar/gtm_badchar_MUPIP_RUNDOWN.log
-##TEST_AWK%GTM-E-LOGTOOLONG, Environment variable .gtm_badchar is too long. Maximum length allowed is [0-9][0-9]* bytes.
+##TEST_AWK%YDB-E-LOGTOOLONG, Environment variable .gtm_badchar is too long. Maximum length allowed is [0-9][0-9]* bytes.
 ##TEST_HOST_SHORT##:##TEST_PATH##/gtm_badchar/gtm_badchar_MUPIP_UPGRADE.log
-##TEST_AWK%GTM-E-LOGTOOLONG, Environment variable .gtm_badchar is too long. Maximum length allowed is [0-9][0-9]* bytes.
+##TEST_AWK%YDB-E-LOGTOOLONG, Environment variable .gtm_badchar is too long. Maximum length allowed is [0-9][0-9]* bytes.
 ##ALLOW_OUTPUT NONUNICODE_MODE

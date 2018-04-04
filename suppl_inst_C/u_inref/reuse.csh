@@ -4,7 +4,7 @@
 #	Copyright 2012, 2013 Fidelity Information Services, Inc	#
 #								#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -33,7 +33,7 @@ $MSR RUN SRC=INST1 RCV=INST3 '$gtm_tst/com/cp_remote_file.csh __SRC_DIR__/back_r
 $MSR STARTRCV INST1 INST3 "updateresync=INSTANCE1.repl -reuse=INSTANCE2"
 get_msrtime
 $MSR RUN INST3 "$msr_err_chk START_$time_msr.out INITORRESUME"
-$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-INITORRESUME
+$gtm_tst/com/knownerror.csh $msr_execute_last_out YDB-E-INITORRESUME
 $MSR STARTRCV INST1 INST3 "updateresync=INSTANCE1.repl -initialize -reuse=INSTANCE2"
 get_msrtime
 $MSR RUN INST3 '$gtm_tst/com/wait_for_log.csh -log RCVR_'$time_msr'.log.updproc -message "New History Content" -duration 30'

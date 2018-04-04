@@ -4,6 +4,9 @@
 # Copyright (c) 2014-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -12,15 +15,15 @@
 #################################################################
 #FILES				File Name	format=ZWR		format=GO		format=BINARY	format not mentioned(auto detect)
 #------------------	---------	--------------- --------------- --------------- ---------------------------------
-#ZWR				x.zwr		Loaded			%GTM-E-LDBINFMT	%GTM-E-LDBINFMT		Loaded
-#GO					x.goo		%GTM-E-LDBINFMT	Loaded			%GTM-E-LDBINFMT		Loaded
-#BINARY				x.bin		%GTM-E-LDBINFMT	%GTM-E-LDBINFMT	Loaded				Loaded
-#EMPTY				x.emt		%GTM-E-LDBINFMT	%GTM-E-LDBINFMT	%GTM-E-LDBINFMT		%GTM-E-LDBINFMT
-#RANDOM TEXT		x.ran		%GTM-E-LDBINFMT	%GTM-E-LDBINFMT	%GTM-E-LDBINFMT		%GTM-E-LDBINFMT
-#ZWR UNKNOWN HEADER	x.zuh		%GTM-E-LDBINFMT	%GTM-E-LDBINFMT	%GTM-E-LDBINFMT		%GTM-E-LDBINFMT
-#GO UNKNOWN HEADER	x.guh		%GTM-E-LDBINFMT	%GTM-E-LDBINFMT	%GTM-E-LDBINFMT		%GTM-E-LDBINFMT
-#ZWR HEADERLESS		x.zhl		%GTM-E-LDBINFMT	%GTM-E-LDBINFMT	%GTM-E-LDBINFMT		%GTM-E-LDBINFMT
-#GO HEADERLESS		x.ghl		%GTM-E-LDBINFMT	%GTM-E-LDBINFMT	%GTM-E-LDBINFMT		%GTM-E-LDBINFMT
+#ZWR				x.zwr		Loaded			%YDB-E-LDBINFMT	%YDB-E-LDBINFMT		Loaded
+#GO					x.goo		%YDB-E-LDBINFMT	Loaded			%YDB-E-LDBINFMT		Loaded
+#BINARY				x.bin		%YDB-E-LDBINFMT	%YDB-E-LDBINFMT	Loaded				Loaded
+#EMPTY				x.emt		%YDB-E-LDBINFMT	%YDB-E-LDBINFMT	%YDB-E-LDBINFMT		%YDB-E-LDBINFMT
+#RANDOM TEXT		x.ran		%YDB-E-LDBINFMT	%YDB-E-LDBINFMT	%YDB-E-LDBINFMT		%YDB-E-LDBINFMT
+#ZWR UNKNOWN HEADER	x.zuh		%YDB-E-LDBINFMT	%YDB-E-LDBINFMT	%YDB-E-LDBINFMT		%YDB-E-LDBINFMT
+#GO UNKNOWN HEADER	x.guh		%YDB-E-LDBINFMT	%YDB-E-LDBINFMT	%YDB-E-LDBINFMT		%YDB-E-LDBINFMT
+#ZWR HEADERLESS		x.zhl		%YDB-E-LDBINFMT	%YDB-E-LDBINFMT	%YDB-E-LDBINFMT		%YDB-E-LDBINFMT
+#GO HEADERLESS		x.ghl		%YDB-E-LDBINFMT	%YDB-E-LDBINFMT	%YDB-E-LDBINFMT		%YDB-E-LDBINFMT
 echo "#### MUPIP LOAD error conditions tests####"
 if ($?gtm_chset) then
 	if ("UTF-8" == $gtm_chset) set utf8mode
@@ -70,55 +73,55 @@ foreach onerror (proceed stop interactive)
 	mv b.dat b.bak
 	# 1. 7. 13. -format=BIN (no database file)
 	@ serial++ ;echo "# ### $serial. Testing Binary Format (no database file) ### #"
-	echo "# ${serial}a. Expect GTM-E-DBFILERR, SYSTEM-E-ENO2 and GTM-E-RECLOAD as a.dat and b.dat database files are not present"
+	echo "# ${serial}a. Expect YDB-E-DBFILERR, SYSTEM-E-ENO2 and YDB-E-RECLOAD as a.dat and b.dat database files are not present"
 	echo "# load will continue for all keys in mumps.dat except when -onerror is stop or interactive"
 	$MUPIP load -format=bin -onerror=$onerror x.bin >&! xloadbinnodat$onerror.outx
 	$grep -vE "Label =|at File offset" xloadbinnodat$onerror.outx
-	echo "# ${serial}b. Expect GTM-E-LDBINFMT, as .zwr is not a valid binary format"
+	echo "# ${serial}b. Expect YDB-E-LDBINFMT, as .zwr is not a valid binary format"
 	$MUPIP load -format=bin -onerror=$onerror x.zwr
 	if (! $?utf8mode) then
-		echo "# ${serial}c. Expect GTM-E-LDBINFMT, as .go is not a valid binary format"
+		echo "# ${serial}c. Expect YDB-E-LDBINFMT, as .go is not a valid binary format"
 		$MUPIP load -format=bin -onerror=$onerror x.go
 	endif
-	echo "# ${serial}d. Expect GTM-E-LDBINFMT, as empty files do not contain any binary header"
+	echo "# ${serial}d. Expect YDB-E-LDBINFMT, as empty files do not contain any binary header"
 	$MUPIP load -format=bin -onerror=$onerror tmp.empty
-	echo "# ${serial}e. Expect GTM-E-LDBINFMT, as random text is not a valid binary format"
+	echo "# ${serial}e. Expect YDB-E-LDBINFMT, as random text is not a valid binary format"
 	$MUPIP load -format=bin -onerror=$onerror tmp.randomtext
-	echo "# ${serial}f. Expect GTM-E-FILEOPENFAIL, as file doesn't exist"
+	echo "# ${serial}f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist"
 	$MUPIP load -format=bin -onerror=$onerror tmp.nofile
 	# 2. 8. 14. -format=ZWR (no database file)
 	@ serial++ ;echo "# ### $serial. Testing ZWR Format (no database file) ### #"
-	echo "# ${serial}a. Expect GTM-E-DBFILERR, SYSTEM-E-ENO2 and GTM-E-RECLOAD as a.dat and b.dat database files are not present"
+	echo "# ${serial}a. Expect YDB-E-DBFILERR, SYSTEM-E-ENO2 and YDB-E-RECLOAD as a.dat and b.dat database files are not present"
 	echo "# load will continue for all keys in mumps.dat except when -onerror is stop or interactive"
 	$MUPIP load -format=zwr -onerror=$onerror x.zwr
-	echo "# ${serial}b. Expect GTM-E-LDBINFMT, as .bin is not a valid zwr format"
+	echo "# ${serial}b. Expect YDB-E-LDBINFMT, as .bin is not a valid zwr format"
 	$MUPIP load -format=zwr -onerror=$onerror x.bin
 	if (! $?utf8mode) then
-		echo "# ${serial}c. Expect GTM-E-LDBINFMT, as .go is not a valid zwr format"
+		echo "# ${serial}c. Expect YDB-E-LDBINFMT, as .go is not a valid zwr format"
 		$MUPIP load -format=zwr -onerror=$onerror x.go
 	endif
-	echo "# ${serial}d. Expect GTM-E-LDBINFMT, as empty files do not contain any zwr header"
+	echo "# ${serial}d. Expect YDB-E-LDBINFMT, as empty files do not contain any zwr header"
 	$MUPIP load -format=zwr -onerror=$onerror tmp.empty
-	echo "# ${serial}e. Expect GTM-E-LDBINFMT, as random text is not a valid zwr format"
+	echo "# ${serial}e. Expect YDB-E-LDBINFMT, as random text is not a valid zwr format"
 	$MUPIP load -format=zwr -onerror=$onerror tmp.randomtext
-	echo "# ${serial}f. Expect GTM-E-FILEOPENFAIL, as file doesn't exist"
+	echo "# ${serial}f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist"
 	$MUPIP load -format=zwr -onerror=$onerror tmp.nofile
 	# 3. 9. 15. -format=GO (no database file)
 	@ serial++
 	if (! $?utf8mode) then
 		echo "# ### $serial. Testing GO Format (no database file) ### #"
-		echo "# ${serial}a. Expect GTM-E-DBFILERR, SYSTEM-E-ENO2 and GTM-E-RECLOAD as a.dat and b.dat database files are not present"
+		echo "# ${serial}a. Expect YDB-E-DBFILERR, SYSTEM-E-ENO2 and YDB-E-RECLOAD as a.dat and b.dat database files are not present"
 		echo "# load will continue for all keys in mumps.dat except when -onerror is stop or interactive"
 		$MUPIP load -format=go -onerror=$onerror x.go
-		echo "# ${serial}b. Expect GTM-E-LDBINFMT, as .zwr is not a valid go format"
+		echo "# ${serial}b. Expect YDB-E-LDBINFMT, as .zwr is not a valid go format"
 		$MUPIP load -format=go -onerror=$onerror x.zwr
-		echo "# ${serial}c. Expect GTM-E-LDBINFMT, as .bin is not a valid go format"
+		echo "# ${serial}c. Expect YDB-E-LDBINFMT, as .bin is not a valid go format"
 		$MUPIP load -format=go -onerror=$onerror x.bin
-		echo "# ${serial}d. Expect GTM-E-LDBINFMT, as empty files do not contain any go header"
+		echo "# ${serial}d. Expect YDB-E-LDBINFMT, as empty files do not contain any go header"
 		$MUPIP load -format=go -onerror=$onerror tmp.empty
-		echo "# ${serial}e. Expect GTM-E-LDBINFMT, as random text is not a valid go format"
+		echo "# ${serial}e. Expect YDB-E-LDBINFMT, as random text is not a valid go format"
 		$MUPIP load -format=go -onerror=$onerror tmp.randomtext
-		echo "# ${serial}f. Expect GTM-E-FILEOPENFAIL, as file doesn't exist"
+		echo "# ${serial}f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist"
 		$MUPIP load -format=go -onerror=$onerror tmp.nofile
 	endif
 	echo "# Restore a.dat and b.dat"
@@ -129,21 +132,21 @@ foreach onerror (proceed stop interactive)
 	echo "# ${serial}a. Successfully load the x.bin content in the database"
 	$MUPIP load -format=bin -onerror=$onerror x.bin >&! xloadbin$onerror.outx
 	$grep -v "Label =" xloadbin$onerror.outx
-	echo "# ${serial}b. Expect GTM-E-LDBINFMT, as .zwr is not a valid binary format"
+	echo "# ${serial}b. Expect YDB-E-LDBINFMT, as .zwr is not a valid binary format"
 	$MUPIP load -format=bin -onerror=$onerror x.zwr
 	if (! $?utf8mode) then
-		echo "# ${serial}c. Expect GTM-E-LDBINFMT, as .go is not a valid binary format"
+		echo "# ${serial}c. Expect YDB-E-LDBINFMT, as .go is not a valid binary format"
 		$MUPIP load -format=bin -onerror=$onerror x.go
 	endif
-	echo "# ${serial}d. Expect GTM-E-LDBINFMT, as empty files do not contain any binary header"
+	echo "# ${serial}d. Expect YDB-E-LDBINFMT, as empty files do not contain any binary header"
 	$MUPIP load -format=bin -onerror=$onerror tmp.empty
-	echo "# ${serial}e. Expect GTM-E-LDBINFMT, as random text is not a valid binary format"
+	echo "# ${serial}e. Expect YDB-E-LDBINFMT, as random text is not a valid binary format"
 	$MUPIP load -format=bin -onerror=$onerror tmp.randomtext
-	echo "# ${serial}f. Expect GTM-E-FILEOPENFAIL, as file doesn't exist"
+	echo "# ${serial}f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist"
 	$MUPIP load -format=bin -onerror=$onerror tmp.nofile
 	if ( "NON_ENCRYPT" == "$test_encryption" ) then
 		echo "# ${serial}g. Corrupt a binary file (replace last occurrence of ABCD with ABCDEFGH) and try loading that"
-		echo "# Expect GTM-E-PREMATEOF, as file is corrupted binary format"
+		echo "# Expect YDB-E-PREMATEOF, as file is corrupted binary format"
 		$MUPIP load -format=bin -onerror=$onerror xcorrupt.bin  >&! xcorrupt$onerror.outx
 		$grep -v "Label =" xcorrupt$onerror.outx
 	endif
@@ -151,17 +154,17 @@ foreach onerror (proceed stop interactive)
 	@ serial++ ;echo "# ### $serial. Testing ZWR Format ### #"
 	echo "# ${serial}a. Successfully load the x.zwr content in the database"
 	$MUPIP load -format=zwr -onerror=$onerror x.zwr
-	echo "# ${serial}b. Expect GTM-E-LDBINFMT, as .bin is not a valid zwr format"
+	echo "# ${serial}b. Expect YDB-E-LDBINFMT, as .bin is not a valid zwr format"
 	$MUPIP load -format=zwr -onerror=$onerror x.bin
 	if (! $?utf8mode) then
-		echo "# ${serial}c. Expect GTM-E-LDBINFMT, as .go is not a valid zwr format"
+		echo "# ${serial}c. Expect YDB-E-LDBINFMT, as .go is not a valid zwr format"
 		$MUPIP load -format=zwr -onerror=$onerror x.go
 	endif
-	echo "# ${serial}d. Expect GTM-E-LDBINFMT, as empty files do not contain any zwr header"
+	echo "# ${serial}d. Expect YDB-E-LDBINFMT, as empty files do not contain any zwr header"
 	$MUPIP load -format=zwr -onerror=$onerror tmp.empty
-	echo "# ${serial}e. Expect GTM-E-LDBINFMT, as random text is not a valid zwr format"
+	echo "# ${serial}e. Expect YDB-E-LDBINFMT, as random text is not a valid zwr format"
 	$MUPIP load -format=zwr -onerror=$onerror tmp.randomtext
-	echo "# ${serial}f. Expect GTM-E-FILEOPENFAIL, as file doesn't exist"
+	echo "# ${serial}f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist"
 	$MUPIP load -format=zwr -onerror=$onerror tmp.nofile
 	# 6. 12. 18. -format=GO
 	@ serial++
@@ -169,15 +172,15 @@ foreach onerror (proceed stop interactive)
 		echo "# ### $serial. Testing GO Format ### #"
 		echo "# ${serial}a. Successfully load the x.go content in the database"
 		$MUPIP load -format=go -onerror=$onerror x.go
-		echo "# ${serial}b. Expect GTM-E-LDBINFMT, as .zwr is not a valid go format"
+		echo "# ${serial}b. Expect YDB-E-LDBINFMT, as .zwr is not a valid go format"
 		$MUPIP load -format=go -onerror=$onerror x.zwr
-		echo "# ${serial}c. Expect GTM-E-LDBINFMT, as .bin is not a valid go format"
+		echo "# ${serial}c. Expect YDB-E-LDBINFMT, as .bin is not a valid go format"
 		$MUPIP load -format=go -onerror=$onerror x.bin
-		echo "# ${serial}d. Expect GTM-E-LDBINFMT, as empty files do not contain any go header"
+		echo "# ${serial}d. Expect YDB-E-LDBINFMT, as empty files do not contain any go header"
 		$MUPIP load -format=go -onerror=$onerror tmp.empty
-		echo "# ${serial}e. Expect GTM-E-LDBINFMT, as random text is not a valid go format"
+		echo "# ${serial}e. Expect YDB-E-LDBINFMT, as random text is not a valid go format"
 		$MUPIP load -format=go -onerror=$onerror tmp.randomtext
-		echo "# ${serial}f. Expect GTM-E-FILEOPENFAIL, as file doesn't exist"
+		echo "# ${serial}f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist"
 		$MUPIP load -format=go -onerror=$onerror tmp.nofile
 	endif
 end
@@ -192,11 +195,11 @@ if (! $?utf8mode) then
 	echo "# ${serial}c. Successfully load the x.go content in the database"
 	$MUPIP load x.go
 endif
-echo "# ${serial}d. Expect GTM-E-LDBINFMT, as empty files do not contain ZWR/GO/BINARY header"
+echo "# ${serial}d. Expect YDB-E-LDBINFMT, as empty files do not contain ZWR/GO/BINARY header"
 $MUPIP load tmp.empty
-echo "# ${serial}e. Expect GTM-E-LDBINFMT, as file with random text do not contain a valid ZWR/GO/BINARY header"
+echo "# ${serial}e. Expect YDB-E-LDBINFMT, as file with random text do not contain a valid ZWR/GO/BINARY header"
 $MUPIP load tmp.randomtext
-echo "# ${serial}f. Expect GTM-E-FILEOPENFAIL, as file doesn't exist"
+echo "# ${serial}f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist"
 $MUPIP load tmp.nofile
 # 20. -STDIN redirection
 @ serial++ ;echo "# ### $serial. Testing Auto File Sensing with -STDIN and FILE REDIRECTION ### #"
@@ -209,9 +212,9 @@ if (! $?utf8mode) then
 	echo "# ${serial}c. Successfully load the x.go content in the database"
 	$MUPIP load -STDIN < x.go
 endif
-echo "# ${serial}d. Expect GTM-E-LDBINFMT, as empty files do not contain ZWR/GO/BINARY header"
+echo "# ${serial}d. Expect YDB-E-LDBINFMT, as empty files do not contain ZWR/GO/BINARY header"
 $MUPIP load -STDIN < tmp.empty
-echo "# ${serial}e. Expect GTM-E-LDBINFMT, as file with random text do not contain a valid ZWR/GO/BINARY header"
+echo "# ${serial}e. Expect YDB-E-LDBINFMT, as file with random text do not contain a valid ZWR/GO/BINARY header"
 $MUPIP load -STDIN < tmp.randomtext
 echo "# ${serial}f. Expect No such file error, as file doesn't exist"
 $MUPIP load -STDIN < tmp.nofile
@@ -226,9 +229,9 @@ if (! $?utf8mode) then
 	echo "# ${serial}c. Successfully load the x.go content in the database"
 	cat x.go | $MUPIP load -STDIN
 endif
-echo "# ${serial}d. Expect GTM-E-LDBINFMT, as empty files do not contain ZWR/GO/BINARY header"
+echo "# ${serial}d. Expect YDB-E-LDBINFMT, as empty files do not contain ZWR/GO/BINARY header"
 cat tmp.empty | $MUPIP load -STDIN
-echo "# ${serial}e. Expect GTM-E-LDBINFMT, as file with random text do not contain a valid ZWR/GO/BINARY header"
+echo "# ${serial}e. Expect YDB-E-LDBINFMT, as file with random text do not contain a valid ZWR/GO/BINARY header"
 cat tmp.randomtext | $MUPIP load -STDIN
 # 22. -STDIN UNIX named pipe
 @ serial++ ;echo "# ### $serial. Testing Auto File Sensing with UNIX NAMED PIPE ### #"
@@ -245,13 +248,13 @@ if (! $?utf8mode) then
 	(cat x.go > namedpipe &) >&! xnamedpipe${serial}c.outx
 	$MUPIP load namedpipe
 endif
-echo "# ${serial}d. Expect GTM-E-LDBINFMT, as empty files do not contain ZWR/GO/BINARY header"
+echo "# ${serial}d. Expect YDB-E-LDBINFMT, as empty files do not contain ZWR/GO/BINARY header"
 (cat tmp.empty > namedpipe &) >&! xnamedpipe${serial}d.outx
 $MUPIP load namedpipe
-echo "# ${serial}e. Expect GTM-E-LDBINFMT, as file with random text do not contain a valid ZWR/GO/BINARY header"
+echo "# ${serial}e. Expect YDB-E-LDBINFMT, as file with random text do not contain a valid ZWR/GO/BINARY header"
 (cat tmp.randomtext > namedpipe &) >&! xnamedpipe${serial}e.outx
 $MUPIP load namedpipe
-# switching to M mode to avoid GTM-E-LOADINVCHSET even before the actual error is caught.
+# switching to M mode to avoid YDB-E-LOADINVCHSET even before the actual error is caught.
 $switch_chset M >&! switch_chset.out
 foreach test (a b c d e f)
 	foreach type (.zwr .go)

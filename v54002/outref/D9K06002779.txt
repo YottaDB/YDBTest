@@ -5,7 +5,7 @@ Using: ##SOURCE_PATH##/mupip
 mumps.dat
 Test that TRESTART outside of TP does not SIG-11
 -----------------------------------------------
-%GTM-E-TLVLZERO, Transaction is not in progress
+%YDB-E-TLVLZERO, Transaction is not in progress
 		At M source location test1+4^d002779
 
 GTM>
@@ -16,7 +16,7 @@ $trestart=1
 $trestart=2
 $trestart=3
 $trestart=4
-%GTM-E-TRESTMAX, TRESTART not allowed in a final TP retry more than once
+%YDB-E-TRESTMAX, TRESTART not allowed in a final TP retry more than once
 		At M source location test2+10^d002779
 
 GTM>

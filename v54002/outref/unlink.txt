@@ -44,13 +44,13 @@ Testing error path - expect ZLINKFILE error for missing allgone routine but shou
  In tulnk4
  In tulnk5
  In tulnk6 - Gathering info then doing zgoto - expect error
-150373978,+2^tulnk6,%GTM-E-ZLINKFILE, Error while zlinking "allgone",%GTM-E-FILENOTFND, File allgone not found
+150373978,+2^tulnk6,%YDB-E-ZLINKFILE, Error while zlinking "allgone",%YDB-E-FILENOTFND, File allgone not found
 ###################################################################
 
 ############# Test 4 ##############################
 Testing error path - expect ZGOCALLOUTIN when stack has a call-in on it
 In simpleci - attempting UNLINK type ZGOTO - expect ZGOCALLOUTIN error
- 150381954,+5^simpleci,%GTM-E-ZGOCALLOUTIN, ZGOTO level 0 with entry ref not valid when using call-ins 
+ 150381954,+5^simpleci,%YDB-E-ZGOCALLOUTIN, ZGOTO level 0 with entry ref not valid when using call-ins 
 ###################################################################
 
 ############# Test 5 ##############################

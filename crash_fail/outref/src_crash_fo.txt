@@ -41,15 +41,15 @@ $gtm_tst/com/mupip_rollback.csh -fetchresync=portno -losttrans=fetch.glo *
  -> Diffing rollback.log rollback2.log (ignoring timestamps and fetchresync messages)
 ==> Checking that rollback without -fetchresync or -resync errors out with RLBKNOBIMG message
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-RLBKNOBIMG, ROLLBACK cannot proceed as database ##TEST_PATH##/a.dat has NOBEFORE_IMAGE journaling
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-RLBKNOBIMG, ROLLBACK cannot proceed as database ##TEST_PATH##/a.dat has NOBEFORE_IMAGE journaling
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 %GTM-I-FILENOTCREATE, Lost transactions extract file fetch3.glo not created
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ==> Checking that backward recovery using NOBEFORE_IMAGE errors out with MUUSERLBK message because of crashed journal file
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-MUUSERLBK, Abnormal shutdown of replication-enabled database ##TEST_PATH##/a.dat detected
+%YDB-E-MUUSERLBK, Abnormal shutdown of replication-enabled database ##TEST_PATH##/a.dat detected
 %GTM-I-TEXT, Run MUPIP JOURNAL ROLLBACK
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ##ALLOW_OUTPUT JNL_BEFORE
 Multi-process Multi-region GTM restarts on primary (B)...

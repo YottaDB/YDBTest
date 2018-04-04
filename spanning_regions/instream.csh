@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -22,7 +25,7 @@
 # viewregion_gvstats	[nars] Test that $VIEW("REGION") and various db operations touch the correct # of regions in case of spanned globals
 # mergecoll		[kishoreh,nars] test cases for merge and different collations (and spanning regions)
 # keysizevary		[nars] test effect of varying max-key-size settings across the regions spanned by one global
-# actcollmismtch	[kishoreh,nars] test cases for GTM-E-ACTCOLLMISMTCH errors
+# actcollmismtch	[kishoreh,nars] test cases for YDB-E-ACTCOLLMISMTCH errors
 # gtm7562		[kishoreh] GTM-7562 DSE silently switches to the wrong region if same global exists in multiple .dat files
 # collationtests	[kishoreh,nars] various test cases for collation + spanning regions
 # noisolation		[kishoreh] tests for view "NOISOLATION" command

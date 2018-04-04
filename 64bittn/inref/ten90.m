@@ -1,3 +1,14 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 tenninety
 	set name=$piece($ZCMDLINE," ",1)
 	set infile=name_".ext",top10=name_"2.ext",rev90=name_"1_reverse.ext"
@@ -10,7 +21,7 @@ doneread
 	if i<3  goto nozwrheader
 	; there is not enough data, the 10% file will be empty
 	if i<12 goto notenoughdata
-	
+
 	; -1 to drop the the extra count from the for loop
 	set total=i-1
 	; -2 to drop the two header lines, but add them back in
@@ -33,16 +44,16 @@ doneread
 	quit
 
 nozwrheader
-	write "%GTM-E-ERROR no headers in the extract",!
+	write "%YDB-E-ERROR no headers in the extract",!
 	quit
 
 notenoughdata
-	write "%GTM-E-ERROR not enough lines in the extract",!
+	write "%YDB-E-ERROR not enough lines in the extract",!
 	quit
 
 nofile
 	use $p
 	write $zstatus,!
 	if $length(name)=0 set name="<no file name given>"
-	write "%GTM-E-ERROR the file ",name," does not exist",!
+	write "%YDB-E-ERROR the file ",name," does not exist",!
 	quit

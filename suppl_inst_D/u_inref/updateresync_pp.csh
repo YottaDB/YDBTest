@@ -4,6 +4,9 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -33,7 +36,7 @@
 # A -> P : INST1 -> INST2
 # P -> Q : INST2 -> INST3
 #
-# The test copied database files from one instance to another. This leads to "%GTM-E-CRYPTKEYFETCHFAILED, Cannot obtain encryption key" error.
+# The test copied database files from one instance to another. This leads to "%YDB-E-CRYPTKEYFETCHFAILED, Cannot obtain encryption key" error.
 setenv test_encryption "NON_ENCRYPT" # Since database file is moved from INST2 to INST3
 # Since this test moves backup from P to Q, it is possible to have mixture of V4 and V5 format blocks on Q which will cause SSV4NOALLOW integ error.
 # So disable the random setting of mupip_set_version

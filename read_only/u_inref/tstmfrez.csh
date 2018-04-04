@@ -1,4 +1,16 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
 #Tests of mupip command "FREEZE" on a read_only database file
 echo ""
 echo "*** TSTMFREZ.CSH ***"
@@ -39,11 +51,11 @@ chmod 444 b.dat
 chmod 666 b.mjl
 echo mupip freeze -on "*"
 $MUPIP freeze -on "*" >& freeze2_on_all.outx
-$gtm_tst/com/check_error_exist.csh freeze2_on_all.outx "GTM-E-DBRDONLY"
+$gtm_tst/com/check_error_exist.csh freeze2_on_all.outx "YDB-E-DBRDONLY"
 mipcmanage
 echo mupip freeze -off "*"
 $MUPIP freeze -off "*" >& freeze2_off_all.outx
-$gtm_tst/com/check_error_exist.csh freeze2_off_all.outx "GTM-E-DBRDONLY"
+$gtm_tst/com/check_error_exist.csh freeze2_off_all.outx "YDB-E-DBRDONLY"
 mipcmanage
 $gtm_tst/com/dbcheck.csh
 
@@ -52,11 +64,11 @@ chmod 444 b.dat
 chmod 444 b.mjl
 echo mupip freeze -on "*"
 $MUPIP freeze -on "*" >& freeze3_on_all.outx
-$gtm_tst/com/check_error_exist.csh freeze3_on_all.outx "GTM-E-DBRDONLY"
+$gtm_tst/com/check_error_exist.csh freeze3_on_all.outx "YDB-E-DBRDONLY"
 mipcmanage
-echo mupip freeze -off "*" 
+echo mupip freeze -off "*"
 $MUPIP freeze -off "*" >& freeze3_off_all.outx
-$gtm_tst/com/check_error_exist.csh freeze3_off_all.outx "GTM-E-DBRDONLY"
+$gtm_tst/com/check_error_exist.csh freeze3_off_all.outx "YDB-E-DBRDONLY"
 mipcmanage
 $gtm_tst/com/dbcheck.csh
 

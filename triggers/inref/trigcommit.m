@@ -3,6 +3,9 @@
 ; Copyright (c) 2016 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -13,7 +16,7 @@
 trigcommit
 	do setup
 	do ^echoline
-	write "TCOMMIT inside trigger issues GTM-E-TRIGTCOMMIT",!
+	write "TCOMMIT inside trigger issues YDB-E-TRIGTCOMMIT",!
 	do ^echoline
 	set $etrap="do etr^trigcommit"
 	tstart ():serial

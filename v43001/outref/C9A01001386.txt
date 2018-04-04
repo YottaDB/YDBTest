@@ -21,16 +21,16 @@ DB file ##TEST_PATH##/online.dat backed up in file ##TEST_PATH##/online1/online.
 Transactions up to 0x0000000000000388 are backed up.
 ##ALLOW_OUTPUT SPANNING_REGIONS
 This should error:
-%GTM-E-FILEEXISTS, File ##TEST_PATH##/online1/online.dat already exists
+%YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/online.dat already exists
 
 MUPIP cannot start backup with above errors
 
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 This should error:
 
 
-%GTM-E-FILEEXISTS, File ##TEST_PATH##/online1/online.dat already exists
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/online.dat already exists
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 MUPIP cannot start backup with above errors
 This should REPLACE:
 BACKUP COMPLETED.
@@ -62,11 +62,11 @@ Total number of transactions backed up:  1029
 This should error:
 
 
-%GTM-E-FILEEXISTS, File ##TEST_PATH##/online1/a.dat already exists
-%GTM-E-FILEEXISTS, File ##TEST_PATH##/online1/b.dat already exists
-%GTM-E-FILEEXISTS, File ##TEST_PATH##/online1/c.dat already exists
-%GTM-E-FILEEXISTS, File ##TEST_PATH##/online1/online.dat already exists
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/a.dat already exists
+%YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/b.dat already exists
+%YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/c.dat already exists
+%YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/online.dat already exists
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 MUPIP cannot start backup with above errors
 This should REPLACE:
 BACKUP COMPLETED.
@@ -99,8 +99,8 @@ Transactions up to 0x0000000000000388 are backed up.
 Target exists and replace qualifier NOT specified
 
 
-%GTM-E-FILEEXISTS, File ##TEST_PATH##/online1/online.dat already exists
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/online.dat already exists
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 MUPIP cannot start backup with above errors
 Target exists and replace qualifier specified
 BACKUP COMPLETED.
@@ -119,9 +119,9 @@ Transactions up to 0x000000000000002A are backed up.
 Target exists and individual files specified. No replace qualifier
 
 
-%GTM-E-FILEEXISTS, File ##TEST_PATH##/online1/a.dat already exists
-%GTM-E-FILEEXISTS, File ##TEST_PATH##/online1/b.dat already exists
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/a.dat already exists
+%YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/b.dat already exists
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 MUPIP cannot start backup with above errors
 Target exists and individual files specified. replace qualifier specified
 BACKUP COMPLETED.
@@ -146,11 +146,11 @@ Transactions up to 0x0000000000000388 are backed up.
 Target exists, region is * and replace qualifier NOT specified
 
 
-%GTM-E-FILEEXISTS, File ##TEST_PATH##/online1/a.dat already exists
-%GTM-E-FILEEXISTS, File ##TEST_PATH##/online1/b.dat already exists
-%GTM-E-FILEEXISTS, File ##TEST_PATH##/online1/c.dat already exists
-%GTM-E-FILEEXISTS, File ##TEST_PATH##/online1/online.dat already exists
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/a.dat already exists
+%YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/b.dat already exists
+%YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/c.dat already exists
+%YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/online.dat already exists
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 MUPIP cannot start backup with above errors
 Target exists, region is * and replace qualifier specified
 BACKUP COMPLETED.
@@ -178,10 +178,10 @@ Transactions up to 0x000000000000002A are backed up.
 Target exists and is a combination of files/directories
 
 
-%GTM-E-FILEEXISTS, File ##TEST_PATH##/online1/a.dat already exists
-%GTM-E-FILEEXISTS, File ##TEST_PATH##/online1/b.dat already exists
-%GTM-E-FILEEXISTS, File ##TEST_PATH##/online1/c.dat already exists
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/a.dat already exists
+%YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/b.dat already exists
+%YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/c.dat already exists
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 MUPIP cannot start backup with above errors
 Target exists and is a combination of files/directories and replace qualifier specified
 BACKUP COMPLETED.
@@ -196,10 +196,10 @@ Transactions up to 0x000000000000002A are backed up.
 Target exists and duplicates in target list
 
 
-%GTM-E-FILEEXISTS, File ##TEST_PATH##/online1/a.dat already exists
-%GTM-E-FILEEXISTS, File ##TEST_PATH##/online1/a.dat already exists
-%GTM-E-FILEEXISTS, File ##TEST_PATH##/online1/a.dat already exists
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/a.dat already exists
+%YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/a.dat already exists
+%YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/a.dat already exists
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 Cannot backup database regions AREG and BREG to the same destination file ##TEST_PATH##/online1/a.dat
 Cannot backup database regions AREG and CREG to the same destination file ##TEST_PATH##/online1/a.dat
 Cannot backup database regions BREG and CREG to the same destination file ##TEST_PATH##/online1/a.dat
@@ -207,7 +207,7 @@ MUPIP cannot start backup with above errors
 Target does not exist and duplicates in target list
 
 
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 Cannot backup database regions AREG and BREG to the same destination file ##TEST_PATH##/online1/a.dat
 Cannot backup database regions AREG and CREG to the same destination file ##TEST_PATH##/online1/a.dat
 Cannot backup database regions BREG and CREG to the same destination file ##TEST_PATH##/online1/a.dat
@@ -215,7 +215,7 @@ MUPIP cannot start backup with above errors
 Target does not exist and duplicates in target list and replace qualifier specified
 
 
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 Cannot backup database regions AREG and BREG to the same destination file ##TEST_PATH##/online1/a.dat
 Cannot backup database regions AREG and CREG to the same destination file ##TEST_PATH##/online1/a.dat
 Cannot backup database regions BREG and CREG to the same destination file ##TEST_PATH##/online1/a.dat
@@ -223,7 +223,7 @@ MUPIP cannot start backup with above errors
 Target does not exist but path contains a very long directory name
 
 
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 Cannot backup database regions AREG and BREG to the same destination file ##TEST_PATH##/extremely_very_very_long_directory_name_for_testing/another_medium_sized_directory_name/online1/a.dat
 Cannot backup database regions AREG and CREG to the same destination file ##TEST_PATH##/extremely_very_very_long_directory_name_for_testing/another_medium_sized_directory_name/online1/a.dat
 Cannot backup database regions BREG and CREG to the same destination file ##TEST_PATH##/extremely_very_very_long_directory_name_for_testing/another_medium_sized_directory_name/online1/a.dat

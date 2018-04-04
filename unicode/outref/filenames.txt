@@ -658,7 +658,7 @@ unset echo
 ###################################################################
 ----------
 Error MUNOACTION seen in mjon.log as expected:
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ----------
 #- Set some globals.
 
@@ -1339,13 +1339,13 @@ GT.M MUPIP EXTRACT UTF-8
 #- mupip load using a filename with multi-byte characters.
 #	--> This should succeed.
 # mupip create - will give 'File exists' error for the existing database files... please ignore
-%GTM-E-DBOPNERR, Error opening database file ##TEST_PATH##/安办在.好
+%YDB-E-DBOPNERR, Error opening database file ##TEST_PATH##/安办在.好
 %SYSTEM-E-ENO17, File exists
-%GTM-E-DBOPNERR, Error opening database file ##TEST_PATH##/我能吞下玻璃而不伤身体.dat
+%YDB-E-DBOPNERR, Error opening database file ##TEST_PATH##/我能吞下玻璃而不伤身体.dat
 %SYSTEM-E-ENO17, File exists
 %GTM-I-DBFILECREATED, Database file ##TEST_PATH##/ＲＥＧＣ.dat created
 %GTM-I-DBFILECREATED, Database file ##TEST_PATH##/ＲＥＧＤＥＦＡＵＬＴ.dat created
-%GTM-E-DBOPNERR, Error opening database file ##TEST_PATH##/D我能吞下玻璃而不伤身体.dat
+%YDB-E-DBOPNERR, Error opening database file ##TEST_PATH##/D我能吞下玻璃而不伤身体.dat
 %SYSTEM-E-ENO17, File exists
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 # mupip load ｍｕｐｉｐｅｘｔ1.ext
@@ -1390,11 +1390,11 @@ Error ENO2 seen in freeze_err.log as expected:
 ----------
 ----------
 Error MUNOACTION seen in freeze_err.log as expected:
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ----------
 # cat freeze_err.log
 %GTM-I-REGFILENOTFOUND, Database file ＲＥＧＤＥＦＡＵＬＴ.dat corresponding to region DEFAULT cannot be found
-%GTM-E-NOREGION, REGION not found: DEFAULT
+%YDB-E-NOREGION, REGION not found: DEFAULT
 
 MUPIP cannot start freeze with above errors
 
@@ -1471,7 +1471,7 @@ Here in the jobbed off process
 GTM>
 ----------
 Error DIVZERO seen in ｊｏｂｏｆｆ.ｍｊｅ as expected:
-%GTM-E-DIVZERO, Attempt to divide by zero
+%YDB-E-DIVZERO, Attempt to divide by zero
 ----------
 ###################################################################
 #- Create a replication instance file 我能吞下玻璃而不伤身体.repl, with -name=我能吞
@@ -1584,6 +1584,6 @@ integ_star.out:No errors detected by integ.
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
 ##TEST_PATH##/freeze_err.log
-%GTM-E-NOREGION, REGION not found: DEFAULT
+%YDB-E-NOREGION, REGION not found: DEFAULT
 ##TEST_PATH##/mjon.log
-%GTM-E-NOREGION, REGION not found: 安办在
+%YDB-E-NOREGION, REGION not found: 安办在

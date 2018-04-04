@@ -181,19 +181,19 @@ Test zgetjpi should error out gracefully with incorrect item parameter
 
 GTM>
 Testing with incorrect item parameter null
-%GTM-E-BADJPIPARAM, null is not a legal parameter for $ZGETJPI()
+%YDB-E-BADJPIPARAM, null is not a legal parameter for $ZGETJPI()
 Testing with incorrect item parameter @
-%GTM-E-BADJPIPARAM, @ is not a legal parameter for $ZGETJPI()
+%YDB-E-BADJPIPARAM, @ is not a legal parameter for $ZGETJPI()
 Testing with incorrect item parameter a
-%GTM-E-BADJPIPARAM, a is not a legal parameter for $ZGETJPI()
+%YDB-E-BADJPIPARAM, a is not a legal parameter for $ZGETJPI()
 Testing with incorrect item parameter .afdas
-%GTM-E-BADJPIPARAM, .afdas is not a legal parameter for $ZGETJPI()
+%YDB-E-BADJPIPARAM, .afdas is not a legal parameter for $ZGETJPI()
 Testing with incorrect item parameter -0
-%GTM-E-BADJPIPARAM, -0 is not a legal parameter for $ZGETJPI()
+%YDB-E-BADJPIPARAM, -0 is not a legal parameter for $ZGETJPI()
 Testing with incorrect item parameter +999999999
-%GTM-E-BADJPIPARAM, +999999999 is not a legal parameter for $ZGETJPI()
+%YDB-E-BADJPIPARAM, +999999999 is not a legal parameter for $ZGETJPI()
 Testing with incorrect item parameter *
-%GTM-E-BADJPIPARAM, * is not a legal parameter for $ZGETJPI()
+%YDB-E-BADJPIPARAM, * is not a legal parameter for $ZGETJPI()
 Testing with correct item parameter ISPROCALIVE
 ##TEST_AWK[0-9][0-9]*
 Testing with correct item parameter CPUTIM
@@ -390,10 +390,10 @@ x="A"_$C(0)_$ZCH(191)_$C(19)_"5Wy"_$ZCH(145)_$C(19)_"5Wy"_$C(0,0)
 14
 y="^A(1.23456789012345678)"
 # Test a few invalid or non-canonical numeric subscripts
-STAT=viewygn2gds+26^viewygvn2gds,%GTM-E-NOCANONICNAME, Value is not a canonic name ("^A(1.23456789012345670)")
-STAT=viewygn2gds+27^viewygvn2gds,%GTM-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded
-STAT=viewygn2gds+28^viewygvn2gds,%GTM-E-NOCANONICNAME, Value is not a canonic name ("^A(1.2345678901234567890)")
-STAT=viewygn2gds+29^viewygvn2gds,%GTM-E-NOCANONICNAME, Value is not a canonic name ("^A(1E3abcd)")
+STAT=viewygn2gds+26^viewygvn2gds,%YDB-E-NOCANONICNAME, Value is not a canonic name ("^A(1.23456789012345670)")
+STAT=viewygn2gds+27^viewygvn2gds,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded
+STAT=viewygn2gds+28^viewygvn2gds,%YDB-E-NOCANONICNAME, Value is not a canonic name ("^A(1.2345678901234567890)")
+STAT=viewygn2gds+29^viewygvn2gds,%YDB-E-NOCANONICNAME, Value is not a canonic name ("^A(1E3abcd)")
 # Test that numeric subscripts inside double-quotes are treated as string subscripts
 x="A"_$C(0)_$ZCH(191)_$C(17,0,0)
 y="^A(1)"
@@ -425,10 +425,10 @@ x="A"_$C(0)_"¿"_$C(19)_"5Wy"_$C(145,19)_"5Wy"_$C(0,0)
 14
 y="^A(1.23456789012345678)"
 # Test a few invalid or non-canonical numeric subscripts
-STAT=viewygn2gds+26^viewygvn2gds,%GTM-E-NOCANONICNAME, Value is not a canonic name ("^A(1.23456789012345670)")
-STAT=viewygn2gds+27^viewygvn2gds,%GTM-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded
-STAT=viewygn2gds+28^viewygvn2gds,%GTM-E-NOCANONICNAME, Value is not a canonic name ("^A(1.2345678901234567890)")
-STAT=viewygn2gds+29^viewygvn2gds,%GTM-E-NOCANONICNAME, Value is not a canonic name ("^A(1E3abcd)")
+STAT=viewygn2gds+26^viewygvn2gds,%YDB-E-NOCANONICNAME, Value is not a canonic name ("^A(1.23456789012345670)")
+STAT=viewygn2gds+27^viewygvn2gds,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded
+STAT=viewygn2gds+28^viewygvn2gds,%YDB-E-NOCANONICNAME, Value is not a canonic name ("^A(1.2345678901234567890)")
+STAT=viewygn2gds+29^viewygvn2gds,%YDB-E-NOCANONICNAME, Value is not a canonic name ("^A(1E3abcd)")
 # Test that numeric subscripts inside double-quotes are treated as string subscripts
 x="A"_$C(0)_"¿"_$C(17,0,0)
 y="^A(1)"

@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -87,8 +90,8 @@ $gtm_tst/com/getoper.csh "$syslog_before1" "" syslog2.txt "" "encountered JNLFIL
 echo "# unfreeze and wait"
 $MUPIP replic -source -freeze=off >&! freeze_off.outx
 
-# GTM-E-NOJNLPOOL can occur if an argumentless rundown is done by some other test in this timeframe
-$grep -v 'GTM-E-NOJNLPOOL' freeze_off.outx
+# YDB-E-NOJNLPOOL can occur if an argumentless rundown is done by some other test in this timeframe
+$grep -v 'YDB-E-NOJNLPOOL' freeze_off.outx
 
 $gtm_tst/com/wait_for_proc_to_die.csh `cat rollback_pid.txt`
 

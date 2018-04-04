@@ -38,7 +38,7 @@ The trigger etrap#3# is doing S
 	$ZTDAta :0	$ZTVAlue:101
 	$ZTLEvel:1	$ZLevel:4	$TLevel:1
 	twork+7^twork	+1^etrap#3#	testetrap+5^merrorhandling
-%GTM-E-DIVZERO, Attempt to divide by zero
+%YDB-E-DIVZERO, Attempt to divide by zero
 		At M source location +1^etrap#3#
 
 GTM>
@@ -62,7 +62,7 @@ The trigger etrap#3# is doing S
 	twork+7^twork	+1^etrap#3#	divbyzeropass+5^merrorhandling
 PASS
 ###################################################################
-%GTM-E-SPOREOL, Either a space or an end-of-line was expected but not found
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
 %GTM-I-TEXT, in $gtm_trigger_etrap
 ###################################################################
 Show the default, installed and NEWed etraps
@@ -78,7 +78,7 @@ The trigger etrap#3# is doing S
 	$ZTDAta :1	$ZTOLdval:expect success	$ZTVAlue:0
 	$ZTLEvel:1	$ZLevel:4	$TLevel:1
 	twork+7^twork	+1^etrap#3#	newedetrap+9^merrorhandling
-150373210,+1^etrap#3#,%GTM-E-DIVZERO, Attempt to divide by zero
+150373210,+1^etrap#3#,%YDB-E-DIVZERO, Attempt to divide by zero
 HALT!
 ###################################################################
 Change etrap in the trigger
@@ -94,7 +94,7 @@ The trigger etrap#5# is doing S
 	$ZTDAta :0	$ZTVAlue:43008
 	$ZTLEvel:1	$ZLevel:4	$TLevel:1
 	twork+7^twork	+1^etrap#5#	changeetrap+6^merrorhandling
-150373210,+1^etrap#5#,%GTM-E-DIVZERO, Attempt to divide by zero
+150373210,+1^etrap#5#,%YDB-E-DIVZERO, Attempt to divide by zero
 zgoto breaks the trigger update
 ^etrap("xecutetrap")=43008
 ###################################################################
@@ -128,7 +128,7 @@ The trigger etrap#3# is doing S
      ecode     ,M9,Z150373210,
      place     +1^etrap#3#
      mcode      do ^twork write $ZTVAlue/0
-150381666,dispatch+1^eHandle,%GTM-E-NOZTRAPINTRIG, Use of $ZTRAP in a database trigger environment ($ZTLEVEL greater than 0) is not supported
+150381666,dispatch+1^eHandle,%YDB-E-NOZTRAPINTRIG, Use of $ZTRAP in a database trigger environment ($ZTLEVEL greater than 0) is not supported
 ,M9,Z150373210,Z150381666,
 ###################################################################
 Error handling with broken compile
@@ -143,7 +143,7 @@ Error handling with broken compile
      ecode     ,M39,Z150373866,
      place     +1^etrap#6#
      mcode      xecute "set 1=1"
-150381666,dispatch+1^eHandle,%GTM-E-NOZTRAPINTRIG, Use of $ZTRAP in a database trigger environment ($ZTLEVEL greater than 0) is not supported
+150381666,dispatch+1^eHandle,%YDB-E-NOZTRAPINTRIG, Use of $ZTRAP in a database trigger environment ($ZTLEVEL greater than 0) is not supported
 ,M39,Z150373866,Z150381666,
 ###################################################################
 Expect this to fail because gtm_trigger_etrap does not clear ECODE :'zshow "s" w !'
@@ -185,19 +185,19 @@ Value get set? 10
 Done
 ###################################################################
 Testing non existent labels and routines
-$ZSTATUS=150373978,+1^etrap#8#,%GTM-E-ZLINKFILE, Error while zlinking "nosuchrtn",%GTM-E-FILENOTFND, File nosuchrtn not found
+$ZSTATUS=150373978,+1^etrap#8#,%YDB-E-ZLINKFILE, Error while zlinking "nosuchrtn",%YDB-E-FILENOTFND, File nosuchrtn not found
 ##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
-$ZSTATUS=150373194,+1^etrap#9#,%GTM-E-LABELMISSING, Label referenced but not defined: XXX
+$ZSTATUS=150373194,+1^etrap#9#,%YDB-E-LABELMISSING, Label referenced but not defined: XXX
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
-$ZSTATUS=150373202,+1^etrap#9#,%GTM-E-LABELUNKNOWN, Label referenced but not defined
+$ZSTATUS=150373202,+1^etrap#9#,%YDB-E-LABELUNKNOWN, Label referenced but not defined
 ##ALLOW_OUTPUT HOST_ALL
 ###################################################################
 $zlevel=1 : $ztlevel=0
 $zlevel=2 : $ztlevel=1 : $reference=^CIF(1)
 $zlevel=3 : $ztlevel=2 : $reference=^CIF(2)
 $zlevel=2 : $ztlevel=1 : $reference=^CIF(2)
-$ecode=,M9,Z150373210,Z150373978,Z150379578, : $zstatus=150379578,+6^CIF#1#,%GTM-E-ERRWETRAP, Error while processing $ETRAP,-GTM-E-ZLINKFILE, Error while zlinking "TRIGBADREF",%GTM-E-FILENOTFND, File TRIGBADREF not found
+$ecode=,M9,Z150373210,Z150373978,Z150379578, : $zstatus=150379578,+6^CIF#1#,%YDB-E-ERRWETRAP, Error while processing $ETRAP,-YDB-E-ZLINKFILE, Error while zlinking "TRIGBADREF",%YDB-E-FILENOTFND, File TRIGBADREF not found
 ^CIF(1)=1
 ^CIF(2)=2
 ###################################################################
@@ -213,7 +213,7 @@ Added SET trigger on ^a named a#1
      ecode     ,Z150381666,
      place     +1^a#1#
      mcode      w 1/0,!
-150379578,+1^a#1#,%GTM-E-ERRWETRAP, Error while processing $ETRAP,-GTM-E-NOZTRAPINTRIG, Use of $ZTRAP in a database trigger environment ($ZTLEVEL greater than 0) is not supported
+150379578,+1^a#1#,%YDB-E-ERRWETRAP, Error while processing $ETRAP,-YDB-E-NOZTRAPINTRIG, Use of $ZTRAP in a database trigger environment ($ZTLEVEL greater than 0) is not supported
 ,Z150381666,Z150379578,
 Break everything such that the base etrap is called
 write "BASE HALT",! halt

@@ -34,11 +34,11 @@ No errors detected by integ.
 Case 4. Ensuring that backup needs both keys in configuration file to be restored
 ----------
 Error CRYPTKEYFETCHFAILED seen in mupip_restore1.out as expected:
-##TEST_AWK%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file mumps.dat.bak. .*
+##TEST_AWK%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file mumps.dat.bak. .*
 ----------
 ----------
 Error MUPRESTERR seen in mupip_restore1.out as expected:
-%GTM-E-MUPRESTERR, MUPIP restore aborted due to preceding errors
+%YDB-E-MUPRESTERR, MUPIP restore aborted due to preceding errors
 ----------
 
 ##SOURCE_PATH##/mupip
@@ -52,7 +52,7 @@ No errors detected by integ.
 Case 5. RESTORE cannot start while the database is being (re)encrypted
 ----------
 Error MUPRESTERR seen in mupip_restore.out as expected:
-%GTM-E-MUPRESTERR, MUPIP restore aborted due to preceding errors
+%YDB-E-MUPRESTERR, MUPIP restore aborted due to preceding errors
 ----------
 
 ##SOURCE_PATH##/mupip

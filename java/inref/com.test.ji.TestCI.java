@@ -97,7 +97,7 @@ public class TestCI {
 							error = true;
 							argValue = doubleValue + "";
 							argInit = J.genArgInit("x", "GTMDouble", argValue);
-							expValue = "150373506,(Call-In),%GTM-E-NUMOFLOW, Numeric overflow\n";
+							expValue = "150373506,(Call-In),%YDB-E-NUMOFLOW, Numeric overflow\n";
 						} else {
 							if (doubleValue < TestCommon.M_MIN) {
 								isZero = true;
@@ -444,9 +444,9 @@ public class TestCI {
 				"\twrite " + var2 + "\n",
 				"\tset a=1/0\n"};
 		final String[] errorTexts = new String[]{
-				"150373850,%s,%%GTM-E-LVUNDEF, Undefined local variable: " + var1 + "\n",
-				"150372994,%s,%%GTM-E-GVUNDEF, Global variable undefined: " + var2 + "\n",
-				"150373210,%s,%%GTM-E-DIVZERO, Attempt to divide by zero\n"};
+				"150373850,%s,%%YDB-E-LVUNDEF, Undefined local variable: " + var1 + "\n",
+				"150372994,%s,%%YDB-E-GVUNDEF, Global variable undefined: " + var2 + "\n",
+				"150373210,%s,%%YDB-E-DIVZERO, Attempt to divide by zero\n"};
 
 		int numOfErrorCases = errorCodes.length;
 
@@ -536,7 +536,7 @@ public class TestCI {
 
 						@Override
 						public String getJavaResponse() {
-							return "150373850," + name + "+1^" + "test4" + ",%GTM-E-LVUNDEF, Undefined local variable: " + args[0].name + "\n";
+							return "150373850," + name + "+1^" + "test4" + ",%YDB-E-LVUNDEF, Undefined local variable: " + args[0].name + "\n";
 						}
 					};
 				}
@@ -608,9 +608,9 @@ public class TestCI {
 							@Override
 							public String getJavaResponse() {
 								if (argNull)
-									return "GTM-E-JNI, Arg #1 to entryref '" + name + "' is null.\n";
+									return "YDB-E-JNI, Arg #1 to entryref '" + name + "' is null.\n";
 								else
-									return "GTM-E-JNI, Passing a null reference in the 'value' field of arg #1 to entryref '" + name + "'.\n";
+									return "YDB-E-JNI, Passing a null reference in the 'value' field of arg #1 to entryref '" + name + "'.\n";
 							}
 						};
 					}
@@ -717,13 +717,13 @@ public class TestCI {
 					public String getJavaResponse() {
 						if (retType1 == GTMType.VOID) {
 							if (retType2 != GTMType.VOID)
-								return "GTM-E-JNI, Expecting a return value from a void entryref '" + name + "'.\n";
+								return "YDB-E-JNI, Expecting a return value from a void entryref '" + name + "'.\n";
 						} else {
 							if (retType2 == GTMType.VOID)
-								return "GTM-E-JNI, Expecting void return from a non-void entryref '" + name + "'.\n";
+								return "YDB-E-JNI, Expecting void return from a non-void entryref '" + name + "'.\n";
 						}
 						if (retType1 != retType2)
-							return "GTM-E-JNI, Wrong return type for entryref '" + name + "': " +
+							return "YDB-E-JNI, Wrong return type for entryref '" + name + "': " +
 								ret1ErrorTypeWord + " expected but " + ret2ErrorTypeWord + " found.\n";
 						return "";
 					}
@@ -819,14 +819,14 @@ public class TestCI {
 							{
 								if ((argType1 == GTMType.GTM_STRING) || (argType1 == GTMType.JAVA_STRING)) {
 									if ((argType2 != GTMType.GTM_STRING) && (argType2 != GTMType.JAVA_STRING))
-										return "GTM-E-JNI, Wrong type used for arg #1 to entryref '" + name +
+										return "YDB-E-JNI, Wrong type used for arg #1 to entryref '" + name +
 											"': GTMString or String expected but " + GTMType.JAVA_ARG_TYPE_NAMES[finalArgIndex2] + " found.\n";
 								} else if ((argType1 == GTMType.GTM_BYTE_ARRAY) || (argType1 == GTMType.JAVA_BYTE_ARRAY)) {
 									if ((argType2 != GTMType.GTM_BYTE_ARRAY) && (argType2 != GTMType.JAVA_BYTE_ARRAY))
-										return "GTM-E-JNI, Wrong type used for arg #1 to entryref '" + name +
+										return "YDB-E-JNI, Wrong type used for arg #1 to entryref '" + name +
 											"': GTMByteArray or byte[] expected but " + GTMType.JAVA_ARG_TYPE_NAMES[finalArgIndex2] + " found.\n";
 								} else
-									return "GTM-E-JNI, Wrong type used for arg #1 to entryref '" + name + "': " +
+									return "YDB-E-JNI, Wrong type used for arg #1 to entryref '" + name + "': " +
 									GTMType.JAVA_ARG_TYPE_NAMES[finalArgIndex1] + " expected but " + GTMType.JAVA_ARG_TYPE_NAMES[finalArgIndex2] + " found.\n";
 							}
 							return "";
@@ -957,8 +957,8 @@ public class TestCI {
 				"\t\t\tabc += \"a\";\n" +
 				"\t\t\tGTMCI.doVoidJob(abc);\n" };
 		final String[] javaResponses = new String[]{
-			"150379666,(Call-In),%GTM-E-CINOENTRY, No entry specified for abc123 in the call-in table\n",
-			"GTM-E-JNI, Entryref exceeds 2048 characters.\n" };
+			"150379666,(Call-In),%YDB-E-CINOENTRY, No entry specified for abc123 in the call-in table\n",
+			"YDB-E-JNI, Entryref exceeds 2048 characters.\n" };
 
 		int numOfCases = javaCodes.length;
 
@@ -1040,7 +1040,7 @@ public class TestCI {
 				@Override
 				public String getJavaResponse() {
 					if (numOfTestArgs > 33)
-						return "GTM-E-JNI, Number of parameters to entryref '" + name + "' exceeds 32.\n";
+						return "YDB-E-JNI, Number of parameters to entryref '" + name + "' exceeds 32.\n";
 					else
 						return "";
 				}
@@ -1088,7 +1088,7 @@ public class TestCI {
 
 				@Override
 				public String getJavaResponse() {
-					return "150374474,(Call-In),%GTM-E-ACTLSTTOOLONG, More actual parameters than formal parameters: lbl0\n";
+					return "150374474,(Call-In),%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: lbl0\n";
 				}
 			}
 		};
@@ -1134,7 +1134,7 @@ public class TestCI {
 
 				@Override
 				public String getJavaResponse() {
-					return "150373850,lbl0+1^test14,%GTM-E-LVUNDEF, Undefined local variable: " + args[numOfFormals - 1].name + "\n";
+					return "150373850,lbl0+1^test14,%YDB-E-LVUNDEF, Undefined local variable: " + args[numOfFormals - 1].name + "\n";
 				}
 			}
 		};
@@ -1182,11 +1182,11 @@ public class TestCI {
 				@Override
 				public String getJavaResponse() {
 					if (type == GTMType.JAVA_STRING)
-						return "GTM-E-JNI, Value of arg #1 to entryref '" + name + "' exceeds the capacity of M variables.\n";
+						return "YDB-E-JNI, Value of arg #1 to entryref '" + name + "' exceeds the capacity of M variables.\n";
 					else if (type == GTMType.JAVA_BYTE_ARRAY)
-						return "GTM-E-JNI, Length of arg #1 to entryref '" + name + "' exceeds the capacity of M variables.\n";
+						return "YDB-E-JNI, Length of arg #1 to entryref '" + name + "' exceeds the capacity of M variables.\n";
 					else
-						return "GTM-E-JNI, Length of 'value' field in arg #1 to entryref '" + name + "' exceeds the capacity of M variables.\n";
+						return "YDB-E-JNI, Length of 'value' field in arg #1 to entryref '" + name + "' exceeds the capacity of M variables.\n";
 
 				}
 			}
@@ -1237,7 +1237,7 @@ public class TestCI {
 
 				@Override
 				public String getJavaResponse() {
-					return "GTM-E-JNI, Invalid expected type for arg #1 to entryref '" + name + "'.\n";
+					return "YDB-E-JNI, Invalid expected type for arg #1 to entryref '" + name + "'.\n";
 				}
 
 				@Override
@@ -1295,7 +1295,7 @@ public class TestCI {
 				public String getJavaResponse() {
 					return	"%GTM-I-EXTSRCLIN, \tlbl0\t:void lbl0^test17(I:" + invalidType + ")\n" +
 							"%GTM-I-EXTSRCLOC, \t\tAt column xx, line 1, source module ./Test17.ci\n" +
-							"150379658,(Call-In),%GTM-E-CIUNTYPE, Unknown parameter type encountered\n";
+							"150379658,(Call-In),%YDB-E-CIUNTYPE, Unknown parameter type encountered\n";
 				}
 
 				@Override
@@ -1779,9 +1779,9 @@ public class TestCI {
 				@Override
 				public String getJavaResponse() {
 					if (codeIndex == 0)
-						return "150373978,(Call-In),%GTM-E-ZLINKFILE, Error while zlinking \"abc\",%GTM-E-FILENOTFND, File abc not found\n";
+						return "150373978,(Call-In),%YDB-E-ZLINKFILE, Error while zlinking \"abc\",%YDB-E-FILENOTFND, File abc not found\n";
 					else
-						return "150373122,(Call-In),%GTM-E-JOBLABOFF, Label and offset not found in created process\n";
+						return "150373122,(Call-In),%YDB-E-JOBLABOFF, Label and offset not found in created process\n";
 				}
 
 				@Override
@@ -1951,7 +1951,7 @@ public class TestCI {
 
 				@Override
 				public String getJavaResponse() {
-					return "150374554,(Call-In),%GTM-E-QUITARGREQD, Quit from an extrinsic must have an argument" + "\n";
+					return "150374554,(Call-In),%YDB-E-QUITARGREQD, Quit from an extrinsic must have an argument" + "\n";
 				}
 			};
 		}

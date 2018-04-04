@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -64,7 +64,7 @@ $GDE exit >&! tst_ver_gdeexit.out
 cp mumps.gld tst_ver_mumps.gld
 
 
-echo '# Expect GTM-E-NEEDTRIGUPGRD for all the below attempts (GTM-8116 : $text should silently exit)'
+echo '# Expect YDB-E-NEEDTRIGUPGRD for all the below attempts (GTM-8116 : $text should silently exit)'
 set verbose
 $gtm_exe/mumps -run %XCMD 'set ^a=1'
 $gtm_exe/mumps -run %XCMD 'set ^notrigger=1'
@@ -97,7 +97,7 @@ echo "# switch to prior ver and try setting ^a"
 source $gtm_tst/com/switch_gtm_version.csh $prior_ver pro
 cp prior_ver_mumps.gld mumps.gld
 $gtm_exe/mumps -run %XCMD 'set ^a=1' >&! prior_ver_upgraded_trig.out
-$gtm_tst/com/check_error_exist.csh prior_ver_upgraded_trig.out GTM-E-TRIGDEFBAD
+$gtm_tst/com/check_error_exist.csh prior_ver_upgraded_trig.out YDB-E-TRIGDEFBAD
 
 echo "# switch to current ver and delete all triggers"
 source $gtm_tst/com/switch_gtm_version.csh $tst_ver $tst_image

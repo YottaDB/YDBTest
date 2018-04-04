@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -175,7 +178,7 @@ EOF
 # verify that REQRUNDOWN message was printed in the GT.M prompt
 $grep REQRUNDOWN gtm${case}a.outx
 if ($status) then
-	echo "TEST-E-FAIL GTM-E-REQRUNDOWN not issued. Check gtm${case}a.outx."
+	echo "TEST-E-FAIL YDB-E-REQRUNDOWN not issued. Check gtm${case}a.outx."
 endif
 
 # remember the start time
@@ -210,7 +213,7 @@ EOF
 # verify that REQRUNDOWN message was NOT printed in the GT.M prompt
 $grep REQRUNDOWN gtm${case}b.outx
 if (! $status) then
-	echo "TEST-E-FAIL GTM-E-REQRUNDOWN issued. Check gtm${case}b.outx."
+	echo "TEST-E-FAIL YDB-E-REQRUNDOWN issued. Check gtm${case}b.outx."
 endif
 
 $echoline
@@ -287,7 +290,7 @@ EOF
 # verify that REQRECOV message was printed in the GT.M prompt
 $grep REQRECOV gtm${case}a.outx
 if ($status) then
-	echo "TEST-E-FAIL GTM-E-REQRECOV not issued. Check gtm${case}a.outx."
+	echo "TEST-E-FAIL YDB-E-REQRECOV not issued. Check gtm${case}a.outx."
 endif
 
 # remember the start time
@@ -322,7 +325,7 @@ EOF
 # verify that REQRECOV message was NOT printed in the GT.M prompt
 $grep REQRECOV gtm${case}b.outx
 if (! $status) then
-	echo "TEST-E-FAIL GTM-E-REQRECOV issued. Check gtm${case}b.outx."
+	echo "TEST-E-FAIL YDB-E-REQRECOV issued. Check gtm${case}b.outx."
 endif
 
 # reenable replication before using MSR framework

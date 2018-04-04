@@ -8,7 +8,7 @@ mumps.dat
 echo This should error out, since effectively, [NO]BEFORE_IMAGES is not specified
 This should error out, since effectively, [NO]BEFORE_IMAGES is not specified
 ##SOURCE_PATH##/mupip set -journal=on,before -file mumps.dat -journal=on
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: JOURNAL DISABLE OFF BEFORE_IMAGES BEFORE_IMAGES
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: JOURNAL DISABLE OFF BEFORE_IMAGES BEFORE_IMAGES
 echo 
 
 echo This should start journalling with BEFORE images
@@ -29,13 +29,13 @@ echo
 echo This should not error out
 This should not error out
 ##SOURCE_PATH##/mupip set -journal=alloc=a -file mumps.dat
-%GTM-E-CLIERR, Unrecognized value: a, Decimal number expected
+%YDB-E-CLIERR, Unrecognized value: a, Decimal number expected
 echo 
 
 echo This should error out
 This should error out
 ##SOURCE_PATH##/mumps -bad
-%GTM-E-CLIERR, Unrecognized option : BAD
+%YDB-E-CLIERR, Unrecognized option : BAD
 echo 
 
 ##SOURCE_PATH##/mupip set -journal=on,enable,before -file mumps.dat

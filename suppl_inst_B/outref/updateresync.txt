@@ -42,11 +42,11 @@ TEST-E-MULTISITE replic action failed.Pls. check msr_execute_##FILTERED##NO.csh 
 ==Executing MULTISITE_REPLIC 'RUN INST2 ##TEST_COM_PATH##/check_error_exist.csh ##FILTERED##START_##TIMESTAMP##.out UPDSYNC2MTINS NORECVPOOL'==
 ----------
 Error UPDSYNC2MTINS seen in ##FILTERED##START_##TIMESTAMP##.out as expected:
-%GTM-E-UPDSYNC2MTINS, Can only UPDATERESYNC with an empty instance file
+%YDB-E-UPDSYNC2MTINS, Can only UPDATERESYNC with an empty instance file
 ----------
 ----------
 Error NORECVPOOL seen in ##FILTERED##START_##TIMESTAMP##.out as expected:
-##TEST_AWK.GTM-E-NORECVPOOL, No receiver pool info found in the replication instance of .*/instance2/mumps.repl
+##TEST_AWK.YDB-E-NORECVPOOL, No receiver pool info found in the replication instance of .*/instance2/mumps.repl
 ----------
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST2 SRC=INST1 $MUPIP replic -source -shutdown -timeout=0 -instsecondary=__SRC_INSTNAME__  >&! passivesrc_shut_INST1INST2.out'==
 ==Executing MULTISITE_REPLIC 'STOP ALL_LINKS'==
@@ -57,7 +57,7 @@ Error NORECVPOOL seen in ##FILTERED##START_##TIMESTAMP##.out as expected:
 ==Executing MULTISITE_REPLIC 'RUN INST5 ##TEST_COM_PATH##/check_error_exist.csh ##FILTERED##RCVR_##TIMESTAMP##.log INSUNKNOWN'==
 ----------
 Error INSUNKNOWN seen in ##FILTERED##RCVR_##TIMESTAMP##.log as expected:
-%GTM-E-INSUNKNOWN, Supplementary Instance INSTANCE5 has no instance definition for non-Supplementary Instance INSTANCE1
+%YDB-E-INSUNKNOWN, Supplementary Instance INSTANCE5 has no instance definition for non-Supplementary Instance INSTANCE1
 ----------
 ==Executing MULTISITE_REPLIC 'RUN INST5 set msr_dont_chk_stat ; $MUPIP replic -receiver -shutdown -timeout=0 >&! updateproc_shut_INST1INST5.out'==
 ==Executing MULTISITE_REPLIC 'STOPSRC INST5 INST3'==

@@ -11,11 +11,11 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
 
-%GTM-E-CRYPTNOMM, ##TEST_PATH##/mumps.dat is an encrypted database. Cannot support MM access method.
+%YDB-E-CRYPTNOMM, ##TEST_PATH##/mumps.dat is an encrypted database. Cannot support MM access method.
 %GTM-W-WCWRNNOTCHG, Not all specified database files were changed
 Region DEFAULT : MUPIP REORG ENCRYPT started
 Region DEFAULT : MUPIP REORG -ENCRYPT cannot continue as access method is not BG
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 
 # Case 1B. Operation attempted with V4 blocks
 Files Created in ##TEST_PATH##:
@@ -24,48 +24,48 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
 $MUPIP set -encryptable -region "*"
-%GTM-E-MUREENCRYPTV4NOALLOW, Database (re)encryption supported only on fully upgraded V5 databases. ##TEST_PATH##/mumps.dat has V4 format blocks
+%YDB-E-MUREENCRYPTV4NOALLOW, Database (re)encryption supported only on fully upgraded V5 databases. ##TEST_PATH##/mumps.dat has V4 format blocks
 %GTM-W-WCWRNNOTCHG, Not all specified database files were changed
 $MUPIP reorg -encrypt=$good_key -region "*"
 Region DEFAULT : MUPIP REORG ENCRYPT started
-%GTM-E-MUREENCRYPTV4NOALLOW, Database (re)encryption supported only on fully upgraded V5 databases. ##TEST_PATH##/mumps.dat has V4 format blocks
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUREENCRYPTV4NOALLOW, Database (re)encryption supported only on fully upgraded V5 databases. ##TEST_PATH##/mumps.dat has V4 format blocks
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 $MUPIP set -encryptioncomplete -region "*"
-%GTM-E-MUREENCRYPTV4NOALLOW, Database (re)encryption supported only on fully upgraded V5 databases. ##TEST_PATH##/mumps.dat has V4 format blocks
+%YDB-E-MUREENCRYPTV4NOALLOW, Database (re)encryption supported only on fully upgraded V5 databases. ##TEST_PATH##/mumps.dat has V4 format blocks
 %GTM-W-WCWRNNOTCHG, Not all specified database files were changed
 unset verbose
 # Case 2. Specified key is not found in the configuration file.
-##TEST_AWK%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. Could not obtain the real path of the key .*
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##TEST_AWK%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. Could not obtain the real path of the key .*
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 
 # Case 3. Specified key corresponds to a different database.
-%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. Database file ##TEST_PATH##/mumps.dat missing in configuration file, does not exist, or is not associated with key ##TEST_PATH##/mumps_dat_key.other
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. Database file ##TEST_PATH##/mumps.dat missing in configuration file, does not exist, or is not associated with key ##TEST_PATH##/mumps_dat_key.other
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 
 # Case 4. Read-only database.
 Region DEFAULT : MUPIP REORG ENCRYPT started
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 
 ##SUSPEND_OUTPUT PRO
 # Case 5. Concurrent MUPIP REORG ENCRYPTs.
 Region DEFAULT : MUPIP REORG ENCRYPT started
 ##TEST_AWKRegion DEFAULT : MUPIP REORG -ENCRYPT processes cannot operate concurrently. Concurrent REORG's pid is [0-9]*
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 
 # Case 6. Attempt to mark encryption complete during an ongoing MUPIP REORG ENCRYPT.
 Cannot mark encryption complete on database file ##TEST_PATH##/mumps.dat due to an ongoing MUPIP REORG -ENCRYPT operation
 %GTM-W-WCWRNNOTCHG, Not all specified database files were changed
 
 # Case 7. Attempt mupip extract -format=bin while mupip reorg -encrypt is running
-%GTM-E-ENCRYPTCONFLT, MUPIP REORG -ENCRYPT and MUPIP EXTRACT -FORMAT=BIN cannot run concurrently - skipping MUPIP EXTRACT -FORMAT=BIN on region: DEFAULT, file: ##TEST_PATH##/mumps.dat
+%YDB-E-ENCRYPTCONFLT, MUPIP REORG -ENCRYPT and MUPIP EXTRACT -FORMAT=BIN cannot run concurrently - skipping MUPIP EXTRACT -FORMAT=BIN on region: DEFAULT, file: ##TEST_PATH##/mumps.dat
 
 # Signal the mupip reorg -encrypt process to exit
 
 # Case 8. Consecutive MUPIP REORG ENCRYPTs without marking encryption complete in between.
 Region DEFAULT : MUPIP REORG ENCRYPT started
 Region DEFAULT : A previous MUPIP REORG -ENCRYPT has finished, but (re)encryption has not been marked complete. Run MUPIP SET -ENCRYPTIONCOMPLETE to do so
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 
 Database file ##TEST_PATH##/mumps.dat now has encryption marked complete
 
@@ -76,11 +76,11 @@ Database file ##TEST_PATH##/mumps.dat is being (re)encrypted and must stay encry
 # Case 10. Attempt to resume (re)encryption with a different key.
 Region DEFAULT : MUPIP REORG ENCRYPT started
 Region DEFAULT : MUPIP REORG -ENCRYPT process was previously started with a different hash. Use the same hash to complete the operation.
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 
 # Case 11. Attempt to resume (re)encryption with the key gone.
-##TEST_AWK%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. Could not obtain the real path of the key .*
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##TEST_AWK%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. Could not obtain the real path of the key .*
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 
 Region DEFAULT : MUPIP REORG ENCRYPT started
 Region DEFAULT : Database is now FULLY ENCRYPTED with the following key: ##TEST_PATH##/mumps_dat_key
@@ -88,15 +88,15 @@ Region DEFAULT : MUPIP REORG ENCRYPT finished
 
 ##ALLOW_OUTPUT PRO
 # Case 12. Incompatible REORG qualifiers.
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT ENCRYPT UPGRADE DOWNGRADE
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DOWNGRADE EXCLUDE ENCRYPT
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DOWNGRADE EXCLUDE FILL_FACTOR ENCRYPT
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DOWNGRADE EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR ENCRYPT
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DOWNGRADE EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR RESUME ENCRYPT
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DOWNGRADE EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR RESUME SELECT ENCRYPT
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DOWNGRADE EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR RESUME SELECT TRUNCATE ENCRYPT
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT ENCRYPT UPGRADE
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DOWNGRADE EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR RESUME SELECT TRUNCATE UPGRADE USER_DEFINED_REORG ENCRYPT
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT ENCRYPT UPGRADE DOWNGRADE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DOWNGRADE EXCLUDE ENCRYPT
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DOWNGRADE EXCLUDE FILL_FACTOR ENCRYPT
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DOWNGRADE EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR ENCRYPT
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DOWNGRADE EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR RESUME ENCRYPT
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DOWNGRADE EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR RESUME SELECT ENCRYPT
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DOWNGRADE EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR RESUME SELECT TRUNCATE ENCRYPT
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT ENCRYPT UPGRADE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DOWNGRADE EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR RESUME SELECT TRUNCATE UPGRADE USER_DEFINED_REORG ENCRYPT
 
 ##SUSPEND_OUTPUT HOST_AIX_RS6000 PRO DBG
 # Case 13. Attempt to downgrade a partially (re)encrypted database.
@@ -111,8 +111,8 @@ You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
 %GTM-I-TEXT, Mupip downgrade started
-%GTM-E-TEXT, Database is being (re)encrypted
-%GTM-E-MUNODWNGRD, Database not downgraded because of preceding errors
+%YDB-E-TEXT, Database is being (re)encrypted
+%YDB-E-MUNODWNGRD, Database not downgraded because of preceding errors
 
 ##ALLOW_OUTPUT HOST_AIX_RS6000 PRO DBG
 ##SOURCE_PATH##/mupip

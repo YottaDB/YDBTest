@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -43,7 +43,7 @@ GDE_EOF
 $MUPIP create
 $MUPIP set -replication=on -reg "*"
 
-echo "# The below update should error out with GTM-E-REPLINSTNOSHM"
+echo "# The below update should error out with YDB-E-REPLINSTNOSHM"
 $GTM << GTM_EOF >&! gtm_updates.outx
 set ^other=1
 GTM_EOF
@@ -87,7 +87,7 @@ unsetenv gtm_test_repl_skipsrcchkhlth
 
 echo "# The source server should error out with REPLINSTMISMTCH though the name of replication instance file is the same"
 echo "# Check if the error message prints the shmid of the old mumps.repl correctly"
-$gtm_tst/com/check_error_exist.csh SRC_${start_time2}.log REPLINSTMISMTCH GTM-E-DBNOREGION | sed 's/jnlpool shmid = '$old_shmid'/jnlpool shmid = ##OLD_SHMID##/' | sed 's/jnlpool shmid = [0-9][0-9]*/jnlpool shmid = ##NEW_SHMID##/'
+$gtm_tst/com/check_error_exist.csh SRC_${start_time2}.log REPLINSTMISMTCH YDB-E-DBNOREGION | sed 's/jnlpool shmid = '$old_shmid'/jnlpool shmid = ##OLD_SHMID##/' | sed 's/jnlpool shmid = [0-9][0-9]*/jnlpool shmid = ##NEW_SHMID##/'
 
 echo "# The below should error out with NOJNLPOOL error because source server startup failed"
 $GTM << GTM_EOF

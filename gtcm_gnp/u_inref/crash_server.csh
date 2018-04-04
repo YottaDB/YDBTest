@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2002, 2013 Fidelity Information Services, Inc	#
+# Copyright 2002, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -17,7 +20,7 @@ source $gtm_tst/com/dbcreate.csh . 4
 echo "Start a GT.M client and crash one of the servers (the one on $tst_remote_host_2)"
 $gtm_exe/mumps -run long </dev/null >& long.log
 
-$gtm_tst/com/check_error_exist.csh long.log "GTM-E-GVPUTFAIL" "GTM-W-NOTPRINCIO"
+$gtm_tst/com/check_error_exist.csh long.log "YDB-E-GVPUTFAIL" "GTM-W-NOTPRINCIO"
 echo "Re-start a server (on $tst_remote_host_2)"
 setenv start_time `date +%H_%M_%S`
 setenv portno_gtcm `$rsh $tst_remote_host_2  "source $gtm_tst/com/remote_getenv.csh $SEC_DIR_GTCM_2 ;cd $SEC_DIR_GTCM_2;source $gtm_tst/com/portno_acquire.csh"`

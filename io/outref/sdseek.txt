@@ -20,11 +20,11 @@ x= This output written after a use:REWIND on a zero length file $device= 0 $zkey
 ** then do a read to show value of $zkey and $display
 
 x=  $device= 1,Device detected EOF $zkey= 0
-STAT=mseek+34^mseek,%GTM-E-SDSEEKERR, Sequential device seek error - SEEK value 5b invalid.
-STAT=mseek+38^mseek,%GTM-E-SDSEEKERR, Sequential device seek error - SEEK value - 5 invalid.
-STAT=mseek+40^mseek,%GTM-E-SDSEEKERR, Sequential device seek error - SEEK value 9999999999999999999 invalid.
-STAT=mseek+42^mseek,%GTM-E-SDSEEKERR, Sequential device seek error - SEEK value 5k invalid.
-STAT=mseek+44^mseek,%GTM-E-SDSEEKERR, Sequential device seek error - SEEK value "" invalid.
+STAT=mseek+34^mseek,%YDB-E-SDSEEKERR, Sequential device seek error - SEEK value 5b invalid.
+STAT=mseek+38^mseek,%YDB-E-SDSEEKERR, Sequential device seek error - SEEK value - 5 invalid.
+STAT=mseek+40^mseek,%YDB-E-SDSEEKERR, Sequential device seek error - SEEK value 9999999999999999999 invalid.
+STAT=mseek+42^mseek,%YDB-E-SDSEEKERR, Sequential device seek error - SEEK value 5k invalid.
+STAT=mseek+44^mseek,%YDB-E-SDSEEKERR, Sequential device seek error - SEEK value "" invalid.
 
 ** write line 1001 at end to test relative SEEK=-60 after a write
 
@@ -680,7 +680,7 @@ x= ԞՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 42
 zshow "d" output for useek16withbom:
 useek16withbom OPEN RMS REC=32764 ICHSET=M OCHSET=M 
 
-x= STAT=results+4^utfseek,%GTM-E-BADCHAR, $ZCHAR(254,255) is not a valid character in the UTF-8 encoding form
+x= STAT=results+4^utfseek,%YDB-E-BADCHAR, $ZCHAR(254,255) is not a valid character in the UTF-8 encoding form
 
 ** close nodestroy then reopen ICHSET="UTF-16":OCHSET="UTF-16BE":append:seek="-52" to read last line
 
@@ -703,7 +703,7 @@ x= This is some text in M character set at the end of the file $device= 0 $zkey=
 zshow "d" output for useek16withbom:
 useek16withbom OPEN RMS 
 
-STAT=utfseek+387^utfseek,%GTM-E-BADCHAR, $ZCHAR(254) is not a valid character in the UTF-8 encoding form
+STAT=utfseek+387^utfseek,%YDB-E-BADCHAR, $ZCHAR(254) is not a valid character in the UTF-8 encoding form
 
 ** close nodestroy then reopen append and write savex in UTF-8 mode to end of file
 
@@ -719,7 +719,7 @@ x= ԞՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 4309
 zshow "d" output for useek16withbom:
 useek16withbom OPEN RMS ICHSET=UTF-16BE OCHSET=UTF-16BE 
 
-STAT=utfseek+404^utfseek,%GTM-E-BADCHAR, $ZCHAR(10) is not a valid character in the UTF-16BE encoding form
+STAT=utfseek+404^utfseek,%YDB-E-BADCHAR, $ZCHAR(10) is not a valid character in the UTF-16BE encoding form
 
 ** rewind file and read first line again in UTF-16 chset
 x= ԞՇՈՉՊՋՌՍՎՏՇՈՉՊՋՌՍՎՏ $device= 0 $zkey= 42

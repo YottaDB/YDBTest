@@ -1,3 +1,14 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 setpiece	; Test of Set command with the $PIECE function
 	New
 	Do begin^header($TEXT(+0))
@@ -38,10 +49,10 @@ setpiece	; Test of Set command with the $PIECE function
 	Set $ZTRAP="Set $ZTRAP=""""  Goto trap"
 	Set $PIECE(st,"-",1048580)="HELP"
 	Set errcnt=errcnt+1
-	Write "** FAIL - $ZTRAP should have bypassed this on a %GTM-E-MAXSTRLEN error",!
+	Write "** FAIL - $ZTRAP should have bypassed this on a %YDB-E-MAXSTRLEN error",!
 	Goto end
 
-trap	Do ^examine($PIECE($ZSTATUS,",",3),"%GTM-E-MAXSTRLEN","$ZTRAP")
+trap	Do ^examine($PIECE($ZSTATUS,",",3),"%YDB-E-MAXSTRLEN","$ZTRAP")
 
 end	If errcnt=0 Write "   PASS",!
 	Do end^header($TEXT(+0))

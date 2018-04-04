@@ -6,83 +6,83 @@ mumps.dat
 ;trigger name: a#1 (region DEFAULT)  cycle: 1
 +^a(acn=*) -commands=S -xecute="set ^a(acn,acn)=$ztval"
 ###################################################################
-Test 1: #LABEL incorrect. Expect GTM-E-TRIGDEFBAD
+Test 1: #LABEL incorrect. Expect YDB-E-TRIGDEFBAD
 ###################################################################
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-TRIGDEFBAD, Trigger initialization failed for global ^a. Error while processing ^#t("a","#LABEL"),%GTM-I-TEXT, #LABEL field is not ##FILTERED##
+%YDB-E-TRIGDEFBAD, Trigger initialization failed for global ^a. Error while processing ^#t("a","#LABEL"),%GTM-I-TEXT, #LABEL field is not ##FILTERED##
 
 
 ###################################################################
-Test 2:  #CYCLE missing. Expect GTM-E-TRIGDEFBAD
-###################################################################
-
-File  	##TEST_PATH##/mumps.dat
-Region	DEFAULT
-
-%GTM-E-TRIGDEFBAD, Trigger initialization failed for global ^a. Error while processing ^#t("a","#CYCLE"),%GTM-I-TEXT, #CYCLE field is missing
-
-
-###################################################################
-Test 3: #CYCLE = 0. Expect GTM-E-TRIGDEFBAD
+Test 2:  #CYCLE missing. Expect YDB-E-TRIGDEFBAD
 ###################################################################
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-TRIGDEFBAD, Trigger initialization failed for global ^a. Error while processing ^#t("a","#CYCLE"),%GTM-I-TEXT, #CYCLE field is negative
+%YDB-E-TRIGDEFBAD, Trigger initialization failed for global ^a. Error while processing ^#t("a","#CYCLE"),%GTM-I-TEXT, #CYCLE field is missing
 
 
 ###################################################################
-Test 4: #COUNT missing. Expect GTM-E-TRIGDEFBAD
-###################################################################
-
-File  	##TEST_PATH##/mumps.dat
-Region	DEFAULT
-
-%GTM-E-TRIGDEFBAD, Trigger initialization failed for global ^a. Error while processing ^#t("a","#COUNT"),%GTM-I-TEXT, #COUNT field is missing
-
-
-###################################################################
-Test 5: #COUNT = 0. Expect GTM-E-TRIGDEFBAD
+Test 3: #CYCLE = 0. Expect YDB-E-TRIGDEFBAD
 ###################################################################
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-TRIGDEFBAD, Trigger initialization failed for global ^a. Error while processing ^#t("a","#COUNT"),%GTM-I-TEXT, #COUNT field is negative
+%YDB-E-TRIGDEFBAD, Trigger initialization failed for global ^a. Error while processing ^#t("a","#CYCLE"),%GTM-I-TEXT, #CYCLE field is negative
 
 
 ###################################################################
-Test 6: #TRIGNAME missing. Expect GTM-E-TRIGDEFBAD
-###################################################################
-
-File  	##TEST_PATH##/mumps.dat
-Region	DEFAULT
-
-%GTM-E-TRIGDEFBAD, Trigger initialization failed for global ^a. Error while processing ^#t("a",1,"TRIGNAME")
-
-
-###################################################################
-Test 7: #CMD missing. Expect GTM-E-TRIGDEFBAD
+Test 4: #COUNT missing. Expect YDB-E-TRIGDEFBAD
 ###################################################################
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-TRIGDEFBAD, Trigger initialization failed for global ^a. Error while processing ^#t("a",1,"CMD")
+%YDB-E-TRIGDEFBAD, Trigger initialization failed for global ^a. Error while processing ^#t("a","#COUNT"),%GTM-I-TEXT, #COUNT field is missing
 
 
 ###################################################################
-Test 8: #CHSET missing. Expect GTM-E-TRIGDEFBAD
+Test 5: #COUNT = 0. Expect YDB-E-TRIGDEFBAD
 ###################################################################
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-TRIGDEFBAD, Trigger initialization failed for global ^a. Error while processing ^#t("a",1,"CHSET")
+%YDB-E-TRIGDEFBAD, Trigger initialization failed for global ^a. Error while processing ^#t("a","#COUNT"),%GTM-I-TEXT, #COUNT field is negative
+
+
+###################################################################
+Test 6: #TRIGNAME missing. Expect YDB-E-TRIGDEFBAD
+###################################################################
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+%YDB-E-TRIGDEFBAD, Trigger initialization failed for global ^a. Error while processing ^#t("a",1,"TRIGNAME")
+
+
+###################################################################
+Test 7: #CMD missing. Expect YDB-E-TRIGDEFBAD
+###################################################################
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+%YDB-E-TRIGDEFBAD, Trigger initialization failed for global ^a. Error while processing ^#t("a",1,"CMD")
+
+
+###################################################################
+Test 8: #CHSET missing. Expect YDB-E-TRIGDEFBAD
+###################################################################
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+%YDB-E-TRIGDEFBAD, Trigger initialization failed for global ^a. Error while processing ^#t("a",1,"CHSET")
 
 
 ##SUSPEND_OUTPUT DBG
@@ -95,7 +95,7 @@ Region	DEFAULT
 
 ----------
 Error TPFAIL seen in tpfail.log as expected:
-%GTM-E-TPFAIL, Transaction COMMIT failed.  Failure code: ZZZZ.
+%YDB-E-TPFAIL, Transaction COMMIT failed.  Failure code: ZZZZ.
 ----------
 
 

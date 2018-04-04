@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh
 #################################################################
 #								#
-#	Copyright 2013, 2014 Fidelity Information Services, Inc	#
+# Copyright 2013, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -29,7 +32,7 @@ $echoline
 
 # the following command enters mumps with $PATH undefined and then tries to open a pipe with the parse parameter
 # prior to gtm-7964 this caused a signal 11.  After this JI it issues the following:
-# %GTM-E-DEVOPENFAIL, Error opening PP
+# %YDB-E-DEVOPENFAIL, Error opening PP
 # %GTM-I-TEXT, $PATH undefined, Invalid command string: cat
 # The new information in the text message is that $PATH is undefined so parse_pipe() can't find cat
 # If the parse device parameter is omitted the underlying exec of a shell to execute the command

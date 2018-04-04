@@ -1,3 +1,14 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 tzintr	;
 	; Routine to test job interrupt functionality and its interaction with $ZTRAP
 	;
@@ -21,7 +32,7 @@ tzintr	;
 	; and the naked indicator and every zintr iterations causes a divide by zero exception that
 	; we handle and recover from.
 	set $Zint="set b=b+1 set d(b)=i_""_""_j_""_""_lasti_""_""_lastj set b(i)=$get(b(i))+1 set b(j)=$get(b(j))+1 if 1=1 set ^(0)=^b(0)+$ZINI+$test set xx=100/zintr set zintr=zintr-1 set c=c+1"
-	
+
 	kill ^a,^b,^cnt,a,b,c,d
 	set ztidxlst=""
 	set ^done=0
@@ -34,7 +45,7 @@ tzintr	;
 	write "Spawning interrupter job",!
 	if unix job @("intrdrv^tzintr($j,unix):(output=""intrdrv.mjo"":error=""intrdrv.mje"")")
 	else    job @("intrdrv^tzintr($j,unix):(nodetached:startup=""startup.com"":output=""intrdrv.mjo"":error=""intrdrv.mje"")")
-	write "waiting for job to set ^drvactive",! 
+	write "waiting for job to set ^drvactive",!
 	for wait=1:1:360 quit:^drvactive=1  hang 1
 	if '(wait<360) write "waiting for job to set ^drvactive timed out",!
 	set ^drvactive=2 ; let the child know that we are ready
@@ -67,7 +78,7 @@ tzintr	;
 	write "waiting for job to unset ^drvactive",!
 	for wait=1:1:360 quit:^drvactive=0  hang 1
 	if '(wait<360) write "waiting for job to unset ^drvactive timed out",!
-	
+
 	write !,"Shutdown complete",!
 	write !,"Stats: ",!,^a(0)," transactions were done",!,^cnt," interrupts were sent",!
 	write b," interrupt handlers were started or restarted",!,ztcnt," interrupts generated ztraps that were handled",!
@@ -119,7 +130,7 @@ intrdrv(pid,unix)
 	if '(wait<360) write "waiting for parent to set ^drvactive=2 timed out",!
 	write "Interrupt job beginning for process ",pid,!
 	if unix set cmd="$gtm_dist/mupip intr "_pid
-	
+
 	; Interrupt until we are requested to shutdown or we reach an outer limit of 100,000 interrupts
 	; which probably means we were orphaned and are just chewing up cpu time.
 	for x=1:1:100000 quit:(^done=1)  do
@@ -134,7 +145,7 @@ intrdrv(pid,unix)
 	write "Interrupt job ",pid," complete",!
 	quit
 
-slowdown quit:unix 
+slowdown quit:unix
 	; Spin some cycles so we don't bomb the process so hard it can't get anything done.
 	; don't need to do this on Unix. Normal process create takes enough time to
 	; keep us from saturating the target.
@@ -147,7 +158,7 @@ ztrprtn new $ZT set $ZTRAP="set $ZT="""" set ^drvactive=0 zshow ""*"" halt"
 	; line that was executing when it got broke.
 	set ztcnt=ztcnt+1
 	set ztidxlst(ztcnt)=i_","_j
-	if ($piece($zs,",",5)="-GTM-E-DIVZERO")&($zini=1) set zintr=zintrini quit  ; return back to $zinterrut
+	if ($piece($zs,",",5)="-YDB-E-DIVZERO")&($zini=1) set zintr=zintrini quit  ; return back to $zinterrut
 	;
 	; Either the ztrap was not a divide by zero we expect or we weren't in an interrupt
 	; which we also did not expect

@@ -1,7 +1,10 @@
 #! /usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2002, 2014 Fidelity Information Services, Inc	#
+# Copyright 2002, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -192,7 +195,7 @@ endif
 if ("UTF-8" == $gtmchset) then
 	set no_lines=`$grep "Error:  GLO format is not supported in UTF-8 mode" dse_glo.out | wc -l`
 else
-	set no_lines=`$grep -E "1 GLO records written.|DSE> %GTM-E-CANTBITMAP, Can't perform this operation on a bit map .block at a 200 hexadecimal boundary." dse_glo.out | wc -l`
+	set no_lines=`$grep -E "1 GLO records written.|DSE> %YDB-E-CANTBITMAP, Can't perform this operation on a bit map .block at a 200 hexadecimal boundary." dse_glo.out | wc -l`
 	mv dse_glo.out dse_glo.outx
 	$grep -v CANTBITMAP dse_glo.outx > dse_glo.out
 endif

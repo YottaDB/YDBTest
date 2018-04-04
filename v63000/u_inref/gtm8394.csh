@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -76,8 +76,8 @@ $gtm_tst/com/backup_dbjnl.csh bak "*.gld *.repl *.dat *.mjl*" cp nozip
 # this way later stages of this test dont get confused (every stage assumes no core files left over from previous stage).
 # The test framework will anyways catch these cores (from "*_coredir") and issue a test failure if they are not from "tcsh"
 
-# An out-of-memory pattern could be a GTM-F-MEMORY error OR a GTM-E-SYSCALL error from shmat.
-set oompattern = "GTM-F-MEMORY|%GTM-E-SYSCALL, Error received from system call shmat"
+# An out-of-memory pattern could be a GTM-F-MEMORY error OR a YDB-E-SYSCALL error from shmat.
+set oompattern = "GTM-F-MEMORY|%YDB-E-SYSCALL, Error received from system call shmat"
 
 echo ">>> Find one value of <limit vmemoryuse> that will cause a GTM-F-MEMORY error in the forward phase of rollback"
 # Phase 1 : Towards that first find out a value of <limit vmemoryuse> that causes rollback to succeed but half of it causes failure
@@ -85,9 +85,9 @@ echo "Phase 1" >>! rollback_filename_order.txt
 set mem = 32768  # start out with 32Mb as the vmemoryuse limit and use binary search to figure it out
 @ max = 0
 while (1)
-	# Since we are limiting vmemoryuse for the rollback, various GTM-E-xxx messages are possible.
+	# Since we are limiting vmemoryuse for the rollback, various YDB-E-xxx messages are possible.
 	# All we care about is no cores which the test framework will anyways check. So it is okay to redirect this to .outx
-	# instead of .out (that way test framework will not worry about the rollback output for "GTM-E-xxx"
+	# instead of .out (that way test framework will not worry about the rollback output for "YDB-E-xxx"
 	set file=rollback_1_${mem}
 	echo $file.outx >>! rollback_filename_order.txt
 	cp bak/* .
@@ -201,9 +201,9 @@ $gtm_tst/com/check_error_exist.csh rollback1.out "$oompattern" >>& check_error_r
 if ($status) then
 	echo "TEST-E-VERIFY : Out-of-memory error verification failed. See rollback1.out and check_error_rollback1.outx"
 endif
-# It is possible we optionally see "SYSTEM-E-ENO12", "GTM-E-MUNOACTION" and/or "SYSTEM-E-ENO11" messages
+# It is possible we optionally see "SYSTEM-E-ENO12", "YDB-E-MUNOACTION" and/or "SYSTEM-E-ENO11" messages
 # along with the "GTM-F-MEMORY message. If so filter those out as well to avoid the test framework from catching them.
-foreach message ("GTM-E-MUNOACTION" "SYSTEM-E-ENO12" "SYSTEM-E-ENO11")
+foreach message ("YDB-E-MUNOACTION" "SYSTEM-E-ENO12" "SYSTEM-E-ENO11")
 	$gtm_tst/com/check_error_exist.csh rollback1.out $message >>& check_error_rollback1.outx
 end
 echo ">> Move core file (from FATAL GTM-F-MEMORY) to avoid test framework from treating this as a test failure"
@@ -227,9 +227,9 @@ $gtm_tst/com/backup_dbjnl.csh bak2 "*.gld *.repl *.dat *.mjl*" cp nozip # Dont u
 
 echo ">>> Verify out-of-memory error in second rollback (logfile = rollback2.out)"
 $gtm_tst/com/check_error_exist.csh rollback2.out "$oompattern" >>& check_error_rollback2.outx
-# It is possible we optionally see "SYSTEM-E-ENO12", "GTM-E-MUNOACTION" and/or "SYSTEM-E-ENO11" messages
+# It is possible we optionally see "SYSTEM-E-ENO12", "YDB-E-MUNOACTION" and/or "SYSTEM-E-ENO11" messages
 # along with the "GTM-F-MEMORY message. If so filter those out as well to avoid the test framework from catching them.
-foreach message ("GTM-E-MUNOACTION" "SYSTEM-E-ENO12" "SYSTEM-E-ENO11")
+foreach message ("YDB-E-MUNOACTION" "SYSTEM-E-ENO12" "SYSTEM-E-ENO11")
 	$gtm_tst/com/check_error_exist.csh rollback2.out $message >>& check_error_rollback2.outx
 end
 echo ">> Move core file (from FATAL GTM-F-MEMORY) to avoid test framework from treating this as a test failure"

@@ -4,6 +4,9 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -66,7 +69,7 @@ $gtm_tst/com/endtp.csh >>&! endtp.out
 $echoline
 
 $gtm_tst/com/mupip_rollback.csh -online "*" >&! orlbk.outx
-$grep -E '(GTM-E-|JNLSUCCESS|ORLBKCMPLT)' orlbk.outx
+$grep -E '(YDB-E-|JNLSUCCESS|ORLBKCMPLT)' orlbk.outx
 
 # TODO do I need to check syslog?
 

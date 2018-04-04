@@ -34,11 +34,11 @@ Change the fileid of the mumps.mjl by doing a gzip followed by a gunzip
 
 
 ###################################################################
-Attempt to do journal activity by a new process should result in GTM-E-JNLOPNERR
+Attempt to do journal activity by a new process should result in YDB-E-JNLOPNERR
 ###################################################################
 
 GTM>
-%GTM-E-JNLOPNERR, Error opening journal file ##TEST_PATH##/mumps.mjl
+%YDB-E-JNLOPNERR, Error opening journal file ##TEST_PATH##/mumps.mjl
   for database ##TEST_PATH##/mumps.dat
 
 GTM>
@@ -49,7 +49,7 @@ Fix the situation by doing a MUPIP SET -JOURNAL that will cut the previous link 
 ###################################################################
 ----------
 Error JNLOPNERR seen in set_journal2.out as expected:
-%GTM-E-JNLOPNERR, Error opening journal file ##TEST_PATH##/mumps.mjl
+%YDB-E-JNLOPNERR, Error opening journal file ##TEST_PATH##/mumps.mjl
 ----------
 ----------
 Error PREVJNLLINKCUT seen in set_journal2.out as expected:

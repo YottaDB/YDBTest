@@ -1713,7 +1713,7 @@ BAD CHARACTER PROCESSING, NON-FIXED, FOLLOW, UTF-8
 **********************************
 
 Processing utf8_nobom_tail
-STAT=badcharfollow+11^badcharfollow,%GTM-E-BADCHAR, $ZCHAR(136) is not a valid character in the UTF-8 encoding form
+STAT=badcharfollow+11^badcharfollow,%YDB-E-BADCHAR, $ZCHAR(136) is not a valid character in the UTF-8 encoding form
 x=  length(x)= 0
 expect:
 $device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 136 $zb= 136
@@ -1732,7 +1732,7 @@ x= Շ length(x)= 1
 expect:
 $device= 0 $za= 0 $zeof= 0 $test= 0
 $device= 0 $za= 0 $zeof= 0 $test= 0
-STAT=badcharfollow+27^badcharfollow,%GTM-E-BADCHAR, $ZCHAR(213) is not a valid character in the UTF-8 encoding form
+STAT=badcharfollow+27^badcharfollow,%YDB-E-BADCHAR, $ZCHAR(213) is not a valid character in the UTF-8 encoding form
 x=  length(x)= 0
 expect:
 $device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 213 $zb= 213
@@ -1751,7 +1751,7 @@ x= 䠅䤅䨀 length(x)= 3
 expect:
 $device= 0 $za= 0 $zeof= 0 $test= 0
 $device= 0 $za= 0 $zeof= 0 $test= 0
-STAT=badcharfollow+43^badcharfollow,%GTM-E-BADCHAR, $ZCHAR(10) is not a valid character in the UTF-16BE encoding form
+STAT=badcharfollow+43^badcharfollow,%YDB-E-BADCHAR, $ZCHAR(10) is not a valid character in the UTF-16BE encoding form
 x=  length(x)= 0
 expect:
 $device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 10 $zb= 10
@@ -1766,7 +1766,7 @@ x= Շ length(x)= 1
 expect:
 $device= 0 $za= 0 $zeof= 0 $test= 0
 $device= 0 $za= 0 $zeof= 0 $test= 0
-STAT=badcharfollow+56^badcharfollow,%GTM-E-BADCHAR, $ZCHAR(5) is not a valid character in the UTF-16BE encoding form
+STAT=badcharfollow+56^badcharfollow,%YDB-E-BADCHAR, $ZCHAR(5) is not a valid character in the UTF-16BE encoding form
 x=  length(x)= 0
 expect:
 $device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 5 $zb= 5
@@ -1781,7 +1781,7 @@ BAD CHARACTER PROCESSING, NON-FIXED, NOFOLLOW, UTF-8
 **********************************
 
 Processing utf8_nobom_tail
-STAT=badcharfollow+69^badcharfollow,%GTM-E-BADCHAR, $ZCHAR(136) is not a valid character in the UTF-8 encoding form
+STAT=badcharfollow+69^badcharfollow,%YDB-E-BADCHAR, $ZCHAR(136) is not a valid character in the UTF-8 encoding form
 x=  length(x)= 0
 expect:
 $device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 136 $zb= 136
@@ -1796,7 +1796,7 @@ $device= 1,Device detected EOF $za= 9 $zeof= 1
 $device= 1,Device detected EOF $za= 9 $zeof= 1
 
 Processing utf8_nobom_head
-STAT=badcharfollow+81^badcharfollow,%GTM-E-BADCHAR, $ZCHAR(213) is not a valid character in the UTF-8 encoding form
+STAT=badcharfollow+81^badcharfollow,%YDB-E-BADCHAR, $ZCHAR(213) is not a valid character in the UTF-8 encoding form
 x= Շ length(x)= 1
 expect:
 $device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 213 $zb= 213
@@ -1811,7 +1811,7 @@ BAD CHARACTER PROCESSING, NON-FIXED, NOFOLLOW, UTF-16
 **********************************
 
 Processing utf16_nobom_tail
-STAT=badcharfollow+94^badcharfollow,%GTM-E-BADCHAR, $ZCHAR(10) is not a valid character in the UTF-16BE encoding form
+STAT=badcharfollow+94^badcharfollow,%YDB-E-BADCHAR, $ZCHAR(10) is not a valid character in the UTF-16BE encoding form
 x= 䠅䤅䨀 length(x)= 3
 expect:
 $device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 10 $zb= 10
@@ -1822,7 +1822,7 @@ $device= 1,Device detected EOF $za= 9 $zeof= 1
 $device= 1,Device detected EOF $za= 9 $zeof= 1
 
 Processing utf16_nobom_head
-STAT=badcharfollow+104^badcharfollow,%GTM-E-BADCHAR, $ZCHAR(5) is not a valid character in the UTF-16BE encoding form
+STAT=badcharfollow+104^badcharfollow,%YDB-E-BADCHAR, $ZCHAR(5) is not a valid character in the UTF-16BE encoding form
 x= Շ length(x)= 1
 expect:
 $device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 5 $zb= 5
@@ -1837,7 +1837,7 @@ BAD CHARACTER PROCESSING, FIXED, FOLLOW, UTF-8
 **********************************
 
 Processing utf8_nobom_tail
-STAT=badcharfollow+117^badcharfollow,%GTM-E-BADCHAR, $ZCHAR(136) is not a valid character in the UTF-8 encoding form
+STAT=badcharfollow+117^badcharfollow,%YDB-E-BADCHAR, $ZCHAR(136) is not a valid character in the UTF-8 encoding form
 x=  length(x)= 0
 expect:
 $device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 136 $zb= 136
@@ -1853,7 +1853,7 @@ $device= 1,Device detected EOF $za= 9 $zeof= 1
 $device= 1,Device detected EOF $za= 9 $zeof= 1
 
 Processing utf8_nobom_head
-STAT=badcharfollow+130^badcharfollow,%GTM-E-BADCHAR, $ZCHAR(213) is not a valid character in the UTF-8 encoding form
+STAT=badcharfollow+130^badcharfollow,%YDB-E-BADCHAR, $ZCHAR(213) is not a valid character in the UTF-8 encoding form
 x=  length(x)= 0
 expect:
 $device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 213 $zb= 213
@@ -1868,7 +1868,7 @@ BAD CHARACTER PROCESSING, FIXED, FOLLOW, UTF-16
 **********************************
 
 Processing utf16_nobom_tail
-STAT=badcharfollow+144^badcharfollow,%GTM-E-BADCHAR, $ZCHAR(10) is not a valid character in the UTF-16BE encoding form
+STAT=badcharfollow+144^badcharfollow,%YDB-E-BADCHAR, $ZCHAR(10) is not a valid character in the UTF-16BE encoding form
 x=  length(x)= 0
 expect:
 $device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 10 $zb= 10
@@ -1879,7 +1879,7 @@ $device= 1,Device detected EOF $za= 9 $zeof= 1
 $device= 1,Device detected EOF $za= 9 $zeof= 1
 
 Processing utf16_nobom_head
-STAT=badcharfollow+155^badcharfollow,%GTM-E-BADCHAR, $ZCHAR(5) is not a valid character in the UTF-16BE encoding form
+STAT=badcharfollow+155^badcharfollow,%YDB-E-BADCHAR, $ZCHAR(5) is not a valid character in the UTF-16BE encoding form
 x=  length(x)= 0
 expect:
 $device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 5 $zb= 5
@@ -1894,7 +1894,7 @@ BAD CHARACTER PROCESSING, FIXED, NOFOLLOW, UTF-8
 **********************************
 
 Processing utf8_nobom_tail
-STAT=badcharfollow+169^badcharfollow,%GTM-E-BADCHAR, $ZCHAR(136) is not a valid character in the UTF-8 encoding form
+STAT=badcharfollow+169^badcharfollow,%YDB-E-BADCHAR, $ZCHAR(136) is not a valid character in the UTF-8 encoding form
 x=  length(x)= 0
 expect:
 $device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 136 $zb= 136
@@ -1910,7 +1910,7 @@ $device= 1,Device detected EOF $za= 9 $zeof= 1
 $device= 1,Device detected EOF $za= 9 $zeof= 1
 
 In utf8_nobom_head
-STAT=badcharfollow+181^badcharfollow,%GTM-E-BADCHAR, $ZCHAR(213) is not a valid character in the UTF-8 encoding form
+STAT=badcharfollow+181^badcharfollow,%YDB-E-BADCHAR, $ZCHAR(213) is not a valid character in the UTF-8 encoding form
 x=  length(x)= 0
 expect:
 $device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 213 $zb= 213
@@ -1925,7 +1925,7 @@ BAD CHARACTER PROCESSING, FIXED, NOFOLLOW, UTF-16
 **********************************
 
 Processing utf16_nobom_tail
-STAT=badcharfollow+194^badcharfollow,%GTM-E-BADCHAR, $ZCHAR(10) is not a valid character in the UTF-16BE encoding form
+STAT=badcharfollow+194^badcharfollow,%YDB-E-BADCHAR, $ZCHAR(10) is not a valid character in the UTF-16BE encoding form
 x=  length(x)= 0
 expect:
 $device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 10 $zb= 10
@@ -1936,7 +1936,7 @@ $device= 1,Device detected EOF $za= 9 $zeof= 1
 $device= 1,Device detected EOF $za= 9 $zeof= 1
 
 In utf16_nobom_head
-STAT=badcharfollow+204^badcharfollow,%GTM-E-BADCHAR, $ZCHAR(5) is not a valid character in the UTF-16BE encoding form
+STAT=badcharfollow+204^badcharfollow,%YDB-E-BADCHAR, $ZCHAR(5) is not a valid character in the UTF-16BE encoding form
 x=  length(x)= 0
 expect:
 $device= 1,BADCHAR error raised on input $za= 9 $zeof= 0 $key= 5 $zb= 5

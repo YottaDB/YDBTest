@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -99,7 +99,7 @@ $MSR RUN INST7 '$gtm_exe/mumps -run %XCMD "zwrite ^?.E"'
 $MSR RUN INST6 '$MUPIP trigger -triggerfile=c.trg >& load_ctrig.out'
 $MSR RUN INST7 "$gtm_tst/com/wait_for_log.csh -log RCVR_${time_msr}.log -message REPLNOHASHTREC"
 $MSR RUN INST7 "set msr_dont_chk_stat ; $gtm_tst/com/check_error_exist.csh RCVR_${time_msr}.log REPLNOHASHTREC"
-$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-REPLNOHASHTREC
+$gtm_tst/com/knownerror.csh $msr_execute_last_out YDB-E-REPLNOHASHTREC
 echo "# The receiver would have exited with the above error. Manually shutdown the update process and passive server"
 $MSR RUN INST7 'set msr_dont_chk_stat ;$MUPIP replic -receiver -shutdown -timeout=0 >&! updateproc_shut.out'
 $MSR RUN INST7 '$MUPIP replic -source -shutdown -timeout=0 >&! passive_shut.out'

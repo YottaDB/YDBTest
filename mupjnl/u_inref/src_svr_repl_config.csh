@@ -4,6 +4,9 @@
 # Copyright (c) 2003-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -28,7 +31,7 @@ echo "Now try to start source server  which should error out"
 echo $MUPIP replic -source -start -buffsize='$tst_buffsize' -secondary="$tst_now_secondary":'$portno' -instsecondary=$gtm_test_cur_sec_name -log=SRC_LOG_FILE1
 $MUPIP replic -source -start -buffsize=$tst_buffsize -secondary="$tst_now_secondary":"$portno" -instsecondary=$gtm_test_cur_sec_name -log=SRC_LOG_FILE1
 sleep 5 #D9E10-002501 Apparent deadlock b/w source server parent, child and showbacklog commands
-$grep "GTM-E-REPLOFFJNLON" SRC_LOG_FILE1
+$grep "YDB-E-REPLOFFJNLON" SRC_LOG_FILE1
 #
 echo "----------------------------------------------------------------------"
 echo "Journal State : a.dat->OFF, b->OFF, Replic State: mumps->ON"
@@ -41,7 +44,7 @@ $MUPIP  set -replication=on -file mumps.dat
 echo "Now try to start source server  which should error out"
 echo $MUPIP replic -source -start -buffsize='$tst_buffsize' -secondary="$tst_now_secondary":'$portno' -instsecondary=$gtm_test_cur_sec_name -log=SRC_LOG_FILE2
 $MUPIP replic -source -start -buffsize=$tst_buffsize -secondary="$tst_now_secondary":"$portno" -instsecondary=$gtm_test_cur_sec_name -log=SRC_LOG_FILE2
-$grep "GTM-E-REPLOFFJNLON" SRC_LOG_FILE2
+$grep "YDB-E-REPLOFFJNLON" SRC_LOG_FILE2
 #
 echo "----------------------------------------------------------------------"
 echo "Journal State : a.dat->OFF, b->DISABLED, Replic State: mumps->ON"
@@ -55,7 +58,7 @@ echo "Now try to start source server  which should error out"
 echo $MUPIP replic -source -start -buffsize='$tst_buffsize' -secondary="$tst_now_secondary":'$portno' -instsecondary=$gtm_test_cur_sec_name -log=SRC_LOG_FILE3
 $MUPIP replic -source -start -buffsize=$tst_buffsize -secondary="$tst_now_secondary":"$portno" -instsecondary=$gtm_test_cur_sec_name -log=SRC_LOG_FILE3
 sleep 5 #D9E10-002501 Apparent deadlock b/w source server parent, child and showbacklog commands
-$grep "GTM-E-REPLOFFJNLON" SRC_LOG_FILE3
+$grep "YDB-E-REPLOFFJNLON" SRC_LOG_FILE3
 echo "----------------------------------------------------------------------"
 echo "Journal State : a.dat->DISABLED, b->OFF, Replic State: mumps->ON"
 echo mupip set -journal=disable -file a.dat
@@ -68,7 +71,7 @@ echo "Now try to start source server  which should error out"
 echo $MUPIP replic -source -start -buffsize='$tst_buffsize' -secondary="$tst_now_secondary":'$portno' -instsecondary=$gtm_test_cur_sec_name -log=SRC_LOG_FILE4
 $MUPIP replic -source -start -buffsize=$tst_buffsize -secondary="$tst_now_secondary":"$portno" -instsecondary=$gtm_test_cur_sec_name -log=SRC_LOG_FILE4
 sleep 5 #D9E10-002501 Apparent deadlock b/w source server parent, child and showbacklog commands
-$grep "GTM-E-REPLOFFJNLON" SRC_LOG_FILE4
+$grep "YDB-E-REPLOFFJNLON" SRC_LOG_FILE4
 echo "----------------------------------------------------------------------"
 echo "Journal State : a.dat->DISABLED, b->DISABLED, mumps->DISABLED"
 echo mupip set -journal=disable -file a.dat

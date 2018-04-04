@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -31,8 +31,8 @@ $MSR STARTSRC INST1 INST2 RP
 $MSR STARTRCV INST1 INST2 "updateresync -initialize"
 get_msrtime
 $MSR RUN INST2 "$msr_err_chk START_$time_msr.out UPDSYNC2MTINS NORECVPOOL"
-$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-UPDSYNC2MTINS
-$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-NORECVPOOL
+$gtm_tst/com/knownerror.csh $msr_execute_last_out YDB-E-UPDSYNC2MTINS
+$gtm_tst/com/knownerror.csh $msr_execute_last_out YDB-E-NORECVPOOL
 # the receiver will be shut down but the passive server will be alive. Manually stop it
 $MSR RUN RCV=INST2 SRC=INST1 '$MUPIP replic -source -shutdown -timeout=0 -instsecondary=__SRC_INSTNAME__  >&! passivesrc_shut_INST1INST2.out'
 $MSR STOP ALL_LINKS
@@ -45,7 +45,7 @@ get_msrtime
 $MSR RUN INST5 '$gtm_tst/com/wait_for_log.csh -log 'RCVR_$time_msr.log' -message INSUNKNOWN -duration 120 -waitcreation'
 $MSR RUN INST5 "$msr_err_chk RCVR_$time_msr.log INSUNKNOWN"
 # Receiver server would have exited with the above error. Manually shutdown update process
-$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-INSUNKNOWN
+$gtm_tst/com/knownerror.csh $msr_execute_last_out YDB-E-INSUNKNOWN
 $MSR RUN INST5 'set msr_dont_chk_stat ; $MUPIP replic -receiver -shutdown -timeout=0 >&! updateproc_shut_INST1INST5.out'
 $MSR STOPSRC INST5 INST3
 $MSR STOPSRC INST1 INST5

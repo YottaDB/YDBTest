@@ -16,16 +16,16 @@ Save database and journal files
 --------------------------------------------------------------
 mupip journal -show -forward  nonexist.mjl
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-JNLFILEOPNERR, Error opening journal file ##TEST_PATH##/nonexist.mjl
+%YDB-E-JNLFILEOPNERR, Error opening journal file ##TEST_PATH##/nonexist.mjl
 %SYSTEM-E-ENO2, No such file or directory
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 --------------------------------------------------------------
 mupip journal -recover -forward  nonexist.mjl
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-JNLFILEOPNERR, Error opening journal file ##TEST_PATH##/nonexist.mjl
+%YDB-E-JNLFILEOPNERR, Error opening journal file ##TEST_PATH##/nonexist.mjl
 %SYSTEM-E-ENO2, No such file or directory
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 --------------------------------------------------------------
 Journal State : OFF
@@ -33,8 +33,8 @@ mupip set -journal=enable,off,file=notexists.mjl -file mumps.dat
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
 mupip journal -recover -backward mumps.mjl
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-JNLSTATEOFF, ROLLBACK or RECOVER BACKWARD cannot proceed as database file ##TEST_PATH##/mumps.dat does not have journaling ENABLED and ON
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-JNLSTATEOFF, ROLLBACK or RECOVER BACKWARD cannot proceed as database file ##TEST_PATH##/mumps.dat does not have journaling ENABLED and ON
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 --------------------------------------------------------------
 Journal State : ON
@@ -43,8 +43,8 @@ mupip set -journal=enable,on,before,file=notexists.mjl -file mumps.dat
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 mupip journal -recover -backward mumps.mjl
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-JNLNMBKNOTPRCD, Journal file ##TEST_PATH##/mumps.mjl does not match the current journal file ##TEST_PATH##/notexists.mjl of database file ##TEST_PATH##/mumps.dat
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-JNLNMBKNOTPRCD, Journal file ##TEST_PATH##/mumps.mjl does not match the current journal file ##TEST_PATH##/notexists.mjl of database file ##TEST_PATH##/mumps.dat
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 --------------------------------------------------------------
 Delete the old database and create a new one
@@ -79,8 +79,8 @@ mupip set -journal=disable -file mumps.dat
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
 mupip journal -recover -back *
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-NOTALLJNLEN, Journaling disabled/off for all regions
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-NOTALLJNLEN, Journaling disabled/off for all regions
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 --------------------------------------------------------------
 Jouranl State : OFF and with * option
@@ -88,8 +88,8 @@ mupip set -journal=enable,off -file mumps.dat
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
 mupip journal -recover -back *
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-NOTALLJNLEN, Journaling disabled/off for all regions
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-NOTALLJNLEN, Journaling disabled/off for all regions
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 --------------------------------------------------------------
 Journal State : ON and with * option
@@ -113,8 +113,8 @@ mupip set -journal=enable,on,nobefore,file=newa.mjl -file mumps.dat
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 mupip journal -recover -back mumps.mjl
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-JNLNMBKNOTPRCD, Journal file ##TEST_PATH##/mumps.mjl does not match the current journal file ##TEST_PATH##/newa.mjl of database file ##TEST_PATH##/mumps.dat
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-JNLNMBKNOTPRCD, Journal file ##TEST_PATH##/mumps.mjl does not match the current journal file ##TEST_PATH##/newa.mjl of database file ##TEST_PATH##/mumps.dat
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 --------------------------------------------------------------
 Journal State: OFF and with nobefore image
@@ -124,8 +124,8 @@ mupip set -journal=enable,off,nobefore,file=newa.mjl -file mumps.dat
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
 mupip journal -recover -back mumps.mjl
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-JNLSTATEOFF, ROLLBACK or RECOVER BACKWARD cannot proceed as database file ##TEST_PATH##/mumps.dat does not have journaling ENABLED and ON
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-JNLSTATEOFF, ROLLBACK or RECOVER BACKWARD cannot proceed as database file ##TEST_PATH##/mumps.dat does not have journaling ENABLED and ON
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 --------------------------------------------------------------
 delete all database and journal files
@@ -280,8 +280,8 @@ mupip set -journal=enable,on,before,file=a_new.mjl -reg AREG
 %GTM-I-JNLSTATE, Journaling state for region AREG is now ON
 mupip journal -recover -back mumps.mjl,a.mjl
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-JNLNMBKNOTPRCD, Journal file ##TEST_PATH##/a.mjl does not match the current journal file ##TEST_PATH##/a_new.mjl of database file ##TEST_PATH##/a.dat
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-JNLNMBKNOTPRCD, Journal file ##TEST_PATH##/a.mjl does not match the current journal file ##TEST_PATH##/a_new.mjl of database file ##TEST_PATH##/a.dat
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 --------------------------------------------------------------
 mupip set -journal=enable,on,before,file=mupms_new.mjl -reg DEFAULT
@@ -289,8 +289,8 @@ mupip set -journal=enable,on,before,file=mupms_new.mjl -reg DEFAULT
 %GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 mupip journal -recover -back mumps.mjl,a.mjl
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-JNLNMBKNOTPRCD, Journal file ##TEST_PATH##/mumps.mjl does not match the current journal file ##TEST_PATH##/mumps_new.mjl of database file ##TEST_PATH##/mumps.dat
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-JNLNMBKNOTPRCD, Journal file ##TEST_PATH##/mumps.mjl does not match the current journal file ##TEST_PATH##/mumps_new.mjl of database file ##TEST_PATH##/mumps.dat
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 --------------------------------------------------------------
 End of test

@@ -4,6 +4,9 @@
 # Copyright (c) 2008-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -62,7 +65,7 @@ if ($crossendian_test) then
 	$MSR RUN SRC=$endianinst1 RCV=$endianinst2 '$gtm_tst/com/cp_remote_file.csh _REMOTEINFO___RCV_DIR__/mumps.repl __SRC_DIR__/mumps.repl' >&! transfer_remote_endian.out
 	$MSR STARTSRC $endianinst1 $endianinst2
 	get_msrtime
-	# Check for the presence of GTM-E-REPLINSTFMT and ENDIAN mismatch message
+	# Check for the presence of YDB-E-REPLINSTFMT and ENDIAN mismatch message
 	# Check excacly the right Expected and Found Endian, stored in $e1 and $e2 respectively
 	$MSR RUN $endianinst1 'set msr_dont_chk_stat ; '"$msr_err_chk START_$time_msr.out" 'E-REPLINSTFMT "Expected '$e1'. Found '$e2'" '$rollback_err''
 	if ($status) then
@@ -70,7 +73,7 @@ if ($crossendian_test) then
 		echo "TEST-E-REPLINSTFMT expected but not found. Crossendian test failed."
 		set error_status = 1
 	endif
-	# move the last msr_execute's output to outx since it will have message about presence of GTM-E-REPLINSTFMT
+	# move the last msr_execute's output to outx since it will have message about presence of YDB-E-REPLINSTFMT
 	mv $msr_execute_last_out ${msr_execute_last_out}x
 	# If gtm_custom_errors is set , we will se the same error in replication enabling commands too. So filter them out
 	unset filterjnlerror
@@ -117,7 +120,7 @@ if ($gtmplatform_test) then
 	$MSR RUN SRC=$platforminst1 RCV=$platforminst2 '$gtm_tst/com/cp_remote_file.csh _REMOTEINFO___RCV_DIR__/mumps.repl __SRC_DIR__/mumps.repl' >&! transfer_remote_platform.out
 	$MSR STARTSRC $platforminst1 $platforminst2
 	get_msrtime
-	# Check for the presence of GTM-E-REPLINSTFMT AND one of the ENDIAN or 32-64bit mismatch
+	# Check for the presence of YDB-E-REPLINSTFMT AND one of the ENDIAN or 32-64bit mismatch
 	# ENDIAN mismatch takes precedence over the 32-62bit mismatch. So check for both incase both of them varies
 	$MSR RUN $platforminst1 'set msr_dont_chk_stat ; '"$msr_err_chk START_$time_msr.out" 'E-REPLINSTFMT "Expected '$p1'-bit. Found '$p2'-bit|Expected '$e1'. Found '$e2'" '$rollback_err''
 	if ($status) then
@@ -125,7 +128,7 @@ if ($gtmplatform_test) then
 		echo "TEST-E-REPLINSTFMT expected but not found. Cross platform test failed."
 		set error_status = 1
 	endif
-	# move the last msr_execute's output to outx since it will have message about presence of GTM-E-REPLINSTFMT
+	# move the last msr_execute's output to outx since it will have message about presence of YDB-E-REPLINSTFMT
 	mv $msr_execute_last_out ${msr_execute_last_out}x
 	# If gtm_custom_errors is set , we will se the same error in replication enabling commands too. So filter them out
 	unset filterjnlerror

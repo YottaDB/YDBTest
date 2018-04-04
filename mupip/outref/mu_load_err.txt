@@ -10,27 +10,27 @@ mumps.dat
 #### mupip load with onerror=proceed####
 # Move a.dat and b.dat to .bak
 # ### 1. Testing Binary Format (no database file) ### #
-# 1a. Expect GTM-E-DBFILERR, SYSTEM-E-ENO2 and GTM-E-RECLOAD as a.dat and b.dat database files are not present
+# 1a. Expect YDB-E-DBFILERR, SYSTEM-E-ENO2 and YDB-E-RECLOAD as a.dat and b.dat database files are not present
 # load will continue for all keys in mumps.dat except when -onerror is stop or interactive
 
 Beginning LOAD at record number: 2
 
-%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
 %SYSTEM-E-ENO2, No such file or directory
-%GTM-E-RECLOAD, Error loading record number: 2
+%YDB-E-RECLOAD, Error loading record number: 2
 
-%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat
 %SYSTEM-E-ENO2, No such file or directory
-%GTM-E-RECLOAD, Error loading record number: 3
+%YDB-E-RECLOAD, Error loading record number: 3
 
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 LOAD TOTAL		Key Cnt: 3  Max Subsc Len: 8  Max Data Len: 2
 Last LOAD record number: 4
 ##ALLOW_OUTPUT SPANNING_REGIONS
 ##SUSPEND_OUTPUT NONSPANNING_REGIONS
-%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat
 %SYSTEM-E-ENO2, No such file or directory
-%GTM-E-CORRUPTNODE, Corrupt input in Record # 4, Key #1; resuming with next global node
+%YDB-E-CORRUPTNODE, Corrupt input in Record # 4, Key #1; resuming with next global node
 		Key: ^c("ten")
 		Value :
 "30"
@@ -39,31 +39,31 @@ LOAD TOTAL		Key Cnt: 2  Max Subsc Len: 8  Max Data Len: 2
 Last LOAD record number: 5
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
 
-# 1b. Expect GTM-E-LDBINFMT, as .zwr is not a valid binary format
+# 1b. Expect YDB-E-LDBINFMT, as .zwr is not a valid binary format
 ##SUSPEND_OUTPUT UNICODE_MODE
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:.. ZWR
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 1c. Expect GTM-E-LDBINFMT, as .go is not a valid binary format
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 1c. Expect YDB-E-LDBINFMT, as .go is not a valid binary format
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:..
-%GTM-E-LDBINFMT, Unrecognized header for load file
+%YDB-E-LDBINFMT, Unrecognized header for load file
 ##SUSPEND_OUTPUT NONUNICODE_MODE
 ##ALLOW_OUTPUT UNICODE_MODE
 GT.M MUPIP EXTRACT UTF-8
 ##FILTERED##..-...-....  ..:..:.. ZWR
-%GTM-E-LDBINFMT, Unrecognized header for load file
+%YDB-E-LDBINFMT, Unrecognized header for load file
 ##ALLOW_OUTPUT NONUNICODE_MODE
-# 1d. Expect GTM-E-LDBINFMT, as empty files do not contain any binary header
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 1e. Expect GTM-E-LDBINFMT, as random text is not a valid binary format
+# 1d. Expect YDB-E-LDBINFMT, as empty files do not contain any binary header
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 1e. Expect YDB-E-LDBINFMT, as random text is not a valid binary format
 this is
 a random
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 1f. Expect GTM-E-FILEOPENFAIL, as file doesn't exist
-%GTM-E-FILEOPENFAIL, Failed to open file tmp.nofile
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 1f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist
+%YDB-E-FILEOPENFAIL, Failed to open file tmp.nofile
 # ### 2. Testing ZWR Format (no database file) ### #
-# 2a. Expect GTM-E-DBFILERR, SYSTEM-E-ENO2 and GTM-E-RECLOAD as a.dat and b.dat database files are not present
+# 2a. Expect YDB-E-DBFILERR, SYSTEM-E-ENO2 and YDB-E-RECLOAD as a.dat and b.dat database files are not present
 # load will continue for all keys in mumps.dat except when -onerror is stop or interactive
 ##SUSPEND_OUTPUT NONUNICODE_MODE
 GT.M MUPIP EXTRACT UTF-8
@@ -74,190 +74,190 @@ GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
 
-%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
 %SYSTEM-E-ENO2, No such file or directory
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 3
+%YDB-E-RECLOAD, Error loading record number: 3
 
-%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
 %SYSTEM-E-ENO2, No such file or directory
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 4
+%YDB-E-RECLOAD, Error loading record number: 4
 
-%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
 %SYSTEM-E-ENO2, No such file or directory
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 5
+%YDB-E-RECLOAD, Error loading record number: 5
 
-%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
 %SYSTEM-E-ENO2, No such file or directory
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 6
+%YDB-E-RECLOAD, Error loading record number: 6
 
-%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat
 %SYSTEM-E-ENO2, No such file or directory
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 7
+%YDB-E-RECLOAD, Error loading record number: 7
 
-%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat
 %SYSTEM-E-ENO2, No such file or directory
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 8
+%YDB-E-RECLOAD, Error loading record number: 8
 
-%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat
 %SYSTEM-E-ENO2, No such file or directory
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 9
+%YDB-E-RECLOAD, Error loading record number: 9
 
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 LOAD TOTAL		Key Cnt: 3  Max Subsc Len: 8  Max Data Len: 2
 Last LOAD record number: 12
 ##ALLOW_OUTPUT SPANNING_REGIONS
 ##SUSPEND_OUTPUT NONSPANNING_REGIONS
-%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat
 %SYSTEM-E-ENO2, No such file or directory
 		Global variable : ^c("ten")
-%GTM-E-RECLOAD, Error loading record number: 10
+%YDB-E-RECLOAD, Error loading record number: 10
 
 LOAD TOTAL		Key Cnt: 2  Max Subsc Len: 6  Max Data Len: 1
 Last LOAD record number: 12
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
 
-# 2b. Expect GTM-E-LDBINFMT, as .bin is not a valid zwr format
-%GTM-E-LDBINFMT, Unrecognized header for load file
+# 2b. Expect YDB-E-LDBINFMT, as .bin is not a valid zwr format
+%YDB-E-LDBINFMT, Unrecognized header for load file
 ##SUSPEND_OUTPUT UNICODE_MODE
-# 2c. Expect GTM-E-LDBINFMT, as .go is not a valid zwr format
+# 2c. Expect YDB-E-LDBINFMT, as .go is not a valid zwr format
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:..
-%GTM-E-LDBINFMT, Unrecognized header for load file
+%YDB-E-LDBINFMT, Unrecognized header for load file
 ##ALLOW_OUTPUT UNICODE_MODE
-# 2d. Expect GTM-E-LDBINFMT, as empty files do not contain any zwr header
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 2e. Expect GTM-E-LDBINFMT, as random text is not a valid zwr format
+# 2d. Expect YDB-E-LDBINFMT, as empty files do not contain any zwr header
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 2e. Expect YDB-E-LDBINFMT, as random text is not a valid zwr format
 this is
 a random
 Beginning LOAD at record number: 3
 
-%GTM-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): text in this file
+%YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): text in this file
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 3
+%YDB-E-RECLOAD, Error loading record number: 3
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 Last LOAD record number: 0
 
-# 2f. Expect GTM-E-FILEOPENFAIL, as file doesn't exist
-%GTM-E-FILEOPENFAIL, Failed to open file tmp.nofile
+# 2f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist
+%YDB-E-FILEOPENFAIL, Failed to open file tmp.nofile
 ##SUSPEND_OUTPUT UNICODE_MODE
 # ### 3. Testing GO Format (no database file) ### #
-# 3a. Expect GTM-E-DBFILERR, SYSTEM-E-ENO2 and GTM-E-RECLOAD as a.dat and b.dat database files are not present
+# 3a. Expect YDB-E-DBFILERR, SYSTEM-E-ENO2 and YDB-E-RECLOAD as a.dat and b.dat database files are not present
 # load will continue for all keys in mumps.dat except when -onerror is stop or interactive
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:..
 Beginning LOAD at record number: 3
 
-%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
 %SYSTEM-E-ENO2, No such file or directory
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 3
+%YDB-E-RECLOAD, Error loading record number: 3
 
-%GTM-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): 1
+%YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): 1
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 4
+%YDB-E-RECLOAD, Error loading record number: 4
 
-%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
 %SYSTEM-E-ENO2, No such file or directory
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 5
+%YDB-E-RECLOAD, Error loading record number: 5
 
-%GTM-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): 2
+%YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): 2
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 6
+%YDB-E-RECLOAD, Error loading record number: 6
 
-%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
 %SYSTEM-E-ENO2, No such file or directory
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 7
+%YDB-E-RECLOAD, Error loading record number: 7
 
-%GTM-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): one
+%YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): one
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 8
+%YDB-E-RECLOAD, Error loading record number: 8
 
-%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
 %SYSTEM-E-ENO2, No such file or directory
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 9
+%YDB-E-RECLOAD, Error loading record number: 9
 
-%GTM-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): ten
+%YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): ten
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 10
+%YDB-E-RECLOAD, Error loading record number: 10
 
-%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat
 %SYSTEM-E-ENO2, No such file or directory
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 11
+%YDB-E-RECLOAD, Error loading record number: 11
 
-%GTM-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): 2
+%YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): 2
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 12
+%YDB-E-RECLOAD, Error loading record number: 12
 
-%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat
 %SYSTEM-E-ENO2, No such file or directory
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 13
+%YDB-E-RECLOAD, Error loading record number: 13
 
-%GTM-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): 4
+%YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): 4
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 14
+%YDB-E-RECLOAD, Error loading record number: 14
 
-%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat
 %SYSTEM-E-ENO2, No such file or directory
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 15
+%YDB-E-RECLOAD, Error loading record number: 15
 
-%GTM-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): twentyABCD
+%YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): twentyABCD
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 16
+%YDB-E-RECLOAD, Error loading record number: 16
 
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 LOAD TOTAL		Key Cnt: 3  Max Subsc Len: 8  Max Data Len: 2
 Last LOAD record number: 22
 ##ALLOW_OUTPUT SPANNING_REGIONS
 ##SUSPEND_OUTPUT NONSPANNING_REGIONS
-%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat
 %SYSTEM-E-ENO2, No such file or directory
 		Global variable : ^c("ten")
-%GTM-E-RECLOAD, Error loading record number: 17
+%YDB-E-RECLOAD, Error loading record number: 17
 
-%GTM-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): 30
+%YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): 30
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 18
+%YDB-E-RECLOAD, Error loading record number: 18
 
 LOAD TOTAL		Key Cnt: 2  Max Subsc Len: 6  Max Data Len: 1
 Last LOAD record number: 22
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
 
-# 3b. Expect GTM-E-LDBINFMT, as .zwr is not a valid go format
+# 3b. Expect YDB-E-LDBINFMT, as .zwr is not a valid go format
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:.. ZWR
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 3c. Expect GTM-E-LDBINFMT, as .bin is not a valid go format
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 3d. Expect GTM-E-LDBINFMT, as empty files do not contain any go header
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 3e. Expect GTM-E-LDBINFMT, as random text is not a valid go format
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 3c. Expect YDB-E-LDBINFMT, as .bin is not a valid go format
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 3d. Expect YDB-E-LDBINFMT, as empty files do not contain any go header
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 3e. Expect YDB-E-LDBINFMT, as random text is not a valid go format
 this is
 a random
 Beginning LOAD at record number: 3
 
-%GTM-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): text in this file
+%YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): text in this file
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 3
+%YDB-E-RECLOAD, Error loading record number: 3
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 Last LOAD record number: 0
 
-# 3f. Expect GTM-E-FILEOPENFAIL, as file doesn't exist
-%GTM-E-FILEOPENFAIL, Failed to open file tmp.nofile
+# 3f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist
+%YDB-E-FILEOPENFAIL, Failed to open file tmp.nofile
 ##ALLOW_OUTPUT UNICODE_MODE
 # Restore a.dat and b.dat
 # ### 4. Testing Binary Format ### #
@@ -273,40 +273,40 @@ Last LOAD record number: 4
 Last LOAD record number: 5
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
 
-# 4b. Expect GTM-E-LDBINFMT, as .zwr is not a valid binary format
+# 4b. Expect YDB-E-LDBINFMT, as .zwr is not a valid binary format
 ##SUSPEND_OUTPUT UNICODE_MODE
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:.. ZWR
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 4c. Expect GTM-E-LDBINFMT, as .go is not a valid binary format
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 4c. Expect YDB-E-LDBINFMT, as .go is not a valid binary format
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:..
-%GTM-E-LDBINFMT, Unrecognized header for load file
+%YDB-E-LDBINFMT, Unrecognized header for load file
 ##SUSPEND_OUTPUT NONUNICODE_MODE
 ##ALLOW_OUTPUT UNICODE_MODE
 GT.M MUPIP EXTRACT UTF-8
 ##FILTERED##..-...-....  ..:..:.. ZWR
-%GTM-E-LDBINFMT, Unrecognized header for load file
+%YDB-E-LDBINFMT, Unrecognized header for load file
 ##ALLOW_OUTPUT NONUNICODE_MODE
-# 4d. Expect GTM-E-LDBINFMT, as empty files do not contain any binary header
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 4e. Expect GTM-E-LDBINFMT, as random text is not a valid binary format
+# 4d. Expect YDB-E-LDBINFMT, as empty files do not contain any binary header
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 4e. Expect YDB-E-LDBINFMT, as random text is not a valid binary format
 this is
 a random
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 4f. Expect GTM-E-FILEOPENFAIL, as file doesn't exist
-%GTM-E-FILEOPENFAIL, Failed to open file tmp.nofile
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 4f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist
+%YDB-E-FILEOPENFAIL, Failed to open file tmp.nofile
 ##SUSPEND_OUTPUT ENCRYPT
 # 4g. Corrupt a binary file (replace last occurrence of ABCD with ABCDEFGH) and try loading that
-# Expect GTM-E-PREMATEOF, as file is corrupted binary format
+# Expect YDB-E-PREMATEOF, as file is corrupted binary format
 
 Beginning LOAD at record number: 2
 
-%GTM-E-PREMATEOF, Premature end of file detected
+%YDB-E-PREMATEOF, Premature end of file detected
 LOAD TOTAL		Key Cnt: 7  Max Subsc Len: 8  Max Data Len: 10
 Last LOAD record number: 3
 
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ##ALLOW_OUTPUT ENCRYPT
 # ### 5. Testing ZWR Format ### #
 # 5a. Successfully load the x.zwr content in the database
@@ -322,30 +322,30 @@ Beginning LOAD at record number: 3
 LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
 Last LOAD record number: 12
 
-# 5b. Expect GTM-E-LDBINFMT, as .bin is not a valid zwr format
-%GTM-E-LDBINFMT, Unrecognized header for load file
+# 5b. Expect YDB-E-LDBINFMT, as .bin is not a valid zwr format
+%YDB-E-LDBINFMT, Unrecognized header for load file
 ##SUSPEND_OUTPUT UNICODE_MODE
-# 5c. Expect GTM-E-LDBINFMT, as .go is not a valid zwr format
+# 5c. Expect YDB-E-LDBINFMT, as .go is not a valid zwr format
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:..
-%GTM-E-LDBINFMT, Unrecognized header for load file
+%YDB-E-LDBINFMT, Unrecognized header for load file
 ##ALLOW_OUTPUT UNICODE_MODE
-# 5d. Expect GTM-E-LDBINFMT, as empty files do not contain any zwr header
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 5e. Expect GTM-E-LDBINFMT, as random text is not a valid zwr format
+# 5d. Expect YDB-E-LDBINFMT, as empty files do not contain any zwr header
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 5e. Expect YDB-E-LDBINFMT, as random text is not a valid zwr format
 this is
 a random
 Beginning LOAD at record number: 3
 
-%GTM-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): text in this file
+%YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): text in this file
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 3
+%YDB-E-RECLOAD, Error loading record number: 3
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 Last LOAD record number: 0
 
-# 5f. Expect GTM-E-FILEOPENFAIL, as file doesn't exist
-%GTM-E-FILEOPENFAIL, Failed to open file tmp.nofile
+# 5f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist
+%YDB-E-FILEOPENFAIL, Failed to open file tmp.nofile
 ##SUSPEND_OUTPUT UNICODE_MODE
 # ### 6. Testing GO Format ### #
 # 6a. Successfully load the x.go content in the database
@@ -356,70 +356,70 @@ Beginning LOAD at record number: 3
 LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
 Last LOAD record number: 22
 
-# 6b. Expect GTM-E-LDBINFMT, as .zwr is not a valid go format
+# 6b. Expect YDB-E-LDBINFMT, as .zwr is not a valid go format
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:.. ZWR
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 6c. Expect GTM-E-LDBINFMT, as .bin is not a valid go format
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 6d. Expect GTM-E-LDBINFMT, as empty files do not contain any go header
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 6e. Expect GTM-E-LDBINFMT, as random text is not a valid go format
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 6c. Expect YDB-E-LDBINFMT, as .bin is not a valid go format
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 6d. Expect YDB-E-LDBINFMT, as empty files do not contain any go header
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 6e. Expect YDB-E-LDBINFMT, as random text is not a valid go format
 this is
 a random
 Beginning LOAD at record number: 3
 
-%GTM-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): text in this file
+%YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): text in this file
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 3
+%YDB-E-RECLOAD, Error loading record number: 3
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 Last LOAD record number: 0
 
-# 6f. Expect GTM-E-FILEOPENFAIL, as file doesn't exist
-%GTM-E-FILEOPENFAIL, Failed to open file tmp.nofile
+# 6f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist
+%YDB-E-FILEOPENFAIL, Failed to open file tmp.nofile
 ##ALLOW_OUTPUT UNICODE_MODE
 #### mupip load with onerror=stop####
 # Move a.dat and b.dat to .bak
 # ### 7. Testing Binary Format (no database file) ### #
-# 7a. Expect GTM-E-DBFILERR, SYSTEM-E-ENO2 and GTM-E-RECLOAD as a.dat and b.dat database files are not present
+# 7a. Expect YDB-E-DBFILERR, SYSTEM-E-ENO2 and YDB-E-RECLOAD as a.dat and b.dat database files are not present
 # load will continue for all keys in mumps.dat except when -onerror is stop or interactive
 
 Beginning LOAD at record number: 2
 
-%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
 %SYSTEM-E-ENO2, No such file or directory
-%GTM-E-RECLOAD, Error loading record number: 2
+%YDB-E-RECLOAD, Error loading record number: 2
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 Last LOAD record number: 0
 
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
-# 7b. Expect GTM-E-LDBINFMT, as .zwr is not a valid binary format
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+# 7b. Expect YDB-E-LDBINFMT, as .zwr is not a valid binary format
 ##SUSPEND_OUTPUT UNICODE_MODE
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:.. ZWR
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 7c. Expect GTM-E-LDBINFMT, as .go is not a valid binary format
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 7c. Expect YDB-E-LDBINFMT, as .go is not a valid binary format
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:..
-%GTM-E-LDBINFMT, Unrecognized header for load file
+%YDB-E-LDBINFMT, Unrecognized header for load file
 ##SUSPEND_OUTPUT NONUNICODE_MODE
 ##ALLOW_OUTPUT UNICODE_MODE
 GT.M MUPIP EXTRACT UTF-8
 ##FILTERED##..-...-....  ..:..:.. ZWR
-%GTM-E-LDBINFMT, Unrecognized header for load file
+%YDB-E-LDBINFMT, Unrecognized header for load file
 ##ALLOW_OUTPUT NONUNICODE_MODE
-# 7d. Expect GTM-E-LDBINFMT, as empty files do not contain any binary header
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 7e. Expect GTM-E-LDBINFMT, as random text is not a valid binary format
+# 7d. Expect YDB-E-LDBINFMT, as empty files do not contain any binary header
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 7e. Expect YDB-E-LDBINFMT, as random text is not a valid binary format
 this is
 a random
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 7f. Expect GTM-E-FILEOPENFAIL, as file doesn't exist
-%GTM-E-FILEOPENFAIL, Failed to open file tmp.nofile
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 7f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist
+%YDB-E-FILEOPENFAIL, Failed to open file tmp.nofile
 # ### 8. Testing ZWR Format (no database file) ### #
-# 8a. Expect GTM-E-DBFILERR, SYSTEM-E-ENO2 and GTM-E-RECLOAD as a.dat and b.dat database files are not present
+# 8a. Expect YDB-E-DBFILERR, SYSTEM-E-ENO2 and YDB-E-RECLOAD as a.dat and b.dat database files are not present
 # load will continue for all keys in mumps.dat except when -onerror is stop or interactive
 ##SUSPEND_OUTPUT NONUNICODE_MODE
 GT.M MUPIP EXTRACT UTF-8
@@ -430,81 +430,81 @@ GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
 
-%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
 %SYSTEM-E-ENO2, No such file or directory
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 3
+%YDB-E-RECLOAD, Error loading record number: 3
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 Last LOAD record number: 0
 
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
-# 8b. Expect GTM-E-LDBINFMT, as .bin is not a valid zwr format
-%GTM-E-LDBINFMT, Unrecognized header for load file
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+# 8b. Expect YDB-E-LDBINFMT, as .bin is not a valid zwr format
+%YDB-E-LDBINFMT, Unrecognized header for load file
 ##SUSPEND_OUTPUT UNICODE_MODE
-# 8c. Expect GTM-E-LDBINFMT, as .go is not a valid zwr format
+# 8c. Expect YDB-E-LDBINFMT, as .go is not a valid zwr format
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:..
-%GTM-E-LDBINFMT, Unrecognized header for load file
+%YDB-E-LDBINFMT, Unrecognized header for load file
 ##ALLOW_OUTPUT UNICODE_MODE
-# 8d. Expect GTM-E-LDBINFMT, as empty files do not contain any zwr header
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 8e. Expect GTM-E-LDBINFMT, as random text is not a valid zwr format
+# 8d. Expect YDB-E-LDBINFMT, as empty files do not contain any zwr header
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 8e. Expect YDB-E-LDBINFMT, as random text is not a valid zwr format
 this is
 a random
 Beginning LOAD at record number: 3
 
-%GTM-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): text in this file
+%YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): text in this file
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 3
+%YDB-E-RECLOAD, Error loading record number: 3
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 Last LOAD record number: 0
 
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ##ALLOW_OUTPUT UNICODE_MODE
-# 8f. Expect GTM-E-FILEOPENFAIL, as file doesn't exist
-%GTM-E-FILEOPENFAIL, Failed to open file tmp.nofile
+# 8f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist
+%YDB-E-FILEOPENFAIL, Failed to open file tmp.nofile
 ##SUSPEND_OUTPUT UNICODE_MODE
 # ### 9. Testing GO Format (no database file) ### #
-# 9a. Expect GTM-E-DBFILERR, SYSTEM-E-ENO2 and GTM-E-RECLOAD as a.dat and b.dat database files are not present
+# 9a. Expect YDB-E-DBFILERR, SYSTEM-E-ENO2 and YDB-E-RECLOAD as a.dat and b.dat database files are not present
 # load will continue for all keys in mumps.dat except when -onerror is stop or interactive
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:..
 Beginning LOAD at record number: 3
 
-%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
 %SYSTEM-E-ENO2, No such file or directory
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 3
+%YDB-E-RECLOAD, Error loading record number: 3
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 Last LOAD record number: 0
 
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
-# 9b. Expect GTM-E-LDBINFMT, as .zwr is not a valid go format
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+# 9b. Expect YDB-E-LDBINFMT, as .zwr is not a valid go format
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:.. ZWR
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 9c. Expect GTM-E-LDBINFMT, as .bin is not a valid go format
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 9d. Expect GTM-E-LDBINFMT, as empty files do not contain any go header
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 9e. Expect GTM-E-LDBINFMT, as random text is not a valid go format
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 9c. Expect YDB-E-LDBINFMT, as .bin is not a valid go format
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 9d. Expect YDB-E-LDBINFMT, as empty files do not contain any go header
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 9e. Expect YDB-E-LDBINFMT, as random text is not a valid go format
 this is
 a random
 Beginning LOAD at record number: 3
 
-%GTM-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): text in this file
+%YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): text in this file
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 3
+%YDB-E-RECLOAD, Error loading record number: 3
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 Last LOAD record number: 0
 
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
-# 9f. Expect GTM-E-FILEOPENFAIL, as file doesn't exist
-%GTM-E-FILEOPENFAIL, Failed to open file tmp.nofile
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+# 9f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist
+%YDB-E-FILEOPENFAIL, Failed to open file tmp.nofile
 ##ALLOW_OUTPUT UNICODE_MODE
 # Restore a.dat and b.dat
 # ### 10. Testing Binary Format ### #
@@ -520,40 +520,40 @@ Last LOAD record number: 4
 Last LOAD record number: 5
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
 
-# 10b. Expect GTM-E-LDBINFMT, as .zwr is not a valid binary format
+# 10b. Expect YDB-E-LDBINFMT, as .zwr is not a valid binary format
 ##SUSPEND_OUTPUT UNICODE_MODE
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:.. ZWR
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 10c. Expect GTM-E-LDBINFMT, as .go is not a valid binary format
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 10c. Expect YDB-E-LDBINFMT, as .go is not a valid binary format
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:..
-%GTM-E-LDBINFMT, Unrecognized header for load file
+%YDB-E-LDBINFMT, Unrecognized header for load file
 ##SUSPEND_OUTPUT NONUNICODE_MODE
 ##ALLOW_OUTPUT UNICODE_MODE
 GT.M MUPIP EXTRACT UTF-8
 ##FILTERED##..-...-....  ..:..:.. ZWR
-%GTM-E-LDBINFMT, Unrecognized header for load file
+%YDB-E-LDBINFMT, Unrecognized header for load file
 ##ALLOW_OUTPUT NONUNICODE_MODE
-# 10d. Expect GTM-E-LDBINFMT, as empty files do not contain any binary header
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 10e. Expect GTM-E-LDBINFMT, as random text is not a valid binary format
+# 10d. Expect YDB-E-LDBINFMT, as empty files do not contain any binary header
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 10e. Expect YDB-E-LDBINFMT, as random text is not a valid binary format
 this is
 a random
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 10f. Expect GTM-E-FILEOPENFAIL, as file doesn't exist
-%GTM-E-FILEOPENFAIL, Failed to open file tmp.nofile
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 10f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist
+%YDB-E-FILEOPENFAIL, Failed to open file tmp.nofile
 ##SUSPEND_OUTPUT ENCRYPT
 # 10g. Corrupt a binary file (replace last occurrence of ABCD with ABCDEFGH) and try loading that
-# Expect GTM-E-PREMATEOF, as file is corrupted binary format
+# Expect YDB-E-PREMATEOF, as file is corrupted binary format
 
 Beginning LOAD at record number: 2
 
-%GTM-E-PREMATEOF, Premature end of file detected
+%YDB-E-PREMATEOF, Premature end of file detected
 LOAD TOTAL		Key Cnt: 7  Max Subsc Len: 8  Max Data Len: 10
 Last LOAD record number: 3
 
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ##ALLOW_OUTPUT ENCRYPT
 # ### 11. Testing ZWR Format ### #
 # 11a. Successfully load the x.zwr content in the database
@@ -569,31 +569,31 @@ Beginning LOAD at record number: 3
 LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
 Last LOAD record number: 12
 
-# 11b. Expect GTM-E-LDBINFMT, as .bin is not a valid zwr format
-%GTM-E-LDBINFMT, Unrecognized header for load file
+# 11b. Expect YDB-E-LDBINFMT, as .bin is not a valid zwr format
+%YDB-E-LDBINFMT, Unrecognized header for load file
 ##SUSPEND_OUTPUT UNICODE_MODE
-# 11c. Expect GTM-E-LDBINFMT, as .go is not a valid zwr format
+# 11c. Expect YDB-E-LDBINFMT, as .go is not a valid zwr format
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:..
-%GTM-E-LDBINFMT, Unrecognized header for load file
+%YDB-E-LDBINFMT, Unrecognized header for load file
 ##ALLOW_OUTPUT UNICODE_MODE
-# 11d. Expect GTM-E-LDBINFMT, as empty files do not contain any zwr header
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 11e. Expect GTM-E-LDBINFMT, as random text is not a valid zwr format
+# 11d. Expect YDB-E-LDBINFMT, as empty files do not contain any zwr header
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 11e. Expect YDB-E-LDBINFMT, as random text is not a valid zwr format
 this is
 a random
 Beginning LOAD at record number: 3
 
-%GTM-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): text in this file
+%YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): text in this file
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 3
+%YDB-E-RECLOAD, Error loading record number: 3
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 Last LOAD record number: 0
 
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
-# 11f. Expect GTM-E-FILEOPENFAIL, as file doesn't exist
-%GTM-E-FILEOPENFAIL, Failed to open file tmp.nofile
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+# 11f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist
+%YDB-E-FILEOPENFAIL, Failed to open file tmp.nofile
 ##SUSPEND_OUTPUT UNICODE_MODE
 # ### 12. Testing GO Format ### #
 # 12a. Successfully load the x.go content in the database
@@ -604,71 +604,71 @@ Beginning LOAD at record number: 3
 LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
 Last LOAD record number: 22
 
-# 12b. Expect GTM-E-LDBINFMT, as .zwr is not a valid go format
+# 12b. Expect YDB-E-LDBINFMT, as .zwr is not a valid go format
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:.. ZWR
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 12c. Expect GTM-E-LDBINFMT, as .bin is not a valid go format
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 12d. Expect GTM-E-LDBINFMT, as empty files do not contain any go header
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 12e. Expect GTM-E-LDBINFMT, as random text is not a valid go format
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 12c. Expect YDB-E-LDBINFMT, as .bin is not a valid go format
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 12d. Expect YDB-E-LDBINFMT, as empty files do not contain any go header
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 12e. Expect YDB-E-LDBINFMT, as random text is not a valid go format
 this is
 a random
 Beginning LOAD at record number: 3
 
-%GTM-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): text in this file
+%YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): text in this file
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 3
+%YDB-E-RECLOAD, Error loading record number: 3
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 Last LOAD record number: 0
 
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
-# 12f. Expect GTM-E-FILEOPENFAIL, as file doesn't exist
-%GTM-E-FILEOPENFAIL, Failed to open file tmp.nofile
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+# 12f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist
+%YDB-E-FILEOPENFAIL, Failed to open file tmp.nofile
 ##ALLOW_OUTPUT UNICODE_MODE
 #### mupip load with onerror=interactive####
 # Move a.dat and b.dat to .bak
 # ### 13. Testing Binary Format (no database file) ### #
-# 13a. Expect GTM-E-DBFILERR, SYSTEM-E-ENO2 and GTM-E-RECLOAD as a.dat and b.dat database files are not present
+# 13a. Expect YDB-E-DBFILERR, SYSTEM-E-ENO2 and YDB-E-RECLOAD as a.dat and b.dat database files are not present
 # load will continue for all keys in mumps.dat except when -onerror is stop or interactive
 
 Beginning LOAD at record number: 2
 
-%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
 %SYSTEM-E-ENO2, No such file or directory
-%GTM-E-RECLOAD, Error loading record number: 2
+%YDB-E-RECLOAD, Error loading record number: 2
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 Last LOAD record number: 0
 
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
-# 13b. Expect GTM-E-LDBINFMT, as .zwr is not a valid binary format
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+# 13b. Expect YDB-E-LDBINFMT, as .zwr is not a valid binary format
 ##SUSPEND_OUTPUT UNICODE_MODE
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:.. ZWR
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 13c. Expect GTM-E-LDBINFMT, as .go is not a valid binary format
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 13c. Expect YDB-E-LDBINFMT, as .go is not a valid binary format
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:..
-%GTM-E-LDBINFMT, Unrecognized header for load file
+%YDB-E-LDBINFMT, Unrecognized header for load file
 ##SUSPEND_OUTPUT NONUNICODE_MODE
 ##ALLOW_OUTPUT UNICODE_MODE
 GT.M MUPIP EXTRACT UTF-8
 ##FILTERED##..-...-....  ..:..:.. ZWR
-%GTM-E-LDBINFMT, Unrecognized header for load file
+%YDB-E-LDBINFMT, Unrecognized header for load file
 ##ALLOW_OUTPUT NONUNICODE_MODE
-# 13d. Expect GTM-E-LDBINFMT, as empty files do not contain any binary header
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 13e. Expect GTM-E-LDBINFMT, as random text is not a valid binary format
+# 13d. Expect YDB-E-LDBINFMT, as empty files do not contain any binary header
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 13e. Expect YDB-E-LDBINFMT, as random text is not a valid binary format
 this is
 a random
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 13f. Expect GTM-E-FILEOPENFAIL, as file doesn't exist
-%GTM-E-FILEOPENFAIL, Failed to open file tmp.nofile
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 13f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist
+%YDB-E-FILEOPENFAIL, Failed to open file tmp.nofile
 # ### 14. Testing ZWR Format (no database file) ### #
-# 14a. Expect GTM-E-DBFILERR, SYSTEM-E-ENO2 and GTM-E-RECLOAD as a.dat and b.dat database files are not present
+# 14a. Expect YDB-E-DBFILERR, SYSTEM-E-ENO2 and YDB-E-RECLOAD as a.dat and b.dat database files are not present
 # load will continue for all keys in mumps.dat except when -onerror is stop or interactive
 ##SUSPEND_OUTPUT NONUNICODE_MODE
 GT.M MUPIP EXTRACT UTF-8
@@ -679,81 +679,81 @@ GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
 
-%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
 %SYSTEM-E-ENO2, No such file or directory
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 3
+%YDB-E-RECLOAD, Error loading record number: 3
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 Last LOAD record number: 0
 
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
-# 14b. Expect GTM-E-LDBINFMT, as .bin is not a valid zwr format
-%GTM-E-LDBINFMT, Unrecognized header for load file
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+# 14b. Expect YDB-E-LDBINFMT, as .bin is not a valid zwr format
+%YDB-E-LDBINFMT, Unrecognized header for load file
 ##SUSPEND_OUTPUT UNICODE_MODE
-# 14c. Expect GTM-E-LDBINFMT, as .go is not a valid zwr format
+# 14c. Expect YDB-E-LDBINFMT, as .go is not a valid zwr format
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:..
-%GTM-E-LDBINFMT, Unrecognized header for load file
+%YDB-E-LDBINFMT, Unrecognized header for load file
 ##ALLOW_OUTPUT UNICODE_MODE
-# 14d. Expect GTM-E-LDBINFMT, as empty files do not contain any zwr header
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 14e. Expect GTM-E-LDBINFMT, as random text is not a valid zwr format
+# 14d. Expect YDB-E-LDBINFMT, as empty files do not contain any zwr header
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 14e. Expect YDB-E-LDBINFMT, as random text is not a valid zwr format
 this is
 a random
 Beginning LOAD at record number: 3
 
-%GTM-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): text in this file
+%YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): text in this file
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 3
+%YDB-E-RECLOAD, Error loading record number: 3
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 Last LOAD record number: 0
 
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ##ALLOW_OUTPUT UNICODE_MODE
-# 14f. Expect GTM-E-FILEOPENFAIL, as file doesn't exist
-%GTM-E-FILEOPENFAIL, Failed to open file tmp.nofile
+# 14f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist
+%YDB-E-FILEOPENFAIL, Failed to open file tmp.nofile
 ##SUSPEND_OUTPUT UNICODE_MODE
 # ### 15. Testing GO Format (no database file) ### #
-# 15a. Expect GTM-E-DBFILERR, SYSTEM-E-ENO2 and GTM-E-RECLOAD as a.dat and b.dat database files are not present
+# 15a. Expect YDB-E-DBFILERR, SYSTEM-E-ENO2 and YDB-E-RECLOAD as a.dat and b.dat database files are not present
 # load will continue for all keys in mumps.dat except when -onerror is stop or interactive
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:..
 Beginning LOAD at record number: 3
 
-%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
 %SYSTEM-E-ENO2, No such file or directory
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 3
+%YDB-E-RECLOAD, Error loading record number: 3
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 Last LOAD record number: 0
 
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
-# 15b. Expect GTM-E-LDBINFMT, as .zwr is not a valid go format
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+# 15b. Expect YDB-E-LDBINFMT, as .zwr is not a valid go format
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:.. ZWR
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 15c. Expect GTM-E-LDBINFMT, as .bin is not a valid go format
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 15d. Expect GTM-E-LDBINFMT, as empty files do not contain any go header
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 15e. Expect GTM-E-LDBINFMT, as random text is not a valid go format
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 15c. Expect YDB-E-LDBINFMT, as .bin is not a valid go format
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 15d. Expect YDB-E-LDBINFMT, as empty files do not contain any go header
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 15e. Expect YDB-E-LDBINFMT, as random text is not a valid go format
 this is
 a random
 Beginning LOAD at record number: 3
 
-%GTM-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): text in this file
+%YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): text in this file
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 3
+%YDB-E-RECLOAD, Error loading record number: 3
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 Last LOAD record number: 0
 
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
-# 15f. Expect GTM-E-FILEOPENFAIL, as file doesn't exist
-%GTM-E-FILEOPENFAIL, Failed to open file tmp.nofile
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+# 15f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist
+%YDB-E-FILEOPENFAIL, Failed to open file tmp.nofile
 ##ALLOW_OUTPUT UNICODE_MODE
 # Restore a.dat and b.dat
 # ### 16. Testing Binary Format ### #
@@ -769,40 +769,40 @@ Last LOAD record number: 4
 Last LOAD record number: 5
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
 
-# 16b. Expect GTM-E-LDBINFMT, as .zwr is not a valid binary format
+# 16b. Expect YDB-E-LDBINFMT, as .zwr is not a valid binary format
 ##SUSPEND_OUTPUT UNICODE_MODE
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:.. ZWR
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 16c. Expect GTM-E-LDBINFMT, as .go is not a valid binary format
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 16c. Expect YDB-E-LDBINFMT, as .go is not a valid binary format
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:..
-%GTM-E-LDBINFMT, Unrecognized header for load file
+%YDB-E-LDBINFMT, Unrecognized header for load file
 ##SUSPEND_OUTPUT NONUNICODE_MODE
 ##ALLOW_OUTPUT UNICODE_MODE
 GT.M MUPIP EXTRACT UTF-8
 ##FILTERED##..-...-....  ..:..:.. ZWR
-%GTM-E-LDBINFMT, Unrecognized header for load file
+%YDB-E-LDBINFMT, Unrecognized header for load file
 ##ALLOW_OUTPUT NONUNICODE_MODE
-# 16d. Expect GTM-E-LDBINFMT, as empty files do not contain any binary header
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 16e. Expect GTM-E-LDBINFMT, as random text is not a valid binary format
+# 16d. Expect YDB-E-LDBINFMT, as empty files do not contain any binary header
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 16e. Expect YDB-E-LDBINFMT, as random text is not a valid binary format
 this is
 a random
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 16f. Expect GTM-E-FILEOPENFAIL, as file doesn't exist
-%GTM-E-FILEOPENFAIL, Failed to open file tmp.nofile
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 16f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist
+%YDB-E-FILEOPENFAIL, Failed to open file tmp.nofile
 ##SUSPEND_OUTPUT ENCRYPT
 # 16g. Corrupt a binary file (replace last occurrence of ABCD with ABCDEFGH) and try loading that
-# Expect GTM-E-PREMATEOF, as file is corrupted binary format
+# Expect YDB-E-PREMATEOF, as file is corrupted binary format
 
 Beginning LOAD at record number: 2
 
-%GTM-E-PREMATEOF, Premature end of file detected
+%YDB-E-PREMATEOF, Premature end of file detected
 LOAD TOTAL		Key Cnt: 7  Max Subsc Len: 8  Max Data Len: 10
 Last LOAD record number: 3
 
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ##ALLOW_OUTPUT ENCRYPT
 # ### 17. Testing ZWR Format ### #
 # 17a. Successfully load the x.zwr content in the database
@@ -818,31 +818,31 @@ Beginning LOAD at record number: 3
 LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
 Last LOAD record number: 12
 
-# 17b. Expect GTM-E-LDBINFMT, as .bin is not a valid zwr format
-%GTM-E-LDBINFMT, Unrecognized header for load file
+# 17b. Expect YDB-E-LDBINFMT, as .bin is not a valid zwr format
+%YDB-E-LDBINFMT, Unrecognized header for load file
 ##SUSPEND_OUTPUT UNICODE_MODE
-# 17c. Expect GTM-E-LDBINFMT, as .go is not a valid zwr format
+# 17c. Expect YDB-E-LDBINFMT, as .go is not a valid zwr format
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:..
-%GTM-E-LDBINFMT, Unrecognized header for load file
+%YDB-E-LDBINFMT, Unrecognized header for load file
 ##ALLOW_OUTPUT UNICODE_MODE
-# 17d. Expect GTM-E-LDBINFMT, as empty files do not contain any zwr header
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 17e. Expect GTM-E-LDBINFMT, as random text is not a valid zwr format
+# 17d. Expect YDB-E-LDBINFMT, as empty files do not contain any zwr header
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 17e. Expect YDB-E-LDBINFMT, as random text is not a valid zwr format
 this is
 a random
 Beginning LOAD at record number: 3
 
-%GTM-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): text in this file
+%YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): text in this file
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 3
+%YDB-E-RECLOAD, Error loading record number: 3
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 Last LOAD record number: 0
 
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
-# 17f. Expect GTM-E-FILEOPENFAIL, as file doesn't exist
-%GTM-E-FILEOPENFAIL, Failed to open file tmp.nofile
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+# 17f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist
+%YDB-E-FILEOPENFAIL, Failed to open file tmp.nofile
 ##SUSPEND_OUTPUT UNICODE_MODE
 # ### 18. Testing GO Format ### #
 # 18a. Successfully load the x.go content in the database
@@ -853,29 +853,29 @@ Beginning LOAD at record number: 3
 LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
 Last LOAD record number: 22
 
-# 18b. Expect GTM-E-LDBINFMT, as .zwr is not a valid go format
+# 18b. Expect YDB-E-LDBINFMT, as .zwr is not a valid go format
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:.. ZWR
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 18c. Expect GTM-E-LDBINFMT, as .bin is not a valid go format
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 18d. Expect GTM-E-LDBINFMT, as empty files do not contain any go header
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 18e. Expect GTM-E-LDBINFMT, as random text is not a valid go format
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 18c. Expect YDB-E-LDBINFMT, as .bin is not a valid go format
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 18d. Expect YDB-E-LDBINFMT, as empty files do not contain any go header
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 18e. Expect YDB-E-LDBINFMT, as random text is not a valid go format
 this is
 a random
 Beginning LOAD at record number: 3
 
-%GTM-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): text in this file
+%YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): text in this file
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 3
+%YDB-E-RECLOAD, Error loading record number: 3
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 Last LOAD record number: 0
 
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
-# 18f. Expect GTM-E-FILEOPENFAIL, as file doesn't exist
-%GTM-E-FILEOPENFAIL, Failed to open file tmp.nofile
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+# 18f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist
+%YDB-E-FILEOPENFAIL, Failed to open file tmp.nofile
 ##ALLOW_OUTPUT UNICODE_MODE
 # ### 19. Testing Auto File Sensing ### #
 # 19a. Successfully load the x.zwr content in the database
@@ -913,14 +913,14 @@ LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
 Last LOAD record number: 22
 
 ##ALLOW_OUTPUT UNICODE_MODE
-# 19d. Expect GTM-E-LDBINFMT, as empty files do not contain ZWR/GO/BINARY header
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 19e. Expect GTM-E-LDBINFMT, as file with random text do not contain a valid ZWR/GO/BINARY header
+# 19d. Expect YDB-E-LDBINFMT, as empty files do not contain ZWR/GO/BINARY header
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 19e. Expect YDB-E-LDBINFMT, as file with random text do not contain a valid ZWR/GO/BINARY header
 this is
 a random
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 19f. Expect GTM-E-FILEOPENFAIL, as file doesn't exist
-%GTM-E-FILEOPENFAIL, Failed to open file tmp.nofile
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 19f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist
+%YDB-E-FILEOPENFAIL, Failed to open file tmp.nofile
 # ### 20. Testing Auto File Sensing with -STDIN and FILE REDIRECTION ### #
 # 20a. Successfully load the x.zwr content in the database
 ##SUSPEND_OUTPUT NONUNICODE_MODE
@@ -957,12 +957,12 @@ LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
 Last LOAD record number: 22
 
 ##ALLOW_OUTPUT UNICODE_MODE
-# 20d. Expect GTM-E-LDBINFMT, as empty files do not contain ZWR/GO/BINARY header
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 20e. Expect GTM-E-LDBINFMT, as file with random text do not contain a valid ZWR/GO/BINARY header
+# 20d. Expect YDB-E-LDBINFMT, as empty files do not contain ZWR/GO/BINARY header
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 20e. Expect YDB-E-LDBINFMT, as file with random text do not contain a valid ZWR/GO/BINARY header
 this is
 a random
-%GTM-E-LDBINFMT, Unrecognized header for load file
+%YDB-E-LDBINFMT, Unrecognized header for load file
 # 20f. Expect No such file error, as file doesn't exist
 tmp.nofile: No such file or directory.
 # ### 21. Testing Auto File Sensing with -STDIN and UNIX PIPE ### #
@@ -1001,12 +1001,12 @@ LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
 Last LOAD record number: 22
 
 ##ALLOW_OUTPUT UNICODE_MODE
-# 21d. Expect GTM-E-LDBINFMT, as empty files do not contain ZWR/GO/BINARY header
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 21e. Expect GTM-E-LDBINFMT, as file with random text do not contain a valid ZWR/GO/BINARY header
+# 21d. Expect YDB-E-LDBINFMT, as empty files do not contain ZWR/GO/BINARY header
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 21e. Expect YDB-E-LDBINFMT, as file with random text do not contain a valid ZWR/GO/BINARY header
 this is
 a random
-%GTM-E-LDBINFMT, Unrecognized header for load file
+%YDB-E-LDBINFMT, Unrecognized header for load file
 # ### 22. Testing Auto File Sensing with UNIX NAMED PIPE ### #
 # 22a. Successfully load the x.zwr content in the database
 ##SUSPEND_OUTPUT NONUNICODE_MODE
@@ -1043,12 +1043,12 @@ LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
 Last LOAD record number: 22
 
 ##ALLOW_OUTPUT UNICODE_MODE
-# 22d. Expect GTM-E-LDBINFMT, as empty files do not contain ZWR/GO/BINARY header
-%GTM-E-LDBINFMT, Unrecognized header for load file
-# 22e. Expect GTM-E-LDBINFMT, as file with random text do not contain a valid ZWR/GO/BINARY header
+# 22d. Expect YDB-E-LDBINFMT, as empty files do not contain ZWR/GO/BINARY header
+%YDB-E-LDBINFMT, Unrecognized header for load file
+# 22e. Expect YDB-E-LDBINFMT, as file with random text do not contain a valid ZWR/GO/BINARY header
 this is
 a random
-%GTM-E-LDBINFMT, Unrecognized header for load file
+%YDB-E-LDBINFMT, Unrecognized header for load file
 ##################### gtm8223a.zwr ###################
 #################### no format ##################
 %GO
@@ -1069,7 +1069,7 @@ Last LOAD record number: 9
 ################### -format=go ##################
 %GO
 GT.M 09-JUL-2015 08:41:37 ZWR
-%GTM-E-LDBINFMT, Unrecognized header for load file
+%YDB-E-LDBINFMT, Unrecognized header for load file
 ##################### gtm8223a.go ###################
 #################### no format ##################
 %GO
@@ -1082,7 +1082,7 @@ Last LOAD record number: 14
 ################### -format=zwr #################
 %GO
 GT.M 09-JUL-2015 08:42:35
-%GTM-E-LDBINFMT, Unrecognized header for load file
+%YDB-E-LDBINFMT, Unrecognized header for load file
 ################### -format=go ##################
 %GO
 GT.M 09-JUL-2015 08:42:35
@@ -1111,7 +1111,7 @@ Last LOAD record number: 7
 ################### -format=go ##################
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:.. ZWR
-%GTM-E-LDBINFMT, Unrecognized header for load file
+%YDB-E-LDBINFMT, Unrecognized header for load file
 ##################### gtm8223b.go ###################
 #################### no format ##################
 GT.M MUPIP EXTRACT
@@ -1124,7 +1124,7 @@ Last LOAD record number: 12
 ################### -format=zwr #################
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:..
-%GTM-E-LDBINFMT, Unrecognized header for load file
+%YDB-E-LDBINFMT, Unrecognized header for load file
 ################### -format=go ##################
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:..
@@ -1153,7 +1153,7 @@ Last LOAD record number: 9
 ################### -format=go ##################
 LABEL
 ; ZWR
-%GTM-E-LDBINFMT, Unrecognized header for load file
+%YDB-E-LDBINFMT, Unrecognized header for load file
 ##################### gtm8223c.go ###################
 #################### no format ##################
 LABEL
@@ -1166,7 +1166,7 @@ Last LOAD record number: 14
 ################### -format=zwr #################
 LABEL
 ; GLO
-%GTM-E-LDBINFMT, Unrecognized header for load file
+%YDB-E-LDBINFMT, Unrecognized header for load file
 ################### -format=go ##################
 LABEL
 ; GLO
@@ -1195,7 +1195,7 @@ Last LOAD record number: 9
 ################### -format=go ##################
 LABEL
 some random stuff ZWR
-%GTM-E-LDBINFMT, Unrecognized header for load file
+%YDB-E-LDBINFMT, Unrecognized header for load file
 ##################### gtm8223d.go ###################
 #################### no format ##################
 LABEL
@@ -1208,7 +1208,7 @@ Last LOAD record number: 14
 ################### -format=zwr #################
 LABEL
 some random stuff GLO
-%GTM-E-LDBINFMT, Unrecognized header for load file
+%YDB-E-LDBINFMT, Unrecognized header for load file
 ################### -format=go ##################
 LABEL
 some random stuff GLO
@@ -1237,7 +1237,7 @@ Last LOAD record number: 9
 ################### -format=go ##################
 LABEL
 juicy baloney
-%GTM-E-LDBINFMT, Unrecognized header for load file
+%YDB-E-LDBINFMT, Unrecognized header for load file
 ##################### gtm8223e.go ###################
 #################### no format ##################
 LABEL
@@ -1250,7 +1250,7 @@ Last LOAD record number: 14
 ################### -format=zwr #################
 LABEL
 juicy baloney
-%GTM-E-LDBINFMT, Unrecognized header for load file
+%YDB-E-LDBINFMT, Unrecognized header for load file
 ################### -format=go ##################
 LABEL
 juicy baloney
@@ -1263,15 +1263,15 @@ Last LOAD record number: 14
 #################### no format ##################
 a
 b
-%GTM-E-LDBINFMT, Unrecognized header for load file
+%YDB-E-LDBINFMT, Unrecognized header for load file
 ################### -format=zwr #################
 a
 b
 Beginning LOAD at record number: 3
 
-%GTM-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): 1
+%YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): 1
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 4
+%YDB-E-RECLOAD, Error loading record number: 4
 
 LOAD TOTAL		Key Cnt: 2  Max Subsc Len: 3  Max Data Len: 1
 Last LOAD record number: 7
@@ -1281,19 +1281,19 @@ a
 b
 Beginning LOAD at record number: 3
 
-%GTM-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): 1
+%YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): 1
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 4
+%YDB-E-RECLOAD, Error loading record number: 4
 
-%GTM-E-GVINVALID, 	^e=1
+%YDB-E-GVINVALID, 	^e=1
 			Invalid global name
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 5
+%YDB-E-RECLOAD, Error loading record number: 5
 
-%GTM-E-GVINVALID, 	^f=1
+%YDB-E-GVINVALID, 	^f=1
 			Invalid global name
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 6
+%YDB-E-RECLOAD, Error loading record number: 6
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 Last LOAD record number: 0
@@ -1302,43 +1302,43 @@ Last LOAD record number: 0
 #################### no format ##################
 a
 b
-%GTM-E-LDBINFMT, Unrecognized header for load file
+%YDB-E-LDBINFMT, Unrecognized header for load file
 ################### -format=zwr #################
 a
 b
 Beginning LOAD at record number: 3
 
-%GTM-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): 1
+%YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): 1
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 4
+%YDB-E-RECLOAD, Error loading record number: 4
 
 		Global variable : ^e
-%GTM-E-RECLOAD, Error loading record number: 5
+%YDB-E-RECLOAD, Error loading record number: 5
 
-%GTM-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): 1
+%YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): 1
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 6
+%YDB-E-RECLOAD, Error loading record number: 6
 
 		Global variable : ^f
-%GTM-E-RECLOAD, Error loading record number: 7
+%YDB-E-RECLOAD, Error loading record number: 7
 
-%GTM-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): 1
+%YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): 1
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 8
+%YDB-E-RECLOAD, Error loading record number: 8
 
 		Global variable : ^g
-%GTM-E-RECLOAD, Error loading record number: 9
+%YDB-E-RECLOAD, Error loading record number: 9
 
-%GTM-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): 1
+%YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): 1
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 10
+%YDB-E-RECLOAD, Error loading record number: 10
 
 		Global variable : ^h
-%GTM-E-RECLOAD, Error loading record number: 11
+%YDB-E-RECLOAD, Error loading record number: 11
 
-%GTM-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): 1
+%YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): 1
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 12
+%YDB-E-RECLOAD, Error loading record number: 12
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 Last LOAD record number: 0
@@ -1348,9 +1348,9 @@ a
 b
 Beginning LOAD at record number: 3
 
-%GTM-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): 1
+%YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): 1
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 4
+%YDB-E-RECLOAD, Error loading record number: 4
 
 LOAD TOTAL		Key Cnt: 4  Max Subsc Len: 3  Max Data Len: 1
 Last LOAD record number: 13

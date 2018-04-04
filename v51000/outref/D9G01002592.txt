@@ -132,64 +132,64 @@ Last LOAD record number: 4
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=5 -end=4 all.$fmt
-%GTM-E-LOADEDBG, Load error: END smaller than BEGIN.  No records loaded.
+%YDB-E-LOADEDBG, Load error: END smaller than BEGIN.  No records loaded.
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=1000000000 -end=1000000000 all.$fmt
 ##TEST_AWKGT.M MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:.. ZWR
-%GTM-E-LOADEOF, Load error: EOF reached prior to BEGIN record 1000000000.  No records loaded.
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 1000000000.  No records loaded.
 Error reading record number: 14
 
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=2000000000 -end=2000000000 all.$fmt
 ##TEST_AWKGT.M MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:.. ZWR
-%GTM-E-LOADEOF, Load error: EOF reached prior to BEGIN record 2000000000.  No records loaded.
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 2000000000.  No records loaded.
 Error reading record number: 14
 
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=3000000000 -end=3000000000 all.$fmt
 ##TEST_AWKGT.M MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:.. ZWR
-%GTM-E-LOADEOF, Load error: EOF reached prior to BEGIN record 3000000000.  No records loaded.
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 3000000000.  No records loaded.
 Error reading record number: 14
 
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=4000000000 -end=4000000000 all.$fmt
 ##TEST_AWKGT.M MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:.. ZWR
-%GTM-E-LOADEOF, Load error: EOF reached prior to BEGIN record 4000000000.  No records loaded.
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 4000000000.  No records loaded.
 Error reading record number: 14
 
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=4294967295 -end=4294967295 all.$fmt
 ##TEST_AWKGT.M MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:.. ZWR
-%GTM-E-LOADEOF, Load error: EOF reached prior to BEGIN record 4294967295.  No records loaded.
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 4294967295.  No records loaded.
 Error reading record number: 14
 
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=4294967295 -end=4294967296 all.$fmt
-%GTM-E-LOADEDSZ2, Load error: END too large.  No records loaded.
+%YDB-E-LOADEDSZ2, Load error: END too large.  No records loaded.
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=4294967296 -end=4294967295 all.$fmt
-%GTM-E-LOADBGSZ2, Load error: BEGIN too large.  No records loaded.
+%YDB-E-LOADBGSZ2, Load error: BEGIN too large.  No records loaded.
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=4294967296 -end=4294967296 all.$fmt
-%GTM-E-LOADBGSZ2, Load error: BEGIN too large.  No records loaded.
+%YDB-E-LOADBGSZ2, Load error: BEGIN too large.  No records loaded.
 unset verbose
 
 ######################################################################################
@@ -310,9 +310,9 @@ $MUPIP load $fmtstr -begin=4 -end=4 all.$fmt
 ##FILTERED##..-...-....  ..:..:..
 Beginning LOAD at record number: 4
 
-%GTM-E-NOTGBL, Expected a global variable name starting with an up-arrow (^):                                                                                                                                                                                                                                                                                                                                                                                                                1
+%YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^):                                                                                                                                                                                                                                                                                                                                                                                                                1
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 4
+%YDB-E-RECLOAD, Error loading record number: 4
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 Last LOAD record number: 0
@@ -320,64 +320,64 @@ Last LOAD record number: 0
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=5 -end=4 all.$fmt
-%GTM-E-LOADEDBG, Load error: END smaller than BEGIN.  No records loaded.
+%YDB-E-LOADEDBG, Load error: END smaller than BEGIN.  No records loaded.
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=1000000000 -end=1000000000 all.$fmt
 ##TEST_AWKGT.M MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:..
-%GTM-E-LOADEOF, Load error: EOF reached prior to BEGIN record 1000000000.  No records loaded.
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 1000000000.  No records loaded.
 Error reading record number: 25
 
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=2000000000 -end=2000000000 all.$fmt
 ##TEST_AWKGT.M MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:..
-%GTM-E-LOADEOF, Load error: EOF reached prior to BEGIN record 2000000000.  No records loaded.
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 2000000000.  No records loaded.
 Error reading record number: 25
 
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=3000000000 -end=3000000000 all.$fmt
 ##TEST_AWKGT.M MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:..
-%GTM-E-LOADEOF, Load error: EOF reached prior to BEGIN record 3000000000.  No records loaded.
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 3000000000.  No records loaded.
 Error reading record number: 25
 
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=4000000000 -end=4000000000 all.$fmt
 ##TEST_AWKGT.M MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:..
-%GTM-E-LOADEOF, Load error: EOF reached prior to BEGIN record 4000000000.  No records loaded.
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 4000000000.  No records loaded.
 Error reading record number: 25
 
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=4294967295 -end=4294967295 all.$fmt
 ##TEST_AWKGT.M MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:..
-%GTM-E-LOADEOF, Load error: EOF reached prior to BEGIN record 4294967295.  No records loaded.
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 4294967295.  No records loaded.
 Error reading record number: 25
 
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=4294967295 -end=4294967296 all.$fmt
-%GTM-E-LOADEDSZ2, Load error: END too large.  No records loaded.
+%YDB-E-LOADEDSZ2, Load error: END too large.  No records loaded.
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=4294967296 -end=4294967295 all.$fmt
-%GTM-E-LOADBGSZ2, Load error: BEGIN too large.  No records loaded.
+%YDB-E-LOADBGSZ2, Load error: BEGIN too large.  No records loaded.
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=4294967296 -end=4294967296 all.$fmt
-%GTM-E-LOADBGSZ2, Load error: BEGIN too large.  No records loaded.
+%YDB-E-LOADBGSZ2, Load error: BEGIN too large.  No records loaded.
 unset verbose
 
 ######################################################################################
@@ -503,64 +503,64 @@ Last LOAD record number: 4
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=5 -end=4 all.$fmt
-%GTM-E-LOADEDBG, Load error: END smaller than BEGIN.  No records loaded.
+%YDB-E-LOADEDBG, Load error: END smaller than BEGIN.  No records loaded.
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=1000000000 -end=1000000000 all.$fmt
 ##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
 
-%GTM-E-LOADEOF, Load error: EOF reached prior to BEGIN record 1000000000.  No records loaded.
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 1000000000.  No records loaded.
 Error reading record number: 13
 
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=2000000000 -end=2000000000 all.$fmt
 ##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
 
-%GTM-E-LOADEOF, Load error: EOF reached prior to BEGIN record 2000000000.  No records loaded.
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 2000000000.  No records loaded.
 Error reading record number: 13
 
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=3000000000 -end=3000000000 all.$fmt
 ##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
 
-%GTM-E-LOADEOF, Load error: EOF reached prior to BEGIN record 3000000000.  No records loaded.
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 3000000000.  No records loaded.
 Error reading record number: 13
 
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=4000000000 -end=4000000000 all.$fmt
 ##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
 
-%GTM-E-LOADEOF, Load error: EOF reached prior to BEGIN record 4000000000.  No records loaded.
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 4000000000.  No records loaded.
 Error reading record number: 13
 
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=4294967295 -end=4294967295 all.$fmt
 ##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
 
-%GTM-E-LOADEOF, Load error: EOF reached prior to BEGIN record 4294967295.  No records loaded.
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 4294967295.  No records loaded.
 Error reading record number: 13
 
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=4294967295 -end=4294967296 all.$fmt
-%GTM-E-LOADEDSZ2, Load error: END too large.  No records loaded.
+%YDB-E-LOADEDSZ2, Load error: END too large.  No records loaded.
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=4294967296 -end=4294967295 all.$fmt
-%GTM-E-LOADBGSZ2, Load error: BEGIN too large.  No records loaded.
+%YDB-E-LOADBGSZ2, Load error: BEGIN too large.  No records loaded.
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=4294967296 -end=4294967296 all.$fmt
-%GTM-E-LOADBGSZ2, Load error: BEGIN too large.  No records loaded.
+%YDB-E-LOADBGSZ2, Load error: BEGIN too large.  No records loaded.
 unset verbose
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *

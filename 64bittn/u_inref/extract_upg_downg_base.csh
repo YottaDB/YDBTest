@@ -1,4 +1,15 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
 
 #This procedure initially ran with the smallest extension size=1 in order to ensure the database is 100% packed with data.
 #But we ended up overflowing the system logs, so after months of testing we decided to remove the exten=1 condition for the DB
@@ -67,12 +78,12 @@ echo "MUPIP load v5.zwr"
 $MUPIP load v5.zwr 				#---> should load without any errors
 echo "MUPIP load -format=bin v5.bin"
 $MUPIP load -format=bin v5.bin >&! loadv5inv4.log			#---> should issue LDBINFMT error due to incompatible binary format (created by V5)
-$grep -E "GTM-E-LDBINFMT" loadv5inv4.log >>& /dev/null
+$grep -E "YDB-E-LDBINFMT" loadv5inv4.log >>& /dev/null
 if ($status == 0) then
 	echo "The expected error (LDBINFMT) was issued (V44 versions)"
 else
 	echo "TEST-E-ERROR. The expected error LDBINFMT not issued"
-endif 
+endif
 	$tst_gzip loadv5inv4.log
 endif
 $gtm_tst/com/dbcheck.csh

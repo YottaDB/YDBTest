@@ -4,6 +4,9 @@
 # Copyright (c) 2014-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -42,7 +45,7 @@ GTM>
 EOF
 
 cat > gtmErrorPrompt.outx <<EOF
-%GTM-E-DIVZERO, Attempt to divide by zero
+%YDB-E-DIVZERO, Attempt to divide by zero
 		At M source location principalError+4^ioerr
 
 GTM>
@@ -61,7 +64,7 @@ EOF
 
 cat > gtmStringErrorPrompt.outx <<EOF
 Hello, world!
-%GTM-E-DIVZERO, Attempt to divide by zero
+%YDB-E-DIVZERO, Attempt to divide by zero
 		At M source location principalWriteError+8^ioerr
 
 GTM>

@@ -1,7 +1,19 @@
 #!/usr/local/bin/tcsh
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
 #
 # Test the handling of max key size from 3-1019.
-# 
+#
 # Choose value randomly between 3 and 1019
 set value = `$gtm_dist/mumps -run ^%XCMD 'write $RANDOM(1020)'`
 if (3 > $value) set value=3
@@ -26,11 +38,11 @@ echo "Globals are in maxkey.glo, with ^f being the number of failures"
 set failures = `$gtm_dist/mumps -run ^%XCMD 'write ^f'`
 echo ""
 echo "Number of failures in ^f should equal number of lines containing GVSUBOFLOW in gv.out"
-set error_lines = `$grep -c GVSUBOFLOW gv.out` 
+set error_lines = `$grep -c GVSUBOFLOW gv.out`
 echo ""
 if ($failures == $error_lines) then
 	echo "Passed"
-	# move this file so we don't see the expected GTM-E-GVSUBOFLOW errors
+	# move this file so we don't see the expected YDB-E-GVSUBOFLOW errors
 	mv gv.out gv.outx
 else
 	echo "Failed"

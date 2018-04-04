@@ -37,7 +37,7 @@ sleep 4
 $MUPIP replicate -source -statslog=OFF >> & SRC5_ignore.out
 $MUPIP replicate -source -statslog=OFF >> & SRC6_ignore.out
 $MUPIP replicate -source -statslog=OFF -changelog -log=SRC7.log
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
 sleep 4
 $MUPIP replicate -source -changelog -log=SRC8.log
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating CHANGELOG operation on source server pid [##PID##] for secondary instance [INSTANCE2]
@@ -92,7 +92,7 @@ $MUPIP replicate -receiv -statslog=ON >> & RCVR4_ignore.out
 $MUPIP replicate -receiv -statslog=OFF >> & RCVR5_ignore.out
 $MUPIP replicate -receiv -statslog=OFF >> & RCVR6_ignore.out
 $MUPIP replicate -receiv -statslog=OFF -changelog -log=RCVR7.log
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
 sleep 4
 $MUPIP replicate -receiv -changelog -log=RCVR8.log
 Change log initiated with file RCVR8.log

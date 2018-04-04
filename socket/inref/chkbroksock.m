@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-;	Copyright 2011, 2013 Fidelity Information Services, Inc	;
+; Copyright 2011, 2013 Fidelity Information Services, Inc	;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -14,7 +17,7 @@
 ; not null-terminated yet is parsed with a SSCANF() library call causing the SSCANF to continue scanning
 ; long past the argument into other areas of the string pool copying what it finds into a small buffer
 ; that is easily overflowed. This test fills the stringpool with "stuff" then uses WRITE /WAIT to verify
-; the problem is fixed. Failures are typically sig-11s or %GTM-E-INVCTLMNE errors.
+; the problem is fixed. Failures are typically sig-11s or %YDB-E-INVCTLMNE errors.
 ;
 	Set $ETrap="Use $P ZShow ""*"" Halt"
 	;

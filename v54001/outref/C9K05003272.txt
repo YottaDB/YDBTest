@@ -50,7 +50,7 @@ PID ##FILTERED##[##PID##] Source server is alive in ACTIVE mode
 ==Executing MULTISITE_REPLIC 'RUN INST1 $MUPIP replicate -source -checkhealth -instsecondary=INSTANCE3; echo $status'==
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating CHECKHEALTH operation on source server pid [##PID##] for secondary instance name [INSTANCE3]
 PID 0 Source server is NOT alive
-%GTM-E-SRCSRVNOTEXIST, Source server for secondary instance INSTANCE3 is not alive
+%YDB-E-SRCSRVNOTEXIST, Source server for secondary instance INSTANCE3 is not alive
 1
 
 # Test SHOWBACKLOG behavior if VALID instance name is specified & source server is dead
@@ -66,13 +66,13 @@ PID 0 Source server is NOT alive
 # Test CHECKHEALTH behavior if INVALID instance name is specified
 # We expect a REPLINSTSECNONE error in this case
 ==Executing MULTISITE_REPLIC 'RUN INST1 $MUPIP replicate -source -checkhealth -instsecondary=ZYXWVU; echo $status'==
-%GTM-E-REPLINSTSECNONE, No information found for secondary instance ZYXWVU in instance file ##TEST_PATH##/mumps.repl
+%YDB-E-REPLINSTSECNONE, No information found for secondary instance ZYXWVU in instance file ##TEST_PATH##/mumps.repl
 138
 
 # Test SHOWBACKLOG behavior if INVALID instance name is specified
 # We expect a REPLINSTSECNONE error in this case
 ==Executing MULTISITE_REPLIC 'RUN INST1 $MUPIP replicate -source -showbacklog -instsecondary=UVWXYZ; echo $status'==
-%GTM-E-REPLINSTSECNONE, No information found for secondary instance UVWXYZ in instance file ##TEST_PATH##/mumps.repl
+%YDB-E-REPLINSTSECNONE, No information found for secondary instance UVWXYZ in instance file ##TEST_PATH##/mumps.repl
 138
 
 # Test that INVALID instance names did not use up a slot in the instance file/journal pool
@@ -113,10 +113,10 @@ No errors detected by integ.
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
 ##TEST_AWK##TEST_HOST_SHORT##:##TEST_PATH##/msr_execute_.*.out
-%GTM-E-SRCSRVNOTEXIST, Source server for secondary instance INSTANCE3 is not alive
+%YDB-E-SRCSRVNOTEXIST, Source server for secondary instance INSTANCE3 is not alive
 ##TEST_AWK##TEST_HOST_SHORT##:##TEST_PATH##/msr_execute_.*.out
 %GTM-W-SRCSRVNOTEXIST, Source server for secondary instance INSTANCE3 is not alive
 ##TEST_AWK##TEST_HOST_SHORT##:##TEST_PATH##/msr_execute_.*.out
-%GTM-E-REPLINSTSECNONE, No information found for secondary instance ZYXWVU in instance file ##TEST_PATH##/mumps.repl
+%YDB-E-REPLINSTSECNONE, No information found for secondary instance ZYXWVU in instance file ##TEST_PATH##/mumps.repl
 ##TEST_AWK##TEST_HOST_SHORT##:##TEST_PATH##/msr_execute_.*.out
-%GTM-E-REPLINSTSECNONE, No information found for secondary instance UVWXYZ in instance file ##TEST_PATH##/mumps.repl
+%YDB-E-REPLINSTSECNONE, No information found for secondary instance UVWXYZ in instance file ##TEST_PATH##/mumps.repl

@@ -544,10 +544,10 @@ This is the calling routine
 This is foo^per2968b
 This is the calling routine
 ##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
-%GTM-E-LABELMISSING, Label referenced but not defined: foo
+%YDB-E-LABELMISSING, Label referenced but not defined: foo
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
-%GTM-E-LABELUNKNOWN, Label referenced but not defined
+%YDB-E-LABELUNKNOWN, Label referenced but not defined
 ##ALLOW_OUTPUT HOST_ALL
 		At M source location per2968a+1^per2968a
 
@@ -600,41 +600,41 @@ d ^largeexp2
 		k f s f(1E111)="1E111" zwr f
 		       ^-----
 		At column 9, line 4, source module ##IN_TEST_PATH##/inref/largeexp2.m
-%GTM-E-NUMOFLOW, Numeric overflow
+%YDB-E-NUMOFLOW, Numeric overflow
 		k f s f(1E11111111111111111)="1Ealot" zwr f
 		       ^-----
 		At column 9, line 6, source module ##IN_TEST_PATH##/inref/largeexp2.m
-%GTM-E-NUMOFLOW, Numeric overflow
+%YDB-E-NUMOFLOW, Numeric overflow
 		k f s f(1E1111111111111111111111)="1Ealotalot" zwr f
 		       ^-----
 		At column 9, line 8, source module ##IN_TEST_PATH##/inref/largeexp2.m
-%GTM-E-NUMOFLOW, Numeric overflow
+%YDB-E-NUMOFLOW, Numeric overflow
 		k ^f s ^f(1E111)="1E111" zwr ^f
 		         ^-----
 		At column 11, line 10, source module ##IN_TEST_PATH##/inref/largeexp2.m
-%GTM-E-NUMOFLOW, Numeric overflow
+%YDB-E-NUMOFLOW, Numeric overflow
 		k ^f s ^f(1E11111111111111111)="1Ealot" zwr ^f
 		         ^-----
 		At column 11, line 12, source module ##IN_TEST_PATH##/inref/largeexp2.m
-%GTM-E-NUMOFLOW, Numeric overflow
+%YDB-E-NUMOFLOW, Numeric overflow
 		k ^f s ^f(1E1111111111111111111111)="1Ealotalot" zwr ^f
 		         ^-----
 		At column 11, line 14, source module ##IN_TEST_PATH##/inref/largeexp2.m
-%GTM-E-NUMOFLOW, Numeric overflow
+%YDB-E-NUMOFLOW, Numeric overflow
 		w "s x=1E111 w x,!",! s x=1E111 w x,!
 		                         ^-----
 		At column 27, line 15, source module ##IN_TEST_PATH##/inref/largeexp2.m
-%GTM-E-NUMOFLOW, Numeric overflow
+%YDB-E-NUMOFLOW, Numeric overflow
 		w "s x=1E11111111111111111 w x,!",! s x=1E11111111111111111 w x,!
 		                                       ^-----
 		At column 41, line 16, source module ##IN_TEST_PATH##/inref/largeexp2.m
-%GTM-E-NUMOFLOW, Numeric overflow
+%YDB-E-NUMOFLOW, Numeric overflow
 		w "s x=1E47 w x,!",! s x=1E47 w x,!
 		                        ^-----
 		At column 26, line 17, source module ##IN_TEST_PATH##/inref/largeexp2.m
-%GTM-E-NUMOFLOW, Numeric overflow
+%YDB-E-NUMOFLOW, Numeric overflow
 k f s f(1E111)="1E111" zwr f
-%GTM-E-NUMOFLOW, Numeric overflow
+%YDB-E-NUMOFLOW, Numeric overflow
 		At M source location largeexp2+3^largeexp2
 
 GTM>
@@ -642,13 +642,13 @@ d ^largeexp3
 		k f s f(1E1111111111111111111111)="1Ealotalot" zwr f
 		       ^-----
 		At column 9, line 4, source module ##IN_TEST_PATH##/inref/largeexp3.m
-%GTM-E-NUMOFLOW, Numeric overflow
+%YDB-E-NUMOFLOW, Numeric overflow
 		k ^f s ^f(1E1111111111111111111111)="1Ealotalot" zwr ^f
 		         ^-----
 		At column 11, line 6, source module ##IN_TEST_PATH##/inref/largeexp3.m
-%GTM-E-NUMOFLOW, Numeric overflow
+%YDB-E-NUMOFLOW, Numeric overflow
 k f s f(1E1111111111111111111111)="1Ealotalot" zwr f
-%GTM-E-NUMOFLOW, Numeric overflow
+%YDB-E-NUMOFLOW, Numeric overflow
 		At M source location largeexp3+3^largeexp3
 
 GTM>
@@ -736,33 +736,33 @@ GTM>
 do ^ztidrv
 do NOLAB^ztiref
 Testing 'ZTRAP label' with no label present
-150372762,NOLAB+3^ztiref,%GTM-E-ERRWZTRAP, Error while processing $ZTRAP,-GTM-E-LABELMISSING, Label referenced but not defined: lab
+150372762,NOLAB+3^ztiref,%YDB-E-ERRWZTRAP, Error while processing $ZTRAP,-YDB-E-LABELMISSING, Label referenced but not defined: lab
 
 do OFF^ztiref
 Testing Ztrap Lable+offset with invalid offset
-150372762,OFF+3^ztiref,%GTM-E-ERRWZTRAP, Error while processing $ZTRAP,-GTM-E-OFFSETINV, Entry point OFF+1000 not valid
+150372762,OFF+3^ztiref,%YDB-E-ERRWZTRAP, Error while processing $ZTRAP,-YDB-E-OFFSETINV, Entry point OFF+1000 not valid
 
 do MOD^ztiref
 Testing Ztrap ^module with no module
-150372762,MOD+3^ztiref,%GTM-E-ERRWZTRAP, Error while processing $ZTRAP,-GTM-E-ZLINKFILE, Error while zlinking "nowhere",%GTM-E-FILENOTFND, File nowhere not found
+150372762,MOD+3^ztiref,%YDB-E-ERRWZTRAP, Error while processing $ZTRAP,-YDB-E-ZLINKFILE, Error while zlinking "nowhere",%YDB-E-FILENOTFND, File nowhere not found
 
 do SUB4^ztiref
 Testing Ztrap containing erroneous indirection
 ##SUSPEND_OUTPUT HOST_LINUX_ARMVXL
 ##SUSPEND_OUTPUT  NODYNAMIC_LITERALS
-150372762,SUB4+4^ztiref,%GTM-E-ERRWZTRAP, Error while processing $ZTRAP,-GTM-E-STACKCRIT, Stack space critical
+150372762,SUB4+4^ztiref,%YDB-E-ERRWZTRAP, Error while processing $ZTRAP,-YDB-E-STACKCRIT, Stack space critical
 ##ALLOW_OUTPUT  NODYNAMIC_LITERALS
 ##SUSPEND_OUTPUT  DYNAMIC_LITERALS
-150373738,SUB4+4^ztiref,%GTM-E-STACKCRIT, Stack space critical
+150373738,SUB4+4^ztiref,%YDB-E-STACKCRIT, Stack space critical
 ##ALLOW_OUTPUT  DYNAMIC_LITERALS
 ##ALLOW_OUTPUT HOST_LINUX_ARMVXL
 ##SUSPEND_OUTPUT HOST_LINUX_X86_64
-150372762,SUB4+4^ztiref,%GTM-E-ERRWZTRAP, Error while processing $ZTRAP,-GTM-E-STACKCRIT, Stack space critical
+150372762,SUB4+4^ztiref,%YDB-E-ERRWZTRAP, Error while processing $ZTRAP,-YDB-E-STACKCRIT, Stack space critical
 ##ALLOW_OUTPUT HOST_LINUX_X86_64
 
 do IND^ztiref
 Testing invalid indirection @(lab+off)^mod)
-150372762,IND+4^ztiref,%GTM-E-ERRWZTRAP, Error while processing $ZTRAP,-GTM-E-LABELMISSING, Label referenced but not defined: lab+0
+150372762,IND+4^ztiref,%YDB-E-ERRWZTRAP, Error while processing $ZTRAP,-YDB-E-LABELMISSING, Label referenced but not defined: lab+0
 
 do TST1^zticmd3
 Testing syntax error...zlevel = 4
@@ -771,11 +771,11 @@ do TST2^zticmd3
 Testing quit as label...zlevel = 4
 do TST3^zticmd3
 Testing syntax error in set command...zlevel = 4
-150373010,SUB1+2^zticmd3,%GTM-E-INDEXTRACHARS, Indirection string contains extra trailing characters
+150373010,SUB1+2^zticmd3,%YDB-E-INDEXTRACHARS, Indirection string contains extra trailing characters
 
 do TST4^zticmd3
 Testing indirect arg with syntax error...zlevel = 4
-150372762,SUB1+2^zticmd3,%GTM-E-ERRWZTRAP, Error while processing $ZTRAP,-GTM-E-EXPR, Expression expected but not found
+150372762,SUB1+2^zticmd3,%YDB-E-ERRWZTRAP, Error while processing $ZTRAP,-YDB-E-EXPR, Expression expected but not found
 
 
 GTM>
@@ -785,7 +785,7 @@ GTM>
 do ^ztidrv
 do NOLAB^ztiref
 Testing 'ZTRAP label' with no label present
-%GTM-E-LABELMISSING, Label referenced but not defined: lab
+%YDB-E-LABELMISSING, Label referenced but not defined: lab
 
 GTM>
 
@@ -797,7 +797,7 @@ This is main function
 GTM>
 do ^zticmd2
 This is main function
-%GTM-E-STACKCRIT, Stack space critical
+%YDB-E-STACKCRIT, Stack space critical
 
 GTM>
 end of invalid ZTRAP cases...
@@ -808,22 +808,22 @@ GTM>
 do ^zevref1
 Testing ZYERROR Label...
 done(SUB2)
-ZSTATUS = 150373850,SUBROUTINE1+4^zevref1,%GTM-E-LVUNDEF, Undefined local variable: x  ZERROR = GTM-E-LVUNDEF, Undefined local variable: x
+ZSTATUS = 150373850,SUBROUTINE1+4^zevref1,%YDB-E-LVUNDEF, Undefined local variable: x  ZERROR = YDB-E-LVUNDEF, Undefined local variable: x
 end of SUB2
 Testing ZYERROR Label+offset...done(SUB3+1)
-ZSTATUS = 150373210,SUBROUTINE1+8^zevref1,%GTM-E-DIVZERO, Attempt to divide by zero  ZERROR = GTM-E-DIVZERO, Attempt to divide by zero
+ZSTATUS = 150373210,SUBROUTINE1+8^zevref1,%YDB-E-DIVZERO, Attempt to divide by zero  ZERROR = YDB-E-DIVZERO, Attempt to divide by zero
 end of SUB3
 1Testing ZYERROR Label+module...done(labelinanothermoduleforzyerror^zeleaf)
-ZSTATUS = 150372778,SUBROUTINE1+12^zevref1,%GTM-E-EXPR, Expression expected but not found  ZERROR = GTM-E-EXPR, Expression expected but not found
+ZSTATUS = 150372778,SUBROUTINE1+12^zevref1,%YDB-E-EXPR, Expression expected but not found  ZERROR = YDB-E-EXPR, Expression expected but not found
 1
 Testing ZYERROR Label+offset+module...done(labelinanothermoduleforzyerror+1^zeleaf)
-ZSTATUS = 150373850,SUBROUTINE1+16^zevref1,%GTM-E-LVUNDEF, Undefined local variable: x  ZERROR = GTM-E-LVUNDEF, Undefined local variable: x
+ZSTATUS = 150373850,SUBROUTINE1+16^zevref1,%YDB-E-LVUNDEF, Undefined local variable: x  ZERROR = YDB-E-LVUNDEF, Undefined local variable: x
 end of SUB1
 
 GTM>
 do ^zevref2
 Testing ZYERROR Label^module...done(SUB2)
-ZSTATUS = 150373850,SUBROUTINEWITHINMODULE1+4^zevref2,%GTM-E-LVUNDEF, Undefined local variable: x  ZERROR = GTM-E-LVUNDEF, Undefined local variable: x
+ZSTATUS = 150373850,SUBROUTINEWITHINMODULE1+4^zevref2,%YDB-E-LVUNDEF, Undefined local variable: x  ZERROR = YDB-E-LVUNDEF, Undefined local variable: x
 end of SUB2
 end of SUB1
 
@@ -831,20 +831,20 @@ GTM>
 do ^zevref3
 Testing ZYERROR @Label...
 done(SUB2)
-ZSTATUS = 150373850,INDIRECTSUBROUTINE1+4^zevref3,%GTM-E-LVUNDEF, Undefined local variable: x  ZERROR = GTM-E-LVUNDEF, Undefined local variable: x
+ZSTATUS = 150373850,INDIRECTSUBROUTINE1+4^zevref3,%YDB-E-LVUNDEF, Undefined local variable: x  ZERROR = YDB-E-LVUNDEF, Undefined local variable: x
 end of SUB2
 Testing ZYERROR @Lable+offset...done(SUB3+1)
-ZSTATUS = 150373210,INDIRECTSUBROUTINE1+9^zevref3,%GTM-E-DIVZERO, Attempt to divide by zero  ZERROR = GTM-E-DIVZERO, Attempt to divide by zero
+ZSTATUS = 150373210,INDIRECTSUBROUTINE1+9^zevref3,%YDB-E-DIVZERO, Attempt to divide by zero  ZERROR = YDB-E-DIVZERO, Attempt to divide by zero
 end of SUB3
 1
 Testing ZYERROR @Label+@module...done(labelinanothermoduleforzyerror^zeleaf)
-ZSTATUS = 150372778,INDIRECTSUBROUTINE1+14^zevref3,%GTM-E-EXPR, Expression expected but not found  ZERROR = GTM-E-EXPR, Expression expected but not found
+ZSTATUS = 150372778,INDIRECTSUBROUTINE1+14^zevref3,%YDB-E-EXPR, Expression expected but not found  ZERROR = YDB-E-EXPR, Expression expected but not found
 1
 Testing ZYERROR @(Label+offset+module)...
 done(labelinanothermoduleforzyerror+1^zeleaf)
-ZSTATUS = 150373850,INDIRECTSUBROUTINE1+19^zevref3,%GTM-E-LVUNDEF, Undefined local variable: x  ZERROR = GTM-E-LVUNDEF, Undefined local variable: x
+ZSTATUS = 150373850,INDIRECTSUBROUTINE1+19^zevref3,%YDB-E-LVUNDEF, Undefined local variable: x  ZERROR = YDB-E-LVUNDEF, Undefined local variable: x
 Testing ZYERROR with no quit cmd in its handler...
-ZSTATUS = 150373850,INDIRECTSUBROUTINE1+24^zevref3,%GTM-E-LVUNDEF, Undefined local variable: x  ZERROR = GTM-E-LVUNDEF, Undefined local variable: x
+ZSTATUS = 150373850,INDIRECTSUBROUTINE1+24^zevref3,%YDB-E-LVUNDEF, Undefined local variable: x  ZERROR = YDB-E-LVUNDEF, Undefined local variable: x
 end of SUB1
 
 GTM>
@@ -871,17 +871,17 @@ Testing ZYERROR containing erroneous indirection
 GTM>
 do ZTERR^zeiref1
 Testing ZYERROR with syntactically erroneous ZTRAP value
-ZSTATUS = 150373850,ZTERR+4^zeiref1,%GTM-E-LVUNDEF, Undefined local variable: x  ZERROR = GTM-E-LVUNDEF, Undefined local variable: x
-%GTM-E-LABELMISSING, Label referenced but not defined: w
+ZSTATUS = 150373850,ZTERR+4^zeiref1,%YDB-E-LVUNDEF, Undefined local variable: x  ZERROR = YDB-E-LVUNDEF, Undefined local variable: x
+%YDB-E-LABELMISSING, Label referenced but not defined: w
 
 GTM>
 do TST1^zeiref2
 Testing ZYERROR Label...
 done(SUB2)
-ZSTATUS = 150373850,TST1+4^zeiref2,%GTM-E-LVUNDEF, Undefined local variable: x  ZERROR = GTM-E-LVUNDEF, Undefined local variable: x
+ZSTATUS = 150373850,TST1+4^zeiref2,%YDB-E-LVUNDEF, Undefined local variable: x  ZERROR = YDB-E-LVUNDEF, Undefined local variable: x
 Testing ZYERROR Label+offset...
 done(SUB3+1)
-ZSTATUS = 150373210,TST1+8^zeiref2,%GTM-E-DIVZERO, Attempt to divide by zero  ZERROR = GTM-E-DIVZERO, Attempt to divide by zero
+ZSTATUS = 150373210,TST1+8^zeiref2,%YDB-E-DIVZERO, Attempt to divide by zero  ZERROR = YDB-E-DIVZERO, Attempt to divide by zero
 1
 end of TST1
 
@@ -905,7 +905,7 @@ GTM>
 do TST1^zevref4
 Testing ZYERROR Label...
 done(SUB2)
-ZSTATUS = 150373850,TST1+3^zevref4,%GTM-E-LVUNDEF, Undefined local variable: x  ZERROR = GTM-E-LVUNDEF, Undefined local variable: x
+ZSTATUS = 150373850,TST1+3^zevref4,%YDB-E-LVUNDEF, Undefined local variable: x  ZERROR = YDB-E-LVUNDEF, Undefined local variable: x
 end of SUB2
 
 GTM>
@@ -913,7 +913,7 @@ GTM>
 GTM>
 do TST2^zevref4
 Testing ZYERROR Label+offset...done(SUB3+1)
-ZSTATUS = 150373210,TST2+3^zevref4,%GTM-E-DIVZERO, Attempt to divide by zero  ZERROR = GTM-E-DIVZERO, Attempt to divide by zero
+ZSTATUS = 150373210,TST2+3^zevref4,%YDB-E-DIVZERO, Attempt to divide by zero  ZERROR = YDB-E-DIVZERO, Attempt to divide by zero
 end of SUB3
 1
 GTM>
@@ -921,14 +921,14 @@ GTM>
 GTM>
 do TST3^zevref4
 Testing ZYERROR Label+module...done(labelinanothermoduleforzyerror^zeleaf)
-ZSTATUS = 150372778,TST3+3^zevref4,%GTM-E-EXPR, Expression expected but not found  ZERROR = GTM-E-EXPR, Expression expected but not found
+ZSTATUS = 150372778,TST3+3^zevref4,%YDB-E-EXPR, Expression expected but not found  ZERROR = YDB-E-EXPR, Expression expected but not found
 1
 GTM>
 
 GTM>
 do TST4^zevref4
 Testing ZYERROR Label+offset+module...done(labelinanothermoduleforzyerror+1^zeleaf)
-ZSTATUS = 150373850,TST4+3^zevref4,%GTM-E-LVUNDEF, Undefined local variable: x  ZERROR = GTM-E-LVUNDEF, Undefined local variable: x
+ZSTATUS = 150373850,TST4+3^zevref4,%YDB-E-LVUNDEF, Undefined local variable: x  ZERROR = YDB-E-LVUNDEF, Undefined local variable: x
 
 GTM>
 
@@ -946,21 +946,21 @@ d ^zbrk
 ztrap called
 3
 break points reached
-$zstatus = 150372754,sub^zbrk,%GTM-E-ERRWZBRK, Error while processing ZBREAK action string,-GTM-E-LVUNDEF, Undefined local variable: x
+$zstatus = 150372754,sub^zbrk,%YDB-E-ERRWZBRK, Error while processing ZBREAK action string,-YDB-E-LVUNDEF, Undefined local variable: x
 
 GTM>
 d ^ztrp
-150373210,ztrp+2^ztrp,%GTM-E-DIVZERO, Attempt to divide by zero
-%GTM-E-LVUNDEF, Undefined local variable: x
+150373210,ztrp+2^ztrp,%YDB-E-DIVZERO, Attempt to divide by zero
+%YDB-E-LVUNDEF, Undefined local variable: x
 
 GTM>
-$zstatus = 150372762,ztrp+2^ztrp,%GTM-E-ERRWZTRAP, Error while processing $ZTRAP,-GTM-E-LVUNDEF, Undefined local variable: x
+$zstatus = 150372762,ztrp+2^ztrp,%YDB-E-ERRWZTRAP, Error while processing $ZTRAP,-YDB-E-LVUNDEF, Undefined local variable: x
 
 GTM>
 d ^zstep
 ztrap called
 zstep stops here
-$zstatus = 150372738,zstep+3^zstep,%GTM-E-ERRWEXC, Error while processing exception string,-GTM-E-LVUNDEF, Undefined local variable: x
+$zstatus = 150372738,zstep+3^zstep,%YDB-E-ERRWEXC, Error while processing exception string,-YDB-E-LVUNDEF, Undefined local variable: x
 
 GTM>
 d ^zstep1
@@ -969,7 +969,7 @@ $zstep=do zsteplabelforzstepwithoutparameter
 zstep called
 zsteplabelforzstepwithoutparame+2^zstep1
 zstep stops here
-$zstatus = 150372738,zstep+3^zstep,%GTM-E-ERRWEXC, Error while processing exception string,-GTM-E-LVUNDEF, Undefined local variable: x
+$zstatus = 150372738,zstep+3^zstep,%YDB-E-ERRWEXC, Error while processing exception string,-YDB-E-LVUNDEF, Undefined local variable: x
 
 GTM>
 endof ZTRAP testing with ZBREAK and ZSTEP
@@ -1490,11 +1490,11 @@ GTM>
 
 GTM>
 ZB average+400^avg
-%GTM-E-NOPLACE, Line specified in a ZBREAK cannot be found
+%YDB-E-NOPLACE, Line specified in a ZBREAK cannot be found
 
 GTM>
 ZB nolab^avg
-%GTM-E-NOPLACE, Line specified in a ZBREAK cannot be found
+%YDB-E-NOPLACE, Line specified in a ZBREAK cannot be found
 
 GTM>
 ZB average+1^avg
@@ -1520,7 +1520,7 @@ average^avg
 fact^factor
 GTM>
 ZB average+6^avg
-%GTM-E-NOPLACE, Line specified in a ZBREAK cannot be found
+%YDB-E-NOPLACE, Line specified in a ZBREAK cannot be found
 
 GTM>
 

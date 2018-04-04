@@ -1,4 +1,16 @@
 #!/usr/loca/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
 #
 # v5cbsu test is chosen only randomly (50% chance) everytime
 # The script output WILL NOT BE DISPLAYED in the reference file as there is only a random chance for its execution
@@ -19,7 +31,7 @@ $gtm_exe/mumps -run dump^v5cbsu dbcertify_report2.scan >&! dump_v5cbsu.out
 set noof_gvt_leaf = `$tst_awk 'BEGIN { n=0 } /GVT-Leaf/ {n++} END {print n}' dump_v5cbsu.out`
 
 set killglobal=0
-# rand.o might already exist and sometime we see %GTM-E-INVOBJ, error.
+# rand.o might already exist and sometime we see %YDB-E-INVOBJ, error.
 \rm -f rand.o >&! /dev/null
 set kill_rand=`$gtm_exe/mumps -run rand 2`
 if (1 == $kill_rand) then

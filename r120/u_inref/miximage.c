@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	*
+ * Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -46,9 +46,9 @@ ydb_status_t main(int argc, char **argv, char **envp)
 	exe_main = (exe_main_t)dlsym(RTLD_DEFAULT, argv[1]);
 	if (NULL == exe_main)
 	{
-		fprintf(stderr, "%%GTM-E-DLLNORTN, Failed to look up the location of the symbol %s\n", argv[1]);
+		fprintf(stderr, "%%YDB-E-DLLNORTN, Failed to look up the location of the symbol %s\n", argv[1]);
 		if ((fptr = dlerror()) != NULL)
-			fprintf(stderr, "%%GTM-E-TEXT, %s\n", fptr);
+			fprintf(stderr, "%%YDB-E-TEXT, %s\n", fptr);
 		return -1;
 	}
 	status = exe_main(argc, argv, envp);	/* this should issue MIXIMAGE error and exit the process */

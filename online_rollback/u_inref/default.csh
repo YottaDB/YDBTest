@@ -4,6 +4,9 @@
 # Copyright (c) 2012-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -45,7 +48,7 @@ set ts1 = `date +"%b %e %H:%M:%S"`
 echo '$gtm_tst/com/mupip_rollback.csh -backward $rlbkmethod *' >&! rlbk.outx
 $gtm_tst/com/mupip_rollback.csh -backward $rlbkmethod "*" 	>>& rlbk.outx
 # The sed expression below takes care of filtering out the SHMID field in the MUJPOOLRNDWNFL message spewed out by ROLLBACK
-$grep -E '(GTM-E-|JNLSUCCESS|ORLBKCMPLT)' rlbk.outx |& sed 's/id = [0-9]*/id = ##SHMID##/'
+$grep -E '(YDB-E-|JNLSUCCESS|ORLBKCMPLT)' rlbk.outx |& sed 's/id = [0-9]*/id = ##SHMID##/'
 sleep 1  # force time to advance to avoid overlapping syslog time stamps
 set ts2 = `date +"%b %e %H:%M:%S"`
 echo $ts2						>>&! orlbk.outx
@@ -56,7 +59,7 @@ $echoline
 echo "Rollback with -online"
 echo '$gtm_tst/com/mupip_rollback.csh -online *' 	>>& orlbk.outx
 $gtm_tst/com/mupip_rollback.csh -online "*" 		>>& orlbk.outx
-$grep -E '(GTM-E-|JNLSUCCESS|ORLBKCMPLT)' orlbk.outx
+$grep -E '(YDB-E-|JNLSUCCESS|ORLBKCMPLT)' orlbk.outx
 echo "Should see Online Rollback in syslog"
 $gtm_tst/com/getoper.csh "$ts2" "" syslog_online.txt "" "ORLBKCMPLT.*${PWD:h:h:t}"
 $tst_awk -f $gtm_tst/$tst/inref/orlbksyslogreport.awk td="${PWD:h:h:t}" syslog_online.txt

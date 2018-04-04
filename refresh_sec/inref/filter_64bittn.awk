@@ -1,3 +1,15 @@
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
 {
 ################################# scan phase block output filter ###############################
 gsub("Total blocks in database  -------[ ]*[0-9]* .0x[0-9a-z]*.","Total blocks in database  -------##SCAN_BLOCKS##",$0)
@@ -33,11 +45,11 @@ gsub("Region[$A-Za-z ]*: MUPIP REORG UPGRADE finished","Region ##REG## : MUPIP R
 gsub("Region[$A-Za-z ]*: Database is now FULLY UPGRADED","Region ##REG## : Database is now FULLY UPGRADED",$0)
 gsub("upgrade[d ]*to GT.M.*","upgrade to GT.M ##MACHTYPE##",$0)
 ########################### MUPIP upgrade/downgrade dbcertify issues filter ###########################
-gsub("%GTM-E-DBMAXREC2BIG, Maximum record size .[0-9][0-9][0-9]. is too large","%GTM-E-DBMAXREC2BIG, Maximum record size ##MAX_REC_SIZE## is too large",$0)
-gsub("%GTM-E-DBCMODBLK2BIG, Block 0x[0-9A-Z]*","%GTM-E-DBCMODBLK2BIG, Block ##BLK_NO##",$0)
-gsub("%GTM-E-DBCREC2BIG, Record with key .biggbl.[0-9]*. is length [0-9]* in block 0x[0-9A-Z]*","%GTM-E-DBCREC2BIG, Record with key ^biggbl(##KEY##) is length ##SIZE## in block ##BLOCK##",$0)
-gsub("%GTM-E-MUDWNGRDTN, Transaction number 0x[0-9A-Z]* in database [A-Za-z. ]*is too big for MUPIP ","%GTM-E-MUDWNGRDTN, Transaction number ##TN## in database ##DATAFILE## is too big for MUPIP ",$0)
-gsub("[%-]GTM-E-DYNUPGRDFAIL, Unable to dynamically upgrade block 0x[0-9A-Z]*","%GTM-E-DYNUPGRDFAIL, Unable to dynamically upgrade block ##TN##",$0)
+gsub("%YDB-E-DBMAXREC2BIG, Maximum record size .[0-9][0-9][0-9]. is too large","%YDB-E-DBMAXREC2BIG, Maximum record size ##MAX_REC_SIZE## is too large",$0)
+gsub("%YDB-E-DBCMODBLK2BIG, Block 0x[0-9A-Z]*","%YDB-E-DBCMODBLK2BIG, Block ##BLK_NO##",$0)
+gsub("%YDB-E-DBCREC2BIG, Record with key .biggbl.[0-9]*. is length [0-9]* in block 0x[0-9A-Z]*","%YDB-E-DBCREC2BIG, Record with key ^biggbl(##KEY##) is length ##SIZE## in block ##BLOCK##",$0)
+gsub("%YDB-E-MUDWNGRDTN, Transaction number 0x[0-9A-Z]* in database [A-Za-z. ]*is too big for MUPIP ","%YDB-E-MUDWNGRDTN, Transaction number ##TN## in database ##DATAFILE## is too big for MUPIP ",$0)
+gsub("[%-]YDB-E-DYNUPGRDFAIL, Unable to dynamically upgrade block 0x[0-9A-Z]*","%YDB-E-DYNUPGRDFAIL, Unable to dynamically upgrade block ##TN##",$0)
 ########################### random V4 version chosen filter ###################
 gsub("/usr/library/V4[0-9A-Z]*/[a-z][a-z][a-z]","##V4VER##",$0)
 ###########################  VMS specific filiter for mumps.gld versions ###################

@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2009, 2013 Fidelity Information Services, Inc	#
+# Copyright 2009, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -35,7 +38,7 @@ echo "-------------------------------------------------------------------"
 echo "Do updates locally to reflect them in the remote GT.CM servers"
 echo "-------------------------------------------------------------------"
 # Make small updates locally. If one of the remote GT.CM servers supports encryption, then one or more of the updates below
-# should generate GTM-E-CRYPTINIT error.
+# should generate YDB-E-CRYPTINIT error.
 $GTM << EOF >>& local_err.outx
 s ^a=10
 s ^b=10
@@ -61,7 +64,7 @@ while ($cntx <= $cnt)
 		set stat2 = $status
 		if (0 != $stat1 || 0 != $stat2) then
 			set test_failed = "TRUE"
-			echo "TEST-E-FAILED, GTM-E-CRYPTINIT was expected on ${each_gtcm_server} server logs and local log, but "
+			echo "TEST-E-FAILED, YDB-E-CRYPTINIT was expected on ${each_gtcm_server} server logs and local log, but "
 			echo "not found. Check local_err.outx and ${each_gtcm_server}_err.outx and the GT.CM server log file on "
 			echo "the server ${each_gtcm_server}"
 		endif
@@ -70,7 +73,7 @@ while ($cntx <= $cnt)
 end
 
 if ("FALSE" == "$test_failed") then
-	echo "If there are no errors above, it means the error - GTM-E-CRYPTINIT was seen wherever it is supposed to occur"
+	echo "If there are no errors above, it means the error - YDB-E-CRYPTINIT was seen wherever it is supposed to occur"
 endif
 echo "GT.CM ENCRYPTION TEST ENDS"
 $gtm_tst/com/dbcheck.csh

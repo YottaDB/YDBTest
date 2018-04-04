@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -259,9 +259,9 @@ if (! $gtm_test_jnl_nobefore) then
 	#
 endif
 foreach x ( 1 2 )
-	$grep "GTM-E-SEMWT2LONG" online${x}_loop.out >& /dev/null
+	$grep "YDB-E-SEMWT2LONG" online${x}_loop.out >& /dev/null
 	if (! $status) then
 		mv online${x}_loop.out online${x}_loop.outx
-		$grep -v -E "GTM-E-SEMWT2LONG|GTM-E-DBFILERR" online${x}_loop.outx >& online${x}_loop.out
+		$grep -v -E "YDB-E-SEMWT2LONG|YDB-E-DBFILERR" online${x}_loop.outx >& online${x}_loop.out
 	endif
 end

@@ -34,8 +34,8 @@ Rolling back on primary side
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##TEST_AWK%GTM-I-RESOLVESEQNO, Resolving until sequence number.*
-##TEST_AWK.*%GTM-E-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##TEST_AWK.*%YDB-E-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 %GTM-I-FILENOTCREATE, Lost transactions extract file lost.glo not created
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 *********************************
@@ -43,8 +43,8 @@ Backward recovery on primary side
 *********************************
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##TEST_AWK.*%GTM-E-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##TEST_AWK.*%YDB-E-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 PASS
 ##SOURCE_PATH##/mupip

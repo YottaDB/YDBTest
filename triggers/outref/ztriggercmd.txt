@@ -48,7 +48,7 @@ PASS:^zt(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27
 ^fired("+1^lvntest#")=1
 ###################################################################
 Match 31+ subs
-150373282,match31subs+14^ztriggercmd,%GTM-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
+150373282,match31subs+14^ztriggercmd,%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
 ###################################################################
 $gtm_exe/mumps -run match31plusgvn^ztriggercmd
 Match GVNs longer than 31 chars
@@ -73,9 +73,9 @@ Expect one trigger to fire for the next two ztrigger cmds
 ^fired("+1^superlong22#")=1
 ###################################################################
 $gtm_exe/mumps -run matchoflow^ztriggercmd
-ZSTATUS=matchoflow+10^ztriggercmd,%GTM-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%GTM-I-GVIS, 		Global variable: ^zt("oflowkey","aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+ZSTATUS=matchoflow+10^ztriggercmd,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%GTM-I-GVIS, 		Global variable: ^zt("oflowkey","aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
 Over flow the subscripts in the ztrigger command
-150372986,matchoflow+15^ztriggercmd,%GTM-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%GTM-I-GVIS, 		Global variable: ^zt("oflowkey","baaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+150372986,matchoflow+15^ztriggercmd,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%GTM-I-GVIS, 		Global variable: ^zt("oflowkey","baaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
 ###################################################################
 Test non-existent triggers
 ###################################################################
@@ -96,24 +96,24 @@ The trigger twork# is doing ZTR
 	twork+7^twork	+1^twork#	exec+22^ztriggercmd	ztriggercmd+4^ztriggercmd
 ###################################################################
 Inspect ISVs while you're at it
-$ZSTATUS=ztriggerop+1^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztriggerop+2^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztvalue+1^inspectISV,%GTM-E-SETINSETTRIGONLY, ISV $ZTVALUE can only be modified in a 'SET' type trigger
-$ZSTATUS=ztvalue+2^inspectISV,%GTM-E-SETINSETTRIGONLY, ISV $ZTVALUE can only be modified in a 'SET' type trigger
-$ZSTATUS=ztoldval+1^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztoldval+2^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztdata+1^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztdata+2^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztupdate+1^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztupdate+2^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztdelim+1^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztdelim+2^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztlevel+1^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztlevel+2^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztcode+1^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztcode+2^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztname+1^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztname+2^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztriggerop+1^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztriggerop+2^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztvalue+1^inspectISV,%YDB-E-SETINSETTRIGONLY, ISV $ZTVALUE can only be modified in a 'SET' type trigger
+$ZSTATUS=ztvalue+2^inspectISV,%YDB-E-SETINSETTRIGONLY, ISV $ZTVALUE can only be modified in a 'SET' type trigger
+$ZSTATUS=ztoldval+1^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztoldval+2^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztdata+1^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztdata+2^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztupdate+1^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztupdate+2^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztdelim+1^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztdelim+2^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztlevel+1^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztlevel+2^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztcode+1^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztcode+2^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztname+1^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztname+2^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
 ###################################################################
 Test local variables inside the trigger
 PASS:^fired("+1^shortlvntest#")
@@ -130,26 +130,26 @@ repeat, but alternate between ztrigger and updating the GVN
 ###################################################################
 $gtm_exe/mumps -run maxtrignest^ztriggercmd
 Test for MAXTRIGNEST with ztrigger
-150381650,+1^ztriggerloop#,%GTM-E-MAXTRIGNEST, Maximum trigger nesting level (127) exceeded
+150381650,+1^ztriggerloop#,%YDB-E-MAXTRIGNEST, Maximum trigger nesting level (127) exceeded
 ^fired("+1^ztriggerloop#")=127
 1_ZTR_+1^ztriggerloop#_1_^fired("+1^ztriggerloop#")__0
 127_ZTR_+1^ztriggerloop#_127_^fired("+1^ztriggerloop#")__0
 
 Repeat, but alternate between ztrigger and updating the GVN
-150381650,ztriggerloop+3^ztriggercmd,%GTM-E-MAXTRIGNEST, Maximum trigger nesting level (127) exceeded
+150381650,ztriggerloop+3^ztriggercmd,%YDB-E-MAXTRIGNEST, Maximum trigger nesting level (127) exceeded
 ^fired("+1^ztriggerloop2#")=127
 
 
 ###################################################################
 $gtm_exe/mumps -run maxtrignest2^ztriggercmd
 Test for MAXTRIGNEST with ztrigger
-150381650,+1^ztriggerloop#,%GTM-E-MAXTRIGNEST, Maximum trigger nesting level (127) exceeded
+150381650,+1^ztriggerloop#,%YDB-E-MAXTRIGNEST, Maximum trigger nesting level (127) exceeded
 ^fired("+1^ztriggerloop#")=127
 1_ZTR_+1^ztriggerloop#_1_^fired("+1^ztriggerloop#")__0
 127_ZTR_+1^ztriggerloop#_127_^fired("+1^ztriggerloop#")__0
 
 Repeat, but alternate between ztrigger and updating the GVN
-150381650,ztriggerloop+3^ztriggercmd,%GTM-E-MAXTRIGNEST, Maximum trigger nesting level (127) exceeded
+150381650,ztriggerloop+3^ztriggercmd,%YDB-E-MAXTRIGNEST, Maximum trigger nesting level (127) exceeded
 1_ZTR_+1^ztriggerloop2#_1_^fired("+1^ztriggerloop2#")__0
 127_ZTR_+1^ztriggerloop2#_127_^fired("+1^ztriggerloop2#")__0
 ^fired("+1^ztriggerloop2#")=127
@@ -167,41 +167,41 @@ No errors detected by integ.
 No errors detected by integ.
 ##SUSPEND_OUTPUT NON_REPLIC
 ##TEST_AWK##TEST_HOST_SHORT##:##REMOTE_TEST_PATH##/RCVR[_0-9]*.log.updproc
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztriggerop+1^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztriggerop+2^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztvalue+1^inspectISV,%GTM-E-SETINSETTRIGONLY, ISV $ZTVALUE can only be modified in a 'SET' type trigger
-$ZSTATUS=ztvalue+2^inspectISV,%GTM-E-SETINSETTRIGONLY, ISV $ZTVALUE can only be modified in a 'SET' type trigger
-$ZSTATUS=ztoldval+1^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztoldval+2^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztdata+1^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztdata+2^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztupdate+1^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztupdate+2^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztdelim+1^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztdelim+2^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztlevel+1^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztlevel+2^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztcode+1^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztcode+2^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztname+1^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-$ZSTATUS=ztname+2^inspectISV,%GTM-E-SVNOSET, Cannot SET this special variable
-150381650,+1^ztriggerloop#,%GTM-E-MAXTRIGNEST, Maximum trigger nesting level (127) exceeded
-150381650,ztriggerloop+3^ztriggercmd,%GTM-E-MAXTRIGNEST, Maximum trigger nesting level (127) exceeded
-150381650,+1^ztriggerloop#,%GTM-E-MAXTRIGNEST, Maximum trigger nesting level (127) exceeded
-150381650,ztriggerloop+3^ztriggercmd,%GTM-E-MAXTRIGNEST, Maximum trigger nesting level (127) exceeded
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztriggerop+1^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztriggerop+2^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztvalue+1^inspectISV,%YDB-E-SETINSETTRIGONLY, ISV $ZTVALUE can only be modified in a 'SET' type trigger
+$ZSTATUS=ztvalue+2^inspectISV,%YDB-E-SETINSETTRIGONLY, ISV $ZTVALUE can only be modified in a 'SET' type trigger
+$ZSTATUS=ztoldval+1^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztoldval+2^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztdata+1^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztdata+2^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztupdate+1^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztupdate+2^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztdelim+1^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztdelim+2^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztlevel+1^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztlevel+2^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztcode+1^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztcode+2^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztname+1^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+$ZSTATUS=ztname+2^inspectISV,%YDB-E-SVNOSET, Cannot SET this special variable
+150381650,+1^ztriggerloop#,%YDB-E-MAXTRIGNEST, Maximum trigger nesting level (127) exceeded
+150381650,ztriggerloop+3^ztriggercmd,%YDB-E-MAXTRIGNEST, Maximum trigger nesting level (127) exceeded
+150381650,+1^ztriggerloop#,%YDB-E-MAXTRIGNEST, Maximum trigger nesting level (127) exceeded
+150381650,ztriggerloop+3^ztriggercmd,%YDB-E-MAXTRIGNEST, Maximum trigger nesting level (127) exceeded

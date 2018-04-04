@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -87,7 +87,7 @@ $MSR RUN INST2 "set msr_dont_trace ; touch bkgrndjobs.stop ; $gtm_tst/com/wait_f
 
 # Check for expected errors in the background job (gtm8023__bgprocess.csh)
 echo "# The below two errors should have happened. Make sure they did"
-# gtm8023.m should have encountered GTM-E-SCNDDBNOUPD attempting to do an update when the instance is secondary
+# gtm8023.m should have encountered YDB-E-SCNDDBNOUPD attempting to do an update when the instance is secondary
 $MSR RUN INST2 "$msr_err_chk bgmumps1.out SCNDDBNOUPD"
 $gtm_tst/com/knownerror.csh $msr_execute_last_out "SCNDDBNOUPD"
 

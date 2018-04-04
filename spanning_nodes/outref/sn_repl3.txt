@@ -35,7 +35,7 @@ No errors detected by integ.
 ==Executing MULTISITE_REPLIC 'RUN INST2 set update_log = `ls RCVR_*.updproc`; $gtm_tst/com/check_error_exist.csh $update_log REC2BIG; $gtm_tst/com/backup_dbjnl.csh record1 "$update_log *dat *.mjl* *.gld" mv'==
 ----------
 Error REC2BIG seen in ##FILTERED##RCVR_##TIMESTAMP##.log.updproc as expected:
-##TEST_AWK%GTM-E-REC2BIG, Record size \(1\) is greater than maximum \(0\) for region: [A-Z]*
+##TEST_AWK%YDB-E-REC2BIG, Record size \(1\) is greater than maximum \(0\) for region: [A-Z]*
 ----------
 
 ###################################################################
@@ -72,7 +72,7 @@ No errors detected by integ.
 ==Executing MULTISITE_REPLIC 'RUN INST2 set update_log = `ls RCVR_*.updproc`; $gtm_tst/com/check_error_exist.csh $update_log REC2BIG; $gtm_tst/com/backup_dbjnl.csh record2 "$update_log *dat *.mjl* *.gld" mv'==
 ----------
 Error REC2BIG seen in ##FILTERED##RCVR_##TIMESTAMP##.log.updproc as expected:
-##TEST_AWK%GTM-E-REC2BIG, Record size \(256\) is greater than maximum \(255\) for region: [A-Z]*
+##TEST_AWK%YDB-E-REC2BIG, Record size \(256\) is greater than maximum \(255\) for region: [A-Z]*
 ----------
 
 ###################################################################
@@ -109,6 +109,6 @@ No errors detected by integ.
 ==Executing MULTISITE_REPLIC 'RUN INST2 set update_log = `ls RCVR_*.updproc`; $gtm_tst/com/check_error_exist.csh $update_log REC2BIG; $gtm_tst/com/backup_dbjnl.csh record3 "$update_log *dat *.mjl* *.gld" mv'==
 ----------
 Error REC2BIG seen in ##FILTERED##RCVR_##TIMESTAMP##.log.updproc as expected:
-##TEST_AWK%GTM-E-REC2BIG, Record size \(65025\) is greater than maximum \(65024\) for region: [A-Z]*
+##TEST_AWK%YDB-E-REC2BIG, Record size \(65025\) is greater than maximum \(65024\) for region: [A-Z]*
 ----------
 

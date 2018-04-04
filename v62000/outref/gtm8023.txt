@@ -31,7 +31,7 @@ Check ##FILTERED##ACTIVATE_##TIMESTAMP##.out
 ==Executing MULTISITE_REPLIC 'RUN INST2 ##TEST_COM_PATH##/check_error_exist.csh ##FILTERED##ACTIVATE_##TIMESTAMP##.out ACTIVATEFAIL'==
 ----------
 Error ACTIVATEFAIL seen in ##FILTERED##ACTIVATE_##TIMESTAMP##.out as expected:
-%GTM-E-ACTIVATEFAIL, Cannot activate passive source server on instance INSTANCE1 while a receiver server and/or update process is running
+%YDB-E-ACTIVATEFAIL, Cannot activate passive source server on instance INSTANCE1 while a receiver server and/or update process is running
 ----------
 # Kill only the receiver server and let the update process run
 # Expect ACTIVATEFAIL error, as update process is still running in INST2
@@ -43,7 +43,7 @@ Check ##FILTERED##ACTIVATE_##TIMESTAMP##.out
 ==Executing MULTISITE_REPLIC 'RUN INST2 ##TEST_COM_PATH##/check_error_exist.csh ##FILTERED##ACTIVATE_##TIMESTAMP##.out ACTIVATEFAIL'==
 ----------
 Error ACTIVATEFAIL seen in ##FILTERED##ACTIVATE_##TIMESTAMP##.out as expected:
-%GTM-E-ACTIVATEFAIL, Cannot activate passive source server on instance INSTANCE1 while a receiver server and/or update process is running
+%YDB-E-ACTIVATEFAIL, Cannot activate passive source server on instance INSTANCE1 while a receiver server and/or update process is running
 ----------
 # Restart the receiver server to have a clean shutdown
 ==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP replic -receiver -start -listen=__SRC_PORTNO__ -log=receiver_restart.log'==
@@ -60,7 +60,7 @@ Error ACTIVATEFAIL seen in ##FILTERED##ACTIVATE_##TIMESTAMP##.out as expected:
 ==Executing MULTISITE_REPLIC 'RUN INST2 ##TEST_COM_PATH##/check_error_exist.csh bgmumps1.out SCNDDBNOUPD'==
 ----------
 Error SCNDDBNOUPD seen in bgmumps1.out as expected:
-STAT=gtm8023+2^gtm8023,%GTM-E-SCNDDBNOUPD, Database Updates not allowed on the secondary
+STAT=gtm8023+2^gtm8023,%YDB-E-SCNDDBNOUPD, Database Updates not allowed on the secondary
 ----------
 ==Executing MULTISITE_REPLIC 'RUN INST2 ##TEST_COM_PATH##/check_error_exist.csh bgprocess.out E-NOTFOUND'==
 ----------

@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -107,9 +107,9 @@ $MSR START INST3 INST4
 get_msrtime
 echo "# Anything that requires examining triggers should issue NEEDTRIGUPGRD error"
 $MSR RUN INST3 'set msr_dont_chk_stat ; echo "" | $MUPIP trigger -select '
-$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-NEEDTRIGUPGRD
+$gtm_tst/com/knownerror.csh $msr_execute_last_out YDB-E-NEEDTRIGUPGRD
 $MSR RUN INST3 'set msr_dont_chk_stat ; $gtm_exe/mumps -run %XCMD "set ^GBL(1)=1"'
-$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-NEEDTRIGUPGRD
+$gtm_tst/com/knownerror.csh $msr_execute_last_out YDB-E-NEEDTRIGUPGRD
 echo "# The same commands should work fine after trigger -upgrade"
 $MSR RUN INST3 '$MUPIP trigger -upgrade'
 echo "# trigger -upgrade should cut new journal file with no back link"
@@ -125,12 +125,12 @@ $MSR RUN INST3 'echo "" | $MUPIP trigger -select '
 echo "# When the new trigger gets replicated to the receiver, updproc would exit with NEEDTRIGUPGRD"
 $MSR RUN INST4 "set msr_dont_trace ; $gtm_tst/com/wait_for_log.csh -log RCVR_${time_msr}.log.updproc -message NEEDTRIGUPGRD"
 $MSR RUN INST4 "$msr_err_chk RCVR_$time_msr.log.updproc NEEDTRIGUPGRD"
-$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-NEEDTRIGUPGRD
+$gtm_tst/com/knownerror.csh $msr_execute_last_out YDB-E-NEEDTRIGUPGRD
 echo "# Simply restarting update process will still result in the same NEEDTRIGUPGRD error"
 $MSR RUN INST4 '$MUPIP replicate -receiver -start -updateonly'
 $MSR RUN INST4 "set msr_dont_trace ; $gtm_tst/com/wait_for_log.csh -log RCVR_${time_msr}.log.updproc -message NEEDTRIGUPGRD"
 $MSR RUN INST4 "$msr_err_chk RCVR_$time_msr.log.updproc NEEDTRIGUPGRD"
-$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-NEEDTRIGUPGRD
+$gtm_tst/com/knownerror.csh $msr_execute_last_out YDB-E-NEEDTRIGUPGRD
 echo "# Restarting update process after upgrading the triggers on the reciever side should work fine"
 $MSR RUN INST4 '$MUPIP trigger -upgrade'
 $MSR RUN INST4 '$MUPIP replicate -receiver -start -updateonly'

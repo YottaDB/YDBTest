@@ -1,3 +1,14 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 c003412	;
 	; C9L05-003412 Test that the GVIS secondary error (as part of GVSUBOFLOW error) does not print garbage
 	;
@@ -25,7 +36,7 @@ c003412	;
 ztr	;
 	; $ZSTATUS will be a long line composed of the string concatenation of the below 3 lines
 	;	150372986,c003412+18^c003412,
-	;	%GTM-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,
+	;	%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,
 	;	%GTM-I-GVIS, 		Global variable: ^ZGBL(1,$C(0,2)_"."_$C(0,0,0,0,0,0,0,2))
 	; Out of this, we are only interested in the gvn starting with ^ZGBL as that is what will change with different keysizes
 	; So print just that below.

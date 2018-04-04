@@ -1,19 +1,19 @@
 ##TEST_HOST_SHORT##:##TEST_PATH##/gtm_repl_instance/gtm_repl_instance_DBCERTIFY.log
-%GTM-E-BADDBVER, Incorrect database version: 
+%YDB-E-BADDBVER, Incorrect database version: 
 ##TEST_HOST_SHORT##:##TEST_PATH##/gtm_repl_instance/gtm_repl_instance_GTCM_GNP_SERVER2.log
 %GTM-F-FORCEDHALT, Image HALTed by MUPIP STOP
 ##TEST_HOST_SHORT##:##TEST_PATH##/gtm_repl_instance/gtm_repl_instance_GTM.log
-##TEST_AWK%GTM-E-LOGTOOLONG, Environment variable .gtm_repl_instance is too long. Maximum length allowed is [0-9][0-9]* bytes.
+##TEST_AWK%YDB-E-LOGTOOLONG, Environment variable .gtm_repl_instance is too long. Maximum length allowed is [0-9][0-9]* bytes.
 ##TEST_HOST_SHORT##:##TEST_PATH##/gtm_repl_instance/gtm_repl_instance_MUPIP_DOWNGRADE.log
-##TEST_AWK%GTM-E-SYSCALL, Error received from system call ftok.. -- called from module .*/mu_all_version_standalone.c at line [1-9][0-9]*
+##TEST_AWK%YDB-E-SYSCALL, Error received from system call ftok.. -- called from module .*/mu_all_version_standalone.c at line [1-9][0-9]*
 ##TEST_AWK.*No such file or directory.*
 ##TEST_HOST_SHORT##:##TEST_PATH##/gtm_repl_instance/gtm_repl_instance_MUPIP_JOURNAL_ROLLBACK.log
-##TEST_AWK%GTM-E-LOGTOOLONG, Environment variable .gtm_repl_instance is too long. Maximum length allowed is [0-9][0-9]* bytes.
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##TEST_AWK%YDB-E-LOGTOOLONG, Environment variable .gtm_repl_instance is too long. Maximum length allowed is [0-9][0-9]* bytes.
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##TEST_HOST_SHORT##:##TEST_PATH##/gtm_repl_instance/gtm_repl_instance_MUPIP_REPLIC_SHOWBACKLOG.log
-##TEST_AWK%GTM-E-LOGTOOLONG, Environment variable .gtm_repl_instance is too long. Maximum length allowed is [0-9][0-9]* bytes.
+##TEST_AWK%YDB-E-LOGTOOLONG, Environment variable .gtm_repl_instance is too long. Maximum length allowed is [0-9][0-9]* bytes.
 ##TEST_HOST_SHORT##:##TEST_PATH##/gtm_repl_instance/gtm_repl_instance_MUPIP_RUNDOWN.log
 %GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
 ##TEST_HOST_SHORT##:##TEST_PATH##/gtm_repl_instance/gtm_repl_instance_MUPIP_UPGRADE.log
-##TEST_AWK%GTM-E-SYSCALL, Error received from system call ftok.. -- called from module .*/mu_all_version_standalone.c at line [1-9][0-9]*
+##TEST_AWK%YDB-E-SYSCALL, Error received from system call ftok.. -- called from module .*/mu_all_version_standalone.c at line [1-9][0-9]*
 ##TEST_AWK.*No such file or directory.*

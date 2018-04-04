@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2006, 2013 Fidelity Information Services, Inc	#
+# Copyright 2006, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -54,7 +57,7 @@ cat << EOF
 ##  Create a V4 database and populate it with data
 ##  Upgrade and stop at mupip upgrade mumps.dat  /* blocks to upgrade is non zero now */
 ##  mupip endiancvt -outdb mumps_cvt.dat mumps.dat
-##      -> The attempt should fail issuing GTM-E-NOENDIANCVT, Unable to convert the endian format of file mumps.dat due to some blocks are not upgraded to the current version
+##      -> The attempt should fail issuing YDB-E-NOENDIANCVT, Unable to convert the endian format of file mumps.dat due to some blocks are not upgraded to the current version
 ##  Run mupip reorg -upgrade -region DEFAULT /* blocks to upgrade is zero now */
 ##  mupip endiancvt -outdb mumps_cvt.dat mumps.dat
 ##      --> Should be successful

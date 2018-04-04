@@ -45,7 +45,7 @@ Shutting down Primary Source Server Server in ##FILTERED##_REMOTE_TEST_PATH_/ins
 ==Executing MULTISITE_REPLIC 'RUN INST3 ##TEST_COM_PATH##/check_error_exist.csh ##FILTERED##RCVR_##TIMESTAMP##.log INSUNKNOWN'==
 ----------
 Error INSUNKNOWN seen in ##FILTERED##RCVR_##TIMESTAMP##.log as expected:
-%GTM-E-INSUNKNOWN, Supplementary Instance INSTANCE3 has no instance definition for non-Supplementary Instance INSTANCE1
+%YDB-E-INSUNKNOWN, Supplementary Instance INSTANCE3 has no instance definition for non-Supplementary Instance INSTANCE1
 ----------
 ==Executing MULTISITE_REPLIC 'RUN INST3 set msr_dont_chk_stat ; $MUPIP replic -receiver -shutdown -timeout=0 >&! updateproc_shut_INST1INST3.out'==
 ==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST3'==

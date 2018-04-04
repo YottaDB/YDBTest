@@ -1,7 +1,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
-; All rights reserved.	     	  	     			;
+; Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -62,7 +62,7 @@ print(linec,x) ; write one line of output (format: line_no length line)
         ;if 70<$L(x) write $E(x,1,50),"<...length=",$L(x),"...> ",!
         w $$shrnkstr^shrnkfil(x),!
         quit
-dirdev(device) ; Will print certain fields of dir/full output 
+dirdev(device) ; Will print certain fields of dir/full output
 	new prevdev
 	set prevdev=$IO
 	use $PRINCIPAL
@@ -86,7 +86,7 @@ unixdir	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	close tmpfile:(DELETE)
 	quit
 vmsdir	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	; the fields from dir/full output that we are interested in: 
+	; the fields from dir/full output that we are interested in:
 	set inter(1)="File attributes"
 	set inter(2)="Record format"
 	set inter(3)="Record attributes"

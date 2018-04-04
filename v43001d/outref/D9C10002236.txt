@@ -8,11 +8,11 @@ GTM>
 		S name(i)=$NA(|"Extref for local"|local("Shouldn't work") S i=i+1 ; float expressions in subscript
 		              ^-----
 		At column 16, line 33, source module ##IN_TEST_PATH##/inref/d002236.m
-%GTM-E-VAREXPECTED, Variable expected in this context
+%YDB-E-VAREXPECTED, Variable expected in this context
 		S name(i)=$NA(["Another Extref for local"]local("Shouldn't work") S i=i+1 ; float expressions in subscript
 		              ^-----
 		At column 16, line 34, source module ##IN_TEST_PATH##/inref/d002236.m
-%GTM-E-VAREXPECTED, Variable expected in this context
+%YDB-E-VAREXPECTED, Variable expected in this context
 
 TESTING $NAME
 name(1)="^global(9999,.1234,""String Subscript"",""Longer String Subscript"")"
@@ -22,7 +22,7 @@ name(4)="^global"
 name(5)="^global(9999,.1234,""String Subscript"",""Same Depth As Naked"")"
 name(6)="^global(9999,.1234,""String Subscript"",""Depth Larger Than # Of SUBSC In Naked"")"
 name(7)="^global(9999,.1234,""String Subscript"",""Largest Possible Depth"")"
-name(8)="150376002,d002236+13^d002236,%GTM-E-FNNAMENEG, Depth argument to $NAME cannot be negative"
+name(8)="150376002,d002236+13^d002236,%YDB-E-FNNAMENEG, Depth argument to $NAME cannot be negative"
 name(9)="^[""EXTREF [] Form"",""Non Empty Second Arg""]global"
 name(10)="^[""EXTREF [] Form"",1234]global"
 name(11)="^[5678,1234]global"
@@ -33,15 +33,15 @@ name(15)="^|""EXTREF || Form"",""Non Empty Second Arg""|global"
 name(16)="^global(9999,.1234,""String Subscript"",""See If Extref Messed Up Naked"")"
 name(17)="^global(9999,.1234,""String Subscript"",""B COMES AFTER A"")"
 name(18)="^global(9999,.1234,""String Subscript"",""                                                                                I AM RIGHT JUSTIFIED"")"
-name(19)="150373290,d002236+24^d002236,%GTM-E-MAXSTRLEN, Maximum string length exceeded"
+name(19)="150373290,d002236+24^d002236,%YDB-E-MAXSTRLEN, Maximum string length exceeded"
 name(20)="local(200000000,100000000,-100000000,""                     100000000"")"
 name(21)="local(246913579.975308642,-123456789.987654321,123456789.987654321,""           123456789.987654321"")"
 name(22)="local(246913579.975308642,-123456789.987654321,123456789.987654321,""           123456789.987654321"")"
 name(23)="local"
 name(24)="local(246913579.975308642,-123456789.987654321,123456789.987654321,""           123456789.987654321"")"
 name(25)="local(246913579.975308642)"
-name(26)="150373866,d002236+32^d002236,%GTM-E-VAREXPECTED, Variable expected in this context"
-name(27)="150373866,d002236+33^d002236,%GTM-E-VAREXPECTED, Variable expected in this context"
+name(26)="150373866,d002236+32^d002236,%YDB-E-VAREXPECTED, Variable expected in this context"
+name(27)="150373866,d002236+33^d002236,%YDB-E-VAREXPECTED, Variable expected in this context"
 
 GTM>
 ##SOURCE_PATH##/mupip

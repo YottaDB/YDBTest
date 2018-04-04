@@ -191,12 +191,12 @@ done	5:1	threadnoparm+20^job	        Indirection	unprimed+1^multilinezgoto	test+
 	6:1	threadnoparm+20^job	        Indirection	unprimed+1^multilinezgoto	test+13^multilinezgoto	+5^mline#2#	label3+1^mline#2#
 	zgoto $zlevel:^@$ZTNAme
 2   mline#2#
-150373978,+2^mline#2#,%GTM-E-ZLINKFILE, Error while zlinking "mline#3#",%GTM-E-FILENOTFND, File mline#3# not found
+150373978,+2^mline#2#,%YDB-E-ZLINKFILE, Error while zlinking "mline#3#",%YDB-E-FILENOTFND, File mline#3# not found
 ###################################################################
 ###################################################################
 zgoto ^mline#3# from non-trigger land
 $ZLevel = 4	$ZTLevel = 0
-150373978,notfromtrig+5^multilinezgoto,%GTM-E-ZLINKFILE, Error while zlinking "mline#3#",%GTM-E-FILENOTFND, File mline#3# not found
+150373978,notfromtrig+5^multilinezgoto,%YDB-E-ZLINKFILE, Error while zlinking "mline#3#",%YDB-E-FILENOTFND, File mline#3# not found
 ###################################################################
 ###################################################################
 lock +^%jobwait(1)
@@ -264,5 +264,5 @@ Dropping down from 7 to 3
 My nonce is too high
 ###################################################################
 ##TEST_AWK.*/unprimed_multilinezgoto.mjo1
-150373978,+2^mline#2#,%GTM-E-ZLINKFILE, Error while zlinking "mline#3#",%GTM-E-FILENOTFND, File mline#3# not found
-150373978,notfromtrig+5^multilinezgoto,%GTM-E-ZLINKFILE, Error while zlinking "mline#3#",%GTM-E-FILENOTFND, File mline#3# not found
+150373978,+2^mline#2#,%YDB-E-ZLINKFILE, Error while zlinking "mline#3#",%YDB-E-FILENOTFND, File mline#3# not found
+150373978,notfromtrig+5^multilinezgoto,%YDB-E-ZLINKFILE, Error while zlinking "mline#3#",%YDB-E-FILENOTFND, File mline#3# not found

@@ -24,17 +24,17 @@ journal recover without gtm_passwd and expect to error out
 -----------------------------------------------------------
 unsetenv gtm_passwd
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
+%YDB-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
 %GTM-I-MUSTANDALONE, Could not get exclusive access to ##TEST_PATH##/mumps.dat
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 -----------------------------------------------------------
 journal recover with bad gtm_passwd and expect to error out
 -----------------------------------------------------------
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##TEST_AWK%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. .*
+##TEST_AWK%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. .*
 %GTM-I-MUSTANDALONE, Could not get exclusive access to ##TEST_PATH##/mumps.dat
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 -----------------------------------------------------------
 journal recover with correct gtm_passwd and expect to work

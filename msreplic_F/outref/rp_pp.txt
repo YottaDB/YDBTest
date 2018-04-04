@@ -27,11 +27,11 @@ mumps.dat
 ##TEST_AWK==Executing MULTISITE_REPLIC 'RUN INST2 .*START_##TIMESTAMP##.out PRIMARYNOTROOT REPLINSTSECNONE'==
 ----------
 Error PRIMARYNOTROOT seen in ##TEST_AWK.*out as expected:
-%GTM-E-PRIMARYNOTROOT, Attempted operation not valid on non-root primary instance INSTANCE2
+%YDB-E-PRIMARYNOTROOT, Attempted operation not valid on non-root primary instance INSTANCE2
 ----------
 ----------
 Error REPLINSTSECNONE seen in ##TEST_AWK.*out as expected:
-##TEST_AWK.GTM-E-REPLINSTSECNONE, No information found for secondary instance INSTANCE3 in instance file .*/instance2/mumps.repl
+##TEST_AWK.YDB-E-REPLINSTSECNONE, No information found for secondary instance INSTANCE3 in instance file .*/instance2/mumps.repl
 ----------
 # --> Test PRIMARYNOTROOT when there is already a propagating source server running on INST1,
  so it cannot be a rootprimary (unless that is activated as rootprimary)
@@ -40,11 +40,11 @@ Error REPLINSTSECNONE seen in ##TEST_AWK.*out as expected:
 ==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST4 RP'==
 ----------
 Error PRIMARYNOTROOT seen in ##FILTERED##START_##TIMESTAMP##.out as expected:
-%GTM-E-PRIMARYNOTROOT, Attempted operation not valid on non-root primary instance INSTANCE1
+%YDB-E-PRIMARYNOTROOT, Attempted operation not valid on non-root primary instance INSTANCE1
 ----------
 ----------
 Error REPLINSTSECNONE seen in ##FILTERED##START_##TIMESTAMP##.out as expected:
-%GTM-E-REPLINSTSECNONE, No information found for secondary instance INSTANCE4 in instance file ##TEST_PATH##/mumps.repl
+%YDB-E-REPLINSTSECNONE, No information found for secondary instance INSTANCE4 in instance file ##TEST_PATH##/mumps.repl
 ----------
 ==Executing MULTISITE_REPLIC 'ACTIVATE INST1 INST2 RP'==
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating ACTIVATE operation on source server pid [##PID##] for secondary instance [INSTANCE2]
@@ -52,11 +52,11 @@ Error REPLINSTSECNONE seen in ##FILTERED##START_##TIMESTAMP##.out as expected:
 ==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST3 PP'==
 ----------
 Error PRIMARYISROOT seen in ##FILTERED##START_##TIMESTAMP##.out as expected:
-%GTM-E-PRIMARYISROOT, Attempted operation not valid on root primary instance INSTANCE1
+%YDB-E-PRIMARYISROOT, Attempted operation not valid on root primary instance INSTANCE1
 ----------
 ----------
 Error REPLINSTSECNONE seen in ##FILTERED##START_##TIMESTAMP##.out as expected:
-%GTM-E-REPLINSTSECNONE, No information found for secondary instance INSTANCE3 in instance file ##TEST_PATH##/mumps.repl
+%YDB-E-REPLINSTSECNONE, No information found for secondary instance INSTANCE3 in instance file ##TEST_PATH##/mumps.repl
 ----------
 ==Executing MULTISITE_REPLIC 'START INST2 INST3 PP'==
 Starting Primary Source Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
@@ -112,5 +112,5 @@ No errors detected by integ.
 ##REMOTE_SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
 ##TEST_AWK.*
-%GTM-E-PRIMARYNOTROOT, Attempted operation not valid on non-root primary instance INSTANCE2
-##TEST_AWK.GTM-E-REPLINSTSECNONE, No information found for secondary instance INSTANCE3 in instance file .*/instance2/mumps.repl
+%YDB-E-PRIMARYNOTROOT, Attempted operation not valid on non-root primary instance INSTANCE2
+##TEST_AWK.YDB-E-REPLINSTSECNONE, No information found for secondary instance INSTANCE3 in instance file .*/instance2/mumps.repl

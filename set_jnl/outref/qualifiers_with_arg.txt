@@ -19,7 +19,7 @@ Test Case 23
 ALIGNSIZE option
 ##SOURCE_PATH##/mupip set -journal=[no]before,alignsize=255 -file mumps.dat
 %GTM-W-JNLMINALIGN, Journal Record Alignment 255 is less than the minimum value of 4096
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 journal alignsize expected 4096 blocks: actual 4096
 ##SOURCE_PATH##/mupip set -journal=[no]before,alignsize=4096 -file mumps.dat
 ##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
@@ -37,7 +37,7 @@ journal alignsize expected 4096 blocks: actual 4096
 journal alignsize expected 4194304 blocks: actual 4194304
 ##SOURCE_PATH##/mupip set -journal=[no]before,alignsize=4194305 -file mumps.dat
 ALIGNSIZE cannot be greater than 4194304
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 ##SOURCE_PATH##/mupip set -journal=[no]before,alignsize=4097 -file mumps.dat
 %GTM-I-JNLALIGNSZCHG, Journal ALIGNSIZE is rounded up to 8192 blocks (closest next higher power of two)
 ##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
@@ -46,13 +46,13 @@ ALIGNSIZE cannot be greater than 4194304
 ============================================================
 Change extension to be 1, so that all values of allocation and AutoSwitchLimit are allowed:
 ##SOURCE_PATH##/mupip set -journal=[no]before,auto=8388608,extension=1 -file mumps.dat
-%GTM-E-JNLINVSWITCHLMT, Journal AUTOSWITCHLIMIT [8388608] falls outside of allowed limits [16384] and [8388607]
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-JNLINVSWITCHLMT, Journal AUTOSWITCHLIMIT [8388608] falls outside of allowed limits [16384] and [8388607]
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 Test Case 24
 ALLOCATION option
 ##SOURCE_PATH##/mupip set -journal=[no]before,allocation=199 -file mumps.dat
 %GTM-W-JNLINVALLOC, Journal file allocation 199 is not within the valid range of 2048 to 8388607.  Journal file not created.
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 journal allocation: expected 2048 blocks : actual 2048
 ##SOURCE_PATH##/mupip set -journal=[no]before,allocation=2048 -file mumps.dat
 ##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
@@ -70,7 +70,7 @@ journal allocation: expected 32768 blocks : actual 32768
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 ##SOURCE_PATH##/mupip set -journal=[no]before,allocation=8388608 -file mumps.dat
 %GTM-W-JNLINVALLOC, Journal file allocation 8388608 is not within the valid range of 2048 to 8388607.  Journal file not created.
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -83,8 +83,8 @@ Using: ##SOURCE_PATH##/mupip
 mumps.dat
 AUTOSWITCHLIMIT option
 ##SOURCE_PATH##/mupip set -journal=[no]before,autoswitchlimit=4095 -file mumps.dat
-%GTM-E-JNLINVSWITCHLMT, Journal AUTOSWITCHLIMIT [4095] falls outside of allowed limits [16384] and [8388607]
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-JNLINVSWITCHLMT, Journal AUTOSWITCHLIMIT [4095] falls outside of allowed limits [16384] and [8388607]
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 The AUTOSWITCHLIMIT is 8386560
 ##SOURCE_PATH##/mupip set -journal=[no]before,autoswitchlimit=16384 -file mumps.dat
 ##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
@@ -103,8 +103,8 @@ The AUTOSWITCHLIMIT is 65536
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 The AUTOSWITCHLIMIT is 8386560
 ##SOURCE_PATH##/mupip set -journal=[no]before,autoswitchlimit=8388608 -file mumps.dat
-%GTM-E-JNLINVSWITCHLMT, Journal AUTOSWITCHLIMIT [8388608] falls outside of allowed limits [16384] and [8388607]
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-JNLINVSWITCHLMT, Journal AUTOSWITCHLIMIT [8388608] falls outside of allowed limits [16384] and [8388607]
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 The AUTOSWITCHLIMIT is 8386560
 ============================================================
 Test Case 26
@@ -168,7 +168,7 @@ EPOCH_INTERVAL option
 journal epoch_interval=: expected 2047 sec, but actual 2047
 ##SOURCE_PATH##/mupip set -journal=before,epoch_interval=0 -file mumps.dat
 EPOCH_INTERVAL cannot be ZERO (or negative)
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 journal epoch_interval=: expected 2047 sec, but actual 2047
 ##SOURCE_PATH##/mupip set -journal=before,epoch_interval=1 -file mumps.dat
 ##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
@@ -187,14 +187,14 @@ journal epoch_interval=: expected 600 sec, but actual 600
 journal epoch_interval=: expected 32767 sec, but actual 32767
 ##SOURCE_PATH##/mupip set -journal=before,epoch_interval=32768 -file mumps.dat
 EPOCH_INTERVAL cannot be greater than 32767
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 journal epoch_interval=: expected 32767 sec, but actual 32767
 ============================================================
 ##ALLOW_OUTPUT MM
 Test Case 28
 EXTENSION option
 ##SOURCE_PATH##/mupip set -journal=[no]before,extension=-1 -file mumps.dat
-%GTM-E-CLIERR, Unrecognized value: -1, Decimal number expected
+%YDB-E-CLIERR, Unrecognized value: -1, Decimal number expected
 journal extension=: expected 2048 blocks, but actual 2048
 ##SOURCE_PATH##/mupip set -journal=[no]before,alloc=20000,autoswitch=20000,extension=0 -file mumps.dat
 ##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
@@ -221,13 +221,13 @@ journal extension=: expected 1048575 blocks, but actual 1048575
 journal extension=: expected 1073741823 blocks, but actual 1073741823
 ##SOURCE_PATH##/mupip set -journal=[no]before,alloc=3000,auto=1049576,extension=1073741824 -file mumps.dat
 %GTM-W-JNLINVEXT, Journal file extension 1073741824 is greater than the maximum allowed size of 1073741823.  Journal file not created.
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 journal extension=: expected 1073741824 blocks, but actual 1073741823
 ============================================================
 Test Case 29
 YIELD_LIMIT option
 ##SOURCE_PATH##/mupip set -journal=[no]before,yield_limit=-1 -file mumps.dat
-%GTM-E-CLIERR, Unrecognized value: -1, Decimal number expected
+%YDB-E-CLIERR, Unrecognized value: -1, Decimal number expected
 journal yield_limit=: expected 8, but actual 8
 ##SOURCE_PATH##/mupip set -journal=[no]before,yield_limit=0 -file mumps.dat
 ##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
@@ -246,7 +246,7 @@ journal yield_limit=: expected 1024 , but actual 1024
 journal yield_limit=: expected 2048 , but actual 2048
 ##SOURCE_PATH##/mupip set -journal=[no]before,yield_limit=2049 -file mumps.dat
 YIELD_LIMIT cannot be greater than 2048
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 journal yield_limit=: expected 2048 , but actual 2048
 ============================================================
 ##SOURCE_PATH##/mupip

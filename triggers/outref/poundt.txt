@@ -201,34 +201,34 @@ Global ^
 
 GTM>
 
-%GTM-E-VAREXPECTED, Variable expected in this context
+%YDB-E-VAREXPECTED, Variable expected in this context
 	zwr ^#t
 	     ^-----
 
-%GTM-E-VAREXPECTED, Variable expected in this context
+%YDB-E-VAREXPECTED, Variable expected in this context
 	^#t
 	 ^-----
 
-%GTM-E-GBLNAME, Either an identifier or a left parenthesis is expected after a ^ in this context
+%YDB-E-GBLNAME, Either an identifier or a left parenthesis is expected after a ^ in this context
 	^#t
 	 ^-----
 
 
 GTM>
 
-%GTM-E-GBLNAME, Either an identifier or a left parenthesis is expected after a ^ in this context
+%YDB-E-GBLNAME, Either an identifier or a left parenthesis is expected after a ^ in this context
 	set ^#t("a","#LABEL")=0
 	     ^-----
 
-%GTM-E-GBLNAME, Either an identifier or a left parenthesis is expected after a ^ in this context
+%YDB-E-GBLNAME, Either an identifier or a left parenthesis is expected after a ^ in this context
 	^#t("a","#LABEL")
 	 ^-----
 
-%GTM-E-GBLNAME, Either an identifier or a left parenthesis is expected after a ^ in this context
+%YDB-E-GBLNAME, Either an identifier or a left parenthesis is expected after a ^ in this context
 	^#t("a","#LABEL")
 	 ^-----
 
-%GTM-E-GBLNAME, Either an identifier or a left parenthesis is expected after a ^ in this context
+%YDB-E-GBLNAME, Either an identifier or a left parenthesis is expected after a ^ in this context
 		At M source location +1^GTM$DMOD
 
 # DSE should be able to access ^#t records
@@ -508,7 +508,7 @@ File poundt.trg, Line 4: Added SET and/or Non-SET trigger on ^c named c#1
 
 $R after FILE is valid
 
-%GTM-E-GVNAKED, Illegal naked global reference
+%YDB-E-GVNAKED, Illegal naked global reference
 
 File poundt.trg, Line 2: SET and/or Non-SET trigger on ^a already present in trigger named a#1 - no action taken
 File poundt.trg, Line 3: SET and/or Non-SET trigger on ^b already present in trigger named b#1 - no action taken
@@ -559,7 +559,7 @@ GTM>
 
 $R after select is valid
 
-%GTM-E-GVNAKED, Illegal naked global reference
+%YDB-E-GVNAKED, Illegal naked global reference
 
 ;trigger name: a#1 (region AREG)  cycle: 1
 +^a(*) -commands=S,K -xecute="write $ztri,$char(9),$reference,!"
@@ -570,7 +570,7 @@ $R after select is valid
 
 $R after select is valid
 
-%GTM-E-GVNAKED, Illegal naked global reference
+%YDB-E-GVNAKED, Illegal naked global reference
 
 ;trigger name: a#1 (region AREG)  cycle: 1
 +^a(*) -commands=S,K -xecute="write $ztri,$char(9),$reference,!"
@@ -605,7 +605,7 @@ Added Non-SET trigger on ^z named z#1
 
 $R after ITEM add is valid
 
-%GTM-E-GVNAKED, Illegal naked global reference
+%YDB-E-GVNAKED, Illegal naked global reference
 
 Modified SET and/or Non-SET trigger on ^z named z#1
 
@@ -627,13 +627,13 @@ SET and/or Non-SET trigger on ^DONOTEXIST does not exist - no action taken
 
 $R after deleting trigger is valid
 
-%GTM-E-GVNAKED, Illegal naked global reference
+%YDB-E-GVNAKED, Illegal naked global reference
 
 Modified Non-SET trigger on ^b named b#1
 
 $R after deleting trigger is valid
 
-%GTM-E-GVNAKED, Illegal naked global reference
+%YDB-E-GVNAKED, Illegal naked global reference
 
 All existing triggers (count = 4) deleted
 

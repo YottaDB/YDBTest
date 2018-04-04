@@ -124,24 +124,24 @@ foreach var (gtm_dist $envlist)
 	# or not, we might either see ROLLBACK failing with LOGTOOLONG error or continuing with the full ROLLBACK which will fail
 	# with MUJPOOLRNDWNFL error message. Filter that out here instead of changing it in more than 50 reference files.
 	set logx = $envvar/${envvar}_MUPIP_JOURNAL_filter.logx
-	$gtm_tst/com/check_error_exist.csh $logfile "GTM-E-MUJPOOLRNDWNFL" >& $logx
+	$gtm_tst/com/check_error_exist.csh $logfile "YDB-E-MUJPOOLRNDWNFL" >& $logx
 	$corecheck "mupip_journal_rollback"
 	# Test MUPIP RUNDOWN
 	$MUPIP rundown -reg "*" -override >&! $envvar/${envvar}_MUPIP_RUNDOWN.log
 	set logfile = $envvar/${envvar}_MUPIP_RUNDOWN.log
 	# Depending on whether or not someone else is holding the ftok lock on the instance file at the same time,
 	# 	occasionally we see one of the following sets of messages.
-	# 	a) %GTM-E-CRITSEMFAIL, %GTM-E-SYSCALL and %SYSTEM-E-ENOxx messages
+	# 	a) %YDB-E-CRITSEMFAIL, %YDB-E-SYSCALL and %SYSTEM-E-ENOxx messages
 	#	b) %SYSTEM-E-ENO11 Resource temporarily unavailable
 	# Filter these out.
 	# Since the errors should not be caught by the error catching test framework, redirect the output to .logx (not .log)
 	# as otherwise we will see TEST-E-ERRORNOTSEEN messages.
 	set logx = $envvar/${envvar}_MUPIP_RUNDOWN_filter1.logx
-	$gtm_tst/com/check_error_exist.csh $logfile "GTM-E-CRITSEMFAIL" "GTM-E-SYSCALL" "SYSTEM-E-ENO" >& $logx
+	$gtm_tst/com/check_error_exist.csh $logfile "YDB-E-CRITSEMFAIL" "YDB-E-SYSCALL" "SYSTEM-E-ENO" >& $logx
 	set logx = $envvar/${envvar}_MUPIP_RUNDOWN_filter2.logx
 	$gtm_tst/com/check_error_exist.csh $logfile "SYSTEM-E-ENO11" >& $logx
 	set logx = $envvar/${envvar}_MUPIP_RUNDOWN_filter3.logx
-	$gtm_tst/com/check_error_exist.csh $logfile "GTM-E-MUJPOOLRNDWNFL" >& $logx
+	$gtm_tst/com/check_error_exist.csh $logfile "YDB-E-MUJPOOLRNDWNFL" >& $logx
 	$corecheck "mupip_rundown"
 	# Test MUPIP UPGRADE
 	echo "yes" | $MUPIP upgrade  "*" >&! $envvar/${envvar}_MUPIP_UPGRADE.log

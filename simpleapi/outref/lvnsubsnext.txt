@@ -188,7 +188,7 @@ Attempting ydb_subscript_next_s() of bad basevar (first letter in name is digit)
 ydb_subscript_next_s() [75]: 151027762,(SimpleAPI),%YDB-E-INVVARNAME, Invalid local/global/ISV variable name supplied to API call
 # Test of MAXNRSUBSCRIPTS error
 Attempting ydb_subscript_next_s() of basevar with 32 subscripts
-ydb_subscript_next_s() [87]: 150373282,(SimpleAPI),%GTM-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
+ydb_subscript_next_s() [87]: 150373282,(SimpleAPI),%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
 # Test of MINNRSUBSCRIPTS error
 Attempting ydb_subscript_next_s() of basevar with -1 subscripts
 ydb_subscript_next_s() [97]: 151027786,(SimpleAPI),%YDB-E-MINNRSUBSCRIPTS, Number of subscripts cannot be a negative number
@@ -202,7 +202,7 @@ Attempting ydb_subscript_next_s() with ret_value->buf_addr=NULL when return valu
 ydb_subscript_next_s() [148]: 151027770,(SimpleAPI),%YDB-E-PARAMINVALID, NULL ret_value->buf_addr parameter specified in ydb_subscript_next_s() call
 # Test of INVSTRLEN error
 Attempting ydb_subscript_next_s() with ret_value->len_alloc=0 : Expect INVSTRLEN error
-ydb_subscript_next_s() [160]: 150375522,(SimpleAPI),%GTM-E-INVSTRLEN, Invalid string length 0: max 0 : ret_value->len_used = 6 after call
+ydb_subscript_next_s() [160]: 150375522,(SimpleAPI),%YDB-E-INVSTRLEN, Invalid string length 0: max 0 : ret_value->len_used = 6 after call
 Attempting ydb_subscript_next_s() with ret_value->len_alloc set to value returned in ret_value->len_used after INVSTRLEN error. Expect NO error
 ydb_subscript_next_s() returned [baselv]
 # Test of SUBSARRAYNULL error

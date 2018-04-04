@@ -18,33 +18,33 @@ mumps.dat
 # 4. NODESTROY:FIFO
 ############# Encryption/decryption with SEEK #############
 # 1. SEEK:SD
-%GTM-E-CRYPTNOSEEK, SEEK disallowed on the encrypted file SEEK-SD.encr
+%YDB-E-CRYPTNOSEEK, SEEK disallowed on the encrypted file SEEK-SD.encr
 		At M source location simpleSeek+3^deviceopers
 # 2. SEEK:PRINCIPAL
-%GTM-E-CRYPTNOSEEK, SEEK disallowed on the encrypted file 0
+%YDB-E-CRYPTNOSEEK, SEEK disallowed on the encrypted file 0
 		At M source location simpleSeek+3^deviceopers
 # 3. SEEK:PIPE
-%GTM-E-CRYPTNOSEEK, SEEK disallowed on the encrypted file SEEK-PIPE.encr
+%YDB-E-CRYPTNOSEEK, SEEK disallowed on the encrypted file SEEK-PIPE.encr
 		At M source location simpleSeek+3^deviceopers
 # 4. SEEK:FIFO
-%GTM-E-CRYPTNOSEEK, SEEK disallowed on the encrypted file fifo
+%YDB-E-CRYPTNOSEEK, SEEK disallowed on the encrypted file fifo
 		At M source location simpleSeek+3^deviceopers
 ############# Encryption/decryption with SEEK and NODESTROY #############
 # 1. SEEKNODESTROY:SD
-%GTM-E-CRYPTNOSEEK, SEEK disallowed on the encrypted file SEEKNODESTROY-SD.encr
+%YDB-E-CRYPTNOSEEK, SEEK disallowed on the encrypted file SEEKNODESTROY-SD.encr
 		At M source location seekNoDestroy+9^deviceopers
 # 2. SEEKNODESTROY:PRINCIPAL
-%GTM-E-CRYPTNOSEEK, SEEK disallowed on the encrypted file 0
+%YDB-E-CRYPTNOSEEK, SEEK disallowed on the encrypted file 0
 		At M source location seekNoDestroy+9^deviceopers
 # 3. SEEKNODESTROY:PIPE
-%GTM-E-CRYPTNOSEEK, SEEK disallowed on the encrypted file SEEKNODESTROY-PIPE.encr
+%YDB-E-CRYPTNOSEEK, SEEK disallowed on the encrypted file SEEKNODESTROY-PIPE.encr
 		At M source location seekNoDestroy+9^deviceopers
 # 4. SEEKNODESTROY:FIFO
-%GTM-E-CRYPTNOSEEK, SEEK disallowed on the encrypted file fifo
+%YDB-E-CRYPTNOSEEK, SEEK disallowed on the encrypted file fifo
 		At M source location seekNoDestroy+9^deviceopers
 ############# Encryption/decryption with simple APPEND #############
 # 1. APPEND:SD
-%GTM-E-CRYPTNOAPPEND, APPEND disallowed on the encrypted file APPEND-SD.encr
+%YDB-E-CRYPTNOAPPEND, APPEND disallowed on the encrypted file APPEND-SD.encr
 		At M source location simpleAppend+8^deviceopers
 # 2. APPEND:PRINCIPAL
 # 3. APPEND:PIPE
@@ -71,11 +71,11 @@ mumps.dat
 # 4. REWINDTRUNC:FIFO
 ############# Encryption/decryption with TRUNCATE then REWIND #############
 # 1. TRUNCREWIND:SD
-%GTM-E-NOTTOEOFONPUT, Not positioned to EOF on write (sequential organization only)
+%YDB-E-NOTTOEOFONPUT, Not positioned to EOF on write (sequential organization only)
 		At M source location truncateRewind+12^deviceopers
 %GTM-W-NOTPRINCIO, Output currently directed to device TRUNCREWIND-SD.encr
 # 2. TRUNCREWIND:PRINCIPAL
-150373482,truncateRewind+12^deviceopers,%GTM-E-NOTTOEOFONPUT, Not positioned to EOF on write (sequential organization only)
+150373482,truncateRewind+12^deviceopers,%YDB-E-NOTTOEOFONPUT, Not positioned to EOF on write (sequential organization only)
 # 3. TRUNCREWIND:PIPE
 # 4. TRUNCREWIND:FIFO
 ############# Encryption/decryption with incremental reads/writes #############

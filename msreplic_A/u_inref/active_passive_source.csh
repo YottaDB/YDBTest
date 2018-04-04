@@ -1,4 +1,16 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
 # Test:
 # If there is an active source server running with -instsecondary to a specific instance, one should not be able to
 # start another active or passive source server to that instance.
@@ -38,11 +50,11 @@ if (1 == $test_replic_suppl_type) then
 else
 	$MSR RUN RCV=INST2 SRC=INST1 "set msr_dont_chk_stat; $MUPIP replic -source -start -passive -log=passive_source.log -buf=1 -instsecondary=__SRC_INSTNAME__" >>&!  restart_inst2_source.out
 endif
-$gtm_tst/com/check_error_exist.csh restart_inst2_source.out GTM-E-SRCSRVEXISTS >&! srcsrvrexists_expected.outx
+$gtm_tst/com/check_error_exist.csh restart_inst2_source.out YDB-E-SRCSRVEXISTS >&! srcsrvrexists_expected.outx
 if(0 == $status) then
-	echo "GTM-E-SRCSRVEXISTS seen in restart_source_secondary.out as expected"
+	echo "YDB-E-SRCSRVEXISTS seen in restart_source_secondary.out as expected"
 else
-	echo "GTM-E-SRCSRVEXISTS NOT seen in restart_source_secondary.out. Check the files restart_source_secondary.out and srcsrvrexists_expected.outx"
+	echo "YDB-E-SRCSRVEXISTS NOT seen in restart_source_secondary.out. Check the files restart_source_secondary.out and srcsrvrexists_expected.outx"
 endif
 $gtm_tst/com/check_error_exist.csh $msr_execute_last_out SRCSRVEXISTS > /dev/null
 

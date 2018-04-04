@@ -7,7 +7,7 @@ mumps.dat
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_LINUX_IX86 MM
 ##SUSPEND_OUTPUT BG
-%GTM-E-MMFILETOOLARGE, Size of DEFAULT region (##TEST_PATH##/mumps.dat) is larger than maximum size supported for memory mapped I/O on this platform
+%YDB-E-MMFILETOOLARGE, Size of DEFAULT region (##TEST_PATH##/mumps.dat) is larger than maximum size supported for memory mapped I/O on this platform
 ##ALLOW_OUTPUT HOST_ALL BG
 ###################################################################
 # Multiple updater processes start in the background
@@ -28,7 +28,7 @@ GTM>
 ###################################################################
 ----------
 ##TEST_AWKError MAXSSREACHED seen in online_integ..out as expected:
-%GTM-E-MAXSSREACHED, Maximum snapshots - 1 - for region DEFAULT reached. Please wait for the existing snapshots to complete before starting a new one.
+%YDB-E-MAXSSREACHED, Maximum snapshots - 1 - for region DEFAULT reached. Please wait for the existing snapshots to complete before starting a new one.
 ----------
 ----------
 ##TEST_AWKError MUNOTALLINTEG seen in online_integ..out as expected:

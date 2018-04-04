@@ -5,12 +5,12 @@
 
 # Test 1 : mumps/mupip/dse/lke etc. invoked through a soft link of a different name should work
 #  Invoking executable : mumps
-What file: %GTM-E-FILENOTFND, File  not found
+What file: %YDB-E-FILENOTFND, File  not found
 #  Invoking executable : mupip
 MUPIP> #  Invoking executable : dbcertify
-%GTM-E-CLIERR, No parameters specified
+%YDB-E-CLIERR, No parameters specified
 #  Invoking executable : dse
-%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
+%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
 %SYSTEM-E-ENO2, No such file or directory
 #  Invoking executable : ftok
 
@@ -33,7 +33,7 @@ this program.
 Do you want to contine? (y or n)  Error while reading response from user. Exiting
 #  Invoking executable : gtmsecshr
 #  Invoking executable : lke
-%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
+%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
 %SYSTEM-E-ENO2, No such file or directory
 #  Invoking executable : semstat2
 ##TEST_PATH##/mysemstat2:  Report information about semaphores
@@ -50,12 +50,12 @@ information returned for each semaphore in set:
 # Test 2 : Copy of mumps/mupip/dse/lke etc. invoked from a directory that also contains a copy of libyottadb##TEST_SHL_SUFFIX## should work
 #          Previously this would issue an IMAGENAME error for the "mumps" case. That is no longer the case
 #  Invoking executable : mumps
-What file: %GTM-E-FILENOTFND, File  not found
+What file: %YDB-E-FILENOTFND, File  not found
 #  Invoking executable : mupip
 MUPIP> #  Invoking executable : dbcertify
-%GTM-E-CLIERR, No parameters specified
+%YDB-E-CLIERR, No parameters specified
 #  Invoking executable : dse
-%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
+%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
 %SYSTEM-E-ENO2, No such file or directory
 #  Invoking executable : ftok
 
@@ -78,7 +78,7 @@ this program.
 Do you want to contine? (y or n)  Error while reading response from user. Exiting
 #  Invoking executable : gtmsecshr
 #  Invoking executable : lke
-%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
+%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
 %SYSTEM-E-ENO2, No such file or directory
 #  Invoking executable : semstat2
 ##TEST_PATH##/mysemstat2:  Report information about semaphores
@@ -139,12 +139,12 @@ information returned for each semaphore in set:
 
 # Test 4 : mumps/mupip/dse/lke etc. invoked from a current directory where they do not exist, but are found in $PATH, should work
 #  Invoking executable : mumps
-What file: %GTM-E-FILENOTFND, File  not found
+What file: %YDB-E-FILENOTFND, File  not found
 #  Invoking executable : mupip
 MUPIP> #  Invoking executable : dbcertify
-%GTM-E-CLIERR, No parameters specified
+%YDB-E-CLIERR, No parameters specified
 #  Invoking executable : dse
-%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
+%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
 %SYSTEM-E-ENO2, No such file or directory
 #  Invoking executable : ftok
 
@@ -167,7 +167,7 @@ this program.
 Do you want to contine? (y or n)  Error while reading response from user. Exiting
 #  Invoking executable : gtmsecshr
 #  Invoking executable : lke
-%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
+%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
 %SYSTEM-E-ENO2, No such file or directory
 #  Invoking executable : semstat2
 semstat2:  Report information about semaphores
@@ -184,6 +184,6 @@ information returned for each semaphore in set:
 # Test 5 : gtmsecshr issues a SECSHRNOYDBDIST error if ydb_dist env var is not set
 ----------
 Error SECSHRNOYDBDIST seen in syslog1.txt as expected:
-##TEST_AWK.* GTMSECSHRINIT\[.*\]: %GTM-E-SECSHRNOYDBDIST, ydb_dist env var does not exist. gtmsecshr will not be started
+##TEST_AWK.* GTMSECSHRINIT\[.*\]: %YDB-E-SECSHRNOYDBDIST, ydb_dist env var does not exist. gtmsecshr will not be started
 ----------
 # Remove portno allocation file

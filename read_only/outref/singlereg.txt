@@ -41,8 +41,8 @@ No errors detected by integ.
 ***** changing mumps.dat to read_only *****
 -r--r--r-- mumps.dat
 mupip backup -noonline DEFAULT back.dat
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -88,15 +88,15 @@ No errors detected by integ.
 *** mumps.dat R/O mumps.mjl R/W ***
 -r--r--r-- mumps.dat
 -rw-rw-rw- mumps.mjl
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 OK.
 
 *** mumps.dat R/O mumps.mjl R/O ***
 -r--r--r-- mumps.dat
 -r--r--r-- mumps.mjl
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 OK.
 
 
@@ -117,7 +117,7 @@ No errors detected by integ.
 ***** mumps.dat R/W  mumps.mjl R/O *****
 mupip extend DEFAULT 
 The extension failed on file ##TEST_PATH##/mumps.dat; check disk space and permissions.
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -127,8 +127,8 @@ No errors detected by integ.
 -rw-rw-rw- mumps.mjl
 ***** mumps.dat R/O  mumps.mjl R/W *****
 mupip extend DEFAULT 
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -138,8 +138,8 @@ No errors detected by integ.
 -r--r--r-- mumps.mjl
 ***** mumps.dat R/O  mumps.mjl R/O *****
 mupip extend DEFAULT 
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -194,8 +194,8 @@ No errors detected by integ.
 -r--r--r-- mumps.dat
 mupip extract -fr -nolog glo.dir
 Cannot freeze the database
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -284,8 +284,8 @@ No errors detected by integ.
 **** mumps.dat R/O mumps.mjl R/W ***
 mupip extract -fr -nolog glo.dir
 Cannot freeze the database
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -296,8 +296,8 @@ No errors detected by integ.
 **** mumps.dat R/O mumps.mjl R/O ***
 mupip extract -fr -nolog glo.dir
 Cannot freeze the database
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -334,15 +334,15 @@ No errors detected by integ.
 -r--r--r-- mumps.dat
 -rw-rw-rw- mumps.mjl
 mupip freeze -on DEFAULT
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
-%GTM-E-FREEZEERR, Error while trying to freeze region DEFAULT
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-FREEZEERR, Error while trying to freeze region DEFAULT
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 OK.
 
 mupip freeze -off DEFAULT
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
-%GTM-E-FREEZEERR, Error while trying to unfreeze region DEFAULT
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-FREEZEERR, Error while trying to unfreeze region DEFAULT
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -352,15 +352,15 @@ No errors detected by integ.
 -r--r--r-- mumps.dat
 -r--r--r-- mumps.mjl
 mupip freeze -on DEFAULT
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
-%GTM-E-FREEZEERR, Error while trying to freeze region DEFAULT
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-FREEZEERR, Error while trying to freeze region DEFAULT
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 OK.
 
 mupip freeze -off DEFAULT
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
-%GTM-E-FREEZEERR, Error while trying to unfreeze region DEFAULT
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-FREEZEERR, Error while trying to unfreeze region DEFAULT
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -783,8 +783,8 @@ OK.
 ***** mumps.dat read_only *****
 -r--r--r-- mumps.dat
 mupip integ -tn_reset mumps.dat 
-%GTM-E-DBRDONLY, Database file mumps.dat read only
-%GTM-E-DBTNRESET, Cannot reset transaction number for this region
+%YDB-E-DBRDONLY, Database file mumps.dat read only
+%YDB-E-DBTNRESET, Cannot reset transaction number for this region
 
 No errors detected by integ.
 
@@ -850,8 +850,8 @@ OK.
 -r--r--r-- mumps.dat
 -rw-rw-rw- mumps.mjl
 mupip integ -tn_reset mumps.dat 
-%GTM-E-DBRDONLY, Database file mumps.dat read only
-%GTM-E-DBTNRESET, Cannot reset transaction number for this region
+%YDB-E-DBRDONLY, Database file mumps.dat read only
+%YDB-E-DBTNRESET, Cannot reset transaction number for this region
 
 No errors detected by integ.
 
@@ -868,8 +868,8 @@ OK.
 -r--r--r-- mumps.dat
 -r--r--r-- mumps.mjl
 mupip integ -tn_reset mumps.dat 
-%GTM-E-DBRDONLY, Database file mumps.dat read only
-%GTM-E-DBTNRESET, Cannot reset transaction number for this region
+%YDB-E-DBRDONLY, Database file mumps.dat read only
+%YDB-E-DBTNRESET, Cannot reset transaction number for this region
 
 No errors detected by integ.
 
@@ -925,13 +925,13 @@ mupip load load.go2
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
 
-%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/mumps.mjl for database file ##TEST_PATH##/mumps.dat
+%YDB-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/mumps.mjl for database file ##TEST_PATH##/mumps.dat
 		Global variable : ^g
-%GTM-E-RECLOAD, Error loading record number: 3
+%YDB-E-RECLOAD, Error loading record number: 3
 
-%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/mumps.mjl for database file ##TEST_PATH##/mumps.dat
+%YDB-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/mumps.mjl for database file ##TEST_PATH##/mumps.dat
 		Global variable : ^h
-%GTM-E-RECLOAD, Error loading record number: 4
+%YDB-E-RECLOAD, Error loading record number: 4
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 3  Max Data Len: 11
 Last LOAD record number: 0
@@ -949,13 +949,13 @@ mupip load load.go3
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/mumps.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/mumps.dat
 		Global variable : ^d
-%GTM-E-RECLOAD, Error loading record number: 3
+%YDB-E-RECLOAD, Error loading record number: 3
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/mumps.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/mumps.dat
 		Global variable : ^e
-%GTM-E-RECLOAD, Error loading record number: 4
+%YDB-E-RECLOAD, Error loading record number: 4
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 3  Max Data Len: 248
 Last LOAD record number: 0
@@ -973,13 +973,13 @@ mupip load load.go2
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/mumps.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/mumps.dat
 		Global variable : ^g
-%GTM-E-RECLOAD, Error loading record number: 3
+%YDB-E-RECLOAD, Error loading record number: 3
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/mumps.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/mumps.dat
 		Global variable : ^h
-%GTM-E-RECLOAD, Error loading record number: 4
+%YDB-E-RECLOAD, Error loading record number: 4
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 3  Max Data Len: 11
 Last LOAD record number: 0
@@ -1089,16 +1089,16 @@ Total             400            2366              NA            25
 Fill Factor:: Index blocks 100%: Data blocks 100%
    
 Global: bcd (region DEFAULT)
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
    
 Global: bcdefghijklmn (region DEFAULT)
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
    
 Global: bcdefghijklmnopqrstuvwx (region DEFAULT)
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
    
 Global: bfill (region DEFAULT)
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
 %GTM-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
  ----- After reorg on read_only database -----
 
@@ -1219,16 +1219,16 @@ R/O mumps.dat R/W mumps.mjl
 Fill Factor:: Index blocks 100%: Data blocks 100%
    
 Global: bcd (region DEFAULT)
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
    
 Global: bcdefghijklmn (region DEFAULT)
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
    
 Global: bcdefghijklmnopqrstuvwx (region DEFAULT)
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
    
 Global: bfill (region DEFAULT)
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
 %GTM-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
 ------- Test last reorg -------
 
@@ -1281,7 +1281,7 @@ Blocks reused       : 0
 Blocks extended     : 0 
    
 Global: bcdefghijklmn (region DEFAULT)
-%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/mumps.mjl for database file ##TEST_PATH##/mumps.dat
+%YDB-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/mumps.mjl for database file ##TEST_PATH##/mumps.dat
 ------- Test last reorg -------
 
 
@@ -1324,16 +1324,16 @@ R/O mumps.dat R/O mumps.mjl
 Fill Factor:: Index blocks 100%: Data blocks 100%
    
 Global: bcd (region DEFAULT)
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
    
 Global: bcdefghijklmn (region DEFAULT)
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
    
 Global: bcdefghijklmnopqrstuvwx (region DEFAULT)
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
    
 Global: bfill (region DEFAULT)
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
 %GTM-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
 ------- Test last reorg -------
 
@@ -1393,7 +1393,7 @@ No errors detected by integ.
 mupip restore mumps.dat bak.dat
 Transaction in input file bak.dat does not align with database TN.
 DB: 0000000000000402	Input file: 0000000000000001
-%GTM-E-MUPRESTERR, MUPIP restore aborted due to preceding errors
+%YDB-E-MUPRESTERR, MUPIP restore aborted due to preceding errors
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -1457,7 +1457,7 @@ No errors detected by integ.
 -r--r--r-- mumps.dat
 -rw-rw-rw- mumps.mjl
 mupip rundown -f mumps.dat
-%GTM-E-DBRDONLY, Database file mumps.dat read only
+%YDB-E-DBRDONLY, Database file mumps.dat read only
 %GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
 %GTM-I-MUFILRNDWNSUC, File mumps.dat successfully rundown
 OK.
@@ -1469,7 +1469,7 @@ No errors detected by integ.
 -r--r--r-- mumps.dat
 -r--r--r-- mumps.mjl
 mupip rundown -f mumps.dat
-%GTM-E-DBRDONLY, Database file mumps.dat read only
+%YDB-E-DBRDONLY, Database file mumps.dat read only
 %GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
 %GTM-I-MUFILRNDWNSUC, File mumps.dat successfully rundown
 OK.
@@ -1500,9 +1500,9 @@ No errors detected by integ.
 -rw-rw-rw- mumps.dat
 -r--r--r-- mumps.mjl
 ##SOURCE_PATH##/mupip set -file mumps.dat -journal=enable,on,before
-%GTM-E-JNLRDONLY, Journal file ##TEST_PATH##/mumps.mjl read only
-%GTM-E-JNLNOCREATE, Journal file ##TEST_PATH##/mumps.mjl not created
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-JNLRDONLY, Journal file ##TEST_PATH##/mumps.mjl read only
+%YDB-E-JNLNOCREATE, Journal file ##TEST_PATH##/mumps.mjl not created
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -1513,8 +1513,8 @@ No errors detected by integ.
 -r--r--r-- mumps.dat
 -rw-rw-rw- mumps.mjl
 ##SOURCE_PATH##/mupip set -file mumps.dat -journal=enable,on,before
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/mumps.dat
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/mumps.dat
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -1525,8 +1525,8 @@ No errors detected by integ.
 -r--r--r-- mumps.dat
 -r--r--r-- mumps.mjl
 ##SOURCE_PATH##/mupip set -file mumps.dat -journal=enable,on,before
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/mumps.dat
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/mumps.dat
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -1555,9 +1555,9 @@ No errors detected by integ.
 -rw-rw-rw- mumps.dat
 -r--r--r-- mumps.mjl
 ##SOURCE_PATH##/mupip set -region DEFAULT -journal=enable,on,before
-%GTM-E-JNLRDONLY, Journal file ##TEST_PATH##/mumps.mjl read only
-%GTM-E-JNLNOCREATE, Journal file ##TEST_PATH##/mumps.mjl not created
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-JNLRDONLY, Journal file ##TEST_PATH##/mumps.mjl read only
+%YDB-E-JNLNOCREATE, Journal file ##TEST_PATH##/mumps.mjl not created
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -1568,8 +1568,8 @@ No errors detected by integ.
 -r--r--r-- mumps.dat
 -rw-rw-rw- mumps.mjl
 ##SOURCE_PATH##/mupip set -region DEFAULT -journal=enable,on,before
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/mumps.dat
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/mumps.dat
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -1580,8 +1580,8 @@ No errors detected by integ.
 -r--r--r-- mumps.dat
 -r--r--r-- mumps.mjl
 ##SOURCE_PATH##/mupip set -region DEFAULT -journal=enable,on,before
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/mumps.dat
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/mumps.dat
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -1711,8 +1711,8 @@ No errors detected by integ.
 -rw-rw-rw- mumps.mjl
 mupip journal -recover -forward mumps.mjl
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 OK.
 
@@ -1724,8 +1724,8 @@ No errors detected by integ.
 -r--r--r-- mumps.mjl
 mupip journal -recover -forward mumps.mjl
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 OK.
 

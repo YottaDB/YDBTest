@@ -22,37 +22,37 @@ GTM>
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: STAR DATA
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: STAR DATA
 --------- Testing : ##SOURCE_PATH##/dse  add -key="^X" -star ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: STAR DATA KEY
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: STAR DATA KEY
 --------- Testing : ##SOURCE_PATH##/dse  add -record=1 -star ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: STAR DATA KEY RECORD
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: STAR DATA KEY RECORD
 --------- Testing : ##SOURCE_PATH##/dse  add -offset=20 -star ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: STAR DATA KEY RECORD OFFSET
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: STAR DATA KEY RECORD OFFSET
 --------- Testing : ##SOURCE_PATH##/dse  add -data="ABCD" -pointer=65 ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DATA POINTER
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DATA POINTER
 --------- Testing : ##SOURCE_PATH##/dse  add -record=2 -offset=35 ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: RECORD OFFSET
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: RECORD OFFSET
 !
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !
@@ -66,7 +66,7 @@ Region	DEFAULT
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: WCINIT BUFFER_FLUSH
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: WCINIT BUFFER_FLUSH
 !
 !	DISALLOW (RENEW AND (FREEZE OR SEIZE OR RELEASE OR CRITINIT OR BUFFER_FLUSH OR REFERENCE OR WCINIT OR OVERRIDE))
 !
@@ -77,49 +77,49 @@ Region	DEFAULT
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: RENEW FREEZE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: RENEW FREEZE
 --------- Testing : ##SOURCE_PATH##/dse  all -renew -seize ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: RENEW FREEZE SEIZE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: RENEW FREEZE SEIZE
 --------- Testing : ##SOURCE_PATH##/dse  all -renew -release ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: RENEW FREEZE SEIZE RELEASE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: RENEW FREEZE SEIZE RELEASE
 --------- Testing : ##SOURCE_PATH##/dse  all -renew -critinit ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: RENEW FREEZE SEIZE RELEASE CRITINIT
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: RENEW FREEZE SEIZE RELEASE CRITINIT
 --------- Testing : ##SOURCE_PATH##/dse  all -renew -buff ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: RENEW FREEZE SEIZE RELEASE CRITINIT BUFFER_FLUSH
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: RENEW FREEZE SEIZE RELEASE CRITINIT BUFFER_FLUSH
 --------- Testing : ##SOURCE_PATH##/dse  all -renew -reference ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: RENEW FREEZE SEIZE RELEASE CRITINIT BUFFER_FLUSH REFERENCE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: RENEW FREEZE SEIZE RELEASE CRITINIT BUFFER_FLUSH REFERENCE
 --------- Testing : ##SOURCE_PATH##/dse  all -renew -wcinit ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: RENEW FREEZE SEIZE RELEASE CRITINIT BUFFER_FLUSH REFERENCE WCINIT
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: RENEW FREEZE SEIZE RELEASE CRITINIT BUFFER_FLUSH REFERENCE WCINIT
 --------- Testing : ##SOURCE_PATH##/dse  all -renew -override ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: RENEW FREEZE SEIZE RELEASE CRITINIT BUFFER_FLUSH REFERENCE WCINIT OVERRIDE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: RENEW FREEZE SEIZE RELEASE CRITINIT BUFFER_FLUSH REFERENCE WCINIT OVERRIDE
 !
 !	DISALLOW (SEIZE AND RELEASE) OR (CRITINIT AND (SEIZE OR RELEASE))
 !
@@ -128,19 +128,19 @@ Region	DEFAULT
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SEIZE RELEASE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SEIZE RELEASE
 --------- Testing : ##SOURCE_PATH##/dse  all -critinit -seize ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CRITINIT SEIZE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CRITINIT SEIZE
 --------- Testing : ##SOURCE_PATH##/dse  all -critinit -release ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CRITINIT SEIZE RELEASE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CRITINIT SEIZE RELEASE
 !
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !
@@ -152,43 +152,43 @@ Region	DEFAULT
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE RECOVER SHOW VERIFY
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE RECOVER SHOW VERIFY
 --------- Testing : ##SOURCE_PATH##/dse  cache -crit ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE RECOVER SHOW VERIFY
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE RECOVER SHOW VERIFY
 --------- Testing : ##SOURCE_PATH##/dse  cache -nocrit ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE RECOVER SHOW VERIFY
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE RECOVER SHOW VERIFY
 --------- Testing : ##SOURCE_PATH##/dse  cache -offset=10 ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE RECOVER SHOW VERIFY
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE RECOVER SHOW VERIFY
 --------- Testing : ##SOURCE_PATH##/dse  cache -size=4 ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE RECOVER SHOW VERIFY
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE RECOVER SHOW VERIFY
 --------- Testing : ##SOURCE_PATH##/dse  cache -value=23 ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE RECOVER SHOW VERIFY
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE RECOVER SHOW VERIFY
 --------- Testing : ##SOURCE_PATH##/dse  cache ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE RECOVER SHOW VERIFY
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE RECOVER SHOW VERIFY
 !
 !	DISALLOW ANY2(CHANGE,RECOVER,SHOW,VERIFY)
 !
@@ -197,37 +197,37 @@ Region	DEFAULT
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE RECOVER SHOW VERIFY
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE RECOVER SHOW VERIFY
 --------- Testing : ##SOURCE_PATH##/dse  cache -change -show ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE RECOVER SHOW VERIFY
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE RECOVER SHOW VERIFY
 --------- Testing : ##SOURCE_PATH##/dse  cache -change -verify ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE RECOVER SHOW VERIFY
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE RECOVER SHOW VERIFY
 --------- Testing : ##SOURCE_PATH##/dse  cache -recover -show ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE RECOVER SHOW VERIFY
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE RECOVER SHOW VERIFY
 --------- Testing : ##SOURCE_PATH##/dse  cache -recover -verify ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE RECOVER SHOW VERIFY
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE RECOVER SHOW VERIFY
 --------- Testing : ##SOURCE_PATH##/dse  cache -show -verify ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE RECOVER SHOW VERIFY
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE RECOVER SHOW VERIFY
 !
 !	DISALLOW ALL AND CHANGE
 !
@@ -236,7 +236,7 @@ Region	DEFAULT
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ALL CHANGE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: ALL CHANGE
 !
 !	DISALLOW NOT (CHANGE OR SHOW) AND (OFFSET OR SIZE OR VALUE)
 !
@@ -245,31 +245,31 @@ Region	DEFAULT
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW OFFSET
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW OFFSET
 --------- Testing : ##SOURCE_PATH##/dse  cache -verify -crit -offset=10 -size=4 -value=10 ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW OFFSET
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW OFFSET
 --------- Testing : ##SOURCE_PATH##/dse  cache -recover -nocrit -offset=10 -size=4 -value=10 ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW OFFSET
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW OFFSET
 --------- Testing : ##SOURCE_PATH##/dse  cache -recover -offset=10 -size=4 -value=10 ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW OFFSET
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW OFFSET
 --------- Testing : ##SOURCE_PATH##/dse  cache -verify -offset=10 -size=4 -value=10 ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW OFFSET
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW OFFSET
 !
 !	DISALLOW SHOW AND VALUE
 !
@@ -278,7 +278,7 @@ Region	DEFAULT
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SHOW VALUE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SHOW VALUE
 !
 !	DISALLOW CHANGE AND NOT OFFSET
 !
@@ -287,7 +287,7 @@ Region	DEFAULT
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE OFFSET
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE OFFSET
 !
 !	DISALLOW OFFSET AND NOT SIZE
 !
@@ -296,7 +296,7 @@ Region	DEFAULT
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: OFFSET SIZE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: OFFSET SIZE
 !
 !	DISALLOW SIZE AND NOT OFFSET
 !
@@ -305,7 +305,7 @@ Region	DEFAULT
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SIZE OFFSET
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SIZE OFFSET
 !
 !	DISALLOW VALUE AND NOT OFFSET
 !
@@ -318,7 +318,7 @@ Region	DEFAULT
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE OFFSET
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE OFFSET
 !
 !	DISALLOW NEG CRIT AND (CHANGE OR RECOVER OR VERIFY)
 !
@@ -327,19 +327,19 @@ Region	DEFAULT
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CRIT CHANGE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CRIT CHANGE
 --------- Testing : ##SOURCE_PATH##/dse  cache -recover -nocrit ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CRIT CHANGE RECOVER
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CRIT CHANGE RECOVER
 --------- Testing : ##SOURCE_PATH##/dse  cache -verify -nocrit ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CRIT CHANGE RECOVER VERIFY
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CRIT CHANGE RECOVER VERIFY
 !
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !
@@ -353,127 +353,127 @@ Region	DEFAULT
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILEHEADER BLOCK
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILEHEADER BLOCK
 --------- Testing : ##SOURCE_PATH##/dse  change -level=10  -fileheader  ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILEHEADER BLOCK LEVEL
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILEHEADER BLOCK LEVEL
 --------- Testing : ##SOURCE_PATH##/dse  change -bsiz=10   -fileheader  ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILEHEADER BLOCK LEVEL BSIZ
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILEHEADER BLOCK LEVEL BSIZ
 --------- Testing : ##SOURCE_PATH##/dse  change -record=10 -fileheader  ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILEHEADER BLOCK LEVEL BSIZ RECORD
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILEHEADER BLOCK LEVEL BSIZ RECORD
 --------- Testing : ##SOURCE_PATH##/dse  change -offset=10 -fileheader  ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILEHEADER BLOCK LEVEL BSIZ RECORD OFFSET
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILEHEADER BLOCK LEVEL BSIZ RECORD OFFSET
 --------- Testing : ##SOURCE_PATH##/dse  change -cmpc=10   -fileheader  ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILEHEADER BLOCK LEVEL BSIZ RECORD OFFSET CMPC
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILEHEADER BLOCK LEVEL BSIZ RECORD OFFSET CMPC
 --------- Testing : ##SOURCE_PATH##/dse  change -rsiz=10   -fileheader  ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILEHEADER BLOCK LEVEL BSIZ RECORD OFFSET CMPC RSIZ
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILEHEADER BLOCK LEVEL BSIZ RECORD OFFSET CMPC RSIZ
 --------- Testing : ##SOURCE_PATH##/dse  change -tn=10     -fileheader  ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILEHEADER BLOCK LEVEL BSIZ RECORD OFFSET CMPC RSIZ TN
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILEHEADER BLOCK LEVEL BSIZ RECORD OFFSET CMPC RSIZ TN
 --------- Testing : ##SOURCE_PATH##/dse  change -level=1 -record=10 ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: LEVEL RECORD
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: LEVEL RECORD
 --------- Testing : ##SOURCE_PATH##/dse  change -level=1 -offset=10 ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: LEVEL RECORD OFFSET
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: LEVEL RECORD OFFSET
 --------- Testing : ##SOURCE_PATH##/dse  change -level=1 -cmpc=10 ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: LEVEL RECORD OFFSET CMPC
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: LEVEL RECORD OFFSET CMPC
 --------- Testing : ##SOURCE_PATH##/dse  change -level=1 -rsiz=10 ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: LEVEL RECORD OFFSET CMPC RSIZ
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: LEVEL RECORD OFFSET CMPC RSIZ
 --------- Testing : ##SOURCE_PATH##/dse  change -bsiz=1 -record=10 ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: LEVEL BSIZ RECORD
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: LEVEL BSIZ RECORD
 --------- Testing : ##SOURCE_PATH##/dse  change -bsiz=1 -offset=10 ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: LEVEL BSIZ RECORD OFFSET
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: LEVEL BSIZ RECORD OFFSET
 --------- Testing : ##SOURCE_PATH##/dse  change -bsiz=1 -cmpc=10 ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: LEVEL BSIZ RECORD OFFSET CMPC
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: LEVEL BSIZ RECORD OFFSET CMPC
 --------- Testing : ##SOURCE_PATH##/dse  change -bsiz=1 -rsiz=10 ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: LEVEL BSIZ RECORD OFFSET CMPC RSIZ
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: LEVEL BSIZ RECORD OFFSET CMPC RSIZ
 --------- Testing : ##SOURCE_PATH##/dse  change -tn=1 -record=10 ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: LEVEL BSIZ TN RECORD
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: LEVEL BSIZ TN RECORD
 --------- Testing : ##SOURCE_PATH##/dse  change -tn=1 -offset=10 ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: LEVEL BSIZ TN RECORD OFFSET
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: LEVEL BSIZ TN RECORD OFFSET
 --------- Testing : ##SOURCE_PATH##/dse  change -tn=1 -cmpc=10 ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: LEVEL BSIZ TN RECORD OFFSET CMPC
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: LEVEL BSIZ TN RECORD OFFSET CMPC
 --------- Testing : ##SOURCE_PATH##/dse  change -tn=1 -rsiz=10 ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: LEVEL BSIZ TN RECORD OFFSET CMPC RSIZ
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: LEVEL BSIZ TN RECORD OFFSET CMPC RSIZ
 --------- Testing : ##SOURCE_PATH##/dse  change -record=10 -offset=40 ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: RECORD OFFSET
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: RECORD OFFSET
 !
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !
@@ -484,61 +484,61 @@ Region	DEFAULT
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: INIT OWNER SEIZE RELEASE REMOVE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: INIT OWNER SEIZE RELEASE REMOVE
 --------- Testing : ##SOURCE_PATH##/dse  crit -init -seize ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: INIT OWNER SEIZE RELEASE REMOVE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: INIT OWNER SEIZE RELEASE REMOVE
 --------- Testing : ##SOURCE_PATH##/dse  crit -init -release ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: INIT OWNER SEIZE RELEASE REMOVE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: INIT OWNER SEIZE RELEASE REMOVE
 --------- Testing : ##SOURCE_PATH##/dse  crit -init -remove ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: INIT OWNER SEIZE RELEASE REMOVE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: INIT OWNER SEIZE RELEASE REMOVE
 --------- Testing : ##SOURCE_PATH##/dse  crit -owner -seize ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: INIT OWNER SEIZE RELEASE REMOVE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: INIT OWNER SEIZE RELEASE REMOVE
 --------- Testing : ##SOURCE_PATH##/dse  crit -owner -release ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: INIT OWNER SEIZE RELEASE REMOVE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: INIT OWNER SEIZE RELEASE REMOVE
 --------- Testing : ##SOURCE_PATH##/dse  crit -owner -remove ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: INIT OWNER SEIZE RELEASE REMOVE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: INIT OWNER SEIZE RELEASE REMOVE
 --------- Testing : ##SOURCE_PATH##/dse  crit -seize -release ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: INIT OWNER SEIZE RELEASE REMOVE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: INIT OWNER SEIZE RELEASE REMOVE
 --------- Testing : ##SOURCE_PATH##/dse  crit -seize -remove ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: INIT OWNER SEIZE RELEASE REMOVE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: INIT OWNER SEIZE RELEASE REMOVE
 --------- Testing : ##SOURCE_PATH##/dse  crit -release -remove ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: INIT OWNER SEIZE RELEASE REMOVE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: INIT OWNER SEIZE RELEASE REMOVE
 !
 !	DISALLOW CRASH AND (SEIZE OR RELEASE OR OWNER OR RESET)
 !
@@ -547,25 +547,25 @@ Region	DEFAULT
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CRASH SEIZE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CRASH SEIZE
 --------- Testing : ##SOURCE_PATH##/dse  crit -crash -release ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CRASH SEIZE RELEASE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CRASH SEIZE RELEASE
 --------- Testing : ##SOURCE_PATH##/dse  crit -crash -owner ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CRASH SEIZE RELEASE OWNER
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CRASH SEIZE RELEASE OWNER
 --------- Testing : ##SOURCE_PATH##/dse  crit -crash -reset ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CRASH SEIZE RELEASE OWNER RESET
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CRASH SEIZE RELEASE OWNER RESET
 !
 !	DISALLOW RESET AND (SEIZE OR RELEASE OR OWNER)
 !
@@ -574,19 +574,19 @@ Region	DEFAULT
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: RESET SEIZE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: RESET SEIZE
 --------- Testing : ##SOURCE_PATH##/dse  crit -reset -release ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: RESET SEIZE RELEASE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: RESET SEIZE RELEASE
 --------- Testing : ##SOURCE_PATH##/dse  crit -reset -owner ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: RESET SEIZE RELEASE OWNER
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: RESET SEIZE RELEASE OWNER
 !
 !	DISALLOW CYCLE AND (INIT OR REMOVE OR SEIZE OR RELEASE OR RESET)
 !
@@ -595,31 +595,31 @@ Region	DEFAULT
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CYCLE INIT
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CYCLE INIT
 --------- Testing : ##SOURCE_PATH##/dse  crit -cycle -remove ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CYCLE INIT REMOVE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CYCLE INIT REMOVE
 --------- Testing : ##SOURCE_PATH##/dse  crit -cycle -seize ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CYCLE INIT REMOVE SEIZE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CYCLE INIT REMOVE SEIZE
 --------- Testing : ##SOURCE_PATH##/dse  crit -cycle -release ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CYCLE INIT REMOVE SEIZE RELEASE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CYCLE INIT REMOVE SEIZE RELEASE
 --------- Testing : ##SOURCE_PATH##/dse  crit -cycle -reset ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CYCLE INIT REMOVE SEIZE RELEASE RESET
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CYCLE INIT REMOVE SEIZE RELEASE RESET
 !
 !	DISALLOW ALL AND (CRASH OR CYCLE OR INIT OR OWNER OR RELEASE OR REMOVE OR RESET OR SEIZE)
 !
@@ -628,49 +628,49 @@ Region	DEFAULT
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ALL CRASH
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: ALL CRASH
 --------- Testing : ##SOURCE_PATH##/dse  crit -all -cycle ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ALL CRASH CYCLE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: ALL CRASH CYCLE
 --------- Testing : ##SOURCE_PATH##/dse  crit -all -init ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ALL CRASH CYCLE INIT
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: ALL CRASH CYCLE INIT
 --------- Testing : ##SOURCE_PATH##/dse  crit -all -owner ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ALL CRASH CYCLE INIT OWNER
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: ALL CRASH CYCLE INIT OWNER
 --------- Testing : ##SOURCE_PATH##/dse  crit -all -release ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ALL CRASH CYCLE INIT OWNER RELEASE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: ALL CRASH CYCLE INIT OWNER RELEASE
 --------- Testing : ##SOURCE_PATH##/dse  crit -all -remove ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ALL CRASH CYCLE INIT OWNER RELEASE REMOVE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: ALL CRASH CYCLE INIT OWNER RELEASE REMOVE
 --------- Testing : ##SOURCE_PATH##/dse  crit -all -reset ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ALL CRASH CYCLE INIT OWNER RELEASE REMOVE RESET
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: ALL CRASH CYCLE INIT OWNER RELEASE REMOVE RESET
 --------- Testing : ##SOURCE_PATH##/dse  crit -all -seize ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ALL CRASH CYCLE INIT OWNER RELEASE REMOVE RESET SEIZE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: ALL CRASH CYCLE INIT OWNER RELEASE REMOVE RESET SEIZE
 !
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !
@@ -690,109 +690,109 @@ Region	DEFAULT
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: RECORD OFFSET FILEHEADER
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: RECORD OFFSET FILEHEADER
 --------- Testing : ##SOURCE_PATH##/dse  dump -record=20 -fileheader  ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: RECORD OFFSET FILEHEADER
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: RECORD OFFSET FILEHEADER
 --------- Testing : ##SOURCE_PATH##/dse  dump -offset=15 -fileheader  ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: RECORD OFFSET FILEHEADER
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: RECORD OFFSET FILEHEADER
 --------- Testing : ##SOURCE_PATH##/dse  dump -block=10  -fileheader  ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILEHEADER BLOCK
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILEHEADER BLOCK
 --------- Testing : ##SOURCE_PATH##/dse  dump -header    -fileheader  ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILEHEADER BLOCK HEADER
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILEHEADER BLOCK HEADER
 --------- Testing : ##SOURCE_PATH##/dse  dump -count=10  -fileheader  ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILEHEADER BLOCK HEADER COUNT
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILEHEADER BLOCK HEADER COUNT
 --------- Testing : ##SOURCE_PATH##/dse  dump -glo       -fileheader  ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILEHEADER BLOCK HEADER COUNT GLO
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILEHEADER BLOCK HEADER COUNT GLO
 --------- Testing : ##SOURCE_PATH##/dse  dump -zwr       -fileheader  ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILEHEADER BLOCK HEADER COUNT GLO ZWR
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILEHEADER BLOCK HEADER COUNT GLO ZWR
 --------- Testing : ##SOURCE_PATH##/dse  dump -glo -zwr ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: GLO ZWR
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: GLO ZWR
 --------- Testing : ##SOURCE_PATH##/dse  dump -glo -header ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: GLO HEADER
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: GLO HEADER
 --------- Testing : ##SOURCE_PATH##/dse  dump -zwr -header ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ZWR HEADER
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: ZWR HEADER
 --------- Testing : ##SOURCE_PATH##/dse  dump -count=10 -glo ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: COUNT HEADER RECORD OFFSET BLOCK
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: COUNT HEADER RECORD OFFSET BLOCK
 --------- Testing : ##SOURCE_PATH##/dse  dump -count=10 -zwr ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: COUNT HEADER RECORD OFFSET BLOCK
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: COUNT HEADER RECORD OFFSET BLOCK
 --------- Testing : ##SOURCE_PATH##/dse  dump -count=10 -noheader -glo ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: COUNT HEADER RECORD OFFSET BLOCK
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: COUNT HEADER RECORD OFFSET BLOCK
 --------- Testing : ##SOURCE_PATH##/dse  dump -count=10 -noheader -zwr ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: COUNT HEADER RECORD OFFSET BLOCK
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: COUNT HEADER RECORD OFFSET BLOCK
 --------- Testing : ##SOURCE_PATH##/dse  dump -count=10 -noheader -zwr -crit ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: COUNT HEADER RECORD OFFSET BLOCK
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: COUNT HEADER RECORD OFFSET BLOCK
 --------- Testing : ##SOURCE_PATH##/dse  dump -count=10 -noheader -zwr -nocrit ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: COUNT HEADER RECORD OFFSET BLOCK
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: COUNT HEADER RECORD OFFSET BLOCK
 --------- Testing : ##SOURCE_PATH##/dse  dump -count=10 ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: COUNT HEADER RECORD OFFSET BLOCK
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: COUNT HEADER RECORD OFFSET BLOCK
 !
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !
@@ -805,37 +805,37 @@ Region	DEFAULT
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: BLOCK FREEBLOCK KEY REGION
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: BLOCK FREEBLOCK KEY REGION
 --------- Testing : ##SOURCE_PATH##/dse  find -block=12 -key="^a" ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: BLOCK FREEBLOCK KEY REGION
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: BLOCK FREEBLOCK KEY REGION
 --------- Testing : ##SOURCE_PATH##/dse  find -block=15 -region ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: BLOCK FREEBLOCK KEY REGION
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: BLOCK FREEBLOCK KEY REGION
 --------- Testing : ##SOURCE_PATH##/dse  find -freeblock -key="^a" ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: BLOCK FREEBLOCK KEY REGION
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: BLOCK FREEBLOCK KEY REGION
 --------- Testing : ##SOURCE_PATH##/dse  find -freeblock -region ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: BLOCK FREEBLOCK KEY REGION
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: BLOCK FREEBLOCK KEY REGION
 --------- Testing : ##SOURCE_PATH##/dse  find -key="^a" -region ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: BLOCK FREEBLOCK KEY REGION
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: BLOCK FREEBLOCK KEY REGION
 !
 !	DISALLOW (EXHAUSTIVE OR SIBLINGS) AND (FREEBLOCK OR KEY OR REGION)
 !
@@ -844,37 +844,37 @@ Region	DEFAULT
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: EXHAUSTIVE FREEBLOCK
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: EXHAUSTIVE FREEBLOCK
 --------- Testing : ##SOURCE_PATH##/dse  find -exhaustive -key="^a" ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: EXHAUSTIVE FREEBLOCK KEY
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: EXHAUSTIVE FREEBLOCK KEY
 --------- Testing : ##SOURCE_PATH##/dse  find -exhaustive -region ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: EXHAUSTIVE FREEBLOCK KEY REGION
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: EXHAUSTIVE FREEBLOCK KEY REGION
 --------- Testing : ##SOURCE_PATH##/dse  find -siblings -freeblock ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: EXHAUSTIVE SIBLINGS FREEBLOCK
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: EXHAUSTIVE SIBLINGS FREEBLOCK
 --------- Testing : ##SOURCE_PATH##/dse  find -siblings -key="^a" ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: EXHAUSTIVE SIBLINGS FREEBLOCK KEY
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: EXHAUSTIVE SIBLINGS FREEBLOCK KEY
 --------- Testing : ##SOURCE_PATH##/dse  find -siblings -region ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: EXHAUSTIVE SIBLINGS FREEBLOCK KEY REGION
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: EXHAUSTIVE SIBLINGS FREEBLOCK KEY REGION
 !
 !	DISALLOW HINT AND NOT FREEBLOCK
 !
@@ -883,49 +883,49 @@ Region	DEFAULT
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: HINT FREEBLOCK
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: HINT FREEBLOCK
 --------- Testing : ##SOURCE_PATH##/dse  find -crit -hint=20 ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: HINT FREEBLOCK
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: HINT FREEBLOCK
 --------- Testing : ##SOURCE_PATH##/dse  find -nocrit -hint=20 ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: HINT FREEBLOCK
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: HINT FREEBLOCK
 --------- Testing : ##SOURCE_PATH##/dse  find -exhaustive -hint=20 ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: HINT FREEBLOCK
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: HINT FREEBLOCK
 --------- Testing : ##SOURCE_PATH##/dse  find -key="^a" -hint=20 ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: HINT FREEBLOCK
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: HINT FREEBLOCK
 --------- Testing : ##SOURCE_PATH##/dse  find -region -hint=20 ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: HINT FREEBLOCK
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: HINT FREEBLOCK
 --------- Testing : ##SOURCE_PATH##/dse  find -siblings -hint=20 ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: HINT FREEBLOCK
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: HINT FREEBLOCK
 --------- Testing : ##SOURCE_PATH##/dse  find -hint=20 ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: HINT FREEBLOCK
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: HINT FREEBLOCK
 !
 !	DISALLOW FREEBLOCK AND NOT HINT
 !
@@ -934,7 +934,7 @@ Region	DEFAULT
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FREEBLOCK HINT
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: FREEBLOCK HINT
 !
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !
@@ -946,43 +946,43 @@ Region	DEFAULT
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FREE BUSY MASTER RESTORE_ALL
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: FREE BUSY MASTER RESTORE_ALL
 --------- Testing : ##SOURCE_PATH##/dse  maps -free -master ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FREE BUSY MASTER RESTORE_ALL
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: FREE BUSY MASTER RESTORE_ALL
 --------- Testing : ##SOURCE_PATH##/dse  maps -free -restore_all ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FREE BUSY MASTER RESTORE_ALL
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: FREE BUSY MASTER RESTORE_ALL
 --------- Testing : ##SOURCE_PATH##/dse  maps -busy -master ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FREE BUSY MASTER RESTORE_ALL
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: FREE BUSY MASTER RESTORE_ALL
 --------- Testing : ##SOURCE_PATH##/dse  maps -busy -restore_all ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FREE BUSY MASTER RESTORE_ALL
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: FREE BUSY MASTER RESTORE_ALL
 --------- Testing : ##SOURCE_PATH##/dse  maps -master -restore_all ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FREE BUSY MASTER RESTORE_ALL
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: FREE BUSY MASTER RESTORE_ALL
 --------- Testing : ##SOURCE_PATH##/dse  maps -block=10 -restore_all ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: BLOCK RESTORE_ALL
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: BLOCK RESTORE_ALL
 !
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !
@@ -994,25 +994,25 @@ Region	DEFAULT
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: RECORD OFFSET VERSION
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: RECORD OFFSET VERSION
 --------- Testing : ##SOURCE_PATH##/dse  remove -record=7 -version=11 ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: RECORD OFFSET VERSION
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: RECORD OFFSET VERSION
 --------- Testing : ##SOURCE_PATH##/dse  remove -offset=8 -version=12 ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: RECORD OFFSET VERSION
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: RECORD OFFSET VERSION
 --------- Testing : ##SOURCE_PATH##/dse  remove -version=13 -count=20 ------------
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: VERSION COUNT
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: VERSION COUNT
 !
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !
@@ -1024,7 +1024,7 @@ Region	DEFAULT
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: LIST COMMENT
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: LIST COMMENT
 !
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !
@@ -1036,7 +1036,7 @@ Region	DEFAULT
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FORWARD BACKWARD
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: FORWARD BACKWARD
 
 GTM>
 ##SOURCE_PATH##/mupip

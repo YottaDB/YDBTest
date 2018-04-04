@@ -41,7 +41,7 @@ Trying -NOCHECKTN. Expect a MUPCLIERR error
 ----------------------------------------------------------
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 MUPIP JOURNAL -ROLLBACK -FORWARD does not support -NOCHECKTN
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
 Trying -CHECKTN with one missing .mjl file and prevlink. Expect JNLFILEOPNERR error
@@ -49,33 +49,33 @@ Trying -CHECKTN with one missing .mjl file and prevlink. Expect JNLFILEOPNERR er
 # With -CHAIN or no chain specification, we expect the same output. Test that by randomly adding one of the two.
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##TEST_AWK%GTM-I-DBFRZRESETSUC, Freeze released successfully on database file ##TEST_PATH##/mumps.dat
-##TEST_AWK%GTM-E-JNLFILEOPNERR, Error opening journal file ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
+##TEST_AWK%YDB-E-JNLFILEOPNERR, Error opening journal file ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
 %SYSTEM-E-ENO2, No such file or directory
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
 Trying -CHECKTN with one missing .mjl file and prevlink but with -NOCHAIN. Expect JNLDBTNNOMATCH but no NOPREVLINK error
 ----------------------------------------------------------
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##TEST_AWK.GTM-E-JNLDBTNNOMATCH, Journal file ##TEST_PATH##.mumps.mjl has beginning transaction number .0x[0-9A-F]+., but database ##TEST_PATH##.mumps.dat has current transaction number .0x[0-9A-F]+. and journal end transaction number .0x[0-9A-F]+.
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##TEST_AWK.YDB-E-JNLDBTNNOMATCH, Journal file ##TEST_PATH##.mumps.mjl has beginning transaction number .0x[0-9A-F]+., but database ##TEST_PATH##.mumps.dat has current transaction number .0x[0-9A-F]+. and journal end transaction number .0x[0-9A-F]+.
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
 Trying -CHECKTN with one missing .mjl file and noprevlink and *. Expect JNLDBTNNOMATCH and NOPREVLINK error
 ----------------------------------------------------------
 ##TEST_AWKprev_jnl_file name changed from ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]) to NULL
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##TEST_AWK.GTM-E-JNLDBTNNOMATCH, Journal file ##TEST_PATH##.mumps.mjl has beginning transaction number .0x[0-9A-F]+., but database ##TEST_PATH##.mumps.dat has current transaction number .0x[0-9A-F]+. and journal end transaction number .0x[0-9A-F]+.
-%GTM-E-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##TEST_AWK.YDB-E-JNLDBTNNOMATCH, Journal file ##TEST_PATH##.mumps.mjl has beginning transaction number .0x[0-9A-F]+., but database ##TEST_PATH##.mumps.dat has current transaction number .0x[0-9A-F]+. and journal end transaction number .0x[0-9A-F]+.
+%YDB-E-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
 Trying -CHECKTN with one missing .mjl file and noprevlink with explicit mjl file. Expect JNLDBTNNOMATCH and NOPREVLINK error
 ----------------------------------------------------------
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##TEST_AWK.GTM-E-JNLDBTNNOMATCH, Journal file ##TEST_PATH##.mumps.mjl has beginning transaction number .0x[0-9A-F]+., but database ##TEST_PATH##.mumps.dat has current transaction number .0x[0-9A-F]+. and journal end transaction number .0x[0-9A-F]+.
-%GTM-E-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##TEST_AWK.YDB-E-JNLDBTNNOMATCH, Journal file ##TEST_PATH##.mumps.mjl has beginning transaction number .0x[0-9A-F]+., but database ##TEST_PATH##.mumps.dat has current transaction number .0x[0-9A-F]+. and journal end transaction number .0x[0-9A-F]+.
+%YDB-E-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
 Trying -CHECKTN with no missing .mjl file. Expect NO error
@@ -103,14 +103,14 @@ Trying FENCES=NONE with FORWARD ROLLBACK. Expect MUPCLIERR error
 ----------------------------------------------------------
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 MUPIP JOURNAL -ROLLBACK only supports -FENCES=PROCESS
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
 Trying FENCES=ALWAYS with FORWARD ROLLBACK. Expect MUPCLIERR error
 ----------------------------------------------------------
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 MUPIP JOURNAL -ROLLBACK only supports -FENCES=PROCESS
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
 Trying FENCES=PROCESS with FORWARD ROLLBACK. Expect NO error
@@ -134,14 +134,14 @@ Trying FENCES=NONE with BACKWARD ROLLBACK. Expect MUPCLIERR error
 ----------------------------------------------------------
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 MUPIP JOURNAL -ROLLBACK only supports -FENCES=PROCESS
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
 Trying FENCES=ALWAYS with BACKWARD ROLLBACK. Expect MUPCLIERR error
 ----------------------------------------------------------
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 MUPIP JOURNAL -ROLLBACK only supports -FENCES=PROCESS
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
 ##SUSPEND_OUTPUT JNL_BEFORE
@@ -154,8 +154,8 @@ Trying FENCES=PROCESS with BACKWARD ROLLBACK. Expect NO error
 # -FENCES=PROCESS or no -fences specification should produce the same output. Test that by randomly adding one of the two.
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##SUSPEND_OUTPUT JNL_BEFORE
-%GTM-E-RLBKNOBIMG, ROLLBACK cannot proceed as database ##TEST_PATH##/mumps.dat has NOBEFORE_IMAGE journaling
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-RLBKNOBIMG, ROLLBACK cannot proceed as database ##TEST_PATH##/mumps.dat has NOBEFORE_IMAGE journaling
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##ALLOW_OUTPUT JNL_BEFORE
 ##SUSPEND_OUTPUT JNL_NOBEFORE
 ##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..

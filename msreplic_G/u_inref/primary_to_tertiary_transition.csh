@@ -4,6 +4,9 @@
 # Copyright (c) 2006-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -92,7 +95,7 @@ $MSR STARTSRC INST3 INST1 PP
 # a framework script RCVR.csh which in turn starts the receiver server and then does a checkhealth to ensure it is up
 # and running. It is possible in rare cases that the receiver server gets the PRIMARYNOTROOT error and exits (thereby
 # cleaning up the receive pool) even before the checkhealth is attempted in RCVR.csh. In this case, the checkhealth will
-# error out with GTM-E-NORECVPOOL message. We do not want this to happen so we specifically ask RCVR.csh to skip the
+# error out with YDB-E-NORECVPOOL message. We do not want this to happen so we specifically ask RCVR.csh to skip the
 # checkhealth by setting the environment variable gtm_test_repl_skiprcvrchkhlth. It is unset right afterwards.
 setenv gtm_test_repl_skiprcvrchkhlth 1
 $MSR STARTRCV INST3 INST1
@@ -114,7 +117,7 @@ $MSR STARTSRC INST3 INST1 PP
 # a framework script RCVR.csh which in turn starts the receiver server and then does a checkhealth to ensure it is up
 # and running. It is possible in rare cases that the receiver server gets the PRIMARYNOTROOT error and exits (thereby
 # cleaning up the receive pool) even before the checkhealth is attempted in RCVR.csh. In this case, the checkhealth will
-# error out with GTM-E-NORECVPOOL message. We do not want this to happen so we specifically ask RCVR.csh to skip the
+# error out with YDB-E-NORECVPOOL message. We do not want this to happen so we specifically ask RCVR.csh to skip the
 # checkhealth by setting the environment variable gtm_test_repl_skiprcvrchkhlth. It is unset right afterwards.
 setenv gtm_test_repl_skiprcvrchkhlth 1
 $MSR STARTRCV INST3 INST1

@@ -11,103 +11,103 @@ Shutting down Primary Source Server Server in ##TEST_PATH##
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating START of source server for secondary instance [INSTANCE1]
 # Now activate the passive source server
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST4 SRC=INST1 set msr_dont_chk_stat ; $MUPIP replic -source -activate -secondary=__RCV_HOST__:12345 -instsecondary=$gtm_test_msr_INSTNAME1'==
-%GTM-E-ACTIVATEFAIL, Cannot activate passive source server on instance INSTANCE1 while a receiver server and/or update process is running
+%YDB-E-ACTIVATEFAIL, Cannot activate passive source server on instance INSTANCE1 while a receiver server and/or update process is running
 ==Executing MULTISITE_REPLIC 'RUN INST4 $MUPIP replic -receiver -shutdown -timeout=0 >&! rcvr_shut.out'==
 ==Executing MULTISITE_REPLIC 'RUN INST4 $MUPIP replic -source -shutdown -timeout=0 >&! passive_shut.out'==
-# Expect rcvr to exit with GTM-E-UPDSYNCINSTFILE when no value is specified to -updateresync
+# Expect rcvr to exit with YDB-E-UPDSYNCINSTFILE when no value is specified to -updateresync
 ==Executing MULTISITE_REPLIC 'STARTSRC INST4 INST5 RP'==
 ==Executing MULTISITE_REPLIC 'RUN INST5 $gtm_tst/com/wait_for_log.csh -log ##FILTERED##RCVR_##TIMESTAMP##.log -message UPDSYNCINSTFILE -duration 120 -waitcreation'==
 ==Executing MULTISITE_REPLIC 'RUN INST5 ##TEST_COM_PATH##/check_error_exist.csh ##FILTERED##RCVR_##TIMESTAMP##.log UPDSYNCINSTFILE'==
 ----------
 Error UPDSYNCINSTFILE seen in ##FILTERED##RCVR_##TIMESTAMP##.log as expected:
-%GTM-E-UPDSYNCINSTFILE, Error with instance file name specified in UPDATERESYNC qualifier
+%YDB-E-UPDSYNCINSTFILE, Error with instance file name specified in UPDATERESYNC qualifier
 ----------
 # The receiver would have exited with the above error. Manually shutdown the update process and passive server
 ==Executing MULTISITE_REPLIC 'RUN INST5 set msr_dont_chk_stat ;$MUPIP replic -receiver -shutdown -timeout=0 >&! updateproc_shut_IST4INST5.out'==
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST5 SRC=INST4 $MUPIP replic -source -shutdown -timeout=0 -instsecondary=__SRC_INSTNAME__ >&! passivesrc_shut_INST4INST5.out'==
 ==Executing MULTISITE_REPLIC 'REFRESHLINK INST4 INST5'==
 ==Executing MULTISITE_REPLIC 'STOPSRC INST4 INST5'==
-# Expect the rcvr to exit with GTM-E-REPL2OLD if it attempts to connect to pre V5.5-000 source
+# Expect the rcvr to exit with YDB-E-REPL2OLD if it attempts to connect to pre V5.5-000 source
 ==Executing MULTISITE_REPLIC 'STARTSRC INST2 INST4 RP'==
 ==Executing MULTISITE_REPLIC 'RUN INST4 $gtm_tst/com/wait_for_log.csh -log ##FILTERED##RCVR_##TIMESTAMP##.log -message REPL2OLD -duration 120 -waitcreation'==
 ==Executing MULTISITE_REPLIC 'RUN INST4 ##TEST_COM_PATH##/check_error_exist.csh ##FILTERED##RCVR_##TIMESTAMP##.log REPL2OLD'==
 ----------
 Error REPL2OLD seen in ##FILTERED##RCVR_##TIMESTAMP##.log as expected:
-%GTM-E-REPL2OLD, Instance INSTANCE2 uses a GT.M/YottaDB version that does not support connection with the current version on instance INSTANCE4
+%YDB-E-REPL2OLD, Instance INSTANCE2 uses a GT.M/YottaDB version that does not support connection with the current version on instance INSTANCE4
 ----------
 # The receiver would have exited with the above error. Manually shutdown the update process and passive server
 ==Executing MULTISITE_REPLIC 'RUN INST4 set msr_dont_chk_stat ; $MUPIP replic -receiver -shutdown -timeout=0 >&! updateproc_shut_IST2INST4.out'==
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST4 SRC=INST2 $MUPIP replic -source -shutdown -timeout=0 -instsecondary=__SRC_INSTNAME__ >&! passivesrc_shut_INST2INST4.out'==
 ==Executing MULTISITE_REPLIC 'REFRESHLINK INST2 INST4'==
 ==Executing MULTISITE_REPLIC 'STOPSRC INST2 INST4'==
-# Expect the src to exit with GTM-E-REPL2OLD if it attempts to connect to pre V5.5-000 receiver
+# Expect the src to exit with YDB-E-REPL2OLD if it attempts to connect to pre V5.5-000 receiver
 ==Executing MULTISITE_REPLIC 'STARTRCV INST4 INST2'==
 ==Executing MULTISITE_REPLIC 'RUN INST4 $gtm_tst/com/wait_for_log.csh -log ##FILTERED##SRC_##TIMESTAMP##.log -message REPL2OLD -duration 120 -waitcreation'==
 ==Executing MULTISITE_REPLIC 'RUN INST4 ##TEST_COM_PATH##/check_error_exist.csh ##FILTERED##SRC_##TIMESTAMP##.log REPL2OLD'==
 ----------
 Error REPL2OLD seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
-%GTM-E-REPL2OLD, Instance INSTANCE2 uses a GT.M/YottaDB version that does not support connection with the current version on instance INSTANCE4
+%YDB-E-REPL2OLD, Instance INSTANCE2 uses a GT.M/YottaDB version that does not support connection with the current version on instance INSTANCE4
 ----------
 ==Executing MULTISITE_REPLIC 'REFRESHLINK INST4 INST2'==
 ==Executing MULTISITE_REPLIC 'STOPRCV INST4 INST2'==
-# Expect src of INST4 which is supplementary to exit with GTM-E-SECNOTSUPPLEMENTARY when it tries to connect to rcvr of INST1, which is non-supplementary
+# Expect src of INST4 which is supplementary to exit with YDB-E-SECNOTSUPPLEMENTARY when it tries to connect to rcvr of INST1, which is non-supplementary
 ==Executing MULTISITE_REPLIC 'STARTRCV INST4 INST1'==
 ==Executing MULTISITE_REPLIC 'RUN INST4 $gtm_tst/com/wait_for_log.csh -log ##FILTERED##SRC_##TIMESTAMP##.log -message SECNOTSUPPLEMENTARY -duration 120 -waitcreation'==
 ==Executing MULTISITE_REPLIC 'RUN INST4 ##TEST_COM_PATH##/check_error_exist.csh ##FILTERED##SRC_##TIMESTAMP##.log SECNOTSUPPLEMENTARY'==
 ----------
 Error SECNOTSUPPLEMENTARY seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
-%GTM-E-SECNOTSUPPLEMENTARY, INSTANCE4 is a Supplementary Instance and so cannot act as a source to non-Supplementary Instance INSTANCE1 
+%YDB-E-SECNOTSUPPLEMENTARY, INSTANCE4 is a Supplementary Instance and so cannot act as a source to non-Supplementary Instance INSTANCE1 
 ----------
 ==Executing MULTISITE_REPLIC 'REFRESHLINK INST4 INST1'==
 ==Executing MULTISITE_REPLIC 'STOPRCV INST4 INST1'==
-# Expect rcvr of INST5 which is supplementary, but no -updok server to exit with GTM-E-SUPRCVRNEEDSSUPSRC when it tries to connect to src of INST1
+# Expect rcvr of INST5 which is supplementary, but no -updok server to exit with YDB-E-SUPRCVRNEEDSSUPSRC when it tries to connect to src of INST1
 ==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST5'==
 ==Executing MULTISITE_REPLIC 'RUN INST5 $gtm_tst/com/wait_for_log.csh -log ##FILTERED##RCVR_##TIMESTAMP##.log -message SUPRCVRNEEDSSUPSRC -duration 120 -waitcreation'==
 ==Executing MULTISITE_REPLIC 'RUN INST5 ##TEST_COM_PATH##/check_error_exist.csh ##FILTERED##RCVR_##TIMESTAMP##.log SUPRCVRNEEDSSUPSRC'==
 ----------
 Error SUPRCVRNEEDSSUPSRC seen in ##FILTERED##RCVR_##TIMESTAMP##.log as expected:
-%GTM-E-SUPRCVRNEEDSSUPSRC, Instance INSTANCE5 is not configured to perform local updates so it cannot act as a receiver for non-Supplementary Instance INSTANCE1
+%YDB-E-SUPRCVRNEEDSSUPSRC, Instance INSTANCE5 is not configured to perform local updates so it cannot act as a receiver for non-Supplementary Instance INSTANCE1
 ----------
 # The receiver would have exited with the above error. Manually shutdown the update process and passive server
 ==Executing MULTISITE_REPLIC 'RUN INST5 set msr_dont_chk_stat ; $MUPIP replic -receiver -shutdown -timeout=0 >&! updateproc_shut_IST1INST5.out'==
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST5 SRC=INST1 $MUPIP replic -source -shutdown -timeout=0 -instsecondary=__SRC_INSTNAME__ >&! passivesrc_shut_INST1INST5.out'==
 ==Executing MULTISITE_REPLIC 'REFRESHLINK INST1 INST5'==
 ==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST5'==
-# Expect RCVR of INST4 which is a supplementary instance to error out with GTM-E-NOSUPPLSUPP, when it connects to INST6 which is also a supplementary instance
+# Expect RCVR of INST4 which is a supplementary instance to error out with YDB-E-NOSUPPLSUPP, when it connects to INST6 which is also a supplementary instance
 ==Executing MULTISITE_REPLIC 'STARTSRC INST6 INST5 RP'==
 ==Executing MULTISITE_REPLIC 'STARTSRC INST4 INST6 RP'==
 ==Executing MULTISITE_REPLIC 'RUN INST6 $gtm_tst/com/wait_for_log.csh -log ##FILTERED##RCVR_##TIMESTAMP##.log -message NOSUPPLSUPP -duration 120 -waitcreation'==
 ==Executing MULTISITE_REPLIC 'RUN INST6 ##TEST_COM_PATH##/check_error_exist.csh ##FILTERED##RCVR_##TIMESTAMP##.log NOSUPPLSUPP'==
 ----------
 Error NOSUPPLSUPP seen in ##FILTERED##RCVR_##TIMESTAMP##.log as expected:
-%GTM-E-NOSUPPLSUPPL, Instance INSTANCE6 is configured to perform local updates so it cannot receive from Supplementary Instance INSTANCE4
+%YDB-E-NOSUPPLSUPPL, Instance INSTANCE6 is configured to perform local updates so it cannot receive from Supplementary Instance INSTANCE4
 ----------
 ==Executing MULTISITE_REPLIC 'RUN INST6 set msr_dont_chk_stat ; $MUPIP replic -receiver -shutdown -timeout=0 >&! updateproc_shut_INST6INST4.out'==
 ==Executing MULTISITE_REPLIC 'STOPSRC INST6 INST5'==
 ==Executing MULTISITE_REPLIC 'REFRESHLINK INST4 INST6'==
 ==Executing MULTISITE_REPLIC 'STOPSRC INST4 INST6'==
-# Expect GTM-E-REPLINSTSECLEN if the length of -instsecondary is >15 bytes
+# Expect YDB-E-REPLINSTSECLEN if the length of -instsecondary is >15 bytes
 ==Executing MULTISITE_REPLIC 'RUN INST1 ##TEST_COM_PATH##/check_error_exist.csh ##FILTERED##START_##TIMESTAMP##.out REPLINSTSECLEN MUPCLIERR'==
 ----------
 Error REPLINSTSECLEN seen in ##FILTERED##START_##TIMESTAMP##.out as expected:
-%GTM-E-REPLINSTSECLEN, Secondary replication instance name MYNAMEISROLANDE2 should be 1 to 15 characters long
+%YDB-E-REPLINSTSECLEN, Secondary replication instance name MYNAMEISROLANDE2 should be 1 to 15 characters long
 ----------
 ----------
 Error MUPCLIERR seen in ##FILTERED##START_##TIMESTAMP##.out as expected:
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 ----------
 ==Executing MULTISITE_REPLIC 'RUN INST4 ##TEST_COM_PATH##/check_error_exist.csh ##FILTERED##START_##TIMESTAMP##.out REPLINSTSECLEN MUPCLIERR'==
 ----------
 Error REPLINSTSECLEN seen in ##FILTERED##START_##TIMESTAMP##.out as expected:
-%GTM-E-REPLINSTSECLEN, Secondary replication instance name MYNAMEISROLANDE5 should be 1 to 15 characters long
+%YDB-E-REPLINSTSECLEN, Secondary replication instance name MYNAMEISROLANDE5 should be 1 to 15 characters long
 ----------
 ----------
 Error MUPCLIERR seen in ##FILTERED##START_##TIMESTAMP##.out as expected:
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 ----------
 ==Executing MULTISITE_REPLIC 'REFRESHLINK INST1 INST2'==
 ==Executing MULTISITE_REPLIC 'REFRESHLINK INST4 INST5'==
-# Expect GTM-E-INSROLECHANGE below
+# Expect YDB-E-INSROLECHANGE below
 ==Executing MULTISITE_REPLIC 'START INST1 INST3 RP'==
 Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
@@ -133,7 +133,7 @@ Offset 172 [0x000000AC] : Old Value = 0 [0x00000000] : New Value = 1 [0x00000001
 ==Executing MULTISITE_REPLIC 'RUN INST3 ##TEST_COM_PATH##/check_error_exist.csh ##FILTERED##RCVR_##TIMESTAMP##.log INSROLECHANGE'==
 ----------
 Error INSROLECHANGE seen in ##FILTERED##RCVR_##TIMESTAMP##.log as expected:
-%GTM-E-INSROLECHANGE, Supplementary Instance INSTANCE3 and non-Supplementary Instance INSTANCE1 belong to the same Group
+%YDB-E-INSROLECHANGE, Supplementary Instance INSTANCE3 and non-Supplementary Instance INSTANCE1 belong to the same Group
 ----------
 # The receiver would have exited with the above error. Manually shutdown the update process
 ==Executing MULTISITE_REPLIC 'RUN INST3 set msr_dont_chk_stat ; $MUPIP replic -receiver -shutdown -timeout=0 >&! updateproc_shut_IST1INST5.out'==

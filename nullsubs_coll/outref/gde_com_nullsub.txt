@@ -522,12 +522,12 @@ GTM>
 ^a(1,"")="1_null"
 
 GTM>
-%GTM-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region
+%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region
 %GTM-I-GVIS, 		Global variable: ^a("")
 
 GTM>
 use of $incr function , should error out
-%GTM-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region
+%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region
 %GTM-I-GVIS, 		Global variable: ^a("",2)
 
 GTM>
@@ -554,7 +554,7 @@ GTM>
 GTM>
 
 GTM>
-%GTM-E-GVUNDEF, Global variable undefined: ^a
+%YDB-E-GVUNDEF, Global variable undefined: ^a
 
 GTM>
 
@@ -567,7 +567,7 @@ GTM>
 GTM>
 
 GTM>
-%GTM-E-GVUNDEF, Global variable undefined: ^a(1,2,3,"")
+%YDB-E-GVUNDEF, Global variable undefined: ^a(1,2,3,"")
 
 GTM>
 0
@@ -650,12 +650,12 @@ GTM>
 GTM>
 
 GTM>
-%GTM-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region
+%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region
 %GTM-I-GVIS, 		Global variable: ^cregglobalvariable("",2)
 
 GTM>
 Increment function used for CREG(EXISTING),should error out
-%GTM-E-GVNAKED, Illegal naked global reference
+%YDB-E-GVNAKED, Illegal naked global reference
 
 GTM>
 ^cregglobalvariable(1,3)=100
@@ -677,7 +677,7 @@ GTM>
 set breg globals which is now EXISTING with null_subs,naked reference should error out
 
 GTM>
-%GTM-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region
+%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region
 %GTM-I-GVIS, 		Global variable: ^bglobalvar(1,"",2,7)
 
 GTM>
@@ -686,7 +686,7 @@ GTM>
 set breg globals which is now EXISTING with null_subs,naked reference should error out
 
 GTM>
-%GTM-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region
+%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region
 %GTM-I-GVIS, 		Global variable: ^bglobalvar(4,5,"")
 
 GTM>
@@ -732,7 +732,7 @@ GTM>
 set  null subscripts to extended.dat which is existing. Should Error out
 
 GTM>
-%GTM-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region
+%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region
 %GTM-I-GVIS, 		Global variable: ^defaultregvariable("")
 
 GTM>
@@ -744,7 +744,7 @@ GTM>
 201
 GTM>
 Increment function used for extended gld(EXISTING),Should error out
-%GTM-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region
+%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region
 %GTM-I-GVIS, 		Global variable: ^defaultregvariable("","extended")
 
 GTM>

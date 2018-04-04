@@ -168,26 +168,26 @@ Copy backup database
   Journal State               [inactive] ON  Journal Before imaging       FALSE
 mupip journal -recover -backward mumps.mjl
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-JNLNOBIJBACK, MUPIP JOURNAL BACKWARD cannot continue as journal file ##TEST_PATH##/mumps.mjl does not have before image journaling
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-JNLNOBIJBACK, MUPIP JOURNAL BACKWARD cannot continue as journal file ##TEST_PATH##/mumps.mjl does not have before image journaling
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 -----------------------------------------------------------
 mupip journal -extract -backward mumps.mjl
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-JNLNOBIJBACK, MUPIP JOURNAL BACKWARD cannot continue as journal file ##TEST_PATH##/mumps.mjl does not have before image journaling
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-JNLNOBIJBACK, MUPIP JOURNAL BACKWARD cannot continue as journal file ##TEST_PATH##/mumps.mjl does not have before image journaling
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 -----------------------------------------------------------
 mupip journal -verify -backward mumps.mjl
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-JNLNOBIJBACK, MUPIP JOURNAL BACKWARD cannot continue as journal file ##TEST_PATH##/mumps.mjl does not have before image journaling
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-JNLNOBIJBACK, MUPIP JOURNAL BACKWARD cannot continue as journal file ##TEST_PATH##/mumps.mjl does not have before image journaling
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 -----------------------------------------------------------
 mupip journal -extract -verify -recover -show -backward mumps.mjl
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-JNLNOBIJBACK, MUPIP JOURNAL BACKWARD cannot continue as journal file ##TEST_PATH##/mumps.mjl does not have before image journaling
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-JNLNOBIJBACK, MUPIP JOURNAL BACKWARD cannot continue as journal file ##TEST_PATH##/mumps.mjl does not have before image journaling
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 -----------------------------------------------------------
 mupip journal -extract -verify -recover -show  -forward mumps.mjl

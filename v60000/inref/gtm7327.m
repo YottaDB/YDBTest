@@ -3,6 +3,9 @@
 ; Copyright (c) 2012-2016 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -33,7 +36,7 @@ silly	lock ^silly			; Hold lock to aggravate the subsequent LOCK and ZALLOCATE c
 	set ^childjob=1
 	write !,$job
 	for i=1:1:90 quit:'$data(^childjob)  hang 1
-	if 90=i write "GTM-E-TESTERROR, child timed out"
+	if 90=i write "YDB-E-TESTERROR, child timed out"
 	write !,"finished"
 	quit
 trans(x,y)
@@ -50,7 +53,7 @@ trans(x,y)
 	quit:(x'["job")
 	set ^jobid(y)=$zjob
 	for k=1:1:90 quit:$data(^childjob)  hang 1	; HANG must be less than gtm_tpnotacidtime
-	if 90=k write "GTM-E-TESTERROR, no evidence of JOB success",!
+	if 90=k write "YDB-E-TESTERROR, no evidence of JOB success",!
 	quit
 err	for lev=$stack:-1:0 quit:$stack(lev,"PLACE")[("^"_$text(+0))
 	set loc=$stack(lev,"PLACE"),next=$zl_":"_$p(loc,"+")_"+"_($piece(loc,"+",2)+1)_"^"_$piece(loc,"^",2)

@@ -105,8 +105,8 @@ BEGIN 8 :-) Recover should fail: jfh->eov_tn < db->curr_tn BUT db->jnl_eovtn > j
 ##TEST_AWK%GTM-I-MUINFOUINT4,     Last valid record time : [0-9]* .0x[0-9a-fA-F]*.
 %GTM-I-MUINFOSTR,       Tail analysis done : FALSE
 %GTM-I-MUINFOSTR,       Properly closed : TRUE
-##TEST_AWK.GTM-E-JNLDBTNNOMATCH, Journal file ##TEST_PATH##.big.mjl has end transaction number .0x[0-9A-F]+., but database ##TEST_PATH##.small.dat has current transaction number .0x[0-9A-F]+. and journal end transaction number .0x[0-9A-F]+.
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##TEST_AWK.YDB-E-JNLDBTNNOMATCH, Journal file ##TEST_PATH##.big.mjl has end transaction number .0x[0-9A-F]+., but database ##TEST_PATH##.small.dat has current transaction number .0x[0-9A-F]+. and journal end transaction number .0x[0-9A-F]+.
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
 END 8

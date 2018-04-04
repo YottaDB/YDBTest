@@ -81,8 +81,8 @@ Integ of region BREG
 #
 # Integ with a bad region
 #
-%GTM-E-NOREGION, REGION not found: FREELUNCH
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-NOREGION, REGION not found: FREELUNCH
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 PASS from mupip integ region freeze.
 $MUPIP integ -region "*" -subscript="^a"
 No errors detected by integ.
@@ -549,11 +549,11 @@ Index               1               3           1.245             1
 Data                3            1000          81.013             3
 Free               94              NA              NA            NA
 Total             100            1005              NA             4
-%GTM-E-DBTNLTCTN, Transaction numbers greater than the current transaction were found
+%YDB-E-DBTNLTCTN, Transaction numbers greater than the current transaction were found
 
 Largest transaction number found in database was 3E8
 Current transaction number is                    3E8
-%GTM-E-INTEGERRS, Database integrity errors
+%YDB-E-INTEGERRS, Database integrity errors
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 Total error count from integ:		1.
@@ -579,11 +579,11 @@ Index               1               3           1.245             1
 Data                3            1000          81.013             3
 Free               94              NA              NA            NA
 Total             100            1005              NA             4
-%GTM-E-DBTNLTCTN, Transaction numbers greater than the current transaction were found
+%YDB-E-DBTNLTCTN, Transaction numbers greater than the current transaction were found
 
 Largest transaction number found in database was 3E8
 Current transaction number is                    3E8
-%GTM-E-INTEGERRS, Database integrity errors
+%YDB-E-INTEGERRS, Database integrity errors
 Test PASSED
 Files Created in ##TEST_PATH##:
 Using: ##SOURCE_PATH##/mumps -run GDE
@@ -593,8 +593,8 @@ a.dat
 b.dat
 c.dat
 integ.dat
-%GTM-E-INTEGERRS, Database integrity errors
-%GTM-E-NOREGION, REGION not found: BREG
+%YDB-E-INTEGERRS, Database integrity errors
+%YDB-E-NOREGION, REGION not found: BREG
 %GTM-I-REGFILENOTFOUND, Database file b.dat corresponding to region BREG cannot be found
 %SYSTEM-E-ENO2, No such file or directory
 No errors detected by integ.
@@ -608,20 +608,20 @@ a.dat
 b.dat
 c.dat
 integ.dat
-%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat
 %GTM-W-MUNOTALLINTEG, At least one region skipped. See the earlier messages
 %SYSTEM-E-ENO13, Permission denied
 No errors detected by integ.
 No errors detected by integ.
 No errors detected by integ.
 ##TEST_PATH##/mupip_integ_chmod.out
-%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat
 %SYSTEM-E-ENO13, Permission denied
 %GTM-W-MUNOTALLINTEG, At least one region skipped. See the earlier messages
 ##TEST_PATH##/mupip_integ_rm.out
 %SYSTEM-E-ENO2, No such file or directory
-%GTM-E-NOREGION, REGION not found: BREG
-%GTM-E-INTEGERRS, Database integrity errors
+%YDB-E-NOREGION, REGION not found: BREG
+%YDB-E-INTEGERRS, Database integrity errors
 ##TEST_PATH##/mupip.err_##TEST_AWK.*
-%GTM-E-DBTNLTCTN, Transaction numbers greater than the current transaction were found
-%GTM-E-INTEGERRS, Database integrity errors
+%YDB-E-DBTNLTCTN, Transaction numbers greater than the current transaction were found
+%YDB-E-INTEGERRS, Database integrity errors

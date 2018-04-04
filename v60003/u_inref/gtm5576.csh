@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2013, 2014 Fidelity Information Services, Inc	#
+# Copyright 2013, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -30,7 +33,7 @@ setenv gtm_collate_1 `pwd`/libreverse.{$ext}
 $gtm_exe/mumps -run %XCMD 'for i=1:1:3 set ^x(i)=i'
 
 # Set the current GT.M collation to non-existent collation library. This should
-# cause GTM-I-DLLNOOPEN and GTM-E-COLLATIONUNDEF error when tried to access the
+# cause GTM-I-DLLNOOPEN and YDB-E-COLLATIONUNDEF error when tried to access the
 # database values.
 setenv gtm_collate_1 badcollation.{$ext}
 $gtm_exe/mumps -dir <<EOF  >&! zwr.op
@@ -38,7 +41,7 @@ zwrite ^x
 halt
 EOF
 $gtm_tst/com/check_error_exist.csh zwr.op "GTM-I-DLLNOOPEN"
-$gtm_tst/com/check_error_exist.csh zwr.op "GTM-E-COLLATIONUNDEF"
+$gtm_tst/com/check_error_exist.csh zwr.op "YDB-E-COLLATIONUNDEF"
 $gtm_tst/com/check_error_exist.csh zwr.op "GTM-I-GVIS"
 
 

@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2013 Fidelity Information Services, Inc	#
+# Copyright 2013 Fidelity Information Services, Inc		#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -39,13 +42,13 @@ $gtm_dist/mumps -run %XCMD 'write $zversion,!' >&! icu_fail.logx
 
 # Previously the above command generated only three lines. The last line contained an ambiguous reference.
 #
-#%GTM-E-DLLNOOPEN, Failed to load external dynamic library ##TEST_PATH##/libicuio42.1.a(libicuio.so)
+#%YDB-E-DLLNOOPEN, Failed to load external dynamic library ##TEST_PATH##/libicuio42.1.a(libicuio.so)
 #%GTM-I-TEXT, Could not load module ##TEST_PATH##/libicuio42.1.a(libicuio.so).
 #        Member libicuio.so is not found in archive
 #
 # Now the error prints out more detailed information.
 #
-#%GTM-E-DLLNOOPEN, Failed to load external dynamic library ##TEST_PATH##/libicuio42.1.a(libicuio42.1.so)
+#%YDB-E-DLLNOOPEN, Failed to load external dynamic library ##TEST_PATH##/libicuio42.1.a(libicuio42.1.so)
 #%GTM-I-TEXT, Could not load module ##TEST_PATH##/libicuio42.1.a(libicuio42.1.so).
 #        Dependent module libicuuc42.a(libicuuc42.1.so) could not be loaded.
 #Could not load module libicuuc42.a(libicuuc42.1.so).

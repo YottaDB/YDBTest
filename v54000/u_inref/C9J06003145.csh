@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh
 #################################################################
 #								#
-#	Copyright 2013 Fidelity Information Services, Inc	#
+# Copyright 2013 Fidelity Information Services, Inc		#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -52,21 +55,21 @@ set ^a=1
 zsystem "ls -al ${tempdir}/gtm_s* "
 here
 
-$gtm_tst/com/check_error_exist.csh gtm_gtmsecshr.log "GTM-E-LOGTOOLONG" >>& test.logx
+$gtm_tst/com/check_error_exist.csh gtm_gtmsecshr.log "YDB-E-LOGTOOLONG" >>& test.logx
 if ($status) then
 	if ("aix" == "$gtm_test_osname") then
-	    echo "TEST-I-PASSED.. GTM-E-LOGTOOLONG found in gtm_gtmsecshr.log" # White lie so reference file matches
+	    echo "TEST-I-PASSED.. YDB-E-LOGTOOLONG found in gtm_gtmsecshr.log" # White lie so reference file matches
 	else
-	    echo "TEST-E-FAILED.. GTM-E-LOGTOOLONG not found in gtm_gtmsecshr.log"
+	    echo "TEST-E-FAILED.. YDB-E-LOGTOOLONG not found in gtm_gtmsecshr.log"
 	endif
 else
-	echo "TEST-I-PASSED.. GTM-E-LOGTOOLONG found in gtm_gtmsecshr.log"
+	echo "TEST-I-PASSED.. YDB-E-LOGTOOLONG found in gtm_gtmsecshr.log"
 endif
 
 if ( "HOST_OS390_S390" == "$gtm_test_os_machtype" ) then
-	set error_msg = "GTM-E-MUTEXERR"
+	set error_msg = "YDB-E-MUTEXERR"
 else
-	set error_msg = "GTM-E-DBPRIVERR"
+	set error_msg = "YDB-E-DBPRIVERR"
 endif
 
 $gtm_tst/com/check_error_exist.csh gtm_gtmsecshr.log "$error_msg" >>& test.logx

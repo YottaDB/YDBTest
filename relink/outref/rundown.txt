@@ -5,18 +5,18 @@ Using: ##SOURCE_PATH##/mupip
 mumps.dat
 
 1. MUPIP RUNDOWN -RELINKCTL . on a used relinkctl file with no routines.
-%GTM-E-RLNKCTLRNDWNFL, Relinkctl file for $ZROUTINES directory ##TEST_PATH## failed to rundown as it is open by 1 process(es)
+%YDB-E-RLNKCTLRNDWNFL, Relinkctl file for $ZROUTINES directory ##TEST_PATH## failed to rundown as it is open by 1 process(es)
 
 2. MUPIP RUNDOWN -RELINKCTL . on a used relinkctl file with no autorelinked routines.
-%GTM-E-RLNKCTLRNDWNFL, Relinkctl file for $ZROUTINES directory ##TEST_PATH## failed to rundown as it is open by 1 process(es)
+%YDB-E-RLNKCTLRNDWNFL, Relinkctl file for $ZROUTINES directory ##TEST_PATH## failed to rundown as it is open by 1 process(es)
 
 3a. MUMPS on a directory whose relinkctl file has not been run down due to a crash.
 Killed
 
 3b. MUMPS on a directory whose relinkctl file has not been run down due to a crash but shared memory removed.
 ##TEST_AWKTEST-I-INFO, Removed relinkctl shared memory segment [0-9]*.
-##TEST_AWK%GTM-E-REQRLNKCTLRNDWN, Error accessing relinkctl file ./gtm-relinkctl-[0-9a-f]* for \$ZROUTINES directory ##TEST_PATH##. Must be rundown
-##TEST_AWK%GTM-E-SYSCALL, Error received from system call shmat\(\) failed for shmid=.* shmsize=.* \[0x.*\] -- called from module .*/relinkctl.c at line .*
+##TEST_AWK%YDB-E-REQRLNKCTLRNDWN, Error accessing relinkctl file ./gtm-relinkctl-[0-9a-f]* for \$ZROUTINES directory ##TEST_PATH##. Must be rundown
+##TEST_AWK%YDB-E-SYSCALL, Error received from system call shmat\(\) failed for shmid=.* shmsize=.* \[0x.*\] -- called from module .*/relinkctl.c at line .*
 ##TEST_AWK%SYSTEM-E-ENO[1-9][0-9]*, .*
 
 3c. MUPIP RUNDOWN -RELINKCTL . on an unused relinkctl file with no routines.
@@ -28,20 +28,20 @@ Killed
 4b. MUMPS on a directory whose relinkctl file has not been run down due to a crash but shared memory removed.
 ##TEST_AWKTEST-I-INFO, Removed rtnobj shared memory segment [0-9]*.
 ##TEST_AWKTEST-I-INFO, Removed relinkctl shared memory segment [0-9]*.
-##TEST_AWK%GTM-E-REQRLNKCTLRNDWN, Error accessing relinkctl file ./gtm-relinkctl-[0-9a-f]* for \$ZROUTINES directory ##TEST_PATH##. Must be rundown
-##TEST_AWK%GTM-E-SYSCALL, Error received from system call shmat\(\) failed for shmid=.* shmsize=.* \[0x.*\] -- called from module .*/relinkctl.c at line .*
+##TEST_AWK%YDB-E-REQRLNKCTLRNDWN, Error accessing relinkctl file ./gtm-relinkctl-[0-9a-f]* for \$ZROUTINES directory ##TEST_PATH##. Must be rundown
+##TEST_AWK%YDB-E-SYSCALL, Error received from system call shmat\(\) failed for shmid=.* shmsize=.* \[0x.*\] -- called from module .*/relinkctl.c at line .*
 ##TEST_AWK%SYSTEM-E-ENO[1-9][0-9]*, .*
 
 4c. MUPIP RUNDOWN -RELINKCTL . on an unused relinkctl file with routines.
 %GTM-I-RLNKCTLRNDWNSUC, Relinkctl file for $ZROUTINES directory ##TEST_PATH## successfully rundown
 
 5. MUPIP RUNDOWN -RELINKCTL on used relinkctl files with no routines.
-%GTM-E-RLNKCTLRNDWNFL, Relinkctl file for $ZROUTINES directory ##TEST_PATH## failed to rundown as it is open by 1 process(es)
-%GTM-E-RLNKCTLRNDWNFL, Relinkctl file for $ZROUTINES directory ##TEST_PATH##/dir failed to rundown as it is open by 1 process(es)
+%YDB-E-RLNKCTLRNDWNFL, Relinkctl file for $ZROUTINES directory ##TEST_PATH## failed to rundown as it is open by 1 process(es)
+%YDB-E-RLNKCTLRNDWNFL, Relinkctl file for $ZROUTINES directory ##TEST_PATH##/dir failed to rundown as it is open by 1 process(es)
 
 6. MUPIP RUNDOWN -RELINKCTL on used relinkctl files with no autorelinked routines.
-%GTM-E-RLNKCTLRNDWNFL, Relinkctl file for $ZROUTINES directory ##TEST_PATH## failed to rundown as it is open by 1 process(es)
-%GTM-E-RLNKCTLRNDWNFL, Relinkctl file for $ZROUTINES directory ##TEST_PATH##/dir failed to rundown as it is open by 1 process(es)
+%YDB-E-RLNKCTLRNDWNFL, Relinkctl file for $ZROUTINES directory ##TEST_PATH## failed to rundown as it is open by 1 process(es)
+%YDB-E-RLNKCTLRNDWNFL, Relinkctl file for $ZROUTINES directory ##TEST_PATH##/dir failed to rundown as it is open by 1 process(es)
 
 7a. MUMPS on directories whose relinkctl files have not been run down due to a crash.
 Killed
@@ -49,8 +49,8 @@ Killed
 7b. MUMPS on directories whose relinkctl files have not been run down due to a crash but shared memory removed.
 ##TEST_AWKTEST-I-INFO, Removed relinkctl shared memory segment [0-9]*.
 ##TEST_AWKTEST-I-INFO, Removed relinkctl shared memory segment [0-9]*.
-##TEST_AWK%GTM-E-REQRLNKCTLRNDWN, Error accessing relinkctl file ./gtm-relinkctl-[0-9a-f]* for \$ZROUTINES directory ##TEST_PATH##. Must be rundown
-##TEST_AWK%GTM-E-SYSCALL, Error received from system call shmat\(\) failed for shmid=.* shmsize=.* \[0x.*\] -- called from module .*/relinkctl.c at line .*
+##TEST_AWK%YDB-E-REQRLNKCTLRNDWN, Error accessing relinkctl file ./gtm-relinkctl-[0-9a-f]* for \$ZROUTINES directory ##TEST_PATH##. Must be rundown
+##TEST_AWK%YDB-E-SYSCALL, Error received from system call shmat\(\) failed for shmid=.* shmsize=.* \[0x.*\] -- called from module .*/relinkctl.c at line .*
 ##TEST_AWK%SYSTEM-E-ENO[1-9][0-9]*, .*
 
 7c. MUPIP RUNDOWN -RELINKCTL on unused relinkctl files with no routines.
@@ -65,8 +65,8 @@ Killed
 ##TEST_AWKTEST-I-INFO, Removed rtnobj shared memory segment [0-9]*.
 ##TEST_AWKTEST-I-INFO, Removed relinkctl shared memory segment [0-9]*.
 ##TEST_AWKTEST-I-INFO, Removed relinkctl shared memory segment [0-9]*.
-##TEST_AWK%GTM-E-REQRLNKCTLRNDWN, Error accessing relinkctl file ./gtm-relinkctl-[0-9a-f]* for \$ZROUTINES directory ##TEST_PATH##. Must be rundown
-##TEST_AWK%GTM-E-SYSCALL, Error received from system call shmat\(\) failed for shmid=.* shmsize=.* \[0x.*\] -- called from module .*/relinkctl.c at line .*
+##TEST_AWK%YDB-E-REQRLNKCTLRNDWN, Error accessing relinkctl file ./gtm-relinkctl-[0-9a-f]* for \$ZROUTINES directory ##TEST_PATH##. Must be rundown
+##TEST_AWK%YDB-E-SYSCALL, Error received from system call shmat\(\) failed for shmid=.* shmsize=.* \[0x.*\] -- called from module .*/relinkctl.c at line .*
 ##TEST_AWK%SYSTEM-E-ENO[1-9][0-9]*, .*
 
 8c. MUPIP RUNDOWN -RELINKCTL on unused relinkctl files with routines.
@@ -74,17 +74,17 @@ Killed
 %GTM-I-RLNKCTLRNDWNSUC, Relinkctl file for $ZROUTINES directory ##TEST_PATH##/dir successfully rundown
 
 9. MUPIP RUNDOWN -RELINKCTL on active relinkctl file with an incorrect attach count.
-%GTM-E-RLNKCTLRNDWNFL, Relinkctl file for $ZROUTINES directory ##TEST_PATH## failed to rundown as it is open by 1 process(es)
+%YDB-E-RLNKCTLRNDWNFL, Relinkctl file for $ZROUTINES directory ##TEST_PATH## failed to rundown as it is open by 1 process(es)
 Checking for left-over shared memory segments:
 TEST-I-INFO, No left-over relinkctl IPCs found.
 
 10. MUPIP RUNDOWN -RELINKCTL abc on a non-existent directory.
-%GTM-E-FILEPARSE, Error parsing file specification: abc
+%YDB-E-FILEPARSE, Error parsing file specification: abc
 %SYSTEM-E-ENO2, No such file or directory
 
 11. MUPIP RUNDOWN -RELINKCTL on a non-existent directory.
-##TEST_AWK%GTM-E-ZROSYNTAX, \$ZROUTINES syntax error: .* abc
-%GTM-E-FILEPARSE, Error parsing file specification: abc
+##TEST_AWK%YDB-E-ZROSYNTAX, \$ZROUTINES syntax error: .* abc
+%YDB-E-FILEPARSE, Error parsing file specification: abc
 ##TEST_AWK%SYSTEM-E-ENO[1-9][0-9]*, .*
 
 12. MUPIP RUNDOWN -RELINKCTL on a directory that is non-autorelinked in $gtmroutines.
@@ -92,8 +92,8 @@ TEST-I-INFO, No left-over relinkctl IPCs found.
 13. Live MUMPS process whose previously loaded relinkctl shared memory has been removed.
 ##TEST_AWKTEST-I-INFO, Removed rtnobj shared memory segment [0-9]*.
 ##TEST_AWK.*relinkctl shared memory.*
-##TEST_AWK%GTM-E-REQRLNKCTLRNDWN, Error accessing relinkctl file ./gtm-relinkctl-[0-9a-f]* for \$ZROUTINES directory ##TEST_PATH##. Must be rundown
-##TEST_AWK%GTM-E-SYSCALL, Error received from system call rtnobj2 shmat\(\) failed for shmid=[0-9]* shmsize=0x[0-9a-f]* -- called from module .*/rtnobj.c at line [1-9][0-9]*
+##TEST_AWK%YDB-E-REQRLNKCTLRNDWN, Error accessing relinkctl file ./gtm-relinkctl-[0-9a-f]* for \$ZROUTINES directory ##TEST_PATH##. Must be rundown
+##TEST_AWK%YDB-E-SYSCALL, Error received from system call rtnobj2 shmat\(\) failed for shmid=[0-9]* shmsize=0x[0-9a-f]* -- called from module .*/rtnobj.c at line [1-9][0-9]*
 ##TEST_AWK%SYSTEM-E-ENO[1-9][0-9]*, .*
 
 ##SOURCE_PATH##/mupip

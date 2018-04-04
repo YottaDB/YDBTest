@@ -6,14 +6,14 @@ aaa(1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,1)="34 subs in bbb
 
 m bbb(1,2,3,4)=aaa
 Error Number=1
-STAT=lcl+7^subslen,%GTM-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%GTM-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
+STAT=lcl+7^subslen,%GTM-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
 aaa(1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0)="30 subs in aaa"
 aaa(1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,1)="34 subs in bbb"
 line=8
-mystat="lcl+7^subslen,%GTM-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%GTM-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded"
+mystat="lcl+7^subslen,%GTM-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded"
 newprog="2:lcl+8^subslen"
 prog="lcl+7^subslen"
-savestat="150379328,lcl+7^subslen,%GTM-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%GTM-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded"
+savestat="150379328,lcl+7^subslen,%GTM-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded"
 unix=1
 us="errcont"
 
@@ -27,7 +27,7 @@ subslen for local test PASSED
 
 MERGE ^a($j("new",25))=^b
 Error Number=2
-STAT=gbl+10^subslen,%GTM-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%GTM-I-GVIS, 		Global variable: ^a("                      new","                        8","                        8")
+STAT=gbl+10^subslen,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%GTM-I-GVIS, 		Global variable: ^a("                      new","                        8","                        8")
 ^a("                        8","                        8")="a_8_8"
 ^a("                        9","                        9")="a_9_9"
 ^a("                      new","                        8")="b_825"
@@ -38,26 +38,26 @@ STAT=gbl+10^subslen,%GTM-E-GVSUBOFLOW, Maximum combined length of subscripts exc
 
 GTM>
 Error Number=3
-STAT=gtm7867+5^subslen,%GTM-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%GTM-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
+STAT=gtm7867+5^subslen,%GTM-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
 Error Number=4
-STAT=gtm7867+7^subslen,%GTM-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%GTM-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
+STAT=gtm7867+7^subslen,%GTM-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
 Error Number=5
 ##SUSPEND_OUTPUT GT.CM
-STAT=gtm7867+8^subslen,%GTM-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%GTM-I-GVIS, 		Global variable: ^c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18)
+STAT=gtm7867+8^subslen,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%GTM-I-GVIS, 		Global variable: ^c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18)
 ##ALLOW_OUTPUT GT.CM
 ##SUSPEND_OUTPUT GT.M
-STAT=gtm7867+8^subslen,%GTM-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%GTM-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
+STAT=gtm7867+8^subslen,%GTM-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
 ##ALLOW_OUTPUT GT.M
 Error Number=6
-STAT=gtm7867+11^subslen,%GTM-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%GTM-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
+STAT=gtm7867+11^subslen,%GTM-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
 Error Number=7
-STAT=gtm7867+13^subslen,%GTM-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%GTM-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
+STAT=gtm7867+13^subslen,%GTM-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
 Error Number=8
 ##SUSPEND_OUTPUT GT.CM
-STAT=gtm7867+14^subslen,%GTM-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%GTM-I-GVIS, 		Global variable: ^c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18)
+STAT=gtm7867+14^subslen,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%GTM-I-GVIS, 		Global variable: ^c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18)
 ##ALLOW_OUTPUT GT.CM
 ##SUSPEND_OUTPUT GT.M
-STAT=gtm7867+14^subslen,%GTM-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%GTM-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
+STAT=gtm7867+14^subslen,%GTM-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
 ##ALLOW_OUTPUT GT.M
 
 GTM>
@@ -89,27 +89,27 @@ No errors detected by integ.
 
 GTM>
 Error Number=1
-STAT=errors+4^errors,%GTM-E-MERGEDESC, Merge operation not possible.  abc(1,aa,12.34,99910) is descendent of abc.
+STAT=errors+4^errors,%YDB-E-MERGEDESC, Merge operation not possible.  abc(1,aa,12.34,99910) is descendent of abc.
 Error Number=2
-STAT=errors+12^errors,%GTM-E-MERGEDESC, Merge operation not possible.  abc(aaa,bbb,ccc,ddd) is descendent of abc(aaa,bbb,ccc).
+STAT=errors+12^errors,%YDB-E-MERGEDESC, Merge operation not possible.  abc(aaa,bbb,ccc,ddd) is descendent of abc(aaa,bbb,ccc).
 Error Number=3
-STAT=errors+13^errors,%GTM-E-MERGEDESC, Merge operation not possible.  abc(aaa,bbb,ccc) is descendent of abc(aaa,bbb).
+STAT=errors+13^errors,%YDB-E-MERGEDESC, Merge operation not possible.  abc(aaa,bbb,ccc) is descendent of abc(aaa,bbb).
 a(111)="vala"
 Error Number=4
-STAT=lab2+4^errors,%GTM-E-MERGEDESC, Merge operation not possible.  a(111,222) is descendent of a(111).
+STAT=lab2+4^errors,%YDB-E-MERGEDESC, Merge operation not possible.  a(111,222) is descendent of a(111).
 a(111)="vala"
 Error Number=5
-STAT=lab2+8^errors,%GTM-E-MERGEDESC, Merge operation not possible.  ^a(111,222) is descendent of ^a(111).
+STAT=lab2+8^errors,%YDB-E-MERGEDESC, Merge operation not possible.  ^a(111,222) is descendent of ^a(111).
 ^a(111)="vala"
 Error Number=6
-STAT=lab3+3^errors,%GTM-E-MERGEDESC, Merge operation not possible.  ^a(111,0,22222) is descendent of ^a(111).
+STAT=lab3+3^errors,%YDB-E-MERGEDESC, Merge operation not possible.  ^a(111,0,22222) is descendent of ^a(111).
 ^a(111)="vala"
 ^a(1110,22222)="vala"
 ^a(111222)="vala"
 ^b(111)="vala"
 ^bb(111)="vala"
 Error Number=7
-STAT=lab4+4^errors,%GTM-E-MERGEDESC, Merge operation not possible.  a(111,0,22222) is descendent of a(111).
+STAT=lab4+4^errors,%YDB-E-MERGEDESC, Merge operation not possible.  a(111,0,22222) is descendent of a(111).
 a(111)="vala"
 a(1110,22222)="vala"
 a(111222)="vala"

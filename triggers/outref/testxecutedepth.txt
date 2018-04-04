@@ -149,7 +149,7 @@ GTM>
 @125 BEGIN Trigger CIF#1# invoked for ^CIF(125)
 @126 BEGIN Trigger CIF#1# invoked for ^CIF(126)
 @127 BEGIN Trigger CIF#1# invoked for ^CIF(127)
-##TEST_AWK[0-9]*.trigbomb.4.trigbomb..GTM-E-MAXTRIGNEST. Maximum trigger nesting level .127. exceeded
+##TEST_AWK[0-9]*.trigbomb.4.trigbomb..YDB-E-MAXTRIGNEST. Maximum trigger nesting level .127. exceeded
 Output File: 
 ;trigger name: CIF#1 (region DEFAULT)  cycle: 3
 +^CIF(*) -commands=S -xecute="do ^trigbomb(126)"
@@ -1956,10 +1956,10 @@ Output File:
 GTM>
 
 GTM>
-%GTM-E-MAXTRIGNEST, Maximum trigger nesting level (127) exceeded
+%YDB-E-MAXTRIGNEST, Maximum trigger nesting level (127) exceeded
 
 GTM>
-%GTM-E-MAXTRIGNEST, Maximum trigger nesting level (127) exceeded
+%YDB-E-MAXTRIGNEST, Maximum trigger nesting level (127) exceeded
 
 GTM>
 

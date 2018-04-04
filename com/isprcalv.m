@@ -1,6 +1,17 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Checks if "pid" passed as input is alive or not
 ;
-; Returns 
+; Returns
 ;	--> 1 if "pid" is alive
 ;	--> 0 if "pid" is not alive
 ;
@@ -13,13 +24,13 @@ isalive;
 	set unix=$ZVersion'["VMS"
 	if unix do
 	.	set alive=0
-	.	set zsystr="ps -p "_pid_" >& /dev/null" 
+	.	set zsystr="ps -p "_pid_" >& /dev/null"
 	.	zsystem zsystr
 	.	if $zsystem=0 set alive=1
 	if 'unix do
 	.	set alive=-1
 	.	set zsystr="pipe show process /id="_$$FUNC^%DH(pid)
-	.	set nooutput=" >nl: 2>nl:" 
+	.	set nooutput=" >nl: 2>nl:"
 	.	zsystem zsystr_nooutput
 	.	; in VMS, the last 4 hexadecimal bytes of the status should be 0x0001 to be considered success
 	.	set status=$$FUNC^%DH($zsystem)
@@ -43,6 +54,6 @@ errjpi;
 	set newprog=$piece(prog,"+",1)_"+"_line_"^"_$piece(prog,"^",2,3)
 	set newprog=$zlevel_":"_newprog
 	;
-	if $ZSTATUS'["%GTM-E-BADJPIPARAM" halt
+	if $ZSTATUS'["%YDB-E-BADJPIPARAM" halt
 	do isalive
 	ZGOTO @newprog

@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-;	Copyright 2011, 2014 Fidelity Information Services, Inc	;
+; Copyright 2011, 2014 Fidelity Information Services, Inc	;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -84,7 +87,7 @@ processStr(type,t,a)
 	. set ^readcnt(type)=i
 	. read y
 	. if $za!$zeof set za=$za set zeof=$zeof use $p write "$za= ",za," $zeof= ",zeof,! set ^quit=2 halt
-	. if a'=y use $p write "GTM-E-BADINPUT: ",!,"Expected: ",!,a,!,"Read: ",!,y,! set ^quit=3 halt
+	. if a'=y use $p write "YDB-E-BADINPUT: ",!,"Expected: ",!,a,!,"Read: ",!,y,! set ^quit=3 halt
 	use $p
 	write type,": ","Input matches output",!
 	set ^quit=1
@@ -98,7 +101,7 @@ processStr2(type,t,a)
 	. set ^readcnt(type)=i
 	. read y
 	. if $za!$zeof set za=$za set zeof=$zeof use $p write "$za= ",za," $zeof= ",zeof,! set ^quit=2 halt
-	. if a(i#2)'=y use $p write "GTM-E-BADINPUT: ",!,"Expected: ",!,a(i#2),!,"Read: ",!,y,! set ^quit=3 halt
+	. if a(i#2)'=y use $p write "YDB-E-BADINPUT: ",!,"Expected: ",!,a(i#2),!,"Read: ",!,y,! set ^quit=3 halt
 	use $p
 	write type,": ","Input matches output",!
 	set ^quit=1

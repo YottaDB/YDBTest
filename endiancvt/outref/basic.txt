@@ -2,10 +2,10 @@
 
 ## create a V4 database
 ## mupip endiancvt mumps.dat
-##      --> Shoud issue "GTM-E-NOENDIANCVT Unable to convert the endian format of the file mumps.dat due to the database not in current version" error
+##      --> Shoud issue "YDB-E-NOENDIANCVT Unable to convert the endian format of the file mumps.dat due to the database not in current version" error
 ## concurrently run a few updates
 ## mupip endiancvt mumps.dat
-##      --> Shoud issue "GTM-E-NOENDIANCVT Unable to convert the endian format of the file mumps.dat due to the database not in current version" error
+##      --> Shoud issue "YDB-E-NOENDIANCVT Unable to convert the endian format of the file mumps.dat due to the database not in current version" error
 
 GT.M switched to ##FILTERED##PRIORVER## version
 Files Created in ##TEST_PATH##:
@@ -19,7 +19,7 @@ Database file mumps.dat has an unrecognizable format
 ----------
 ----------
 Error MUNOACTION seen in endiancvt_try1.out as expected:
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ----------
 ----------
 Error unrecognizable seen in endiancvt_try2.out as expected:
@@ -27,7 +27,7 @@ Database file mumps.dat has an unrecognizable format
 ----------
 ----------
 Error MUNOACTION seen in endiancvt_try2.out as expected:
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ----------
 
 # Upgrade the database to V5
@@ -68,11 +68,11 @@ Region DEFAULT : MUPIP REORG UPGRADE finished
 
 ----------
 Error MUSTANDALONE seen in endiancvt_try3.out as expected:
-%GTM-E-MUSTANDALONE, Could not get exclusive access to mumps.dat
+%YDB-E-MUSTANDALONE, Could not get exclusive access to mumps.dat
 ----------
 ----------
 Error MUNOACTION seen in endiancvt_try3.out as expected:
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ----------
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *

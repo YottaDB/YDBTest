@@ -10,20 +10,20 @@ GTM>
 
 GTM>
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-JNLFILEDUP, Journal files ##TEST_PATH##/mumps.mjl and ##TEST_PATH##/mumps.mjl are the same
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-JNLFILEDUP, Journal files ##TEST_PATH##/mumps.mjl and ##TEST_PATH##/mumps.mjl are the same
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-JNLFILEDUP, Journal files ##TEST_PATH##/mumps.mjl and ##TEST_PATH##/mumps.mjl are the same
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-JNLFILEDUP, Journal files ##TEST_PATH##/mumps.mjl and ##TEST_PATH##/mumps.mjl are the same
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-JNLFILEDUP, Journal files ##TEST_PATH##/link.mjl and ##TEST_PATH##/mumps.mjl are the same
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-JNLFILEDUP, Journal files ##TEST_PATH##/link.mjl and ##TEST_PATH##/mumps.mjl are the same
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-JNLFILEDUP, Journal files ##TEST_PATH##/mumps.mjl and ##TEST_PATH##/mumps.mjl are the same
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-JNLFILEDUP, Journal files ##TEST_PATH##/mumps.mjl and ##TEST_PATH##/mumps.mjl are the same
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 %GTM-S-JNLSUCCESS, Show successful
@@ -39,7 +39,7 @@ spawn ##SOURCE_PATH##/mupip journal -recover -forward mumps.mjl,copy.mjl -nochec
 %GTM-I-MUJNLSTAT, Initial processing started at ##TEST_AWK... ... .. ..:..:.. 20..
 %GTM-I-MUJNLSTAT, Backward processing started at ##TEST_AWK... ... .. ..:..:.. 20..
 ##TEST_AWK.*%GTM-I-TEXT, Transaction number continuity check failed: \[0x[0-9A-F]*\] vs \[0x[0-9A-F]*\]
-##TEST_AWK.*%GTM-E-JNLBADRECFMT, Journal File Record Format Error encountered for file ##TEST_PATH##/copy.mjl at disk address 0x##TEST_AWK.*
+##TEST_AWK.*%YDB-E-JNLBADRECFMT, Journal File Record Format Error encountered for file ##TEST_PATH##/copy.mjl at disk address 0x##TEST_AWK.*
 Proceed? [Y/N]: 
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_AIX_RS6000
@@ -51,19 +51,19 @@ Proceed? [Y/N]:
 ##SUSPEND_OUTPUT HOST_AIX_RS6000 HOST_SUNOS_SPARC HOST_OSF1_ALPHA HOST_OS390_S390
 Recovery terminated by operator
 ##ALLOW_OUTPUT HOST_AIX_RS6000 HOST_SUNOS_SPARC
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 %GTM-I-MUJNLSTAT, End processing at ##TEST_AWK... ... .. ..:..:.. 20..
 spawn ##SOURCE_PATH##/mupip journal -recover -forward mumps.mjl,copy.mjl -nochecktn
 %GTM-I-MUJNLSTAT, Initial processing started at ##TEST_AWK... ... .. ..:..:.. 20..
 %GTM-I-MUJNLSTAT, Backward processing started at ##TEST_AWK... ... .. ..:..:.. 20..
 ##TEST_AWK.*%GTM-I-TEXT, Transaction number continuity check failed: \[0x[0-9A-F]*\] vs \[0x[0-9A-F]*\]
-##TEST_AWK.*%GTM-E-JNLBADRECFMT, Journal File Record Format Error encountered for file ##TEST_PATH##/copy.mjl at disk address 0x##TEST_AWK.*
+##TEST_AWK.*%YDB-E-JNLBADRECFMT, Journal File Record Format Error encountered for file ##TEST_PATH##/copy.mjl at disk address 0x##TEST_AWK.*
 Proceed? [Y/N]: 
 
 Please enter Y or N: 
 N
 Recovery terminated by operator
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 %GTM-I-MUJNLSTAT, End processing at ##TEST_AWK... ... .. ..:..:.. 20..
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_OSF1_ALPHA HOST_OS390_S390

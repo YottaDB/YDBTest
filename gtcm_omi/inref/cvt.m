@@ -1,3 +1,14 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; various conversion routines
 
 ; Convert mumps numeric into string containing binary representation
@@ -57,7 +68,7 @@ gvn2ref(gvn)
 	f ndx=1:1:Connect("Max Subscript") Do  q:gvnsub=""
 	. if $E(gvnsub)="""" Do
 	. . s sub=""
-	. . F  s qpos=$F(gvnsub,"""",2)-1,sub=sub_$E(gvnsub,2,qpos-1),gvnsub=$E(gvnsub,qpos+1,$L(gvnsub)) q:$E(gvnsub)=","  q:gvnsub=""  zm:$E(gvnsub)'="""" GTMERR("GTM-E-NOTGBL"):gvn s sub=sub_""""
+	. . F  s qpos=$F(gvnsub,"""",2)-1,sub=sub_$E(gvnsub,2,qpos-1),gvnsub=$E(gvnsub,qpos+1,$L(gvnsub)) q:$E(gvnsub)=","  q:gvnsub=""  zm:$E(gvnsub)'="""" GTMERR("YDB-E-NOTGBL"):gvn s sub=sub_""""
 	. . s gvnsub=$E(gvnsub,2,$L(gvnsub))
 	. e  s sub=$P(gvnsub,",",1) s gvnsub=$E(gvnsub,$L(sub)+2,$L(gvnsub))
 	. s ref=ref_$$str2SS(sub)
@@ -83,6 +94,6 @@ ref2gvn(ref)
 	. s gvn=gvn_","
 	s gvn=gvn_")"
 	q gvn
-	
 
-	
+
+

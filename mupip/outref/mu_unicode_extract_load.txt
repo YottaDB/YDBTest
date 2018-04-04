@@ -161,7 +161,7 @@ GTM>
 Now load from different encoding
 %GTM-I-DBFILECREATED, Database file ##TEST_PATH##/load.dat created
 ##SOURCE_PATH##/mupip load -format=binary ＸＹ.ＢＩＮ
-%GTM-E-LOADINVCHSET, Extract file CHSET (UTF-8) is incompatible with gtm_chset
+%YDB-E-LOADINVCHSET, Extract file CHSET (UTF-8) is incompatible with gtm_chset
 Loading was unsuccessful as expected
 setenv gtm_chset UTF-8
 unset echo
@@ -172,8 +172,8 @@ No errors detected by integ.
 ##SOURCE_PATH##/mupip load -format=zwr ＤＡＴＡ.ＺＷＲ
 我能吞下玻璃而不伤身体 UTF-8
 ##FILTERED##..-...-....  ..:..:.. ZWR
-%GTM-E-LOADINVCHSET, Extract file CHSET (UTF-8) is incompatible with gtm_chset
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-LOADINVCHSET, Extract file CHSET (UTF-8) is incompatible with gtm_chset
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 Loading was unsuccessful as expected
 setenv gtm_chset UTF-8
 unset echo

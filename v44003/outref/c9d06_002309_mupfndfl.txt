@@ -6,42 +6,42 @@ Test case 1 : Global directory not present : database not present : directory no
 echo "#"
 #
 $MUPIP create
-%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
+%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
 %SYSTEM-E-ENO2, No such file or directory
 $MUPIP set -journal=enable,on,before -reg "*"
-%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
+%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
 %SYSTEM-E-ENO2, No such file or directory
 $MUPIP reorg
 Fill Factor:: Index blocks 100%: Data blocks 100%
-%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
+%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
 %SYSTEM-E-ENO2, No such file or directory
 $MUPIP backup "*" backup.dat
-%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
+%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
 %SYSTEM-E-ENO2, No such file or directory
 $MUPIP integ -r "*"
-%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
+%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
 %SYSTEM-E-ENO2, No such file or directory
 $MUPIP set -reg DEFAULT -exten=100
-%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
+%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
 %SYSTEM-E-ENO2, No such file or directory
 $MUPIP rundown -reg "*"
-%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
+%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
 %SYSTEM-E-ENO2, No such file or directory
 cp $gtm_tst/$tst/inref/extr.glo .
 unset verbose
 $MUPIP load extr.glo
 ##TEST_AWKGT.M MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:.. ZWR
-%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
+%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
 %SYSTEM-E-ENO2, No such file or directory
 $MUPIP extr extr.gbl1
-%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
+%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
 %SYSTEM-E-ENO2, No such file or directory
 $MUPIP fr -on "*"
-%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
+%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
 %SYSTEM-E-ENO2, No such file or directory
 $MUPIP fr -off "*"
-%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
+%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.
 %SYSTEM-E-ENO2, No such file or directory
 echo "#"
 #
@@ -66,30 +66,30 @@ GDE>
 	##TEST_PATH##/mumps.gld
 $MUPIP create
 %GTM-I-DBFILECREATED, Database file ##TEST_PATH##/dir2/a.dat created
-%GTM-E-DBOPNERR, Error opening database file ##TEST_PATH##/dir1/mumps.dat
+%YDB-E-DBOPNERR, Error opening database file ##TEST_PATH##/dir1/mumps.dat
 %SYSTEM-E-ENO2, No such file or directory
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 $MUPIP set -journal=enable,on,before -reg "*"
 %GTM-I-REGFILENOTFOUND, Database file ./dir1/mumps.dat corresponding to region DEFAULT cannot be found
 %SYSTEM-E-ENO2, No such file or directory
-%GTM-E-NOREGION, REGION not found: DEFAULT
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-NOREGION, REGION not found: DEFAULT
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 $MUPIP reorg
 Fill Factor:: Index blocks 100%: Data blocks 100%
-%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/dir1/mumps.dat
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/dir1/mumps.dat
 %SYSTEM-E-ENO2, No such file or directory
 $MUPIP backup "*" ./back1
 %GTM-I-REGFILENOTFOUND, Database file ./dir1/mumps.dat corresponding to region DEFAULT cannot be found
 %SYSTEM-E-ENO2, No such file or directory
-%GTM-E-NOREGION, REGION not found: DEFAULT
+%YDB-E-NOREGION, REGION not found: DEFAULT
 
 MUPIP cannot start backup with above errors
 
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 $MUPIP integ -r "*"
 %GTM-I-REGFILENOTFOUND, Database file ./dir1/mumps.dat corresponding to region DEFAULT cannot be found
 %SYSTEM-E-ENO2, No such file or directory
-%GTM-E-NOREGION, REGION not found: DEFAULT
+%YDB-E-NOREGION, REGION not found: DEFAULT
 
 
 Integ of region AREG
@@ -103,39 +103,39 @@ Index               0               0           0.000             0
 Data                0               0           0.000             0
 Free               98              NA              NA            NA
 Total             100               1              NA             0
-%GTM-E-INTEGERRS, Database integrity errors
+%YDB-E-INTEGERRS, Database integrity errors
 $MUPIP set -reg DEFAULT -exten=100
 %GTM-I-REGFILENOTFOUND, Database file ./dir1/mumps.dat corresponding to region DEFAULT cannot be found
 %SYSTEM-E-ENO2, No such file or directory
-%GTM-E-NOREGION, REGION not found: DEFAULT
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-NOREGION, REGION not found: DEFAULT
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 $MUPIP rundown -reg "*"
 %GTM-I-REGFILENOTFOUND, Database file ./dir1/mumps.dat corresponding to region DEFAULT cannot be found
 %SYSTEM-E-ENO2, No such file or directory
-%GTM-E-NOREGION, REGION not found: DEFAULT
+%YDB-E-NOREGION, REGION not found: DEFAULT
 %GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/dir2/a.dat successfully rundown
 %GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
 
 
 $MUPIP extr extr.gbl2
-%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/dir1/mumps.dat
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/dir1/mumps.dat
 %SYSTEM-E-ENO2, No such file or directory
 $MUPIP fr -on "*"
 %GTM-I-REGFILENOTFOUND, Database file ./dir1/mumps.dat corresponding to region DEFAULT cannot be found
 %SYSTEM-E-ENO2, No such file or directory
-%GTM-E-NOREGION, REGION not found: DEFAULT
+%YDB-E-NOREGION, REGION not found: DEFAULT
 
 MUPIP cannot start freeze with above errors
 
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 $MUPIP fr -off "*"
 %GTM-I-REGFILENOTFOUND, Database file ./dir1/mumps.dat corresponding to region DEFAULT cannot be found
 %SYSTEM-E-ENO2, No such file or directory
-%GTM-E-NOREGION, REGION not found: DEFAULT
+%YDB-E-NOREGION, REGION not found: DEFAULT
 
 MUPIP cannot start freeze with above errors
 
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 echo "#"
 #
 echo "Test case 3 : Global directory present : database not present : dir2 was present and now dir1 present"
@@ -144,7 +144,7 @@ echo "#"
 #
 mkdir ./dir1
 $MUPIP create
-%GTM-E-DBOPNERR, Error opening database file ##TEST_PATH##/dir2/a.dat
+%YDB-E-DBOPNERR, Error opening database file ##TEST_PATH##/dir2/a.dat
 %SYSTEM-E-ENO17, File exists
 %GTM-I-DBFILECREATED, Database file ##TEST_PATH##/dir1/mumps.dat created
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
@@ -278,10 +278,10 @@ Test case 4 : File specification related
 echo "#"
 #
 $MUPIP integ a''d/mumps.dat
-%GTM-E-DBOPNERR, Error opening database file ad/mumps.dat
+%YDB-E-DBOPNERR, Error opening database file ad/mumps.dat
 %SYSTEM-E-ENO2, No such file or directory
 %GTM-I-MUSTANDALONE, Could not get exclusive access to ad/mumps.dat
-%GTM-E-INTEGERRS, Database integrity errors
+%YDB-E-INTEGERRS, Database integrity errors
 
 set nonomatch
 $MUPIP backup "*" -nonewj .a..?..b.c/backup.dat
@@ -319,8 +319,8 @@ rm -f ./dir1/*.dat
 rm -f ./dir2/*.dat
 $MUPIP journal -recover -for ./dir2/a.mjl,./dir1/mumps.mjl
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-FILENOTFND, File ##TEST_PATH##/dir2/a.dat not found
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-FILENOTFND, File ##TEST_PATH##/dir2/a.dat not found
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 $MUPIP crea
 %GTM-I-DBFILECREATED, Database file ##TEST_PATH##/dir2/a.dat created
@@ -346,7 +346,7 @@ GTM>
 ^a(8)=8
 ^a(9)=9
 ^a(10)=10
-%GTM-E-DBFILERR, Error with database file ##TEST_PATH##/dir1/mumps.dat
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/dir1/mumps.dat
 %SYSTEM-E-ENO2, No such file or directory
 
 GTM>

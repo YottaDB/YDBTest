@@ -1,4 +1,16 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
 
 # Verify that spanning node INTEG checks are properly issued in case of damaged spanning node.
 
@@ -94,7 +106,7 @@ endif
 @ tmp  = ( $totspanblks / 2 )
 @ num = `$gtm_exe/mumps -run rand $tmp 1 1`
 # increment number by 1 because if it is 0, the following loop will never terminate.
-@ num = $num + 1 
+@ num = $num + 1
 
 @ count = 0
 
@@ -102,7 +114,7 @@ endif
 while ( $crptblkind < $totspanblks )
 	@ count = $count + 1
 	set crptblkno = $blkid_list[$crptblkind]
-	
+
 	echo "crptblkind = $crptblkind" >>& test.debug
 	echo "crptblkno = $crptblkno" >>& test.debug
 
@@ -116,24 +128,24 @@ echo "Total corrupted blocks count = $count" >>& test.debug
 $MUPIP integ -reg "*" >&! integreport.outx
 
 # If the last block of the spanning node is corrupted, we will get one less DBSPANCHUNKORD error message.
-@ err_cnt = `$grep "GTM-E-DBSPANCHUNKORD" integreport.outx | wc -l`
+@ err_cnt = `$grep "YDB-E-DBSPANCHUNKORD" integreport.outx | wc -l`
 @ err_cnt_1 = $err_cnt + 1
 
 if (( $count == $err_cnt ) || ($count == $err_cnt_1) ) then
-	echo "GTM-E-DBSPANCHUNKORD issued correctly"
+	echo "YDB-E-DBSPANCHUNKORD issued correctly"
 else
 	echo "DBSPANCHUNKORD integ check is failed"
 endif
 
-@ cnt = `$grep "GTM-E-DBSPANGLOINCMP" integreport.outx | wc -l`
+@ cnt = `$grep "YDB-E-DBSPANGLOINCMP" integreport.outx | wc -l`
 if ( $count != 0 ) then
 	if ( $cnt == 1 ) then
-		echo "GTM-E-DBSPANGLOINCMP issued correctly"
+		echo "YDB-E-DBSPANGLOINCMP issued correctly"
 	else
 		echo "DBSPANGLOINCMP integ check is failed"
 	endif
 else
 # There is no corruption of spanning node, so there wont be DBSPANGLOINCMP message
-	echo "GTM-E-DBSPANGLOINCMP is not issued"
+	echo "YDB-E-DBSPANGLOINCMP is not issued"
 endif
-#$gtm_tst/com/dbcheck.csh  
+#$gtm_tst/com/dbcheck.csh

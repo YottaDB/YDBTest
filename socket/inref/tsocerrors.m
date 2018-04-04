@@ -3,6 +3,9 @@
 ; Copyright (c) 2014-2015 Fidelity National Information 	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -73,22 +76,22 @@ servererrors(case)
 	zshow "D":^zshowd("servererrors","serverb4")
 	; insert tests here
 	set $etrap="do serverror"
-	; ^expected("badopt","zstatus")="150383618,servererrors+9^tsocerrors,%GTM-E-TLSPARAM, TLS parameter BADOPT not a valid option"
+	; ^expected("badopt","zstatus")="150383618,servererrors+9^tsocerrors,%YDB-E-TLSPARAM, TLS parameter BADOPT not a valid option"
 	do
 	. set (case,^case)="badopt" u tcpdev write /tls("badopt")
 	. do error("servererrors",case)
 	do checkerror(case,"not a valid")
-	; ^expected("noopt","zstatus")="150372778,servererrors+14^tsocerrors,%GTM-E-EXPR,Expression expected but not found"
+	; ^expected("noopt","zstatus")="150372778,servererrors+14^tsocerrors,%YDB-E-EXPR,Expression expected but not found"
 	do
 	. set (case,^case)="noopt" u tcpdev write /tls(,)
 	. do error("servererrors",case)
 	do checkerror(case,"E-EXPR")
-	; ^expected("renegotiate","zstatus")="150383618,servererrors+19^tsocerrors,%GTM-E-TLSPARAM, TLS parameter RENEGOTIATE but TLS not enabled"
+	; ^expected("renegotiate","zstatus")="150383618,servererrors+19^tsocerrors,%YDB-E-TLSPARAM, TLS parameter RENEGOTIATE but TLS not enabled"
 	do	; needs tls enabled socket
 	. set (case,^case)="renegotiate" u tcpdev write /tls("renegotiate")
 	. do error("servererrors",case)
 	do checkerror(case,"TLS not enabled")
-	; ^expected("listener","zstatus")="150383618,servererrors+27^tsocerrors,%GTM-E-TLSPARAM, TLS parameter /TLS but socket not connected"
+	; ^expected("listener","zstatus")="150383618,servererrors+27^tsocerrors,%YDB-E-TLSPARAM, TLS parameter /TLS but socket not connected"
 	set $zstatus=""			; clear it
 	do	; listening socket not able to enable tls
 	. set (case,^case)="listener"

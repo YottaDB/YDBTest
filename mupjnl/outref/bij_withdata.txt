@@ -143,8 +143,8 @@ PASSED
 mupip journal -extract -verify -recover -show -backward mumps.mjl
 This should fail, because there  is no database
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-FILENOTFND, File ##TEST_PATH##/mumps.dat not found
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-FILENOTFND, File ##TEST_PATH##/mumps.dat not found
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ---------------------------------------------------------
 Now copy  the backup database
@@ -254,8 +254,8 @@ Record type    Count
 ---------------------------------------------------------
 mupip journal -recover -forward mumps.mjl
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-JNLDBTNNOMATCH, Journal file ##TEST_PATH##/mumps.mjl has beginning transaction number [0x0000000000000001], but database ##TEST_PATH##/mumps.dat has current transaction number [0x0000000000000065] and journal end transaction number [0x0000000000000001]
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-JNLDBTNNOMATCH, Journal file ##TEST_PATH##/mumps.mjl has beginning transaction number [0x0000000000000001], but database ##TEST_PATH##/mumps.dat has current transaction number [0x0000000000000065] and journal end transaction number [0x0000000000000001]
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ---------------------------------------------------------
 mupip journal -recover -forward mumps.mjl -nochecktn
@@ -712,7 +712,7 @@ GTM>
 
 GTM>
 first,third,fourth
-%GTM-E-GVUNDEF, Global variable undefined: ^a(2)
+%YDB-E-GVUNDEF, Global variable undefined: ^a(2)
 
 GTM>
 Now extract...

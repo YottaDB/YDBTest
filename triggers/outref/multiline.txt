@@ -91,7 +91,7 @@ Validating strayopen.trg expect FAIL
 	<<
 	^-----
 ##TEST_AWK		At column 0, line 2, source module /.*/trgtmp.*
-%GTM-E-LSEXPECTED, A line separator is expected here
+%YDB-E-LSEXPECTED, A line separator is expected here
 $gtm_exe/mupip trigger -trig=strayopen.trg
 =========================================
 3 trigger file entries have errors
@@ -136,11 +136,11 @@ PASS 4
 		set x=5 do l^mrtn()"
 		                    ^-----
 ##TEST_AWK		At column 22, line 1, source module /.*/trgtmp.*
-%GTM-E-EXPR, Expression expected but not found
+%YDB-E-EXPR, Expression expected but not found
 	>>
 	^-----
 ##TEST_AWK		At column 0, line 2, source module /.*/trgtmp.*
-%GTM-E-LSEXPECTED, A line separator is expected here
+%YDB-E-LSEXPECTED, A line separator is expected here
 PASS 5
 ###################################################################
 ###################################################################

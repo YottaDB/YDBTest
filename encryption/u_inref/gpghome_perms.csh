@@ -4,6 +4,9 @@
 # Copyright (c) 2009-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -38,5 +41,5 @@ $gtm_tst/$tst/u_inref/user2.csh >&! user2.log
 
 chmod -R 755 $GNUPGHOME
 
-$gtm_tst/com/check_error_exist.csh remote_user.log "GTM-E-CRYPTINIT"
+$gtm_tst/com/check_error_exist.csh remote_user.log "YDB-E-CRYPTINIT"
 $gtm_tst/com/dbcheck.csh

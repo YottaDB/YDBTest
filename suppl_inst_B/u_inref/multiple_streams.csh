@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -38,7 +38,7 @@ $MSR STOPSRC INST1 INST3
 $MSR RUN INST2 'set msr_dont_trace ; $MUPIP replic -instance_create -name=$gtm_test_cur_pri_name '$gtm_test_qdbrundown_parms' ; $gtm_tst/com/jnl_on.csh $test_jnldir -replic=on'
 $MSR RUN SRC=INST2 RCV=INST3 '$MUPIP replic -source -start -log=SRC_INST2INST3.log -secondary=__RCV_HOST__:__RCV_PORTNO__ -instsecondary=__RCV_INSTNAME__'
 # As soon as INST2 comes up and talks to INST3, expect rcvr of INST3 to error out with the below
-# %GTM-E-INSUNKNOWN, Supplementary Instance INSTANCE3 has no instance definition for non-Supplementary Instance INSTANCE2
+# %YDB-E-INSUNKNOWN, Supplementary Instance INSTANCE3 has no instance definition for non-Supplementary Instance INSTANCE2
 $MSR RUN INST3 '$gtm_tst/com/wait_for_log.csh -log RCVR_'$time_msr'.log -message INSUNKNOWN'
 $MSR RUN INST3 "$msr_err_chk RCVR_$time_msr.log INSUNKNOWN"
 $gtm_tst/com/knownerror.csh $msr_execute_last_out INSUNKNOWN

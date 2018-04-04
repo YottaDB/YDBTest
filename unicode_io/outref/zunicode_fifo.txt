@@ -14,7 +14,7 @@ GTM>
 Test: unicodefifoUTF-8.pipe
 -> OPEN "unicodefifoUTF-8.pipe":(FIFO:WRITE:RECORDSIZE=-1:CHSET="UTF-8"):60
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150375962,open+13^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+150375962,open+13^io,%YDB-E-RMWIDTHPOS, File record size or width must be greater than zero
 error+6^zunicodefifo
 open+13^io
     ($ZTRAP)
@@ -30,7 +30,7 @@ unicodefifo2("unicodefifoUTF-8.pipe","UTF-8"):(output="fifojobUTF-8.out":error="
 Test: unicodefifoUTF-8.pipe
 -> OPEN "unicodefifoUTF-8.pipe":(FIFO:WRITE:RECORDSIZE=-1:CHSET="UTF-8"):60
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150375962,open+13^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+150375962,open+13^io,%YDB-E-RMWIDTHPOS, File record size or width must be greater than zero
 error+6^zunicodefifo
 open+13^io
     ($ZTRAP)
@@ -44,7 +44,7 @@ OK, was expecting an error
 Test: unicodefifoUTF-8.pipe
 -> OPEN "unicodefifoUTF-8.pipe":(FIFO:WRITE:RECORDSIZE=0:CHSET="UTF-8"):60
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150375962,open+13^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+150375962,open+13^io,%YDB-E-RMWIDTHPOS, File record size or width must be greater than zero
 error+6^zunicodefifo
 open+13^io
     ($ZTRAP)
@@ -76,7 +76,7 @@ PASS
 Test: unicodefifoUTF-8.pipe
 -> OPEN "unicodefifoUTF-8.pipe":(FIFO:WRITE:RECORDSIZE=1048580:CHSET="UTF-8"):60
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150376194,open+13^io,%GTM-E-RMWIDTHTOOBIG, File record size or width too big
+150376194,open+13^io,%YDB-E-RMWIDTHTOOBIG, File record size or width too big
 error+6^zunicodefifo
 open+13^io
     ($ZTRAP)
@@ -91,7 +91,7 @@ Test: unicodefifoUTF-8.pipe
 -> OPEN "unicodefifoUTF-8.pipe":(FIFO:WRITE:CHSET="UTF-8"):60
 -> USE "unicodefifoUTF-8.pipe":(WIDTH=-1)
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150375962,use+5^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+150375962,use+5^io,%YDB-E-RMWIDTHPOS, File record size or width must be greater than zero
 error+6^zunicodefifo
 use+5^io
     ($ZTRAP)
@@ -112,7 +112,7 @@ Test: unicodefifoUTF-8.pipe
 -> OPEN "unicodefifoUTF-8.pipe":(FIFO:WRITE:CHSET="UTF-8"):60
 -> USE "unicodefifoUTF-8.pipe":(WIDTH=1)
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150381138,use+5^io,%GTM-E-WIDTHTOOSMALL, WIDTH should be at least 2 when device ICHSET or OCHSET is UTF-8 or UTF-16
+150381138,use+5^io,%YDB-E-WIDTHTOOSMALL, WIDTH should be at least 2 when device ICHSET or OCHSET is UTF-8 or UTF-16
 error+6^zunicodefifo
 use+5^io
     ($ZTRAP)
@@ -139,7 +139,7 @@ Test: unicodefifoUTF-8.pipe
 -> OPEN "unicodefifoUTF-8.pipe":(FIFO:WRITE:CHSET="UTF-8"):60
 -> USE "unicodefifoUTF-8.pipe":(WIDTH=1048580)
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150376194,use+5^io,%GTM-E-RMWIDTHTOOBIG, File record size or width too big
+150376194,use+5^io,%YDB-E-RMWIDTHTOOBIG, File record size or width too big
 error+6^zunicodefifo
 use+5^io
     ($ZTRAP)
@@ -164,7 +164,7 @@ GTM>
 Test: unicodefifoUTF-16.pipe
 -> OPEN "unicodefifoUTF-16.pipe":(FIFO:WRITE:RECORDSIZE=-1:CHSET="UTF-16"):60
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150375962,open+13^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+150375962,open+13^io,%YDB-E-RMWIDTHPOS, File record size or width must be greater than zero
 error+6^zunicodefifo
 open+13^io
     ($ZTRAP)
@@ -180,7 +180,7 @@ unicodefifo2("unicodefifoUTF-16.pipe","UTF-16"):(output="fifojobUTF-16.out":erro
 Test: unicodefifoUTF-16.pipe
 -> OPEN "unicodefifoUTF-16.pipe":(FIFO:WRITE:RECORDSIZE=-1:CHSET="UTF-16"):60
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150375962,open+13^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+150375962,open+13^io,%YDB-E-RMWIDTHPOS, File record size or width must be greater than zero
 error+6^zunicodefifo
 open+13^io
     ($ZTRAP)
@@ -194,7 +194,7 @@ OK, was expecting an error
 Test: unicodefifoUTF-16.pipe
 -> OPEN "unicodefifoUTF-16.pipe":(FIFO:WRITE:RECORDSIZE=0:CHSET="UTF-16"):60
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150375962,open+13^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+150375962,open+13^io,%YDB-E-RMWIDTHPOS, File record size or width must be greater than zero
 error+6^zunicodefifo
 open+13^io
     ($ZTRAP)
@@ -208,7 +208,7 @@ OK, was expecting an error
 Test: unicodefifoUTF-16.pipe
 -> OPEN "unicodefifoUTF-16.pipe":(FIFO:WRITE:RECORDSIZE=1:CHSET="UTF-16"):60
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150377658,open+13^io,%GTM-E-RECSIZENOTEVEN, RECORDSIZE [1] needs to be a multiple of 2 if ICHSET or OCHSET is UTF-16, UTF-16LE or UTF-16BE
+150377658,open+13^io,%YDB-E-RECSIZENOTEVEN, RECORDSIZE [1] needs to be a multiple of 2 if ICHSET or OCHSET is UTF-16, UTF-16LE or UTF-16BE
 error+6^zunicodefifo
 open+13^io
     ($ZTRAP)
@@ -234,7 +234,7 @@ PASS
 Test: unicodefifoUTF-16.pipe
 -> OPEN "unicodefifoUTF-16.pipe":(FIFO:WRITE:RECORDSIZE=1048580:CHSET="UTF-16"):60
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150376194,open+13^io,%GTM-E-RMWIDTHTOOBIG, File record size or width too big
+150376194,open+13^io,%YDB-E-RMWIDTHTOOBIG, File record size or width too big
 error+6^zunicodefifo
 open+13^io
     ($ZTRAP)
@@ -249,7 +249,7 @@ Test: unicodefifoUTF-16.pipe
 -> OPEN "unicodefifoUTF-16.pipe":(FIFO:WRITE:CHSET="UTF-16"):60
 -> USE "unicodefifoUTF-16.pipe":(WIDTH=-1)
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150375962,use+5^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+150375962,use+5^io,%YDB-E-RMWIDTHPOS, File record size or width must be greater than zero
 error+6^zunicodefifo
 use+5^io
     ($ZTRAP)
@@ -270,7 +270,7 @@ Test: unicodefifoUTF-16.pipe
 -> OPEN "unicodefifoUTF-16.pipe":(FIFO:WRITE:CHSET="UTF-16"):60
 -> USE "unicodefifoUTF-16.pipe":(WIDTH=1)
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150381138,use+5^io,%GTM-E-WIDTHTOOSMALL, WIDTH should be at least 2 when device ICHSET or OCHSET is UTF-8 or UTF-16
+150381138,use+5^io,%YDB-E-WIDTHTOOSMALL, WIDTH should be at least 2 when device ICHSET or OCHSET is UTF-8 or UTF-16
 error+6^zunicodefifo
 use+5^io
     ($ZTRAP)
@@ -297,7 +297,7 @@ Test: unicodefifoUTF-16.pipe
 -> OPEN "unicodefifoUTF-16.pipe":(FIFO:WRITE:CHSET="UTF-16"):60
 -> USE "unicodefifoUTF-16.pipe":(WIDTH=1048580)
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150376194,use+5^io,%GTM-E-RMWIDTHTOOBIG, File record size or width too big
+150376194,use+5^io,%YDB-E-RMWIDTHTOOBIG, File record size or width too big
 error+6^zunicodefifo
 use+5^io
     ($ZTRAP)
@@ -322,7 +322,7 @@ GTM>
 Test: unicodefifoUTF-16LE.pipe
 -> OPEN "unicodefifoUTF-16LE.pipe":(FIFO:WRITE:RECORDSIZE=-1:CHSET="UTF-16LE"):60
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150375962,open+13^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+150375962,open+13^io,%YDB-E-RMWIDTHPOS, File record size or width must be greater than zero
 error+6^zunicodefifo
 open+13^io
     ($ZTRAP)
@@ -338,7 +338,7 @@ unicodefifo2("unicodefifoUTF-16LE.pipe","UTF-16LE"):(output="fifojobUTF-16LE.out
 Test: unicodefifoUTF-16LE.pipe
 -> OPEN "unicodefifoUTF-16LE.pipe":(FIFO:WRITE:RECORDSIZE=-1:CHSET="UTF-16LE"):60
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150375962,open+13^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+150375962,open+13^io,%YDB-E-RMWIDTHPOS, File record size or width must be greater than zero
 error+6^zunicodefifo
 open+13^io
     ($ZTRAP)
@@ -352,7 +352,7 @@ OK, was expecting an error
 Test: unicodefifoUTF-16LE.pipe
 -> OPEN "unicodefifoUTF-16LE.pipe":(FIFO:WRITE:RECORDSIZE=0:CHSET="UTF-16LE"):60
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150375962,open+13^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+150375962,open+13^io,%YDB-E-RMWIDTHPOS, File record size or width must be greater than zero
 error+6^zunicodefifo
 open+13^io
     ($ZTRAP)
@@ -366,7 +366,7 @@ OK, was expecting an error
 Test: unicodefifoUTF-16LE.pipe
 -> OPEN "unicodefifoUTF-16LE.pipe":(FIFO:WRITE:RECORDSIZE=1:CHSET="UTF-16LE"):60
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150377658,open+13^io,%GTM-E-RECSIZENOTEVEN, RECORDSIZE [1] needs to be a multiple of 2 if ICHSET or OCHSET is UTF-16, UTF-16LE or UTF-16BE
+150377658,open+13^io,%YDB-E-RECSIZENOTEVEN, RECORDSIZE [1] needs to be a multiple of 2 if ICHSET or OCHSET is UTF-16, UTF-16LE or UTF-16BE
 error+6^zunicodefifo
 open+13^io
     ($ZTRAP)
@@ -392,7 +392,7 @@ PASS
 Test: unicodefifoUTF-16LE.pipe
 -> OPEN "unicodefifoUTF-16LE.pipe":(FIFO:WRITE:RECORDSIZE=1048580:CHSET="UTF-16LE"):60
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150376194,open+13^io,%GTM-E-RMWIDTHTOOBIG, File record size or width too big
+150376194,open+13^io,%YDB-E-RMWIDTHTOOBIG, File record size or width too big
 error+6^zunicodefifo
 open+13^io
     ($ZTRAP)
@@ -407,7 +407,7 @@ Test: unicodefifoUTF-16LE.pipe
 -> OPEN "unicodefifoUTF-16LE.pipe":(FIFO:WRITE:CHSET="UTF-16LE"):60
 -> USE "unicodefifoUTF-16LE.pipe":(WIDTH=-1)
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150375962,use+5^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+150375962,use+5^io,%YDB-E-RMWIDTHPOS, File record size or width must be greater than zero
 error+6^zunicodefifo
 use+5^io
     ($ZTRAP)
@@ -428,7 +428,7 @@ Test: unicodefifoUTF-16LE.pipe
 -> OPEN "unicodefifoUTF-16LE.pipe":(FIFO:WRITE:CHSET="UTF-16LE"):60
 -> USE "unicodefifoUTF-16LE.pipe":(WIDTH=1)
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150381138,use+5^io,%GTM-E-WIDTHTOOSMALL, WIDTH should be at least 2 when device ICHSET or OCHSET is UTF-8 or UTF-16
+150381138,use+5^io,%YDB-E-WIDTHTOOSMALL, WIDTH should be at least 2 when device ICHSET or OCHSET is UTF-8 or UTF-16
 error+6^zunicodefifo
 use+5^io
     ($ZTRAP)
@@ -455,7 +455,7 @@ Test: unicodefifoUTF-16LE.pipe
 -> OPEN "unicodefifoUTF-16LE.pipe":(FIFO:WRITE:CHSET="UTF-16LE"):60
 -> USE "unicodefifoUTF-16LE.pipe":(WIDTH=1048580)
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150376194,use+5^io,%GTM-E-RMWIDTHTOOBIG, File record size or width too big
+150376194,use+5^io,%YDB-E-RMWIDTHTOOBIG, File record size or width too big
 error+6^zunicodefifo
 use+5^io
     ($ZTRAP)
@@ -480,7 +480,7 @@ GTM>
 Test: unicodefifoUTF-16BE.pipe
 -> OPEN "unicodefifoUTF-16BE.pipe":(FIFO:WRITE:RECORDSIZE=-1:CHSET="UTF-16BE"):60
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150375962,open+13^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+150375962,open+13^io,%YDB-E-RMWIDTHPOS, File record size or width must be greater than zero
 error+6^zunicodefifo
 open+13^io
     ($ZTRAP)
@@ -496,7 +496,7 @@ unicodefifo2("unicodefifoUTF-16BE.pipe","UTF-16BE"):(output="fifojobUTF-16BE.out
 Test: unicodefifoUTF-16BE.pipe
 -> OPEN "unicodefifoUTF-16BE.pipe":(FIFO:WRITE:RECORDSIZE=-1:CHSET="UTF-16BE"):60
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150375962,open+13^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+150375962,open+13^io,%YDB-E-RMWIDTHPOS, File record size or width must be greater than zero
 error+6^zunicodefifo
 open+13^io
     ($ZTRAP)
@@ -510,7 +510,7 @@ OK, was expecting an error
 Test: unicodefifoUTF-16BE.pipe
 -> OPEN "unicodefifoUTF-16BE.pipe":(FIFO:WRITE:RECORDSIZE=0:CHSET="UTF-16BE"):60
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150375962,open+13^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+150375962,open+13^io,%YDB-E-RMWIDTHPOS, File record size or width must be greater than zero
 error+6^zunicodefifo
 open+13^io
     ($ZTRAP)
@@ -524,7 +524,7 @@ OK, was expecting an error
 Test: unicodefifoUTF-16BE.pipe
 -> OPEN "unicodefifoUTF-16BE.pipe":(FIFO:WRITE:RECORDSIZE=1:CHSET="UTF-16BE"):60
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150377658,open+13^io,%GTM-E-RECSIZENOTEVEN, RECORDSIZE [1] needs to be a multiple of 2 if ICHSET or OCHSET is UTF-16, UTF-16LE or UTF-16BE
+150377658,open+13^io,%YDB-E-RECSIZENOTEVEN, RECORDSIZE [1] needs to be a multiple of 2 if ICHSET or OCHSET is UTF-16, UTF-16LE or UTF-16BE
 error+6^zunicodefifo
 open+13^io
     ($ZTRAP)
@@ -550,7 +550,7 @@ PASS
 Test: unicodefifoUTF-16BE.pipe
 -> OPEN "unicodefifoUTF-16BE.pipe":(FIFO:WRITE:RECORDSIZE=1048580:CHSET="UTF-16BE"):60
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150376194,open+13^io,%GTM-E-RMWIDTHTOOBIG, File record size or width too big
+150376194,open+13^io,%YDB-E-RMWIDTHTOOBIG, File record size or width too big
 error+6^zunicodefifo
 open+13^io
     ($ZTRAP)
@@ -565,7 +565,7 @@ Test: unicodefifoUTF-16BE.pipe
 -> OPEN "unicodefifoUTF-16BE.pipe":(FIFO:WRITE:CHSET="UTF-16BE"):60
 -> USE "unicodefifoUTF-16BE.pipe":(WIDTH=-1)
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150375962,use+5^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+150375962,use+5^io,%YDB-E-RMWIDTHPOS, File record size or width must be greater than zero
 error+6^zunicodefifo
 use+5^io
     ($ZTRAP)
@@ -586,7 +586,7 @@ Test: unicodefifoUTF-16BE.pipe
 -> OPEN "unicodefifoUTF-16BE.pipe":(FIFO:WRITE:CHSET="UTF-16BE"):60
 -> USE "unicodefifoUTF-16BE.pipe":(WIDTH=1)
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150381138,use+5^io,%GTM-E-WIDTHTOOSMALL, WIDTH should be at least 2 when device ICHSET or OCHSET is UTF-8 or UTF-16
+150381138,use+5^io,%YDB-E-WIDTHTOOSMALL, WIDTH should be at least 2 when device ICHSET or OCHSET is UTF-8 or UTF-16
 error+6^zunicodefifo
 use+5^io
     ($ZTRAP)
@@ -613,7 +613,7 @@ Test: unicodefifoUTF-16BE.pipe
 -> OPEN "unicodefifoUTF-16BE.pipe":(FIFO:WRITE:CHSET="UTF-16BE"):60
 -> USE "unicodefifoUTF-16BE.pipe":(WIDTH=1048580)
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150376194,use+5^io,%GTM-E-RMWIDTHTOOBIG, File record size or width too big
+150376194,use+5^io,%YDB-E-RMWIDTHTOOBIG, File record size or width too big
 error+6^zunicodefifo
 use+5^io
     ($ZTRAP)
@@ -638,7 +638,7 @@ GTM>
 Test: unicodefifoM.pipe
 -> OPEN "unicodefifoM.pipe":(FIFO:WRITE:RECORDSIZE=-1:CHSET="M"):60
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150375962,open+13^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+150375962,open+13^io,%YDB-E-RMWIDTHPOS, File record size or width must be greater than zero
 error+6^zunicodefifo
 open+13^io
     ($ZTRAP)
@@ -654,7 +654,7 @@ unicodefifo2("unicodefifoM.pipe","M"):(output="fifojobM.out":error="fifojobM.err
 Test: unicodefifoM.pipe
 -> OPEN "unicodefifoM.pipe":(FIFO:WRITE:RECORDSIZE=-1:CHSET="M"):60
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150375962,open+13^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+150375962,open+13^io,%YDB-E-RMWIDTHPOS, File record size or width must be greater than zero
 error+6^zunicodefifo
 open+13^io
     ($ZTRAP)
@@ -668,7 +668,7 @@ OK, was expecting an error
 Test: unicodefifoM.pipe
 -> OPEN "unicodefifoM.pipe":(FIFO:WRITE:RECORDSIZE=0:CHSET="M"):60
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150375962,open+13^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+150375962,open+13^io,%YDB-E-RMWIDTHPOS, File record size or width must be greater than zero
 error+6^zunicodefifo
 open+13^io
     ($ZTRAP)
@@ -700,7 +700,7 @@ PASS
 Test: unicodefifoM.pipe
 -> OPEN "unicodefifoM.pipe":(FIFO:WRITE:RECORDSIZE=1048580:CHSET="M"):60
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150376194,open+13^io,%GTM-E-RMWIDTHTOOBIG, File record size or width too big
+150376194,open+13^io,%YDB-E-RMWIDTHTOOBIG, File record size or width too big
 error+6^zunicodefifo
 open+13^io
     ($ZTRAP)
@@ -715,7 +715,7 @@ Test: unicodefifoM.pipe
 -> OPEN "unicodefifoM.pipe":(FIFO:WRITE:CHSET="M"):60
 -> USE "unicodefifoM.pipe":(WIDTH=-1)
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150375962,use+5^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+150375962,use+5^io,%YDB-E-RMWIDTHPOS, File record size or width must be greater than zero
 error+6^zunicodefifo
 use+5^io
     ($ZTRAP)
@@ -730,7 +730,7 @@ Test: unicodefifoM.pipe
 -> OPEN "unicodefifoM.pipe":(FIFO:WRITE:CHSET="M"):60
 -> USE "unicodefifoM.pipe":(WIDTH=0)
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150375962,use+5^io,%GTM-E-RMWIDTHPOS, File record size or width must be greater than zero
+150375962,use+5^io,%YDB-E-RMWIDTHPOS, File record size or width must be greater than zero
 error+6^zunicodefifo
 use+5^io
     ($ZTRAP)
@@ -763,7 +763,7 @@ Test: unicodefifoM.pipe
 -> OPEN "unicodefifoM.pipe":(FIFO:WRITE:CHSET="M"):60
 -> USE "unicodefifoM.pipe":(WIDTH=1048580)
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-150376194,use+5^io,%GTM-E-RMWIDTHTOOBIG, File record size or width too big
+150376194,use+5^io,%YDB-E-RMWIDTHTOOBIG, File record size or width too big
 error+6^zunicodefifo
 use+5^io
     ($ZTRAP)

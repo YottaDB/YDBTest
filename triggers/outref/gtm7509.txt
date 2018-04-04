@@ -68,7 +68,7 @@ No matching triggers found for deletion
 	>>
 	^-----
 ##TEST_AWK		At column 0, line 3, source module .*
-%GTM-E-LSEXPECTED, A line separator is expected here
+%YDB-E-LSEXPECTED, A line separator is expected here
 Error : Parsing XECUTE string: " if ($incr(a)) write a,!"_$C(10)_" write ^a21,!"_$C(10)_">>"_$C(10)
 0
 Added SET trigger on ^a22 named a22#1
@@ -77,14 +77,14 @@ Added SET trigger on ^a3 named a3#1
 1
 Added SET trigger on ^a4 named a4#1
 1
-%GTM-E-LABELMISSING, Label referenced but not defined: trigwork
+%YDB-E-LABELMISSING, Label referenced but not defined: trigwork
 ##TEST_AWK%GTM-I-SRCNAM, in source module .*
 Error : Parsing XECUTE string: " do trigwork()"_$C(10)_" write 2,!"_$C(10)
 0
 	 w $gtm()
 	    ^-----
 ##TEST_AWK		At column 5, line 1, source module .*
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 Error : Parsing XECUTE string: " w $gtm()"_$C(10)_" write 2,!"_$C(10)
 0
 # Trying mumps1.dat (multi-line trigger created with current version) with prior version trigger select

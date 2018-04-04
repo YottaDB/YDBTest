@@ -64,11 +64,11 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
 TEST-E-MULTISITE replic action failed.Pls. check msr_execute_##FILTERED##NO.csh and all logs related to ##FILTERED## ##TIMESTAMP##
 ----------
 Error SRCSRVTOOMANY seen in ##TEST_PATH##/##FILTERED##START_##TIMESTAMP##.out as expected:
-%GTM-E-SRCSRVTOOMANY, Cannot start more than 16 source servers in replication instance ##TEST_PATH##/mumps.repl
+%YDB-E-SRCSRVTOOMANY, Cannot start more than 16 source servers in replication instance ##TEST_PATH##/mumps.repl
 ----------
 ----------
 Error REPLINSTSECNONE seen in ##TEST_PATH##/##FILTERED##START_##TIMESTAMP##.out as expected:
-%GTM-E-REPLINSTSECNONE, No information found for secondary instance INSTANCE18 in instance file ##TEST_PATH##/mumps.repl
+%YDB-E-REPLINSTSECNONE, No information found for secondary instance INSTANCE18 in instance file ##TEST_PATH##/mumps.repl
 ----------
 ==Executing MULTISITE_REPLIC 'STOPRCV INST1 INST18'==
 ==Executing MULTISITE_REPLIC 'START INST17 INST18 PP'==
@@ -285,11 +285,11 @@ WARNING - Source Server is in passive mode, transactions are not being replicate
 0 : backlog number of transactions written to journal pool and yet to be sent by the source server
 ----------
 Error REPLINSTSECNONE seen in showbacklog_instsecondary_INSTANCE2.out as expected:
-%GTM-E-REPLINSTSECNONE, No information found for secondary instance INSTANCE2 in instance file ##TEST_PATH##/mumps.repl
+%YDB-E-REPLINSTSECNONE, No information found for secondary instance INSTANCE2 in instance file ##TEST_PATH##/mumps.repl
 ----------
 ----------
 Error REPLINSTSECNONE seen in showbacklog_instsecondary_INSTANCE3.out as expected:
-%GTM-E-REPLINSTSECNONE, No information found for secondary instance INSTANCE3 in instance file ##TEST_PATH##/mumps.repl
+%YDB-E-REPLINSTSECNONE, No information found for secondary instance INSTANCE3 in instance file ##TEST_PATH##/mumps.repl
 ----------
 ----------
 Error SRCSRVNOTEXIST seen in showbacklog_instsecondary_INSTANCE4.out as expected:
@@ -307,40 +307,40 @@ Error SRCSRVNOTEXIST seen in showbacklog_instsecondary_INSTANCE4.out as expected
 > 0x........ 0x0004 HDR STRM  0: Last history record number                  0 [0x00000000]
 > 0x........ 0x0008 HDR STRM  0: Journal Sequence Number                     1 [0x0000000000000001]
 ##ALLOW_OUTPUT SUPPLEMENTARY_AB
-############# Expect GTM-E-REPLINSTSECNONE in the next section of the script #############
+############# Expect YDB-E-REPLINSTSECNONE in the next section of the script #############
 
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST3 set msr_dont_chk_stat;$MUPIP replic -source -checkhealth $instsecvar'==
-%GTM-E-REPLINSTSECNONE, No information found for secondary instance INSTANCE3 in instance file ##TEST_PATH##/mumps.repl
+%YDB-E-REPLINSTSECNONE, No information found for secondary instance INSTANCE3 in instance file ##TEST_PATH##/mumps.repl
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST3 set msr_dont_chk_stat;$MUPIP replic -source -showbacklog $instsecvar'==
-%GTM-E-REPLINSTSECNONE, No information found for secondary instance INSTANCE3 in instance file ##TEST_PATH##/mumps.repl
+%YDB-E-REPLINSTSECNONE, No information found for secondary instance INSTANCE3 in instance file ##TEST_PATH##/mumps.repl
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST3 set msr_dont_chk_stat;$MUPIP replic -source -needrestart $instsecvar'==
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating NEEDRESTART operation for secondary instance [##INSTANCE##]
 Secondary Instance [INSTANCE3] NEEDS to be restarted first
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST3 set msr_dont_chk_stat;$MUPIP replic -source -changelog -log=123.log $instsecvar'==
-%GTM-E-REPLINSTSECNONE, No information found for secondary instance INSTANCE3 in instance file ##TEST_PATH##/mumps.repl
+%YDB-E-REPLINSTSECNONE, No information found for secondary instance INSTANCE3 in instance file ##TEST_PATH##/mumps.repl
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST3 set msr_dont_chk_stat;$MUPIP replic -source -statslog=ON $instsecvar'==
-%GTM-E-REPLINSTSECNONE, No information found for secondary instance INSTANCE3 in instance file ##TEST_PATH##/mumps.repl
+%YDB-E-REPLINSTSECNONE, No information found for secondary instance INSTANCE3 in instance file ##TEST_PATH##/mumps.repl
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST3 set msr_dont_chk_stat;$MUPIP replic -source -deactivate $instsecvar -rootprimary'==
-%GTM-E-REPLINSTSECNONE, No information found for secondary instance INSTANCE3 in instance file ##TEST_PATH##/mumps.repl
+%YDB-E-REPLINSTSECNONE, No information found for secondary instance INSTANCE3 in instance file ##TEST_PATH##/mumps.repl
 ----------
 Error REPLINSTSECNONE seen in msr_execute_##FILTERED##NO.out as expected:
-%GTM-E-REPLINSTSECNONE, No information found for secondary instance INSTANCE3 in instance file ##TEST_PATH##/mumps.repl
-----------
-----------
-Error REPLINSTSECNONE seen in msr_execute_##FILTERED##NO.out as expected:
-%GTM-E-REPLINSTSECNONE, No information found for secondary instance INSTANCE3 in instance file ##TEST_PATH##/mumps.repl
+%YDB-E-REPLINSTSECNONE, No information found for secondary instance INSTANCE3 in instance file ##TEST_PATH##/mumps.repl
 ----------
 ----------
 Error REPLINSTSECNONE seen in msr_execute_##FILTERED##NO.out as expected:
-%GTM-E-REPLINSTSECNONE, No information found for secondary instance INSTANCE3 in instance file ##TEST_PATH##/mumps.repl
+%YDB-E-REPLINSTSECNONE, No information found for secondary instance INSTANCE3 in instance file ##TEST_PATH##/mumps.repl
 ----------
 ----------
 Error REPLINSTSECNONE seen in msr_execute_##FILTERED##NO.out as expected:
-%GTM-E-REPLINSTSECNONE, No information found for secondary instance INSTANCE3 in instance file ##TEST_PATH##/mumps.repl
+%YDB-E-REPLINSTSECNONE, No information found for secondary instance INSTANCE3 in instance file ##TEST_PATH##/mumps.repl
 ----------
 ----------
 Error REPLINSTSECNONE seen in msr_execute_##FILTERED##NO.out as expected:
-%GTM-E-REPLINSTSECNONE, No information found for secondary instance INSTANCE3 in instance file ##TEST_PATH##/mumps.repl
+%YDB-E-REPLINSTSECNONE, No information found for secondary instance INSTANCE3 in instance file ##TEST_PATH##/mumps.repl
+----------
+----------
+Error REPLINSTSECNONE seen in msr_execute_##FILTERED##NO.out as expected:
+%YDB-E-REPLINSTSECNONE, No information found for secondary instance INSTANCE3 in instance file ##TEST_PATH##/mumps.repl
 ----------
 
 #############        usage of replic_source_commands.csh done       #############
@@ -348,8 +348,8 @@ The number of servers that the above shutdown command shut : 15
 
 Expect NOJNLPOOL error next. It means the shutdown command indeed shut ALL the servers
 ----------
-Error GTM-E-NOJNLPOOL seen in checkhealth.out as expected:
-%GTM-E-NOJNLPOOL, No journal pool info found in the replication instance of ##TEST_PATH##/mumps.repl
+Error YDB-E-NOJNLPOOL seen in checkhealth.out as expected:
+%YDB-E-NOJNLPOOL, No journal pool info found in the replication instance of ##TEST_PATH##/mumps.repl
 ----------
 ==Executing MULTISITE_REPLIC 'REFRESHLINK INST1 INST5'==
 ==Executing MULTISITE_REPLIC 'REFRESHLINK INST1 INST6'==

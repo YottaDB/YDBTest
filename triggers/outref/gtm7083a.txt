@@ -78,9 +78,9 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
 # Anything that requires examining triggers should issue NEEDTRIGUPGRD error
 ==Executing MULTISITE_REPLIC 'RUN INST3 set msr_dont_chk_stat ; echo "" | $MUPIP trigger -select '==
 Output File: 
-%GTM-E-NEEDTRIGUPGRD, Cannot do trigger operation on database file ##REMOTE_TEST_PATH##/instance3/mumps.dat until it is upgraded; Run MUPIP TRIGGER -UPGRADE first
+%YDB-E-NEEDTRIGUPGRD, Cannot do trigger operation on database file ##REMOTE_TEST_PATH##/instance3/mumps.dat until it is upgraded; Run MUPIP TRIGGER -UPGRADE first
 ==Executing MULTISITE_REPLIC 'RUN INST3 set msr_dont_chk_stat ; $gtm_exe/mumps -run %XCMD "set ^GBL(1)=1"'==
-%GTM-E-NEEDTRIGUPGRD, Cannot do trigger operation on database file ##REMOTE_TEST_PATH##/instance3/mumps.dat until it is upgraded; Run MUPIP TRIGGER -UPGRADE first
+%YDB-E-NEEDTRIGUPGRD, Cannot do trigger operation on database file ##REMOTE_TEST_PATH##/instance3/mumps.dat until it is upgraded; Run MUPIP TRIGGER -UPGRADE first
 # The same commands should work fine after trigger -upgrade
 ==Executing MULTISITE_REPLIC 'RUN INST3 $MUPIP trigger -upgrade'==
 ##FILTERED##%GTM-I-FILERENAME, File ##REMOTE_TEST_PATH##/instance3/mumps.mjl is renamed to ##REMOTE_TEST_PATH##/instance3/mumps.mjl_##TIMESTAMP##
@@ -125,7 +125,7 @@ Output File:
 ==Executing MULTISITE_REPLIC 'RUN INST4 ##TEST_COM_PATH##/check_error_exist.csh ##FILTERED##RCVR_##TIMESTAMP##.log.updproc NEEDTRIGUPGRD'==
 ----------
 Error NEEDTRIGUPGRD seen in ##FILTERED##RCVR_##TIMESTAMP##.log.updproc as expected:
-%GTM-E-NEEDTRIGUPGRD, Cannot do trigger operation on database file ##REMOTE_TEST_PATH##/instance4/mumps.dat until it is upgraded; Run MUPIP TRIGGER -UPGRADE first
+%YDB-E-NEEDTRIGUPGRD, Cannot do trigger operation on database file ##REMOTE_TEST_PATH##/instance4/mumps.dat until it is upgraded; Run MUPIP TRIGGER -UPGRADE first
 ----------
 # Simply restarting update process will still result in the same NEEDTRIGUPGRD error
 ==Executing MULTISITE_REPLIC 'RUN INST4 $MUPIP replicate -receiver -start -updateonly'==
@@ -133,7 +133,7 @@ Error NEEDTRIGUPGRD seen in ##FILTERED##RCVR_##TIMESTAMP##.log.updproc as expect
 ==Executing MULTISITE_REPLIC 'RUN INST4 ##TEST_COM_PATH##/check_error_exist.csh ##FILTERED##RCVR_##TIMESTAMP##.log.updproc NEEDTRIGUPGRD'==
 ----------
 Error NEEDTRIGUPGRD seen in ##FILTERED##RCVR_##TIMESTAMP##.log.updproc as expected:
-%GTM-E-NEEDTRIGUPGRD, Cannot do trigger operation on database file ##REMOTE_TEST_PATH##/instance4/mumps.dat until it is upgraded; Run MUPIP TRIGGER -UPGRADE first
+%YDB-E-NEEDTRIGUPGRD, Cannot do trigger operation on database file ##REMOTE_TEST_PATH##/instance4/mumps.dat until it is upgraded; Run MUPIP TRIGGER -UPGRADE first
 ----------
 # Restarting update process after upgrading the triggers on the reciever side should work fine
 ==Executing MULTISITE_REPLIC 'RUN INST4 $MUPIP trigger -upgrade'==

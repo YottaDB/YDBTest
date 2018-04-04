@@ -20,13 +20,13 @@
 # Now try to set ^x. This should throw ACTCOLLMISMTCH error
 
 GTM>
-%GTM-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #1 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #0 for this global
+%YDB-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #1 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #0 for this global
 
 GTM>
-%GTM-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #1 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #0 for this global
+%YDB-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #1 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #0 for this global
 
 GTM>
-%GTM-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #1 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #0 for this global
+%YDB-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #1 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #0 for this global
 
 GTM>
 # Test case 2 :
@@ -52,12 +52,12 @@ GTM>
 GTM>
 
 GTM>
-%GTM-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #0 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #1 for this global
+%YDB-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #0 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #1 for this global
 
 GTM>
 
 GTM>
-%GTM-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #0 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #1 for this global
+%YDB-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #0 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #1 for this global
 
 GTM>
 # Test case 2B :
@@ -92,16 +92,16 @@ Region	DEFAULT
 # expect ACTCOLLMISMTCH error in both the cases (because the Directory Tree has set collation 2 for the global)
 
 GTM>
-%GTM-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #1 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #2 for this global
+%YDB-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #1 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #2 for this global
 
 GTM>
-%GTM-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #0 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #1 for this global
+%YDB-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #0 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #1 for this global
 
 GTM>
-%GTM-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #1 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #2 for this global
+%YDB-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #1 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #2 for this global
 
 GTM>
-%GTM-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #0 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #1 for this global
+%YDB-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #0 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #1 for this global
 
 GTM>
 # Test case 3 :
@@ -124,7 +124,7 @@ GTM>
 GTM>
 
 GTM>
-%GTM-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #0 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #1 for this global
+%YDB-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #0 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #1 for this global
 
 GTM>
 # Within the same process try accessing |"a.gld"|^x(1), |"b.gld"|^x(1)
@@ -140,7 +140,7 @@ GTM>
 GTM>
 
 GTM>
-%GTM-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #0 from global directory but database file ##TEST_PATH##/a.dat contains different collation sequence #1 for this global
+%YDB-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #0 from global directory but database file ##TEST_PATH##/a.dat contains different collation sequence #1 for this global
 
 GTM>
 # Within the same process try accessing |"a.gld"|^x(11), |"b.gld"|^x(1) -> expect ACTCOLLMISMTCH
@@ -148,7 +148,7 @@ GTM>
 GTM>
 
 GTM>
-%GTM-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #0 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #1 for this global
+%YDB-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #0 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #1 for this global
 
 GTM>
 # Test case 4 :
@@ -181,4 +181,4 @@ GTM>
 
 %GDE-I-GDUPDATE, Updating Global Directory file 
 	##TEST_PATH##/b.gld
-%GTM-E-ACTCOLLMISMTCH, Global ^a inherits alternative collation sequence #1 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #2 for this global
+%YDB-E-ACTCOLLMISMTCH, Global ^a inherits alternative collation sequence #1 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #2 for this global

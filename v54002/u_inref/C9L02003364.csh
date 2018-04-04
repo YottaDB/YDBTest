@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2011, 2013 Fidelity Information Services, Inc	#
+# Copyright 2011, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -85,13 +88,13 @@ echo "Execute driver for badecho"
 $gtm_exe/mumps -run driver 2
 echo
 echo "Wait for error in mtest.mje"
-$gtm_tst/com/wait_for_log.csh -log mtest.mje -message "GTM-E-JOBSTARTCMDFAIL" -duration 300
-$gtm_tst/com/check_error_exist.csh mtest.mje "GTM-E-JOBSTARTCMDFAIL"
+$gtm_tst/com/wait_for_log.csh -log mtest.mje -message "YDB-E-JOBSTARTCMDFAIL" -duration 300
+$gtm_tst/com/check_error_exist.csh mtest.mje "YDB-E-JOBSTARTCMDFAIL"
 echo "Output from mtest.mjo:"
 cat mtest.mjo
 echo "Output from mtest.mje:"
 cat mtest.mje
-# To avoid catching "-E-" in GTM-E-JOSTARTCMDFAIL by test system.
+# To avoid catching "-E-" in YDB-E-JOSTARTCMDFAIL by test system.
 mv mtest.mjex mtest.bkup
 echo "Output from badecho.out:"
 cat badecho.out

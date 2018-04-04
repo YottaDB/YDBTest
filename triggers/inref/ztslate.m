@@ -1,3 +1,14 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ztslate
 	do init
 	do main
@@ -196,7 +207,7 @@ start
 	; This non-restartable test case cause an assert
 assert
 	do ^echoline
-	write "This caused an assert instead of issuing a %GTM-E-TRESTNOT",!
+	write "This caused an assert instead of issuing a %YDB-E-TRESTNOT",!
 	do init
 	set txn=1
 	if $data(txn) tstart

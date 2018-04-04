@@ -4,7 +4,7 @@ D9E09-002493 File descriptor leak while reading from journal files in source ser
 About D9E09-002493 (from TR)
 ------------------------------
 
-KTB reported "GTM-E-JNLFILOPN, ...ENO24 too many files open" error in source server log file. KTB has low journal auto switch limit
+KTB reported "YDB-E-JNLFILOPN, ...ENO24 too many files open" error in source server log file. KTB has low journal auto switch limit
 set to 256 MB. So, if source server were reading from journal files, it is likely to be reading from multiple generaitons.  However,
 a limit of 1024 should be sufficient to account for opening multiple generations.
 

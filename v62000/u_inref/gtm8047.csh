@@ -14,7 +14,7 @@
 #								#
 #################################################################
 #
-# GTM-8047 [nars] GTM-E-MEMORY errors during non-mandatory stringpool expansion result in no garbage collection
+# GTM-8047 [nars] YDB-E-MEMORY errors during non-mandatory stringpool expansion result in no garbage collection
 #
 # GTM-8047 had two issues.
 #
@@ -32,7 +32,7 @@
 # Disable autorelink for this test because of virtual memory limitations.
 source $gtm_tst/com/gtm_test_disable_autorelink.csh
 
-# Prevent core dump files from being created due to GTM-E-MEMORY fatal errors
+# Prevent core dump files from being created due to YDB-E-MEMORY fatal errors
 setenv gtm_white_box_test_case_enable 1
 setenv gtm_white_box_test_case_number 102
 
@@ -46,7 +46,7 @@ unsetenv gtmdbglvl
 # Any case chset does not matter to this test
 $switch_chset M >& switch_chset.out
 
-# The test fills up the stringpool first and then creates a GTM-E-MEMORY error which in turn would create a zshow
+# The test fills up the stringpool first and then creates a YDB-E-MEMORY error which in turn would create a zshow
 # fatal dump file that would end up doing stp_gcol. This is Issue (a) described above.
 
 $gtm_tst/com/dbcreate.csh mumps 1 -block_size=2048 -record_size=4096 -key_size=1010
@@ -87,7 +87,7 @@ if !(("hp-ux" == "$gtm_test_osname") || ("aix" == "$gtm_test_osname")) then
 			# In some cases, it is possible we dont even see a $ZSTATUS in the zshow dump file.
 			# This is because the zshow dumping stopped prematurely due to nested memory errors.
 			# This is a known issue in GT.M even after GTM-5238 (C9D12-002471).
-			# Treat this case as a GTM-E-MEMORY error (i.e. success).
+			# Treat this case as a YDB-E-MEMORY error (i.e. success).
 			$grep '^$ZSTATUS=' filter.ZSHOW_DMP >& /dev/null
 			set status2 = $status
 			if ($status2) then

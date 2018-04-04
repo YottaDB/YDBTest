@@ -1,6 +1,6 @@
 ##SUSPEND_OUTPUT PLATFORM_NO_PRIORGTM
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating START of source server for secondary instance [nobody]
-%GTM-E-REPLINSTFMT, Format error encountered while reading replication instance file ##TEST_PATH##/mumps.repl. Expected GDSRPLUNX##TEST_AWK[0-9]*. Found GDSRPLUNX[0-9]*.
+%YDB-E-REPLINSTFMT, Format error encountered while reading replication instance file ##TEST_PATH##/mumps.repl. Expected GDSRPLUNX##TEST_AWK[0-9]*. Found GDSRPLUNX[0-9]*.
 ##ALLOW_OUTPUT PLATFORM_NO_PRIORGTM
 Files Created in ##TEST_PATH##:
 Using: ##SOURCE_PATH##/mumps -run GDE
@@ -32,7 +32,7 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
 ==Executing MULTISITE_REPLIC 'RUN INST1 $msr_err_chk ##FILTERED##SRC_##TIMESTAMP##.log E-REPLINSTNOHIST'==
 ----------
 Error E-REPLINSTNOHIST seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
-%GTM-E-REPLINSTNOHIST, History information for seqno 200 [0xc8] not found in replication instance file ##TEST_PATH##/mumps.repl
+%YDB-E-REPLINSTNOHIST, History information for seqno 200 [0xc8] not found in replication instance file ##TEST_PATH##/mumps.repl
 ----------
 # The receiver would have exited with the above error. Manually shutdown the passive server
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST2 SRC=INST1 $MUPIP replic -source -shutdown -timeout=0 >&! passivesrc_shut.out'==

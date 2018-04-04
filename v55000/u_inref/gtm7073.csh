@@ -4,6 +4,9 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -70,12 +73,12 @@ $grep -q "%GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]% of 40 pages" sh
 if ($? != 0) then
     echo "Error: Free lock space is outside of expected range. Check show1.txtx."
 endif
-$gtm_tst/com/getoper.csh "$syslog_before1" "" syslog1.txt "" "GTM-E-LOCKSPACEFULL|GTM-I-LOCKSPACEINFO"
-$grep -q "GTM-E-LOCKSPACEFULL" syslog1.txt
+$gtm_tst/com/getoper.csh "$syslog_before1" "" syslog1.txt "" "YDB-E-LOCKSPACEFULL|GTM-I-LOCKSPACEINFO"
+$grep -q "YDB-E-LOCKSPACEFULL" syslog1.txt
 if ($? == 0) then
-    echo "TEST-I-PASS GTM-E-LOCKSPACEFULL found in operator log as expected."
+    echo "TEST-I-PASS YDB-E-LOCKSPACEFULL found in operator log as expected."
 else
-    echo "TEST-E-FAIL GTM-E-LOCKSPACEFULL not found in operator log. Check syslog1.txt."
+    echo "TEST-E-FAIL YDB-E-LOCKSPACEFULL not found in operator log. Check syslog1.txt."
 endif
 #LOCKSPACEFULL and LOCKSPACEINFO Must be issued together.
 $grep -q "GTM-I-LOCKSPACEINFO" syslog1.txt
@@ -136,11 +139,11 @@ if (`$grep "PID= [0-9]*" show2.txtx | cut -d\  -f 2- | sort | uniq | grep -c "PI
     echo "Error: Locks should be held by 2 processes. Check show2.txt"
 endif
 $gtm_tst/com/getoper.csh "$syslog_before1" "" syslog2.txt ""
-$grep "GTM-E-LOCKSPACEFULL" syslog2.txt
+$grep "YDB-E-LOCKSPACEFULL" syslog2.txt
 if ($? == 0) then
-    echo "TEST-E-FAIL GTM-E-LOCKSPACEFULL found in operator log. Check syslog2.txt."
+    echo "TEST-E-FAIL YDB-E-LOCKSPACEFULL found in operator log. Check syslog2.txt."
 else
-    echo "TEST-I-PASS GTM-E-LOCKSPACEFULL not found in operator log as expected."
+    echo "TEST-I-PASS YDB-E-LOCKSPACEFULL not found in operator log as expected."
 endif
 
 $LKE show >& show3.txtx
@@ -210,11 +213,11 @@ $gtm_exe/mumps -run waitlocks^gtm7073
 set syslog_after1 = `date +"%b %e %H:%M:%S"`
 echo $syslog_before1 $syslog_after1 > time_window4.txt
 $gtm_tst/com/getoper.csh "$syslog_before1" "" syslog4.txt ""
-$grep "GTM-E-LOCKSPACEFULL" syslog4.txt
+$grep "YDB-E-LOCKSPACEFULL" syslog4.txt
 if ($? == 0) then
-    echo "TEST-E-FAIL GTM-E-LOCKSPACEFULL found in operator log. Check syslog4.txt."
+    echo "TEST-E-FAIL YDB-E-LOCKSPACEFULL found in operator log. Check syslog4.txt."
 else
-    echo "TEST-I-PASS GTM-E-LOCKSPACEFULL not found in operator log as expected."
+    echo "TEST-I-PASS YDB-E-LOCKSPACEFULL not found in operator log as expected."
 endif
 
 $LKE show >& show6.txt

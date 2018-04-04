@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -39,7 +42,7 @@ $MUPIP reorg -select="afill" >& reorg.out
 if (("BG" == $acc_meth) && ("dbg" == "$tst_image")) then
 	set plvalue = `$tst_awk '/GTMPOOLLIMIT used for mupip reorg : /{print $NF; exit}' reorg.out`
 	if ($gtm_poollimit_value != $plvalue) then
-		echo "GTM-E-POOLLIMIT value mismatch. expected : $gtm_poollimit_value, found : $plvalue"
+		echo "YDB-E-POOLLIMIT value mismatch. expected : $gtm_poollimit_value, found : $plvalue"
 	endif
 endif
 
@@ -54,7 +57,7 @@ $grep "Global:" reorg_AREG.out
 if (("BG" == $acc_meth) && ("dbg" == "$tst_image")) then
 	set plvalue = `$tst_awk '/GTMPOOLLIMIT used for mupip reorg :/ {print $NF; exit}' reorg_AREG.out`
 	if ($gtm_poollimit_value != $plvalue) then
-		echo "GTM-E-POOLLIMIT value mismatch. expected : $gtm_poollimit_value, found : $plvalue"
+		echo "YDB-E-POOLLIMIT value mismatch. expected : $gtm_poollimit_value, found : $plvalue"
 	endif
 endif
 unsetenv gtm_white_box_test_case_enable

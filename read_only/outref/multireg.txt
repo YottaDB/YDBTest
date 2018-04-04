@@ -52,8 +52,8 @@ echo "***** changing b.dat to read_only *****"
 ***** changing b.dat to read_only *****
 chmod 444 b.dat
 $MUPIP backup -noonline "*" ./back | & sort -f
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 DB file ##TEST_PATH##/a.dat backed up in file ./back/a.dat
 DB file ##TEST_PATH##/c.dat backed up in file ./back/c.dat
 DB file ##TEST_PATH##/mumps.dat backed up in file ./back/mumps.dat
@@ -143,8 +143,8 @@ echo "*** b.dat R/O b.mjl R/W ***"
 chmod 444 b.dat
 chmod 666 b.mjl
 $MUPIP backup -noonline "*" ./Back | & sort -f
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 DB file ##TEST_PATH##/a.dat backed up in file ./Back/a.dat
 DB file ##TEST_PATH##/c.dat backed up in file ./Back/c.dat
 DB file ##TEST_PATH##/mumps.dat backed up in file ./Back/mumps.dat
@@ -163,8 +163,8 @@ echo "*** b.dat R/O b.mjl R/O ***"
 chmod 444 b.dat
 chmod 444 b.mjl
 $MUPIP backup -noonline "*" ./Back | & sort -f
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 DB file ##TEST_PATH##/a.dat backed up in file ./Back/a.dat
 DB file ##TEST_PATH##/c.dat backed up in file ./Back/c.dat
 DB file ##TEST_PATH##/mumps.dat backed up in file ./Back/mumps.dat
@@ -236,7 +236,7 @@ Extension successful, file ##TEST_PATH##/a.dat extended by 100 blocks.  Total bl
 mipcmanage
 $MUPIP extend BREG
 The extension failed on file ##TEST_PATH##/b.dat; check disk space and permissions.
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 mipcmanage
 $MUPIP extend CREG
 Extension successful, file ##TEST_PATH##/c.dat extended by 100 blocks.  Total blocks = 300.
@@ -257,8 +257,8 @@ $MUPIP extend AREG
 Extension successful, file ##TEST_PATH##/a.dat extended by 100 blocks.  Total blocks = 400.
 mipcmanage
 $MUPIP extend BREG
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 mipcmanage
 $MUPIP extend CREG
 Extension successful, file ##TEST_PATH##/c.dat extended by 100 blocks.  Total blocks = 400.
@@ -279,8 +279,8 @@ $MUPIP extend AREG
 Extension successful, file ##TEST_PATH##/a.dat extended by 100 blocks.  Total blocks = 500.
 mipcmanage
 $MUPIP extend BREG
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 mipcmanage
 $MUPIP extend CREG
 Extension successful, file ##TEST_PATH##/c.dat extended by 100 blocks.  Total blocks = 500.
@@ -381,8 +381,8 @@ chmod 444 *.dat
 echo "mupip extract -fr -nolog glo.dir"
 mupip extract -fr -nolog glo.dir
 $MUPIP extract -fr -nolog glo.dir | & sort -f
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/a.dat read only
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/a.dat read only
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 Cannot freeze the database
 $gtm_tst/com/dbcheck.csh
 ##SOURCE_PATH##/mupip
@@ -532,8 +532,8 @@ chmod 666 b.mjl
 echo "mupip extract -fr -nolog glo.dir"
 mupip extract -fr -nolog glo.dir
 $MUPIP extract -fr -nolog glo.dir | & sort -f
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 Cannot freeze the database
 mipcmanage
 $gtm_tst/com/dbcheck.csh
@@ -549,8 +549,8 @@ chmod 444 b.mjl
 echo "mupip extract -fr -nolog glo.dir"
 mupip extract -fr -nolog glo.dir
 $MUPIP extract -fr -nolog glo.dir | & sort -f
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 Cannot freeze the database
 mipcmanage
 $gtm_tst/com/dbcheck.csh
@@ -621,19 +621,19 @@ chmod 666 b.mjl
 echo mupip freeze -on "*"
 mupip freeze -on *
 $MUPIP freeze -on "*" > & freeze2_on_all.outx
-$gtm_tst/com/check_error_exist.csh freeze2_on_all.outx "GTM-E-DBRDONLY"
+$gtm_tst/com/check_error_exist.csh freeze2_on_all.outx "YDB-E-DBRDONLY"
 ----------
-Error GTM-E-DBRDONLY seen in freeze2_on_all.outx as expected:
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
+Error YDB-E-DBRDONLY seen in freeze2_on_all.outx as expected:
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
 ----------
 mipcmanage
 echo mupip freeze -off "*"
 mupip freeze -off *
 $MUPIP freeze -off "*" > & freeze2_off_all.outx
-$gtm_tst/com/check_error_exist.csh freeze2_off_all.outx "GTM-E-DBRDONLY"
+$gtm_tst/com/check_error_exist.csh freeze2_off_all.outx "YDB-E-DBRDONLY"
 ----------
-Error GTM-E-DBRDONLY seen in freeze2_off_all.outx as expected:
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
+Error YDB-E-DBRDONLY seen in freeze2_off_all.outx as expected:
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
 ----------
 mipcmanage
 $gtm_tst/com/dbcheck.csh
@@ -648,19 +648,19 @@ chmod 444 b.mjl
 echo mupip freeze -on "*"
 mupip freeze -on *
 $MUPIP freeze -on "*" > & freeze3_on_all.outx
-$gtm_tst/com/check_error_exist.csh freeze3_on_all.outx "GTM-E-DBRDONLY"
+$gtm_tst/com/check_error_exist.csh freeze3_on_all.outx "YDB-E-DBRDONLY"
 ----------
-Error GTM-E-DBRDONLY seen in freeze3_on_all.outx as expected:
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
+Error YDB-E-DBRDONLY seen in freeze3_on_all.outx as expected:
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
 ----------
 mipcmanage
 echo mupip freeze -off "*"
 mupip freeze -off *
 $MUPIP freeze -off "*" > & freeze3_off_all.outx
-$gtm_tst/com/check_error_exist.csh freeze3_off_all.outx "GTM-E-DBRDONLY"
+$gtm_tst/com/check_error_exist.csh freeze3_off_all.outx "YDB-E-DBRDONLY"
 ----------
-Error GTM-E-DBRDONLY seen in freeze3_off_all.outx as expected:
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
+Error YDB-E-DBRDONLY seen in freeze3_off_all.outx as expected:
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
 ----------
 mipcmanage
 $gtm_tst/com/dbcheck.csh
@@ -877,8 +877,8 @@ echo "***** b.dat read_only *****"
 chmod 444 b.dat
 $gtm_tst/$tst/u_inref/tstmintegtn_domultireg.csh | & sort > & integtn.out2
 egrep "GTM-E|No errors" integtn.out2
-%GTM-E-DBRDONLY, Database file b.dat read only
-%GTM-E-DBTNRESET, Cannot reset transaction number for this region
+%YDB-E-DBRDONLY, Database file b.dat read only
+%YDB-E-DBTNRESET, Cannot reset transaction number for this region
 No errors detected by integ.
 No errors detected by integ.
 No errors detected by integ.
@@ -940,8 +940,8 @@ chmod.csh rorw
 **** R/O b.dat R/W b.mjl ****
 $gtm_tst/$tst/u_inref/tstmintegtn_domultireg.csh | & sort > & integtn.out5
 egrep "GTM-E|No errors" integtn.out5
-%GTM-E-DBRDONLY, Database file b.dat read only
-%GTM-E-DBTNRESET, Cannot reset transaction number for this region
+%YDB-E-DBRDONLY, Database file b.dat read only
+%YDB-E-DBTNRESET, Cannot reset transaction number for this region
 No errors detected by integ.
 No errors detected by integ.
 No errors detected by integ.
@@ -952,8 +952,8 @@ chmod.csh roro
 **** R/O b.dat R/O b.mjl ****
 $gtm_tst/$tst/u_inref/tstmintegtn_domultireg.csh | & sort > & integtn.out6
 egrep "GTM-E|No errors" integtn.out6
-%GTM-E-DBRDONLY, Database file b.dat read only
-%GTM-E-DBTNRESET, Cannot reset transaction number for this region
+%YDB-E-DBRDONLY, Database file b.dat read only
+%YDB-E-DBTNRESET, Cannot reset transaction number for this region
 No errors detected by integ.
 No errors detected by integ.
 No errors detected by integ.
@@ -1008,117 +1008,117 @@ $MUPIP load load.go
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
 
-%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+%YDB-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
 		Global variable : ^bfill(1)
-%GTM-E-RECLOAD, Error loading record number: 31
+%YDB-E-RECLOAD, Error loading record number: 31
 
-%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+%YDB-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
 		Global variable : ^bfill(2)
-%GTM-E-RECLOAD, Error loading record number: 32
+%YDB-E-RECLOAD, Error loading record number: 32
 
-%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+%YDB-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
 		Global variable : ^bfill(3)
-%GTM-E-RECLOAD, Error loading record number: 33
+%YDB-E-RECLOAD, Error loading record number: 33
 
-%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+%YDB-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
 		Global variable : ^bfill(4)
-%GTM-E-RECLOAD, Error loading record number: 34
+%YDB-E-RECLOAD, Error loading record number: 34
 
-%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+%YDB-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
 		Global variable : ^bfill(5)
-%GTM-E-RECLOAD, Error loading record number: 35
+%YDB-E-RECLOAD, Error loading record number: 35
 
-%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+%YDB-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
 		Global variable : ^bfill(6)
-%GTM-E-RECLOAD, Error loading record number: 36
+%YDB-E-RECLOAD, Error loading record number: 36
 
-%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+%YDB-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
 		Global variable : ^bfill(7)
-%GTM-E-RECLOAD, Error loading record number: 37
+%YDB-E-RECLOAD, Error loading record number: 37
 
-%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+%YDB-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
 		Global variable : ^bfill(8)
-%GTM-E-RECLOAD, Error loading record number: 38
+%YDB-E-RECLOAD, Error loading record number: 38
 
-%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+%YDB-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
 		Global variable : ^bfill(9)
-%GTM-E-RECLOAD, Error loading record number: 39
+%YDB-E-RECLOAD, Error loading record number: 39
 
-%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+%YDB-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
 		Global variable : ^bfill(10)
-%GTM-E-RECLOAD, Error loading record number: 40
+%YDB-E-RECLOAD, Error loading record number: 40
 
-%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+%YDB-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
 		Global variable : ^bfill(11)
-%GTM-E-RECLOAD, Error loading record number: 41
+%YDB-E-RECLOAD, Error loading record number: 41
 
-%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+%YDB-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
 		Global variable : ^bfill(12)
-%GTM-E-RECLOAD, Error loading record number: 42
+%YDB-E-RECLOAD, Error loading record number: 42
 
-%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+%YDB-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
 		Global variable : ^bfill(13)
-%GTM-E-RECLOAD, Error loading record number: 43
+%YDB-E-RECLOAD, Error loading record number: 43
 
-%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+%YDB-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
 		Global variable : ^bfill(14)
-%GTM-E-RECLOAD, Error loading record number: 44
+%YDB-E-RECLOAD, Error loading record number: 44
 
-%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+%YDB-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
 		Global variable : ^bfill(15)
-%GTM-E-RECLOAD, Error loading record number: 45
+%YDB-E-RECLOAD, Error loading record number: 45
 
-%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+%YDB-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
 		Global variable : ^bfill(16)
-%GTM-E-RECLOAD, Error loading record number: 46
+%YDB-E-RECLOAD, Error loading record number: 46
 
-%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+%YDB-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
 		Global variable : ^bfill(17)
-%GTM-E-RECLOAD, Error loading record number: 47
+%YDB-E-RECLOAD, Error loading record number: 47
 
-%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+%YDB-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
 		Global variable : ^bfill(18)
-%GTM-E-RECLOAD, Error loading record number: 48
+%YDB-E-RECLOAD, Error loading record number: 48
 
-%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+%YDB-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
 		Global variable : ^bfill(19)
-%GTM-E-RECLOAD, Error loading record number: 49
+%YDB-E-RECLOAD, Error loading record number: 49
 
-%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+%YDB-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
 		Global variable : ^bfill(20)
-%GTM-E-RECLOAD, Error loading record number: 50
+%YDB-E-RECLOAD, Error loading record number: 50
 
-%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+%YDB-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
 		Global variable : ^bfill(21)
-%GTM-E-RECLOAD, Error loading record number: 51
+%YDB-E-RECLOAD, Error loading record number: 51
 
-%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+%YDB-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
 		Global variable : ^bfill(22)
-%GTM-E-RECLOAD, Error loading record number: 52
+%YDB-E-RECLOAD, Error loading record number: 52
 
-%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+%YDB-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
 		Global variable : ^bfill(23)
-%GTM-E-RECLOAD, Error loading record number: 53
+%YDB-E-RECLOAD, Error loading record number: 53
 
-%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+%YDB-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
 		Global variable : ^bfill(24)
-%GTM-E-RECLOAD, Error loading record number: 54
+%YDB-E-RECLOAD, Error loading record number: 54
 
-%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+%YDB-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
 		Global variable : ^bfill(25)
-%GTM-E-RECLOAD, Error loading record number: 55
+%YDB-E-RECLOAD, Error loading record number: 55
 
-%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+%YDB-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
 		Global variable : ^bfill(26)
-%GTM-E-RECLOAD, Error loading record number: 56
+%YDB-E-RECLOAD, Error loading record number: 56
 
-%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+%YDB-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
 		Global variable : ^bfill(27)
-%GTM-E-RECLOAD, Error loading record number: 57
+%YDB-E-RECLOAD, Error loading record number: 57
 
-%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
+%YDB-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/b.mjl for database file ##TEST_PATH##/b.dat
 		Global variable : ^bfill(28)
-%GTM-E-RECLOAD, Error loading record number: 58
+%YDB-E-RECLOAD, Error loading record number: 58
 
 LOAD TOTAL		Key Cnt: 112  Max Subsc Len: 10  Max Data Len: 14
 Last LOAD record number: 142
@@ -1136,117 +1136,117 @@ $MUPIP load load.go
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(1)
-%GTM-E-RECLOAD, Error loading record number: 31
+%YDB-E-RECLOAD, Error loading record number: 31
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(2)
-%GTM-E-RECLOAD, Error loading record number: 32
+%YDB-E-RECLOAD, Error loading record number: 32
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(3)
-%GTM-E-RECLOAD, Error loading record number: 33
+%YDB-E-RECLOAD, Error loading record number: 33
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(4)
-%GTM-E-RECLOAD, Error loading record number: 34
+%YDB-E-RECLOAD, Error loading record number: 34
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(5)
-%GTM-E-RECLOAD, Error loading record number: 35
+%YDB-E-RECLOAD, Error loading record number: 35
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(6)
-%GTM-E-RECLOAD, Error loading record number: 36
+%YDB-E-RECLOAD, Error loading record number: 36
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(7)
-%GTM-E-RECLOAD, Error loading record number: 37
+%YDB-E-RECLOAD, Error loading record number: 37
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(8)
-%GTM-E-RECLOAD, Error loading record number: 38
+%YDB-E-RECLOAD, Error loading record number: 38
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(9)
-%GTM-E-RECLOAD, Error loading record number: 39
+%YDB-E-RECLOAD, Error loading record number: 39
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(10)
-%GTM-E-RECLOAD, Error loading record number: 40
+%YDB-E-RECLOAD, Error loading record number: 40
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(11)
-%GTM-E-RECLOAD, Error loading record number: 41
+%YDB-E-RECLOAD, Error loading record number: 41
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(12)
-%GTM-E-RECLOAD, Error loading record number: 42
+%YDB-E-RECLOAD, Error loading record number: 42
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(13)
-%GTM-E-RECLOAD, Error loading record number: 43
+%YDB-E-RECLOAD, Error loading record number: 43
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(14)
-%GTM-E-RECLOAD, Error loading record number: 44
+%YDB-E-RECLOAD, Error loading record number: 44
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(15)
-%GTM-E-RECLOAD, Error loading record number: 45
+%YDB-E-RECLOAD, Error loading record number: 45
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(16)
-%GTM-E-RECLOAD, Error loading record number: 46
+%YDB-E-RECLOAD, Error loading record number: 46
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(17)
-%GTM-E-RECLOAD, Error loading record number: 47
+%YDB-E-RECLOAD, Error loading record number: 47
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(18)
-%GTM-E-RECLOAD, Error loading record number: 48
+%YDB-E-RECLOAD, Error loading record number: 48
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(19)
-%GTM-E-RECLOAD, Error loading record number: 49
+%YDB-E-RECLOAD, Error loading record number: 49
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(20)
-%GTM-E-RECLOAD, Error loading record number: 50
+%YDB-E-RECLOAD, Error loading record number: 50
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(21)
-%GTM-E-RECLOAD, Error loading record number: 51
+%YDB-E-RECLOAD, Error loading record number: 51
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(22)
-%GTM-E-RECLOAD, Error loading record number: 52
+%YDB-E-RECLOAD, Error loading record number: 52
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(23)
-%GTM-E-RECLOAD, Error loading record number: 53
+%YDB-E-RECLOAD, Error loading record number: 53
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(24)
-%GTM-E-RECLOAD, Error loading record number: 54
+%YDB-E-RECLOAD, Error loading record number: 54
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(25)
-%GTM-E-RECLOAD, Error loading record number: 55
+%YDB-E-RECLOAD, Error loading record number: 55
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(26)
-%GTM-E-RECLOAD, Error loading record number: 56
+%YDB-E-RECLOAD, Error loading record number: 56
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(27)
-%GTM-E-RECLOAD, Error loading record number: 57
+%YDB-E-RECLOAD, Error loading record number: 57
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(28)
-%GTM-E-RECLOAD, Error loading record number: 58
+%YDB-E-RECLOAD, Error loading record number: 58
 
 LOAD TOTAL		Key Cnt: 112  Max Subsc Len: 10  Max Data Len: 14
 Last LOAD record number: 142
@@ -1264,117 +1264,117 @@ $MUPIP load load.go
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(1)
-%GTM-E-RECLOAD, Error loading record number: 31
+%YDB-E-RECLOAD, Error loading record number: 31
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(2)
-%GTM-E-RECLOAD, Error loading record number: 32
+%YDB-E-RECLOAD, Error loading record number: 32
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(3)
-%GTM-E-RECLOAD, Error loading record number: 33
+%YDB-E-RECLOAD, Error loading record number: 33
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(4)
-%GTM-E-RECLOAD, Error loading record number: 34
+%YDB-E-RECLOAD, Error loading record number: 34
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(5)
-%GTM-E-RECLOAD, Error loading record number: 35
+%YDB-E-RECLOAD, Error loading record number: 35
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(6)
-%GTM-E-RECLOAD, Error loading record number: 36
+%YDB-E-RECLOAD, Error loading record number: 36
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(7)
-%GTM-E-RECLOAD, Error loading record number: 37
+%YDB-E-RECLOAD, Error loading record number: 37
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(8)
-%GTM-E-RECLOAD, Error loading record number: 38
+%YDB-E-RECLOAD, Error loading record number: 38
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(9)
-%GTM-E-RECLOAD, Error loading record number: 39
+%YDB-E-RECLOAD, Error loading record number: 39
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(10)
-%GTM-E-RECLOAD, Error loading record number: 40
+%YDB-E-RECLOAD, Error loading record number: 40
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(11)
-%GTM-E-RECLOAD, Error loading record number: 41
+%YDB-E-RECLOAD, Error loading record number: 41
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(12)
-%GTM-E-RECLOAD, Error loading record number: 42
+%YDB-E-RECLOAD, Error loading record number: 42
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(13)
-%GTM-E-RECLOAD, Error loading record number: 43
+%YDB-E-RECLOAD, Error loading record number: 43
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(14)
-%GTM-E-RECLOAD, Error loading record number: 44
+%YDB-E-RECLOAD, Error loading record number: 44
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(15)
-%GTM-E-RECLOAD, Error loading record number: 45
+%YDB-E-RECLOAD, Error loading record number: 45
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(16)
-%GTM-E-RECLOAD, Error loading record number: 46
+%YDB-E-RECLOAD, Error loading record number: 46
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(17)
-%GTM-E-RECLOAD, Error loading record number: 47
+%YDB-E-RECLOAD, Error loading record number: 47
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(18)
-%GTM-E-RECLOAD, Error loading record number: 48
+%YDB-E-RECLOAD, Error loading record number: 48
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(19)
-%GTM-E-RECLOAD, Error loading record number: 49
+%YDB-E-RECLOAD, Error loading record number: 49
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(20)
-%GTM-E-RECLOAD, Error loading record number: 50
+%YDB-E-RECLOAD, Error loading record number: 50
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(21)
-%GTM-E-RECLOAD, Error loading record number: 51
+%YDB-E-RECLOAD, Error loading record number: 51
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(22)
-%GTM-E-RECLOAD, Error loading record number: 52
+%YDB-E-RECLOAD, Error loading record number: 52
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(23)
-%GTM-E-RECLOAD, Error loading record number: 53
+%YDB-E-RECLOAD, Error loading record number: 53
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(24)
-%GTM-E-RECLOAD, Error loading record number: 54
+%YDB-E-RECLOAD, Error loading record number: 54
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(25)
-%GTM-E-RECLOAD, Error loading record number: 55
+%YDB-E-RECLOAD, Error loading record number: 55
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(26)
-%GTM-E-RECLOAD, Error loading record number: 56
+%YDB-E-RECLOAD, Error loading record number: 56
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(27)
-%GTM-E-RECLOAD, Error loading record number: 57
+%YDB-E-RECLOAD, Error loading record number: 57
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
 		Global variable : ^bfill(28)
-%GTM-E-RECLOAD, Error loading record number: 58
+%YDB-E-RECLOAD, Error loading record number: 58
 
 LOAD TOTAL		Key Cnt: 112  Max Subsc Len: 10  Max Data Len: 14
 Last LOAD record number: 142
@@ -1574,7 +1574,7 @@ Blocks reused       : 0
 Blocks extended     : 0 
    
 Global: bfill (region DEFAULT)
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
    
 Global: cfill (region AREG)
 Blocks processed    : 1 
@@ -1604,7 +1604,7 @@ Blocks reused       : 0
 Blocks extended     : 0 
    
 Global: dfill (region DEFAULT)
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
 %GTM-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
 ##SUSPEND_OUTPUT SPANNING_REGIONS
@@ -1636,7 +1636,7 @@ Blocks reused       : 0
 Blocks extended     : 0 
    
 Global: dfill (region DEFAULT)
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
 %GTM-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
 ##ALLOW_OUTPUT SPANNING_REGIONS
  ----- After reorg on read_only database -----
@@ -1858,7 +1858,7 @@ Blocks reused       : 0
 Blocks extended     : 0 
    
 Global: bfill (region DEFAULT)
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
    
 Global: cfill (region AREG)
 Blocks processed    : 1 
@@ -1888,7 +1888,7 @@ Blocks reused       : 0
 Blocks extended     : 0 
    
 Global: dfill (region DEFAULT)
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
    
 Global: efill (region CREG)
 Blocks processed    : 1 
@@ -1900,7 +1900,7 @@ Blocks reused       : 0
 Blocks extended     : 0 
    
 Global: efill (region DEFAULT)
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
 %GTM-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
 ##SUSPEND_OUTPUT SPANNING_REGIONS
@@ -1932,10 +1932,10 @@ Blocks reused       : 0
 Blocks extended     : 0 
    
 Global: dfill (region DEFAULT)
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
    
 Global: efill (region DEFAULT)
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
 %GTM-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
 ##ALLOW_OUTPUT SPANNING_REGIONS
 ------- Test last reorg -------
@@ -1992,7 +1992,7 @@ Blocks reused       : 0
 Blocks extended     : 0 
    
 Global: bfill (region DEFAULT)
-%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/mumps.mjl for database file ##TEST_PATH##/mumps.dat
+%YDB-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/mumps.mjl for database file ##TEST_PATH##/mumps.dat
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 Global: afill (region AREG)
@@ -2023,7 +2023,7 @@ Blocks reused       : 0
 Blocks extended     : 0 
    
 Global: dfill (region DEFAULT)
-%GTM-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/mumps.mjl for database file ##TEST_PATH##/mumps.dat
+%YDB-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/mumps.mjl for database file ##TEST_PATH##/mumps.dat
 ##ALLOW_OUTPUT SPANNING_REGIONS
 ------- Test last reorg -------
 ##SOURCE_PATH##/mupip
@@ -2079,7 +2079,7 @@ Blocks reused       : 0
 Blocks extended     : 0 
    
 Global: bfill (region DEFAULT)
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
    
 Global: cfill (region AREG)
 Blocks processed    : 1 
@@ -2109,7 +2109,7 @@ Blocks reused       : 0
 Blocks extended     : 0 
    
 Global: dfill (region DEFAULT)
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
    
 Global: efill (region CREG)
 Blocks processed    : 1 
@@ -2121,7 +2121,7 @@ Blocks reused       : 0
 Blocks extended     : 0 
    
 Global: efill (region DEFAULT)
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
 %GTM-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
 ##SUSPEND_OUTPUT SPANNING_REGIONS
@@ -2153,10 +2153,10 @@ Blocks reused       : 0
 Blocks extended     : 0 
    
 Global: dfill (region DEFAULT)
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
    
 Global: efill (region DEFAULT)
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
 %GTM-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
 ##ALLOW_OUTPUT SPANNING_REGIONS
 ------- Test last reorg -------
@@ -2425,7 +2425,7 @@ chmod.csh rorw
 echo "mupip rundown -reg * "
 mupip rundown -reg * 
 $MUPIP rundown -reg "*" | & sort -f
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
 %GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/a.dat successfully rundown
 %GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/c.dat successfully rundown
 %GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
@@ -2464,7 +2464,7 @@ chmod.csh roro
 echo "mupip rundown -reg * "
 mupip rundown -reg * 
 $MUPIP rundown -reg "*" | & sort -f
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
 %GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/a.dat successfully rundown
 %GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/c.dat successfully rundown
 %GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
@@ -2550,9 +2550,9 @@ GTM>
 chmod.csh rwro
 **** R/W b.dat R/O b.mjl ****
 $MUPIP set -reg "*" -journal=enable,on,before | & sort -f
-%GTM-E-JNLNOCREATE, Journal file ##TEST_PATH##/b.mjl not created
-%GTM-E-JNLRDONLY, Journal file ##TEST_PATH##/b.mjl read only
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-JNLNOCREATE, Journal file ##TEST_PATH##/b.mjl not created
+%YDB-E-JNLRDONLY, Journal file ##TEST_PATH##/b.mjl read only
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
 ##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
 ##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
@@ -2590,8 +2590,8 @@ GTM>
 chmod.csh rorw
 **** R/O b.dat R/W b.mjl ****
 $MUPIP set -reg "*" -journal=enable,on,before | & sort -f
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
 ##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
 ##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
@@ -2628,8 +2628,8 @@ GTM>
 chmod.csh roro
 **** R/O b.dat R/O b.mjl ****
 $MUPIP set -reg "*" -journal=enable,on,before | & sort -f
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/b.dat
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
 ##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
 ##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
@@ -2798,8 +2798,8 @@ chmod.csh rorw
 **** R/O b.dat R/W b.mjl ****
 $MUPIP journal -recover -forward mumps.mjl,a.mjl,b.mjl,c.mjl
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
 $gtm_tst/com/dbcheck.csh
@@ -2813,8 +2813,8 @@ chmod.csh roro
 **** R/O b.dat R/O b.mjl ****
 $MUPIP journal -recover -forward mumps.mjl,a.mjl,b.mjl,c.mjl
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
 $gtm_tst/com/dbcheck.csh
@@ -2863,10 +2863,10 @@ chmod.csh rwro
 **** R/W b.dat R/O b.mjl ****
 $MUPIP journal -recover -backward mumps.mjl,a.mjl,b.mjl,c.mjl
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-JNLFILEOPNERR, Error opening journal file ##TEST_PATH##/b.mjl
-##TEST_AWK%GTM-E-SYSCALL, Error received from system call open -- called from module .*/mur_read_file_sp.c at line [0-9]*
+%YDB-E-JNLFILEOPNERR, Error opening journal file ##TEST_PATH##/b.mjl
+##TEST_AWK%YDB-E-SYSCALL, Error received from system call open -- called from module .*/mur_read_file_sp.c at line [0-9]*
 %SYSTEM-E-ENO13, Permission denied
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
 $gtm_tst/com/dbcheck.csh
@@ -2877,8 +2877,8 @@ chmod.csh rorw
 **** R/O b.dat R/W b.mjl ****
 $MUPIP journal -recover -backward mumps.mjl,a.mjl,b.mjl,c.mjl
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
 $gtm_tst/com/dbcheck.csh
@@ -2889,10 +2889,10 @@ chmod.csh roro
 **** R/O b.dat R/O b.mjl ****
 $MUPIP journal -recover -backward mumps.mjl,a.mjl,b.mjl,c.mjl
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-JNLFILEOPNERR, Error opening journal file ##TEST_PATH##/b.mjl
-##TEST_AWK%GTM-E-SYSCALL, Error received from system call open -- called from module .*/mur_read_file_sp.c at line [0-9]*
+%YDB-E-JNLFILEOPNERR, Error opening journal file ##TEST_PATH##/b.mjl
+##TEST_AWK%YDB-E-SYSCALL, Error received from system call open -- called from module .*/mur_read_file_sp.c at line [0-9]*
 %SYSTEM-E-ENO13, Permission denied
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
 $gtm_tst/com/dbcheck.csh

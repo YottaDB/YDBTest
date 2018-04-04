@@ -3,10 +3,10 @@
 ---------------------------------------------------------------------------------------------------
 
 THIS IS c002181a
-%GTM-E-ERRWZTRAP, Error while processing $ZTRAP,-GTM-E-STACKCRIT, Stack space critical
+%YDB-E-ERRWZTRAP, Error while processing $ZTRAP,-YDB-E-STACKCRIT, Stack space critical
 		At M source location ET^c002181a
 GTM>
-$ZSTATUS="150372762,ET^c002181a,%GTM-E-ERRWZTRAP, Error while processing $ZTRAP,-GTM-E-STACKCRIT, Stack space critical"
+$ZSTATUS="150372762,ET^c002181a,%YDB-E-ERRWZTRAP, Error while processing $ZTRAP,-YDB-E-STACKCRIT, Stack space critical"
 
 ---------------------------------------------------------------------------------------------------
           Testing mumps -run test1^c002181
@@ -14,7 +14,7 @@ $ZSTATUS="150372762,ET^c002181a,%GTM-E-ERRWZTRAP, Error while processing $ZTRAP,
 
 
 THIS IS c002181a
-%GTM-E-ERRWZTRAP, Error while processing $ZTRAP,-GTM-E-STACKCRIT, Stack space critical
+%YDB-E-ERRWZTRAP, Error while processing $ZTRAP,-YDB-E-STACKCRIT, Stack space critical
 		At M source location ET^c002181a
 
 GTM>
@@ -27,14 +27,14 @@ GTM>
 GTM>
 
 THIS IS c002181a
-%GTM-E-ERRWZTRAP, Error while processing $ZTRAP,-GTM-E-STACKCRIT, Stack space critical
+%YDB-E-ERRWZTRAP, Error while processing $ZTRAP,-YDB-E-STACKCRIT, Stack space critical
 		At M source location ET^c002181a
 
 GTM>
 $zlevel at end = 2
 
 GTM>
-$ZSTATUS="150372762,ET^c002181a,%GTM-E-ERRWZTRAP, Error while processing $ZTRAP,-GTM-E-STACKCRIT, Stack space critical"
+$ZSTATUS="150372762,ET^c002181a,%YDB-E-ERRWZTRAP, Error while processing $ZTRAP,-YDB-E-STACKCRIT, Stack space critical"
 
 GTM>
 
@@ -54,13 +54,13 @@ GTM>
 
 
 GTM>
-%GTM-E-STACKCRIT, Stack space critical
+%YDB-E-STACKCRIT, Stack space critical
 
 GTM>
 $zlevel at end = 1
 
 GTM>
-$ZSTATUS="150372762,x+2^c002181b,%GTM-E-ERRWZTRAP, Error while processing $ZTRAP,-GTM-E-STACKCRIT, Stack space critical"
+$ZSTATUS="150372762,x+2^c002181b,%YDB-E-ERRWZTRAP, Error while processing $ZTRAP,-YDB-E-STACKCRIT, Stack space critical"
 
 GTM>
 
@@ -83,13 +83,13 @@ $ZT triggered
 
 GTM>
 $ZT triggered
-%GTM-E-DIVZERO, Attempt to divide by zero
+%YDB-E-DIVZERO, Attempt to divide by zero
 
 GTM>
 $zlevel at end = 1
 
 GTM>
-$ZSTATUS="150372762,ztbug+1^c002181c,%GTM-E-ERRWZTRAP, Error while processing $ZTRAP,-GTM-E-DIVZERO, Attempt to divide by zero"
+$ZSTATUS="150372762,ztbug+1^c002181c,%YDB-E-ERRWZTRAP, Error while processing $ZTRAP,-YDB-E-DIVZERO, Attempt to divide by zero"
 
 GTM>
 
@@ -102,7 +102,7 @@ got past error
 got to zstep
 got to $zt
 $zlevel at end of c002181d = 1
-$ZSTATUS="150372738,lab+1^c002181d,%GTM-E-ERRWEXC, Error while processing exception string,-GTM-E-LABELMISSING, Label referenced but not defined: nolab"
+$ZSTATUS="150372738,lab+1^c002181d,%YDB-E-ERRWEXC, Error while processing exception string,-YDB-E-LABELMISSING, Label referenced but not defined: nolab"
 
 ---------------------------------------------------------------------------------------------------
           Testing mumps -run test4^c002181
@@ -116,7 +116,7 @@ got to zstep
 
 got to $zt
 $zlevel at end of c002181d = 1
-$ZSTATUS="150372738,lab+1^c002181d,%GTM-E-ERRWEXC, Error while processing exception string,-GTM-E-LABELMISSING, Label referenced but not defined: nolab"
+$ZSTATUS="150372738,lab+1^c002181d,%YDB-E-ERRWEXC, Error while processing exception string,-YDB-E-LABELMISSING, Label referenced but not defined: nolab"
 
 ---------------------------------------------------------------------------------------------------
           Testing do test4^c002181
@@ -132,13 +132,13 @@ got to zstep
 
 got to $zt
 $zlevel at end of c002181d = 2
-$ZSTATUS="150372738,lab+1^c002181d,%GTM-E-ERRWEXC, Error while processing exception string,-GTM-E-LABELMISSING, Label referenced but not defined: nolab"
+$ZSTATUS="150372738,lab+1^c002181d,%YDB-E-ERRWEXC, Error while processing exception string,-YDB-E-LABELMISSING, Label referenced but not defined: nolab"
 
 GTM>
 $zlevel at end = 1
 
 GTM>
-$ZSTATUS="150372738,lab+1^c002181d,%GTM-E-ERRWEXC, Error while processing exception string,-GTM-E-LABELMISSING, Label referenced but not defined: nolab"
+$ZSTATUS="150372738,lab+1^c002181d,%YDB-E-ERRWEXC, Error while processing exception string,-YDB-E-LABELMISSING, Label referenced but not defined: nolab"
 
 GTM>
 
@@ -147,22 +147,22 @@ GTM>
 ---------------------------------------------------------------------------------------------------
 
 Starting $ZL=2
-150372746,base^c002181e,%GTM-E-ERRWIOEXC, Error while processing I/O exception string,-GTM-E-LABELMISSING, Label referenced but not defined: fubar
+150372746,base^c002181e,%YDB-E-ERRWIOEXC, Error while processing I/O exception string,-YDB-E-LABELMISSING, Label referenced but not defined: fubar
 $ZL=2
-150372746,ubase^c002181e,%GTM-E-ERRWIOEXC, Error while processing I/O exception string,-GTM-E-LABELMISSING, Label referenced but not defined: fubar
+150372746,ubase^c002181e,%YDB-E-ERRWIOEXC, Error while processing I/O exception string,-YDB-E-LABELMISSING, Label referenced but not defined: fubar
 $ZL=2
-150372746,read^c002181e,%GTM-E-ERRWIOEXC, Error while processing I/O exception string,-GTM-E-LABELMISSING, Label referenced but not defined: fubar
+150372746,read^c002181e,%YDB-E-ERRWIOEXC, Error while processing I/O exception string,-YDB-E-LABELMISSING, Label referenced but not defined: fubar
 $ZL=2
-150372746,write^c002181e,%GTM-E-ERRWIOEXC, Error while processing I/O exception string,-GTM-E-LABELMISSING, Label referenced but not defined: fubar
+150372746,write^c002181e,%YDB-E-ERRWIOEXC, Error while processing I/O exception string,-YDB-E-LABELMISSING, Label referenced but not defined: fubar
 $ZL=2
-150373050,zbt0^c002181e,%GTM-E-INVCMD, Invalid command keyword encountered
+150373050,zbt0^c002181e,%YDB-E-INVCMD, Invalid command keyword encountered
 $ZL=2
-150373050,zbt1^c002181e,%GTM-E-INVCMD, Invalid command keyword encountered
+150373050,zbt1^c002181e,%YDB-E-INVCMD, Invalid command keyword encountered
 $ZL=2
-150372738,zbt3+1^c002181e,%GTM-E-ERRWEXC, Error while processing exception string,-GTM-E-LABELMISSING, Label referenced but not defined: nolab
+150372738,zbt3+1^c002181e,%YDB-E-ERRWEXC, Error while processing exception string,-YDB-E-LABELMISSING, Label referenced but not defined: nolab
 $ZL=2
 $zlevel at end of c002181e = 1
-$ZSTATUS="150372738,zbt3+1^c002181e,%GTM-E-ERRWEXC, Error while processing exception string,-GTM-E-LABELMISSING, Label referenced but not defined: nolab"
+$ZSTATUS="150372738,zbt3+1^c002181e,%YDB-E-ERRWEXC, Error while processing exception string,-YDB-E-LABELMISSING, Label referenced but not defined: nolab"
 
 ---------------------------------------------------------------------------------------------------
           Testing mumps -run test5^c002181
@@ -171,28 +171,28 @@ $ZSTATUS="150372738,zbt3+1^c002181e,%GTM-E-ERRWEXC, Error while processing excep
 
 Starting $ZL=2
 
-150372746,base^c002181e,%GTM-E-ERRWIOEXC, Error while processing I/O exception string,-GTM-E-LABELMISSING, Label referenced but not defined: fubar
+150372746,base^c002181e,%YDB-E-ERRWIOEXC, Error while processing I/O exception string,-YDB-E-LABELMISSING, Label referenced but not defined: fubar
 $ZL=2
 
-150372746,ubase^c002181e,%GTM-E-ERRWIOEXC, Error while processing I/O exception string,-GTM-E-LABELMISSING, Label referenced but not defined: fubar
+150372746,ubase^c002181e,%YDB-E-ERRWIOEXC, Error while processing I/O exception string,-YDB-E-LABELMISSING, Label referenced but not defined: fubar
 $ZL=2
 
-150372746,read^c002181e,%GTM-E-ERRWIOEXC, Error while processing I/O exception string,-GTM-E-LABELMISSING, Label referenced but not defined: fubar
+150372746,read^c002181e,%YDB-E-ERRWIOEXC, Error while processing I/O exception string,-YDB-E-LABELMISSING, Label referenced but not defined: fubar
 $ZL=2
 
-150372746,write^c002181e,%GTM-E-ERRWIOEXC, Error while processing I/O exception string,-GTM-E-LABELMISSING, Label referenced but not defined: fubar
+150372746,write^c002181e,%YDB-E-ERRWIOEXC, Error while processing I/O exception string,-YDB-E-LABELMISSING, Label referenced but not defined: fubar
 $ZL=2
 
-150373050,zbt0^c002181e,%GTM-E-INVCMD, Invalid command keyword encountered
+150373050,zbt0^c002181e,%YDB-E-INVCMD, Invalid command keyword encountered
 $ZL=2
 
-150373050,zbt1^c002181e,%GTM-E-INVCMD, Invalid command keyword encountered
+150373050,zbt1^c002181e,%YDB-E-INVCMD, Invalid command keyword encountered
 $ZL=2
 
-150372738,zbt3+1^c002181e,%GTM-E-ERRWEXC, Error while processing exception string,-GTM-E-LABELMISSING, Label referenced but not defined: nolab
+150372738,zbt3+1^c002181e,%YDB-E-ERRWEXC, Error while processing exception string,-YDB-E-LABELMISSING, Label referenced but not defined: nolab
 $ZL=2
 $zlevel at end of c002181e = 1
-$ZSTATUS="150372738,zbt3+1^c002181e,%GTM-E-ERRWEXC, Error while processing exception string,-GTM-E-LABELMISSING, Label referenced but not defined: nolab"
+$ZSTATUS="150372738,zbt3+1^c002181e,%YDB-E-ERRWEXC, Error while processing exception string,-YDB-E-LABELMISSING, Label referenced but not defined: nolab"
 
 ---------------------------------------------------------------------------------------------------
           Testing do test5^c002181
@@ -203,34 +203,34 @@ GTM>
 
 Starting $ZL=3
 
-150372746,base^c002181e,%GTM-E-ERRWIOEXC, Error while processing I/O exception string,-GTM-E-LABELMISSING, Label referenced but not defined: fubar
+150372746,base^c002181e,%YDB-E-ERRWIOEXC, Error while processing I/O exception string,-YDB-E-LABELMISSING, Label referenced but not defined: fubar
 $ZL=3
 
-150372746,ubase^c002181e,%GTM-E-ERRWIOEXC, Error while processing I/O exception string,-GTM-E-LABELMISSING, Label referenced but not defined: fubar
+150372746,ubase^c002181e,%YDB-E-ERRWIOEXC, Error while processing I/O exception string,-YDB-E-LABELMISSING, Label referenced but not defined: fubar
 $ZL=3
 
-150372746,read^c002181e,%GTM-E-ERRWIOEXC, Error while processing I/O exception string,-GTM-E-LABELMISSING, Label referenced but not defined: fubar
+150372746,read^c002181e,%YDB-E-ERRWIOEXC, Error while processing I/O exception string,-YDB-E-LABELMISSING, Label referenced but not defined: fubar
 $ZL=3
 
-150372746,write^c002181e,%GTM-E-ERRWIOEXC, Error while processing I/O exception string,-GTM-E-LABELMISSING, Label referenced but not defined: fubar
+150372746,write^c002181e,%YDB-E-ERRWIOEXC, Error while processing I/O exception string,-YDB-E-LABELMISSING, Label referenced but not defined: fubar
 $ZL=3
 
-150373050,zbt0^c002181e,%GTM-E-INVCMD, Invalid command keyword encountered
+150373050,zbt0^c002181e,%YDB-E-INVCMD, Invalid command keyword encountered
 $ZL=3
 
-150373050,zbt1^c002181e,%GTM-E-INVCMD, Invalid command keyword encountered
+150373050,zbt1^c002181e,%YDB-E-INVCMD, Invalid command keyword encountered
 $ZL=3
 
-150372738,zbt3+1^c002181e,%GTM-E-ERRWEXC, Error while processing exception string,-GTM-E-LABELMISSING, Label referenced but not defined: nolab
+150372738,zbt3+1^c002181e,%YDB-E-ERRWEXC, Error while processing exception string,-YDB-E-LABELMISSING, Label referenced but not defined: nolab
 $ZL=3
 $zlevel at end of c002181e = 2
-$ZSTATUS="150372738,zbt3+1^c002181e,%GTM-E-ERRWEXC, Error while processing exception string,-GTM-E-LABELMISSING, Label referenced but not defined: nolab"
+$ZSTATUS="150372738,zbt3+1^c002181e,%YDB-E-ERRWEXC, Error while processing exception string,-YDB-E-LABELMISSING, Label referenced but not defined: nolab"
 
 GTM>
 $zlevel at end = 1
 
 GTM>
-$ZSTATUS="150372738,zbt3+1^c002181e,%GTM-E-ERRWEXC, Error while processing exception string,-GTM-E-LABELMISSING, Label referenced but not defined: nolab"
+$ZSTATUS="150372738,zbt3+1^c002181e,%YDB-E-ERRWEXC, Error while processing exception string,-YDB-E-LABELMISSING, Label referenced but not defined: nolab"
 
 GTM>
 
@@ -247,13 +247,13 @@ mumps.dat
 THIS IS c002181f
 THIS IS SUB1
 THIS IS SUB2
-THIS IS SUB3^ERR("ZSTATUS",6)="150373210,BAD+2^c002181f,%GTM-E-DIVZERO, Attempt to divide by zero"
+THIS IS SUB3^ERR("ZSTATUS",6)="150373210,BAD+2^c002181f,%YDB-E-DIVZERO, Attempt to divide by zero"
 
 YOUR HAVE ENCOUNTERED AN ERROR
 PLEASE NOTIFY JOAN Q SUPPORTPERSON AND PROVIDE A COPY OF 
 YOUR SCREEN/TERMINAL FROM BEFORE THE ERROR TWO LINES BELOW HERE
 
-$ZSTATUS=150373210,BAD+2^c002181f,%GTM-E-DIVZERO, Attempt to divide by zero
+$ZSTATUS=150373210,BAD+2^c002181f,%YDB-E-DIVZERO, Attempt to divide by zero
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -271,8 +271,8 @@ YOUR HAVE ENCOUNTERED AN ERROR
 PLEASE NOTIFY JOAN Q SUPPORTPERSON AND PROVIDE A COPY OF 
 YOUR SCREEN/TERMINAL FROM BEFORE THE ERROR TWO LINES BELOW HERE
 
-$ZSTATUS=150374122,RECORD+3^ERR,%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.,%SYSTEM-E-ENO2, No such file or directory
-150374122,RECORD+3^ERR,%GTM-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.,%SYSTEM-E-ENO2, No such file or directory
+$ZSTATUS=150374122,RECORD+3^ERR,%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.,%SYSTEM-E-ENO2, No such file or directory
+150374122,RECORD+3^ERR,%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.,%SYSTEM-E-ENO2, No such file or directory
 OPEN1+2^ERR
 SUB3+3^c002181f
 SUB2+3^c002181f

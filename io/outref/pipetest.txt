@@ -526,7 +526,7 @@ GTM>
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
 ##ALLOW_OUTPUT HOST_OS390_S390
-150372746,BADLABEL+5^badhandler,%GTM-E-ERRWIOEXC, Error while processing I/O exception string,-GTM-E-LABELMISSING, Label referenced but not defined: ADOPEN
+150372746,BADLABEL+5^badhandler,%YDB-E-ERRWIOEXC, Error while processing I/O exception string,-YDB-E-LABELMISSING, Label referenced but not defined: ADOPEN
 in cont1
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_OS390_S390
@@ -551,7 +551,7 @@ GTM>
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
 ##ALLOW_OUTPUT HOST_OS390_S390
-150373050,BADCOMMAND+5^badhandler,%GTM-E-INVCMD, Invalid command keyword encountered
+150373050,BADCOMMAND+5^badhandler,%YDB-E-INVCMD, Invalid command keyword encountered
 in cont1
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_OS390_S390
@@ -577,7 +577,7 @@ GTM>
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
 ##ALLOW_OUTPUT HOST_OS390_S390
-150372746,JUSTBADLABEL+5^badhandler,%GTM-E-ERRWIOEXC, Error while processing I/O exception string,-GTM-E-LABELMISSING, Label referenced but not defined: ADOPEN
+150372746,JUSTBADLABEL+5^badhandler,%YDB-E-ERRWIOEXC, Error while processing I/O exception string,-YDB-E-LABELMISSING, Label referenced but not defined: ADOPEN
 in cont1
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_OS390_S390
@@ -604,7 +604,7 @@ GTM>
 ##ALLOW_OUTPUT HOST_OS390_S390
 
 badopen error
-150379354,JUSTGOODLABEL+5^badhandler,%GTM-E-DEVOPENFAIL, Error opening test,%GTM-I-TEXT, Invalid shell: jjj
+150379354,JUSTGOODLABEL+5^badhandler,%YDB-E-DEVOPENFAIL, Error opening test,%GTM-I-TEXT, Invalid shell: jjj
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_OS390_S390
 0 OPEN RMS FILETAG=UNTAGGED TEXT 
@@ -628,7 +628,7 @@ GTM>
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
 ##ALLOW_OUTPUT HOST_OS390_S390
-150373010,BADCOMMAND+5^badhandler,%GTM-E-INDEXTRACHARS, Indirection string contains extra trailing characters
+150373010,BADCOMMAND+5^badhandler,%YDB-E-INDEXTRACHARS, Indirection string contains extra trailing characters
 in cont1
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_OS390_S390
@@ -645,7 +645,7 @@ GTM>
 ###################################################################
 
 badopen error
-150379354,EX1+2^ex1,%GTM-E-DEVOPENFAIL, Error opening test,%GTM-I-TEXT, Invalid shell: jjj
+150379354,EX1+2^ex1,%YDB-E-DEVOPENFAIL, Error opening test,%GTM-I-TEXT, Invalid shell: jjj
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_OS390_S390
 0 OPEN RMS FILETAG=UNTAGGED TEXT 
@@ -662,7 +662,7 @@ $zeof = 1
 $za = 9
 $device = 1,Device detected EOF
 EOF1
-150373082,EX2+11^ex2,%GTM-E-IOEOF, Attempt to read past an end-of-file
+150373082,EX2+11^ex2,%YDB-E-IOEOF, Attempt to read past an end-of-file
 try stderr
 EOF2
 Nothing in stderr
@@ -681,7 +681,7 @@ test OPEN PIPE SHELL="/usr/local/bin/tcsh" COMMAND="cat -u" STDERR="e1" EXCE="G 
 ###################################################################
 
 badopen error
-150379354,EX3+2^ex3,%GTM-E-DEVOPENFAIL, Error opening test,%GTM-I-TEXT, Invalid command string: jjj
+150379354,EX3+2^ex3,%YDB-E-DEVOPENFAIL, Error opening test,%GTM-I-TEXT, Invalid command string: jjj
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_OS390_S390
 0 OPEN RMS FILETAG=UNTAGGED TEXT 
@@ -697,7 +697,7 @@ $zeof = 1
 $za = 9
 $device = 1,Device detected EOF
 EOF1
-150373082,EX4+5^ex4,%GTM-E-IOEOF, Attempt to read past an end-of-file
+150373082,EX4+5^ex4,%YDB-E-IOEOF, Attempt to read past an end-of-file
 look in ex4.log for stderr output
 END OF FILE SEEN
 ##SUSPEND_OUTPUT HOST_ALL
@@ -717,7 +717,7 @@ $zeof = 1
 $za = 9
 $device = 1,Device detected EOF
 EOF1
-150373082,EX5+7^ex5,%GTM-E-IOEOF, Attempt to read past an end-of-file
+150373082,EX5+7^ex5,%YDB-E-IOEOF, Attempt to read past an end-of-file
 try stderr
 EOF2
 Nothing in stderr
@@ -751,7 +751,7 @@ $device = 1,Device detected EOF
 
 expect 1 since we did if 1, $test = 1
 
-150373082,BAD+14^eofread,%GTM-E-IOEOF, Attempt to read past an end-of-file
+150373082,BAD+14^eofread,%YDB-E-IOEOF, Attempt to read past an end-of-file
 ###################################################################
 **************************** writetrap ****************************
 ###################################################################
@@ -759,7 +759,7 @@ expect 1 since we did if 1, $test = 1
 
 write error
 
-$zstatus = 150373618,WRITETRAP+10^writetrap,%GTM-E-DEVICEREADONLY, Cannot write to read-only device
+$zstatus = 150373618,WRITETRAP+10^writetrap,%YDB-E-DEVICEREADONLY, Cannot write to read-only device
 $device = 0
 $za = 0
 ###################################################################
@@ -767,7 +767,7 @@ $za = 0
 ###################################################################
 
 BADOPEN0 error
-150379354,exnull+2^exnull,%GTM-E-DEVOPENFAIL, Error opening test,%GTM-I-TEXT, Command string has no value
+150379354,exnull+2^exnull,%YDB-E-DEVOPENFAIL, Error opening test,%GTM-I-TEXT, Command string has no value
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_OS390_S390
 0 OPEN RMS FILETAG=UNTAGGED TEXT 
@@ -778,7 +778,7 @@ BADOPEN0 error
 ##ALLOW_OUTPUT HOST_OS390_S390
 
 BADOPEN1 error
-150379354,BADOPEN0+2^exnull,%GTM-E-DEVOPENFAIL, Error opening test,%GTM-I-TEXT, Missing command string
+150379354,BADOPEN0+2^exnull,%YDB-E-DEVOPENFAIL, Error opening test,%GTM-I-TEXT, Missing command string
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_OS390_S390
 0 OPEN RMS FILETAG=UNTAGGED TEXT 
@@ -789,7 +789,7 @@ BADOPEN1 error
 ##ALLOW_OUTPUT HOST_OS390_S390
 
 BADOPEN2 error
-150379354,BADOPEN1+2^exnull,%GTM-E-DEVOPENFAIL, Error opening test,%GTM-I-TEXT, SHELL parameter has no value
+150379354,BADOPEN1+2^exnull,%YDB-E-DEVOPENFAIL, Error opening test,%GTM-I-TEXT, SHELL parameter has no value
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_OS390_S390
 0 OPEN RMS FILETAG=UNTAGGED TEXT 
@@ -800,7 +800,7 @@ BADOPEN2 error
 ##ALLOW_OUTPUT HOST_OS390_S390
 
 BADOPEN3 error
-150379354,BADOPEN2+2^exnull,%GTM-E-DEVOPENFAIL, Error opening test,%GTM-I-TEXT, STDERR parameter has no value
+150379354,BADOPEN2+2^exnull,%YDB-E-DEVOPENFAIL, Error opening test,%GTM-I-TEXT, STDERR parameter has no value
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_OS390_S390
 0 OPEN RMS FILETAG=UNTAGGED TEXT 
@@ -813,9 +813,9 @@ BADOPEN3 error
 ************ test DEVICEWRITEONLY for pipe and file*******************
 ###################################################################
 Testing DEVICEWRITEONLY for file
-%GTM-E-DEVICEWRITEONLY, Cannot read from a write-only device
+%YDB-E-DEVICEWRITEONLY, Cannot read from a write-only device
 Testing DEVICEWRITEONLY for pipe
-%GTM-E-DEVICEWRITEONLY, Cannot read from a write-only device
+%YDB-E-DEVICEWRITEONLY, Cannot read from a write-only device
 ###################################################################
 **************************** mtom ****************************
 ###################################################################
@@ -1151,10 +1151,10 @@ $za = 9 $zeof = 1 $device = 1,Device detected EOF $test = 1
 Second part done
 
 Try to write to readonly fifo
-150373618,fifovarread+118^fifovarread,%GTM-E-DEVICEREADONLY, Cannot write to read-only device
+150373618,fifovarread+118^fifovarread,%YDB-E-DEVICEREADONLY, Cannot write to read-only device
 
 Try to read from writeonly fifo
-150382042,BAD+7^fifovarread,%GTM-E-DEVICEWRITEONLY, Cannot read from a write-only device
+150382042,BAD+7^fifovarread,%YDB-E-DEVICEWRITEONLY, Cannot read from a write-only device
 ###################################################################
 **************************** fbadinput ****************************
 ###################################################################

@@ -4,6 +4,9 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -238,6 +241,6 @@ $gtm_exe/mupip replicate -source -shutdown -timeout=0 >&! replicshutdown.log
 # Render any REPLINSTFROZEN errors in the source log harmless, but put anything
 # else in a log in case there are other errors.
 
-sed 's/GTM-E-REPLINSTFROZEN/GTM-X-REPLINSTFROZEN/' < ${instname}_SRC.logx > ${instname}_SRC.log
+sed 's/YDB-E-REPLINSTFROZEN/GTM-X-REPLINSTFROZEN/' < ${instname}_SRC.logx > ${instname}_SRC.log
 
 $gtm_tst/com/dbcheck.csh

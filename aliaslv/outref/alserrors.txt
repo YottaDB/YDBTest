@@ -1,116 +1,116 @@
 		Set *(a,b)=c	    		 ; NOALIASLIST
 		     ^-----
 		At column 7, line 6, source module ##IN_TEST_PATH##/inref/comperrs.m
-%GTM-E-NOALIASLIST, Parenthetical lists of multiple arguments cannot have a preceding alias introducer or include alias (*) forms
+%YDB-E-NOALIASLIST, Parenthetical lists of multiple arguments cannot have a preceding alias introducer or include alias (*) forms
 		Set (a,*b)=c			 ; NOALIASLIST
 		       ^-----
 		At column 9, line 8, source module ##IN_TEST_PATH##/inref/comperrs.m
-%GTM-E-NOALIASLIST, Parenthetical lists of multiple arguments cannot have a preceding alias introducer or include alias (*) forms
+%YDB-E-NOALIASLIST, Parenthetical lists of multiple arguments cannot have a preceding alias introducer or include alias (*) forms
 		Set *^a=b			 ; ALIASEXPECTED
 		     ^-----
 		At column 7, line 10, source module ##IN_TEST_PATH##/inref/comperrs.m
-%GTM-E-ALIASEXPECTED, Alias or alias container variable expected in this context
+%YDB-E-ALIASEXPECTED, Alias or alias container variable expected in this context
 		Set *@a=b			 ; ALIASEXPECTED
 		     ^-----
 		At column 7, line 12, source module ##IN_TEST_PATH##/inref/comperrs.m
-%GTM-E-ALIASEXPECTED, Alias or alias container variable expected in this context
+%YDB-E-ALIASEXPECTED, Alias or alias container variable expected in this context
 		Set *$Piece(a,".",1)=b		 ; ALIASEXPECTED
 		     ^-----
 		At column 7, line 14, source module ##IN_TEST_PATH##/inref/comperrs.m
-%GTM-E-ALIASEXPECTED, Alias or alias container variable expected in this context
+%YDB-E-ALIASEXPECTED, Alias or alias container variable expected in this context
 		Set *a=(b)			 ; ALIASEXPECTED
 		       ^-----
 		At column 9, line 16, source module ##IN_TEST_PATH##/inref/comperrs.m
-%GTM-E-ALIASEXPECTED, Alias or alias container variable expected in this context
+%YDB-E-ALIASEXPECTED, Alias or alias container variable expected in this context
 		Set *a=$Piece(b,".",1)		 ; ALIASEXPECTED
 		       ^-----
 		At column 9, line 18, source module ##IN_TEST_PATH##/inref/comperrs.m
-%GTM-E-ALIASEXPECTED, Alias or alias container variable expected in this context
+%YDB-E-ALIASEXPECTED, Alias or alias container variable expected in this context
 		Set *a=^b			 ; ALIASEXPECTED
 		       ^-----
 		At column 9, line 20, source module ##IN_TEST_PATH##/inref/comperrs.m
-%GTM-E-ALIASEXPECTED, Alias or alias container variable expected in this context
+%YDB-E-ALIASEXPECTED, Alias or alias container variable expected in this context
 		Set *a=*c			 ; ALIASEXPECTED
 		       ^-----
 		At column 9, line 22, source module ##IN_TEST_PATH##/inref/comperrs.m
-%GTM-E-ALIASEXPECTED, Alias or alias container variable expected in this context
+%YDB-E-ALIASEXPECTED, Alias or alias container variable expected in this context
 		Set *a=@b			 ; ALIASEXPECTED
 		       ^-----
 		At column 9, line 24, source module ##IN_TEST_PATH##/inref/comperrs.m
-%GTM-E-ALIASEXPECTED, Alias or alias container variable expected in this context
+%YDB-E-ALIASEXPECTED, Alias or alias container variable expected in this context
 		Set *a=$ZWRTAC1x		 ; ALIASEXPECTED
 		       ^-----
 		At column 9, line 26, source module ##IN_TEST_PATH##/inref/comperrs.m
-%GTM-E-ALIASEXPECTED, Alias or alias container variable expected in this context
+%YDB-E-ALIASEXPECTED, Alias or alias container variable expected in this context
 		Set *$ZWRTAC=a			 ; DZWRNOALIAS
 		      ^-----
 		At column 8, line 28, source module ##IN_TEST_PATH##/inref/comperrs.m
-%GTM-E-DZWRNOALIAS, $ZWRTAC cannot be aliased
+%YDB-E-DZWRNOALIAS, $ZWRTAC cannot be aliased
 		Set *a=$ZWRTAC			 ; DZWRNOALIAS
 		        ^-----
 		At column 10, line 30, source module ##IN_TEST_PATH##/inref/comperrs.m
-%GTM-E-DZWRNOALIAS, $ZWRTAC cannot be aliased
+%YDB-E-DZWRNOALIAS, $ZWRTAC cannot be aliased
 		Set (a,$ZWRTAC)=b		 ; DZWRNOPAREN
 		        ^-----
 		At column 10, line 32, source module ##IN_TEST_PATH##/inref/comperrs.m
-%GTM-E-DZWRNOPAREN, $ZWRTACxxx is not allowed inside a parenthesized SET target
+%YDB-E-DZWRNOPAREN, $ZWRTACxxx is not allowed inside a parenthesized SET target
 		Set (a,*$ZWRTAC)=b		 ; NOALIASLIST
 		       ^-----
 		At column 9, line 34, source module ##IN_TEST_PATH##/inref/comperrs.m
-%GTM-E-NOALIASLIST, Parenthetical lists of multiple arguments cannot have a preceding alias introducer or include alias (*) forms
+%YDB-E-NOALIASLIST, Parenthetical lists of multiple arguments cannot have a preceding alias introducer or include alias (*) forms
 		Set **a=b			 ; VAREXPECTED
 		    ^-----
 		At column 6, line 36, source module ##IN_TEST_PATH##/inref/comperrs.m
-%GTM-E-VAREXPECTED, Variable expected in this context
+%YDB-E-VAREXPECTED, Variable expected in this context
 		Set a=*b			 ; EXPR
 		      ^-----
 		At column 8, line 38, source module ##IN_TEST_PATH##/inref/comperrs.m
-%GTM-E-EXPR, Expression expected but not found
+%YDB-E-EXPR, Expression expected but not found
 		Kill *^a			 ; ALIASEXPECTED
 		      ^-----
 		At column 8, line 40, source module ##IN_TEST_PATH##/inref/comperrs.m
-%GTM-E-ALIASEXPECTED, Alias or alias container variable expected in this context
+%YDB-E-ALIASEXPECTED, Alias or alias container variable expected in this context
 		Kill *@a			 ; ALIASEXPECTED
 		      ^-----
 		At column 8, line 42, source module ##IN_TEST_PATH##/inref/comperrs.m
-%GTM-E-ALIASEXPECTED, Alias or alias container variable expected in this context
+%YDB-E-ALIASEXPECTED, Alias or alias container variable expected in this context
 		Kill *(a,b)=c			 ; NOALIASLIST
 		      ^-----
 		At column 8, line 44, source module ##IN_TEST_PATH##/inref/comperrs.m
-%GTM-E-NOALIASLIST, Parenthetical lists of multiple arguments cannot have a preceding alias introducer or include alias (*) forms
+%YDB-E-NOALIASLIST, Parenthetical lists of multiple arguments cannot have a preceding alias introducer or include alias (*) forms
 		Kill *,a			 ; ALIASEXPECTED
 		      ^-----
 		At column 8, line 46, source module ##IN_TEST_PATH##/inref/comperrs.m
-%GTM-E-ALIASEXPECTED, Alias or alias container variable expected in this context
+%YDB-E-ALIASEXPECTED, Alias or alias container variable expected in this context
 		Kill (a,*b)			 ; NOALIASLIST
 		        ^-----
 		At column 10, line 48, source module ##IN_TEST_PATH##/inref/comperrs.m
-%GTM-E-NOALIASLIST, Parenthetical lists of multiple arguments cannot have a preceding alias introducer or include alias (*) forms
+%YDB-E-NOALIASLIST, Parenthetical lists of multiple arguments cannot have a preceding alias introducer or include alias (*) forms
 		Set a=$ZWRTAC			 ; INVSVN
 		       ^-----
 		At column 9, line 50, source module ##IN_TEST_PATH##/inref/comperrs.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		Set *a=$zwrtac1			 ; ALIASEXPECTED
 		       ^-----
 		At column 9, line 52, source module ##IN_TEST_PATH##/inref/comperrs.m
-%GTM-E-ALIASEXPECTED, Alias or alias container variable expected in this context
+%YDB-E-ALIASEXPECTED, Alias or alias container variable expected in this context
 		Set $zwrtac=""			 ; INVSVN
 		     ^-----
 		At column 7, line 54, source module ##IN_TEST_PATH##/inref/comperrs.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		Set $ZWRTACx1=a			 ; INVSVN
 		     ^-----
 		At column 7, line 56, source module ##IN_TEST_PATH##/inref/comperrs.m
-%GTM-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
 		Set *a=$$func()+2		 ; SPOREOL
 		               ^-----
 		At column 17, line 58, source module ##IN_TEST_PATH##/inref/comperrs.m
-%GTM-E-SPOREOL, Either a space or an end-of-line was expected but not found
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
 
 
 ******* Start comperrs *******
 
-%GTM-E-NOALIASLIST, Parenthetical lists of multiple arguments cannot have a preceding alias introducer or include alias (*) forms
+%YDB-E-NOALIASLIST, Parenthetical lists of multiple arguments cannot have a preceding alias introducer or include alias (*) forms
 		At M source location +6^comperrs
 
 GTM>
@@ -125,6 +125,6 @@ comperrs2: Testing 5 statements: PASS
 
 
 GTM>
-%GTM-E-LVUNDEF, Undefined local variable: x(2)
+%YDB-E-LVUNDEF, Undefined local variable: x(2)
 
 GTM>

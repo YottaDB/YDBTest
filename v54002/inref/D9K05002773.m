@@ -1,7 +1,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
-; All rights reserved.	     	  	     			;
+; Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -79,7 +79,7 @@ forwardload	;
 load	;
 	set numupds=endsub-startsub+1
 	set i=loopstart
-	for  quit:numupds=0  do 
+	for  quit:numupds=0  do
 	.	; bunch updates randomly
 	.	set thisbunch=1+$random(20)
 	.	set numbunches=1+$r(10)
@@ -90,7 +90,7 @@ load	;
 	.	for j=1:1:numbunches  do
 	.	.	if istp  tstart ():(serial:transaction="BATCH")	; use BATCH to avoid wait for journal hardening
 	.	.	for k=1:1:thisbunch  do
-	.	.	.	set ^GBL(i)=$justify(i,90) 
+	.	.	.	set ^GBL(i)=$justify(i,90)
 	.	.	.	set i=i+stepsize
 	.	.	if istp  tcommit
 	.	set numupds=numupds-updstodo

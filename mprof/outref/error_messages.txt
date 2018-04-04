@@ -10,12 +10,12 @@ Will try various error messages
 		view "TRACE":1:"^X("X""
 		                    ^-----
 		At column 22, line 40, source module ##IN_TEST_PATH##/inref/errormes.m
-%GTM-E-SPOREOL, Either a space or an end-of-line was expected but not found
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
 ========================================
 Command is:(c1+1)
 	view "TRACE":1:"^X($J) "
 ----------------------------------------
-%GTM-E-VIEWNOTFOUND, View parameter ^X($J)  not valid,%GTM-I-TEXT, There are trailing characters after the global name
+%YDB-E-VIEWNOTFOUND, View parameter ^X($J)  not valid,%GTM-I-TEXT, There are trailing characters after the global name
 		At M source location c1+1^errormes
 
 GTM>
@@ -34,7 +34,7 @@ The number of executions:
 Command is:(c3+1)
 	view "TRACE":1:"X"
 ----------------------------------------
-%GTM-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): X
+%YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): X
 		At M source location c3+1^errormes
 
 GTM>
@@ -48,7 +48,7 @@ The number of executions:
 Command is:(c5+1)
 	view "TRACE":1:"^X#"
 ----------------------------------------
-%GTM-E-VIEWNOTFOUND, View parameter ^X# not valid,%GTM-I-TEXT, Invalid global name
+%YDB-E-VIEWNOTFOUND, View parameter ^X# not valid,%GTM-I-TEXT, Invalid global name
 		At M source location c5+1^errormes
 
 GTM>
@@ -56,7 +56,7 @@ GTM>
 Command is:(c6+1)
 	view "TRACE":1:"^#X"
 ----------------------------------------
-%GTM-E-VIEWNOTFOUND, View parameter ^#X not valid,%GTM-I-TEXT, Invalid global name
+%YDB-E-VIEWNOTFOUND, View parameter ^#X not valid,%GTM-I-TEXT, Invalid global name
 		At M source location c6+1^errormes
 
 GTM>
@@ -64,7 +64,7 @@ GTM>
 Command is:(c7+1)
 	view "TRACE":1
 ----------------------------------------
-%GTM-E-TRACEON, Missing global name (with optional subscripts) for recording M-tracing information
+%YDB-E-TRACEON, Missing global name (with optional subscripts) for recording M-tracing information
 		At M source location c7+1^errormes
 
 GTM>
@@ -72,7 +72,7 @@ GTM>
 Command is:(c8+1)
 	view "TRACE":1:"^X("""
 ----------------------------------------
-%GTM-E-VIEWNOTFOUND, View parameter ^X(" not valid,%GTM-I-TEXT, Right parenthesis expected
+%YDB-E-VIEWNOTFOUND, View parameter ^X(" not valid,%GTM-I-TEXT, Right parenthesis expected
 		At M source location c8+1^errormes
 
 GTM>
@@ -80,7 +80,7 @@ GTM>
 Command is:(c9+1)
 	view "TRACE":1:"^X("X""
 ----------------------------------------
-%GTM-E-SPOREOL, Either a space or an end-of-line was expected but not found
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
 		At M source location c9+1^errormes
 
 GTM>
@@ -88,7 +88,7 @@ GTM>
 Command is:(c10+1)
 	view "TRACE":1:"^X($X)"
 ----------------------------------------
-%GTM-E-VIEWNOTFOUND, View parameter ^X($X) not valid,%GTM-I-TEXT, Intrinsic value passed is not $j
+%YDB-E-VIEWNOTFOUND, View parameter ^X($X) not valid,%GTM-I-TEXT, Intrinsic value passed is not $j
 		At M source location c10+1^errormes
 
 GTM>
@@ -96,7 +96,7 @@ GTM>
 Command is:(c11+1)
 	view "TRACE":1:"^X($"
 ----------------------------------------
-%GTM-E-VIEWNOTFOUND, View parameter ^X($ not valid,%GTM-I-TEXT, Intrinsic value is incomplete
+%YDB-E-VIEWNOTFOUND, View parameter ^X($ not valid,%GTM-I-TEXT, Intrinsic value is incomplete
 		At M source location c11+1^errormes
 
 GTM>
@@ -104,7 +104,7 @@ GTM>
 Command is:(c12+1)
 	view "TRACE":1:"^X("
 ----------------------------------------
-%GTM-E-VIEWNOTFOUND, View parameter ^X( not valid,%GTM-I-TEXT, Right parenthesis expected
+%YDB-E-VIEWNOTFOUND, View parameter ^X( not valid,%GTM-I-TEXT, Right parenthesis expected
 		At M source location c12+1^errormes
 
 GTM>
@@ -112,7 +112,7 @@ GTM>
 Command is:(c13+1)
 	view "TRACE":1:"^X(^##)"
 ----------------------------------------
-%GTM-E-VIEWNOTFOUND, View parameter ^X(^##) not valid,%GTM-I-TEXT, Improperly formatted numeric subscript
+%YDB-E-VIEWNOTFOUND, View parameter ^X(^##) not valid,%GTM-I-TEXT, Improperly formatted numeric subscript
 		At M source location c13+1^errormes
 
 GTM>
@@ -120,7 +120,7 @@ GTM>
 Command is:(c14+1)
 	view "TRACE":1:"^X(4#)"
 ----------------------------------------
-%GTM-E-VIEWNOTFOUND, View parameter ^X(4#) not valid,%GTM-I-TEXT, Right parenthesis expected
+%YDB-E-VIEWNOTFOUND, View parameter ^X(4#) not valid,%GTM-I-TEXT, Right parenthesis expected
 		At M source location c14+1^errormes
 
 GTM>
@@ -128,7 +128,7 @@ GTM>
 Command is:(c15+1)
 	view "TRACE":1:"^X(^4#)"
 ----------------------------------------
-%GTM-E-VIEWNOTFOUND, View parameter ^X(^4#) not valid,%GTM-I-TEXT, Improperly formatted numeric subscript
+%YDB-E-VIEWNOTFOUND, View parameter ^X(^4#) not valid,%GTM-I-TEXT, Improperly formatted numeric subscript
 		At M source location c15+1^errormes
 
 GTM>
@@ -136,7 +136,7 @@ GTM>
 Command is:(c16+1)
 	view "TRACE":1:"^X(4.4"
 ----------------------------------------
-%GTM-E-VIEWNOTFOUND, View parameter ^X(4.4 not valid,%GTM-I-TEXT, Right parenthesis expected
+%YDB-E-VIEWNOTFOUND, View parameter ^X(4.4 not valid,%GTM-I-TEXT, Right parenthesis expected
 		At M source location c16+1^errormes
 
 GTM>
@@ -144,7 +144,7 @@ GTM>
 Command is:(c17+1)
 	view "TRACE":1:"^X(4..)"
 ----------------------------------------
-%GTM-E-VIEWNOTFOUND, View parameter ^X(4..) not valid,%GTM-I-TEXT, Improperly formatted numeric subscript
+%YDB-E-VIEWNOTFOUND, View parameter ^X(4..) not valid,%GTM-I-TEXT, Improperly formatted numeric subscript
 		At M source location c17+1^errormes
 
 GTM>
@@ -152,7 +152,7 @@ GTM>
 Command is:(c18+1)
 	view "TRACE":1:"^X12@weR_2"
 ----------------------------------------
-%GTM-E-VIEWNOTFOUND, View parameter ^X12@weR_2 not valid,%GTM-I-TEXT, Invalid global name
+%YDB-E-VIEWNOTFOUND, View parameter ^X12@weR_2 not valid,%GTM-I-TEXT, Invalid global name
 		At M source location c18+1^errormes
 
 GTM>
@@ -160,7 +160,7 @@ GTM>
 Command is:(c19+1)
 	view "TRACE":1:"^X("""""
 ----------------------------------------
-%GTM-E-VIEWNOTFOUND, View parameter ^X("" not valid,%GTM-I-TEXT, Right parenthesis expected
+%YDB-E-VIEWNOTFOUND, View parameter ^X("" not valid,%GTM-I-TEXT, Right parenthesis expected
 		At M source location c19+1^errormes
 
 GTM>
@@ -168,7 +168,7 @@ GTM>
 Command is:(c20+1)
 	view "TRACE":1:"^X($J"
 ----------------------------------------
-%GTM-E-VIEWNOTFOUND, View parameter ^X($J not valid,%GTM-I-TEXT, Right parenthesis expected
+%YDB-E-VIEWNOTFOUND, View parameter ^X($J not valid,%GTM-I-TEXT, Right parenthesis expected
 		At M source location c20+1^errormes
 
 GTM>
@@ -176,7 +176,7 @@ GTM>
 Command is:(c21+1)
 	view "TRACE":1:"^X($JO"
 ----------------------------------------
-%GTM-E-VIEWNOTFOUND, View parameter ^X($JO not valid,%GTM-I-TEXT, Intrinsic value is incomplete
+%YDB-E-VIEWNOTFOUND, View parameter ^X($JO not valid,%GTM-I-TEXT, Intrinsic value is incomplete
 		At M source location c21+1^errormes
 
 GTM>
@@ -184,7 +184,7 @@ GTM>
 Command is:(c22+1)
 	view "TRACE":1:"^X($JOB"
 ----------------------------------------
-%GTM-E-VIEWNOTFOUND, View parameter ^X($JOB not valid,%GTM-I-TEXT, Right parenthesis expected
+%YDB-E-VIEWNOTFOUND, View parameter ^X($JOB not valid,%GTM-I-TEXT, Right parenthesis expected
 		At M source location c22+1^errormes
 
 GTM>
@@ -192,7 +192,7 @@ GTM>
 Command is:(c23+1)
 	view "TRACE":1:"^X($JOA)"
 ----------------------------------------
-%GTM-E-VIEWNOTFOUND, View parameter ^X($JOA) not valid,%GTM-I-TEXT, Intrinsic value passed is not $j
+%YDB-E-VIEWNOTFOUND, View parameter ^X($JOA) not valid,%GTM-I-TEXT, Intrinsic value passed is not $j
 		At M source location c23+1^errormes
 
 GTM>
@@ -200,7 +200,7 @@ GTM>
 Command is:(c24+1)
 	view "TRACE":1:"^X($JA)"
 ----------------------------------------
-%GTM-E-VIEWNOTFOUND, View parameter ^X($JA) not valid,%GTM-I-TEXT, Intrinsic value passed is not $j
+%YDB-E-VIEWNOTFOUND, View parameter ^X($JA) not valid,%GTM-I-TEXT, Intrinsic value passed is not $j
 		At M source location c24+1^errormes
 
 GTM>
@@ -208,7 +208,7 @@ GTM>
 Command is:(c25+1)
 	view "TRACE":1:"^X($JOBS)"
 ----------------------------------------
-%GTM-E-VIEWNOTFOUND, View parameter ^X($JOBS) not valid,%GTM-I-TEXT, Right parenthesis expected
+%YDB-E-VIEWNOTFOUND, View parameter ^X($JOBS) not valid,%GTM-I-TEXT, Right parenthesis expected
 		At M source location c25+1^errormes
 
 GTM>
@@ -216,7 +216,7 @@ GTM>
 Command is:(c26+1)
 	view "TRACE":1:"^X($JO_""a"")"
 ----------------------------------------
-%GTM-E-VIEWNOTFOUND, View parameter ^X($JO_"a") not valid,%GTM-I-TEXT, Intrinsic value passed is not $j
+%YDB-E-VIEWNOTFOUND, View parameter ^X($JO_"a") not valid,%GTM-I-TEXT, Intrinsic value passed is not $j
 		At M source location c26+1^errormes
 
 GTM>
@@ -224,7 +224,7 @@ GTM>
 Command is:(c27+1)
 	view "TRACE":1:"^X($JO,""a"")"
 ----------------------------------------
-%GTM-E-VIEWNOTFOUND, View parameter ^X($JO,"a") not valid,%GTM-I-TEXT, Intrinsic value passed is not $j
+%YDB-E-VIEWNOTFOUND, View parameter ^X($JO,"a") not valid,%GTM-I-TEXT, Intrinsic value passed is not $j
 		At M source location c27+1^errormes
 
 GTM>

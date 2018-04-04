@@ -40,11 +40,11 @@ Instance INSTANCE1 crashed!
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST1 SRC=INST3 set msr_dont_chk_stat ; $gtm_tst/com/mupip_rollback.csh -backward -fetchresync=__RCV_PORTNO__ -losttrans=lost1.glo "*" >&! rollback_inst1inst3.out'==
 ----------
 Error PRIMARYNOTROOT seen in ##TEST_PATH##/rollback_inst1inst3.out as expected:
-%GTM-E-PRIMARYNOTROOT, Attempted operation not valid on non-root primary instance INSTANCE3
+%YDB-E-PRIMARYNOTROOT, Attempted operation not valid on non-root primary instance INSTANCE3
 ----------
 ----------
 Error MUNOACTION seen in ##TEST_PATH##/rollback_inst1inst3.out as expected:
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ----------
 ==Executing MULTISITE_REPLIC 'STOPSRC INST3 INST1'==
 ==Executing MULTISITE_REPLIC 'REFRESHLINK INST3 INST1'==
@@ -72,7 +72,7 @@ lost transaction file empty
 ==Executing MULTISITE_REPLIC 'STARTRCV INST3 INST1'==
 ----------
 Error PRIMARYNOTROOT seen in ##TEST_PATH##/##FILTERED##RCVR_##TIMESTAMP##.log as expected:
-%GTM-E-PRIMARYNOTROOT, Attempted operation not valid on non-root primary instance INSTANCE3
+%YDB-E-PRIMARYNOTROOT, Attempted operation not valid on non-root primary instance INSTANCE3
 ----------
 ==Executing MULTISITE_REPLIC 'STOPSRC INST3 INST1'==
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST1 SRC=INST3 $MUPIP replic -source -shutdown -timeout=0 -instsecondary=__SRC_INSTNAME__  >&! passivesrc_shut_INST3INST1_1.out'==
@@ -87,7 +87,7 @@ Shutting down Primary Source Server Server in ##FILTERED##_REMOTE_TEST_PATH_/ins
 ==Executing MULTISITE_REPLIC 'STARTRCV INST3 INST1'==
 ----------
 Error PRIMARYNOTROOT seen in ##TEST_PATH##/##FILTERED##RCVR_##TIMESTAMP##.log as expected:
-%GTM-E-PRIMARYNOTROOT, Attempted operation not valid on non-root primary instance INSTANCE3
+%YDB-E-PRIMARYNOTROOT, Attempted operation not valid on non-root primary instance INSTANCE3
 ----------
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST1 SRC=INST3 $MUPIP replic -source -shutdown -timeout=0 -instsecondary=__SRC_INSTNAME__  >&! passivesrc_shut_INST3INST1_2.out'==
 ==Executing MULTISITE_REPLIC 'REFRESHLINK INST3 INST1'==

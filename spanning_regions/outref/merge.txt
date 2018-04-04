@@ -176,10 +176,10 @@
 ####     - AND source and target globals have a range of regions that intersect
 # case 1 setup : merge source : mumps.gld : ^a    spans areg and breg
 #                merge target : other.gld : ^a(1) spans breg and creg
-# merge ^|other.gld|a(1)=^a should issue GTM-E-MERGEDESC as breg intersects src(^a) and dest(^a(1))
+# merge ^|other.gld|a(1)=^a should issue YDB-E-MERGEDESC as breg intersects src(^a) and dest(^a(1))
 
 GTM>
-%GTM-E-MERGEDESC, Merge operation not possible.  ^a(1) is descendent of ^a.
+%YDB-E-MERGEDESC, Merge operation not possible.  ^a(1) is descendent of ^a.
 
 GTM>
 # case 2 setup : merge source : mumps.gld : ^a    spans areg    and breg
@@ -194,35 +194,35 @@ GTM>
 ^a(2,1)=1
 # case 3 setup : merge source : mumps.gld : ^a spans areg and breg
 #                merge target : other.gld : ^a(1) maps to breg and does not span regions
-# merge ^|other.gld|a(1)=^a should issue GTM-E-MERGEDESC as breg intersects src(^a) and dest(^a(1))
+# merge ^|other.gld|a(1)=^a should issue YDB-E-MERGEDESC as breg intersects src(^a) and dest(^a(1))
 
 GTM>
-%GTM-E-MERGEDESC, Merge operation not possible.  ^a(1) is descendent of ^a.
+%YDB-E-MERGEDESC, Merge operation not possible.  ^a(1) is descendent of ^a.
 
 GTM>
 # case 4 setup : merge source : other.gld : ^a(2) maps to areg - no spanning
 #                merge target : mumps.gld : ^a spans areg and breg
-# merge ^|mumps.gld|a(1)=^a should issue GTM-E-MERGEDESC as areg intersects src(^a(2)) and dest(^a)
+# merge ^|mumps.gld|a(1)=^a should issue YDB-E-MERGEDESC as areg intersects src(^a(2)) and dest(^a)
 
 GTM>
 
 GTM>
-%GTM-E-MERGEDESC, Merge operation not possible.  ^a(2) is descendent of ^a.
+%YDB-E-MERGEDESC, Merge operation not possible.  ^a(2) is descendent of ^a.
 
 GTM>
 # case 5 setup : merge source : other.gld : ^a(2) maps to areg - no spanning
 #                merge target : mumps.gld : ^a spans areg breg creg and default
-# merge ^|mumps.gld|a=^a(2) should issue GTM-E-MERGEDESC as areg intersects src(^a(2)) and target(^a)
+# merge ^|mumps.gld|a=^a(2) should issue YDB-E-MERGEDESC as areg intersects src(^a(2)) and target(^a)
 
 GTM>
-%GTM-E-MERGEDESC, Merge operation not possible.  ^a(2) is descendent of ^a.
+%YDB-E-MERGEDESC, Merge operation not possible.  ^a(2) is descendent of ^a.
 
 GTM>
 # case 6 setup : merge source : other.gld : ^a maps to areg - no spanning
 #                merge target : mumps.gld : ^a(2) spans areg breg creg and default
-# merge ^|mumps.gld|a(1)=^a should issue GTM-E-MERGEDESC as areg intersects src(^a(2)) and dest(^a(2))
+# merge ^|mumps.gld|a(1)=^a should issue YDB-E-MERGEDESC as areg intersects src(^a(2)) and dest(^a(2))
 
 GTM>
-%GTM-E-MERGEDESC, Merge operation not possible.  ^a(2) is descendent of ^a.
+%YDB-E-MERGEDESC, Merge operation not possible.  ^a(2) is descendent of ^a.
 
 GTM>

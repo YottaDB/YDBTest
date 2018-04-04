@@ -533,7 +533,7 @@ echo "# Check the content of gtm_${tstno}.outx. Expect the below"
 echo '# GTM> DBPRIVERR, No privilege for attempted update operation for file: ${curdir}/mumps.dat GTM>'
 
 set actual = `cat gtm_${tstno}.outx`
-set expected = "GTM> %GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ${curdir}/mumps.dat GTM>"
+set expected = "GTM> %YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ${curdir}/mumps.dat GTM>"
 
 if ("$expected" == "$actual") then
 	echo "TEST-I-PASS the system gave us the correct warning message"
@@ -571,7 +571,7 @@ echo "# Check the content of gtm_${tstno}.outx. Expect the below"
 echo '# GTM> GTMSECSHRPERM, The gtmsecshr module in $gtm_dist does not have the correct permission and uid GTM>'
 
 set actual = `cat gtm_${tstno}.outx`
-set expected = 'GTM> %GTM-E-GTMSECSHRPERM, The gtmsecshr module in $gtm_dist does not have the correct permission and uid GTM>'
+set expected = 'GTM> %YDB-E-GTMSECSHRPERM, The gtmsecshr module in $gtm_dist does not have the correct permission and uid GTM>'
 
 if ("$expected" == "$actual") then
 	echo "TEST-I-PASS the system gave us the correct warning message"

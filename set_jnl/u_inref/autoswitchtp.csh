@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2002, 2013 Fidelity Information Services, Inc	#
+# Copyright 2002, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -23,7 +26,7 @@ echo "setenv test_align $force_align_size"							>> settings.csh
 
 # The test creates sets a calculated number of globals in each region within a transaction
 # Spanning regions result in more globls going to a single region and end up with the below error.
-# GTM-E-JNLTRANS2BIG, Transaction needs an estimated [xxx blocks]...which exceeds the AUTOSWITCHLIMIT of yyy blocks
+# YDB-E-JNLTRANS2BIG, Transaction needs an estimated [xxx blocks]...which exceeds the AUTOSWITCHLIMIT of yyy blocks
 setenv gtm_test_spanreg 0	# Spanningregions cause imbalance and JNLTRANS2BIG error
 
 $gtm_tst/com/dbcreate.csh mumps 9 125 3500 4096 5000 8192 5000

@@ -3,8 +3,8 @@
 ; Copyright (c) 2008-2015 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
-; Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	;
-; All rights reserved.	     	  	     			;
+; Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -242,7 +242,7 @@ test1h;
 	do ^job("test1jhelper^c003044",1,"""""")
 	kill jmjoname	; so later subtests are not fixated on this job name
 	for i=1:1:301 quit:^childlocked=1  hang 1
-	if 301=i write "GTM-E-TESTFAIL, c003044 parent timed out"
+	if 301=i write "YDB-E-TESTFAIL, c003044 parent timed out"
 	view "RESETGVSTATS"	; start afresh
 	set restart=0
 	tstart ():serial  do
@@ -316,7 +316,7 @@ test1j;
 	set ^childlocked=0
 	do ^job("test1jhelper^c003044",1,"""""")
 	for i=1:1:301 quit:^childlocked=1  hang 1
-	if 301=i write "GTM-E-TESTFAIL, c003044 parent timed out"
+	if 301=i write "YDB-E-TESTFAIL, c003044 parent timed out"
 	lock +(^e,^f):1	; will fail and increment LKF, MLT
 	set ^childlocked=0
 	do wait^job	; wait for child to terminate
@@ -413,7 +413,7 @@ test1jhelper;
 	lock +^f
 	set ^childlocked=1
 	for i=1:1:601 quit:^childlocked=0  hang 1
-	if 601=i write "GTM-E-TESTFAIL, c003044 child timed out"
+	if 601=i write "YDB-E-TESTFAIL, c003044 child timed out"
 	quit
 test1k  ;
 	write "------ Testcase 1k ------",!

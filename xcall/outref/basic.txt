@@ -470,7 +470,7 @@ gtm_fcn_gtm_int: returning 12345
 gtm_fcn_gtm_uint: returning 4294967295
 gtm_fcn_gtm_status1: returning 0
 gtm_fcn_gtm_status2: returning -1
-%GTM-E-ZCSTATUSRET, External call returned error status
+%YDB-E-ZCSTATUSRET, External call returned error status
 Value from fcnlong: "12345"
 ##SUSPEND_OUTPUT 64BIT_GTM
 Value from fcnulong: "4294967295"
@@ -483,7 +483,7 @@ Value from fcnuint: "4294967295"
 Value from fcnstat1: "0"
 Value from fcnstat2: "statval2 is undefined"
 gtm_void
-%GTM-E-XCVOIDRET, Attempt to return a value from function gtm_void, which is declared void in external call table gtmxc_fcn.tab
+%YDB-E-XCVOIDRET, Attempt to return a value from function gtm_void, which is declared void in external call table gtmxc_fcn.tab
 
 GTM>
 
@@ -500,7 +500,7 @@ xc_fcn_xc_int: returning 12345
 xc_fcn_xc_uint: returning 4294967295
 xc_fcn_xc_status1: returning 0
 xc_fcn_xc_status2: returning -1
-%GTM-E-ZCSTATUSRET, External call returned error status
+%YDB-E-ZCSTATUSRET, External call returned error status
 Value from fcnlong: "12345"
 ##SUSPEND_OUTPUT 64BIT_GTM
 Value from fcnulong: "4294967295"
@@ -513,7 +513,7 @@ Value from fcnuint: "4294967295"
 Value from fcnstat1: "0"
 Value from fcnstat2: "statval2 is undefined"
 xc_void
-%GTM-E-XCVOIDRET, Attempt to return a value from function xc_void, which is declared void in external call table gtmxc_fcn.tab
+%YDB-E-XCVOIDRET, Attempt to return a value from function xc_void, which is declared void in external call table gtmxc_fcn.tab
 
 GTM>
 
@@ -1766,7 +1766,7 @@ Now length is : 1048575
 Passed
 ##ALLOW_OUTPUT 32BIT_GTM
 Do &noprealloc(.outval)
-%GTM-E-ZCNOPREALLOUTPAR, Parameter 1 in external call <DEFAULT>.noprealloc is an output only parameter requiring pre-allocation
+%YDB-E-ZCNOPREALLOUTPAR, Parameter 1 in external call <DEFAULT>.noprealloc is an output only parameter requiring pre-allocation
 		At M source location prealloc+30^prealloc
 
 GTM>
@@ -1777,7 +1777,7 @@ Do ^maxpreal
 
 								^-----
 %GTM-I-EXTSRCLOC, 		At column 40, line 2, source module gtmxc_maxprealloc.tab
-%GTM-E-ZCPREALLVALINV, The pre-allocation value exceeded the maximum string length
+%YDB-E-ZCPREALLVALINV, The pre-allocation value exceeded the maximum string length
 		At M source location maxpreal+3^maxpreal
 
 GTM>
@@ -1788,7 +1788,7 @@ Do ^maxprealstr
 
 									^-----
 %GTM-I-EXTSRCLOC, 		At column 48, line 2, source module gtmxc_maxpreallocstr.tab
-%GTM-E-ZCPREALLVALINV, The pre-allocation value exceeded the maximum string length
+%YDB-E-ZCPREALLVALINV, The pre-allocation value exceeded the maximum string length
 		At M source location maxprealstr+3^maxprealstr
 
 GTM>
@@ -2011,14 +2011,14 @@ Do ^xcshlib
 
 				       ^-----
 %GTM-I-EXTSRCLOC, 		At column 15, line 3, source module gtmxc_shlib.tab
-%GTM-E-ZCCLNUPRTNMISNG, External call: Cleanup routine name missing. Cannot continue
+%YDB-E-ZCCLNUPRTNMISNG, External call: Cleanup routine name missing. Cannot continue
 		At M source location +1^xcshlib
 
 GTM>
 
 GTM>
 Do ^xcshlib
-##TEST_AWK%GTM-E-DLLNORTN, Failed to look up the location of the symbol abcd,.*
+##TEST_AWK%YDB-E-DLLNORTN, Failed to look up the location of the symbol abcd,.*
 		At M source location +1^xcshlib
 
 GTM>
@@ -2029,7 +2029,7 @@ Do ^xcshlib
 
 				    ^-----
 %GTM-I-EXTSRCLOC, 		At column 12, line 3, source module gtmxc_shlib.tab
-%GTM-E-ZCINVALIDKEYWORD, External call: Invalid keyword found. Cannot continue
+%YDB-E-ZCINVALIDKEYWORD, External call: Invalid keyword found. Cannot continue
 		At M source location +1^xcshlib
 
 GTM>
@@ -2052,14 +2052,14 @@ testFloatStar(4): NON-ZERO, NON-NULL(ZERO), NON-NULL(ZERO), NON-NULL(ZERO), and 
 testDoubleStar(2): ZERO and NON-NULL(NON-ZERO)
 testCharStar(3): ZERO, NON-NULL(ZERO), NON-ZERO, and NON-NULL(NON-ZERO)
 testString(3): NON-NULL(NULL,ZERO,NON-ZERO), NON-NULL(NULL,ZERO,NON-ZERO), and NON-NULL(NON-NULL,NON-ZERO,ZERO)
-%GTM-E-LVUNDEF, Undefined local variable: a1
+%YDB-E-LVUNDEF, Undefined local variable: a1
 testLong(2): ZERO and ZERO
-%GTM-E-LVUNDEF, Undefined local variable: a3
+%YDB-E-LVUNDEF, Undefined local variable: a3
 testLongStar(3): ZERO, ZERO, and NON-NULL(ZERO)
-%GTM-E-LVUNDEF, Undefined local variable: e5
-%GTM-E-LVUNDEF, Undefined local variable: b6
-%GTM-E-LVUNDEF, Undefined local variable: b7
-%GTM-E-LVUNDEF, Undefined local variable: a8
+%YDB-E-LVUNDEF, Undefined local variable: e5
+%YDB-E-LVUNDEF, Undefined local variable: b6
+%YDB-E-LVUNDEF, Undefined local variable: b7
+%YDB-E-LVUNDEF, Undefined local variable: a8
 
 GTM>
 ##TEST_AWKTEST-I-...... Unicode section of the xcall test

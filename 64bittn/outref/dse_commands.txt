@@ -184,11 +184,11 @@ Index               1               1           0.585             1
 Data                1               1           0.585             1
 Free               96              NA              NA            NA
 Total             100               4              NA             2
-%GTM-E-DBTNLTCTN, Transaction numbers greater than the current transaction were found
+%YDB-E-DBTNLTCTN, Transaction numbers greater than the current transaction were found
 
 Largest transaction number found in database was FFFFFFFF
 Current transaction number is                    12
-%GTM-E-INTEGERRS, Database integrity errors
+%YDB-E-INTEGERRS, Database integrity errors
 ====================   DSE CHANGE -FILEHEADER   ====================
 
 ====================   BLKS_TO_UPGRADE   ====================
@@ -223,12 +223,12 @@ Certified for Upgrade to V6
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Unrecognized option : V7
+%YDB-E-CLIERR, Unrecognized option : V7
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Unrecognized option : V3
+%YDB-E-CLIERR, Unrecognized option : V3
 Certified for Upgrade to V6
 ====================   DB_WRITE_FMT   ====================
 
@@ -247,12 +247,12 @@ Desired DB Format V6
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Unrecognized option : V7
+%YDB-E-CLIERR, Unrecognized option : V7
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Unrecognized option : V3
+%YDB-E-CLIERR, Unrecognized option : V3
 ====================   MBM_SIZE   ====================
 
 Master Bitmap Size 496
@@ -260,7 +260,7 @@ Master Bitmap Size 496
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%GTM-E-CLIERR, Unrecognized value: abe0, Decimal number expected
+%YDB-E-CLIERR, Unrecognized value: abe0, Decimal number expected
 Master Bitmap Size 496
 
 File  	##TEST_PATH##/mumps.dat
@@ -394,7 +394,7 @@ GTM>
   Maximum TN Warn        0xFFFFFFF000000000  Desired DB Format               V6
 
 GTM>
-%GTM-E-TNTOOLARGE, Database file ##TEST_PATH##/mumps.dat has reached the transaction number limit (0xFFFFFFF000000000). Renew database with MUPIP INTEG TN_RESET
+%YDB-E-TNTOOLARGE, Database file ##TEST_PATH##/mumps.dat has reached the transaction number limit (0xFFFFFFF000000000). Renew database with MUPIP INTEG TN_RESET
 
 GTM>
 ##SOURCE_PATH##/mupip
@@ -405,9 +405,9 @@ $error_free :  ; $no_regions = 1
 
 Integ of region DEFAULT
 %GTM-W-MUTNWARN, Database file ##TEST_PATH##/mumps.dat has 0x0000000000000000 more transactions to go before reaching the transaction number limit (0xFFFFFFF000000000). Renew database with MUPIP INTEG TN_RESET
-%GTM-E-DBHEADINV, 
+%YDB-E-DBHEADINV, 
        0:0      0  Header size not valid for database
-%GTM-E-INTEGERRS, Database integrity errors
+%YDB-E-INTEGERRS, Database integrity errors
 ====================   MAX_TN and WARN_MAX_TN in Compatibility mode   ====================
 
 Files Created in ##TEST_PATH##:
@@ -437,7 +437,7 @@ Region	DEFAULT
   Maximum TN Warn        0x00000000F7FFFFFF  Desired DB Format               V4
 
 GTM>
-%GTM-E-TNTOOLARGE, Database file ##TEST_PATH##/mumps.dat has reached the transaction number limit (0x00000000F7FFFFFF). Renew database with MUPIP INTEG TN_RESET
+%YDB-E-TNTOOLARGE, Database file ##TEST_PATH##/mumps.dat has reached the transaction number limit (0x00000000F7FFFFFF). Renew database with MUPIP INTEG TN_RESET
 
 GTM>
 
@@ -535,7 +535,7 @@ Index               0               0           0.000             0
 Data                0               0           0.000             0
 Free               98              NA              NA            NA
 Total             100               1              NA             0
-%GTM-E-INTEGERRS, Database integrity errors
+%YDB-E-INTEGERRS, Database integrity errors
 ====================   DSE CHANGE -FILEHEADER transaction fields  ====================
 
 Files Created in ##TEST_PATH##:
@@ -678,12 +678,12 @@ Hex:  FFFFFFFFFFFF   Dec:  281474976710655
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
 ##TEST_PATH##/mupip.err_##TEST_AWK[0-9_]+
-%GTM-E-DBTNLTCTN, Transaction numbers greater than the current transaction were found
-%GTM-E-INTEGERRS, Database integrity errors
+%YDB-E-DBTNLTCTN, Transaction numbers greater than the current transaction were found
+%YDB-E-INTEGERRS, Database integrity errors
 ##TEST_PATH##/mupip.err_##TEST_AWK[0-9_]+
 %GTM-W-MUTNWARN, Database file ##TEST_PATH##/mumps.dat has 0x0000000000000000 more transactions to go before reaching the transaction number limit (0xFFFFFFF000000000). Renew database with MUPIP INTEG TN_RESET
-%GTM-E-DBHEADINV, 
-%GTM-E-INTEGERRS, Database integrity errors
+%YDB-E-DBHEADINV, 
+%YDB-E-INTEGERRS, Database integrity errors
 ##TEST_PATH##/mupip.err_##TEST_AWK[0-9_]+
 %GTM-W-MUTNWARN, Database file ##TEST_PATH##/mumps.dat has 0x000000000000000F more transactions to go before reaching the transaction number limit (0x00000000F7FFFFFF). Renew database with MUPIP INTEG TN_RESET
-%GTM-E-INTEGERRS, Database integrity errors
+%YDB-E-INTEGERRS, Database integrity errors

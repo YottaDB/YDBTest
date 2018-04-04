@@ -3,19 +3,19 @@ TEST-I-PASS, Test succeeded.
 Case 1. Bad symbolic links should not be included in the processing of wildcarded arguments:
 
 Case 2. Files without an extension should not be considered:
-%GTM-E-FILEPARSE, Error parsing file specification: dir1
+%YDB-E-FILEPARSE, Error parsing file specification: dir1
 %GTM-I-TEXT, Unsupported filetype specified
 
 Case 3. Error reporting should be consistent (FILEPARSE is the primary error):
-%GTM-E-FILEPARSE, Error parsing file specification: dir1/a.o
+%YDB-E-FILEPARSE, Error parsing file specification: dir1/a.o
 ##TEST_AWK%SYSTEM-E-ENO[1-9][0-9], .*symbolic links.*
 
 Case 4. When erroring out on bad permissions, no relinkctl entry should be created:
-%GTM-E-FILEPARSE, Error parsing file specification: dir4/a.o
+%YDB-E-FILEPARSE, Error parsing file specification: dir4/a.o
 %SYSTEM-E-ENO13, Permission denied
 
 Case 5. Object files whose name begins with '%' should not be allowed:
-%GTM-E-FILEPARSE, Error parsing file specification: %a.o
+%YDB-E-FILEPARSE, Error parsing file specification: %a.o
 %GTM-I-TEXT, Filename is not a valid routine name
 
 Case 6. Symbolic links should not be accepted for consideration as routine object entries:

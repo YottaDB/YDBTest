@@ -3,103 +3,103 @@ Since all commands in this script are disallowed, none will run,
 hence no database is necessary 
 ==============================================================
 ##SOURCE_PATH##/mupip journal
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: RECOVER VERIFY SHOW EXTRACT ROLLBACK
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: RECOVER VERIFY SHOW EXTRACT ROLLBACK
 ##SOURCE_PATH##/mupip journal -recover -rollback
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: RECOVER ROLLBACK
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: RECOVER ROLLBACK
 ##SOURCE_PATH##/mupip journal -recover
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FORWARD BACKWARD
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: FORWARD BACKWARD
 ##SOURCE_PATH##/mupip journal -recover -forward -backward
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FORWARD BACKWARD
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: FORWARD BACKWARD
 ##SOURCE_PATH##/mupip journal -recover -forward -since="0 00:00:01"
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: SINCE FORWARD
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SINCE FORWARD
 ##SOURCE_PATH##/mupip journal -recover -forward -lookback_limit="time=0 00:00:01"
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: LOOKBACK_LIMIT FORWARD
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: LOOKBACK_LIMIT FORWARD
 ##SOURCE_PATH##/mupip journal -recover -backward -checktn
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHECKTN BACKWARD
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHECKTN BACKWARD
 ##SOURCE_PATH##/mupip journal -rollback -back -resync=1 -fetchresync=2
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: RESYNC FETCHRESYNC
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: RESYNC FETCHRESYNC
 ##SOURCE_PATH##/mupip journal -recover -resync=1 -back -lost=x.lost
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: RESYNC ROLLBACK
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: RESYNC ROLLBACK
 ##SOURCE_PATH##/mupip journal -recover -fetchresync=1 -back -lost=x.lost
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: RESYNC FETCHRESYNC ROLLBACK
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: RESYNC FETCHRESYNC ROLLBACK
 ##SOURCE_PATH##/mupip journal -recover -online -back -lost=x.lost
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: RESYNC FETCHRESYNC ONLINE ROLLBACK
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: RESYNC FETCHRESYNC ONLINE ROLLBACK
 ##SOURCE_PATH##/mupip journal -rollback -fetchresync=1 -forward
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FETCHRESYNC FORWARD
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: FETCHRESYNC FORWARD
 ##SOURCE_PATH##/mupip journal -rollback -online -forward
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FETCHRESYNC ONLINE FORWARD
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: FETCHRESYNC ONLINE FORWARD
 ##SOURCE_PATH##/mupip journal -rollback -backward -rsync_strm=1
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: RSYNC_STRM RESYNC
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: RSYNC_STRM RESYNC
 ##SOURCE_PATH##/mupip journal -rollback -forward -resync=2 -rsync_strm=1
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: RSYNC_STRM FORWARD
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: RSYNC_STRM FORWARD
 ##SOURCE_PATH##/mupip journal -show -losttrans=1 -back
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: LOSTTRANS RECOVER ROLLBACK EXTRACT
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: LOSTTRANS RECOVER ROLLBACK EXTRACT
 ##SOURCE_PATH##/mupip journal -verify -losttrans=1 -back
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: LOSTTRANS RECOVER ROLLBACK EXTRACT
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: LOSTTRANS RECOVER ROLLBACK EXTRACT
 ##SOURCE_PATH##/mupip journal -show -brokentrans=mumps.brk -back
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: BROKENTRANS RECOVER ROLLBACK EXTRACT
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: BROKENTRANS RECOVER ROLLBACK EXTRACT
 ##SOURCE_PATH##/mupip journal -verify -brokentrans=mumps.brk -back
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: BROKENTRANS RECOVER ROLLBACK EXTRACT
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: BROKENTRANS RECOVER ROLLBACK EXTRACT
 ##SOURCE_PATH##/mupip journal -recover -extract -full -forward
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FULL RECOVER
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: FULL RECOVER
 ##SOURCE_PATH##/mupip journal -rollback -extract -full -forward
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: FULL RECOVER ROLLBACK
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: FULL RECOVER ROLLBACK
 ##SOURCE_PATH##/mupip journal -show -detail -forward
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: DETAIL EXTRACT
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DETAIL EXTRACT
 ##SOURCE_PATH##/mupip journal -show -after="-- 18:00:00" -back
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: AFTER FORWARD
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: AFTER FORWARD
 ##SOURCE_PATH##/mupip journal -recover -after="-- 18:00:00" -forward
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: AFTER RECOVER
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: AFTER RECOVER
 ##SOURCE_PATH##/mupip journal -rollback -after="-- 18:00:00" -forward
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: AFTER RECOVER ROLLBACK
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: AFTER RECOVER ROLLBACK
 ##SOURCE_PATH##/mupip journal -rollback -backward -lookback
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: LOOKBACK_LIMIT VERIFY RECOVER EXTRACT SHOW
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: LOOKBACK_LIMIT VERIFY RECOVER EXTRACT SHOW
 ##SOURCE_PATH##/mupip journal -verify -backward -apply_after_image
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: APPLY_AFTER_IMAGE ROLLBACK RECOVER
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: APPLY_AFTER_IMAGE ROLLBACK RECOVER
 ##SOURCE_PATH##/mupip journal -show -backward -apply_after_image
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: APPLY_AFTER_IMAGE ROLLBACK RECOVER
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: APPLY_AFTER_IMAGE ROLLBACK RECOVER
 ##SOURCE_PATH##/mupip journal -extract -backward -apply_after_image
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: APPLY_AFTER_IMAGE ROLLBACK RECOVER
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: APPLY_AFTER_IMAGE ROLLBACK RECOVER
 ##SOURCE_PATH##/mupip journal -rollback -backward -redirect=bgdbb.dat=test.dat
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: REDIRECT RECOVER
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: REDIRECT RECOVER
 ##SOURCE_PATH##/mupip journal -extract -backward -redirect=bgdbb.dat=test.dat
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: REDIRECT RECOVER
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: REDIRECT RECOVER
 ##SOURCE_PATH##/mupip journal -verify -backward -redirect=bgdbb.dat=test.dat
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: REDIRECT RECOVER
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: REDIRECT RECOVER
 ##SOURCE_PATH##/mupip journal -show -backward -redirect=bgdbb.dat=test.dat
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: REDIRECT RECOVER
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: REDIRECT RECOVER
 ##SOURCE_PATH##/mupip journal -recover -backward -redirect=(bgdbb.dat=test.dat)
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: REDIRECT BACKWARD
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: REDIRECT BACKWARD
 ##SOURCE_PATH##/mupip journal -recover -backward -nochain
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: BACKWARD CHAIN
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: BACKWARD CHAIN
 ##SOURCE_PATH##/mupip journal -rollback -after="1 0:18:00" -forward
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: AFTER RECOVER ROLLBACK
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: AFTER RECOVER ROLLBACK
 ##SOURCE_PATH##/mupip journal -rollback -extract -backward -lookback_limit
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROLLBACK AFTER LOOKBACK_LIMIT
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: ROLLBACK AFTER LOOKBACK_LIMIT
 ##SOURCE_PATH##/mupip journal -recover -global="^a" -backward
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: GLOBAL RECOVER
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: GLOBAL RECOVER
 ##SOURCE_PATH##/mupip journal -rollback -global="^a" -backward
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: GLOBAL RECOVER ROLLBACK
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: GLOBAL RECOVER ROLLBACK
 ##SOURCE_PATH##/mupip journal -verify -global="^a" -backward
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: GLOBAL RECOVER ROLLBACK VERIFY
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: GLOBAL RECOVER ROLLBACK VERIFY
 ##SOURCE_PATH##/mupip journal -recover -user=gtmtest -backward
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: GLOBAL USER RECOVER
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: GLOBAL USER RECOVER
 ##SOURCE_PATH##/mupip journal -rollback -user=gtmtest -backward
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: GLOBAL USER RECOVER ROLLBACK
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: GLOBAL USER RECOVER ROLLBACK
 ##SOURCE_PATH##/mupip journal -verify -user=gtmtest -backward
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: GLOBAL USER RECOVER ROLLBACK VERIFY
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: GLOBAL USER RECOVER ROLLBACK VERIFY
 ##SOURCE_PATH##/mupip journal -recover -id=1234 -backward
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: GLOBAL USER ID RECOVER
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: GLOBAL USER ID RECOVER
 ##SOURCE_PATH##/mupip journal -rollback -id=1234 -backward
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: GLOBAL USER ID RECOVER ROLLBACK
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: GLOBAL USER ID RECOVER ROLLBACK
 ##SOURCE_PATH##/mupip journal -verify -id=1234 -backward
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: GLOBAL USER ID RECOVER ROLLBACK VERIFY
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: GLOBAL USER ID RECOVER ROLLBACK VERIFY
 ##SOURCE_PATH##/mupip journal -recover -transaction=kill -backward
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: GLOBAL USER ID TRANSACTION RECOVER
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: GLOBAL USER ID TRANSACTION RECOVER
 ##SOURCE_PATH##/mupip journal -rollback -transaction=kill -backward
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: GLOBAL USER ID TRANSACTION RECOVER ROLLBACK
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: GLOBAL USER ID TRANSACTION RECOVER ROLLBACK
 ##SOURCE_PATH##/mupip journal -verify -transaction=kill -backward
-%GTM-E-CLIERR, Missing or illegal combination of command elements - check documentation: GLOBAL USER ID TRANSACTION RECOVER ROLLBACK VERIFY
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: GLOBAL USER ID TRANSACTION RECOVER ROLLBACK VERIFY
 unset echo
 ==============================================================
 Files Created in ##TEST_PATH##:
@@ -111,13 +111,13 @@ mumps.dat
 Turn journaling on...
 ##SOURCE_PATH##/mupip journal -recover -forward -redirect=bgdbb.dat=test.dat *
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-STARFILE, Star(*) argument cannot be specified with REDIRECT qualifier
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-STARFILE, Star(*) argument cannot be specified with REDIRECT qualifier
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ##SOURCE_PATH##/mupip journal -rollback -back -lost=1 a.mjl
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-NOSTARFILE, Only star(*) argument can be specified with ROLLBACK -BACKWARD qualifier
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-NOSTARFILE, Only star(*) argument can be specified with ROLLBACK -BACKWARD qualifier
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 %GTM-I-FILENOTCREATE, Lost transactions extract file 1 not created
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 unset echo

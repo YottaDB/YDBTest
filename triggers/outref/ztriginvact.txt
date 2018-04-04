@@ -81,16 +81,16 @@ Using anything other than ITEM/I, FILE/F, SELECT/S as the
 first argument is an invalid action
 
 We are looking to see the ZTRIGINVACT using ztrigger with one arg BADARG
-	$ZSTATUS=150381762,onearg+2^ztriginvact,%GTM-E-ZTRIGINVACT, Missing or invalid parameter in position 1 given to $ZTRIGGER()
+	$ZSTATUS=150381762,onearg+2^ztriginvact,%YDB-E-ZTRIGINVACT, Missing or invalid parameter in position 1 given to $ZTRIGGER()
 
 We are looking to see the ZTRIGINVACT using ztrigger with two args BADARG,BADARG
-	$ZSTATUS=150381762,twoarg+2^ztriginvact,%GTM-E-ZTRIGINVACT, Missing or invalid parameter in position 1 given to $ZTRIGGER()
+	$ZSTATUS=150381762,twoarg+2^ztriginvact,%YDB-E-ZTRIGINVACT, Missing or invalid parameter in position 1 given to $ZTRIGGER()
 
 Passing NULL parameters into ztrigger
-	$ZSTATUS=150381762,nullz+2^nullz,%GTM-E-ZTRIGINVACT, Missing or invalid parameter in position 1 given to $ZTRIGGER()
-	$ZSTATUS=150381762,file+2^nullz,%GTM-E-ZTRIGINVACT, Missing or invalid parameter in position 2 given to $ZTRIGGER()
-	$ZSTATUS=150381762,item+2^nullz,%GTM-E-ZTRIGINVACT, Missing or invalid parameter in position 2 given to $ZTRIGGER()
-	$ZSTATUS=150381762,select+2^nullz,%GTM-E-ZTRIGINVACT, Missing or invalid parameter in position 2 given to $ZTRIGGER()
+	$ZSTATUS=150381762,nullz+2^nullz,%YDB-E-ZTRIGINVACT, Missing or invalid parameter in position 1 given to $ZTRIGGER()
+	$ZSTATUS=150381762,file+2^nullz,%YDB-E-ZTRIGINVACT, Missing or invalid parameter in position 2 given to $ZTRIGGER()
+	$ZSTATUS=150381762,item+2^nullz,%YDB-E-ZTRIGINVACT, Missing or invalid parameter in position 2 given to $ZTRIGGER()
+	$ZSTATUS=150381762,select+2^nullz,%YDB-E-ZTRIGINVACT, Missing or invalid parameter in position 2 given to $ZTRIGGER()
 
 The use of FILE or ITEM without arguments is a valid action
 I
@@ -107,39 +107,39 @@ Need to fuzz the command arguments
 Trying :+
 
 We are looking to see the ZTRIGINVACT using ztrigger with one arg +
-	$ZSTATUS=150381762,onearg+2^ztriginvact,%GTM-E-ZTRIGINVACT, Missing or invalid parameter in position 1 given to $ZTRIGGER()
+	$ZSTATUS=150381762,onearg+2^ztriginvact,%YDB-E-ZTRIGINVACT, Missing or invalid parameter in position 1 given to $ZTRIGGER()
 Trying :-
 
 We are looking to see the ZTRIGINVACT using ztrigger with one arg -
-	$ZSTATUS=150381762,onearg+2^ztriginvact,%GTM-E-ZTRIGINVACT, Missing or invalid parameter in position 1 given to $ZTRIGGER()
+	$ZSTATUS=150381762,onearg+2^ztriginvact,%YDB-E-ZTRIGINVACT, Missing or invalid parameter in position 1 given to $ZTRIGGER()
 Trying :-*
 
 We are looking to see the ZTRIGINVACT using ztrigger with one arg -*
-	$ZSTATUS=150381762,onearg+2^ztriginvact,%GTM-E-ZTRIGINVACT, Missing or invalid parameter in position 1 given to $ZTRIGGER()
+	$ZSTATUS=150381762,onearg+2^ztriginvact,%YDB-E-ZTRIGINVACT, Missing or invalid parameter in position 1 given to $ZTRIGGER()
 Trying :*
 
 We are looking to see the ZTRIGINVACT using ztrigger with one arg *
-	$ZSTATUS=150381762,onearg+2^ztriginvact,%GTM-E-ZTRIGINVACT, Missing or invalid parameter in position 1 given to $ZTRIGGER()
+	$ZSTATUS=150381762,onearg+2^ztriginvact,%YDB-E-ZTRIGINVACT, Missing or invalid parameter in position 1 given to $ZTRIGGER()
 Trying :-select
 
 We are looking to see the ZTRIGINVACT using ztrigger with one arg -select
-	$ZSTATUS=150381762,onearg+2^ztriginvact,%GTM-E-ZTRIGINVACT, Missing or invalid parameter in position 1 given to $ZTRIGGER()
+	$ZSTATUS=150381762,onearg+2^ztriginvact,%YDB-E-ZTRIGINVACT, Missing or invalid parameter in position 1 given to $ZTRIGGER()
 "
 
 We are looking to see the ZTRIGINVACT using ztrigger with one arg "
-	$ZSTATUS=150381762,onearg+2^ztriginvact,%GTM-E-ZTRIGINVACT, Missing or invalid parameter in position 1 given to $ZTRIGGER()
+	$ZSTATUS=150381762,onearg+2^ztriginvact,%YDB-E-ZTRIGINVACT, Missing or invalid parameter in position 1 given to $ZTRIGGER()
 ""
 
 We are looking to see the ZTRIGINVACT using ztrigger with one arg ""
-	$ZSTATUS=150381762,onearg+2^ztriginvact,%GTM-E-ZTRIGINVACT, Missing or invalid parameter in position 1 given to $ZTRIGGER()
+	$ZSTATUS=150381762,onearg+2^ztriginvact,%YDB-E-ZTRIGINVACT, Missing or invalid parameter in position 1 given to $ZTRIGGER()
 Trying :'
 
 We are looking to see the ZTRIGINVACT using ztrigger with one arg '
-	$ZSTATUS=150381762,onearg+2^ztriginvact,%GTM-E-ZTRIGINVACT, Missing or invalid parameter in position 1 given to $ZTRIGGER()
+	$ZSTATUS=150381762,onearg+2^ztriginvact,%YDB-E-ZTRIGINVACT, Missing or invalid parameter in position 1 given to $ZTRIGGER()
 Trying :''
 
 We are looking to see the ZTRIGINVACT using ztrigger with one arg ''
-	$ZSTATUS=150381762,onearg+2^ztriginvact,%GTM-E-ZTRIGINVACT, Missing or invalid parameter in position 1 given to $ZTRIGGER()
+	$ZSTATUS=150381762,onearg+2^ztriginvact,%YDB-E-ZTRIGINVACT, Missing or invalid parameter in position 1 given to $ZTRIGGER()
 ###################################################################
 ##SUSPEND_OUTPUT NON_REPLIC
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##

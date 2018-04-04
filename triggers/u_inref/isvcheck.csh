@@ -4,6 +4,9 @@
 # Copyright (c) 2010-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -26,7 +29,7 @@ $tst_awk '/^.set .ZT/ {isv=$2; sub(/=.*$/,"",isv);print isv}' $gtm_tst/$tst/inre
 $convert_to_gtm_chset isv.list
 $gtm_exe/mumps $gtm_tst/$tst/inref/genisvtestcases.m
 $gtm_exe/mumps -run genisvtestcases
-$gtm_exe/mumps isv.m |& $grep -c '%GTM-E-SVNOSET'
+$gtm_exe/mumps isv.m |& $grep -c '%YDB-E-SVNOSET'
 if ($?test_replic == 1) then
 	if ($tst_org_host == $tst_remote_host) then
 		cp isv.m $SEC_SIDE/

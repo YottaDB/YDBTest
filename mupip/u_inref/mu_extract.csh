@@ -3,7 +3,7 @@
 #								#
 #	Copyright 2002, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -153,7 +153,7 @@ $gtm_tst/com/dbcheck.csh
 if (! $?test_replic) then
 	# Below section is disabled for replication because it needs database with different null collation order.
 	# Starting replication servers with that setup would error with:
-	# %GTM-E-NULLCOLLDIFF, Null collation order must be the same for all regions
+	# %YDB-E-NULLCOLLDIFF, Null collation order must be the same for all regions
 	echo "======"
 	echo "Part 5"
 	echo "======"

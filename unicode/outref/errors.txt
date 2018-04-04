@@ -1,21 +1,21 @@
 ###################################################################
  Testing BADCHSET error 
-150381050,badchset+4^errors,%GTM-E-BADCHSET, whatever is not a valid character mapping in this context
-150381050,badchset+5^errors,%GTM-E-BADCHSET, blah is not a valid character mapping in this context
-150381050,badchset+6^errors,%GTM-E-BADCHSET,  is not a valid character mapping in this context
-150381050,badchset+7^errors,%GTM-E-BADCHSET,  is not a valid character mapping in this context
-150381050,badchset+8^errors,%GTM-E-BADCHSET, utf-48 is not a valid character mapping in this context
-150381050,badchset+9^errors,%GTM-E-BADCHSET, utf-18 is not a valid character mapping in this context
-150381050,badchset+10^errors,%GTM-E-BADCHSET, utf8 is not a valid character mapping in this context
-150381050,badchset+11^errors,%GTM-E-BADCHSET, M is not a valid character mapping in this context
-150381050,badchset+12^errors,%GTM-E-BADCHSET, Ｍ is not a valid character mapping in this context
+150381050,badchset+4^errors,%YDB-E-BADCHSET, whatever is not a valid character mapping in this context
+150381050,badchset+5^errors,%YDB-E-BADCHSET, blah is not a valid character mapping in this context
+150381050,badchset+6^errors,%YDB-E-BADCHSET,  is not a valid character mapping in this context
+150381050,badchset+7^errors,%YDB-E-BADCHSET,  is not a valid character mapping in this context
+150381050,badchset+8^errors,%YDB-E-BADCHSET, utf-48 is not a valid character mapping in this context
+150381050,badchset+9^errors,%YDB-E-BADCHSET, utf-18 is not a valid character mapping in this context
+150381050,badchset+10^errors,%YDB-E-BADCHSET, utf8 is not a valid character mapping in this context
+150381050,badchset+11^errors,%YDB-E-BADCHSET, M is not a valid character mapping in this context
+150381050,badchset+12^errors,%YDB-E-BADCHSET, Ｍ is not a valid character mapping in this context
 ###################################################################
  Testing BADCASECODE error 
-150381058,badcasecode+4^errors,%GTM-E-BADCASECODE, a is not a valid case conversion code
-150381058,badcasecode+5^errors,%GTM-E-BADCASECODE, 1111 is not a valid case conversion code
-150381058,badcasecode+6^errors,%GTM-E-BADCASECODE, X is not a valid case conversion code
-150381058,badcasecode+7^errors,%GTM-E-BADCASECODE, Ｘ is not a valid case conversion code
-150381058,badcasecode+8^errors,%GTM-E-BADCASECODE, 29 is not a valid case conversion code
+150381058,badcasecode+4^errors,%YDB-E-BADCASECODE, a is not a valid case conversion code
+150381058,badcasecode+5^errors,%YDB-E-BADCASECODE, 1111 is not a valid case conversion code
+150381058,badcasecode+6^errors,%YDB-E-BADCASECODE, X is not a valid case conversion code
+150381058,badcasecode+7^errors,%YDB-E-BADCASECODE, Ｘ is not a valid case conversion code
+150381058,badcasecode+8^errors,%YDB-E-BADCASECODE, 29 is not a valid case conversion code
 abc
 ###################################################################
  Testing NONUTF8LOCALE error 
@@ -25,7 +25,7 @@ GTM>
 GTM>
 ##SUSPEND_OUTPUT HOST_OS390_S390
 Expected NONUTF8LOCALE because of LANG,LC_CTYPE,LC_ALL not being defined at this point
-##TEST_AWK%GTM-E-NONUTF8LOCALE, Locale has character encoding \((ANSI_X3\.4\-1968|646|roman8|ISO8859\-1)\) which is not compatible with UTF-8 character set
+##TEST_AWK%YDB-E-NONUTF8LOCALE, Locale has character encoding \((ANSI_X3\.4\-1968|646|roman8|ISO8859\-1)\) which is not compatible with UTF-8 character set
 
 ##ALLOW_OUTPUT HOST_OS390_S390
 
@@ -34,12 +34,12 @@ GTM>
 GTM>
 ##SUSPEND_OUTPUT HOST_OS390_S390
 Expected NONUTF8LOCALE because of LC_CTYPE points to invalid CHSET
-##TEST_AWK%GTM-E-NONUTF8LOCALE, Locale has character encoding \((ANSI_X3\.4\-1968|646|roman8|ISO8859\-1)\) which is not compatible with UTF-8 character set
+##TEST_AWK%YDB-E-NONUTF8LOCALE, Locale has character encoding \((ANSI_X3\.4\-1968|646|roman8|ISO8859\-1)\) which is not compatible with UTF-8 character set
 
 ##ALLOW_OUTPUT HOST_OS390_S390
 ###################################################################
  Testing BOMMISMATCH error 
-150381130,bommismatch+7^errors,%GTM-E-BOMMISMATCH, UTF-16BE Byte Order Marker found when UTF-16LE character set specified
+150381130,bommismatch+7^errors,%YDB-E-BOMMISMATCH, UTF-16BE Byte Order Marker found when UTF-16LE character set specified
 I should have a BOM before and is big endian by default
 ###################################################################
  Testing LOADINVCHSET error 
@@ -70,72 +70,72 @@ Using: ##SOURCE_PATH##/mupip
 mumps.dat
 ----------
 Error LOADINVCHSET seen in go.log as expected:
-%GTM-E-LOADINVCHSET, Extract file CHSET (M) is incompatible with gtm_chset
+%YDB-E-LOADINVCHSET, Extract file CHSET (M) is incompatible with gtm_chset
 ----------
 ----------
 Error MUNOFINISH seen in go.log as expected:
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ----------
 ----------
 Error LOADINVCHSET seen in zwr.log as expected:
-%GTM-E-LOADINVCHSET, Extract file CHSET (M) is incompatible with gtm_chset
+%YDB-E-LOADINVCHSET, Extract file CHSET (M) is incompatible with gtm_chset
 ----------
 ----------
 Error MUNOFINISH seen in zwr.log as expected:
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ----------
 ###################################################################
 Test for INDRMAXLEN limit 
 ----------
 Error INDRMAXLEN seen in indrmaxlen.out as expected:
-%GTM-E-INDRMAXLEN, Maximum length 8192 of an indirection argument was exceeded
+%YDB-E-INDRMAXLEN, Maximum length 8192 of an indirection argument was exceeded
 ----------
 ###################################################################
 Test for existing error messages with unicode characters
 
 GTM>
-%GTM-E-SPOREOL, Either a space or an end-of-line was expected but not found
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
 	write "some string" for x=1:1:1:1
 	                               ^-----
 
 GTM>
 The tick symbol in the error should appear at the last colon just like for the above non-multibyte string
 GTM>
-%GTM-E-SPOREOL, Either a space or an end-of-line was expected but not found
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
 	write "Ｓｏｍｅ ｓｔｒ Türkçe" for x=1:1:1:1
 	                                          ^-----
 
 GTM>
-%GTM-E-INVCMD, Invalid command keyword encountered
+%YDB-E-INVCMD, Invalid command keyword encountered
 	write "some string" abc
 	                    ^-----
 
 GTM>
-%GTM-E-INVCMD, Invalid command keyword encountered
+%YDB-E-INVCMD, Invalid command keyword encountered
 	write "Ｓｏｍｅ ｓｔｒ Türkçe" abc
 	                               ^-----
 
 GTM>
 The tick symbol in the error should appear right below abc just like the above non-multibyte string
 GTM>
-%GTM-E-EXPR, Expression expected but not found
+%YDB-E-EXPR, Expression expected but not found
 	write "sdfsdfsabcdefg" write  B
 	                             ^-----
 
 GTM>
 The tick symbol in the error should appear in the same column just like for the above non-multibyte string
 GTM>
-%GTM-E-EXPR, Expression expected but not found
+%YDB-E-EXPR, Expression expected but not found
 	write "sdfsdfsdＡＢＣＤＥＦＧ" write  Ｂ
 	                                     ^-----
 
 GTM>
 Try simple GVUNDEF error
 GTM>
-%GTM-E-GVUNDEF, Global variable undefined: ^globalsinglebyte("oneoneoneall")
+%YDB-E-GVUNDEF, Global variable undefined: ^globalsinglebyte("oneoneoneall")
 
 GTM>
-%GTM-E-GVUNDEF, Global variable undefined: ^globalsinglebyte("ｏｎｅｏｎｅｏｎｅａｌｌ")
+%YDB-E-GVUNDEF, Global variable undefined: ^globalsinglebyte("ｏｎｅｏｎｅｏｎｅａｌｌ")
 
 GTM>
 ##SOURCE_PATH##/mupip
@@ -166,16 +166,16 @@ Using: ##SOURCE_PATH##/mupip
 mumps.dat
 ----------
 Error DLRCILLEGAL seen in dlrcillegal.out as expected:
-%GTM-E-DLRCILLEGAL, 	^a($C(55296)="this has to be changed with illegal $c values"
+%YDB-E-DLRCILLEGAL, 	^a($C(55296)="this has to be changed with illegal $c values"
 ----------
 ----------
 Error RECLOAD seen in dlrcillegal.out as expected:
-%GTM-E-RECLOAD, Error loading record number: 4
+%YDB-E-RECLOAD, Error loading record number: 4
 ----------
 Testing WIDTHTOOSMALL error
 ----------
 Error WIDTHTOOSMALL seen in widthtoosmall.out as expected:
-%GTM-E-WIDTHTOOSMALL, WIDTH should be at least 2 when device ICHSET or OCHSET is UTF-8 or UTF-16
+%YDB-E-WIDTHTOOSMALL, WIDTH should be at least 2 when device ICHSET or OCHSET is UTF-8 or UTF-16
 ----------
 In  M mode width=1 is allowed
 
@@ -188,14 +188,14 @@ M
 Testing ICUVERLT36 error - case (a)
 ----------
 Error ICUVERLT36 seen in icuverlt36a.out as expected:
-##TEST_AWK%GTM-E-ICUVERLT36, \$gtm_icu_version is [0-9]*.[0-9]*. ICU version greater than or equal to 3.6 should be used
+##TEST_AWK%YDB-E-ICUVERLT36, \$gtm_icu_version is [0-9]*.[0-9]*. ICU version greater than or equal to 3.6 should be used
 ----------
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT SNAIL TURTLE ATLST2000 INTI
 Testing ICUVERLT36 error - case (b)
 ----------
 Error ICUVERLT36 seen in icuverlt36b.out as expected:
-##TEST_AWK%GTM-E-ICUVERLT36, libicuio.so has version [0-9]*.[0-9]*. ICU version greater than or equal to 3.6 should be used
+##TEST_AWK%YDB-E-ICUVERLT36, libicuio.so has version [0-9]*.[0-9]*. ICU version greater than or equal to 3.6 should be used
 ----------
 ##ALLOW_OUTPUT HOST_ALL
 END of errors

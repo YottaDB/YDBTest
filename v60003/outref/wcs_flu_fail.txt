@@ -3,26 +3,26 @@ Case #1
 Killed
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##SUSPEND_OUTPUT JNL_BEFORE
-%GTM-E-MUUSERECOV, Abnormal shutdown of journaled database ##TEST_PATH##/mumps.dat detected
+%YDB-E-MUUSERECOV, Abnormal shutdown of journaled database ##TEST_PATH##/mumps.dat detected
 %GTM-I-TEXT, Run MUPIP JOURNAL RECOVER
 ##ALLOW_OUTPUT JNL_BEFORE
 ##SUSPEND_OUTPUT JNL_NOBEFORE
-%GTM-E-JNLORDBFLU, Error flushing database blocks to ##TEST_PATH##/mumps.dat. See related messages in the operator log
+%YDB-E-JNLORDBFLU, Error flushing database blocks to ##TEST_PATH##/mumps.dat. See related messages in the operator log
 ##ALLOW_OUTPUT JNL_NOBEFORE
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
 Case #2
 ###################################################################
 Killed
-%GTM-E-JNLORDBFLU, Error flushing database blocks to ##TEST_PATH##/mumps.dat. See related messages in the operator log
+%YDB-E-JNLORDBFLU, Error flushing database blocks to ##TEST_PATH##/mumps.dat. See related messages in the operator log
 %GTM-I-TEXT, To force the operation to proceed, use the OVERRIDE qualifier
 %GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
 
 Case #3
 ###################################################################
 Killed
-%GTM-E-MUUSERECOV, Abnormal shutdown of journaled database ##TEST_PATH##/mumps.dat detected
+%YDB-E-MUUSERECOV, Abnormal shutdown of journaled database ##TEST_PATH##/mumps.dat detected
 %GTM-I-TEXT, Run MUPIP JOURNAL RECOVER
 %GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
 
@@ -32,7 +32,7 @@ Killed
 ##TEST_AWK%GTM-I-SHMREMOVED, Removed Shared Memory id [0-9]* corresponding to file ##TEST_PATH##/mumps.dat
 ##TEST_AWK%GTM-I-SEMREMOVED, Semaphore id [0-9]* removed from the system
 %GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
-%GTM-E-MUUSERECOV, Abnormal shutdown of journaled database ##TEST_PATH##/mumps.dat detected
+%YDB-E-MUUSERECOV, Abnormal shutdown of journaled database ##TEST_PATH##/mumps.dat detected
 %GTM-I-TEXT, Run MUPIP JOURNAL RECOVER
 %GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
 

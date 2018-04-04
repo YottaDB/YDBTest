@@ -23,7 +23,7 @@ Turn replication back on and manually break the journal's prev link, by setting 
 %GTM-I-REPLSTATE, Replication state for region DEFAULT is now ON
 %GTM-I-PREVJNLLINKSET, Previous generation journal file name is changed from NULL to ##TEST_PATH##/mumps.mjl_##TEST_AWK.*
 Restart replication, source server should get the error JNLNOREPL
-%GTM-E-JNLNOREPL, Replication not enabled for journal file ##TEST_PATH##/mumps.mjl_##TEST_AWK.*
+%YDB-E-JNLNOREPL, Replication not enabled for journal file ##TEST_PATH##/mumps.mjl_##TEST_AWK.*
 Fix prev link and restart source server
 ##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
 %GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with ##TEST_AWK.*_IMAGES
@@ -37,7 +37,7 @@ Start with a fresh journal file
 ##TEST_AWK... ... .. ..:..:.. 20.. : %GTM-I-REPLINFO, GTM Replication Source Server now in ACTIVE mode using port [0-9]*
 Put a transaction in the backlog and shutdown replication
 Truncate journal file so it contains only the header and restart replication.  Source server should get the error JNLRDERR
-%GTM-E-JNLRDERR, Error reading journal file ##TEST_PATH##/mumps.mjl.  Unable to initialize.
+%YDB-E-JNLRDERR, Error reading journal file ##TEST_PATH##/mumps.mjl.  Unable to initialize.
 Fix journal file and restart source server
 # Test case 3: Restart source server with a journal file containing partial records.
 #
@@ -45,7 +45,7 @@ Fix journal file and restart source server
 ##TEST_AWK... ... .. ..:..:.. 20.. : %GTM-I-REPLINFO, GTM Replication Source Server now in ACTIVE mode using port [0-9]*
 Put some transactions in the backlog and shutdown replication
 Truncate journal file so it contains some partial records and restart replication.  Source server should get the error JNLRDERR
-%GTM-E-JNLRDERR, Error reading journal file ##TEST_PATH##/mumps.mjl.  Unable to initialize.
+%YDB-E-JNLRDERR, Error reading journal file ##TEST_PATH##/mumps.mjl.  Unable to initialize.
 Fix journal file and restart source server
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 Shutting down Primary Source Server Server in ##TEST_PATH##

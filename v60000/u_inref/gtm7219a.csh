@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -81,7 +81,7 @@ foreach image_type ( "MUMPS" "MUPIP" "DSE" "LKE" "DBCERTIFY" "GTCM" "GTCM_GNP" )
 	$gtm_tst/com/getoper.csh "$syslog_before" "" ${image_type}_syslog.logx  "" $msg
 	if ( $status ) then
 		cat ${image_type}.logx;
-		echo "GTM-E-ERROR: $msg is not present in the operator log"
+		echo "YDB-E-ERROR: $msg is not present in the operator log"
 	endif
 	if ( ("GTCM" == $image_type) || ("GTCM_GNP" == $image_type) ) then
 	        $kill -15 $server_id >>& ${image_type}_kill.outx

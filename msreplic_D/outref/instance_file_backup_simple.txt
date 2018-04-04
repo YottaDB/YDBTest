@@ -49,11 +49,11 @@ unset echo
 #        --> We expect a MUNOACTION error since file bak1on.repl exists already
 ----------
 Error MUNOACTION seen in backup1on1.out as expected:
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ----------
 ----------
 Error FILEEXISTS seen in backup1on1.out as expected:
-%GTM-E-FILEEXISTS, File bak1on.repl already exists
+%YDB-E-FILEEXISTS, File bak1on.repl already exists
 ----------
 
 MUPIP cannot start backup with above errors
@@ -64,7 +64,7 @@ unset echo
 #        --> Issues a MUPCLIERR error, no bakx.repl generated
 ----------
 Error MUPCLIERR seen in backup1on2.out as expected:
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 ----------
 INCREMENTAL cannot be specified without specifying a backup region
 ###################################################################
@@ -73,7 +73,7 @@ unset echo
 #        --> Issues a MUPCLIERR error, no bakx.repl generated
 ----------
 Error MUPCLIERR seen in backup1on3.out as expected:
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 ----------
 BKUPDBJNL cannot be specified without specifying a backup region
 ###################################################################
@@ -82,7 +82,7 @@ unset echo
 #        --> Issues a MUPCLIERR error, no bakx.repl generated
 ----------
 Error MUPCLIERR seen in backup1on4.out as expected:
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 ----------
 NEWJNLFILES cannot be specified without specifying a backup region
 ###################################################################
@@ -124,11 +124,11 @@ unset echo
 #        --> We expect a MUNOACTION error since bakdir1on exists, since there is a mumps.repl in it already
 ----------
 Error MUNOACTION seen in backup1on6.out as expected:
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ----------
 ----------
 Error FILEEXISTS seen in backup1on6.out as expected:
-%GTM-E-FILEEXISTS, File bakdir1on/mumps.repl already exists
+%YDB-E-FILEEXISTS, File bakdir1on/mumps.repl already exists
 ----------
 
 MUPIP cannot start backup with above errors
@@ -140,7 +140,7 @@ unset echo
 	    exists.
 ----------
 Error MUNOACTION seen in backup1on7.out as expected:
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ----------
 
 
@@ -196,11 +196,11 @@ mumps.repl
 ###################################################################
 ----------
 Error MUPCLIERR seen in msr_execute_##FILTERED##NO.out as expected:
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 ----------
 ----------
 Error MUPCLIERR seen in backup21.out as expected:
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 ----------
 ==Executing MULTISITE_REPLIC 'RUN INST2 set msr_dont_chk_stat; $MUPIP backup -replinstance=bakx.repl -incremental >& backup21.tmp; cat backup21.tmp'==
 INCREMENTAL cannot be specified without specifying a backup region
@@ -208,11 +208,11 @@ INCREMENTAL cannot be specified without specifying a backup region
 ###################################################################
 ----------
 Error MUPCLIERR seen in msr_execute_##FILTERED##NO.out as expected:
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 ----------
 ----------
 Error MUPCLIERR seen in backup22.out as expected:
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 ----------
 ==Executing MULTISITE_REPLIC 'RUN INST2 set msr_dont_chk_stat; $MUPIP backup -replinstance=bakx.repl -bkupdbjnl="off" >& backup22.tmp; cat backup22.tmp'==
 BKUPDBJNL cannot be specified without specifying a backup region
@@ -220,11 +220,11 @@ BKUPDBJNL cannot be specified without specifying a backup region
 ###################################################################
 ----------
 Error MUPCLIERR seen in msr_execute_##FILTERED##NO.out as expected:
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 ----------
 ----------
 Error MUPCLIERR seen in backup23.out as expected:
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 ----------
 ==Executing MULTISITE_REPLIC 'RUN INST2 set msr_dont_chk_stat; $MUPIP backup -replinstance=bakx.repl -newjnlfiles >& backup23.tmp; cat backup23.tmp'==
 NEWJNLFILES cannot be specified without specifying a backup region
@@ -300,11 +300,11 @@ unset echo
 #        --> We expect a MUNOACTION error since file bak1b.repl exists already
 ----------
 Error MUNOACTION seen in backup1off1.out as expected:
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ----------
 ----------
 Error FILEEXISTS seen in backup1off1.out as expected:
-%GTM-E-FILEEXISTS, File bak1b.repl already exists
+%YDB-E-FILEEXISTS, File bak1b.repl already exists
 ----------
 
 MUPIP cannot start backup with above errors
@@ -315,7 +315,7 @@ unset echo
 #        --> Issues a MUPCLIERR error, no bakx.repl generated
 ----------
 Error MUPCLIERR seen in backup1off2.out as expected:
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 ----------
 INCREMENTAL cannot be specified without specifying a backup region
 ###################################################################
@@ -324,7 +324,7 @@ unset echo
 #        --> Issues a MUPCLIERR error, no bakx.repl generated
 ----------
 Error MUPCLIERR seen in backup1off3.out as expected:
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 ----------
 BKUPDBJNL cannot be specified without specifying a backup region
 ###################################################################
@@ -333,7 +333,7 @@ unset echo
 #        --> Issues a MUPCLIERR error, no bakx.repl generated
 ----------
 Error MUPCLIERR seen in backup1off4.out as expected:
-%GTM-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
 ----------
 NEWJNLFILES cannot be specified without specifying a backup region
 ###################################################################

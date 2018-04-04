@@ -7,12 +7,12 @@ hello
 GTM>
 
 cat case2.mumps.err
-%GTM-E-DIVZERO, Attempt to divide by zero
+%YDB-E-DIVZERO, Attempt to divide by zero
 		At M source location case2+2^case2
 
 cat case2.mumps.out+err
 hello
-%GTM-E-DIVZERO, Attempt to divide by zero
+%YDB-E-DIVZERO, Attempt to divide by zero
 		At M source location case2+2^case2
 
 GTM>
@@ -54,7 +54,7 @@ $y is 3
 
 cat case6.mumps.out+err
 hello
-%GTM-E-DIVZERO, Attempt to divide by zero
+%YDB-E-DIVZERO, Attempt to divide by zero
 		At M source location case6+2^case6
 
 GTM>
@@ -88,8 +88,8 @@ $grep -E "(GTM\-|FAIL)" case12.outx | $grep -vE "%GTM\-E\-(ERRWZINTR|ZINTDIRECT)
 Case 13.
 $grep "\-E\-" case13.expect.outx
 ##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
-%GTM-E-RELINKCTLERR, Error with relink control structure for $ZROUTINES directory ##TEST_PATH##
-##TEST_AWK%GTM-E-SYSCALL, Error received from system call open\(\) of file ./gtm-relinkctl-[0-9a-f]* failed -- called from module .*/relinkctl.c at line [1-9][0-9]*
+%YDB-E-RELINKCTLERR, Error with relink control structure for $ZROUTINES directory ##TEST_PATH##
+##TEST_AWK%YDB-E-SYSCALL, Error received from system call open\(\) of file ./gtm-relinkctl-[0-9a-f]* failed -- called from module .*/relinkctl.c at line [1-9][0-9]*
 ##TEST_AWK%SYSTEM-E-ENO[1-9][0-9]*, .*
 ##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
 

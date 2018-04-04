@@ -95,7 +95,7 @@ GTM>
 # Create a V4 database
 # Backup error expected here for a v4 db
 PASS,got expected error
-%GTM-E-GDINVALID, Unrecognized Global Directory file format: ##TEST_PATH##/mumps.gld, expected label:##FILTERED##GTM_TEST_DEBUGINFO.*
+%YDB-E-GDINVALID, Unrecognized Global Directory file format: ##TEST_PATH##/mumps.gld, expected label:##FILTERED##GTM_TEST_DEBUGINFO.*
 ########### V4 incremental backup with V6 mupip restore ############
 #			Section 3		        	   #
 # Create a V4 database
@@ -128,7 +128,7 @@ mumps.dat
 # Attempt a restore from V6
 # Unrecognizable format error expected here while recovering a v5 database from v4
 Input file backupv4.inc1 has an unrecognizable format
-%GTM-E-MUPRESTERR, MUPIP restore aborted due to preceding errors
+%YDB-E-MUPRESTERR, MUPIP restore aborted due to preceding errors
 ########### MUPIP restore transacion option ############
 #			Section 4		       #
 Files Created in ##TEST_PATH##:

@@ -19,7 +19,7 @@ Testing EXCEPTION parameter for use (try to write into the file, although not po
 exception_1.txt
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 Source of error was use
-150373618,use+8^except,%GTM-E-DEVICEREADONLY, Cannot write to read-only device
+150373618,use+8^except,%YDB-E-DEVICEREADONLY, Cannot write to read-only device
 continue...
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ---------------------------------------------------------------
@@ -39,7 +39,7 @@ continue...
 ---------------------------------------------------------------
 Now let's try a bad exception parameter...
 	open file:(EXCEPTION="s err=""open"" do error or is this correct at all")
-%GTM-E-INVCMD, Invalid command keyword encountered
+%YDB-E-INVCMD, Invalid command keyword encountered
 		At M source location badexc+5^except
 
 GTM>
@@ -50,7 +50,7 @@ Testing EXCEPTION parameter for close (try to rename the file to a directory tha
 exception_1.txt
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 Source of error was use
-150373618,try+7^except,%GTM-E-DEVICEREADONLY, Cannot write to read-only device
+150373618,try+7^except,%YDB-E-DEVICEREADONLY, Cannot write to read-only device
 continue...
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ---------------------------------------------------------------
@@ -58,7 +58,7 @@ Testing EXCEPTION parameter for use (try to write into the file, although not po
 exception_1.txt
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 Source of error was use
-150373618,use+8^except,%GTM-E-DEVICEREADONLY, Cannot write to read-only device
+150373618,use+8^except,%YDB-E-DEVICEREADONLY, Cannot write to read-only device
 continue...
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ---------------------------------------------------------------
@@ -78,7 +78,7 @@ continue...
 ---------------------------------------------------------------
 Now let's try a bad exception parameter...
 	open file:(EXCEPTION="s err=""open"" do error or is this correct at all")
-%GTM-E-INVCMD, Invalid command keyword encountered
+%YDB-E-INVCMD, Invalid command keyword encountered
 		At M source location badexc+5^except
 
 GTM>
@@ -89,7 +89,7 @@ Testing EXCEPTION parameter for close (try to rename the file to a directory tha
 exception_1.txt
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 Source of error was use
-150373618,try+7^except,%GTM-E-DEVICEREADONLY, Cannot write to read-only device
+150373618,try+7^except,%YDB-E-DEVICEREADONLY, Cannot write to read-only device
 continue...
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ---------------------------------------------------------------
@@ -97,7 +97,7 @@ Testing EXCEPTION parameter for use (try to write into the file, although not po
 exception_1.txt
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 Source of error was use
-150373618,use+8^except,%GTM-E-DEVICEREADONLY, Cannot write to read-only device
+150373618,use+8^except,%YDB-E-DEVICEREADONLY, Cannot write to read-only device
 continue...
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ---------------------------------------------------------------
@@ -117,7 +117,7 @@ continue...
 ---------------------------------------------------------------
 Now let's try a bad exception parameter...
 	open file:(EXCEPTION="s err=""open"" do error or is this correct at all")
-%GTM-E-INDEXTRACHARS, Indirection string contains extra trailing characters
+%YDB-E-INDEXTRACHARS, Indirection string contains extra trailing characters
 		At M source location badexc+5^except
 
 GTM>

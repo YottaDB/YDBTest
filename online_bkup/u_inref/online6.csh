@@ -1,7 +1,10 @@
 #! /usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2002, 2013 Fidelity Information Services, Inc	#
+# Copyright 2002, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -136,9 +139,9 @@ tcpverify
 endif
 #
 $MUPIP restore online66.dat "tcp://${tst_org_host}/" >&! badtcp1.outx
-$gtm_tst/com/check_string_exist.csh badtcp1.outx any 'GTM-E-GETADDRINFO, Error in getting address info'
+$gtm_tst/com/check_string_exist.csh badtcp1.outx any 'YDB-E-GETADDRINFO, Error in getting address info'
 $MUPIP restore online66.dat "tcp://bogus@host:7777" >&! badtcp2.outx
-$gtm_tst/com/check_string_exist.csh badtcp2.outx any 'GTM-E-GETADDRINFO, Error in getting address info'
+$gtm_tst/com/check_string_exist.csh badtcp2.outx any 'YDB-E-GETADDRINFO, Error in getting address info'
 $MUPIP restore online66.dat "tcp://${tst_org_host}:77D77" >&! badtcp3.outx
-$gtm_tst/com/check_string_exist.csh badtcp3.outx any 'GTM-E-SYSCALL, Error received from system call bind'
+$gtm_tst/com/check_string_exist.csh badtcp3.outx any 'YDB-E-SYSCALL, Error received from system call bind'
 echo LEAVING ONLINE6

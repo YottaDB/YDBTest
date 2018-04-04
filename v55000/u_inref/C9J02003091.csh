@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -22,7 +25,7 @@ endif
 setenv gtm_test_jnl NON_SETJNL
 $gtm_tst/com/dbcreate.csh mumps 1
 
-echo "# Turn on journaling with -file= pointing to the database itself. Expect GTM-E-FILEEXISTS and GTM-E-JNLNOCREATE"
+echo "# Turn on journaling with -file= pointing to the database itself. Expect YDB-E-FILEEXISTS and YDB-E-JNLNOCREATE"
 $MUPIP set $tst_jnl_str,file=mumps.dat -reg "*"
 
 echo "# Now Turn on journaling normally"
@@ -33,7 +36,7 @@ else
 endif
 $grep "GTM-I-JNLSTATE" jnl_on_1.out
 
-echo "# Turn on journaling again with -file= pointing to the database itself. Expect GTM-E-FILEEXISTS and GTM-E-JNLNOCREATE"
+echo "# Turn on journaling again with -file= pointing to the database itself. Expect YDB-E-FILEEXISTS and YDB-E-JNLNOCREATE"
 $MUPIP set $tst_jnl_str,file=mumps.dat -reg "*"
 
 echo "# Do some updates"
@@ -57,10 +60,10 @@ endif
 echo "# In the backup directory, try some journal enabling commands"
 cd $backup_dir
 
-echo "# mupip set -journal=on -reg * should fail with GTM-E-FILEEXISTS and GTM-E-JNLNOCREATE"
+echo "# mupip set -journal=on -reg * should fail with YDB-E-FILEEXISTS and YDB-E-JNLNOCREATE"
 $MUPIP set $tst_jnl_str -reg "*"
 
-echo "# mupip set -journal=on,file=<existing-file> -reg DEFAULT should fail with GTM-E-FILEEXISTS and GTM-E-JNLNOCREATE"
+echo "# mupip set -journal=on,file=<existing-file> -reg DEFAULT should fail with YDB-E-FILEEXISTS and YDB-E-JNLNOCREATE"
 $MUPIP set $tst_jnl_str,file=mumps.mjl -reg DEFAULT
 
 echo "# mupip set -journal=on,file=<new-file> -reg DEFAUT should work fine"

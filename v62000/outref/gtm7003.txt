@@ -1,24 +1,24 @@
-%GTM-E-LABELMISSING, Label referenced but not defined: nogolabel
+%YDB-E-LABELMISSING, Label referenced but not defined: nogolabel
 %GTM-I-SRCNAM, in source module ##TEST_PATH##/gtm7003.m
-%GTM-E-LABELMISSING, Label referenced but not defined: nodolabel
+%YDB-E-LABELMISSING, Label referenced but not defined: nodolabel
 %GTM-I-SRCNAM, in source module ##TEST_PATH##/gtm7003.m
-%GTM-E-LABELMISSING, Label referenced but not defined: noexfunlabel
+%YDB-E-LABELMISSING, Label referenced but not defined: noexfunlabel
 %GTM-I-SRCNAM, in source module ##TEST_PATH##/gtm7003.m
 ##SUSPEND_OUTPUT HOST_LINUX_IA64 HOST_LINUX_S390X HOST_LINUX_X86_64 HOST_LINUX_ARMVXL HOST_AIX_RS6000 HOST_OS390_S390 HOST_OSF1_ALPHA HOST_SUNOS_SPARC HOST_CYGWIN_IX86
-%GTM-E-LABELMISSING, Label referenced but not defined: noexfunlabel
+%YDB-E-LABELMISSING, Label referenced but not defined: noexfunlabel
 %GTM-I-SRCNAM, in source module ##TEST_PATH##/gtm7003.m
 ##ALLOW_OUTPUT HOST_LINUX_IA64 HOST_LINUX_S390X HOST_LINUX_X86_64 HOST_LINUX_ARMVXL HOST_AIX_RS6000 HOST_OS390_S390 HOST_OSF1_ALPHA HOST_SUNOS_SPARC HOST_CYGWIN_IX86
-150383506,eor^gtm7003,%GTM-E-LABELNOTFND, GOTO referenced a label that does not exist
-150373194,zgotolab+1^gtm7003,%GTM-E-LABELMISSING, Label referenced but not defined: nozgolabel
-150373202,dolab^gtm7003,%GTM-E-LABELUNKNOWN, Label referenced but not defined
-150373202,exfunlab+1^gtm7003,%GTM-E-LABELUNKNOWN, Label referenced but not defined
+150383506,eor^gtm7003,%YDB-E-LABELNOTFND, GOTO referenced a label that does not exist
+150373194,zgotolab+1^gtm7003,%YDB-E-LABELMISSING, Label referenced but not defined: nozgolabel
+150373202,dolab^gtm7003,%YDB-E-LABELUNKNOWN, Label referenced but not defined
+150373202,exfunlab+1^gtm7003,%YDB-E-LABELUNKNOWN, Label referenced but not defined
 ##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
-150373194,extexfunlab+1^gtm7003,%GTM-E-LABELMISSING, Label referenced but not defined: noexfunlabel
-150373194,autozllab+1^gtm7003,%GTM-E-LABELMISSING, Label referenced but not defined: nolabel
+150373194,extexfunlab+1^gtm7003,%YDB-E-LABELMISSING, Label referenced but not defined: noexfunlabel
+150373194,autozllab+1^gtm7003,%YDB-E-LABELMISSING, Label referenced but not defined: nolabel
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
-150373202,extexfunlab+1^gtm7003,%GTM-E-LABELUNKNOWN, Label referenced but not defined
-150373202,autozllab+1^gtm7003,%GTM-E-LABELUNKNOWN, Label referenced but not defined
+150373202,extexfunlab+1^gtm7003,%YDB-E-LABELUNKNOWN, Label referenced but not defined
+150373202,autozllab+1^gtm7003,%YDB-E-LABELUNKNOWN, Label referenced but not defined
 ##ALLOW_OUTPUT HOST_ALL
 
 GTM>
@@ -86,7 +86,7 @@ GTM>
 
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
-150373202,autozllab+1^gtm7003,%GTM-E-LABELUNKNOWN, Label referenced but not defined
+150373202,autozllab+1^gtm7003,%YDB-E-LABELUNKNOWN, Label referenced but not defined
 ##ALLOW_OUTPUT HOST_ALL
 GTM>
 
@@ -149,7 +149,7 @@ GTM>
 
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
-150373202,autozllab+1^gtm7003,%GTM-E-LABELUNKNOWN, Label referenced but not defined
+150373202,autozllab+1^gtm7003,%YDB-E-LABELUNKNOWN, Label referenced but not defined
 ##ALLOW_OUTPUT HOST_ALL
 GTM>
 

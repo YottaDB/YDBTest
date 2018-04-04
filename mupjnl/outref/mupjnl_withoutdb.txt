@@ -16,14 +16,14 @@ delete  database
 ------------------------------------------------------------------
 mupip journal -recover -extract -verify -show -forward  mumps.mjl
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-FILENOTFND, File ##TEST_PATH##/mumps.dat not found
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-FILENOTFND, File ##TEST_PATH##/mumps.dat not found
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ------------------------------------------------------------------
 mupip journal -recover -extract -verify -show -backward  mumps.mjl
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-FILENOTFND, File ##TEST_PATH##/mumps.dat not found
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-FILENOTFND, File ##TEST_PATH##/mumps.dat not found
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ------------------------------------------------------------------
 mupip journal -extract -verify -show -forward  mumps.mjl

@@ -20,10 +20,10 @@ efgh_1_2_efgh
 mnop_1
 # Point the collation libraries to older versions of the exact same library
 # Expect COLLTYPVERSION errors from both ^efgh (which uses libreverse) and ^mnop (using libstraight)
-STAT=wrongcoll+3^collationtests,%GTM-E-COLLTYPVERSION, Collation type 3, version 3 mismatch,%GTM-I-GVIS, 		Global variable: efgh
-STAT=wrongcoll+4^collationtests,%GTM-E-COLLTYPVERSION, Collation type 2, version 3 mismatch,%GTM-I-GVIS, 		Global variable: mnop
-STAT=wrongcoll+3^collationtests,%GTM-E-COLLTYPVERSION, Collation type 3, version 3 mismatch,%GTM-I-GVIS, 		Global variable: efgh
-STAT=wrongcoll+4^collationtests,%GTM-E-COLLTYPVERSION, Collation type 2, version 3 mismatch,%GTM-I-GVIS, 		Global variable: mnop
+STAT=wrongcoll+3^collationtests,%YDB-E-COLLTYPVERSION, Collation type 3, version 3 mismatch,%GTM-I-GVIS, 		Global variable: efgh
+STAT=wrongcoll+4^collationtests,%YDB-E-COLLTYPVERSION, Collation type 2, version 3 mismatch,%GTM-I-GVIS, 		Global variable: mnop
+STAT=wrongcoll+3^collationtests,%YDB-E-COLLTYPVERSION, Collation type 3, version 3 mismatch,%GTM-I-GVIS, 		Global variable: efgh
+STAT=wrongcoll+4^collationtests,%YDB-E-COLLTYPVERSION, Collation type 2, version 3 mismatch,%GTM-I-GVIS, 		Global variable: mnop
 %GDE-I-LOADGD, Loading Global Directory file 
 	##TEST_PATH##/mumps.gld
 
@@ -31,9 +31,9 @@ STAT=wrongcoll+4^collationtests,%GTM-E-COLLTYPVERSION, Collation type 2, version
 # Point the collation libraries to newer versions of the exact same library
 # Expect COLLTYPVERSION errors only from ^mnop using libstraight - which has stricter version compatibility check
 efgh_1_2_efgh
-STAT=wrongcoll+4^collationtests,%GTM-E-COLLTYPVERSION, Collation type 2, version 3 mismatch,%GTM-I-GVIS, 		Global variable: mnop
+STAT=wrongcoll+4^collationtests,%YDB-E-COLLTYPVERSION, Collation type 2, version 3 mismatch,%GTM-I-GVIS, 		Global variable: mnop
 efgh_1_2_efgh
-STAT=wrongcoll+4^collationtests,%GTM-E-COLLTYPVERSION, Collation type 2, version 3 mismatch,%GTM-I-GVIS, 		Global variable: mnop
+STAT=wrongcoll+4^collationtests,%YDB-E-COLLTYPVERSION, Collation type 2, version 3 mismatch,%GTM-I-GVIS, 		Global variable: mnop
 %GDE-I-LOADGD, Loading Global Directory file 
 	##TEST_PATH##/mumps.gld
 

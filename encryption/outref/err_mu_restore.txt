@@ -30,16 +30,16 @@ Restore database with out gtm_passwd and expect to error out
 ---------------------------------------------------------------
 unsetenv gtm_passwd
 mupip restore mumps.dat ./back1/mumps.dat
-%GTM-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file mumps.dat. Environment variable gtm_passwd not set
+%YDB-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file mumps.dat. Environment variable gtm_passwd not set
 Error securing stand alone access to output file mumps.dat. Aborting restore.
-%GTM-E-MUPRESTERR, MUPIP restore aborted due to preceding errors
+%YDB-E-MUPRESTERR, MUPIP restore aborted due to preceding errors
 ---------------------------------------------------------------
 Restore database with bad gtm_passwd and expect to error out
 ---------------------------------------------------------------
 mupip restore mumps.dat ./back1/mumps.dat
-##TEST_AWK%GTM-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file mumps.dat. .*
+##TEST_AWK%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file mumps.dat. .*
 Error securing stand alone access to output file mumps.dat. Aborting restore.
-%GTM-E-MUPRESTERR, MUPIP restore aborted due to preceding errors
+%YDB-E-MUPRESTERR, MUPIP restore aborted due to preceding errors
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

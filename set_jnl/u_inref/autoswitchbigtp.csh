@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2002, 2013 Fidelity Information Services, Inc	#
+# Copyright 2002, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -9,7 +12,7 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
-# The test sets a bunch of TP transactions expecting a GTM-E-JNLTRANS2BIG - exceeding AUTOSWITCHLIMIT of the region
+# The test sets a bunch of TP transactions expecting a YDB-E-JNLTRANS2BIG - exceeding AUTOSWITCHLIMIT of the region
 # The assumption is all the globals go to the same region. Spanning regions violates this assumption
 setenv gtm_test_spanreg 0	# The test expects all subscripts of a global to go to the same region
 

@@ -387,7 +387,7 @@ DSE> Region AREG         : Location 0 [0x00000000] : Value = 4660 [0x1234] : Siz
 DSE> Region AREG         : Location 0 [0x00000000] : Old Value = 4660 [0x1234] : New Value =  : Size = 2 [0x02]
 DSE> Region AREG         : Location 0 [0x00000000] : Value =  : Size = 2 [0x02]
 DSE> Region AREG         : Location 0 [0x00000000] : Old Value =  : New Value = 305419896 [0x12345678] : Size = 4 [0x04]
-DSE> %GTM-E-SIZENOTVALID4, Size (in bytes) must be either 1, 2, or 4
+DSE> %YDB-E-SIZENOTVALID4, Size (in bytes) must be either 1, 2, or 4
 DSE> 
 File  	##TEST_PATH##/b.dat
 Region	BREG
@@ -401,7 +401,7 @@ Region DREG         : Location 0 [0x00000000] : Value =  : Size = 4 [0x04]
 Region EREG         : Location 0 [0x00000000] : Value =  : Size = 4 [0x04]
 Region FREG         : Location 0 [0x00000000] : Value =  : Size = 4 [0x04]
 Region GREG         : Location 0 [0x00000000] : Value =  : Size = 4 [0x04]
-DSE> %GTM-E-SIZENOTVALID4, Size (in bytes) must be either 1, 2, or 4
+DSE> %YDB-E-SIZENOTVALID4, Size (in bytes) must be either 1, 2, or 4
 DSE> Error:  already in region: BREG
 DSE> Region BREG         : Location 0 [0x00000000] : Old Value = 2427178479 [0x90ABCDEF] : New Value = 0 [0x00000000] : Size = 4 [0x04]
 DSE> Region BREG         : Location 0 [0x00000000] : Old Value = 0 [0x00] : New Value = 71 [0x47] : Size = 1 [0x01]
@@ -450,5 +450,5 @@ No errors detected by integ.
 ##ALLOW_OUTPUT   NON_REPLIC
 ##TEST_PATH##/dse_cache_change_show.log
 ##ALLOW_OUTPUT  REPLIC
-DSE> %GTM-E-SIZENOTVALID4, Size (in bytes) must be either 1, 2, or 4
-DSE> %GTM-E-SIZENOTVALID4, Size (in bytes) must be either 1, 2, or 4
+DSE> %YDB-E-SIZENOTVALID4, Size (in bytes) must be either 1, 2, or 4
+DSE> %YDB-E-SIZENOTVALID4, Size (in bytes) must be either 1, 2, or 4

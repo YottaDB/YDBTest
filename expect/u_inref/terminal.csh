@@ -4,6 +4,9 @@
 # Copyright (c) 2015 Fidelity National Information 		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -22,7 +25,7 @@ cat terminal_expect.log | $gtm_dist/mumps -run LOOP^%XCMD --xec=';write:(%NR>1)&
 
 $echoline
 echo "Step 4 - print the zshow output from terminal.m"
-$tst_awk '/GTM-E-DEVPARMNEG/{sub(/-E-/,"-X-")} /^.dev/{sub(/^.dev[^ ]+ /,"/dev/tty ")} /Test 7/{x++}/LENG=/{if(x=="")sub(/-?[0-9]+ $/,"XX ")} {print}' zshow.outx
+$tst_awk '/YDB-E-DEVPARMNEG/{sub(/-E-/,"-X-")} /^.dev/{sub(/^.dev[^ ]+ /,"/dev/tty ")} /Test 7/{x++}/LENG=/{if(x=="")sub(/-?[0-9]+ $/,"XX ")} {print}' zshow.outx
 
 # Step 5 was moved to test/expect/u_inref/terminal5.csh since it relies on screen
 

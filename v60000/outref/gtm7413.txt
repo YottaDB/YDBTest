@@ -14,23 +14,23 @@ Start Test1
 ##TEST_AWK.*GETADDRINFO.*
 ##TEST_AWKTest 1:.*
 Start Test2
-150376970,tcpOpen+1^gtm7413,%GTM-E-PROTNOTSUP, Protocol TKD not supported
-150376970,tcpOpen+1^gtm7413,%GTM-E-PROTNOTSUP, Protocol TKD not supported
-150376970,tcpOpen+1^gtm7413,%GTM-E-PROTNOTSUP, Protocol TKD not supported
-150376970,tcpOpen+1^gtm7413,%GTM-E-PROTNOTSUP, Protocol TKD not supported
+150376970,tcpOpen+1^gtm7413,%YDB-E-PROTNOTSUP, Protocol TKD not supported
+150376970,tcpOpen+1^gtm7413,%YDB-E-PROTNOTSUP, Protocol TKD not supported
+150376970,tcpOpen+1^gtm7413,%YDB-E-PROTNOTSUP, Protocol TKD not supported
+150376970,tcpOpen+1^gtm7413,%YDB-E-PROTNOTSUP, Protocol TKD not supported
 Test 2: Correct
 Start Test3
-150376970,tcpServerOpen+1^gtm7413,%GTM-E-PROTNOTSUP, Protocol TKD not supported
-150376970,tcpServerOpen+1^gtm7413,%GTM-E-PROTNOTSUP, Protocol TKD not supported
-150376970,tcpServerOpen+1^gtm7413,%GTM-E-PROTNOTSUP, Protocol TKD not supported
+150376970,tcpServerOpen+1^gtm7413,%YDB-E-PROTNOTSUP, Protocol TKD not supported
+150376970,tcpServerOpen+1^gtm7413,%YDB-E-PROTNOTSUP, Protocol TKD not supported
+150376970,tcpServerOpen+1^gtm7413,%YDB-E-PROTNOTSUP, Protocol TKD not supported
 Test 3: Correct
 ZSHOW "D" output: SERVER$1 OPEN SOCKET NOWRAP TOTAL=1 CURRENT=0 
 close the server device
 Test 4 start: Open one server device with two sockets
 ZSHOW "D" output: SERVER$1 OPEN SOCKET NOWRAP TOTAL=2 CURRENT=1 
-150376970,tcpServerOpen+1^gtm7413,%GTM-E-PROTNOTSUP, Protocol TKD not supported
-150376970,tcpServerOpen+1^gtm7413,%GTM-E-PROTNOTSUP, Protocol TKD not supported
-150376970,tcpServerOpen+1^gtm7413,%GTM-E-PROTNOTSUP, Protocol TKD not supported
+150376970,tcpServerOpen+1^gtm7413,%YDB-E-PROTNOTSUP, Protocol TKD not supported
+150376970,tcpServerOpen+1^gtm7413,%YDB-E-PROTNOTSUP, Protocol TKD not supported
+150376970,tcpServerOpen+1^gtm7413,%YDB-E-PROTNOTSUP, Protocol TKD not supported
 ZSHOW "D" output: SERVER$1 OPEN SOCKET NOWRAP TOTAL=2 CURRENT=1 
 Test 4: Correct
 Close the server device

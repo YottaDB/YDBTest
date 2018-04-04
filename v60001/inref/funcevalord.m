@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-;	Copyright 2012, 2014 Fidelity Information Services, Inc	;
+; Copyright 2012, 2014 Fidelity Information Services, Inc	;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -1333,7 +1336,7 @@ RunTimeErr(text)
 	Use $P
 	Close:(ztrigoutopen) ztrigout
 	If $ZLength($Get(text)) Write !,text
-	Do:($ZStatus["GTM-E-RANDARGNEG")
+	Do:($ZStatus["YDB-E-RANDARGNEG")
 	. Write !,"Fatal error occurred (test bug): ",$ZStatus,!
 	. ZSHow "*"
 	. ZHalt 1

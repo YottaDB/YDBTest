@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-;	Copyright 2010, 2014 Fidelity Information Services, Inc	;
+; Copyright 2010, 2014 Fidelity Information Services, Inc	;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -174,24 +177,24 @@ expectederrors
 	; these are the expected errors for the lines above
 	; note that ztvalue has two error types :(
 expected
-	;ztcode+2^inspectISV;%GTM-E-SVNOSET
-	;ztcode+1^inspectISV;%GTM-E-SVNOSET
-	;ztdata+2^inspectISV;%GTM-E-SVNOSET
-	;ztdata+1^inspectISV;%GTM-E-SVNOSET
-	;ztdelim+2^inspectISV;%GTM-E-SVNOSET
-	;ztdelim+1^inspectISV;%GTM-E-SVNOSET
-	;ztlevel+2^inspectISV;%GTM-E-SVNOSET
-	;ztlevel+1^inspectISV;%GTM-E-SVNOSET
-	;ztname+2^inspectISV;%GTM-E-SVNOSET
-	;ztname+1^inspectISV;%GTM-E-SVNOSET
-	;ztoldval+2^inspectISV;%GTM-E-SVNOSET
-	;ztoldval+1^inspectISV;%GTM-E-SVNOSET
-	;ztriggerop+2^inspectISV;%GTM-E-SVNOSET
-	;ztriggerop+1^inspectISV;%GTM-E-SVNOSET
-	;ztslate+4^inspectISV;%GTM-E-SETINTRIGONLY
-	;ztslate+5^inspectISV;%GTM-E-SETINTRIGONLY
-	;ztupdate+2^inspectISV;%GTM-E-SVNOSET
-	;ztupdate+1^inspectISV;%GTM-E-SVNOSET
-	;ztvalue+2^inspectISV;%GTM-E-SETINTRIGONLY;%GTM-E-SETINSETTRIGONLY
-	;ztvalue+1^inspectISV;%GTM-E-SETINTRIGONLY;%GTM-E-SETINSETTRIGONLY
-	;ztrap+2^inspectISV;%GTM-E-NOZTRAPINTRIG
+	;ztcode+2^inspectISV;%YDB-E-SVNOSET
+	;ztcode+1^inspectISV;%YDB-E-SVNOSET
+	;ztdata+2^inspectISV;%YDB-E-SVNOSET
+	;ztdata+1^inspectISV;%YDB-E-SVNOSET
+	;ztdelim+2^inspectISV;%YDB-E-SVNOSET
+	;ztdelim+1^inspectISV;%YDB-E-SVNOSET
+	;ztlevel+2^inspectISV;%YDB-E-SVNOSET
+	;ztlevel+1^inspectISV;%YDB-E-SVNOSET
+	;ztname+2^inspectISV;%YDB-E-SVNOSET
+	;ztname+1^inspectISV;%YDB-E-SVNOSET
+	;ztoldval+2^inspectISV;%YDB-E-SVNOSET
+	;ztoldval+1^inspectISV;%YDB-E-SVNOSET
+	;ztriggerop+2^inspectISV;%YDB-E-SVNOSET
+	;ztriggerop+1^inspectISV;%YDB-E-SVNOSET
+	;ztslate+4^inspectISV;%YDB-E-SETINTRIGONLY
+	;ztslate+5^inspectISV;%YDB-E-SETINTRIGONLY
+	;ztupdate+2^inspectISV;%YDB-E-SVNOSET
+	;ztupdate+1^inspectISV;%YDB-E-SVNOSET
+	;ztvalue+2^inspectISV;%YDB-E-SETINTRIGONLY;%YDB-E-SETINSETTRIGONLY
+	;ztvalue+1^inspectISV;%YDB-E-SETINTRIGONLY;%YDB-E-SETINSETTRIGONLY
+	;ztrap+2^inspectISV;%YDB-E-NOZTRAPINTRIG

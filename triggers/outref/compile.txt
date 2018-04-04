@@ -17,25 +17,25 @@ Invalid M code in the Xecute string
 	 set $ZTRIggerop=99
 	      ^-----
 ##TEST_AWK		At column 7, line 1, source module .*trgtmp.*
-%GTM-E-SVNOSET, Cannot SET this special variable
+%YDB-E-SVNOSET, Cannot SET this special variable
 	 for quit:x=0 set x=0
 	         ^-----
 ##TEST_AWK		At column 10, line 1, source module .*trgtmp.*
-%GTM-E-EQUAL, Equal sign expected but not found
+%YDB-E-EQUAL, Equal sign expected but not found
 	 set "=0
 	        ^-----
 ##TEST_AWK		At column 9, line 1, source module .*trgtmp.*
-%GTM-E-SPOREOL, Either a space or an end-of-line was expected but not found
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
 	 set a=1 write a!
 	                 ^-----
 ##TEST_AWK		At column 18, line 1, source module .*trgtmp.*
-%GTM-E-RHMISSING, Right-hand side of expression expected
-%GTM-E-LABELMISSING, Label referenced but not defined: DoesNotExist
+%YDB-E-RHMISSING, Right-hand side of expression expected
+%YDB-E-LABELMISSING, Label referenced but not defined: DoesNotExist
 ##TEST_AWK%GTM-I-SRCNAM, in source module .*trgtmp.*
 	 TPRestart
 	 ^-----
 ##TEST_AWK		At column 2, line 1, source module .*trgtmp.*
-%GTM-E-INVCMD, Invalid command keyword encountered
+%YDB-E-INVCMD, Invalid command keyword encountered
 FAIL, see compile_fail.trg.trigout
 ###################################################################
 Invalid code the will pass compilation
@@ -100,22 +100,22 @@ Valid M code in the Xecute string
 ###################################################################
 ###################################################################
 failing cases first
-	$ZSTATUS=150373866,+1^c#1#,%GTM-E-VAREXPECTED, Variable expected in this context
-	$ZSTATUS=150373770,+1^b#1#,%GTM-E-SVNOSET, Cannot SET this special variable
-	$ZSTATUS=150373978,+1^d#1#,%GTM-E-ZLINKFILE, Error while zlinking "DoesNotExist",%GTM-E-FILENOTFND, File DoesNotExist not found
+	$ZSTATUS=150373866,+1^c#1#,%YDB-E-VAREXPECTED, Variable expected in this context
+	$ZSTATUS=150373770,+1^b#1#,%YDB-E-SVNOSET, Cannot SET this special variable
+	$ZSTATUS=150373978,+1^d#1#,%YDB-E-ZLINKFILE, Error while zlinking "DoesNotExist",%YDB-E-FILENOTFND, File DoesNotExist not found
 	 TPRestart:(2>$TRestart)
 	 ^-----
 ##TEST_AWK		At column 2, line 1, source module .*trgtmp.*
 %GTM-W-INVCMD, Invalid command keyword encountered
-	$ZSTATUS=150373050,+1^postconditionalbad#,%GTM-E-INVCMD, Invalid command keyword encountered
-	$ZSTATUS=150373866,+1^c#1#,%GTM-E-VAREXPECTED, Variable expected in this context
-	$ZSTATUS=150373770,+1^b#1#,%GTM-E-SVNOSET, Cannot SET this special variable
-	$ZSTATUS=150373978,+1^d#1#,%GTM-E-ZLINKFILE, Error while zlinking "DoesNotExist",%GTM-E-FILENOTFND, File DoesNotExist not found
-	$ZSTATUS=150373050,+1^postconditionalbad#,%GTM-E-INVCMD, Invalid command keyword encountered
+	$ZSTATUS=150373050,+1^postconditionalbad#,%YDB-E-INVCMD, Invalid command keyword encountered
+	$ZSTATUS=150373866,+1^c#1#,%YDB-E-VAREXPECTED, Variable expected in this context
+	$ZSTATUS=150373770,+1^b#1#,%YDB-E-SVNOSET, Cannot SET this special variable
+	$ZSTATUS=150373978,+1^d#1#,%YDB-E-ZLINKFILE, Error while zlinking "DoesNotExist",%YDB-E-FILENOTFND, File DoesNotExist not found
+	$ZSTATUS=150373050,+1^postconditionalbad#,%YDB-E-INVCMD, Invalid command keyword encountered
 zlink myself
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_LINUX_IX86
-	$ZSTATUS=150373234,selflink+3^selflink,%GTM-E-LOADRUNNING, Cannot ZLINK an active routine selflink
+	$ZSTATUS=150373234,selflink+3^selflink,%YDB-E-LOADRUNNING, Cannot ZLINK an active routine selflink
 ##ALLOW_OUTPUT HOST_ALL
 ###################################################################
 ###################################################################
@@ -128,15 +128,15 @@ Testing compilation failures in sub routines
 		badcommand
 		^-----
 		At column 2, line 16, source module ##IN_TEST_PATH##/inref/badcompile.m
-%GTM-E-INVCMD, Invalid command keyword encountered
-	$ZSTATUS=150373050,badcompile+4^badcompile,%GTM-E-INVCMD, Invalid command keyword encountered
-	$ZSTATUS=150373050,badcompile+4^badcompile,%GTM-E-INVCMD, Invalid command keyword encountered
-	$ZSTATUS=150373050,badcompile+4^badcompile,%GTM-E-INVCMD, Invalid command keyword encountered
-	$ZSTATUS=150373050,badcompile+4^badcompile,%GTM-E-INVCMD, Invalid command keyword encountered
-	$ZSTATUS=150373050,badcompile+4^badcompile,%GTM-E-INVCMD, Invalid command keyword encountered
-	$ZSTATUS=150373050,badcompile+4^badcompile,%GTM-E-INVCMD, Invalid command keyword encountered
-	$ZSTATUS=150373050,badcompile+4^badcompile,%GTM-E-INVCMD, Invalid command keyword encountered
-	$ZSTATUS=150373050,badcompile+4^badcompile,%GTM-E-INVCMD, Invalid command keyword encountered
+%YDB-E-INVCMD, Invalid command keyword encountered
+	$ZSTATUS=150373050,badcompile+4^badcompile,%YDB-E-INVCMD, Invalid command keyword encountered
+	$ZSTATUS=150373050,badcompile+4^badcompile,%YDB-E-INVCMD, Invalid command keyword encountered
+	$ZSTATUS=150373050,badcompile+4^badcompile,%YDB-E-INVCMD, Invalid command keyword encountered
+	$ZSTATUS=150373050,badcompile+4^badcompile,%YDB-E-INVCMD, Invalid command keyword encountered
+	$ZSTATUS=150373050,badcompile+4^badcompile,%YDB-E-INVCMD, Invalid command keyword encountered
+	$ZSTATUS=150373050,badcompile+4^badcompile,%YDB-E-INVCMD, Invalid command keyword encountered
+	$ZSTATUS=150373050,badcompile+4^badcompile,%YDB-E-INVCMD, Invalid command keyword encountered
+	$ZSTATUS=150373050,badcompile+4^badcompile,%YDB-E-INVCMD, Invalid command keyword encountered
 ^fired("dobad#")=4
 ^fired("dogood#")=4
 ^fired("gotobad#")=4
@@ -178,27 +178,27 @@ No errors detected by integ.
 ##SUSPEND_OUTPUT NON_REPLIC
 ##TEST_AWK##TEST_HOST_SHORT##:##REMOTE_TEST_PATH##/RCVR_[0-9][0-9]_[0-9][0-9]_[0-9][0-9].log.updproc
 %GTM-W-INVCMD, Invalid command keyword encountered
-	$ZSTATUS=150373866,+1^c#1#,%GTM-E-VAREXPECTED, Variable expected in this context
-	$ZSTATUS=150373770,+1^b#1#,%GTM-E-SVNOSET, Cannot SET this special variable
-	$ZSTATUS=150373978,+1^d#1#,%GTM-E-ZLINKFILE, Error while zlinking "DoesNotExist",%GTM-E-FILENOTFND, File DoesNotExist not found
+	$ZSTATUS=150373866,+1^c#1#,%YDB-E-VAREXPECTED, Variable expected in this context
+	$ZSTATUS=150373770,+1^b#1#,%YDB-E-SVNOSET, Cannot SET this special variable
+	$ZSTATUS=150373978,+1^d#1#,%YDB-E-ZLINKFILE, Error while zlinking "DoesNotExist",%YDB-E-FILENOTFND, File DoesNotExist not found
 %GTM-W-INVCMD, Invalid command keyword encountered
-	$ZSTATUS=150373050,+1^postconditionalbad#,%GTM-E-INVCMD, Invalid command keyword encountered
-	$ZSTATUS=150373866,+1^c#1#,%GTM-E-VAREXPECTED, Variable expected in this context
-	$ZSTATUS=150373770,+1^b#1#,%GTM-E-SVNOSET, Cannot SET this special variable
-	$ZSTATUS=150373978,+1^d#1#,%GTM-E-ZLINKFILE, Error while zlinking "DoesNotExist",%GTM-E-FILENOTFND, File DoesNotExist not found
-	$ZSTATUS=150373050,+1^postconditionalbad#,%GTM-E-INVCMD, Invalid command keyword encountered
+	$ZSTATUS=150373050,+1^postconditionalbad#,%YDB-E-INVCMD, Invalid command keyword encountered
+	$ZSTATUS=150373866,+1^c#1#,%YDB-E-VAREXPECTED, Variable expected in this context
+	$ZSTATUS=150373770,+1^b#1#,%YDB-E-SVNOSET, Cannot SET this special variable
+	$ZSTATUS=150373978,+1^d#1#,%YDB-E-ZLINKFILE, Error while zlinking "DoesNotExist",%YDB-E-FILENOTFND, File DoesNotExist not found
+	$ZSTATUS=150373050,+1^postconditionalbad#,%YDB-E-INVCMD, Invalid command keyword encountered
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_LINUX_IX86
 ##SUSPEND_OUTPUT NON_REPLIC
-	$ZSTATUS=150373234,selflink+3^selflink,%GTM-E-LOADRUNNING, Cannot ZLINK an active routine selflink
+	$ZSTATUS=150373234,selflink+3^selflink,%YDB-E-LOADRUNNING, Cannot ZLINK an active routine selflink
 ##ALLOW_OUTPUT HOST_ALL
 ##SUSPEND_OUTPUT NON_REPLIC
-%GTM-E-INVCMD, Invalid command keyword encountered
-	$ZSTATUS=150373050,badcompile+4^badcompile,%GTM-E-INVCMD, Invalid command keyword encountered
-	$ZSTATUS=150373050,badcompile+4^badcompile,%GTM-E-INVCMD, Invalid command keyword encountered
-	$ZSTATUS=150373050,badcompile+4^badcompile,%GTM-E-INVCMD, Invalid command keyword encountered
-	$ZSTATUS=150373050,badcompile+4^badcompile,%GTM-E-INVCMD, Invalid command keyword encountered
-	$ZSTATUS=150373050,badcompile+4^badcompile,%GTM-E-INVCMD, Invalid command keyword encountered
-	$ZSTATUS=150373050,badcompile+4^badcompile,%GTM-E-INVCMD, Invalid command keyword encountered
-	$ZSTATUS=150373050,badcompile+4^badcompile,%GTM-E-INVCMD, Invalid command keyword encountered
-	$ZSTATUS=150373050,badcompile+4^badcompile,%GTM-E-INVCMD, Invalid command keyword encountered
+%YDB-E-INVCMD, Invalid command keyword encountered
+	$ZSTATUS=150373050,badcompile+4^badcompile,%YDB-E-INVCMD, Invalid command keyword encountered
+	$ZSTATUS=150373050,badcompile+4^badcompile,%YDB-E-INVCMD, Invalid command keyword encountered
+	$ZSTATUS=150373050,badcompile+4^badcompile,%YDB-E-INVCMD, Invalid command keyword encountered
+	$ZSTATUS=150373050,badcompile+4^badcompile,%YDB-E-INVCMD, Invalid command keyword encountered
+	$ZSTATUS=150373050,badcompile+4^badcompile,%YDB-E-INVCMD, Invalid command keyword encountered
+	$ZSTATUS=150373050,badcompile+4^badcompile,%YDB-E-INVCMD, Invalid command keyword encountered
+	$ZSTATUS=150373050,badcompile+4^badcompile,%YDB-E-INVCMD, Invalid command keyword encountered
+	$ZSTATUS=150373050,badcompile+4^badcompile,%YDB-E-INVCMD, Invalid command keyword encountered

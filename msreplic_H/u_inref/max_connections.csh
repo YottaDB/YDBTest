@@ -4,6 +4,9 @@
 # Copyright (c) 2006-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -33,7 +36,7 @@ EOF
 
 # When this test runs only on lester (i.e no remote hosts), use 1MB receiver and jnlpool (the minimum value) and cut down the number of global buffers to 64.
 # This is to reduced the memory requirement of this test especially in servers like lester where the below error is seen frequently
-# %GTM-E-JNLPOOLSETUP, Journal Pool setup error
+# %YDB-E-JNLPOOLSETUP, Journal Pool setup error
 # %SYSTEM-E-ENO12, Not enough space
 setenv gtm_test_msr_smallenvironment
 set global_buffers = ""
@@ -219,7 +222,7 @@ diff $gtm_tst/$tst/outref/dumppool_detail.out dumppool_detail.out
 ##   dbcheck -extract INST1 INST6 INST7 ... INST20
 ##
 
-echo "############# Expect GTM-E-REPLINSTSECNONE in the next section of the script #############"
+echo "############# Expect YDB-E-REPLINSTSECNONE in the next section of the script #############"
 echo ""
 $gtm_tst/$tst/u_inref/replic_source_commands.csh RCV=INST3 ""-instsecondary=$gtm_test_msr_INSTNAME3"" REPLINSTSECNONE needrestart
 echo ""
@@ -234,7 +237,7 @@ endif
 echo ""
 echo "Expect NOJNLPOOL error next. It means the shutdown command indeed shut ALL the servers"
 $MUPIP replic -source -checkhealth >&! checkhealth.out
-$msr_err_chk checkhealth.out GTM-E-NOJNLPOOL
+$msr_err_chk checkhealth.out YDB-E-NOJNLPOOL
 foreach i (5 6 7 8 9 10 11 12 13 14 15 16 17 19 20)
 	$MSR REFRESHLINK INST1 INST$i
 end

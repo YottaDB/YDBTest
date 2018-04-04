@@ -16,8 +16,8 @@ mupip journal -extract -for mumps.mjl
 %GTM-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
 %GTM-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.mjl. Environment variable gtm_passwd not set
 ##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##TEST_AWK.*%GTM-E-CRYPTOPFAILED, Encrypt/Decrypt operation failed for file ##TEST_PATH##/mumps.mjl. Please look at prior messages related to encryption for more details
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##TEST_AWK.*%YDB-E-CRYPTOPFAILED, Encrypt/Decrypt operation failed for file ##TEST_PATH##/mumps.mjl. Please look at prior messages related to encryption for more details
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ---------------------------------------------------------------------------------------------------
 Try extracting journal file while doing GTM updates with bad gtm_passwd and expect to error out
@@ -27,8 +27,8 @@ mupip journal -extract -for mumps.mjl
 ##TEST_AWK%GTM-W-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. .*
 ##TEST_AWK%GTM-W-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.mjl. .*
 ##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##TEST_AWK.*%GTM-E-CRYPTOPFAILED, Encrypt/Decrypt operation failed for file ##TEST_PATH##/mumps.mjl. Please look at prior messages related to encryption for more details
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##TEST_AWK.*%YDB-E-CRYPTOPFAILED, Encrypt/Decrypt operation failed for file ##TEST_PATH##/mumps.mjl. Please look at prior messages related to encryption for more details
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ---------------------------------------------------------------------------------------------------
 journal show header with noverify while doing GTM updates without gtm_passwd and expect to work
@@ -48,8 +48,8 @@ mupip journal -show=header -verify -forw mumps.mjl
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 %GTM-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.mjl. Environment variable gtm_passwd not set
 ##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##TEST_AWK.*%GTM-E-CRYPTOPFAILED, Encrypt/Decrypt operation failed for file ##TEST_PATH##/mumps.mjl. Please look at prior messages related to encryption for more details
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+##TEST_AWK.*%YDB-E-CRYPTOPFAILED, Encrypt/Decrypt operation failed for file ##TEST_PATH##/mumps.mjl. Please look at prior messages related to encryption for more details
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *

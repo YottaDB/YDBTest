@@ -19,13 +19,13 @@
 GTM>
 global set attempted on a v4 database. should error out
 GTM>
-##TEST_AWK%GTM-E-GDINVALID, Unrecognized Global Directory file format: ##TEST_PATH##/mumps.gld, expected label: GTCGBDUNX[01]10, found: GTCGBDUNX003
+##TEST_AWK%YDB-E-GDINVALID, Unrecognized Global Directory file format: ##TEST_PATH##/mumps.gld, expected label: GTCGBDUNX[01]10, found: GTCGBDUNX003
 
 GTM>
 mupip extract attempted on a v4 database. should error out
-##TEST_AWK%GTM-E-GDINVALID, Unrecognized Global Directory file format: ##TEST_PATH##/mumps.gld, expected label: GTCGBDUNX[01]10, found: GTCGBDUNX003
+##TEST_AWK%YDB-E-GDINVALID, Unrecognized Global Directory file format: ##TEST_PATH##/mumps.gld, expected label: GTCGBDUNX[01]10, found: GTCGBDUNX003
 dse dump attempted on a v4 database. should error out
-##TEST_AWK%GTM-E-GDINVALID, Unrecognized Global Directory file format: ##TEST_PATH##/mumps.gld, expected label: GTCGBDUNX[01]10, found: GTCGBDUNX003
+##TEST_AWK%YDB-E-GDINVALID, Unrecognized Global Directory file format: ##TEST_PATH##/mumps.gld, expected label: GTCGBDUNX[01]10, found: GTCGBDUNX003
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
@@ -112,13 +112,13 @@ vermismatch test -- v5 GLD, v5 DB and ##FILTERED##PRIORVER## version being teste
 GTM>
 global set attempted on a v5 database. should error out
 GTM>
-%GTM-E-GDINVALID, Unrecognized Global Directory file format: ##TEST_PATH##/mumps.gld
+%YDB-E-GDINVALID, Unrecognized Global Directory file format: ##TEST_PATH##/mumps.gld
 
 GTM>
 mupip extract attempted on a v5 database. should error out
-%GTM-E-GDINVALID, Unrecognized Global Directory file format: ##TEST_PATH##/mumps.gld
+%YDB-E-GDINVALID, Unrecognized Global Directory file format: ##TEST_PATH##/mumps.gld
 dse dump attempted on a v5 database. should error out
-%GTM-E-GDINVALID, Unrecognized Global Directory file format: ##TEST_PATH##/mumps.gld
+%YDB-E-GDINVALID, Unrecognized Global Directory file format: ##TEST_PATH##/mumps.gld
 
 vermismatch test -- v5 GLD, v4 DB and ##FILTERED##PRIORVER## version being tested
 
@@ -126,13 +126,13 @@ vermismatch test -- v5 GLD, v4 DB and ##FILTERED##PRIORVER## version being teste
 GTM>
 global set attempted on a v4 database. should error out
 GTM>
-%GTM-E-GDINVALID, Unrecognized Global Directory file format: ##TEST_PATH##/mumps.gld
+%YDB-E-GDINVALID, Unrecognized Global Directory file format: ##TEST_PATH##/mumps.gld
 
 GTM>
 mupip extract attempted on a v4 database. should error out
-%GTM-E-GDINVALID, Unrecognized Global Directory file format: ##TEST_PATH##/mumps.gld
+%YDB-E-GDINVALID, Unrecognized Global Directory file format: ##TEST_PATH##/mumps.gld
 dse dump attempted on a v4 database. should error out
-%GTM-E-GDINVALID, Unrecognized Global Directory file format: ##TEST_PATH##/mumps.gld
+%YDB-E-GDINVALID, Unrecognized Global Directory file format: ##TEST_PATH##/mumps.gld
 
 ##TEST_AWKvermismatch test -- v5 GLD, v4 DB and V.* version being tested
 
@@ -140,14 +140,14 @@ dse dump attempted on a v4 database. should error out
 GTM>
 global set attempted on a v4 database. should error out
 GTM>
-%GTM-E-BADDBVER, Incorrect database version: ##TEST_PATH##/mumps.dat
+%YDB-E-BADDBVER, Incorrect database version: ##TEST_PATH##/mumps.dat
 
 GTM>
 mupip extract attempted on a v4 database. should error out
-%GTM-E-BADDBVER, Incorrect database version: ##TEST_PATH##/mumps.dat
+%YDB-E-BADDBVER, Incorrect database version: ##TEST_PATH##/mumps.dat
 dse dump attempted on a v4 database. should error out
-%GTM-E-BADDBVER, Incorrect database version: ##TEST_PATH##/mumps.dat
-%GTM-E-DBNOREGION, None of the database regions accessible
+%YDB-E-BADDBVER, Incorrect database version: ##TEST_PATH##/mumps.dat
+%YDB-E-DBNOREGION, None of the database regions accessible
 Clean up ftok semaphore which will be left around from the BADDBVER errors above to avoid MUSTANDALONE errors later
 %GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
 ##TEST_AWK.*(Before-images|BEFORE_IMAGES).*
@@ -203,8 +203,8 @@ databse upgraded to V5 now
 	##TEST_PATH##/mumps.gld
 MUPIP recover attempted on V4 journals. should issue JNLBADLABEL but not explode
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-JNLBADLABEL, Journal file ##TEST_PATH##/mumps.mjl has a bad GT.M Journal File Label. Expected GDSJNL26. Found GDSJNL15.
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-JNLBADLABEL, Journal file ##TEST_PATH##/mumps.mjl has a bad GT.M Journal File Label. Expected GDSJNL26. Found GDSJNL15.
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 MUPIP rollback attempted on V4 journals. should issue JNLBADLABEL but not explode
 ##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.repl is renamed to ##TEST_PATH##/mumps.repl_##TIMESTAMP##
@@ -212,7 +212,7 @@ MUPIP rollback attempted on V4 journals. should issue JNLBADLABEL but not explod
 %GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 %GTM-I-REPLSTATE, Replication state for region DEFAULT is now ON
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-JNLBADLABEL, Journal file ##TEST_PATH##/mumps.mjl has a bad GT.M Journal File Label. Expected GDSJNL26. Found GDSJNL15.
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-JNLBADLABEL, Journal file ##TEST_PATH##/mumps.mjl has a bad GT.M Journal File Label. Expected GDSJNL26. Found GDSJNL15.
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 %GTM-I-FILENOTCREATE, Lost transactions extract file fetch.glo not created
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..

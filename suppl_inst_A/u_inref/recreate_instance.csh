@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -104,7 +104,7 @@ endif
 $MSR RUN INST1 'set msr_dont_trace ; mv mumps.repl mumps.repl_precrash ; $MUPIP replic -instance_create -name=$gtm_test_msr_INSTNAME1 '$gtm_test_qdbrundown_parms $INST1_supplarg''
 
 # For A->B and P->Q connections instance file shoule be recreated on the receiver side too. If not done, starting rcvr with -updateresync=file.repl will error with
-# %GTM-E-UPDSYNC2MTINS, Can only UPDATERESYNC with an empty instance file
+# %YDB-E-UPDSYNC2MTINS, Can only UPDATERESYNC with an empty instance file
 # This recreation is not required in case of A->P
 if (1 != $test_replic_suppl_type) then
 	$MSR RUN INST2 'set msr_dont_trace ; mv mumps.repl mumps.repl_old ; $MUPIP replic -instance_create -name=$gtm_test_msr_INSTNAME2 '$gtm_test_qdbrundown_parms $INST2_supplarg''
@@ -144,7 +144,7 @@ echo "# Start the receiver with -updateresync and expect the source server to th
 setenv gtm_test_repl_skiprcvrchkhlth 1 ; $MSR STARTRCV INST1 INST2 "updateresync=srcinstback.repl $resume_initialize">&! startrcv_inst1inst2_2.out ; unsetenv gtm_test_repl_skiprcvrchkhlth
 $MSR RUN INST1 '$gtm_tst/com/wait_for_log.csh -log 'SRC_$time_msr.log' -message REPLINSTNOHIST'
 $MSR RUN INST1 '$msr_err_chk 'SRC_$time_msr.log' E-REPLINSTNOHIST'
-$gtm_tst/com/knownerror.csh $msr_execute_last_out GTM-E-REPLINSTNOHIST
+$gtm_tst/com/knownerror.csh $msr_execute_last_out YDB-E-REPLINSTNOHIST
 echo "# The receiver would have exited with the above error. Manually shutdown the passive server"
 $MSR RUN RCV=INST2 SRC=INST1 '$MUPIP replic -source -shutdown -timeout=0 >&! passivesrc_shut.out'
 if (1 == $test_replic_suppl_type) then
@@ -161,5 +161,5 @@ $MSR STOPSRC INST1 INST2
 $MSR RUN INST1 '$gtm_tst/com/mupip_rollback.csh -losttrans=lost3.glo "*" >&! rollback3.out ;$grep -q JNLSUCCESS rollback3.out ;if ($status) echo "Rollback Failed"'
 $MSR STARTSRC INST1 INST2
 
-# Since the last RCVR straup failed with GTM-E-REPLINSTNOHIST, the instances will not be in sync. Do not use -extract
+# Since the last RCVR straup failed with YDB-E-REPLINSTNOHIST, the instances will not be in sync. Do not use -extract
 $gtm_tst/com/dbcheck.csh

@@ -20,15 +20,15 @@ unijob1:Arg=ＡＢＣＤＥＦＧ
 cat 乴亐亯仑件伞佉佷.job2 : Expect Errors
 unijob2:Arg=乴亐亯仑件伞佉佷
 ^utf8("undef-乴亐亯仑件伞佉佷")=
-$zstatus=150372994,unijob2+7^unicodeJob,%GTM-E-GVUNDEF, Global variable undefined: ^utf8("undef-乴亐亯仑件伞佉佷")
+$zstatus=150372994,unijob2+7^unicodeJob,%YDB-E-GVUNDEF, Global variable undefined: ^utf8("undef-乴亐亯仑件伞佉佷")
 $zgbldir=##TEST_PATH##/ＡＢＣＤ.ＥＦＧ
 cat ＡＢＣＤＥＦＧ.job3 : Expect Errors
 unijob3:Arg=αβγδε
-$zstatus=150373850,unijob3+7^ujob,%GTM-E-LVUNDEF, Undefined local variable: undefvar(ｘｙｚ｛｜｝～)
+$zstatus=150373850,unijob3+7^ujob,%YDB-E-LVUNDEF, Undefined local variable: undefvar(ｘｙｚ｛｜｝～)
 $zgbldir=##TEST_PATH##/ＡＢＣＤ.ＥＦＧ
 cat αβγ我ＡＢＧ玻璃而傷/ujob.mjo : Expect Errors
 unijob4:Arg=লায়েক
-$zstatus=150373850,unijob4+7^ujob,%GTM-E-LVUNDEF, Undefined local variable: undefvar(豈羅爛來祿屢讀數)
+$zstatus=150373850,unijob4+7^ujob,%YDB-E-LVUNDEF, Undefined local variable: undefvar(豈羅爛來祿屢讀數)
 $zgbldir=##TEST_PATH##/ＡＢＣＤ.ＥＦＧ
 cat αβγ我ＡＢＧ玻璃而傷/ujob.mje : Expect No Error
 cat ujob.mjo : Expect No Error
@@ -41,4 +41,4 @@ cat ujob.mje : Expect No Error
 ##TEST_AWKcat ḀḁḂḃḄḅḆḇ.*
 Done checking background jobs for completion
 ##TEST_PATH##/αβγ我ＡＢＧ玻璃而傷/ujob.mjo
-$zstatus=150373850,unijob4+7^ujob,%GTM-E-LVUNDEF, Undefined local variable: undefvar(豈羅爛來祿屢讀數)
+$zstatus=150373850,unijob4+7^ujob,%YDB-E-LVUNDEF, Undefined local variable: undefvar(豈羅爛來祿屢讀數)

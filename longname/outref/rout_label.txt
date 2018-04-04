@@ -39,7 +39,7 @@ do sublabelno2001^testReplacedLiteralsAndLabels
 do sublabelno2000^testReplacedLiteralsAndLabels
 do sublabelno1999^testReplacedLiteralsAndLabels
 do sublabelno1998^testReplacedLiteralsAndLabels
-150373194,errtest+6^litlab,%GTM-E-LABELMISSING, Label referenced but not defined: sublabelno1998
+150373194,errtest+6^litlab,%YDB-E-LABELMISSING, Label referenced but not defined: sublabelno1998
 ###########################################################################################
 relinks
 
@@ -107,7 +107,7 @@ verifyall PASSED
 Following will error out while it tries to link itself
 zlink "relinks"
 Error Number=1
-STAT=relinks+71^relinks,%GTM-E-LOADRUNNING, Cannot ZLINK an active routine relinks
+STAT=relinks+71^relinks,%YDB-E-LOADRUNNING, Cannot ZLINK an active routine relinks
 
 GTM>
 ###########################################################################################
@@ -115,7 +115,7 @@ test stp_move
 
 GTM>
 Error Number=1
-STAT=testmain+38^testmain,%GTM-E-LOADRUNNING, Cannot ZLINK an active routine testmain
+STAT=testmain+38^testmain,%YDB-E-LOADRUNNING, Cannot ZLINK an active routine testmain
 Now ZWR of all locals
 alpha="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 arrv1("alpha")="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
@@ -209,12 +209,12 @@ line=39
 main1="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 main2="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 main3="!@#$%^&*(){}[]|\,./<>?`~;:"
-mystat="testmain+38^testmain,%GTM-E-LOADRUNNING, Cannot ZLINK an active routine testmain"
+mystat="testmain+38^testmain,%YDB-E-LOADRUNNING, Cannot ZLINK an active routine testmain"
 newprog="2:testmain+39^testmain"
 pi=3.141592
 prog="testmain+38^testmain"
 qwspace="!@#$%^&*(){}[]|\,./<>?`~;:"
-savestat="150373234,testmain+38^testmain,%GTM-E-LOADRUNNING, Cannot ZLINK an active routine testmain"
+savestat="150373234,testmain+38^testmain,%YDB-E-LOADRUNNING, Cannot ZLINK an active routine testmain"
 unix=1
 var2="Literal one of labelcalledbystpmovetest2^test1"
 var22="This is labelcalledbystpmovetest2^test2"
@@ -226,11 +226,11 @@ GTM>
 echo routine name is more than 31 characters
 routine name is more than 31 characters
 ##SOURCE_PATH##/mumps -run x234567890123456789012345678901a
-%GTM-E-ZLINKFILE, Error while zlinking "x234567890123456789012345678901"
-%GTM-E-FILENOTFND, File x234567890123456789012345678901 not found
+%YDB-E-ZLINKFILE, Error while zlinking "x234567890123456789012345678901"
+%YDB-E-FILENOTFND, File x234567890123456789012345678901 not found
 ##SOURCE_PATH##/mumps -run x234567890123456789012345678901
-%GTM-E-ZLINKFILE, Error while zlinking "x234567890123456789012345678901"
-%GTM-E-FILENOTFND, File x234567890123456789012345678901 not found
+%YDB-E-ZLINKFILE, Error while zlinking "x234567890123456789012345678901"
+%YDB-E-FILENOTFND, File x234567890123456789012345678901 not found
 ls: No match.
 ##SOURCE_PATH##/mumps x234567890123456789012345678901a.m
 ls x234567890123456789012345678901.o
@@ -268,7 +268,7 @@ GTM>
 do ^x234567890123456789012345678901a
 
 GTM>
-%GTM-E-ZLINKFILE, Error while zlinking "x234567890123456789012345678901",%GTM-E-FILENOTFND, File x234567890123456789012345678901 not found
+%YDB-E-ZLINKFILE, Error while zlinking "x234567890123456789012345678901",%YDB-E-FILENOTFND, File x234567890123456789012345678901 not found
 		At M source location +1^GTM$DMOD
 
 GTM>
@@ -296,7 +296,7 @@ GTM>
 do ^x234567890123456789012345678901a
 
 GTM>
-%GTM-E-ZLINKFILE, Error while zlinking "x234567890123456789012345678901",%GTM-E-FILENOTFND, File x234567890123456789012345678901 not found
+%YDB-E-ZLINKFILE, Error while zlinking "x234567890123456789012345678901",%YDB-E-FILENOTFND, File x234567890123456789012345678901 not found
 		At M source location +1^GTM$DMOD
 
 GTM>
@@ -304,11 +304,11 @@ unset echo
 ###########################################################################################
 label names are more than 31 characters
 ##SOURCE_PATH##/mumps -run x234567890123456789012345678901a^toolong
-%GTM-E-JOBLABOFF, Label and offset not found in created process
+%YDB-E-JOBLABOFF, Label and offset not found in created process
 ##SOURCE_PATH##/mumps -run x234567890123456789012345678901b^toolong
-%GTM-E-JOBLABOFF, Label and offset not found in created process
+%YDB-E-JOBLABOFF, Label and offset not found in created process
 ##SOURCE_PATH##/mumps -run x234567890123456789012345678901c^toolong
-%GTM-E-JOBLABOFF, Label and offset not found in created process
+%YDB-E-JOBLABOFF, Label and offset not found in created process
 unset echo
 ###########################################################################################
 ##SOURCE_PATH##/mupip

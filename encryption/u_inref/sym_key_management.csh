@@ -4,6 +4,9 @@
 # Copyright (c) 2014-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -86,7 +89,7 @@ else
 	mv mumps.gld mumps.gld.1
 endif
 
-$gtm_tst/com/check_error_exist.csh test1.out GTM-E-CRYPTKEYFETCHFAILED
+$gtm_tst/com/check_error_exist.csh test1.out YDB-E-CRYPTKEYFETCHFAILED
 
 $gtm_tst/com/reset_gpg_agent.csh
 setenv GNUPGHOME $GNUPGHOME_OLD
@@ -168,10 +171,10 @@ if ("mupip_create" == $operation) then
 	$gtm_dist/mupip create >&! test3.out
 else if ("db" == $operation) then
 	$gtm_dist/mumps -run %XCMD 'set ^a(3)=$horolog' >&! test3.out
-	$gtm_tst/com/check_error_exist.csh test3.out GTM-E-CRYPTKEYFETCHFAILED >&! cryptkeyfetchfailed3.outx
+	$gtm_tst/com/check_error_exist.csh test3.out YDB-E-CRYPTKEYFETCHFAILED >&! cryptkeyfetchfailed3.outx
 	$grep -q "Expected hash" cryptkeyfetchfailed3.outx
 	if ($status) then
-		echo "TEST-E-FAIL, GTM-E-CRYPTKEYFETCHFAILED is not found in test3.out."
+		echo "TEST-E-FAIL, YDB-E-CRYPTKEYFETCHFAILED is not found in test3.out."
 	endif
 else
 	$gtm_dist/mumps -run %XCMD 'set x="file3" open x:(newversion:key="mumps '$iv'") use x write "hey",! close x' >&! test3.out
@@ -227,7 +230,7 @@ else
 	mv mumps.gld mumps.gld.4
 endif
 
-$gtm_tst/com/check_error_exist.csh test4.out GTM-E-CRYPTKEYFETCHFAILED
+$gtm_tst/com/check_error_exist.csh test4.out YDB-E-CRYPTKEYFETCHFAILED
 
 rm mumps_dat_key
 rm mumps_dat_key_link

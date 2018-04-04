@@ -3,6 +3,9 @@
 ; Copyright (c) 2012, 2015 Fidelity National Information	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -58,7 +61,7 @@ stop
 
 intrahandler(zstatus)
 	quit:zstatus'["TRIGDEFBAD"
-	write "GTM-E-TRIGDEFBAD encountered with $TLEVEL=",$TLEVEL," $TRESTART=",$TRESTART,!
+	write "YDB-E-TRIGDEFBAD encountered with $TLEVEL=",$TLEVEL," $TRESTART=",$TRESTART,!
 	quit
 
 	; load a process specific trigger by embedding $job in the trigger specification and name
@@ -88,7 +91,7 @@ action(line,option)
 	if $data(^debug) write $data(^aprivate(line,$job)),?2,trigspec,$char(9),"-->",$char(9)
 	if wraptp tstart ()
 	set ztrigret=$$direct^dollarztrigger("item",trigspec)
-	if ztrigret=0 write "%GTM-E-FAIL ^aprivate(",line,",$job)",! zshow "*"
+	if ztrigret=0 write "%YDB-E-FAIL ^aprivate(",line,",$job)",! zshow "*"
 	else  set:option=1 ^aprivate(line,$job)=$job zkill:option=2 ^aprivate(line,$job)
 	if wraptp tcommit
 	quit

@@ -39,15 +39,15 @@ GTM>
 		write $INC(@glvn,6)	; Expected: INVFCN error because of incomplete function name
 		       ^-----
 		At column 9, line 64, source module ##IN_TEST_PATH##/inref/incrbas.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		write $ZINC(@glvn,7)	; Expected: INVFCN error because of incomplete function name
 		       ^-----
 		At column 9, line 74, source module ##IN_TEST_PATH##/inref/incrbas.m
-%GTM-E-INVFCN, Invalid function name
+%YDB-E-INVFCN, Invalid function name
 		write $incr(@glvn,-1E-5a)	; Expected: RPARENMISSING error because of trailing "a" in -1E-5a
 		                       ^-----
 		At column 25, line 279, source module ##IN_TEST_PATH##/inref/incrbas.m
-%GTM-E-RPARENMISSING, Right parenthesis expected
+%YDB-E-RPARENMISSING, Right parenthesis expected
 
 Stepping STARTED
 incrbas:	quit
@@ -77,7 +77,7 @@ increrr1:	set $zstep=""
 increrr1:	set %zsaveio=$io use $p write !,"Stepping STOPPED",!  use %zsaveio
 
 Stepping STOPPED
-ZSTATUS=increrr1+6^incrbas,%GTM-E-INVFCN, Invalid function name
+ZSTATUS=increrr1+6^incrbas,%YDB-E-INVFCN, Invalid function name
 
 Stepping STARTED
 increrr1:	quit
@@ -103,7 +103,7 @@ increrr1:	set $zstep=""
 increrr1:	set %zsaveio=$io use $p write !,"Stepping STOPPED",!  use %zsaveio
 
 Stepping STOPPED
-ZSTATUS=increrr1+6^incrbas,%GTM-E-INVFCN, Invalid function name
+ZSTATUS=increrr1+6^incrbas,%YDB-E-INVFCN, Invalid function name
 
 Stepping STARTED
 increrr1:	quit
@@ -131,7 +131,7 @@ increrr2:	set $zstep=""
 increrr2:	set %zsaveio=$io use $p write !,"Stepping STOPPED",!  use %zsaveio
 
 Stepping STOPPED
-ZSTATUS=increrr2+6^incrbas,%GTM-E-INVFCN, Invalid function name
+ZSTATUS=increrr2+6^incrbas,%YDB-E-INVFCN, Invalid function name
 
 Stepping STARTED
 increrr2:	quit
@@ -157,7 +157,7 @@ increrr2:	set $zstep=""
 increrr2:	set %zsaveio=$io use $p write !,"Stepping STOPPED",!  use %zsaveio
 
 Stepping STOPPED
-ZSTATUS=increrr2+6^incrbas,%GTM-E-INVFCN, Invalid function name
+ZSTATUS=increrr2+6^incrbas,%YDB-E-INVFCN, Invalid function name
 
 Stepping STARTED
 increrr2:	quit
@@ -1100,7 +1100,7 @@ incr04c:	set $zstep=""
 incr04c:	set %zsaveio=$io use $p write !,"Stepping STOPPED",!  use %zsaveio
 
 Stepping STOPPED
-ZSTATUS=incr04c+14^incrbas,%GTM-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=incr04c+14^incrbas,%YDB-E-RPARENMISSING, Right parenthesis expected
 
 Stepping STARTED
 incr04c:	quit
@@ -1143,7 +1143,7 @@ incr04c:	set $zstep=""
 incr04c:	set %zsaveio=$io use $p write !,"Stepping STOPPED",!  use %zsaveio
 
 Stepping STOPPED
-ZSTATUS=incr04c+14^incrbas,%GTM-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=incr04c+14^incrbas,%YDB-E-RPARENMISSING, Right parenthesis expected
 
 Stepping STARTED
 incr04c:	quit

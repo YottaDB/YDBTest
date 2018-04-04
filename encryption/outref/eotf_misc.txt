@@ -87,8 +87,8 @@ Region DEFAULT : MUPIP REORG ENCRYPT finished
 
 $grep -vE 'AREG|DEFAULT|^$' reorg_encr_b_readonly.outx
 Region BREG : MUPIP REORG ENCRYPT started
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 $MUPIP set -encryptioncomplete -region "*" > & ! encrypt_complete_b_readonly.outx
 $grep 'a.dat' encrypt_complete_b_readonly.outx
 Database file ##TEST_PATH##/a.dat now has encryption marked complete
@@ -96,8 +96,8 @@ $grep 'mumps.dat' encrypt_complete_b_readonly.outx
 Database file ##TEST_PATH##/mumps.dat now has encryption marked complete
 
 $grep -vE 'a.dat|mumps.dat' encrypt_complete_b_readonly.outx
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
-%GTM-E-WCERRNOTCHG, Not all specified database files were changed
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
+%YDB-E-WCERRNOTCHG, Not all specified database files were changed
 unset verbose
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *

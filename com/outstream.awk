@@ -3,7 +3,7 @@
 # Copyright (c) 2005-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -196,8 +196,8 @@ BEGIN {
 	#Tue Jan 17 13:36:01 2016 : Shutting down with zero backlog
 	str = "Shutting down with zero backlog"
 	gsub(replicationtimeexpr str, replicationtimerepl str)
-	#Wed Feb 15 14:48:54 2006 : %GTM-E-REPLINSTSECMTCH,...
-	str = "%GTM-E-"
+	#Wed Feb 15 14:48:54 2006 : %YDB-E-REPLINSTSECMTCH,...
+	str = "%YDB-E-"
 	gsub(replicationtimeexpr str, replicationtimerepl str)
 	########################################################
 
@@ -346,8 +346,8 @@ BEGIN {
 		substatus = gsub(strexpr, strrepl);
 		if (substatus) $0="##FILTERED##"$0;
 	}
-	#%GTM-E-DBENDIAN, Database file /testarea1/kishoreh/tst_V994_dbg_03_060519_101438/multi_machine_3/tmp/tst_V994_dbg_03_060519_101606/endiancvt_3/tmp/mumps.dat is BIG endian on a LITTLE endian system
-	if ($0 ~ /GTM-E-DBENDIAN, Database file .* is [A-Z]* endian on a [A-Z]* endian system/)
+	#%YDB-E-DBENDIAN, Database file /testarea1/kishoreh/tst_V994_dbg_03_060519_101438/multi_machine_3/tmp/tst_V994_dbg_03_060519_101606/endiancvt_3/tmp/mumps.dat is BIG endian on a LITTLE endian system
+	if ($0 ~ /YDB-E-DBENDIAN, Database file .* is [A-Z]* endian on a [A-Z]* endian system/)
 	{
 		strexpr = "is [A-Z]* endian on a [A-Z]* endian system"
 		strrepl = "is ##ENDIAN## endian on a ##ENDIAN## endian system"

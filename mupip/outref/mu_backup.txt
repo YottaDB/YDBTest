@@ -38,8 +38,8 @@ GTM>
 #
 # Backup with a bad region
 #
-%GTM-E-NOREGION, REGION not found: FREELUNCH
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-NOREGION, REGION not found: FREELUNCH
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 DB file ##TEST_PATH##/backup.dat backed up in file ##TEST_PATH##/backup-dir/backup.dat
 ##SUSPEND_OUTPUT MM_FILE_NO_EXT
 Transactions up to 0x0000000000000402 are backed up.
@@ -330,12 +330,12 @@ GTM>
 PASS from fill5^myfill("ver")
 
 GTM>
-%GTM-E-MUSELFBKUP, Database file ##TEST_PATH##/backup.dat can not be backed upon itself
-%GTM-E-FILEEXISTS, File ./backup.dat already exists
+%YDB-E-MUSELFBKUP, Database file ##TEST_PATH##/backup.dat can not be backed upon itself
+%YDB-E-FILEEXISTS, File ./backup.dat already exists
 
 MUPIP cannot start backup with above errors
 
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

@@ -3,7 +3,7 @@
 #								#
 # Copyright 2010, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -20,7 +20,7 @@ source $gtm_tst/com/dbcreate.csh mumps 3
 
 $gtm_exe/mumps -run gentrigfiles^gtcmtriggers
 
-echo "# Expect GTM-E-UNIMPLOP error when triggers that go to remote (i.e gtcm client) regions is loaded"
+echo "# Expect YDB-E-UNIMPLOP error when triggers that go to remote (i.e gtcm client) regions is loaded"
 $MUPIP trigger -trig=remote.trg
 echo "# Loading triggers that go to the local region only should work fine"
 $MUPIP trigger -trig=local.trg

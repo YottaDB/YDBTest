@@ -4,7 +4,7 @@
 # Copyright (c) 2011-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -173,7 +173,7 @@ if ("ENCRYPT" == $test_encryption) then
 	source $gtm_tst/com/create_sym_key_for_multihost_use.csh
 endif
 
-# A lot of subtests expect GTM-E-REQRUNDOWN error. But running with journling on would throw GTM-E-REQRECOV error
+# A lot of subtests expect YDB-E-REQRUNDOWN error. But running with journling on would throw YDB-E-REQRECOV error
 # Until the individual tests are changed to handle both, disable journaling
 setenv gtm_test_jnl NON_SETJNL
 

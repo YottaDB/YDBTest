@@ -4,7 +4,7 @@
 # Copyright (c) 2006-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -240,7 +240,7 @@ eof
 #
 echo ""
 echo 'changing the whole data completely for ^testgbl("０１２３４５_３")'
-# A space in the data="" gives %GTM-E-CLIERR, Too many parameters. So use \20 instead
+# A space in the data="" gives %YDB-E-CLIERR, Too many parameters. So use \20 instead
 $DSE << eof
 overwrite -block=2E -data="ａ\20ｎｅｗ\20ｄａｔａ\20\ef\bd\96ａｌ" -offset=11B
 eof

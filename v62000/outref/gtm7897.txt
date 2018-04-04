@@ -35,12 +35,12 @@ Try mumps read
 
 Try mumps write
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/ro_mount/mumps.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/ro_mount/mumps.dat
 
 Try backup
 
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 
 Try extract
 
@@ -48,29 +48,29 @@ Try extract
 Try extract with freeze
 
 Cannot freeze the database
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 
 Try freeze
 
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
-%GTM-E-FREEZEERR, Error while trying to freeze region DEFAULT
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
-%GTM-E-FREEZEERR, Error while trying to unfreeze region DEFAULT
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
+%YDB-E-FREEZEERR, Error while trying to freeze region DEFAULT
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
+%YDB-E-FREEZEERR, Error while trying to unfreeze region DEFAULT
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 
 Try extend
 
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 
 Try integ tn_reset
 
 ----------
 Error DBRDONLY|DBTNRESET seen in integ_tn_reset_1.out as expected:
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
-%GTM-E-DBTNRESET, Cannot reset transaction number for this region
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
+%YDB-E-DBTNRESET, Cannot reset transaction number for this region
 ----------
 
 Try reorg
@@ -78,23 +78,23 @@ Try reorg
 Fill Factor:: Index blocks 100%: Data blocks 100%
    
 Global: GBL (region DEFAULT)
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
 %GTM-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
 
 Try rundown
 
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
 %GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
 
 Try set file
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/ro_mount/mumps.dat
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/ro_mount/mumps.dat
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 
 Try set region
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/ro_mount/mumps.dat
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/ro_mount/mumps.dat
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 
 Pass #1 Complete
 
@@ -119,12 +119,12 @@ Try mumps read
 
 Try mumps write
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/ro_mount/mumps.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/ro_mount/mumps.dat
 
 Try backup
 
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 
 Try extract
 
@@ -132,29 +132,29 @@ Try extract
 Try extract with freeze
 
 Cannot freeze the database
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 
 Try freeze
 
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
-%GTM-E-FREEZEERR, Error while trying to freeze region DEFAULT
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
-%GTM-E-FREEZEERR, Error while trying to unfreeze region DEFAULT
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
+%YDB-E-FREEZEERR, Error while trying to freeze region DEFAULT
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
+%YDB-E-FREEZEERR, Error while trying to unfreeze region DEFAULT
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 
 Try extend
 
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 
 Try integ tn_reset
 
 ----------
 Error DBRDONLY|DBTNRESET seen in integ_tn_reset_2.out as expected:
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
-%GTM-E-DBTNRESET, Cannot reset transaction number for this region
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
+%YDB-E-DBTNRESET, Cannot reset transaction number for this region
 ----------
 
 Try reorg
@@ -162,23 +162,23 @@ Try reorg
 Fill Factor:: Index blocks 100%: Data blocks 100%
    
 Global: GBL (region DEFAULT)
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
 %GTM-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
 
 Try rundown
 
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
 %GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
 
 Try set file
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/ro_mount/mumps.dat
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/ro_mount/mumps.dat
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 
 Try set region
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/ro_mount/mumps.dat
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/ro_mount/mumps.dat
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 
 Try journal extract
 
@@ -194,8 +194,8 @@ Try journal extract
 Try journal recover
 
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-FILENOTFND, File ##TEST_PATH##/rw_files/mumps.dat not found
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-FILENOTFND, File ##TEST_PATH##/rw_files/mumps.dat not found
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
 Try journal verify
@@ -232,12 +232,12 @@ Try mumps read
 
 Try mumps write
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/ro_mount/mumps.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/ro_mount/mumps.dat
 
 Try backup
 
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 
 Try extract
 
@@ -245,29 +245,29 @@ Try extract
 Try extract with freeze
 
 Cannot freeze the database
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 
 Try freeze
 
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
-%GTM-E-FREEZEERR, Error while trying to freeze region DEFAULT
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
-%GTM-E-FREEZEERR, Error while trying to unfreeze region DEFAULT
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
+%YDB-E-FREEZEERR, Error while trying to freeze region DEFAULT
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
+%YDB-E-FREEZEERR, Error while trying to unfreeze region DEFAULT
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 
 Try extend
 
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 
 Try integ tn_reset
 
 ----------
 Error DBRDONLY|DBTNRESET seen in integ_tn_reset_3.out as expected:
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
-%GTM-E-DBTNRESET, Cannot reset transaction number for this region
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
+%YDB-E-DBTNRESET, Cannot reset transaction number for this region
 ----------
 
 Try reorg
@@ -275,23 +275,23 @@ Try reorg
 Fill Factor:: Index blocks 100%: Data blocks 100%
    
 Global: GBL (region DEFAULT)
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
 %GTM-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
 
 Try rundown
 
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
 %GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
 
 Try set file
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/ro_mount/mumps.dat
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/ro_mount/mumps.dat
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 
 Try set region
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/ro_mount/mumps.dat
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/ro_mount/mumps.dat
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 
 Try journal extract
 
@@ -307,8 +307,8 @@ Try journal extract
 Try journal recover
 
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-FILENOTFND, File ##TEST_PATH##/rw_files/mumps.dat not found
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-FILENOTFND, File ##TEST_PATH##/rw_files/mumps.dat not found
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
 Try journal verify
@@ -347,12 +347,12 @@ Try mumps read
 
 Try mumps write
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/ro_mount/mumps.dat
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/ro_mount/mumps.dat
 
 Try backup
 
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 
 Try extract
 
@@ -360,28 +360,28 @@ Try extract
 Try extract with freeze
 
 %GTM-I-FREEZE, Region: DEFAULT is already frozen
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 
 Try freeze
 
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
-%GTM-E-FREEZEERR, Error while trying to freeze region DEFAULT
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
-%GTM-E-FREEZEERR, Error while trying to unfreeze region DEFAULT
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
+%YDB-E-FREEZEERR, Error while trying to freeze region DEFAULT
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
+%YDB-E-FREEZEERR, Error while trying to unfreeze region DEFAULT
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 
 Try extend
 
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 
 Try integ tn_reset
 
 ----------
 Error DBRDONLY|DBTNRESET seen in integ_tn_reset_4.out as expected:
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
-%GTM-E-DBTNRESET, Cannot reset transaction number for this region
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
+%YDB-E-DBTNRESET, Cannot reset transaction number for this region
 ----------
 
 Try reorg
@@ -389,23 +389,23 @@ Try reorg
 Fill Factor:: Index blocks 100%: Data blocks 100%
    
 Global: GBL (region DEFAULT)
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
 %GTM-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
 
 Try rundown
 
-%GTM-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
+%YDB-E-DBRDONLY, Database file ##TEST_PATH##/ro_mount/mumps.dat read only
 %GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
 
 Try set file
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/ro_mount/mumps.dat
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/ro_mount/mumps.dat
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 
 Try set region
 
-%GTM-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/ro_mount/mumps.dat
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/ro_mount/mumps.dat
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 
 Try journal extract
 
@@ -421,8 +421,8 @@ Try journal extract
 Try journal recover
 
 ##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-E-FILENOTFND, File ##TEST_PATH##/rw_files/mumps.dat not found
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-FILENOTFND, File ##TEST_PATH##/rw_files/mumps.dat not found
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
 Try journal verify

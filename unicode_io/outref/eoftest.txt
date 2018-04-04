@@ -59,7 +59,7 @@ filename=utf8-1.txt : encoding=UTF-8
 -> USE "utf8-1.txt":(EXCEPTION="set err=""use"" goto ioerror")
 =================================================
 Source of error was use
-150381066,badFileRead+2^eoftest,%GTM-E-BADCHAR, $ZCHAR(226,130) is not a valid character in the UTF-8 encoding form
+150381066,badFileRead+2^eoftest,%YDB-E-BADCHAR, $ZCHAR(226,130) is not a valid character in the UTF-8 encoding form
 continue...
 =================================================
 str="This will be truncated by last 1 byte -١٢٣٤٥٧₁₂₃"
@@ -69,7 +69,7 @@ filename=utf8-2.txt : encoding=UTF-8
 -> USE "utf8-2.txt":(EXCEPTION="set err=""use"" goto ioerror")
 =================================================
 Source of error was use
-150381066,badFileRead+2^eoftest,%GTM-E-BADCHAR, $ZCHAR(239) is not a valid character in the UTF-8 encoding form
+150381066,badFileRead+2^eoftest,%YDB-E-BADCHAR, $ZCHAR(239) is not a valid character in the UTF-8 encoding form
 continue...
 =================================================
 str="This will be truncated by last 2 byte -١٢٣٤٥٧₁₂₃₄０１２３４５６"
@@ -79,7 +79,7 @@ filename=utf8-3.txt : encoding=UTF-8
 -> USE "utf8-3.txt":(EXCEPTION="set err=""use"" goto ioerror")
 =================================================
 Source of error was use
-150381066,badFileRead+2^eoftest,%GTM-E-BADCHAR, $ZCHAR(244) is not a valid character in the UTF-8 encoding form
+150381066,badFileRead+2^eoftest,%YDB-E-BADCHAR, $ZCHAR(244) is not a valid character in the UTF-8 encoding form
 continue...
 =================================================
 str="This will be truncated by last 3 byte -١٢٣٤٥٧₁₂₃₄０１２３４５６７乴亐亯仑件伞佉佷"_$C(1111110,1111111)
@@ -89,7 +89,7 @@ filename=utf16.txt : encoding=UTF-16
 -> USE "utf16.txt":(EXCEPTION="set err=""use"" goto ioerror")
 =================================================
 Source of error was use
-150381066,badFileRead+2^eoftest,%GTM-E-BADCHAR, $ZCHAR(219,253,220) is not a valid character in the UTF-16BE encoding form
+150381066,badFileRead+2^eoftest,%YDB-E-BADCHAR, $ZCHAR(219,253,220) is not a valid character in the UTF-16BE encoding form
 continue...
 =================================================
 str="This will be truncated by last 1 byte -١٢٣٤٥٧₁₂₃₄０１２３４５６７乴亐亯仑件伞佉佷"_$C(1111110,1111111)
@@ -99,7 +99,7 @@ filename=utf16_BE.txt : encoding=UTF-16BE
 -> USE "utf16_BE.txt":(EXCEPTION="set err=""use"" goto ioerror")
 =================================================
 Source of error was use
-150381066,badFileRead+2^eoftest,%GTM-E-BADCHAR, $ZCHAR(219,253,220) is not a valid character in the UTF-16BE encoding form
+150381066,badFileRead+2^eoftest,%YDB-E-BADCHAR, $ZCHAR(219,253,220) is not a valid character in the UTF-16BE encoding form
 continue...
 =================================================
 str="This will be truncated by last 1 byte -١٢٣٤٥٧₁₂₃₄０１２３４５６７乴亐亯仑件伞佉佷"_$C(1111110,1111111)
@@ -109,7 +109,7 @@ filename=utf16_LE.txt : encoding=UTF-16LE
 -> USE "utf16_LE.txt":(EXCEPTION="set err=""use"" goto ioerror")
 =================================================
 Source of error was use
-150381066,badFileRead+2^eoftest,%GTM-E-BADCHAR, $ZCHAR(253,219,72) is not a valid character in the UTF-16LE encoding form
+150381066,badFileRead+2^eoftest,%YDB-E-BADCHAR, $ZCHAR(253,219,72) is not a valid character in the UTF-16LE encoding form
 continue...
 =================================================
 str="This will be truncated by last 1 byte -١٢٣٤٥٧₁₂₃₄０１２３４５６７乴亐亯仑件伞佉佷"_$C(1111110,1111111)
@@ -119,7 +119,7 @@ filename=utf16-Surrogate.txt : encoding=UTF-16
 -> USE "utf16-Surrogate.txt":(EXCEPTION="set err=""use"" goto ioerror")
 =================================================
 Source of error was use
-150381066,badFileRead+2^eoftest,%GTM-E-BADCHAR, $ZCHAR(216,0) is not a valid character in the UTF-16BE encoding form
+150381066,badFileRead+2^eoftest,%YDB-E-BADCHAR, $ZCHAR(216,0) is not a valid character in the UTF-16BE encoding form
 continue...
 =================================================
 str="This will be truncated by last 2 bytes of a surrogate pair -١٢٣٤٥٧₁₂₃₄０１２３４５６７乴亐亯仑件伞佉佷𐀀𐀁"
@@ -193,7 +193,7 @@ zb=""
 filename=utf16.txt : encoding=UTF-16
 -> OPEN "utf16.txt":(READONLY:RECORDSIZE=32000:CHSET="UTF-8")
 -> USE "utf16.txt"
-STAT=badFileOpenRead+10^eoftest,%GTM-E-BADCHAR, $ZCHAR(254) is not a valid character in the UTF-8 encoding form
+STAT=badFileOpenRead+10^eoftest,%YDB-E-BADCHAR, $ZCHAR(254) is not a valid character in the UTF-8 encoding form
 str=""
 zb=""
 -> OPEN "utf16.txt":(READONLY:RECORDSIZE=32000:CHSET="UTF-16")
@@ -205,7 +205,7 @@ zb=""
 str="█▇▆▅▄▃▂▁"_$C(0)
 zb=""
 -> OPEN "utf16.txt":(READONLY:RECORDSIZE=32000:CHSET="UTF-16LE")
-STAT=open+13^io,%GTM-E-BOMMISMATCH, UTF-16BE Byte Order Marker found when UTF-16LE character set specified
+STAT=open+13^io,%YDB-E-BOMMISMATCH, UTF-16BE Byte Order Marker found when UTF-16LE character set specified
 -> OPEN "utf16.txt":(READONLY:RECORDSIZE=32000:CHSET="M")
 -> USE "utf16.txt"
 str=$ZCH(254,255)_"%"_$ZCH(136)_"%"_$ZCH(135)_"%"_$ZCH(134)_"%"_$ZCH(133)_"%"_$ZCH(132)_"%"_$ZCH(131)_"%"_$ZCH(130)_"%"_$ZCH(129)_$C(0,0,0)
@@ -213,7 +213,7 @@ zb=""
 filename=utf16_BE.txt : encoding=UTF-16BE
 -> OPEN "utf16_BE.txt":(READONLY:RECORDSIZE=32000:CHSET="UTF-8")
 -> USE "utf16_BE.txt"
-STAT=badFileOpenRead+10^eoftest,%GTM-E-BADCHAR, $ZCHAR(136) is not a valid character in the UTF-8 encoding form
+STAT=badFileOpenRead+10^eoftest,%YDB-E-BADCHAR, $ZCHAR(136) is not a valid character in the UTF-8 encoding form
 str="%"
 zb=""
 -> OPEN "utf16_BE.txt":(READONLY:RECORDSIZE=32000:CHSET="UTF-16")
@@ -235,7 +235,7 @@ zb=""
 filename=utf16_LE.txt : encoding=UTF-16LE
 -> OPEN "utf16_LE.txt":(READONLY:RECORDSIZE=32000:CHSET="UTF-8")
 -> USE "utf16_LE.txt"
-STAT=badFileOpenRead+10^eoftest,%GTM-E-BADCHAR, $ZCHAR(136) is not a valid character in the UTF-8 encoding form
+STAT=badFileOpenRead+10^eoftest,%YDB-E-BADCHAR, $ZCHAR(136) is not a valid character in the UTF-8 encoding form
 str=""
 zb=""
 -> OPEN "utf16_LE.txt":(READONLY:RECORDSIZE=32000:CHSET="UTF-16")

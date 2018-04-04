@@ -29,7 +29,7 @@ GDE>
 %GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
 Multiple database regions cannot be journalled in a single file
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ====================================================
 Test Case 18
 default journal filename
@@ -83,9 +83,9 @@ User specified journal filename
 ##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/test3.mjl is renamed to ##TEST_PATH##/test3.mjl_##TIMESTAMP##
 %GTM-I-JNLCREATE, Journal file ##TEST_PATH##/test3.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-%GTM-E-FILEEXISTS, File ##TEST_PATH##/dummy.mjl already exists
-%GTM-E-JNLNOCREATE, Journal file ##TEST_PATH##/dummy.mjl not created
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-FILEEXISTS, File ##TEST_PATH##/dummy.mjl already exists
+%YDB-E-JNLNOCREATE, Journal file ##TEST_PATH##/dummy.mjl not created
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 %GTM-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 ====================================================
@@ -201,9 +201,9 @@ Journal filename cycle
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 %GTM-I-JNLCREATE, Journal file ##TEST_PATH##/j3.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
 %GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-%GTM-E-FILEEXISTS, File ##TEST_PATH##/j1.mjl already exists
-%GTM-E-JNLNOCREATE, Journal file ##TEST_PATH##/j1.mjl not created
-%GTM-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-E-FILEEXISTS, File ##TEST_PATH##/j1.mjl already exists
+%YDB-E-JNLNOCREATE, Journal file ##TEST_PATH##/j1.mjl not created
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ====================================================
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *

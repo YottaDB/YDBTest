@@ -41,13 +41,13 @@ GTM>
 GTM>
 
 GTM>
-%GTM-E-SCNDDBNOUPD, Database Updates not allowed on the secondary
+%YDB-E-SCNDDBNOUPD, Database Updates not allowed on the secondary
 		At M source location simpleinstanceupdate+8^simpleinstanceupdate
 
 GTM>
 ----------
 Error SCNDDBNOUPD seen in msr_execute_##FILTERED##NO.out as expected:
-%GTM-E-SCNDDBNOUPD, Database Updates not allowed on the secondary
+%YDB-E-SCNDDBNOUPD, Database Updates not allowed on the secondary
 ----------
 ==Executing MULTISITE_REPLIC 'START INST1 INST2 RP'==
 Starting Primary Source Server in ##TEST_PATH##
@@ -67,10 +67,10 @@ Source Server already ACTIVE, not changing mode
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST4 $MUPIP replic -source -start -passive -rootprimary -log=$gtm_test_msr_DBDIR1/pass.log -instsecondary=__RCV_INSTNAME__'==
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating START of source server for secondary instance [INSTANCE4]
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST4 set msr_dont_chk_stat ; $MUPIP replic -source -activate -instsecondary=__RCV_INSTNAME__ -propagateprimary -secondary=__RCV_HOST__:1234'==
-%GTM-E-PRIMARYISROOT, Attempted operation not valid on root primary instance INSTANCE1
+%YDB-E-PRIMARYISROOT, Attempted operation not valid on root primary instance INSTANCE1
 ----------
 Error PRIMARYISROOT seen in msr_execute_##FILTERED##NO.out as expected:
-%GTM-E-PRIMARYISROOT, Attempted operation not valid on root primary instance INSTANCE1
+%YDB-E-PRIMARYISROOT, Attempted operation not valid on root primary instance INSTANCE1
 ----------
 ###################################################################
 ==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST4'==
@@ -85,25 +85,25 @@ GTM>
 GTM>
 
 GTM>
-%GTM-E-SCNDDBNOUPD, Database Updates not allowed on the secondary
+%YDB-E-SCNDDBNOUPD, Database Updates not allowed on the secondary
 		At M source location simpleinstanceupdate+8^simpleinstanceupdate
 
 GTM>
 ----------
 Error SCNDDBNOUPD seen in msr_execute_##FILTERED##NO.out as expected:
-%GTM-E-SCNDDBNOUPD, Database Updates not allowed on the secondary
+%YDB-E-SCNDDBNOUPD, Database Updates not allowed on the secondary
 ----------
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST2 set msr_dont_chk_stat; ##SOURCE_PATH##/mupip replic -source -deactivate -instsecondary=__RCV_INSTNAME__ -propagateprimary'==
-%GTM-E-PRIMARYISROOT, Attempted operation not valid on root primary instance INSTANCE1
+%YDB-E-PRIMARYISROOT, Attempted operation not valid on root primary instance INSTANCE1
 ----------
 Error PRIMARYISROOT seen in msr_execute_##FILTERED##NO.out as expected:
-%GTM-E-PRIMARYISROOT, Attempted operation not valid on root primary instance INSTANCE1
+%YDB-E-PRIMARYISROOT, Attempted operation not valid on root primary instance INSTANCE1
 ----------
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST2 RCV=INST3 set msr_dont_chk_stat; ##SOURCE_PATH##/mupip replic -source -deactivate -instsecondary=__RCV_INSTNAME__ -rootprimary >& err_src_shut.tmp; cat err_src_shut.tmp'==
-%GTM-E-PRIMARYNOTROOT, Attempted operation not valid on non-root primary instance INSTANCE2
+%YDB-E-PRIMARYNOTROOT, Attempted operation not valid on non-root primary instance INSTANCE2
 ----------
 Error PRIMARYNOTROOT seen in msr_execute_##FILTERED##NO.out as expected:
-%GTM-E-PRIMARYNOTROOT, Attempted operation not valid on non-root primary instance INSTANCE2
+%YDB-E-PRIMARYNOTROOT, Attempted operation not valid on non-root primary instance INSTANCE2
 ----------
 ###################################################################
 Stop the servers - backup the files - restart the servers
@@ -136,16 +136,16 @@ GTM>
 
 GTM>
 ==Executing MULTISITE_REPLIC 'RUN INST1 set msr_dont_chk_stat ; $MUPIP replic -instance_create -name=CANIRECREATE'==
-%GTM-E-REPLINSTSTNDALN, Could not get exclusive access to replication instance file ##TEST_PATH##/mumps.repl
+%YDB-E-REPLINSTSTNDALN, Could not get exclusive access to replication instance file ##TEST_PATH##/mumps.repl
 ----------
 Error REPLINSTSTNDALN seen in msr_execute_##FILTERED##NO.out as expected:
-%GTM-E-REPLINSTSTNDALN, Could not get exclusive access to replication instance file ##TEST_PATH##/mumps.repl
+%YDB-E-REPLINSTSTNDALN, Could not get exclusive access to replication instance file ##TEST_PATH##/mumps.repl
 ----------
 ==Executing MULTISITE_REPLIC 'RUN INST2 set msr_dont_chk_stat ; setenv gtm_white_box_test_case_enable 1 ; setenv gtm_white_box_test_case_number 134 ; $MUPIP replic -instance_create -name=CANIRECREATE'==
-##TEST_AWK%GTM-E-REPLINSTSTNDALN, Could not get exclusive access to replication instance file .*/instance2/mumps.repl
+##TEST_AWK%YDB-E-REPLINSTSTNDALN, Could not get exclusive access to replication instance file .*/instance2/mumps.repl
 ----------
 Error REPLINSTSTNDALN seen in msr_execute_##FILTERED##NO.out as expected:
-##TEST_AWK%GTM-E-REPLINSTSTNDALN, Could not get exclusive access to replication instance file .*/instance2/mumps.repl
+##TEST_AWK%YDB-E-REPLINSTSTNDALN, Could not get exclusive access to replication instance file .*/instance2/mumps.repl
 ----------
 ==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
 ==Executing MULTISITE_REPLIC 'STOP INST2'==
@@ -184,22 +184,22 @@ TEST-E-MULTISITE replic action failed.Pls. check msr_execute_##FILTERED##NO.csh 
 ##TEST_AWK==Executing MULTISITE_REPLIC 'RUN INST2 .*passive_##TIMESTAMP##.log REPLINSTDBMATCH'==
 ----------
 Error REPLINSTDBMATCH seen in ##FILTERED##passive_##TIMESTAMP##.log as expected:
-##TEST_AWK%GTM-E-REPLINSTDBMATCH, Replication instance file .*/instance2/mumps.repl has seqno .0x000000000000000B. while database has a different seqno .0x0000000000000015.
+##TEST_AWK%YDB-E-REPLINSTDBMATCH, Replication instance file .*/instance2/mumps.repl has seqno .0x000000000000000B. while database has a different seqno .0x0000000000000015.
 ----------
 ##TEST_AWK==Executing MULTISITE_REPLIC 'RUN INST2 .*START_##TIMESTAMP##.out NOJNLPOOL'==
 ----------
 Error NOJNLPOOL seen in ##FILTERED##START_##TIMESTAMP##.out as expected:
-##TEST_AWK%GTM-E-NOJNLPOOL, No journal pool info found in the replication instance of .*/instance2/mumps.repl
+##TEST_AWK%YDB-E-NOJNLPOOL, No journal pool info found in the replication instance of .*/instance2/mumps.repl
 ----------
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST2 set msr_dont_chk_stat ; $gtm_tst/com/mupip_rollback.csh -backward -fetchresync=__RCV_PORTNO__ -losttrans=fetch.glo "*" >&! rollback_REPLINSTDBMATCH.out'==
 ##TEST_AWK==Executing MULTISITE_REPLIC 'RUN INST2 .*rollback_REPLINSTDBMATCH.out REPLINSTDBMATCH MUNOACTION'==
 ----------
 Error REPLINSTDBMATCH seen in rollback_REPLINSTDBMATCH.out as expected:
-##TEST_AWK%GTM-E-REPLINSTDBMATCH, Replication instance file .*/instance2/mumps.repl has seqno .0x000000000000000B. while database has a different seqno .0x0000000000000015.
+##TEST_AWK%YDB-E-REPLINSTDBMATCH, Replication instance file .*/instance2/mumps.repl has seqno .0x000000000000000B. while database has a different seqno .0x0000000000000015.
 ----------
 ----------
 Error MUNOACTION seen in rollback_REPLINSTDBMATCH.out as expected:
-%GTM-E-MUNOACTION, MUPIP unable to perform requested action
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ----------
 ###################################################################
 ## - Restore db from backup (time2) on INST2, cut new journal files
@@ -216,7 +216,7 @@ Error MUNOACTION seen in rollback_REPLINSTDBMATCH.out as expected:
 ##TEST_AWK==Executing MULTISITE_REPLIC 'RUN INST2 .*RCVR_##TIMESTAMP##.log REPLINSTNOHIST'==
 ----------
 Error REPLINSTNOHIST seen in ##FILTERED##RCVR_##TIMESTAMP##.log as expected:
-##TEST_AWK%GTM-E-REPLINSTNOHIST, History information for seqno 20 .0x14. not found in replication instance file .*/instance2/mumps.repl
+##TEST_AWK%YDB-E-REPLINSTNOHIST, History information for seqno 20 .0x14. not found in replication instance file .*/instance2/mumps.repl
 ----------
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST2 SRC=INST1 $MUPIP replic -source -shutdown -timeout=0 -instsecondary=__SRC_INSTNAME__  >&! passivesrc_shut_INST1INST2.out'==
 ==Executing MULTISITE_REPLIC 'REFRESHLINK INST1 INST2'==
@@ -247,7 +247,7 @@ Offset 1040 [0x00000410] : Old Value = 0 [0x0] : New Value = 16 [0x10] : Size = 
 ==Executing MULTISITE_REPLIC 'RUN INST5 ##TEST_COM_PATH##/check_error_exist.csh ##FILTERED##RCVR_##TIMESTAMP##.log REPLINSTNOHIST'==
 ----------
 Error REPLINSTNOHIST seen in ##FILTERED##RCVR_##TIMESTAMP##.log as expected:
-##TEST_AWK%GTM-E-REPLINSTNOHIST, History information for seqno 15 .0xf. not found in replication instance file .*/instance5/mumps.repl
+##TEST_AWK%YDB-E-REPLINSTNOHIST, History information for seqno 15 .0xf. not found in replication instance file .*/instance5/mumps.repl
 ----------
 ==Executing MULTISITE_REPLIC 'REFRESHLINK INST1 INST5'==
 ==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST5'==
@@ -267,7 +267,7 @@ Error REPLINSTNOHIST seen in ##FILTERED##RCVR_##TIMESTAMP##.log as expected:
 ==Executing MULTISITE_REPLIC 'RUN INST2 ##TEST_COM_PATH##/check_error_exist.csh ##FILTERED##SRC_##TIMESTAMP##.log REPLINSTNOHIST'==
 ----------
 Error REPLINSTNOHIST seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
-##TEST_AWK%GTM-E-REPLINSTNOHIST, History information for seqno 20 .0x14. not found in replication instance file .*/instance2/mumps.repl
+##TEST_AWK%YDB-E-REPLINSTNOHIST, History information for seqno 20 .0x14. not found in replication instance file .*/instance2/mumps.repl
 ##TEST_AWK... ... .. ..:..:.. 20.. : Connection reset due to above REPLINSTNOHIST error
 ----------
 ==Executing MULTISITE_REPLIC 'CHECKHEALTH INST2 INST3 SRC'==
@@ -306,11 +306,11 @@ Shutting down Primary Source Server Server in ##FILTERED##_REMOTE_TEST_PATH_/ins
 TEST-E-MULTISITE replic action failed.Pls. check msr_execute_##FILTERED##NO.csh and all logs related to ##FILTERED## ##TIMESTAMP##
 ----------
 Error REPLINSTDBMATCH seen in ##TEST_PATH##/##FILTERED##SRC_##TIMESTAMP##.log as expected:
-%GTM-E-REPLINSTDBMATCH, Replication instance file ##TEST_PATH##/mumps.repl has seqno [0x000000000000000B] while database has a different seqno [0x0000000000000020]
+%YDB-E-REPLINSTDBMATCH, Replication instance file ##TEST_PATH##/mumps.repl has seqno [0x000000000000000B] while database has a different seqno [0x0000000000000020]
 ----------
 ----------
 Error NOJNLPOOL seen in ##TEST_PATH##/##FILTERED##START_##TIMESTAMP##.out as expected:
-%GTM-E-NOJNLPOOL, No journal pool info found in the replication instance of ##TEST_PATH##/mumps.repl
+%YDB-E-NOJNLPOOL, No journal pool info found in the replication instance of ##TEST_PATH##/mumps.repl
 ----------
 ==Executing MULTISITE_REPLIC 'STOPRCV INST1 INST2'==
 ##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.repl is renamed to ##TEST_PATH##/mumps.repl_##TIMESTAMP##
@@ -327,7 +327,7 @@ SLT # 1 : Secondary Instance Name            SOMEWRONGNAME
 ==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
 ----------
 Error REPLINSTSECMTCH seen in ##TEST_PATH##/##FILTERED##SRC_##TIMESTAMP##.log as expected:
-##FILTERED##... ... .. ..:..:.. 20.. : %GTM-E-REPLINSTSECMTCH, Secondary replication instance name INSTANCE2 sent by receiver does not match SOMEWRONGNAME specified at source server startup
+##FILTERED##... ... .. ..:..:.. 20.. : %YDB-E-REPLINSTSECMTCH, Secondary replication instance name INSTANCE2 sent by receiver does not match SOMEWRONGNAME specified at source server startup
 ----------
 ==Executing MULTISITE_REPLIC 'REFRESHLINK INST1 INST2'==
 ==Executing MULTISITE_REPLIC 'STOP ALL_LINKS'==

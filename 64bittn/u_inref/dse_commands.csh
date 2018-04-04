@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2005, 2013 Fidelity Information Services, Inc	#
+# Copyright 2005, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -111,7 +114,7 @@ $DSE change -fileheader -db_write_fmt="V3"					# Should issue error message sinc
 echo "====================   MBM_SIZE   ===================="
 echo ""
 $DSE dump -fileheader |&  $tst_awk '/Master Bitmap Size/ { print $1,$2,$3,$4}'	# should display 64
-$DSE change -fileheader -mbm_size=abe0						# should issue "%GTM-E-CLIERR, Unrecognized value: abe0, Decimal number expected"
+$DSE change -fileheader -mbm_size=abe0						# should issue "%YDB-E-CLIERR, Unrecognized value: abe0, Decimal number expected"
 $DSE dump -fileheader |&  $tst_awk '/Master Bitmap Size/ { print $1,$2,$3,$4}'	# should display 64
 $DSE change -fileheader -mbm_size=32
 $DSE dump -fileheader |&  $tst_awk '/Master Bitmap Size/ { print $1,$2,$3,$4}'	# should display 32
@@ -163,7 +166,7 @@ $GTM <<gtm_eof
 set ^x=1
 halt
 gtm_eof
-	#should issue GTM-E-TNTOOLARGE error
+	#should issue YDB-E-TNTOOLARGE error
 
 $gtm_tst/com/dbcheck.csh -noonline
 $gtm_tst/com/backup_dbjnl.csh dse_change_fileheader
@@ -182,7 +185,7 @@ $GTM << gtm_eof
 set ^x=1
 halt
 gtm_eof
-	# should issue GTM-E-TNTOOLARGE error
+	# should issue YDB-E-TNTOOLARGE error
 
 $DSE change -fileheader -current_tn=00000000F5FFFFFF
 $DSE change -fileheader -warn_max_tn=00000000F5FFFFFF
