@@ -81,11 +81,11 @@ echo '$gtm_tst/com/mupip_rollback.csh -resync=1 -lost=alllost.glo *'
 $gtm_tst/com/mupip_rollback.csh -resync=1 -lost=alllost.glo "*" >&! rollback_resync1.out
 set rollback_status = $status
 # Only P->Q will have the below additional line. Check for it and filter it out to make the reference file consistent.
-# %GTM-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  0 : Seqno 1 [0x0000000000000001]
+# %YDB-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  0 : Seqno 1 [0x0000000000000001]
 if (2 == $test_replic_suppl_type) then
-	$grep "GTM-I-RLBKSTRMSEQ" rollback_resync1.out >& /dev/null
+	$grep "YDB-I-RLBKSTRMSEQ" rollback_resync1.out >& /dev/null
 	@ rollback_status = $rollback_status + $status
-	$grep -v "GTM-I-RLBKSTRMSEQ" rollback_resync1.out
+	$grep -v "YDB-I-RLBKSTRMSEQ" rollback_resync1.out
 else
 	cat rollback_resync1.out
 endif

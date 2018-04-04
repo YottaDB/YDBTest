@@ -12,7 +12,7 @@ Test 1: #LABEL incorrect. Expect YDB-E-TRIGDEFBAD
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%YDB-E-TRIGDEFBAD, Trigger initialization failed for global ^a. Error while processing ^#t("a","#LABEL"),%GTM-I-TEXT, #LABEL field is not ##FILTERED##
+%YDB-E-TRIGDEFBAD, Trigger initialization failed for global ^a. Error while processing ^#t("a","#LABEL"),%YDB-I-TEXT, #LABEL field is not ##FILTERED##
 
 
 ###################################################################
@@ -22,7 +22,7 @@ Test 2:  #CYCLE missing. Expect YDB-E-TRIGDEFBAD
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%YDB-E-TRIGDEFBAD, Trigger initialization failed for global ^a. Error while processing ^#t("a","#CYCLE"),%GTM-I-TEXT, #CYCLE field is missing
+%YDB-E-TRIGDEFBAD, Trigger initialization failed for global ^a. Error while processing ^#t("a","#CYCLE"),%YDB-I-TEXT, #CYCLE field is missing
 
 
 ###################################################################
@@ -32,7 +32,7 @@ Test 3: #CYCLE = 0. Expect YDB-E-TRIGDEFBAD
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%YDB-E-TRIGDEFBAD, Trigger initialization failed for global ^a. Error while processing ^#t("a","#CYCLE"),%GTM-I-TEXT, #CYCLE field is negative
+%YDB-E-TRIGDEFBAD, Trigger initialization failed for global ^a. Error while processing ^#t("a","#CYCLE"),%YDB-I-TEXT, #CYCLE field is negative
 
 
 ###################################################################
@@ -42,7 +42,7 @@ Test 4: #COUNT missing. Expect YDB-E-TRIGDEFBAD
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%YDB-E-TRIGDEFBAD, Trigger initialization failed for global ^a. Error while processing ^#t("a","#COUNT"),%GTM-I-TEXT, #COUNT field is missing
+%YDB-E-TRIGDEFBAD, Trigger initialization failed for global ^a. Error while processing ^#t("a","#COUNT"),%YDB-I-TEXT, #COUNT field is missing
 
 
 ###################################################################
@@ -52,7 +52,7 @@ Test 5: #COUNT = 0. Expect YDB-E-TRIGDEFBAD
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%YDB-E-TRIGDEFBAD, Trigger initialization failed for global ^a. Error while processing ^#t("a","#COUNT"),%GTM-I-TEXT, #COUNT field is negative
+%YDB-E-TRIGDEFBAD, Trigger initialization failed for global ^a. Error while processing ^#t("a","#COUNT"),%YDB-I-TEXT, #COUNT field is negative
 
 
 ###################################################################

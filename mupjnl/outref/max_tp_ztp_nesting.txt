@@ -14,11 +14,11 @@ GTM>
 GTM>
 $MUPIP journal -recov -back -since=\"$time0\" mumps.mjl -lost=mumps.lost1 -broken=mumps.broken1 -extract=mumps.mjf1 > & recov_back.out
 $grep -v MUJNLSTAT recov_back.out
-%GTM-I-NOPREVLINK, Journal file ##TEST_PATH##/ztp/mumps.mjl has a null previous link
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/ztp/mumps.mjl is renamed to ##TEST_PATH##/ztp/mumps.mjl_##TIMESTAMP##
-%GTM-I-FILECREATE, Journal extract file mumps.mjf1 created
-%GTM-I-FILECREATE, Broken transactions extract file mumps.broken1 created
-%GTM-I-FILECREATE, Lost transactions extract file mumps.lost1 created
+%YDB-I-NOPREVLINK, Journal file ##TEST_PATH##/ztp/mumps.mjl has a null previous link
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/ztp/mumps.mjl is renamed to ##TEST_PATH##/ztp/mumps.mjl_##TIMESTAMP##
+%YDB-I-FILECREATE, Journal extract file mumps.mjf1 created
+%YDB-I-FILECREATE, Broken transactions extract file mumps.broken1 created
+%YDB-I-FILECREATE, Lost transactions extract file mumps.lost1 created
 
 -------------------------------------------------------------------------------
 ##FILTERED##SHOW output for journal file ##TEST_PATH##/ztp/mumps.mjl_##TIMESTAMP##
@@ -57,9 +57,9 @@ cp cp.dat mumps.dat
 cp cp.mjl mumps.mjl
 $MUPIP journal -recov -forw mumps.mjl -verify -lost=mumps.lost2 -broken=mumps.broken2 -extract=mumps.mjf2 > & ! recov_forw.out
 $grep -v MUJNLSTAT recov_forw.out
-%GTM-I-FILECREATE, Journal extract file mumps.mjf2 created
-%GTM-I-FILECREATE, Broken transactions extract file mumps.broken2 created
-%GTM-I-FILECREATE, Lost transactions extract file mumps.lost2 created
+%YDB-I-FILECREATE, Journal extract file mumps.mjf2 created
+%YDB-I-FILECREATE, Broken transactions extract file mumps.broken2 created
+%YDB-I-FILECREATE, Lost transactions extract file mumps.lost2 created
 
 -------------------------------------------------------------------------------
 SHOW output for journal file ##TEST_PATH##/ztp/mumps.mjl
@@ -71,7 +71,7 @@ PID        NODE             USER         TERM JPV_TIME
 -----------------------------------------------------------------
 ##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..
 
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/ztp/mumps.dat is now OFF
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/ztp/mumps.dat is now OFF
 %GTM-S-JNLSUCCESS, Show successful
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
@@ -110,10 +110,10 @@ GTM>
 GTM>
 $MUPIP journal -recov -back -since=\"$time0\" mumps.mjl -lost=mumps.lost1 -broken=mumps.broken1 -extract=mumps.mjf1 > & recov_back.out
 $grep -v MUJNLSTAT recov_back.out
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/tp/mumps.mjl is renamed to ##TEST_PATH##/tp/mumps.mjl_##TIMESTAMP##
-%GTM-I-FILECREATE, Journal extract file mumps.mjf1 created
-%GTM-I-FILENOTCREATE, Broken transactions extract file mumps.broken1 not created
-%GTM-I-FILENOTCREATE, Lost transactions extract file mumps.lost1 not created
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/tp/mumps.mjl is renamed to ##TEST_PATH##/tp/mumps.mjl_##TIMESTAMP##
+%YDB-I-FILECREATE, Journal extract file mumps.mjf1 created
+%YDB-I-FILENOTCREATE, Broken transactions extract file mumps.broken1 not created
+%YDB-I-FILENOTCREATE, Lost transactions extract file mumps.lost1 not created
 %GTM-S-JNLSUCCESS, Show successful
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
@@ -132,10 +132,10 @@ cp cp.dat mumps.dat
 cp cp.mjl mumps.mjl
 $MUPIP journal -recov -forw mumps.mjl -verify -lost=mumps.lost2 -broken=mumps.broken2 -extract=mumps.mjf2 > & recov_forw.out
 $grep -v MUJNLSTAT recov_forw.out
-%GTM-I-FILECREATE, Journal extract file mumps.mjf2 created
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/tp/mumps.dat is now OFF
-%GTM-I-FILENOTCREATE, Broken transactions extract file mumps.broken2 not created
-%GTM-I-FILENOTCREATE, Lost transactions extract file mumps.lost2 not created
+%YDB-I-FILECREATE, Journal extract file mumps.mjf2 created
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/tp/mumps.dat is now OFF
+%YDB-I-FILENOTCREATE, Broken transactions extract file mumps.broken2 not created
+%YDB-I-FILENOTCREATE, Lost transactions extract file mumps.lost2 not created
 %GTM-S-JNLSUCCESS, Show successful
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful

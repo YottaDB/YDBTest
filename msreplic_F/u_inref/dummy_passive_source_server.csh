@@ -4,6 +4,9 @@
 # Copyright (c) 2006-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -21,7 +24,7 @@ $MSR RUN INST1 '$gtm_tst/com/simpleinstanceupdate.csh 100'
 set suppl_arg = ""
 if (0 != $test_replic_suppl_type) set suppl_arg = "-supplementary"
 $MSR RUN RCV=INST2 '$MUPIP replic -inst -name=__RCV_INSTNAME__ '$suppl_arg $gtm_test_qdbrundown_parms';$MUPIP set -replic=on -reg "*" >& jnl_on_INST2.tmp; cat jnl_on_INST2.tmp' >&! jnl_on_INST2.out
-$grep -vE "GTM-I-JNLCREATE|Executing MULTISITE_REPLIC" jnl_on_INST2.out
+$grep -vE "YDB-I-JNLCREATE|Executing MULTISITE_REPLIC" jnl_on_INST2.out
 #
 echo "#- Start replication on INST2, with a dummy passive source server to INST3 (if INST1 will not be a secondary)"
 $MSR RUN INST2 '$gtm_tst/$tst/u_inref/helper_start_source_passive_buf_pp.csh DUMMY'

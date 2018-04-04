@@ -4,6 +4,9 @@
 # Copyright (c) 2009-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -56,7 +59,7 @@ echo "# Lock space overloaded and quit. Now checking syslog."
 # Put in timing info for getoper
 set syslog_after1 = `date +"%b %e %H:%M:%S"`
 echo $syslog_before1 $syslog_after1 > time_window.txt
-$gtm_tst/com/getoper.csh "$syslog_before1" "" syslog1.txt "" "GTM-I-LOCKSPACEINFO"
+$gtm_tst/com/getoper.csh "$syslog_before1" "" syslog1.txt "" "YDB-I-LOCKSPACEINFO"
 
 echo "# Verify that messages are not generated from another process"
 set pids=`$tst_awk '{if ($1 ~ "PID:") {var=var "|" $2}} END{print substr(var,2)}' justlock.mjo*`

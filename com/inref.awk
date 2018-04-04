@@ -134,12 +134,12 @@ function replace_flags()
 		gsub(/broken_[0-9][0-9]*(_[0-9][0-9]*|[0-9])/,"broken_[0-9]*(_[0-9][0-9]*|[0-9])");
 		$0="##TEST_AWK"$0;
 	}
-	#if ($0 ~ /^.GTM-I-FILERENAME, File .*\/[a-z0-9]*.mjl is renamed to .*\/[a-z0-9]*.mjl_[0-9][0-9]*(_[0-9][0-9]*|[0-9])$/)
+	#if ($0 ~ /^.YDB-I-FILERENAME, File .*\/[a-z0-9]*.mjl is renamed to .*\/[a-z0-9]*.mjl_[0-9][0-9]*(_[0-9][0-9]*|[0-9])$/)
 	#{
 	#	gsub(/mjl_[0-9][0-9_]*(_[0-9][0-9]*|[0-9]*)/,"mjl_[0-9]*(_[0-9][0-9]*|[0-9])");
 	#	$0="##TEST_AWK"$0;
 	#}
-	if ($0 ~ /^%GTM-I-MUJNLSTAT, .* at /)#initial processing at Wed Mar 12 09:48:17 2003
+	if ($0 ~ /^%YDB-I-MUJNLSTAT, .* at /)#initial processing at Wed Mar 12 09:48:17 2003
 	{
 		gsub(/ at .*/," at ... ... .. ..:..:.. 20..");
 		$0="##TEST_AWK"$0;
@@ -149,8 +149,8 @@ function replace_flags()
 	{
 		$0="##TEST_AWKDate/Time       [0-9][0-9]-[A-Z][A-Z][A-Z]-[0-9][0-9][0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] ..H = [5-9][0-9][0-9][0-9][0-9],[0-9]+."
 	}
-	# Online RollBack #"%GTM-I-IPCNOTDEL, Mon Dec  5 14:04:34 2011 : Mupip journal process did not delete IPC resources for region AREG"
-	if ($0 ~ /^%GTM-I-IPCNOTDEL, /)
+	# Online RollBack #"%YDB-I-IPCNOTDEL, Mon Dec  5 14:04:34 2011 : Mupip journal process did not delete IPC resources for region AREG"
+	if ($0 ~ /^%YDB-I-IPCNOTDEL, /)
 	{
 		gsub (/[A-Z][aeiounhdrn]+ [A-Z][abcelmnopruv]+ [ 12][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9] 20[0-9][0-9]/,"... ... .. ..:..:.. 20..");
 		$0="##TEST_AWK"$0;

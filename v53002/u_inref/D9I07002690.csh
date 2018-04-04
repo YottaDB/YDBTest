@@ -1,4 +1,16 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
 #
 # D9I07-002690 GTMASSERT in JNL_FILE_EXTEND.C;1 line 101 using V44004 at CSOB
 #
@@ -9,7 +21,7 @@ unsetenv gtm_custom_errors	# The test explicitly tests journaling getting turned
 echo "# Create database and turn on journaling"
 $gtm_tst/com/dbcreate.csh mumps 1 . 512
 $MUPIP set $tst_jnl_str -reg "*" >&! jnl_on.out
-$grep "GTM-I-JNLSTATE" jnl_on.out
+$grep "YDB-I-JNLSTATE" jnl_on.out
 
 setenv gtm_white_box_test_case_enable 1
 setenv gtm_white_box_test_case_number 16
@@ -113,7 +125,7 @@ sleep 5
 
 echo "# Switch to new journal file"
 $MUPIP set $tst_jnl_str -reg "*" >&! jnl_on_again.out
-$grep "GTM-I-JNLSTATE" jnl_on_again.out
+$grep "YDB-I-JNLSTATE" jnl_on_again.out
 
 echo "# Allow some updates to happen while journaling is turned BACK ON"
 sleep 5

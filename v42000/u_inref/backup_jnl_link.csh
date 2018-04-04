@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -22,7 +25,7 @@ setenv gtm_test_jnl NON_SETJNL
 $gtm_tst/com/dbcreate.csh mumps 2
 $MUPIP set $tst_jnl_str -reg AREG >&! jnl_on_1.log
 $MUPIP set $tst_jnl_str -reg DEFAULT >>&! jnl_on_1.log
-$grep "GTM-I-JNLSTATE" jnl_on_1.log |& sort -f
+$grep "YDB-I-JNLSTATE" jnl_on_1.log |& sort -f
 echo "First Journal file names are:"
 ls -1 *.mjl*
 $GTM << EOF
@@ -44,7 +47,7 @@ echo ""
 \mkdir ./bak2
 echo "$MUPIP backup * ./bak2"
 $MUPIP backup "*" ./bak2 >&! jnl_on_2.log
-$grep -v "GTM-I-JNLCREATE" jnl_on_2.log |& sort -f
+$grep -v "YDB-I-JNLCREATE" jnl_on_2.log |& sort -f
 $MUPIP journal -show=header -forward mumps.mjl |& $grep "Prev journal"
 $MUPIP journal -show=header -forward a.mjl |& $grep "Prev journal"
 #
@@ -54,7 +57,7 @@ echo ""
 \mkdir ./bak3
 echo "$MUPIP backup * -journal=noprevjnlfile ./bak3"
 $MUPIP backup "*" -journal=noprevjnlfile ./bak3 >&! jnl_on_3.log
-$grep -v "GTM-I-JNLCREATE" jnl_on_3.log |& sort -f
+$grep -v "YDB-I-JNLCREATE" jnl_on_3.log |& sort -f
 $MUPIP journal -show=header -forward mumps.mjl |& $grep "Prev journal"
 $MUPIP journal -show=header -forward a.mjl |& $grep "Prev journal"
 #
@@ -70,9 +73,9 @@ echo "backup_jnl_link: Backup with journal=off for destinition database"
 echo ""
 \mkdir ./bak4
 $MUPIP backup AREG -journal=off ./bak4 >&! jnl_on_4.log
-$grep -v "GTM-I-JNLCREATE" jnl_on_4.log
+$grep -v "YDB-I-JNLCREATE" jnl_on_4.log
 $MUPIP backup DEFAULT -journal=off ./bak4 >&! jnl_on_5.log
-$grep -v "GTM-I-JNLCREATE" jnl_on_5.log
+$grep -v "YDB-I-JNLCREATE" jnl_on_5.log
 \cp mumps.gld ./bak4
 cd ./bak4
 $GTM << EOF
@@ -109,9 +112,9 @@ echo "backup_jnl_link: Backup with journal=noprev,disable for destinition databa
 echo ""
 \mkdir ./bak6
 $MUPIP backup AREG -journal=noprev,disable ./bak6 >&! jnl_on_6.log
-$grep -v "GTM-I-JNLCREATE" jnl_on_6.log
+$grep -v "YDB-I-JNLCREATE" jnl_on_6.log
 $MUPIP backup DEFAULT -journal=noprev,disable ./bak6 >&! jnl_on_7.log
-$grep -v "GTM-I-JNLCREATE" jnl_on_7.log
+$grep -v "YDB-I-JNLCREATE" jnl_on_7.log
 $MUPIP journal -show=header -forward mumps.mjl |& $grep "Prev journal"
 $MUPIP journal -show=header -forward a.mjl |& $grep "Prev journal"
 \cp mumps.gld ./bak6

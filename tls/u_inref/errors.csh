@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -192,7 +192,7 @@ set src_logfile = SRC_${time_msr}.log
 $MSR STARTRCV INST1 INST2
 
 $MSR RUN INST1 "set msr_dont_trace; $gtm_tst/com/wait_for_log.csh -log $src_logfile -message TLSCONVSOCK"
-$MSR RUN INST1 "set msr_dont_trace; $msr_err_chk $src_logfile 'W-TLSCONVSOCK' 'GTM-I-TEXT'"
+$MSR RUN INST1 "set msr_dont_trace; $msr_err_chk $src_logfile 'W-TLSCONVSOCK' 'YDB-I-TEXT'"
 $gtm_tst/com/knownerror.csh $msr_execute_last_out "GTM-W-TLSCONVSOCK"
 
 $MSR STOP INST1 INST2
@@ -236,7 +236,7 @@ get_msrtime
 set src_logfile = SRC_${time_msr}.log
 $MSR STARTRCV INST1 INST2
 $MSR RUN INST1 "set msr_dont_trace; $gtm_tst/com/wait_for_log.csh -log $src_logfile -message TLSCONVSOCK"
-$MSR RUN INST1 "set msr_dont_trace; $msr_err_chk $src_logfile 'W-TLSCONVSOCK' 'GTM-I-TEXT'"
+$MSR RUN INST1 "set msr_dont_trace; $msr_err_chk $src_logfile 'W-TLSCONVSOCK' 'YDB-I-TEXT'"
 $gtm_tst/com/knownerror.csh $msr_execute_last_out "GTM-W-TLSCONVSOCK"
 
 $MSR STOP INST1 INST2
@@ -293,7 +293,7 @@ get_msrtime
 set rcv_logfile = RCVR_${time_msr}.log
 
 $MSR RUN INST2 "set msr_dont_trace; $gtm_tst/com/wait_for_log.csh -log $rcv_logfile -message TLSCONVSOCK"
-$MSR RUN INST2 "set msr_dont_trace; $msr_err_chk $rcv_logfile 'W-TLSCONVSOCK' 'GTM-I-TEXT'"
+$MSR RUN INST2 "set msr_dont_trace; $msr_err_chk $rcv_logfile 'W-TLSCONVSOCK' 'YDB-I-TEXT'"
 $gtm_tst/com/knownerror.csh $msr_execute_last_out "GTM-W-TLSCONVSOCK"
 
 $MSR STOP INST1 INST2

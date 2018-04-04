@@ -92,8 +92,8 @@ $MSR REFRESHLINK INST1 INST2
 setenv time_stamp `date +%H_%M_%S`
 $MSR RUN RCV=INST1 SRC=INST2 'set msr_dont_chk_stat; set msr_dont_trace; set echo; $MUPIP replic -source -start -buffsize=$tst_buffsize -passive -log=passive1.log -instsecondary=__SRC_INSTNAME__' >& log1.log
 echo "#  	--> We expect a REPLREQROLLBACK error since INST1 has crashed, but has not run a rollback since."
-$gtm_tst/com/check_error_exist.csh log1.log REPLREQROLLBACK GTM-I-TEXT
-$gtm_tst/com/check_error_exist.csh $msr_execute_last_out REPLREQROLLBACK GTM-I-TEXT > /dev/null
+$gtm_tst/com/check_error_exist.csh log1.log REPLREQROLLBACK YDB-I-TEXT
+$gtm_tst/com/check_error_exist.csh $msr_execute_last_out REPLREQROLLBACK YDB-I-TEXT > /dev/null
 echo "log1.log:"; cat log1.log
 $MSR RUN RCV=INST1 SRC=INST2 '$gtm_tst/com/mupip_rollback.csh -verbose -fetchresync=__RCV_PORTNO__ -losttrans=fetch12.glo "*"' >& rollback12.log
 $grep JNLSUCCESS rollback12.log

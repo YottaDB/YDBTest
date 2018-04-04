@@ -42,7 +42,7 @@ BEGIN {
 	# with: "##FILTERED##"
 	#####
 	########################################################
-	if ($0 ~ /^.GTM-I-FILERENAME, File .*[\/a-z0-9_]*\..* is renamed to .*[\/a-z0-9_]*\..*_[0-9][0-9]*(_[0-9][0-9]*|[0-9])$/)
+	if ($0 ~ /^.YDB-I-FILERENAME, File .*[\/a-z0-9_]*\..* is renamed to .*[\/a-z0-9_]*\..*_[0-9][0-9]*(_[0-9][0-9]*|[0-9])$/)
 	{
 		substatus += gsub(/mjl_[0-9][0-9_]*(_[0-9][0-9]*|[0-9]*)/, "mjl_##TIMESTAMP##");
 		substatus += gsub(/mjf_[0-9][0-9_]*(_[0-9][0-9]*|[0-9]*)/, "mjf_##TIMESTAMP##");
@@ -66,15 +66,15 @@ BEGIN {
 	########################################################
 
 	########################################################
-        gsub("^.GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..$", "##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..");
-	gsub("^.GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..$", "##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..");
-	gsub("^.GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..$", "##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..");
-	gsub("^.GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..$", "##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..");
-	gsub("^.GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..$", "##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..");
-	gsub("^.GTM-I-MUJNLSTAT, Lookback processing started at ... ... .. ..:..:.. ....$", "##FILTERED##%GTM-I-MUJNLSTAT, Lookback processing started at ... ... .. ..:..:.. ....");
-	#%GTM-I-MUJNLSTAT, FETCHRESYNC processing started at Thu Dec 22 15:40:05 2005
-	gsub("^.GTM-I-MUJNLSTAT, FETCHRESYNC processing started at [A-Z][a-z][a-z] [A-Z][a-z][a-z] [ 0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] 20[0-9][0-9]$", "##FILTERED##%GTM-I-MUJNLSTAT, FETCHRESYNC processing started at... ... .. ..:..:.. 20..");
-	gsub(/^.GTM-I-IPCNOTDEL, ... ... .. ..:..:.. 20.. : Mupip journal process did not delete IPC resources for region [A-Z]+$/, "##FILTERED##%GTM-I-IPCNOTDEL, ... ... .. ..:..:.. 20.. : Mupip journal process did not delete IPC resources for region XREG");
+        gsub("^.YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..$", "##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..");
+	gsub("^.YDB-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..$", "##FILTERED##%YDB-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..");
+	gsub("^.YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..$", "##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..");
+	gsub("^.YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..$", "##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..");
+	gsub("^.YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..$", "##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..");
+	gsub("^.YDB-I-MUJNLSTAT, Lookback processing started at ... ... .. ..:..:.. ....$", "##FILTERED##%YDB-I-MUJNLSTAT, Lookback processing started at ... ... .. ..:..:.. ....");
+	#%YDB-I-MUJNLSTAT, FETCHRESYNC processing started at Thu Dec 22 15:40:05 2005
+	gsub("^.YDB-I-MUJNLSTAT, FETCHRESYNC processing started at [A-Z][a-z][a-z] [A-Z][a-z][a-z] [ 0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] 20[0-9][0-9]$", "##FILTERED##%YDB-I-MUJNLSTAT, FETCHRESYNC processing started at... ... .. ..:..:.. 20..");
+	gsub(/^.YDB-I-IPCNOTDEL, ... ... .. ..:..:.. 20.. : Mupip journal process did not delete IPC resources for region [A-Z]+$/, "##FILTERED##%YDB-I-IPCNOTDEL, ... ... .. ..:..:.. 20.. : Mupip journal process did not delete IPC resources for region XREG");
 	if ($0 ~ /SHOW output for journal file/)
 	{
 		status = gsub(/mjl_[0-9][0-9_]*(_[0-9][0-9]*|[0-9]*)/, "mjl_##TIMESTAMP##");
@@ -337,7 +337,7 @@ BEGIN {
 	###
 	########################################################
 	# Endiancvt message filters
-	#%GTM-I-ENDIANCVT, Converted database file mumps.dat from LITTLE endian to BIG endian on a LITTLE endian system
+	#%YDB-I-ENDIANCVT, Converted database file mumps.dat from LITTLE endian to BIG endian on a LITTLE endian system
 	#Converting database file mumps.dat from LITTLE endian to BIG endian on a LITTLE endian system
 	if ($0 ~ /database file [a-zA-Z0-9_\.]* from [A-Z]* endian to [A-Z]* endian on a [A-Z]* endian system/)
 	{
@@ -377,12 +377,12 @@ BEGIN {
 	########################################################
 	# Instance Frozen messages - MUINSTFROZEN, MUINSTUNFROZEN
 	# Skip them if fake ENOSPC test is enabled because those messages appear on random placed in the outref
-	if (($0 ~ /^.GTM-I-MUINSTFROZEN,..../) || ($0 ~ /^.GTM-I-MUINSTUNFROZEN,...../))
+	if (($0 ~ /^.YDB-I-MUINSTFROZEN,..../) || ($0 ~ /^.YDB-I-MUINSTUNFROZEN,...../))
 	{
 	    if ((NULL == ENVIRON["gtm_test_keep_muinstfrozen"])) { next }
 	}
-	gsub("^.GTM-I-MUINSTFROZEN, ... ... .. ..:..:.. 20..", "##FILTERED##GTM-I-MUINSTFROZEN, ... ... .. ..:..:.. 20..");
-	gsub("^.GTM-I-MUINSTUNFROZEN, ... ... .. ..:..:.. 20..", "##FILTERED##GTM-I-MUINSTUNFROZEN, ... ... .. ..:..:.. 20..");
+	gsub("^.YDB-I-MUINSTFROZEN, ... ... .. ..:..:.. 20..", "##FILTERED##YDB-I-MUINSTFROZEN, ... ... .. ..:..:.. 20..");
+	gsub("^.YDB-I-MUINSTUNFROZEN, ... ... .. ..:..:.. 20..", "##FILTERED##YDB-I-MUINSTUNFROZEN, ... ... .. ..:..:.. 20..");
 	# QDBRUNDOWN is randomly true or false
 	gsub(/HDR Quick database rundown is active                 ...../,"HDR Quick database rundown is active                 .....");
 	########################################################

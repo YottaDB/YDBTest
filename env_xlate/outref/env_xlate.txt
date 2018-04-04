@@ -83,7 +83,7 @@ This will error:
 
 GTM>
 This will error with a message:
-%YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, This is an error from gtm_env_xlate
+%YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%YDB-I-TEXT, This is an error from gtm_env_xlate
 		At M source location err3+2^basic
 
 GTM>
@@ -110,7 +110,7 @@ mumps.gld
 The status of the link is:  0
 undefined environment variable (gtm_gblxlate)...
 ^["/a/b/c","sphere"]GBL= 
-%YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  Cannot translate environment variable gtm_gblxlate
+%YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%YDB-I-TEXT, gtm_env_xlate:  Cannot translate environment variable gtm_gblxlate
 		At M source location tsq+3^sq
 
 GTM>
@@ -119,23 +119,23 @@ bad file name for gtm_gblxlate...
 gtm_gblxlate = ##IN_TEST_PATH##/inref/notthere.dat
 ^["/a/b/c","sphere"]GBL= 
 ##SUSPEND_OUTPUT HOST_OS390_S390
-%YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  Cannot open translation file ##IN_TEST_PATH##/inref/notthere.dat (2) - No such file or directory
+%YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%YDB-I-TEXT, gtm_env_xlate:  Cannot open translation file ##IN_TEST_PATH##/inref/notthere.dat (2) - No such file or directory
 		At M source location tsq+3^sq
 
 GTM>
 ^["/a/b/c","sphere"]GBL= 
-%YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  Cannot open translation file ##IN_TEST_PATH##/inref/notthere.dat (2) - No such file or directory
+%YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%YDB-I-TEXT, gtm_env_xlate:  Cannot open translation file ##IN_TEST_PATH##/inref/notthere.dat (2) - No such file or directory
 		At M source location tsq+3^sq
 
 GTM>
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_OS390_S390
-%YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  Cannot open translation file ##IN_TEST_PATH##/inref/notthere.dat (129) - No such file or directory
+%YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%YDB-I-TEXT, gtm_env_xlate:  Cannot open translation file ##IN_TEST_PATH##/inref/notthere.dat (129) - No such file or directory
 		At M source location tsq+3^sq
 
 GTM>
 ^["/a/b/c","sphere"]GBL= 
-%YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  Cannot open translation file ##IN_TEST_PATH##/inref/notthere.dat (129) - No such file or directory
+%YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%YDB-I-TEXT, gtm_env_xlate:  Cannot open translation file ##IN_TEST_PATH##/inref/notthere.dat (129) - No such file or directory
 		At M source location tsq+3^sq
 
 GTM>
@@ -144,17 +144,17 @@ GTM>
 Now the correct gtm_gblxlate...
 gtm_gblxlate = ##IN_TEST_PATH##/inref/table.dat
 ^["/a/b/c","emotehost"]GBL= 
-%YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  No translation available
+%YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%YDB-I-TEXT, gtm_env_xlate:  No translation available
 		At M source location tsq+3^sq
 
 GTM>
 ^["/b/c","sphere"]GBL= 
-%YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  No translation available
+%YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%YDB-I-TEXT, gtm_env_xlate:  No translation available
 		At M source location tsq+3^sq
 
 GTM>
 ^["a/a/b/c","sphere"]GBL= 
-%YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  No translation available
+%YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%YDB-I-TEXT, gtm_env_xlate:  No translation available
 		At M source location tsq+3^sq
 
 GTM>
@@ -178,7 +178,7 @@ Now let's test an error - no-existent host
 
 gtm_gblxlate = ##IN_TEST_PATH##/inref/table_bad.dat
 ^["/a/b/c","sphere"]GBL= 
-%YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%GTM-I-TEXT, gtm_env_xlate:  Can't get IP address for host in /not/here
+%YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%YDB-I-TEXT, gtm_env_xlate:  Can't get IP address for host in /not/here
 		At M source location tsq+3^sq
 
 GTM>
@@ -199,17 +199,17 @@ LOCK ^GBL1 LEVEL=1
 Check with LKE...
 --------------
 mumps.gld
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in DEFAULT
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 --------------
 a.gld
 
 DEFAULT
 ##TEST_AWKLCL1 Owned by PID= [0-9]* which is an existing process
 ##TEST_AWK.GBL1 Owned by PID= [0-9]* which is an existing process
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 2/(120|184); name space not full
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 2/(120|184); name space not full
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 --------------
 ..done with lke...
 ...........................................
@@ -231,16 +231,16 @@ mumps.gld
 DEFAULT
 ##TEST_AWKLCL1 Owned by PID= [0-9]* which is an existing process
 ##TEST_AWK.GBL1 Owned by PID= [0-9]* which is an existing process
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 2/(120|184); name space not full
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 2/(120|184); name space not full
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 --------------
 a.gld
 
 DEFAULT
 ##TEST_AWKLCL1 Owned by PID= [0-9]* which is an existing process
 ##TEST_AWK.GBL1 Owned by PID= [0-9]* which is an existing process
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 2/(120|184); name space not full
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 2/(120|184); name space not full
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 --------------
 ..done with lke...
 ..............END OF TEST1.................
@@ -271,16 +271,16 @@ DEFAULT
 ##TEST_AWK.locks2 Owned by PID= [0-9]* which is an existing process
 ##TEST_AWK.othloc1 Owned by PID= [0-9]* which is an existing process
 ##TEST_AWK.othloc2 Owned by PID= [0-9]* which is an existing process
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 5/(120|184); name space not full
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 5/(120|184); name space not full
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 --------------
 a.gld
 
 DEFAULT
 ##TEST_AWKLCL1 Owned by PID= [0-9]* which is an existing process
 ##TEST_AWK.GBL1 Owned by PID= [0-9]* which is an existing process
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 2/(120|184); name space not full
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 2/(120|184); name space not full
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 --------------
 ..done with lke...
 ...........................................
@@ -302,16 +302,16 @@ DEFAULT
 ##TEST_AWK.locks2 Owned by PID= [0-9]* which is an existing process
 ##TEST_AWK.othloc1 Owned by PID= [0-9]* which is an existing process
 ##TEST_AWK.othloc2 Owned by PID= [0-9]* which is an existing process
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 5/(120|184); name space not full
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 5/(120|184); name space not full
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 --------------
 a.gld
 
 DEFAULT
 ##TEST_AWKLCL1 Owned by PID= [0-9]* which is an existing process
 ##TEST_AWK.GBL1 Owned by PID= [0-9]* which is an existing process
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 2/(120|184); name space not full
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 2/(120|184); name space not full
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 --------------
 ..done with lke...
 ..............END OF TEST1.................

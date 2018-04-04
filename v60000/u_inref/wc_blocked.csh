@@ -99,7 +99,7 @@ set time_after = `date +"%b %e %H:%M:%S"`
 $gtm_tst/com/getoper.csh "$time_before" "" "verifystart${case}.txt" "" DBWCVERIFYSTART
 $grep DBWCVERIFYSTART verifystart${case}.txt | $grep "$cur_dir" >&! /dev/null
 if ($status) then
-	echo "TEST-E-FAIL GTM-I-DBWCVERIFYSTART not found in operator log. Check verifystart${case}.txt."
+	echo "TEST-E-FAIL YDB-I-DBWCVERIFYSTART not found in operator log. Check verifystart${case}.txt."
 endif
 
 # verify that the database is fine
@@ -197,7 +197,7 @@ set time_after = `date +"%b %e %H:%M:%S"`
 $gtm_tst/com/getoper.csh "$time_before" "$time_after" "verifystart${case}.txt" ""
 $grep DBWCVERIFYSTART verifystart${case}.txt | $grep "$cur_dir" >&! /dev/null
 if (! $status) then
-	echo "TEST-E-FAIL GTM-I-DBWCVERIFYSTART found in operator log. Check verifystart${case}.txt."
+	echo "TEST-E-FAIL YDB-I-DBWCVERIFYSTART found in operator log. Check verifystart${case}.txt."
 endif
 
 echo
@@ -309,7 +309,7 @@ set time_after = `date +"%b %e %H:%M:%S"`
 $gtm_tst/com/getoper.csh "$time_before" "$time_after" "verifystart${case}.txt" ""
 $grep DBWCVERIFYSTART verifystart${case}.txt | $grep "$cur_dir" >&! /dev/null
 if (! $status) then
-	echo "TEST-E-FAIL GTM-I-DBWCVERIFYSTART found in operator log. Check verifystart${case}.txt."
+	echo "TEST-E-FAIL YDB-I-DBWCVERIFYSTART found in operator log. Check verifystart${case}.txt."
 endif
 
 echo

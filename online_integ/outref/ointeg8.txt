@@ -19,9 +19,9 @@ GTM>
 # ONLINE INTEG is now shot down. Ensure that doing a rundown cleans up the temporary files
 ###################################################################
 # Snapshot temporary files found before rundown as expected
-##TEST_AWK%GTM-I-SHMREMOVED, Removed Shared Memory id [0-9]* corresponding to file ##TEST_PATH##/mumps.dat
-##TEST_AWK%GTM-I-SEMREMOVED, Semaphore id [0-9][0-9]* removed from the system
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+##TEST_AWK%YDB-I-SHMREMOVED, Removed Shared Memory id [0-9]* corresponding to file ##TEST_PATH##/mumps.dat
+##TEST_AWK%YDB-I-SEMREMOVED, Semaphore id [0-9][0-9]* removed from the system
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
 # Snapshot temporary files NOT found after rundown as expected
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *

@@ -83,7 +83,7 @@ Output File:
 %YDB-E-NEEDTRIGUPGRD, Cannot do trigger operation on database file ##REMOTE_TEST_PATH##/instance3/mumps.dat until it is upgraded; Run MUPIP TRIGGER -UPGRADE first
 # The same commands should work fine after trigger -upgrade
 ==Executing MULTISITE_REPLIC 'RUN INST3 $MUPIP trigger -upgrade'==
-##FILTERED##%GTM-I-FILERENAME, File ##REMOTE_TEST_PATH##/instance3/mumps.mjl is renamed to ##REMOTE_TEST_PATH##/instance3/mumps.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##REMOTE_TEST_PATH##/instance3/mumps.mjl is renamed to ##REMOTE_TEST_PATH##/instance3/mumps.mjl_##TIMESTAMP##
 Triggers in region DEFAULT have been upgraded
 # trigger -upgrade should cut new journal file with no back link
 ==Executing MULTISITE_REPLIC 'RUN INST3 $MUPIP journal -show=header -forward mumps.mjl|& $grep "Prev journal file name"'==
@@ -129,7 +129,7 @@ Error NEEDTRIGUPGRD seen in ##FILTERED##RCVR_##TIMESTAMP##.log.updproc as expect
 ----------
 # Simply restarting update process will still result in the same NEEDTRIGUPGRD error
 ==Executing MULTISITE_REPLIC 'RUN INST4 $MUPIP replicate -receiver -start -updateonly'==
-%GTM-I-REPLINFO, Update Process started successfully
+%YDB-I-REPLINFO, Update Process started successfully
 ==Executing MULTISITE_REPLIC 'RUN INST4 ##TEST_COM_PATH##/check_error_exist.csh ##FILTERED##RCVR_##TIMESTAMP##.log.updproc NEEDTRIGUPGRD'==
 ----------
 Error NEEDTRIGUPGRD seen in ##FILTERED##RCVR_##TIMESTAMP##.log.updproc as expected:
@@ -137,11 +137,11 @@ Error NEEDTRIGUPGRD seen in ##FILTERED##RCVR_##TIMESTAMP##.log.updproc as expect
 ----------
 # Restarting update process after upgrading the triggers on the reciever side should work fine
 ==Executing MULTISITE_REPLIC 'RUN INST4 $MUPIP trigger -upgrade'==
-##FILTERED##%GTM-I-FILERENAME, File ##REMOTE_TEST_PATH##/instance4/mumps.mjl is renamed to ##REMOTE_TEST_PATH##/instance4/mumps.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##REMOTE_TEST_PATH##/instance4/mumps.mjl is renamed to ##REMOTE_TEST_PATH##/instance4/mumps.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##REMOTE_TEST_PATH##/instance4/mumps.mjl is renamed to ##REMOTE_TEST_PATH##/instance4/mumps.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##REMOTE_TEST_PATH##/instance4/mumps.mjl is renamed to ##REMOTE_TEST_PATH##/instance4/mumps.mjl_##TIMESTAMP##
 Triggers in region DEFAULT have been upgraded
 ==Executing MULTISITE_REPLIC 'RUN INST4 $MUPIP replicate -receiver -start -updateonly'==
-%GTM-I-REPLINFO, Update Process started successfully
+%YDB-I-REPLINFO, Update Process started successfully
 ==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_exe/mumps -run %XCMD "set ^new(1)=1"'==
 trigger executed
 ==Executing MULTISITE_REPLIC 'RUN INST3 $MUPIP trigger -triggerfile=new.trg'==

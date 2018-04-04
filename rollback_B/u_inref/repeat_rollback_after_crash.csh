@@ -4,6 +4,9 @@
 # Copyright (c) 2004-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -118,11 +121,11 @@ echo "# ROLLBACK5 process ends : GTM_TEST_DEBUGINFO : `date`"
 # to be at the exact same strm_seqno. A dse dump -file -supp should show the same value before and after the second rollback.
 echo "# ROLLBACK5B process starts : GTM_TEST_DEBUGINFO : `date`"
 $MUPIP replic -edit -show mumps.repl >&! repl_show5.out
-$grep -E "GTM-I-RLBK.*SEQ" rollback5.log >&! seqnocheck5.out
+$grep -E "YDB-I-RLBK.*SEQ" rollback5.log >&! seqnocheck5.out
 $grep "Journal Sequence Number" repl_show5.out >>&! seqnocheck5.out
 $gtm_tst/com/mupip_rollback.csh "*" -resync=$tst_seqno -lost=lost_trans5B.log >>&! rollback5B.log
 $MUPIP replic -edit -show mumps.repl >&! repl_show5B.out
-$grep -E "GTM-I-RLBK.*SEQ" rollback5B.log >&! seqnocheck5B.out
+$grep -E "YDB-I-RLBK.*SEQ" rollback5B.log >&! seqnocheck5B.out
 $grep "Journal Sequence Number" repl_show5B.out >>&! seqnocheck5B.out
 diff seqnocheck5.out seqnocheck5B.out
 echo "# ROLLBACK5B process ends : GTM_TEST_DEBUGINFO : `date`"

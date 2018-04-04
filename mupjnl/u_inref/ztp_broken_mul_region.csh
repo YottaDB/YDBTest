@@ -4,6 +4,9 @@
 # Copyright (c) 2003-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -16,7 +19,7 @@ setenv gtmgbldir "mumps.gld"
 #
 if ($?test_replic == 0) then
 	$MUPIP set $tst_jnl_str -reg "*" >&! jnl_on.log
-	$grep "GTM-I-JNLSTATE" jnl_on.log | sort
+	$grep "YDB-I-JNLSTATE" jnl_on.log | sort
 endif
 #
 $GTM << gtm_eof
@@ -37,7 +40,7 @@ if ($stat1 != 0 || $stat2 != 0) then
 	cat ext_for1.log
 	exit 1
 endif
-$grep "GTM-I-FILECREATE" ext_for1.log
+$grep "YDB-I-FILECREATE" ext_for1.log
 if ($status != 0) then
 	echo "ztp_broken_mul_region TEST FAILED"
 	cat ext_for1.log
@@ -60,7 +63,7 @@ if ($stat1 != 0 || $stat2 != 0) then
 	cat ext_for2.log
 	exit 1
 endif
-$grep "GTM-I-FILECREATE" ext_for2.log
+$grep "YDB-I-FILECREATE" ext_for2.log
 if ($status != 0) then
 	echo "ztp_broken_mul_region TEST FAILED"
 	cat ext_for2.log
@@ -82,7 +85,7 @@ if ($stat1 != 0 || $stat2 != 0) then
 	cat ext_for3.log
 	exit 1
 endif
-$grep "GTM-I-FILECREATE" ext_for3.log
+$grep "YDB-I-FILECREATE" ext_for3.log
 if ($status != 0) then
 	echo "ztp_broken_mul_region TEST FAILED"
 	cat ext_for3.log
@@ -104,7 +107,7 @@ if ($stat1 != 0 || $stat2 != 0) then
 	cat ext_for4.log
 	exit 1
 endif
-$grep "GTM-I-FILECREATE" ext_for4.log
+$grep "YDB-I-FILECREATE" ext_for4.log
 if ($status != 0) then
 	echo "ztp_broken_mul_region TEST FAILED"
 	cat ext_for4.log

@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -63,25 +63,25 @@ set timeout 300
 send -- "do ^ctrlc\r"
 expect "for i=1:1:10000000  SET x=x+1"
 send -- "\003"
-expect "GTM-I-CTRLC, CTRL_C encountered" {set ctrlc [expr $ctrlc + 1]}
+expect "YDB-I-CTRLC, CTRL_C encountered" {set ctrlc [expr $ctrlc + 1]}
 
 # ZSHOW
 send -- "do zshow^ctrlc\r"
 expect "a=0"
 send -- "\003"
-expect "GTM-I-CTRLC, CTRL_C encountered" {set ctrlc [expr $ctrlc + 1]}
+expect "YDB-I-CTRLC, CTRL_C encountered" {set ctrlc [expr $ctrlc + 1]}
 
 # ZWRITE
 send -- "do zwrite^ctrlc\r"
 expect "a=0"
 send -- "\003"
-expect "GTM-I-CTRLC, CTRL_C encountered" {set ctrlc [expr $ctrlc + 1]}
+expect "YDB-I-CTRLC, CTRL_C encountered" {set ctrlc [expr $ctrlc + 1]}
 
 # XECUTEd ZWRITE
 send -- "do xzwrite^ctrlc\r"
 expect "a=0"
 send -- "\003"
-expect "GTM-I-CTRLC, CTRL_C encountered" {set ctrlc [expr $ctrlc + 1]}
+expect "YDB-I-CTRLC, CTRL_C encountered" {set ctrlc [expr $ctrlc + 1]}
 
 # Validate (set status in advance in case the matching fails)
 expect "
@@ -106,7 +106,7 @@ expect "LKE>"
 send -- "show -all\r"
 expect "Owned by PID="
 send -- "\003"
-expect "GTM-I-CTRLC, CTRL_C encountered" {set ctrlc [expr $ctrlc + 1]}
+expect "YDB-I-CTRLC, CTRL_C encountered" {set ctrlc [expr $ctrlc + 1]}
 expect "LKE>"
 send -- "exit\r"
 

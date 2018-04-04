@@ -74,28 +74,28 @@ GTM>
 ==Executing MULTISITE_REPLIC 'CRASH INST1'==
 Simulating crash on Instance INSTANCE1 in ##TEST_PATH##
 Instance INSTANCE1 crashed!
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
 ==Executing MULTISITE_REPLIC 'STOPRCV INST1 INST2 ON'==
 ==Executing MULTISITE_REPLIC 'STOPSRC INST2 INST3 ON'==
 ==Executing MULTISITE_REPLIC 'STARTSRC INST4 INST2 RP'==
 rollback on INST2...
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST2 SRC=INST4 set msr_dont_chk_stat; $gtm_tst/com/mupip_rollback.csh -fetchresync=__RCV_PORTNO__ -losttrans=lost1.glo "*" >& rollback.tmp; $grep "%GTM-" rollback.tmp'==
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, FETCHRESYNC processing started at... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-RESOLVESEQNO, Resolving until sequence number 71 [0x0000000000000047]
-##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_AWK.*/instance2/mumps.mjl is renamed to ##TEST_AWK.*/instance2/mumps.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-FILECREATE, Lost transactions extract file lost1.glo created
-%GTM-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 71 [0x0000000000000047]
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, FETCHRESYNC processing started at... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-RESOLVESEQNO, Resolving until sequence number 71 [0x0000000000000047]
+##FILTERED##%YDB-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_AWK.*/instance2/mumps.mjl is renamed to ##TEST_AWK.*/instance2/mumps.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Lost transactions extract file lost1.glo created
+%YDB-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 71 [0x0000000000000047]
 ##SUSPEND_OUTPUT SUPPLEMENTARY_AB
-%GTM-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  0 : Seqno 71 [0x0000000000000047]
+%YDB-I-RLBKSTRMSEQ, Stream journal seqno of the instance after rollback is Stream  0 : Seqno 71 [0x0000000000000047]
 ##ALLOW_OUTPUT SUPPLEMENTARY_AB
 %GTM-S-JNLSUCCESS, Show successful
 %GTM-S-JNLSUCCESS, Verify successful
 %GTM-S-JNLSUCCESS, Rollback successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 #  	--> Should rollback 71-80 (i.e. lost1.glo should have 71-80)
 ==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/analyze_jnl_extract.csh lost1.glo 71 80'==
 05 71 ^GBL("INSTANCE1",71)="71"

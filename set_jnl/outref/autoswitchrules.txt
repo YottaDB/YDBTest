@@ -13,12 +13,12 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ##ALLOW_OUTPUT  NON_REPLIC
 ##SOURCE_PATH##/mupip set -journal=enable,on,[no]before,alloc=2048,extension=1000,auto=16500 -reg DEFAULT
-%GTM-I-JNLSWITCHSZCHG, Journal AUTOSWITCHLIMIT [16500 blocks] is rounded down to [16048 blocks] to equal the sum of Journal ALLOCATION [2048 blocks] and a multiple of Journal EXTENSION [1000 blocks] for database file ##TEST_PATH##/mumps.dat
+%YDB-I-JNLSWITCHSZCHG, Journal AUTOSWITCHLIMIT [16500 blocks] is rounded down to [16048 blocks] to equal the sum of Journal ALLOCATION [2048 blocks] and a multiple of Journal EXTENSION [1000 blocks] for database file ##TEST_PATH##/mumps.dat
 %YDB-E-JNLINVSWITCHLMT, Journal AUTOSWITCHLIMIT [16048] falls outside of allowed limits [16384] and [8388607]
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ##SUSPEND_OUTPUT  NON_REPLIC
 Secondary :
-%GTM-I-JNLSWITCHSZCHG, Journal AUTOSWITCHLIMIT [16500 blocks] is rounded down to [16048 blocks] to equal the sum of Journal ALLOCATION [2048 blocks] and a multiple of Journal EXTENSION [1000 blocks] for database file ##REMOTE_TEST_PATH##/mumps.dat
+%YDB-I-JNLSWITCHSZCHG, Journal AUTOSWITCHLIMIT [16500 blocks] is rounded down to [16048 blocks] to equal the sum of Journal ALLOCATION [2048 blocks] and a multiple of Journal EXTENSION [1000 blocks] for database file ##REMOTE_TEST_PATH##/mumps.dat
 %YDB-E-JNLINVSWITCHLMT, Journal AUTOSWITCHLIMIT [16048] falls outside of allowed limits [16384] and [8388607]
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ##ALLOW_OUTPUT  NON_REPLIC
@@ -29,15 +29,15 @@ GTM>
 
 GTM>
 ##SOURCE_PATH##/mupip set -journal=enable,on,[no]before,alloc=4096,extension=200,auto=17200 -reg DEFAULT
-%GTM-I-JNLSWITCHSZCHG, Journal AUTOSWITCHLIMIT [17200 blocks] is rounded down to [17096 blocks] to equal the sum of Journal ALLOCATION [4096 blocks] and a multiple of Journal EXTENSION [200 blocks] for database file ##TEST_PATH##/mumps.dat
+%YDB-I-JNLSWITCHSZCHG, Journal AUTOSWITCHLIMIT [17200 blocks] is rounded down to [17096 blocks] to equal the sum of Journal ALLOCATION [4096 blocks] and a multiple of Journal EXTENSION [200 blocks] for database file ##TEST_PATH##/mumps.dat
 ##SUSPEND_OUTPUT  NON_REPLIC
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
 ##ALLOW_OUTPUT  NON_REPLIC
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 Journal AutoSwitchLimit 17096
   Journal Allocation                   4096  Journal Extension              200
 ##SOURCE_PATH##/mupip set -journal=enable,on,[no]before,alloc=16384,extension=0,auto=16384 -reg DEFAULT
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 Journal AutoSwitchLimit 16384
   Journal Allocation                  16384  Journal Extension                0
 ##SOURCE_PATH##/mupip set -journal=enable,on,[no]before,alloc=2048,extension=10,auto=20 -reg DEFAULT
@@ -57,14 +57,14 @@ Journal AutoSwitchLimit 16384
 Journal AutoSwitchLimit 16384
   Journal Allocation                  16384  Journal Extension                0
 ##SOURCE_PATH##/mupip set -journal=enable,on,[no]before,alloc=2048,extension=0,auto=16384 -reg DEFAULT
-%GTM-I-JNLSWITCHSZCHG, Journal AUTOSWITCHLIMIT [16384 blocks] is rounded down to [2048 blocks] to equal the sum of Journal ALLOCATION [2048 blocks] and a multiple of Journal EXTENSION [0 blocks] for database file ##TEST_PATH##/mumps.dat
+%YDB-I-JNLSWITCHSZCHG, Journal AUTOSWITCHLIMIT [16384 blocks] is rounded down to [2048 blocks] to equal the sum of Journal ALLOCATION [2048 blocks] and a multiple of Journal EXTENSION [0 blocks] for database file ##TEST_PATH##/mumps.dat
 %YDB-E-JNLINVSWITCHLMT, Journal AUTOSWITCHLIMIT [2048] falls outside of allowed limits [16384] and [8388607]
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 Journal AutoSwitchLimit 16384
   Journal Allocation                  16384  Journal Extension                0
 ##SUSPEND_OUTPUT  NON_REPLIC
 Secondary :
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 ##ALLOW_OUTPUT  NON_REPLIC
 
 GTM>

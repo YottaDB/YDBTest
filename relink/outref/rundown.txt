@@ -20,7 +20,7 @@ Killed
 ##TEST_AWK%SYSTEM-E-ENO[1-9][0-9]*, .*
 
 3c. MUPIP RUNDOWN -RELINKCTL . on an unused relinkctl file with no routines.
-%GTM-I-RLNKCTLRNDWNSUC, Relinkctl file for $ZROUTINES directory ##TEST_PATH## successfully rundown
+%YDB-I-RLNKCTLRNDWNSUC, Relinkctl file for $ZROUTINES directory ##TEST_PATH## successfully rundown
 
 4a. MUMPS on a directory whose relinkctl file has not been run down due to a crash.
 Killed
@@ -33,7 +33,7 @@ Killed
 ##TEST_AWK%SYSTEM-E-ENO[1-9][0-9]*, .*
 
 4c. MUPIP RUNDOWN -RELINKCTL . on an unused relinkctl file with routines.
-%GTM-I-RLNKCTLRNDWNSUC, Relinkctl file for $ZROUTINES directory ##TEST_PATH## successfully rundown
+%YDB-I-RLNKCTLRNDWNSUC, Relinkctl file for $ZROUTINES directory ##TEST_PATH## successfully rundown
 
 5. MUPIP RUNDOWN -RELINKCTL on used relinkctl files with no routines.
 %YDB-E-RLNKCTLRNDWNFL, Relinkctl file for $ZROUTINES directory ##TEST_PATH## failed to rundown as it is open by 1 process(es)
@@ -54,8 +54,8 @@ Killed
 ##TEST_AWK%SYSTEM-E-ENO[1-9][0-9]*, .*
 
 7c. MUPIP RUNDOWN -RELINKCTL on unused relinkctl files with no routines.
-%GTM-I-RLNKCTLRNDWNSUC, Relinkctl file for $ZROUTINES directory ##TEST_PATH## successfully rundown
-%GTM-I-RLNKCTLRNDWNSUC, Relinkctl file for $ZROUTINES directory ##TEST_PATH##/dir successfully rundown
+%YDB-I-RLNKCTLRNDWNSUC, Relinkctl file for $ZROUTINES directory ##TEST_PATH## successfully rundown
+%YDB-I-RLNKCTLRNDWNSUC, Relinkctl file for $ZROUTINES directory ##TEST_PATH##/dir successfully rundown
 
 8a. MUMPS on directories whose relinkctl files have not been run down due to a crash.
 Killed
@@ -70,8 +70,8 @@ Killed
 ##TEST_AWK%SYSTEM-E-ENO[1-9][0-9]*, .*
 
 8c. MUPIP RUNDOWN -RELINKCTL on unused relinkctl files with routines.
-%GTM-I-RLNKCTLRNDWNSUC, Relinkctl file for $ZROUTINES directory ##TEST_PATH## successfully rundown
-%GTM-I-RLNKCTLRNDWNSUC, Relinkctl file for $ZROUTINES directory ##TEST_PATH##/dir successfully rundown
+%YDB-I-RLNKCTLRNDWNSUC, Relinkctl file for $ZROUTINES directory ##TEST_PATH## successfully rundown
+%YDB-I-RLNKCTLRNDWNSUC, Relinkctl file for $ZROUTINES directory ##TEST_PATH##/dir successfully rundown
 
 9. MUPIP RUNDOWN -RELINKCTL on active relinkctl file with an incorrect attach count.
 %YDB-E-RLNKCTLRNDWNFL, Relinkctl file for $ZROUTINES directory ##TEST_PATH## failed to rundown as it is open by 1 process(es)

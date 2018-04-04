@@ -49,68 +49,68 @@ GTM>
 PASSED VERIFY
 GTM>
 ##TEST_AWK##SOURCE_PATH##/mupip journal -recov -back mumps.mjl -since=".*" -verbose
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##TEST_AWK.*%GTM-I-MUINFOSTR, Processing started for journal file : ##TEST_PATH##/mumps.mjl
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     First Epoch Record Offset : [0-9]* .0x[0-9a-fA-F]*.
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     First Epoch Record timestamp : [0-9]* .0x[0-9a-fA-F]*.
-##TEST_AWK.*##TEST_AWK%GTM-I-MUINFOSTR, Module : mur_back_processing:save_turn_around_point at .*
-##TEST_AWK.*%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Record Offset : 65744 .0x000100D0.
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Turn around Offset : 65744 .0x000100D0.
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Turn around timestamp : [0-9]* .0x[0-9a-fA-F]*.
-##TEST_AWK.*%GTM-I-MUINFOUINT8,     Turn around transaction : 1 .0x0000000000000001.
-##TEST_AWK.*%GTM-I-MUINFOUINT8,     Turn around seqno : 1 .0x0000000000000001.
-##TEST_AWK.*%GTM-I-MUINFOUINT6,     Tp_resolve_time :[ 0-9]* .0x[0-9A-F]*. ; .H=[0-9]*.[0-9]*
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Token total : 8 .0x00000008.
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Token broken : 0 .0x00000000.
-##TEST_AWK.*##TEST_AWK%GTM-I-MUINFOSTR, Module : mur_back_processing:at the end at .*
-##TEST_AWK.*%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Record Offset : 65744 .0x000100D0.
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Turn around Offset : 65744 .0x000100D0.
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Turn around timestamp : [0-9]* .0x[0-9a-fA-F]*.
-##TEST_AWK.*%GTM-I-MUINFOUINT8,     Turn around transaction : 1 .0x0000000000000001.
-##TEST_AWK.*%GTM-I-MUINFOUINT8,     Turn around seqno : 1 .0x0000000000000001.
-##TEST_AWK.*.GTM-I-MUINFOUINT6,     Tp_resolve_time :[ 0-9]* .0x[0-9A-F]*. ; .H=[0-9]*,[0-9]*
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Token total : 8 .0x00000008.
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Token broken : 0 .0x00000000.
-%GTM-I-MUINFOUINT4, mur_process_token_table returns min_broken_time : 4294967295 [0xFFFFFFFF]
-##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
-##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_apply_blk:start at ... ... .. ..:..:.. 20..
-##TEST_AWK.*%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Record Offset : [0-9]* .0x[0-9a-fA-F]*.
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Turn around Offset : 65744 .0x000100D0.
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Turn around timestamp : [0-9]* .0x[0-9a-fA-F]*.
-##TEST_AWK.*%GTM-I-MUINFOUINT8,     Turn around transaction : 1 .0x0000000000000001.
-##TEST_AWK.*%GTM-I-MUINFOUINT8,     Turn around seqno : 1 .0x0000000000000001.
-##TEST_AWK.*GTM-I-MUINFOUINT6,     Tp_resolve_time :[ 0-9]* .0x[0-9A-F]*. ; .H=[0-9]*.[0-9]*
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Token total : 0 .0x00000000.
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Token broken : 0 .0x00000000.
-##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_apply_blk:end at ... ... .. ..:..:.. 20..
-##TEST_AWK.*%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Record Offset : 65744 .0x000100D0.
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Turn around Offset : 65744 .0x000100D0.
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Turn around timestamp : [0-9]* .0x[0-9a-fA-F]*.
-##TEST_AWK.*%GTM-I-MUINFOUINT8,     Turn around transaction : 1 .0x0000000000000001.
-##TEST_AWK.*%GTM-I-MUINFOUINT8,     Turn around seqno : 1 .0x0000000000000001.
-##TEST_AWK.*GTM-I-MUINFOUINT6,     Tp_resolve_time :[ 0-9]* .0x[0-9A-F]*. ; .H=[0-9]*.[0-9]*
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Token total : 0 .0x00000000.
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Token broken : 0 .0x00000000.
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_forward:at the start at .*
-##TEST_AWK%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
-%GTM-I-MUINFOUINT4,     Record Offset : 65744 [0x000100D0]
-##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_forward:Reached EOF before tp_resolve_time at .*
-##TEST_AWK%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
-%GTM-I-MUINFOUINT4,     Record Offset : 75024 [0x00012510]
-##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_forward:at the end at .*
-##TEST_AWK%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
-##TEST_AWK%GTM-I-MUINFOUINT4,     Record Offset : [0-9]* .0x[0-9a-fA-F]*.
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK.*%YDB-I-MUINFOSTR, Processing started for journal file : ##TEST_PATH##/mumps.mjl
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     First Epoch Record Offset : [0-9]* .0x[0-9a-fA-F]*.
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     First Epoch Record timestamp : [0-9]* .0x[0-9a-fA-F]*.
+##TEST_AWK.*##TEST_AWK%YDB-I-MUINFOSTR, Module : mur_back_processing:save_turn_around_point at .*
+##TEST_AWK.*%YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Record Offset : 65744 .0x000100D0.
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Turn around Offset : 65744 .0x000100D0.
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Turn around timestamp : [0-9]* .0x[0-9a-fA-F]*.
+##TEST_AWK.*%YDB-I-MUINFOUINT8,     Turn around transaction : 1 .0x0000000000000001.
+##TEST_AWK.*%YDB-I-MUINFOUINT8,     Turn around seqno : 1 .0x0000000000000001.
+##TEST_AWK.*%YDB-I-MUINFOUINT6,     Tp_resolve_time :[ 0-9]* .0x[0-9A-F]*. ; .H=[0-9]*.[0-9]*
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Token total : 8 .0x00000008.
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Token broken : 0 .0x00000000.
+##TEST_AWK.*##TEST_AWK%YDB-I-MUINFOSTR, Module : mur_back_processing:at the end at .*
+##TEST_AWK.*%YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Record Offset : 65744 .0x000100D0.
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Turn around Offset : 65744 .0x000100D0.
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Turn around timestamp : [0-9]* .0x[0-9a-fA-F]*.
+##TEST_AWK.*%YDB-I-MUINFOUINT8,     Turn around transaction : 1 .0x0000000000000001.
+##TEST_AWK.*%YDB-I-MUINFOUINT8,     Turn around seqno : 1 .0x0000000000000001.
+##TEST_AWK.*.YDB-I-MUINFOUINT6,     Tp_resolve_time :[ 0-9]* .0x[0-9A-F]*. ; .H=[0-9]*,[0-9]*
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Token total : 8 .0x00000008.
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Token broken : 0 .0x00000000.
+%YDB-I-MUINFOUINT4, mur_process_token_table returns min_broken_time : 4294967295 [0xFFFFFFFF]
+##FILTERED##%YDB-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
+##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_apply_blk:start at ... ... .. ..:..:.. 20..
+##TEST_AWK.*%YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Record Offset : [0-9]* .0x[0-9a-fA-F]*.
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Turn around Offset : 65744 .0x000100D0.
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Turn around timestamp : [0-9]* .0x[0-9a-fA-F]*.
+##TEST_AWK.*%YDB-I-MUINFOUINT8,     Turn around transaction : 1 .0x0000000000000001.
+##TEST_AWK.*%YDB-I-MUINFOUINT8,     Turn around seqno : 1 .0x0000000000000001.
+##TEST_AWK.*YDB-I-MUINFOUINT6,     Tp_resolve_time :[ 0-9]* .0x[0-9A-F]*. ; .H=[0-9]*.[0-9]*
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Token total : 0 .0x00000000.
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Token broken : 0 .0x00000000.
+##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_apply_blk:end at ... ... .. ..:..:.. 20..
+##TEST_AWK.*%YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Record Offset : 65744 .0x000100D0.
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Turn around Offset : 65744 .0x000100D0.
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Turn around timestamp : [0-9]* .0x[0-9a-fA-F]*.
+##TEST_AWK.*%YDB-I-MUINFOUINT8,     Turn around transaction : 1 .0x0000000000000001.
+##TEST_AWK.*%YDB-I-MUINFOUINT8,     Turn around seqno : 1 .0x0000000000000001.
+##TEST_AWK.*YDB-I-MUINFOUINT6,     Tp_resolve_time :[ 0-9]* .0x[0-9A-F]*. ; .H=[0-9]*.[0-9]*
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Token total : 0 .0x00000000.
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Token broken : 0 .0x00000000.
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_forward:at the start at .*
+##TEST_AWK%YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
+%YDB-I-MUINFOUINT4,     Record Offset : 65744 [0x000100D0]
+##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_forward:Reached EOF before tp_resolve_time at .*
+##TEST_AWK%YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
+%YDB-I-MUINFOUINT4,     Record Offset : 75024 [0x00012510]
+##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_forward:at the end at .*
+##TEST_AWK%YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
+##TEST_AWK%YDB-I-MUINFOUINT4,     Record Offset : [0-9]* .0x[0-9a-fA-F]*.
 %GTM-S-JNLSUCCESS, Show successful
 %GTM-S-JNLSUCCESS, Verify successful
 %GTM-S-JNLSUCCESS, Recover successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ##SOURCE_PATH##/mumps -direct
 
 GTM>
@@ -144,91 +144,91 @@ GTM>
 rm mumps.dat
 unset echo
 ##SOURCE_PATH##/mupip journal -extract=forward_nv.mjf -for mumps.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 %GTM-W-DBCOLLREQ, JOURNAL EXTRACT proceeding without collation information for globals in database. Missing Database file ##TEST_PATH##/mumps.dat
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-FILECREATE, Journal extract file forward_nv.mjf created
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file forward_nv.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ##SOURCE_PATH##/mupip journal -extract=forward.mjf -for mumps.mjl -verbose
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 %GTM-W-DBCOLLREQ, JOURNAL EXTRACT proceeding without collation information for globals in database. Missing Database file ##TEST_PATH##/mumps.dat
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##TEST_AWK.*%GTM-I-MUINFOSTR, Processing started for journal file : ##TEST_PATH##/mumps.mjl
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     First Epoch Record Offset : 75048 .0x00012528.
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     First Epoch Record timestamp : [0-9]* .0x[0-9a-fA-F]*.
-##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_back_processing:at the end at .*
-##TEST_AWK.*%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Record Offset : 65536 .0x00010000.
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Turn around Offset : 0 .0x00000000.
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Turn around timestamp : 0 .0x00000000.
-##TEST_AWK.*%GTM-I-MUINFOUINT8,     Turn around transaction : 0 .0x0000000000000000.
-##TEST_AWK.*%GTM-I-MUINFOUINT8,     Turn around seqno : 0 .0x0000000000000000.
-##TEST_AWK.*%GTM-I-MUINFOUINT6,     Tp_resolve_time : 0 .0x00000000. ; \$H=47116,68400
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Token total : 8 .0x00000008.
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Token broken : 0 .0x00000000.
-%GTM-I-MUINFOUINT4, mur_process_token_table returns min_broken_time : 4294967295 [0xFFFFFFFF]
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_forward:at the start at .*
-%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
-%GTM-I-MUINFOUINT4,     Record Offset : 65536 [0x00010000]
-%GTM-I-FILECREATE, Journal extract file forward.mjf created
-##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_forward:Reached EOF before tp_resolve_time at .*
-%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
-%GTM-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
-##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_forward:at the end at .*
-%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
-%GTM-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK.*%YDB-I-MUINFOSTR, Processing started for journal file : ##TEST_PATH##/mumps.mjl
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     First Epoch Record Offset : 75048 .0x00012528.
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     First Epoch Record timestamp : [0-9]* .0x[0-9a-fA-F]*.
+##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_back_processing:at the end at .*
+##TEST_AWK.*%YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Record Offset : 65536 .0x00010000.
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Turn around Offset : 0 .0x00000000.
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Turn around timestamp : 0 .0x00000000.
+##TEST_AWK.*%YDB-I-MUINFOUINT8,     Turn around transaction : 0 .0x0000000000000000.
+##TEST_AWK.*%YDB-I-MUINFOUINT8,     Turn around seqno : 0 .0x0000000000000000.
+##TEST_AWK.*%YDB-I-MUINFOUINT6,     Tp_resolve_time : 0 .0x00000000. ; \$H=47116,68400
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Token total : 8 .0x00000008.
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Token broken : 0 .0x00000000.
+%YDB-I-MUINFOUINT4, mur_process_token_table returns min_broken_time : 4294967295 [0xFFFFFFFF]
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_forward:at the start at .*
+%YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+%YDB-I-MUINFOUINT4,     Record Offset : 65536 [0x00010000]
+%YDB-I-FILECREATE, Journal extract file forward.mjf created
+##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_forward:Reached EOF before tp_resolve_time at .*
+%YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+%YDB-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
+##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_forward:at the end at .*
+%YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+%YDB-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 unset echo
 ##TEST_AWK##SOURCE_PATH##/mupip journal -extract=backward.mjf -back mumps.mjl -since=".*" -verbose
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 %GTM-W-DBCOLLREQ, JOURNAL EXTRACT proceeding without collation information for globals in database. Missing Database file ##TEST_PATH##/mumps.dat
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##TEST_AWK.*%GTM-I-MUINFOSTR, Processing started for journal file : ##TEST_PATH##/mumps.mjl
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     First Epoch Record Offset : 75048 .0x00012528.
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     First Epoch Record timestamp : [0-9]* .0x[0-9a-fA-F]*.
-##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_back_processing:save_turn_around_point at .*
-##TEST_AWK.*%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Record Offset : 65744 .0x000100D0.
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Turn around Offset : 65744 .0x000100D0.
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Turn around timestamp : [0-9]* .0x[0-9a-fA-F]*.
-##TEST_AWK.*%GTM-I-MUINFOUINT8,     Turn around transaction : 1 .0x0000000000000001.
-##TEST_AWK.*%GTM-I-MUINFOUINT8,     Turn around seqno : 1 .0x0000000000000001.
-##TEST_AWK.*.GTM-I-MUINFOUINT6,     Tp_resolve_time :[ 0-9]* .0x[0-9A-F]*. ; .H=[0-9]*.[0-9]*
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Token total : 8 .0x00000008.
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Token broken : 0 .0x00000000.
-##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_back_processing:at the end at .*
-##TEST_AWK.*%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Record Offset : 65744 .0x000100D0.
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Turn around Offset : 65744 .0x000100D0.
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Turn around timestamp : [0-9]* .0x[0-9a-fA-F]*.
-##TEST_AWK.*%GTM-I-MUINFOUINT8,     Turn around transaction : 1 .0x0000000000000001.
-##TEST_AWK.*%GTM-I-MUINFOUINT8,     Turn around seqno : 1 .0x0000000000000001.
-##TEST_AWK.*.GTM-I-MUINFOUINT6,     Tp_resolve_time :[ 0-9]* .0x[0-9A-F]*. ; .H=[0-9]*.[0-9]*
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Token total : 8 .0x00000008.
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Token broken : 0 .0x00000000.
-%GTM-I-MUINFOUINT4, mur_process_token_table returns min_broken_time : 4294967295 [0xFFFFFFFF]
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_forward:at the start at .*
-%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
-%GTM-I-MUINFOUINT4,     Record Offset : 65744 [0x000100D0]
-%GTM-I-FILECREATE, Journal extract file backward.mjf created
-##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_forward:Reached EOF before tp_resolve_time at .*
-%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
-%GTM-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
-##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_forward:at the end at .*
-%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
-%GTM-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK.*%YDB-I-MUINFOSTR, Processing started for journal file : ##TEST_PATH##/mumps.mjl
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     First Epoch Record Offset : 75048 .0x00012528.
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     First Epoch Record timestamp : [0-9]* .0x[0-9a-fA-F]*.
+##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_back_processing:save_turn_around_point at .*
+##TEST_AWK.*%YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Record Offset : 65744 .0x000100D0.
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Turn around Offset : 65744 .0x000100D0.
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Turn around timestamp : [0-9]* .0x[0-9a-fA-F]*.
+##TEST_AWK.*%YDB-I-MUINFOUINT8,     Turn around transaction : 1 .0x0000000000000001.
+##TEST_AWK.*%YDB-I-MUINFOUINT8,     Turn around seqno : 1 .0x0000000000000001.
+##TEST_AWK.*.YDB-I-MUINFOUINT6,     Tp_resolve_time :[ 0-9]* .0x[0-9A-F]*. ; .H=[0-9]*.[0-9]*
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Token total : 8 .0x00000008.
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Token broken : 0 .0x00000000.
+##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_back_processing:at the end at .*
+##TEST_AWK.*%YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Record Offset : 65744 .0x000100D0.
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Turn around Offset : 65744 .0x000100D0.
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Turn around timestamp : [0-9]* .0x[0-9a-fA-F]*.
+##TEST_AWK.*%YDB-I-MUINFOUINT8,     Turn around transaction : 1 .0x0000000000000001.
+##TEST_AWK.*%YDB-I-MUINFOUINT8,     Turn around seqno : 1 .0x0000000000000001.
+##TEST_AWK.*.YDB-I-MUINFOUINT6,     Tp_resolve_time :[ 0-9]* .0x[0-9A-F]*. ; .H=[0-9]*.[0-9]*
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Token total : 8 .0x00000008.
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Token broken : 0 .0x00000000.
+%YDB-I-MUINFOUINT4, mur_process_token_table returns min_broken_time : 4294967295 [0xFFFFFFFF]
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_forward:at the start at .*
+%YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+%YDB-I-MUINFOUINT4,     Record Offset : 65744 [0x000100D0]
+%YDB-I-FILECREATE, Journal extract file backward.mjf created
+##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_forward:Reached EOF before tp_resolve_time at .*
+%YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+%YDB-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
+##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_forward:at the end at .*
+%YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+%YDB-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ##SOURCE_PATH##/mupip journal -show=all -back mumps.mjl -verbose
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 
 -------------------------------------------------------------------------------
 SHOW output for journal file ##TEST_PATH##/mumps.mjl
@@ -327,40 +327,40 @@ Record type    Count
 
 %GTM-S-JNLSUCCESS, Show successful
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ##SOURCE_PATH##/mupip create
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 ##SOURCE_PATH##/mupip journal -recov -for mumps.mjl -verbose -verify
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##TEST_AWK.*%GTM-I-MUINFOSTR, Processing started for journal file : ##TEST_PATH##/mumps.mjl
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     First Epoch Record Offset : 75048 .0x00012528.
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     First Epoch Record timestamp : [0-9]* .0x[0-9a-fA-F]*.
-##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_back_processing:at the end at .*
-##TEST_AWK.*%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Record Offset : 65536 .0x00010000.
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Turn around Offset : 0 .0x00000000.
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Turn around timestamp : 0 .0x00000000.
-##TEST_AWK.*%GTM-I-MUINFOUINT8,     Turn around transaction : 0 .0x0000000000000000.
-##TEST_AWK.*%GTM-I-MUINFOUINT8,     Turn around seqno : 0 .0x0000000000000000.
-##TEST_AWK.*%GTM-I-MUINFOUINT6,     Tp_resolve_time : 0 .0x00000000. ; \$H=47116,68400
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Token total : 8 .0x00000008.
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Token broken : 0 .0x00000000.
-%GTM-I-MUINFOUINT4, mur_process_token_table returns min_broken_time : 4294967295 [0xFFFFFFFF]
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_forward:at the start at .*
-%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
-%GTM-I-MUINFOUINT4,     Record Offset : 65536 [0x00010000]
-##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_forward:Reached EOF before tp_resolve_time at .*
-%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
-%GTM-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
-##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_forward:at the end at .*
-%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
-%GTM-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK.*%YDB-I-MUINFOSTR, Processing started for journal file : ##TEST_PATH##/mumps.mjl
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     First Epoch Record Offset : 75048 .0x00012528.
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     First Epoch Record timestamp : [0-9]* .0x[0-9a-fA-F]*.
+##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_back_processing:at the end at .*
+##TEST_AWK.*%YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Record Offset : 65536 .0x00010000.
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Turn around Offset : 0 .0x00000000.
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Turn around timestamp : 0 .0x00000000.
+##TEST_AWK.*%YDB-I-MUINFOUINT8,     Turn around transaction : 0 .0x0000000000000000.
+##TEST_AWK.*%YDB-I-MUINFOUINT8,     Turn around seqno : 0 .0x0000000000000000.
+##TEST_AWK.*%YDB-I-MUINFOUINT6,     Tp_resolve_time : 0 .0x00000000. ; \$H=47116,68400
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Token total : 8 .0x00000008.
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Token broken : 0 .0x00000000.
+%YDB-I-MUINFOUINT4, mur_process_token_table returns min_broken_time : 4294967295 [0xFFFFFFFF]
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_forward:at the start at .*
+%YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+%YDB-I-MUINFOUINT4,     Record Offset : 65536 [0x00010000]
+##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_forward:Reached EOF before tp_resolve_time at .*
+%YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+%YDB-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
+##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_forward:at the end at .*
+%YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+%YDB-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
 %GTM-S-JNLSUCCESS, Show successful
 %GTM-S-JNLSUCCESS, Verify successful
 %GTM-S-JNLSUCCESS, Recover successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ##SOURCE_PATH##/mumps -direct
 
 GTM>
@@ -394,74 +394,74 @@ GTM>
 rm mumps.dat
 unset echo
 ##SOURCE_PATH##/mupip journal -extract=forward2_nv.mjf -for mumps.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 %GTM-W-DBCOLLREQ, JOURNAL EXTRACT proceeding without collation information for globals in database. Missing Database file ##TEST_PATH##/mumps.dat
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-FILECREATE, Journal extract file forward2_nv.mjf created
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file forward2_nv.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ##SOURCE_PATH##/mupip journal -extract=forward2.mjf -for mumps.mjl -verbose
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 %GTM-W-DBCOLLREQ, JOURNAL EXTRACT proceeding without collation information for globals in database. Missing Database file ##TEST_PATH##/mumps.dat
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##TEST_AWK.*%GTM-I-MUINFOSTR, Processing started for journal file : ##TEST_PATH##/mumps.mjl
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     First Epoch Record Offset : 75048 .0x00012528.
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     First Epoch Record timestamp : [0-9]* .0x[0-9a-fA-F]*.
-##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_back_processing:at the end at .*
-##TEST_AWK.*%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Record Offset : 65536 .0x00010000.
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Turn around Offset : 0 .0x00000000.
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Turn around timestamp : 0 .0x00000000.
-##TEST_AWK.*%GTM-I-MUINFOUINT8,     Turn around transaction : 0 .0x0000000000000000.
-##TEST_AWK.*%GTM-I-MUINFOUINT8,     Turn around seqno : 0 .0x0000000000000000.
-##TEST_AWK.*%GTM-I-MUINFOUINT6,     Tp_resolve_time : 0 .0x00000000. ; \$H=47116,68400
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Token total : 8 .0x00000008.
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Token broken : 0 .0x00000000.
-%GTM-I-MUINFOUINT4, mur_process_token_table returns min_broken_time : 4294967295 [0xFFFFFFFF]
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_forward:at the start at .*
-%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
-%GTM-I-MUINFOUINT4,     Record Offset : 65536 [0x00010000]
-%GTM-I-FILECREATE, Journal extract file forward2.mjf created
-##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_forward:Reached EOF before tp_resolve_time at .*
-%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
-%GTM-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
-##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_forward:at the end at .*
-%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
-%GTM-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK.*%YDB-I-MUINFOSTR, Processing started for journal file : ##TEST_PATH##/mumps.mjl
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     First Epoch Record Offset : 75048 .0x00012528.
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     First Epoch Record timestamp : [0-9]* .0x[0-9a-fA-F]*.
+##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_back_processing:at the end at .*
+##TEST_AWK.*%YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Record Offset : 65536 .0x00010000.
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Turn around Offset : 0 .0x00000000.
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Turn around timestamp : 0 .0x00000000.
+##TEST_AWK.*%YDB-I-MUINFOUINT8,     Turn around transaction : 0 .0x0000000000000000.
+##TEST_AWK.*%YDB-I-MUINFOUINT8,     Turn around seqno : 0 .0x0000000000000000.
+##TEST_AWK.*%YDB-I-MUINFOUINT6,     Tp_resolve_time : 0 .0x00000000. ; \$H=47116,68400
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Token total : 8 .0x00000008.
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Token broken : 0 .0x00000000.
+%YDB-I-MUINFOUINT4, mur_process_token_table returns min_broken_time : 4294967295 [0xFFFFFFFF]
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_forward:at the start at .*
+%YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+%YDB-I-MUINFOUINT4,     Record Offset : 65536 [0x00010000]
+%YDB-I-FILECREATE, Journal extract file forward2.mjf created
+##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_forward:Reached EOF before tp_resolve_time at .*
+%YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+%YDB-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
+##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_forward:at the end at .*
+%YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+%YDB-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 unset echo
 ##SOURCE_PATH##/mupip journal -show=all -for mumps.mjl -verbose
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##TEST_AWK.*%GTM-I-MUINFOSTR, Processing started for journal file : ##TEST_PATH##/mumps.mjl
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     First Epoch Record Offset : 75048 .0x00012528.
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     First Epoch Record timestamp : [0-9]* .0x[0-9a-fA-F]*.
-##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_back_processing:at the end at .*
-##TEST_AWK.*%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Record Offset : 65536 .0x00010000.
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Turn around Offset : 0 .0x00000000.
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Turn around timestamp : 0 .0x00000000.
-##TEST_AWK.*%GTM-I-MUINFOUINT8,     Turn around transaction : 0 .0x0000000000000000.
-##TEST_AWK.*%GTM-I-MUINFOUINT8,     Turn around seqno : 0 .0x0000000000000000.
-##TEST_AWK.*%GTM-I-MUINFOUINT6,     Tp_resolve_time : 0 .0x00000000. ; \$H=47116,68400
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Token total : 8 .0x00000008.
-##TEST_AWK.*%GTM-I-MUINFOUINT4,     Token broken : 0 .0x00000000.
-%GTM-I-MUINFOUINT4, mur_process_token_table returns min_broken_time : 4294967295 [0xFFFFFFFF]
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_forward:at the start at .*
-%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
-%GTM-I-MUINFOUINT4,     Record Offset : 65536 [0x00010000]
-##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_forward:Reached EOF before tp_resolve_time at .*
-%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
-%GTM-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
-##TEST_AWK.*%GTM-I-MUINFOSTR, Module : mur_forward:at the end at .*
-%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
-%GTM-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK.*%YDB-I-MUINFOSTR, Processing started for journal file : ##TEST_PATH##/mumps.mjl
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     First Epoch Record Offset : 75048 .0x00012528.
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     First Epoch Record timestamp : [0-9]* .0x[0-9a-fA-F]*.
+##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_back_processing:at the end at .*
+##TEST_AWK.*%YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Record Offset : 65536 .0x00010000.
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Turn around Offset : 0 .0x00000000.
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Turn around timestamp : 0 .0x00000000.
+##TEST_AWK.*%YDB-I-MUINFOUINT8,     Turn around transaction : 0 .0x0000000000000000.
+##TEST_AWK.*%YDB-I-MUINFOUINT8,     Turn around seqno : 0 .0x0000000000000000.
+##TEST_AWK.*%YDB-I-MUINFOUINT6,     Tp_resolve_time : 0 .0x00000000. ; \$H=47116,68400
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Token total : 8 .0x00000008.
+##TEST_AWK.*%YDB-I-MUINFOUINT4,     Token broken : 0 .0x00000000.
+%YDB-I-MUINFOUINT4, mur_process_token_table returns min_broken_time : 4294967295 [0xFFFFFFFF]
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_forward:at the start at .*
+%YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+%YDB-I-MUINFOUINT4,     Record Offset : 65536 [0x00010000]
+##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_forward:Reached EOF before tp_resolve_time at .*
+%YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+%YDB-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
+##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_forward:at the end at .*
+%YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
+%YDB-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
 
 -------------------------------------------------------------------------------
 SHOW output for journal file ##TEST_PATH##/mumps.mjl
@@ -568,7 +568,7 @@ Record type    Count
 
 %GTM-S-JNLSUCCESS, Show successful
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 unset echo
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *

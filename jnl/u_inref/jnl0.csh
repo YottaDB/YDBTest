@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -36,8 +39,8 @@ $MUPIP journal -back -show myjnl0.mjl >>& show.out
 # This should be same as above with all
 $MUPIP journal -back -show=all myjnl0.mjl >>& show_all.out
 #filter the timestamp before the diff - zhouc - 05/07/2003
-$tst_awk '{if ($0 ~ /^%GTM-I-MUJNLSTAT, .* at/) {gsub(/at .*/,"at #timestamp#");$0="##TEST_AWK"$0} print $0}' show.out > ! show_new.out
-$tst_awk '{if ($0 ~ /^%GTM-I-MUJNLSTAT, .* at/) {gsub(/at .*/,"at #timestamp#");$0="##TEST_AWK"$0} print $0}' show_all.out > ! show_all_new.out
+$tst_awk '{if ($0 ~ /^%YDB-I-MUJNLSTAT, .* at/) {gsub(/at .*/,"at #timestamp#");$0="##TEST_AWK"$0} print $0}' show.out > ! show_new.out
+$tst_awk '{if ($0 ~ /^%YDB-I-MUJNLSTAT, .* at/) {gsub(/at .*/,"at #timestamp#");$0="##TEST_AWK"$0} print $0}' show_all.out > ! show_all_new.out
 diff show_new.out show_all_new.out
 #
 #

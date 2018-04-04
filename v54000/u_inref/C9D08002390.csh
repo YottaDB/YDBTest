@@ -43,10 +43,10 @@ set syslog_after1 = `date +"%b %e %H:%M:%S"`
 echo "# Time after test case 1 : GTM_TEST_DEBUGINFO $syslog_after1"
 # Check if the error/messages are logged in operator log
 set dsepid = `cat dse.pid_1`
-echo "# Check the operator log for the messages GTM-I-STUCKACT and YDB-E-WRITERSTUCK"
+echo "# Check the operator log for the messages YDB-I-STUCKACT and YDB-E-WRITERSTUCK"
 $gtm_tst/com/getoper.csh "$syslog_before1" "" syslog1a.txt "" STUCKACT
 $gtm_tst/com/getoper.csh "$syslog_before1" "" syslog1b.txt "" WRITERSTUCK
-$grep "GTM-I-STUCKACT" syslog1a.txt | $grep $dsepid | sed 's/.*\(GTM-I-STUCKACT\)/\1/; s/\(.*stack_trace.csh\).*/\1/'
+$grep "YDB-I-STUCKACT" syslog1a.txt | $grep $dsepid | sed 's/.*\(YDB-I-STUCKACT\)/\1/; s/\(.*stack_trace.csh\).*/\1/'
 $grep "YDB-E-WRITERSTUCK" syslog1b.txt | $grep $dsepid | sed 's/.*\(YDB-E-WRITERSTUCK\)/\1/; s/\(.*mumps.dat\).*/\1/'
 
 echo ""
@@ -77,11 +77,11 @@ $gtm_tst/com/check_string_exist.csh dse_flush.out_2 ANY "gtmprocstuck_get_stack_
 echo "# Check that WRITERSTUCK file is not generated now"
 ls | $grep "^TRACE_WRITERSTUCK"
 # Check if the error/messages are logged in operator log
-echo "# Check the operator log for the messages GTM-I-STUCKACT and YDB-E-WRITERSTUCK"
+echo "# Check the operator log for the messages YDB-I-STUCKACT and YDB-E-WRITERSTUCK"
 $gtm_tst/com/getoper.csh "$syslog_before2" "" syslog2a.txt "" STUCKACT
 $gtm_tst/com/getoper.csh "$syslog_before2" "" syslog2b.txt "" WRITERSTUCK
 set dsepid = `cat dse.pid_2`
-$grep "GTM-I-STUCKACT" syslog2a.txt | $grep $dsepid | sed 's/.*\(GTM-I-STUCKACT\)/\1/; s/\(.*stack_trace.csh\).*/\1/'
+$grep "YDB-I-STUCKACT" syslog2a.txt | $grep $dsepid | sed 's/.*\(YDB-I-STUCKACT\)/\1/; s/\(.*stack_trace.csh\).*/\1/'
 $grep "YDB-E-WRITERSTUCK" syslog2b.txt | $grep $dsepid | sed 's/.*\(YDB-E-WRITERSTUCK\)/\1/; s/\(.*mumps.dat\).*/\1/'
 
 echo ""
@@ -109,11 +109,11 @@ $gtm_tst/com/check_string_exist.csh dse_flush.out_3 ANY "noexist.csh.*not found"
 echo "# Check that WRITERSTUCK file is not generated now"
 ls | $grep "^TRACE_WRITERSTUCK"
 # Check if the error/messages are logged in operator log
-echo "# Check the operator log for the messages GTM-I-STUCKACT and YDB-E-WRITERSTUCK"
+echo "# Check the operator log for the messages YDB-I-STUCKACT and YDB-E-WRITERSTUCK"
 set dsepid = `cat dse.pid_3`
 $gtm_tst/com/getoper.csh "$syslog_before3" "" syslog3a.txt "" STUCKACT
 $gtm_tst/com/getoper.csh "$syslog_before3" "" syslog3b.txt "" WRITERSTUCK
-$grep "GTM-I-STUCKACT" syslog3a.txt | $grep $dsepid | sed 's/.*\(GTM-I-STUCKACT\)/\1/; s/\(.*noexist.csh\).*/\1/'
+$grep "YDB-I-STUCKACT" syslog3a.txt | $grep $dsepid | sed 's/.*\(YDB-I-STUCKACT\)/\1/; s/\(.*noexist.csh\).*/\1/'
 $grep "YDB-E-WRITERSTUCK" syslog3b.txt | $grep $dsepid | sed 's/.*\(YDB-E-WRITERSTUCK\)/\1/; s/\(.*mumps.dat\).*/\1/'
 
 # End of test

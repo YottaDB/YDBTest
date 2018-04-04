@@ -38,14 +38,14 @@ Integ without gtm_passwd and expect to error out
 unsetenv gtm_passwd
 mupip integ -file mumps.dat
 %YDB-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file mumps.dat. Environment variable gtm_passwd not set
-%GTM-I-MUSTANDALONE, Could not get exclusive access to mumps.dat
+%YDB-I-MUSTANDALONE, Could not get exclusive access to mumps.dat
 %YDB-E-INTEGERRS, Database integrity errors
 ----------------------------------------------------------------------------------
 Integ with bad gtm_passwd and expect to error out
 ----------------------------------------------------------------------------------
 mupip integ -file mumps.dat
 ##TEST_AWK%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file mumps.dat. .*
-%GTM-I-MUSTANDALONE, Could not get exclusive access to mumps.dat
+%YDB-I-MUSTANDALONE, Could not get exclusive access to mumps.dat
 %YDB-E-INTEGERRS, Database integrity errors
 ----------------------------------------------------------------------------------
 Integ with correct password and expect to work

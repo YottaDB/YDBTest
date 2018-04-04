@@ -4,14 +4,14 @@
 
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/mumps.gld
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 %GDE-I-GDUSEDEFS, Using defaults for Global Directory 
 	##TEST_PATH##/mumps.gld
 %GDE-I-VERIFY, Verification OK
 
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/mumps.gld
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
 ##TEST_AWKvermismatch test -- v4 GLD, v4 DB and V.* version being tested
 
@@ -41,16 +41,16 @@ Blocks needing to be split ------              0 [0x00000000]
 - DT index blocks ---------------              0 [0x00000000]
 - GVT leaf (data) blocks --------              0 [0x00000000]
 - GVT index blocks --------------              0 [0x00000000]
-%GTM-I-DBCDBCERTIFIED, Database ##TEST_PATH##/mumps.dat has been certified for use with GT.M V5
+%YDB-I-DBCDBCERTIFIED, Database ##TEST_PATH##/mumps.dat has been certified for use with GT.M V5
 You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
-%GTM-I-TEXT, Mupip upgrade started
-%GTM-I-MUINFOUINT4, Old file header size : 24576 [0x00006000]
-%GTM-I-MUINFOUINT8, Old file length : 128512 [0x000000000001F600]
-%GTM-I-MUINFOUINT4, Old file start_vbn : 49 [0x00000031]
-%GTM-I-MUINFOUINT4, Old file gds blk_size : 1024 [0x00000400]
-%GTM-I-MUINFOUINT4, Old file total_blks : 101 [0x00000065]
+%YDB-I-TEXT, Mupip upgrade started
+%YDB-I-MUINFOUINT4, Old file header size : 24576 [0x00006000]
+%YDB-I-MUINFOUINT8, Old file length : 128512 [0x000000000001F600]
+%YDB-I-MUINFOUINT4, Old file start_vbn : 49 [0x00000031]
+%YDB-I-MUINFOUINT4, Old file gds blk_size : 1024 [0x00000400]
+%YDB-I-MUINFOUINT4, Old file total_blks : 101 [0x00000065]
 ##TEST_AWK%GTM-S-MUPGRDSUCC, Database file mumps.dat successfully upgraded to GT.M .*
 databse upgraded to V5 now
 do gde exit in V5. this should automatically convert gld to V5 without issue
@@ -69,7 +69,7 @@ GTM>
 GTM>
 
 GTM>
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
@@ -149,7 +149,7 @@ dse dump attempted on a v4 database. should error out
 %YDB-E-BADDBVER, Incorrect database version: ##TEST_PATH##/mumps.dat
 %YDB-E-DBNOREGION, None of the database regions accessible
 Clean up ftok semaphore which will be left around from the BADDBVER errors above to avoid MUSTANDALONE errors later
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
 ##TEST_AWK.*(Before-images|BEFORE_IMAGES).*
 
 GTM>
@@ -170,27 +170,27 @@ Blocks needing to be split ------              0 [0x00000000]
 - DT index blocks ---------------              0 [0x00000000]
 - GVT leaf (data) blocks --------              0 [0x00000000]
 - GVT index blocks --------------              0 [0x00000000]
-%GTM-I-DBCDBCERTIFIED, Database ##TEST_PATH##/mumps.dat has been certified for use with GT.M V5
-%GTM-I-DBCDBCERTIFIED, Database ##TEST_PATH##/mumps.dat has been certified for use with GT.M V5
+%YDB-I-DBCDBCERTIFIED, Database ##TEST_PATH##/mumps.dat has been certified for use with GT.M V5
+%YDB-I-DBCDBCERTIFIED, Database ##TEST_PATH##/mumps.dat has been certified for use with GT.M V5
 You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
 		Are you ready to continue the operation [y/n] ? 
-%GTM-I-TEXT, Mupip upgrade started
-%GTM-I-MUINFOUINT4, Old file header size : 24576 [0x00006000]
-%GTM-I-MUINFOUINT8, Old file length : 128512 [0x000000000001F600]
-%GTM-I-MUINFOUINT4, Old file start_vbn : 49 [0x00000031]
-%GTM-I-MUINFOUINT4, Old file gds blk_size : 1024 [0x00000400]
-%GTM-I-MUINFOUINT4, Old file total_blks : 101 [0x00000065]
-%GTM-I-MUINFOSTR, Journal file name : ##TEST_PATH##/mumps.mjl
-%GTM-I-MUINFOSTR, Journal before imaging :  TRUE
-%GTM-I-MUINFOUINT4, Journal buffer size : 128 [0x00000080]
-%GTM-I-MUINFOUINT4, Journal allocation : 100 [0x00000064]
-%GTM-I-MUINFOUINT4, Journal extension : 100 [0x00000064]
-%GTM-I-MUINFOUINT4, Journal autoswitchlimit : 8388600 [0x007FFFF8]
-##TEST_AWK%GTM-I-MUINFOUINT4, Journal epoch interval : 30[0]* .0x00000[10][12][CE].
-%GTM-I-MUINFOSTR, Journal sync_io : FALSE
-##TEST_AWK%GTM-I-MUINFOUINT4, Journal yield limit : (8|256) .0x00000[10]0[08].
-%GTM-I-MUINFOUINT8, Region sequence number : 1 [0x0000000000000001]
+%YDB-I-TEXT, Mupip upgrade started
+%YDB-I-MUINFOUINT4, Old file header size : 24576 [0x00006000]
+%YDB-I-MUINFOUINT8, Old file length : 128512 [0x000000000001F600]
+%YDB-I-MUINFOUINT4, Old file start_vbn : 49 [0x00000031]
+%YDB-I-MUINFOUINT4, Old file gds blk_size : 1024 [0x00000400]
+%YDB-I-MUINFOUINT4, Old file total_blks : 101 [0x00000065]
+%YDB-I-MUINFOSTR, Journal file name : ##TEST_PATH##/mumps.mjl
+%YDB-I-MUINFOSTR, Journal before imaging :  TRUE
+%YDB-I-MUINFOUINT4, Journal buffer size : 128 [0x00000080]
+%YDB-I-MUINFOUINT4, Journal allocation : 100 [0x00000064]
+%YDB-I-MUINFOUINT4, Journal extension : 100 [0x00000064]
+%YDB-I-MUINFOUINT4, Journal autoswitchlimit : 8388600 [0x007FFFF8]
+##TEST_AWK%YDB-I-MUINFOUINT4, Journal epoch interval : 30[0]* .0x00000[10][12][CE].
+%YDB-I-MUINFOSTR, Journal sync_io : FALSE
+##TEST_AWK%YDB-I-MUINFOUINT4, Journal yield limit : (8|256) .0x00000[10]0[08].
+%YDB-I-MUINFOUINT8, Region sequence number : 1 [0x0000000000000001]
 ##TEST_AWK%GTM-S-MUPGRDSUCC, Database file mumps.dat successfully upgraded to GT.M .*
 databse upgraded to V5 now
 %GDE-I-LOADGD, Loading Global Directory file 
@@ -202,17 +202,17 @@ databse upgraded to V5 now
 %GDE-I-GDUPDATE, Updating Global Directory file 
 	##TEST_PATH##/mumps.gld
 MUPIP recover attempted on V4 journals. should issue JNLBADLABEL but not explode
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 %YDB-E-JNLBADLABEL, Journal file ##TEST_PATH##/mumps.mjl has a bad GT.M Journal File Label. Expected GDSJNL26. Found GDSJNL15.
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 MUPIP rollback attempted on V4 journals. should issue JNLBADLABEL but not explode
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.repl is renamed to ##TEST_PATH##/mumps.repl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
-%GTM-I-REPLSTATE, Replication state for region DEFAULT is now ON
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.repl is renamed to ##TEST_PATH##/mumps.repl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-REPLSTATE, Replication state for region DEFAULT is now ON
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 %YDB-E-JNLBADLABEL, Journal file ##TEST_PATH##/mumps.mjl has a bad GT.M Journal File Label. Expected GDSJNL26. Found GDSJNL15.
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-%GTM-I-FILENOTCREATE, Lost transactions extract file fetch.glo not created
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+%YDB-I-FILENOTCREATE, Lost transactions extract file fetch.glo not created
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..

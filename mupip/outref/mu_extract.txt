@@ -31,7 +31,7 @@ DSE> DSE> Shutting down Passive Source Server and Receiver Server in ##REMOTE_TE
 Shutting down Primary Source Server Server in ##TEST_PATH##
 TEST-E-DB_EXTRACT, MUPIP extract failed
 %YDB-E-EXTRFAIL, Extract failed for the global ^dupkey. MUPIP INTEG should be run.
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 13  max rec len: 1  max node len: 18
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 13  max rec len: 1  max node len: 18
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 Either primary extract file or the secondary extract file does not exist
 TEST-E-FAILED : DATABASE EXTRACT FAILED
@@ -88,8 +88,8 @@ Free               96              NA              NA            NA
 Total             100               5              NA             2
 %YDB-E-INTEGERRS, Database integrity errors
 %YDB-E-EXTRFAIL, Extract failed for the global ^dupkey. MUPIP INTEG should be run.
-%GTM-I-RECORDSTAT, ^dupkey:	  Key cnt: 1  max subsc len: 13  max rec len: 1  max node len: 18
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 13  max rec len: 1  max node len: 18
+%YDB-I-RECORDSTAT, ^dupkey:	  Key cnt: 1  max subsc len: 13  max rec len: 1  max node len: 18
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 13  max rec len: 1  max node len: 18
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ^dupkey("one")="1"
 ======
@@ -129,7 +129,7 @@ DSE> DSE> Shutting down Passive Source Server and Receiver Server in ##REMOTE_TE
 Shutting down Primary Source Server Server in ##TEST_PATH##
 TEST-E-DB_EXTRACT, MUPIP extract failed
 %YDB-E-EXTRFAIL, Extract failed for the global ^dupkey. MUPIP INTEG should be run.
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 14  max rec len: 1  max node len: 18
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 14  max rec len: 1  max node len: 18
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 Either primary extract file or the secondary extract file does not exist
 TEST-E-FAILED : DATABASE EXTRACT FAILED
@@ -187,15 +187,15 @@ Total             100               6              NA             2
 %YDB-E-INTEGERRS, Database integrity errors
 ### -format=zwr ###
 %YDB-E-EXTRFAIL, Extract failed for the global ^dupkey. MUPIP INTEG should be run.
-%GTM-I-RECORDSTAT, ^dupkey:	  Key cnt: 2  max subsc len: 14  max rec len: 1  max node len: 18
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 14  max rec len: 1  max node len: 18
+%YDB-I-RECORDSTAT, ^dupkey:	  Key cnt: 2  max subsc len: 14  max rec len: 1  max node len: 18
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 14  max rec len: 1  max node len: 18
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ^dupkey("one")="1"
 ^dupkey("one1")="2"
 ### -format=go ###
 %YDB-E-EXTRFAIL, Extract failed for the global ^dupkey. MUPIP INTEG should be run.
-%GTM-I-RECORDSTAT, ^dupkey:	  Key cnt: 2  max subsc len: 14  max rec len: 1  max node len: 18
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 14  max rec len: 1  max node len: 18
+%YDB-I-RECORDSTAT, ^dupkey:	  Key cnt: 2  max subsc len: 14  max rec len: 1  max node len: 18
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 14  max rec len: 1  max node len: 18
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ^dupkey("one")
 1
@@ -203,10 +203,10 @@ Total             100               6              NA             2
 2
 ### -format=bin ###
 %YDB-E-EXTRFAIL, Extract failed for the global ^dupkey. MUPIP INTEG should be run.
-%GTM-I-RECORDSTAT, ^dupkey:	  Key cnt: 2  max subsc len: 14  max rec len: 1  max node len: 18
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 14  max rec len: 1  max node len: 18
+%YDB-I-RECORDSTAT, ^dupkey:	  Key cnt: 2  max subsc len: 14  max rec len: 1  max node len: 18
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 14  max rec len: 1  max node len: 18
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 MUPIP load extr2.bin -format=bin
 Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................GT.M MUPIP EXTRACT              
 
@@ -271,7 +271,7 @@ DSE> DSE> Shutting down Passive Source Server and Receiver Server in ##REMOTE_TE
 Shutting down Primary Source Server Server in ##TEST_PATH##
 TEST-E-DB_EXTRACT, MUPIP extract failed
 %YDB-E-EXTRFAIL, Extract failed for the global ^var. MUPIP INTEG should be run.
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 169  max subsc len: 59  max rec len: 3  max node len: 63
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 169  max subsc len: 59  max rec len: 3  max node len: 63
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 Either primary extract file or the secondary extract file does not exist
 TEST-E-FAILED : DATABASE EXTRACT FAILED
@@ -329,8 +329,8 @@ Total             100             198              NA             3
 %YDB-E-INTEGERRS, Database integrity errors
 ### -format=zwr ###
 %YDB-E-EXTRFAIL, Extract failed for the global ^var. MUPIP INTEG should be run.
-%GTM-I-RECORDSTAT, ^var:	  Key cnt: 169  max subsc len: 59  max rec len: 3  max node len: 63
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 169  max subsc len: 59  max rec len: 3  max node len: 63
+%YDB-I-RECORDSTAT, ^var:	  Key cnt: 169  max subsc len: 59  max rec len: 3  max node len: 63
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 169  max subsc len: 59  max rec len: 3  max node len: 63
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",1)="1"
 ^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",6)="6"
@@ -503,8 +503,8 @@ Total             100             198              NA             3
 ^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",841)="841"
 ### -format=go ###
 %YDB-E-EXTRFAIL, Extract failed for the global ^var. MUPIP INTEG should be run.
-%GTM-I-RECORDSTAT, ^var:	  Key cnt: 169  max subsc len: 59  max rec len: 3  max node len: 63
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 169  max subsc len: 59  max rec len: 3  max node len: 63
+%YDB-I-RECORDSTAT, ^var:	  Key cnt: 169  max subsc len: 59  max rec len: 3  max node len: 63
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 169  max subsc len: 59  max rec len: 3  max node len: 63
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ^var("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv",1)
 1
@@ -846,10 +846,10 @@ Total             100             198              NA             3
 841
 ### -format=bin ###
 %YDB-E-EXTRFAIL, Extract failed for the global ^var. MUPIP INTEG should be run.
-%GTM-I-RECORDSTAT, ^var:	  Key cnt: 169  max subsc len: 59  max rec len: 3  max node len: 63
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 169  max subsc len: 59  max rec len: 3  max node len: 63
+%YDB-I-RECORDSTAT, ^var:	  Key cnt: 169  max subsc len: 59  max rec len: 3  max node len: 63
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 169  max subsc len: 59  max rec len: 3  max node len: 63
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 MUPIP load extr3.bin -format=bin
 Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................GT.M MUPIP EXTRACT              
 
@@ -1271,11 +1271,11 @@ Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ^b("")=1
 ##ALLOW_OUTPUT  NON_REPLIC
 # With mumps.gld do mupip extract
-%GTM-I-RECORDSTAT, ^a (region AREG):	  Key cnt: 5  max subsc len: 6  max rec len: 11  max node len: 20
-%GTM-I-RECORDSTAT, ^a (region DEFAULT):	  Key cnt: 10  max subsc len: 6  max rec len: 12  max node len: 20
-%GTM-I-RECORDSTAT, ^a:	  Key cnt: 15  max subsc len: 6  max rec len: 12  max node len: 20
-%GTM-I-RECORDSTAT, ^b:	  Key cnt: 1  max subsc len: 5  max rec len: 1  max node len: 10
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 16  max subsc len: 6  max rec len: 12  max node len: 20
+%YDB-I-RECORDSTAT, ^a (region AREG):	  Key cnt: 5  max subsc len: 6  max rec len: 11  max node len: 20
+%YDB-I-RECORDSTAT, ^a (region DEFAULT):	  Key cnt: 10  max subsc len: 6  max rec len: 12  max node len: 20
+%YDB-I-RECORDSTAT, ^a:	  Key cnt: 15  max subsc len: 6  max rec len: 12  max node len: 20
+%YDB-I-RECORDSTAT, ^b:	  Key cnt: 1  max subsc len: 5  max rec len: 1  max node len: 10
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 16  max subsc len: 6  max rec len: 12  max node len: 20
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:.. ZWR
 ^a(6)="mumps.gld6"
@@ -1323,18 +1323,18 @@ mumps.dat
 # set ^b(1-5)=i, set ^c(1-5)=i and set ^d(1-5)=i
 # 1. Run the following to unit test the addition of new -REGION qualifier in mupip_cmd.c
 # 1a. mupip extract mext1a.zwr -region (prompt for region(s))
-Region(s): %GTM-I-RECORDSTAT, ^a (region AREG):	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
-%GTM-I-RECORDSTAT, ^a:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+Region(s): %YDB-I-RECORDSTAT, ^a (region AREG):	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%YDB-I-RECORDSTAT, ^a:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
 # 1b. mupip extract mext1b.zwr -region=AREG (accept a value for region qualifier)
-%GTM-I-RECORDSTAT, ^a (region AREG):	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
-%GTM-I-RECORDSTAT, ^a:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%YDB-I-RECORDSTAT, ^a (region AREG):	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%YDB-I-RECORDSTAT, ^a:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
 # 1c. mupip extract mext1c.zwr -region=AREG,CREG (accept comma seperated region list)
-%GTM-I-RECORDSTAT, ^a (region AREG):	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
-%GTM-I-RECORDSTAT, ^a:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
-%GTM-I-RECORDSTAT, ^c:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 10  max subsc len: 6  max rec len: 1  max node len: 11
+%YDB-I-RECORDSTAT, ^a (region AREG):	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%YDB-I-RECORDSTAT, ^a:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%YDB-I-RECORDSTAT, ^c:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 10  max subsc len: 6  max rec len: 1  max node len: 11
 # 1d. mupip extract mext1d.zwr -region=NOREG (Show error, region not found)
 %YDB-E-NOREGION, REGION not found: NOREG
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
@@ -1342,14 +1342,14 @@ Region(s): %GTM-I-RECORDSTAT, ^a (region AREG):	  Key cnt: 5  max subsc len: 6  
 %YDB-E-CLIERR, Too many parameters
 # 2. Run the following to test the extracted file
 # 2a. mupip extract mext2a.zwr (file have all the globals extracted)
-%GTM-I-RECORDSTAT, ^a (region AREG):	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
-%GTM-I-RECORDSTAT, ^a (region BREG):	  Key cnt: 5  max subsc len: 6  max rec len: 2  max node len: 11
-%GTM-I-RECORDSTAT, ^a (region DEFAULT):	  Key cnt: 5  max subsc len: 6  max rec len: 2  max node len: 12
-%GTM-I-RECORDSTAT, ^a:	  Key cnt: 15  max subsc len: 6  max rec len: 2  max node len: 12
-%GTM-I-RECORDSTAT, ^b:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
-%GTM-I-RECORDSTAT, ^c:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
-%GTM-I-RECORDSTAT, ^d:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 30  max subsc len: 6  max rec len: 2  max node len: 12
+%YDB-I-RECORDSTAT, ^a (region AREG):	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%YDB-I-RECORDSTAT, ^a (region BREG):	  Key cnt: 5  max subsc len: 6  max rec len: 2  max node len: 11
+%YDB-I-RECORDSTAT, ^a (region DEFAULT):	  Key cnt: 5  max subsc len: 6  max rec len: 2  max node len: 12
+%YDB-I-RECORDSTAT, ^a:	  Key cnt: 15  max subsc len: 6  max rec len: 2  max node len: 12
+%YDB-I-RECORDSTAT, ^b:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%YDB-I-RECORDSTAT, ^c:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%YDB-I-RECORDSTAT, ^d:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 30  max subsc len: 6  max rec len: 2  max node len: 12
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:.. ZWR
 ^a(1)="1"
@@ -1383,9 +1383,9 @@ GT.M MUPIP EXTRACT
 ^d(4)="4"
 ^d(5)="5"
 # 2b. mupip extract mext2b.zwr -region=AREG (file will only have global ^a(1:5))
-%GTM-I-RECORDSTAT, ^a (region AREG):	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
-%GTM-I-RECORDSTAT, ^a:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%YDB-I-RECORDSTAT, ^a (region AREG):	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%YDB-I-RECORDSTAT, ^a:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:.. ZWR
 ^a(1)="1"
@@ -1394,11 +1394,11 @@ GT.M MUPIP EXTRACT
 ^a(4)="4"
 ^a(5)="5"
 # 2c. mupip extract mext2c.zwr -region=brEG,CReg (file will have global ^b, ^a(6:10) and ^c)
-%GTM-I-RECORDSTAT, ^a (region BREG):	  Key cnt: 5  max subsc len: 6  max rec len: 2  max node len: 11
-%GTM-I-RECORDSTAT, ^a:	  Key cnt: 5  max subsc len: 6  max rec len: 2  max node len: 11
-%GTM-I-RECORDSTAT, ^b:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
-%GTM-I-RECORDSTAT, ^c:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 15  max subsc len: 6  max rec len: 2  max node len: 11
+%YDB-I-RECORDSTAT, ^a (region BREG):	  Key cnt: 5  max subsc len: 6  max rec len: 2  max node len: 11
+%YDB-I-RECORDSTAT, ^a:	  Key cnt: 5  max subsc len: 6  max rec len: 2  max node len: 11
+%YDB-I-RECORDSTAT, ^b:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%YDB-I-RECORDSTAT, ^c:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 15  max subsc len: 6  max rec len: 2  max node len: 11
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:.. ZWR
 ^a(6)="6"
@@ -1417,13 +1417,13 @@ GT.M MUPIP EXTRACT
 ^c(4)="4"
 ^c(5)="5"
 # 2d. mupip extract mext2d.zwr -region=BREG,AREG,DEFAULT (file will have global all the values in global ^a(1:15), ^b and ^d)
-%GTM-I-RECORDSTAT, ^a (region AREG):	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
-%GTM-I-RECORDSTAT, ^a (region BREG):	  Key cnt: 5  max subsc len: 6  max rec len: 2  max node len: 11
-%GTM-I-RECORDSTAT, ^a (region DEFAULT):	  Key cnt: 5  max subsc len: 6  max rec len: 2  max node len: 12
-%GTM-I-RECORDSTAT, ^a:	  Key cnt: 15  max subsc len: 6  max rec len: 2  max node len: 12
-%GTM-I-RECORDSTAT, ^b:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
-%GTM-I-RECORDSTAT, ^d:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 25  max subsc len: 6  max rec len: 2  max node len: 12
+%YDB-I-RECORDSTAT, ^a (region AREG):	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%YDB-I-RECORDSTAT, ^a (region BREG):	  Key cnt: 5  max subsc len: 6  max rec len: 2  max node len: 11
+%YDB-I-RECORDSTAT, ^a (region DEFAULT):	  Key cnt: 5  max subsc len: 6  max rec len: 2  max node len: 12
+%YDB-I-RECORDSTAT, ^a:	  Key cnt: 15  max subsc len: 6  max rec len: 2  max node len: 12
+%YDB-I-RECORDSTAT, ^b:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%YDB-I-RECORDSTAT, ^d:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 25  max subsc len: 6  max rec len: 2  max node len: 12
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:.. ZWR
 ^a(1)="1"
@@ -1452,11 +1452,11 @@ GT.M MUPIP EXTRACT
 ^d(4)="4"
 ^d(5)="5"
 # 2e. mupip extract mext2e.go -region=BREG,CREG -format=go (file will have global ^b, ^a(6:10) and ^c)
-%GTM-I-RECORDSTAT, ^a (region BREG):	  Key cnt: 5  max subsc len: 6  max rec len: 2  max node len: 11
-%GTM-I-RECORDSTAT, ^a:	  Key cnt: 5  max subsc len: 6  max rec len: 2  max node len: 11
-%GTM-I-RECORDSTAT, ^b:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
-%GTM-I-RECORDSTAT, ^c:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 15  max subsc len: 6  max rec len: 2  max node len: 11
+%YDB-I-RECORDSTAT, ^a (region BREG):	  Key cnt: 5  max subsc len: 6  max rec len: 2  max node len: 11
+%YDB-I-RECORDSTAT, ^a:	  Key cnt: 5  max subsc len: 6  max rec len: 2  max node len: 11
+%YDB-I-RECORDSTAT, ^b:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%YDB-I-RECORDSTAT, ^c:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 15  max subsc len: 6  max rec len: 2  max node len: 11
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:..
 ^a(6)
@@ -1498,11 +1498,11 @@ GT.M MUPIP EXTRACT
 %YDB-E-NULLCOLLDIFF, Null collation order must be the same for all regions
 # 3c. mupip extract mext3c.bin -format=bin -region=AREG,BREG (file will be generated successfully, further load
 #     the file into new database and check its content)
-%GTM-I-RECORDSTAT, ^a (region AREG):	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
-%GTM-I-RECORDSTAT, ^a (region BREG):	  Key cnt: 5  max subsc len: 6  max rec len: 2  max node len: 11
-%GTM-I-RECORDSTAT, ^a:	  Key cnt: 10  max subsc len: 6  max rec len: 2  max node len: 11
-%GTM-I-RECORDSTAT, ^b:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 15  max subsc len: 6  max rec len: 2  max node len: 11
+%YDB-I-RECORDSTAT, ^a (region AREG):	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%YDB-I-RECORDSTAT, ^a (region BREG):	  Key cnt: 5  max subsc len: 6  max rec len: 2  max node len: 11
+%YDB-I-RECORDSTAT, ^a:	  Key cnt: 10  max subsc len: 6  max rec len: 2  max node len: 11
+%YDB-I-RECORDSTAT, ^b:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 15  max subsc len: 6  max rec len: 2  max node len: 11
 mext3c.bin
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
@@ -1525,9 +1525,9 @@ LOAD TOTAL		Key Cnt: 15  Max Subsc Len: 6  Max Data Len: 2
 Last LOAD record number: 4
 
 # extract the data from new database and print the content on stderr
-%GTM-I-RECORDSTAT, ^a:	  Key cnt: 10  max subsc len: 6  max rec len: 2  max node len: 11
-%GTM-I-RECORDSTAT, ^b:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 15  max subsc len: 6  max rec len: 2  max node len: 11
+%YDB-I-RECORDSTAT, ^a:	  Key cnt: 10  max subsc len: 6  max rec len: 2  max node len: 11
+%YDB-I-RECORDSTAT, ^b:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 15  max subsc len: 6  max rec len: 2  max node len: 11
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:.. ZWR
 ^a(1)="1"

@@ -303,8 +303,8 @@ GDE>
 
 Now create the databases
 
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
 modify null_subscripts using DSE CHANGE commands
 
@@ -523,12 +523,12 @@ GTM>
 
 GTM>
 %YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region
-%GTM-I-GVIS, 		Global variable: ^a("")
+%YDB-I-GVIS, 		Global variable: ^a("")
 
 GTM>
 use of $incr function , should error out
 %YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region
-%GTM-I-GVIS, 		Global variable: ^a("",2)
+%YDB-I-GVIS, 		Global variable: ^a("",2)
 
 GTM>
 ^a(1,"")="1_null"
@@ -605,12 +605,12 @@ GDE>
 
 create the databases
 
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/c.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/d.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/e.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/c.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/d.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/e.dat created
 AREG PASSED
 BREG PASSED
 CREG PASSED
@@ -651,7 +651,7 @@ GTM>
 
 GTM>
 %YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region
-%GTM-I-GVIS, 		Global variable: ^cregglobalvariable("",2)
+%YDB-I-GVIS, 		Global variable: ^cregglobalvariable("",2)
 
 GTM>
 Increment function used for CREG(EXISTING),should error out
@@ -678,7 +678,7 @@ set breg globals which is now EXISTING with null_subs,naked reference should err
 
 GTM>
 %YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region
-%GTM-I-GVIS, 		Global variable: ^bglobalvar(1,"",2,7)
+%YDB-I-GVIS, 		Global variable: ^bglobalvar(1,"",2,7)
 
 GTM>
 to use later
@@ -687,7 +687,7 @@ set breg globals which is now EXISTING with null_subs,naked reference should err
 
 GTM>
 %YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region
-%GTM-I-GVIS, 		Global variable: ^bglobalvar(4,5,"")
+%YDB-I-GVIS, 		Global variable: ^bglobalvar(4,5,"")
 
 GTM>
 
@@ -711,7 +711,7 @@ GDE>
 
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/extended.gld
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/extended.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/extended.dat created
 
 GTM>
 set some null subscripted globals to extended.dat
@@ -733,7 +733,7 @@ set  null subscripts to extended.dat which is existing. Should Error out
 
 GTM>
 %YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region
-%GTM-I-GVIS, 		Global variable: ^defaultregvariable("")
+%YDB-I-GVIS, 		Global variable: ^defaultregvariable("")
 
 GTM>
 set  without null subscripts to extended.dat.This should pass
@@ -745,7 +745,7 @@ GTM>
 GTM>
 Increment function used for extended gld(EXISTING),Should error out
 %YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region
-%GTM-I-GVIS, 		Global variable: ^defaultregvariable("","extended")
+%YDB-I-GVIS, 		Global variable: ^defaultregvariable("","extended")
 
 GTM>
 

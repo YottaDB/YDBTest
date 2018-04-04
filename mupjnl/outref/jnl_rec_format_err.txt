@@ -5,8 +5,8 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
 Start befor image journaling
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 
 GTM>
 
@@ -14,18 +14,18 @@ GTM>
 Now manually insert some garbage into journal file
 Now Journal file is corrupted
 mupip journal -recover -back -since=time1 mumps.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 %YDB-E-JNLBADRECFMT, Journal File Record Format Error encountered for file ##TEST_PATH##/mumps.mjl at disk address 0x00010BD0
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 Database will be unchanged
 --------------------------------------------------------------------
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 mupip journal -recover -forward mumps.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 %YDB-E-JNLBADRECFMT, Journal File Record Format Error encountered for file ##TEST_PATH##/mumps.mjl at disk address 0x00010BD0
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 Nothing will be appilied to database
 
 GTM>
@@ -35,19 +35,19 @@ GTM>
 --------------------------------------------------------------------
 extract will extract until the point of corruption
 mupip journal -extract -forward -noerr mumps.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 %YDB-E-JNLBADRECFMT, Journal File Record Format Error encountered for file ##TEST_PATH##/mumps.mjl at disk address 0x00010BD0
 %YDB-E-JNLBADRECFMT, Journal File Record Format Error encountered for file ##TEST_PATH##/mumps.mjl at disk address 0x00000B88
-%GTM-I-TEXT, Requested offset beyond end of file [next] (dskaddr == 0)
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
+%YDB-I-TEXT, Requested offset beyond end of file [next] (dskaddr == 0)
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
 %YDB-E-JNLBADRECFMT, Journal File Record Format Error encountered for file ##TEST_PATH##/mumps.mjl at disk address 0x00000B88
-%GTM-I-TEXT, Requested offset beyond end of file [next] (dskaddr == 0)
+%YDB-I-TEXT, Requested offset beyond end of file [next] (dskaddr == 0)
 %YDB-E-JNLBADRECFMT, Journal File Record Format Error encountered for file ##TEST_PATH##/mumps.mjl at disk address 0x00000B88
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ^a(1)="1"
 ^a(2)="2"
 ^a(3)="3"
@@ -3685,9 +3685,9 @@ mupip journal -extract -forward -noerr mumps.mjl
 ^a(5000)="5000"
 --------------------------------------------------------------------
 mupip journal -extract -forward -error=0 mumps.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 %YDB-E-JNLBADRECFMT, Journal File Record Format Error encountered for file ##TEST_PATH##/mumps.mjl at disk address 0x00010BD0
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 End of test

@@ -61,34 +61,34 @@ Show only one lock with embedded = and quote
 DEFAULT
 ^global("embedded = and""")
 ##TEST_AWK                         Owned by PID= [1-9][0-9]* which is an existing process
-##TEST_AWK.GTM-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 1(0|4)/(120|184); name space not full
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: REG1: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in REG1
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: REG2: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|184); name space not full
-%GTM-I-NOLOCKMATCH, No matching locks were found in REG2
-##TEST_AWK.GTM-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK.YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 1(0|4)/(120|184); name space not full
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: REG1: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in REG1
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: REG2: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in REG2
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 Remove only one lock with embedded = and quote witout space
 
 DEFAULT
 Lock removed : ^global("embed=and""nospace")
-%GTM-I-NOLOCKMATCH, No matching locks were found in REG1
-%GTM-I-NOLOCKMATCH, No matching locks were found in REG2
+%YDB-I-NOLOCKMATCH, No matching locks were found in REG1
+%YDB-I-NOLOCKMATCH, No matching locks were found in REG2
 
 Remove only one lock ^global(two words)
 
 DEFAULT
 Lock removed : ^global("two words")
-%GTM-I-NOLOCKMATCH, No matching locks were found in REG1
-%GTM-I-NOLOCKMATCH, No matching locks were found in REG2
+%YDB-I-NOLOCKMATCH, No matching locks were found in REG1
+%YDB-I-NOLOCKMATCH, No matching locks were found in REG2
 
 Remove only one lock ^global(embedded = equals)
 
 DEFAULT
 Lock removed : ^global("embedded = equals")
-%GTM-I-NOLOCKMATCH, No matching locks were found in REG1
-%GTM-I-NOLOCKMATCH, No matching locks were found in REG2
+%YDB-I-NOLOCKMATCH, No matching locks were found in REG1
+%YDB-I-NOLOCKMATCH, No matching locks were found in REG2
 
 Clear all locks
 

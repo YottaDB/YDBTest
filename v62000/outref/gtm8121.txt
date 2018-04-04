@@ -63,19 +63,19 @@ Try to start GT.M. Expect REQRUNDOWN error now
 
 GTM>
 %YDB-E-REQRUNDOWN, Error accessing database ##TEST_PATH##/mumps.dat.  Must be rundown on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
-%GTM-I-TEXT, Error with database control semaphore (IPC_STAT)
+%YDB-I-TEXT, Error with database control semaphore (IPC_STAT)
 ##TEST_AWK%SYSTEM-E-ENO(22|43).*
 
 GTM>
 Try to start DSE. Should get REQRUNDOWN error
 %YDB-E-REQRUNDOWN, Error accessing database ##TEST_PATH##/mumps.dat.  Must be rundown on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
-%GTM-I-TEXT, Error with database control semaphore (IPC_STAT)
+%YDB-I-TEXT, Error with database control semaphore (IPC_STAT)
 ##TEST_AWK%SYSTEM-E-ENO(22|43).*
 %YDB-E-DBNOREGION, None of the database regions accessible
 
 Start MUPIP RUNDOWN. Should work fine without DBFLCORRP error. Should also fix REQRUNDOWN error.
-##TEST_AWK%GTM-I-SHMREMOVED, Removed Shared Memory id [0-9]* corresponding to file ##TEST_PATH##/mumps.dat
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+##TEST_AWK%YDB-I-SHMREMOVED, Removed Shared Memory id [0-9]* corresponding to file ##TEST_PATH##/mumps.dat
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
 Try to start GT.M. Expect DBFLCORRP error still
 
 GTM>
@@ -121,24 +121,24 @@ Try to start GT.M. Expect REQRECOV error now
 
 GTM>
 %YDB-E-REQRECOV, Error accessing database ##TEST_PATH##/mumps.dat.  Must be recovered on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
-%GTM-I-TEXT, Error with database control semaphore (IPC_STAT)
+%YDB-I-TEXT, Error with database control semaphore (IPC_STAT)
 ##TEST_AWK%SYSTEM-E-ENO(22|43).*
 
 GTM>
 Try to start DSE. Should get REQRECOV error
 %YDB-E-REQRECOV, Error accessing database ##TEST_PATH##/mumps.dat.  Must be recovered on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
-%GTM-I-TEXT, Error with database control semaphore (IPC_STAT)
+%YDB-I-TEXT, Error with database control semaphore (IPC_STAT)
 ##TEST_AWK%SYSTEM-E-ENO(22|43).*
 %YDB-E-DBNOREGION, None of the database regions accessible
 
 Start MUPIP RUNDOWN. Should issue error saying run MUPIP JOURNAL -RECOVER
 %YDB-E-MUUSERECOV, Abnormal shutdown of journaled database ##TEST_PATH##/mumps.dat detected
-%GTM-I-TEXT, Run MUPIP JOURNAL RECOVER
+%YDB-I-TEXT, Run MUPIP JOURNAL RECOVER
 %GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
 
 Start MUPIP RUNDOWN -OVERRIDE. Should work fine without DBFLCORRP error. Should also fix REQRECOV error.
-##TEST_AWK%GTM-I-SHMREMOVED, Removed Shared Memory id [0-9]* corresponding to file ##TEST_PATH##/mumps.dat
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+##TEST_AWK%YDB-I-SHMREMOVED, Removed Shared Memory id [0-9]* corresponding to file ##TEST_PATH##/mumps.dat
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
 Try to start GT.M. Expect DBFLCORRP error still
 
 GTM>
@@ -199,27 +199,27 @@ Try to start GT.M. Expect REQROLLBACK error now
 
 GTM>
 %YDB-E-REQROLLBACK, Error accessing database ##TEST_PATH##/mumps.dat.  Run MUPIP JOURNAL -ROLLBACK -NOONLINE on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
-%GTM-I-TEXT, Error with database control semaphore (IPC_STAT)
+%YDB-I-TEXT, Error with database control semaphore (IPC_STAT)
 ##TEST_AWK%SYSTEM-E-ENO(22|43).*
 
 GTM>
 Try to start DSE. Should get REQROLLBACK error
 %YDB-E-REQROLLBACK, Error accessing database ##TEST_PATH##/mumps.dat.  Run MUPIP JOURNAL -ROLLBACK -NOONLINE on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
-%GTM-I-TEXT, Error with database control semaphore (IPC_STAT)
+%YDB-I-TEXT, Error with database control semaphore (IPC_STAT)
 ##TEST_AWK%SYSTEM-E-ENO(22|43).*
 %YDB-E-DBNOREGION, None of the database regions accessible
 
 Start MUPIP RUNDOWN. Should issue error saying run MUPIP JOURNAL -ROLLBACK
 %YDB-E-MUUSERLBK, Abnormal shutdown of replication-enabled database ##TEST_PATH##/mumps.dat detected
-##TEST_AWK%GTM-I-MUJPOOLRNDWNSUC, Jnlpool section \(id = [0-9]*\) belonging to the replication instance ##TEST_PATH##/mumps.repl successfully rundown
-##TEST_AWK%GTM-I-MUJPOOLRNDWNSUC, Jnlpool section \(id = [0-9]*\) belonging to the replication instance ##TEST_PATH##/mumps.repl successfully rundown
-##TEST_AWK%GTM-I-SEMREMOVED, Semaphore id [1-9][0-9]* removed from the system
-%GTM-I-TEXT, Run MUPIP JOURNAL ROLLBACK
+##TEST_AWK%YDB-I-MUJPOOLRNDWNSUC, Jnlpool section \(id = [0-9]*\) belonging to the replication instance ##TEST_PATH##/mumps.repl successfully rundown
+##TEST_AWK%YDB-I-MUJPOOLRNDWNSUC, Jnlpool section \(id = [0-9]*\) belonging to the replication instance ##TEST_PATH##/mumps.repl successfully rundown
+##TEST_AWK%YDB-I-SEMREMOVED, Semaphore id [1-9][0-9]* removed from the system
+%YDB-I-TEXT, Run MUPIP JOURNAL ROLLBACK
 %GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
 
 Start MUPIP RUNDOWN -OVERRIDE. Should work fine without DBFLCORRP error. Should also fix REQROLLBACK error.
-##TEST_AWK%GTM-I-SHMREMOVED, Removed Shared Memory id [0-9]* corresponding to file ##TEST_PATH##/mumps.dat
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+##TEST_AWK%YDB-I-SHMREMOVED, Removed Shared Memory id [0-9]* corresponding to file ##TEST_PATH##/mumps.dat
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
 Try to start GT.M. Expect DBFLCORRP error still
 
 GTM>
@@ -286,37 +286,37 @@ Try to start GT.M. Expect REQROLLBACK error now
 
 GTM>
 %YDB-E-REQROLLBACK, Error accessing database ##TEST_PATH##/mumps.dat.  Run MUPIP JOURNAL -ROLLBACK -NOONLINE on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
-%GTM-I-TEXT, Error with database control semaphore (IPC_STAT)
+%YDB-I-TEXT, Error with database control semaphore (IPC_STAT)
 ##TEST_AWK%SYSTEM-E-ENO(22|43).*
 
 GTM>
 Try to start DSE. Should get REQROLLBACK error
 %YDB-E-REQROLLBACK, Error accessing database ##TEST_PATH##/mumps.dat.  Run MUPIP JOURNAL -ROLLBACK -NOONLINE on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
-%GTM-I-TEXT, Error with database control semaphore (IPC_STAT)
+%YDB-I-TEXT, Error with database control semaphore (IPC_STAT)
 ##TEST_AWK%SYSTEM-E-ENO(22|43).*
 %YDB-E-DBNOREGION, None of the database regions accessible
 
 Start MUPIP RUNDOWN. Should issue error saying run MUPIP JOURNAL -ROLLBACK
 %YDB-E-MUUSERLBK, Abnormal shutdown of replication-enabled database ##TEST_PATH##/mumps.dat detected
-##TEST_AWK%GTM-I-MUJPOOLRNDWNSUC, Jnlpool section \(id = [0-9]*\) belonging to the replication instance ##TEST_PATH##/mumps.repl successfully rundown
-##TEST_AWK%GTM-I-MUJPOOLRNDWNSUC, Jnlpool section \(id = [0-9]*\) belonging to the replication instance ##TEST_PATH##/mumps.repl successfully rundown
-##TEST_AWK%GTM-I-SEMREMOVED, Semaphore id [1-9][0-9]* removed from the system
-%GTM-I-TEXT, Run MUPIP JOURNAL ROLLBACK
+##TEST_AWK%YDB-I-MUJPOOLRNDWNSUC, Jnlpool section \(id = [0-9]*\) belonging to the replication instance ##TEST_PATH##/mumps.repl successfully rundown
+##TEST_AWK%YDB-I-MUJPOOLRNDWNSUC, Jnlpool section \(id = [0-9]*\) belonging to the replication instance ##TEST_PATH##/mumps.repl successfully rundown
+##TEST_AWK%YDB-I-SEMREMOVED, Semaphore id [1-9][0-9]* removed from the system
+%YDB-I-TEXT, Run MUPIP JOURNAL ROLLBACK
 %GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
 
 Start MUPIP JOURNAL -ROLLBACK. Should work fine without DBFLCORRP error. Should fix REQROLLBACK and DBFLCORRP error.
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##TEST_AWK%GTM-I-SHMREMOVED, Removed Shared Memory id [0-9]* corresponding to file ##TEST_PATH##/mumps.dat
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-##TEST_AWK%GTM-I-RLBKJNSEQ, Journal seqno of the instance after rollback is [1-9][0-9]* .0x.*
-%GTM-I-FILENOTCREATE, Lost transactions extract file rollback4.los not created
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK%YDB-I-SHMREMOVED, Removed Shared Memory id [0-9]* corresponding to file ##TEST_PATH##/mumps.dat
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK%YDB-I-RLBKJNSEQ, Journal seqno of the instance after rollback is [1-9][0-9]* .0x.*
+%YDB-I-FILENOTCREATE, Lost transactions extract file rollback4.los not created
 %GTM-S-JNLSUCCESS, Show successful
 %GTM-S-JNLSUCCESS, Verify successful
 %GTM-S-JNLSUCCESS, Rollback successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
 Try to start GT.M. Expect NO errors
 

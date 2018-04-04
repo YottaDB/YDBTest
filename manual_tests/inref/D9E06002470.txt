@@ -125,7 +125,7 @@ Total of 4 files, 22 blocks.
 Test reading a pre-existing file:
 
 --> gtm
-%GTM-I-BREAK, Break instruction encountered
+%YDB-I-BREAK, Break instruction encountered
                 At M source location +1^GTM$DMOD
 GTM>s f="dnfs1:[test]shrnkfil.m"
 
@@ -144,7 +144,7 @@ line=$C(9)_"; shrinks a file of long strings, printing the number of ALPHABETalp
 Assumes gtm$routines includes gtm$troot:[v990.manual_tests.inref]
 
 -->  gtm
-%GTM-I-BREAK, Break instruction encountered
+%YDB-I-BREAK, Break instruction encountered
                 At M source location +1^GTM$DMOD
 GTM>d write^d002470
 file to create: dnfs1:[test]d2470.txt
@@ -198,7 +198,7 @@ Total of 1 file, 1/1 block.
 -->  sho def
   DNFS1:[TEST]
 -->  gtm
-%GTM-I-BREAK, Break instruction encountered
+%YDB-I-BREAK, Break instruction encountered
                 At M source location +1^GTM$DMOD
 GTM>d write^d002470
 file to create: d2470indir.txt

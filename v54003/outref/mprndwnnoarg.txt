@@ -38,7 +38,7 @@ END 3
 BEGIN 4 :-) Do argumentless MUPIP RUNDOWN while two shared memory points to same db file name
 
 test that active shared memory is not rundown
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
 GTM>
 set ^x=11
@@ -65,7 +65,7 @@ END 5
 ---------------------------------------------------------------------------------------
 ##TEST_AWKBEGIN 6 .-. Verify that shared memory corresponding to old_mumps.dat \([0-9]*\) is removed
 
-##TEST_AWK%GTM-I-SHMREMOVED, Removed Shared Memory id [0-9]* corresponding to file ##TEST_PATH##/mumps.dat
+##TEST_AWK%YDB-I-SHMREMOVED, Removed Shared Memory id [0-9]* corresponding to file ##TEST_PATH##/mumps.dat
 
 END 6
 ---------------------------------------------------------------------------------------
@@ -77,7 +77,7 @@ GTM>
 set ^y=1
 GTM>
 %YDB-E-REQRUNDOWN, Error accessing database ##TEST_PATH##/mumps.dat.  Must be rundown on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
-%GTM-I-TEXT, Error with database control shmctl
+%YDB-I-TEXT, Error with database control shmctl
 ##TEST_AWK.SYSTEM-E-ENO(22|43).*
 
 GTM>
@@ -88,7 +88,7 @@ END 7
 BEGIN 8 :-) do MUPIP RUNDOWN on old_mumps.dat(now mumps.dat) and then access it. It should work fine
 
 ##TEST_AWKmupip rundown .*
-##TEST_AWK%GTM-I-MUFILRNDWNSUC, File.*mumps.dat successfully rundown
+##TEST_AWK%YDB-I-MUFILRNDWNSUC, File.*mumps.dat successfully rundown
 
 GTM>
 set ^y=1

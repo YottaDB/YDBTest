@@ -10,7 +10,7 @@ GDE>
 
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/mumps.gld
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 Running binary load test cases
 
 
@@ -18,24 +18,24 @@ Test case 1a - Compression count > 0 on first record in a block
 PASS
 
 Test case 1b - Key does not terminate before end of record
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 PASS
 
 Test case 2a - Record length points beyond top of block
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 PASS
 
 Test case 2b1 - Key does not terminate before end of record
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 PASS
 
 
 Test case 2b2 - Key length > max key length for region
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 PASS
 
 Test case 2c1 - While building a spanning node find a non-spanning record
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 PASS
 
 GTM>
@@ -43,27 +43,27 @@ I am here!!
 GTM>
 
 Test case 2c2 - While building a spanning node find a chunk from another spanning node
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 PASS
 
 Test case 2c3 - While building a spanning node expected chunk x but found chunk y
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 PASS
 
 Test case 2c4 - While building a spanning node adding the next chunk makes value longer than expected
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 PASS
 
 Test case 2c5 - While building a spanning node have all chunks but value is not expected length
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 PASS
 
 Test case 2c6 - While building a spanning node extract file terminates
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 PASS
 
 Test case 2c7 - Verify that a child of the beacon node is not deleted when an incomplete spanning node is found
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
 GTM>
 
@@ -75,5 +75,5 @@ hope I am still here!!!
 GTM>
 
 Test case 2d - Encounter an errant spanning node chunk while not building a spanning node
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 PASS

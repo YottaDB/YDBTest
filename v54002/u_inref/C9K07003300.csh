@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -34,8 +37,8 @@ ls TRACE_SEMOP_INFO* | $tst_awk '{sub(/SEMOP_INFO_.*/,"SEMOP_INFO_##FILTERED##")
 set syslog_after1 = `date +"%b %e %H:%M:%S"`
 echo "# Time after processes got over : GTM_TEST_DEBUGINFO $syslog_after1"
 # Check if the error/messages are logged in operator log
-echo "# Check the operator log for the messages GTM-I-STUCKACT"
+echo "# Check the operator log for the messages YDB-I-STUCKACT"
  $gtm_tst/com/getoper.csh "$syslog_before1" "" syslog1a.txt "" STUCKACT
- $grep "GTM-I-STUCKACT" syslog1a.txt | $grep SEMOP_INFO | $grep $dsepid | sed 's/.*\(GTM-I-STUCKACT\)/\1/; s/\(.*stack_trace.csh\).*/\1/'
+ $grep "YDB-I-STUCKACT" syslog1a.txt | $grep SEMOP_INFO | $grep $dsepid | sed 's/.*\(YDB-I-STUCKACT\)/\1/; s/\(.*stack_trace.csh\).*/\1/'
 echo ""
 $gtm_tst/com/dbcheck.csh

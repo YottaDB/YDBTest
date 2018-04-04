@@ -6,7 +6,7 @@ Using: ##SOURCE_PATH##/mupip
 mumps.dat
 
 GTM>
-%GTM-I-BREAK, Break instruction encountered
+%YDB-I-BREAK, Break instruction encountered
 		At M source location trans+6^gtm7327
 
 GTM>
@@ -15,29 +15,29 @@ GTM>
 gtm7327
 No errors from gtm7327
 ##TEST_AWK.* trans.6.gtm7327 : break.*
-##TEST_AWK.* %GTM-I-TPNOTACID, DIRECT MODE .any TP RESTART will fail. at trans.6.gtm7327 violates ACID properties of a TRANSACTION and could exceed 2 seconds; .TRESTART = 3 and indefinite RESTARTs may occur -- generated from 0x[0-9A-F]*.
+##TEST_AWK.* %YDB-I-TPNOTACID, DIRECT MODE .any TP RESTART will fail. at trans.6.gtm7327 violates ACID properties of a TRANSACTION and could exceed 2 seconds; .TRESTART = 3 and indefinite RESTARTs may occur -- generated from 0x[0-9A-F]*.
 ##TEST_AWK.* trans.6.gtm7327 : hang 3
-##TEST_AWK.* %GTM-I-TPNOTACID, HANG at trans.6.gtm7327 violates ACID properties of a TRANSACTION and could exceed 2 seconds; .TRESTART = 3 and indefinite RESTARTs may occur -- generated from 0x[0-9A-F]*.
+##TEST_AWK.* %YDB-I-TPNOTACID, HANG at trans.6.gtm7327 violates ACID properties of a TRANSACTION and could exceed 2 seconds; .TRESTART = 3 and indefinite RESTARTs may occur -- generated from 0x[0-9A-F]*.
 ##TEST_AWK.* trans.6.gtm7327 : job silly::3
-##TEST_AWK.* %GTM-I-TPNOTACID, JOB at trans.6.gtm7327 violates ACID properties of a TRANSACTION and could exceed 2 seconds; .TRESTART = 3 and indefinite RESTARTs may occur -- generated from 0x[0-9A-F]*.
+##TEST_AWK.* %YDB-I-TPNOTACID, JOB at trans.6.gtm7327 violates ACID properties of a TRANSACTION and could exceed 2 seconds; .TRESTART = 3 and indefinite RESTARTs may occur -- generated from 0x[0-9A-F]*.
 ##TEST_AWK.* trans.6.gtm7327 : lock .silly:3
-##TEST_AWK.* %GTM-I-TPNOTACID, LOCK at trans.6.gtm7327 violates ACID properties of a TRANSACTION and could exceed 2 seconds; .TRESTART = 3 and indefinite RESTARTs may occur -- generated from 0x[0-9A-F]*.
+##TEST_AWK.* %YDB-I-TPNOTACID, LOCK at trans.6.gtm7327 violates ACID properties of a TRANSACTION and could exceed 2 seconds; .TRESTART = 3 and indefinite RESTARTs may occur -- generated from 0x[0-9A-F]*.
 ##TEST_AWK.* trans.6.gtm7327 : open "silly.txt":newversion:3
-##TEST_AWK.* %GTM-I-TPNOTACID, OPEN at trans.6.gtm7327 violates ACID properties of a TRANSACTION and could exceed 2 seconds; .TRESTART = 3 and indefinite RESTARTs may occur -- generated from 0x[0-9A-F]*.
+##TEST_AWK.* %YDB-I-TPNOTACID, OPEN at trans.6.gtm7327 violates ACID properties of a TRANSACTION and could exceed 2 seconds; .TRESTART = 3 and indefinite RESTARTs may occur -- generated from 0x[0-9A-F]*.
 ##TEST_AWK.* trans.6.gtm7327 : read .,"> ",r:3
-##TEST_AWK.* %GTM-I-TPNOTACID, READ at trans.6.gtm7327 violates ACID properties of a TRANSACTION and could exceed 2 seconds; .TRESTART = 3 and indefinite RESTARTs may occur -- generated from 0x[0-9A-F]*.
+##TEST_AWK.* %YDB-I-TPNOTACID, READ at trans.6.gtm7327 violates ACID properties of a TRANSACTION and could exceed 2 seconds; .TRESTART = 3 and indefinite RESTARTs may occur -- generated from 0x[0-9A-F]*.
 ##TEST_AWK.* trans.6.gtm7327 : zallocate .silly:3
-##TEST_AWK.* %GTM-I-TPNOTACID, ZALLOCATE at trans.6.gtm7327 violates ACID properties of a TRANSACTION and could exceed 2 seconds; .TRESTART = 3 and indefinite RESTARTs may occur -- generated from 0x[0-9A-F]*.
+##TEST_AWK.* %YDB-I-TPNOTACID, ZALLOCATE at trans.6.gtm7327 violates ACID properties of a TRANSACTION and could exceed 2 seconds; .TRESTART = 3 and indefinite RESTARTs may occur -- generated from 0x[0-9A-F]*.
 ##TEST_AWK.* trans.6.gtm7327 : hang 0
 ##TEST_AWK.* trans.6.gtm7327 : job silly::0
 ##TEST_AWK.* trans.6.gtm7327 : lock .silly:0
 ##TEST_AWK.* trans.6.gtm7327 : open "silly.txt":newversion:0
 ##TEST_AWK.* trans.6.gtm7327 : zallocate .silly:0
 ##TEST_AWK.* trans.6.gtm7327 : zsystem "printf "".ngtm7327"""
-##TEST_AWK.* %GTM-I-TPNOTACID, ZSYSTEM at trans.6.gtm7327 violates ACID properties of a TRANSACTION and could exceed 2 seconds; .TRESTART = 3 and indefinite RESTARTs may occur -- generated from 0x[0-9A-F]*.
+##TEST_AWK.* %YDB-I-TPNOTACID, ZSYSTEM at trans.6.gtm7327 violates ACID properties of a TRANSACTION and could exceed 2 seconds; .TRESTART = 3 and indefinite RESTARTs may occur -- generated from 0x[0-9A-F]*.
 
 GTM>
-%GTM-I-BREAK, Break instruction encountered
+%YDB-I-BREAK, Break instruction encountered
 		At M source location trans+6^gtm7327
 
 GTM>
@@ -46,22 +46,22 @@ GTM>
 gtm7327
 No errors from gtm7327
 ##TEST_AWK.* trans.6.gtm7327 : break.*
-##TEST_AWK.* %GTM-I-TPNOTACID, DIRECT MODE .any TP RESTART will fail. at trans.6.gtm7327 violates ACID properties of a TRANSACTION and could exceed 4 seconds; .TRESTART = 3 and indefinite RESTARTs may occur -- generated from 0x[0-9A-F]*.
+##TEST_AWK.* %YDB-I-TPNOTACID, DIRECT MODE .any TP RESTART will fail. at trans.6.gtm7327 violates ACID properties of a TRANSACTION and could exceed 4 seconds; .TRESTART = 3 and indefinite RESTARTs may occur -- generated from 0x[0-9A-F]*.
 ##TEST_AWK.* trans.6.gtm7327 : hang 3
 ##TEST_AWK.* trans.6.gtm7327 : job silly::3
 ##TEST_AWK.* trans.6.gtm7327 : lock .silly:3
-##TEST_AWK.* %GTM-W-LOCKTIMINGINTP, A LOCK at trans.6.gtm7327 within a TP transaction is waiting in a final TP retry, which may lead to a general response gap, %GTM-I-LOCKIS,.*Resource name: .silly -- generated from 0x[0-9A-F]*.
+##TEST_AWK.* %GTM-W-LOCKTIMINGINTP, A LOCK at trans.6.gtm7327 within a TP transaction is waiting in a final TP retry, which may lead to a general response gap, %YDB-I-LOCKIS,.*Resource name: .silly -- generated from 0x[0-9A-F]*.
 ##TEST_AWK.* trans.6.gtm7327 : open "silly.txt":newversion:3
 ##TEST_AWK.* trans.6.gtm7327 : read .,"> ",r:3
 ##TEST_AWK.* trans.6.gtm7327 : zallocate .silly:3
-##TEST_AWK.* %GTM-W-LOCKTIMINGINTP, A LOCK at trans.6.gtm7327 within a TP transaction is waiting in a final TP retry, which may lead to a general response gap, %GTM-I-LOCKIS,.*Resource name: .silly -- generated from 0x[0-9A-F]*.
+##TEST_AWK.* %GTM-W-LOCKTIMINGINTP, A LOCK at trans.6.gtm7327 within a TP transaction is waiting in a final TP retry, which may lead to a general response gap, %YDB-I-LOCKIS,.*Resource name: .silly -- generated from 0x[0-9A-F]*.
 ##TEST_AWK.* trans.6.gtm7327 : hang 0
 ##TEST_AWK.* trans.6.gtm7327 : job silly::0
 ##TEST_AWK.* trans.6.gtm7327 : lock .silly:0
 ##TEST_AWK.* trans.6.gtm7327 : open "silly.txt":newversion:0
 ##TEST_AWK.* trans.6.gtm7327 : zallocate .silly:0
 ##TEST_AWK.* trans.6.gtm7327 : zsystem "printf "".ngtm7327"""
-##TEST_AWK.* %GTM-I-TPNOTACID, ZSYSTEM at trans.6.gtm7327 violates ACID properties of a TRANSACTION and could exceed 4 seconds; .TRESTART = 3 and indefinite RESTARTs may occur -- generated from 0x[0-9A-F]*.
+##TEST_AWK.* %YDB-I-TPNOTACID, ZSYSTEM at trans.6.gtm7327 violates ACID properties of a TRANSACTION and could exceed 4 seconds; .TRESTART = 3 and indefinite RESTARTs may occur -- generated from 0x[0-9A-F]*.
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

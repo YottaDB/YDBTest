@@ -906,10 +906,10 @@ No errors detected by integ.
 No errors detected by integ.
 # Test triggers for > 21 character global names go to respective mapped regions
 # and can coexist with conflicting auto-generated names in same gld.
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/c.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/c.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 ;trigger name: a23456789012345678901#1 (region AREG)  cycle: 1
 +^a23456789012345678901a -commands=S -xecute="do ^twork(1)"
 ;trigger name: a23456789012345678901#2 (region AREG)  cycle: 1

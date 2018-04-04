@@ -4,6 +4,9 @@
 # Copyright (c) 2010-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -41,7 +44,7 @@ ls TRACE_SEMOP_INFO* >&! is_SEMOP_INFO_exist.out
 if ($status) echo "Was expecting SEMOP_INFO* file created by gtm_procstuckexed mechanism, but not found"
 set syslog_after1 = `date +"%b %e %H:%M:%S"`
 echo "# Time after the run: GTM_TEST_DEBUGINFO $syslog_after1"
-echo "# Check the operator log for the message GTM-I-STUCKACT"
+echo "# Check the operator log for the message YDB-I-STUCKACT"
 $gtm_tst/com/getoper.csh "$syslog_before1" "" syslog1.txt "" "STUCKACT"
-$grep -E "${dse_pid}.*GTM-I-STUCKACT.*SEMOP_INFO" syslog1.txt | sed 's/.*\(GTM-I-STUCKACT\)/\1/; s/\(.*stack_trace.csh\).*/\1/'
+$grep -E "${dse_pid}.*YDB-I-STUCKACT.*SEMOP_INFO" syslog1.txt | sed 's/.*\(YDB-I-STUCKACT\)/\1/; s/\(.*stack_trace.csh\).*/\1/'
 $gtm_tst/com/wait_for_proc_to_die.csh $dse_pid

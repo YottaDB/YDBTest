@@ -57,10 +57,10 @@ END 4
 BEGIN 5 :-) Do MUPIP RUNDOWN and acccess database. This database access should be clean
 
 ##TEST_AWKmupip rundown .*
-##TEST_AWK.GTM-I-DBIDMISMATCH, Database file ##TEST_PATH##.mumps.dat .region .*mumps.dat. id does not match file id in shared memory .id = [0-9]+..
-%GTM-I-TEXT, [MUPIP] Database filename and fileid in shared memory are not in sync
-##TEST_AWK%GTM-I-SHMREMOVED, Removed Shared Memory id [0-9]* corresponding to file .*mumps.dat
-##TEST_AWK.GTM-I-MUFILRNDWNSUC, File .*mumps.dat successfully rundown
+##TEST_AWK.YDB-I-DBIDMISMATCH, Database file ##TEST_PATH##.mumps.dat .region .*mumps.dat. id does not match file id in shared memory .id = [0-9]+..
+%YDB-I-TEXT, [MUPIP] Database filename and fileid in shared memory are not in sync
+##TEST_AWK%YDB-I-SHMREMOVED, Removed Shared Memory id [0-9]* corresponding to file .*mumps.dat
+##TEST_AWK.YDB-I-MUFILRNDWNSUC, File .*mumps.dat successfully rundown
 
 GTM>
 set ^y=1

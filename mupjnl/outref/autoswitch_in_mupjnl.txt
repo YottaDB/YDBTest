@@ -44,5 +44,5 @@ No errors detected by integ.
 # Miss out on specifying b.mjl in order to create broken transactions in MUPIP JOURNAL
 ##TEST_AWK##SOURCE_PATH##/mupip journal -recover -back -noverify -since=".*" a.mjl,mumps.mjl -parallel=2
 # We expect to see a FILERENAME message in the DEFAULT region in the forward phase of recovery
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-##TEST_AWKDEFAULT : %GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##TEST_AWKDEFAULT : %YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])

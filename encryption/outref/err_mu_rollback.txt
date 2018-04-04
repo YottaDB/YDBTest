@@ -36,16 +36,16 @@ GTM>
 Mupip rollback without gtm_passwd and expect to error out
 --------------------------------------------------------------
 mupip_rollback.csh -backward -forward -resync=1 -lost=lost.glo *
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 %YDB-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
-%GTM-I-MUSTANDALONE, Could not get exclusive access to ##TEST_PATH##/mumps.dat
+%YDB-I-MUSTANDALONE, Could not get exclusive access to ##TEST_PATH##/mumps.dat
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-%GTM-I-FILENOTCREATE, Lost transactions extract file lost.glo not created
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILENOTCREATE, Lost transactions extract file lost.glo not created
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 %YDB-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
-%GTM-I-MUSTANDALONE, Could not get exclusive access to ##TEST_PATH##/mumps.dat
+%YDB-I-MUSTANDALONE, Could not get exclusive access to ##TEST_PATH##/mumps.dat
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-%GTM-I-FILENOTCREATE, Lost transactions extract file lost.glo not created
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+%YDB-I-FILENOTCREATE, Lost transactions extract file lost.glo not created
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 Without env var <gtm_passwd> set, MUPIP JOURNAL ROLLBACK failed as expected

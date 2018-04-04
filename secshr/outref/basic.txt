@@ -13,16 +13,16 @@ GTM>
 ^a(3)=3
 ^a(4)=4
 ^a(5)=5
-##TEST_AWK... .. ..:..:.. ##TEST_HOST_SHORT##.* GTM-SECSHR\[[1-9][0-9]*\]: %GTM-I-GTMSECSHRUPDDBHDR, \[client pid [1-9][0-9]*\] database fileheader \(##TEST_PATH##/a.dat\) updated for open -- generated from 0x[0-9A-F]*.
+##TEST_AWK... .. ..:..:.. ##TEST_HOST_SHORT##.* GTM-SECSHR\[[1-9][0-9]*\]: %YDB-I-GTMSECSHRUPDDBHDR, \[client pid [1-9][0-9]*\] database fileheader \(##TEST_PATH##/a.dat\) updated for open -- generated from 0x[0-9A-F]*.
 ##SUSPEND_OUTPUT PRO
 ##TEST_AWK... .. ..:..:.. ##TEST_HOST_SHORT##.* GTM-SECSHR\[[1-9][0-9]*\]: \[client pid [1-9][0-9]*\] Process [1-9][0-9]* was requested to resume processing
 ##ALLOW_OUTPUT PRO
-##TEST_AWK... .. ..:..:.. ##TEST_HOST_SHORT##.* GTM-SECSHR\[[1-9][0-9]*\]: %GTM-I-GTMSECSHRUPDDBHDR, \[client pid [1-9][0-9]*\] database fileheader \(##TEST_PATH##/a.dat\) updated for close -- generated from 0x[0-9A-F]*.
+##TEST_AWK... .. ..:..:.. ##TEST_HOST_SHORT##.* GTM-SECSHR\[[1-9][0-9]*\]: %YDB-I-GTMSECSHRUPDDBHDR, \[client pid [1-9][0-9]*\] database fileheader \(##TEST_PATH##/a.dat\) updated for close -- generated from 0x[0-9A-F]*.
 ##SUSPEND_OUTPUT PRO
-##TEST_AWK... .. ..:..:.. ##TEST_HOST_SHORT##.* GTM-SECSHR\[[1-9][0-9]*\]: %GTM-I-GTMSECSHRREMSHM, \[client pid [1-9][0-9]*\] Shared memory segment \([0-9][0-9]*\) removed, nattch = 0 -- generated from 0x[0-9A-F]*.
+##TEST_AWK... .. ..:..:.. ##TEST_HOST_SHORT##.* GTM-SECSHR\[[1-9][0-9]*\]: %YDB-I-GTMSECSHRREMSHM, \[client pid [1-9][0-9]*\] Shared memory segment \([0-9][0-9]*\) removed, nattch = 0 -- generated from 0x[0-9A-F]*.
 ##TEST_AWK... .. ..:..:.. ##TEST_HOST_SHORT##.* GTM-SECSHR\[[1-9][0-9]*\]: %YDB-E-GTMSECSHRREMSEM, \[client pid [1-9][0-9]*\] Semaphore \([0-9][0-9]*\) removed -- generated from 0x[0-9A-F]*.
 ##TEST_AWK... .. ..:..:.. ##TEST_HOST_SHORT##.* GTM-SECSHR\[[1-9][0-9]*\]: %YDB-E-GTMSECSHRREMSEM, \[client pid [1-9][0-9]*\] Semaphore \([0-9][0-9]*\) removed -- generated from 0x[0-9A-F]*.
-##TEST_AWK... .. ..:..:.. ##TEST_HOST_SHORT##.* GTM-SECSHR\[[1-9][0-9]*\]: %GTM-I-GTMSECSHRREMSHM, \[client pid [1-9][0-9]*\] Shared memory segment \([0-9][0-9]*\) removed, nattch = 0 -- generated from 0x[0-9A-F]*.
+##TEST_AWK... .. ..:..:.. ##TEST_HOST_SHORT##.* GTM-SECSHR\[[1-9][0-9]*\]: %YDB-I-GTMSECSHRREMSHM, \[client pid [1-9][0-9]*\] Shared memory segment \([0-9][0-9]*\) removed, nattch = 0 -- generated from 0x[0-9A-F]*.
 ##TEST_AWK... .. ..:..:.. ##TEST_HOST_SHORT##.* GTM-SECSHR\[[1-9][0-9]*\]: %YDB-E-GTMSECSHRREMSEM, \[client pid [1-9][0-9]*\] Semaphore \([0-9][0-9]*\) removed -- generated from 0x[0-9A-F]*.
 ##TEST_AWK... .. ..:..:.. ##TEST_HOST_SHORT##.* GTM-SECSHR\[[1-9][0-9]*\]: %YDB-E-GTMSECSHRREMSEM, \[client pid [1-9][0-9]*\] Semaphore \([0-9][0-9]*\) removed -- generated from 0x[0-9A-F]*.
 ##ALLOW_OUTPUT PRO
@@ -31,8 +31,8 @@ GTM>
 ^a(3)=3
 ^a(4)=4
 ^a(5)=5
-##TEST_AWK... .. ..:..:.. ##TEST_HOST_SHORT##.* GTM-SECSHR\[[1-9][0-9]*\]: %GTM-I-GTMSECSHRUPDDBHDR, \[client pid [1-9][0-9]*\] database fileheader \(##TEST_PATH##/a.dat\) updated for open -- generated from 0x[0-9A-F]*.
-##TEST_AWK... .. ..:..:.. ##TEST_HOST_SHORT##.* GTM-SECSHR\[[1-9][0-9]*\]: %GTM-I-GTMSECSHRUPDDBHDR, \[client pid [1-9][0-9]*\] database fileheader \(##TEST_PATH##/a.dat\) updated for close -- generated from 0x[0-9A-F]*.
+##TEST_AWK... .. ..:..:.. ##TEST_HOST_SHORT##.* GTM-SECSHR\[[1-9][0-9]*\]: %YDB-I-GTMSECSHRUPDDBHDR, \[client pid [1-9][0-9]*\] database fileheader \(##TEST_PATH##/a.dat\) updated for open -- generated from 0x[0-9A-F]*.
+##TEST_AWK... .. ..:..:.. ##TEST_HOST_SHORT##.* GTM-SECSHR\[[1-9][0-9]*\]: %YDB-I-GTMSECSHRUPDDBHDR, \[client pid [1-9][0-9]*\] database fileheader \(##TEST_PATH##/a.dat\) updated for close -- generated from 0x[0-9A-F]*.
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

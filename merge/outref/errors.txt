@@ -27,7 +27,7 @@ subslen for local test PASSED
 
 MERGE ^a($j("new",25))=^b
 Error Number=2
-STAT=gbl+10^subslen,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%GTM-I-GVIS, 		Global variable: ^a("                      new","                        8","                        8")
+STAT=gbl+10^subslen,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%YDB-I-GVIS, 		Global variable: ^a("                      new","                        8","                        8")
 ^a("                        8","                        8")="a_8_8"
 ^a("                        9","                        9")="a_9_9"
 ^a("                      new","                        8")="b_825"
@@ -43,7 +43,7 @@ Error Number=4
 STAT=gtm7867+7^subslen,%GTM-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
 Error Number=5
 ##SUSPEND_OUTPUT GT.CM
-STAT=gtm7867+8^subslen,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%GTM-I-GVIS, 		Global variable: ^c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18)
+STAT=gtm7867+8^subslen,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%YDB-I-GVIS, 		Global variable: ^c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18)
 ##ALLOW_OUTPUT GT.CM
 ##SUSPEND_OUTPUT GT.M
 STAT=gtm7867+8^subslen,%GTM-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
@@ -54,7 +54,7 @@ Error Number=7
 STAT=gtm7867+13^subslen,%GTM-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
 Error Number=8
 ##SUSPEND_OUTPUT GT.CM
-STAT=gtm7867+14^subslen,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%GTM-I-GVIS, 		Global variable: ^c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18)
+STAT=gtm7867+14^subslen,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%YDB-I-GVIS, 		Global variable: ^c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18)
 ##ALLOW_OUTPUT GT.CM
 ##SUSPEND_OUTPUT GT.M
 STAT=gtm7867+14^subslen,%GTM-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded

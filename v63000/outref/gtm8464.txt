@@ -17,8 +17,8 @@ Fill in data in the regions
 Point the first region to the second region's database
 
 Do an extract
-%GTM-I-RECORDSTAT, ^z:	  Key cnt: 100  max subsc len: 6  max rec len: 100  max node len: 110
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 100  max subsc len: 6  max rec len: 100  max node len: 110
+%YDB-I-RECORDSTAT, ^z:	  Key cnt: 100  max subsc len: 6  max rec len: 100  max node len: 110
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 100  max subsc len: 6  max rec len: 100  max node len: 110
 
 Point the first region back to its database
 
@@ -55,9 +55,9 @@ Point the regions to the other region's database files
 Fill in data in the regions
 
 Do an extract
-%GTM-I-RECORDSTAT, ^A:	  Key cnt: 100  max subsc len: 6  max rec len: 100  max node len: 110
-%GTM-I-RECORDSTAT, ^z:	  Key cnt: 100  max subsc len: 6  max rec len: 100  max node len: 110
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 200  max subsc len: 6  max rec len: 100  max node len: 110
+%YDB-I-RECORDSTAT, ^A:	  Key cnt: 100  max subsc len: 6  max rec len: 100  max node len: 110
+%YDB-I-RECORDSTAT, ^z:	  Key cnt: 100  max subsc len: 6  max rec len: 100  max node len: 110
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 200  max subsc len: 6  max rec len: 100  max node len: 110
 
 Do a load
 ##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *        

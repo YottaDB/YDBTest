@@ -1,6 +1,6 @@
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/c.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/c.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 ----------------------------------
 Testing with ^a coll = 0 : ^b coll = 0,!
 ----------------------------------
@@ -30,7 +30,7 @@ zwrite ^a
 
 # kill ^c ; merge ^c=^a ; zwrite ^c
 # Since CREG does not allow null subscripts, the below merge shoud error out
-STAT=mergecoll+16^mergecoll,%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^c(1,"")
+STAT=mergecoll+16^mergecoll,%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%YDB-I-GVIS, 		Global variable: ^c(1,"")
 ^c(1)=900
 
 ##SUSPEND_OUTPUT NONSPANNING_REGIONS

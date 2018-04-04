@@ -4,8 +4,8 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
 ##TEST_AWK	\^a : \[shrblk\] [0-9a-z]* : \[shrsub\] [0-9a-z]*
-##TEST_AWK%GTM-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|184); name space not full
-%GTM-I-LOCKSPACEUSE, Estimated free lock space: 99% of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|184); name space not full
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 99% of 40 pages
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

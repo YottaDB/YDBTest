@@ -34,8 +34,8 @@ GTM>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
-%GTM-I-RECORDSTAT, ^x:	  Key cnt: 2  max subsc len: 6  max rec len: 900  max node len: 910
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 6  max rec len: 900  max node len: 910
+%YDB-I-RECORDSTAT, ^x:	  Key cnt: 2  max subsc len: 6  max rec len: 900  max node len: 910
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 6  max rec len: 900  max node len: 910
 data1.glo
 ^x(2)="                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   1"
 ^x(3)="                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   1"
@@ -66,8 +66,8 @@ GTM>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
-%GTM-I-RECORDSTAT, ^x:	  Key cnt: 2  max subsc len: 6  max rec len: 900  max node len: 880
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 6  max rec len: 900  max node len: 880
+%YDB-I-RECORDSTAT, ^x:	  Key cnt: 2  max subsc len: 6  max rec len: 900  max node len: 880
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 6  max rec len: 900  max node len: 880
 data2.glo
 ^x(2)="                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   1"
 ^x(3)="                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   1"
@@ -85,8 +85,8 @@ Last LOAD record number: 4
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
-%GTM-I-RECORDSTAT, ^x:	  Key cnt: 2  max subsc len: 6  max rec len: 900  max node len: 880
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 6  max rec len: 900  max node len: 880
+%YDB-I-RECORDSTAT, ^x:	  Key cnt: 2  max subsc len: 6  max rec len: 900  max node len: 880
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 6  max rec len: 900  max node len: 880
 
 ###### MUPIP LOAD with RESERVED_BYTES=0 and FILLFACTOR=30. Should NOT issue RSVDBYTE2HIGH error ###### 
 Beginning LOAD at record number: 3
@@ -97,8 +97,8 @@ Last LOAD record number: 4
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
-%GTM-I-RECORDSTAT, ^x:	  Key cnt: 2  max subsc len: 6  max rec len: 900  max node len: 910
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 6  max rec len: 900  max node len: 910
+%YDB-I-RECORDSTAT, ^x:	  Key cnt: 2  max subsc len: 6  max rec len: 900  max node len: 910
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 6  max rec len: 900  max node len: 910
 
 
 File  	##TEST_PATH##/mumps.dat
@@ -108,7 +108,7 @@ DSE> DSE>
 GTM>
 
 --------- (b3) Test RSVDBYTE2HIGH error at the index level -------------------
-%YDB-E-RSVDBYTE2HIGH, Record size (260) is greater than the maximum allowed for region DEFAULT with Block size (1024) and Reserved bytes (768),%GTM-I-GVIS, 		Global variable: ^x("                                                                                                                                                                                                                                     2")
+%YDB-E-RSVDBYTE2HIGH, Record size (260) is greater than the maximum allowed for region DEFAULT with Block size (1024) and Reserved bytes (768),%YDB-I-GVIS, 		Global variable: ^x("                                                                                                                                                                                                                                     2")
 		At M source location data4+8^d002587
 
 GTM>
@@ -123,8 +123,8 @@ GTM>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
-%GTM-I-RECORDSTAT, ^x:	  Key cnt: 2  max subsc len: 6  max rec len: 500  max node len: 510
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 6  max rec len: 500  max node len: 510
+%YDB-I-RECORDSTAT, ^x:	  Key cnt: 2  max subsc len: 6  max rec len: 500  max node len: 510
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 6  max rec len: 500  max node len: 510
 
 ###### MUPIP LOAD with FILLFACTOR=60 ######
 Beginning LOAD at record number: 3
@@ -135,8 +135,8 @@ Last LOAD record number: 4
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
-%GTM-I-RECORDSTAT, ^x:	  Key cnt: 2  max subsc len: 6  max rec len: 500  max node len: 510
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 6  max rec len: 500  max node len: 510
+%YDB-I-RECORDSTAT, ^x:	  Key cnt: 2  max subsc len: 6  max rec len: 500  max node len: 510
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 6  max rec len: 500  max node len: 510
 data6.glo
 ^x(1)="                                                                                                   1"
 ^x(2)="                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   1"
@@ -151,8 +151,8 @@ GTM>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
-%GTM-I-RECORDSTAT, ^x:	  Key cnt: 2  max subsc len: 6  max rec len: 500  max node len: 510
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 6  max rec len: 500  max node len: 510
+%YDB-I-RECORDSTAT, ^x:	  Key cnt: 2  max subsc len: 6  max rec len: 500  max node len: 510
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 6  max rec len: 500  max node len: 510
 
 GTM>
 
@@ -162,8 +162,8 @@ GTM>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
-%GTM-I-RECORDSTAT, ^x:	  Key cnt: 1  max subsc len: 6  max rec len: 500  max node len: 510
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 6  max rec len: 500  max node len: 510
+%YDB-I-RECORDSTAT, ^x:	  Key cnt: 1  max subsc len: 6  max rec len: 500  max node len: 510
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 6  max rec len: 500  max node len: 510
 
 GTM>
 
@@ -173,8 +173,8 @@ GTM>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
-%GTM-I-RECORDSTAT, ^x:	  Key cnt: 1  max subsc len: 6  max rec len: 100  max node len: 110
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 6  max rec len: 100  max node len: 110
+%YDB-I-RECORDSTAT, ^x:	  Key cnt: 1  max subsc len: 6  max rec len: 100  max node len: 110
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 6  max rec len: 100  max node len: 110
 
 ###### MUPIP LOAD of DATA2 with FILLFACTOR=60 ######
 Beginning LOAD at record number: 3
@@ -195,8 +195,8 @@ Last LOAD record number: 3
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
-%GTM-I-RECORDSTAT, ^x:	  Key cnt: 2  max subsc len: 6  max rec len: 500  max node len: 510
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 6  max rec len: 500  max node len: 510
+%YDB-I-RECORDSTAT, ^x:	  Key cnt: 2  max subsc len: 6  max rec len: 500  max node len: 510
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 6  max rec len: 500  max node len: 510
 data8.glo
 ^x(1)="                                                                                                   1"
 ^x(2)="                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   1"

@@ -22,8 +22,8 @@ PASS from fill1^myfill("set")
 
 GTM>
 ##SUSPEND_OUTPUT  NON_REPLIC
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/online1.mjl is renamed to ##TEST_PATH##/online1.mjl_##TIMESTAMP##
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/online1.mjl created for region DEFAULT with .*BEFORE_IMAGES
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/online1.mjl is renamed to ##TEST_PATH##/online1.mjl_##TIMESTAMP##
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/online1.mjl created for region DEFAULT with .*BEFORE_IMAGES
 ##ALLOW_OUTPUT  NON_REPLIC
 DB file ##TEST_PATH##/online1.dat backed up in file ##TEST_PATH##/online1/online1.dat
 ##SUSPEND_OUTPUT MM_FILE_NO_EXT
@@ -45,8 +45,8 @@ PASS from fill2^myfill("set")
 
 GTM>
 ##SUSPEND_OUTPUT  NON_REPLIC
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/online1.mjl is renamed to ##TEST_PATH##/online1.mjl_##TIMESTAMP##
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/online1.mjl created for region DEFAULT with .*BEFORE_IMAGES
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/online1.mjl is renamed to ##TEST_PATH##/online1.mjl_##TIMESTAMP##
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/online1.mjl created for region DEFAULT with .*BEFORE_IMAGES
 ##ALLOW_OUTPUT  NON_REPLIC
 MUPIP backup of database file ##TEST_PATH##/online1.dat to ##TEST_PATH##/online1/backup.bak2
 DB file ##TEST_PATH##/online1.dat incrementally backed up in file ##TEST_PATH##/online1/backup.bak2
@@ -74,8 +74,8 @@ PASS from fill3^myfill("set")
 
 GTM>
 ##SUSPEND_OUTPUT  NON_REPLIC
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/online1.mjl is renamed to ##TEST_PATH##/online1.mjl_##TIMESTAMP##
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/online1.mjl created for region DEFAULT with .*BEFORE_IMAGES
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/online1.mjl is renamed to ##TEST_PATH##/online1.mjl_##TIMESTAMP##
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/online1.mjl created for region DEFAULT with .*BEFORE_IMAGES
 ##ALLOW_OUTPUT  NON_REPLIC
 MUPIP backup of database file ##TEST_PATH##/online1.dat to ##TEST_PATH##/online1/backup.bak3
 DB file ##TEST_PATH##/online1.dat incrementally backed up in file ##TEST_PATH##/online1/backup.bak3
@@ -96,8 +96,8 @@ Transactions from 0x0000000000000BFF to 0x0000000000002BFE are backed up.
 BACKUP COMPLETED.
 
 ##SUSPEND_OUTPUT  NON_REPLIC
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/online1.mjl is renamed to ##TEST_PATH##/online1.mjl_##TIMESTAMP##
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/online1.mjl created for region DEFAULT with .*BEFORE_IMAGES
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/online1.mjl is renamed to ##TEST_PATH##/online1.mjl_##TIMESTAMP##
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/online1.mjl created for region DEFAULT with .*BEFORE_IMAGES
 ##ALLOW_OUTPUT  NON_REPLIC
 MUPIP backup of database file ##TEST_PATH##/online1.dat to ##TEST_PATH##/online1/backup.bak33
 DB file ##TEST_PATH##/online1.dat incrementally backed up in file ##TEST_PATH##/online1/backup.bak33
@@ -118,8 +118,8 @@ Transactions from 0x0000000000000400 to 0x0000000000002BFE are backed up.
 BACKUP COMPLETED.
 
 ##SUSPEND_OUTPUT  NON_REPLIC
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/online1.mjl is renamed to ##TEST_PATH##/online1.mjl_##TIMESTAMP##
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/online1.mjl created for region DEFAULT with .*BEFORE_IMAGES
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/online1.mjl is renamed to ##TEST_PATH##/online1.mjl_##TIMESTAMP##
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/online1.mjl created for region DEFAULT with .*BEFORE_IMAGES
 ##ALLOW_OUTPUT  NON_REPLIC
 MUPIP backup of database file ##TEST_PATH##/online1.dat to ##TEST_PATH##/online1/backup.bak333
 DB file ##TEST_PATH##/online1.dat incrementally backed up in file ##TEST_PATH##/online1/backup.bak333
@@ -247,7 +247,7 @@ GTM>
 PASS from fill3^myfill("ver")
 
 GTM>
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/online1.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/online1.dat created
 
 RESTORE COMPLETED
 ##SUSPEND_OUTPUT COLLATION

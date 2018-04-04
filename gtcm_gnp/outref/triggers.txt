@@ -15,7 +15,7 @@ DEFAULT	##TEST_REMOTE_NODE_PATH_GTCM##/mumps.dat
 Starting the GT.CM Servers...
 # Expect YDB-E-UNIMPLOP error when triggers that go to remote (i.e gtcm client) regions is loaded
 %YDB-E-UNIMPLOP, Unimplemented construct encountered
-%GTM-I-TEXT, This utility does not support remote database operations
+%YDB-I-TEXT, This utility does not support remote database operations
 # Loading triggers that go to the local region only should work fine
 File local.trg, Line 1: Added SET trigger on ^a named a#1
 =========================================

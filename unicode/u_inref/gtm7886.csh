@@ -43,13 +43,13 @@ $gtm_dist/mumps -run %XCMD 'write $zversion,!' >&! icu_fail.logx
 # Previously the above command generated only three lines. The last line contained an ambiguous reference.
 #
 #%YDB-E-DLLNOOPEN, Failed to load external dynamic library ##TEST_PATH##/libicuio42.1.a(libicuio.so)
-#%GTM-I-TEXT, Could not load module ##TEST_PATH##/libicuio42.1.a(libicuio.so).
+#%YDB-I-TEXT, Could not load module ##TEST_PATH##/libicuio42.1.a(libicuio.so).
 #        Member libicuio.so is not found in archive
 #
 # Now the error prints out more detailed information.
 #
 #%YDB-E-DLLNOOPEN, Failed to load external dynamic library ##TEST_PATH##/libicuio42.1.a(libicuio42.1.so)
-#%GTM-I-TEXT, Could not load module ##TEST_PATH##/libicuio42.1.a(libicuio42.1.so).
+#%YDB-I-TEXT, Could not load module ##TEST_PATH##/libicuio42.1.a(libicuio42.1.so).
 #        Dependent module libicuuc42.a(libicuuc42.1.so) could not be loaded.
 #Could not load module libicuuc42.a(libicuuc42.1.so).
 #System error: No such file or directory

@@ -1,4 +1,16 @@
 #!/usr/bin/expect -f
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
 # expect $gtm_test/T999/manual_tests/u_inref/remote_ctrlc.exp sagaloo $gtm_test/T999 V990
 
 proc debug {switch} {
@@ -72,26 +84,26 @@ expect "GTM>"
 send -- "do ^ctrlc\r"
 expect "for i=1:1:10000000  SET x=x+1"
 send -- ""
-expect "%GTM-I-CTRLC, CTRL_C encountered"
+expect "%YDB-I-CTRLC, CTRL_C encountered"
 #
 send -- "write \"Testing interrupt of zshow V\",!\r"
 expect "GTM>"
 send -- "zshow \"v\":y\r"
 send -- ""
-expect "%GTM-I-CTRLC, CTRL_C encountered"
+expect "%YDB-I-CTRLC, CTRL_C encountered"
 #
 send -- "write \"Testing interrupt of zwrite a\",!\r"
 expect "GTM>"
 send -- "zwrite a\r"
 send -- ""
-expect "%GTM-I-CTRLC, CTRL_C encountered"
+expect "%YDB-I-CTRLC, CTRL_C encountered"
 #
 send -- "write \"Testing interrupt of xecuted zwrite a\",!\r"
 expect "GTM>"
 send -- "xecute \"zwrite a\"\r"
 expect "a=0"
 send -- ""
-expect "%GTM-I-CTRLC, CTRL_C encountered"
+expect "%YDB-I-CTRLC, CTRL_C encountered"
 #
 send -- "write \"Testing interrupt of lke show -all\",!\r"
 expect "GTM>"
@@ -100,7 +112,7 @@ expect ">"
 send -- "\$gtm_dist/lke show -all\r"
 expect "Owned by PID="
 send -- ""
-expect "%GTM-I-CTRLC, CTRL_C encountered"
+expect "%YDB-I-CTRLC, CTRL_C encountered"
 send -- "exit\r"
 
 expect "GTM>"

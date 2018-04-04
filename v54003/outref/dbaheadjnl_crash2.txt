@@ -15,9 +15,9 @@ GDE>
 %GDE-I-VERIFY, Verification OK
 
 %GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/small.gld
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/small.dat created
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/small.mjl created for region DEFAULT with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/small.dat created
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/small.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 %GDE-I-GDUSEDEFS, Using defaults for Global Directory 
 	##TEST_PATH##/big.gld
 
@@ -32,9 +32,9 @@ GDE>
 %GDE-I-VERIFY, Verification OK
 
 %GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/big.gld
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/big.dat created
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/big.mjl created for region DEFAULT with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/big.dat created
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/big.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 
 END 1
 ---------------------------------------------------------------------------------------
@@ -73,12 +73,12 @@ END 5
 ---------------------------------------------------------------------------------------
 BEGIN 6 :-) Get the timestamp of fisrt epoch written to journal:
 
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/big.mjf created
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/big.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
 END 6
 ---------------------------------------------------------------------------------------
@@ -98,16 +98,16 @@ BEGIN 8 :-) Recover should fail: jfh->eov_tn < db->curr_tn BUT db->jnl_eovtn > j
 ##TEST_AWKeov_tn = 0x[0-9A-F]+
 ##TEST_AWKjnl_eovtn = 0x[0-9A-F]+
 ##TEST_AWK##SOURCE_PATH##.mupip journal -recover -backward -verbose -since=.* -before=.* . 
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%GTM-I-MUINFOSTR, Module : mur_open_files : Post mur_fread_eof details
-%GTM-I-MUINFOSTR,     Journal file : ##TEST_PATH##/big.mjl
-##TEST_AWK%GTM-I-MUINFOUINT4,     Last valid record offset : [0-9]* .0x[0-9a-fA-F]*.
-##TEST_AWK%GTM-I-MUINFOUINT4,     Last valid record time : [0-9]* .0x[0-9a-fA-F]*.
-%GTM-I-MUINFOSTR,       Tail analysis done : FALSE
-%GTM-I-MUINFOSTR,       Properly closed : TRUE
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%YDB-I-MUINFOSTR, Module : mur_open_files : Post mur_fread_eof details
+%YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/big.mjl
+##TEST_AWK%YDB-I-MUINFOUINT4,     Last valid record offset : [0-9]* .0x[0-9a-fA-F]*.
+##TEST_AWK%YDB-I-MUINFOUINT4,     Last valid record time : [0-9]* .0x[0-9a-fA-F]*.
+%YDB-I-MUINFOSTR,       Tail analysis done : FALSE
+%YDB-I-MUINFOSTR,       Properly closed : TRUE
 ##TEST_AWK.YDB-E-JNLDBTNNOMATCH, Journal file ##TEST_PATH##.big.mjl has end transaction number .0x[0-9A-F]+., but database ##TEST_PATH##.small.dat has current transaction number .0x[0-9A-F]+. and journal end transaction number .0x[0-9A-F]+.
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
 END 8
 ---------------------------------------------------------------------------------------

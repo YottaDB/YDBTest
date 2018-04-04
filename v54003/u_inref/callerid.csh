@@ -4,6 +4,9 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -33,7 +36,7 @@ END
 BEGIN "Do mupip rundown and check if the 0xFFFFFFFF is sent as <generated from> address to operator log"
 set syslog_before = `date +"%b %e %H:%M:%S"`
 $MUPIP rundown -region "*" >&! rundown.txt
-$gtm_tst/com/getoper.csh "$syslog_before" "" "syslog.txt" "" "GTM-I-SEMREMOVED"
+$gtm_tst/com/getoper.csh "$syslog_before" "" "syslog.txt" "" "YDB-I-SEMREMOVED"
 
 if (  $status == 0 ) then
 	$grep "0xFFFFFFFF" syslog.txt >&! greplog.txt

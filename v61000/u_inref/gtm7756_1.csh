@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -28,7 +28,7 @@ $MUPIP reorg -truncate >&! truncate.out
 # The magic number 1993 below is determined only by experimentations.
 # With above data base configuration, only with and above 1993 updates,
 # reorg -truncate can free any blocks. Until then it should issue
-# GTM-I-MUTRUNCNOSPACE error. verify that below.
+# YDB-I-MUTRUNCNOSPACE error. verify that below.
 if ($updcnt < 1993) then
 	set string="MUTRUNCNOSPACE"
 else

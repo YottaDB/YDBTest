@@ -21,18 +21,18 @@ GDE>
 
 %GDE-I-GDUPDATE, Updating Global Directory file 
 	##TEST_PATH##/create.gld
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/create.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/create.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
 #########TEST CONDITION:BAD PASSPHRASE###########
 ##TEST_AWK%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file a.dat. .*
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
 ##TEST_AWK%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file create.dat. .*
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
 ##TEST_AWK%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file b.dat. .*
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 #########TEST CONDITION:gtm_passwd unset#########
@@ -42,14 +42,14 @@ GDE>
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 %YDB-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file create.dat. Environment variable gtm_passwd not set
 %GTM-F-DBNOCRE, Not all specified database files, or their associated journal files were created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
 #########TEST CONDITION:gtm_passwd restored to the true value########
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/create.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/create.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
 HASH DUMP ON ENCRYPTED DATABASE
   DB encryption hash cutoff              -1
   DB encr hash2 start TN 0x0000000000000000

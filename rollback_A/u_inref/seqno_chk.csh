@@ -4,6 +4,9 @@
 # Copyright (c) 2003-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -66,14 +69,14 @@ echo "mupip rollback on secondary side ..."
 echo "#mupip journal /rollback /back /fetchresync=portno -losttrans=lost2.glo"
 $sec_shell "$sec_getenv; cd $SEC_SIDE;"'echo $gtm_tst/com/mupip_rollback.csh  -fetchresync=$portno -losttrans=lost2.glo >>&! rollback2.log'
 $sec_shell "$sec_getenv; cd $SEC_SIDE;"'$gtm_tst/com/mupip_rollback.csh  -fetchresync=$portno -losttrans=lost2.glo "*" >>&! rollback2.log; $grep "successful" rollback2.log'
-$sec_shell "$sec_getenv; cd $SEC_SIDE;"'$grep -E "GTM-I-RLBK.*SEQ" rollback2.log >&! seqnocheck2.out'
+$sec_shell "$sec_getenv; cd $SEC_SIDE;"'$grep -E "YDB-I-RLBK.*SEQ" rollback2.log >&! seqnocheck2.out'
 $sec_shell "$sec_getenv; cd $SEC_SIDE;"'$MUPIP replic -edit -show mumps.repl >&! repl_show2.out ; $grep "Journal Sequence Number" repl_show2.out >>&! seqnocheck2.out'
 # Test the below from supplementary test plan
 # 54) Test that -resync rollback is idempotent. That is do a -resync or -fetchresync rollback that takes the instance to
 # say strm_seqno 100 with strm_index = 1. Now redo the exact same rollback command and you expect the instance
 # to be at the exact same strm_seqno. A dse dump -file -supp should show the same value before and after the second rollback.
 $sec_shell "$sec_getenv; cd $SEC_SIDE;"'$gtm_tst/com/mupip_rollback.csh  -fetchresync=$portno -losttrans=lost2B.glo "*" >>&! rollback2B.log; '
-$sec_shell "$sec_getenv; cd $SEC_SIDE;"'$grep -E "GTM-I-RLBK.*SEQ" rollback2B.log >&! seqnocheck2B.out'
+$sec_shell "$sec_getenv; cd $SEC_SIDE;"'$grep -E "YDB-I-RLBK.*SEQ" rollback2B.log >&! seqnocheck2B.out'
 $sec_shell "$sec_getenv; cd $SEC_SIDE;"'$MUPIP replic -edit -show mumps.repl >&! repl_show2B.out ; $grep "Journal Sequence Number" repl_show2B.out >>&! seqnocheck2B.out'
 $sec_shell "$sec_getenv; cd $SEC_SIDE;"'diff seqnocheck2.out seqnocheck2B.out'
 

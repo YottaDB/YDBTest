@@ -95,13 +95,13 @@ ver PASS
 GTM>
 END of TEST1 NCT test
 ##SOURCE_PATH##/mupip extract -format=bin extr.bin
-%GTM-I-RECORDSTAT, ^AGLOBALVAR1:	  Key cnt: 15622  max subsc len: 63  max rec len: 15  max node len: 79
-%GTM-I-RECORDSTAT, ^BGLOBALVAR1:	  Key cnt: 15622  max subsc len: 63  max rec len: 15  max node len: 79
-%GTM-I-RECORDSTAT, ^CGLOBALVAR1:	  Key cnt: 502  max subsc len: 18  max rec len: 14  max node len: 36
-%GTM-I-RECORDSTAT, ^TESTINGLONGGLOBALNAME2345678901:	  Key cnt: 8  max subsc len: 47  max rec len: 12  max node len: 41
-%GTM-I-RECORDSTAT, ^morefill:	  Key cnt: 20  max subsc len: 42  max rec len: 5  max node len: 50
-%GTM-I-RECORDSTAT, ^prefix:	  Key cnt: 1  max subsc len: 8  max rec len: 1  max node len: 13
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 31775  max subsc len: 63  max rec len: 15  max node len: 79
+%YDB-I-RECORDSTAT, ^AGLOBALVAR1:	  Key cnt: 15622  max subsc len: 63  max rec len: 15  max node len: 79
+%YDB-I-RECORDSTAT, ^BGLOBALVAR1:	  Key cnt: 15622  max subsc len: 63  max rec len: 15  max node len: 79
+%YDB-I-RECORDSTAT, ^CGLOBALVAR1:	  Key cnt: 502  max subsc len: 18  max rec len: 14  max node len: 36
+%YDB-I-RECORDSTAT, ^TESTINGLONGGLOBALNAME2345678901:	  Key cnt: 8  max subsc len: 47  max rec len: 12  max node len: 41
+%YDB-I-RECORDSTAT, ^morefill:	  Key cnt: 20  max subsc len: 42  max rec len: 5  max node len: 50
+%YDB-I-RECORDSTAT, ^prefix:	  Key cnt: 1  max subsc len: 8  max rec len: 1  max node len: 13
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 31775  max subsc len: 63  max rec len: 15  max node len: 79
 Files Created in ##TEST_PATH##:
 ##ALLOW_OUTPUT  REPLIC
 Using: ##SOURCE_PATH##/mumps -run GDE
@@ -305,19 +305,19 @@ END of TEST1 NCT test
 END of TEST4 NCT test
 ##ALLOW_OUTPUT  REPLIC
 ##SOURCE_PATH##/mupip extract -format=bin extr.bin
-%GTM-I-RECORDSTAT, ^AGLOBALVAR1:	  Key cnt: 15622  max subsc len: 63  max rec len: 15  max node len: 79
-%GTM-I-RECORDSTAT, ^BGLOBALVAR1:	  Key cnt: 15622  max subsc len: 63  max rec len: 15  max node len: 79
-%GTM-I-RECORDSTAT, ^CGLOBALVAR1:	  Key cnt: 502  max subsc len: 18  max rec len: 14  max node len: 36
+%YDB-I-RECORDSTAT, ^AGLOBALVAR1:	  Key cnt: 15622  max subsc len: 63  max rec len: 15  max node len: 79
+%YDB-I-RECORDSTAT, ^BGLOBALVAR1:	  Key cnt: 15622  max subsc len: 63  max rec len: 15  max node len: 79
+%YDB-I-RECORDSTAT, ^CGLOBALVAR1:	  Key cnt: 502  max subsc len: 18  max rec len: 14  max node len: 36
 ##SUSPEND_OUTPUT  REPLIC
-%GTM-I-RECORDSTAT, ^TESTINGLONGGLOBALNAME2345678901:	  Key cnt: 8  max subsc len: 47  max rec len: 12  max node len: 41
+%YDB-I-RECORDSTAT, ^TESTINGLONGGLOBALNAME2345678901:	  Key cnt: 8  max subsc len: 47  max rec len: 12  max node len: 41
 ##ALLOW_OUTPUT  REPLIC
-%GTM-I-RECORDSTAT, ^morefill:	  Key cnt: 20  max subsc len: 42  max rec len: 5  max node len: 50
-%GTM-I-RECORDSTAT, ^prefix:	  Key cnt: 1  max subsc len: 8  max rec len: 1  max node len: 13
+%YDB-I-RECORDSTAT, ^morefill:	  Key cnt: 20  max subsc len: 42  max rec len: 5  max node len: 50
+%YDB-I-RECORDSTAT, ^prefix:	  Key cnt: 1  max subsc len: 8  max rec len: 1  max node len: 13
 ##SUSPEND_OUTPUT  NON_REPLIC
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 31767  max subsc len: 63  max rec len: 15  max node len: 79
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 31767  max subsc len: 63  max rec len: 15  max node len: 79
 ##SUSPEND_OUTPUT  REPLIC
 ##ALLOW_OUTPUT  NON_REPLIC
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 31775  max subsc len: 63  max rec len: 15  max node len: 79
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 31775  max subsc len: 63  max rec len: 15  max node len: 79
 ##ALLOW_OUTPUT  REPLIC
 Files Created in ##TEST_PATH##:
 Using: ##SOURCE_PATH##/mumps -run GDE
@@ -492,12 +492,12 @@ ver PASS
 GTM>
 END of TEST4 NCT test
 ##SOURCE_PATH##/mupip extract -format=bin extr.bin
-%GTM-I-RECORDSTAT, ^AGLOBALVAR1:	  Key cnt: 15622  max subsc len: 63  max rec len: 15  max node len: 79
-%GTM-I-RECORDSTAT, ^BGLOBALVAR1:	  Key cnt: 15622  max subsc len: 63  max rec len: 15  max node len: 79
-%GTM-I-RECORDSTAT, ^CGLOBALVAR1:	  Key cnt: 502  max subsc len: 18  max rec len: 14  max node len: 36
-%GTM-I-RECORDSTAT, ^morefill:	  Key cnt: 20  max subsc len: 42  max rec len: 5  max node len: 50
-%GTM-I-RECORDSTAT, ^prefix:	  Key cnt: 1  max subsc len: 8  max rec len: 1  max node len: 13
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 31767  max subsc len: 63  max rec len: 15  max node len: 79
+%YDB-I-RECORDSTAT, ^AGLOBALVAR1:	  Key cnt: 15622  max subsc len: 63  max rec len: 15  max node len: 79
+%YDB-I-RECORDSTAT, ^BGLOBALVAR1:	  Key cnt: 15622  max subsc len: 63  max rec len: 15  max node len: 79
+%YDB-I-RECORDSTAT, ^CGLOBALVAR1:	  Key cnt: 502  max subsc len: 18  max rec len: 14  max node len: 36
+%YDB-I-RECORDSTAT, ^morefill:	  Key cnt: 20  max subsc len: 42  max rec len: 5  max node len: 50
+%YDB-I-RECORDSTAT, ^prefix:	  Key cnt: 1  max subsc len: 8  max rec len: 1  max node len: 13
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 31767  max subsc len: 63  max rec len: 15  max node len: 79
 Files Created in ##TEST_PATH##:
 Using: ##SOURCE_PATH##/mumps -run GDE
 mumps.gld

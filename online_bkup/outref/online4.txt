@@ -20,14 +20,14 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ##ALLOW_OUTPUT NON_REPLIC
 ##SUSPEND_OUTPUT REPLIC
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/acct.mjl created for region ACCT with NOBEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/acnm.mjl created for region ACNM with NOBEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/jnl.mjl created for region JNL with NOBEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region ACCT is now ON
-%GTM-I-JNLSTATE, Journaling state for region ACNM is now ON
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
-%GTM-I-JNLSTATE, Journaling state for region JNL is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/acct.mjl created for region ACCT with NOBEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/acnm.mjl created for region ACNM with NOBEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/jnl.mjl created for region JNL with NOBEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region ACCT is now ON
+%YDB-I-JNLSTATE, Journaling state for region ACNM is now ON
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-JNLSTATE, Journaling state for region JNL is now ON
 ##ALLOW_OUTPUT REPLIC
 
 GTM>
@@ -68,10 +68,10 @@ No errors detected by integ.
 No errors detected by integ.
 ##ALLOW_OUTPUT NON_REPLIC
 Verify that journaling is turned OFF at the end of forward recovery and that it finished successfully
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/acct.dat is now OFF
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/acnm.dat is now OFF
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/jnl.dat is now OFF
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/acct.dat is now OFF
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/acnm.dat is now OFF
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/jnl.dat is now OFF
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
 %GTM-S-JNLSUCCESS, Recover successful
 %GTM-S-JNLSUCCESS, Show successful
  PBank verify started

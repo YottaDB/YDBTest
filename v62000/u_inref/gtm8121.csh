@@ -300,7 +300,7 @@ DSE_EOF
 
 	echo ""
 	echo "Start MUPIP JOURNAL -ROLLBACK. Should work fine without DBFLCORRP error. Should fix REQROLLBACK and DBFLCORRP error."
-	# If instance is supplementary (randomly chosen by test system), an additional GTM-I-RLBKSTRMSEQ shows up in the output
+	# If instance is supplementary (randomly chosen by test system), an additional YDB-I-RLBKSTRMSEQ shows up in the output
 	# To keep reference file deterministic, filter that out.
 	$gtm_tst/com/mupip_rollback.csh "" -back -lost=rollback4.los "*" |& $grep -v RLBKSTRMSEQ
 

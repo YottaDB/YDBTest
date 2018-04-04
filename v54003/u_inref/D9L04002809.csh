@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2011, 2013 Fidelity Information Services, Inc	#
+# Copyright 2011, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -61,12 +64,12 @@ $MSR RUN RCV=INST2 '$MUPIP replic -receiv -start -listen=__RCV_PORTNO__ -log=__R
 $echoline
 echo "	Step 5a ===> Verify that receiver server detects an already existing update process"
 $echoline
-# The actual message we are looking for is : "GTM-I-TEXT, Update process already exists. Not starting it". However,
+# The actual message we are looking for is : "YDB-I-TEXT, Update process already exists. Not starting it". However,
 # check_error_exist.csh when passed a message string with spaces in it considers each of the individual words as
 # seperate messages and prints the the check_error_exist template for each word which is not what we want. Instead,
-# do the check_error_exist ONLY on GTM-I-TEXT
-$MSR RUN RCV=INST2 '$gtm_tst/com/wait_for_log.csh -log RCVR_restart.log -message' "GTM-I-TEXT" -duration 120
-$MSR RUN RCV=INST2 '$gtm_tst/com/check_error_exist.csh RCVR_restart.log' "GTM-I-TEXT"
+# do the check_error_exist ONLY on YDB-I-TEXT
+$MSR RUN RCV=INST2 '$gtm_tst/com/wait_for_log.csh -log RCVR_restart.log -message' "YDB-I-TEXT" -duration 120
+$MSR RUN RCV=INST2 '$gtm_tst/com/check_error_exist.csh RCVR_restart.log' "YDB-I-TEXT"
 
 # We are about to kill the update process. Make sure the update process is in a quiescent state before the kill. This is necessary
 # as otherwise, the kill can reach the update process at the right time when it is in the midst of doing a PHASE2 commit (after

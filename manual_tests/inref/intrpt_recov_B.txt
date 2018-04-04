@@ -31,13 +31,13 @@
 	(/usr/bin/dbx) stop in cre_jnl_file_common
 	[1] stop in cre_jnl_file_common
 	(/usr/bin/dbx) r  journal -recover -back "*"
-	%GTM-I-MUJNLSTAT, Initial processing started at Wed Mar 31 10:43:52 2004
-	%GTM-I-MUJNLSTAT, Backward processing started at Wed Mar 31 10:43:52 2004
-	%GTM-I-MUJNLSTAT, Before image applying started at Wed Mar 31 10:43:52 2004
+	%YDB-I-MUJNLSTAT, Initial processing started at Wed Mar 31 10:43:52 2004
+	%YDB-I-MUJNLSTAT, Backward processing started at Wed Mar 31 10:43:52 2004
+	%YDB-I-MUJNLSTAT, Before image applying started at Wed Mar 31 10:43:52 2004
 	[1] stopped in cre_jnl_file_common at line 169 in file "##GTM_LIBRARY_PATH##/V44004/src/cre_jnl_file.c"
 	169           jrecbuf = NULL;
 	(/usr/bin/dbx) return
-	%GTM-I-FILERENAME, File /testarea1/alim/work/misc/manual_test/mumps3.mjl is renamed to /testarea1/alim/work/misc/manual_test/mumps3.mjl_2004091104328
+	%YDB-I-FILERENAME, File /testarea1/alim/work/misc/manual_test/mumps3.mjl is renamed to /testarea1/alim/work/misc/manual_test/mumps3.mjl_2004091104328
 	stopped in mur_process_intrpt_recov at line 228 in file "##GTM_LIBRARY_PATH##/V44004/src/mur_process_intrpt_recov.c"
 	228                   if (EXIT_NRM != cre_jnl_file_common(&jnl_info, rename_fn, rename_fn_len))
 	(/usr/bin/dbx) q
@@ -83,12 +83,12 @@
 	[1] stop in cre_jnl_file_common
 	(/usr/bin/dbx) r
 	MUPIP> journal -recover -back "*" -since="31-Mar-2004 10:47:42"
-	%GTM-I-MUJNLSTAT, Initial processing started at Wed Mar 31 10:50:08 2004
-	%GTM-I-MUJNLSTAT, Interrupted recovery processing started at Wed Mar 31 10:50:08 2004
-	%GTM-I-MUJNLPREVGEN, Previous generation journal file /testarea1/alim/work/misc/manual_test/mumps3.mjl_2004091104759 included for database file /testarea1/alim/work/misc/manual_test/mumps.dat
-	%GTM-I-MUJNLSTAT, Backward processing started at Wed Mar 31 10:50:08 2004
-	%GTM-I-MUJNLPREVGEN, Previous generation journal file /testarea1/alim/work/misc/manual_test/mumps2.mjl included for database file /testarea1/alim/work/misc/manual_test/mumps.dat
-	%GTM-I-MUJNLSTAT, Before image applying started at Wed Mar 31 10:50:08 2004
+	%YDB-I-MUJNLSTAT, Initial processing started at Wed Mar 31 10:50:08 2004
+	%YDB-I-MUJNLSTAT, Interrupted recovery processing started at Wed Mar 31 10:50:08 2004
+	%YDB-I-MUJNLPREVGEN, Previous generation journal file /testarea1/alim/work/misc/manual_test/mumps3.mjl_2004091104759 included for database file /testarea1/alim/work/misc/manual_test/mumps.dat
+	%YDB-I-MUJNLSTAT, Backward processing started at Wed Mar 31 10:50:08 2004
+	%YDB-I-MUJNLPREVGEN, Previous generation journal file /testarea1/alim/work/misc/manual_test/mumps2.mjl included for database file /testarea1/alim/work/misc/manual_test/mumps.dat
+	%YDB-I-MUJNLSTAT, Before image applying started at Wed Mar 31 10:50:08 2004
 	[1] stopped in cre_jnl_file_common at line 169 in file "##GTM_LIBRARY_PATH##/V44004/src/cre_jnl_file.c"
 	  169           jrecbuf = NULL;
 	(/usr/bin/dbx) q
@@ -130,13 +130,13 @@
 	[1] stop in cre_jnl_file_common
 	(/usr/bin/dbx) r
 	MUPIP>  journal -recover -back "*" -since="31-Mar-2004 10:47:41"
-	%GTM-I-MUJNLSTAT, Initial processing started at Wed Mar 31 10:52:48 2004
-	%GTM-I-MUJNLSTAT, Interrupted recovery processing started at Wed Mar 31 10:52:48 2004
-	%GTM-I-MUJNLPREVGEN, Previous generation journal file /testarea1/alim/work/misc/manual_test/mumps3.mjl_2004091104759 included for database file /testarea1/alim/work/misc/manual_test/mumps.dat
-	%GTM-I-MUJNLPREVGEN, Previous generation journal file /testarea1/alim/work/misc/manual_test/mumps2.mjl included for database file /testarea1/alim/work/misc/manual_test/mumps.dat
-	%GTM-I-MUJNLSTAT, Backward processing started at Wed Mar 31 10:52:48 2004
-	%GTM-I-MUJNLPREVGEN, Previous generation journal file /testarea1/alim/work/misc/manual_test/mumps1.mjl included for database file /testarea1/alim/work/misc/manual_test/mumps.dat
-	%GTM-I-MUJNLSTAT, Before image applying started at Wed Mar 31 10:52:48 2004
+	%YDB-I-MUJNLSTAT, Initial processing started at Wed Mar 31 10:52:48 2004
+	%YDB-I-MUJNLSTAT, Interrupted recovery processing started at Wed Mar 31 10:52:48 2004
+	%YDB-I-MUJNLPREVGEN, Previous generation journal file /testarea1/alim/work/misc/manual_test/mumps3.mjl_2004091104759 included for database file /testarea1/alim/work/misc/manual_test/mumps.dat
+	%YDB-I-MUJNLPREVGEN, Previous generation journal file /testarea1/alim/work/misc/manual_test/mumps2.mjl included for database file /testarea1/alim/work/misc/manual_test/mumps.dat
+	%YDB-I-MUJNLSTAT, Backward processing started at Wed Mar 31 10:52:48 2004
+	%YDB-I-MUJNLPREVGEN, Previous generation journal file /testarea1/alim/work/misc/manual_test/mumps1.mjl included for database file /testarea1/alim/work/misc/manual_test/mumps.dat
+	%YDB-I-MUJNLSTAT, Before image applying started at Wed Mar 31 10:52:48 2004
 	[1] stopped in cre_jnl_file_common at line 169 in file "##GTM_LIBRARY_PATH##/V44004/src/cre_jnl_file.c"
 	  169           jrecbuf = NULL;
 	(/usr/bin/dbx) q
@@ -168,22 +168,22 @@
 
 	[lespaul-alim]:>mupip
 	MUPIP>  journal -recover -back "*" -since="31-Mar-2004 10:47:41"
-	%GTM-I-MUJNLSTAT, Initial processing started at Wed Mar 31 10:55:31 2004
-	%GTM-I-MUJNLSTAT, Interrupted recovery processing started at Wed Mar 31 10:55:31 2004
-	%GTM-I-MUJNLPREVGEN, Previous generation journal file /testarea1/alim/work/misc/manual_test/mumps3.mjl_2004091104759 included for database file /testarea1/alim/work/misc/manual_test/mumps.dat
-	%GTM-I-MUJNLPREVGEN, Previous generation journal file /testarea1/alim/work/misc/manual_test/mumps2.mjl included for database file /testarea1/alim/work/misc/manual_test/mumps.dat
-	%GTM-I-MUJNLPREVGEN, Previous generation journal file /testarea1/alim/work/misc/manual_test/mumps1.mjl included for database file /testarea1/alim/work/misc/manual_test/mumps.dat
-	%GTM-I-MUJNLSTAT, Backward processing started at Wed Mar 31 10:55:31 2004
-	%GTM-I-MUJNLSTAT, Before image applying started at Wed Mar 31 10:55:31 2004
-	%GTM-I-FILERENAME, File /testarea1/alim/work/misc/manual_test/mumps3.mjl is renamed to /testarea1/alim/work/misc/manual_test/mumps3.mjl_2004091104904
-	%GTM-I-FILEDEL, File /testarea1/alim/work/misc/manual_test/mumps3.mjl_2004091104904 successfully deleted
-	%GTM-I-MUJNLSTAT, Forward processing started at Wed Mar 31 10:55:31 2004
-	%GTM-I-FILERENAME, File /testarea1/alim/work/misc/manual_test/mumps3.mjl_2004091104759 is renamed to /testarea1/alim/work/misc/manual_test/rolled_bak_mumps3.mjl_2004091104759
-	%GTM-I-FILERENAME, File /testarea1/alim/work/misc/manual_test/mumps2.mjl is renamed to /testarea1/alim/work/misc/manual_test/rolled_bak_mumps2.mjl
+	%YDB-I-MUJNLSTAT, Initial processing started at Wed Mar 31 10:55:31 2004
+	%YDB-I-MUJNLSTAT, Interrupted recovery processing started at Wed Mar 31 10:55:31 2004
+	%YDB-I-MUJNLPREVGEN, Previous generation journal file /testarea1/alim/work/misc/manual_test/mumps3.mjl_2004091104759 included for database file /testarea1/alim/work/misc/manual_test/mumps.dat
+	%YDB-I-MUJNLPREVGEN, Previous generation journal file /testarea1/alim/work/misc/manual_test/mumps2.mjl included for database file /testarea1/alim/work/misc/manual_test/mumps.dat
+	%YDB-I-MUJNLPREVGEN, Previous generation journal file /testarea1/alim/work/misc/manual_test/mumps1.mjl included for database file /testarea1/alim/work/misc/manual_test/mumps.dat
+	%YDB-I-MUJNLSTAT, Backward processing started at Wed Mar 31 10:55:31 2004
+	%YDB-I-MUJNLSTAT, Before image applying started at Wed Mar 31 10:55:31 2004
+	%YDB-I-FILERENAME, File /testarea1/alim/work/misc/manual_test/mumps3.mjl is renamed to /testarea1/alim/work/misc/manual_test/mumps3.mjl_2004091104904
+	%YDB-I-FILEDEL, File /testarea1/alim/work/misc/manual_test/mumps3.mjl_2004091104904 successfully deleted
+	%YDB-I-MUJNLSTAT, Forward processing started at Wed Mar 31 10:55:31 2004
+	%YDB-I-FILERENAME, File /testarea1/alim/work/misc/manual_test/mumps3.mjl_2004091104759 is renamed to /testarea1/alim/work/misc/manual_test/rolled_bak_mumps3.mjl_2004091104759
+	%YDB-I-FILERENAME, File /testarea1/alim/work/misc/manual_test/mumps2.mjl is renamed to /testarea1/alim/work/misc/manual_test/rolled_bak_mumps2.mjl
 	%GTM-S-JNLSUCCESS, Show successful
 	%GTM-S-JNLSUCCESS, Verify successful
 	%GTM-S-JNLSUCCESS, Recover successful
-	%GTM-I-MUJNLSTAT, End processing at Wed Mar 31 10:55:32 2004
+	%YDB-I-MUJNLSTAT, End processing at Wed Mar 31 10:55:32 2004
 	[lespaul-alim]:>
 
 
@@ -194,43 +194,43 @@
 	
     g. Verify the data the journal files
 	1) mupip extract data.glo
-	%GTM-I-RECORDSTAT, ^a:    Key cnt: 1000  max subsc len: 7  max rec len: 4 max node len: 14
-	%GTM-I-RECORDSTAT, ^b:    Key cnt: 1000  max subsc len: 7  max rec len: 4 max node len: 14
-	%GTM-I-RECORDSTAT, ^c:    Key cnt: 1000  max subsc len: 7  max rec len: 4 max node len: 14
-	%GTM-I-RECORDSTAT, ^d:    Key cnt: 1000  max subsc len: 7  max rec len: 4 max node len: 14
-	%GTM-I-RECORDSTAT, ^e:    Key cnt: 1000  max subsc len: 7  max rec len: 4 max node len: 14
-	%GTM-I-RECORDSTAT, ^f:    Key cnt: 130  max subsc len: 7  max rec len: 3  max node len: 14
-	%GTM-I-RECORDSTAT, TOTAL:         Key cnt: 5130  max subsc len: 7  max rec len: 4  max node len: 14
+	%YDB-I-RECORDSTAT, ^a:    Key cnt: 1000  max subsc len: 7  max rec len: 4 max node len: 14
+	%YDB-I-RECORDSTAT, ^b:    Key cnt: 1000  max subsc len: 7  max rec len: 4 max node len: 14
+	%YDB-I-RECORDSTAT, ^c:    Key cnt: 1000  max subsc len: 7  max rec len: 4 max node len: 14
+	%YDB-I-RECORDSTAT, ^d:    Key cnt: 1000  max subsc len: 7  max rec len: 4 max node len: 14
+	%YDB-I-RECORDSTAT, ^e:    Key cnt: 1000  max subsc len: 7  max rec len: 4 max node len: 14
+	%YDB-I-RECORDSTAT, ^f:    Key cnt: 130  max subsc len: 7  max rec len: 3  max node len: 14
+	%YDB-I-RECORDSTAT, TOTAL:         Key cnt: 5130  max subsc len: 7  max rec len: 4  max node len: 14
 
 	2) rm *.dat
 	   mupip crea
 	Created file /$testpath/mumps.dat
 	[lespaul-alim]:>mupip journal -extract -detail -for mumps1.mjl,mumps3.mjl
-	%GTM-I-MUJNLSTAT, Initial processing started at Wed Mar 31 10:58:16 2004
-	%GTM-I-MUJNLSTAT, Backward processing started at Wed Mar 31 10:58:16 2004
-	%GTM-I-MUJNLSTAT, Forward processing started at Wed Mar 31 10:58:16 2004
-	%GTM-I-FILECREATE, Journal extract file /testarea1/alim/work/misc/manual_test/mumps1.mjf created
+	%YDB-I-MUJNLSTAT, Initial processing started at Wed Mar 31 10:58:16 2004
+	%YDB-I-MUJNLSTAT, Backward processing started at Wed Mar 31 10:58:16 2004
+	%YDB-I-MUJNLSTAT, Forward processing started at Wed Mar 31 10:58:16 2004
+	%YDB-I-FILECREATE, Journal extract file /testarea1/alim/work/misc/manual_test/mumps1.mjf created
 	%GTM-S-JNLSUCCESS, Extract successful
 	%GTM-S-JNLSUCCESS, Verify successful
-	%GTM-I-MUJNLSTAT, End processing at Wed Mar 31 10:58:16 2004
+	%YDB-I-MUJNLSTAT, End processing at Wed Mar 31 10:58:16 2004
 
 	3) mupip journal -recover -for mumps1.mjl,mumps3.mjl
-	%GTM-I-MUJNLSTAT, Initial processing started at Wed Mar 31 10:59:32 2004
-	%GTM-I-MUJNLSTAT, Backward processing started at Wed Mar 31 10:59:32 2004
-	%GTM-I-MUJNLSTAT, Forward processing started at Wed Mar 31 10:59:32 2004
+	%YDB-I-MUJNLSTAT, Initial processing started at Wed Mar 31 10:59:32 2004
+	%YDB-I-MUJNLSTAT, Backward processing started at Wed Mar 31 10:59:32 2004
+	%YDB-I-MUJNLSTAT, Forward processing started at Wed Mar 31 10:59:32 2004
 	%GTM-S-JNLSUCCESS, Show successful
 	%GTM-S-JNLSUCCESS, Verify successful
 	%GTM-S-JNLSUCCESS, Recover successful
-	%GTM-I-MUJNLSTAT, End processing at Wed Mar 31 10:59:32 2004
+	%YDB-I-MUJNLSTAT, End processing at Wed Mar 31 10:59:32 2004
 
 	4) mupip extract for.glo
-	%GTM-I-RECORDSTAT, ^a:    Key cnt: 1000  max subsc len: 7  max rec len: 4 max node len: 14
-	%GTM-I-RECORDSTAT, ^b:    Key cnt: 1000  max subsc len: 7  max rec len: 4 max node len: 14
-	%GTM-I-RECORDSTAT, ^c:    Key cnt: 1000  max subsc len: 7  max rec len: 4 max node len: 14
-	%GTM-I-RECORDSTAT, ^d:    Key cnt: 1000  max subsc len: 7  max rec len: 4 max node len: 14
-	%GTM-I-RECORDSTAT, ^e:    Key cnt: 1000  max subsc len: 7  max rec len: 4 max node len: 14
-	%GTM-I-RECORDSTAT, ^f:    Key cnt: 130  max subsc len: 7  max rec len: 3  max node len: 14
-	%GTM-I-RECORDSTAT, TOTAL:         Key cnt: 5130  max subsc len: 7  max rec len: 4  max node len: 14
+	%YDB-I-RECORDSTAT, ^a:    Key cnt: 1000  max subsc len: 7  max rec len: 4 max node len: 14
+	%YDB-I-RECORDSTAT, ^b:    Key cnt: 1000  max subsc len: 7  max rec len: 4 max node len: 14
+	%YDB-I-RECORDSTAT, ^c:    Key cnt: 1000  max subsc len: 7  max rec len: 4 max node len: 14
+	%YDB-I-RECORDSTAT, ^d:    Key cnt: 1000  max subsc len: 7  max rec len: 4 max node len: 14
+	%YDB-I-RECORDSTAT, ^e:    Key cnt: 1000  max subsc len: 7  max rec len: 4 max node len: 14
+	%YDB-I-RECORDSTAT, ^f:    Key cnt: 130  max subsc len: 7  max rec len: 3  max node len: 14
+	%YDB-I-RECORDSTAT, TOTAL:         Key cnt: 5130  max subsc len: 7  max rec len: 4  max node len: 14
 
 	5)
 	[lespaul-alim]:>diff forw.glo data.glo

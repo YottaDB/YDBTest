@@ -17,7 +17,7 @@
 source $gtm_tst/com/dbcreate.csh mumps 3
 if (0 == $?test_replic) then
 	$gtm_exe/mupip set $tst_jnl_str -reg "*" >&! jnl_on.log
-	$grep "GTM-I-JNLSTATE" jnl_on.log |& sort -f
+	$grep "YDB-I-JNLSTATE" jnl_on.log |& sort -f
 endif
 
 setenv GTMCI args1.tab

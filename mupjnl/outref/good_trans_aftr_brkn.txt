@@ -11,12 +11,12 @@ Do tp updates now
 GTM>
 
 GTM>
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Before image applying started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
 
 -------------------------------------------------------------------------------
 ##FILTERED##SHOW output for journal file ##TEST_PATH##/b.mjl_##TIMESTAMP##
@@ -28,17 +28,17 @@ PID        NODE             USER         TERM JPV_TIME
 -----------------------------------------------------------------
 ##FILTERED## ##PID## ##NODENAME## ##USER## ..../../.. ..:..:..
 
-%GTM-I-FILECREATE, Broken transactions extract file ##TEST_PATH##/b.broken created
-%GTM-I-FILECREATE, Lost transactions extract file ##TEST_PATH##/b.lost created
+%YDB-I-FILECREATE, Broken transactions extract file ##TEST_PATH##/b.broken created
+%YDB-I-FILECREATE, Lost transactions extract file ##TEST_PATH##/b.lost created
 %GTM-S-JNLSUCCESS, Show successful
 %GTM-S-JNLSUCCESS, Verify successful
 %GTM-S-JNLSUCCESS, Recover successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 DB Extract
-%GTM-I-RECORDSTAT, ^a:	  Key cnt: 1  max subsc len: 6  max rec len: 1  max node len: 11
-%GTM-I-RECORDSTAT, ^b:	  Key cnt: 1  max subsc len: 6  max rec len: 1  max node len: 11
-%GTM-I-RECORDSTAT, ^c:	  Key cnt: 2  max subsc len: 6  max rec len: 1  max node len: 11
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 4  max subsc len: 6  max rec len: 1  max node len: 11
+%YDB-I-RECORDSTAT, ^a:	  Key cnt: 1  max subsc len: 6  max rec len: 1  max node len: 11
+%YDB-I-RECORDSTAT, ^b:	  Key cnt: 1  max subsc len: 6  max rec len: 1  max node len: 11
+%YDB-I-RECORDSTAT, ^c:	  Key cnt: 2  max subsc len: 6  max rec len: 1  max node len: 11
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 4  max subsc len: 6  max rec len: 1  max node len: 11
 ##TEST_AWKGT.M MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:.. ZWR
 ^a(2)="2"

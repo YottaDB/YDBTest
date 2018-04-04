@@ -52,18 +52,18 @@
     e. Now do mupip journal -recover -back "*" . It leaves orphaned journal files mums3.mjl_xxxx, mumps3.mjl_yyyy. It should not.
 	Sample Output at this point:
 	[lespaul-alim]:> mupip journal -recover -back "*"
-	%GTM-I-MUJNLSTAT, Initial processing started at Wed Mar 31 11:06:39 2004
-	%GTM-I-MUJNLSTAT, Interrupted recovery processing started at Wed Mar 31 11:06:39 2004
-	%GTM-I-MUJNLPREVGEN, Previous generation journal file /testarea1/alim/work/misc/manual_test/mumps3.mjl_2004091110411 included for database file /testarea1/alim/work/misc/manual_test/mumps.dat
-	%GTM-I-MUJNLSTAT, Backward processing started at Wed Mar 31 11:06:39 2004
-	%GTM-I-MUJNLSTAT, Before image applying started at Wed Mar 31 11:06:39 2004
-	%GTM-I-FILERENAME, File /testarea1/alim/work/misc/manual_test/mumps3.mjl is renamed to /testarea1/alim/work/misc/manual_test/mumps3.mjl_2004091110515
-	%GTM-I-FILEDEL, File /testarea1/alim/work/misc/manual_test/mumps3.mjl_2004091110515 successfully deleted
-	%GTM-I-MUJNLSTAT, Forward processing started at Wed Mar 31 11:06:39 2004
+	%YDB-I-MUJNLSTAT, Initial processing started at Wed Mar 31 11:06:39 2004
+	%YDB-I-MUJNLSTAT, Interrupted recovery processing started at Wed Mar 31 11:06:39 2004
+	%YDB-I-MUJNLPREVGEN, Previous generation journal file /testarea1/alim/work/misc/manual_test/mumps3.mjl_2004091110411 included for database file /testarea1/alim/work/misc/manual_test/mumps.dat
+	%YDB-I-MUJNLSTAT, Backward processing started at Wed Mar 31 11:06:39 2004
+	%YDB-I-MUJNLSTAT, Before image applying started at Wed Mar 31 11:06:39 2004
+	%YDB-I-FILERENAME, File /testarea1/alim/work/misc/manual_test/mumps3.mjl is renamed to /testarea1/alim/work/misc/manual_test/mumps3.mjl_2004091110515
+	%YDB-I-FILEDEL, File /testarea1/alim/work/misc/manual_test/mumps3.mjl_2004091110515 successfully deleted
+	%YDB-I-MUJNLSTAT, Forward processing started at Wed Mar 31 11:06:39 2004
 	%GTM-S-JNLSUCCESS, Show successful
 	%GTM-S-JNLSUCCESS, Verify successful
 	%GTM-S-JNLSUCCESS, Recover successful
-	%GTM-I-MUJNLSTAT, End processing at Wed Mar 31 11:06:39 2004
+	%YDB-I-MUJNLSTAT, End processing at Wed Mar 31 11:06:39 2004
 
 
 	[lespaul-alim]:>int_chk.csh

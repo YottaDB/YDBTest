@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -145,7 +145,7 @@ if (("dbg" == "$tst_image") || ("HOST_SUNOS_SPARC" == "$gtm_test_os_machtype")) 
 	setenv subtest_exclude_list "$subtest_exclude_list helper_scripts"
 endif
 
-# The sylog on solaris servers prints "last message repeated 1 time" when it sees two identical GTM-I-NEWJNLFILECREAT messages.
+# The sylog on solaris servers prints "last message repeated 1 time" when it sees two identical YDB-I-NEWJNLFILECREAT messages.
 # Exclude the subtest on solaris (since it is no longer supported), but if we see this on other servers, it needs some work
 if ("HOST_SUNOS_SPARC" == "$gtm_test_os_machtype") then
 	setenv subtest_exclude_list "$subtest_exclude_list eotf_basic"

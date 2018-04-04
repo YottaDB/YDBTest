@@ -1,10 +1,22 @@
 #!/usr/local/bin/tcsh
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
 #
 # D9F07-002561 Use heartbeat timer to check and close open older generation journal files (Unix only issue)
 #
 $gtm_tst/com/dbcreate.csh mumps
 $MUPIP set $tst_jnl_str -region "*" >&! mupip_set_jnl.out
-$grep "GTM-I-JNLSTATE" mupip_set_jnl.out
+$grep "YDB-I-JNLSTATE" mupip_set_jnl.out
 
 # Start 15 GT.M processes in background that sleeps random seconds before opening the journal file.
 $GTM << GTM_EOF
@@ -44,7 +56,7 @@ $GTM << GTM_EOF
 GTM_EOF
 
 # Randomly decide to switch journal files one more time.
-# If we decide NOT to switch now, we need to later check that there is at least one process having the latest 
+# If we decide NOT to switch now, we need to later check that there is at least one process having the latest
 #	generation journal file open. This is to test that the fixes DO NOT incorrectly close the latest generation
 #	journal file.
 # If we decide to switch now, we need to allow for the fact that there could be NO process having the latest
@@ -56,7 +68,7 @@ if ($rand == 1) then
 	$MUPIP set $tst_jnl_str -reg "*" >& jnlswitch_${num}.out
 endif
 
-# Wait for approx. 1 minute and check that 
+# Wait for approx. 1 minute and check that
 #	1) All those GT.M processes that have older journal files open have closed them.
 #	2) All those GT.M processes that have latest generation journal files open have them open even after the wait.
 # The 1 minute wait is approximate since the heartbeat timer is once every 8 seconds and the journal file check is
@@ -79,7 +91,7 @@ foreach file (mumps.mjl_*)
 	$fuser $file |& grep $file >& $logfile
 	set firstpid = `$tst_awk '{print $2}' $logfile`
 	if ("$firstpid" != "") then
-		# at least one pid attached to older generation journal file. Error. 
+		# at least one pid attached to older generation journal file. Error.
 		cat $logfile
 		set pass=0
 	endif
@@ -103,12 +115,12 @@ $fuser $file |& grep $file >& $logfile
 set firstpid = `$tst_awk '{print $2}' $logfile`
 if ($rand == 1) then
 	if ($firstpid != "") then
-		# some pid attached to latest generation journal file. Error. 
+		# some pid attached to latest generation journal file. Error.
 		set pass=0
 	endif
 else
 	if ($firstpid == "") then
-		# no pid attached to latest generation journal file. Error. 
+		# no pid attached to latest generation journal file. Error.
 		set pass=0
 	endif
 endif

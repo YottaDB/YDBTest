@@ -18,8 +18,8 @@ Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 # Cause 32K counter overflow on instance file
 Test Replication instance file counter overflow error message
 # Wait for NOMORESEMCNT message
-##TEST_AWK.*GTM-MUMPS-INSTANCE1\[.* %GTM-I-NOMORESEMCNT, ftok counter semaphore has reached its maximum and stopped counting for replication instance ##TEST_PATH##/mumps.repl. Run MUPIP JOURNAL -ROLLBACK -BACKWARD, MUPIP JOURNAL -RECOVER -BACKWARD or MUPIP RUNDOWN to restore the database files and shared resources to a clean state .*
-##TEST_AWK.*GTM-MUMPS-INSTANCE1\[.* %GTM-I-NOMORESEMCNT, ftok counter semaphore has reached its maximum and stopped counting for database ##TEST_PATH##/mumps.dat. Run MUPIP JOURNAL -ROLLBACK -BACKWARD, MUPIP JOURNAL -RECOVER -BACKWARD or MUPIP RUNDOWN to restore the database files and shared resources to a clean state .*
+##TEST_AWK.*GTM-MUMPS-INSTANCE1\[.* %YDB-I-NOMORESEMCNT, ftok counter semaphore has reached its maximum and stopped counting for replication instance ##TEST_PATH##/mumps.repl. Run MUPIP JOURNAL -ROLLBACK -BACKWARD, MUPIP JOURNAL -RECOVER -BACKWARD or MUPIP RUNDOWN to restore the database files and shared resources to a clean state .*
+##TEST_AWK.*GTM-MUMPS-INSTANCE1\[.* %YDB-I-NOMORESEMCNT, ftok counter semaphore has reached its maximum and stopped counting for database ##TEST_PATH##/mumps.dat. Run MUPIP JOURNAL -ROLLBACK -BACKWARD, MUPIP JOURNAL -RECOVER -BACKWARD or MUPIP RUNDOWN to restore the database files and shared resources to a clean state .*
 # Restore permissions on instance and db file
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 Shutting down Primary Source Server Server in ##TEST_PATH##
@@ -46,7 +46,7 @@ GTM>
 Killed
 # Expect MUUSERECOV error from MUPIP INTEG of crashed journaled database
 %YDB-E-MUUSERECOV, Abnormal shutdown of journaled database mumps.dat detected
-%GTM-I-TEXT, Run MUPIP JOURNAL RECOVER
+%YDB-I-TEXT, Run MUPIP JOURNAL RECOVER
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

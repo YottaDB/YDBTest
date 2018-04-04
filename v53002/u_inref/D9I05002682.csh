@@ -66,7 +66,7 @@ $MSR RUN INST2 'set msr_dont_trace ; $gtm_tst/com/wait_for_proc_to_die.csh '$upd
 $MSR STOPRCV INST1 INST2
 # Turn replication ON in region BREG.
 echo "# Turn replication ON in region BREG. (MSR action command not printed)"
-$MSR RUN INST2 'set msr_dont_trace ; $MUPIP set -file b.dat '${tst_jnl_str}',file=b.mjl -replic=on >&! set_jnlreplic_on.out ; $grep GTM-I-REPLSTATE set_jnlreplic_on.out'
+$MSR RUN INST2 'set msr_dont_trace ; $MUPIP set -file b.dat '${tst_jnl_str}',file=b.mjl -replic=on >&! set_jnlreplic_on.out ; $grep YDB-I-REPLSTATE set_jnlreplic_on.out'
 # Start the replication servers on the secondary. Now it should start successfully.
 $MSR STARTRCV INST1 INST2
 # Now do RF_sync. This should succeed.

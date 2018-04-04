@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2014 Fidelity Information Services, Inc	#
+# Copyright 2014 Fidelity Information Services, Inc		#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -69,7 +72,7 @@ while ($i <= $num_of_cases)
 
 		# Tab characters are escaped differently in syslog, so extract a tab escape sequence from
 		# a message that we know contains one, and save it in a file for our helper script to use.
-		$grep STATCNT ${logFileName}.outx | $head -n 1 | $tst_awk -F '%GTM-I-' '{print $2}' | $tst_awk -F ':' '{print $2}' | sed 's/  Key cnt//' >&! tab.log
+		$grep STATCNT ${logFileName}.outx | $head -n 1 | $tst_awk -F '%YDB-I-' '{print $2}' | $tst_awk -F ':' '{print $2}' | sed 's/  Key cnt//' >&! tab.log
 
 		# Extract arguments out of each generated message and save them in a file.
 		$gtm_dist/mumps -run gtm7919 ${msgFileName} ${logFileName}.outx ${argsFileName}.log tab.log

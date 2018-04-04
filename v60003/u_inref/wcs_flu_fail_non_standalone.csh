@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -40,7 +43,7 @@ if (4 == $case) then
 	# grep for MURNDWNOVRD messages only from our test (not other concurrent tests)
 	$grep "MURNDWNOVRD.*$PWD" murndwnovrd${case}.txt >& /dev/null
 	if ($status) then
-		echo "TEST-E-FAIL, GTM-I-MURNDWNOVRD not found in operator log. Check murndwnovrd${case}.txt."
+		echo "TEST-E-FAIL, YDB-I-MURNDWNOVRD not found in operator log. Check murndwnovrd${case}.txt."
 	endif
 endif
 

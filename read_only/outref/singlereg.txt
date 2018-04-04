@@ -7,9 +7,9 @@ GDE>
 
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/mumps.gld
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 
 GTM>
 Do fill1^myfill("set")
@@ -21,7 +21,7 @@ GTM>
 
 *** TSTBAKNJ ***
 
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 -rw-rw-rw- mumps.dat
 mupip backup -noonline DEFAULT back.dat
 DB file ##TEST_PATH##/mumps.dat backed up in file back.dat
@@ -148,7 +148,7 @@ No errors detected by integ.
 
 *** TSTEXTRNJ.CSH ***
 
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 -rw-rw-rw- mumps.dat
 
 GTM>
@@ -157,7 +157,7 @@ set ^a=1,^b=2,^c=3
 
 GTM>
 mupip extract -nolog glo.dir
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 3  max subsc len: 3  max rec len: 1  max node len: 8
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 3  max subsc len: 3  max rec len: 1  max node len: 8
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -166,7 +166,7 @@ No errors detected by integ.
 ***** changing mumps.dat to read_only *****
 -r--r--r-- mumps.dat
 mupip extract -nolog glo.dir
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 3  max subsc len: 3  max rec len: 1  max node len: 8
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 3  max subsc len: 3  max rec len: 1  max node len: 8
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -175,7 +175,7 @@ No errors detected by integ.
 
 *** TSTEXTRNJ.CSH ***
 
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 -rw-rw-rw- mumps.dat
 
 GTM>
@@ -184,7 +184,7 @@ set ^a=1,^b=2,^c=3
 
 GTM>
 mupip extract -fr -nolog glo.dir
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 3  max subsc len: 3  max rec len: 1  max node len: 8
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 3  max subsc len: 3  max rec len: 1  max node len: 8
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -214,7 +214,7 @@ set ^a=1,^b=2,^c=3
 
 GTM>
 mupip extract -nolog glo.dir
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1026  max subsc len: 37  max rec len: 30  max node len: 70
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1026  max subsc len: 37  max rec len: 30  max node len: 70
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -224,7 +224,7 @@ No errors detected by integ.
 -r--r--r-- mumps.mjl
 **** mumps.dat R/W mumps.mjl R/O ***
 mupip extract -nolog glo.dir
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1026  max subsc len: 37  max rec len: 30  max node len: 70
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1026  max subsc len: 37  max rec len: 30  max node len: 70
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -234,7 +234,7 @@ No errors detected by integ.
 -rw-rw-rw- mumps.mjl
 **** mumps.dat R/O mumps.mjl R/W ***
 mupip extract -nolog glo.dir
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1026  max subsc len: 37  max rec len: 30  max node len: 70
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1026  max subsc len: 37  max rec len: 30  max node len: 70
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -244,7 +244,7 @@ No errors detected by integ.
 -r--r--r-- mumps.mjl
 **** mumps.dat R/O mumps.mjl R/O ***
 mupip extract -nolog glo.dir
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1026  max subsc len: 37  max rec len: 30  max node len: 70
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1026  max subsc len: 37  max rec len: 30  max node len: 70
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -263,7 +263,7 @@ set ^a=1,^b=2,^c=3
 
 GTM>
 mupip extract -fr -nolog glo.dir
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1026  max subsc len: 37  max rec len: 30  max node len: 70
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1026  max subsc len: 37  max rec len: 30  max node len: 70
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -273,7 +273,7 @@ No errors detected by integ.
 -r--r--r-- mumps.mjl
 **** mumps.dat R/W mumps.mjl R/O ***
 mupip extract -fr -nolog glo.dir
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1026  max subsc len: 37  max rec len: 30  max node len: 70
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1026  max subsc len: 37  max rec len: 30  max node len: 70
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -369,7 +369,7 @@ No errors detected by integ.
 
 *** TSTINTEGF.CSH ***
 
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 -rw-rw-rw- mumps.dat
 
 First with no journal
@@ -552,7 +552,7 @@ OK.
 
 *** First database with no journal***
 
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
 GTM>
 do init
@@ -755,7 +755,7 @@ OK.
 
 *** First database with no journal***
 
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
 GTM>
 do init
@@ -1374,7 +1374,7 @@ BACKUP COMPLETED.
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 ***** mumps.dat R/W mumps.mjl R/W *****
 -rw-rw-rw- mumps.dat
 -rw-rw-rw- mumps.mjl
@@ -1437,7 +1437,7 @@ set ^a=1,^b=2,^c=3
 GTM>
 **** R/W mumps.dat R/W mumps.mjl ****
 mupip rundown -f mumps.dat
-%GTM-I-MUFILRNDWNSUC, File mumps.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File mumps.dat successfully rundown
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -1447,7 +1447,7 @@ No errors detected by integ.
 -rw-rw-rw- mumps.dat
 -r--r--r-- mumps.mjl
 mupip rundown -f mumps.dat
-%GTM-I-MUFILRNDWNSUC, File mumps.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File mumps.dat successfully rundown
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -1459,7 +1459,7 @@ No errors detected by integ.
 mupip rundown -f mumps.dat
 %YDB-E-DBRDONLY, Database file mumps.dat read only
 %GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
-%GTM-I-MUFILRNDWNSUC, File mumps.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File mumps.dat successfully rundown
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -1471,7 +1471,7 @@ No errors detected by integ.
 mupip rundown -f mumps.dat
 %YDB-E-DBRDONLY, Database file mumps.dat read only
 %GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
-%GTM-I-MUFILRNDWNSUC, File mumps.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File mumps.dat successfully rundown
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -1485,9 +1485,9 @@ No errors detected by integ.
 -rw-rw-rw- mumps.dat
 -rw-rw-rw- mumps.mjl
 ##SOURCE_PATH##/mupip set -file mumps.dat -journal=enable,on,before
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 -rw-rw-rw- mumps.dat
 -rw-rw-rw- mumps.mjl
 OK.
@@ -1540,9 +1540,9 @@ No errors detected by integ.
 -rw-rw-rw- mumps.dat
 -rw-rw-rw- mumps.mjl
 ##SOURCE_PATH##/mupip set -region DEFAULT -journal=enable,on,before
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 -rw-rw-rw- mumps.dat
 -rw-rw-rw- mumps.mjl
 OK.
@@ -1603,13 +1603,13 @@ GTM>
 -rw-rw-rw- mumps.dat
 -rw-rw-rw- mumps.mjl
 mupip journal -extract=mumps.1 -forward mumps.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-FILECREATE, Journal extract file mumps.1 created
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file mumps.1 created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -1619,13 +1619,13 @@ No errors detected by integ.
 -r--r--r-- mumps.dat
 -rw-rw-rw- mumps.mjl
 mupip journal -extract=mumps.1 -forward mumps.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-FILECREATE, Journal extract file mumps.1 created
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file mumps.1 created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -1635,13 +1635,13 @@ No errors detected by integ.
 -rw-rw-rw- mumps.dat
 -r--r--r-- mumps.mjl
 mupip journal -extract=mumps.1 -forward mumps.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-FILECREATE, Journal extract file mumps.1 created
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file mumps.1 created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -1651,13 +1651,13 @@ No errors detected by integ.
 -r--r--r-- mumps.dat
 -r--r--r-- mumps.mjl
 mupip journal -extract=mumps.1 -forward mumps.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-FILECREATE, Journal extract file mumps.1 created
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file mumps.1 created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -1677,30 +1677,30 @@ GTM>
 *** Recovering on R/W mumps.dat R/W mumps.mjl ***
 -rw-rw-rw- mumps.dat
 -rw-rw-rw- mumps.mjl
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 mupip journal -recover -forward mumps.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
 %GTM-S-JNLSUCCESS, Show successful
 %GTM-S-JNLSUCCESS, Recover successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 OK.
 
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
 *** Recovering on R/W mumps.dat R/O mumps.mjl ***
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 -rw-rw-rw- mumps.dat
 -r--r--r-- mumps.mjl
 mupip journal -recover -forward mumps.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
 %GTM-S-JNLSUCCESS, Show successful
 %GTM-S-JNLSUCCESS, Recover successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -1710,10 +1710,10 @@ No errors detected by integ.
 -r--r--r-- mumps.dat
 -rw-rw-rw- mumps.mjl
 mupip journal -recover -forward mumps.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 %YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -1723,10 +1723,10 @@ No errors detected by integ.
 -r--r--r-- mumps.dat
 -r--r--r-- mumps.mjl
 mupip journal -recover -forward mumps.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 %YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -1802,11 +1802,11 @@ set ^a=1,^b=2,^c=3
 GTM>
 *** Verifying on R/W mumps.dat R/W mumps.mjl ***
 mupip journal -verify -forward mumps.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -1816,11 +1816,11 @@ No errors detected by integ.
 -rw-rw-rw- mumps.dat
 -r--r--r-- mumps.mjl
 mupip journal -verify -forward mumps.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -1830,11 +1830,11 @@ No errors detected by integ.
 -r--r--r-- mumps.dat
 -rw-rw-rw- mumps.mjl
 mupip journal -verify -forward mumps.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -1844,11 +1844,11 @@ No errors detected by integ.
 -r--r--r-- mumps.dat
 -r--r--r-- mumps.mjl
 mupip journal -verify -forward mumps.mjl
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 OK.
 
 ##SOURCE_PATH##/mupip

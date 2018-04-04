@@ -1,4 +1,15 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
 
 # This redirect-grep arrangement is for the "wait" command to work
 # wait works only if the background jobs are in the same shell. (bla &) >&! /dev/null will not make the wait command actually wait. Hence the workaround
@@ -15,5 +26,5 @@ if ($wait_status) then
 endif
 
 foreach file ($*)
-	$grep GTM-I-ENDIANCVT endiancvt_$file.out
+	$grep YDB-I-ENDIANCVT endiancvt_$file.out
 end

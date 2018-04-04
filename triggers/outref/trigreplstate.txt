@@ -29,8 +29,8 @@ Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 -----------------------
 # Do SETs
 -----------------------
-150381706,+1^h1#1#,%YDB-E-TRIGREPLSTATE, Trigger cannot update replicated database file ##TEST_PATH##/b.dat since triggering update was not replicated,%GTM-I-GVIS, 		Global variable: ^b11(1)
-150381706,+1^h55#1#,%YDB-E-TRIGREPLSTATE, Trigger cannot update replicated database file ##TEST_PATH##/b.dat since triggering update was not replicated,%GTM-I-GVIS, 		Global variable: ^b555(5)
+150381706,+1^h1#1#,%YDB-E-TRIGREPLSTATE, Trigger cannot update replicated database file ##TEST_PATH##/b.dat since triggering update was not replicated,%YDB-I-GVIS, 		Global variable: ^b11(1)
+150381706,+1^h55#1#,%YDB-E-TRIGREPLSTATE, Trigger cannot update replicated database file ##TEST_PATH##/b.dat since triggering update was not replicated,%YDB-I-GVIS, 		Global variable: ^b555(5)
 -----------------------
 # Globals after the SET
 -----------------------
@@ -61,8 +61,8 @@ Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 -----------------------
 # Do KILLs
 -----------------------
-150381706,+1^h1#2#,%YDB-E-TRIGREPLSTATE, Trigger cannot update replicated database file ##TEST_PATH##/b.dat since triggering update was not replicated,%GTM-I-GVIS, 		Global variable: ^b11(1)
-150381706,+1^h55#2#,%YDB-E-TRIGREPLSTATE, Trigger cannot update replicated database file ##TEST_PATH##/b.dat since triggering update was not replicated,%GTM-I-GVIS, 		Global variable: ^b555(5)
+150381706,+1^h1#2#,%YDB-E-TRIGREPLSTATE, Trigger cannot update replicated database file ##TEST_PATH##/b.dat since triggering update was not replicated,%YDB-I-GVIS, 		Global variable: ^b11(1)
+150381706,+1^h55#2#,%YDB-E-TRIGREPLSTATE, Trigger cannot update replicated database file ##TEST_PATH##/b.dat since triggering update was not replicated,%YDB-I-GVIS, 		Global variable: ^b555(5)
 -----------------------
 # Globals after the KILL
 -----------------------
@@ -70,8 +70,8 @@ Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ^b555(5)=7
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 Shutting down Primary Source Server Server in ##TEST_PATH##
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/h.dat created
-%GTM-I-DBFILECREATED, Database file ##REMOTE_TEST_PATH##/h.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/h.dat created
+%YDB-I-DBFILECREATED, Database file ##REMOTE_TEST_PATH##/h.dat created
 DATABASE EXTRACT PASSED
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *

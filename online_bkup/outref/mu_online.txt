@@ -12,7 +12,7 @@ GDE>
 
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/online/tmp/online.gld
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/online/tmp/online.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/online/tmp/online.dat created
 
 GTM>
 Do fill1^myfill("set")
@@ -121,7 +121,7 @@ GTM>
 PASS from fill3^myfill("ver")
 
 GTM>
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/online/tmp/online.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/online/tmp/online.dat created
 
 RESTORE COMPLETED
 328 blocks restored
@@ -135,7 +135,7 @@ GTM>
 PASS from fill3^myfill("ver")
 
 GTM>
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/online/tmp/online.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/online/tmp/online.dat created
 
 GTM>
 PASSED
@@ -155,9 +155,9 @@ GDE>
 
 %GDE-I-GDUPDATE, Updating Global Directory file 
 	##TEST_PATH##/online/tmp/online.gld;1
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/online/tmp/online.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/online/tmp/online1.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/online/tmp/online2.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/online/tmp/online.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/online/tmp/online1.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/online/tmp/online2.dat created
 ##SOURCE_PATH##/mupip
 No errors detected by integ.
 ##SOURCE_PATH##/mupip
@@ -202,9 +202,9 @@ DB file ##TEST_PATH##/online/tmp/online2.dat backed up in file mapb.bak
 
 BACKUP COMPLETED.
 
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/online/tmp/online.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/online/tmp/online1.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/online/tmp/online2.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/online/tmp/online.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/online/tmp/online1.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/online/tmp/online2.dat created
 
 GTM>
 ^c="This should be in region default"

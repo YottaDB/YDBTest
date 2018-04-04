@@ -47,9 +47,9 @@ GTM>
 
 GTM>
 $MUPIP journal -extract=total.mjf -detail -broken=total.broken -lost=total.lost -forward mumps.mjl
-%GTM-I-FILECREATE, Journal extract file total.mjf created
-%GTM-I-FILECREATE, Broken transactions extract file total.broken created
-%GTM-I-FILECREATE, Lost transactions extract file total.lost created
+%YDB-I-FILECREATE, Journal extract file total.mjf created
+%YDB-I-FILECREATE, Broken transactions extract file total.broken created
+%YDB-I-FILECREATE, Lost transactions extract file total.lost created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 check_mjf total.mjf
@@ -108,7 +108,7 @@ PFIN	2
 $grep -v PINI total.mjf_analysis > total.mjf_analysis_noPINI
 
 $MUPIP journal -global="^A*,^C" -extract=globalac.mjf -detail -forward mumps.mjl
-%GTM-I-FILECREATE, Journal extract file globalac.mjf created
+%YDB-I-FILECREATE, Journal extract file globalac.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 check_mjf globalac.mjf
@@ -136,9 +136,9 @@ KILL	2
 
 
 $MUPIP journal -global="~(^*A*,^C,^*B*)" -extract=global_m_abc.mjf -detail -forward mumps.mjl
-%GTM-I-FILECREATE, Journal extract file global_m_abc.mjf created
-%GTM-I-FILECREATE, Broken transactions extract file ##TEST_PATH##/mumps.broken created
-%GTM-I-FILECREATE, Lost transactions extract file ##TEST_PATH##/mumps.lost created
+%YDB-I-FILECREATE, Journal extract file global_m_abc.mjf created
+%YDB-I-FILECREATE, Broken transactions extract file ##TEST_PATH##/mumps.broken created
+%YDB-I-FILECREATE, Lost transactions extract file ##TEST_PATH##/mumps.lost created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 check_mjf global_m_abc.mjf
@@ -155,7 +155,7 @@ SET	10
 
 
 $MUPIP journal -global="^*A" -extract=globalstara.mjf -detail -forward mumps.mjl
-%GTM-I-FILECREATE, Journal extract file globalstara.mjf created
+%YDB-I-FILECREATE, Journal extract file globalstara.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 check_mjf globalstara.mjf
@@ -171,7 +171,7 @@ TCOM	2
 
 
 $MUPIP journal -extract=globalasub1.mjf -forward -global=\"^A\(1\),^AA\" mumps.mjl
-%GTM-I-FILECREATE, Journal extract file globalasub1.mjf created
+%YDB-I-FILECREATE, Journal extract file globalasub1.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 check_mjf globalasub1.mjf
@@ -191,7 +191,7 @@ globalasub1.mjf
 
 
 $MUPIP journal -extract=globalasub1a.mjf -forward -global=\"^A\(1\)\" -detail mumps.mjl
-%GTM-I-FILECREATE, Journal extract file globalasub1a.mjf created
+%YDB-I-FILECREATE, Journal extract file globalasub1a.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 check_mjf globalasub1a.mjf
@@ -208,7 +208,7 @@ TSET	1
 
 
 $MUPIP journal -extract=globalasub2.mjf -forward -global=\"^A\(1,\"\"str\"\"\),^AA\" -detail mumps.mjl
-%GTM-I-FILECREATE, Journal extract file globalasub2.mjf created
+%YDB-I-FILECREATE, Journal extract file globalasub2.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 check_mjf globalasub2.mjf
@@ -227,7 +227,7 @@ KILL	1
 
 
 $MUPIP journal -extract=globalasub3.mjf -forward -global=\"^A\(1,\*\),^AA\" -detail mumps.mjl
-%GTM-I-FILECREATE, Journal extract file globalasub3.mjf created
+%YDB-I-FILECREATE, Journal extract file globalasub3.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 check_mjf globalasub3.mjf
@@ -246,7 +246,7 @@ KILL	1
 
 
 $MUPIP journal -extract=globalasub4.mjf -forward -global=\"^A\(\*,\"\"str\"\"\),^AA\" -detail mumps.mjl
-%GTM-I-FILECREATE, Journal extract file globalasub4.mjf created
+%YDB-I-FILECREATE, Journal extract file globalasub4.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 check_mjf globalasub4.mjf
@@ -265,7 +265,7 @@ KILL	1
 
 
 $MUPIP journal -global="^*A,~^AA" -extract=globalstara_maa.mjf -detail -forward mumps.mjl
-%GTM-I-FILECREATE, Journal extract file globalstara_maa.mjf created
+%YDB-I-FILECREATE, Journal extract file globalstara_maa.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 check_mjf globalstara_maa.mjf
@@ -281,7 +281,7 @@ TCOM	2
 
 
 $MUPIP journal -global="^D" -extract=globald.mjf -detail -forward mumps.mjl
-%GTM-I-FILECREATE, Journal extract file globald.mjf created
+%YDB-I-FILECREATE, Journal extract file globald.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 check_mjf globald.mjf
@@ -294,9 +294,9 @@ TCOM	2
 
 
 $MUPIP journal -global="~^B" -extract=global_mb.mjf -detail -broken=global_mb.broken -lost=global_mb.lost -forward mumps.mjl
-%GTM-I-FILECREATE, Journal extract file global_mb.mjf created
-%GTM-I-FILECREATE, Broken transactions extract file global_mb.broken created
-%GTM-I-FILECREATE, Lost transactions extract file global_mb.lost created
+%YDB-I-FILECREATE, Journal extract file global_mb.mjf created
+%YDB-I-FILECREATE, Broken transactions extract file global_mb.broken created
+%YDB-I-FILECREATE, Lost transactions extract file global_mb.lost created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 check_mjf global_mb.mjf
@@ -353,9 +353,9 @@ PFIN	2
 
 
 $MUPIP journal -global="~^D" -extract=global_md.mjf -detail -broken=global_md.broken -lost=global_md.lost -forward mumps.mjl
-%GTM-I-FILECREATE, Journal extract file global_md.mjf created
-%GTM-I-FILECREATE, Broken transactions extract file global_md.broken created
-%GTM-I-FILECREATE, Lost transactions extract file global_md.lost created
+%YDB-I-FILECREATE, Journal extract file global_md.mjf created
+%YDB-I-FILECREATE, Broken transactions extract file global_md.broken created
+%YDB-I-FILECREATE, Lost transactions extract file global_md.lost created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 check_mjf global_md.mjf
@@ -418,8 +418,8 @@ diff total.lost_analysis global_md.lost_analysis
 
 
 $MUPIP journal -global="^A*,^C" -extract=bglobal_as_c.mjf -detail -backward -since=\"$time1\" mumps.mjl
-%GTM-I-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
-%GTM-I-FILECREATE, Journal extract file bglobal_as_c.mjf created
+%YDB-I-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
+%YDB-I-FILECREATE, Journal extract file bglobal_as_c.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 check_mjf bglobal_as_c.mjf
@@ -447,8 +447,8 @@ KILL	2
 
 
 $MUPIP journal -global="^D" -extract=bglobal_d.mjf -since=\"$time1\" -detail -backward mumps.mjl
-%GTM-I-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
-%GTM-I-FILECREATE, Journal extract file bglobal_d.mjf created
+%YDB-I-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
+%YDB-I-FILECREATE, Journal extract file bglobal_d.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 echo "check this one"
@@ -463,7 +463,7 @@ TCOM	2
 
 
 $MUPIP journal -global="~^B" -extract=bglobal_mb.mjf -detail -backward -since=\"$time1\" mumps.mjl -fences=none
-%GTM-I-FILECREATE, Journal extract file bglobal_mb.mjf created
+%YDB-I-FILECREATE, Journal extract file bglobal_mb.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 check_mjf bglobal_mb.mjf
@@ -506,10 +506,10 @@ GSET	4
 
 
 $MUPIP journal -global="~^D" -extract=bglobal_md.mjf -detail -backward -since=\"$time1\" -broken=bglobal_md.broken -lost=bglobal_md.lost mumps.mjl
-%GTM-I-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
-%GTM-I-FILECREATE, Journal extract file bglobal_md.mjf created
-%GTM-I-FILECREATE, Broken transactions extract file bglobal_md.broken created
-%GTM-I-FILECREATE, Lost transactions extract file bglobal_md.lost created
+%YDB-I-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
+%YDB-I-FILECREATE, Journal extract file bglobal_md.mjf created
+%YDB-I-FILECREATE, Broken transactions extract file bglobal_md.broken created
+%YDB-I-FILECREATE, Lost transactions extract file bglobal_md.lost created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 check_mjf bglobal_md.mjf
@@ -573,8 +573,8 @@ diff total.lost_analysis bglobal_md.lost_analysis
 
 
 $MUPIP journal -user="$USER" -extract=buser.mjf -detail -backward -since=\"$time1\" mumps.mjl
-%GTM-I-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
-%GTM-I-FILECREATE, Journal extract file buser.mjf created
+%YDB-I-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
+%YDB-I-FILECREATE, Journal extract file buser.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 check_mjf buser.mjf
@@ -607,7 +607,7 @@ $grep -v PINI buser.mjf_analysis > buser.mjf_analysis_noPINI
 
 
 $MUPIP journal -user="~$USER" -extract=buser2.mjf -detail -backward -since=\"$time1\" mumps.mjl -fences=none
-%GTM-I-FILECREATE, Journal extract file buser2.mjf created
+%YDB-I-FILECREATE, Journal extract file buser2.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 check_mjf buser2.mjf
@@ -646,7 +646,7 @@ GSET	4
 
 
 $MUPIP journal -user="~${gtmtest1}" -extract=buser3.mjf -detail -forward mumps.mjl
-%GTM-I-FILECREATE, Journal extract file buser3.mjf created
+%YDB-I-FILECREATE, Journal extract file buser3.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 check_mjf buser3.mjf
@@ -680,7 +680,7 @@ diff buser.mjf_analysis_noPINI buser3.mjf_analysis_noPINI
 
 
 $MUPIP journal -user="$USER,~${gtmtest1}" -extract=user4.mjf -detail -forward mumps.mjl
-%GTM-I-FILECREATE, Journal extract file user4.mjf created
+%YDB-I-FILECREATE, Journal extract file user4.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 check_mjf user4.mjf
@@ -714,7 +714,7 @@ diff buser.mjf_analysis_noPINI user4.mjf_analysis_noPINI
 
 
 $MUPIP journal -user="~$USER,${gtmtest1}" -extract=user5.mjf -detail -forward mumps.mjl -fences=none
-%GTM-I-FILECREATE, Journal extract file user5.mjf created
+%YDB-I-FILECREATE, Journal extract file user5.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 check_mjf user5.mjf
@@ -753,7 +753,7 @@ GSET	4
 
 
 $MUPIP journal -user="~$USER,~${gtmtest1}" -extract=user6.mjf -detail -forward mumps.mjl
-%GTM-I-FILENOTCREATE, Journal extract file user6.mjf not created
+%YDB-I-FILENOTCREATE, Journal extract file user6.mjf not created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 if ( -e user6.mjf ) then
@@ -761,7 +761,7 @@ if ( -e user6.mjf ) then
 
 
 $MUPIP journal -user="gtmtestx,~${gtmtest1}" -extract=user7.mjf -detail -forward mumps.mjl
-%GTM-I-FILENOTCREATE, Journal extract file user7.mjf not created
+%YDB-I-FILENOTCREATE, Journal extract file user7.mjf not created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 if ( -e user7.mjf ) then
@@ -771,7 +771,7 @@ if ( -e user7.mjf ) then
 
 
 $MUPIP journal -user="$USER,~gtmtestx" -extract=user8.mjf -detail -forward mumps.mjl
-%GTM-I-FILECREATE, Journal extract file user8.mjf created
+%YDB-I-FILECREATE, Journal extract file user8.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 check_mjf user8.mjf
@@ -801,13 +801,13 @@ KILL	1
 
 
 $MUPIP journal -extract=user_${gtmtest1}.mjf -user="${gtmtest1}" -detail -fences=none -for mumps.mjl
-%GTM-I-FILECREATE, Journal extract file user_gtmtest1.mjf created
+%YDB-I-FILECREATE, Journal extract file user_gtmtest1.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 ( check_mjf user_${gtmtest1}.mjf ) > & /dev/null
 unset verbose
 $MUPIP journal -extract=user_star.mjf -user="$gtmtstusr1" -detail -fences=none -for mumps.mjl
-%GTM-I-FILECREATE, Journal extract file user_star.mjf created
+%YDB-I-FILECREATE, Journal extract file user_star.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 check_mjf user_star.mjf
@@ -843,7 +843,7 @@ GSET	4
 ^C	1
 diff user_${gtmtest1}.mjf_analysis user_star.mjf_analysis
 $MUPIP journal -extract=user_per.mjf -user="$gtmtstusr2" -detail -fences=none -for mumps.mjl
-%GTM-I-FILECREATE, Journal extract file user_per.mjf created
+%YDB-I-FILECREATE, Journal extract file user_per.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 check_mjf user_per.mjf
@@ -910,7 +910,7 @@ GSET	4
 ^C	1
 diff user_${gtmtest1}.mjf_analysis user_per.mjf_analysis
 $MUPIP journal -extract=user_per2.mjf -user="$gtmtstusr3" -detail -fences=none -for mumps.mjl
-%GTM-I-FILECREATE, Journal extract file user_per2.mjf created
+%YDB-I-FILECREATE, Journal extract file user_per2.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 check_mjf user_per2.mjf
@@ -949,8 +949,8 @@ diff user_per.mjf_analysis user_per2.mjf_analysis
 set verbose
 
 $MUPIP journal -id="$pid1" -extract=bpid_1.mjf -detail -backward -since=\"$time1\" mumps.mjl
-%GTM-I-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
-%GTM-I-FILECREATE, Journal extract file bpid_1.mjf created
+%YDB-I-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
+%YDB-I-FILECREATE, Journal extract file bpid_1.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 check_mjf bpid_1.mjf
@@ -977,10 +977,10 @@ PFIN	1
 
 
 $MUPIP journal -id="~$pid1" -extract=bpid_1m.mjf -lost=bpid_1m.lost -broken=bpid_1m.broken -detail -backward -since=\"$time1\" mumps.mjl
-%GTM-I-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
-%GTM-I-FILECREATE, Journal extract file bpid_1m.mjf created
-%GTM-I-FILECREATE, Broken transactions extract file bpid_1m.broken created
-%GTM-I-FILECREATE, Lost transactions extract file bpid_1m.lost created
+%YDB-I-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
+%YDB-I-FILECREATE, Journal extract file bpid_1m.mjf created
+%YDB-I-FILECREATE, Broken transactions extract file bpid_1m.broken created
+%YDB-I-FILECREATE, Lost transactions extract file bpid_1m.lost created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 check_mjf bpid_1m.mjf
@@ -1031,7 +1031,7 @@ PFIN	2
 #Globals (z)killed (in the order of appearance):
 ^AA	1
 $MUPIP journal -id="~$pid1" -extract=bpid2_nofence.mjf -backward -since=\"$time1\" -detail -fences=none mumps.mjl
-%GTM-I-FILECREATE, Journal extract file bpid2_nofence.mjf created
+%YDB-I-FILECREATE, Journal extract file bpid2_nofence.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 check_mjf bpid2_nofence.mjf
@@ -1072,7 +1072,7 @@ GSET	4
 
 
 $MUPIP journal -id="~$pid1,$pid2" -extract=pid_m1_2.mjf -forward -detail mumps.mjl -fences=none
-%GTM-I-FILECREATE, Journal extract file pid_m1_2.mjf created
+%YDB-I-FILECREATE, Journal extract file pid_m1_2.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 check_mjf pid_m1_2.mjf
@@ -1110,7 +1110,7 @@ GSET	4
 
 
 $MUPIP journal -id="$pid1,$pid2" -extract=bpid_1_2.mjf -backward -since=\"$time1\" -detail mumps.mjl -fences=none
-%GTM-I-FILECREATE, Journal extract file bpid_1_2.mjf created
+%YDB-I-FILECREATE, Journal extract file bpid_1_2.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 check_mjf bpid_1_2.mjf
@@ -1155,8 +1155,8 @@ GSET	4
 
 
 $MUPIP journal -id="~($pid1,$pid2)" -extract=bpid_m12.mjf -backward -since=\"$time1\" -detail mumps.mjl
-%GTM-I-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
-%GTM-I-FILECREATE, Journal extract file bpid_m12.mjf created
+%YDB-I-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
+%YDB-I-FILECREATE, Journal extract file bpid_m12.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 check_mjf bpid_m12.mjf
@@ -1171,7 +1171,7 @@ SET	1
 #Globals (z)killed (in the order of appearance):
 ^AA	1
 $MUPIP journal -id="~($pid1,$pid2)" -extract=pid_m12.mjf -forward -detail mumps.mjl
-%GTM-I-FILECREATE, Journal extract file pid_m12.mjf created
+%YDB-I-FILECREATE, Journal extract file pid_m12.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 check_mjf pid_m12.mjf
@@ -1188,7 +1188,7 @@ SET	1
 
 
 $MUPIP journal -id="~$pid1,~$pid2" -extract=pid_m1_m2.mjf -forward -detail mumps.mjl
-%GTM-I-FILECREATE, Journal extract file pid_m1_m2.mjf created
+%YDB-I-FILECREATE, Journal extract file pid_m1_m2.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 check_mjf pid_m1_m2.mjf
@@ -1207,8 +1207,8 @@ diff pid_m12.mjf_analysis pid_m1_m2.mjf_analysis
 
 
 $MUPIP journal -id="~$pid1,~$pid2,$pid3" -extract=bpid_m1_m2_3.mjf -backward -since=\"$time1\" -detail mumps.mjl
-%GTM-I-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
-%GTM-I-FILECREATE, Journal extract file bpid_m1_m2_3.mjf created
+%YDB-I-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
+%YDB-I-FILECREATE, Journal extract file bpid_m1_m2_3.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 check_mjf bpid_m1_m2_3.mjf
@@ -1226,8 +1226,8 @@ PFIN	1
 
 
 $MUPIP journal -id="~$pid1,$pid4" -extract=bpid_m1_4.mjf -backward -since=\"$time1\" -detail mumps.mjl
-%GTM-I-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
-%GTM-I-FILENOTCREATE, Journal extract file bpid_m1_4.mjf not created
+%YDB-I-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
+%YDB-I-FILENOTCREATE, Journal extract file bpid_m1_4.mjf not created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 if ( -e bpid_m1_4.mjf ) then
@@ -1236,8 +1236,8 @@ if ( -e bpid_m1_4.mjf ) then
 
 
 $MUPIP journal -id="$pid4,$pid5" -extract=bpid_4_5.mjf -backward -since=\"$time1\" -detail mumps.mjl
-%GTM-I-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
-%GTM-I-FILENOTCREATE, Journal extract file bpid_4_5.mjf not created
+%YDB-I-NOPREVLINK, Journal file ##TEST_PATH##/mumps.mjl has a null previous link
+%YDB-I-FILENOTCREATE, Journal extract file bpid_4_5.mjf not created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 if ( -e bpid_4_5.mjf ) then
@@ -1248,7 +1248,7 @@ if ( -e bpid_4_5.mjf ) then
 
 
 $MUPIP journal -transaction="set" -extract=btypeset.mjf -for -detail mumps.mjl -fences=none
-%GTM-I-FILECREATE, Journal extract file btypeset.mjf created
+%YDB-I-FILECREATE, Journal extract file btypeset.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 check_mjf btypeset.mjf
@@ -1284,7 +1284,7 @@ GSET	4
 ^sema1	1
 
 $MUPIP journal -transaction=nokill -extract=btypenokill.mjf -for -detail mumps.mjl -fences=none
-%GTM-I-FILECREATE, Journal extract file btypenokill.mjf created
+%YDB-I-FILECREATE, Journal extract file btypenokill.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 check_mjf btypenokill.mjf
@@ -1323,7 +1323,7 @@ diff btypeset.mjf_analysis btypenokill.mjf_analysis
 
 
 $MUPIP journal -transaction="kill" -extract=btypekill.mjf -for -detail mumps.mjl -fences=none
-%GTM-I-FILECREATE, Journal extract file btypekill.mjf created
+%YDB-I-FILECREATE, Journal extract file btypekill.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 check_mjf btypekill.mjf
@@ -1342,7 +1342,7 @@ KILL	2
 ^AA	1
 
 $MUPIP journal -transaction="noset" -extract=btypenoset.mjf -for -detail mumps.mjl -fences=none
-%GTM-I-FILECREATE, Journal extract file btypenoset.mjf created
+%YDB-I-FILECREATE, Journal extract file btypenoset.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 check_mjf btypenoset.mjf
@@ -1364,7 +1364,7 @@ diff btypekill1.mjf btypenoset1.mjf
 
 
 $MUPIP journal -transaction="set" -global="^A*" -user="${gtmtest1}" -extract=select1.mjf -for -detail mumps.mjl -fences=none
-%GTM-I-FILECREATE, Journal extract file select1.mjf created
+%YDB-I-FILECREATE, Journal extract file select1.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 check_mjf select1.mjf
@@ -1380,7 +1380,7 @@ SET	5
 ^A	5
 ^AAA	5
 $MUPIP journal -transaction="kill" -global="^AA" -user="$USER" -extract=select2.mjf -for -detail mumps.mjl -fences=none
-%GTM-I-FILECREATE, Journal extract file select2.mjf created
+%YDB-I-FILECREATE, Journal extract file select2.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 check_mjf select2.mjf
@@ -1957,31 +1957,31 @@ End of second_process job!
 $MUPIP journal -extract=error.mjf -global=\"^A\(\" -for mumps.mjl
 %YDB-E-INVGLOBALQUAL, Error in GLOBAL qualifier : Parse error at offset 3 in ^A(
 %YDB-E-MUPCLIERR, Action not taken due to CLI errors
-%GTM-I-FILENOTCREATE, Journal extract file error.mjf not created
+%YDB-I-FILENOTCREATE, Journal extract file error.mjf not created
 $MUPIP journal -extract=error.mjf -global=\"^A\(1,2,3\" -for mumps.mjl
 %YDB-E-INVGLOBALQUAL, Error in GLOBAL qualifier : Parse error at offset 8 in ^A(1,2,3
 %YDB-E-MUPCLIERR, Action not taken due to CLI errors
-%GTM-I-FILENOTCREATE, Journal extract file error.mjf not created
+%YDB-I-FILENOTCREATE, Journal extract file error.mjf not created
 $MUPIP journal -extract=error.mjf -global=\"^A\)\" -for mumps.mjl
 %YDB-E-INVGLOBALQUAL, Error in GLOBAL qualifier : Parse error at offset 3 in ^A)
 %YDB-E-MUPCLIERR, Action not taken due to CLI errors
-%GTM-I-FILENOTCREATE, Journal extract file error.mjf not created
+%YDB-I-FILENOTCREATE, Journal extract file error.mjf not created
 $MUPIP journal -extract=error.mjf -global=\"^\(\" -for mumps.mjl
 %YDB-E-INVGLOBALQUAL, Error in GLOBAL qualifier : Parse error at offset 2 in ^(
 %YDB-E-MUPCLIERR, Action not taken due to CLI errors
-%GTM-I-FILENOTCREATE, Journal extract file error.mjf not created
+%YDB-I-FILENOTCREATE, Journal extract file error.mjf not created
 $MUPIP journal -extract=error.mjf -global=\"^\)\" -for mumps.mjl
 %YDB-E-INVGLOBALQUAL, Error in GLOBAL qualifier : Parse error at offset 2 in ^)
 %YDB-E-MUPCLIERR, Action not taken due to CLI errors
-%GTM-I-FILENOTCREATE, Journal extract file error.mjf not created
+%YDB-I-FILENOTCREATE, Journal extract file error.mjf not created
 $MUPIP journal -id="badpid" -extract=error.mjf -detail -forward mumps.mjl
 %YDB-E-INVIDQUAL, Invalid ID qualifier value badpid
 %YDB-E-MUPCLIERR, Action not taken due to CLI errors
-%GTM-I-FILENOTCREATE, Journal extract file error.mjf not created
+%YDB-I-FILENOTCREATE, Journal extract file error.mjf not created
 $MUPIP journal -id="98765432198" -extract=error.mjf -detail -forward mumps.mjl
 %YDB-E-INVIDQUAL, Invalid ID qualifier value 98765432198
 %YDB-E-MUPCLIERR, Action not taken due to CLI errors
-%GTM-I-FILENOTCREATE, Journal extract file error.mjf not created
+%YDB-I-FILENOTCREATE, Journal extract file error.mjf not created
 
 unset verbose
 ##SOURCE_PATH##/mupip
@@ -2014,9 +2014,9 @@ GTM>
 GTM>
 
 $MUPIP journal -show=stat -extract -global="~^B" -forward b.mjl
-%GTM-I-FILECREATE, Journal extract file ##TEST_PATH##/b.mjf created
-%GTM-I-FILECREATE, Broken transactions extract file ##TEST_PATH##/b.broken created
-%GTM-I-FILECREATE, Lost transactions extract file ##TEST_PATH##/b.lost created
+%YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/b.mjf created
+%YDB-I-FILECREATE, Broken transactions extract file ##TEST_PATH##/b.broken created
+%YDB-I-FILECREATE, Lost transactions extract file ##TEST_PATH##/b.lost created
 
 -------------------------------------------------------------------------------
 SHOW output for journal file ##TEST_PATH##/b.mjl
@@ -2068,9 +2068,9 @@ b.mjf
 
 
 $MUPIP journal -show=stat -extract=b1.mjf -global="^A,^B" -forward b.mjl -lost=b1.lost -broken=b1.broken
-%GTM-I-FILECREATE, Journal extract file b1.mjf created
-%GTM-I-FILECREATE, Broken transactions extract file b1.broken created
-%GTM-I-FILECREATE, Lost transactions extract file b1.lost created
+%YDB-I-FILECREATE, Journal extract file b1.mjf created
+%YDB-I-FILECREATE, Broken transactions extract file b1.broken created
+%YDB-I-FILECREATE, Lost transactions extract file b1.lost created
 
 -------------------------------------------------------------------------------
 SHOW output for journal file ##TEST_PATH##/b.mjl
@@ -2144,7 +2144,7 @@ b1.broken
 
 
 $MUPIP journal -extract=multi_mb.mjf -global="~^B" -forward "*"
-%GTM-I-FILECREATE, Journal extract file multi_mb.mjf created
+%YDB-I-FILECREATE, Journal extract file multi_mb.mjf created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
 setenv extract_summary_sort 1
@@ -2173,7 +2173,7 @@ unsetenv extract_summary_sort
 
 
 $MUPIP journal -show=stat -extract=no_a_mb.mjf -global="^A,~^B" -forward b.mjl -fences=NONE
-%GTM-I-FILECREATE, Journal extract file no_a_mb.mjf created
+%YDB-I-FILECREATE, Journal extract file no_a_mb.mjf created
 
 -------------------------------------------------------------------------------
 SHOW output for journal file ##TEST_PATH##/b.mjl
@@ -2382,7 +2382,7 @@ Record type    Count
    TLGTR          0
    ULGTR          0
 
-%GTM-I-FILECREATE, Journal extract file multi_a_ma1.mjf created
+%YDB-I-FILECREATE, Journal extract file multi_a_ma1.mjf created
 %GTM-S-JNLSUCCESS, Show successful
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
@@ -2401,8 +2401,8 @@ multi_a_ma1.mjf
 #Globals (z)killed (in the order of appearance):
 ^A	2
 $MUPIP journal -show=stat -extract=multi_a_ma1.mjf -global="^A,~^A(1)" -forward a.mjl -fences=none
-##FILTERED##%GTM-I-FILERENAME, File multi_a_ma1.mjf is renamed to multi_a_ma1.mjf_##TIMESTAMP##
-%GTM-I-FILECREATE, Journal extract file multi_a_ma1.mjf created
+##FILTERED##%YDB-I-FILERENAME, File multi_a_ma1.mjf is renamed to multi_a_ma1.mjf_##TIMESTAMP##
+%YDB-I-FILECREATE, Journal extract file multi_a_ma1.mjf created
 
 -------------------------------------------------------------------------------
 SHOW output for journal file ##TEST_PATH##/a.mjl

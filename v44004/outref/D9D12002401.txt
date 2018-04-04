@@ -8,25 +8,25 @@ c.dat
 d.dat
 e.dat
 mumps.dat
-%GTM-I-JNLSTATE, Journaling state for region AREG is now DISABLED
-%GTM-I-JNLSTATE, Journaling state for region BREG is now OFF
-%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
-%GTM-I-JNLSTATE, Journaling state for region DREG is now ON
-%GTM-I-REPLSTATE, Replication state for region DREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region EREG is now ON
-%GTM-I-REPLSTATE, Replication state for region EREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region AREG is now DISABLED
+%YDB-I-JNLSTATE, Journaling state for region BREG is now OFF
+%YDB-I-JNLSTATE, Journaling state for region CREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-JNLSTATE, Journaling state for region DREG is now ON
+%YDB-I-REPLSTATE, Replication state for region DREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region EREG is now ON
+%YDB-I-REPLSTATE, Replication state for region EREG is now ON
 
 ---------- Enable journaling with  -----------
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/d.mjl is renamed to ##TEST_PATH##/d.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/e.mjl is renamed to ##TEST_PATH##/e.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
-%GTM-I-JNLSTATE, Journaling state for region DREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region EREG is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/d.mjl is renamed to ##TEST_PATH##/d.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/e.mjl is renamed to ##TEST_PATH##/e.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLSTATE, Journaling state for region BREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region CREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-JNLSTATE, Journaling state for region DREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region EREG is now ON
 %GTM-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/a.dat
 %GTM-W-MUNOFINISH, MUPIP unable to finish all requested actions
 Region          AREG
@@ -48,15 +48,15 @@ Region          EREG
   Journal Yield Limit                     8  Journal Sync IO               TRUE
 
 ---------- Enable journaling with ,nosync_io -----------
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/d.mjl is renamed to ##TEST_PATH##/d.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/e.mjl is renamed to ##TEST_PATH##/e.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
-%GTM-I-JNLSTATE, Journaling state for region DREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region EREG is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/d.mjl is renamed to ##TEST_PATH##/d.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/e.mjl is renamed to ##TEST_PATH##/e.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLSTATE, Journaling state for region BREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region CREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-JNLSTATE, Journaling state for region DREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region EREG is now ON
 %GTM-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/a.dat
 %GTM-W-MUNOFINISH, MUPIP unable to finish all requested actions
 Region          AREG
@@ -78,15 +78,15 @@ Region          EREG
   Journal Yield Limit                     8  Journal Sync IO              FALSE
 
 ---------- Enable journaling with ,sync_io -----------
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/d.mjl is renamed to ##TEST_PATH##/d.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/e.mjl is renamed to ##TEST_PATH##/e.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
-%GTM-I-JNLSTATE, Journaling state for region DREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region EREG is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/d.mjl is renamed to ##TEST_PATH##/d.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/e.mjl is renamed to ##TEST_PATH##/e.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLSTATE, Journaling state for region BREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region CREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-JNLSTATE, Journaling state for region DREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region EREG is now ON
 %GTM-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/a.dat
 %GTM-W-MUNOFINISH, MUPIP unable to finish all requested actions
 Region          AREG

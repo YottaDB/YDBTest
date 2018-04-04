@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2013, 2014 Fidelity Information Services, Inc	#
+# Copyright 2013, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -47,7 +50,7 @@ chmod +x control_chars.csh
 
 ./control_chars.csh
 
-echo "# Expect GTM-I-JNLALLOCGROW below and not an assert failure"
+echo "# Expect YDB-I-JNLALLOCGROW below and not an assert failure"
 $MUPIP create
 $MUPIP set -journal=enable,on,nobefore -reg "*" >&! jnl_on.out
 echo "# While the vaule of allocation in the gde settings was not changed, expect it to be higher due to JNLALLOCGROW above"

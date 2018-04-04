@@ -123,8 +123,8 @@ GTM>
 Replication Instance file ##TEST_PATH##/mumps.repl backed up in file bak1/mumps.repl
 Journal Seqnos up to 0x0000000000000033 are backed up.
 
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
 DB file ##TEST_PATH##/mumps.dat backed up in file bak1/mumps.dat
 ##TEST_AWKTransactions up to .* are backed up.
 
@@ -334,11 +334,11 @@ No diff on INST4 between instancefile_1.out instancefile_2.out
 ##SUSPEND_OUTPUT JNL_BEFORE
 ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/backup_dbjnl.csh bak2 "*.dat *.mjl* *.repl" mv'==
 ==Executing MULTISITE_REPLIC 'RUN INST1 cp bak1/* .; ##SOURCE_PATH##/mupip set -replication=on -journal=enable,on,nobefore -reg "*"'==
-%GTM-I-JNLFNF, Journal file ##TEST_PATH##/mumps.mjl not found
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with .*BEFORE_IMAGES
-%GTM-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
-%GTM-I-REPLSTATE, Replication state for region DEFAULT is now ON
+%YDB-I-JNLFNF, Journal file ##TEST_PATH##/mumps.mjl not found
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with .*BEFORE_IMAGES
+%YDB-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-REPLSTATE, Replication state for region DEFAULT is now ON
 ##ALLOW_OUTPUT JNL_BEFORE
 ==Executing MULTISITE_REPLIC 'STARTRCV INST2 INST1 waitforconnect'==
 ==========================================================
@@ -542,8 +542,8 @@ examining ^examine($ZQGBLMOD(^GBLA(30),vcorr(30))) -> ^examine(0,0)
 ##TEST_AWKReplication Instance file .*/instance2/mumps.repl backed up in file bak1/mumps.repl
 Journal Seqnos up to 0x0000000000000047 are backed up.
 
-##TEST_AWK##FILTERED##%GTM-I-FILERENAME, File .*/instance2/mumps.mjl is renamed to .*/instance2/mumps.mjl_##TIMESTAMP##
-##TEST_AWK%GTM-I-JNLCREATE, Journal file .*/instance2/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
+##TEST_AWK##FILTERED##%YDB-I-FILERENAME, File .*/instance2/mumps.mjl is renamed to .*/instance2/mumps.mjl_##TIMESTAMP##
+##TEST_AWK%YDB-I-JNLCREATE, Journal file .*/instance2/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
 ##TEST_AWKDB file .*/instance2/mumps.dat backed up in file bak1/mumps.dat
 ##TEST_AWKTransactions up to .* are backed up.
 
@@ -836,11 +836,11 @@ The Zqgblmod seqno value is as expected, (71 vs 71)
 ##SUSPEND_OUTPUT JNL_BEFORE
 ==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/backup_dbjnl.csh bak2 "*.dat *.mjl* *.repl" mv'==
 ==Executing MULTISITE_REPLIC 'RUN INST2 cp bak1/* .; ##SOURCE_PATH##/mupip set -replication=on -journal=enable,on,nobefore -reg "*" >& bak1cp.tmp; cat bak1cp.tmp'==
-##TEST_AWK%GTM-I-JNLFNF, Journal file .*/instance2/mumps.mjl not found
-##TEST_AWK%GTM-I-JNLCREATE, Journal file .*/instance2/mumps.mjl created for region DEFAULT with .*BEFORE_IMAGES
-##TEST_AWK%GTM-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file .*/instance2/mumps.mjl created for database file .*/instance2/mumps.dat
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
-%GTM-I-REPLSTATE, Replication state for region DEFAULT is now ON
+##TEST_AWK%YDB-I-JNLFNF, Journal file .*/instance2/mumps.mjl not found
+##TEST_AWK%YDB-I-JNLCREATE, Journal file .*/instance2/mumps.mjl created for region DEFAULT with .*BEFORE_IMAGES
+##TEST_AWK%YDB-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file .*/instance2/mumps.mjl created for database file .*/instance2/mumps.dat
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-REPLSTATE, Replication state for region DEFAULT is now ON
 ##ALLOW_OUTPUT JNL_BEFORE
 ==Executing MULTISITE_REPLIC 'STARTRCV INST3 INST2'==
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST3 RCV=INST2 $MUPIP replic -source -needrestart -instsecondary=__RCV_INSTNAME__'==
@@ -977,11 +977,11 @@ The Zqgblmod seqno value is as expected, (0 vs 0)
 #  	--> We expect 0.
 ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/backup_dbjnl.csh bak3 "*.dat *.mjl* *.repl" mv'==
 ==Executing MULTISITE_REPLIC 'RUN INST1 cp bak1/* .; ##SOURCE_PATH##/mupip set -replication=on -journal=enable,on,nobefore -reg "*"'==
-%GTM-I-JNLFNF, Journal file ##TEST_PATH##/mumps.mjl not found
-##TEST_AWK%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with .*BEFORE_IMAGES
-%GTM-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
-%GTM-I-REPLSTATE, Replication state for region DEFAULT is now ON
+%YDB-I-JNLFNF, Journal file ##TEST_PATH##/mumps.mjl not found
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with .*BEFORE_IMAGES
+%YDB-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-REPLSTATE, Replication state for region DEFAULT is now ON
 ##ALLOW_OUTPUT JNL_BEFORE
 ==Executing MULTISITE_REPLIC 'STARTRCV INST3 INST1'==
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST3 RCV=INST1 $MUPIP replic -source -needrestart -instsecondary=__RCV_INSTNAME__'==

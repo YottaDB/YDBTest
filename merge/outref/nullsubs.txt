@@ -287,11 +287,11 @@ M ^xgbl=^varlongvariablenamesworkfornull
 Next Command Will fail
 M ^agbl("newtree","")=^varlongvariablenamesworkfornull
 Error Number=1
-STAT=nullntp+9^nullntp,%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^agbl("newtree","",-100,100,-100)
+STAT=nullntp+9^nullntp,%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%YDB-I-GVIS, 		Global variable: ^agbl("newtree","",-100,100,-100)
 Next Command Will fail
 M ^agbl=^varlongvariablenamesworkfornull
 Error Number=2
-STAT=nullntp+11^nullntp,%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^agbl(-100,100,"")
+STAT=nullntp+11^nullntp,%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%YDB-I-GVIS, 		Global variable: ^agbl(-100,100,"")
 Verify MERGE
 
 Verify ^xgbl("newtree","")
@@ -311,16 +311,16 @@ ZWR ^agbl
 Test more:
 Next Command Will fail
 Error Number=3
-STAT=nullntp+23^nullntp,%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^aaa("I will not be created",1,"",200)
+STAT=nullntp+23^nullntp,%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%YDB-I-GVIS, 		Global variable: ^aaa("I will not be created",1,"",200)
 Next Command Will fail
 Error Number=4
-STAT=nullntp+25^nullntp,%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^aaa("I will not be created",2,"")
+STAT=nullntp+25^nullntp,%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%YDB-I-GVIS, 		Global variable: ^aaa("I will not be created",2,"")
 Next Command Will fail
 Error Number=5
-STAT=nullntp+27^nullntp,%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^aaa("I will not be created",3,"",200)
+STAT=nullntp+27^nullntp,%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%YDB-I-GVIS, 		Global variable: ^aaa("I will not be created",3,"",200)
 Next Command Will fail
 Error Number=6
-STAT=nullntp+29^nullntp,%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^aaa("I will not be created",3,"")
+STAT=nullntp+29^nullntp,%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%YDB-I-GVIS, 		Global variable: ^aaa("I will not be created",3,"")
 
 
 Test local to global:
@@ -328,7 +328,7 @@ M ^cgbl=varlongvariablenamesworkfornull
 Next Command Will fail
 M ^bgbl=varlongvariablenamesworkfornull
 Error Number=7
-STAT=nullntp+37^nullntp,%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%GTM-I-GVIS, 		Global variable: ^bgbl(-100,100,"")
+STAT=nullntp+37^nullntp,%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%YDB-I-GVIS, 		Global variable: ^bgbl(-100,100,"")
 Verify MERGE
 
 Verify ^cgbl
@@ -758,16 +758,16 @@ End nulllc
 
 GTM>
 ##SOURCE_PATH##/mupip extract extr.glo
-%GTM-I-RECORDSTAT, ^agbl:	  Key cnt: 5  max subsc len: 25  max rec len: 1  max node len: 22
-%GTM-I-RECORDSTAT, ^bgbl:	  Key cnt: 5  max subsc len: 25  max rec len: 1  max node len: 22
-%GTM-I-RECORDSTAT, ^cgbl:	  Key cnt: 245  max subsc len: 34  max rec len: 13  max node len: 26
-%GTM-I-RECORDSTAT, ^ctp:	  Key cnt: 245  max subsc len: 33  max rec len: 13  max node len: 26
-%GTM-I-RECORDSTAT, ^errcnt:	  Key cnt: 1  max subsc len: 8  max rec len: 2  max node len: 14
-%GTM-I-RECORDSTAT, ^varlongvariablenamesworkfornull:	  Key cnt: 245  max subsc len: 61  max rec len: 13  max node len: 49
-%GTM-I-RECORDSTAT, ^vvv:	  Key cnt: 2  max subsc len: 15  max rec len: 8  max node len: 25
-%GTM-I-RECORDSTAT, ^xgbl:	  Key cnt: 245  max subsc len: 34  max rec len: 13  max node len: 26
-%GTM-I-RECORDSTAT, ^xtp:	  Key cnt: 245  max subsc len: 33  max rec len: 13  max node len: 26
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1238  max subsc len: 61  max rec len: 13  max node len: 49
+%YDB-I-RECORDSTAT, ^agbl:	  Key cnt: 5  max subsc len: 25  max rec len: 1  max node len: 22
+%YDB-I-RECORDSTAT, ^bgbl:	  Key cnt: 5  max subsc len: 25  max rec len: 1  max node len: 22
+%YDB-I-RECORDSTAT, ^cgbl:	  Key cnt: 245  max subsc len: 34  max rec len: 13  max node len: 26
+%YDB-I-RECORDSTAT, ^ctp:	  Key cnt: 245  max subsc len: 33  max rec len: 13  max node len: 26
+%YDB-I-RECORDSTAT, ^errcnt:	  Key cnt: 1  max subsc len: 8  max rec len: 2  max node len: 14
+%YDB-I-RECORDSTAT, ^varlongvariablenamesworkfornull:	  Key cnt: 245  max subsc len: 61  max rec len: 13  max node len: 49
+%YDB-I-RECORDSTAT, ^vvv:	  Key cnt: 2  max subsc len: 15  max rec len: 8  max node len: 25
+%YDB-I-RECORDSTAT, ^xgbl:	  Key cnt: 245  max subsc len: 34  max rec len: 13  max node len: 26
+%YDB-I-RECORDSTAT, ^xtp:	  Key cnt: 245  max subsc len: 33  max rec len: 13  max node len: 26
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1238  max subsc len: 61  max rec len: 13  max node len: 49
 tail -n +3 extr.glo
 ^agbl(-100,100,-100)="1"
 ^agbl(-100,100,-3.14285714285714285)="2"

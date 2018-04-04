@@ -102,7 +102,7 @@ Instance INSTANCE1 crashed!
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST2 SRC=INST1 $MUPIP replic -receiv -shutdown -timeout=0 > SHUT_receiver1.log'==
 ==========================================================
 The instance file contents on INST1 (instancefile_1.out):
-GTM-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
+YDB-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
 
 ----------------------------------------------------------
 File Header
@@ -185,7 +185,7 @@ HST #      0 : History record type                       1 [0x00000001]
 ==========================================================
 ==========================================================
 The instance file contents on INST2 (instancefile_1.out):
-GTM-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
+YDB-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
 
 ----------------------------------------------------------
 File Header
@@ -255,7 +255,7 @@ HST #      0 : History record type                       1 [0x00000001]
 ==========================================================
 ==========================================================
 The instance file contents on INST3 (instancefile_1.out):
-GTM-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
+YDB-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
 
 ----------------------------------------------------------
 File Header
@@ -325,7 +325,7 @@ HST #      0 : History record type                       1 [0x00000001]
 ==========================================================
 ==========================================================
 The instance file contents on INST4 (instancefile_1.out):
-GTM-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
+YDB-I-MUREPLSHOW, SHOW output for replication instance file mumps.repl
 
 ----------------------------------------------------------
 File Header
@@ -403,7 +403,7 @@ HST #      0 : History record type                       1 [0x00000001]
 ==Executing MULTISITE_REPLIC 'ACTIVATE INST2 INST1 RP'==
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating ACTIVATE operation on source server pid [##PID##] for secondary instance [INSTANCE1]
 ==Executing MULTISITE_REPLIC 'RUN INST1 $MUPIP rundown -reg "*" -override'==
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
 ==Executing MULTISITE_REPLIC 'REFRESHLINK INST1 INST2'==
 #  	--> We expect a REPLREQROLLBACK error since INST1 has crashed, but has not run a rollback since.
 ----------
@@ -411,8 +411,8 @@ Error REPLREQROLLBACK seen in log1.log as expected:
 %YDB-E-REPLREQROLLBACK, Replication instance file ##TEST_PATH##/mumps.repl indicates abnormal shutdown or an incomplete ROLLBACK. Run MUPIP JOURNAL ROLLBACK first
 ----------
 ----------
-Error GTM-I-TEXT seen in log1.log as expected:
-%GTM-I-TEXT, Instance file header has crash field set to TRUE
+Error YDB-I-TEXT seen in log1.log as expected:
+%YDB-I-TEXT, Instance file header has crash field set to TRUE
 ----------
 log1.log:
 ##SOURCE_PATH##/mupip replic -source -start -buffsize=33554432 -passive -log=passive1.log -instsecondary=INSTANCE2

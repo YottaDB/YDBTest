@@ -13,10 +13,10 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ##ALLOW_OUTPUT NON_REPLIC
 Making some extracts
-##TEST_AWK%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: [0-9]+  max subsc len: [0-9]+  max rec len: [0-9]+  max node len: [0-9]+
-##TEST_AWK%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: [0-9]+  max subsc len: [0-9]+  max rec len: [0-9]+  max node len: [0-9]+
+##TEST_AWK%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: [0-9]+  max subsc len: [0-9]+  max rec len: [0-9]+  max node len: [0-9]+
+##TEST_AWK%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: [0-9]+  max subsc len: [0-9]+  max rec len: [0-9]+  max node len: [0-9]+
 ##SUSPEND_OUTPUT UNICODE_MODE
-##TEST_AWK%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: [0-9]+  max subsc len: [0-9]+  max rec len: [0-9]+  max node len: [0-9]+
+##TEST_AWK%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: [0-9]+  max subsc len: [0-9]+  max rec len: [0-9]+  max node len: [0-9]+
 ##ALLOW_OUTPUT UNICODE_MODE
 ##SUSPEND_OUTPUT NON_REPLIC
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
@@ -62,7 +62,7 @@ Total of 0 globals.
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
 
-%GTM-I-TRIGDATAIGNORE, Ignoring trigger data ^#t("c","#LABEL"). Use MUPIP TRIGGER to load trigger definitions
+%YDB-I-TRIGDATAIGNORE, Ignoring trigger data ^#t("c","#LABEL"). Use MUPIP TRIGGER to load trigger definitions
 ##TEST_AWKLOAD TOTAL		Key Cnt: [0-9]+  Max Subsc Len: [0-9]+  Max Data Len: [0-9]+
 ##TEST_AWKLast LOAD record number: [0-9]*
 
@@ -72,7 +72,7 @@ Global Directory
 Global ^
 ^a        ^b        ^c        
 Total of 3 globals.
-##TEST_AWK%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: [0-9]+  max subsc len: [0-9]+  max rec len: [0-9]+  max node len: [0-9]+
+##TEST_AWK%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: [0-9]+  max subsc len: [0-9]+  max rec len: [0-9]+  max node len: [0-9]+
 ##SUSPEND_OUTPUT NON_REPLIC
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 Shutting down Primary Source Server Server in ##TEST_PATH##
@@ -115,7 +115,7 @@ GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:..
 Beginning LOAD at record number: 3
 
-%GTM-I-TRIGDATAIGNORE, Ignoring trigger data ^#t("c","#LABEL")="2". Use MUPIP TRIGGER to load trigger definitions
+%YDB-I-TRIGDATAIGNORE, Ignoring trigger data ^#t("c","#LABEL")="2". Use MUPIP TRIGGER to load trigger definitions
 ##TEST_AWKLOAD TOTAL		Key Cnt: [0-9]+  Max Subsc Len: [0-9]+  Max Data Len: [0-9]+
 ##TEST_AWKLast LOAD record number: [0-9]*
 
@@ -125,7 +125,7 @@ Global Directory
 Global ^
 ^a        ^b        ^c        
 Total of 3 globals.
-##TEST_AWK%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: [0-9]+  max subsc len: [0-9]+  max rec len: [0-9]+  max node len: [0-9]+
+##TEST_AWK%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: [0-9]+  max subsc len: [0-9]+  max rec len: [0-9]+  max node len: [0-9]+
 ##SUSPEND_OUTPUT NON_REPLIC
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 Shutting down Primary Source Server Server in ##TEST_PATH##
@@ -177,7 +177,7 @@ Global Directory
 Global ^
 ^a        ^b        ^c        
 Total of 3 globals.
-##TEST_AWK%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: [0-9]+  max subsc len: [0-9]+  max rec len: [0-9]+  max node len: [0-9]+
+##TEST_AWK%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: [0-9]+  max subsc len: [0-9]+  max rec len: [0-9]+  max node len: [0-9]+
 Cannot see ^#t from GT.M runtime
 
 Global Directory
@@ -405,7 +405,7 @@ Total of 4 globals.
 ^z=33
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 5. Restore
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
 ###################################################################
 First incremental restore

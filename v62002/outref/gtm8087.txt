@@ -226,7 +226,7 @@ Let's check some limits on globals
 
 kill ^z
 zshow "C":^z(1,2,3,4,5)
-%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%GTM-I-GVIS, 		Global variable: ^z(1,2,3,4,5,"C","gtm8087xcalls1","iamtoolongforanexternalcallname")
+%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%YDB-I-GVIS, 		Global variable: ^z(1,2,3,4,5,"C","gtm8087xcalls1","iamtoolongforanexternalcallname")
 		At M source location globallimits5+7^gtm8087
 
 GTM>
@@ -237,7 +237,7 @@ GTM>
 
 kill ^z
 zshow "C":^z(1,2,3,4)
-%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%GTM-I-GVIS, 		Global variable: ^z(1,2,3,4,"C","gtm8087xcalls1","iamtoolongforanexternalcallname")
+%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%YDB-I-GVIS, 		Global variable: ^z(1,2,3,4,"C","gtm8087xcalls1","iamtoolongforanexternalcallname")
 		At M source location globallimits4+6^gtm8087
 
 GTM>

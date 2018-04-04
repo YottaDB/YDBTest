@@ -37,7 +37,7 @@ END 3
 ---------------------------------------------------------------------------------------
 ##TEST_AWKBEGIN 4 .-. Verify that shared memory corresponding to old_mumps.dat \([0-9]*\) is removed
 
-##TEST_AWK%GTM-I-SHMREMOVED, Removed Shared Memory id [0-9]* corresponding to file ##TEST_PATH##/mumps.dat
+##TEST_AWK%YDB-I-SHMREMOVED, Removed Shared Memory id [0-9]* corresponding to file ##TEST_PATH##/mumps.dat
 
 END 4
 ---------------------------------------------------------------------------------------
@@ -49,7 +49,7 @@ GTM>
 set ^y=1
 GTM>
 %YDB-E-REQRUNDOWN, Error accessing database ##TEST_PATH##/mumps.dat.  Must be rundown on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
-%GTM-I-TEXT, Error with database control shmctl
+%YDB-I-TEXT, Error with database control shmctl
 ##TEST_AWK.SYSTEM-E-ENO[0-9]+.*
 
 GTM>
@@ -60,7 +60,7 @@ END 5
 BEGIN 6 :-) Verify that old_mumps.dat(now mumps.dat) can be accessed after doing mupip rundown
 
 ##TEST_AWKmupip rundown .*
-##TEST_AWK.GTM-I-MUFILRNDWNSUC, File .*mumps.dat successfully rundown
+##TEST_AWK.YDB-I-MUFILRNDWNSUC, File .*mumps.dat successfully rundown
 
 GTM>
 set ^y=1

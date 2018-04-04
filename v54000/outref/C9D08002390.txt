@@ -7,14 +7,14 @@
 
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/mumps.gld
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 # Time before test case 1 : ##FILTERED##GTM_TEST_DEBUGINFO.*
 # Starting the dse process now
 # Test if the output file exists
 TRACE_WRITERSTUCK_##FILTERED##
 # Time after test case 1 : ##FILTERED##GTM_TEST_DEBUGINFO.*
-# Check the operator log for the messages GTM-I-STUCKACT and YDB-E-WRITERSTUCK
-GTM-I-STUCKACT, Process stuck script invoked: SUCCESS : ##TEST_COM_PATH##/gtmprocstuck_get_stack_trace.csh
+# Check the operator log for the messages YDB-I-STUCKACT and YDB-E-WRITERSTUCK
+YDB-I-STUCKACT, Process stuck script invoked: SUCCESS : ##TEST_COM_PATH##/gtmprocstuck_get_stack_trace.csh
 YDB-E-WRITERSTUCK, Buffer flush stuck waiting for [0x00000001] concurrent writers to finish writing to database file ##TEST_PATH##/mumps.dat
 
 #####################################################################
@@ -26,8 +26,8 @@ YDB-E-WRITERSTUCK, Buffer flush stuck waiting for [0x00000001] concurrent writer
 # Check if 'permission denied' or 'cannot execute' error is issued
 CHECK_STRING_EXIST-I-FOUND. At least one of the messages passed is found in the file dse_flush.out_2
 # Check that WRITERSTUCK file is not generated now
-# Check the operator log for the messages GTM-I-STUCKACT and YDB-E-WRITERSTUCK
-GTM-I-STUCKACT, Process stuck script invoked: FAILURE : ##TEST_PATH##/gtmprocstuck_get_stack_trace.csh
+# Check the operator log for the messages YDB-I-STUCKACT and YDB-E-WRITERSTUCK
+YDB-I-STUCKACT, Process stuck script invoked: FAILURE : ##TEST_PATH##/gtmprocstuck_get_stack_trace.csh
 YDB-E-WRITERSTUCK, Buffer flush stuck waiting for [0x00000001] concurrent writers to finish writing to database file ##TEST_PATH##/mumps.dat
 
 #####################################################################
@@ -38,6 +38,6 @@ YDB-E-WRITERSTUCK, Buffer flush stuck waiting for [0x00000001] concurrent writer
 # Check if 'File not found' or 'no such file' error is issued
 CHECK_STRING_EXIST-I-FOUND. At least one of the messages passed is found in the file dse_flush.out_3
 # Check that WRITERSTUCK file is not generated now
-# Check the operator log for the messages GTM-I-STUCKACT and YDB-E-WRITERSTUCK
-GTM-I-STUCKACT, Process stuck script invoked: FAILURE : ##TEST_PATH##/noexist.csh
+# Check the operator log for the messages YDB-I-STUCKACT and YDB-E-WRITERSTUCK
+YDB-I-STUCKACT, Process stuck script invoked: FAILURE : ##TEST_PATH##/noexist.csh
 YDB-E-WRITERSTUCK, Buffer flush stuck waiting for [0x00000001] concurrent writers to finish writing to database file ##TEST_PATH##/mumps.dat

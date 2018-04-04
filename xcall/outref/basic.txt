@@ -3,7 +3,7 @@ GTM>
 Do ^mathtst
 
 Doing SQRT for 1
-%GTM-I-DLLNORTN, Failed to look up the location of the symbol math_hello
+%YDB-I-DLLNORTN, Failed to look up the location of the symbol math_hello
 ##TEST_AWK%.*
 SQRT Value = 1.00000000000000
 
@@ -1773,10 +1773,10 @@ GTM>
 
 GTM>
 Do ^maxpreal
-%GTM-I-EXTSRCLIN, 	alloc1mb:	void	xc_new_alloc_1mb(O:xc_char_t *[1048578])
+%YDB-I-EXTSRCLIN, 	alloc1mb:	void	xc_new_alloc_1mb(O:xc_char_t *[1048578])
 
 								^-----
-%GTM-I-EXTSRCLOC, 		At column 40, line 2, source module gtmxc_maxprealloc.tab
+%YDB-I-EXTSRCLOC, 		At column 40, line 2, source module gtmxc_maxprealloc.tab
 %YDB-E-ZCPREALLVALINV, The pre-allocation value exceeded the maximum string length
 		At M source location maxpreal+3^maxpreal
 
@@ -1784,10 +1784,10 @@ GTM>
 
 GTM>
 Do ^maxprealstr
-%GTM-I-EXTSRCLIN, 	alloc1mbstr:	void	xc_new_alloc_1mbstr(O:xc_string_t *[1048578])
+%YDB-I-EXTSRCLIN, 	alloc1mbstr:	void	xc_new_alloc_1mbstr(O:xc_string_t *[1048578])
 
 									^-----
-%GTM-I-EXTSRCLOC, 		At column 48, line 2, source module gtmxc_maxpreallocstr.tab
+%YDB-I-EXTSRCLOC, 		At column 48, line 2, source module gtmxc_maxpreallocstr.tab
 %YDB-E-ZCPREALLVALINV, The pre-allocation value exceeded the maximum string length
 		At M source location maxprealstr+3^maxprealstr
 
@@ -2007,10 +2007,10 @@ GTM>
 
 GTM>
 Do ^xcshlib
-%GTM-I-EXTSRCLIN, 		GTMSHLIBEXIT = 
+%YDB-I-EXTSRCLIN, 		GTMSHLIBEXIT = 
 
 				       ^-----
-%GTM-I-EXTSRCLOC, 		At column 15, line 3, source module gtmxc_shlib.tab
+%YDB-I-EXTSRCLOC, 		At column 15, line 3, source module gtmxc_shlib.tab
 %YDB-E-ZCCLNUPRTNMISNG, External call: Cleanup routine name missing. Cannot continue
 		At M source location +1^xcshlib
 
@@ -2025,10 +2025,10 @@ GTM>
 
 GTM>
 Do ^xcshlib
-%GTM-I-EXTSRCLIN, 		GMSHLIBEXT = 
+%YDB-I-EXTSRCLIN, 		GMSHLIBEXT = 
 
 				    ^-----
-%GTM-I-EXTSRCLOC, 		At column 12, line 3, source module gtmxc_shlib.tab
+%YDB-I-EXTSRCLOC, 		At column 12, line 3, source module gtmxc_shlib.tab
 %YDB-E-ZCINVALIDKEYWORD, External call: Invalid keyword found. Cannot continue
 		At M source location +1^xcshlib
 

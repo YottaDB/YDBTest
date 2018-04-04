@@ -34,7 +34,7 @@ if ($?nob4jnl) then
 else
 	$MUPIP set $tst_jnl_str -reg "*" 			>&! jnl_on_1.out
 endif
-$grep "GTM-I-JNLSTATE" jnl_on_1.out
+$grep "YDB-I-JNLSTATE" jnl_on_1.out
 
 echo "# Turn on journaling again with -file= pointing to the database itself. Expect YDB-E-FILEEXISTS and YDB-E-JNLNOCREATE"
 $MUPIP set $tst_jnl_str,file=mumps.dat -reg "*"
@@ -68,7 +68,7 @@ $MUPIP set $tst_jnl_str,file=mumps.mjl -reg DEFAULT
 
 echo "# mupip set -journal=on,file=<new-file> -reg DEFAUT should work fine"
 $MUPIP set $tst_jnl_str,file=newmumps.mjl -reg DEFAULT	>&! jnl_on_2.out
-$grep "GTM-I-JNLSTATE" jnl_on_2.out
+$grep "YDB-I-JNLSTATE" jnl_on_2.out
 
 echo "# The journal file shoud have NO previous links"
 $MUPIP journal -show -forward newmumps.mjl 		>&! jnl_show.out

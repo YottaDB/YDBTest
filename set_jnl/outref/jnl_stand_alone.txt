@@ -23,10 +23,10 @@ Journal States:(expected DISABLED):
   Journal State                    DISABLED
   Journal State                    DISABLED
 Try 0 to 0: ##SOURCE_PATH##/mupip set -journal=disable -reg *
-%GTM-I-JNLSTATE, Journaling state for region AREG is now DISABLED
-%GTM-I-JNLSTATE, Journaling state for region BREG is now DISABLED
-%GTM-I-JNLSTATE, Journaling state for region CREG is now DISABLED
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now DISABLED
+%YDB-I-JNLSTATE, Journaling state for region AREG is now DISABLED
+%YDB-I-JNLSTATE, Journaling state for region BREG is now DISABLED
+%YDB-I-JNLSTATE, Journaling state for region CREG is now DISABLED
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now DISABLED
 Journal States:(expected DISABLED):
   Journal State                    DISABLED
   Journal State                    DISABLED
@@ -47,39 +47,39 @@ GTM>
 Now try to switch journal state when no active M process is present:
 
 Try 0 to 0: ##SOURCE_PATH##/mupip set -journal=disable -reg *
-%GTM-I-JNLSTATE, Journaling state for region AREG is now DISABLED
-%GTM-I-JNLSTATE, Journaling state for region BREG is now DISABLED
-%GTM-I-JNLSTATE, Journaling state for region CREG is now DISABLED
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now DISABLED
+%YDB-I-JNLSTATE, Journaling state for region AREG is now DISABLED
+%YDB-I-JNLSTATE, Journaling state for region BREG is now DISABLED
+%YDB-I-JNLSTATE, Journaling state for region CREG is now DISABLED
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now DISABLED
 Journal States:(expected DISABLED):
   Journal State                    DISABLED
   Journal State                    DISABLED
   Journal State                    DISABLED
   Journal State                    DISABLED
 Try 0 to 1: ##SOURCE_PATH##/mupip set -journal=enable,off,nobefore -reg *
-%GTM-I-JNLSTATE, Journaling state for region AREG is now OFF
-%GTM-I-JNLSTATE, Journaling state for region BREG is now OFF
-%GTM-I-JNLSTATE, Journaling state for region CREG is now OFF
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now OFF
+%YDB-I-JNLSTATE, Journaling state for region AREG is now OFF
+%YDB-I-JNLSTATE, Journaling state for region BREG is now OFF
+%YDB-I-JNLSTATE, Journaling state for region CREG is now OFF
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now OFF
 Journal States:(expected OFF):
   Journal State                         OFF  Journal Before imaging       FALSE
   Journal State                         OFF  Journal Before imaging       FALSE
   Journal State                         OFF  Journal Before imaging       FALSE
   Journal State                         OFF  Journal Before imaging       FALSE
 Change state to 0:
-%GTM-I-JNLSTATE, Journaling state for region AREG is now DISABLED
-%GTM-I-JNLSTATE, Journaling state for region BREG is now DISABLED
-%GTM-I-JNLSTATE, Journaling state for region CREG is now DISABLED
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now DISABLED
+%YDB-I-JNLSTATE, Journaling state for region AREG is now DISABLED
+%YDB-I-JNLSTATE, Journaling state for region BREG is now DISABLED
+%YDB-I-JNLSTATE, Journaling state for region CREG is now DISABLED
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now DISABLED
 Try 0 to 2: ##SOURCE_PATH##/mupip set -journal=enable,on,nobefore -reg *
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with NOBEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with NOBEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with NOBEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with NOBEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with NOBEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with NOBEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region AREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region BREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region CREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 Journal States:(expected ON):
   Journal State               [inactive] ON  Journal Before imaging       FALSE
   Journal State               [inactive] ON  Journal Before imaging       FALSE
@@ -88,10 +88,10 @@ Journal States:(expected ON):
 Case 39
 Journal state switching from 1 or 2 to 0 needs standalone access
 Change state to 1:
-%GTM-I-JNLSTATE, Journaling state for region AREG is now OFF
-%GTM-I-JNLSTATE, Journaling state for region BREG is now OFF
-%GTM-I-JNLSTATE, Journaling state for region CREG is now OFF
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now OFF
+%YDB-I-JNLSTATE, Journaling state for region AREG is now OFF
+%YDB-I-JNLSTATE, Journaling state for region BREG is now OFF
+%YDB-I-JNLSTATE, Journaling state for region CREG is now OFF
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now OFF
 GTM Process starts in background...
 Try to swtich from 1 to 0
 Journal States:(expected OFF):
@@ -100,74 +100,74 @@ Journal States:(expected OFF):
   Journal State                         OFF  Journal Before imaging        TRUE
   Journal State                         OFF  Journal Before imaging        TRUE
 Journal state switch from 1 to 1
-%GTM-I-JNLSTATE, Journaling state for region AREG is now OFF
-%GTM-I-JNLSTATE, Journaling state for region BREG is now OFF
-%GTM-I-JNLSTATE, Journaling state for region CREG is now OFF
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now OFF
+%YDB-I-JNLSTATE, Journaling state for region AREG is now OFF
+%YDB-I-JNLSTATE, Journaling state for region BREG is now OFF
+%YDB-I-JNLSTATE, Journaling state for region CREG is now OFF
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now OFF
 Journal States:(expected OFF):
   Journal State                         OFF  Journal Before imaging        TRUE
   Journal State                         OFF  Journal Before imaging        TRUE
   Journal State                         OFF  Journal Before imaging        TRUE
   Journal State                         OFF  Journal Before imaging        TRUE
 Journal state switch from 1 to 2
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region AREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region BREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region CREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 Journal States:(expected ON):
   Journal State                          ON  Journal Before imaging        TRUE
   Journal State                          ON  Journal Before imaging        TRUE
   Journal State                          ON  Journal Before imaging        TRUE
   Journal State                          ON  Journal Before imaging        TRUE
 Journal state switch from 2 to 2
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region AREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region BREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region CREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 Journal States:(expected ON):
   Journal State                          ON  Journal Before imaging        TRUE
   Journal State                          ON  Journal Before imaging        TRUE
   Journal State                          ON  Journal Before imaging        TRUE
   Journal State                          ON  Journal Before imaging        TRUE
 Journal state switch from 2 to 1
-%GTM-I-JNLSTATE, Journaling state for region AREG is now OFF
-%GTM-I-JNLSTATE, Journaling state for region BREG is now OFF
-%GTM-I-JNLSTATE, Journaling state for region CREG is now OFF
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now OFF
+%YDB-I-JNLSTATE, Journaling state for region AREG is now OFF
+%YDB-I-JNLSTATE, Journaling state for region BREG is now OFF
+%YDB-I-JNLSTATE, Journaling state for region CREG is now OFF
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now OFF
 Journal States:(expected OFF):
   Journal State                         OFF  Journal Before imaging        TRUE
   Journal State                         OFF  Journal Before imaging        TRUE
   Journal State                         OFF  Journal Before imaging        TRUE
   Journal State                         OFF  Journal Before imaging        TRUE
 Journal state switch from 1 to 2
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region AREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region BREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region CREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 Journal States:(expected ON):
   Journal State                          ON  Journal Before imaging        TRUE
   Journal State                          ON  Journal Before imaging        TRUE
@@ -194,26 +194,26 @@ GTM>
 No errors detected by integ.
 No process are running in the background
 Journal state switch to 0
-%GTM-I-JNLSTATE, Journaling state for region AREG is now DISABLED
-%GTM-I-JNLSTATE, Journaling state for region BREG is now DISABLED
-%GTM-I-JNLSTATE, Journaling state for region CREG is now DISABLED
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now DISABLED
+%YDB-I-JNLSTATE, Journaling state for region AREG is now DISABLED
+%YDB-I-JNLSTATE, Journaling state for region BREG is now DISABLED
+%YDB-I-JNLSTATE, Journaling state for region CREG is now DISABLED
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now DISABLED
 Current state is 0:
 Case 42 and 43
 BUFFER_SIZE change requires stand alone access, but most others do not
 Switch journal state to 2
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region AREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region BREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region CREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 GTM Process starts in background...
 # Expect all the below buffer_size change commands to error out with 'File is in use/File already open'
 Journal Buffer Size:(expected 2308)
@@ -223,30 +223,30 @@ Journal Buffer Size:(expected 2308)
   Journal Buffer Size                  2312  Journal Alignsize             4096
 Some qualifiers do not need standalone access
 With nobefore option
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-%GTM-I-JNLSWITCHSZCHG, Journal AUTOSWITCHLIMIT [2097152 blocks] is rounded down to [2096948 blocks] to equal the sum of Journal ALLOCATION [2048 blocks] and a multiple of Journal EXTENSION [300 blocks] for database file ##TEST_PATH##/mumps.dat
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps_standalone_nobefore.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps_standalone_nobefore.mjl is renamed to ##TEST_PATH##/mumps_standalone_nobefore.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps_standalone_nobefore.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps_standalone_nobefore.mjl is renamed to ##TEST_PATH##/mumps_standalone_nobefore.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps_standalone_nobefore.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps_standalone_nobefore.mjl is renamed to ##TEST_PATH##/mumps_standalone_nobefore.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps_standalone_nobefore.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+%YDB-I-JNLSWITCHSZCHG, Journal AUTOSWITCHLIMIT [2097152 blocks] is rounded down to [2096948 blocks] to equal the sum of Journal ALLOCATION [2048 blocks] and a multiple of Journal EXTENSION [300 blocks] for database file ##TEST_PATH##/mumps.dat
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps_standalone_nobefore.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps_standalone_nobefore.mjl is renamed to ##TEST_PATH##/mumps_standalone_nobefore.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps_standalone_nobefore.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps_standalone_nobefore.mjl is renamed to ##TEST_PATH##/mumps_standalone_nobefore.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps_standalone_nobefore.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps_standalone_nobefore.mjl is renamed to ##TEST_PATH##/mumps_standalone_nobefore.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps_standalone_nobefore.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
   Journal State                          ON  Journal Before imaging        TRUE
   Journal Allocation                   2048  Journal Extension             2048
   Journal Buffer Size                  2312  Journal Alignsize             4096
@@ -272,87 +272,87 @@ With nobefore option
   Journal Yield Limit                   900  Journal Sync IO              FALSE
   Journal File: ##TEST_PATH##/mumps_standalone_nobefore.mjl
 With before option
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps_standalone_nobefore.mjl is renamed to ##TEST_PATH##/mumps_standalone_nobefore.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps_standalone_nobefore.mjl created for region DEFAULT with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps_standalone_nobefore.mjl is renamed to ##TEST_PATH##/mumps_standalone_nobefore.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps_standalone_nobefore.mjl created for region DEFAULT with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
-%GTM-I-JNLSWITCHSZCHG, Journal AUTOSWITCHLIMIT [2096948 blocks] is rounded down to [2096800 blocks] to equal the sum of Journal ALLOCATION [4000 blocks] and a multiple of Journal EXTENSION [300 blocks] for database file ##TEST_PATH##/mumps.dat
-%GTM-I-JNLSWITCHSZCHG, Journal AUTOSWITCHLIMIT [8386560 blocks] is rounded down to [8386464 blocks] to equal the sum of Journal ALLOCATION [4000 blocks] and a multiple of Journal EXTENSION [2048 blocks] for database file ##TEST_PATH##/a.dat
-%GTM-I-JNLSWITCHSZCHG, Journal AUTOSWITCHLIMIT [8386560 blocks] is rounded down to [8386464 blocks] to equal the sum of Journal ALLOCATION [4000 blocks] and a multiple of Journal EXTENSION [2048 blocks] for database file ##TEST_PATH##/b.dat
-%GTM-I-JNLSWITCHSZCHG, Journal AUTOSWITCHLIMIT [8386560 blocks] is rounded down to [8386464 blocks] to equal the sum of Journal ALLOCATION [4000 blocks] and a multiple of Journal EXTENSION [2048 blocks] for database file ##TEST_PATH##/c.dat
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps_standalone_nobefore.mjl is renamed to ##TEST_PATH##/mumps_standalone_nobefore.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps_standalone_nobefore.mjl created for region DEFAULT with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
-%GTM-I-JNLSWITCHSZCHG, Journal AUTOSWITCHLIMIT [8386464 blocks] is rounded down to [8386400 blocks] to equal the sum of Journal ALLOCATION [4000 blocks] and a multiple of Journal EXTENSION [200 blocks] for database file ##TEST_PATH##/a.dat
-%GTM-I-JNLSWITCHSZCHG, Journal AUTOSWITCHLIMIT [8386464 blocks] is rounded down to [8386400 blocks] to equal the sum of Journal ALLOCATION [4000 blocks] and a multiple of Journal EXTENSION [200 blocks] for database file ##TEST_PATH##/b.dat
-%GTM-I-JNLSWITCHSZCHG, Journal AUTOSWITCHLIMIT [8386464 blocks] is rounded down to [8386400 blocks] to equal the sum of Journal ALLOCATION [4000 blocks] and a multiple of Journal EXTENSION [200 blocks] for database file ##TEST_PATH##/c.dat
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a_standalone_before.mjl created for database file ##TEST_PATH##/a.dat with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/a.dat is now ON
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a_standalone_before.mjl is renamed to ##TEST_PATH##/a_standalone_before.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps_standalone_nobefore.mjl is renamed to ##TEST_PATH##/mumps_standalone_nobefore.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a_standalone_before.mjl created for region AREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps_standalone_nobefore.mjl created for region DEFAULT with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a_standalone_before.mjl is renamed to ##TEST_PATH##/a_standalone_before.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps_standalone_nobefore.mjl is renamed to ##TEST_PATH##/mumps_standalone_nobefore.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a_standalone_before.mjl created for region AREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps_standalone_nobefore.mjl created for region DEFAULT with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a_standalone_before.mjl is renamed to ##TEST_PATH##/a_standalone_before.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps_standalone_nobefore.mjl is renamed to ##TEST_PATH##/mumps_standalone_nobefore.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a_standalone_before.mjl created for region AREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps_standalone_nobefore.mjl created for region DEFAULT with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps_standalone_nobefore.mjl is renamed to ##TEST_PATH##/mumps_standalone_nobefore.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps_standalone_nobefore.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region AREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region BREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region CREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps_standalone_nobefore.mjl is renamed to ##TEST_PATH##/mumps_standalone_nobefore.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps_standalone_nobefore.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region AREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region BREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region CREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-JNLSWITCHSZCHG, Journal AUTOSWITCHLIMIT [2096948 blocks] is rounded down to [2096800 blocks] to equal the sum of Journal ALLOCATION [4000 blocks] and a multiple of Journal EXTENSION [300 blocks] for database file ##TEST_PATH##/mumps.dat
+%YDB-I-JNLSWITCHSZCHG, Journal AUTOSWITCHLIMIT [8386560 blocks] is rounded down to [8386464 blocks] to equal the sum of Journal ALLOCATION [4000 blocks] and a multiple of Journal EXTENSION [2048 blocks] for database file ##TEST_PATH##/a.dat
+%YDB-I-JNLSWITCHSZCHG, Journal AUTOSWITCHLIMIT [8386560 blocks] is rounded down to [8386464 blocks] to equal the sum of Journal ALLOCATION [4000 blocks] and a multiple of Journal EXTENSION [2048 blocks] for database file ##TEST_PATH##/b.dat
+%YDB-I-JNLSWITCHSZCHG, Journal AUTOSWITCHLIMIT [8386560 blocks] is rounded down to [8386464 blocks] to equal the sum of Journal ALLOCATION [4000 blocks] and a multiple of Journal EXTENSION [2048 blocks] for database file ##TEST_PATH##/c.dat
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps_standalone_nobefore.mjl is renamed to ##TEST_PATH##/mumps_standalone_nobefore.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps_standalone_nobefore.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region AREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region BREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region CREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-JNLSWITCHSZCHG, Journal AUTOSWITCHLIMIT [8386464 blocks] is rounded down to [8386400 blocks] to equal the sum of Journal ALLOCATION [4000 blocks] and a multiple of Journal EXTENSION [200 blocks] for database file ##TEST_PATH##/a.dat
+%YDB-I-JNLSWITCHSZCHG, Journal AUTOSWITCHLIMIT [8386464 blocks] is rounded down to [8386400 blocks] to equal the sum of Journal ALLOCATION [4000 blocks] and a multiple of Journal EXTENSION [200 blocks] for database file ##TEST_PATH##/b.dat
+%YDB-I-JNLSWITCHSZCHG, Journal AUTOSWITCHLIMIT [8386464 blocks] is rounded down to [8386400 blocks] to equal the sum of Journal ALLOCATION [4000 blocks] and a multiple of Journal EXTENSION [200 blocks] for database file ##TEST_PATH##/c.dat
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/a_standalone_before.mjl created for database file ##TEST_PATH##/a.dat with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/a.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/a_standalone_before.mjl is renamed to ##TEST_PATH##/a_standalone_before.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps_standalone_nobefore.mjl is renamed to ##TEST_PATH##/mumps_standalone_nobefore.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/a_standalone_before.mjl created for region AREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps_standalone_nobefore.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region AREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region BREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region CREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/a_standalone_before.mjl is renamed to ##TEST_PATH##/a_standalone_before.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps_standalone_nobefore.mjl is renamed to ##TEST_PATH##/mumps_standalone_nobefore.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/a_standalone_before.mjl created for region AREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps_standalone_nobefore.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region AREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region BREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region CREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/a_standalone_before.mjl is renamed to ##TEST_PATH##/a_standalone_before.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps_standalone_nobefore.mjl is renamed to ##TEST_PATH##/mumps_standalone_nobefore.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/a_standalone_before.mjl created for region AREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps_standalone_nobefore.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region AREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region BREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region CREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
   Journal State                          ON  Journal Before imaging        TRUE
   Journal Allocation                   4000  Journal Extension              200
   Journal Buffer Size                  2312  Journal Alignsize             4096
@@ -389,18 +389,18 @@ Verify Pass
 GTM>
 No background processes are running
 Now change journal buffer size
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a_standalone_before.mjl is renamed to ##TEST_PATH##/a_standalone_before.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps_standalone_nobefore.mjl is renamed to ##TEST_PATH##/mumps_standalone_nobefore.mjl_##TIMESTAMP##
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a_standalone_before.mjl created for region AREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps_standalone_nobefore.mjl created for region DEFAULT with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/a_standalone_before.mjl is renamed to ##TEST_PATH##/a_standalone_before.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps_standalone_nobefore.mjl is renamed to ##TEST_PATH##/mumps_standalone_nobefore.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/a_standalone_before.mjl created for region AREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps_standalone_nobefore.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region AREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region BREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region CREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 Journal Buffer Size:(expected 2308)
   Journal Buffer Size                  2308  Journal Alignsize             4096
   Journal Buffer Size                  2308  Journal Alignsize             4096

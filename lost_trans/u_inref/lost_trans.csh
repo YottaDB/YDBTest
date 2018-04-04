@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -114,7 +117,7 @@ endif
 if (0 == $rollback_rand) then
 	# Start rcvr with -autorollback
 	$sec_shell "$sec_getenv; cd $SEC_SIDE;  setenv gtm_test_autorollback TRUE ; $gtm_tst/com/RCVR.csh "." $portno $start_time >&! RCVR_${start_time}.out"
-	$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/wait_for_log.csh -log $RCVR_LOG_FILE -message GTM-I-ORLBKCMPLT -duration 180; if (! -e a.lost) mv *.lost a.lost"	# Rename lost transaction file (which could be a.lost or b.lost or c.lost etc.) to fixed name a.lost
+	$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/wait_for_log.csh -log $RCVR_LOG_FILE -message YDB-I-ORLBKCMPLT -duration 180; if (! -e a.lost) mv *.lost a.lost"	# Rename lost transaction file (which could be a.lost or b.lost or c.lost etc.) to fixed name a.lost
 else
 	# Do rollback -fetchresync
 	$gtm_tst/com/mupip_rollback.csh -fetchresync=$portno -losttrans=$SEC_SIDE/a.lost "*"  >&! rollback.log

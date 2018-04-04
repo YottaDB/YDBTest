@@ -3,17 +3,17 @@
 No prior versions available: RANDOMVER-E-CANNOTRUN : Could not determine previous version matching the given criteria. Exiting...
 ##ALLOW_OUTPUT HOST_ALL
 ##SUSPEND_OUTPUT HOST_LINUX_S390X HOST_OS390_S390
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
 GTM>
 
 GTM>
 
 GTM>
-%GTM-I-RECORDSTAT, ^var:	  Key cnt: 384  max subsc len: 59  max data len: 4  max rec len: 67
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 384  max subsc len: 59  max data len: 4  max rec len: 67
-%GTM-I-RECORDSTAT, ^var:	  Key cnt: 384  max subsc len: 59  max rec len: 4  max node len: 67
-%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 384  max subsc len: 59  max rec len: 4  max node len: 67
+%YDB-I-RECORDSTAT, ^var:	  Key cnt: 384  max subsc len: 59  max data len: 4  max rec len: 67
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 384  max subsc len: 59  max data len: 4  max rec len: 67
+%YDB-I-RECORDSTAT, ^var:	  Key cnt: 384  max subsc len: 59  max rec len: 4  max node len: 67
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 384  max subsc len: 59  max rec len: 4  max node len: 67
 #####TEST CONDITION :Loading into encrypted and non encrypted databases with new extract filee#####
 Files Created in ##TEST_PATH##:
 Using: ##SOURCE_PATH##/mumps -run GDE
@@ -35,8 +35,8 @@ GDE>
 
 %GDE-I-GDUPDATE, Updating Global Directory file 
 	##TEST_PATH##/create.gld
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
 ##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
 
 Beginning LOAD at record number: 2
@@ -68,8 +68,8 @@ GDE>
 
 %GDE-I-GDUPDATE, Updating Global Directory file 
 	##TEST_PATH##/create_old.gld
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/z.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/y.dat created
 ##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
 
 Beginning LOAD at record number: 2

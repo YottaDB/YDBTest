@@ -62,15 +62,15 @@ Test 2 : Source server reads correctly from journal files even if concurrent jnl
 --> Stop receiver server
 ==Executing MULTISITE_REPLIC 'STOPRCV INST1 INST2'==
 --> Switch to new journal file with 8Mb autoswitchlimit and 2Mb alignsize
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
-##FILTERED##%GTM-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-##TEST_AWK.GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with .*BEFORE_IMAGES
-##TEST_AWK.GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with .*BEFORE_IMAGES
-##TEST_AWK.GTM-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with .*BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##TEST_AWK.YDB-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with .*BEFORE_IMAGES
+##TEST_AWK.YDB-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with .*BEFORE_IMAGES
+##TEST_AWK.YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with .*BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region AREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region BREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 --> Do approximately 8Mb of updates to fill it
 --> Do some more updates in the background to cause autoswitch
 --> Sleep randomly before switch to increase chances of catching source server in the second call to <repl_read_file>

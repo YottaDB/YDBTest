@@ -343,7 +343,7 @@ unset verbose
            Test that GDE setting of LOCK_SPACE gets carried over to the database        
 ########################################################################################
 $MUPIP create
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 $gtm_tst/com/get_dse_df.csh
 $grep -E "Region          |Lock space" dse_df.log
 Region          DEFAULT

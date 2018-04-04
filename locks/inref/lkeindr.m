@@ -157,7 +157,7 @@ LKEEXAM(k,e0,e1,e2,lcnt)
 	.  for  quit:line["DEFAULT"!$ZEOF  read line
 	.  if line["LOCKSPACEINFO" read line	; take into account LOCKSPACEINFO message in LKE SHOW output
 	.  close fname
-	.  if line["%GTM-I-NOLOCKMATCH, No matching locks were found in" w !,k,"   LKE PASS"
+	.  if line["%YDB-I-NOLOCKMATCH, No matching locks were found in" w !,k,"   LKE PASS"
 	.  else  w !,k,"   LKE FAIL ",line,!
 	.  q
 	else  do

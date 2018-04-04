@@ -129,7 +129,7 @@ $gtm_tst/com/jnl_on.csh
 set echo
 #-file-list should not be * for -REDIRECT
 $MUPIP journal -recover -forward -redirect="bgdbb.dat=test.dat" "*"
-#%GTM-I-STARFILE, Star argument cannot be be specified with REDIRECT qualifier,
+#%YDB-I-STARFILE, Star argument cannot be be specified with REDIRECT qualifier,
 #%YDB-E-MUPCLIERR,
 
 #-file-list should be * for ROLLBACK

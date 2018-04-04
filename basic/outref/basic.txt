@@ -1250,34 +1250,34 @@ ZB ^main
 
 GTM>
 Do ^main
-%GTM-I-BREAKZBA, Break instruction encountered during ZBREAK action
+%YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
 		At M source location +2^main
 
 GTM>
 ZContinue
 
 Executing Shared Copy of MAIN...
-%GTM-I-BREAKZBA, Break instruction encountered during ZBREAK action
+%YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
 		At M source location fact^factor
 
 GTM>
 ZContinue
-%GTM-I-BREAKZBA, Break instruction encountered during ZBREAK action
+%YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
 		At M source location fact^factor
 
 GTM>
 ZContinue
-%GTM-I-BREAKZBA, Break instruction encountered during ZBREAK action
+%YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
 		At M source location fact^factor
 
 GTM>
 ZContinue
-%GTM-I-BREAKZBA, Break instruction encountered during ZBREAK action
+%YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
 		At M source location fact^factor
 
 GTM>
 ZContinue
-%GTM-I-BREAKZBA, Break instruction encountered during ZBREAK action
+%YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
 		At M source location fact^factor
 
 GTM>
@@ -1299,7 +1299,7 @@ GTM>
 fact^factor
 GTM>
 Do ^main
-%GTM-I-BREAKZBA, Break instruction encountered during ZBREAK action
+%YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
 		At M source location +2^main
 
 GTM>
@@ -1461,17 +1461,17 @@ GTM>
 Do ^main
 
 Executing Shared Copy of MAIN...
-%GTM-I-BREAKZBA, Break instruction encountered during ZBREAK action
+%YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
 		At M source location fact^factor
 
 GTM>
 ZContinue
-%GTM-I-BREAKZBA, Break instruction encountered during ZBREAK action
+%YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
 		At M source location fact^factor
 
 GTM>
 ZContinue
-%GTM-I-BREAKZBA, Break instruction encountered during ZBREAK action
+%YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
 		At M source location fact^factor
 
 GTM>
@@ -1554,12 +1554,12 @@ GTM>
 Do ^main
 
 Executing Shared Copy of MAIN...
-%GTM-I-BREAKZBA, Break instruction encountered during ZBREAK action
+%YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
 		At M source location squaroot^squaroot
 
 GTM>
 ZContinue
-%GTM-I-BREAKZBA, Break instruction encountered during ZBREAK action
+%YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
 		At M source location squaroot^squaroot
 
 GTM>
@@ -1579,7 +1579,7 @@ ZB ^base
 
 GTM>
 Do ^main
-%GTM-I-BREAKZBA, Break instruction encountered during ZBREAK action
+%YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
 		At M source location +2^main
 
 GTM>
@@ -1588,35 +1588,35 @@ ZST into
 Executing Shared Copy of MAIN...
 +3^main
        For I=1:1:5 Do
-%GTM-I-BREAKZST, Break instruction encountered during ZSTEP action
+%YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location +3^main
 
 GTM>
 ZST into
 +5^main
        . Do squaroot^squaroot(I,.sqrt) Set NUM(I,"root")=sqrt
-%GTM-I-BREAKZST, Break instruction encountered during ZSTEP action
+%YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location +5^main
 
 GTM>
 ZST into
 squaroot^squaroot
 squaroot(num,root);
-%GTM-I-BREAKZST, Break instruction encountered during ZSTEP action
+%YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location squaroot^squaroot
 
 GTM>
 ZST Outof
 +6^main
        . Set sqr=$$squar^square(I),NUM(I,"square")=sqr
-%GTM-I-BREAKZST, Break instruction encountered during ZSTEP action
+%YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location +6^main
 
 GTM>
 ZST over
 +7^main
        . Set cube=$$cubeit^cube(I),NUM(I,"cube")=cube
-%GTM-I-BREAKZST, Break instruction encountered during ZSTEP action
+%YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location +7^main
 
 GTM>
@@ -1624,28 +1624,28 @@ ZB cubeit^cube
 
 GTM>
 ZST Outof
-%GTM-I-BREAKZBA, Break instruction encountered during ZBREAK action
+%YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
 		At M source location cubeit^cube
 
 GTM>
 ZST Outof
 +8^main
        . Set factrl=$$fact^factor(I),NUM(I,"factorial")=factrl                 
-%GTM-I-BREAKZST, Break instruction encountered during ZSTEP action
+%YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location +8^main
 
 GTM>
 ZST over
 +9^main
        . Set base=10,base2=2,base8=8
-%GTM-I-BREAKZST, Break instruction encountered during ZSTEP action
+%YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location +9^main
 
 GTM>
 ZST over
 +10^main
        . Set binary=$$base^base(sqr,base,base2),NUM(I,"square","binary")=binary
-%GTM-I-BREAKZST, Break instruction encountered during ZSTEP action
+%YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location +10^main
 
 GTM>
@@ -1670,38 +1670,38 @@ ZB -^main
 
 GTM>
 ZContinue
-%GTM-I-BREAKZBA, Break instruction encountered during ZBREAK action
+%YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
 		At M source location base^base
 
 GTM>
 ZContinue
-%GTM-I-BREAKZBA, Break instruction encountered during ZBREAK action
+%YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
 		At M source location base^base
 
 GTM>
 ZContinue
-%GTM-I-BREAKZBA, Break instruction encountered during ZBREAK action
+%YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
 		At M source location base^base
 
 GTM>
 ZST into
 base+1^base
  	New val Set val=""
-%GTM-I-BREAKZST, Break instruction encountered during ZSTEP action
+%YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location base+1^base
 
 GTM>
 ZST into
 base+2^base
 	If (n<0)!(y<2)!(y>16)!(z<2)!(z>16)!(+n[".") Q val
-%GTM-I-BREAKZST, Break instruction encountered during ZSTEP action
+%YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location base+2^base
 
 GTM>
 ZST into
 base+3^base
 	Set n=$$decimal^decimal(n,y)
-%GTM-I-BREAKZST, Break instruction encountered during ZSTEP action
+%YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location base+3^base
 
 GTM>

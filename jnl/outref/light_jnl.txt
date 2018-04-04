@@ -11,25 +11,25 @@ f.dat
 g.dat
 h.dat
 light_jnl.dat
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/light_jnl.dat is now DISABLED
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/d.mjl created for region DREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/e.mjl created for region EREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/f.mjl created for region FREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/g.mjl created for region GREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/h.mjl created for region HREG with BEFORE_IMAGES
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/light_jnl.mjl created for region DEFAULT with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region CREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
-%GTM-I-JNLSTATE, Journaling state for region DREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region EREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region FREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region GREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region HREG is now ON
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/light_jnl.dat is now DISABLED
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/c.mjl created for region CREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/d.mjl created for region DREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/e.mjl created for region EREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/f.mjl created for region FREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/g.mjl created for region GREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/h.mjl created for region HREG with BEFORE_IMAGES
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/light_jnl.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region AREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region BREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region CREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-JNLSTATE, Journaling state for region DREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region EREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region FREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region GREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region HREG is now ON
 
 GTM>
  Eight region TP TESTING
@@ -38,22 +38,22 @@ GTM>
 GTM>
 h
 Backward recovery ... ...
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 %GTM-S-JNLSUCCESS, Show successful
 %GTM-S-JNLSUCCESS, Verify successful
 %GTM-S-JNLSUCCESS, Recover successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 Forward recover ... ...
 remove the database file and create a new one.
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/c.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/light_jnl.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/d.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/e.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/f.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/g.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/h.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/c.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/light_jnl.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/d.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/e.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/f.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/g.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/h.dat created
 %GTM-S-JNLSUCCESS, Recover successful
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
@@ -65,9 +65,9 @@ Using: ##SOURCE_PATH##/mupip
 a.dat
 b.dat
 light_jnl.dat
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/light_jnl.dat is now DISABLED
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region BREG is now ON
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/light_jnl.dat is now DISABLED
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region BREG is now ON
 
 GTM>
 
@@ -102,9 +102,9 @@ GTM>
 
 GTM>
 remove the database file and create a new one.
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/light_jnl.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/light_jnl.dat created
 First recover ... ...
 %GTM-S-JNLSUCCESS, Recover successful
 
@@ -133,9 +133,9 @@ Using: ##SOURCE_PATH##/mupip
 a.dat
 b.dat
 light_jnl.dat
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/light_jnl.dat is now DISABLED
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with NOBEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/light_jnl.dat is now DISABLED
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region AREG is now ON
 
 GTM>
 
@@ -170,9 +170,9 @@ GTM>
 
 GTM>
 remove the database file and create a new one.
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/light_jnl.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/light_jnl.dat created
 First recover ... ...
 %GTM-S-JNLSUCCESS, Recover successful
 

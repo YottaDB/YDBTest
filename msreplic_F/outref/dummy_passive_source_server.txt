@@ -26,8 +26,8 @@ GTM>
 GTM>
 
 GTM>
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
-%GTM-I-REPLSTATE, Replication state for region DEFAULT is now ON
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-REPLSTATE, Replication state for region DEFAULT is now ON
 #- Start replication on INST2, with a dummy passive source server to INST3 (if INST1 will not be a secondary)
 ==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/$tst/u_inref/helper_start_source_passive_buf_pp.csh DUMMY'==
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating START of source server for secondary instance [DUMMY]
@@ -47,7 +47,7 @@ GTM>
 Simulating crash on Instance INSTANCE1 in ##TEST_PATH##
 Instance INSTANCE1 crashed!
 #- since we will not use INST1 again, run it down
-%GTM-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
 ==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP replic -receiver -shutdown -timeout=0 >&! SHUT_INST2.out'==
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST2 RCV=INST3 $gtm_tst/$tst/u_inref/helper_start_source_passive_pp.csh __RCV_INSTNAME__'==
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating START of source server for secondary instance [INSTANCE3]

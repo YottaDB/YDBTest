@@ -13,11 +13,11 @@ GDE>
 
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/αβγδε能吞/ＡＢＣＤ.ＥＦＧ
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/αβγδε能吞/αβγδε.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/αβγδε能吞/我能吞下玻璃.而傷 created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/αβγδε能吞/αβγδε.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/αβγδε能吞/我能吞下玻璃.而傷 created
 Enable before image journaling
-%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-JNLSTATE, Journaling state for region AREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 
 GTM>
 
@@ -27,8 +27,8 @@ GTM>
 
 GTM>
 Enable before image journaling again
-%GTM-I-JNLSTATE, Journaling state for region AREG is now ON
-%GTM-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-JNLSTATE, Journaling state for region AREG is now ON
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 
 GTM>
 
@@ -38,10 +38,10 @@ GTM>
 
 GTM>
 Enable before image journaling on all regions
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/αβγδε能吞/Üäröß.mjl created for database file ##TEST_PATH##/αβγδε能吞/我能吞下玻璃.而傷 with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/αβγδε能吞/我能吞下玻璃.而傷 is now ON
-%GTM-I-JNLCREATE, Journal file ##TEST_PATH##/αβγδε能吞/ＥＦＧ.ＡＢＣＤ created for database file ##TEST_PATH##/αβγδε能吞/αβγδε.dat with BEFORE_IMAGES
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/αβγδε能吞/αβγδε.dat is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/αβγδε能吞/Üäröß.mjl created for database file ##TEST_PATH##/αβγδε能吞/我能吞下玻璃.而傷 with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/αβγδε能吞/我能吞下玻璃.而傷 is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/αβγδε能吞/ＥＦＧ.ＡＢＣＤ created for database file ##TEST_PATH##/αβγδε能吞/αβγδε.dat with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/αβγδε能吞/αβγδε.dat is now ON
 
 GTM>
 
@@ -51,13 +51,13 @@ GTM>
 
 GTM>
 ##SOURCE_PATH##/mupip journal -forward -fence=none -verify -extract=ＡＢＣＤＥＦ.Ｇ *
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%GTM-I-FILECREATE, Journal extract file ＡＢＣＤＥＦ.Ｇ created
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file ＡＢＣＤＥＦ.Ｇ created
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Verify successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 check_mjf ＡＢＣＤＥＦ.Ｇ
 unset echo
 05\#TIMESTAMP#\21\#PID3#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^adata("ď")="21"
@@ -159,17 +159,17 @@ GTM>
 GTM>
 Forward recovering
 ##SOURCE_PATH##/mupip journal -recover -forward -extract=ＡＢＣＤＥＦ.Ｇ Üäröß.mjl,ＥＦＧ.ＡＢＣＤ
-##FILTERED##%GTM-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%GTM-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-##TEST_AWK%GTM-I-FILERENAME, File ＡＢＣＤＥＦ.Ｇ is renamed to ＡＢＣＤＥＦ.Ｇ_.*
-%GTM-I-FILECREATE, Journal extract file ＡＢＣＤＥＦ.Ｇ created
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK%YDB-I-FILERENAME, File ＡＢＣＤＥＦ.Ｇ is renamed to ＡＢＣＤＥＦ.Ｇ_.*
+%YDB-I-FILECREATE, Journal extract file ＡＢＣＤＥＦ.Ｇ created
 %GTM-S-JNLSUCCESS, Show successful
 %GTM-S-JNLSUCCESS, Extract successful
 %GTM-S-JNLSUCCESS, Recover successful
-##FILTERED##%GTM-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/αβγδε能吞/αβγδε.dat is now OFF
-%GTM-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/αβγδε能吞/我能吞下玻璃.而傷 is now OFF
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/αβγδε能吞/αβγδε.dat is now OFF
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/αβγδε能吞/我能吞下玻璃.而傷 is now OFF
 check_mjf ＡＢＣＤＥＦ.Ｇ
 unset echo
 # The extract file output will be in a non-deterministic order. Will therefore cause reference file issue.

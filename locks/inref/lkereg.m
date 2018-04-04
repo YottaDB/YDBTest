@@ -100,12 +100,12 @@ lkeexam(k,reg,e0,e1,e2,lcnt)
 
 	open fname:(READONLY)
 	use fname
-	read line	; skip GTM-I-LOCKSPACEINFO line that shows up first
+	read line	; skip YDB-I-LOCKSPACEINFO line that shows up first
 	for  read line  quit:line[reg!$ZEOF
         if line'[reg close fname   w !,k,"FAIL:Check REGION"  q
 
 	if e0=".",e1=".",e2="." do
-	. if line'["%GTM-I-NOLOCKMATCH, No matching locks were found in" set cnt=-99
+	. if line'["%YDB-I-NOLOCKMATCH, No matching locks were found in" set cnt=-99
 	else  do
 	. if '$ZEOF,unix read line
 	. if line[y,line[e0 set cnt=cnt+1

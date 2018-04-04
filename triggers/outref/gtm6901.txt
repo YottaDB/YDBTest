@@ -17,7 +17,7 @@ GDE>
 
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/alt.gld
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/alt.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/alt.dat created
 # Using alt.gld ^x goes to : AREG
 Added SET trigger on ^x named xyz
 1
@@ -89,8 +89,8 @@ Deleted trigger named 'atrig' for global ^a (region DEFAULT)
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
 # CASE B: Test cases for removing the reloading-trigger logic (in trigger_source_read_andor_verify.c) as part of a ZPRINT ^x#
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
-%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
 # Test 1 : zprint should not assert fail when the same trigger is loaded twice
 # Test 2 : zprint should print previously loaded M-source for a trigger even if it is deleted concurrently
 # Run trigreload.m to load same triggers using two different global directories

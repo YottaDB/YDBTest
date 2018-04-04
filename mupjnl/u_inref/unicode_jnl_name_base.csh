@@ -4,6 +4,9 @@
 # Copyright (c) 2007-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -34,7 +37,7 @@ $MUPIP create
 #
 echo "Enable before image journaling"
 $MUPIP set -journal="enable,on,before" -reg "*" >&! jnl_on_1.log
-$grep "GTM-I-JNLSTATE" jnl_on_1.log | sort
+$grep "YDB-I-JNLSTATE" jnl_on_1.log | sort
 sleep 2
 source $gtm_tst/com/get_abs_time.csh
 #
@@ -50,7 +53,7 @@ gtm_eof
 #
 echo "Enable before image journaling again"
 $MUPIP set -journal="enable,on,before" -reg "*" >&! jnl_on_2.log
-$grep "GTM-I-JNLSTATE" jnl_on_2.log | sort
+$grep "YDB-I-JNLSTATE" jnl_on_2.log | sort
 $GTM << gtm_eof
 for i=11:1:20 set ^adata(\$char(250+i))=i
 h 2

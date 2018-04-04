@@ -4,6 +4,9 @@
 # Copyright (c) 2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -56,4 +59,4 @@ echo $MUPIP journal -recover -back -noverify -since=\"$time1\" a.mjl,mumps.mjl -
 unset nonomatch
 $MUPIP journal -recover -back -noverify -since=\"$time1\" a.mjl,mumps.mjl -parallel=2 >& mupjnl.out
 echo "# We expect to see a FILERENAME message in the DEFAULT region in the forward phase of recovery"
-$grep -E "Forward processing started at| : %GTM-I-FILERENAME" mupjnl.out
+$grep -E "Forward processing started at| : %YDB-I-FILERENAME" mupjnl.out
