@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2002, 2013 Fidelity Information Services, Inc	#
+# Copyright 2002, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -72,5 +75,5 @@ $tail -n +3  tmp.glo >! data3.glo
 echo "diff data2.glo data3.glo"
 $tst_cmpsilent data2.glo data3.glo
 if ($status) echo "TEST falied in MUPIP recover"
-egrep "GTM-E|GTM-F" *.out
+egrep "YDB-E|YDB-F" *.out
 cat *.mje*

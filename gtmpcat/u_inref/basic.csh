@@ -249,10 +249,10 @@ EOF
     #
     # Scan the makedmp logs for spurious GT.M errors. There should be exactly one error (KILLBYSIG*) in each log.
     #
-    set errcnt = `$grep -Ec "GTM-[EF]-" makedmp-${pcatver}.log.txt`
+    set errcnt = `$grep -Ec "YDB-[EF]-" makedmp-${pcatver}.log.txt`
     if ($errcnt > 1) then
 	echo "Extraneous errors in makedmp run for ${pcatver}:"
-	$grep -E "GTM-[WEF]-" makedmp-${pcatver}.log.txt | $grep -v "killed by a signal 4"
+	$grep -E "YDB-[WEF]-" makedmp-${pcatver}.log.txt | $grep -v "killed by a signal 4"
 	echo
     endif
 end
@@ -263,7 +263,7 @@ errorexit:
 $echoline
 echo "Any errors in gtmpcat on mumps or mupip processes are shown here"
 $grep -E 'GTMPCAT-[WEF]-' gtmpcat-V*.log.txt
-$grep -E 'GTM-[WEF]-' gtmpcat-V*.log.txt
+$grep -E 'YDB-[WEF]-' gtmpcat-V*.log.txt
 $grep -E 'GTMPCAT-[WEF]-' gtmpcatIntList*.txt
 /bin/ls -l | $grep gtmpcat-fail
 $echoline

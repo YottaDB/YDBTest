@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -64,7 +67,7 @@ else
         $rcp "$tst_remote_host":$SEC_SIDE/online.out $tst_general_dir/online.out.recv
         $rcp "$tst_remote_host":$SEC_SIDE/$timefile $tst_general_dir/$timefile.recv
 endif
-egrep "%GTM-E"  $tst_general_dir/online.out*
-egrep "%GTM-F"  $tst_general_dir/online.out*
+egrep "%YDB-E"  $tst_general_dir/online.out*
+egrep "%YDB-F"  $tst_general_dir/online.out*
 echo "onlnbkup_rcvr test ends."
 echo "Please look at $timefile for timing information."

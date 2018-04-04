@@ -4,6 +4,9 @@
 # Copyright (c) 2005-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -113,7 +116,7 @@ EOF
 endif
 echo "Attempting MUPIP REORG UPGRADE with too big records. Should error out"
 $MUPIP reorg -upgrade -reg DEFAULT >>&! reorg_toobig_up.out
-$grep "GTM-E" reorg_toobig_up.out
+$grep "YDB-E" reorg_toobig_up.out
 if ($status) then
 	echo "TEST-E-ERROR upgrade didn't issue expected too-big record error"
 endif

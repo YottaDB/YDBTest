@@ -18,8 +18,8 @@ Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 # Cause 32K counter overflow on instance file
 Test Replication instance file counter overflow error message
 # Wait for NOMORESEMCNT message
-##TEST_AWK.*GTM-MUMPS-INSTANCE1\[.* %YDB-I-NOMORESEMCNT, ftok counter semaphore has reached its maximum and stopped counting for replication instance ##TEST_PATH##/mumps.repl. Run MUPIP JOURNAL -ROLLBACK -BACKWARD, MUPIP JOURNAL -RECOVER -BACKWARD or MUPIP RUNDOWN to restore the database files and shared resources to a clean state .*
-##TEST_AWK.*GTM-MUMPS-INSTANCE1\[.* %YDB-I-NOMORESEMCNT, ftok counter semaphore has reached its maximum and stopped counting for database ##TEST_PATH##/mumps.dat. Run MUPIP JOURNAL -ROLLBACK -BACKWARD, MUPIP JOURNAL -RECOVER -BACKWARD or MUPIP RUNDOWN to restore the database files and shared resources to a clean state .*
+##TEST_AWK.*YDB-MUMPS-INSTANCE1\[.* %YDB-I-NOMORESEMCNT, ftok counter semaphore has reached its maximum and stopped counting for replication instance ##TEST_PATH##/mumps.repl. Run MUPIP JOURNAL -ROLLBACK -BACKWARD, MUPIP JOURNAL -RECOVER -BACKWARD or MUPIP RUNDOWN to restore the database files and shared resources to a clean state .*
+##TEST_AWK.*YDB-MUMPS-INSTANCE1\[.* %YDB-I-NOMORESEMCNT, ftok counter semaphore has reached its maximum and stopped counting for database ##TEST_PATH##/mumps.dat. Run MUPIP JOURNAL -ROLLBACK -BACKWARD, MUPIP JOURNAL -RECOVER -BACKWARD or MUPIP RUNDOWN to restore the database files and shared resources to a clean state .*
 # Restore permissions on instance and db file
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 Shutting down Primary Source Server Server in ##TEST_PATH##

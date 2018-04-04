@@ -4,6 +4,9 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -49,7 +52,7 @@ cp -f ./save/* .
 echo "# journal recover"
 $MUPIP journal -recover -forward "*" -verbose -parallel=1 >&! journal_recover_case_1.out
 echo "# Do not expect any region prefix messages in the recover output"
-$grep -E '^(AREG|BREG|CREG|DEFAULT) : %GTM-I' journal_recover_case_1.out
+$grep -E '^(AREG|BREG|CREG|DEFAULT) : %YDB-I' journal_recover_case_1.out
 
 echo "# journal show"
 $MUPIP journal -show=broken -forward '*' -parallel=1 >&! journal_show_case_1.out
@@ -89,7 +92,7 @@ cp -f ./save/* .
 echo "# Do journal recover with -parallel=n"
 $MUPIP journal -recover -forward "*" -verbose -parallel=$parallel >&! journal_recover_case_2.out
 echo "# Expect region prefix messages in the recover output"
-$grep -q -E '^(AREG|BREG|CREG|DEFAULT) : %GTM-I' journal_recover_case_2.out
+$grep -q -E '^(AREG|BREG|CREG|DEFAULT) : %YDB-I' journal_recover_case_2.out
 if ($status) then
 	echo "RECOV-E-PARALLEL : Region name prefix expected in recover output, but not found"
 	echo "Check journal_recover_case_1.out"
