@@ -6,14 +6,14 @@ aaa(1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,1)="34 subs in bbb
 
 m bbb(1,2,3,4)=aaa
 Error Number=1
-STAT=lcl+7^subslen,%GTM-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
+STAT=lcl+7^subslen,%YDB-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
 aaa(1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0)="30 subs in aaa"
 aaa(1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,1)="34 subs in bbb"
 line=8
-mystat="lcl+7^subslen,%GTM-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded"
+mystat="lcl+7^subslen,%YDB-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded"
 newprog="2:lcl+8^subslen"
 prog="lcl+7^subslen"
-savestat="150379328,lcl+7^subslen,%GTM-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded"
+savestat="150379328,lcl+7^subslen,%YDB-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded"
 unix=1
 us="errcont"
 
@@ -38,26 +38,26 @@ STAT=gbl+10^subslen,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exc
 
 GTM>
 Error Number=3
-STAT=gtm7867+5^subslen,%GTM-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
+STAT=gtm7867+5^subslen,%YDB-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
 Error Number=4
-STAT=gtm7867+7^subslen,%GTM-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
+STAT=gtm7867+7^subslen,%YDB-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
 Error Number=5
 ##SUSPEND_OUTPUT GT.CM
 STAT=gtm7867+8^subslen,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%YDB-I-GVIS, 		Global variable: ^c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18)
 ##ALLOW_OUTPUT GT.CM
 ##SUSPEND_OUTPUT GT.M
-STAT=gtm7867+8^subslen,%GTM-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
+STAT=gtm7867+8^subslen,%YDB-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
 ##ALLOW_OUTPUT GT.M
 Error Number=6
-STAT=gtm7867+11^subslen,%GTM-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
+STAT=gtm7867+11^subslen,%YDB-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
 Error Number=7
-STAT=gtm7867+13^subslen,%GTM-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
+STAT=gtm7867+13^subslen,%YDB-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
 Error Number=8
 ##SUSPEND_OUTPUT GT.CM
 STAT=gtm7867+14^subslen,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%YDB-I-GVIS, 		Global variable: ^c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18)
 ##ALLOW_OUTPUT GT.CM
 ##SUSPEND_OUTPUT GT.M
-STAT=gtm7867+14^subslen,%GTM-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
+STAT=gtm7867+14^subslen,%YDB-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
 ##ALLOW_OUTPUT GT.M
 
 GTM>

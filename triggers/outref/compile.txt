@@ -42,7 +42,7 @@ Invalid code the will pass compilation
 	 TPRestart:(2>$TRestart)
 	 ^-----
 ##TEST_AWK		At column 2, line 1, source module .*trgtmp.*
-%GTM-W-INVCMD, Invalid command keyword encountered
+%YDB-W-INVCMD, Invalid command keyword encountered
 ;trigger name: b#1 (region DEFAULT)  cycle: 1
 +^b -commands=S -xecute="xecute ""set $ZTRIggerop=99"""
 ;trigger name: c#1 (region DEFAULT)  cycle: 1
@@ -106,7 +106,7 @@ failing cases first
 	 TPRestart:(2>$TRestart)
 	 ^-----
 ##TEST_AWK		At column 2, line 1, source module .*trgtmp.*
-%GTM-W-INVCMD, Invalid command keyword encountered
+%YDB-W-INVCMD, Invalid command keyword encountered
 	$ZSTATUS=150373050,+1^postconditionalbad#,%YDB-E-INVCMD, Invalid command keyword encountered
 	$ZSTATUS=150373866,+1^c#1#,%YDB-E-VAREXPECTED, Variable expected in this context
 	$ZSTATUS=150373770,+1^b#1#,%YDB-E-SVNOSET, Cannot SET this special variable
@@ -177,11 +177,11 @@ No errors detected by integ.
 No errors detected by integ.
 ##SUSPEND_OUTPUT NON_REPLIC
 ##TEST_AWK##TEST_HOST_SHORT##:##REMOTE_TEST_PATH##/RCVR_[0-9][0-9]_[0-9][0-9]_[0-9][0-9].log.updproc
-%GTM-W-INVCMD, Invalid command keyword encountered
+%YDB-W-INVCMD, Invalid command keyword encountered
 	$ZSTATUS=150373866,+1^c#1#,%YDB-E-VAREXPECTED, Variable expected in this context
 	$ZSTATUS=150373770,+1^b#1#,%YDB-E-SVNOSET, Cannot SET this special variable
 	$ZSTATUS=150373978,+1^d#1#,%YDB-E-ZLINKFILE, Error while zlinking "DoesNotExist",%YDB-E-FILENOTFND, File DoesNotExist not found
-%GTM-W-INVCMD, Invalid command keyword encountered
+%YDB-W-INVCMD, Invalid command keyword encountered
 	$ZSTATUS=150373050,+1^postconditionalbad#,%YDB-E-INVCMD, Invalid command keyword encountered
 	$ZSTATUS=150373866,+1^c#1#,%YDB-E-VAREXPECTED, Variable expected in this context
 	$ZSTATUS=150373770,+1^b#1#,%YDB-E-SVNOSET, Cannot SET this special variable

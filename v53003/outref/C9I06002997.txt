@@ -26,12 +26,12 @@ MUPIP INTEG test on REGION started ...
 Integ of region ##REGION1##
 
 Database for region ##REGION1## is already frozen, not integing
-%GTM-W-MUNOTALLINTEG, At least one region skipped. See the earlier messages
+%YDB-W-MUNOTALLINTEG, At least one region skipped. See the earlier messages
 # MUPIP integ for second region. Expect error message: ##FILTERED##GTM_TEST_DEBUGINFO.*
 
 
 Integ of region ##REGION2##
-%GTM-W-MUKILLIP, Kill in progress indicator is set for file ##TEST_PATH##/##DBNAME2## - this MUPIP INTEG operation is likely to result in incorrectly marked busy errors
+%YDB-W-MUKILLIP, Kill in progress indicator is set for file ##TEST_PATH##/##DBNAME2## - this MUPIP INTEG operation is likely to result in incorrectly marked busy errors
 
 Total error count from integ:		1.
 
@@ -49,14 +49,14 @@ Total             100               1              NA             0
 Integ of region ##REGION3##
 
 Database for region ##REGION3## is already frozen, not integing
-%GTM-W-MUNOTALLINTEG, At least one region skipped. See the earlier messages
+%YDB-W-MUNOTALLINTEG, At least one region skipped. See the earlier messages
 # MUPIP INTEG test on REGION ends
 
 # MUPIP INTEG test on FILE started ...
 # MUPIP integ -file for first region
 No errors detected by integ.
 # MUPIP integ -file for second region. Expect warning
-%GTM-W-MUKILLIP, Kill in progress indicator is set for file ##DBNAME2## - this MUPIP INTEG operation is likely to result in incorrectly marked busy errors
+%YDB-W-MUKILLIP, Kill in progress indicator is set for file ##DBNAME2## - this MUPIP INTEG operation is likely to result in incorrectly marked busy errors
 
 No errors detected by integ.
 
@@ -106,13 +106,13 @@ All requested regions unfrozen
 # Start testing abandoned_kills counter
 # Set abandoned_kills flag
 # MUPIP BACKUP ALL regions. Region2 is expected to have warning but will not affect backup.
-%GTM-W-KILLABANDONED, Abandoned kills counter is greater than zero for file ##TEST_PATH##/##DBNAME2##, backup database could have incorrectly marked busy integrity errors
+%YDB-W-KILLABANDONED, Abandoned kills counter is greater than zero for file ##TEST_PATH##/##DBNAME2##, backup database could have incorrectly marked busy integrity errors
 BACKUP COMPLETED.
 # MUPIP FREEZE ALL regions. Region2 is expected to have warning but will be frozen.
 WARNING: The region ##REGION2## to be frozen contains abandoned kills
 All requested regions frozen
 # MUPIP INTEG ALL regions. Region2 is expected to have warning, but will be frozen.
-%GTM-W-KILLABANDONED, Abandoned kills counter is greater than zero for file ##TEST_PATH##/##DBNAME2##, database could have incorrectly marked busy integrity errors
+%YDB-W-KILLABANDONED, Abandoned kills counter is greater than zero for file ##TEST_PATH##/##DBNAME2##, database could have incorrectly marked busy integrity errors
 # Reset abandoned_kills flag
 All requested regions unfrozen
 # End testing abandoned_kills counter

@@ -26,7 +26,7 @@ TEST CASE 2: Bad private key should issue an appropriate error.
 ==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
 ----------
 Error W-TLSCONVSOCK seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
-%GTM-W-TLSCONVSOCK, Failed to convert Unix TCP/IP socket to TLS/SSL aware socket
+%YDB-W-TLSCONVSOCK, Failed to convert Unix TCP/IP socket to TLS/SSL aware socket
 ----------
 ----------
 Error YDB-I-TEXT seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
@@ -53,7 +53,7 @@ TEST CASE 4: Test that specifying a bad password issues appropriate error
 ==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
 ----------
 Error W-TLSCONVSOCK seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
-%GTM-W-TLSCONVSOCK, Failed to convert Unix TCP/IP socket to TLS/SSL aware socket
+%YDB-W-TLSCONVSOCK, Failed to convert Unix TCP/IP socket to TLS/SSL aware socket
 ----------
 ----------
 Error YDB-I-TEXT seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
@@ -80,7 +80,7 @@ TEST CASE 6: Test that specifying only one of dh* parameters issues an appropria
 ==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
 ----------
 Error W-TLSCONVSOCK seen in ##FILTERED##RCVR_##TIMESTAMP##.log as expected:
-%GTM-W-TLSCONVSOCK, Failed to convert Unix TCP/IP socket to TLS/SSL aware socket
+%YDB-W-TLSCONVSOCK, Failed to convert Unix TCP/IP socket to TLS/SSL aware socket
 ----------
 ----------
 Error YDB-I-TEXT seen in ##FILTERED##RCVR_##TIMESTAMP##.log as expected:

@@ -21,7 +21,7 @@ source $gtm_tst/com/set_random_limits.csh
 @ rec_range = ($MAX_RECORD_SIZE - $RAND_BLOCK_SIZE) + 1
 @ rec_size = `$gtm_exe/mumps -run rand $rec_range 1 $RAND_BLOCK_SIZE`
 $gtm_tst/com/dbcreate.csh mumps 1 20 $rec_size $RAND_BLOCK_SIZE 1024 4096 >&! dbcreate.outx
-$grep "GTM-W-MUNOSTRMBKUP" dbcreate.out >&! test.debug
+$grep "YDB-W-MUNOSTRMBKUP" dbcreate.out >&! test.debug
 if ( 0 == $status ) then
         mv dbcreate.out dbcreate.out_bkup
 endif

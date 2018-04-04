@@ -20,7 +20,7 @@ File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
 DSE> DSE> DSE> 
-%GTM-W-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
+%YDB-W-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
@@ -83,7 +83,7 @@ GTM>
 
 GTM>
 Try to start DSE. Should NOT get REQRUNDOWN error. Fix DBFLCORRP error
-%GTM-W-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
+%YDB-W-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
@@ -134,7 +134,7 @@ Try to start DSE. Should get REQRECOV error
 Start MUPIP RUNDOWN. Should issue error saying run MUPIP JOURNAL -RECOVER
 %YDB-E-MUUSERECOV, Abnormal shutdown of journaled database ##TEST_PATH##/mumps.dat detected
 %YDB-I-TEXT, Run MUPIP JOURNAL RECOVER
-%GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
+%YDB-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
 
 Start MUPIP RUNDOWN -OVERRIDE. Should work fine without DBFLCORRP error. Should also fix REQRECOV error.
 ##TEST_AWK%YDB-I-SHMREMOVED, Removed Shared Memory id [0-9]* corresponding to file ##TEST_PATH##/mumps.dat
@@ -146,7 +146,7 @@ GTM>
 
 GTM>
 Try to start DSE. Should NOT get REQRECOV error. Fix DBFLCORRP error
-%GTM-W-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
+%YDB-W-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
@@ -215,7 +215,7 @@ Start MUPIP RUNDOWN. Should issue error saying run MUPIP JOURNAL -ROLLBACK
 ##TEST_AWK%YDB-I-MUJPOOLRNDWNSUC, Jnlpool section \(id = [0-9]*\) belonging to the replication instance ##TEST_PATH##/mumps.repl successfully rundown
 ##TEST_AWK%YDB-I-SEMREMOVED, Semaphore id [1-9][0-9]* removed from the system
 %YDB-I-TEXT, Run MUPIP JOURNAL ROLLBACK
-%GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
+%YDB-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
 
 Start MUPIP RUNDOWN -OVERRIDE. Should work fine without DBFLCORRP error. Should also fix REQROLLBACK error.
 ##TEST_AWK%YDB-I-SHMREMOVED, Removed Shared Memory id [0-9]* corresponding to file ##TEST_PATH##/mumps.dat
@@ -227,7 +227,7 @@ GTM>
 
 GTM>
 Try to start DSE. Should NOT get REQROLLBACK error. Fix DBFLCORRP error
-%GTM-W-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
+%YDB-W-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
@@ -302,7 +302,7 @@ Start MUPIP RUNDOWN. Should issue error saying run MUPIP JOURNAL -ROLLBACK
 ##TEST_AWK%YDB-I-MUJPOOLRNDWNSUC, Jnlpool section \(id = [0-9]*\) belonging to the replication instance ##TEST_PATH##/mumps.repl successfully rundown
 ##TEST_AWK%YDB-I-SEMREMOVED, Semaphore id [1-9][0-9]* removed from the system
 %YDB-I-TEXT, Run MUPIP JOURNAL ROLLBACK
-%GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
+%YDB-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
 
 Start MUPIP JOURNAL -ROLLBACK. Should work fine without DBFLCORRP error. Should fix REQROLLBACK and DBFLCORRP error.
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..

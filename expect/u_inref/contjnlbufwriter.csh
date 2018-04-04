@@ -48,7 +48,7 @@ $gtm_tst/com/getoper.csh "$syslog_start" "" test_syslog.txt "" REQ2RESUME
 # - The proc2 has sent JNLPROCSTUCK message to the operator log i.e. the proc2 is waiting for lock on journal buffer.
 # - The proc1 has sent REQ2RESUME message to the operator log i.e. the proc1 is woken up by proc2.
 $gtm_tst/com/grepfile.csh "${proc1}.*YDB-I-SUSPENDING" test_syslog.txt 1 >&! grepresult.txt
-$gtm_tst/com/grepfile.csh "${proc2}.*GTM-W-JNLPROCSTUCK" test_syslog.txt 1 >>&! grepresult.txt
+$gtm_tst/com/grepfile.csh "${proc2}.*YDB-W-JNLPROCSTUCK" test_syslog.txt 1 >>&! grepresult.txt
 $gtm_tst/com/grepfile.csh "${proc1}.*YDB-I-REQ2RESUME.*${proc2}" test_syslog.txt 1 >>&! grepresult.txt
 $grep "is not present" grepresult.txt
 

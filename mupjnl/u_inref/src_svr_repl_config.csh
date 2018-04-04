@@ -84,7 +84,7 @@ echo "Now try to start source server which should not start"
 echo $MUPIP replic -source -start -buffsize='$tst_buffsize' -secondary="$tst_now_secondary":'$portno' -instsecondary=$gtm_test_cur_sec_name -log=SRC_LOG_FILE5
 $MUPIP replic -source -start -buffsize=$tst_buffsize -secondary="$tst_now_secondary":"$portno" -instsecondary=$gtm_test_cur_sec_name -log=SRC_LOG_FILE5
 sleep 5 #D9E10-002501 Apparent deadlock b/w source server parent, child and showbacklog commands
-$grep "GTM-W-NOREPLCTDREG" SRC_LOG_FILE5
+$grep "YDB-W-NOREPLCTDREG" SRC_LOG_FILE5
 #####
 echo "----------------------------------------------------------------------"
 echo "Journal State : a.dat->DISABLED, b->DISABLED, Replic State: mumps->ON"

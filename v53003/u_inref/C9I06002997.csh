@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2008, 2013 Fidelity Information Services, Inc	#
+# Copyright 2008, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -48,7 +51,7 @@ $DSE dump -file -all >& dse_region1_1.out
 # FREEZE actually waited for KIP before erroring out.
 set format="%Y %m %d %H %M %S %Z"
 set stime=`date +"$format"`	# Start time
-# This should generate GTM-W-MUKILLIP error
+# This should generate YDB-W-MUKILLIP error
 echo "# set MUPIP freeze ON for the second region. Expect error message : GTM_TEST_DEBUGINFO $reg2"
 $MUPIP freeze -on  $reg2 >& freeze1_${reg2}.outx
 $tst_awk -v "region=$db2" '{gsub(region,"##DBNAME2##") ; print }' freeze1_${reg2}.outx
@@ -106,7 +109,7 @@ echo "# MUPIP integ -file for first region"
 $MUPIP integ -file $db1 >& integ2_${dbname1}.out
 if ($status) echo "$db1 has integ errors"
 $grep "No errors detected by integ" integ2_${dbname1}.out
-# Expect a warning %GTM-W-MUKILLIP but no integrity errors
+# Expect a warning %YDB-W-MUKILLIP but no integrity errors
 echo "# MUPIP integ -file for second region. Expect warning"
 $MUPIP integ -file $db2  >& integ2_${dbname2}.outx
 $tst_awk -v "region=$db2" '{gsub(region,"##DBNAME2##") ; print }' integ2_${dbname2}.outx
@@ -207,7 +210,7 @@ mkdir $bkp_dir
 chmod 777 $bkp_dir
 echo "# MUPIP BACKUP ALL regions. Region2 is expected to have warning but will not affect backup."
 $MUPIP backup -online '*' $bkp_dir  >& backup3_${dbname2}.outx
-$grep "GTM-W-KILLABANDONED" backup3_${dbname2}.outx | $tst_awk -v "region=$db2" '{gsub(region,"##DBNAME2##") ; print }'
+$grep "YDB-W-KILLABANDONED" backup3_${dbname2}.outx | $tst_awk -v "region=$db2" '{gsub(region,"##DBNAME2##") ; print }'
 $grep "BACKUP COMPLETED" backup3_${dbname2}.outx
 
 echo "# MUPIP FREEZE ALL regions. Region2 is expected to have warning but will be frozen."
@@ -218,7 +221,7 @@ $MUPIP freeze -off '*' >& freeze3_off_all.out
 
 echo "# MUPIP INTEG ALL regions. Region2 is expected to have warning, but will be frozen."
 $MUPIP integ -noonline -region '*' >& integ3_${dbname2}.outx
-$grep "GTM-W-KILLABANDONED" integ3_${dbname2}.outx | $tst_awk -v "region=$db2" '{gsub(region,"##DBNAME2##") ; print }'
+$grep "YDB-W-KILLABANDONED" integ3_${dbname2}.outx | $tst_awk -v "region=$db2" '{gsub(region,"##DBNAME2##") ; print }'
 #$grep "Database for region" integ3_${dbname2}.outx | $tst_awk '{gsub(/'$reg1/',"##REGION1##"); gsub(/'$reg2/',"##REGION2##"); gsub(/'$reg3/',"##REGION3##") ; print }'
 
 echo "# Reset abandoned_kills flag"

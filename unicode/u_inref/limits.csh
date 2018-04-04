@@ -15,13 +15,13 @@
 #################################################################
 #
 # Test for limits on string length, source line length, db keysize, db record size.
-# because of larger block size we will end up with a GTM-W-MUNOSTRMBKUP warning and hence a subsequent dbcreate error
+# because of larger block size we will end up with a YDB-W-MUNOSTRMBKUP warning and hence a subsequent dbcreate error
 # to avoid it from getting displayed redirect the output and have it checked instead.
 #
 $gtm_tst/com/dbcreate.csh mumps 1 -key=255 -rec=32767 -blk=65024 -alloc=10 -glo=64 >&! redirected_dbcreate.out
 cat dbcreate.out
-$gtm_tst/com/check_error_exist.csh redirected_dbcreate.out "GTM-W-MUNOSTRMBKUP" "TEST-E-DBCREATE"
-$gtm_tst/com/check_error_exist.csh dbcreate.out "GTM-W-MUNOSTRMBKUP"
+$gtm_tst/com/check_error_exist.csh redirected_dbcreate.out "YDB-W-MUNOSTRMBKUP" "TEST-E-DBCREATE"
+$gtm_tst/com/check_error_exist.csh dbcreate.out "YDB-W-MUNOSTRMBKUP"
 #
 $echoline
 # 1 MB string length limit
@@ -81,7 +81,7 @@ $GTM << gtm_eof >&! $bytestr$check.out
 do ^$bytestr$check
 gtm_eof
 		# check and filter out the known expected errors
-		if ( "error" == $check ) $gtm_tst/com/check_error_exist.csh $bytestr$check.out "GTM-W-LSINSERTED" "YDB-E-LSEXPECTED" "YDB-E-EXPR"
+		if ( "error" == $check ) $gtm_tst/com/check_error_exist.csh $bytestr$check.out "YDB-W-LSINSERTED" "YDB-E-LSEXPECTED" "YDB-E-EXPR"
 	end
 #
 $GTM << gtm_eof >&! rec_$check.out

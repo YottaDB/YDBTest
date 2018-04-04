@@ -4,6 +4,9 @@
 # Copyright (c) 2003-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -40,7 +43,7 @@ $grep -qE '.dat.*(File is in use|File already open) by another process' ${output
 if ($status) then
 	echo "SETJNL-E-ERROR : Expected File is in use or File already open error from the above command, but did not find it in ${output}x"
 endif
-$grep -v 'GTM-W-WCWRNNOTCHG' ${output}x >&! $output
+$grep -v 'YDB-W-WCWRNNOTCHG' ${output}x >&! $output
 
 echo "MUPIP set -extension_count=500 -global_buffer=2048 -reg "'"*"'
 set output = "set_extension_count_2.out"
@@ -49,7 +52,7 @@ $grep -qE '.dat.*(File is in use|File already open) by another process' ${output
 if ($status) then
 	echo "SETJNL-E-ERROR : Expected File is in use or File already open error from the above command, but did not find it in ${output}x"
 endif
-$grep -v 'GTM-W-WCWRNNOTCHG' ${output}x >&! $output
+$grep -v 'YDB-W-WCWRNNOTCHG' ${output}x >&! $output
 
 $DSE dump -fileheader >&! dse_dump_4.out
 $tst_awk '/Extension Count/ {print $5,$6,$7}' dse_dump_4.out

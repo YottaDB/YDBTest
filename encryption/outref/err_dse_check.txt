@@ -7,8 +7,8 @@ mumps.dat
 ----------------------------------------------------------
 dump file header without gtm_paswd and expect to work
 ----------------------------------------------------------
-%GTM-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/a.dat. Environment variable gtm_passwd not set
-%GTM-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
+%YDB-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/a.dat. Environment variable gtm_passwd not set
+%YDB-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
 
 File  	##TEST_PATH##/a.dat
 Region	AREG
@@ -47,8 +47,8 @@ Region          AREG
 ----------------------------------------------------------
 Rename a_dat_key as a_key
 ----------------------------------------------------------
-%GTM-W-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/a.dat. In config file gtmcrypt.cfg, could not obtain the real path of 'database.keys' entry #1's key. No such file or directory
-%GTM-W-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. In config file gtmcrypt.cfg, could not obtain the real path of 'database.keys' entry #1's key. No such file or directory
+%YDB-W-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/a.dat. In config file gtmcrypt.cfg, could not obtain the real path of 'database.keys' entry #1's key. No such file or directory
+%YDB-W-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. In config file gtmcrypt.cfg, could not obtain the real path of 'database.keys' entry #1's key. No such file or directory
 
 File  	##TEST_PATH##/a.dat
 Region	AREG

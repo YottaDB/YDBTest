@@ -55,8 +55,8 @@ Test case 32
 Journaling cannot be disabled if replication is on
 However journal=disable and replication=off can be specified together
 ##SOURCE_PATH##/mupip set -journal=disable -file mumps.dat
-%GTM-W-REPLJNLCNFLCT, Journaling cannot be turned OFF/DISABLED on database file ##TEST_PATH##/mumps.dat as the replication state is ON and must also be turned OFF/DISABLED in the same command
-%GTM-W-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-W-REPLJNLCNFLCT, Journaling cannot be turned OFF/DISABLED on database file ##TEST_PATH##/mumps.dat as the replication state is ON and must also be turned OFF/DISABLED in the same command
+%YDB-W-MUNOFINISH, MUPIP unable to finish all requested actions
 ##SOURCE_PATH##/mupip set -journal=disable -replic=off -file mumps.dat
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
 %YDB-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now OFF
@@ -75,8 +75,8 @@ are specified in the same command
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 %YDB-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now ON
 ##SOURCE_PATH##/mupip set -journal=off -file mumps.dat
-%GTM-W-REPLJNLCNFLCT, Journaling cannot be turned OFF/DISABLED on database file ##TEST_PATH##/mumps.dat as the replication state is ON and must also be turned OFF/DISABLED in the same command
-%GTM-W-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-W-REPLJNLCNFLCT, Journaling cannot be turned OFF/DISABLED on database file ##TEST_PATH##/mumps.dat as the replication state is ON and must also be turned OFF/DISABLED in the same command
+%YDB-W-MUNOFINISH, MUPIP unable to finish all requested actions
 ##SOURCE_PATH##/mupip set -journal=off -replic=on -file mumps.dat
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: ON OFF
 ##SOURCE_PATH##/mupip set -replic=off -file mumps.dat
@@ -126,7 +126,7 @@ Test Case 36
 replication=on and other journal qualifiers
 ##SOURCE_PATH##/mupip set -journal=enable,before,alignsize=4096,allocation=2048,autoswitchlimit=16448,bu=2308,EP=600,extension=100,filename=abcd.mjl,sync_io,yield_limit=1000 -replic=on -file mumps.dat
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
-%GTM-W-JNLBUFFDBUPD, Journal file buffer size for database file ##TEST_PATH##/mumps.dat has been adjusted from 2308 to 2312.
+%YDB-W-JNLBUFFDBUPD, Journal file buffer size for database file ##TEST_PATH##/mumps.dat has been adjusted from 2308 to 2312.
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 %YDB-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now ON
   Journal State               [inactive] ON  Journal Before imaging        TRUE
@@ -140,7 +140,7 @@ Test Case 37
 replication=off and other journal qualifiers
 ##SOURCE_PATH##/mupip set -journal=enable,before,alignsize=4096,allocation=2048,autoswitchlimit=16448,bu=2308,EP=600,extension=100,filename=test_37.mjl,sync_io,yteld_limit=1000 -replic=off -file mumps.dat
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/test_37.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
-%GTM-W-JNLBUFFDBUPD, Journal file buffer size for database file ##TEST_PATH##/mumps.dat has been adjusted from 2308 to 2312.
+%YDB-W-JNLBUFFDBUPD, Journal file buffer size for database file ##TEST_PATH##/mumps.dat has been adjusted from 2308 to 2312.
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 %YDB-I-REPLSTATE, Replication state for database file ##TEST_PATH##/mumps.dat is now OFF
   Journal State               [inactive] ON  Journal Before imaging        TRUE

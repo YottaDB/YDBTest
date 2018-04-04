@@ -77,9 +77,9 @@ GTM>
 
 GTM>
 %YDB-E-MUDWNGRDTN, Transaction number 0x00000000F8000003 in database ##TEST_PATH##/mumps.dat is too big for MUPIP [REORG] DOWNGRADE. Renew database with MUPIP INTEG TN_RESET
-%GTM-W-WCWRNNOTCHG, Not all specified database files were changed
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
 MUPIP integ -tn_reset mumps.dat
-%GTM-W-DBBTUWRNG, The blocks-to-upgrade file-header field is incorrect. Expected 0x00000000, found 0x00000001
+%YDB-W-DBBTUWRNG, The blocks-to-upgrade file-header field is incorrect. Expected 0x00000000, found 0x00000001
 %YDB-I-DBBTUFIXED, The blocks-to-upgrade file-header field has been changed to the correct value
 
 No errors detected by integ.
@@ -134,7 +134,7 @@ $error_free :  ; $no_regions = 1
 
 Integ of region DEFAULT
 %YDB-E-BADDBVER, Incorrect database version: ##TEST_PATH##/mumps.dat
-%GTM-W-MUNOTALLINTEG, At least one region skipped. See the earlier messages
+%YDB-W-MUNOTALLINTEG, At least one region skipped. See the earlier messages
 
 Check that VERSION and EXTENSION_COUNT work together
 
@@ -194,4 +194,4 @@ Database file ##TEST_PATH##/mumps.dat now has desired DB format V6
 No errors detected by integ.
 ##TEST_PATH##/mupip.err_##TEST_AWK.._.._.._.._.._..
 %YDB-E-BADDBVER, Incorrect database version: ##TEST_PATH##/mumps.dat
-%GTM-W-MUNOTALLINTEG, At least one region skipped. See the earlier messages
+%YDB-W-MUNOTALLINTEG, At least one region skipped. See the earlier messages

@@ -60,7 +60,7 @@ PID 0 Source server is NOT alive
 5 : backlog number of transactions written to journal pool and yet to be sent by the source server
 15 : sequence number of last transaction written to journal pool
 10 : sequence number of last transaction sent by source server
-%GTM-W-SRCSRVNOTEXIST, Source server for secondary instance INSTANCE3 is not alive
+%YDB-W-SRCSRVNOTEXIST, Source server for secondary instance INSTANCE3 is not alive
 0
 
 # Test CHECKHEALTH behavior if INVALID instance name is specified
@@ -115,7 +115,7 @@ No errors detected by integ.
 ##TEST_AWK##TEST_HOST_SHORT##:##TEST_PATH##/msr_execute_.*.out
 %YDB-E-SRCSRVNOTEXIST, Source server for secondary instance INSTANCE3 is not alive
 ##TEST_AWK##TEST_HOST_SHORT##:##TEST_PATH##/msr_execute_.*.out
-%GTM-W-SRCSRVNOTEXIST, Source server for secondary instance INSTANCE3 is not alive
+%YDB-W-SRCSRVNOTEXIST, Source server for secondary instance INSTANCE3 is not alive
 ##TEST_AWK##TEST_HOST_SHORT##:##TEST_PATH##/msr_execute_.*.out
 %YDB-E-REPLINSTSECNONE, No information found for secondary instance ZYXWVU in instance file ##TEST_PATH##/mumps.repl
 ##TEST_AWK##TEST_HOST_SHORT##:##TEST_PATH##/msr_execute_.*.out

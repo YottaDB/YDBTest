@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2005, 2013 Fidelity Information Services, Inc	#
+# Copyright 2005, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -84,7 +87,7 @@ cp mumps_bak.dat mumps.dat
 d1
 # manually create other integirty error like gtm-w-mukillip
 $DSE change -fileheader -kill_in_prog=1
-setenv mupip_err_chk "GTM-W-MUKILLIP"
+setenv mupip_err_chk "YDB-W-MUKILLIP"
 $gtm_tst/$tst/u_inref/integ_err_chk.csh
 #
 ############################ MUTNWARN section #################################

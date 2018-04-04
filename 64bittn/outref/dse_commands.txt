@@ -404,7 +404,7 @@ $error_free :  ; $no_regions = 1
 
 
 Integ of region DEFAULT
-%GTM-W-MUTNWARN, Database file ##TEST_PATH##/mumps.dat has 0x0000000000000000 more transactions to go before reaching the transaction number limit (0xFFFFFFF000000000). Renew database with MUPIP INTEG TN_RESET
+%YDB-W-MUTNWARN, Database file ##TEST_PATH##/mumps.dat has 0x0000000000000000 more transactions to go before reaching the transaction number limit (0xFFFFFFF000000000). Renew database with MUPIP INTEG TN_RESET
 %YDB-E-DBHEADINV, 
        0:0      0  Header size not valid for database
 %YDB-E-INTEGERRS, Database integrity errors
@@ -524,7 +524,7 @@ Total error count from integ:		1.
 
 
 Integ of region DEFAULT
-%GTM-W-MUTNWARN, Database file ##TEST_PATH##/mumps.dat has 0x000000000000000F more transactions to go before reaching the transaction number limit (0x00000000F7FFFFFF). Renew database with MUPIP INTEG TN_RESET
+%YDB-W-MUTNWARN, Database file ##TEST_PATH##/mumps.dat has 0x000000000000000F more transactions to go before reaching the transaction number limit (0x00000000F7FFFFFF). Renew database with MUPIP INTEG TN_RESET
 
 Total error count from integ:		1.
 
@@ -681,9 +681,9 @@ No errors detected by integ.
 %YDB-E-DBTNLTCTN, Transaction numbers greater than the current transaction were found
 %YDB-E-INTEGERRS, Database integrity errors
 ##TEST_PATH##/mupip.err_##TEST_AWK[0-9_]+
-%GTM-W-MUTNWARN, Database file ##TEST_PATH##/mumps.dat has 0x0000000000000000 more transactions to go before reaching the transaction number limit (0xFFFFFFF000000000). Renew database with MUPIP INTEG TN_RESET
+%YDB-W-MUTNWARN, Database file ##TEST_PATH##/mumps.dat has 0x0000000000000000 more transactions to go before reaching the transaction number limit (0xFFFFFFF000000000). Renew database with MUPIP INTEG TN_RESET
 %YDB-E-DBHEADINV, 
 %YDB-E-INTEGERRS, Database integrity errors
 ##TEST_PATH##/mupip.err_##TEST_AWK[0-9_]+
-%GTM-W-MUTNWARN, Database file ##TEST_PATH##/mumps.dat has 0x000000000000000F more transactions to go before reaching the transaction number limit (0x00000000F7FFFFFF). Renew database with MUPIP INTEG TN_RESET
+%YDB-W-MUTNWARN, Database file ##TEST_PATH##/mumps.dat has 0x000000000000000F more transactions to go before reaching the transaction number limit (0x00000000F7FFFFFF). Renew database with MUPIP INTEG TN_RESET
 %YDB-E-INTEGERRS, Database integrity errors

@@ -77,7 +77,7 @@ $gtm_exe/mupip rundown -relinkctl >&! mupip_rundown_rctl1.logx
 $gtm_tst/com/getoper.csh "$time_before" "$time_after" "wcblocked${case}.txt" "" WCBLOCKED
 $grep WCBLOCKED wcblocked${case}.txt | $grep "$cur_dir" >&! /dev/null
 if ($status) then
-	echo "TEST-E-FAIL GTM-W-WCBLOCKED not found in operator log. Check wcblocked${case}.txt."
+	echo "TEST-E-FAIL YDB-W-WCBLOCKED not found in operator log. Check wcblocked${case}.txt."
 endif
 
 # disable the white-box test
@@ -158,7 +158,7 @@ $gtm_exe/mupip rundown -relinkctl >&! mupip_rundown_rctl2.logx
 $gtm_tst/com/getoper.csh "$time_before" "$time_after" "wcblocked${case}.txt" "" WCBLOCKED
 $grep WCBLOCKED wcblocked${case}.txt | $grep "$cur_dir" >&! /dev/null
 if ($status) then
-	echo "TEST-E-FAIL GTM-W-WCBLOCKED not found in operator log. Check wcblocked${case}.txt."
+	echo "TEST-E-FAIL YDB-W-WCBLOCKED not found in operator log. Check wcblocked${case}.txt."
 endif
 
 # disable the white-box test
@@ -270,7 +270,7 @@ $gtm_exe/mupip rundown -relinkctl >&! mupip_rundown_rctl3.logx
 $gtm_tst/com/getoper.csh "$time_before" "$time_after" "wcblocked${case}.txt" "" WCBLOCKED
 $grep WCBLOCKED wcblocked${case}.txt | $grep "$cur_dir" >&! /dev/null
 if ($status) then
-	echo "TEST-E-FAIL GTM-W-WCBLOCKED not found in operator log. Check wcblocked${case}.txt."
+	echo "TEST-E-FAIL YDB-W-WCBLOCKED not found in operator log. Check wcblocked${case}.txt."
 endif
 
 # disable the white-box test

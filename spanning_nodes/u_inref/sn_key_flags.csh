@@ -4,6 +4,9 @@
 # Copyright (c) 2012-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -24,7 +27,7 @@ if ($RAND_KEY_SIZE < 8) then
 endif
 
 $gtm_tst/com/dbcreate.csh mumps 1 $RAND_KEY_SIZE $RAND_RECORD_SIZE $RAND_BLOCK_SIZE 1024 $RAND_GLOBAL_BUFFER_COUNT >&! dbcreate.outx
-$grep "GTM-W-MUNOSTRMBKUP" dbcreate.out >&! test.debug
+$grep "YDB-W-MUNOSTRMBKUP" dbcreate.out >&! test.debug
 if ( 0 == $status ) then
 	mv dbcreate.out dbcreate.out_bkup
 endif

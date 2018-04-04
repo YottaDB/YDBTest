@@ -8,27 +8,27 @@ Issue mupip freeze while parallel GTM updates with out gtm_passwdand expect erro
 ------------------------------------------------------------------------------------------
 unsetenv gtm_passwd
 mupip freeze -ON DEFAULT
-%GTM-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
+%YDB-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
 %YDB-E-CRYPTOPFAILED, Encrypt/Decrypt operation failed for file ##TEST_PATH##/mumps.dat. Please look at prior messages related to encryption for more details
 ------------------------------------------------------------------------------------------
 Issue mupip freeze while parallel GTM updates with bad gtm_passwd and expect error message
 ------------------------------------------------------------------------------------------
 mupip freeze -ON DEFAULT
-##TEST_AWK%GTM-W-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. .*
+##TEST_AWK%YDB-W-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. .*
 %YDB-E-CRYPTOPFAILED, Encrypt/Decrypt operation failed for file ##TEST_PATH##/mumps.dat. Please look at prior messages related to encryption for more details
 ------------------------------------------------------------------------------------------
 Issue mupip freeze after GTM updates without gtm_passwd and expect to work
 ------------------------------------------------------------------------------------------
 unsetenv gtm_passwd
 mupip freeze -ON DEFAULT
-%GTM-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
+%YDB-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
 Region DEFAULT is now FROZEN
 All requested regions frozen
 ------------------------------------------------------------------------------------------
 Issue mupip freeze after GTM updates with bad gtm_passwd and expect to work
 ------------------------------------------------------------------------------------------
 mupip freeze -ON DEFAULT
-##TEST_AWK%GTM-W-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. .*
+##TEST_AWK%YDB-W-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. .*
 Region DEFAULT is now FROZEN
 All requested regions frozen
 ##SOURCE_PATH##/mupip

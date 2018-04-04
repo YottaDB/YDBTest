@@ -8,12 +8,12 @@ Using: ##SOURCE_PATH##/mumps -run GDE
 mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
-# Start the receiver without gtm_passwd - Expect GTM-W-CRYPTINIT warning in passive server log and update process log
+# Start the receiver without gtm_passwd - Expect YDB-W-CRYPTINIT warning in passive server log and update process log
 # Update some globals on primary - Expect update process to exit with YDB-E-CRYPTBADCONFIG
-# Expect both GTM-W-CRYPTINIT and YDB-E-CRYPTBADCONFIG from update process log
+# Expect both YDB-W-CRYPTINIT and YDB-E-CRYPTBADCONFIG from update process log
 ----------
-Error GTM-W-CRYPTINIT seen in ##FILTERED##RCVR_##TIMESTAMP##.log.updproc as expected:
-%GTM-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##REMOTE_TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
+Error YDB-W-CRYPTINIT seen in ##FILTERED##RCVR_##TIMESTAMP##.log.updproc as expected:
+%YDB-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##REMOTE_TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
 ----------
 ----------
 Error YDB-E-CRYPTBADCONFIG seen in ##FILTERED##RCVR_##TIMESTAMP##.log.updproc as expected:
@@ -28,12 +28,12 @@ No errors detected by integ.
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
-# Expect and filter out GTM-W-CRYPTINIT warning from receiver start log and passive source server log
+# Expect and filter out YDB-W-CRYPTINIT warning from receiver start log and passive source server log
 ----------
-Error GTM-W-CRYPTINIT seen in ##FILTERED##START_##TIMESTAMP##.out as expected:
-%GTM-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##REMOTE_TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
+Error YDB-W-CRYPTINIT seen in ##FILTERED##START_##TIMESTAMP##.out as expected:
+%YDB-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##REMOTE_TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
 ----------
 ----------
-Error GTM-W-CRYPTINIT seen in ##FILTERED##passive_##TIMESTAMP##.log as expected:
-%GTM-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##REMOTE_TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
+Error YDB-W-CRYPTINIT seen in ##FILTERED##passive_##TIMESTAMP##.log as expected:
+%YDB-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##REMOTE_TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
 ----------

@@ -60,7 +60,7 @@ $grep -qE '.dat.*(File is in use|File already open) by another process' ${output
 if ($status) then
 	echo "SETJNL-E-ERROR : Expected File is in use or File already open error from the above command, but did not find it in ${output}x"
 endif
-$grep -v 'GTM-W-WCWRNNOTCHG' ${output}x >&! $output
+$grep -v 'YDB-W-WCWRNNOTCHG' ${output}x >&! $output
 echo "Stop the background processes"
 $gtm_tst/com/endtp.csh  >>& endtp1.out
 $gtm_tst/com/dbcheck.csh -nosprgde

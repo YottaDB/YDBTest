@@ -43,7 +43,7 @@ $MUPIP set -journal=enable,nobefore,filename="../a.b.c/d2.jnl" -file $cur_dir/mu
   Journal File: ##TEST_PATH##/a.b.c/d2.jnl
 --------------------------------------------------------------
 $MUPIP set -journal=enable,nobefore,filename="../c.d/failed.mjl" -file mumps.dat
-##TEST_AWK%GTM-W-JNLCRESTATUS, .*
+##TEST_AWK%YDB-W-JNLCRESTATUS, .*
 %SYSTEM-E-ENO2, No such file or directory
 %YDB-E-JNLNOCREATE, Journal file ##TEST_PATH##/c.d/failed.mjl not created
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions

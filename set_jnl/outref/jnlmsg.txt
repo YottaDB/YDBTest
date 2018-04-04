@@ -7,15 +7,15 @@ b.dat
 mumps.dat
 Journal State state is DISABLED
 Case 1a
-%GTM-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/a.dat
-%GTM-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/b.dat
-%GTM-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/mumps.dat
-%GTM-W-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/a.dat
+%YDB-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/b.dat
+%YDB-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/mumps.dat
+%YDB-W-MUNOFINISH, MUPIP unable to finish all requested actions
 Case 1b
-%GTM-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/a.dat
-%GTM-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/b.dat
-%GTM-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/mumps.dat
-%GTM-W-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/a.dat
+%YDB-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/b.dat
+%YDB-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/mumps.dat
+%YDB-W-MUNOFINISH, MUPIP unable to finish all requested actions
 Case 1c
 %YDB-I-JNLSTATE, Journaling state for region AREG is now DISABLED
 %YDB-I-JNLSTATE, Journaling state for region BREG is now DISABLED
@@ -208,9 +208,9 @@ Case 8
 %YDB-I-TEXT, The previous value was outside the allowable range of 2307 to 32768
 %YDB-I-TEXT, The previous value was outside the allowable range of 2307 to 32768
 %YDB-I-TEXT, The previous value was outside the allowable range of 2307 to 32768
-%GTM-W-JNLBUFFREGUPD, Journal file buffer size for region AREG has been adjusted from 1 to 2312.
-%GTM-W-JNLBUFFREGUPD, Journal file buffer size for region BREG has been adjusted from 1 to 2312.
-%GTM-W-JNLBUFFREGUPD, Journal file buffer size for region DEFAULT has been adjusted from 1 to 2312.
+%YDB-W-JNLBUFFREGUPD, Journal file buffer size for region AREG has been adjusted from 1 to 2312.
+%YDB-W-JNLBUFFREGUPD, Journal file buffer size for region BREG has been adjusted from 1 to 2312.
+%YDB-W-JNLBUFFREGUPD, Journal file buffer size for region DEFAULT has been adjusted from 1 to 2312.
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

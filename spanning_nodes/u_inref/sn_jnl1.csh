@@ -305,7 +305,7 @@ echo
 echo "Too small an allocation limit"
 @ allocation = $MIN_ALLOCATION_LIMIT - 1
 $gtm_dist/mupip set -journal=enable,on,$b4nob4image,alloc=$allocation -reg "*" >&! mupip_set-c.out
-$grep "%GTM-W-JNLINVALLOC, Journal file allocation $allocation is not within the valid range of $MIN_ALLOCATION_LIMIT to $MAX_ALLOCATION_LIMIT" mupip_set-c.out >&! /dev/null
+$grep "%YDB-W-JNLINVALLOC, Journal file allocation $allocation is not within the valid range of $MIN_ALLOCATION_LIMIT to $MAX_ALLOCATION_LIMIT" mupip_set-c.out >&! /dev/null
 if ($status) then
 	echo "TEST-E-FAIL Expected error for a low allocation limit not found"
 else
@@ -318,7 +318,7 @@ echo
 echo "Too large an allocation limit"
 @ allocation = $MAX_ALLOCATION_LIMIT + 1
 $gtm_dist/mupip set -journal=enable,on,$b4nob4image,alloc=$allocation -reg "*" >&! mupip_set-d.out
-$grep "%GTM-W-JNLINVALLOC, Journal file allocation $allocation is not within the valid range of $MIN_ALLOCATION_LIMIT to $MAX_ALLOCATION_LIMIT" mupip_set-d.out >&! /dev/null
+$grep "%YDB-W-JNLINVALLOC, Journal file allocation $allocation is not within the valid range of $MIN_ALLOCATION_LIMIT to $MAX_ALLOCATION_LIMIT" mupip_set-d.out >&! /dev/null
 if ($status) then
 	echo "TEST-E-FAIL Expected error for a high allocation limit not found"
 else
@@ -345,7 +345,7 @@ echo
 echo "Too small a journal buffer size"
 @ buffer_size = $MIN_JOURNAL_BUFFER_SIZE - 1
 $gtm_dist/mupip set -journal=enable,on,$b4nob4image,buffer_size=$buffer_size -reg "*" >&! mupip_set-f.out
-$grep "%GTM-W-JNLBUFFREGUPD, Journal file buffer size for region DEFAULT has been adjusted from $buffer_size to $DEF_JOURNAL_BUFFER_SIZE." mupip_set-f.out >&! /dev/null
+$grep "%YDB-W-JNLBUFFREGUPD, Journal file buffer size for region DEFAULT has been adjusted from $buffer_size to $DEF_JOURNAL_BUFFER_SIZE." mupip_set-f.out >&! /dev/null
 
 if ($status) then
 	echo "TEST-E-FAIL Expected error for a low journal buffer size not found"
@@ -359,7 +359,7 @@ echo
 echo "Too large a journal buffer size"
 @ buffer_size = $MAX_JOURNAL_BUFFER_SIZE + 1
 $gtm_dist/mupip set -journal=enable,on,$b4nob4image,buffer_size=$buffer_size -reg "*" >&! mupip_set-g.out
-$grep "%GTM-W-JNLBUFFREGUPD, Journal file buffer size for region DEFAULT has been adjusted from $buffer_size to $MAX_JOURNAL_BUFFER_SIZE." mupip_set-g.out >&! /dev/null
+$grep "%YDB-W-JNLBUFFREGUPD, Journal file buffer size for region DEFAULT has been adjusted from $buffer_size to $MAX_JOURNAL_BUFFER_SIZE." mupip_set-g.out >&! /dev/null
 if ($status) then
 	echo "TEST-E-FAIL Expected error for a high journal buffer size not found"
 else

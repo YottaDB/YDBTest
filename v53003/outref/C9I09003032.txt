@@ -1,4 +1,4 @@
-# This subtest generates a lot of GTM-W-LITNONGRAPH, YDB-E-SPOREOL and YDB-E-EQUAL errors
+# This subtest generates a lot of YDB-W-LITNONGRAPH, YDB-E-SPOREOL and YDB-E-EQUAL errors
 Files Created in ##TEST_PATH##:
 Using: ##SOURCE_PATH##/mumps -run GDE
 mumps.gld
@@ -8,7 +8,7 @@ mumps.dat
 		write !,"this is a bad string literal with a tab	in it,!
 		                                                ^-----
 		At column 50, line 3, source module ##TEST_PATH##/c003032.m
-%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(9)
+%YDB-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(9)
 		write !,"this is a bad string literal with a tab	in it,!
 		                                                	       ^-----
 		At column 58, line 3, source module ##TEST_PATH##/c003032.m
@@ -20,7 +20,7 @@ mumps.dat
 		set ^b="this is 	tab
 		                ^-----
 		At column 18, line 5, source module ##TEST_PATH##/c003032.m
-%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(9)
+%YDB-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(9)
 		set ^b="this is 	tab
 		                	   ^-----
 		At column 22, line 5, source module ##TEST_PATH##/c003032.m
@@ -34,7 +34,7 @@ GTM>
 		write !,"this is a bad string literal with a tab	in it,!
 		                                                ^-----
 		At column 50, line 3, source module ##IN_TEST_PATH##/inref/c003032.m
-%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(9)
+%YDB-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(9)
 		write !,"this is a bad string literal with a tab	in it,!
 		                                                	       ^-----
 		At column 58, line 3, source module ##IN_TEST_PATH##/inref/c003032.m
@@ -46,7 +46,7 @@ GTM>
 		set ^b="this is 	tab
 		                ^-----
 		At column 18, line 5, source module ##IN_TEST_PATH##/inref/c003032.m
-%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(9)
+%YDB-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(9)
 		set ^b="this is 	tab
 		                	   ^-----
 		At column 22, line 5, source module ##IN_TEST_PATH##/inref/c003032.m
@@ -61,7 +61,7 @@ GTM>
 		write !,"this is a bad string literal with a tab	in it,!
 		                                                ^-----
 		At column 50, line 3, source module ##IN_TEST_PATH##/inref/c003032.m
-%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(9)
+%YDB-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(9)
 		write !,"this is a bad string literal with a tab	in it,!
 		                                                	       ^-----
 		At column 58, line 3, source module ##IN_TEST_PATH##/inref/c003032.m
@@ -73,7 +73,7 @@ GTM>
 		set ^b="this is 	tab
 		                ^-----
 		At column 18, line 5, source module ##IN_TEST_PATH##/inref/c003032.m
-%GTM-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(9)
+%YDB-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(9)
 		set ^b="this is 	tab
 		                	   ^-----
 		At column 22, line 5, source module ##IN_TEST_PATH##/inref/c003032.m

@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -97,7 +100,7 @@ if ($stat) then
   # furthermore check errors not related to integrity of the blocks (like "Database is flagged corrupt")
   # eliminate DBMRKBUSY DBLOCMBINC DBMBPFLDLBM MUKILLIP (and INTEGERRS)
   # also eliminate DBBTUWRNG if you see MUKILLIP or DBMRKBUSY
-  # they are GTM-W- but, eliminate them anyway
+  # they are YDB-W- but, eliminate them anyway
   $grep ".-[EF]-" tmp.mupip | $grep -E "MUKILLIP|KILLABANDONED|DBMRKBUSY" >! /dev/null
   if ($status) then
 	mv tmp.mupip tmp.mupip_orig

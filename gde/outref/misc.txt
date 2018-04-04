@@ -272,7 +272,7 @@ TEMPLATE -SEGMENT -ACCESS_METHOD=BG
 ADD -SEGMENT ASEG -BLOCK_SIZE=65024 -FILE_NAME="locksmutexa.dat" -LOCK_SPACE=262144 -MUTEX_SLOTS=64 -RESERVED_BYTES=63965
 ADD -SEGMENT BSEG -ACCESS_METHOD=MM -FILE_NAME="locksmutexb.dat"
 # DSE dump should reflect the modified values of lockspace, mutex slots and reserved bytes
-%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/locksmutexa.dat has a block size larger than 32256 and thus cannot use stream (incremental) backup
+%YDB-W-MUNOSTRMBKUP, Database ##TEST_PATH##/locksmutexa.dat has a block size larger than 32256 and thus cannot use stream (incremental) backup
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/locksmutexa.dat created
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/locksmutexb.dat created
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/locksmutexdefault.dat created

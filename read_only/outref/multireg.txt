@@ -1605,7 +1605,7 @@ Blocks extended     : 0
    
 Global: dfill (region DEFAULT)
 %YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
-%GTM-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
+%YDB-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 Global: afill (region AREG)
@@ -1637,7 +1637,7 @@ Blocks extended     : 0
    
 Global: dfill (region DEFAULT)
 %YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
-%GTM-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
+%YDB-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
 ##ALLOW_OUTPUT SPANNING_REGIONS
  ----- After reorg on read_only database -----
 ##SOURCE_PATH##/mupip
@@ -1901,7 +1901,7 @@ Blocks extended     : 0
    
 Global: efill (region DEFAULT)
 %YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
-%GTM-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
+%YDB-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 Global: afill (region AREG)
@@ -1936,7 +1936,7 @@ Global: dfill (region DEFAULT)
    
 Global: efill (region DEFAULT)
 %YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
-%GTM-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
+%YDB-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
 ##ALLOW_OUTPUT SPANNING_REGIONS
 ------- Test last reorg -------
 ##SOURCE_PATH##/mupip
@@ -2122,7 +2122,7 @@ Blocks extended     : 0
    
 Global: efill (region DEFAULT)
 %YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
-%GTM-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
+%YDB-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 Global: afill (region AREG)
@@ -2157,7 +2157,7 @@ Global: dfill (region DEFAULT)
    
 Global: efill (region DEFAULT)
 %YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
-%GTM-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
+%YDB-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
 ##ALLOW_OUTPUT SPANNING_REGIONS
 ------- Test last reorg -------
 ##SOURCE_PATH##/mupip
@@ -2429,7 +2429,7 @@ $MUPIP rundown -reg "*" | & sort -f
 %YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/a.dat successfully rundown
 %YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/c.dat successfully rundown
 %YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
-%GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
+%YDB-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
 chmod.csh rwrw
 **** R/W b.dat R/W b.mjl ****
 $MUPIP rundown -reg "*" | & sort -f
@@ -2468,7 +2468,7 @@ $MUPIP rundown -reg "*" | & sort -f
 %YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/a.dat successfully rundown
 %YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/c.dat successfully rundown
 %YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
-%GTM-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
+%YDB-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
 chmod.csh rwrw
 **** R/W b.dat R/W b.mjl ****
 $MUPIP rundown -reg "*" | & sort -f

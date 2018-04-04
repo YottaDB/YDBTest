@@ -1,13 +1,13 @@
 ---------------------------------------------------------------
 TEST-E-DBCREATE, errors seen in the log file dbcreate.out:
-##TEST_AWK%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
-##TEST_AWK%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
-##TEST_AWK%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
-##TEST_AWK%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
-##TEST_AWK%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
-##TEST_AWK%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
-##TEST_AWK%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
-##TEST_AWK%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
+##TEST_AWK%YDB-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
+##TEST_AWK%YDB-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
+##TEST_AWK%YDB-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
+##TEST_AWK%YDB-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
+##TEST_AWK%YDB-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
+##TEST_AWK%YDB-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
+##TEST_AWK%YDB-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
+##TEST_AWK%YDB-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
 ---------------------------------------------------------------
 Files Created in ##TEST_PATH##:
 Using: ##SOURCE_PATH##/mumps -run GDE
@@ -144,7 +144,7 @@ MUPIP integ -reg *
 ##TEST_AWK%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/.*.dat
 ##TEST_AWK%YDB-I-TEXT, Error.*
 ##TEST_AWK%SYSTEM-E-ENO[12][28].*
-%GTM-W-MUNOTALLINTEG, At least one region skipped. See the earlier messages
+%YDB-W-MUNOTALLINTEG, At least one region skipped. See the earlier messages
 ****************************
 DSE exit
 
@@ -234,11 +234,11 @@ MUPIP journal -recov -forw *
 %YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/g.dat successfully rundown
 %YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
 ##TEST_PATH##/dbcreate.out
-##TEST_AWK%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
-##TEST_AWK%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
-##TEST_AWK%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
-##TEST_AWK%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
-##TEST_AWK%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
-##TEST_AWK%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
-##TEST_AWK%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
-##TEST_AWK%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
+##TEST_AWK%YDB-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
+##TEST_AWK%YDB-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
+##TEST_AWK%YDB-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
+##TEST_AWK%YDB-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
+##TEST_AWK%YDB-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
+##TEST_AWK%YDB-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
+##TEST_AWK%YDB-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
+##TEST_AWK%YDB-W-MUNOSTRMBKUP, Database ##TEST_PATH##/.*.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup

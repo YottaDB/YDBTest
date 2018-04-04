@@ -237,7 +237,7 @@ if (! $forward_only_specified) then
 	echo "$DSE all -dump -all >& ${bakdir}_backward_dse_dump.log" >>& $misclog
 	$DSE all -dump -all >& ${bakdir}_backward_dse_dump.log
 	echo "$MUPIP extract ${bakdir}_backward_extract.out" >>& $misclog
-	$MUPIP extract ${bakdir}_backward_extract.out >>& ${bakdir}_backward_extract.outx # .outx needed in case we see GTM-W-NOSELECT here
+	$MUPIP extract ${bakdir}_backward_extract.out >>& ${bakdir}_backward_extract.outx # .outx needed in case we see YDB-W-NOSELECT here
 											  # with .out test framework will signal test failure
 	@ status1 = $status
 	if (0 != $status1) then
@@ -383,7 +383,7 @@ if (! $forward_only_specified) then
 	echo "$DSE all -dump -all >& ${bakdir}_forward_dse_dump.log" >>& $misclog
 	$DSE all -dump -all >& ${bakdir}_forward_dse_dump.log
 	echo "$MUPIP extract ${bakdir}_forward_extract.out" >>& $misclog
-	$MUPIP extract ${bakdir}_forward_extract.out >>& ${bakdir}_forward_extract.outx	# .outx needed in case we see GTM-W-NOSELECT here
+	$MUPIP extract ${bakdir}_forward_extract.out >>& ${bakdir}_forward_extract.outx	# .outx needed in case we see YDB-W-NOSELECT here
 											# with .out test framework will signal test failure
 	@ status1 = $status
 	if (0 != $status1) then

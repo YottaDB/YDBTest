@@ -9,7 +9,7 @@
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/c.dat created
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
-%GTM-W-MUNOSTRMBKUP, Database ##TEST_PATH##/d.dat has a block size larger than 32256 and thus cannot use stream (incremental) backup
+%YDB-W-MUNOSTRMBKUP, Database ##TEST_PATH##/d.dat has a block size larger than 32256 and thus cannot use stream (incremental) backup
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/d.dat created
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/e.dat created
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/f.dat created
@@ -82,7 +82,7 @@ DSE> DSE> DSE> %YDB-I-RECORDSTAT, ^a:	  Key cnt: 120  max subsc len: 12  max rec
 %YDB-I-RECORDSTAT, ^gm:	  Key cnt: 120  max subsc len: 13  max rec len: 1048576  max node len: 496
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1680  max subsc len: 13  max rec len: 1048576  max node len: 32752
 1682
-%GTM-W-NOSELECT, None of the selected variables exist -- halting
+%YDB-W-NOSELECT, None of the selected variables exist -- halting
 ##TEST_AWKGT.M MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
