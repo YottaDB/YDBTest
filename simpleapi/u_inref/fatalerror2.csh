@@ -45,7 +45,7 @@ echo "# Reset vmemoryuse back to unlimited to avoid memory errors in the getoper
 limit vmemoryuse unlimited
 
 $gtm_tst/com/getoper.csh "$syslog_time1" "" syslog1.txt "" "FATALERROR2"
-$grep FATALERROR2 syslog1.txt | sed 's/.*%YDB/%YDB/;s/ Error:.*//;'
+$grep FATALERROR2 syslog1.txt | sed 's/.*%YDB-F-FATALERROR2/%YDB-F-FATALERROR2/;s/ Error:.*//;'
 # Unlike the FATALERROR1 case, we do not expect a core file in the FATALERROR2 case.
 # But we do not need to do any checks for this. The test framework will automatically fail the test if it finds a core file.
 if (-e YDB_FATAL_ERROR*) then

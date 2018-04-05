@@ -74,9 +74,9 @@ foreach image_type ( "MUMPS" "MUPIP" "DSE" "LKE" "DBCERTIFY" "GTCM" "GTCM_GNP" )
 	echo "$image_type : syslog_after=$syslog_after" >>&! syslog_time.outx
 	echo "--------------------------------------------------------------" >>&! syslog_time.outx
 	if ($?test_replic == 1) then
-		setenv msg "GTM\-${image_type}\-INSTANCE1"
+		setenv msg "YDB\-${image_type}\-INSTANCE1"
 	else
-		setenv msg "GTM\-${image_type}"
+		setenv msg "YDB\-${image_type}"
 	endif
 	$gtm_tst/com/getoper.csh "$syslog_before" "" ${image_type}_syslog.logx  "" $msg
 	if ( $status ) then

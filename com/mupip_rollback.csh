@@ -304,7 +304,9 @@ else if ($do_fetchresync) then
 	set use_back_seqno = 1
 endif
 if (! $forward_only_specified) then
-	set forw_resync_seqno = `$tst_awk '/YDB-I-RLBKJNSEQ,/ {print $10}' $backwardlog`
+	# It is possible the rollback is done with a version >= r120 in which case the message is going to be YDB-I-RLBKJNSEQ
+	# or a version < r120 in which case the message will be GTM-I-RLBKJNSEQ so search for both possibilities below.
+	set forw_resync_seqno = `$tst_awk '/-I-RLBKJNSEQ,/ {print $10}' $backwardlog`
 	if ($use_back_seqno) then
 		set rollforwparms = "$rollforwparms -resync=$forw_resync_seqno"
 	endif

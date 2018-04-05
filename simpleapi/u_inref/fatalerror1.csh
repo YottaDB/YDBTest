@@ -45,7 +45,7 @@ echo "# Reset vmemoryuse back to unlimited to avoid memory errors in the getoper
 limit vmemoryuse unlimited
 
 $gtm_tst/com/getoper.csh "$syslog_time1" "" syslog1.txt "" "FATALERROR1"
-$grep FATALERROR1 syslog1.txt | sed 's/.*%YDB/%YDB/;s/ Error:.*//;'
+$grep FATALERROR1 syslog1.txt | sed 's/.*%YDB-F-FATALERROR1/%YDB-F-FATALERROR1/;s/ Error:.*//;'
 if (-e core*) then
 	set corefile = core*
 	mv $corefile fatalerror1_$corefile

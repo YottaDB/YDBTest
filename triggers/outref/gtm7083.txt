@@ -51,8 +51,8 @@ File a.trg, Line 1: SET trigger on ^a already present in trigger named x - no ac
 =========================================
 # switch to prior ver and try setting ^a
 ----------
-Error YDB-E-TRIGDEFBAD seen in prior_ver_upgraded_trig.out as expected:
-%YDB-E-TRIGDEFBAD, Trigger initialization failed for global ^a. Error while processing ^#t("a","#LABEL")
+Error GTM-E-TRIGDEFBAD seen in prior_ver_upgraded_trig.out as expected:
+%GTM-E-TRIGDEFBAD, Trigger initialization failed for global ^a. Error while processing ^#t("a","#LABEL")
 ----------
 # switch to current ver and delete all triggers
 All existing triggers (count = 1) deleted

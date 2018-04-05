@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -34,6 +34,12 @@ endif
 source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver
 echo $prior_ver >& priorver.txt
 echo "Randomly chosen multisite version is GTM_TEST_DEBUGINFO: [$prior_ver]"
+
+# If this test chose r120 as the prior version, that won't work if ydb_msgprefix is not set to "GTM".
+# (https://github.com/YottaDB/YottaDB/issues/193). Therefore, set ydb_msgprefix to "GTM" in that case.
+if ($prior_ver == "V63003A_R120") then
+	setenv ydb_msgprefix "GTM"
+endif
 
 # Switch to prior version PRO image for instance 1
 cp msr_instance_config.txt msr_instance_config.bak

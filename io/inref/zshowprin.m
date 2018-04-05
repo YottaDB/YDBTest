@@ -3,6 +3,9 @@
 ; Copyright (c) 2014-2015 Fidelity National Information 	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -21,8 +24,8 @@ zshowprin
 	. set p2=$piece(x,"ttyp",2)
 	. if p2 set x=$piece(x,"ttyp",1)_"pts/0 "_$extract(p2,$find(p2," "),1000)
 	. use $p
-	. ; if line begins with TEST, ZSHOW, $P, or %GTM write as is
-	. if ((5=$find(x,"TEST"))!(6=$find(x,"ZSHOW"))!(3=$find(x,"$P"))!(5=$find(x,"%GTM"))) write $piece(x,$C(13),1),! use p quit
+	. ; if line begins with TEST, ZSHOW, $P, or %YDB write as is
+	. if ((5=$find(x,"TEST"))!(6=$find(x,"ZSHOW"))!(3=$find(x,"$P"))!(5=$find(x,"%YDB"))) write $piece(x,$C(13),1),! use p quit
 	. ; if line begins with /dev A( or 0 clean it up
 	. set Aseen=$find(x,"A(")
 	. if ((5=$find(x,"/dev"))!(2=$find(x,"0"))!Aseen) do cleanup(x,Aseen)

@@ -107,15 +107,15 @@ $gtm_tst/com/check_error_exist.csh  viewbadchar_expected.out "YDB-E-BADCHAR" >&!
 $gtm_tst/com/check_error_exist.csh  viewbadchar_zconvert.out "YDB-E-BADCHAR" >&! check_error_exist.logy
 $gtm_tst/com/check_error_exist.csh  alwaysbadchar.out "YDB-E-BADCHAR" >&! alwaysbadchar.loga
 # first check YDB-E-BADCHAR is seen or not in the redirected logs
-set stat1x=`$grep "%GTM\-E\-BADCHAR" check_error_exist.logx|wc -l`
+set stat1x=`$grep "%YDB\-E\-BADCHAR" check_error_exist.logx|wc -l`
 # then check for any other -E- errors in the redirected log
-set stat2x=`$grep "\-E\-" check_error_exist.logx|grep -v "GTM\-E\-BADCHAR"|wc -l`
+set stat2x=`$grep "\-E\-" check_error_exist.logx|grep -v "YDB\-E\-BADCHAR"|wc -l`
 #
-set stat1y=`$grep "GTM\-E\-BADCHAR" check_error_exist.logy|wc -l`
-set stat2y=`$grep "\-E\-" check_error_exist.logy|grep -v "GTM\-E\-BADCHAR"|wc -l`
+set stat1y=`$grep "YDB\-E\-BADCHAR" check_error_exist.logy|wc -l`
+set stat2y=`$grep "\-E\-" check_error_exist.logy|grep -v "YDB\-E\-BADCHAR"|wc -l`
 #
-set stat1a=`$grep "GTM\-E\-BADCHAR" alwaysbadchar.loga|wc -l`
-set stat2a=`$grep "\-E\-" alwaysbadchar.loga|grep -v "GTM\-E\-BADCHAR"|wc -l`
+set stat1a=`$grep "YDB\-E\-BADCHAR" alwaysbadchar.loga|wc -l`
+set stat2a=`$grep "\-E\-" alwaysbadchar.loga|grep -v "YDB\-E\-BADCHAR"|wc -l`
 if ( (0 != $stat1x) && (0 != $stat1y) && (0 != $stat1a) && (0 == $stat2x) && (0 == $stat2y) && (0 == $stat2a) ) then
 	echo "PASS. Expected error YDB-E-BADCHAR seen and not other errors detected"
 else
@@ -125,9 +125,9 @@ endif
 # check for INVDLRCVAL error here. Since this error depends on VIEW "BADCHAR" seetting we will have i captured here
 # insted of in the errors subtest
 $gtm_tst/com/check_error_exist.csh  invdlrcval_expected.out "YDB-E-INVDLRCVAL" >&! check_error_exist.logz
-set stat1z=`$grep "%GTM\-E\-INVDLRCVAL" check_error_exist.logz|wc -l`
+set stat1z=`$grep "%YDB\-E\-INVDLRCVAL" check_error_exist.logz|wc -l`
 # then check for any other -E- errors in the redirected log
-set stat2z=`$grep "\-E\-" check_error_exist.logz|grep -v "GTM\-E\-INVDLRCVAL"|wc -l`
+set stat2z=`$grep "\-E\-" check_error_exist.logz|grep -v "YDB\-E\-INVDLRCVAL"|wc -l`
 if ( (0 != $stat1z) && (0 == $stat2z) ) then
 	echo "PASS. Expected error YDB-E-INVDLRCVAL seen and not other errors detected"
 else
@@ -144,9 +144,9 @@ if !($status) then
 	echo "TEST-E-ERROR ZCONVERT BADCHAR test doesn't produce expected results"
 endif
 $gtm_tst/com/check_error_exist.csh  zconvert_badchar.out "YDB-E-BADCHAR" >&! check_error_exist.logxx
-set stat1xx=`$grep "%GTM\-E\-BADCHAR" check_error_exist.logxx|wc -l`
+set stat1xx=`$grep "%YDB\-E\-BADCHAR" check_error_exist.logxx|wc -l`
 # then check for any other -E- errors in the redirected log
-set stat2xx=`$grep "\-E\-" check_error_exist.logxx|grep -v "GTM\-E\-BADCHAR"|wc -l`
+set stat2xx=`$grep "\-E\-" check_error_exist.logxx|grep -v "YDB\-E\-BADCHAR"|wc -l`
 if ( (0 != $stat1xx) && (0 == $stat2xx) ) then
 	echo "PASS. Expected error YDB-E-BADCHAR seen and not other errors detected for ZCONVERT"
 else

@@ -608,9 +608,12 @@ public class TestCI {
 							@Override
 							public String getJavaResponse() {
 								if (argNull)
-									return "YDB-E-JNI, Arg #1 to entryref '" + name + "' is null.\n";
+									/* Note that we expect GTM-E-JNI below instead of YDB-E-JNI
+									 * because the java plugin has that string hardcoded in it.
+									 */
+									return "GTM-E-JNI, Arg #1 to entryref '" + name + "' is null.\n";
 								else
-									return "YDB-E-JNI, Passing a null reference in the 'value' field of arg #1 to entryref '" + name + "'.\n";
+									return "GTM-E-JNI, Passing a null reference in the 'value' field of arg #1 to entryref '" + name + "'.\n";
 							}
 						};
 					}
@@ -717,13 +720,13 @@ public class TestCI {
 					public String getJavaResponse() {
 						if (retType1 == GTMType.VOID) {
 							if (retType2 != GTMType.VOID)
-								return "YDB-E-JNI, Expecting a return value from a void entryref '" + name + "'.\n";
+								return "GTM-E-JNI, Expecting a return value from a void entryref '" + name + "'.\n";
 						} else {
 							if (retType2 == GTMType.VOID)
-								return "YDB-E-JNI, Expecting void return from a non-void entryref '" + name + "'.\n";
+								return "GTM-E-JNI, Expecting void return from a non-void entryref '" + name + "'.\n";
 						}
 						if (retType1 != retType2)
-							return "YDB-E-JNI, Wrong return type for entryref '" + name + "': " +
+							return "GTM-E-JNI, Wrong return type for entryref '" + name + "': " +
 								ret1ErrorTypeWord + " expected but " + ret2ErrorTypeWord + " found.\n";
 						return "";
 					}
@@ -819,14 +822,14 @@ public class TestCI {
 							{
 								if ((argType1 == GTMType.GTM_STRING) || (argType1 == GTMType.JAVA_STRING)) {
 									if ((argType2 != GTMType.GTM_STRING) && (argType2 != GTMType.JAVA_STRING))
-										return "YDB-E-JNI, Wrong type used for arg #1 to entryref '" + name +
+										return "GTM-E-JNI, Wrong type used for arg #1 to entryref '" + name +
 											"': GTMString or String expected but " + GTMType.JAVA_ARG_TYPE_NAMES[finalArgIndex2] + " found.\n";
 								} else if ((argType1 == GTMType.GTM_BYTE_ARRAY) || (argType1 == GTMType.JAVA_BYTE_ARRAY)) {
 									if ((argType2 != GTMType.GTM_BYTE_ARRAY) && (argType2 != GTMType.JAVA_BYTE_ARRAY))
-										return "YDB-E-JNI, Wrong type used for arg #1 to entryref '" + name +
+										return "GTM-E-JNI, Wrong type used for arg #1 to entryref '" + name +
 											"': GTMByteArray or byte[] expected but " + GTMType.JAVA_ARG_TYPE_NAMES[finalArgIndex2] + " found.\n";
 								} else
-									return "YDB-E-JNI, Wrong type used for arg #1 to entryref '" + name + "': " +
+									return "GTM-E-JNI, Wrong type used for arg #1 to entryref '" + name + "': " +
 									GTMType.JAVA_ARG_TYPE_NAMES[finalArgIndex1] + " expected but " + GTMType.JAVA_ARG_TYPE_NAMES[finalArgIndex2] + " found.\n";
 							}
 							return "";
@@ -958,7 +961,7 @@ public class TestCI {
 				"\t\t\tGTMCI.doVoidJob(abc);\n" };
 		final String[] javaResponses = new String[]{
 			"150379666,(Call-In),%YDB-E-CINOENTRY, No entry specified for abc123 in the call-in table\n",
-			"YDB-E-JNI, Entryref exceeds 2048 characters.\n" };
+			"GTM-E-JNI, Entryref exceeds 2048 characters.\n" };
 
 		int numOfCases = javaCodes.length;
 
@@ -1040,7 +1043,7 @@ public class TestCI {
 				@Override
 				public String getJavaResponse() {
 					if (numOfTestArgs > 33)
-						return "YDB-E-JNI, Number of parameters to entryref '" + name + "' exceeds 32.\n";
+						return "GTM-E-JNI, Number of parameters to entryref '" + name + "' exceeds 32.\n";
 					else
 						return "";
 				}
@@ -1182,11 +1185,11 @@ public class TestCI {
 				@Override
 				public String getJavaResponse() {
 					if (type == GTMType.JAVA_STRING)
-						return "YDB-E-JNI, Value of arg #1 to entryref '" + name + "' exceeds the capacity of M variables.\n";
+						return "GTM-E-JNI, Value of arg #1 to entryref '" + name + "' exceeds the capacity of M variables.\n";
 					else if (type == GTMType.JAVA_BYTE_ARRAY)
-						return "YDB-E-JNI, Length of arg #1 to entryref '" + name + "' exceeds the capacity of M variables.\n";
+						return "GTM-E-JNI, Length of arg #1 to entryref '" + name + "' exceeds the capacity of M variables.\n";
 					else
-						return "YDB-E-JNI, Length of 'value' field in arg #1 to entryref '" + name + "' exceeds the capacity of M variables.\n";
+						return "GTM-E-JNI, Length of 'value' field in arg #1 to entryref '" + name + "' exceeds the capacity of M variables.\n";
 
 				}
 			}
@@ -1237,7 +1240,7 @@ public class TestCI {
 
 				@Override
 				public String getJavaResponse() {
-					return "YDB-E-JNI, Invalid expected type for arg #1 to entryref '" + name + "'.\n";
+					return "GTM-E-JNI, Invalid expected type for arg #1 to entryref '" + name + "'.\n";
 				}
 
 				@Override
