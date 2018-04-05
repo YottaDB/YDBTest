@@ -97,7 +97,8 @@ echo "# switch to prior ver and try setting ^a"
 source $gtm_tst/com/switch_gtm_version.csh $prior_ver pro
 cp prior_ver_mumps.gld mumps.gld
 $gtm_exe/mumps -run %XCMD 'set ^a=1' >&! prior_ver_upgraded_trig.out
-$gtm_tst/com/check_error_exist.csh prior_ver_upgraded_trig.out YDB-E-TRIGDEFBAD
+# Check for GTM-E-TRIGDEFBAD (not YDB-E-TRIGDEFBAD) since the version issuing this is < r1.20 (prior random version chosen above)
+$gtm_tst/com/check_error_exist.csh prior_ver_upgraded_trig.out GTM-E-TRIGDEFBAD
 
 echo "# switch to current ver and delete all triggers"
 source $gtm_tst/com/switch_gtm_version.csh $tst_ver $tst_image

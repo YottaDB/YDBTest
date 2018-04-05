@@ -1541,22 +1541,22 @@ GTM>
 #- try some command that does not accept multi-byte characters, and see the error makes sense.
 
 GTM>
-%GTM_E_CMD, Command expected but not found
+%YDB_E_CMD, Command expected but not found
 	ｗｒｉｔｅ "abc",!
 	^-----
 
 GTM>
-%GTM_E_EXPR, Expression expected but not found
+%YDB_E_EXPR, Expression expected but not found
 	write ａｂｃ,!
 	      ^-----
 
 GTM>
-%GTM_E_RHMISSING, Right-hand side of expression expected
+%YDB_E_RHMISSING, Right-hand side of expression expected
 	set x=3+ａ
 	        ^-----
 
 GTM>
-%GTM_E_EXPR, Expression expected but not found
+%YDB_E_EXPR, Expression expected but not found
 	write "But there is an error ｏｎ ｔｈｉｓ ｌｉｎｅ!",!,,
 	                                                        ^-----
 

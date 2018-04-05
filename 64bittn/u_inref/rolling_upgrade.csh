@@ -19,6 +19,7 @@
 # If run with journaling, this test requires BEFORE_IMAGE so set that unconditionally even if test was started with -jnl nobefore
 setenv test_no_ipv6_ver 1
 source $gtm_tst/com/gtm_test_setbeforeimage.csh
+
 #
 setenv gtm_test_tptype "ONLINE"
 setenv tst_buffsize 33000000
@@ -51,6 +52,12 @@ if (`expr "$msver" "<" "V62000"`) then
 	setenv gtm_test_trigger 0
 	# disable encryption for versions prior to V62000 as encryption setup (config files) changed from V62000
 	setenv test_encryption NON_ENCRYPT
+endif
+
+# If this test chose r120 as the prior version, that won't work if ydb_msgprefix is not set to "GTM".
+# (https://github.com/YottaDB/YottaDB/issues/193). Therefore, set ydb_msgprefix to "GTM" in that case.
+if ($msver == "V63003A_R120") then
+	setenv ydb_msgprefix "GTM"
 endif
 
 # V62001 pro has a different layout of the relinkshm_hdr_t structure than debug or later versions. We do not want other
@@ -151,7 +158,8 @@ sleep 5
 cd $SEC_SIDE
 echo "Do rollback in side A"
 $sec_shell '$sec_getenv; cd $SEC_SIDE;$sv_oldver;$gtm_tst/com/mupip_rollback.csh -fetchresync=$portno -losttrans=prev_pri.lost "*" >& rollback_sideA.out'
-$grep -q 'YDB-S-JNLSUCCESS' $SEC_SIDE/rollback_sideA.out
+# Search not just for YDB-S-JNLSUCCESS as if the random prior version chosen is < r1.20, it would have a GTM-S-JNLSUCCESS instead.
+$grep -qE 'YDB-S-JNLSUCCESS|GTM-S-JNLSUCCESS' $SEC_SIDE/rollback_sideA.out
 if (0 == $status) then
 	echo  "Rollback succesful"
 else

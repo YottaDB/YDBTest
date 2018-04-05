@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -54,6 +54,10 @@ setenv tst_jnl_str `echo "$tst_jnl_str" | sed 's/,align=[1-9][0-9]*//'`
 
 # Also disable triggers to avoid complications with previous versions
 setenv gtm_test_trigger 0
+
+# Since this test uses prior versions before r1.20, they issue error messages with GTM prefix (not YDB prefix).
+# To get this test to pass always, set ydb_msgprefix so versions r1.20 and later also use the same GTM prefix.
+setenv ydb_msgprefix "GTM"
 
 if ($?gtm_test_replay) then
 	set prior_ver = `echo $gtm_test_rand_prior_ver`

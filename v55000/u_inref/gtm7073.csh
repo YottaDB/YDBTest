@@ -90,7 +90,7 @@ endif
 #Get PID
 set pid=`sed -n 's/PID: \([0-9]*\)/\1/p' show1.txtx`
 #Verify PID
-$grep -q "GTM.*\[$pid\]" syslog1.txt
+$grep -q "YDB.*\[$pid\]" syslog1.txt
 if ($? != 0) then
     echo "Syslog PID does not match with the actual process PID check show1.txt and syslog1.txt"
 endif
@@ -180,7 +180,7 @@ $LKE show >& show4.txtx
 #Get PID
 set pid=`sed -n 's/.*PID= \([0-9]*\).*/\1/p' show4.txtx | sort | uniq`
 #Verify PID
-$grep -E -q "GTM.*\[($pid[1]|$pid[2])\]" syslog3.txt
+$grep -E -q "YDB.*\[($pid[1]|$pid[2])\]" syslog3.txt
 if ($? != 0) then
     echo "Syslog PID does not match with the actual process PID check and syslog3.txt"
 endif

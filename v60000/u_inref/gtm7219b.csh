@@ -38,19 +38,19 @@ echo "syslog_after=$syslog_after" >>&! syslog_time.outx
 foreach proc_type ("SRCSRVR" "RCVSRVR" "UPDPROC" "UPDREAD" "UPDWRITE")
 	switch ( $proc_type )
 		case "SRCSRVR":
-			setenv msg "GTM\-${proc_type}\-INSTANCE1"
+			setenv msg "YDB\-${proc_type}\-INSTANCE1"
 			breaksw
 		case "RCVSRVR":
-			setenv msg "GTM\-${proc_type}\-INSTANCE2"
+			setenv msg "YDB\-${proc_type}\-INSTANCE2"
 			breaksw
 		case "UPDPROC"
-			setenv msg "GTM\-${proc_type}\-INSTANCE2"
+			setenv msg "YDB\-${proc_type}\-INSTANCE2"
 			breaksw
 		case "UPDREAD"
-			setenv msg "GTM\-${proc_type}\-INSTANCE2"
+			setenv msg "YDB\-${proc_type}\-INSTANCE2"
 			breaksw
 		case "UPDWRITE"
-			setenv msg "GTM\-${proc_type}\-INSTANCE2"
+			setenv msg "YDB\-${proc_type}\-INSTANCE2"
 			breaksw
 		default:
 			echo "$proc_type is not tested"

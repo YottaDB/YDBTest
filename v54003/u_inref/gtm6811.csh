@@ -131,7 +131,7 @@ echo "# Attempt to connect with prior version"
 $gtm_exe/mumps -run dowrite^gtm6811 >& connect.logx
 
 # Different prior versions have different errors. Just make sure we got one.
-$grep -qE 'YDB-E-(VERMISMATCH|DBIDMISMATCH|REQRUNDOWN)' connect.logx && echo Found expected error || echo Did not find expected error
+$grep -qE 'GTM-E-(VERMISMATCH|DBIDMISMATCH|REQRUNDOWN)' connect.logx && echo Found expected error || echo Did not find expected error
 
 echo "# Switch to current version"
 cd ../new
