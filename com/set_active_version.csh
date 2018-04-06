@@ -65,6 +65,7 @@ if ($ydbenv) then
 		exit -1
 	endif
 	setenv gtm_dist $gtm_root/$verno/$image
+	setenv ydb_dist $gtm_root/$verno/$image	# needed at least by maskpass (e.g. set_tls_env.csh invocation for a different version)
 	setenv gtm_exe $gtm_dist
 	if ($?gtm_chset) then
 		if ("$gtm_chset" != "UTF-8") then
