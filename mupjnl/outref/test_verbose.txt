@@ -20,7 +20,7 @@ Check that only ^acn(11,11),^acn(12,12),^acn(13,13),^acn(14,14) are present
 ^acn(13,13)="this is GSET"
 ^acn(14,14)="this is GSET"
 
-GTM>
+YDB>
 
 Output device: <terminal>: 
 
@@ -45,9 +45,9 @@ List ^
 
 List ^
 
-GTM>
+YDB>
 PASSED VERIFY
-GTM>
+YDB>
 ##TEST_AWK##SOURCE_PATH##/mupip journal -recov -back mumps.mjl -since=".*" -verbose
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
@@ -113,7 +113,7 @@ GTM>
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ##SOURCE_PATH##/mumps -direct
 
-GTM>
+YDB>
 
 Output device: <terminal>: 
 
@@ -138,9 +138,9 @@ List ^
 
 List ^
 
-GTM>
+YDB>
 PASSED VERIFY
-GTM>
+YDB>
 rm mumps.dat
 unset echo
 ##SOURCE_PATH##/mupip journal -extract=forward_nv.mjf -for mumps.mjl
@@ -363,7 +363,7 @@ Record type    Count
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ##SOURCE_PATH##/mumps -direct
 
-GTM>
+YDB>
 
 Output device: <terminal>: 
 
@@ -388,9 +388,9 @@ List ^
 
 List ^
 
-GTM>
+YDB>
 PASSED VERIFY
-GTM>
+YDB>
 rm mumps.dat
 unset echo
 ##SOURCE_PATH##/mupip journal -extract=forward2_nv.mjf -for mumps.mjl

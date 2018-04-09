@@ -31,11 +31,11 @@ light_jnl.dat
 %YDB-I-JNLSTATE, Journaling state for region GREG is now ON
 %YDB-I-JNLSTATE, Journaling state for region HREG is now ON
 
-GTM>
+YDB>
  Eight region TP TESTING
-GTM>
+YDB>
  Eight region NON TP TESTING
-GTM>
+YDB>
 h
 Backward recovery ... ...
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
@@ -69,38 +69,38 @@ light_jnl.dat
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with NOBEFORE_IMAGES
 %YDB-I-JNLSTATE, Journaling state for region BREG is now ON
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 f k=1:1:3000  q:^in4=2  h 1
 
-GTM>
+YDB>
 if k=3000  w "TIMEOUT 1",!
 
-GTM>
+YDB>
 w "starting to switch journal files.",!
 starting to switch journal files.
 
-GTM>
+YDB>
 h
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 remove the database file and create a new one.
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
@@ -108,21 +108,21 @@ remove the database file and create a new one.
 First recover ... ...
 %YDB-S-JNLSUCCESS, Recover successful
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 VERIFICATION PASSED
 
-GTM>
+YDB>
 Second recover ... ...
 %YDB-S-JNLSUCCESS, Recover successful
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 VERIFICATION PASSED
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -137,38 +137,38 @@ light_jnl.dat
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with NOBEFORE_IMAGES
 %YDB-I-JNLSTATE, Journaling state for region AREG is now ON
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 f k=1:1:3000  q:^in4=2  h 1
 
-GTM>
+YDB>
 if k=3000  w "TIMEOUT 1",!
 
-GTM>
+YDB>
 w "starting to switch journal files.",!
 starting to switch journal files.
 
-GTM>
+YDB>
 h
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 remove the database file and create a new one.
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
@@ -176,21 +176,21 @@ remove the database file and create a new one.
 First recover ... ...
 %YDB-S-JNLSUCCESS, Recover successful
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 VERIFICATION PASSED
 
-GTM>
+YDB>
 Second recover ... ...
 %YDB-S-JNLSUCCESS, Recover successful
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 VERIFICATION PASSED
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

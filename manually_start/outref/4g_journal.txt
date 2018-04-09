@@ -28,9 +28,9 @@ Transactions up to 0x0000000000000001 are backed up.
 BACKUP COMPLETED.
 
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  NON_REPLIC
 Starting receiver server ...
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
@@ -63,28 +63,28 @@ Rollback on side B ...
 %YDB-S-JNLSUCCESS, Rollback successful
 Verifying data ...
 
-GTM>
+YDB>
 VERIFICATION PASSED
 
-GTM>
+YDB>
 Forward recovery ...
 %YDB-S-JNLSUCCESS, Recover successful
 ##ALLOW_OUTPUT  NON_REPLIC
 Verifying data ...
 
-GTM>
+YDB>
 VERIFICATION PASSED
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  REPLIC
 Forward recovery ...
 %YDB-S-JNLSUCCESS, Recover successful
 Verifying data ...
 
-GTM>
+YDB>
 VERIFICATION PASSED
 
-GTM>
+YDB>
 ##ALLOW_OUTPUT  REPLIC
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *

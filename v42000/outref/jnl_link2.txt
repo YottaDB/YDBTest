@@ -10,31 +10,31 @@ First Journal file names are:
 a.mjl
 mumps.mjl
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Enable journaling for mumps.dat with : file=defjnl2.mjl
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 Enable journaling for a.dat with : file=ajnl2.mjl
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/a.dat is now ON
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Enable journaling for region DEFAULT with : file=defjnl3.mjl
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 Enable journaling for region AREG with : file=ajnl3.mjl
 %YDB-I-JNLSTATE, Journaling state for region AREG is now ON
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Verify link:
  Prev journal file name ##TEST_PATH##/defjnl2.mjl
  Prev journal file name ##TEST_PATH##/ajnl2.mjl
@@ -43,17 +43,17 @@ Verify link:
  Prev journal file name 
  Prev journal file name 
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 prev_jnl_file name changed from ##TEST_PATH##/defjnl2.mjl to NULL
 
-GTM>
+YDB>
 prev_jnl_file name changed from ##TEST_PATH##/ajnl2.mjl to NULL
 
-GTM>
+YDB>
 Verify link:
  Prev journal file name 
  Prev journal file name 
@@ -62,17 +62,17 @@ Verify link:
  Prev journal file name 
  Prev journal file name 
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 %YDB-I-PREVJNLLINKSET, Previous generation journal file name is changed from NULL to ##TEST_PATH##/mumps.mjl
 
-GTM>
+YDB>
 %YDB-I-PREVJNLLINKSET, Previous generation journal file name is changed from NULL to ##TEST_PATH##/a.mjl
 
-GTM>
+YDB>
 Verify link:
  Prev journal file name ##TEST_PATH##/mumps.mjl
  Prev journal file name ##TEST_PATH##/a.mjl

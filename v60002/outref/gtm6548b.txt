@@ -1,49 +1,49 @@
 Test JOB command with environment variable gtm_noundef = FALSE
 
-GTM>
+YDB>
 job ^@a
 
-GTM>
+YDB>
 %YDB-E-LVUNDEF, Undefined local variable: k
 
-GTM>
+YDB>
 job @k
 
-GTM>
+YDB>
 %YDB-E-LVUNDEF, Undefined local variable: k
 
-GTM>
+YDB>
 job ^k
 
-GTM>
+YDB>
 %YDB-E-JOBFAIL, JOB command failure
 %YDB-I-TEXT, Job error in routine specification. Label and offset not found in created process
 
-GTM>
+YDB>
 ------------------------------------------------------------
 
 Test JOB command with environment variable gtm_noundef = TRUE
 
-GTM>
+YDB>
 job ^@a
 
-GTM>
+YDB>
 %YDB-E-JOBFAIL, JOB command failure
 %YDB-E-NULLENTRYREF, JOB command did not specify entryref
 
-GTM>
+YDB>
 job @k
 
-GTM>
+YDB>
 %YDB-E-LABELEXPECTED, Label expected in this context
 	
 	^-----
 
-GTM>
+YDB>
 job ^k
 
-GTM>
+YDB>
 %YDB-E-JOBFAIL, JOB command failure
 %YDB-I-TEXT, Job error in routine specification. Label and offset not found in created process
 
-GTM>
+YDB>

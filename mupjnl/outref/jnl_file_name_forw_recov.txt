@@ -7,23 +7,23 @@ mupip set -journal=enable,on,before,file=mumps1.mjl -reg "*"
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps1.mjl created for region DEFAULT with BEFORE_IMAGES
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 mupip set -journal=enable,on,before,file=mumps2.mjl -reg "*"
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps2.mjl created for region DEFAULT with BEFORE_IMAGES
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 mupip set -journal=enable,on,before,file=mumps3.mjl -reg "*"
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps3.mjl created for region DEFAULT with BEFORE_IMAGES
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ----------------------------------------------------------------------------
 
 File  	##TEST_PATH##/mumps.dat
@@ -41,10 +41,10 @@ mupip journal -recover -forward "*"
 %YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
-GTM>
+YDB>
 ^x=1,^y=2,^z=3
 
-GTM>
+YDB>
 ----------------------------------------------------------------------------
 mupip journal -recover -forward mumps3.mjl,mumps2.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
@@ -72,11 +72,11 @@ mupip journal -recover -forward mumps2.mjl,mumps1.mjl
 %YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
-GTM>
+YDB>
 ^x=1,^y=2,^z=
 %YDB-E-GVUNDEF, Global variable undefined: ^z
 
-GTM>
+YDB>
 ----------------------------------------------------------------------------
 mupip journal -recover -forward mumps3.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
@@ -90,10 +90,10 @@ mupip journal -recover -forward mumps3.mjl
 %YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
-GTM>
+YDB>
 ^x=1,^y=2,^z=3
 
-GTM>
+YDB>
 ----------------------------------------------------------------------------
 mupip journal -recover -forward -nochain mumps3.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
@@ -111,17 +111,17 @@ mupip journal -recover -forward -chain mumps2.mjl
 %YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
-GTM>
+YDB>
 ^x=1
 
-GTM>
+YDB>
 ^y=2
 
-GTM>
+YDB>
 ^z=
 %YDB-E-GVUNDEF, Global variable undefined: ^z
 
-GTM>
+YDB>
 ----------------------------------------------------------------------------
 mupip journal -recover -forward -nochain -nochecktn mumps3.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
@@ -133,18 +133,18 @@ mupip journal -recover -forward -nochain -nochecktn mumps3.mjl
 %YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
-GTM>
+YDB>
 ^z=3
 
-GTM>
+YDB>
 ^x=
 %YDB-E-GVUNDEF, Global variable undefined: ^x
 
-GTM>
+YDB>
 ^y=
 %YDB-E-GVUNDEF, Global variable undefined: ^y
 
-GTM>
+YDB>
 ----------------------------------------------------------------------------
 mupip journal -recover -forward -chain mumps3.mjl,mumps1.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
@@ -161,15 +161,15 @@ mupip journal -recover -forward -chain -nochecktn mumps3.mjl,mumps1.mjl
 %YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
-GTM>
+YDB>
 ^x=1
 
-GTM>
+YDB>
 ^z=3
 
-GTM>
+YDB>
 ^y=
 %YDB-E-GVUNDEF, Global variable undefined: ^y
 
-GTM>
+YDB>
 ----------------------------------------------------------------------------

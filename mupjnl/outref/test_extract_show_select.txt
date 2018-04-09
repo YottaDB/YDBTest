@@ -10,42 +10,42 @@ Turn journaling on:
 ####################################################################
 ##TEST_AWKTime written into time1:.*
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Start second process (as another user)...
 Wait for second user to finish its processing...
 
-GTM>
+YDB>
 ##TEST_AWK.H = [0-9]*,[0-9]*
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 second user should have finished
 
-GTM>
+YDB>
 ##TEST_AWK.H = [0-9]*,[0-9]*
 
-GTM>
+YDB>
 Updates done, test...
 
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ######################################
 EXTRACT
 
 First extract all
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 $MUPIP journal -extract=total.mjf -detail -broken=total.broken -lost=total.lost -forward mumps.mjl
 %YDB-I-FILECREATE, Journal extract file total.mjf created
 %YDB-I-FILECREATE, Broken transactions extract file total.broken created
@@ -1882,76 +1882,76 @@ Record type    Count
 unset verbose
 Stop second process...
 
-GTM>
+YDB>
 ##TEST_AWK.H = [0-9]*,[0-9]*
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 End
 
-GTM>
+YDB>
 ##TEST_AWK.H = [0-9]*,[0-9]*
 
-GTM>
+YDB>
 ################ SECOND PROCESS OUTPUT ###################
 Check second_process.log for the following output:
 Will run           : user2
 ##SOURCE_PATH##
 ##TEST_PATH##
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##TEST_AWK.ZV = GT.M .*
 
-GTM>
+YDB>
 start...
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 in active ztp...
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 end...
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 End of second_process job!
 ############ END SECOND PROCESS OUTPUT ###################
 $MUPIP journal -extract=error.mjf -global=\"^A\(\" -for mumps.mjl
@@ -1997,21 +1997,21 @@ b.dat
 c.dat
 multireg.dat
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 $MUPIP journal -show=stat -extract -global="~^B" -forward b.mjl
 %YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/b.mjf created

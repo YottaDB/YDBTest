@@ -44,11 +44,11 @@ echo
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 ##SOURCE_PATH##/mumps -direct
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 rm a.dat b.dat mumps.dat
 ##SOURCE_PATH##/mupip create
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
@@ -63,11 +63,11 @@ rm a.dat b.dat mumps.dat
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ##SOURCE_PATH##/mumps -direct
 
-GTM>
+YDB>
 3
-GTM>
+YDB>
 4
-GTM>
+YDB>
 unset echo
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *

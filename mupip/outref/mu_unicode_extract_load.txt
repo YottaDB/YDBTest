@@ -7,25 +7,25 @@ load.gld
 Using: ##SOURCE_PATH##/mupip
 load.dat
 
-GTM>
+YDB>
 do in0^udbfill("set")
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do in1^udbfill("set")
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip extract -format=binary -log -label=YXdutf8 -sel=YX*,d*,%utf8char ＸＹ.ＢＩＮ
 %YDB-I-RECORDSTAT, ^%utf8char:	  Key cnt: 301  max subsc len: 15  max rec len: 3  max node len: 22
 %YDB-I-RECORDSTAT, ^YXW:	  Key cnt: 1  max subsc len: 9  max rec len: 25  max node len: 38
@@ -81,13 +81,13 @@ GTM>
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 2413  max subsc len: 42  max rec len: 78  max node len: 119
 ##ALLOW_OUTPUT  NON_COLLATION
 
-GTM>
+YDB>
 do in2^udbfill("set")
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip extract -format=zwr -nolog -label=我能吞下玻璃而不伤身体 ＤＡＴＡ.ＺＷＲ
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 543981  max subsc len: 130  max rec len: 78  max node len: 140
 ##SOURCE_PATH##/mupip create
@@ -109,12 +109,12 @@ Last LOAD record number: 184
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 h
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip create
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/load.dat created
 ##SOURCE_PATH##/mupip load -format=zwr ＤＡＴＡ.ＺＷＲ
@@ -134,30 +134,30 @@ Last LOAD record number: 543983
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
 
-GTM>
+YDB>
 do in0^udbfill("ver")
 
-GTM>
+YDB>
 ver PASS
 
-GTM>
+YDB>
 do in1^udbfill("ver")
 
-GTM>
+YDB>
 ver PASS
 
-GTM>
+YDB>
 do in2^udbfill("ver")
 
-GTM>
+YDB>
 ver PASS
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 h
 
-GTM>
+YDB>
 Now load from different encoding
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/load.dat created
 ##SOURCE_PATH##/mupip load -format=binary ＸＹ.ＢＩＮ

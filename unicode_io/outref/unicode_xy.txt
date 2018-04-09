@@ -1,20 +1,20 @@
 setenv gtm_chset UTF-8
 unset echo
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do ^unicodexy("UTF-8")
 
-GTM>
+YDB>
 -> OPEN "UTF-8_testxy.txt":(NEWVERSION:BIGRECORD:RECORDSIZE=1048576:CHSET="UTF-8")
 -> USE "UTF-8_testxy.txt"
 -> USE "UTF-8_testxy.txt":(LENGTH=4)
@@ -124,10 +124,10 @@ File: UTF-8_testxy.txt
 97   14:14   0
 -> CLOSE "UTF-8_testxy.txt"
 
-GTM>
+YDB>
 do ^unicodexy("UTF-16")
 
-GTM>
+YDB>
 -> OPEN "UTF-16_testxy.txt":(NEWVERSION:BIGRECORD:RECORDSIZE=1048576:CHSET="UTF-16")
 -> USE "UTF-16_testxy.txt"
 -> USE "UTF-16_testxy.txt":(LENGTH=4)
@@ -237,10 +237,10 @@ File: UTF-16_testxy.txt
 ##TEST_AWK97   19:19   (323381|327387|330269|332618|333423|333425|333427|336726|338559|353786|355548)
 -> CLOSE "UTF-16_testxy.txt"
 
-GTM>
+YDB>
 do ^unicodexy("UTF-16LE")
 
-GTM>
+YDB>
 -> OPEN "UTF-16LE_testxy.txt":(NEWVERSION:BIGRECORD:RECORDSIZE=1048576:CHSET="UTF-16LE")
 -> USE "UTF-16LE_testxy.txt"
 -> USE "UTF-16LE_testxy.txt":(LENGTH=4)
@@ -350,10 +350,10 @@ File: UTF-16LE_testxy.txt
 ##TEST_AWK97   19:19   (323381|327387|330269|332618|333423|333425|333427|336726|338559|353786|355548)
 -> CLOSE "UTF-16LE_testxy.txt"
 
-GTM>
+YDB>
 do ^unicodexy("UTF-16BE")
 
-GTM>
+YDB>
 -> OPEN "UTF-16BE_testxy.txt":(NEWVERSION:BIGRECORD:RECORDSIZE=1048576:CHSET="UTF-16BE")
 -> USE "UTF-16BE_testxy.txt"
 -> USE "UTF-16BE_testxy.txt":(LENGTH=4)
@@ -463,10 +463,10 @@ File: UTF-16BE_testxy.txt
 ##TEST_AWK97   19:19   (323381|327387|330269|332618|333423|333425|333427|336726|338559|353786|355548)
 -> CLOSE "UTF-16BE_testxy.txt"
 
-GTM>
+YDB>
 do ^unicodexy("M")
 
-GTM>
+YDB>
 -> OPEN "M_testxy.txt":(NEWVERSION:BIGRECORD:RECORDSIZE=1048576:CHSET="M")
 -> USE "M_testxy.txt"
 -> USE "M_testxy.txt":(LENGTH=4)
@@ -584,4 +584,4 @@ Test that LENGTH=0 does not reset $Y
 PASS, LENGTH=0 does not reset $Y
 -> CLOSE "M_testxylong.txt"
 
-GTM>
+YDB>

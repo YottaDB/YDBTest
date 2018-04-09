@@ -11,9 +11,9 @@ mumps.dat
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/xxx.gld
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##############################################################
 Test $DATA
 ##############################################################
@@ -175,11 +175,11 @@ textforlongnamedentryandlabels ; $text
  write $text(+1),!
  set dollartextvariable=$ZPOSITION
 
-GTM>
+YDB>
 ################################################
 Test zgetjpi should error out gracefully with incorrect item parameter
 
-GTM>
+YDB>
 Testing with incorrect item parameter null
 %YDB-E-BADJPIPARAM, null is not a legal parameter for $ZGETJPI()
 Testing with incorrect item parameter @
@@ -207,7 +207,7 @@ Testing with correct item parameter STIME
 Testing with correct item parameter UTIME
 ##TEST_AWK[0-9][0-9]*
 
-GTM>
+YDB>
 ################################################
 # C9I06-003002 $ZD does not properly format DAY of the week
 ################################################

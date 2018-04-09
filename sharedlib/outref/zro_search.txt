@@ -5,57 +5,57 @@ zro_search test starts.....
 %YDB-I-SRCNAM, in source module ##IN_TEST_PATH##/inref/stringbad.m
 rm: No match.
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 %YDB-E-ZROSYNTAX, $ZROUTINES syntax error: ./shlib1##TEST_SHL_SUFFIX## ./shlib2 ./shlib_bad_txt
 %YDB-E-FILEPARSE, Error parsing file specification: ./shlib_bad_txt
 %SYSTEM-E-ENO2, No such file or directory
 
-GTM>
+YDB>
 %YDB-E-ZROSYNTAX, $ZROUTINES syntax error: ./noexist##TEST_SHL_SUFFIX##
 %YDB-E-FILEPARSE, Error parsing file specification: ./noexist##TEST_SHL_SUFFIX##
 %SYSTEM-E-ENO2, No such file or directory
 
-GTM>
+YDB>
 %YDB-E-ZROSYNTAX, $ZROUTINES syntax error: ./shlib1##TEST_SHL_SUFFIX##(./src) ./shlib
 %YDB-E-NOLBRSRC, Object libraries cannot have SRC paths associated
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ZL avg
 %YDB-E-ZLINKFILE, Error while zlinking "avg"
 %YDB-E-FILENOTFND, File avg not found
 
-GTM>
+YDB>
 %YDB-E-ZROSYNTAX, $ZROUTINES syntax error: ./shlib2 ./obj(./src) /dev/tty
 %YDB-E-INVZROENT, /dev/tty is neither a directory nor an object library(DLL)
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ZL avg
 
-GTM>
+YDB>
 Do ^avg
 
 Executing AVG in OBJ directory....
 The AVERAGE is 38.5
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ZL avg
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ZL main
 
-GTM>
+YDB>
 Do ^main
 
 Executing Shared Copy of MAIN...
@@ -69,26 +69,26 @@ Executing Shared Copy of CUBE...
 Executing Shared Copy of CUBE...
 Executing Shared Copy of CUBE...
 Executing Shared Copy of CUBE...
-GTM>
+YDB>
 
-GTM>
+YDB>
 W $zsource
 ##IN_TEST_PATH##/inref/main
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Do ^avg
 
 Executing Shared Copy of AVG...
 The AVERAGE is 38.5
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Do ^main
 
 Executing Shared Copy of MAIN...
@@ -102,37 +102,11 @@ Executing Shared Copy of CUBE...
 Executing Shared Copy of CUBE...
 Executing Shared Copy of CUBE...
 Executing Shared Copy of CUBE...
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
-Do ^main
-
-Executing Shared Copy of MAIN...
-Executing CUBE in OBJ directory....
-Executing FACTOR in OBJ directory....
-Executing CUBE in OBJ directory....
-Executing FACTOR in OBJ directory....
-Executing CUBE in OBJ directory....
-Executing FACTOR in OBJ directory....
-Executing CUBE in OBJ directory....
-Executing FACTOR in OBJ directory....
-Executing CUBE in OBJ directory....
-Executing FACTOR in OBJ directory....
-Executing CUBE in OBJ directory....
-Executing FACTOR in OBJ directory....
-Executing CUBE in OBJ directory....
-Executing FACTOR in OBJ directory....
-Executing CUBE in OBJ directory....
-Executing FACTOR in OBJ directory....
-Executing CUBE in OBJ directory....
-Executing FACTOR in OBJ directory....
-Executing CUBE in OBJ directory....
-Executing FACTOR in OBJ directory....
-GTM>
-
-GTM>
+YDB>
 Do ^main
 
 Executing Shared Copy of MAIN...
@@ -156,9 +130,35 @@ Executing CUBE in OBJ directory....
 Executing FACTOR in OBJ directory....
 Executing CUBE in OBJ directory....
 Executing FACTOR in OBJ directory....
-GTM>
+YDB>
 
-GTM>
+YDB>
+Do ^main
+
+Executing Shared Copy of MAIN...
+Executing CUBE in OBJ directory....
+Executing FACTOR in OBJ directory....
+Executing CUBE in OBJ directory....
+Executing FACTOR in OBJ directory....
+Executing CUBE in OBJ directory....
+Executing FACTOR in OBJ directory....
+Executing CUBE in OBJ directory....
+Executing FACTOR in OBJ directory....
+Executing CUBE in OBJ directory....
+Executing FACTOR in OBJ directory....
+Executing CUBE in OBJ directory....
+Executing FACTOR in OBJ directory....
+Executing CUBE in OBJ directory....
+Executing FACTOR in OBJ directory....
+Executing CUBE in OBJ directory....
+Executing FACTOR in OBJ directory....
+Executing CUBE in OBJ directory....
+Executing FACTOR in OBJ directory....
+Executing CUBE in OBJ directory....
+Executing FACTOR in OBJ directory....
+YDB>
+
+YDB>
 Do main3
 
 Executing Shared Copy of MAIN in shlib3...
@@ -182,11 +182,11 @@ Executing CUBE in OBJ directory....
 Executing FACTOR in OBJ directory....
 Executing CUBE in OBJ directory....
 Executing FACTOR in OBJ directory....
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Do ^main
 
 Executing MAIN in OBJ directory....
@@ -210,17 +210,17 @@ Executing CUBE in OBJ directory....
 Executing FACTOR in OBJ directory....
 Executing CUBE in OBJ directory....
 Executing FACTOR in OBJ directory....
-GTM>
+YDB>
 Do ^avg
 
 Executing Shared Copy of AVG...
 The AVERAGE is 38.5
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Do ^main
 
 Executing Shared Copy of MAIN...
@@ -244,71 +244,71 @@ Executing CUBE in OBJ directory....
 Executing FACTOR in OBJ directory....
 Executing CUBE in OBJ directory....
 Executing FACTOR in OBJ directory....
-GTM>
+YDB>
 Do ^avg
 
 Executing Shared Copy of AVG...
 The AVERAGE is 38.5
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Do ^avg
 
 Executing Shared Copy of AVG...
 The AVERAGE is 38.5
 
-GTM>
+YDB>
 ZEDIT avg
 
-GTM>
+YDB>
 W $zsource
 avg
-GTM>
+YDB>
 ZPRINT average^avg
 average ;calc average
 
-GTM>
+YDB>
 ZL avg
 
-GTM>
+YDB>
 $TEXT(average^avg)
 average ;calc average
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ZL avg
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ZPRINT average^avg
 %YDB-I-TXTSRCMAT, M object module and source file do not match
 
  
 
-GTM>
+YDB>
 $TEXT(average^avg)
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ZEDIT main
 
-GTM>
+YDB>
 W $zsource
 main
-GTM>
+YDB>
 ZEDIT main (full path)
 
-GTM>
+YDB>
 W $zsource
 ##IN_TEST_PATH##/inref/main
-GTM>
+YDB>
 End of zro_search tests.....

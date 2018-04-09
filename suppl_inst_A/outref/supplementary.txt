@@ -52,19 +52,19 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
 ==Executing MULTISITE_REPLIC 'RUN INST2 ##TEST_COM_PATH##/simplegblupd.csh -instance INST2 -count 1 -internal'==
 
-GTM>
+YDB>
 %YDB-E-SCNDDBNOUPD, Database Updates not allowed on the secondary
 		At M source location simplegblupd+9^simplegblupd
 
-GTM>
+YDB>
 
 ==Executing MULTISITE_REPLIC 'RUN INST4 ##TEST_COM_PATH##/simplegblupd.csh -instance INST4 -count 1 -internal'==
 
-GTM>
+YDB>
 %YDB-E-SCNDDBNOUPD, Database Updates not allowed on the secondary
 		At M source location simplegblupd+9^simplegblupd
 
-GTM>
+YDB>
 
 ==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
 ==Executing MULTISITE_REPLIC 'STOP ALL_LINKS'==

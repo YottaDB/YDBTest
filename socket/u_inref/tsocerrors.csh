@@ -347,15 +347,15 @@ d fail^tsocerrors("6b.cunset","server","not found in",1,0,"nonsuch")
 EOF
 else	# libconfig is too old
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo "  PASSED: 6a.cunset"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo "  PASSED: 6b.cunset"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 endif	# newconfig
 echo
 echo "TEST CASE 7: Test config file options."
@@ -498,78 +498,78 @@ else	# libconfig is too old
 # libconfig 1.3.x does not have config_read_string so fake test output
 # echo expected output so test passes - ^expected and ^checkjob record if actually did CASE 9
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo "  PASSED: 9a"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo "  PASSED: 9b"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo "  PASSED: 9c"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo "  PASSED: 9d"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo "  PASSED: 9e"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo "  PASSED: 9f"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo "  PASSED: 9g"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 endif	# newconfig
 
 echo
@@ -626,47 +626,47 @@ do succeed^tsocerrors("10f","server")
 EOF
 else	# libconfig is too old
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo "  PASSED: 10c"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo "  PASSED: 10d"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo "  PASSED: 10e"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 	echo "  PASSED: 10f"
 	echo
-	echo "GTM>"
+	echo "YDB>"
 endif	# newconfig
 # test verify client once in config file
 $tst_awk ' /renegverifyonce/ {$0 = $2 " " $3 " " $4 " "  $5 " " $6} {print}' $gtmcrypt_config.case10 >! $gtmcrypt_config

@@ -26,17 +26,17 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 Multi-Process GTM Process starts in background...
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Now GTM process ends
 DATABASE EXTRACT PASSED
 ##SOURCE_PATH##/mupip
@@ -47,11 +47,11 @@ No errors detected by integ.
 No errors detected by integ.
 Checking database on ##TEST_PATH##
 
-GTM>
+YDB>
 do checkdb
 checkdb PASSED.
 
-GTM>
+YDB>
 Extact from database...
 ##SOURCE_PATH##/mupip journal -rollback -backward * -lost=lost_trans{1}.log >>&! rollback{1}.log
 %YDB-S-JNLSUCCESS, Show successful
@@ -60,11 +60,11 @@ Extact from database...
 Extact from database...
 Checking database on ##TEST_PATH##
 
-GTM>
+YDB>
 do checkdb
 checkdb PASSED.
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -75,33 +75,33 @@ No errors detected by integ.
 Extact from database...
 Checking database on ##TEST_PATH##
 
-GTM>
+YDB>
 do checkdb
 checkdb PASSED.
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
 ##SOURCE_PATH##/mupip journal -rollback -backward * -resync=8000 -lost=lost_trans{3}.log >>&! rollback{3}.log
 Checking database on ##TEST_PATH##
 
-GTM>
+YDB>
 do checkdb
 checkdb PASSED.
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
 ##SOURCE_PATH##/mupip journal -rollback -backward * -resync=6000 -lost=lost_trans{4}.log >>&! rollback{4}.log
 Checking database on ##TEST_PATH##
 
-GTM>
+YDB>
 do checkdb
 checkdb PASSED.
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

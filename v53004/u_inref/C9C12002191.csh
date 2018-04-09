@@ -530,10 +530,10 @@ set curdir = `pwd`
 
 echo "# Check the content of gtm_${tstno}.outx. Expect the below"
 # notice no gtm error prefix below -- to avoid a false test failure
-echo '# GTM> DBPRIVERR, No privilege for attempted update operation for file: ${curdir}/mumps.dat GTM>'
+echo '# YDB> DBPRIVERR, No privilege for attempted update operation for file: ${curdir}/mumps.dat YDB>'
 
 set actual = `cat gtm_${tstno}.outx`
-set expected = "GTM> %YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ${curdir}/mumps.dat GTM>"
+set expected = "YDB> %YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ${curdir}/mumps.dat YDB>"
 
 if ("$expected" == "$actual") then
 	echo "TEST-I-PASS the system gave us the correct warning message"
@@ -568,10 +568,10 @@ here
 
 echo "# Check the content of gtm_${tstno}.outx. Expect the below"
 # notice no gtm error prefix below -- to avoid a false test failure
-echo '# GTM> GTMSECSHRPERM, The gtmsecshr module in $gtm_dist does not have the correct permission and uid GTM>'
+echo '# YDB> GTMSECSHRPERM, The gtmsecshr module in $gtm_dist does not have the correct permission and uid YDB>'
 
 set actual = `cat gtm_${tstno}.outx`
-set expected = 'GTM> %YDB-E-GTMSECSHRPERM, The gtmsecshr module in $gtm_dist does not have the correct permission and uid GTM>'
+set expected = 'YDB> %YDB-E-GTMSECSHRPERM, The gtmsecshr module in $gtm_dist does not have the correct permission and uid YDB>'
 
 if ("$expected" == "$actual") then
 	echo "TEST-I-PASS the system gave us the correct warning message"

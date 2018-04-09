@@ -6,7 +6,7 @@ mumps.dat
 
 # Prevent EXEC of gtmsecshr
 
-GTM>
+YDB>
 ##TEST_AWK%YDB-E-GTMSECSHRSTART, Client - [0-9]* : gtmsecshr failed to startup
 %YDB-I-TEXT, Unable to start gtmsecshr executable
 ##TEST_AWK%YDB-E-GTMSECSHRSTART, Client - [0-9]* : gtmsecshr failed to startup
@@ -22,7 +22,7 @@ GTM>
 %YDB-E-DBFILERR, Error with database file ##TEST_PATH##/mumps.dat
 %YDB-I-TEXT, gtmsecshr failed to update database file header
 
-GTM>
+YDB>
 Message Found!
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *

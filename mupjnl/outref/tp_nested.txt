@@ -127,7 +127,7 @@ PID        NODE             USER         TERM JPV_TIME
 %YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
-GTM>
+YDB>
 ^z1(1)=1
 ^z1(2)=2
 ^z1(3)=3
@@ -170,7 +170,7 @@ GTM>
 ^z23(10)=10
 %YDB-E-GVUNDEF, Global variable undefined: ^z24
 
-GTM>
+YDB>
 ^z3 will be in broken transaction file
 ^z3(1)="1"
 ^z3(2)="2"
@@ -231,10 +231,10 @@ PID        NODE             USER         TERM JPV_TIME
 %YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
-GTM>
+YDB>
 %YDB-E-GVUNDEF, Global variable undefined: ^z1
 
-GTM>
+YDB>
 ^z1 nd ^z3 will be in broken transaction file
 ^z1(1)="1"
 ^z1(2)="2"
@@ -299,7 +299,7 @@ MUPIP journal -recover -back "*" -since=time1 -fence=none
 %YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
-GTM>
+YDB>
 ^z1(1)=1
 ^z1(2)=2
 ^z1(3)=3
@@ -352,7 +352,7 @@ GTM>
 ^z3(10)=10
 %YDB-E-GVUNDEF, Global variable undefined: ^z24
 
-GTM>
+YDB>
 ------------------------------------------------------------------------------------------
 MUPIP journal -recover -back "*" -since=time1 -fence=process
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
@@ -365,7 +365,7 @@ MUPIP journal -recover -back "*" -since=time1 -fence=process
 %YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
-GTM>
+YDB>
 ^z1(1)=1
 ^z1(2)=2
 ^z1(3)=3
@@ -418,7 +418,7 @@ GTM>
 ^z3(10)=10
 %YDB-E-GVUNDEF, Global variable undefined: ^z24
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

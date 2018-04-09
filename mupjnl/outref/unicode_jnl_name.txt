@@ -19,37 +19,37 @@ Enable before image journaling
 %YDB-I-JNLSTATE, Journaling state for region AREG is now ON
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Enable before image journaling again
 %YDB-I-JNLSTATE, Journaling state for region AREG is now ON
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Enable before image journaling on all regions
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/αβγδε能吞/Üäröß.mjl created for database file ##TEST_PATH##/αβγδε能吞/我能吞下玻璃.而傷 with BEFORE_IMAGES
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/αβγδε能吞/我能吞下玻璃.而傷 is now ON
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/αβγδε能吞/ＥＦＧ.ＡＢＣＤ created for database file ##TEST_PATH##/αβγδε能吞/αβγδε.dat with BEFORE_IMAGES
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/αβγδε能吞/αβγδε.dat is now ON
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip journal -forward -fence=none -verify -extract=ＡＢＣＤＥＦ.Ｇ *
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
@@ -152,11 +152,11 @@ unset echo
 ^adata("Ę")="30"
 Verifying the database ...
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Forward recovering
 ##SOURCE_PATH##/mupip journal -recover -forward -extract=ＡＢＣＤＥＦ.Ｇ Üäröß.mjl,ＥＦＧ.ＡＢＣＤ
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
@@ -236,11 +236,11 @@ unset echo
 05\#TIMESTAMP#\30\#PID.#\0\0\0\#STRMSEQNO#\0\#NODEFLAGS#\^adata("Ę")="30"
 Verifying the database ...
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

@@ -127,16 +127,16 @@ Test reading a pre-existing file:
 --> gtm
 %YDB-I-BREAK, Break instruction encountered
                 At M source location +1^GTM$DMOD
-GTM>s f="dnfs1:[test]shrnkfil.m"
+YDB>s f="dnfs1:[test]shrnkfil.m"
 
-GTM>o f:read
+YDB>o f:read
 
-GTM>zshow "D"
+YDB>zshow "D"
 DNFS1:[TEST]SHRNKFIL.M OPEN RMS ALLO=3 STMLF READ 
 _TNA811: OPEN TERMINAL EDIT NOESCA HOST NOINSE NOPAST
 	NOREADS TTSY TYPE WIDTH=80 LENG=24 
 
-GTM>use f read line use 0 zwrite
+YDB>use f read line use 0 zwrite
 f="dnfs1:[test]shrnkfil.m"
 line=$C(9)_"; shrinks a file of long strings, printing the number of ALPHABETalp
 	habet occurrences instead."
@@ -146,13 +146,13 @@ Assumes gtm$routines includes gtm$troot:[v990.manual_tests.inref]
 -->  gtm
 %YDB-I-BREAK, Break instruction encountered
                 At M source location +1^GTM$DMOD
-GTM>d write^d002470
+YDB>d write^d002470
 file to create: dnfs1:[test]d2470.txt
 DNFS1:[TEST]D2470.TXT OPEN RMS 
 _TNA811: OPEN TERMINAL EDIT NOESCA HOST NOINSE NOPAST NOREADS TTSY TYPE WIDTH=80
            LENG=24 
 
-GTM>d read^d002470
+YDB>d read^d002470
 file to read: dnfs1:[test]d2470.txt
 DNFS1:[TEST]D2470.TXT OPEN RMS ALLO=1 STMLF READ EXCE="G notfound"
 _TNA811: OPEN TERMINAL EDIT NOESCA HOST NOINSE NOPAST NOREADS TTSY TYPE WIDTH=80
@@ -161,12 +161,12 @@ line="this is line 1"
 line="this is the second line"
 line="this is the last line"
 
-GTM>d read^d002470
+YDB>d read^d002470
 file to read: dnfs1:[test]nothere.txt
 
 The file dnfs1:[test]nothere.txt does not exist.
 
-GTM>
+YDB>
 
 -->  dir/fu dnfs1:[test]d2470;
 
@@ -200,13 +200,13 @@ Total of 1 file, 1/1 block.
 -->  gtm
 %YDB-I-BREAK, Break instruction encountered
                 At M source location +1^GTM$DMOD
-GTM>d write^d002470
+YDB>d write^d002470
 file to create: d2470indir.txt
 D2470INDIR.TXT OPEN RMS 
 _TNA811: OPEN TERMINAL EDIT NOESCA HOST NOINSE NOPAST NOREADS TTSY TYPE WIDTH=80
            LENG=24 
 
-GTM>d read^d002470
+YDB>d read^d002470
 file to read: d2470indir.txt
 D2470INDIR.TXT OPEN RMS ALLO=1 STMLF READ EXCE="G notfound"
 _TNA811: OPEN TERMINAL EDIT NOESCA HOST NOINSE NOPAST NOREADS TTSY TYPE WIDTH=80
@@ -215,5 +215,5 @@ line="this is line 1"
 line="this is the second line"
 line="this is the last line"
 
-GTM>h
+YDB>h
 

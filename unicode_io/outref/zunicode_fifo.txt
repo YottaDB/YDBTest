@@ -6,10 +6,10 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
 
-GTM>
+YDB>
 do ^zunicodefifo("UTF-8")
 
-GTM>
+YDB>
 ---------------------------------------------
 Test: unicodefifoUTF-8.pipe
 -> OPEN "unicodefifoUTF-8.pipe":(FIFO:WRITE:RECORDSIZE=-1:CHSET="UTF-8"):60
@@ -154,12 +154,12 @@ Now try writing a large record
 -> OPEN "unicodefifoUTF-8.pipe":(FIFO:WRITE:RECORDSIZE=1048576:CHSET="UTF-8")
 -> OPEN "unicodefifoUTF-8.pipe":(FIFO:WRITE:CHSET="UTF-8"):60
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do ^zunicodefifo("UTF-16")
 
-GTM>
+YDB>
 ---------------------------------------------
 Test: unicodefifoUTF-16.pipe
 -> OPEN "unicodefifoUTF-16.pipe":(FIFO:WRITE:RECORDSIZE=-1:CHSET="UTF-16"):60
@@ -312,12 +312,12 @@ Now try writing a large record
 -> OPEN "unicodefifoUTF-16.pipe":(FIFO:WRITE:RECORDSIZE=1048576:CHSET="UTF-16")
 -> OPEN "unicodefifoUTF-16.pipe":(FIFO:WRITE:CHSET="UTF-16"):60
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do ^zunicodefifo("UTF-16LE")
 
-GTM>
+YDB>
 ---------------------------------------------
 Test: unicodefifoUTF-16LE.pipe
 -> OPEN "unicodefifoUTF-16LE.pipe":(FIFO:WRITE:RECORDSIZE=-1:CHSET="UTF-16LE"):60
@@ -470,12 +470,12 @@ Now try writing a large record
 -> OPEN "unicodefifoUTF-16LE.pipe":(FIFO:WRITE:RECORDSIZE=1048576:CHSET="UTF-16LE")
 -> OPEN "unicodefifoUTF-16LE.pipe":(FIFO:WRITE:CHSET="UTF-16LE"):60
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do ^zunicodefifo("UTF-16BE")
 
-GTM>
+YDB>
 ---------------------------------------------
 Test: unicodefifoUTF-16BE.pipe
 -> OPEN "unicodefifoUTF-16BE.pipe":(FIFO:WRITE:RECORDSIZE=-1:CHSET="UTF-16BE"):60
@@ -628,12 +628,12 @@ Now try writing a large record
 -> OPEN "unicodefifoUTF-16BE.pipe":(FIFO:WRITE:RECORDSIZE=1048576:CHSET="UTF-16BE")
 -> OPEN "unicodefifoUTF-16BE.pipe":(FIFO:WRITE:CHSET="UTF-16BE"):60
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do ^zunicodefifo("M")
 
-GTM>
+YDB>
 ---------------------------------------------
 Test: unicodefifoM.pipe
 -> OPEN "unicodefifoM.pipe":(FIFO:WRITE:RECORDSIZE=-1:CHSET="M"):60
@@ -778,7 +778,7 @@ Now try writing a large record
 -> OPEN "unicodefifoM.pipe":(FIFO:WRITE:RECORDSIZE=1048576:CHSET="M")
 -> OPEN "unicodefifoM.pipe":(FIFO:WRITE:CHSET="M"):60
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

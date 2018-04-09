@@ -16,12 +16,12 @@
 ##TEST_AWKvermismatch test -- v4 GLD, v4 DB and V.* version being tested
 
 
-GTM>
+YDB>
 global set attempted on a v4 database. should error out
-GTM>
+YDB>
 ##TEST_AWK%YDB-E-GDINVALID, Unrecognized Global Directory file format: ##TEST_PATH##/mumps.gld, expected label: GTCGBDUNX[01]10, found: GTCGBDUNX003
 
-GTM>
+YDB>
 mupip extract attempted on a v4 database. should error out
 ##TEST_AWK%YDB-E-GDINVALID, Unrecognized Global Directory file format: ##TEST_PATH##/mumps.gld, expected label: GTCGBDUNX[01]10, found: GTCGBDUNX003
 dse dump attempted on a v4 database. should error out
@@ -64,11 +64,11 @@ do gde exit in V5. this should automatically convert gld to V5 without issue
 	##TEST_PATH##/mumps.gld
 global sets, mupip & dse expected to PASS here
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8
 
 File  	##TEST_PATH##/mumps.dat
@@ -109,12 +109,12 @@ Region          DEFAULT
 vermismatch test -- v5 GLD, v5 DB and ##FILTERED##PRIORVER## version being tested
 
 
-GTM>
+YDB>
 global set attempted on a v5 database. should error out
-GTM>
+YDB>
 %YDB-E-GDINVALID, Unrecognized Global Directory file format: ##TEST_PATH##/mumps.gld
 
-GTM>
+YDB>
 mupip extract attempted on a v5 database. should error out
 %YDB-E-GDINVALID, Unrecognized Global Directory file format: ##TEST_PATH##/mumps.gld
 dse dump attempted on a v5 database. should error out
@@ -123,12 +123,12 @@ dse dump attempted on a v5 database. should error out
 vermismatch test -- v5 GLD, v4 DB and ##FILTERED##PRIORVER## version being tested
 
 
-GTM>
+YDB>
 global set attempted on a v4 database. should error out
-GTM>
+YDB>
 %YDB-E-GDINVALID, Unrecognized Global Directory file format: ##TEST_PATH##/mumps.gld
 
-GTM>
+YDB>
 mupip extract attempted on a v4 database. should error out
 %YDB-E-GDINVALID, Unrecognized Global Directory file format: ##TEST_PATH##/mumps.gld
 dse dump attempted on a v4 database. should error out
@@ -137,12 +137,12 @@ dse dump attempted on a v4 database. should error out
 ##TEST_AWKvermismatch test -- v5 GLD, v4 DB and V.* version being tested
 
 
-GTM>
+YDB>
 global set attempted on a v4 database. should error out
-GTM>
+YDB>
 %YDB-E-BADDBVER, Incorrect database version: ##TEST_PATH##/mumps.dat
 
-GTM>
+YDB>
 mupip extract attempted on a v4 database. should error out
 %YDB-E-BADDBVER, Incorrect database version: ##TEST_PATH##/mumps.dat
 dse dump attempted on a v4 database. should error out
@@ -152,9 +152,9 @@ Clean up ftok semaphore which will be left around from the BADDBVER errors above
 %YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
 ##TEST_AWK.*(Before-images|BEFORE_IMAGES).*
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT

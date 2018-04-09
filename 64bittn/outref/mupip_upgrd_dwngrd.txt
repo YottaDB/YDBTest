@@ -27,9 +27,9 @@ An abnormal termination will damage the database during the operation !!
 
 ##TEST_AWK.YDB-I-FTOKKEY, FTOK key 0x[0-9A-F]+
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 Begin Section 3
 
@@ -103,9 +103,9 @@ File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
@@ -172,17 +172,17 @@ $error_free :  ; $no_regions = 1
 Integ of region DEFAULT
 %YDB-E-DYNUPGRDFAIL, Unable to dynamically upgrade block ##TN## in database ##TEST_PATH##/mumps.dat due to lack of free space in block
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT DBG
 verification should issue DYNUPGRDFAIL error here,as too-big records were previously set
 
-GTM>
+YDB>
 %YDB-E-DYNUPGRDFAIL, Unable to dynamically upgrade block ##TN## in database ##TEST_PATH##/mumps.dat due to lack of free space in block
 		At M source location vrfybig+8^upgrdtst
 
-GTM>
+YDB>
 ##ALLOW_OUTPUT DBG
 Attempting MUPIP REORG UPGRADE with too big records. Should error out
 %YDB-E-DBFILERR, Error with database file ##TEST_PATH##/mumps.dat
@@ -212,12 +212,12 @@ An abnormal termination will damage the database during the operation !!
 %YDB-I-MUINFOUINT4, Old file total_blks : ##UPGRD_DWNGRD_BLKS##
 %YDB-S-MUPGRDSUCC, Database file mumps.dat successfully downgraded to GT.M V4
 
-GTM>
+YDB>
 Killing too-big records
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 
 Total blocks in database  -------##SCAN_BLOCKS##
@@ -241,27 +241,27 @@ An abnormal termination will damage the database during the operation !!
 %YDB-I-MUINFOUINT4, Old file total_blks : ##UPGRD_DWNGRD_BLKS##
 %YDB-S-MUPGRDSUCC, Database file mumps.dat successfully upgrade to GT.M ##MACHTYPE##
 
-GTM>
+YDB>
 Running verify
 
-GTM>
+YDB>
  --> Verify Directory Tree : PASS
  --> Verify all Global Variable Tree : PASS
 
-GTM>
+YDB>
 Running verify big
 
-GTM>
+YDB>
  --> Verify Directory Tree : PASS
 
-GTM>
+YDB>
 verification error expected since database is upgraded to V5 but the version now is V4
 
-GTM>
+YDB>
 %YDB-E-BADDBVER, Incorrect database version: ##TEST_PATH##/mumps.dat
 		At M source location dirtloop+4^upgrdtst
 
-GTM>
+YDB>
 Database file mumps.dat now has desired DB format V4
 Attempting MUPIP DOWNGRADE without standalone access. Should issue MUSTANDLONE error
 You must have a backup before you proceed!!
@@ -273,9 +273,9 @@ An abnormal termination will damage the database during the operation !!
 
 ##TEST_AWK.YDB-I-FTOKKEY, FTOK key 0x[0-9A-F]+
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Attempting MUPIP DOWNGRADE again with standalone access. Should PASS
 You must have a backup before you proceed!!
 An abnormal termination will damage the database during the operation !!
@@ -307,32 +307,32 @@ Reserved Bytes 8
   TP blkmod tp_hist                0
 verification & setting should  pass since database is downgraded to V4
 
-GTM>
+YDB>
  --> Verify Directory Tree : PASS
  --> Verify all Global Variable Tree : PASS
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 --> Number of globals in directory tree : ##V4RAND##
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 --> Number of records in global variable tree : ##V4RAND##
 
-GTM>
+YDB>
 dbcheck on a downgraded v4 database should be clean here
 ##V4VER##/mupip
 ##V4VER##/mupip integ -REG *
 No errors detected by integ.
 verification expected to now fail with BADDBVER error as V5 version is used on a V4 database
 
-GTM>
+YDB>
 %YDB-E-BADDBVER, Incorrect database version: ##TEST_PATH##/mumps.dat
 		At M source location dirtloop+4^upgrdtst
 
-GTM>
+YDB>
 Clean up ftok semaphore which will be left around from the BADDBVER error before attempting MUPIP UPGRADE
 %YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
 MUPIP UPGRADE should issue MUUPGRDNRDY error here as dbcertify is not yet run
@@ -366,11 +366,11 @@ An abnormal termination will damage the database during the operation !!
 %YDB-I-MUINFOUINT4, Old file total_blks : ##UPGRD_DWNGRD_BLKS##
 %YDB-S-MUPGRDSUCC, Database file mumps.dat successfully upgrade to GT.M ##MACHTYPE##
 
-GTM>
+YDB>
  --> Verify Directory Tree : PASS
  --> Verify all Global Variable Tree : PASS
 
-GTM>
+YDB>
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT

@@ -6,9 +6,9 @@ mumps.dat
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
@@ -144,10 +144,10 @@ Total             100               6              NA             2
 %YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
-GTM>
+YDB>
 Analyzing detailed journal extract
 
-GTM>
+YDB>
 
 Get PBLK records from dse.mjf : Field Position:8
 TN = 16
@@ -155,7 +155,7 @@ TN = 144
 TN = 115
 TN = 121
 
-GTM>
+YDB>
 
 Get PBLK records from dse.mjf : Field Position:6
 BLOCK ID = 0
@@ -163,7 +163,7 @@ BLOCK ID = 0
 BLOCK ID = 0
 BLOCK ID = 0
 
-GTM>
+YDB>
 
 Get PBLK records from dse.mjf : Field Position:7
 SIZE = 2
@@ -171,28 +171,28 @@ SIZE = 0
 SIZE = 3
 SIZE = 3
 
-GTM>
+YDB>
 
 Get AIMG records from dse.mjf : Field Position:3
 TN = 5
 TN = 6
 TN = 7
 
-GTM>
+YDB>
 
 Get AIMG records from dse.mjf : Field Position:6
 BLOCK ID = 0
 BLOCK ID = 0
 BLOCK ID = 0
 
-GTM>
+YDB>
 
 Get AIMG records from dse.mjf : Field Position:7
 SIZE = 3
 SIZE = 3
 SIZE = 3
 
-GTM>
+YDB>
 mupip journal -recov -noverify -back mumps.mjl -since=time1
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..

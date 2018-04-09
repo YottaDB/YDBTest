@@ -1,4 +1,16 @@
 #!/usr/bin/expect -f
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
 # expect $gtm_test/T999/manual_tests/u_inref/remote_terminal.exp zztop2 $gtm_test/T999 V990
 
 proc debug {switch} {
@@ -68,14 +80,14 @@ send "clear\n"
 
 # Execute GT.M
 send -- "\$gtm_exe/mumps -direct\r"
-expect "GTM>"
+expect "YDB>"
 send "do ^terminal\r"
 
 # Emtpy the expect buffer and start logging
 expect -re {$}
 log_user 1
 
-expect "GTM>"
+expect "YDB>"
 send_user "\r\n"
 log_user 0
 send -- "halt\r"

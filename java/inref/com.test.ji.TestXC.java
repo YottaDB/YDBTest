@@ -956,7 +956,7 @@ public class TestXC {
 					return	"%YDB-E-ZCARGMSMTCH, External call: Actual argument count, " + numOfActuals +
 							", is greater than formal argument count, " + numOfFormals + "\n" +
 							"\n" +
-							"GTM>\n";
+							"YDB>\n";
 				}
 			}
 		};

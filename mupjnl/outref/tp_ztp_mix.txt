@@ -5,26 +5,26 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
 
-GTM>
+YDB>
 d t1^ztptp
 %YDB-E-TPMIXUP, An M transaction cannot be started within a fenced logical transaction
 		At M source location t1+3^ztptp
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 d t2^ztptp
 %YDB-E-TPMIXUP, A fenced logical transaction cannot be started within an M transaction
 		At M source location t2+3^ztptp
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 d t3^ztptp
 %YDB-E-TPMIXUP, An M transaction cannot be started within a fenced logical transaction
 		At M source location t3+4^ztptp
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

@@ -19,16 +19,16 @@
 	##TEST_PATH##/mumps.gld
 # Now try to set ^x. This should throw ACTCOLLMISMTCH error
 
-GTM>
+YDB>
 %YDB-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #1 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #0 for this global
 
-GTM>
+YDB>
 %YDB-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #1 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #0 for this global
 
-GTM>
+YDB>
 %YDB-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #1 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #0 for this global
 
-GTM>
+YDB>
 # Test case 2 :
 # create a.gld with global x having collation 1
 %GDE-I-GDUSEDEFS, Using defaults for Global Directory 
@@ -49,17 +49,17 @@ GTM>
 # Now try to do $get(^x) first with a.gld and then with b.gld
 # expect ACTCOLLMISMTCH error whenever accessed via b.gld but not when accessed with a.gld again
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 %YDB-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #0 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #1 for this global
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 %YDB-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #0 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #1 for this global
 
-GTM>
+YDB>
 # Test case 2B :
 # Create a database with fileheader collation set to 2
 %GDE-I-GDUSEDEFS, Using defaults for Global Directory 
@@ -91,19 +91,19 @@ Region	DEFAULT
 # Now try to do $get(^x) first with a.gld and then with b.gld
 # expect ACTCOLLMISMTCH error in both the cases (because the Directory Tree has set collation 2 for the global)
 
-GTM>
+YDB>
 %YDB-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #1 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #2 for this global
 
-GTM>
+YDB>
 %YDB-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #0 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #1 for this global
 
-GTM>
+YDB>
 %YDB-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #1 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #2 for this global
 
-GTM>
+YDB>
 %YDB-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #0 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #1 for this global
 
-GTM>
+YDB>
 # Test case 3 :
 # Create a.gld with ^x(1:10) -> AREG and ^x(11:) -> DEFAULT ; and gblname x with collation=1
 %GDE-I-GDUSEDEFS, Using defaults for Global Directory 
@@ -121,36 +121,36 @@ GTM>
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 # Within the same process try accessing |"a.gld"|^x(11), |"b.gld"|^x(11) -> expect ACTCOLLMISMTCH
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 %YDB-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #0 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #1 for this global
 
-GTM>
+YDB>
 # Within the same process try accessing |"a.gld"|^x(1), |"b.gld"|^x(1)
 # It should not error out, as they map to different regions
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 # Within the same process try accessing |"a.gld"|^x(1), |"b.gld"|^x(11) -> expect ACTCOLLMISMTCH
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 %YDB-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #0 from global directory but database file ##TEST_PATH##/a.dat contains different collation sequence #1 for this global
 
-GTM>
+YDB>
 # Within the same process try accessing |"a.gld"|^x(11), |"b.gld"|^x(1) -> expect ACTCOLLMISMTCH
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 %YDB-E-ACTCOLLMISMTCH, Global ^x inherits alternative collation sequence #0 from global directory but database file ##TEST_PATH##/mumps.dat contains different collation sequence #1 for this global
 
-GTM>
+YDB>
 # Test case 4 :
 # If collation characteristics are defined in gld for a global name, (only when) the first node of that global
 # name which gets set in the database (i.e. one that creates the GVT) will create a tree with 

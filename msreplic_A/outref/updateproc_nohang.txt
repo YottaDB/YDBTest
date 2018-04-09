@@ -21,23 +21,23 @@ mumps.dat
 # Kill the update process on INST2
 ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/simpleinstanceupdate.csh 50'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 # Kill the update process on INST2
 ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/simpleinstanceupdate.csh 50'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'RUN INST3 $MUPIP replic -instance_create -name=$gtm_test_cur_pri_name; $gtm_tst/com/jnl_on.csh $test_jnldir -replic=on'==
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST3 $MUPIP replic -source -start -passive -log=passive_source.log -buf=1 -instsecondary=INSTANCE1'==
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating START of source server for secondary instance [INSTANCE1]
@@ -45,22 +45,22 @@ GTM>
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating START of source server for secondary instance [INSTANCE3]
 ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/simpleinstanceupdate.csh 50'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/simpleinstanceupdate.csh 50'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST2 $gtm_tst/com/wait_until_src_backlog_below.csh 0'==
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST3 $gtm_tst/com/wait_until_src_backlog_below.csh 0'==
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST2 SRC=INST1 $gtm_tst/com/wait_until_rcvr_backlog_clear.csh'==

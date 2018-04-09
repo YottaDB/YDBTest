@@ -253,9 +253,9 @@ Region          AREG
   LOCK shares DB critical section     FALSE  Read Only                      OFF
 DSE> DSE  dump output 
 
-GTM>
+YDB>
 
-GTM>
+YDB>
   Null subscripts                    ALWAYS  Free blocks             0x00000060
   Standard Null Collation              TRUE  Free space              0x00000000
 
@@ -320,13 +320,13 @@ GDE>
 	##TEST_PATH##/mumps.gld
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
-GTM>
+YDB>
 
 1
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 GLOBALS COLLATE IN stdnullcoll WITH NCT 0 & WITH ACT 0
 zwriting the collation order
@@ -365,7 +365,7 @@ dgh
 efg
 iamAREG
 
-GTM>
+YDB>
 
 GLOBALS COLLATE IN stdnullcoll WITH NCT 0 & WITH ACT 0
 zwriting the collation order
@@ -390,7 +390,7 @@ abc
 565
 1
 
-GTM>
+YDB>
 
 GLOBALS COLLATE IN stdnullcoll WITH NCT 0 & WITH ACT 0
 zwriting the collation order
@@ -418,7 +418,7 @@ EXECUTING $QUERYon ^aregionvar
 ^aregionvar("efg",2,"",4)
 ^aregionvar("iamAREG",2)
 
-GTM>
+YDB>
 
 GLOBALS COLLATE IN stdnullcoll WITH NCT 0 & WITH ACT 0
 zwriting the collation order
@@ -443,11 +443,11 @@ dgh
 efg
 iamAREG
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 1
-GTM>
+YDB>
 
 LOCALS COLLATE WITH NCT 0 & WITH ACT 0 FOR stdnullcoll DATABASE
 zwriting the local collation order
@@ -476,7 +476,7 @@ set s1=null FOR  set s1=$ORDER(localvariable(s1)) quit:s1=s2  write s1,!
 1
 565
 
-GTM>
+YDB>
 
 LOCALS COLLATE WITH NCT 0 & WITH ACT 0 FOR stdnullcoll DATABASE
 zwriting the local collation order
@@ -499,7 +499,7 @@ efg
 dgh
 abc
 
-GTM>
+YDB>
 
 LOCALS COLLATE WITH NCT 0 & WITH ACT 0 FOR stdnullcoll DATABASE
 zwriting the local collation order
@@ -527,19 +527,19 @@ localvariable("dgh")
 localvariable("efg",2,"",4)
 localvariable("iamAREG",2)
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 1
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 GLOBALS COLLATE IN stdnullcoll WITH NCT 1 & WITH ACT 0
 zwriting the collation order
@@ -578,7 +578,7 @@ dgh
 efg
 iamAREG
 
-GTM>
+YDB>
 
 GLOBALS COLLATE IN stdnullcoll WITH NCT 1 & WITH ACT 0
 zwriting the collation order
@@ -603,7 +603,7 @@ abc
 565
 1
 
-GTM>
+YDB>
 
 GLOBALS COLLATE IN stdnullcoll WITH NCT 1 & WITH ACT 0
 zwriting the collation order
@@ -631,7 +631,7 @@ EXECUTING $QUERYon ^aregionvar
 ^aregionvar("efg","2","","4")
 ^aregionvar("iamAREG","2")
 
-GTM>
+YDB>
 
 GLOBALS COLLATE IN stdnullcoll WITH NCT 1 & WITH ACT 0
 zwriting the collation order
@@ -656,11 +656,11 @@ dgh
 efg
 iamAREG
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 1
-GTM>
+YDB>
 
 LOCALS COLLATE WITH NCT 1 & WITH ACT 0 FOR stdnullcoll DATABASE
 zwriting the local collation order
@@ -699,7 +699,7 @@ dgh
 efg
 iamAREG
 
-GTM>
+YDB>
 
 LOCALS COLLATE WITH NCT 1 & WITH ACT 0 FOR stdnullcoll DATABASE
 zwriting the local collation order
@@ -724,7 +724,7 @@ abc
 565
 1
 
-GTM>
+YDB>
 
 LOCALS COLLATE WITH NCT 1 & WITH ACT 0 FOR stdnullcoll DATABASE
 zwriting the local collation order
@@ -752,7 +752,7 @@ localvariable("dgh")
 localvariable("efg",2,"",4)
 localvariable("iamAREG",2)
 
-GTM>
+YDB>
 
 LOCALS COLLATE WITH NCT 1 & WITH ACT 0 FOR stdnullcoll DATABASE
 zwriting the local collation order
@@ -777,9 +777,9 @@ dgh
 efg
 iamAREG
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 %GDE-I-LOADGD, Loading Global Directory file 
 	##TEST_PATH##/mumps.gld
 %GDE-I-VERIFY, Verification OK
@@ -801,13 +801,13 @@ GDE>
 	##TEST_PATH##/mumps.gld
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
-GTM>
+YDB>
 
 1
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 GLOBALS COLLATE IN stdnullcoll WITH NCT 0 & WITH ACT 10
 zwriting the collation order
@@ -846,7 +846,7 @@ efg
 dgh
 abc
 
-GTM>
+YDB>
 
 GLOBALS COLLATE IN stdnullcoll WITH NCT 0 & WITH ACT 10
 zwriting the collation order
@@ -871,7 +871,7 @@ iamAREG
 565
 1
 
-GTM>
+YDB>
 
 GLOBALS COLLATE IN stdnullcoll WITH NCT 0 & WITH ACT 10
 zwriting the collation order
@@ -899,7 +899,7 @@ EXECUTING $QUERYon ^aregionvar
 ^aregionvar("abc","")
 ^aregionvar("abc","","hi",2)
 
-GTM>
+YDB>
 
 GLOBALS COLLATE IN stdnullcoll WITH NCT 0 & WITH ACT 10
 zwriting the collation order
@@ -924,11 +924,11 @@ efg
 dgh
 abc
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 1
-GTM>
+YDB>
 
 LOCALS COLLATE WITH NCT 0 & WITH ACT 10 FOR stdnullcoll DATABASE
 zwriting the local collation order
@@ -957,7 +957,7 @@ set s1=null FOR  set s1=$ORDER(localvariable(s1)) quit:s1=s2  write s1,!
 1
 565
 
-GTM>
+YDB>
 
 LOCALS COLLATE WITH NCT 0 & WITH ACT 10 FOR stdnullcoll DATABASE
 zwriting the local collation order
@@ -980,7 +980,7 @@ dgh
 efg
 iamAREG
 
-GTM>
+YDB>
 
 LOCALS COLLATE WITH NCT 0 & WITH ACT 10 FOR stdnullcoll DATABASE
 zwriting the local collation order
@@ -1008,19 +1008,19 @@ localvariable("dgh")
 localvariable("abc","")
 localvariable("abc","","hi",2)
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 1
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 GLOBALS COLLATE IN stdnullcoll WITH NCT 1 & WITH ACT 10
 zwriting the collation order
@@ -1059,7 +1059,7 @@ abc
 565
 1
 
-GTM>
+YDB>
 
 GLOBALS COLLATE IN stdnullcoll WITH NCT 1 & WITH ACT 10
 zwriting the collation order
@@ -1084,7 +1084,7 @@ dgh
 efg
 iamAREG
 
-GTM>
+YDB>
 
 GLOBALS COLLATE IN stdnullcoll WITH NCT 1 & WITH ACT 10
 zwriting the collation order
@@ -1112,7 +1112,7 @@ EXECUTING $QUERYon ^aregionvar
 ^aregionvar("1","")
 ^aregionvar("1","","2","3")
 
-GTM>
+YDB>
 
 GLOBALS COLLATE IN stdnullcoll WITH NCT 1 & WITH ACT 10
 zwriting the collation order
@@ -1137,11 +1137,11 @@ abc
 565
 1
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 1
-GTM>
+YDB>
 
 LOCALS COLLATE WITH NCT 1 & WITH ACT 10 FOR stdnullcoll DATABASE
 zwriting the local collation order
@@ -1180,7 +1180,7 @@ efg
 dgh
 abc
 
-GTM>
+YDB>
 
 LOCALS COLLATE WITH NCT 1 & WITH ACT 10 FOR stdnullcoll DATABASE
 zwriting the local collation order
@@ -1205,7 +1205,7 @@ iamAREG
 565
 1
 
-GTM>
+YDB>
 
 LOCALS COLLATE WITH NCT 1 & WITH ACT 10 FOR stdnullcoll DATABASE
 zwriting the local collation order
@@ -1233,11 +1233,11 @@ localvariable("dgh")
 localvariable("abc","")
 localvariable("abc","","hi",2)
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 %GDE-I-LOADGD, Loading Global Directory file 
 	##TEST_PATH##/mumps.gld
 %GDE-I-VERIFY, Verification OK
@@ -1270,13 +1270,13 @@ GDE>
 	##TEST_PATH##/mumps.gld
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
-GTM>
+YDB>
 
 1
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 GLOBALS COLLATE IN nostdnullcoll WITH NCT 0 & WITH ACT 0
 zwriting the collation order
@@ -1305,7 +1305,7 @@ set s1=null for  set s1=$ORDER(^aregionvar(s1)) quit:s1=s2  write s1,!
 1
 565
 
-GTM>
+YDB>
 
 GLOBALS COLLATE IN nostdnullcoll WITH NCT 0 & WITH ACT 0
 zwriting the collation order
@@ -1328,15 +1328,15 @@ efg
 dgh
 abc
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 1
-GTM>
+YDB>
 
 LOCALS COLLATE WITH NCT 0 & WITH ACT 0 FOR nostdnullcoll DATABASE
 zwriting the local collation order
@@ -1365,7 +1365,7 @@ set s1=null FOR  set s1=$ORDER(localvariable(s1)) quit:s1=s2  write s1,!
 1
 565
 
-GTM>
+YDB>
 
 LOCALS COLLATE WITH NCT 0 & WITH ACT 0 FOR nostdnullcoll DATABASE
 zwriting the local collation order
@@ -1388,7 +1388,7 @@ efg
 dgh
 abc
 
-GTM>
+YDB>
 
 LOCALS COLLATE WITH NCT 0 & WITH ACT 0 FOR nostdnullcoll DATABASE
 zwriting the local collation order
@@ -1416,19 +1416,19 @@ localvariable("dgh")
 localvariable("efg",2,"",4)
 localvariable("iamAREG",2)
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 1
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 GLOBALS COLLATE IN nostdnullcoll WITH NCT 1 & WITH ACT 0
 zwriting the collation order
@@ -1455,7 +1455,7 @@ abc
 1
 set s1=null for  set s1=$ORDER(^aregionvar(s1)) quit:s1=s2  write s1,!
 
-GTM>
+YDB>
 
 GLOBALS COLLATE IN nostdnullcoll WITH NCT 1 & WITH ACT 0
 zwriting the collation order
@@ -1480,15 +1480,15 @@ abc
 565
 1
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 1
-GTM>
+YDB>
 
 LOCALS COLLATE WITH NCT 1 & WITH ACT 0 FOR nostdnullcoll DATABASE
 zwriting the local collation order
@@ -1527,7 +1527,7 @@ dgh
 efg
 iamAREG
 
-GTM>
+YDB>
 
 LOCALS COLLATE WITH NCT 1 & WITH ACT 0 FOR nostdnullcoll DATABASE
 zwriting the local collation order
@@ -1552,7 +1552,7 @@ abc
 565
 1
 
-GTM>
+YDB>
 
 LOCALS COLLATE WITH NCT 1 & WITH ACT 0 FOR nostdnullcoll DATABASE
 zwriting the local collation order
@@ -1580,7 +1580,7 @@ localvariable("dgh")
 localvariable("efg",2,"",4)
 localvariable("iamAREG",2)
 
-GTM>
+YDB>
 
 LOCALS COLLATE WITH NCT 1 & WITH ACT 0 FOR nostdnullcoll DATABASE
 zwriting the local collation order
@@ -1605,9 +1605,9 @@ dgh
 efg
 iamAREG
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 %GDE-I-LOADGD, Loading Global Directory file 
 	##TEST_PATH##/mumps.gld
 %GDE-I-VERIFY, Verification OK
@@ -1629,13 +1629,13 @@ GDE>
 	##TEST_PATH##/mumps.gld
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
-GTM>
+YDB>
 
 1
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 GLOBALS COLLATE IN nostdnullcoll WITH NCT 0 & WITH ACT 10
 zwriting the collation order
@@ -1664,7 +1664,7 @@ set s1=null for  set s1=$ORDER(^aregionvar(s1)) quit:s1=s2  write s1,!
 1
 565
 
-GTM>
+YDB>
 
 GLOBALS COLLATE IN nostdnullcoll WITH NCT 0 & WITH ACT 10
 zwriting the collation order
@@ -1687,15 +1687,15 @@ dgh
 efg
 iamAREG
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 1
-GTM>
+YDB>
 
 LOCALS COLLATE WITH NCT 0 & WITH ACT 10 FOR nostdnullcoll DATABASE
 zwriting the local collation order
@@ -1724,7 +1724,7 @@ set s1=null FOR  set s1=$ORDER(localvariable(s1)) quit:s1=s2  write s1,!
 1
 565
 
-GTM>
+YDB>
 
 LOCALS COLLATE WITH NCT 0 & WITH ACT 10 FOR nostdnullcoll DATABASE
 zwriting the local collation order
@@ -1747,7 +1747,7 @@ dgh
 efg
 iamAREG
 
-GTM>
+YDB>
 
 LOCALS COLLATE WITH NCT 0 & WITH ACT 10 FOR nostdnullcoll DATABASE
 zwriting the local collation order
@@ -1775,19 +1775,19 @@ localvariable("dgh")
 localvariable("abc","")
 localvariable("abc","","hi",2)
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 1
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 GLOBALS COLLATE IN nostdnullcoll WITH NCT 1 & WITH ACT 10
 zwriting the collation order
@@ -1814,7 +1814,7 @@ efg
 iamAREG
 set s1=null for  set s1=$ORDER(^aregionvar(s1)) quit:s1=s2  write s1,!
 
-GTM>
+YDB>
 
 GLOBALS COLLATE IN nostdnullcoll WITH NCT 1 & WITH ACT 10
 zwriting the collation order
@@ -1839,15 +1839,15 @@ dgh
 efg
 iamAREG
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 1
-GTM>
+YDB>
 
 LOCALS COLLATE WITH NCT 1 & WITH ACT 10 FOR nostdnullcoll DATABASE
 zwriting the local collation order
@@ -1886,7 +1886,7 @@ efg
 dgh
 abc
 
-GTM>
+YDB>
 
 LOCALS COLLATE WITH NCT 1 & WITH ACT 10 FOR nostdnullcoll DATABASE
 zwriting the local collation order
@@ -1911,7 +1911,7 @@ iamAREG
 565
 1
 
-GTM>
+YDB>
 
 LOCALS COLLATE WITH NCT 1 & WITH ACT 10 FOR nostdnullcoll DATABASE
 zwriting the local collation order
@@ -1939,11 +1939,11 @@ localvariable("dgh")
 localvariable("abc","")
 localvariable("abc","","hi",2)
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 #######################################################################
 %GBLDEF CHECK BEGINS HERE
 #######################################################################
@@ -1968,7 +1968,7 @@ GDE>
 	##TEST_PATH##/mumps.gld
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
-GTM>
+YDB>
 ^aregionvar collates with nct=1 & act=10
 
 
@@ -2003,7 +2003,7 @@ merge of ^aregionvar with ^defregvar would give error here due to different nct
 %YDB-E-NCTCOLLDIFF, Source and destination for MERGE cannot have different numerical collation type
 		At M source location chkgbldef+15^chkgbldef
 
-GTM>
+YDB>
 ^aregionvar now collates with nct=0 & act=0
 
 
@@ -2184,7 +2184,7 @@ AFTER MERGE ^aregionvar ^defregvar
 ^defregvar("abc","")=100
 ^defregvar("abc","","hi",2)=1002
 
-GTM>
+YDB>
 MERGING ^defregvar("abc","")=^aregionvar("")
 
 
@@ -2336,7 +2336,7 @@ AFTER MERGE ^defregvar ^aregionvar
 ^aregionvar("efg",2,"",4)="string_two_four"
 ^aregionvar("iamAREG",2)="string_two"
 
-GTM>
+YDB>
 %GDE-I-LOADGD, Loading Global Directory file 
 	##TEST_PATH##/mumps.gld
 %GDE-I-VERIFY, Verification OK
@@ -2358,7 +2358,7 @@ GDE>
 	##TEST_PATH##/mumps.gld
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
-GTM>
+YDB>
 ^aregionvar collates with nct=1 & act=10
 
 
@@ -2393,7 +2393,7 @@ merge of ^aregionvar with ^defregvar would give error here due to different nct
 %YDB-E-NCTCOLLDIFF, Source and destination for MERGE cannot have different numerical collation type
 		At M source location chkgbldef+15^chkgbldef
 
-GTM>
+YDB>
 ^aregionvar now collates with nct=0 & act=0
 
 
@@ -2574,7 +2574,7 @@ AFTER MERGE ^aregionvar ^defregvar
 ^defregvar("abc","")=100
 ^defregvar("abc","","hi",2)=1002
 
-GTM>
+YDB>
 MERGING ^defregvar("abc","")=^aregionvar("")
 
 
@@ -2726,7 +2726,7 @@ AFTER MERGE ^defregvar ^aregionvar
 ^aregionvar("efg",2,"",4)="string_two_four"
 ^aregionvar("iamAREG",2)="string_two"
 
-GTM>
+YDB>
 
 %gbldef check for multiple region database
 Files Created in ##TEST_PATH##:
@@ -2750,13 +2750,13 @@ GDE>
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
-GTM>
+YDB>
 AREG GLOBALS COLLATES IN NOSTDNULLCOLL
 
-GTM>
+YDB>
 DEFAULT GLOBALS COLLATES IN STDNULLCOLL
 
-GTM>
+YDB>
 ^aregionvar collates with nct=1 & act=10
 
 
@@ -2791,7 +2791,7 @@ merge of ^aregionvar with ^defregvar would give error here due to different nct
 %YDB-E-NCTCOLLDIFF, Source and destination for MERGE cannot have different numerical collation type
 		At M source location chkgbldef+15^chkgbldef
 
-GTM>
+YDB>
 ^aregionvar now collates with nct=0 & act=0
 
 
@@ -2972,7 +2972,7 @@ AFTER MERGE ^aregionvar ^defregvar
 ^defregvar("abc","")=100
 ^defregvar("abc","","hi",2)=1002
 
-GTM>
+YDB>
 MERGING ^defregvar("abc","")=^aregionvar("")
 
 
@@ -3124,81 +3124,81 @@ AFTER MERGE ^defregvar ^aregionvar
 ^aregionvar("efg",2,"",4)="string_two_four"
 ^aregionvar("iamAREG",2)="string_two"
 
-GTM>
+YDB>
 #######################################################################
 %LCLCOL CHECK BEGINS HERE
 #######################################################################
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 env. variable set to M std. null collation
 
-GTM>
+YDB>
 lcl("")=1
 lcl(1)=1
 lcl("y")=1
 lcl("x")=1
 
-GTM>
+YDB>
 getncol should return 1 here
 
-GTM>
+YDB>
 1
-GTM>
+YDB>
 
-GTM>
+YDB>
 change local collation order to GT.M null collation
 
-GTM>
+YDB>
 1
-GTM>
+YDB>
 getncol should return 0 here
 
-GTM>
+YDB>
 0
-GTM>
+YDB>
 
-GTM>
+YDB>
 collating order should be GT.M null collation here
 
-GTM>
+YDB>
 lcl(1)=1
 lcl("")=1
 lcl("x")=1
 lcl("y")=1
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 change local collation order to M std. again
 
-GTM>
+YDB>
 1
-GTM>
+YDB>
 getncol should return 1 here
 
-GTM>
+YDB>
 1
-GTM>
+YDB>
 1
-GTM>
+YDB>
 getncol should return 1 here
 
-GTM>
+YDB>
 1
-GTM>
+YDB>
 
-GTM>
+YDB>
 collating order should be M std. here
 
-GTM>
+YDB>
 lcl("")=1
 lcl(1)=1
 lcl("x")=1
 lcl("y")=1
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

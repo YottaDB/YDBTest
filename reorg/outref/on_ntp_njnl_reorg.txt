@@ -27,87 +27,87 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ##ALLOW_OUTPUT NON_REPLIC
 
-GTM>
+YDB>
 do ^manygbls
-GTM>
+YDB>
 do in0^dbfill("set")set PASS
 
-GTM>
+YDB>
 do in0^dbfill("ver")ver PASS
 
-GTM>
+YDB>
 do in0^dbfill("kill")kill PASS
 
-GTM>
+YDB>
 do in1^dbfill("set")set PASS
 
-GTM>
+YDB>
 do in1^dbfill("ver")ver PASS
 
-GTM>
+YDB>
 do in1^dbfill("kill")kill PASS
 
-GTM>
+YDB>
 do in2^dbfill("set")set PASS
 
-GTM>
+YDB>
 do in2^dbfill("ver")ver PASS
 
-GTM>
+YDB>
 do ^rinttp(1)Non-TP and TP-Rollback
 Releasing jobs...
 Starting verification...
 ver PASS
 
 PASS from rinttp
-GTM>
+YDB>
 do ^rinttp(2)Transaction Commit and TP-Rollback
 Releasing jobs...
 Starting verification...
 ver PASS
 
 PASS from rinttp
-GTM>
+YDB>
 do ^rinttp(3)non-TP and Transaction Commit and TP-Rollback
 Releasing jobs...
 Starting verification...
 ver PASS
 
 PASS from rinttp
-GTM>
+YDB>
 do in0^pfill("kill",1)kill PASS
 
-GTM>
+YDB>
 do in2^dbfill("kill")kill PASS
 
-GTM>
+YDB>
 do fill3^myfill("set")PASS from fill3^myfill("set")
 
-GTM>
+YDB>
 do fill3^myfill("ver")PASS from fill3^myfill("ver")
 
-GTM>
+YDB>
 do fill3^myfill("kill")PASS from fill3^myfill("kill")
 
-GTM>
+YDB>
 do fill4^myfill("set")PASS from fill4^myfill("set")
 
-GTM>
+YDB>
 do fill4^myfill("ver")PASS from fill4^myfill("ver")
 
-GTM>
+YDB>
 do fill4^myfill("kill")PASS from fill4^myfill("kill")
 
-GTM>
+YDB>
 do in4^sfill("set",1,8)set PASS
 
-GTM>
+YDB>
 do in4^sfill("ver",1,8)ver PASS
 
-GTM>
+YDB>
 do in4^sfill("kill",1,8)kill PASS
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT NON_REPLIC
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 Shutting down Primary Source Server Server in ##TEST_PATH##

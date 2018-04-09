@@ -8,9 +8,9 @@ Start befor image journaling
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Now manually insert some garbage into journal file
 Now Journal file is corrupted
 mupip journal -recover -back -since=time1 mumps.mjl
@@ -28,10 +28,10 @@ mupip journal -recover -forward mumps.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 Nothing will be appilied to database
 
-GTM>
+YDB>
 %YDB-E-GVUNDEF, Global variable undefined: ^a
 
-GTM>
+YDB>
 --------------------------------------------------------------------
 extract will extract until the point of corruption
 mupip journal -extract -forward -noerr mumps.mjl

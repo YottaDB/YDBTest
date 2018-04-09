@@ -3,6 +3,9 @@
 ; Copyright (c) 2016 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -21,7 +24,7 @@ gtm8357
 	. for i=1:1 use pipe read line:1 quit:$zeof  do:""'=line
 	. . use $principal
 	. . write !,line
-	. . if line["GTM>",$increment(cnt) do
+	. . if line["YDB>",$increment(cnt) do
 	. . . set next=$select(1=cnt:"write $zstep,!",(3=case)+6=cnt:"zcontinue",(3=case)&(5=cnt):"set $ZSTEP=""B""",1:"zstep")
 	. . . write !,cnt,?5,next
 	. . . use pipe

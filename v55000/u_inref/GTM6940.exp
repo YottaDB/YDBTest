@@ -61,19 +61,19 @@ set GTM_LONG_SLEEP 1.5
 set gtm_dist [lrange $argv 0 0]
 
 spawn $gtm_dist/mumps -dir
-expect "GTM>"
+expect "YDB>"
 send -s -- "f i=1:1:10 s a(i)=i*2,b(i)=i\r"
 sleep $GTM_LONG_SLEEP
 expect "f i=1:1:10 s a(i)=i*2,b(i)=i"
 send -- "\r"
 sleep $GTM_LONG_SLEEP
-expect "GTM>"
+expect "YDB>"
 send -s -- "set \$zintr=\"zwr a m a=b\""
 sleep $GTM_LONG_SLEEP
 expect "set \$zintr=\"zwr a m a=b\""
 send -s -- "\r"
 sleep $GTM_LONG_SLEEP
-expect "GTM>"
+expect "YDB>"
 send -s -- "zsy \"mupip intr \"_\$j"
 sleep $GTM_LONG_SLEEP
 expect "zsy \"mupip intr \"_\$j"
@@ -81,11 +81,11 @@ send -s -- "\r"
 sleep $GTM_LONG_SLEEP
 expect  "INTRPT issued to process "
 exp_pid
-expect "GTM>%YDB-E-ZINTRECURSEIO, Attempt to do IO to the active device in \$ZINTERRUPT"
+expect "YDB>%YDB-E-ZINTRECURSEIO, Attempt to do IO to the active device in \$ZINTERRUPT"
 expect "%YDB-E-ERRWZINTR, Error while processing \$ZINTERRUPT"
 send -s -- "\r"
 sleep $GTM_LONG_SLEEP
-expect  "GTM>"
+expect  "YDB>"
 send -s -- "h"
 sleep $GTM_LONG_SLEEP
 expect "h"

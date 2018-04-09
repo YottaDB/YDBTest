@@ -7,7 +7,7 @@ mumps.dat
 test view LVNULLSUBS
 ----------------------------------
 
-GTM>
+YDB>
 view "LVNULLSUBS"
 
 -----> zwrite LVNULLSUBS 1 <------
@@ -61,7 +61,7 @@ var456789("")="var9"
 var4567890123456789012345678901("")="var31"
 
 
-GTM>
+YDB>
 view "NOLVNULLSUBS"
 --> ERROR (expected) : $ZSTATUS=nolvnull+4^viewnull,%YDB-E-LVNULLSUBS, Null subscripts not allowed in local variables
 --> ERROR (expected) : $ZSTATUS=nolvnull+6^viewnull,%YDB-E-LVNULLSUBS, Null subscripts not allowed in local variables
@@ -166,13 +166,13 @@ var456789("")="var9"
 var4567890123456789012345678901("")="var31"
 
 
-GTM>
+YDB>
 *********************************
 test view LABELS
 ----------------------------------
 DEFAULT
 
-GTM>
+YDB>
 %YDB-E-LABELMISSING, Label referenced but not defined: LOWERCASEONLYLABEL111111111111
 %YDB-I-SRCNAM, in source module ##IN_TEST_PATH##/inref/viewlab.m
 %YDB-E-LABELMISSING, Label referenced but not defined: uppercaseonlylabel111111111111
@@ -199,13 +199,13 @@ calling LOWERCASEONLYLABEL111111111111   [X,Y]: ERROR (LABELUNKNOWN) at line: t1
 calling uppercaseonlylabel111111111111   [X,Y]: ERROR (LABELUNKNOWN) at line: t11^viewlab:t11 write "calling uppercaseonlylabel111111111111   [X,Y]: " do uppercaseonlylabel111111111111 quit
 calling UPPERCASEONLYLABEL111111111111        : UPPERCASEONLYLABEL111111111111^viewlab:->UPPERCASEONLYLABEL111111111111 write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
 
-GTM>
+YDB>
 ----------------------------------
 UPPER - i.e. disable case sensitivity
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 	LONGLABElloweRANDUPPERCASE1111	write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
 	^-----
 		At column 0, line 43, source module ##IN_TEST_PATH##/inref/viewlab.m
@@ -231,13 +231,13 @@ calling LOWERCASEONLYLABEL111111111111   [X,Y]: LOWERCASEONLYLABEL111111111111^v
 calling uppercaseonlylabel111111111111   [X,Y]: UPPERCASEONLYLABEL111111111111^viewlab:->UPPERCASEONLYLABEL111111111111 write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
 calling UPPERCASEONLYLABEL111111111111        : UPPERCASEONLYLABEL111111111111^viewlab:->UPPERCASEONLYLABEL111111111111 write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
 
-GTM>
+YDB>
 ----------------------------------
 LOWER - i.e. enable case sensitivity
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 %YDB-E-LABELMISSING, Label referenced but not defined: LOWERCASEONLYLABEL111111111111
 %YDB-I-SRCNAM, in source module ##IN_TEST_PATH##/inref/viewlab.m
 %YDB-E-LABELMISSING, Label referenced but not defined: uppercaseonlylabel111111111111
@@ -264,25 +264,25 @@ calling LOWERCASEONLYLABEL111111111111   [X,Y]: ERROR (LABELUNKNOWN) at line: t1
 calling uppercaseonlylabel111111111111   [X,Y]: ERROR (LABELUNKNOWN) at line: t11^viewlab:t11 write "calling uppercaseonlylabel111111111111   [X,Y]: " do uppercaseonlylabel111111111111 quit
 calling UPPERCASEONLYLABEL111111111111        : UPPERCASEONLYLABEL111111111111^viewlab:->UPPERCASEONLYLABEL111111111111 write $ZPOSITION,":->",$TEXT(@$ZPOSITION),!	quit
 
-GTM>
+YDB>
 *********************************
 test view JNLERROR
 ----------------------------------
 DEFAULT
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 0
-GTM>
+YDB>
 ----------------------------------
 RTSERROR
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 1
-GTM>
+YDB>
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
@@ -291,7 +291,7 @@ DSE> DSE> *********************************
 test view UNDEF
 ----------------------------------
 
-GTM>
+YDB>
 In test...
  --> Testing aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
  --> Testing %aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -312,22 +312,22 @@ In test...
  --> Testing ^aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa(1,2,3,"some subscripts")
  --> Testing ^%aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa(1,2,3,"some subscripts")
 
-GTM>
+YDB>
 *********************************
 test view NOISOLATION:^
 ----------------------------------
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 %YDB-E-VIEWGVN, Invalid global key name used with VIEW/$VIEW(): 
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 %YDB-E-VIEWGVN, Invalid global key name used with VIEW/$VIEW(): 
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

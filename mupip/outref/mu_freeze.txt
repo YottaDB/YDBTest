@@ -14,42 +14,42 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ##ALLOW_OUTPUT  NON_REPLIC
 
-GTM>
+YDB>
 PASS from fill1^myfill("set")
 
-GTM>
+YDB>
 PASS from fill1^myfill("ver")
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 %YDB-E-NOREGION, REGION not found: NOEXIST
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 mu_freeze PASS 1.
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 mu_freeze PASS 2.
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 PASS from fill1^myfill("ver")
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  NON_REPLIC
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 Shutting down Primary Source Server Server in ##TEST_PATH##
@@ -86,35 +86,35 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ##ALLOW_OUTPUT  NON_REPLIC
 
-GTM>
+YDB>
 PASS from fill1^myfill("set")
 
-GTM>
+YDB>
 PASS from fill1^myfill("ver")
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 mu_freeze PASS 3.
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 mu_freeze PASS 4.
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  NON_REPLIC
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 Shutting down Primary Source Server Server in ##TEST_PATH##

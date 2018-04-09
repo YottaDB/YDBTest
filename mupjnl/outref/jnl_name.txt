@@ -7,14 +7,14 @@ Enable no before image journaling
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Forward recovering ......
 %YDB-S-JNLSUCCESS, Recover successful
 Verifying the data ...
 
-GTM>
+YDB>
 ^x(1)=1
 ^x(2)=2
 ^x(3)=3
@@ -26,7 +26,7 @@ GTM>
 ^x(9)=9
 ^x(10)=10
 
-GTM>
+YDB>
 Forward recovering with journaling disabled...
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..

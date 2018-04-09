@@ -1,10 +1,10 @@
 # create a small database
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 ######################################################################################
 **** test1 ****
@@ -188,7 +188,7 @@ TEST-I-PASS file permissions of gtm_secshr are as expected
 ** that we already do a newincver, and there is no point in wasting extra space.
 
 # Check the content of gtm_6.outx. Expect the below
-# GTM> DBPRIVERR, No privilege for attempted update operation for file: ${curdir}/mumps.dat GTM>
+# YDB> DBPRIVERR, No privilege for attempted update operation for file: ${curdir}/mumps.dat YDB>
 TEST-I-PASS the system gave us the correct warning message
 
 
@@ -200,7 +200,7 @@ TEST-I-PASS the system gave us the correct warning message
 ** that we already do a newincver, and there is no point in wasting extra space.
 
 # Check the content of gtm_7.outx. Expect the below
-# GTM> GTMSECSHRPERM, The gtmsecshr module in $gtm_dist does not have the correct permission and uid GTM>
+# YDB> GTMSECSHRPERM, The gtmsecshr module in $gtm_dist does not have the correct permission and uid YDB>
 TEST-I-PASS the system gave us the correct warning message
 
 
@@ -3649,12 +3649,12 @@ Relink IPC Permissions:          No object module was produced
 # *** GTM-8296 %PEEKBYNAME test starts ***
 # Take away gtmhelp.dat read permission to trigger an error
 
-GTM>
+YDB>
 ##TEST_AWK%YDB-E-DBFILERR, Error with database file.*
 %SYSTEM-E-ENO13, Permission denied
 
-GTM>
+YDB>
 ##TEST_PATH##/mumps.gld
-GTM>
+YDB>
 # *** GTM-8296 %PEEKBYNAME test ends ***
 # End of C9C12002191 testing

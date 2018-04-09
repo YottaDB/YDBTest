@@ -19,18 +19,18 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ##ALLOW_OUTPUT  NON_REPLIC
 
-GTM>
+YDB>
 
 Caution: Database Block Certification Has Been Enabled
 
-GTM>
+YDB>
 d ^nullfill("set")
 
 set Started
 
 set Finished
 
-GTM>
+YDB>
 d ^nullntp
 
 
@@ -623,20 +623,20 @@ ZSHOW "V"
 End nullntp
 
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 Caution: Database Block Certification Has Been Enabled
 
-GTM>
+YDB>
 d ^nullfill("set")
 
 set Started
 
 set Finished
 
-GTM>
+YDB>
 d ^nulltp
 
 
@@ -690,20 +690,20 @@ Verify of bvar Passed
 
 nulltp finished
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 Caution: Database Block Certification Has Been Enabled
 
-GTM>
+YDB>
 d ^nullfill("set")
 
 set Started
 
 set Finished
 
-GTM>
+YDB>
 d ^nulllc
 
 
@@ -756,7 +756,7 @@ bbvar(-100,100,100)=5
 End nulllc
 
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip extract extr.glo
 %YDB-I-RECORDSTAT, ^agbl:	  Key cnt: 5  max subsc len: 25  max rec len: 1  max node len: 22
 %YDB-I-RECORDSTAT, ^bgbl:	  Key cnt: 5  max subsc len: 25  max rec len: 1  max node len: 22

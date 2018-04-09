@@ -12,61 +12,61 @@ mupip set -journal=enable,on,before -reg AREG
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
 %YDB-I-JNLSTATE, Journaling state for region AREG is now ON
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ^x=1
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip journal -recover -back mumps.mjl,a.mjl
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 %YDB-S-JNLSUCCESS, Show successful
 %YDB-S-JNLSUCCESS, Verify successful
 %YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
-GTM>
+YDB>
 ------------------------------------------------------------------------------------
 
-GTM>
+YDB>
 ^a=1
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip journal -recover -back mumps.mjl,a.mjl
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ------------------------------------------------------------------------------------
 
-GTM>
+YDB>
 ^x=1
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip journal -recover -forw -nochecktn mumps.mjl,a.mjl
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ------------------------------------------------------------------------------------
 
-GTM>
+YDB>
 ^a=1
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip journal -recover -forw -nochecktn mumps.mjl,a.mjl
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

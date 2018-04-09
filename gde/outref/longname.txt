@@ -170,14 +170,14 @@ STEP1. test long name name-space (gde_long1.csh)
 %GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
 create the database and fill the database with gdefill.m
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 set globals of 31-char length (to test name-level $ORDER)
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Will test name level $ORDER() (in both directions) of max length names works
 Will loop through only the globals that are set using set3^gdefill
 loop through all globals A23* to verify $ORDER
@@ -307,7 +307,7 @@ loop through all globals A23* to verify $ORDER(x,-1)
 ^A234567890123456789012345678901
 ^A234567890123456789012345678900
 
-GTM>
+YDB>
 Verify the globals have gone to the correct database
 Globals written to a_extract.glo
 Globals written to b_extract.glo
@@ -522,14 +522,14 @@ STEP2. test long global directory names
 %GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/g2345678901234567890123456789012.gld
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ^a=1
 ^b=2
 ^c=3
 
-GTM>
+YDB>
 #################################################################################
 STEP3. test GDE boundary conditions with long region/segment names (gde_long2.csh)
 %GDE-I-LOADGD, Loading Global Directory file 

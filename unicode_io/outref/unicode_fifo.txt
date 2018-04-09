@@ -6,14 +6,14 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do ^unicodefifo("UTF-8")
 
-GTM>
+YDB>
 unicodefifo3("unicodefifoUTF-8.pipe","UTF-8"):(output="fifojob1UTF-8.out":error="fifojob1UTF-8.err")
 ---------------------------------------------
 Test: unicodefifoUTF-8.pipe
@@ -159,12 +159,12 @@ Now try writing a large record
 -> OPEN "unicodefifoUTF-8.pipe":(FIFO:WRITE:RECORDSIZE=1048576:CHSET="UTF-8")
 -> OPEN "unicodefifoUTF-8.pipe":(FIFO:WRITE:CHSET="UTF-8"):60
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do ^unicodefifo("UTF-16")
 
-GTM>
+YDB>
 unicodefifo3("unicodefifoUTF-16.pipe","UTF-16"):(output="fifojob1UTF-16.out":error="fifojob1UTF-16.err")
 ---------------------------------------------
 Test: unicodefifoUTF-16.pipe
@@ -318,12 +318,12 @@ Now try writing a large record
 -> OPEN "unicodefifoUTF-16.pipe":(FIFO:WRITE:RECORDSIZE=1048576:CHSET="UTF-16")
 -> OPEN "unicodefifoUTF-16.pipe":(FIFO:WRITE:CHSET="UTF-16"):60
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do ^unicodefifo("UTF-16LE")
 
-GTM>
+YDB>
 unicodefifo3("unicodefifoUTF-16LE.pipe","UTF-16LE"):(output="fifojob1UTF-16LE.out":error="fifojob1UTF-16LE.err")
 ---------------------------------------------
 Test: unicodefifoUTF-16LE.pipe
@@ -477,12 +477,12 @@ Now try writing a large record
 -> OPEN "unicodefifoUTF-16LE.pipe":(FIFO:WRITE:RECORDSIZE=1048576:CHSET="UTF-16LE")
 -> OPEN "unicodefifoUTF-16LE.pipe":(FIFO:WRITE:CHSET="UTF-16LE"):60
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do ^unicodefifo("UTF-16BE")
 
-GTM>
+YDB>
 unicodefifo3("unicodefifoUTF-16BE.pipe","UTF-16BE"):(output="fifojob1UTF-16BE.out":error="fifojob1UTF-16BE.err")
 ---------------------------------------------
 Test: unicodefifoUTF-16BE.pipe
@@ -636,12 +636,12 @@ Now try writing a large record
 -> OPEN "unicodefifoUTF-16BE.pipe":(FIFO:WRITE:RECORDSIZE=1048576:CHSET="UTF-16BE")
 -> OPEN "unicodefifoUTF-16BE.pipe":(FIFO:WRITE:CHSET="UTF-16BE"):60
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do ^unicodefifo("M")
 
-GTM>
+YDB>
 unicodefifo3("unicodefifoM.pipe","M"):(output="fifojob1M.out":error="fifojob1M.err")
 ---------------------------------------------
 Test: unicodefifoM.pipe
@@ -787,7 +787,7 @@ Now try writing a large record
 -> OPEN "unicodefifoM.pipe":(FIFO:WRITE:RECORDSIZE=1048576:CHSET="M")
 -> OPEN "unicodefifoM.pipe":(FIFO:WRITE:CHSET="M"):60
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

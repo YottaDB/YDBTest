@@ -9,29 +9,29 @@ Time written into time1:##FILTERED##GTM_TEST_DEBUGINFO.*
 start second process...
 Wait for second process to finish its processing...
 
-GTM>
+YDB>
 $H = ##FILTERED##GTM_TEST_DEBUGINFO.*
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 second process should have finished
 
-GTM>
+YDB>
 $H = ##FILTERED##GTM_TEST_DEBUGINFO.*
 
-GTM>
+YDB>
 Updates done, test...
 
 echo Before crash:
 Before crash:
 ##SOURCE_PATH##/mumps -direct
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip journal -extract=ext1b.mjf -detail -forward mumps1.mjl -fences=none
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
@@ -84,38 +84,38 @@ Check second_process.log for the following output:
 ##SOURCE_PATH##
 ##TEST_PATH##
 
-GTM>
+YDB>
 $ZV = ##FILTERED##GTM_TEST_DEBUGINFO.*
 
-GTM>
+YDB>
 start...
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 in active ztp...
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps2.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Killed
 End of second_process job!
 ############ END SECOND PROCESS OUTPUT ###################
@@ -218,9 +218,9 @@ GSET	5
 ^sema1	1
 ##SOURCE_PATH##/mumps -direct
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##TEST_COM_PATH##/dbcheck.csh
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *

@@ -25,18 +25,18 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
 >>> Update secondary, freeze primary, update secondary again, and crash primary
 ==Executing MULTISITE_REPLIC 'RUN INST2 ##TEST_COM_PATH##/simplegblupd.csh -instance INST2 -count 1 -internal'==
 
-GTM>
+YDB>
 set ^GBLA(1)=1_<...>
 
-GTM>
+YDB>
 1,1
 ==Executing MULTISITE_REPLIC 'RUN INST1 $MUPIP replic -source -freeze=ON -comment=gtm7862'==
 ==Executing MULTISITE_REPLIC 'RUN INST2 ##TEST_COM_PATH##/simplegblupd.csh -instance INST2 -count 1 -internal'==
 
-GTM>
+YDB>
 set ^GBLA(2)=1_<...>
 
-GTM>
+YDB>
 2,1
 ==Executing MULTISITE_REPLIC 'CRASH INST1'==
 Simulating crash on Instance INSTANCE1 in ##TEST_PATH##

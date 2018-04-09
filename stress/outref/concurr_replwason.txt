@@ -37,9 +37,9 @@ mumps.dat
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/cjnl/c.mjl created for region DEFAULT with .*BEFORE_IMAGES
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 =>Get the pid of source server
 ##TEST_AWK=>Source server PID = [0-9]*
 =>Waiting for AREG journal file to have switched at least once
@@ -64,9 +64,9 @@ PID ##FILTERED##[##PID##] Source server is alive in ACTIVE mode
 ==Executing MULTISITE_REPLIC 'RUN INST2 ##TEST_COM_PATH##/bkgrnd_reorg.csh >>& stress_reorg.out'==
 =>Check that processes that newly attach to regions with repl_state=WAS_ON have no problems doing so
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 =>Check that source server sends at least as much as it can from the journal files (even if WAS_ON state)
 ==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST3'==
 =>Determine the PID of the INST1->INST3 source server (used later)
@@ -100,14 +100,14 @@ Error REPLBRKNTRANS seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
 PID ##FILTERED##[##PID##] Source server is alive in ACTIVE mode
 =>Check that processes that attach to regions after repl_state transitioned from WAS_ON --> ON have no problems doing so
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 =>Stop running GT.M processes
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST2 ##TEST_COM_PATH##/rfstatus.csh AFTER'==
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST2 SRC=INST1 ##TEST_COM_PATH##/rfstatus.csh AFTER: < /dev/null'==
 ==Executing MULTISITE_REPLIC 'RUN INST1 ##TEST_COM_PATH##/close_reorg.csh >>& stress_reorg.out'==
@@ -143,16 +143,16 @@ No errors detected by integ.
 No errors detected by integ.
 =>Application level check on INST1 (and INST2) : Should PASS
 
-GTM>
+YDB>
 Verification PASS
 
-GTM>
+YDB>
 =>Application level check on INST3 : Should FAIL since replication from INST1 was incomplete due to jnl_file_lost error
 ==Executing MULTISITE_REPLIC 'RUN INST3 ##SOURCE_PATH##/mumps -run allverify^replwason'==
 %YDB-E-GVUNDEF, Global variable undefined: ^jobindex(1)
 		At M source location verify+4^replwason
 
-GTM>
+YDB>
 
 =>Replicating post-jnl_file_lost seqnos from INST2 to INST3
 ==Executing MULTISITE_REPLIC 'START INST2 INST3 PP'==

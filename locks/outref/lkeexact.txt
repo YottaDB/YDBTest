@@ -13,7 +13,7 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ##ALLOW_OUTPUT  NON_REPLIC
 
-GTM>
+YDB>
 do lkeexact
 Step 1: Verify lke clear -all
 Setting locks
@@ -140,7 +140,7 @@ Should see qualifier error
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: EXACT LOCK
 
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  NON_REPLIC
 ##ALLOW_OUTPUT  L
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##

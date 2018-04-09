@@ -13,12 +13,12 @@ GDE>
 
 ##### MUPIP extract & load in ZWR format begins #####
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 global a* collates in  M.std & rest in GT.M null collation
 
-GTM>
+YDB>
 ^aforavariable("")="iam null"
 ^aforavariable(78)=1090
 ^aforavariable("ohayogozaimasu")="i said goodmorning"
@@ -28,15 +28,15 @@ GTM>
 ^iamdefault("")="konnichiwa"
 ^iamdefault("konbanwa")="goodafternoon"
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 after loading the zwr extract to the database
 
-GTM>
+YDB>
 global a* collates in  M.std & rest in GT.M null collation
 
-GTM>
+YDB>
 ^aforavariable("")="iam null"
 ^aforavariable(78)=1090
 ^aforavariable("ohayogozaimasu")="i said goodmorning"
@@ -46,7 +46,7 @@ GTM>
 ^iamdefault("")="konnichiwa"
 ^iamdefault("konbanwa")="goodafternoon"
 
-GTM>
+YDB>
 
 File  	##TEST_PATH##/a.dat
 Region	AREG
@@ -126,13 +126,13 @@ Region          DEFAULT
   DB is auto-created                  FALSE  DB shares gvstats             TRUE
   LOCK shares DB critical section     FALSE  Read Only                      OFF
 DSE> 
-GTM>
+YDB>
 Collating orders changed thro' DSE
 
-GTM>
+YDB>
 all globals collate in  M.std
 
-GTM>
+YDB>
 ^aforavariable("")="iam null"
 ^aforavariable(78)=1090
 ^aforavariable("ohayogozaimasu")="i said goodmorning"
@@ -142,7 +142,7 @@ GTM>
 ^iamdefault(1009,"nippon")=90
 ^iamdefault("konbanwa")="goodafternoon"
 
-GTM>
+YDB>
 
 File  	##TEST_PATH##/a.dat
 Region	AREG
@@ -222,13 +222,13 @@ Region          DEFAULT
   DB is auto-created                  FALSE  DB shares gvstats             TRUE
   LOCK shares DB critical section     FALSE  Read Only                      OFF
 DSE> 
-GTM>
+YDB>
 collating orders again changed thro' DSE
 
-GTM>
+YDB>
 a* globals collate in  GT.M.null collation & rest in M.std
 
-GTM>
+YDB>
 ^aforavariable(78)=1090
 ^aforavariable("")="iam null"
 ^aforavariable("ohayogozaimasu")="i said goodmorning"
@@ -238,18 +238,18 @@ GTM>
 ^iamdefault(1009,"nippon")=90
 ^iamdefault("konbanwa")="goodafternoon"
 
-GTM>
+YDB>
 ##### MUPIP extract & load in ZWR format ends #####
 
 
 ##### MUPIP extract & load in GO format begins #####
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 global a* collates in  M.std & rest in GT.M null collation
 
-GTM>
+YDB>
 ^aforavariable("")="iam null"
 ^aforavariable(78)=1090
 ^aforavariable("ohayogozaimasu")="i said goodmorning"
@@ -259,15 +259,15 @@ GTM>
 ^iamdefault("")="konnichiwa"
 ^iamdefault("konbanwa")="goodafternoon"
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 after loading the go extract to the database
 
-GTM>
+YDB>
 global a* collates in  M.std & rest in GT.M null collation
 
-GTM>
+YDB>
 ^aforavariable("")="iam null"
 ^aforavariable(78)=1090
 ^aforavariable("ohayogozaimasu")="i said goodmorning"
@@ -277,7 +277,7 @@ GTM>
 ^iamdefault("")="konnichiwa"
 ^iamdefault("konbanwa")="goodafternoon"
 
-GTM>
+YDB>
 
 File  	##TEST_PATH##/a.dat
 Region	AREG
@@ -357,13 +357,13 @@ Region          DEFAULT
   DB is auto-created                  FALSE  DB shares gvstats             TRUE
   LOCK shares DB critical section     FALSE  Read Only                      OFF
 DSE> 
-GTM>
+YDB>
 Collating orders changed thro' DSE
 
-GTM>
+YDB>
 all globals collate in  M.std
 
-GTM>
+YDB>
 ^aforavariable("")="iam null"
 ^aforavariable(78)=1090
 ^aforavariable("ohayogozaimasu")="i said goodmorning"
@@ -373,7 +373,7 @@ GTM>
 ^iamdefault(1009,"nippon")=90
 ^iamdefault("konbanwa")="goodafternoon"
 
-GTM>
+YDB>
 
 File  	##TEST_PATH##/a.dat
 Region	AREG
@@ -453,13 +453,13 @@ Region          DEFAULT
   DB is auto-created                  FALSE  DB shares gvstats             TRUE
   LOCK shares DB critical section     FALSE  Read Only                      OFF
 DSE> 
-GTM>
+YDB>
 collating orders again changed thro' DSE
 
-GTM>
+YDB>
 a* globals collate in  GT.M.null collation & rest in M.std
 
-GTM>
+YDB>
 ^aforavariable(78)=1090
 ^aforavariable("")="iam null"
 ^aforavariable("ohayogozaimasu")="i said goodmorning"
@@ -469,6 +469,6 @@ GTM>
 ^iamdefault(1009,"nippon")=90
 ^iamdefault("konbanwa")="goodafternoon"
 
-GTM>
+YDB>
 ##### MUPIP extract & load in GO format ends #####
 

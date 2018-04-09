@@ -3,6 +3,9 @@
 # Copyright (c) 2014-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -17,37 +20,37 @@ expect "CTRLC>"
 send -- "stty intr ^c\r"
 expect "CTRLC>"
 send -- "gtm\r"
-expect "GTM>"
+expect "YDB>"
 send -- "\r"
-expect "GTM>"
+expect "YDB>"
 # send ctrl-c
 send -- "\003"
 # since cenable is the default we should see the CTRL_C message
 sleep 1
 expect "CTRL_C encountered"
-expect "GTM>"
+expect "YDB>"
 send -- "use \$principal:nocenable\r"
-expect "GTM>"
+expect "YDB>"
 # send ctrl-c
 send -- "\003"
 # with nocenable we should not see any message
 sleep 1
 send -- "\r"
-expect "GTM>"
+expect "YDB>"
 send -- "use \$principal:ctrap=\$char(3)\r"
-expect "GTM>"
+expect "YDB>"
 # send ctrl-c
 send -- "\003"
 # with ctrap=$char(3) we should see the CTRAP message
 expect "C(3) encountered"
-expect "GTM>"
+expect "YDB>"
 send -- "use \$principal:nocenable\r"
-expect "GTM>"
+expect "YDB>"
 # send ctrl-c
 send -- "\003"
 # the nocenable should not have changed anything, so we should see the CTRAP message
 expect "C(3) encountered"
-expect "GTM>"
+expect "YDB>"
 # try it with a READ which has its own logic
 send -- "read Z:10\r"
 sleep 1
@@ -55,22 +58,22 @@ sleep 1
 send -- "\003"
 # should work the same
 expect "C(3) encountered"
-expect "GTM>"
+expect "YDB>"
 send -- "use \$principal:ctrap=\$char(34,34)\r"
-expect "GTM>"
+expect "YDB>"
 # send ctrl-c
 send -- "\003"
 ## with nocenable back in control we should not see any message
 sleep 1
 send -- "\r"
-expect "GTM>"
+expect "YDB>"
 send -- "use \$principal:cenable\r"
-expect "GTM>"
+expect "YDB>"
 # send ctrl-c
 send -- "\003"
 # with cenable and no ctrap, we should see the CTRL_C message
 expect "CTRL_C encountered"
-expect "GTM>"
+expect "YDB>"
 # try it with a READ * which has its own logic
 send -- "read *Z:10\r"
 sleep 1
@@ -78,16 +81,16 @@ sleep 1
 send -- "\003"
 # should work the same
 expect "CTRL_C encountered"
-expect "GTM>"
+expect "YDB>"
 send -- "use \$principal:ctrap=\$char(3)\r"
-expect "GTM>"
+expect "YDB>"
 # send ctrl-c
 send -- "\003"
 # with ctrap=$char(3) we should see the CTRAP message even with cenable
 expect "C(3) encountered"
-expect "GTM>"
+expect "YDB>"
 send -- "use \$principal:nocenable\r"
-expect "GTM>"
+expect "YDB>"
 send -- "halt\r"
 expect "CTRLC>"
 expect eof

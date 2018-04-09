@@ -1,29 +1,29 @@
 Entering ZGBLDIR subtest
 
-GTM>
+YDB>
 %YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/ddd.gld.  Retaining ##TEST_PATH##/mumps.gld.
 %SYSTEM-E-ENO2, No such file or directory
 
-GTM>
+YDB>
 %YDB-E-LVUNDEF, Undefined local variable: abc
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##TEST_PATH##/mumps.gld
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##TEST_PATH##/$ydb_gbldir.gld
-GTM>
+YDB>
 %YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/ddd.gld.  Retaining ##TEST_PATH##/$ydb_gbldir.gld.
 %SYSTEM-E-ENO2, No such file or directory
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##TEST_PATH##/$ydb_gbldir.gld
-GTM>
+YDB>
 %GDE-I-GDUSEDEFS, Using defaults for Global Directory 
 	##TEST_PATH##/a.gld
 
@@ -53,13 +53,13 @@ GDE>
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
-GTM>
+YDB>
 Inside sub: Global Directory ##TEST_PATH##/b.gld
 Now Global directory b.gld
 We can see ^a
 We cannot see ^b
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

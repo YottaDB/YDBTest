@@ -18,12 +18,12 @@ File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
 DSE> DSE> 
-GTM>
+YDB>
 
-GTM>
+YDB>
 all globals should collate same as GT.M null collation
 
-GTM>
+YDB>
 ^aregvar(68,"",56)="some num mix"
 ^aregvar(100)=1078
 ^aregvar("")="iam null"
@@ -37,7 +37,7 @@ GTM>
 ^cregvar("gogo",56,"")=789
 ^cregvar("samurai")="iam string"
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -166,10 +166,10 @@ Region          DEFAULT
   DB is auto-created                  FALSE  DB shares gvstats             TRUE
   LOCK shares DB critical section     FALSE  Read Only                      OFF
 DSE> 
-GTM>
+YDB>
 AREG should collate as M.std. rest as GT.M null collation.
 
-GTM>
+YDB>
 ^aregvar("")="iam null"
 ^aregvar(68,"",56)="some num mix"
 ^aregvar(100)=1078
@@ -183,7 +183,7 @@ GTM>
 ^cregvar("gogo",56,"")=789
 ^cregvar("samurai")="iam string"
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -207,12 +207,12 @@ File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
 DSE> DSE> 
-GTM>
+YDB>
 
-GTM>
+YDB>
 all globals should collate same as M.std
 
-GTM>
+YDB>
 ^aregvar("")="iam null"
 ^aregvar(68,"",56)="some num mix"
 ^aregvar(100)=1078
@@ -226,7 +226,7 @@ GTM>
 ^cregvar("gogo",56,"")=789
 ^cregvar("samurai")="iam string"
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -355,10 +355,10 @@ Region          DEFAULT
   DB is auto-created                  FALSE  DB shares gvstats             TRUE
   LOCK shares DB critical section     FALSE  Read Only                      OFF
 DSE> 
-GTM>
+YDB>
 BREG should collate as M.std. rest as GT.M null collation.
 
-GTM>
+YDB>
 ^aregvar(68,"",56)="some num mix"
 ^aregvar(100)=1078
 ^aregvar("")="iam null"
@@ -372,7 +372,7 @@ GTM>
 ^cregvar("gogo",56,"")=789
 ^cregvar("samurai")="iam string"
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

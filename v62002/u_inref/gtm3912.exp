@@ -1,20 +1,32 @@
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
 set timeout 120
 spawn $env(SHELL)
 send -- "set prompt=\"ZSHOWD>\"\r"
 expect "ZSHOWD>"
 send -- "gtm\r"
-expect "GTM>"
+expect "YDB>"
 send -- "set \$etrap=\"use \$principal:width=132 zshow \"\"v\"\"\"\r"
-expect "GTM>"
+expect "YDB>"
 send -- "set x=\"the quick brown fox jumped over the lazy dog\"\r"
-expect "GTM>"
+expect "YDB>"
 send -- "use \$principal:width=11\r"
-expect "GTM>"
+expect "YDB>"
 send -- "zshow \"D\"\r"
-expect "GTM>"
+expect "YDB>"
 send -- "use \$principal:width=10\r"
-expect "GTM>"
+expect "YDB>"
 send -- "zwrite\r"
-expect "GTM>"
+expect "YDB>"
 send -- halt\r
 expect "ZSHOWD>"

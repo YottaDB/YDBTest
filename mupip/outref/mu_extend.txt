@@ -14,15 +14,15 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ##ALLOW_OUTPUT  NON_REPLIC
 
-GTM>
+YDB>
 
 Caution: Database Block Certification Has Been Enabled
 
-GTM>
+YDB>
 do in0^dbfill("set")
 set PASS
 
-GTM>
+YDB>
 h
 #
 # Extend with a bad region
@@ -31,35 +31,35 @@ h
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 Extension successful, file ##TEST_PATH##/extend.dat extended by 400 blocks.  Total blocks = ##TEST_AWK[1-2][0-9]00.
 
-GTM>
+YDB>
 
 Caution: Database Block Certification Has Been Enabled
 
-GTM>
+YDB>
 do in0^dbfill("ver")
 ver PASS
 
-GTM>
+YDB>
 do in1^dbfill("set")
 set PASS
 
-GTM>
+YDB>
 h
 Extension successful, file ##TEST_PATH##/extend.dat extended by 100 blocks.  Total blocks = ##TEST_AWK[1-2][0-9]00.
 
-GTM>
+YDB>
 
 Caution: Database Block Certification Has Been Enabled
 
-GTM>
+YDB>
 do in1^dbfill("ver")
 ver PASS
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 SUCCESS
-GTM>
+YDB>
 h
 ##SUSPEND_OUTPUT  NON_REPLIC
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##

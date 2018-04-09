@@ -6,10 +6,10 @@ myjnl1.dat
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/myjnl1.mjl created for database file ##TEST_PATH##/myjnl1.dat with BEFORE_IMAGES
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/myjnl1.dat is now ON
 
-GTM>
+YDB>
 s pass=16,ermax=3,start=1,commit=0
 
-GTM>
+YDB>
 d ^jnlbasf0
 
 
@@ -20,10 +20,10 @@ JNLBASF0 test - unfenced transactions, 16 passes .... .... .... ....
 JNLBASF0 test 1 fences on transactions, 16 passes .... .... .... .... 
 
 JNLBASF0 COMPLETE 
-GTM>
+YDB>
 h 5
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ myjnl1.dat
 No errors detected by integ.
@@ -31,20 +31,20 @@ No errors detected by integ.
 %YDB-S-JNLSUCCESS, Verify successful
 %YDB-S-JNLSUCCESS, Recover successful
 
-GTM>
+YDB>
 s pass=16,ermax=3
 
-GTM>
+YDB>
 d ^jnlbasf1
 
 
 JNLBASF1 check of data after recovery 
 PASS 
 
-GTM>
+YDB>
 h 5
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ myjnl1.dat
 No errors detected by integ.

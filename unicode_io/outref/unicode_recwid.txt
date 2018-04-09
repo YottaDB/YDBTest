@@ -1,10 +1,10 @@
 setenv gtm_chset UTF-8
 unset echo
 
-GTM>
+YDB>
 do ^unicoderecwid("UTF-8")
 
-GTM>
+YDB>
 -> OPEN "UTF-8_recordwidth1.txt":(NEWVERSION:RECORDSIZE=10:CHSET="UTF-8")
 -> USE "UTF-8_recordwidth1.txt":(width=20)
 -> CLOSE "UTF-8_recordwidth1.txt"
@@ -38,10 +38,10 @@ File: UTF-8_recordwidth3.txt
 8    3:9     ９０１
 9    3:7     ２３4
 
-GTM>
+YDB>
 do ^unicoderecwid("UTF-16")
 
-GTM>
+YDB>
 -> OPEN "UTF-16_recordwidth1.txt":(NEWVERSION:RECORDSIZE=10:CHSET="UTF-16")
 -> USE "UTF-16_recordwidth1.txt":(width=20)
 -> CLOSE "UTF-16_recordwidth1.txt"
@@ -70,10 +70,10 @@ File: UTF-16_recordwidth3.txt
 5    5:15    ７８９０１
 6    3:7     ２３4
 
-GTM>
+YDB>
 do ^unicoderecwid("UTF-16LE")
 
-GTM>
+YDB>
 -> OPEN "UTF-16LE_recordwidth1.txt":(NEWVERSION:RECORDSIZE=10:CHSET="UTF-16LE")
 -> USE "UTF-16LE_recordwidth1.txt":(width=20)
 -> CLOSE "UTF-16LE_recordwidth1.txt"
@@ -102,10 +102,10 @@ File: UTF-16LE_recordwidth3.txt
 5    5:15    ７８９０１
 6    3:7     ２３4
 
-GTM>
+YDB>
 do ^unicoderecwid("UTF-16BE")
 
-GTM>
+YDB>
 -> OPEN "UTF-16BE_recordwidth1.txt":(NEWVERSION:RECORDSIZE=10:CHSET="UTF-16BE")
 -> USE "UTF-16BE_recordwidth1.txt":(width=20)
 -> CLOSE "UTF-16BE_recordwidth1.txt"
@@ -134,4 +134,4 @@ File: UTF-16BE_recordwidth3.txt
 5    5:15    ７８９０１
 6    3:7     ２３4
 
-GTM>
+YDB>

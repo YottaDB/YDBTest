@@ -6,21 +6,21 @@ a.dat
 b.dat
 mumps.dat
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 The return status from MUPIP is: 0
 PASS C9C05-001997
 set verbose
@@ -47,17 +47,17 @@ unset echo
 unset verbose
 ##TEST_AWKTime written into time0:.*
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##TEST_AWKTime written into time1:.*
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/a2.mjl created for database file ##TEST_PATH##/a.dat with BEFORE_IMAGES
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/a.dat is now ON
@@ -66,13 +66,13 @@ GTM>
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps2.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 set verbose
 
 $MUPIP journal -recov -back mumps1.mjl -extract=1.mjf
@@ -165,13 +165,13 @@ $MUPIP journal -recov -back mumps2.mjl -since=\"$time1\" -extract=5.mjf
 $GTM << gtm_eof
 ##SOURCE_PATH##/mumps -direct
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 $MUPIP journal -recov -back mumps1.mjl,mumps2.mjl,mumps3.mjl -extract=7.mjf
 ##SOURCE_PATH##/mupip journal -recov -back mumps1.mjl,mumps2.mjl,mumps3.mjl -extract=7.mjf

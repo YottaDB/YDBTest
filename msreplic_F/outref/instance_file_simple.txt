@@ -43,13 +43,13 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
 #  Perform 70 transactions on INST1/A (seqnos: 1-70):
 ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/simpleinstanceupdate.csh 70'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
 ==========================================================
 The instance file contents on INST1 (instancefile_1.out):
@@ -288,13 +288,13 @@ HST #      0 : History record type                       1 [0x00000001]
 #  Perform 10 more transactions on INST1/A (seqnos: 70-80):
 ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/simpleinstanceupdate.csh 10'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS sync_to_disk'==
 ==Executing MULTISITE_REPLIC 'CRASH INST2'==
 Simulating crash on Instance INSTANCE2 in ##FILTERED##_REMOTE_TEST_PATH_
@@ -302,13 +302,13 @@ Instance INSTANCE2 crashed!
 #  Perform 20 more transactions on INST1/A (seqnos: 80-100):
 ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/simpleinstanceupdate.csh 20'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==========================================================
 Diffing instancefile_1.out and instancefile_2.out on INST1
 ##TEST_AWK.*
@@ -402,13 +402,13 @@ Diffing instancefile_2.out and instancefile_3.out on INST3
 #  Perform 50 updates on INST3/C (seqnos: 71-120):
 ==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/simpleinstanceupdate.csh 50'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==========================================================
 No diff on INST1 between instancefile_3.out instancefile_4.out
 ==========================================================

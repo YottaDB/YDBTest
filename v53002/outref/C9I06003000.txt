@@ -23,9 +23,9 @@ Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 # Check if the align size is minimal. The rest of the test relies on it.
 # If align size is not minimal, no point in continuing the test. Will exit
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 # Run "mupip journal -extract -noverify -detail -for -fences=none a.mjl" on primary.
 # Run "grep 0x00020000 a.mjf" on primary. Sample output is as follows.
@@ -64,13 +64,13 @@ mumps.dat
 Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 # Once all these updates are sent across to the secondary, shut down the secondary and primary.
 # On the secondary run : mupip_rollback.csh -resync=352 -lost=x.los "*"

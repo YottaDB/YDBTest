@@ -18,17 +18,17 @@ END 1
 BEGIN 2 :-) Add 10 transaction in a, b and c regions spanned across 1 seconds
 
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 END 2
 ---------------------------------------------------------------------------------------
@@ -36,13 +36,13 @@ END 2
 BEGIN 3 :-) Add updates transaction in d region and crash the database
 
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Killed
 
 END 3
@@ -51,15 +51,15 @@ END 3
 BEGIN 4 :-) Add updates transaction in e region and crash the database
 
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Killed
 
 END 4
@@ -92,27 +92,27 @@ END 7
 BEGIN 8 :-) EOF timestamp in c.mjf and tp_resolve time should match
 
 
-GTM>
+YDB>
 ##TEST_AWKEOF time stamp:  [0-9]+,[0-9]+
-GTM>
+YDB>
 ##TEST_AWKTP Resolve time: [0-9]+,[0-9]+
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Timestamp match
-GTM>
+YDB>
 
 END 8
 ---------------------------------------------------------------------------------------

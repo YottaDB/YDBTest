@@ -37,9 +37,9 @@ mumps.dat
 Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
 ==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
 Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
@@ -48,9 +48,9 @@ Shutting down Primary Source Server Server in ##TEST_PATH##
 Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'SYNC INST1 INST3'==
 ==Executing MULTISITE_REPLIC 'STOP INST1 INST3'==
 Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
@@ -75,7 +75,7 @@ Starting Primary Source Server in ##FILTERED##_REMOTE_TEST_PATH_/instance6
 Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance7
 ==Executing MULTISITE_REPLIC 'RUN INST4 ##TEST_COM_PATH##/simplegblupd.csh -instance INST4 -count 10 -internal'==
 
-GTM>
+YDB>
 set ^GBLA(1)=1_<...>
 set ^GBLA(2)=1_<...>
 set ^GBLA(3)=1_<...>
@@ -87,11 +87,11 @@ set ^GBLA(8)=1_<...>
 set ^GBLA(9)=1_<...>
 set ^GBLA(10)=1_<...>
 
-GTM>
+YDB>
 10,1
 ==Executing MULTISITE_REPLIC 'RUN INST6 ##TEST_COM_PATH##/simplegblupd.csh -instance INST6 -count 10 -internal'==
 
-GTM>
+YDB>
 set ^GBLA(11)=1_<...>
 set ^GBLA(12)=1_<...>
 set ^GBLA(13)=1_<...>
@@ -103,7 +103,7 @@ set ^GBLA(18)=1_<...>
 set ^GBLA(19)=1_<...>
 set ^GBLA(20)=1_<...>
 
-GTM>
+YDB>
 20,1
 ==Executing MULTISITE_REPLIC 'STOP INST4 INST5'==
 Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance5

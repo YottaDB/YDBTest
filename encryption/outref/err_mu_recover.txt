@@ -11,13 +11,13 @@ mumps.dat
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 # Update some data
 
-GTM>
+YDB>
 PASS from fill1^myfill("set")
 
-GTM>
+YDB>
 PASS from fill1^myfill("ver")
 
-GTM>
+YDB>
 # Remove dat file
 -----------------------------------------------------------
 journal recover without gtm_passwd and expect to error out

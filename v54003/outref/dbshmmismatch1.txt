@@ -24,17 +24,17 @@ END 2
 BEGIN 3 :-) Access mumps.dat and crash it:
 
 
-GTM>
+YDB>
 set ^x=1
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
 
-GTM>
+YDB>
 Killed
 
 END 3
@@ -44,13 +44,13 @@ END 3
 BEGIN 4 :-) Issue REQRUNDOWN message with a DBSHMNAMEDIFF secondary error:
 
 
-GTM>
+YDB>
 write ^x
-GTM>
+YDB>
 %YDB-E-REQRUNDOWN, Error accessing database ##TEST_PATH##/backup.dat.  Must be rundown on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
 ##TEST_AWK.YDB-E-DBSHMNAMEDIFF, Database file ##TEST_PATH##.backup.dat points to shared memory .id = [0-9]+. which points to a different database file ##TEST_PATH##.mumps.dat
 
-GTM>
+YDB>
 
 END 4
 ---------------------------------------------------------------------------------------
@@ -67,11 +67,11 @@ BEGIN 6 :-) Do mupip rundown on backup.dat again and it should be fine. Accesss 
 
 ##TEST_AWK.YDB-I-MUFILRNDWNSUC, File .*backup.dat successfully rundown
 
-GTM>
+YDB>
 set ^y=1
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 END 6
 ---------------------------------------------------------------------------------------
@@ -79,11 +79,11 @@ END 6
 BEGIN 7 :-) Switch to mumps.dat and access it. It should access successfully.
 
 
-GTM>
+YDB>
 write ^x
-GTM>
+YDB>
 1
-GTM>
+YDB>
 
 END 7
 ---------------------------------------------------------------------------------------
@@ -93,13 +93,13 @@ BEGIN 8 :-) Mupip rundown on mumps.dat and access GT.M and that should be fine:
 ##TEST_AWKmupip rundown .*
 ##TEST_AWK.YDB-I-MUFILRNDWNSUC, File .*.dat successfully rundown
 
-GTM>
+YDB>
 write ^x
-GTM>
+YDB>
 1
-GTM>
+YDB>
 clean database access
-GTM>
+YDB>
 
 END 8
 ---------------------------------------------------------------------------------------

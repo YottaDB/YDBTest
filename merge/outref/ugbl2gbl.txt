@@ -30,7 +30,7 @@ Starting the GT.CM Servers...
 ##ALLOW_OUTPUT  GT.M
 ##SUSPEND_OUTPUT  REORG REPLIC
 
-GTM>
+YDB>
 STEP 1
 ^A(1,2)="Third"
 ^A(1,2,4)="Second"
@@ -49,7 +49,7 @@ STEP 3
 ^ABC(1,5,3,"TESTNAKED")="OK"
 ^ABC(1,5,6)="PASSVAL"
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  GT.M
 Stopping the GT.CM Servers...
 Check the databases on the GT.CM Servers...
@@ -100,7 +100,7 @@ DEFAULT	##TEST_REMOTE_NODE_PATH_GTCM##/mumps.dat
 Starting the GT.CM Servers...
 ##ALLOW_OUTPUT  REORG GT.M REPLIC
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  NON_REORG NON_REPLIC GT.CM
 STEP 1
 ^A(1,2)="Third"
@@ -121,7 +121,7 @@ STEP 3
 ^ABC(1,5,6)="PASSVAL"
 ##ALLOW_OUTPUT  NON_REORG NON_REPLIC GT.CM
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  NON_REORG NON_REPLIC GT.CM
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 Shutting down Primary Source Server Server in ##TEST_PATH##
@@ -129,9 +129,9 @@ DATABASE EXTRACT PASSED
 ##SUSPEND_OUTPUT  REORG REPLIC
 ##ALLOW_OUTPUT  NON_REORG NON_REPLIC GT.CM
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ^var1(1001,"ｉnd1001",1000)="αβγδε2"
 ^var1(1001,"ｉnd1001",1001)="αβγδε3"
 ^var1(1001,"ｉnd1001",1002)="αβγδε4"
@@ -164,9 +164,9 @@ GTM>
 ^var1(1005,"ｉnd1005",1004)="αβγδε30"
 ^var1(1005,"ｉnd1005",1005)="αβγδε31"
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ^new2("NEWVAR",1001,"ｉnd1001",1000)="αβγδε2"
 ^new2("NEWVAR",1001,"ｉnd1001",1001)="αβγδε3"
 ^new2("NEWVAR",1001,"ｉnd1001",1002)="αβγδε4"
@@ -199,9 +199,9 @@ GTM>
 ^new2("NEWVAR",1005,"ｉnd1005",1004)="αβγδε30"
 ^new2("NEWVAR",1005,"ｉnd1005",1005)="αβγδε31"
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ^new1("ａａa","ｂｂｂｂ","ｃｃｃｃ")="αβγδε1003"
 ^new1("ａａa","ｂｂｂｂ","ｃｃｃｃ",1000)="αβγδε14"
 ^new1("ａａa","ｂｂｂｂ","ｃｃｃｃ",1001)="αβγδε15"
@@ -210,9 +210,9 @@ GTM>
 ^new1("ａａa","ｂｂｂｂ","ｃｃｃｃ",1004)="αβγδε18"
 ^new1("ａａa","ｂｂｂｂ","ｃｃｃｃ",1005)="αβγδε19"
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ^new1("kkk",1000)="αβγδε2"
 ^new1("kkk",1001)="αβγδε3"
 ^new1("kkk",1002)="αβγδε4"
@@ -227,9 +227,9 @@ GTM>
 ^new1("ａａa","ｂｂｂｂ","ｃｃｃｃ",1004)="αβγδε18"
 ^new1("ａａa","ｂｂｂｂ","ｃｃｃｃ",1005)="αβγδε19"
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ^new1("kkk",1000)="αβγδε2"
 ^new1("kkk",1001)="αβγδε3"
 ^new1("kkk",1002)="αβγδε4"
@@ -250,9 +250,9 @@ GTM>
 ^new1("ａａａ","ｉnd1004",1004)="αβγδε24"
 ^new1("ａａａ","ｉnd1004",1005)="αβγδε25"
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ^new1("kkk",1000)="αβγδε2"
 ^new1("kkk",1001)="αβγδε3"
 ^new1("kkk",1002)="αβγδε4"
@@ -279,9 +279,9 @@ GTM>
 ^new1("ａａａ","ｉnd1005",1004)="αβγδε30"
 ^new1("ａａａ","ｉnd1005",1005)="αβγδε31"
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ^new1("kkk",1000)="αβγδε2"
 ^new1("kkk",1001)="αβγδε3"
 ^new1("kkk",1002)="αβγδε4"
@@ -314,9 +314,9 @@ GTM>
 ^new1("ａａａ","ｉnd1005",1004)="αβγδε30"
 ^new1("ａａａ","ｉnd1005",1005)="αβγδε31"
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ^new1("kkk",1000)="αβγδε2"
 ^new1("kkk",1001)="αβγδε3"
 ^new1("kkk",1002)="αβγδε4"
@@ -350,9 +350,9 @@ GTM>
 ^new1("ａａａ","ｉnd1005",1004)="αβγδε30"
 ^new1("ａａａ","ｉnd1005",1005)="αβγδε31"
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ^new1("kkk",1000)="αβγδε2"
 ^new1("kkk",1001)="αβγδε3"
 ^new1("kkk",1002)="αβγδε4"
@@ -387,31 +387,31 @@ GTM>
 ^new1("ａａａ","ｉnd1005",1004)="αβγδε30"
 ^new1("ａａａ","ｉnd1005",1005)="αβγδε31"
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ^new1longnamevariableswork4merge(1,2,4)="tmp"
 ^new1longnamevariableswork4merge(1,2,"naked1")="naked reference into (1,2,""nakedx"")"
 ^new1longnamevariableswork4merge(1,2,"naked2")="naked reference into (1,2,""nakedx"")"
@@ -421,7 +421,7 @@ GTM>
 ^new1longnamevariableswork4merge("bbb")="long global to global"
 ^new1longnamevariableswork4merge("αβγδε.ＡＢＣＤＥＦＧ.我能吞下玻璃而傷")="long global to global"
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  GT.M
 Stopping the GT.CM Servers...
 Check the databases on the GT.CM Servers...
@@ -461,13 +461,13 @@ mumps.dat
 Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ^var1(1001,"ｉnd1001",1000)="αβγδε2"
 ^var1(1001,"ｉnd1001",1001)="αβγδε3"
 ^var1(1001,"ｉnd1001",1002)="αβγδε4"
@@ -500,9 +500,9 @@ GTM>
 ^var1(1005,"ｉnd1005",1004)="αβγδε30"
 ^var1(1005,"ｉnd1005",1005)="αβγδε31"
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ^new2("NEWVAR",1001,"ｉnd1001",1000)="αβγδε2"
 ^new2("NEWVAR",1001,"ｉnd1001",1001)="αβγδε3"
 ^new2("NEWVAR",1001,"ｉnd1001",1002)="αβγδε4"
@@ -535,9 +535,9 @@ GTM>
 ^new2("NEWVAR",1005,"ｉnd1005",1004)="αβγδε30"
 ^new2("NEWVAR",1005,"ｉnd1005",1005)="αβγδε31"
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ^new1("ａａa","ｂｂｂｂ","ｃｃｃｃ")="αβγδε1003"
 ^new1("ａａa","ｂｂｂｂ","ｃｃｃｃ",1000)="αβγδε14"
 ^new1("ａａa","ｂｂｂｂ","ｃｃｃｃ",1001)="αβγδε15"
@@ -546,9 +546,9 @@ GTM>
 ^new1("ａａa","ｂｂｂｂ","ｃｃｃｃ",1004)="αβγδε18"
 ^new1("ａａa","ｂｂｂｂ","ｃｃｃｃ",1005)="αβγδε19"
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ^new1("kkk",1000)="αβγδε2"
 ^new1("kkk",1001)="αβγδε3"
 ^new1("kkk",1002)="αβγδε4"
@@ -563,9 +563,9 @@ GTM>
 ^new1("ａａa","ｂｂｂｂ","ｃｃｃｃ",1004)="αβγδε18"
 ^new1("ａａa","ｂｂｂｂ","ｃｃｃｃ",1005)="αβγδε19"
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ^new1("kkk",1000)="αβγδε2"
 ^new1("kkk",1001)="αβγδε3"
 ^new1("kkk",1002)="αβγδε4"
@@ -586,9 +586,9 @@ GTM>
 ^new1("ａａａ","ｉnd1004",1004)="αβγδε24"
 ^new1("ａａａ","ｉnd1004",1005)="αβγδε25"
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ^new1("kkk",1000)="αβγδε2"
 ^new1("kkk",1001)="αβγδε3"
 ^new1("kkk",1002)="αβγδε4"
@@ -615,9 +615,9 @@ GTM>
 ^new1("ａａａ","ｉnd1005",1004)="αβγδε30"
 ^new1("ａａａ","ｉnd1005",1005)="αβγδε31"
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ^new1("kkk",1000)="αβγδε2"
 ^new1("kkk",1001)="αβγδε3"
 ^new1("kkk",1002)="αβγδε4"
@@ -650,9 +650,9 @@ GTM>
 ^new1("ａａａ","ｉnd1005",1004)="αβγδε30"
 ^new1("ａａａ","ｉnd1005",1005)="αβγδε31"
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ^new1("kkk",1000)="αβγδε2"
 ^new1("kkk",1001)="αβγδε3"
 ^new1("kkk",1002)="αβγδε4"
@@ -686,9 +686,9 @@ GTM>
 ^new1("ａａａ","ｉnd1005",1004)="αβγδε30"
 ^new1("ａａａ","ｉnd1005",1005)="αβγδε31"
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ^new1("kkk",1000)="αβγδε2"
 ^new1("kkk",1001)="αβγδε3"
 ^new1("kkk",1002)="αβγδε4"
@@ -723,31 +723,31 @@ GTM>
 ^new1("ａａａ","ｉnd1005",1004)="αβγδε30"
 ^new1("ａａａ","ｉnd1005",1005)="αβγδε31"
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ^new1longnamevariableswork4merge(1,2,4)="tmp"
 ^new1longnamevariableswork4merge(1,2,"naked1")="naked reference into (1,2,""nakedx"")"
 ^new1longnamevariableswork4merge(1,2,"naked2")="naked reference into (1,2,""nakedx"")"
@@ -757,7 +757,7 @@ GTM>
 ^new1longnamevariableswork4merge("bbb")="long global to global"
 ^new1longnamevariableswork4merge("αβγδε.ＡＢＣＤＥＦＧ.我能吞下玻璃而傷")="long global to global"
 
-GTM>
+YDB>
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 Shutting down Primary Source Server Server in ##TEST_PATH##
 DATABASE EXTRACT PASSED

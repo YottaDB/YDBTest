@@ -19,17 +19,17 @@ END 2
 BEGIN 3 :-) Access the database(hence create the shared memory) and crash the database
 
 
-GTM>
+YDB>
 set ^x=1
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
 
-GTM>
+YDB>
 Killed
 
 END 3
@@ -40,19 +40,19 @@ BEGIN 4 :-) Do argumentless MUPIP RUNDOWN while two shared memory points to same
 test that active shared memory is not rundown
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
-GTM>
+YDB>
 set ^x=11
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 set ^x=22
-GTM>
+YDB>
 
-GTM>
+YDB>
 Shared memory is not removed by mupip rundown in previous command
-GTM>
+YDB>
 
 END 4
 ---------------------------------------------------------------------------------------
@@ -73,14 +73,14 @@ END 6
 BEGIN 7 :-) Verify that access to old_mumps.dat should issue MUPIP RUNDOWN required
 
 
-GTM>
+YDB>
 set ^y=1
-GTM>
+YDB>
 %YDB-E-REQRUNDOWN, Error accessing database ##TEST_PATH##/mumps.dat.  Must be rundown on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
 %YDB-I-TEXT, Error with database control shmctl
 ##TEST_AWK.SYSTEM-E-ENO(22|43).*
 
-GTM>
+YDB>
 
 END 7
 ---------------------------------------------------------------------------------------
@@ -90,11 +90,11 @@ BEGIN 8 :-) do MUPIP RUNDOWN on old_mumps.dat(now mumps.dat) and then access it.
 ##TEST_AWKmupip rundown .*
 ##TEST_AWK%YDB-I-MUFILRNDWNSUC, File.*mumps.dat successfully rundown
 
-GTM>
+YDB>
 set ^y=1
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 END 8
 ---------------------------------------------------------------------------------------

@@ -7,11 +7,11 @@ Using: ##SOURCE_PATH##/mupip
 mumps.dat
 ##TEST_AWKTime written into time0:.*
 
-GTM>
+YDB>
 %YDB-E-TRANSNEST, Maximum transaction nesting levels exceeded
 		At M source location lztp+7^nesting
 
-GTM>
+YDB>
 $MUPIP journal -recov -back -since=\"$time0\" mumps.mjl -lost=mumps.lost1 -broken=mumps.broken1 -extract=mumps.mjf1 > & recov_back.out
 $grep -v MUJNLSTAT recov_back.out
 %YDB-I-NOPREVLINK, Journal file ##TEST_PATH##/ztp/mumps.mjl has a null previous link
@@ -36,10 +36,10 @@ PID        NODE             USER         TERM JPV_TIME
 %YDB-S-JNLSUCCESS, Recover successful
 $GTM << XXX
 
-GTM>
+YDB>
 PASSED VERIFICATION
 
-GTM>
+YDB>
 
 $grep -q -w za mumps.broken1
 set st1 = $status
@@ -87,10 +87,10 @@ if ( "011" != "$st1$st2$st3" ) echo "TEST-E-FAILED. all ^za should go to broken"
 
 unset verbose
 
-GTM>
+YDB>
 PASSED VERIFICATION
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -103,11 +103,11 @@ Using: ##SOURCE_PATH##/mupip
 mumps.dat
 ##TEST_AWKTime written into time0:.*
 
-GTM>
+YDB>
 %YDB-E-TPTOODEEP, $TLEVEL cannot exceed 126
 		At M source location ltp+7^nesting
 
-GTM>
+YDB>
 $MUPIP journal -recov -back -since=\"$time0\" mumps.mjl -lost=mumps.lost1 -broken=mumps.broken1 -extract=mumps.mjf1 > & recov_back.out
 $grep -v MUJNLSTAT recov_back.out
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/tp/mumps.mjl is renamed to ##TEST_PATH##/tp/mumps.mjl_##TIMESTAMP##
@@ -120,10 +120,10 @@ $grep -v MUJNLSTAT recov_back.out
 %YDB-S-JNLSUCCESS, Recover successful
 $GTM << XXX
 
-GTM>
+YDB>
 PASSED VERIFICATION
 
-GTM>
+YDB>
 
 mkdir back
 cp mumps* back
@@ -143,10 +143,10 @@ $grep -v MUJNLSTAT recov_forw.out
 
 unset verbose
 
-GTM>
+YDB>
 PASSED VERIFICATION
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

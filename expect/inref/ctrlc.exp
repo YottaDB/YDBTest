@@ -56,7 +56,7 @@ send -- "\$gtm_exe/mumps -direct\r"
 # Loosen the matching restrictions only AFTER you get into your test. Here, we
 # are waiting for the GTM prompt before going forward
 expect "
-GTM>"
+YDB>"
 set timeout 300
 
 # FOR loop
@@ -85,7 +85,7 @@ expect "YDB-I-CTRLC, CTRL_C encountered" {set ctrlc [expr $ctrlc + 1]}
 
 # Validate (set status in advance in case the matching fails)
 expect "
-GTM>"
+YDB>"
 send "do validate^ctrlc\r"
 set status "MISSING"
 expect "Checking test status"
@@ -96,7 +96,7 @@ expect {
 
 # NEVER EVER send "halt" to the GT.M prompt from expect because you might be at an actual prompt
 expect "
-GTM>"
+YDB>"
 send -- "h\r"
 
 # LKE - MREP expect_spawn_id_expNN_not_open explains why we issue the command at the LKE prompt

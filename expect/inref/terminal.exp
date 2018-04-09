@@ -1,7 +1,7 @@
 #!/usr/bin/expect -f
 #################################################################
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -60,7 +60,7 @@ set timeout 60
 
 # Wait for the GTM prompt and then do your routine
 expect "
-GTM>"
+YDB>"
 send -- "do ^terminal\r"
 
 # Emtpy the expect buffer and start logging
@@ -69,7 +69,7 @@ log_user 1
 
 # Wait again for the GTM prompt and then halt out
 expect "
-GTM>"
+YDB>"
 send_user "\r\n"
 log_user 0
 send -- "halt\r"

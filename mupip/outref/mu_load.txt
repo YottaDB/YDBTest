@@ -14,17 +14,17 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ##ALLOW_OUTPUT  NON_REPLIC
 
-GTM>
+YDB>
 
 Caution: Database Block Certification Has Been Enabled
 
-GTM>
+YDB>
 do in0^dbfill("set")
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 %YDB-I-RECORDSTAT, ^bc:	  Key cnt: 2  max subsc len: 8  max rec len: 16  max node len: 24
 %YDB-I-RECORDSTAT, ^bcd:	  Key cnt: 1  max subsc len: 9  max rec len: 14  max node len: 27
 %YDB-I-RECORDSTAT, ^bcde:	  Key cnt: 2  max subsc len: 9  max rec len: 7  max node len: 17
@@ -60,20 +60,20 @@ GTM>
 %YDB-I-RECORDSTAT, ^defghijklmnopqrstuvwxyzABCDEFGH:	  Key cnt: 1  max subsc len: 37  max rec len: 17  max node len: 58
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 56  max subsc len: 37  max rec len: 23  max node len: 60
 
-GTM>
+YDB>
 
 Caution: Database Block Certification Has Been Enabled
 
-GTM>
+YDB>
 do in1^dbfill("set")
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 $MUPIP extract -format=binary -label=YX -sel="YX*","d*" yx.bin
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT NON_COLLATION
 %YDB-I-RECORDSTAT, ^data:	  Key cnt: 2050  max subsc len: 42  max rec len: 66  max node len: 108
 ##ALLOW_OUTPUT NON_COLLATION
@@ -106,43 +106,43 @@ GTM>
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 2077  max subsc len: 42  max rec len: 66  max node len: 111
 ##ALLOW_OUTPUT COLLATION
 
-GTM>
+YDB>
 k ^bcde
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Loading b-c.glo was successful
 Loading yx.bin was successful
 
-GTM>
+YDB>
 
 Caution: Database Block Certification Has Been Enabled
 
-GTM>
+YDB>
 do in0^dbfill("ver")
 
-GTM>
+YDB>
 ver PASS
 
-GTM>
+YDB>
 do in1^dbfill("ver")
 
-GTM>
+YDB>
 ver PASS
 
-GTM>
+YDB>
 h
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 %YDB-I-RECORDSTAT, ^aaaa:	  Key cnt: 1  max subsc len: 6  max rec len: 5  max node len: 15
 %YDB-I-RECORDSTAT, ^aaaaa:	  Key cnt: 1  max subsc len: 7  max rec len: 5  max node len: 16
 %YDB-I-RECORDSTAT, ^aaaaaa:	  Key cnt: 1  max subsc len: 8  max rec len: 5  max node len: 17
@@ -166,13 +166,13 @@ GTM>
 %YDB-I-RECORDSTAT, ^abcdefghijklmnopqrstuvwxyzABCDE:	  Key cnt: 2  max subsc len: 37  max rec len: 14  max node len: 54
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 31  max subsc len: 37  max rec len: 23  max node len: 59
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##TEST_AWK.*
 
 Beginning LOAD at record number: 2
@@ -181,29 +181,29 @@ LOAD TOTAL		Key Cnt: 31  Max Subsc Len: 37  Max Data Len: 23
 Last LOAD record number: 22
 
 
-GTM>
+YDB>
 right right right
 
-GTM>
+YDB>
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 3  max subsc len: 8  max rec len: 5  max node len: 17
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 right right right
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 PASS from fill5^myfill("right")
 
-GTM>
+YDB>
 %YDB-I-RECORDSTAT, ^aaaa:	  Key cnt: 1  max subsc len: 6  max rec len: 5  max node len: 15
 %YDB-I-RECORDSTAT, ^aaaaa:	  Key cnt: 1  max subsc len: 7  max rec len: 5  max node len: 16
 %YDB-I-RECORDSTAT, ^aaaaaa:	  Key cnt: 1  max subsc len: 8  max rec len: 5  max node len: 17
@@ -212,19 +212,19 @@ GTM>
 %YDB-I-RECORDSTAT, ^bbbbbbbbbb:	  Key cnt: 100  max subsc len: 15  max rec len: 5  max node len: 24
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 100  max subsc len: 15  max rec len: 5  max node len: 24
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 PASS from fill5^myfill("wrong")
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 PASS from fill5^myfill("ver")
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  NON_REPLIC
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 Shutting down Primary Source Server Server in ##TEST_PATH##
@@ -256,10 +256,10 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ##ALLOW_OUTPUT  NON_REPLIC
 
-GTM>
+YDB>
 PASS from fill4^myfill("set")
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT NONSPANNING_REGIONS
 ##SUSPEND_OUTPUT COLLATION
 %YDB-I-RECORDSTAT, ^bing (region BREG):	  Key cnt: 916  max subsc len: 24  max rec len: 10  max node len: 38
@@ -284,19 +284,19 @@ GTM>
 %YDB-I-RECORDSTAT, ^cing:	  Key cnt: 999  max subsc len: 24  max rec len: 10  max node len: 38
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1998  max subsc len: 24  max rec len: 10  max node len: 38
 
-GTM>
+YDB>
 PASS from mupip extract freeze.
 
-GTM>
+YDB>
 PASS from fill4^myfill("kill")
 
-GTM>
+YDB>
 loading big.glo successful.
 
-GTM>
+YDB>
 PASS from fill4^myfill("ver")
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  NON_REPLIC
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 Shutting down Primary Source Server Server in ##TEST_PATH##

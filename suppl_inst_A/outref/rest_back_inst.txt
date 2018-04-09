@@ -13,7 +13,7 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
 ==Executing MULTISITE_REPLIC 'RUN INST1 ##TEST_COM_PATH##/simplegblupd.csh -instance INST1 -count 10 -internal'==
 
-GTM>
+YDB>
 set ^GBLA(1)=1_<...>
 set ^GBLA(2)=1_<...>
 set ^GBLA(3)=1_<...>
@@ -25,7 +25,7 @@ set ^GBLA(8)=1_<...>
 set ^GBLA(9)=1_<...>
 set ^GBLA(10)=1_<...>
 
-GTM>
+YDB>
 10,1
 ==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
 ==Executing MULTISITE_REPLIC 'RUN INST1 mkdir bak1 ; $MUPIP backup -replinstance=bak1 "*" bak1 ; $MUPIP replic -editinstance bak1/mumps.repl -change -offset=0x00000058 -size=1 -value=0x32'==
@@ -54,7 +54,7 @@ Starting Primary Source Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
 Starting Passive Source Server and Receiver Server in ##TEST_PATH##
 ==Executing MULTISITE_REPLIC 'RUN INST2 ##TEST_COM_PATH##/simplegblupd.csh -instance INST2 -count 10 -internal'==
 
-GTM>
+YDB>
 set ^GBLA(11)=1_<...>
 set ^GBLA(12)=1_<...>
 set ^GBLA(13)=1_<...>
@@ -66,7 +66,7 @@ set ^GBLA(18)=1_<...>
 set ^GBLA(19)=1_<...>
 set ^GBLA(20)=1_<...>
 
-GTM>
+YDB>
 20,1
 ==Executing MULTISITE_REPLIC 'SYNC INST2 INST1'==
 ==Executing MULTISITE_REPLIC 'STOP INST2 INST1'==

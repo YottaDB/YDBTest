@@ -17,12 +17,12 @@ GDE>
 	##TEST_PATH##/mumps.gld
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
-GTM>
+YDB>
 set globals with null_subscripts
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
@@ -32,23 +32,23 @@ DSE> DSE> Null subscripts changed to EXISTING
 
 PASS! BEHAVIOR NOT CHANGED FOR M-FUNCTIONS $ORDER,$NEXT,$QUERY,$ZPREVIOUS FOR EXISTING NULL_SUBS
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 un-defined local var. errorexpected here as undef condition restored
 
-GTM>
+YDB>
 %YDB-E-GVUNDEF, Global variable undefined: ^aglobalvar("MOUSE")
 
-GTM>
+YDB>
 check for $DATA & $GET functions
 
-GTM>
+YDB>
 11
-GTM>
+YDB>
 4906
-GTM>
+YDB>

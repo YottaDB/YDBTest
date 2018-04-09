@@ -25,7 +25,7 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ##ALLOW_OUTPUT  NON_REPLIC
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  REPLIC
 do ^c002472(off,3)...
 $VIEW("GVDUPSETNOOP"): 0
@@ -39,7 +39,7 @@ $VIEW("GVDUPSETNOOP"): 0
 OK.
 ##ALLOW_OUTPUT  REPLIC
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  REPLIC
 ---------------------------------------------------------------
 #remove prior journal extract files...
@@ -92,7 +92,7 @@ d.dat
 mumps.dat
 #################### Test 2 ##############################
 
-GTM>
+YDB>
 do ^c002472(on,3)...
 $VIEW("GVDUPSETNOOP"): 1
 OK.
@@ -104,7 +104,7 @@ loop 5...
 $VIEW("GVDUPSETNOOP"): 1
 OK.
 
-GTM>
+YDB>
 ---------------------------------------------------------------
 #remove prior journal extract files...
 #do a fresh exract...
@@ -327,7 +327,7 @@ d.dat
 mumps.dat
 #################### Test 1 ##############################
 
-GTM>
+YDB>
 do ^c002472(off,0)...
 $VIEW("GVDUPSETNOOP"): 0
 OK.
@@ -339,7 +339,7 @@ loop 5...
 $VIEW("GVDUPSETNOOP"): 0
 OK.
 
-GTM>
+YDB>
 ---------------------------------------------------------------
 #Analyze the block TN information...
 ---------------------------------------------------------------
@@ -361,7 +361,7 @@ d.dat
 mumps.dat
 #################### Test 2 ##############################
 
-GTM>
+YDB>
 do ^c002472(on,0)...
 $VIEW("GVDUPSETNOOP"): 1
 OK.
@@ -373,7 +373,7 @@ loop 5...
 $VIEW("GVDUPSETNOOP"): 1
 OK.
 
-GTM>
+YDB>
 ---------------------------------------------------------------
 #Analyze the block TN information...
 ---------------------------------------------------------------
@@ -395,7 +395,7 @@ d.dat
 mumps.dat
 #################### Test 3 ##############################
 
-GTM>
+YDB>
 do ^c002472(off,0)...
 $VIEW("GVDUPSETNOOP"): 0
 OK.
@@ -407,7 +407,7 @@ loop 5...
 $VIEW("GVDUPSETNOOP"): 0
 OK.
 
-GTM>
+YDB>
 ---------------------------------------------------------------
 #Analyze the block TN information...
 ---------------------------------------------------------------
@@ -429,7 +429,7 @@ d.dat
 mumps.dat
 #################### Test 4 ##############################
 
-GTM>
+YDB>
 do ^c002472(on,0)...
 $VIEW("GVDUPSETNOOP"): 1
 OK.
@@ -441,7 +441,7 @@ loop 5...
 $VIEW("GVDUPSETNOOP"): 1
 OK.
 
-GTM>
+YDB>
 ---------------------------------------------------------------
 #Analyze the block TN information...
 ---------------------------------------------------------------
@@ -463,7 +463,7 @@ d.dat
 mumps.dat
 #################### Test 5 ##############################
 
-GTM>
+YDB>
 do ^c002472(off,0)...
 $VIEW("GVDUPSETNOOP"): 0
 OK.
@@ -475,7 +475,7 @@ loop 5...
 $VIEW("GVDUPSETNOOP"): 0
 OK.
 
-GTM>
+YDB>
 ---------------------------------------------------------------
 #Analyze the block TN information...
 ---------------------------------------------------------------
@@ -497,9 +497,9 @@ d.dat
 mumps.dat
 #################### Test 6 ##############################
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do ^c002472(on,0)...
 $VIEW("GVDUPSETNOOP"): 1
 OK.
@@ -511,7 +511,7 @@ loop 5...
 $VIEW("GVDUPSETNOOP"): 1
 OK.
 
-GTM>
+YDB>
 ---------------------------------------------------------------
 #Analyze the block TN information...
 ---------------------------------------------------------------
@@ -533,9 +533,9 @@ d.dat
 mumps.dat
 #################### Test 7 ##############################
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do ^c002472(off,0)...
 $VIEW("GVDUPSETNOOP"): 0
 OK.
@@ -547,7 +547,7 @@ loop 5...
 $VIEW("GVDUPSETNOOP"): 0
 OK.
 
-GTM>
+YDB>
 ---------------------------------------------------------------
 #Analyze the block TN information...
 ---------------------------------------------------------------
@@ -569,7 +569,7 @@ d.dat
 mumps.dat
 #################### Test 8 ##############################
 
-GTM>
+YDB>
 do ^c002472(off,0)...
 $VIEW("GVDUPSETNOOP"): 0
 OK.
@@ -581,7 +581,7 @@ loop 5...
 $VIEW("GVDUPSETNOOP"): 0
 OK.
 
-GTM>
+YDB>
 ---------------------------------------------------------------
 #Analyze the block TN information...
 ---------------------------------------------------------------
@@ -603,7 +603,7 @@ d.dat
 mumps.dat
 #################### Test 9 ##############################
 
-GTM>
+YDB>
 do ^c002472(off,0)...
 $VIEW("GVDUPSETNOOP"): 0
 OK.
@@ -615,7 +615,7 @@ loop 5...
 $VIEW("GVDUPSETNOOP"): 0
 OK.
 
-GTM>
+YDB>
 ---------------------------------------------------------------
 #Analyze the block TN information...
 ---------------------------------------------------------------

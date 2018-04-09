@@ -8,9 +8,9 @@ mupip set -journal=enable,on,[no]before -reg *
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with (NO|)BEFORE_IMAGES
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 -REDIRECT qualifier needs a value
 mupip journal -recover -forw -redir mumps.mjl
 %YDB-E-CLIERR, Option : REDIRECT needs value
@@ -28,14 +28,14 @@ mupip journal -recover -forw -redir=mumps.dat=redir.dat mumps.mjl
 %YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
-GTM>
+YDB>
 a1
 a2
 a3
 a4
 a5
 
-GTM>
+YDB>
 ------------------------------------------------------------------------
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
@@ -58,9 +58,9 @@ mupip set -journal=enable,on,[no]before -reg *
 %YDB-I-JNLSTATE, Journaling state for region CREG is now ON
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 mupip journal -recover -redir="a.dat=redir2.dat,mumps.dat=redir1.dat" -forw "*"
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 %YDB-E-STARFILE, Star(*) argument cannot be specified with REDIRECT qualifier
@@ -75,9 +75,9 @@ mupip journal -recover -redir="a.dat=redir1.dat,b.dat=redir2.dat" -forw mumps.mj
 %YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
-GTM>
+YDB>
 1111
-GTM>
+YDB>
 ------------------------------------------------------------------------
 mupip journal -recover -redir="a.dat=./save/redir1.dat,b.dat=./save/redir2.dat" -forw mumps.mjl,a.mjl,b.mjl,c.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
@@ -88,9 +88,9 @@ mupip journal -recover -redir="a.dat=./save/redir1.dat,b.dat=./save/redir2.dat" 
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 Now verify data
 
-GTM>
+YDB>
 1111
-GTM>
+YDB>
 ------------------------------------------------------------------------
 Check for duplicates
 mupip journal -recover -redir="a.dat=b.dat,a.dat=c.dat" -forw mumps.mjl,a.mjl,b.mjl,c.mjl

@@ -14,10 +14,10 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ##ALLOW_OUTPUT  NON_REPLIC
 
-GTM>
+YDB>
 PASS from fill3^myfill("set")
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  NON_REPLIC
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/online5.mjl is renamed to ##TEST_PATH##/online5.mjl_##TIMESTAMP##
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/online5.mjl created for region DEFAULT with .*BEFORE_IMAGES
@@ -68,10 +68,10 @@ RESTORE COMPLETED
 210 blocks restored
 ##ALLOW_OUTPUT NON_COLLATION
 
-GTM>
+YDB>
 PASS from fill3^myfill("ver")
 
-GTM>
+YDB>
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/online5.dat created
 RESTORE COMPLETED
 ##SUSPEND_OUTPUT COLLATION
@@ -81,10 +81,10 @@ RESTORE COMPLETED
 210 blocks restored
 ##ALLOW_OUTPUT NON_COLLATION
 
-GTM>
+YDB>
 PASS from fill3^myfill("ver")
 
-GTM>
+YDB>
 ##ALLOW_OUTPUT  NON_REPLIC
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *

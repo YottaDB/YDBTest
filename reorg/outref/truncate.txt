@@ -18,11 +18,11 @@ GDE>
 %GDE-I-GDUPDATE, Updating Global Directory file 
 	##TEST_PATH##/mumps.gld
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 # Try -truncate=100
 %YDB-E-MUTRUNCPERCENT, Truncate threshold percentage should be from 0 to 99
 # Try -truncate=99
@@ -36,11 +36,11 @@ Truncated region: BREG. Reduced total blocks from [602] to [512]. Reduced free b
 %YDB-I-MUTRUNCNOSPACE, Region BREG has insufficient space to meet truncate target percentage of 0
 # The below commands will create a full local bitmap eligible for truncation
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 %YDB-I-MUTRUNCNOSPACE, Region AREG has insufficient space to meet truncate target percentage of 0
 Truncated region: BREG. Reduced total blocks from [613] to [512]. Reduced free blocks from [101] to [1].
 # Extending AREG by rand_ext :##FILTERED##GTM_TEST_DEBUGINFO.*
@@ -59,14 +59,14 @@ Using: ##SOURCE_PATH##/mupip
 mumps.dat
 # Verify truncate frees up space, even when root blocks and directory tree blocks lie towards the end of the file
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 LOTSVAR-I-END_SET
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Truncated region: DEFAULT. Reduced total blocks from [31262] to [6144]. Reduced free blocks from [25364] to [296].
 # Second truncate shouldn't move root blocks unnecessarily
 Total root blocks moved: 0

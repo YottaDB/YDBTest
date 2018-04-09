@@ -1744,38 +1744,38 @@ unset echo
 Start second process (as same user)...
 Wait for second user to finish its processing...
 
-GTM>
+YDB>
 ##TEST_AWK.H = [0-9]*,[0-9]*
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 second user should have finished
 
-GTM>
+YDB>
 ##TEST_AWK.H = [0-9]*,[0-9]*
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Updates done, test...
 
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Simulating kill of GTM Processes in ##TEST_PATH##
 GTM processes Killed!
 ######################################
@@ -3136,25 +3136,25 @@ Will run           : jnlrecm
 ##TEST_PATH##
 Killed
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##TEST_AWK.ZV = GT.M .*
 
-GTM>
+YDB>
 start...
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##TEST_AWKTime written into time.*
 SET,TSET,USET,GSET,FSET
 ##TEST_AWKTime written into time.*
@@ -3171,32 +3171,32 @@ Check that only ^acn(11,11),^acn(12,12),^acn(13,13),^acn(14,14) are present
 ^acn(13,13)="this is GSET"
 ^acn(14,14)="this is GSET"
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 in active ztp...
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 End of second_process job!
 ############ END SECOND PROCESS OUTPUT ###################
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip journal -show=broken -forward *
 env LC_ALL=C gawk -f ##TEST_COM_PATH##/mupjnl_multireg_show_sort.awk show_broken3.unsorted
 

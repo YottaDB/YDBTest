@@ -47,24 +47,24 @@ Secondary Side:
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 ##ALLOW_OUTPUT  NON_REPLIC
 
-GTM>
+YDB>
 Touch AREG:
 ##TEST_AWK%YDB-E-JNLTRANS2BIG, Transaction needs an estimated \[19971 blocks\] in journal file ##TEST_PATH##/a.mjl which exceeds the AUTOSWITCHLIMIT of 16384 blocks
 		At M source location laba+5^bigtp
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Touch BREG:
 ##TEST_AWK%YDB-E-JNLTRANS2BIG, Transaction needs an estimated \[17663 blocks\] in journal file ##TEST_PATH##/b.mjl which exceeds the AUTOSWITCHLIMIT of 16384 blocks
 		At M source location labb+5^bigtp
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Touch AREG,BREG,CREG:
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  NON_REPLIC
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 Shutting down Primary Source Server Server in ##TEST_PATH##

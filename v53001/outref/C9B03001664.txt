@@ -8,31 +8,31 @@ test gtm_noundef env.variable settings
 ###################################################################
 gtm_noundef not set
 
-GTM>
+YDB>
 1
-GTM>
+YDB>
 
-GTM>
+YDB>
 0
-GTM>
+YDB>
 gtm_noundef set to TRUE
 
-GTM>
+YDB>
 0
-GTM>
+YDB>
 
-GTM>
+YDB>
 1
-GTM>
+YDB>
 gtm_noundef set to FALSE
 
-GTM>
+YDB>
 1
-GTM>
+YDB>
 
-GTM>
+YDB>
 0
-GTM>
+YDB>
 ###################################################################
 run noundeftst with gtm_noundef set to FALSE
 ###################################################################
@@ -666,7 +666,7 @@ run noundeftst with gtm_noundef set to TRUE
 Do not pass the parameter GEN, so that all the test runs in indirection mode
 ###################################################################
 
-GTM>
+YDB>
 
 Test case: S $ZE(j,k,k+1)=k
 Test case: S $ZE(j,@k)=k

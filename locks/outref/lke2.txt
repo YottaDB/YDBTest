@@ -17,7 +17,7 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ##ALLOW_OUTPUT  NON_REPLIC
 
-GTM>
+YDB>
 do ^lkereg
 
 0   GTM PASS 
@@ -52,9 +52,9 @@ do ^lkereg
 8   LKE PASS
 8   LKE PASS
 8   LKE PASS
-GTM>
+YDB>
 
-GTM>
+YDB>
 do ^lkespace
 Show only one lock with embedded = and quote
 
@@ -105,7 +105,7 @@ Lock removed : ^A1
 REG2
 Lock removed : ^B2
 
-GTM>
+YDB>
 %YDB-E-CLIERR, Unrecognized option : INVALID
 ##SUSPEND_OUTPUT  NON_REPLIC
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##

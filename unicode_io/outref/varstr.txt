@@ -1,10 +1,10 @@
 setenv gtm_chset UTF-8
 unset echo
 
-GTM>
+YDB>
 do ^varstr("UTF-8")
 
-GTM>
+YDB>
 20  30１２３４５６７８９０
 11  20В чащах юга
 26  37나는 유리를 먹을 수 있어요
@@ -101,10 +101,10 @@ GTM>
 0:0:0       
 
 
-GTM>
+YDB>
 do ^varstr("UTF-16")
 
-GTM>
+YDB>
 -> OPEN "UTF-16_varstr1.txt":(NEWVERSION:STREAM:NOWRAP:RECORDSIZE=18:CHSET="UTF-16")
 -> OPEN "UTF-16_varstr1.txt":(APPEND:STREAM:NOWRAP:RECORDSIZE=18:CHSET="UTF-16")
 -> USE "UTF-16_varstr1.txt":(NOWRAP)
@@ -194,10 +194,10 @@ GTM>
 0:0:0       
 
 
-GTM>
+YDB>
 do ^varstr("UTF-16LE")
 
-GTM>
+YDB>
 -> OPEN "UTF-16LE_varstr1.txt":(NEWVERSION:STREAM:NOWRAP:RECORDSIZE=18:CHSET="UTF-16LE")
 -> OPEN "UTF-16LE_varstr1.txt":(APPEND:STREAM:NOWRAP:RECORDSIZE=18:CHSET="UTF-16LE")
 -> USE "UTF-16LE_varstr1.txt":(NOWRAP)
@@ -287,10 +287,10 @@ GTM>
 0:0:0       
 
 
-GTM>
+YDB>
 do ^varstr("UTF-16BE")
 
-GTM>
+YDB>
 -> OPEN "UTF-16BE_varstr1.txt":(NEWVERSION:STREAM:NOWRAP:RECORDSIZE=18:CHSET="UTF-16BE")
 -> OPEN "UTF-16BE_varstr1.txt":(APPEND:STREAM:NOWRAP:RECORDSIZE=18:CHSET="UTF-16BE")
 -> USE "UTF-16BE_varstr1.txt":(NOWRAP)
@@ -380,4 +380,4 @@ GTM>
 0:0:0       
 
 
-GTM>
+YDB>

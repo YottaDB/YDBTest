@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -118,13 +118,13 @@ $gtm_tst/com/dbcreate.csh mumps . 255 1000 1024 500 64
 if ("dbg" == $tst_image) then
 	#this is DUMMY output
 	echo ""
-	echo "GTM>"
+	echo "YDB>"
 	echo "do ^tptestk"
 	echo ""
 	echo "Caution: Database Block Certification Has Been Enabled"
 	echo ""
 	echo "PASS from tptestk"
-	echo "GTM>"
+	echo "YDB>"
 else
 	$GTM << GTM_EOF
 	w "do ^tptestk",! do ^tptestk
@@ -306,4 +306,4 @@ $gtm_tst/com/dbcheck.csh -extract
 # 	$gtm_tst/com/dbcheck.csh -extract
 # 	$grep "TEST FAILED" *.mjo*
 # endif
-# 
+#

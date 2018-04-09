@@ -35,21 +35,21 @@ S	^b(10) = 10
 ###################################################################
 
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 %YDB-E-GVUNDEF, Global variable undefined: ^b
 
-GTM>
+YDB>
 %YDB-I-RECORDSTAT, ^a:	  Key cnt: 10  max subsc len: 6  max rec len: 2  max node len: 11
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 10  max subsc len: 6  max rec len: 2  max node len: 11
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 %YDB-E-GVUNDEF, Global variable undefined: ^a
 
-GTM>
+YDB>
 ##TEST_AWKGT.M MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
@@ -58,7 +58,7 @@ LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 6  Max Data Len: 2
 Last LOAD record number: 12
 
 
-GTM>
+YDB>
 ^a(1)=1
 ^a(2)=2
 ^a(3)=3
@@ -71,7 +71,7 @@ GTM>
 ^a(10)=10
 %YDB-E-GVUNDEF, Global variable undefined: ^b
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT NON_REPLIC
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 Shutting down Primary Source Server Server in ##TEST_PATH##

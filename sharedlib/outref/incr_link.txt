@@ -5,9 +5,9 @@ Incr_link tests starts....
 %YDB-I-SRCNAM, in source module ##IN_TEST_PATH##/inref/stringbad.m
 rm: No match.
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Do ^main
 
 Executing Shared Copy of MAIN...
@@ -21,38 +21,38 @@ Executing Shared Copy of CUBE...
 Executing Shared Copy of CUBE...
 Executing Shared Copy of CUBE...
 Executing Shared Copy of CUBE...
-GTM>
+YDB>
 Do ^avg
 
 Executing Shared Copy of AVG...
 The AVERAGE is 38.5
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Do ^avg
 
 Executing Shared Copy of AVG...
 The AVERAGE is 38.5
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ZL avg
 
-GTM>
+YDB>
 Do ^avg
 
 Executing AVG in OBJ directory....
 The AVERAGE is 38.5
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Do ^main
 
 Executing Shared Copy of MAIN...
@@ -66,12 +66,12 @@ Executing Shared Copy of CUBE...
 Executing Shared Copy of CUBE...
 Executing Shared Copy of CUBE...
 Executing Shared Copy of CUBE...
-GTM>
+YDB>
 
-GTM>
+YDB>
 ZL factor
 
-GTM>
+YDB>
 Do ^main
 
 Executing Shared Copy of MAIN...
@@ -95,11 +95,11 @@ Executing Shared Copy of CUBE...
 Executing FACTOR in OBJ directory....
 Executing Shared Copy of CUBE...
 Executing FACTOR in OBJ directory....
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Do ^main
 
 Executing Shared Copy of MAIN...
@@ -113,31 +113,31 @@ Executing Shared Copy of CUBE...
 Executing Shared Copy of CUBE...
 Executing Shared Copy of CUBE...
 Executing Shared Copy of CUBE...
-GTM>
+YDB>
 Do ^avg
 
 Executing Shared Copy of AVG...
 The AVERAGE is 38.5
 
-GTM>
+YDB>
 $VIEW(RTNNEXT,main)
 sqrt
-GTM>
+YDB>
 $VIEW(RTNNEXT,base)
 cube
-GTM>
+YDB>
 $VIEW(RTNNEXT,avg)
 base
-GTM>
+YDB>
 Files Created in ##TEST_PATH##:
 Using: ##SOURCE_PATH##/mumps -run GDE
 mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 mumps -r main
 
 Executing Shared Copy of MAIN...
@@ -152,12 +152,12 @@ Executing Shared Copy of CUBE...
 Executing Shared Copy of CUBE...
 Executing Shared Copy of CUBE...
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ZL factor
 
-GTM>
+YDB>
 Do ^jobmain
 
 Executing Shared Copy of jobMain...
@@ -183,10 +183,10 @@ Executing CUBE in OBJ directory....
 Executing FACTOR in OBJ directory....
 Job main done
 
-GTM>
+YDB>
 Job ^jobmain
 
-GTM>
+YDB>
 main.mjo.....
 
 Executing Shared Copy of jobMain...
@@ -202,28 +202,28 @@ Executing Shared Copy of CUBE...
 Executing Shared Copy of CUBE...
 Job main done
 
-GTM>
+YDB>
 Do ^literwrt
 Did not write to literal table, good GT.M
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 I am in a1000.m
 I am in b.m
 
-GTM>
+YDB>
 Create a shared library with files
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ./shbin##TEST_SHL_SUFFIX## .
-GTM>
+YDB>
 I am in a1000.m
 I am in b.m
 
-GTM>
+YDB>
 End of Incr_link tests...
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *

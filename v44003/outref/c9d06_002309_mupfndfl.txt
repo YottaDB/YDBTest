@@ -156,13 +156,13 @@ sort -f mupip_set_jnl.out
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 $GTM << xyz
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 $MUPIP reorg
 Fill Factor:: Index blocks 100%: Data blocks 100%
    
@@ -264,13 +264,13 @@ Region AREG is now UNFROZEN
 Region DEFAULT is now UNFROZEN
 $GTM << xyz
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 echo "#"
 #
 echo "Test case 4 : File specification related"
@@ -335,7 +335,7 @@ $MUPIP journal -recover -for ./dir2/a.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 $GTM << xyz
 
-GTM>
+YDB>
 ^a(1)=1
 ^a(2)=2
 ^a(3)=3
@@ -349,7 +349,7 @@ GTM>
 %YDB-E-DBFILERR, Error with database file ##TEST_PATH##/dir1/mumps.dat
 %SYSTEM-E-ENO2, No such file or directory
 
-GTM>
+YDB>
 $MUPIP integ ./dir2/a.dat
 
 No errors detected by integ.

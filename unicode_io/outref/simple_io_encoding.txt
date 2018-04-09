@@ -1,10 +1,10 @@
 setenv gtm_chset UTF-8
 unset echo
 
-GTM>
+YDB>
 do ^simpleUnicodeIO("UTF-8")
 
-GTM>
+YDB>
 CreatFile using encoding=UTF-8
 ReadFile using encoding=UTF-8
 
@@ -23,12 +23,12 @@ STAT=errorTest+18^simpleUnicodeIO,%YDB-E-DEVPARTOOBIG, String deviceparameter ex
 ---------------------------------
 zlength of unistr=1048574
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do ^simpleUnicodeIO("UTF-16")
 
-GTM>
+YDB>
 CreatFile using encoding=UTF-16
 ReadFile using encoding=UTF-16
 
@@ -47,12 +47,12 @@ STAT=errorTest+18^simpleUnicodeIO,%YDB-E-DEVPARTOOBIG, String deviceparameter ex
 ---------------------------------
 zlength of unistr=1048574
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do ^simpleUnicodeIO("UTF-16LE")
 
-GTM>
+YDB>
 CreatFile using encoding=UTF-16LE
 ReadFile using encoding=UTF-16LE
 
@@ -71,12 +71,12 @@ STAT=errorTest+18^simpleUnicodeIO,%YDB-E-DEVPARTOOBIG, String deviceparameter ex
 ---------------------------------
 zlength of unistr=1048574
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do ^simpleUnicodeIO("UTF-16BE")
 
-GTM>
+YDB>
 CreatFile using encoding=UTF-16BE
 ReadFile using encoding=UTF-16BE
 
@@ -95,12 +95,12 @@ STAT=errorTest+18^simpleUnicodeIO,%YDB-E-DEVPARTOOBIG, String deviceparameter ex
 ---------------------------------
 zlength of unistr=1048574
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do ^simpleUnicodeIO("M")
 
-GTM>
+YDB>
 CreatFile using encoding=M
 ReadFile using encoding=M
 
@@ -119,12 +119,12 @@ STAT=errorTest+18^simpleUnicodeIO,%YDB-E-DEVPARTOOBIG, String deviceparameter ex
 ---------------------------------
 zlength of unistr=1048574
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do ^simpleUnicodeIO("")
 
-GTM>
+YDB>
 CreatFile using encoding=
 ReadFile using encoding=
 
@@ -143,4 +143,4 @@ STAT=errorTest+18^simpleUnicodeIO,%YDB-E-DEVPARTOOBIG, String deviceparameter ex
 ---------------------------------
 zlength of unistr=1048574
 
-GTM>
+YDB>

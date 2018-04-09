@@ -8,42 +8,42 @@ Test various issues identified with the READ_ONLY db characteristic (new feature
 # Test that READ_ONLY database with READ-WRITE permissions works fine even after argumentless mupip rundown
 # Test that help database works fine even after argumentless rundown
 
-GTM>
+YDB>
 Open the READ_ONLY database mumps.dat
 
-GTM>
+YDB>
 Open the help database
 
-GTM>
+YDB>
 Concurrently run argumentless MUPIP RUNDOWN
 
-GTM>
+YDB>
 Expect no errors while halting out
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 # Test that READ_ONLY database works fine after a MUPIP command that gets standalone access
 
-GTM>
+YDB>
 Open the READ_ONLY database mumps.dat. Expect no errors during open
 
-GTM>
+YDB>
 Expect no errors while halting out
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 # Test that ftok semaphore is not left around after halt from a READ_ONLY database
 
-GTM>
+YDB>
 Open the READ_ONLY database mumps.dat. Expect no errors during open
 
-GTM>
+YDB>
 Expect no errors while halting out
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 # Test for cases where READONLYNOSTATS error should and should not be issued
   --> Try setting STATS on a database that has READ_ONLY already set. This should error out.
@@ -115,20 +115,20 @@ Database file mumps.dat now has BG access method
 # Test for cases where READONLYLKFAIL error should be issued
   --> Test of READONLYLKFAIL error from MUPIP SET
 
-GTM>
+YDB>
 Open the READ_ONLY database mumps.dat.
 
-GTM>
+YDB>
 Concurrently run argumentless MUPIP SET -NOREAD_ONLY. It should error out
 %YDB-E-READONLYLKFAIL, Failed to get exclusive lock on READ_ONLY database file mumps.dat
 %SYSTEM-E-ENO11, Resource temporarily unavailable
 %YDB-W-WCWRNNOTCHG, Not all specified database files were changed
 
-GTM>
+YDB>
 Expect no errors while halting out
-GTM>
+YDB>
 
-GTM>
+YDB>
   --> Test of READONLYLKFAIL error from a non-MUPIP-SET process
 %YDB-E-READONLYLKFAIL, Failed to get shared lock on READ_ONLY database file ##TEST_PATH##/mumps.dat
 %SYSTEM-E-ENO11, Resource temporarily unavailable
@@ -141,42 +141,42 @@ GTM>
 # Test that READ_ONLY database with READ-ONLY permissions works fine even after argumentless mupip rundown
 # Test that help database works fine even after argumentless rundown
 
-GTM>
+YDB>
 Open the READ_ONLY database mumps.dat
 
-GTM>
+YDB>
 Open the help database
 
-GTM>
+YDB>
 Concurrently run argumentless MUPIP RUNDOWN
 
-GTM>
+YDB>
 Expect no errors while halting out
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 # Test that READ_ONLY database works fine after a MUPIP command that gets standalone access
 
-GTM>
+YDB>
 Open the READ_ONLY database mumps.dat. Expect no errors during open
 
-GTM>
+YDB>
 Expect no errors while halting out
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 # Test that ftok semaphore is not left around after halt from a READ_ONLY database
 
-GTM>
+YDB>
 Open the READ_ONLY database mumps.dat. Expect no errors during open
 
-GTM>
+YDB>
 Expect no errors while halting out
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 # Test for cases where READONLYNOSTATS error should and should not be issued
   --> Try setting STATS on a database that has READ_ONLY already set. This should error out.
@@ -248,20 +248,20 @@ Database file ##TEST_PATH##/mumps.dat now has BG access method
 # Test for cases where READONLYLKFAIL error should be issued
   --> Test of READONLYLKFAIL error from MUPIP SET
 
-GTM>
+YDB>
 Open the READ_ONLY database mumps.dat.
 
-GTM>
+YDB>
 Concurrently run argumentless MUPIP SET -NOREAD_ONLY. It should error out
 %YDB-E-READONLYLKFAIL, Failed to get exclusive lock on READ_ONLY database file ##TEST_PATH##/mumps.dat
 %SYSTEM-E-ENO11, Resource temporarily unavailable
 %YDB-W-WCWRNNOTCHG, Not all specified database files were changed
 
-GTM>
+YDB>
 Expect no errors while halting out
-GTM>
+YDB>
 
-GTM>
+YDB>
   --> Test of READONLYLKFAIL error from a non-MUPIP-SET process
 %YDB-E-READONLYLKFAIL, Failed to get shared lock on READ_ONLY database file ##TEST_PATH##/mumps.dat
 %SYSTEM-E-ENO11, Resource temporarily unavailable

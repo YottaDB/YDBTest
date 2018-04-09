@@ -14,11 +14,11 @@ mumps.dat
 ---------------------------------------------------------------------------------------------------
 
 
-GTM>
+YDB>
 150373210,test0+4^c002617,%YDB-E-DIVZERO, Attempt to divide by zero
 %YDB-E-DIVZERO, Attempt to divide by zero
 
-GTM>
+YDB>
 
 ---------------------------------------------------------------------------------------------------
           Testing mumps -run test1^c002617  
@@ -27,18 +27,18 @@ GTM>
 %YDB-E-LVUNDEF, Undefined local variable: cnt
 		At M source location A+1^c002617a
 
-GTM>
+YDB>
 
 ---------------------------------------------------------------------------------------------------
           Testing do test1^c002617  
 ---------------------------------------------------------------------------------------------------
 
 
-GTM>
+YDB>
 %YDB-E-LVUNDEF, Undefined local variable: cnt
 		At M source location A+1^c002617a
 
-GTM>
+YDB>
 
 ---------------------------------------------------------------------------------------------------
           Testing mumps -run test2^c002617  
@@ -52,7 +52,7 @@ $ZSTATUS=150373738,stacktst+4^stacktst,%YDB-E-STACKCRIT, Stack space critical
 ---------------------------------------------------------------------------------------------------
 
 
-GTM>
+YDB>
 $ZSTATUS=150373738,stacktst+4^stacktst,%YDB-E-STACKCRIT, Stack space critical
 %YDB-F-STACKOFLOW, Stack overflow
 
@@ -68,7 +68,7 @@ $ZSTATUS=150373738,stacktst1+5^stacktst1,%YDB-E-STACKCRIT, Stack space critical
 ---------------------------------------------------------------------------------------------------
 
 
-GTM>
+YDB>
 $ZSTATUS=150373738,stacktst1+5^stacktst1,%YDB-E-STACKCRIT, Stack space critical
 %YDB-F-STACKOFLOW, Stack overflow
 
@@ -79,18 +79,18 @@ $ZSTATUS=150373738,stacktst1+5^stacktst1,%YDB-E-STACKCRIT, Stack space critical
 %YDB-E-LVUNDEF, Undefined local variable: cnt
 		At M source location lab1+1^test
 
-GTM>
+YDB>
 
 ---------------------------------------------------------------------------------------------------
           Testing do test4^c002617  
 ---------------------------------------------------------------------------------------------------
 
 
-GTM>
+YDB>
 %YDB-E-LVUNDEF, Undefined local variable: cnt
 		At M source location lab1+1^test
 
-GTM>
+YDB>
 
 ---------------------------------------------------------------------------------------------------
           Testing mumps -run test5^c002617  
@@ -103,10 +103,10 @@ Error occurred: 150373050,TestTrap+2^TestTrap,%YDB-E-INVCMD, Invalid command key
 ---------------------------------------------------------------------------------------------------
 
 
-GTM>
+YDB>
 %YDB-E-INVCMD, Invalid command keyword encountered
 
-GTM>
+YDB>
 
 ---------------------------------------------------------------------------------------------------
           Testing mumps -run test5^c002617 WITH gtm_ztrap_form = popadaptive 
@@ -120,10 +120,10 @@ GTM>
 ---------------------------------------------------------------------------------------------------
 
 
-GTM>
+YDB>
 
 ##TEST_AWKTrapErr..FRAMESTACK.FSErr...TestTrap3
-GTM>
+YDB>
 
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *

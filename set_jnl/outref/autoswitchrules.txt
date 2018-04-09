@@ -23,11 +23,11 @@ Secondary :
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ##ALLOW_OUTPUT  NON_REPLIC
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip set -journal=enable,on,[no]before,alloc=4096,extension=200,auto=17200 -reg DEFAULT
 %YDB-I-JNLSWITCHSZCHG, Journal AUTOSWITCHLIMIT [17200 blocks] is rounded down to [17096 blocks] to equal the sum of Journal ALLOCATION [4096 blocks] and a multiple of Journal EXTENSION [200 blocks] for database file ##TEST_PATH##/mumps.dat
 ##SUSPEND_OUTPUT  NON_REPLIC
@@ -67,22 +67,22 @@ Secondary :
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 ##ALLOW_OUTPUT  NON_REPLIC
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 ver PASS
 
-GTM>
+YDB>
 kill PASS
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 ver PASS
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  NON_REPLIC
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 Shutting down Primary Source Server Server in ##TEST_PATH##

@@ -24,22 +24,22 @@ Test relative ZGOTO with entryref
 Next21 return (good)
 Pass: ZGoto test successfully completed
 
-GTM>
+YDB>
 ZGoto a non-existent label in an existing routine (expect error)
 
-GTM>
+YDB>
 %YDB-E-LABELMISSING, Label referenced but not defined: Next99
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ZGoto a non-existent routine (expect error)
 
-GTM>
+YDB>
 %YDB-E-ZLINKFILE, Error while zlinking "zgoto99"
 %YDB-E-FILENOTFND, File zgoto99 not found
 
-GTM>
+YDB>
 
 ii=2
 ii=1

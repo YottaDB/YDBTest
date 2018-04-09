@@ -34,27 +34,27 @@ Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ###################################################################
 #- Step 2:
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ###################################################################
 #- Step 3:
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ###################################################################
 #- Step 4:
 #  kill -15 source server for INSTANCE1.
@@ -62,11 +62,11 @@ GTM>
 #- Step 5:
 # signal Step 2 process to stop
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ###################################################################
 #- Step 6:
 # signal Step 3 process to continue and unsuccessfully update region BREG
@@ -75,11 +75,11 @@ GTM>
 # signal Step 3 process to continue and successfully update region BREG
 # Now we need to wait until the third update that does NOT result in a potential REPLINSTNOSHM error is finished
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 # Now that Step 3 process is done, dump its output
 lock +^%jobwait(2,1)
 ##TEST_AWKlock ..jobgtm2.1,[0-9]*.

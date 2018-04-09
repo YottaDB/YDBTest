@@ -5,7 +5,7 @@ Using: ##SOURCE_PATH##/mupip
 mumps.dat
 #####################1###################
 
-GTM>
+YDB>
 
 First Line Lister
 
@@ -152,10 +152,10 @@ rtnx    ;;
 Total of 47 lines in 7 routines.
 
 
-GTM>
+YDB>
 #####################2###################
 
-GTM>
+YDB>
 
 First Line Lister
 
@@ -180,23 +180,23 @@ Output device: <terminal>:
 Total of 29 lines in 4 routines.
 
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 fl.out
 #####################3###################
 
-GTM>
+YDB>
 
 First Line Lister
 
 Routine: 
 
 No routines selected
-GTM>
+YDB>
 #####################4###################
 
-GTM>
+YDB>
 
 Routine Change Every occurrence
 
@@ -289,14 +289,14 @@ Now: 	; Yada YA	DA YADA
 Total of 6 routines parsed.
 12 occurrences changed in 6 routines.
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 #####################5###################
 
-GTM>
+YDB>
 
 Routine Change Every occurrence
 
@@ -330,7 +330,7 @@ Output device: <terminal>:
 
 rtn       rtn1      rtn45678  rtn456789 rtn45678901234567890          rtn4567890123456789012345678901         
 rtnx      
-GTM>
+YDB>
 ##TEST_AWK.*
 Routine Change Every occurrence of:
 >YADA<
@@ -380,7 +380,7 @@ Total of 7 routines parsed.
 12 occurrences changed in 6 routines.
 #####################6###################
 
-GTM>
+YDB>
 
 Routine Change Every occurrence
 
@@ -406,12 +406,12 @@ rtnx
 Total of 7 routines parsed.
 14 occurrences changed in 7 routines.
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 #####################7###################
 
-GTM>
+YDB>
 
 Routine Change Every occurrence
 
@@ -422,12 +422,12 @@ Current total of 0 routines.
 Routine: 
 
 No routines selected
-GTM>
+YDB>
 
-GTM>
+YDB>
 #####################8###################
 
-GTM>
+YDB>
 
 Routine Change Every occurrence
 
@@ -441,9 +441,9 @@ Routine:
 Old string: 
 No search string to find - no search performed
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 #####################9###################
 rtn1	;; 
 	;; This is the description for rtn1
@@ -455,7 +455,7 @@ rtn1	;;
 	w "Some text here",!
 	q
 
-GTM>
+YDB>
 
 Routine: 
 rtn1      
@@ -463,13 +463,13 @@ Current total of 1 routine.
 
 Routine: 
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 
 ##TEST_PATH##/rtns/rtn1.m
@@ -477,14 +477,14 @@ Was: 	; Yada YA	DA TADA
 Now: 	; Yada YA	DA TADAAA
 Was: 	; Yada YA	DA TADA
 Now: 	; Yada YA	DA TADAAA
-GTM>
+YDB>
 %ZC=1
 %ZF="TADA"
 %ZN="TADAAA"
 %ZR=""
 %ZR("rtn1")="##TEST_PATH##/rtns/"
 
-GTM>
+YDB>
 rtn1	;; 
 	;; This is the description for rtn1
 	; Some more description
@@ -496,7 +496,7 @@ rtn1	;;
 	q
 #####################10###################
 
-GTM>
+YDB>
 
 Routine directory
 Routine: 
@@ -531,12 +531,12 @@ Total of 2 routines.
 
 Routine: 
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 #####################11###################
 
-GTM>
+YDB>
 
 Routine Output - Save selected routines into RO file.
 
@@ -622,12 +622,12 @@ label   write "Line of code with no preceding spaces",!
 Total of 21 lines in 3 routines.
 
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 #####################12###################
 
-GTM>
+YDB>
 
 Routine Output - Save selected routines into RO file.
 
@@ -650,15 +650,15 @@ rtnx      tmpy
 Total of 18 lines in 2 routines.
 
 
-GTM>
+YDB>
 file.ro
 #####################13###################
 
-GTM>
+YDB>
 
 Routine: 
 
-GTM>
+YDB>
 
 Routine: 
 rtn1      
@@ -670,7 +670,7 @@ Current total of 2 routines.
 
 Routine: 
 
-GTM>
+YDB>
 %RO Routine Output Utility
 ##TEST_AWKGT.M .*
 rtn1
@@ -698,15 +698,15 @@ rtnx    ;;
 
 
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 rtn1      rtnx      
-GTM>
+YDB>
 ##TEST_AWK.*559 .* callro.ro
 #####################14###################
 
-GTM>
+YDB>
 
 Routine Input Utility - Converts RO file to *.m files.
 
@@ -729,14 +729,14 @@ rtnx      tmpy
 
 
 Restored 18 lines in 2 routines.
-GTM>
+YDB>
 
-GTM>
+YDB>
 rtnx.m
 tmpy.m
 #####################15###################
 
-GTM>
+YDB>
 
 Routine Search for Every occurrence
 
@@ -793,12 +793,12 @@ Output device: <terminal>:
 Total of 2 routines parsed.
 4 occurrences found in 2 routines.
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 #####################16###################
 
-GTM>
+YDB>
 
 Routine Search for Every occurrence
 
@@ -852,14 +852,14 @@ Output device: <terminal>:
 Total of 2 routines parsed.
 2 occurrences found in 1 routine.
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 #####################17###################
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 Routine: 
 rtn1      
@@ -871,36 +871,36 @@ Current total of 2 routines.
 
 Routine: 
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
  w "Some text here",!
          ^^^^^^^^^
  w "Some text here",!
          ^^^^^^^^^
-GTM>
+YDB>
 %ZF="text here"
 %ZR=""
 %ZR("rtn1")="##TEST_PATH##/rtns/"
 %ZR("zz")="##TEST_PATH##/rtns/"
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 %ZD="callrse.out"
 %ZF="text here"
 %ZR=""
 %ZR("rtn1")="##TEST_PATH##/rtns/"
 %ZR("zz")="##TEST_PATH##/rtns/"
 
-GTM>
+YDB>
 ##TEST_AWK.*
 Routine Search for Every occurrence of:
 >text here<
@@ -915,7 +915,7 @@ Routine Search for Every occurrence of:
          ^^^^^^^^^
 #####################18###################
 
-GTM>
+YDB>
 
 Routine: 
 rtn       rtn1      rtn45678  rtn456789 rtn45678901234567890          rtn4567890123456789012345678901         
@@ -964,7 +964,7 @@ Routine:
 rtn       rtn1      rtn45678  rtn456789 rtn45678901234567890          rtn4567890123456789012345678901         
 Routine: 
 
-GTM>
+YDB>
 %ZR=6
 %ZR("rtn")="##TEST_PATH##/rtns/"
 %ZR("rtn1")="##TEST_PATH##/rtns/"
@@ -973,10 +973,10 @@ GTM>
 %ZR("rtn45678901234567890")="##TEST_PATH##/rtns/"
 %ZR("rtn4567890123456789012345678901")="##TEST_PATH##/rtns/"
 
-GTM>
+YDB>
 #####################19###################
 
-GTM>
+YDB>
 
 Routine: 
 rtn       rtn1      rtn45678  rtn456789 rtn45678901234567890          rtn4567890123456789012345678901         
@@ -985,7 +985,7 @@ Current total of 7 routines.
 
 Routine: 
 
-GTM>
+YDB>
 %ZR=7
 %ZR("rtn")="##TEST_PATH##/rtns/"
 %ZR("rtn1")="##TEST_PATH##/rtns/"
@@ -995,7 +995,7 @@ GTM>
 %ZR("rtn4567890123456789012345678901")="##TEST_PATH##/rtns/"
 %ZR("rtnx")="##TEST_PATH##/"
 
-GTM>
+YDB>
 
 Output device: <terminal>: 
 
@@ -1003,9 +1003,9 @@ List ^
 
 List ^
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 Routine: 
 rtn       rtn1      rtn45678  rtn456789 rtn45678901234567890          rtn4567890123456789012345678901         
@@ -1014,12 +1014,12 @@ Current total of 7 routines.
 
 Routine: 
 
-GTM>
+YDB>
 %ZRSET=1
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 RSET=7
 RSET("rtn")="##TEST_PATH##/rtns/"
 RSET("rtn1")="##TEST_PATH##/rtns/"
@@ -1029,13 +1029,13 @@ RSET("rtn45678901234567890")="##TEST_PATH##/rtns/"
 RSET("rtn4567890123456789012345678901")="##TEST_PATH##/rtns/"
 RSET("rtnx")="##TEST_PATH##/"
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 Routine directory
 Routine: 
@@ -1044,12 +1044,12 @@ Total of 0 routines.
 
 Routine: 
 
-GTM>
+YDB>
 %ZRSET=1
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 Routine directory
 Routine: 
@@ -1059,12 +1059,12 @@ Total of 7 routines.
 
 Routine: 
 
-GTM>
+YDB>
 %ZRSET=1
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 Routine directory
 %D        %DATE     %DH       %DO       %DSEWRAP  %DUMPFHEAD          %EXP      
@@ -1076,12 +1076,12 @@ Routine directory
 %YGBLSTAT %ZSHOWVTOLCL        
 Total of 48 routines.
 
-GTM>
+YDB>
 %ZRSET=1
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 Routine: 
 rtn1      
@@ -1089,7 +1089,7 @@ Current total of 1 routine.
 
 Routine: 
 
-GTM>
+YDB>
 
 Routine: 
 
@@ -1097,7 +1097,7 @@ Current total of 2 routines.
 
 Routine: 
 
-GTM>
+YDB>
 HERE IN RSELTEST
 
 Routine: 
@@ -1178,7 +1178,7 @@ Routine:
 %ZR("tmpz")="##TEST_PATH##/rtns/"
 #####################20###################
 
-GTM>
+YDB>
 
 Routine: 
 rtn1      
@@ -1186,11 +1186,11 @@ Current total of 1 routine.
 
 Routine: 
 
-GTM>
+YDB>
 %ZR=1
 %ZR("rtn1")="##TEST_PATH##/rtns/"
 
-GTM>
+YDB>
 
 Routine: 
 
@@ -1198,12 +1198,12 @@ Current total of 2 routines.
 
 Routine: 
 
-GTM>
+YDB>
 %ZR=2
 %ZR("rtn1")="##TEST_PATH##/rtns/"
 %ZR("rtn45678")="##TEST_PATH##/rtns/"
 
-GTM>
+YDB>
 
 Routine: 
 
@@ -1211,20 +1211,20 @@ Current total of 3 routines.
 
 Routine: 
 
-GTM>
+YDB>
 %ZR=3
 %ZR("rtn1")="##TEST_PATH##/rtns/"
 %ZR("rtn45678")="##TEST_PATH##/rtns/"
 %ZR("rtnx")="##TEST_PATH##/"
 
-GTM>
+YDB>
 #####################21###################
 ##TEST_AWK\.\(##IN_TEST_PATH##\/inref .*
 
-GTM>
+YDB>
 %RSEL
 
-GTM>
+YDB>
 
 Routine: 
 rtn       rtn1      rtn45678  rtn456789 rtn45678901234567890          rtn4567890123456789012345678901         
@@ -1237,10 +1237,10 @@ Current total of 8 routines.
 
 Routine: 
 
-GTM>
+YDB>
 OBJ:
 
-GTM>
+YDB>
 
 Routine: 
 rtnx      
@@ -1252,10 +1252,10 @@ Current total of 2 routines.
 
 Routine: 
 
-GTM>
+YDB>
 SRC:
 
-GTM>
+YDB>
 
 Routine: 
 rtn       rtn1      rtn45678  rtn456789 rtn45678901234567890          rtn4567890123456789012345678901         
@@ -1268,13 +1268,13 @@ Current total of 8 routines.
 
 Routine: 
 
-GTM>
+YDB>
 #####################22###################
 
-GTM>
+YDB>
 OBJ:
 
-GTM>
+YDB>
 
 Routine directory
 Routine: 
@@ -1287,10 +1287,10 @@ Total of 1 routine.
 
 Routine: 
 
-GTM>
+YDB>
 SRC:
 
-GTM>
+YDB>
 
 Routine directory
 Routine: 
@@ -1304,10 +1304,10 @@ Total of 1 routine.
 
 Routine: 
 
-GTM>
+YDB>
 LIB:
 
-GTM>
+YDB>
 
 Routine directory
 %D        %DATE     %DH       %DO       %DSEWRAP  %DUMPFHEAD          %EXP      
@@ -1319,12 +1319,12 @@ Routine directory
 %YGBLSTAT %ZSHOWVTOLCL        
 Total of 48 routines.
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 #####################23###################
 
-GTM>
+YDB>
 
 Routine Input Utility - Converts RO file to *.m files.
 
@@ -1347,13 +1347,13 @@ XUS2
 
 
 Restored 172 lines in 1 routine.
-GTM>
+YDB>
 
-GTM>
+YDB>
 XUS2.m
 #####################24###################
 
-GTM>
+YDB>
 
 Routine Input Utility - Converts RO file to *.m files.
 
@@ -1370,14 +1370,14 @@ Output directory :
 
 
 Restored 58 lines in 2 routines.
-GTM>
+YDB>
 
-GTM>
+YDB>
 rtns/_DH.m
 rtns/_DO.m
 #####################25###################
 
-GTM>
+YDB>
 
 Routine Input Utility - Converts RO file to *.m files.
 
@@ -1394,12 +1394,12 @@ foo
 
 
 Restored 2 lines in 1 routine.
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 this is foo
-GTM>
+YDB>
 foo.m
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *

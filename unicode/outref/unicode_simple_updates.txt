@@ -10,10 +10,10 @@ File  	##TEST_PATH##/uniupdates.dat
 Region	DEFAULT
 
 DSE> DSE> 
-GTM>
+YDB>
 do ^unicodeLocalUpdates
 
-GTM>
+YDB>
 Start Set unicode Local variable
 End Set unicode Local variable
 Start Test Unicode Order
@@ -146,12 +146,12 @@ Start unicodezshowx
 End unicodezshowx
 Test Completed Successfully
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do ^unicodeGlobalUpdates
 
-GTM>
+YDB>
 Start Set unicode Global variable
 $reference=^utf8("чащах юга жил-был цитрус","чащах юга жил-был цитрус","чащах юга жил-был цитрус","чащах юга жил-был цитрус","綴縢纓缇罾翺翿"_$C(127)_"ÿ"_$C(0,1,5)_" AB我能吞下玻璃而傷")
 End Set unicode Global variable
@@ -383,7 +383,7 @@ Start do unicodezshowx
 End do unicodezshowx
 Test Completed Successfully
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

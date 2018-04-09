@@ -22,9 +22,9 @@ mumps.dat
 %YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
 #All but DEFAULT region should have free space
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
 %YDB-I-NOLOCKMATCH, No matching locks were found in AREG
 %YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
@@ -40,14 +40,14 @@ DEFAULT
 ##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|184); name space not full
 %YDB-I-LOCKSPACEUSE, Estimated free lock space: 99% of 40 pages
 
-GTM>
+YDB>
 #All but AREG region should have free space
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 AREG
 ##TEST_AWK.avar Owned by PID= [1-9][0-9]* which is an existing process
@@ -63,14 +63,14 @@ AREG
 %YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
 %YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
 
-GTM>
+YDB>
 #All but BREG region should have free space
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
 %YDB-I-NOLOCKMATCH, No matching locks were found in AREG
 %YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
@@ -86,18 +86,18 @@ BREG
 %YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
 %YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
 
-GTM>
+YDB>
 #CREG and DEFAULT region should have free space
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 AREG
 ##TEST_AWK.avar Owned by PID= [1-9][0-9]* which is an existing process
@@ -115,7 +115,7 @@ BREG
 %YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
 %YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
 
-GTM>
+YDB>
 #No locks should be here
 ##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
 %YDB-I-NOLOCKMATCH, No matching locks were found in AREG

@@ -9,13 +9,13 @@ Using: ##SOURCE_PATH##/mupip
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/ＡＢＣＤ.mjl created for region DEFAULT with (NO|)BEFORE_IMAGES
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 
-GTM>
+YDB>
 Do in0^udbfill("set")
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/ＡＢＣＤ.mjl is renamed to ##TEST_PATH##/ＡＢＣＤ.mjl_##TIMESTAMP##
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/ＡＢＣＤ.mjl created for region DEFAULT with (NO|)BEFORE_IMAGES
 DB file ##TEST_PATH##/ＡＢＣＤ.dat backed up in file ##TEST_PATH##/ＡＤＩＲ/ＡＢＣＤ.dat
@@ -30,19 +30,19 @@ Transactions up to 0x0000000000000400 are backed up.
 BACKUP COMPLETED.
 
 
-GTM>
+YDB>
 Do in0^udbfill("kill")
 
-GTM>
+YDB>
 kill PASS
 
-GTM>
+YDB>
 Do in1^udbfill("set")
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/ＡＢＣＤ.mjl is renamed to ##TEST_PATH##/ＡＢＣＤ.mjl_##TIMESTAMP##
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/ＡＢＣＤ.mjl created for region DEFAULT with (NO|)BEFORE_IMAGES
 MUPIP backup of database file ##TEST_PATH##/ＡＢＣＤ.dat to ##TEST_PATH##/αβγδε/backup.bak2
@@ -64,19 +64,19 @@ Transactions from 0x0000000000000400 to 0x0000000000001A85 are backed up.
 BACKUP COMPLETED.
 
 
-GTM>
+YDB>
 Do in1^udbfill("kill")
 
-GTM>
+YDB>
 kill PASS
 
-GTM>
+YDB>
 Do in2^udbfill("set")
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/ＡＢＣＤ.mjl is renamed to ##TEST_PATH##/ＡＢＣＤ.mjl_##TIMESTAMP##
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/ＡＢＣＤ.mjl created for region DEFAULT with (NO|)BEFORE_IMAGES
 MUPIP backup of database file ##TEST_PATH##/ＡＢＣＤ.dat to ##TEST_PATH##/我能吞下玻璃而不伤身体/backup.bak3
@@ -155,24 +155,24 @@ BACKUP COMPLETED.
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
 
-GTM>
+YDB>
 Do in0^udbfill("ver")
 
-GTM>
+YDB>
 ver PASS
 
-GTM>
+YDB>
 
 RESTORE COMPLETED
 ##TEST_AWK13(45|50) blocks restored
 
-GTM>
+YDB>
 Do in1^udbfill("ver")
 
-GTM>
+YDB>
 ver PASS
 
-GTM>
+YDB>
 
 RESTORE COMPLETED
 ##SUSPEND_OUTPUT  NON_COLLATION
@@ -182,13 +182,13 @@ RESTORE COMPLETED
 5168 blocks restored
 ##ALLOW_OUTPUT  COLLATION
 
-GTM>
+YDB>
 Do in2^udbfill("ver")
 
-GTM>
+YDB>
 ver PASS
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -202,13 +202,13 @@ RESTORE COMPLETED
 5882 blocks restored
 ##ALLOW_OUTPUT  COLLATION
 
-GTM>
+YDB>
 Do in2^udbfill("ver")
 
-GTM>
+YDB>
 ver PASS
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -222,13 +222,13 @@ RESTORE COMPLETED
 5882 blocks restored
 ##ALLOW_OUTPUT  COLLATION
 
-GTM>
+YDB>
 Do in2^udbfill("ver")
 
-GTM>
+YDB>
 ver PASS
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

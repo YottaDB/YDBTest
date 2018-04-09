@@ -178,17 +178,17 @@
 #                merge target : other.gld : ^a(1) spans breg and creg
 # merge ^|other.gld|a(1)=^a should issue YDB-E-MERGEDESC as breg intersects src(^a) and dest(^a(1))
 
-GTM>
+YDB>
 %YDB-E-MERGEDESC, Merge operation not possible.  ^a(1) is descendent of ^a.
 
-GTM>
+YDB>
 # case 2 setup : merge source : mumps.gld : ^a    spans areg    and breg
 #                merge target : other.gld : ^a(1) spans default and creg
 # merge ^|other.gld|a(1)=^a should work as src(^a) spans areg and breg ; but dest(^a(1)) spans default and creg
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ^a(1,2,1)=1
 ^a(1,2,2)=2
 ^a(2,1)=1
@@ -196,33 +196,33 @@ GTM>
 #                merge target : other.gld : ^a(1) maps to breg and does not span regions
 # merge ^|other.gld|a(1)=^a should issue YDB-E-MERGEDESC as breg intersects src(^a) and dest(^a(1))
 
-GTM>
+YDB>
 %YDB-E-MERGEDESC, Merge operation not possible.  ^a(1) is descendent of ^a.
 
-GTM>
+YDB>
 # case 4 setup : merge source : other.gld : ^a(2) maps to areg - no spanning
 #                merge target : mumps.gld : ^a spans areg and breg
 # merge ^|mumps.gld|a(1)=^a should issue YDB-E-MERGEDESC as areg intersects src(^a(2)) and dest(^a)
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 %YDB-E-MERGEDESC, Merge operation not possible.  ^a(2) is descendent of ^a.
 
-GTM>
+YDB>
 # case 5 setup : merge source : other.gld : ^a(2) maps to areg - no spanning
 #                merge target : mumps.gld : ^a spans areg breg creg and default
 # merge ^|mumps.gld|a=^a(2) should issue YDB-E-MERGEDESC as areg intersects src(^a(2)) and target(^a)
 
-GTM>
+YDB>
 %YDB-E-MERGEDESC, Merge operation not possible.  ^a(2) is descendent of ^a.
 
-GTM>
+YDB>
 # case 6 setup : merge source : other.gld : ^a maps to areg - no spanning
 #                merge target : mumps.gld : ^a(2) spans areg breg creg and default
 # merge ^|mumps.gld|a(1)=^a should issue YDB-E-MERGEDESC as areg intersects src(^a(2)) and dest(^a(2))
 
-GTM>
+YDB>
 %YDB-E-MERGEDESC, Merge operation not possible.  ^a(2) is descendent of ^a.
 
-GTM>
+YDB>

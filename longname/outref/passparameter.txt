@@ -5,7 +5,7 @@ Using: ##SOURCE_PATH##/mupip
 mumps.dat
 ###### Begin Actual Formal Parameter List check ######
 
-GTM>
+YDB>
 		do DUMMYLONGLONGLONGLONGLONGLONG^lists(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33)
 		                                                                                                                              ^-----
 		At column 128, line 114, source module ##IN_TEST_PATH##/inref/paramchk.m
@@ -56,50 +56,50 @@ second parameter not passed in
 correct behavior parameters are newed inside function
 correct behavior parameters are newed inside function
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Actual List is 2 Formal list is 3,should give undefined local var. error
 
 %YDB-E-LVUNDEF, Undefined local variable: nowthisisenoughtosetlong
 		At M source location error+2^paramchk
 
-GTM>
+YDB>
 check for 32 parameter limit,This case should give error
 
 %YDB-E-MAXACTARG, Maximum number of actual arguments exceeded
 		At M source location error1+2^paramchk
 
-GTM>
+YDB>
 Actual list is 1 Formal list is 2,should give undefined local var.error
 
 %YDB-E-LVUNDEF, Undefined local variable: checklabelvaluelong
 		At M source location error2+2^paramchk
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
 ###### Begin call by reference parameters check ######
 refvars.m begins to check 31char longnames
 
-GTM>
+YDB>
 Call by reference is correct for lentvar8longlonglonglonglonglon
 Call by reference is correct for Strings & numerals
 
-GTM>
+YDB>
 pcntvars.m begins to check 31char longnames beginning with %
 
-GTM>
+YDB>
 Call by reference is correct for %variables
 
-GTM>
+YDB>
 xcessvar.m begins to check >31char longnames getting truncated
 
-GTM>
+YDB>
 Call by reference is correct for truncated varables
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

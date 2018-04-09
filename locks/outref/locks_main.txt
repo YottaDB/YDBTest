@@ -20,7 +20,7 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ##ALLOW_OUTPUT  NON_REPLIC
 
-GTM>
+YDB>
 do ^locks1
 ##TEST_PATH##/mumps.gld
 d TEST1
@@ -47,7 +47,7 @@ Testing $T 0
 d d002014
 d002014 PASS
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  REPLIC
 do ^locks2
 ##TEST_PATH##/mumps.gld
@@ -56,11 +56,11 @@ TEST3 Passed
 d TEST8
 TEST8 Passed
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT L NON_REPLIC
 ##ALLOW_OUTPUT REPLIC
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  REPLIC
 ##ALLOW_OUTPUT L NON_REPLIC
 ##SOURCE_PATH##/mupip
@@ -68,7 +68,7 @@ GTM>
 No errors detected by integ.
 ##SUSPEND_OUTPUT  L
 
-GTM>
+YDB>
 ##ALLOW_OUTPUT  REPLIC
 do ^locksub1
 
@@ -79,25 +79,25 @@ onk^locksub1
 onzw^locksub1
 onxk^locksub1
 OK from lsubtst
-GTM>
+YDB>
 do ^locktst4
 
 PASS from locktst4
-GTM>
+YDB>
 
-GTM>
+YDB>
 do ^per3086
 per3086 - PASSED
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  F
 
-GTM>
+YDB>
 do ^lockwake
 Starting lockwake.m
 End lockwake.m
 
-GTM>
+YDB>
 ##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: [078]/(120|184); name space not full
 %YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
@@ -105,7 +105,7 @@ S1 DONE
 S2 DONE
 S3 DONE
 
-GTM>
+YDB>
 do ^clocks
 Main task started
 ^result(1)="GOT THE LOCK"
@@ -116,7 +116,7 @@ Main task started
 ^result(6)="GOT THE LOCK"
 Main task ended
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  NON_REPLIC
 ##ALLOW_OUTPUT  F L
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##

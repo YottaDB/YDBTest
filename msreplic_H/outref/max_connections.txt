@@ -90,13 +90,13 @@ Shutting down Primary Source Server Server in ##TEST_PATH##
 ##   Also check the backlog for all instances with one command:
 ==Executing MULTISITE_REPLIC 'RUN INST1 ##TEST_COM_PATH##/simpleinstanceupdate.csh 2'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
 ==Executing MULTISITE_REPLIC 'RUN INST1 set msr_dont_chk_stat; $MUPIP replicate -source -showbacklog -instsecondary=INSTANCE2 >&! showbacklog_INST2.out'==
 ==Executing MULTISITE_REPLIC 'RUN INST1 set msr_dont_chk_stat; $MUPIP replicate -source -showbacklog -instsecondary=INSTANCE3 >&! showbacklog_INST3.out'==
@@ -207,13 +207,13 @@ PID ##FILTERED##[##PID##] Source server is alive in PASSIVE mode
 ## 	    - "WARNING - Source Server is in passive mode, transactions are not being replicated" -- for the other deactivated and stopped instances (INST4, INST5)
 ==Executing MULTISITE_REPLIC 'RUN INST1 ##TEST_COM_PATH##/simpleinstanceupdate.csh 10'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
 RFSYNC-I-PASSIVEMODE. Source server not replicating at this point in time.Cannot Sync this link.
 

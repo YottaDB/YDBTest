@@ -1,10 +1,10 @@
 setenv gtm_chset UTF-8
 unset echo
 
-GTM>
+YDB>
 do createFilesTruncate^eoftest
 
-GTM>
+YDB>
 createFiles for truncation followed by reads
 
 
@@ -27,7 +27,7 @@ fileinfo(6)="utf16_LE.txt|UTF-16LE|0|1114111"
 fileinfo(7)="utf16-Surrogate.txt|UTF-16|0|1114111"
 fileinfo(8)="ascii.txt|M|0|1114111"
 
-GTM>
+YDB>
 Truncation Stats
 
 64 utf8-1.txt
@@ -45,7 +45,7 @@ Truncation Stats
 188 utf16-Surrogate.txt
 ##TEST_PATH##/ftruncate utf16-Surrogate.txt 184
 
-GTM>
+YDB>
 
 
 
@@ -130,12 +130,12 @@ filename=ascii.txt : encoding=M
 str="This is a simple ASCII file (0-127)"
 zb=""
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do createFilesEncoding^eoftest
 
-GTM>
+YDB>
 createFiles for different encoding reads
 
 
@@ -150,9 +150,9 @@ zlengthe(6)=25
 zlengthe(7)=25
 zlengthe(8)=25
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 
 
@@ -276,5 +276,5 @@ zb=""
 str="█▇▆▅▄▃▂▁"_$C(0)
 zb=""
 
-GTM>
+YDB>
 END OF TEST

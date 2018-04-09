@@ -24,15 +24,15 @@ END 2
 BEGIN 3 :-) access database mumps.dat and crash it
 
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
 
-GTM>
+YDB>
 Killed
 
 END 3
@@ -41,12 +41,12 @@ END 3
 BEGIN 4 :-) move mumps database to backup to trigger DBNAMEMISMATCH error
 
 
-GTM>
+YDB>
 %YDB-E-REQRUNDOWN, Error accessing database ##TEST_PATH##/backup.dat.  Must be rundown on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
 ##TEST_AWK.YDB-E-DBNAMEMISMATCH, Database file ##TEST_PATH##.backup.dat points to shared memory .id = [0-9]+. which in turn points to an inaccessible database file ##TEST_PATH##.mumps.dat
 %SYSTEM-E-ENO2, No such file or directory
 
-GTM>
+YDB>
 
 END 4
 ---------------------------------------------------------------------------------------
@@ -58,13 +58,13 @@ BEGIN 5 :-) Do mupip rundown on backup.dat and then access it. Database access s
 ##TEST_AWK%YDB-I-SHMREMOVED, Removed Shared Memory id [0-9]* corresponding to file .*backup.dat
 ##TEST_AWK.YDB-I-MUFILRNDWNSUC, File .*backup.dat successfully rundown
 
-GTM>
+YDB>
 set ^x=1
-GTM>
+YDB>
 
-GTM>
+YDB>
 Clean database access
-GTM>
+YDB>
 
 END 5
 ---------------------------------------------------------------------------------------

@@ -7,9 +7,9 @@ mumps.dat
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Back up the database
 ---------------------------------------------------------
 mupip journal -recover -backward mumps.mjl
@@ -20,7 +20,7 @@ mupip journal -recover -backward mumps.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 PASSED
 
-GTM>
+YDB>
 PASSED
 ---------------------------------------------------------
 delete database
@@ -411,7 +411,7 @@ mupip journal -recover -forward mumps.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 PASSED
 
-GTM>
+YDB>
 PASSED
 ---------------------------------------------------------
 mupip journal -extract -forward mumps.mjl
@@ -665,7 +665,7 @@ Record type    Count
 PASSED
 ---------------------------------------------------------
 
-GTM>
+YDB>
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
@@ -676,7 +676,7 @@ File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
 
-GTM>
+YDB>
 ##TEST_AWKmupip journal -extract -backward -since=".*" -before=".*" mumps.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
@@ -691,13 +691,13 @@ For TR C9C06-002010
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 
-GTM>
+YDB>
 ##TEST_AWKTime written into sincetime.txt:.*
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 
-GTM>
+YDB>
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##TEST_AWK.*%YDB-I-MUJNLPREVGEN, Previous generation journal file ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]) included for database file ##TEST_PATH##/mumps.dat
@@ -710,11 +710,11 @@ GTM>
 %YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
-GTM>
+YDB>
 first,third,fourth
 %YDB-E-GVUNDEF, Global variable undefined: ^a(2)
 
-GTM>
+YDB>
 Now extract...
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..

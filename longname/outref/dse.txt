@@ -5,10 +5,10 @@ Using: ##SOURCE_PATH##/mupip
 mumps.dat
 Use basfill for dse add and dse find
 
-GTM>
+YDB>
 do ^basfill
 
-GTM>
+YDB>
 key	^Aa3456789012345678901234567890
 key1	^Aa3456789012345678901234567890(0,2)
 key2	^Aa3456789012345678901234567890(0,1,3)
@@ -311,23 +311,23 @@ Rec:2  Blk 214  Off 2C  Size 9  Cmpc 16  Key ^Ae3456789012345678901(1)
 
 End DSE DUMP
 
-GTM>
+YDB>
 do set^lotsvar
 LOTSVAR-I-END_SET
 
-GTM>
+YDB>
 do ver^lotsvar
 LOTSVAR-I-OK
 LOTSVAR-I-END_VER
 
-GTM>
+YDB>
 Start DSE RANGE
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 echo nonexistent range
 nonexistent range
 ##SOURCE_PATH##/dse range -lower=^abcdefgh -upper=^abcdefghi
