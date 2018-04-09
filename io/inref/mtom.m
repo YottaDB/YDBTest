@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-;	Copyright 2008, 2013 Fidelity Information Services, Inc	;
+; Copyright 2008, 2013 Fidelity Information Services, Inc	;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -16,7 +19,7 @@ mtom
 	use p:exception="G PROB"
 	; read newline
 	read x
-	; read GTM> without newline
+	; read YDB> without newline
 	read x#4
 	use $p
 	write x,!
@@ -24,7 +27,7 @@ mtom
 	write "set x=1",!
 	; read 2 newlines
 	read x,x
-	; read GTM> without newline
+	; read YDB> without newline
 	read x#4
 	use $p
 	write x,!
@@ -43,7 +46,7 @@ mtom
 	; read newline
 	read x
 	use p
-	; read GTM> without newline
+	; read YDB> without newline
 	read x#4
 	use $p
 	write x,!

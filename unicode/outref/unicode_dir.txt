@@ -14,45 +14,45 @@ GDE>
 ##TEST_PATH##/αβγδε能吞/udbfill.m
 ##TEST_PATH##/αβγδε能吞/unicodedir.m
 
-GTM>
+YDB>
 zcompile "udbfill.m"
 
-GTM>
+YDB>
 %YDB-E-FILENOTFND, File udbfill.m not found
 
-GTM>
+YDB>
 $zcstatus = 150372730
 
-GTM>
+YDB>
 zlink "udbfill.m"
-GTM>
+YDB>
 
-GTM>
+YDB>
 zcompile "$msrc_dir/udbfill.m"
-GTM>
+YDB>
 
-GTM>
+YDB>
 $zcstatus = 1
 
-GTM>
+YDB>
 zlink "$msrc_dir/udbfill.m"
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do in1^udbfill("set")
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 do in1^udbfill("ver")
 
-GTM>
+YDB>
 ver PASS
 
-GTM>
+YDB>
 ##FILTERED##GTM_TEST_DEBUGINFO.*
 getunitemplate.o
 udbfill.o

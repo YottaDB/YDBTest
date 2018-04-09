@@ -21,13 +21,13 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ##ALLOW_OUTPUT  NON_REPLIC
 
-GTM>
+YDB>
     SET Global ^a
 
-GTM>
+YDB>
     SET Global ^A
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  NON_REPLIC
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 Shutting down Primary Source Server Server in ##TEST_PATH##
@@ -52,13 +52,13 @@ Checking ZWR output of globals a with Chinese data for default Collation
 Globals with Chinese data with default collation check PASSED
 Now verify data in application level
 
-GTM>
+YDB>
     VERIFY Global ^a : PASS
 
-GTM>
+YDB>
     VERIFY Global ^A : PASS
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip extract chinese.bin -format=bin
 ##TEST_AWK%YDB-I-RECORDSTAT, .A:	  Key cnt: 70  max subsc len: 181  max rec len: 174  max node len: [23]..
 ##TEST_AWK%YDB-I-RECORDSTAT, .a:	  Key cnt: 36  max subsc len: 14  max rec len: 6  max node len: [12].
@@ -82,36 +82,36 @@ Checking ZWR output of globals a with Chinese data for the sample Chinese Collat
 Globals with Chinese data with the sample Chinese collation check PASSED
 Now verify data in application level
 
-GTM>
+YDB>
     VERIFY Global ^a : PASS
 
-GTM>
+YDB>
     VERIFY Global ^A : PASS
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip extract -format=zwr chinese_chnc.zwr
 ##TEST_AWK%YDB-I-RECORDSTAT, .A:	  Key cnt: 70  max subsc len: 133  max rec len: 174  max node len: [23]..
 ##TEST_AWK%YDB-I-RECORDSTAT, .a:	  Key cnt: 36  max subsc len: 11  max rec len: 6  max node len: [12].
 ##TEST_AWK%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 106  max subsc len: 133  max rec len: 174  max node len: [23]..
 
-GTM>
+YDB>
     KILLSOME Global ^a
 
-GTM>
+YDB>
     KILLSOME Global ^A
 
-GTM>
+YDB>
 Checking ZWR output of globals a with Chinese data for the sample Chinese Collation after kill
 Globals with Chinese data with the sample Chinese collation after kill check PASSED
 Now verify data in application level
 
-GTM>
+YDB>
     VERIFYSOME Global ^a : PASS
 
-GTM>
+YDB>
     VERIFYSOME Global ^A : PASS
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip extract chinese_afterkill.bin -format=bin
 ##TEST_AWK%YDB-I-RECORDSTAT, .A:	  Key cnt: 35  max subsc len: 133  max rec len: 174  max node len: [23]..
 ##TEST_AWK%YDB-I-RECORDSTAT, .a:	  Key cnt: 1  max subsc len: 11  max rec len: 6  max node len: [12].
@@ -131,13 +131,13 @@ Checking ZWR output of globals a with Chinese data for the sample Chinese Collat
 Globals with Chinese data with default collation after kill check PASSED
 Now verify data in application level
 
-GTM>
+YDB>
     VERIFYSOME Global ^a : PASS
 
-GTM>
+YDB>
     VERIFYSOME Global ^A : PASS
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

@@ -28,23 +28,23 @@ END 1
 BEGIN 2 :-) Do MUPIP RUNDOWN on backup.dat while mumps.dat is still accessing shared memory:
 
 
-GTM>
+YDB>
 set ^m=1
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##TEST_AWK.YDB-E-REQRUNDOWN, Error accessing database ##TEST_PATH##.backup.dat.  Must be rundown on cluster node ##TEST_HOST_SHORT##[A-Za-z.]*.,.YDB-E-DBSHMNAMEDIFF, Database file ##TEST_PATH##.backup.dat points to shared memory .id = [0-9]+. which points to a different database file ##TEST_PATH##/mumps.dat
 		At M source location backup+1^backup
 
-GTM>
+YDB>
 ##TEST_AWK.YDB-I-DBSHMNAMEDIFF, Database file ##TEST_PATH##.backup.dat points to shared memory .id = [0-9]+. which points to a different database file ##TEST_PATH##.mumps.dat
 %YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/backup.dat successfully rundown
 
-GTM>
+YDB>
 set ^n=1
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 END 2
 ---------------------------------------------------------------------------------------
@@ -52,11 +52,11 @@ END 2
 BEGIN 3 :-) Access to backup.dat should be fine:
 
 
-GTM>
+YDB>
 set ^b=1
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 END 3
 ---------------------------------------------------------------------------------------
@@ -64,11 +64,11 @@ END 3
 BEGIN 4 :-) Access to mumps.dat should be fine:
 
 
-GTM>
+YDB>
 write ^m
-GTM>
+YDB>
 1
-GTM>
+YDB>
 
 END 4
 ---------------------------------------------------------------------------------------

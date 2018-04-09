@@ -13,12 +13,12 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ##ALLOW_OUTPUT  NON_REPLIC
 
-GTM>
+YDB>
 do ^actundef
 
 OK from actundef.m
 
-GTM>
+YDB>
 do ^donargl
 		.. w !,"too many levels"
 		   ^-----
@@ -26,51 +26,51 @@ do ^donargl
 %YDB-W-BLKTOODEEP, Block level too deep
 
 PASS from donargl
-GTM>
+YDB>
 do ^extgot1
 
 PASS from extgot1
-GTM>
+YDB>
 do ^newpara
 
 PASS from newpara
-GTM>
+YDB>
 do ^qt
 
 PASS from qt
-GTM>
+YDB>
 do ^undefi
 
 PASS from undefi
-GTM>
+YDB>
 do ^zgonolab
 
 PASS from zgonolab
-GTM>
+YDB>
 do ^zlirout
 
 PASS from zlirout
-GTM>
+YDB>
 do ^zstfor1
 
 PASS from zstfor1
-GTM>
+YDB>
 do ^compstress
 
-GTM>
+YDB>
 do ^compstrsA
 compstrsA.m started
 PASS
 
-GTM>
+YDB>
 do ^compstrsB
 compstrsB.m started
 PASS
 
-GTM>
+YDB>
 do ^C9L06003432
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  NON_REPLIC
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 Shutting down Primary Source Server Server in ##TEST_PATH##

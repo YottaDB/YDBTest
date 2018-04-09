@@ -28,13 +28,13 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ##ALLOW_OUTPUT  NON_REPLIC
 
-GTM>
+YDB>
 Do fill1^myfill("set")
 
-GTM>
+YDB>
 PASS from fill1^myfill("set")
 
-GTM>
+YDB>
 #
 # Backup with a bad region
 #
@@ -52,13 +52,13 @@ Transactions up to 0x0000000000000400 are backed up.
 BACKUP COMPLETED.
 
 
-GTM>
+YDB>
 Do fill2^myfill("set")
 
-GTM>
+YDB>
 PASS from fill2^myfill("set")
 
-GTM>
+YDB>
 MUPIP backup of database file ##TEST_PATH##/backup.dat to ##TEST_PATH##/backup-dir/backup.bak2
 DB file ##TEST_PATH##/backup.dat incrementally backed up in file ##TEST_PATH##/backup-dir/backup.bak2
 ##SUSPEND_OUTPUT COLLATION
@@ -88,12 +88,12 @@ Transactions from 0x0000000000000400 to 0x0000000000000BFF are backed up.
 BACKUP COMPLETED.
 
 
-GTM>
+YDB>
 Do fill3^myfill("set")
-GTM>
+YDB>
 PASS from fill3^myfill("set")
 
-GTM>
+YDB>
 MUPIP backup of database file ##TEST_PATH##/backup.dat to ##TEST_PATH##/backup-dir/backup.bak3
 DB file ##TEST_PATH##/backup.dat incrementally backed up in file ##TEST_PATH##/backup-dir/backup.bak3
 ##SUSPEND_OUTPUT COLLATION
@@ -164,13 +164,13 @@ No errors detected by integ.
 No errors detected by integ.
 ##ALLOW_OUTPUT  NON_REPLIC
 
-GTM>
+YDB>
 Do fill1^myfill("ver")
 
-GTM>
+YDB>
 PASS from fill1^myfill("ver")
 
-GTM>
+YDB>
 
 RESTORE COMPLETED
 ##SUSPEND_OUTPUT COLLATION
@@ -193,13 +193,13 @@ RESTORE COMPLETED
 ##SOURCE_PATH##/mupip integ backup.dat
 No errors detected by integ.
 
-GTM>
+YDB>
 Do fill2^myfill("ver")
 
-GTM>
+YDB>
 PASS from fill2^myfill("ver")
 
-GTM>
+YDB>
 
 RESTORE COMPLETED
 ##SUSPEND_OUTPUT COLLATION
@@ -230,13 +230,13 @@ RESTORE COMPLETED
 ##SOURCE_PATH##/mupip integ backup.dat
 No errors detected by integ.
 
-GTM>
+YDB>
 Do fill3^myfill("ver")
 
-GTM>
+YDB>
 PASS from fill3^myfill("ver")
 
-GTM>
+YDB>
 
 RESTORE COMPLETED
 ##SUSPEND_OUTPUT COLLATION
@@ -249,13 +249,13 @@ RESTORE COMPLETED
 ##SOURCE_PATH##/mupip integ backup.dat
 No errors detected by integ.
 
-GTM>
+YDB>
 Do fill3^myfill("ver")
 
-GTM>
+YDB>
 PASS from fill3^myfill("ver")
 
-GTM>
+YDB>
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/backup.dat created
 
 RESTORE COMPLETED
@@ -269,13 +269,13 @@ RESTORE COMPLETED
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
 
-GTM>
+YDB>
 Do fill3^myfill("ver")
 
-GTM>
+YDB>
 PASS from fill3^myfill("ver")
 
-GTM>
+YDB>
 PASS from mupip backup implicit freeze.
 Files Created in ##TEST_PATH##:
 Using: ##SOURCE_PATH##/mumps -run GDE
@@ -296,10 +296,10 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ##ALLOW_OUTPUT  NON_REPLIC
 
-GTM>
+YDB>
 PASS from fill5^myfill("right")
 
-GTM>
+YDB>
 
 
 
@@ -326,10 +326,10 @@ No errors detected by integ.
 No errors detected by integ.
 ##ALLOW_OUTPUT  NON_REPLIC
 
-GTM>
+YDB>
 PASS from fill5^myfill("ver")
 
-GTM>
+YDB>
 %YDB-E-MUSELFBKUP, Database file ##TEST_PATH##/backup.dat can not be backed upon itself
 %YDB-E-FILEEXISTS, File ./backup.dat already exists
 

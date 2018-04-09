@@ -494,21 +494,21 @@ File  	##TEST_PATH##/a.dat
 Region	AREG
 
 DSE> DSE> 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 use of $incr function , value = 1002
-GTM>
+YDB>
 
 File  	##TEST_PATH##/a.dat
 Region	AREG
@@ -516,21 +516,21 @@ Region	AREG
 DSE> DSE> 
 Existing null subscripts can be  read but a new one cannot be set
 
-GTM>
+YDB>
 1_null
-GTM>
+YDB>
 ^a(1,"")="1_null"
 
-GTM>
+YDB>
 %YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region
 %YDB-I-GVIS, 		Global variable: ^a("")
 
-GTM>
+YDB>
 use of $incr function , should error out
 %YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region
 %YDB-I-GVIS, 		Global variable: ^a("",2)
 
-GTM>
+YDB>
 ^a(1,"")="1_null"
 ^a(1,"",1)="one_null_one"
 ^a(2,"")="two_null"
@@ -538,42 +538,42 @@ GTM>
 ^a(2,"",1,2)="two_null_one_two"
 ^a("",2)=1002
 
-GTM>
+YDB>
 11
-GTM>
+YDB>
 
-GTM>
+YDB>
 10
-GTM>
+YDB>
 
-GTM>
+YDB>
 ^a(1,"",1)="one_null_one"
 ^a(2,"")="two_null"
 ^a("",2)=1002
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 %YDB-E-GVUNDEF, Global variable undefined: ^a
 
-GTM>
+YDB>
 
 check for view  undef/noundef scenario when null_subs=existing
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 %YDB-E-GVUNDEF, Global variable undefined: ^a(1,2,3,"")
 
-GTM>
+YDB>
 0
-GTM>
+YDB>
 default
-GTM>
+YDB>
 
 create a new 6 region gld mapping with null_sub states as follows
 
@@ -623,45 +623,45 @@ CREG PASSED for NULCOLLATION
 check naked reference for BREG (ALWAYS) & CREG (EXISTING)
 
 
-GTM>
+YDB>
 set  breg  globals with null_subs,naked reference should pass
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Increment function used for BREG(ALWAYS),value is 101
-GTM>
+YDB>
 ^bglobalvar(1,"",2,3)="1NULL23"
 ^bglobalvar(1,"",2,"hi")="Iam naked referenced for bglobalvar"
 ^bglobalvar(4,5,6)="to use later"
 ^bglobalvar("",2)=101
 
-GTM>
+YDB>
 set creg globals with null_subs,naked reference should error out
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 %YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region
 %YDB-I-GVIS, 		Global variable: ^cregglobalvariable("",2)
 
-GTM>
+YDB>
 Increment function used for CREG(EXISTING),should error out
 %YDB-E-GVNAKED, Illegal naked global reference
 
-GTM>
+YDB>
 ^cregglobalvariable(1,3)=100
 ^cregglobalvariable(1,45,"stringme")="I should be set"
 
-GTM>
+YDB>
 
 File  	##TEST_PATH##/a.dat
 Region	AREG
@@ -671,25 +671,25 @@ File  	##TEST_PATH##/b.dat
 Region	BREG
 
 DSE> DSE> 
-GTM>
+YDB>
 1NULL23
-GTM>
+YDB>
 set breg globals which is now EXISTING with null_subs,naked reference should error out
 
-GTM>
+YDB>
 %YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region
 %YDB-I-GVIS, 		Global variable: ^bglobalvar(1,"",2,7)
 
-GTM>
+YDB>
 to use later
-GTM>
+YDB>
 set breg globals which is now EXISTING with null_subs,naked reference should error out
 
-GTM>
+YDB>
 %YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region
 %YDB-I-GVIS, 		Global variable: ^bglobalvar(4,5,"")
 
-GTM>
+YDB>
 
 check extended references
 
@@ -713,48 +713,48 @@ GDE>
 	##TEST_PATH##/extended.gld
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/extended.dat created
 
-GTM>
+YDB>
 set some null subscripted globals to extended.dat
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Increment function used for extended gld(ALWAYS),value = 201
-GTM>
+YDB>
 
 File  	##TEST_PATH##/extended.dat
 Region	DEFAULT
 
 DSE> DSE> 
-GTM>
+YDB>
 set  null subscripts to extended.dat which is existing. Should Error out
 
-GTM>
+YDB>
 %YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region
 %YDB-I-GVIS, 		Global variable: ^defaultregvariable("")
 
-GTM>
+YDB>
 set  without null subscripts to extended.dat.This should pass
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 201
-GTM>
+YDB>
 Increment function used for extended gld(EXISTING),Should error out
 %YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region
 %YDB-I-GVIS, 		Global variable: ^defaultregvariable("","extended")
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 zwrite the globals in extended.dat
 
-GTM>
+YDB>
 ^defaultregvariable(89,123)="I should be set properly"
 ^defaultregvariable("")="iam null"
 ^defaultregvariable("","extended")=201
 
-GTM>
+YDB>

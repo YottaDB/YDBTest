@@ -1,6 +1,6 @@
 ONLINE BACKUP
 
-GTM>
+YDB>
 %GDE-I-GDUSEDEFS, Using defaults for Global Directory 
 	##TEST_PATH##/online/tmp/online.gld
 
@@ -14,26 +14,26 @@ GDE>
 	##TEST_PATH##/online/tmp/online.gld
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/online/tmp/online.dat created
 
-GTM>
+YDB>
 Do fill1^myfill("set")
 
-GTM>
+YDB>
 PASS from fill1^myfill("set")
 
-GTM>
+YDB>
 DB file ##TEST_PATH##/online/tmp/online.dat backed up in file ##TEST_PATH##/online/tmp/online//online.dat
 
 
 BACKUP COMPLETED.
 
 
-GTM>
+YDB>
 Do fill2^myfill("set")
 
-GTM>
+YDB>
 PASS from fill2^myfill("set")
 
-GTM>
+YDB>
 MUPIP backup of database file ##TEST_PATH##/online/tmp/online.dat to ##TEST_PATH##/online/tmp/online/backup.bak2
 DB file ##TEST_PATH##/online/tmp/online.dat incrementally backed up in file ##TEST_PATH##/online/tmp/online/backup.bak2
 42 blocks saved.
@@ -42,12 +42,12 @@ DB file ##TEST_PATH##/online/tmp/online.dat incrementally backed up in file ##TE
 BACKUP COMPLETED.
 
 
-GTM>
+YDB>
 Do fill3^myfill("set")
-GTM>
+YDB>
 PASS from fill3^myfill("set")
 
-GTM>
+YDB>
 MUPIP backup of database file ##TEST_PATH##/online/tmp/online.dat to ##TEST_PATH##/online/tmp/online/backup.bak3
 DB file ##TEST_PATH##/online/tmp/online.dat incrementally backed up in file ##TEST_PATH##/online/tmp/online/backup.bak3
 227 blocks saved.
@@ -72,26 +72,26 @@ BACKUP COMPLETED.
 ##SOURCE_PATH##/mupip
 No errors detected by integ.
 
-GTM>
+YDB>
 Do fill1^myfill("ver")
 
-GTM>
+YDB>
 PASS from fill1^myfill("ver")
 
-GTM>
+YDB>
 
 RESTORE COMPLETED
 42 blocks restored
 ##SOURCE_PATH##/mupip
 No errors detected by integ.
 
-GTM>
+YDB>
 Do fill2^myfill("ver")
 
-GTM>
+YDB>
 PASS from fill2^myfill("ver")
 
-GTM>
+YDB>
 
 RESTORE COMPLETED
 42 blocks restored
@@ -101,26 +101,26 @@ RESTORE COMPLETED
 ##SOURCE_PATH##/mupip
 No errors detected by integ.
 
-GTM>
+YDB>
 Do fill3^myfill("ver")
 
-GTM>
+YDB>
 PASS from fill3^myfill("ver")
 
-GTM>
+YDB>
 
 RESTORE COMPLETED
 228 blocks restored
 ##SOURCE_PATH##/mupip
 No errors detected by integ.
 
-GTM>
+YDB>
 Do fill3^myfill("ver")
 
-GTM>
+YDB>
 PASS from fill3^myfill("ver")
 
-GTM>
+YDB>
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/online/tmp/online.dat created
 
 RESTORE COMPLETED
@@ -128,20 +128,20 @@ RESTORE COMPLETED
 ##SOURCE_PATH##/mupip
 No errors detected by integ.
 
-GTM>
+YDB>
 Do fill3^myfill("ver")
 
-GTM>
+YDB>
 PASS from fill3^myfill("ver")
 
-GTM>
+YDB>
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/online/tmp/online.dat created
 
-GTM>
+YDB>
 PASSED
-GTM>
+YDB>
 
-GTM>
+YDB>
 %GDE-I-LOADGD, Loading Global Directory file 
 	##TEST_PATH##/online/tmp/online.gld
 %GDE-I-VERIFY, Verification OK
@@ -165,10 +165,10 @@ No errors detected by integ.
 ##SOURCE_PATH##/mupip
 No errors detected by integ.
 
-GTM>
+YDB>
 PASS from fill5^myfill("right")
 
-GTM>
+YDB>
 
 
 
@@ -183,18 +183,18 @@ No errors detected by integ.
 ##SOURCE_PATH##/mupip
 No errors detected by integ.
 
-GTM>
+YDB>
 PASS from fill5^myfill("ver")
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 DB file ##TEST_PATH##/online/tmp/online.dat backed up in file mapc.bak
 DB file ##TEST_PATH##/online/tmp/online1.dat backed up in file mapa.bak
 DB file ##TEST_PATH##/online/tmp/online2.dat backed up in file mapb.bak
@@ -206,17 +206,17 @@ BACKUP COMPLETED.
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/online/tmp/online1.dat created
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/online/tmp/online2.dat created
 
-GTM>
+YDB>
 ^c="This should be in region default"
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ^b="This should be in region reg2"
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ^a="This should be in region reg1"
 
-GTM>
+YDB>

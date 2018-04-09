@@ -1,6 +1,6 @@
 TEST $X and $Y and LENGTH (sequential files)
 
-GTM>
+YDB>
 -> OPEN "testxy.txt":(NEWVERSION:BIGRECORD:RECORDSIZE=1048576)
 -> USE "testxy.txt"
 -> USE "testxy.txt":(LENGTH=4)
@@ -118,4 +118,4 @@ Test that LENGTH=0 does not reset $Y
 PASS, LENGTH=0 does not reset $Y
 -> CLOSE "testxylong.txt"
 
-GTM>
+YDB>

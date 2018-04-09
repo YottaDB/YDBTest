@@ -200,17 +200,17 @@ zshow "C":x(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26
 %YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
 		At M source location locallimits31+7^gtm8087
 
-GTM>
+YDB>
 zshow "C":x(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30)
 %YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
 		At M source location locallimits30+4^gtm8087
 
-GTM>
+YDB>
 zshow "C":x(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29)
 %YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
 		At M source location locallimits29+4^gtm8087
 
-GTM>
+YDB>
 zshow "C":x(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28)
 x(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,"C","gtm8087xcalls1","chShmMod")=""
 x(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,"C","gtm8087xcalls1","chooseFileByIndex")=""
@@ -229,22 +229,22 @@ zshow "C":^z(1,2,3,4,5)
 %YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%YDB-I-GVIS, 		Global variable: ^z(1,2,3,4,5,"C","gtm8087xcalls1","iamtoolongforanexternalcallname")
 		At M source location globallimits5+7^gtm8087
 
-GTM>
+YDB>
 %YDB-E-GVUNDEF, Global variable undefined: ^z
 		At M source location globallimits5b+1^gtm8087
 
-GTM>
+YDB>
 
 kill ^z
 zshow "C":^z(1,2,3,4)
 %YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%YDB-I-GVIS, 		Global variable: ^z(1,2,3,4,"C","gtm8087xcalls1","iamtoolongforanexternalcallname")
 		At M source location globallimits4+6^gtm8087
 
-GTM>
+YDB>
 %YDB-E-GVUNDEF, Global variable undefined: ^z
 		At M source location globallimits4b+1^gtm8087
 
-GTM>
+YDB>
 
 kill ^z
 zshow "C":^z(1,2,3)
@@ -309,7 +309,7 @@ $ZPIN="0< /"
 ##TEST_AWK\$ZPOSITION=".*"
 $ZPOUT="0> /"
 $ZPROCESS=""
-$ZPROMPT="GTM>"
+$ZPROMPT="YDB>"
 $ZQUIT=0
 ##TEST_AWK\$ZREALSTOR=[1-9][0-9]*
 ##TEST_AWK\$ZROUTINES=".*"

@@ -13,7 +13,7 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ##ALLOW_OUTPUT  NON_REPLIC
 
-GTM>
+YDB>
 do ^interfer(1)
 Non-TP and TP-Rollback
 Releasing jobs...
@@ -22,7 +22,7 @@ ver PASS
 ver PASS
 
 PASS from interfer
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  NON_REPLIC
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 Shutting down Primary Source Server Server in ##TEST_PATH##
@@ -51,7 +51,7 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ##ALLOW_OUTPUT  NON_REPLIC
 
-GTM>
+YDB>
 do ^interfer(2)
 Transaction Commit and TP-Rollback
 Releasing jobs...
@@ -59,7 +59,7 @@ Starting verification...
 ver PASS
 
 PASS from interfer
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  NON_REPLIC
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 Shutting down Primary Source Server Server in ##TEST_PATH##
@@ -88,13 +88,13 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ##ALLOW_OUTPUT  NON_REPLIC
 
-GTM>
+YDB>
 do ^interfer(3)
 non-TP and Transaction Commit and TP-Rollback
 Releasing jobs...
 
 PASS from interfer
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  NON_REPLIC
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 Shutting down Primary Source Server Server in ##TEST_PATH##

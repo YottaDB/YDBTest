@@ -1,5 +1,5 @@
 
-GTM>
+YDB>
 ###################################################################
 $gtm_exe/mumps -run noref^runzgoto
 Testing ZGOTO within a trigger w/o an entryref
@@ -29,12 +29,12 @@ Have expected successful return from triggers with $ZLEVEL=2 and $ZTLEVEL=0
 ^a(1)=1
 ^a(2)=1
 
-GTM>
+YDB>
 Back at GTM prompt with $ZLEVEL=1
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ###################################################################
 $gtm_exe/mumps -run ref^runzgoto
 Testing ZGOTO within a trigger w/o an entryref
@@ -70,10 +70,10 @@ The trigger setgotob# is doing S
 ZGOTOing back out of trigger levels from $ZTLEVEL=4 and $ZLEVEL=10
 Expected zgoto return to primary code with $ZLEVEL=2 and $ZTLEVEL=0
 
-GTM>
+YDB>
 testing [z]goto to bounce around the same level
 
-GTM>
+YDB>
 $ZLevel3        $ZTLEvel1
 gotoloop+2^norefzgoto
 +1^killgotoa#
@@ -87,7 +87,7 @@ gotoloop+6^norefzgoto
 +1^killgotoa#
 +1^GTM$DMOD    (Direct mode) 
 
-GTM>
+YDB>
 ###################################################################
 $gtm_exe/mumps -run minusone^runzgoto
 +1^e#1#

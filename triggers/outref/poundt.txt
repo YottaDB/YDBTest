@@ -188,7 +188,7 @@ Total of 0 globals.
 
 Global ^
 
-GTM>
+YDB>
 
 Global Directory
 
@@ -199,7 +199,7 @@ Total of 0 globals.
 Global ^
 
 
-GTM>
+YDB>
 
 %YDB-E-VAREXPECTED, Variable expected in this context
 	zwr ^#t
@@ -214,7 +214,7 @@ GTM>
 	 ^-----
 
 
-GTM>
+YDB>
 
 %YDB-E-GBLNAME, Either an identifier or a left parenthesis is expected after a ^ in this context
 	set ^#t("a","#LABEL")=0
@@ -371,12 +371,12 @@ Output File:
 +^z -name=zreason -commands=S,K -xecute="set $ztvalue=$ztvalue/3 set ^r($ztvalue)=$reference"
 
 
-GTM>
+YDB>
 
 Do some updates
 
 
-GTM>
+YDB>
 
 Do some more updates
 
@@ -482,7 +482,7 @@ Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ###################################################################
 Test dollar reference at runtime startup and with nothing in select
 
-GTM>
+YDB>
 
 $R at runtime startup is valid
 
@@ -493,7 +493,7 @@ $R on naked select with GVN parm is valid
 ###################################################################
 Test dollar reference with ztrigger FILE commands
 
-GTM>
+YDB>
 
 File poundt.trg, Line 2: Added SET and/or Non-SET trigger on ^a named a#1
 File poundt.trg, Line 3: Added SET and/or Non-SET trigger on ^b named b#1
@@ -552,7 +552,7 @@ $R after FILE with GVN parm is valid
 ###################################################################
 Test dollar reference with ztrigger SELECT commands
 
-GTM>
+YDB>
 
 ;trigger name: c#1 (region DEFAULT)  cycle: 1
 +^c(*) -commands=S,K -xecute="write $ztri,$char(9),$reference,!"
@@ -599,7 +599,7 @@ $R after select with GVN parm is valid
 ###################################################################
 Test dollar reference with ztrigger ITEM commands
 
-GTM>
+YDB>
 
 Added Non-SET trigger on ^z named z#1
 
@@ -621,7 +621,7 @@ $R after ITEM add with GVN is valid
 
 
 
-GTM>
+YDB>
 
 SET and/or Non-SET trigger on ^DONOTEXIST does not exist - no action taken
 

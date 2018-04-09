@@ -36,13 +36,13 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ##ALLOW_OUTPUT  NON_REORG GT.CM NON_REPLIC
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 var1(1001,"ind1001",1000)="BBB2"
 var1(1001,"ind1001",1001)="BBB3"
 var1(1001,"ind1001",1002)="BBB4"
@@ -75,9 +75,9 @@ var1(1005,"ind1005",1003)="BBB29"
 var1(1005,"ind1005",1004)="BBB30"
 var1(1005,"ind1005",1005)="BBB31"
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ^new2("NEWVAR",1001,"ind1001",1000)="BBB2"
 ^new2("NEWVAR",1001,"ind1001",1001)="BBB3"
 ^new2("NEWVAR",1001,"ind1001",1002)="BBB4"
@@ -110,9 +110,9 @@ GTM>
 ^new2("NEWVAR",1005,"ind1005",1004)="BBB30"
 ^new2("NEWVAR",1005,"ind1005",1005)="BBB31"
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ^new1("aaa","bbbb","cccc")="BBB1003"
 ^new1("aaa","bbbb","cccc",1000)="BBB14"
 ^new1("aaa","bbbb","cccc",1001)="BBB15"
@@ -121,9 +121,9 @@ GTM>
 ^new1("aaa","bbbb","cccc",1004)="BBB18"
 ^new1("aaa","bbbb","cccc",1005)="BBB19"
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ^new1("aaa","bbbb","cccc")="BBB1003"
 ^new1("aaa","bbbb","cccc",1000)="BBB14"
 ^new1("aaa","bbbb","cccc",1001)="BBB15"
@@ -138,9 +138,9 @@ GTM>
 ^new1("kkk",1004)="BBB6"
 ^new1("kkk",1005)="BBB7"
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ^new1("aaa","bbbb","cccc")="BBB1003"
 ^new1("aaa","bbbb","cccc",1000)="BBB14"
 ^new1("aaa","bbbb","cccc",1001)="BBB15"
@@ -161,9 +161,9 @@ GTM>
 ^new1("kkk",1004)="BBB6"
 ^new1("kkk",1005)="BBB7"
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ^new1("aaa","bbbb","cccc")="BBB1003"
 ^new1("aaa","bbbb","cccc",1000)="BBB14"
 ^new1("aaa","bbbb","cccc",1001)="BBB15"
@@ -190,9 +190,9 @@ GTM>
 ^new1("kkk",1004)="BBB6"
 ^new1("kkk",1005)="BBB7"
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ^new1("aaa","bbbb","cccc")="BBB1003"
 ^new1("aaa","bbbb","cccc",1000)="BBB14"
 ^new1("aaa","bbbb","cccc",1001)="BBB15"
@@ -225,11 +225,11 @@ GTM>
 ^new1("lll",1004)="BBB6"
 ^new1("lll",1005)="BBB7"
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ^new1("aaa","bbbb","cccc")="BBB1003"
 ^new1("aaa","bbbb","cccc",1000)="BBB14"
 ^new1("aaa","bbbb","cccc",1001)="BBB15"
@@ -264,24 +264,24 @@ GTM>
 ^new1("lll",1005)="BBB7"
 ^new1("lll0")="BBB4"
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ^new1longnamevariableswork4merge("aaa")="long local to global"
 ^new1longnamevariableswork4merge("bbb")="long local to global"
 ^new1longnamevariableswork4merge("ccc")="long local to global"
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  REPLIC REORG GT.M
 Stopping the GT.CM Servers...
 Check the databases on the GT.CM Servers...

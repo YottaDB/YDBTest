@@ -38,13 +38,13 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
 ==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
 ==Executing MULTISITE_REPLIC 'RUN INST1 ##TEST_COM_PATH##/simpleinstanceupdate.csh 100'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'START INST1 INST3 RP'==
 Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
@@ -230,13 +230,13 @@ Simulating crash on Instance INSTANCE1 in ##TEST_PATH##
 Instance INSTANCE1 crashed!
 ==Executing MULTISITE_REPLIC 'RUN INST3 ##TEST_COM_PATH##/simpleinstanceupdate.csh 100'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'CRASH INST3'==
 Simulating crash on Instance INSTANCE3 in ##FILTERED##_REMOTE_TEST_PATH_
 Instance INSTANCE3 crashed!
@@ -481,13 +481,13 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
 ==Executing MULTISITE_REPLIC 'RUN INST1 ##TEST_COM_PATH##/simpleinstanceupdate.csh 110'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
 ==========================================================
 The instance file contents on INST1 (instancefile_3.out):
@@ -809,13 +809,13 @@ PASS from lost transaction analysis
 ==Executing MULTISITE_REPLIC 'STARTRCV INST2 INST4 waitforconnect'==
 ==Executing MULTISITE_REPLIC 'RUN INST2 ##TEST_COM_PATH##/simpleinstanceupdate.csh 1'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'SYNC INST2 INST4'==
 ==========================================================
 The instance file contents on INST1 (instancefile_4.out):

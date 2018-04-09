@@ -1,9 +1,20 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 c002181	;
 	set rtn="test"_+$zcmdline_"^c002181"
 	set pipe="pipe"
 	open pipe:(command="$gtm_dist/mumps -run "_rtn)::"pipe"
 	use pipe
-	for i=1:1  read line(i):1 quit:$zeof  if line(i)["GTM>" write "zwrite $zstatus halt",!
+	for i=1:1  read line(i):1 quit:$zeof  if line(i)["YDB>" write "zwrite $zstatus halt",!
 	use $p
 	for i=1:1:$order(line(""),-1)  if $length(line(i)) write line(i),!
 	quit

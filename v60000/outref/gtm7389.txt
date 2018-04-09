@@ -7,21 +7,21 @@ mumps.dat
 # test : Only DFL should exist when no global updates are done
 # test : when a dse dump is done (i.e db flushed), DFL is incremented
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 STATS-I-PASS : On doing a dse dump, DFL increased exactly by 1
 # Expect only DFL to be shown below
   DFL : # of Database FLushes                   0x##MASKED##
 # test : For just one update, most of the stats should be deterministic. Do a diff with existing output
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 # test : JBB and JFB should be non-zero and increase for every global update
 # test : JFW should increase by everytime we write jnlfile on disk
 STATS-I-PASS : JBB, JFB and JFW increased after jnl write operaion
@@ -37,21 +37,21 @@ STATS-I-PASS : JRL and JRO increased after a global update operation
 STATS-I-JEX. JEX is 1 as expected
 STATS-I-DEX. DEX is not seen as expected
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 # test : For the updates done above database extension should have happened
 STATS-I-DEX. DEX is 1 as expected
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 # test : For the updates done above more than one database and journal extensions should have happened
 STATS-I-[JD]EX. JEX and DEX has increased as expected
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 # test : After the single update and hang of more than 6 seconds, a JRI record should have been written
 STATS-I-JRI. JRI increased by 1 as expected
 ##SOURCE_PATH##/mupip

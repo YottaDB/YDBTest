@@ -51,13 +51,13 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
 #  Perform 70 transactions on INST1/A (seqnos: 1-70):
 ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/simpleinstanceupdate.csh 70'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
 ==========================================================
 The instance file contents on INST1 (instancefile_1.out):
@@ -297,13 +297,13 @@ No diff on INST3 between instancefile_1.out instancefile_2.out
 #  Perform 10 more transactions on INST1 (seqnos: 71-80)
 ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/simpleinstanceupdate.csh 10'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS sync_to_disk'==
 ==Executing MULTISITE_REPLIC 'CRASH INST2'==
 Simulating crash on Instance INSTANCE2 in ##FILTERED##_REMOTE_TEST_PATH_
@@ -311,13 +311,13 @@ Instance INSTANCE2 crashed!
 #  Perform 20 more transactions on INST1 (seqnos: 80-100)
 ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/simpleinstanceupdate.csh 20'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==========================================================
 Diffing instancefile_2.out and instancefile_3.out on INST1
 ##TEST_AWK.*
@@ -420,13 +420,13 @@ Diffing instancefile_4.out and instancefile_5.out on INST3
 #  Perform 40 transactions on INST3 (seqnos: 71-110)
 ==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/simpleinstanceupdate.csh 40'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==========================================================
 No diff on INST1 between instancefile_5.out instancefile_6.out
 ==========================================================
@@ -481,13 +481,13 @@ Instance INSTANCE1 crashed!
 #  Perform 10 transactions on INST3 (seqnos: 111-120)
 ==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/simpleinstanceupdate.csh 10'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'CRASH INST3'==
 Simulating crash on Instance INSTANCE3 in ##FILTERED##_REMOTE_TEST_PATH_
 Instance INSTANCE3 crashed!
@@ -642,13 +642,13 @@ PASS from lost transaction analysis
 #  Perform 20 transactions on INST3 (seqnos: 121-140)
 ==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/simpleinstanceupdate.csh 20'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS sync_to_disk'==
 ==========================================================
 History records for INST1 at instancefile_9.out
@@ -932,13 +932,13 @@ Instance INSTANCE2 crashed!
 #  Perform 10 transactions on INST3 (seqnos: 141-150)
 ==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/simpleinstanceupdate.csh 10'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'CRASH INST3'==
 Simulating crash on Instance INSTANCE3 in ##FILTERED##_REMOTE_TEST_PATH_
 Instance INSTANCE3 crashed!
@@ -1035,13 +1035,13 @@ Diffing instancefile_10.out and instancefile_11.out on INST3
 #  Make an update on INST2
 ==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/simpleinstanceupdate.csh 1'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==========================================================
 No diff on INST1 between instancefile_11.out instancefile_12.out
 ==========================================================

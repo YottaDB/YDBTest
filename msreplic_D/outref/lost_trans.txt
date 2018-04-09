@@ -61,7 +61,7 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
 # seqnos: 1-50:
 ==Executing MULTISITE_REPLIC 'RUN INST1 ##TEST_COM_PATH##/simplegblupd.csh -instance INST1 -count 50 -internal'==
 
-GTM>
+YDB>
 set ^GBLA(1)=1_<...>
 set ^GBLA(2)=1_<...>
 set ^GBLA(3)=1_<...>
@@ -113,7 +113,7 @@ set ^GBLA(13)=2_<...>
 set ^GBLA(14)=2_<...>
 set ^GBLA(15)=2_<...>
 
-GTM>
+YDB>
 15,2
 ==Executing MULTISITE_REPLIC 'SYNC INST1 INST3'==
 ==Executing MULTISITE_REPLIC 'STOPRCV INST1 INST3'==
@@ -135,7 +135,7 @@ BACKUP COMPLETED.
 # seqnos: 51-70:
 ==Executing MULTISITE_REPLIC 'RUN INST1 ##TEST_COM_PATH##/simplegblupd.csh -instance INST1 -count 20 -internal'==
 
-GTM>
+YDB>
 set ^GBLA(16)=2_<...>
 set ^GBLA(17)=2_<...>
 set ^GBLA(18)=2_<...>
@@ -157,7 +157,7 @@ set ^GBLA(33)=2_<...>
 set ^GBLA(34)=2_<...>
 set ^GBLA(35)=2_<...>
 
-GTM>
+YDB>
 35,2
 ==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
     switch journals on INST1. -- Due to $ZQGBLMOD's pessimistic answers, let's
@@ -177,21 +177,21 @@ GTM>
 # seqnos: 71- 75:
 ==Executing MULTISITE_REPLIC 'RUN INST1 ##TEST_COM_PATH##/simplegblupd.csh -instance INST1 -count 5 -internal'==
 
-GTM>
+YDB>
 set ^GBLA(1)=3_<...>
 set ^GBLA(2)=3_<...>
 set ^GBLA(3)=3_<...>
 set ^GBLA(4)=3_<...>
 set ^GBLA(5)=3_<...>
 
-GTM>
+YDB>
 5,3
 #-- Switch journals on INST1.
 ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/jnl_on.csh'==
 # seqnos: 76-100:
 ==Executing MULTISITE_REPLIC 'RUN INST1 ##TEST_COM_PATH##/simplegblupd.csh -instance INST1 -count 25 -internal'==
 
-GTM>
+YDB>
 set ^GBLA(6)=3_<...>
 set ^GBLA(7)=3_<...>
 set ^GBLA(8)=3_<...>
@@ -218,7 +218,7 @@ set ^GBLA(28)=3_<...>
 set ^GBLA(29)=3_<...>
 set ^GBLA(30)=3_<...>
 
-GTM>
+YDB>
 30,3
 ==Executing MULTISITE_REPLIC 'STOP INST1'==
 ==Executing MULTISITE_REPLIC 'STOP INST2 INST4'==
@@ -562,21 +562,21 @@ BACKUP COMPLETED.
 # seqnos: 71-75:
 ==Executing MULTISITE_REPLIC 'RUN INST2 ##TEST_COM_PATH##/simplegblupd.csh -instance INST2 -count 5 -internal'==
 
-GTM>
+YDB>
 set ^GBLA(1)=4_<...>
 set ^GBLA(2)=4_<...>
 set ^GBLA(3)=4_<...>
 set ^GBLA(4)=4_<...>
 set ^GBLA(5)=4_<...>
 
-GTM>
+YDB>
 5,4
 #-- Switch journals on INST2.
 ==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/jnl_on.csh $test_jnldir'==
 # seqnos: 76-100:
 ==Executing MULTISITE_REPLIC 'RUN INST2 ##TEST_COM_PATH##/simplegblupd.csh -instance INST2 -count 25 -internal'==
 
-GTM>
+YDB>
 set ^GBLA(6)=4_<...>
 set ^GBLA(7)=4_<...>
 set ^GBLA(8)=4_<...>
@@ -603,14 +603,14 @@ set ^GBLA(28)=4_<...>
 set ^GBLA(29)=4_<...>
 set ^GBLA(30)=4_<...>
 
-GTM>
+YDB>
 30,4
 ==Executing MULTISITE_REPLIC 'SYNC INST2 INST3'==
 ==Executing MULTISITE_REPLIC 'STOPRCV INST2 INST3'==
 # seqnos: 101-130:
 ==Executing MULTISITE_REPLIC 'RUN INST2 ##TEST_COM_PATH##/simplegblupd.csh -instance INST2 -count 30 -internal'==
 
-GTM>
+YDB>
 set ^GBLA(31)=4_<...>
 set ^GBLA(32)=4_<...>
 set ^GBLA(33)=4_<...>
@@ -642,14 +642,14 @@ set ^GBLA(23)=5_<...>
 set ^GBLA(24)=5_<...>
 set ^GBLA(25)=5_<...>
 
-GTM>
+YDB>
 25,5
 ==Executing MULTISITE_REPLIC 'SYNC INST2 INST1'==
 ==Executing MULTISITE_REPLIC 'STOPRCV INST2 INST1'==
 # seqnos: 131-140:
 ==Executing MULTISITE_REPLIC 'RUN INST2 ##TEST_COM_PATH##/simplegblupd.csh -instance INST2 -count 10 -internal'==
 
-GTM>
+YDB>
 set ^GBLA(26)=5_<...>
 set ^GBLA(27)=5_<...>
 set ^GBLA(28)=5_<...>
@@ -661,7 +661,7 @@ set ^GBLA(33)=5_<...>
 set ^GBLA(34)=5_<...>
 set ^GBLA(35)=5_<...>
 
-GTM>
+YDB>
 35,5
 ==Executing MULTISITE_REPLIC 'STOP INST2'==
 ==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/$tst/u_inref/check_zqgblmod.csh 1:1-30'==
@@ -1064,9 +1064,9 @@ examining ^examine($ZQGBLMOD(^GBLA(35),vcorr(35))) -> ^examine(0,0)
 ==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/applylt_check_zqgblmod.csh lost1_INST1.glo '==
 ==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/applylt_check_zqgblmod.csh lost1_INST1.glo '==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 Not applying "set ^GBLA(1)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
 Not applying "set ^GBLA(2)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
@@ -1098,14 +1098,14 @@ Not applying "set ^GBLA(27)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
 Not applying "set ^GBLA(28)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
 Not applying "set ^GBLA(29)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
 Not applying "set ^GBLA(30)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
-GTM>
+YDB>
 #  	--> This should succeed, but print out all updates rather than make the updates in the database (due to $ZQGBLMOD values).
 ==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/applylt_check_zqgblmod.csh lost2_INST2.glo '==
 ==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/applylt_check_zqgblmod.csh lost2_INST2.glo '==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Applying: set ^GBLA(31)="4_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr") returned 0.
 Applying: set ^GBLA(32)="4_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr") returned 0.
 Applying: set ^GBLA(33)="4_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr") returned 0.
@@ -1147,7 +1147,7 @@ Not applying "set ^GBLA(32)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
 Not applying "set ^GBLA(33)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
 Not applying "set ^GBLA(34)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
 Not applying "set ^GBLA(35)="5_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
-GTM>
+YDB>
 	--> This should succeed, but it will not apply all the transactions. It will apply the first 5 (seqnos
 	    101-105: ^GBLA(31-35), the rest (seqnos:105-140: ^GBLA(1-35)) are expected to report $ZQGBLMOD=1.
 ###################################################################

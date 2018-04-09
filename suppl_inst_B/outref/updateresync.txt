@@ -29,10 +29,10 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
 ==Executing MULTISITE_REPLIC 'RUN INST1 ##TEST_COM_PATH##/simplegblupd.csh -instance INST1 -count 1 -internal'==
 
-GTM>
+YDB>
 set ^GBLA(1)=1_<...>
 
-GTM>
+YDB>
 1,1
 ==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
 ==Executing MULTISITE_REPLIC 'STOP ALL_LINKS'==
@@ -69,7 +69,7 @@ Starting Primary Source Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
 Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
 ==Executing MULTISITE_REPLIC 'RUN INST3 ##TEST_COM_PATH##/simplegblupd.csh -instance INST3 -count 50 -internal'==
 
-GTM>
+YDB>
 set ^GBLA(2)=1_<...>
 set ^GBLA(3)=1_<...>
 set ^GBLA(4)=1_<...>
@@ -121,13 +121,13 @@ set ^GBLA(14)=2_<...>
 set ^GBLA(15)=2_<...>
 set ^GBLA(16)=2_<...>
 
-GTM>
+YDB>
 16,2
 ==Executing MULTISITE_REPLIC 'SYNC INST3 INST4'==
 ==Executing MULTISITE_REPLIC 'RUN INST3 mkdir bak1; ##REMOTE_SOURCE_PATH##/mupip backup -replinstance=bak1 "*" bak1 >&! backup_replinstance_bak1.out'==
 ==Executing MULTISITE_REPLIC 'RUN INST3 ##TEST_COM_PATH##/simplegblupd.csh -instance INST3 -count 50 -internal'==
 
-GTM>
+YDB>
 set ^GBLA(17)=2_<...>
 set ^GBLA(18)=2_<...>
 set ^GBLA(19)=2_<...>
@@ -179,7 +179,7 @@ set ^GBLA(29)=3_<...>
 set ^GBLA(30)=3_<...>
 set ^GBLA(31)=3_<...>
 
-GTM>
+YDB>
 31,3
 ==Executing MULTISITE_REPLIC 'STOP INST3 INST4'==
 Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4

@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh
 #################################################################
 #								#
-#	Copyright 2013, 2014 Fidelity Information Services, Inc	#
+# Copyright 2013, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -96,7 +99,7 @@ $echoline
 echo "**************************** truncate output of PRINCIPAL in heredoc ****************************"
 $echoline
 $gtm_exe/mumps -dir <<EOF >heredoctrunc
-; write 4 lines then back up 2 line, truncate and write 2 more - expect GTM> before the new lines
+; write 4 lines then back up 2 line, truncate and write 2 more - expect YDB> before the new lines
 for i=1:1:4 write "Line "_i_" - abcdefdhijklmnopqrstuvwxyz",!
 use \$p:outseek="-79"
 for i=3:1:4 write "After truncate Line "_i_" - abcdefdhijklmnopqrstuvwxyz",!

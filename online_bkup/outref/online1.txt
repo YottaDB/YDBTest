@@ -14,13 +14,13 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ##ALLOW_OUTPUT  NON_REPLIC
 
-GTM>
+YDB>
 Do fill1^myfill("set")
 
-GTM>
+YDB>
 PASS from fill1^myfill("set")
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  NON_REPLIC
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/online1.mjl is renamed to ##TEST_PATH##/online1.mjl_##TIMESTAMP##
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/online1.mjl created for region DEFAULT with .*BEFORE_IMAGES
@@ -37,13 +37,13 @@ Transactions up to 0x0000000000000400 are backed up.
 BACKUP COMPLETED.
 
 
-GTM>
+YDB>
 Do fill2^myfill("set")
 
-GTM>
+YDB>
 PASS from fill2^myfill("set")
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  NON_REPLIC
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/online1.mjl is renamed to ##TEST_PATH##/online1.mjl_##TIMESTAMP##
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/online1.mjl created for region DEFAULT with .*BEFORE_IMAGES
@@ -67,12 +67,12 @@ Transactions from 0x0000000000000400 to 0x0000000000000BFF are backed up.
 BACKUP COMPLETED.
 
 
-GTM>
+YDB>
 Do fill3^myfill("set")
-GTM>
+YDB>
 PASS from fill3^myfill("set")
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  NON_REPLIC
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/online1.mjl is renamed to ##TEST_PATH##/online1.mjl_##TIMESTAMP##
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/online1.mjl created for region DEFAULT with .*BEFORE_IMAGES
@@ -160,13 +160,13 @@ No errors detected by integ.
 No errors detected by integ.
 ##ALLOW_OUTPUT  NON_REPLIC
 
-GTM>
+YDB>
 Do fill1^myfill("ver")
 
-GTM>
+YDB>
 PASS from fill1^myfill("ver")
 
-GTM>
+YDB>
 
 RESTORE COMPLETED
 ##SUSPEND_OUTPUT COLLATION
@@ -184,13 +184,13 @@ No errors detected by integ.
 No errors detected by integ.
 ##ALLOW_OUTPUT  NON_REPLIC
 
-GTM>
+YDB>
 Do fill2^myfill("ver")
 
-GTM>
+YDB>
 PASS from fill2^myfill("ver")
 
-GTM>
+YDB>
 
 RESTORE COMPLETED
 ##SUSPEND_OUTPUT COLLATION
@@ -216,13 +216,13 @@ No errors detected by integ.
 No errors detected by integ.
 ##ALLOW_OUTPUT  NON_REPLIC
 
-GTM>
+YDB>
 Do fill3^myfill("ver")
 
-GTM>
+YDB>
 PASS from fill3^myfill("ver")
 
-GTM>
+YDB>
 
 RESTORE COMPLETED
 ##SUSPEND_OUTPUT COLLATION
@@ -240,13 +240,13 @@ No errors detected by integ.
 No errors detected by integ.
 ##ALLOW_OUTPUT  NON_REPLIC
 
-GTM>
+YDB>
 Do fill3^myfill("ver")
 
-GTM>
+YDB>
 PASS from fill3^myfill("ver")
 
-GTM>
+YDB>
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/online1.dat created
 
 RESTORE COMPLETED
@@ -265,11 +265,11 @@ No errors detected by integ.
 No errors detected by integ.
 ##ALLOW_OUTPUT  NON_REPLIC
 
-GTM>
+YDB>
 Do fill3^myfill("ver")
 
-GTM>
+YDB>
 PASS from fill3^myfill("ver")
 
-GTM>
+YDB>
 LEAVING ONLINE1

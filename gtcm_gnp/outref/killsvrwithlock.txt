@@ -35,33 +35,33 @@ b Owned by PID= <PID> which is an existing process
 ,%YDB-E-LCKSCANCELLED, Error on remote node holding LOCKs or ZALLOCATEs.  All LOCKs and ZALLOCATEs cancelled.
 		At M source location lock+12^lbcl
 
-GTM>
+YDB>
 Re-start the server (on ##TEST_REMOTE_HOST_GTCM_2##)
 GT.CM Server up again, retry the lock (the lock is still held on the server side)...
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Could not get the lock, just as expected
 
-GTM>
+YDB>
 Release lock on the server side...
 Retry the lock on the client side now...
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 I got the lock, as expected
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Stopping the GT.CM Servers...
 Check the databases on the GT.CM Servers...
 ##GT.CM####REMOTE_SOURCE_PATH##/mupip

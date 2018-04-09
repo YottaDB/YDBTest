@@ -9,9 +9,9 @@ Start before image journaling
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Save database and journal files
 --------------------------------------------------------------
 mupip journal -show -forward  nonexist.mjl
@@ -143,9 +143,9 @@ Transactions up to 0x0000000000000001 are backed up.
 BACKUP COMPLETED.
 
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 mupip journal -recover -forward mumps.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
@@ -162,9 +162,9 @@ mupip set -journal=enable,on,nobefore -file mumps.dat
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 delete mumps.dat
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 mupip set -journal=enable,off,before,file=newa.mjl -file mumps.dat
@@ -186,9 +186,9 @@ mupip set -journal=enable,on,nobefore -file mumps.dat
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 mupip set -journal=disable -file mumps.dat
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
@@ -218,9 +218,9 @@ Transactions up to 0x0000000000000001 are backed up.
 BACKUP COMPLETED.
 
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 mupip journal -recover -forward mumps.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
@@ -250,11 +250,11 @@ mupip set -journal=enable,on,before,file=a.mjl -reg AREG
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
 %YDB-I-JNLSTATE, Journaling state for region AREG is now ON
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 mupip set -journal=disable -reg DEFAULT
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now DISABLED
 mupip journal -recover -back "*"

@@ -13,23 +13,23 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ##ALLOW_OUTPUT NON_REPLIC
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ^avar = 1
 
-GTM>
+YDB>
 Test for ^#var
 
 Rec:1  Blk 2  Off 10  Size 12  Cmpc 0  Ptr 4  Key ^#var
 Rec:1  Blk 3  Off 10  Size B  Cmpc 0  Key ^#var
 
 
-GTM>
+YDB>
 ^avar = 
 %YDB-E-GVUNDEF, Global variable undefined: ^avar
 
-GTM>
+YDB>
 
 Block:Offset Level
 %YDB-E-DBBADKYNM, 
@@ -96,12 +96,12 @@ Total             100               4              NA             2
 
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ^%t = 1
 
-GTM>
+YDB>
 Test for ^%t
 
 Rec:1  Blk 2  Off 10  Size 10  Cmpc 0  Ptr 4  Key ^%t

@@ -6,27 +6,27 @@ mumps.dat
 ###########################################################################################
 test that the correct labels/routines are invoked
 
-GTM>
+YDB>
 
 Test of differentiation between short and long routines
 PASS
 
-GTM>
+YDB>
 ###########################################################################################
 test all acceptable lengths of label and routine names
 
-GTM>
+YDB>
 ##BEGIN labtest.m
 direct mode...
  (the output is in driverm.out)
 mumps -run label^routine...
 ##END labtest.m
 
-GTM>
+YDB>
 ###########################################################################################
 zlink a routine over and over to test that literals set in the prev incarnations are still valid
 
-GTM>
+YDB>
 ------------------------------------------------------------
 Test of literals, variables and labels for replaced routines
 ------------------------------------------------------------
@@ -43,7 +43,7 @@ do sublabelno1998^testReplacedLiteralsAndLabels
 ###########################################################################################
 relinks
 
-GTM>
+YDB>
 in lnkrtn0
 enable:lnkrtn1
 in lnkrtn1
@@ -109,11 +109,11 @@ zlink "relinks"
 Error Number=1
 STAT=relinks+71^relinks,%YDB-E-LOADRUNNING, Cannot ZLINK an active routine relinks
 
-GTM>
+YDB>
 ###########################################################################################
 test stp_move
 
-GTM>
+YDB>
 Error Number=1
 STAT=testmain+38^testmain,%YDB-E-LOADRUNNING, Cannot ZLINK an active routine testmain
 Now ZWR of all locals
@@ -221,7 +221,7 @@ var22="This is labelcalledbystpmovetest2^test2"
 wspace="!@#$%^&*(){}[]|\,./<>?`~;:"
 zstr="zsystem ""\cp -f test2.m currentcalleeroutineinstpmovetest.m"""
 
-GTM>
+YDB>
 ###########################################################################################
 echo routine name is more than 31 characters
 routine name is more than 31 characters
@@ -237,69 +237,69 @@ ls x234567890123456789012345678901.o
 x234567890123456789012345678901.o
 ##SOURCE_PATH##/mumps -direct
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do ^x234567890123456789012345678901
 
-GTM>
+YDB>
 this routine name is more than 31 characters
 x123456789012345678901234567890+1^x234567890123456789012345678901
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mumps -direct
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do ^x234567890123456789012345678901a
 
-GTM>
+YDB>
 this routine name is more than 31 characters
 x123456789012345678901234567890+1^x234567890123456789012345678901
 
-GTM>
+YDB>
 rm -f x234567890123456789012345678901.o
 ##SOURCE_PATH##/mumps -direct
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do ^x234567890123456789012345678901a
 
-GTM>
+YDB>
 %YDB-E-ZLINKFILE, Error while zlinking "x234567890123456789012345678901",%YDB-E-FILENOTFND, File x234567890123456789012345678901 not found
 		At M source location +1^GTM$DMOD
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 zlink "x234567890123456789012345678901a"
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do ^x234567890123456789012345678901a
 
-GTM>
+YDB>
 this routine name is more than 31 characters
 x123456789012345678901234567890+1^x234567890123456789012345678901
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mumps -direct
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do ^x234567890123456789012345678901a
 
-GTM>
+YDB>
 %YDB-E-ZLINKFILE, Error while zlinking "x234567890123456789012345678901",%YDB-E-FILENOTFND, File x234567890123456789012345678901 not found
 		At M source location +1^GTM$DMOD
 
-GTM>
+YDB>
 unset echo
 ###########################################################################################
 label names are more than 31 characters

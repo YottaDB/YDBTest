@@ -11,13 +11,13 @@ GDE>
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 
-GTM>
+YDB>
 Do fill1^myfill("set")
 
-GTM>
+YDB>
 PASS from fill1^myfill("set")
 
-GTM>
+YDB>
 
 *** TSTBAKNJ ***
 
@@ -151,11 +151,11 @@ No errors detected by integ.
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 -rw-rw-rw- mumps.dat
 
-GTM>
+YDB>
 do init
 set ^a=1,^b=2,^c=3
 
-GTM>
+YDB>
 mupip extract -nolog glo.dir
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 3  max subsc len: 3  max rec len: 1  max node len: 8
 OK.
@@ -178,11 +178,11 @@ No errors detected by integ.
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 -rw-rw-rw- mumps.dat
 
-GTM>
+YDB>
 do init
 set ^a=1,^b=2,^c=3
 
-GTM>
+YDB>
 mupip extract -fr -nolog glo.dir
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 3  max subsc len: 3  max rec len: 1  max node len: 8
 OK.
@@ -208,11 +208,11 @@ No errors detected by integ.
 -rw-rw-rw- mumps.mjl
 **** mumps.dat R/W mumps.mjl R/W ***
 
-GTM>
+YDB>
 do init
 set ^a=1,^b=2,^c=3
 
-GTM>
+YDB>
 mupip extract -nolog glo.dir
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1026  max subsc len: 37  max rec len: 30  max node len: 70
 OK.
@@ -257,11 +257,11 @@ No errors detected by integ.
 -rw-rw-rw- mumps.mjl
 **** mumps.dat R/W mumps.mjl R/W ***
 
-GTM>
+YDB>
 do init
 set ^a=1,^b=2,^c=3
 
-GTM>
+YDB>
 mupip extract -fr -nolog glo.dir
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1026  max subsc len: 37  max rec len: 30  max node len: 70
 OK.
@@ -375,11 +375,11 @@ No errors detected by integ.
 First with no journal
 
 
-GTM>
+YDB>
 do init
 set ^a=1,^b=2,^c=3
 
-GTM>
+YDB>
 mupip integ -FAST mumps.dat
 
 No errors detected by fast integ.
@@ -437,11 +437,11 @@ Now with journal
 -rw-rw-rw- mumps.dat
 -rw-rw-rw- mumps.mjl
 
-GTM>
+YDB>
 do init
 set ^a=1,^b=2,^c=3
 
-GTM>
+YDB>
 mupip integ -FAST mumps.dat 
 
 No errors detected by fast integ.
@@ -554,11 +554,11 @@ OK.
 
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
-GTM>
+YDB>
 do init
 set ^a=1,^b=2,^c=3
 
-GTM>
+YDB>
 ***** mumps.dat R/W *****
 -rw-rw-rw- mumps.dat
 mupip integ -region DEFAULT
@@ -622,11 +622,11 @@ OK.
 -rw-rw-rw- mumps.dat
 -rw-rw-rw- mumps.mjl
 
-GTM>
+YDB>
 do init
 set ^a=1,^b=2,^c=3
 
-GTM>
+YDB>
 mupip integ -region DEFAULT
 
 
@@ -757,11 +757,11 @@ OK.
 
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
-GTM>
+YDB>
 do init
 set ^a=1,^b=2,^c=3
 
-GTM>
+YDB>
 ***** mumps.dat read_write *****
 -rw-rw-rw- mumps.dat
 mupip integ -tn_reset mumps.dat
@@ -803,11 +803,11 @@ OK.
 -rw-rw-rw- mumps.dat
 -rw-rw-rw- mumps.mjl
 
-GTM>
+YDB>
 do init
 set ^a=1,^b=2,^c=3
 
-GTM>
+YDB>
 **** R/W mumps.dat R/W mumps.mjl ****
 -rw-rw-rw- mumps.dat
 -rw-rw-rw- mumps.mjl
@@ -888,13 +888,13 @@ OK.
 -rw-rw-rw- mumps.dat
 -rw-rw-rw- mumps.mjl
 
-GTM>
+YDB>
 do init
 
-GTM>
+YDB>
 set ^a=1,^b=2,^c=3
 
-GTM>
+YDB>
 *****  mumps.dat R/W mumps.mjl R/W *****
 mupip load -begin=3 -end=5 load.go1
 ##TEST_AWKGT.M MUPIP EXTRACT.*
@@ -993,10 +993,10 @@ No errors detected by integ.
 *** TSTREORGNJ.CSH ***
 
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
  ------- Before reorg --------
 
 
@@ -1064,10 +1064,10 @@ Data              185            2023          29.047            21
 Free               60              NA              NA            NA
 Total             400            2362              NA            25
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 ----- Before reorg -----
 
 
@@ -1120,10 +1120,10 @@ Total             400            2366              NA            25
 -rw-rw-rw- mumps.dat
 -rw-rw-rw- mumps.mjl
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 ------- Before reorg -------
 
 
@@ -1194,10 +1194,10 @@ Total             400            2624              NA            27
 -rw-rw-rw- mumps.dat
 -rw-rw-rw- mumps.mjl
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 ------- Before reorg -------
 
 
@@ -1247,10 +1247,10 @@ Total             400            2628              NA            24
 -rw-rw-rw- mumps.dat
 -rw-rw-rw- mumps.mjl
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 ------- Before reorg -------
 
 
@@ -1299,10 +1299,10 @@ Total             400            2628              NA            24
 -rw-rw-rw- mumps.dat
 -rw-rw-rw- mumps.mjl
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 ------- Before reorg -------
 
 
@@ -1356,13 +1356,13 @@ Total             400            2628              NA            24
 -rw-rw-rw- mumps.dat
 -rw-rw-rw- mumps.mjl
 
-GTM>
+YDB>
 do dbfill
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 MUPIP backup of database file ##TEST_PATH##/mumps.dat to bak.dat
 DB file ##TEST_PATH##/mumps.dat incrementally backed up in file bak.dat
 1452 blocks saved.
@@ -1430,11 +1430,11 @@ No errors detected by integ.
 -rw-rw-rw- mumps.dat
 -rw-rw-rw- mumps.mjl
 
-GTM>
+YDB>
 do init
 set ^a=1,^b=2,^c=3
 
-GTM>
+YDB>
 **** R/W mumps.dat R/W mumps.mjl ****
 mupip rundown -f mumps.dat
 %YDB-I-MUFILRNDWNSUC, File mumps.dat successfully rundown
@@ -1594,11 +1594,11 @@ No errors detected by integ.
 -rw-rw-rw- mumps.dat
 -rw-rw-rw- mumps.mjl
 
-GTM>
+YDB>
 do init
 set ^a=1,^b=2,^c=3
 
-GTM>
+YDB>
 *** Extracting journal R/W mumps.dat R/W mumps.mjl ***
 -rw-rw-rw- mumps.dat
 -rw-rw-rw- mumps.mjl
@@ -1669,11 +1669,11 @@ No errors detected by integ.
 -rw-rw-rw- mumps.dat
 -rw-rw-rw- mumps.mjl
 
-GTM>
+YDB>
 do init
 set ^a=1,^b=2,^c=3
 
-GTM>
+YDB>
 *** Recovering on R/W mumps.dat R/W mumps.mjl ***
 -rw-rw-rw- mumps.dat
 -rw-rw-rw- mumps.mjl
@@ -1739,11 +1739,11 @@ No errors detected by integ.
 -rw-rw-rw- mumps.dat
 -rw-rw-rw- mumps.mjl
 
-GTM>
+YDB>
 do init
 set ^a=1,^b=2,^c=3
 
-GTM>
+YDB>
 *** Showing on R/W mumps.dat R/W mumps.mjl ***
 -rw-rw-rw- mumps.dat
 -rw-rw-rw- mumps.mjl
@@ -1795,11 +1795,11 @@ jlsh4.out:%YDB-S-JNLSUCCESS, Verify successful
 -rw-rw-rw- mumps.dat
 -rw-rw-rw- mumps.mjl
 
-GTM>
+YDB>
 do init
 set ^a=1,^b=2,^c=3
 
-GTM>
+YDB>
 *** Verifying on R/W mumps.dat R/W mumps.mjl ***
 mupip journal -verify -forward mumps.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..

@@ -175,18 +175,18 @@ a.dat
 b.dat
 mumps.dat
 
-GTM>
+YDB>
 Case 10 - $ZTrigger(FILE) - Adding a trigger to a read-only database
 
-GTM>
+YDB>
 %YDB-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
 
-GTM>
+YDB>
 Case 11 - $ZTrigger(FILE) - Delete all triggers in a read-only database (first add a trigger to attempt to 'delete')
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 File ##IN_TEST_PATH##/inref/readonlyadd1.trg, Line 1: Added SET and/or Non-SET trigger on ^C named addedtrig
 =========================================
 1 triggers added
@@ -197,29 +197,29 @@ File ##IN_TEST_PATH##/inref/readonlyadd1.trg, Line 1: Added SET and/or Non-SET t
 =========================================
 1
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 %YDB-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
 
-GTM>
+YDB>
 Case 12 - $ZTrigger(FILE) - Modifying a trigger in a read-only database
 
-GTM>
+YDB>
 %YDB-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
 
-GTM>
+YDB>
 Case 13 - $ZTrigger(FILE) - Deleting a specific trigger in a read-only database
 
-GTM>
+YDB>
 %YDB-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
 
-GTM>
+YDB>
 Case 14 - $ZTrigger(FILE) - multi-region - verify can add trigger to AREG if BREG is R/O
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 File ##IN_TEST_PATH##/inref/readonlyadd2.trg, Line 1: Added SET and/or Non-SET trigger on ^A named addedtrig2
 =========================================
 1 triggers added
@@ -231,12 +231,12 @@ File ##IN_TEST_PATH##/inref/readonlyadd2.trg, Line 1: Added SET and/or Non-SET t
 1
 
 
-GTM>
+YDB>
 Case 15 - $ZTrigger(FILE) - multi-region - verify we can modify trigger in AREG while DEFAULT region is R/O
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 File ##IN_TEST_PATH##/inref/readonlymod2.trg, Line 1: Modified SET and/or Non-SET trigger on ^A named addedtrig2
 =========================================
 0 triggers added
@@ -248,10 +248,10 @@ File ##IN_TEST_PATH##/inref/readonlymod2.trg, Line 1: Modified SET and/or Non-SE
 1
 
 
-GTM>
+YDB>
 Case 16 - $ZTrigger(FILE) - multi-region - verify we can delete trigger in AREG with DEFAULT and BREG R/O
 
-GTM>
+YDB>
 File ##IN_TEST_PATH##/inref/readonlydel2.trg, Line 1: Deleted SET and/or Non-SET trigger on ^A named addedtrig2
 =========================================
 0 triggers added
@@ -263,12 +263,12 @@ File ##IN_TEST_PATH##/inref/readonlydel2.trg, Line 1: Deleted SET and/or Non-SET
 1
 
 
-GTM>
+YDB>
 Case 17 - $ZTrigger(FILE) - multi-region - verify we can also delete trigger in AREG if only BREG is R/O
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 File ##IN_TEST_PATH##/inref/readonlydel2.trg, Line 1: Deleted SET and/or Non-SET trigger on ^A named addedtrig2
 =========================================
 0 triggers added
@@ -280,10 +280,10 @@ File ##IN_TEST_PATH##/inref/readonlydel2.trg, Line 1: Deleted SET and/or Non-SET
 1
 
 
-GTM>
+YDB>
 Case 18 - $ZTrigger(FILE) - multi-region - verify we can delete all trigges if only BREF is R/O (no triggers there)
 
-GTM>
+YDB>
 File ##IN_TEST_PATH##/inref/readonlydall.trg, Line 1: All existing triggers (count = 1) deleted
 =========================================
 0 triggers added
@@ -295,7 +295,7 @@ File ##IN_TEST_PATH##/inref/readonlydall.trg, Line 1: All existing triggers (cou
 1
 
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -309,85 +309,85 @@ a.dat
 b.dat
 mumps.dat
 
-GTM>
+YDB>
 Case 19 - $ZTrigger(ITEM) - Adding a trigger to a read-only database
 
-GTM>
+YDB>
 %YDB-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
 
-GTM>
+YDB>
 Case 20 - $ZTrigger(ITEM) - Delete all triggers in a read-only database (first add a trigger to attempt to 'delete')
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Added SET and/or Non-SET trigger on ^C named addedtrig
 1
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 %YDB-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
 
-GTM>
+YDB>
 Case 21 - $ZTrigger(ITEM) - Modifying a trigger in a read-only database
 
-GTM>
+YDB>
 %YDB-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
 
-GTM>
+YDB>
 Case 22 - $ZTrigger(ITEM) - Deleting a specific trigger in a read-only database
 
-GTM>
+YDB>
 %YDB-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
 
-GTM>
+YDB>
 Case 23 - $ZTrigger(ITEM) - multi-region - verify can add trigger to AREG if BREG is R/O
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Added SET and/or Non-SET trigger on ^A named addedtrig2
 1
 
 
-GTM>
+YDB>
 Case 24 - $ZTrigger(ITEM) - multi-region - verify we can modify trigger in AREG while DEFAULT region is R/O
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Modified SET and/or Non-SET trigger on ^A named addedtrig2
 1
 
 
-GTM>
+YDB>
 Case 25 - $ZTrigger(ITEM) - multi-region - verify we can delete trigger in AREG with DEFAULT and BREG R/O
 
-GTM>
+YDB>
 Deleted SET and/or Non-SET trigger on ^A named addedtrig2
 1
 
 
-GTM>
+YDB>
 Case 26 - $ZTrigger(ITEM) - multi-region - verify we can also delete trigger in AREG if only BREG is R/O
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Deleted SET and/or Non-SET trigger on ^A named addedtrig2
 1
 
 
-GTM>
+YDB>
 Case 27 - $ZTrigger(FILE) - multi-region - verify we can delete all trigges if only BREF is R/O (no triggers there)
 
-GTM>
+YDB>
 All existing triggers (count = 1) deleted
 1
 
 
-GTM>
+YDB>
 
 Case 28-29 - ZTRIGGER command (adding 1 trigger back in)
 File ##IN_TEST_PATH##/inref/readonlyadd1.trg, Line 1: Added SET and/or Non-SET trigger on ^C named addedtrig
@@ -399,22 +399,22 @@ File ##IN_TEST_PATH##/inref/readonlyadd1.trg, Line 1: Added SET and/or Non-SET t
 0 trigger file entries did not update database trigger content
 =========================================
 
-GTM>
+YDB>
 Case 28 - Drive trigger for non-existant global in a read-only database
 
-GTM>
+YDB>
 %YDB-E-ZTRIGNOTRW, ZTRIGGER cannot operate on read-only region DEFAULT
 
-GTM>
+YDB>
 
 
-GTM>
+YDB>
 Case 29 - Drive trigger for existing global in a read-only database
 
-GTM>
+YDB>
 %YDB-E-ZTRIGNOTRW, ZTRIGGER cannot operate on read-only region DEFAULT
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

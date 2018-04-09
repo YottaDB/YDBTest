@@ -905,43 +905,43 @@ echo Wait for second user to finish its processing...
 Wait for second user to finish its processing...
 ##SOURCE_PATH##/mumps -direct
 
-GTM>
+YDB>
 ##TEST_AWK.H = [0-9]*,[0-9]*
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 second user should have finished
 
-GTM>
+YDB>
 ##TEST_AWK.H = [0-9]*,[0-9]*
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 echo Updates done, test...
 Updates done, test...
 echo 
 
 ##SOURCE_PATH##/mumps -direct
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mumps -direct
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mumps -direct
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##TEST_COM_PATH##/wait_for_log.csh -log updatesyncndie_done.txt -duration 300
 ##TEST_COM_PATH##/gtm_crash.csh
 Simulating kill of GTM Processes in ##TEST_PATH##
@@ -1966,25 +1966,25 @@ Will run           : jnlrecm
 ##TEST_PATH##
 Killed
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##TEST_AWK.ZV = GT.M .*
 
-GTM>
+YDB>
 start...
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##TEST_AWKTime written into time.*
 SET,TSET,USET,GSET,FSET
 ##TEST_AWKTime written into time.*
@@ -2001,32 +2001,32 @@ Check that only ^acn(11,11),^acn(12,12),^acn(13,13),^acn(14,14) are present
 ^acn(13,13)="this is GSET"
 ^acn(14,14)="this is GSET"
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 in active ztp...
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 End of second_process job!
 ############ END SECOND PROCESS OUTPUT ###################
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip journal -show=broken -forward *
 env LC_ALL=C gawk -f ##TEST_COM_PATH##/mupjnl_multireg_show_sort.awk show_broken3.unsorted
 
@@ -2056,7 +2056,7 @@ mumps.dat
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 
-GTM>
+YDB>
 ##TEST_AWKTime written into time.*
 SET,TSET,USET,GSET,FSET
 ##TEST_AWKTime written into time.*
@@ -2073,7 +2073,7 @@ Check that only ^acn(11,11),^acn(12,12),^acn(13,13),^acn(14,14) are present
 ^acn(13,13)="this is GSET"
 ^acn(14,14)="this is GSET"
 
-GTM>
+YDB>
 ##TEST_AWKTime written into time.*
 SET,TSET,USET,GSET,FSET
 ##TEST_AWKTime written into time.*
@@ -2090,7 +2090,7 @@ Check that only ^acn(11,11),^acn(12,12),^acn(13,13),^acn(14,14) are present
 ^acn(13,13)="this is GSET"
 ^acn(14,14)="this is GSET"
 
-GTM>
+YDB>
 ##TEST_AWKTime written into time.*
 SET,TSET,USET,GSET,FSET
 ##TEST_AWKTime written into time.*

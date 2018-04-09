@@ -25,11 +25,11 @@ Once the above passes, check the last few commented lines in smoketest.m. Those 
 	; The following should be executed on their own as part of the smoke test milestone
 	; > setenv EDITOR vi
 	; > gtm
-	; GTM> zedit "foo"
+	; YDB> zedit "foo"
 	;
-	; GTM> zsy
+	; YDB> zsy
 	; then cntl-d to get back to gtm prompt
 	;
-	; GTM> w !,$R(-10) ; when this is executed it should give an error
+	; YDB> w !,$R(-10) ; when this is executed it should give an error
 
 NOTE : At various stages of the porting, commands from smoketest.m and smokepct.m can be just copied and executed, if the full routine cannot be executed successfully.

@@ -1,10 +1,10 @@
 Case 1.
-$grep "GTM>.*FILENOTFND" case1.expect.outx
+$grep "YDB>.*FILENOTFND" case1.expect.outx
 
 Case 2.
 cat case2.mumps.out
 hello
-GTM>
+YDB>
 
 cat case2.mumps.err
 %YDB-E-DIVZERO, Attempt to divide by zero
@@ -15,7 +15,7 @@ hello
 %YDB-E-DIVZERO, Attempt to divide by zero
 		At M source location case2+2^case2
 
-GTM>
+YDB>
 
 $grep "hello.*DIVZERO" case2.expect.outx
 
@@ -57,9 +57,9 @@ hello
 %YDB-E-DIVZERO, Attempt to divide by zero
 		At M source location case6+2^case6
 
-GTM>
+YDB>
 $y is 5
-GTM>
+YDB>
 
 Files Created in ##TEST_PATH##:
 Using: ##SOURCE_PATH##/mumps -run GDE

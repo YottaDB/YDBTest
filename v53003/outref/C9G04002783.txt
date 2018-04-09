@@ -6,30 +6,30 @@ Using: ##SOURCE_PATH##/mupip
 mumps.dat
 # SCENARIO #1
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Setting inhibit_kills=1 using DSE
-GTM>
+YDB>
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##TEST_AWK(NON-TP|TP)
 Finished killing
 
-GTM>
+YDB>
 Test if KILL of global variable a and b was successful. Expect write failure.
-GTM>
+YDB>
 %YDB-E-GVUNDEF, Global variable undefined: ^a(10,10,10)
 
-GTM>
+YDB>
 
-GTM>
+YDB>
   Process(es) inhibiting KILLs            0  DB is a StatsDB              FALSE
 ##SUSPEND_OUTPUT DBG
 ##ALLOW_OUTPUT PRO
@@ -40,9 +40,9 @@ GTM>
 # Enable WHITE BOX TESTING
 # Set globals
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 # Since the KILLs will be waiting when white box testing is enabled.Start them in background
 # Wait for kill process to create job.txt with its process id. Mupip wait will stop this process
 # Wait for log with message WBTEST_ABANDONEDKILL

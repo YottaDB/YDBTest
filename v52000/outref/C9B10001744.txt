@@ -8,7 +8,7 @@ File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
 DSE> DSE> 
-GTM>
+YDB>
 
 Test $Order() gives correct result if 2nd arg is a global variable
 ^x(1)=2
@@ -60,7 +60,7 @@ $order(^x(""),1)                   =    1 : $reference = ^x("")
 0!^x($order(^x(""),$get(y,^x(1)))) =    1 : $reference = ^x(1)
 0!^X($order(^x(""),$select(1:-1))) =    1 : $reference = ^x(2)
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

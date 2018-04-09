@@ -9,10 +9,10 @@ mumps.gld
 ##TEST_AWKUsing: ##GTM_LIBRARY_PATH##/.*
 mumps.dat
 
-GTM>
+YDB>
 ##TEST_AWKRandom choice to kill child process is : [01]
 
-GTM>
+YDB>
 ----------------------------------------------------------------------
 # Check if jobbed off child has to be killed (written to the file killchild.choice)
 # If yes, kill the child and wait for it to die
@@ -23,11 +23,11 @@ GTM>
 # Starting GT.M. Expect a VERMISMATCH error
 
 
-GTM>
+YDB>
 ##TEST_AWK%YDB-E-VERMISMATCH, Attempt to access ##TEST_PATH##/mumps.dat with version GT.M V.*
 		At M source location newver+1^c002387
 
-GTM>
+YDB>
 ----------------------------------------------------------------------
 # Starting LKE. Expect a VERMISMATCH error
 

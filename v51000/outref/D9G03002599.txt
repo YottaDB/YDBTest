@@ -15,37 +15,37 @@ otherrepl.dat
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating START of source server for secondary instance [mumps_secondary]
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating START of source server for secondary instance [other_secondary]
 
-GTM>
+YDB>
 ##TEST_AWK.YDB.E.REPLINSTMISMTCH, Process has replication instance file ##TEST_PATH##/mumps.repl \(jnlpool shmid = [0-9]*\) open but database ##TEST_PATH##/otherrepl.dat is bound to instance file ##TEST_PATH##/other.repl \(jnlpool shmid = [0-9]*\)
 		At M source location mumpsfirst+4^d002599
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##TEST_AWK.YDB.E.REPLINSTMISMTCH, Process has replication instance file ##TEST_PATH##/mumps.repl \(jnlpool shmid = [0-9]*\) open but database ##TEST_PATH##/otherrepl.dat is bound to instance file ##TEST_PATH##/other.repl \(jnlpool shmid = [0-9]*\)
 		At M source location otherfirst+2^d002599
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##TEST_AWK.YDB.E.REPLINSTMISMTCH, Process has replication instance file ##TEST_PATH##/other.repl \(jnlpool shmid = [0-9]*\) open but database ##TEST_PATH##/mumpsrepl.dat is bound to instance file ##TEST_PATH##/mumps.repl \(jnlpool shmid = [0-9]*\)
 		At M source location mumpsfirst+2^d002599
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##TEST_AWK.YDB.E.REPLINSTMISMTCH, Process has replication instance file ##TEST_PATH##/other.repl \(jnlpool shmid = [0-9]*\) open but database ##TEST_PATH##/mumpsrepl.dat is bound to instance file ##TEST_PATH##/mumps.repl \(jnlpool shmid = [0-9]*\)
 		At M source location otherfirst+5^d002599
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 Checking mumps environment
 $grep last transaction written to journal pool mumps_showbacklog.log

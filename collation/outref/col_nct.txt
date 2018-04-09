@@ -5,18 +5,18 @@ Using: ##SOURCE_PATH##/mupip
 a.dat
 mumps.dat
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 NCT Enabled
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  NON_REPLIC
 Files Created in ##REMOTE_TEST_PATH##:
 ##SUSPEND_OUTPUT  REPLIC
@@ -70,15 +70,15 @@ Now testing set get and kill of GBLDEF
 ^setgetandkillusageofgbldef78901("z")="z"
 PASSED testing set get and kill of GBLDEF
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -86,13 +86,13 @@ Checking ZWR output of globals for straight Collation
 Globals collation check PASSED
 Now verify data in application level
 
-GTM>
+YDB>
 ver PASS
 
-GTM>
+YDB>
 ver PASS
 
-GTM>
+YDB>
 END of TEST1 NCT test
 ##SOURCE_PATH##/mupip extract -format=bin extr.bin
 %YDB-I-RECORDSTAT, ^AGLOBALVAR1:	  Key cnt: 15622  max subsc len: 63  max rec len: 15  max node len: 79
@@ -124,17 +124,17 @@ Globals collation check PASSED
 Now verify data in application level
 
 ##ALLOW_OUTPUT  REPLIC
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  REPLIC
 ver PASS
 ##ALLOW_OUTPUT  REPLIC
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  REPLIC
 ver PASS
 ##ALLOW_OUTPUT  REPLIC
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  REPLIC
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
@@ -148,20 +148,20 @@ a.dat
 mumps.dat
 ##ALLOW_OUTPUT  REPLIC
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  REPLIC
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##ALLOW_OUTPUT  REPLIC
 NCT Enabled
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  NON_REPLIC
 Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
@@ -181,14 +181,14 @@ Globals collation check PASSED
 Now verify data in application level
 
 ##ALLOW_OUTPUT  REPLIC
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  REPLIC
 ver PASS
 
-GTM>
+YDB>
 ver PASS
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -200,18 +200,18 @@ Using: ##SOURCE_PATH##/mupip
 a.dat
 mumps.dat
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 NCT Enabled
 
-GTM>
+YDB>
 ^TESTINGLONGGLOBALNAME2345678901("%")="%"
 ^TESTINGLONGGLOBALNAME2345678901("-1")=-1
 ^TESTINGLONGGLOBALNAME2345678901("-2")=-2
@@ -261,16 +261,16 @@ Now testing set get and kill of GBLDEF
 ^setgetandkillusageofgbldef78901("z")="z"
 PASSED testing set get and kill of GBLDEF
 
-GTM>
+YDB>
 ##ALLOW_OUTPUT  REPLIC
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  NON_REPLIC
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 Shutting down Primary Source Server Server in ##TEST_PATH##
@@ -291,13 +291,13 @@ Checking ZWR output of globals for reverse Collation
 Globals collation check PASSED
 Now verify data in application level
 
-GTM>
+YDB>
 ver PASS
 
-GTM>
+YDB>
 ver PASS
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  NON_REPLIC
 END of TEST1 NCT test
 ##SUSPEND_OUTPUT  REPLIC
@@ -349,13 +349,13 @@ Checking ZWR output of globals for reverse Collation
 Globals collation check PASSED
 Now verify data in application level
 
-GTM>
+YDB>
 ver PASS
 
-GTM>
+YDB>
 ver PASS
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -372,18 +372,18 @@ Using: ##SOURCE_PATH##/mupip
 a.dat
 mumps.dat
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 NCT Enabled
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip load -format=bin extr.bin
 
 ##SUSPEND_OUTPUT  NON_REPLIC
@@ -408,13 +408,13 @@ Checking ZWR output of globals for reverse Collation
 Globals collation check PASSED
 Now verify data in application level
 
-GTM>
+YDB>
 ver PASS
 
-GTM>
+YDB>
 ver PASS
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -427,18 +427,18 @@ Using: ##SOURCE_PATH##/mupip
 a.dat
 mumps.dat
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 NCT Enabled
 
-GTM>
+YDB>
 Files Created in ##REMOTE_TEST_PATH##:
 Using: ##SOURCE_PATH##/mumps -run GDE
 mumps.gld
@@ -446,30 +446,30 @@ Using: ##SOURCE_PATH##/mupip
 a.dat
 mumps.dat
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 NCT Enabled
 
-GTM>
+YDB>
 Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 Shutting down Primary Source Server Server in ##TEST_PATH##
 DATABASE EXTRACT PASSED
@@ -483,13 +483,13 @@ Checking ZWR output of globals for reverse Collation
 Globals collation check PASSED
 Now verify data in application level
 
-GTM>
+YDB>
 ver PASS
 
-GTM>
+YDB>
 ver PASS
 
-GTM>
+YDB>
 END of TEST4 NCT test
 ##SOURCE_PATH##/mupip extract -format=bin extr.bin
 %YDB-I-RECORDSTAT, ^AGLOBALVAR1:	  Key cnt: 15622  max subsc len: 63  max rec len: 15  max node len: 79
@@ -515,13 +515,13 @@ Checking ZWR output of globals for reverse Collation
 Globals collation check PASSED
 Now verify data in application level
 
-GTM>
+YDB>
 ver PASS
 
-GTM>
+YDB>
 ver PASS
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -533,18 +533,18 @@ Using: ##SOURCE_PATH##/mupip
 a.dat
 mumps.dat
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 NCT Enabled
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip load -format=bin extr.bin
 
 Beginning LOAD at record number: 2
@@ -556,13 +556,13 @@ Checking ZWR output of globals for reverse Collation
 Globals collation check PASSED
 Now verify data in application level
 
-GTM>
+YDB>
 ver PASS
 
-GTM>
+YDB>
 ver PASS
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

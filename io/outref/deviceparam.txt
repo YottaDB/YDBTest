@@ -6,24 +6,24 @@ mumps.dat
 ==================================================================================
 # APPEND - Test that APPEND deviceparameter appends to the end of the file
 
-GTM>
+YDB>
 
 1    BLAH
 2    MORE BLAH
 PASS
 
-GTM>
+YDB>
 ==================================================================================
 # DELETE  - Test that the DELETE deviceparameter for CLOSE actually deletes the file.
 
-GTM>
+YDB>
 PASS, file is deleted
 
-GTM>
+YDB>
 ==================================================================================
 # Test fixed length reads
 
-GTM>
+YDB>
 Will test a valid fixed len (1048576)
 The length of variable line read was:12
 The length of variable line read was:17
@@ -32,18 +32,18 @@ Will test an invalid fixed len (1048577)
 ==================================================================================
 # RENAME - Test that the RENAME deviceparameter for CLOSE actually renames the file.
 
-GTM>
+YDB>
 expect this message in attempt to rename to self then a PASS
 PASS
 File: renamed.txt
 #l   $L(l)   l
 1    4       BLAH
 
-GTM>
+YDB>
 ==================================================================================
 # REWIND -test that REWIND does rewind to the beginning of the file
 
-GTM>
+YDB>
 
 REWIND with USE:
 File: rewind.txt
@@ -105,11 +105,11 @@ File: rewind.txt
 10   11      END OF FILE
 PASS
 
-GTM>
+YDB>
 ==================================================================================
 # READONLY - Test that a device that was opened READONLY cannot be written into.
 
-GTM>
+YDB>
 File: readonly.txt
 #l   $L(l)   l
 1    4       BLAH
@@ -124,7 +124,7 @@ File: readonly.txt
 ==================================================================================
 # TRUNCATE - Test that TRUNCATE deviceparameter works for OPEN and USE.
 
-GTM>
+YDB>
 TRUNCATE with OPEN on a non-existent file
 File: truncate.txt
 #l   $L(l)   l
@@ -183,11 +183,11 @@ File: truncate.txt
 10   1048576                                                                                 <...length=1048576...> 
 11   967120                                                                                  <...length=967120...> 
 
-GTM>
+YDB>
 ==================================================================================
 # FIXED - test that FIXED records work as expected.
 
-GTM>
+YDB>
 -> OPEN "fixed1.txt":(NEWVERSION:FIXED:RECORDSIZE=10)
 -> USE "fixed1.txt":(WIDTH=20)
 File: fixed1.txt
@@ -207,11 +207,11 @@ File: fixed3.txt
 1    60      123       123       123       blah blah blah      123       
              12345678901234567890123456789012345678901234567890
 
-GTM>
+YDB>
 ==================================================================================
 # RECORDSIZE and WIDTH
 
-GTM>
+YDB>
 -> OPEN "recordwidth1.txt":(NEWVERSION:RECORDSIZE=10)
 -> USE "recordwidth1.txt":(width=20)
 -> CLOSE "recordwidth1.txt"
@@ -234,11 +234,11 @@ File: recordwidth3.txt
 2    10      123 412345
 3    10      67890123 9
 
-GTM>
+YDB>
 ==================================================================================
 # LENGTH
 
-GTM>
+YDB>
 -> OPEN "length0.txt":(NEWVERSION)
 -> USE "length0.txt":(LENGTH=0)
 $Y is:1490
@@ -288,11 +288,11 @@ $Y is:487
 $Y is:488
 $Y is:489
 
-GTM>
+YDB>
 ==================================================================================
 # FIFO - RECORDSIZE and WIDTH limits for FIFO devices
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT HOST_OS390_S390
 TEST-I-FNF, file is not found
 ##ALLOW_OUTPUT HOST_OS390_S390
@@ -435,18 +435,18 @@ Will continue with the rest of the tests...
 TEST-I-OK, was expecting an error
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 message: <20164_ALPHABETalphabets>ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklm
 nop
 message: QUIT
 ==================================================================================
 # DESTROY - Test that the DESTROY deviceparameter for CLOSE destroy the sequential disk file device.
 
-GTM>
+YDB>
 Test 1: Test if the default option is destroy
 Before closing file: 
 ZSHOW "D" output: DESTROY.TXT OPEN RMS 
@@ -463,11 +463,11 @@ ZSHOW "D" output: DESTROY.TXT OPEN RMS
 After closing file
 ZSHOW "D" output: DESTROY.TXT CLOSED 
 
-GTM>
+YDB>
 ==================================================================================
 # DESTROY - Test that the DESTROY deviceparameter for CLOSE destroy the FIFO and PIPE device.
 
-GTM>
+YDB>
 Test 1: Test if the default option is destroy
 Before closing fifoX and pipeY: 
 ZSHOW "D" output: fifonamedpipe OPEN FIFO 
@@ -486,7 +486,7 @@ ZSHOW "D" output: fifonamedpipe OPEN FIFO
 ZSHOW "D" output: unnamedpipe OPEN PIPE COMMAND="ls" 
 After closing fifoX and pipeY: 
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

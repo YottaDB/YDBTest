@@ -23,7 +23,7 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ##ALLOW_OUTPUT  NON_REPLIC
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT UTF8
 PASS from fill3^myfill("set")
 ##ALLOW_OUTPUT UTF8
@@ -31,7 +31,7 @@ PASS from fill3^myfill("set")
 set PASS
 ##ALLOW_OUTPUT NON_UTF8
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  NON_REPLIC
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/online6.mjl is renamed to ##TEST_PATH##/online6.mjl_##TIMESTAMP##
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/online6.mjl created for region DEFAULT with .*BEFORE_IMAGES
@@ -95,7 +95,7 @@ No errors detected by integ.
 No errors detected by integ.
 ##ALLOW_OUTPUT NON_REPLIC
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT UTF8
 PASS from fill3^myfill("ver")
 ##ALLOW_OUTPUT UTF8
@@ -103,7 +103,7 @@ PASS from fill3^myfill("ver")
 ver PASS
 ##ALLOW_OUTPUT NON_UTF8
 
-GTM>
+YDB>
 CHECK_STRING_EXIST-I-FOUND. At least one of the messages passed is found in the file badtcp1.outx
 CHECK_STRING_EXIST-I-FOUND. At least one of the messages passed is found in the file badtcp2.outx
 CHECK_STRING_EXIST-I-FOUND. At least one of the messages passed is found in the file badtcp3.outx

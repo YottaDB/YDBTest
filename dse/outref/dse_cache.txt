@@ -27,15 +27,15 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ##ALLOW_OUTPUT   NON_REPLIC
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  REPLIC
 Done Waiting for region AREG : Refcnt = 4
 Done Waiting for region BREG : Refcnt = 4
@@ -57,7 +57,7 @@ Done Waiting for region FREG : Refcnt = 5
 Done Waiting for region GREG : Refcnt = 5
 ##ALLOW_OUTPUT  NON_REPLIC
 
-GTM>
+YDB>
 
 --------- Testing CACHE VERIFY and CACHE RECOVER ---------
 
@@ -431,9 +431,9 @@ Region FREG         : Location 0 [0x00000000] : Value =  : Size = 4 [0x04]
 Region GREG         : Location 0 [0x00000000] : Value =  : Size = 4 [0x04]
 DSE> 
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT   NON_REPLIC
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 Shutting down Primary Source Server Server in ##TEST_PATH##

@@ -6,15 +6,15 @@ mumps.dat
 Step1: Generate snapshot file for normal integ
 ###################################################################
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 # Start the online integ while the background updaters are active
 start database update
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 # Wait for background online integ to complete
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
@@ -27,14 +27,14 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 start database update
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 # Wait for background online integ to complete
 Correct: Fast integ results in smaller snapshot file
 ##SOURCE_PATH##/mupip

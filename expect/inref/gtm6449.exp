@@ -1,3 +1,15 @@
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
 set timeout 10
 if { $::env(alternate) == 1 } {
     set leftkey "\033OD"
@@ -17,8 +29,8 @@ expect "NEXT_COMM"	{ send "cp \$nodelfile \$withdelfile; printf '\\tkdch1=\\\\E\
 expect "NEXT_COMM"	{ send "setenv TERMINFO \$tmpdir\r" }
 expect "NEXT_COMM"	{ send "tic \$withdelfile\r" }
 expect "NEXT_COMM"	{ send "\$GTM\r" }
-# GTM>write "abcd"
-expect "GTM>"	{ send "write \"abcd\"" }
+# YDB>write "abcd"
+expect "YDB>"	{ send "write \"abcd\"" }
 # Three left arrows
 send -- $leftkey
 send -- $leftkey
@@ -31,7 +43,7 @@ expect {
     timeout { exit 1 }
     -exact "abd"
 }
-expect "GTM>"	{ send "halt\r" }
+expect "YDB>"	{ send "halt\r" }
 expect "NEXT_COMM"
 send -- "exit\r"
 expect eof

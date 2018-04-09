@@ -37,11 +37,11 @@ Change the fileid of the mumps.mjl by doing a gzip followed by a gunzip
 Attempt to do journal activity by a new process should result in YDB-E-JNLOPNERR
 ###################################################################
 
-GTM>
+YDB>
 %YDB-E-JNLOPNERR, Error opening journal file ##TEST_PATH##/mumps.mjl
   for database ##TEST_PATH##/mumps.dat
 
-GTM>
+YDB>
 
 
 ###################################################################
@@ -61,9 +61,9 @@ Error PREVJNLLINKCUT seen in set_journal2.out as expected:
 Verify that the situation is indeed fixed by doing an update to DEFAULT region and ensuring that it gets journaled
 ###################################################################
 
-GTM>
+YDB>
 set ^xrandomvariable="something_unique"
-GTM>
+YDB>
 
 File  	##TEST_PATH##/a.dat
 Region	AREG

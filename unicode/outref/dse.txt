@@ -96,7 +96,7 @@ TEST-I-PASS dse dump for encoding UTF16BE in ZWR passed
 #- DSE OVERWRITE
 ^testgbl before OVERWITE
 
-GTM>
+YDB>
 ^testgbl(1)="0ab3456789 -- ０ａｂ２３４５６７８９"
 ^testgbl("four byte char1")="a󠄀a"
 ^testgbl("four byte char2")="a𐄀a"
@@ -106,7 +106,7 @@ GTM>
 ^testgbl("０１２３４５_３")="datab -- ０１２３４５６７８９"
 ^testgbl("０１２３４５_５")="datac -- ０１２３４５６７８９"
 
-GTM>
+YDB>
 changing single byte on globals ^testgbl("０１２３４５_１") , ^testgbl(1)
 
 File  	##TEST_PATH##/mumps.dat
@@ -144,7 +144,7 @@ Region	DEFAULT
 DSE> DSE> 
 ^testgbl after OVERWITE
 
-GTM>
+YDB>
 ^testgbl(1)="0ab3456789 -- ０！ｂ２３４５６７８９"
 ^testgbl("four byte char1")="aŞŞa"
 ^testgbl("four byte char2")="aav"_$ZCH(132,128)_"a"
@@ -154,7 +154,7 @@ GTM>
 ^testgbl("０１２３４５_３")="ａ ｎｅｗ ｄａｔａ ｖａｌ９"
 ^testgbl("０１２３４５_５")="datac -- ０１２３４ｊ６７８９"
 
-GTM>
+YDB>
 
 
 Integ of region DEFAULT
@@ -189,7 +189,7 @@ Free               53              NA              NA            NA
 Total             100             312              NA            24
 TEST-I-PASS, DSE add key passed
 
-GTM>
+YDB>
 ^testgbl(1)="0ab3456789 -- ０！ｂ２３４５６７８９"
 ^testgbl("four byte char1")="aŞŞa"
 ^testgbl("four byte char2")="aav"_$ZCH(132,128)_"a"
@@ -202,7 +202,7 @@ GTM>
 ^testgbl("０１２３４５_４４４","ａｂｃ")=1234567
 ^testgbl("０１２３４５_５")="datac -- ０１２３４ｊ６７８９"
 
-GTM>
+YDB>
 
 
 Integ of region DEFAULT

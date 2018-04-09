@@ -13,7 +13,7 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ##ALLOW_OUTPUT  NON_REPLIC
 
-GTM>
+YDB>
 1:PASS from TP MERGE with TCOMMIT
 Nothing should be in ^newvar
 $DATA(^newvar)=0
@@ -22,7 +22,7 @@ $DATA(newvar)=10
 2:PASS from TP MERGE with TROLLBAK
 3:PASS from TP MERGE with TCOMMIT
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  NON_REPLIC
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 Shutting down Primary Source Server Server in ##TEST_PATH##

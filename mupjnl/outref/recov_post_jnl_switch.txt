@@ -21,16 +21,16 @@ mupip set -journal=enable,before,ep=300,alignsize=4096 -reg "*"
 %YDB-I-JNLSTATE, Journaling state for region DREG is now ON
 ##TEST_AWKtime1 = .*
 
-GTM>
+YDB>
 d t1^test15
 
-GTM>
+YDB>
 d t2^test15
 
-GTM>
+YDB>
 d t3^test15
 
-GTM>
+YDB>
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
@@ -115,9 +115,9 @@ mupip set -journal=enable,before -reg *
 Make update only to AREG
 ##TEST_AWKtime2 = .*
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 mupip journal -recov -back '*' -since=time2
 %YDB-S-JNLSUCCESS, Show successful
 %YDB-S-JNLSUCCESS, Verify successful
@@ -137,9 +137,9 @@ mupip journal -recov -forw -verify "*"
 %YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
-GTM>
+YDB>
 ^a(1)= 1, ^a(100)= 100
 
-GTM>
+YDB>
 ============================================================================
 END of test

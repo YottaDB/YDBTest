@@ -18,16 +18,16 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ##ALLOW_OUTPUT  NON_REPLIC
 
-GTM>
+YDB>
 PASS from fill5^myfill("right")
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 
 
@@ -78,31 +78,31 @@ RESTORE COMPLETED
 7 blocks restored
 ##ALLOW_OUTPUT SPANNING_REGIONS
 
-GTM>
+YDB>
 ^d="This should be in region DEFAULT"
 
-GTM>
+YDB>
 
 RESTORE COMPLETED
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 7 blocks restored
 ##ALLOW_OUTPUT SPANNING_REGIONS
 
-GTM>
+YDB>
 ^a="This should be in region AREG"
 
-GTM>
+YDB>
 
 RESTORE COMPLETED
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 7 blocks restored
 ##ALLOW_OUTPUT SPANNING_REGIONS
 
-GTM>
+YDB>
 ^b="This should be in region BREG"
 
-GTM>
+YDB>
 PASS from fill5^myfill("ver")
 
-GTM>
+YDB>
 LEAVING ONLINE3

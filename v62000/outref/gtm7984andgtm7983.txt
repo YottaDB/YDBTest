@@ -10,21 +10,21 @@ mumps.dat
 
  -------------------- Record size = 32768 ------------------
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
  --> Test of (c) : MUPIP EXTRACT -STDOUT <-- 
 %YDB-I-RECORDSTAT, ^a:	  Key cnt: 3  max subsc len: 9  max rec len: 1000  max node len: 1011
 %YDB-I-RECORDSTAT, ^x:	  Key cnt: 3  max subsc len: 985  max rec len: 32768  max node len: 4080
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 6  max subsc len: 985  max rec len: 32768  max node len: 4080
 
-GTM>
+YDB>
 ^a="<999 >1"
 ^a(1)="<999 >1"
 ^a("abcd")="<999 >1"
@@ -32,7 +32,7 @@ GTM>
 ^x(1)="<32767 >2"
 ^x("<979 >1")="<32767 >2"
 
-GTM>
+YDB>
  --> Test of (a) : MUPIP JOURNAL -EXTRACT <-- 
 ^a="<999 >1"
 ^a(1)="<999 >1"
@@ -42,7 +42,7 @@ GTM>
 ^x("<979 >1")="<32767 >2"
  --> Test of (b) : DSE DUMP -ZWR <-- 
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT NONUNICODE_MODE
 ; DSE EXTRACT UTF-8
 ##ALLOW_OUTPUT NONUNICODE_MODE
@@ -54,10 +54,10 @@ GTM>
 ^a(1)="<999 >1"
 ^a("abcd")="<999 >1"
 
-GTM>
+YDB>
  --> Test of (b) : DSE DUMP -GLO <-- 
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT UNICODE_MODE
 ; DSE EXTRACT
 ; GLO
@@ -69,7 +69,7 @@ GTM>
 <999 >1
 ##ALLOW_OUTPUT UNICODE_MODE
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -81,21 +81,21 @@ mumps.dat
 
  -------------------- Record size = 65536 ------------------
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
  --> Test of (c) : MUPIP EXTRACT -STDOUT <-- 
 %YDB-I-RECORDSTAT, ^a:	  Key cnt: 3  max subsc len: 9  max rec len: 1000  max node len: 1011
 %YDB-I-RECORDSTAT, ^x:	  Key cnt: 3  max subsc len: 985  max rec len: 65536  max node len: 4080
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 6  max subsc len: 985  max rec len: 65536  max node len: 4080
 
-GTM>
+YDB>
 ^a="<999 >1"
 ^a(1)="<999 >1"
 ^a("abcd")="<999 >1"
@@ -103,7 +103,7 @@ GTM>
 ^x(1)="<65535 >2"
 ^x("<979 >1")="<65535 >2"
 
-GTM>
+YDB>
  --> Test of (a) : MUPIP JOURNAL -EXTRACT <-- 
 ^a="<999 >1"
 ^a(1)="<999 >1"
@@ -113,7 +113,7 @@ GTM>
 ^x("<979 >1")="<65535 >2"
  --> Test of (b) : DSE DUMP -ZWR <-- 
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT NONUNICODE_MODE
 ; DSE EXTRACT UTF-8
 ##ALLOW_OUTPUT NONUNICODE_MODE
@@ -125,10 +125,10 @@ GTM>
 ^a(1)="<999 >1"
 ^a("abcd")="<999 >1"
 
-GTM>
+YDB>
  --> Test of (b) : DSE DUMP -GLO <-- 
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT UNICODE_MODE
 ; DSE EXTRACT
 ; GLO
@@ -140,7 +140,7 @@ GTM>
 <999 >1
 ##ALLOW_OUTPUT UNICODE_MODE
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -152,21 +152,21 @@ mumps.dat
 
  -------------------- Record size = 1048576 ------------------
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
  --> Test of (c) : MUPIP EXTRACT -STDOUT <-- 
 %YDB-I-RECORDSTAT, ^a:	  Key cnt: 3  max subsc len: 9  max rec len: 1000  max node len: 1011
 %YDB-I-RECORDSTAT, ^x:	  Key cnt: 3  max subsc len: 985  max rec len: 1048576  max node len: 4080
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 6  max subsc len: 985  max rec len: 1048576  max node len: 4080
 
-GTM>
+YDB>
 ^a="<999 >1"
 ^a(1)="<999 >1"
 ^a("abcd")="<999 >1"
@@ -174,7 +174,7 @@ GTM>
 ^x(1)="<1048575 >2"
 ^x("<979 >1")="<1048575 >2"
 
-GTM>
+YDB>
  --> Test of (a) : MUPIP JOURNAL -EXTRACT <-- 
 ^a="<999 >1"
 ^a(1)="<999 >1"
@@ -184,7 +184,7 @@ GTM>
 ^x("<979 >1")="<1048575 >2"
  --> Test of (b) : DSE DUMP -ZWR <-- 
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT NONUNICODE_MODE
 ; DSE EXTRACT UTF-8
 ##ALLOW_OUTPUT NONUNICODE_MODE
@@ -196,10 +196,10 @@ GTM>
 ^a(1)="<999 >1"
 ^a("abcd")="<999 >1"
 
-GTM>
+YDB>
  --> Test of (b) : DSE DUMP -GLO <-- 
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT UNICODE_MODE
 ; DSE EXTRACT
 ; GLO
@@ -211,7 +211,7 @@ GTM>
 <999 >1
 ##ALLOW_OUTPUT UNICODE_MODE
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

@@ -36,15 +36,15 @@ Starting Primary Source Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
 Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
 ==Executing MULTISITE_REPLIC 'RUN INST2 ##TEST_COM_PATH##/simpleinstanceupdate.csh 1 '==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 %YDB-E-SCNDDBNOUPD, Database Updates not allowed on the secondary
 		At M source location simpleinstanceupdate+8^simpleinstanceupdate
 
-GTM>
+YDB>
 ----------
 Error SCNDDBNOUPD seen in msr_execute_##FILTERED##NO.out as expected:
 %YDB-E-SCNDDBNOUPD, Database Updates not allowed on the secondary
@@ -54,13 +54,13 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
 ==Executing MULTISITE_REPLIC 'RUN INST1 ##TEST_COM_PATH##/simpleinstanceupdate.csh 10'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST2 RCV=INST3 set msr_dont_chk_stat ; ##SOURCE_PATH##/mupip replic -source -activate -propagateprimary -instsecondary=__RCV_INSTNAME__ -secondary=__RCV_HOST__:__RCV_PORTNO__ >& err_src.tmp ; cat err_src.tmp'==
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating ACTIVATE operation on source server pid [##PID##] for secondary instance [INSTANCE3]
 Source Server already ACTIVE, not changing mode
@@ -80,15 +80,15 @@ Error PRIMARYISROOT seen in msr_execute_##FILTERED##NO.out as expected:
 ==Executing MULTISITE_REPLIC 'CHECKHEALTH INST1 INST4'==
 ==Executing MULTISITE_REPLIC 'RUN INST4 set msr_dont_chk_stat; ##TEST_COM_PATH##/simpleinstanceupdate.csh 10'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 %YDB-E-SCNDDBNOUPD, Database Updates not allowed on the secondary
 		At M source location simpleinstanceupdate+8^simpleinstanceupdate
 
-GTM>
+YDB>
 ----------
 Error SCNDDBNOUPD seen in msr_execute_##FILTERED##NO.out as expected:
 %YDB-E-SCNDDBNOUPD, Database Updates not allowed on the secondary
@@ -128,13 +128,13 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
 ###################################################################
 ==Executing MULTISITE_REPLIC 'RUN INST1 ##TEST_COM_PATH##/simpleinstanceupdate.csh 10'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'RUN INST1 set msr_dont_chk_stat ; $MUPIP replic -instance_create -name=CANIRECREATE'==
 %YDB-E-REPLINSTSTNDALN, Could not get exclusive access to replication instance file ##TEST_PATH##/mumps.repl
 ----------
@@ -152,13 +152,13 @@ Error REPLINSTSTNDALN seen in msr_execute_##FILTERED##NO.out as expected:
 ==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST2 RESERVEPORT'==
 ==Executing MULTISITE_REPLIC 'RUN INST1 ##TEST_COM_PATH##/simpleinstanceupdate.csh 10'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ###################################################################
 Stop the servers - backup the files - restart the servers
 ==Executing MULTISITE_REPLIC 'STOP INST1 INST4 ON'==
@@ -283,9 +283,9 @@ Error REPLINSTNOHIST seen in ##FILTERED##RCVR_##TIMESTAMP##.log as expected:
 ==Executing MULTISITE_REPLIC 'STARTRCV INST2 INST3 updateresync=save2/mumps.repl -initialize'==
 ==Executing MULTISITE_REPLIC 'STARTSRC INST2 INST3 PP'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
 ==Executing MULTISITE_REPLIC 'STOP INST2 INST3'==
 Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3

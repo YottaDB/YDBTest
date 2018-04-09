@@ -17,43 +17,43 @@ mumps.dat
 Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 
-GTM>
+YDB>
 do ^sptp1(1,1000)
 
-GTM>
+YDB>
 sptp1 Started
 sptp1 Ends
 
-GTM>
+YDB>
 # Switch journals right before shutting down to ensure $ZQGBLMOD returns the "best" values since $ZQGBLMOD returns the most pessimistic values (i.e. beginning of the journal file).
 # Shut down receiver (B)...
 
-GTM>
+YDB>
 do ^sptp2(1001,10000)
 
-GTM>
+YDB>
 sptp2 Started
 sptp2 Ends
 
-GTM>
+YDB>
 Shutdown Primary in (A)...
 Restarting (B) as primary...
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating NEEDRESTART operation on source server pid [##PID##] for secondary instance [INSTANCE1]
 Secondary Instance [INSTANCE1] DOES NOT NEED to be restarted
 
-GTM>
+YDB>
 do ^sptp3(1,5)
 
-GTM>
+YDB>
 sptp3 Started
 sptp3 Ends
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do ^zqlapp(11,100)
 
-GTM>
+YDB>
 ZQLAPP Started
 $zqgblmod of ^alongglobalnameforzqgblmod 1
 $zqgblmod of ^b 1
@@ -347,7 +347,7 @@ Check variables which was never applied
 Following globals was never applied but zqgblmod is doubtful...
 ZQLAPP Ends
 
-GTM>
+YDB>
 Shutting down Passive Source Server and Receiver Server in ##TEST_PATH##
 Shutting down Primary Source Server Server in ##REMOTE_TEST_PATH##
 DATABASE EXTRACT PASSED

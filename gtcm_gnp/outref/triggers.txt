@@ -89,34 +89,34 @@ Load triggers on remote nodes. See trigload*.out for the actual trigger command
 Do updates on Local and Remote nodes. The updates to remote nodes should not invoke triggers
 ###################################################################
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 
 ###################################################################
 Verify that no triggers were invoked on the remote sides
 ###################################################################
 
-GTM>
+YDB>
 ^a(1)="Update to 'a' global"
 ^a(1,2)="Update to 'a' global"
 
-GTM>
+YDB>
 ^b(1)="Remote update"
 
-GTM>
+YDB>
 ^x(1)="Remote update 2"
 
-GTM>
+YDB>
 Stopping the GT.CM Servers...
 Check the databases on the GT.CM Servers...
 ##GT.CM####SOURCE_PATH##/mupip

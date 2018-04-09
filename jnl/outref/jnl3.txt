@@ -7,10 +7,10 @@ myjnl3.dat
 %YDB-W-JNLBUFFDBUPD, Journal file buffer size for database file ##TEST_PATH##/myjnl3.dat has been adjusted from 2308 to 2312.
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/myjnl3.dat is now ON
 
-GTM>
+YDB>
 s pass=16,start=1,commit=0
 
-GTM>
+YDB>
 d ^jnlbasf0
 
 
@@ -25,7 +25,7 @@ Region	DEFAULT
 . 
 
 JNLBASF0 COMPLETE 
-GTM>
+YDB>
 h
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ myjnl3.dat
@@ -34,17 +34,17 @@ No errors detected by integ.
 %YDB-S-JNLSUCCESS, Verify successful
 %YDB-S-JNLSUCCESS, Recover successful
 
-GTM>
+YDB>
 s pass=16
 
-GTM>
+YDB>
 d ^jnlbasf1
 
 
 JNLBASF1 check of data after recovery 
 PASS 
 
-GTM>
+YDB>
 h
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ myjnl3.dat
@@ -54,17 +54,17 @@ No errors detected by integ.
 %YDB-S-JNLSUCCESS, Verify successful
 %YDB-S-JNLSUCCESS, Recover successful
 
-GTM>
+YDB>
 s pass=16
 
-GTM>
+YDB>
 d ^jnlbasf1
 
 
 JNLBASF1 check of data after recovery 
 PASS 
 
-GTM>
+YDB>
 h
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ myjnl3.dat

@@ -1,12 +1,12 @@
 # Expecting ZWRITE output of x and y to be "" after timeouts from timed READ of 1.234 and 1.2345 seconds
 # With YottaDB r110 and GTM V63002, the timed READ of 1.2345 seconds would not timeout thus causing y to not be "" below
-GTM>read x:1.234
-GTM>zwrite $test
+YDB>read x:1.234
+YDB>zwrite $test
 $TEST=0
-GTM>read y:1.2345
-GTM>zwrite $test
+YDB>read y:1.2345
+YDB>zwrite $test
 $TEST=0
-GTM>zwrite
+YDB>zwrite
 x=""
 y=""
-GTM>halt
+YDB>halt

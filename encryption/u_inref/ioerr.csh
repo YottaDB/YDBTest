@@ -41,25 +41,25 @@ setenv gtm_passwd `echo $password | $gtm_dist/plugin/gtmcrypt/maskpass | cut -f3
 
 cat > gtmPrompt.outx <<EOF
 
-GTM>
+YDB>
 EOF
 
 cat > gtmErrorPrompt.outx <<EOF
 %YDB-E-DIVZERO, Attempt to divide by zero
 		At M source location principalError+4^ioerr
 
-GTM>
+YDB>
 EOF
 
 cat > gtmStringPrompt.outx <<EOF
 Hello, world!
 
-GTM>
+YDB>
 EOF
 
 cat > gtmStringPromptCompact.outx <<EOF
 Hello, world!
-GTM>
+YDB>
 EOF
 
 cat > gtmStringErrorPrompt.outx <<EOF
@@ -67,7 +67,7 @@ Hello, world!
 %YDB-E-DIVZERO, Attempt to divide by zero
 		At M source location principalWriteError+8^ioerr
 
-GTM>
+YDB>
 EOF
 
 source $gtm_tst/$tst/u_inref/set_encryption_algorithm.csh

@@ -2,7 +2,7 @@
 
 [beowulf-alim]:>gtm
 d
-GTM>d ^ctrlc
+YDB>d ^ctrlc
  
 Stepping STARTED
  q
@@ -10,15 +10,15 @@ Stepping STARTED
  f i=1:1:10000000  SET x=x+1
 %YDB-I-CTRLC, CTRL_C encountered
  
-GTM>zc
+YDB>zc
 %YDB-I-CTRLC, CTRL_C encountered
  
-GTM>w i
+YDB>w i
 2016565
-GTM>zc
+YDB>zc
 %YDB-I-CTRLC, CTRL_C encountered
  
-GTM>zp
+YDB>zp
 ctrlc       ;
  s x=0
         d sstep^ctrlc
@@ -31,4 +31,4 @@ sstep   ;
         w !,"Stepping STARTED",!
  q
  
-GTM>                                 
+YDB>                                 

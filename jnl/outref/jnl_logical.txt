@@ -308,9 +308,9 @@ GDE>
 %GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
 $GTM << XXX
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 setenv logi yyy.mjl
 $MUPIP set -jour="enable,before" -reg "*" | & sort -f
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
@@ -336,9 +336,9 @@ xxx.mjl
 ##TEST_AWKxxx.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
 $GTM << XXX
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 $MUPIP set -jour="enable,before" -reg BREG | & sort -f
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with BEFORE_IMAGES
@@ -355,11 +355,11 @@ xxx.mjl
 ##TEST_AWKxxx.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
 $GTM << XXX
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 $MUPIP set -jour="enable,before" -reg "*" | & sort -f
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
@@ -424,21 +424,21 @@ xxx.mjl
 ##TEST_AWKxxx.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
 $GTM << XXX
 
-GTM>
+YDB>
 2 = 2
-GTM>
+YDB>
 3 = 3
-GTM>
+YDB>
 4 = 4
-GTM>
+YDB>
 2 = 2
-GTM>
+YDB>
 9 = 9
-GTM>
+YDB>
 4 = 4
-GTM>
+YDB>
 4 = 4
-GTM>
+YDB>
 $MUPIP set -jour="enable,before" -reg "*" | & sort -f
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##

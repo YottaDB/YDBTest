@@ -54,11 +54,16 @@ if (`expr "$msver" "<" "V62000"`) then
 	setenv test_encryption NON_ENCRYPT
 endif
 
-# If this test chose r120 as the prior version, that won't work if ydb_msgprefix is not set to "GTM".
+# If this test chose r120 as the prior version, GDE won't work with that version unless ydb_msgprefix is set to "GTM".
 # (https://github.com/YottaDB/YottaDB/issues/193). Therefore, set ydb_msgprefix to "GTM" in that case.
 if ($msver == "V63003A_R120") then
 	setenv ydb_msgprefix "GTM"
 endif
+
+# The default prompt is "GTM>" for versions < r1.00 and "YDB>" for other versions.
+# Since we want a deterministic reference file, and it is not possible to get pre r1.00 versions to
+# display a "YDB>" prompt, keep the prompt at "GTM>" even in post-r1.00 versions.
+setenv gtm_prompt "GTM>"
 
 # V62001 pro has a different layout of the relinkshm_hdr_t structure than debug or later versions. We do not want other
 # processes to be accessing the relinkctl file it creates.

@@ -1,61 +1,61 @@
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 -> OPEN "example_1.txt":(NEWVERSION:RECORDSIZE=100000)
 
-GTM>
+YDB>
 ZSHOW "D" output: example_1.txt OPEN RMS REC=100000 
 
-GTM>
+YDB>
 -> OPEN "example_1.txt":(NEWVERSION:RECORDSIZE=1000000:BIGRECORD)
 
-GTM>
+YDB>
 ZSHOW "D" output: example_1.txt OPEN RMS REC=1000000 
 
-GTM>
+YDB>
 -> OPEN "example_1.txt":(NEWVERSION:RECORDSIZE=5000)
 
-GTM>
+YDB>
 ZSHOW "D" output: example_1.txt OPEN RMS REC=5000 
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 -> OPEN "example_2.txt":(NEWVERSION:RECORDSIZE=50000000)
 %YDB-E-RMWIDTHTOOBIG, File record size or width too big
 		At M source location open+10^io
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 -> OPEN "example_2.txt":(NEWVERSION:RECORDSIZE=1000000)
 
-GTM>
+YDB>
 -> OPEN "example_2.txt":(NEWVERSION:BIGRECORD:RECORDSIZE=1000000)
 
-GTM>
+YDB>
 ZSHOW "D" output: example_2.txt OPEN RMS REC=1000000 
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 -> OPEN "example_3.txt":(NEWVERSION:BIGRECORD:RECORDSIZE=1048576)
 
-GTM>
+YDB>
 ZSHOW "D" output: example_3.txt OPEN RMS REC=1048576 
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 -> OPEN "example_7.txt":(BADDEVPARAM)
 %YDB-E-DEVPARUNK, Deviceparameter unknown
 		At M source location open+10^io
 
-GTM>
+YDB>

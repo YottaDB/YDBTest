@@ -5,27 +5,27 @@ Using: ##SOURCE_PATH##/mupip
 a.dat
 gtm_env_translate is not defined
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Files Created in ##TEST_PATH##:
 Using: ##SOURCE_PATH##/mumps -run GDE
 b.gld
 Using: ##SOURCE_PATH##/mupip
 b.dat
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Files Created in ##TEST_PATH##:
 Using: ##SOURCE_PATH##/mumps -run GDE
 mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 #########################################################################################
 gtm_env_translate is not defined. No environment translation.
 
@@ -76,32 +76,32 @@ This will error:
 %YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/$b.gld.  Retaining ##TEST_PATH##/mumps.gld.,%SYSTEM-E-ENO2, No such file or directory
 		At M source location err1^basic
 
-GTM>
+YDB>
 This will error: 
 %YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/badgld.gld.  Retaining ##TEST_PATH##/mumps.gld.,%SYSTEM-E-ENO2, No such file or directory
 		At M source location err2^basic
 
-GTM>
+YDB>
 This will error with a message:
 %YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%YDB-I-TEXT, This is an error from gtm_env_xlate
 		At M source location err3+2^basic
 
-GTM>
+YDB>
 This will error without a message:
 %YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm
 		At M source location err4+2^basic
 
-GTM>
+YDB>
 This will error with too long a return string (and success):  
 %YDB-E-XTRNRETVAL, Length of return value (33333) from extended reference translation algorithm is not in the range [0,32767]
 		At M source location err5+3^basic
 
-GTM>
+YDB>
 This will error without too long a return string (and error): 
 %YDB-E-XTRNRETVAL, Length of return value (33333) from extended reference translation algorithm is not in the range [0,32767]
 		At M source location err6^basic
 
-GTM>
+YDB>
 #########################################################################################
 Now the SQ translation routine
 
@@ -113,7 +113,7 @@ undefined environment variable (gtm_gblxlate)...
 %YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%YDB-I-TEXT, gtm_env_xlate:  Cannot translate environment variable gtm_gblxlate
 		At M source location tsq+3^sq
 
-GTM>
+YDB>
 
 bad file name for gtm_gblxlate...
 gtm_gblxlate = ##IN_TEST_PATH##/inref/notthere.dat
@@ -122,23 +122,23 @@ gtm_gblxlate = ##IN_TEST_PATH##/inref/notthere.dat
 %YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%YDB-I-TEXT, gtm_env_xlate:  Cannot open translation file ##IN_TEST_PATH##/inref/notthere.dat (2) - No such file or directory
 		At M source location tsq+3^sq
 
-GTM>
+YDB>
 ^["/a/b/c","sphere"]GBL= 
 %YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%YDB-I-TEXT, gtm_env_xlate:  Cannot open translation file ##IN_TEST_PATH##/inref/notthere.dat (2) - No such file or directory
 		At M source location tsq+3^sq
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_OS390_S390
 %YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%YDB-I-TEXT, gtm_env_xlate:  Cannot open translation file ##IN_TEST_PATH##/inref/notthere.dat (129) - No such file or directory
 		At M source location tsq+3^sq
 
-GTM>
+YDB>
 ^["/a/b/c","sphere"]GBL= 
 %YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%YDB-I-TEXT, gtm_env_xlate:  Cannot open translation file ##IN_TEST_PATH##/inref/notthere.dat (129) - No such file or directory
 		At M source location tsq+3^sq
 
-GTM>
+YDB>
 ##ALLOW_OUTPUT HOST_ALL
 
 Now the correct gtm_gblxlate...
@@ -147,17 +147,17 @@ gtm_gblxlate = ##IN_TEST_PATH##/inref/table.dat
 %YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%YDB-I-TEXT, gtm_env_xlate:  No translation available
 		At M source location tsq+3^sq
 
-GTM>
+YDB>
 ^["/b/c","sphere"]GBL= 
 %YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%YDB-I-TEXT, gtm_env_xlate:  No translation available
 		At M source location tsq+3^sq
 
-GTM>
+YDB>
 ^["a/a/b/c","sphere"]GBL= 
 %YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%YDB-I-TEXT, gtm_env_xlate:  No translation available
 		At M source location tsq+3^sq
 
-GTM>
+YDB>
 ^["/a/b/c","sphere"]GBL= 
 THIS IS A
 ^["/a/b/c","sphere"]GBL= 
@@ -181,7 +181,7 @@ gtm_gblxlate = ##IN_TEST_PATH##/inref/table_bad.dat
 %YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%YDB-I-TEXT, gtm_env_xlate:  Can't get IP address for host in /not/here
 		At M source location tsq+3^sq
 
-GTM>
+YDB>
 
 gtm_gblxlate = ##IN_TEST_PATH##/inref/table.dat
 Now let's test LOCKS...

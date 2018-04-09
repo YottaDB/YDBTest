@@ -1,5 +1,5 @@
 
-GTM>
+YDB>
 d ^nodb
 
 I do not have a database...
@@ -15,22 +15,22 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
 
-GTM>
+YDB>
 %YDB-E-TRACEON, Missing global name (with optional subscripts) for recording M-tracing information
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 %YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): LCL
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 d ^badprof
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 d ^examin ^TRACE
 The number of executions:
 ^TRACE("GTM$DMOD","^"): 1
@@ -39,11 +39,11 @@ The number of executions:
 ^TRACE("badprof","badprof",3): 1
 ^TRACE("badprof","badprof",4): 1
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 d ^examin ^TRACE
 The number of executions:
 ^TRACE("badprof","badprof"): 1
@@ -51,14 +51,14 @@ The number of executions:
 ^TRACE("badprof","badprof",3): 1
 ^TRACE("badprof","badprof",4): 1
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 d ^out1
 
-GTM>
+YDB>
 d ^examin ^TRACE
 The number of executions:
 ^TRACE("badprof","badprof"): 1
@@ -74,21 +74,21 @@ The number of executions:
 ^TRACE("out1","out",4,"FOR_LOOP",1): 10
 ^TRACE("out1","out",5): 1
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 d ^out2
 
-GTM>
+YDB>
 d ^examin ^TRACE
 The number of executions:
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 d ^smoke
 
-GTM>
+YDB>
 d ^examin ^TRACE
 The number of executions:
 ^TRACE("END","smoke","end",0): 1
@@ -99,9 +99,9 @@ The number of executions:
 ^TRACE("END","smoke","smoke",4,"FOR_LOOP",1): 3
 ^TRACE("END","smoke","smoke",4,"FOR_LOOP",2): 6
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 d ^examin ^TRACE
 The number of executions:
 ^TRACE("ZMPROF15","lev1","lev1",3): 1
@@ -147,7 +147,7 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
 
-GTM>
+YDB>
 d ^extin
 
 Testing external and internal extrinsic functions...
@@ -156,7 +156,7 @@ Processing External extrinsic function
 
 Processing Internal extrinsic function 
 
-GTM>
+YDB>
 d ^examin ^TRACE
 The number of executions:
 ^TRACE("ZMPROF1","exf","lab1"): 10
@@ -183,9 +183,9 @@ The number of executions:
 ^TRACE("ZMPROF1","testei","testei",2): 1
 ^TRACE("ZMPROF1","testei","testei",3): 1
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 d ^direct
 
 Testing direct routine calls...
@@ -194,7 +194,7 @@ Processing External routine
 
 Processing Internal routine
 
-GTM>
+YDB>
 d ^examin ^TRACE
 The number of executions:
 ^TRACE("ZMPROF13","direct","direct",3): 1
@@ -223,9 +223,9 @@ The number of executions:
 ^TRACE("ZMPROF13","testdir","testdir",2): 1
 ^TRACE("ZMPROF13","testdir","testdir",3): 1
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 d ^indirect
 
 Testing indirection...
@@ -234,7 +234,7 @@ Processing External routine
 
 Processing Internal routine
 
-GTM>
+YDB>
 d ^examin ^TRACE
 The number of executions:
 ^TRACE("ZMPROF2","exr","lab1"): 10
@@ -263,9 +263,9 @@ The number of executions:
 ^TRACE("ZMPROF2","testind","testind",2): 1
 ^TRACE("ZMPROF2","testind","testind",3): 1
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 d ^label
 
 Testing routine calls without labels, and variable in TRACE:0:var ...
@@ -273,7 +273,7 @@ DUMMY
 DUMMY
 DUMMY
 I have a labelNo I do not have a label
-GTM>
+YDB>
 d ^examin ^TRACE
 The number of executions:
 ^TRACE("NAME","dummy","^"): 1
@@ -306,7 +306,7 @@ The number of executions:
 ^TRACE("ZMPROF4","label","label",9): 1
 ^TRACE("ZMPROF4","label","label",10): 1
 
-GTM>
+YDB>
 d ^examin ^TRACEN
 The number of executions:
 ^TRACEN("dummy","^"): 1
@@ -320,16 +320,16 @@ The number of executions:
 ^TRACEN("label","label",4): 1
 ^TRACEN("label","label",5): 1
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 d ^multilvl
 
 Testing multilevel m routines, internal and external, and various command/comment/local/global variations...
 another line hereI am still hereanother line hereI am still hereanother line hereI am still hereNest 3 levels
 1 2 3 
 
-GTM>
+YDB>
 d ^examin ^TRACE
 The number of executions:
 ^TRACE("ZMPROF6","lvls","lvl1"): 1
@@ -371,9 +371,9 @@ The number of executions:
 ^TRACE("ZMPROF6","pow","pow",0): 1
 ^TRACE("ZMPROF6","pow","pow",1): 1
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 d ^comm
 
 Testing commands/comments/local/global variations and jobbed processes...
@@ -385,7 +385,7 @@ k is:4
 do you count jobs?
 tell me
 a
-GTM>
+YDB>
 d ^examin ^TRACE
 The number of executions:
 ^TRACE("ZMPROF10","comm","comm",19): 1
@@ -514,11 +514,11 @@ The number of executions:
 ^TRACE("ZMPROF9","comm","comm",15): 1
 ^TRACE("ZMPROF9","comm","comm",16): 1
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 d ^mnylvl
 ##TEST_AWK\^TRACE\([0-9A-Za-z\*",_]*\).[":0-9]*
 ##TEST_AWK\^TRACE\([0-9A-Za-z\*",_]*\).[":0-9]*
@@ -530,7 +530,7 @@ d ^mnylvl
 ##TEST_AWK\^TRACE\([0-9A-Za-z",_]*\).[":0-9]*
 ##TEST_AWK\^TRACE\([0-9A-Za-z",_]*\).[":0-9]*
 
-GTM>
+YDB>
 d ^examin ^TRACE
 The number of executions:
 ^TRACE("ZMPROF17","mnylvl","loop",3): 1
@@ -542,15 +542,15 @@ The number of executions:
 ^TRACE("ZMPROF17","mnylvl","x",3): 1026
 ##SUSPEND_OUTPUT  L
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 d ^fors
 
 Testing fors...
-GTM>
+YDB>
 d ^examin ^TRACE
 The number of executions:
 ^TRACE("ZMPROF14","fors","fors",3): 1
@@ -644,12 +644,12 @@ The number of executions:
 ^TRACE("ZMPROF14","lotsfor","zminfor",4): 2
 ##ALLOW_OUTPUT  L
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 ##SUSPEND_OUTPUT  L
-GTM>
+YDB>
 ##ALLOW_OUTPUT  L
 
 
@@ -659,13 +659,13 @@ GTM>
 ##SUSPEND_OUTPUT  L
 
 ##ALLOW_OUTPUT  L
-GTM>
-GTM>
-GTM>
-GTM>
-GTM>
-GTM>
-GTM>
+YDB>
+YDB>
+YDB>
+YDB>
+YDB>
+YDB>
+YDB>
 ##TEST_AWK\^LONGGLOBALNAMESCANBEUSEDTOSTORE\("TEST",[0-9][0-9]*,[0-9A-Za-z",_\*]*\).[":0-9]*
 ##TEST_AWK\^LONGGLOBALNAMESCANBEUSEDTOSTORE\("TEST",[0-9][0-9]*,[0-9A-Za-z",_\*]*\).[":0-9]*
 ##TEST_AWK\^LONGGLOBALNAMESCANBEUSEDTOSTORE\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
@@ -689,13 +689,13 @@ another line hereI am still here
 
 
 
-GTM>
-GTM>
-GTM>
-GTM>
-GTM>
-GTM>
-GTM>
+YDB>
+YDB>
+YDB>
+YDB>
+YDB>
+YDB>
+YDB>
 ##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_\*]*\).[":0-9]*
 ##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_\*]*\).[":0-9]*
 ##TEST_AWK\^MYGBL\("TEST",[0-9][0-9]*,[0-9A-Za-z",_]*\).[":0-9]*
@@ -796,14 +796,14 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 d ^fact(18)
 Factorial test 
   PASS
 
-GTM>
+YDB>
 d ^arith(18)
 Numeric Test 
   unary operators 
@@ -813,7 +813,7 @@ a  PASS
   multiplication 
 m  PASS
 
-GTM>
+YDB>
 d ^ebmuldiv(0)
 ## BEGIN PROGRAM - ebmuldiv
    PASS - PER 002137
@@ -823,13 +823,13 @@ d ^ebmuldiv(0)
    PASS - Multiplication tests
 ## END   PROGRAM - ebmuldiv
 
-GTM>
+YDB>
 d ^barith
 ## BEGIN PROGRAM - barith
    PASS
 ## END   PROGRAM - barith
 
-GTM>
+YDB>
 d ^bool
 
 Test of Boolean operators
@@ -837,7 +837,7 @@ c  PASS
 u  PASS
 b  PASS
 
-GTM>
+YDB>
 d ^relation
 
 Test of relational operations
@@ -846,7 +846,7 @@ b  PASS
 c  PASS
 d  PASS
 
-GTM>
+YDB>
 d ^pattst
 ## BEGIN PROGRAM - pattst
 Test of MUMPS pattern match operator
@@ -856,13 +856,13 @@ c  PASS
 0  PASS - PER 002579
 ## END   PROGRAM - pattst
 
-GTM>
+YDB>
 d ^sortsaft
 ## BEGIN PROGRAM - sortsaft
    PASS
 ## END   PROGRAM - sortsaft
 
-GTM>
+YDB>
 d ^text4
 In text4 beginning calls to other routines
 
@@ -1006,21 +1006,21 @@ in text2
 leaving text2
 
 
-GTM>
+YDB>
 d ^per02457
 ## BEGIN PROGRAM - per02457
    PASS - PER 002457
 ## END   PROGRAM - per02457
 
-GTM>
+YDB>
 d ^ascii
 ******* ASCII TEST ********
 
-GTM>
+YDB>
 d ^char
 ******** CHAR TEST *******
 
-GTM>
+YDB>
 d ^fnextr
 -1 -1 ''
 -1 0 ''
@@ -1059,13 +1059,13 @@ d ^fnextr
 4 3 ''
 4 4 ''
 
-GTM>
+YDB>
 d ^length
 
 Test of $length function
 l  PASS
 
-GTM>
+YDB>
 d ^piece
 
 Test of $piece
@@ -1075,19 +1075,19 @@ c  PASS
 d  PASS
 e  PASS
 
-GTM>
+YDB>
 d ^setpiece
 ## BEGIN PROGRAM - setpiece
    PASS
 ## END   PROGRAM - setpiece
 
-GTM>
+YDB>
 d ^query
 ## BEGIN PROGRAM - query
    PASS - PER 001897
 ## END   PROGRAM - query
 
-GTM>
+YDB>
 d ^extcall
 ENTERED ^extcall2
 ENTERED LAB1^extcall1
@@ -1104,7 +1104,7 @@ I AM AT LABEL A
 A IS DONE
 DOING LAB1^extcall AGAINENTERED LAB1^extcall1
 
-GTM>
+YDB>
 d ^locals
 
 Test of access to MUMPS locals
@@ -1123,7 +1123,7 @@ u  PASS
 k  PASS
 s  PASS
 
-GTM>
+YDB>
 d ^cmptst
 1
 0
@@ -1135,7 +1135,7 @@ d ^cmptst
 (121,234,567.9)
 (1,234,567.891)
 
-GTM>
+YDB>
 d ^expr2
 str= 1
 1
@@ -1158,7 +1158,7 @@ str= 123456789
 str= 12345678910
 12345678910
 
-GTM>
+YDB>
 d ^for
 
 Test of for loop
@@ -1172,7 +1172,7 @@ l  PASS
 +c PASS
 -c PASS
 
-GTM>
+YDB>
 d ^forloop
 1000005
 1000001
@@ -1181,7 +1181,7 @@ d ^forloop
 -1000001
 -1000001
 
-GTM>
+YDB>
 d ^log
 0000001100010110001100001001100000010001000011000010100001000000
 
@@ -1200,7 +1200,7 @@ d ^log
 1100100001000000100001000000001001001000001000000100001010000001
 
 
-GTM>
+YDB>
 d ^new
 ind="x"
 ind2="y"
@@ -1224,7 +1224,7 @@ yy=3 ;*
 
 n 
 
-GTM>
+YDB>
 d ^select
 <begin>
 <enter>
@@ -1234,7 +1234,7 @@ d ^select
 <begin>
 <begin>
 
-GTM>
+YDB>
 d ^xecute
 help
 write "help",!
@@ -1247,7 +1247,7 @@ help
 write "help",!
 x
 
-GTM>
+YDB>
 d ^larray
 ## BEGIN PROGRAM - larray
    PASS  1
@@ -1256,20 +1256,20 @@ d ^larray
    PASS  2c
 ## END   PROGRAM - larray
 
-GTM>
+YDB>
 d ^view
 ## BEGIN PROGRAM - view
    PASS - PER 002184
    PASS - PER 002277
 ## END   PROGRAM - view
 
-GTM>
+YDB>
 d ^view2(0)
 ## BEGIN PROGRAM - view2
    PASS
 ## END   PROGRAM - view2
 
-GTM>
+YDB>
 d ^zbits
 ## BEGIN PROGRAM - zbits
    PASS - $ZBITSTR $ZBITLEN
@@ -1283,25 +1283,25 @@ d ^zbits
    PASS - $ZBITXOR
 ## END   PROGRAM - zbits
 
-GTM>
+YDB>
 d ^per2586a(0)
 $ZTRAP on entry to ^%X, before New $ZTRAP = B
 
    PASS
 
-GTM>
+YDB>
 d ^per2586b(0)
 $ZTRAP on entry to ^%X, before New $ZTRAP = B
 
    PASS
 
-GTM>
+YDB>
 d ^per2586c(0)
 $ZTRAP on entry to ^%X, before New $ZTRAP = B
 
    PASS
 
-GTM>
+YDB>
 d ^per2968
 This is the calling routine
 This is foo^per2968b
@@ -1314,21 +1314,21 @@ This is the calling routine
 ##ALLOW_OUTPUT HOST_ALL
 		At M source location per2968a+1^per2968a
 
-GTM>
+YDB>
 d ^tstp
 All tests passed
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ZTRAP testing starts...
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Testing valid ZTRAP cases...
 
-GTM>
+YDB>
 do ^ztvref1
 Testing Ztrap Label...done(SUB2)
 Testing Ztrap Lable+offset...done(SUB3+1)
@@ -1337,7 +1337,7 @@ end ztleaf
 Testing Ztrap Label+module...done(lab^ztleaf)
 end ztleaf
 
-GTM>
+YDB>
 do ^ztvref2
 Testing Ztrap @Label...done(IND2)
 Testing Ztrap @Label+offest...done(IND3+1)
@@ -1346,12 +1346,12 @@ end ztleaf
 Testing Ztrap @Label+@module...done(lab^ztleaf)
 end ztleaf
 
-GTM>
+YDB>
 do ^ztvref3
 Testing Recursive Ztrap to find the sum
 Sum of first 100 numbers = 5050
 
-GTM>
+YDB>
 do ^ztvcmd1
 This is main function
 this is SUB1
@@ -1359,7 +1359,7 @@ this is SUB2
 exiting main function
 stack level: 2
 
-GTM>
+YDB>
 do ^ztvcmd2
 This is main function
 
@@ -1373,7 +1373,7 @@ value of a = 10
 value of b = 15
 value of x(a*b) = 150
 
-GTM>
+YDB>
 do ^ztvcmd3
 This is main function
 Before SUB1
@@ -1385,77 +1385,77 @@ this is SUB2
 end of valid ZTRAP cases...
 Testing invalid ZTRAP cases...
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do NOLAB^ztiref
 Testing 'ZTRAP label' with no label present
 %YDB-E-LABELMISSING, Label referenced but not defined: lab
 
-GTM>
+YDB>
 do OFF^ztiref
 Testing Ztrap Lable+offset with invalid offset
 %YDB-E-OFFSETINV, Entry point OFF+1000 not valid
 
-GTM>
+YDB>
 do MOD^ztiref
 Testing Ztrap ^module with no module
 %YDB-E-ZLINKFILE, Error while zlinking "nowhere"
 %YDB-E-FILENOTFND, File nowhere not found
 
-GTM>
+YDB>
 do SUB4^ztiref
 Testing Ztrap containing erroneous indirection
 %YDB-E-STACKCRIT, Stack space critical
 
-GTM>
+YDB>
 do IND^ztiref
 Testing invalid indirection @(lab+off)^mod)
 %YDB-E-LABELMISSING, Label referenced but not defined: lab+0
 
-GTM>
+YDB>
 do TST1^zticmd3
 Testing syntax error...zlevel = 3
 done
 
-GTM>
+YDB>
 do TST2^zticmd3
 Testing quit as label...zlevel = 3
 
-GTM>
+YDB>
 do TST3^zticmd3
 Testing syntax error in set command...zlevel = 3
 %YDB-E-INDEXTRACHARS, Indirection string contains extra trailing characters
 
-GTM>
+YDB>
 do TST4^zticmd3
 Testing indirect arg with syntax error...zlevel = 3
 %YDB-E-EXPR, Expression expected but not found
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do ^zticmd1
 
 This is main function
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do ^zticmd2
 This is main function
 %YDB-E-STACKCRIT, Stack space critical
 
-GTM>
+YDB>
 end of invalid ZTRAP cases...
 ...end of ZTRAP testing
 Testing of ZYERROR/ZERROR starts...
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do ^zevref1
 Testing ZYERROR Label...
 done(SUB2)
@@ -1471,14 +1471,14 @@ Testing ZYERROR Label+offset+module...done(lab+1^zeleaf)
 ZSTATUS = 150373850,SUB1+16^zevref1,%YDB-E-LVUNDEF, Undefined local variable: x  ZERROR = YDB-E-LVUNDEF, Undefined local variable: x
 end of SUB1
 
-GTM>
+YDB>
 do ^zevref2
 Testing ZYERROR Label^module...done(SUB2)
 ZSTATUS = 150373850,SUB1+4^zevref2,%YDB-E-LVUNDEF, Undefined local variable: x  ZERROR = YDB-E-LVUNDEF, Undefined local variable: x
 end of SUB2
 end of SUB1
 
-GTM>
+YDB>
 do ^zevref3
 Testing ZYERROR @Label...
 done(SUB2)
@@ -1498,34 +1498,34 @@ Testing ZYERROR with no quit cmd in its handler...
 ZSTATUS = 150373850,SUB1+24^zevref3,%YDB-E-LVUNDEF, Undefined local variable: x  ZERROR = YDB-E-LVUNDEF, Undefined local variable: x
 end of SUB1
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do NOLAB^zeiref1
 Testing 'ZYERROR label' with no label present
 
-GTM>
+YDB>
 do OFF^zeiref1
 Testing ZYERROR Lable+offset with invalid offset
 1
 
-GTM>
+YDB>
 do MOD^zeiref1
 Testing ZYERROR ^module with no module
 1
 
-GTM>
+YDB>
 do IND^zeiref1
 Testing ZYERROR containing erroneous indirection
 1
 
-GTM>
+YDB>
 do ZTERR^zeiref1
 Testing ZYERROR with syntactically erroneous ZTRAP value
 ZSTATUS = 150373850,ZTERR+4^zeiref1,%YDB-E-LVUNDEF, Undefined local variable: x  ZERROR = YDB-E-LVUNDEF, Undefined local variable: x
 %YDB-E-LABELMISSING, Label referenced but not defined: w
 
-GTM>
+YDB>
 do TST1^zeiref2
 Testing ZYERROR Label...
 done(SUB2)
@@ -1536,68 +1536,68 @@ ZSTATUS = 150373210,TST1+8^zeiref2,%YDB-E-DIVZERO, Attempt to divide by zero  ZE
 1
 end of TST1
 
-GTM>
+YDB>
 do TST2^zeiref2
 Testing ZYERROR with command...
 1
 
-GTM>
+YDB>
 do TST3^zeiref2
 Testing ZYERROR @(Label+offset)...
 
-GTM>
+YDB>
 do TST4^zeiref2
 Testing ZYERROR @(offset^module)...
 
-GTM>
+YDB>
 Begin of ZYERROR environement test cases...
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do TST1^zevref4
 Testing ZYERROR Label...
 done(SUB2)
 ZSTATUS = 150373850,TST1+3^zevref4,%YDB-E-LVUNDEF, Undefined local variable: x  ZERROR = YDB-E-LVUNDEF, Undefined local variable: x
 end of SUB2
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do TST2^zevref4
 Testing ZYERROR Label+offset...done(SUB3+1)
 ZSTATUS = 150373210,TST2+3^zevref4,%YDB-E-DIVZERO, Attempt to divide by zero  ZERROR = YDB-E-DIVZERO, Attempt to divide by zero
 end of SUB3
 1
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do TST3^zevref4
 Testing ZYERROR Label+module...done(lab^zeleaf)
 ZSTATUS = 150372778,TST3+3^zevref4,%YDB-E-EXPR, Expression expected but not found  ZERROR = YDB-E-EXPR, Expression expected but not found
 1
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do TST4^zevref4
 Testing ZYERROR Label+offset+module...done(lab+1^zeleaf)
 ZSTATUS = 150373850,TST4+3^zevref4,%YDB-E-LVUNDEF, Undefined local variable: x  ZERROR = YDB-E-LVUNDEF, Undefined local variable: x
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do TST1^zevref4
 Testing ZYERROR Label...
 
-GTM>
+YDB>
 ...end of ZYERROR as environment variable
 ...end of ZYERROR testing
 Files Created in ##TEST_PATH##:
@@ -1608,14 +1608,14 @@ a.dat
 b.dat
 mumps.dat
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 d ^kill1
 tty=1
 tty2=3
 
-GTM>
+YDB>
 d ^set
 2
 test
@@ -1628,7 +1628,7 @@ x=2
 y=3
 z=2
 
-GTM>
+YDB>
 d ^globals
 
 Test of access to MUMPS globals
@@ -1636,22 +1636,22 @@ d  PASS
 i  PASS
 u  PASS
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 d ^zprev
 ## BEGIN PROGRAM - zprev
    PASS - PER 002320
    PASS
 ## END   PROGRAM - zprev
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 Global Input Utility
 
@@ -1669,19 +1669,19 @@ OK <Yes>?
 ^ASW      
 
 Restored 15 nodes in 1 global.
-GTM>
+YDB>
 d ^per02397
 ## BEGIN PROGRAM - per02397
    PASS - PER 002397
 ## END   PROGRAM - per02397
 
-GTM>
+YDB>
 d ^miscdb
 ## BEGIN PROGRAM - miscdb
    PASS - PER 002209
 ## END   PROGRAM - miscdb
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -1691,19 +1691,19 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 d ^per02276
 ## BEGIN PROGRAM - per02276
    PASS - PER 002276,002416
 ## END   PROGRAM - per02276
 
-GTM>
+YDB>
 d ^stpfail
 Execute/Set test PASSED
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -1713,9 +1713,9 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 d ^putfail
 ## BEGIN PROGRAM - putfail
    PASS - putfail1
@@ -1730,7 +1730,7 @@ d ^putfail
    PASS - putfail
 ## END   PROGRAM - putfail
 
-GTM>
+YDB>
 d ^fifo
 ## BEGIN PROGRAM - fifo
   ** fifo output **
@@ -1739,16 +1739,16 @@ d ^fifo
    PASS
 ## END   PROGRAM - fifo
 
-GTM>
+YDB>
 d ^stream
 ## BEGIN PROGRAM - stream
    PASS
 ## END   PROGRAM - stream
 
-GTM>
+YDB>
 d ^iowrite
 
-GTM>
+YDB>
 R   I   C   K   S       T   E   S   T                        
 
 

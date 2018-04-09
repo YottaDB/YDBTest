@@ -17,11 +17,11 @@ Output File:
 +^CIF(*) -commands=S -xecute="do ^trigbomb(129)"
 
 
-GTM>
+YDB>
 No cores expected
-GTM>
+YDB>
 
-GTM>
+YDB>
 @1 BEGIN Trigger CIF#1# invoked for ^CIF(1)
 @2 BEGIN Trigger CIF#1# invoked for ^CIF(2)
 @3 BEGIN Trigger CIF#1# invoked for ^CIF(3)
@@ -155,9 +155,9 @@ Output File:
 +^CIF(*) -commands=S -xecute="do ^trigbomb(126)"
 
 
-GTM>
+YDB>
 No cores or failures expected
-GTM>
+YDB>
 @1 BEGIN Trigger CIF#1# invoked for ^CIF(1)
 @2 BEGIN Trigger CIF#1# invoked for ^CIF(2)
 @3 BEGIN Trigger CIF#1# invoked for ^CIF(3)
@@ -411,7 +411,7 @@ GTM>
 @2 End Trigger CIF#1# invoked for ^CIF(2)
 @1 End Trigger CIF#1# invoked for ^CIF(1)
 
-GTM>
+YDB>
 @1 BEGIN Trigger CIF#1# invoked for ^CIF(1)
 @2 BEGIN Trigger CIF#1# invoked for ^CIF(127)
 @3 BEGIN Trigger CIF#1# invoked for ^CIF(128)
@@ -665,7 +665,7 @@ GTM>
 @2 End Trigger CIF#1# invoked for ^CIF(127)
 @1 End Trigger CIF#1# invoked for ^CIF(1)
 
-GTM>
+YDB>
 ^CIF(1)=100
 ^CIF(2)=2
 ^CIF(3)=3
@@ -918,15 +918,15 @@ GTM>
 ^CIF(250)=250
 ^CIF(251)=251
 
-GTM>
+YDB>
 Output File: 
 ;trigger name: CIF#1 (region DEFAULT)  cycle: 5
 +^CIF(*) -commands=S -xecute="do ^trigbomb(127)"
 
 
-GTM>
+YDB>
 No cores or failures expected
-GTM>
+YDB>
 @1 BEGIN Trigger CIF#1# invoked for ^CIF(1)
 @2 BEGIN Trigger CIF#1# invoked for ^CIF(252)
 @3 BEGIN Trigger CIF#1# invoked for ^CIF(253)
@@ -1182,7 +1182,7 @@ GTM>
 @2 End Trigger CIF#1# invoked for ^CIF(252)
 @1 End Trigger CIF#1# invoked for ^CIF(1)
 
-GTM>
+YDB>
 @1 BEGIN Trigger CIF#1# invoked for ^CIF(1)
 @2 BEGIN Trigger CIF#1# invoked for ^CIF(378)
 @3 BEGIN Trigger CIF#1# invoked for ^CIF(379)
@@ -1438,7 +1438,7 @@ GTM>
 @2 End Trigger CIF#1# invoked for ^CIF(378)
 @1 End Trigger CIF#1# invoked for ^CIF(1)
 
-GTM>
+YDB>
 ^CIF(1)=99
 ^CIF(2)=2
 ^CIF(3)=3
@@ -1943,7 +1943,7 @@ GTM>
 ^CIF(502)=502
 ^CIF(503)=503
 
-GTM>
+YDB>
 Output File: 
 ;trigger name: CIF#1 (region DEFAULT)  cycle: 9
 +^CIF(*) -commands=S -xecute="write ""I do diddly squat"",!"
@@ -1953,17 +1953,17 @@ Output File:
 +^CIF(*) -commands=S -xecute="do ^trigbomb(129)"
 
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 %YDB-E-MAXTRIGNEST, Maximum trigger nesting level (127) exceeded
 
-GTM>
+YDB>
 %YDB-E-MAXTRIGNEST, Maximum trigger nesting level (127) exceeded
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ^CIF(1)=99
 ^CIF(2)=2
 ^CIF(3)=3
@@ -2468,7 +2468,7 @@ GTM>
 ^CIF(502)=502
 ^CIF(503)=503
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT NON_REPLIC
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 Shutting down Primary Source Server Server in ##TEST_PATH##

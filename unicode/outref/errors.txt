@@ -20,18 +20,18 @@ abc
 ###################################################################
  Testing NONUTF8LOCALE error 
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT HOST_OS390_S390
 Expected NONUTF8LOCALE because of LANG,LC_CTYPE,LC_ALL not being defined at this point
 ##TEST_AWK%YDB-E-NONUTF8LOCALE, Locale has character encoding \((ANSI_X3\.4\-1968|646|roman8|ISO8859\-1)\) which is not compatible with UTF-8 character set
 
 ##ALLOW_OUTPUT HOST_OS390_S390
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT HOST_OS390_S390
 Expected NONUTF8LOCALE because of LC_CTYPE points to invalid CHSET
 ##TEST_AWK%YDB-E-NONUTF8LOCALE, Locale has character encoding \((ANSI_X3\.4\-1968|646|roman8|ISO8859\-1)\) which is not compatible with UTF-8 character set
@@ -49,11 +49,11 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 %YDB-I-RECORDSTAT, ^a:	  Key cnt: 1  max subsc len: 3  max rec len: 3  max node len: 10
 %YDB-I-RECORDSTAT, ^b:	  Key cnt: 1  max subsc len: 3  max rec len: 26  max node len: 33
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 3  max rec len: 26  max node len: 33
@@ -93,51 +93,51 @@ Error INDRMAXLEN seen in indrmaxlen.out as expected:
 ###################################################################
 Test for existing error messages with unicode characters
 
-GTM>
+YDB>
 %YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
 	write "some string" for x=1:1:1:1
 	                               ^-----
 
-GTM>
+YDB>
 The tick symbol in the error should appear at the last colon just like for the above non-multibyte string
-GTM>
+YDB>
 %YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
 	write "Ｓｏｍｅ ｓｔｒ Türkçe" for x=1:1:1:1
 	                                          ^-----
 
-GTM>
+YDB>
 %YDB-E-INVCMD, Invalid command keyword encountered
 	write "some string" abc
 	                    ^-----
 
-GTM>
+YDB>
 %YDB-E-INVCMD, Invalid command keyword encountered
 	write "Ｓｏｍｅ ｓｔｒ Türkçe" abc
 	                               ^-----
 
-GTM>
+YDB>
 The tick symbol in the error should appear right below abc just like the above non-multibyte string
-GTM>
+YDB>
 %YDB-E-EXPR, Expression expected but not found
 	write "sdfsdfsabcdefg" write  B
 	                             ^-----
 
-GTM>
+YDB>
 The tick symbol in the error should appear in the same column just like for the above non-multibyte string
-GTM>
+YDB>
 %YDB-E-EXPR, Expression expected but not found
 	write "sdfsdfsdＡＢＣＤＥＦＧ" write  Ｂ
 	                                     ^-----
 
-GTM>
+YDB>
 Try simple GVUNDEF error
-GTM>
+YDB>
 %YDB-E-GVUNDEF, Global variable undefined: ^globalsinglebyte("oneoneoneall")
 
-GTM>
+YDB>
 %YDB-E-GVUNDEF, Global variable undefined: ^globalsinglebyte("ｏｎｅｏｎｅｏｎｅａｌｌ")
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -149,11 +149,11 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 %YDB-I-RECORDSTAT, ^a:	  Key cnt: 2  max subsc len: 8  max rec len: 45  max node len: 55
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 8  max rec len: 45  max node len: 55
 ##SOURCE_PATH##/mupip
@@ -179,11 +179,11 @@ Error WIDTHTOOSMALL seen in widthtoosmall.out as expected:
 ----------
 In  M mode width=1 is allowed
 
-GTM>
+YDB>
 
-G
-T
-M
+Y
+D
+B
 >
 Testing ICUVERLT36 error - case (a)
 ----------

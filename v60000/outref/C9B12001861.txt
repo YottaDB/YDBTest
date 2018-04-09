@@ -5,11 +5,11 @@ Using: ##SOURCE_PATH##/mupip
 mumps.dat
 #Launch first process and wait after db_init()
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 #Launch second process
 #Launch third and bypasser process:  dse change -fileheader -record_max_size=1024
 
@@ -25,11 +25,11 @@ Region	DEFAULT
 1024
 #Launch first process and wait after db_init()
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 #Launch second process
 #Launch third and bypasser process:  lke show
 ##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full

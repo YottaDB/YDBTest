@@ -14,12 +14,12 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ##ALLOW_OUTPUT  NON_REPLIC
 
-GTM>
+YDB>
 d ^fact(18)
 Factorial test 
   PASS
 
-GTM>
+YDB>
 d ^arith(18)
 Numeric Test 
   unary operators 
@@ -29,7 +29,7 @@ a  PASS
   multiplication 
 m  PASS
 
-GTM>
+YDB>
 d ^ebmuldiv(0)
 ## BEGIN PROGRAM - ebmuldiv
    PASS - PER 002137
@@ -39,13 +39,13 @@ d ^ebmuldiv(0)
    PASS - Multiplication tests
 ## END   PROGRAM - ebmuldiv
 
-GTM>
+YDB>
 d ^barith
 ## BEGIN PROGRAM - barith
    PASS
 ## END   PROGRAM - barith
 
-GTM>
+YDB>
 d ^bool
 
 Test of Boolean operators
@@ -53,7 +53,7 @@ c  PASS
 u  PASS
 b  PASS
 
-GTM>
+YDB>
 d ^relation
 
 Test of relational operations
@@ -62,7 +62,7 @@ b  PASS
 c  PASS
 d  PASS
 
-GTM>
+YDB>
 d ^pattst
 ## BEGIN PROGRAM - pattst
 Test of MUMPS pattern match operator
@@ -72,13 +72,13 @@ c  PASS
 0  PASS - PER 002579
 ## END   PROGRAM - pattst
 
-GTM>
+YDB>
 d ^sortsaft
 ## BEGIN PROGRAM - sortsaft
    PASS
 ## END   PROGRAM - sortsaft
 
-GTM>
+YDB>
 d ^text4
 In text4 beginning calls to other routines
 
@@ -222,21 +222,21 @@ in text2
 leaving text2
 
 
-GTM>
+YDB>
 d ^per02457
 ## BEGIN PROGRAM - per02457
    PASS - PER 002457
 ## END   PROGRAM - per02457
 
-GTM>
+YDB>
 d ^ascii
 ******* ASCII TEST ********
 
-GTM>
+YDB>
 d ^char
 ******** CHAR TEST *******
 
-GTM>
+YDB>
 d ^fnextr
 -1 -1 ''
 -1 0 ''
@@ -275,13 +275,13 @@ d ^fnextr
 4 3 ''
 4 4 ''
 
-GTM>
+YDB>
 d ^length
 
 Test of $length function
 l  PASS
 
-GTM>
+YDB>
 d ^piece
 
 Test of $piece
@@ -291,19 +291,19 @@ c  PASS
 d  PASS
 e  PASS
 
-GTM>
+YDB>
 d ^setpiece
 ## BEGIN PROGRAM - setpiece
    PASS
 ## END   PROGRAM - setpiece
 
-GTM>
+YDB>
 d ^query
 ## BEGIN PROGRAM - query
    PASS - PER 001897
 ## END   PROGRAM - query
 
-GTM>
+YDB>
 d ^extcall
 ENTERED ^extcall2
 ENTERED LAB1^extcall1
@@ -320,7 +320,7 @@ I AM AT LABEL A
 A IS DONE
 DOING LAB1^extcall AGAINENTERED LAB1^extcall1
 
-GTM>
+YDB>
 d ^locals
 
 Test of access to MUMPS locals
@@ -339,7 +339,7 @@ u  PASS
 k  PASS
 s  PASS
 
-GTM>
+YDB>
 d ^cmptst
 1
 0
@@ -351,7 +351,7 @@ d ^cmptst
 (121,234,567.9)
 (1,234,567.891)
 
-GTM>
+YDB>
 d ^expr2
 str= 1
 1
@@ -374,7 +374,7 @@ str= 123456789
 str= 12345678910
 12345678910
 
-GTM>
+YDB>
 d ^for
 
 Test of for loop
@@ -388,7 +388,7 @@ l  PASS
 +c PASS
 -c PASS
 
-GTM>
+YDB>
 d ^forloop
 1000005
 1000001
@@ -397,7 +397,7 @@ d ^forloop
 -1000001
 -1000001
 
-GTM>
+YDB>
 d ^log
 0000001100010110001100001001100000010001000011000010100001000000
 
@@ -416,7 +416,7 @@ d ^log
 1100100001000000100001000000001001001000001000000100001010000001
 
 
-GTM>
+YDB>
 d ^new
 ind45678="x2345678"
 ind4567890123456789012345678901="y2345678"
@@ -461,7 +461,7 @@ c234567890123456789012345678901="c31"
 varc="c234567890123456789012345678901"
 vcomp="a8,b30,b31,c31"
 
-GTM>
+YDB>
 d ^select
 <begin>
 <enter>
@@ -471,7 +471,7 @@ d ^select
 <begin>
 <begin>
 
-GTM>
+YDB>
 d ^xecute
 help
 write "help",!
@@ -484,7 +484,7 @@ help
 write "help",!
 x
 
-GTM>
+YDB>
 d ^larray
 ## BEGIN PROGRAM - larray
    PASS  1
@@ -493,20 +493,20 @@ d ^larray
    PASS  2c
 ## END   PROGRAM - larray
 
-GTM>
+YDB>
 d ^view
 ## BEGIN PROGRAM - view
    PASS - PER 002184
    PASS - PER 002277
 ## END   PROGRAM - view
 
-GTM>
+YDB>
 d ^view2(0)
 ## BEGIN PROGRAM - view2
    PASS
 ## END   PROGRAM - view2
 
-GTM>
+YDB>
 d ^zbits
 ## BEGIN PROGRAM - zbits
    PASS - $ZBITSTR $ZBITLEN
@@ -520,25 +520,25 @@ d ^zbits
    PASS - $ZBITXOR
 ## END   PROGRAM - zbits
 
-GTM>
+YDB>
 d ^per2586a(0)
 $ZTRAP on entry to ^%X, before New $ZTRAP = B
 
    PASS
 
-GTM>
+YDB>
 d ^per2586b(0)
 $ZTRAP on entry to ^%X, before New $ZTRAP = B
 
    PASS
 
-GTM>
+YDB>
 d ^per2586c(0)
 $ZTRAP on entry to ^%X, before New $ZTRAP = B
 
    PASS
 
-GTM>
+YDB>
 d ^per2968
 This is the calling routine
 This is foo^per2968b
@@ -551,16 +551,16 @@ This is the calling routine
 ##ALLOW_OUTPUT HOST_ALL
 		At M source location per2968a+1^per2968a
 
-GTM>
+YDB>
 d ^tstp
 All tests passed
 
-GTM>
+YDB>
 d ^zlfix
 We are here in zlfix1a
 We are here in zlfix1b
 
-GTM>
+YDB>
 d ^largeexp1
 k f s f(1E11)="1E11" zwr f
 f(100000000000)="1E11"
@@ -595,7 +595,7 @@ s x=1E-47 w x,!
 s ^x("1E60",1)=23 zwr ^x("1E60",*)
 ^x("1E60",1)=23
 
-GTM>
+YDB>
 d ^largeexp2
 		k f s f(1E111)="1E111" zwr f
 		       ^-----
@@ -637,7 +637,7 @@ k f s f(1E111)="1E111" zwr f
 %YDB-E-NUMOFLOW, Numeric overflow
 		At M source location largeexp2+3^largeexp2
 
-GTM>
+YDB>
 d ^largeexp3
 		k f s f(1E1111111111111111111111)="1Ealotalot" zwr f
 		       ^-----
@@ -651,7 +651,7 @@ k f s f(1E1111111111111111111111)="1Ealotalot" zwr f
 %YDB-E-NUMOFLOW, Numeric overflow
 		At M source location largeexp3+3^largeexp3
 
-GTM>
+YDB>
 d ^order
 test 1
 s a("31100180200000000003")="A"
@@ -669,13 +669,13 @@ s x=$o(c(""))
 w c(x)
 C
 
-GTM>
+YDB>
 ZTRAP testing starts...
 
-GTM>
+YDB>
 Testing valid ZTRAP cases...
 
-GTM>
+YDB>
 do ^ztvref1
 Testing Ztrap Label...done(SUB2)
 Testing Ztrap Lable+offset...done(SUB3+1)
@@ -684,7 +684,7 @@ end ztleaf
 Testing Ztrap Label+module...done(labelinanothermoduleforztrap^ztleaf)
 end ztleaf
 
-GTM>
+YDB>
 do ^ztvref2
 Testing Ztrap @Label...done(IND2)
 Testing Ztrap @Label+offest...done(IND3+1)
@@ -693,12 +693,12 @@ end ztleaf
 Testing Ztrap @Label+@module...done(labelinanothermoduleforztrap^ztleaf)
 end ztleaf
 
-GTM>
+YDB>
 do ^ztvref3
 Testing Recursive Ztrap to find the sum
 Sum of first 100 numbers = 5050
 
-GTM>
+YDB>
 do ^ztvcmd1
 This is main function
 this is SUB1
@@ -706,7 +706,7 @@ this is SUB2
 exiting main function
 stack level: 2
 
-GTM>
+YDB>
 do ^ztvcmd2
 This is main function
 
@@ -720,7 +720,7 @@ value of a = 10
 value of b = 15
 value of x(a*b) = 150
 
-GTM>
+YDB>
 do ^ztvcmd3
 This is main function
 Before SUB1
@@ -732,7 +732,7 @@ this is SUB2
 end of valid ZTRAP cases...
 Testing invalid ZTRAP cases with gtm_ztrap_new set to TRUE...
 
-GTM>
+YDB>
 do ^ztidrv
 do NOLAB^ztiref
 Testing 'ZTRAP label' with no label present
@@ -778,33 +778,33 @@ Testing indirect arg with syntax error...zlevel = 4
 150372762,SUB1+2^zticmd3,%YDB-E-ERRWZTRAP, Error while processing $ZTRAP,-YDB-E-EXPR, Expression expected but not found
 
 
-GTM>
+YDB>
 Testing invalid ZTRAP cases with NO gtm_ztrap_new ...
 
-GTM>
+YDB>
 do ^ztidrv
 do NOLAB^ztiref
 Testing 'ZTRAP label' with no label present
 %YDB-E-LABELMISSING, Label referenced but not defined: lab
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do ^zticmd1
 
 This is main function
 
-GTM>
+YDB>
 do ^zticmd2
 This is main function
 %YDB-E-STACKCRIT, Stack space critical
 
-GTM>
+YDB>
 end of invalid ZTRAP cases...
 ...end of ZTRAP testing
 Testing of ZYERROR/ZERROR starts...
 
-GTM>
+YDB>
 do ^zevref1
 Testing ZYERROR Label...
 done(SUB2)
@@ -820,14 +820,14 @@ Testing ZYERROR Label+offset+module...done(labelinanothermoduleforzyerror+1^zele
 ZSTATUS = 150373850,SUBROUTINE1+16^zevref1,%YDB-E-LVUNDEF, Undefined local variable: x  ZERROR = YDB-E-LVUNDEF, Undefined local variable: x
 end of SUB1
 
-GTM>
+YDB>
 do ^zevref2
 Testing ZYERROR Label^module...done(SUB2)
 ZSTATUS = 150373850,SUBROUTINEWITHINMODULE1+4^zevref2,%YDB-E-LVUNDEF, Undefined local variable: x  ZERROR = YDB-E-LVUNDEF, Undefined local variable: x
 end of SUB2
 end of SUB1
 
-GTM>
+YDB>
 do ^zevref3
 Testing ZYERROR @Label...
 done(SUB2)
@@ -847,34 +847,34 @@ Testing ZYERROR with no quit cmd in its handler...
 ZSTATUS = 150373850,INDIRECTSUBROUTINE1+24^zevref3,%YDB-E-LVUNDEF, Undefined local variable: x  ZERROR = YDB-E-LVUNDEF, Undefined local variable: x
 end of SUB1
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do NOLAB^zeiref1
 Testing 'ZYERROR label' with no label present
 
-GTM>
+YDB>
 do OFF^zeiref1
 Testing ZYERROR Lable+offset with invalid offset
 1
 
-GTM>
+YDB>
 do MOD^zeiref1
 Testing ZYERROR ^module with no module
 1
 
-GTM>
+YDB>
 do IND^zeiref1
 Testing ZYERROR containing erroneous indirection
 1
 
-GTM>
+YDB>
 do ZTERR^zeiref1
 Testing ZYERROR with syntactically erroneous ZTRAP value
 ZSTATUS = 150373850,ZTERR+4^zeiref1,%YDB-E-LVUNDEF, Undefined local variable: x  ZERROR = YDB-E-LVUNDEF, Undefined local variable: x
 %YDB-E-LABELMISSING, Label referenced but not defined: w
 
-GTM>
+YDB>
 do TST1^zeiref2
 Testing ZYERROR Label...
 done(SUB2)
@@ -885,84 +885,84 @@ ZSTATUS = 150373210,TST1+8^zeiref2,%YDB-E-DIVZERO, Attempt to divide by zero  ZE
 1
 end of TST1
 
-GTM>
+YDB>
 do TST2^zeiref2
 Testing ZYERROR with command...
 1
 
-GTM>
+YDB>
 do TST3^zeiref2
 Testing ZYERROR @(Label+offset)...
 
-GTM>
+YDB>
 do TST4^zeiref2
 Testing ZYERROR @(offset^module)...
 
-GTM>
+YDB>
 Begin of ZYERROR environement test cases...
 
-GTM>
+YDB>
 do TST1^zevref4
 Testing ZYERROR Label...
 done(SUB2)
 ZSTATUS = 150373850,TST1+3^zevref4,%YDB-E-LVUNDEF, Undefined local variable: x  ZERROR = YDB-E-LVUNDEF, Undefined local variable: x
 end of SUB2
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do TST2^zevref4
 Testing ZYERROR Label+offset...done(SUB3+1)
 ZSTATUS = 150373210,TST2+3^zevref4,%YDB-E-DIVZERO, Attempt to divide by zero  ZERROR = YDB-E-DIVZERO, Attempt to divide by zero
 end of SUB3
 1
-GTM>
+YDB>
 
-GTM>
+YDB>
 do TST3^zevref4
 Testing ZYERROR Label+module...done(labelinanothermoduleforzyerror^zeleaf)
 ZSTATUS = 150372778,TST3+3^zevref4,%YDB-E-EXPR, Expression expected but not found  ZERROR = YDB-E-EXPR, Expression expected but not found
 1
-GTM>
+YDB>
 
-GTM>
+YDB>
 do TST4^zevref4
 Testing ZYERROR Label+offset+module...done(labelinanothermoduleforzyerror+1^zeleaf)
 ZSTATUS = 150373850,TST4+3^zevref4,%YDB-E-LVUNDEF, Undefined local variable: x  ZERROR = YDB-E-LVUNDEF, Undefined local variable: x
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do TST1^zevref4
 Testing ZYERROR Label...
 
-GTM>
+YDB>
 ...end of ZYERROR as environment variable
 ...end of ZYERROR testing
 Testing ZTRAP for errors in ZBREAK, ZSTEP actions...
 
-GTM>
+YDB>
 d ^zbrk
 ztrap called
 3
 break points reached
 $zstatus = 150372754,sub^zbrk,%YDB-E-ERRWZBRK, Error while processing ZBREAK action string,-YDB-E-LVUNDEF, Undefined local variable: x
 
-GTM>
+YDB>
 d ^ztrp
 150373210,ztrp+2^ztrp,%YDB-E-DIVZERO, Attempt to divide by zero
 %YDB-E-LVUNDEF, Undefined local variable: x
 
-GTM>
+YDB>
 $zstatus = 150372762,ztrp+2^ztrp,%YDB-E-ERRWZTRAP, Error while processing $ZTRAP,-YDB-E-LVUNDEF, Undefined local variable: x
 
-GTM>
+YDB>
 d ^zstep
 ztrap called
 zstep stops here
 $zstatus = 150372738,zstep+3^zstep,%YDB-E-ERRWEXC, Error while processing exception string,-YDB-E-LVUNDEF, Undefined local variable: x
 
-GTM>
+YDB>
 d ^zstep1
 B
 $zstep=do zsteplabelforzstepwithoutparameter
@@ -971,7 +971,7 @@ zsteplabelforzstepwithoutparame+2^zstep1
 zstep stops here
 $zstatus = 150372738,zstep+3^zstep,%YDB-E-ERRWEXC, Error while processing exception string,-YDB-E-LVUNDEF, Undefined local variable: x
 
-GTM>
+YDB>
 endof ZTRAP testing with ZBREAK and ZSTEP
 ##SUSPEND_OUTPUT  NON_REPLIC
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
@@ -1005,7 +1005,7 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ##ALLOW_OUTPUT  NON_REPLIC
 
-GTM>
+YDB>
 d ^kill1
 tty=1
 tty2=3
@@ -1044,7 +1044,7 @@ zwithdraw...
 kill...
 PASS
 
-GTM>
+YDB>
 d ^set
 2
 test
@@ -1062,7 +1062,7 @@ x=2
 y=3
 z=2
 
-GTM>
+YDB>
 d ^globals
 
 Test of access to MUMPS globals
@@ -1070,12 +1070,12 @@ d  PASS
 i  PASS
 u  PASS
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT NON_COLLATION
 Running with alternative collation. ZPREVIOUS test will fail:
 ##ALLOW_OUTPUT NON_COLLATION
 
-GTM>
+YDB>
 d ^zprev
 ## BEGIN PROGRAM - zprev
    PASS - PER 002320
@@ -1090,9 +1090,9 @@ d ^zprev
 ## END   PROGRAM - zprev     Error count = 1
 ##ALLOW_OUTPUT NON_COLLATION
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 Global Input Utility
 
@@ -1110,19 +1110,19 @@ OK <Yes>?
 ^ASW      
 
 Restored 15 nodes in 1 global.
-GTM>
+YDB>
 d ^per02397
 ## BEGIN PROGRAM - per02397
    PASS - PER 002397
 ## END   PROGRAM - per02397
 
-GTM>
+YDB>
 d ^miscdb
 ## BEGIN PROGRAM - miscdb
    PASS - PER 002209
 ## END   PROGRAM - miscdb
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  NON_REPLIC
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 Shutting down Primary Source Server Server in ##TEST_PATH##
@@ -1151,17 +1151,17 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ##ALLOW_OUTPUT  NON_REPLIC
 
-GTM>
+YDB>
 d ^per02276
 ## BEGIN PROGRAM - per02276
    PASS - PER 002276,002416
 ## END   PROGRAM - per02276
 
-GTM>
+YDB>
 d ^stpfail
 Execute/Set test PASSED
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  NON_REPLIC
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 Shutting down Primary Source Server Server in ##TEST_PATH##
@@ -1190,7 +1190,7 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ##ALLOW_OUTPUT  NON_REPLIC
 
-GTM>
+YDB>
 d ^putfail
 ## BEGIN PROGRAM - putfail
    PASS - putfail1
@@ -1205,7 +1205,7 @@ d ^putfail
    PASS - putfail
 ## END   PROGRAM - putfail
 
-GTM>
+YDB>
 d ^fifo
 ## BEGIN PROGRAM - fifo
   ** fifo output **
@@ -1222,16 +1222,16 @@ FIFO blocks on CYGWIN 1.5-24-2, try again when 1.7 is out
 ##ALLOW_OUTPUT HOST_ALL
 ## END   PROGRAM - fifo
 
-GTM>
+YDB>
 d ^stream
 ## BEGIN PROGRAM - stream
    PASS
 ## END   PROGRAM - stream
 
-GTM>
+YDB>
 d ^iowrite
 
-GTM>
+YDB>
 R   I   C   K   S       T   E   S   T                        
 
 
@@ -1242,111 +1242,111 @@ R   I   C   K   S       T   E   S   T
 ##SUSPEND_OUTPUT REPLIC
 More ZBreak and ZSTep tests ........
 
-GTM>
+YDB>
 ZB fact^factor
 
-GTM>
+YDB>
 ZB ^main
 
-GTM>
+YDB>
 Do ^main
 %YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
 		At M source location +2^main
 
-GTM>
+YDB>
 ZContinue
 
 Executing Shared Copy of MAIN...
 %YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
 		At M source location fact^factor
 
-GTM>
+YDB>
 ZContinue
 %YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
 		At M source location fact^factor
 
-GTM>
+YDB>
 ZContinue
 %YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
 		At M source location fact^factor
 
-GTM>
+YDB>
 ZContinue
 %YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
 		At M source location fact^factor
 
-GTM>
+YDB>
 ZContinue
 %YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
 		At M source location fact^factor
 
-GTM>
+YDB>
 ZContinue
 
 Done!
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ZSHOW B:
 
-GTM>
+YDB>
 
 ^main
 fact^factor
-GTM>
+YDB>
 Do ^main
 %YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
 		At M source location +2^main
 
-GTM>
+YDB>
 ZSHOW B
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 ^main
 fact^factor
-GTM>
+YDB>
 ZB -*
 
-GTM>
+YDB>
 ZContinue
 
 Executing Shared Copy of MAIN...
 
 Done!
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ZB average+3^avg
 
-GTM>
+YDB>
 Do ^avg
 
 Executing Shared Copy of AVG...
 breaks reached in average+3^avg...
 The AVERAGE is 11
 
-GTM>
+YDB>
 ZB ^main
 
-GTM>
+YDB>
 ZB cubeit^cube
 
-GTM>
+YDB>
 Do ^main
 
 breaks reached in main...
@@ -1354,235 +1354,235 @@ Executing Shared Copy of MAIN...
 
 Current value is : 3
 Done!
-GTM>
+YDB>
 ZContinue
 
-GTM>
+YDB>
 ZContinue
 
-GTM>
+YDB>
 ZContinue
 
-GTM>
+YDB>
 ZContinue
 
-GTM>
+YDB>
 ZContinue
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ZSHOW B:
 
-GTM>
+YDB>
 
 ^main
 average+3^avg
 cubeit^cube
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ZB ^main
 
-GTM>
+YDB>
 ZB average^avg
 
-GTM>
+YDB>
 Do ^main
 
 breaks reached in main...
 Executing Shared Copy of MAIN...
 
 Done!
-GTM>
+YDB>
 ZContinue
 
-GTM>
+YDB>
 Do ^avg
 
 Executing Shared Copy of AVG...
 breaks reached in average^avg...
 The AVERAGE is 11
 
-GTM>
+YDB>
 ZContinue
 
-GTM>
+YDB>
 ZContinue
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ZSHOW B:
 
-GTM>
+YDB>
 
 ^main
 average^avg
-GTM>
+YDB>
 ZB average^avg
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ZSHOW B:
 
-GTM>
+YDB>
 
 ^main
 average^avg
-GTM>
+YDB>
 ZL main
 
-GTM>
+YDB>
 ZSHOW B
 average^avg
 
-GTM>
+YDB>
 ZB fact^factor
 
-GTM>
+YDB>
 Do ^main
 
 Executing Shared Copy of MAIN...
 %YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
 		At M source location fact^factor
 
-GTM>
+YDB>
 ZContinue
 %YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
 		At M source location fact^factor
 
-GTM>
+YDB>
 ZContinue
 %YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
 		At M source location fact^factor
 
-GTM>
+YDB>
 ZB -average^avg
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ZSHOW B:
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ZB average+400^avg
 %YDB-E-NOPLACE, Line specified in a ZBREAK cannot be found
 
-GTM>
+YDB>
 ZB nolab^avg
 %YDB-E-NOPLACE, Line specified in a ZBREAK cannot be found
 
-GTM>
+YDB>
 ZB average+1^avg
 
-GTM>
+YDB>
 ZB average+2^avg
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ZSHOW B:
 
-GTM>
+YDB>
 
 ^main
 average+1^avg
 average+2^avg
 average^avg
 fact^factor
-GTM>
+YDB>
 ZB average+6^avg
 %YDB-E-NOPLACE, Line specified in a ZBREAK cannot be found
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ZSHOW B:
 
-GTM>
+YDB>
 
 ^main
 average+1^avg
 average+2^avg
 average^avg
 fact^factor
-GTM>
+YDB>
 ZB -*
 
-GTM>
+YDB>
 ZSHOW B
 
-GTM>
+YDB>
 Test breaks in eightlab^eightrtn....
 
-GTM>
+YDB>
 ZB squaroot^squaroot
 
-GTM>
+YDB>
 Do ^main
 
 Executing Shared Copy of MAIN...
 %YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
 		At M source location squaroot^squaroot
 
-GTM>
+YDB>
 ZContinue
 %YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
 		At M source location squaroot^squaroot
 
-GTM>
+YDB>
 ZB -*
 
-GTM>
+YDB>
 ZContinue
 
 Done!
-GTM>
+YDB>
 
-GTM>
+YDB>
 ZB ^main
 
-GTM>
+YDB>
 ZB ^base
 
-GTM>
+YDB>
 Do ^main
 %YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
 		At M source location +2^main
 
-GTM>
+YDB>
 ZST into
 
 Executing Shared Copy of MAIN...
@@ -1591,130 +1591,130 @@ Executing Shared Copy of MAIN...
 %YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location +3^main
 
-GTM>
+YDB>
 ZST into
 +5^main
        . Do squaroot^squaroot(I,.sqrt) Set NUM(I,"root")=sqrt
 %YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location +5^main
 
-GTM>
+YDB>
 ZST into
 squaroot^squaroot
 squaroot(num,root);
 %YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location squaroot^squaroot
 
-GTM>
+YDB>
 ZST Outof
 +6^main
        . Set sqr=$$squar^square(I),NUM(I,"square")=sqr
 %YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location +6^main
 
-GTM>
+YDB>
 ZST over
 +7^main
        . Set cube=$$cubeit^cube(I),NUM(I,"cube")=cube
 %YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location +7^main
 
-GTM>
+YDB>
 ZB cubeit^cube
 
-GTM>
+YDB>
 ZST Outof
 %YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
 		At M source location cubeit^cube
 
-GTM>
+YDB>
 ZST Outof
 +8^main
        . Set factrl=$$fact^factor(I),NUM(I,"factorial")=factrl                 
 %YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location +8^main
 
-GTM>
+YDB>
 ZST over
 +9^main
        . Set base=10,base2=2,base8=8
 %YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location +9^main
 
-GTM>
+YDB>
 ZST over
 +10^main
        . Set binary=$$base^base(sqr,base,base2),NUM(I,"square","binary")=binary
 %YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location +10^main
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ZSHOW B:
 
-GTM>
+YDB>
 
 ^base
 ^main
 cubeit^cube
-GTM>
+YDB>
 ZB -cubeit^cube
 
-GTM>
+YDB>
 ZB -^main
 
-GTM>
+YDB>
 ZContinue
 %YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
 		At M source location base^base
 
-GTM>
+YDB>
 ZContinue
 %YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
 		At M source location base^base
 
-GTM>
+YDB>
 ZContinue
 %YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
 		At M source location base^base
 
-GTM>
+YDB>
 ZST into
 base+1^base
  	New val Set val=""
 %YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location base+1^base
 
-GTM>
+YDB>
 ZST into
 base+2^base
 	If (n<0)!(y<2)!(y>16)!(z<2)!(z>16)!(+n[".") Q val
 %YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location base+2^base
 
-GTM>
+YDB>
 ZST into
 base+3^base
 	Set n=$$decimal^decimal(n,y)
 %YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location base+3^base
 
-GTM>
+YDB>
 Converting 4 from base 10 to base 2
 
-GTM>
+YDB>
 ZB -*
 
-GTM>
+YDB>
 ZContinue
 
 Done!
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  NON_REPLIC
 ##ALLOW_OUTPUT  REPLIC
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##

@@ -5,7 +5,7 @@
 THIS IS c002181a
 %YDB-E-ERRWZTRAP, Error while processing $ZTRAP,-YDB-E-STACKCRIT, Stack space critical
 		At M source location ET^c002181a
-GTM>
+YDB>
 $ZSTATUS="150372762,ET^c002181a,%YDB-E-ERRWZTRAP, Error while processing $ZTRAP,-YDB-E-STACKCRIT, Stack space critical"
 
 ---------------------------------------------------------------------------------------------------
@@ -17,26 +17,26 @@ THIS IS c002181a
 %YDB-E-ERRWZTRAP, Error while processing $ZTRAP,-YDB-E-STACKCRIT, Stack space critical
 		At M source location ET^c002181a
 
-GTM>
+YDB>
 
 ---------------------------------------------------------------------------------------------------
           Testing do test1^c002181
 ---------------------------------------------------------------------------------------------------
 
 
-GTM>
+YDB>
 
 THIS IS c002181a
 %YDB-E-ERRWZTRAP, Error while processing $ZTRAP,-YDB-E-STACKCRIT, Stack space critical
 		At M source location ET^c002181a
 
-GTM>
+YDB>
 $zlevel at end = 2
 
-GTM>
+YDB>
 $ZSTATUS="150372762,ET^c002181a,%YDB-E-ERRWZTRAP, Error while processing $ZTRAP,-YDB-E-STACKCRIT, Stack space critical"
 
-GTM>
+YDB>
 
 ---------------------------------------------------------------------------------------------------
           Testing mumps -run c002181 2 through a PIPE DEVICE
@@ -53,16 +53,16 @@ GTM>
 ---------------------------------------------------------------------------------------------------
 
 
-GTM>
+YDB>
 %YDB-E-STACKCRIT, Stack space critical
 
-GTM>
+YDB>
 $zlevel at end = 1
 
-GTM>
+YDB>
 $ZSTATUS="150372762,x+2^c002181b,%YDB-E-ERRWZTRAP, Error while processing $ZTRAP,-YDB-E-STACKCRIT, Stack space critical"
 
-GTM>
+YDB>
 
 ---------------------------------------------------------------------------------------------------
           Testing mumps -run c002181 3 through a PIPE DEVICE
@@ -81,17 +81,17 @@ $ZT triggered
 ---------------------------------------------------------------------------------------------------
 
 
-GTM>
+YDB>
 $ZT triggered
 %YDB-E-DIVZERO, Attempt to divide by zero
 
-GTM>
+YDB>
 $zlevel at end = 1
 
-GTM>
+YDB>
 $ZSTATUS="150372762,ztbug+1^c002181c,%YDB-E-ERRWZTRAP, Error while processing $ZTRAP,-YDB-E-DIVZERO, Attempt to divide by zero"
 
-GTM>
+YDB>
 
 ---------------------------------------------------------------------------------------------------
           Testing mumps -run c002181 4 through a PIPE DEVICE
@@ -123,7 +123,7 @@ $ZSTATUS="150372738,lab+1^c002181d,%YDB-E-ERRWEXC, Error while processing except
 ---------------------------------------------------------------------------------------------------
 
 
-GTM>
+YDB>
 
 got to $zt
 
@@ -134,13 +134,13 @@ got to $zt
 $zlevel at end of c002181d = 2
 $ZSTATUS="150372738,lab+1^c002181d,%YDB-E-ERRWEXC, Error while processing exception string,-YDB-E-LABELMISSING, Label referenced but not defined: nolab"
 
-GTM>
+YDB>
 $zlevel at end = 1
 
-GTM>
+YDB>
 $ZSTATUS="150372738,lab+1^c002181d,%YDB-E-ERRWEXC, Error while processing exception string,-YDB-E-LABELMISSING, Label referenced but not defined: nolab"
 
-GTM>
+YDB>
 
 ---------------------------------------------------------------------------------------------------
           Testing mumps -run c002181 5 through a PIPE DEVICE
@@ -199,7 +199,7 @@ $ZSTATUS="150372738,zbt3+1^c002181e,%YDB-E-ERRWEXC, Error while processing excep
 ---------------------------------------------------------------------------------------------------
 
 
-GTM>
+YDB>
 
 Starting $ZL=3
 
@@ -226,13 +226,13 @@ $ZL=3
 $zlevel at end of c002181e = 2
 $ZSTATUS="150372738,zbt3+1^c002181e,%YDB-E-ERRWEXC, Error while processing exception string,-YDB-E-LABELMISSING, Label referenced but not defined: nolab"
 
-GTM>
+YDB>
 $zlevel at end = 1
 
-GTM>
+YDB>
 $ZSTATUS="150372738,zbt3+1^c002181e,%YDB-E-ERRWEXC, Error while processing exception string,-YDB-E-LABELMISSING, Label referenced but not defined: nolab"
 
-GTM>
+YDB>
 
 ---------------------------------------------------------------------------------------------------
           Test that test6^c002181 writes to the database when it exists

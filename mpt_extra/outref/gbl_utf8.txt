@@ -10,9 +10,9 @@ init
 ########################################## 1 ########################################
 Testing %G 1
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 Output device: <terminal>: 
 
@@ -96,7 +96,7 @@ List ^
 
 List ^
 
-GTM>
+YDB>
 
 Output device: <terminal>: 
 
@@ -130,7 +130,7 @@ Global ^
 
 List ^
 
-GTM>
+YDB>
 
 Global Directory
 
@@ -142,7 +142,7 @@ Total of 18 globals.
 
 Global ^
 
-GTM>
+YDB>
 
 Global Directory
 
@@ -167,16 +167,16 @@ Total of 18 globals.
 
 Global ^
 
-GTM>
+YDB>
 
 ########################################## 2 ########################################
 Testing %G 2
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 Output device: <terminal>: 
 
@@ -228,9 +228,9 @@ List ^
 
 List ^
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 Output device: <terminal>: 
 
@@ -276,14 +276,14 @@ List ^
 
 List ^
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 ########################################## 3 ########################################
 Testing %GC
 
-GTM>
+YDB>
 
 Global copy
 
@@ -331,10 +331,10 @@ To global   ^
 Total 28 nodes copied.
 
 From global ^
-GTM>
+YDB>
 zwriting samplegbl
 
-GTM>
+YDB>
 ^samplegbl("aづぎ")="oh very few hiraganas NOT meant to be matched by %G"
 ^samplegbl("aづぎぬまめわ")="a with hiraganas"
 ^samplegbl("aづぎめまぬまわ")="a with some more hiraganas"
@@ -364,10 +364,10 @@ GTM>
 ^samplegbl("３４５６")="full-width range numbers for %G"
 ^samplegbl("𐀃")="I am an invalid mix"
 
-GTM>
+YDB>
 zwriting samplegblcp, should be the same as above
 
-GTM>
+YDB>
 ^samplegblcp("aづぎ")="oh very few hiraganas NOT meant to be matched by %G"
 ^samplegblcp("aづぎぬまめわ")="a with hiraganas"
 ^samplegblcp("aづぎめまぬまわ")="a with some more hiraganas"
@@ -397,12 +397,12 @@ GTM>
 ^samplegblcp("３４５６")="full-width range numbers for %G"
 ^samplegblcp("𐀃")="I am an invalid mix"
 
-GTM>
+YDB>
 
 ########################################## 4 ########################################
 Testing %GC
 
-GTM>
+YDB>
 
 Global Change Every occurrence
 
@@ -501,22 +501,22 @@ Now : ♞♘
 
 Global ^
 
-GTM>
+YDB>
 
 ########################################## 5 ########################################
 Testing %GCE
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 Global Change Every occurrence
 
@@ -549,7 +549,7 @@ Now : 0₃₅2₃₅
 
 Global ^
 
-GTM>
+YDB>
 
 Output device: <terminal>: 
 
@@ -562,12 +562,12 @@ List ^
 
 List ^
 
-GTM>
+YDB>
 
 ########################################## 6 ########################################
 Testing %GO
 
-GTM>
+YDB>
 
 Global Output Utility
 
@@ -605,9 +605,9 @@ Output device: <terminal>:
 Total of 28 nodes in 1 global.
 
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 Global Output Utility
 
@@ -645,9 +645,9 @@ Output device: <terminal>:
 Total of 28 nodes in 1 global.
 
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 %YDB-I-RECORDSTAT, ^%uniYYY:	  Key cnt: 1  max subsc len: 9  max rec len: 22  max node len: 35
 %YDB-I-RECORDSTAT, ^cc:	  Key cnt: 5  max subsc len: 18  max rec len: 14  max node len: 26
 %YDB-I-RECORDSTAT, ^mix1:	  Key cnt: 1  max subsc len: 6  max rec len: 15  max node len: 25
@@ -670,9 +670,9 @@ GTM>
 %YDB-I-RECORDSTAT, ^uniname567890123456789012345678:	  Key cnt: 1  max subsc len: 33  max rec len: 84  max node len: 121
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 109  max subsc len: 48  max rec len: 100  max node len: 121
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 Global Input Utility
 
@@ -687,9 +687,9 @@ OK <Yes>?
 ^samplegbl          
 
 Restored 28 nodes in 1 global.
-GTM>
+YDB>
 
-GTM>
+YDB>
 %YDB-I-RECORDSTAT, ^%uniYYY:	  Key cnt: 1  max subsc len: 9  max rec len: 22  max node len: 35
 %YDB-I-RECORDSTAT, ^cc:	  Key cnt: 5  max subsc len: 18  max rec len: 14  max node len: 26
 %YDB-I-RECORDSTAT, ^mix1:	  Key cnt: 1  max subsc len: 6  max rec len: 15  max node len: 25
@@ -712,9 +712,9 @@ GTM>
 %YDB-I-RECORDSTAT, ^uniname567890123456789012345678:	  Key cnt: 1  max subsc len: 33  max rec len: 84  max node len: 121
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 109  max subsc len: 48  max rec len: 100  max node len: 121
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 Global Input Utility
 
@@ -729,9 +729,9 @@ OK <Yes>?
 ^samplegbl          
 
 Restored 28 nodes in 1 global.
-GTM>
+YDB>
 
-GTM>
+YDB>
 %YDB-I-RECORDSTAT, ^%uniYYY:	  Key cnt: 1  max subsc len: 9  max rec len: 22  max node len: 35
 %YDB-I-RECORDSTAT, ^cc:	  Key cnt: 5  max subsc len: 18  max rec len: 14  max node len: 26
 %YDB-I-RECORDSTAT, ^mix1:	  Key cnt: 1  max subsc len: 6  max rec len: 15  max node len: 25
@@ -757,7 +757,7 @@ GTM>
 ########################################## 7 ########################################
 Testing %GSE
 
-GTM>
+YDB>
 
 Global Search for Every Occurrence
 
@@ -956,7 +956,7 @@ No matches found in 1 nodes.
 
 Global ^
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

@@ -15,7 +15,7 @@ BSEG	##TEST_REMOTE_NODE_PATH_GTCM##/b.dat
 DEFAULT	##TEST_REMOTE_NODE_PATH_GTCM##/mumps.dat
 Starting the GT.CM Servers...
 
-GTM>
+YDB>
 100
 200
 300
@@ -118,15 +118,15 @@ GTM>
 %YDB-E-REC2BIG, Record size (5) is greater than maximum (4) for region: AREG
 %YDB-I-GVIS, 		Global variable: ^a
 
-GTM>
+YDB>
 ##TEST_AWK%YDB-E-REC2BIG, .*
 %YDB-I-GVIS, 		Global variable: ^b
 
-GTM>
+YDB>
 ##TEST_AWK%YDB-E-REC2BIG, .*
 %YDB-I-GVIS, 		Global variable: ^x
 
-GTM>
+YDB>
 Stopping the GT.CM Servers...
 Check the databases on the GT.CM Servers...
 ##GT.CM####SOURCE_PATH##/mupip

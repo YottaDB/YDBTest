@@ -29,7 +29,7 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
 ==Executing MULTISITE_REPLIC 'RUN INST1 ##TEST_COM_PATH##/simplegblupd.csh -instance INST1 -count 8 -internal'==
 
-GTM>
+YDB>
 set ^GBLA(1)=1_<...>
 set ^GBLA(2)=1_<...>
 set ^GBLA(3)=1_<...>
@@ -39,17 +39,17 @@ set ^GBLA(6)=1_<...>
 set ^GBLA(7)=1_<...>
 set ^GBLA(8)=1_<...>
 
-GTM>
+YDB>
 8,1
 ==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
 ==Executing MULTISITE_REPLIC 'STOPRCV INST1 INST2'==
 ==Executing MULTISITE_REPLIC 'RUN INST1 ##TEST_COM_PATH##/simplegblupd.csh -instance INST1 -count 2 -internal'==
 
-GTM>
+YDB>
 set ^GBLA(9)=1_<...>
 set ^GBLA(10)=1_<...>
 
-GTM>
+YDB>
 10,1
 ==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
 ==========================================================
@@ -145,14 +145,14 @@ HST #      2 : Stream  1: Last History Number            1 [0x00000001]
 1 9
 ==Executing MULTISITE_REPLIC 'RUN INST2 ##TEST_COM_PATH##/simplegblupd.csh -instance INST2 -count 5 -internal'==
 
-GTM>
+YDB>
 set ^GBLA(11)=1_<...>
 set ^GBLA(12)=1_<...>
 set ^GBLA(13)=1_<...>
 set ^GBLA(14)=1_<...>
 set ^GBLA(15)=1_<...>
 
-GTM>
+YDB>
 15,1
 ==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
 ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_exe/mumps -run printglobals'==

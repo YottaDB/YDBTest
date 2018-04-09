@@ -61,39 +61,39 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
 # Perform 50 transactions on INST1 (seqnos: 1-50).
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
 ==Executing MULTISITE_REPLIC 'STOP INST1 INST3'==
 Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
 Shutting down Primary Source Server Server in ##TEST_PATH##
 # Perform  5 transactions on INST1 (seqnos: 51-55).
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
 ==Executing MULTISITE_REPLIC 'STOP INST1 INST4'==
 Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
 Shutting down Primary Source Server Server in ##TEST_PATH##
 # Perform  5 transactions on INST1 (seqnos: 56-60).
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'SYNC INST1 INST2 sync_to_disk'==
 #Crash INST1
 ==Executing MULTISITE_REPLIC 'CRASH INST1'==
@@ -426,13 +426,13 @@ lost transaction file empty
 #  Perform 20 transactions on INST2 (seqnos: 61-80).
 ==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/simpleinstanceupdate.csh 20'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'SYNC INST2 INST1'==
 ==Executing MULTISITE_REPLIC 'STOP INST2 INST1'==
 Shutting down Passive Source Server and Receiver Server in ##TEST_PATH##
@@ -570,13 +570,13 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
 #  Perform 10 transactions on INST1 (seqnos: 81-90).
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
 ==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
 Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
@@ -691,13 +691,13 @@ Starting Passive Source Server and Receiver Server in ##TEST_PATH##
 #  Perform 20 transactions on INST2 (seqnos: 91-110).
 ==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/simpleinstanceupdate.csh 20'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
 ==Executing MULTISITE_REPLIC 'STOP INST2 INST1'==
 Shutting down Passive Source Server and Receiver Server in ##TEST_PATH##
@@ -815,37 +815,37 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
 #  Perform 10 transactions on INST1 (seqnos: 111-120).
 ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/simpleinstanceupdate.csh 10'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST2'==
 ==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2'==
 #  Perform 10 transactions on INST1 (seqnos: 121-130).
 ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/simpleinstanceupdate.csh 10'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST2'==
 ==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2'==
 #  Perform 10 transactions on INST1 (seqnos: 131-140).
 ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/simpleinstanceupdate.csh 10'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
 ==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST2'==
 ==========================================================
@@ -1051,50 +1051,50 @@ No diff on INST4 between instancefile_4.out instancefile_5.out
 #  Perform 10 transactions on INST2 (seqnos: 141-150)
 ==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/simpleinstanceupdate.csh 10'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'STOPSRC INST2 INST1'==
 ==Executing MULTISITE_REPLIC 'STARTSRC INST2 INST1'==
 #  Perform 10 transactions on INST2 (seqnos: 151-160)
 ==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/simpleinstanceupdate.csh 10'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'STOPSRC INST2 INST1'==
 ==Executing MULTISITE_REPLIC 'STARTSRC INST2 INST1'==
 #  Perform 10 transactions on INST2 (seqnos: 161-170)
 ==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/simpleinstanceupdate.csh 10'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'STOPSRC INST2 INST1'==
 ==Executing MULTISITE_REPLIC 'STARTSRC INST2 INST1'==
 ==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/wait_for_log.csh -log ##FILTERED##SRC_##TIMESTAMP##.log -message "Sending REPL_HISTREC message" -duration 100 -waitcreation'==
 #  Perform 10 transactions on INST2 (seqnos: 171-180)
 ==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/simpleinstanceupdate.csh 10'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'SYNC INST2 INST1'==
 ==========================================================
 Diffing instancefile_5.out and instancefile_6.out on INST1
@@ -1351,37 +1351,37 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
 # Perform 10 transactions on INST2 (seqnos: 181-190)
 ==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/simpleinstanceupdate.csh 10'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'SYNC INST2 INST1'==
 ==Executing MULTISITE_REPLIC 'STOPRCV INST2 INST1'==
 #  Perform 10 transactions on INST2 (seqnos: 191-200)
 ==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/simpleinstanceupdate.csh 10'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'SYNC INST2 INST3'==
 ==Executing MULTISITE_REPLIC 'STOPRCV INST2 INST3'==
 #  Perform 10 transactions on INST2 (seqnos: 201-210)
 ==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/simpleinstanceupdate.csh 10'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==========================================================
 History records for INST1 at instancefile_7.out
 ----------------------------------------------------------
@@ -2234,13 +2234,13 @@ No diff on INST4 between instancefile_6.out instancefile_7.out
 #  Perform 45 transactions on INST4 (seqnos: 56-100)
 ==Executing MULTISITE_REPLIC 'RUN INST4 $gtm_tst/com/simpleinstanceupdate.csh 45'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==========================================================
 ##SUSPEND_OUTPUT SUPPLEMENTARY_AB
 Diffing instancefile_7.out and instancefile_8.out on INST1

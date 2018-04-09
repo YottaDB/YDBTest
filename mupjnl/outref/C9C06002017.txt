@@ -9,17 +9,17 @@ mumps.dat
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
 %YDB-I-JNLSTATE, Journaling state for region AREG is now ON
 
-GTM>
+YDB>
 
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Backward recovery ......
 ##TEST_AWK%YDB-I-MUJNLPREVGEN, Previous generation journal file ##TEST_PATH##/a.mjl_[0-9]*(_[0-9][0-9]*|[0-9]) included for database file ##TEST_PATH##/a.dat
 ##TEST_AWK%YDB-I-MUJNLPREVGEN, Previous generation journal file ##TEST_PATH##/a.mjl_[0-9]*(_[0-9][0-9]*|[0-9]) included for database file ##TEST_PATH##/a.dat
@@ -41,20 +41,20 @@ Backward recovery ......
 %YDB-S-JNLSUCCESS, Recover successful
 Verifying data ......
 
-GTM>
+YDB>
 d dverify^c002017
 
-GTM>
+YDB>
 VERIFICATION PASSED
 
-GTM>
+YDB>
 Verifying journal extract data ......
 
-GTM>
+YDB>
 d everify^c002017
 VERIFICATION PASSED
 
-GTM>
+YDB>
 Verifying the journal files ...
 ****************************
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..

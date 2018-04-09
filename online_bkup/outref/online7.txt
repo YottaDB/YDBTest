@@ -31,7 +31,7 @@ Journal file ##TEST_PATH##/online_bkup/tmp/online7/mumps.mjl created for
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/online_bkup/tmp/online7/online7/jnl.dat created
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/online_bkup/tmp/online7/online7/mumps.dat created
 
-GTM>
+YDB>
  Initializing database
 .. processed 10000 accounts..
 .. processed 20000 accounts..
@@ -40,24 +40,24 @@ GTM>
 .. processed 50000 accounts..
  Initialization complete
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 cmd is ##SOURCE_PATH##/mupip backup -i -t=1 -o -newjnlfiles -nettimeout=120 ACCT,ACNM,JNL,DEFAULT "tcp://##TEST_HOST##:6200","./online7/acnm.inc","| gzip -c > ./online7/jnl.inc.gz","./online7/mumps.inc"
 
-GTM>
+YDB>
 
-GTM>
+YDB>
  Spawning tasks and waiting
  Releasing tasks and waiting..
  Test complete (PASS)
 
-GTM>
+YDB>
  PBank verify started
 ..processed 10000 accounts..
 ..processed 20000 accounts..
@@ -66,7 +66,7 @@ GTM>
 ..processed 50000 accounts..
  PBank verify ended
 
-GTM>
+YDB>
 online71restore.log:RESTORE COMPLETED
 online72restore.log:RESTORE COMPLETED
 online73restore.log:RESTORE COMPLETED
@@ -74,7 +74,7 @@ online77restore.log:RESTORE COMPLETED
 
 Update successful
 
-GTM>
+YDB>
  PBank verify started
 ..processed 10000 accounts..
 ..processed 20000 accounts..
@@ -83,5 +83,5 @@ GTM>
 ..processed 50000 accounts..
  PBank verify ended
 
-GTM>
+YDB>
 LEAVING ONLINE7

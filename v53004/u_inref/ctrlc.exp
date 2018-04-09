@@ -1,3 +1,15 @@
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+#
 set gtm_dist [lrange $argv 0 0]
 set timeout 120
 spawn $env(SHELL)
@@ -10,24 +22,24 @@ CTRLC>"
 send -- "setenv gtm_nocenable 1\r"
 expect "CTRLC>"
 send -- "gtm\r"
-expect "GTM>"
+expect "YDB>"
 # send ctrl-c
 send -- "\003"
 sleep 1
 send -- "\r"
-expect "GTM>"
+expect "YDB>"
 send -- "h\r"
 expect "CTRLC>"
 send -- "unsetenv gtm_nocenable\r"
 expect "CTRLC>"
 send -- "gtm\r"
-expect "GTM>"
+expect "YDB>"
 # send ctrl-c
 send -- "\003"
 # since ctrl-c is not disabled we should see the message
 sleep 1
 send -- "\r"
-expect "GTM>"
+expect "YDB>"
 expect "CTRL_C encountered"
 send -- "h\r"
 expect "CTRLC>"

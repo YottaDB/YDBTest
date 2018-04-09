@@ -19,13 +19,13 @@ mumps.dat
 ==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
 ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/simpleinstanceupdate.csh 100'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 %YDB-I-REPLSTATE, Replication state for region DEFAULT is now ON
 #- Start replication on INST2, with a dummy passive source server to INST3 (if INST1 will not be a secondary)
@@ -34,13 +34,13 @@ GTM>
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST2 SRC=INST1 $gtm_tst/$tst/u_inref/helper_start_receiver_server.csh __RCV_PORTNO__'==
 ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/simpleinstanceupdate.csh 50'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
 #- Crash INST1 and make INST2 primary, replicating to INST3:
 ==Executing MULTISITE_REPLIC 'CRASH INST1'==
@@ -62,13 +62,13 @@ Instance INSTANCE1 crashed!
 ==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/wait_for_log.csh -log ##FILTERED##RCVR_##TIMESTAMP##.log -message "New History Content"'==
 ==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/simpleinstanceupdate.csh 50'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
 ==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
 ==Executing MULTISITE_REPLIC 'EXTRACT INST2 INST3'==

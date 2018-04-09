@@ -23,7 +23,7 @@ test long region names
 %YDB-I-NOLOCKMATCH, No matching locks were found in A234567890123456789012345678901
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 
-GTM>
+YDB>
 do ^lkelong
 #####################################################################
 PID= PID1
@@ -1112,9 +1112,9 @@ $LKE show -all -region=DEFAULT
 zshow L
 #####################################################################
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do ^lkelongregion
 PID= PID2
 #####################################################################
@@ -1363,7 +1363,7 @@ $LKE show -all
 %YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

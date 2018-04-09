@@ -16,13 +16,13 @@ DEFAULT	##TEST_REMOTE_NODE_PATH_GTCM##/mumps.dat
 Starting the GT.CM Servers...
 Lock ^b at client...
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##TEST_AWKWill try to lock .b on the server side. \([0-9,]*\)
 0
 it shouldn't have gotten the lock (time it took:>=30)
@@ -39,9 +39,9 @@ BREG
 %YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Stopping the GT.CM Servers...
 Check the databases on the GT.CM Servers...
 ##GT.CM####SOURCE_PATH##/mupip

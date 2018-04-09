@@ -27,19 +27,19 @@ Secondary Side: ##SOURCE_PATH##/mupip set -journal=enable,on,before,alloc=2500,e
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 ##ALLOW_OUTPUT  NON_REPLIC
 
-GTM>
+YDB>
 Start SET...
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Again a new process starts SET...
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  NON_REPLIC
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 Shutting down Primary Source Server Server in ##TEST_PATH##
@@ -54,14 +54,14 @@ No errors detected by integ.
 No errors detected by integ.
 ##ALLOW_OUTPUT  NON_REPLIC
 
-GTM>
+YDB>
 Start Application Data Verification
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  REPLIC
 ##SOURCE_PATH##/mupip journal -recover -back * -since=<gtm_test_since_time>
 ##SUSPEND_OUTPUT  NON_REPLIC

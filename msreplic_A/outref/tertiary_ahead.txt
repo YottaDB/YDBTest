@@ -48,26 +48,26 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
 ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/simpleinstanceupdate.csh 70'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
 ==Executing MULTISITE_REPLIC 'STOP INST1 INST4'==
 Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
 Shutting down Primary Source Server Server in ##TEST_PATH##
 ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/simpleinstanceupdate.csh 10'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
 ###################################################################
 #- Step 2:
@@ -113,13 +113,13 @@ PASS from lost transaction analysis
 ==Executing MULTISITE_REPLIC 'STARTSRC INST2 INST3 PP'==
 ==Executing MULTISITE_REPLIC 'RUN INST4 $gtm_tst/com/simpleinstanceupdate.csh 80'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##FILTERED##... ... .. ..:..:.. 20.. : Received REPL_ROLLBACK_FIRST message. Secondary is out of sync with the primary. Secondary at 81 [0x51] ##FILTERED##
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST3 SRC=INST2 $MUPIP replic -source -instsecondary=__SRC_INSTNAME__ -shutdown -timeout=0 > SHUT_passive.log'==
 ==Executing MULTISITE_REPLIC 'REFRESHLINK INST2 INST3'==

@@ -4,7 +4,7 @@
 # Copyright (c) 2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -18,7 +18,7 @@
 # List of subtests of the form "subtestname [author] description"
 #-------------------------------------------------------------------------------------
 # zlen2arg	[estess]	Test two argument form of $[Z]LENGTH() and its use of $[Z]PIECE() cache
-# prmptchk 	[estess]	Test prompt that it defaults to "YDB>" but can be overridden to "GTM>" if desired
+# prmptchk 	[estess]	Test prompt that it defaults to "YDB>" but can be overridden to "YDB>" if desired
 # objlvlchk	[estess]	Verify object level changes for YDB
 # dllversion	[estess]	Test DLLVERSION error for x8664 (sharedlib version is only 32 bit)
 #-------------------------------------------------------------------------------------

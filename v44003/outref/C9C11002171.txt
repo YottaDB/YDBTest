@@ -1,33 +1,33 @@
 C9C11002171 subtest begins
 exception for  sequential file where no file exists
 
-GTM>
+YDB>
 Inside Error handler
 
 The file abc.txt does not exist
 %SYSTEM-E-ENO2, No such file or directory
 		At M source location BADOPEN+8^opexrm
 
-GTM>
+YDB>
 ----------------------------------------------------
 exception for sequential file where no directory exists
 
-GTM>
+YDB>
 Inside error handler
 The file nosuchdir/abc.txt does not exist
 %SYSTEM-E-ENO20, Not a directory
 		At M source location BADOPEN+8^opnodir
 
-GTM>
+YDB>
 ----------------------------------------------------
 exception for fifo where permission is denied
 
-GTM>
+YDB>
 We are inside error handler
 
 No permission to create fifo /abc.txt
 %SYSTEM-E-ENO13, Permission denied
 		At M source location BADOPEN+3^opexff
 
-GTM>
+YDB>
 End of C9C11002171 subtest

@@ -1,10 +1,10 @@
 setenv gtm_chset UTF-8
 unset echo
 
-GTM>
+YDB>
 do ^bomtest
 
-GTM>
+YDB>
 do init
 Now Create Big and Little endian files with BOM
 Now Read
@@ -51,4 +51,4 @@ str=$ZCH(255,254)_$C(0)_"S"_$C(0)_"o"_$C(0)_"m"_$C(0)_"e"_$C(0)_" "_$C(0)_"k"_$C
 STAT=badFileReadRepeat+3^bomtest,%YDB-E-BADCHAR, $ZCHAR(255) is not a valid character in the UTF-8 encoding form
 str=""
 
-GTM>
+YDB>

@@ -29,7 +29,7 @@ mumps.dat
 %YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
 		At M source location c003032+2^c003032
 
-GTM>
+YDB>
 # Remove the object file and run the routine
 		write !,"this is a bad string literal with a tab	in it,!
 		                                                ^-----
@@ -54,10 +54,10 @@ GTM>
 %YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
 		At M source location c003032+2^c003032
 
-GTM>
+YDB>
 # Run the routine in direct mode
 
-GTM>
+YDB>
 		write !,"this is a bad string literal with a tab	in it,!
 		                                                ^-----
 		At column 50, line 3, source module ##IN_TEST_PATH##/inref/c003032.m
@@ -81,25 +81,25 @@ GTM>
 %YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
 		At M source location c003032+2^c003032
 
-GTM>
+YDB>
 # Execute the write command with malformed string literal in direct mode
 
-GTM>
+YDB>
 %YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
 	write !,"this is a bad string literal with a tab        in it,!
 	                                                               ^-----
 
-GTM>
+YDB>
 %YDB-E-EQUAL, Equal sign expected but not found
 	set a="unclosed string
 	                      ^-----
 
-GTM>
+YDB>
 %YDB-E-EQUAL, Equal sign expected but not found
 	set ^b="this is 	tab
 	                	   ^-----
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

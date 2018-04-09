@@ -18,15 +18,15 @@ END 1
 BEGIN 2 :-) Access mumps.dat and crash it
 
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
 
-GTM>
+YDB>
 Killed
 
 END 2
@@ -35,11 +35,11 @@ END 2
 BEGIN 3 :-) Switch to backup.dat and access database. It should issue DBIDMISMATCH error
 
 
-GTM>
+YDB>
 %YDB-E-REQRUNDOWN, Error accessing database ##TEST_PATH##/mumps.dat.  Must be rundown on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
 ##TEST_AWK.YDB-E-DBIDMISMATCH, Database file ##TEST_PATH##.mumps.dat .region ##TEST_PATH##.mumps.dat. id does not match file id in shared memory .id = [0-9]+..
 
-GTM>
+YDB>
 
 END 3
 ---------------------------------------------------------------------------------------
@@ -54,13 +54,13 @@ END 4
 BEGIN 5 :-) This database access should be clean
 
 
-GTM>
+YDB>
 set ^x=1
-GTM>
+YDB>
 
-GTM>
+YDB>
 Clean database access
-GTM>
+YDB>
 
 END 5
 ---------------------------------------------------------------------------------------

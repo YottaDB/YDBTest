@@ -31,10 +31,10 @@ Transactions up to 0x0000000000000001 are backed up.
 BACKUP COMPLETED.
 
 
-GTM>
+YDB>
 s pass=16
 
-GTM>
+YDB>
 d ^jnlbas0
 
 
@@ -46,10 +46,10 @@ JNLBAS0 - no wait 16 passes
 JNLBAS0 random wait 16 passes 
 .... .... .... .... 
 JNLBAS0 COMPLETE
-GTM>
+YDB>
 h 5
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  NON_REPLIC
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 Shutting down Primary Source Server Server in ##TEST_PATH##
@@ -71,20 +71,20 @@ No errors detected by integ.
 %YDB-S-JNLSUCCESS, Verify successful
 %YDB-S-JNLSUCCESS, Recover successful
 
-GTM>
+YDB>
 s pass=16
 
-GTM>
+YDB>
 d ^jnlbas1
 
 
 JNLBAS1 data check 
 PASS 
 
-GTM>
+YDB>
 h 3
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

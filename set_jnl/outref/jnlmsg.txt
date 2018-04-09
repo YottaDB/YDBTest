@@ -25,10 +25,10 @@ Case 1d
 Case 1e
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: JOURNAL DISABLE OFF BEFORE_IMAGES BEFORE_IMAGES
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -108,10 +108,10 @@ Case 3e : Turn replication off so db updates in next step can run fine
 %YDB-I-REPLSTATE, Replication state for region BREG is now OFF
 %YDB-I-REPLSTATE, Replication state for region DEFAULT is now OFF
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -120,10 +120,10 @@ Case 4
 %YDB-I-JNLSTATE, Journaling state for region BREG is now OFF
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now OFF
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -163,10 +163,10 @@ Case 5
 Multiple database regions cannot be journalled in a single file
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -178,10 +178,10 @@ Case 6
 %YDB-E-JNLNOCREATE, Journal file ##TEST_PATH##/a.mjl not created
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

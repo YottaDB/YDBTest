@@ -3,7 +3,7 @@
 # Copyright (c) 2014-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -20,16 +20,16 @@ expect "CTRLC>"
 send -- "stty intr ^c\r"
 expect "CTRLC>"
 send -- "gtm\r"
-expect "GTM>"
+expect "YDB>"
 send -- "\r"
-expect "GTM>"
+expect "YDB>"
 send -- "set \$etrap=\"set x=\$zjobexam(),\$ecode=\"\"\"\"\"\r"
-expect "GTM>"
+expect "YDB>"
 send -- "for i=1:1:10000 set a(i)=i\r"
-expect "GTM>"
+expect "YDB>"
 # the next thing seems nonsensical but it keeps at least one solaris box from sailing past the merge
 send -- "write \$zdate(\$horolog)\r"
-expect "GTM>"
+expect "YDB>"
 send -- "write \$char(77,69,82,71,69) xecute \"for i=1:1 merge b(i)=a\"\r"
 sleep 2
 # send ctrl-c

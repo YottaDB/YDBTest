@@ -12,9 +12,9 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 # The below update should be successful
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 # Change gtmgbldir to other.gld and create other.dat
 %GDE-I-GDUSEDEFS, Using defaults for Global Directory 
 	##TEST_PATH##/other.gld
@@ -31,10 +31,10 @@ GDE>
 %YDB-I-REPLSTATE, Replication state for region DEFAULT is now ON
 # The below update should error out with YDB-E-REPLINSTNOSHM
 
-GTM>
+YDB>
 %YDB-E-REPLINSTNOSHM, Database ##TEST_PATH##/other.dat has no active connection to a replication journal pool
 
-GTM>
+YDB>
 # Start background updates
 # Get the jnlpool shmid of mumps.repl
 # For the sake of completeness, make sure the three ipcs exist now (and will not exist after mupip rundown below)
@@ -52,12 +52,12 @@ Error YDB-E-DBNOREGION seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
 ----------
 # The below should error out with NOJNLPOOL error because source server startup failed
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 %YDB-E-NOJNLPOOL, No journal pool info found in the replication instance of ##TEST_PATH##/mumps.repl
 
-GTM>
+YDB>
 # The below shutdown command should issue NOJNLPOOL error because source server did not start at all
 ##FILTERED##... ... .. ..:..:.. 20.. : Forcing immediate shutdown
 %YDB-E-NOJNLPOOL, No journal pool info found in the replication instance of ##TEST_PATH##/mumps.repl
@@ -82,11 +82,11 @@ GDE>
 	##TEST_PATH##/user1.gld
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/user1.dat created
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 Killed
 # Notedown the shared memory and semaphore id
 # The database has 600 permission. An argumentless mupip rundown as $gtmtest1 should not remove the shared memory, as it does not have write permission to the database

@@ -2,10 +2,10 @@ setenv gtm_chset UTF-8
 unset echo
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/ＡＢＣＤ.db created
 
-GTM>
+YDB>
 do ^unicodeJob
 
-GTM>
+YDB>
 zwr ^utf8
 ^utf8("unijob1","ＡＢＣＤＥＦＧ")=3
 ^utf8("unijob2","乴亐亯仑件伞佉佷")="There will be an error for this job"
@@ -13,7 +13,7 @@ zwr ^utf8
 ^utf8("unijob4","豈羅爛來祿屢讀數")="There will be an undef error, and will be seen in mje file"
 ^utf8("unijob5","兩驪練殮領遼戮李")="αβγ我ＡＢＧ玻璃而傷"
 
-GTM>
+YDB>
 No errors detected by integ.
 cat ＡＢＣＤＥＦＧ.out : Expect No Error
 unijob1:Arg=ＡＢＣＤＥＦＧ

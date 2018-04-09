@@ -83,12 +83,12 @@ Region          DEFAULT
   DB is auto-created                  FALSE  DB shares gvstats             TRUE
   LOCK shares DB critical section     FALSE  Read Only                      OFF
 DSE> 
-GTM>
+YDB>
 
-GTM>
+YDB>
 both globals should collate differently
 
-GTM>
+YDB>
 ^aforavariable("")="iam null"
 ^aforavariable(78)=1090
 ^aforavariable("ohayogozaimasu")="i said goodmorning"
@@ -98,13 +98,13 @@ GTM>
 ^iamdefault("")="konnichiwa"
 ^iamdefault("konbanwa")="goodafternoon"
 
-GTM>
+YDB>
 %YDB-E-NULLCOLLDIFF, Null collation order must be the same for all regions
 PASS! extract did fail as expected
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 File  	##TEST_PATH##/a.dat
 Region	AREG
@@ -149,12 +149,12 @@ Region          DEFAULT
   DB is auto-created                  FALSE  DB shares gvstats             TRUE
   LOCK shares DB critical section     FALSE  Read Only                      OFF
 DSE> 
-GTM>
+YDB>
 
-GTM>
+YDB>
 both globals should collate same
 
-GTM>
+YDB>
 ^aforavariable("")="iam null"
 ^aforavariable(78)=1090
 ^aforavariable("ohayogozaimasu")="i said goodmorning"
@@ -164,7 +164,7 @@ GTM>
 ^iamdefault(1009,"nippon")=90
 ^iamdefault("konbanwa")="goodafternoon"
 
-GTM>
+YDB>
 
 PASS! extract successfull after change of collation
 ##SOURCE_PATH##/mupip

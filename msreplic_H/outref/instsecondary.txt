@@ -120,13 +120,13 @@ Starting Primary Source Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
 Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
 ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/simpleinstanceupdate.csh 20'==
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
 #####################################################################################
 TEST-I-ERROREXPECT, REPLINSTSECUNDF expected for the section below
@@ -212,20 +212,20 @@ Stats log turned on
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST2 ;$MUPIP replic -source -deactivate $instsecvar -rootprimary'==
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating DEACTIVATE operation on source server pid [##PID##] for secondary instance [INSTANCE2]
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/wait_until_src_backlog_below.csh 0 20'==
 ##REMOTE_TEST_PATH##/instance3
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##REMOTE_TEST_PATH##/instance2
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST2 $MUPIP replic -source -activate $instsecvar -secondary=__RCV_HOST__:__RCV_PORTNO__'==
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating ACTIVATE operation on source server pid [##PID##] for secondary instance [INSTANCE2]
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST2 $MUPIP replic -source -shutdown $shutinst -timeout=0'==
@@ -240,9 +240,9 @@ GTM>
 Stop filter initiated
 ##REMOTE_TEST_PATH##/instance2
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 #####################################################################################
 TEST-I-ALLPASS, all commands expected to PASS for the section below
 
@@ -266,20 +266,20 @@ Stats log turned on
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST2 ;$MUPIP replic -source -deactivate $instsecvar -rootprimary'==
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating DEACTIVATE operation on source server pid [##PID##] for secondary instance [INSTANCE2]
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/wait_until_src_backlog_below.csh 0 20'==
 ##REMOTE_TEST_PATH##/instance3
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##REMOTE_TEST_PATH##/instance2
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST2 $MUPIP replic -source -activate $instsecvar -secondary=__RCV_HOST__:__RCV_PORTNO__'==
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating ACTIVATE operation on source server pid [##PID##] for secondary instance [INSTANCE2]
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST2 $MUPIP replic -source -shutdown $shutinst -timeout=0'==
@@ -294,9 +294,9 @@ GTM>
 Stop filter initiated
 ##REMOTE_TEST_PATH##/instance2
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 #####################################################################################
 TEST-I-ERROREXPECT, REPLINSTSECLEN expected for the section below
 

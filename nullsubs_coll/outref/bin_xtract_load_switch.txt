@@ -31,22 +31,22 @@ Region          DEFAULT
   Replication State              OFF        Region Seqno    0x0000000000000001
   Resync Seqno    0x0000000000000001        Resync transaction      0x00000001
 DSE> 
-GTM>
+YDB>
 ##TEST_AWKGT.M .*
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 The globals should be in GT.M null-collation order
 
-GTM>
+YDB>
 ^aglobalv(1)=94756
 ^aglobalv(1,"","str")="mixed fill"
 ^aglobalv(1,"hi")="hello"
 ^aglobalv("")=1
 ^aglobalv("str")="iam a string subscript"
 
-GTM>
+YDB>
 ##TEST_AWK##GTM_LIBRARY_PATH##/##FILTERED##PRIORVER##/[a-z]*/mupip
 ##TEST_AWK##GTM_LIBRARY_PATH##/##FILTERED##PRIORVER##/[a-z]*/mupip integ -REG .
 No errors detected by integ.
@@ -95,22 +95,22 @@ DSE> ##SOURCE_PATH##/mupip
 No errors detected by integ.
 Successful load of old version data into the version being tested
 
-GTM>
+YDB>
 ##TEST_AWKGT.M .*
 
-GTM>
+YDB>
 The globals should be in M standard null-collation order
 
-GTM>
+YDB>
 ^aglobalv("")=1
 ^aglobalv(1)=94756
 ^aglobalv(1,"","str")="mixed fill"
 ^aglobalv(1,"hi")="hello"
 ^aglobalv("str")="iam a string subscript"
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
@@ -148,17 +148,17 @@ Region          DEFAULT
   Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
 DSE> Successful load of old version data into the version being tested after changing collation order
 
-GTM>
+YDB>
 ##TEST_AWKGT.M .*
 
-GTM>
+YDB>
 The globals should be in GT.M null-collation order
 
-GTM>
+YDB>
 ^aglobalv(1)=94756
 ^aglobalv(1,"","str")="mixed fill"
 ^aglobalv(1,"hi")="hello"
 ^aglobalv("")=1
 ^aglobalv("str")="iam a string subscript"
 
-GTM>
+YDB>

@@ -1,14 +1,14 @@
 
-GTM>
+YDB>
 %GDE-I-GDUSEDEFS, Using defaults for Global Directory 
 	##TEST_PATH##/gdetst.gld
 
 GDE> 
 %GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/gdetst.gld
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 %GDE-I-LOADGD, Loading Global Directory file 
 	##TEST_PATH##/gdetst.gld
 %GDE-I-GDUNKNFMT, ##TEST_PATH##/gdetst.gld 
@@ -16,24 +16,24 @@ GTM>
 
 %GDE-E-INPINTEG, Input integrity error -- aborting load
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 # test that setting subscripted variables inside mumps BEFORE invoking GDE results in COLLDATAEXISTS error
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 %YDB-E-COLLDATAEXISTS, Collation type cannot be changed while data exists
 %GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/gdetst.gld
 
-GTM>
+YDB>
 # kill x and expect the below GDE invocation to work
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 %GDE-I-GDUSEDEFS, Using defaults for Global Directory 
 	##TEST_PATH##/gdetst.gld
 
@@ -43,41 +43,41 @@ GDE>
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/gdetst.gld
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 # test that we are able to resume processing inside mumps AFTER exiting GDE
-GTM>
+YDB>
 
-GTM>
+YDB>
 i=1
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 # test that after setting a different local variable alternate collation,null collation,numeric collation
 # GDE invocation exits gracefully and does not error with GDE-E-INPINTEG
-GTM>
+YDB>
 1
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 %YDB-E-COLLDATAEXISTS, Collation type cannot be changed while data exists
 %GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/gdetst.gld
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 # test that we are able to set unsubscripted variables inside mumps BEFORE invoking GDE
-GTM>
+YDB>
 
-GTM>
+YDB>
 i=1
 
-GTM>
+YDB>
 %GDE-I-LOADGD, Loading Global Directory file 
 	##TEST_PATH##/gdetst.gld
 %GDE-I-VERIFY, Verification OK
@@ -91,15 +91,15 @@ GDE>
 GDE> 
 %GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/gdetst.gld
 
-GTM>
+YDB>
 # test that we are able to resume processing inside mumps AFTER quitting GDE
-GTM>
+YDB>
 
-GTM>
+YDB>
 i=1
 i(3)=1
 
-GTM>
+YDB>
 	** gdemaptst
 %GDE-I-GDUSEDEFS, Using defaults for Global Directory 
 	##TEST_PATH##/gdetst.gld
@@ -121,10 +121,10 @@ gdeshowdiff.csh gdemaptst.cmp gdemaptst.log
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/star1.dat created
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/star2.dat created
 
-GTM>
+YDB>
 
 OK from fullgd
-GTM>
+YDB>
 	** dmi
 %GDE-I-GDUSEDEFS, Using defaults for Global Directory 
 	##TEST_PATH##/gdetst.gld
@@ -147,10 +147,10 @@ gdeshowdiff.csh dmi.cmp dmi.log
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/MAX_TW.DAT created
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/MAX_XRF.DAT created
 
-GTM>
+YDB>
 
 OK from fullgd
-GTM>
+YDB>
 	** tnt
 %GDE-I-GDUSEDEFS, Using defaults for Global Directory 
 	##TEST_PATH##/gdetst.gld
@@ -173,10 +173,10 @@ gdeshowdiff.csh tnt.cmp tnt.log
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/ARCHGROT.dat created
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
-GTM>
+YDB>
 
 OK from fullgd
-GTM>
+YDB>
 	** its
 %GDE-I-GDUSEDEFS, Using defaults for Global Directory 
 	##TEST_PATH##/gdetst.gld
@@ -199,10 +199,10 @@ gdeshowdiff.csh its.cmp its.log
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/MUMPS_SCRA.dat created
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/MUMPS_TABL.dat created
 
-GTM>
+YDB>
 
 OK from fullgd
-GTM>
+YDB>
 %GDE-I-GDUSEDEFS, Using defaults for Global Directory 
 	##TEST_PATH##/cryptmm.gld
 

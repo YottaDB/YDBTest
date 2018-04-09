@@ -21,9 +21,9 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
 # Do Round I of updates
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 # Sync Round I updates to the secondary
 ==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
 # Check that source server logs show compression happened in Round-I
@@ -34,9 +34,9 @@ GTM>
 ==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST3'==
 # Do Round II of updates
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 # Sync Round II updates to the secondary
 ==Executing MULTISITE_REPLIC 'SYNC INST1 INST3'==
 # Check that source server logs show compression happened in Round-I but NOT in Round-II
@@ -47,9 +47,9 @@ GTM>
 ==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
 # Do Round III of updates
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 # Sync Round III updates to the secondary
 ==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
 ==Executing MULTISITE_REPLIC 'STOPRCV INST1 INST2 RESERVEPORT'==

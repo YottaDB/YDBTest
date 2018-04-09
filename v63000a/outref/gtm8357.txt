@@ -2,10 +2,10 @@
 ;# Set gtm_zstep environmental variable to display the code in specified location
 %YDB-I-BREAK, Break instruction encountered
 		At M source location begin^gtm8357
-GTM>
+YDB>
 1    write $zstep,!
 NEW myio SET myio=$IO USE $PRINCIPAL ZPRINT @$ZPOSITION BREAK  USE myio
-GTM>
+YDB>
 2    zstep
 line7
 line8
@@ -13,25 +13,25 @@ line9
 	write "line1",!
 %YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location begin+1^gtm8357
-GTM>
+YDB>
 3    zstep
 line1
 	write "line2",!
 %YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location begin+2^gtm8357
-GTM>
+YDB>
 4    zstep
 line2
 	write "line3",!
 %YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location begin+3^gtm8357
-GTM>
+YDB>
 5    zstep
 line3
 	write "line4",!
 %YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location begin+4^gtm8357
-GTM>
+YDB>
 6    zcontinue
 line4
 line5
@@ -39,32 +39,32 @@ line6
 ;# gtm_zstep is not defined test case
 %YDB-I-BREAK, Break instruction encountered
 		At M source location begin^gtm8357
-GTM>
+YDB>
 1    write $zstep,!
 B
-GTM>
+YDB>
 2    zstep
 line7
 line8
 line9
 %YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location begin+1^gtm8357
-GTM>
+YDB>
 3    zstep
 line1
 %YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location begin+2^gtm8357
-GTM>
+YDB>
 4    zstep
 line2
 %YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location begin+3^gtm8357
-GTM>
+YDB>
 5    zstep
 line3
 %YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location begin+4^gtm8357
-GTM>
+YDB>
 6    zcontinue
 line4
 line5
@@ -72,10 +72,10 @@ line6
 ;# gtm_zstep is defined and overwritten while doing debug
 %YDB-I-BREAK, Break instruction encountered
 		At M source location begin^gtm8357
-GTM>
+YDB>
 1    write $zstep,!
 NEW myio SET myio=$IO USE $PRINCIPAL ZPRINT @$ZPOSITION BREAK  USE myio
-GTM>
+YDB>
 2    zstep
 line7
 line8
@@ -83,26 +83,26 @@ line9
 	write "line1",!
 %YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location begin+1^gtm8357
-GTM>
+YDB>
 3    zstep
 line1
 	write "line2",!
 %YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location begin+2^gtm8357
-GTM>
+YDB>
 4    zstep
 line2
 	write "line3",!
 %YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location begin+3^gtm8357
-GTM>
+YDB>
 5    set $ZSTEP="B"
-GTM>
+YDB>
 6    zstep
 line3
 %YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
 		At M source location begin+4^gtm8357
-GTM>
+YDB>
 7    zcontinue
 line4
 line5

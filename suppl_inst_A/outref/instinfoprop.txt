@@ -18,10 +18,10 @@ Starting Primary Source Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
 Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
 ==Executing MULTISITE_REPLIC 'RUN INST2 ##TEST_COM_PATH##/simplegblupd.csh -instance INST2 -count 1 -internal'==
 
-GTM>
+YDB>
 set ^GBLA(1)=1_<...>
 
-GTM>
+YDB>
 1,1
 ==Executing MULTISITE_REPLIC 'SYNC INST2 INST3'==
 ==Executing MULTISITE_REPLIC 'STOP INST2 INST3'==
@@ -57,7 +57,7 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
 ==Executing MULTISITE_REPLIC 'STARTRCV INST3 INST2'==
 ==Executing MULTISITE_REPLIC 'RUN INST1 ##TEST_COM_PATH##/simplegblupd.csh -instance INST1 -count 10 -internal'==
 
-GTM>
+YDB>
 set ^GBLA(17)=28572_<...>
 set ^GBLA(18)=28572_<...>
 set ^GBLA(19)=28572_<...>
@@ -69,7 +69,7 @@ set ^GBLA(24)=28572_<...>
 set ^GBLA(25)=28572_<...>
 set ^GBLA(26)=28572_<...>
 
-GTM>
+YDB>
 26,28572
 ==Executing MULTISITE_REPLIC 'STOP ALL_LINKS'==
 ==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==

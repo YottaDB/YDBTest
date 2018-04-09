@@ -61,13 +61,13 @@ log5.log:
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST2 set msr_dont_chk_stat; $MUPIP replic -source -propagateprimary -activate -instsecondary=__RCV_INSTNAME__ -secondary=__RCV_HOST__:__RCV_PORTNO__'==
 some updates on INST1
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ###################################################################
 # activate it again:
 #  	--> This should succeed.
@@ -81,13 +81,13 @@ GTM>
 PID ##FILTERED##[##PID##] Source server is alive in PASSIVE mode
 some updates on INST1
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ###################################################################
 # activate it again:
 #  	--> We expect a ACTIVATEFAIL error since -rootprimary will be assumed, and there are more processes attached to the journal pool than only one passive source server.
@@ -103,13 +103,13 @@ Error ACTIVATEFAIL seen in msr_execute_##FILTERED##NO.out as expected:
 #  	--> This should succeed.
 some updates on INST1:
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
 ==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
 ==Executing MULTISITE_REPLIC 'EXTRACT INST1 INST2 INST3'==

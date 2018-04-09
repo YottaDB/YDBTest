@@ -3,6 +3,9 @@
 ; Copyright (c) 2008-2016 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -735,9 +738,9 @@
 ; The following should be executed on their own as part of the smoke test milestone
 ; > setenv EDITOR vi
 ; > gtm
-; GTM> zedit "foo"
+; YDB> zedit "foo"
 ;
-; GTM> zsy
+; YDB> zsy
 ; then cntl-d to get back to gtm prompt
 ;
-; GTM> w !,$R(-10) ; when this is executed it should give an error
+; YDB> w !,$R(-10) ; when this is executed it should give an error

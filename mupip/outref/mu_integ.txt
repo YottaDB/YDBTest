@@ -15,13 +15,13 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ##ALLOW_OUTPUT  NON_REPLIC
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 File  	##TEST_PATH##/integneg.dat
 Region	DEFAULT
@@ -72,10 +72,10 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ##ALLOW_OUTPUT  NON_REPLIC
 
-GTM>
+YDB>
 PASS from fill7^myfill("set")
 
-GTM>
+YDB>
 Integ of region AREG
 Integ of region BREG
 #
@@ -409,10 +409,10 @@ Total             100              47              NA             2
 ##ALLOW_OUTPUT NON_COLLATION
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
 
-GTM>
+YDB>
 PASS from fill7^myfill("ver")
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  REPLIC
 Files Created in ##TEST_PATH##:
 Using: ##SOURCE_PATH##/mumps -run GDE
@@ -420,9 +420,9 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT

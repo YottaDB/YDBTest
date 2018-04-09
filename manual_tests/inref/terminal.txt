@@ -16,7 +16,7 @@ On UNIX:
 stty cols 132 ; stty -a
 
 gtm
-GTM>do ^terminal
+YDB>do ^terminal
 
 (On VMS, do a set term/inquire before to reset terminal characteristics)
 -----------------------------------------------
@@ -49,30 +49,30 @@ Notes :
 -----------------------------------------------
 5. run the following (note output to terminal will occur while typing:)
 
-GTM>use $PRINCIPAL:(X=0:Y=0:CLEARSCREEN) write "HERE: ",$X,",",$Y,! use $PRINCIPAL:(X=8:y=2) write "HERE: ",$X,",",$Y,!
+YDB>use $PRINCIPAL:(X=0:Y=0:CLEARSCREEN) write "HERE: ",$X,",",$Y,! use $PRINCIPAL:(X=8:y=2) write "HERE: ",$X,",",$Y,!
 
 Your screen should look like (at the top of the screen):
 HERE: 6,0
 
         HERE: 14,2
 
-GTM>
+YDB>
 
 now do:
 
-GTM>use $PRINCIPAL:(X=1:Y=1) write "HERE: ",$X,",",$Y,!
+YDB>use $PRINCIPAL:(X=1:Y=1) write "HERE: ",$X,",",$Y,!
 
 Screen should be:
 HERE: 6,0
  HERE: 7,1
         HERE: 14,2
-GTM>
+YDB>
 
 (On VMS, do a set term/inquire before to reset terminal characteristics)
 -----------------------------------------------
 6. Run:
 gtm
-GTM>do test2^terminal
+YDB>do test2^terminal
 
 The output is self-explanatory.
 
@@ -81,7 +81,7 @@ The output is self-explanatory.
 7. Run:
 (assuming longstr.m is already copied - the very first step of this manual test)
 gtm
-GTM>write $$^longstr(35000)
+YDB>write $$^longstr(35000)
 This should produce a lot of output (many alphabets), but should not error out.
 -----------------------------------------------
 

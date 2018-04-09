@@ -35,7 +35,7 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ##ALLOW_OUTPUT  NON_REPLIC
 
-GTM>
+YDB>
 		write $INC(@glvn,6)	; Expected: INVFCN error because of incomplete function name
 		       ^-----
 		At column 9, line 64, source module ##IN_TEST_PATH##/inref/incrbas.m
@@ -2052,7 +2052,7 @@ incr06e:	kill ^longvariableV4GET
 incr06e:	quit
 incr06e:	quit
 
-GTM>
+YDB>
 ##SUSPEND_OUTPUT  GT.M
 Stopping the GT.CM Servers...
 Check the databases on the GT.CM Servers...

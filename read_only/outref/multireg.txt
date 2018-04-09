@@ -14,13 +14,13 @@ mumps.dat
 
 $GTM << bbb
 
-GTM>
+YDB>
 Do in0^sfill("set",1,4)
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 chmod 666 *.dat
 
 unset verbose
@@ -82,13 +82,13 @@ $gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
 -rw-rw-rw- mumps.mjl
 $GTM << bbb
 
-GTM>
+YDB>
 Do in0^sfill("set",1,4)
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 chmod 666 *.dat *.mjl
 
 mkdir ./Back
@@ -196,13 +196,13 @@ $gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
 -rw-rw-rw- mumps.mjl
 $GTM << bbb
 
-GTM>
+YDB>
 Do in0^sfill("set",1,4)
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 chmod 666 *.dat *.mjl
 
 echo "***** *.dat R/W  *.mjl R/W *****"
@@ -306,13 +306,13 @@ c.dat
 mumps.dat
 $GTM << bbb
 
-GTM>
+YDB>
 Do in0^sfill("set",1,4)
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 chmod 666 *.dat
 
 echo "mupip extract -nolog glo.dir"
@@ -355,13 +355,13 @@ c.dat
 mumps.dat
 $GTM << bbb
 
-GTM>
+YDB>
 Do in0^sfill("set",1,4)
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 chmod 666 *.dat
 
 echo "mupip extract -fr -nolog glo.dir"
@@ -407,13 +407,13 @@ $gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
 -rw-rw-rw- mumps.mjl
 $GTM << bbb
 
-GTM>
+YDB>
 Do in0^sfill("set",1,4)
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 chmod 666 *.dat *.mjl
 
 echo "**** *.dat R/W *.mjl R/W ****"
@@ -488,13 +488,13 @@ $gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
 -rw-rw-rw- mumps.mjl
 $GTM << bbb
 
-GTM>
+YDB>
 Do in0^sfill("set",1,4)
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 chmod 666 *.dat *.mjl
 
 echo "**** *.dat R/W *.mjl R/W ***"
@@ -573,13 +573,13 @@ $gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
 -rw-rw-rw- mumps.mjl
 $GTM << bbb
 
-GTM>
+YDB>
 Do in0^sfill("set",1,4)
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 chmod 666 *.dat *.mjl
 
 echo "***** *.dat R/W  *.mjl R/W *****"
@@ -691,13 +691,13 @@ c.dat
 mumps.dat
 $GTM << bbb
 
-GTM>
+YDB>
 Do in0^sfill("set",1,4)
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 chmod 666 b.dat
 $MUPIP integ -FAST -reg "*" > & integr.out1
 egrep "YDB-E|No errors" integr.out1
@@ -750,13 +750,13 @@ $gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
 -rw-rw-rw- mumps.mjl
 $GTM << bbb
 
-GTM>
+YDB>
 Do in0^sfill("set",1,4)
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 chmod 666 b.dat b.mjl
 
 echo "***** *.dat R/W *.mjl R/W *****"
@@ -855,11 +855,11 @@ c.dat
 mumps.dat
 $GTM << aaa
 
-GTM>
+YDB>
 do in0^sfill("set",1,4)
 set PASS
 
-GTM>
+YDB>
 chmod 666 b.dat
 
 echo "***** *.dat read_write *****"
@@ -909,11 +909,11 @@ $MUPIP set -journal=enable,on,before -reg "*" | & sort -f
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 $GTM << aaa
 
-GTM>
+YDB>
 do in0^sfill("set",1,4)
 set PASS
 
-GTM>
+YDB>
 chmod 666 *.dat *.mjl
 
 chmod.csh rwrw
@@ -992,13 +992,13 @@ Last LOAD record number: 142
 
 $GTM << bbb
 
-GTM>
+YDB>
 ver PASS
 
-GTM>
+YDB>
 kill PASS
 
-GTM>
+YDB>
 mipcmanage
 
 chmod.csh rwro
@@ -1398,10 +1398,10 @@ b.dat
 c.dat
 mumps.dat
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
  ------- Before reorg --------
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
@@ -1532,10 +1532,10 @@ b.dat
 c.dat
 mumps.dat
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 ----- Before reorg -----
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
@@ -1655,10 +1655,10 @@ No errors detected by integ.
 -rw-rw-rw- mumps.dat
 -rw-rw-rw- mumps.mjl
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 ------- Before reorg -------
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
@@ -1817,10 +1817,10 @@ No errors detected by integ.
 -rw-rw-rw- mumps.dat
 -rw-rw-rw- mumps.mjl
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 ------- Before reorg -------
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
@@ -1951,10 +1951,10 @@ No errors detected by integ.
 -rw-rw-rw- mumps.dat
 -rw-rw-rw- mumps.mjl
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 ------- Before reorg -------
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
@@ -2038,10 +2038,10 @@ No errors detected by integ.
 -rw-rw-rw- mumps.dat
 -rw-rw-rw- mumps.mjl
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 ------- Before reorg -------
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
@@ -2178,13 +2178,13 @@ $gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
 -rw-rw-rw- mumps.mjl
 $GTM << bbb
 
-GTM>
+YDB>
 Do in0^sfill("set",1,4)
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 chmod 666 *.dat *.mjl
 
 mkdir ./backup
@@ -2352,10 +2352,10 @@ $gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
 -rw-rw-rw- mumps.mjl
 $GTM << bbb
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 chmod 666 *.dat *.mjl
 
 chmod.csh rwrw
@@ -2385,10 +2385,10 @@ $gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
 -rw-rw-rw- mumps.mjl
 $GTM << bbb
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 chmod.csh rwro
 **** R/W b.dat R/O b.mjl ****
 echo "mupip rundown -reg * "
@@ -2416,10 +2416,10 @@ $gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
 -rw-rw-rw- mumps.mjl
 $GTM << bbb
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 chmod.csh rorw
 **** R/O b.dat R/W b.mjl ****
 echo "mupip rundown -reg * "
@@ -2455,10 +2455,10 @@ $gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
 -rw-rw-rw- mumps.mjl
 $GTM << bbb
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 chmod.csh roro
 **** R/O b.dat R/O b.mjl ****
 echo "mupip rundown -reg * "
@@ -2499,13 +2499,13 @@ $gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
 -rw-rw-rw- mumps.mjl
 $GTM << bbb
 
-GTM>
+YDB>
 Do in0^sfill("set",1,4)
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 chmod.csh rwrw
 **** R/W b.dat R/W b.mjl ****
 $MUPIP set -reg "*" -journal=enable,on,before | & sort -f
@@ -2540,13 +2540,13 @@ $gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
 -rw-rw-rw- mumps.mjl
 $GTM << bbb
 
-GTM>
+YDB>
 Do in0^sfill("set",1,4)
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 chmod.csh rwro
 **** R/W b.dat R/O b.mjl ****
 $MUPIP set -reg "*" -journal=enable,on,before | & sort -f
@@ -2580,13 +2580,13 @@ $gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
 -rw-rw-rw- mumps.mjl
 $GTM << bbb
 
-GTM>
+YDB>
 Do in0^sfill("set",1,4)
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 chmod.csh rorw
 **** R/O b.dat R/W b.mjl ****
 $MUPIP set -reg "*" -journal=enable,on,before | & sort -f
@@ -2618,13 +2618,13 @@ $gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
 -rw-rw-rw- mumps.mjl
 $GTM << bbb
 
-GTM>
+YDB>
 Do in0^sfill("set",1,4)
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 chmod.csh roro
 **** R/O b.dat R/O b.mjl ****
 $MUPIP set -reg "*" -journal=enable,on,before | & sort -f
@@ -2659,10 +2659,10 @@ $gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
 -rw-rw-rw- mumps.mjl
 $GTM << bbb
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 chmod.csh rwrw
 **** R/W b.dat R/W b.mjl ****
 $MUPIP journal -extract=mumps.mjf -forward mumps.mjl,a.mjl,b.mjl,c.mjl
@@ -2749,13 +2749,13 @@ $gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
 -rw-rw-rw- mumps.mjl
 $GTM << bbb
 
-GTM>
+YDB>
 Do in0^sfill("set",1,4)
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 chmod 666 *.dat *.mjl
 
 \rm -f *.dat
@@ -2838,13 +2838,13 @@ $gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
 -rw-rw-rw- mumps.mjl
 $GTM << bbb
 
-GTM>
+YDB>
 Do in0^sfill("set",1,4)
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 chmod 666 *.dat *.mjl
 chmod.csh rwrw
 **** R/W b.dat R/W b.mjl ****
@@ -2917,13 +2917,13 @@ $gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
 -rw-rw-rw- mumps.mjl
 $GTM << EOF
 
-GTM>
+YDB>
 Do in0^sfill("set",1,4)
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 chmod 666 *.dat *.mjl
 
 chmod.csh rwrw
@@ -2988,13 +2988,13 @@ $gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
 -rw-rw-rw- mumps.mjl
 $GTM << bbb
 
-GTM>
+YDB>
 Do in0^sfill("set",1,4)
 
-GTM>
+YDB>
 set PASS
 
-GTM>
+YDB>
 chmod 666 *.dat *.mjl
 
 chmod.csh rwrw

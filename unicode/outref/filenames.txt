@@ -282,23 +282,23 @@ GDE>
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/ＲＥＧＤＥＦＡＵＬＴ.dat created
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/D我能吞下玻璃而不伤身体.dat created
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ###################################################################
 setenv gtm_chset M
 unset echo
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ###################################################################
 setenv gtm_chset UTF-8
 unset echo
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ###################################################################
 %GDE-I-LOADGD, Loading Global Directory file 
 	##TEST_PATH##/ｍｕｍｐｓ.ｇｌｄ
@@ -641,9 +641,9 @@ unset echo
 ###################################################################
 #- Set some globals.
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ###################################################################
 #- cut a new generation jnl file for one region (DEFAULT)
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mｇmｄｅｆ１.mjl created for region DEFAULT with BEFORE_IMAGES
@@ -662,17 +662,17 @@ Error MUNOACTION seen in mjon.log as expected:
 ----------
 #- Set some globals.
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ###################################################################
 #- cut a new generation jnl file for one region (DEFAULT) again
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mｇmｄｅｆ１.mjl is renamed to ##TEST_PATH##/mｇmｄｅｆ１.mjl_##TIMESTAMP##
@@ -693,11 +693,11 @@ unset echo
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/ＲＥＧＣ．ｍｊｌ.mjl created for region CREG with BEFORE_IMAGES
 %YDB-I-JNLSTATE, Journaling state for region CREG is now ON
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##FILTERED##GTM_TEST_DEBUGINFO.*
 sleep 2
 unset echo
@@ -707,9 +707,9 @@ unset echo
 ##FILTERED##GTM_TEST_DEBUGINFO.*
 ##FILTERED##GTM_TEST_DEBUGINFO.*
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mｇmｄｅｆ１.mjl is renamed to ##TEST_PATH##/mｇmｄｅｆ１.mjl_##TIMESTAMP##
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mｇmｄｅｆ１.mjl created for region DEFAULT with BEFORE_IMAGES
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
@@ -1227,14 +1227,14 @@ BACKUP COMPLETED.
 ＲＥＧＣ.dat
 D我能吞下玻璃而不伤身体.dat
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 hello
 
-GTM>
+YDB>
 ###################################################################
 #- mupip set -file ... -glo=
 #	--> Change the global buffers, and verify that it worked.
@@ -1404,13 +1404,13 @@ MUPIP cannot start freeze with above errors
 #  Note that this is NOT the test for multi-byte characters in the locked variables, that test is in the locks test.
 #lock some globals
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 AREG
 ##TEST_AWK.a."ａｂｃ". Owned by PID= [1-9][0-9]* which is an existing process
@@ -1454,21 +1454,21 @@ LKE> LKE> LKE> # all locks should be gone now
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 #release the job
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ###################################################################
 #- job off a process with the log and error going to filenames with multi-byte characters.
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 grep -v PID ｊｏｂｏｆｆ.ｍｊｏ
 Here in the jobbed off process
 
-GTM>
+YDB>
 ----------
 Error DIVZERO seen in ｊｏｂｏｆｆ.ｍｊｅ as expected:
 %YDB-E-DIVZERO, Attempt to divide by zero
@@ -1531,36 +1531,36 @@ SLT # 0 : Connect Sequence Number                        0 [0x0000000000000000]
 #- set an environment variable envvar_ｅｎｖ to some value, and attempt to read the value from GTM.
 #	--> It should succeed.
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 The value read from the environment variable is:some value, ｌｏｏｋ
 
-GTM>
+YDB>
 ###################################################################
 #- try some command that does not accept multi-byte characters, and see the error makes sense.
 
-GTM>
+YDB>
 %YDB_E_CMD, Command expected but not found
 	ｗｒｉｔｅ "abc",!
 	^-----
 
-GTM>
+YDB>
 %YDB_E_EXPR, Expression expected but not found
 	write ａｂｃ,!
 	      ^-----
 
-GTM>
+YDB>
 %YDB_E_RHMISSING, Right-hand side of expression expected
 	set x=3+ａ
 	        ^-----
 
-GTM>
+YDB>
 %YDB_E_EXPR, Expression expected but not found
 	write "But there is an error ｏｎ ｔｈｉｓ ｌｉｎｅ!",!,,
 	                                                        ^-----
 
-GTM>
+YDB>
 ###################################################################
 #- mupip integ
 #AREG

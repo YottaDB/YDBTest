@@ -4,33 +4,33 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
 
-GTM>
+YDB>
 
 --------- (a) Test viewfillfactor ------------
 
 Fill factor = 100
 Fill factor = 30
 Fill factor = 60
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
 
 ###### GT.M with RESERVED_BYTES=0. Should NOT issue RSVDBYTE2HIGH error ###### 
 
-GTM>
+YDB>
 
 --------- (b1) Test fillfactor -------------------
 
-GTM>
+YDB>
 
 --------- (b2) Test RSVDBYTE2HIGH error at the leaf level -------------------
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -46,23 +46,23 @@ Region	DEFAULT
 DSE> DSE> 
 ###### GT.M with RESERVED_BYTES=128. Should issue RSVDBYTE2HIGH error ###### 
 
-GTM>
+YDB>
 
 --------- (b2) Test RSVDBYTE2HIGH error at the leaf level -------------------
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 --------- (b1) Test fillfactor -------------------
 
-GTM>
+YDB>
 
 --------- (b2) Test RSVDBYTE2HIGH error at the leaf level -------------------
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -105,21 +105,21 @@ File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
 DSE> DSE> 
-GTM>
+YDB>
 
 --------- (b3) Test RSVDBYTE2HIGH error at the index level -------------------
 %YDB-E-RSVDBYTE2HIGH, Record size (260) is greater than the maximum allowed for region DEFAULT with Block size (1024) and Reserved bytes (768),%YDB-I-GVIS, 		Global variable: ^x("                                                                                                                                                                                                                                     2")
 		At M source location data4+8^d002587
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 --------- (c) Test emptyrightblock ------------
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -141,35 +141,35 @@ data6.glo
 ^x(1)="                                                                                                   1"
 ^x(2)="                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   1"
 
-GTM>
+YDB>
 
 --------- (d) Test copyextrarecord ------------
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
 %YDB-I-RECORDSTAT, ^x:	  Key cnt: 2  max subsc len: 6  max rec len: 500  max node len: 510
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 6  max rec len: 500  max node len: 510
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
 %YDB-I-RECORDSTAT, ^x:	  Key cnt: 1  max subsc len: 6  max rec len: 500  max node len: 510
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 6  max rec len: 500  max node len: 510
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -201,65 +201,65 @@ data8.glo
 ^x(1)="                                                                                                   1"
 ^x(2)="                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   1"
 
-GTM>
+YDB>
 
 --------- (e) Test leftsplitLEFTBLOCK ------------
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
 DSE> DSE> 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
 
-GTM>
+YDB>
 
 --------- (f) Test leftsplitRIGHTBLOCK ------------
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
 DSE> DSE> 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
 
-GTM>
+YDB>
 
 --------- (g) Test rightsplitLEFTBLOCK ------------
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
 DSE> DSE> 
-GTM>
+YDB>
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

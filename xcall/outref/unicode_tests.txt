@@ -3,7 +3,7 @@ This section tests external calls using unicode string
 setenv gtm_chset UTF-8
 unset echo
 
-GTM>
+YDB>
 do unistrtest
 
 Testing strlen
@@ -24,9 +24,9 @@ Testing strcpy
 expected output  :2β3私
 strcpy done by C :2β3私
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do uniprealloc
 Value returned from prealloc = "αβγ Message"
 
@@ -39,9 +39,9 @@ Passed
 After alloc1mb: Now length is : 1048572
 Passed
 
-GTM>
+YDB>
 
-GTM>
+YDB>
 do unimaxprealloc
 %YDB-I-EXTSRCLIN, 	allocerr:	void	xc_new_alloc_err(O:xc_char_t *[1048578])
 
@@ -50,6 +50,6 @@ do unimaxprealloc
 %YDB-E-ZCPREALLVALINV, The pre-allocation value exceeded the maximum string length
 		At M source location unimaxprealloc+3^unimaxprealloc
 
-GTM>
+YDB>
 ######################################################
 Section done...

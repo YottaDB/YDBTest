@@ -17,14 +17,14 @@ start before image  journaling
 %YDB-I-JNLSTATE, Journaling state for region CREG is now ON
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 
-GTM>
+YDB>
 
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
 ##TEST_AWKTime written into time1.txt:.*
 
-GTM>
+YDB>
 ----------------------------------------------------------------------------------
 mupip journal -recover -back a.mjl,b.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
@@ -72,7 +72,7 @@ PID        NODE             USER         TERM JPV_TIME
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 PASSED
 
-GTM>
+YDB>
 ^a(1)="A1"
 ^b(1)="B1"
 ^c(1)="C1"
@@ -96,7 +96,7 @@ GTM>
 ^d(9)="D9"
 ^d(10)="D10"
 
-GTM>
+YDB>
 ^a(2) to ^a(10) and ^b(2) to ^b(10) will be in the a.broken file
 ^a(2)="A2"
 ^b(2)="B2"
@@ -131,7 +131,7 @@ GTM>
 %YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
-GTM>
+YDB>
 ^a(1)="A1"
 ^a(2)="A2"
 ^a(3)="A3"
@@ -173,7 +173,7 @@ GTM>
 ^d(9)="D9"
 ^d(10)="D10"
 
-GTM>
+YDB>
 ----------------------------------------------------------------------------------
 Again delete databases
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
@@ -215,19 +215,19 @@ PID        NODE             USER         TERM JPV_TIME
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 PASSED
 
-GTM>
+YDB>
 %YDB-E-GVUNDEF, Global variable undefined: ^a
 
-GTM>
+YDB>
 %YDB-E-GVUNDEF, Global variable undefined: ^b
 
-GTM>
+YDB>
 %YDB-E-GVUNDEF, Global variable undefined: ^c
 
-GTM>
+YDB>
 %YDB-E-GVUNDEF, Global variable undefined: ^d
 
-GTM>
+YDB>
 ^a(1) to ^a(10) and ^b(1) to ^b(10) will be in the a.broken file
 ^a(1)="A1"
 ^b(1)="B1"
@@ -301,19 +301,19 @@ PID        NODE             USER         TERM JPV_TIME
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 PASSED
 
-GTM>
+YDB>
 %YDB-E-GVUNDEF, Global variable undefined: ^a
 
-GTM>
+YDB>
 %YDB-E-GVUNDEF, Global variable undefined: ^b
 
-GTM>
+YDB>
 %YDB-E-GVUNDEF, Global variable undefined: ^c
 
-GTM>
+YDB>
 %YDB-E-GVUNDEF, Global variable undefined: ^d
 
-GTM>
+YDB>
 ^a(1) to ^a(10) and ^b(1) to ^b(10) and ^c(1) to ^c(10) will be in the a.broken file
 ^a(1)="A1"
 ^b(1)="B1"
@@ -362,7 +362,7 @@ mupip journal -recover -forward -verify a.mjl,b.mjl,c.mjl,mumps.mjl -broken=a.br
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 PASSED
 
-GTM>
+YDB>
 ^a(1)="A1"
 ^a(2)="A2"
 ^a(3)="A3"
@@ -404,7 +404,7 @@ GTM>
 ^d(9)="D9"
 ^d(10)="D10"
 
-GTM>
+YDB>
 ----------------------------------------------------------------------------------
 End of test 08
 ##SOURCE_PATH##/mupip

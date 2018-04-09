@@ -53,20 +53,20 @@ Region	DEFAULT
 DSE> DSE> DSE> 
 Try to start GT.M. Expect DBFLCORRP error
 
-GTM>
+YDB>
 %YDB-E-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
 
-GTM>
+YDB>
 Kill backgrounded GT.M process
 Remove database semaphore to induce REQRUNDOWN situation
 Try to start GT.M. Expect REQRUNDOWN error now
 
-GTM>
+YDB>
 %YDB-E-REQRUNDOWN, Error accessing database ##TEST_PATH##/mumps.dat.  Must be rundown on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
 %YDB-I-TEXT, Error with database control semaphore (IPC_STAT)
 ##TEST_AWK%SYSTEM-E-ENO(22|43).*
 
-GTM>
+YDB>
 Try to start DSE. Should get REQRUNDOWN error
 %YDB-E-REQRUNDOWN, Error accessing database ##TEST_PATH##/mumps.dat.  Must be rundown on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
 %YDB-I-TEXT, Error with database control semaphore (IPC_STAT)
@@ -78,10 +78,10 @@ Start MUPIP RUNDOWN. Should work fine without DBFLCORRP error. Should also fix R
 %YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
 Try to start GT.M. Expect DBFLCORRP error still
 
-GTM>
+YDB>
 %YDB-E-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
 
-GTM>
+YDB>
 Try to start DSE. Should NOT get REQRUNDOWN error. Fix DBFLCORRP error
 %YDB-W-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
 
@@ -91,10 +91,10 @@ Region	DEFAULT
 DSE> DSE> DSE> 
 Try to start GT.M. Expect NO errors
 
-GTM>
+YDB>
 ##TEST_AWK[1-9][0-9]*
 
-GTM>
+YDB>
 -----------------------------------------------------------------------------------------
 Test case (2b) : Test that MUPIP RUNDOWN works fine in case of DBFLCORRP error : REQRECOV
 -----------------------------------------------------------------------------------------
@@ -111,20 +111,20 @@ Region	DEFAULT
 DSE> DSE> DSE> 
 Try to start GT.M. Expect DBFLCORRP error
 
-GTM>
+YDB>
 %YDB-E-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
 
-GTM>
+YDB>
 Kill backgrounded GT.M process
 Remove database semaphore to induce REQRECOV situation
 Try to start GT.M. Expect REQRECOV error now
 
-GTM>
+YDB>
 %YDB-E-REQRECOV, Error accessing database ##TEST_PATH##/mumps.dat.  Must be recovered on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
 %YDB-I-TEXT, Error with database control semaphore (IPC_STAT)
 ##TEST_AWK%SYSTEM-E-ENO(22|43).*
 
-GTM>
+YDB>
 Try to start DSE. Should get REQRECOV error
 %YDB-E-REQRECOV, Error accessing database ##TEST_PATH##/mumps.dat.  Must be recovered on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
 %YDB-I-TEXT, Error with database control semaphore (IPC_STAT)
@@ -141,10 +141,10 @@ Start MUPIP RUNDOWN -OVERRIDE. Should work fine without DBFLCORRP error. Should 
 %YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
 Try to start GT.M. Expect DBFLCORRP error still
 
-GTM>
+YDB>
 %YDB-E-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
 
-GTM>
+YDB>
 Try to start DSE. Should NOT get REQRECOV error. Fix DBFLCORRP error
 %YDB-W-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
 
@@ -154,10 +154,10 @@ Region	DEFAULT
 DSE> DSE> DSE> 
 Try to start GT.M. Expect NO errors
 
-GTM>
+YDB>
 ##TEST_AWK[1-9][0-9]*
 
-GTM>
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -186,10 +186,10 @@ Region	DEFAULT
 DSE> DSE> DSE> 
 Try to start GT.M. Expect DBFLCORRP error
 
-GTM>
+YDB>
 %YDB-E-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
 
-GTM>
+YDB>
 Kill backgrounded GT.M process
 Kill source server
 Simulating crash on primary in ##TEST_PATH##
@@ -197,12 +197,12 @@ Primary crashed!
 Remove database semaphore to induce REQROLLBACK situation
 Try to start GT.M. Expect REQROLLBACK error now
 
-GTM>
+YDB>
 %YDB-E-REQROLLBACK, Error accessing database ##TEST_PATH##/mumps.dat.  Run MUPIP JOURNAL -ROLLBACK -NOONLINE on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
 %YDB-I-TEXT, Error with database control semaphore (IPC_STAT)
 ##TEST_AWK%SYSTEM-E-ENO(22|43).*
 
-GTM>
+YDB>
 Try to start DSE. Should get REQROLLBACK error
 %YDB-E-REQROLLBACK, Error accessing database ##TEST_PATH##/mumps.dat.  Run MUPIP JOURNAL -ROLLBACK -NOONLINE on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
 %YDB-I-TEXT, Error with database control semaphore (IPC_STAT)
@@ -222,10 +222,10 @@ Start MUPIP RUNDOWN -OVERRIDE. Should work fine without DBFLCORRP error. Should 
 %YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
 Try to start GT.M. Expect DBFLCORRP error still
 
-GTM>
+YDB>
 %YDB-E-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
 
-GTM>
+YDB>
 Try to start DSE. Should NOT get REQROLLBACK error. Fix DBFLCORRP error
 %YDB-W-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
 
@@ -235,10 +235,10 @@ Region	DEFAULT
 DSE> DSE> DSE> 
 Try to start GT.M. Expect NO errors
 
-GTM>
+YDB>
 ##TEST_AWK[1-9][0-9]*
 
-GTM>
+YDB>
 Run MUPIP JOURNAL -ROLLBACK to fix crashed journal files
 Restarting source server
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
@@ -273,10 +273,10 @@ Region	DEFAULT
 DSE> DSE> DSE> 
 Try to start GT.M. Expect DBFLCORRP error
 
-GTM>
+YDB>
 %YDB-E-DBFLCORRP, ##TEST_PATH##/mumps.dat Header indicates database file is corrupt
 
-GTM>
+YDB>
 Kill backgrounded GT.M process
 Kill source server
 Simulating crash on primary in ##TEST_PATH##
@@ -284,12 +284,12 @@ Primary crashed!
 Remove database semaphore to induce REQROLLBACK situation
 Try to start GT.M. Expect REQROLLBACK error now
 
-GTM>
+YDB>
 %YDB-E-REQROLLBACK, Error accessing database ##TEST_PATH##/mumps.dat.  Run MUPIP JOURNAL -ROLLBACK -NOONLINE on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
 %YDB-I-TEXT, Error with database control semaphore (IPC_STAT)
 ##TEST_AWK%SYSTEM-E-ENO(22|43).*
 
-GTM>
+YDB>
 Try to start DSE. Should get REQROLLBACK error
 %YDB-E-REQROLLBACK, Error accessing database ##TEST_PATH##/mumps.dat.  Run MUPIP JOURNAL -ROLLBACK -NOONLINE on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
 %YDB-I-TEXT, Error with database control semaphore (IPC_STAT)
@@ -320,10 +320,10 @@ Start MUPIP JOURNAL -ROLLBACK. Should work fine without DBFLCORRP error. Should 
 
 Try to start GT.M. Expect NO errors
 
-GTM>
+YDB>
 ##TEST_AWK[1-9][0-9]*
 
-GTM>
+YDB>
 Restarting source server
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 Shutting down Primary Source Server Server in ##TEST_PATH##

@@ -21,7 +21,7 @@ mupip journal -recover -back "*"
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 Value of  ^a(i) should be i*10
 
-GTM>
+YDB>
 10
 20
 30
@@ -33,7 +33,7 @@ GTM>
 90
 100
 
-GTM>
+YDB>
 ------------------------------------------------------------------
 mupip journal -recover -back "*" -since=time1
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
@@ -62,7 +62,7 @@ PID        NODE             USER         TERM JPV_TIME
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 Value of ^a(i) should be i
 
-GTM>
+YDB>
 1
 2
 3
@@ -74,7 +74,7 @@ GTM>
 9
 10
 
-GTM>
+YDB>
 mupip journal -show=broken -back mumps.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 
@@ -98,7 +98,7 @@ mupip journal -recover -back "*" -look="time=time1"
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 Value of ^a(i) should be i*10
 
-GTM>
+YDB>
 10
 20
 30
@@ -110,7 +110,7 @@ GTM>
 90
 100
 
-GTM>
+YDB>
 ------------------------------------------------------------------
 ##TEST_AWKmupip journal -recover -back "\*" -since=".*"
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
@@ -131,7 +131,7 @@ mupip journal -recover -back "*" -look="time=time0"
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 Value of ^a(i) should be i*10
 
-GTM>
+YDB>
 10
 20
 30
@@ -143,7 +143,7 @@ GTM>
 90
 100
 
-GTM>
+YDB>
 ------------------------------------------------------------------
 ##TEST_AWKmupip journal -recover -back "\*" -since=".*"
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
@@ -157,7 +157,7 @@ GTM>
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 Value of ^a(i) should be i*10
 
-GTM>
+YDB>
 10
 20
 30
@@ -169,7 +169,7 @@ GTM>
 90
 100
 
-GTM>
+YDB>
 ------------------------------------------------------------------
 ##TEST_AWKmupip journal -recover -back "\*" -since=".*" -look="time=time3"
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
@@ -205,7 +205,7 @@ PID        NODE             USER         TERM JPV_TIME
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 Value of ^a(i) should be i
 
-GTM>
+YDB>
 1
 2
 3
@@ -217,7 +217,7 @@ GTM>
 9
 10
 
-GTM>
+YDB>
 mupip journal -show=br -back mumps.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 
@@ -241,7 +241,7 @@ SHOW output for journal file ##TEST_PATH##/mumps.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 Value of ^a(i) should be i*10
 
-GTM>
+YDB>
 10
 20
 30
@@ -253,7 +253,7 @@ GTM>
 90
 100
 
-GTM>
+YDB>
 ------------------------------------------------------------------
 ##TEST_AWKmupip journal -recover -back "\*" -before=".*"
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
@@ -274,7 +274,7 @@ GTM>
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 Value of ^a(i) should be i
 
-GTM>
+YDB>
 1
 2
 3
@@ -286,7 +286,7 @@ GTM>
 9
 10
 
-GTM>
+YDB>
 ------------------------------------------------------------------
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 mupip journal -recover -forw -verify mumps.mjl -before=time2
@@ -299,7 +299,7 @@ mupip journal -recover -forw -verify mumps.mjl -before=time2
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 Value of ^a(i) should be i
 
-GTM>
+YDB>
 1
 2
 3
@@ -311,7 +311,7 @@ GTM>
 9
 10
 
-GTM>
+YDB>
 ------------------------------------------------------------------
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 mupip journal -recover -forw -verify mumps.mjl
@@ -339,7 +339,7 @@ PID        NODE             USER         TERM JPV_TIME
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 Value of ^a(i) should be i
 
-GTM>
+YDB>
 1
 2
 3
@@ -351,7 +351,7 @@ GTM>
 9
 10
 
-GTM>
+YDB>
 mupip journal -show=br -back mumps.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 
@@ -389,7 +389,7 @@ PID        NODE             USER         TERM JPV_TIME
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 Value of ^a(i) should be i
 
-GTM>
+YDB>
 1
 2
 3
@@ -401,7 +401,7 @@ GTM>
 9
 10
 
-GTM>
+YDB>
 ------------------------------------------------------------------
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 mupip journal -recover -forw -verify mumps.mjl -fences=process
@@ -429,7 +429,7 @@ PID        NODE             USER         TERM JPV_TIME
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 Value of ^a(i) should be i
 
-GTM>
+YDB>
 1
 2
 3
@@ -441,7 +441,7 @@ GTM>
 9
 10
 
-GTM>
+YDB>
 mupip journal -show=br -back mumps.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 
@@ -464,7 +464,7 @@ mupip journal -recover -forw -verify mumps.mjl -fences=none
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 Value of ^a(i) should be i*10
 
-GTM>
+YDB>
 10
 20
 30
@@ -476,7 +476,7 @@ GTM>
 90
 100
 
-GTM>
+YDB>
 ------------------------------------------------------------------
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 mupip journal -extract -forw mumps.mjl -after=time2

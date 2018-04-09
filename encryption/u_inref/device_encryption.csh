@@ -4,6 +4,9 @@
 # Copyright (c) 2014-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -74,8 +77,8 @@ setenv string3 "${string1}${string2}"
 #		Operation	Description						Encryption label	Decryption label	SD		PRINCIPAL	PIPE		FIFO
 set operArr = (	"SIMPLE"	"Simple encryption/decryption"				"simpleEncrypt"		"simpleDecrypt"		"$string1"	"$string1"	"$string1"	"$string1"	\
 		"NODESTROY"	"Encryption/decryption with NODESTROY"			"encryptNoDestroy"	"simpleDecrypt"		"$string3"	"$string3"	"$string2"	"$string2"	\
-		"SEEK"		"Encryption/decryption with SEEK" 			"simpleSeek"		"simpleDecrypt"		"N/A"		"GTM>"		"GTM>"		"N/A"		\
-		"SEEKNODESTROY"	"Encryption/decryption with SEEK and NODESTROY" 	"seekNoDestroy"		"simpleDecrypt"		"$string1"	"$string1 GTM>"	"GTM>"		"N/A"		\
+		"SEEK"		"Encryption/decryption with SEEK" 			"simpleSeek"		"simpleDecrypt"		"N/A"		"YDB>"		"YDB>"		"N/A"		\
+		"SEEKNODESTROY"	"Encryption/decryption with SEEK and NODESTROY" 	"seekNoDestroy"		"simpleDecrypt"		"$string1"	"$string1 YDB>"	"YDB>"		"N/A"		\
 		"APPEND"	"Encryption/decryption with simple APPEND" 		"simpleAppend"		"simpleDecrypt"		"$string1"	"$string3"	"$string2"	"$string2"	\
 		"APNDNEWVER"	"Encryption/decryption with APPEND on NEWVERSION" 	"appendNewversion"	"simpleDecrypt"		"$string2"	"$string3"	"$string2"	"$string2"	\
 		"APNDEMPTY"	"Encryption/decryption with APPEND on EMPTY device" 	"appendEmptyDevice"	"simpleDecrypt"		"$string1"	"$string1"	"$string1"	"$string1"	\
