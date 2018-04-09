@@ -449,8 +449,10 @@ if (! $forward_only_specified) then
 		# CHNGTPRSLVTM is possible with backward rollback but never with forward rollback.
 		set pattern = "FILECREATE|MUJNLSTAT|FILERENAME|JNLSTATE|^SHOW output|MUJNLPREVGEN|MUINFO|CHNGTPRSLVTM"
 		# By default backward rollback runs with -verify, but forward rollback runs with -noverify.
-		# Therefore filter out "Verify successful" message from both logs.
-		set pattern = "$pattern|YDB-S-JNLSUCCESS, Verify successful"
+		# Therefore filter out "Verify successful" message from both logs. Since pre r1.20 versions would have a
+		# GTM-S-JNLSUCCESS message and r1.20 (and above) would have YDB-S-JNLSUCCESS messages (and both types of
+		# versions can call the mupip_rollback.csh script), allow for both patterns.
+		set pattern = "$pattern|-S-JNLSUCCESS, Verify successful"
 		if ($do_fetchresync) then
 			# If -fetchresync is used in backward rollback, then we need to filter associated logs with establishing the
 			#	connection on a remote host:port since forward rollback does not support it. The set of lines
