@@ -95,11 +95,11 @@ hence no database is necessary
 ##SOURCE_PATH##/mupip journal -verify -id=1234 -backward
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: GLOBAL USER ID RECOVER ROLLBACK VERIFY
 ##SOURCE_PATH##/mupip journal -recover -transaction=kill -backward
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: GLOBAL USER ID TRANSACTION RECOVER
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: GLOBAL USER ID SEQNO TRANSACTION RECOVER
 ##SOURCE_PATH##/mupip journal -rollback -transaction=kill -backward
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: GLOBAL USER ID TRANSACTION RECOVER ROLLBACK
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: GLOBAL USER ID SEQNO TRANSACTION RECOVER ROLLBACK
 ##SOURCE_PATH##/mupip journal -verify -transaction=kill -backward
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: GLOBAL USER ID TRANSACTION RECOVER ROLLBACK VERIFY
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: GLOBAL USER ID SEQNO TRANSACTION RECOVER ROLLBACK VERIFY
 unset echo
 ==============================================================
 Files Created in ##TEST_PATH##:

@@ -84,8 +84,7 @@ subscript length 8192
 subscripts 28
 
 ztrigger the acceptably long trigger matching the file test
-Error : ^Z trigger - value larger than max record size
-FAIL
+Added SET trigger on ^Z named Z#1
 
 ztrigger load unacceptably long triggers from 8193 and up
 PASS:8193
@@ -93,17 +92,11 @@ Trigger definition too long
 
 
 Compare loaded trigger length to select output trigger length
-FAIL: wrote 8229 but select shows only 0
+PASS
 
 
 now mupip trigger
-Trigger load for maxsubslen.trg FAILED see  ./maxsubslen.trg.trigout
-File maxsubslen.trg, Line 2: Error : ^Z trigger - value larger than max record size
-=========================================
-1 trigger file entries have errors
-0 trigger file entries have no errors
-=========================================
-%YDB-E-MUNOACTION, MUPIP unable to perform requested action
+Trigger load for maxsubslen.trg PASSED
 Trigger load for overmaxsubslen.trg PASSED
 File overmaxsubslen.trg, Line 2: Subscript too long
 
@@ -118,98 +111,48 @@ Output File:
 +^BCDEFGHIJKLMNOPQRSTUVWXYZABC -commands=S -xecute="do ^maxrtn"
 ;trigger name: BCDEFGHIJKLMNOPQRSTUV#2 (region DEFAULT)  cycle: 3
 +^BCDEFGHIJKLMNOPQRSTUVWXYZABCDEF -commands=S -xecute="do ^maxrtn"
+;trigger name: Z#1 (region DEFAULT)  cycle: 3
++^Z(10,"A0";"A1";"A2";"A3";"A4";"A5";"A6";"A7";"A8";"A9";"AA";"AB";"AC";"AD";"AE
 ;trigger name: oBCDEFGHIJKLMNOPQRSTU#1 (region DEFAULT)  cycle: 3
 +^oBCDEFGHIJKLMNOPQRSTUVWXYZABCDE -commands=S -xecute="do ^maxrtn"
 
 
 ###################################################################
 Test maximum delimiter length
-Trigger load for maxdelim.trg FAILED see  ./maxdelim.trg.trigout
-File maxdelim.trg, Line 1: Error : ^cmaxdelim trigger - value larger than max record size
-=========================================
-1 trigger file entries have errors
-0 trigger file entries have no errors
-=========================================
-%YDB-E-MUNOACTION, MUPIP unable to perform requested action
+Trigger load for maxdelim.trg PASSED
 Trigger load for overmaxdelim.trg PASSED
 File overmaxdelim.trg, Line 1: Delimiter too long
 ###################################################################
 Run the ztr^maxdelim test twice because that produced a core once upon a time
-For delimiter of length 1000	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1001	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1002	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1003	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1004	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1005	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1006	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1007	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1008	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1009	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1010	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1011	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1012	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1013	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1014	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1015	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1016	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1017	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1018	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1019	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1020	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1021	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1022	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1000	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1001	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1002	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1003	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1004	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1005	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1006	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1007	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1008	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1009	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1010	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1011	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1012	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1013	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1014	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1015	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1016	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1017	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1018	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1019	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1020	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1021	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1022	Error : ^cmaxdelim trigger - value larger than max record size
+For delimiter of length 1000	Added SET trigger on ^cmaxdelim named cmaxdelim#2
+For delimiter of length 1001	Added SET trigger on ^cmaxdelim named cmaxdelim#3
+For delimiter of length 1002	Added SET trigger on ^cmaxdelim named cmaxdelim#4
+For delimiter of length 1003	Added SET trigger on ^cmaxdelim named cmaxdelim#5
+For delimiter of length 1004	Added SET trigger on ^cmaxdelim named cmaxdelim#6
+For delimiter of length 1005	Added SET trigger on ^cmaxdelim named cmaxdelim#7
+For delimiter of length 1006	Added SET trigger on ^cmaxdelim named cmaxdelim#8
+For delimiter of length 1007	Added SET trigger on ^cmaxdelim named cmaxdelim#9
+For delimiter of length 1008	Added SET trigger on ^cmaxdelim named cmaxdelim#10
+For delimiter of length 1009	Added SET trigger on ^cmaxdelim named cmaxdelim#11
+For delimiter of length 1010	Added SET trigger on ^cmaxdelim named cmaxdelim#12
+For delimiter of length 1011	Added SET trigger on ^cmaxdelim named cmaxdelim#13
+For delimiter of length 1012	Added SET trigger on ^cmaxdelim named cmaxdelim#14
+For delimiter of length 1013	Added SET trigger on ^cmaxdelim named cmaxdelim#15
+For delimiter of length 1014	Added SET trigger on ^cmaxdelim named cmaxdelim#16
+For delimiter of length 1015	Added SET trigger on ^cmaxdelim named cmaxdelim#17
+For delimiter of length 1016	Added SET trigger on ^cmaxdelim named cmaxdelim#18
+For delimiter of length 1017	Added SET trigger on ^cmaxdelim named cmaxdelim#19
+For delimiter of length 1018	Added SET trigger on ^cmaxdelim named cmaxdelim#20
+For delimiter of length 1019	Added SET trigger on ^cmaxdelim named cmaxdelim#21
+For delimiter of length 1020	Added SET trigger on ^cmaxdelim named cmaxdelim#22
+For delimiter of length 1021	Added SET trigger on ^cmaxdelim named cmaxdelim#23
+For delimiter of length 1022	SET trigger on ^cmaxdelim already present in trigger named cmaxdelim#1 - no action taken
 Number of 'Entry too large to properly index' errors 0
 For delimiter of length 1023	Delimiter too long
 For delimiter of length 1024	Delimiter too long
 For delimiter of length 1025	Delimiter too long
 For delimiter of length 1026	Delimiter too long
 ###################################################################
-For delimiter of length 1000	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1001	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1002	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1003	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1004	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1005	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1006	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1007	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1008	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1009	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1010	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1011	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1012	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1013	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1014	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1015	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1016	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1017	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1018	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1019	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1020	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1021	Error : ^cmaxdelim trigger - value larger than max record size
-For delimiter of length 1022	Error : ^cmaxdelim trigger - value larger than max record size
 Number of 'Entry too large to properly index' errors 0
 For delimiter of length 1023	Delimiter too long
 For delimiter of length 1024	Delimiter too long
@@ -230,42 +173,30 @@ Error : Parsing NAME string: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 Test maximum trigger lines
 
 Load a long line of 21646
-Error : ^longline trigger - value larger than max record size
+Added SET and/or Non-SET trigger on ^longline named longlineshave32kilobyteschar
 
 Load a long line of 32766 that collides with the previous name
-Error : ^longline trigger - value larger than max record size
+Error : SET and/or Non-SET trigger on ^longline not added as another trigger named longlineshave32kilobyteschar already 
 
 Load a long line of 32766
-Error : ^longline trigger - value larger than max record size
+Added SET and/or Non-SET trigger on ^longline named LONGLINESHAVE32KILOBYTESCHAR
 
 Load a long line of 57407
 Trigger definition too long
 "^longline(100,""A0"";""A1"";""A2"";""A3"";""A4"";""A5"";""A6"";""A7"";""A8"";""A9"";""AA"";""AB"";""AC"";""AD"";""AE"";
 ###################################################################
-Trigger load for maxline.trg FAILED see  ./maxline.trg.trigout
-File maxline.trg, Line 2: Error : ^longline trigger - value larger than max record size
-=========================================
-1 trigger file entries have errors
-0 trigger file entries have no errors
-=========================================
-%YDB-E-MUNOACTION, MUPIP unable to perform requested action
-File maxline.trg, Line 2: Error : ^longline trigger - value larger than max record size
-Trigger load for maxline32.trg FAILED see  ./maxline32.trg.trigout
-File maxline32.trg, Line 2: Error : ^longline trigger - value larger than max record size
-=========================================
-1 trigger file entries have errors
-0 trigger file entries have no errors
-=========================================
-%YDB-E-MUNOACTION, MUPIP unable to perform requested action
-File maxline32.trg, Line 2: Error : ^longline trigger - value larger than max record size
+Trigger load for maxline.trg PASSED
+File maxline.trg, Line 2: SET and/or Non-SET trigger on ^longline already present in trigger named longlineshave32kilobyteschar - no action taken
+Trigger load for maxline32.trg PASSED
+File maxline32.trg, Line 2: SET and/or Non-SET trigger on ^longline already present in trigger named LONGLINESHAVE32KILOBYTESCHAR - no action taken
 Trigger load for maxline64.trg PASSED
 File maxline64.trg, Line 2: Trigger definition too long
 
 ###################################################################
 Reload Test
-4 triggers deleted
+30 triggers deleted
 0 triggers modified
-4 trigger file entries did update database trigger content
+30 trigger file entries did update database trigger content
 0 trigger file entries did not update database trigger content
 =========================================
 ###################################################################

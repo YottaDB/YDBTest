@@ -83,32 +83,18 @@ BACKUP COMPLETED.
 DB file ##TEST_PATH##/a.dat backed up in file ./bak/a.dat
 DB file ##TEST_PATH##/b.dat backed up in file ./bak/b.dat
 DB file ##TEST_PATH##/mumps.dat backed up in file ./bak/mumps.dat
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_LINUX_X86_64 HOST_LINUX_ARMVXL
-MUPIP INFO:   cd ##TEST_PATH## && cp --sparse=always a.dat ##TEST_PATH##/bak/bak/AREG_XXXX__N.tmp
-MUPIP INFO:   cd ##TEST_PATH## && cp --sparse=always b.dat ##TEST_PATH##/bak/bak/BREG_XXXX__N.tmp
-MUPIP INFO:   cd ##TEST_PATH## && cp --sparse=always mumps.dat ##TEST_PATH##/bak/bak/DEFAULT_XXXX__N.tmp
-##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_LINUX_X86_64 HOST_LINUX_ARMVXL
-##ALLOW_OUTPUT HOST_AIX_RS6000
-MUPIP INFO:   cd ##TEST_PATH## && pax -r -w a.dat ##TEST_PATH##/bak/bak/AREG_XXXX__N.tmp
-MUPIP INFO:   cd ##TEST_PATH## && pax -r -w b.dat ##TEST_PATH##/bak/bak/BREG_XXXX__N.tmp
-MUPIP INFO:   cd ##TEST_PATH## && pax -r -w mumps.dat ##TEST_PATH##/bak/bak/DEFAULT_XXXX__N.tmp
-##SUSPEND_OUTPUT HOST_AIX_RS6000
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_LINUX_X86_64 HOST_LINUX_ARMVXL HOST_AIX_RS6000
-MUPIP INFO:   cd ##TEST_PATH## && cp a.dat ##TEST_PATH##/bak/bak/AREG_XXXX__N.tmp
-MUPIP INFO:   cd ##TEST_PATH## && cp b.dat ##TEST_PATH##/bak/bak/BREG_XXXX__N.tmp
-MUPIP INFO:   cd ##TEST_PATH## && cp mumps.dat ##TEST_PATH##/bak/bak/DEFAULT_XXXX__N.tmp
-##ALLOW_OUTPUT HOST_ALL
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
-MUPIP INFO:   mv ./bak/AREG_XXXX__N.tmp/a.dat ./bak/a.dat
-MUPIP INFO:   mv ./bak/BREG_XXXX__N.tmp/b.dat ./bak/b.dat
-MUPIP INFO:   mv ./bak/DEFAULT_XXXX__N.tmp/mumps.dat ./bak/mumps.dat
 MUPIP INFO:   Temp file name: ##TEST_PATH##/bak/bak//AREG_YYYY_ZZZZZZ
 MUPIP INFO:   Temp file name: ##TEST_PATH##/bak/bak//BREG_YYYY_ZZZZZZ
 MUPIP INFO:   Temp file name: ##TEST_PATH##/bak/bak//DEFAULT_YYYY_ZZZZZZ
+##TEST_AWKMUPIP INFO:   unalias -a; .*/mv ./bak/AREG_XXXX__N.tmp/a.dat ./bak/a.dat
+##TEST_AWKMUPIP INFO:   unalias -a; .*/mv ./bak/BREG_XXXX__N.tmp/b.dat ./bak/b.dat
+##TEST_AWKMUPIP INFO:   unalias -a; .*/mv ./bak/DEFAULT_XXXX__N.tmp/mumps.dat ./bak/mumps.dat
+##TEST_AWKMUPIP INFO:   unalias -a; cd ##TEST_PATH## && .*/cp --sparse=always a.dat ##TEST_PATH##/bak/bak/AREG_XXXX__N.tmp
+##TEST_AWKMUPIP INFO:   unalias -a; cd ##TEST_PATH## && .*/cp --sparse=always b.dat ##TEST_PATH##/bak/bak/BREG_XXXX__N.tmp
+##TEST_AWKMUPIP INFO:   unalias -a; cd ##TEST_PATH## && .*/cp --sparse=always mumps.dat ##TEST_PATH##/bak/bak/DEFAULT_XXXX__N.tmp
 Transactions up to XXXX are backed up.
 Transactions up to XXXX are backed up.
 Transactions up to XXXX are backed up.
@@ -168,32 +154,18 @@ BACKUP COMPLETED.
 DB file ##TEST_PATH##/a.dat backed up in file ./bak/a.dat
 DB file ##TEST_PATH##/b.dat backed up in file ./bak/b.dat
 DB file ##TEST_PATH##/mumps.dat backed up in file ./bak/mumps.dat
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_LINUX_X86_64 HOST_LINUX_ARMVXL
-MUPIP INFO:   cd ##TEST_PATH## && cp --sparse=always a.dat ##TEST_PATH##/bak/bak/AREG_XXXX__N.tmp
-MUPIP INFO:   cd ##TEST_PATH## && cp --sparse=always b.dat ##TEST_PATH##/bak/bak/BREG_XXXX__N.tmp
-MUPIP INFO:   cd ##TEST_PATH## && cp --sparse=always mumps.dat ##TEST_PATH##/bak/bak/DEFAULT_XXXX__N.tmp
-##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_LINUX_X86_64 HOST_LINUX_ARMVXL
-##ALLOW_OUTPUT HOST_AIX_RS6000
-MUPIP INFO:   cd ##TEST_PATH## && pax -r -w a.dat ##TEST_PATH##/bak/bak/AREG_XXXX__N.tmp
-MUPIP INFO:   cd ##TEST_PATH## && pax -r -w b.dat ##TEST_PATH##/bak/bak/BREG_XXXX__N.tmp
-MUPIP INFO:   cd ##TEST_PATH## && pax -r -w mumps.dat ##TEST_PATH##/bak/bak/DEFAULT_XXXX__N.tmp
-##SUSPEND_OUTPUT HOST_AIX_RS6000
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_LINUX_X86_64 HOST_LINUX_ARMVXL HOST_AIX_RS6000
-MUPIP INFO:   cd ##TEST_PATH## && cp a.dat ##TEST_PATH##/bak/bak/AREG_XXXX__N.tmp
-MUPIP INFO:   cd ##TEST_PATH## && cp b.dat ##TEST_PATH##/bak/bak/BREG_XXXX__N.tmp
-MUPIP INFO:   cd ##TEST_PATH## && cp mumps.dat ##TEST_PATH##/bak/bak/DEFAULT_XXXX__N.tmp
-##ALLOW_OUTPUT HOST_ALL
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
-MUPIP INFO:   mv ./bak/AREG_XXXX__N.tmp/a.dat ./bak/a.dat
-MUPIP INFO:   mv ./bak/BREG_XXXX__N.tmp/b.dat ./bak/b.dat
-MUPIP INFO:   mv ./bak/DEFAULT_XXXX__N.tmp/mumps.dat ./bak/mumps.dat
 MUPIP INFO:   Temp file name: ##TEST_PATH##/bak/baktmp/AREG_YYYY_ZZZZZZ
 MUPIP INFO:   Temp file name: ##TEST_PATH##/bak/baktmp/BREG_YYYY_ZZZZZZ
 MUPIP INFO:   Temp file name: ##TEST_PATH##/bak/baktmp/DEFAULT_YYYY_ZZZZZZ
+##TEST_AWKMUPIP INFO:   unalias -a; .*/mv ./bak/AREG_XXXX__N.tmp/a.dat ./bak/a.dat
+##TEST_AWKMUPIP INFO:   unalias -a; .*/mv ./bak/BREG_XXXX__N.tmp/b.dat ./bak/b.dat
+##TEST_AWKMUPIP INFO:   unalias -a; .*/mv ./bak/DEFAULT_XXXX__N.tmp/mumps.dat ./bak/mumps.dat
+##TEST_AWKMUPIP INFO:   unalias -a; cd ##TEST_PATH## && .*/cp --sparse=always a.dat ##TEST_PATH##/bak/bak/AREG_XXXX__N.tmp
+##TEST_AWKMUPIP INFO:   unalias -a; cd ##TEST_PATH## && .*/cp --sparse=always b.dat ##TEST_PATH##/bak/bak/BREG_XXXX__N.tmp
+##TEST_AWKMUPIP INFO:   unalias -a; cd ##TEST_PATH## && .*/cp --sparse=always mumps.dat ##TEST_PATH##/bak/bak/DEFAULT_XXXX__N.tmp
 Transactions up to XXXX are backed up.
 Transactions up to XXXX are backed up.
 Transactions up to XXXX are backed up.
@@ -245,12 +217,7 @@ No read permissions for ##TEST_PATH##/bak/baktmp.
 $MUPIP backup -nonew -o "AREG" ./bak -dbg
 
 Do not have full access to directory for temporary files: ##TEST_PATH##/bak/baktmp
-##SUSPEND_OUTPUT HOST_AIX_RS6000 HOST_SUNOS_SPARC
 %SYSTEM-E-ENO13, Permission denied
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_AIX_RS6000 HOST_SUNOS_SPARC
-%SYSTEM-E-ENO2, No such file or directory
-##ALLOW_OUTPUT HOST_ALL
 
 MUPIP cannot start backup with above errors
 
@@ -266,12 +233,7 @@ ls: No match.
 $MUPIP backup -nonew -o "AREG" ./bak -dbg -i
 
 Do not have full access to directory for temporary files: ##TEST_PATH##/bak/baktmp
-##SUSPEND_OUTPUT HOST_AIX_RS6000 HOST_SUNOS_SPARC
 %SYSTEM-E-ENO13, Permission denied
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_AIX_RS6000 HOST_SUNOS_SPARC
-%SYSTEM-E-ENO2, No such file or directory
-##ALLOW_OUTPUT HOST_ALL
 
 MUPIP cannot start backup with above errors
 
@@ -324,12 +286,7 @@ echo "No read permissions for $gtm_baktmpdir."
 $MUPIP backup -nonew -o "AREG" ./bak -dbg
 
 Do not have full access to directory for temporary files: ##REMOTE_TEST_PATH##/bak/baktmp
-##SUSPEND_OUTPUT HOST_AIX_RS6000 HOST_SUNOS_SPARC
 %SYSTEM-E-ENO13, Permission denied
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_AIX_RS6000 HOST_SUNOS_SPARC
-%SYSTEM-E-ENO2, No such file or directory
-##ALLOW_OUTPUT HOST_ALL
 
 MUPIP cannot start backup with above errors
 
@@ -345,12 +302,7 @@ ls: No match.
 $MUPIP backup -nonew -o "AREG" ./bak -dbg -i
 
 Do not have full access to directory for temporary files: ##REMOTE_TEST_PATH##/bak/baktmp
-##SUSPEND_OUTPUT HOST_AIX_RS6000 HOST_SUNOS_SPARC
 %SYSTEM-E-ENO13, Permission denied
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_AIX_RS6000 HOST_SUNOS_SPARC
-%SYSTEM-E-ENO2, No such file or directory
-##ALLOW_OUTPUT HOST_ALL
 
 MUPIP cannot start backup with above errors
 
@@ -370,32 +322,18 @@ BACKUP COMPLETED.
 DB file ##TEST_PATH##/a.dat backed up in file ./bak/a.dat
 DB file ##TEST_PATH##/b.dat backed up in file ./bak/b.dat
 DB file ##TEST_PATH##/mumps.dat backed up in file ./bak/mumps.dat
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_LINUX_X86_64 HOST_LINUX_ARMVXL
-MUPIP INFO:   cd ##TEST_PATH## && cp --sparse=always a.dat ##REMOTE_TEST_PATH##/bak/bak/AREG_XXXX__N.tmp
-MUPIP INFO:   cd ##TEST_PATH## && cp --sparse=always b.dat ##REMOTE_TEST_PATH##/bak/bak/BREG_XXXX__N.tmp
-MUPIP INFO:   cd ##TEST_PATH## && cp --sparse=always mumps.dat ##REMOTE_TEST_PATH##/bak/bak/DEFAULT_XXXX__N.tmp
-##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_LINUX_X86_64 HOST_LINUX_ARMVXL
-##ALLOW_OUTPUT HOST_AIX_RS6000
-MUPIP INFO:   cd ##TEST_PATH## && pax -r -w a.dat ##REMOTE_TEST_PATH##/bak/bak/AREG_XXXX__N.tmp
-MUPIP INFO:   cd ##TEST_PATH## && pax -r -w b.dat ##REMOTE_TEST_PATH##/bak/bak/BREG_XXXX__N.tmp
-MUPIP INFO:   cd ##TEST_PATH## && pax -r -w mumps.dat ##REMOTE_TEST_PATH##/bak/bak/DEFAULT_XXXX__N.tmp
-##SUSPEND_OUTPUT HOST_AIX_RS6000
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_LINUX_X86_64 HOST_LINUX_ARMVXL HOST_AIX_RS6000
-MUPIP INFO:   cd ##TEST_PATH## && cp a.dat ##REMOTE_TEST_PATH##/bak/bak/AREG_XXXX__N.tmp
-MUPIP INFO:   cd ##TEST_PATH## && cp b.dat ##REMOTE_TEST_PATH##/bak/bak/BREG_XXXX__N.tmp
-MUPIP INFO:   cd ##TEST_PATH## && cp mumps.dat ##REMOTE_TEST_PATH##/bak/bak/DEFAULT_XXXX__N.tmp
-##ALLOW_OUTPUT HOST_ALL
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
-MUPIP INFO:   mv ./bak/AREG_XXXX__N.tmp/a.dat ./bak/a.dat
-MUPIP INFO:   mv ./bak/BREG_XXXX__N.tmp/b.dat ./bak/b.dat
-MUPIP INFO:   mv ./bak/DEFAULT_XXXX__N.tmp/mumps.dat ./bak/mumps.dat
 MUPIP INFO:   Temp file name: ##REMOTE_TEST_PATH##/bak/bak//AREG_YYYY_ZZZZZZ
 MUPIP INFO:   Temp file name: ##REMOTE_TEST_PATH##/bak/bak//BREG_YYYY_ZZZZZZ
 MUPIP INFO:   Temp file name: ##REMOTE_TEST_PATH##/bak/bak//DEFAULT_YYYY_ZZZZZZ
+##TEST_AWKMUPIP INFO:   unalias -a; .*/mv ./bak/AREG_XXXX__N.tmp/a.dat ./bak/a.dat
+##TEST_AWKMUPIP INFO:   unalias -a; .*/mv ./bak/BREG_XXXX__N.tmp/b.dat ./bak/b.dat
+##TEST_AWKMUPIP INFO:   unalias -a; .*/mv ./bak/DEFAULT_XXXX__N.tmp/mumps.dat ./bak/mumps.dat
+##TEST_AWKMUPIP INFO:   unalias -a; cd ##TEST_PATH## && .*/cp --sparse=always a.dat ##REMOTE_TEST_PATH##/bak/bak/AREG_XXXX__N.tmp
+##TEST_AWKMUPIP INFO:   unalias -a; cd ##TEST_PATH## && .*/cp --sparse=always b.dat ##REMOTE_TEST_PATH##/bak/bak/BREG_XXXX__N.tmp
+##TEST_AWKMUPIP INFO:   unalias -a; cd ##TEST_PATH## && .*/cp --sparse=always mumps.dat ##REMOTE_TEST_PATH##/bak/bak/DEFAULT_XXXX__N.tmp
 Transactions up to XXXX are backed up.
 Transactions up to XXXX are backed up.
 Transactions up to XXXX are backed up.
@@ -441,32 +379,18 @@ BACKUP COMPLETED.
 DB file ##TEST_PATH##/a.dat backed up in file ./bak/a.dat
 DB file ##TEST_PATH##/b.dat backed up in file ./bak/b.dat
 DB file ##TEST_PATH##/mumps.dat backed up in file ./bak/mumps.dat
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_LINUX_X86_64 HOST_LINUX_ARMVXL
-MUPIP INFO:   cd ##TEST_PATH## && cp --sparse=always a.dat ##REMOTE_TEST_PATH##/bak/bak/AREG_XXXX__N.tmp
-MUPIP INFO:   cd ##TEST_PATH## && cp --sparse=always b.dat ##REMOTE_TEST_PATH##/bak/bak/BREG_XXXX__N.tmp
-MUPIP INFO:   cd ##TEST_PATH## && cp --sparse=always mumps.dat ##REMOTE_TEST_PATH##/bak/bak/DEFAULT_XXXX__N.tmp
-##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_LINUX_X86_64 HOST_LINUX_ARMVXL
-##ALLOW_OUTPUT HOST_AIX_RS6000
-MUPIP INFO:   cd ##TEST_PATH## && pax -r -w a.dat ##REMOTE_TEST_PATH##/bak/bak/AREG_XXXX__N.tmp
-MUPIP INFO:   cd ##TEST_PATH## && pax -r -w b.dat ##REMOTE_TEST_PATH##/bak/bak/BREG_XXXX__N.tmp
-MUPIP INFO:   cd ##TEST_PATH## && pax -r -w mumps.dat ##REMOTE_TEST_PATH##/bak/bak/DEFAULT_XXXX__N.tmp
-##SUSPEND_OUTPUT HOST_AIX_RS6000
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_LINUX_X86_64 HOST_LINUX_ARMVXL HOST_AIX_RS6000
-MUPIP INFO:   cd ##TEST_PATH## && cp a.dat ##REMOTE_TEST_PATH##/bak/bak/AREG_XXXX__N.tmp
-MUPIP INFO:   cd ##TEST_PATH## && cp b.dat ##REMOTE_TEST_PATH##/bak/bak/BREG_XXXX__N.tmp
-MUPIP INFO:   cd ##TEST_PATH## && cp mumps.dat ##REMOTE_TEST_PATH##/bak/bak/DEFAULT_XXXX__N.tmp
-##ALLOW_OUTPUT HOST_ALL
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
-MUPIP INFO:   mv ./bak/AREG_XXXX__N.tmp/a.dat ./bak/a.dat
-MUPIP INFO:   mv ./bak/BREG_XXXX__N.tmp/b.dat ./bak/b.dat
-MUPIP INFO:   mv ./bak/DEFAULT_XXXX__N.tmp/mumps.dat ./bak/mumps.dat
 MUPIP INFO:   Temp file name: ##REMOTE_TEST_PATH##/bak/baktmp/AREG_YYYY_ZZZZZZ
 MUPIP INFO:   Temp file name: ##REMOTE_TEST_PATH##/bak/baktmp/BREG_YYYY_ZZZZZZ
 MUPIP INFO:   Temp file name: ##REMOTE_TEST_PATH##/bak/baktmp/DEFAULT_YYYY_ZZZZZZ
+##TEST_AWKMUPIP INFO:   unalias -a; .*/mv ./bak/AREG_XXXX__N.tmp/a.dat ./bak/a.dat
+##TEST_AWKMUPIP INFO:   unalias -a; .*/mv ./bak/BREG_XXXX__N.tmp/b.dat ./bak/b.dat
+##TEST_AWKMUPIP INFO:   unalias -a; .*/mv ./bak/DEFAULT_XXXX__N.tmp/mumps.dat ./bak/mumps.dat
+##TEST_AWKMUPIP INFO:   unalias -a; cd ##TEST_PATH## && .*/cp --sparse=always a.dat ##REMOTE_TEST_PATH##/bak/bak/AREG_XXXX__N.tmp
+##TEST_AWKMUPIP INFO:   unalias -a; cd ##TEST_PATH## && .*/cp --sparse=always b.dat ##REMOTE_TEST_PATH##/bak/bak/BREG_XXXX__N.tmp
+##TEST_AWKMUPIP INFO:   unalias -a; cd ##TEST_PATH## && .*/cp --sparse=always mumps.dat ##REMOTE_TEST_PATH##/bak/bak/DEFAULT_XXXX__N.tmp
 Transactions up to XXXX are backed up.
 Transactions up to XXXX are backed up.
 Transactions up to XXXX are backed up.
@@ -529,19 +453,9 @@ No errors detected by integ.
 ##TEST_HOST_SHORT##:##TEST_PATH##/D9C05002121a.log
 ##ALLOW_OUTPUT NON_REPLIC
 %SYSTEM-E-ENO2, No such file or directory
-##SUSPEND_OUTPUT HOST_AIX_RS6000 HOST_SUNOS_SPARC
 %SYSTEM-E-ENO13, Permission denied
 %SYSTEM-E-ENO13, Permission denied
 ##SUSPEND_OUTPUT NON_REPLIC
 %SYSTEM-E-ENO13, Permission denied
 %SYSTEM-E-ENO13, Permission denied
 ##ALLOW_OUTPUT NON_REPLIC
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_AIX_RS6000 HOST_SUNOS_SPARC
-%SYSTEM-E-ENO2, No such file or directory
-%SYSTEM-E-ENO2, No such file or directory
-##SUSPEND_OUTPUT NON_REPLIC
-%SYSTEM-E-ENO2, No such file or directory
-%SYSTEM-E-ENO2, No such file or directory
-##ALLOW_OUTPUT NON_REPLIC
-##ALLOW_OUTPUT HOST_ALL

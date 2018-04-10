@@ -106,37 +106,37 @@ Journal file name       ##TEST_PATH##/mumps.mjl
        3) Reg/Resync Seqno after MUPIP SET -REG *                  
 -------------------------------------------------------------------
 Region          AREG
-  Replication State                      ON  Region Seqno    0x000000010000012C
+  Replication State                      ON  Region Seqno    0x0000000000000064
   Zqgblmod Seqno         0x0000000000000000  Zqgblmod Trans  0x0000000000000000
 Region          BREG
-  Replication State                      ON  Region Seqno    0x000000010000012C
+  Replication State                      ON  Region Seqno    0x00000000FFFFFFF0
   Zqgblmod Seqno         0x0000000000000000  Zqgblmod Trans  0x0000000000000000
 Region          CREG
   Replication State                      ON  Region Seqno    0x000000010000012C
   Zqgblmod Seqno         0x0000000000000000  Zqgblmod Trans  0x0000000000000000
 Region          DEFAULT
-  Replication State                      ON  Region Seqno    0x000000010000012C
+  Replication State                      ON  Region Seqno    0x0000000040000000
   Zqgblmod Seqno         0x0000000000000000  Zqgblmod Trans  0x0000000000000000
 Region          DREG
-  Replication State                      ON  Region Seqno    0x000000010000012C
+  Replication State                      ON  Region Seqno    0x0000000000001194
   Zqgblmod Seqno         0x0000000000000000  Zqgblmod Trans  0x0000000000000000
 0x00000410 0x0008 SLT # 0 : Resync Sequence Number                      4500 [0x0000000000001194]
 
 Journal file name       ##TEST_PATH##/a.mjl
- Start Region Sequence Number           4294967596 [0x000000010000012C]
- End Region Sequence Number             4294967596 [0x000000010000012C]
+ Start Region Sequence Number                  100 [0x0000000000000064]
+ End Region Sequence Number                    100 [0x0000000000000064]
 Journal file name       ##TEST_PATH##/b.mjl
- Start Region Sequence Number           4294967596 [0x000000010000012C]
- End Region Sequence Number             4294967596 [0x000000010000012C]
+ Start Region Sequence Number           4294967280 [0x00000000FFFFFFF0]
+ End Region Sequence Number             4294967280 [0x00000000FFFFFFF0]
 Journal file name       ##TEST_PATH##/c.mjl
  Start Region Sequence Number           4294967596 [0x000000010000012C]
  End Region Sequence Number             4294967596 [0x000000010000012C]
 Journal file name       ##TEST_PATH##/d.mjl
- Start Region Sequence Number           4294967596 [0x000000010000012C]
- End Region Sequence Number             4294967596 [0x000000010000012C]
+ Start Region Sequence Number                 4500 [0x0000000000001194]
+ End Region Sequence Number                   4500 [0x0000000000001194]
 Journal file name       ##TEST_PATH##/mumps.mjl
- Start Region Sequence Number           4294967596 [0x000000010000012C]
- End Region Sequence Number             4294967596 [0x000000010000012C]
+ Start Region Sequence Number           1073741824 [0x0000000040000000]
+ End Region Sequence Number             1073741824 [0x0000000040000000]
 
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 Shutting down Primary Source Server Server in ##TEST_PATH##
