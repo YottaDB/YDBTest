@@ -3,21 +3,6 @@ Using: ##SOURCE_PATH##/mumps -run GDE
 mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
-
-File  	##TEST_PATH##/mumps.dat
-Region	DEFAULT
-
-File trig.trg, Line 1: Added SET trigger on ^a named a#1
-File trig.trg, Line 2: Error : ^a trigger - value larger than max record size
-=========================================
-1 trigger file entries have errors
-1 trigger file entries have no errors
-=========================================
-%YDB-E-MUNOACTION, MUPIP unable to perform requested action
-
-File  	##TEST_PATH##/mumps.dat
-Region	DEFAULT
-
 File trig.trg, Line 1: Added SET trigger on ^a named a#1
 File trig.trg, Line 2: Added SET trigger on ^a named a123456789
 =========================================
@@ -27,6 +12,10 @@ File trig.trg, Line 2: Added SET trigger on ^a named a123456789
 2 trigger file entries did update database trigger content
 0 trigger file entries did not update database trigger content
 =========================================
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
@@ -46,24 +35,19 @@ Rec:6 Key ^#t("a",1,"CHSET")
 Rec:7 Key ^#t("a",1,"CMD")
 Rec:8 Key ^#t("a",1,"LHASH")
 Rec:9 Key ^#t("a",1,"TRIGNAME")
-Rec:A Key ^#t("a",1,"XECUTE",0)
-Rec:B Key ^#t("a",1,"XECUTE",1)
-Rec:C Key ^#t("a",1,"XECUTE",2)
-Rec:D Key ^#t("a",2,"BHASH")
-Rec:E Key ^#t("a",2,"CHSET")
-Rec:F Key ^#t("a",2,"CMD")
-Rec:10 Key ^#t("a",2,"LHASH")
-Rec:11 Key ^#t("a",2,"TRIGNAME")
-Rec:12 Key ^#t("a",2,"XECUTE",0)
-Rec:13 Key ^#t("a",2,"XECUTE",1)
-Rec:14 Key ^#t("a",2,"XECUTE",2)
-Rec:15 Key ^#t("a",2,"XECUTE",3)
-Rec:16 Key ^#t("a","#COUNT")
-Rec:17 Key ^#t("a","#CYCLE")
-Rec:18 Key ^#t("a","#LABEL")
-Rec:19 Key ^#t("a","#TRHASH",2599053458,1)
-Rec:1A Key ^#t("a","#TRHASH",4034553647,1)
-Rec:1B Key ^#t("z")
+Rec:A Key ^#t("a",1,"XECUTE")
+Rec:B Key ^#t("a",2,"BHASH")
+Rec:C Key ^#t("a",2,"CHSET")
+Rec:D Key ^#t("a",2,"CMD")
+Rec:E Key ^#t("a",2,"LHASH")
+Rec:F Key ^#t("a",2,"TRIGNAME")
+Rec:10 Key ^#t("a",2,"XECUTE")
+Rec:11 Key ^#t("a","#COUNT")
+Rec:12 Key ^#t("a","#CYCLE")
+Rec:13 Key ^#t("a","#LABEL")
+Rec:14 Key ^#t("a","#TRHASH",2599053458,1)
+Rec:15 Key ^#t("a","#TRHASH",4034553647,1)
+Rec:16 Key ^#t("z")
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

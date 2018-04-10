@@ -103,7 +103,7 @@ Index               0               0           0.000             0
 Data                0               0           0.000             0
 Free               98              NA              NA            NA
 Total             100               1              NA             0
-%YDB-E-INTEGERRS, Database integrity errors
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 $MUPIP set -reg DEFAULT -exten=100
 %YDB-I-REGFILENOTFOUND, Database file ./dir1/mumps.dat corresponding to region DEFAULT cannot be found
 %SYSTEM-E-ENO2, No such file or directory
@@ -280,8 +280,7 @@ echo "#"
 $MUPIP integ a''d/mumps.dat
 %YDB-E-DBOPNERR, Error opening database file ad/mumps.dat
 %SYSTEM-E-ENO2, No such file or directory
-%YDB-I-MUSTANDALONE, Could not get exclusive access to ad/mumps.dat
-%YDB-E-INTEGERRS, Database integrity errors
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 
 set nonomatch
 $MUPIP backup "*" -nonewj .a..?..b.c/backup.dat
