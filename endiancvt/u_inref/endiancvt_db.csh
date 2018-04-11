@@ -10,6 +10,8 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+# This module is derived from FIS GT.M.
+#################################################################
 
 # This redirect-grep arrangement is for the "wait" command to work
 # wait works only if the background jobs are in the same shell. (bla &) >&! /dev/null will not make the wait command actually wait. Hence the workaround

@@ -10,6 +10,8 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+# This module is derived from FIS GT.M.
+#################################################################
 #
 # D9D12-002404 [Malli] %YDB-F-GTMCHECK, Internal GT.M error
 #

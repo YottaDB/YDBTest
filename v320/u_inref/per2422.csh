@@ -9,6 +9,8 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+# This module is derived from FIS GT.M.
+#################################################################
 
 $gtm_tst/com/dbcreate.csh mumps . -key=255 -rec=500
 $MUPIP set -file mumps.dat $tst_jnl_str >&! jnl_on.log

@@ -10,6 +10,8 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+# This module is derived from FIS GT.M.
+#################################################################
 #
 # Test "ZHALT rc" command for correct functioning. Three types of ZHalt return codes tested over
 # a range of potential return codes. Note since the maximum retcode we can see is 255, the test

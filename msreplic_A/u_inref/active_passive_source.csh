@@ -10,6 +10,8 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+# This module is derived from FIS GT.M.
+#################################################################
 
 # Test:
 # If there is an active source server running with -instsecondary to a specific instance, one should not be able to

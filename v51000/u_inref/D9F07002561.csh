@@ -10,6 +10,8 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+# This module is derived from FIS GT.M.
+#################################################################
 
 #
 # D9F07-002561 Use heartbeat timer to check and close open older generation journal files (Unix only issue)

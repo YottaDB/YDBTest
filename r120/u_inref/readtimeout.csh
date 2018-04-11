@@ -10,6 +10,8 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+# This module is derived from FIS GT.M.
+#################################################################
 
 # Test that READ X:TIMEOUT works correctly if TIMEOUT is a fraction with more than 3 decimal digits
 
