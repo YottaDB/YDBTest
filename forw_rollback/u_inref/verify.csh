@@ -4,6 +4,9 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -118,7 +121,16 @@ echo '# Copy *.dat from $bkupdir1'
 $gtm_tst/com/backup_dbjnl.csh 'save1' '*.dat' 'mv'
 cp $bkupdir1/*.dat .
 
-echo "# Expect JNLDBSEQNOMATCH error when rollback -forward is attempted with -nochain"
-$MUPIP journal -rollback -forward -nochain a.mjl	# BYPASSOK("-rollback")
+echo "# Expect JNLDBTNNOMATCH error first when rollback -forward is attempted with -nochain"
+$MUPIP journal -rollback -forward -nochain b.mjl	# BYPASSOK("-rollback")
+echo "# Fix TN to match so we can exercise the JNLDBSEQNOMATCH error"
+set curr_tn = `$MUPIP journal -show=header -forward -noverify b.mjl | & grep "Begin Transaction" | sed 's/.*\[0x//g;s/]//g;s/^0*//g'`
+$DSE << DSE_EOF
+find -reg=BREG
+change -file -current_tn=$curr_tn
+DSE_EOF
+
+echo ""	# $DSE above leaves the cursor at the end of a line instead of the beginning of a fresh line
+$MUPIP journal -rollback -forward -nochain b.mjl	# BYPASSOK("-rollback")
 echo "# Expect JNLDBSEQNOMATCH error for the below rollback -forward, since journal backlinks are cut"
-$MUPIP journal -rollback -forward a.mjl			# BYPASSOK("-rollback")
+$MUPIP journal -rollback -forward b.mjl			# BYPASSOK("-rollback")

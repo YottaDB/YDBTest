@@ -148,14 +148,28 @@ No errors detected by integ.
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
 # Copy *.dat from $bkupdir1
-# Expect JNLDBSEQNOMATCH error when rollback -forward is attempted with -nochain
+# Expect JNLDBTNNOMATCH error first when rollback -forward is attempted with -nochain
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%YDB-E-JNLDBSEQNOMATCH, Journal file ##TEST_PATH##/a.mjl has beginning region sequence number [0x0000000000000033], but database ##TEST_PATH##/a.dat has region sequence number [0x000000000000001D]
+##TEST_AWK\%YDB-E-JNLDBTNNOMATCH, Journal file ##TEST_PATH##/b.mjl has beginning transaction number .0x[0-9A-F]+., but database ##TEST_PATH##/b.dat has current transaction number .0x[0-9A-F]+. and journal end transaction number .0x[0-9A-F]+.
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+# Fix TN to match so we can exercise the JNLDBSEQNOMATCH error
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> 
+File  	##TEST_PATH##/b.dat
+Region	BREG
+
+DSE> DSE> 
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%YDB-E-JNLDBSEQNOMATCH, Journal file ##TEST_PATH##/b.mjl has beginning region sequence number [0x0000000000000032], but database ##TEST_PATH##/b.dat has region sequence number [0x000000000000001E]
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 # Expect JNLDBSEQNOMATCH error for the below rollback -forward, since journal backlinks are cut
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%YDB-E-JNLDBSEQNOMATCH, Journal file ##TEST_PATH##/a.mjl has beginning region sequence number [0x0000000000000033], but database ##TEST_PATH##/a.dat has region sequence number [0x000000000000001D]
-%YDB-E-NOPREVLINK, Journal file ##TEST_PATH##/a.mjl has a null previous link
+%YDB-E-JNLDBSEQNOMATCH, Journal file ##TEST_PATH##/b.mjl has beginning region sequence number [0x0000000000000032], but database ##TEST_PATH##/b.dat has region sequence number [0x000000000000001E]
+%YDB-E-NOPREVLINK, Journal file ##TEST_PATH##/b.mjl has a null previous link
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
