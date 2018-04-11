@@ -10,6 +10,8 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+# This module is derived from FIS GT.M.
+#################################################################
 
 #
 # C9I09003032 : Prevent malformed string literals from over-scanning EOL

@@ -10,6 +10,8 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+# This module is derived from FIS GT.M.
+#################################################################
 
 $gtm_tst/com/dbcreate.csh mumps 1 255 2500 4096 2048 2048 2048
 echo "$MUPIP set -journal=enable,on,[no]before,alloc=2048,extension=1000,auto=16500 -reg DEFAULT"

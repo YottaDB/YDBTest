@@ -10,6 +10,8 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+# This module is derived from FIS GT.M.
+#################################################################
 
 #
 # D9D12-002402 TID in the journal extract seems to be from innermost TSTART not outermost

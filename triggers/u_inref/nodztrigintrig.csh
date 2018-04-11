@@ -10,6 +10,8 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+# This module is derived from FIS GT.M.
+#################################################################
 
 $gtm_tst/com/dbcreate.csh mumps 1 255 1024 2048
 $gtm_exe/mumps -run nodztrigintrig >&! nodztrigintrig.outx

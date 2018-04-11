@@ -9,6 +9,8 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+# This module is derived from FIS GT.M.
+#################################################################
 # Filter the below output from the log file
 #	 set $x=$x_$J("",48-$L($x))_$J($FN($piece(x(x),".",2),",",2),18)
 #	                                                ^-----

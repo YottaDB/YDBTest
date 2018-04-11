@@ -10,6 +10,8 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+# This module is derived from FIS GT.M.
+#################################################################
 
 echo "# Begin gtm7412 - check operator log for warnings when database extension=0"
 # Get a random allocation value, between 100 and 20000

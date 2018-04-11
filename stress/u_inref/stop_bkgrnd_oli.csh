@@ -10,6 +10,8 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+# This module is derived from FIS GT.M.
+#################################################################
 
 if (! -e NOT_DONE.OLI) exit # means ONLINE INTEG never started before
 

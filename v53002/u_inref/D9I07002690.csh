@@ -10,6 +10,8 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+# This module is derived from FIS GT.M.
+#################################################################
 
 #
 # D9I07-002690 GTMASSERT in JNL_FILE_EXTEND.C;1 line 101 using V44004 at CSOB

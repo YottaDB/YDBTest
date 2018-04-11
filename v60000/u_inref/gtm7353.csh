@@ -10,6 +10,8 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+# This module is derived from FIS GT.M.
+#################################################################
 #
 # GTM-7353 Database integrity errors in v51000/C9E12002698 test
 #

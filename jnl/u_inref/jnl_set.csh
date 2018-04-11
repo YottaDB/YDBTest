@@ -10,6 +10,8 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+# This module is derived from FIS GT.M.
+#################################################################
 
 # This test is for C9B12-001854 GTM increments curr_tn even jnl_file_open fails
 # it sets the jnl file to read only and tries to write to the db.

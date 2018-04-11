@@ -1,6 +1,5 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
-#								#
 # Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
@@ -9,6 +8,8 @@
 #	under a license.  If you do not know the terms of	#
 #	the license, please stop and do not read further.	#
 #								#
+#################################################################
+# This module is derived from FIS GT.M.
 #################################################################
 
 # Before sourcing the script file generated from multisite_replic.awk let's do mandatory checks here!!

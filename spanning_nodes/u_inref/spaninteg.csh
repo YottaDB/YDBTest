@@ -10,6 +10,8 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+# This module is derived from FIS GT.M.
+#################################################################
 
 
 # Verify that spanning node INTEG checks are properly issued in case of damaged spanning node.
