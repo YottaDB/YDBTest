@@ -80,6 +80,7 @@ void nodenextcb(int parmcnt, ydb_string_t *basevar_in)
 	}
 	subs_in = subs1;			/* Initial alignment */
 	subs_out = subs2;
+	subs_out_cnt = 0;
 	/* Set up loop to run through the subscripted nodes */
 	for (reccnt = 0; ; reccnt++)
 	{	/* Once through for each node - subs_in_cnt gets initialized to subs_out_cnt except for
@@ -95,7 +96,7 @@ void nodenextcb(int parmcnt, ydb_string_t *basevar_in)
 		subs_out = subs_tmp;
 		/* Reset our output count so all subs are available for output and make our call */
 		subs_out_cnt = YDB_MAX_SUBS;
-		YDB_ASSERT((0 < subs_in_cnt) || (0 == reccnt));	/* Positive sub cnt unless first pass */
+		YDB_ASSERT((0 < subs_in_cnt) || ((0 == subs_in_cnt) && (0 == reccnt)));	/* Positive sub cnt unless first pass */
 		status = ydb_node_next_s(&basevar, subs_in_cnt, subs_in, &subs_out_cnt, subs_out);
 		SAPI_VALIDATE_RETURN(status, "ydb_node_next()", TRUE);
 		if (YDB_NODE_END == subs_out_cnt)
