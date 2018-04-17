@@ -4,6 +4,9 @@
 # Copyright (c) 2011-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -18,7 +21,7 @@ set echoline = "echo -----------------------------------------------------------
 alias BEGIN "source $gtm_tst/com/BEGIN.csh"
 alias END "source $gtm_tst/com/END.csh"
 
-setenv gtm_poollimit 0 # This test needs to use the maximum available buffers, for it checks the limit on block read/writes
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_poollimit gtm_poollimit 0 # This test needs to use the maximum available buffers, for it checks the limit on block read/writes
 BEGIN "Create a database with maximum block size(1008) and fill it with 64K+1 blocks of data"
 setenv gtmgbldir mumps.gld
 setenv test_specific_gde $gtm_tst/$tst/u_inref/recsize.gde

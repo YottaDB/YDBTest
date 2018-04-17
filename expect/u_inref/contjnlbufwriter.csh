@@ -27,9 +27,9 @@ $MUPIP set -flush_time=1000 -reg "*"
 # Code change as part of WHITE BOX TEST ensures that process SUSPEND itself while holding the lock on journal buffer.
 setenv gtm_white_box_test_case_enable 1
 setenv gtm_white_box_test_case_number 82
-# Since the process holding journal buffer is locked, on few platform we cant attach it to the debugger. And precisely
+# Since the process holding journal buffer is locked, on few platform we can't attach it to the debugger. And precisely
 # this is what GET_C_STACK_FROM_SCRIPT macro does. Hence unsetenv gtm_procstuckexec.
-unsetenv gtm_procstuckexec
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_procstuckexec gtm_procstuckexec
 
 setenv TERM xterm
 set syslog_start = `date +"%b %e %H:%M:%S"`

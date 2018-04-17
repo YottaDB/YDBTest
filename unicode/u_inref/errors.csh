@@ -1,4 +1,18 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+# This module is derived from FIS GT.M.
+#################################################################
+
 # ***WARNING*** Due to an unknown tcsh issue on solaris servers, if the number of lines at the top are too many,
 # tcsh mishandles the unicode characters in the rest of the script. Due to this,
 # a) copyright statement is not inserted
@@ -170,33 +184,21 @@ eof
 #switch back to UTF-8
 $switch_chset "UTF-8" >&! switch4.out
 # ICUVERLT36 is issued in two scenarios -
-# (a) gtm_icu_version < 3.6 : Can be tested in all platforms
-# (b) non symbol-renamed libicuio.so has version < 3.6 : Can be tested only on atlst2000, snail and turtle
+# (a) ydb_icu_version < 3.6 : Can be tested in all platforms
+# (b) non symbol-renamed libicuio.so has version < 3.6 : Can be tested only on Solaris (an unsupported platform)
 echo "Testing ICUVERLT36 error - case (a)"
 if ($?gtm_icu_version) then
-	setenv save_gtm_icu_version $gtm_icu_version
+	setenv save_icu_version $gtm_icu_version
 endif
-setenv gtm_icu_version "3.2" # Set gtm_icu_version to a value less than 3.6
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_icu_version gtm_icu_version "3.2" # Set gtm_icu_version to a value less than 3.6
 $GTM >&! icuverlt36a.out
-$gtm_tst/com/check_error_exist.csh icuverlt36a.out "ICUVERLT36"
-unsetenv gtm_icu_version
-## Only run this on Solaris machines that we know have a system installed ICU that is <3.6
-set hostn = $HOST:r:r:r
-if (("snail" == "$hostn") || ("turtle" == "$hostn") || ("atlst2000" == "$hostn") || ("inti" == "$hostn")) then
-	echo "Testing ICUVERLT36 error - case (b)"
-	setenv save_ldlibpath $LD_LIBRARY_PATH
-	# Setting LD_LIBRARY_PATH to "" lets GT.M to search for ICU libraries in the default path which is where
-	# we have the ICU libraries less than 3.6 installed
-	setenv LD_LIBRARY_PATH ""
-	$GTM >&! icuverlt36b.out
-	$gtm_tst/com/check_error_exist.csh icuverlt36b.out "ICUVERLT36"
-	setenv LD_LIBRARY_PATH $save_ldlibpath
+if ($?save_icu_version) then
+	setenv ydb_icu_version $save_icu_version
+	setenv gtm_icu_version $save_icu_version
 endif
+$gtm_tst/com/check_error_exist.csh icuverlt36a.out "ICUVERLT36"
 echo "END of errors"
 #
-if ($?save_gtm_icu_version) then
-	setenv gtm_icu_version $save_gtm_icu_version
-endif
 $gtm_tst/com/dbcheck.csh
 #
 # Test different kinds of unicode introduced errors

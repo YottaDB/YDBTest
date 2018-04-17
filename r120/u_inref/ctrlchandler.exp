@@ -12,6 +12,9 @@
 
 set timeout 60
 spawn /usr/local/bin/tcsh -f
+# Have columns higher than 80 as that can cause test failures on lines that are just above 80 columns in length
+send -- "stty cols 132\r"
+expect "stty cols 132"
 set cenable(0) "CENABLE"
 set cenable(1) "NOCENABLE"
 for {set i 0} {$i < 2} {incr i 1} {

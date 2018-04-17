@@ -4,6 +4,9 @@
 # Copyright (c) 2003-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -63,15 +66,15 @@ unset echo
 # JOURNAL EXTRACT is issued when there are no database files in the current directory.
 # JOURNAL EXTRACT might need to read the database file to get the collation information.
 # To skip the JOURNAL EXTRACT from reading the database file, set the env variable
-# gtm_extract_nocol to non-zero value.
-setenv gtm_extract_nocol 1
+# ydb_extract_nocol/gtm_extract_nocol to non-zero value.
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_extract_nocol gtm_extract_nocol 1
 set echo
 $MUPIP journal -extract=forward_nv.mjf -for mumps.mjl
 $MUPIP journal -extract=forward.mjf -for mumps.mjl -verbose
 unset echo
 echo $MUPIP journal -extract=backward.mjf -back mumps.mjl -since=\"$time1\" -verbose
 $MUPIP journal -extract=backward.mjf -back mumps.mjl -since=\"$time1\" -verbose |& $grep -v MUJNLPREVGEN
-unsetenv gtm_extract_nocol
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_extract_nocol gtm_extract_nocol
 $grep '\^' forward_nv.mjf > forward_nv.mjf_data
 $grep '\^' forward.mjf > forward.mjf_data
 $grep '\^' backward.mjf > backward.mjf_data
@@ -113,13 +116,13 @@ unset echo
 # JOURNAL EXTRACT is issued when there are no database files in the current directory.
 # JOURNAL EXTRACT might need to read the database file to get the collation information.
 # To skip the JOURNAL EXTRACT from reading the database file, set the env variable
-# gtm_extract_nocol to non-zero value.
-setenv gtm_extract_nocol 1
+# ydb_extract_nocol/gtm_extract_nocol to non-zero value.
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_extract_nocol gtm_extract_nocol 1
 set echo
 $MUPIP journal -extract=forward2_nv.mjf -for mumps.mjl
 $MUPIP journal -extract=forward2.mjf -for mumps.mjl -verbose
 unset echo
-unsetenv gtm_extract_nocol
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_extract_nocol gtm_extract_nocol
 $grep '\^' forward2_nv.mjf > forward2_nv.mjf_data
 $grep '\^' forward2.mjf > forward2.mjf_data
 diff forward2_nv.mjf_data forward2.mjf_data > /dev/null

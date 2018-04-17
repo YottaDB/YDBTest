@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh
 #################################################################
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -22,7 +22,6 @@ $gt_ld_shl_linker ${gt_ld_option_output}$cur_dir/libpolish_rev${gt_ld_shl_suffix
 
 setenv gtm_collate_1  "$cur_dir/libpolish${gt_ld_shl_suffix}"
 setenv gtm_collate_2  "$cur_dir/libpolish_rev${gt_ld_shl_suffix}"
-setenv gtm_local_collate_1  "$cur_dir/libpolish${gt_ld_shl_suffix}"
 
 
 setenv | grep coll >! env_individual.txt

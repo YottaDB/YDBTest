@@ -1,7 +1,20 @@
-#! /usr/local/bin/tcsh -f
+#!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+# This module is derived from FIS GT.M.
+#################################################################
 set exit_status = 0
 mkdir online1 baktmp
-setenv GTM_BAKTMPDIR `pwd`/baktmp
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_baktmpdir gtm_baktmpdir `pwd`/baktmp
 source $gtm_tst/$tst/u_inref/createdb_start_updates.csh 1
 ($gtm_tst/$tst/u_inref/find_tmpfiles.csh >>& find_tmpfiles.out&) >&! find_tmpfiles.log
 $MUPIP backup -online "*" ./online1 >&! online1.out

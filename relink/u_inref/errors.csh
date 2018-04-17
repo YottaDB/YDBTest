@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -21,7 +21,7 @@
 source $gtm_tst/com/gtm_test_disable_autorelink.csh
 
 # Keep things local to avoid affecting concurrent tests.
-setenv gtm_linktmpdir .
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_linktmpdir gtm_linktmpdir .
 
 # Make sure only the current directory is autorelink-enabled.
 setenv gtmroutines ".* $gtmroutines"

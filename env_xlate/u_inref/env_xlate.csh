@@ -19,13 +19,13 @@
 #setenv test_reorg "NON_REORG"
 #setenv tst env_xlate
 #setenv gtmroutines ". /usr/library/V990/dbg $gtm_tst/env_xlate/inref"
-#unsetenv gtm_env_translate
+#unsetenv ydb_env_translate
 #setenv tst_working_dir `pwd`
 #rm *.o
 #rm *.so
 
-unsetenv gtm_env_translate
-  setenv compile  "$gt_cc_compiler $gtt_cc_shl_options $gt_cc_option_debug -I$gtm_dist -I$gtm_tst/com"
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_env_translate gtm_env_translate
+setenv compile  "$gt_cc_compiler $gtt_cc_shl_options $gt_cc_option_debug -I$gtm_dist -I$gtm_tst/com"
 if ( "hp-ux"  == "$gtm_test_osname" && $gtm_test_machtype == "ia64") then
 	setenv compile 	"$compile +W 2550 "
 endif
@@ -35,10 +35,10 @@ setenv link	"$gt_ld_shl_linker $gt_ld_shl_options"
 ipcs -a > ipcs1.out
 $gtm_tst/com/dbcreate.csh a
 setenv gtmgbldir a.gld
-if ($?gtm_env_translate) then
+if ($?gtm_env_translate || $?ydb_env_translate) then
 	echo "ERROR. it should not be defined"
 else
-	echo "gtm_env_translate is not defined"
+	echo "ydb_env_translate is not defined"
 endif
 
 echo  -n
@@ -71,18 +71,19 @@ if ( "os390" == $gtm_test_osname ) then
 endif
 
 mv datbak/* .					# Move back the backed up files (to prevent dbcreate renaming them)
-# no gtm_env_translate defined
+# no ydb_env_translate defined
 echo "#########################################################################################"
-echo "gtm_env_translate is not defined. No environment translation."
+echo "ydb_env_translate is not defined. No environment translation."
 echo ""
 $gtm_exe/mumps -run notdef
 
-# bad gtm_env_translate definition
+# bad ydb_env_translate definition
 echo "#########################################################################################"
-echo "gtm_env_translate is defined, but library does not exist."
+echo "ydb_env_translate is defined, but library does not exist."
 echo ""
-setenv gtm_env_translate "$tst_working_dir/foo.bad"
-echo "gtm_env_translate = "$gtm_env_translate
+set xlate = "$tst_working_dir/foo.bad"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_env_translate gtm_env_translate $xlate
+echo "ydb_env_translate = "$xlate
 $gtm_exe/mumps -run notdef >& notdef1_log
 # to get a different reference file for each platform
 $tst_awk -f $gtm_tst/com/process.awk -f $gtm_tst/com/outref.awk notdef1_log $gtm_tst/$tst/outref/notdef1.txt > notdef1.cmp
@@ -98,10 +99,11 @@ endif
 
 # good definition, bad dll (gtm_env_xlate not there)
 echo "#########################################################################################"
-echo "gtm_env_translate is defined, but there is no gtm_env_xlate function in it."
+echo "ydb_env_translate is defined, but there is no gtm_env_xlate function in it."
 echo ""
-setenv gtm_env_translate "$tst_working_dir/liboops${gt_ld_shl_suffix}"
-echo "gtm_env_translate = "$gtm_env_translate
+set xlate = "$tst_working_dir/liboops${gt_ld_shl_suffix}"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_env_translate gtm_env_translate $xlate
+echo "ydb_env_translate = "$xlate
 $compile $gtm_tst/$tst/inref/gtm_env_oops.c
 $link ${gt_ld_option_output}liboops${gt_ld_shl_suffix} gtm_env_oops.o $syslibs >& link0.log
 if ($status) cat link0.log
@@ -124,8 +126,9 @@ echo "##########################################################################
 echo "A good DLL at last..."
 echo ""
 setenv a `pwd`/a.gld
-setenv gtm_env_translate "$tst_working_dir/libxlate${gt_ld_shl_suffix}"
-echo "gtm_env_translate = "$gtm_env_translate
+set xlate = "$tst_working_dir/libxlate${gt_ld_shl_suffix}"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_env_translate gtm_env_translate $xlate
+echo "ydb_env_translate = "$xlate
 $compile $gtm_tst/$tst/inref/gtm_env_xlate.c
 $link ${gt_ld_option_output}libxlate${gt_ld_shl_suffix} gtm_env_xlate.o $syslibs >& link1.log
 echo $status
@@ -146,8 +149,9 @@ echo ""
 mkdir first
 mv *.o first
 mv *${gt_ld_shl_suffix} first
-setenv gtm_env_translate "$tst_working_dir/libxlatesq${gt_ld_shl_suffix}"
-echo "gtm_env_translate = "$gtm_env_translate
+set xlate = "$tst_working_dir/libxlatesq${gt_ld_shl_suffix}"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_env_translate gtm_env_translate $xlate
+echo "ydb_env_translate = "$xlate
 echo $gtmgbldir
 
 if ("linux" == $gtm_test_osname) then

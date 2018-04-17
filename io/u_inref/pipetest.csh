@@ -4,6 +4,9 @@
 # Copyright (c) 2008-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -74,7 +77,7 @@ if (0 == $status) then
 endif
 
 # set gtm_non_blocked_write_retries to 300 so writes will not block for loops with read x:0 in them
-setenv gtm_non_blocked_write_retries 300
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_non_blocked_write_retries gtm_non_blocked_write_retries 300
 
 $echoline
 echo "**************************** catback2 ****************************"
@@ -280,7 +283,7 @@ xxx
 $echoline
 echo "*********************** justbadlabel^badhandler entryref *********"
 $echoline
-setenv gtm_ztrap_form entryref
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_ztrap_form gtm_ztrap_form entryref
 $gtm_dist/mumps -direct << xxx
 do JUSTBADLABEL^badhandler
 halt
@@ -288,7 +291,7 @@ xxx
 $echoline
 echo "**************************** justgoodlabel^badhandler entryref *********"
 $echoline
-setenv gtm_ztrap_form entryref
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_ztrap_form gtm_ztrap_form entryref
 $gtm_dist/mumps -direct << xxx
 do JUSTGOODLABEL^badhandler
 halt
@@ -296,7 +299,7 @@ xxx
 $echoline
 echo "************************ badcommand^badhandler adaptive ***********"
 $echoline
-setenv gtm_ztrap_form adaptive
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_ztrap_form gtm_ztrap_form adaptive
 $gtm_dist/mumps -direct << xxx
 do BADCOMMAND^badhandler
 halt

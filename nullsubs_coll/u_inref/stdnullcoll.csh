@@ -1,7 +1,10 @@
 #! /usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2004, 2013 Fidelity Information Services, Inc	#
+# Copyright 2004, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -191,7 +194,7 @@ EOF
 echo "#######################################################################"
 echo "%LCLCOL CHECK BEGINS HERE"
 echo "#######################################################################"
-setenv gtm_lct_stdnull 1
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_lct_stdnull gtm_lct_stdnull 1
 $GTM << EOF
 set (lcl(1),lcl("x"),lcl(""),lcl("y"))=1
 write "env. variable set to M std. null collation",!
@@ -219,6 +222,6 @@ write "collating order should be M std. here",!
 zwrite lcl
 halt
 EOF
-unsetenv gtm_lct_stdnull
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_lct_stdnull gtm_lct_stdnull
 #
 $gtm_tst/com/dbcheck.csh

@@ -55,7 +55,7 @@ echo "# Test case 2: Check the code exits gracefully in case of error"
 cp $gtm_tst/com/gtmprocstuck_get_stack_trace.csh .
 echo "# Remove execute permission from the file"
 chmod -x gtmprocstuck_get_stack_trace.csh
-setenv gtm_procstuckexec `pwd`/gtmprocstuck_get_stack_trace.csh
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_procstuckexec gtm_procstuckexec `pwd`/gtmprocstuck_get_stack_trace.csh
 set syslog_before2 = `date +"%b %e %H:%M:%S"`
 echo "# Time before test case 2 : GTM_TEST_DEBUGINFO $syslog_before2"
 echo "# Starting the dse process now"
@@ -87,7 +87,7 @@ $grep "YDB-E-WRITERSTUCK" syslog2b.txt | $grep $dsepid | sed 's/.*\(YDB-E-WRITER
 echo ""
 echo $banner
 echo "# Test case 3: File does not exist"
-setenv gtm_procstuckexec `pwd`/noexist.csh
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_procstuckexec gtm_procstuckexec `pwd`/noexist.csh
 set syslog_before3 = `date +"%b %e %H:%M:%S"`
 echo "# Time before test case 3 : GTM_TEST_DEBUGINFO $syslog_before3"
 echo "# Starting the dse process now"

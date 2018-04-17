@@ -13,21 +13,21 @@
 #
 # Check both default prompt and overridden prompt
 #
-unsetenv gtm_prompt
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_prompt gtm_prompt
 $gtm_dist/mumps -dir << EOF1
 halt
 EOF1
 #
 # Now override the prompt with "YDB>"
 #
-setenv gtm_prompt "YDB>"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_prompt gtm_prompt "YDB>"
 $gtm_dist/mumps -dir << EOF2
 halt
 EOF2
 #
 # Now override the prompt with "GTM>"
 #
-setenv gtm_prompt "GTM>"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_prompt gtm_prompt "GTM>"
 $gtm_dist/mumps -dir << EOF2
 halt
 EOF

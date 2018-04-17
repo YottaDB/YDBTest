@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2009, 2014 Fidelity Information Services, Inc	#
+# Copyright 2009, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -22,7 +25,7 @@ $echoline
 echo "# Test Case # 1: Current directory does not have write permissions and gtm_snaptmpdir is not set"
 $echoline
 unsetenv GTM_BAKTMPDIR
-unsetenv gtm_snaptmpdir
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_snaptmpdir gtm_snaptmpdir
 mkdir curdirnowriteperms
 cd curdirnowriteperms
 ln -s ../mumps.gld mumps.gld
@@ -45,7 +48,7 @@ echo " "
 $echoline
 echo "# Test Case # 2: Directory pointed to by gtm_snaptmpdir does not exist"
 $echoline
-setenv gtm_snaptmpdir $PWD/dirdoesnotexist
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_snaptmpdir gtm_snaptmpdir $PWD/dirdoesnotexist
 set mupip_log = "mupip_log2.log"
 $MUPIP integ $FASTINTEG -online -preserve -r DEFAULT >&! $mupip_log
 echo "# Verify SSTMPCREATE error is present."
@@ -60,9 +63,10 @@ echo " "
 $echoline
 echo "# Test Case # 3: Directory pointed to by gtm_snaptmpdir does not have write permissions"
 $echoline
-setenv gtm_snaptmpdir $PWD/dirwowriteperms
-mkdir $gtm_snaptmpdir
-chmod a-w $gtm_snaptmpdir
+set snaptmpdir = $PWD/dirwowriteperms
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_snaptmpdir gtm_snaptmpdir $snaptmpdir
+mkdir $snaptmpdir
+chmod a-w $snaptmpdir
 set mupip_log = "mupip_log3.log"
 $MUPIP integ $FASTINTEG -online -preserve -r DEFAULT >&! $mupip_log
 echo "# Verify SSTMPCREATE error is present."
@@ -73,14 +77,15 @@ else
 endif
 $gtm_tst/com/check_error_exist.csh $mupip_log SSTMPCREATE $errENO MUNOTALLINTEG
 echo "# Setting write permissions on directory so test cleanup does not have a problem."
-chmod a+w $gtm_snaptmpdir
+chmod a+w $snaptmpdir
 
 echo " "
 $echoline
 echo "# Test Case # 4: Directory pointed to by gtm_snaptmpdir is actually a file"
 $echoline
-setenv gtm_snaptmpdir $PWD/dirisafile
-touch $gtm_snaptmpdir
+set snaptmpdir = $PWD/dirisafile
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_snaptmpdir gtm_snaptmpdir $snaptmpdir
+touch $snaptmpdir
 set mupip_log = "mupip_log4.log"
 $MUPIP integ $FASTINTEG -online -preserve -r DEFAULT >&! $mupip_log
 echo "# Verify SSTMPCREATE error is present."
@@ -90,5 +95,5 @@ else
 	set errENO = "ENO135"
 endif
 $gtm_tst/com/check_error_exist.csh $mupip_log SSTMPCREATE $errENO MUNOTALLINTEG
-unsetenv gtm_snaptmpdir
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_snaptmpdir gtm_snaptmpdir
 $gtm_tst/com/dbcheck.csh

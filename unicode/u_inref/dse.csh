@@ -84,7 +84,7 @@ $tst_awk -f $gtm_tst/com/filter_litnongraph.awk unicodedbdata_with_warns.outx
 # move this script from 64bittn/u_inref to /com and take care of reverse impacts
 source $gtm_tst/com/get_blks_to_upgrade.csh "" "default"
 foreach chset("M" "UTF-8")
-	setenv gtm_chset $chset
+	source $gtm_tst/com/set_ydb_env_var_random.csh ydb_chset gtm_chset $chset
 	# C9G10-002805 DSE DUMP -BLOCK -COUNT=2 does not work correctly for second block
 	# Fix the below refernce files once the above TR is fixed.
 	$DSE dump -block=1 -count=$calculated >&! dseunicode_dump_$chset.outx
@@ -112,9 +112,9 @@ foreach chset("M" "UTF-8")
 	$tst_awk -f $gtm_tst/com/process.awk -f $gtm_tst/com/outref.awk dseunicode_dump_$chset.out $reference_file >&! dseunicode_dump_${chset}_${endian}.cmp
 	diff dseunicode_dump_${chset}_${endian}.cmp dseunicode_dump_$chset.out
 	if ($status) then
-		echo "TEST-E-ERROR, DSE dump behavior on gtm_chset $chset incorrect"
+		echo "TEST-E-ERROR, DSE dump behavior on ydb_chset $chset incorrect"
 	else
-		echo "TEST-I-PASS, DSE dump behavior on gtm_chset $chset is correct"
+		echo "TEST-I-PASS, DSE dump behavior on ydb_chset $chset is correct"
 	endif
 	# Blocks with single record : 5,D
 	# Few Index blocks : 4,25,27,29
@@ -142,11 +142,16 @@ DSE_EOF
 	$tst_awk -f $gtm_tst/com/process.awk -f $gtm_tst/com/outref.awk dse_dump_select_$chset.out $gtm_tst/$tst/outref/dse_dump_select_${chset}_${endian}.txt >&! dse_dump_select_${chset}_${endian}.cmp
 	diff dse_dump_select_${chset}_${endian}.cmp  dse_dump_select_$chset.out
 	if ($status) then
-		echo "TEST-E-ERROR, DSE dump behavior for selected blocks/records on gtm_chset $chset incorrect"
+		echo "TEST-E-ERROR, DSE dump behavior for selected blocks/records on ydb_chset $chset incorrect"
 	else
-		echo "TEST-I-PASS, DSE dump behavior for selected blocks/records on gtm_chset $chset is correct"
+		echo "TEST-I-PASS, DSE dump behavior for selected blocks/records on ydb_chset $chset is correct"
 	endif
 end
+# Undo the effect of set_ydb_env_var_random.csh call above and reset gtm_chset env var to UTF-8 like was done at beginning of
+# this script. Later calls to dbcreate.csh (inside dse_dump_zwr_glo.csh) are otherwise affected if ydb_chset/gtm_chset are not
+# changed in tandem with ydb_routines/gtmroutines (like $switch_chset does).
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_chset gtm_chset
+$switch_chset "UTF-8" >& switch_chset_intermediate.out
 #
 $echoline
 #################

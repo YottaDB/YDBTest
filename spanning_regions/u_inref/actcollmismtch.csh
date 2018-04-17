@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2013, 2014 Fidelity Information Services, Inc	#
+# Copyright 2013, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -22,8 +25,8 @@ endif
 # setup collation 1
 source $gtm_tst/com/cre_coll_sl_reverse.csh 1
 setenv back_gtm_collate_1 $gtm_collate_1
-unsetenv gtm_collate_1
-unsetenv gtm_local_collate
+$gtm_tst/com/unset_ydb_env_var.csh ydb_collate_1 gtm_collate_1
+$gtm_tst/com/unset_ydb_env_var.csh ydb_local_collate gtm_local_collate
 echo "# Test case 1 :"
 $GDE exit
 $MUPIP create
@@ -31,7 +34,7 @@ echo "# Create ^x entry in directory tree with collation of 0"
 $gtm_exe/mumps -run %XCMD 'set ^x=1'
 
 echo "# Switch to collation 1"
-setenv gtm_collate_1 $back_gtm_collate_1
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_collate_1 gtm_collate_1 $back_gtm_collate_1
 
 echo "# Add a global with collation 1"
 $GDE add -gblname x -coll=1
@@ -48,7 +51,7 @@ $gtm_tst/com/backup_dbjnl.csh testcase1 "*.dat *.gld" "mv"
 
 echo "# Test case 2 :"
 echo "# create a.gld with global x having collation 1"
-setenv gtm_collate_1 $back_gtm_collate_1
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_collate_1 gtm_collate_1 $back_gtm_collate_1
 setenv gtmgbldir a.gld
 $GDE add -gblname x -coll=1
 
@@ -77,7 +80,7 @@ $gtm_tst/com/backup_dbjnl.csh testcase2 "*.dat *.gld" "mv"
 
 echo "# Test case 2B :"
 echo "# Create a database with fileheader collation set to 2"
-setenv gtm_collate_2 $back_gtm_collate_1
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_collate_2 gtm_collate_2 $back_gtm_collate_1
 setenv gtmgbldir mumps.gld
 $GDE exit ; $MUPIP create
 $DSE change -fi -def=2
@@ -85,7 +88,7 @@ echo "# Create ^x entry in directory tree with collation of 2"
 $gtm_exe/mumps -run %XCMD 'set ^x=1'
 
 echo "# create a.gld with global x having collation 1"
-setenv gtm_collate_1 $back_gtm_collate_1
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_collate_1 gtm_collate_1 $back_gtm_collate_1
 setenv gtmgbldir a.gld
 $GDE add -gblname x -coll=1
 
@@ -160,7 +163,7 @@ echo "# If collation characteristics are defined in gld for a global name, (only
 echo "# name which gets set in the database (i.e. one that creates the GVT) will create a tree with "
 echo "# the collation characteristics inherited from the gld."
 
-setenv gtm_collate_2 $gtm_collate_1
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_collate_2 gtm_collate_2 $back_gtm_collate_1
 
 $GDE add -gblname a -coll=1
 $MUPIP create

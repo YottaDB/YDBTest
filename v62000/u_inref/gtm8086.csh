@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -17,7 +17,7 @@
 # Test that autoswitch failure due to permissions on the directory containing the journal files is handled properly.
 #
 # Runs a number of imptp processes, waits for at least one journal switch, then chmod's the journal directory read-only.
-# For non-replic, gtm_error_on_jnl_file_lost is set, so we expect all the imptp processes to exit with JNLEXTEND.
+# For non-replic, ydb_error_on_jnl_file_lost is set, so we expect all the imptp processes to exit with JNLEXTEND.
 # For replic, gtm_test_freeze_on_error is configured, so we expect the instance to freeze.
 # Restores write access to the journal directory and verifies that writes and reads proceed normally.
 
@@ -31,7 +31,7 @@ if ($?test_replic) then
 	unsetenv gtm_test_jnlpool_sync
 	$MULTISITE_REPLIC_PREPARE 2
 else
-	setenv gtm_error_on_jnl_file_lost 1
+	source $gtm_tst/com/set_ydb_env_var_random.csh ydb_error_on_jnl_file_lost gtm_error_on_jnl_file_lost 1
 endif
 
 set jnldir="jnldir"

@@ -4,6 +4,9 @@
 # Copyright (c) 2009-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -30,7 +33,7 @@ echo "--------------------------------------------------------------------------
 echo "Try extracting database without gtm_passwd and expect error message"
 echo "--------------------------------------------------------------------------------------------------"
 echo "unsetenv gtmpasswd"
-unsetenv gtm_passwd
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_passwd gtm_passwd
 echo "##################################"
 echo "mupip extract -fo=bin ext1.bin"
 $MUPIP extract -fo=bin ext1.bin
@@ -42,7 +45,7 @@ echo "mupip extract -fo=go ext1.go"
 $MUPIP extract -fo=go ext1.go
 
 mv  mumps.dat mumps.dat_1
-setenv gtm_passwd $save_gtm_passwd
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_passwd gtm_passwd $save_gtm_passwd
 $MUPIP create
 echo "--------------------------------------------------------------------------------------------------"
 echo "Try extracting while doing parallel GTM updates without gtm_passwd and expect error message"
@@ -51,7 +54,7 @@ setenv gtm_test_dbfill "SLOWFILL"
 setenv gtm_test_jobcnt 1
 $gtm_tst/com/imptp.csh >>&! imptp.out
 sleep 5
-unsetenv gtm_passwd
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_passwd gtm_passwd
 echo "##################################"
 echo "mupip extract -fo=bin ext2.bin"
 $MUPIP extract -fo=bin ext2.bin
@@ -65,7 +68,7 @@ $MUPIP extract -fo=go ext2.go
 echo "--------------------------------------------------------------------------------------------------"
 echo "Try extracting while doing parallel GTM updates with wrong gtm_passwd and expect error message"
 echo "--------------------------------------------------------------------------------------------------"
-setenv gtm_passwd `echo "badvalue" | $gtm_dist/plugin/gtmcrypt/maskpass | cut -d " " -f3`
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_passwd gtm_passwd `echo "badvalue" | $gtm_dist/plugin/gtmcrypt/maskpass | cut -d " " -f3`
 $gtm_tst/com/reset_gpg_agent.csh
 echo "##################################"
 echo "mupip extract -fo=bin ext3.bin"
@@ -77,7 +80,7 @@ echo "##################################"
 echo "mupip extract -fo=go ext3.go"
 $MUPIP extract -fo=go ext3.go
 
-setenv gtm_passwd $save_gtm_passwd
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_passwd gtm_passwd $save_gtm_passwd
 $gtm_tst/com/reset_gpg_agent.csh
 $gtm_tst/com/endtp.csh >>&! imptp.out
 
@@ -110,11 +113,11 @@ EOF
 echo "-----------------------------------------------------------------------------------------"
 echo "Try binary extract with select qualifier to extract gloabl from unencrypted region (AREG)"
 echo "-----------------------------------------------------------------------------------------"
-unsetenv gtm_passwd
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_passwd gtm_passwd
 echo "mupip extract -fo=bin -select=a* ext4.bin"
 $MUPIP extract -fo=bin -select="a*" ext4.bin
 
-setenv gtm_passwd $save_gtm_passwd
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_passwd gtm_passwd $save_gtm_passwd
 
 $gtm_tst/com/backup_dbjnl.csh "back1" "*.dat" mv
 $GDE <<EOF
@@ -135,8 +138,8 @@ EOF
 echo "--------------------------------------------------------------------------------------------"
 echo "Try binary extract with select qualifier to extract global from unencrypted region (DEFAULT)"
 echo "--------------------------------------------------------------------------------------------"
-unsetenv gtm_passwd
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_passwd gtm_passwd
 echo "mupip extract -fo=bin -select=b* ext5.bin"
 $MUPIP extract -fo=bin -select="b*" ext5.bin
-setenv gtm_passwd $save_gtm_passwd
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_passwd gtm_passwd $save_gtm_passwd
 $gtm_tst/com/dbcheck.csh

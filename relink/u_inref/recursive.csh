@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2013, 2014 Fidelity Information Services, Inc	#
+# Copyright 2013, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -23,7 +26,7 @@
 source $gtm_tst/$tst/u_inref/unpack_subtest_files.csh "recursive" `pwd`
 #####
 
-setenv gtm_link "RECURSIVE"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_link gtm_link "RECURSIVE"
 
 $gtm_exe/mumps -run recurlink
 

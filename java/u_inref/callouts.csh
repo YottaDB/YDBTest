@@ -48,7 +48,7 @@ set javac_exe = "$JAVA_HOME/bin/${bin_subdir}javac -encoding utf-8 -classpath $g
 echo "Trying to invoke call-outs without setting GTMXC_xxx:"
 echo "Command: $gtm_dist/mumps -run test1" >> $java_comm_output
 $gtm_dist/mumps -run test1 |& tee -a $java_comm_output | $grep -v "$large_pages" >&! test0a.outx
-$grep "YDB-E-ZCCTENV, Environmental variable for external package GTMXC_test1 not set" test0a.outx
+$grep "YDB-E-ZCCTENV, Environmental variable for external package ydb_xc_test1/GTMXC_test1 not set" test0a.outx
 $grep -q "lbl1" test0a.outx
 if (! $status) echo "MUMPS did not terminate!"
 echo

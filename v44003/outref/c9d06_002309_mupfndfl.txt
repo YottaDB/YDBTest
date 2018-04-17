@@ -291,7 +291,8 @@ Do not have full access to directory for temporary files: .a..?..b.c/
 MUPIP cannot start backup with above errors
 
 unset nonomatch
-setenv GTM_BAKTMPDIR ./bo'$'goue_name
+unset verbose
+setenv ydb_baktmpdir ./bo$goue_name
 $MUPIP backup "*" -nonewj ./back3
 
 Do not have full access to directory for temporary files: ./bo$goue_name
@@ -299,7 +300,8 @@ Do not have full access to directory for temporary files: ./bo$goue_name
 
 MUPIP cannot start backup with above errors
 
-setenv GTM_BAKTMPDIR ./back3/mumps'$$'
+unset verbose
+setenv ydb_baktmpdir ./back3/mumps$$
 $MUPIP backup "*" -nonewj ./back3 > & mupip_backup_nonewj_1.outx
 sort -f mupip_backup_nonewj_1.outx
 

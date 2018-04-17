@@ -4,6 +4,9 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -28,8 +31,8 @@ echo '	quit' >> $setglob
 echo "## ROUND 1 ##"
 echo "# Use view command instead of environment variables"
 setenv useviewcommand 1 # Tell children to use the view command
-unsetenv gtm_nontprestart_log_delta
-unsetenv gtm_nontprestart_log_first
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_nontprestart_log_delta gtm_nontprestart_log_delta
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_nontprestart_log_first gtm_nontprestart_log_first
 
 echo "# Launching processes"
 set syslog_start = `date +"%b %e %H:%M:%S"`
@@ -53,8 +56,8 @@ mv waitpidstodie.m waitpidstodie1.m
 
 unsetenv useviewcommand
 # Setting this to maximum signed integer so that we can control the number of messsages by setting gtm_nontprestart_log_first only
-setenv gtm_nontprestart_log_delta 2147483647
-setenv gtm_nontprestart_log_first 1
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_nontprestart_log_delta gtm_nontprestart_log_delta 2147483647
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_nontprestart_log_first gtm_nontprestart_log_first 1
 
 # This round is necessary because we want to capture a fixed number of NONTPRESTART messages in the outref. Round 2 does not capture
 # the whole message in the outref
@@ -97,7 +100,7 @@ if (! $?random_gtm_nontprestart_log_first) then
 	echo "setenv random_gtm_nontprestart_log_first $random_gtm_nontprestart_log_first" >> settings.csh
 endif
 
-setenv gtm_nontprestart_log_first $random_gtm_nontprestart_log_first
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_nontprestart_log_first gtm_nontprestart_log_first $random_gtm_nontprestart_log_first
 
 echo "## ROUND 3 ##"
 echo "# Randomly select gtm_nontprestart_log_first and make sure each process generates chosen number of messages"

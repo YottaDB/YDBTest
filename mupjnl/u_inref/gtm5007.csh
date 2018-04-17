@@ -39,10 +39,10 @@ $gtm_tst/com/endtp.csh >&! endtp.out
 # -parallel=1 should override gtm_mupjnl_parallel value
 if (10 > $smallrange[1]) then
 	# ~ 50% of the time set it to 2-9
-	setenv gtm_mupjnl_parallel $smallrange[1]
+	source $gtm_tst/com/set_ydb_env_var_random.csh ydb_mupjnl_parallel gtm_mupjnl_parallel $smallrange[1]
 else
 	# ~ 50% of the time set it to a large number
-	setenv gtm_mupjnl_parallel $largerange[1]
+	source $gtm_tst/com/set_ydb_env_var_random.csh ydb_mupjnl_parallel gtm_mupjnl_parallel $largerange[1]
 endif
 
 echo "# Case 1 : Set gtm_mupjnl_parallel to > 1 and explicitly pass -parallel=1 - Expect -parallel setting to override gtm_mupjnl_parallel"
@@ -63,9 +63,9 @@ $tst_awk -F / '/SHOW output for/ {print $NF}' journal_show_case_1.out
 # -parallel=4 should override gtm_mupjnl_parallel value
 @ isodd = $smallrange[2] % 2
 if ($isodd) then
-	setenv gtm_mupjnl_parallel 1
+	source $gtm_tst/com/set_ydb_env_var_random.csh ydb_mupjnl_parallel gtm_mupjnl_parallel 1
 else
-	unsetenv gtm_mupjnl_parallel
+	source $gtm_tst/com/unset_ydb_env_var.csh ydb_mupjnl_parallel gtm_mupjnl_parallel
 endif
 if (10 > $smallrange[2]) then
 	# ~ 50% of the time pass 2-10 as the value to -parallel

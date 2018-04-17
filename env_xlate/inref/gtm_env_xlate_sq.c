@@ -3,6 +3,9 @@
  * Copyright (c) 2002-2015 Fidelity National Information	*
  * Services, Inc. and/or its subsidiaries. All rights reserved.	*
  *								*
+ * Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	*
+ * All rights reserved.						*
+ *								*
  *	This source code contains the intellectual property	*
  *	of its copyright holder(s), and is made available	*
  *	under a license.  If you do not know the terms of	*
@@ -487,7 +490,7 @@ xc_string_t *errmsg;
 	pathptr = XLATE_FILE;
 #else
 /* translate the requisite environment variable to find the file */
-	if ((pathptr = GETENV(XLATE_FILE)) == (char *)NULL)
+	if ((pathptr = getenv(XLATE_FILE)) == (char *)NULL)
 	{
 		(void)msg(errmsg, "Cannot translate environment variable %s", XLATE_FILE);
 		return FALSE;
@@ -1105,7 +1108,7 @@ xc_string_t *errbuf;
 	char *pcAddress;
 	void **functable;
 
-	pcAddress = GETENV(CALLIN_ENV_VAR);
+	pcAddress = getenv(CALLIN_ENV_VAR);
 	if (pcAddress == (char *)NULL)
 	{
 		(void)msg(errbuf, "gtm_env_xlate:  Failed to get environment variable %s", CALLIN_ENV_VAR);

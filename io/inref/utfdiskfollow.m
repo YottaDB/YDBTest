@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-;	Copyright 2013 Fidelity Information Services, Inc	;
+; Copyright 2013 Fidelity Information Services, Inc		;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -622,7 +625,7 @@ writer(p)
 	; test is using a pipe device to start the mumps process "utfinit" in M mode instead of zsystem
 	; no actual I/O is done over the pipe, but in case test cleanup is necessary, just killing
 	; the writer process will also kill the child process.
-	open pp:(comm="unsetenv gtm_chset; $gtm_exe/mumps -r utfinit "_p:write)::"pipe"
+	open pp:(comm="unsetenv gtm_chset; unsetenv ydb_chset; $gtm_exe/mumps -r utfinit "_p:write)::"pipe"
 	do wait("rdone")
 	close pp
 	quit

@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh
 #################################################################
 #								#
-#	Copyright 2013, 2014 Fidelity Information Services, Inc	#
+# Copyright 2013, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -22,7 +25,7 @@ $gtm_tst/com/dbcreate.csh mumps 1
 # Set encryption attributes, if needed.
 source $gtm_tst/$tst/u_inref/set_key_and_iv.csh
 
-setenv gtm_non_blocked_write_retries 600
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_non_blocked_write_retries gtm_non_blocked_write_retries 600
 
 # report number of read interrupts when mumps exits
 setenv gtmdbglvl 0x00080000

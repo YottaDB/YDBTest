@@ -788,13 +788,23 @@ setenv tst_random_all "$tst_random_all gtm_test_dynamic_literals"
 # Do this if gtm_ipv4_only is not already passed to gtmtest.csh
 if !($?gtm_ipv4_only) then
 	if (2 >= $randnumbers[26]) then				# 2/10 chance (enabled)
-		setenv gtm_ipv4_only "1"
-		echo "# gtm_ipv4_only set by do_random_settings.csh"					>>&! $settingsfile
-		echo "setenv gtm_ipv4_only $gtm_ipv4_only"						>>&! $settingsfile
+		source $gtm_tst/com/set_ydb_env_var_random.csh ydb_ipv4_only gtm_ipv4_only "1"
+		if ($?ydb_ipv4_only) then
+			echo "# ydb_ipv4_only set by do_random_settings.csh"				>>&! $settingsfile
+			echo "setenv ydb_ipv4_only $ydb_ipv4_only"					>>&! $settingsfile
+		else
+			echo "# gtm_ipv4_only set by do_random_settings.csh"				>>&! $settingsfile
+			echo "setenv gtm_ipv4_only $gtm_ipv4_only"					>>&! $settingsfile
+		endif
 	else 							# 8/10 chance (disabled; default, pre-V60002 behavior)
-		setenv gtm_ipv4_only "0"
-		echo "# gtm_ipv4_only disabled by do_random_settings.csh"				>>&! $settingsfile
-		echo "setenv gtm_ipv4_only $gtm_ipv4_only"						>>&! $settingsfile
+		source $gtm_tst/com/set_ydb_env_var_random.csh ydb_ipv4_only gtm_ipv4_only "0"
+		if ($?ydb_ipv4_only) then
+			echo "# ydb_ipv4_only disabled by do_random_settings.csh"			>>&! $settingsfile
+			echo "setenv ydb_ipv4_only $ydb_ipv4_only"					>>&! $settingsfile
+		else
+			echo "# gtm_ipv4_only disabled by do_random_settings.csh"			>>&! $settingsfile
+			echo "setenv gtm_ipv4_only $gtm_ipv4_only"					>>&! $settingsfile
+		endif
 	endif
 else
 	echo "# gtm_ipv4_only was already set before coming into do_random_settings.csh"		>>&! $settingsfile
@@ -807,7 +817,7 @@ else
 endif
 echo "setenv host_suffix_if_ipv6 '$host_suffix_if_ipv6'"						>>&! $settingsfile
 
-setenv tst_random_all "$tst_random_all gtm_ipv4_only"
+setenv tst_random_all "$tst_random_all ydb_ipv4_only"
 
 ###########################################################################
 ### Random option - 28 ### Randomly decide to enable SSL/TLS

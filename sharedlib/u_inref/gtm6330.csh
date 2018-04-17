@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2013 Fidelity Information Services, Inc	#
+# Copyright 2013 Fidelity Information Services, Inc		#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -28,7 +31,7 @@ $gtm_exe/mumps -run genlits^gtm6330 > lotlits_orig.txt
 
 ## 1. Compile, link shared library, and run without dynamic literals. Collect baseline memory usage.
 
-unsetenv gtmcompile
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_compile gtmcompile
 \cp lotlits_orig.txt lotlits.m
 $gtm_exe/mumps lotlits.m
 $gt_ld_m_shl_linker ${gt_ld_option_output} shlib$gt_ld_shl_suffix lotlits.o ${gt_ld_m_shl_options} >& link1_ld.outx
@@ -45,7 +48,7 @@ unsetenv gtmdbglvl
 ## 2. Repeat, this time with dynamic literals. Make sure memory usage is reduced.
 
 \rm shlib*
-setenv gtmcompile "-dynamic_literals"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_compile gtmcompile "-dynamic_literals"
 \cp lotlits_orig.txt lotlits.m
 $gtm_exe/mumps lotlits.m
 $gt_ld_m_shl_linker ${gt_ld_option_output} shlib$gt_ld_shl_suffix lotlits.o ${gt_ld_m_shl_options} >& link2_ld.outx
@@ -70,37 +73,37 @@ $gtm_exe/mumps -run cmpmem^gtm6330
 echo " Quit" > tmp.m
 
 echo "# a) Expect good.o and tmp.lis to be generated"
-unsetenv gtmcompile
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_compile gtmcompile
 \rm -rf tmp.o good.o notgood.o tmp.lis
 $gtm_exe/mumps -list -object="good.o" tmp.m
 \ls tmp.o good.o tmp.lis
 
 echo "# b) Expect same as (a)"
-setenv gtmcompile "-list -object=""good.o"""
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_compile gtmcompile "-list -object=""good.o"""
 \rm -rf tmp.o good.o notgood.o tmp.lis
 $gtm_exe/mumps tmp.m
 \ls tmp.o good.o tmp.lis
 
 echo "# c) Expect same as (a)"
-setenv gtmcompile "-list"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_compile gtmcompile "-list"
 \rm -rf tmp.o good.o notgood.o tmp.lis
 $gtm_exe/mumps -object="good.o" tmp.m
 \ls tmp.o good.o tmp.lis
 
 echo "# d) Expect same as (a)"
-setenv gtmcompile "-object=""good.o"""
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_compile gtmcompile "-object=""good.o"""
 \rm -rf tmp.o good.o notgood.o tmp.lis
 $gtm_exe/mumps -list tmp.m
 \ls tmp.o good.o tmp.lis
 
 echo "# e) Expect MUMPS qualifiers to override gtmcompile. Expect good.o to be generated"
-setenv gtmcompile "-list -object=""notgood.o"""
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_compile gtmcompile "-list -object=""notgood.o"""
 \rm -rf tmp.o good.o notgood.o tmp.lis
 $gtm_exe/mumps -nolist -object="good.o" tmp.m
 \ls tmp.o good.o notgood.o tmp.lis
 
 echo "# f) ZCOMPILE variant of (a)"
-unsetenv gtmcompile
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_compile gtmcompile
 \rm -rf tmp.o good.o notgood.o tmp.lis
 $GTM << EOF >>&! zcomp.out
 	ZCompile "-list -object=""good.o"" tmp.m"
@@ -109,7 +112,7 @@ EOF
 \ls tmp.o good.o tmp.lis
 
 echo "# g) ZCOMPILE variant of (b)"
-setenv gtmcompile "-list -object=""good.o"""
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_compile gtmcompile "-list -object=""good.o"""
 \rm -rf tmp.o good.o notgood.o tmp.lis
 $GTM << EOF >>&! zcomp.out
 	ZCompile "tmp.m"
@@ -118,7 +121,7 @@ EOF
 \ls tmp.o good.o tmp.lis
 
 echo "# h) ZCOMPILE variant of (c)"
-setenv gtmcompile "-list"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_compile gtmcompile "-list"
 \rm -rf tmp.o good.o notgood.o tmp.lis
 $GTM << EOF >>&! zcomp.out
 	ZCompile "-object=""good.o"" tmp.m"
@@ -127,7 +130,7 @@ EOF
 \ls tmp.o good.o tmp.lis
 
 echo "# i) ZCOMPILE variant of (d)"
-setenv gtmcompile "-object=""good.o"""
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_compile gtmcompile "-object=""good.o"""
 \rm -rf tmp.o good.o notgood.o tmp.lis
 $GTM << EOF >>&! zcomp.out
 	ZCompile "-list tmp.m"
@@ -136,7 +139,7 @@ EOF
 \ls tmp.o good.o tmp.lis
 
 echo "# j) ZCOMPILE variant of (e)"
-setenv gtmcompile "-list -object=""notgood.o"""
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_compile gtmcompile "-list -object=""notgood.o"""
 \rm -rf tmp.o good.o notgood.o tmp.lis
 $GTM << EOF >>&! zcomp.out
 	ZCompile "-nolist -object=""good.o"" tmp.m"

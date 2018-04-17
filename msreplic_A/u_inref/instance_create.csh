@@ -23,7 +23,7 @@ echo "There would be lots of YDB-E- errors following. They are part of the test"
 echo " "
 setenv MUPIP "$gtm_exe/mupip"
 setenv gtm_repl_instance "mumps.repl"
-unsetenv gtm_repl_instname
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_repl_instname gtm_repl_instname
 
 ## - mupip repl -instance_create
 ## 	--> We expect a REPLINSTNMUNDEF error, check that no instance file is created.
@@ -51,13 +51,13 @@ if (-e "mumps.repl") echo "TEST-E-ERROR mumps.repl is not expected here"
 echo " "
 echo "expect 3 REPLINSTNMLEN errors"
 echo " "
-setenv gtm_repl_instname ""
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_repl_instname gtm_repl_instname ""
 $MUPIP replicate -instance_create
 if (-e "mumps.repl") echo "TEST-E-ERROR mumps.repl is not expected here"
-unsetenv gtm_repl_instname
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_repl_instname gtm_repl_instname
 $MUPIP replicate -instance_create -name=LONGNAME90123456
 if (-e "mumps.repl") echo "TEST-E-ERROR mumps.repl is not expected here"
-setenv gtm_repl_instname LONGNAME90123456
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_repl_instname gtm_repl_instname LONGNAME90123456
 $MUPIP replicate -instance_create
 if (-e "mumps.repl") echo "TEST-E-ERROR mumps.repl is not expected here"
 
@@ -80,15 +80,15 @@ if (-e "mumps.repl") echo "TEST-E-ERROR mumps.repl is not expected here"
 ## - Let's not worry about checking the renamed mumps.repl* from here on (since by now, we've tested the rename quite a
 ##   bit), so let's just check mumps.repl and not the renamed versions.
 
-unsetenv gtm_repl_instname
-setenv gtm_repl_instname SHOULDNOTBEUSEDITSLONGANYWAY
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_repl_instname gtm_repl_instname
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_repl_instname gtm_repl_instname SHOULDNOTBEUSEDITSLONGANYWAY
 $MUPIP replicate -instance_create -name=GOODNAME
 if ( ! -e "mumps.repl") echo "TEST-E-ERROR mumps.repl is expected but missing"
 echo " "
 echo "expect instance name to be GOODNAME"
 echo " "
 $MUPIP replicate -editinstance -show mumps.repl |& tee instancefile_GOODNAME.out | $grep "HDR Instance Name"
-setenv gtm_repl_instname B
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_repl_instname gtm_repl_instname B
 $MUPIP replicate -instance_create
 echo " "
 echo "expect mumps.repl_<timestamp>"
@@ -131,19 +131,19 @@ $MUPIP replicate -editinstance -show mumps.repl |& tee instancefile_B.out | $gre
 
 $MUPIP replicate -instance_create -name=C
 $MUPIP replicate -editinstance -show mumps.repl |& tee instancefile_C.out | $grep "HDR Instance Name"
-setenv gtm_repl_instname 1
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_repl_instname gtm_repl_instname 1
 $MUPIP replicate -instance_create
 $MUPIP replicate -editinstance -show mumps.repl |& tee instancefile_1.out | $grep "HDR Instance Name"
 $MUPIP replicate -instance_create -name=2
 $MUPIP replicate -editinstance -show mumps.repl |& tee instancefile_2.out | $grep "HDR Instance Name"
 $MUPIP replicate -instance_create -name=ABC4E6G890
 $MUPIP replicate -editinstance -show mumps.repl |& tee instancefile_ABC4E6G890.out | $grep "HDR Instance Name"
-setenv gtm_repl_instname TESTINSTANCEA45
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_repl_instname gtm_repl_instname TESTINSTANCEA45
 $MUPIP replicate -instance_create
 $MUPIP replicate -editinstance -show mumps.repl |& tee instancefile_TESTINSTANCEA45.out | $grep "HDR Instance Name"
 $MUPIP replicate -instance_create -name=INTE_RES/+TING.
 $MUPIP replicate -editinstance -show mumps.repl |& tee instancefile_INTERESTING.out | $grep "HDR Instance Name"
-setenv gtm_repl_instname INTE_RES/+TING.
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_repl_instname gtm_repl_instname INTE_RES/+TING.
 $MUPIP replicate -instance_create
 $MUPIP replicate -editinstance -show mumps.repl |& tee instancefile_XINTERESTING.out | $grep "HDR Instance Name"
-unsetenv gtm_repl_instname
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_repl_instname gtm_repl_instname

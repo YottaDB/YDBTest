@@ -1,6 +1,9 @@
 #################################################################
 #								#
-#	Copyright 2002, 2014 Fidelity Information Services, Inc	#
+# Copyright 2002, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -89,10 +92,8 @@ foreach gtcm_server ($tst_gtcm_server_list)
 
 		if (-e gtcm_portno_$x.txt) mv gtcm_portno_$x.txt  gtcm_portno_$x.txt_$datefmt
 		echo $portno_gtcm >>& gtcm_portno_$x.txt
-		setenv GTCM_${tst_remote_host_gtcm:r:r:r} "[${tst_remote_host_gtcm}]:${portno_gtcm}"
-		cat >>! GTCM_x.csh <<EOF
-setenv GTCM_${tst_remote_host_gtcm:r:r:r} "[${tst_remote_host_gtcm}]:${portno_gtcm}"
-EOF
+		set rmthost = ${tst_remote_host_gtcm:ar}
+		source $gtm_tst/com/set_ydb_env_var_random.csh ydb_cm_${rmthost} GTCM_${rmthost} "[${tst_remote_host_gtcm}]:${portno_gtcm}"
 		set argv_new = `echo "$argv_new" | sed "s,PORTNO_GTCM,$portno_gtcm,g"  `
 	endif
 	# , is used instead of / since there are /'s in the environment variables (but not commas, I hope`)

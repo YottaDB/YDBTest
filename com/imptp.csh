@@ -99,7 +99,7 @@ writejobinfofileifneeded: void writejobinfofileifneeded^job()
 ztrcmd: void ztrcmd^imptpxc()
 ztwormstr: void ztwormstr^imptpxc()
 CAT_EOF
-		setenv GTMCI imptp.xc
+		source $gtm_tst/com/set_ydb_env_var_random.csh ydb_ci GTMCI imptp.xc
 		# Run simpleAPI executable
 		`pwd`/$exefile
 	endif

@@ -4,6 +4,9 @@
 # Copyright (c) 2014-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -16,7 +19,7 @@
 # For a split $P, USE applies to the input side and output side respectively.
 # alternate use of wrap and nowrap for $ZPIN and $ZPOUT for all XCMD USE calls to show both sides of a split device
 # are set when appropriate
-setenv gtm_principal "abc"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_principal gtm_principal "abc"
 set RUNXCMD="$gtm_dist/mumps -run %XCMD"
 echo 'ZSHOW "D" with no $PRINCIPAL redirection'
 $RUNXCMD 'write "$P = ",$P,", $ZPIN = ",$ZPIN,", $ZPOUT = ",$ZPOUT,!'

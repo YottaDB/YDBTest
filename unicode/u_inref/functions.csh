@@ -4,6 +4,9 @@
 # Copyright (c) 2006-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -105,9 +108,11 @@ foreach mode("UTF-8" "M")
 	$switch_chset $mode
 	foreach num_mode("UTF-8" "M")
 		if ("" == $num_mode) then
-			set echo;unsetenv gtm_patnumeric;unset echo
+			echo "unsetenv gtm_patnumeric"
+			source $gtm_tst/com/unset_ydb_env_var.csh ydb_patnumeric gtm_patnumeric
 		else
-			set echo;setenv gtm_patnumeric $num_mode;unset echo
+			echo "setenv gtm_patnumeric $num_mode"
+			source $gtm_tst/com/set_ydb_env_var_random.csh ydb_patnumeric gtm_patnumeric $num_mode
 		endif
 $GTM << eof
 write "On default BADCHAR behavior"

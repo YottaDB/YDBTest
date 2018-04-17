@@ -1,5 +1,18 @@
+/****************************************************************
+ *								*
+ * Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	*
+ * All rights reserved.						*
+ *								*
+ *	This source code contains the intellectual property	*
+ *	of its copyright holder(s), and is made available	*
+ *	under a license.  If you do not know the terms of	*
+ *	the license, please stop and do not read further.	*
+ *								*
+ ****************************************************************/
+/* This module is derived from FIS GT.M.
+ ****************************************************************/
 
-/*	gtmxc_callin.c - functions 
+/*	gtmxc_callin.c - functions
  *
  */
 #include <unistd.h>
@@ -33,9 +46,9 @@ void (*sleep_uninterrupted)(int );
 
 void	init_timers ()
 {
-	char *start_address;	
+	char *start_address;
 
-	start_address = (char *)GETENV("GTM_CALLIN_START");
+	start_address = (char *)getenv("GTM_CALLIN_START");
 
 	if (start_address == (char *)0)
 	{
@@ -78,7 +91,7 @@ void	tst_timer (int count, int time_to_int, int time_to_sleep)
 	for(; timer_count < 200; ++timer_count)
 		(*setup_timer)((INTPTR_T)tst_timer + timer_count, time_to_int + timer_count, timer_handler, 0, 0);
 	(*sleep_interrupted)(time_to_sleep);
-	(*stop_timer)((INTPTR_T)tst_timer); 
+	(*stop_timer)((INTPTR_T)tst_timer);
 
 	return;
 }

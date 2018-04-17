@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -60,9 +63,9 @@ source $gtm_tst/com/leftover_ipc_cleanup_if_needed.csh $0 # do rundown of recvpo
 mv mumps.repl pri_mumps.repl
 # At this point, mumps.repl is renamed under a different name and so the below "MUPIP SET" command will error out with FTOKERR/ENO2
 # error if $gtm_custom_errors is defined. Unsetenv $gtm_repl_instance temporarily to avoid the false errors
-unsetenv gtm_repl_instance
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_repl_instance gtm_repl_instance
 $MUPIP set -replication=on -reg "*" >&! repl_on.out
-setenv gtm_repl_instance mumps.repl
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_repl_instance gtm_repl_instance mumps.repl
 # replication instance file be created with -supplementary option for A->P and P->Q situations i.e if test_replic_suppl_type is 1 or 2
 set supplarg = ""
 if ((1 == $test_replic_suppl_type) || (2 == $test_replic_suppl_type)) then

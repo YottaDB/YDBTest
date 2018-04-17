@@ -24,8 +24,9 @@ $switch_chset UTF-8 >&! uchset.out
 # Use the highest discovered ICU library for the test case
 foreach lib ( {,/usr,/usr/local}/lib*/libicuio* )
 	set icuver = ${lib:t:r:s/libicuio//}
-	if ("" == "${icuver}") continue
-	setenv gtm_icu_version ${icuver}
+	if ("" == "${icuver}")
+		continue
+	source $gtm_tst/com/set_ydb_env_var_random.csh ydb_icu_version gtm_icu_version "${icuver}"
 end
 
 # Use PWD as the location of the ICU libraries
@@ -65,5 +66,3 @@ if ( 0 != $status ) then
 else
 	echo "FAIL"
 endif
-
-

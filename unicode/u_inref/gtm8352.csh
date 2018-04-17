@@ -4,6 +4,9 @@
 # Copyright (c) 2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -60,7 +63,7 @@ endif
 # Note for this test, bump $gtm_utfcgr_string_groups to 4096 (up from default of 32) to handle very large
 # UTF8 string (nearly 700K bytes and 170K characters) better.
 #
-setenv gtm_utfcgr_string_groups 4096
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_utfcgr_string_groups gtm_utfcgr_string_groups 4096
 #
 # Switch to $gtm_curpro
 #

@@ -4,6 +4,9 @@
 # Copyright (c) 2014-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -17,7 +20,7 @@ setenv gtm_test_jnl NON_SETJNL		# because the MM region can't do BEFORE_IMAGE jo
 setenv gtm_test_mupip_set_version "disable"	# because the MM region can do a dynamic block format change
 setenv test_encryption NON_ENCRYPT		# even setting MMSEG to NOENCRYPTION doesn't keep encryption testing out of trouble
 $gtm_tst/com/dbcreate.csh mumps 3 -allocation=2048 -extension_count=2048
-setenv gtm_poollimit 10%
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_poollimit gtm_poollimit 10%
 $gtm_dist/mumps -run gtm8191
 $gtm_dist/mumps -run gtm8191a
 $gtm_tst/com/dbcheck.csh

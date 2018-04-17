@@ -1,3 +1,17 @@
+/****************************************************************
+ *								*
+ * Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	*
+ * All rights reserved.						*
+ *								*
+ *	This source code contains the intellectual property	*
+ *	of its copyright holder(s), and is made available	*
+ *	under a license.  If you do not know the terms of	*
+ *	the license, please stop and do not read further.	*
+ *								*
+ ****************************************************************/
+/* This module is derived from FIS GT.M.
+ ****************************************************************/
+
 #include <string.h>
 #include "gtm_stdlib.h"
 #include "gtm_stdio.h"
@@ -22,7 +36,7 @@ void init_functable()
 	void 	(*setup_timer)  ();
 	void 	(*cancel_timer) ();
 
-	pcAddress = GETENV(ENV_VAR);
+	pcAddress = getenv(ENV_VAR);
 	if (pcAddress == NULL)
 	{
 		FPRINTF(stdout, "\nsca_AlarmSetup: Failed to get environment variable %s.\n", ENV_VAR);

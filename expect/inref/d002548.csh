@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2013 Fidelity Information Services, Inc	#
+# Copyright 2013 Fidelity Information Services, Inc		#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -40,7 +43,7 @@ echo "* PRESS return *ONLY* IF SPECIFIED AS <ret>				 	 *"
 $echoline
 echo ""
 
-setenv gtm_principal_editing "NOINSERT:EDITING"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_principal_editing gtm_principal_editing "NOINSERT:EDITING"
 echo "#### Testing for gtm_principal_editing : $gtm_principal_editing ####"
 $gtm_dist/mumps -run noinsert^ttyread
 echo ""
@@ -49,7 +52,7 @@ echo "do btest^ttyread<ctrl-A><right><right><right>a"
 echo "The display should be 'do atest^ttyread'. Press <ret>"
 echo "You should see the following message 'This is routine ATEST'"
 $gtm_dist/mumps -direct
-setenv gtm_principal_editing "INSERT:EDITING"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_principal_editing gtm_principal_editing "INSERT:EDITING"
 echo "#### Testing for gtm_principal_editing : $gtm_principal_editing ####"
 $gtm_dist/mumps -run insert^ttyread
 $gtm_dist/mumps -run noecho^ttyread
@@ -59,7 +62,7 @@ echo "do atest^ttyreadin<ctrl-B><crtl-B><ctrl-K>"
 echo "The display should be 'do atest^ttyread'. Press <ret>"
 echo "You should see the following message 'This is routine ATEST'"
 $gtm_dist/mumps -direct
-setenv gtm_principal_editing "NOEDITING"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_principal_editing gtm_principal_editing "NOEDITING"
 echo "#### Testing for gtm_principal_editing : $gtm_principal_editing ####"
 $gtm_dist/mumps -run noedit^ttyread
 echo ""
@@ -68,7 +71,7 @@ echo "so<Ctrl-U>do atest^ttyra<left>e<ctrl-E>d"
 echo "The display should be 'do atest^ttyread'. Press <ret>"
 echo "You should see the following message 'This is routine ATEST'"
 $gtm_dist/mumps -direct
-setenv gtm_principal_editing "INSERT:EDITING"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_principal_editing gtm_principal_editing "INSERT:EDITING"
 echo "Testing for multiple line read"
 echo "Input the following for the next read"
 echo "12345678901234567<ctrl-A>a<ctrl-E>b<4 lefts><del>b<ctrl-B><ins>c<ret>"
@@ -92,7 +95,7 @@ stty columns 100
 $gtm_dist/mumps -run nowrap^ttyread
 stty columns $oldttysize[2]
 
-setenv gtm_principal_editing "INSERT:EDITING"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_principal_editing gtm_principal_editing "INSERT:EDITING"
 echo "#### Testing for gtm_principal_editing : $gtm_principal_editing ####"
 echo "*** Now checking GDE ***"
 echo "**************************************"
@@ -108,7 +111,7 @@ echo ""
 echo ""
 $GDE
 
-setenv gtm_principal_editing "NOINSERT:EDITING"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_principal_editing gtm_principal_editing "NOINSERT:EDITING"
 echo "#### Testing for gtm_principal_editing : $gtm_principal_editing ####"
 echo "**************************************"
 echo "Input the following in the GDE> prompt"
@@ -123,7 +126,7 @@ echo ""
 echo ""
 $GDE
 
-setenv gtm_principal_editing "NOEDITING"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_principal_editing gtm_principal_editing "NOEDITING"
 echo "#### Testing for gtm_principal_editing : $gtm_principal_editing ####"
 echo "**************************************"
 echo "Input the following in the GDE> prompt"
@@ -134,7 +137,7 @@ echo "**************************************"
 $GDE
 
 echo "*** Now Testing [NO]ESCAPE ***"
-unsetenv gtm_principal_editing
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_principal_editing gtm_principal_editing
 echo ""
 $gtm_dist/mumps -run escape^ttyread
 echo ""

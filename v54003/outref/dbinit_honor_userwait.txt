@@ -1,7 +1,7 @@
 ############################## FTOK SEMAPHORE TESTING ################################
 
 
-CASE 1 : Testing gtm_db_startup_max_wait environment variable with value set to 0 - immediate exit
+CASE 1 : Testing ydb_db_startup_max_wait environment variable with value set to 0 - immediate exit
 ---------------------------------------------------------------------------------------------------------------------
 Files Created in ##TEST_PATH##:
 Using: ##SOURCE_PATH##/mumps -run GDE
@@ -26,7 +26,7 @@ Error YDB-E-SEMWT2LONG seen in ftokcontender_1.out as expected:
 %YDB-S-JNLSUCCESS, Extract successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
-##TEST_AWKCASE 2 : Testing gtm_db_startup_max_wait environment variable with value set to [1-9][0-9]* - wait for atmost [1-9][0-9]* seconds
+##TEST_AWKCASE 2 : Testing ydb_db_startup_max_wait environment variable with value set to [1-9][0-9]* - wait for atmost [1-9][0-9]* seconds
 ---------------------------------------------------------------------------------------------------------------------
 Files Created in ##TEST_PATH##:
 Using: ##SOURCE_PATH##/mumps -run GDE
@@ -51,7 +51,7 @@ Error YDB-E-SEMWT2LONG seen in ftokcontender_2.out as expected:
 %YDB-S-JNLSUCCESS, Extract successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
-CASE 3 : Testing gtm_db_startup_max_wait environment variable with value set to -1 - wait indefinitely
+CASE 3 : Testing ydb_db_startup_max_wait environment variable with value set to -1 - wait indefinitely
 ---------------------------------------------------------------------------------------------------------------------
 Files Created in ##TEST_PATH##:
 Using: ##SOURCE_PATH##/mumps -run GDE
@@ -76,7 +76,7 @@ mumps.dat
 ############################## ACCESS CONTROL SEMAPHORE TESTING ################################
 
 
-CASE 1 : Testing gtm_db_startup_max_wait environment variable with value set to 0 - immediate exit
+CASE 1 : Testing ydb_db_startup_max_wait environment variable with value set to 0 - immediate exit
 ---------------------------------------------------------------------------------------------------------------------
 Files Created in ##TEST_PATH##:
 Using: ##SOURCE_PATH##/mumps -run GDE
@@ -101,7 +101,7 @@ Error YDB-E-SEMWT2LONG seen in accsemcontender_1.out as expected:
 %YDB-S-JNLSUCCESS, Extract successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
-##TEST_AWKCASE 2 : Testing gtm_db_startup_max_wait environment variable with value set to [1-9][0-9]* - wait for atmost [1-9][0-9]* seconds
+##TEST_AWKCASE 2 : Testing ydb_db_startup_max_wait environment variable with value set to [1-9][0-9]* - wait for atmost [1-9][0-9]* seconds
 ---------------------------------------------------------------------------------------------------------------------
 Files Created in ##TEST_PATH##:
 Using: ##SOURCE_PATH##/mumps -run GDE
@@ -126,7 +126,7 @@ Error YDB-E-SEMWT2LONG seen in accsemcontender_2.out as expected:
 %YDB-S-JNLSUCCESS, Extract successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 
-CASE 3 : Testing gtm_db_startup_max_wait environment variable with value set to -1 - wait indefinitely
+CASE 3 : Testing ydb_db_startup_max_wait environment variable with value set to -1 - wait indefinitely
 ---------------------------------------------------------------------------------------------------------------------
 Files Created in ##TEST_PATH##:
 Using: ##SOURCE_PATH##/mumps -run GDE

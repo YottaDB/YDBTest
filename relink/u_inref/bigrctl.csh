@@ -4,6 +4,9 @@
 # Copyright (c) 2014-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -14,7 +17,7 @@
 # This test verifies the population of relink-control file entries and overflow behavior with ZRUPDATEs.
 # It invokes a script to do 1M + 1 ZRUPDATEs on actual files and validate the resultant RCTLDUMP.
 
-setenv gtm_autorelink_ctlmax 1000000
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_autorelink_ctlmax gtm_autorelink_ctlmax 1000000
 
 # First, create a temporary file system to avoid having to remove 1M files at the end.
 set tmpFS = tmpfs

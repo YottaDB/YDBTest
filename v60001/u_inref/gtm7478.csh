@@ -35,10 +35,10 @@ echo "# Starting paasive server"
 # source this to get start_time variable
 source $gtm_tst/com/passive_start_upd_enable.csh >&! passive_start_`date +%H_%M_%S`.out
 $MUPIP set -flush_time=100000 -reg "*"
-setenv gtm_extract_nocol 1
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_extract_nocol gtm_extract_nocol 1
 $gtm_exe/mumps -run dbfill^gtm7478
-# bufferfill.m logs the output in freeze.out{1,2} and dbmissing.out{1,2} for JOURNAL extract done with gtm_extract_nocol env variable
-# defined and without its definition for instance freezing and DB missing case.
+# bufferfill.m logs the output in freeze.out{1,2} and dbmissing.out{1,2} for JOURNAL extract done with
+# ydb_extract_nocol/gtm_extract_nocol env variable defined and without its definition for instance freezing and DB missing case.
 $gtm_exe/mumps -run bufferfill^gtm7478
 $gtm_tst/com/grepfile.csh 'YDB-W-DBCOLLREQ' freeze.out1 1
 $gtm_tst/com/grepfile.csh 'YDB-S-JNLSUCCESS' freeze.out1 1

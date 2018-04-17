@@ -3,6 +3,9 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -113,7 +116,7 @@ BEGIN {
 			} else { dl = 0 }
 			printf "DL:%-1s ",dl
 		}
-		if ( "gtm_ipv4_only" == rname )
+		if ("ydb_ipv4_only" == rname )
 		{
 			if ( 1 == rval[i]) { ipv6=0
 			} else { ipv6=1 }

@@ -4,6 +4,9 @@
 # Copyright (c) 2014-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -36,14 +39,15 @@ $gtm_tst/com/dbcreate.csh mumps
 ##################################################################################################################################
 
 # Pick the initial allocation from 0 to 8 MB.
-setenv gtm_autorelink_shm `$gtm_dist/mumps -run %XCMD 'write $random('$max_autorelink_shm_mb'+1)'`
-@ shm_size_mb = `echo $gtm_autorelink_shm`
+set shmmax = `$gtm_dist/mumps -run %XCMD 'write $random('$max_autorelink_shm_mb'+1)'`
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_autorelink_shm gtm_autorelink_shm $shmmax
+@ shm_size_mb = `echo $shmmax`
 
 # Pick the size for the object to generate, from 1 to 8 MB.
 @ obj_size_mb = `$gtm_dist/mumps -run %XCMD 'write $random('$max_autorelink_shm_mb')+1'`
 @ safe_obj_size = ((($obj_size_mb * $mb) - $obj_overhead) - $obj_size_increment) - 1
 
-# Figure out the required shared memory allocation to fit the object and honor the gtm_autorelink_shm setting.
+# Figure out the required shared memory allocation to fit the object and honor the shmmax setting.
 if ($obj_size_mb > $shm_size_mb) then
 	@ req_shm_size_mb = $obj_size_mb
 else
@@ -72,7 +76,7 @@ $gtm_dist/mumps -run %XCMD 'zlink "a" zsystem "$MUPIP rctldump . >&! mupip_rctl1
 set act_shm_size_hex = `$grep "Rtnobj shared memory" mupip_rctl1.log | $tst_awk '{print $10}'`
 if (1 != $#act_shm_size_hex) then
 	echo "TEST-E-FAIL, Case 1 failed. Expected 1 routine object shared memory segment but got $#act_shm_size_hex."
-	echo '             $gtm_autorelink_shm = '$gtm_autorelink_shm'; estimated routine object size is '$safe_obj_size
+	echo '             $ydb_autorelink_shm/$gtm_autorelink_shm = '$shmmax'; estimated routine object size is '$safe_obj_size
 else
 	# Convert the size to MBs.
 	@ act_shm_size = `$gtm_dist/mumps -run %XCMD 'write $$FUNC^%HD($piece("'$act_shm_size_hex'","x",2))'`
@@ -81,7 +85,7 @@ else
 	# Validate the numbers.
 	if ($act_shm_size_mb != $exp_shm_size_mb) then
 		echo "TEST-E-FAIL, Case 1 failed. Expected the routine object shared memory to be $exp_shm_size_mb MB in size whereas it is $act_shm_size_mb MB."
-		echo '             $gtm_autorelink_shm = '$gtm_autorelink_shm'; estimated routine object size is '$safe_obj_size
+		echo '             $ydb_autorelink_shm/$gtm_autorelink_shm = '$shmmax'; estimated routine object size is '$safe_obj_size
 	endif
 endif
 
@@ -89,7 +93,7 @@ endif
 set act_shm_size_hex = `$grep "Rtnobj shared memory" mupip_rctl2.log | $tst_awk '{print $10}'`
 if (2 != $#act_shm_size_hex) then
 	echo "TEST-E-FAIL, Case 2 failed. Expected 2 routine object shared memory segments but got $#act_shm_size_hex."
-	echo '             $gtm_autorelink_shm = '$gtm_autorelink_shm'; estimated routine object size is '$safe_obj_size
+	echo '             $ydb_autorelink_shm/$gtm_autorelink_shm = '$shmmax'; estimated routine object size is '$safe_obj_size
 else
 	# Convert the size to MBs.
 	@ act_shm_size = `$gtm_dist/mumps -run %XCMD 'write $$FUNC^%HD($piece("'$act_shm_size_hex[2]'","x",2))'`
@@ -99,7 +103,7 @@ else
 	# Validate the numbers.
 	if ($act_shm_size_mb != $exp_shm_size_mb) then
 		echo "TEST-E-FAIL, Case 2 failed. Expected the routine object shared memory expansion to reach $exp_shm_size_mb MB in size whereas it is $act_shm_size_mb MB."
-		echo '             $gtm_autorelink_shm = '$gtm_autorelink_shm'; estimated routine object size is '$safe_obj_size
+		echo '             $ydb_autorelink_shm/$gtm_autorelink_shm = '$shmmax'; estimated routine object size is '$safe_obj_size
 	endif
 endif
 
@@ -109,7 +113,7 @@ endif
 ##################################################################################################################################
 
 setenv gtmroutines "obj($gtm_tst/$tst/inref) $gtmroutines"
-setenv gtm_autorelink_shm 1
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_autorelink_shm gtm_autorelink_shm 1
 
 # We rely on the fact that unused routine object memory is released, so unset this variable.
 if ($?gtm_autorelink_keeprtn) then
@@ -148,7 +152,7 @@ $gtm_dist/mumps -run memleak^memleak $num_of_test_jobs
 set act_shm_size_hex = `$grep "Rtnobj shared memory" mupip_rctl3.log | $tst_awk '{print $10}'`
 if (1 != $#act_shm_size_hex) then
 	echo "TEST-E-FAIL, Case 3 failed. Expected 1 routine object shared memory segment but got $#act_shm_size_hex."
-	echo '             $gtm_autorelink_shm = '$gtm_autorelink_shm'; routine sizes are as follows: '"$rtn_obj_sizes"
+	echo '             $ydb_autorelink_shm/$gtm_autorelink_shm = '$shmmax'; routine sizes are as follows: '"$rtn_obj_sizes"
 else
 	# Convert the size to MBs.
 	@ act_shm_size = `$gtm_dist/mumps -run %XCMD 'write $$FUNC^%HD($piece("'$act_shm_size_hex'","x",2))'`
@@ -157,7 +161,7 @@ else
 	# Validate the numbers.
 	if ($exp_shm_size_mb != $act_shm_size_mb) then
 		echo "TEST-E-FAIL, Case 3 failed. Expected the routine object shared memory to be $exp_shm_size_mb MB in size whereas it is $act_shm_size_mb MB."
-		echo '             $gtm_autorelink_shm = '$gtm_autorelink_shm'; routine sizes are as follows: '"$rtn_obj_sizes"
+		echo '             $ydb_autorelink_shm/$gtm_autorelink_shm = '$shmmax'; routine sizes are as follows: '"$rtn_obj_sizes"
 	endif
 endif
 
@@ -180,7 +184,7 @@ setenv gtmroutines "$save_gtmroutines"
 set act_shm_size_hex = `$grep "Rtnobj shared memory" zshow_a.logx | $tst_awk '{print $10}'`
 if (1 != $#act_shm_size_hex) then
 	echo "TEST-E-FAIL, Case 4 failed. Expected 1 routine object shared memory segment but got $#act_shm_size_hex."
-	echo '             $gtm_autorelink_shm = '$gtm_autorelink_shm
+	echo '             $ydb_autorelink_shm/$gtm_autorelink_shm = '$shmmax
 else
 	# Convert the size to MBs.
 	@ act_shm_size = `$gtm_dist/mumps -run %XCMD 'write $$FUNC^%HD($piece("'$act_shm_size_hex'","x",2))'`
@@ -189,7 +193,7 @@ else
 	# Validate the numbers.
 	if ($exp_shm_size_mb != $act_shm_size_mb) then
 		echo "TEST-E-FAIL, Case 4 failed. Expected the routine object shared memory to be $exp_shm_size_mb MB in size whereas it is $act_shm_size_mb MB."
-		echo '             $gtm_autorelink_shm = '$gtm_autorelink_shm
+		echo '             $ydb_autorelink_shm/$gtm_autorelink_shm = '$shmmax
 	endif
 endif
 
@@ -197,7 +201,7 @@ endif
 @ cycle = `$grep "rtnname: rtn" zshow_a.logx | $tst_awk '{print $5}'`
 if (100 != $cycle) then
 	echo "TEST-E-FAIL, Case 4 failed. Expected rtn to go through 100 iterations instead of $cycle."
-	echo '             $gtm_autorelink_shm = '$gtm_autorelink_shm
+	echo '             $ydb_autorelink_shm/$gtm_autorelink_shm = '$shmmax
 endif
 
 ##################################################################################################################################

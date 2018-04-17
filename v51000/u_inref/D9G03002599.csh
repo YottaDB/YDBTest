@@ -4,6 +4,9 @@
 # Copyright (c) 2006-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -34,7 +37,7 @@ setenv gtm_test_jnl NON_SETJNL	# because replication is enabled for only one dat
 ##################### Create MUMPS and OTHER environments ######################
 foreach value (mumps other)
 	setenv gtmgbldir ${value}.gld
-	setenv gtm_repl_instance ${value}.repl
+	source $gtm_tst/com/set_ydb_env_var_random.csh ydb_repl_instance gtm_repl_instance ${value}.repl
 	cat > ${value}.gde << CAT_EOF
 	add -name nonrepl -region=nonreplreg
 	add -region nonreplreg -dyn=nonreplseg
@@ -54,7 +57,7 @@ end
 
 foreach value (mumps other)
 	setenv gtmgbldir ${value}.gld
-	setenv gtm_repl_instance ${value}.repl
+	source $gtm_tst/com/set_ydb_env_var_random.csh ydb_repl_instance gtm_repl_instance ${value}.repl
 	mv bak_${value}/* .
 	# Since ${value}.repl is not yet created, the below replic=on command issues FTOKERR/ENO2 error if $gtm_custom_errors is
 	# defined. So, temporarily undefine $gtm_custom_errors.
@@ -78,7 +81,7 @@ foreach value (mumps other)
 end
 
 ##################### Start GT.M process to perform updates to MUMPS and OTHER environment ######################
-setenv gtm_repl_instance mumps.repl
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_repl_instance gtm_repl_instance mumps.repl
 $GTM << EOF
 	do mumpsfirst^d002599
 	quit
@@ -88,7 +91,7 @@ $GTM << EOF
 	quit
 EOF
 
-setenv gtm_repl_instance other.repl
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_repl_instance gtm_repl_instance other.repl
 $GTM << EOF
 	do mumpsfirst^d002599
 	quit
@@ -102,7 +105,7 @@ foreach value (mumps other)
 	# Print journal seqno of the replication instance through the showbacklog command
 	echo ""
 	echo "Checking $value environment"
-	setenv gtm_repl_instance ${value}.repl
+	source $gtm_tst/com/set_ydb_env_var_random.csh ydb_repl_instance gtm_repl_instance ${value}.repl
 	$MUPIP replic -source -showbacklog >& ${value}_showbacklog.log
 	echo '$grep last transaction written to journal pool'" ${value}_showbacklog.log"
 	$grep "last transaction written to journal pool" ${value}_showbacklog.log

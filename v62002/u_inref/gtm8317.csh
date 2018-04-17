@@ -4,6 +4,9 @@
 # Copyright (c) 2015 Fidelity National Information 		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -38,7 +41,7 @@ sleep 1
 set syslog_start = `date +"%b %e %H:%M:%S"`
 echo
 echo "gtm_tmp is bogus - expect INVTMPDIR from mumps (1)"
-setenv gtm_tmp "bogus"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_tmp gtm_tmp "bogus"
 $gtm_dist/mumps -run gtm8317util
 sleep 1
 set syslog_end = `date +"%b %e %H:%M:%S"`
@@ -90,7 +93,7 @@ if ((HOST_LINUX_IX86 != "$gtm_test_os_machtype") && (HOST_HP-UX_IA64 != "$gtm_te
     set syslog_start = `date +"%b %e %H:%M:%S"`
     echo
     echo "gtm_linktmpdir is bogus - expect INVLINKTMPDIR from mumps (1)"
-    unsetenv gtm_tmp
+    source $gtm_tst/com/unset_ydb_env_var.csh ydb_tmp gtm_tmp
     $gtm_dist/mumps -run gtm8317util
     sleep 1
     set syslog_end = `date +"%b %e %H:%M:%S"`

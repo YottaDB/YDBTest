@@ -4,7 +4,7 @@
 # Copyright (c) 2010-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -16,7 +16,7 @@
 
 @ rand = `$gtm_exe/mumps -run rand 2`
 if ($rand) then
-	setenv gtm_error_on_jnl_file_lost "1"
+	source $gtm_tst/com/set_ydb_env_var_random.csh ydb_error_on_jnl_file_lost gtm_error_on_jnl_file_lost "1"
 	set expected_jnl_state = "ON"
 else
 	set expected_jnl_state = "OFF"
@@ -122,9 +122,9 @@ check_jnl_state $expected_jnl_state
 ###
 echo "** Testing for sr_unix/jnl_file_extend.c (empty custom errors, -noinst_freeze_on_error)"
 
-setenv gtm_custom_errors "/dev/null"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_custom_errors gtm_custom_errors "/dev/null"
 unsetenv gtm_test_fake_enospc
-unsetenv gtm_error_on_jnl_file_lost
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_error_on_jnl_file_lost gtm_error_on_jnl_file_lost
 start_test_replic jfe_ece
 enable_wb
 set syslog_before = `date +"%b %e %H:%M:%S"`
@@ -140,9 +140,9 @@ stop_test_replic ${instname}
 ###
 echo "** Testing for sr_unix/jnl_file_extend.c (default custom errors, -noinst_freeze_on_error)"
 
-setenv gtm_custom_errors "$gtm_tools/custom_errors_sample.txt"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_custom_errors gtm_custom_errors "$gtm_tools/custom_errors_sample.txt"
 unsetenv gtm_test_fake_enospc
-unsetenv gtm_error_on_jnl_file_lost
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_error_on_jnl_file_lost gtm_error_on_jnl_file_lost
 start_test_replic jfe_dce
 enable_wb
 set syslog_before = `date +"%b %e %H:%M:%S"`
@@ -158,9 +158,9 @@ stop_test_replic ${instname}
 ###
 echo "** Testing for sr_unix/jnl_file_extend.c (empty custom errors, -inst_freeze_on_error)"
 
-setenv gtm_custom_errors "/dev/null"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_custom_errors gtm_custom_errors "/dev/null"
 unsetenv gtm_test_fake_enospc
-unsetenv gtm_error_on_jnl_file_lost
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_error_on_jnl_file_lost gtm_error_on_jnl_file_lost
 start_test_replic jfe_ece_ifoe
 $MUPIP set -inst_freeze_on_error -region DEFAULT >& set_ifoe_${instname}.out
 enable_wb
@@ -177,9 +177,9 @@ stop_test_replic ${instname}
 ###
 echo "** Testing for sr_unix/jnl_file_extend.c (default custom errors, -inst_freeze_on_error)"
 
-setenv gtm_custom_errors "$gtm_tools/custom_errors_sample.txt"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_custom_errors gtm_custom_errors "$gtm_tools/custom_errors_sample.txt"
 unsetenv gtm_test_fake_enospc
-unsetenv gtm_error_on_jnl_file_lost
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_error_on_jnl_file_lost gtm_error_on_jnl_file_lost
 start_test_replic jfe_dce_ifoe
 $MUPIP set -inst_freeze_on_error -region DEFAULT >& set_ifoe_${instname}.out
 enable_wb
