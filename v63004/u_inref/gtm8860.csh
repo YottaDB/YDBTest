@@ -14,7 +14,7 @@
 
 setenv gtm_test_jnl SETJNL
 
-$gtm_tst/com/dbcreate.csh mumps #>&! dbcreate.log  What is this for?
+$gtm_tst/com/dbcreate.csh mumps
 
 echo "#  journal extract with single / for journal file"
 $MUPIP journal -extract -noverify -detail -for -fences=none mumps.mjl
