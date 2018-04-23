@@ -1,0 +1,38 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+#  journal extract with single / for journal file
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
+%YDB-S-JNLSUCCESS, Extract successful
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+#  journal extract with multiple / for journal file
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjf is renamed to ##TEST_PATH##/mumps.mjf_##TIMESTAMP##
+%YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
+%YDB-S-JNLSUCCESS, Extract successful
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+#  journal extract with single / for journal file and multiple / for extract file
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file ./extract.mjf created
+%YDB-S-JNLSUCCESS, Extract successful
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+#  journal extract with multiple / for journal file and multiple / for extract file
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-FILERENAME, File ./extract.mjf is renamed to ./extract.mjf_##TIMESTAMP##
+%YDB-I-FILECREATE, Journal extract file ./extract.mjf created
+%YDB-S-JNLSUCCESS, Extract successful
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
