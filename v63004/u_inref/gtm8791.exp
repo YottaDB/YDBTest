@@ -23,8 +23,8 @@ expect -exact "Suspended (signal)"
 send -- "fg\r"
 
 expect -exact "LKE>"
-send -- "exit\r"
+send -- "exit\r" 	#exits from the LKE prompt
 
 expect -exact ">"
-send -- "exit\r"
+send -- "exit\r"	#exits from the tcsh shell
 
