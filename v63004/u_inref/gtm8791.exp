@@ -1,0 +1,30 @@
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+#
+set timeout 60
+spawn /usr/local/bin/tcsh -f
+
+send -- "\$gtm_dist/lke\r"
+
+expect -exact "LKE>"
+# Send <Ctrl-Z>
+send -- "\x1A\r"
+
+expect -exact "Suspended (signal)"
+send -- "fg\r"
+
+expect -exact "LKE>"
+send -- "exit\r" 	#exits from the LKE prompt
+
+expect -exact ">"
+send -- "exit\r"	#exits from the tcsh shell
+

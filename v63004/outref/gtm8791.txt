@@ -1,0 +1,17 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+spawn /usr/local/bin/tcsh -f
+$gtm_dist/lke
+> $gtm_dist/lke
+LKE> ^Z
+
+Suspended (signal)
+> fg
+##SOURCE_PATH##/lke
+LKE> exit
+> ##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
