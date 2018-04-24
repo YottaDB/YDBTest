@@ -23,6 +23,4 @@ mv expect.out expect.outx	# move .out to .outx to avoid -E- from being caught by
 perl $gtm_tst/com/expectsanitize.pl expect.outx > expect_sanitized.outx
 cat expect_sanitized.outx
 
-echo exit
-
 $gtm_tst/com/dbcheck.csh

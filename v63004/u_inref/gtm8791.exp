@@ -12,8 +12,6 @@
 #
 set timeout 60
 spawn /usr/local/bin/tcsh -f
-set cenable(0) "CENABLE"
-set cenable(1) "NOCENABLE"
 
 send -- "\$gtm_dist/lke\r"
 
@@ -22,5 +20,11 @@ expect -exact "LKE>"
 send -- "\x1A\r"
 
 expect -exact "Suspended (signal)"
+send -- "fg\r"
+
+expect -exact "LKE>"
+send -- "exit\r"
+
+expect -exact ">"
 send -- "exit\r"
 
