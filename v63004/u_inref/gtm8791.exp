@@ -13,20 +13,26 @@
 set timeout 60
 spawn /usr/local/bin/tcsh -f
 
+expect_after {
+	timeout { timeout_procedure }
+}
+
+proc timeout_procedure { } {
+	puts "timeout occurred"
+	exit -1
+}
+
+
 send -- "\$gtm_dist/lke\r"
 
-expect -exact "LKE>"
 # Send <Ctrl-Z>
-send -- "\x1A\r"
+expect -exact "LKE>" {send -- "\x1A\r"}
 
-expect -exact "Suspended (signal)"
-send -- "fg\r"
+expect -exact "Suspended (signal)" {expect ">" {send -- "fg\r"}}
 
 #exits from the LKE prompt
-expect -exact "LKE>"
-send -- "exit\r"
+expect -exact "LKE>" {send -- "exit\r"}
 
 #exits from the tcsh shell
-expect -exact ">"
-send -- "exit\r"
+expect -exact ">" {send -- "exit\r"}
 
