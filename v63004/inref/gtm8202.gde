@@ -1,0 +1,24 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!								!
+! Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	!
+! All rights reserved.						!
+!								!
+!	This source code contains the intellectual property	!
+!	of its copyright holder(s), and is made available	!
+!	under a license.  If you do not know the terms of	!
+!	the license, please stop and do not read further.	!
+!								!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+change -segment DEFAULT -block_size=4096 -allocation=1000 -extension=1000 -global_buffer_count=1000 -file_name=mumps.dat
+change -region DEFAULT -stdnull -key_size=255 -record_size=4080 -journal=(before,file="mumps.mjl")
+!
+template -segment -access_method=bg -block_size=4096 -allocation=1000 -extension=1000 -global_buffer_count=1000
+template -region -stdnull -key_size=255 -record_size=4080 -journal=before
+!
+add -segment TEST -access_method=bg -file_name=test.dat
+!
+add -region TEST -dynamic=test -journal=(nobefore,file="test.mjl")
+!
+add -name jake -region=default
+add -name zack -region=test

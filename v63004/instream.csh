@@ -11,17 +11,18 @@
 #								#
 #################################################################
 #
-#-------------------------------------------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------------------------------------
 # List of subtests of the form "subtestname [author] description"
-#-------------------------------------------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------------------------------------
 # gtm8860	    [jake]  Tests that journal extract removes additional / from journal and output file paths
 # gtm8791	    [jake]  Tests that <ctrl-z> no longer causes segmentation violation
-#-------------------------------------------------------------------------------------------------------------
+# gtm8202	    [jake]  Tests the functionality of the -SEQNO qualifier for the mupip journal -extract command
+#-----------------------------------------------------------------------------------------------------------------
 
 echo "v63004 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
-setenv subtest_list_common     ""
+setenv subtest_list_common     "gtm8202"
 setenv subtest_list_non_replic ""
 setenv subtest_list_non_replic "$subtest_list_non_replic gtm8860 gtm8791"
 setenv subtest_list_replic     ""

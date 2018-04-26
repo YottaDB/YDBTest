@@ -1,0 +1,38 @@
+#Create 2 database files for 2 regions, mumps.dat for DEFAULT and test.dat for TEST
+#calls gtm8202.m to set variables
+#  journal extract -SEQNO=0,1,~2 across a single region
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file ./singleReg.mjf created
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+#  search extract file for set variables
+##SUSPEND_OUTPUT  NON_REPLIC
+1 ^jake(1)="a"
+##ALLOW_OUTPUT  NON_REPLIC
+#  journal extract -SEQNO=~1,2,~3,4  across multiple regions
+#  expected to create error for nonrep
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##SUSPEND_OUTPUT  REPLIC
+%YDB-E-JNLEXTRCTSEQNO, Journal Extracts based on sequence numbers are restricted to a single region when replication is OFF
+%YDB-I-FILENOTCREATE, Journal extract file ./multiReg.mjf not created
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
+##SUSPEND_OUTPUT  NON_REPLIC
+##ALLOW_OUTPUT  REPLIC
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file ./multiReg.mjf created
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
+##ALLOW_OUTPUT  NON_REPLIC
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+#  search extract file for set variables
+##SUSPEND_OUTPUT  REPLIC
+cat: multiReg.mjf: No such file or directory
+cat: multiReg.mjf: No such file or directory
+##SUSPEND_OUTPUT  NON_REPLIC
+##ALLOW_OUTPUT  REPLIC
+2 ^jake(2)="b"
+4 ^zack(2)="2"
