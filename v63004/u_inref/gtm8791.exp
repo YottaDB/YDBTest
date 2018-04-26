@@ -26,13 +26,18 @@ proc timeout_procedure { } {
 send -- "\$gtm_dist/lke\r"
 
 # Send <Ctrl-Z>
-expect -exact "LKE>" {send -- "\x1A\r"}
+expect -exact "LKE>"
+send -- "\x1A\r"
 
-expect -exact "Suspended (signal)" {expect ">" {send -- "fg\r"}}
+expect -exact "Suspended (signal)"
+expect ">"
+send -- "fg\r"
 
 #exits from the LKE prompt
-expect -exact "LKE>" {send -- "exit\r"}
+expect -exact "LKE>"
+send -- "exit\r"
 
 #exits from the tcsh shell
-expect -exact ">" {send -- "exit\r"}
+expect -exact ">"
+send -- "exit\r"
 
