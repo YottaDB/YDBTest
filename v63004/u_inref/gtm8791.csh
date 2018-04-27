@@ -21,6 +21,8 @@ endif
 mv expect.out expect.outx	# move .out to .outx to avoid -E- from being caught by test framework
 
 perl $gtm_tst/com/expectsanitize.pl expect.outx > expect_sanitized.outx
-cat expect_sanitized.outx
+# The output is variable on slow vs fast systems and so filter out just the essential part of it to keep it deterministic.
+# We want to ensure that a Ctrl-Z did happen and hence we check the below.
+$grep -E "\^Z|Suspended" expect_sanitized.outx
 
 $gtm_tst/com/dbcheck.csh

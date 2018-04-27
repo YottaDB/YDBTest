@@ -32,9 +32,12 @@ send -- "\x1A\r"
 expect -exact "Suspended (signal)"
 expect ">"
 send -- "fg\r"
-
-#exits from the LKE prompt
+expect -exact "lke"	# the shell prints the process' executable name whenever a backgrounded process is foregrounded
+# Sometimes a LKE> prompt might show up. Sometimes it might not. To be sure send one more \r.
+# Because of this non-determinism, the below portions of the test are filtered out from the reference file.
+send -- "\r"
 expect -exact "LKE>"
+#exits from the LKE prompt
 send -- "exit\r"
 
 #exits from the tcsh shell
