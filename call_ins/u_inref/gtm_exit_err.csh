@@ -43,5 +43,6 @@ $GTM <<EOF
 Write "Do ^gtmexit",!  Do ^gtmexit
 Halt
 EOF
-unsetenv $xctab
+
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_xc GTMXC
 unsetenv GTMCI
