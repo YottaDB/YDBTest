@@ -17,7 +17,7 @@ misceval;
 	new $etrap
 	set $etrap="do etr"
 	set TRUE=1,FALSE=0
-	set env("gtm_side_effects")=+$ztrnlnm("gtm_side_effects")
+	set env("gtm_side_effects")=+$select(""'=$ztrnlnm("ydb_side_effects"):$ztrnlnm("ydb_side_effects"),1:$ztrnlnm("gtm_side_effects"))
 	set env("gtm_boolean")=+$ztrnlnm("gtm_boolean")
 	write !
 	write "misceval test run begins... gtm_side_effects=",env("gtm_side_effects")," gtm_boolean=",env("gtm_boolean"),!

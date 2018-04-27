@@ -226,8 +226,9 @@ echo
 cp $gtmcrypt_config.good $gtmcrypt_config
 # Now mess up the $gtmtls_passwd_INSTANCE1
 set save_passwd = $gtmtls_passwd_INSTANCE1
-setenv gtmtls_passwd_INSTANCE1 `echo "baDpaSSworD" | $gtm_dist/plugin/gtmcrypt/maskpass | cut -f3 -d' '`
-echo $gtmtls_passwd_INSTANCE1 >&! badpasswd.log
+set inst1pwd = `echo "baDpaSSworD" | $gtm_dist/plugin/gtmcrypt/maskpass | cut -f3 -d' '`
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_tls_passwd_INSTANCE1 gtmtls_passwd_INSTANCE1 $inst1pwd
+echo $inst1pwd >&! badpasswd.log
 # Take a copy of the certificate and private key that the client would use to aid in debugging.
 cp ./demoCA/private/client.key ./client.key.test4
 cp ./demoCA/client.pem ./client.pem.test4
@@ -245,7 +246,7 @@ echo
 echo "TEST CASE 5: Test that expired certificates issues appropriate errors."
 echo
 # First fix the bad password in the environment.
-setenv gtmtls_passwd_INSTANCE1 $save_passwd
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_tls_passwd_INSTANCE1 gtmtls_passwd_INSTANCE1 $save_passwd
 
 # Now create an expired certificate.
 set startdate=`date +%y%m%d%H%M%S`Z

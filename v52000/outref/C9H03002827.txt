@@ -91,10 +91,10 @@ d gtm2^c9h03002827
 ###################################################################
 #- Step 7:
 # Try to cause a REPLINSTUNDEF error
-%YDB-E-REPLINSTUNDEF, Replication instance environment variable $gtm_repl_instance is undefined
+%YDB-E-REPLINSTUNDEF, Replication instance environment variable $ydb_repl_instance/$gtm_repl_instance is undefined
 ^a=5
 $ZSTATUS=""
-$ZSTATUS="150379386,c9h03002827+7^c9h03002827,%YDB-E-REPLINSTUNDEF, Replication instance environment variable $gtm_repl_instance is undefined"
+$ZSTATUS="150379386,c9h03002827+7^c9h03002827,%YDB-E-REPLINSTUNDEF, Replication instance environment variable $ydb_repl_instance/$gtm_repl_instance is undefined"
 ###################################################################
 #- Step 8:
 # Clean up and exit

@@ -42,6 +42,7 @@ BEGIN {
 	nr_outref = 0
 	nr_outstream = 0
 	tst_dir = ENVIRON[ "tst_working_dir" ]
+	envvar = ENVIRON[ "envvar" ]	# used by v53003/u_inref/D9I10002703.csh
 	remote_tst_dir = ENVIRON[ "SEC_DIR" ]
 	tst_osname = toupper(ENVIRON[ "gtm_test_osname" ]);
 	tst_machtype = toupper(ENVIRON[ "gtm_test_machtype" ]);
@@ -453,6 +454,7 @@ function replace_flags()
 	else
 		gsub(/##REMOTE_TEST_PATH##/, remote_tst_dir)
 	gsub(/##TEST_PATH##/, tst_dir)
+	gsub(/##YDBENVVAR##/, envvar) # used by v53003/u_inref/D9I10002703.csh
 	gsub(/##IN_TEST_PATH##/, in_test_path)
 	gsub(/##REMOTE_SOURCE_PATH##/, remote_gtm_exe)
 	gsub(/##SOURCE_PATH##/, gtm_exe)

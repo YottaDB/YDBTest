@@ -3,7 +3,7 @@ Using: ##SOURCE_PATH##/mumps -run GDE
 a.gld
 Using: ##SOURCE_PATH##/mupip
 a.dat
-gtm_env_translate is not defined
+ydb_env_translate is not defined
 
 YDB>
 
@@ -27,26 +27,26 @@ YDB>
 
 YDB>
 #########################################################################################
-gtm_env_translate is not defined. No environment translation.
+ydb_env_translate is not defined. No environment translation.
 
 mumps.gld: THIS IS MUMPS
 a.gld: THIS IS A
 b.gld: THIS IS B
 a.gld: THIS IS A
 #########################################################################################
-gtm_env_translate is defined, but library does not exist.
+ydb_env_translate is defined, but library does not exist.
 
-gtm_env_translate = ##TEST_PATH##/foo.bad
+ydb_env_translate = ##TEST_PATH##/foo.bad
 PASSED
 #########################################################################################
-gtm_env_translate is defined, but there is no gtm_env_xlate function in it.
+ydb_env_translate is defined, but there is no gtm_env_xlate function in it.
 
-##TEST_AWKgtm_env_translate = ##TEST_PATH##/liboops.(s.|dll)
+##TEST_AWKydb_env_translate = ##TEST_PATH##/liboops.(s.|dll)
 PASSED
 #########################################################################################
 A good DLL at last...
 
-##TEST_AWKgtm_env_translate = ##TEST_PATH##/libxlate.(s.|dll)
+##TEST_AWKydb_env_translate = ##TEST_PATH##/libxlate.(s.|dll)
 0
 mumps.gld : THIS IS MUMPS
 a.gld     : THIS IS A
@@ -105,7 +105,7 @@ YDB>
 #########################################################################################
 Now the SQ translation routine
 
-##TEST_AWKgtm_env_translate = ##TEST_PATH##/libxlatesq.(s.|dll)
+##TEST_AWKydb_env_translate = ##TEST_PATH##/libxlatesq.(s.|dll)
 mumps.gld
 The status of the link is:  0
 undefined environment variable (gtm_gblxlate)...

@@ -17,18 +17,11 @@
 #
 # if running in UTF-8 locale, punctuation marks get displayed as their octal equivalents due to some tcsh bug
 # to work around this until tcsh is fixed, we transform such an output to what it should normally be.
-# gtm_icu_version is host specific (depending on the ICU version installed). It is dynamically obtained at shell startup.
-# So remove it from the environment variable sending list
-if ($HOSTOS == "SunOS") then
-	setenv | $grep -E "^gtm|^acc_meth|^tst|^test|^PRI|^SEC|^remote_ver|^remote_image|^user|^mailing_list" | $grep -vE "gtm_icu_version" |  sed 's/\\\075/=/g' >&! ${TMP_FILE_PREFIX}_env_${USER}.txt
-	# Fix user specific environment variables
-	setenv | $grep -E "gtm_linktmpdir" | sed 's/\\\075/=/g' | sed 's/'$user'/$user/' >>&! ${TMP_FILE_PREFIX}_env_${USER}.txt
-
-else
-	setenv | $grep -E "^ydb|^gt_|^gtm|^acc_meth|^tst|^test|^PRI|^SEC|^remote_ver|^remote_image|^user|^mailing_list" | $grep -vE "gtm_icu_version" >&! ${TMP_FILE_PREFIX}_env_${USER}.txt
-	setenv | $grep -E "gtm_linktmpdir" | sed 's/'$user'/$user/' >>&! ${TMP_FILE_PREFIX}_env_${USER}.txt
-	# Fix user specific environment variables
-endif
+# ydb_icu_version/gtm_icu_version is host specific (depending on the ICU version installed).
+# It is dynamically obtained at shell startup. So remove it from the environment variable sending list
+setenv | $grep -E "^ydb|^gt_|^gtm|^acc_meth|^tst|^test|^PRI|^SEC|^remote_ver|^remote_image|^user|^mailing_list" | $grep -vE "icu_version" >&! ${TMP_FILE_PREFIX}_env_${USER}.txt
+setenv | $grep -E "gtm_linktmpdir" | sed 's/'$user'/$user/' >>&! ${TMP_FILE_PREFIX}_env_${USER}.txt
+# Fix user specific environment variables
 if ($?test_replic) then
 # Send encryption related environment for remote host from current host to remote host we need this for multisite tests
 

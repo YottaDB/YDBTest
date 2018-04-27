@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -25,9 +25,10 @@ rm -f gtm_exit.o
 #
 # external call
 #
-setenv	GTMXC	mtoc1.tab
-echo "`pwd`/libexit${gt_ld_shl_suffix}" > $GTMXC
-cat >> $GTMXC << xx
+set xctab = mtoc1.tab
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_xc GTMXC $xctab
+echo "`pwd`/libexit${gt_ld_shl_suffix}" > $xctab
+cat >> $xctab << xx
 inmult:		void	xc_inmult(I:xc_float_t *, I:xc_double_t *, I:xc_char_t *, I:xc_char_t **, I:xc_string_t *)
 xx
 #
@@ -42,5 +43,6 @@ $GTM <<EOF
 Write "Do ^gtmexit",!  Do ^gtmexit
 Halt
 EOF
-unsetenv GTMXC
+
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_xc GTMXC
 unsetenv GTMCI

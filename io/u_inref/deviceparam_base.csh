@@ -1,9 +1,23 @@
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+# This module is derived from FIS GT.M.
+#################################################################
+
 # Test various deviceparameters (for sequential files).
 # Note that there might be other tests that are testing some of the deviceparameters (that will not be
 # tested here), i.e. this is not a complete test on it's own.
 
 # increase gtm_non_blocked_write_retries so fifo test will still pass with non-blocking writes
-setenv gtm_non_blocked_write_retries 300
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_non_blocked_write_retries gtm_non_blocked_write_retries 300
 
 $switch_chset M >&! /dev/null
 set echoline = "echo =================================================================================="

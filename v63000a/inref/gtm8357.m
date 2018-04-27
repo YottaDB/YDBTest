@@ -15,7 +15,8 @@
 gtm8357
 	set pipe="pipe"
 	set case=0
-	set def="setenv gtm_zstep 'NEW myio SET myio=\$IO USE \$PRINCIPAL ZPRINT @\$ZPOSITION BREAK  USE myio';"
+	set zstepenv=$select($random(2):"ydb_zstep",1:"gtm_zstep")
+	set def="setenv "_zstepenv_" 'NEW myio SET myio=\$IO USE \$PRINCIPAL ZPRINT @\$ZPOSITION BREAK  USE myio';"
 	for cmd=def,"",def do
 	. write !,$text(case+$increment(case))
 	. set cmd=cmd_"$gtm_dist/mumps -run begin^"_$text(+0)

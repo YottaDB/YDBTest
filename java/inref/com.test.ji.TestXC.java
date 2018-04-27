@@ -809,7 +809,7 @@ public class TestXC {
 			"\tdo &test9.lbl2(\"com/test/Test123\",\"lbl2\")\n",
 			"\tdo &test9.lbl3(\"com/test/Test9\",\"lbl123\")\n" };
 		final String[] mResponses = new String[]{
-			"%YDB-E-ZCCTENV, Environmental variable for external package GTMXC_test123 not set\n",
+			"%YDB-E-ZCCTENV, Environmental variable for external package ydb_xc_test123/GTMXC_test123 not set\n",
 			"%YDB-E-ZCRTENOTF, External call routine lbl123 not found\n",
 			"%YDB-E-JNI, Class com/test/Test123 is not found.\n",
 			"%YDB-E-JNI, Method (void)" + packagePrefix + "Test9.lbl123 not found.\n" };

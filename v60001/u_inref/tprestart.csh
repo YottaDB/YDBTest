@@ -37,12 +37,12 @@ endif
 
 echo $echoline
 echo "ii) Only gtm_tprestart_log_first is defined."
-setenv gtm_tprestart_log_first 3
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_tprestart_log_first gtm_tprestart_log_first 3
 @ no_of_restarts = 2
 set syslog_begin = `date +"%b %e %H:%M:%S"`
 echo "syslog_begin = $syslog_begin" > syslog_time2
 $gtm_exe/mumps -r %XCMD "do envdelta^restart($no_of_restarts)"
-unsetenv gtm_tprestart_log_first
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_tprestart_log_first gtm_tprestart_log_first
 @ proc_pid = `$gtm_exe/mumps -run %XCMD 'write ^myjob'`
 set syslog_end = `date +"%b %e %H:%M:%S"`
 echo "syslog_end = $syslog_end" >> syslog_time2
@@ -57,13 +57,14 @@ endif
 
 echo $echoline
 echo "iii) Only gtm_tprestart_log_delta is defined."
-setenv gtm_tprestart_log_delta 3
+set delta = 3
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_tprestart_log_delta gtm_tprestart_log_delta $delta
 @ no_of_restarts = 20
-@ exp_msgcnt = $no_of_restarts / $gtm_tprestart_log_delta
+@ exp_msgcnt = $no_of_restarts / $delta
 set syslog_begin = `date +"%b %e %H:%M:%S"`
 echo "syslog_begin = $syslog_begin" > syslog_time3
 $gtm_exe/mumps -r %XCMD "do envdelta^restart($no_of_restarts)"
-unsetenv gtm_tprestart_log_delta
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_tprestart_log_delta gtm_tprestart_log_delta
 @ proc_pid = `$gtm_exe/mumps -run %XCMD 'write ^myjob'`
 set syslog_end = `date +"%b %e %H:%M:%S"`
 echo "syslog_end = $syslog_end" >> syslog_time3
@@ -76,16 +77,18 @@ endif
 
 echo $echoline
 echo "iv) gtm_tprestart_log_first and gtm_tprestart_log_delta both are defined."
-setenv gtm_tprestart_log_delta 3
-setenv gtm_tprestart_log_first 4
+set delta = 3
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_tprestart_log_delta gtm_tprestart_log_delta $delta
+set first = 4
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_tprestart_log_first gtm_tprestart_log_first $first
 @ no_of_restarts = 20
-@ exp_msgcnt = ($no_of_restarts - $gtm_tprestart_log_first) / $gtm_tprestart_log_delta
-@ exp_msgcnt = $exp_msgcnt + $gtm_tprestart_log_first
+@ exp_msgcnt = ($no_of_restarts - $first) / $delta
+@ exp_msgcnt = $exp_msgcnt + $first
 set syslog_begin = `date +"%b %e %H:%M:%S"`
 echo "syslog_begin = $syslog_begin" > syslog_time4
 $gtm_exe/mumps -r %XCMD "do envdelta^restart($no_of_restarts)"
-unsetenv gtm_tprestart_log_delta
-unsetenv gtm_tprestart_log_first
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_tprestart_log_delta gtm_tprestart_log_delta
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_tprestart_log_first gtm_tprestart_log_first
 @ proc_pid = `$gtm_exe/mumps -run %XCMD 'write ^myjob'`
 set syslog_end = `date +"%b %e %H:%M:%S"`
 echo "syslog_end = $syslog_end" >> syslog_time4
@@ -134,9 +137,10 @@ endif
 
 echo $echoline
 echo "vii) gtm_tprestart_log_delta is specified but VIEW command did not specify the value for logging frequency."
-setenv gtm_tprestart_log_delta 3
+set delta = 3
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_tprestart_log_delta gtm_tprestart_log_delta $delta
 @ no_of_restarts = 20
-@ exp_msgcnt = $no_of_restarts / $gtm_tprestart_log_delta
+@ exp_msgcnt = $no_of_restarts / $delta
 set syslog_begin = `date +"%b %e %H:%M:%S"`
 echo "syslog_begin = $syslog_begin" > syslog_time7
 $gtm_exe/mumps -r %XCMD "do viewdelta^restart($no_of_restarts,0,100)"
@@ -152,14 +156,15 @@ endif
 
 echo $echoline
 echo "viii) gtm_tprestart_log_delta is specified and VIEW command specified the value for tprestart logging frequency."
-setenv gtm_tprestart_log_delta 3
+set delta = 3
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_tprestart_log_delta gtm_tprestart_log_delta $delta
 @ log_freq = 9
 @ no_of_restarts = 20
 @ exp_msgcnt = $no_of_restarts / $log_freq
 set syslog_begin = `date +"%b %e %H:%M:%S"`
 echo "syslog_begin = $syslog_begin" > syslog_time8
 $gtm_exe/mumps -r %XCMD "do viewdelta^restart($no_of_restarts,1,$log_freq)"
-unsetenv gtm_tprestart_log_delta
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_tprestart_log_delta gtm_tprestart_log_delta
 @ proc_pid = `$gtm_exe/mumps -run %XCMD 'write ^myjob'`
 set syslog_end = `date +"%b %e %H:%M:%S"`
 echo "syslog_end = $syslog_end" >> syslog_time8
@@ -172,14 +177,15 @@ endif
 
 echo $echoline
 echo "ix) Negative value for the LOGTPRESTART is specified."
-setenv gtm_tprestart_log_delta 3
+set delta = 3
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_tprestart_log_delta gtm_tprestart_log_delta $delta
 @ log_freq = -5
 @ no_of_restarts = 5
 @ exp_msgcnt = 0
 set syslog_begin = `date +"%b %e %H:%M:%S"`
 echo "syslog_begin = $syslog_begin" > syslog_time9
 $gtm_exe/mumps -r %XCMD "do viewdelta^restart($no_of_restarts,1,$log_freq)"
-unsetenv gtm_tprestart_log_delta
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_tprestart_log_delta gtm_tprestart_log_delta
 @ proc_pid = `$gtm_exe/mumps -run %XCMD 'write ^myjob'`
 set syslog_end = `date +"%b %e %H:%M:%S"`
 echo "syslog_end = $syslog_end" >> syslog_time9
@@ -198,13 +204,13 @@ source $gtm_tst/com/leftover_ipc_cleanup_if_needed.csh $0 # do rundown if needed
 # Starting V63001A, the default GDS block size is 4K. The child^restart in v60001/inref/restart.m needs to create
 # nodes whose size is greater than half the GDS block size and so uses a 3K value so use the same here for record_size.
 $MUPIP set -file mumps.dat -record=3000
-setenv gtm_tprestart_log_delta 1
-setenv gtm_tprestart_log_first 1
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_tprestart_log_delta gtm_tprestart_log_delta 1
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_tprestart_log_first gtm_tprestart_log_first 1
 set syslog_begin = `date +"%b %e %H:%M:%S"`
 echo "syslog_begin = $syslog_begin" > syslog_time10
 $gtm_exe/mumps -r %XCMD "do tpbitmaprestart^restart"
-unsetenv gtm_tprestart_log_delta
-unsetenv gtm_tprestart_log_first
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_tprestart_log_delta gtm_tprestart_log_delta
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_tprestart_log_first gtm_tprestart_log_first
 set syslog_end = `date +"%b %e %H:%M:%S"`
 echo "syslog_end = $syslog_end" >> syslog_time10
 $gtm_tst/com/getoper.csh "$syslog_begin" "$syslog_end" test_syslog10.txt "" ".*YDB-I-TPRESTART.*BITMAP"

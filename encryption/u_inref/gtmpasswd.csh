@@ -4,6 +4,9 @@
 # Copyright (c) 2009-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -44,7 +47,7 @@ setenv LIBPATH $save_libpath
 setenv gtm_passwd
 echo "My kingdom for a horse!" > ob_key.txt
 
-unsetenv gtm_obfuscation_key
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_obfuscation_key gtm_obfuscation_key
 echo "Try something simple (with userid and inode)"
 set newpasswd="banana"
 set maskpass=`echo $newpasswd|$gtm_exe/plugin/gtmcrypt/maskpass |cut -d":" -f 2`
@@ -60,7 +63,7 @@ else
 	echo FAIL
 endif
 
-setenv gtm_obfuscation_key "ob_key.txt"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_obfuscation_key gtm_obfuscation_key "ob_key.txt"
 echo "Try something simple (with gtm_obfuscation key)"
 set newpasswd="banana"
 set maskpass=`echo $newpasswd|$gtm_exe/plugin/gtmcrypt/maskpass |cut -d":" -f 2`
@@ -76,7 +79,7 @@ else
 	echo FAIL
 endif
 
-unsetenv gtm_obfuscation_key
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_obfuscation_key gtm_obfuscation_key
 echo "Try something simple with spaces (with userid and inode)"
 set newpasswd="the rain in spain falls mainly on the plain."
 set maskpass=`echo $newpasswd|$gtm_exe/plugin/gtmcrypt/maskpass |cut -d":" -f 2`
@@ -92,7 +95,7 @@ else
 	echo FAIL
 endif
 
-setenv gtm_obfuscation_key "ob_key.txt"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_obfuscation_key gtm_obfuscation_key "ob_key.txt"
 echo "Try something simple with spaces (with gtm_obfuscation key)"
 set newpasswd="the rain in spain falls mainly on the plain."
 set maskpass=`echo $newpasswd|$gtm_exe/plugin/gtmcrypt/maskpass |cut -d":" -f 2`
@@ -108,7 +111,7 @@ else
 	echo FAIL
 endif
 
-unsetenv gtm_obfuscation_key
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_obfuscation_key gtm_obfuscation_key
 echo "Try something simple but longer (with userid and inode)"
 set newpasswd="1234567890qwertyuiopasdfghjklzxcvbnm"
 set maskpass=`echo $newpasswd|$gtm_exe/plugin/gtmcrypt/maskpass |cut -d":" -f 2`
@@ -124,7 +127,7 @@ else
 	echo FAIL
 endif
 
-setenv gtm_obfuscation_key "ob_key.txt"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_obfuscation_key gtm_obfuscation_key "ob_key.txt"
 echo "Try something simple but longer (with gtm_obfuscation key)"
 set newpasswd="1234567890qwertyuiopasdfghjklzxcvbnm"
 set maskpass=`echo $newpasswd|$gtm_exe/plugin/gtmcrypt/maskpass |cut -d":" -f 2`
@@ -140,7 +143,7 @@ else
 	echo FAIL
 endif
 
-unsetenv gtm_obfuscation_key
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_obfuscation_key gtm_obfuscation_key
 echo "Try something else (with userid and inode)"
 set newpasswd="fsdkfjsafjsd;ajfdsjfajl;sjad"
 set maskpass=`echo $newpasswd|$gtm_exe/plugin/gtmcrypt/maskpass |cut -d":" -f 2`
@@ -156,7 +159,7 @@ else
 	echo FAIL
 endif
 
-setenv gtm_obfuscation_key "ob_key.txt"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_obfuscation_key gtm_obfuscation_key "ob_key.txt"
 echo "Try something else (with gtm_obfuscation key)"
 set newpasswd="fsdkfjsafjsd;ajfdsjfajl;sjad"
 set maskpass=`echo $newpasswd|$gtm_exe/plugin/gtmcrypt/maskpass |cut -d":" -f 2`
@@ -172,7 +175,7 @@ else
 	echo FAIL
 endif
 
-unsetenv gtm_obfuscation_key
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_obfuscation_key gtm_obfuscation_key
 echo "Try something else with spaces (with userid and inode)"
 set newpasswd="123456 7890-= asdfg hjkl;' zxcvb nm,./"
 set maskpass=`echo $newpasswd|$gtm_exe/plugin/gtmcrypt/maskpass |cut -d":" -f 2`
@@ -188,7 +191,7 @@ else
 	echo FAIL
 endif
 
-setenv gtm_obfuscation_key "ob_key.txt"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_obfuscation_key gtm_obfuscation_key "ob_key.txt"
 echo "Try something else with spaces (with gtm_obfuscation key)"
 set newpasswd="123456 7890-= asdfg hjkl;' zxcvb nm,./"
 set maskpass=`echo $newpasswd|$gtm_exe/plugin/gtmcrypt/maskpass |cut -d":" -f 2`
@@ -204,7 +207,7 @@ else
 	echo FAIL
 endif
 
-unsetenv gtm_obfuscation_key
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_obfuscation_key gtm_obfuscation_key
 echo "Try all blanks (with userid and inode)"
 set newpasswd="                                                                         "
 set maskpass=`echo "$newpasswd"|$gtm_exe/plugin/gtmcrypt/maskpass |cut -d":" -f 2`
@@ -220,7 +223,7 @@ else
 	echo FAIL
 endif
 
-setenv gtm_obfuscation_key "ob_key.txt"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_obfuscation_key gtm_obfuscation_key "ob_key.txt"
 echo "Try all blanks (with gtm_obfuscation key)"
 set newpasswd="                                                                         "
 set maskpass=`echo "$newpasswd"|$gtm_exe/plugin/gtmcrypt/maskpass |cut -d":" -f 2`
@@ -236,7 +239,7 @@ else
 	echo FAIL
 endif
 
-unsetenv gtm_obfuscation_key
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_obfuscation_key gtm_obfuscation_key
 unset newpasswd
 
 # Test that GT.M encryption works with longer passwords
@@ -266,7 +269,7 @@ $GTM << EOF
 s ^XXX="ENCRPTED"
 EOF
 
-setenv gtm_obfuscation_key `pwd`/"ob_key.txt"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_obfuscation_key gtm_obfuscation_key `pwd`/"ob_key.txt"
 setenv gtm_passwd `echo $newpasswd|$gtm_exe/plugin/gtmcrypt/maskpass |cut -d":" -f 2`
 $gtm_tst/com/reset_gpg_agent.csh RESET
 $GTM << EOF
@@ -274,7 +277,7 @@ s ^YYY="ENCRPTED"
 EOF
 
 echo "Test 2: Much longer password"
-setenv gtm_obfuscation_key
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_obfuscation_key gtm_obfuscation_key
 setenv oldpasswd $newpasswd
 # Using gpg --gen-random for that purpose is not ideal because it creates Base64-encrypted "armored" ASCII of length longer
 # than requested; furthermore, it refuses to work with passwords exceeding 496 bytes (see <CRYPTKEYFETCHFAILED_long_password>
@@ -296,14 +299,14 @@ $GTM << EOF
 s ^XXX="ENCRPTED"
 EOF
 
-setenv gtm_obfuscation_key `pwd`/"ob_key.txt"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_obfuscation_key gtm_obfuscation_key `pwd`/"ob_key.txt"
 setenv gtm_passwd `echo $newpasswd|$gtm_exe/plugin/gtmcrypt/maskpass |cut -d":" -f 2`
 $gtm_tst/com/reset_gpg_agent.csh
 $GTM << EOF
 s ^YYY="ENCRPTED"
 EOF
 
-setenv gtm_obfuscation_key
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_obfuscation_key gtm_obfuscation_key
 echo "Test 3: Revert back the changes"
 setenv oldpasswd $newpasswd
 setenv newpasswd $USER

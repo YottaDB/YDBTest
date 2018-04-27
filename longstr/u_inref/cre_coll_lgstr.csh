@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh
 #################################################################
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -17,6 +17,12 @@ setenv cur_dir `pwd`
 cp $gtm_tst/$tst/inref/"$2".c $cur_dir
 $gt_cc_compiler $gtt_cc_shl_options -I$gtm_inc $cur_dir/"$2".c
 $gt_ld_shl_linker ${gt_ld_option_output}$cur_dir/lib"$2"${gt_ld_shl_suffix} $gt_ld_shl_options $cur_dir/"$2".o -lc
-set col_n = "gtm_collate_$1"
+unsetenv ydb_collate_$1
+unsetenv gtm_collate_$1
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_local_collate gtm_local_collate $1
+if ($?ydb_local_collate) then
+	set col_n = "ydb_collate_$1"
+else
+	set col_n = "gtm_collate_$1"
+endif
 setenv $col_n "$cur_dir/lib"$2"${gt_ld_shl_suffix}"
-setenv gtm_local_collate $1

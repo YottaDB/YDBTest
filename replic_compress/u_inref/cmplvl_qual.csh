@@ -1,4 +1,17 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+# This module is derived from FIS GT.M.
+#################################################################
 
 # -----------------------------------------------------------------------
 # Test the -CMPLVL qualifier.
@@ -13,9 +26,9 @@ set echostr = "-----------------------------------------------------------------
 @ validcmplvl  = 1 + `$gtm_exe/mumps -run rand 9`
 @ validcmplvl2 = 1 + `$gtm_exe/mumps -run rand 9`
 
-unsetenv gtm_zlib_cmp_level	# start with NO compression
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_zlib_cmp_level gtm_zlib_cmp_level	# start with NO compression
 # Record the above overrides into settings.csh as well in case dbcreate sources settings.csh
-echo "unsetenv gtm_zlib_cmp_level"	>>! settings.csh
+echo "source $gtm_tst/com/unset_ydb_env_var.csh ydb_zlib_cmp_level gtm_zlib_cmp_level"	>>! settings.csh
 
 #-----------------------------------------------------------------------------------------------------------------
 # Define strings to look out for in the log files
@@ -157,7 +170,7 @@ echo $echostr
 # Start receiver server with no -cmplvl qualifier.
 unsetenv gtm_test_repl_src_cmplvl
 unsetenv gtm_test_repl_rcvr_cmplvl
-setenv gtm_zlib_cmp_level $validcmplvl
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_zlib_cmp_level gtm_zlib_cmp_level $validcmplvl
 $gtm_tst/com/RF_START.csh
 $GTM << GTM_EOF
 	set ^testcase(7)="Done"
@@ -176,8 +189,8 @@ echo $echostr
 # Set environment variable gtm_zlib_cmp_level to 9 (a valid level).
 # Start source server with -cmplvl=5 (yet another valid level) qualifier.
 # Start receiver server with no -cmplvl qualifier.
-# 
-setenv gtm_zlib_cmp_level $validcmplvl2
+#
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_zlib_cmp_level gtm_zlib_cmp_level $validcmplvl2
 setenv gtm_test_repl_src_cmplvl $validcmplvl
 unsetenv gtm_test_repl_rcvr_cmplvl
 $gtm_tst/com/RF_START.csh
@@ -193,10 +206,10 @@ $gtm_tst/com/grepfile.csh "$nocmpstr" $srclog 0
 
 #-----------------------------------------------------------------------------------------------------------------
 echo $echostr
-echo "Test 9 : Test that environment variable gtm_zlib_cmp_level=0 implies NO compression" 
+echo "Test 9 : Test that environment variable gtm_zlib_cmp_level=0 implies NO compression"
 echo $echostr
 # Set environment variable gtm_zlib_cmp_level to 0.
-setenv gtm_zlib_cmp_level 0
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_zlib_cmp_level gtm_zlib_cmp_level 0
 # Make sure CMPLVL qualifier is NOT used.
 unsetenv gtm_test_repl_src_cmplvl
 unsetenv gtm_test_repl_rcvr_cmplvl
@@ -218,7 +231,7 @@ echo $echostr
 # Set environment variable gtm_zlib_cmp_level to 9 (a valid cmplevel)
 # Start source server with -cmplvl=5 (yet another valid cmplevel) qualifier. This should override the environment variable.
 # Start receiver server with no -cmplvl qualifier. It should inherit the cmplevel from the environment variable.
-setenv gtm_zlib_cmp_level $validcmplvl2
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_zlib_cmp_level gtm_zlib_cmp_level $validcmplvl2
 setenv gtm_test_repl_src_cmplvl $validcmplvl
 unsetenv gtm_test_repl_rcvr_cmplvl
 $gtm_tst/com/RF_START.csh
@@ -239,7 +252,7 @@ echo $echostr
 # Unset the environment variable gtm_zlib_cmp_level so only CMPLVL qualifier controls compression.
 # Start source server with -cmplvl=5 (a valid cmplevel) qualifier.
 # Start receiver server with no -cmplvl qualifier. It should start with NO compression.
-unsetenv gtm_zlib_cmp_level
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_zlib_cmp_level gtm_zlib_cmp_level
 setenv gtm_test_repl_src_cmplvl $validcmplvl
 unsetenv gtm_test_repl_rcvr_cmplvl
 $gtm_tst/com/RF_START.csh

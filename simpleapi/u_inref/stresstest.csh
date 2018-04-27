@@ -13,8 +13,8 @@
 
 unsetenv gtmdbglvl # or else test runs for too long
 
-echo "# Set gtm_lct_stdnull to 1 to enable Standard Null Collation (needed for simpleAPI when using null subscripts)"
-setenv gtm_lct_stdnull 1
+echo "# Set ydb_lct_stdnull to 1 to enable Standard Null Collation (needed for simpleAPI when using null subscripts)"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_lct_stdnull gtm_lct_stdnull 1
 
 echo "# Create database using maximum keysize of ~1K and record size = 4K"
 echo "# Allow null subscripts in database since randomly generated subscripts could be null"

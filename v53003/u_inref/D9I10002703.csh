@@ -37,59 +37,53 @@ if (! $?test_replic) then
 	exit -1
 endif
 
-# Define global directory env var to create database.
-setenv gtmgbldir mumps.gld
-# Unsetenv ydb_gbldir in case it was set at entry into this script.
-# This way when we test "gtmgbldir" env var (which comes ahead of ydb_gbldir) in the test below,
-# we don't have an overriding env var. That is also the reason why we use gtmgbldir in the above test (and not ydb_gbldir)
-# as it provides a test of the fact that if ydb_gbldir is not defined, gtmgbldir is honored.
-unsetenv ydb_gbldir
-
 # Use minimum align size value to reduce the memory requirement to open all the journal files
 # Note : New align value is just appended to the end, instead of modifying the already set value. It works.
 setenv tst_jnl_str "$tst_jnl_str,align=4096"
 echo "# Create database"
 $gtm_tst/com/dbcreate.csh mumps
 
-echo "# Start GT.M updates in the background for the entire duration of the test"
-$GTM << GTM_EOF
+echo "# Start YottaDB updates in the background for the entire duration of the test"
+$GTM << YDB_EOF
 	do start^d002703
-GTM_EOF
+YDB_EOF
 
 echo "# Allocate a portno to be used for gtcm-gnp and gtcm-omi servers"
 source $gtm_tst/com/portno_acquire.csh >>& portno.out
 
-echo "# Now determine list of environment variables used by GT.M from the header file gtm_logicals.h"
-# This proceeds by first finding the names of ALL environment variables that GT.M knows about.
-# Then determining the list of those which are valid on the current platform being tested (done by means of the C preprocessor).
-set envnamelist = `sed "s/#[ 	]*define/#define/" $gtm_inc/gtm_logicals.h | $grep "#define" | $tst_awk '{print $2}'`
-set cfile = "tst_envname.c"
-echo '#include "gtm_logicals.h"' >! $cfile
-foreach envname ($envnamelist)
-	echo "#ifdef $envname"	>> $cfile
-	echo "$envname" 	>> $cfile
-	echo "#endif"		>> $cfile
-end
-# pre-process it for this platform to find those env vars that are applicable on this platform
-# for example, gtm_chset_locale is applicable only to zOS and so non-zOS platforms should not test that out
-$gt_cc_compiler -I$gtm_inc -E $cfile >& $cfile.out
-
-set envlist = `$grep '^[ 	]*"' $cfile.out | sed 's/^[ 	]*"\$//g' | sed 's/".*//g' `
-echo "$envlist" > $cfile.list
+echo "# Now determine list of YottaDB-specific environment variables from the header file ydb_logicals_tab.h"
+# Remove duplicates (e.g. ydb_baktmpdir occurs in 2 lines) and empty strings
+set envlist = `$tst_awk -F\" '/^YDBENVINDX_TABLE_ENTRY.*/ { var[1]=$2; var[2]=$4; for (i in var) { if ((var[i] == "") || (var[i] in vararray)) continue; printf "%s\n", var[i]; vararray[var[i]];}}' $gtm_inc/ydb_logicals_tab.h`
+echo "$envlist" > envvar.list
 set command0 = "$gtm_dist/mumps -direct"
 set corecheck = "$tst_tcsh $gtm_tst/$tst/u_inref/D9I10002703_corecheck.csh"
 set maxstr = `$gtm_dist/mumps -run %XCMD 'Set $ZPiece(x,"0",9999)="" Write x,!'`
+echo $maxstr > maxstr.txt	# for debugging purposes
 echo "-------------------------------------------------------------------------------------------"
 
-# Add gtm_dist (supported for backward compatibility but absent in gtm_logicals.h) to buffer overflow check tests
-foreach var (gtm_dist $envlist)
-	setenv envvar $var
-	mkdir $envvar
+foreach var ($envlist)
+	setenv envvar "$var:s/$//"	# Remove leading $ from env var name
+	if ($envvar == "PATH") then
+		# Setting PATH to a long string causes issues with invoking executables in this test script so
+		# skip just this env var.
+		continue
+	endif
 	# We do not want different output for $gtm_autorelink_keeprtn on platforms that support it and on those that do not.
 	if (("gtm_autorelink_keeprtn" == $envvar) && (! $?gtm_test_autorelink_support)) then
 		continue
 	endif
+	# "ydb_aio_nr_events"/"gtm_aio_nr_events" is only supported on 64-bit builds (32-bit uses posix aio, not libaio)
+	# To avoid maintaining different reference files for 64 vs 32 bit builds, skip this unsupported env var on 32-bit builds.
+	if ((("gtm_aio_nr_events" == $envvar) || ("ydb_aio_nr_events" == $envvar)) && ($gtm_platform_size == 32)) then
+		continue
+	endif
+	# Skip dbg-only env vars in pro testing as their output will be different for dbg vs pro and we do not want
+	# to maintain two different reference files for the same env var.
+	if (("pro" == "$tst_image") && ("ydb_dbgflags" == $envvar)) then
+		break
+	endif
 	echo "Testing buffer overflow for environment variable : <$envvar>"
+	mkdir $envvar
 	set oldvalue = `env | $grep "^$envvar="`
 	if ("$oldvalue" == "") then
 		set varwasdefined = 0
@@ -98,10 +92,21 @@ foreach var (gtm_dist $envlist)
 		set oldvalue = `echo "$oldvalue" | sed 's/^'$envvar'=//g'`
 	endif
 	setenv $envvar "$maxstr"
-	# Test GT.M
+	if ($envvar == "gtm_ipv4_only") then
+		# Currently in do_random_settings.csh (test framework), the only env var that is randomly set
+		# is ydb_ipv4_only/gtm_ipv4_only. That means it is possible "ydb_ipv4_only" is defined at this point
+		# (by the test framework) and so if we want to test "gtm_ipv4_only", whatever value we give it will
+		# not be honored because "ydb_ipv4_only" overrides it. Therefore temporarily unsetenv the ydb* env var
+		# until gtm_ipv4_only testing is complete.
+		if ($?ydb_ipv4_only) then
+			set save_ydb_ipv4_only = $ydb_ipv4_only
+			unsetenv ydb_ipv4_only
+		endif
+	endif
+	# Test mumps
 	rm -f d002703.o	# just in case it was compiled with a different chset
-	$gtm_exe/mumps -run smallupd^d002703 >&! $envvar/${envvar}_GTM.log
-	$corecheck "gtm"
+	$gtm_exe/mumps -run smallupd^d002703 >&! $envvar/${envvar}_YDB.log
+	$corecheck "ydb"
 	# Test DSE
 	$DSE dump -file -all >&! $envvar/${envvar}_DSE.log
 	$corecheck "dse"
@@ -213,6 +218,14 @@ foreach var (gtm_dist $envlist)
 	else
 		setenv $envvar "$oldvalue"
 	endif
+	if ($envvar == "gtm_ipv4_only") then
+		# Restore "ydb_ipv4_only" to its original value (what it had before we came into
+		# this "gtm_ipv4_only" iteration of the for loop).
+		if ($?save_ydb_ipv4_only) then
+			setenv ydb_ipv4_only $save_ydb_ipv4_only
+			unset save_ydb_ipv4_only
+		endif
+	endif
 	if ("ENCRYPT" == "$test_encryption") then
 		if ($gtm_gpg_use_agent) then
 			# With GnuPG 2.x, DSE and DBCERTIFY can fail early with a CRYPTKEYFETCHFAILED error because of
@@ -233,19 +246,38 @@ foreach var (gtm_dist $envlist)
 	endif
 	cd $envvar
 	$gtm_tst/com/errors.csh ${envvar}_errorlog >&! allerrors_${envvar}.logx
-	$tst_awk -f $gtm_tst/com/process.awk -f $gtm_tst/com/outref.awk allerrors_${envvar}.logx $gtm_tst/$tst/outref/errors_${envvar}.txt >&!  allerrors_${envvar}.cmp
+	set reffile = $gtm_tst/$tst/outref/errors_${envvar}.txt
+	if (! -e $reffile) then
+		# If env-var-specific reference file does not exist, check if it is a ydb* or gtm* env var
+		# If ydb* or generic env var (e.g. SHELL, HOME etc.), then use errors_template.txt as the reference file.
+		# A simple way of identifying these is by checking if the env var beings with gtm or GTM and if not
+		# assume it is ydb* or the generic env var.
+		if (($envvar !~ "gtm*") && ($envvar !~ "GTM*")) then
+			set reffile = $gtm_tst/$tst/outref/errors_template.txt
+		else
+			# Env var is gtm* env var. Find corresponding ydb* env var and use that env var reference file
+			# since the output for the gtm* env var and its corresponding ydb* env var should be identical.
+			# Since this for loop is structured such that the ydb* env var comes first and the corresponding
+			# gtm* env var comes next in the loop, all we need is to use $lastreffile (set in previous iteration).
+			set reffile = $lastreffile
+		endif
+	endif
+	$tst_awk -f $gtm_tst/com/process.awk -f $gtm_tst/com/outref.awk allerrors_${envvar}.logx $reffile >&!  allerrors_${envvar}.cmp
 	$tst_cmpsilent allerrors_${envvar}.cmp allerrors_${envvar}.logx
 	if ($status) then
-		echo "TEST-E-FAIL. Testing $envvar failed. Check $envvar directory and allerrors_${envvar}.logx"
+		echo "diff allerrors_${envvar}.cmp allerrors_${envvar}.logx" > ../$envvar.diff
+		diff allerrors_${envvar}.cmp allerrors_${envvar}.logx >> ../$envvar.diff
+		echo "	--> FAIL : Check $envvar.diff"
 	endif
 	$tst_gzip_quiet *.*
+	set lastreffile = $reffile	# Note down ydb* reference file for later use by gtm* env var
 	cd -
 end
-echo "# Stop background GT.M updates"
+echo "# Stop background YottaDB updates"
 rm -f d002703.o	# just in case it was compiled with a different chset
-$GTM << GTM_EOF
+$GTM << YDB_EOF
 	do stop^d002703
-GTM_EOF
+YDB_EOF
 
 echo "# Remove portno allocation file"
 $gtm_tst/com/portno_release.csh

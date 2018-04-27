@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2003, 2014 Fidelity Information Services, Inc	#
+# Copyright 2003, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -108,9 +111,15 @@ $MUPIP integ a''d/mumps.dat
 set nonomatch
 $MUPIP backup "*" -nonewj .a..?..b.c/backup.dat
 unset nonomatch
-setenv GTM_BAKTMPDIR ./bo'$'goue_name
+unset verbose
+echo 'setenv ydb_baktmpdir ./bo$goue_name'
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_baktmpdir GTM_BAKTMPDIR ./bo'$'goue_name
+set verbose
 $MUPIP backup "*" -nonewj ./back3
-setenv GTM_BAKTMPDIR ./back3/mumps'$$'
+unset verbose
+echo 'setenv ydb_baktmpdir ./back3/mumps$$'
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_baktmpdir GTM_BAKTMPDIR ./back3/mumps'$$'
+set verbose
 $MUPIP backup "*" -nonewj ./back3 >& mupip_backup_nonewj_1.outx
 sort -f mupip_backup_nonewj_1.outx
 echo "#"
@@ -128,4 +137,4 @@ h
 xyz
 $MUPIP integ ./dir2/a.dat
 unset verbose
-unsetenv GTM_BAKTMPDIR
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_baktmpdir GTM_BAKTMPDIR

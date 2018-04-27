@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -71,7 +74,7 @@ w "d ^order",! d ^order
 h
 xyz
 
-unsetenv gtm_zyerror
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_zyerror gtm_zyerror
 setenv gtm_ztrap_form  adaptive
 echo "ZTRAP testing starts..."
 $GTM << EOF
@@ -86,14 +89,14 @@ EOF
 echo "end of valid ZTRAP cases..."
 
 echo "Testing invalid ZTRAP cases with gtm_ztrap_new set to TRUE..."
-setenv gtm_ztrap_new TRUE
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_ztrap_new gtm_ztrap_new TRUE
 $GTM << EOF
 w "do ^ztidrv",!  do ^ztidrv
 h
 EOF
 
 echo "Testing invalid ZTRAP cases with NO gtm_ztrap_new ..."
-unsetenv gtm_ztrap_new
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_ztrap_new gtm_ztrap_new
 $GTM << EOF
 w "do ^ztidrv",!  do ^ztidrv
 h
@@ -132,31 +135,31 @@ h
 EOF
 
 echo "Begin of ZYERROR environement test cases..."
-setenv gtm_zyerror "SUB2"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_zyerror gtm_zyerror "SUB2"
 $GTM << EOF
 w "do TST1^zevref4",!  do TST1^zevref4
 h
 EOF
 
-setenv gtm_zyerror "SUB3+0"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_zyerror gtm_zyerror "SUB3+0"
 $GTM << EOF
 w "do TST2^zevref4",!  do TST2^zevref4
 h
 EOF
 
-setenv gtm_zyerror "labelinanothermoduleforzyerror^zeleaf"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_zyerror gtm_zyerror "labelinanothermoduleforzyerror^zeleaf"
 $GTM << EOF
 w "do TST3^zevref4",!  do TST3^zevref4
 h
 EOF
 
-setenv gtm_zyerror "labelinanothermoduleforzyerror+1^zeleaf"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_zyerror gtm_zyerror "labelinanothermoduleforzyerror+1^zeleaf"
 $GTM << EOF
 w "do TST4^zevref4",!  do TST4^zevref4
 h
 EOF
 
-unsetenv gtm_zyerror
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_zyerror gtm_zyerror
 $GTM << EOF
 w "do TST1^zevref4",!  do TST1^zevref4
 h

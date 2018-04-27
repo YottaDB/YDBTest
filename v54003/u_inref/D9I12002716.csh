@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2011, 2013 Fidelity Information Services, Inc	#
+# Copyright 2011, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -19,8 +22,9 @@ echo 'unsetenv gtmdbglvl' >>&! settings.csh
 # between 30 and 330 seconds.  This will allow us to take a peek at open journal files 30 sec. before the idle timer fires.
 set peek_time = 30
 if ($?gtm_jnl_release_timeout) then
-	setenv gtm_jnl_release_timeout `$gtm_exe/mumps -run %XCMD "write $gtm_jnl_release_timeout#301+30"`
-	@ wait_time = $gtm_jnl_release_timeout - $peek_time
+	set timeout = `$gtm_exe/mumps -run %XCMD "write $gtm_jnl_release_timeout#301+30"`
+	source $gtm_tst/com/set_ydb_env_var_random.csh ydb_jnl_release_timeout gtm_jnl_release_timeout $timeout
+	@ wait_time = $timeout - $peek_time
 else
 	# If gtm_jnl_release_timeout is not defined, the default value of 5 min. (300 sec.) will be used, so set wait_time accordingly.
 	@ wait_time = 300 - $peek_time

@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2014 Fidelity Information Services, Inc	#
+# Copyright 2014 Fidelity Information Services, Inc		#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -11,7 +14,16 @@
 #################################################################
 
 # Add v46/v6 randomly to hostname if supported
-if ($gtm_ipv4_only) then
+# do_random_settings.csh could randomly define gtm_ipv4_only or ydb_ipv4_only
+if ($?ydb_ipv4_only) then
+	set ipv4_only = $ydb_ipv4_only
+else if ($?gtm_ipv4_only) then
+	set ipv4_only = $gtm_ipv4_only
+else
+	set ipv4_only = 0
+endif
+
+if ($ipv4_only) then
 	alias host_ipv6_supported '/bin/true \!{:1} ; echo 0'		# Reference !:1 to consume arguments; /bin/true discards arguments
 else
 	alias host_ipv6_supported '(set rout=`$rsh \!{:1}.v6 /bin/echo ok |& cat` ; set res=0 ; if ("$rout" == "ok") set res=1 ; echo "$rout" >& ipv6_support_\!{:1}.outx ; echo $res)'

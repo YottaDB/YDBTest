@@ -1,4 +1,18 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+# This module is derived from FIS GT.M.
+#################################################################
+
 # this script tests all commands that makes use of instsecondary qualifier
 # various correct and incorrect combinations of instsecndary will be specified as argument to this script
 #
@@ -81,9 +95,13 @@ if (\$DATA(^$global_name)) write "TEST-E-UNEXPECTED, ^$global_name update not ex
 halt
 gtm_eof
 	$MSR RUN SRC=INST1 $RCVARG '$MUPIP replic -source -activate $instsecvar -secondary=__RCV_HOST__:__RCV_PORTNO__'
-	# we need this check because shutdown command will not act based on $gtm_repl_instsecondary
+	# we need this check because shutdown command will not act based on $ydb_repl_instsecondary/$gtm_repl_instsecondary
 	if ("" == $instsecvar) then
-		setenv shutinst "-instsecondary=$gtm_repl_instsecondary"
+		if ($?ydb_repl_instsecondary) then
+			setenv shutinst "-instsecondary=$ydb_repl_instsecondary"
+		else
+			setenv shutinst "-instsecondary=$gtm_repl_instsecondary"
+		endif
 	else
 		setenv shutinst "$instsecvar"
 	endif

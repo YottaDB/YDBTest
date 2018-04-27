@@ -21,7 +21,7 @@
 source $gtm_tst/com/gtm_test_disable_autorelink.csh
 
 # With count validations and process suicides we do not want to affect concurrently running tests.
-setenv gtm_linktmpdir .
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_linktmpdir gtm_linktmpdir .
 
 $gtm_tst/com/dbcreate.csh mumps
 echo

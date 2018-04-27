@@ -26,7 +26,7 @@ set max_wait_vals = (0 $randomwait -1)
 set max_wait_msg = ("immediate exit" "wait for atmost $randomwait seconds" "wait indefinitely")
 echo ""
 while (3 >= $cnt)
-	echo "CASE $cnt : Testing gtm_db_startup_max_wait environment variable with value set to $max_wait_vals[$cnt] - $max_wait_msg[$cnt]"
+	echo "CASE $cnt : Testing ydb_db_startup_max_wait environment variable with value set to $max_wait_vals[$cnt] - $max_wait_msg[$cnt]"
 	echo "---------------------------------------------------------------------------------------------------------------------"
 	# Create fresh databases
 	set bkupdir = "bkup`date +%H%M%S`"
@@ -42,7 +42,7 @@ while (3 >= $cnt)
 	($gtm_tst/$tst/u_inref/hold_onto_lock.csh 49 hold_onto_ftok_$cnt.out &) >>&! bkgrnd_exec_$cnt.out
 	$gtm_tst/com/wait_for_log.csh -log hold_onto_ftok_$cnt.out -message "Holding the ftok semaphore"
 	# Set the appropriate wait time
-	setenv gtm_db_startup_max_wait $max_wait_vals[$cnt]
+	source $gtm_tst/com/set_ydb_env_var_random.csh ydb_db_startup_max_wait gtm_db_startup_max_wait $max_wait_vals[$cnt]
 	# Do a SET by contending for the ftok - currently held by the other process
 	echo "---> Now that the process is holding onto the FTOK, start another process to cause FTOK contention"
 	if (2 >= $cnt) then
@@ -54,14 +54,14 @@ while (3 >= $cnt)
 	# Now that we got what we wanted, kill the background process and continue with the next iteration
 	set bkgrnd_pid = `cat mumps_pid.log`
 	if (2 >= $cnt) then
-		# For no wait ($gtm_db_startup_max_wait) and non-negative wait, the background process will still exist after the
+		# For no wait ($ydb_db_startup_max_wait) and non-negative wait, the background process will still exist after the
 		# above foreground process error'ed out with either a CRITSEMFAIL or SEMWT2LONG error.
 		$kill9 $bkgrnd_pid
 		$MUPIP rundown -reg "*" >>&! mupip_rundown_$bkgrnd_pid.out
 		$MUPIP rundown -relinkctl >&! mupip_rundown_ctl_$bkgrnd_pid.outx
 		$gtm_tst/com/check_error_exist.csh ftokcontender_$cnt.out "YDB-E-DBFILERR" "YDB-E-SEMWT2LONG"
 	else
-		# For the indefinite wait ($gtm_db_startup_max_wait = -1), both the process will succeed eventually and hence at
+		# For the indefinite wait ($ydb_db_startup_max_wait = -1), both the process will succeed eventually and hence at
 		# this point we won't have the background process alive for killing it.
 		$gtm_tst/com/wait_for_proc_to_die.csh $bkgrnd_pid 120 # Wait for the process to die (in case the system is loaded)
 	endif
@@ -85,7 +85,7 @@ set max_wait_vals = (0 $randomwait -1)
 set max_wait_msg = ("immediate exit" "wait for atmost $randomwait seconds" "wait indefinitely")
 echo
 while (3 >= $cnt)
-	echo "CASE $cnt : Testing gtm_db_startup_max_wait environment variable with value set to $max_wait_vals[$cnt] - $max_wait_msg[$cnt]"
+	echo "CASE $cnt : Testing ydb_db_startup_max_wait environment variable with value set to $max_wait_vals[$cnt] - $max_wait_msg[$cnt]"
 	echo "---------------------------------------------------------------------------------------------------------------------"
 	# Create fresh databases
 	set bkupdir = "bkup`date +%H%M%S`"
@@ -101,7 +101,7 @@ while (3 >= $cnt)
 	($gtm_tst/$tst/u_inref/hold_onto_lock.csh 50 hold_onto_access_$cnt.out &) >>&! bkgrnd_exec_$cnt.out
 	$gtm_tst/com/wait_for_log.csh -log hold_onto_access_$cnt.out -message "Holding the access control semaphore"
 	# Set the appropriate wait time
-	setenv gtm_db_startup_max_wait $max_wait_vals[$cnt]
+	source $gtm_tst/com/set_ydb_env_var_random.csh ydb_db_startup_max_wait gtm_db_startup_max_wait $max_wait_vals[$cnt]
 	# Do a SET by contending for the access - currently held by the other process
 	echo "---> Now that the process is holding onto the ACCESS control lock, start another process to cause contention"
 	if (2 >= $cnt) then
@@ -113,14 +113,14 @@ while (3 >= $cnt)
 	# Now that we got what we wanted, kill the background process and continue with the next iteration
 	set bkgrnd_pid = `cat mumps_pid.log`
 	if (2 >= $cnt) then
-		# For no wait ($gtm_db_startup_max_wait) and non-negative wait, the background process will still exist after the
+		# For no wait ($ydb_db_startup_max_wait) and non-negative wait, the background process will still exist after the
 		# above foreground process error'ed out with either a CRITSEMFAIL or SEMWT2LONG error.
 		$kill9 $bkgrnd_pid
 		$MUPIP rundown -reg "*" >>&! mupip_rundown_$bkgrnd_pid.out
 		$MUPIP rundown -relinkctl >&! mupip_rundown_ctl_$bkgrnd_pid.outx
 		$gtm_tst/com/check_error_exist.csh accsemcontender_$cnt.out "YDB-E-DBFILERR" "YDB-E-SEMWT2LONG"
 	else
-		# For the indefinite wait ($gtm_db_startup_max_wait = -1), both the process will succeed eventually and hence at
+		# For the indefinite wait ($ydb_db_startup_max_wait = -1), both the process will succeed eventually and hence at
 		# this point we won't have the background process alive for killing it.
 		$gtm_tst/com/wait_for_proc_to_die.csh $bkgrnd_pid 120 # Wait for the process to die (in case the system is loaded)
 	endif

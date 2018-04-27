@@ -1,4 +1,17 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+# This module is derived from FIS GT.M.
+#################################################################
 #
 # Test different settings for gtm_chset and $ZCHSET (valid and invalid)
 #
@@ -32,7 +45,7 @@ do ^examine(1,\$LENGTH(^strsmiley),"\$LENGTH of ^strsmiley is 1")
 do ^examine(9786,\$ASCII(^strsmiley),"\$ASCII of ^strsmiley is 9786")
 do ^examine("ａ",\$CHAR(65345),"\$CHAR(65345) is ａ")
 write "Testing four byte 𝐀",!
-set ^MathematicalA=\$ZCHAR(240,157,144,128) ; 𝐀	
+set ^MathematicalA=\$ZCHAR(240,157,144,128) ; 𝐀
 do ^examine(1,\$LENGTH(^MathematicalA),"\$LENGTH of ^MathematicalA is 1")
 do ^examine(119808,\$ASCII(^MathematicalA),"\$ASCII of ^MathematicalA is 119808")
 do ^examine("𝐀",\$CHAR(119808),"\$CHAR(119808) is 𝐀")
@@ -81,12 +94,13 @@ PATSTART
 	    48,49,50,51,152,53,54,55,56,57
 PATEND
 EOF
-setenv gtm_pattern_file "pattable"
-setenv gtm_pattern_table "DUMMY"
+
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_pattern_file gtm_pattern_file "pattable"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_pattern_table gtm_pattern_table "DUMMY"
 $GTM << EOF >&! patcode_error.out
 EOF
 #
 $gtm_tst/com/check_error_exist.csh patcode_error.out "PATTABSYNTAX"
 #
-unsetenv gtm_pattern_file
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_pattern_file gtm_pattern_file
 $gtm_tst/com/dbcheck.csh

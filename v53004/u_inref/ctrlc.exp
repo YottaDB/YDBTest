@@ -13,7 +13,7 @@
 #################################################################
 #
 set gtm_dist [lrange $argv 0 0]
-set timeout 120
+set timeout 10
 spawn $env(SHELL)
 # convince HP-UX to accept ctrl-c
 send -- "stty intr ^c\r"
@@ -21,7 +21,7 @@ expect "stty intr ^c"
 send -- "set prompt=\"CTRLC>\"\r"
 expect -exact "set prompt=\"CTRLC>\"\r\r
 CTRLC>"
-send -- "setenv gtm_nocenable 1\r"
+send -- "source \$gtm_tst/com/set_ydb_env_var_random.csh ydb_nocenable gtm_nocenable 1\r"
 expect "CTRLC>"
 send -- "gtm\r"
 expect "YDB>"
@@ -32,7 +32,7 @@ send -- "\r"
 expect "YDB>"
 send -- "h\r"
 expect "CTRLC>"
-send -- "unsetenv gtm_nocenable\r"
+send -- "source \$gtm_tst/com/unset_ydb_env_var.csh ydb_nocenable gtm_nocenable\r"
 expect "CTRLC>"
 send -- "gtm\r"
 expect "YDB>"

@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2014 Fidelity Information Services, Inc	#
+# Copyright 2014 Fidelity Information Services, Inc		#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -14,7 +17,7 @@
 setenv gtmcompile "-embed_source"
 
 # Keep things local to avoid affecting concurrent tests.
-setenv gtm_linktmpdir .
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_linktmpdir gtm_linktmpdir .
 
 # Define reasonable limits for object file sizes.
 setenv max_object_size		131072

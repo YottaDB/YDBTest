@@ -1,4 +1,18 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+# This module is derived from FIS GT.M.
+#################################################################
+
 # EXCEPTION
 unset gtm_ztrap_form
 $GTM << EOF
@@ -12,13 +26,13 @@ if ($?gtm_etrap) then
 endif
 unsetenv gtm_etrap
 
-setenv gtm_ztrap_form code
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_ztrap_form gtm_ztrap_form code
 $GTM << EOF
 do ^except
 halt
 EOF
 
-setenv gtm_ztrap_form adaptive
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_ztrap_form gtm_ztrap_form adaptive
 $GTM << EOF
 do ^except
 halt

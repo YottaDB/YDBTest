@@ -4,6 +4,9 @@
 # Copyright (c) 2014-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -121,7 +124,7 @@ echo
 echo "Implicit relink of a statically linked routine whose source has not changed but object has (due to different compilation options)."
 cat > rtn.csh <<eof
 #!/usr/local/bin/tcsh -f
-setenv gtm_boolean 1
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_boolean gtm_boolean 1
 cp -p rtn.o rtn.o.orig
 $gtm_dist/mumps rtn.m
 $gtm_dist/mumps -direct << GTM_EOF
@@ -145,7 +148,7 @@ setenv gtmroutines "$save_gtmroutines"
 
 # These environment variables are modified in the following test, so we want to start with a "vanilla" state.
 unsetenv gtm_side_effects
-unsetenv gtm_boolean
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_boolean gtm_boolean
 
 # Because rtn itself is linked from a non-autorelink-enabled directory, no relink will follow the ZRUPDATE.
 $gtm_dist/mumps -run rtn
@@ -155,7 +158,7 @@ echo
 
 echo "Implicit relink of an autorelinked routine whose source has not changed but object has (due to different compilation options)."
 setenv gtmroutines ".* $save_gtmroutines"
-# This time rtn is linked from an autorelink-enabled directory, so ZRUPDATE should cause a relink with $gtm_boolean.
+# This time rtn is linked from an autorelink-enabled directory, so ZRUPDATE should cause a relink with $ydb_boolean/$gtm_boolean.
 $gtm_dist/mumps -run rtn
 mv rtn.o rtn.o.2
 mv rtn.o.orig rtn.o.orig.2

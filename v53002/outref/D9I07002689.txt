@@ -3,7 +3,7 @@ Using: ##SOURCE_PATH##/mumps -run GDE
 mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
-# try funky QUIT compile; setenv gtm_zquit_anyway 1
+# try funky QUIT compile; setenv ydb_zquit_anyway/gtm_zquit_anyway 1
 # Compile D9I07002689.m
 		Quit x,x		; this line should give a compilation error
 		      ^-----
@@ -32,7 +32,7 @@ Q:$Q arg Q; x = $$$$
 Q:'$Q  Q arg; x = $$$$
 Q ^a(x)$$
 PASS from D9I07002689 with $ZQUIT=1
-# verify normal (error) QUIT behavior; unsetenv gtm_zquit_anyway
+# verify normal (error) QUIT behavior; unsetenv ydb_zquit_anyway/gtm_zquit_anyway
 # Compile D9I07002689.m
 		Quit x,x		; this line should give a compilation error
 		      ^-----

@@ -4,6 +4,9 @@
 # Copyright (c) 2004-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -27,7 +30,7 @@ $MUPIP set -journal="on,enable,before" -reg "*" |& sort -f
 #
 # set the full block write on
 echo "Turn the full block writes on"
-setenv gtm_fullblockwrites 1
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_fullblockwrites gtm_fullblockwrites 1
 echo "************"
 echo 'GTM updates'
 echo ""
@@ -76,7 +79,7 @@ echo " Do the dbcheck."
 $gtm_tst/com/dbcheck.csh
 #
 echo "Turn the Full Block writes off"
-setenv gtm_fullblockwrites 0
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_fullblockwrites gtm_fullblockwrites 0
 $DSE dump -f -all >& dse_dump2.txt
 $grep "Full Block Writes" dse_dump2.txt
 #

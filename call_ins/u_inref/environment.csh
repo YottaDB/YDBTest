@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -24,9 +24,10 @@ EOF
 #
 # Create simple call-out (aka external call) that wants to do a call-in
 #
-setenv GTMXC drivecirtn.xc
-echo "`pwd`/libdrivecirtn${gt_ld_shl_suffix}" > $GTMXC
-cat >> $GTMXC << EOF
+set xctab = drivecirtn.xc
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_xc GTMXC $xctab
+echo "`pwd`/libdrivecirtn${gt_ld_shl_suffix}" > $xctab
+cat >> $xctab << EOF
 drivecirtn: void drivecirtn(I:gtm_char_t *)
 EOF
 #

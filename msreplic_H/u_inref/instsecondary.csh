@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2006, 2013 Fidelity Information Services, Inc	#
+# Copyright 2006, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -48,7 +51,7 @@ foreach side (RCV SRC)
 		$MSR RUN INST2 'set msr_dont_trace ; setenv rem_port `cat portno` ; rm /tmp/test_${rem_port}.txt'
 	endif
 	setenv gtm_test_instsecondary ""
-	setenv gtm_repl_instsecondary "SOMEREALLYLONGINVALIDNAME"
+	source $gtm_tst/com/set_ydb_env_var_random.csh ydb_repl_instsecondary gtm_repl_instsecondary "SOMEREALLYLONGINVALIDNAME"
 	setenv msr_dont_chk_stat
 	$MSR START$side INST1 INST2 $qual
 	get_msrtime
@@ -57,7 +60,7 @@ foreach side (RCV SRC)
 		$MSR RUN INST2 'set msr_dont_trace ; setenv rem_port `cat portno` ; rm /tmp/test_${rem_port}.txt'
 	endif
 	setenv gtm_test_instsecondary ""
-	setenv gtm_repl_instsecondary ""
+	source $gtm_tst/com/set_ydb_env_var_random.csh ydb_repl_instsecondary gtm_repl_instsecondary ""
 	setenv msr_dont_chk_stat
 	$MSR START$side INST1 INST2 $qual
 	get_msrtime
@@ -66,13 +69,13 @@ foreach side (RCV SRC)
 		$MSR RUN INST2 'set msr_dont_trace ; setenv rem_port `cat portno` ; rm /tmp/test_${rem_port}.txt'
 	endif
 	setenv gtm_test_instsecondary "-instsecondary=$tmp_name"
-	setenv gtm_repl_instsecondary "SOMEREALLYLONGINVALIDNAMEBUTSHOULDNOTBEUSED"
+	source $gtm_tst/com/set_ydb_env_var_random.csh ydb_repl_instsecondary gtm_repl_instsecondary "SOMEREALLYLONGINVALIDNAMEBUTSHOULDNOTBEUSED"
 	$MSR START$side INST1 INST2 $qual
-	unsetenv gtm_repl_instsecondary
+	source $gtm_tst/com/unset_ydb_env_var.csh ydb_repl_instsecondary gtm_repl_instsecondary
 end
-setenv gtm_repl_instsecondary "$gtm_test_msr_INSTNAME3"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_repl_instsecondary gtm_repl_instsecondary "$gtm_test_msr_INSTNAME3"
 $MSR START INST1 INST3 RP
-unsetenv gtm_repl_instsecondary
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_repl_instsecondary gtm_repl_instsecondary
 #
 echo ""
 $MSR RUN INST5 '$MUPIP replic -instance_create -name=__SRC_INSTNAME__'	# note instance name will be INSTANCE1
@@ -100,33 +103,33 @@ $gtm_tst/$tst/u_inref/replic_source_commands.csh RCV=INST2 "" "REPLINSTSECUNDF M
 $echoline
 echo "TEST-I-ALLPASS, all commands expected to PASS for the section below"
 echo ""
-setenv gtm_repl_instsecondary "$gtm_test_msr_INSTNAME2"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_repl_instsecondary gtm_repl_instsecondary "$gtm_test_msr_INSTNAME2"
 $gtm_tst/$tst/u_inref/replic_source_commands.csh RCV=INST2
 #
 $echoline
 echo "TEST-I-ALLPASS, all commands expected to PASS for the section below"
 echo ""
-setenv gtm_repl_instsecondary "BADINSTANCENAME" # just a bait and no significance otherwise
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_repl_instsecondary gtm_repl_instsecondary "BADINSTANCENAME" # just a bait and no significance otherwise
 $gtm_tst/$tst/u_inref/replic_source_commands.csh RCV=INST2 "-instsecondary=$gtm_test_msr_INSTNAME2"
 #
 $echoline
 echo "TEST-I-ERROREXPECT, REPLINSTSECLEN expected for the section below"
 echo ""
-setenv gtm_repl_instsecondary "SOMEREALLYLONGINVALIDNAME"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_repl_instsecondary gtm_repl_instsecondary "SOMEREALLYLONGINVALIDNAME"
 $gtm_tst/$tst/u_inref/replic_source_commands.csh RCV=INST2 "" "REPLINSTSECLEN MUPCLIERR"
 #
 $echoline
 echo "TEST-I-ERROREXPECT, REPLINSTSECLEN expected for the section below"
 echo ""
-setenv gtm_repl_instsecondary ""
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_repl_instsecondary gtm_repl_instsecondary ""
 $gtm_tst/$tst/u_inref/replic_source_commands.csh RCV=INST2 "" "REPLINSTSECLEN MUPCLIERR"
 #
 $echoline
 echo "TEST-I-ERROREXPECT, REPLINSTNMSAME expected for the section below"
 echo ""
-setenv gtm_repl_instsecondary "$gtm_test_msr_INSTNAME1"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_repl_instsecondary gtm_repl_instsecondary "$gtm_test_msr_INSTNAME1"
 $gtm_tst/$tst/u_inref/replic_source_commands.csh RCV=INST2 "" "REPLINSTNMSAME"
 #
-unsetenv gtm_repl_instsecondary
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_repl_instsecondary gtm_repl_instsecondary
 $gtm_tst/com/dbcheck.csh
 #

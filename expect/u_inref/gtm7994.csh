@@ -14,14 +14,14 @@
 #################################################################
 
 # Verify that the application terminators do not affect direct mode if DMTERM is specified
-setenv gtm_dmterm 1
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_dmterm gtm_dmterm 1
 setenv TERM vt220
 
 echo "# Running expect (output: expect.out)"
 expect <<EOF > expect.out
     set timeout 10
     spawn $GTM
-    # DMTERM is enabled by the gtm_dmterm env. variable
+    # DMTERM is enabled by the ydb_env/gtm_dmterm env. variable
     expect "YDB>" {send "write \\\$view(\\"DMTERM\\")\\r"}
     expect {
 	-exact "1" { }

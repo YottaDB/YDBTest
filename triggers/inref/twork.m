@@ -3,6 +3,9 @@
 ; Copyright (c) 2010-2016 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -31,7 +34,7 @@ operation
 
 traps
 	new exttrap
-	set exttrap=$ztrnlnm("gtm_trigger_etrap")
+	set exttrap=$select(""'=$ztrnlnm("ydb_trigger_etrap"):$ztrnlnm("ydb_trigger_etrap"),1:$ztrnlnm("gtm_trigger_etrap"))
 	write !
 	write:exttrap'="" $$tabornltab(),"$gtm_trigger_etrap",$char(58),exttrap
 	if $select(exttrap=$ETrap:0,$ETrap'="":1,1:0) do

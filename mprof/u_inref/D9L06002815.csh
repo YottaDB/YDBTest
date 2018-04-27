@@ -3,7 +3,7 @@
 # Copyright (c) 2011-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -59,7 +59,7 @@ echo $limit > limit.txt
 # Testing of implicit tracing without saving to the db                   #
 ##########################################################################
 echo "Implicit tracing, no saving..."
-setenv gtm_trace_gbl_name ""
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_trace_gbl_name gtm_trace_gbl_name ""
 source $gtm_tst/$tst/u_inref/threeen.csh $limit no_expl_mem_only 3 1
 
 $echoline
@@ -68,7 +68,7 @@ $echoline
 # Testing of explicit and implicit tracing without saving to the db      #
 ##########################################################################
 echo "Implicit and explicit tracing, no saving..."
-setenv gtm_trace_gbl_name ""
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_trace_gbl_name gtm_trace_gbl_name ""
 source $gtm_tst/$tst/u_inref/threeen.csh $limit expl_mem_only 4 1
 
 $echoline
@@ -79,29 +79,34 @@ $echoline
 echo "Implicit tracing, saving..."
 
 # first, a few bad global names
-setenv gtm_trace_gbl_name "^"
-source $gtm_tst/$tst/u_inref/threeen.csh $limit no_expl_with_db1 5 1 $gtm_trace_gbl_name
+set name = "^"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_trace_gbl_name gtm_trace_gbl_name $name
+source $gtm_tst/$tst/u_inref/threeen.csh $limit no_expl_with_db1 5 1 $name
 
 echo ""
 
-setenv gtm_trace_gbl_name "a"
-source $gtm_tst/$tst/u_inref/threeen.csh $limit no_expl_with_db2 5 1 $gtm_trace_gbl_name
+set name = "a"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_trace_gbl_name gtm_trace_gbl_name $name
+source $gtm_tst/$tst/u_inref/threeen.csh $limit no_expl_with_db2 5 1 $name
 
 echo ""
 
-setenv gtm_trace_gbl_name "\~sdf"
-source $gtm_tst/$tst/u_inref/threeen.csh $limit no_expl_with_db3 5 1 $gtm_trace_gbl_name
+set name = "\~sdf"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_trace_gbl_name gtm_trace_gbl_name $name
+source $gtm_tst/$tst/u_inref/threeen.csh $limit no_expl_with_db3 5 1 $name
 
 echo ""
 
-setenv gtm_trace_gbl_name " "
-source $gtm_tst/$tst/u_inref/threeen.csh $limit no_expl_with_db4 5 1 $gtm_trace_gbl_name
+set name = " "
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_trace_gbl_name gtm_trace_gbl_name "$name"
+source $gtm_tst/$tst/u_inref/threeen.csh $limit no_expl_with_db4 5 1 "$name"
 
 echo ""
 
 # then, with a valid global name
-setenv gtm_trace_gbl_name "^abc"
-source $gtm_tst/$tst/u_inref/threeen.csh $limit no_expl_with_db5 5 1 $gtm_trace_gbl_name
+set name = "^abc"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_trace_gbl_name gtm_trace_gbl_name $name
+source $gtm_tst/$tst/u_inref/threeen.csh $limit no_expl_with_db5 5 1 $name
 
 $echoline
 
@@ -109,8 +114,9 @@ $echoline
 # Testing of explicit and implicit tracing with saving to the db         #
 ##########################################################################
 echo "Implicit and explicit tracing, saving..."
-setenv gtm_trace_gbl_name "^abc"
-source $gtm_tst/$tst/u_inref/threeen.csh $limit expl_with_db 6 1 $gtm_trace_gbl_name
+set name = "^abc"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_trace_gbl_name gtm_trace_gbl_name $name
+source $gtm_tst/$tst/u_inref/threeen.csh $limit expl_with_db 6 1 $name
 
 $echoline
 
@@ -118,7 +124,7 @@ $echoline
 # Testing of implicit tracing without saving to the db (other global)    #
 ##########################################################################
 echo "Implicit and explicit tracing, saving to other global..."
-setenv gtm_trace_gbl_name "^abc"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_trace_gbl_name gtm_trace_gbl_name "^abc"
 source $gtm_tst/$tst/u_inref/threeen.csh $limit expl_with_other_db 8 1 "^cba"
 
 $echoline
@@ -127,7 +133,7 @@ $echoline
 # Testing absolute time field                                            #
 ##########################################################################
 echo "Absolute time testing..."
-unsetenv gtm_trace_gbl_name
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_trace_gbl_name gtm_trace_gbl_name
 source $gtm_tst/$tst/u_inref/threeen.csh $limit abs_time_run 2 1 >& abs_time_run_time.txt
 $gtm_tst/com/wait_for_log.csh -log pids.outx -message "PID is printed" -waitcreation -duration 120
 set child_pid = `$head -1 pids.outx`

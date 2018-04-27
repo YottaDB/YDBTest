@@ -14,11 +14,11 @@ noundeftst	; test for noundef operation with local variables
 	N (act,cmdline)
 	I '$D(act) N act S act="W ! ZSH ""*""" ; "B"=$E(act) causes the NOUNDEF Mode to emulate success
 	S zcmdline=$S($D(cmdline):cmdline,1:$ZCMDLINE) N cmdline
-	S nound("errors")=$ZTRNLNM("gtm_noundef")
+	S nound("errors")=$select(""'=$ztrnlnm("ydb_noundef"):$ztrnlnm("ydb_noundef"),1:$ztrnlnm("gtm_noundef"))
 	I $ZVER'["VMS",$L(nound("errors")) D
 	. I ";YES;TRUE"[(";"_nound("errors"))!nound("errors") S nound("errors")=1=$V("UNDEF")
 	. E  S nound("errors")=0=$V("UNDEF")
-	. I nound("errors") W !,"Test not responding to gtm_noundef environment variable"
+	. I nound("errors") W !,"Test not responding to ydb_noundef/gtm_noundef environment variable"
 	E  I $L(zcmdline) V $S(";YES;TRUE"[(";"_$P(zcmdline," "))!zcmdline:"NOUNDEF",1:"UNDEF")
 	E  V "NOUNDEF"
 	S nound("gen")=zcmdline["GEN"

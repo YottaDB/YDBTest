@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2008, 2013 Fidelity Information Services, Inc	#
+# Copyright 2008, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -13,27 +16,27 @@
 $gtm_tst/com/dbcreate.csh mumps 1
 
 $echoline
-echo "test gtm_noundef env.variable settings"
+echo "test ydb_noundef/gtm_noundef env.variable settings"
 $echoline
 
-unsetenv gtm_noundef
-echo "gtm_noundef not set"
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_noundef gtm_noundef
+echo "ydb_noundef/gtm_noundef not set"
 $GTM << EOF
 write \$view("UNDEF")
 view "NOUNDEF"
 write \$view("UNDEF")
 EOF
 
-echo "gtm_noundef set to TRUE"
-setenv gtm_noundef TRUE
+echo "ydb_noundef/gtm_noundef set to TRUE"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_noundef gtm_noundef TRUE
 $GTM << EOF
 write \$view("UNDEF")
 view "UNDEF"
 write \$view("UNDEF")
 EOF
 
-echo "gtm_noundef set to FALSE"
-setenv gtm_noundef FALSE
+echo "ydb_noundef/gtm_noundef set to FALSE"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_noundef gtm_noundef FALSE
 $GTM << EOF
 write \$view("UNDEF")
 view "NOUNDEF"
@@ -42,8 +45,8 @@ EOF
 
 
 $echoline
-echo "run noundeftst with gtm_noundef set to FALSE"
-setenv gtm_noundef FALSE
+echo "run noundeftst with ydb_noundef/gtm_noundef set to FALSE"
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_noundef gtm_noundef FALSE
 $echoline
 echo "Do not pass the parameter GEN, so that all the test runs in indirection mode"
 $echoline
@@ -54,9 +57,9 @@ $echoline
 $gtm_exe/mumps -run noundeftst FALSE GEN
 $echoline
 
-echo "run noundeftst with gtm_noundef set to TRUE"
+echo "run noundeftst with ydb_noundef/gtm_noundef set to TRUE"
 $echoline
-setenv gtm_noundef TRUE
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_noundef gtm_noundef TRUE
 $echoline
 echo "Do not pass the parameter GEN, so that all the test runs in indirection mode"
 $echoline

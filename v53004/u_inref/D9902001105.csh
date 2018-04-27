@@ -27,7 +27,7 @@ set numfound = `$grep -c YDB-I-CTRLC ctrlc.out`
 # Should only see YDB-I-CTRLC once (when gtm_nocenable is not set)
 if (1 == $numfound) then
 	set ctrlclinenum = `$grep -n YDB-I-CTRLC ctrlc.out| cut -d: -f1`
-	set nocenablelinenum = `$grep -n "unsetenv gtm_nocenable" ctrlc.out| cut -d: -f1`
+	set nocenablelinenum = `$grep -n "source $gtm_tst/com/unset_ydb_env_var.csh ydb_nocenable gtm_nocenable" ctrlc.out| cut -d: -f1`
 #	Should see YDB-I-CTRLC after gtm_nocenable is unset
 	if (`expr "$ctrlclinenum" \> "$nocenablelinenum"`) then
 		echo "PASS"

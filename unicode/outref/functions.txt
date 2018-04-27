@@ -1816,7 +1816,6 @@ Test Switching to UTF-8
 setenv gtm_chset UTF-8
 unset echo
 setenv gtm_patnumeric UTF-8
-unset echo
 
 YDB>
 On default BADCHAR behavior
@@ -1834,7 +1833,6 @@ noerror("UTF-8")="I should be set with あさきゆめみじ"
 
 YDB>
 setenv gtm_patnumeric M
-unset echo
 
 YDB>
 On default BADCHAR behavior
@@ -1855,7 +1853,6 @@ Test Switching to M
 setenv gtm_chset M
 unset echo
 setenv gtm_patnumeric UTF-8
-unset echo
 
 YDB>
 On default BADCHAR behavior
@@ -1873,7 +1870,6 @@ noerror("M")="I should be set with �"_$C(129,130)_"�"_$C(129,149)_"�"_$C(129,141
 
 YDB>
 setenv gtm_patnumeric M
-unset echo
 
 YDB>
 On default BADCHAR behavior

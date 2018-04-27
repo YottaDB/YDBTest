@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2002, 2013 Fidelity Information Services, Inc	#
+# Copyright 2002, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -71,7 +74,8 @@ setenv start_time `date +%H_%M_%S`
 setenv portno_gtcm `$rsh $tst_remote_host_2  "source $gtm_tst/com/remote_getenv.csh $SEC_DIR_GTCM_2 ;cd $SEC_DIR_GTCM_2;source $gtm_tst/com/portno_acquire.csh"`
 if (-e gtcm_portno_2.txt) mv gtcm_portno_2.txt  gtcm_portno_2.txt_`date +%H_%M_%S`
 echo $portno_gtcm >&! gtcm_portno_2.txt
-setenv GTCM_${tst_remote_host_2:r:r:r:r} "[${tst_remote_host_2}]:$portno_gtcm"
+set rmthost = ${tst_remote_host_2:ar}
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_cm_${rmthost} GTCM_${rmthost} "[${tst_remote_host_2}]:$portno_gtcm"
 $rsh $tst_remote_host_2  "source $gtm_tst/com/remote_getenv.csh $SEC_DIR_GTCM_2 ; cd $SEC_DIR_GTCM_2; $gtm_tst/com/GTCM_SERVER.csh $portno_gtcm $start_time >&! $SEC_DIR_GTCM_2/gtcm_start_${start_time}.out"
 
 echo "GT.CM Server up again, retry the lock (the lock is still held on the server side)..."

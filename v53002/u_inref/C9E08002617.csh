@@ -22,12 +22,12 @@ foreach realtnum (0 1 2 3 4 5 6)
 	if ($realtnum == 6) then
 		set tnum = 5
 		set popstr = "WITH gtm_ztrap_form = popadaptive"
-		setenv gtm_ztrap_form popadaptive
+		source $gtm_tst/com/set_ydb_env_var_random.csh ydb_ztrap_form gtm_ztrap_form popadaptive
 		# Run test5 (in turn TestTrap) with popadaptive setting. In V53001, it used to assert fail.
 	else
 		set tnum = $realtnum
 		set popstr=""
-		unsetenv gtm_ztrap_form
+		source $gtm_tst/com/unset_ydb_env_var.csh ydb_ztrap_form gtm_ztrap_form
 	endif
 	echo "---------------------------------------------------------------------------------------------------"
 	echo "          Testing mumps -run test${tnum}^c002617 $popstr "

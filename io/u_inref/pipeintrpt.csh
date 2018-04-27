@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh
 #################################################################
 #								#
-#	Copyright 2011, 2014 Fidelity Information Services, Inc	#
+# Copyright 2011, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -24,7 +27,7 @@ rm -f delayecho.o
 # Set encryption attributes, if needed.
 source $gtm_tst/$tst/u_inref/set_key_and_iv.csh
 
-setenv gtm_non_blocked_write_retries 600
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_non_blocked_write_retries gtm_non_blocked_write_retries 600
 
 # add additional reads for inti and liza as they are faster than atlst2000 and can finish with no interrupts using the
 # default settings in ^readcnt as defined in intrdriver.m for Solaris platforms

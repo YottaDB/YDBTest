@@ -34,9 +34,10 @@ rm -f callc.o
 #
 # external call
 #
-setenv  GTMXC_xcall `pwd`/tst.tab
-echo "`pwd`/libcallc${gt_ld_shl_suffix}" > $GTMXC_xcall
-cat >> $GTMXC_xcall << xx
+set xctab = `pwd`/tst.tab
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_xc_xcall GTMXC_xcall $xctab
+echo "`pwd`/libcallc${gt_ld_shl_suffix}" > $xctab
+cat >> $xctab << xx
 callc:  xc_status_t callc(I:xc_long_t, I:xc_long_t, O:xc_long_t*)
 xx
 
@@ -50,5 +51,5 @@ rm -f link2.map
 
 dmain
 unsetenv GTMCI
-unsetenv GTMXC_xcall
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_xc_xcall GTMXC_xcall
 

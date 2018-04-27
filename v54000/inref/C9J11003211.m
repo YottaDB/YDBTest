@@ -1,3 +1,17 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; This module is derived from FIS GT.M.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
 ; C9J11-003211 - Require option to run both the M-Standard compliant Exclusive Kill (XKILL) and the historical
 ; 	         GTM non-compliant algorithm.
 ;
@@ -8,7 +22,7 @@
 
 	kill  kill *
 	set Val("")=0,Val(0)=0,Val(1)=1,Val("YES")=1,Val("NO")=0,Val("TRUE")=1,Val("FALSE")=0
-	set gtmstdxkill=$$FUNC^%UCASE($ZTRNLNM($Select("VMS"[$ZVersion:"GTM_STDXKILL",1:"gtm_stdxkill")))
+	set gtmstdxkill=$$FUNC^%UCASE($select(""'=$ztrnlnm("ydb_stdxkill"):$ztrnlnm("ydb_stdxkill"),1:$ztrnlnm("gtm_stdxkill")))
 	set $ETrap="Goto EnvERR"
 	set gtmstdxkill=Val(gtmstdxkill)
 	set $ETrap=""
@@ -28,7 +42,7 @@
 X(C,D)	kill (C,D,gtmstdxkill)
 	quit
 
-EnvERR	if $ZStatus["UNDEF" write "Invalid setting for $gtm_stdxkill/GTM_STDXKILL: ",gtmstdxkill,! quit
+EnvERR	if $ZStatus["UNDEF" write "Invalid setting for ydb_stdxkill/gtm_stdxkill: ",gtmstdxkill,! quit
 	write !!,"Unknown error in C9J11-003211",!!
 	zshow "*"
 	quit

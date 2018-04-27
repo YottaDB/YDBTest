@@ -4,9 +4,9 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
 ###################################################################
-test gtm_noundef env.variable settings
+test ydb_noundef/gtm_noundef env.variable settings
 ###################################################################
-gtm_noundef not set
+ydb_noundef/gtm_noundef not set
 
 YDB>
 1
@@ -15,7 +15,7 @@ YDB>
 YDB>
 0
 YDB>
-gtm_noundef set to TRUE
+ydb_noundef/gtm_noundef set to TRUE
 
 YDB>
 0
@@ -24,7 +24,7 @@ YDB>
 YDB>
 1
 YDB>
-gtm_noundef set to FALSE
+ydb_noundef/gtm_noundef set to FALSE
 
 YDB>
 1
@@ -34,7 +34,7 @@ YDB>
 0
 YDB>
 ###################################################################
-run noundeftst with gtm_noundef set to FALSE
+run noundeftst with ydb_noundef/gtm_noundef set to FALSE
 ###################################################################
 Do not pass the parameter GEN, so that all the test runs in indirection mode
 ###################################################################
@@ -660,7 +660,7 @@ PASS from 300 cases in noundeftst in operating in UNDEF mode
 PASS from 296 cases in noundeftst in operating in UNDEF mode
 ##ALLOW_OUTPUT UNICODE_MODE
 ###################################################################
-run noundeftst with gtm_noundef set to TRUE
+run noundeftst with ydb_noundef/gtm_noundef set to TRUE
 ###################################################################
 ###################################################################
 Do not pass the parameter GEN, so that all the test runs in indirection mode

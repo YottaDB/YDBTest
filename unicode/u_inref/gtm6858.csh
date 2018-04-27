@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -41,14 +41,6 @@ foreach ver ( $libvers )
 	set savestat = $status
 	if ($savestat && `expr $ver \> 35` ) set fail=1
 end
-
-# Use the system default ICU on AIX 6+
-if ("aix" == "$gtm_test_osname" && 5 < $gtm_test_osver) then
-	$echoline									>>& gtm6858.outx
-	echo "Null gtm_icu_version" 							>>& gtm6858.outx
-	env gtm_icu_version= LIBPATH= $gtm_dist/mumps -run %XCMD 'zwr $zchset zhalt 0'	>>& gtm6858.outx
-	if ($status) set fail=1
-endif
 
 if ($?fail) then
 	cat gtm6858.outx
