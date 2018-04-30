@@ -4,6 +4,9 @@
 # Copyright (c) 2003, 2015 Fidelity National Information	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -19,6 +22,10 @@ $gtm_tst/com/dbcreate.csh mumps 8 -rec=8000
 foreach no (0 1 2 3 4 5 6 7)
 	cp mumps.gld mumpssec$no.gld
 end
+
+# Randomly set ydb_app_ensures_isolation env var to list of globals that need VIEW "NOISOLATION" set.
+# If not set, tpntpupd.m (invoked later from dsecache.m below) will do the needed VIEW "NOISOLATION" call.
+source $gtm_tst/com/tpntpupd_set_noisolation.csh
 
 $GTM <<GTM_EOF
 set ^secgldnm="mumpssec"	; will randomly pick one or the other global directory

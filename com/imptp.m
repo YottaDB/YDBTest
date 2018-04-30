@@ -3,6 +3,9 @@
 ; Copyright (c) 2004-2016 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -455,7 +458,10 @@ noop;
 	write "TEST-I-INFO : did noop",!
 	quit
 tpnoiso;
-	view "NOISOLATION":"^arandom,^brandomv,^crandomva,^drandomvariable,^erandomvariableimptp,^frandomvariableinimptp,^grandomvariableinimptpfill,^hrandomvariableinimptpfilling,^irandomvariableinimptpfillprgrm,^jrandomvariableinimptpfillprogram"
+	if (""=$ztrnlnm("ydb_app_ensures_isolation")) do
+	. view "NOISOLATION":"^arandom,^brandomv,^crandomva,^drandomvariable,^erandomvariableimptp,^frandomvariableinimptp,^grandomvariableinimptpfill,^hrandomvariableinimptpfilling,^irandomvariableinimptpfillprgrm,^jrandomvariableinimptpfillprogram"
+	; else imptp.csh has already set the env var to the above list of globals
+	;
 	write "$view(""NOISOLATION"",""^arandom"")=",$view("NOISOLATION","^arandom"),!
 	write "$view(""NOISOLATION"",""^brandomv"")=",$view("NOISOLATION","^brandomv"),!
 	write "$view(""NOISOLATION"",""^crandomva"")=",$view("NOISOLATION","^crandomva"),!
