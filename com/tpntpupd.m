@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-;	Copyright 2003, 2013 Fidelity Information Services, Inc	;
+; Copyright 2003, 2013 Fidelity Information Services, Inc	;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -32,9 +35,11 @@ tpntpupd;
 	; there is a huge list of non-existent globals that are specified. This is specifically present to test that
 	; process_gvt_pending_list() processes the linked list of pending gvts correctly as each region gets opened.
 	;
-	VIEW "NOISOLATION":"+^aa,^aaa,^aaaa,^bb,^bbb,^bbbb,^cc,^ccc,^cccc,^dd,^ddd,^dddd"
-	VIEW "NOISOLATION":"+^ee,^eee,^eeee,^ff,^fff,^ffff,^gg,^ggg,^gggg,^hh,^hhh,^hhhh"
-	VIEW "NOISOLATION":"+^ii,^iii,^iiii"
+	if (""=$ztrnlnm("ydb_app_ensures_isolation")) do
+	. VIEW "NOISOLATION":"+^aa,^aaa,^aaaa,^bb,^bbb,^bbbb,^cc,^ccc,^cccc,^dd,^ddd,^dddd"
+	. VIEW "NOISOLATION":"+^ee,^eee,^eeee,^ff,^fff,^ffff,^gg,^ggg,^gggg,^hh,^hhh,^hhhh"
+	. VIEW "NOISOLATION":"+^ii,^iii,^iiii"
+	; else dse_cache.csh has already set the env var to the above list of globals
 	;
 	if $data(^secgldno)  do
 	.	set secgldno=^secgldno

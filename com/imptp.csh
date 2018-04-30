@@ -42,6 +42,19 @@ if ("$1" != "") setenv gtm_test_jobcnt "$1"
 
 $gtm_tst/com/imptp_savemjo.csh
 if ($gtm_test_dbfill == "IMPTP" || $gtm_test_dbfill == "IMPZTP") then
+	if (! $?gtm_test_replay) then
+		@ rand = `$gtm_exe/mumps -run rand 2`
+		# If rand = 0 -> set env var here
+		if (0 == $rand) then
+			set noisolist = "^arandom,^brandomv,^crandomva,^drandomvariable,^erandomvariableimptp"
+			set noisolist = "$noisolist,^frandomvariableinimptp,^grandomvariableinimptpfill"
+			set noisolist = "$noisolist,^hrandomvariableinimptpfilling,^irandomvariableinimptpfillprgrm"
+			set noisolist = "$noisolist,^jrandomvariableinimptpfillprogram"
+			setenv ydb_app_ensures_isolation "$noisolist"
+			echo "setenv ydb_app_ensures_isolation $noisolist"	>> settings.csh
+		endif
+		# If rand = 1 (i.e. ydb_app_ensures_isolation env var is not set) -> do VIEW "NOISOLATION" command later in imptp.m
+	endif
 	if (($?trigger_load) && ($gtm_test_dbfill == "IMPTP")) then
 		# Test has specified -trigger and we are going to use imptp.m.
 		# Load triggers in the database.
@@ -53,16 +66,22 @@ if ($gtm_test_dbfill == "IMPTP" || $gtm_test_dbfill == "IMPZTP") then
 	if !($?gtm_test_replay) then
 		set usesimpleapi = `$gtm_exe/mumps -run rand 2`
 		echo "setenv usesimpleapi $usesimpleapi" >> settings.csh
+	else
+		set usesimpleapi = $usesimpleapi
 	endif
 	# If using a version that is other than the currently tested version, disable simpleapi for the older version.
 	if ("$gtm_verno" != "$tst_ver") then
 		set usesimpleapi = 0
+		echo "# Disabling simpleapi due to using current version $gtm_verno (other than test version $tst_ver)"
+		echo "setenv usesimpleapi $usesimpleapi" >> settings.csh
 	endif
 	# If online rollback test, then disable simpleapi. This is because imptp.m transfers control to an M label
 	# "orlbkres^imptp" etc. for online rollbacks and that is not straightforward with simpleAPI.
 	if ($?gtm_test_onlinerollback) then
 		if ($gtm_test_onlinerollback == "TRUE") then
 			set usesimpleapi = 0
+			echo "# Disabling simpleapi due to using online rollback"
+			echo "setenv usesimpleapi $usesimpleapi" >> settings.csh
 		endif
 	endif
 	if (! $usesimpleapi) then

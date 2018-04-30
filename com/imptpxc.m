@@ -25,17 +25,7 @@ imptpdztrig;
 	quit
 
 tpnoiso;
-	view "NOISOLATION":"^arandom,^brandomv,^crandomva,^drandomvariable,^erandomvariableimptp,^frandomvariableinimptp,^grandomvariableinimptpfill,^hrandomvariableinimptpfilling,^irandomvariableinimptpfillprgrm,^jrandomvariableinimptpfillprogram"
-	write "$view(""NOISOLATION"",""^arandom"")=",$view("NOISOLATION","^arandom"),!
-	write "$view(""NOISOLATION"",""^brandomv"")=",$view("NOISOLATION","^brandomv"),!
-	write "$view(""NOISOLATION"",""^crandomva"")=",$view("NOISOLATION","^crandomva"),!
-	write "$view(""NOISOLATION"",""^drandomvariable"")=",$view("NOISOLATION","^drandomvariable"),!
-	write "$view(""NOISOLATION"",""^erandomvariableimptp"")=",$view("NOISOLATION","^erandomvariableimptp"),!
-	write "$view(""NOISOLATION"",""^frandomvariableinimptp"")=",$view("NOISOLATION","^frandomvariableinimptp"),!
-	write "$view(""NOISOLATION"",""^grandomvariableinimptpfill"")=",$view("NOISOLATION","^grandomvariableinimptpfill"),!
-	write "$view(""NOISOLATION"",""^hrandomvariableinimptpfilling"")=",$view("NOISOLATION","^hrandomvariableinimptpfilling"),!
-	write "$view(""NOISOLATION"",""^irandomvariableinimptpfillprgrm"")=",$view("NOISOLATION","^irandomvariableinimptpfillprgrm"),!
-	write "$view(""NOISOLATION"",""^jrandomvariableinimptpfillprogram"")=",$view("NOISOLATION","^jrandomvariableinimptpfillprogram"),!
+	do tpnoiso^imptp
 	quit
 
 helper1	;
