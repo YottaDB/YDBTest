@@ -1,38 +1,113 @@
-#Create 2 database files for 2 regions, mumps.dat for DEFAULT and test.dat for TEST
+#Create 3 database files for 3 regions, mumps.dat, a.dat, and b.dat for DEFAULT, AREG, and BREG respectively
 #calls gtm8202.m to set variables
-#  journal extract -SEQNO=0,1,~2 across a single region
+#  single region extract -SEQNO=~0,1,~2 
+#  expected to return sequences 1
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%YDB-I-FILECREATE, Journal extract file ./singleReg.mjf created
+%YDB-I-FILECREATE, Journal extract file ./Reg.mjf created
 %YDB-S-JNLSUCCESS, Extract successful
 %YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 #  search extract file for set variables
-##SUSPEND_OUTPUT  NON_REPLIC
-1 ^jake(1)="a"
-##ALLOW_OUTPUT  NON_REPLIC
-#  journal extract -SEQNO=~1,2,~3,4  across multiple regions
-#  expected to create error for nonrep
+1 ^a(1)="a"
+#  multi region extract -SEQNO=~1,2,3,4,5,6 
+#  expected to return sequences 2,3,4
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##SUSPEND_OUTPUT  REPLIC
+%YDB-W-NOTALLJNLEN, Journaling disabled/off for one or more regions
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file ./Reg.mjf created
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+#  search extract file for set variables
+2 ^a(2)="b"
+3 ^b(1)="1"
+4 ^b(2)="2"
+5 ^a(3)="c"
+5 ^a(4)="d"
+#  multi region extract -SEQNO=~1,2,3,4,5,6 
+#  expected to return sequences 2,3,4
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%YDB-W-NOTALLJNLEN, Journaling disabled/off for one or more regions
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file ./Reg.mjf created
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+#  search extract file for set variables
+2 ^a(2)="b"
+3 ^b(1)="1"
+4 ^b(2)="2"
+5 ^a(3)="c"
+5 ^a(4)="d"
+#  multi region extract -SEQNO=~1,2,~3
+#  expected to return sequences 2
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%YDB-W-NOTALLJNLEN, Journaling disabled/off for one or more regions
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file ./Reg.mjf created
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+#  search extract file for set variables
+2 ^a(2)="b"
+#  multi region extract -SEQNO=~(~1,2,~3)
+#  expected to return sequences 1,3
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%YDB-W-NOTALLJNLEN, Journaling disabled/off for one or more regions
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file ./Reg.mjf created
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+#  search extract file for set variables
+1 ^a(1)="a"
+3 ^b(1)="1"
+#  multi region extract -SEQNO=1,~2,3
+#  expected to return sequences 1,3
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%YDB-W-NOTALLJNLEN, Journaling disabled/off for one or more regions
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file ./Reg.mjf created
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+#  search extract file for set variables
+1 ^a(1)="a"
+3 ^b(1)="1"
+#  multi region extract -SEQNO=~(1,~2,3)
+#  expected to return sequences 2
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%YDB-W-NOTALLJNLEN, Journaling disabled/off for one or more regions
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file ./Reg.mjf created
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+#  search extract file for set variables
+2 ^a(2)="b"
+#  single region extract -SEQNO=7,8 TP transaction 
+#  expecting a.lost to be created
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file ./Reg.mjf created
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+#  shutdown replication and turn it back on for AREG
+#  multi region extract -SEQNO=1,2,3,4 with BREG replication turned off
+#  expecting JNLEXTRCTSEQNO error
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%YDB-W-NOTALLJNLEN, Journaling disabled/off for one or more regions
 %YDB-E-JNLEXTRCTSEQNO, Journal Extracts based on sequence numbers are restricted to a single region when replication is OFF
-%YDB-I-FILENOTCREATE, Journal extract file ./multiReg.mjf not created
+%YDB-I-FILENOTCREATE, Journal extract file ./Reg.mjf not created
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-##SUSPEND_OUTPUT  NON_REPLIC
-##ALLOW_OUTPUT  REPLIC
-##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
-##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%YDB-I-FILECREATE, Journal extract file ./multiReg.mjf created
-%YDB-S-JNLSUCCESS, Extract successful
-%YDB-S-JNLSUCCESS, Verify successful
-##ALLOW_OUTPUT  NON_REPLIC
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
-#  search extract file for set variables
-##SUSPEND_OUTPUT  REPLIC
-cat: multiReg.mjf: No such file or directory
-cat: multiReg.mjf: No such file or directory
-##SUSPEND_OUTPUT  NON_REPLIC
-##ALLOW_OUTPUT  REPLIC
-2 ^jake(2)="b"
-4 ^zack(2)="2"
