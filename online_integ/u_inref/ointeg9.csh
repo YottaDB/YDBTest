@@ -4,6 +4,9 @@
 # Copyright (c) 2010-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -97,7 +100,7 @@ $gtm_tst/com/check_error_exist.csh online_integ_final.out FORCEDHALT
 
 echo ""
 $echoline
-ls -l gtm_snapshot* >&! ls_gtm_snapshot.log
+ls -l ydb_snapshot* >&! ls_ydb_snapshot.log
 set stat = $status
 if ($stat) then
 	echo "Snapshot files not found AS EXPECTED"
