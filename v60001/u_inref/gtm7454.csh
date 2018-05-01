@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2013 Fidelity Information Services, Inc	#
+# Copyright 2013 Fidelity Information Services, Inc		#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -46,7 +49,7 @@ EOF
 
 echo "# Wait for background online integ to complete"
 $gtm_tst/com/wait_for_proc_to_die.csh $fast_pid 120
-#rm gtm_snapshot*
+#rm ydb_snapshot*
 
 # Test 2: mixed updates with kill and reorg
 $GTM <<EOF

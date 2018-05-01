@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2009, 2013 Fidelity Information Services, Inc	#
+# Copyright 2009, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -47,15 +50,15 @@ echo "# ONLINE INTEG is now shot down. Ensure that doing a rundown cleans up the
 $echoline
 # Save snapshots in case we want to debug a failure
 \mkdir bak_snapshot
-cp gtm_snapshot_* bak_snapshot
+cp ydb_snapshot_* bak_snapshot
 
-ls -l gtm_snapshot* >&! ls_gtm_snapshot.log
+ls -l ydb_snapshot* >&! ls_ydb_snapshot.log
 set stat = $status
 if !($stat) then
 	echo "# Snapshot temporary files found before rundown as expected"
 endif
 $MUPIP rundown -reg "*"
-ls -l gtm_snapshot* >>&! ls_gtm_snapshot.log
+ls -l ydb_snapshot* >>&! ls_ydb_snapshot.log
 set stat = $status
 if ($stat) then
 	echo "# Snapshot temporary files NOT found after rundown as expected"

@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2012, 2013 Fidelity Information Services, Inc	#
+# Copyright 2012, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -72,8 +75,8 @@ endif
 
 setenv gtm_white_box_test_case_enable 0
 
-set file_fast=`ls -lrt gtm_snapshot*|$tst_awk 'NR==2{print $9}'`
-set file_norm=`ls -lrt gtm_snapshot*|$tst_awk 'NR==1{print $9}'`
+set file_fast=`ls -lrt ydb_snapshot*|$tst_awk 'NR==2{print $9}'`
+set file_norm=`ls -lrt ydb_snapshot*|$tst_awk 'NR==1{print $9}'`
 
 @ size_fast=`du -s $file_fast|$tst_awk '{print $1}'|sed 's/[A-Za-z]*//g'`
 @ size_norm=`du -s $file_norm|$tst_awk '{print $1}'|sed 's/[A-Za-z]*//g'`

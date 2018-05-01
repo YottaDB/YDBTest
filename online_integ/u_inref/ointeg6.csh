@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2009, 2013 Fidelity Information Services, Inc	#
+# Copyright 2009, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -74,7 +77,7 @@ endif
 $echoline
 echo "# Verify that ^alongvariable is not present in the snapshot file"
 $echoline
-$strings gtm_snapshot_* | $grep "alongvariable"
+$strings ydb_snapshot_* | $grep "alongvariable"
 set stat = $status
 if (! $stat) then
 	echo "# TEST-E-FAILED: Variable name 'alongvariable' is found in the temporary file though database is encrypted"

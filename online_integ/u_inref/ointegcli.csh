@@ -1,7 +1,21 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+# This module is derived from FIS GT.M.
+#################################################################
+
 # This subtest verifies that mupip online integ reports an error if it is run on a V4 database
 
-$gtm_tst/com/dbcreate.csh mumps 4 
+$gtm_tst/com/dbcreate.csh mumps 4
 
 $GTM << EOF
 set ^a=3
@@ -68,22 +82,22 @@ $echoline
 set mupip_log = "mupip_log8.log"
 $MUPIP integ $FASTINTEG -online -preserve -r DEFAULT >&! $mupip_log
 
-# Verify gtm_snapshot files exist
-ls gtm_snapshot*
+# Verify ydb_snapshot files exist
+ls ydb_snapshot*
 
 $echoline
 echo "# online integ analyze"
 echo "# mupip integ -online -analyze"
 $echoline
 set mupip_log = "mupip_log6.log"
-$MUPIP integ $FASTINTEG -online -analyze=`ls gtm_snapshot_*` >&! $mupip_log
+$MUPIP integ $FASTINTEG -online -analyze=`ls ydb_snapshot_*` >&! $mupip_log
 
 $echoline
 echo "# regular integ - all regions"
 echo "# mupip integ -r *"
 $echoline
 set mupip_log = "mupip_log9.log"
-$MUPIP integ $FASTINTEG -r "*" >&! $mupip_log 
+$MUPIP integ $FASTINTEG -r "*" >&! $mupip_log
 
 $echoline
 echo "# regular integ - multiple listed regions"
