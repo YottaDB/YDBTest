@@ -22,9 +22,9 @@
 echo "v63004 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
-setenv subtest_list_common     "gtm8202"
+setenv subtest_list_common     ""
 setenv subtest_list_non_replic ""
-setenv subtest_list_non_replic "$subtest_list_non_replic gtm8860 gtm8791"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm8860 gtm8791 gtm8202"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
