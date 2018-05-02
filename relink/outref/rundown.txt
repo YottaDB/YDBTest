@@ -15,7 +15,7 @@ Killed
 
 3b. MUMPS on a directory whose relinkctl file has not been run down due to a crash but shared memory removed.
 ##TEST_AWKTEST-I-INFO, Removed relinkctl shared memory segment [0-9]*.
-##TEST_AWK%YDB-E-REQRLNKCTLRNDWN, Error accessing relinkctl file ./gtm-relinkctl-[0-9a-f]* for \$ZROUTINES directory ##TEST_PATH##. Must be rundown
+##TEST_AWK%YDB-E-REQRLNKCTLRNDWN, Error accessing relinkctl file ./ydb-relinkctl-[0-9a-f]* for \$ZROUTINES directory ##TEST_PATH##. Must be rundown
 ##TEST_AWK%YDB-E-SYSCALL, Error received from system call shmat\(\) failed for shmid=.* shmsize=.* \[0x.*\] -- called from module .*/relinkctl.c at line .*
 ##TEST_AWK%SYSTEM-E-ENO[1-9][0-9]*, .*
 
@@ -28,7 +28,7 @@ Killed
 4b. MUMPS on a directory whose relinkctl file has not been run down due to a crash but shared memory removed.
 ##TEST_AWKTEST-I-INFO, Removed rtnobj shared memory segment [0-9]*.
 ##TEST_AWKTEST-I-INFO, Removed relinkctl shared memory segment [0-9]*.
-##TEST_AWK%YDB-E-REQRLNKCTLRNDWN, Error accessing relinkctl file ./gtm-relinkctl-[0-9a-f]* for \$ZROUTINES directory ##TEST_PATH##. Must be rundown
+##TEST_AWK%YDB-E-REQRLNKCTLRNDWN, Error accessing relinkctl file ./ydb-relinkctl-[0-9a-f]* for \$ZROUTINES directory ##TEST_PATH##. Must be rundown
 ##TEST_AWK%YDB-E-SYSCALL, Error received from system call shmat\(\) failed for shmid=.* shmsize=.* \[0x.*\] -- called from module .*/relinkctl.c at line .*
 ##TEST_AWK%SYSTEM-E-ENO[1-9][0-9]*, .*
 
@@ -49,7 +49,7 @@ Killed
 7b. MUMPS on directories whose relinkctl files have not been run down due to a crash but shared memory removed.
 ##TEST_AWKTEST-I-INFO, Removed relinkctl shared memory segment [0-9]*.
 ##TEST_AWKTEST-I-INFO, Removed relinkctl shared memory segment [0-9]*.
-##TEST_AWK%YDB-E-REQRLNKCTLRNDWN, Error accessing relinkctl file ./gtm-relinkctl-[0-9a-f]* for \$ZROUTINES directory ##TEST_PATH##. Must be rundown
+##TEST_AWK%YDB-E-REQRLNKCTLRNDWN, Error accessing relinkctl file ./ydb-relinkctl-[0-9a-f]* for \$ZROUTINES directory ##TEST_PATH##. Must be rundown
 ##TEST_AWK%YDB-E-SYSCALL, Error received from system call shmat\(\) failed for shmid=.* shmsize=.* \[0x.*\] -- called from module .*/relinkctl.c at line .*
 ##TEST_AWK%SYSTEM-E-ENO[1-9][0-9]*, .*
 
@@ -65,7 +65,7 @@ Killed
 ##TEST_AWKTEST-I-INFO, Removed rtnobj shared memory segment [0-9]*.
 ##TEST_AWKTEST-I-INFO, Removed relinkctl shared memory segment [0-9]*.
 ##TEST_AWKTEST-I-INFO, Removed relinkctl shared memory segment [0-9]*.
-##TEST_AWK%YDB-E-REQRLNKCTLRNDWN, Error accessing relinkctl file ./gtm-relinkctl-[0-9a-f]* for \$ZROUTINES directory ##TEST_PATH##. Must be rundown
+##TEST_AWK%YDB-E-REQRLNKCTLRNDWN, Error accessing relinkctl file ./ydb-relinkctl-[0-9a-f]* for \$ZROUTINES directory ##TEST_PATH##. Must be rundown
 ##TEST_AWK%YDB-E-SYSCALL, Error received from system call shmat\(\) failed for shmid=.* shmsize=.* \[0x.*\] -- called from module .*/relinkctl.c at line .*
 ##TEST_AWK%SYSTEM-E-ENO[1-9][0-9]*, .*
 
@@ -92,7 +92,7 @@ TEST-I-INFO, No left-over relinkctl IPCs found.
 13. Live MUMPS process whose previously loaded relinkctl shared memory has been removed.
 ##TEST_AWKTEST-I-INFO, Removed rtnobj shared memory segment [0-9]*.
 ##TEST_AWK.*relinkctl shared memory.*
-##TEST_AWK%YDB-E-REQRLNKCTLRNDWN, Error accessing relinkctl file ./gtm-relinkctl-[0-9a-f]* for \$ZROUTINES directory ##TEST_PATH##. Must be rundown
+##TEST_AWK%YDB-E-REQRLNKCTLRNDWN, Error accessing relinkctl file ./ydb-relinkctl-[0-9a-f]* for \$ZROUTINES directory ##TEST_PATH##. Must be rundown
 ##TEST_AWK%YDB-E-SYSCALL, Error received from system call rtnobj2 shmat\(\) failed for shmid=[0-9]* shmsize=0x[0-9a-f]* -- called from module .*/rtnobj.c at line [1-9][0-9]*
 ##TEST_AWK%SYSTEM-E-ENO[1-9][0-9]*, .*
 

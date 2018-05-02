@@ -3,6 +3,9 @@
 ; Copyright (c) 2015 Fidelity National Information 		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -41,7 +44,7 @@ case10
 
 case13
 	set $zroutines=".*"
-	zsystem "chmod 000 gtm-relink*; $gtm_dist/mupip rundown -relinkctl ."
+	zsystem "chmod 000 ydb-relinkctl*; $gtm_dist/mupip rundown -relinkctl ."
 	quit
 
 case16

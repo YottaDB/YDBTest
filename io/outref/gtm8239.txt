@@ -89,7 +89,7 @@ Case 13.
 $grep "\-E\-" case13.expect.outx
 ##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
 %YDB-E-RELINKCTLERR, Error with relink control structure for $ZROUTINES directory ##TEST_PATH##
-##TEST_AWK%YDB-E-SYSCALL, Error received from system call open\(\) of file ./gtm-relinkctl-[0-9a-f]* failed -- called from module .*/relinkctl.c at line [1-9][0-9]*
+##TEST_AWK%YDB-E-SYSCALL, Error received from system call open\(\) of file ./ydb-relinkctl-[0-9a-f]* failed -- called from module .*/relinkctl.c at line [1-9][0-9]*
 ##TEST_AWK%SYSTEM-E-ENO[1-9][0-9]*, .*
 ##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
 
