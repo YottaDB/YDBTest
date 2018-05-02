@@ -27,20 +27,14 @@ $MUPIP set -repli=on  -reg "AREG" >>& db_log.txt
 $MUPIP set -repli=on  -reg "BREG" >>& db_log.txt
 $MUPIP set -repli=off -journal=disable -reg "DEFAULT" >>& db_log.txt
 
-
 $gtm_tst/com/passive_start_upd_enable.csh >>& passive_start.out
-
-
 
 echo "#calls gtm8202.m to set variables"
 $ydb_dist/mumps -run gtm8202 > gtm8202.m.log
 
-
-
 echo "#  single region extract -SEQNO=~0,1,~2 "
 echo "#  expected to return sequences 1"
-$MUPIP journal -forward -extract=./Reg.mjf -seqno=~0,1,~2 "a.mjl" >> db_log.txt
-
+$MUPIP journal -forward -extract=./Reg.mjf -seqno=~0,1,~2 "a.mjl" >>& db_log.txt
 echo "#  search extract file for set variables"
 if (  -f Reg.mjf ) then
 	$grep "=" Reg.mjf | awk -F '\\' '{ print $6 " " $11 }'
@@ -49,14 +43,20 @@ else
 	echo "Reg.mjf not created (not supposed to happen here)"
 endif
 
-
-
-
+echo "#  multi region extract -SEQNO=~1,2,3,4,5 "
+echo "#  expected to return only variables a and b (not c)"
+$MUPIP journal -forward -extract=./Reg.mjf -seqno=~1,2,3,4,5 "*" >>& db_log.txt
+echo "#  search extract file for set variables"
+if (  -f Reg.mjf ) then
+	$grep "=" Reg.mjf | awk -F '\\' '{ print $6 " " $11 }'
+	rm Reg.mjf
+else
+	echo "Reg.mjf not created (not supposed to happen here)"
+endif
 
 echo "#  multi region extract -SEQNO=~1,2,3,4,5,6 "
-echo "#  expected to return sequences 2,3,4"
-$MUPIP journal -forward -extract=./Reg.mjf -seqno=~1,2,3,4,5,6 "*" >> db_log.txt
-
+echo "#  expected to return sequences 2,3,4,5"
+$MUPIP journal -forward -extract=./Reg.mjf -seqno=~1,2,3,4,5,6 "*" >>& db_log.txt
 echo "#  search extract file for set variables"
 if (  -f Reg.mjf ) then
 	$grep "=" Reg.mjf | awk -F '\\' '{ print $6 " " $11 }'
@@ -64,31 +64,10 @@ if (  -f Reg.mjf ) then
 else
 	echo "Reg.mjf not created (not supposed to happen here)"
 endif
-
-
-
-
-
-echo "#  multi region extract -SEQNO=~1,2,3,4,5,6 "
-echo "#  expected to return sequences 2,3,4"
-$MUPIP journal -forward -extract=./Reg.mjf -seqno=~1,2,3,4,5,6 "*" >> db_log.txt
-
-echo "#  search extract file for set variables"
-if (  -f Reg.mjf ) then
-	$grep "=" Reg.mjf | awk -F '\\' '{ print $6 " " $11 }'
-	rm Reg.mjf
-else
-	echo "Reg.mjf not created (not supposed to happen here)"
-endif
-
-
-
-
 
 echo "#  multi region extract -SEQNO=~1,2,~3"
 echo "#  expected to return sequences 2"
-$MUPIP journal -forward -extract=./Reg.mjf -seqno=~1,2,~3 "*" >> db_log.txt
-
+$MUPIP journal -forward -extract=./Reg.mjf -seqno=~1,2,~3 "*" >>& db_log.txt
 echo "#  search extract file for set variables"
 if (  -f Reg.mjf ) then
 	$grep "=" Reg.mjf | awk -F '\\' '{ print $6 " " $11 }'
@@ -96,15 +75,10 @@ if (  -f Reg.mjf ) then
 else
 	echo "Reg.mjf not created (not supposed to happen here)"
 endif
-
-
-
-
 
 echo "#  multi region extract -SEQNO=~(~1,2,~3)"
 echo "#  expected to return sequences 1,3"
-$MUPIP journal -forward -extract=./Reg.mjf -seqno="~(~1,2,~3)" "*" >> db_log.txt
-
+$MUPIP journal -forward -extract=./Reg.mjf -seqno="~(~1,2,~3)" "*" >>& db_log.txt
 echo "#  search extract file for set variables"
 if (  -f Reg.mjf ) then
 	$grep "=" Reg.mjf | awk -F '\\' '{ print $6 " " $11 }'
@@ -112,15 +86,10 @@ if (  -f Reg.mjf ) then
 else
 	echo "Reg.mjf not created (not supposed to happen here)"
 endif
-
-
-
-
 
 echo "#  multi region extract -SEQNO=1,~2,3"
 echo "#  expected to return sequences 1,3"
-$MUPIP journal -forward -extract=./Reg.mjf -seqno=1,~2,3 "*" >> db_log.txt
-
+$MUPIP journal -forward -extract=./Reg.mjf -seqno=1,~2,3 "*" >>& db_log.txt
 echo "#  search extract file for set variables"
 if (  -f Reg.mjf ) then
 	$grep "=" Reg.mjf | awk -F '\\' '{ print $6 " " $11 }'
@@ -128,15 +97,10 @@ if (  -f Reg.mjf ) then
 else
 	echo "Reg.mjf not created (not supposed to happen here)"
 endif
-
-
-
-
 
 echo "#  multi region extract -SEQNO=~(1,~2,3)"
 echo "#  expected to return sequences 2"
-$MUPIP journal -forward -extract=./Reg.mjf -seqno="~(1,~2,3)" "*" >> db_log.txt
-
+$MUPIP journal -forward -extract=./Reg.mjf -seqno="~(1,~2,3)" "*" >>& db_log.txt
 echo "#  search extract file for set variables"
 if (  -f Reg.mjf ) then
 	$grep "=" Reg.mjf | awk -F '\\' '{ print $6 " " $11 }'
@@ -145,16 +109,14 @@ else
 	echo "Reg.mjf not created (not supposed to happen here)"
 endif
 
-
-
-
-
-echo "#  single region extract -SEQNO=7,8 TP transaction "
+echo "#  single region extract -SEQNO=1,2,3,4,5,6,7,8 TP transaction "
 echo "#  expecting a.lost to be created"
-$MUPIP journal -forward -extract=./Reg.mjf -seqno="7,8" "a.mjl" >> db_log.txt
-
-
-
+$MUPIP journal -forward -extract=./Reg.mjf -seqno=1,2,3,4,5,6,7,8 "a.mjl" >>& db_log.txt;
+if (  -f "a.lost" ) then
+	echo "a.lost file created (expected)"
+else
+	echo "No a.lost file created (NOT expected)"
+endif
 
 
 echo "#  shutdown replication and turn it back on for AREG"
@@ -164,7 +126,6 @@ $MUPIP set -repli=on  -reg "AREG" >>& db_log.txt
 $MUPIP set -repli=off  -reg "BREG" >>& db_log.txt
 $MUPIP set -repli=off  -reg "DEFAULT" >>& db_log.txt
 
-
 echo "#  multi region extract -SEQNO=1,2,3,4 with BREG replication turned off"
 echo "#  expecting JNLEXTRCTSEQNO error"
-$MUPIP journal -forward -extract=./Reg.mjf -seqno="1,2,3,4" "*" >> db_log.txt
+$MUPIP journal -forward -extract=./Reg.mjf -seqno="1,2,3,4" "*" >>& db_log.txt
