@@ -1,0 +1,25 @@
+# Test that BLKTOODEEP error is not issued if -NOWARNING is specified at compile time
+
+# First test MUMPS blktoodeep.m : Expect EXPR and BLKTOODEEP warnings
+---------------------------------------------------------------------
+		IF '##class(%File).DirectoryExists(XOBDIR) DO  QUIT 0
+		    ^-----
+		At column 6, line 14, source module ##TEST_PATH##/blktoodeep.m
+%YDB-E-EXPR, Expression expected but not found
+		. WRITE !," o  Directory does not exist: "_XOBDIR
+		  ^-----
+		At column 4, line 15, source module ##TEST_PATH##/blktoodeep.m
+%YDB-W-BLKTOODEEP, Block level too deep
+		IF '##class(%File).Exists(XOBPATH) DO  QUIT 0
+		    ^-----
+		At column 6, line 16, source module ##TEST_PATH##/blktoodeep.m
+%YDB-E-EXPR, Expression expected but not found
+		. WRITE !," o  File to be imported does not exist: "_XOBPATH
+		  ^-----
+		At column 4, line 17, source module ##TEST_PATH##/blktoodeep.m
+%YDB-W-BLKTOODEEP, Block level too deep
+
+# Now test MUMPS -nowarning blktoodeep.m : Expect neither EXPR nor BLKTOODEEP warnings
+--------------------------------------------------------------------------------------
+
+# End of test
