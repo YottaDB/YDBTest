@@ -32,7 +32,7 @@ gtm8202()
 	 TCOMMIT
 
 	 ;ensures all updates to DB are moved from memory to disk
-	 ;mupip journal -extract only checks the disk
+	 ;mupip journal -extract (done in caller script right after this M program exits) only checks the disk
 	 view "flush"
 
 	 quit

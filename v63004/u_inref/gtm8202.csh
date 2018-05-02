@@ -18,9 +18,12 @@ setenv gtm_repl_instname INSTANCE1
 
 #setting this skips turning on replication in the passive start script
 setenv gtm_test_repl_skipsetreplic ""
+#setting initial db transaction number to 2**10 = 1024
+setenv gtm_test_dbcreate_initial_tn 10
 
+echo "setenv gtm_test_dbcreate_initial_tn 10" >> settings.csh
 
-echo " #Create 3 database files for 3 regions, mumps.dat, a.dat, and b.dat for DEFAULT, AREG, and BREG respectively"
+echo "# Create 3 database files for 3 regions, mumps.dat, a.dat, and b.dat for DEFAULT, AREG, and BREG respectively"
 $gtm_tst/com/dbcreate.csh mumps 3 255 8000 16384 1024 1024 1024 > db_log.txt
 
 $MUPIP set -repli=on  -reg "AREG" >>& db_log.txt
@@ -129,15 +132,43 @@ else
 endif
 
 
-echo "# Shutdown replication and turn it back on for AREG"
+echo "# Shutdown replication for BREG"
 $MUPIP replic -source -shutdown -timeout=0 >>& passive_stop.out
 $gtm_tst/com/dbcheck.csh >> dbcreate_log.txt
-$MUPIP set -repli=on  -reg "AREG" >>& db_log.txt
 $MUPIP set -repli=off  -reg "BREG" >>& db_log.txt
-$MUPIP set -repli=off  -reg "DEFAULT" >>& db_log.txt
 
 echo "# Multi region extract -SEQNO=1,2,3,4 with BREG replication turned off"
 echo "# Expecting JNLEXTRCTSEQNO error"
 $MUPIP journal -forward -extract=./Reg.mjf -seqno="1,2,3,4" "*" >>& db_log.txt
 $grep "JNLEXTRCTSEQNO" db_log.txt
+
+
+echo "# Grep db_log.txt for the b.mjl_* file holding the previous transactions"
+set bjnl=`$grep 'b.mjl_' db_log.txt | awk -F '/' 'END{ print $(NF) }'`
+echo $bjnl
+
+
+echo "# Single region extract -SEQNO="3,4" (journal sequence numbers) with BREG replication truned off"
+echo "# Expecting to find no set variables"
+$MUPIP journal -forward -extract=./Reg.mjf -seqno="3,4" "$bjnl" >>& db_log.txt
+echo "# Search extract file for set variables"
+if (  -f Reg.mjf ) then
+	$grep "=" Reg.mjf | awk -F '\\' '{ print $6 " " $11 }'
+	rm Reg.mjf
+else
+	echo "# Reg.mjf not created (NOT expected)"
+endif
+
+echo "# Single region extract -SEQNO="1024,1025,1026,1027,1028,1029" (DB transaction numbers) with BREG replication truned off"
+echo "# Expecting variables b(1) and b(2) to be set"
+$MUPIP journal -forward -extract=./Reg.mjf -seqno="1024,1025,1026,1027,1028,1029" "$bjnl" >>& db_log.txt
+echo "# Search extract file for set variables"
+if (  -f Reg.mjf ) then
+	$grep "=" Reg.mjf | awk -F '\\' '{ print $2 " " $11 }'
+	rm Reg.mjf
+else
+	echo "# Reg.mjf not created (NOT expected)"
+endif
+
+
 
