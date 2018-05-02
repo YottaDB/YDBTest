@@ -1,0 +1,37 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Test of various VIEW commands and $VIEW functions
+ --> Running test test1^viewcmdfunc
+$view("NOISOLATION","^a000000000000000000000000000000") = 1
+ --> Running test test2^viewcmdfunc
+%YDB-E-VIEWGVN, Invalid global key name used with VIEW/$VIEW(): "abcdefghijklmnopqrstuvwxyzabcde"
+		At M source location test2+1^viewcmdfunc
+
+YDB>
+ --> Running test test3^viewcmdfunc
+%YDB-E-NOREGION, REGION not found: "A000000000000000000000000000000"
+		At M source location test3+3^viewcmdfunc
+
+YDB>
+ --> Running test test4^viewcmdfunc
+%YDB-E-NOREGION, REGION not found: "A000000000000000000000000000000"
+		At M source location test4+3^viewcmdfunc
+
+YDB>
+ --> Running test test5^viewcmdfunc
+ --> Running test test6^viewcmdfunc
+%YDB-E-NOREGION, REGION not found: ""
+		At M source location test6+1^viewcmdfunc
+
+YDB>
+ --> Running test test7^viewcmdfunc
+%YDB-E-NOREGION, REGION not found: ""
+		At M source location test7+1^viewcmdfunc
+
+YDB>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
