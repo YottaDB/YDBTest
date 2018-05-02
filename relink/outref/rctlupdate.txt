@@ -20,7 +20,7 @@ Case 5. Object files whose name begins with '%' should not be allowed:
 
 Case 6. Symbolic links should not be accepted for consideration as routine object entries:
 Object Directory         : ##TEST_PATH##/dir
-##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/gtm-relinkctl-[0-9a-f]*
+##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/ydb-relinkctl-[0-9a-f]*
 # of routines / max      : 1 / 50000
 # of attached processes  : 1
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
@@ -28,7 +28,7 @@ Object Directory         : ##TEST_PATH##/dir
 
 Case 7. The '?' wildcard character needs to be supported:
 Object Directory         : ##TEST_PATH##/dir
-##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/gtm-relinkctl-[0-9a-f]*
+##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/ydb-relinkctl-[0-9a-f]*
 # of routines / max      : 1 / 50000
 # of attached processes  : 1
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
@@ -38,14 +38,14 @@ Case 8. If the directory in ZRUPDATE argument is missing, and the relinkctl file
         by a different process and never opened by the process doing the ZRUPDATE, we should still
         increment its cycle.
 Object Directory         : ##TEST_PATH##/dir/dir3
-##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/gtm-relinkctl-[0-9a-f]*
+##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/ydb-relinkctl-[0-9a-f]*
 # of routines / max      : 1 / 50000
 # of attached processes  : 1
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
     rec#1: rtnname: a  cycle: 1  objhash: 0x0  numvers: 0  objlen: 0x0  shmlen: 0x0
 
 Object Directory         : ##TEST_PATH##/dir/dir3
-##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/gtm-relinkctl-[0-9a-f]*
+##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/ydb-relinkctl-[0-9a-f]*
 # of routines / max      : 1 / 50000
 # of attached processes  : 2
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*

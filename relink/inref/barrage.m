@@ -1534,7 +1534,7 @@ validateRctlDump(pid)
 	; Read whatever lines have been added by job processes and extract relevant information. A typical RCTL dump looks like this:
 	;
 	;   Object Directory         : /extra1/testarea1/.../relink_0/memleak
-	;   Relinkctl filename       : /tmp/gtm-relinkctl-945748b645177f392aa3698ac6c65f92
+	;   Relinkctl filename       : /tmp/ydb-relinkctl-945748b645177f392aa3698ac6c65f92
 	;   # of routines / max      : 4 / 50000
 	;   # of attached processes  : 3
 	;   Relinkctl shared memory  : shmid: 1314848795  shmlen: 0x57c6000

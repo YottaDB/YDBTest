@@ -1,6 +1,6 @@
 1. Change permissions on an active relinkctl file and start a concurrent process to access it.
 %YDB-E-RELINKCTLERR, Error with relink control structure for $ZROUTINES directory ##TEST_PATH##
-##TEST_AWK%YDB-E-SYSCALL, Error received from system call open\(\) of file ./gtm-relinkctl-[0-9a-f]* failed -- called from module .*/relinkctl.c at line [1-9][0-9]*
+##TEST_AWK%YDB-E-SYSCALL, Error received from system call open\(\) of file ./ydb-relinkctl-[0-9a-f]* failed -- called from module .*/relinkctl.c at line [1-9][0-9]*
 ##TEST_AWK%SYSTEM-E-ENO[1-9][0-9]*, .*
 
 2. Change permissions on an active relinkctl shared memory and start a concurrent process to access it.

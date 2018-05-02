@@ -37,28 +37,28 @@ version 1
 
 # Existing directory with relinkctl stuff as an argument to MUPIP RCTLDUMP.
 Object Directory         : ##TEST_PATH##/a
-##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/gtm-relinkctl-[0-9a-f]*
+##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/ydb-relinkctl-[0-9a-f]*
 # of routines / max      : 0 / 50000
 # of attached processes  : 2
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
 
 # Existing directory with relinkctl stuff as an argument (including a . path modifier) to MUPIP RCTLDUMP.
 Object Directory         : ##TEST_PATH##/a
-##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/gtm-relinkctl-[0-9a-f]*
+##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/ydb-relinkctl-[0-9a-f]*
 # of routines / max      : 0 / 50000
 # of attached processes  : 2
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
 
 # Existing directory with relinkctl stuff as an argument (including a .. path modifier) to MUPIP RCTLDUMP.
 Object Directory         : ##TEST_PATH##/a
-##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/gtm-relinkctl-[0-9a-f]*
+##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/ydb-relinkctl-[0-9a-f]*
 # of routines / max      : 0 / 50000
 # of attached processes  : 2
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
 
 # Existing directory with relinkctl stuff as an argument (as an absolute path) to MUPIP RCTLDUMP.
 Object Directory         : ##TEST_PATH##/a
-##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/gtm-relinkctl-[0-9a-f]*
+##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/ydb-relinkctl-[0-9a-f]*
 # of routines / max      : 0 / 50000
 # of attached processes  : 2
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
@@ -93,13 +93,13 @@ x=1
 Multiple arguments to ZRUPDATE:
  a. ZRUPDATE "someRtn.o","someDir/someRtn.o"
 Object Directory         : ##TEST_PATH##/someDir
-##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/gtm-relinkctl-[0-9a-f]*
+##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/ydb-relinkctl-[0-9a-f]*
 # of routines / max      : 1 / 50000
 # of attached processes  : 1
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
     rec#1: rtnname: someRtn  cycle: 1  objhash: 0x0  numvers: 0  objlen: 0x0  shmlen: 0x0
 Object Directory         : ##TEST_PATH##
-##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/gtm-relinkctl-[0-9a-f]*
+##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/ydb-relinkctl-[0-9a-f]*
 # of routines / max      : 1 / 50000
 # of attached processes  : 1
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
@@ -107,13 +107,13 @@ Object Directory         : ##TEST_PATH##
 
  b. ZRUPDATE "otherRtn.o","someDir/someRtn.o","someDir/otherRtn.o","someRtn.o"
 Object Directory         : ##TEST_PATH##/someDir
-##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/gtm-relinkctl-[0-9a-f]*
+##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/ydb-relinkctl-[0-9a-f]*
 # of routines / max      : 1 / 50000
 # of attached processes  : 1
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
     rec#1: rtnname: someRtn  cycle: 1  objhash: 0x0  numvers: 0  objlen: 0x0  shmlen: 0x0
 Object Directory         : ##TEST_PATH##
-##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/gtm-relinkctl-[0-9a-f]*
+##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/ydb-relinkctl-[0-9a-f]*
 # of routines / max      : 1 / 50000
 # of attached processes  : 1
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
@@ -121,25 +121,25 @@ Object Directory         : ##TEST_PATH##
 
  c. ZRUPDATE "otherRtn.o","someDir/otherRtn.o"
 Object Directory         : ##TEST_PATH##/someDir
-##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/gtm-relinkctl-[0-9a-f]*
+##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/ydb-relinkctl-[0-9a-f]*
 # of routines / max      : 0 / 50000
 # of attached processes  : 1
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
 Object Directory         : ##TEST_PATH##
-##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/gtm-relinkctl-[0-9a-f]*
+##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/ydb-relinkctl-[0-9a-f]*
 # of routines / max      : 0 / 50000
 # of attached processes  : 1
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
 
  d. ZRUPDATE "someRtn.o","someDir/someRtn.o","someRtn.o","someDir/someRtn.o"
 Object Directory         : ##TEST_PATH##/someDir
-##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/gtm-relinkctl-[0-9a-f]*
+##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/ydb-relinkctl-[0-9a-f]*
 # of routines / max      : 1 / 50000
 # of attached processes  : 1
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
     rec#1: rtnname: someRtn  cycle: 2  objhash: 0x0  numvers: 0  objlen: 0x0  shmlen: 0x0
 Object Directory         : ##TEST_PATH##
-##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/gtm-relinkctl-[0-9a-f]*
+##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/ydb-relinkctl-[0-9a-f]*
 # of routines / max      : 1 / 50000
 # of attached processes  : 1
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
@@ -155,13 +155,13 @@ Object Directory         : ##TEST_PATH##
 
  g. ZRUPDATE "*some*.o","some*/*"
 Object Directory         : ##TEST_PATH##/someDir
-##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/gtm-relinkctl-[0-9a-f]*
+##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/ydb-relinkctl-[0-9a-f]*
 # of routines / max      : 1 / 50000
 # of attached processes  : 1
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
     rec#1: rtnname: someRtn  cycle: 1  objhash: 0x0  numvers: 0  objlen: 0x0  shmlen: 0x0
 Object Directory         : ##TEST_PATH##
-##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/gtm-relinkctl-[0-9a-f]*
+##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/ydb-relinkctl-[0-9a-f]*
 # of routines / max      : 1 / 50000
 # of attached processes  : 1
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
@@ -173,7 +173,7 @@ Object Directory         : ##TEST_PATH##
 
 Static link of a routine from a directory following a starred directory in $zroutines.
 Object Directory         : ##TEST_PATH##/dir1
-##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/gtm-relinkctl-[0-9a-f]*
+##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/ydb-relinkctl-[0-9a-f]*
 # of routines / max      : 0 / 50000
 # of attached processes  : 1
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
@@ -181,7 +181,7 @@ Object Directory         : ##TEST_PATH##/dir1
 Check the concurrent versions of the same routine in rtnobj shared memory.
 Process B has compiled and linked a different version of routine and recompiled the original:
 Object Directory         : ##TEST_PATH##/objXDS
-##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/gtm-relinkctl-[0-9a-f]*
+##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/ydb-relinkctl-[0-9a-f]*
 # of routines / max      : 1 / 50000
 # of attached processes  : 3
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
@@ -190,7 +190,7 @@ Object Directory         : ##TEST_PATH##/objXDS
 
 Process A has executed the originally linked version of the routine:
 Object Directory         : ##TEST_PATH##/objXDS
-##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/gtm-relinkctl-[0-9a-f]*
+##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/ydb-relinkctl-[0-9a-f]*
 # of routines / max      : 1 / 50000
 # of attached processes  : 3
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
@@ -199,7 +199,7 @@ Object Directory         : ##TEST_PATH##/objXDS
 
 Process C has executed the currently available routine:
 Object Directory         : ##TEST_PATH##/objXDS
-##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/gtm-relinkctl-[0-9a-f]*
+##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/ydb-relinkctl-[0-9a-f]*
 # of routines / max      : 1 / 50000
 # of attached processes  : 4
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
@@ -208,7 +208,7 @@ Object Directory         : ##TEST_PATH##/objXDS
 
 Process A has also executed the currently available routine:
 Object Directory         : ##TEST_PATH##/objXDS
-##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/gtm-relinkctl-[0-9a-f]*
+##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/ydb-relinkctl-[0-9a-f]*
 # of routines / max      : 1 / 50000
 # of attached processes  : 4
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
@@ -218,7 +218,7 @@ Object Directory         : ##TEST_PATH##/objXDS
 Duplicate entries in $gtmroutines.
 version 1
 Object Directory         : ##TEST_PATH##/dirA
-##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/gtm-relinkctl-[0-9a-f]*
+##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/ydb-relinkctl-[0-9a-f]*
 # of routines / max      : 1 / 50000
 # of attached processes  : 1
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
@@ -226,7 +226,7 @@ Object Directory         : ##TEST_PATH##/dirA
 ##TEST_AWK    rec#1: rtnname: y  cycle: 1  objhash: 0x[0-9a-f]*  numvers: 1  objlen: 0x[0-9a-f]*  shmlen: 0x[0-9a-f]*
 
 Object Directory         : ##TEST_PATH##/dirA
-##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/gtm-relinkctl-[0-9a-f]*
+##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/ydb-relinkctl-[0-9a-f]*
 # of routines / max      : 1 / 50000
 # of attached processes  : 1
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
@@ -235,7 +235,7 @@ Object Directory         : ##TEST_PATH##/dirA
 Duplicate entries in $zroutines.
 version 1
 Object Directory         : ##TEST_PATH##/dirA
-##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/gtm-relinkctl-[0-9a-f]*
+##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/ydb-relinkctl-[0-9a-f]*
 # of routines / max      : 1 / 50000
 # of attached processes  : 1
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
@@ -243,7 +243,7 @@ Object Directory         : ##TEST_PATH##/dirA
 ##TEST_AWK    rec#1: rtnname: y  cycle: 1  objhash: 0x[0-9a-f]*  numvers: 1  objlen: 0x[0-9a-f]*  shmlen: 0x[0-9a-f]*
 
 Object Directory         : ##TEST_PATH##/dirA
-##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/gtm-relinkctl-[0-9a-f]*
+##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/ydb-relinkctl-[0-9a-f]*
 # of routines / max      : 1 / 50000
 # of attached processes  : 1
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
@@ -251,19 +251,19 @@ Object Directory         : ##TEST_PATH##/dirA
 
 Environment variables in $zroutines.
 Object Directory         : ##TEST_PATH##
-##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/gtm-relinkctl-[0-9a-f]*
+##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/ydb-relinkctl-[0-9a-f]*
 # of routines / max      : 0 / 50000
 # of attached processes  : 1
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
 
 Object Directory         : ##TEST_PATH##/dirA
-##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/gtm-relinkctl-[0-9a-f]*
+##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/ydb-relinkctl-[0-9a-f]*
 # of routines / max      : 0 / 50000
 # of attached processes  : 1
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
 
 Object Directory         : ##TEST_PATH##/dirA
-##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/gtm-relinkctl-[0-9a-f]*
+##TEST_AWKRelinkctl filename       : /tmp/relinkdir/[0-9a-zA-Z]*/ydb-relinkctl-[0-9a-f]*
 # of routines / max      : 0 / 50000
 # of attached processes  : 1
 ##TEST_AWKRelinkctl shared memory  : shmid: [0-9]*  shmlen: 0x[0-9a-f]*
