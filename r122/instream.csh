@@ -16,6 +16,7 @@
 #-------------------------------------------------------------------------------------------------------------
 # tprestart   [nars]  Test that TPRESTART syslog message has the correct global name when restart "type" is 4
 # viewcmdfunc [nars]  Test various VIEW commands and $VIEW functions (used to SIG-11/SIG-6/GTMASSERT2 in V6.3-004)
+# blktoodeep  [nars]  Test that BLKTOODEEP error is not issued if -NOWARNING is specified at compile time
 #-------------------------------------------------------------------------------------------------------------
 
 echo "r122 test starts..."
@@ -23,7 +24,7 @@ echo "r122 test starts..."
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic ""
-setenv subtest_list_non_replic "$subtest_list_non_replic tprestart viewcmdfunc"
+setenv subtest_list_non_replic "$subtest_list_non_replic tprestart viewcmdfunc blktoodeep"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
