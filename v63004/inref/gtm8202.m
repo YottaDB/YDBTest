@@ -31,5 +31,8 @@ gtm8202()
 	 set ^c(4)="12"
 	 TCOMMIT
 
+	 ;ensures all updates to DB are moved from memory to disk
+	 ;mupip journal -extract only checks the disk
 	 view "flush"
+
 	 quit

@@ -1,12 +1,12 @@
-#Create 3 database files for 3 regions, mumps.dat, a.dat, and b.dat for DEFAULT, AREG, and BREG respectively
-#calls gtm8202.m to set variables
-#  single region extract -SEQNO=~0,1,~2 
-#  expected to return sequences 1
-#  search extract file for set variables
+ #Create 3 database files for 3 regions, mumps.dat, a.dat, and b.dat for DEFAULT, AREG, and BREG respectively
+ #Calls gtm8202.m to set variables
+# Single region extract -SEQNO=~0,1,~2 
+# Expected to return sequences 1
+# Search extract file for set variables
 1 ^a(1)="10"
-#  multi region extract -SEQNO=~1,2,3,4,5 
-#  expected to return only variables a and b (not c)
-#  search extract file for set variables
+# Multi region extract -SEQNO=~1,2,3,4,5 
+# Expected to return only variables a and b (not c)
+# Search extract file for set variables
 2 ^a(2)="20"
 3 ^b(1)="5"
 4 ^b(2)="10"
@@ -14,9 +14,9 @@
 5 ^a(4)="40"
 5 ^b(3)="15"
 5 ^b(4)="20"
-#  multi region extract -SEQNO=~1,2,3,4,5,6 
-#  expected to return sequences 2,3,4,5
-#  search extract file for set variables
+# Multi region extract -SEQNO=~1,2,3,4,5,6 
+# Expected to return sequences 2,3,4,5
+# Search extract file for set variables
 2 ^a(2)="20"
 3 ^b(1)="5"
 4 ^b(2)="10"
@@ -24,27 +24,35 @@
 5 ^a(4)="40"
 5 ^b(3)="15"
 5 ^b(4)="20"
-#  multi region extract -SEQNO=~1,2,~3
-#  expected to return sequences 2
-#  search extract file for set variables
+# Multi region extract -SEQNO=~1,2,~3
+# Expected to return sequences 2
+# Search extract file for set variables
 2 ^a(2)="20"
-#  multi region extract -SEQNO=~(~1,2,~3)
-#  expected to return sequences 1,3
-#  search extract file for set variables
+# Multi region extract -SEQNO=~(~1,2,~3)
+# Expected to return sequences 1,3
+# Search extract file for set variables
 1 ^a(1)="10"
 3 ^b(1)="5"
-#  multi region extract -SEQNO=1,~2,3
-#  expected to return sequences 1,3
-#  search extract file for set variables
+# Multi region extract -SEQNO=1,~2,3
+# Expected to return sequences 1,3
+# Search extract file for set variables
 1 ^a(1)="10"
 3 ^b(1)="5"
-#  multi region extract -SEQNO=~(1,~2,3)
-#  expected to return sequences 2
-#  search extract file for set variables
+# Multi region extract -SEQNO=~(1,~2,3)
+# Expected to return sequences 2
+# Search extract file for set variables
 2 ^a(2)="20"
-#  single region extract -SEQNO=1,2,3,4,5,6,7,8 TP transaction 
-#  expecting a.lost to be created
-a.lost file created (expected)
-#  shutdown replication and turn it back on for AREG
-#  multi region extract -SEQNO=1,2,3,4 with BREG replication turned off
-#  expecting JNLEXTRCTSEQNO error
+# Single region extract -SEQNO=1,2,3,4,5,6,7,8 TP transaction 
+# Expecting a.broken to contain a(3) and a(4)
+# Expecting Reg.mjf to contain a(1) and a(2)
+%YDB-I-FILECREATE, Broken transactions extract file ##TEST_PATH##/a.broken created
+# a.broken
+5 ^a(3)="30"
+5 ^a(4)="40"
+# Reg.mjf
+1 ^a(1)="10"
+2 ^a(2)="20"
+# Shutdown replication and turn it back on for AREG
+# Multi region extract -SEQNO=1,2,3,4 with BREG replication turned off
+# Expecting JNLEXTRCTSEQNO error
+%YDB-E-JNLEXTRCTSEQNO, Journal Extracts based on sequence numbers are restricted to a single region when replication is OFF
