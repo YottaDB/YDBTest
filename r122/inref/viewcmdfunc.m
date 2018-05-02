@@ -11,10 +11,13 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 test1
-	set xstr="view ""NOISOLATION"":""^a"
-	for i=1:1:1024 set xstr=xstr_"0"
+	set gblname="^a"
+	for i=1:1:1024 set gblname=gblname_"0"
+	set xstr="view ""NOISOLATION"":"""_gblname
 	set xstr=xstr_""""
 	xecute xstr
+	set agbl=$extract(gblname,1,32)
+	write "$view(""NOISOLATION"","""_agbl_""") = ",$view("NOISOLATION",agbl),!
 	quit
 
 test2

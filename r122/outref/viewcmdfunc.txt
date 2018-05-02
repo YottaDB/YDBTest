@@ -5,10 +5,7 @@ Using: ##SOURCE_PATH##/mupip
 mumps.dat
 Test of various VIEW commands and $VIEW functions
  --> Running test test1^viewcmdfunc
-%YDB-E-VIEWGVN, Invalid global key name used with VIEW/$VIEW(): "a000000000000000000000000000000"
-		At M source location test1+4^viewcmdfunc
-
-YDB>
+$view("NOISOLATION","^a000000000000000000000000000000") = 1
  --> Running test test2^viewcmdfunc
 %YDB-E-VIEWGVN, Invalid global key name used with VIEW/$VIEW(): "abcdefghijklmnopqrstuvwxyzabcde"
 		At M source location test2+1^viewcmdfunc
