@@ -22,6 +22,8 @@ child  ;
 	for i=1:1  quit:^stop=1  do
 	.	tstart ():serial
 	.	set x=$incr(^c)
-	.	set ^a(x)=1,^b(x)=2
+	.	if $r(2) set ^a($j,x)=$j(1,220)
+	.	if $r(2) set ^b($j,x)=$j(2,220)
+	.	if $r(2) set ^c($j,x)=$j(3,220)
 	.	tcommit
 	quit
