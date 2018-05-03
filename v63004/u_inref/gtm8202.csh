@@ -145,10 +145,9 @@ $grep "JNLEXTRCTSEQNO" db_log.txt
 
 echo "# Grep db_log.txt for the b.mjl_* file holding the previous transactions"
 set bjnl=`$grep 'b.mjl_' db_log.txt | awk -F '/' 'END{ print $(NF) }'`
-echo $bjnl
 
 
-echo "# Single region extract -SEQNO="3,4" (journal sequence numbers) with BREG replication truned off"
+echo "# Single region extract -SEQNO="3,4" (journal sequence numbers) with BREG replication turned off"
 echo "# Expecting to find no set variables"
 $MUPIP journal -forward -extract=./Reg.mjf -seqno="3,4" "$bjnl" >>& db_log.txt
 echo "# Search extract file for set variables"
@@ -159,16 +158,26 @@ else
 	echo "# Reg.mjf not created (NOT expected)"
 endif
 
-echo "# Single region extract -SEQNO="1024,1025,1026,1027,1028,1029" (DB transaction numbers) with BREG replication truned off"
+echo "# Single region extract -SEQNO="1024,1025,1026,1027,1028,1029" (DB transaction numbers) with BREG replication turned off"
 echo "# Expecting variables b(1) and b(2) to be set"
 $MUPIP journal -forward -extract=./Reg.mjf -seqno="1024,1025,1026,1027,1028,1029" "$bjnl" >>& db_log.txt
 echo "# Search extract file for set variables"
 if (  -f Reg.mjf ) then
-	$grep "=" Reg.mjf | awk -F '\\' '{ print $2 " " $11 }'
+	$grep "=" Reg.mjf | awk -F '\\' '{ print $3 " " $11 }'
 	rm Reg.mjf
 else
 	echo "# Reg.mjf not created (NOT expected)"
 endif
 
 
+echo "# Single region extract -SEQNO="1024" (DB transaction numbers) with BREG replication turned off"
+echo "# Expecting variables b(1) to be set"
+$MUPIP journal -forward -extract=./Reg.mjf -seqno="1024" "$bjnl" >>& db_log.txt
+echo "# Search extract file for set variables"
+if (  -f Reg.mjf ) then
+	$grep "=" Reg.mjf | awk -F '\\' '{ print $3 " " $11 }'
+	rm Reg.mjf
+else
+	echo "# Reg.mjf not created (NOT expected)"
+endif
 
