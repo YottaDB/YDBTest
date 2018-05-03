@@ -14,6 +14,11 @@
 
 $gtm_tst/com/dbcreate.csh mumps 3
 
+set rand = `$ydb_dist/mumps -run rand 5 1 1`	# Return random numbers in the range [1,3]
+
+setenv ydb_tprestart_log_delta $rand # Enable TPRESTART logging
+setenv gtm_tprestart_log_delta $rand	# Also set gtm* env var so this test can be run with pre-r122 versions
+
 set syslog_time_before = `date +"%b %e %H:%M:%S"`
 $ydb_dist/mumps -run tprestart
 set syslog_time_after = `date +"%b %e %H:%M:%S"`
@@ -27,6 +32,10 @@ $gtm_tst/com/getoper.csh "$syslog_time_before" "$syslog_time_after" syslog2.txt
 # It is possible the global name has subscripts. Filter that out.
 # Finally compare the unsubscripted global name against the database file name.
 $grep "TPRESTART.*`pwd`" syslog2.txt | $tst_awk '{print $8, $15}' | grep -vw DIR | sed 's/(.*)//g' | sort -u >& reg_gbl.out
+if (-z reg_gbl.out) then
+	echo "No TPRESTART messages in the syslog from this test run. The test is not serving its purpose. Signal failure."
+	exit -1
+endif
 echo "-------------------------------------------------------------------------------------------------"
 echo "Below is a list of global names & region names in the TPRESTART syslog messages that do not match"
 echo "-------------------------------------------------------------------------------------------------"
