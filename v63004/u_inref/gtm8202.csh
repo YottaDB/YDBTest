@@ -40,7 +40,7 @@ echo "# Expected to return sequences 1"
 $MUPIP journal -forward -extract=./Reg.mjf -seqno=~0,1,~2 "a.mjl" >>& db_log.txt
 echo "# Search extract file for set variables"
 if (  -f Reg.mjf ) then
-	$grep "=" Reg.mjf | awk -F '\\' '{ print $6 " " $11 }'
+	$grep "=" Reg.mjf | $tst_awk -F '\\' '{ print $6 " " $11 }'
 	rm Reg.mjf
 else
 	echo "# Reg.mjf not created (not supposed to happen here)"
@@ -51,7 +51,7 @@ echo "# Expected to return only variables a and b (not c)"
 $MUPIP journal -forward -extract=./Reg.mjf -seqno=~1,2,3,4,5 "*" >>& db_log.txt
 echo "# Search extract file for set variables"
 if (  -f Reg.mjf ) then
-	$grep "=" Reg.mjf | awk -F '\\' '{ print $6 " " $11 }'
+	$grep "=" Reg.mjf | $tst_awk -F '\\' '{ print $6 " " $11 }'
 	rm Reg.mjf
 else
 	echo "# Reg.mjf not created (not supposed to happen here)"
@@ -62,7 +62,7 @@ echo "# Expected to return sequences 2,3,4,5"
 $MUPIP journal -forward -extract=./Reg.mjf -seqno=~1,2,3,4,5,6 "*" >>& db_log.txt
 echo "# Search extract file for set variables"
 if (  -f Reg.mjf ) then
-	$grep "=" Reg.mjf | awk -F '\\' '{ print $6 " " $11 }'
+	$grep "=" Reg.mjf | $tst_awk -F '\\' '{ print $6 " " $11 }'
 	rm Reg.mjf
 else
 	echo "# Reg.mjf not created (not supposed to happen here)"
@@ -73,7 +73,7 @@ echo "# Expected to return sequences 2"
 $MUPIP journal -forward -extract=./Reg.mjf -seqno=~1,2,~3 "*" >>& db_log.txt
 echo "# Search extract file for set variables"
 if (  -f Reg.mjf ) then
-	$grep "=" Reg.mjf | awk -F '\\' '{ print $6 " " $11 }'
+	$grep "=" Reg.mjf | $tst_awk -F '\\' '{ print $6 " " $11 }'
 	rm Reg.mjf
 else
 	echo "# Reg.mjf not created (not supposed to happen here)"
@@ -84,7 +84,7 @@ echo "# Expected to return sequences 1,3"
 $MUPIP journal -forward -extract=./Reg.mjf -seqno="~(~1,2,~3)" "*" >>& db_log.txt
 echo "# Search extract file for set variables"
 if (  -f Reg.mjf ) then
-	$grep "=" Reg.mjf | awk -F '\\' '{ print $6 " " $11 }'
+	$grep "=" Reg.mjf | $tst_awk -F '\\' '{ print $6 " " $11 }'
 	rm Reg.mjf
 else
 	echo "# Reg.mjf not created (not supposed to happen here)"
@@ -95,7 +95,7 @@ echo "# Expected to return sequences 1,3"
 $MUPIP journal -forward -extract=./Reg.mjf -seqno=1,~2,3 "*" >>& db_log.txt
 echo "# Search extract file for set variables"
 if (  -f Reg.mjf ) then
-	$grep "=" Reg.mjf | awk -F '\\' '{ print $6 " " $11 }'
+	$grep "=" Reg.mjf | $tst_awk -F '\\' '{ print $6 " " $11 }'
 	rm Reg.mjf
 else
 	echo "# Reg.mjf not created (not supposed to happen here)"
@@ -106,7 +106,7 @@ echo "# Expected to return sequences 2"
 $MUPIP journal -forward -extract=./Reg.mjf -seqno="~(1,~2,3)" "*" >>& db_log.txt
 echo "# Search extract file for set variables"
 if (  -f Reg.mjf ) then
-	$grep "=" Reg.mjf | awk -F '\\' '{ print $6 " " $11 }'
+	$grep "=" Reg.mjf | $tst_awk -F '\\' '{ print $6 " " $11 }'
 	rm Reg.mjf
 else
 	echo "# Reg.mjf not created (not supposed to happen here)"
@@ -119,13 +119,13 @@ $MUPIP journal -forward -extract=./Reg.mjf -seqno=1,2,3,4,5,6,7,8 "a.mjl" >>& db
 $grep "a.broken" db_log.txt
 echo "# a.broken"
 if (  -f "a.broken" ) then
-	$grep "=" a.broken | awk -F '\\' '{ print $6 " " $11 }'
+	$grep "=" a.broken | $tst_awk -F '\\' '{ print $6 " " $11 }'
 else
 	echo "# No a.broken file created (NOT expected)"
 endif
 echo "# Reg.mjf"
 if (  -f Reg.mjf ) then
-	$grep "=" Reg.mjf | awk -F '\\' '{ print $6 " " $11 }'
+	$grep "=" Reg.mjf | $tst_awk -F '\\' '{ print $6 " " $11 }'
 	rm Reg.mjf
 else
 	echo "# Reg.mjf not created (not supposed to happen here)"
@@ -144,7 +144,7 @@ $grep "JNLEXTRCTSEQNO" db_log.txt
 
 
 echo "# Grep db_log.txt for the b.mjl_* file holding the previous transactions"
-set bjnl=`$grep 'b.mjl_' db_log.txt | awk -F '/' 'END{ print $(NF) }'`
+set bjnl=`$grep 'b.mjl_' db_log.txt | $tst_awk -F '/' 'END{ print $(NF) }'`
 
 
 echo "# Single region extract -SEQNO="3,4" (journal sequence numbers) with BREG replication turned off"
@@ -152,7 +152,7 @@ echo "# Expecting to find no set variables"
 $MUPIP journal -forward -extract=./Reg.mjf -seqno="3,4" "$bjnl" >>& db_log.txt
 echo "# Search extract file for set variables"
 if (  -f Reg.mjf ) then
-	$grep "=" Reg.mjf | awk -F '\\' '{ print $6 " " $11 }'
+	$grep "=" Reg.mjf | $tst_awk -F '\\' '{ print $6 " " $11 }'
 	rm Reg.mjf
 else
 	echo "# Reg.mjf not created (NOT expected)"
@@ -163,7 +163,7 @@ echo "# Expecting variables b(1) and b(2) to be set"
 $MUPIP journal -forward -extract=./Reg.mjf -seqno="1024,1025,1026,1027,1028,1029" "$bjnl" >>& db_log.txt
 echo "# Search extract file for set variables"
 if (  -f Reg.mjf ) then
-	$grep "=" Reg.mjf | awk -F '\\' '{ print $3 " " $11 }'
+	$grep "=" Reg.mjf | $tst_awk -F '\\' '{ print $3 " " $11 }'
 	rm Reg.mjf
 else
 	echo "# Reg.mjf not created (NOT expected)"
@@ -175,7 +175,7 @@ echo "# Expecting variables b(1) to be set"
 $MUPIP journal -forward -extract=./Reg.mjf -seqno="1024" "$bjnl" >>& db_log.txt
 echo "# Search extract file for set variables"
 if (  -f Reg.mjf ) then
-	$grep "=" Reg.mjf | awk -F '\\' '{ print $3 " " $11 }'
+	$grep "=" Reg.mjf | $tst_awk -F '\\' '{ print $3 " " $11 }'
 	rm Reg.mjf
 else
 	echo "# Reg.mjf not created (NOT expected)"
