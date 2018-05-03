@@ -14,8 +14,10 @@
 
 $gtm_tst/com/dbcreate.csh mumps 3
 
-setenv ydb_tprestart_log_delta 1	# Enable TPRESTART logging
-setenv gtm_tprestart_log_delta 1	# Also set gtm* env var so this test can be run with pre-r122 versions
+set rand = `$ydb_dist/mumps -run rand 5 1 1`	# Return random numbers in the range [1,3]
+
+setenv ydb_tprestart_log_delta $rand # Enable TPRESTART logging
+setenv gtm_tprestart_log_delta $rand	# Also set gtm* env var so this test can be run with pre-r122 versions
 
 set syslog_time_before = `date +"%b %e %H:%M:%S"`
 $ydb_dist/mumps -run tprestart
