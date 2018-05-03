@@ -1,0 +1,71 @@
+# Create 3 database files for 3 regions, mumps.dat, a.dat, and b.dat for DEFAULT, AREG, and BREG respectively
+ #Calls gtm8202.m to set variables
+# Single region extract -SEQNO=~0,1,~2 
+# Expected to return sequences 1
+# Search extract file for set variables
+1 ^a(1)="10"
+# Multi region extract -SEQNO=~1,2,3,4,5 
+# Expected to return only variables a and b (not c)
+# Search extract file for set variables
+2 ^a(2)="20"
+3 ^b(1)="5"
+4 ^b(2)="10"
+5 ^a(3)="30"
+5 ^a(4)="40"
+5 ^b(3)="15"
+5 ^b(4)="20"
+# Multi region extract -SEQNO=~1,2,3,4,5,6 
+# Expected to return sequences 2,3,4,5
+# Search extract file for set variables
+2 ^a(2)="20"
+3 ^b(1)="5"
+4 ^b(2)="10"
+5 ^a(3)="30"
+5 ^a(4)="40"
+5 ^b(3)="15"
+5 ^b(4)="20"
+# Multi region extract -SEQNO=~1,2,~3
+# Expected to return sequences 2
+# Search extract file for set variables
+2 ^a(2)="20"
+# Multi region extract -SEQNO=~(~1,2,~3)
+# Expected to return sequences 1,3
+# Search extract file for set variables
+1 ^a(1)="10"
+3 ^b(1)="5"
+# Multi region extract -SEQNO=1,~2,3
+# Expected to return sequences 1,3
+# Search extract file for set variables
+1 ^a(1)="10"
+3 ^b(1)="5"
+# Multi region extract -SEQNO=~(1,~2,3)
+# Expected to return sequences 2
+# Search extract file for set variables
+2 ^a(2)="20"
+# Single region extract -SEQNO=1,2,3,4,5,6,7,8 TP transaction 
+# Expecting a.broken to contain a(3) and a(4)
+# Expecting Reg.mjf to contain a(1) and a(2)
+%YDB-I-FILECREATE, Broken transactions extract file ##TEST_PATH##/a.broken created
+# a.broken
+5 ^a(3)="30"
+5 ^a(4)="40"
+# Reg.mjf
+1 ^a(1)="10"
+2 ^a(2)="20"
+# Shutdown replication for BREG
+# Multi region extract -SEQNO=1,2,3,4 with BREG replication turned off
+# Expecting JNLEXTRCTSEQNO error
+%YDB-E-JNLEXTRCTSEQNO, Journal Extracts based on sequence numbers are restricted to a single region when replication is OFF
+# Grep db_log.txt for the b.mjl_* file holding the previous transactions
+# Single region extract -SEQNO=3,4 (journal sequence numbers) with BREG replication turned off
+# Expecting to find no set variables
+# Search extract file for set variables
+# Single region extract -SEQNO=1024,1025,1026,1027,1028,1029 (DB transaction numbers) with BREG replication turned off
+# Expecting variables b(1) and b(2) to be set
+# Search extract file for set variables
+1024 ^b(1)="5"
+1025 ^b(2)="10"
+# Single region extract -SEQNO=1024 (DB transaction numbers) with BREG replication turned off
+# Expecting variables b(1) to be set
+# Search extract file for set variables
+1024 ^b(1)="5"
