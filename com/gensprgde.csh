@@ -80,6 +80,7 @@ if ($status) then
 endif
 # temporarily set gtmgbldir to a dummy gbldir for the below GDE commands to execute without OBJDUP errors
 setenv gtmgbldir tmp.sprgde.gld
+unsetenv ydb_app_ensures_isolation	# or else we could get ZGBLDIRACC errors on non-existent gld file (tmp.sprgde.gld)
 $tst_awk '/change -region .* -std/ {regs[$3]++} END {for (reg in regs) {if (reg != "DEFAULT") {print "add -region "reg" -dyn="reg}}}' tmp.sprgde >&! tmp.sprgde2
 if (! -z tmp.sprgde2) then
 	$GDE << GDE_EOF >&! tmp.sprgde.out
