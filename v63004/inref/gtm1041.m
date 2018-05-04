@@ -9,16 +9,13 @@
 ;	the license, please stop and do not read further.	;
 ;								;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
 
-		set i=1
-		set ^x=0
-		do gtm1041(i)
+gtm1041	;Recursive function designed to fill up the stack
+	set ^x=0
+	do recurse
+	quit
 
-
-
-gtm1041(x) 	;Recursive function designed to fill up the stack
-		if $increment(^x)
-	 	do gtm1041(^x)
-
-                quit
+recurse	;
+	if $increment(^x) ; increment global while recursing so the caller script can later see the recursion depth
+	do recurse
+	quit
