@@ -39,6 +39,8 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
 ==Executing MULTISITE_REPLIC 'SYNC INST1 INST3'==
 # Shut receiver side of A->P connection
 ==Executing MULTISITE_REPLIC 'STOPRCV INST1 INST3'==
+# Wait for ZERO backlog on P->Q side
+==Executing MULTISITE_REPLIC 'SYNC INST3 INST4'==
 # Shut source side of P->Q connection
 ==Executing MULTISITE_REPLIC 'STOPSRC INST3 INST4'==
 # Break previous journal link on P before ROLLBACK
