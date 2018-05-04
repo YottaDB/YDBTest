@@ -1,0 +1,32 @@
+# Create a single region DB with region DEFAULT
+# Establishing baseline of (recursive calls / KiB)
+# Set gtm_mstack_size = minKiB
+# Run gtm1041.m recursively until stack overflow
+# Set gtm_mstack_size = maxKiB
+# Run gtm1041.m recursively until stack overflow
+# Calculate baseline calls / KiB
+# Calculate calls lost to stack overhead
+
+# Unset gtm_mstack_size (defaults to defKiB)
+# Run gtm1041.m recursively until stack overflow
+# Depth matches expected
+
+# Set gtm_mstack_size to 0 (defaults to defKiB)
+# Run gtm1041.m recursively until stack overflow
+# Depth matches expected
+
+# Set gtm_mstack_size to 5000
+# Run gtm1041.m recursively until stack overflow
+# Depth matches expected
+
+# Set gtm_mstack_size to maxKiB
+# Run gtm1041.m recursively until stack overflow
+# Depth matches expected
+
+# Set gtm_mstack_size to maxKiB + 10000 (defaults to maxKiB)
+# Run gtm1041.m recursively until stack overflow
+# Depth matches expected
+
+# Set gtm_mstack_size to minKiB - 5 (defaults to minKiB)
+# Run gtm1041.m recursively until stack overflow
+# Depth matches expected
