@@ -52,6 +52,7 @@ Region          DEFAULT
   Async IO                              OFF  WIP queue cache blocks           0
   DB is auto-created                  FALSE  DB shares gvstats             TRUE
   LOCK shares DB critical section     FALSE  Read Only                      OFF
+  Reorg Sleep Nanoseconds                 0
 command: change -fileheader -location=NULL -size=1 -value=1 ...
 command: change -fileheader -location=10 -size=z -value=1...
 command: change -fileheader -location=Z -size=1 -value=1...
@@ -132,6 +133,7 @@ Region          DEFAULT
   Async IO                              OFF  WIP queue cache blocks           0
   DB is auto-created                  FALSE  DB shares gvstats             TRUE
   LOCK shares DB critical section     FALSE  Read Only                      OFF
+  Reorg Sleep Nanoseconds                 0
 Check -nocrit qualifier...
 Seize critical section for process A-----------------------------
 

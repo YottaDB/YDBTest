@@ -10,20 +10,12 @@
 ;								;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-tprestart	;
-	set ^stop=0,jmaxwait=0			; signal child processes to proceed
-	do ^job("child^tprestart",5,"""""")	; start 5 jobs
-	hang 10					; let child run for 10 seconds
-	set ^stop=1				; signal child processes to stop
-	do wait^job				; wait for child processes to die
-        quit
+gtm1041	;Recursive function designed to fill up the stack
+	set ^x=0
+	do recurse
+	quit
 
-child  ;
-	for i=1:1  quit:^stop=1  do
-	.	tstart ():serial
-	.	set x=$incr(^c)
-	.	if $r(2) set ^a($j,x)=$j(1,220)
-	.	if $r(2) set ^b($j,x)=$j(2,220)
-	.	if $r(2) set ^c($j,x)=$j(3,220)
-	.	tcommit
+recurse	;
+	if $increment(^x) ; increment global while recursing so the caller script can later see the recursion depth
+	do recurse
 	quit

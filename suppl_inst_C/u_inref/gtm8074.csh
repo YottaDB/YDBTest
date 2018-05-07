@@ -4,6 +4,9 @@
 # Copyright (c) 2014-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -42,6 +45,9 @@ $MSR SYNC INST1 INST3
 
 echo "# Shut receiver side of A->P connection"
 $MSR STOPRCV INST1 INST3
+
+echo "# Wait for ZERO backlog on P->Q side"
+$MSR SYNC INST3 INST4
 
 echo "# Shut source side of P->Q connection"
 $MSR STOPSRC INST3 INST4
