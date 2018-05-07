@@ -100,6 +100,28 @@ echo "=================================================="
 echo "############# Secondary Side #####################"
 echo "=================================================="
 echo "Shut down receiver server/update process...(B)"
+
+# Before shutting down the receiver, make sure at least one update (i.e. seqno > 1) goes through on B and gets hardened.
+# This is necessary to ensure a REPLINSTNOHIST error is issued by the source server on A when it connects
+# to B in upgrade_and_start_repl.csh after switching to the new version in the case where the new version
+# has a different replication instance file format than the version running on A.
+# wait until update process has processed seqno=1
+set stat = `$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/wait_for_transaction_seqno.csh 2 RCVR 300; echo $status"`
+if (0 != "$stat") then
+	echo "TEST-E-TRANSACTIONS processed by the secondary did not reach the expected number (2)"
+	echo "Since the rest of the test relies on this, no point in continuing it. Will exit now."
+	$gtm_tst/com/endtp.csh >>& endtp.out
+        $gtm_tst/com/dbcheck.csh
+	exit 1
+endif
+
+# Since it is possible the "shut_normal_kill.csh" call done below could choose to crash B and remove db shm,
+# we need to ensure the db file header and journal file buffers containing seqno=1 are flushed to disk before
+# the shutdown that way we are guaranteed a fetchresync rollback done (after the crash if randomly chosen) would
+# not take B back to seqno=1 (which would later cause REPLINSTNOHIST error to not be seen in the receiver log
+# in upgrade_and_start_repl.csh).
+$sec_shell '$sec_getenv; cd $SEC_SIDE; $sv_oldver; $gtm_tst/com/sync_to_disk.csh'
+
 # randomly decide to shutdown gracefully or kill -15 the receiver server
 $sec_shell '$sec_getenv; cd $SEC_SIDE;$sv_oldver;$gtm_tst/$tst/u_inref/shut_normal_kill.csh $start_time1'
 
