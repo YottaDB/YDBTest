@@ -1,0 +1,61 @@
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+#
+set timeout 60
+spawn /usr/local/bin/tcsh -f
+
+expect_after {
+	timeout { timeout_procedure }
+}
+
+proc timeout_procedure { } {
+	puts "timeout occurred"
+	exit -1
+}
+
+# Start LKE help facility
+send -- "\$gtm_dist/lke\r"
+expect -exact "LKE>"
+send -- "help\r"
+# Send <Ctrl-C> and then <Enter>
+expect -exact "Topic?"
+send -- "\x03\r"	#<Ctrl-C>
+send -- "\x0D\r"	#<Enter>
+# Exit the LKE prompt completely
+expect -exact "LKE>"
+send -- "exit\r"
+
+## Start DSE help facility
+#send -- "\$gtm_dist/dse\r"
+#expect -exact "DSE>"
+#send -- "help\r"
+## Send <Ctrl-C> and then <Enter>
+#expect -exact "Topic?"
+#send -- "\x03"		#<Ctrl-C>
+##send -- "\x0D\r"	#<Enter>
+#send -- "\r"	#<Enter>
+## Exit the DSE prompt completely
+#expect -exact "DSE>"
+#send -- "exit\r"
+#
+## Start MUPIP help facility
+#send -- "\$gtm_dist/mupip\r"
+#expect -exact "MUPIP>"
+#send -- "help\r"
+## Send <Ctrl-C> and then <Enter>
+#expect -exact "Topic?"
+#send -- "\x03"		#<Ctrl-C>
+##send -- "\x0D\r"	#<Enter>
+#send -- "\r"	#<Enter>
+## Exit the MUPIP prompt completely
+#expect -exact "MUPIP>"
+#send -- "exit\r"
