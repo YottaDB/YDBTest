@@ -17,7 +17,7 @@ setenv gtm_repl_instance mumps.repl
 setenv gtm_repl_instname INSTANCE1
 setenv gtm_test_spanreg 0		# Test requires traditional global mappings, so disable spanning regions
 
-setenv gtm_test_repl_skipsetreplic "" ;	#setting this skips turning on replication in the passive start script
+setenv gtm_test_repl_skipsetreplic "" 	#setting this skips turning on replication in the passive start script
 setenv gtm_test_dbcreate_initial_tn 10	#setting initial db transaction number to 2**10 = 1024
 
 echo "setenv gtm_test_dbcreate_initial_tn 10" >> settings.csh
@@ -38,7 +38,6 @@ echo "# Expected to return sequences 1"
 $MUPIP journal -forward -extract=./Reg.mjf -seqno=~0,1,~2 "a.mjl" >>& db_log.txt
 echo "# Search extract file for set variables"
 if (  -f Reg.mjf ) then
-	#$grep "=" Reg.mjf | $tst_awk -F '\\' '{ print $6 " " $11 }'
 	$ydb_dist/mumps -run LOOP^%XCMD --xec=';write:$zfind(%l,"=") $zpiece(%l,"\",6)," ",$zpiece(%l,"\",11),!;' < Reg.mjf
 	rm Reg.mjf
 else
@@ -50,7 +49,6 @@ echo "# Expected to return only variables a and b (not c)"
 $MUPIP journal -forward -extract=./Reg.mjf -seqno=~1,2,3,4,5 "*" >>& db_log.txt
 echo "# Search extract file for set variables"
 if (  -f Reg.mjf ) then
-	#$grep "=" Reg.mjf | $tst_awk -F '\\' '{ print $6 " " $11 }'
 	$ydb_dist/mumps -run LOOP^%XCMD --xec=';write:$zfind(%l,"=") $zpiece(%l,"\",6)," ",$zpiece(%l,"\",11),!;' < Reg.mjf
 	rm Reg.mjf
 else
@@ -62,7 +60,6 @@ echo "# Expected to return sequences 2,3,4,5"
 $MUPIP journal -forward -extract=./Reg.mjf -seqno=~1,2,3,4,5,6 "*" >>& db_log.txt
 echo "# Search extract file for set variables"
 if (  -f Reg.mjf ) then
-	#$grep "=" Reg.mjf | $tst_awk -F '\\' '{ print $6 " " $11 }'
 	$ydb_dist/mumps -run LOOP^%XCMD --xec=';write:$zfind(%l,"=") $zpiece(%l,"\",6)," ",$zpiece(%l,"\",11),!;' < Reg.mjf
 	rm Reg.mjf
 else
@@ -74,7 +71,6 @@ echo "# Expected to return sequences 2"
 $MUPIP journal -forward -extract=./Reg.mjf -seqno=~1,2,~3 "*" >>& db_log.txt
 echo "# Search extract file for set variables"
 if (  -f Reg.mjf ) then
-	#$grep "=" Reg.mjf | $tst_awk -F '\\' '{ print $6 " " $11 }'
 	$ydb_dist/mumps -run LOOP^%XCMD --xec=';write:$zfind(%l,"=") $zpiece(%l,"\",6)," ",$zpiece(%l,"\",11),!;' < Reg.mjf
 	rm Reg.mjf
 else
@@ -86,7 +82,6 @@ echo "# Expected to return sequences 1,3"
 $MUPIP journal -forward -extract=./Reg.mjf -seqno="~(~1,2,~3)" "*" >>& db_log.txt
 echo "# Search extract file for set variables"
 if (  -f Reg.mjf ) then
-	#$grep "=" Reg.mjf | $tst_awk -F '\\' '{ print $6 " " $11 }'
 	$ydb_dist/mumps -run LOOP^%XCMD --xec=';write:$zfind(%l,"=") $zpiece(%l,"\",6)," ",$zpiece(%l,"\",11),!;' < Reg.mjf
 	rm Reg.mjf
 else
@@ -98,7 +93,6 @@ echo "# Expected to return sequences 1,3"
 $MUPIP journal -forward -extract=./Reg.mjf -seqno=1,~2,3 "*" >>& db_log.txt
 echo "# Search extract file for set variables"
 if (  -f Reg.mjf ) then
-	#$grep "=" Reg.mjf | $tst_awk -F '\\' '{ print $6 " " $11 }'
 	$ydb_dist/mumps -run LOOP^%XCMD --xec=';write:$zfind(%l,"=") $zpiece(%l,"\",6)," ",$zpiece(%l,"\",11),!;' < Reg.mjf
 	rm Reg.mjf
 else
@@ -110,7 +104,6 @@ echo "# Expected to return sequences 2"
 $MUPIP journal -forward -extract=./Reg.mjf -seqno="~(1,~2,3)" "*" >>& db_log.txt
 echo "# Search extract file for set variables"
 if (  -f Reg.mjf ) then
-	#$grep "=" Reg.mjf | $tst_awk -F '\\' '{ print $6 " " $11 }'
 	$ydb_dist/mumps -run LOOP^%XCMD --xec=';write:$zfind(%l,"=") $zpiece(%l,"\",6)," ",$zpiece(%l,"\",11),!;' < Reg.mjf
 	rm Reg.mjf
 else
@@ -124,14 +117,12 @@ $MUPIP journal -forward -extract=./Reg.mjf -seqno=1,2,3,4,5,6,7,8 "a.mjl" >>& db
 $grep "a.broken" db_log.txt
 echo "# a.broken"
 if (  -f "a.broken" ) then
-	#$grep "=" a.broken | $tst_awk -F '\\' '{ print $6 " " $11 }'
 	$ydb_dist/mumps -run LOOP^%XCMD --xec=';write:$zfind(%l,"=") $zpiece(%l,"\",6)," ",$zpiece(%l,"\",11),!;' < a.broken
 else
 	echo "# No a.broken file created (NOT expected)"
 endif
 echo "# Reg.mjf"
 if (  -f Reg.mjf ) then
-	#$grep "=" Reg.mjf | $tst_awk -F '\\' '{ print $6 " " $11 }'
 	$ydb_dist/mumps -run LOOP^%XCMD --xec=';write:$zfind(%l,"=") $zpiece(%l,"\",6)," ",$zpiece(%l,"\",11),!;' < Reg.mjf
 	rm Reg.mjf
 else
@@ -159,7 +150,6 @@ echo "# Expecting to find no set variables"
 $MUPIP journal -forward -extract=./Reg.mjf -seqno="3,4" "$bjnl" >>& db_log.txt
 echo "# Search extract file for set variables"
 if (  -f Reg.mjf ) then
-	#$grep "=" Reg.mjf | $tst_awk -F '\\' '{ print $6 " " $11 }'
 	$ydb_dist/mumps -run LOOP^%XCMD --xec=';write:$zfind(%l,"=") $zpiece(%l,"\",6)," ",$zpiece(%l,"\",11),!;' < Reg.mjf
 	rm Reg.mjf
 else
@@ -171,7 +161,6 @@ echo "# Expecting variables b(1) and b(2) to be set"
 $MUPIP journal -forward -extract=./Reg.mjf -seqno="1024,1025,1026,1027,1028,1029" "$bjnl" >>& db_log.txt
 echo "# Search extract file for set variables"
 if (  -f Reg.mjf ) then
-	#$grep "=" Reg.mjf | $tst_awk -F '\\' '{ print $3 " " $11 }'
 	$ydb_dist/mumps -run LOOP^%XCMD --xec=';write:$zfind(%l,"=") $zpiece(%l,"\",3)," ",$zpiece(%l,"\",11),!;' < Reg.mjf
 	rm Reg.mjf
 else
@@ -184,7 +173,6 @@ echo "# Expecting variables b(1) to be set"
 $MUPIP journal -forward -extract=./Reg.mjf -seqno="1024" "$bjnl" >>& db_log.txt
 echo "# Search extract file for set variables"
 if (  -f Reg.mjf ) then
-	#$grep "=" Reg.mjf | $tst_awk -F '\\' '{ print $3 " " $11 }'
 	$ydb_dist/mumps -run LOOP^%XCMD --xec=';write:$zfind(%l,"=") $zpiece(%l,"\",3)," ",$zpiece(%l,"\",11),!;' < Reg.mjf
 	rm Reg.mjf
 else
