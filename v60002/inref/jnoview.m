@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-;	Copyright 2013, 2014 Fidelity Information Services, Inc	;
+; Copyright 2013, 2014 Fidelity Information Services, Inc	;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -11,6 +14,7 @@
 jnoview(jobcmd);
 	Job @jobcmd
 	Write jobcmd," GTM_TEST_DEBUGINFO: ",$ZJOB,!
+	do ^waitforproctodie($zjob)
 	quit
 hworld;
 	write "Hello World "_$job,!
@@ -27,6 +31,7 @@ jnoview1(jobcmd,needed);
 	else  do
 	. if before'=after write "Timeout is not specified and $TEST changed",!
 	Write jobcmd," GTM_TEST_DEBUGINFO: ",$ZJOB,!
+	do ^waitforproctodie($zjob)
 	quit
 ; This label verifis that JOB command handles entryref with input argument properly.
 ; Hence dummy(not so useful) parameters are passed to the label.
