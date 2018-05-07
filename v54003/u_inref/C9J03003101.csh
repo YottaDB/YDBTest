@@ -4,6 +4,9 @@
 # Copyright (c) 2011-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -13,11 +16,6 @@
 
 setenv gtmgbldir "mumps.gld"
 $gtm_tst/com/dbcreate.csh mumps
-
-# Turn on white box test case WBTEST_JNL_SWITCH_EXPECTED as we will truncate the journal file and we expect the Source Server
-# to fail on opening it, which would result in an automatic journal file switch (which the Source Server can not do).
-setenv gtm_white_box_test_case_number 51
-setenv gtm_white_box_test_case_enable 1
 
 echo "# Test case 1: Restart source server with a non-replicated previous generation file."
 echo "#"
