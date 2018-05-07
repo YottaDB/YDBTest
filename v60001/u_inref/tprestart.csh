@@ -15,7 +15,9 @@
 #################################################################
 
 setenv echoline "------------------------------------------------------------------"
-$gtm_tst/com/dbcreate.csh mumps 1 -allocation=2048 -extension_count=2048
+# Set global buffers to a high value (8Ki) to avoid G type of restarts (which are otherwise the most common restarts
+# with global buffers set to the default of 1Ki). Also set allocation and extension to 8Ki to reduce frequency of DBFILEXT messages.
+$gtm_tst/com/dbcreate.csh mumps 1 -allocation=8192 -extension_count=8192 -global_buffer_count=8192
 
 echo $echoline
 echo "i) gtm_tprestart_log_first and gtm_tprestart_log_delta are not defined."
