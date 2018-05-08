@@ -1,0 +1,45 @@
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+#
+set timeout 60
+set promptList {LKE DSE MUPIP}
+
+spawn /usr/local/bin/tcsh -f
+
+expect_after {
+	timeout { timeout_procedure }
+}
+
+proc timeout_procedure { } {
+	puts "timeout occurred"
+	exit -1
+}
+
+
+foreach prompt $promptList {
+	puts "# Expect the shell prompt"
+	expect -exact ">"
+	puts "# Start $prompt help facility"
+	send -- "\$gtm_dist/[string tolower $prompt]\r"
+	expect -exact "$prompt>"
+	send -- "help\r"
+	expect  "Topic?"
+	puts "#<Ctrl-C>"
+	send -- "\x03\r"
+	send -- "\r"
+	puts "# Exit $prompt>"
+	expect -exact "$prompt>"
+	send -- "exit\r"
+	}
+
+puts "# Expect the shell prompt"
+expect -exact ">"

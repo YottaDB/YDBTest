@@ -14,6 +14,7 @@
 #-----------------------------------------------------------------------------------------------------------------
 # List of subtests of the form "subtestname [author] description"
 #-----------------------------------------------------------------------------------------------------------------
+# gtm8909	    [jake]  Tests that <ctrl-c> within the help facility no longer leads to EN0256 error upon exit
 # gtm8860	    [jake]  Tests that journal extract removes additional / from journal and output file paths
 # gtm8791	    [jake]  Tests that <ctrl-z> no longer causes segmentation violation
 # gtm8202	    [jake]  Tests the functionality of the -SEQNO qualifier for the mupip journal -extract command
@@ -25,7 +26,7 @@ echo "v63004 test starts..."
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic ""
-setenv subtest_list_non_replic "$subtest_list_non_replic gtm8860 gtm8791 gtm8202 gtm1041"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm8909 gtm8860 gtm8791 gtm8202 gtm1041"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
