@@ -51,6 +51,16 @@ $gtm_tst/com/dbcreate.csh mumps $num_regions 125 1000 4096 2000 4096 2000 -jnl_a
 if ($?test_replic) then
 	# Start creates the instance file, which we need for the set
 	$MSR START INST1 INST2 RP >&! msr_start_`date +%H_%M_%S`.out
+	# Randomly test that JNLSWITCHRETRY error scenario is handled properly by source server (YDB#235)
+	# To do so, we stop the receiver server before any updates happen. And will start the receiver server
+	# later after the instance has frozen (and the latest generation journal file has been closed in
+	# shared memory but a new one has not been created due to write permission issues on the directory).
+	# This way the source server will connect to the receiver server while the latest generation journal
+	# has jfh->is_not_latest_jnl set to TRUE.
+	set jnlswitchretry = `$gtm_exe/mumps -run rand 2`
+	if ($jnlswitchretry) then
+		$MSR STOPRCV INST1 INST2 >& jnlswitchretry_1.log
+	endif
 else
 	$MUPIP set $tst_jnl_str -region "*" >& jnl_enable.out
 endif
@@ -83,6 +93,10 @@ if ($?test_replic) then
 		sleep 1
 	end
 	echo $sleepcnt > instfreeze_sleepcnt.txt
+	if ($jnlswitchretry) then
+		$MSR STARTRCV INST1 INST2 >& jnlswitchretry_2.log
+		$MSR SYNC INST1 INST2 >& jnlswitchretry_3.log
+	endif
 else
 	@ jobnum=0
 	set mjofiles=""

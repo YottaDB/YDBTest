@@ -12,6 +12,7 @@
 #################################################################
 #
 
+setenv gtm_test_spanreg     0              # Test requires traditional global mappings, so disable spanning regions
 $gtm_tst/com/dbcreate.csh mumps 3
 
 set rand = `$ydb_dist/mumps -run rand 5 1 1`	# Return random numbers in the range [1,3]
