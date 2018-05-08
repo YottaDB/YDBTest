@@ -4,6 +4,9 @@
 # Copyright (c) 2011-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -73,7 +76,7 @@ while ( ($nstat == 0) && ($portno < $port_upperlimit ) )
 		# so there is a good chance of a port being shown as unused incorrectly. Hence introduce the below check
 		# Regarding $head bypass : most scripts which use MSR.. expect to just keep going in most cases even if there is
 		# an error, so we can't use $head which can fail.
-		head -n 1 $port_reservation_file | $grep "^$$ $tst_working_dir" > /dev/null	# BYPASSOK $head
+		head -n 1 $port_reservation_file |& $grep "^$$ $tst_working_dir" > /dev/null	# BYPASSOK $head
 		if !($status) then
 			rm $port_reservation_file
 		else
@@ -82,7 +85,7 @@ while ( ($nstat == 0) && ($portno < $port_upperlimit ) )
 		echo `date` "# $portno is in use..." >> $logfile
 	else
 		# unused port, check if it was me who grabbed the reservation file
-		head -n 1 $port_reservation_file | $grep "^$$ $tst_working_dir" > /dev/null	# BYPASSOK $head
+		head -n 1 $port_reservation_file |& $grep "^$$ $tst_working_dir" > /dev/null	# BYPASSOK $head
 		if ($status) then
 			#oops, it was someone else who got it first
 			set nstat = 0
