@@ -22,40 +22,52 @@ proc timeout_procedure { } {
 	exit -1
 }
 
-# Start LKE help facility
+puts "# Expect the shell prompt"
+expect -exact ">"
+puts "# Start LKE help facility"
 send -- "\$gtm_dist/lke\r"
 expect -exact "LKE>"
 send -- "help\r"
-# Send <Ctrl-C> and then <Enter>
-expect -exact "Topic?"
-send -- "\x03\r"	#<Ctrl-C>
-send -- "\x0D\r"	#<Enter>
-# Exit the LKE prompt completely
+puts "# Expect Help Facility Prompt"
+expect  "Topic?"
+puts "#<Ctrl-C>"
+send -- "\x03\r"
+send -- "\r"
+puts "# Exit LKE>"
 expect -exact "LKE>"
 send -- "exit\r"
 
-## Start DSE help facility
-#send -- "\$gtm_dist/dse\r"
-#expect -exact "DSE>"
-#send -- "help\r"
-## Send <Ctrl-C> and then <Enter>
-#expect -exact "Topic?"
-#send -- "\x03"		#<Ctrl-C>
-##send -- "\x0D\r"	#<Enter>
-#send -- "\r"	#<Enter>
-## Exit the DSE prompt completely
-#expect -exact "DSE>"
-#send -- "exit\r"
-#
-## Start MUPIP help facility
-#send -- "\$gtm_dist/mupip\r"
-#expect -exact "MUPIP>"
-#send -- "help\r"
-## Send <Ctrl-C> and then <Enter>
-#expect -exact "Topic?"
-#send -- "\x03"		#<Ctrl-C>
-##send -- "\x0D\r"	#<Enter>
-#send -- "\r"	#<Enter>
-## Exit the MUPIP prompt completely
-#expect -exact "MUPIP>"
-#send -- "exit\r"
+puts "# Expect the shell prompt"
+expect -exact ">"
+puts "# Start DSE help facility"
+send -- "\$gtm_dist/dse\r"
+expect -exact "DSE>"
+send -- "help\r"
+puts "# Expect Help Facility Prompt"
+expect 	"Topic?"
+puts "# <Ctrl-C>"
+send -- "\x03\r"
+send -- "\r"
+puts "# Exit DSE>"
+expect -exact "DSE>"
+send -- "exit\r"
+
+puts "# Expect the shell prompt"
+expect -exact ">"
+puts "# Start MUPIP help facility"
+send -- "\$gtm_dist/mupip\r"
+expect -exact "MUPIP>"
+send -- "help\r"
+puts "# Expect Help Facility Prompt"
+expect 	"Topic?"
+puts "#<Ctrl-C>"
+send -- "\x03\r"
+send -- "\r"
+puts "# Exit MUPIP>"
+expect -exact "MUPIP>"
+send -- "exit\r"
+
+puts "# Expect the shell prompt"
+expect -exact ">"
+
+interact

@@ -11,7 +11,7 @@
 #								#
 #################################################################
 #
-$gtm_tst/com/dbcreate.csh mumps
+$gtm_tst/com/dbcreate.csh mumps > db_log.txt
 
 ## Turn on expect debugging using "-d". The debug output would be in expect.dbg in case needed to analyze stray timing failures.
 (expect -d $gtm_tst/$tst/u_inref/gtm8909.exp > expect.out) >& expect.dbg
@@ -23,10 +23,7 @@ mv expect.out expect.outx	# move .out to .outx to avoid -E- from being caught by
 perl $gtm_tst/com/expectsanitize.pl expect.outx > expect_sanitized.outx
 # The output is variable on slow vs fast systems and so filter out just the essential part of it to keep it deterministic.
 
-#THIS COMMAND IS GOING TO NEED TO BE AMMENDED
-# We want to ensure that a Ctrl-C did happen and hence we check the below.
-#$grep -E "\^Z|Suspended" expect_sanitized.outx
 
 cat expect_sanitized.outx
 
-$gtm_tst/com/dbcheck.csh
+$gtm_tst/com/dbcheck.csh >> db_log.txt
