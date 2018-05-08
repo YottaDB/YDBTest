@@ -11,6 +11,8 @@
 #################################################################
 #
 set timeout 60
+set promptList {LKE DSE MUPIP}
+
 spawn /usr/local/bin/tcsh -f
 
 expect_after {
@@ -22,52 +24,54 @@ proc timeout_procedure { } {
 	exit -1
 }
 
-puts "# Expect the shell prompt"
-expect -exact ">"
-puts "# Start LKE help facility"
-send -- "\$gtm_dist/lke\r"
-expect -exact "LKE>"
-send -- "help\r"
-puts "# Expect Help Facility Prompt"
-expect  "Topic?"
-puts "#<Ctrl-C>"
-send -- "\x03\r"
-send -- "\r"
-puts "# Exit LKE>"
-expect -exact "LKE>"
-send -- "exit\r"
 
-puts "# Expect the shell prompt"
-expect -exact ">"
-puts "# Start DSE help facility"
-send -- "\$gtm_dist/dse\r"
-expect -exact "DSE>"
-send -- "help\r"
-puts "# Expect Help Facility Prompt"
-expect 	"Topic?"
-puts "# <Ctrl-C>"
-send -- "\x03\r"
-send -- "\r"
-puts "# Exit DSE>"
-expect -exact "DSE>"
-send -- "exit\r"
-
-puts "# Expect the shell prompt"
-expect -exact ">"
-puts "# Start MUPIP help facility"
-send -- "\$gtm_dist/mupip\r"
-expect -exact "MUPIP>"
-send -- "help\r"
-puts "# Expect Help Facility Prompt"
-expect 	"Topic?"
-puts "#<Ctrl-C>"
-send -- "\x03\r"
-send -- "\r"
-puts "# Exit MUPIP>"
-expect -exact "MUPIP>"
-send -- "exit\r"
+foreach prompt $promptList {
+	puts "# Expect the shell prompt"
+	expect -exact ">"
+	puts "# Start $prompt help facility"
+	send -- "\$gtm_dist/[string tolower $prompt]\r"
+	expect -exact "$prompt>"
+	send -- "help\r"
+	expect  "Topic?"
+	puts "#<Ctrl-C>"
+	send -- "\x03\r"
+	send -- "\r"
+	puts "# Exit $prompt>"
+	expect -exact "$prompt>"
+	send -- "exit\r"
+	}
 
 puts "# Expect the shell prompt"
 expect -exact ">"
 
-interact
+#puts "# Expect the shell prompt"
+#expect -exact ">"
+#puts "# Start DSE help facility"
+#send -- "\$gtm_dist/dse\r"
+#expect -exact "DSE>"
+#send -- "help\r"
+#expect 	"Topic?"
+#puts "# <Ctrl-C>"
+#send -- "\x03\r"
+#send -- "\r"
+#puts "# Exit DSE>"
+#expect -exact "DSE>"
+#send -- "exit\r"
+#
+#puts "# Expect the shell prompt"
+#expect -exact ">"
+#puts "# Start MUPIP help facility"
+#send -- "\$gtm_dist/mupip\r"
+#expect -exact "MUPIP>"
+#send -- "help\r"
+#expect 	"Topic?"
+#puts "#<Ctrl-C>"
+#send -- "\x03\r"
+#send -- "\r"
+#puts "# Exit MUPIP>"
+#expect -exact "MUPIP>"
+#send -- "exit\r"
+#
+#puts "# Expect the shell prompt"
+#expect -exact ">"
+#
