@@ -10,29 +10,5 @@
 ;								;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
-gtm8202()
-	 set ^a(1)="10"
-	 set ^a(2)="20"
-
-	 set ^b(1)="5"
-	 set ^b(2)="10"
-
-	 set ^c(1)="3"
-	 set ^c(2)="6"
-
-	 TSTART
-	 set ^a(3)="30"
-	 set ^a(4)="40"
-
-	 set ^b(3)="15"
-	 set ^b(4)="20"
-
-	 set ^c(3)="9"
-	 set ^c(4)="12"
-	 TCOMMIT
-
-	 ;ensures all updates to DB are moved from memory to disk
-	 ;mupip journal -extract (done in caller script right after this M program exits) only checks the disk
-	 view "flush"
-
-	 quit
+gtm5730()
+	 FOR I=1:1:2000 W I;
