@@ -8,7 +8,7 @@ Issue mupip rundown while doing GTM updates without gtm_passwd and expect to err
 -----------------------------------------------------------------------------------------------
 unsetenv gtm_passwd
 mupip rundown -region DEFAULT
-%YDB-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
+%YDB-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable ydb_passwd/gtm_passwd not set
 %YDB-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
 -----------------------------------------------------------------------------------------------
 Issue mupip rundown while doing GTM updates with bad gtm_passwd and expect to error out

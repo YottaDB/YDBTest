@@ -30,7 +30,7 @@ Restore database with out gtm_passwd and expect to error out
 ---------------------------------------------------------------
 unsetenv gtm_passwd
 mupip restore mumps.dat ./back1/mumps.dat
-%YDB-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file mumps.dat. Environment variable gtm_passwd not set
+%YDB-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file mumps.dat. Environment variable ydb_passwd/gtm_passwd not set
 Error securing stand alone access to output file mumps.dat. Aborting restore.
 %YDB-E-MUPRESTERR, MUPIP restore aborted due to preceding errors
 ---------------------------------------------------------------

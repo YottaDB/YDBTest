@@ -10,13 +10,13 @@ YDB>
 ******* Experiment #1: Verify that we cannot access the global in an encrypted file without password *******
 
 YDB>
-%YDB-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
+%YDB-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable ydb_passwd/gtm_passwd not set
 
 YDB>
 ******* Experiment #2: Verify we can set gtm_passwd value after we are in GT.M *******
 
 YDB>
-%YDB-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
+%YDB-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable ydb_passwd/gtm_passwd not set
 
 YDB>
 
@@ -28,7 +28,7 @@ Experiment #3 passed.
 ******* Experiment #4 Verify we can recover from a bad password by setting to a correct value after entering GT.M *******
 
 YDB>
-%YDB-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
+%YDB-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable ydb_passwd/gtm_passwd not set
 
 YDB>
 
