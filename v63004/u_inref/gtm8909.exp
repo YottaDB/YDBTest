@@ -24,10 +24,13 @@ proc timeout_procedure { } {
 	exit -1
 }
 
+send -- "stty cols 130\r"
+expect "stty cols 130\r"
+
 
 foreach prompt $promptList {
-	puts "# Expect the shell prompt"
 	expect -exact ">"
+	puts "# Expect the shell prompt"
 	puts "# Start $prompt help facility"
 	send -- "\$gtm_dist/[string tolower $prompt]\r"
 	expect -exact "$prompt>"
