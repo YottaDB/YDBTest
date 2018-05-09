@@ -24,6 +24,7 @@ proc timeout_procedure { } {
 	exit -1
 }
 
+puts "# terminal size is set to keep output consistent with reference file"
 send -- "stty cols 130\r"
 expect "stty cols 130\r"
 

@@ -23,6 +23,7 @@ mv expect.out expect.outx	# move .out to .outx to avoid -E- from being caught by
 perl $gtm_tst/com/expectsanitize.pl expect.outx > expect_sanitized.outx
 # The output is variable on slow vs fast systems and so filter out just the essential part of it to keep it deterministic.
 
-$grep -P "\S" expect_sanitized.outx
+$grep -v '^$' expect_sanitized.outx
+# The output, stripped of all blank lines, is output
 
 $gtm_tst/com/dbcheck.csh >> db_log.txt
