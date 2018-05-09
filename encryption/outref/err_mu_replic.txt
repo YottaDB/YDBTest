@@ -13,7 +13,7 @@ mumps.dat
 # Expect both YDB-W-CRYPTINIT and YDB-E-CRYPTBADCONFIG from update process log
 ----------
 Error YDB-W-CRYPTINIT seen in ##FILTERED##RCVR_##TIMESTAMP##.log.updproc as expected:
-%YDB-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##REMOTE_TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
+%YDB-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##REMOTE_TEST_PATH##/mumps.dat. Environment variable ydb_passwd/gtm_passwd not set
 ----------
 ----------
 Error YDB-E-CRYPTBADCONFIG seen in ##FILTERED##RCVR_##TIMESTAMP##.log.updproc as expected:
@@ -31,9 +31,9 @@ No errors detected by integ.
 # Expect and filter out YDB-W-CRYPTINIT warning from receiver start log and passive source server log
 ----------
 Error YDB-W-CRYPTINIT seen in ##FILTERED##START_##TIMESTAMP##.out as expected:
-%YDB-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##REMOTE_TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
+%YDB-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##REMOTE_TEST_PATH##/mumps.dat. Environment variable ydb_passwd/gtm_passwd not set
 ----------
 ----------
 Error YDB-W-CRYPTINIT seen in ##FILTERED##passive_##TIMESTAMP##.log as expected:
-%YDB-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##REMOTE_TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
+%YDB-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##REMOTE_TEST_PATH##/mumps.dat. Environment variable ydb_passwd/gtm_passwd not set
 ----------

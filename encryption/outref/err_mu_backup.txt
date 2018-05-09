@@ -17,7 +17,7 @@ Backup without gtm_passwd and expect to work
 unsetenv gtm_passwd
 #####################################################
 mupip backup -bytestream DEFAULT ./back1
-%YDB-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
+%YDB-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable ydb_passwd/gtm_passwd not set
 MUPIP backup of database file ##TEST_PATH##/mumps.dat to ./back1/mumps.dat
 DB file ##TEST_PATH##/mumps.dat incrementally backed up in file ./back1/mumps.dat
 297 blocks saved.
@@ -28,7 +28,7 @@ BACKUP COMPLETED.
 
 #####################################################
 mupip backup -comprehensive DEFAULT ./back2
-%YDB-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
+%YDB-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable ydb_passwd/gtm_passwd not set
 DB file ##TEST_PATH##/mumps.dat backed up in file ./back2/mumps.dat
 ##TEST_AWKTransactions up to 0x[0-9A-F]* are backed up.
 
@@ -64,11 +64,11 @@ Backup while parallel GTM updates without gtm_passwd and expect to error out
 unsetenv gtm_passwd
 #####################################################
 mupip backup -bytestream -online DEFAULT ./back5
-%YDB-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
+%YDB-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable ydb_passwd/gtm_passwd not set
 %YDB-E-CRYPTOPFAILED, Encrypt/Decrypt operation failed for file ##TEST_PATH##/mumps.dat. Please look at prior messages related to encryption for more details
 #####################################################
 mupip backup -comprehensive DEFAULT ./back6
-%YDB-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
+%YDB-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable ydb_passwd/gtm_passwd not set
 %YDB-E-CRYPTOPFAILED, Encrypt/Decrypt operation failed for file ##TEST_PATH##/mumps.dat. Please look at prior messages related to encryption for more details
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *

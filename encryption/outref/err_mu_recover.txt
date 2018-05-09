@@ -24,7 +24,7 @@ journal recover without gtm_passwd and expect to error out
 -----------------------------------------------------------
 unsetenv gtm_passwd
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%YDB-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
+%YDB-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable ydb_passwd/gtm_passwd not set
 %YDB-I-MUSTANDALONE, Could not get exclusive access to ##TEST_PATH##/mumps.dat
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..

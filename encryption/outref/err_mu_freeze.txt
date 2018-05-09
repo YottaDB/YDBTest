@@ -8,7 +8,7 @@ Issue mupip freeze while parallel GTM updates with out gtm_passwdand expect erro
 ------------------------------------------------------------------------------------------
 unsetenv gtm_passwd
 mupip freeze -ON DEFAULT
-%YDB-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
+%YDB-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable ydb_passwd/gtm_passwd not set
 %YDB-E-CRYPTOPFAILED, Encrypt/Decrypt operation failed for file ##TEST_PATH##/mumps.dat. Please look at prior messages related to encryption for more details
 ------------------------------------------------------------------------------------------
 Issue mupip freeze while parallel GTM updates with bad gtm_passwd and expect error message
@@ -21,7 +21,7 @@ Issue mupip freeze after GTM updates without gtm_passwd and expect to work
 ------------------------------------------------------------------------------------------
 unsetenv gtm_passwd
 mupip freeze -ON DEFAULT
-%YDB-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable gtm_passwd not set
+%YDB-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable ydb_passwd/gtm_passwd not set
 Region DEFAULT is now FROZEN
 All requested regions frozen
 ------------------------------------------------------------------------------------------
