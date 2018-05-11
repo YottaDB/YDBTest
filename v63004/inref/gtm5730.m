@@ -11,4 +11,15 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 gtm5730()
-	 FOR I=1:1:2000 W I;
+	 TSTART
+	 FOR i=1:1:2000 set ^x(i)=i ;
+	 FOR i=1:1:2000 W ^x(i);
+
+	 TCOMMIT
+
+	 ;ensures all updates to DB are moved from memory to disk
+	 ;mupip journal -extract (done in caller script right after this M program exits) only checks the disk
+	 view "flush"
+
+	 quit
+
