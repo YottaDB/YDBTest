@@ -24,10 +24,14 @@ proc timeout_procedure { } {
 	exit -1
 }
 
+# Have columns higher than 80 as that can cause test failures on lines that are just above 80 columns in length
+send -- "stty cols 132\r"
+expect "stty cols 132\r"
+
 
 foreach prompt $promptList {
-	puts "# Expect the shell prompt"
 	expect -exact ">"
+	puts "# Expect the shell prompt"
 	puts "# Start $prompt help facility"
 	send -- "\$gtm_dist/[string tolower $prompt]\r"
 	expect -exact "$prompt>"

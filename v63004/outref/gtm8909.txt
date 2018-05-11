@@ -1,79 +1,46 @@
 spawn /usr/local/bin/tcsh -f
+stty cols 132
+> stty cols 132
 # Expect the shell prompt
-> # Start LKE help facility
+# Start LKE help facility
 $gtm_dist/lke
+> $gtm_dist/lke
 LKE> help
-
-
-
 Additional information available: 
-
 Commands    Copyright   Introduction            Summary     
-
 Topic? #<Ctrl-C>
 # Exit LKE>
-
-
-
-
 Additional information available: 
-
 Commands    Copyright   Introduction            Summary     
-
 Topic? 
-LKE> # Expect the shell prompt
-exit
-> # Start DSE help facility
+LKE> exit
+> # Expect the shell prompt
+# Start DSE help facility
 $gtm_dist/dse
-
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
-
 DSE> help
-
-
-
 Additional information available: 
-
 Commands    Copyright   Operations  Summary     
-
 Topic? #<Ctrl-C>
 # Exit DSE>
-
-
-
-
 Additional information available: 
-
 Commands    Copyright   Operations  Summary     
-
 Topic? 
-DSE> # Expect the shell prompt
-exit
-> # Start MUPIP help facility
+DSE> exit
+> # Expect the shell prompt
+# Start MUPIP help facility
 $gtm_dist/mupip
 MUPIP> help
-
-
-
 Additional information available: 
-
 Copyright   GDM         Introduction            Journaling  Replication
 Summary     
-
 Topic? #<Ctrl-C>
 # Exit MUPIP>
-
-
-
-
 Additional information available: 
-
 Copyright   GDM         Introduction            Journaling  Replication
 Summary     
-
 Topic? 
 MUPIP> # Expect the shell prompt
 exit
-
 > 

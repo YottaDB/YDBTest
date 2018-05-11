@@ -23,7 +23,10 @@ mv expect.out expect.outx	# move .out to .outx to avoid -E- from being caught by
 perl $gtm_tst/com/expectsanitize.pl expect.outx > expect_sanitized.outx
 # The output is variable on slow vs fast systems and so filter out just the essential part of it to keep it deterministic.
 
-
-cat expect_sanitized.outx
+$grep -v '^$' expect_sanitized.outx
+# The output, stripped of all blank lines, is output
+# On slower systems, a rare failure occurs because some blank lines are being omitted from the output log.
+# The cause of the issue is not clear yet, but these blank lines are unnecessary and are filtered out to
+# avoid false failures on slower systems.
 
 $gtm_tst/com/dbcheck.csh >> db_log.txt
