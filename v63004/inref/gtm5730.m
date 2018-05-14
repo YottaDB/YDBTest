@@ -11,11 +11,15 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 gtm5730()
-	 TSTART
-	 FOR i=1:1:2000 set ^x(i)=i ;
-	 FOR i=1:1:2000 W ^x(i);
 
-	 TCOMMIT
+	FOR i=1:1:1000 DO
+	. TSTART
+ 	. set ^x(i)=i
+	. TCOMMIT
+
+	FOR i=1001:1:2000 set ^x(i)=i ;
+
+	KILL ^x
 
 	 quit
 
