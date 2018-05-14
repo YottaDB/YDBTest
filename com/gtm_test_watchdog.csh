@@ -22,11 +22,15 @@ set shorthost = $HOST:r:r:r:r
 set format="%Y.%m.%d.%H.%M.%S.%Z"
 set timestart = `date +"$format"`
 if (! $?gtm_test_hang_alert_sec) then
-	if ("HOST_LINUX_ARMVXL" != $gtm_test_os_machtype) then
-		set gtm_test_hang_alert_sec = 9000 # A subtest running for 2.5 hours is suspected to be hung
+	if ($gtm_test_singlecpu || ) then
+		# 1-CPU armv7l/armv6l/x86_64 box. Set a high hang alert for 1-CPU systems (slow boxes)
+		set gtm_test_hang_alert_sec = 36000 # A subtest running for 10 hours on a 1-CPU system is suspected to be hung
+	else if ("HOST_LINUX_ARMVXL" != $gtm_test_os_machtype) then
+		# Multi-CPU x86_64 box
+		set gtm_test_hang_alert_sec = 9000 # A subtest running for 2.5 hours on x86_64 boxes is suspected to be hung
 	else
-		# ARM boxes are usually slower so give them a bigger timeout for the hang alert
-		set gtm_test_hang_alert_sec = 18000 # A subtest running for 5.0 hours is suspected to be hung
+		# Multi-CPU armv6l/armv7l boxes are not as IO capable so give them a slightly bigger timeout for the hang alert
+		set gtm_test_hang_alert_sec = 18000 # A subtest running for 5.0 hours on a multi-CPU ARM is suspected to be hung
 	endif
 endif
 set mailinterval = 1800 # Send mail to the user ever 30 minutes
