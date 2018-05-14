@@ -15,9 +15,7 @@
 echo "# Create a single region DB with region DEFAULT"
 $gtm_tst/com/dbcreate.csh mumps >>& dbcreate_log.txt
 
-$ydb_dist/mumps -run gtm8699 > gtm8699.m.log
-#$ydb_dist/mumps -run ^%XCMD 'W $VIEW("STATSHARE","DEFAULT")'
-
-
+echo '# Run gtm8699.m to run $VIEW and V[IEW]'
+$ydb_dist/mumps -run gtm8699
 
 $gtm_tst/com/dbcheck.csh >>& dbcreate_log.txt
