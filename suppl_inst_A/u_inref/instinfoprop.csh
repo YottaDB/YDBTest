@@ -45,7 +45,14 @@ get_msrtime
 unsetenv needupdatersync
 $MSR RUN INST2 '$gtm_tst/com/wait_for_log.csh -log RCVR_'${time_msr}'.log -message "History has non-zero Supplementary Stream" -duration 30'
 $MSR STOP INST1 INST2
+# Stop INST2 -> INST3 replication but do not wait for the instances to be synced (all 1 million updates done above)
+# as it will take a while and increases the possibility of a connection reset/re-establish sequence
+# (e.g. due to heartbeat loss etc.) and that could in turn inadvertently propagate the non-zero supplementary instance
+# information from INST1 onto INST3 on the reconnection which would result in no INSUNKNOWN error when INST1 and INST3
+# later connect in the test.
+setenv gtm_test_norfsync
 $MSR STOP INST2 INST3
+unsetenv gtm_test_norfsync
 $MSR STARTSRC INST3 INST2 RP
 # INST3 receiver start will fail because it doesn't yet know about INST1, so we will retry with updateresync after that
 $MSR STARTSRC INST1 INST3 RP
