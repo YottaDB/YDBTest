@@ -49,17 +49,29 @@ while (1)
 	# This is the case for multisrv_crash test case which deliberately kills online_reorg sub processes
 	set tmpoutput = "online_reorg_$$.outx"
 	echo "# `date` : ===== Begin round $cnt of mupip size/reorg ($tmpoutput) ====="
-	echo "# `date` : cnt = $cnt ; ff = $ff ; inff = $inff"			>&!  $tmpoutput
+	echo "# `date` : cnt = $cnt ; ff = $ff ; inff = $inff"			>>&!  $tmpoutput
 	if ($cnt % 5 == 2) then
-		$try_nice $MUPIP size -heuristic="arsample,samples=100000"	>>&! $tmpoutput && \
-		$try_nice $MUPIP size -heuristic="impsample,samples=100000"	>>&! $tmpoutput && \
-		$try_nice $MUPIP size -heuristic="scan,level=1"			>>&! $tmpoutput
-		set ret = $status
+		foreach heuristic ("arsample,samples=100000" "impsample,samples=100000" "scan,level=1")
+			echo "# `date` : $try_nice $MUPIP size -heuristic=\"$heuristic\""	>>& $tmpoutput
+			$try_nice $MUPIP size -heuristic="$heuristic"				>>& $tmpoutput
+			set ret = $status
+			if ($ret) then
+				break
+			endif
+			# If test has asked us to stop, check for it in between iterations of for loop
+			# or else test could wait for too long (as much as 2 hours) for 3 MUPIP SIZE operations to finish
+			# causing test to fail with a TEST-E-TIMEOUT error timing out waiting for REORG.TXT* to be removed.
+			if (-f REORG.END) then
+				break
+			endif
+		end
 	else if ($cnt < 5) then
-		$try_nice $MUPIP reorg -fill=$ff -index=$inff -truncate		>>&! $tmpoutput
+		echo "# `date` : $try_nice $MUPIP reorg -fill=$ff -index=$inff -truncate"	>>&! $tmpoutput
+		$try_nice $MUPIP reorg -fill=$ff -index=$inff -truncate				>>&! $tmpoutput
 		set ret = $status
 	else
-		$try_nice $MUPIP reorg -fill=$ff -index=$inff			>>&! $tmpoutput
+		echo "# `date` : $try_nice $MUPIP reorg -fill=$ff -index=$inff"		>>&! $tmpoutput
+		$try_nice $MUPIP reorg -fill=$ff -index=$inff				>>&! $tmpoutput
 		set ret = $status
 	endif
 
