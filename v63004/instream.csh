@@ -19,6 +19,7 @@
 # gtm8860	    [jake]  Tests that journal extract removes additional / from journal and output file paths
 # gtm8791	    [jake]  Tests that <ctrl-z> no longer causes segmentation violation
 # gtm8202	    [jake]  Tests the functionality of the -SEQNO qualifier for the mupip journal -extract command
+# gtm5730	    [jake]  Tests that the update process now logs record types with a corresponding, non-numerical, description
 # gtm1041	    [jake]  Tests the that env variable gtm_mstack_size sets the size of the M stack as expected
 #-----------------------------------------------------------------------------------------------------------------
 
@@ -28,7 +29,8 @@ echo "v63004 test starts..."
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic ""
 setenv subtest_list_non_replic "$subtest_list_non_replic gtm8909 gtm8874 gtm8860 gtm8791 gtm8202 gtm1041"
-setenv subtest_list_replic     ""
+setenv subtest_list_replic ""
+setenv subtest_list_replic     "$subtest_list_replic gtm5730"
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
