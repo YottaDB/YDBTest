@@ -10,7 +10,14 @@
 ;								;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
-gtm8874()
+testA
+	WRITE "Check for open region files:",!
+	ZSYSTEM "ls -l /proc/"_$job_"/fd | $grep '.dat$' | awk -F '/' '{print $(NF)}' "
+	WRITE !,"VIEW ""STATSHARE"" ",!
+	VIEW "STATSHARE"
+	WRITE "Check for open region files:",!
+	ZSYSTEM "ls -l /proc/"_$job_"/fd | $grep '.dat$' | awk -F '/' '{print $(NF)}' "
+	WRITE !
 
 	WRITE "STATSHARE DEFAULT: "
 	WRITE $VIEW("STATSHARE","DEFAULT"),!
@@ -36,7 +43,6 @@ gtm8874()
 	VIEW "STATSHARE":"DEFAULT"
 	WRITE "VIEW ""NOTSTATSHARE"":""AREG""",!
 	VIEW "NOSTATSHARE":"AREG"
-	WRITE !
 
 	WRITE "STATSHARE DEFAULT: "
 	WRITE $VIEW("STATSHARE","DEFAULT"),!
@@ -69,5 +75,38 @@ gtm8874()
 	WRITE "STATSHARE BREG:    "
 	WRITE $VIEW("STATSHARE","BREG"),!
 	WRITE !
+
+	quit
+
+
+
+testB
+	;WRITE "VIEW ""NOSTATSHARE"""
+	;VIEW "NOSTATSHARE"
+	;WRITE !
+
+	WRITE "STATSHARE DEFAULT: "
+	WRITE $VIEW("STATSHARE","DEFAULT"),!
+	WRITE "STATSHARE AREG:    "
+	WRITE $VIEW("STATSHARE","AREG"),!
+	WRITE "STATSHARE BREG:    "
+	WRITE $VIEW("STATSHARE","BREG"),!
+	WRITE !
+
+	quit
+
+
+testC
+	WRITE "SET $ZGBLDIR=""otherA.gld"" ",!
+	SET $ZGBLDIR="otherA.gld"
+	WRITE "VIEW ""STATSHARE"":""DEFAULT"" ",!
+	VIEW "STATSHARE":"DEFAULT"
+	WRITE "$VIEW(""STATSHARE"",""DEFAULT""): "
+	WRITE $VIEW("STATSHARE","DEFAULT"),!!
+
+	WRITE "SET $ZGBLDIR=""otherB.gld"" ",!
+	SET $ZGBLDIR="otherB.gld"
+	WRITE "$VIEW(""STATSHARE"",""DEFAULT""): "
+	WRITE $VIEW("STATSHARE","DEFAULT"),!
 
 	quit

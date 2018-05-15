@@ -1,0 +1,60 @@
+# Create a 3 region DB with gbl_dir mumps.gld and regions DEFAULT, AREG, and BREG
+
+# Disable sharing for BREG
+Database file ##TEST_PATH##/b.dat now has sharing of gvstats set to FALSE
+# Run testA of gtm8874.m
+Check for open region files:
+
+
+VIEW "STATSHARE" 
+Check for open region files:
+a.dat
+b.dat
+mumps.dat
+
+STATSHARE DEFAULT: 1
+STATSHARE AREG:    1
+STATSHARE BREG:    0
+
+VIEW "STATSHARE":"AREG"
+STATSHARE DEFAULT: 1
+STATSHARE AREG:    1
+STATSHARE BREG:    0
+
+VIEW "STATSHARE":"DEFAULT"
+VIEW "NOTSTATSHARE":"AREG"
+STATSHARE DEFAULT: 1
+STATSHARE AREG:    0
+STATSHARE BREG:    0
+
+VIEW "STATSHARE"
+STATSHARE DEFAULT: 1
+STATSHARE AREG:    1
+STATSHARE BREG:    0
+
+VIEW "NOSTATSHARE"
+STATSHARE DEFAULT: 0
+STATSHARE AREG:    0
+STATSHARE BREG:    0
+
+# Shut down the DB and backup necessary files to sub directory
+setenv gtm_statshare "TRUE"
+# Recreate the 3 region DB with gbl_dir mumps.gld
+# Run testB of gtm8874.m
+STATSHARE DEFAULT: 1
+STATSHARE AREG:    1
+STATSHARE BREG:    1
+
+# Shut down the DB and backup necessary files to sub directory
+unsetenv gtm_statshare
+# Create a 1 region DB with gbl_dir otherA.gld
+# Backup otherA.dat DB
+# Create a 1 region DB with gbl_dir otherB.gld
+# Move otherA.dat DB files back to current directory
+# Run testC of gtm8874.m
+SET $ZGBLDIR="otherA.gld" 
+VIEW "STATSHARE":"DEFAULT" 
+$VIEW("STATSHARE","DEFAULT"): 1
+
+SET $ZGBLDIR="otherB.gld" 
+$VIEW("STATSHARE","DEFAULT"): 0
