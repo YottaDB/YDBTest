@@ -40,7 +40,7 @@ foreach pattern ("*.out" "*.log" "*.err*" "*.log.updproc" "*.mje*" "*.mjo*" "*.D
 	#   at the same time, and sort's work files might step on find's toes (find sees the temporary files
 	#   at one point, but not later in it's processing)
 	find `pwd` -name "$pattern" ! -name "*.gz" >! file_list.tmp
-	$sort_T . file_list.tmp >>! log_and_out_files.txt
+	sort -T . file_list.tmp >>! log_and_out_files.txt
 	set stat = $status
 	if ($stat) then
 		echo "TEST-E-ERRORS_FIND, Could not determine files of type $pattern under directory `pwd`"
