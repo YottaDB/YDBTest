@@ -12,6 +12,7 @@
 #################################################################
 #
 
+#### testA ####
 echo "# Create a 3 region DB with gbl_dir mumps.gld and regions DEFAULT, AREG, and BREG"
 $gtm_tst/com/dbcreate.csh mumps 3 >>& dbcreate_log_1.txt
 
@@ -26,7 +27,7 @@ echo '# Shut down the DB and backup necessary files to sub directory'
 $gtm_tst/com/dbcheck.csh >>& dbcreate_log_1.txt
 $gtm_tst/com/backup_dbjnl.csh dbbkup1 "*.gld *.mjl* *.mjf *.dat" cp nozip
 
-#################
+#### testB ####
 echo 'setenv gtm_statshare "TRUE"'
 setenv gtm_statshare "TRUE"
 echo '# Recreate the 3 region DB with gbl_dir mumps.gld'
@@ -41,7 +42,7 @@ $gtm_tst/com/backup_dbjnl.csh dbbkup2 "*.gld *.mjl* *.mjf *.dat" cp nozip
 echo 'unsetenv gtm_statshare'
 unsetenv gtm_statshare
 
-##################
+#### testC ####
 echo "# Create a 1 region DB with gbl_dir otherA.gld"
 $gtm_tst/com/dbcreate.csh otherA >>& dbcreate_log_3.txt
 echo "# Backup otherA.dat DB"
