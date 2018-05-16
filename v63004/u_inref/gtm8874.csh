@@ -32,6 +32,11 @@ echo 'setenv gtm_statshare "TRUE"'
 setenv gtm_statshare "TRUE"
 echo '# Recreate the 3 region DB with gbl_dir mumps.gld'
 $gtm_tst/com/dbcreate.csh mumps 3 >>& dbcreate_log_2.txt
+
+echo ''
+echo '# Disable sharing for BREG'
+$MUPIP set -NOSTAT  -reg "BREG" #>>& dbcreate_log.txt
+
 echo '# Run testB of gtm8874.m'
 $ydb_dist/mumps -run testB^gtm8874
 
