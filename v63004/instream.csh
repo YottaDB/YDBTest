@@ -17,7 +17,7 @@
 # gtm8909	    [jake]  Tests that <ctrl-c> within the help facility no longer leads to EN0256 error upon exit
 # gtm8860	    [jake]  Tests that journal extract removes additional / from journal and output file paths
 # gtm8791	    [jake]  Tests that <ctrl-z> no longer causes segmentation violation
-# gtm8699	    [jake]  Tests that $VIEW("STATSHARE",<region>) returns 1 if the process is sharig DB stats and 0 otherwise
+# gtm8699	    [jake]  Tests that $VIEW("STATSHARE",<region>) returns 1 if the process is sharing DB stats and 0 otherwise
 # gtm8202	    [jake]  Tests the functionality of the -SEQNO qualifier for the mupip journal -extract command
 # gtm1041	    [jake]  Tests the that env variable gtm_mstack_size sets the size of the M stack as expected
 #-----------------------------------------------------------------------------------------------------------------------------

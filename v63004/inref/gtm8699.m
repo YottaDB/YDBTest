@@ -10,17 +10,44 @@
 ;								;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
-gtm8699()
+testA
 
-	WRITE "    $VIEW(""STATSHARE"",""DEFAULT"")",!
-	WRITE "    "
+	WRITE "    $VIEW(""STATSHARE"",""DEFAULT""): "
 	WRITE $VIEW("STATSHARE","DEFAULT"),!
+	WRITE "    $VIEW(""STATSHARE""): "
+	WRITE $VIEW("STATSHARE"),!
 
+	WRITE !
 	WRITE "    VIEW ""STATSHARE"" ",!
 	VIEW "STATSHARE"
+	WRITE !
 
-	WRITE "    $VIEW(""STATSHARE"",""DEFAULT"")",!
-	WRITE "    "
+	WRITE "    $VIEW(""STATSHARE"",""DEFAULT""): "
 	WRITE $VIEW("STATSHARE","DEFAULT"),!
+	WRITE "    $VIEW(""STATSHARE""): "
+	WRITE $VIEW("STATSHARE"),!
+
+	quit
+
+testB
+
+	WRITE "    $VIEW(""STATSHARE"",""DEFAULT""): "
+	WRITE $VIEW("STATSHARE","DEFAULT"),!
+	WRITE "    $VIEW(""STATSHARE"",""AREG""): "
+	WRITE $VIEW("STATSHARE","AREG"),!
+	WRITE "    $VIEW(""STATSHARE""): "
+	WRITE $VIEW("STATSHARE"),!
+
+	WRITE !
+	WRITE "    VIEW ""STATSHARE"":""DEFAULT"" ",!
+	VIEW "STATSHARE":"DEFAULT"
+	WRITE !
+
+	WRITE "    $VIEW(""STATSHARE"",""DEFAULT""): "
+	WRITE $VIEW("STATSHARE","DEFAULT"),!
+	WRITE "    $VIEW(""STATSHARE"",""AREG""): "
+	WRITE $VIEW("STATSHARE","AREG"),!
+	WRITE "    $VIEW(""STATSHARE""): "
+	WRITE $VIEW("STATSHARE"),!
 
 	quit

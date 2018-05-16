@@ -12,10 +12,21 @@
 #################################################################
 #
 
+#### testA ####
 echo "# Create a single region DB with region DEFAULT"
-$gtm_tst/com/dbcreate.csh mumps >>& dbcreate_log.txt
+$gtm_tst/com/dbcreate.csh mumps 2 >>& dbcreate_log.txt
 
-echo '# Run gtm8699.m to run $VIEW and V[IEW]'
-$ydb_dist/mumps -run gtm8699
+echo '# Run testA^gtm8699.m to test $VIEW("STATSHARE") with V[IEW] "STATSHARE"'
+$ydb_dist/mumps -run testA^gtm8699
+
+$gtm_tst/com/dbcheck.csh >>& dbcreate_log.txt
+
+echo ''
+#### testB ####
+echo "# Create a two region DB with regions DEFAULT"
+$gtm_tst/com/dbcreate.csh mumps 2 >>& dbcreate_log.txt
+
+echo '# Run testB^gtm8699.m to test $VIEW("STATSHARE") with V[IEW] "STATSHARE":"DEFAULT"'
+$ydb_dist/mumps -run testB^gtm8699
 
 $gtm_tst/com/dbcheck.csh >>& dbcreate_log.txt

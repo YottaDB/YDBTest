@@ -1,7 +1,21 @@
 # Create a single region DB with region DEFAULT
-# Run gtm8699.m to run $VIEW and V[IEW]
-    $VIEW("STATSHARE","DEFAULT")
-    0
+# Run testA^gtm8699.m to test $VIEW("STATSHARE") with V[IEW] "STATSHARE"
+    $VIEW("STATSHARE","DEFAULT"): 0
+    $VIEW("STATSHARE"): 0
+
     VIEW "STATSHARE" 
-    $VIEW("STATSHARE","DEFAULT")
-    1
+
+    $VIEW("STATSHARE","DEFAULT"): 1
+    $VIEW("STATSHARE"): 1
+
+# Create a two region DB with regions DEFAULT
+# Run testB^gtm8699.m to test $VIEW("STATSHARE") with V[IEW] "STATSHARE":"DEFAULT"
+    $VIEW("STATSHARE","DEFAULT"): 0
+    $VIEW("STATSHARE","AREG"): 0
+    $VIEW("STATSHARE"): 0
+
+    VIEW "STATSHARE":"DEFAULT" 
+
+    $VIEW("STATSHARE","DEFAULT"): 1
+    $VIEW("STATSHARE","AREG"): 0
+    $VIEW("STATSHARE"): 1
