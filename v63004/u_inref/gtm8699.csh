@@ -14,15 +14,16 @@
 
 #### testA ####
 echo "# Create a single region DB with region DEFAULT"
-$gtm_tst/com/dbcreate.csh mumps 2 >>& dbcreate_log.txt
+$gtm_tst/com/dbcreate.csh mumps >>& dbcreate_log.txt
 
 echo '# Run testA^gtm8699.m to test $VIEW("STATSHARE") with V[IEW] "STATSHARE"'
 $ydb_dist/mumps -run testA^gtm8699
 
+
 $gtm_tst/com/dbcheck.csh >>& dbcreate_log.txt
 
-echo ''
 #### testB ####
+echo ''
 echo "# Create a two region DB with regions DEFAULT"
 $gtm_tst/com/dbcreate.csh mumps 2 >>& dbcreate_log.txt
 
@@ -30,3 +31,17 @@ echo '# Run testB^gtm8699.m to test $VIEW("STATSHARE") with V[IEW] "STATSHARE":"
 $ydb_dist/mumps -run testB^gtm8699
 
 $gtm_tst/com/dbcheck.csh >>& dbcreate_log.txt
+
+#### testC ####
+echo ''
+echo "# Create a single region DB with region DEFAULT"
+$gtm_tst/com/dbcreate.csh mumps >>& dbcreate_log.txt
+
+echo '# Disable DB stat sharing'
+$MUPIP set -NOSTAT  -reg "DEFAULT" #>>& dbcreate_log.txt
+
+echo '# Run testC^gtm8699.m to test $VIEW("STATSHARE") when DB sharing is disabled'
+$ydb_dist/mumps -run testC^gtm8699
+
+$gtm_tst/com/dbcheck.csh >>& dbcreate_log.txt
+
