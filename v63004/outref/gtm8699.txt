@@ -1,15 +1,8 @@
+# Testing for STAT
+
 # Create a single region DB with region DEFAULT
-# Run testA^gtm8699.m to test $VIEW("STATSHARE") with V[IEW] "STATSHARE"
-    $VIEW("STATSHARE","DEFAULT"): 0
-    $VIEW("STATSHARE"): 0
-
-    VIEW "STATSHARE" 
-
-    $VIEW("STATSHARE","DEFAULT"): 1
-    $VIEW("STATSHARE"): 1
-
-# Create a two region DB with regions DEFAULT
-# Run testB^gtm8699.m to test $VIEW("STATSHARE") with V[IEW] "STATSHARE":"DEFAULT"
+# Setting DB stat settings
+# Run gtm8699.m
     $VIEW("STATSHARE","DEFAULT"): 0
     $VIEW("STATSHARE","AREG"): 0
     $VIEW("STATSHARE"): 0
@@ -19,3 +12,43 @@
     $VIEW("STATSHARE","DEFAULT"): 1
     $VIEW("STATSHARE","AREG"): 0
     $VIEW("STATSHARE"): 1
+
+    VIEW "STATSHARE" 
+
+    $VIEW("STATSHARE","DEFAULT"): 1
+    $VIEW("STATSHARE","AREG"): 1
+    $VIEW("STATSHARE"): 1
+
+    VIEW "NOSTATSHARE" 
+
+    $VIEW("STATSHARE","DEFAULT"): 0
+    $VIEW("STATSHARE","AREG"): 0
+    $VIEW("STATSHARE"): 0
+
+# Testing for NOSTAT
+
+# Create a single region DB with region DEFAULT
+# Setting DB stat settings
+# Run gtm8699.m
+    $VIEW("STATSHARE","DEFAULT"): 0
+    $VIEW("STATSHARE","AREG"): 0
+    $VIEW("STATSHARE"): 0
+
+    VIEW "STATSHARE":"DEFAULT" 
+
+    $VIEW("STATSHARE","DEFAULT"): 0
+    $VIEW("STATSHARE","AREG"): 0
+    $VIEW("STATSHARE"): 1
+
+    VIEW "STATSHARE" 
+
+    $VIEW("STATSHARE","DEFAULT"): 0
+    $VIEW("STATSHARE","AREG"): 0
+    $VIEW("STATSHARE"): 1
+
+    VIEW "NOSTATSHARE" 
+
+    $VIEW("STATSHARE","DEFAULT"): 0
+    $VIEW("STATSHARE","AREG"): 0
+    $VIEW("STATSHARE"): 0
+

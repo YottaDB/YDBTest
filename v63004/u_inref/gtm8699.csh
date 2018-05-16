@@ -11,37 +11,50 @@
 #								#
 #################################################################
 #
+foreach share_opt ("STAT" "NOSTAT")
 
-#### testA ####
-echo "# Create a single region DB with region DEFAULT"
-$gtm_tst/com/dbcreate.csh mumps >>& dbcreate_log.txt
+	echo "# Testing for $share_opt"
 
-echo '# Run testA^gtm8699.m to test $VIEW("STATSHARE") with V[IEW] "STATSHARE"'
-$ydb_dist/mumps -run testA^gtm8699
+	#### testA ####
+	echo ''
+	echo "# Create a single region DB with region DEFAULT"
+	$gtm_tst/com/dbcreate.csh mumps 2 >>& dbcreate_log.txt
+
+	echo '# Setting DB stat settings'
+	$MUPIP set -$share_opt  -reg "*" >>& dbcreate_log.txt
+
+	echo '# Run gtm8699.m'
+	$ydb_dist/mumps -run gtm8699
 
 
-$gtm_tst/com/dbcheck.csh >>& dbcreate_log.txt
+	$gtm_tst/com/dbcheck.csh >>& dbcreate_log.txt
 
-#### testB ####
-echo ''
-echo "# Create a two region DB with regions DEFAULT"
-$gtm_tst/com/dbcreate.csh mumps 2 >>& dbcreate_log.txt
+	##### testB ####
+	#echo ''
+	#echo "# Create a two region DB with regions DEFAULT"
+	#$gtm_tst/com/dbcreate.csh mumps 2 >>& dbcreate_log.txt
 
-echo '# Run testB^gtm8699.m to test $VIEW("STATSHARE") with V[IEW] "STATSHARE":"DEFAULT"'
-$ydb_dist/mumps -run testB^gtm8699
+	#echo '# Setting DB stat settings'
+	#$MUPIP set -$share_opt  -reg "*" >>& dbcreate_log.txt
+	#
+	#echo '# Run testB^gtm8699.m to test $VIEW("STATSHARE") with V[IEW] "STATSHARE":"DEFAULT"'
+	#$ydb_dist/mumps -run testB^gtm8699
+	#
+	#$gtm_tst/com/dbcheck.csh >>& dbcreate_log.txt
 
-$gtm_tst/com/dbcheck.csh >>& dbcreate_log.txt
+	echo ''
+end
 
-#### testC ####
-echo ''
-echo "# Create a single region DB with region DEFAULT"
-$gtm_tst/com/dbcreate.csh mumps >>& dbcreate_log.txt
-
-echo '# Disable DB stat sharing'
-$MUPIP set -NOSTAT  -reg "DEFAULT" #>>& dbcreate_log.txt
-
-echo '# Run testC^gtm8699.m to test $VIEW("STATSHARE") when DB sharing is disabled'
-$ydb_dist/mumps -run testC^gtm8699
-
-$gtm_tst/com/dbcheck.csh >>& dbcreate_log.txt
-
+##### testC ####
+#echo ''
+#echo "# Create a single region DB with region DEFAULT"
+#$gtm_tst/com/dbcreate.csh mumps >>& dbcreate_log.txt
+#
+#echo '# Disable DB stat sharing'
+#$MUPIP set -NOSTAT  -reg "*" #>>& dbcreate_log.txt
+#
+#echo '# Run testC^gtm8699.m to test $VIEW("STATSHARE") when DB sharing is disabled'
+#$ydb_dist/mumps -run testC^gtm8699
+#
+#$gtm_tst/com/dbcheck.csh >>& dbcreate_log.txt
+#
