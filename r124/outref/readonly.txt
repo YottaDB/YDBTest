@@ -1,0 +1,15 @@
+# Test update on database with READ_ONLY flag through multiple global directories
+
+# Create gld mumps.gld mapping to the database file mumps.dat
+# Create gld x.gld mapping to the same database file mumps.dat
+# Enable READ_ONLY flag on mumps.dat (need to also disable STATS flag on mumps.dat at the same time)
+Database file ##TEST_PATH##/mumps.dat now has MM access method
+Database file ##TEST_PATH##/mumps.dat is now read-only
+Database file ##TEST_PATH##/mumps.dat now has sharing of gvstats set to FALSE
+# Update a.dat through mumps.gld first
+ZSTATUS=readonly+3^readonly,%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/mumps.dat
+# Update a.dat through x.gld next. This used to SIG-11 in r1.22
+ZSTATUS=readonly+5^readonly,%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/mumps.dat
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
