@@ -2,37 +2,92 @@
 
 # Disable sharing for BREG
 Database file ##TEST_PATH##/b.dat now has sharing of gvstats set to FALSE
-# Run testA of gtm8874.m
-Check for open region files:
+# Run testA of gtm8874.m to test basic VIEW functionality and disabled regions
+----------
+testA
+----------
 
+Check for open region files:
 
 VIEW "STATSHARE" 
 Check for open region files:
 a.dat
 b.dat
 mumps.dat
+xxx.a.dat.gst
+xxx.mumps.dat.gst
 
 STATSHARE DEFAULT: 1
 STATSHARE AREG:    1
 STATSHARE BREG:    0
 
+
+VIEW "NOSTATSHARE" 
+Check for open region files:
+a.dat
+b.dat
+mumps.dat
+xxx.a.dat.gst
+xxx.mumps.dat.gst
+
+STATSHARE DEFAULT: 0
+STATSHARE AREG:    0
+STATSHARE BREG:    0
+
 VIEW "STATSHARE":"AREG"
-STATSHARE DEFAULT: 1
+Check for open region files:
+a.dat
+b.dat
+mumps.dat
+xxx.a.dat.gst
+xxx.mumps.dat.gst
+
+STATSHARE DEFAULT: 0
 STATSHARE AREG:    1
 STATSHARE BREG:    0
 
 VIEW "STATSHARE":"DEFAULT"
-VIEW "NOTSTATSHARE":"AREG"
+
+Check for open region files:
+a.dat
+b.dat
+mumps.dat
+xxx.a.dat.gst
+xxx.mumps.dat.gst
+
+VIEW "NOSTATSHARE":"AREG"
+
+Check for open region files:
+a.dat
+b.dat
+mumps.dat
+xxx.a.dat.gst
+xxx.mumps.dat.gst
+
 STATSHARE DEFAULT: 1
 STATSHARE AREG:    0
 STATSHARE BREG:    0
 
 VIEW "STATSHARE"
+Check for open region files:
+a.dat
+b.dat
+mumps.dat
+xxx.a.dat.gst
+xxx.mumps.dat.gst
+
 STATSHARE DEFAULT: 1
 STATSHARE AREG:    1
 STATSHARE BREG:    0
 
 VIEW "NOSTATSHARE"
+Check for open region files:
+a.dat
+b.dat
+mumps.dat
+xxx.a.dat.gst
+xxx.mumps.dat.gst
+
 STATSHARE DEFAULT: 0
 STATSHARE AREG:    0
 STATSHARE BREG:    0
@@ -40,7 +95,33 @@ STATSHARE BREG:    0
 # Shut down the DB and backup necessary files to sub directory
 setenv gtm_statshare "TRUE"
 # Recreate the 3 region DB with gbl_dir mumps.gld
-# Run testB of gtm8874.m
+
+# Disable sharing for BREG
+Database file ##TEST_PATH##/b.dat now has sharing of gvstats set to FALSE
+# Run testB1 of gtm8874.m to V[IEW] "STATSHARE" and run $VIEW for each region with gtm_statshare="TRUE"
+----------
+testB1
+----------
+
+VIEW "STATSHARE"
+Check for open region files:
+a.dat
+b.dat
+mumps.dat
+xxx.a.dat.gst
+xxx.mumps.dat.gst
+
+STATSHARE DEFAULT: 1
+STATSHARE AREG:    1
+STATSHARE BREG:    0
+
+# Enable sharing for BREG
+Database file ##TEST_PATH##/b.dat now has sharing of gvstats set to  TRUE
+# Run testB2 of gtm8874.m to $VIEW regions
+----------
+testB2
+----------
+
 STATSHARE DEFAULT: 1
 STATSHARE AREG:    1
 STATSHARE BREG:    1
@@ -51,10 +132,46 @@ unsetenv gtm_statshare
 # Backup otherA.dat DB
 # Create a 1 region DB with gbl_dir otherB.gld
 # Move otherA.dat DB files back to current directory
-# Run testC of gtm8874.m
+# Run testC of gtm8874.m to test implicit sharing of VIEW "STATSHARE"
+----------
+testC
+----------
+
 SET $ZGBLDIR="otherA.gld" 
 VIEW "STATSHARE":"DEFAULT" 
+
+Check for open region files:
+otherA.dat
+xxx.otherA.dat.gst
+
 $VIEW("STATSHARE","DEFAULT"): 1
 
-SET $ZGBLDIR="otherB.gld" 
+VIEW "NOSTATSHARE":"DEFAULT" 
+
+Check for open region files:
+otherA.dat
+xxx.otherA.dat.gst
+
 $VIEW("STATSHARE","DEFAULT"): 0
+
+SET $ZGBLDIR="otherB.gld" 
+VIEW "STATSHARE":"DEFAULT" 
+
+Check for open region files:
+otherA.dat
+otherB.dat
+xxx.otherA.dat.gst
+xxx.otherB.dat.gst
+
+$VIEW("STATSHARE","DEFAULT"): 1
+
+VIEW "NOSTATSHARE":"DEFAULT" 
+
+Check for open region files:
+otherA.dat
+otherB.dat
+xxx.otherA.dat.gst
+xxx.otherB.dat.gst
+
+$VIEW("STATSHARE","DEFAULT"): 0
+

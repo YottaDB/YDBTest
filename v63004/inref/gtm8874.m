@@ -11,12 +11,28 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 testA
-	WRITE "Check for open region files:",!
-	ZSYSTEM "ls -l /proc/"_$job_"/fd | $grep '.dat$' | awk -F '/' '{print $(NF)}' "
+	WRITE "----------",!
+	WRITE "testA",!
+	WRITE "----------",!!
+
+	do checkRegion()
+
 	WRITE !,"VIEW ""STATSHARE"" ",!
 	VIEW "STATSHARE"
-	WRITE "Check for open region files:",!
-	ZSYSTEM "ls -l /proc/"_$job_"/fd | $grep '.dat$' | awk -F '/' '{print $(NF)}' "
+	do checkRegion()
+	WRITE !
+
+	WRITE "STATSHARE DEFAULT: "
+	WRITE $VIEW("STATSHARE","DEFAULT"),!
+	WRITE "STATSHARE AREG:    "
+	WRITE $VIEW("STATSHARE","AREG"),!
+	WRITE "STATSHARE BREG:    "
+	WRITE $VIEW("STATSHARE","BREG"),!
+	WRITE !
+
+	WRITE !,"VIEW ""NOSTATSHARE"" ",!
+	VIEW "NOSTATSHARE"
+	do checkRegion()
 	WRITE !
 
 	WRITE "STATSHARE DEFAULT: "
@@ -30,6 +46,8 @@ testA
 	WRITE "VIEW ""STATSHARE"":""AREG"""
 	VIEW "STATSHARE":"AREG"
 	WRITE !
+	do checkRegion()
+	WRITE !
 
 	WRITE "STATSHARE DEFAULT: "
 	WRITE $VIEW("STATSHARE","DEFAULT"),!
@@ -41,8 +59,14 @@ testA
 
 	WRITE "VIEW ""STATSHARE"":""DEFAULT""",!
 	VIEW "STATSHARE":"DEFAULT"
-	WRITE "VIEW ""NOTSTATSHARE"":""AREG""",!
+	WRITE !
+	do checkRegion()
+	WRITE !
+	WRITE "VIEW ""NOSTATSHARE"":""AREG""",!
 	VIEW "NOSTATSHARE":"AREG"
+	WRITE !
+	do checkRegion()
+	WRITE !
 
 	WRITE "STATSHARE DEFAULT: "
 	WRITE $VIEW("STATSHARE","DEFAULT"),!
@@ -54,6 +78,8 @@ testA
 
 	WRITE "VIEW ""STATSHARE"""
 	VIEW "STATSHARE"
+	WRITE !
+	do checkRegion()
 	WRITE !
 
 	WRITE "STATSHARE DEFAULT: "
@@ -67,6 +93,8 @@ testA
 	WRITE "VIEW ""NOSTATSHARE"""
 	VIEW "NOSTATSHARE"
 	WRITE !
+	do checkRegion()
+	WRITE !
 
 	WRITE "STATSHARE DEFAULT: "
 	WRITE $VIEW("STATSHARE","DEFAULT"),!
@@ -80,10 +108,31 @@ testA
 
 
 
-testB
-	;WRITE "VIEW ""NOSTATSHARE"""
-	;VIEW "NOSTATSHARE"
-	;WRITE !
+testB1
+	WRITE "----------",!
+	WRITE "testB1",!
+	WRITE "----------",!!
+
+	WRITE "VIEW ""STATSHARE"""
+	VIEW "STATSHARE"
+	WRITE !
+	do checkRegion()
+	WRITE !
+
+	WRITE "STATSHARE DEFAULT: "
+	WRITE $VIEW("STATSHARE","DEFAULT"),!
+	WRITE "STATSHARE AREG:    "
+	WRITE $VIEW("STATSHARE","AREG"),!
+	WRITE "STATSHARE BREG:    "
+	WRITE $VIEW("STATSHARE","BREG"),!
+	WRITE !
+
+	quit
+
+testB2
+	WRITE "----------",!
+	WRITE "testB2",!
+	WRITE "----------",!!
 
 	WRITE "STATSHARE DEFAULT: "
 	WRITE $VIEW("STATSHARE","DEFAULT"),!
@@ -97,16 +146,64 @@ testB
 
 
 testC
+	WRITE "----------",!
+	WRITE "testC",!
+	WRITE "----------",!!
+
 	WRITE "SET $ZGBLDIR=""otherA.gld"" ",!
 	SET $ZGBLDIR="otherA.gld"
+
 	WRITE "VIEW ""STATSHARE"":""DEFAULT"" ",!
 	VIEW "STATSHARE":"DEFAULT"
+	WRITE !
+	do checkRegion()
+	WRITE !
+	WRITE "$VIEW(""STATSHARE"",""DEFAULT""): "
+	WRITE $VIEW("STATSHARE","DEFAULT"),!!
+
+	WRITE "VIEW ""NOSTATSHARE"":""DEFAULT"" ",!
+	VIEW "NOSTATSHARE":"DEFAULT"
+	WRITE !
+	do checkRegion()
+	WRITE !
 	WRITE "$VIEW(""STATSHARE"",""DEFAULT""): "
 	WRITE $VIEW("STATSHARE","DEFAULT"),!!
 
 	WRITE "SET $ZGBLDIR=""otherB.gld"" ",!
 	SET $ZGBLDIR="otherB.gld"
+
+	WRITE "VIEW ""STATSHARE"":""DEFAULT"" ",!
+	VIEW "STATSHARE":"DEFAULT"
+	WRITE !
+	do checkRegion()
+	WRITE !
 	WRITE "$VIEW(""STATSHARE"",""DEFAULT""): "
-	WRITE $VIEW("STATSHARE","DEFAULT"),!
+	WRITE $VIEW("STATSHARE","DEFAULT"),!!
+
+	WRITE "VIEW ""NOSTATSHARE"":""DEFAULT"" ",!
+	VIEW "NOSTATSHARE":"DEFAULT"
+	WRITE !
+	do checkRegion()
+	WRITE !
+	WRITE "$VIEW(""STATSHARE"",""DEFAULT""): "
+	WRITE $VIEW("STATSHARE","DEFAULT"),!!
 
 	quit
+
+checkRegion()
+
+	WRITE "Check for open region files:",!
+
+	; Filters the file names from the ls output
+	ZSYSTEM "ls -l /proc/"_$job_"/fd | $grep '.dat$' | awk -F '/' '{print $(NF)}' | sort"
+
+
+	; .gst files start with an RNG number, so the file names themselves require additional filtering
+
+	set line1="ls -l /proc/"_$job_"/fd | $grep '.gst$' | "
+	set line2="awk -F '/' '{print $(NF)}'  | "
+	set line3="awk -F '.' 'BEGIN { ORS="""" }; {print ""xxx""; for (i = 2; i <= NF ; i++) { print ""."" ; print $i } print ""\n""}' | "
+	set line4=" sort"
+
+	ZSYSTEM line1_line2_line3_line4
+
