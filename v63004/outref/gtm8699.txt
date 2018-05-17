@@ -1,6 +1,6 @@
-# Testing for STAT
+# Testing where database has STATISTICS sharing enabled
 
-# Create a single region DB with region DEFAULT
+# Create a 2 region DB with region DEFAULT
 # Setting DB stat settings
 # Run gtm8699.m
     $VIEW("STATSHARE","DEFAULT"): 0
@@ -25,9 +25,9 @@
     $VIEW("STATSHARE","AREG"): 0
     $VIEW("STATSHARE"): 0
 
-# Testing for NOSTAT
+# Testing where database has STATISTICS sharing disabled
 
-# Create a single region DB with region DEFAULT
+# Create a 2 region DB with region DEFAULT
 # Setting DB stat settings
 # Run gtm8699.m
     $VIEW("STATSHARE","DEFAULT"): 0

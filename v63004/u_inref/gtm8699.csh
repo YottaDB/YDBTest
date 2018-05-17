@@ -13,11 +13,15 @@
 #
 foreach share_opt ("STAT" "NOSTAT")
 
-	echo "# Testing for $share_opt"
+	if ($share_opt == "STAT") then
+		echo "# Testing where database has STATISTICS sharing enabled"
+	else
+		echo "# Testing where database has STATISTICS sharing disabled"
+	endif
 
 	#### testA ####
 	echo ''
-	echo "# Create a single region DB with region DEFAULT"
+	echo "# Create a 2 region DB with region DEFAULT"
 	$gtm_tst/com/dbcreate.csh mumps 2 >>& dbcreate_log.txt
 
 	echo '# Setting DB stat settings'
@@ -29,32 +33,6 @@ foreach share_opt ("STAT" "NOSTAT")
 
 	$gtm_tst/com/dbcheck.csh >>& dbcreate_log.txt
 
-	##### testB ####
-	#echo ''
-	#echo "# Create a two region DB with regions DEFAULT"
-	#$gtm_tst/com/dbcreate.csh mumps 2 >>& dbcreate_log.txt
-
-	#echo '# Setting DB stat settings'
-	#$MUPIP set -$share_opt  -reg "*" >>& dbcreate_log.txt
-	#
-	#echo '# Run testB^gtm8699.m to test $VIEW("STATSHARE") with V[IEW] "STATSHARE":"DEFAULT"'
-	#$ydb_dist/mumps -run testB^gtm8699
-	#
-	#$gtm_tst/com/dbcheck.csh >>& dbcreate_log.txt
-
 	echo ''
 end
 
-##### testC ####
-#echo ''
-#echo "# Create a single region DB with region DEFAULT"
-#$gtm_tst/com/dbcreate.csh mumps >>& dbcreate_log.txt
-#
-#echo '# Disable DB stat sharing'
-#$MUPIP set -NOSTAT  -reg "*" #>>& dbcreate_log.txt
-#
-#echo '# Run testC^gtm8699.m to test $VIEW("STATSHARE") when DB sharing is disabled'
-#$ydb_dist/mumps -run testC^gtm8699
-#
-#$gtm_tst/com/dbcheck.csh >>& dbcreate_log.txt
-#
