@@ -11,23 +11,24 @@
 #								#
 #################################################################
 #
-#-----------------------------------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # List of subtests of the form "subtestname [author] description"
-#-----------------------------------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# gtm8914	    [jake]  Tests that $VIEW("GVSTATS",<region>) ZSHOW "G" and ZSHOW "T" append output with "?" for processes w/o access to the current shared statistics
 # gtm8909	    [jake]  Tests that <ctrl-c> within the help facility no longer leads to EN0256 error upon exit
 # gtm8860	    [jake]  Tests that journal extract removes additional / from journal and output file paths
 # gtm8791	    [jake]  Tests that <ctrl-z> no longer causes segmentation violation
 # gtm8202	    [jake]  Tests the functionality of the -SEQNO qualifier for the mupip journal -extract command
 # gtm5730	    [jake]  Tests that the update process now logs record types with a corresponding, non-numerical, description
 # gtm1041	    [jake]  Tests the that env variable gtm_mstack_size sets the size of the M stack as expected
-#-----------------------------------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "v63004 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic ""
-setenv subtest_list_non_replic "$subtest_list_non_replic gtm8909 gtm8860 gtm8791 gtm8202 gtm1041"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm8914 gtm8909 gtm8860 gtm8791 gtm8202 gtm1041"
 setenv subtest_list_replic ""
 setenv subtest_list_replic     "$subtest_list_replic gtm5730"
 
