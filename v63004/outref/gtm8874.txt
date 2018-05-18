@@ -1,3 +1,12 @@
+# Testing VIEW "[NO]STATSHARE"[:<region-list>]
+#### testA ####
+# enables or disables database statistics sharing for listed regions which permit such sharing. 
+#
+# Without the region-list, the command acts on all regions enabled for sharing. 
+#
+# When a targeted region has sharing disabled, STATSHARE has no immediate effect, 
+# but may cause the process to start sharing when MUPIP SET -STATS enables sharing for that region
+
 # Create a 3 region DB with gbl_dir mumps.gld and regions DEFAULT, AREG, and BREG
 
 # Disable sharing for BREG
@@ -9,6 +18,12 @@ testA
 
 Check for open region files:
 
+Check Sharing Status:
+STATSHARE AREG: 0
+STATSHARE BREG: 0
+STATSHARE DEFAULT: 0
+STATSHARE: 0
+
 VIEW "STATSHARE" 
 Check for open region files:
 a.dat
@@ -17,9 +32,11 @@ mumps.dat
 xxx.a.dat.gst
 xxx.mumps.dat.gst
 
+Check Sharing Status:
+STATSHARE AREG: 1
+STATSHARE BREG: 0
 STATSHARE DEFAULT: 1
-STATSHARE AREG:    1
-STATSHARE BREG:    0
+STATSHARE: 1
 
 
 VIEW "NOSTATSHARE" 
@@ -30,9 +47,11 @@ mumps.dat
 xxx.a.dat.gst
 xxx.mumps.dat.gst
 
+Check Sharing Status:
+STATSHARE AREG: 0
+STATSHARE BREG: 0
 STATSHARE DEFAULT: 0
-STATSHARE AREG:    0
-STATSHARE BREG:    0
+STATSHARE: 0
 
 VIEW "STATSHARE":"AREG"
 Check for open region files:
@@ -42,9 +61,11 @@ mumps.dat
 xxx.a.dat.gst
 xxx.mumps.dat.gst
 
+Check Sharing Status:
+STATSHARE AREG: 1
+STATSHARE BREG: 0
 STATSHARE DEFAULT: 0
-STATSHARE AREG:    1
-STATSHARE BREG:    0
+STATSHARE: 1
 
 VIEW "STATSHARE":"DEFAULT"
 
@@ -55,6 +76,12 @@ mumps.dat
 xxx.a.dat.gst
 xxx.mumps.dat.gst
 
+Check Sharing Status:
+STATSHARE AREG: 1
+STATSHARE BREG: 0
+STATSHARE DEFAULT: 1
+STATSHARE: 1
+
 VIEW "NOSTATSHARE":"AREG"
 
 Check for open region files:
@@ -64,9 +91,11 @@ mumps.dat
 xxx.a.dat.gst
 xxx.mumps.dat.gst
 
+Check Sharing Status:
+STATSHARE AREG: 0
+STATSHARE BREG: 0
 STATSHARE DEFAULT: 1
-STATSHARE AREG:    0
-STATSHARE BREG:    0
+STATSHARE: 1
 
 VIEW "STATSHARE"
 Check for open region files:
@@ -76,9 +105,11 @@ mumps.dat
 xxx.a.dat.gst
 xxx.mumps.dat.gst
 
+Check Sharing Status:
+STATSHARE AREG: 1
+STATSHARE BREG: 0
 STATSHARE DEFAULT: 1
-STATSHARE AREG:    1
-STATSHARE BREG:    0
+STATSHARE: 1
 
 VIEW "NOSTATSHARE"
 Check for open region files:
@@ -88,12 +119,21 @@ mumps.dat
 xxx.a.dat.gst
 xxx.mumps.dat.gst
 
+Check Sharing Status:
+STATSHARE AREG: 0
+STATSHARE BREG: 0
 STATSHARE DEFAULT: 0
-STATSHARE AREG:    0
-STATSHARE BREG:    0
+STATSHARE: 0
 
 # Shut down the DB and backup necessary files to sub directory
-setenv gtm_statshare "TRUE"
+
+#### testB ####
+# When a targeted region has sharing disabled, STATSHARE has no immediate effect, 
+# but may cause the process to start sharing when MUPIP SET -STATS enables sharing for that region
+#
+# the $gtm_statshare environment variable applies to databases as the application first uses them
+
+# setenv gtm_statshare "TRUE"
 # Recreate the 3 region DB with gbl_dir mumps.gld
 
 # Disable sharing for BREG
@@ -111,9 +151,11 @@ mumps.dat
 xxx.a.dat.gst
 xxx.mumps.dat.gst
 
+Check Sharing Status:
+STATSHARE AREG: 1
+STATSHARE BREG: 0
 STATSHARE DEFAULT: 1
-STATSHARE AREG:    1
-STATSHARE BREG:    0
+STATSHARE: 1
 
 # Enable sharing for BREG
 Database file ##TEST_PATH##/b.dat now has sharing of gvstats set to  TRUE
@@ -122,56 +164,22 @@ Database file ##TEST_PATH##/b.dat now has sharing of gvstats set to  TRUE
 testB2
 ----------
 
+
+Check for open region files:
+
+Check Sharing Status:
+STATSHARE AREG: 1
+STATSHARE BREG: 1
 STATSHARE DEFAULT: 1
-STATSHARE AREG:    1
-STATSHARE BREG:    1
+STATSHARE: 1
 
-# Shut down the DB and backup necessary files to sub directory
 unsetenv gtm_statshare
-# Create a 1 region DB with gbl_dir otherA.gld
-# Backup otherA.dat DB
-# Create a 1 region DB with gbl_dir otherB.gld
-# Move otherA.dat DB files back to current directory
-# Run testC of gtm8874.m to test implicit sharing of VIEW "STATSHARE"
-----------
-testC
-----------
+# Shut down the DB and backup necessary files to sub directory
 
-SET $ZGBLDIR="otherA.gld" 
-VIEW "STATSHARE":"DEFAULT" 
-
-Check for open region files:
-otherA.dat
-xxx.otherA.dat.gst
-
-$VIEW("STATSHARE","DEFAULT"): 1
-
-VIEW "NOSTATSHARE":"DEFAULT" 
-
-Check for open region files:
-otherA.dat
-xxx.otherA.dat.gst
-
-$VIEW("STATSHARE","DEFAULT"): 0
-
-SET $ZGBLDIR="otherB.gld" 
-VIEW "STATSHARE":"DEFAULT" 
-
-Check for open region files:
-otherA.dat
-otherB.dat
-xxx.otherA.dat.gst
-xxx.otherB.dat.gst
-
-$VIEW("STATSHARE","DEFAULT"): 1
-
-VIEW "NOSTATSHARE":"DEFAULT" 
-
-Check for open region files:
-otherA.dat
-otherB.dat
-xxx.otherA.dat.gst
-xxx.otherB.dat.gst
-
-$VIEW("STATSHARE","DEFAULT"): 0
-
+#### testC ####
+# VIEW "[NO]STATSHARE" with no region sub-argument opens any unopened mapped regions
+# and any enabled associated statsDB regions
+#
+# When the last VIEW "[NO]STATSHARE" had no region sub-argument, regions implicitly share 
+# when the process first references them, but after a VIEW specifies selective sharing, 
+Unmatched '''.

@@ -11,11 +11,17 @@
 #								#
 #################################################################
 #
+echo '# Testing VIEW "[NO]STATSHARE"[:<region-list>]'
 
-#### testA ####
-# Basic VIEW "[no]STATSHARE":<region-list> functionality
-# Basic VIEW "[no]STATSHARE" functionality
-# VIEW command with disabled regions
+echo '#### testA ####'
+echo '# enables or disables database statistics sharing for listed regions which permit such sharing. '
+echo '#'
+echo '# Without the region-list, the command acts on all regions enabled for sharing. '
+echo '#'
+echo '# When a targeted region has sharing disabled, STATSHARE has no immediate effect, '
+echo '# but may cause the process to start sharing when MUPIP SET -STATS enables sharing for that region'
+echo ''
+
 echo "# Create a 3 region DB with gbl_dir mumps.gld and regions DEFAULT, AREG, and BREG"
 $gtm_tst/com/dbcreate.csh mumps 3 >>& dbcreate_log_1.txt
 
@@ -29,11 +35,16 @@ $ydb_dist/mumps -run testA^gtm8874
 echo '# Shut down the DB and backup necessary files to sub directory'
 $gtm_tst/com/dbcheck.csh >>& dbcreate_log_1.txt
 $gtm_tst/com/backup_dbjnl.csh dbbkup1 "*.gld *.mjl* *.mjf *.dat" cp nozip
+echo ''
 
-#### testB ####
-# VIEW command with disabled regions
-# VIEW command with gtm_statshare env var
-echo 'setenv gtm_statshare "TRUE"'
+echo '#### testB ####'
+echo '# When a targeted region has sharing disabled, STATSHARE has no immediate effect, '
+echo '# but may cause the process to start sharing when MUPIP SET -STATS enables sharing for that region'
+echo '#'
+echo '# the $gtm_statshare environment variable applies to databases as the application first uses them'
+echo ''
+
+echo '# setenv gtm_statshare "TRUE"'
 setenv gtm_statshare "TRUE"
 echo '# Recreate the 3 region DB with gbl_dir mumps.gld'
 $gtm_tst/com/dbcreate.csh mumps 3 >>& dbcreate_log_2.txt
@@ -51,15 +62,23 @@ $MUPIP set -STAT  -reg "BREG" #>>& dbcreate_log.txt
 echo '# Run testB2 of gtm8874.m to $VIEW regions'
 $ydb_dist/mumps -run testB2^gtm8874
 
-echo '# Shut down the DB and backup necessary files to sub directory'
-$gtm_tst/com/dbcheck.csh >>& dbcreate_log_2.txt
-$gtm_tst/com/backup_dbjnl.csh dbbkup2 "*.gld *.mjl* *.mjf *.dat" cp nozip
-
 echo 'unsetenv gtm_statshare'
 unsetenv gtm_statshare
 
-#### testC ####
-# Implicit Sharing of VIEW "STATSHARE"
+echo '# Shut down the DB and backup necessary files to sub directory'
+$gtm_tst/com/dbcheck.csh >>& dbcreate_log_2.txt
+$gtm_tst/com/backup_dbjnl.csh dbbkup2 "*.gld *.mjl* *.mjf *.dat" cp nozip
+echo ''
+
+echo '#### testC ####'
+echo '# VIEW "[NO]STATSHARE" with no region sub-argument opens any unopened mapped regions'
+echo '# and any enabled associated statsDB regions'
+echo '#'
+echo '# When the last VIEW "[NO]STATSHARE" had no region sub-argument, regions implicitly share '
+echo '# when the process first references them, but after a VIEW specifies selective sharing, '
+echo '# regions don\'t implicitly share as they open'
+echo ''
+
 echo "# Create a 1 region DB with gbl_dir otherA.gld"
 $gtm_tst/com/dbcreate.csh otherA >>& dbcreate_log_3.txt
 echo "# Backup otherA.dat DB"
