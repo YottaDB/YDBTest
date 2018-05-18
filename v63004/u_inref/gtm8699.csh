@@ -21,7 +21,7 @@ foreach share_opt ("STAT" "NOSTAT")
 
 	#### testA ####
 	echo ''
-	echo "# Create a 2 region DB with region DEFAULT"
+	echo "# Create a 2 region DB with regions DEFAULT and AREG"
 	$gtm_tst/com/dbcreate.csh mumps 2 >>& dbcreate_log.txt
 
 	echo '# Setting DB stat settings'
