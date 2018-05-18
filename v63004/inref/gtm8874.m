@@ -149,5 +149,14 @@ checkRegion()
 	WRITE "STATSHARE: "
 	WRITE $VIEW("STATSHARE"),!
 
+      ;. if $data(@y) write y,!
+
+	WRITE "^%YGS : ",!
+	IF $data(^%YGS)  DO
+	. ZWR ^%YGS
+
+	ELSE  DO
+	. WRITE "NO REGION"
+
 	quit
 

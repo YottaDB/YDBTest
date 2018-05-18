@@ -76,7 +76,7 @@ echo '# and any enabled associated statsDB regions'
 echo '#'
 echo '# When the last VIEW "[NO]STATSHARE" had no region sub-argument, regions implicitly share '
 echo '# when the process first references them, but after a VIEW specifies selective sharing, '
-echo '# regions don\'t implicitly share as they open'
+echo '# regions do not implicitly share as they open'
 echo ''
 
 echo "# Create a 1 region DB with gbl_dir otherA.gld"
