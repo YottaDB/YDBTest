@@ -109,8 +109,8 @@ while ($nowtime <= $timeout)
 	endif
 	# Showbacklog of primary
 	set prev_pribacklog = "$pribacklog"
-	set pribacklog = `$tst_awk '/backlog number of transactions/ {print $1}' $filepath/$logfile_src`
-	set srcsno  = `$tst_awk '/last transaction written to journal pool/ {print $1}' $filepath/$logfile_src`
+	set pribacklog = `$tst_awk '/backlog number of transactions/ {print $1}' $filepath/$logfile_src | tail -1`
+	set srcsno  = `$tst_awk '/last transaction written to journal pool/ {print $1}' $filepath/$logfile_src | tail -1`
 	if ( ("" == "$pribacklog") || ("" == "$srcsno") ) then
 		echo "RFSYNC-E-SRCBACKLOG unable to get source backlog from $logfile_src"	>>&! $logfile
 		cat $filepath/$logfile_src							>>&! $logfile
