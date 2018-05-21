@@ -21,6 +21,7 @@
 # gtm8202	    [jake]  Tests the functionality of the -SEQNO qualifier for the mupip journal -extract command
 # gtm5730	    [jake]  Tests that the update process now logs record types with a corresponding, non-numerical, description
 # gtm1041	    [jake]  Tests the that env variable gtm_mstack_size sets the size of the M stack as expected
+# gtm8891	    [vinay] Tests that <side-effect-expression><pure-Boolean-operator>$SELECT(0:side-effect-expression)) sequence produces a SELECTFALSE runtime error
 #-----------------------------------------------------------------------------------------------------------------------------
 
 echo "v63004 test starts..."
@@ -28,7 +29,7 @@ echo "v63004 test starts..."
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic ""
-setenv subtest_list_non_replic "$subtest_list_non_replic gtm8909 gtm8860 gtm8791 gtm8699 gtm8202 gtm1041"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm8909 gtm8860 gtm8791 gtm8699 gtm8202 gtm1041 gtm8891"
 setenv subtest_list_replic     ""
 setenv subtest_list_replic     "$subtest_list_replic gtm5730"
 
