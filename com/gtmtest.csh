@@ -769,7 +769,6 @@ endif
 if ($?test_replic) then
    echo "TEST REMOTE DIR:  $tst_remote_dir"			>> $confil
    echo "BUFFSIZE:         $tst_buffsize"			>> $confil
-   echo "TIMEOUT:          $test_timeout"			>> $confil
    echo "LOG:              $tst_rf_log"				>> $confil
    echo "TEST REMOTE JNL DIR:	$tst_remote_jnldir" 		>> $confil
    echo "TEST REMOTE BACKUP DIR:	$tst_remote_bakdir"	>> $confil

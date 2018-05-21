@@ -3,6 +3,9 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -459,11 +462,6 @@ case "-non_tp":
 case "-NON_TP":
 	    ##HELP_SCREEN NON_TP  ($gtm_test_tp)
 	    setenv gtm_test_tp "NON_TP"
-breaksw
-case "-timeout":
-	    ##HELP_SCREEN  Test timeout ($test_timeout) is set to next argument
-	    setenv test_timeout $argv[$argc1]
-	    set skip
 breaksw
 case "-testtiminglog":
 	    ##HELP_SCREEN log results into timing.info

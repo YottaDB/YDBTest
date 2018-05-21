@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -31,7 +34,6 @@ set format="%Y %m %d %H %M %S %Z"
 set dispformat = "%H:%M:%S"
 set logfile = "rf_sync_`date +%H%M%S`.out"
 echo "Started at `date +$dispformat`" >>&! $logfile
-if !($?test_timeout) setenv test_timeout 3600
 if ($?gtm_tst_rfsync_check_frequency) then
 	@ change_check_frequency = $gtm_tst_rfsync_check_frequency
 else
@@ -39,7 +41,11 @@ else
 endif
 set nowtime = `date +%s`
 set starttime = "$nowtime"
-@ timeout = $nowtime + $test_timeout
+# Previously we had a timeout of 3 hours (the now-nixed $test_timeout env var) here but that was not enough on slow ARMV6L boxes.
+# So bump the timeout to a much higher value (12 hours = 43,200 seconds)
+# Note that as long as this timeout is higher than $gtm_test_hang_alert_sec, this timeout is effectively infinite
+# since before this timeout occurs, we would see a TEST-E-HANG/TEST-E-TIMEDOUT email from the test framework.
+@ timeout = $nowtime + 43200
 
 if (! $?gtm_test_instsecondary ) then
 	setenv gtm_test_instsecondary "-instsecondary=$gtm_test_cur_sec_name"
@@ -119,16 +125,9 @@ while ($nowtime <= $timeout)
 		set prev_updtn = "$updtn"
 		set updtn = `$sec_shell "$sec_getenv; cd $SEC_SIDE;$gtm_tst/com/get_rcvr_backlog.csh updproc"`
 		if ($updtn == $prev_updtn) then
-			# Even update process did not progress. Error out
+			# Update process did not progress. Record that fact but continue waiting until timeout.
 			echo "RFSYNC-E-NOPROGRESS : pribacklog = $pribacklog ; updtn = $updtn for $change_check_frequency seconds : `date +$dispformat`"
-			goto timeout
-		else
-			# Update process shows some progress, Continue waiting
-			continue
 		endif
-	else
-		# There is some progress. Continue waiting
-		continue
 	endif
 end
 if ($nowtime > $timeout) then
