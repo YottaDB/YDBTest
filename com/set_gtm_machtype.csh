@@ -57,9 +57,9 @@ endif
 # Set the variable for 32 bit architectures. Adding more 32bit platforms isn't likely
 if (($gtm_test_machtype == "ix86") || ($gtm_test_machtype == "armvxl")) then
 	setenv gtm_platform_size 32
-	# Increase replication filter timeout on the ARM as we have seen test failures
+	# Increase replication filter timeout on the ARM as we have seen test failures (particularly on ARMV6L)
 	# due to FILTERTIMEDOUT error in the source server log.
-	setenv ydb_repl_filter_timeout 256      # in seconds. This is 4 times default of 64 seconds
+	setenv ydb_repl_filter_timeout 1024	# in seconds. This is 16 times default of 64 seconds
 else
 	setenv gtm_platform_size 64
 endif
