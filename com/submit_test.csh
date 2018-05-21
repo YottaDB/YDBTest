@@ -3,7 +3,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -532,7 +532,6 @@ if ($?test_replic) then
    endif
    echo "gtm_repl_instance:	$gtm_repl_instance" 	>> $tst_general_dir/config.log
    echo "BUFFSIZE:            	$tst_buffsize" 		>> $tst_general_dir/config.log
-   echo "TIMEOUT:             	$test_timeout" 		>> $tst_general_dir/config.log
    echo "LOG:                 	$tst_rf_log" 		>> $tst_general_dir/config.log
    echo "JOURNAL:              	$tst_jnl_str" 		>> $tst_general_dir/config.log
 else
