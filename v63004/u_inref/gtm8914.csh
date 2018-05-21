@@ -19,10 +19,11 @@ echo ''
 echo '# Disable sharing for BREG'
 $MUPIP set -NOSTAT  -reg "BREG" #>>& dbcreate_log.txt
 
+echo ''
 echo '# Run gtm8914'
 $ydb_dist/mumps -run gtm8914
 
-echo '# Shut down the DB and backup necessary files to sub directory'
-$gtm_tst/com/dbcheck.csh >>& dbcreate_log_1.txt
-$gtm_tst/com/backup_dbjnl.csh dbbkup1 "*.gld *.mjl* *.mjf *.dat" cp nozip
+#echo '# Shut down the DB and backup necessary files to sub directory'
+#$gtm_tst/com/dbcheck.csh >>& dbcreate_log_1.txt
+#$gtm_tst/com/backup_dbjnl.csh dbbkup1 "*.gld *.mjl* *.mjf *.dat" cp nozip
 
