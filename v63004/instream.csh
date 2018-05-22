@@ -11,9 +11,10 @@
 #								#
 #################################################################
 #
-#-----------------------------------------------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # List of subtests of the form "subtestname [author] description"
-#-----------------------------------------------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# gtm8914	    [jake]  Tests that $VIEW("GVSTATS",<region>) ZSHOW "G" and ZSHOW "T" append output with "?" for processes w/o access to the current shared statistics
 # gtm8909	    [jake]  Tests that <ctrl-c> within the help facility no longer leads to EN0256 error upon exit
 # gtm8874	    [jake]  Tests the VIEW command's [:<region list>] qualifier
 # gtm8860	    [jake]  Tests that journal extract removes additional / from journal and output file paths
@@ -24,15 +25,19 @@
 # gtm1042	    [jake]  Tests the that env variable gtm_mstack_size sets the size of the M stack as expected
 # gtm8891	    [vinay] Tests that <side-effect-expression><pure-Boolean-operator>$SELECT(0:side-effect-expression)) sequence produces a SELECTFALSE runtime error
 # gtm8894	    [vinay] Tests that $zreldate outputs in the form YYYYMMDD 24:60
-#-----------------------------------------------------------------------------------------------------------------------------
 
 echo "v63004 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic ""
+<<<<<<< HEAD
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm8914 gtm8909 gtm8860 gtm8791 gtm8202 gtm1041"
+setenv subtest_list_replic ""
+=======
 setenv subtest_list_non_replic "$subtest_list_non_replic gtm8909 gtm8874 gtm8860 gtm8791 gtm8699 gtm8202 gtm1042 gtm8891 gtm8894"
 setenv subtest_list_replic     ""
+>>>>>>> master
 setenv subtest_list_replic     "$subtest_list_replic gtm5730"
 
 if ($?test_replic == 1) then
