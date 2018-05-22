@@ -12,18 +12,28 @@
 #################################################################
 #
 
-echo "# Create a 3 region DB with gbl_dir mumps.gld and regions DEFAULT, AREG, and BREG"
-$gtm_tst/com/dbcreate.csh mumps 3 >>& dbcreate_log_1.txt
+echo "# Enable sharing with gtm_statshare"
+setenv gtm_statshare "TRUE"
+echo "# Set gtm_statsdir to the root directory, which we dont have permissions to"
+setenv gtm_statsdir "/"
+
+echo "# Create a single region DB with gbl_dir mumps.gld and region DEFAULT"
+$gtm_tst/com/dbcreate.csh mumps >>& dbcreate_log_1.txt
+
+echo "# The DB, while set for sharing, should now be unable to share due to the invalid gtm_statsdir selection"
 
 echo ''
-echo '# Disable sharing for BREG'
-$MUPIP set -NOSTAT  -reg "BREG" #>>& dbcreate_log.txt
+echo '# Run gtm8914.m'
+$ydb_dist/mumps -run gtm8914 >> gtm8914_m_log.txt
 
-echo ''
-echo '# Run gtm8914'
-$ydb_dist/mumps -run gtm8914
+echo '# End of line for each commands output: '
+foreach line (`cat gtm8914_m_log.txt`)
+	setenv cmd `echo "$line" | $grep -e "VIEW"; echo "$line" | $grep -e "ZSHOW"`
+	if ("$cmd" != "") then
+		echo $cmd
+	else
+		echo "$line" | awk -F":" '{print $NF}'
+	endif
 
-#echo '# Shut down the DB and backup necessary files to sub directory'
-#$gtm_tst/com/dbcheck.csh >>& dbcreate_log_1.txt
-#$gtm_tst/com/backup_dbjnl.csh dbbkup1 "*.gld *.mjl* *.mjf *.dat" cp nozip
+end
 

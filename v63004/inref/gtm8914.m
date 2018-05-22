@@ -12,45 +12,8 @@
 ;
 gtm8914
 
-
-	DO showStats()
-
-	WRITE !
-	WRITE "$MUPIP set -STAT -reg BREG",!
-	ZSYSTEM "$MUPIP set -STAT -reg ""BREG"""
-	ZSYSTEM "$gtm_dist/mupip SET -STAT  -reg ""BREG"""
-	ZSYSTEM "$ydb_dist/mupip SET -STAT  -reg ""BREG"""
-	WRITE !
-
-	DO showStats()
-	;WRITE "VIEW ""STATSHARE"" ",!
-	;VIEW "STATSHARE"
-
-	;WRITE !
-	;WRITE "$VIEW(""STATSHARE""): "
-	;WRITE $VIEW("STATSHARE"),!
-
- 	;DO showStats()
-	;
-	;
-	;WRITE "VIEW ""NOSTATSHARE"" ",!
-	;VIEW "NOSTATSHARE"
-
-	;WRITE "$VIEW(""STATSHARE""): "
-	;WRITE $VIEW("STATSHARE"),!
-	;WRITE !
-
- 	;DO showStats()
-
-	quit
-
-showStats()
-
 	WRITE "$VIEW(""GVSTATS"",""DEFAULT"")",!
-	WRITE $VIEW("GVSTATS","DEFAULT")
-
-	WRITE "$VIEW(""GVSTATS"",""BREG"")",!
-	WRITE $VIEW("GVSTATS","BREG")
+	WRITE $VIEW("GVSTATS","DEFAULT"),!
 
 	WRITE "ZSHOW ""G""",!
 	ZSHOW "G"

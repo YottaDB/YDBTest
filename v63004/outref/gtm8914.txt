@@ -1,0 +1,17 @@
+# Enable sharing with gtm_statshare
+# Set gtm_statsdir to the root directory, which we dont have permissions to
+# Create a single region DB with gbl_dir mumps.gld and region DEFAULT
+# The DB, while set for sharing, should now be unable to share due to the invalid gtm_statsdir selection
+
+# Run gtm8914.m
+# End of line for each commands output: 
+$VIEW("GVSTATS","DEFAULT")
+0?
+ZSHOW
+"G"
+0?
+0?
+ZSHOW
+"T"
+0?
+0
