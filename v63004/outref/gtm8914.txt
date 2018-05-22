@@ -4,14 +4,12 @@
 # The DB, while set for sharing, should now be unable to share due to the invalid gtm_statsdir selection
 
 # Run gtm8914.m
-# End of line for each commands output: 
 $VIEW("GVSTATS","DEFAULT")
-0?
-ZSHOW
-"G"
-0?
-0?
-ZSHOW
-"T"
-0?
-0
+##TEST_AWKSET.*\?
+ZSHOW "G" 
+##TEST_AWKGLD.*\?
+##TEST_AWKGLD.*\?
+ZSHOW "T" 
+##TEST_AWKGLD.*\?
+MLG:0,MLT:0
+

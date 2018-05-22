@@ -15,10 +15,10 @@ gtm8914
 	WRITE "$VIEW(""GVSTATS"",""DEFAULT"")",!
 	WRITE $VIEW("GVSTATS","DEFAULT"),!
 
-	WRITE "ZSHOW ""G""",!
+	WRITE "ZSHOW ""G"" ",!
 	ZSHOW "G"
 
-	WRITE "ZSHOW ""T""",!
+	WRITE "ZSHOW ""T"" ",!
 	ZSHOW "T"
 
 	WRITE !

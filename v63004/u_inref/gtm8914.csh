@@ -24,16 +24,28 @@ echo "# The DB, while set for sharing, should now be unable to share due to the 
 
 echo ''
 echo '# Run gtm8914.m'
-$ydb_dist/mumps -run gtm8914 >> gtm8914_m_log.txt
+$ydb_dist/mumps -run gtm8914
 
-echo '# End of line for each commands output: '
-foreach line (`cat gtm8914_m_log.txt`)
-	setenv cmd `echo "$line" | $grep -e "VIEW"; echo "$line" | $grep -e "ZSHOW"`
-	if ("$cmd" != "") then
-		echo $cmd
-	else
-		echo "$line" | awk -F":" '{print $NF}'
-	endif
-
-end
-
+#echo '# End of line for each commands output: '
+#foreach line (`cat gtm8914_m_log.txt`)
+#	setenv cmd `echo "$line" | $grep -e "VIEW"; echo "$line" | $grep -e "ZSHOW"`
+#	if ("$cmd" != "") then
+#		echo $cmd
+#	else
+#		echo "$line" | awk -F":" '{print $NF}'
+#	endif
+#
+#end
+#set word='sdkf "G"'
+#echo "$word"
+#
+#echo '# forloop output: '
+#foreach line (`cat gtm8914_m_log.txt`)
+#	echo -n "$line"
+#	echo ""
+#
+#end
+#
+#
+#echo "# Full output gtm8914:"
+#cat gtm8914_m_log.txt
