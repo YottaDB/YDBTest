@@ -17,8 +17,9 @@ gtm8914
 
 	WRITE !
 	WRITE "$MUPIP set -STAT -reg BREG",!
-	;ZSYSTEM "\$MUPIP set -STAT -reg ""BREG"""
-	ZSYSTEM "\$MUPIP set -STAT  -reg ""BREG"""
+	ZSYSTEM "$MUPIP set -STAT -reg ""BREG"""
+	ZSYSTEM "$gtm_dist/mupip SET -STAT  -reg ""BREG"""
+	ZSYSTEM "$ydb_dist/mupip SET -STAT  -reg ""BREG"""
 	WRITE !
 
 	DO showStats()
