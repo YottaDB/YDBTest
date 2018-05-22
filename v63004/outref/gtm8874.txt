@@ -5,7 +5,6 @@
 # Without the region-list, the command acts on all regions enabled for sharing. 
 #
 # When a targeted region has sharing disabled, STATSHARE has no immediate effect, 
-# but may cause the process to start sharing when MUPIP SET -STATS enables sharing for that region
 
 # Create a 3 region DB with gbl_dir mumps.gld and regions DEFAULT, AREG, and BREG
 
@@ -144,9 +143,6 @@ NO REGION
 # Shut down the DB and backup necessary files to sub directory
 
 #### testB ####
-# When a targeted region has sharing disabled, STATSHARE has no immediate effect, 
-# but may cause the process to start sharing when MUPIP SET -STATS enables sharing for that region
-#
 # the $gtm_statshare environment variable applies to databases as the application first uses them
 
 # setenv gtm_statshare "TRUE"
@@ -156,7 +152,7 @@ NO REGION
 Database file ##TEST_PATH##/b.dat now has sharing of gvstats set to FALSE
 # Run testB1 of gtm8874.m to V[IEW] "STATSHARE" and run $VIEW for each region with gtm_statshare="TRUE"
 ----------
-testB1
+testB
 ----------
 
 VIEW "STATSHARE"
@@ -174,26 +170,6 @@ STATSHARE DEFAULT: 1
 STATSHARE: 1
 ^%YGS : 
 ##TEST_AWK\^%YGS\("AREG",.*
-##TEST_AWK\^%YGS\("DEFAULT",.*
-
-# Enable sharing for BREG
-Database file ##TEST_PATH##/b.dat now has sharing of gvstats set to  TRUE
-# Run testB2 of gtm8874.m to $VIEW regions
-----------
-testB2
-----------
-
-
-Check for open region files:
-
-Check Sharing Status:
-STATSHARE AREG: 1
-STATSHARE BREG: 1
-STATSHARE DEFAULT: 1
-STATSHARE: 1
-^%YGS : 
-##TEST_AWK\^%YGS\("AREG",.*
-##TEST_AWK\^%YGS\("BREG",.*
 ##TEST_AWK\^%YGS\("DEFAULT",.*
 
 unsetenv gtm_statshare
@@ -241,30 +217,13 @@ STATSHARE: 1
 ^%YGS : 
 NO REGION
 SET $ZGBLDIR="otherB.gld" 
-VIEW "STATSHARE":"DEFAULT" 
 
 Check for open region files:
 otherA.dat
-otherB.dat
 xxx.otherA.dat.gst
-xxx.otherB.dat.gst
-
-Check Sharing Status:
-STATSHARE DEFAULT: 1
-STATSHARE: 1
-^%YGS : 
-##TEST_AWK\^%YGS\("DEFAULT",.*
-
-VIEW "NOSTATSHARE":"DEFAULT" 
-
-Check for open region files:
-otherA.dat
-otherB.dat
-xxx.otherA.dat.gst
-xxx.otherB.dat.gst
 
 Check Sharing Status:
 STATSHARE DEFAULT: 0
 STATSHARE: 1
 ^%YGS : 
-NO REGION
+##TEST_AWK\^%YGS\("DEFAULT",.*

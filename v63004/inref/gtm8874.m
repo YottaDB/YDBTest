@@ -59,9 +59,9 @@ testA
 	quit
 
 
-testB1
+testB
 	WRITE "----------",!
-	WRITE "testB1",!
+	WRITE "testB",!
 	WRITE "----------",!!
 
 	WRITE "VIEW ""STATSHARE"""
@@ -70,16 +70,6 @@ testB1
 	do checkRegion()
 	WRITE !
 
-	quit
-
-testB2
-	WRITE "----------",!
-	WRITE "testB2",!
-	WRITE "----------",!!
-
-	WRITE !
-	do checkRegion()
-	WRITE !
 
 	quit
 
@@ -107,17 +97,8 @@ testC
 	WRITE "SET $ZGBLDIR=""otherB.gld"" ",!
 	SET $ZGBLDIR="otherB.gld"
 
-	WRITE "VIEW ""STATSHARE"":""DEFAULT"" ",!
-	VIEW "STATSHARE":"DEFAULT"
 	WRITE !
 	do checkRegion()
-	WRITE !
-
-	WRITE "VIEW ""NOSTATSHARE"":""DEFAULT"" ",!
-	VIEW "NOSTATSHARE":"DEFAULT"
-	WRITE !
-	do checkRegion()
-	WRITE !
 
 	quit
 
@@ -148,8 +129,6 @@ checkRegion()
 
 	WRITE "STATSHARE: "
 	WRITE $VIEW("STATSHARE"),!
-
-      ;. if $data(@y) write y,!
 
 	WRITE "^%YGS : ",!
 	IF $data(^%YGS)  DO

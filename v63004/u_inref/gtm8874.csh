@@ -19,7 +19,6 @@ echo '#'
 echo '# Without the region-list, the command acts on all regions enabled for sharing. '
 echo '#'
 echo '# When a targeted region has sharing disabled, STATSHARE has no immediate effect, '
-echo '# but may cause the process to start sharing when MUPIP SET -STATS enables sharing for that region'
 echo ''
 
 echo "# Create a 3 region DB with gbl_dir mumps.gld and regions DEFAULT, AREG, and BREG"
@@ -38,9 +37,6 @@ $gtm_tst/com/backup_dbjnl.csh dbbkup1 "*.gld *.mjl* *.mjf *.dat" cp nozip
 echo ''
 
 echo '#### testB ####'
-echo '# When a targeted region has sharing disabled, STATSHARE has no immediate effect, '
-echo '# but may cause the process to start sharing when MUPIP SET -STATS enables sharing for that region'
-echo '#'
 echo '# the $gtm_statshare environment variable applies to databases as the application first uses them'
 echo ''
 
@@ -54,13 +50,7 @@ echo '# Disable sharing for BREG'
 $MUPIP set -NOSTAT  -reg "BREG" #>>& dbcreate_log.txt
 
 echo '# Run testB1 of gtm8874.m to V[IEW] "STATSHARE" and run $VIEW for each region with gtm_statshare="TRUE"'
-$ydb_dist/mumps -run testB1^gtm8874
-
-echo '# Enable sharing for BREG'
-$MUPIP set -STAT  -reg "BREG" #>>& dbcreate_log.txt
-
-echo '# Run testB2 of gtm8874.m to $VIEW regions'
-$ydb_dist/mumps -run testB2^gtm8874
+$ydb_dist/mumps -run testB^gtm8874
 
 echo 'unsetenv gtm_statshare'
 unsetenv gtm_statshare
@@ -87,9 +77,7 @@ echo "# Create a 1 region DB with gbl_dir otherB.gld"
 $gtm_tst/com/dbcreate.csh otherB >>& dbcreate_log_3.txt
 echo "# Move otherA.dat DB files back to current directory"
 
-foreach x (`ls ./dbbkup3`)
-     mv ./dbbkup3/$x ./$x
-end
+mv dbbkup3/* ./
 
 echo '# Run testC of gtm8874.m to test implicit sharing of VIEW "STATSHARE"'
 $ydb_dist/mumps -run testC^gtm8874
