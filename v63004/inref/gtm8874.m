@@ -76,7 +76,7 @@ testB
 
 testC
 	WRITE "----------",!
-	WRITE "testC",!
+	WRITE "testC ("_$ZCMDLINE_")",!
 	WRITE "----------",!!
 
 	WRITE "SET $ZGBLDIR=""otherA.gld"" ",!
@@ -94,11 +94,14 @@ testC
 	do checkRegion()
 	WRITE !
 
+	VIEW $ZCMDLINE	;Either "NOSTATSHARE or STATSHARE
 	WRITE "SET $ZGBLDIR=""otherB.gld"" ",!
 	SET $ZGBLDIR="otherB.gld"
 
+	set x=$get(^x)
 	WRITE !
 	do checkRegion()
+	WRITE !
 
 	quit
 

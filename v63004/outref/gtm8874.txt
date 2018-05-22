@@ -189,7 +189,7 @@ unsetenv gtm_statshare
 # Move otherA.dat DB files back to current directory
 # Run testC of gtm8874.m to test implicit sharing of VIEW "STATSHARE"
 ----------
-testC
+testC (NOSTATSHARE)
 ----------
 
 SET $ZGBLDIR="otherA.gld" 
@@ -220,10 +220,53 @@ SET $ZGBLDIR="otherB.gld"
 
 Check for open region files:
 otherA.dat
+otherB.dat
+xxx.otherA.dat.gst
+
+Check Sharing Status:
+STATSHARE DEFAULT: 0
+STATSHARE: 0
+^%YGS : 
+NO REGION
+----------
+testC (STATSHARE)
+----------
+
+SET $ZGBLDIR="otherA.gld" 
+VIEW "STATSHARE":"DEFAULT" 
+
+Check for open region files:
+otherA.dat
+xxx.otherA.dat.gst
+
+Check Sharing Status:
+STATSHARE DEFAULT: 1
+STATSHARE: 1
+^%YGS : 
+##TEST_AWK\^%YGS\("DEFAULT",.*
+
+VIEW "NOSTATSHARE":"DEFAULT" 
+
+Check for open region files:
+otherA.dat
 xxx.otherA.dat.gst
 
 Check Sharing Status:
 STATSHARE DEFAULT: 0
 STATSHARE: 1
 ^%YGS : 
+NO REGION
+SET $ZGBLDIR="otherB.gld" 
+
+Check for open region files:
+otherA.dat
+otherB.dat
+xxx.otherA.dat.gst
+xxx.otherB.dat.gst
+
+Check Sharing Status:
+STATSHARE DEFAULT: 1
+STATSHARE: 1
+^%YGS : 
 ##TEST_AWK\^%YGS\("DEFAULT",.*
+

@@ -80,4 +80,5 @@ echo "# Move otherA.dat DB files back to current directory"
 mv dbbkup3/* ./
 
 echo '# Run testC of gtm8874.m to test implicit sharing of VIEW "STATSHARE"'
-$ydb_dist/mumps -run testC^gtm8874
+$ydb_dist/mumps -run testC^gtm8874 "NOSTATSHARE"
+$ydb_dist/mumps -run testC^gtm8874 "STATSHARE"
