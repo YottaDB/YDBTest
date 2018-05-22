@@ -1,0 +1,54 @@
+# Testing where database has STATISTICS sharing enabled
+
+# Create a 2 region DB with regions DEFAULT and AREG
+# Setting DB stat settings
+# Run gtm8699.m
+    $VIEW("STATSHARE","DEFAULT"): 0
+    $VIEW("STATSHARE","AREG"): 0
+    $VIEW("STATSHARE"): 0
+
+    VIEW "STATSHARE":"DEFAULT" 
+
+    $VIEW("STATSHARE","DEFAULT"): 1
+    $VIEW("STATSHARE","AREG"): 0
+    $VIEW("STATSHARE"): 1
+
+    VIEW "STATSHARE" 
+
+    $VIEW("STATSHARE","DEFAULT"): 1
+    $VIEW("STATSHARE","AREG"): 1
+    $VIEW("STATSHARE"): 1
+
+    VIEW "NOSTATSHARE" 
+
+    $VIEW("STATSHARE","DEFAULT"): 0
+    $VIEW("STATSHARE","AREG"): 0
+    $VIEW("STATSHARE"): 0
+
+# Testing where database has STATISTICS sharing disabled
+
+# Create a 2 region DB with regions DEFAULT and AREG
+# Setting DB stat settings
+# Run gtm8699.m
+    $VIEW("STATSHARE","DEFAULT"): 0
+    $VIEW("STATSHARE","AREG"): 0
+    $VIEW("STATSHARE"): 0
+
+    VIEW "STATSHARE":"DEFAULT" 
+
+    $VIEW("STATSHARE","DEFAULT"): 0
+    $VIEW("STATSHARE","AREG"): 0
+    $VIEW("STATSHARE"): 1
+
+    VIEW "STATSHARE" 
+
+    $VIEW("STATSHARE","DEFAULT"): 0
+    $VIEW("STATSHARE","AREG"): 0
+    $VIEW("STATSHARE"): 1
+
+    VIEW "NOSTATSHARE" 
+
+    $VIEW("STATSHARE","DEFAULT"): 0
+    $VIEW("STATSHARE","AREG"): 0
+    $VIEW("STATSHARE"): 0
+

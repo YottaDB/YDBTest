@@ -428,6 +428,8 @@ set bakdir3 = dir_${bakdir}_mupip_rollback_3
 unset noglob
 $gtm_tst/com/backup_dbjnl.csh $bakdir3 "*.dat *.mjl*" mv	# move over files for debugging test failures if any
 
+set sort = "sort -T ."	# Use sort -T . to ensure temporary files get created in current directory instead of /tmp where we might not have enough space
+
 if (! $forward_only_specified) then
 	echo "#################################################################" >>& $misclog
 	echo "# Check BACKWARD and FORWARD rollback produced the same database state" >>& $misclog
@@ -498,7 +500,7 @@ if (! $forward_only_specified) then
 		$grep -vE "$pattern" $file >& $file.filtered
 		# It is possible that backward and forward rollback displays the SHOW output of various journal files (across multiple
 		# regions in different order). So need to sort the output before doing the diff.
-		sort $file.filtered >& $file.filtered.sort
+		$sort $file.filtered >& $file.filtered.sort
 	end
 	echo "diff {$backwardlog,$forwardlog}.filtered.sort" >>& $misclog
 	diff {$backwardlog,$forwardlog}.filtered.sort >>& $misclog
@@ -578,7 +580,7 @@ if (! $forward_only_specified) then
 		else
 			$tst_awk '{if (NR == 1) print $1,$2,$3'$dispstr'; else print; }' $back_losttn_file | sort >& $back_losttn_file.sort
 		endif
-		sort $forw_losttn_file >& $forw_losttn_file.sort
+		$sort $forw_losttn_file >& $forw_losttn_file.sort
 		echo "cmp $back_losttn_file.sort $forw_losttn_file.sort" >>& $misclog
 		cmp $back_losttn_file.sort $forw_losttn_file.sort >>& $misclog
 		if ($status) then
@@ -592,8 +594,8 @@ if (! $forward_only_specified) then
 		# A broken transaction file was created in backward and forward rollback. Check diff.
 		# Since rollback could process the individual regions in an arbitrary order, it is possible the broken transaction
 		# file contains records in a different order in the backward vs forward case. So sort it.
-		sort $back_broken_file > $back_broken_file.sort
-		sort $forw_broken_file > $forw_broken_file.sort
+		$sort $back_broken_file > $back_broken_file.sort
+		$sort $forw_broken_file > $forw_broken_file.sort
 		echo "cmp $back_broken_file.sort $forw_broken_file.sort" >>& $misclog
 		cmp $back_broken_file.sort $forw_broken_file.sort >>& $misclog
 		if ($status) then

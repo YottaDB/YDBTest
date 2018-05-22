@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2004, 2014 Fidelity Information Services, Inc	#
+# Copyright 2004, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -58,14 +61,14 @@ set stacktrace = "${logfile:r}_stacktrace.out"
 $MUPIP replicate -source $gtm_test_instsecondary -checkhealth >&! $srcckhlth
 
 if ( 0 != `$grep -c 'alive in PASSIVE mode' $srcckhlth` ) then
-	echo "SRCBACKLOG-E-PASSIVE Source server is in PASSIVE mode"	 >&! $logfile
+	echo "SRCBACKLOG-E-PASSIVE Source server is in PASSIVE mode"	>>&! $logfile
 	cat $srcckhlth							>>&! $logfile
 	exit 1
 endif
 
 set pidsrc = `$tst_awk '/Source server is alive in ACTIVE mode/ { print $2}' $srcckhlth`
 if ( "" == "$pidsrc" ) then
-	echo "SRCBACKLOG-E-PID unable to obtain pid of source server"	 >&! $logfile
+	echo "SRCBACKLOG-E-PID unable to obtain pid of source server"	>>&! $logfile
 	cat $srcckhlth							>>&! $logfile
 	exit 1
 endif
@@ -74,7 +77,7 @@ while ($nowtime < $timeout)
 	$MUPIP replic -source $gtm_test_instsecondary -showbacklog >& $sblogfile
 	set backlog = `$tst_awk '/backlog number of transactions/ {print $1}' $sblogfile`
 	if ("" == "$backlog") then
-		echo "SRCBACKLOG-E-FAILED -showbacklog failed. Check $sblogfile"  >&! $logfile
+		echo "SRCBACKLOG-E-FAILED -showbacklog failed. Check $sblogfile" >>&! $logfile
 		cat $sblogfile							>>&! $logfile
 		exit 1
 	endif
@@ -84,13 +87,13 @@ while ($nowtime < $timeout)
 	set nowtime = `date +%s`
 end
 
-cat $sblogfile  >&! $logfile
+cat $sblogfile  >>&! $logfile
 if ($nowtime < $timeout) then
 	exit 0
 else
 	$gtm_tst/com/get_dbx_c_stack_trace.csh $pidsrc $gtm_exe/mupip	>>&! $stacktrace
 	# If noerror is set, just silently exit
 	if ($?noerror) exit 0
-	echo "SRCBACKLOG-E-TIMEOUT did not go below $limit in $maxwait seconds. Current backlog: $backlog"	 >&! $logfile
+	echo "SRCBACKLOG-E-TIMEOUT did not go below $limit in $maxwait seconds. Current backlog: $backlog"	 >>&! $logfile
 	exit 1
 endif
