@@ -11,6 +11,10 @@
 #################################################################
 
 
-echo "#Generating output for zreldate"
-$gtm_dist/mumps -run gtm8894
+echo '# Generating output for $zreldate'
+$ydb_dist/mumps -run gtm8894 >& temp.out
+set x = `cat temp.out`
+echo '# Verify output is in libyottadb.so'
+strings  $ydb_dist/libyottadb.so | $grep "$x"
+
 
