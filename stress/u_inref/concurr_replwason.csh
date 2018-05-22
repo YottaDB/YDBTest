@@ -50,12 +50,15 @@ unsetenv gtm_db_counter_sem_incr	# To prevent help database encountering counter
 # being sent to the other side. At this point, it is not clear whether it is a code issue or a system setup issue. For now, increase
 # the buffer size on all the boxes to 256 MB to allow for more journal records to be placed in the shared memory. If the failures
 # still persist we need to analyze further to see if the slowdown is really happening and if so, what's causing it.
-# On some boxes, like lester, a large buffsize causes IPCs problem if there are already too many IPCs left over. Keep it at 128 MB
-# on lester.
-if ("HOST_HP-UX_PA_RISC" != "$gtm_test_os_machtype") then
-	setenv tst_buffsize 268435456
-else
+# On armv6l boxes, with less memory, a large buffsize may further the system so keep the buffer size at 128 MB there.
+if ("armv6l" == `uname -m`) then
 	setenv tst_buffsize 134217728
+	# On ARMV6L boxes, we have seen the procstuck scheme slow tests further down (due to gdb attaching to processes)
+	# and resulting in FILTERTIMEDOUT errors in the source server log causing test failures. For now, disable the
+	# procstuck scheme there to see if those failures go away.
+	source $gtm_tst/com/unset_ydb_env_var.csh ydb_procstuckexec gtm_procstuckexec
+else
+	setenv tst_buffsize 268435456
 endif
 
 # Since the test induces a REPLBRKNTRANS, we don't want the source server to get it, too, so disable JNLFILEONLY

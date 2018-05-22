@@ -53,7 +53,6 @@ setenv tst_tcsh "tcsh -f"
 setenv tst_awk "env LC_ALL=C gawk"
 setenv tst_od "od"
 setenv tst_ls "ls"
-setenv sort_T "sort -T "
 setenv lsof  /usr/local/bin/lsof
 setenv tst_ld_yottadb "-lyottadb"
 setenv convert_to_gtm_chset :
@@ -131,7 +130,6 @@ case "OS/390":
    # be redirected(stdout/stderr) to appropriate output file.
    setenv strings "iconv -f ISO8859-1 -t IBM-1047"
    if ($?gtm_test_com_individual) then
-	   setenv sort_T "$gtm_test_com_individual/sort_T.csh"
 	   setenv convert_to_gtm_chset "$gtm_test_com_individual/convert_to_gtm_chset.csh"
    endif
    # mtailhead.csh generates SIGPIPE outputs so use system head/tail
