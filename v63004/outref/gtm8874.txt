@@ -1,0 +1,272 @@
+# Testing VIEW "[NO]STATSHARE"[:<region-list>]
+#### testA ####
+# enables or disables database statistics sharing for listed regions which permit such sharing. 
+#
+# Without the region-list, the command acts on all regions enabled for sharing. 
+#
+# When a targeted region has sharing disabled, STATSHARE has no immediate effect, 
+
+# Create a 3 region DB with gbl_dir mumps.gld and regions DEFAULT, AREG, and BREG
+
+# Disable sharing for BREG
+Database file ##TEST_PATH##/b.dat now has sharing of gvstats set to FALSE
+# Run testA of gtm8874.m to test basic VIEW functionality and disabled regions
+----------
+testA
+----------
+
+Check for open region files:
+
+Check Sharing Status:
+STATSHARE AREG: 0
+STATSHARE BREG: 0
+STATSHARE DEFAULT: 0
+STATSHARE: 0
+^%YGS : 
+NO REGION
+VIEW "STATSHARE" 
+Check for open region files:
+a.dat
+b.dat
+mumps.dat
+xxx.a.dat.gst
+xxx.mumps.dat.gst
+
+Check Sharing Status:
+STATSHARE AREG: 1
+STATSHARE BREG: 0
+STATSHARE DEFAULT: 1
+STATSHARE: 1
+^%YGS : 
+##TEST_AWK\^%YGS\("AREG",.*
+##TEST_AWK\^%YGS\("DEFAULT",.*
+
+
+VIEW "NOSTATSHARE" 
+Check for open region files:
+a.dat
+b.dat
+mumps.dat
+xxx.a.dat.gst
+xxx.mumps.dat.gst
+
+Check Sharing Status:
+STATSHARE AREG: 0
+STATSHARE BREG: 0
+STATSHARE DEFAULT: 0
+STATSHARE: 0
+^%YGS : 
+NO REGION
+VIEW "STATSHARE":"AREG"
+Check for open region files:
+a.dat
+b.dat
+mumps.dat
+xxx.a.dat.gst
+xxx.mumps.dat.gst
+
+Check Sharing Status:
+STATSHARE AREG: 1
+STATSHARE BREG: 0
+STATSHARE DEFAULT: 0
+STATSHARE: 1
+^%YGS : 
+##TEST_AWK\^%YGS\("AREG",.*
+
+VIEW "STATSHARE":"DEFAULT"
+
+Check for open region files:
+a.dat
+b.dat
+mumps.dat
+xxx.a.dat.gst
+xxx.mumps.dat.gst
+
+Check Sharing Status:
+STATSHARE AREG: 1
+STATSHARE BREG: 0
+STATSHARE DEFAULT: 1
+STATSHARE: 1
+^%YGS : 
+##TEST_AWK\^%YGS\("AREG",.*
+##TEST_AWK\^%YGS\("DEFAULT",.*
+
+VIEW "NOSTATSHARE":"AREG"
+
+Check for open region files:
+a.dat
+b.dat
+mumps.dat
+xxx.a.dat.gst
+xxx.mumps.dat.gst
+
+Check Sharing Status:
+STATSHARE AREG: 0
+STATSHARE BREG: 0
+STATSHARE DEFAULT: 1
+STATSHARE: 1
+^%YGS : 
+##TEST_AWK\^%YGS\("DEFAULT",.*
+
+VIEW "STATSHARE"
+Check for open region files:
+a.dat
+b.dat
+mumps.dat
+xxx.a.dat.gst
+xxx.mumps.dat.gst
+
+Check Sharing Status:
+STATSHARE AREG: 1
+STATSHARE BREG: 0
+STATSHARE DEFAULT: 1
+STATSHARE: 1
+^%YGS : 
+##TEST_AWK\^%YGS\("AREG",.*
+##TEST_AWK\^%YGS\("DEFAULT",.*
+
+VIEW "NOSTATSHARE"
+Check for open region files:
+a.dat
+b.dat
+mumps.dat
+xxx.a.dat.gst
+xxx.mumps.dat.gst
+
+Check Sharing Status:
+STATSHARE AREG: 0
+STATSHARE BREG: 0
+STATSHARE DEFAULT: 0
+STATSHARE: 0
+^%YGS : 
+NO REGION
+# Shut down the DB and backup necessary files to sub directory
+
+#### testB ####
+# the $gtm_statshare environment variable applies to databases as the application first uses them
+
+# setenv gtm_statshare "TRUE"
+# Recreate the 3 region DB with gbl_dir mumps.gld
+
+# Disable sharing for BREG
+Database file ##TEST_PATH##/b.dat now has sharing of gvstats set to FALSE
+# Run testB1 of gtm8874.m to V[IEW] "STATSHARE" and run $VIEW for each region with gtm_statshare="TRUE"
+----------
+testB
+----------
+
+VIEW "STATSHARE"
+Check for open region files:
+a.dat
+b.dat
+mumps.dat
+xxx.a.dat.gst
+xxx.mumps.dat.gst
+
+Check Sharing Status:
+STATSHARE AREG: 1
+STATSHARE BREG: 0
+STATSHARE DEFAULT: 1
+STATSHARE: 1
+^%YGS : 
+##TEST_AWK\^%YGS\("AREG",.*
+##TEST_AWK\^%YGS\("DEFAULT",.*
+
+unsetenv gtm_statshare
+# Shut down the DB and backup necessary files to sub directory
+
+#### testC ####
+# VIEW "[NO]STATSHARE" with no region sub-argument opens any unopened mapped regions
+# and any enabled associated statsDB regions
+#
+# When the last VIEW "[NO]STATSHARE" had no region sub-argument, regions implicitly share 
+# when the process first references them, but after a VIEW specifies selective sharing, 
+# regions do not implicitly share as they open
+
+# Create a 1 region DB with gbl_dir otherA.gld
+# Backup otherA.dat DB
+# Create a 1 region DB with gbl_dir otherB.gld
+# Move otherA.dat DB files back to current directory
+# Run testC of gtm8874.m to test implicit sharing of VIEW "STATSHARE"
+----------
+testC (NOSTATSHARE)
+----------
+
+SET $ZGBLDIR="otherA.gld" 
+VIEW "STATSHARE":"DEFAULT" 
+
+Check for open region files:
+otherA.dat
+xxx.otherA.dat.gst
+
+Check Sharing Status:
+STATSHARE DEFAULT: 1
+STATSHARE: 1
+^%YGS : 
+##TEST_AWK\^%YGS\("DEFAULT",.*
+
+VIEW "NOSTATSHARE":"DEFAULT" 
+
+Check for open region files:
+otherA.dat
+xxx.otherA.dat.gst
+
+Check Sharing Status:
+STATSHARE DEFAULT: 0
+STATSHARE: 1
+^%YGS : 
+NO REGION
+SET $ZGBLDIR="otherB.gld" 
+
+Check for open region files:
+otherA.dat
+otherB.dat
+xxx.otherA.dat.gst
+
+Check Sharing Status:
+STATSHARE DEFAULT: 0
+STATSHARE: 0
+^%YGS : 
+NO REGION
+----------
+testC (STATSHARE)
+----------
+
+SET $ZGBLDIR="otherA.gld" 
+VIEW "STATSHARE":"DEFAULT" 
+
+Check for open region files:
+otherA.dat
+xxx.otherA.dat.gst
+
+Check Sharing Status:
+STATSHARE DEFAULT: 1
+STATSHARE: 1
+^%YGS : 
+##TEST_AWK\^%YGS\("DEFAULT",.*
+
+VIEW "NOSTATSHARE":"DEFAULT" 
+
+Check for open region files:
+otherA.dat
+xxx.otherA.dat.gst
+
+Check Sharing Status:
+STATSHARE DEFAULT: 0
+STATSHARE: 1
+^%YGS : 
+NO REGION
+SET $ZGBLDIR="otherB.gld" 
+
+Check for open region files:
+otherA.dat
+otherB.dat
+xxx.otherA.dat.gst
+xxx.otherB.dat.gst
+
+Check Sharing Status:
+STATSHARE DEFAULT: 1
+STATSHARE: 1
+^%YGS : 
+##TEST_AWK\^%YGS\("DEFAULT",.*
+
