@@ -10,7 +10,7 @@
 ;								;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-gtm1041	;Recursive function designed to fill up the stack
+gtm1042	;Recursive function designed to fill up the stack
 	set ^x=0
 	do recurse
 	quit
