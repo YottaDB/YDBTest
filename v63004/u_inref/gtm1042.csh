@@ -24,14 +24,14 @@ set defKiB = 272	; #Default Mstack size
 echo "# Establishing baseline of (recursive calls / KiB)"
 echo "# Set gtm_mstack_size = minKiB"
 setenv gtm_mstack_size $minKiB
-echo "# Run gtm1041.m recursively until stack overflow"
-$ydb_dist/mumps -run gtm1041 >>& gtm1041.m.baseline.log0
+echo "# Run gtm1042.m recursively until stack overflow"
+$ydb_dist/mumps -run gtm1042 >>& gtm1042.m.baseline.log0
 unsetenv gtm_mstack_size
 set min=`$ydb_dist/mumps -run ^%XCMD 'write ^x'`
 echo "# Set gtm_mstack_size = maxKiB"
 setenv gtm_mstack_size $maxKiB
-echo "# Run gtm1041.m recursively until stack overflow"
-$ydb_dist/mumps -run gtm1041 >>& gtm1041.m.baseline.log0
+echo "# Run gtm1042.m recursively until stack overflow"
+$ydb_dist/mumps -run gtm1042 >>& gtm1042.m.baseline.log0
 unsetenv gtm_mstack_size
 set max=`$ydb_dist/mumps -run ^%XCMD 'write ^x' `
 echo "# Calculate baseline calls / KiB"
@@ -67,8 +67,8 @@ foreach envKiB ($defKiB 0 5000 $maxKiB $maxKiB2 $minKiB2)
 			set expKiB = $minKiB
 		endif
 	endif
-	echo "# Run gtm1041.m recursively until stack overflow"
-	$ydb_dist/mumps -run gtm1041 >& gtm1041.$envKiB.logx
+	echo "# Run gtm1042.m recursively until stack overflow"
+	$ydb_dist/mumps -run gtm1042 >& gtm1042.$envKiB.logx
 	unsetenv gtm_mstack_size	# so below mumps -run commands are not affected by above mstack size setting
 	set dep=`$ydb_dist/mumps -run ^%XCMD 'write ^x'`
 	set expDep=`$ydb_dist/mumps -run ^%XCMD 'write ('$expKiB'*'$baseline')-'$lostcalls''`
