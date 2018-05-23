@@ -12,32 +12,17 @@
 ;
 gtm8643
  	set tcpdev="server$"_$j
- 	set timeout=10
- 	set tcpdev="server$"_$j
  	set portno=0
+	set timeout=10
 
  	open tcpdev:(ZLISTEN=portno_":TCP":attach="server"):timeout:"SOCKET"
 
- 	use $p	; principle device
-	WRITE "WRITE /listen(4):",!
- 	use tcpdev
- 	WRITE /listen(4)
- 	WRITE /wait(timeout)
-	WRITE !
-
- 	use $p	; principle device
-	WRITE "WRITE /listen(5):",!
- 	use tcpdev
- 	WRITE /listen(5)
- 	WRITE /wait(timeout)
-	WRITE !
-
- 	use $p	; principle device
-	WRITE "WRITE /listen(6):",!
- 	use tcpdev
- 	WRITE /listen(6)
- 	WRITE /wait(timeout)
-	WRITE !
+	FOR queueDepth=4:1:6 DO
+ 		. use $p	; principal device
+		. WRITE "WRITE /listen("_queueDepth_"):",!
+ 		. use tcpdev
+ 		. WRITE /listen(queueDepth)
+		. WRITE !
 
 	quit
 
