@@ -18,6 +18,8 @@ if ("pro" == $tst_image) then
 	exit
 endif
 
+source $gtm_tst/com/enable_procstuckexec.csh # This test needs ydb_procstuckexec (test framework would have disabled it on armv6l)
+
 # With 16K counter semaphore bump per process, the 32K counter overflow happens with just 2 processes
 # and prevents exercising white-box code which this test relies upon so disable counter overflow
 # in this test by setting the increment value to default value of 1 (aka unset).

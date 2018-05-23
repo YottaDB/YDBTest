@@ -17,6 +17,7 @@
 if ("pro" == $tst_image) then
 	exit
 endif
+source $gtm_tst/com/enable_procstuckexec.csh # This test needs ydb_procstuckexec (test framework would have disabled it on armv6l)
 setenv gtm_test_jnl NON_SETJNL
 set banner = "#####################################################################"
 echo $banner
