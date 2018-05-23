@@ -25,7 +25,7 @@
 # gtm1042	    [jake]  Tests the that env variable gtm_mstack_size sets the size of the M stack as expected
 # gtm8891	    [vinay] Tests that <side-effect-expression><pure-Boolean-operator>$SELECT(0:side-effect-expression)) sequence produces a SELECTFALSE runtime error
 # gtm8894	    [vinay] Tests that $zreldate outputs in the form YYYYMMDD 24:60
-# gtm8643	    [jake]  Tests that YDB no longer enforces queue depth limit of 5 for SOCKET devices. NOT TESTED YET (Confirms connection attempts fail upon transient issues)
+# gtm8643	    [jake]  Tests that YDB no longer enforces queue depth limit of 5 for SOCKET devices.
 
 echo "v63004 test starts..."
 
