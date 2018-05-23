@@ -15,13 +15,14 @@
 # List of subtests of the form "subtestname [author] description"
 #-------------------------------------------------------------------------------------
 # gtm8788           [nars]  Test that BLKTOODEEP error lines are excluded from object file (GTM-8788 fixed in GT.M V6.3-003)
+# gtm7986	    [vinay] Test that a line of over 8192 bytes produces an LSINSERTED warning
 #-------------------------------------------------------------------------------------
 
 echo "v63003 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "gtm8788"
+setenv subtest_list_non_replic "gtm8788 gtm7986"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
