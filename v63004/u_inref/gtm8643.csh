@@ -13,4 +13,5 @@
 #
 
 echo "# Run gtm8643.m to test queue depth limit > 5"
+echo "# Older versions will return an LQLENGTHNA error"
 $ydb_dist/mumps -run gtm8643
