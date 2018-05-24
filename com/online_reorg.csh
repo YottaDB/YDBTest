@@ -47,7 +47,7 @@ while (1)
 	# are called simultaneously
 	# The variable *ret* stores exit statuses after each mupip invocation so the test stops in case any sub process exits with error.
 	# This is the case for multisrv_crash test case which deliberately kills online_reorg sub processes
-	set tmpoutput = "online_reorg_$$.outx"
+	set tmpoutput = "online_reorg_$$.outx.$cnt"
 	echo "# `date` : ===== Begin round $cnt of mupip size/reorg ($tmpoutput) ====="
 	echo "# `date` : cnt = $cnt ; ff = $ff ; inff = $inff"			>>&!  $tmpoutput
 	if ($cnt % 5 == 2) then

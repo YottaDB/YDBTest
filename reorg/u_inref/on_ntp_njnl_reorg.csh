@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -26,9 +29,6 @@ endif
 
 $gtm_exe/mumps $gtm_tst/com/pfill.m
 $gtm_tst/com/dbcreate.csh "mumps" 8 255 1000
-if (0 == $?test_replic) then
-	if ($?test_collation) $gtm_tst/com/enable_nct.csh
-endif
 $GTM << \aaa
 w "do ^manygbls"  do ^manygbls
 w "do in0^dbfill(""set"")"  do in0^dbfill("set")
