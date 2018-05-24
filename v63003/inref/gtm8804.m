@@ -14,6 +14,7 @@
 ;
 
 gtm8804
+	;accessing and locking in database to ensure ZSHOW "g" and "l" have at least one nonzero statistic
 	set ^x=1
 	lock ^x
 
@@ -22,17 +23,18 @@ gtm8804
 	ZSHOW "G":g
 	;filter out variable settings
 	do out^zshowgfilter(.g,"CTN,DFL,DFS,JFL,JFS,JBB,JFB,JFW,JRL,JRP,JRE,JRI,JRO,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD")
-	write g("G",0),!,g("G",1),!
+	ZWRITE g
 
 	write !,"output for zshow l",!
-	ZSHOW "L"
+	new l
+	ZSHOW "L":l
+	ZWRITE l
 
 	write !,"output for zshow t (summary of g and l)",!
 	new t
 	ZSHOW "T":t
 	;filter out variable settings
 	do out^zshowgfilter(.t,"CTN,DFL,DFS,JFL,JFS,JBB,JFB,JFW,JRL,JRP,JRE,JRI,JRO,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD")
-	write t("G",0),!
-	write t("L",0),!
+	ZWRITE t
 	quit
 
