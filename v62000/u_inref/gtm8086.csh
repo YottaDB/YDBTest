@@ -74,7 +74,7 @@ $gtm_tst/com/imptp.csh >>&! imptp.out
 
 @ logcount = $num_regions + 1	# Wait for at least one journal file switch
 
-(cd $jnldir ; $gtm_tst/com/wait_for_n_jnl.csh -lognum $logcount -duration 300)
+(cd $jnldir ; $gtm_tst/com/wait_for_n_jnl.csh -lognum $logcount -duration 3600)
 
 echo ">>> Set jnldir read-only"
 
