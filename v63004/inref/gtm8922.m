@@ -10,72 +10,173 @@
 ;								;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
-gtm8922
+generalTest
+	SET dbFlush="DBFLUSH n_dsk_write"
+	SET dbSync="DBSYNC n_db_fsync"
+	SET jnlFlush="JNLFLUSH n_jnl_flush JNLFLUSH n_jnl_fsync"
+	SET epoch="EPOCH n_db_flush EPOCH n_jrec_epoch_regular"
+	SET flush="FLUSH n_db_flush FLUSH n_jrec_epoch_regular"
 
-	WRITE $VIEW("DBFLUSH")
-	WRITE "VIEW ""DBFLUSH"":""AREG,BREG"""
-	VIEW "DBFLUSH":"AREG,BREG"
-	WRITE $VIEW("DBFLUSH")
+	; the params string takes the following form
+	; "<VIEW OPTIONS> <STAT ARG>[ <VIEW OPTIONS> <STAT ARG>...]
+	SET params=dbFlush_" "_dbSync_" "_jnlFlush_" "_epoch_" "_flush
 
-	WRITE $VIEW("DBSYNC")
-	WRITE "VIEW ""DBSYNC"":""AREG,BREG"""
-	VIEW "DBSYNC":"AREG,BREG"
-	WRITE $VIEW("DBSYNC")
+	;loops throug words in params to call VIEW on each option and showBuffer() on each stat arg
+	FOR I=1:1:$L(params," ") DO
+	. SET keyword=$P(params," ",I) ; option passed to VIEW
+	. SET stat=$P(params," ",I+1)  ; register to peek with showBuffer
+	. WRITE "TESTING KEYWORD: "_keyword,!
+	. WRITE "------------------------",!
+	. SET ^DefTmp="MOE"_I
+	. SET ^AregTmp="LARRY"_I
+	. SET ^BregTmp="CURLY"_I
+	. DO showBuffer(stat)
+	. WRITE "VIEW """_keyword_""":""AREG,BREG,BREG""",!
+	. VIEW keyword:"AREG,BREG,BREG"
+	. DO showBuffer(stat)
+	. WRITE "VIEW """_keyword_"""",!
+	. VIEW keyword
+	. DO showBuffer(stat)
+	. SET I=I+1 ; make for loop start next cycle on next keyword
+	. WRITE !!
 
-	;WRITE "VIEW ""STATSHARE"":""AREG"""
-	;VIEW "STATSHARE":"AREG"
-	;WRITE !
-	;do checkRegion()
-	;WRITE !
+	quit
 
-	;WRITE "VIEW ""STATSHARE"":""DEFAULT""",!
-	;VIEW "STATSHARE":"DEFAULT"
-	;WRITE !
-	;do checkRegion()
-	;WRITE !
-	;WRITE "VIEW ""NOSTATSHARE"":""AREG""",!
-	;VIEW "NOSTATSHARE":"AREG"
-	;WRITE !
-	;do checkRegion()
-	;WRITE !
+poolLimitTest
+	; VIEW POOLLIMIT requires an extra expression when called and
+	; updates a register other than $gmnt_addrs.gvstats_rec... , which
+	; showBuffer() accesses, so it can not be called in the FOR loop
+	WRITE "TESTING KEYWORD: POOLLIMIT",!
+	WRITE "------------------------",!
+	SET ^DefTmp="JAKE"
+	SET ^AregTmp="ZACK"
+	SET ^BregTmp="JIM"
+	DO showPoolLimit()
+	WRITE "VIEW ""POOLLIMIT"":""AREG,BREG,BREG"":""30""",!
+	VIEW "POOLLIMIT":"AREG,BREG,BREG":"30"
+	DO showPoolLimit()
+	WRITE !!
+
+	quit
+
+gvsResetTest
+	;VIEW GVSRESET requires use of the zshow "G" command to test
+	;Once run zshow "G" should be wiped to a slate of all 0s
+	WRITE "TESTING KEYWORD: GVSRESET",!
+	WRITE "-------------------------",!
+
+	NEW run1
+	NEW run2
+	NEW run3
+
+	SET ^DefTmp="JAKE"
+	SET ^AregTmp="ZACK"
+	SET ^BregTmp="JIM"
+
+	WRITE "Running First ZSHOW ""G"" ",!
+	ZSHOW "G":run1
+
+	WRITE "VIEW ""GVSRESET"":""AREG,BREG,BREG""",!
+	VIEW "GVSRESET":"AREG,BREG,BREG"
+
+	WRITE "Running Second ZSHOW ""G"" ",!
+	ZSHOW "G":run2
+
+	WRITE "---Run1 Run2 Comparison---",!
+	SET reg=""
+	SET I="0"
+	FOR  set reg=$view("GVNEXT",reg) quit:reg=""  DO
+	. SET I=I+1
+	. IF run1("G",I)=run2("G",I) WRITE "-NO CHANGE IN "_reg,!
+	. ELSE  WRITE "-CHANGE IN "_reg_": ",!,run2("G",I),!
+
+	WRITE "VIEW ""GVSRESET"":""AREG,BREG,DEFAULT""",!
+	VIEW "GVSRESET":"AREG,BREG,DEFAULT"
+
+	WRITE "Running Third ZSHOW ""G"" ",!
+	ZSHOW "G":run3
+
+	WRITE "---Run1 Run3 Comparison---",!
+	SET reg=""
+	SET I="0"
+	FOR  set reg=$view("GVNEXT",reg) quit:reg=""  DO
+	. SET I=I+1
+	. IF run1("G",I)=run3("G",I) WRITE "-NO CHANGE IN "_reg,!
+	. ELSE  WRITE "-CHANGE IN "_reg_": ",!,run2("G",I),!
+
+
+
+	WRITE !!
+
+	quit
+openRegionsTest
+	; The openRegionsTest will run a VIEW command using our cmdline args
+	; as its VIEW options. Options are passed in as such:
+	;		<option>:<exp1>:<exp2>
+
+	SET CMD=$ZCMDLINE
+
+	SET numArgs=$L(CMD,":")
+
+	SET option=$P(CMD,":",1)
+	SET exp1=$P(CMD,":",2)
+
+	IF exp1="" SET exp1="*"
+
+	;exp2 wont always have anything specified for it
+	IF numArgs>"2"
+	SET exp2=$P(CMD,":",3)
+
+
+	; if exp2 is empty we need to make sure that our VIEW command
+	; doesn't end up with a dangling ":"
+	IF numArgs="2" DO
+	. WRITE "TESTING REGIONS OPENED BY:  VIEW "_option_":"_exp1,!
+	. WRITE "------------------------------------------------------------",!
+	. WRITE "VIEW "_option_":"_exp1,!
+	. VIEW option:exp1
+	ELSE  DO
+	. WRITE "TESTING REGIONS OPENED BY:  VIEW "_option_":"_exp1_":"_exp2,!
+	. WRITE "------------------------------------------------------------",!
+	. WRITE "VIEW "_option_":"_exp1_":"_exp2,!
+	. VIEW option:exp1:exp2
+
+
+	WRITE "---Check for open region files---",!
+
+	; Filters the file names from the ls output
+	ZSYSTEM "ls -l /proc/"_$job_"/fd | $grep '.dat$' | awk -F '/' '{print $(NF)}' | sort"
+
+	; .gst files start with an RNG number, so the file names themselves require additional filtering
+	set line1="ls -l /proc/"_$job_"/fd | $grep '.gst$' | "
+	set line2="awk -F '/' '{print $(NF)}'  | "
+	set line3="awk -F '.' 'BEGIN { ORS="""" }; {print ""xxx""; for (i = 2; i <= NF ; i++) { print ""."" ; print $i } print ""\n""}' | "
+	set line4=" sort"
+
+	ZSYSTEM line1_line2_line3_line4
+
+	WRITE !
 
 	quit
 
 
+showBuffer(stat)
+	;FOR reg="DEFAULT","AREG","BREG" do
+	set reg=""
+	FOR  SET reg=$view("GVNEXT",reg) quit:reg=""  DO
+	. SET x=$$^%PEEKBYNAME("sgmnt_addrs.gvstats_rec."_stat,reg)
+	. WRITE stat_" Buffer ("_reg_"): ",x,!
+	quit
 
-;checkRegion()
-;
-;	WRITE "Check for open region files:",!
-;
-;	; Filters the file names from the ls output
-;	ZSYSTEM "ls -l /proc/"_$job_"/fd | $grep '.dat$' | awk -F '/' '{print $(NF)}' | sort"
-;
-;
-;	; .gst files start with an RNG number, so the file names themselves require additional filtering
-;
-;	set line1="ls -l /proc/"_$job_"/fd | $grep '.gst$' | "
-;	set line2="awk -F '/' '{print $(NF)}'  | "
-;	set line3="awk -F '.' 'BEGIN { ORS="""" }; {print ""xxx""; for (i = 2; i <= NF ; i++) { print ""."" ; print $i } print ""\n""}' | "
-;	set line4=" sort"
-;
-;	ZSYSTEM line1_line2_line3_line4
-;
-;	WRITE !,"Check Sharing Status:",!
-;
-;	set reg=""
-;	for  set reg=$view("GVNEXT",reg) quit:reg=""  DO
-;	. WRITE "STATSHARE "_reg_": "
-;	. WRITE $VIEW("STATSHARE",reg),!
-;
-;	WRITE "STATSHARE: "
-;	WRITE $VIEW("STATSHARE"),!
-;
-;	WRITE "^%YGS : ",!
-;	IF $data(^%YGS)  DO
-;	. ZWR ^%YGS
-;
-;	ELSE  DO
-;	. WRITE "NO REGION"
-;
-;	quit
-;
+showPoolLimit()
+	;FOR reg="DEFAULT","AREG","BREG" do
+	set reg=""
+	FOR  SET reg=$view("GVNEXT",reg) quit:reg=""  DO
+	. SET x=$$^%PEEKBYNAME("sgmnt_addrs.gbuff_limit",reg)
+	. WRITE stat_" Buffer ("_reg_"): ",x,!
+	. WRITE "$VIEW(""POOLLIMIT"",reg): "
+	. WRITE $VIEW("POOLLIMIT",reg),!
+
+	WRITE !
+
+	quit

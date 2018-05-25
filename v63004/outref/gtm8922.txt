@@ -1,0 +1,342 @@
+# Testing VIEW "[NO]STATSHARE"[:<region-list>]
+# Create a 3 region DB with gbl_dir mumps.gld and regions DEFAULT, AREG, and BREG
+# Run generalTest to test all commands of the form VIEW <KEYWORD>[:<region-list>]
+# Tests for:
+#    	-VIEW commands accepting region sub-argument accept comma (,) delimited region lists
+# 	-GT.M sorts the regions, eliminating any duplicates from the list. 
+TESTING KEYWORD: DBFLUSH
+------------------------
+n_dsk_write Buffer (AREG): 0x0000000000000000
+n_dsk_write Buffer (BREG): 0x0000000000000000
+n_dsk_write Buffer (DEFAULT): 0x0000000000000000
+VIEW "DBFLUSH":"AREG,BREG,BREG"
+n_dsk_write Buffer (AREG): 0x0000000000000004
+n_dsk_write Buffer (BREG): 0x0000000000000004
+n_dsk_write Buffer (DEFAULT): 0x0000000000000000
+VIEW "DBFLUSH"
+n_dsk_write Buffer (AREG): 0x0000000000000004
+n_dsk_write Buffer (BREG): 0x0000000000000004
+n_dsk_write Buffer (DEFAULT): 0x0000000000000004
+
+
+TESTING KEYWORD: DBSYNC
+------------------------
+n_db_fsync Buffer (AREG): 0x0000000000000000
+n_db_fsync Buffer (BREG): 0x0000000000000000
+n_db_fsync Buffer (DEFAULT): 0x0000000000000000
+VIEW "DBSYNC":"AREG,BREG,BREG"
+n_db_fsync Buffer (AREG): 0x0000000000000001
+n_db_fsync Buffer (BREG): 0x0000000000000001
+n_db_fsync Buffer (DEFAULT): 0x0000000000000000
+VIEW "DBSYNC"
+n_db_fsync Buffer (AREG): 0x0000000000000002
+n_db_fsync Buffer (BREG): 0x0000000000000002
+n_db_fsync Buffer (DEFAULT): 0x0000000000000001
+
+
+TESTING KEYWORD: JNLFLUSH
+------------------------
+n_jnl_flush Buffer (AREG): 0x0000000000000000
+n_jnl_flush Buffer (BREG): 0x0000000000000000
+n_jnl_flush Buffer (DEFAULT): 0x0000000000000000
+VIEW "JNLFLUSH":"AREG,BREG,BREG"
+n_jnl_flush Buffer (AREG): 0x0000000000000001
+n_jnl_flush Buffer (BREG): 0x0000000000000001
+n_jnl_flush Buffer (DEFAULT): 0x0000000000000000
+VIEW "JNLFLUSH"
+n_jnl_flush Buffer (AREG): 0x0000000000000001
+n_jnl_flush Buffer (BREG): 0x0000000000000001
+n_jnl_flush Buffer (DEFAULT): 0x0000000000000001
+
+
+##SUSPEND_OUTPUT JNL_NOBEFORE
+TESTING KEYWORD: JNLFLUSH
+------------------------
+n_jnl_fsync Buffer (AREG): 0x0000000000000002
+n_jnl_fsync Buffer (BREG): 0x0000000000000002
+n_jnl_fsync Buffer (DEFAULT): 0x0000000000000002
+VIEW "JNLFLUSH":"AREG,BREG,BREG"
+n_jnl_fsync Buffer (AREG): 0x0000000000000003
+n_jnl_fsync Buffer (BREG): 0x0000000000000003
+n_jnl_fsync Buffer (DEFAULT): 0x0000000000000002
+VIEW "JNLFLUSH"
+n_jnl_fsync Buffer (AREG): 0x0000000000000003
+n_jnl_fsync Buffer (BREG): 0x0000000000000003
+n_jnl_fsync Buffer (DEFAULT): 0x0000000000000003
+##ALLOW_OUTPUT JNL_NOBEFORE
+##SUSPEND_OUTPUT JNL_BEFORE
+TESTING KEYWORD: JNLFLUSH
+------------------------
+n_jnl_fsync Buffer (AREG): 0x0000000000000001
+n_jnl_fsync Buffer (BREG): 0x0000000000000001
+n_jnl_fsync Buffer (DEFAULT): 0x0000000000000001
+VIEW "JNLFLUSH":"AREG,BREG,BREG"
+n_jnl_fsync Buffer (AREG): 0x0000000000000002
+n_jnl_fsync Buffer (BREG): 0x0000000000000002
+n_jnl_fsync Buffer (DEFAULT): 0x0000000000000001
+VIEW "JNLFLUSH"
+n_jnl_fsync Buffer (AREG): 0x0000000000000002
+n_jnl_fsync Buffer (BREG): 0x0000000000000002
+n_jnl_fsync Buffer (DEFAULT): 0x0000000000000002
+##ALLOW_OUTPUT JNL_BEFORE
+
+
+##SUSPEND_OUTPUT JNL_NOBEFORE
+TESTING KEYWORD: EPOCH
+------------------------
+n_db_flush Buffer (AREG): 0x0000000000000000
+n_db_flush Buffer (BREG): 0x0000000000000000
+n_db_flush Buffer (DEFAULT): 0x0000000000000000
+VIEW "EPOCH":"AREG,BREG,BREG"
+n_db_flush Buffer (AREG): 0x0000000000000001
+n_db_flush Buffer (BREG): 0x0000000000000001
+n_db_flush Buffer (DEFAULT): 0x0000000000000000
+VIEW "EPOCH"
+n_db_flush Buffer (AREG): 0x0000000000000002
+n_db_flush Buffer (BREG): 0x0000000000000002
+n_db_flush Buffer (DEFAULT): 0x0000000000000001
+##ALLOW_OUTPUT JNL_NOBEFORE
+##SUSPEND_OUTPUT JNL_BEFORE
+TESTING KEYWORD: EPOCH
+------------------------
+n_db_flush Buffer (AREG): 0x0000000000000000
+n_db_flush Buffer (BREG): 0x0000000000000000
+n_db_flush Buffer (DEFAULT): 0x0000000000000000
+VIEW "EPOCH":"AREG,BREG,BREG"
+n_db_flush Buffer (AREG): 0x0000000000000000
+n_db_flush Buffer (BREG): 0x0000000000000000
+n_db_flush Buffer (DEFAULT): 0x0000000000000000
+VIEW "EPOCH"
+n_db_flush Buffer (AREG): 0x0000000000000000
+n_db_flush Buffer (BREG): 0x0000000000000000
+n_db_flush Buffer (DEFAULT): 0x0000000000000000
+##ALLOW_OUTPUT JNL_BEFORE
+
+
+TESTING KEYWORD: EPOCH
+------------------------
+n_jrec_epoch_regular Buffer (AREG): 0x0000000000000001
+n_jrec_epoch_regular Buffer (BREG): 0x0000000000000001
+n_jrec_epoch_regular Buffer (DEFAULT): 0x0000000000000001
+VIEW "EPOCH":"AREG,BREG,BREG"
+n_jrec_epoch_regular Buffer (AREG): 0x0000000000000002
+n_jrec_epoch_regular Buffer (BREG): 0x0000000000000002
+n_jrec_epoch_regular Buffer (DEFAULT): 0x0000000000000001
+VIEW "EPOCH"
+n_jrec_epoch_regular Buffer (AREG): 0x0000000000000002
+n_jrec_epoch_regular Buffer (BREG): 0x0000000000000002
+n_jrec_epoch_regular Buffer (DEFAULT): 0x0000000000000002
+
+
+##SUSPEND_OUTPUT JNL_NOBEFORE
+TESTING KEYWORD: FLUSH
+------------------------
+n_db_flush Buffer (AREG): 0x0000000000000004
+n_db_flush Buffer (BREG): 0x0000000000000004
+n_db_flush Buffer (DEFAULT): 0x0000000000000002
+VIEW "FLUSH":"AREG,BREG,BREG"
+n_db_flush Buffer (AREG): 0x0000000000000005
+n_db_flush Buffer (BREG): 0x0000000000000005
+n_db_flush Buffer (DEFAULT): 0x0000000000000002
+VIEW "FLUSH"
+n_db_flush Buffer (AREG): 0x0000000000000006
+n_db_flush Buffer (BREG): 0x0000000000000006
+n_db_flush Buffer (DEFAULT): 0x0000000000000003
+##ALLOW_OUTPUT JNL_NOBEFORE
+##SUSPEND_OUTPUT JNL_BEFORE
+TESTING KEYWORD: FLUSH
+------------------------
+n_db_flush Buffer (AREG): 0x0000000000000000
+n_db_flush Buffer (BREG): 0x0000000000000000
+n_db_flush Buffer (DEFAULT): 0x0000000000000000
+VIEW "FLUSH":"AREG,BREG,BREG"
+n_db_flush Buffer (AREG): 0x0000000000000000
+n_db_flush Buffer (BREG): 0x0000000000000000
+n_db_flush Buffer (DEFAULT): 0x0000000000000000
+VIEW "FLUSH"
+n_db_flush Buffer (AREG): 0x0000000000000000
+n_db_flush Buffer (BREG): 0x0000000000000000
+n_db_flush Buffer (DEFAULT): 0x0000000000000000
+##ALLOW_OUTPUT JNL_BEFORE
+
+
+TESTING KEYWORD: FLUSH
+------------------------
+n_jrec_epoch_regular Buffer (AREG): 0x0000000000000003
+n_jrec_epoch_regular Buffer (BREG): 0x0000000000000003
+n_jrec_epoch_regular Buffer (DEFAULT): 0x0000000000000003
+VIEW "FLUSH":"AREG,BREG,BREG"
+n_jrec_epoch_regular Buffer (AREG): 0x0000000000000004
+n_jrec_epoch_regular Buffer (BREG): 0x0000000000000004
+n_jrec_epoch_regular Buffer (DEFAULT): 0x0000000000000003
+VIEW "FLUSH"
+n_jrec_epoch_regular Buffer (AREG): 0x0000000000000004
+n_jrec_epoch_regular Buffer (BREG): 0x0000000000000004
+n_jrec_epoch_regular Buffer (DEFAULT): 0x0000000000000004
+
+
+# Run poolLimitTest to test VIEW POOLLIMIT:<REGION>:n[%]
+# Tests for:
+#    	-VIEW commands accepting region sub-argument accept comma (,) delimited region lists
+# 	-GT.M sorts the regions, eliminating any duplicates from the list. 
+#		-If the VIEW argument has a corresponding environment variable to set the default state,
+# 		 the state applies to databases as the application implicitly opens them with references.
+TESTING KEYWORD: POOLLIMIT
+------------------------
+%YDB-E-LVUNDEF, Undefined local variable: stat
+		At M source location showPoolLimit+5^gtm8922
+
+YDB>
+# Run gvsResetTest to test VIEW GVSRESET:<REGION>
+# Tests for:
+#    	-VIEW commands accepting region sub-argument accept comma (,) delimited region lists
+# 	-GT.M sorts the regions, eliminating any duplicates from the list. 
+TESTING KEYWORD: GVSRESET
+-------------------------
+Running First ZSHOW "G" 
+VIEW "GVSRESET":"AREG,BREG,BREG"
+Running Second ZSHOW "G" 
+---Run1 Run2 Comparison---
+-CHANGE IN AREG: 
+GLD:##TEST_PATH##/mumps.gld,REG:AREG,SET:0,KIL:0,GET:0,DTA:0,ORD:0,ZPR:0,QRY:0,LKS:0,LKF:0,CTN:0,DRD:0,DWT:0,NTW:0,NTR:0,NBW:0,NBR:0,NR0:0,NR1:0,NR2:0,NR3:0,TTW:0,TTR:0,TRB:0,TBW:0,TBR:0,TR0:0,TR1:0,TR2:0,TR3:0,TR4:0,TC0:0,TC1:0,TC2:0,TC3:0,TC4:0,ZTR:0,DFL:0,DFS:0,JFL:0,JFS:0,JBB:0,JFB:0,JFW:0,JRL:0,JRP:0,JRE:0,JRI:0,JRO:0,JEX:0,DEX:0,CAT:0,CFE:0,CFS:0,CFT:0,CQS:0,CQT:0,CYS:0,CYT:0,BTD:0
+-CHANGE IN BREG: 
+GLD:##TEST_PATH##/mumps.gld,REG:BREG,SET:0,KIL:0,GET:0,DTA:0,ORD:0,ZPR:0,QRY:0,LKS:0,LKF:0,CTN:0,DRD:0,DWT:0,NTW:0,NTR:0,NBW:0,NBR:0,NR0:0,NR1:0,NR2:0,NR3:0,TTW:0,TTR:0,TRB:0,TBW:0,TBR:0,TR0:0,TR1:0,TR2:0,TR3:0,TR4:0,TC0:0,TC1:0,TC2:0,TC3:0,TC4:0,ZTR:0,DFL:0,DFS:0,JFL:0,JFS:0,JBB:0,JFB:0,JFW:0,JRL:0,JRP:0,JRE:0,JRI:0,JRO:0,JEX:0,DEX:0,CAT:0,CFE:0,CFS:0,CFT:0,CQS:0,CQT:0,CYS:0,CYT:0,BTD:0
+-NO CHANGE IN DEFAULT
+VIEW "GVSRESET":"AREG,BREG,DEFAULT"
+Running Third ZSHOW "G" 
+---Run1 Run3 Comparison---
+-CHANGE IN AREG: 
+GLD:##TEST_PATH##/mumps.gld,REG:AREG,SET:0,KIL:0,GET:0,DTA:0,ORD:0,ZPR:0,QRY:0,LKS:0,LKF:0,CTN:0,DRD:0,DWT:0,NTW:0,NTR:0,NBW:0,NBR:0,NR0:0,NR1:0,NR2:0,NR3:0,TTW:0,TTR:0,TRB:0,TBW:0,TBR:0,TR0:0,TR1:0,TR2:0,TR3:0,TR4:0,TC0:0,TC1:0,TC2:0,TC3:0,TC4:0,ZTR:0,DFL:0,DFS:0,JFL:0,JFS:0,JBB:0,JFB:0,JFW:0,JRL:0,JRP:0,JRE:0,JRI:0,JRO:0,JEX:0,DEX:0,CAT:0,CFE:0,CFS:0,CFT:0,CQS:0,CQT:0,CYS:0,CYT:0,BTD:0
+-CHANGE IN BREG: 
+GLD:##TEST_PATH##/mumps.gld,REG:BREG,SET:0,KIL:0,GET:0,DTA:0,ORD:0,ZPR:0,QRY:0,LKS:0,LKF:0,CTN:0,DRD:0,DWT:0,NTW:0,NTR:0,NBW:0,NBR:0,NR0:0,NR1:0,NR2:0,NR3:0,TTW:0,TTR:0,TRB:0,TBW:0,TBR:0,TR0:0,TR1:0,TR2:0,TR3:0,TR4:0,TC0:0,TC1:0,TC2:0,TC3:0,TC4:0,ZTR:0,DFL:0,DFS:0,JFL:0,JFS:0,JBB:0,JFB:0,JFW:0,JRL:0,JRP:0,JRE:0,JRI:0,JRO:0,JEX:0,DEX:0,CAT:0,CFE:0,CFS:0,CFT:0,CQS:0,CQT:0,CYS:0,CYT:0,BTD:0
+-CHANGE IN DEFAULT: 
+GLD:##TEST_PATH##/mumps.gld,REG:DEFAULT,SET:1,KIL:0,GET:0,DTA:0,ORD:0,ZPR:0,QRY:0,LKS:0,LKF:0,CTN:73,DRD:4,DWT:0,NTW:1,NTR:1,NBW:0,NBR:4,NR0:0,NR1:0,NR2:0,NR3:0,TTW:0,TTR:0,TRB:0,TBW:0,TBR:0,TR0:0,TR1:0,TR2:0,TR3:0,TR4:0,TC0:0,TC1:0,TC2:0,TC3:0,TC4:0,ZTR:0,DFL:0,DFS:0,JFL:0,JFS:0,JBB:280,JFB:0,JFW:0,JRL:1,JRP:0,JRE:0,JRI:0,JRO:1,JEX:0,DEX:0,CAT:5,CFE:0,CFS:0,CFT:0,CQS:0,CQT:0,CYS:0,CYT:0,BTD:0
+
+
+# Options are: DBFLUSH:AREG,BREG,BREG DBFLUSH DBSYNC:AREG,BREG,BREG DBSYNC EPOCH:AREG,BREG,BREG EPOCH FLUSH:AREG,BREG,BREG FLUSH JNLFLUSH:AREG,BREG,BREG JNLFLUSH GVSRESET:AREG,BREG,BREG GVSRESET: POOLLIMIT:AREG,BREG,BREG:40 POOLLIMIT::40
+# Run openRegionTest
+# Tests for:
+# 	-GT.M sorts the regions, eliminating any duplicates from the list. 
+# 	-VIEW with no region sub-argument opens any unopened mapped regions in the current global directory, 
+#			while one with a list only opens the listed regions. 
+# Run openRegionTest with DBFLUSH:AREG,BREG,BREG subarguments
+TESTING REGIONS OPENED BY:  VIEW DBFLUSH:AREG,BREG,BREG
+------------------------------------------------------------
+VIEW DBFLUSH:AREG,BREG,BREG
+---Check for open region files---
+a.dat
+b.dat
+
+# Run openRegionTest with DBFLUSH subarguments
+TESTING REGIONS OPENED BY:  VIEW DBFLUSH:*:
+------------------------------------------------------------
+VIEW DBFLUSH:*:
+---Check for open region files---
+a.dat
+b.dat
+mumps.dat
+
+# Run openRegionTest with DBSYNC:AREG,BREG,BREG subarguments
+TESTING REGIONS OPENED BY:  VIEW DBSYNC:AREG,BREG,BREG
+------------------------------------------------------------
+VIEW DBSYNC:AREG,BREG,BREG
+---Check for open region files---
+a.dat
+b.dat
+
+# Run openRegionTest with DBSYNC subarguments
+TESTING REGIONS OPENED BY:  VIEW DBSYNC:*:
+------------------------------------------------------------
+VIEW DBSYNC:*:
+---Check for open region files---
+a.dat
+b.dat
+mumps.dat
+
+# Run openRegionTest with EPOCH:AREG,BREG,BREG subarguments
+TESTING REGIONS OPENED BY:  VIEW EPOCH:AREG,BREG,BREG
+------------------------------------------------------------
+VIEW EPOCH:AREG,BREG,BREG
+---Check for open region files---
+a.dat
+b.dat
+
+# Run openRegionTest with EPOCH subarguments
+TESTING REGIONS OPENED BY:  VIEW EPOCH:*:
+------------------------------------------------------------
+VIEW EPOCH:*:
+---Check for open region files---
+a.dat
+b.dat
+mumps.dat
+
+# Run openRegionTest with FLUSH:AREG,BREG,BREG subarguments
+TESTING REGIONS OPENED BY:  VIEW FLUSH:AREG,BREG,BREG
+------------------------------------------------------------
+VIEW FLUSH:AREG,BREG,BREG
+---Check for open region files---
+a.dat
+b.dat
+
+# Run openRegionTest with FLUSH subarguments
+TESTING REGIONS OPENED BY:  VIEW FLUSH:*:
+------------------------------------------------------------
+VIEW FLUSH:*:
+---Check for open region files---
+a.dat
+b.dat
+mumps.dat
+
+# Run openRegionTest with JNLFLUSH:AREG,BREG,BREG subarguments
+TESTING REGIONS OPENED BY:  VIEW JNLFLUSH:AREG,BREG,BREG
+------------------------------------------------------------
+VIEW JNLFLUSH:AREG,BREG,BREG
+---Check for open region files---
+a.dat
+b.dat
+
+# Run openRegionTest with JNLFLUSH subarguments
+TESTING REGIONS OPENED BY:  VIEW JNLFLUSH:*:
+------------------------------------------------------------
+VIEW JNLFLUSH:*:
+---Check for open region files---
+a.dat
+b.dat
+mumps.dat
+
+# Run openRegionTest with GVSRESET:AREG,BREG,BREG subarguments
+TESTING REGIONS OPENED BY:  VIEW GVSRESET:AREG,BREG,BREG
+------------------------------------------------------------
+VIEW GVSRESET:AREG,BREG,BREG
+---Check for open region files---
+a.dat
+b.dat
+
+# Run openRegionTest with GVSRESET: subarguments
+TESTING REGIONS OPENED BY:  VIEW GVSRESET:*
+------------------------------------------------------------
+VIEW GVSRESET:*
+---Check for open region files---
+a.dat
+b.dat
+mumps.dat
+
+# Run openRegionTest with POOLLIMIT:AREG,BREG,BREG:40 subarguments
+TESTING REGIONS OPENED BY:  VIEW POOLLIMIT:AREG,BREG,BREG:40
+------------------------------------------------------------
+VIEW POOLLIMIT:AREG,BREG,BREG:40
+---Check for open region files---
+a.dat
+b.dat
+
+# Run openRegionTest with POOLLIMIT::40 subarguments
+TESTING REGIONS OPENED BY:  VIEW POOLLIMIT:*:40
+------------------------------------------------------------
+VIEW POOLLIMIT:*:40
+---Check for open region files---
+a.dat
+b.dat
+mumps.dat
+
+# Shut down the DB 
+

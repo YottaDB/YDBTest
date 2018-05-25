@@ -13,20 +13,61 @@
 #
 echo '# Testing VIEW "[NO]STATSHARE"[:<region-list>]'
 
-echo '#### testA ####'
+setenv ydb_poollimit "50"
+setenv gtm_test_jnl SETJNL
 
 echo "# Create a 3 region DB with gbl_dir mumps.gld and regions DEFAULT, AREG, and BREG"
-$gtm_tst/com/dbcreate.csh mumps 3 >>& dbcreate_log_1.txt
+$gtm_tst/com/dbcreate.csh mumps 3 >>& dbcreate_log.txt
 
-#echo ''
-#echo '# Disable sharing for BREG'
-#$MUPIP set -NOSTAT  -reg "BREG" #>>& dbcreate_log.txt
+$MUPIP set -access_method=BG -file mumps.dat >>& dbcreate_log.txt
+$MUPIP set -access_method=BG -file a.dat >>& dbcreate_log.txt
+$MUPIP set -access_method=BG -file b.dat >>& dbcreate_log.txt
 
-echo '# Run gtm8874.m to ...'
-$ydb_dist/mumps -run gtm8922
+echo '# Run generalTest to test all commands of the form VIEW <KEYWORD>[:<region-list>]'
+echo '# Tests for:'
+echo '#    	-VIEW commands accepting region sub-argument accept comma (,) delimited region lists'
+echo '# 	-GT.M sorts the regions, eliminating any duplicates from the list. '
+$ydb_dist/mumps -run generalTest^gtm8922
+
+echo '# Run poolLimitTest to test VIEW POOLLIMIT:<REGION>:n[%]'
+echo '# Tests for:'
+echo '#    	-VIEW commands accepting region sub-argument accept comma (,) delimited region lists'
+echo '# 	-GT.M sorts the regions, eliminating any duplicates from the list. '
+echo '#		-If the VIEW argument has a corresponding environment variable to set the default state,'
+echo '# 		 the state applies to databases as the application implicitly opens them with references.'
+$ydb_dist/mumps -run poolLimitTest^gtm8922
+
+echo '# Run gvsResetTest to test VIEW GVSRESET:<REGION>'
+echo '# Tests for:'
+echo '#    	-VIEW commands accepting region sub-argument accept comma (,) delimited region lists'
+echo '# 	-GT.M sorts the regions, eliminating any duplicates from the list. '
+$ydb_dist/mumps -run gvsResetTest^gtm8922
+
+# The openRegionsTest will run a VIEW command using our cmdline args
+# as its VIEW options. So the options var will be a list
+# of every VIEW option to test
+
+set options=\
+("DBFLUSH:AREG,BREG,BREG" "DBFLUSH" "DBSYNC:AREG,BREG,BREG"\
+ "DBSYNC" "EPOCH:AREG,BREG,BREG" "EPOCH" "FLUSH:AREG,BREG,BREG"\
+ "FLUSH" "JNLFLUSH:AREG,BREG,BREG" "JNLFLUSH"\
+ "GVSRESET:AREG,BREG,BREG" "GVSRESET:" "POOLLIMIT:AREG,BREG,BREG:40"\
+ "POOLLIMIT::40")
+
+echo "# Options are: $options"
+
+echo "# Run openRegionTest"
+echo '# Tests for:'
+echo '# 	-GT.M sorts the regions, eliminating any duplicates from the list. '
+echo '# 	-VIEW with no region sub-argument opens any unopened mapped regions in the current global directory, '
+echo '#			while one with a list only opens the listed regions. '
+foreach option ($options)
+	######set option=`${options:s/;/ /}`
+	echo "# Run openRegionTest with $option subarguments"
+	$ydb_dist/mumps -run openRegionsTest^gtm8922 $option
+end
+
 
 echo '# Shut down the DB '#and backup necessary files to sub directory'
-$gtm_tst/com/dbcheck.csh >>& dbcreate_log_1.txt
-#$gtm_tst/com/backup_dbjnl.csh dbbkup1 "*.gld *.mjl* *.mjf *.dat" cp nozip
+$gtm_tst/com/dbcheck.csh >>& dbcreate_log.txt
 echo ''
-
