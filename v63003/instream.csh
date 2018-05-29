@@ -19,7 +19,7 @@
 # gtm8186	    [vinay] Test DO, GOTO and ZGOTO can take offset without a label
 # gtm8804	    [vinay] Test zshow "t" produces only a summary of zshow "g" and "l"
 # gtm8832	    [vinay] Test string literal evaluating to >=1E47 produces a NUMOFLOW error
-# gtm8617	    [vinay] Tests functionality of STDNULLCOLL and NULL_SUBSCRIPTS
+# gtm8617	    [vinay] Tests MUPIP SET command of STDNULLCOLL and NULL_SUBSCRIPTS
 #-------------------------------------------------------------------------------------
 
 echo "v63003 test starts..."

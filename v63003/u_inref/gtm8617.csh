@@ -16,36 +16,35 @@
 
 echo "# Null subscript set to never"
 $gtm_tst/com/dbcreate.csh mumps 1 >>& db.txt
-$ydb_dist/mupip set -region DEFAULT -N=never
+$ydb_dist/mupip set -region DEFAULT -Null_SUBSCRIPTS=never
+$DSE dump -file|&grep "Null subscripts"
 $gtm_tst/com/dbcheck.csh >& db.txt
 
 echo "# Null subscript set to existing"
 $gtm_tst/com/dbcreate.csh mumps 1 >>& db.txt
-$ydb_dist/mupip set -region DEFAULT -N=existing
+$ydb_dist/mupip set -region DEFAULT -NULL_SUBSCRIPTS=existing
+$DSE dump -file|&grep "Null subscripts"
 $gtm_tst/com/dbcheck.csh >& db.txt
 
 echo "# Null subscript set to always"
 $gtm_tst/com/dbcreate.csh mumps 1 >>& db.txt
-$ydb_dist/mupip set -region DEFAULT -N=always
+$ydb_dist/mupip set -region DEFAULT -NULL_SUBSCRIPTS=always
+$DSE dump -file|&grep "Null subscripts"
 $gtm_tst/com/dbcheck.csh >& db.txt
 
-echo "# Null collation set to GT.M"
+echo "# Null subscript set to an option not listed (expecting an error)"
 $gtm_tst/com/dbcreate.csh mumps 1 >>& db.txt
-$ydb_dist/mupip set -region DEFAULT -std
+$ydb_dist/mupip set -region DEFAULT -NULL_SUBSCRIPTS=sometimes
 $gtm_tst/com/dbcheck.csh >& db.txt
 
 echo "# Null collation set to M"
 $gtm_tst/com/dbcreate.csh mumps 1 >>& db.txt
-$ydb_dist/mupip set -region DEFAULT -nostd
+$ydb_dist/mupip set -region DEFAULT -STDNULLCOLL
+$DSE dump -file|&grep "Standard Null Collation"
 $gtm_tst/com/dbcheck.csh >& db.txt
 
-
-
-
-
-
-
-
-
-
-
+echo "# Null collation set to GT.M"
+$gtm_tst/com/dbcreate.csh mumps 1 >>& db.txt
+$ydb_dist/mupip set -region DEFAULT -NOSTDNULLCOLL
+$DSE dump -file|&grep "Standard Null Collation"
+$gtm_tst/com/dbcheck.csh >& db.txt
