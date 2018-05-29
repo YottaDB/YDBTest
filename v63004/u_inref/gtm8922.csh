@@ -11,7 +11,7 @@
 #								#
 #################################################################
 #
-echo '# Testing VIEW "[NO]STATSHARE"[:<region-list>]'
+echo '# Testing VIEW <KEYWORD>[:<region-list>]'
 
 setenv ydb_poollimit "50"
 setenv gtm_test_jnl SETJNL
@@ -54,7 +54,6 @@ set options=\
  "GVSRESET:AREG,BREG,BREG" "GVSRESET:" "POOLLIMIT:AREG,BREG,BREG:40"\
  "POOLLIMIT::40")
 
-echo "# Options are: $options"
 
 echo "# Run openRegionTest"
 echo '# Tests for:'
@@ -62,7 +61,6 @@ echo '# 	-GT.M sorts the regions, eliminating any duplicates from the list. '
 echo '# 	-VIEW with no region sub-argument opens any unopened mapped regions in the current global directory, '
 echo '#			while one with a list only opens the listed regions. '
 foreach option ($options)
-	######set option=`${options:s/;/ /}`
 	echo "# Run openRegionTest with $option subarguments"
 	$ydb_dist/mumps -run openRegionsTest^gtm8922 $option
 end

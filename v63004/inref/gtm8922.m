@@ -102,7 +102,7 @@ gvsResetTest
 	FOR  set reg=$view("GVNEXT",reg) quit:reg=""  DO
 	. SET I=I+1
 	. IF run1("G",I)=run3("G",I) WRITE "-NO CHANGE IN "_reg,!
-	. ELSE  WRITE "-CHANGE IN "_reg_": ",!,run2("G",I),!
+	. ELSE  WRITE "-CHANGE IN "_reg_": ",!,run3("G",I),!
 
 
 
