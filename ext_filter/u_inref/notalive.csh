@@ -14,7 +14,7 @@
 #								#
 #################################################################
 # this is not a multisite test, but it is easier this way
-echo "External Filter test with a bad filter"
+echo "# External Filter test with a bad filter"
 $MULTISITE_REPLIC_PREPARE 2
 setenv gtm_tst_ext_filter_src \""$gtm_exe/mumps -run ^notalive"\"
 $gtm_tst/com/dbcreate.csh mumps 1
@@ -22,9 +22,7 @@ $MSR START INST1 INST2
 get_msrtime
 setenv srclogfile SRC_${time_msr}.log
 setenv pidsrc12 `$tst_awk '/Source server is alive in ACTIVE mode/ {print $2}' START_${time_msr}.out`
-$GTM << EOF
-s ^abc=1234
-EOF
+$ydb_dist/mumps -run set^notalive
 # Slow boxes (particularly those with 1-cpu) have been seen to take ~ 5 minutes to issue the FILTERNOTALIVE error
 # in the source server log file. Therefore wait for 10 minutes (higher than the default of 2 minutes).
 $gtm_tst/com/wait_for_log.csh -log $srclogfile -message FILTERNOTALIVE -duration 600
