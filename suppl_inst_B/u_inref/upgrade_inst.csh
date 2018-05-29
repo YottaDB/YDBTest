@@ -4,6 +4,9 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -35,16 +38,13 @@ echo "===>Start replication A->B"
 echo
 $MSR START INST1 INST2 RP
 
-# Also because this test does SLOWFILL type of updates, we need to have a very small inter-update time (gtm_test_wait_factor)
-# in order to exercise jnl autoswitch. But because we do not want a lot of updates, the inter-update time should not be too
-# low either. Therefore we currently maintain it at 0.02. This value needs to be changed with care.
-setenv gtm_test_wait_factor 0.02 # 0.02 second delay between updates in slowfill.m. See comment above for why it is what it is
+source $gtm_tst/com/set_gtm_test_wait_factor.csh	# set gtm_test_wait_factor env var to control SLOWFILL rate of updates
 
 echo
 echo "===>Do some updates on A and let them replicate to B."
 echo
 $MSR RUN INST1 'setenv gtm_test_jobid 1 ; setenv gtm_test_dbfill "SLOWFILL" ; setenv gtm_test_dbfillid 1 ; $gtm_tst/com/imptp.csh' >&! imptp_inst1_1.out
-# Following sleep along with environment variable gtm_test_wait_factor ensure that there will be reasonable updates on instance A and P before switchover
+# Following sleep along with environment variable gtm_test_wait_factor ensures that there will be reasonable updates on instance A and P before switchover
 sleep 1
 
 $MSR RUN INST1 'setenv gtm_test_jobid 1 ; setenv gtm_test_dbfillid 1 ; $gtm_tst/com/endtp.csh' >&! endtp_inst1_1.out
