@@ -1,11 +1,14 @@
 # Testing VIEW <KEYWORD>[:<region-list>]
 # Create a 3 region DB with gbl_dir mumps.gld and regions DEFAULT, AREG, and BREG
 # Run generalTest to test all commands of the form VIEW <KEYWORD>[:<region-list>]
+# and the VIEW POOLLIMIT:<region-list>:n[%] command
 # Tests for:
 #    	-VIEW commands accepting region sub-argument accept comma (,) delimited region lists
-# 	-GT.M sorts the regions, eliminating any duplicates from the list. 
+# 	-YottaDB sorts the regions, eliminating any duplicates from the list. 
+#		-If the VIEW argument has a corresponding environment variable to set the default state,
+# 		 the state applies to databases as the application implicitly opens them with references.
 TESTING KEYWORD: DBFLUSH
-------------------------
+--------------------------
 n_dsk_write Buffer (AREG): 0x0000000000000000
 n_dsk_write Buffer (BREG): 0x0000000000000000
 n_dsk_write Buffer (DEFAULT): 0x0000000000000000
@@ -20,7 +23,7 @@ n_dsk_write Buffer (DEFAULT): 0x0000000000000004
 
 
 TESTING KEYWORD: DBSYNC
-------------------------
+--------------------------
 n_db_fsync Buffer (AREG): 0x0000000000000000
 n_db_fsync Buffer (BREG): 0x0000000000000000
 n_db_fsync Buffer (DEFAULT): 0x0000000000000000
@@ -34,167 +37,183 @@ n_db_fsync Buffer (BREG): 0x0000000000000002
 n_db_fsync Buffer (DEFAULT): 0x0000000000000001
 
 
+##SUSPEND_OUTPUT JNL_BEFORE
 TESTING KEYWORD: JNLFLUSH
-------------------------
+--------------------------
 n_jnl_flush Buffer (AREG): 0x0000000000000000
 n_jnl_flush Buffer (BREG): 0x0000000000000000
 n_jnl_flush Buffer (DEFAULT): 0x0000000000000000
+n_jnl_fsync Buffer (AREG): 0x0000000000000000
+n_jnl_fsync Buffer (BREG): 0x0000000000000000
+n_jnl_fsync Buffer (DEFAULT): 0x0000000000000000
 VIEW "JNLFLUSH":"AREG,BREG,BREG"
 n_jnl_flush Buffer (AREG): 0x0000000000000001
 n_jnl_flush Buffer (BREG): 0x0000000000000001
 n_jnl_flush Buffer (DEFAULT): 0x0000000000000000
+n_jnl_fsync Buffer (AREG): 0x0000000000000001
+n_jnl_fsync Buffer (BREG): 0x0000000000000001
+n_jnl_fsync Buffer (DEFAULT): 0x0000000000000000
 VIEW "JNLFLUSH"
 n_jnl_flush Buffer (AREG): 0x0000000000000001
 n_jnl_flush Buffer (BREG): 0x0000000000000001
 n_jnl_flush Buffer (DEFAULT): 0x0000000000000001
-
-
+n_jnl_fsync Buffer (AREG): 0x0000000000000001
+n_jnl_fsync Buffer (BREG): 0x0000000000000001
+n_jnl_fsync Buffer (DEFAULT): 0x0000000000000001
+##ALLOW_OUTPUT JNL_BEFORE
 ##SUSPEND_OUTPUT JNL_NOBEFORE
 TESTING KEYWORD: JNLFLUSH
-------------------------
-n_jnl_fsync Buffer (AREG): 0x0000000000000002
-n_jnl_fsync Buffer (BREG): 0x0000000000000002
-n_jnl_fsync Buffer (DEFAULT): 0x0000000000000002
-VIEW "JNLFLUSH":"AREG,BREG,BREG"
-n_jnl_fsync Buffer (AREG): 0x0000000000000003
-n_jnl_fsync Buffer (BREG): 0x0000000000000003
-n_jnl_fsync Buffer (DEFAULT): 0x0000000000000002
-VIEW "JNLFLUSH"
-n_jnl_fsync Buffer (AREG): 0x0000000000000003
-n_jnl_fsync Buffer (BREG): 0x0000000000000003
-n_jnl_fsync Buffer (DEFAULT): 0x0000000000000003
-##ALLOW_OUTPUT JNL_NOBEFORE
-##SUSPEND_OUTPUT JNL_BEFORE
-TESTING KEYWORD: JNLFLUSH
-------------------------
+--------------------------
+n_jnl_flush Buffer (AREG): 0x0000000000000000
+n_jnl_flush Buffer (BREG): 0x0000000000000000
+n_jnl_flush Buffer (DEFAULT): 0x0000000000000000
 n_jnl_fsync Buffer (AREG): 0x0000000000000001
 n_jnl_fsync Buffer (BREG): 0x0000000000000001
 n_jnl_fsync Buffer (DEFAULT): 0x0000000000000001
 VIEW "JNLFLUSH":"AREG,BREG,BREG"
+n_jnl_flush Buffer (AREG): 0x0000000000000001
+n_jnl_flush Buffer (BREG): 0x0000000000000001
+n_jnl_flush Buffer (DEFAULT): 0x0000000000000000
 n_jnl_fsync Buffer (AREG): 0x0000000000000002
 n_jnl_fsync Buffer (BREG): 0x0000000000000002
 n_jnl_fsync Buffer (DEFAULT): 0x0000000000000001
 VIEW "JNLFLUSH"
+n_jnl_flush Buffer (AREG): 0x0000000000000001
+n_jnl_flush Buffer (BREG): 0x0000000000000001
+n_jnl_flush Buffer (DEFAULT): 0x0000000000000001
 n_jnl_fsync Buffer (AREG): 0x0000000000000002
 n_jnl_fsync Buffer (BREG): 0x0000000000000002
 n_jnl_fsync Buffer (DEFAULT): 0x0000000000000002
-##ALLOW_OUTPUT JNL_BEFORE
+##ALLOW_OUTPUT JNL_NOBEFORE
 
 
-##SUSPEND_OUTPUT JNL_NOBEFORE
+##SUSPEND_OUTPUT JNL_BEFORE
 TESTING KEYWORD: EPOCH
-------------------------
+--------------------------
 n_db_flush Buffer (AREG): 0x0000000000000000
 n_db_flush Buffer (BREG): 0x0000000000000000
 n_db_flush Buffer (DEFAULT): 0x0000000000000000
+n_jrec_epoch_regular Buffer (AREG): 0x0000000000000000
+n_jrec_epoch_regular Buffer (BREG): 0x0000000000000000
+n_jrec_epoch_regular Buffer (DEFAULT): 0x0000000000000000
+VIEW "EPOCH":"AREG,BREG,BREG"
+n_db_flush Buffer (AREG): 0x0000000000000000
+n_db_flush Buffer (BREG): 0x0000000000000000
+n_db_flush Buffer (DEFAULT): 0x0000000000000000
+n_jrec_epoch_regular Buffer (AREG): 0x0000000000000001
+n_jrec_epoch_regular Buffer (BREG): 0x0000000000000001
+n_jrec_epoch_regular Buffer (DEFAULT): 0x0000000000000000
+VIEW "EPOCH"
+n_db_flush Buffer (AREG): 0x0000000000000000
+n_db_flush Buffer (BREG): 0x0000000000000000
+n_db_flush Buffer (DEFAULT): 0x0000000000000000
+n_jrec_epoch_regular Buffer (AREG): 0x0000000000000001
+n_jrec_epoch_regular Buffer (BREG): 0x0000000000000001
+n_jrec_epoch_regular Buffer (DEFAULT): 0x0000000000000001
+##ALLOW_OUTPUT JNL_BEFORE
+##SUSPEND_OUTPUT JNL_NOBEFORE
+TESTING KEYWORD: EPOCH
+--------------------------
+n_db_flush Buffer (AREG): 0x0000000000000000
+n_db_flush Buffer (BREG): 0x0000000000000000
+n_db_flush Buffer (DEFAULT): 0x0000000000000000
+n_jrec_epoch_regular Buffer (AREG): 0x0000000000000000
+n_jrec_epoch_regular Buffer (BREG): 0x0000000000000000
+n_jrec_epoch_regular Buffer (DEFAULT): 0x0000000000000000
 VIEW "EPOCH":"AREG,BREG,BREG"
 n_db_flush Buffer (AREG): 0x0000000000000001
 n_db_flush Buffer (BREG): 0x0000000000000001
 n_db_flush Buffer (DEFAULT): 0x0000000000000000
+n_jrec_epoch_regular Buffer (AREG): 0x0000000000000001
+n_jrec_epoch_regular Buffer (BREG): 0x0000000000000001
+n_jrec_epoch_regular Buffer (DEFAULT): 0x0000000000000000
 VIEW "EPOCH"
 n_db_flush Buffer (AREG): 0x0000000000000002
 n_db_flush Buffer (BREG): 0x0000000000000002
 n_db_flush Buffer (DEFAULT): 0x0000000000000001
-##ALLOW_OUTPUT JNL_NOBEFORE
-##SUSPEND_OUTPUT JNL_BEFORE
-TESTING KEYWORD: EPOCH
-------------------------
-n_db_flush Buffer (AREG): 0x0000000000000000
-n_db_flush Buffer (BREG): 0x0000000000000000
-n_db_flush Buffer (DEFAULT): 0x0000000000000000
-VIEW "EPOCH":"AREG,BREG,BREG"
-n_db_flush Buffer (AREG): 0x0000000000000000
-n_db_flush Buffer (BREG): 0x0000000000000000
-n_db_flush Buffer (DEFAULT): 0x0000000000000000
-VIEW "EPOCH"
-n_db_flush Buffer (AREG): 0x0000000000000000
-n_db_flush Buffer (BREG): 0x0000000000000000
-n_db_flush Buffer (DEFAULT): 0x0000000000000000
-##ALLOW_OUTPUT JNL_BEFORE
-
-
-TESTING KEYWORD: EPOCH
-------------------------
 n_jrec_epoch_regular Buffer (AREG): 0x0000000000000001
 n_jrec_epoch_regular Buffer (BREG): 0x0000000000000001
 n_jrec_epoch_regular Buffer (DEFAULT): 0x0000000000000001
-VIEW "EPOCH":"AREG,BREG,BREG"
+##ALLOW_OUTPUT JNL_NOBEFORE
+
+
+##SUSPEND_OUTPUT JNL_BEFORE
+TESTING KEYWORD: FLUSH
+--------------------------
+n_db_flush Buffer (AREG): 0x0000000000000000
+n_db_flush Buffer (BREG): 0x0000000000000000
+n_db_flush Buffer (DEFAULT): 0x0000000000000000
+n_jrec_epoch_regular Buffer (AREG): 0x0000000000000001
+n_jrec_epoch_regular Buffer (BREG): 0x0000000000000001
+n_jrec_epoch_regular Buffer (DEFAULT): 0x0000000000000001
+VIEW "FLUSH":"AREG,BREG,BREG"
+n_db_flush Buffer (AREG): 0x0000000000000000
+n_db_flush Buffer (BREG): 0x0000000000000000
+n_db_flush Buffer (DEFAULT): 0x0000000000000000
 n_jrec_epoch_regular Buffer (AREG): 0x0000000000000002
 n_jrec_epoch_regular Buffer (BREG): 0x0000000000000002
 n_jrec_epoch_regular Buffer (DEFAULT): 0x0000000000000001
-VIEW "EPOCH"
+VIEW "FLUSH"
+n_db_flush Buffer (AREG): 0x0000000000000000
+n_db_flush Buffer (BREG): 0x0000000000000000
+n_db_flush Buffer (DEFAULT): 0x0000000000000000
 n_jrec_epoch_regular Buffer (AREG): 0x0000000000000002
 n_jrec_epoch_regular Buffer (BREG): 0x0000000000000002
 n_jrec_epoch_regular Buffer (DEFAULT): 0x0000000000000002
-
-
+##ALLOW_OUTPUT JNL_BEFORE
 ##SUSPEND_OUTPUT JNL_NOBEFORE
 TESTING KEYWORD: FLUSH
-------------------------
+--------------------------
+n_db_flush Buffer (AREG): 0x0000000000000002
+n_db_flush Buffer (BREG): 0x0000000000000002
+n_db_flush Buffer (DEFAULT): 0x0000000000000001
+n_jrec_epoch_regular Buffer (AREG): 0x0000000000000001
+n_jrec_epoch_regular Buffer (BREG): 0x0000000000000001
+n_jrec_epoch_regular Buffer (DEFAULT): 0x0000000000000001
+VIEW "FLUSH":"AREG,BREG,BREG"
+n_db_flush Buffer (AREG): 0x0000000000000003
+n_db_flush Buffer (BREG): 0x0000000000000003
+n_db_flush Buffer (DEFAULT): 0x0000000000000001
+n_jrec_epoch_regular Buffer (AREG): 0x0000000000000002
+n_jrec_epoch_regular Buffer (BREG): 0x0000000000000002
+n_jrec_epoch_regular Buffer (DEFAULT): 0x0000000000000001
+VIEW "FLUSH"
 n_db_flush Buffer (AREG): 0x0000000000000004
 n_db_flush Buffer (BREG): 0x0000000000000004
 n_db_flush Buffer (DEFAULT): 0x0000000000000002
-VIEW "FLUSH":"AREG,BREG,BREG"
-n_db_flush Buffer (AREG): 0x0000000000000005
-n_db_flush Buffer (BREG): 0x0000000000000005
-n_db_flush Buffer (DEFAULT): 0x0000000000000002
-VIEW "FLUSH"
-n_db_flush Buffer (AREG): 0x0000000000000006
-n_db_flush Buffer (BREG): 0x0000000000000006
-n_db_flush Buffer (DEFAULT): 0x0000000000000003
+n_jrec_epoch_regular Buffer (AREG): 0x0000000000000002
+n_jrec_epoch_regular Buffer (BREG): 0x0000000000000002
+n_jrec_epoch_regular Buffer (DEFAULT): 0x0000000000000002
 ##ALLOW_OUTPUT JNL_NOBEFORE
-##SUSPEND_OUTPUT JNL_BEFORE
-TESTING KEYWORD: FLUSH
-------------------------
-n_db_flush Buffer (AREG): 0x0000000000000000
-n_db_flush Buffer (BREG): 0x0000000000000000
-n_db_flush Buffer (DEFAULT): 0x0000000000000000
-VIEW "FLUSH":"AREG,BREG,BREG"
-n_db_flush Buffer (AREG): 0x0000000000000000
-n_db_flush Buffer (BREG): 0x0000000000000000
-n_db_flush Buffer (DEFAULT): 0x0000000000000000
-VIEW "FLUSH"
-n_db_flush Buffer (AREG): 0x0000000000000000
-n_db_flush Buffer (BREG): 0x0000000000000000
-n_db_flush Buffer (DEFAULT): 0x0000000000000000
-##ALLOW_OUTPUT JNL_BEFORE
 
 
-TESTING KEYWORD: FLUSH
-------------------------
-n_jrec_epoch_regular Buffer (AREG): 0x0000000000000003
-n_jrec_epoch_regular Buffer (BREG): 0x0000000000000003
-n_jrec_epoch_regular Buffer (DEFAULT): 0x0000000000000003
-VIEW "FLUSH":"AREG,BREG,BREG"
-n_jrec_epoch_regular Buffer (AREG): 0x0000000000000004
-n_jrec_epoch_regular Buffer (BREG): 0x0000000000000004
-n_jrec_epoch_regular Buffer (DEFAULT): 0x0000000000000003
-VIEW "FLUSH"
-n_jrec_epoch_regular Buffer (AREG): 0x0000000000000004
-n_jrec_epoch_regular Buffer (BREG): 0x0000000000000004
-n_jrec_epoch_regular Buffer (DEFAULT): 0x0000000000000004
-
-
-# Run poolLimitTest to test VIEW POOLLIMIT:<REGION>:n[%]
-# Tests for:
-#    	-VIEW commands accepting region sub-argument accept comma (,) delimited region lists
-# 	-GT.M sorts the regions, eliminating any duplicates from the list. 
-#		-If the VIEW argument has a corresponding environment variable to set the default state,
-# 		 the state applies to databases as the application implicitly opens them with references.
 TESTING KEYWORD: POOLLIMIT
-------------------------
-%YDB-E-LVUNDEF, Undefined local variable: stat
-		At M source location showPoolLimit+5^gtm8922
+--------------------------
+gbuff_limit Buffer (AREG): 50
+$VIEW("POOLLIMIT",reg): 50
+gbuff_limit Buffer (BREG): 50
+$VIEW("POOLLIMIT",reg): 50
+gbuff_limit Buffer (DEFAULT): 50
+$VIEW("POOLLIMIT",reg): 50
 
-YDB>
+VIEW "POOLLIMIT":"BREG,AREG,BREG,BREG":"30"
+gbuff_limit Buffer (AREG): 32
+$VIEW("POOLLIMIT",reg): 32
+gbuff_limit Buffer (BREG): 32
+$VIEW("POOLLIMIT",reg): 32
+gbuff_limit Buffer (DEFAULT): 50
+$VIEW("POOLLIMIT",reg): 50
+
+
+
 # Run gvsResetTest to test VIEW GVSRESET:<REGION>
 # Tests for:
 #    	-VIEW commands accepting region sub-argument accept comma (,) delimited region lists
-# 	-GT.M sorts the regions, eliminating any duplicates from the list. 
+# 	-YottaDB sorts the regions, eliminating any duplicates from the list. 
 TESTING KEYWORD: GVSRESET
 -------------------------
 Running First ZSHOW "G" 
-VIEW "GVSRESET":"AREG,BREG,BREG"
+VIEW "GVSRESET":"AREG,BREG,AREG,BREG"
 Running Second ZSHOW "G" 
 ---Run1 Run2 Comparison---
 -CHANGE IN AREG: 
@@ -202,7 +221,7 @@ GLD:##TEST_PATH##/mumps.gld,REG:AREG,SET:0,KIL:0,GET:0,DTA:0,ORD:0,ZPR:0,QRY:0,L
 -CHANGE IN BREG: 
 GLD:##TEST_PATH##/mumps.gld,REG:BREG,SET:0,KIL:0,GET:0,DTA:0,ORD:0,ZPR:0,QRY:0,LKS:0,LKF:0,CTN:0,DRD:0,DWT:0,NTW:0,NTR:0,NBW:0,NBR:0,NR0:0,NR1:0,NR2:0,NR3:0,TTW:0,TTR:0,TRB:0,TBW:0,TBR:0,TR0:0,TR1:0,TR2:0,TR3:0,TR4:0,TC0:0,TC1:0,TC2:0,TC3:0,TC4:0,ZTR:0,DFL:0,DFS:0,JFL:0,JFS:0,JBB:0,JFB:0,JFW:0,JRL:0,JRP:0,JRE:0,JRI:0,JRO:0,JEX:0,DEX:0,CAT:0,CFE:0,CFS:0,CFT:0,CQS:0,CQT:0,CYS:0,CYT:0,BTD:0
 -NO CHANGE IN DEFAULT
-VIEW "GVSRESET":"AREG,BREG,DEFAULT"
+VIEW "GVSRESET":"DEFAULT,AREG,BREG,DEFAULT,BREG,AREG"
 Running Third ZSHOW "G" 
 ---Run1 Run3 Comparison---
 -CHANGE IN AREG: 
@@ -215,7 +234,7 @@ GLD:##TEST_PATH##/mumps.gld,REG:DEFAULT,SET:0,KIL:0,GET:0,DTA:0,ORD:0,ZPR:0,QRY:
 
 # Run openRegionTest
 # Tests for:
-# 	-GT.M sorts the regions, eliminating any duplicates from the list. 
+# 	-YottaDB sorts the regions, eliminating any duplicates from the list. 
 # 	-VIEW with no region sub-argument opens any unopened mapped regions in the current global directory, 
 #			while one with a list only opens the listed regions. 
 # Run openRegionTest with DBFLUSH:AREG,BREG,BREG subarguments

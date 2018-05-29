@@ -25,13 +25,14 @@
 # gtm1042	    [jake]  Tests the that env variable gtm_mstack_size sets the size of the M stack as expected
 # gtm8891	    [vinay] Tests that <side-effect-expression><pure-Boolean-operator>$SELECT(0:side-effect-expression)) sequence produces a SELECTFALSE runtime error
 # gtm8894	    [vinay] Tests that $zreldate outputs in the form YYYYMMDD 24:60
+# gtm8922	    [jake]  Tests the functionality of VIEW keywords that take <region-list> expressions
 
 echo "v63004 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic ""
-setenv subtest_list_non_replic "$subtest_list_non_replic gtm8914 gtm8909 gtm8874 gtm8860 gtm8791 gtm8699 gtm8202 gtm1042 gtm8891 gtm8894"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm8914 gtm8909 gtm8874 gtm8860 gtm8791 gtm8699 gtm8202 gtm1042 gtm8891 gtm8894 gtm8922"
 setenv subtest_list_replic     ""
 setenv subtest_list_replic     "$subtest_list_replic gtm5730"
 

@@ -13,47 +13,50 @@
 generalTest
 	SET dbFlush="DBFLUSH n_dsk_write"
 	SET dbSync="DBSYNC n_db_fsync"
-	SET jnlFlush="JNLFLUSH n_jnl_flush JNLFLUSH n_jnl_fsync"
-	SET epoch="EPOCH n_db_flush EPOCH n_jrec_epoch_regular"
-	SET flush="FLUSH n_db_flush FLUSH n_jrec_epoch_regular"
+	SET jnlFlush="JNLFLUSH n_jnl_flush|n_jnl_fsync"
+	SET epoch="EPOCH n_db_flush|n_jrec_epoch_regular"
+	SET flush="FLUSH n_db_flush|n_jrec_epoch_regular"
 
 	; the params string takes the following form
 	; "<VIEW OPTIONS> <STAT ARG>[ <VIEW OPTIONS> <STAT ARG>...]
 	SET params=dbFlush_" "_dbSync_" "_jnlFlush_" "_epoch_" "_flush
 
-	;loops throug words in params to call VIEW on each option and showBuffer() on each stat arg
+	;loops through words in params to call VIEW on each option and showBuffer() on each stat arg
 	FOR I=1:1:$L(params," ") DO
 	. SET keyword=$P(params," ",I) ; option passed to VIEW
-	. SET stat=$P(params," ",I+1)  ; register to peek with showBuffer
+	. SET stats=$P(params," ",I+1)  ; PEEKBYNAME field names to use in showBUFFER to verify VIEW operation
 	. WRITE "TESTING KEYWORD: "_keyword,!
-	. WRITE "------------------------",!
+	. WRITE "--------------------------",!
 	. SET ^DefTmp="MOE"_I
 	. SET ^AregTmp="LARRY"_I
 	. SET ^BregTmp="CURLY"_I
-	. DO showBuffer(stat)
+	.
+	. FOR J=1:1:$L(stats,"|") DO  ;stats is a list of multiple '|' delimited fields
+	. . DO showBuffer($P(stats,"|",J))
 	. WRITE "VIEW """_keyword_""":""AREG,BREG,BREG""",!
 	. VIEW keyword:"AREG,BREG,BREG"
-	. DO showBuffer(stat)
+	.
+	. FOR J=1:1:$L(stats,"|") DO  ;stats is a list of multiple '|' delimited fields
+	. . DO showBuffer($P(stats,"|",J))
 	. WRITE "VIEW """_keyword_"""",!
 	. VIEW keyword
-	. DO showBuffer(stat)
+	.
+	. FOR J=1:1:$L(stats,"|") DO  ;stats is a list of multiple '|' delimited fields
+	. . DO showBuffer($P(stats,"|",J))
 	. SET I=I+1 ; make for loop start next cycle on next keyword
 	. WRITE !!
 
-	quit
-
-poolLimitTest
 	; VIEW POOLLIMIT requires an extra expression when called and
-	; updates a register other than $gmnt_addrs.gvstats_rec... , which
+	; updates a field other than sgmnt_addrs.gvstats_rec... , which
 	; showBuffer() accesses, so it can not be called in the FOR loop
 	WRITE "TESTING KEYWORD: POOLLIMIT",!
-	WRITE "------------------------",!
+	WRITE "--------------------------",!
 	SET ^DefTmp="JAKE"
 	SET ^AregTmp="ZACK"
 	SET ^BregTmp="JIM"
 	DO showPoolLimit()
-	WRITE "VIEW ""POOLLIMIT"":""AREG,BREG,BREG"":""30""",!
-	VIEW "POOLLIMIT":"AREG,BREG,BREG":"30"
+	WRITE "VIEW ""POOLLIMIT"":""BREG,AREG,BREG,BREG"":""30""",!
+	VIEW "POOLLIMIT":"BREG,AREG,BREG,BREG":"30"
 	DO showPoolLimit()
 	WRITE !!
 
@@ -61,7 +64,7 @@ poolLimitTest
 
 gvsResetTest
 	;VIEW GVSRESET requires use of the zshow "G" command to test
-	;Once run zshow "G" should be wiped to a slate of all 0s
+	;Once run zshow "G" should be wiped to a state of all 0s
 	WRITE "TESTING KEYWORD: GVSRESET",!
 	WRITE "-------------------------",!
 
@@ -76,8 +79,8 @@ gvsResetTest
 	WRITE "Running First ZSHOW ""G"" ",!
 	ZSHOW "G":run1
 
-	WRITE "VIEW ""GVSRESET"":""AREG,BREG,BREG""",!
-	VIEW "GVSRESET":"AREG,BREG,BREG"
+	WRITE "VIEW ""GVSRESET"":""AREG,BREG,AREG,BREG""",!
+	VIEW "GVSRESET":"AREG,BREG,AREG,BREG"
 
 	WRITE "Running Second ZSHOW ""G"" ",!
 	ZSHOW "G":run2
@@ -90,8 +93,8 @@ gvsResetTest
 	. IF run1("G",I)=run2("G",I) WRITE "-NO CHANGE IN "_reg,!
 	. ELSE  WRITE "-CHANGE IN "_reg_": ",!,run2("G",I),!
 
-	WRITE "VIEW ""GVSRESET"":""AREG,BREG,DEFAULT""",!
-	VIEW "GVSRESET":"AREG,BREG,DEFAULT"
+	WRITE "VIEW ""GVSRESET"":""DEFAULT,AREG,BREG,DEFAULT,BREG,AREG""",!
+	VIEW "GVSRESET":"DEFAULT,AREG,BREG,DEFAULT,BREG,AREG"
 
 	WRITE "Running Third ZSHOW ""G"" ",!
 	ZSHOW "G":run3
@@ -161,7 +164,6 @@ openRegionsTest
 
 
 showBuffer(stat)
-	;FOR reg="DEFAULT","AREG","BREG" do
 	set reg=""
 	FOR  SET reg=$view("GVNEXT",reg) quit:reg=""  DO
 	. SET x=$$^%PEEKBYNAME("sgmnt_addrs.gvstats_rec."_stat,reg)
@@ -169,11 +171,10 @@ showBuffer(stat)
 	quit
 
 showPoolLimit()
-	;FOR reg="DEFAULT","AREG","BREG" do
 	set reg=""
 	FOR  SET reg=$view("GVNEXT",reg) quit:reg=""  DO
 	. SET x=$$^%PEEKBYNAME("sgmnt_addrs.gbuff_limit",reg)
-	. WRITE stat_" Buffer ("_reg_"): ",x,!
+	. WRITE "gbuff_limit Buffer ("_reg_"): ",x,!
 	. WRITE "$VIEW(""POOLLIMIT"",reg): "
 	. WRITE $VIEW("POOLLIMIT",reg),!
 

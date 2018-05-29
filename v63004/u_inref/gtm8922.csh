@@ -19,28 +19,25 @@ setenv gtm_test_jnl SETJNL
 echo "# Create a 3 region DB with gbl_dir mumps.gld and regions DEFAULT, AREG, and BREG"
 $gtm_tst/com/dbcreate.csh mumps 3 >>& dbcreate_log.txt
 
+# Some of the VIEW commands tested (i.e. VIEW DBFLUSH and VIEW POOLLIMIT) only affect the
+# DB when an -access_method of BG is specified
 $MUPIP set -access_method=BG -file mumps.dat >>& dbcreate_log.txt
 $MUPIP set -access_method=BG -file a.dat >>& dbcreate_log.txt
 $MUPIP set -access_method=BG -file b.dat >>& dbcreate_log.txt
 
 echo '# Run generalTest to test all commands of the form VIEW <KEYWORD>[:<region-list>]'
+echo '# and the VIEW POOLLIMIT:<region-list>:n[%] command'
 echo '# Tests for:'
 echo '#    	-VIEW commands accepting region sub-argument accept comma (,) delimited region lists'
-echo '# 	-GT.M sorts the regions, eliminating any duplicates from the list. '
-$ydb_dist/mumps -run generalTest^gtm8922
-
-echo '# Run poolLimitTest to test VIEW POOLLIMIT:<REGION>:n[%]'
-echo '# Tests for:'
-echo '#    	-VIEW commands accepting region sub-argument accept comma (,) delimited region lists'
-echo '# 	-GT.M sorts the regions, eliminating any duplicates from the list. '
+echo '# 	-YottaDB sorts the regions, eliminating any duplicates from the list. '
 echo '#		-If the VIEW argument has a corresponding environment variable to set the default state,'
 echo '# 		 the state applies to databases as the application implicitly opens them with references.'
-$ydb_dist/mumps -run poolLimitTest^gtm8922
+$ydb_dist/mumps -run generalTest^gtm8922
 
 echo '# Run gvsResetTest to test VIEW GVSRESET:<REGION>'
 echo '# Tests for:'
 echo '#    	-VIEW commands accepting region sub-argument accept comma (,) delimited region lists'
-echo '# 	-GT.M sorts the regions, eliminating any duplicates from the list. '
+echo '# 	-YottaDB sorts the regions, eliminating any duplicates from the list. '
 $ydb_dist/mumps -run gvsResetTest^gtm8922
 
 # The openRegionsTest will run a VIEW command using our cmdline args
@@ -57,7 +54,7 @@ set options=\
 
 echo "# Run openRegionTest"
 echo '# Tests for:'
-echo '# 	-GT.M sorts the regions, eliminating any duplicates from the list. '
+echo '# 	-YottaDB sorts the regions, eliminating any duplicates from the list. '
 echo '# 	-VIEW with no region sub-argument opens any unopened mapped regions in the current global directory, '
 echo '#			while one with a list only opens the listed regions. '
 foreach option ($options)
@@ -66,6 +63,6 @@ foreach option ($options)
 end
 
 
-echo '# Shut down the DB '#and backup necessary files to sub directory'
+echo '# Shut down the DB '
 $gtm_tst/com/dbcheck.csh >>& dbcreate_log.txt
 echo ''
