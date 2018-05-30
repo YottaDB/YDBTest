@@ -1,0 +1,28 @@
+# Creating data base
+# Running CHANGELOG in sec_shell with log interval 0
+Change log initiated with file a.log
+# Running CHANGELOG in sec_shell with log interval 2^31-1
+Change log initiated with file s.log
+%YDB-I-CHANGELOGINTERVAL, Receiver Server is now logging to s.log every 2147483647 transactions
+# Running CHANGELOG in sec_shell with random log interval between 0 and 2^31-1
+Change log initiated with file a.log
+##TEST_AWK%YDB-I-CHANGELOGINTERVAL, Receiver Server is now logging to a.log every [0-9]* transactions
+# Running CHANGELOG in sec_shell with log interval 2^31 (error expected)
+Error parsing or invalid parameter for LOG_INTERVAL
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
+# Running CHANGELOG in sec_shell with log interval -1 (error expected)
+Error parsing or invalid parameter for LOG_INTERVAL
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
+# Setting Helpers to 1
+%YDB-I-REPLINFO, All 0 out of 0 readers and 1 out of 1 writers started
+# Resetting Helpers and Setting to 128
+%YDB-I-REPLINFO, All 80 out of 80 readers and 48 out of 48 writers started
+# Resetting Helpers and Setting to a Random Number [1,128]
+##TEST_AWK%YDB-I-REPLINFO, All [0-9]* out of [0-9]* readers and [0-9]* out of [0-9]* writers started
+# Resetting Helpers and Setting to 129 (error expected)
+Invalid number of helpers; must be in the range [1,128]
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
+# Resetting Helpers and Setting to 0 (error expected)
+Invalid number of helpers; must be in the range [1,128]
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
+# Shutting down database
