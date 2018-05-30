@@ -11,11 +11,11 @@
 #								#
 #################################################################
 #
-# Test that a line length greater than 8192 bytes produces a LSEXPECTED warning
+#
 #
 
-echo "# Generating an M file with big string"
+echo "# Generating a path 249 characters long"
 $ydb_dist/mumps -run gtm7986
+set p = `cat temp.out`
+mkdir -p $p
 
-echo "# Attempting to run file"
-$ydb_dist/mumps -run temp
