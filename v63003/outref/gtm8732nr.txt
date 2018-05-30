@@ -1,51 +1,21 @@
 # Creating database, setting defer time to 0
-Files Created in ##TEST_PATH##:
-Using: ##SOURCE_PATH##/mumps -run GDE
-mumps.gld
-Using: ##SOURCE_PATH##/mupip
-mumps.dat
 Database file ##TEST_PATH##/mumps.dat now has defer_time set to 0
 
 # Creating database, setting defer time to 2^31-1
-Files Created in ##TEST_PATH##:
-Using: ##SOURCE_PATH##/mumps -run GDE
-mumps.gld
-Using: ##SOURCE_PATH##/mupip
-mumps.dat
 Database file ##TEST_PATH##/mumps.dat now has defer_time set to 2147483647
 
 # Creating database, setting defer time to a random number
-Files Created in ##TEST_PATH##:
-Using: ##SOURCE_PATH##/mumps -run GDE
-mumps.gld
-Using: ##SOURCE_PATH##/mupip
-mumps.dat
 ##TEST_AWKDatabase file ##TEST_PATH##/mumps.dat now has defer_time set to [0-9]*
 
 # Creating database, setting defer time to -1
-Files Created in ##TEST_PATH##:
-Using: ##SOURCE_PATH##/mumps -run GDE
-mumps.gld
-Using: ##SOURCE_PATH##/mupip
-mumps.dat
 Database file ##TEST_PATH##/mumps.dat now has defer_time set to -1
 
 # Creating database, setting defer time to -2 (expecting an error)
-Files Created in ##TEST_PATH##:
-Using: ##SOURCE_PATH##/mumps -run GDE
-mumps.gld
-Using: ##SOURCE_PATH##/mupip
-mumps.dat
 Error: cannot convert -2 value to decimal number.
 %YDB-E-SETQUALPROB, Error getting DEFER_TIME qualifier value
 %YDB-W-WCWRNNOTCHG, Not all specified database files were changed
 
 # Creating database, setting defer time to 2^31(expecting an error)
-Files Created in ##TEST_PATH##:
-Using: ##SOURCE_PATH##/mumps -run GDE
-mumps.gld
-Using: ##SOURCE_PATH##/mupip
-mumps.dat
 Error: cannot convert 2147483648 value to decimal number.
 %YDB-E-SETQUALPROB, Error getting DEFER_TIME qualifier value
 %YDB-W-WCWRNNOTCHG, Not all specified database files were changed

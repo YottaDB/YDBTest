@@ -11,28 +11,30 @@
 #								#
 #################################################################
 #
-# Test that a line length greater than 8192 bytes produces a LSEXPECTED warning
+# Testing valid inputs for LOG_INTERVAL and HELPERS for
+# MUPIP REPLICATE -RECEIVER
 #
+
 set x = `$ydb_dist/mumps -run ^%XCMD "write 2**31-1"`
 set y = `$ydb_dist/mumps -run ^%XCMD "write 2**31"`
 set rand = `$gtm_tst/com/genrandnumbers.csh 1 0 $x`
-set rand128 = `$gtm_tst/com/genrandnumbers.csh 1 0 128`
+set rand128 = `$gtm_tst/com/genrandnumbers.csh 1 1 128`
 echo '# Creating data base'
 $gtm_tst/com/dbcreate.csh mumps 1>>db.out
 
-echo '# Running CHANGELOG in sec_shell with log interval 0'
+echo '# Running changelog with LOG_INTERVAL 0'
 $sec_shell "$sec_getenv; cd $SEC_SIDE; $MUPIP replicate -RECEIVER -CHANGELOG -LOG=a.log -LOG_INTERVAL=0"
 
-echo '# Running CHANGELOG in sec_shell with log interval 2^31-1'
+echo '# Running changelog with LOG_INTERVAL 2^31-1'
 $sec_shell "$sec_getenv; cd $SEC_SIDE; $MUPIP replicate -RECEIVER -CHANGELOG -LOG=s.log -LOG_INTERVAL=$x"
 
-echo '# Running CHANGELOG in sec_shell with random log interval between 0 and 2^31-1'
+echo '# Running changelog with LOG_INTERVAL a random number <=2^31-1'
 $sec_shell "$sec_getenv; cd $SEC_SIDE; $MUPIP replicate -RECEIVER -CHANGELOG -LOG=a.log -LOG_INTERVAL=$rand"
 
-echo '# Running CHANGELOG in sec_shell with log interval 2^31 (error expected)'
+echo '# Running changelog with LOG_INTERVAL 2^31(expecting an error)'
 $sec_shell "$sec_getenv; cd $SEC_SIDE; $MUPIP replicate -RECEIVER -CHANGELOG -LOG=s.log -LOG_INTERVAL=$y"
 
-echo '# Running CHANGELOG in sec_shell with log interval -1 (error expected)'
+echo '# Running changelog with LOG_INTERVAL -1 (expecting an error)'
 $sec_shell "$sec_getenv; cd $SEC_SIDE; $MUPIP replicate -RECEIVER -CHANGELOG -LOG=a.log -LOG_INTERVAL=-1"
 
 echo '# Setting Helpers to 1'

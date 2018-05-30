@@ -1,16 +1,16 @@
 # Creating data base
-# Running CHANGELOG in sec_shell with log interval 0
+# Running changelog with LOG_INTERVAL 0
 Change log initiated with file a.log
-# Running CHANGELOG in sec_shell with log interval 2^31-1
+# Running changelog with LOG_INTERVAL 2^31-1
 Change log initiated with file s.log
 %YDB-I-CHANGELOGINTERVAL, Receiver Server is now logging to s.log every 2147483647 transactions
-# Running CHANGELOG in sec_shell with random log interval between 0 and 2^31-1
+# Running changelog with LOG_INTERVAL a random number <=2^31-1
 Change log initiated with file a.log
 ##TEST_AWK%YDB-I-CHANGELOGINTERVAL, Receiver Server is now logging to a.log every [0-9]* transactions
-# Running CHANGELOG in sec_shell with log interval 2^31 (error expected)
+# Running changelog with LOG_INTERVAL 2^31(expecting an error)
 Error parsing or invalid parameter for LOG_INTERVAL
 %YDB-E-MUPCLIERR, Action not taken due to CLI errors
-# Running CHANGELOG in sec_shell with log interval -1 (error expected)
+# Running changelog with LOG_INTERVAL -1 (expecting an error)
 Error parsing or invalid parameter for LOG_INTERVAL
 %YDB-E-MUPCLIERR, Action not taken due to CLI errors
 # Setting Helpers to 1
