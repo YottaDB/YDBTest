@@ -12,10 +12,17 @@
 ;
 ; Generating an m program which prints a string that is too long
 ;
-path253
-	new bigstring
+path249
+	write "Creating a 249 length path based off the current directory"
+	set bigstring="temp.out"
+	open bigstring
 	use bigstring write $ZDIRECTORY
-	write bigstring
-
+	set l=$length($ZDIRECTORY)
+	use bigstring write "a"
+	set l=l+1
+	if l<249 do  goto path249+8
+	. if l#124=0 use bigstring write "/"
+	. else  use bigstring write "a"
+	. set l=l+1
 	quit
 
