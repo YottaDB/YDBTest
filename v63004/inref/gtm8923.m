@@ -12,100 +12,104 @@
 ;
 gtm8923
 
+	SET encodings="UTF-16"
+	SET encodings="UTF-16 UTF-16BE UTF-16LE"
+
+	FOR I=1:1:$L(encodings," ") DO
+	. SET chset=$P(encodings," ",I)
+	. SET file="gtm8923"_chset_".file"
+	.
+	. ;READ * test
+	. OPEN file:CHSET=chset:10
+	. USE file:CHSET=chset
+	. WRITE "1",!
+	. CLOSE file
+	. OPEN file:CHSET=chset:10
+	. USE file:CHSET=chset
+	. READ *x,!
+	. CLOSE file
+	. USE $P
+	. WRITE "READ * test on "_chset_" file:"
+	. WRITE x,!
+	. ;CLOSE file
+	.
+	. ;WRITE * test
+	. OPEN file:CHSET=chset:10
+	. USE file:CHSET=chset
+	. WRITE *"49",!
+	. CLOSE file
+	. OPEN file:CHSET=chset:10
+	. USE file:CHSET=chset
+	. READ x,!
+	. CLOSE file
+	. USE $P
+	. WRITE "WRITE * test on "_chset_" file:"
+	. WRITE x,!
+
         do ^job("child^gtm8923",2,"""""")     ; start 2 jobs ; .
+
+	WRITE ^readTests("1"),!
+	WRITE ^writeTests("1"),!
+
+	WRITE ^readTests("2"),!
+	WRITE ^writeTests("2"),!
+
+	WRITE ^readTests("3"),!
+	WRITE ^writeTests("3"),!
+
+
 	quit
 
 child
-	ZSHOW "V"
 	SET encodings="UTF-16 UTF-16BE UTF-16LE"
+
+	SET file="gtm8923.socket"
 
 	FOR I=1:1:$L(encodings," ") DO
 	. SET chset=$P(encodings," ",I)
 	.
 	. IF jobindex=1 DO  ;
-	. . OPEN "gtm8923file":(CONNECT="gtm8923.file:LOCAL":attach="attach_file":CHSET=chset):10
-	. . OPEN "gtm8923socket":(CONNECT="gtm8923.socket:LOCAL":attach="attach_socket":CHSET=chset):10:"SOCKET"
-	. . USE "gtm8923file"
-	. . WRITE "TEST WRITE",!
-	. . USE "gtm8923socket"
-	. . WRITE "TEST WRITE",!
+	. . OPEN file:(CONNECT="gtm8923R"_I_".socket:LOCAL":attach="attach_socket":CHSET=chset):10:"SOCKET"
+	. . USE file:CHSET=chset
+	. . WRITE "1",!
+	. . CLOSE file
 	.
 	. ELSE  IF jobindex=2 DO
-	. . OPEN "gtm8923file":(LISTEN="gtm8923.file:LOCAL":attach="attach_file":CHSET=chset):10
-	. . OPEN "gtm8923socket":(LISTEN="gtm8923.socket:LOCAL":attach="attach_socket":CHSET=chset):10:"SOCKET"
-	. . USE "gtm8923file"
+	. . OPEN file:(LISTEN="gtm8923R"_I_".socket:LOCAL":attach="attach_socket":CHSET=chset):10:"SOCKET"
+	. . USE file:CHSET=chset
 	. . write /wait
-	. . READ text
+	. . READ *x,!
+	. . CLOSE file
 	. . USE $P
-	. . WRITE "gtm8923file READ: "_text,!
-	. .
-	. . USE "gtm8923socket"
+	. . WRITE "READ * test on "_chset_" socket: "
+	. . WRITE x,!
+	. . SET ^readTests(I)="READ * test on "_chset_" socket: "_x
+	.
+	. ELSE  DO
+	. . WRITE "INVALID JOBINDEX",!
+	. . WRITE "jobindex= "_jobindex,!
+	.
+	.
+	. ;WRITE * test
+	. IF jobindex=1 DO  ;
+	. . OPEN file:(CONNECT="gtm8923W"_I_".socket:LOCAL":attach="attach_socket":CHSET=chset):10:"SOCKET"
+	. . USE file:CHSET=chset
+	. . WRITE *"49",!
+	. . CLOSE file
+	.
+	. ELSE  IF jobindex=2 DO
+	. . OPEN file:(LISTEN="gtm8923W"_I_".socket:LOCAL":attach="attach_socket":CHSET=chset):10:"SOCKET"
+	. . USE file:CHSET=chset
 	. . write /wait
-	. . READ text
+	. . READ x,!
+	. . CLOSE file
 	. . USE $P
-	. . WRITE "gtm8923file READ: "_text,!
+	. . WRITE "WRITE * test on "_chset_" socket:"
+	. . WRITE x,!
+	. . SET ^writeTests(I)="WRITE * test on "_chset_" socket: "_x
 	.
 	. ELSE  DO
 	. . WRITE "INVALID JOBINDEX",!
 	. . WRITE "jobindex= "_jobindex,!
 
-	;open "socket":(LISTEN=${portno}_":TCP":attach="server"):10:"SOCKET"
 	quit
-
-
-;tprestart       ;
-;        set ^stop=0,jmaxwait=0                  ; signal child processes to proceed
-;        do ^job("child^tprestart",5,"""""")     ; start 5 jobs
-;        hang 10                                 ; let child run for 10 seconds
-;        set ^stop=1                             ; signal child processes to stop
-;        do wait^job                             ; wait for child processes to die
-;        quit
-;
-
-
-;child  ;
-;        for i=1:1  quit:^stop=1  do
-;        .       tstart ():serial
-;        .       set x=$incr(^c)
-;        .       if $r(2) set ^a($j,x)=$j(1,220)
-;        .       if $r(2) set ^b($j,x)=$j(2,220)
-;        .       if $r(2) set ^c($j,x)=$j(3,220)
-;        .       tcommit
-;        quit
-
-;checkRegion()
-;
-;	WRITE "Check for open region files:",!
-;
-;	; Filters the file names from the ls output
-;	ZSYSTEM "ls -l /proc/"_$job_"/fd | $grep '.dat$' | awk -F '/' '{print $(NF)}' | sort"
-;
-;
-;	; .gst files start with an RNG number, so the file names themselves require additional filtering
-;
-;	set line1="ls -l /proc/"_$job_"/fd | $grep '.gst$' | "
-;	set line2="awk -F '/' '{print $(NF)}'  | "
-;	set line3="awk -F '.' 'BEGIN { ORS="""" }; {print ""xxx""; for (i = 2; i <= NF ; i++) { print ""."" ; print $i } print ""\n""}' | "
-;	set line4=" sort"
-;
-;	ZSYSTEM line1_line2_line3_line4
-;
-;	WRITE !,"Check Sharing Status:",!
-;
-;	set reg=""
-;	for  set reg=$view("GVNEXT",reg) quit:reg=""  DO
-;	. WRITE "STATSHARE "_reg_": "
-;	. WRITE $VIEW("STATSHARE",reg),!
-;
-;	WRITE "STATSHARE: "
-;	WRITE $VIEW("STATSHARE"),!
-;
-;	WRITE "^%YGS : ",!
-;	IF $data(^%YGS)  DO
-;	. ZWR ^%YGS
-;
-;	ELSE  DO
-;	. WRITE "NO REGION"
-;
-;	quit
-;

@@ -1,0 +1,19 @@
+setenv gtm_chset UTF-8
+unset echo
+# Testing VIEW "[NO]STATSHARE"[:<region-list>]
+# Create a single region DB with region DEFAULT
+
+# Run gtm8923.m to test WRITE * and READ * commands
+READ * test on UTF-16 file:49
+WRITE * test on UTF-16 file:1
+READ * test on UTF-16BE file:49
+WRITE * test on UTF-16BE file:1
+READ * test on UTF-16LE file:49
+WRITE * test on UTF-16LE file:1
+READ * test on UTF-16 socket: 49
+WRITE * test on UTF-16 socket: 1
+READ * test on UTF-16BE socket: 49
+WRITE * test on UTF-16BE socket: 1
+READ * test on UTF-16LE socket: 49
+WRITE * test on UTF-16LE socket: 1
+# Shut down the DB 

@@ -11,16 +11,14 @@
 #								#
 #################################################################
 #
+$switch_chset UTF-8
 echo '# Testing VIEW "[NO]STATSHARE"[:<region-list>]'
-
-echo '#### test ####'
-echo ''
 
 echo "# Create a single region DB with region DEFAULT"
 $gtm_tst/com/dbcreate.csh mumps 1 >>& dbcreate_log_1.txt
 echo ''
 
-echo '# Run gtm8923.m to ....'
+echo '# Run gtm8923.m to test WRITE * and READ * commands'
 $ydb_dist/mumps -run gtm8923
 
 echo '# Shut down the DB '
