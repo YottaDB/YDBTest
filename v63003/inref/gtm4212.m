@@ -12,18 +12,60 @@
 ;
 ;
 ;
-path246
-	;assumes path is already less than 246 characters long
-	write "Creating a 246 length path based off the current directory"
-	set bigstring="temp.out"
+path235
+	;assumes path is already less than 235 characters long
+	set bigstring="temp235.out"
 	open bigstring
 	use bigstring write $ZDIRECTORY
 	set l=$length($ZDIRECTORY)
 	use bigstring write "a"
 	set l=l+1
-	if l<238 do  goto path246+9
+	if l<235 do  goto path235+8
 	. if l#25=0 use bigstring write "/"
 	. else  use bigstring write "a"
 	. set l=l+1
 	quit
+
+path236
+	;assumes path is already less than 236 characters long
+	set bigstring="temp236.out"
+	open bigstring
+	use bigstring write $ZDIRECTORY
+	set l=$length($ZDIRECTORY)
+	use bigstring write "a"
+	set l=l+1
+	if l<236 do  goto path236+8
+	. if l#25=0 use bigstring write "/"
+	. else  use bigstring write "a"
+	. set l=l+1
+	quit
+
+pathle235
+	set x=235-$random(10)-1
+	set bigstring="temple235.out"
+	open bigstring
+	use bigstring write $ZDIRECTORY
+	set l=$length($ZDIRECTORY)
+	use bigstring write "a"
+	set l=l+1
+	if l<x do  goto pathle235+8
+	. if l#25=0 use bigstring write "/"
+	. else  use bigstring write "a"
+	. set l=l+1
+	quit
+
+pathge236
+	set x=235+$random(10)+1
+	set bigstring="tempge236.out"
+	open bigstring
+	use bigstring write $ZDIRECTORY
+	set l=$length($ZDIRECTORY)
+	use bigstring write "a"
+	set l=l+1
+	if l<x do  goto pathge236+8
+	. if l#25=0 use bigstring write "/"
+	. else  use bigstring write "a"
+	. set l=l+1
+	quit
+
 
