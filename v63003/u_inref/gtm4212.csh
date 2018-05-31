@@ -15,7 +15,12 @@
 #
 
 echo "# Generating a path 249 characters long"
-$ydb_dist/mumps -run gtm7986
+$ydb_dist/mumps -run gtm4212
 set p = `cat temp.out`
 mkdir -p $p
+
+echo "# Creating Directory"
+$gtm_tst/com/dbcreate.csh mumps 1 >>& dbcreate1.out
+echo "# Backing up Directory"
+$MUPIP BACKUP "DEFAULT" $p
 
