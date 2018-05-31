@@ -12,16 +12,12 @@
 #################################################################
 #
 
-echo "# Enable sharing with gtm_statshare"
-setenv gtm_statshare "TRUE"
-echo "# Set gtm_statsdir to the root directory, which we dont have permissions to"
-setenv gtm_statsdir "/"
+echo "# Creating database"
+$gtm_tst/com/dbcreate.csh mumps 1 >>& db_log.txt
 
-echo "# Create a single region DB with gbl_dir mumps.gld and region DEFAULT"
-$gtm_tst/com/dbcreate.csh mumps >>& dbcreate_log_1.txt
+echo "# Producing ZSHOW for g, l and t"
+$ydb_dist/mumps -run gtm8804
 
-echo "# The DB, while set for sharing, should now be unable to share due to the invalid gtm_statsdir selection"
+echo "# Shutting down database"
+$gtm_tst/com/dbcheck.csh >& db_log.txt
 
-echo ''
-echo '# Run gtm8914.m'
-$ydb_dist/mumps -run gtm8914

@@ -11,17 +11,9 @@
 #								#
 #################################################################
 #
+# Testing if do, goto and zgoto can be run with an offset but no
+# labels
 
-echo "# Enable sharing with gtm_statshare"
-setenv gtm_statshare "TRUE"
-echo "# Set gtm_statsdir to the root directory, which we dont have permissions to"
-setenv gtm_statsdir "/"
+echo "# Testing goto, do and zgoto"
+$ydb_dist/mumps -run gtm8186
 
-echo "# Create a single region DB with gbl_dir mumps.gld and region DEFAULT"
-$gtm_tst/com/dbcreate.csh mumps >>& dbcreate_log_1.txt
-
-echo "# The DB, while set for sharing, should now be unable to share due to the invalid gtm_statsdir selection"
-
-echo ''
-echo '# Run gtm8914.m'
-$ydb_dist/mumps -run gtm8914

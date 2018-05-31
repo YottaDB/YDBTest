@@ -16,14 +16,20 @@
 #-------------------------------------------------------------------------------------
 # gtm8788           [nars]  Test that BLKTOODEEP error lines are excluded from object file (GTM-8788 fixed in GT.M V6.3-003)
 # gtm7986	    [vinay] Test that a line of over 8192 bytes produces an LSINSERTED warning
+# gtm8186	    [vinay] Test DO, GOTO and ZGOTO can take offset without a label
+# gtm8804	    [vinay] Test zshow "t" produces only a summary of zshow "g" and "l"
+# gtm8832	    [vinay] Test string literal evaluating to >=1E47 produces a NUMOFLOW error
+# gtm8617	    [vinay] Tests MUPIP SET command of STDNULLCOLL and NULL_SUBSCRIPTS
+# gtm8732nr	    [vinay] Tests the valid inputs of the flag DEFER_TIME for the MUPIP SET command
+# gtm8732r	    [vinay] Tests the valid inputs of HELPERS and LOG_INTERVAL for the MUPIP REPLICATE command
 #-------------------------------------------------------------------------------------
 
 echo "v63003 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "gtm8788 gtm7986"
-setenv subtest_list_replic     ""
+setenv subtest_list_non_replic "gtm8788 gtm7986 gtm8186 gtm8804 gtm8832 gtm8617 gtm8732nr"
+setenv subtest_list_replic     "gtm8732r"
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
