@@ -1,0 +1,17 @@
+# Creating database, manually setting variables so database is compatible with read only
+# Setting default region to read only
+Database file ##TEST_PATH##/mumps.dat is now read-only
+# Attempting to set a global variable while in read only mode
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/mumps.dat
+# Attempting to set access method to BG while in read only mode
+%YDB-E-READONLYNOBG, Read-only cannot be enabled on non-MM databases
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+# Setting default region to no read only
+Database file ##TEST_PATH##/mumps.dat is no longer read-only
+# Setting a global variable
+^X=1
+# Setting access method to BG
+Database file ##TEST_PATH##/mumps.dat now has BG access method
+# Attempting to set default region to read only with a BG access method
+%YDB-E-READONLYNOBG, Read-only cannot be enabled on non-MM databases
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
