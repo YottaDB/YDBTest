@@ -3,6 +3,9 @@
 ; Copyright (c) 2014-2016 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -20,16 +23,16 @@ gtm8023	;
 	write "# Now do a zwrite of global - Should hang",!,$zdate($H,"24:60:SS"),!
 	zwrite ^noreorg
 	write $zdate($H,"24:60:SS"),!
-	for i=1:1:600 quit:$data(^nowprimary)  hang 1
-	if i=600 write "gtm8023-E-Timeout",! quit
+	for i=1:1:3600 quit:$data(^nowprimary)  hang 1
+	if i=3600 write "gtm8023-E-Timeout",! quit
 	; The side is now primary
 	set ^nowpossible("gtm8023")=1
 	quit
 
 readonly	;
 	set $etrap="goto errorAndCont^errorAndCont"
-	for i=1:1:600 quit:$data(^nowprimary)  hang 1
-	if i=600 write "gtm8023-E-Timeout",! quit
+	for i=1:1:3600 quit:$data(^nowprimary)  hang 1
+	if i=3600 write "gtm8023-E-Timeout",! quit
 	; The side is now primary
 	set ^nowpossible("readonly^gtm8023")=1
 	quit
