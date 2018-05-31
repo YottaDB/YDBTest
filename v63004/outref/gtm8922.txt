@@ -12,7 +12,7 @@ TESTING KEYWORD: DBFLUSH
 n_dsk_write Buffer (AREG): 0x0000000000000000
 n_dsk_write Buffer (BREG): 0x0000000000000000
 n_dsk_write Buffer (DEFAULT): 0x0000000000000000
-VIEW "DBFLUSH":"AREG,BREG,BREG"
+VIEW "DBFLUSH":"BREG,BREG,AREG"
 n_dsk_write Buffer (AREG): 0x0000000000000004
 n_dsk_write Buffer (BREG): 0x0000000000000004
 n_dsk_write Buffer (DEFAULT): 0x0000000000000000
@@ -27,7 +27,7 @@ TESTING KEYWORD: DBSYNC
 n_db_fsync Buffer (AREG): 0x0000000000000000
 n_db_fsync Buffer (BREG): 0x0000000000000000
 n_db_fsync Buffer (DEFAULT): 0x0000000000000000
-VIEW "DBSYNC":"AREG,BREG,BREG"
+VIEW "DBSYNC":"BREG,BREG,AREG"
 n_db_fsync Buffer (AREG): 0x0000000000000001
 n_db_fsync Buffer (BREG): 0x0000000000000001
 n_db_fsync Buffer (DEFAULT): 0x0000000000000000
@@ -46,7 +46,7 @@ n_jnl_flush Buffer (DEFAULT): 0x0000000000000000
 n_jnl_fsync Buffer (AREG): 0x0000000000000000
 n_jnl_fsync Buffer (BREG): 0x0000000000000000
 n_jnl_fsync Buffer (DEFAULT): 0x0000000000000000
-VIEW "JNLFLUSH":"AREG,BREG,BREG"
+VIEW "JNLFLUSH":"BREG,BREG,AREG"
 n_jnl_flush Buffer (AREG): 0x0000000000000001
 n_jnl_flush Buffer (BREG): 0x0000000000000001
 n_jnl_flush Buffer (DEFAULT): 0x0000000000000000
@@ -70,7 +70,7 @@ n_jnl_flush Buffer (DEFAULT): 0x0000000000000000
 n_jnl_fsync Buffer (AREG): 0x0000000000000001
 n_jnl_fsync Buffer (BREG): 0x0000000000000001
 n_jnl_fsync Buffer (DEFAULT): 0x0000000000000001
-VIEW "JNLFLUSH":"AREG,BREG,BREG"
+VIEW "JNLFLUSH":"BREG,BREG,AREG"
 n_jnl_flush Buffer (AREG): 0x0000000000000001
 n_jnl_flush Buffer (BREG): 0x0000000000000001
 n_jnl_flush Buffer (DEFAULT): 0x0000000000000000
@@ -96,7 +96,7 @@ n_db_flush Buffer (DEFAULT): 0x0000000000000000
 n_jrec_epoch_regular Buffer (AREG): 0x0000000000000000
 n_jrec_epoch_regular Buffer (BREG): 0x0000000000000000
 n_jrec_epoch_regular Buffer (DEFAULT): 0x0000000000000000
-VIEW "EPOCH":"AREG,BREG,BREG"
+VIEW "EPOCH":"BREG,BREG,AREG"
 n_db_flush Buffer (AREG): 0x0000000000000000
 n_db_flush Buffer (BREG): 0x0000000000000000
 n_db_flush Buffer (DEFAULT): 0x0000000000000000
@@ -120,7 +120,7 @@ n_db_flush Buffer (DEFAULT): 0x0000000000000000
 n_jrec_epoch_regular Buffer (AREG): 0x0000000000000000
 n_jrec_epoch_regular Buffer (BREG): 0x0000000000000000
 n_jrec_epoch_regular Buffer (DEFAULT): 0x0000000000000000
-VIEW "EPOCH":"AREG,BREG,BREG"
+VIEW "EPOCH":"BREG,BREG,AREG"
 n_db_flush Buffer (AREG): 0x0000000000000001
 n_db_flush Buffer (BREG): 0x0000000000000001
 n_db_flush Buffer (DEFAULT): 0x0000000000000000
@@ -146,7 +146,7 @@ n_db_flush Buffer (DEFAULT): 0x0000000000000000
 n_jrec_epoch_regular Buffer (AREG): 0x0000000000000001
 n_jrec_epoch_regular Buffer (BREG): 0x0000000000000001
 n_jrec_epoch_regular Buffer (DEFAULT): 0x0000000000000001
-VIEW "FLUSH":"AREG,BREG,BREG"
+VIEW "FLUSH":"BREG,BREG,AREG"
 n_db_flush Buffer (AREG): 0x0000000000000000
 n_db_flush Buffer (BREG): 0x0000000000000000
 n_db_flush Buffer (DEFAULT): 0x0000000000000000
@@ -170,7 +170,7 @@ n_db_flush Buffer (DEFAULT): 0x0000000000000001
 n_jrec_epoch_regular Buffer (AREG): 0x0000000000000001
 n_jrec_epoch_regular Buffer (BREG): 0x0000000000000001
 n_jrec_epoch_regular Buffer (DEFAULT): 0x0000000000000001
-VIEW "FLUSH":"AREG,BREG,BREG"
+VIEW "FLUSH":"BREG,BREG,AREG"
 n_db_flush Buffer (AREG): 0x0000000000000003
 n_db_flush Buffer (BREG): 0x0000000000000003
 n_db_flush Buffer (DEFAULT): 0x0000000000000001
@@ -196,7 +196,7 @@ $VIEW("POOLLIMIT",reg): 50
 gbuff_limit Buffer (DEFAULT): 50
 $VIEW("POOLLIMIT",reg): 50
 
-VIEW "POOLLIMIT":"BREG,AREG,BREG,BREG":"30"
+VIEW "POOLLIMIT":"AREG,BREG,BREG":"30"
 gbuff_limit Buffer (AREG): 32
 $VIEW("POOLLIMIT",reg): 32
 gbuff_limit Buffer (BREG): 32

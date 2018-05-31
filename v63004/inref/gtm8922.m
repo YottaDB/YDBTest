@@ -33,8 +33,8 @@ generalTest
 	.
 	. FOR J=1:1:$L(stats,"|") DO  ;stats is a list of multiple '|' delimited fields
 	. . DO showBuffer($P(stats,"|",J))
-	. WRITE "VIEW """_keyword_""":""AREG,BREG,BREG""",!
-	. VIEW keyword:"AREG,BREG,BREG"
+	. WRITE "VIEW """_keyword_""":""BREG,BREG,AREG""",!
+	. VIEW keyword:"BREG,BREG,AREG"
 	.
 	. FOR J=1:1:$L(stats,"|") DO  ;stats is a list of multiple '|' delimited fields
 	. . DO showBuffer($P(stats,"|",J))
@@ -55,8 +55,8 @@ generalTest
 	SET ^AregTmp="ZACK"
 	SET ^BregTmp="JIM"
 	DO showPoolLimit()
-	WRITE "VIEW ""POOLLIMIT"":""BREG,AREG,BREG,BREG"":""30""",!
-	VIEW "POOLLIMIT":"BREG,AREG,BREG,BREG":"30"
+	WRITE "VIEW ""POOLLIMIT"":""AREG,BREG,BREG"":""30""",!
+	VIEW "POOLLIMIT":"AREG,BREG,BREG":"30"
 	DO showPoolLimit()
 	WRITE !!
 
