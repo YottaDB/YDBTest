@@ -61,7 +61,7 @@ $DSE dump -file|&$grep "Read Only"
 
 
 echo '# Displaying status of gtmhelp databases to verify files have read-only permissions for user/group/other'
-ls -l $ydb_dist/*.dat|$tst_awk '{print $1,$9}'
+$gtm_tst/com/lsminusl.csh $ydb_dist/*.dat|$tst_awk '{print $1,$9}'
 
 foreach dir ($ydb_dist/*.gld)
 	echo "# Displaying status of "$dir
