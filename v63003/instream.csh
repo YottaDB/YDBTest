@@ -23,13 +23,14 @@
 # gtm8732nr	    [vinay] Tests the valid inputs of the flag DEFER_TIME for the MUPIP SET command
 # gtm8732r	    [vinay] Tests the valid inputs of HELPERS and LOG_INTERVAL for the MUPIP REPLICATE command
 # gtm8767	    [vinay] Tests the functionality of HARD_SPIN_COUNT, SPIN_SLEEP_MASK and SPIN_SLEEP_LIMIT for MUPIP SET
+# gtm8735	    [vinay] Tests the functionality of the READ_ONLY flag in MUPIP SET
 #-------------------------------------------------------------------------------------
 
 echo "v63003 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "gtm8788 gtm7986 gtm8186 gtm8804 gtm8832 gtm8617 gtm8732nr gtm8767"
+setenv subtest_list_non_replic "gtm8788 gtm7986 gtm8186 gtm8804 gtm8832 gtm8617 gtm8732nr gtm8767 gtm8735"
 setenv subtest_list_replic     "gtm8732r"
 
 if ($?test_replic == 1) then
