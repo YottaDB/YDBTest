@@ -16,7 +16,8 @@ gtm8903
 	SET ^x=2
 
 	;$S[ELECT](tvexpr:expr[,...])
-	WRITE "0!$SELECT(1:x&x,1:^x),!",!
-	WRITE 0!$SELECT(1:x&x,1:^x),!
+	SET xstr="WRITE 0!$SELECT(1:x&x,1:^x),!"
+	WRITE xstr,!
+	XECUTE xstr
 
 	quit

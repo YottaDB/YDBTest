@@ -1,0 +1,72 @@
+# Creating database, manually setting variables so database is compatible with read only
+# Setting default region to read only
+  Access method                          MM  Global Buffers                1024
+  LOCK shares DB critical section     FALSE  Read Only                       ON
+# Attempting to set a global variable while in read only mode
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/mumps.dat
+# Attempting to set access method to BG while in read only mode
+%YDB-E-READONLYNOBG, Read-only cannot be enabled on non-MM databases
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+  Access method                          MM  Global Buffers                1024
+  LOCK shares DB critical section     FALSE  Read Only                       ON
+# Setting default region to no read only
+Database file ##TEST_PATH##/mumps.dat is no longer read-only
+  Access method                          MM  Global Buffers                1024
+  LOCK shares DB critical section     FALSE  Read Only                      OFF
+# Setting a global variable
+^X=1
+# Setting access method to BG
+Database file ##TEST_PATH##/mumps.dat now has BG access method
+  Access method                          BG  Global Buffers                1024
+  LOCK shares DB critical section     FALSE  Read Only                      OFF
+# Attempting to set default region to read only with a BG access method
+%YDB-E-READONLYNOBG, Read-only cannot be enabled on non-MM databases
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+  Access method                          BG  Global Buffers                1024
+  LOCK shares DB critical section     FALSE  Read Only                      OFF
+# Displaying status of gtmhelp databases to verify files have read-only permissions for user/group/other
+-r--r--r-- ##SOURCE_PATH##/dsehelp.dat
+-r--r--r-- ##SOURCE_PATH##/gdehelp.dat
+-r--r--r-- ##SOURCE_PATH##/gtmhelp.dat
+-r--r--r-- ##SOURCE_PATH##/lkehelp.dat
+-r--r--r-- ##SOURCE_PATH##/mupiphelp.dat
+# Displaying status of ##SOURCE_PATH##/dsehelp.gld
+  LOCK shares DB critical section     FALSE  Read Only                       ON
+# Attempting to change to no read only
+%YDB-E-DBFILOPERR, Error doing database I/O to region ##SOURCE_PATH##/dsehelp.dat
+%SYSTEM-E-ENO13, Permission denied
+%YDB-E-WCERRNOTCHG, Not all specified database files were changed
+# Attempting to write to database
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##SOURCE_PATH##/dsehelp.dat
+# Displaying status of ##SOURCE_PATH##/gdehelp.gld
+  LOCK shares DB critical section     FALSE  Read Only                       ON
+# Attempting to change to no read only
+%YDB-E-DBFILOPERR, Error doing database I/O to region ##SOURCE_PATH##/gdehelp.dat
+%SYSTEM-E-ENO13, Permission denied
+%YDB-E-WCERRNOTCHG, Not all specified database files were changed
+# Attempting to write to database
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##SOURCE_PATH##/gdehelp.dat
+# Displaying status of ##SOURCE_PATH##/gtmhelp.gld
+  LOCK shares DB critical section     FALSE  Read Only                       ON
+# Attempting to change to no read only
+%YDB-E-DBFILOPERR, Error doing database I/O to region ##SOURCE_PATH##/gtmhelp.dat
+%SYSTEM-E-ENO13, Permission denied
+%YDB-E-WCERRNOTCHG, Not all specified database files were changed
+# Attempting to write to database
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##SOURCE_PATH##/gtmhelp.dat
+# Displaying status of ##SOURCE_PATH##/lkehelp.gld
+  LOCK shares DB critical section     FALSE  Read Only                       ON
+# Attempting to change to no read only
+%YDB-E-DBFILOPERR, Error doing database I/O to region ##SOURCE_PATH##/lkehelp.dat
+%SYSTEM-E-ENO13, Permission denied
+%YDB-E-WCERRNOTCHG, Not all specified database files were changed
+# Attempting to write to database
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##SOURCE_PATH##/lkehelp.dat
+# Displaying status of ##SOURCE_PATH##/mupiphelp.gld
+  LOCK shares DB critical section     FALSE  Read Only                       ON
+# Attempting to change to no read only
+%YDB-E-DBFILOPERR, Error doing database I/O to region ##SOURCE_PATH##/mupiphelp.dat
+%SYSTEM-E-ENO13, Permission denied
+%YDB-E-WCERRNOTCHG, Not all specified database files were changed
+# Attempting to write to database
+%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##SOURCE_PATH##/mupiphelp.dat
