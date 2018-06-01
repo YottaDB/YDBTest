@@ -1,0 +1,8 @@
+Setting Hard Spin Count
+##TEST_AWKDatabase file ##TEST_PATH##/mumps.dat now has hard spin count [0-9]*
+##TEST_AWK  Mutex Hard Spin Count               [0-9]*  Mutex Sleep Spin Count         128
+Setting Spin Sleep Mask
+##TEST_AWKDatabase file ##TEST_PATH##/mumps.dat now has spin sleep mask [0-9]*
+  Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
+Attempting to set Spin Sleep Limit
+%YDB-E-CLIERR, Unrecognized option : SPIN_SLEEP_LIMIT
