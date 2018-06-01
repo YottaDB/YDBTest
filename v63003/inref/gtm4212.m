@@ -10,7 +10,8 @@
 ;								;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
-;
+; Creates 4 paths based on the current directory, of length 230, 231
+; <=230 and >=231 and stores them in temp files
 ;
 gtm4212
 	set p230="temp230.out"
