@@ -14,10 +14,7 @@
 #
 #
 
-$ydb_dist/mumps -run path230^gtm4212
-$ydb_dist/mumps -run path231^gtm4212
-$ydb_dist/mumps -run pathge231^gtm4212
-$ydb_dist/mumps -run pathle230^gtm4212
+$ydb_dist/mumps -run gtm4212
 
 set p231 = `cat temp231.out`
 set p230 = `cat temp230.out`
