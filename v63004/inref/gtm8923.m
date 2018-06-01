@@ -11,52 +11,57 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 gtm8923
-
-	SET encodings="UTF-16"
 	SET encodings="UTF-16 UTF-16BE UTF-16LE"
 
 	FOR I=1:1:$L(encodings," ") DO
 	. SET chset=$P(encodings," ",I)
 	. SET file="gtm8923"_chset_".file"
-	.
 	. ;READ * test
-	. OPEN file:CHSET=chset:10
+	. OPEN file:CHSET=chset
 	. USE file:CHSET=chset
 	. WRITE "1",!
 	. CLOSE file
-	. OPEN file:CHSET=chset:10
+	. OPEN file:CHSET=chset
 	. USE file:CHSET=chset
-	. READ *x,!
+	. READ *text,!
 	. CLOSE file
 	. USE $P
-	. WRITE "READ * test on "_chset_" file:"
-	. WRITE x,!
+	. WRITE "READ * test on "_chset_" file:",!
+	. WRITE text,!
+	. ZWRITE text
+	. WRITE !
 	. ;CLOSE file
-	.
 	. ;WRITE * test
-	. OPEN file:CHSET=chset:10
+	. OPEN file:CHSET=chset
 	. USE file:CHSET=chset
 	. WRITE *"49",!
 	. CLOSE file
-	. OPEN file:CHSET=chset:10
+	. OPEN file:CHSET=chset
 	. USE file:CHSET=chset
-	. READ x,!
+	. READ text,!
 	. CLOSE file
 	. USE $P
-	. WRITE "WRITE * test on "_chset_" file:"
-	. WRITE x,!
+	. WRITE "WRITE * test on "_chset_" file:",!
+	. WRITE text,!
+	. ZWRITE text
+	. WRITE !,!
 
         do ^job("child^gtm8923",2,"""""")     ; start 2 jobs ; .
 
-	WRITE ^readTests("1"),!
-	WRITE ^writeTests("1"),!
-
-	WRITE ^readTests("2"),!
-	WRITE ^writeTests("2"),!
-
-	WRITE ^readTests("3"),!
-	WRITE ^writeTests("3"),!
-
+	FOR I=1:1:$L(encodings," ") DO
+	. SET chset=$P(encodings," ",I)
+	. ;READ * test
+	. SET text=^readTests(I)
+	. WRITE "READ * test on "_chset_" socket:",!
+	. WRITE text,!
+	. ZWRITE text
+	. WRITE !
+	. ;WRITE * test
+	. SET text=^writeTests(I)
+	. WRITE "WRITE * test on "_chset_" socket:",!
+	. WRITE text,!
+	. ZWRITE text
+	. WRITE !,!
 
 	quit
 
@@ -67,47 +72,41 @@ child
 
 	FOR I=1:1:$L(encodings," ") DO
 	. SET chset=$P(encodings," ",I)
-	.
+	. ;READ * test
 	. IF jobindex=1 DO  ;
-	. . OPEN file:(CONNECT="gtm8923R"_I_".socket:LOCAL":attach="attach_socket":CHSET=chset):10:"SOCKET"
+	. . OPEN file:(CONNECT="gtm8923R"_I_".socket:LOCAL":attach="attach_socket":CHSET=chset)::"SOCKET"
 	. . USE file:CHSET=chset
 	. . WRITE "1",!
 	. . CLOSE file
-	.
 	. ELSE  IF jobindex=2 DO
-	. . OPEN file:(LISTEN="gtm8923R"_I_".socket:LOCAL":attach="attach_socket":CHSET=chset):10:"SOCKET"
+	. . OPEN file:(LISTEN="gtm8923R"_I_".socket:LOCAL":attach="attach_socket":CHSET=chset)::"SOCKET"
 	. . USE file:CHSET=chset
 	. . write /wait
-	. . READ *x,!
+	. . READ *text,!
 	. . CLOSE file
 	. . USE $P
 	. . WRITE "READ * test on "_chset_" socket: "
-	. . WRITE x,!
-	. . SET ^readTests(I)="READ * test on "_chset_" socket: "_x
-	.
+	. . WRITE text,!
+	. . SET ^readTests(I)=text
 	. ELSE  DO
 	. . WRITE "INVALID JOBINDEX",!
 	. . WRITE "jobindex= "_jobindex,!
-	.
-	.
 	. ;WRITE * test
 	. IF jobindex=1 DO  ;
-	. . OPEN file:(CONNECT="gtm8923W"_I_".socket:LOCAL":attach="attach_socket":CHSET=chset):10:"SOCKET"
+	. . OPEN file:(CONNECT="gtm8923W"_I_".socket:LOCAL":attach="attach_socket":CHSET=chset)::"SOCKET"
 	. . USE file:CHSET=chset
 	. . WRITE *"49",!
 	. . CLOSE file
-	.
 	. ELSE  IF jobindex=2 DO
-	. . OPEN file:(LISTEN="gtm8923W"_I_".socket:LOCAL":attach="attach_socket":CHSET=chset):10:"SOCKET"
+	. . OPEN file:(LISTEN="gtm8923W"_I_".socket:LOCAL":attach="attach_socket":CHSET=chset)::"SOCKET"
 	. . USE file:CHSET=chset
 	. . write /wait
-	. . READ x,!
+	. . READ text,!
 	. . CLOSE file
 	. . USE $P
 	. . WRITE "WRITE * test on "_chset_" socket:"
-	. . WRITE x,!
-	. . SET ^writeTests(I)="WRITE * test on "_chset_" socket: "_x
-	.
+	. . WRITE text,!
+	. . SET ^writeTests(I)=text
 	. ELSE  DO
 	. . WRITE "INVALID JOBINDEX",!
 	. . WRITE "jobindex= "_jobindex,!

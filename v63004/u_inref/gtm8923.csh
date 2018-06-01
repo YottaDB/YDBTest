@@ -12,7 +12,7 @@
 #################################################################
 #
 $switch_chset UTF-8
-echo '# Testing VIEW "[NO]STATSHARE"[:<region-list>]'
+echo '# Testing READ * and WRITE * commands on sockets and files of various UTF CHSETs'
 
 echo "# Create a single region DB with region DEFAULT"
 $gtm_tst/com/dbcreate.csh mumps 1 >>& dbcreate_log_1.txt
