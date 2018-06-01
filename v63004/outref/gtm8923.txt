@@ -4,58 +4,34 @@ unset echo
 # Create a single region DB with region DEFAULT
 
 # Run gtm8923.m to test WRITE * and READ * commands
-READ * test on UTF-16 file:
-49
-text=49
+Testing ASCII dec char 49:
+------------------------------------------
+READ * test on UTF-16 file 49
+WRITE * test on UTF-16 file 1
+READ * test on UTF-16BE file 49
+WRITE * test on UTF-16BE file 1
+READ * test on UTF-16LE file 49
+WRITE * test on UTF-16LE file 1
+READ * test on UTF-16 socket 49
+WRITE * test on UTF-16 socket 1
+READ * test on UTF-16BE socket 49
+WRITE * test on UTF-16BE socket 1
+READ * test on UTF-16LE socket 49
+WRITE * test on UTF-16LE socket 1
 
-WRITE * test on UTF-16 file:
-1
-text=1
-
-
-READ * test on UTF-16BE file:
-49
-text=49
-
-WRITE * test on UTF-16BE file:
-1
-text=1
-
-
-READ * test on UTF-16LE file:
-49
-text=49
-
-WRITE * test on UTF-16LE file:
-1
-text=1
-
-
-READ * test on UTF-16 socket:
-49
-text=49
-
-WRITE * test on UTF-16 socket:
-1
-text=1
-
-
-READ * test on UTF-16BE socket:
-49
-text=49
-
-WRITE * test on UTF-16BE socket:
-1
-text=1
-
-
-READ * test on UTF-16LE socket:
-49
-text=49
-
-WRITE * test on UTF-16LE socket:
-1
-text=1
-
+Testing ASCII dec char 174:
+------------------------------------------
+READ * test on UTF-16 file 174
+WRITE * test on UTF-16 file "®"
+READ * test on UTF-16BE file 174
+WRITE * test on UTF-16BE file "®"
+READ * test on UTF-16LE file 174
+WRITE * test on UTF-16LE file "®"
+READ * test on UTF-16 socket 174
+WRITE * test on UTF-16 socket "®"
+READ * test on UTF-16BE socket 174
+WRITE * test on UTF-16BE socket "®"
+READ * test on UTF-16LE socket 174
+WRITE * test on UTF-16LE socket "®"
 
 # Shut down the DB 

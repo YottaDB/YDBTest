@@ -40,8 +40,8 @@ testLoop
 	. READ *text,!
 	. CLOSE file
 	. USE $P
-	. WRITE "READ * test on "_chset_" file:",!
-	. ZWRITE text
+	. WRITE "READ * test on "_chset_" file "
+	. WRITE $ZWRITE(text)
 	. WRITE !
 	. ;WRITE * test
 	. OPEN file:CHSET=chset
@@ -53,9 +53,9 @@ testLoop
 	. READ text,!
 	. CLOSE file
 	. USE $P
-	. WRITE "WRITE * test on "_chset_" file:",!
-	. ZWRITE text
-	. WRITE !,!
+	. WRITE "WRITE * test on "_chset_" file "
+	. WRITE $ZWRITE(text)
+	. WRITE !
 
         do ^job("child^gtm8923",2,"""""")     ; start 2 jobs ; .
 
@@ -63,14 +63,14 @@ testLoop
 	. SET chset=$P(^encodings," ",I)
 	. ;READ * test
 	. SET text=^readTests(I)
-	. WRITE "READ * test on "_chset_" socket:",!
-	. ZWRITE text
+	. WRITE "READ * test on "_chset_" socket "
+	. WRITE $ZWRITE(text)
 	. WRITE !
 	. ;WRITE * test
 	. SET text=^writeTests(I)
-	. WRITE "WRITE * test on "_chset_" socket:",!
-	. ZWRITE text
-	. WRITE !,!
+	. WRITE "WRITE * test on "_chset_" socket "
+	. WRITE $ZWRITE(text)
+	. WRITE !
 
 	quit
 
