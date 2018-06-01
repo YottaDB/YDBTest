@@ -189,20 +189,36 @@ n_jrec_epoch_regular Buffer (DEFAULT): 0x0000000000000002
 
 TESTING KEYWORD: POOLLIMIT
 --------------------------
+##SUSPEND_OUTPUT DBG
+gbuff_limit Buffer (AREG): 0
+$VIEW("POOLLIMIT",reg): 0
+gbuff_limit Buffer (BREG): 0
+$VIEW("POOLLIMIT",reg): 0
+gbuff_limit Buffer (DEFAULT): 0
+$VIEW("POOLLIMIT",reg): 0
+##ALLOW_OUTPUT DBG
+##SUSPEND_OUTPUT PRO
 gbuff_limit Buffer (AREG): 50
 $VIEW("POOLLIMIT",reg): 50
 gbuff_limit Buffer (BREG): 50
 $VIEW("POOLLIMIT",reg): 50
 gbuff_limit Buffer (DEFAULT): 50
 $VIEW("POOLLIMIT",reg): 50
+##ALLOW_OUTPUT PRO
 
 VIEW "POOLLIMIT":"AREG,BREG,BREG":"30"
 gbuff_limit Buffer (AREG): 32
 $VIEW("POOLLIMIT",reg): 32
 gbuff_limit Buffer (BREG): 32
 $VIEW("POOLLIMIT",reg): 32
+##SUSPEND_OUTPUT DBG
+gbuff_limit Buffer (DEFAULT): 0
+$VIEW("POOLLIMIT",reg): 0
+##ALLOW_OUTPUT DBG
+##SUSPEND_OUTPUT PRO
 gbuff_limit Buffer (DEFAULT): 50
 $VIEW("POOLLIMIT",reg): 50
+##ALLOW_OUTPUT PRO
 
 
 
