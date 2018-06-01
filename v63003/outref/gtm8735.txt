@@ -24,39 +24,49 @@ Database file ##TEST_PATH##/mumps.dat now has BG access method
 %YDB-W-WCWRNNOTCHG, Not all specified database files were changed
   Access method                          BG  Global Buffers                1024
   LOCK shares DB critical section     FALSE  Read Only                      OFF
-# Displaying status of gtmhelp databases
+# Displaying status of gtmhelp databases to verify files have read-only permissions for user/group/other
 -r--r--r-- ##SOURCE_PATH##/dsehelp.dat
 -r--r--r-- ##SOURCE_PATH##/gdehelp.dat
 -r--r--r-- ##SOURCE_PATH##/gtmhelp.dat
 -r--r--r-- ##SOURCE_PATH##/lkehelp.dat
 -r--r--r-- ##SOURCE_PATH##/mupiphelp.dat
-#Displaying status of ##SOURCE_PATH##/dsehelp.gld
+# Displaying status of ##SOURCE_PATH##/dsehelp.gld
   LOCK shares DB critical section     FALSE  Read Only                       ON
+# Attempting to change to no read only
 %YDB-E-DBFILOPERR, Error doing database I/O to region ##SOURCE_PATH##/dsehelp.dat
 %SYSTEM-E-ENO13, Permission denied
 %YDB-E-WCERRNOTCHG, Not all specified database files were changed
+# Attempting to write to database
 %YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##SOURCE_PATH##/dsehelp.dat
-#Displaying status of ##SOURCE_PATH##/gdehelp.gld
+# Displaying status of ##SOURCE_PATH##/gdehelp.gld
   LOCK shares DB critical section     FALSE  Read Only                       ON
+# Attempting to change to no read only
 %YDB-E-DBFILOPERR, Error doing database I/O to region ##SOURCE_PATH##/gdehelp.dat
 %SYSTEM-E-ENO13, Permission denied
 %YDB-E-WCERRNOTCHG, Not all specified database files were changed
+# Attempting to write to database
 %YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##SOURCE_PATH##/gdehelp.dat
-#Displaying status of ##SOURCE_PATH##/gtmhelp.gld
+# Displaying status of ##SOURCE_PATH##/gtmhelp.gld
   LOCK shares DB critical section     FALSE  Read Only                       ON
+# Attempting to change to no read only
 %YDB-E-DBFILOPERR, Error doing database I/O to region ##SOURCE_PATH##/gtmhelp.dat
 %SYSTEM-E-ENO13, Permission denied
 %YDB-E-WCERRNOTCHG, Not all specified database files were changed
+# Attempting to write to database
 %YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##SOURCE_PATH##/gtmhelp.dat
-#Displaying status of ##SOURCE_PATH##/lkehelp.gld
+# Displaying status of ##SOURCE_PATH##/lkehelp.gld
   LOCK shares DB critical section     FALSE  Read Only                       ON
+# Attempting to change to no read only
 %YDB-E-DBFILOPERR, Error doing database I/O to region ##SOURCE_PATH##/lkehelp.dat
 %SYSTEM-E-ENO13, Permission denied
 %YDB-E-WCERRNOTCHG, Not all specified database files were changed
+# Attempting to write to database
 %YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##SOURCE_PATH##/lkehelp.dat
-#Displaying status of ##SOURCE_PATH##/mupiphelp.gld
+# Displaying status of ##SOURCE_PATH##/mupiphelp.gld
   LOCK shares DB critical section     FALSE  Read Only                       ON
+# Attempting to change to no read only
 %YDB-E-DBFILOPERR, Error doing database I/O to region ##SOURCE_PATH##/mupiphelp.dat
 %SYSTEM-E-ENO13, Permission denied
 %YDB-E-WCERRNOTCHG, Not all specified database files were changed
+# Attempting to write to database
 %YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##SOURCE_PATH##/mupiphelp.dat
