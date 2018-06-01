@@ -22,16 +22,20 @@ $gtm_tst/com/dbcreate.csh mumps 1 >>& create.out
 $MUPIP FREEZE -OFF DEFAULT >>& init.out
 
 set t1 = `date +"%b %e %H:%M:%S"`
+# Sleep commands to ensure a difference in time of at least 1 second so getoper.csh
+# will catch the message every time
+sleep 1
 $MUPIP FREEZE -ON DEFAULT
 set t2 = `date +"%b %e %H:%M:%S"`
+sleep 1
 echo "# Verifying System received a DBFREEZEON message"
 $gtm_tst/com/getoper.csh "$t1" "$t2" t1t2.txt
 
 cat t1t2.txt |& $grep "DBFREEZEON" | $tst_awk '{print $6}'
 
 echo "# Setting Default Region to UNFROZEN"
-set t3 = `date +"%b %e %H:%M:%S"`
 $MUPIP FREEZE -OFF DEFAULT
+set t3 = `date +"%b %e %H:%M:%S"`
 echo "# Verifying System received a DBFREEZEOFF message"
 $gtm_tst/com/getoper.csh "$t2" "$t3" t2t3.txt
 
