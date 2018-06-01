@@ -61,13 +61,12 @@ $DSE dump -file|&$grep "Read Only"
 
 
 echo '# Displaying status of gtmhelp databases to verify files have read-only permissions for user/group/other'
-ls -l $ydb_dist/*.dat|awk '{print $1,$9}'
+ls -l $ydb_dist/*.dat|$tst_awk '{print $1,$9}'
 
-set gbldir = `ls $ydb_dist/*.gld`
-foreach dir ( $gbldir:as/ / / )
+foreach dir ($ydb_dist/*.gld)
 	echo "# Displaying status of "$dir
 	setenv ydb_gbldir $dir
-	$DSE dump -file|&$grep "Read Only"
+	$DSE dump -file |& $grep "Read Only"
 	echo "# Attempting to change to no read only"
 	$MUPIP SET -region DEFAULT -NOREAD_ONLY
 	echo "# Attempting to write to database"
