@@ -11,15 +11,13 @@
 #								#
 #################################################################
 #
-echo '# Testing $S[ELECT](<TRUE expr>:<expr>,<GLBL references>)'
-
-echo '#### test ####'
+echo '# Testing $S[ELECT](<TRUE>:<expr>,<GLBL references>)'
 echo ''
 
 echo "# Create a DB with region DEFAULT"
 $gtm_tst/com/dbcreate.csh mumps 1 >>& dbcreate_log_1.txt
 
-echo '# Run gtm8903.m to ...'
+echo '# Run gtm8903.m to'
 $ydb_dist/mumps -run gtm8903
 
 echo '# Shut down the DB '
