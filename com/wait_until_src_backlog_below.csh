@@ -74,6 +74,9 @@ if ( "" == "$pidsrc" ) then
 endif
 
 while ($nowtime < $timeout)
+	echo "---------------------------------------------------------------"	>>&! ${logfile:r}_trace.out
+	echo "Current Time is : `date`"						>>&! ${logfile:r}_trace.out
+	echo "---------------------------------------------------------------"	>>&! ${logfile:r}_trace.out
 	$MUPIP replic -source $gtm_test_instsecondary -showbacklog >& $sblogfile
 	set backlog = `$tst_awk '/backlog number of transactions/ {print $1}' $sblogfile`
 	if ("" == "$backlog") then
