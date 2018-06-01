@@ -14,29 +14,29 @@
 #
 #
 
-$ydb_dist/mumps -run path236^gtm4212
-$ydb_dist/mumps -run path235^gtm4212
-$ydb_dist/mumps -run pathge236^gtm4212
-$ydb_dist/mumps -run pathle235^gtm4212
+$ydb_dist/mumps -run path230^gtm4212
+$ydb_dist/mumps -run path231^gtm4212
+$ydb_dist/mumps -run pathge231^gtm4212
+$ydb_dist/mumps -run pathle230^gtm4212
 
-set p235 = `cat temp235.out`
-set p236 = `cat temp236.out`
-set ple235 = `cat temple235.out`
-set pge236 = `cat tempge236.out`
+set p231 = `cat temp231.out`
+set p230 = `cat temp230.out`
+set pge231 = `cat tempge231.out`
+set ple230 = `cat temple230.out`
 
-mkdir -p $p235
-mkdir -p $p236
-mkdir -p $ple235
-mkdir -p $pge236
+mkdir -p $p231
+mkdir -p $p230
+mkdir -p $pge231
+mkdir -p $ple230
 
 
 $gtm_tst/com/dbcreate.csh mumps 1 >>& dbcreate1.out
-echo "# Backing up Default to length 235 path (length of temp file is 19, so total path is 254)"
-$MUPIP BACKUP "DEFAULT" $p235 >& bck1.outx; $grep -Ev 'FILERENAME|JNLCREATE' bck1.outx
-echo "# Backing up Default to length 236 path (length of temp file is 19, so total path is 255)"
-$MUPIP BACKUP "DEFAULT" $p236 >& bck2.outx; $grep -Ev 'FILERENAME|JNLCREATE' bck2.outx
-echo "# Backing up a Default to length <=235 path (<=254 including temp file)"
-$MUPIP BACKUP "DEFAULT" $ple235 >& bck3.outx; $grep -Ev 'FILERENAME|JNLCREATE' bck3.outx
-echo "# Backing up a Default to length >=236 path (>=255 including temp file)"
-$MUPIP BACKUP "DEFAULT" $pge236 >& bck4.outx; $grep -Ev 'FILERENAME|JNLCREATE' bck4.outx
+echo "# Backing up Default to length 230 path (length of temp file is 24, so total path is 254)"
+$MUPIP BACKUP "DEFAULT" $p230 >& bck1.outx; $grep -Ev 'FILERENAME|JNLCREATE' bck1.outx
+echo "# Backing up Default to length 231 path (length of temp file is 24, so total path is 255)"
+$MUPIP BACKUP "DEFAULT" $p231 >& bck2.outx; $grep -Ev 'FILERENAME|JNLCREATE' bck2.outx
+echo "# Backing up a Default to length <=230 path (<=254 including temp file)"
+$MUPIP BACKUP "DEFAULT" $ple230 >& bck3.outx; $grep -Ev 'FILERENAME|JNLCREATE' bck3.outx
+echo "# Backing up a Default to length >=231 path (>=255 including temp file)"
+$MUPIP BACKUP "DEFAULT" $pge231 >& bck4.outx; $grep -Ev 'FILERENAME|JNLCREATE' bck4.outx
 $gtm_tst/com/dbcheck.csh >>& dbcheck1.out

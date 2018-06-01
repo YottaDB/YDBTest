@@ -12,57 +12,57 @@
 ;
 ;
 ;
-path235
-	;assumes path is already less than 235 characters long
-	set bigstring="temp235.out"
+path231
+	;assumes path is already less than 231 characters long
+	set bigstring="temp231.out"
 	open bigstring
 	use bigstring write $ZDIRECTORY
 	set l=$length($ZDIRECTORY)
 	use bigstring write "a"
 	set l=l+1
-	if l<235 do  goto path235+8
+	if l<231 do  goto path231+8
 	. if l#25=0 use bigstring write "/"
 	. else  use bigstring write "a"
 	. set l=l+1
 	quit
 
-path236
-	;assumes path is already less than 236 characters long
-	set bigstring="temp236.out"
+path230
+	;assumes path is already less than 230 characters long
+	set bigstring="temp230.out"
 	open bigstring
 	use bigstring write $ZDIRECTORY
 	set l=$length($ZDIRECTORY)
 	use bigstring write "a"
 	set l=l+1
-	if l<236 do  goto path236+8
+	if l<230 do  goto path230+8
 	. if l#25=0 use bigstring write "/"
 	. else  use bigstring write "a"
 	. set l=l+1
 	quit
 
-pathle235
-	set x=235-$random(10)-1
-	set bigstring="temple235.out"
+pathge231
+	set x=231+$random(10)+1
+	set bigstring="tempge231.out"
 	open bigstring
 	use bigstring write $ZDIRECTORY
 	set l=$length($ZDIRECTORY)
 	use bigstring write "a"
 	set l=l+1
-	if l<x do  goto pathle235+8
+	if l<x do  goto pathge231+8
 	. if l#25=0 use bigstring write "/"
 	. else  use bigstring write "a"
 	. set l=l+1
 	quit
 
-pathge236
-	set x=235+$random(10)+1
-	set bigstring="tempge236.out"
+pathle230
+	set x=230-$random(10)-1
+	set bigstring="temple230.out"
 	open bigstring
 	use bigstring write $ZDIRECTORY
 	set l=$length($ZDIRECTORY)
 	use bigstring write "a"
 	set l=l+1
-	if l<x do  goto pathge236+8
+	if l<x do  goto pathle230+8
 	. if l#25=0 use bigstring write "/"
 	. else  use bigstring write "a"
 	. set l=l+1

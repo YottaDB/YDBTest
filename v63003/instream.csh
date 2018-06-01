@@ -20,13 +20,14 @@
 # gtm8804	    [vinay] Test zshow "t" produces only a summary of zshow "g" and "l"
 # gtm8832	    [vinay] Test string literal evaluating to >=1E47 produces a NUMOFLOW error
 # gtm8617	    [vinay] Tests MUPIP SET command of STDNULLCOLL and NULL_SUBSCRIPTS
+# gtm4212	    [vinay] Tests that MUPIP BACKUP produces a filenametoolong error for paths >=255 characters
 #-------------------------------------------------------------------------------------
 
 echo "v63003 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "gtm8788 gtm7986 gtm8186 gtm8804 gtm8832 gtm8617"
+setenv subtest_list_non_replic "gtm8788 gtm7986 gtm8186 gtm8804 gtm8832 gtm8617 gtm4212"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
