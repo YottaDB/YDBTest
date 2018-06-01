@@ -11,15 +11,29 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 gtm8923
-	SET encodings="UTF-16 UTF-16BE UTF-16LE"
+	SET $etrap="use $p zshow ""*"" halt"
 
-	FOR I=1:1:$L(encodings," ") DO
-	. SET chset=$P(encodings," ",I)
+	SET ^encodings="UTF-16 UTF-16BE UTF-16LE"
+
+	SET testCases="49 174"
+
+	FOR J=1:1:$L(testCases," ") DO
+	. SET ^testPoint=$P(testCases," ",J)
+	. WRITE "Testing ASCII dec char "_^testPoint_":",!
+	. WRITE "------------------------------------------",!
+	. DO testLoop
+	. WRITE !
+
+	quit
+
+testLoop
+	FOR I=1:1:$L(^encodings," ") DO
+	. SET chset=$P(^encodings," ",I)
 	. SET file="gtm8923"_chset_".file"
 	. ;READ * test
 	. OPEN file:CHSET=chset
 	. USE file:CHSET=chset
-	. WRITE "1",!
+	. WRITE $char(^testPoint),!
 	. CLOSE file
 	. OPEN file:CHSET=chset
 	. USE file:CHSET=chset
@@ -27,14 +41,12 @@ gtm8923
 	. CLOSE file
 	. USE $P
 	. WRITE "READ * test on "_chset_" file:",!
-	. WRITE text,!
 	. ZWRITE text
 	. WRITE !
-	. ;CLOSE file
 	. ;WRITE * test
 	. OPEN file:CHSET=chset
 	. USE file:CHSET=chset
-	. WRITE *"49",!
+	. WRITE *^testPoint,!
 	. CLOSE file
 	. OPEN file:CHSET=chset
 	. USE file:CHSET=chset
@@ -42,41 +54,36 @@ gtm8923
 	. CLOSE file
 	. USE $P
 	. WRITE "WRITE * test on "_chset_" file:",!
-	. WRITE text,!
 	. ZWRITE text
 	. WRITE !,!
 
         do ^job("child^gtm8923",2,"""""")     ; start 2 jobs ; .
 
-	FOR I=1:1:$L(encodings," ") DO
-	. SET chset=$P(encodings," ",I)
+	FOR I=1:1:$L(^encodings," ") DO
+	. SET chset=$P(^encodings," ",I)
 	. ;READ * test
 	. SET text=^readTests(I)
 	. WRITE "READ * test on "_chset_" socket:",!
-	. WRITE text,!
 	. ZWRITE text
 	. WRITE !
 	. ;WRITE * test
 	. SET text=^writeTests(I)
 	. WRITE "WRITE * test on "_chset_" socket:",!
-	. WRITE text,!
 	. ZWRITE text
 	. WRITE !,!
 
 	quit
 
 child
-	SET encodings="UTF-16 UTF-16BE UTF-16LE"
-
 	SET file="gtm8923.socket"
 
-	FOR I=1:1:$L(encodings," ") DO
-	. SET chset=$P(encodings," ",I)
+	FOR I=1:1:$L(^encodings," ") DO
+	. SET chset=$P(^encodings," ",I)
 	. ;READ * test
 	. IF jobindex=1 DO  ;
 	. . OPEN file:(CONNECT="gtm8923R"_I_".socket:LOCAL":attach="attach_socket":CHSET=chset)::"SOCKET"
 	. . USE file:CHSET=chset
-	. . WRITE "1",!
+	. . WRITE $char(^testPoint),!
 	. . CLOSE file
 	. ELSE  IF jobindex=2 DO
 	. . OPEN file:(LISTEN="gtm8923R"_I_".socket:LOCAL":attach="attach_socket":CHSET=chset)::"SOCKET"
@@ -95,7 +102,7 @@ child
 	. IF jobindex=1 DO  ;
 	. . OPEN file:(CONNECT="gtm8923W"_I_".socket:LOCAL":attach="attach_socket":CHSET=chset)::"SOCKET"
 	. . USE file:CHSET=chset
-	. . WRITE *"49",!
+	. . WRITE *^testPoint,!
 	. . CLOSE file
 	. ELSE  IF jobindex=2 DO
 	. . OPEN file:(LISTEN="gtm8923W"_I_".socket:LOCAL":attach="attach_socket":CHSET=chset)::"SOCKET"
