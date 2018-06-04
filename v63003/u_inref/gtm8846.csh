@@ -13,3 +13,7 @@
 #
 #
 
+$gtm_tst/com/dbcreate mumps 1 >>& create1.out
+
+
+$gtm_tst/com/dbcheck >>& check1.out
