@@ -17,9 +17,8 @@
 source $gtm_tst/com/gtm_test_setbeforeimage.csh
 
 $gtm_tst/com/dbcreate.csh mumps 1 >>& create1.out
-foreach i (`seq 1 1 5000`)
+foreach i (`seq 1 1 500000`)
 	$ydb_dist/mumps -run ^%XCMD "set ^X($i)=1"
-	echo $i
 end
 $ydb_dist/mumps -run ^%XCMD "zwrite ^X"
 echo "Backing up"
