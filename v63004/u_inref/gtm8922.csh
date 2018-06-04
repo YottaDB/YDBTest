@@ -25,9 +25,7 @@ $MUPIP set -access_method=BG -file mumps.dat >>& dbcreate_log.txt
 $MUPIP set -access_method=BG -file a.dat >>& dbcreate_log.txt
 $MUPIP set -access_method=BG -file b.dat >>& dbcreate_log.txt
 
-$MUPIP set -file mumps.dat -flush_time=1:0:0 # Prevent interruptions from flush timers
-$MUPIP set -file a.dat -flush_time=1:0:0 # Prevent interruptions from flush timers
-$MUPIP set -file b.dat -flush_time=1:0:0 # Prevent interruptions from flush timers
+$MUPIP set -region "*" -flush_time=1:0:0 # Prevent interruptions from flush timers
 
 echo '# Run generalTest to test all commands of the form VIEW <KEYWORD>[:<region-list>]'
 echo '# and the VIEW POOLLIMIT:<region-list>:n[%] command'
