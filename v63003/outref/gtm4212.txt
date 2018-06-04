@@ -1,20 +1,31 @@
-# Backing up Default to length 230 path (length of temp file is 24, so total path is 254)
-##TEST_AWKDB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##[a/]*mumps.dat
+##TEST_PATH##/a
+# Backing up DEFAULT Region to path length 228 (length of temp file is 24, so total path is 252)
+##TEST_AWKDB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##[a /]*mumps.dat
 ##TEST_AWKTransactions up to 0x................ are backed up.
 
 
 BACKUP COMPLETED.
 
-# Backing up Default to length 231 path (length of temp file is 24, so total path is 255)
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##[a/]*DEFAULT_........_XXXXXX
+# Backing up DEFAULT Region to path length 229 (length of temp file is 24, so total path is 253)
+##TEST_AWKDB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##[a /]*mumps.dat
+##TEST_AWKTransactions up to 0x................ are backed up.
+
+
+BACKUP COMPLETED.
+
+# Backing up DEFAULT Region to path length 230 (length of temp file is 24, so total path is 254)
+##TEST_AWKDB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##[a /]*mumps.dat
+##TEST_AWKTransactions up to 0x................ are backed up.
+
+
+BACKUP COMPLETED.
+
+# Backing up DEFAULT Region to path length 231 (length of temp file is 24, so total path is 255)
+##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##[a /]*DEFAULT_........_XXXXXX
 %YDB-E-FILENAMETOOLONG, File name too long
-# Backing up a Default to length <=230 path (<=254 including temp file)
-##TEST_AWKDB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##[a/]*mumps.dat
-##TEST_AWKTransactions up to 0x................ are backed up.
-
-
-BACKUP COMPLETED.
-
-# Backing up a Default to length >=231 path (>=255 including temp file)
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##[a/]*DEFAULT_........_XXXXXX
+# Backing up DEFAULT Region to path length 232 (length of temp file is 24, so total path is 256)
+##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##[a /]*DEFAULT_........_XXXXXX
+%YDB-E-FILENAMETOOLONG, File name too long
+# Backing up DEFAULT Region to path length 233 (length of temp file is 24, so total path is 257)
+##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##[a /]*DEFAULT_........_XXXXXX
 %YDB-E-FILENAMETOOLONG, File name too long

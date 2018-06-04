@@ -16,24 +16,16 @@
 
 $ydb_dist/mumps -run gtm4212
 
-set p231 = `cat temp231.out`
-set p230 = `cat temp230.out`
-set pge231 = `cat tempge231.out`
-set ple230 = `cat temple230.out`
-
-mkdir -p $p231
-mkdir -p $p230
-mkdir -p $pge231
-mkdir -p $ple230
-
 
 $gtm_tst/com/dbcreate.csh mumps 1 >>& dbcreate1.out
-echo "# Backing up Default to length 230 path (length of temp file is 24, so total path is 254)"
-$MUPIP BACKUP "DEFAULT" $p230 >& bck1.outx; $grep -Ev 'FILERENAME|JNLCREATE' bck1.outx
-echo "# Backing up Default to length 231 path (length of temp file is 24, so total path is 255)"
-$MUPIP BACKUP "DEFAULT" $p231 >& bck2.outx; $grep -Ev 'FILERENAME|JNLCREATE' bck2.outx
-echo "# Backing up a Default to length <=230 path (<=254 including temp file)"
-$MUPIP BACKUP "DEFAULT" $ple230 >& bck3.outx; $grep -Ev 'FILERENAME|JNLCREATE' bck3.outx
-echo "# Backing up a Default to length >=231 path (>=255 including temp file)"
-$MUPIP BACKUP "DEFAULT" $pge231 >& bck4.outx; $grep -Ev 'FILERENAME|JNLCREATE' bck4.outx
+foreach i (228 229 230 231 232 233)
+	$ydb_dist/mumps -run gtm4212 $i >>& a$i.out
+	set dir = `cat a$i.out`
+	mkdir -p $dir
+	set j = `expr $i + 24`
+	echo "# Backing up DEFAULT Region to path length $i (length of temp file is 24, so total path is $j)"
+	$MUPIP BACKUP "DEFAULT" $dir >& bck$i.outx; $grep -Ev 'FILERENAME|JNLCREATE' bck$i.outx
+
+end
+
 $gtm_tst/com/dbcheck.csh >>& dbcheck1.out

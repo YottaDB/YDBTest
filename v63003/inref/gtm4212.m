@@ -13,27 +13,12 @@
 ; Creates 4 paths based on the current directory, of length 230, 231
 ; <=230 and >=231 and stores them in temp files
 ;
-gtm4212
-	set p230="temp230.out"
-	set p231="temp231.out"
-	set ple230="temple230.out"
-	set pge231="tempge231.out"
-	open p230
-	open p231
-	open ple230
-	open pge231
-	use p230 do patheq(230)
-	use p231 do patheq(231)
-	use ple230 do patheq(230-1-$random(10))
-	use pge231 do patheq(231+1+$random(10))
-	quit
-
-patheq(n)
+patheq
 	write $ZDIRECTORY
 	set l=$length($ZDIRECTORY)
 	write "a"
 	set l=l+1
-	if l<n do  goto patheq+5
+	if l<$ZCMDLINE do  goto patheq+5
 	. if l#25=0  write "/"
 	. else  write "a"
 	. set l=l+1
