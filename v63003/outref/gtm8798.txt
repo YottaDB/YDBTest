@@ -1,0 +1,17 @@
+# Mutex fields before ENDIANCVT
+record("sgmnt_data.mutex_spin_parms.mutex_hard_spin_count")=128
+record("sgmnt_data.mutex_spin_parms.mutex_que_entry_space_size")=1024
+record("sgmnt_data.mutex_spin_parms.mutex_sleep_spin_count")=128
+record("sgmnt_data.mutex_spin_parms.mutex_spin_sleep_mask")=0
+
+##FILTERED##Converting database file mumps.dat from ##ENDIAN## endian to ##ENDIAN## endian on a ##ENDIAN## endian system
+Converting in place - database will be damaged by an abnormal termination
+You must have a backup before proceeding
+Proceed [yes/no] ?
+##FILTERED##%YDB-I-ENDIANCVT, Converted database file mumps.dat from ##ENDIAN## endian to ##ENDIAN## endian on a ##ENDIAN## endian system
+
+# Mutex fields after ENDIANCVT
+record("sgmnt_data.mutex_spin_parms.mutex_hard_spin_count")=-2147483648
+record("sgmnt_data.mutex_spin_parms.mutex_que_entry_space_size")=262144
+record("sgmnt_data.mutex_spin_parms.mutex_sleep_spin_count")=-2147483648
+record("sgmnt_data.mutex_spin_parms.mutex_spin_sleep_mask")=0
