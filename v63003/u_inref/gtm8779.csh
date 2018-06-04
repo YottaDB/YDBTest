@@ -15,23 +15,24 @@
 #
 
 echo "# Setting Default Region to FROZEN"
-$gtm_tst/com/dbcreate.csh mumps 1 >>& create.out
+$gtm_tst/com/dbcreate.csh mumps 3 >>& create.out
 
 # Setting freeze to off initially so we can ensure the first command
 # is changing the freeze status
-$MUPIP FREEZE -OFF DEFAULT >>& init.out
-
+$MUPIP FREEZE -OFF DEFAULT >>& init1.out
+$MUPIP FREEZE -OFF AREG >>& init2.out
+$MUPIP FREEZE -ON BREG >>& init3.out
+set randstring = "aaaaaaaaaaaaaaaaaaaaaaaa"
 set t1 = `date +"%b %e %H:%M:%S"`
 # Sleep commands to ensure a difference in time of at least 1 second so getoper.csh
 # will catch the message every time
-sleep 1
 $MUPIP FREEZE -ON DEFAULT
 set t2 = `date +"%b %e %H:%M:%S"`
-sleep 1
+$ydb_dist/mumps -run ^%XCMD '$ZSYSLOG("aaaaaaaaaaaaaa")'
 echo "# Verifying System received a DBFREEZEON message"
-$gtm_tst/com/getoper.csh "$t1" "$t2" t1t2.txt
+$gtm_tst/com/getoper.csh "$t1" "$randstring" t1t2.txt
 
-cat t1t2.txt |& $grep "DBFREEZEON" | $tst_awk '{print $6}'
+cat t1t2.txt |& $grep "DBFREEZEON"
 
 echo "# Setting Default Region to UNFROZEN"
 $MUPIP FREEZE -OFF DEFAULT
