@@ -31,7 +31,7 @@ $MUPIP dumpfhead -region DEFAULT >>& Dump2.out
 
 echo ""
 
-echo "# Mutex fields after ENDIANCVT"
+echo "# Mutex fields after ENDIANCVT (expect different values, in previous versions they would remain the same)"
 cat Dump2.out |& $grep mutex_spin_parms
 
 echo "yes" | $MUPIP ENDIANCVT mumps.dat -OVERRIDE >>& reset.out
