@@ -22,7 +22,7 @@ set shorthost = $HOST:r:r:r:r
 set format="%Y.%m.%d.%H.%M.%S.%Z"
 set timestart = `date +"$format"`
 if (! $?gtm_test_hang_alert_sec) then
-	if ($gtm_test_singlecpu || ) then
+	if ($gtm_test_singlecpu) then
 		# 1-CPU armv7l/armv6l/x86_64 box. Set a high hang alert for 1-CPU systems (slow boxes)
 		set gtm_test_hang_alert_sec = 36000 # A subtest running for 10 hours on a 1-CPU system is suspected to be hung
 	else if ("HOST_LINUX_ARMVXL" != $gtm_test_os_machtype) then

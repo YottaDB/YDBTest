@@ -4,6 +4,9 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -46,10 +49,7 @@ $MSR START INST3 INST4 RP
 $MSR START INST1 INST3 RP
 unsetenv needupdatersync
 
-# Also because this test does SLOWFILL type of updates, we need to have a very small inter-update time (gtm_test_wait_factor)
-# in order to exercise jnl autoswitch. But because we do not want a lot of updates, the inter-update time should not be too
-# low either. Therefore we currently maintain it at 0.02. This value needs to be changed with care.
-setenv gtm_test_wait_factor 0.02 # 0.02 second delay between updates in slowfill.m. See comment above for why it is what it is
+source $gtm_tst/com/set_gtm_test_wait_factor.csh	# set gtm_test_wait_factor env var to control SLOWFILL rate of updates
 
 echo
 echo "===>Do some updates on A and P and let them replicate to B, P and Q as appropriate"
@@ -57,7 +57,7 @@ echo
 # The first digit in jobid and dibfillid indicates the instance ID while second digits indicates number of times updates are started on the given instance.
 $MSR RUN INST1 'setenv gtm_test_jobid 11 ; setenv gtm_test_dbfillid 11 ; $gtm_tst/com/imptp.csh' >&! imptp_inst1_1.out
 $MSR RUN INST3 'setenv gtm_test_jobid 31 ; setenv gtm_test_dbfillid 31 ; $gtm_tst/com/imptp.csh' >&! imptp_inst3_1.out
-# Following sleep along with environment variable gtm_test_wait_factor ensure that there will be reasonable updates on instance A and P before switchover
+# Following sleep along with environment variable gtm_test_wait_factor ensures that there will be reasonable updates on instance A and P before switchover
 sleep 1
 
 setenv gtm_test_other_bg_processes
@@ -70,7 +70,7 @@ $MSR STOP INST1 INST2
 $MSR STOP INST1 INST3
 $MSR STARTSRC INST2 INST1 RP
 $MSR RUN INST2 'setenv gtm_test_jobid 21 ; setenv gtm_test_dbfillid 21 ; $gtm_tst/com/imptp.csh' >&! imptp_inst2_1.out
-# Following sleep along with environment variable gtm_test_wait_factor ensure that there will be reasonable updates on instance A and P before switchover
+# Following sleep along with environment variable gtm_test_wait_factor ensures that there will be reasonable updates on instance A and P before switchover
 sleep 1
 $MSR RUN RCV=INST1 SRC=INST2 '$gtm_tst/com/mupip_rollback.csh -fetchresync=__RCV_PORTNO__ -losttrans=lost1.glo "*" >&! rollback_1.out; $grep "Rollback successful" rollback_1.out'
 $MSR STARTRCV INST2 INST1
@@ -84,11 +84,11 @@ $MSR RUN INST3 'setenv gtm_test_jobid 31 ; setenv gtm_test_dbfillid 31 ; $gtm_ts
 $MSR STOP INST2 INST3
 $MSR STOP INST3 INST4
 $MSR RUN INST2 'setenv gtm_test_jobid 22 ; setenv gtm_test_dbfillid 22 ; $gtm_tst/com/imptp.csh' >&! imptp_inst2_2.out
-# Following sleep along with environment variable gtm_test_wait_factor ensure that there will be reasonable updates on instance A and P before switchover
+# Following sleep along with environment variable gtm_test_wait_factor ensures that there will be reasonable updates on instance A and P before switchover
 sleep 1
 $MSR STARTSRC INST4 INST3 RP
 $MSR RUN INST4 'setenv gtm_test_jobid 41 ; setenv gtm_test_dbfillid 41 ; $gtm_tst/com/imptp.csh' >&! imptp_inst4_1.out
-# Following sleep along with environment variable gtm_test_wait_factor ensure that there will be reasonable updates on instance A and P before switchover
+# Following sleep along with environment variable gtm_test_wait_factor ensures that there will be reasonable updates on instance A and P before switchover
 sleep 1
 $MSR RUN RCV=INST3 SRC=INST4 '$gtm_tst/com/mupip_rollback.csh -fetchresync=__RCV_PORTNO__ -losttrans=lost1.glo "*" >&! rollback_2.out; $grep "Rollback successful" rollback_2.out'
 $MSR STARTRCV INST4 INST3
@@ -102,7 +102,7 @@ $MSR STOP INST2 INST1
 $MSR STOP INST2 INST4
 $MSR STARTSRC INST1 INST2 RP
 $MSR RUN INST1 'setenv gtm_test_jobid 12 ; setenv gtm_test_dbfillid 12 ; $gtm_tst/com/imptp.csh' >&! imptp_inst1_2.out
-# Following sleep along with environment variable gtm_test_wait_factor ensure that there will be reasonable updates on instance A and P before switchover
+# Following sleep along with environment variable gtm_test_wait_factor ensures that there will be reasonable updates on instance A and P before switchover
 sleep 1
 $MSR RUN RCV=INST2 SRC=INST1 '$gtm_tst/com/mupip_rollback.csh -fetchresync=__RCV_PORTNO__ -losttrans=lost1.glo "*" >&! rollback_3.out; $grep "Rollback successful" rollback_3.out'
 $MSR STARTRCV INST1 INST2
@@ -116,11 +116,11 @@ $MSR RUN INST1 'setenv gtm_test_jobid 12 ; setenv gtm_test_dbfillid 12 ; $gtm_ts
 $MSR STOP INST1 INST4
 $MSR STOP INST4 INST3
 $MSR RUN INST1 'setenv gtm_test_jobid 13 ; setenv gtm_test_dbfillid 13 ; $gtm_tst/com/imptp.csh' >&! imptp_inst1_3.out
-# Following sleep along with environment variable gtm_test_wait_factor ensure that there will be reasonable updates on instance A and P before switchover
+# Following sleep along with environment variable gtm_test_wait_factor ensures that there will be reasonable updates on instance A and P before switchover
 sleep 1
 $MSR STARTSRC INST3 INST4 RP
 $MSR RUN INST3 'setenv gtm_test_jobid 32 ; setenv gtm_test_dbfillid 32 ; $gtm_tst/com/imptp.csh' >&! imptp_inst3_2.out
-# Following sleep along with environment variable gtm_test_wait_factor ensure that there will be reasonable updates on instance A and P before switchover
+# Following sleep along with environment variable gtm_test_wait_factor ensures that there will be reasonable updates on instance A and P before switchover
 sleep 1
 $MSR RUN RCV=INST4 SRC=INST3 '$gtm_tst/com/mupip_rollback.csh -fetchresync=__RCV_PORTNO__ -losttrans=lost1.glo "*" >&! rollback_4.out; $grep "Rollback successful" rollback_4.out'
 $MSR STARTRCV INST3 INST4
