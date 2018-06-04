@@ -1,10 +1,18 @@
-# Setting Default Region to FROZEN
+# Initially, DEFAULT and AREG are OFF, BREG is ON
+# Turning on Freeze for all
+Region AREG is now FROZEN
+Region BREG is now FROZEN
 Region DEFAULT is now FROZEN
 All requested regions frozen
-# Verifying System received a DBFREEZEON message
-%YDB-I-DBFREEZEON,
-# Setting Default Region to UNFROZEN
+# Verifying System received a DBFREEZEON message for only DEFAULT and AREG
+%YDB-I-DBFREEZEON, Region AREG is FROZEN
+%YDB-I-DBFREEZEON, Region DEFAULT is FROZEN
+# Resetting to initial state
+
+# Turning off Freeze for all
+Region AREG is now UNFROZEN
+Region BREG is now UNFROZEN
 Region DEFAULT is now UNFROZEN
 All requested regions unfrozen
-# Verifying System received a DBFREEZEOFF message
-%YDB-I-DBFREEZEOFF,
+# Verifying System received a DBFREEZEOFF message for only BREG
+%YDB-I-DBFREEZEOFF, Region BREG is UNFROZEN
