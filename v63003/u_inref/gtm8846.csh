@@ -12,8 +12,19 @@
 #################################################################
 #
 #
+#
+source $gtm_tst/com/gtm_test_setbgaccess.csh
+source $gtm_tst/com/gtm_test_setbeforeimage.csh
+$gtm_tst/com/dbcreate.csh mumps 1>>& create.out
+if ($status) then
+	echo "DB Create Failed, Output Below"
+	cat create.out
+endif
 
-$gtm_tst/com/dbcreate mumps 1 >>& create1.out
+$MUPIP SET -REGION DEFAULT -JOURNAL=ENABLE,ON,BEFORE,FILE=.//mumps.mjl
 
-
-$gtm_tst/com/dbcheck >>& check1.out
+$gtm_tst/com/dbcheck.csh >>& check.out
+if ($status) then
+	echo "DB Check Failed, Output Below"
+	cat check.out
+endif
