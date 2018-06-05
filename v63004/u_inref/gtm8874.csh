@@ -36,10 +36,10 @@ echo '# Run testA of gtm8874.m to test basic VIEW functionality and disabled reg
 $ydb_dist/mumps -run testA^gtm8874
 
 echo '# Shut down the DB and backup necessary files to sub directory'
-$gtm_tst/com/dbcheck.csh >>& dbcreate_log_1.txt
+$gtm_tst/com/dbcheck.csh >>& dbcheck_log_1.txt
 if ($status) then
 	echo "DB Check Failed in Test A, Output Below"
-	cat dbcreate_log_1.txt
+	cat dbcheck_log_1.txt
 endif
 $gtm_tst/com/backup_dbjnl.csh dbbkup1 "*.gld *.mjl* *.mjf *.dat" cp nozip
 echo ''
@@ -68,10 +68,10 @@ echo 'unsetenv gtm_statshare'
 unsetenv gtm_statshare
 
 echo '# Shut down the DB and backup necessary files to sub directory'
-$gtm_tst/com/dbcheck.csh >>& dbcreate_log_2.txt
+$gtm_tst/com/dbcheck.csh >>& dbcheck_log_2.txt
 if ($status) then
 	echo "DB Check Failed in Test B, Output Below"
-	cat dbcreate_log_2.txt
+	cat dbcheck_log_2.txt
 endif
 $gtm_tst/com/backup_dbjnl.csh dbbkup2 "*.gld *.mjl* *.mjf *.dat" cp nozip
 echo ''

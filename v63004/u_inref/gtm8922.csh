@@ -68,9 +68,9 @@ end
 
 
 echo '# Shut down the DB '
-$gtm_tst/com/dbcheck.csh >>& dbcreate_log.txt
+$gtm_tst/com/dbcheck.csh >>& dbcheck_log.txt
 if ($status) then
 	echo "DB Check Failed, Output Below"
-	cat dbcreate_log.txt
+	cat dbcheck_log.txt
 endif
 echo ''

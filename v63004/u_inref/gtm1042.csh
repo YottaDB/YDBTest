@@ -85,8 +85,8 @@ foreach envKiB ($defKiB 0 5000 $maxKiB $maxKiB2 $minKiB2)
 	echo ""
 end
 
-$gtm_tst/com/dbcheck.csh >>& dbcreate_log.txt
+$gtm_tst/com/dbcheck.csh >>& dbcheck_log.txt
 if ($status) then
 	echo "DB Check Failed, Output Below"
-	cat dbcreate_log.txt
+	cat dbcheck_log.txt
 endif

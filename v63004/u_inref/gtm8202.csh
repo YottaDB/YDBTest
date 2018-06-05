@@ -136,10 +136,10 @@ endif
 
 echo "# Shutdown replication for BREG"
 $MUPIP replic -source -shutdown -timeout=0 >>& passive_stop.out
-$gtm_tst/com/dbcheck.csh >> dbcreate_log.txt
+$gtm_tst/com/dbcheck.csh >> dbcheck_log.txt
 if ($status) then
-	echo "DB Create Failed, Output Below"
-	cat dbcreate_log.txt
+	echo "DB Check Failed, Output Below"
+	cat dbcheck_log.txt
 endif
 $MUPIP set -repli=off  -reg "BREG" >>& db_log.txt
 
