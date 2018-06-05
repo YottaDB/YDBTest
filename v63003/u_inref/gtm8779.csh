@@ -15,12 +15,13 @@
 #
 
 $gtm_tst/com/dbcreate.csh mumps 3 >>& create.out
-echo "# Initially, all regions set to OFF"
 if ($status) then
 	echo "DB Create Failed, Output Below"
 	cat create.out
 endif
 
+
+echo "# Initially, all regions set to OFF"
 set t0 = `date +"%b %e %H:%M:%S"`
 
 echo "# Setting DEFAULT and AREG to OFF, BREG to ON"
@@ -70,7 +71,7 @@ $MUPIP FREEZE -ON BREG
 # print everything in the syslog between t2 and the occurence of this random string
 $ydb_dist/mumps -run gtm8779 >>& temp2.out
 set s2 = `cat temp2.out`
-echo "# Verifying System received a DBFREEZEOFF message for only AREG and BREG"
+echo "# Verifying System received a DBFREEZEOFF message for only AREG and DEFAULT"
 $gtm_tst/com/getoper.csh "$t2" "" t2t3.txt "" $s2
 cat t2t3.txt |& $grep DBFREEZE |& $tst_awk '{print $6 " " $7 " " $8 " " $9 " " $10}'
 
