@@ -23,6 +23,10 @@ foreach share_opt ("STAT" "NOSTAT")
 	echo ''
 	echo "# Create a 2 region DB with regions DEFAULT and AREG"
 	$gtm_tst/com/dbcreate.csh mumps 2 >>& dbcreate_log.txt
+	if ($status) then
+		echo "DB Create Failed, Output Below"
+		cat dbcreate_log.txt
+	endif
 
 	echo '# Setting DB stat settings'
 	$MUPIP set -$share_opt  -reg "*" >>& dbcreate_log.txt
@@ -31,7 +35,11 @@ foreach share_opt ("STAT" "NOSTAT")
 	$ydb_dist/mumps -run gtm8699
 
 
-	$gtm_tst/com/dbcheck.csh >>& dbcreate_log.txt
+	$gtm_tst/com/dbcheck.csh >>& dbcheck_log.txt
+	if ($status) then
+		echo "DB Check Failed, Output Below"
+		cat dbcheck_log.txt
+	endif
 
 	echo ''
 end

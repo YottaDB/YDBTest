@@ -14,7 +14,11 @@
 
 setenv gtm_test_jnl SETJNL
 
-$gtm_tst/com/dbcreate.csh mumps
+$gtm_tst/com/dbcreate.csh mumps >>& create.out
+if ($status) then
+      echo "DB Create Failed, Output Below"
+      cat create.out
+endif
 
 echo "#  journal extract with single / for journal file"
 $MUPIP journal -extract -noverify -detail -for -fences=none mumps.mjl
@@ -28,7 +32,11 @@ $MUPIP journal -extract=.///extract.mjf -noverify -detail -for -fences=none mump
 echo "#  journal extract with multiple / for journal file and multiple / for extract file"
 $MUPIP journal -extract=.///extract.mjf -noverify -detail -for -fences=none .///mumps.mjl
 
-$gtm_tst/com/dbcheck.csh
+$gtm_tst/com/dbcheck.csh >>& check.out
+if ($status) then
+      echo "DB Check Failed, Output Below"
+      cat check.out
+endif
 
 
 

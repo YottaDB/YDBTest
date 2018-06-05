@@ -11,7 +11,11 @@
 #								#
 #################################################################
 #
-$gtm_tst/com/dbcreate.csh mumps > db_log.txt
+$gtm_tst/com/dbcreate.csh mumps >>& create.out
+if ($status) then
+	echo "DB Create Failed, Output Below"
+	cat create.out
+endif
 
 ## Turn on expect debugging using "-d". The debug output would be in expect.dbg in case needed to analyze stray timing failures.
 (expect -d $gtm_tst/$tst/u_inref/gtm8909.exp > expect.out) >& expect.dbg
@@ -29,4 +33,8 @@ $grep -v '^$' expect_sanitized.outx
 # The cause of the issue is not clear yet, but these blank lines are unnecessary and are filtered out to
 # avoid false failures on slower systems.
 
-$gtm_tst/com/dbcheck.csh >> db_log.txt
+$gtm_tst/com/dbcheck.csh >>& check.out
+if ($status) then
+	echo "DB Check Failed, Output Below"
+	cat check.out
+endif

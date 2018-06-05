@@ -11,8 +11,13 @@
 #								#
 #################################################################
 #
-$gtm_tst/com/dbcreate.csh mumps
+$gtm_tst/com/dbcreate.csh mumps >>& db_create_log.txt
+if ($status) then
+	echo "DB Create has failed, Output Below "
+	cat db_check_log.txt
+endif
 
+echo "# Test that LKE does not fail with sig-11 after <ctrl-Z>"
 ## Turn on expect debugging using "-d". The debug output would be in expect.dbg in case needed to analyze stray timing failures.
 (expect -d $gtm_tst/$tst/u_inref/gtm8791.exp > expect.out) >& expect.dbg
 if ($status) then
@@ -25,4 +30,8 @@ perl $gtm_tst/com/expectsanitize.pl expect.outx > expect_sanitized.outx
 # We want to ensure that a Ctrl-Z did happen and hence we check the below.
 $grep -E "\^Z|Suspended" expect_sanitized.outx
 
-$gtm_tst/com/dbcheck.csh
+$gtm_tst/com/dbcheck.csh >>& db_check_log.txt
+if ($status) then
+	echo "DB Check has failed, Output Below "
+	cat db_check_log.txt
+endif
