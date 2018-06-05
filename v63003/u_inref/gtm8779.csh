@@ -28,6 +28,8 @@ $MUPIP FREEZE -OFF DEFAULT
 $MUPIP FREEZE -OFF AREG
 $MUPIP FREEZE -ON BREG
 
+# Passing a random string into the sys log after we make changes, getoper will
+# print everything in the syslog between t0 and the occurence of this random string
 $ydb_dist/mumps -run gtm8779 >>& temp0.out
 set s0 = `cat temp0.out`
 echo "# Verifying System received a DBFREEZEON message for only BREG"
@@ -64,6 +66,8 @@ $MUPIP FREEZE -OFF DEFAULT
 $MUPIP FREEZE -OFF AREG
 $MUPIP FREEZE -ON BREG
 
+# Passing a random string into the sys log after we make changes, getoper will
+# print everything in the syslog between t2 and the occurence of this random string
 $ydb_dist/mumps -run gtm8779 >>& temp2.out
 set s2 = `cat temp2.out`
 echo "# Verifying System received a DBFREEZEOFF message for only AREG and BREG"
@@ -80,7 +84,7 @@ echo "# Turning off Freeze for all"
 $MUPIP FREEZE -OFF "*" |& sort
 
 # Passing a random string into the sys log after we make changes, getoper will
-# print everything in the syslog between t2 and the occurence of this random string
+# print everything in the syslog between t3 and the occurence of this random string
 $ydb_dist/mumps -run gtm8779 >>& temp3.out
 set s3 = `cat temp3.out`
 echo "# Verifying System received a DBFREEZEOFF message for only BREG"
