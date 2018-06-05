@@ -27,7 +27,7 @@ BEGIN {
 	env["gtm_tst"] = ENVIRON[ "gtm_tst" ]
 	env["in_test_path"]=env["gtm_tst"] "/" env["tst"]
 	env["gtm_exe"] = ENVIRON[ "gtm_exe" ]
-	env["gtm_exe_realpath"] = ENVIRON[ "gtm_exe_realpath" ]
+	"realpath $gtm_exe" |& getline env["gtm_exe_realpath"]
 	env["gtm_root"] = ENVIRON[ "gtm_root" ]
 	env["gtm_src"] = ENVIRON[ "gtm_src" ]
 	env["home"] = ENVIRON[ "HOME" ]

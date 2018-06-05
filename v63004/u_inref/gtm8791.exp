@@ -12,6 +12,19 @@
 #
 set timeout 60
 spawn /usr/local/bin/tcsh -f
+# Change shell prompt to something other than ">" as that is a substring of the LKE prompt "LKE>"
+# and can cause incorrect match later when we wait for the shell prompt.
+expect -exact ">"
+# Note: Changing the shell prompt to SHELL might seem easily achieved as follows.
+#	send -- "set prompt=SHELL\r"
+#	expect -exact "SHELL"
+# But that will not work because it is possible the "expect" matches the SHELL from the "set prompt=SHELL" input
+# instead of from the SHELL prompt later spewed out by the shell. To avoid this, we first store the "SHELL" string
+# in a shell variable and use that variable in another line to set the prompt.
+send -- "set shellprompt=SHELL\r"
+expect -exact ">"
+send -- "set prompt=\$shellprompt\r"
+expect -exact "SHELL"
 
 expect_after {
 	timeout { timeout_procedure }
@@ -22,7 +35,6 @@ proc timeout_procedure { } {
 	exit -1
 }
 
-
 send -- "\$gtm_dist/lke\r"
 
 # Send <Ctrl-Z>
@@ -30,7 +42,7 @@ expect -exact "LKE>"
 send -- "\x1A\r"
 
 expect -exact "Suspended (signal)"
-expect ">"
+expect "SHELL"
 send -- "fg\r"
 expect -exact "lke"	# the shell prints the process' executable name whenever a backgrounded process is foregrounded
 # Sometimes a LKE> prompt might show up. Sometimes it might not. To be sure send one more \r.
@@ -41,6 +53,6 @@ expect -exact "LKE>"
 send -- "exit\r"
 
 #exits from the tcsh shell
-expect -exact ">"
+expect -exact "SHELL"
 send -- "exit\r"
 
