@@ -41,9 +41,10 @@ foreach prompt $promptList {
 	send -- "help\r"
 	expect  "Topic?"
 	puts "#<Ctrl-C>"
-	send -- "\x03\r"
+	send -- "\x03"
+	expect  "Topic?"
 	send -- "\r"
-	puts "# Exit $prompt>"
+	puts "\n# Exit $prompt>"
 	expect -exact "$prompt>"
 	send -- "exit\r"
 	}
