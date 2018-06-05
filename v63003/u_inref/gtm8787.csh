@@ -11,16 +11,29 @@
 #								#
 #################################################################
 #
-# Tests MUPIP JOURNAL -EXTRACT='-stdout' appropriately handles
-# its termination
+#
+#
 
+source $gtm_tst/com/gtm_test_setbgaccess.csh
 source $gtm_tst/com/gtm_test_setbeforeimage.csh
+$gtm_tst/com/dbcreate.csh mumps 1>>& create.out
+if ($status) then
+	echo "DB Create Failed, Output Below"
+	cat create.out
+endif
+#exec 1>&-
+#exec 2>&-
+$MUPIP Set -Region Default -Journal=enable,on,before,file=mumps.mjl >>& jnlcreate.out
+if ($status) then
+	echo "Journal Create Failed, Output Below"
+	cat jnlcreate.out
+endif
 
-$gtm_tst/com/dbcreate.csh mumps 1 >>& create1.out
-foreach i (`seq 1 1 500000`)
-	$ydb_dist/mumps -run ^%XCMD "set ^X($i)=1"
-end
-$ydb_dist/mumps -run ^%XCMD "zwrite ^X"
-echo "Backing up"
-$MUPIP Journal -EXTRACT='-stdout' -BACKWARD mumps.mjl
-$gtm_tst/com/dbcheck.csh >>& check1.out
+fclose 'stdout'
+$MUPIP Journal -Extract='-stdout' -Backward mumps.mjl
+
+$gtm_tst/com/dbcheck.csh >>& check.out
+if ($status) then
+	echo "DB Check Failed, Output Below"
+	cat check.out
+endif
