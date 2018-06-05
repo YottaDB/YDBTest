@@ -14,7 +14,7 @@
 ; it (to be used in the shell script)
 ;
 makestring
-	set x=$$^%RANDSTR(10)
+	set x=$$^%RANDSTR(32)
 	write x
 	set y=$ZSYSLOG(x)
 	quit
