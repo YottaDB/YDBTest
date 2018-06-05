@@ -17,7 +17,11 @@
 $ydb_dist/mumps -run gtm4212
 
 
-$gtm_tst/com/dbcreate.csh mumps 1 >>& dbcreate1.out
+$gtm_tst/com/dbcreate.csh mumps 1 >>& dbcreate.out
+if ($status) then
+	echo "DB Create Failed, Output Below"
+	cat create.out
+endif
 foreach i (228 229 230 231 232 233)
 	$ydb_dist/mumps -run gtm4212 $i >>& a$i.out
 	set dir = `cat a$i.out`
@@ -28,4 +32,8 @@ foreach i (228 229 230 231 232 233)
 
 end
 
-$gtm_tst/com/dbcheck.csh >>& dbcheck1.out
+$gtm_tst/com/dbcheck.csh >>& check.out
+if ($status) then
+	echo "DB Check Failed, Output Below"
+	cat check.out
+endif

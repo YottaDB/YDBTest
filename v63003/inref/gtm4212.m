@@ -10,18 +10,18 @@
 ;								;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
-; Creates 4 paths based on the current directory, of length 230, 231
-; <=230 and >=231 and stores them in temp files
+; Creates a path based on current directory with a number of characters
+; specified by the parameter
 ;
-patheq
+genlongpath
 	write $ZDIRECTORY
 	set l=$length($ZDIRECTORY)
 	write "a"
 	set l=l+1
-	if l<$ZCMDLINE do  goto patheq+5
-	. if l#25=0  write "/"
-	. else  write "a"
-	. set l=l+1
+	if l<$ZCMDLINE do
+	. for i=1:1:$ZCMDLINE-l do
+	. . if l#25=0  write "/"
+	. . else  write "a"
 	quit
 
 

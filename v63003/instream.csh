@@ -20,7 +20,7 @@
 # gtm8804	    [vinay] Test zshow "t" produces only a summary of zshow "g" and "l"
 # gtm8832	    [vinay] Test string literal evaluating to >=1E47 produces a NUMOFLOW error
 # gtm8617	    [vinay] Tests MUPIP SET command of STDNULLCOLL and NULL_SUBSCRIPTS
-# gtm4212	    [vinay] Tests that MUPIP BACKUP produces a filenametoolong error for paths >=255 characters
+# gtm4212	    [vinay] Tests that MUPIP BACKUP produces a FILENAMETOOLONG error for paths >=255 characters
 # gtm8732nr	    [vinay] Tests the valid inputs of the flag DEFER_TIME for the MUPIP SET command
 # gtm8732r	    [vinay] Tests the valid inputs of HELPERS and LOG_INTERVAL for the MUPIP REPLICATE command
 # gtm8767	    [vinay] Tests the functionality of HARD_SPIN_COUNT, SPIN_SLEEP_MASK and SPIN_SLEEP_LIMIT for MUPIP SET
