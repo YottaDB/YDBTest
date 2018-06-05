@@ -16,6 +16,10 @@ set randint = `$gtm_tst/com/genrandnumbers.csh 1 0 2147483647`
 set randhex = `$ydb_dist/mumps -run ^%XCMD 'write $$FUNC^%DH($random(2**30))'`
 
 $gtm_tst/com/dbcreate.csh mumps 1 >>& create1.out
+if ($status) then
+	echo "DB Create Failed, Output Below"
+	cat create1.out
+endif
 
 
 echo "# Setting Hard Spin Count to 0 using MUPIP SET -HARD_SPIN_COUNT"
@@ -66,3 +70,7 @@ $MUPIP SET -region DEFAULT -SPIN_SLEEP_MASK=0x40000000
 echo "# Attempting to set Spin Sleep Limit to a random value using MUPIP SET -SPIN_SLEEP_LIMIT"
 $MUPIP SET -region DEFAULT -SPIN_SLEEP_LIMIT=$randint
 $gtm_tst/com/dbcheck.csh >>& check1.out
+if ($status) then
+	echo "DB Check Failed, Output Below"
+	cat check1.out
+endif

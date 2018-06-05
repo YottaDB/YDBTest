@@ -21,6 +21,10 @@ set rand = `$gtm_tst/com/genrandnumbers.csh 1 0 $x`
 set rand128 = `$gtm_tst/com/genrandnumbers.csh 1 1 128`
 echo '# Creating data base'
 $gtm_tst/com/dbcreate.csh mumps 1>>db.out
+if ($status) then
+	echo "DB Create Failed, Output Below"
+	cat db.out
+endif
 
 echo '# Running changelog with LOG_INTERVAL 0'
 $sec_shell "$sec_getenv; cd $SEC_SIDE; $MUPIP replicate -RECEIVER -CHANGELOG -LOG=a.log -LOG_INTERVAL=0"
@@ -58,3 +62,7 @@ $sec_shell "$sec_getenv; cd $SEC_SIDE; $MUPIP replicate -RECEIVER -START -HELPER
 
 echo '# Shutting down database'
 $gtm_tst/com/dbcheck.csh>>&db.out
+if ($status) then
+	echo "DB Check Failed, Output Below"
+	cat db.out
+endif

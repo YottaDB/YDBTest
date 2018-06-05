@@ -19,6 +19,10 @@ setenv acc_meth MM
 setenv test_encryption NON_ENCRYPT
 source $gtm_tst/com/mm_nobefore.csh
 $gtm_tst/com/dbcreate.csh mumps 1 >>& create1.out
+if ($status) then
+	echo "DB Create Failed, Output Below"
+	cat create1.out
+endif
 $MUPIP SET -region DEFAULT -ACCESS_METHOD=MM -NOSTATS >>& settings.out
 
 echo '# Setting default region to read only'
@@ -73,4 +77,8 @@ foreach dir ($ydb_dist/*.gld)
 	$ydb_dist/mumps -run ^%XCMD "set ^X=2"
 end
 $gtm_tst/com/dbcheck.csh mumps 1 >>& check1.out
+if ($status) then
+	echo "DB Check Failed, Output Below"
+	cat check1.out
+endif
 
