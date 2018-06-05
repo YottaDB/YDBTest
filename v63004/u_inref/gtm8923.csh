@@ -15,11 +15,19 @@ $switch_chset UTF-8
 echo '# Testing READ * and WRITE * commands on sockets and files of various UTF CHSETs'
 
 echo "# Create a single region DB with region DEFAULT"
-$gtm_tst/com/dbcreate.csh mumps 1 >>& dbcreate_log_1.txt
+$gtm_tst/com/dbcreate.csh mumps 1 >>& dbcreate_log.txt
+if ($status) then
+	echo "DB Create Failed, Output Below"
+	cat dbcreate_log.txt
+endif
 echo ''
 
 echo '# Run gtm8923.m to test WRITE * and READ * commands'
 $ydb_dist/mumps -run gtm8923
 
 echo '# Shut down the DB '
-$gtm_tst/com/dbcheck.csh >>& dbcreate_log_1.txt
+$gtm_tst/com/dbcheck.csh >>& dbcreate_log.txt
+if ($status) then
+	echo "DB check Failed, Output Below"
+	cat dbcreate_log.txt
+endif

@@ -12,7 +12,6 @@
 #################################################################
 #
 $gtm_tst/com/dbcreate.csh mumps
-
 ## Turn on expect debugging using "-d". The debug output would be in expect.dbg in case needed to analyze stray timing failures.
 (expect -d $gtm_tst/$tst/u_inref/gtm8791.exp > expect.out) >& expect.dbg
 if ($status) then

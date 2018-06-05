@@ -14,6 +14,10 @@
 
 echo "# Create a single region DB with region DEFAULT"
 $gtm_tst/com/dbcreate.csh mumps >>& dbcreate_log.txt
+if ($status) then
+	echo "DB Create Failed, Output Below"
+	cat dbcreate_log.txt
+endif
 
 set dep = 0		; #The actual depth of each recursive call before overflow (calculated later)
 set expDep = 0		; #The expected depth of each recursive call before overflow (calculated later)
@@ -82,3 +86,7 @@ foreach envKiB ($defKiB 0 5000 $maxKiB $maxKiB2 $minKiB2)
 end
 
 $gtm_tst/com/dbcheck.csh >>& dbcreate_log.txt
+if ($status) then
+	echo "DB Check Failed, Output Below"
+	cat dbcreate_log.txt
+endif

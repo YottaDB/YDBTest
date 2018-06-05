@@ -18,6 +18,10 @@ setenv gtm_test_jnl SETJNL
 
 echo "# Create a 3 region DB with gbl_dir mumps.gld and regions DEFAULT, AREG, and BREG"
 $gtm_tst/com/dbcreate.csh mumps 3 >>& dbcreate_log.txt
+if ($status) then
+	echo "DB Create Failed, Output Below"
+	cat dbcreate_log.txt
+endif
 
 # Some of the VIEW commands tested (i.e. VIEW DBFLUSH and VIEW POOLLIMIT) only affect the
 # DB when an -access_method of BG is specified
@@ -65,4 +69,8 @@ end
 
 echo '# Shut down the DB '
 $gtm_tst/com/dbcheck.csh >>& dbcreate_log.txt
+if ($status) then
+	echo "DB Check Failed, Output Below"
+	cat dbcreate_log.txt
+endif
 echo ''

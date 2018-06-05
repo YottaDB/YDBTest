@@ -23,6 +23,10 @@ setenv gtm_test_dbcreate_initial_tn 10	#setting initial db transaction number to
 echo "setenv gtm_test_dbcreate_initial_tn 10" >> settings.csh
 echo "# Create 3 database files for 3 regions, mumps.dat, a.dat, and b.dat for DEFAULT, AREG, and BREG respectively"
 $gtm_tst/com/dbcreate.csh mumps 3 255 8000 16384 1024 1024 1024 > db_log.txt
+if ($status) then
+	echo "DB Create Failed, Output Below"
+	cat db_log.txt
+endif
 
 $MUPIP set -repli=on  -reg "AREG" >>& db_log.txt
 $MUPIP set -repli=on  -reg "BREG" >>& db_log.txt
@@ -133,6 +137,10 @@ endif
 echo "# Shutdown replication for BREG"
 $MUPIP replic -source -shutdown -timeout=0 >>& passive_stop.out
 $gtm_tst/com/dbcheck.csh >> dbcreate_log.txt
+if ($status) then
+	echo "DB Create Failed, Output Below"
+	cat dbcreate_log.txt
+endif
 $MUPIP set -repli=off  -reg "BREG" >>& db_log.txt
 
 echo "# Multi region extract -SEQNO=1,2,3,4 with BREG replication turned off"

@@ -18,10 +18,21 @@ echo "# Set gtm_statsdir to the root directory, which we dont have permissions t
 setenv gtm_statsdir "/"
 
 echo "# Create a single region DB with gbl_dir mumps.gld and region DEFAULT"
-$gtm_tst/com/dbcreate.csh mumps >>& dbcreate_log_1.txt
+$gtm_tst/com/dbcreate.csh mumps >>& create.out
+if ($status) then
+	echo "DB Create Failed, Output Below"
+	cat create.out
+endif
 
 echo "# The DB, while set for sharing, should now be unable to share due to the invalid gtm_statsdir selection"
 
 echo ''
 echo '# Run gtm8914.m'
 $ydb_dist/mumps -run gtm8914
+
+
+$gtm_tst/com/dbcheck.csh mumps >>& check.out
+if ($status) then
+	echo "DB Check Failed, Output Below"
+	cat check.out
+endif

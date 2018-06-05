@@ -13,6 +13,11 @@
 #
 
 $gtm_tst/com/dbcreate.csh mumps 1 >& dbcreate.outx
+if ($status) then
+	echo "DB Create Failed, Output Below"
+	cat dbcreate.outx
+endif
+echo ''
 
 echo "# Get start time (used in .updproc file name)"
 setenv start_time `cat start_time` # start_time is used in naming conventions
@@ -30,4 +35,9 @@ echo "# Search rcvr.updproc for non-numerical type descriptor"
 $ydb_dist/mumps -run LOOP^%XCMD --xec=';write:$zfind(%l,"Rectype") $zpiece(%l,":",5)," ",$zpiece(%l,":",6),!;' < rcvr.updproc
 
 $gtm_tst/com/dbcheck.csh >& dbcheck.outx
+if ($status) then
+	echo "DB Check Failed, Output Below"
+	cat dbcheck.outx
+endif
+echo ''
 
