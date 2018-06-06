@@ -74,11 +74,9 @@ foreach dir ($ydb_dist/*.gld)
 	# Occasionally there is a READONLYLKFAIL Error instead of the desired DBFILEOPERR. We have the program retry
 	# if it encounters this
 	while (1)
-		$MUPIP SET -region DEFAULT -NOREAD_ONLY >>& temp.out
-		set x = `cat temp.out |& $grep READONLYLKFAIL`
-		if ("$x"!="") then
-			rm temp.out
-		else
+		$MUPIP SET -region DEFAULT -NOREAD_ONLY >& temp.out
+		$grep READONLYLKFAIL temp.out > /dev/null
+		if ($status) then
 			break
 		endif
 	end
