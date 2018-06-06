@@ -66,16 +66,23 @@ $DSE dump -file|&$grep "Read Only"
 
 echo '# Displaying status of gtmhelp databases to verify files have read-only permissions for user/group/other'
 $gtm_tst/com/lsminusl.csh $ydb_dist/*.dat|$tst_awk '{print $1,$9}'
-
+set i = 0
 foreach dir ($ydb_dist/*.gld)
 	echo "# Displaying status of "$dir
 	setenv ydb_gbldir $dir
 	$DSE dump -file |& $grep "Read Only"
 	echo "# Attempting to change to no read only"
-	$MUPIP SET -region DEFAULT -NOREAD_ONLY
+	set x = ""
+	while ("$x" == "")
+		@ i++
+		$MUPIP SET -region DEFAULT -NOREAD_ONLY >>& temp$i.out
+		set x = `cat temp$i.out |& $grep YDB-E-DBFILOPERR`
+	end
+	cat temp$i.out
 	echo "# Attempting to write to database"
 	$ydb_dist/mumps -run ^%XCMD "set ^X=2"
 end
+rm temp*.out
 $gtm_tst/com/dbcheck.csh mumps 1 >>& check1.out
 if ($status) then
 	echo "DB Check Failed, Output Below"
