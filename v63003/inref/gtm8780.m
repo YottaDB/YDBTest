@@ -12,5 +12,5 @@
 ;
 
 gtm8780
-	write $select(1)
+	write $select(1:0,0)
 	quit

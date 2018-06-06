@@ -13,16 +13,5 @@
 #
 #
 #
-$gtm_tst/com/dbcreate.csh mumps 1>>& create.out
-if ($status) then
-	echo "DB Create Failed, Output Below"
-	cat create.out
-endif
 
-
-
-$gtm_tst/com/dbcheck.csh >>& check.out
-if ($status) then
-	echo "DB Check Failed, Output Below"
-	cat check.out
-endif
+$ydb_dist/mumps -run gtm8780
