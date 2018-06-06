@@ -4,6 +4,9 @@
 # Copyright (c) 2005-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -32,7 +35,7 @@ ps_mrc >>& $KILL_LOG
 
 @ maxtry = 10
 @ tried = 0
-set wait_time = 60			# Try for a maximum of 60 seconds
+set wait_time = 300			# Try for a maximum of 5 minutes
 set now_time = `date +%s`
 @ max_wait = $now_time + $wait_time
 while ($now_time <= $max_wait)
@@ -41,9 +44,9 @@ while ($now_time <= $max_wait)
 	# PID for MUPIP REORG
 	set ppid=`$grep PID mu_reorg_upgrd_dwngrd.pid | $tst_awk '{printf("%s ",$2);}'`
 	echo "The ppid is $ppid" >> $KILL_LOG
-	echo "------------------" >>! ${KILL_LOG}_ps
+	echo "------------------ time $now_time --------------" >>! ${KILL_LOG}
 	date >>& $KILL_LOG
-	set rpid=`ps_mrc | $grep "mupip" | tee -a ${KILL_LOG}_ps | $tst_awk '{if ($3 == '$ppid') printf($2);}'`
+	set rpid=`ps_mrc | $grep "mupip" | tee -a ${KILL_LOG} | $tst_awk '{if ($3 == '$ppid') printf($2);}'`
 	if ( "" == "$rpid") then
 		set flag = "notfound"
 		echo "TEST-I-MUPIP_CRASH Not found, will look again..." >> $KILL_LOG
