@@ -11,3 +11,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 
+nslashes
+	;write "."
+	for i=1:1:$ZCMDLINE write "/"
+	write "abcd.mjl"
+	quit
+
+

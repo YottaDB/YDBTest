@@ -11,7 +11,7 @@
 #								#
 #################################################################
 #
-#
+# Tests that Mupip Set can handle extra slashes before a filename
 #
 source $gtm_tst/com/gtm_test_setbgaccess.csh
 source $gtm_tst/com/gtm_test_setbeforeimage.csh
@@ -20,8 +20,38 @@ if ($status) then
 	echo "DB Create Failed, Output Below"
 	cat create.out
 endif
+rm *.mjl* >>& rm.out
+rm *.dat* >>& rm.out
 
-$MUPIP SET -REGION DEFAULT -JOURNAL=ENABLE,ON,BEFORE,FILE=.//mumps.mjl
+mkdir temp
+set rand=`$gtm_tst/com/genrandnumbers.csh 2 1 100`
+set rand1=${rand[1]}
+set rand2=${rand[2]}
+$MUPIP create
+foreach x (75)
+	echo "# -----------------------------------------"
+	echo "# $x slashes"
+	echo "# -----------------------------------------"
+
+	$ydb_dist/mumps -run gtm8846 $x >>& slash$x.out
+	set s1="."`cat slash$x.out`
+	set s2="temp"`cat slash$x.out`
+	echo "# Verifying no Journal Files before running Mupip Set"
+	$gtm_tst/com/lsminusl.csh *.mjl
+	$gtm_tst/com/lsminusl.csh temp/*.mjl
+	echo "# Paths we are feeding to Mupip Set Command"
+	echo $s1
+	echo $s2
+	$MUPIP SET -REGION DEFAULT -JOURNAL=ENABLE,ON,BEFORE,FILE=$s1
+	$MUPIP SET -REGION DEFAULT -JOURNAL=ENABLE,ON,BEFORE,FILE=$s2
+	echo "# Verifying journal file was made properly"
+	$gtm_tst/com/lsminusl.csh *.mjl* |& $tst_awk '{print $1 " " $2 " " $3 " " $4 " " $9}'
+	$gtm_tst/com/lsminusl.csh temp/*.mjl* |& $tst_awk '{print $1 " " $2 " " $3 " " $4 " " $9}'
+	ls *.mjl*
+	ls temp/*.mjl*
+	rm *.mjl
+	rm temp/*.mjl
+end
 
 $gtm_tst/com/dbcheck.csh >>& check.out
 if ($status) then
