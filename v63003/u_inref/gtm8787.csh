@@ -21,16 +21,21 @@ if ($status) then
 	echo "DB Create Failed, Output Below"
 	cat create.out
 endif
-#exec 1>&-
-#exec 2>&-
 $MUPIP Set -Region Default -Journal=enable,on,before,file=mumps.mjl >>& jnlcreate.out
 if ($status) then
 	echo "Journal Create Failed, Output Below"
 	cat jnlcreate.out
 endif
+$ydb_dist/mumps -run ^%XCMD "for i=1:1:10 set ^x(i)=i"
+set t = `date +"%b %e %H:%M:%S"`
+set pid = `($MUPIP journal -extract='-stdout' -forward mumps.mjl >& output.out)&`
+echo $pid
+$ydb_dist/mumps -run gtm8787 >>& temp.out
+set s = `cat temp.out`
+$gtm_tst/com/getoper.csh "$t" "" log.out "" $s
 
-fclose 'stdout'
-$MUPIP Journal -Extract='-stdout' -Backward mumps.mjl
+cat log.out |& $grep KILLBYSIG
+cat log.out |& $grep NOPRINCIO
 
 $gtm_tst/com/dbcheck.csh >>& check.out
 if ($status) then
