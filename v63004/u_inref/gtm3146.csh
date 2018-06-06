@@ -21,27 +21,34 @@ if ($status) then
 	cat dbcreate_log.txt
 endif
 
-echo "# Create a file, alias.csh, to be sourced by child shells : "
-#echo "#			!/usr/local/bin/tcsh -f"
-#echo '#			alias cp "jakewashere"'
-echo '#			echo "hello world"'
+echo "# Create a file, shell.csh, to be sourced by child shells : "
 
-#echo '!/usr/local/bin/tcsh -f'> "alias.csh"
-echo 'alias cp "jakewashere"' >> ".cshrc" #"alias.csh"
-
-echo '# Set $SHELL env var to have child shells source alias.csh'
-#setenv SHELL "$SHELL -x ./alias.csh"
+echo '#\!/usr/local/bin/tcsh -f' 		> "shell.csh"
+echo 'set echo ; set verbose'			>> "shell.csh"
+echo 'alias cp "jakewashere"' 			>> "shell.csh"
+echo 'if ( "$1" == "-c") then' 			>> "shell.csh"
+echo '	shift ' 				>> "shell.csh"
+echo 'endif' 					>> "shell.csh"
+echo 'echo "$*" > script.csh'			>> "shell.csh"
+echo 'source script.csh'			>> "shell.csh"
 echo ''
 
-echo '------------------'
-echo '$SHELL'": $SHELL"
-echo "alias.csh:"
-cat alias.csh
-echo '------------------'
+chmod +x ./shell.csh
+chmod +rw ./
+
+echo 'cat shell.csh'
+cat ./shell.csh
 echo ''
 
-echo "# Running Mupip with "'$SHELL'" set to $SHELL"
-$MUPIP BACKUP "*" tstBackup
+echo '# Set $SHELL env var to have child shell shell.csh '
+setenv SHELL "$PWD/shell.csh"
+echo ''
+
+echo "# Running Mupip with "'$SHELL'" ./shell.csh"
+$MUPIP BACKUP "*" tstBackup >>& backup.log
+
+grep -e "BACKUP COMPLETED" backup.log
+
 
 echo '# Shut down the DB '
 $gtm_tst/com/dbcheck.csh >>& dbcheck_log.txt
