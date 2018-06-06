@@ -1,75 +1,222 @@
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 # -----------------------------------------
-# 13 slashes
-# -----------------------------------------
-# Verifying no Journal Files before running Mupip Set
-##TEST_COM_PATH##/lsminusl.csh: No match.
-##TEST_COM_PATH##/lsminusl.csh: No match.
-# Paths we are feeding to Mupip Set Command
-./////////////mumps.mjl
-temp/////////////mumps.mjl
-# Verifying journal file was made properly
--rw-rw-rw- 1 vinay gtc mumps.mjl
--rw-rw-rw- 1 vinay gtc temp/mumps.mjl
-# -----------------------------------------
-# 14 slashes
+# 75 slashes
 # -----------------------------------------
 # Verifying no Journal Files before running Mupip Set
 ##TEST_COM_PATH##/lsminusl.csh: No match.
 ##TEST_COM_PATH##/lsminusl.csh: No match.
 # Paths we are feeding to Mupip Set Command
-.//////////////mumps.mjl
-temp//////////////mumps.mjl
+.///////////////////////////////////////////////////////////////////////////abcd.mjl
+temp///////////////////////////////////////////////////////////////////////////abcd.mjl
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/temp/abcd.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 # Verifying journal file was made properly
--rw-rw-rw- 1 vinay gtc mumps.mjl
--rw-rw-rw- 1 vinay gtc temp/mumps.mjl
+-rw-rw-rw- 1 vinay gtc abcd.mjl
+-rw-rw-rw- 1 vinay gtc temp/abcd.mjl
+abcd.mjl
+temp/abcd.mjl
 # -----------------------------------------
-# 15 slashes
+# 76 slashes
 # -----------------------------------------
 # Verifying no Journal Files before running Mupip Set
 ##TEST_COM_PATH##/lsminusl.csh: No match.
 ##TEST_COM_PATH##/lsminusl.csh: No match.
 # Paths we are feeding to Mupip Set Command
-.///////////////mumps.mjl
-temp///////////////mumps.mjl
+.////////////////////////////////////////////////////////////////////////////abcd.mjl
+temp////////////////////////////////////////////////////////////////////////////abcd.mjl
+%YDB-I-JNLFNF, Journal file ##TEST_PATH##/temp/abcd.mjl not found
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/temp/abcd.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 # Verifying journal file was made properly
--rw-rw-rw- 1 vinay gtc mumps.mjl
--rw-rw-rw- 1 vinay gtc temp/mumps.mjl
+-rw-rw-rw- 1 vinay gtc abcd.mjl
+-rw-rw-rw- 1 vinay gtc temp/abcd.mjl
+abcd.mjl
+temp/abcd.mjl
 # -----------------------------------------
-# 16 slashes
+# 77 slashes
 # -----------------------------------------
 # Verifying no Journal Files before running Mupip Set
 ##TEST_COM_PATH##/lsminusl.csh: No match.
 ##TEST_COM_PATH##/lsminusl.csh: No match.
 # Paths we are feeding to Mupip Set Command
-.////////////////mumps.mjl
-temp////////////////mumps.mjl
+./////////////////////////////////////////////////////////////////////////////abcd.mjl
+temp/////////////////////////////////////////////////////////////////////////////abcd.mjl
+%YDB-I-JNLFNF, Journal file ##TEST_PATH##/temp/abcd.mjl not found
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/temp/abcd.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 # Verifying journal file was made properly
--rw-rw-rw- 1 vinay gtc mumps.mjl
--rw-rw-rw- 1 vinay gtc temp/mumps.mjl
+-rw-rw-rw- 1 vinay gtc abcd.mjl
+-rw-rw-rw- 1 vinay gtc temp/abcd.mjl
+abcd.mjl
+temp/abcd.mjl
 # -----------------------------------------
-# 17 slashes
+# 78 slashes
 # -----------------------------------------
 # Verifying no Journal Files before running Mupip Set
 ##TEST_COM_PATH##/lsminusl.csh: No match.
 ##TEST_COM_PATH##/lsminusl.csh: No match.
 # Paths we are feeding to Mupip Set Command
-./////////////////mumps.mjl
-temp/////////////////mumps.mjl
+.//////////////////////////////////////////////////////////////////////////////abcd.mjl
+temp//////////////////////////////////////////////////////////////////////////////abcd.mjl
+%YDB-I-JNLFNF, Journal file ##TEST_PATH##/temp/abcd.mjl not found
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/temp/abcd.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 # Verifying journal file was made properly
--rw-rw-rw- 1 vinay gtc mumps.mjl
--rw-rw-rw- 1 vinay gtc temp/mumps.mjl
+-rw-rw-rw- 1 vinay gtc abcd.mjl
+-rw-rw-rw- 1 vinay gtc temp/abcd.mjl
+abcd.mjl
+temp/abcd.mjl
 # -----------------------------------------
-# 18 slashes
+# 79 slashes
 # -----------------------------------------
 # Verifying no Journal Files before running Mupip Set
 ##TEST_COM_PATH##/lsminusl.csh: No match.
 ##TEST_COM_PATH##/lsminusl.csh: No match.
 # Paths we are feeding to Mupip Set Command
-.//////////////////mumps.mjl
-temp//////////////////mumps.mjl
+.///////////////////////////////////////////////////////////////////////////////abcd.mjl
+temp///////////////////////////////////////////////////////////////////////////////abcd.mjl
+%YDB-I-JNLFNF, Journal file ##TEST_PATH##/temp/abcd.mjl not found
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/temp/abcd.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 # Verifying journal file was made properly
--rw-rw-rw- 1 vinay gtc mumps.mjl
--rw-rw-rw- 1 vinay gtc temp/mumps.mjl
+-rw-rw-rw- 1 vinay gtc abcd.mjl
+-rw-rw-rw- 1 vinay gtc temp/abcd.mjl
+abcd.mjl
+temp/abcd.mjl
+# -----------------------------------------
+# 80 slashes
+# -----------------------------------------
+# Verifying no Journal Files before running Mupip Set
+##TEST_COM_PATH##/lsminusl.csh: No match.
+##TEST_COM_PATH##/lsminusl.csh: No match.
+# Paths we are feeding to Mupip Set Command
+.////////////////////////////////////////////////////////////////////////////////abcd.mjl
+temp////////////////////////////////////////////////////////////////////////////////abcd.mjl
+%YDB-I-JNLFNF, Journal file ##TEST_PATH##/temp/abcd.mjl not found
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/temp/abcd.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+# Verifying journal file was made properly
+-rw-rw-rw- 1 vinay gtc abcd.mjl
+-rw-rw-rw- 1 vinay gtc temp/abcd.mjl
+abcd.mjl
+temp/abcd.mjl
+# -----------------------------------------
+# 81 slashes
+# -----------------------------------------
+# Verifying no Journal Files before running Mupip Set
+##TEST_COM_PATH##/lsminusl.csh: No match.
+##TEST_COM_PATH##/lsminusl.csh: No match.
+# Paths we are feeding to Mupip Set Command
+./////////////////////////////////////////////////////////////////////////////////abcd.mjl
+temp/////////////////////////////////////////////////////////////////////////////////abcd.mjl
+%YDB-I-JNLFNF, Journal file ##TEST_PATH##/temp/abcd.mjl not found
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/temp/abcd.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+# Verifying journal file was made properly
+-rw-rw-rw- 1 vinay gtc abcd.mjl
+-rw-rw-rw- 1 vinay gtc temp/abcd.mjl
+abcd.mjl
+temp/abcd.mjl
+# -----------------------------------------
+# 82 slashes
+# -----------------------------------------
+# Verifying no Journal Files before running Mupip Set
+##TEST_COM_PATH##/lsminusl.csh: No match.
+##TEST_COM_PATH##/lsminusl.csh: No match.
+# Paths we are feeding to Mupip Set Command
+.//////////////////////////////////////////////////////////////////////////////////abcd.mjl
+temp//////////////////////////////////////////////////////////////////////////////////abcd.mjl
+%YDB-I-JNLFNF, Journal file ##TEST_PATH##/temp/abcd.mjl not found
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/temp/abcd.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+# Verifying journal file was made properly
+-rw-rw-rw- 1 vinay gtc abcd.mjl
+-rw-rw-rw- 1 vinay gtc temp/abcd.mjl
+abcd.mjl
+temp/abcd.mjl
+# -----------------------------------------
+# 83 slashes
+# -----------------------------------------
+# Verifying no Journal Files before running Mupip Set
+##TEST_COM_PATH##/lsminusl.csh: No match.
+##TEST_COM_PATH##/lsminusl.csh: No match.
+# Paths we are feeding to Mupip Set Command
+.///////////////////////////////////////////////////////////////////////////////////abcd.mjl
+temp///////////////////////////////////////////////////////////////////////////////////abcd.mjl
+%YDB-I-JNLFNF, Journal file ##TEST_PATH##/temp/abcd.mjl not found
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/temp/abcd.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+# Verifying journal file was made properly
+-rw-rw-rw- 1 vinay gtc abcd.mjl
+-rw-rw-rw- 1 vinay gtc temp/abcd.mjl
+abcd.mjl
+temp/abcd.mjl
+# -----------------------------------------
+# 84 slashes
+# -----------------------------------------
+# Verifying no Journal Files before running Mupip Set
+##TEST_COM_PATH##/lsminusl.csh: No match.
+##TEST_COM_PATH##/lsminusl.csh: No match.
+# Paths we are feeding to Mupip Set Command
+.////////////////////////////////////////////////////////////////////////////////////abcd.mjl
+temp////////////////////////////////////////////////////////////////////////////////////abcd.mjl
+%YDB-I-JNLFNF, Journal file ##TEST_PATH##/temp/abcd.mjl not found
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/temp/abcd.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+# Verifying journal file was made properly
+-rw-rw-rw- 1 vinay gtc abcd.mjl
+-rw-rw-rw- 1 vinay gtc temp/abcd.mjl
+abcd.mjl
+temp/abcd.mjl
+# -----------------------------------------
+# 85 slashes
+# -----------------------------------------
+# Verifying no Journal Files before running Mupip Set
+##TEST_COM_PATH##/lsminusl.csh: No match.
+##TEST_COM_PATH##/lsminusl.csh: No match.
+# Paths we are feeding to Mupip Set Command
+./////////////////////////////////////////////////////////////////////////////////////abcd.mjl
+temp/////////////////////////////////////////////////////////////////////////////////////abcd.mjl
+%YDB-I-JNLFNF, Journal file ##TEST_PATH##/temp/abcd.mjl not found
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/temp/abcd.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+# Verifying journal file was made properly
+-rw-rw-rw- 1 vinay gtc abcd.mjl
+-rw-rw-rw- 1 vinay gtc temp/abcd.mjl
+abcd.mjl
+temp/abcd.mjl
 # -----------------------------------------
 ##TEST_AWK# [0-9]* slashes
 # -----------------------------------------
@@ -77,11 +224,19 @@ temp//////////////////mumps.mjl
 ##TEST_COM_PATH##/lsminusl.csh: No match.
 ##TEST_COM_PATH##/lsminusl.csh: No match.
 # Paths we are feeding to Mupip Set Command
-##TEST_AWK.[/]*mumps.mjl
-##TEST_AWKtemp[/]*mumps.mjl
+##TEST_AWK.[/]*abcd.mjl
+##TEST_AWKtemp[/]*abcd.mjl
+%YDB-I-JNLFNF, Journal file ##TEST_PATH##/temp/abcd.mjl not found
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/temp/abcd.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 # Verifying journal file was made properly
--rw-rw-rw- 1 vinay gtc mumps.mjl
--rw-rw-rw- 1 vinay gtc temp/mumps.mjl
+-rw-rw-rw- 1 vinay gtc abcd.mjl
+-rw-rw-rw- 1 vinay gtc temp/abcd.mjl
+abcd.mjl
+temp/abcd.mjl
 # -----------------------------------------
 ##TEST_AWK# [0-9]* slashes
 # -----------------------------------------
@@ -89,8 +244,16 @@ temp//////////////////mumps.mjl
 ##TEST_COM_PATH##/lsminusl.csh: No match.
 ##TEST_COM_PATH##/lsminusl.csh: No match.
 # Paths we are feeding to Mupip Set Command
-##TEST_AWK.[/]*mumps.mjl
-##TEST_AWKtemp[/]*mumps.mjl
+##TEST_AWK.[/]*abcd.mjl
+##TEST_AWKtemp[/]*abcd.mjl
+%YDB-I-JNLFNF, Journal file ##TEST_PATH##/temp/abcd.mjl not found
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/abcd.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/abcd.mjl created for database file ##TEST_PATH##/mumps.dat
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/temp/abcd.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 # Verifying journal file was made properly
--rw-rw-rw- 1 vinay gtc mumps.mjl
--rw-rw-rw- 1 vinay gtc temp/mumps.mjl
+-rw-rw-rw- 1 vinay gtc abcd.mjl
+-rw-rw-rw- 1 vinay gtc temp/abcd.mjl
+abcd.mjl
+temp/abcd.mjl

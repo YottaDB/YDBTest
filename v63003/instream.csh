@@ -27,6 +27,7 @@
 # gtm8735	    [vinay] Tests the functionality of the READ_ONLY flag in MUPIP SET
 # gtm8779	    [vinay] Tests changing Freeze produces a DBFREEZEON/DBFREEZEOFF message in the system
 # gtm8798	    [vinay] Tests ENDIANCVT converts the mutex fields
+# gtm8846	    [vinay] Tests Mupip Set appropriately handles a file with excess slashes
 #-------------------------------------------------------------------------------------
 
 echo "v63003 test starts..."
@@ -34,6 +35,7 @@ echo "v63003 test starts..."
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic "gtm8788 gtm7986 gtm8186 gtm8804 gtm8832 gtm8617 gtm4212 gtm8732nr gtm8767 gtm8735 gtm8779 gtm8798"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm8846"
 setenv subtest_list_replic     "gtm8732r"
 
 if ($?test_replic == 1) then
