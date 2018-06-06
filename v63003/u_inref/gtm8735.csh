@@ -71,14 +71,16 @@ foreach dir ($ydb_dist/*.gld)
 	setenv ydb_gbldir $dir
 	$DSE dump -file |& $grep "Read Only"
 	echo "# Attempting to change to no read only"
-	$MUPIP SET -region DEFAULT -NOREAD_ONLY >>& temp.out
 	# Occasionally there is a READONLYLKFAIL Error instead of the desired DBFILEOPERR. We have the program retry
 	# if it encounters this
-	set x = `cat temp.out |& $grep READONLYLKFAIL`
-	while ("$x" != "")
-		rm temp.out
+	while (1)
 		$MUPIP SET -region DEFAULT -NOREAD_ONLY >>& temp.out
 		set x = `cat temp.out |& $grep READONLYLKFAIL`
+		if ("$x"!="") then
+			rm temp.out
+		else
+			break
+		endif
 	end
 	cat temp.out
 	rm temp.out
