@@ -35,7 +35,7 @@ $ydb_dist/mumps -run gtm8779 >>& temp0.out
 set s0 = `cat temp0.out`
 echo "# Verifying System received a DBFREEZEON message for only BREG"
 $gtm_tst/com/getoper.csh "$t0" "" t0t1.txt "" $s0
-cat t0t1.txt |& $grep DBFREEZE |& $tst_awk '{print $6 " " $7 " " $8 " " $9 " " $10}'
+cat t0t1.txt |& $grep "DBFREEZE.*$PWD" |& $tst_awk '{print $6,$7,$8,$9,$10,$11}'
 
 
 # To ensure our previous freeze settings are not captured in getoper
@@ -53,7 +53,7 @@ $ydb_dist/mumps -run gtm8779 >>& temp1.out
 set s1 = `cat temp1.out`
 echo "# Verifying System received a DBFREEZEON message for only DEFAULT and AREG"
 $gtm_tst/com/getoper.csh "$t1" "" t1t2.txt "" $s1
-cat t1t2.txt |& $grep DBFREEZE |& $tst_awk '{print $6 " " $7 " " $8 " " $9 " " $10}' |& sort
+cat t1t2.txt |& $grep "DBFREEZE.*$PWD" |& $tst_awk '{print $6,$7,$8,$9,$10,$11}' |& sort
 
 
 # To ensure our previous freeze settings are not captured in getoper
@@ -73,7 +73,7 @@ $ydb_dist/mumps -run gtm8779 >>& temp2.out
 set s2 = `cat temp2.out`
 echo "# Verifying System received a DBFREEZEOFF message for only AREG and DEFAULT"
 $gtm_tst/com/getoper.csh "$t2" "" t2t3.txt "" $s2
-cat t2t3.txt |& $grep DBFREEZE |& $tst_awk '{print $6 " " $7 " " $8 " " $9 " " $10}'
+cat t2t3.txt |& $grep "DBFREEZE.*$PWD" |& $tst_awk '{print $6,$7,$8,$9,$10,$11}'
 
 
 # To ensure our previous freeze settings are not captured in getoper
@@ -90,7 +90,7 @@ $ydb_dist/mumps -run gtm8779 >>& temp3.out
 set s3 = `cat temp3.out`
 echo "# Verifying System received a DBFREEZEOFF message for only BREG"
 $gtm_tst/com/getoper.csh "$t3" "" t3t4.txt "" $s3
-cat t3t4.txt |& $grep DBFREEZE |& $tst_awk '{print $6 " " $7 " " $8 " " $9 " " $10}'
+cat t3t4.txt |& $grep "DBFREEZE.*$PWD" |& $tst_awk '{print $6,$7,$8,$9,$10,$11}'
 
 $gtm_tst/com/dbcheck.csh >>& check.out
 if ($status) then
