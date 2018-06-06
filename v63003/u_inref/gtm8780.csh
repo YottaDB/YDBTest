@@ -11,7 +11,9 @@
 #								#
 #################################################################
 #
-#
+# Tests $select produces a syntax error for omitted colons after
+# a literal true is encountered
 #
 
+echo '# Running "write $select(1:0,0)" in mumps script'
 $ydb_dist/mumps -run gtm8780
