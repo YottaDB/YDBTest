@@ -15,5 +15,5 @@
 # a literal true is encountered
 #
 
-echo '# Running "write $select(1:0,0)" (Would produce an GTMASSERT2 error in previous versions)'
+echo '# Running "write $select(1:0,0)" (Would produce an GTMASSERT2/SIG-11 error in previous versions)'
 $ydb_dist/mumps -run gtm8780
