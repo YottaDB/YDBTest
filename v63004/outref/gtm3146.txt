@@ -1,0 +1,23 @@
+# Testing 
+# Create a 1 region DB region DEFAULT
+
+# Create a file, shell.csh, to be sourced by child shells : 
+
+cat shell.csh
+#!/usr/local/bin/tcsh -f
+set echo ; set verbose
+alias cp "jakewashere"
+# ^MUPIP BACKUP uses the cp command internally
+# and used to fail in environments with cp aliases
+
+if ( "$1" == "-c") then
+	shift 
+endif
+echo "$*" > script.csh
+source script.csh
+
+# Set $SHELL env var to have child shell shell.csh 
+
+# Running Mupip with $SHELL ./shell.csh
+BACKUP COMPLETED.
+# Shut down the DB 
