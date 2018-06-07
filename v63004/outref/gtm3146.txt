@@ -7,6 +7,9 @@ cat shell.csh
 #!/usr/local/bin/tcsh -f
 set echo ; set verbose
 alias cp "jakewashere"
+# ^MUPIP BACKUP uses the cp command internally
+# and used to fail in environments with cp aliases
+
 if ( "$1" == "-c") then
 	shift 
 endif

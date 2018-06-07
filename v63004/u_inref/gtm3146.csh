@@ -23,14 +23,17 @@ endif
 
 echo "# Create a file, shell.csh, to be sourced by child shells : "
 
-echo '#\!/usr/local/bin/tcsh -f' 		> "shell.csh"
-echo 'set echo ; set verbose'			>> "shell.csh"
-echo 'alias cp "jakewashere"' 			>> "shell.csh"
-echo 'if ( "$1" == "-c") then' 			>> "shell.csh"
-echo '	shift ' 				>> "shell.csh"
-echo 'endif' 					>> "shell.csh"
-echo 'echo "$*" > script.csh'			>> "shell.csh"
-echo 'source script.csh'			>> "shell.csh"
+echo '#\!/usr/local/bin/tcsh -f' 				> "shell.csh"
+echo 'set echo ; set verbose'					>> "shell.csh"
+echo 'alias cp "jakewashere"' 					>> "shell.csh"
+echo '# ^MUPIP BACKUP uses the cp command internally' 		>> "shell.csh"
+echo '# and used to fail in environments with cp aliases'	>> "shell.csh"
+echo ''								>> "shell.csh"
+echo 'if ( "$1" == "-c") then' 					>> "shell.csh"
+echo '	shift ' 						>> "shell.csh"
+echo 'endif' 							>> "shell.csh"
+echo 'echo "$*" > script.csh'					>> "shell.csh"
+echo 'source script.csh'					>> "shell.csh"
 echo ''
 
 chmod +x ./shell.csh
@@ -45,9 +48,13 @@ setenv SHELL "$PWD/shell.csh"
 echo ''
 
 echo "# Running Mupip with "'$SHELL'" ./shell.csh"
-$MUPIP BACKUP "*" tstBackup >>& backup.log
+$MUPIP BACKUP "*" tstBackup >>& backup_log.txt
+if ($status) then
+	echo "MUPIP BACKUP RETURNED AN ERROR"
+	cat backup_log.txt
+endif
 
-grep -e "BACKUP COMPLETED" backup.log
+grep -e "BACKUP COMPLETED" backup_log.txt
 
 
 echo '# Shut down the DB '
