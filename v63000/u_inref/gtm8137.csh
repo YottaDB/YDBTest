@@ -4,6 +4,9 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -170,4 +173,8 @@ endif
 echo "# Check again. No IPCS should lay around"
 $gtm_tst/com/check_ipcs.csh all
 
-$gtm_tst/com/dbcheck.csh
+# Since this test does a MUPIP JOURNAL -RECOVER and a MUPIP JOURNAL -ROLLBACK with database shared memory not cleanly shutdown
+# (i.e. no EOF record in journal file because of counter semaphore overflow) AND the imptp updates could be doing KILL operations,
+# it is possible an EPOCH happens in between phase1 and phase2 of the KILL in which case the database at the end of the
+# recover/rollback can have DBMRKBUSY integ errors (benign errors). Therefore use dbcheck_filter.csh (not the usual dbcheck.csh).
+$gtm_tst/com/dbcheck_filter.csh
