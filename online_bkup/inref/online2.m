@@ -1,3 +1,16 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; This module is derived from FIS GT.M.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	;;; online2.m
 	;===============================================================
 update	n
@@ -50,7 +63,7 @@ verify	n
 	if maxutime=0 s maxutime=1
         s ^config("maxutime")=maxutime
 	; if for at least 2 updates the inter-update interval is greater than maxwaitallowed, signal failure
-	; One update can take a long time(say 30 sec), due to system load. 
+	; One update can take a long time(say 30 sec), due to system load.
 	; To ward off spurious failures and since sys hiccups take place over long intervals,check 2 updates
 	i updwaitingforlongtime>1 s ^config("conclusn")="FAILED: The update interval is too long."
         s ^config("updatepersecondduringbackup")=^backup("lasted")/^backup("lasted","time")
@@ -67,12 +80,11 @@ main	n
 	s ^config("threshld","times")=5				; max interupdate time !> 1/5 backup run time
 	s ^config("threshld","basetime")=20			; with the min of 20 sec
 	s ^config("largnum")=1000000				; number of updates (atlhxit1 : 10 seconds)
-	if 'unix d
-	. s ^config("threshld","updatepersecondduringbackup")=10; decision threshold
-	else  d
-	. s ^config("threshld","updatepersecondduringbackup")=20	; decision threshold
+	; We have seen a test failure on a 1-CPU system with 13 updates per second during backup so
+	; have an update threshold less than 20 (currently set to 10) for such systems to avoid failures
+	s ^config("threshld","updatepersecondduringbackup")=$select(+$ztrnlnm("gtm_test_singlecpu"):10,1:20) ; decision threshold
 	s ^config("threshld","times")=5				; decision threshold
-	s ^config("conclusn")="PASSED"				; assume we can pass 
+	s ^config("conclusn")="PASSED"				; assume we can pass
 	s ^config("backupdone")=^config("largnum")		; flag for backup status
 	s ^config("updatedone")="FALSE"				; flag for updater status
 	s ^counter=0                            		; update/backup communication
