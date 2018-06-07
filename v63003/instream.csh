@@ -28,13 +28,14 @@
 # gtm8779	    [vinay] Tests changing Freeze produces a DBFREEZEON/DBFREEZEOFF message in the system
 # gtm8798	    [vinay] Tests ENDIANCVT converts the mutex fields
 # gtm8780	    [vinay] Tests $SELECT() produces a syntax error for an omitted colon after a literal true argument
+# gtm8787	    [vinay] Tests Mupip Journal -Extract=-stdout properly handles its termination
 #-------------------------------------------------------------------------------------
 
 echo "v63003 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "gtm8788 gtm7986 gtm8186 gtm8804 gtm8832 gtm8617 gtm4212 gtm8732nr gtm8767 gtm8735 gtm8779 gtm8798 gtm8780"
+setenv subtest_list_non_replic "gtm8788 gtm7986 gtm8186 gtm8804 gtm8832 gtm8617 gtm4212 gtm8732nr gtm8767 gtm8735 gtm8779 gtm8798 gtm8780 gtm8787"
 setenv subtest_list_replic     "gtm8732r"
 
 if ($?test_replic == 1) then
