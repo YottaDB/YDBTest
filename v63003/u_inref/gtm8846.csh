@@ -28,7 +28,7 @@ set rand=`$gtm_tst/com/genrandnumbers.csh 2 1 100`
 set rand1=${rand[1]}
 set rand2=${rand[2]}
 $MUPIP create
-echo "Testing with number of slashes ranging from 75 to 85 and to random numbers"
+echo "Testing with number of slashes ranging from 75 to 85 and two random numbers rangint from 1 to 100"
 foreach x (`seq 75 1 85` $rand1 $rand2)
 	echo "# -----------------------------------------"
 	echo "# $x slashes"
