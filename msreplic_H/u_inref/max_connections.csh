@@ -34,13 +34,12 @@ EOF
 ##   ...
 ##   START INST1 INST17 RP
 
-# When this test runs only on lester (i.e no remote hosts), use 1MB receiver and jnlpool (the minimum value) and cut down the number of global buffers to 64.
-# This is to reduced the memory requirement of this test especially in servers like lester where the below error is seen frequently
-# %YDB-E-JNLPOOLSETUP, Journal Pool setup error
-# %SYSTEM-E-ENO12, Not enough space
+# When this test runs on 1-CPU systems, which are usually low on system memory too, in multi-host mode or single-host mode,
+# use 1MB receivepool and jnlpool (the minimum value) and cut down the number of global buffers to 64. This is to reduce
+# the chances of the test taking a long time to run (we have seen it take 15 hours on an armv6l box) due to a memory crunch.
 setenv gtm_test_msr_smallenvironment
 set global_buffers = ""
-if ( ("HOST_HP-UX_PA_RISC" == "$gtm_test_os_machtype") && ("MULTISITE" != "$test_replic") ) then
+if ($gtm_test_singlecpu) then
 	setenv tst_buffsize  1048576
 	set  global_buffers = "-global_buffers=64"
 endif
