@@ -27,7 +27,7 @@
 # gtm8735	    [vinay] Tests the functionality of the READ_ONLY flag in MUPIP SET
 # gtm8779	    [vinay] Tests changing Freeze produces a DBFREEZEON/DBFREEZEOFF message in the system
 # gtm8798	    [vinay] Tests ENDIANCVT converts the mutex fields
-# gtm8846	    [vinay] Tests Mupip Set appropriately handles a file with excess slashes
+# gtm8846	    [vinay] Tests Mupip Set Journal appropriately handles a file with excess slashes
 #-------------------------------------------------------------------------------------
 
 echo "v63003 test starts..."

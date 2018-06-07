@@ -39,16 +39,14 @@ foreach x (`seq 75 1 85` $rand1 $rand2)
 	set s1="."`cat slash$i.out`
 	set s2="temp"`cat slash$i.out`
 	echo "# Verifying no Journal Files before running Mupip Set"
-	$gtm_tst/com/lsminusl.csh *.mjl
-	$gtm_tst/com/lsminusl.csh temp/*.mjl
+	ls *.mjl*
+	ls temp/*.mjl*
 	echo "# Paths we are feeding to Mupip Set Command"
 	echo $s1
 	echo $s2
 	$MUPIP SET -REGION DEFAULT -JOURNAL=ENABLE,ON,BEFORE,FILE=$s1
 	$MUPIP SET -REGION DEFAULT -JOURNAL=ENABLE,ON,BEFORE,FILE=$s2
 	echo "# Verifying journal file was made properly"
-	$gtm_tst/com/lsminusl.csh *.mjl* |& $tst_awk '{print $1 " " $2 " " $3 " " $4 " " $9}'
-	$gtm_tst/com/lsminusl.csh temp/*.mjl* |& $tst_awk '{print $1 " " $2 " " $3 " " $4 " " $9}'
 	ls *.mjl*
 	ls temp/*.mjl*
 	rm abcd*
