@@ -1,0 +1,46 @@
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+#
+set timeout 60
+
+spawn /usr/local/bin/tcsh -f
+
+expect_after {
+	timeout { timeout_procedure }
+}
+
+proc timeout_procedure { } {
+	puts "timeout occurred"
+	exit -1
+}
+
+expect -exact ">"
+puts "# Expect the shell prompt"
+
+# Have columns higher than 80 as that can cause test failures on lines that are just above 80 columns in length
+send -- "stty cols 132\r"
+expect "stty cols 132\r"
+
+expect -exact ">"
+puts "YDB"
+send -- "\$ydb_dist/mumps -dir\r"
+expect -exact "YDB>"
+send "zhelp\r"
+expect "Topic?"
+puts "#<Ctrl-C>"
+send "\x03\r"
+send "\r"
+expect -exact "YDB>"
+send "halt\r"
+expect ">"
+send "exit\r"
+
