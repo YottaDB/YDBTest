@@ -20,7 +20,6 @@ if ($status) then
 	echo "DB Create Failed, Output Below"
 	cat create.out
 endif
-$MUPIP set -region default -journal=enable,on,nobefore,file=abcd.mjl >>& set.out
 rm *.mjl* >>& rm.out
 rm *.dat* >>& rm.out
 
@@ -29,15 +28,14 @@ set rand=`$gtm_tst/com/genrandnumbers.csh 2 1 100`
 set rand1=${rand[1]}
 set rand2=${rand[2]}
 $MUPIP create
-set i = 1
+echo "Testing with number of slashes ranging from 75 to 85 and to random numbers"
 foreach x (`seq 75 1 85` $rand1 $rand2)
 	echo "# -----------------------------------------"
 	echo "# $x slashes"
 	echo "# -----------------------------------------"
-	@ i++
-	$ydb_dist/mumps -run gtm8846 $x >>& slash$i.out
-	set s1="."`cat slash$i.out`
-	set s2="temp"`cat slash$i.out`
+	$ydb_dist/mumps -run gtm8846 $x >& slash.out
+	set s1="."`cat slash.out`
+	set s2="temp"`cat slash.out`
 	echo "# Verifying no Journal Files before running Mupip Set"
 	ls *.mjl*
 	ls temp/*.mjl*
