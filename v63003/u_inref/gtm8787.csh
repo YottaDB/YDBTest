@@ -14,16 +14,13 @@
 # Tests that Mupip Journal -Extract=-stdout handles its termination appropriately
 #
 
-# Creating database,journal file
-setenv gtm_test_db_format "NO_CHANGE"
-source $gtm_tst/com/gtm_test_setbgaccess.csh
-source $gtm_tst/com/gtm_test_setbeforeimage.csh
+echo "# Creating database,journal file"
 $gtm_tst/com/dbcreate.csh mumps 1>>& create.out
 if ($status) then
 	echo "DB Create Failed, Output Below"
 	cat create.out
 endif
-$MUPIP Set -Region Default -Journal=enable,on,before,file=mumps.mjl >>& jnlcreate.out
+$MUPIP Set -Region Default -Journal=enable,on,nobefore,file=mumps.mjl >>& jnlcreate.out
 if ($status) then
 	echo "Journal Create Failed, Output Below"
 	cat jnlcreate.out
@@ -31,7 +28,7 @@ endif
 
 # Updating database with massive amount of information so it will take time to extract,
 # allowing the system to easily exit while extracting
-$ydb_dist/mumps -run ^%XCMD "for i=1:1:10 set ^x(i)=i"
+$ydb_dist/mumps -run ^%XCMD "for i=1:1:1000 set ^x(i)=i"
 set t = `date +"%b %e %H:%M:%S"`
 
 echo "# Running extract and terminating in separate terminal"
@@ -39,15 +36,13 @@ echo "# Running extract and terminating in separate terminal"
 if ($status) then
 	echo "EXPECT FAILED"
 endif
-$ydb_dist/mumps -run gtm8787 >>& temp.out
-set s = `cat temp.out`
-$gtm_tst/com/getoper.csh "$t" "" log.outx "" $s
+$gtm_tst/com/getoper.csh "$t"
 
 echo "# Searching Sys Log for a KILLBYSIG Error (Expecting nothing, would be found in previous versions)"
-cat log.outx |& $grep KILLBYSIG |& $tst_awk '{print $5 " " $6 " " $7 " " $8 " " $9 " " $10 " " $11 " " $12}'
+cat syslog.txt |& $grep KILLBYSIG |& $tst_awk '{print $6 " " $7 " " $8 " " $9 " " $10 " " $11 " " $12}'
 echo ""
 echo "# Searching Sys Log for a NOPRINCIO Error"
-cat log.outx |& $grep NOPRINCIO |& $tst_awk '{print $5 " " $6 " " $7 " " $8 " " $9 " " $10 " " $11 " " $12}'
+cat syslog.txt |& $grep NOPRINCIO |& $tst_awk '{print $6 " " $7 " " $8 " " $9 " " $10 " " $11 " " $12}'
 
 
 $gtm_tst/com/dbcheck.csh >>& check.out
