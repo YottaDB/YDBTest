@@ -29,6 +29,7 @@
 # gtm8922	    [jake]  Tests the functionality of VIEW keywords that take <region-list> expressions
 # gtm8923	    [jake]  Tests the READ * and WRITE * commands no longer produce errors or incorrect output for files or sockets with CHSET={UTF-16,UTF-16BE,UTF-16LE}
 # gtm8903	    [jake]  Tests $SELECT(1:,:) function call for errors when global references are present
+# gtm3146	    [jake]  Tests that changes to alias and path settings no longer disrupt system() calls within MUPIP BACKUP command calls
 
 echo "v63004 test starts..."
 
@@ -36,7 +37,7 @@ echo "v63004 test starts..."
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic ""
 setenv subtest_list_non_replic "$subtest_list_non_replic gtm8914 gtm8909 gtm8874 gtm8860 gtm8791 gtm8699 gtm8202 gtm1042 gtm8891 "
-setenv subtest_list_non_replic "$subtest_list_non_replic gtm8894 gtm8643 gtm8922 gtm8923 gtm8903"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm8894 gtm8643 gtm8922 gtm8923 gtm8903 gtm3146"
 setenv subtest_list_replic     ""
 setenv subtest_list_replic     "$subtest_list_replic gtm5730"
 
