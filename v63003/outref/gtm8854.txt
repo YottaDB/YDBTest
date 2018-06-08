@@ -1,0 +1,10 @@
+# Using a literal false postconditional with an argument containing a syntax error
+# In previous versions, this would produce a SIG11 error
+		write:0 "bad syntax
+		                   ^-----
+		At column 21, line 17, source module ##IN_TEST_PATH##/inref/gtm8854.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+		At M source location gtm8854+1^gtm8854
+
+YDB>
