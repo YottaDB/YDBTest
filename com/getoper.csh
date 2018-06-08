@@ -18,7 +18,7 @@
 # It will just call syslog.awk and since this can be called even from remote hosts to log their syslog information
 # we decided to keep this wrapper executing the awk.
 ################################################################################################################
-if ( 2 > $# ) then
+if ( 1 > $# ) then
 	echo "TEST-E-SYSLOGINFO error. cannot proceed to capture syslog information,pls. provide the following"
 	echo "timeframe - beginning and end in format like Nov 16 10:11:39"
 	echo "output file to write the log is optional.If not provided it writes to syslog.txt in the current dir"
@@ -29,12 +29,13 @@ if ( 2 > $# ) then
 	echo "$gtm_tst/com/getoper.csh time_before time_after <output_file> <syslog_file> <message> <count>"
 	exit 1
 endif
-if (5 <= $#) set message = "$5"
+if (5 <= $# && "" != $5) set message = "$5"
 
 if (6 == $#) then
 	set count = $6
 else
 	set count = 1
+	set message = `$ydb_dist/mumps -run ^%XCMD 'write $$^%RANDSTR(32)'`
 endif
 
 if ( "" == $3 ) then
@@ -80,7 +81,9 @@ else
 	set time_after = "$2"
 endif
 
-if ($?message) then
+if ("" == "$time_after") then
+	set a = '$ZSYSLOG("'$message'")'
+	$ydb_dist/mumps -run ^%XCMD "set y=$a"
 	set sleepinc = 5
 	set found = 0
 	set end_time = "$time_after"
@@ -95,9 +98,7 @@ if ($?message) then
 	@ timeout = $starttime + $maxwait
 	while ($nowtime <= $timeout)
 		set nowtime = `date +%s`
-		if ("" == "$time_after") then
-			set end_time = `date +"$datefmt"`
-		endif
+		set end_time = `date +"$datefmt"`
 		if (-f $output_file) \rm -f $output_file
 		## START - PREVIOUS GENERATION SYSLOG SEARCH
 		if (! ($?no_prev_search)) then
@@ -140,7 +141,6 @@ if ($?message) then
 		exit 1
 	endif
 else
-	if ("" == "$time_after") set time_after = `date +"$datefmt"`
 	## START - PREVIOUS GENERATION SYSLOG SEARCH
 	if (! ($?no_prev_search)) then
 		set search_prev_syslog = `$tst_awk -f $gtm_tst/com/get_time.awk -v before="$time_before" --source '{first_entry = get_time($1" "$2" "$3); search_start_time = get_time(before); print (search_start_time <= first_entry); exit}' $syslog_file`
