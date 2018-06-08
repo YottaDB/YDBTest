@@ -31,10 +31,8 @@ $MUPIP FREEZE -ON BREG
 
 # Passing a random string into the sys log after we make changes, getoper will
 # print everything in the syslog between t0 and the occurence of this random string
-$ydb_dist/mumps -run gtm8779 >>& temp0.out
-set s0 = `cat temp0.out`
 echo "# Verifying System received a DBFREEZEON message for only BREG"
-$gtm_tst/com/getoper.csh "$t0" "" t0t1.txt "" $s0
+$gtm_tst/com/getoper.csh "$t0" "" t0t1.txt
 cat t0t1.txt |& $grep "DBFREEZE.*$PWD" |& $tst_awk '{print $6,$7,$8,$9,$10,$11}'
 
 
@@ -49,10 +47,8 @@ $MUPIP FREEZE -ON "*" |& sort
 
 # Passing a random string into the sys log after we make changes, getoper will
 # print everything in the syslog between t1 and the occurence of this random string
-$ydb_dist/mumps -run gtm8779 >>& temp1.out
-set s1 = `cat temp1.out`
 echo "# Verifying System received a DBFREEZEON message for only DEFAULT and AREG"
-$gtm_tst/com/getoper.csh "$t1" "" t1t2.txt "" $s1
+$gtm_tst/com/getoper.csh "$t1" "" t1t2.txt
 cat t1t2.txt |& $grep "DBFREEZE.*$PWD" |& $tst_awk '{print $6,$7,$8,$9,$10,$11}' |& sort
 
 
@@ -69,10 +65,8 @@ $MUPIP FREEZE -ON BREG
 
 # Passing a random string into the sys log after we make changes, getoper will
 # print everything in the syslog between t2 and the occurence of this random string
-$ydb_dist/mumps -run gtm8779 >>& temp2.out
-set s2 = `cat temp2.out`
 echo "# Verifying System received a DBFREEZEOFF message for only AREG and DEFAULT"
-$gtm_tst/com/getoper.csh "$t2" "" t2t3.txt "" $s2
+$gtm_tst/com/getoper.csh "$t2" "" t2t3.txt
 cat t2t3.txt |& $grep "DBFREEZE.*$PWD" |& $tst_awk '{print $6,$7,$8,$9,$10,$11}'
 
 
@@ -86,10 +80,8 @@ $MUPIP FREEZE -OFF "*" |& sort
 
 # Passing a random string into the sys log after we make changes, getoper will
 # print everything in the syslog between t3 and the occurence of this random string
-$ydb_dist/mumps -run gtm8779 >>& temp3.out
-set s3 = `cat temp3.out`
 echo "# Verifying System received a DBFREEZEOFF message for only BREG"
-$gtm_tst/com/getoper.csh "$t3" "" t3t4.txt "" $s3
+$gtm_tst/com/getoper.csh "$t3" "" t3t4.txt
 cat t3t4.txt |& $grep "DBFREEZE.*$PWD" |& $tst_awk '{print $6,$7,$8,$9,$10,$11}'
 
 $gtm_tst/com/dbcheck.csh >>& check.out

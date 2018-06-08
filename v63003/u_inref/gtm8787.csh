@@ -20,6 +20,7 @@ if ($status) then
 	echo "DB Create Failed, Output Below"
 	cat create.out
 endif
+# Using nobefore so test can work with BG or MM access method (randomly chosen by test framework)
 $MUPIP Set -Region Default -Journal=enable,on,nobefore,file=mumps.mjl >>& jnlcreate.out
 if ($status) then
 	echo "Journal Create Failed, Output Below"
@@ -37,12 +38,13 @@ if ($status) then
 	echo "EXPECT FAILED"
 endif
 $gtm_tst/com/getoper.csh "$t"
+# Syslog messages captured in getoper will be logged to syslog.txt
 
 echo "# Searching Sys Log for a KILLBYSIG Error (Expecting nothing, would be found in previous versions)"
-cat syslog.txt |& $grep KILLBYSIG |& $tst_awk '{print $6 " " $7 " " $8 " " $9 " " $10 " " $11 " " $12}'
+cat syslog.txt |& $grep KILLBYSIG |& $tst_awk '{print $6,$7,$8,$9,$10,$11,$12}'
 echo ""
 echo "# Searching Sys Log for a NOPRINCIO Error"
-cat syslog.txt |& $grep NOPRINCIO |& $tst_awk '{print $6 " " $7 " " $8 " " $9 " " $10 " " $11 " " $12}'
+cat syslog.txt |& $grep NOPRINCIO |& $tst_awk '{print $6,$7,$8,$9,$10,$11,$12}'
 
 
 $gtm_tst/com/dbcheck.csh >>& check.out
