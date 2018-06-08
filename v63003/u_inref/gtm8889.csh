@@ -18,7 +18,7 @@ echo "# Pressing Control C while in zhelp, would get an error in previous versio
 echo ""
 echo "# Terminal Display:"
 echo ""
-# Setting GTM prompt so we can run on previous versions (which default to "GTM>"
+# Setting prompt explicitly so we can run on previous GTM versions too (which default to "GTM>")
 setenv gtm_prompt "YDB>"
 (expect -d $gtm_tst/$tst/u_inref/gtm8889.exp > expect.outx) >& expect.dbg
 if ($status) then
