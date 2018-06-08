@@ -1,3 +1,17 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; This module is derived from FIS GT.M.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 d002477	;
 	do intrpt^d002477	; test the primary issue of MUPIP INTRPT and TPTIMEOUT interfering with each other
 	do hangtest^d002477	; test a secondary VMS-only issue where TPTIMEOUT error causes HANG to stop working
@@ -8,12 +22,12 @@ intrpt  ;
 	; D9E08-002477 JOB Interrupt puts IBS servers into a non functional state and breaks outofband
 	;
 	; The issue is that we want to test that a long running TCOMMIT command does not reset any outofband
-	; related state information that was set by a MUPIP INTRPT that came in during the TCOMMIT. The 
+	; related state information that was set by a MUPIP INTRPT that came in during the TCOMMIT. The
 	; objective of this test is to ensure the TCOMMIT is long running for a MUPIP INTRPT to sneak in.
 	; To do that first of all we enable before-image journaling on this database. Next we spawn off
 	; two threads. One of them doing SETs and the other doing only KILLs of all the SETs done by the
 	; first thread. A TCOMMIT that does an M-KILL involves 2-phases and is more likely to take a long time.
-	; We therefore send MUPIP INTRPTs to the second thread periodically and expect it to generate a 
+	; We therefore send MUPIP INTRPTs to the second thread periodically and expect it to generate a
 	; JOBEXAM dump file. Note that we need a timed TP transaction in order to reproduce this issue.
 	; Having GDSCERT turned on also lengthens the commit time so that is also done.
 	; ------------------------------------------------------------------------------------------------------
@@ -56,7 +70,7 @@ intrpt  ;
 	.	if unix   zsystem "$gtm_dist/mupip intrpt "_intrptpid_" >& mupip_intrpt_"_i_".log"
 	.	if 'unix  set iteration(intrptpid,i,"SIGPROCSTATUS")=$ZSigproc(intrptpid,16)
 	.	; Wait for jobexam file to be created before sending the next MUPIP INTRPT or $ZSIGPROC
-	.	set waitstatus=$$FUNC^waitforfilecreate("GTM_JOBEXAM.ZSHOW_DMP_"_intrptpid_"_"_jobexami,waittime)
+	.	set waitstatus=$$FUNC^waitforfilecreate("YDB_JOBEXAM.ZSHOW_DMP_"_intrptpid_"_"_jobexami,waittime)
 	.	; If file was successfully created, wait for next file # in next iteration else wait for same file in next round
 	.	set iteration(intrptpid,i,"WAITFORFILECREATESTATUS")=waitstatus
 	.	set iteration(intrptpid,i,"2-DURING")=$horolog
