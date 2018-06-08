@@ -1,0 +1,21 @@
+RANDOM SETTING: 
+##TEST_AWK.*Tests will be run.*
+
+Calling ydb210.exp to create DB in new terminal
+
+# Shut down source server and set regions to different NULL Collation
+Database file ##TEST_PATH##/mumps.dat is now using GT.M null collation      
+Database file ##TEST_PATH##/a.dat is now using M standard null collation
+
+# Restart source server (expecting NULLCOLLDIFF error)
+%YDB-E-NULLCOLLDIFF, Null collation order must be the same for all regions
+
+# Shut down source server and set regions back to the same NULL Collation
+Database file ##TEST_PATH##/mumps.dat is now using M standard null collation
+Database file ##TEST_PATH##/a.dat is now using M standard null collation
+
+# Restart source server (expecting no error)
+
+# Shutdown the DB
+##TEST_AWK.*/SRC_.*.log
+%YDB-E-NULLCOLLDIFF, Null collation order must be the same for all regions

@@ -17,6 +17,7 @@
 # tprestart   [nars]  Test that TPRESTART syslog message has the correct global name when restart "type" is 4
 # viewcmdfunc [nars]  Test various VIEW commands and $VIEW functions (used to SIG-11/SIG-6/GTMASSERT2 in V6.3-004)
 # blktoodeep  [nars]  Test that BLKTOODEEP error is not issued if -NOWARNING is specified at compile time
+# ydb210    [jake]  Test that source server errors are sent to source server log file
 #-------------------------------------------------------------------------------------------------------------
 
 echo "r122 test starts..."
@@ -26,6 +27,7 @@ setenv subtest_list_common     ""
 setenv subtest_list_non_replic ""
 setenv subtest_list_non_replic "$subtest_list_non_replic tprestart viewcmdfunc blktoodeep"
 setenv subtest_list_replic     ""
+setenv subtest_list_replic "$subtest_list_replic ydb210"
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
