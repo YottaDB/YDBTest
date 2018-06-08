@@ -1,4 +1,17 @@
 #!/usr/local/bin/tcsh
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+# This module is derived from FIS GT.M.
+#################################################################
 #
 # D9E08-002477 JOB Interrupt puts IBS servers into a non functional state and breaks outofband
 #
@@ -18,7 +31,7 @@ GTM_EOF
 @ success = 1
 while ($cnt < $maxcnt)
 	@ cnt = $cnt + 1
-	if (! -e GTM_JOBEXAM.ZSHOW_DMP_${pid}_${cnt}) then
+	if (! -e YDB_JOBEXAM.ZSHOW_DMP_${pid}_${cnt}) then
 		@ success = 0
 	else
 		@ actualcnt = $actualcnt + 1
@@ -27,9 +40,9 @@ end
 
 @ gracecnt = $maxcnt / 2	# allow for 50% job interrupts to NOT create JOBEXAM files
 if (($success == 0) && ($actualcnt < ($maxcnt - $gracecnt))) then
-	echo "Test FAILED : $maxcnt MUPIP INTRPTs sent to pid=$pid but only $actualcnt GTM_JOBEXAM.ZSHOW_DMP* files found"
+	echo "Test FAILED : $maxcnt MUPIP INTRPTs sent to pid=$pid but only $actualcnt YDB_JOBEXAM.ZSHOW_DMP* files found"
 	echo ""
-	ls -l GTM_JOBEXAM.ZSHOW_DMP*
+	ls -l YDB_JOBEXAM.ZSHOW_DMP*
 	echo ""
 endif
 
