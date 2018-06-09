@@ -14,7 +14,8 @@
 #-------------------------------------------------------------------------------------------------------------
 # List of subtests of the form "subtestname [author] description"
 #-------------------------------------------------------------------------------------------------------------
-# readonly [nars]  Test update on database with READ_ONLY flag through multiple global directories
+# readonly          [nars]  Test update on database with READ_ONLY flag through multiple global directories
+# ydb275socketpass [nars]  Test that LISTENING sockets can be passed through JOB or WRITE /PASS and WRITE /ACCEPT
 #-------------------------------------------------------------------------------------------------------------
 
 echo "r124 test starts..."
@@ -22,7 +23,7 @@ echo "r124 test starts..."
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic ""
-setenv subtest_list_non_replic "$subtest_list_non_replic readonly"
+setenv subtest_list_non_replic "$subtest_list_non_replic readonly ydb275socketpass"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
