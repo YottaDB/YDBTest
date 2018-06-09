@@ -29,7 +29,7 @@ if ( 1 > $# ) then
 	echo "$gtm_tst/com/getoper.csh time_before time_after <output_file> <syslog_file> <message> <count>"
 	exit 1
 endif
-if (5 <= $# && "" != $5) set message = "$5"
+if (5 <= $# && "" != "$5") set message = "$5"
 
 if (6 == $#) then
 	set count = $6
