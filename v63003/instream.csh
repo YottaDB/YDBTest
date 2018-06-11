@@ -31,7 +31,7 @@
 # gtm8780	    [vinay] Tests $SELECT() produces a syntax error for an omitted colon after a literal true argument
 # gtm8787	    [vinay] Tests Mupip Journal -Extract=-stdout properly handles its termination
 # gtm8889	    [vinay] Tests zhelp does not produce an error when <Ctrl C> is pressed
-# gtm8856	    [vinay] Tests XECUTE+evaluations that encounter issues with a pattern table produce an error while compiling
+# gtm8856	    [vinay] Tests literal optimizations that can result in errors at compile time are deferred if done inside XECUTE
 #-------------------------------------------------------------------------------------
 
 echo "v63003 test starts..."
