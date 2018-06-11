@@ -31,6 +31,7 @@
 # gtm8780	    [vinay] Tests $SELECT() produces a syntax error for an omitted colon after a literal true argument
 # gtm8787	    [vinay] Tests Mupip Journal -Extract=-stdout properly handles its termination
 # gtm8889	    [vinay] Tests zhelp does not produce an error when <Ctrl C> is pressed
+# gtm8856	    [vinay] Tests literal optimizations that can result in errors at compile time are deferred if done inside XECUTE
 # gtm8857	    [vinay] Tests patterns exceeding the size GTM supports produces a PATMAXLEN error
 # gtm8854	    [vinay] Tests syntax error in the argument of a FALSE postconditional is handled appropriately
 #-------------------------------------------------------------------------------------
@@ -40,7 +41,7 @@ echo "v63003 test starts..."
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic "gtm8788 gtm7986 gtm8186 gtm8804 gtm8832 gtm8617 gtm4212 gtm8732nr gtm8767 gtm8735 gtm8779 gtm8798"
-setenv subtest_list_non_replic "$subtest_list_non_replic gtm8846 gtm8780 gtm8787 gtm8889 gtm8857 gtm8854"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm8846 gtm8780 gtm8787 gtm8889 gtm8856 gtm8857 gtm8854"
 setenv subtest_list_replic     "gtm8732r"
 
 if ($?test_replic == 1) then
