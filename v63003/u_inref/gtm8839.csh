@@ -11,8 +11,19 @@
 #								#
 #################################################################
 #
-# Tests $DEVICE returns a complete error message
 #
-echo $x
-$ydb_dist/mumps -run gtm8839
+#
 
+echo "# Pressing Control C while in zhelp, would get an error in previous versions"
+echo ""
+echo "# Terminal Display:"
+echo ""
+# Setting prompt explicitly so we can run on previous GTM versions too (which default to "GTM>")
+setenv gtm_prompt "YDB>"
+(expect -d $gtm_tst/$tst/u_inref/gtm8839.exp > expect.outx) >& expect.dbg
+if ($status) then
+	echo "EXPECT Failed"
+endif
+perl $gtm_tst/com/expectsanitize.pl expect.outx > expect_sanitized.outx
+
+cat expect_sanitized.outx
