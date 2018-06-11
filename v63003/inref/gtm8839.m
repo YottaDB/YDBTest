@@ -11,6 +11,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 gtm8839
-	set x="temp.out"
-	open x
+	kill
+	use $principal:(noescape:term=$char(13))
+	read *x set zb=$zb read y:0 zwrite
 	quit

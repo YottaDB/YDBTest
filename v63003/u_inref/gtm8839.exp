@@ -32,6 +32,7 @@ expect "stty cols 132\r"
 
 expect -exact ">"
 send -- "$ydb_dist/mumps -run gtm8839\r"
+send -- "1"
 expect "YDB>"
 send -- "write $DEVICE\r"
 expect "YDB>"
