@@ -33,6 +33,7 @@
 # gtm8889	    [vinay] Tests zhelp does not produce an error when <Ctrl C> is pressed
 # gtm8857	    [vinay] Tests patterns exceeding the size GTM supports produces a PATMAXLEN error
 # gtm8854	    [vinay] Tests syntax error in the argument of a FALSE postconditional is handled appropriately
+# gtm8880	    [vinay] Tests $DEVICE returns the complete error message
 #-------------------------------------------------------------------------------------
 
 echo "v63003 test starts..."
@@ -40,7 +41,7 @@ echo "v63003 test starts..."
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic "gtm8788 gtm7986 gtm8186 gtm8804 gtm8832 gtm8617 gtm4212 gtm8732nr gtm8767 gtm8735 gtm8779 gtm8798"
-setenv subtest_list_non_replic "$subtest_list_non_replic gtm8846 gtm8780 gtm8787 gtm8889 gtm8857 gtm8854"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm8846 gtm8780 gtm8787 gtm8889 gtm8857 gtm8854 gtm8880"
 setenv subtest_list_replic     "gtm8732r"
 
 if ($?test_replic == 1) then
