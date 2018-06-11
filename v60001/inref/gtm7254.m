@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-;	Copyright 2012, 2014 Fidelity Information Services, Inc	;
+; Copyright 2012, 2014 Fidelity Information Services, Inc	;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -22,11 +25,11 @@ gtm7254(thr)
 	do wait^job
 	quit
 lockit(timed)
-	if timed write "Trying with timed lock",! set lcomm="+^x:5"
+	if timed write "Trying with timed lock",! set lcomm="+^x:60"
 	else  write "Trying with untimed lock",! set lcomm="+^x"
 	for i=1:1:100 do
 	.	lock @(lcomm)
-	.	if (timed&(0=$test)) write "TEST-E-FAIL This process waited more than 5 seconds for a timed lock",!
+	.	if (timed&(0=$test)) write "TEST-E-FAIL This process waited more than 60 seconds for a timed lock",!
 	.	write "o"
 	.	set ^update($increment(^seq))=index ; Keep update order in a global
 	.	; fake some activity inside the lock critical section. not doing so can cause one process to finish
