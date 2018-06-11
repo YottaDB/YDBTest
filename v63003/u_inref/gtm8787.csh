@@ -14,6 +14,10 @@
 # Tests that Mupip Journal -Extract=-stdout handles its termination appropriately
 #
 
+
+# Needed to avoid ocassional assert failures in iott_use.c due to an error return rom tcsetattr() after the terminal is killed
+setenv gtm_white_box_test_case_enable   1
+setenv gtm_white_box_test_case_number   51      # WBTEST_KILL_TERMINAL
 echo "# Creating database,journal file"
 $gtm_tst/com/dbcreate.csh mumps 1>>& create.out
 if ($status) then
