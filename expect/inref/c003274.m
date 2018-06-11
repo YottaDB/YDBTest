@@ -3,6 +3,9 @@
 ; Copyright (c) 2015-2016 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -30,7 +33,7 @@ load	;
 verify
 	new file,filepattern,i,pidsep
 	set pidsep="_"_^c003274_"_"
-	set filepattern="GTM_JOBEXAM.ZSHOW_DMP"_pidsep_"*"
+	set filepattern="YDB_JOBEXAM.ZSHOW_DMP"_pidsep_"*"
 	if $zsearch("/dev/null",17)
 	for i=1:1 set file=$zsearch(filepattern,17) quit:""=file  do
 	. write $zpiece(file,pidsep,1),"_MASKED_",$zpiece(file,pidsep,2),!
@@ -53,6 +56,6 @@ intrpt
 	for i=1:1:2 quit:(0=waitstatus)!(1=^done)  do
 	. if $zsigproc(^c003274,sigusr1)
 	. set ^intrpt($job,$horolog)=i
-	. set waitstatus=$$FUNC^waitforfilecreate("GTM_JOBEXAM.ZSHOW_DMP_"_^c003274_"_"_intrptcnt,waittime)
+	. set waitstatus=$$FUNC^waitforfilecreate("YDB_JOBEXAM.ZSHOW_DMP_"_^c003274_"_"_intrptcnt,waittime)
 	if waitstatus>0,$zjobexam()
 	quit

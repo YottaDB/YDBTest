@@ -82,18 +82,41 @@ while !( -e $exit_file)
 		set runtime =  `echo $timestart.$timenow | $tst_awk -F \. -f $gtm_tst/com/diff_time.awk`
 		if ( ( $runtime >= $gtm_test_hang_alert_sec ) && (! $?mailsent) ) then
 			# The test has been running for longer than $gtm_test_hang_alert_sec.
+			# Send a TEST-E-HANG email
+			#
+			cd $cursubtestdir
+			# Capture ps/ipcs etc. at time of TEST-E-HANG report
+			$gtm_tst/com/capture_ps_ipcs_netstat_lsof.csh	>& capture_ps_ipcs_netstat_lsof_HANG.out
+			# Get syslog at time of TEST-E-HANG report
+			set syslog_before = `cat start_time_syslog.txt`
+			set syslog_after = `date +"%b %e %H:%M:%S"`
+			$gtm_tst/com/getoper.csh "$syslog_before" "$syslog_after" syslog_${cursubtestdir}_HANG.txt
+			cd -
 			set msg = "${watch_dir:h:t}/$cursubtestdir has been running for $runtime seconds. Check if it is hung"
+			# Send TEST-E-HANG email
 			echo $msg | mailx -s "TEST-E-HANG $shorthost : ${watch_dir:h}/$cursubtestdir" $mailing_list
 			echo "TEST-E-HANG : $msg" >> $cursubtestdir/hangalert.out
 			set mailsent = 1
 		endif
 		if ( $runtime >= $killtime) then
+			# The test has been running for longer than $gtm_test_hang_alert_sec + extra-time.
+			# Send a TEST-E-TIMEDOUT email
+			#
+			cd $cursubtestdir
+			# Capture ps/ipcs etc. at time of TEST-E-TIMEDOUT report
+			$gtm_tst/com/capture_ps_ipcs_netstat_lsof.csh	>& capture_ps_ipcs_netstat_lsof_TIMEDOUT.out
+			# Get syslog at time of TEST-E-TIMEDOUT report
+			set syslog_before = `cat start_time_syslog.txt`
+			set syslog_after = `date +"%b %e %H:%M:%S"`
+			$gtm_tst/com/getoper.csh "$syslog_before" "$syslog_after" syslog_${cursubtestdir}_TIMEDOUT.txt
+			cd -
 			# Kill just submit_test.csh
 			cd $tst_general_dir
 			set submit_test_pid = `$tst_awk '/submit_test.csh PID/ { print $NF}' $tst_general_dir/config.log`
 			$kill9 $submit_test_pid
 			$tst_awk -f $gtm_tst/com/process.awk -f $gtm_tst/com/outref.awk $tst_general_dir/outstream.log $outref_txt >&! $tst_general_dir/outstream.cmp
 			\diff $tst_general_dir/outstream.cmp $tst_general_dir/outstream.log >& $tst_general_dir/diff.log
+			# Send TEST-E-TIMEDOUT email
 			$gtm_tst/com/gtm_test_sendresultmail.csh TIMEDOUT
 			\rm $tst_general_dir/diff.log # To avoid confusion when the test runs to completion
 			set test_killed = 1
