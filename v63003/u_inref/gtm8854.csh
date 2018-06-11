@@ -13,6 +13,7 @@
 #
 #
 #
-echo "# Using a literal false postconditional with an argument containing a syntax error"
+echo "# Using literal false postconditionals with arguments containing syntax errors"
 echo "# In previous versions, this would produce a SIG11 error"
-$ydb_dist/mumps -run gtm8854
+$ydb_dist/mumps -run test1^gtm8854
+$ydb_dist/mumps -run test2^gtm8854

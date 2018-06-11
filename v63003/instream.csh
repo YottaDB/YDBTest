@@ -31,7 +31,7 @@
 # gtm8780	    [vinay] Tests $SELECT() produces a syntax error for an omitted colon after a literal true argument
 # gtm8787	    [vinay] Tests Mupip Journal -Extract=-stdout properly handles its termination
 # gtm8889	    [vinay] Tests zhelp does not produce an error when <Ctrl C> is pressed
-# gtm8854	    [vinay] Tests syntax error in the argument of a FALSE postconidtional is handled appropriately
+# gtm8854	    [vinay] Tests syntax error in the argument of a FALSE postconditional is handled appropriately
 #-------------------------------------------------------------------------------------
 
 echo "v63003 test starts..."

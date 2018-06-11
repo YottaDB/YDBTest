@@ -13,6 +13,10 @@
 ;
 ;
 
-gtm8854
-	write:0 "bad syntax
+test1
+	hang:0
+	quit
+
+test2
+	hang:0 0,
 	quit
