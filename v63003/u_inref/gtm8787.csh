@@ -41,10 +41,11 @@ $gtm_tst/com/getoper.csh "$t"
 # Syslog messages captured in getoper will be logged to syslog.txt
 
 echo "# Searching Sys Log for a KILLBYSIG Error (Expecting nothing, would be found in previous versions)"
-cat syslog.txt |& $grep KILLBYSIG |& $tst_awk '{print $6,$7,$8,$9,$10,$11,$12}'
+cat syslog.txt |& $grep -m 1 KILLBYSIG |& $tst_awk '{print $6,$7,$8,$9,$10,$11,$12}'
 echo ""
 echo "# Searching Sys Log for a NOPRINCIO Error"
-cat syslog.txt |& $grep NOPRINCIO |& $tst_awk '{print $6,$7,$8,$9,$10,$11,$12}'
+# Syslog can sometimes produce either one or two NOPRINCIO Errors, for uniformity we are just looking for the first instance
+cat syslog.txt |& $grep -m 1 NOPRINCIO |& $tst_awk '{print $6,$7,$8,$9,$10,$11,$12}'
 
 
 $gtm_tst/com/dbcheck.csh >>& check.out
