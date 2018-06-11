@@ -17,8 +17,6 @@
 # run time
 #
 
-# Specifying chset to M, since UTF-8 does not let us load a new PATTABLE
-$switch_chset "M" >& chset.out
 cat <<EOF > patcode.txt
 PATSTART
   PATTABLE NEWLANGUAGE
