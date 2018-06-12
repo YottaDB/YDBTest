@@ -71,6 +71,7 @@ endif
 setenv gtmgbldir mumps.gld
 setenv DO_FAIL_OVER "source $gtm_tst/com/fail_over.csh"
 setenv GTM "$gtm_exe/mumps -direct"
+setenv YDB "$gtm_exe/mumps -direct"
 setenv MUPIP "$gtm_exe/mupip"
 setenv LKE "$gtm_exe/lke"
 setenv DSE "$gtm_exe/dse"
@@ -555,7 +556,7 @@ source $gtm_tst/com/collation_setup.csh
 ##########################
 echo " "
 echo $gtmgbldir
-echo $GTM
+echo $YDB
 echo $MUPIP
 echo $DSE
 echo $GDE
@@ -565,8 +566,8 @@ echo " "
 echo Testing $tst
 if (($?test_replic)||("GT.CM" == $test_gtm_gtcm)) then
    echo " "
-   echo "Original Host GTM:$gtm_exe"
-   echo "Remote Host   GTM:$remote_gtm_exe"
+   echo "Original Host YDB:$gtm_exe"
+   echo "Remote Host   YDB:$remote_gtm_exe"
    echo " "
 endif
 echo `pwd`
