@@ -36,6 +36,7 @@
 # gtm8854	    [vinay] Tests syntax error in the argument of a FALSE postconditional is handled appropriately
 # gtm8839	    [vinay] Tests $DEVICE returns the complete error message
 # gtm8781	    [vinay] Tests ZSYSTEM does not produce memory leaks
+# gtm8849	    [vinay] Shows help databases have QDBRUNDOWN and NOGVSTATS characteristics
 #-------------------------------------------------------------------------------------
 
 echo "v63003 test starts..."
@@ -44,6 +45,7 @@ echo "v63003 test starts..."
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic "gtm8788 gtm7986 gtm8186 gtm8804 gtm8832 gtm8617 gtm4212 gtm8732nr gtm8767 gtm8735 gtm8779 gtm8798"
 setenv subtest_list_non_replic "$subtest_list_non_replic gtm8846 gtm8780 gtm8787 gtm8889 gtm8856 gtm8857 gtm8854 gtm8839 gtm8781"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm8849"
 setenv subtest_list_replic     "gtm8732r"
 
 if ($?test_replic == 1) then
