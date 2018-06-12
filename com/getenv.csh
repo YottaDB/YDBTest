@@ -1,6 +1,9 @@
 #################################################################
 #								#
-#	Copyright 2002, 2014 Fidelity Information Services, Inc	#
+# Copyright 2002, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -11,7 +14,7 @@
 ##getenv.csh
 #
 ###############################
-## GTM software environments ##
+## YDB software environments ##
 ###############################
 setenv gtm_ver_noecho
 if ("GT.CM" == "$test_gtm_gtcm") then
@@ -26,6 +29,7 @@ if ("GT.CM" == "$test_gtm_gtcm") then
 else
 	source $gtm_tst/com/set_active_version.csh $remote_ver $remote_image
 endif
+setenv YDB "$gtm_exe/mumps -direct"
 setenv GTM "$gtm_exe/mumps -direct"
 setenv MUPIP "$gtm_exe/mupip"
 setenv LKE "$gtm_exe/lke"
