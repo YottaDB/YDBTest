@@ -11,7 +11,13 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 gtm8839
-	kill
-	use $principal:(noescape:term=$char(13))
-	read *x set zb=$zb read y:0 zwrite
+        set file=$zcmdline
+        open file:(readonly)
+        use file
+        for  read line  quit:$zeof
+        set device=$device
+        close file
+        kill line
+        use $principal
+        write "$DEVICE=",device,!
 	quit

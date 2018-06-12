@@ -14,16 +14,7 @@
 #
 #
 
-echo "# Pressing Control C while in zhelp, would get an error in previous versions"
-echo ""
-echo "# Terminal Display:"
-echo ""
-# Setting prompt explicitly so we can run on previous GTM versions too (which default to "GTM>")
-setenv gtm_prompt "YDB>"
-(expect -d $gtm_tst/$tst/u_inref/gtm8839.exp > expect.outx) >& expect.dbg
-if ($status) then
-	echo "EXPECT Failed"
-endif
-perl $gtm_tst/com/expectsanitize.pl expect.outx > expect_sanitized.outx
+setenv ydb_white_box_test_case_enable 1
+setenv ydb_white_box_test_case_number 138
+$ydb_dist/mumps -run gtm8839
 
-cat expect_sanitized.outx
