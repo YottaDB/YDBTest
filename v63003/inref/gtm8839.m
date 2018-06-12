@@ -14,10 +14,11 @@ gtm8839
         set file=$zcmdline
         open file:(readonly)
         use file
-        for  read line  quit:$zeof
+	for  read line  quit:$zeof
         set device=$device
         close file
         kill line
         use $principal
         write "$DEVICE=",device,!
+	write "Length of $DEVICE=",$length($DEVICE)
 	quit

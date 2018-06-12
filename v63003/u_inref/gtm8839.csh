@@ -11,9 +11,10 @@
 #								#
 #################################################################
 #
-#
+# Tests that $DEVICE displays full message when over 80 characters
 #
 
+# Setting environment variables to allow for custom $DEVICE message that will be over 80 characters
 setenv ydb_white_box_test_case_enable 1
 setenv ydb_white_box_test_case_number 138
 $ydb_dist/mumps -run gtm8839
