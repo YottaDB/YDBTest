@@ -13,16 +13,23 @@
 #
 #
 #
+source $gtm_tst/com/gtm_test_setbgaccess.csh
 $gtm_tst/com/dbcreate.csh mumps 1>&create.out
 if ($status) then
 	echo "create failed"
 endif
-$MUPIP SET -region DEFAULT -journal=enable,on,nobefore
+$MUPIP SET -region DEFAULT -journal=enable,on,before -replication=on
 $MUPIP FREEZE -ON -ONLINE DEFAULT
+echo ""
 
+$ydb_dist/mumps -run ^%XCMD "set ^X=1"
+sleep 1
+$MUPIP Journal -Extract -Forward mumps.mjl
+cat mumps.mjf |& $grep X= |& $tst_awk -F '\\' '{print $1,"/",$11}'
+
+echo ""
 $MUPIP FREEZE -OFF DEFAULT
-
-$gtm_tst/com/dbcheck.csh mumps 1>&check.out
+$gtm_tst/com/dbcheck.csh>&check.out
 if ($status) then
 	echo "close failed"
 endif
