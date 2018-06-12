@@ -14,11 +14,11 @@
 #
 #
 source $gtm_tst/com/gtm_test_setbgaccess.csh
+setenv gtm_test_jnl SETJNL
 $gtm_tst/com/dbcreate.csh mumps 1>&create.out
 if ($status) then
 	echo "create failed"
 endif
-$MUPIP SET -region DEFAULT -journal=enable,on,before>&journal.out -replication=on
 if ($status) then
 	echo "journal failed"
 endif
