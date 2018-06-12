@@ -13,12 +13,12 @@
 
 gtm8781
 	zsystem "echo 'gtm8781 subtest'"
-	write "Memory Allocated: ",$zrealstor,!
+	write "Memory Allocated after 1 ZSYSTEM: ",$zrealstor,!
 	set mem=$zrealstor
 	set pass=1
 	set halt=0
 	for i=1:1:100 do  quit:halt=1
 	. zsystem "echo 'hello' > /dev/null"
 	. if mem'=$zrealstor  set pass=0  write "Memory Leak Detected, Test Failed"  set halt=1
-	write:pass "No Memory Leaks, Test Passed"
+	write:pass "Memory Allocated After 100 ZSYSTEMS Is The Same, No Memory Leaks, Test Passed"
 	quit
