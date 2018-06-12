@@ -14,6 +14,10 @@
 # Tests that Mupip Journal -Extract=-stdout handles its termination appropriately
 #
 
+
+# Needed to avoid ocassional assert failures in iott_use.c due to an error return from tcsetattr() after the terminal is killed
+setenv gtm_white_box_test_case_enable   1
+setenv gtm_white_box_test_case_number   51      # WBTEST_KILL_TERMINAL
 echo "# Creating database,journal file"
 $gtm_tst/com/dbcreate.csh mumps 1>>& create.out
 if ($status) then
@@ -44,7 +48,8 @@ echo "# Searching Sys Log for a KILLBYSIG Error (Expecting nothing, would be fou
 cat syslog.txt |& $grep KILLBYSIG |& $tst_awk '{print $6,$7,$8,$9,$10,$11,$12}'
 echo ""
 echo "# Searching Sys Log for a NOPRINCIO Error"
-cat syslog.txt |& $grep NOPRINCIO |& $tst_awk '{print $6,$7,$8,$9,$10,$11,$12}'
+# MUPIP LOAD can sometimes produce either one or two NOPRINCIO Errors, for uniformity we are just looking for the first instance
+cat syslog.txt |& $grep "MUPIP.*NOPRINCIO" |& $tst_awk '{print $6,$7,$8,$9,$10,$11,$12}' | sort -u
 
 
 $gtm_tst/com/dbcheck.csh >>& check.out

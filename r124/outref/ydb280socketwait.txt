@@ -1,0 +1,4 @@
+# Test of #280 : WRITE /WAIT on a SOCKET device with no sockets does not spin loop
+; We expect the elapsed time of the WRITE /WAIT to be 0 seconds. In rare cases it is possible it is 1 second
+; if we were on the edge of a 1-second rollover when the WRITE /WAIT started. So allow 1 second too.
+PASS : WRITE /WAIT on a SOCKET device with NO sockets took <= 1 second as expected
