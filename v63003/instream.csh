@@ -38,6 +38,7 @@
 # gtm8839	    [vinay] Tests $DEVICE returns the complete error message
 # gtm8781	    [vinay] Tests ZSYSTEM does not produce memory leaks
 # gtm8849	    [vinay] Shows help databases have QDBRUNDOWN and NOGVSTATS characteristics
+# gtm8790	    [vinay] Tests $REFERENCE will maintain extended reference for the first reference when stat sharing is enabled
 #-------------------------------------------------------------------------------------
 
 echo "v63003 test starts..."
@@ -46,7 +47,7 @@ echo "v63003 test starts..."
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic "gtm8788 gtm7986 gtm8186 gtm8804 gtm8832 gtm8617 gtm4212 gtm8732nr gtm8767 gtm8735 gtm8779 gtm8798"
 setenv subtest_list_non_replic "$subtest_list_non_replic gtm8846 gtm8780 gtm8787 gtm8889 gtm8856 gtm8857 gtm8854 gtm8795 gtm8839"
-setenv subtest_list_non_replic "$subtest_list_non_replic gtm8781 gtm8849"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm8781 gtm8849 gtm8790"
 setenv subtest_list_replic     "gtm8732r gtm8795"
 
 if ($?test_replic == 1) then
