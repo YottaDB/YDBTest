@@ -1,0 +1,54 @@
+ ####################################################################
+     Testing FILEDELFAIL error codepath in source server
+ ####################################################################
+# Create database in source and receiver side
+# Set access method to BG since with MM -jnl_prefix= does not work in dbcreate.csh
+# Set autoswitch to the lowest setting to maximize switching
+==Executing MULTISITE_REPLIC 'RUN INST2 mkdir -p jnldir'==
+# Start only source server (not receiver server) so no connection happens
+# This will ensure journal files are not opened now by source server but later after directory permissions have been changed
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
+# Permissions of [jnldir] before change
+drwxrwxr-x jnldir
+# Run lots of updates with white-box case enabled (202) to ensure a FILEDELFAIL codepath is later exercised in source server
+# This will also turn write permissions OFF in [jnldir] directory and result in JNLEXTEND/JNLNOCREATE errors
+%YDB-E-JNLEXTEND, Journal file extension error for file ##TEST_PATH##/jnldir/mumps.mjl
+%YDB-E-JNLNOCREATE, Journal file  not created
+# Permissions of [jnldir] after change
+dr-xr-xr-x jnldir
+# Start receiver server so source server connects and opens journal file and exercise FILEDELFAIL codepath
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+# Ensure source and receiver are in sync
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+# Turn write permissions back ON in [jnldir] directory
+# Turn off instance freeze
+# Ensure source server did go through FILEDELFAIL codepath (by checking syslog)
+##TEST_AWK.* YDB-SRCSRVR-INSTANCE1.*: %YDB-W-FILEDELFAIL, Deletion of file ##TEST_PATH##/jnldir/mumps.mjl_%YGTM failed, %SYSTEM-E-ENO13, Permission denied -- generated from .*
+# Run dbcheck
+ ####################################################################
+     Testing RENAMEFAIL error codepath in source server
+ ####################################################################
+# Create database in source and receiver side
+# Set access method to BG since with MM -jnl_prefix= does not work in dbcreate.csh
+# Set autoswitch to the lowest setting to maximize switching
+==Executing MULTISITE_REPLIC 'RUN INST2 mkdir -p jnldir'==
+# Start only source server (not receiver server) so no connection happens
+# This will ensure journal files are not opened now by source server but later after directory permissions have been changed
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
+# Permissions of [jnldir] before change
+drwxrwxrwx jnldir
+# Run lots of updates with white-box case enabled (202) to ensure a RENAMEFAIL codepath is later exercised in source server
+# This will also turn write permissions OFF in [jnldir] directory and result in JNLEXTEND/JNLNOCREATE errors
+%YDB-E-JNLEXTEND, Journal file extension error for file ##TEST_PATH##/jnldir/mumps.mjl
+%YDB-E-JNLNOCREATE, Journal file  not created
+# Permissions of [jnldir] after change
+dr-xr-xr-x jnldir
+# Start receiver server so source server connects and opens journal file and exercise RENAMEFAIL codepath
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+# Ensure source and receiver are in sync
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+# Turn write permissions back ON in [jnldir] directory
+# Turn off instance freeze
+# Ensure source server did go through RENAMEFAIL codepath (by checking syslog)
+##TEST_AWK.* YDB-SRCSRVR-INSTANCE1.*: %YDB-W-RENAMEFAIL, Rename of file ##TEST_PATH##/jnldir/mumps.mjl_%YGTM to ##TEST_PATH##/jnldir/mumps.mjl failed, %SYSTEM-E-ENO13, Permission denied -- generated from .*
+# Run dbcheck

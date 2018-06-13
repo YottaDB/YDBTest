@@ -17,7 +17,7 @@
 
 # Needed to avoid ocassional assert failures in iott_use.c due to an error return from tcsetattr() after the terminal is killed
 setenv gtm_white_box_test_case_enable   1
-setenv gtm_white_box_test_case_number   51      # WBTEST_KILL_TERMINAL
+setenv gtm_white_box_test_case_number   200      # WBTEST_YDB_KILL_TERMINAL
 echo "# Creating database,journal file"
 $gtm_tst/com/dbcreate.csh mumps 1>>& create.out
 if ($status) then
