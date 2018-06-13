@@ -17,10 +17,7 @@ source $gtm_tst/com/gtm_test_setbgaccess.csh
 setenv gtm_test_jnl SETJNL
 $gtm_tst/com/dbcreate.csh mumps 1>&create.out
 if ($status) then
-	echo "create failed"
-endif
-if ($status) then
-	echo "journal failed"
+	echo "dbcreate failed"
 endif
 echo "# Setting Freeze ON,ONLINE"
 $MUPIP FREEZE -ON -ONLINE DEFAULT
@@ -40,6 +37,6 @@ if ($status) then
 endif
 $gtm_tst/com/dbcheck.csh>&check.out
 if ($status) then
-	echo "close failed"
+	echo "dbcheck failed"
 endif
 
