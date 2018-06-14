@@ -1,0 +1,8 @@
+# Test that MUPIP JOURNAL -EXTRACT does not issue JNLUNXPCTERR error in the face of concurrent udpates
+# Create database with journaling turned on
+# Start MUPIP JOURNAL EXTRACT commands in background
+# Update the journal file in the foreground so multiple EOF records get written (and overwritten)
+# Signal backgrounded MUPIP JOURNAL EXTRACT script to stop
+# Wait for backgrounded script to terminate
+# Check for any errors in MUPIP JOURNAL EXTRACT
+# Do dbcheck on database
