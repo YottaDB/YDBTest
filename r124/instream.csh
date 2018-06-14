@@ -17,6 +17,7 @@
 # readonly         [nars]  Test update on database with READ_ONLY flag through multiple global directories
 # ydb275socketpass [nars]  Test that LISTENING sockets can be passed through JOB or WRITE /PASS and WRITE /ACCEPT
 # ydb280socketwait [nars]  Test that WRITE /WAIT on a SOCKET device with no sockets does not spin loop
+# ydb282srcsrvrerr [nars]  Test that source server clears backlog and does not terminate with FILEDELFAIL or RENAMEFAIL errors
 #-------------------------------------------------------------------------------------------------------------
 
 echo "r124 test starts..."
@@ -26,6 +27,13 @@ setenv subtest_list_common     ""
 setenv subtest_list_non_replic ""
 setenv subtest_list_non_replic "$subtest_list_non_replic readonly ydb275socketpass ydb280socketwait"
 setenv subtest_list_replic     ""
+setenv subtest_list_replic     "$subtest_list_replic ydb282srcsrvrerr"
+
+setenv subtest_exclude_list    ""
+# filter out white box tests that cannot run in pro
+if ("pro" == "$tst_image") then
+	setenv subtest_exclude_list "$subtest_exclude_list ydb282srcsrvrerr"
+endif
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
