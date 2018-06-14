@@ -13,14 +13,13 @@
 gtm8839
         set file=$zcmdline
         open file:(readonly)
-        use file:(TERMINATOR="")
+        use file:TERM="\r"
 	read line
         set device=$device
+	set key=$key
         close file
-	write line
         ;kill line
         use $principal
         write "$DEVICE=",device,!
-	write "$KEY=",$key,!
-	write "Length of $DEVICE=",$length($DEVICE)
+	write "$KEY=",key,!
 	quit
