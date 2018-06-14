@@ -1,0 +1,17 @@
+# Setting Freeze ON,ONLINE
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+Region DEFAULT is now FROZEN
+All requested regions frozen
+
+# Creating temp folder, making copies of all relevant files for temp folder, switching to temp folder
+
+# Performing Rundown on mumps.dat in temp folder
+##TEST_AWK%YDB-I-DBSHMNAMEDIFF, Database file mumps.dat points to shared memory .id = [0-9]*. which points to a different database file ##TEST_PATH##/mumps.dat
+%YDB-I-MUFILRNDWNSUC, File mumps.dat successfully rundown
+
+# Turning off Freeze for DEFAULT (will act on database file in temp)
+Region DEFAULT is now UNFROZEN
+All requested regions unfrozen
+# Updating Database
+# set ^X=1  zwrite ^X
+^X=1
