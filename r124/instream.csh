@@ -27,7 +27,13 @@ setenv subtest_list_common     ""
 setenv subtest_list_non_replic ""
 setenv subtest_list_non_replic "$subtest_list_non_replic readonly ydb275socketpass ydb280socketwait"
 setenv subtest_list_replic     ""
-setenv subtest_list_non_replic "$subtest_list_replic ydb282srcsrvrerr"
+setenv subtest_list_replic     "$subtest_list_replic ydb282srcsrvrerr"
+
+setenv subtest_exclude_list    ""
+# filter out white box tests that cannot run in pro
+if ("pro" == "$tst_image") then
+	setenv subtest_exclude_list "$subtest_exclude_list ydb282srcsrvrerr"
+endif
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
