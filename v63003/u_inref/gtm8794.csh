@@ -33,7 +33,7 @@ echo "# Performing Rundown on mumps.dat in temp folder"
 $MUPIP RUNDOWN -OVERRIDE -FILE mumps.dat
 
 echo ""
-echo "# Turning off Freeze for DEFAULT"
+echo "# Turning off Freeze for DEFAULT (will act on database file in temp)"
 $MUPIP FREEZE -OFF DEFAULT
 
 echo "# Updating Database"
