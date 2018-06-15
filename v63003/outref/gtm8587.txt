@@ -1,0 +1,10 @@
+# RUNNING TEST FOR $KEY
+# Check $DEVICE to see it is 0 and $KEY contains the terminating character
+$DEVICE=0
+$KEY=     (In previous versions, this would be an empty string)
+
+# RUNNING TEST FOR $DEVICE
+ZSTATUS=dollardevice+6^gtm8587,%SYSTEM-E-ENO13, Permission denied
+# Check $DEVICE to see if it has the error detail and $KEY is an empty string
+$DEVICE=1,Permission denied     (In previous versions, this would be an empty string)
+$KEY=

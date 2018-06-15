@@ -16,8 +16,7 @@
 set key='$KEY'
 set device='$DEVICE'
 setenv gtm_chset "UTF-8"
-echo "RUNNING TEST FOR $key"
-echo "RUNNING TEST FOR $key\rIF YOU SEE THIS THE TEST FAILED">>&temp1.txt
-$ydb_dist/mumps -run gtm8587 temp1.txt
-echo "RUNNING TEST FOR $device"
-$ydb_dist/mumps -run gtm8587
+echo "# RUNNING TEST FOR $key\rIF YOU SEE THIS THE TEST FAILED">>&temp1.txt
+$ydb_dist/mumps -run dollarkey^gtm8587 temp1.txt
+echo "# RUNNING TEST FOR $device"
+$ydb_dist/mumps -run dollardevice^gtm8587
