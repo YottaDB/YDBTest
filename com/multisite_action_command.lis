@@ -1,12 +1,25 @@
+#!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+#
 #############################################################################################################################
 # This file will hold the actual commands for the action we request for in MULTISITE scenario. column 1 will be the action that we request for,  beginning cloulmn 2 it will be the actual command, this file will be read by multisite_replic.awk
 # The variable "msr_other_qualifiers" is set from multisite_replic.awk holding additional qualifiers if any for all of the msr actions below. For e.g. updateresync for STARTRCV etc.For now it's added only for few actions and if in future any of the action needs additional qualifier this is the place to add
 #############################################################################################################################
 START	source $gtm_tst/com/RF_START.csh $msr_repl_state $msr_other_qualifiers
-STARTRCV	$sec_shell "$sec_getenv; cd $SEC_SIDE;$gtm_tst/com/RCVR.csh $msr_repl_state $portno $gtm_test_replic_timestamp $msr_other_qualifiers < /dev/null "">>&"" $SEC_SIDE/START_${gtm_test_replic_timestamp}.out"
-STARTSRC	$pri_shell "$pri_getenv; cd $PRI_SIDE;$gtm_tst/com/SRC.csh $msr_repl_state $portno $gtm_test_replic_timestamp $msr_other_qualifiers < /dev/null "">>&"" $PRI_SIDE/START_${gtm_test_replic_timestamp}.out"
-STOPRCV	$sec_shell "$sec_getenv; cd $SEC_SIDE;$gtm_tst/com/RCVR_SHUT.csh $msr_repl_state $msr_other_qualifiers < /dev/null "">>&"" $SEC_SIDE/RCVR_SHUT_${gtm_test_replic_timestamp}.out"
-STOPSRC	$pri_shell "$pri_getenv; cd $PRI_SIDE;$gtm_tst/com/SRC_SHUT.csh $msr_repl_state $msr_other_qualifiers < /dev/null "">>&"" $PRI_SIDE/SRC_SHUT_${gtm_test_replic_timestamp}.out"
+STARTRCV	$sec_shell "$sec_getenv; cd $SEC_SIDE;$gtm_tst/com/RCVR.csh $msr_repl_state $portno $gtm_test_replic_timestamp $msr_other_qualifiers "">>&"" $SEC_SIDE/START_${gtm_test_replic_timestamp}.out"
+STARTSRC	$pri_shell "$pri_getenv; cd $PRI_SIDE;$gtm_tst/com/SRC.csh $msr_repl_state $portno $gtm_test_replic_timestamp $msr_other_qualifiers "">>&"" $PRI_SIDE/START_${gtm_test_replic_timestamp}.out"
+STOPRCV	$sec_shell "$sec_getenv; cd $SEC_SIDE;$gtm_tst/com/RCVR_SHUT.csh $msr_repl_state $msr_other_qualifiers "">>&"" $SEC_SIDE/RCVR_SHUT_${gtm_test_replic_timestamp}.out"
+STOPSRC	$pri_shell "$pri_getenv; cd $PRI_SIDE;$gtm_tst/com/SRC_SHUT.csh $msr_repl_state $msr_other_qualifiers "">>&"" $PRI_SIDE/SRC_SHUT_${gtm_test_replic_timestamp}.out"
 STOP	$gtm_tst/com/RF_SHUT.csh  $msr_repl_state $msr_other_qualifiers
 CRASH	$pri_shell "$pri_getenv;$gtm_tst/com/primary_crash.csh"
 SYNC	source $gtm_tst/com/RF_sync.csh $msr_other_qualifiers

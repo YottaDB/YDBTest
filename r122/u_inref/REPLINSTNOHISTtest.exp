@@ -34,6 +34,12 @@ expect -exact ">"
 send -- "set prompt=\$shellprompt\r"
 expect -exact "SHELL"
 
-send -- "\$errorTest\r"
-expect -exact "Test has concluded"
+# Start the source server for the INST1 INST3 connection
+send -- "\$MSR STARTSRC INST1 INST3 >>& REPLINSTNOHIST.logx\r"
 expect -exact "SHELL"
+#send -- "get_msrtime\r"
+#expect -exact "SHELL"
+#send -- "setenv srcLog2 \"SRC_\$time_msr.log\"\r"
+#expect -exact "SHELL"
+
+

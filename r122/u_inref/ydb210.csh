@@ -18,6 +18,7 @@ setenv gtm_test_repl_skiprcvrchkhlth 1
 #This random value (1 or 0)  will determine if the errors are generated before or after closing
 #the terminal that the DB was created in
 setenv rand `$gtm_tst/com/genrandnumbers.csh`
+setenv rand 0
 
 #This will supress the ocassional %YDB-I-SHMREMOVED that is output when changing STDNULLCOLL settings
 unsetenv gtm_db_counter_sem_incr
@@ -30,28 +31,40 @@ else
 endif
 echo ''
 
-echo "Calling ydb210.exp to create DB in new terminal"
-echo ''
+#Run each error test and move their files to their respective subdirectories
+foreach testDir ("REPLINSTNOHIST")#"NULLCOLL" "REPLOFFJNLON" "REPLINSTNOHIST")#
+	# Used by ydb210.exp
+	setenv errorTest "$testDir""test.csh"
+	# Used by $errorTest to store output
+	setenv outputFile "$testDir"".logx"
 
-(expect -d $gtm_tst/$tst/u_inref/ydb210.exp > expect.out) >& expect.dbg
-if ($status) then
-	echo "EXPECT-E-FAIL : expect returned non-zero exit status"
-endif
-mv expect.out expect.outx	# move .out to .outx to avoid -E- from being caught by test framework
-# The output is variable on slow vs fast systems and so filter out just the essential part of it to keep it deterministic.
-perl $gtm_tst/com/expectsanitize.pl expect.outx > expect_sanitized.outx
+	(expect -d $gtm_tst/$tst/u_inref/ydb210.exp > expect.out) >& expect.dbg
+	if ($status) then
+		echo "EXPECT-E-FAIL : expect returned non-zero exit status"
+		echo "		      ydb210.exp calling $errorTest"
+	endif
+	mv expect.out expect.outx	# move .out to .outx to avoid -E- from being caught by test framework
+	perl $gtm_tst/com/expectsanitize.pl expect.outx > expect_sanitized.outx
 
-#if rand is 0 we run ydb210.dbcreate.csh here. Otherwise it will have been run in ydb210.exp already
-if ($rand == 0) then
-	NULLCOLLtest.csh
-else
-	cat NULLCOLLtest.outx
-endif
+	# cat $outputFile to record it in ydb210.log
+	cat $outputFile
 
-echo "# Shutdown the DB"
-$gtm_tst/com/dbcheck.csh >& dbcheck.outx
-if ($status) then
-	echo "DB Check Failed, Output Below"
-	cat dbcheck.outx
-endif
+	# Create $testDir and move files there
+	mkdir $testDir
 
+	#Rename SRC log files to logx files to avoid redundant error checking by DB
+	foreach file (`ls`)
+
+		if($file =~ "SRC_*.log") then
+			mv $file ./$file"x"
+		endif
+	end
+
+	#Move all of this error tests respective files to $testDir
+	foreach file (`ls`)
+		#directories and the main log remain in the top directory
+		if ( !( -d $file) && !($file == "ydb210.log") && !($file == "start_time_syslog.txt") ) then
+			mv ./$file $testDir/
+		endif
+	end
+end

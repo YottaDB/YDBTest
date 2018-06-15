@@ -11,13 +11,14 @@
 #								#
 #################################################################
 #
-	#some of these variables are form older tests and may be outdated
-#setenv test_specific_gde $gtm_tst/$tst/inref/ydb210.gde
-
-$gtm_tst/com/dbcreate.csh mumps 2 >& dbcreate.outx
+$gtm_tst/com/dbcreate.csh mumps >& dbcreate.outx
 if ($status) then
 	echo "DB Create Failed, Output Below"
 	cat dbcreate.outx
 endif
 
-echo "dbcreate complete"
+if ($rand == 0) then
+	#in the event this script is called from an expect script we signal
+	#the .exp script that the database creation is finished
+	echo "dbcreate complete"
+endif

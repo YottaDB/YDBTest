@@ -34,6 +34,6 @@ expect -exact ">"
 send -- "set prompt=\$shellprompt\r"
 expect -exact "SHELL"
 
-send -- "\$errorTest\r"
-expect -exact "Test has concluded"
+send -- "\$gtm_tst/\$tst/u_inref/ydb210_MSR.dbcreate.csh\r"
+expect -exact "dbcreate complete"
 expect -exact "SHELL"
