@@ -38,13 +38,13 @@ $MUPIP FREEZE -OFF DEFAULT
 
 echo "# Updating Database"
 # Reassigning jnl file for the database to be in the temp folder (Randomly set to before/nobefore by the tests framework)
-$MUPIP SET -REGION DEFAULT -JOURNAL=disable -REPLICATION=OFF>&jnl.outx
+$MUPIP SET -REGION DEFAULT -JOURNAL=disable -REPLICATION=OFF>>&jnloff.out
 if($status) then
-	echo "Bad MUPIP SET"
+	echo "Error Turning off Journaling and Replicationn"
 endif
-$MUPIP SET -REGION DEFAULT $tst_jnl_str >&jnl.outx
+$MUPIP SET -REGION DEFAULT $tst_jnl_str >>&jnlon.out
 if ($status) then
-	echo "Bad MUPIP SET"
+	echo "Error Turning on Journaling and Replication"
 endif
 
 echo '# set ^X=1  zwrite ^X'
