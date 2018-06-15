@@ -25,8 +25,7 @@ $MUPIP FREEZE -ON -ONLINE DEFAULT
 echo ""
 echo "# Creating temp folder, making copies of all relevant files for temp folder, switching to temp folder"
 mkdir temp
-cp mumps.dat temp/mumps.dat
-cp mumps.gld temp/mumps.gld
+cp mumps* temp/
 cd temp
 echo ""
 echo "# Performing Rundown on mumps.dat in temp folder"
@@ -38,8 +37,8 @@ $MUPIP FREEZE -OFF DEFAULT
 
 echo "# Updating Database"
 # Reassigning jnl file for the database to be in the temp folder (Randomly set to before/nobefore by the tests framework)
-$MUPIP SET -REGION DEFAULT -JOURNAL=disable >&jnl.out
-$MUPIP SET -REGION DEFAULT $tst_jnl_str >&jnl.out
+$MUPIP SET -REGION DEFAULT -JOURNAL=disable -REPLICATION=off>&jnl.outx
+$MUPIP SET -REGION DEFAULT $tst_jnl_str -REPLICATION=on>&jnl.outx
 
 echo '# set ^X=1  zwrite ^X'
 $ydb_dist/mumps -run ^%XCMD "set ^X=1  zwrite ^X"
