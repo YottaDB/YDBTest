@@ -16,14 +16,14 @@ dollarkey
         open file:(readonly)
         use file:TERM="\r"
 	read line
-        set device=$device
+	set device=$device
 	set key=$key
         close file
         use $principal
-	write line,!
-	write "# Check $DEVICE to see it is 0 and $KEY contains the terminating character",!
-        write "$DEVICE=",device,!
-	write "$KEY=",key,"     (In previous versions, this would be an empty string)",!,!
+	;write line,!
+	;write "# Check $KEY contains the terminating character",!
+	zwrite device
+	zwrite key
 	kill line
 	quit
 
@@ -35,13 +35,14 @@ dollardevice
         zsystem "chmod -w tmpdir"
         close file:delete
         use file
-        set k1=$device
-	set k2=$key
+        set device=$device
+	set key=$key
         use $principal
-        write "# Check $DEVICE to see if it has the error detail and $KEY is an empty string",!
-        write "$DEVICE=",k1,"     (In previous versions, this would be an empty string)",!
-	write "$KEY=",k2,!
+        ;write "# Check $DEVICE to see if it has the error detail and $KEY is an empty string",!
+	zwrite device
+        zwrite key
         zsystem "chmod +w tmpdir"
         close file:delete
         zsystem "rm -rf tmpdir"
         quit
+

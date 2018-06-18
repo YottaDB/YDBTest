@@ -1,10 +1,12 @@
-# RUNNING TEST FOR $KEY
-# Check $DEVICE to see it is 0 and $KEY contains the terminating character
-$DEVICE=0
-$KEY=     (In previous versions, this would be an empty string)
-
-# RUNNING TEST FOR $DEVICE
+# Triggering an IO Permissions Error, expecting a message in $DEVICE (would be zero in previous versions)
 ZSTATUS=dollardevice+6^gtm8587,%SYSTEM-E-ENO13, Permission denied
-# Check $DEVICE to see if it has the error detail and $KEY is an empty string
-$DEVICE=1,Permission denied     (In previous versions, this would be an empty string)
-$KEY=
+device="1,Permission denied"
+key=""
+
+# Ending a read with a new line control character, expecting $KEY to reflect this (would be null in previous versions)
+device=0
+key=$C(13)
+
+# Ending a read with an EOF, expecting $KEY to be null
+device="1,Device detected EOF"
+key=""
