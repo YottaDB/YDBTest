@@ -43,7 +43,7 @@ $MSR RUN INST1 'set msr_dont_trace ; mv mumps.repl mumps.repl_precrash ; $MUPIP 
 echo '' >> REPLINSTNOHIST.logx
 
 echo "# Start INST1 INST3 connection (expecting RCVR start to fail with REPLINSTNOHIST error)" >> REPLINSTNOHIST.logx
-if ($terminalKill == 1) then
+if ($terminalNoKill == 1) then
        	$MSR STARTSRC INST1 INST3 >>& REPLINSTNOHIST.logx
 	get_msrtime
 	setenv srcLog2 "SRC_$time_msr.log"

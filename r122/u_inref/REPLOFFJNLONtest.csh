@@ -11,7 +11,7 @@
 #								#
 #################################################################
 #
-if ($terminalKill == 1) then
+if ($terminalNoKill == 1) then
 	$gtm_tst/$tst/u_inref/ydb210_dbcreate.csh
 else
 	(expect -d $gtm_tst/$tst/u_inref/ydb210_dbcreate.exp > expect_REPLOFFJNLON.out) >& expect_REPLOFFJNLON.dbg

@@ -67,3 +67,15 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
 
 # Check the DB
 
+RUNNING SECNOTSUPPLEMENTARY ERROR TEST
+----------------------------------------
+# Generate INST1 INST2 instance files (supplementary and non-supplementary respectively)
+
+# Start INST1 server 
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+
+# Errors:
+%YDB-E-SECNOTSUPPLEMENTARY, INSTANCE1 is a Supplementary Instance and so cannot act as a source to non-Supplementary Instance INSTANCE2 
+
+==Executing MULTISITE_REPLIC 'STOPRCV INST1 INST2'==
