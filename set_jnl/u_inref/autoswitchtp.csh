@@ -29,7 +29,7 @@ echo "setenv test_align $force_align_size"							>> settings.csh
 # YDB-E-JNLTRANS2BIG, Transaction needs an estimated [xxx blocks]...which exceeds the AUTOSWITCHLIMIT of yyy blocks
 setenv gtm_test_spanreg 0	# Spanningregions cause imbalance and JNLTRANS2BIG error
 
-$gtm_tst/com/dbcreate.csh mumps 9 125 3500 4096 5000 8192 5000
+$gtm_tst/com/dbcreate.csh mumps 9 125 3500 4096 5000 1024 5000
 #
 # Note : The "-journal=enable,on,before" usage below should normally be replaced with $tst_jnl_str. This will make sure we use
 # BEFORE_IMAGE or NOBEFORE_IMAGE depending on what was specified at the test startup. But in the case the test was started with
