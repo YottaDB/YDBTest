@@ -20,8 +20,6 @@ dollarkey
 	set key=$key
         close file
         use $principal
-	;write line,!
-	;write "# Check $KEY contains the terminating character",!
 	zwrite device
 	zwrite key
 	kill line
@@ -38,7 +36,6 @@ dollardevice
         set device=$device
 	set key=$key
         use $principal
-        ;write "# Check $DEVICE to see if it has the error detail and $KEY is an empty string",!
 	zwrite device
         zwrite key
         zsystem "chmod +w tmpdir"
