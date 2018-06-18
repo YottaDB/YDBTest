@@ -1,6 +1,8 @@
 RANDOM SETTING: 
-##TEST_AWK.*Tests will be run.*
+##TEST_AWK# Tests will be run .*
 
+RUNNING NULLCOLL ERROR TEST
+----------------------------------------
 # Shut down source server and set regions to different NULL Collation
 Database file ##TEST_PATH##/mumps.dat is now using GT.M null collation      
 Database file ##TEST_PATH##/a.dat is now using M standard null collation
@@ -16,6 +18,8 @@ Database file ##TEST_PATH##/a.dat is now using M standard null collation
 
 # Shutdown the DB
 
+RUNNING REPLOFFJNLON ERROR TEST
+----------------------------------------
 # Shut down source server and turn replication off in AREG
 # (Both regions should have had journaling and replication on initially)
 %YDB-I-JNLSTATE, Journaling state for region AREG is now ON
@@ -32,7 +36,34 @@ Database file ##TEST_PATH##/a.dat is now using M standard null collation
 
 # Shutdown the DB
 
-##TEST_AWK.*/SRC_.*.log
-%YDB-E-NULLCOLLDIFF, Null collation order must be the same for all regions
-##TEST_AWK.*/SRC_.*.log
-%YDB-E-REPLOFFJNLON, Replication state for database file ##TEST_PATH##/a.dat is OFF but journaling state is enabled
+RUNNING REPLINSTNOHIST ERROR TEST
+----------------------------------------
+# Start INST1 INST2 connection
+==Executing MULTISITE_REPLIC 'START INST1 INST2'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+
+# Update the DB
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+
+# Shutdown INST1 INST2 connection and replace the instance file in INST1
+==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STOPRCV INST1 INST2'==
+
+# Start INST1 INST3 connection (expecting RCVR start to fail with REPLINSTNOHIST error)
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST3'==
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST3'==
+
+# INST1 INST2 errors:
+# INST1 INST3 errors:
+%YDB-E-REPLINSTNOHIST, History information for seqno [0x0] not found in replication instance file ##TEST_PATH##/mumps.repl
+
+# Wait for the INST1 INST3 reciever to die
+
+# Shutdown INST3 passive source server
+
+# Stop INST1 INST3 source server
+==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST3'==
+
+# Check the DB
+

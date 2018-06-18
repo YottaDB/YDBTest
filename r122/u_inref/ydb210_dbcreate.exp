@@ -34,17 +34,6 @@ expect -exact ">"
 send -- "set prompt=\$shellprompt\r"
 expect -exact "SHELL"
 
-#send -- "\$gtm_tst/\$tst/u_inref/ydb210.dbcreate.csh\r"
 send -- "ydb210_dbcreate.csh\r"
 expect -exact "dbcreate complete"
 expect -exact "SHELL"
-
-
-#send -- "echo \$rand \r"
-#expect -exact "SHELL"
-#send -- "if (\$rand == 1) NULLCOLLtest.csh >>&! NULLCOLLtest.outx\r"
-#expect -exact "SHELL"
-#send -- "if (\$rand == 1) REPLOFFJNLONtest.csh >>&! REPLOFFJNLONtest.outx\r"
-#expect -exact "SHELL"
-#send -- "if (\$rand == 1) REPLINSTNOHISTtest.csh >>&! REPLINSTNOHISTtest.outx\r"
-#expect -exact "SHELL"

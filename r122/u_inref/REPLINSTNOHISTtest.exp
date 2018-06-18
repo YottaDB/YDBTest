@@ -37,6 +37,8 @@ expect -exact "SHELL"
 # Start the source server for the INST1 INST3 connection
 send -- "\$MSR STARTSRC INST1 INST3 >>& REPLINSTNOHIST.logx\r"
 expect -exact "SHELL"
+send -- "echo 'setenv msr_execute_last_out '\$msr_execute_last_out > REPLINSTNOHIST.src\r"
+expect -exact "SHELL"
 #send -- "get_msrtime\r"
 #expect -exact "SHELL"
 #send -- "setenv srcLog2 \"SRC_\$time_msr.log\"\r"

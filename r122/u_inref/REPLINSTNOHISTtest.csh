@@ -43,7 +43,7 @@ $MSR RUN INST1 'set msr_dont_trace ; mv mumps.repl mumps.repl_precrash ; $MUPIP 
 echo '' >> REPLINSTNOHIST.logx
 
 echo "# Start INST1 INST3 connection (expecting RCVR start to fail with REPLINSTNOHIST error)" >> REPLINSTNOHIST.logx
-if ($rand == 1) then
+if ($terminalKill == 1) then
        	$MSR STARTSRC INST1 INST3 >>& REPLINSTNOHIST.logx
 	get_msrtime
 	setenv srcLog2 "SRC_$time_msr.log"
@@ -56,13 +56,16 @@ else
 		echo '' >> REPLINSTNOHIST.logx
 	endif
 
+	#source file created by REPLINSTNOHISTtest.exp for $msr_execute_last_out
+	source REPLINSTNOHIST.src
 	get_msrtime
 	setenv srcLog2 "SRC_$time_msr.log"
 	# move .out to .outx to avoid -E- from being caught by test framework
 	mv expect_REPLINSTNOHIST.out expect_REPLINSTNOHIST.outx
 	perl $gtm_tst/com/expectsanitize.pl expect_REPLINSTNOHIST.outx > expect_REPLINSTNOHIST_sanitized.outx
 endif
-echo "srcLog2: $srcLog2" >> REPLINSTNOHIST.logx
+
+#echo "srcLog2: $srcLog2" >> REPLINSTNOHIST.logx
 
 # Start the reciever and get its log file
 $MSR STARTRCV INST1 INST3 >>& REPLINSTNOHIST.logx

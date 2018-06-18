@@ -17,14 +17,13 @@ setenv gtm_test_repl_skiprcvrchkhlth 1
 
 #This random value (1 or 0)  will determine if the errors are generated before or after closing
 #the terminal that the DB was created in
-setenv rand `$gtm_tst/com/genrandnumbers.csh`
-setenv rand 0
+setenv terminalKill `$gtm_tst/com/genrandnumbers.csh`
 
 #This will supress the ocassional %YDB-I-SHMREMOVED that is output when changing STDNULLCOLL settings
 unsetenv gtm_db_counter_sem_incr
 
 echo "RANDOM SETTING: "
-if ($rand == 1) then
+if ($terminalKill == 1) then
 	echo '# Tests will be run within the DBs original terminal'
 else
 	echo '# Tests will be run after closing the DBs original terminal'
@@ -32,12 +31,14 @@ endif
 echo ''
 
 #Run each error test and move their files to their respective subdirectories
-foreach testDir ("REPLINSTNOHIST")#"NULLCOLL" "REPLOFFJNLON" "REPLINSTNOHIST")#
+foreach testDir ("NULLCOLL" "REPLOFFJNLON" "REPLINSTNOHIST")
 	# Used by ydb210.exp
 	setenv errorTest "$testDir""test.csh"
 	# Used by $errorTest to store output
 	setenv outputFile "$testDir"".logx"
 
+	echo "RUNNING $testDir ERROR TEST"
+	echo "----------------------------------------"
 	(expect -d $gtm_tst/$tst/u_inref/ydb210.exp > expect.out) >& expect.dbg
 	if ($status) then
 		echo "EXPECT-E-FAIL : expect returned non-zero exit status"

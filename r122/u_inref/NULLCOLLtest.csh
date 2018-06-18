@@ -11,7 +11,7 @@
 #								#
 #################################################################
 #
-if ($rand == 1) then
+if ($terminalKill == 1) then
 	$gtm_tst/$tst/u_inref/ydb210_dbcreate.csh
 else
 	(expect -d $gtm_tst/$tst/u_inref/ydb210_dbcreate.exp > expect_NULLCOLL.out) >& expect_NULLCOLL.dbg

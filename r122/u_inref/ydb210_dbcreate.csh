@@ -20,7 +20,7 @@ if ($status) then
 	cat dbcreate.outx
 endif
 
-if ($rand == 0) then
+if ($terminalKill == 0) then
 	#in the event this script is called from an expect script we signal
 	#the .exp script that the database creation is finished
 	echo "dbcreate complete"
