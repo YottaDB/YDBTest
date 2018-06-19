@@ -15,11 +15,6 @@
 #
 echo "# Attempting to overflow the string pool"
 $ydb_dist/mumps -run test2^gtm8847 >>& errors.outx
-#set nonomatch; set cores=(core*); unset nonomatch
-#if ("$cores" != "core*") then
-	#	mkdir coredir
-	#	mv core* coredir/
-	#endif
 set nonomatch;rm core*
 cat errors.outx |& $grep -m 1 STPCRIT
 cat errors.outx |& $grep STPOFLOW

@@ -1,5 +1,5 @@
 # Attempting to overflow the string pool
-%YDB-E-STPCRIT, String pool space critical
+ZSTATUS=expand+1^gtm8847,%YDB-E-STPCRIT, String pool space critical
 %YDB-F-STPOFLOW, String pool space overflow
 # Demonstrating that when zstrpllim<=0 there is no limit on the string pool
 # (A max string error indicates that the string pool will not overflow, since the loop is infinite)
@@ -11,4 +11,4 @@ ZSTATUS=test3+8^gtm8847,%YDB-E-MAXSTRLEN, Maximum string length exceeded
 $gtm_string_pool_limit=$ZSTRPLLIM
 ################################################################
 There are YDB_FATAL files
-##TEST_AWK./YDB_FATAL_ERROR.ZSHOW_DMP_[0-9]*_1.txt
+##TEST_AWK./YDB_FATAL_ERROR.ZSHOW_DMP_.*.txt

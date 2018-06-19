@@ -15,12 +15,15 @@ test1
 	quit
 
 test2
+
+	set $etrap="set $ecode="""" do incrtrap^incrtrap"
 	do ^sstep
-	set x="abcd"
-	set $ztrap="goto incrtrap^incrtrap"
-	set $ZSTRPPLIM=100
-	for  set x=x_x
-	set x=x_x
+	set $ZSTRPPLIM=100000
+	for  do expand
+	quit
+
+expand
+	set x($incr(x))=$j(1,2**10)
 	quit
 
 test3
