@@ -146,12 +146,16 @@ while ($jobnum < $gtm_test_jobcnt)
 	$grep -vE 'JNLEXTEND|JNLCLOSE|NOTALLDBRNDWN|GVRUNDOWN' impjob_imptp1.xmje${jobnum}x > impjob_imptp1.mje${jobnum}
 end
 
+# Tests GTM-8699 in V63004
+#"Previously the [PREVJNLLINKCUT error] message could be reported in rare cases where a journal switch was deferred, then later switched without cutting links"
 if ($?test_replic) then
 	if ($jnlswitchretry) then
 		# getoper will capture syslog messages generated since starting the jnlswitchretry error
 		$gtm_tst/com/getoper.csh "$jnlswitchretry_time"
 		# Confirm there is no PREVJNLLINKCUT error in the output
 		$grep -e "PREVJNLLINKCUT" syslog.txt
+
+
 	endif
 endif
 
