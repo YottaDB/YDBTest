@@ -59,6 +59,7 @@ if ($?test_replic) then
 	# has jfh->is_not_latest_jnl set to TRUE.
 	set jnlswitchretry = `$gtm_exe/mumps -run rand 2`
 	if ($jnlswitchretry) then
+		set jnlswitchretry_time = `date +"%b %e %H: %M: %S"`
 		$MSR STOPRCV INST1 INST2 >& jnlswitchretry_1.log
 	endif
 else
@@ -144,5 +145,14 @@ while ($jobnum < $gtm_test_jobcnt)
 	mv impjob_imptp1.mje${jobnum} impjob_imptp1.xmje${jobnum}x
 	$grep -vE 'JNLEXTEND|JNLCLOSE|NOTALLDBRNDWN|GVRUNDOWN' impjob_imptp1.xmje${jobnum}x > impjob_imptp1.mje${jobnum}
 end
+
+if ($?test_replic) then
+	if ($jnlswitchretry) then
+		# getoper will capture syslog messages generated since starting the jnlswitchretry error
+		$gtm_tst/com/getoper.csh "$jnlswitchretry_time"
+		# Confirm there is no PREVJNLLINKCUT error in the output
+		$grep -e "PREVJNLLINKCUT" syslog.txt
+	endif
+endif
 
 echo ">>> Done"
