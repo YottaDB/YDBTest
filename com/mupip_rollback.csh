@@ -576,9 +576,9 @@ if (! $forward_only_specified) then
 		endif
 		if ($do_fetchresync) then
 			$tst_awk '{if (NR == 1) print $1,$2,"SECONDARY"'$dispstr'; else print; }' $back_losttn_file	\
-									| sort >& $back_losttn_file.sort
+									| $sort >& $back_losttn_file.sort
 		else
-			$tst_awk '{if (NR == 1) print $1,$2,$3'$dispstr'; else print; }' $back_losttn_file | sort >& $back_losttn_file.sort
+			$tst_awk '{if (NR == 1) print $1,$2,$3'$dispstr'; else print; }' $back_losttn_file | $sort >& $back_losttn_file.sort
 		endif
 		$sort $forw_losttn_file >& $forw_losttn_file.sort
 		echo "cmp $back_losttn_file.sort $forw_losttn_file.sort" >>& $misclog

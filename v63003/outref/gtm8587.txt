@@ -1,0 +1,12 @@
+# Triggering an IO Permissions Error, expecting a message in $DEVICE (would be zero in previous versions)
+ZSTATUS=dollardevice+6^gtm8587,%SYSTEM-E-ENO13, Permission denied
+device="1,Permission denied"
+key=""
+
+# Ending a read with a new line control character, expecting $KEY to reflect this (would be null in previous versions)
+device=0
+key=$C(13)
+
+# Ending a read with an EOF, expecting $KEY to be null
+device="1,Device detected EOF"
+key=""

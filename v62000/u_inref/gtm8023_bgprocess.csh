@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2014 Fidelity Information Services, Inc	#
+# Copyright 2014 Fidelity Information Services, Inc		#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -80,7 +83,7 @@ cat >&! bkgrnd_dse.csh << CAT_EOF
 date
 \$DSE << DSE_EOF
 dump -file -all
-spawn "$gtm_tst/com/wait_for_log.csh -log bkgrndjobs.stop -duration 600 -waitcreation"
+spawn "$gtm_tst/com/wait_for_log.csh -log bkgrndjobs.stop -duration 3600 -waitcreation"
 dump -file -all
 DSE_EOF
 

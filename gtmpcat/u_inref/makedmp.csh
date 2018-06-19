@@ -21,7 +21,7 @@ alias dbglvlclr "unsetenv gtmdbglvl"
 setenv gtm_trace_groups ALL
 dbglvlclr
 
-rm -f mumps.gld *.o core* YDB_FATAL_ERR* GTM_JOBEXAM.* makedmp.gld makedmp.instance.* >& /dev/null
+rm -f mumps.gld *.o core* YDB_FATAL_ERR* YDB_JOBEXAM.* makedmp.gld makedmp.instance.* >& /dev/null
 rm -f mumps.dat acct*.dat acct*.mjl* acnm*.dat acnm*.mjl* jnl.dat jnl.mjl* mumps.mjl* unused.dat unused.mjl* makedmp_zwr.txt >& /dev/null
 rm -fr repl2ndary >& /dev/null
 rm -f repl.src.log >& /dev/null
@@ -194,7 +194,7 @@ dbglvlclr
 #
 # Find/rename the jobexam file to use for later validation
 #
-set jefile = `ls -1 GTM_JOBEXAM.ZSHOW_DMP_*`
+set jefile = `ls -1 YDB_JOBEXAM.ZSHOW_DMP_*`
 mv $jefile jobexam_output_${gtmversion}.txt
 #
 # Find core created by makedmp. If the name is "core", rename it so we have a predictable name

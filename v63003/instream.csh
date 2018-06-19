@@ -27,15 +27,31 @@
 # gtm8735	    [vinay] Tests the functionality of the READ_ONLY flag in MUPIP SET
 # gtm8779	    [vinay] Tests changing Freeze produces a DBFREEZEON/DBFREEZEOFF message in the system
 # gtm8798	    [vinay] Tests ENDIANCVT converts the mutex fields
+# gtm8846	    [vinay] Tests Mupip Set Journal appropriately handles a file with excess slashes
 # gtm8780	    [vinay] Tests $SELECT() produces a syntax error for an omitted colon after a literal true argument
+# gtm8787	    [vinay] Tests Mupip Journal -Extract=-stdout properly handles its termination
+# gtm8889	    [vinay] Tests zhelp does not produce an error when <Ctrl C> is pressed
+# gtm8856	    [vinay] Tests literal optimizations that can result in errors at compile time are deferred if done inside XECUTE
+# gtm8857	    [vinay] Tests patterns exceeding the size GTM supports produces a PATMAXLEN error
+# gtm8854	    [vinay] Tests syntax error in the argument of a FALSE postconditional is handled appropriately
+# gtm8795	    [vinay] Tests journal files update after MUPIP FREEZE -ON -ONLINE
+# gtm8839	    [vinay] Tests $DEVICE returns the complete error message
+# gtm8781	    [vinay] Tests ZSYSTEM does not produce memory leaks
+# gtm8849	    [vinay] Shows help databases have QDBRUNDOWN and NOGVSTATS characteristics
+# gtm8794	    [vinay] Tests copies of a database file can be used after a MUPIP RUNDOWN -OVERRIDE and MUPIP FREEZE -OFF on the copy
+# gtm8790	    [vinay] Tests $REFERENCE will maintain extended reference for the first reference when stat sharing is enabled
+# gtm8587	    [vinay] Tests $KEY is maintained for sequential devices and $DEVICE is maintained for certain error descriptions
+# gtm8855	    [vinay] Tests GTM correctly cleans up buffers allocated due to a missing global directory
 #-------------------------------------------------------------------------------------
 
 echo "v63003 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "gtm8788 gtm7986 gtm8186 gtm8804 gtm8832 gtm8617 gtm4212 gtm8732nr gtm8767 gtm8735 gtm8779 gtm8798 gtm8780"
-setenv subtest_list_replic     "gtm8732r"
+setenv subtest_list_non_replic "gtm8788 gtm7986 gtm8186 gtm8804 gtm8832 gtm8617 gtm4212 gtm8732nr gtm8767 gtm8735 gtm8779 gtm8798"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm8846 gtm8780 gtm8787 gtm8889 gtm8856 gtm8857 gtm8854 gtm8795 gtm8839"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm8781 gtm8849 gtm8794 gtm8790 gtm8587 gtm8855"
+setenv subtest_list_replic     "gtm8732r gtm8795 gtm8794"
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
@@ -45,6 +61,10 @@ endif
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
 setenv subtest_exclude_list	""
+# Filter out white box tests that cannot run in pro
+if ("pro" == "$tst_image") then
+	setenv subtest_exclude_list "$subtest_exclude_list gtm8839"
+endif
 
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh

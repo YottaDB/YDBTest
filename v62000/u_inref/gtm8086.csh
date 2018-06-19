@@ -86,7 +86,7 @@ if ($?test_replic) then
 	# Loop until we get an error status ({ cmd } returns false) or time out.
 	while ( { $MUPIP replic -source -freeze } ) >& /dev/null < /dev/null
 		@ sleepcnt++
-		if ($sleepcnt > 120) then
+		if ($sleepcnt > 900) then		# wait for 15 minutes
 			echo "TEST-E-timeout waiting for instance freeze"
 			break
 		endif

@@ -1,0 +1,19 @@
+# Test of #275 : LISTENING sockets can be passed through JOB or WRITE /PASS and WRITE /ACCEPT
+
+# --------------------------------------------------------------
+# Executing : mumps -run socketJobPassListening^ydb275socketpass
+# --------------------------------------------------------------
+# Passing a LISTENing socket to a child through JOB command.
+# Expecting data below that child wrote and was read through the parent process socket
+cmdop(1)="socketJobPassListening : This is the child writing Line 1 out of 2 lines"
+cmdop(2)="socketJobPassListening : This is the child writing Line 2 out of 2 lines"
+cmdop(3)=""
+
+# --------------------------------------------------------------
+# Executing : mumps -run socketLocalPassListening^ydb275socketpass
+# --------------------------------------------------------------
+# Passing a LISTENing socket to a child through a LOCAL socket.
+# Expecting data below that child wrote and was read through the parent process socket
+cmdop(1)="socketLocalPassListening : This is the child writing Line 1 out of 2 lines"
+cmdop(2)="socketLocalPassListening : This is the child writing Line 2 out of 2 lines"
+cmdop(3)=""
