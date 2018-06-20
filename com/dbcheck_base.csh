@@ -42,12 +42,15 @@ endif
 set arg1 = "$1"
 if (-e "${arg1}.gld") then
 	set dir = `dirname ${arg1}.gld`
-	cd $dir
-	# Keep setting gtmgbldir env var (not ydb_gbldir) in this test framework script
-	# so we can run tests with older GT.M versions that don't understand ydb_gbldir.
-	setenv gtmgbldir `basename ${arg1}.gld`
-	shift
-	set arg1 = "$1"
+	if ("$dir" != ".") then
+		# A subdirectory has been specified. If so go into that subdirectory and do MUPIP INTEG -REG "*"
+		cd $dir
+		# Set gtmgbldir env var (not ydb_gbldir) in this test framework script
+		# so we can run tests with older GT.M versions that don't understand ydb_gbldir.
+		setenv gtmgbldir `basename ${arg1}.gld`
+		shift
+		set arg1 = "$1"
+	endif
 endif
 
 if (!($?acc_meth)) setenv acc_meth "BG"
