@@ -16,11 +16,11 @@
 
 $gtm_tst/com/dbcreate.csh mumps 1 >>& dbcreate.out
 # Start background script that does MUPIP FREEZE -ONLINE -ON -NOAUTORELEASE
-$SHELL $gtm_tst/$tst/u_inref/gtm8850a.csh >& f.outx &
+$SHELL $gtm_tst/$tst/u_inref/gtm8850freeze.csh >& f.outx &
 # Start 8 background scripts that starts MUMPS processes which do two updates and terminate in a loop
 @ num = 0
 while ($num < 8)
-        $SHELL $gtm_tst/$tst/u_inref/gtm8850b.csh >& x$num.outx &
+        $SHELL $gtm_tst/$tst/u_inref/gtm8850xcmd.csh >& x$num.outx &
         @ num = $num + 1
 end
 # Run background scripts for 15 seconds to see if there is a hang
