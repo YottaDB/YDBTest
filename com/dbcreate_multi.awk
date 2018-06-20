@@ -103,7 +103,7 @@ END {
       if (value["file_name"] !~/..*/ || value["file_name"] ~/\./) value["file_name"]=default_filename
       # Check if value["file_name"] points to a subdirectory. If so, cd to that subdir before creating the db
       nsubdirs = split(value["file_name"], fullpath, "/")
-      if (1 < nsubdirs)
+      if ((1 < nsubdirs) && ("" != fullpath[1]))	# fullpath[1] check needed to ensure it is not an absolute path
       {
 	      subdir = ""
 	      for (i = 1; i < nsubdirs; i++)
