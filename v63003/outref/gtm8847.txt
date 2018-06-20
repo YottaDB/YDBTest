@@ -1,4 +1,4 @@
-# Attempting to overflow the string pool
+# Attempting to overflow the string pool (Expecting an STPCRIT error first and then an STPOFLOW error)
 ##TEST_AWK.*YDB-E-STPCRIT, String pool space critical
 %YDB-F-STPOFLOW, String pool space overflow
 # Demonstrating that when zstrpllim<=0 there is no limit on the string pool
