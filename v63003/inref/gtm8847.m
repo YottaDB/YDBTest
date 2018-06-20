@@ -18,7 +18,7 @@ test2
 
 	set $etrap="set $ecode="""" do incrtrap^incrtrap"
 	do ^sstep
-	set $ZSTRPPLIM=100000
+	set $ZSTRPPLIM=1000000
 	for  do expand
 	quit
 
