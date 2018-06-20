@@ -15,7 +15,7 @@
 #
 source $gtm_tst/com/gtm_test_setbgaccess.csh
 $gtm_tst/com/dbcreate.csh mumps 1 >>& dbcreate.out
-echo "# Start background script that does MUPIP FREEZE -ONLINE -ON -NOAUTORELEASE"
+echo "# Start background script that does MUPIP FREEZE -ONLINE -ON -NOAUTORELEASE or -AUTORELEASE"
 ($SHELL $gtm_tst/$tst/u_inref/gtm8850freeze.csh & ; echo $!>>& bg.pid) >& f.out
 echo "# Start 8 background scripts that starts MUMPS processes which do two updates and terminate in a loop"
 @ num = 0
