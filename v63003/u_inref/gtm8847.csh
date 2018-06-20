@@ -16,7 +16,7 @@
 echo "# Attempting to overflow the string pool"
 $ydb_dist/mumps -run test2^gtm8847 >>& errors.outx
 set nonomatch;rm core*
-cat errors.outx |& $grep -m 1 STPCRIT
+cat errors.outx |& $grep STPCRIT |& tail -1
 cat errors.outx |& $grep STPOFLOW
 
 

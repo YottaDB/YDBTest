@@ -1,5 +1,5 @@
 # Attempting to overflow the string pool
-ZSTATUS=expand+1^gtm8847,%YDB-E-STPCRIT, String pool space critical
+##TEST_AWK.*YDB-E-STPCRIT, String pool space critical
 %YDB-F-STPOFLOW, String pool space overflow
 # Demonstrating that when zstrpllim<=0 there is no limit on the string pool
 # (A max string error indicates that the string pool will not overflow, since the loop is infinite)
