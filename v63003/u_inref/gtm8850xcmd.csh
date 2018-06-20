@@ -11,16 +11,12 @@
 #								#
 #################################################################
 #
-#
+# Helper script for gtm8850, executes a command in mumps to verify
+# it is quitting out appropriately
 #
 while (1)
         $ydb_dist/mumps -run ^%XCMD 'set ^x($j)=$j kill ^x($j)'
         if (-e test.STOP) then
-		echo "# Process exited correctly"
                 break
         endif
 end
-
-
-
-

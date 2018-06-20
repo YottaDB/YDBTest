@@ -11,9 +11,9 @@
 #								#
 #################################################################
 #
+# Tests processes properly detach from a database when a FREEZE -ON -ONLINE is in effect
 #
-#
-source $gtm_tst/com/mm_nobefore.csh
+source $gtm_tst/com/gtm_test_setbgaccess.csh
 $gtm_tst/com/dbcreate.csh mumps 1 >>& dbcreate.out
 echo "# Start background script that does MUPIP FREEZE -ONLINE -ON -NOAUTORELEASE"
 ($SHELL $gtm_tst/$tst/u_inref/gtm8850freeze.csh & ; echo $!>>& bg.pid) >& f.outx
@@ -31,15 +31,5 @@ touch test.STOP
 foreach bgpid(`cat bg.pid`)
 	$gtm_tst/com/wait_for_proc_to_die.csh $bgpid
 end
-echo "# Confirm all background processes finished properly"
-echo ""
-echo "# Status for freeze process"
-cat f.outx |& $grep finished
-foreach i (`seq 0 1 7`)
-	echo ""
-	echo "# Status for process $i"
-	cat x$i.outx
-end
+echo "# All processes exited correctly"
 $gtm_tst/com/dbcheck.csh >>& dbcheck.out
-
-
