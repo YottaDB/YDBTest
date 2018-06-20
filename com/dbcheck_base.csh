@@ -128,10 +128,6 @@ else
 		source $gtm_tst/com/leftover_ipc_cleanup_if_needed.csh $0 # do rundown if needed before requiring standalone access
 	endif
 	setenv dbname $arg1
-	if ($gtmgbldir != "mumps.gld") then
-		# Doing dbcheck on gbldir that is not mumps.gld. Display the actual gtmgbldir for this non-default scenario.
-		echo -n "gbldir = $gtmgbldir; "
-	endif
 	echo "$MUPIP integ -REG *"
 	$MUPIP integ -REG $online_noonline "*" >& tmp.mupip
 	# If gtm_test_trig_upgrade env var is defined, the parent test uses triggers and wants to additionally
