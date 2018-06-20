@@ -16,6 +16,7 @@
 while (1)
         $ydb_dist/mumps -run ^%XCMD 'set ^x($j)=$j kill ^x($j)'
         if (-e test.STOP) then
+		echo "# Process exited correctly"
                 break
         endif
 end

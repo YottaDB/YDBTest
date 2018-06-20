@@ -20,6 +20,7 @@ while (1)
         sleep 1
         $ydb_dist/mupip freeze -off "*"
         if (-e test.STOP) then
+		echo "# Freeze process finished properly"
                 break
         endif
 end

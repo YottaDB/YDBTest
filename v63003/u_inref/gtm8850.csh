@@ -13,22 +13,33 @@
 #
 #
 #
-
+source $gtm_tst/com/mm_nobefore.csh
 $gtm_tst/com/dbcreate.csh mumps 1 >>& dbcreate.out
-# Start background script that does MUPIP FREEZE -ONLINE -ON -NOAUTORELEASE
-$SHELL $gtm_tst/$tst/u_inref/gtm8850freeze.csh >& f.outx &
-# Start 8 background scripts that starts MUMPS processes which do two updates and terminate in a loop
+echo "# Start background script that does MUPIP FREEZE -ONLINE -ON -NOAUTORELEASE"
+($SHELL $gtm_tst/$tst/u_inref/gtm8850freeze.csh & ; echo $!>>& bg.pid) >& f.outx
+echo "# Start 8 background scripts that starts MUMPS processes which do two updates and terminate in a loop"
 @ num = 0
 while ($num < 8)
-        $SHELL $gtm_tst/$tst/u_inref/gtm8850xcmd.csh >& x$num.outx &
+        ($SHELL $gtm_tst/$tst/u_inref/gtm8850xcmd.csh & ; echo $!>>& bg.pid) >& x$num.outx
         @ num = $num + 1
 end
-# Run background scripts for 15 seconds to see if there is a hang
+echo "# Run background scripts for 15 seconds to see if there is a hang"
 sleep 15
-# Signal background scripts to stop
+echo "# Signal background scripts to stop"
 touch test.STOP
 # Wait for background processes to stop
-wait
+foreach bgpid(`cat bg.pid`)
+	$gtm_tst/com/wait_for_proc_to_die.csh $bgpid
+end
+echo "# Confirm all background processes finished properly"
+echo ""
+echo "# Status for freeze process"
+cat f.outx |& $grep finished
+foreach i (`seq 0 1 7`)
+	echo ""
+	echo "# Status for process $i"
+	cat x$i.outx
+end
 $gtm_tst/com/dbcheck.csh >>& dbcheck.out
 
 
