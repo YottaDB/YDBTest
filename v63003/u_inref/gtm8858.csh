@@ -22,29 +22,26 @@ $MUPIP Backup Default backup >& backup.out
 
 
 echo "# Changing block size to trigger a DBKEYMN Error"
-$DSE ch -bl=1 -bsiz=1000
+$DSE ch -block=1 -bsiz=1000
 $MUPIP Integ -region default
-$DSE integ -bl=1
+$DSE integ -block=1
 rm mumps.dat
 cp backup/mumps.dat mumps.dat
 echo "# -------------------------------------------------------------------------------------------------------"
 
 echo "# Changing level to trigger a DBROOTBURN Error"
-$DSE ch -bl=1 -l=0 >& l.out
+$DSE ch -block=1 -level=0 >& l.out
 $MUPIP Integ -region default
-$DSE integ -bl=1
+$DSE integ -block=1
 rm mumps.dat
 cp backup/mumps.dat mumps.dat
 echo "# -------------------------------------------------------------------------------------------------------"
 echo "# Writing a global variable with a null subscript and then changing null_subscripts to false to trigger a NULLSUBSC Error"
-$DSE ch -fi -nu=t
+$DSE ch -file -null_subscripts=true
 $ydb_dist/mumps -run ^%XCMD 'set ^X("")=1'
-$DSE ch -fi -nu=f
+$DSE ch -file -null_subscripts=false
 $MUPIP Integ -region default
-$DSE integ -bl=3
+$DSE integ -block=3
 rm mumps.dat
 cp backup/mumps.dat mumps.dat
-echo ""
-echo ""
-echo ""
 $gtm_tst/com/dbcheck.csh >>& dbcheck.out
