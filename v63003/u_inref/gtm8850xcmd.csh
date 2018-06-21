@@ -11,12 +11,13 @@
 #								#
 #################################################################
 #
-# Helper script for gtm8850, executes a command in mumps to verify
-# it is quitting out appropriately
+# Helper script for gtm8850, starts mumps, does a couple updates and halts in a loop to verify
+# it halts without hanging while an online freeze on/off command is concurrently running.
 #
 while (1)
         $ydb_dist/mumps -run ^%XCMD 'set ^x($j)=$j kill ^x($j)'
         if (-e test.STOP) then
+		# foreground script gtm8850.csh has signaled us to STOP.
                 break
         endif
 end

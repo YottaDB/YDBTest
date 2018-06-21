@@ -13,7 +13,6 @@
 #
 # Helper script for gtm885, turns freeze on and off until signalled to stop
 #
-rm -f test.STOP
 while (1)
 	set rand = `$gtm_tst/com/genrandnumbers.csh 1 0 1`
 	echo $rand
@@ -27,6 +26,7 @@ while (1)
         sleep 1
         $ydb_dist/mupip freeze -off "*"
         if (-e test.STOP) then
+		# foreground script gtm8850.csh has signaled us to STOP.
                 break
         endif
 end
