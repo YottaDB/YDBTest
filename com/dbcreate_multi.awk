@@ -3,7 +3,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -101,6 +101,17 @@ END {
       sub("\\.gld$","",value["filename_override"])
       if (value["filename_override"]!="") default_filename=value["filename_override"]
       if (value["file_name"] !~/..*/ || value["file_name"] ~/\./) value["file_name"]=default_filename
+      # Check if value["file_name"] points to a subdirectory. If so, cd to that subdir before creating the db
+      nsubdirs = split(value["file_name"], fullpath, "/")
+      if ((1 < nsubdirs) && ("" != fullpath[1]))	# fullpath[1] check needed to ensure it is not an absolute path
+      {
+	      subdir = ""
+	      for (i = 1; i < nsubdirs; i++)
+		subdir = subdir "" fullpath[i] "/"
+	      printf "mkdir -p %s\n", subdir
+	      printf "cd %s\n", subdir
+	      value["file_name"] = fullpath[nsubdirs]
+      }
       print "setenv dbname " value["file_name"]
       print "setenv gtmgbldir \"$dbname.gld\""
       print "set timenow = `date +%H_%M_%S`"
