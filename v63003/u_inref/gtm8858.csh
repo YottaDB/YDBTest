@@ -13,6 +13,9 @@
 #
 # Shows improved available information in cases of apparent database integrity issues
 #
+
+# Disable random 4-byte collation header in DT leaf block since this test output is sensitive to DT leaf block layout
+setenv gtm_dirtree_collhdr_always 1
 $gtm_tst/com/dbcreate.csh mumps 1 >>& dbcreate.out
 mkdir backup
 $MUPIP Backup Default backup >& backup.out
