@@ -21,6 +21,7 @@ cp $ydb_dist/* temp/
 setenv ydb_dist temp
 echo "TRIGGER_MOD" >>& $ydb_dist/restrict.txt
 chmod -w $ydb_dist/restrict.txt
+#chmod -r $ydb_dist/restrict.txt
 ls -l $ydb_dist/restrict.txt
 $gtm_tst/com/dbcreate.csh mumps 1 >>& dbcreate.out
 $MUPIP trigger -triggerfile=triggers.txt

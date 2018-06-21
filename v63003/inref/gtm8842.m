@@ -11,21 +11,22 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 parent
-	ZBREAK child^gtm8842
-	ZSTEP
 	set ^X=1
+	write "parent"
 	quit
 
 trigger
 	do child^gtm8842
+	write "trigger"
 	quit
 
 child
 	do baby^gtm8842
+	write "Test successful"
 	quit
 
 baby
-	write "Test Successful"
+	ZSTEP
 	quit
 
 
