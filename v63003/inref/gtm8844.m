@@ -12,14 +12,20 @@
 ;
 haltfn
 	set $etrap="do incrtrap^incrtrap"
+	write "# Halt 1, Expect a RESTRICTEDOP error",!
 	halt
+	write "# Halt 2, Expect a RESTRICTEDOP fatal error",!
 	halt
+	write "Haltfn failed"
 	quit
 
 zhaltfn
 	set $etrap="do incrtrap^incrtrap"
+	write "# Zhalt 1, Expect a RESTRICTEDOP error",!
 	zhalt
+	write "# Zhalt 2, Expect a RESTRICTEDOP fatal error",!
 	zhalt
+	write "Zhaltfn failed"
 	quit
 
 zgotofn
@@ -29,3 +35,4 @@ zgotofn
 	write "$ECODE=",$ECODE,!
 	zgoto 0
 	quit
+
