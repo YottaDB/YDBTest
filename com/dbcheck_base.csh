@@ -40,6 +40,18 @@ else
 endif
 
 set arg1 = "$1"
+if (-e "${arg1}.gld") then
+	set dir = `dirname ${arg1}.gld`
+	if ("$dir" != ".") then
+		# A subdirectory has been specified. If so go into that subdirectory and do MUPIP INTEG -REG "*"
+		cd $dir
+		# Set gtmgbldir env var (not ydb_gbldir) in this test framework script
+		# so we can run tests with older GT.M versions that don't understand ydb_gbldir.
+		setenv gtmgbldir `basename ${arg1}.gld`
+		shift
+		set arg1 = "$1"
+	endif
+endif
 
 if (!($?acc_meth)) setenv acc_meth "BG"
 if (!($?GDE))  then
@@ -118,7 +130,7 @@ else
 	if (! $noleftoveripccheck_specified) then
 		source $gtm_tst/com/leftover_ipc_cleanup_if_needed.csh $0 # do rundown if needed before requiring standalone access
 	endif
-	setenv dbname mumps
+	setenv dbname $arg1
 	echo "$MUPIP integ -REG *"
 	$MUPIP integ -REG $online_noonline "*" >& tmp.mupip
 	# If gtm_test_trig_upgrade env var is defined, the parent test uses triggers and wants to additionally
