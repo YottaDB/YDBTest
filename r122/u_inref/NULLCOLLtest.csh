@@ -12,50 +12,57 @@
 #################################################################
 #
 if ($terminalNoKill == 1) then
-	$gtm_tst/$tst/u_inref/ydb210_dbcreate.csh
+	$gtm_tst/$tst/u_inref/ydb210_dbcreate.csh 2
 else
-	(expect -d $gtm_tst/$tst/u_inref/ydb210_dbcreate.exp > expect_NULLCOLL.out) >& expect_NULLCOLL.dbg
+	#Use expect script to run the commands from the IF block of code
+	set cmd='ydb210_dbcreate.csh 2'
+
+	(expect -d $gtm_tst/com/runcmd.exp "$cmd" > expect_NULLCOLL.out) >& expect_NULLCOLL.dbg
+
 	if ($status) then
 		echo "EXPECT-E-FAIL : expect returned non-zero exit status"
 	endif
 
-	mv expect_NULLCOLL.out expect_NULLCOLL.outx	# move .out to .outx to avoid -E- from being caught by test framework
 	# The output is variable on slow vs fast systems and so filter out just the essential part of it to keep it deterministic.
-	perl $gtm_tst/com/expectsanitize.pl expect_NULLCOLL.outx > expect_NULLCOLL_sanitized.outx
+	perl $gtm_tst/com/expectsanitize.pl expect_NULLCOLL.out > expect_NULLCOLL_sanitized.out
 endif
 
 setenv start_time `cat start_time` # start_time is used in naming conventions
 setenv srcLog "SRC_$start_time.log"
 setenv portno `$sec_shell "$sec_getenv ; source $gtm_tst/com/portno_acquire.csh"`
 
-echo "# Shut down source server and set regions to different NULL Collation" >> NULLCOLL.logx
+echo "# Shut down source server and set regions to different NULL Collation" >> $outputFile
 $gtm_tst/com/SRC_SHUT.csh "." < /dev/null >>&! $PRI_SIDE/NULLCOLL_SHUT1.out
-$MUPIP SET -REGION "DEFAULT" -NOSTDNULLCOLL >>& NULLCOLL.logx
-$MUPIP SET -REGION "AREG" -STDNULLCOLL >>& NULLCOLL.logx
-echo '' >> NULLCOLL.logx
+$MUPIP SET -REGION "DEFAULT" -NOSTDNULLCOLL >>& $outputFile
+$MUPIP SET -REGION "AREG" -STDNULLCOLL >>& $outputFile
+echo '' >> $outputFile
 
-echo "# Restart source server (expecting NULLCOLLDIFF error)" >> NULLCOLL.logx
+echo "# Restart source server (expecting NULLCOLLDIFF error in source server log)" >> $outputFile
 $gtm_tst/com/SRC.csh "." $portno $start_time >>&! NULLCOLL_RESTART1.outx
 
-$grep "NULLCOLL" $srcLog >> NULLCOLL.logx
-echo '' >> NULLCOLL.logx
 
-echo "# Shut down source server and set regions back to the same NULL Collation" >> NULLCOLL.logx
-$MUPIP SET -REGION "DEFAULT" -STDNULLCOLL >>& NULLCOLL.logx
-$MUPIP SET -REGION "AREG" -STDNULLCOLL >>& NULLCOLL.logx
-echo '' >> NULLCOLL.logx
+$grep "NULLCOLL" $srcLog >> $outputFile
+echo '' >> $outputFile
 
-echo "# Restart source server (expecting no error)" >> NULLCOLL.logx
+#Clean $srcLog of expected errors
+check_error_exist.csh $srcLog "YDB-E-NULLCOLLDIFF" > /dev/null
+
+echo "# Shut down source server and set regions back to the same NULL Collation" >> $outputFile
+$MUPIP SET -REGION "DEFAULT" -STDNULLCOLL >>& $outputFile
+$MUPIP SET -REGION "AREG" -STDNULLCOLL >>& $outputFile
+echo '' >> $outputFile
+
+echo "# Restart source server (expecting no error)" >> $outputFile
 $gtm_tst/com/SRC.csh "." $portno $start_time >>&! NULLCOLL_RESTART2.out
-echo '' >> NULLCOLL.logx
+echo '' >> $outputFile
 
-echo "# Shutdown the DB" >> NULLCOLL.logx
+echo "# Shutdown the DB" >> $outputFile
 $gtm_tst/com/dbcheck.csh >& dbcheck.outx
 if ($status) then
-	echo "DB Check Failed, Output Below" >> NULLCOLL.logx
-	cat dbcheck.outx >> NULLCOLL.logx
+	echo "DB Check Failed, Output Below" >> $outputFile
+	cat dbcheck.outx >> $outputFile
 endif
 
-echo '' >> NULLCOLL.logx
+echo '' >> $outputFile
 
 echo "Test has concluded"

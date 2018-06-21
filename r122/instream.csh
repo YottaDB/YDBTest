@@ -17,7 +17,7 @@
 # tprestart   [nars]  Test that TPRESTART syslog message has the correct global name when restart "type" is 4
 # viewcmdfunc [nars]  Test various VIEW commands and $VIEW functions (used to SIG-11/SIG-6/GTMASSERT2 in V6.3-004)
 # blktoodeep  [nars]  Test that BLKTOODEEP error is not issued if -NOWARNING is specified at compile time
-# ydb210    [jake]  Test that source server errors are sent to source server log file
+# ydb210      [jake]  Test that source server errors are sent to source server log file when started from the terminal
 #-------------------------------------------------------------------------------------------------------------
 
 echo "r122 test starts..."

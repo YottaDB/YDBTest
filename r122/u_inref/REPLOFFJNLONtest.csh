@@ -12,48 +12,54 @@
 #################################################################
 #
 if ($terminalNoKill == 1) then
-	$gtm_tst/$tst/u_inref/ydb210_dbcreate.csh
+	$gtm_tst/$tst/u_inref/ydb210_dbcreate.csh 2
 else
-	(expect -d $gtm_tst/$tst/u_inref/ydb210_dbcreate.exp > expect_REPLOFFJNLON.out) >& expect_REPLOFFJNLON.dbg
+	#Use expect script to run the commands from the IF block of code
+	set cmd='ydb210_dbcreate.csh 2'
+
+	(expect -d $gtm_tst/com/runcmd.exp "$cmd" > expect_REPLOFFJNLON.out) >& expect_REPLOFFJNLON.dbg
+
 	if ($status) then
 		echo "EXPECT-E-FAIL : expect returned non-zero exit status"
 	endif
-	mv expect_REPLOFFJNLON.out expect_REPLOFFJNLON.outx	# move .out to .outx to avoid -E- from being caught by test framework
 	# The output is variable on slow vs fast systems and so filter out just the essential part of it to keep it deterministic.
-	perl $gtm_tst/com/expectsanitize.pl expect_REPLOFFJNLON.outx > expect_REPLOFFJNLON_sanitized.outx
+	perl $gtm_tst/com/expectsanitize.pl expect_REPLOFFJNLON.out > expect_REPLOFFJNLON_sanitized.out
 endif
 
 setenv start_time `cat start_time` # start_time is used in naming conventions
 setenv srcLog "SRC_$start_time.log"
 setenv portno `$sec_shell "$sec_getenv ; source $gtm_tst/com/portno_acquire.csh"`
 
-echo "# Shut down source server and turn replication off in AREG" >> REPLOFFJNLON.logx
-echo "# (Both regions should have had journaling and replication on initially)" >> REPLOFFJNLON.logx
+echo "# Shut down source server and turn replication off in AREG" >> $outputFile
+echo "# (Both regions should have had journaling and replication on initially)" >> $outputFile
 $gtm_tst/com/SRC_SHUT.csh "." < /dev/null >>&! $PRI_SIDE/REPLOFFJNLON_SHUT1.out
-$MUPIP SET -REGION "AREG" -REPLICATION=OFF |& grep "STATE" >>& REPLOFFJNLON.logx
-echo '' >> REPLOFFJNLON.logx
+$MUPIP SET -REGION "AREG" -REPLICATION=OFF |& grep "STATE" >>& $outputFile
+echo '' >> $outputFile
 
-echo "# Restart source server (expecting REPLOFFJNLON error)" >> REPLOFFJNLON.logx
+echo "# Restart source server (expecting REPLOFFJNLON error in source server log)" >> $outputFile
 $gtm_tst/com/SRC.csh "." $portno $start_time >>&! REPLOFFJNLON_RESTART1.outx
 
-$grep "REPLOFFJNLON" $srcLog >> REPLOFFJNLON.logx
-echo '' >> REPLOFFJNLON.logx
+$grep "REPLOFFJNLON" $srcLog >> $outputFile
+echo '' >> $outputFile
 
-echo "# Shut down source server and turn replication back on in AREG" >> REPLOFFJNLON.logx
-$MUPIP SET -REGION "AREG" -REPLICATION=ON |& grep "STATE" >>& REPLOFFJNLON.logx
-echo '' >> REPLOFFJNLON.logx
+#Clean $srcLog of expected errors
+check_error_exist.csh $srcLog "YDB-E-REPLOFFJNLON" > /dev/null
 
-echo "# Restart source server (expecting no error)" >> REPLOFFJNLON.logx
+echo "# Shut down source server and turn replication back on in AREG" >> $outputFile
+$MUPIP SET -REGION "AREG" -REPLICATION=ON |& grep "STATE" >>& $outputFile
+echo '' >> $outputFile
+
+echo "# Restart source server (expecting no error)" >> $outputFile
 $gtm_tst/com/SRC.csh "." $portno $start_time >>&! REPLOFFJNLON_RESTART2.out
-echo '' >> REPLOFFJNLON.logx
+echo '' >> $outputFile
 
-echo "# Shutdown the DB" >> REPLOFFJNLON.logx
+echo "# Shutdown the DB" >> $outputFile
 $gtm_tst/com/dbcheck.csh >& dbcheck.outx
 if ($status) then
-	echo "DB Check Failed, Output Below" >> REPLOFFJNLON.logx
-	cat dbcheck.outx >> REPLOFFJNLON.logx
+	echo "DB Check Failed, Output Below" >> $outputFile
+	cat dbcheck.outx >> $outputFile
 endif
 
-echo '' >> REPLOFFJNLON.logx
+echo '' >> $outputFile
 
 echo "Test has concluded"

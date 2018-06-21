@@ -14,7 +14,7 @@
 	#some of these variables are form older tests and may be outdated
 #setenv test_specific_gde $gtm_tst/$tst/inref/ydb210.gde
 
-$gtm_tst/com/dbcreate.csh mumps 2 >& dbcreate.outx
+$gtm_tst/com/dbcreate.csh mumps $1 >& dbcreate.outx
 if ($status) then
 	echo "DB Create Failed, Output Below"
 	cat dbcreate.outx

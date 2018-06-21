@@ -12,9 +12,6 @@
 #################################################################
 #
 
-#This test purposely sets up the source server to fail upon restart, so those failures will be ignored
-setenv gtm_test_repl_skiprcvrchkhlth 1
-
 #This random value (1 or 0)  will determine if the errors are generated before or after closing
 #the terminal that the DB was created in
 setenv terminalNoKill `$gtm_tst/com/genrandnumbers.csh`
@@ -31,21 +28,25 @@ endif
 echo ''
 
 #Run each error test and move their files to their respective subdirectories
-foreach testDir ("NULLCOLL" "REPLOFFJNLON" "REPLINSTNOHIST" "SECNOTSUPPLEMENTARY")
-	# Used by ydb210.exp
-	setenv errorTest "$testDir""test.csh"
+foreach testDir ("NULLCOLLtest" "REPLOFFJNLONtest" "REPLINSTNOHISTtest" "SECNOTSUPPLEMENTARYtest")
+	# Used by runcmd.exp
+	setenv errorTest "$testDir"".csh"
 	# Used by $errorTest to store output
 	setenv outputFile "$testDir"".logx"
 
-	echo "RUNNING $testDir ERROR TEST"
-	echo "----------------------------------------"
-	(expect -d $gtm_tst/$tst/u_inref/ydb210.exp > expect.out) >& expect.dbg
+	echo "RUNNING $testDir.csh IN A NEW TERMINAL"
+	echo "----------------------------------------------------------"
+	#(expect -d $gtm_tst/$tst/u_inref/ydb210.exp > expect.out) >& expect.dbg
+	set cmd='echo "Running: $errorTest"; '
+	set cmd="$cmd"'$errorTest; '
+
+	(expect -d $gtm_tst/com/runcmd.exp "$cmd" > expect.out) >& expect.dbg
+
 	if ($status) then
 		echo "EXPECT-E-FAIL : expect returned non-zero exit status"
 		echo "		      ydb210.exp calling $errorTest"
 	endif
-	mv expect.out expect.outx	# move .out to .outx to avoid -E- from being caught by test framework
-	perl $gtm_tst/com/expectsanitize.pl expect.outx > expect_sanitized.outx
+	perl $gtm_tst/com/expectsanitize.pl expect.out > expect_sanitized.out
 
 	# cat $outputFile to record it in ydb210.log
 	cat $outputFile
@@ -53,7 +54,7 @@ foreach testDir ("NULLCOLL" "REPLOFFJNLON" "REPLINSTNOHIST" "SECNOTSUPPLEMENTARY
 	# Create $testDir and move files there
 	mkdir $testDir
 
-	#Rename SRC log files to logx files to avoid redundant error checking by DB
+	#Rename SRC log files to logx files to avoid redundant error checking by test framework
 	foreach file (`ls`)
 
 		if($file =~ "SRC_*.log") then

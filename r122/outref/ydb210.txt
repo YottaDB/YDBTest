@@ -1,13 +1,13 @@
 RANDOM SETTING: 
-##TEST_AWK# Tests will be run .*
+##TEST_AWK# Tests will be run (within the DBs original terminal|after closing the DBs original terminal)
 
-RUNNING NULLCOLL ERROR TEST
-----------------------------------------
+RUNNING NULLCOLLtest.csh IN A NEW TERMINAL
+----------------------------------------------------------
 # Shut down source server and set regions to different NULL Collation
 Database file ##TEST_PATH##/mumps.dat is now using GT.M null collation      
 Database file ##TEST_PATH##/a.dat is now using M standard null collation
 
-# Restart source server (expecting NULLCOLLDIFF error)
+# Restart source server (expecting NULLCOLLDIFF error in source server log)
 %YDB-E-NULLCOLLDIFF, Null collation order must be the same for all regions
 
 # Shut down source server and set regions back to the same NULL Collation
@@ -18,14 +18,14 @@ Database file ##TEST_PATH##/a.dat is now using M standard null collation
 
 # Shutdown the DB
 
-RUNNING REPLOFFJNLON ERROR TEST
-----------------------------------------
+RUNNING REPLOFFJNLONtest.csh IN A NEW TERMINAL
+----------------------------------------------------------
 # Shut down source server and turn replication off in AREG
 # (Both regions should have had journaling and replication on initially)
 %YDB-I-JNLSTATE, Journaling state for region AREG is now ON
 %YDB-I-REPLSTATE, Replication state for region AREG is now OFF
 
-# Restart source server (expecting REPLOFFJNLON error)
+# Restart source server (expecting REPLOFFJNLON error in source server log)
 %YDB-E-REPLOFFJNLON, Replication state for database file ##TEST_PATH##/a.dat is OFF but journaling state is enabled
 
 # Shut down source server and turn replication back on in AREG
@@ -36,8 +36,8 @@ RUNNING REPLOFFJNLON ERROR TEST
 
 # Shutdown the DB
 
-RUNNING REPLINSTNOHIST ERROR TEST
-----------------------------------------
+RUNNING REPLINSTNOHISTtest.csh IN A NEW TERMINAL
+----------------------------------------------------------
 # Start INST1 INST2 connection
 ==Executing MULTISITE_REPLIC 'START INST1 INST2'==
 Starting Primary Source Server in ##TEST_PATH##
@@ -46,16 +46,16 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
 # Update the DB
 ==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
 
-# Shutdown INST1 INST2 connection and replace the instance file in INST1
+# Shutdown INST1 INST2 connection and recreate the instance file in INST1
 ==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST2'==
 ==Executing MULTISITE_REPLIC 'STOPRCV INST1 INST2'==
 
-# Start INST1 INST3 connection (expecting RCVR start to fail with REPLINSTNOHIST error)
+# Start INST1 INST3 connection (expecting RCVR start to fail with REPLINSTNOHIST error in source server log)
 ==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST3'==
 ==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST3'==
 
-# INST1 INST2 errors:
-# INST1 INST3 errors:
+# INST1 INST2 source server log errors:
+# INST1 INST3 source server log errors:
 %YDB-E-REPLINSTNOHIST, History information for seqno [0x0] not found in replication instance file ##TEST_PATH##/mumps.repl
 
 # Wait for the INST1 INST3 reciever to die
@@ -67,15 +67,21 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
 
 # Check the DB
 
-RUNNING SECNOTSUPPLEMENTARY ERROR TEST
-----------------------------------------
+RUNNING SECNOTSUPPLEMENTARYtest.csh IN A NEW TERMINAL
+----------------------------------------------------------
 # Generate INST1 INST2 instance files (supplementary and non-supplementary respectively)
 
 # Start INST1 server 
 ==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2'==
+
+# Start the INST2 server (expecting SECSUPPLEMENTARY error in source server log)
 ==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
 
-# Errors:
+
+# Errors in source server log:
 %YDB-E-SECNOTSUPPLEMENTARY, INSTANCE1 is a Supplementary Instance and so cannot act as a source to non-Supplementary Instance INSTANCE2 
 
+# Stop INST2 server
 ==Executing MULTISITE_REPLIC 'STOPRCV INST1 INST2'==
+
+# Wait for INST2 reciever server to die
