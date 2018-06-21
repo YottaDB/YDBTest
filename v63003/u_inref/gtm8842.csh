@@ -14,17 +14,19 @@
 # Tests TRIGGER_MOD restricts ZBREAKS and ZSTEPS
 #
 cat > triggers.txt << EOF
-+^X -command=set -xecute="zbreak child^gtm8842  do trigger^gtm8842"
++^X -command=set -name=triggered -xecute="do trigger^gtm8842"
 EOF
+# Since we cannot write to ydb_dist, we are creating a pseudo ydb_dist called temp that contains
+# all the relevant files in ydb_dist and restrict.txt
 mkdir temp
-cp $ydb_dist/* temp/
+cp $ydb_dist/* temp/ >>& copy.out
 setenv ydb_dist temp
 echo "TRIGGER_MOD" >>& $ydb_dist/restrict.txt
 chmod -w $ydb_dist/restrict.txt
-#chmod -r $ydb_dist/restrict.txt
-ls -l $ydb_dist/restrict.txt
+
+
 $gtm_tst/com/dbcreate.csh mumps 1 >>& dbcreate.out
+echo "# Uploading triggerfile"
 $MUPIP trigger -triggerfile=triggers.txt
 $ydb_dist/mumps -run parent^gtm8842
-
 $gtm_tst/com/dbcheck.csh >>& dbcheck.out

@@ -11,22 +11,22 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 parent
+	set $etrap="do incrtrap^incrtrap"
+	write "# Attempting to ZBREAK the trigger",!
+	ZBREAK ^triggered#
+	ZBREAK child^gtm8842
+
+	write "# Setting off a trigger function with ZBREAK break points and ZSTEPS",!
 	set ^X=1
-	write "parent"
+	write "ZSTEP Successfully Ignored",!
+	write "TEST PASSED"
 	quit
 
 trigger
 	do child^gtm8842
-	write "trigger"
+	write "ZBREAK Successfully Ignored",!
 	quit
 
 child
-	do baby^gtm8842
-	write "Test successful"
-	quit
-
-baby
 	ZSTEP
 	quit
-
-
