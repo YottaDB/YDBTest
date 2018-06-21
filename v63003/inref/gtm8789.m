@@ -11,8 +11,23 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 gtm8789
-	for i=1:1:100 do
-	. set ^X=i
-	zwrite ^X
-	write $ZGBLDIR
-	quit
+        for i=1:1:3  do
+        . new $zgbldir
+        . set ^a(i)=i
+        quit
+trig    ;
+        set $zgbldir="x.gld"
+        set ^a($ztval)=$ztval
+        quit
+trigx   ;
+        set ^b($ztval)=$ztval
+        quit
+dump    ;
+        for gbldir="mumps.gld","x.gld" do
+        . write "---> $zgbldir = ",gbldir,!
+        . set $zgbldir=gbldir
+        . if $data(^a) zwrite ^a
+        . if $data(^b) zwrite ^b
+        quit
+
+
