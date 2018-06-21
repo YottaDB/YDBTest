@@ -1,0 +1,113 @@
+# Changing block size to trigger a DBKEYMN Error
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+
+Integ of region DEFAULT
+
+Block:Offset Level
+%YDB-E-DBKEYMN, 
+       1:10     1  Key too short
+                   Directory Path:  1:10
+Keys from ^ to the end are suspect.
+%YDB-W-DBLOCMBINC, 
+       0:0     FF  Local bit map incorrect
+%YDB-W-DBMRKBUSY, 
+       2:0     FF  Block incorrectly marked busy
+
+Total error count from integ:		3.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           0               0           0.000            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free              100              NA              NA            NA
+Total             100               0              NA             0
+%YDB-E-INTEGERRS, Database integrity errors
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Checking integrity of block 1:
+%YDB-I-DBKEYMN, BLK=0x00000001 : OFF=0x10   : LVL=0x01, Key too short
+
+# -------------------------------------------------------------------------------------------------------
+# Changing level to trigger a DBROOTBURN Error
+
+
+Integ of region DEFAULT
+
+Block:Offset Level
+%YDB-E-DBRLEVLTONE, 
+       1:0      0  Root level less than one
+%YDB-W-DBLOCMBINC, 
+       0:0     FF  Local bit map incorrect
+%YDB-W-DBMRKBUSY, 
+       2:0     FF  Block incorrectly marked busy
+
+Total error count from integ:		3.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           0               0           0.000            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free              100              NA              NA            NA
+Total             100               0              NA             0
+%YDB-E-INTEGERRS, Database integrity errors
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Checking integrity of block 1:
+%YDB-I-DBROOTBURN, BLK=0x00000001 :              LVL=0x00, Root block has data level
+
+# -------------------------------------------------------------------------------------------------------
+# Writing a global variable with a null subscript and then changing null_subscripts to false to trigger a NULLSUBSC Error
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+
+Integ of region DEFAULT
+
+Block:Offset Level
+%YDB-E-NULSUBSC, 
+       3:10     0  Null subscripts are not allowed for current region
+                   Directory Path:  1:10, 2:10
+                   Path:  4:10, 3:10
+Keys from ^X to the end are suspect.
+
+Total error count from integ:		1.
+
+Type           Blocks         Records          % Used      Adjacent
+
+##TEST_AWKDirectory           2               2           0.[0-9]*            NA
+Index               1               1           0.585             1
+Data                1               1           0.634             1
+Free               96              NA              NA            NA
+Total             100               4              NA             2
+%YDB-E-INTEGERRS, Database integrity errors
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Checking integrity of block 3:
+%YDB-I-NULSUBSC, BLK=0x00000003 : OFF=0x10   : LVL=0x00, Null subscripts are not allowed for current region
+
+  No errors detected.
+
+
+
+
