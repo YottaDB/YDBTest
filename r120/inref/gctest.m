@@ -56,8 +56,12 @@ done    if '$zeof write $zstatus,!
         close file
 	set errcnt=0
 	set i=i-1
+	set allowedscale=3 ; see comments in r120/u_inref/gctest.csh about allowing 3x increase every iteration
 	for j=1:1:i-1  do
-	. set max=cpu(j)*3
-	. if cpu(j+1)>max write "TEST-E-FAIL : ",! zshow "v"  if $incr(errcnt)
+	. set actualscale=(cpu(j+1)/cpu(j))*100\1/100
+	. if actualscale>allowedscale do
+	. . write "TEST-E-FAIL : cpu(",j+1,")=",cpu(j+1)," is ",actualscale,"x times cpu(",j,")=",cpu(j)," but max allowed is ",allowedscale,"x",!
+	. . if $incr(errcnt)
 	if errcnt=0 write "TEST-E-PASS",!
+	else        write !,"ZSHOW ""V"" output follows",! zshow "v"
         quit
