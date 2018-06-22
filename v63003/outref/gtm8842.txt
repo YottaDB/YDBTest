@@ -15,10 +15,6 @@ ZBREAK Trigger was not ignored
 ZBREAK within trigger was not ignored
 ZSTEP within trigger was not ignored
 TEST FAILED
-%YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
-		At M source location child+2^gtm8842
-
-YDB>
 # Running test with write permissions on restrict.txt (to show restrict.txt must have readonly access)
 -rw-rw-r-- ydb_temp_dist/restrict.txt
 # Attempting to ZBREAK the trigger (Expect a RESTRICTEDOP Error)
@@ -27,15 +23,8 @@ ZBREAK Trigger was not ignored
 ZBREAK within trigger was not ignored
 ZSTEP within trigger was not ignored
 TEST FAILED
-%YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
-		At M source location child+2^gtm8842
-
-YDB>
 # Running test without write permissions on restrict.txt (should work as described in the release note)
 -r--r--r-- ydb_temp_dist/restrict.txt
 # Attempting to ZBREAK the trigger (Expect a RESTRICTEDOP Error)
 ZSTATUS=parent+3^gtm8842,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: ZBREAK
 # Setting off a trigger function with ZBREAK break points and ZSTEPS
-ZBREAK Successfully Ignored
-ZSTEP Successfully Ignored
-TEST PASSED

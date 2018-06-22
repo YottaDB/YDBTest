@@ -18,15 +18,12 @@ parent
 
 	write "# Setting off a trigger function with ZBREAK break points and ZSTEPS",!
 	set ^X=1
-	write "ZSTEP Successfully Ignored",!
-	write "TEST PASSED"
 	quit
 
 trigger
 	do child^gtm8842
-	write "ZBREAK Successfully Ignored",!
 	quit
 
 child
-	ZSTEP INTO:"Write ""ZSTEP within trigger was not ignored"",!,""TEST FAILED""  break"
+	ZSTEP INTO:"Write ""ZSTEP within trigger was not ignored"",!,""TEST FAILED"""
 	quit

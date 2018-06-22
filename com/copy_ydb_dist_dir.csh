@@ -1,9 +1,6 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2005-2016 Fidelity National Information		#
-# Services, Inc. and/or its subsidiaries. All rights reserved.	#
-#								#
 # Copyright (c) 2017,2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
@@ -15,7 +12,7 @@
 #################################################################
 ################################################################################################################
 # Since the test framework cannot write files to the $ydb_dist script, this function creates a pseudo $ydb_dist
-# directory under ydb_temp_dist that contains all relavent files
+# directory under the caller specified directory ($1) that contains all relevent files
 ################################################################################################################
 
 mkdir $1
