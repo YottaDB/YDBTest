@@ -20,16 +20,12 @@ cat > triggers.txt << EOF
 +^X -command=set -name=triggered -xecute="do trigger^gtm8842"
 EOF
 $MUPIP trigger -triggerfile=triggers.txt
-# Since we cannot write to ydb_dist, we are creating a pseudo ydb_dist under ydb_temp_dist that will contain
-# all the relevant files in ydb_dist and restrict.txt
-mkdir ydb_temp_dist
-cp $ydb_dist/* ydb_temp_dist/ >>& copy.out
 
 
 echo "# Running test without restrict.txt (to show restricting TRIGGER_MOD is necessary)"
+source $gtm_tst/com/copy_ydb_dist_dir.csh ydb_temp_dist
 $gtm_tst/com/lsminusl.csh $ydb_dist/restrict.txt
 $ydb_dist/mumps -run parent^gtm8842
-setenv ydb_dist ydb_temp_dist
 
 
 echo "# Running test with write permissions on restrict.txt (to show restrict.txt must have readonly access)"

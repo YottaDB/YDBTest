@@ -8,19 +8,27 @@ File triggers.txt, Line 1: Added SET trigger on ^X named triggered
 0 trigger file entries did not update database trigger content
 =========================================
 # Running test without restrict.txt (to show restricting TRIGGER_MOD is necessary)
-ls: cannot access '##SOURCE_PATH##/restrict.txt': No such file or directory
+ls: cannot access 'ydb_temp_dist/restrict.txt': No such file or directory
 # Attempting to ZBREAK the trigger (Expect a RESTRICTEDOP Error)
 # Setting off a trigger function with ZBREAK break points and ZSTEPS
-%YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
-		At M source location +1^triggered#
+ZBREAK Trigger was not ignored
+ZBREAK within trigger was not ignored
+ZSTEP within trigger was not ignored
+TEST FAILED
+%YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
+		At M source location child+2^gtm8842
 
 YDB>
 # Running test with write permissions on restrict.txt (to show restrict.txt must have readonly access)
 -rw-rw-r-- ydb_temp_dist/restrict.txt
 # Attempting to ZBREAK the trigger (Expect a RESTRICTEDOP Error)
 # Setting off a trigger function with ZBREAK break points and ZSTEPS
-%YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
-		At M source location +1^triggered#
+ZBREAK Trigger was not ignored
+ZBREAK within trigger was not ignored
+ZSTEP within trigger was not ignored
+TEST FAILED
+%YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
+		At M source location child+2^gtm8842
 
 YDB>
 # Running test without write permissions on restrict.txt (should work as described in the release note)

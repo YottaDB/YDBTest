@@ -13,8 +13,8 @@
 parent
 	set $etrap="do incrtrap^incrtrap"
 	write "# Attempting to ZBREAK the trigger (Expect a RESTRICTEDOP Error)",!
-	ZBREAK ^triggered#
-	ZBREAK child^gtm8842
+	ZBREAK ^triggered#:"Write ""ZBREAK Trigger was not ignored"",!"
+	ZBREAK child^gtm8842:"Write ""ZBREAK within trigger was not ignored"",!"
 
 	write "# Setting off a trigger function with ZBREAK break points and ZSTEPS",!
 	set ^X=1
@@ -28,5 +28,5 @@ trigger
 	quit
 
 child
-	ZSTEP
+	ZSTEP INTO:"Write ""ZSTEP within trigger was not ignored"",!,""TEST FAILED""  break"
 	quit
