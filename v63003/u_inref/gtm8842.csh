@@ -13,20 +13,33 @@
 #
 # Tests TRIGGER_MOD restricts ZBREAKS and ZSTEPS
 #
-cat > triggers.txt << EOF
-+^X -command=set -name=triggered -xecute="do trigger^gtm8842"
-EOF
-# Since we cannot write to ydb_dist, we are creating a pseudo ydb_dist called temp that contains
-# all the relevant files in ydb_dist and restrict.txt
-mkdir temp
-cp $ydb_dist/* temp/ >>& copy.out
-setenv ydb_dist temp
-echo "TRIGGER_MOD" >>& $ydb_dist/restrict.txt
-chmod -w $ydb_dist/restrict.txt
-
 
 $gtm_tst/com/dbcreate.csh mumps 1 >>& dbcreate.out
 echo "# Uploading triggerfile"
+cat > triggers.txt << EOF
++^X -command=set -name=triggered -xecute="do trigger^gtm8842"
+EOF
 $MUPIP trigger -triggerfile=triggers.txt
+# Since we cannot write to ydb_dist, we are creating a pseudo ydb_dist under ydb_temp_dist that will contain
+# all the relevant files in ydb_dist and restrict.txt
+mkdir ydb_temp_dist
+cp $ydb_dist/* ydb_temp_dist/ >>& copy.out
+
+
+echo "# Running test without restrict.txt (to show restricting TRIGGER_MOD is necessary)"
+$gtm_tst/com/lsminusl.csh $ydb_dist/restrict.txt
+$ydb_dist/mumps -run parent^gtm8842
+setenv ydb_dist ydb_temp_dist
+
+
+echo "# Running test with write permissions on restrict.txt (to show restrict.txt must have readonly access)"
+echo "TRIGGER_MOD" >>& $ydb_dist/restrict.txt
+$gtm_tst/com/lsminusl.csh $ydb_dist/restrict.txt | $tst_awk '{print $1,$9}'
+$ydb_dist/mumps -run parent^gtm8842
+
+
+echo "# Running test without write permissions on restrict.txt (should work as described in the release note)"
+chmod -w $ydb_dist/restrict.txt
+$gtm_tst/com/lsminusl.csh $ydb_dist/restrict.txt | $tst_awk '{print $1,$9}'
 $ydb_dist/mumps -run parent^gtm8842
 $gtm_tst/com/dbcheck.csh >>& dbcheck.out

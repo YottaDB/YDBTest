@@ -12,7 +12,7 @@
 ;
 parent
 	set $etrap="do incrtrap^incrtrap"
-	write "# Attempting to ZBREAK the trigger",!
+	write "# Attempting to ZBREAK the trigger (Expect a RESTRICTEDOP Error)",!
 	ZBREAK ^triggered#
 	ZBREAK child^gtm8842
 

@@ -7,7 +7,25 @@ File triggers.txt, Line 1: Added SET trigger on ^X named triggered
 1 trigger file entries did update database trigger content
 0 trigger file entries did not update database trigger content
 =========================================
-# Attempting to ZBREAK the trigger
+# Running test without restrict.txt (to show restricting TRIGGER_MOD is necessary)
+ls: cannot access '##SOURCE_PATH##/restrict.txt': No such file or directory
+# Attempting to ZBREAK the trigger (Expect a RESTRICTEDOP Error)
+# Setting off a trigger function with ZBREAK break points and ZSTEPS
+%YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
+		At M source location +1^triggered#
+
+YDB>
+# Running test with write permissions on restrict.txt (to show restrict.txt must have readonly access)
+-rw-rw-r-- ydb_temp_dist/restrict.txt
+# Attempting to ZBREAK the trigger (Expect a RESTRICTEDOP Error)
+# Setting off a trigger function with ZBREAK break points and ZSTEPS
+%YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
+		At M source location +1^triggered#
+
+YDB>
+# Running test without write permissions on restrict.txt (should work as described in the release note)
+-r--r--r-- ydb_temp_dist/restrict.txt
+# Attempting to ZBREAK the trigger (Expect a RESTRICTEDOP Error)
 ZSTATUS=parent+3^gtm8842,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: ZBREAK
 # Setting off a trigger function with ZBREAK break points and ZSTEPS
 ZBREAK Successfully Ignored
