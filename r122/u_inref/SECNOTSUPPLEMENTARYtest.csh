@@ -14,7 +14,12 @@
 setenv test_replic_suppl_type 0
 
 $MULTISITE_REPLIC_PREPARE 2
-$gtm_tst/$tst/u_inref/ydb210_dbcreate.csh 1
+$gtm_tst/$tst/u_inref/ydb210_dbcreate.csh 1 >> dbcreate.log
+	if ($status) then
+		echo "FAILURE from ydb210_dbcreate.csh "
+		echo "Dumping dbcreate.log:"
+		cat dbcreate.log
+	endif
 
 echo "# Generate INST1 INST2 instance files (supplementary and non-supplementary respectively)" >> $outputFile
 #INST1 server will be supplementary
@@ -73,6 +78,11 @@ echo '' >> $outputFile
 
 #Clean $srcLog of expected errors
 check_error_exist.csh $srcLog "YDB-E-SECNOTSUPPLEMENTARY" > /dev/null
+if ($status) then
+	echo " FAILURE from check_error_exist.csh:" >> $outputFile
+	echo " 		Searching for YDB-E-SECNOTSUPPLEMENTARY in $srcLog" >> $outputFile
+	echo "" >> $outputFile
+endif
 
 echo '# Stop INST2 server' >>& $outputFile
 $MSR STOPRCV INST1 INST2 >>& $outputFile
@@ -80,5 +90,3 @@ echo '' >>& $outputFile
 
 echo '# Wait for INST2 reciever server to die' >>& $outputFile
 source $gtm_tst/com/wait_for_proc_to_die.csh $RCVR_PID 60 ./wait_for_proc_to_die.logx >> $outputFile
-
-echo "Test has concluded"

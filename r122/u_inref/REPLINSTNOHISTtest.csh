@@ -14,7 +14,12 @@
 setenv test_replic_suppl_type 0
 
 $MULTISITE_REPLIC_PREPARE 3
-$gtm_tst/$tst/u_inref/ydb210_dbcreate.csh 1
+$gtm_tst/$tst/u_inref/ydb210_dbcreate.csh 1 >> dbcreate.log
+if ($status) then
+	echo "FAILURE from ydb210_dbcreate.csh " >> $outputFile
+	echo "Dumping dbcreate.log:" >> $outputFile
+	cat dbcreate.log >> $outputFile
+endif
 
 echo "# Start INST1 INST2 connection" >> $outputFile
 $MSR START INST1 INST2 >>& $outputFile
@@ -79,6 +84,10 @@ setenv RCVR_PID `$grep -e "Replication Receiver Server with Pid" INST3_RCVR.log 
 
 # dont move on until the error has been generated in the source log
 $gtm_tst/com/wait_for_log.csh -message "YDB-E" -log $srcLog2 -duration 300
+if ($status) then
+	echo " FAILURE from wait_for_log.csh:"
+	echo " 		Searching for YDB_E within $srcLog2"
+endif
 echo '' >> $outputFile
 
 echo "# INST1 INST2 source server log errors:" >> $outputFile
@@ -89,9 +98,17 @@ echo '' >> $outputFile
 
 #Clean $srcLog2 of expected errors
 check_error_exist.csh $srcLog2 "YDB-E-REPLINSTNOHIST" > /dev/null
+if ($status) then
+	echo " FAILURE from check_error_exist.csh:"
+	echo " 		Searching for YDB-E-REPLINSTNOHIST in $srcLog2"
+endif
 
 echo "# Wait for the INST1 INST3 reciever to die" >> $outputFile
 source $gtm_tst/com/wait_for_proc_to_die.csh $RCVR_PID 60 ./wait_for_proc_to_die.logx >> $outputFile
+if ($status) then
+	echo " FAILURE from wait_for_proc_to_die.csh:"
+	echo " 		looking at RCVR with PID $RCVR_PID"
+endif
 echo '' >>& $outputFile
 
 echo "# Shutdown INST3 passive source server" >> $outputFile
@@ -109,6 +126,3 @@ if ($status) then
 	cat dbcheck.outx >> $outputFile
 endif
 echo '' >> $outputFile
-
-
-echo "Test has concluded"
