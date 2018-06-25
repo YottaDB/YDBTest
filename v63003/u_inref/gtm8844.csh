@@ -10,15 +10,12 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
-
-setenv start_time `cat start_time`
-setenv srcLog2 "SRC_$start_time.log"
-setenv portno `$sec_shell "$sec_getenv; source $gtm_tst/com/portno_acquire.csh"`
 # Lack permissions to write to the $ydb_dist directory, so we are creating a temp directory
 # and copying all files from $ydb_dist to temp, changing the ydb_dist environment variable
 # and putting restrict.txt in temp
+
 mkdir temp
-cp $ydb_dist/* temp/
+cp $ydb_dist/* temp/ >>& not_copied.out
 set ydb_dist0=$ydb_dist
 setenv ydb_dist temp
 cat > $ydb_dist/restrict.txt << EOF
@@ -29,7 +26,8 @@ chmod -w $ydb_dist/restrict.txt
 
 # Creating trigger file
 cat > trigger.txt << EOF
-+^X -name=triggered -command=set -xecute="do zgotofn^gtm8844"
++^X -name=triggerx -command=set -xecute="do triggerfnx^gtm8844"
++^Y -name=triggery -command=set -xecute="do triggerfny^gtm8844"
 EOF
 
 echo "# Running functions that violate our restrictions"
@@ -37,37 +35,82 @@ echo "# Expect two GTM_FATAL files at the bottom of the reference file"
 echo "# -------------------------------------------------------------------------------------------"
 echo "# Two consecutive halts"
 $ydb_dist/mumps -run haltfn^gtm8844
+ls *FATAL*
+rm *FATAL*
 echo "# -------------------------------------------------------------------------------------------"
 echo "# Two consecutive zhalts"
 $ydb_dist/mumps -run zhaltfn^gtm8844
-echo ""
-echo ""
-echo ""
-echo ""
-echo ""
+ls *FATAL*
+rm *FATAL*
+echo "# -------------------------------------------------------------------------------------------"
 echo "# Confirming ZHALT,ZGOTO 0 produces an error in the shell"
 $ydb_dist/mumps -run zgotofn^gtm8844
 echo "Status After ZGOTOFN=$status"
-if !($status) then
+if ($status) then
 	echo "Error Detected"
 endif
 echo "# -------------------------------------------------------------------------------------------"
-$gtm_tst/com/dbcreate.csh mumps 1 >>& dbcreate.out
+$MULTISITE_REPLIC_PREPARE 2
+setenv gtm_test_repl_norepl 1
+$gtm_tst/com/dbcreate.csh mumps 9 >>& dbcreate.out
+$MSR START INST1 INST2 >>& MSRStart.out
+
+# Creating initial values for global variables X and Y, uploading triggers
+$MSR RUN INST1 '$ydb_dist/mumps -run ^%XCMD "set ^X=0  set ^Y=0"'
 $MUPIP trigger -triggerfile=trigger.txt
-$ydb_dist/mumps -run ^%XCMD "set ^X=1"
+
+echo ""
+
+echo "# Test for ZHALT in a trigger"
+# We use the global variable ^H in HREG (unreplicated in instance 2) to ensure that when we turn the database back on, the update in the backlog
+# can go through without error
+$MSR RUN INST2 '$ydb_dist/mumps -run ^%XCMD "set ^H=0;write ^H"' >>& extrastuff.out
+echo "# Setting off Trigger"
+$MSR RUN INST1 '$ydb_dist/mumps -run ^%XCMD "set ^X=1"'
+echo "# Check primary"
+$MSR RUN INST1 '$ydb_dist/mumps -run ^%XCMD "write ^X"'
+echo "# Check secondary"
+$MSR RUN INST2 '$ydb_dist/mumps -run ^%XCMD "write ^X,!"'
+$MSR RUN INST2 '$MUPIP replic -receiver -checkhealth >& checkhealth.tmp ; cat checkhealth.tmp' >& checkhealth.out
+set updprocpid = `$tst_awk '/PID.*Update process/{print $2}' checkhealth.out`
+$MSR RUN INST2 'set msr_dont_trace ; $gtm_tst/com/wait_for_proc_to_die.csh' $updprocpid
+$MSR RUN INST2 '$MUPIP replic -receiver -checkhealth >& checkhealth.tmp ; cat checkhealth.tmp' >& checkhealth.out
+cat checkhealth.out
+echo "# Restore the update process"
+# Using outx because we are expecting errors
+$MSR STOPRCV INST1 INST2 >>& restart.outx
+$MSR RUN INST2 '$ydb_dist/mumps -run ^%XCMD "set ^H=1;write ^H"'>>& restart.outx
+$MSR STARTRCV INST1 INST2 >>& restart.outx
+$MSR SYNC INST1 INST2 >>& restart.outx
+echo "# Confirm secondary's update process is restored and database is up to date"
+$MSR RUN INST2 '$MUPIP replic -receiver -checkhealth'
+$MSR RUN INST2 '$ydb_dist/mumps -run ^%XCMD "write ^X,!"'
+
+echo "# -------------------------------------------------------------------------------------------"
+
+echo "# Test for HALT in a trigger"
+$MSR RUN INST2 '$ydb_dist/mumps -run ^%XCMD "set ^H=0;write ^H"' >>& extrastuff.out
+echo "# Setting off Trigger"
+$MSR RUN INST1 '$ydb_dist/mumps -run ^%XCMD "set ^Y=1"'
+echo "# Check primary"
+$MSR RUN INST1 '$ydb_dist/mumps -run ^%XCMD "write ^Y"'
+echo "# Check secondary"
+$MSR RUN INST2 '$ydb_dist/mumps -run ^%XCMD "write ^Y"'
+$MSR RUN INST2 '$MUPIP replic -receiver -checkhealth >& checkhealth.tmp ; cat checkhealth.tmp' >& checkhealth.out
+set updprocpid = `$tst_awk '/PID.*Update process/{print $2}' checkhealth.out`
+$MSR RUN INST2 'set msr_dont_trace ; $gtm_tst/com/wait_for_proc_to_die.csh' $updprocpid
+$MSR RUN INST2 '$MUPIP replic -receiver -checkhealth >& checkhealth.tmp; cat checkhealth.tmp' >& checkhealth.out
+cat checkhealth.out
+echo "# Restore the update process"
+$MSR STOPRCV INST1 INST2 >>& restart.outx
+$MSR RUN INST2 '$ydb_dist/mumps -run ^%XCMD "set ^H=1;write ^H"' >>& restart.outx
+$MSR STARTRCV INST1 INST2 >>& restart.outx
+$MSR SYNC INST1 INST2 >>& restart.outx
+echo "# Confirm secondary's update process is restored and database is up to date"
+$MSR RUN INST2 '$MUPIP replic -receiver -checkhealth'
+$MSR RUN INST2 '$ydb_dist/mumps -run ^%XCMD "write ^Y"'
+# Remove all fatal files produced from test
+rm $SEC_DIR/*FATAL*
 
 
-# dont move on until the error has been generated in the source log
-$gtm_tst/com/wait_for_log.csh -message "YDB-E" -log $srcLog2 -duration 300
-#echo '' >> $outputFile
-#echo "# INST1 INST2 source server log errors:" >> $outputFile
-#$grep -e "-E-" $srcLog1  >> $outputFile
-#echo "# INST1 INST3 source server log errors:" >> $outputFile
-#$grep -e "-E-" $srcLog2  >> $outputFile
-#echo '' >> $outputFile
-
-
-$ydb_dist/mumps -run ^%XCMD "set ^Y=1"
-$ydb_dist/mumps -run ^%XCMD "write ^Y"
-$sec_shell "cd $SEC_SIDE; $ydb_dist0/mumps -run ^%XCMD ""write ^Y"""
 $gtm_tst/com/dbcheck.csh >>& dbcheck.out

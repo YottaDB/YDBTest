@@ -36,3 +36,14 @@ zgotofn
 	zgoto 0
 	quit
 
+triggerfnx
+	if ($view("ENVIRONMENT")'["MUMPS")&(^H=0) do
+	. zhalt
+	quit
+
+triggerfny
+	if ($view("ENVIRONMENT")'["MUMPS")&(^H=0)  do
+	. halt
+	quit
+
+
