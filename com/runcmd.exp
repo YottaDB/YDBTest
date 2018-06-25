@@ -11,14 +11,15 @@
 #################################################################
 #
 #
-#	USAGE:
-#		runcmd.exp <cmd>
-#			where cmd is a string of ; delimited commands issued at the shell (tcsh) prompt
-
-
+# USAGE:
+#	runcmd.exp <cmd>
+#		where cmd is a string of ; delimited commands issued at the shell (tcsh) prompt
 #
 
+# Note: Timeout set at 1 hour below since an arbitrary input script (<cmd>) is executed
+# and could take a lot longer than the usual 1 minute that we have for expect command timeout.
 set timeout 3600
+
 spawn /usr/local/bin/tcsh -f
 
 expect_after {
@@ -28,9 +29,10 @@ proc timeout_procedure { } {
 	puts "timeout occurred"
 	exit -1
 }
-# Change shell prompt to something other than ">" as that is a substring of the LKE prompt "LKE>"
+# Change shell prompt to something other than ">" as that is a substring of prompts like "LKE>", "YDB>", "DSE>", "MUPIP>" etc.
 # and can cause incorrect match later when we wait for the shell prompt.
 expect -exact ">"
+
 # Note: Changing the shell prompt to SHELL might seem easily achieved as follows.
 #	send -- "set prompt=SHELL\r"
 #	expect -exact "SHELL"
@@ -41,7 +43,6 @@ send -- "set shellprompt=SHELL\r"
 expect -exact ">"
 send -- "set prompt=\$shellprompt\r"
 expect -exact "SHELL"
-
 
 send -- "set prompt=\$shellprompt\r"
 expect -exact "SHELL"
