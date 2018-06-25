@@ -15,7 +15,8 @@
 #This random value (1 or 0)  will determine if the errors are generated before or after closing
 #the terminal that the DB was created in
 setenv terminalNoKill `$gtm_tst/com/genrandnumbers.csh`
-setenv terminalNoKill 1
+
+setenv src_srvr_stdin_is_terminal 1 # Needed by SRC.csh to ensure source server has terminal as stdin/stdout/stderr (to test #210)
 
 #This will supress the ocassional %YDB-I-SHMREMOVED that is output when changing STDNULLCOLL settings
 unsetenv gtm_db_counter_sem_incr
