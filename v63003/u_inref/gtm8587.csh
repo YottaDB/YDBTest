@@ -15,7 +15,7 @@
 #
 set key='$KEY'
 set device='$DEVICE'
-setenv gtm_chset "UTF-8"
+$switch_chset "UTF-8" >>& chset.out
 echo "# Triggering an IO Permissions Error, expecting a message in $device (would be zero in previous versions)"
 $ydb_dist/mumps -run dollardevice^gtm8587
 echo ""
