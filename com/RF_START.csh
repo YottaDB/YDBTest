@@ -3,8 +3,8 @@
 #								#
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
-#                                                               #
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -14,7 +14,7 @@
 #								#
 #################################################################
 #
-# RF_START : Starts source  and receiver server
+# RF_START: Starts source  and receiver server
 #
 
 if ($?test_jnlseqno == 1) then
@@ -62,7 +62,7 @@ set other_qualifiers = "$argv"
 # Start source server
 #==========================
 echo "Starting Primary Source Server in $PRI_SIDE"
-$pri_shell "$pri_getenv;cd $PRI_SIDE;$gtm_tst/com/SRC.csh $main_repl_state $portno $start_time $other_qualifiers < /dev/null >&! START_${start_time}.out ; grep -E '^SRC_START_SUCCESSFUL' START_${start_time}.out" >&! START_${start_time}_SRC_status.out # BYPASSOK grep
+$pri_shell "$pri_getenv;cd $PRI_SIDE;$gtm_tst/com/SRC.csh $main_repl_state $portno $start_time $other_qualifiers  >&! START_${start_time}.out ; grep -E '^SRC_START_SUCCESSFUL' START_${start_time}.out" >&! START_${start_time}_SRC_status.out # BYPASSOK grep
 set src_start = `cat START_${start_time}_SRC_status.out`
 if ( "SRC_START_SUCCESSFUL" != "$src_start" ) then
 	echo "################################################################"
@@ -77,7 +77,7 @@ endif
 # Start receiver server
 #==========================
 echo "Starting Passive Source Server and Receiver Server in $SEC_SIDE"
-$sec_shell "$sec_getenv;cd $SEC_SIDE;$gtm_tst/com/RCVR.csh $main_repl_state $portno $start_time $other_qualifiers < /dev/null >&! START_${start_time}.out ; grep -E '^RCVR_START_SUCCESSFUL' START_${start_time}.out" >&! START_${start_time}_RCVR_status.out # BYPASSOK grep
+$sec_shell "$sec_getenv;cd $SEC_SIDE;$gtm_tst/com/RCVR.csh $main_repl_state $portno $start_time $other_qualifiers  >&! START_${start_time}.out ; grep -E '^RCVR_START_SUCCESSFUL' START_${start_time}.out" >&! START_${start_time}_RCVR_status.out # BYPASSOK grep
 set rcvr_start = `cat START_${start_time}_RCVR_status.out`
 if ( "RCVR_START_SUCCESSFUL" != "$rcvr_start" ) then
 	echo "################################################################"

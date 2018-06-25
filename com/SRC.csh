@@ -233,7 +233,30 @@ else
 	set jnlpoolsize = $tst_buffsize
 endif
 echo $MUPIP replic -source -start -secondary="$tst_now_secondary:q":"$portno" ${cmplvlstr} -buffsize=$jnlpoolsize $gtm_test_instsecondary $gtm_test_rp_pp $filter_arg -log=$SRC_LOG_FILE $updokarg $tlsparm $tls_reneg_parm $fileonlyarg
-$MUPIP replic -source -start -secondary="$tst_now_secondary:q":"$portno" ${cmplvlstr} -buffsize=$jnlpoolsize $gtm_test_instsecondary $gtm_test_rp_pp $filter_arg -log=$SRC_LOG_FILE $updokarg $tlsparm $tls_reneg_parm $fileonlyarg
+# Prepare the source server startup command. Set an environment variable as we want this to be accessible from within "sh" below.
+setenv srcstartcmd "$MUPIP replic -source -start -secondary="$tst_now_secondary:q":"$portno" ${cmplvlstr} -buffsize=$jnlpoolsize $gtm_test_instsecondary $gtm_test_rp_pp $filter_arg -log=$SRC_LOG_FILE $updokarg $tlsparm $tls_reneg_parm $fileonlyarg"
+if (! $?src_srvr_stdin_is_terminal) then
+	# Start the source server
+	$srcstartcmd
+else
+	# src_srvr_stdin_is_terminal is set implying the subtest (currently only r122/ydb210) wants to start the source server
+	# with stdin/stdout/stderr as the terminal. This is needed to exercise the issue fixed by #210.
+	# Due to redirections happening at various levels of caller scripts, it is most often the case that stdout/stderr
+	# is a file at this point even though stdin might be a terminal. Therefore repoint stdout/stderr to the terminal too
+	# just for the source server startup command. This can be easily done with sh (tcsh has no such facility) so use
+	# that temporarily. In this case though, we are guaranteed stdin is a terminal so check that first. And then redirect
+	# stdout/stderr to point to stdin.
+	set stdinfd = `ls -l /proc/self/fd | grep " 0 -> " | grep "dev/pts"`
+	if ($status != 0) then
+		echo "src_srvr_stdin_is_terminal env var is set so expecting stdin to be terminal but it is not."
+		echo "ls -l /proc/self/fd output below. Exiting $0 with error"
+		ls -l /proc/self/fd
+		exit 1
+	endif
+	sh -c '$srcstartcmd 1>&0 2>&0'
+endif
+unsetenv srcstartcmd
+
 set start_status = $status
 setenv tst_now_secondary "$temp_save_secondary"
 
