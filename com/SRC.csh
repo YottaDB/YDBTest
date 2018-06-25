@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -237,7 +237,11 @@ echo $MUPIP replic -source -start -secondary="$tst_now_secondary:q":"$portno" ${
 setenv srcstartcmd "$MUPIP replic -source -start -secondary="$tst_now_secondary:q":"$portno" ${cmplvlstr} -buffsize=$jnlpoolsize $gtm_test_instsecondary $gtm_test_rp_pp $filter_arg -log=$SRC_LOG_FILE $updokarg $tlsparm $tls_reneg_parm $fileonlyarg"
 if (! $?src_srvr_stdin_is_terminal) then
 	# Start the source server
+	# It is possible for usages like "-secondary=[::ffff:127.0.0.1]:36008" to be there in $srcstartcmd
+	# Do not error out for those cases (tcsh would try to evaluate :). Hence the nonomatch below.
+	set nonomatch
 	$srcstartcmd
+	unset nonomatch
 else
 	# src_srvr_stdin_is_terminal is set implying the subtest (currently only r122/ydb210) wants to start the source server
 	# with stdin/stdout/stderr as the terminal. This is needed to exercise the issue fixed by #210.
