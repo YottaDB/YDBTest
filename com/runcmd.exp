@@ -10,6 +10,12 @@
 #								#
 #################################################################
 #
+#
+#	USAGE:
+#		runcmd.exp <cmd>
+#			where cmd is a string of ; delimited commands
+#
+
 set timeout 60
 spawn /usr/local/bin/tcsh -f
 
@@ -34,7 +40,15 @@ expect -exact ">"
 send -- "set prompt=\$shellprompt\r"
 expect -exact "SHELL"
 
-#send -- "\$gtm_tst/\$tst/u_inref/gtm8576.dbcreate.csh\r"
-send -- "gtm8576.dbcreate.csh\r"
-expect -exact "dbcreate complete"
+
+send -- "set prompt=\$shellprompt\r"
 expect -exact "SHELL"
+
+# Send the first argument as a command
+set cmd [lindex $argv 0]
+send -- $cmd
+send -- "\r"
+
+# Wait for shell prompt to return
+expect -exact "SHELL"
+
