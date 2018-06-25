@@ -15,6 +15,7 @@
 #This random value (1 or 0)  will determine if the errors are generated before or after closing
 #the terminal that the DB was created in
 setenv terminalNoKill `$gtm_tst/com/genrandnumbers.csh`
+setenv terminalNoKill 1
 
 #This will supress the ocassional %YDB-I-SHMREMOVED that is output when changing STDNULLCOLL settings
 unsetenv gtm_db_counter_sem_incr

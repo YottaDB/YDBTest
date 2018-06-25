@@ -13,10 +13,12 @@
 #
 #	USAGE:
 #		runcmd.exp <cmd>
-#			where cmd is a string of ; delimited commands
+#			where cmd is a string of ; delimited commands issued at the shell (tcsh) prompt
+
+
 #
 
-set timeout 60
+set timeout 3600
 spawn /usr/local/bin/tcsh -f
 
 expect_after {
