@@ -37,7 +37,7 @@ BEGIN { split("file_name n_regions key_size record_size block_size allocation gl
 	    if ($i ~/-f/) value["file_name"]=tmp
 	    else if ($i ~/^-bl/) value["block_size"]=tmp
 	    else if ($i ~/^-al/) value["allocation"]=tmp
-	    else if ($i ~/^-g/) value["global_buffer_count"]=tmp
+	    else if ($i ~/^-glo/) value["global_buffer_count"]=tmp
 	    else if ($i ~/^-e/) value["extension_count"]=tmp
 	    else if ($i ~/^-c/) value["collation_default"]=tmp
 	    else if ($i ~/^-rec/) value["record_size"]=tmp
@@ -64,6 +64,7 @@ BEGIN { split("file_name n_regions key_size record_size block_size allocation gl
 	    else if ($i ~/^-stdnull/) value["test_stdnull_collation"]="-stdnull"
 	    else if ($i ~/^-nostdnull/) value["test_stdnull_collation"]="-nostdnull"
 	    else if ($i ~/^-different_gld/) value["different_gld"]=1
+	    else if ($i ~/^-gld_has_db_fullpath/) value["gld_has_db_fullpath"]=1
 	    else if ($i ~/^-jnl_prefix=/) value["jnl_prefix"]=tmp
 	    else if ($i ~/^-jnl_suffix=/) value["jnl_suffix"]=tmp
 	    else if ($i ~/^-jnl_auto/) value["journal" ++jnl_count]="autoswitchlimit=" tmp
@@ -112,6 +113,8 @@ END {
 	      printf "cd %s\n", subdir
 	      value["file_name"] = fullpath[nsubdirs]
       }
+      if (value["gld_has_db_fullpath"])
+              value["file_name"] = ENVIRON["PWD"] "/" value["file_name"]
       print "setenv dbname " value["file_name"]
       print "setenv gtmgbldir \"$dbname.gld\""
       print "set timenow = `date +%H_%M_%S`"
@@ -220,6 +223,8 @@ END {
 			    seg = filenames[i]"seg"
 			    reg = filenames[i]"reg"
 		    }
+		    if (value["gld_has_db_fullpath"])
+			fname = ENVIRON["PWD"] "/" fname
 		    print "add -name " filenames[i] "* -region="  reg
 		    print "add -name " FILENAMES[i] "* -region="  reg
 		    if (!(tst_on_remote && value["different_gld"] && !(i%2)))
