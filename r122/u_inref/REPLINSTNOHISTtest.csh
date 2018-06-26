@@ -75,7 +75,9 @@ endif
 
 
 # Start the reciever and get its log file
+setenv gtm_test_repl_skiprcvrchkhlth 1 # Have test framework ignore the expected failure in the reciever log
 $MSR STARTRCV INST1 INST3 >>& $outputFile
+unsetenv gtm_test_repl_skiprcvrchkhlth # It's now safe to pay attention to reciever log errors again
 get_msrtime
 $MSR RUN INST3 "cat RCVR_$time_msr.log" >> INST3_RCVR.log
 
