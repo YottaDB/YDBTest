@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-;	Copyright 2012, 2013 Fidelity Information Services, Inc	;
+; Copyright 2012, 2013 Fidelity Information Services, Inc	;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -44,12 +47,13 @@ parseargs
 	.	if (key?1"f".e)&($length(value)) set args("name_override")=value quit
 	.	if (key="name_override")&($length(value)) set args("name_override")=value quit
 	.	if (key="different_gld") set args("different_gld")=1 quit
+	.	if (key="gld_has_db_fullpath") set args("gld_has_db_fullpath")=1 quit
 	.	if (key="n_regions")&($length(value)) set args("n_regions")=value quit
 	.	if (key?1"k".e)&($length(value)) set args("key_size")=value quit
 	.	if (key?1"rec".e)&($length(value)) set args("record_size")=value quit
 	.	if (key?1"bl".e)&($length(value)) set args("block_size")=value quit
 	.	if (key?1"al".e)&($length(value)) set args("allocation")=value quit
-	.	if (key?1"g".e)&($length(value)) set args("global_buffer_count")=value quit
+	.	if (key?1"glo".e)&($length(value)) set args("global_buffer_count")=value quit
 	.	if (key?1"e".e)&($length(value)) set args("extension_count")=value quit
 	.	if (key?1"res".e)&($length(value)) set args("reserved_bytes")=value quit
 	.	if (key?1"c".e)&($length(value)) set args("collation_default")=value quit
