@@ -37,7 +37,7 @@ echo "########## Begin do_random_settings.csh random settings ###########"	>>&! 
 # 	governed by the current time in second level granularity.
 # If any new randomness is added, check if speed test also needs to be changed to take it into consideration
 # arguments below are count-of-numbers-needed lower-bound upper-bound
-set randnumbers = `$gtm_tst/com/genrandnumbers.csh 44 1 10`
+set randnumbers = `$gtm_tst/com/genrandnumbers.csh 45 1 10`
 
 # Caution : No. of random choices below and the no. of random numbers generated above might not necessarily be the same.
 # 	    Increase the count by the number of new random numbers the newly introduced code needs.
@@ -1126,7 +1126,7 @@ setenv tst_random_all "$tst_random_all gtm_mupjnl_parallel"
 ###########################################################################
 ### Random option - 44 ### Randomly enable periodic forced journal overflow due to a simulated pool/record accounting sync problem
 if !($?gtm_test_jnlpool_sync) then
-	if ((1 != $gtm_test_jnlfileonly) && (2 >= $randnumbers[42])) then
+	if ((1 != $gtm_test_jnlfileonly) && (2 >= $randnumbers[44])) then
 		setenv gtm_test_jnlpool_sync `$tst_awk 'BEGIN {srand () ; print (5000 + int (rand () * 20000))}'`
 	endif
 	if ($?gtm_test_jnlpool_sync) then
@@ -1141,6 +1141,28 @@ else
 	echo "setenv gtm_test_jnlpool_sync $gtm_test_jnlpool_sync"					>>&! $settingsfile
 endif
 setenv tst_random_all "$tst_random_all gtm_test_jnlpool_sync"
+###########################################################################
+
+###########################################################################
+### Random option - 45 ### Randomly enable lock hash collisions in dbg code
+# Uses randnumbers[45]
+if !($?ydb_lockhash_n_bits) then
+	set nbits = $randnumbers[44]
+	if (6 <= $nbits) then
+		unsetenv ydb_lockhash_n_bits
+		echo "# ydb_lockhash_n_bits chosen to be UNDEFINED by do_random_settings.csh"	>>&! $settingsfile
+		echo "unsetenv ydb_lockhash_n_bits"						>>&! $settingsfile
+	else
+		echo "# ydb_lockhash_n_bits set by do_random_settings.csh"			>>&! $settingsfile
+		setenv ydb_lockhash_n_bits `$gtm_dist/mumps -run chooseamong 1 3 7 15 31`
+		echo "setenv ydb_lockhash_n_bits $ydb_lockhash_n_bits"				>>&! $settingsfile
+	endif
+else
+	echo "# ydb_lockhash_n_bits was already set before coming into do_random_settings.csh"	>>&! $settingsfile
+	echo "setenv ydb_lockhash_n_bits $ydb_lockhash_n_bits"					>>&! $settingsfile
+endif
+setenv tst_random_all "$tst_random_all ydb_lockhash_n_bits"
+###########################################################################
 
 # For any change to tst_random_all, a corresponding change is required in log_report.awk, to show in final report
 echo "########### End do_random_settings.csh random settings ############"			>>&! $settingsfile
