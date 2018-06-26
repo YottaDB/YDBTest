@@ -11,21 +11,30 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 gtm8789
+	do ^sstep
         for i=1:1:3  do
         . new $zgbldir
         . set ^a(i)=i
         quit
 trig    ;
-        set $zgbldir="x.gld"
+	do ^sstep
+	open "newdir.txt"
+	use "newdir.txt" read newdir
+	use $principal
+        set $zgbldir=newdir_"/mumps.gld"
+	write $zgbldir,!
         set ^a($ztval)=$ztval
         quit
 trigx   ;
         set ^b($ztval)=$ztval
         quit
 dump    ;
-        for gbldir="mumps.gld","x.gld" do
-        . write "---> $zgbldir = ",gbldir,!
+	open "newdir.txt"
+	use "newdir.txt" read newdir
+	use $principal
+        for gbldir="mumps.gld",newdir_"/mumps.gld" do
         . set $zgbldir=gbldir
+        . write "---> $zgbldir = ",$zgbldir,!
         . if $data(^a) zwrite ^a
         . if $data(^b) zwrite ^b
         quit
