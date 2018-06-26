@@ -1147,7 +1147,7 @@ setenv tst_random_all "$tst_random_all gtm_test_jnlpool_sync"
 ### Random option - 45 ### Randomly enable lock hash collisions in dbg code
 # Uses randnumbers[45]
 if !($?ydb_lockhash_n_bits) then
-	set nbits = $randnumbers[44]
+	set nbits = $randnumbers[45]
 	if (6 <= $nbits) then
 		unsetenv ydb_lockhash_n_bits
 		echo "# ydb_lockhash_n_bits chosen to be UNDEFINED by do_random_settings.csh"	>>&! $settingsfile
