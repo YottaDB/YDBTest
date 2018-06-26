@@ -47,7 +47,6 @@ $MSR RUN INST1 'set msr_dont_trace ; mv mumps.repl mumps.repl_precrash ; $MUPIP 
 echo '' >> $outputFile
 
 echo "# Start INST1 INST3 connection (expecting RCVR start to fail with REPLINSTNOHIST error in source server log)" >> $outputFile
-setenv gtm_test_repl_skiprcvrchkhlth 1 # Have test framework ignore the expected failure in the reciever log
 if ($terminalNoKill == 1) then
        	$MSR STARTSRC INST1 INST3 >>& $outputFile
 	get_msrtime
@@ -76,7 +75,9 @@ endif
 
 
 # Start the reciever and get its log file
+setenv gtm_test_repl_skiprcvrchkhlth 1 # Have test framework ignore the expected failure in the reciever log
 $MSR STARTRCV INST1 INST3 >>& $outputFile
+unsetenv gtm_test_repl_skiprcvrchkhlth # It's now safe to pay attention to reciever log errors again
 get_msrtime
 $MSR RUN INST3 "cat RCVR_$time_msr.log" >> INST3_RCVR.log
 
@@ -85,7 +86,6 @@ setenv RCVR_PID `$grep -e "Replication Receiver Server with Pid" INST3_RCVR.log 
 
 # dont move on until the error has been generated in the source log
 $gtm_tst/com/wait_for_log.csh -message "YDB-E" -log $srcLog2 -duration 300
-unsetenv gtm_test_repl_skiprcvrchkhlth # It's now safe to pay attention to reciever log errors again
 if ($status) then
 	echo " FAILURE from wait_for_log.csh:"
 	echo " 		Searching for YDB_E within $srcLog2"
