@@ -92,7 +92,7 @@ else
 endif
 # If _POSIX.so exists, use that ahead of _POSIX.m (to avoid permission errors while trying to create plugin/o/_POSIX.o)
 if (-e ${gtm_exe}/plugin/o${utf8}/_POSIX.so) then
-	set plugrtns = " ${gtm_exe}/plugin/o${utf8}/_POSIX.so${star2} $plugrtns"
+	set plugrtns = " ${gtm_exe}/plugin/o${utf8}/_POSIX.so $plugrtns"
 endif
 set exedir = "$gtm_exe${utf8}${star2}${plugrtns}"
 set gtm_routines_var = "${gtm_routines_var} ${exedir}"
