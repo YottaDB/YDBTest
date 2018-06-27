@@ -153,7 +153,7 @@ if ($?test_replic) then
 		# getoper will capture syslog messages generated since starting the jnlswitchretry error
 		$gtm_tst/com/getoper.csh "$jnlswitchretry_time"
 		# Confirm there is no PREVJNLLINKCUT error in the output
-		$grep "PREVJNLLINKCUT" syslog.txt | $grep "$PWD"
+		$grep -e "PREVJNLLINKCUT" syslog.txt
 
 
 	endif
