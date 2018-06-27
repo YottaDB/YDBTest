@@ -245,6 +245,8 @@ END {
 	    }
 	    }
       }
+      if (value["gld_has_db_fullpath"])
+          print "change -instance -file_name=" ENVIRON["PWD"] "/mumps.repl"
 
       print "\\_GDE_EOF"
       print "$gtm_tst/com/usesprgde.csh >> dbcreate.gde"
