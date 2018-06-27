@@ -15,7 +15,7 @@
 # while performing updates on other unreplicated instances
 #
 $MULTISITE_REPLIC_PREPARE 4
-$gtm_tst/com/dbcreate.csh mumps 1 >>& dbcreate.out
+$gtm_tst/com/dbcreate.csh -gld_has_db_fullpath mumps 1 >>& dbcreate.out
 $MSR START INST1 INST2
 cat > trigx.trg <<EOF
 +^a(:) -name=a0 -commands=S -xecute="do trigx^gtm8789"

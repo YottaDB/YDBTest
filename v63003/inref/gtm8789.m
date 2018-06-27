@@ -11,13 +11,11 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 gtm8789
-	do ^sstep
         for i=1:1:3  do
         . new $zgbldir
         . set ^a(i)=i
         quit
 trig    ;
-	do ^sstep
 	open "newdir.txt"
 	use "newdir.txt" read newdir
 	use $principal
