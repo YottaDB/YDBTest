@@ -14,7 +14,8 @@ haltfn
 	set $etrap="do incrtrap^incrtrap"
 	write "# Halt 1, Expect a RESTRICTEDOP error",!
 	halt
-	write "# Halt 2, Expect a RESTRICTEDOP fatal error",!
+	hang:$ZTRNLNM("pause") 1
+	write "# Halt 2",!
 	halt
 	write "Haltfn failed"
 	quit
@@ -23,10 +24,12 @@ zhaltfn
 	set $etrap="do incrtrap^incrtrap"
 	write "# Zhalt 1, Expect a RESTRICTEDOP error",!
 	zhalt
-	write "# Zhalt 2, Expect a RESTRICTEDOP fatal error",!
+	hang:$ZTRNLNM("pause") 1
+	write "# Zhalt 2",!
 	zhalt
 	write "Zhaltfn failed"
 	quit
+
 
 zgotofn
 	set $etrap="do incrtrap^incrtrap"
