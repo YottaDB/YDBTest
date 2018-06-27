@@ -52,10 +52,7 @@ echo "# ------------------------------------------------------------------------
 echo "# Confirming ZHALT,ZGOTO 0 produces an error in the shell"
 $ydb_dist/mumps -run zgotofn^gtm8844
 set exitstatus=$status
-echo "Status After ZGOTOFN=$exitstatus"
-if ($exitstatus) then
-	echo "Error Detected"
-endif
+echo '$Status in Shell After ZGOTOFN='$exitstatus
 echo "# -------------------------------------------------------------------------------------------"
 $MULTISITE_REPLIC_PREPARE 2
 # Set up a non replicated region HREG for our trigger activities (the 9th region from the dbcreate)
@@ -86,7 +83,7 @@ foreach var (^X ^Y)
 	$MSR RUN INST2 'set msr_dont_trace ; $gtm_tst/com/wait_for_proc_to_die.csh' $updprocpid
 	$MSR RUN INST2 '$MUPIP replic -receiver -checkhealth >& checkhealth.tmp ; cat checkhealth.tmp' >& checkhealth.out
 	cat checkhealth.out
-	echo "# Restore the update process"
+	echo "# Restart the update process"
 	# Using outx because we are expecting errors
 	$MSR STOPRCV INST1 INST2 >>& restart.outx
 	$MSR RUN INST2 '$ydb_dist/mumps -run ^%XCMD "set ^H=1;write ^H"'>>& restart.outx

@@ -15,8 +15,11 @@ haltfn
 	write "# Halt 1, Expect a RESTRICTEDOP error",!
 	halt
 	hang:$ZTRNLNM("pause") .5
-	write "# Halt 2",!
+	write "# Halt 2, Expect a "
+	write:'$ZTRNLNM("pause") "fatal "
+	write "RESTRICTEDOP error",!
 	halt
+	; Needed so the second halt and quit don't produce a RESTRICTEDOP error
 	hang 1
 	quit
 
@@ -25,8 +28,11 @@ zhaltfn
 	write "# Zhalt 1, Expect a RESTRICTEDOP error",!
 	zhalt
 	hang:$ZTRNLNM("pause") .5
-	write "# Zhalt 2",!
+	write "# Zhalt 2, Expect a "
+	write:'$ZTRNLNM("pause") "fatal "
+	write "RESTRICTEDOP error",!
 	zhalt
+	; needed so the second zhalt and quit don't produce a RESTRICTEDOP error
 	hang 1
 	quit
 
