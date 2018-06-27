@@ -21,15 +21,20 @@ $ydb_dist/mumps -run ydb297^ydb297 >>& job.out
 $gtm_tst/com/dbcheck.csh >>& dbcheck.out
 echo "# LOCKING RESOURCES THAT HASH TO THE SAME VALUE, EXPECT NUMBER OF LOCKS TO REMAIN CONSTANT ACROSS EACH RUN"
 echo "# INFO FROM RUN 1"
-set status1 = `cat lockhang_ydb297.mjo1 |& $grep FAILURE`
-cat lockhang_ydb297.mjo1 |& $grep LOCKSPACEINFO
-echo "# INFO FROM RUN 2"
-cat lockhang_ydb297.mjo2 |& $grep LOCKSPACEINFO
-set status2 = `cat lockhang_ydb297.mjo2 |& $grep SUCCESS`
-echo "# INFO FROM RUN 3"
-cat lockhang_ydb297.mjo3 |& $grep LOCKSPACEINFO
-set status3 = `cat lockhang_ydb297.mjo3 |& $grep SUCCESS`
-cat lockhang_ydb297.mjo3 |& $grep SEGMENT
-if (0 == `expr $hang` && "" == "$status1" && "" != "$status2" && "" != "$status3") then
-	echo "# INAPPROPRIATE LOCK SEIZED"
+if (0 == $hang) then
+	# Not expecting any failure strings if we are running a non hanging test
+	$grep FAILURE lockhang_ydb297.mjo1
 endif
+$grep LOCKSPACEINFO lockhang_ydb297.mjo1
+echo "# INFO FROM RUN 2"
+if (0 == $hang) then
+	# No expecting any success strings if we are running a non hanging test (same for run 3)
+	$grep SUCCESS lockhang_ydb297.mjo2
+endif
+$grep LOCKSPACEINFO lockhang_ydb297.mjo2
+echo "# INFO FROM RUN 3"
+if (0 == $hang) then
+	$grep SUCCESS lockhang_ydb297.mjo3
+endif
+$grep LOCKSPACEINFO lockhang_ydb297.mjo3
+$grep SEGMENT lockhang_ydb297.mjo3
