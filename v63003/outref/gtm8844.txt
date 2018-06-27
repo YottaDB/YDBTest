@@ -18,12 +18,14 @@ ZSTATUS=zhaltfn+3^gtm8844,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted o
 # Halt 1, Expect a RESTRICTEDOP error
 ZSTATUS=haltfn+3^gtm8844,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: HALT
 # Halt 2
+ZSTATUS=haltfn+6^gtm8844,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: HALT
 ls: No match.
 # -------------------------------------------------------------------------------------------
 # Two consecutive zhalts with a pause
 # Zhalt 1, Expect a RESTRICTEDOP error
 ZSTATUS=zhaltfn+3^gtm8844,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: ZHALT
 # Zhalt 2
+ZSTATUS=zhaltfn+6^gtm8844,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: ZHALT
 ls: No match.
 # -------------------------------------------------------------------------------------------
 # Confirming ZHALT,ZGOTO 0 produces an error in the shell
