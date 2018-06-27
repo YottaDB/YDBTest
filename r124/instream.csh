@@ -20,6 +20,7 @@
 # ydb282srcsrvrerr [nars]  Test that source server clears backlog and does not terminate with FILEDELFAIL or RENAMEFAIL errors
 # jnlunxpcterr     [nars]  Test that MUPIP JOURNAL -EXTRACT does not issue JNLUNXPCTERR error in the face of concurrent udpates
 # ydb293	   [vinay] Tests the update process operates correctly with triggers and SET $ZGBLDIR
+# ydb297	   [vinay] Demonstrates LOCK commands work correctly when there are more than 31 subscripts that hash to the same value
 #-------------------------------------------------------------------------------------------------------------
 
 echo "r124 test starts..."
@@ -27,7 +28,7 @@ echo "r124 test starts..."
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic ""
-setenv subtest_list_non_replic "$subtest_list_non_replic readonly ydb275socketpass ydb280socketwait jnlunxpcterr"
+setenv subtest_list_non_replic "$subtest_list_non_replic readonly ydb275socketpass ydb280socketwait jnlunxpcterr ydb297"
 setenv subtest_list_replic     ""
 setenv subtest_list_replic     "$subtest_list_replic ydb282srcsrvrerr ydb293"
 
