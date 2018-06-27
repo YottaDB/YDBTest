@@ -11,6 +11,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 gtm8789
+	write "# Updating the database, which will trigger a switch of gld files"
         for i=1:1:3  do
         . new $zgbldir
         . set ^a(i)=i
@@ -20,7 +21,8 @@ trig    ;
 	use "newdir.txt" read newdir
 	use $principal
         set $zgbldir=newdir_"/mumps.gld"
-	write $zgbldir,!
+	kill newdir
+	close "newdir.txt"
         set ^a($ztval)=$ztval
         quit
 trigx   ;
