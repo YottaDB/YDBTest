@@ -14,10 +14,7 @@
 # and copying all files from $ydb_dist to temp, changing the ydb_dist environment variable
 # and putting restrict.txt in temp
 
-mkdir temp
-cp $ydb_dist/* temp/ >>& not_copied.out
-set ydb_dist0=$ydb_dist
-setenv ydb_dist temp
+source $gtm_tst/com/copy_ydb_dist_dir.csh ydb_temp_dist
 cat > $ydb_dist/restrict.txt << EOF
 ZHALT
 HALT
@@ -45,12 +42,14 @@ rm *FATAL*
 echo "# -------------------------------------------------------------------------------------------"
 echo "# Confirming ZHALT,ZGOTO 0 produces an error in the shell"
 $ydb_dist/mumps -run zgotofn^gtm8844
-echo "Status After ZGOTOFN=$status"
-if ($status) then
+set exitstatus=$status
+echo "Status After ZGOTOFN=$exitstatus"
+if ($exitstatus) then
 	echo "Error Detected"
 endif
 echo "# -------------------------------------------------------------------------------------------"
 $MULTISITE_REPLIC_PREPARE 2
+# Set up a non replicated region HREG for our trigger activities (the 9th region from the dbcreate)
 setenv gtm_test_repl_norepl 1
 $gtm_tst/com/dbcreate.csh mumps 9 >>& dbcreate.out
 $MSR START INST1 INST2 >>& MSRStart.out
@@ -61,54 +60,55 @@ $MUPIP trigger -triggerfile=trigger.txt
 
 echo ""
 
-echo "# Test for ZHALT in a trigger"
+echo "# Test ZHALT in a trigger takes down the update process"
 # We use the global variable ^H in HREG (unreplicated in instance 2) to ensure that when we turn the database back on, the update in the backlog
 # can go through without error
-$MSR RUN INST2 '$ydb_dist/mumps -run ^%XCMD "set ^H=0;write ^H"' >>& extrastuff.out
-echo "# Setting off Trigger"
-$MSR RUN INST1 '$ydb_dist/mumps -run ^%XCMD "set ^X=1"'
-echo "# Check primary"
-$MSR RUN INST1 '$ydb_dist/mumps -run ^%XCMD "write ^X"'
-echo "# Check secondary"
-$MSR RUN INST2 '$ydb_dist/mumps -run ^%XCMD "write ^X,!"'
-$MSR RUN INST2 '$MUPIP replic -receiver -checkhealth >& checkhealth.tmp ; cat checkhealth.tmp' >& checkhealth.out
-set updprocpid = `$tst_awk '/PID.*Update process/{print $2}' checkhealth.out`
-$MSR RUN INST2 'set msr_dont_trace ; $gtm_tst/com/wait_for_proc_to_die.csh' $updprocpid
-$MSR RUN INST2 '$MUPIP replic -receiver -checkhealth >& checkhealth.tmp ; cat checkhealth.tmp' >& checkhealth.out
-cat checkhealth.out
-echo "# Restore the update process"
-# Using outx because we are expecting errors
-$MSR STOPRCV INST1 INST2 >>& restart.outx
-$MSR RUN INST2 '$ydb_dist/mumps -run ^%XCMD "set ^H=1;write ^H"'>>& restart.outx
-$MSR STARTRCV INST1 INST2 >>& restart.outx
-$MSR SYNC INST1 INST2 >>& restart.outx
-echo "# Confirm secondary's update process is restored and database is up to date"
-$MSR RUN INST2 '$MUPIP replic -receiver -checkhealth'
-$MSR RUN INST2 '$ydb_dist/mumps -run ^%XCMD "write ^X,!"'
 
-echo "# -------------------------------------------------------------------------------------------"
-
-echo "# Test for HALT in a trigger"
-$MSR RUN INST2 '$ydb_dist/mumps -run ^%XCMD "set ^H=0;write ^H"' >>& extrastuff.out
-echo "# Setting off Trigger"
-$MSR RUN INST1 '$ydb_dist/mumps -run ^%XCMD "set ^Y=1"'
-echo "# Check primary"
-$MSR RUN INST1 '$ydb_dist/mumps -run ^%XCMD "write ^Y"'
-echo "# Check secondary"
-$MSR RUN INST2 '$ydb_dist/mumps -run ^%XCMD "write ^Y"'
-$MSR RUN INST2 '$MUPIP replic -receiver -checkhealth >& checkhealth.tmp ; cat checkhealth.tmp' >& checkhealth.out
-set updprocpid = `$tst_awk '/PID.*Update process/{print $2}' checkhealth.out`
-$MSR RUN INST2 'set msr_dont_trace ; $gtm_tst/com/wait_for_proc_to_die.csh' $updprocpid
-$MSR RUN INST2 '$MUPIP replic -receiver -checkhealth >& checkhealth.tmp; cat checkhealth.tmp' >& checkhealth.out
-cat checkhealth.out
-echo "# Restore the update process"
-$MSR STOPRCV INST1 INST2 >>& restart.outx
-$MSR RUN INST2 '$ydb_dist/mumps -run ^%XCMD "set ^H=1;write ^H"' >>& restart.outx
-$MSR STARTRCV INST1 INST2 >>& restart.outx
-$MSR SYNC INST1 INST2 >>& restart.outx
-echo "# Confirm secondary's update process is restored and database is up to date"
-$MSR RUN INST2 '$MUPIP replic -receiver -checkhealth'
-$MSR RUN INST2 '$ydb_dist/mumps -run ^%XCMD "write ^Y"'
+foreach var ("^X" "^Y")
+	$MSR RUN INST2 '$ydb_dist/mumps -run ^%XCMD "set ^H=0;write ^H"' >>& extrastuff.out
+	echo "# Setting off Trigger"
+	$MSR RUN INST1 "\$ydb_dist/mumps -run ^%XCMD \'set $var=1\'"
+	echo "# Check primary"
+	$MSR RUN INST1 "\$ydb_dist/mumps -run ^%XCMD \'write $var\'"
+	echo "# Check secondary"
+	$MSR RUN INST2 '\$ydb_dist/mumps -run ^%XCMD "write $var,!"'
+	$MSR RUN INST2 '$MUPIP replic -receiver -checkhealth >& checkhealth.tmp ; cat checkhealth.tmp' >& checkhealth.out
+	set updprocpid = `$tst_awk '/PID.*Update process/{print $2}' checkhealth.out`
+	$MSR RUN INST2 'set msr_dont_trace ; $gtm_tst/com/wait_for_proc_to_die.csh' $updprocpid
+	$MSR RUN INST2 '$MUPIP replic -receiver -checkhealth >& checkhealth.tmp ; cat checkhealth.tmp' >& checkhealth.out
+	cat checkhealth.out
+	echo "# Restore the update process"
+	# Using outx because we are expecting errors
+	$MSR STOPRCV INST1 INST2 >>& restart.outx
+	$MSR RUN INST2 '$ydb_dist/mumps -run ^%XCMD "set ^H=1;write ^H"'>>& restart.outx
+	$MSR STARTRCV INST1 INST2 >>& restart.outx
+	$MSR SYNC INST1 INST2 >>& restart.outx
+	echo "# Confirm secondary's update process is restored and database is up to date"
+	$MSR RUN INST2 '$MUPIP replic -receiver -checkhealth'
+	$MSR RUN INST2 '\$ydb_dist/mumps -run ^%XCMD "write $var,!"'
+	echo "# -------------------------------------------------------------------------------------------"
+end
+#echo "# Test HALT in a trigger takes down the update process"
+#$MSR RUN INST2 '$ydb_dist/mumps -run ^%XCMD "set ^H=0;write ^H"' >>& extrastuff.out
+#echo "# Setting off Trigger"
+#$MSR RUN INST1 '$ydb_dist/mumps -run ^%XCMD "set ^Y=1"'
+#echo "# Check primary"
+#$MSR RUN INST1 '$ydb_dist/mumps -run ^%XCMD "write ^Y"'
+#echo "# Check secondary"
+#$MSR RUN INST2 '$ydb_dist/mumps -run ^%XCMD "write ^Y"'
+#$MSR RUN INST2 '$MUPIP replic -receiver -checkhealth >& checkhealth.tmp ; cat checkhealth.tmp' >& checkhealth.out
+#set updprocpid = `$tst_awk '/PID.*Update process/{print $2}' checkhealth.out`
+#$MSR RUN INST2 'set msr_dont_trace ; $gtm_tst/com/wait_for_proc_to_die.csh' $updprocpid
+#$MSR RUN INST2 '$MUPIP replic -receiver -checkhealth >& checkhealth.tmp; cat checkhealth.tmp' >& checkhealth.out
+#cat checkhealth.out
+#echo "# Restore the update process"
+#$MSR STOPRCV INST1 INST2 >>& restart.outx
+#$MSR RUN INST2 '$ydb_dist/mumps -run ^%XCMD "set ^H=1;write ^H"' >>& restart.outx
+#$MSR STARTRCV INST1 INST2 >>& restart.outx
+#$MSR SYNC INST1 INST2 >>& restart.outx
+#echo "# Confirm secondary's update process is restored and database is up to date"
+#$MSR RUN INST2 '$MUPIP replic -receiver -checkhealth'
+#$MSR RUN INST2 '$ydb_dist/mumps -run ^%XCMD "write ^Y"'
 # Remove all fatal files produced from test
 rm $SEC_DIR/*FATAL*
 
