@@ -10,7 +10,7 @@
 ;								;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
-gtm8789
+ydb293
 	write "# Updating the database, which will trigger a switch of gld files"
         for i=1:1:3  do
         . new $zgbldir

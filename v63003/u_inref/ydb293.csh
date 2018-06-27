@@ -19,11 +19,11 @@ $gtm_tst/com/dbcreate.csh mumps 1 -gld_has_db_fullpath>>& dbcreate.out
 $MSR START INST1 INST2
 # Uploading triggers, trig will occur on instance 1 (and will be replicated by instance 2), trigx will occur on instance 3 and 4
 cat > trigx.trg <<EOF
-+^a(:) -name=a0 -commands=S -xecute="do trigx^gtm8789"
++^a(:) -name=a0 -commands=S -xecute="do trigx^ydb293"
 EOF
 
 cat > trigmumps.trg <<EOF
-+^a(:) -name=a0 -commands=S -xecute="do trig^gtm8789"
++^a(:) -name=a0 -commands=S -xecute="do trig^ydb293"
 EOF
 set curdir=`pwd`
 $MSR RUN INST1 "$MUPIP trigger -trigg=$curdir/trigmumps.trg" >& hide.txt
@@ -36,13 +36,13 @@ $MSR RUN INST1 "echo $d3 >>& newdir.txt" >& hide.txt
 $MSR RUN INST2 "echo $d4 >>& newdir.txt" >& hide.txt
 
 echo ""
-$MSR RUN INST1 '$ydb_dist/mumps -run gtm8789'
+$MSR RUN INST1 '$ydb_dist/mumps -run ydb293'
 
 
 # Dump globals on primary and secondary side
-echo "Dumping globals on primary side"; echo "--------------------------------"; $ydb_dist/mumps -run dump^gtm8789
+echo "Dumping globals on primary side"; echo "--------------------------------"; $ydb_dist/mumps -run dump^ydb293
 sleep 1 # to ensure stuff is replicated across to secondary
-echo "Dumping globals on secondary side"; echo "--------------------------------"; $sec_shell "$sec_getenv; cd $SEC_SIDE; $ydb_dist/mumps -run dump^gtm8789"
+echo "Dumping globals on secondary side"; echo "--------------------------------"; $sec_shell "$sec_getenv; cd $SEC_SIDE; $ydb_dist/mumps -run dump^ydb293"
 echo $! >& pid.txt
 set pid=`cat pid.txt`
 $gtm_tst/com/dbcheck.csh >>& dbcheck.out
