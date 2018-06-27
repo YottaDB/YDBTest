@@ -43,7 +43,5 @@ $MSR RUN INST1 '$ydb_dist/mumps -run ydb293'
 echo "Dumping globals on primary side"; echo "--------------------------------"; $ydb_dist/mumps -run dump^ydb293
 sleep 1 # to ensure stuff is replicated across to secondary
 echo "Dumping globals on secondary side"; echo "--------------------------------"; $sec_shell "$sec_getenv; cd $SEC_SIDE; $ydb_dist/mumps -run dump^ydb293"
-echo $! >& pid.txt
-set pid=`cat pid.txt`
 $gtm_tst/com/dbcheck.csh >>& dbcheck.out
 
