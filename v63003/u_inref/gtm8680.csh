@@ -11,9 +11,22 @@
 #								#
 #################################################################
 #
+# Tests YDB does not experience significant slowdown with large number locks
 #
-#
-$gtm_tst/com/dbcreate.csh mumps 1 >& a.out
-$MUPIP set -region default -lock_space=65536
-$ydb_dist/mumps -run child^gtm8680
+$gtm_tst/com/dbcreate.csh mumps 1 -lock_space=60000>& a.out
+echo "# Running test with 1 process"
+echo "# Locking ^a in child function and attempting to lock ^a(i) in parent"
+setenv proc 1
+$ydb_dist/mumps -run manylocks^gtm8680
+echo ""
+echo "# Running test with 100 processes, each holding 1000 locks"
+echo "# Locking ^a(1)-^a(100000) in child processes, attempting to lock ^a(i) in parent"
+setenv proc 0
+$ydb_dist/mumps -run manylocks^gtm8680
+echo ""
+
+$MUPIP set -lock=65536 -region DEFAULT
+$MUPIP set -lock=65537 -region DEFAULT
+$MUPIP set -lock=262144 -region DEFAULT
+$MUPIP set -lock=262145 -region DEFAULT
 $gtm_tst/com/dbcheck.csh >& b.out
