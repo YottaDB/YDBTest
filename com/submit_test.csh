@@ -1103,11 +1103,6 @@ if ($?testtiming_log) then
 	endif
 endif
 ############################################################
-if ($?test_distributed) then
-	set donefile = ${test_distributed}.done
-	# Note down in the file that this test is done
-	$test_distributed_srvr "$gtm_tst/com/distributed_test_pick.csh donetest $testname $short_host $log_line_stat $donefile $gtm_tst"
-endif
 if (1 == $stat) then
 	# Lets signal a "test failure" to the caller (differentiate with the other exit 1 states)
 	exit 99
