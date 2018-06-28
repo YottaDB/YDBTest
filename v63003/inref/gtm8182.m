@@ -33,9 +33,8 @@ gtm8182
 	; Switch to global directory for INST3
 	SET $ZGBLDIR=INST3gbldir
 	WRITE "ZGBLDIR: ",$ZGBLDIR,!
-	;DO setenv^%POSIX("ydb_gbldir",INST3gbldir,1) ; setenv gbl dir to INST3's
-	;ZSYSTEM "$GDE CHANGE -INSTANCE -FILE_NAME="""_INST3repl_""""
-	ZSYSTEM "setenv ydb_gbldir """_INST3gbldir_""" ; "_"$GDE CHANGE -INSTANCE -FILE_NAME="""_INST1repl_""""
+
+	;ZSYSTEM "setenv ydb_gbldir """_INST3gbldir_""" ; "_"$GDE CHANGE -INSTANCE -FILE_NAME="""_INST1repl_""""
 
 	; Update the DB of INST3
 	SET ^zack="oldest"
@@ -43,8 +42,7 @@ gtm8182
 	; Switch back to global directory for INST1
 	SET $ZGBLDIR=INST1gbldir
 	WRITE "ZGBLDIR: ",$ZGBLDIR,!
-	;DO setenv^%POSIX("ydb_gbldir",INST1gbldir,1) ; setenv gbl dir back to INST1's
-	;ZSYSTEM "$GDE CHANGE -INSTANCE -FILE_NAME="""_INST1repl_""""
-	ZSYSTEM "setenv ydb_gbldir """_INST1gbldir_""" ; "_"$GDE CHANGE -INSTANCE -FILE_NAME="""_INST1repl_""""
+
+	;ZSYSTEM "setenv ydb_gbldir """_INST1gbldir_""" ; "_"$GDE CHANGE -INSTANCE -FILE_NAME="""_INST1repl_""""
 
 	quit
