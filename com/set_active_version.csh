@@ -28,8 +28,10 @@ if ($?gtmroutines) then
 	set rtns = ($gtmroutines:x)
 	if (0 < $#rtns) then
 		@ rtncnt = $#rtns
-		# Strip off "$gtm_exe/plugin/o($gtm_exe/plugin/r)" if present; assumption, it's at the end
+		# Strip off "$gtm_exe/plugin/o($gtm_exe/plugin/r)" if present; assumption, it's last in the list
 		if ("$rtns[$rtncnt]" =~ "*/plugin/o*(*/plugin/r)") @ rtncnt--
+		# Strip off "$gtm_exe/plugin/o/_POSIX.so" if present; assumption, it's last but one in the list
+		if ("$rtns[$rtncnt]" =~ "*/plugin/o*/_POSIX.so") @ rtncnt--
 		setenv gtmroutines "$rtns[-$rtncnt]"
 		unset rtncnt
 	else
