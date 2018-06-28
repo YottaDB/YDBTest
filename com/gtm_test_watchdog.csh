@@ -83,7 +83,11 @@ while !( -e $exit_file)
 			# The test has been running for longer than $gtm_test_hang_alert_sec.
 			# Send a TEST-E-HANG email
 			#
+			set msg = "${watch_dir:h:t}/$cursubtestdir has been running for $runtime seconds. Check if it is hung"
 			cd $cursubtestdir
+			# create a diff file so scripts that search for *.diff files find this failure
+			echo $msg > $cursubtestdir.diff
+			$gtm_tst/com/write_logs.csh FAILED
 			# Capture ps/ipcs etc. at time of TEST-E-HANG report
 			$gtm_tst/com/capture_ps_ipcs_netstat_lsof.csh	>& capture_ps_ipcs_netstat_lsof_HANG.out
 			# Get syslog at time of TEST-E-HANG report
@@ -91,7 +95,6 @@ while !( -e $exit_file)
 			set syslog_after = `date +"%b %e %H:%M:%S"`
 			$gtm_tst/com/getoper.csh "$syslog_before" "$syslog_after" syslog_${cursubtestdir}_HANG.txt
 			cd -
-			set msg = "${watch_dir:h:t}/$cursubtestdir has been running for $runtime seconds. Check if it is hung"
 			# Send TEST-E-HANG email
 			echo $msg | mailx -s "TEST-E-HANG $shorthost : ${watch_dir:h}/$cursubtestdir" $mailing_list
 			echo "TEST-E-HANG : $msg" >> $cursubtestdir/hangalert.out
@@ -117,7 +120,10 @@ while !( -e $exit_file)
 			\diff $tst_general_dir/outstream.cmp $tst_general_dir/outstream.log >& $tst_general_dir/diff.log
 			# Send TEST-E-TIMEDOUT email
 			$gtm_tst/com/gtm_test_sendresultmail.csh TIMEDOUT
-			\rm $tst_general_dir/diff.log # To avoid confusion when the test runs to completion
+			# Keep the generated diff.log as is that way scripts that check for failures find this abnormal event.
+			# Note that it is possible the killed test runs to completion after all in which case it will
+			# regenerate diff.log. If so, that is fine. But in case the test is hung eternally, we do want a
+			# non-zero diff.log hence keeping this one until it gets overwritten in case the killed test completes.
 			set test_killed = 1
 			cd -
 			touch $exit_file
