@@ -1,0 +1,27 @@
+Create the DB
+
+==Executing MULTISITE_REPLIC 'START INST1 INST2'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+
+==Executing MULTISITE_REPLIC 'START INST3 INST4'==
+Starting Primary Source Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
+
+# Run gtm8182.m to update both INST1 and INST3 source server
+    Update the INST1 DB
+    Switch to INST3 gbldir
+    Update the INST3 DB
+    Switch back to INST1 gbldir
+# Check INST2 receiver server for update (expecting only ^jake to be defined)
+==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP extract INST2_extract.glo'==
+%YDB-I-RECORDSTAT, ^jake:	  Key cnt: 1  max subsc len: 6  max rec len: 8  max node len: 18
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 6  max rec len: 8  max node len: 18
+
+# Check INST4 receiver server for update (expecting only ^zack to be defined)
+==Executing MULTISITE_REPLIC 'RUN INST4 $MUPIP extract INST4_extract.glo'==
+%YDB-I-RECORDSTAT, ^zack:	  Key cnt: 1  max subsc len: 6  max rec len: 6  max node len: 16
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 6  max rec len: 6  max node len: 16
+
+Check the DB
+

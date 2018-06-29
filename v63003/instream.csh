@@ -48,6 +48,7 @@
 # gtm8842	    [vinay] Tests TRIGGER_MOD appropriately restricts ZBREAK and ZSTEP
 # gtm8858	    [vinay] Demonstrates the improved available information in cases of apparent database integrity issues
 # gtm8844	    [vinay] Tests the functionality of HALT and ZHALT in trigger logic and when restricted
+# gtm8182	    [jake]  Tests the updating of globals belonging to a different source instance using global references
 #-------------------------------------------------------------------------------------
 
 echo "v63003 test starts..."
@@ -58,7 +59,7 @@ setenv subtest_list_non_replic "gtm8788 gtm7986 gtm8186 gtm8804 gtm8832 gtm8617 
 setenv subtest_list_non_replic "$subtest_list_non_replic gtm8846 gtm8780 gtm8787 gtm8889 gtm8856 gtm8857 gtm8854 gtm8795 gtm8839"
 setenv subtest_list_non_replic "$subtest_list_non_replic gtm8781 gtm8849 gtm8794 gtm8790 gtm8587 gtm8855 gtm8850 gtm8847 gtm8801"
 setenv subtest_list_non_replic "$subtest_list_non_replic gtm8842 gtm8858"
-setenv subtest_list_replic     "gtm8732r gtm8795 gtm8794 gtm8850 gtm8844"
+setenv subtest_list_replic     "gtm8732r gtm8795 gtm8794 gtm8850 gtm8844 gtm8182"
 
 
 if ($?test_replic == 1) then

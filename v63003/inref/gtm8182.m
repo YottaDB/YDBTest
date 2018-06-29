@@ -14,35 +14,20 @@
 gtm8182
 	SET INST1path=$ZTRNLNM("path_INST1","","","","","VALUE")
 	SET INST1gbldir=INST1path_"/mumps.gld"
-	SET INST1repl=INST1path_"/mumps.repl"
 
 	SET INST3path=$ZTRNLNM("path_INST3","","","","","VALUE")
 	SET INST3gbldir=INST3path_"/mumps.gld"
-	SET INST3repl=INST3path_"/mumps.repl"
 
-	WRITE "INST1gbldir: "
-	WRITE INST1gbldir,!
-
-	WRITE "INST3gbldir: "
-	WRITE INST3gbldir,!
-
-	WRITE "ZGBLDIR: ",$ZGBLDIR,!
-	; Update the DB of INST1
+	WRITE "    Update the INST1 DB",!
 	SET ^jake="youngest"
 
-	; Switch to global directory for INST3
+	WRITE "    Switch to INST3 gbldir",!
 	SET $ZGBLDIR=INST3gbldir
-	WRITE "ZGBLDIR: ",$ZGBLDIR,!
 
-	;ZSYSTEM "setenv ydb_gbldir """_INST3gbldir_""" ; "_"$GDE CHANGE -INSTANCE -FILE_NAME="""_INST1repl_""""
-
-	; Update the DB of INST3
+	WRITE "    Update the INST3 DB",!
 	SET ^zack="oldest"
 
-	; Switch back to global directory for INST1
+	WRITE "    Switch back to INST1 gbldir",!
 	SET $ZGBLDIR=INST1gbldir
-	WRITE "ZGBLDIR: ",$ZGBLDIR,!
-
-	;ZSYSTEM "setenv ydb_gbldir """_INST1gbldir_""" ; "_"$GDE CHANGE -INSTANCE -FILE_NAME="""_INST1repl_""""
 
 	quit
