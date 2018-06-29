@@ -13,6 +13,11 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
     Switch to INST3 gbldir
     Update the INST3 DB
     Switch back to INST1 gbldir
+
+# Sync originating and replicating instances
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'SYNC INST3 INST4'==
+
 # Check INST2 receiver server for update (expecting only ^jake to be defined)
 ==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP extract INST2_extract.glo'==
 %YDB-I-RECORDSTAT, ^jake:	  Key cnt: 1  max subsc len: 6  max rec len: 8  max node len: 18
@@ -24,4 +29,4 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 6  max rec len: 6  max node len: 16
 
 Check the DB
-
+DB is in good shape

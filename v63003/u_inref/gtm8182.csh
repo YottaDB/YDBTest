@@ -36,6 +36,11 @@ setenv path_INST3 `$tst_awk '{-F " "; if ($1" "$2 ~ /INST3 DBDIR/)  print $3}' $
 echo "# Run gtm8182.m to update both INST1 and INST3 source server"
 $gtm_dist/mumps -run gtm8182
 
+echo "# Sync originating and replicating instances"
+$MSR SYNC INST1 INST2
+$MSR SYNC INST3 INST4
+echo ""
+
 echo "# Check INST2 receiver server for update (expecting only ^jake to be defined)"
 $MSR RUN INST2 '$MUPIP extract INST2_extract.glo'
 echo ""
@@ -51,4 +56,4 @@ if ($status) then
 	cat check.out
 	exit -1
 endif
-echo ""
+echo "DB is in good shape"

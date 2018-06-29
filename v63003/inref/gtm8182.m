@@ -30,4 +30,6 @@ gtm8182
 	WRITE "    Switch back to INST1 gbldir",!
 	SET $ZGBLDIR=INST1gbldir
 
+	WRITE !
+
 	quit
