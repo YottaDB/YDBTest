@@ -3,7 +3,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -67,6 +67,8 @@ BEGIN {
 	gsub(/CTL Phase2 Commit Index1 *[1-9][0-9]* .0x[0-9A-F][0-9A-F]*./, "CTL Phase2 Commit Index1                   ##PHS2CMTINDX## [0x........]");
 	gsub(/CTL Phase2 Commit Index2 *[1-9][0-9]* .0x[0-9A-F][0-9A-F]*./, "CTL Phase2 Commit Index2                   ##PHS2CMTINDX## [0x........]");
 	# Most below can sometime be non-zero (depending on system load when running test) so convert a non-zero value into 0 for a deterministic reference file.
+	gsub(/CTL JnlPoolWrite Sleep       Cntr  *[1-9][0-9]* .0x[0-9A-F][0-9A-F]*./, "CTL JnlPoolWrite Sleep       Cntr                        0 [0x00000000]");
+	gsub(/CTL JnlPoolWrite Sleep       Seqno *[1-9][0-9]* .0x[0-9A-F][0-9A-F]*./, "CTL JnlPoolWrite Sleep       Seqno                       0 [0x00000000]");
 	gsub(/CTL ReplPhs2Clnup IsPrcAlv   Cntr  *[1-9][0-9]* .0x[0-9A-F][0-9A-F]*./, "CTL ReplPhs2Clnup IsPrcAlv   Cntr                        0 [0x00000000]");
 	gsub(/CTL ReplPhs2Clnup IsPrcAlv   Seqno *[1-9][0-9]* .0x[0-9A-F][0-9A-F]*./, "CTL ReplPhs2Clnup IsPrcAlv   Seqno                       0 [0x00000000]");
 	gsub(/Remote Supports Triggers                    TRUE/, "Remote Supports Triggers       ##TRUE_OR_FALSE##");
