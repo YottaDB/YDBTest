@@ -47,7 +47,7 @@
 # gtm8801	    [vinay] Tests ^%YGBLSTAT works on a cmake build
 # gtm8842	    [vinay] Tests TRIGGER_MOD appropriately restricts ZBREAK and ZSTEP
 # gtm8858	    [vinay] Demonstrates the improved available information in cases of apparent database integrity issues
-# gtm8680	    [vinay] Tests YDB does not slow down significantly when holding a large number of locks
+# gtm8680	    [vinay] Tests YDB does not slow down significantly when holding a large number of locks and/or processes
 #-------------------------------------------------------------------------------------
 
 echo "v63003 test starts..."
