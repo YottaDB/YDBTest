@@ -11,7 +11,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 gtm8805
-	;a globals used to dictate order in which jobs execute, B variables used as an event log
+	;^A global nodes used to dictate order in which jobs execute, ^B global nodes used as an event log
 	set ^a(1)=1,^a(2)=0,^a(3)=0,^a(4)=0,^a(5)=0,^B($increment(^b))="# Sequence of Events in Subtest"
 	do ^job("child^gtm8805",3,"""""")
 	zwrite ^B
@@ -23,7 +23,7 @@ child
 	; Lock ^x, await a signal to trigger an ungraceful shutdown
 	if jobindex=1 do
 	. lock +^x
-	. set:($test) ^B($increment(^b))="# Process 1: Process 1 currently holds ^x"
+	. set:($test) ^B($increment(^b))="# Process 1: Currently holds ^x"
 	. set ^a(2)=1
 	. for  quit:^a(4)
 	. set ^B($increment(^b))="# Process 1: Issuing a kill -9"
@@ -36,15 +36,17 @@ child
 	. open p:(command="$ydb_dist/dse")::"PIPE"
 	. use p
 	. write "find -region=DEFAULT",!
-      	. write "crit -seize",!
+	. write "crit -seize",!
 	. for  read x($incr(x))  quit:(x(x)["Seized")  hang 1
 	. set ^B($increment(^b))="# Process 2: "_x(x)
 	. set ^a(3)=1
 
 	; Attempting to seize ^x (should fail until job 1 is shutdown)
 	if jobindex=3 do
+	. set ^B($increment(^b))="# Process 3: Attempting to get ^x:1. Should time out"
 	. lock ^x:1
-	. set:$test ^B($increment(^b))="# Process 3: Lock inappropriately seized"
+	. if $test  set ^B($increment(^b))="# Process 3: Lock inapporpriately seized"
+	. else  set ^B($increment(^b))="# Process 3: Lock ^x:1 timed out as expected"
 	. for  lock ^x:1  quit:$test  set ^a(4)=1
 	. set ^B($increment(^b))="# Process 3: Lock successfully acquired by Process 3 after ungraceful shutdown of process 1"
 	. set ^a(5)=1

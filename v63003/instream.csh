@@ -40,7 +40,7 @@
 # gtm8849	    [vinay] Shows help databases have QDBRUNDOWN and NOGVSTATS characteristics
 # gtm8794	    [vinay] Tests copies of a database file can be used after a MUPIP RUNDOWN -OVERRIDE and MUPIP FREEZE -OFF on the copy
 # gtm8790	    [vinay] Tests $REFERENCE will maintain extended reference for the first reference when stat sharing is enabled
-# gtm8805	    [vinay] Tests GTM manages LOCK concurrency correctly when checking for abandoned locks
+# gtm8805	    [vinay] Tests YottaDB manages LOCK concurrency correctly when checking for abandoned locks
 #-------------------------------------------------------------------------------------
 
 echo "v63003 test starts..."
