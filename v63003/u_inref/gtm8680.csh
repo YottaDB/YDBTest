@@ -13,6 +13,10 @@
 #
 # Tests YDB does not experience significant slowdown with large number locks and/or processes
 #
+
+# Lockspace is 60000 to ensure we never call the garbage collector, which would clean up
+# the unused lock names from shared memory and speed up future lock commands in versions that
+# do not have the fix
 $gtm_tst/com/dbcreate.csh mumps 1 -lock_space=60000>& dbcreate.out
 if ($status) then
 	echo "DBCreate failed, see dbcreate.out"
