@@ -1,6 +1,9 @@
 #################################################################
 #								#
-#	Copyright 2002, 2014 Fidelity Information Services, Inc	#
+# Copyright 2002, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -81,6 +84,13 @@ $1 !~ /#/ {testname = $2 "_" $1
  if (ENVIRON["test_want_concurrency"]=="yes") printf " &"
  printf "\n"
  print "set teststat = $status"
+ print "# It is possible the test got kill -9ed (by gtm_test_watchdog.csh due to a TIMEDOUT alert)."
+ print "# In that case, the exit status would be 128 + 9 (kill -9) = 137. Handle that specially."
+ print "if ((137 == $teststat) && $?test_distributed) then"
+ print "	set donefile = ${test_distributed}.done"
+ print "	# Note down in the file that this test is done"
+ print "	$test_distributed_srvr \"$gtm_tst/com/distributed_test_pick.csh donetest $testname $short_host FAILED $donefile $gtm_tst\""
+ print "endif"
  print "end_"testname":"
  print "if ($teststat != 0 ) set stat = $teststat"
  print "if ($?test_no_background) then"

@@ -4,6 +4,9 @@
 # Copyright (c) 2003-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -32,7 +35,11 @@ endif
 echo "----------------------------------------------------------------------------------"
 cp -f ./save/* .
 echo mupip journal -recover -back a.mjl,b.mjl -since=\"$time1\" -look=\"time=0 0:0:0\" -broken=a.broken
-$MUPIP journal -recover -back -since=\"$time1\" -look=\"time=0 0:0:0\" a.mjl,b.mjl -broken=a.broken
+# FILERENAME messages will appear below for each .mjl file that is renamed to .mjl_<timestamp>
+# But since the order in which MUPIP JOURNAL processes regions is the ftok order of the *.dat files
+# (not the alphabetic order), the output order of FILERENAME messages is not guaranteed to be a.mjl, b.mjl, c.mjl, d.mjl
+# Since the FILERENAME message is not pertinent to this test, just filter that non-deterministic part of the output away.
+$MUPIP journal -recover -back -since=\"$time1\" -look=\"time=0 0:0:0\" a.mjl,b.mjl -broken=a.broken |& $grep -v "FILERENAME"
 if ($status == 0) then
 	echo PASSED
 else
@@ -49,7 +56,7 @@ echo "--------------------------------------------------------------------------
 ##successful case
 cp -f ./save/* .
 echo mupip journal -recover -back '*' -since=\"$time1\"
-$MUPIP journal -recover -back a.mjl,b.mjl,c.mjl,mumps.mjl -since=\"$time1\" -lookback=\"time=0 0:0:0\"
+$MUPIP journal -recover -back a.mjl,b.mjl,c.mjl,mumps.mjl -since=\"$time1\" -lookback=\"time=0 0:0:0\" |& $grep -v "FILERENAME"
 ##all  transactions will be  in database and no broken transaction file
 #
 $GTM << EOF

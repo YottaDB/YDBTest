@@ -1,0 +1,32 @@
+==Executing MULTISITE_REPLIC 'START INST1 INST2'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+
+==Executing MULTISITE_REPLIC 'RUN INST1 $ydb_dist/mumps -run ydb293'==
+# Updating the database, which will trigger a switch of gld files
+Dumping globals on primary side
+--------------------------------
+---> $zgbldir = mumps.gld
+^a(1)=1
+^a(2)=2
+^a(3)=3
+##TEST_AWK---> .zgbldir = .*/instance3/mumps.gld
+^a(1)=1
+^a(2)=2
+^a(3)=3
+^b(1)=1
+^b(2)=2
+^b(3)=3
+Dumping globals on secondary side
+--------------------------------
+---> $zgbldir = mumps.gld
+^a(1)=1
+^a(2)=2
+^a(3)=3
+##TEST_AWK---> .zgbldir = .*/instance4/mumps.gld
+^a(1)=1
+^a(2)=2
+^a(3)=3
+^b(1)=1
+^b(2)=2
+^b(3)=3
