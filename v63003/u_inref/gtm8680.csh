@@ -13,7 +13,10 @@
 #
 # Tests YDB does not experience significant slowdown with large number locks and/or processes
 #
-$gtm_tst/com/dbcreate.csh mumps 1 -lock_space=60000>& a.out
+$gtm_tst/com/dbcreate.csh mumps 1 -lock_space=60000>& dbcreate.out
+if ($status) then
+	echo "DBCreate failed, see dbcreate.out"
+endif
 echo "# Running test with 1 process that creates 100000 lock names"
 echo "# Locking ^a in child function and attempting to lock ^a(i) in parent"
 setenv proc 1
@@ -31,4 +34,7 @@ $MUPIP set -lock=65536 -region DEFAULT
 $MUPIP set -lock=65537 -region DEFAULT
 $MUPIP set -lock=262144 -region DEFAULT
 $MUPIP set -lock=262145 -region DEFAULT
-$gtm_tst/com/dbcheck.csh >& b.out
+$gtm_tst/com/dbcheck.csh >& dbcheck.out
+if ($status) then
+	echo "DBCheck failed, see dbcheck.out"
+endif
