@@ -22,15 +22,14 @@ set shorthost = $HOST:r:r:r:r
 set format="%Y.%m.%d.%H.%M.%S.%Z"
 set timestart = `date +"$format"`
 if (! $?gtm_test_hang_alert_sec) then
-	if ($gtm_test_singlecpu) then
-		# 1-CPU armv7l/armv6l/x86_64 box. Set a high hang alert for 1-CPU systems (slow boxes)
-		set gtm_test_hang_alert_sec = 36000 # A subtest running for 10 hours on a 1-CPU system is suspected to be hung
-	else if ("HOST_LINUX_ARMVXL" != $gtm_test_os_machtype) then
+	if ($gtm_test_singlecpu || ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype)) then
+		# 1-CPU armv7l/armv6l/x86_64 box or a Multi-CPU armv7l/armv6l box. Set a high hang alert.
+		# We have seen test runtimes as high as 13 hours (msreplic_H_1/max_connections) on 1-CPU armv6l
+		# and 10.25 hours (msreplic_H_1/max_connections) on 4-CPU armv7l so keep max at 16 hours.
+		set gtm_test_hang_alert_sec = 57600 # A subtest running for 16 hours on a 1-CPU system is suspected to be hung
+	else
 		# Multi-CPU x86_64 box
 		set gtm_test_hang_alert_sec = 9000 # A subtest running for 2.5 hours on x86_64 boxes is suspected to be hung
-	else
-		# Multi-CPU armv6l/armv7l boxes are not as IO capable so give them a slightly bigger timeout for the hang alert
-		set gtm_test_hang_alert_sec = 18000 # A subtest running for 5.0 hours on a multi-CPU ARM is suspected to be hung
 	endif
 endif
 set mailinterval = 1800 # Send mail to the user ever 30 minutes
@@ -84,7 +83,11 @@ while !( -e $exit_file)
 			# The test has been running for longer than $gtm_test_hang_alert_sec.
 			# Send a TEST-E-HANG email
 			#
+			set msg = "${watch_dir:h:t}/$cursubtestdir has been running for $runtime seconds. Check if it is hung"
 			cd $cursubtestdir
+			# create a diff file so scripts that search for *.diff files find this failure
+			echo $msg > $cursubtestdir.diff
+			$gtm_tst/com/write_logs.csh FAILED
 			# Capture ps/ipcs etc. at time of TEST-E-HANG report
 			$gtm_tst/com/capture_ps_ipcs_netstat_lsof.csh	>& capture_ps_ipcs_netstat_lsof_HANG.out
 			# Get syslog at time of TEST-E-HANG report
@@ -92,7 +95,6 @@ while !( -e $exit_file)
 			set syslog_after = `date +"%b %e %H:%M:%S"`
 			$gtm_tst/com/getoper.csh "$syslog_before" "$syslog_after" syslog_${cursubtestdir}_HANG.txt
 			cd -
-			set msg = "${watch_dir:h:t}/$cursubtestdir has been running for $runtime seconds. Check if it is hung"
 			# Send TEST-E-HANG email
 			echo $msg | mailx -s "TEST-E-HANG $shorthost : ${watch_dir:h}/$cursubtestdir" $mailing_list
 			echo "TEST-E-HANG : $msg" >> $cursubtestdir/hangalert.out
@@ -118,7 +120,10 @@ while !( -e $exit_file)
 			\diff $tst_general_dir/outstream.cmp $tst_general_dir/outstream.log >& $tst_general_dir/diff.log
 			# Send TEST-E-TIMEDOUT email
 			$gtm_tst/com/gtm_test_sendresultmail.csh TIMEDOUT
-			\rm $tst_general_dir/diff.log # To avoid confusion when the test runs to completion
+			# Keep the generated diff.log as is that way scripts that check for failures find this abnormal event.
+			# Note that it is possible the killed test runs to completion after all in which case it will
+			# regenerate diff.log. If so, that is fine. But in case the test is hung eternally, we do want a
+			# non-zero diff.log hence keeping this one until it gets overwritten in case the killed test completes.
 			set test_killed = 1
 			cd -
 			touch $exit_file

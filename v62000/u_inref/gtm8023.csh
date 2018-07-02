@@ -25,7 +25,7 @@ unsetenv gtm_test_jnlpool_sync		# ditto
 setenv gtm_test_updhelpers	0	# As described below, we don't want extra flushing.
 
 $MULTISITE_REPLIC_PREPARE 3
-$gtm_tst/com/dbcreate.csh mumps 1 125 256 512 -g=256
+$gtm_tst/com/dbcreate.csh mumps 1 125 256 512 -glo=256
 
 $MSR START INST1 INST2 RP
 $MSR START INST2 INST3 PP

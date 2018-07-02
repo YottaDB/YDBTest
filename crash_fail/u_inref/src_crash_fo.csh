@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -26,7 +29,7 @@ setenv gtm_test_jobid 1
 setenv gtm_test_dbfillid 1
 $gtm_tst/com/imptp.csh >>&! imptp.out
 # Wait for some transactions
-$gtm_tst/com/wait_for_transaction_seqno.csh +50000 SRC 600
+$gtm_tst/com/wait_for_transaction_seqno.csh +50000 SRC 3600
 
 if ($gtm_test_jnl_nobefore) then
 	# If NOBEFORE_IMAGE journaling, we need to take a backup of the db in order to restore after a fetchresync rollback.

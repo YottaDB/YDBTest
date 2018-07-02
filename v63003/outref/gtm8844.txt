@@ -1,0 +1,86 @@
+# Running functions that violate our restrictions
+# -------------------------------------------------------------------------------------------
+# Two consecutive halts
+# Halt 1, Expect a RESTRICTEDOP error
+ZSTATUS=haltfn+3^gtm8844,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: HALT
+# Halt 2, Expect a fatal RESTRICTEDOP error
+%YDB-F-RESTRICTEDOP, Attempt to perform a restricted operation: HALT
+##TEST_AWKYDB_FATAL_ERROR.ZSHOW_DMP_[0-9]*_1.txt
+# -------------------------------------------------------------------------------------------
+# Two consecutive zhalts
+# Zhalt 1, Expect a RESTRICTEDOP error
+ZSTATUS=zhaltfn+3^gtm8844,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: ZHALT
+# Zhalt 2, Expect a fatal RESTRICTEDOP error
+%YDB-F-RESTRICTEDOP, Attempt to perform a restricted operation: ZHALT
+##TEST_AWKYDB_FATAL_ERROR.ZSHOW_DMP_[0-9]*_1.txt
+# -------------------------------------------------------------------------------------------
+# Two consecutive halts with a pause
+# Halt 1, Expect a RESTRICTEDOP error
+ZSTATUS=haltfn+3^gtm8844,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: HALT
+# Halt 2, Expect a RESTRICTEDOP error
+ZSTATUS=haltfn+8^gtm8844,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: HALT
+ls: No match.
+# -------------------------------------------------------------------------------------------
+# Two consecutive zhalts with a pause
+# Zhalt 1, Expect a RESTRICTEDOP error
+ZSTATUS=zhaltfn+3^gtm8844,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: ZHALT
+# Zhalt 2, Expect a RESTRICTEDOP error
+ZSTATUS=zhaltfn+8^gtm8844,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: ZHALT
+ls: No match.
+# -------------------------------------------------------------------------------------------
+# Confirming ZHALT,ZGOTO 0 produces an error in the shell
+ZSTATUS=zgotofn+2^gtm8844,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: ZHALT
+$ZTRAP=
+$ECODE=,Z150384210,
+$Status in Shell After ZGOTOFN=82
+# -------------------------------------------------------------------------------------------
+==Executing MULTISITE_REPLIC 'RUN INST1 $ydb_dist/mumps -run ^%XCMD "set ^X=0  set ^Y=0"'==
+File trigger.txt, Line 1: Added SET trigger on ^X named triggerx
+File trigger.txt, Line 2: Added SET trigger on ^Y named triggery
+=========================================
+2 triggers added
+0 triggers deleted
+0 triggers modified
+2 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+
+# Test ZHALT in a trigger takes down the update process
+# Setting off Trigger
+==Executing MULTISITE_REPLIC 'RUN INST1 $ydb_dist/mumps -run ^%XCMD "set ^X=1"'==
+# Check primary
+==Executing MULTISITE_REPLIC 'RUN INST1 $ydb_dist/mumps -run ^%XCMD "write ^X"'==
+1
+# Check secondary
+==Executing MULTISITE_REPLIC 'RUN INST2 $ydb_dist/mumps -run ^%XCMD "write ^X,!"'==
+0
+==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP replic -receiver -checkhealth >& checkhealth.tmp ; cat checkhealth.tmp'==
+PID ##FILTERED##[##PID##] Receiver server is alive
+##TEST_AWKPID [0-9]* Update process is NOT alive
+# Restart the update process
+# Confirm secondary's update process is restored and database is up to date
+==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP replic -receiver -checkhealth'==
+PID ##FILTERED##[##PID##] Receiver server is alive
+PID ##FILTERED##[##PID##] Update process is alive
+==Executing MULTISITE_REPLIC 'RUN INST2 $ydb_dist/mumps -run ^%XCMD "write ^X,!"'==
+1
+# -------------------------------------------------------------------------------------------
+# Setting off Trigger
+==Executing MULTISITE_REPLIC 'RUN INST1 $ydb_dist/mumps -run ^%XCMD "set ^Y=1"'==
+# Check primary
+==Executing MULTISITE_REPLIC 'RUN INST1 $ydb_dist/mumps -run ^%XCMD "write ^Y"'==
+1
+# Check secondary
+==Executing MULTISITE_REPLIC 'RUN INST2 $ydb_dist/mumps -run ^%XCMD "write ^Y,!"'==
+0
+==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP replic -receiver -checkhealth >& checkhealth.tmp ; cat checkhealth.tmp'==
+PID ##FILTERED##[##PID##] Receiver server is alive
+##TEST_AWKPID [0-9]* Update process is NOT alive
+# Restart the update process
+# Confirm secondary's update process is restored and database is up to date
+==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP replic -receiver -checkhealth'==
+PID ##FILTERED##[##PID##] Receiver server is alive
+PID ##FILTERED##[##PID##] Update process is alive
+==Executing MULTISITE_REPLIC 'RUN INST2 $ydb_dist/mumps -run ^%XCMD "write ^Y,!"'==
+1
+# -------------------------------------------------------------------------------------------

@@ -54,18 +54,16 @@ while ($i <= $num_of_cases)
 	# Generate messages in the terminal or syslog.
 	set time_before = `date +"%b %e %H:%M:%S"`
 	$gtm_dist/mumps -run genmsgs ${msgFileName} ${argsFileName}.cmp ${pidFileName}.log >&! ${logFileName}.outx
-	set time_after = `date +"%b %e %H:%M:%S"`
 
 	if ($setWhiteBoxTest) then
 		# Get the pid of the message-issuing MUMPS process and the mnemonic of the last message.
 		set pid = `cat ${pidFileName}.log`
-		set last_mnemonic = `cat ${logFileName}.outx`
 
 		# Save the output of gensmgs run in a separate file in case of errors.
 		mv ${logFileName}.outx ${logFileName}.outx.orig
 
 		# Save the generated syslog messages in a local file.
-		$gtm_tst/com/getoper.csh "$time_before" "$time_after" ${logFileName}.outx.tmp "" "${last_mnemonic}"
+		$gtm_tst/com/getoper.csh "$time_before" "" ${logFileName}.outx.tmp
 
 		# Grep out only the messages that originated from our process.
 		$grep "\[$pid\]" ${logFileName}.outx.tmp > ${logFileName}.outx

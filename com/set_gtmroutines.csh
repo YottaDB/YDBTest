@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -86,6 +89,10 @@ if (-d ${gtm_exe}/plugin/o${utf8} && -d ${gtm_exe}/plugin/r) then
 	set plugrtns = " ${gtm_exe}/plugin/o${utf8}${star2}(${gtm_exe}/plugin/r)"
 else
 	set plugrtns = ""
+endif
+# If _POSIX.so exists, use that ahead of _POSIX.m (to avoid permission errors while trying to create plugin/o/_POSIX.o)
+if (-e ${gtm_exe}/plugin/o${utf8}/_POSIX.so) then
+	set plugrtns = " ${gtm_exe}/plugin/o${utf8}/_POSIX.so $plugrtns"
 endif
 set exedir = "$gtm_exe${utf8}${star2}${plugrtns}"
 set gtm_routines_var = "${gtm_routines_var} ${exedir}"
