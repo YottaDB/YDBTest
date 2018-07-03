@@ -31,12 +31,24 @@ echo "# Running functions that violate our restrictions"
 echo "# -------------------------------------------------------------------------------------------"
 setenv pause 0
 echo "# Two consecutive halts"
-$ydb_dist/mumps -run haltfn^gtm8844
+foreach i (1 2 3)
+	$ydb_dist/mumps -run haltfn^gtm8844 >& halt.outx
+	if ("" != `$grep YDB-F halt.outx`) then
+		break
+	endif
+end
+cat halt.outx
 ls *FATAL*
 rm *FATAL*
 echo "# -------------------------------------------------------------------------------------------"
 echo "# Two consecutive zhalts"
-$ydb_dist/mumps -run zhaltfn^gtm8844
+foreach i (1 2 3)
+	$ydb_dist/mumps -run zhaltfn^gtm8844 >& zhalt.outx
+	if ("" != `$grep YDB-F zhalt.outx`) then
+		break
+	endif
+end
+cat zhalt.outx
 ls *FATAL*
 rm *FATAL*
 echo "# -------------------------------------------------------------------------------------------"
