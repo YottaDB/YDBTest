@@ -1,0 +1,148 @@
+# TESTING EACH FUNCTION RESTRICTED BY RESTRICT.TXT (with readonly permissions)
+
+-r--r--r-- ydb_temp_dist/restrict.txt
+# TESTING BREAK
+Break command successfully ignored
+# TESTING ZBREAK
+ZSTATUS=zbreakfn+3^gtm8694,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: ZBREAK
+Zbreak command successfully ignored
+# TESTING ZCMDLINE
+
+# TESTING ZEDIT
+ZSTATUS=zeditfn+3^gtm8694,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: ZEDIT
+# TESTING ZSYSTEM
+ZSTATUS=zsystemfn+3^gtm8694,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: ZSYSTEM
+# TESTING PIPE
+ZSTATUS=pipefn+4^gtm8694,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: OPEN PIPE
+# TESTING TRIGMOD
+ZSTATUS=trigmodfn+3^gtm8694,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: $ZTRIGGER(FILE)
+# TESTING DIRECTMODE
+%YDB-F-RESTRICTEDOP, Attempt to perform a restricted operation: mumps -direct
+# TESTING DSE
+%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: DSE
+
+# TESTING CENABLE
+YDB>#<CTRL-C>
+
+# -----------------------------------------------------------------------------
+
+# TESTING EACH FUNCTION WHEN RESTRICT.TXT HAS NO READ OR WRITE PERMISSIONS
+
+---------- ydb_temp_dist/restrict.txt
+# TESTING BREAK
+Break command successfully ignored
+# TESTING ZBREAK
+ZSTATUS=zbreakfn+3^gtm8694,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: ZBREAK
+Zbreak command successfully ignored
+# TESTING ZCMDLINE
+
+# TESTING ZEDIT
+ZSTATUS=zeditfn+3^gtm8694,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: ZEDIT
+# TESTING ZSYSTEM
+ZSTATUS=zsystemfn+3^gtm8694,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: ZSYSTEM
+# TESTING PIPE
+ZSTATUS=pipefn+4^gtm8694,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: OPEN PIPE
+# TESTING TRIGMOD
+ZSTATUS=trigmodfn+3^gtm8694,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: $ZTRIGGER(FILE)
+# TESTING DIRECTMODE
+%YDB-F-RESTRICTEDOP, Attempt to perform a restricted operation: mumps -direct
+# TESTING DSE
+%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: DSE
+
+
+# ----------------------------------------------------------------------------
+
+# TESTING EACH FUNCTION WHEN RESTRICT.TXT LISTS OUR GROUP NAME (with readonly permissions)
+
+
+-r--r--r-- ydb_temp_dist/restrict.txt
+# TESTING BREAK
+%YDB-I-BREAK, Break instruction encountered
+		At M source location breakfn+2^gtm8694
+
+YDB>
+# TESTING ZBREAK
+%YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
+		At M source location zbreakchild+1^gtm8694
+
+YDB>
+# TESTING ZCMDLINE
+ZCMDLNE was not ignored
+# TESTING ZEDIT
+[Using open mode]
+
+Open and visual must be used interactively
+# TESTING ZSYSTEM
+ZSYSTEM not ignored
+# TESTING PIPE
+PIPE not ignored
+# TESTING TRIGMOD
+File trigclear.trg, Line 1: Deleted SET trigger on ^A named A#1
+=========================================
+0 triggers added
+1 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+1
+# TESTING DIRECTMODE
+
+YDB>
+# TESTING DSE
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> 
+# TESTING CENABLE
+YDB>#<CTRL-C>
+YDB>%YDB-I-CTRLC, CTRL_C encountered
+
+# -------------------------------------------------------------------------
+
+TESTING EACH FUNCTION WHEN RESTRICT.TXT HAS WRITE PERMISSIONS
+
+-rw-rw-r-- ydb_temp_dist/restrict.txt
+# TESTING BREAK
+%YDB-I-BREAK, Break instruction encountered
+		At M source location breakfn+2^gtm8694
+
+YDB>
+# TESTING ZBREAK
+%YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
+		At M source location zbreakchild+1^gtm8694
+
+YDB>
+# TESTING ZCMDLINE
+ZCMDLNE was not ignored
+# TESTING ZEDIT
+[Using open mode]
+
+Open and visual must be used interactively
+# TESTING ZSYSTEM
+ZSYSTEM not ignored
+# TESTING PIPE
+PIPE not ignored
+# TESTING TRIGMOD
+File trigclear.trg, Line 1: Deleted SET trigger on ^A named A#1
+=========================================
+0 triggers added
+1 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+1
+# TESTING DIRECTMODE
+
+YDB>
+# TESTING DSE
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> 
+# TESTING CENABLE
+YDB>#<CTRL-C>
+YDB>%YDB-I-CTRLC, CTRL_C encountered
