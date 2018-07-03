@@ -25,11 +25,11 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
 # to test that .repl file mapping overrides the gtm_repl_instname env var.
 ----------------------------------------------------------------------------
 # Show INST3 mapped instance file
- /extra2/testarea2/jake/V997/tst_V999_R122_dbg_16_180703_144209/v63003_1/gtm8182/instance3/mumps.repl
+##TEST_AWK.*/instance3/mumps.repl
 # Remove INST3 mapping
 # Change INST3 mapped instance file
 # Show INST3 mapped instance file
- /extra2/testarea2/jake/V997/tst_V999_R122_dbg_16_180703_144209/v63003_1/gtm8182/instance3/mumps.repl
+##TEST_AWK.*/instance3/mumps.repl
 
 
 # Run gtm8182.m to update both INST1 and INST3 source server
@@ -66,7 +66,7 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
 # Remove INST3 mapping
 # Remove INST1 mapping
 # Run gtm8182.m again and search output for error
-%YDB-E-REPLINSTMISMTCH, Process has replication instance file ##TEST_PATH##/mumps.repl (jnlpool shmid = 948306307) open but database /extra2/testarea2/jake/V997/tst_V999_R122_dbg_16_180703_144209/v63003_1/gtm8182/instance3/mumps.dat is bound to instance file /extra2/testarea2/jake/V997/tst_V999_R122_dbg_16_180703_144209/v63003_1/gtm8182/instance3/mumps.repl (jnlpool shmid = 950960536)
+##TEST_AWK^%YDB-E-REPLINSTMISMTCH.*
 		At M source location gtm8182+6^gtm8182
 # Return INST3 mapping to correct state
 
@@ -75,7 +75,7 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
 # in order to test for an error upon sharing a region between 2 instances
 ----------------------------------------------------------------------------
 # Run gtm8182.m again and search output for error
-%YDB-E-REPLINSTMISMTCH, Process has replication instance file /extra2/testarea2/jake/V997/tst_V999_R122_dbg_16_180703_144209/v63003_1/gtm8182/instance3/mumps.repl (jnlpool shmid = 950960536) open but database ##TEST_PATH##/mumps.dat is bound to instance file ##TEST_PATH##/mumps.repl (jnlpool shmid = 948306307)
+##TEST_AWK^%YDB-E-REPLINSTMISMTCH.*
 		At M source location gtm8182+4^gtm8182
 # Remove INST1 mapping
 
@@ -83,7 +83,7 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
 # Run TP1^gtm8182 to test for an error when updating multiple 
 # instances within the same TP transaction
 ----------------------------------------------------------------------------
-%YDB-E-REPLMULTINSTUPDATE, Previous updates in the current transaction are to ##TEST_PATH##/mumps.repl so updates to /extra2/testarea2/jake/V997/tst_V999_R122_dbg_16_180703_144209/v63003_1/gtm8182/instance3/g.dat (in /extra2/testarea2/jake/V997/tst_V999_R122_dbg_16_180703_144209/v63003_1/gtm8182/instance3/mumps.repl) not allowed
+##TEST_AWK^%YDB-E-REPLMULTINSTUPDATE.*
 		At M source location TP1+12^gtm8182
 # Sync originating and replicating instances
 ==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
@@ -143,7 +143,7 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
     Switch to INST3 gbldir
 
     JNL POOL INST3: 
-    /extra2/testarea2/jake/V997/tst_V999_R122_dbg_16_180703_144209/v63003_1/gtm8182/instance3/mumps.repl
+##TEST_AWK.*instance3/mumps.repl
 
     Update the INST1 DB with an extended reference 
     JNL POOL INST3: 
@@ -157,7 +157,7 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
 Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
 Shutting down Primary Source Server Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
 # Run gtm8182.m again and search output for error
-%YDB-E-NOJNLPOOL, No journal pool info found in the replication instance of /extra2/testarea2/jake/V997/tst_V999_R122_dbg_16_180703_144209/v63003_1/gtm8182/instance3/mumps.repl
+##TEST_AWK^%YDB-E-NOJNLPOOL.*
 		At M source location gtm8182+6^gtm8182
 
 
