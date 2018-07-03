@@ -29,6 +29,7 @@ if ($status) then
 	exit -1
 endif
 echo ""
+echo ""
 
 
 echo "# Show INST1 mapped instance file"
@@ -81,6 +82,7 @@ $MSR RUN INST3 "$GDE CHANGE -INSTANCE -FILE_NAME=$path_INST3/mumps.repl" >>& GDE
 echo "# Show INST3 mapped instance file"
 $MSR RUN INST3 "$GDE SHOW -INSTANCE " >& show.log; $grep -e 'extra' show.log | $grep 'repl'
 echo ""
+echo ""
 
 
 
@@ -109,6 +111,7 @@ echo ""
 echo "# Check INST4 receiver server for update (expecting only ^zack to be defined)"
 $MSR RUN INST4 '$MUPIP extract INST4_extract.glo'
 echo ""
+echo ""
 
 
 echo "# Remove mapping from both INST1 and INST3 in order to test for error"
@@ -123,6 +126,7 @@ $gtm_dist/mumps -run gtm8182 | grep "YDB-E-"
 echo "# Return INST3 mapping to correct state"
 $MSR RUN INST3 "$GDE CHANGE -INSTANCE -FILE_NAME=$path_INST3/mumps.repl" >>& GDEchangeINST3_2.log
 echo ""
+echo ""
 
 
 echo "# Change INST1 mapped instance file to the INST3 instance file"
@@ -133,6 +137,7 @@ echo "# Run gtm8182.m again and search output for error"
 $gtm_dist/mumps -run gtm8182 | grep "YDB-E-"
 echo "# Remove INST1 mapping"
 $GDE CHANGE -INSTANCE -FILE_NAME=\"\" >>& GDEchangeINST1_3.log
+echo ""
 echo ""
 
 
@@ -149,6 +154,7 @@ $MSR RUN INST2 '$MUPIP extract INST2_2_extract.glo'
 echo ""
 echo "# Check INST4 receiver server for update (expecting no new variables)"
 $MSR RUN INST4 '$MUPIP extract INST4_2_extract.glo'
+echo ""
 echo ""
 
 
@@ -169,14 +175,28 @@ echo ""
 echo "# Check INST4 receiver server for update (expecting no new variables)"
 $MSR RUN INST4 '$MUPIP extract INST4_3_extract.glo'
 echo ""
+echo ""
+echo ""
 
 
 echo "# Run testPool^gtm8182 to test that VIEW"'("JNLPOOL")' "returns different"
-echo "# instance file names when switching between multile instances but returns"
-echo "# the original journal pool when another instance is accessed through an"
-echo "# extended reference"
+echo "# instance file names when switching between multile instances and when"
+echo "# another instance is accessed through an extended reference"
 echo "----------------------------------------------------------------------------"
 $gtm_dist/mumps -run testPool^gtm8182
+echo ""
+echo ""
+
+
+echo "# Stop replication between INST3 INST4 and run gtm8182.m in order to test"
+echo "# that using 2 instances will cause an error when 1 jnl pool is not set up"
+echo "----------------------------------------------------------------------------"
+$MSR STOP INST3 INST4
+echo "# Run gtm8182.m again and search output for error"
+$gtm_dist/mumps -run gtm8182 | grep "YDB-E-"
+echo ""
+echo ""
+
 
 
 echo "Check and shutdown the DB"

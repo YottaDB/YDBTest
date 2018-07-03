@@ -1,18 +1,47 @@
 Create the DB
 
+
+# Show INST1 mapped instance file
+ ##TEST_PATH##/mumps.repl
+
+# Remove INST1 gld mapping to instance file
+# to test that gtm_repl_instname determines .repl mapping when otherwise unset and 
+# that GDE CHANGE -INSTANCE -FILE_NAME= "" removes the .repl mapping in the gld file.
+----------------------------------------------------------------------------
+
+# Show INST1 mapped instance file
+
+# Start INST1 INST2 replication
 ==Executing MULTISITE_REPLIC 'START INST1 INST2'==
 Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
 
+# Start INST3 INST4 replication
 ==Executing MULTISITE_REPLIC 'START INST3 INST4'==
 Starting Primary Source Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
 Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
 
+# Remove and replace INST3 .repl mapping 
+# to test that .repl file mapping overrides the gtm_repl_instname env var.
+----------------------------------------------------------------------------
+# Show INST3 mapped instance file
+ /extra2/testarea2/jake/V997/tst_V999_R122_dbg_16_180703_144209/v63003_1/gtm8182/instance3/mumps.repl
+# Remove INST3 mapping
+# Change INST3 mapped instance file
+# Show INST3 mapped instance file
+ /extra2/testarea2/jake/V997/tst_V999_R122_dbg_16_180703_144209/v63003_1/gtm8182/instance3/mumps.repl
+
+
 # Run gtm8182.m to update both INST1 and INST3 source server
+----------------------------------------------------------------------------
     Update the INST1 DB
+    Update the INST3 DB with an extended reference
     Switch to INST3 gbldir
     Update the INST3 DB
+    Update the INST1 DB with an extended reference
     Switch back to INST1 gbldir
+
+# Show INST1 mapped instance file
 
 # Sync originating and replicating instances
 ==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
@@ -21,12 +50,117 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
 # Check INST2 receiver server for update (expecting only ^jake to be defined)
 ==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP extract INST2_extract.glo'==
 %YDB-I-RECORDSTAT, ^jake:	  Key cnt: 1  max subsc len: 6  max rec len: 8  max node len: 18
-%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 6  max rec len: 8  max node len: 18
+%YDB-I-RECORDSTAT, ^wendy:	  Key cnt: 1  max subsc len: 7  max rec len: 6  max node len: 17
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 7  max rec len: 8  max node len: 18
 
 # Check INST4 receiver server for update (expecting only ^zack to be defined)
 ==Executing MULTISITE_REPLIC 'RUN INST4 $MUPIP extract INST4_extract.glo'==
+%YDB-I-RECORDSTAT, ^jim:	  Key cnt: 1  max subsc len: 5  max rec len: 6  max node len: 15
 %YDB-I-RECORDSTAT, ^zack:	  Key cnt: 1  max subsc len: 6  max rec len: 6  max node len: 16
-%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 6  max rec len: 6  max node len: 16
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 6  max rec len: 6  max node len: 16
 
-Check the DB
-DB is in good shape
+
+# Remove mapping from both INST1 and INST3 in order to test for error
+# upon using both instances in a single process
+----------------------------------------------------------------------------
+# Remove INST3 mapping
+# Remove INST1 mapping
+# Run gtm8182.m again and search output for error
+%YDB-E-REPLINSTMISMTCH, Process has replication instance file ##TEST_PATH##/mumps.repl (jnlpool shmid = 948306307) open but database /extra2/testarea2/jake/V997/tst_V999_R122_dbg_16_180703_144209/v63003_1/gtm8182/instance3/mumps.dat is bound to instance file /extra2/testarea2/jake/V997/tst_V999_R122_dbg_16_180703_144209/v63003_1/gtm8182/instance3/mumps.repl (jnlpool shmid = 950960536)
+		At M source location gtm8182+6^gtm8182
+# Return INST3 mapping to correct state
+
+
+# Change INST1 mapped instance file to the INST3 instance file
+# in order to test for an error upon sharing a region between 2 instances
+----------------------------------------------------------------------------
+# Run gtm8182.m again and search output for error
+%YDB-E-REPLINSTMISMTCH, Process has replication instance file /extra2/testarea2/jake/V997/tst_V999_R122_dbg_16_180703_144209/v63003_1/gtm8182/instance3/mumps.repl (jnlpool shmid = 950960536) open but database ##TEST_PATH##/mumps.dat is bound to instance file ##TEST_PATH##/mumps.repl (jnlpool shmid = 948306307)
+		At M source location gtm8182+4^gtm8182
+# Remove INST1 mapping
+
+
+# Run TP1^gtm8182 to test for an error when updating multiple 
+# instances within the same TP transaction
+----------------------------------------------------------------------------
+%YDB-E-REPLMULTINSTUPDATE, Previous updates in the current transaction are to ##TEST_PATH##/mumps.repl so updates to /extra2/testarea2/jake/V997/tst_V999_R122_dbg_16_180703_144209/v63003_1/gtm8182/instance3/g.dat (in /extra2/testarea2/jake/V997/tst_V999_R122_dbg_16_180703_144209/v63003_1/gtm8182/instance3/mumps.repl) not allowed
+		At M source location TP1+12^gtm8182
+# Sync originating and replicating instances
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'SYNC INST3 INST4'==
+
+# Check INST2 receiver server for update (expecting variable ^mike) 
+==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP extract INST2_2_extract.glo'==
+%YDB-I-RECORDSTAT, ^jake:	  Key cnt: 1  max subsc len: 6  max rec len: 8  max node len: 18
+%YDB-I-RECORDSTAT, ^mike:	  Key cnt: 1  max subsc len: 6  max rec len: 5  max node len: 15
+%YDB-I-RECORDSTAT, ^wendy:	  Key cnt: 1  max subsc len: 7  max rec len: 6  max node len: 17
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 3  max subsc len: 7  max rec len: 8  max node len: 18
+
+# Check INST4 receiver server for update (expecting no new variables)
+==Executing MULTISITE_REPLIC 'RUN INST4 $MUPIP extract INST4_2_extract.glo'==
+%YDB-I-RECORDSTAT, ^jim:	  Key cnt: 1  max subsc len: 5  max rec len: 6  max node len: 15
+%YDB-I-RECORDSTAT, ^zack:	  Key cnt: 1  max subsc len: 6  max rec len: 6  max node len: 16
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 6  max rec len: 6  max node len: 16
+
+
+# Run TP2^gtm8182 to test that updating multiple instances in a single
+# TP transaction is allowed as long as the second instance only has
+# non-replicating regions updated (HREG in this case)
+----------------------------------------------------------------------------
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'SYNC INST3 INST4'==
+
+# Check INST2 receiver server for update (expecting variable ^edd) 
+==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP extract INST2_3_extract.glo'==
+%YDB-I-RECORDSTAT, ^edd:	  Key cnt: 1  max subsc len: 5  max rec len: 5  max node len: 14
+%YDB-I-RECORDSTAT, ^jake:	  Key cnt: 1  max subsc len: 6  max rec len: 8  max node len: 18
+%YDB-I-RECORDSTAT, ^mike:	  Key cnt: 1  max subsc len: 6  max rec len: 5  max node len: 15
+%YDB-I-RECORDSTAT, ^wendy:	  Key cnt: 1  max subsc len: 7  max rec len: 6  max node len: 17
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 4  max subsc len: 7  max rec len: 8  max node len: 18
+
+# Check INST3 receiver server for update (expecting variable ^al)
+==Executing MULTISITE_REPLIC 'RUN INST3 $MUPIP extract INST3_1_extract.glo'==
+%YDB-I-RECORDSTAT, ^harley:	  Key cnt: 1  max subsc len: 8  max rec len: 7  max node len: 19
+%YDB-I-RECORDSTAT, ^jim:	  Key cnt: 1  max subsc len: 5  max rec len: 6  max node len: 15
+%YDB-I-RECORDSTAT, ^zack:	  Key cnt: 1  max subsc len: 6  max rec len: 6  max node len: 16
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 3  max subsc len: 8  max rec len: 7  max node len: 19
+
+# Check INST4 receiver server for update (expecting no new variables)
+==Executing MULTISITE_REPLIC 'RUN INST4 $MUPIP extract INST4_3_extract.glo'==
+%YDB-I-RECORDSTAT, ^jim:	  Key cnt: 1  max subsc len: 5  max rec len: 6  max node len: 15
+%YDB-I-RECORDSTAT, ^zack:	  Key cnt: 1  max subsc len: 6  max rec len: 6  max node len: 16
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 6  max rec len: 6  max node len: 16
+
+
+
+# Run testPool^gtm8182 to test that VIEW("JNLPOOL") returns different
+# instance file names when switching between multile instances and when
+# another instance is accessed through an extended reference
+----------------------------------------------------------------------------
+    JNL POOL INST1: 
+    ##TEST_PATH##/mumps.repl
+
+    Switch to INST3 gbldir
+
+    JNL POOL INST3: 
+    /extra2/testarea2/jake/V997/tst_V999_R122_dbg_16_180703_144209/v63003_1/gtm8182/instance3/mumps.repl
+
+    Update the INST1 DB with an extended reference 
+    JNL POOL INST3: 
+    ##TEST_PATH##/mumps.repl
+
+
+# Stop replication between INST3 INST4 and run gtm8182.m in order to test
+# that using 2 instances will cause an error when 1 jnl pool is not set up
+----------------------------------------------------------------------------
+==Executing MULTISITE_REPLIC 'STOP INST3 INST4'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
+Shutting down Primary Source Server Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+# Run gtm8182.m again and search output for error
+%YDB-E-NOJNLPOOL, No journal pool info found in the replication instance of /extra2/testarea2/jake/V997/tst_V999_R122_dbg_16_180703_144209/v63003_1/gtm8182/instance3/mumps.repl
+		At M source location gtm8182+6^gtm8182
+
+
+Check and shutdown the DB
+----------------------------------------------------------------------------
+DB has shutdown gracefully

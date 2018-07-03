@@ -83,9 +83,9 @@ testPool
 	WRITE "    ",$VIEW("JNLPOOL"),!
 	WRITE !
 
-	WRITE "    Update the INST1 DB with an extended reference: ",!
-	SET jake=^|INST3gbldir|jake
-	SET ^|INST3gbldir|jake=jake
+	WRITE "    Update the INST1 DB with an extended reference ",!
+	SET jake=^|INST1gbldir|jake
+	SET ^|INST1gbldir|jake=jake
 	WRITE "    JNL POOL INST3: ",!
 	WRITE "    ",$VIEW("JNLPOOL"),!
 
