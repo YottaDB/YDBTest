@@ -4,7 +4,7 @@
 # TESTING BREAK
 Break command successfully ignored
 # TESTING ZBREAK
-ZSTATUS=zbreakfn+3^gtm8694,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: ZBREAK
+ZSTATUS=zbreakfn+4^gtm8694,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: ZBREAK
 Zbreak command successfully ignored
 # TESTING ZCMDLINE
 
@@ -28,11 +28,13 @@ YDB>#<CTRL-C>
 
 # TESTING EACH FUNCTION WHEN RESTRICT.TXT HAS NO READ OR WRITE PERMISSIONS
 
+# Not testing cenable, since this should restrict direct mode, which is necessary for testing cenable
+# Randomly choosing what is listed as restricted, since everything should get restricted regardless
 ---------- ydb_temp_dist/restrict.txt
 # TESTING BREAK
 Break command successfully ignored
 # TESTING ZBREAK
-ZSTATUS=zbreakfn+3^gtm8694,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: ZBREAK
+ZSTATUS=zbreakfn+4^gtm8694,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: ZBREAK
 Zbreak command successfully ignored
 # TESTING ZCMDLINE
 
@@ -62,10 +64,7 @@ ZSTATUS=trigmodfn+3^gtm8694,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted
 
 YDB>
 # TESTING ZBREAK
-%YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
-		At M source location zbreakchild+1^gtm8694
-
-YDB>
+ZBREAK not ignored
 # TESTING ZCMDLINE
 ZCMDLNE was not ignored
 # TESTING ZEDIT
@@ -101,7 +100,8 @@ YDB>%YDB-I-CTRLC, CTRL_C encountered
 
 # -------------------------------------------------------------------------
 
-TESTING EACH FUNCTION WHEN RESTRICT.TXT HAS WRITE PERMISSIONS
+# TESTING EACH FUNCTION WHEN RESTRICT.TXT HAS WRITE PERMISSIONS
+# Randomly choosing what gets ristricted, since nothing should end up restricted
 
 -rw-rw-r-- ydb_temp_dist/restrict.txt
 # TESTING BREAK
@@ -110,10 +110,7 @@ TESTING EACH FUNCTION WHEN RESTRICT.TXT HAS WRITE PERMISSIONS
 
 YDB>
 # TESTING ZBREAK
-%YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
-		At M source location zbreakchild+1^gtm8694
-
-YDB>
+ZBREAK not ignored
 # TESTING ZCMDLINE
 ZCMDLNE was not ignored
 # TESTING ZEDIT
@@ -146,3 +143,18 @@ DSE>
 # TESTING CENABLE
 YDB>#<CTRL-C>
 YDB>%YDB-I-CTRLC, CTRL_C encountered
+
+# -----------------------------------------------------------------------
+
+TESTING EACH FUNCTION WHEN ALL ARE INCLUDED IN RESTRICT.TXT AND SOME ARE RANDOMLY ASSIGNED TO OUR GROUP
+
+-r--r--r-- ydb_temp_dist/restrict.txt
+BREAK acted as expected
+ZBREAK acted as expected
+ZCMDLINE acted as expected
+ZEDIT acted as expected
+ZSYSTEM acted as expected
+PIPE_OPEN acted as expected
+DIRECT_MODE acted as expected
+DSE acted as expected
+TRIGGER_MOD acted as expected

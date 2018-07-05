@@ -10,6 +10,30 @@
 ;								;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
+randrestrict
+	set y="restrictlist.txt"
+	open y
+	use y read restrictlist
+	set x="$ydb_dist/restrict.txt"
+	open x
+	use x
+	for i=1:1:$length(restrictlist," ") do
+	. write:$random(2) $piece(restrictlist," ",i),!
+	quit
+
+randrestrictgroup
+	set y="restrictlist.txt"
+	open y
+	use y read restrictlist
+	set x="$ydb_dist/restrict.txt"
+	open x
+	use x
+	for i=1:1:$length(restrictlist," ") do
+	. write $piece(restrictlist," ",i)
+	. write:$random(2) ":",$ztrnlnm("groupname")
+	. write !
+	quit
+
 breakfn
 	write "# TESTING BREAK",!
 	break
@@ -17,14 +41,15 @@ breakfn
 	quit
 
 zbreakfn
+	set ^X=1
 	write "# TESTING ZBREAK",!
 	set $etrap="do incrtrap^incrtrap"
-	zbreak zbreakchild^gtm8694
+	zbreak zbreakchild^gtm8694:"set ^X=0  write ""ZBREAK not ignored"",!"
 	do zbreakchild^gtm8694
 	quit
 
 zbreakchild
-	write "Zbreak command successfully ignored",!
+	write:^X "Zbreak command successfully ignored",!
 	quit
 
 zcmdlnefn
