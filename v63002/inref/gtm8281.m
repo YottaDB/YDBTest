@@ -13,15 +13,15 @@
 ; Generating an m program which prints a string that is too long
 ;
 genlongline
-	set x="temp.m"
-	open x
-        use x write " write "
+	set n=$piece($zcmdlne," ",1)
+	set file=$piece($zcmdlne," ",2)
+	open file
+        use file write " write "
 	write """"
 	for i=1:1:$zcmdlne do
 	. write "a"
 	write """"
-	write ",!"
-	close x
+	close file
 	set y="check.out"
 	open y
 	use y

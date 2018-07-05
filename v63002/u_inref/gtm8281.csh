@@ -14,16 +14,16 @@
 # Tests that the new maximum for source lines, xecute strings and direct mode input all accept up to 8192 bytes
 #
 
-# 1 terminating characters and 9 other characters outside of the big string
-# Expect the line to be too long as a source line when n=8182, and too long as
-# an xecute string or command in direct mode when n=8183
-foreach n (8180 8181 8182 8283 8184)
+# 1 terminating characters and 7 other characters outside of the big string
+# Expect the line to be too long as a source line when n=8184, and too long as
+# an xecute string or command in direct mode when n=8185
+foreach n (8182 8183 8184 8185 8186)
 	echo "# Generating big string with $n characters"
-	$ydb_dist/mumps -run gtm8281 $n
+	$ydb_dist/mumps -run gtm8281 $n "temp$n.m"
 	echo ""
 	echo "# Using string as source line in an m file"
-	$ydb_dist/mumps -run temp >& source.outx
-	if (`cat check.out` == `cat source.outx`) then
+	$ydb_dist/mumps -run temp$n >& source.outx
+	if ("" == `diff check.out source.outx`) then
 		echo "# a <repeated $n times> executed correctly"
 	else
 		echo "# a <repeated $n times> too long"
@@ -31,9 +31,9 @@ foreach n (8180 8181 8182 8283 8184)
 	endif
 	echo ""
 	echo "# Using string as an xecute string"
-	set bigstring=`cat temp.m`
+	set bigstring=`cat temp$n.m`
 	$ydb_dist/mumps -run xecutefn^gtm8281 "$bigstring" >& xecute.outx
-	if (`cat check.out` == `cat xecute.outx`) then
+	if ("" == `diff check.out xecute.outx`) then
 		echo "# a <repeated $n times> executed correctly"
 	else
 		echo "# a <repeated $n times> too long"
@@ -42,13 +42,12 @@ foreach n (8180 8181 8182 8283 8184)
 	echo ""
 	echo "# Using string as a command in direct mode"
 	$ydb_dist/mumps -run dirmode^gtm8281 "$bigstring" >& dirmode.outx
-	if (`cat check.out` == `cat dirmode.outx`) then
+	if ("" == `diff check.out dirmode.outx`) then
 		echo "# a <repeated $n times> executed correctly"
 	else
 		echo "# a <repeated $n times> too long"
 		cat dirmode.outx
 	endif
-	rm temp.m
 	echo ""
 	echo "# --------------------------------------------------------------------"
 	echo ""
