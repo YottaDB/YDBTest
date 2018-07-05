@@ -33,12 +33,13 @@ unicodefifo(encoding);
 	do test(file,"FIFO:WRITE:RECORDSIZE=-1","",FAIL)
 	set ^A=0
 	f i=1:1:900 quit:^A  hang 1
+	if 0=^A write "FIFO reader unicodefifo3^unicodefifo couldn't start, exiting",! quit
 	do checkfile(file)
 	set ^A=0
 	write jobstr,!
 	job @jobstr
 	for i=1:1:900 quit:^A  hang 1
-	if 0=^A write "FIFO reader couldn't start, exiting",! quit
+	if 0=^A write "FIFO reader unicodefifo2^unicodefifo couldn't start, exiting",! quit
 	hang 1
 	;;;;;
 	do test(file,"FIFO:WRITE:RECORDSIZE=-1","",FAIL)
@@ -74,7 +75,7 @@ unicodefifo(encoding);
 	write "QUIT"
 	close file
 	for i=1:1:900 quit:2=^B  hang 1
-	if 2'=^B write "Reader process is taking too long",!
+	if 2'=^B write "Reader process is taking too long",! quit
 	quit
 test(dev,openpar,usepar,expfail) ;
 	write "---------------------------------------------",!
@@ -111,7 +112,7 @@ unicodefifo2(file,encoding) ;
 	do open^io(file,"FIFO:READ:RECORDSIZE=1048576",encoding,100)
 	; wait until actual write is ready before doing a read
 	for i=1:1:900 quit:^B  hang 1
-	if 0=^B write "Writer process is taking too long",!
+	if 0=^B write "Writer process is taking too long",! quit
 	for i=1:1:100 use file:WIDTH=1048576 read message:40 set t=$T use $PRINCIPAL if t write "message: ",message,! quit:message="QUIT"  h 1
 	close file
 	set ^B=2
@@ -124,16 +125,16 @@ unicodefifo3(file,encoding) ;
 	set fsize=0
 	for i=1:1:900 quit:fsize  do
 	. set fsize=$length($zsearch(file))
-	if 'fsize write file_" not found in 900 seconds",!
+	if 'fsize write file_" not found in 900 seconds",! quit
 	hang 1
 	do open^io(file,"FIFO:READ:RECORDSIZE=1048576",encoding,100)
 	for i=1:1:900 quit:'^A  hang 1
-	if 1=^A write "Writer process is taking too long",!
+	if 1=^A write "Writer process is taking too long",! quit
 	close file
 	; we expect file to be gone before checkfile
 	for i=1:1:900 quit:'fsize  do
 	. set fsize=$length($zsearch(file))
-	if fsize write file_" not removed in 900 seconds",!
+	if fsize write file_" not removed in 900 seconds",! quit
 	set ^A=1
 	quit
 checkfile(file)	;

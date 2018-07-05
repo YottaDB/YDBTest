@@ -59,6 +59,7 @@ zunicodefifo(encoding);
 	;tell reader we are ready to write
 	set ^B=1
 	for i=1:1:900 quit:^A  hang 1
+	if 0=^A write "FIFO reader unicodefifo2^zunicodefifo couldn't start or taking too long, exiting",! quit
 	h 5
 	write longstr,!
 	;;;;;
@@ -103,6 +104,7 @@ unicodefifo2(file,encoding) ;
 	write "encoding=",encoding,!
 	lock ^fifolock
 	for i=1:1:900 quit:^B  hang 1
+	if 0=^B write "FIFO writer zunicodefifo2^zunicodefifo taking too long, exiting",! quit
 	do open^io(file,"FIFO:READ:RECORDSIZE=1048576",encoding,100)
 	set ^A=1
 	for i=1:1:100 use file:WIDTH=1048576 read message:40 set t=$T use $PRINCIPAL if t write "message: ",message,! quit:message="QUIT"  h 1
