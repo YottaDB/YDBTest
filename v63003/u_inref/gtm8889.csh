@@ -26,4 +26,4 @@ if ($status) then
 endif
 perl $gtm_tst/com/expectsanitize.pl expect.outx > expect_sanitized.outx
 
-cat expect_sanitized.outx
+$grep -v '^$' expect_sanitized.outx
