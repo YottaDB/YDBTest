@@ -1,0 +1,14 @@
+# Create a single region DB with region DEFAULT
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2'==
+# Run gtm8906.m to update the DB 55000000 times (this used to issue a MEMORY error in prior versions)
+# The release note of GTM-8906 talks about getting GTM-F-MEMORY errors while handling half a billion updates in V63003
+# But we noticed the errors happening even with about 55000000 updates hence we limit this test to this number
+==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST2'==
+##TEST_AWKMUPIP JOURNAL -(ROLLBACK|RECOVER)
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+##TEST_AWK%YDB-S-JNLSUCCESS, (Rollback|Recover) successful
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..

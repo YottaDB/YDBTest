@@ -25,12 +25,23 @@ proc timeout_procedure { } {
 
 expect -exact ">"
 puts "# Expect the shell prompt"
+# Note: Changing the shell prompt to SHELL might seem easily achieved as follows.
+#	send -- "set prompt=SHELL\r"
+#	expect -exact "SHELL"
+# But that will not work because it is possible the "expect" matches the SHELL from the "set prompt=SHELL" input
+# instead of from the SHELL prompt later spewed out by the shell. To avoid this, we first store the "SHELL" string
+# in a shell variable and use that variable in another line to set the prompt.
+send -- "set shellprompt=SHELL\r"
+expect -exact ">"
+send -- "set prompt=\$shellprompt\r"
+expect -exact "SHELL"
+
 
 # Have columns higher than 80 as that can cause test failures on lines that are just above 80 columns in length
 send -- "stty cols 132\r"
 expect "stty cols 132\r"
 
-expect -exact ">"
+expect -exact "SHELL"
 puts "YDB"
 send -- "\$ydb_dist/mumps -dir\r"
 expect -exact "YDB>"
@@ -41,6 +52,6 @@ send "\x03\r"
 send "\r"
 expect -exact "YDB>"
 send "halt\r"
-expect ">"
+expect -exact "SHELL"
 send "exit\r"
 
