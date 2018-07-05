@@ -1,5 +1,25 @@
-# Running a for loop with multiple leading dots underneath an undotted line
+# BAD COMBINATION OF DOTS
+		. . write "2 dots beneath a for loop with no dots",!
+		    ^-----
+		At column 6, line 23, source module ##IN_TEST_PATH##/inref/gtm5178.m
+%YDB-W-BLKTOODEEP, Block level too deep
+		. write "1 dot beneath a line with no dots",!
+		  ^-----
+		At column 4, line 27, source module ##IN_TEST_PATH##/inref/gtm5178.m
+%YDB-W-BLKTOODEEP, Block level too deep
 		. . write "2 dots beneath a line with no dots",!
 		    ^-----
-		At column 6, line 15, source module ##IN_TEST_PATH##/inref/gtm5178.m
+		At column 6, line 31, source module ##IN_TEST_PATH##/inref/gtm5178.m
 %YDB-W-BLKTOODEEP, Block level too deep
+		. . . . write "4 dots beneath a do with 2 dot",!
+		        ^-----
+		At column 10, line 47, source module ##IN_TEST_PATH##/inref/gtm5178.m
+%YDB-W-BLKTOODEEP, Block level too deep
+
+
+# SUCCESSFUL COMBINATIONS OF BLOCK DEPTHS
+1 dot beneath a do with no dots
+2 dots beneath a do with 1 dot
+1 dot beneath a do with no dots
+2 dots beneath a do with 1 dot
+2 dots after the 4 dots should produce an error (should still be compiled properly)

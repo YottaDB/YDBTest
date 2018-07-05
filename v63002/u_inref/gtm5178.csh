@@ -11,8 +11,7 @@
 #								#
 #################################################################
 #
+# Tests that inappropriately incrementing the depth of a line produces a warning
 #
-#
-echo "# Running a for loop with multiple leading dots underneath an undotted line"
+echo "# BAD COMBINATION OF DOTS"
 $ydb_dist/mumps -run gtm5178
-

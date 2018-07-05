@@ -14,7 +14,7 @@
 #-------------------------------------------------------------------------------------
 # List of subtests of the form "subtestname [author] description"
 #-------------------------------------------------------------------------------------
-# gtm5178	    [vinay] Tests YDB reports BLKTOODEEP errors as warnings
+# gtm5178	    [vinay] Tests Yotta DB reports BLKTOODEEP errors as warnings
 #-------------------------------------------------------------------------------------
 
 echo "v63002 test starts..."
@@ -33,10 +33,6 @@ endif
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
 setenv subtest_exclude_list	""
-# Filter out white box tests that cannot run in pro
-if ("pro" == "$tst_image") then
-	setenv subtest_exclude_list "$subtest_exclude_list"
-endif
 
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh
