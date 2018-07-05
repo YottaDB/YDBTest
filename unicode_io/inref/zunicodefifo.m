@@ -1,9 +1,23 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; This module is derived from FIS GT.M.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 zunicodefifo(encoding);
 	;FIFO - RECORDSIZE and WIDTH limits for FIFO devices"
 	;This code is similar to unicodefifo.m, but due to the fact that an open:writeonly
 	;does a successful return without a reading process the synchroniztion of the code is different
 	;there is a comprehensive unicodefifo test in basic
-	;If this routine is modified then a corresponding change to unicodefifo.m may be required	
+	;If this routine is modified then a corresponding change to unicodefifo.m may be required
 	set ^A=0
 	set ^B=0
 	set $ZTRAP="do error^zunicodefifo"
@@ -44,7 +58,7 @@ zunicodefifo(encoding);
 	use file:WIDTH=1048576
 	;tell reader we are ready to write
 	set ^B=1
-	for i=1:1:60 quit:^A  hang 1
+	for i=1:1:900 quit:^A  hang 1
 	h 5
 	write longstr,!
 	;;;;;
@@ -76,8 +90,8 @@ error	;
 	zshow "S"
 	write "Will continue with the rest of the tests...",!
 	if '$DATA(expfail) set expfail="NO"
-	if "FAIL"'=expfail write "FAIL, was not expecting an error!",! 
-	if "FAIL"=expfail write "OK, was expecting an error",! 
+	if "FAIL"'=expfail write "FAIL, was not expecting an error!",!
+	if "FAIL"=expfail write "OK, was expecting an error",!
 	kill expfail	; reset expect FAIL
 	write "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",!
 	zgoto mainlvl
@@ -88,7 +102,7 @@ unicodefifo2(file,encoding) ;
 	write "file=",file,!
 	write "encoding=",encoding,!
 	lock ^fifolock
-	for i=1:1:60 quit:^B  hang 1
+	for i=1:1:900 quit:^B  hang 1
 	do open^io(file,"FIFO:READ:RECORDSIZE=1048576",encoding,100)
 	set ^A=1
 	for i=1:1:100 use file:WIDTH=1048576 read message:40 set t=$T use $PRINCIPAL if t write "message: ",message,! quit:message="QUIT"  h 1
@@ -118,8 +132,8 @@ error2	;
 	zshow "S"
 	write "Will continue with the rest of the tests...",!
 	if '$DATA(expfail) set expfail="NO"
-	if "FAIL"'=expfail write "FAIL, was not expecting an error!",! 
-	if "FAIL"=expfail write "OK, was expecting an error",! 
+	if "FAIL"'=expfail write "FAIL, was not expecting an error!",!
+	if "FAIL"=expfail write "OK, was expecting an error",!
 	kill expfail	; reset expect FAIL
 	write "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",!
 	halt
