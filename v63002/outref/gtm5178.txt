@@ -1,25 +1,49 @@
 # BAD COMBINATION OF DOTS
 		. . write "2 dots beneath a for loop with no dots",!
 		    ^-----
-		At column 6, line 23, source module ##IN_TEST_PATH##/inref/gtm5178.m
+		At column 6, line 24, source module ##IN_TEST_PATH##/inref/gtm5178.m
 %YDB-W-BLKTOODEEP, Block level too deep
 		. write "1 dot beneath a line with no dots",!
 		  ^-----
-		At column 4, line 27, source module ##IN_TEST_PATH##/inref/gtm5178.m
+		At column 4, line 28, source module ##IN_TEST_PATH##/inref/gtm5178.m
 %YDB-W-BLKTOODEEP, Block level too deep
 		. . write "2 dots beneath a line with no dots",!
 		    ^-----
-		At column 6, line 31, source module ##IN_TEST_PATH##/inref/gtm5178.m
+		At column 6, line 32, source module ##IN_TEST_PATH##/inref/gtm5178.m
 %YDB-W-BLKTOODEEP, Block level too deep
 		. . . . write "4 dots beneath a do with 2 dot",!
 		        ^-----
-		At column 10, line 47, source module ##IN_TEST_PATH##/inref/gtm5178.m
+		At column 10, line 48, source module ##IN_TEST_PATH##/inref/gtm5178.m
 %YDB-W-BLKTOODEEP, Block level too deep
 
 
-# SUCCESSFUL COMBINATIONS OF BLOCK DEPTHS
+# CODE EXECUTES IGNORING THE LINES THAT CREATED WARNINGS
+
+Stepping STARTED
+gtm5178+3^gtm5178   :	do test1^gtm5178
+test1+1^gtm5178     :	for i=1:1:1 do
+test1+3^gtm5178     :	quit
+gtm5178+4^gtm5178   :	do test2^gtm5178
+test2+2^gtm5178     :	quit
+gtm5178+5^gtm5178   :	do test3^gtm5178
+test3+2^gtm5178     :	quit
+gtm5178+6^gtm5178   :	do test4^gtm5178
+test4+1^gtm5178     :	do
+test4+2^gtm5178     :	. write "1 dot beneath a do with no dots",!
 1 dot beneath a do with no dots
+test4+3^gtm5178     :	. do
+test4+4^gtm5178     :	. . write "2 dots beneath a do with 1 dot",!
 2 dots beneath a do with 1 dot
+test4+5^gtm5178     :	quit
+gtm5178+7^gtm5178   :	do test5^gtm5178
+test5+1^gtm5178     :	do
+test5+2^gtm5178     :	. write "1 dot beneath a do with no dots",!
 1 dot beneath a do with no dots
+test5+3^gtm5178     :	. do
+test5+4^gtm5178     :	. . write "2 dots beneath a do with 1 dot",!
 2 dots beneath a do with 1 dot
+test5+5^gtm5178     :	. . do
+test5+7^gtm5178     :	. . write "2 dots after the 4 dots should produce an error (should still be compiled properly)",!
 2 dots after the 4 dots should produce an error (should still be compiled properly)
+test5+8^gtm5178     :	quit
+gtm5178+8^gtm5178   :	quit

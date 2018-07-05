@@ -14,7 +14,7 @@
 #-------------------------------------------------------------------------------------
 # List of subtests of the form "subtestname [author] description"
 #-------------------------------------------------------------------------------------
-# gtm5178	    [vinay] Tests Yotta DB reports BLKTOODEEP errors as warnings
+# gtm5178	    [vinay] Tests YottaDB reports BLKTOODEEP errors as warnings
 #-------------------------------------------------------------------------------------
 
 echo "v63002 test starts..."

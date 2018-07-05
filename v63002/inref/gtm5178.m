@@ -11,7 +11,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 gtm5178
-	write !,!,"# SUCCESSFUL COMBINATIONS OF BLOCK DEPTHS",!
+	write !,!,"# CODE EXECUTES IGNORING THE LINES THAT CREATED WARNINGS",!
+	do ^sstep
 	do test1^gtm5178
 	do test2^gtm5178
 	do test3^gtm5178
