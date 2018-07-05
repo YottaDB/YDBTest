@@ -22,6 +22,12 @@ genlongline
 	write """"
 	write ",!"
 	close x
+	set y="check.out"
+	open y
+	use y
+	for i=1:1:$zcmdlne do
+	. write "a"
+	close y
 	use $P  write "# temp.m contains big string",!
 	quit
 

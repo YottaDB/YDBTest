@@ -31,6 +31,18 @@
 
 # Using string as source line in an m file
 # a <repeated 8182 times> too long
+%YDB-W-LSINSERTED, Line 1, source module ##TEST_PATH##/temp.m exceeds maximum source line length; line seperator inserted, terminating scope of any prior IF, ELSE, or FOR
+Source lines exceeding 1023 character width are not displayed
+		At column 8193, line 1, source module ##TEST_PATH##/temp.m
+%YDB-E-EXPR, Expression expected but not found
+	!
+	^-----
+		At column 0, line 2, source module ##TEST_PATH##/temp.m
+%YDB-E-LSEXPECTED, A line separator is expected here
+%YDB-E-EXPR, Expression expected but not found
+		At M source location +1^temp
+
+YDB>
 
 # Using string as an xecute string
 # a <repeated 8182 times> executed correctly
@@ -45,12 +57,29 @@
 
 # Using string as source line in an m file
 # a <repeated 8283 times> too long
+%YDB-W-LSINSERTED, Line 1, source module ##TEST_PATH##/temp.m exceeds maximum source line length; line seperator inserted, terminating scope of any prior IF, ELSE, or FOR
+Source lines exceeding 1023 character width are not displayed
+		At column 8193, line 1, source module ##TEST_PATH##/temp.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",!
+	^-----
+		At column 0, line 2, source module ##TEST_PATH##/temp.m
+%YDB-E-LSEXPECTED, A line separator is expected here
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+		At M source location +1^temp
+
+YDB>
 
 # Using string as an xecute string
 # a <repeated 8283 times> too long
+%YDB-E-INDRMAXLEN, Maximum length 8192 of an indirection argument was exceeded
+		At M source location xecutefn+1^gtm8281
+
+YDB>
 
 # Using string as a command in direct mode
 # a <repeated 8283 times> too long
+%YDB-E-INDRMAXLEN, Maximum length 8192 of an indirection argument was exceeded
 
 # --------------------------------------------------------------------
 
@@ -59,12 +88,29 @@
 
 # Using string as source line in an m file
 # a <repeated 8184 times> too long
+%YDB-W-LSINSERTED, Line 1, source module ##TEST_PATH##/temp.m exceeds maximum source line length; line seperator inserted, terminating scope of any prior IF, ELSE, or FOR
+Source lines exceeding 1023 character width are not displayed
+		At column 8193, line 1, source module ##TEST_PATH##/temp.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	",!
+	^-----
+		At column 0, line 2, source module ##TEST_PATH##/temp.m
+%YDB-E-LSEXPECTED, A line separator is expected here
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+		At M source location +1^temp
+
+YDB>
 
 # Using string as an xecute string
 # a <repeated 8184 times> too long
+%YDB-E-INDRMAXLEN, Maximum length 8192 of an indirection argument was exceeded
+		At M source location xecutefn+1^gtm8281
+
+YDB>
 
 # Using string as a command in direct mode
 # a <repeated 8184 times> too long
+%YDB-E-INDRMAXLEN, Maximum length 8192 of an indirection argument was exceeded
 
 # --------------------------------------------------------------------
 
