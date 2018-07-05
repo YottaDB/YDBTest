@@ -22,14 +22,29 @@ foreach n (8180 8181 8182 8283 8184)
 	$ydb_dist/mumps -run gtm8281 $n
 	echo ""
 	echo "# Using string as source line in an m file"
-	$ydb_dist/mumps -run temp
+	$ydb_dist/mumps -run temp >& source.outx
+	if ("" != `$grep YDB-E source.outx`) then
+		echo "# a <repeated $n times> too long"
+	else
+		echo "# a <repeated $n times> executed correctly"
+	endif
 	echo ""
 	echo "# Using string as an xecute string"
 	set bigstring=`cat temp.m`
-	$ydb_dist/mumps -run xecutefn^gtm8281 "$bigstring"
+	$ydb_dist/mumps -run xecutefn^gtm8281 "$bigstring" >& xecute.outx
+	if ("" != `$grep YDB-E xecute.outx`) then
+		echo "# a <repeated $n times> too long"
+	else
+		echo "# a <repeated $n times> executed correctly"
+	endif
 	echo ""
 	echo "# Using string as a command in direct mode"
-	$ydb_dist/mumps -run dirmode^gtm8281 "$bigstring"
+	$ydb_dist/mumps -run dirmode^gtm8281 "$bigstring" >& dirmode.outx
+	if ("" != `$grep YDB-E dirmode.outx`) then
+		echo "# a <repeated $n times> too long"
+	else
+		echo "# a <repeated $n times> executed correctly"
+	endif
 	rm temp.m
 	echo ""
 	echo "# --------------------------------------------------------------------"

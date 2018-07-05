@@ -14,7 +14,7 @@
 #-------------------------------------------------------------------------------------
 # List of subtests of the form "subtestname [author] description"
 #-------------------------------------------------------------------------------------
-# gtm8281	    [vinay] Tests YDB source lines, XECUTE strings and Direct Mode input all accept up to 8192 byte values
+# gtm8281	    [vinay] Tests YottaDB source lines, XECUTE strings and Direct Mode input all accept up to 8192 byte values
 #-------------------------------------------------------------------------------------
 
 echo "v63002 test starts..."
@@ -33,10 +33,6 @@ endif
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
 setenv subtest_exclude_list	""
-# Filter out white box tests that cannot run in pro
-if ("pro" == "$tst_image") then
-	setenv subtest_exclude_list "$subtest_exclude_list"
-endif
 
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh
