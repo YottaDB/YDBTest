@@ -16,13 +16,14 @@
 #-------------------------------------------------------------------------------------
 # gtm8281	    [vinay] Tests YottaDB source lines, XECUTE strings and Direct Mode input all accept up to 8192 byte values
 # gtm5178	    [vinay] Tests YottaDB reports BLKTOODEEP errors as warnings
+# gtm8760	    [vinay] Tests YottaDB properly handles environment variables whose contesnts are over 32K in size
 #-------------------------------------------------------------------------------------
 
 echo "v63002 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "gtm8281 gtm5178"
+setenv subtest_list_non_replic "gtm8281 gtm5178 gtm8760"
 setenv subtest_list_replic     ""
 
 
