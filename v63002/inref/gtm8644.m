@@ -10,7 +10,13 @@
 ;								;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
-zsystemfn
+
+shellfn
+	write "# Zsystem calls the shell specified by the SHELL environment variable",!
+	zsystem "echo $SHELL"
+	quit
+
+quotesfn
 	write "# Old quotes system",!
 	zsystem "echo '""hello world""'"
 	write "# Simplified quotes system",!

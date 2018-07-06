@@ -13,4 +13,6 @@
 #
 #
 #
-$ydb_dist/mumps -run gtm8644
+setenv SHELL /usr/local/bin/tcsh
+$ydb_dist/mumps -run shellfn^gtm8644
+$ydb_dist/mumps -run quotesfn^gtm8644
