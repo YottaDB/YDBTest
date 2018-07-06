@@ -1,0 +1,106 @@
+# Testing QUIET and QCALL calls for the following utilities:
+# %GCE	QUIET
+# %GSE	QUIET
+# %RCE	QUIET and QCALL
+# %RSE 	QUIET and QCALL
+
+# Create a single region DB with region DEFAULT
+
+# Run setVars^gtm8777.m to populate DB with variables
+
+# Output string to test1.m for later tests to ^%RCE and ^%RSE
+
+# Output string to test2.m for later tests to ^%RCE and ^%RSE
+Hello; I.T. Have you tried turning it off and on again? 
+# Run showVars^gtm8777.m to show variable values before running QUIET^%GCE
+^string1: Its dangerous to go alone take this
+^string2: Wibboly Wobboly Timey Whimey
+^string3: Lightning Bolt! Lightning Bolt! Lightning Bolt!
+^string4: 'To infinity and beyond' - Buzz Aldrin
+
+# Run gtm8777.exp to: 
+#		QUIET^%GCE - change all instances of 'a' to 'b' within variable ^a	
+#		QUIET^%GSE - search all variables for the string 'Light'          	
+#		QUIET^%RCE - change all instances of 'si' to 'is' within test1.m  	
+#		QCALL^%RCE - append a success message to the end of test1.m       	
+#		QUITE^%RSE - search all routines for every instance of 'is'       	
+#		QCALL^%RSE - wearch all routines for every instance of 'this'     	
+
+
+# Output from QUIET^%GCE 
+--------------------------------------------------------------
+---- QUIET^%GCE ----
+^string1  
+^string1
+Was : Its dangerous to go alone take this
+Now : Its dangerous to go alone take a sandwich in case you get hungry
+1 changes made in total 1 nodes.
+Global ^--------------
+---- QUIET^%GCE ----
+^string4  
+^string4
+Was : 'To infinity and beyond' - Buzz Aldrin
+Now : 'To infinity and beyond' - Buzz Lightyear
+1 changes made in total 1 nodes.
+Global ^
+YDB>--------------------------------------------------------------
+
+
+# Output from QUIET^%GSE 
+--------------------------------------------------------------
+---- QUIET^%GSE ----
+Light
+^string3  
+^string3        Lightning Bolt! Lightning Bolt! Lightning Bolt!
+                ^^^^^           ^^^^^           ^^^^^
+Total 3 matches found in 1 nodes.
+^string4  
+^string4        'To infinity and beyond' - Buzz Lightyear
+                                                ^^^^^
+Total 1 matches found in 1 nodes.
+Global ^
+YDB>--------------------------------------------------------------
+
+
+# Output from QUIET^%RCE 
+--------------------------------------------------------------
+---- QUIET^%RCE ----
+Was:  This si a test string 
+Now:  This is a test string 
+Total of 2 routines parsed.
+1 occurrence changed in 1 routine.
+YDB>--------------------------------------------------------------
+
+
+# Output from QCALL^%RCE 
+--------------------------------------------------------------
+---- QCALL^%RCE ----
+Was:  This is a test string 
+Now:  This is a test string, and the test looks like its succeeded! 
+YDB>--------------------------------------------------------------
+
+
+# Output from QUIET^%RSE 
+--------------------------------------------------------------
+---- QUIET^%RSE ----
+is
+Find all occurrences of:
+>is<
+Output device: <terminal>: 
+ This is a test string, and the test looks like its succeeded! 
+   ^^ ^^
+Total of 2 routines parsed.
+2 occurrences found in 1 routine.
+YDB>--------------------------------------------------------------
+
+
+# Output from QCALL^%RSE 
+--------------------------------------------------------------
+---- QCALL^%RSE ----
+do QCALL^%RSE
+ This is a test string, and the test looks like its succeeded! 
+   ^^ ^^
+YDB>--------------------------------------------------------------
+
+
+# DB has shutdown gracefully

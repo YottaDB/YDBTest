@@ -1,0 +1,207 @@
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+#
+set timeout 120
+spawn /usr/local/bin/tcsh -f
+# Change shell prompt to something other than ">" as that is a substring of the LKE prompt "LKE>"
+# and can cause incorrect match later when we wait for the shell prompt.
+expect -exact ">"
+# Note: Changing the shell prompt to SHELL might seem easily achieved as follows.
+#	send -- "set prompt=SHELL\r"
+#	expect -exact "SHELL"
+# But that will not work because it is possible the "expect" matches the SHELL from the "set prompt=SHELL" input
+# instead of from the SHELL prompt later spewed out by the shell. To avoid this, we first store the "SHELL" string
+# in a shell variable and use that variable in another line to set the prompt.
+send -- "set shellprompt=SHELL\r"
+expect -exact ">"
+send -- "set prompt=\$shellprompt\r"
+expect -exact "SHELL"
+
+expect_after {
+	timeout { timeout_procedure }
+}
+
+proc timeout_procedure { } {
+	puts "timeout occurred"
+	exit -1
+}
+
+#Start YDB
+send -- "\$gtm_dist/ydb\r"
+expect -exact "YDB>"
+
+#Start GCE prompt
+puts "QUIET^%GCE TEST\n"
+puts "--------------------------------------------------------------\n"
+send -- "do QUIET^%GCE\r"
+expect -exact "Global Change Every occurrence"
+expect -exact "Global ^"
+send -- "string1\r"
+expect -exact "Global ^"
+send -- "\r"
+expect -exact "Old string:"
+send -- "this\r"
+expect -exact "New string:"
+send -- "a sandwich in case you get hungry\r"
+expect -exact "Show changed nodes <Yes>?"
+send -- "Yes\r"
+expect -exact "Output device: <terminal>:"
+puts "\n---- QUIET^%GCE ----\n"
+send -- "\r"
+
+expect -exact "Global ^"
+puts "--------------\n"
+send -- "string4\r"
+expect -exact "Global ^"
+send -- "\r"
+expect -exact "Old string:"
+send -- "Aldrin\r"
+expect -exact "New string:"
+send -- "Lightyear\r"
+expect -exact "Show changed nodes <Yes>?"
+send -- "Yes\r"
+expect -exact "Output device: <terminal>:"
+puts "\n---- QUIET^%GCE ----\n"
+send -- "\r"
+
+expect -exact "Global ^"
+send -- "\r"
+expect -exact "YDB>"
+puts "--------------------------------------------------------------\n"
+puts "\n"
+
+puts "QUIET^%GSE TEST\n"
+puts "--------------------------------------------------------------\n"
+#Start GSE prompt
+send -- "do QUIET^%GSE\r"
+expect -exact "Output device: <terminal>:"
+send -- "\r"
+
+expect -exact "Global ^"
+send -- "string1\r"
+expect -exact "Global ^"
+send -- "string2\r"
+expect -exact "Global ^"
+send -- "string3\r"
+expect -exact "Global ^"
+send -- "string4\r"
+expect -exact "Global ^"
+send -- "\r"
+
+expect -exact "Find string: "
+puts "\n---- QUIET^%GSE ----\n"
+send -- "Light\r"
+
+expect -exact "Global ^"
+send -- "\r"
+expect -exact "YDB>"
+puts "--------------------------------------------------------------\n"
+puts "\n"
+
+puts "QUIET^%RCE TEST\n"
+puts "--------------------------------------------------------------\n"
+#Start RCE prompt
+send -- "do QUIET^%RCE\r"
+expect -exact "Routine:"
+send -- "test1\r"
+expect -exact "Routine:"
+send -- "test2\r"
+
+expect -exact "Routine:"
+send -- "\r"
+
+expect -exact "Old string"
+send -- "si\r"
+expect -exact "New string"
+send -- "is\r"
+
+expect -exact "Show changed lines <Yes>?:"
+send -- "Yes\r"
+expect -exact "Output device: <terminal>:"
+puts "\n---- QUIET^%RCE ----\n"
+send -- "\r"
+
+expect -exact "YDB>"
+puts "--------------------------------------------------------------\n"
+puts "\n"
+
+
+puts "QCALL^%RCE TEST\n"
+puts "--------------------------------------------------------------\n"
+#Start RCE prompt
+send -- "set %ZF=\"string\"\r"
+expect -exact "YDB>"
+send -- "set %ZN=\"string, and the test looks like its succeeded!\"\r"
+expect -exact "YDB>"
+
+send -- "do QCALL^%RCE\r"
+expect -exact "Routine:"
+send -- "test1\r"
+expect -exact "Routine:"
+send -- "test2\r"
+expect -exact "Routine:"
+puts "\n---- QCALL^%RCE ----\n"
+send -- "\r"
+
+expect -exact "YDB>"
+puts "--------------------------------------------------------------\n"
+puts "\n"
+
+
+puts "QUIET^%RSE TEST\n"
+puts "--------------------------------------------------------------\n"
+#Start RSE prompt
+send -- "do QUIET^%RSE\r"
+expect -exact "Routine:"
+send -- "test1\r"
+expect -exact "Routine:"
+send -- "test2\r"
+
+expect -exact "Routine:"
+send -- "\r"
+
+expect -exact "Find string: "
+puts "\n---- QUIET^%RSE ----\n"
+send -- "is\r"
+
+expect -exact "Output device: <terminal>:"
+send -- "\r"
+
+expect -exact "YDB>"
+puts "--------------------------------------------------------------\n"
+puts "\n"
+
+
+puts "QCALL^%RSE TEST\n"
+puts "--------------------------------------------------------------\n"
+#Set necessary variables
+send -- "set %ZF=\"is\"\r"
+expect -exact "YDB>"
+
+#send -- "set %ZR=\"test2 test1\"\r"
+#expect -exact "YDB>"
+puts "\n---- QCALL^%RSE ----\n"
+
+#Start RSE prompt
+send -- "do QCALL^%RSE\r"
+
+expect -exact "YDB>"
+puts "--------------------------------------------------------------\n"
+puts "\n"
+
+puts "EXIT\n"
+puts "--------------------------------------------------------------\n"
+#expect -exact "YDB>"
+send -- "halt\r"
+#exits from the tcsh shell
+expect -exact "SHELL"
+send -- "exit\r"
