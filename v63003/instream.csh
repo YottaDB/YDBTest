@@ -76,6 +76,14 @@ if ("pro" == "$tst_image") then
 	setenv subtest_exclude_list "$subtest_exclude_list gtm8839"
 endif
 
+if ("dbg" == "$tst_image") then
+	setenv subtest_exclude_list "$subtest_exclude_list gtm8680"
+endif
+
+if ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) then
+	setenv subtest_exclude_list "$subtest_exclude_list gtm8680"
+endif
+
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh
 
