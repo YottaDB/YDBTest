@@ -14,6 +14,7 @@
 # disable random 4-byte collation header in DT leaf block since this test output is sensitive to DT leaf block layout
 setenv gtm_dirtree_collhdr_always 1
 
+# to avoid non-deterministic DBBTUWRNG errors in the mupip integ output
 setenv gtm_test_db_format "NO_CHANGE"
 
 echo "# Create the DB"
@@ -27,11 +28,12 @@ echo ""
 echo "# Create a variable with 31 characters, the maximum length"
 $ydb_dist/mumps -run ^%XCMD 'set ^abcdefghijklmnopqrstuvwxyzabcde=11'
 echo ""
-echo "# Create a too-long global name by appending 4 more non-zero bytes to an existing global name record"
+echo "# Create a too-long global name by appending 4 more non-zero bytes to the 31 character global name using DSE"
 $ydb_dist/dse overwrite -block=2 -offset=33 -data="\66\67\68\69"
 echo ""
 
 echo "# Perform a MUPIP INTEG"
+echo "# Expect to see DBKEYMX error"
 $MUPIP INTEG -reg "*"
 echo ""
 

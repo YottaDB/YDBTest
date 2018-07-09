@@ -2,13 +2,14 @@
 
 # Create a variable with 31 characters, the maximum length
 
-# Create a too-long global name by appending 4 more non-zero bytes to an existing global name record
+# Create a too-long global name by appending 4 more non-zero bytes to the 31 character global name using DSE
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
 
 # Perform a MUPIP INTEG
+# Expect to see DBKEYMX error
 
 
 Integ of region DEFAULT
