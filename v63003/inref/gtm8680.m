@@ -36,7 +36,9 @@ manylocks
 	write "# Max Iterations in a second=",maxit2,!
 	write "# Min Iterations in a second=",minit2,!
 	if (maxit2<(minit2*2))  write "# No Significant Slowdown Experienced",!
-	else  write "# Significant Slowdown Experienced",!
+	else  do
+	. write "# Significant Slowdown Experienced",!
+	. zwrite ^its
 	zsystem "$LKE SHOW |& $grep LOCKSPACEINFO"
 	set ^stop=1
 	do wait^job
