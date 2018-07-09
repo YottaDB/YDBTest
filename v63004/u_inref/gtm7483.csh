@@ -11,43 +11,28 @@
 #								#
 #################################################################
 #
+# disable random 4-byte collation header in DT leaf block since this test output is sensitive to DT leaf block layout
+setenv gtm_dirtree_collhdr_always 1
+
+setenv gtm_test_db_format "NO_CHANGE"
 
 echo "# Create the DB"
-$gtm_tst/com/dbcreate.csh mumps > db_log.txt
+$gtm_tst/com/dbcreate.csh mumps >& dbcreate_log.txt
 if ($status) then
 	echo "DB Create Failed, Output Below"
-	cat db_log.txt
+	cat dbcreate_log.txt
 endif
 echo ""
 
-#$ydb_dist/mumps -run %XCMD ';write:$zfind(%l,"=") $zpiece(%l,"\",3),!;'
-#$DSE add -b=2 -r=1 -key=^TheMaximumLengthOfAKeyIsThirtyTwoCharacters -data="this data is arbitrary"
-
-#echo "# Change maximum key size to 4"
-#$DSE change -F -KEY_MAX_SIZE=4
-#echo ""
-#
-echo "# Call gtm7483.m to set variables with sequentially longer keys"
-$ydb_dist/mumps -run gtm7483 > gtm7483_m.log
+echo "# Create a variable with 31 characters, the maximum length"
+$ydb_dist/mumps -run ^%XCMD 'set ^abcdefghijklmnopqrstuvwxyzabcde=11'
 echo ""
-$DSE add -block=2 -rec=1 -key=^abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ -data="\04\00\00\00"
-#
-#echo "# Perform mupip extract to display the DB's set variables"
-#$MUPIP extract extract.glo
-#echo ""
-
-echo "# Checking for DBKEYMX"
-$MUPIP INTEG -file "mumps.dat" >>& text.txt
-$grep "DBKEYMX" text.txt
+echo "# Create a too-long global name by appending 4 more non-zero bytes to an existing global name record"
+$ydb_dist/dse overwrite -block=2 -offset=33 -data="\66\67\68\69"
 echo ""
 
-echo "# Perform mupip integ"
-$MUPIP INTEG -file "mumps.dat"
+echo "# Perform a MUPIP INTEG"
+$MUPIP INTEG -reg "*"
 echo ""
 
-echo "# Check the DB"
-$gtm_tst/com/dbcheck.csh > db_chk_log.txt
-if ($status) then
-	echo "DB Create Failed, Output Below"
-	cat db_chk_log.txt
-endif
+echo "# Skip DB check (the subtest has ensured a DB check will fail)"

@@ -1,0 +1,39 @@
+# Create the DB
+
+# Create a variable with 31 characters, the maximum length
+
+# Create a too-long global name by appending 4 more non-zero bytes to an existing global name record
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+# Perform a MUPIP INTEG
+
+
+Integ of region DEFAULT
+
+Block:Offset Level
+%YDB-E-DBKEYMX, 
+       2:10     0  Key too long
+                   Directory Path:  1:10, 2:10
+Keys from ^a(-.00000000000000000000000000000000009*999897969594939291909*8*8*8*8*8*8988878685849*...) to the end are suspect.
+%YDB-W-DBLOCMBINC, 
+       0:0     FF  Local bit map incorrect
+%YDB-W-DBMRKBUSY, 
+       3:0     FF  Block incorrectly marked busy
+%YDB-W-DBMRKBUSY, 
+       4:0     FF  Block incorrectly marked busy
+
+Total error count from integ:		4.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           1.037            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               2              NA             0
+%YDB-E-INTEGERRS, Database integrity errors
+
+# Skip DB check (the subtest has ensured a DB check will fail)
