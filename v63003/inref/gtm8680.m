@@ -22,13 +22,13 @@ manylocks
 	set minit2=0
 	set ^its($increment(^i))=0
 	set start=$h,cur=start,prev=start,previ=0,t=$$^difftime(cur,start)
-	for i=1:1 do  quit:(t>15)
+	for i=1:1 do  quit:(t>30)
 	. lock ^a(i#max):0
 	. set cur=$h,diff=$$^difftime(cur,prev)  do
 	. if diff>0 do  set prev=cur,previ=i,t=$$^difftime(cur,start)
 	. . set ^its($increment(^i))=i-previ
-	. . if t=2 set maxit=i-previ,minit=i-previ,maxit2=i-previ,minit2=i-previ
-	. . if t>=2 do
+	. . if t=8 set maxit=i-previ,minit=i-previ,maxit2=i-previ,minit2=i-previ
+	. . if t>8 do
 	. . . if i-previ>maxit2 set maxit2=i-previ
 	. . . if i-previ<minit2 set minit2=i-previ
 	. . . if i-previ>maxit set maxit2=maxit,maxit=i-previ
