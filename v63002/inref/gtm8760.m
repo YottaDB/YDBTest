@@ -11,11 +11,13 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 longstring
-	set x="longstring.txt"
-	open x
-	use x
-	for i=1:1:$zcmdlne do
-	. write "a"
+	set x="longstring.csh"
+	open x:(newversion:stream:nowrap)
+	use x:(width=65535:nowrap)
+	write "setenv longstring "
+	write """"
+	write $translate($justify("a",+$zcmdline)," ","a")
+	write """"
 	quit
 
 test1

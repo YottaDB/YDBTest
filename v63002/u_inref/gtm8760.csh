@@ -14,11 +14,12 @@
 # Testing a long string as a subscript and a value for global and local variables
 # All of these would produce core files in previous versions when the string is at least 32768 characters
 #
-$gtm_tst/com/dbcreate.csh mumps 1 >>& dbcreate.out
+$gtm_tst/com/dbcreate.csh mumps 1 -record_size=32768 >>& dbcreate.out
+# Attempted to test 1MB (max a local variable can hold) but unsuccessful due to shell limitations
 foreach n (32766 32767 32768 32769)
 	echo "# Length of Environment Variable is $n bytes"
 	$ydb_dist/mumps -run longstring^gtm8760 $n
-	setenv longstring `cat longstring.txt`
+	source longstring.csh
 	echo "# Testing long string as a value for a global variable"
 	$ydb_dist/mumps -run test1^gtm8760
 	echo "# Testing long string as a subscript for a global variable"
