@@ -25,9 +25,14 @@ locktimeout
 	set ^X(2)=0
 	do ^job("lockchild^gtm5250",1,"""""")
 	for  quit:^X(1)  hang 1
-	lock ^A(1):1.234
-	zwrite $test
-	write:'$test "Lock successfully timed out",!
+	for i=1:1:10 do  quit:(diff>1.234)&(diff<1.434) ;Giving a .2 second window for the timeout to occur, doing the same for open timeout
+	. set prev=$zut
+	. lock ^A(1):1.23456 ;Also testing that fractional timeouts specified to more than 3 decimal places get truncated
+	. set dollartest=$test
+	. set cur=$zut
+	. set diff=(cur-prev)*(10**-6)
+	write "$TEST=",dollartest,!
+	write:(diff>1.234)&(diff<1.434) "Lock successfully timed out",!
 	set ^X(2)=1
 	do wait^job
 	quit
@@ -41,7 +46,12 @@ lockchild
 
 opentimeout
 	set s="socket"
-	open s:(connect="notreal.txt:LOCAL"):1.234:"SOCKET"
-	zwrite $test
-	write:'$test "Open succesffuly timed out",!
+	for i=1:1:10 do  quit:(diff>1.234)&(diff<1.434)
+	. set prev=$zut
+	. open s:(connect="notreal.txt:LOCAL"):1.2345:"SOCKET"
+	. set dollartest=$test
+	. set cur=$zut
+	. set diff=(cur-prev)*(10**-6)
+	write "$TEST=",dollartest,!
+	write:(diff>1.234)&(diff<1.434) "Open succesffuly timed out",!
 	quit
