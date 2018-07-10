@@ -32,7 +32,8 @@ locktimeout
 	. set cur=$zut
 	. set diff=(cur-prev)*(10**-6)
 	write "$TEST=",dollartest,!
-	write:(diff>1.234)&(diff<1.434) "Lock successfully timed out",!
+	if (diff>1.234)&(diff<1.434)  write "Lock successfully timed out",!
+	else  write "Lock failed to time out properly",!
 	set ^X(2)=1
 	do wait^job
 	quit
@@ -53,5 +54,6 @@ opentimeout
 	. set cur=$zut
 	. set diff=(cur-prev)*(10**-6)
 	write "$TEST=",dollartest,!
-	write:(diff>1.234)&(diff<1.434) "Open succesffuly timed out",!
+	if (diff>1.234)&(diff<1.434)  write "Open successfully timed out",!
+	else  write "Open failed to time out properly",!
 	quit
