@@ -1,0 +1,10 @@
+# Testing fractional timeout for lock
+$TEST=0
+Lock successfully timed out
+
+# Testing fractional timeout for open
+$TEST=0
+Open successfully timed out
+
+# Testing fractional timeout for $gtm_tpnotacidtime (Expect a TPNOTACID message in the syslog)
+%YDB-I-TPNOTACID, HANG at tpnotacid+2^gtm5250 violates ACID properties of a TRANSACTION and could exceed .123 seconds; 
