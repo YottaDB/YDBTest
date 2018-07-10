@@ -75,6 +75,10 @@ setenv subtest_exclude_list	""
 if ("pro" == "$tst_image") then
 	setenv subtest_exclude_list "$subtest_exclude_list gtm8839"
 endif
+# Disable tests that are timing senstive and start lots of processes on ARM boxes as response times have been seen to be non-deterministic
+if ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) then
+	setenv subtest_exclude_list "$subtest_exclude_list gtm8680"
+endif
 
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh

@@ -17,26 +17,22 @@ manylocks
 	else  do ^job("mprocesseschild^gtm8680",100,"""""")
 	set max=100000
 	set maxit=0
-	set maxit2=0
 	set minit=0
-	set minit2=0
-	set ^its($increment(^i))=0
+	set its($increment(it))=0
 	set start=$h,cur=start,prev=start,previ=0,t=$$^difftime(cur,start)
-	for i=1:1 do  quit:(t>15)
+	for i=1:1 do  quit:(t>30)
 	. lock ^a(i#max):0
 	. set cur=$h,diff=$$^difftime(cur,prev)  do
 	. if diff>0 do  set prev=cur,previ=i,t=$$^difftime(cur,start)
-	. . set ^its($increment(^i))=i-previ
-	. . if t=2 set maxit=i-previ,minit=i-previ,maxit2=i-previ,minit2=i-previ
-	. . if t>=2 do
-	. . . if i-previ>maxit2 set maxit2=i-previ
-	. . . if i-previ<minit2 set minit2=i-previ
-	. . . if i-previ>maxit set maxit2=maxit,maxit=i-previ
-	. . . if i-previ<minit set minit2=minit,minit=i-previ
-	write "# Max Iterations in a second=",maxit2,!
-	write "# Min Iterations in a second=",minit2,!
-	if (maxit2<(minit2*2))  write "# No Significant Slowdown Experienced",!
-	else  write "# Significant Slowdown Experienced",!
+	. . set its($increment(it))=i-previ
+	. . if i-previ<minit set minit=i-previ
+	. . if i-previ>maxit set maxit=i-previ,minit=i-previ
+	write "# Max Iterations in a second=",maxit,!
+	write "# Min Iterations after max=",minit,!
+	if (maxit<(minit*2))  write "# No Significant Slowdown Experienced",!
+	else  do
+	. write "# Significant Slowdown Experienced",!
+	. zwrite its
 	zsystem "$LKE SHOW |& $grep LOCKSPACEINFO"
 	set ^stop=1
 	do wait^job
