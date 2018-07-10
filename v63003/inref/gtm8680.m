@@ -17,7 +17,6 @@ manylocks
 	else  do ^job("mprocesseschild^gtm8680",100,"""""")
 	set max=100000
 	set maxit=0
-	set maxit2=0
 	set minit=0
 	set its($increment(it))=0
 	set start=$h,cur=start,prev=start,previ=0,t=$$^difftime(cur,start)
@@ -26,14 +25,13 @@ manylocks
 	. set cur=$h,diff=$$^difftime(cur,prev)  do
 	. if diff>0 do  set prev=cur,previ=i,t=$$^difftime(cur,start)
 	. . set its($increment(it))=i-previ
-	. . if t=1 set maxit=i-previ,minit=i-previ,maxit2=i-previ
-	. . if t>1 do
+	. . if t=1 set maxit=i-previ,minit=i-previ
+	. . else  do
 	. . . if i-previ<minit set minit=i-previ
-	. . . if i-previ>maxit2 set maxit2=i-previ,minit=i-previ
-	. . . if i-previ>maxit set maxit2=maxit,maxit=i-previ,minit=i-previ
-	write "# Max Iterations in a second=",maxit2,!
+	. . . if i-previ>maxit set maxit=i-previ,minit=i-previ
+	write "# Max Iterations in a second=",maxit,!
 	write "# Min Iterations after max=",minit,!
-	if (maxit2<(minit*2))  write "# No Significant Slowdown Experienced",!
+	if (maxit<(minit*2))  write "# No Significant Slowdown Experienced",!
 	else  do
 	. write "# Significant Slowdown Experienced",!
 	. zwrite its
