@@ -11,6 +11,10 @@
 #								#
 #################################################################
 #
+#This ensures that even if the test is run against a gtm distribution
+#the expected 'YDB>' prompt will be displayed instead of 'GTM>'
+setenv gtm_prompt "YDB>"
+
 echo "# Testing QUIET and QCALL calls for the following utilities:"
 echo "# %GCE	QUIET"
 echo "# %GSE	QUIET"

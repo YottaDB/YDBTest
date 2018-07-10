@@ -35,8 +35,8 @@ proc timeout_procedure { } {
 	exit -1
 }
 
-#Start YDB
-send -- "\$gtm_dist/ydb\r"
+#Start mumps -direct
+send -- "\$gtm_dist/mumps -direct\r"
 expect -exact "YDB>"
 
 #Start GCE prompt
