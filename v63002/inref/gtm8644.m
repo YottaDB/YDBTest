@@ -12,8 +12,10 @@
 ;
 
 shellfn
+	set pid=$j
 	write "# Zsystem calls the shell specified by the SHELL environment variable",!
 	zsystem "echo $SHELL"
+	zsystem "ps --forest -f |& tail -7 |& head -3 |& $tst_awk '{print $7,$8,$9,$10,$11,$12,$13}'"
 	quit
 
 quotesfn
