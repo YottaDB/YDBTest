@@ -87,7 +87,7 @@ echo ""
 
 
 
-echo "# Run gtm8182.m to update both INST1 and INST3 source server"
+echo "# Run gtm8182.m to update both INST1 and INST3 DB"
 echo "----------------------------------------------------------------------------"
 $gtm_dist/mumps -run gtm8182
 
@@ -121,8 +121,8 @@ echo "# Remove INST3 mapping"
 $MSR RUN INST3 "$gtm_tst/v63003/u_inref/gtm8182_rmv_map.csh" >>& GDEchangeINST3_2.log
 echo "# Remove INST1 mapping"
 $GDE CHANGE -INSTANCE -FILE_NAME=\"\" >>& GDEchangeINST1_2.log
-echo "# Run gtm8182.m again and search output for error"
-$gtm_dist/mumps -run gtm8182 | grep "YDB-E-"
+echo "# Run gtm8182.m again"
+$gtm_dist/mumps -run gtm8182 # | grep "YDB-E-"
 echo "# Return INST3 mapping to correct state"
 $MSR RUN INST3 "$GDE CHANGE -INSTANCE -FILE_NAME=$path_INST3/mumps.repl" >>& GDEchangeINST3_2.log
 echo ""
@@ -133,8 +133,8 @@ echo "# Change INST1 mapped instance file to the INST3 instance file"
 echo "# in order to test for an error upon sharing a region between 2 instances"
 echo "----------------------------------------------------------------------------"
 $GDE CHANGE -INSTANCE -FILE_NAME=$path_INST3/mumps.repl >>& GDEchangeINST1_3.log
-echo "# Run gtm8182.m again and search output for error"
-$gtm_dist/mumps -run gtm8182 | grep "YDB-E-"
+echo "# Run gtm8182.m again"
+$gtm_dist/mumps -run gtm8182 # | grep "YDB-E-"
 echo "# Remove INST1 mapping"
 $GDE CHANGE -INSTANCE -FILE_NAME=\"\" >>& GDEchangeINST1_3.log
 echo ""
@@ -144,7 +144,7 @@ echo ""
 echo "# Run TP1^gtm8182 to test for an error when updating multiple "
 echo "# instances within the same TP transaction"
 echo "----------------------------------------------------------------------------"
-$gtm_dist/mumps -run TP1^gtm8182 | grep "YDB-E-"
+$gtm_dist/mumps -run TP1^gtm8182 # | grep "YDB-E-"
 echo "# Sync originating and replicating instances"
 $MSR SYNC INST1 INST2
 $MSR SYNC INST3 INST4
@@ -162,7 +162,7 @@ echo "# Run TP2^gtm8182 to test that updating multiple instances in a single"
 echo "# TP transaction is allowed as long as the second instance only has"
 echo "# non-replicating regions updated (HREG in this case)"
 echo "----------------------------------------------------------------------------"
-$gtm_dist/mumps -run TP2^gtm8182 | grep "YDB-E-"
+$gtm_dist/mumps -run TP2^gtm8182 # | grep "YDB-E-"
 $MSR SYNC INST1 INST2
 $MSR SYNC INST3 INST4
 echo ""
@@ -179,8 +179,8 @@ echo ""
 echo ""
 
 
-echo "# Run testPool^gtm8182 to test that VIEW"'("JNLPOOL")' "returns different"
-echo "# instance file names when switching between multile instances and when"
+echo "# Run testPool^gtm8182 to test that "'$VIEW("JNLPOOL")' "returns different"
+echo "# instance file names when switching between multiple instances and when"
 echo "# another instance is accessed through an extended reference"
 echo "----------------------------------------------------------------------------"
 $gtm_dist/mumps -run testPool^gtm8182
@@ -192,8 +192,8 @@ echo "# Stop replication between INST3 INST4 and run gtm8182.m in order to test"
 echo "# that using 2 instances will cause an error when 1 jnl pool is not set up"
 echo "----------------------------------------------------------------------------"
 $MSR STOP INST3 INST4
-echo "# Run gtm8182.m again and search output for error"
-$gtm_dist/mumps -run gtm8182 | grep "YDB-E-"
+echo "# Run gtm8182.m again"
+$gtm_dist/mumps -run gtm8182 # | grep "YDB-E-"
 echo ""
 echo ""
 

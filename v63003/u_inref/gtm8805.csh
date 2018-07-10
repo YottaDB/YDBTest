@@ -14,16 +14,13 @@
 #
 #
 
-echo "# Pressing Control C while in zhelp, would get an error in previous versions"
-echo ""
-echo "# Terminal Display:"
-echo ""
-# Setting prompt explicitly so we can run on previous GTM versions too (which default to "GTM>")
-setenv gtm_prompt "YDB>"
-(expect -d $gtm_tst/$tst/u_inref/gtm8889.exp > expect.outx) >& expect.dbg
+# Default used for DSE crit seize, AREG used to dictate order of execution, BREG used as an eventlog
+$gtm_tst/com/dbcreate.csh mumps 3>>&dbcreate.out
 if ($status) then
-	echo "EXPECT Failed"
+	cat dbcreate.out
 endif
-perl $gtm_tst/com/expectsanitize.pl expect.outx > expect_sanitized.outx
-
-$grep -v '^$' expect_sanitized.outx
+$ydb_dist/mumps -run gtm8805
+$gtm_tst/com/dbcheck.csh>>dbcheck.out
+if ($status) then
+	cat dbcheck.out
+endif

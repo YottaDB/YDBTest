@@ -9,14 +9,13 @@
 ;	the license, please stop and do not read further.	;
 ;								;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; This module is derived from FIS GT.M.
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
 
-cascade
-	write "Nothing here"
-	quit
-
-waitfororlbk
-	set waittime=3600,neederr=1
-	do FUNC^waitforfilecreate("ONLINE_ROLLBACK.complete",waittime,neederr)
+gtm8906
+	; Generate lots of updates in TP to test MUPIP JOURNAL backward processing hash table sizes
+	set numupdates=+$zcmdline
+	for j=1:1:numupdates do
+	. tstart ():(serial:transaction="BATCH")
+	. set ^x=j
+	. tcommit
 	quit

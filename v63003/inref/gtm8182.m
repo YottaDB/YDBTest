@@ -73,7 +73,7 @@ testPool
 	WRITE "    ",$VIEW("JNLPOOL"),!
 	WRITE !
 
-	WRITE "    Switch to INST3 gbldir",!,!
+	WRITE "    Switch to INST3 gbldir and update DB",!,!
 	SET $ZGBLDIR=INST3gbldir
 
 	; A variable in the DB  must be accessed to open the JNL POOL for the process

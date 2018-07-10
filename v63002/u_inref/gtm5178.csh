@@ -11,19 +11,7 @@
 #								#
 #################################################################
 #
+# Tests that inappropriately incrementing the depth of a line produces a warning
 #
-#
-
-echo "# Pressing Control C while in zhelp, would get an error in previous versions"
-echo ""
-echo "# Terminal Display:"
-echo ""
-# Setting prompt explicitly so we can run on previous GTM versions too (which default to "GTM>")
-setenv gtm_prompt "YDB>"
-(expect -d $gtm_tst/$tst/u_inref/gtm8889.exp > expect.outx) >& expect.dbg
-if ($status) then
-	echo "EXPECT Failed"
-endif
-perl $gtm_tst/com/expectsanitize.pl expect.outx > expect_sanitized.outx
-
-$grep -v '^$' expect_sanitized.outx
+echo "# BAD COMBINATION OF DOTS"
+$ydb_dist/mumps -run gtm5178

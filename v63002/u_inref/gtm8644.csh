@@ -13,17 +13,6 @@
 #
 #
 #
-
-echo "# Pressing Control C while in zhelp, would get an error in previous versions"
-echo ""
-echo "# Terminal Display:"
-echo ""
-# Setting prompt explicitly so we can run on previous GTM versions too (which default to "GTM>")
-setenv gtm_prompt "YDB>"
-(expect -d $gtm_tst/$tst/u_inref/gtm8889.exp > expect.outx) >& expect.dbg
-if ($status) then
-	echo "EXPECT Failed"
-endif
-perl $gtm_tst/com/expectsanitize.pl expect.outx > expect_sanitized.outx
-
-$grep -v '^$' expect_sanitized.outx
+setenv SHELL /usr/local/bin/tcsh
+$ydb_dist/mumps -run shellfn^gtm8644
+$ydb_dist/mumps -run quotesfn^gtm8644

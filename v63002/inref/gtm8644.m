@@ -9,14 +9,18 @@
 ;	the license, please stop and do not read further.	;
 ;								;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; This module is derived from FIS GT.M.
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
 
-cascade
-	write "Nothing here"
+shellfn
+	set pid=$j
+	write "# Zsystem calls the shell specified by the SHELL environment variable",!
+	zsystem "echo $SHELL"
+	zsystem "ps --forest -f |& tail -7 |& head -3 |& $tst_awk '{print $7,$8,$9,$10,$11,$12,$13}'"
 	quit
 
-waitfororlbk
-	set waittime=3600,neederr=1
-	do FUNC^waitforfilecreate("ONLINE_ROLLBACK.complete",waittime,neederr)
+quotesfn
+	write "# Old quotes system",!
+	zsystem "echo '""hello world""'"
+	write "# Simplified quotes system",!
+	zsystem "echo 'hello world'"
 	quit

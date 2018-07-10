@@ -11,19 +11,13 @@
 #								#
 #################################################################
 #
-#
+# Tests that $zroutines defaults to the current directory when gtmroutines is not defined
 #
 
-echo "# Pressing Control C while in zhelp, would get an error in previous versions"
-echo ""
-echo "# Terminal Display:"
-echo ""
-# Setting prompt explicitly so we can run on previous GTM versions too (which default to "GTM>")
-setenv gtm_prompt "YDB>"
-(expect -d $gtm_tst/$tst/u_inref/gtm8889.exp > expect.outx) >& expect.dbg
-if ($status) then
-	echo "EXPECT Failed"
+# Copying M file to current directory so system can still find it even after we unset gtmroutines
+cp $gtm_tst/$tst/inref/gtm8736.m ./gtm8736.m
+unsetenv gtmroutines
+if (! $?gtmroutines) then
+	echo "# gtmroutines is not defined"
 endif
-perl $gtm_tst/com/expectsanitize.pl expect.outx > expect_sanitized.outx
-
-$grep -v '^$' expect_sanitized.outx
+$ydb_dist/mumps -run gtm8736

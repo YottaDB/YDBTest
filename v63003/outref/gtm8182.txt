@@ -32,7 +32,7 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
 ##TEST_AWK.*/instance3/mumps.repl
 
 
-# Run gtm8182.m to update both INST1 and INST3 source server
+# Run gtm8182.m to update both INST1 and INST3 DB
 ----------------------------------------------------------------------------
     Update the INST1 DB
     Update the INST3 DB with an extended reference
@@ -65,26 +65,38 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
 ----------------------------------------------------------------------------
 # Remove INST3 mapping
 # Remove INST1 mapping
-# Run gtm8182.m again and search output for error
+# Run gtm8182.m again
+    Update the INST1 DB
+    Update the INST3 DB with an extended reference
 ##TEST_AWK^%YDB-E-REPLINSTMISMTCH.*
 		At M source location gtm8182+6^gtm8182
+
+YDB>
 # Return INST3 mapping to correct state
 
 
 # Change INST1 mapped instance file to the INST3 instance file
 # in order to test for an error upon sharing a region between 2 instances
 ----------------------------------------------------------------------------
-# Run gtm8182.m again and search output for error
+# Run gtm8182.m again
+    Update the INST1 DB
 ##TEST_AWK^%YDB-E-REPLINSTMISMTCH.*
 		At M source location gtm8182+4^gtm8182
+
+YDB>
 # Remove INST1 mapping
 
 
 # Run TP1^gtm8182 to test for an error when updating multiple 
 # instances within the same TP transaction
 ----------------------------------------------------------------------------
+    Update the INST1 DB
+    Update the INST1 DB
+    Update the INST3 DB with an extended reference
 ##TEST_AWK^%YDB-E-REPLMULTINSTUPDATE.*
 		At M source location TP1+12^gtm8182
+
+YDB>
 # Sync originating and replicating instances
 ==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
 ==Executing MULTISITE_REPLIC 'SYNC INST3 INST4'==
@@ -107,6 +119,8 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
 # TP transaction is allowed as long as the second instance only has
 # non-replicating regions updated (HREG in this case)
 ----------------------------------------------------------------------------
+    Update the INST1 DB
+    Update the INST3 DB with an extended reference
 ==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
 ==Executing MULTISITE_REPLIC 'SYNC INST3 INST4'==
 
@@ -133,14 +147,14 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
 
 
 
-# Run testPool^gtm8182 to test that VIEW("JNLPOOL") returns different
-# instance file names when switching between multile instances and when
+# Run testPool^gtm8182 to test that $VIEW("JNLPOOL") returns different
+# instance file names when switching between multiple instances and when
 # another instance is accessed through an extended reference
 ----------------------------------------------------------------------------
     JNL POOL INST1: 
     ##TEST_PATH##/mumps.repl
 
-    Switch to INST3 gbldir
+    Switch to INST3 gbldir and update DB
 
     JNL POOL INST3: 
 ##TEST_AWK.*instance3/mumps.repl
@@ -156,9 +170,13 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
 ==Executing MULTISITE_REPLIC 'STOP INST3 INST4'==
 Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
 Shutting down Primary Source Server Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
-# Run gtm8182.m again and search output for error
+# Run gtm8182.m again
+    Update the INST1 DB
+    Update the INST3 DB with an extended reference
 ##TEST_AWK^%YDB-E-NOJNLPOOL.*
 		At M source location gtm8182+6^gtm8182
+
+YDB>
 
 
 Check and shutdown the DB

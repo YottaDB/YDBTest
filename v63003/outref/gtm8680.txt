@@ -1,0 +1,21 @@
+# Running test with 1 process that creates 100000 lock names
+# Locking ^a in child function and attempting to lock ^a(i) in parent
+##TEST_AWK# Max Iterations in a second=[0-9]*
+##TEST_AWK# Min Iterations in a second=[0-9]*
+# No Significant Slowdown Experienced
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/240000; LOCK slots in use: [0-9]*/181132; name space not full
+
+# Running test with 100 processes, each holding 1000 locks
+# Locking ^a(1)-^a(100000) in child processes, attempting to lock ^a(i) in parent
+##TEST_AWK# Max Iterations in a second=[0-9]*
+##TEST_AWK# Min Iterations in a second=[0-9]*
+# No Significant Slowdown Experienced
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/240000; LOCK slots in use: [0-9]*/181132; name space not full
+
+# Test maximum lock space supported is increased from 65536 to 262144
+
+Database file ##TEST_PATH##/mumps.dat now has lock space 65536 pages
+Database file ##TEST_PATH##/mumps.dat now has lock space 65537 pages
+Database file ##TEST_PATH##/mumps.dat now has lock space 262144 pages
+%YDB-W-MUPIPSET2BIG, 262145 too large, maximum LOCK_SPACE allowed is 262144
+%YDB-E-WCERRNOTCHG, Not all specified database files were changed

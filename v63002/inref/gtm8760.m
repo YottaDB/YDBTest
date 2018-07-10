@@ -9,14 +9,32 @@
 ;	the license, please stop and do not read further.	;
 ;								;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; This module is derived from FIS GT.M.
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-cascade
-	write "Nothing here"
+;
+longstring
+	set x="longstring.csh"
+	open x:(newversion:stream:nowrap)
+	use x:(width=65535:nowrap)
+	write "setenv longstring "
+	write """"
+	write $translate($justify("a",+$zcmdline)," ","a")
+	write """"
 	quit
 
-waitfororlbk
-	set waittime=3600,neederr=1
-	do FUNC^waitforfilecreate("ONLINE_ROLLBACK.complete",waittime,neederr)
+test1
+	set ^X=$ztrnlnm("longstring")
 	quit
+
+test2
+	set ^X($ztrnlnm("longstring"))=1
+	quit
+
+test3
+	set x=$ztrnlnm("longstring")
+	write "Successfully set variable",!
+	quit
+
+test4
+	set x($ztrnlnm("longstring"))=1
+	write "Successfully set variable",!
+	quit
+
