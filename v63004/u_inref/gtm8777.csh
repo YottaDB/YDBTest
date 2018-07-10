@@ -38,8 +38,8 @@ echo "# Output string to test1.m for later tests to ^%RCE and ^%RSE"
 echo " This si a test string " > test1.m
 echo ""
 echo "# Output string to test2.m for later tests to ^%RCE and ^%RSE"
-echo " " > test2.m
-echo "Hello; I.T. Have you tried turning it off and on again? "
+echo "Hello; I.T. Have you tried turning it off and on again? " >test2.m
+echo " "
 
 echo "# Run showVars^gtm8777.m to show variable values before running QUIET^%GCE"
 $ydb_dist/mumps -run showVars^gtm8777
@@ -51,7 +51,7 @@ echo "#		QUIET^%GSE - search all variables for the string 'Light'          	"
 echo "#		QUIET^%RCE - change all instances of 'si' to 'is' within test1.m  	"
 echo "#		QCALL^%RCE - append a success message to the end of test1.m       	"
 echo "#		QUITE^%RSE - search all routines for every instance of 'is'       	"
-echo "#		QCALL^%RSE - wearch all routines for every instance of 'this'     	"
+echo "#		QCALL^%RSE - search all routines for every instance of 'this'     	"
 ## Turn on expect debugging using "-d". The debug output would be in expect.dbg in case needed to analyze stray timing failures.
 (expect -d $gtm_tst/$tst/u_inref/gtm8777.exp > expect.out) >& expect.dbg
 if ($status) then
@@ -63,15 +63,36 @@ perl $gtm_tst/com/expectsanitize.pl expect.outx > expect_sanitized.outx
 echo ""
 echo ""
 
+echo "# Before QUIET^%GCE "
+echo "--------------------------------------------------------------"
+awk '/---- \^string1  \^string4 before ----/,/--------------/' expect_sanitized.outx | $grep -v '^$'
+echo ""
+echo ""
+
 echo "# Output from QUIET^%GCE "
 echo "--------------------------------------------------------------"
 awk '/---- QUIET\^%GCE ----/,/--------------/' expect_sanitized.outx | $grep -v '^$'
 echo ""
 echo ""
 
+echo "# After QUIET^%GCE "
+echo "--------------------------------------------------------------"
+awk '/---- \^string1  \^string4 after ----/,/--------------/' expect_sanitized.outx | $grep -v '^$'
+echo ""
+echo ""
+
 echo "# Output from QUIET^%GSE "
 echo "--------------------------------------------------------------"
 awk '/---- QUIET\^%GSE ----/,/--------------/' expect_sanitized.outx | $grep -v '^$'
+echo ""
+echo ""
+
+echo "# Before RCE calls "
+echo "--------------------------------------------------------------"
+echo -n "\tcat test1.m:"
+cat test1.m
+echo -n "\tcat test2.m:"
+cat test2.m
 echo ""
 echo ""
 
@@ -86,6 +107,15 @@ echo "# Output from QCALL^%RCE "
 echo "--------------------------------------------------------------"
 # grep -v is used to remove any lines containing file paths, which are variable
 awk '/---- QCALL\^%RCE ----/,/--------------/' expect_sanitized.outx | $grep -v "^/" | $grep -v '^$'
+echo ""
+echo ""
+
+echo "# After RCE calls "
+echo "--------------------------------------------------------------"
+echo -n "\tcat test1.m:"
+cat test1.m
+echo -n "\tcat test2.m:"
+cat test2.m
 echo ""
 echo ""
 

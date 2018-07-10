@@ -42,6 +42,14 @@ expect -exact "YDB>"
 #Start GCE prompt
 puts "QUIET^%GCE TEST\n"
 puts "--------------------------------------------------------------\n"
+
+puts "\n---- ^string1  ^string4 before ----\n"
+send -- "ZWRITE ^string1\r"
+expect -exact "YDB>"
+send -- "ZWRITE ^string4\r"
+expect -exact "YDB>"
+puts "\n--------------------------------------------------------------\n"
+
 send -- "do QUIET^%GCE\r"
 expect -exact "Global Change Every occurrence"
 expect -exact "Global ^"
@@ -59,7 +67,7 @@ puts "\n---- QUIET^%GCE ----\n"
 send -- "\r"
 
 expect -exact "Global ^"
-puts "--------------\n"
+puts "\n--------------------------------------------------------------\n"
 send -- "string4\r"
 expect -exact "Global ^"
 send -- "\r"
@@ -76,8 +84,17 @@ send -- "\r"
 expect -exact "Global ^"
 send -- "\r"
 expect -exact "YDB>"
-puts "--------------------------------------------------------------\n"
-puts "\n"
+puts "\n--------------------------------------------------------------\n"
+
+puts "\n---- ^string1  ^string4 after ----\n"
+send -- "ZWRITE ^string1\r"
+expect -exact "YDB>"
+send -- "ZWRITE ^string4\r"
+expect -exact "YDB>"
+puts "\n--------------------------------------------------------------\n"
+
+
+
 
 puts "QUIET^%GSE TEST\n"
 puts "--------------------------------------------------------------\n"

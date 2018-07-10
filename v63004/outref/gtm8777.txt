@@ -11,7 +11,7 @@
 # Output string to test1.m for later tests to ^%RCE and ^%RSE
 
 # Output string to test2.m for later tests to ^%RCE and ^%RSE
-Hello; I.T. Have you tried turning it off and on again? 
+ 
 # Run showVars^gtm8777.m to show variable values before running QUIET^%GCE
 ^string1: Its dangerous to go alone take this
 ^string2: Wibboly Wobboly Timey Whimey
@@ -24,7 +24,18 @@ Hello; I.T. Have you tried turning it off and on again?
 #		QUIET^%RCE - change all instances of 'si' to 'is' within test1.m  	
 #		QCALL^%RCE - append a success message to the end of test1.m       	
 #		QUITE^%RSE - search all routines for every instance of 'is'       	
-#		QCALL^%RSE - wearch all routines for every instance of 'this'     	
+#		QCALL^%RSE - search all routines for every instance of 'this'     	
+
+
+# Before QUIET^%GCE 
+--------------------------------------------------------------
+---- ^string1  ^string4 before ----
+ZWRITE ^string1
+^string1="Its dangerous to go alone take this"
+YDB>ZWRITE ^string4
+^string4="'To infinity and beyond' - Buzz Aldrin"
+YDB>
+--------------------------------------------------------------
 
 
 # Output from QUIET^%GCE 
@@ -35,7 +46,8 @@ Hello; I.T. Have you tried turning it off and on again?
 Was : Its dangerous to go alone take this
 Now : Its dangerous to go alone take a sandwich in case you get hungry
 1 changes made in total 1 nodes.
-Global ^--------------
+Global ^
+--------------------------------------------------------------
 ---- QUIET^%GCE ----
 ^string4  
 ^string4
@@ -43,7 +55,19 @@ Was : 'To infinity and beyond' - Buzz Aldrin
 Now : 'To infinity and beyond' - Buzz Lightyear
 1 changes made in total 1 nodes.
 Global ^
-YDB>--------------------------------------------------------------
+YDB>
+--------------------------------------------------------------
+
+
+# After QUIET^%GCE 
+--------------------------------------------------------------
+---- ^string1  ^string4 after ----
+ZWRITE ^string1
+^string1="Its dangerous to go alone take a sandwich in case you get hungry"
+YDB>ZWRITE ^string4
+^string4="'To infinity and beyond' - Buzz Lightyear"
+YDB>
+--------------------------------------------------------------
 
 
 # Output from QUIET^%GSE 
@@ -62,6 +86,12 @@ Global ^
 YDB>--------------------------------------------------------------
 
 
+# Before RCE calls 
+--------------------------------------------------------------
+	cat test1.m: This is a test string, and the test looks like its succeeded! 
+	cat test2.m:Hello; I.T. Have you tried turning it off and on again? 
+
+
 # Output from QUIET^%RCE 
 --------------------------------------------------------------
 ---- QUIET^%RCE ----
@@ -78,6 +108,12 @@ YDB>--------------------------------------------------------------
 Was:  This is a test string 
 Now:  This is a test string, and the test looks like its succeeded! 
 YDB>--------------------------------------------------------------
+
+
+# After RCE calls 
+--------------------------------------------------------------
+	cat test1.m: This is a test string, and the test looks like its succeeded! 
+	cat test2.m:Hello; I.T. Have you tried turning it off and on again? 
 
 
 # Output from QUIET^%RSE 
