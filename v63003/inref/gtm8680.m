@@ -25,10 +25,8 @@ manylocks
 	. set cur=$h,diff=$$^difftime(cur,prev)  do
 	. if diff>0 do  set prev=cur,previ=i,t=$$^difftime(cur,start)
 	. . set its($increment(it))=i-previ
-	. . if t=1 set maxit=i-previ,minit=i-previ
-	. . else  do
-	. . . if i-previ<minit set minit=i-previ
-	. . . if i-previ>maxit set maxit=i-previ,minit=i-previ
+	. . if i-previ<minit set minit=i-previ
+	. . if i-previ>maxit set maxit=i-previ,minit=i-previ
 	write "# Max Iterations in a second=",maxit,!
 	write "# Min Iterations after max=",minit,!
 	if (maxit<(minit*2))  write "# No Significant Slowdown Experienced",!
