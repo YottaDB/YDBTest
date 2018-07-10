@@ -12,6 +12,9 @@
 #################################################################
 #
 
+# Avoid frozen instance (due to fake enospc) triggered by an update process which will never be unfrozen because it was kill -9ed by the test.
+unsetenv gtm_test_freeze_on_error
+
 $MULTISITE_REPLIC_PREPARE 2
 
 echo "# Create a single region DB with region DEFAULT"
