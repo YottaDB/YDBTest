@@ -15,13 +15,19 @@
 # List of subtests of the form "subtestname [author] description"
 #-------------------------------------------------------------------------------------
 # gtm8694	    [vinay] Tests YDB's mechanism to restrict certain facilities
+# gtm8281	    [vinay] Tests YottaDB source lines, XECUTE strings and Direct Mode input all accept up to 8192 byte values
+# gtm5178	    [vinay] Tests YottaDB reports BLKTOODEEP errors as warnings
+# gtm8644	    [vinay] Tests that ZSYSTEM invokes the shell specified by the SHELL environment variable, and the new nested quotes system
+# gtm8760	    [vinay] Tests YottaDB properly handles environment variables whose contesnts are over 32K in size
+# gtm5250	    [vinay] Tests YottaDB supports fractional timeouts
+# gtm8736	    [vinay] Tests $zroutines defaults to "." when $gtmroutines is undefined
 #-------------------------------------------------------------------------------------
 
 echo "v63002 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "gtm8694"
+setenv subtest_list_non_replic "gtm8694 gtm8281 gtm5178 gtm8644 gtm8760 gtm5250 gtm8736"
 setenv subtest_list_replic     ""
 
 

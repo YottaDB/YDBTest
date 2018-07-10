@@ -1,0 +1,83 @@
+# Create a single region DB with region DEFAULT
+# Start replication
+==Executing MULTISITE_REPLIC 'START INST1 INST2'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+# Start loop
+	# Iteration 1\:
+##TEST_AWK^==Executing MULTISITE_REPLIC 'RUN INST2 kill -9 .*
+==Executing MULTISITE_REPLIC 'RUN INST2 ##SOURCE_PATH##/mupip REPLIC -RECEIVE -START -UPDATEONLY # Restart update process'==
+%YDB-I-REPLINFO, Update Process started successfully
+
+----------------------------------------------------------------------------
+
+	# Iteration 2\:
+##TEST_AWK^==Executing MULTISITE_REPLIC 'RUN INST2 kill -9 .*
+==Executing MULTISITE_REPLIC 'RUN INST2 ##SOURCE_PATH##/mupip REPLIC -RECEIVE -START -UPDATEONLY # Restart update process'==
+%YDB-I-REPLINFO, Update Process started successfully
+
+----------------------------------------------------------------------------
+
+	# Iteration 3\:
+##TEST_AWK^==Executing MULTISITE_REPLIC 'RUN INST2 kill -9 .*
+==Executing MULTISITE_REPLIC 'RUN INST2 ##SOURCE_PATH##/mupip REPLIC -RECEIVE -START -UPDATEONLY # Restart update process'==
+%YDB-I-REPLINFO, Update Process started successfully
+
+----------------------------------------------------------------------------
+
+	# Iteration 4\:
+##TEST_AWK^==Executing MULTISITE_REPLIC 'RUN INST2 kill -9 .*
+==Executing MULTISITE_REPLIC 'RUN INST2 ##SOURCE_PATH##/mupip REPLIC -RECEIVE -START -UPDATEONLY # Restart update process'==
+%YDB-I-REPLINFO, Update Process started successfully
+
+----------------------------------------------------------------------------
+
+	# Iteration 5\:
+##TEST_AWK^==Executing MULTISITE_REPLIC 'RUN INST2 kill -9 .*
+==Executing MULTISITE_REPLIC 'RUN INST2 ##SOURCE_PATH##/mupip REPLIC -RECEIVE -START -UPDATEONLY # Restart update process'==
+%YDB-I-REPLINFO, Update Process started successfully
+
+----------------------------------------------------------------------------
+
+	# Iteration 6\:
+##TEST_AWK^==Executing MULTISITE_REPLIC 'RUN INST2 kill -9 .*
+==Executing MULTISITE_REPLIC 'RUN INST2 ##SOURCE_PATH##/mupip REPLIC -RECEIVE -START -UPDATEONLY # Restart update process'==
+%YDB-I-REPLINFO, Update Process started successfully
+
+----------------------------------------------------------------------------
+
+	# Iteration 7\:
+##TEST_AWK^==Executing MULTISITE_REPLIC 'RUN INST2 kill -9 .*
+==Executing MULTISITE_REPLIC 'RUN INST2 ##SOURCE_PATH##/mupip REPLIC -RECEIVE -START -UPDATEONLY # Restart update process'==
+%YDB-I-REPLINFO, Update Process started successfully
+
+----------------------------------------------------------------------------
+
+	# Iteration 8\:
+##TEST_AWK^==Executing MULTISITE_REPLIC 'RUN INST2 kill -9 .*
+==Executing MULTISITE_REPLIC 'RUN INST2 ##SOURCE_PATH##/mupip REPLIC -RECEIVE -START -UPDATEONLY # Restart update process'==
+%YDB-I-REPLINFO, Update Process started successfully
+
+----------------------------------------------------------------------------
+
+	# Iteration 9\:
+##TEST_AWK^==Executing MULTISITE_REPLIC 'RUN INST2 kill -9 .*
+==Executing MULTISITE_REPLIC 'RUN INST2 ##SOURCE_PATH##/mupip REPLIC -RECEIVE -START -UPDATEONLY # Restart update process'==
+%YDB-I-REPLINFO, Update Process started successfully
+
+----------------------------------------------------------------------------
+
+	# Iteration 10\:
+##TEST_AWK^==Executing MULTISITE_REPLIC 'RUN INST2 kill -9 .*
+==Executing MULTISITE_REPLIC 'RUN INST2 ##SOURCE_PATH##/mupip REPLIC -RECEIVE -START -UPDATEONLY # Restart update process'==
+%YDB-I-REPLINFO, Update Process started successfully
+
+----------------------------------------------------------------------------
+
+# Sync source and replicating servers
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+# Stop replication
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##
+# Check the DB
