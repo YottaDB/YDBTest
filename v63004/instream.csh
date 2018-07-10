@@ -61,6 +61,13 @@ if ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) then
 	setenv subtest_exclude_list "$subtest_exclude_list gtm8906"
 endif
 
+if ($gtm_test_glibc_225_plus) then
+	# Systems with glibc version > 2.25 cause the v63004/gtm8916 subtest to hang in the receiver server
+	# in "pthread_cond_signal". The current suspicion is that it is a glibc issue with handling kill -9
+	# of processes using pthread_mutex_*() and pthread_cond_*() calls. Temporarily disable this test in those boxes.
+	setenv subtest_exclude_list "$subtest_exclude_list gtm8916"
+endif
+
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh
 

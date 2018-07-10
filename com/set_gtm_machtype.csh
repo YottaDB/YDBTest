@@ -124,4 +124,8 @@ else
 	setenv gtm_test_singlecpu 0
 endif
 
+# Determine whether glibc version is 2.25 or higher. This will be used later to disable v63004/gtm8916 subtest.
+set glibcver = `ldd --version | head -1 | awk '{print $NF}'`
+setenv gtm_test_glibc_225_plus `echo "$glibcver > 2.25" | bc`
+
 ##### HOST SPECIFIC FUNNIES ####

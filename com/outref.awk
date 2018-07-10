@@ -252,6 +252,10 @@ BEGIN {
 	if (1 == ENVIRON["gtm_test_singlecpu"])
 		envir[no_options] = "ONECPU"
 	#
+	option_names[++no_options] = "gtm_test_glibc_225_plus"
+	if (1 == ENVIRON["gtm_test_glibc_225_plus"])
+		envir[no_options] = "GLIBC225PLUS"
+	#
 	option_names[++no_options] = "gtm_test_dynamic_literals"
 	if ("DYNAMIC_LITERALS" == ENVIRON["gtm_test_dynamic_literals"])
 		envir[no_options] = "DYNAMIC_LITERALS"
