@@ -101,7 +101,7 @@ YDB>%YDB-I-CTRLC, CTRL_C encountered
 # -------------------------------------------------------------------------
 
 # TESTING EACH FUNCTION WHEN RESTRICT.TXT HAS WRITE PERMISSIONS
-# Randomly choosing what gets ristricted, since nothing should end up restricted
+# Randomly choosing what gets restricted, since nothing should end up restricted
 
 -rw-rw-r-- ydb_temp_dist/restrict.txt
 # TESTING BREAK
@@ -146,7 +146,7 @@ YDB>%YDB-I-CTRLC, CTRL_C encountered
 
 # -----------------------------------------------------------------------
 
-TESTING EACH FUNCTION WHEN ALL ARE INCLUDED IN RESTRICT.TXT AND SOME ARE RANDOMLY ASSIGNED TO OUR GROUP
+TESTING EACH FUNCTION WHEN ALL ARE INCLUDED IN RESTRICT.TXT AND SOME ARE RANDOMLY ASSIGNED TO OUR GROUP (with read only permissions)
 
 -r--r--r-- ydb_temp_dist/restrict.txt
 BREAK acted as expected

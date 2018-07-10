@@ -160,7 +160,7 @@ echo ""
 echo "# -------------------------------------------------------------------------"
 echo ""
 echo "# TESTING EACH FUNCTION WHEN RESTRICT.TXT HAS WRITE PERMISSIONS"
-echo "# Randomly choosing what gets ristricted, since nothing should end up restricted"
+echo "# Randomly choosing what gets restricted, since nothing should end up restricted"
 echo ""
 
 rm $ydb_dist/restrict.txt
@@ -190,7 +190,7 @@ cat expect_sanitized.outx |& $grep CTRL
 echo ""
 echo "# -----------------------------------------------------------------------"
 echo ""
-echo "TESTING EACH FUNCTION WHEN ALL ARE INCLUDED IN RESTRICT.TXT AND SOME ARE RANDOMLY ASSIGNED TO OUR GROUP"
+echo "TESTING EACH FUNCTION WHEN ALL ARE INCLUDED IN RESTRICT.TXT AND SOME ARE RANDOMLY ASSIGNED TO OUR GROUP (with read only permissions)"
 echo ""
 rm $ydb_dist/restrict.txt
 $ydb_dist/mumps -run randrestrictgroup^gtm8694
