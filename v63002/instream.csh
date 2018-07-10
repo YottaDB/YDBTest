@@ -14,6 +14,7 @@
 #-------------------------------------------------------------------------------------
 # List of subtests of the form "subtestname [author] description"
 #-------------------------------------------------------------------------------------
+# gtm8694	    [vinay] Tests YDB's mechanism to restrict certain facilities
 # gtm8281	    [vinay] Tests YottaDB source lines, XECUTE strings and Direct Mode input all accept up to 8192 byte values
 # gtm5178	    [vinay] Tests YottaDB reports BLKTOODEEP errors as warnings
 # gtm8644	    [vinay] Tests that ZSYSTEM invokes the shell specified by the SHELL environment variable, and the new nested quotes system
@@ -26,7 +27,7 @@ echo "v63002 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "gtm8281 gtm5178 gtm8644 gtm8760 gtm5250 gtm8736"
+setenv subtest_list_non_replic "gtm8694 gtm8281 gtm5178 gtm8644 gtm8760 gtm5250 gtm8736"
 setenv subtest_list_replic     ""
 
 
@@ -38,6 +39,10 @@ endif
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
 setenv subtest_exclude_list	""
+# Filter out white box tests that cannot run in pro
+if ("pro" == "$tst_image") then
+	setenv subtest_exclude_list "$subtest_exclude_list"
+endif
 
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh
