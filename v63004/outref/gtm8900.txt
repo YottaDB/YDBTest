@@ -1,0 +1,29 @@
+# Create a single region DB with region DEFAULT
+# Check the DB
+
+# Testing MUPIP SET -[NO]ENCRYPT in a properly set up environment
+# --------------------------------------------------------------------------
+# \##SOURCE_PATH##/mupip set -ENCRYPTABLE -REGION 'DEFAULT'
+Database file ##TEST_PATH##/mumps.dat now has encryptable flag set to  TRUE
+
+# \##SOURCE_PATH##/mupip set -NOENCRYPTABLE -REGION 'DEFAULT'
+Database file ##TEST_PATH##/mumps.dat now has encryptable flag set to FALSE
+
+
+# Testing MUPIP SET -ENCRYPT  with no set gtm_passwd (expecting failure)
+# --------------------------------------------------------------------------
+# \##SOURCE_PATH##/mupip set -ENCRYPTABLE -REGION 'DEFAULT'
+%YDB-E-CRYPTINIT2, Could not initialize encryption library during GT.M startup. Environment variable ydb_passwd/gtm_passwd not set
+
+# \##SOURCE_PATH##/mupip set -NOENCRYPTABLE -REGION 'DEFAULT'
+Database file ##TEST_PATH##/mumps.dat now has encryptable flag set to FALSE
+
+
+# Testing MUPIP SET -ENCRYPT  with garbage GNUPGHOME (expecting failure)
+# --------------------------------------------------------------------------
+GNUPGHOME: garbageValue
+# \##SOURCE_PATH##/mupip set -ENCRYPTABLE -REGION 'DEFAULT'
+%YDB-E-CRYPTINIT2, Could not initialize encryption library during GT.M startup. Cannot stat on garbageValue - 2
+
+# \##SOURCE_PATH##/mupip set -NOENCRYPTABLE -REGION 'DEFAULT'
+Database file ##TEST_PATH##/mumps.dat now has encryptable flag set to FALSE
