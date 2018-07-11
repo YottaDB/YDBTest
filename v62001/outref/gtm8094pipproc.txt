@@ -1,20 +1,16 @@
 Case 1: Prevent dup2() of stdin in forked piped process
 
-Message Found!
-
 Case 2: Prevent dup2() of stdout in forked piped process
-
-Message Found!
 
 Case 3: Prevent dup2() of stderr in forked piped process
 
-Message Found!
-
 Case 4: Prevent second dup2() of stderr in forked piped process
-
-
-Message Found!
 
 Case 5: Prevent EXEC() by the forked piped process
 
-Message Found!
+# See if there was one PIPE message in syslog for each Case above. List of messages follows
+%YDB-E-DEVOPENFAIL, Error opening uname, %YDB-I-TEXT, PIPE - dup2(pfd_write[0]) failed in child, %SYSTEM-E-UNKNOWN, Unknown system error 0
+%YDB-E-DEVOPENFAIL, Error opening uname, %YDB-I-TEXT, PIPE - dup2(pfd_read[1],1) failed in child, %SYSTEM-E-UNKNOWN, Unknown system error 0
+%YDB-E-DEVOPENFAIL, Error opening uname, %YDB-I-TEXT, PIPE - dup2(pfd_read[1],2) failed in child, %SYSTEM-E-UNKNOWN, Unknown system error 0
+%YDB-E-DEVOPENFAIL, Error opening uname, %YDB-I-TEXT, PIPE - dup2(pfd_read_stderr[1],2) failed in child, %SYSTEM-E-UNKNOWN, Unknown system error 0
+%YDB-E-DEVOPENFAIL, Error opening uname, %YDB-I-TEXT, PIPE - execl() failed in child, %SYSTEM-E-UNKNOWN, Unknown system error 0
