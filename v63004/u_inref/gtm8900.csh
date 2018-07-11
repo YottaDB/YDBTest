@@ -19,23 +19,30 @@ if ($status) then
 	cat dbcreate_log.txt
 endif
 
-echo "# \$MUPIP set -ENCRYPTABLE -region="DEFAULT""
-$MUPIP set -ENCRYPTABLE -region="DEFAULT"
-$MUPIP set -ENCRYPTABLE -file="mumps.dat"
-#These errors seems to be unrelated to the reasons for failure described in the patch
-#%YDB-E-CLIERR, Assignment is not allowed for this option : REGION
-#%YDB-E-CLIERR, Assignment is not allowed for this option : FILE
-
-echo "# \$MUPIP set -NOENCRYPTABLE -region="DEFAULT""
-$MUPIP set -NOENCRYPTABLE -region="DEFAULT"
-$MUPIP set -NOENCRYPTABLE -file="mumps.dat"
-#These errors seems to be unrelated to the reasons for failure described in the patch
-#%YDB-E-CLIERR, Assignment is not allowed for this option : REGION
-#%YDB-E-CLIERR, Assignment is not allowed for this option : FILE
-
+echo "# Check the DB"
 $gtm_tst/com/dbcheck.csh >>& dbcheck_log.txt
 if ($status) then
 	echo "DB Check Failed, Output Below"
 	cat dbcheck_log.txt
 endif
 
+
+setenv gtm_passwd "1AF39D"
+
+echo "# \$MUPIP set -ENCRYPTABLE -REGION 'DEFAULT'"
+$MUPIP SET -ENCRYPTABLE -REGION "DEFAULT"
+echo ""
+
+echo "# \$MUPIP set -NOENCRYPTABLE -REGION 'DEFAULT'"
+$MUPIP set -NOENCRYPTABLE -REGION "DEFAULT"
+echo ""
+
+#unsetenv gtm_passwd
+#
+#echo "# \$MUPIP set -ENCRYPTABLE -REGION 'DEFAULT'"
+#$MUPIP SET -ENCRYPTABLE -REGION "DEFAULT"
+#echo ""
+#
+#echo "# \$MUPIP set -NOENCRYPTABLE -REGION 'DEFAULT'"
+#$MUPIP set -NOENCRYPTABLE -REGION "DEFAULT"
+#echo ""
