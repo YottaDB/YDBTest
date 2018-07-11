@@ -15,4 +15,6 @@
 #
 setenv SHELL /usr/local/bin/tcsh
 $ydb_dist/mumps -run shellfn^gtm8644
+$ydb_dist/mumps -run psforestfn^gtm8644 >& processtree.out
+cat processtree.out |& tail -4 |& head -3 |& $tst_awk '{print $8,$9,$10,$11,$12,$13}'
 $ydb_dist/mumps -run quotesfn^gtm8644
