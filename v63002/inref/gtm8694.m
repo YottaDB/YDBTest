@@ -60,8 +60,7 @@ zcmdlnefn
 zeditfn
 	write "# TESTING ZEDIT",!
 	set $etrap="do incrtrap^incrtrap"
-	set dir=$ZDIRECTORY
-	zedit dir_"/dummy.txt"
+	zedit "dummy.txt"
 	quit
 
 zsystemfn
