@@ -126,15 +126,21 @@ TRIGGER_MOD:$groupname
 EOF
 chmod -w $ydb_dist/restrict.txt
 $gtm_tst/com/lsminusl.csh $ydb_dist/restrict.txt | $tst_awk '{print $1,$9}'
-setenv EDITOR ""
+set sedpath=`which sed`
+setenv EDITOR $sedpath
 $ydb_dist/mumps -run breakfn^gtm8694 >& unrestrictedBREAK.txt
 cat unrestrictedBREAK.txt
 $ydb_dist/mumps -run zbreakfn^gtm8694 >& unrestrictedZBREAK.txt
 cat unrestrictedZBREAK.txt
 $ydb_dist/mumps -run zcmdlnefn^gtm8694 "ZCMDLNE was not ignored" >& unrestrictedZCMDLINE.txt
 cat unrestrictedZCMDLINE.txt
+echo "# TESTING ZEDIT"
 $ydb_dist/mumps -run zeditfn^gtm8694 >& unrestrictedZEDIT.txt
-cat unrestrictedZEDIT.txt
+if ("" == `$grep RESTRICTEDOP unrestrictedZEDIT.txt`) then
+	echo "ZEDIT not ignored"
+else
+	$grep RESTRICTEDOP unrestrictedZEDIT.txt
+endif
 $ydb_dist/mumps -run zsystemfn^gtm8694 >& unrestrictedZSYSTEM.txt
 cat unrestrictedZSYSTEM.txt
 $ydb_dist/mumps -run pipefn^gtm8694 >& unrestrictedPIPE_OPEN.txt
@@ -171,7 +177,13 @@ $gtm_tst/com/lsminusl.csh $ydb_dist/restrict.txt | $tst_awk '{print $1,$9}'
 $ydb_dist/mumps -run breakfn^gtm8694
 $ydb_dist/mumps -run zbreakfn^gtm8694
 $ydb_dist/mumps -run zcmdlnefn^gtm8694 "ZCMDLNE was not ignored"
-$ydb_dist/mumps -run zeditfn^gtm8694
+$ydb_dist/mumps -run zeditfn^gtm8694 >>& zeditoutput.out
+echo "# TESTING ZEDIT"
+if ("" == `$grep RESTRICTEDOP zeditoutput.out`) then
+	echo "ZEDIT not ignored"
+else
+	$grep RESTRICTEDOP zeditoutput.out
+endif
 $ydb_dist/mumps -run zsystemfn^gtm8694
 $ydb_dist/mumps -run pipefn^gtm8694
 $ydb_dist/mumps -run trigmodfn^gtm8694
