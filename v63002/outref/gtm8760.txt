@@ -1,0 +1,60 @@
+# Length of Environment Variable is 32766 bytes
+# Testing long string as a value for a global variable
+# Testing long string as a subscript for a global variable
+%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%YDB-I-GVIS, 		Global variable: ^X*
+		At M source location test2+1^gtm8760
+
+YDB>
+# Testing long string as a value of a local variable
+Successfully set variable
+# Testing long string as a subscript of a local variable
+Successfully set variable
+
+-------------------------------------------------------------------------
+
+# Length of Environment Variable is 32767 bytes
+# Testing long string as a value for a global variable
+# Testing long string as a subscript for a global variable
+%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%YDB-I-GVIS, 		Global variable: ^X*
+		At M source location test2+1^gtm8760
+
+YDB>
+# Testing long string as a value of a local variable
+Successfully set variable
+# Testing long string as a subscript of a local variable
+Successfully set variable
+
+-------------------------------------------------------------------------
+
+# Length of Environment Variable is 32768 bytes
+# Testing long string as a value for a global variable
+# Testing long string as a subscript for a global variable
+%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%YDB-I-GVIS, 		Global variable: ^X*
+		At M source location test2+1^gtm8760
+
+YDB>
+# Testing long string as a value of a local variable
+Successfully set variable
+# Testing long string as a subscript of a local variable
+Successfully set variable
+
+-------------------------------------------------------------------------
+
+# Length of Environment Variable is 32769 bytes
+# Testing long string as a value for a global variable
+%YDB-E-REC2BIG, Record size (32769) is greater than maximum (32768) for region: DEFAULT,%YDB-I-GVIS, 		Global variable: ^X
+		At M source location test1+1^gtm8760
+
+YDB>
+# Testing long string as a subscript for a global variable
+%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%YDB-I-GVIS, 		Global variable: ^X*
+		At M source location test2+1^gtm8760
+
+YDB>
+# Testing long string as a value of a local variable
+Successfully set variable
+# Testing long string as a subscript of a local variable
+Successfully set variable
+
+-------------------------------------------------------------------------
+

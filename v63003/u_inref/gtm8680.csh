@@ -14,6 +14,10 @@
 # Tests YDB does not experience significant slowdown with large number locks and/or processes
 #
 
+# To avoid counter semaphore overflow causing leftover shm as we need standalone access for later MUPIP SET LOCK_SPACE
+unsetenv gtm_db_counter_sem_incr
+# Test is trying to check that lock operations use hashing and not linear search so disable the env var that reverts locks to linear search in dbg
+unsetenv ydb_lockhash_n_bits
 # Lockspace is 60000 to ensure we never call the garbage collector, which would clean up
 # the unused lock names from shared memory and speed up future lock commands in versions that
 # do not have the fix

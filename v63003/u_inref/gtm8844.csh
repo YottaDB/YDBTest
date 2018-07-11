@@ -74,6 +74,7 @@ $MSR START INST1 INST2 >>& MSRStart.out
 
 # Creating initial values for global variables X and Y, uploading triggers
 $MSR RUN INST1 '$ydb_dist/mumps -run ^%XCMD "set ^X=0  set ^Y=0"'
+$MSR SYNC INST1 INST2 >>& waitforupdate.outx
 $MUPIP trigger -triggerfile=trigger.txt
 
 echo ""

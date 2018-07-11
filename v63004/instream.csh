@@ -31,6 +31,8 @@
 # gtm8903  [jake]  Tests $SELECT(1:,:) function call for errors when global references are present
 # gtm3146  [jake]  Tests that changes to alias and path settings no longer disrupt system() calls within MUPIP BACKUP command calls
 # gtm8906  [nars]  Test that MUPIP JOURNAL RECOVER/ROLLBACK handle large amounts of journal data (more than 55 million updates)
+# gtm8916  [jake]  Tests that the reciever process always restarts properly after the update process is killed. Previously the reciever process would often hang.
+# gtm8777  [jake]  Test that QUIET and QCALL calls to %GCE, %GSE, %RCE, and %RSE only output results for globals/routines that contain a match
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "v63004 test starts..."
@@ -39,9 +41,9 @@ echo "v63004 test starts..."
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic ""
 setenv subtest_list_non_replic "$subtest_list_non_replic gtm8914 gtm8909 gtm8874 gtm8860 gtm8791 gtm8699 gtm8202 gtm1042 gtm8891 "
-setenv subtest_list_non_replic "$subtest_list_non_replic gtm8894 gtm8643 gtm8922 gtm8923 gtm8903 gtm3146"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm8894 gtm8643 gtm8922 gtm8923 gtm8903 gtm3146 gtm8777"
 setenv subtest_list_replic     ""
-setenv subtest_list_replic     "$subtest_list_replic gtm5730 gtm8906"
+setenv subtest_list_replic     "$subtest_list_replic gtm5730 gtm8906 gtm8916"
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
@@ -58,6 +60,13 @@ endif
 if ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) then
 	# gtm8906 subtest could take 1 hour or more on the slower (relative to x86_64) ARM boxes even with pro so disable it there.
 	setenv subtest_exclude_list "$subtest_exclude_list gtm8906"
+endif
+
+if ($gtm_test_glibc_225_plus) then
+	# Systems with glibc version > 2.25 cause the v63004/gtm8916 subtest to hang in the receiver server
+	# in "pthread_cond_signal". The current suspicion is that it is a glibc issue with handling kill -9
+	# of processes using pthread_mutex_*() and pthread_cond_*() calls. Temporarily disable this test in those boxes.
+	setenv subtest_exclude_list "$subtest_exclude_list gtm8916"
 endif
 
 # Submit the list of subtests
