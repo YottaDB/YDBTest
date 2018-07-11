@@ -17,6 +17,7 @@ $gtm_tst/com/dbcreate.csh mumps 1 >>& dbcreate.out
 @ num = 1
 @ fail = 0
 echo '# Testing 1000 random variations of $select syntax, checking for FATAL errors'
+echo "# (We have seen some of these random variants generate GTMASSERT2 and KILLBYSIGSINFO1 fatal errors using V63001A)"
 echo ""
 echo "# RUNNING TEST"
 echo ""
