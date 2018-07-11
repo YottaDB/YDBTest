@@ -68,7 +68,7 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
 # Run gtm8182.m again
     Update the INST1 DB
     Update the INST3 DB with an extended reference
-##TEST_AWK^%YDB-E-REPLINSTMISMTCH.*
+##TEST_AWK%YDB-E-REPLINSTMISMTCH, Process has replication instance file ##TEST_PATH##/mumps.repl \(jnlpool shmid = [0-9]*\) open but database .*/instance3/mumps.dat is bound to instance file .*/instance3/mumps.repl \(jnlpool shmid = [0-9]*\)
 		At M source location gtm8182+6^gtm8182
 
 YDB>
@@ -80,7 +80,7 @@ YDB>
 ----------------------------------------------------------------------------
 # Run gtm8182.m again
     Update the INST1 DB
-##TEST_AWK^%YDB-E-REPLINSTMISMTCH.*
+##TEST_AWK%YDB-E-REPLINSTMISMTCH, Process has replication instance file .*/instance3/mumps.repl \(jnlpool shmid = [0-9]*\) open but database ##TEST_PATH##/mumps.dat is bound to instance file ##TEST_PATH##/mumps.repl \(jnlpool shmid = [0-9]*\)
 		At M source location gtm8182+4^gtm8182
 
 YDB>
@@ -93,7 +93,7 @@ YDB>
     Update the INST1 DB
     Update the INST1 DB
     Update the INST3 DB with an extended reference
-##TEST_AWK^%YDB-E-REPLMULTINSTUPDATE.*
+##TEST_AWK%YDB-E-REPLMULTINSTUPDATE, Previous updates in the current transaction are to ##TEST_PATH##/mumps.repl so updates to .*/instance3/g.dat \(in .*/instance3/mumps.repl\) not allowed
 		At M source location TP1+12^gtm8182
 
 YDB>
@@ -173,7 +173,7 @@ Shutting down Primary Source Server Server in ##FILTERED##_REMOTE_TEST_PATH_/ins
 # Run gtm8182.m again
     Update the INST1 DB
     Update the INST3 DB with an extended reference
-##TEST_AWK^%YDB-E-NOJNLPOOL.*
+##TEST_AWK%YDB-E-NOJNLPOOL, No journal pool info found in the replication instance of .*/instance3/mumps.repl
 		At M source location gtm8182+6^gtm8182
 
 YDB>
