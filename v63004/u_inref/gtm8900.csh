@@ -32,7 +32,8 @@ echo ""
 
 echo "# Testing MUPIP SET -[NO]ENCRYPT in a properly set up environment"
 echo "# --------------------------------------------------------------------------"
-setenv gtm_passwd "1AF39D" # Garbage string in hexidecimal format (hex is required for this env var)
+setenv gtm_passwd "48657920796f7520666f756e64206d79207365637265742120676f6f64206a6f6221" # Garbage string in hexidecimal format (hex is required for this env var)
+
 
 echo "# \$MUPIP set -ENCRYPTABLE -REGION 'DEFAULT'"
 $MUPIP SET -ENCRYPTABLE -REGION "DEFAULT"
@@ -54,7 +55,7 @@ echo ""
 echo "# \$MUPIP set -NOENCRYPTABLE -REGION 'DEFAULT'"
 $MUPIP set -NOENCRYPTABLE -REGION "DEFAULT"
 
-setenv gtm_passwd "1AF39D" # Garbage string in hexidecimal format (hex is required for this env var)
+setenv gtm_passwd "4a616b652052657a616320372f31312f32303138" # Garbage string in hexidecimal format (hex is required for this env var)
 
 echo ""
 echo ""
