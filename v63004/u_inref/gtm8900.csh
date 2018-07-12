@@ -80,7 +80,7 @@ unsetenv GNUPGHOME
 # It is very possible that "invalid directory" simply means "non-existent directory"
 
 #echo "# Testing MUPIP SET -[NO]ENCRYPT  with improper GNUPGHOME (expecting failure)"
-#echo "# --------------------------------------------------------------------------"
+#echo "# ---------------------------------------------------------------------------"
 #mkdir temp
 #setenv GNUPGHOME "./temp"
 #echo "GNUPGHOME: $GNUPGHOME"
