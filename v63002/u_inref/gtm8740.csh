@@ -11,7 +11,7 @@
 #								#
 #################################################################
 #
-
+#
 unsetenv gtm_custom_errors
 $MULTISITE_REPLIC_PREPARE 2
 $gtm_tst/com/dbcreate.csh mumps 1 >>& dbcreate.out
