@@ -19,8 +19,22 @@ sleep 1
 # Using .outx because expecting a warning about an argumentless MUPIP RUNDOWN
 echo "# Running argumentless MUPIP RUNDOWN and checking syslog"
 echo ""
-$MUPIP RUNDOWN >& rundown.outx
+($MUPIP RUNDOWN&; echo $! >&! pid.txt)>&rundown.outx
+set pid=`cat pid.txt`
+$gtm_tst/com/wait_for_proc_to_die.csh $pid
 $gtm_tst/com/getoper.csh "$t" "" getoper.txt
 echo "# Syslog message:"
 $grep "process id" getoper.txt |& sed 's/.*%YDB-I-MURNDWNARGLESS/%YDB-I-MURNDWNARGLESS/'
+set getoperpid=`$grep "process id" getoper.txt |& $tst_awk '{print $14}'`
+set getoperuid=`$grep "process id" getoper.txt |& $tst_awk '{print $17}'`
+if ($uid == $getoperuid) then
+	echo "# User ID in syslog message correct"
+else
+	echo "# Incorrect User ID in syslog message"
+endif
+if ($pid == $getoperpid) then
+	echo "# PID in syslog message correct"
+else
+	echo "# Incorrect PID in syslog message"
+endif
 $gtm_tst/com/dbcheck.csh >>& dbcheck.out
