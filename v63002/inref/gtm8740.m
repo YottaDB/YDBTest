@@ -15,6 +15,10 @@ gtm8740
 	quit
 
 waitfn
+	set x="pid.out"
+	open x
+	use x
+	write $job
 	set ^stop=0
 	for  quit:^stop
 	quit
