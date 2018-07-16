@@ -19,6 +19,7 @@ waitfn
 	open x
 	use x
 	write $job
+	close x
 	set ^stop=0
 	for  quit:^stop
 	quit
