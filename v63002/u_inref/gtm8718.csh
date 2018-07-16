@@ -13,7 +13,6 @@
 #
 #
 #
-setenv gtm_test_autorelink_always 1
 echo '# Changing $zroutines to an invalid string'
 $ydb_dist/mumps -run gtm8718
 $grep STATUS zroutines.outx
