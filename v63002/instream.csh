@@ -23,13 +23,14 @@
 # gtm5250	    [vinay] Tests YottaDB supports fractional timeouts
 # gtm8736	    [vinay] Tests $zroutines defaults to "." when $gtmroutines is undefined
 # gtm8740	    [vinay] Tests custom error files can be loaded without a full shutdown
+# gtm8766	    [vinay] Tests MUPIP and GDE behave appropriately when trying to set global buffer values too high
 #-------------------------------------------------------------------------------------
 
 echo "v63002 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "gtm8694 gtm8281 gtm5178 gtm8717 gtm8644 gtm8760 gtm5250 gtm8736"
+setenv subtest_list_non_replic "gtm8694 gtm8281 gtm5178 gtm8717 gtm8644 gtm8760 gtm5250 gtm8736 gtm8766"
 setenv subtest_list_replic     "gtm8740"
 
 
