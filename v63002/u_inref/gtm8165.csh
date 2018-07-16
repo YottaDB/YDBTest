@@ -11,17 +11,24 @@
 #								#
 #################################################################
 #
-# Testing YottaDB can support fractional timeout values to the millisecond for
-# LOCK, OPEN and $gtm_tpnotacidtime
-# Not testing READ since it is demonstrated in r120/readtimeout subtest, or JOB which
-# is logistically too complicated to test
 #
+#
+
 $gtm_tst/com/dbcreate.csh mumps 1 >>& dbcreate.out
+echo "# Setting gtm_tpnotacidtime to .123 seconds"
 setenv gtm_tpnotacidtime .123
-set t = `date +"%b %e %H:%M:%S"`
-sleep 1
 echo '# Testing write timeout greater than $gtm_tpnotacidtime (Expect a TPNOTACID message in the syslog)'
-$ydb_dist/mumps -run tpnotacid^gtm5250
-$gtm_tst/com/getoper.csh "$t" "" getoper.txt
-$grep TPNOTACID getoper.txt |& sed 's/.*%YDB-I-TPNOTACID/%YDB-I-TPNOTACID/' |& sed 's/$TRESTART.*//'
+echo ""
+foreach arg ("wait" "tls" "accept" "pass")
+	echo "# Testing a timed write /$arg"
+	set t = `date +"%b %e %H:%M:%S"`
+	sleep 1
+	$ydb_dist/mumps -run tpnotacid^gtm8165 $arg
+	$gtm_tst/com/getoper.csh "$t" "" getoper.txt
+	echo "# Checking the syslog"
+	$grep TPNOTACID getoper.txt |& sed 's/.*%YDB-I-TPNOTACID/%YDB-I-TPNOTACID/' |& sed 's/$TRESTART.*//'
+	echo ""
+	echo "--------------------------------------------------------------------------------"
+	echo ""
+end
 $gtm_tst/com/dbcheck.csh >>& dbcheck.out

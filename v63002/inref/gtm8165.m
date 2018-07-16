@@ -11,10 +11,13 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 tpnotacid
+	use $p
+	write $$^%PEEKBYNAME("node_local.in_crit","DEFAULT"),!
 	tstart ():(serial:transaction="BA")
 	if $trestart>2 write /wait(.999)
 	else  do
 	. set ^Y=$increment(^i)
 	. zsystem "$ydb_dist/mumps -run ^%XCMD 'set ^Y=$increment(^i)'"
 	tcommit
+	write $$^%PEEKBYNAME("node_local.in_crit","DEFAULT"),!
 	quit
