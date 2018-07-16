@@ -11,7 +11,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 tpnotacid
-	use $p
+	lock ^A
 	write $$^%PEEKBYNAME("node_local.in_crit","DEFAULT"),!
 	tstart ():(serial:transaction="BA")
 	if $trestart>2 write /wait(.999)

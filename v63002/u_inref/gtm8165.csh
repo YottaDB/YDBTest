@@ -19,16 +19,14 @@ echo "# Setting gtm_tpnotacidtime to .123 seconds"
 setenv gtm_tpnotacidtime .123
 echo '# Testing write timeout greater than $gtm_tpnotacidtime (Expect a TPNOTACID message in the syslog)'
 echo ""
-foreach arg ("wait" "tls" "accept" "pass")
-	echo "# Testing a timed write /$arg"
-	set t = `date +"%b %e %H:%M:%S"`
-	sleep 1
-	$ydb_dist/mumps -run tpnotacid^gtm8165 $arg
-	$gtm_tst/com/getoper.csh "$t" "" getoper.txt
-	echo "# Checking the syslog"
-	$grep TPNOTACID getoper.txt |& sed 's/.*%YDB-I-TPNOTACID/%YDB-I-TPNOTACID/' |& sed 's/$TRESTART.*//'
-	echo ""
-	echo "--------------------------------------------------------------------------------"
-	echo ""
-end
+echo "# Testing a timed write /wait"
+set t = `date +"%b %e %H:%M:%S"`
+sleep 1
+$ydb_dist/mumps -run tpnotacid^gtm8165
+$gtm_tst/com/getoper.csh "$t" "" getoper.txt
+echo "# Checking the syslog"
+$grep TPNOTACID getoper.txt |& sed 's/.*%YDB-I-TPNOTACID/%YDB-I-TPNOTACID/' |& sed 's/$TRESTART.*//'
+echo ""
+echo "--------------------------------------------------------------------------------"
+echo ""
 $gtm_tst/com/dbcheck.csh >>& dbcheck.out
