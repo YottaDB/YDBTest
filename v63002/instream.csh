@@ -21,7 +21,7 @@
 # gtm8760	    [vinay] Tests YottaDB properly handles environment variables whose contesnts are over 32K in size
 # gtm5250	    [vinay] Tests YottaDB supports fractional timeouts
 # gtm8736	    [vinay] Tests $zroutines defaults to "." when $gtmroutines is undefined
-# gtm8766	    [vinay] Tests MUPIP and GDE behave appropriately when trying to set buffer values to high
+# gtm8766	    [vinay] Tests MUPIP and GDE behave appropriately when trying to set global buffer values too high
 #-------------------------------------------------------------------------------------
 
 echo "v63002 test starts..."

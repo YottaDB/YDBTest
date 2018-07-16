@@ -14,12 +14,16 @@
 #
 #
 $gtm_tst/com/dbcreate.csh mumps 1 >>& dbcreate.out
+if ($status) then
+	echo "DB Create failed"
+	cat dbcreate.out
+endif
 $GDE change -segment DEFAULT -access_method=BG >& accessmethod.out
 if ($status) then
 	echo "# UNABLE TO CHANGE ACCESS METHOD"
 endif
-# In the current version, 2MB is the maximum value accepted by both MUPIP and GDE. In previous versions
-# 2MB was the max for MUPIP, but a core would be produced for a value over 2GB, and 2GB was the max value for GDE
+echo "# In the current version, 2MB is the maximum value accepted by both MUPIP and GDE. In previous versions"
+echo "# 2MB was the max for MUPIP, but a core would be produced for a value over 2GB, and 2GB was the max value for GDE"
 foreach val (2097151 2097152 2147483647 2147483648)
 
 	echo ""
@@ -33,3 +37,7 @@ foreach val (2097151 2097152 2147483647 2147483648)
 	echo "----------------------------------------------------------------------------------"
 end
 $gtm_tst/com/dbcheck.csh >>& dbcheck.out
+if ($status) then
+	echo "DB Check failed"
+	cat dbcheck.out
+endif
