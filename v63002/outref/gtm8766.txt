@@ -1,0 +1,73 @@
+# In the current version, 2MB is the maximum value accepted by both MUPIP and GDE. In previous versions
+# 2MB was the max for MUPIP, but a core would be produced for a value greater than or equal to 2GB, and 2GB was the max value for GDE
+
+# CHANGING THE BUFFER COUNT TO 2097151
+
+# TEST CHANGING BUFFERCOUNT VIA GDE
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+# TEST CHANGING BUFFERCOUNT VIA MUPIP
+Database file ##TEST_PATH##/mumps.dat now has 2097151 global buffers
+
+----------------------------------------------------------------------------------
+
+# CHANGING THE BUFFER COUNT TO 2097152
+
+# TEST CHANGING BUFFERCOUNT VIA GDE
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VALTOOBIG, 2097152 is larger than the maximum of 2097151 for a GLOBAL_BUFFER_COUNT
+%GDE-I-SEGIS, in BG segment DEFAULT
+
+%GDE-E-OBJNOTCHG, Not changing segment DEFAULT
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+# TEST CHANGING BUFFERCOUNT VIA MUPIP
+%YDB-W-MUPIPSET2BIG, 2097152 too large, maximum GLOBAL_BUFFERS allowed is 2097151
+%YDB-E-WCERRNOTCHG, Not all specified database files were changed
+
+----------------------------------------------------------------------------------
+
+# CHANGING THE BUFFER COUNT TO 2147483647
+
+# TEST CHANGING BUFFERCOUNT VIA GDE
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VALTOOBIG, 2147483647 is larger than the maximum of 2097151 for a GLOBAL_BUFFER_COUNT
+%GDE-I-SEGIS, in BG segment DEFAULT
+
+%GDE-E-OBJNOTCHG, Not changing segment DEFAULT
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+# TEST CHANGING BUFFERCOUNT VIA MUPIP
+%YDB-W-MUPIPSET2BIG, 2147483647 too large, maximum GLOBAL_BUFFERS allowed is 2097151
+%YDB-E-WCERRNOTCHG, Not all specified database files were changed
+
+----------------------------------------------------------------------------------
+
+# CHANGING THE BUFFER COUNT TO 2147483648
+
+# TEST CHANGING BUFFERCOUNT VIA GDE
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VALTOOBIG, 2147483648 is larger than the maximum of 2097151 for a GLOBAL_BUFFER_COUNT
+%GDE-I-SEGIS, in BG segment DEFAULT
+
+%GDE-E-OBJNOTCHG, Not changing segment DEFAULT
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+# TEST CHANGING BUFFERCOUNT VIA MUPIP
+Error: cannot convert 2147483648 value to decimal number.
+%YDB-E-SETQUALPROB, Error getting GLOBAL_BUFFERS qualifier value
+%YDB-E-WCERRNOTCHG, Not all specified database files were changed
+
+----------------------------------------------------------------------------------
