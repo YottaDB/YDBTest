@@ -12,5 +12,10 @@
 ;
 gtm8718
 	set $etrap="do incrtrap^incrtrap"
+	set x="zroutines.outx"
+	open x
+	use x
+	write $zroutines,!
 	set $zroutines="asdfasdfa"
+	write $zroutines,!
 	quit

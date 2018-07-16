@@ -14,11 +14,12 @@
 #
 #
 setenv gtm_test_autorelink_always 1
-set zroutines1 = `$ydb_dist/mumps -run ^%XCMD 'write $zroutines'`
 echo '# Changing $zroutines to an invalid string'
 $ydb_dist/mumps -run gtm8718
+$grep STATUS zroutines.outx
 echo ""
-set zroutines2 = `$ydb_dist/mumps -run ^%XCMD 'write $zroutines'`
+set zroutines1 = `head -1 zroutines.outx`
+set zroutines2 = `tail -1 zroutines.outx`
 if ("$zroutines1" == "$zroutines2") then
 	echo '# $ZROUTINES MAINTAINED ITS ORIGINAL VALUE'
 else
