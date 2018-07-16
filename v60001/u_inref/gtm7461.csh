@@ -77,7 +77,7 @@ echo "# start MUPIP JOURNAL -ROLLBACK -BACKWARD which should trigger instance fr
 set syslog_before1 = `date +"%b %e %H:%M:%S"`
 echo "$syslog_before1" > syslog_before1.txt
 
-sleep 1		# Managed to slip out of the getoper window somehow, so give it a couple seconds to be safe.
+sleep 1		# Managed to slip out of the getoper window somehow, so give it a second to be safe.
 
 # do not use mupip_rollback.csh since we want to know the rollback pid which is not possible if we use a wrapper script
 ($MUPIP journal -rollback -backward -resync=10000 '*' >& rollback.outx & ; echo $! > rollback_pid.txt) >& /dev/null
