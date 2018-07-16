@@ -30,11 +30,11 @@ set getoperuid=`$grep "process id" getoper.txt |& $tst_awk '{print $17}'`
 if ($uid == $getoperuid) then
 	echo "# User ID in syslog message correct"
 else
-	echo "# Incorrect User ID in syslog message"
+	echo "# Incorrect User ID in syslog message, expected $uid but found $getoperuid"
 endif
 if ($pid == $getoperpid) then
 	echo "# PID in syslog message correct"
 else
-	echo "# Incorrect PID in syslog message"
+	echo "# Incorrect PID in syslog message, expected $pid but found $getoperpid"
 endif
 $gtm_tst/com/dbcheck.csh >>& dbcheck.out
