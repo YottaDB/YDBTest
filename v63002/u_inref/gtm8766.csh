@@ -27,8 +27,8 @@ if ("64" == "$gtm_platform_size") then
 	@ smallval=2097152
 	set lowerlim="2Mb"
 else
-	@ smallvalminus1=65535
-	@ smallval=65536
+	@ smallvalminus1=65536
+	@ smallval=65537
 	set lowerlim="64Kb"
 endif
 
