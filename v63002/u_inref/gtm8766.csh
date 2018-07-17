@@ -25,13 +25,15 @@ endif
 if ("64" == "$gtm_platform_size") then
 	@ smallvalminus1=2097151
 	@ smallval=2097152
+	set lowerlim="2Mb"
 else
 	@ smallvalminus1=65535
 	@ smallval=65536
+	set lowerlim="64Kb"
 endif
 
-echo "# In the current version, $smallval is the maximum value accepted by both MUPIP and GDE. In previous versions"
-echo "# $smallval was the max for MUPIP, but a core would be produced for a value greater than or equal to 2GB, and 2GB was the max value for GDE"
+echo "# In the current version, $lowerlim is the maximum value accepted by both MUPIP and GDE. In previous versions"
+echo "# $lowerlim was the max for MUPIP, but a core would be produced for a value greater than or equal to 2GB, and 2GB was the max value for GDE"
 foreach val ($smallvalminus1 $smallval 2147483647 2147483648)
 
 	echo ""
