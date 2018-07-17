@@ -22,9 +22,19 @@ $GDE change -segment DEFAULT -access_method=BG >& accessmethod.out
 if ($status) then
 	echo "# UNABLE TO CHANGE ACCESS METHOD"
 endif
-echo "# In the current version, 2MB is the maximum value accepted by both MUPIP and GDE. In previous versions"
-echo "# 2MB was the max for MUPIP, but a core would be produced for a value greater than or equal to 2GB, and 2GB was the max value for GDE"
-foreach val (2097151 2097152 2147483647 2147483648)
+if ("64" == "$gtm_platform_size") then
+	@ smallvalminus1=2097151
+	@ smallval=2097152
+	set lowerlim="2Mb-1"
+else
+	@ smallvalminus1=65536
+	@ smallval=65537
+	set lowerlim="64Kb"
+endif
+
+echo "# In the current version, $lowerlim (for $gtm_platform_size bit builds) is the maximum value accepted by both MUPIP and GDE. In previous versions"
+echo "# $lowerlim was the max for MUPIP, but a core would be produced for a value greater than or equal to 2GB, and 2GB was the max value for GDE"
+foreach val ($smallvalminus1 $smallval 2147483647 2147483648)
 
 	echo ""
 	echo "# CHANGING THE BUFFER COUNT TO $val"
