@@ -87,8 +87,6 @@ $gtm_tst/com/wait_for_proc_to_die.csh $rollbackpid
 
 echo "# check syslog to confirm instance freeze related messages (REPLINSTFROZEN/JNLFILEOPNERR) are seen from the rollback pid"
 $gtm_tst/com/getoper.csh "$syslog_before1" "" syslog1.txt
-# Note that it is possible we see REPLINSTFROZEN messages on both primary and secondary in the syslog
-# whereas we are interested only on the primary side hence the ".*INSTANCE1" usage below.
 $grep -E "\<$rollbackpid\>.*REPLINSTFROZEN|\<$rollbackpid\>.*JNLFILEOPNERR" syslog1.txt | sed 's/.*%YDB/%YDB/;s/ -- .*//' | sed 's/'$rollbackpid'/xxxx/'
 
 echo "# unfreeze and wait"
