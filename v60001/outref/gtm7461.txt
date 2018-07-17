@@ -8,7 +8,7 @@
 # stop imptp
 # remove journal files
 # start MUPIP JOURNAL -ROLLBACK -BACKWARD which should trigger instance freeze
-# check syslog to confirm instance freeze related messages (REPLINSTFROZEN/JNLFILEOPNERR) are seen
+# check syslog to confirm instance freeze related messages (REPLINSTFROZEN/JNLFILEOPNERR) are seen from the rollback pid
 %YDB-E-REPLINSTFROZEN, Instance INSTANCE1 is now Frozen
 %YDB-I-REPLINSTFREEZECOMMENT, Freeze Comment: PID xxxx encountered JNLFILEOPNERR; Instance frozen
 # unfreeze and wait
