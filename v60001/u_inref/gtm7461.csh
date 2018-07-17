@@ -85,9 +85,11 @@ sleep 1		# Managed to slip out of the getoper window somehow, so give it a secon
 set rollbackpid = `cat rollback_pid.txt`
 $gtm_tst/com/wait_for_proc_to_die.csh $rollbackpid
 
-echo "# check syslog to confirm instance freeze related messages (REPLINSTFROZEN/JNLFILEOPNERR) are seen"
+echo "# check syslog to confirm instance freeze related messages (REPLINSTFROZEN/JNLFILEOPNERR) are seen from the rollback pid"
 $gtm_tst/com/getoper.csh "$syslog_before1" "" syslog1.txt
-$grep -E "REPLINSTFROZEN|JNLFILEOPNERR" syslog1.txt | sed 's/.*%YDB/%YDB/;s/ -- .*//' | sed 's/'$rollbackpid'/xxxx/'
+# Note that it is possible we see REPLINSTFROZEN messages on both primary and secondary in the syslog
+# whereas we are interested only on the primary side hence the ".*INSTANCE1" usage below.
+$grep -E "\<$rollbackpid\>.*REPLINSTFROZEN|\<$rollbackpid\>.*JNLFILEOPNERR" syslog1.txt | sed 's/.*%YDB/%YDB/;s/ -- .*//' | sed 's/'$rollbackpid'/xxxx/'
 
 echo "# unfreeze and wait"
 $MUPIP replic -source -freeze=off >&! freeze_off.outx
