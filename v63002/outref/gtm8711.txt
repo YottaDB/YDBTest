@@ -1,0 +1,21 @@
+spawn /usr/local/bin/tcsh -f
+> # Expect the shell prompt
+stty cols 132
+# Invoking GDE Directly From Shell
+$ydb_dist/mumps -run ^GDE
+> $ydb_dist/mumps -run ^GDE
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+
+GDE> # Sending Invalid Command, Expect The Shell To Maintain The Error Status
+asdfasdfasdf
+%GDE-E-KEYWRDBAD, ASDFASDFASDF is not a valid verb in this context
+
+GDE> exit
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+> echo $status
+114
+> 

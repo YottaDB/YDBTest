@@ -11,12 +11,11 @@
 #								#
 #################################################################
 #
-#
+# Tests GDE appropriately maintains the return status when invoked from the shell
 #
 (expect -d $gtm_tst/$tst/u_inref/gtm8711.exp > expect.outx) >& xpect.dbg
 if ($status) then
 	echo "EXPECT FAILED"
 endif
-echo "# TESTING CENABLE"
 perl $gtm_tst/com/expectsanitize.pl expect.outx > expect_sanitized.outx
 cat expect_sanitized.outx
