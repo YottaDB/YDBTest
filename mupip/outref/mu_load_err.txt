@@ -25,7 +25,7 @@ Beginning LOAD at record number: 2
 
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 LOAD TOTAL		Key Cnt: 3  Max Subsc Len: 8  Max Data Len: 2
-Last LOAD record number: 4
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 4
 ##ALLOW_OUTPUT SPANNING_REGIONS
 ##SUSPEND_OUTPUT NONSPANNING_REGIONS
 %YDB-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat
@@ -36,7 +36,7 @@ Last LOAD record number: 4
 "30"
 
 LOAD TOTAL		Key Cnt: 2  Max Subsc Len: 8  Max Data Len: 2
-Last LOAD record number: 5
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 5
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
 
 # 1b. Expect YDB-E-LDBINFMT, as .zwr is not a valid binary format
@@ -111,7 +111,7 @@ Beginning LOAD at record number: 3
 
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 LOAD TOTAL		Key Cnt: 3  Max Subsc Len: 8  Max Data Len: 2
-Last LOAD record number: 12
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 12
 ##ALLOW_OUTPUT SPANNING_REGIONS
 ##SUSPEND_OUTPUT NONSPANNING_REGIONS
 %YDB-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat
@@ -120,7 +120,7 @@ Last LOAD record number: 12
 %YDB-E-RECLOAD, Error loading record number: 10
 
 LOAD TOTAL		Key Cnt: 2  Max Subsc Len: 6  Max Data Len: 1
-Last LOAD record number: 12
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 12
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
 
 # 2b. Expect YDB-E-LDBINFMT, as .bin is not a valid zwr format
@@ -143,8 +143,7 @@ Beginning LOAD at record number: 3
 %YDB-E-RECLOAD, Error loading record number: 3
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
-Last LOAD record number: 0
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 0
 # 2f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist
 %YDB-E-FILEOPENFAIL, Failed to open file tmp.nofile
 ##SUSPEND_OUTPUT UNICODE_MODE
@@ -220,7 +219,7 @@ Beginning LOAD at record number: 3
 
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 LOAD TOTAL		Key Cnt: 3  Max Subsc Len: 8  Max Data Len: 2
-Last LOAD record number: 22
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 22
 ##ALLOW_OUTPUT SPANNING_REGIONS
 ##SUSPEND_OUTPUT NONSPANNING_REGIONS
 %YDB-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat
@@ -233,7 +232,7 @@ Last LOAD record number: 22
 %YDB-E-RECLOAD, Error loading record number: 18
 
 LOAD TOTAL		Key Cnt: 2  Max Subsc Len: 6  Max Data Len: 1
-Last LOAD record number: 22
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 22
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
 
 # 3b. Expect YDB-E-LDBINFMT, as .zwr is not a valid go format
@@ -254,8 +253,7 @@ Beginning LOAD at record number: 3
 %YDB-E-RECLOAD, Error loading record number: 3
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
-Last LOAD record number: 0
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 0
 # 3f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist
 %YDB-E-FILEOPENFAIL, Failed to open file tmp.nofile
 ##ALLOW_OUTPUT UNICODE_MODE
@@ -267,10 +265,10 @@ Beginning LOAD at record number: 2
 
 LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
 ##SUSPEND_OUTPUT SPANNING_REGIONS
-Last LOAD record number: 4
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 4
 ##ALLOW_OUTPUT SPANNING_REGIONS
 ##SUSPEND_OUTPUT NONSPANNING_REGIONS
-Last LOAD record number: 5
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 5
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
 
 # 4b. Expect YDB-E-LDBINFMT, as .zwr is not a valid binary format
@@ -304,8 +302,7 @@ Beginning LOAD at record number: 2
 
 %YDB-E-PREMATEOF, Premature end of file detected
 LOAD TOTAL		Key Cnt: 7  Max Subsc Len: 8  Max Data Len: 10
-Last LOAD record number: 3
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ##ALLOW_OUTPUT ENCRYPT
 # ### 5. Testing ZWR Format ### #
@@ -320,8 +317,7 @@ GT.M MUPIP EXTRACT
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
-Last LOAD record number: 12
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 12
 # 5b. Expect YDB-E-LDBINFMT, as .bin is not a valid zwr format
 %YDB-E-LDBINFMT, Unrecognized header for load file
 ##SUSPEND_OUTPUT UNICODE_MODE
@@ -342,8 +338,7 @@ Beginning LOAD at record number: 3
 %YDB-E-RECLOAD, Error loading record number: 3
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
-Last LOAD record number: 0
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 0
 # 5f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist
 %YDB-E-FILEOPENFAIL, Failed to open file tmp.nofile
 ##SUSPEND_OUTPUT UNICODE_MODE
@@ -354,8 +349,7 @@ GT.M MUPIP EXTRACT
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
-Last LOAD record number: 22
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 22
 # 6b. Expect YDB-E-LDBINFMT, as .zwr is not a valid go format
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:.. ZWR
@@ -374,8 +368,7 @@ Beginning LOAD at record number: 3
 %YDB-E-RECLOAD, Error loading record number: 3
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
-Last LOAD record number: 0
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 0
 # 6f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist
 %YDB-E-FILEOPENFAIL, Failed to open file tmp.nofile
 ##ALLOW_OUTPUT UNICODE_MODE
@@ -392,8 +385,7 @@ Beginning LOAD at record number: 2
 %YDB-E-RECLOAD, Error loading record number: 2
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
-Last LOAD record number: 0
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 0
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 # 7b. Expect YDB-E-LDBINFMT, as .zwr is not a valid binary format
 ##SUSPEND_OUTPUT UNICODE_MODE
@@ -436,8 +428,7 @@ Beginning LOAD at record number: 3
 %YDB-E-RECLOAD, Error loading record number: 3
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
-Last LOAD record number: 0
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 0
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 # 8b. Expect YDB-E-LDBINFMT, as .bin is not a valid zwr format
 %YDB-E-LDBINFMT, Unrecognized header for load file
@@ -459,8 +450,7 @@ Beginning LOAD at record number: 3
 %YDB-E-RECLOAD, Error loading record number: 3
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
-Last LOAD record number: 0
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 0
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ##ALLOW_OUTPUT UNICODE_MODE
 # 8f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist
@@ -479,8 +469,7 @@ Beginning LOAD at record number: 3
 %YDB-E-RECLOAD, Error loading record number: 3
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
-Last LOAD record number: 0
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 0
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 # 9b. Expect YDB-E-LDBINFMT, as .zwr is not a valid go format
 GT.M MUPIP EXTRACT
@@ -500,8 +489,7 @@ Beginning LOAD at record number: 3
 %YDB-E-RECLOAD, Error loading record number: 3
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
-Last LOAD record number: 0
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 0
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 # 9f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist
 %YDB-E-FILEOPENFAIL, Failed to open file tmp.nofile
@@ -514,10 +502,10 @@ Beginning LOAD at record number: 2
 
 LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
 ##SUSPEND_OUTPUT SPANNING_REGIONS
-Last LOAD record number: 4
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 4
 ##ALLOW_OUTPUT SPANNING_REGIONS
 ##SUSPEND_OUTPUT NONSPANNING_REGIONS
-Last LOAD record number: 5
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 5
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
 
 # 10b. Expect YDB-E-LDBINFMT, as .zwr is not a valid binary format
@@ -551,8 +539,7 @@ Beginning LOAD at record number: 2
 
 %YDB-E-PREMATEOF, Premature end of file detected
 LOAD TOTAL		Key Cnt: 7  Max Subsc Len: 8  Max Data Len: 10
-Last LOAD record number: 3
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ##ALLOW_OUTPUT ENCRYPT
 # ### 11. Testing ZWR Format ### #
@@ -567,8 +554,7 @@ GT.M MUPIP EXTRACT
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
-Last LOAD record number: 12
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 12
 # 11b. Expect YDB-E-LDBINFMT, as .bin is not a valid zwr format
 %YDB-E-LDBINFMT, Unrecognized header for load file
 ##SUSPEND_OUTPUT UNICODE_MODE
@@ -589,8 +575,7 @@ Beginning LOAD at record number: 3
 %YDB-E-RECLOAD, Error loading record number: 3
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
-Last LOAD record number: 0
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 0
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 # 11f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist
 %YDB-E-FILEOPENFAIL, Failed to open file tmp.nofile
@@ -602,8 +587,7 @@ GT.M MUPIP EXTRACT
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
-Last LOAD record number: 22
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 22
 # 12b. Expect YDB-E-LDBINFMT, as .zwr is not a valid go format
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:.. ZWR
@@ -622,8 +606,7 @@ Beginning LOAD at record number: 3
 %YDB-E-RECLOAD, Error loading record number: 3
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
-Last LOAD record number: 0
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 0
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 # 12f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist
 %YDB-E-FILEOPENFAIL, Failed to open file tmp.nofile
@@ -641,8 +624,7 @@ Beginning LOAD at record number: 2
 %YDB-E-RECLOAD, Error loading record number: 2
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
-Last LOAD record number: 0
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 0
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 # 13b. Expect YDB-E-LDBINFMT, as .zwr is not a valid binary format
 ##SUSPEND_OUTPUT UNICODE_MODE
@@ -685,8 +667,7 @@ Beginning LOAD at record number: 3
 %YDB-E-RECLOAD, Error loading record number: 3
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
-Last LOAD record number: 0
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 0
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 # 14b. Expect YDB-E-LDBINFMT, as .bin is not a valid zwr format
 %YDB-E-LDBINFMT, Unrecognized header for load file
@@ -708,8 +689,7 @@ Beginning LOAD at record number: 3
 %YDB-E-RECLOAD, Error loading record number: 3
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
-Last LOAD record number: 0
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 0
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ##ALLOW_OUTPUT UNICODE_MODE
 # 14f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist
@@ -728,8 +708,7 @@ Beginning LOAD at record number: 3
 %YDB-E-RECLOAD, Error loading record number: 3
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
-Last LOAD record number: 0
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 0
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 # 15b. Expect YDB-E-LDBINFMT, as .zwr is not a valid go format
 GT.M MUPIP EXTRACT
@@ -749,8 +728,7 @@ Beginning LOAD at record number: 3
 %YDB-E-RECLOAD, Error loading record number: 3
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
-Last LOAD record number: 0
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 0
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 # 15f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist
 %YDB-E-FILEOPENFAIL, Failed to open file tmp.nofile
@@ -763,10 +741,10 @@ Beginning LOAD at record number: 2
 
 LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
 ##SUSPEND_OUTPUT SPANNING_REGIONS
-Last LOAD record number: 4
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 4
 ##ALLOW_OUTPUT SPANNING_REGIONS
 ##SUSPEND_OUTPUT NONSPANNING_REGIONS
-Last LOAD record number: 5
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 5
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
 
 # 16b. Expect YDB-E-LDBINFMT, as .zwr is not a valid binary format
@@ -800,8 +778,7 @@ Beginning LOAD at record number: 2
 
 %YDB-E-PREMATEOF, Premature end of file detected
 LOAD TOTAL		Key Cnt: 7  Max Subsc Len: 8  Max Data Len: 10
-Last LOAD record number: 3
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ##ALLOW_OUTPUT ENCRYPT
 # ### 17. Testing ZWR Format ### #
@@ -816,8 +793,7 @@ GT.M MUPIP EXTRACT
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
-Last LOAD record number: 12
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 12
 # 17b. Expect YDB-E-LDBINFMT, as .bin is not a valid zwr format
 %YDB-E-LDBINFMT, Unrecognized header for load file
 ##SUSPEND_OUTPUT UNICODE_MODE
@@ -838,8 +814,7 @@ Beginning LOAD at record number: 3
 %YDB-E-RECLOAD, Error loading record number: 3
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
-Last LOAD record number: 0
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 0
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 # 17f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist
 %YDB-E-FILEOPENFAIL, Failed to open file tmp.nofile
@@ -851,8 +826,7 @@ GT.M MUPIP EXTRACT
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
-Last LOAD record number: 22
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 22
 # 18b. Expect YDB-E-LDBINFMT, as .zwr is not a valid go format
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:.. ZWR
@@ -871,8 +845,7 @@ Beginning LOAD at record number: 3
 %YDB-E-RECLOAD, Error loading record number: 3
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
-Last LOAD record number: 0
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 0
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 # 18f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist
 %YDB-E-FILEOPENFAIL, Failed to open file tmp.nofile
@@ -889,18 +862,17 @@ GT.M MUPIP EXTRACT
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
-Last LOAD record number: 12
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 12
 # 19b. Successfully load the x.bin content in the database
 
 Beginning LOAD at record number: 2
 
 LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
 ##SUSPEND_OUTPUT SPANNING_REGIONS
-Last LOAD record number: 4
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 4
 ##ALLOW_OUTPUT SPANNING_REGIONS
 ##SUSPEND_OUTPUT NONSPANNING_REGIONS
-Last LOAD record number: 5
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 5
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
 
 ##SUSPEND_OUTPUT UNICODE_MODE
@@ -910,8 +882,7 @@ GT.M MUPIP EXTRACT
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
-Last LOAD record number: 22
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 22
 ##ALLOW_OUTPUT UNICODE_MODE
 # 19d. Expect YDB-E-LDBINFMT, as empty files do not contain ZWR/GO/BINARY header
 %YDB-E-LDBINFMT, Unrecognized header for load file
@@ -933,18 +904,17 @@ GT.M MUPIP EXTRACT
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
-Last LOAD record number: 12
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 12
 # 20b. Successfully load the x.bin content in the database
 
 Beginning LOAD at record number: 2
 
 LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
 ##SUSPEND_OUTPUT SPANNING_REGIONS
-Last LOAD record number: 4
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 4
 ##ALLOW_OUTPUT SPANNING_REGIONS
 ##SUSPEND_OUTPUT NONSPANNING_REGIONS
-Last LOAD record number: 5
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 5
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
 
 ##SUSPEND_OUTPUT UNICODE_MODE
@@ -954,8 +924,7 @@ GT.M MUPIP EXTRACT
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
-Last LOAD record number: 22
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 22
 ##ALLOW_OUTPUT UNICODE_MODE
 # 20d. Expect YDB-E-LDBINFMT, as empty files do not contain ZWR/GO/BINARY header
 %YDB-E-LDBINFMT, Unrecognized header for load file
@@ -977,18 +946,17 @@ GT.M MUPIP EXTRACT
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
-Last LOAD record number: 12
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 12
 # 21b. Successfully load the x.bin content in the database
 
 Beginning LOAD at record number: 2
 
 LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
 ##SUSPEND_OUTPUT SPANNING_REGIONS
-Last LOAD record number: 4
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 4
 ##ALLOW_OUTPUT SPANNING_REGIONS
 ##SUSPEND_OUTPUT NONSPANNING_REGIONS
-Last LOAD record number: 5
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 5
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
 
 ##SUSPEND_OUTPUT UNICODE_MODE
@@ -998,8 +966,7 @@ GT.M MUPIP EXTRACT
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
-Last LOAD record number: 22
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 22
 ##ALLOW_OUTPUT UNICODE_MODE
 # 21d. Expect YDB-E-LDBINFMT, as empty files do not contain ZWR/GO/BINARY header
 %YDB-E-LDBINFMT, Unrecognized header for load file
@@ -1019,18 +986,17 @@ GT.M MUPIP EXTRACT
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
-Last LOAD record number: 12
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 12
 # 22b. Successfully load the x.bin content in the database
 
 Beginning LOAD at record number: 2
 
 LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
 ##SUSPEND_OUTPUT SPANNING_REGIONS
-Last LOAD record number: 4
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 4
 ##ALLOW_OUTPUT SPANNING_REGIONS
 ##SUSPEND_OUTPUT NONSPANNING_REGIONS
-Last LOAD record number: 5
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 5
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
 
 ##SUSPEND_OUTPUT UNICODE_MODE
@@ -1040,8 +1006,7 @@ GT.M MUPIP EXTRACT
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
-Last LOAD record number: 22
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 22
 ##ALLOW_OUTPUT UNICODE_MODE
 # 22d. Expect YDB-E-LDBINFMT, as empty files do not contain ZWR/GO/BINARY header
 %YDB-E-LDBINFMT, Unrecognized header for load file
@@ -1056,16 +1021,14 @@ GT.M 09-JUL-2015 08:41:37 ZWR
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 5  Max Subsc Len: 11  Max Data Len: 3
-Last LOAD record number: 9
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 9
 ################### -format=zwr #################
 %GO
 GT.M 09-JUL-2015 08:41:37 ZWR
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 5  Max Subsc Len: 11  Max Data Len: 3
-Last LOAD record number: 9
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 9
 ################### -format=go ##################
 %GO
 GT.M 09-JUL-2015 08:41:37 ZWR
@@ -1077,8 +1040,7 @@ GT.M 09-JUL-2015 08:42:35
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 5  Max Subsc Len: 11  Max Data Len: 3
-Last LOAD record number: 14
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 14
 ################### -format=zwr #################
 %GO
 GT.M 09-JUL-2015 08:42:35
@@ -1089,8 +1051,7 @@ GT.M 09-JUL-2015 08:42:35
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 5  Max Subsc Len: 11  Max Data Len: 3
-Last LOAD record number: 14
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 14
 ##################### gtm8223b.zwr ###################
 #################### no format ##################
 GT.M MUPIP EXTRACT
@@ -1098,16 +1059,14 @@ GT.M MUPIP EXTRACT
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 5  Max Subsc Len: 11  Max Data Len: 3
-Last LOAD record number: 7
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 7
 ################### -format=zwr #################
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 5  Max Subsc Len: 11  Max Data Len: 3
-Last LOAD record number: 7
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 7
 ################### -format=go ##################
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:.. ZWR
@@ -1119,8 +1078,7 @@ GT.M MUPIP EXTRACT
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 5  Max Subsc Len: 11  Max Data Len: 3
-Last LOAD record number: 12
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 12
 ################### -format=zwr #################
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:..
@@ -1131,8 +1089,7 @@ GT.M MUPIP EXTRACT
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 5  Max Subsc Len: 11  Max Data Len: 3
-Last LOAD record number: 12
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 12
 ##################### gtm8223c.zwr ###################
 #################### no format ##################
 LABEL
@@ -1140,16 +1097,14 @@ LABEL
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 5  Max Subsc Len: 11  Max Data Len: 3
-Last LOAD record number: 9
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 9
 ################### -format=zwr #################
 LABEL
 ; ZWR
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 5  Max Subsc Len: 11  Max Data Len: 3
-Last LOAD record number: 9
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 9
 ################### -format=go ##################
 LABEL
 ; ZWR
@@ -1161,8 +1116,7 @@ LABEL
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 5  Max Subsc Len: 11  Max Data Len: 3
-Last LOAD record number: 14
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 14
 ################### -format=zwr #################
 LABEL
 ; GLO
@@ -1173,8 +1127,7 @@ LABEL
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 5  Max Subsc Len: 11  Max Data Len: 3
-Last LOAD record number: 14
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 14
 ##################### gtm8223d.zwr ###################
 #################### no format ##################
 LABEL
@@ -1182,16 +1135,14 @@ some random stuff ZWR
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 5  Max Subsc Len: 11  Max Data Len: 3
-Last LOAD record number: 9
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 9
 ################### -format=zwr #################
 LABEL
 some random stuff ZWR
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 5  Max Subsc Len: 11  Max Data Len: 3
-Last LOAD record number: 9
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 9
 ################### -format=go ##################
 LABEL
 some random stuff ZWR
@@ -1203,8 +1154,7 @@ some random stuff GLO
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 5  Max Subsc Len: 11  Max Data Len: 3
-Last LOAD record number: 14
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 14
 ################### -format=zwr #################
 LABEL
 some random stuff GLO
@@ -1215,8 +1165,7 @@ some random stuff GLO
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 5  Max Subsc Len: 11  Max Data Len: 3
-Last LOAD record number: 14
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 14
 ##################### gtm8223e.zwr ###################
 #################### no format ##################
 LABEL
@@ -1224,16 +1173,14 @@ juicy baloney
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 5  Max Subsc Len: 11  Max Data Len: 3
-Last LOAD record number: 9
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 9
 ################### -format=zwr #################
 LABEL
 juicy baloney
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 5  Max Subsc Len: 11  Max Data Len: 3
-Last LOAD record number: 9
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 9
 ################### -format=go ##################
 LABEL
 juicy baloney
@@ -1245,8 +1192,7 @@ juicy baloney
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 5  Max Subsc Len: 11  Max Data Len: 3
-Last LOAD record number: 14
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 14
 ################### -format=zwr #################
 LABEL
 juicy baloney
@@ -1257,8 +1203,7 @@ juicy baloney
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 5  Max Subsc Len: 11  Max Data Len: 3
-Last LOAD record number: 14
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 14
 ##################### gtm8223f.zwr ###################
 #################### no format ##################
 a
@@ -1274,8 +1219,7 @@ Beginning LOAD at record number: 3
 %YDB-E-RECLOAD, Error loading record number: 4
 
 LOAD TOTAL		Key Cnt: 2  Max Subsc Len: 3  Max Data Len: 1
-Last LOAD record number: 7
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 7
 ################### -format=go ##################
 a
 b
@@ -1296,8 +1240,7 @@ Beginning LOAD at record number: 3
 %YDB-E-RECLOAD, Error loading record number: 6
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
-Last LOAD record number: 0
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 0
 ##################### gtm8223f.go ###################
 #################### no format ##################
 a
@@ -1341,8 +1284,7 @@ Beginning LOAD at record number: 3
 %YDB-E-RECLOAD, Error loading record number: 12
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
-Last LOAD record number: 0
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 0
 ################### -format=go ##################
 a
 b
@@ -1353,8 +1295,7 @@ Beginning LOAD at record number: 3
 %YDB-E-RECLOAD, Error loading record number: 4
 
 LOAD TOTAL		Key Cnt: 4  Max Subsc Len: 3  Max Data Len: 1
-Last LOAD record number: 13
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 13
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
