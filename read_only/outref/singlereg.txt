@@ -902,16 +902,14 @@ mupip load -begin=3 -end=5 load.go1
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 3  Max Subsc Len: 6  Max Data Len: 15
-Last LOAD record number: 5
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 5
 mupip load load.go1
 ##TEST_AWKGT.M MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 8  Max Subsc Len: 6  Max Data Len: 15
-Last LOAD record number: 10
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 10
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -934,8 +932,7 @@ Beginning LOAD at record number: 3
 %YDB-E-RECLOAD, Error loading record number: 4
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 3  Max Data Len: 11
-Last LOAD record number: 0
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 0
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -958,8 +955,7 @@ Beginning LOAD at record number: 3
 %YDB-E-RECLOAD, Error loading record number: 4
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 3  Max Data Len: 248
-Last LOAD record number: 0
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 0
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -982,8 +978,7 @@ Beginning LOAD at record number: 3
 %YDB-E-RECLOAD, Error loading record number: 4
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 3  Max Data Len: 11
-Last LOAD record number: 0
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 0
 OK.
 
 ##SOURCE_PATH##/mupip
