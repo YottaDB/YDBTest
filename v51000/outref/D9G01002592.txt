@@ -226,7 +226,7 @@ $MUPIP load $fmtstr -begin=1 -end=3 all.$fmt
 ##FILTERED##..-...-....  ..:..:..
 Beginning LOAD at record number: 3
 
-LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 6  Max Data Len: 0
+LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
 $echoline
 -----------------------------------------------------------------
@@ -292,9 +292,9 @@ Beginning LOAD at record number: 4
 %YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^):                                                                                                                                                                                                                                                                                                                                                                                                                1
 		Global variable : 
 %YDB-E-RECLOAD, Error loading record number: 4
-
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
-%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
+%YDB-E-FAILEDRECCOUNT, LOAD unable to process 1 records
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 4
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=5 -end=4 all.$fmt
@@ -376,7 +376,7 @@ $MUPIP load $fmtstr -begin=1 -end=1 all.$fmt
 Beginning LOAD at record number: 2
 
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
-%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 2
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=1 -end=2 all.$fmt
