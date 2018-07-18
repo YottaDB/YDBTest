@@ -31,8 +31,10 @@ echo ""
 
 
 echo "# Testing MUPIP SET -[NO]ENCRYPT in a properly set up environment"
-echo "# --------------------------------------------------------------------------"
-setenv gtm_passwd "48657920796f7520666f756e64206d79207365637265742120676f6f64206a6f6221" # Garbage string in hexidecimal format (hex is required for this env var)
+echo "# --------------------------------------------------------------------------------------------------------------------"
+#setenv gtm_passwd "69747320612073656372657420746f206576657279626f6479a" # Garbage string in hexidecimal format (hex is required for this env var)
+setenv gtm_passwd "69747320612073656372657420746f206576657279626f647921" # Garbage string in hexidecimal format (hex is required for this env var)
+
 
 
 echo "# \$MUPIP set -ENCRYPTABLE -REGION 'DEFAULT'"
@@ -45,8 +47,8 @@ echo ""
 echo ""
 
 
-echo "# Testing MUPIP SET -ENCRYPT  with no set gtm_passwd (expecting failure)"
-echo "# --------------------------------------------------------------------------"
+echo "# Testing MUPIP SET -[NO]ENCRYPT  with no set gtm_passwd (expecting failure for ENCRYPT and success for NOENCRYPT)"
+echo "# --------------------------------------------------------------------------------------------------------------------"
 unsetenv gtm_passwd
 
 echo "# \$MUPIP set -ENCRYPTABLE -REGION 'DEFAULT'"
@@ -61,8 +63,8 @@ echo ""
 echo ""
 
 
-echo "# Testing MUPIP SET -ENCRYPT  with garbage GNUPGHOME (expecting failure)"
-echo "# --------------------------------------------------------------------------"
+echo "# Testing MUPIP SET -[NO]ENCRYPT  with set garbage GNUPGHOME (expecting failure for ENCRYPT and success for NOENCRYPT)"
+echo "# --------------------------------------------------------------------------------------------------------------------"
 setenv GNUPGHOME "garbageValue"
 echo "GNUPGHOME: $GNUPGHOME"
 
@@ -74,8 +76,44 @@ $MUPIP set -NOENCRYPTABLE -REGION "DEFAULT"
 
 unsetenv GNUPGHOME
 
+echo ""
+echo ""
+
+
+#Add a test for $MUPIP SET -NOENCRYPT where:
+#		- encryptable flag is set to true
+#		- GNUPGHOME randomly set to garbage or not
+#		- gtm_passwd is randomly set or not set
+echo "# Testing MUPIP SET -[NO]ENCRYPT  with encryptable flag set true and GNUPGHOME and gtm_passwd is randomly set"
+echo "# --------------------------------------------------------------------------------------------------------------------"
+
+setenv set_GNUPGHOME `$gtm_tst/com/genrandnumbers.csh`
+setenv set_gtm_passwd `$gtm_tst/com/genrandnumbers.csh`
+
+echo "# \$MUPIP set -ENCRYPTABLE -REGION 'DEFAULT'"
+$MUPIP SET -ENCRYPTABLE -REGION "DEFAULT"
+
+if ($set_GNUPGHOME) then
+	setenv GNUPGHOME "garbageValue"
+	echo "#		GNUPGHOME set to $GNUPGHOME"
+else
+	echo "# 	GNUPGHOME left unset"
+endif
+
+if ($set_gtm_passwd) then
+	setenv gtm_passwd "726f736574796c65726d61727468616a6f6e6573646f6e6e616e6f62656c544152444953" # Garbage string in hexidecimal format (hex is required for this env var)
+	echo "#		gtm_passwd set to garbage value"
+else
+	unsetenv gtm_passwd
+	echo "#		gtm_passwd unset"
+endif
+
+echo "# \$MUPIP set -NOENCRYPTABLE -REGION 'DEFAULT'"
+$MUPIP SET -NOENCRYPTABLE -REGION "DEFAULT"
+
+
 # The following block is meant to test for failure when GNUPGHOME is set to a real
-# directory that is still invalide. However, MUPIP SET -[NO]ENCRYPTABLE still works.
+# directory that is still invalid. However, MUPIP SET -[NO]ENCRYPTABLE still works.
 # It is believed that this is due to a minsunderstanding with the patch notes.
 # It is very possible that "invalid directory" simply means "non-existent directory"
 
