@@ -87,6 +87,8 @@ echo ""
 echo "# Testing MUPIP SET -[NO]ENCRYPT  with encryptable flag set true and GNUPGHOME and gtm_passwd is randomly set"
 echo "# --------------------------------------------------------------------------------------------------------------------"
 
+#These randomly set variables (either 0 or 1) will be used to choose whether or not to set
+#GNUPGHOME and gtm_passwd respectively.
 setenv set_GNUPGHOME `$gtm_tst/com/genrandnumbers.csh`
 setenv set_gtm_passwd `$gtm_tst/com/genrandnumbers.csh`
 
