@@ -34,7 +34,7 @@
 # gtm8916  [jake]  Tests that the reciever process always restarts properly after the update process is killed. Previously the reciever process would often hang.
 # gtm8777  [jake]  Test that QUIET and QCALL calls to %GCE, %GSE, %RCE, and %RSE only output results for globals/routines that contain a match
 # gtm7483  [jake]  Test that MUPIP INTEG issues a DBKEYMX error in case of a long key name stored in the Directory Tree
-# gtm8900  [jake]  Test the functionality of MUPIP SET -[NO]ENCRYPTABLE
+# gtm8900  [jake]  Test the functionality of MUPIP SET -[NO]ENCRYPTABLE when GNUPGHOME and/or gtm_passwd are properly defined or not
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "v63004 test starts..."
