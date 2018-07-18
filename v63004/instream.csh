@@ -34,6 +34,7 @@
 # gtm8916  [jake]  Tests that the reciever process always restarts properly after the update process is killed. Previously the reciever process would often hang.
 # gtm8777  [jake]  Test that QUIET and QCALL calls to %GCE, %GSE, %RCE, and %RSE only output results for globals/routines that contain a match
 # gtm7483  [jake]  Test that MUPIP INTEG issues a DBKEYMX error in case of a long key name stored in the Directory Tree
+# gtm8900  [jake]  Test the functionality of MUPIP SET -[NO]ENCRYPTABLE
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "v63004 test starts..."
@@ -42,7 +43,7 @@ echo "v63004 test starts..."
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic ""
 setenv subtest_list_non_replic "$subtest_list_non_replic gtm8914 gtm8909 gtm8874 gtm8860 gtm8791 gtm8699 gtm8202 gtm1042 gtm8891 "
-setenv subtest_list_non_replic "$subtest_list_non_replic gtm8894 gtm8643 gtm8922 gtm8923 gtm8903 gtm3146 gtm8777 gtm7483"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm8894 gtm8643 gtm8922 gtm8923 gtm8903 gtm3146 gtm8777 gtm7483 gtm8900"
 setenv subtest_list_replic     ""
 setenv subtest_list_replic     "$subtest_list_replic gtm5730 gtm8906 gtm8916"
 
