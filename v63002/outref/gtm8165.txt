@@ -1,2 +1,65 @@
-# Testing write timeout greater than $gtm_tpnotacidtime (Expect a TPNOTACID message in the syslog)
-%YDB-I-TPNOTACID, HANG at tpnotacid+2^gtm5250 violates ACID properties of a TRANSACTION and could exceed .123 seconds; 
+# Setting gtm_tpnotacidtime to .123 seconds
+# Testing write timeout (write /wait(.999)) greater than .123 (Expect a TPNOTACID message in the syslog)
+ATTEMPT 0
+CRITICAL RESOURCES=0
+ATTEMPT 1
+CRITICAL RESOURCES=0
+ATTEMPT 2
+CRITICAL RESOURCES=0
+ATTEMPT 3
+##TEST_AWKCRITICAL RESOURCES=[0-9]*
+POST TRANSACTION
+CRITICAL RESOURCES=0
+# Checking the syslog
+%YDB-I-TPNOTACID, OPEN at tpnotacid+6^gtm8165 violates ACID properties of a TRANSACTION and could exceed .123 seconds; 
+
+--------------------------------------------------------------------------------
+
+# Testing write timeout (write /pass(,.999,"handle")) greater than .123 (Expect a TPNOTACID message in the syslog)
+ATTEMPT 0
+CRITICAL RESOURCES=0
+ATTEMPT 1
+CRITICAL RESOURCES=0
+ATTEMPT 2
+CRITICAL RESOURCES=0
+ATTEMPT 3
+##TEST_AWKCRITICAL RESOURCES=[0-9]*
+POST TRANSACTION
+CRITICAL RESOURCES=0
+# Checking the syslog
+%YDB-I-TPNOTACID, OPEN at tpnotacid+6^gtm8165 violates ACID properties of a TRANSACTION and could exceed .123 seconds; 
+
+--------------------------------------------------------------------------------
+
+# Testing write timeout (write /accept(,.999,"handle")) greater than .123 (Expect a TPNOTACID message in the syslog)
+ATTEMPT 0
+CRITICAL RESOURCES=0
+ATTEMPT 1
+CRITICAL RESOURCES=0
+ATTEMPT 2
+CRITICAL RESOURCES=0
+ATTEMPT 3
+##TEST_AWKCRITICAL RESOURCES=[0-9]*
+POST TRANSACTION
+CRITICAL RESOURCES=0
+# Checking the syslog
+%YDB-I-TPNOTACID, OPEN at tpnotacid+6^gtm8165 violates ACID properties of a TRANSACTION and could exceed .123 seconds; 
+
+--------------------------------------------------------------------------------
+
+# Testing write timeout (write /tls("client",.999)) greater than .123 (Expect a TPNOTACID message in the syslog)
+ATTEMPT 0
+CRITICAL RESOURCES=0
+ATTEMPT 1
+CRITICAL RESOURCES=0
+ATTEMPT 2
+CRITICAL RESOURCES=0
+ATTEMPT 3
+##TEST_AWKCRITICAL RESOURCES=[0-9]*
+POST TRANSACTION
+CRITICAL RESOURCES=0
+# Checking the syslog
+%YDB-I-TPNOTACID, OPEN at tpnotacid+6^gtm8165 violates ACID properties of a TRANSACTION and could exceed .123 seconds; 
+
+--------------------------------------------------------------------------------
+
