@@ -13,9 +13,8 @@
 
 tpnotacid
 	tstart ():(serial:transaction="BA")
-	write "ATTEMPT ",$trestart,!
-	write "CRITICAL RESOURCES=",$$^%PEEKBYNAME("node_local.in_crit","DEFAULT"),!
 	if $trestart>2  do
+	. write:($job=$$^%PEEKBYNAME("node_local.in_crit","DEFAULT")) "DB Crit of DEFAULT owned by pid = ",$$^%PEEKBYNAME("node_local.in_crit","DEFAULT"),!
 	. set sock="gtm8165.socket"
 	. open sock:(LISTEN="gtm8165sock.socket:LOCAL":attach="handle")::"SOCKET"
 	. use sock:(detach="handle")
@@ -26,8 +25,7 @@ tpnotacid
 	. zsystem "$ydb_dist/mumps -run ^%XCMD 'set ^Y=$increment(^i)'"
 	tcommit
 	use $p
-	write "POST TRANSACTION",!
-	write "CRITICAL RESOURCES=",$$^%PEEKBYNAME("node_local.in_crit","DEFAULT"),!
+	write "Post Transaction DB Crit of DEFAULT owned by pid = ",$$^%PEEKBYNAME("node_local.in_crit","DEFAULT"),!
 	quit
 
 

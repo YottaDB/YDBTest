@@ -29,4 +29,16 @@ foreach arg ("write /wait(.999)" 'write /pass(,.999,"handle")' 'write /accept(,.
 	echo "--------------------------------------------------------------------------------"
 	echo ""
 end
+
+foreach arg ("write /wait")
+	echo "# Testing write without timeout ($arg), Expect a TPNOTACID message in the syslog still)"
+	set t = `date +"%b %e %H:%M:%S"`
+	sleep 1
+	(($ydb_dist/mumps -run tpnotacid^gtm8165 $arg>>&tpnotacid.out)&;echo $!>>&pid.out)>& bckg.out
+	set pid=`cat pid.out`
+	$gtm_tst/com/getoper.csh "$t" "" getoper.txt "" "TPNOTACID"
+	kill -9 $pid
+	$grep TPNOTACID getoper.txt |& sed 's/.*%YDB-I-TPNOTACID/%YDB-I-TPNOTACID/' |& sed 's/$TRESTART.*//' |& $grep gtm8165
+
+end
 $gtm_tst/com/dbcheck.csh >>& dbcheck.out
