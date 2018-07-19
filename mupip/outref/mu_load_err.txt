@@ -18,13 +18,12 @@ Beginning LOAD at record number: 2
 %YDB-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
 %SYSTEM-E-ENO2, No such file or directory
 %YDB-E-RECLOAD, Error loading record number: 2
-
 %YDB-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat
 %SYSTEM-E-ENO2, No such file or directory
 %YDB-E-RECLOAD, Error loading record number: 3
-
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 LOAD TOTAL		Key Cnt: 3  Max Subsc Len: 8  Max Data Len: 2
+%YDB-E-FAILEDRECCOUNT, LOAD unable to process 2 records
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 4
 ##ALLOW_OUTPUT SPANNING_REGIONS
 ##SUSPEND_OUTPUT NONSPANNING_REGIONS
@@ -35,10 +34,10 @@ LOAD TOTAL		Key Cnt: 3  Max Subsc Len: 8  Max Data Len: 2
 		Value :
 "30"
 
-LOAD TOTAL		Key Cnt: 2  Max Subsc Len: 8  Max Data Len: 2
+LOAD TOTAL		Key Cnt: 2  Max Subsc Len: 6  Max Data Len: 1
+%YDB-E-FAILEDRECCOUNT, LOAD unable to process 3 records
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 5
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
-
 # 1b. Expect YDB-E-LDBINFMT, as .zwr is not a valid binary format
 ##SUSPEND_OUTPUT UNICODE_MODE
 GT.M MUPIP EXTRACT
@@ -76,53 +75,23 @@ Beginning LOAD at record number: 3
 
 %YDB-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
 %SYSTEM-E-ENO2, No such file or directory
-		Global variable : 
-%YDB-E-RECLOAD, Error loading record number: 3
-
-%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
-%SYSTEM-E-ENO2, No such file or directory
-		Global variable : 
-%YDB-E-RECLOAD, Error loading record number: 4
-
-%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
-%SYSTEM-E-ENO2, No such file or directory
-		Global variable : 
-%YDB-E-RECLOAD, Error loading record number: 5
-
-%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
-%SYSTEM-E-ENO2, No such file or directory
-		Global variable : 
-%YDB-E-RECLOAD, Error loading record number: 6
-
+%YDB-E-RECLOAD, Error loading record number: 3 to 6
 %YDB-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat
 %SYSTEM-E-ENO2, No such file or directory
-		Global variable : 
-%YDB-E-RECLOAD, Error loading record number: 7
-
-%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat
-%SYSTEM-E-ENO2, No such file or directory
-		Global variable : 
-%YDB-E-RECLOAD, Error loading record number: 8
-
-%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat
-%SYSTEM-E-ENO2, No such file or directory
-		Global variable : 
-%YDB-E-RECLOAD, Error loading record number: 9
-
+%YDB-E-RECLOAD, Error loading record number: 7 to 9
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 LOAD TOTAL		Key Cnt: 3  Max Subsc Len: 8  Max Data Len: 2
-%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 12
+%YDB-E-FAILEDRECCOUNT, LOAD unable to process 7 records
 ##ALLOW_OUTPUT SPANNING_REGIONS
 ##SUSPEND_OUTPUT NONSPANNING_REGIONS
 %YDB-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat
 %SYSTEM-E-ENO2, No such file or directory
-		Global variable : ^c("ten")
 %YDB-E-RECLOAD, Error loading record number: 10
-
 LOAD TOTAL		Key Cnt: 2  Max Subsc Len: 6  Max Data Len: 1
+%YDB-E-FAILEDRECCOUNT, LOAD unable to process 8 records
+##ALLOW_OUTPUT NONSPANNING_REGIONS
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 12
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
-
 # 2b. Expect YDB-E-LDBINFMT, as .bin is not a valid zwr format
 %YDB-E-LDBINFMT, Unrecognized header for load file
 ##SUSPEND_OUTPUT UNICODE_MODE
@@ -141,8 +110,8 @@ Beginning LOAD at record number: 3
 %YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): text in this file
 		Global variable : 
 %YDB-E-RECLOAD, Error loading record number: 3
-
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
+%YDB-E-FAILEDRECCOUNT, LOAD unable to process 1 records
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
 # 2f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist
 %YDB-E-FILEOPENFAIL, Failed to open file tmp.nofile
@@ -156,85 +125,23 @@ Beginning LOAD at record number: 3
 
 %YDB-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
 %SYSTEM-E-ENO2, No such file or directory
-		Global variable : 
-%YDB-E-RECLOAD, Error loading record number: 3
-
-%YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): 1
-		Global variable : 
-%YDB-E-RECLOAD, Error loading record number: 4
-
-%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
-%SYSTEM-E-ENO2, No such file or directory
-		Global variable : 
-%YDB-E-RECLOAD, Error loading record number: 5
-
-%YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): 2
-		Global variable : 
-%YDB-E-RECLOAD, Error loading record number: 6
-
-%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
-%SYSTEM-E-ENO2, No such file or directory
-		Global variable : 
-%YDB-E-RECLOAD, Error loading record number: 7
-
-%YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): one
-		Global variable : 
-%YDB-E-RECLOAD, Error loading record number: 8
-
-%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
-%SYSTEM-E-ENO2, No such file or directory
-		Global variable : 
-%YDB-E-RECLOAD, Error loading record number: 9
-
-%YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): ten
-		Global variable : 
-%YDB-E-RECLOAD, Error loading record number: 10
-
+%YDB-E-RECLOAD, Error loading record number: 3 to 10
 %YDB-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat
 %SYSTEM-E-ENO2, No such file or directory
-		Global variable : 
-%YDB-E-RECLOAD, Error loading record number: 11
-
-%YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): 2
-		Global variable : 
-%YDB-E-RECLOAD, Error loading record number: 12
-
-%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat
-%SYSTEM-E-ENO2, No such file or directory
-		Global variable : 
-%YDB-E-RECLOAD, Error loading record number: 13
-
-%YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): 4
-		Global variable : 
-%YDB-E-RECLOAD, Error loading record number: 14
-
-%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat
-%SYSTEM-E-ENO2, No such file or directory
-		Global variable : 
-%YDB-E-RECLOAD, Error loading record number: 15
-
-%YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): twentyABCD
-		Global variable : 
-%YDB-E-RECLOAD, Error loading record number: 16
-
+%YDB-E-RECLOAD, Error loading record number: 11 to 16
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 LOAD TOTAL		Key Cnt: 3  Max Subsc Len: 8  Max Data Len: 2
-%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 22
+%YDB-E-FAILEDRECCOUNT, LOAD unable to process 14 records
 ##ALLOW_OUTPUT SPANNING_REGIONS
 ##SUSPEND_OUTPUT NONSPANNING_REGIONS
 %YDB-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat
 %SYSTEM-E-ENO2, No such file or directory
-		Global variable : ^c("ten")
-%YDB-E-RECLOAD, Error loading record number: 17
-
-%YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): 30
-		Global variable : 
-%YDB-E-RECLOAD, Error loading record number: 18
-
+%YDB-E-RECLOAD, Error loading record number: 17 to 18
 LOAD TOTAL		Key Cnt: 2  Max Subsc Len: 6  Max Data Len: 1
+%YDB-E-FAILEDRECCOUNT, LOAD unable to process 16 records
+##ALLOW_OUTPUT NONSPANNING_REGIONS
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 22
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
-
 # 3b. Expect YDB-E-LDBINFMT, as .zwr is not a valid go format
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:.. ZWR
@@ -251,8 +158,8 @@ Beginning LOAD at record number: 3
 %YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): text in this file
 		Global variable : 
 %YDB-E-RECLOAD, Error loading record number: 3
-
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
+%YDB-E-FAILEDRECCOUNT, LOAD unable to process 1 records
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
 # 3f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist
 %YDB-E-FILEOPENFAIL, Failed to open file tmp.nofile
@@ -270,7 +177,6 @@ LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
 ##SUSPEND_OUTPUT NONSPANNING_REGIONS
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 5
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
-
 # 4b. Expect YDB-E-LDBINFMT, as .zwr is not a valid binary format
 ##SUSPEND_OUTPUT UNICODE_MODE
 GT.M MUPIP EXTRACT
@@ -336,8 +242,8 @@ Beginning LOAD at record number: 3
 %YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): text in this file
 		Global variable : 
 %YDB-E-RECLOAD, Error loading record number: 3
-
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
+%YDB-E-FAILEDRECCOUNT, LOAD unable to process 1 records
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
 # 5f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist
 %YDB-E-FILEOPENFAIL, Failed to open file tmp.nofile
@@ -366,8 +272,8 @@ Beginning LOAD at record number: 3
 %YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): text in this file
 		Global variable : 
 %YDB-E-RECLOAD, Error loading record number: 3
-
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
+%YDB-E-FAILEDRECCOUNT, LOAD unable to process 1 records
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
 # 6f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist
 %YDB-E-FILEOPENFAIL, Failed to open file tmp.nofile
@@ -383,9 +289,9 @@ Beginning LOAD at record number: 2
 %YDB-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
 %SYSTEM-E-ENO2, No such file or directory
 %YDB-E-RECLOAD, Error loading record number: 2
-
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
-%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
+%YDB-E-FAILEDRECCOUNT, LOAD unable to process 1 records
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 2
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 # 7b. Expect YDB-E-LDBINFMT, as .zwr is not a valid binary format
 ##SUSPEND_OUTPUT UNICODE_MODE
@@ -424,10 +330,9 @@ Beginning LOAD at record number: 3
 
 %YDB-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
 %SYSTEM-E-ENO2, No such file or directory
-		Global variable : 
 %YDB-E-RECLOAD, Error loading record number: 3
-
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
+%YDB-E-FAILEDRECCOUNT, LOAD unable to process 1 records
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 # 8b. Expect YDB-E-LDBINFMT, as .bin is not a valid zwr format
@@ -448,8 +353,8 @@ Beginning LOAD at record number: 3
 %YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): text in this file
 		Global variable : 
 %YDB-E-RECLOAD, Error loading record number: 3
-
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
+%YDB-E-FAILEDRECCOUNT, LOAD unable to process 1 records
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ##ALLOW_OUTPUT UNICODE_MODE
@@ -465,10 +370,9 @@ Beginning LOAD at record number: 3
 
 %YDB-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
 %SYSTEM-E-ENO2, No such file or directory
-		Global variable : 
 %YDB-E-RECLOAD, Error loading record number: 3
-
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
+%YDB-E-FAILEDRECCOUNT, LOAD unable to process 1 records
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 # 9b. Expect YDB-E-LDBINFMT, as .zwr is not a valid go format
@@ -487,8 +391,8 @@ Beginning LOAD at record number: 3
 %YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): text in this file
 		Global variable : 
 %YDB-E-RECLOAD, Error loading record number: 3
-
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
+%YDB-E-FAILEDRECCOUNT, LOAD unable to process 1 records
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 # 9f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist
@@ -507,7 +411,6 @@ LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
 ##SUSPEND_OUTPUT NONSPANNING_REGIONS
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 5
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
-
 # 10b. Expect YDB-E-LDBINFMT, as .zwr is not a valid binary format
 ##SUSPEND_OUTPUT UNICODE_MODE
 GT.M MUPIP EXTRACT
@@ -573,8 +476,8 @@ Beginning LOAD at record number: 3
 %YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): text in this file
 		Global variable : 
 %YDB-E-RECLOAD, Error loading record number: 3
-
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
+%YDB-E-FAILEDRECCOUNT, LOAD unable to process 1 records
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 # 11f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist
@@ -604,8 +507,8 @@ Beginning LOAD at record number: 3
 %YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): text in this file
 		Global variable : 
 %YDB-E-RECLOAD, Error loading record number: 3
-
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
+%YDB-E-FAILEDRECCOUNT, LOAD unable to process 1 records
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 # 12f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist
@@ -622,9 +525,9 @@ Beginning LOAD at record number: 2
 %YDB-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
 %SYSTEM-E-ENO2, No such file or directory
 %YDB-E-RECLOAD, Error loading record number: 2
-
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
-%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
+%YDB-E-FAILEDRECCOUNT, LOAD unable to process 1 records
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 2
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 # 13b. Expect YDB-E-LDBINFMT, as .zwr is not a valid binary format
 ##SUSPEND_OUTPUT UNICODE_MODE
@@ -663,10 +566,9 @@ Beginning LOAD at record number: 3
 
 %YDB-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
 %SYSTEM-E-ENO2, No such file or directory
-		Global variable : 
 %YDB-E-RECLOAD, Error loading record number: 3
-
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
+%YDB-E-FAILEDRECCOUNT, LOAD unable to process 1 records
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 # 14b. Expect YDB-E-LDBINFMT, as .bin is not a valid zwr format
@@ -687,8 +589,8 @@ Beginning LOAD at record number: 3
 %YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): text in this file
 		Global variable : 
 %YDB-E-RECLOAD, Error loading record number: 3
-
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
+%YDB-E-FAILEDRECCOUNT, LOAD unable to process 1 records
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ##ALLOW_OUTPUT UNICODE_MODE
@@ -704,10 +606,9 @@ Beginning LOAD at record number: 3
 
 %YDB-E-DBFILERR, Error with database file ##TEST_PATH##/a.dat
 %SYSTEM-E-ENO2, No such file or directory
-		Global variable : 
 %YDB-E-RECLOAD, Error loading record number: 3
-
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
+%YDB-E-FAILEDRECCOUNT, LOAD unable to process 1 records
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 # 15b. Expect YDB-E-LDBINFMT, as .zwr is not a valid go format
@@ -726,8 +627,8 @@ Beginning LOAD at record number: 3
 %YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): text in this file
 		Global variable : 
 %YDB-E-RECLOAD, Error loading record number: 3
-
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
+%YDB-E-FAILEDRECCOUNT, LOAD unable to process 1 records
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 # 15f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist
@@ -746,7 +647,6 @@ LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
 ##SUSPEND_OUTPUT NONSPANNING_REGIONS
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 5
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
-
 # 16b. Expect YDB-E-LDBINFMT, as .zwr is not a valid binary format
 ##SUSPEND_OUTPUT UNICODE_MODE
 GT.M MUPIP EXTRACT
@@ -812,8 +712,8 @@ Beginning LOAD at record number: 3
 %YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): text in this file
 		Global variable : 
 %YDB-E-RECLOAD, Error loading record number: 3
-
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
+%YDB-E-FAILEDRECCOUNT, LOAD unable to process 1 records
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 # 17f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist
@@ -843,8 +743,8 @@ Beginning LOAD at record number: 3
 %YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): text in this file
 		Global variable : 
 %YDB-E-RECLOAD, Error loading record number: 3
-
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
+%YDB-E-FAILEDRECCOUNT, LOAD unable to process 1 records
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 # 18f. Expect YDB-E-FILEOPENFAIL, as file doesn't exist
@@ -874,7 +774,6 @@ LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
 ##SUSPEND_OUTPUT NONSPANNING_REGIONS
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 5
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
-
 ##SUSPEND_OUTPUT UNICODE_MODE
 # 19c. Successfully load the x.go content in the database
 GT.M MUPIP EXTRACT
@@ -916,7 +815,6 @@ LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
 ##SUSPEND_OUTPUT NONSPANNING_REGIONS
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 5
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
-
 ##SUSPEND_OUTPUT UNICODE_MODE
 # 20c. Successfully load the x.go content in the database
 GT.M MUPIP EXTRACT
@@ -958,7 +856,6 @@ LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
 ##SUSPEND_OUTPUT NONSPANNING_REGIONS
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 5
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
-
 ##SUSPEND_OUTPUT UNICODE_MODE
 # 21c. Successfully load the x.go content in the database
 GT.M MUPIP EXTRACT
@@ -998,7 +895,6 @@ LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
 ##SUSPEND_OUTPUT NONSPANNING_REGIONS
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 5
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
-
 ##SUSPEND_OUTPUT UNICODE_MODE
 # 22c. Successfully load the x.go content in the database
 GT.M MUPIP EXTRACT
@@ -1217,8 +1113,8 @@ Beginning LOAD at record number: 3
 %YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): 1
 		Global variable : 
 %YDB-E-RECLOAD, Error loading record number: 4
-
 LOAD TOTAL		Key Cnt: 2  Max Subsc Len: 3  Max Data Len: 1
+%YDB-E-FAILEDRECCOUNT, LOAD unable to process 1 records
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 7
 ################### -format=go ##################
 a
@@ -1228,19 +1124,17 @@ Beginning LOAD at record number: 3
 %YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): 1
 		Global variable : 
 %YDB-E-RECLOAD, Error loading record number: 4
-
 %YDB-E-GVINVALID, 	^e=1
 			Invalid global name
 		Global variable : 
 %YDB-E-RECLOAD, Error loading record number: 5
-
 %YDB-E-GVINVALID, 	^f=1
 			Invalid global name
 		Global variable : 
 %YDB-E-RECLOAD, Error loading record number: 6
-
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
-%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
+%YDB-E-FAILEDRECCOUNT, LOAD unable to process 3 records
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 7
 ##################### gtm8223f.go ###################
 #################### no format ##################
 a
@@ -1254,37 +1148,29 @@ Beginning LOAD at record number: 3
 %YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): 1
 		Global variable : 
 %YDB-E-RECLOAD, Error loading record number: 4
-
 		Global variable : ^e
 %YDB-E-RECLOAD, Error loading record number: 5
-
 %YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): 1
 		Global variable : 
 %YDB-E-RECLOAD, Error loading record number: 6
-
 		Global variable : ^f
 %YDB-E-RECLOAD, Error loading record number: 7
-
 %YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): 1
 		Global variable : 
 %YDB-E-RECLOAD, Error loading record number: 8
-
 		Global variable : ^g
 %YDB-E-RECLOAD, Error loading record number: 9
-
 %YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): 1
 		Global variable : 
 %YDB-E-RECLOAD, Error loading record number: 10
-
 		Global variable : ^h
 %YDB-E-RECLOAD, Error loading record number: 11
-
 %YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): 1
 		Global variable : 
 %YDB-E-RECLOAD, Error loading record number: 12
-
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
-%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
+%YDB-E-FAILEDRECCOUNT, LOAD unable to process 9 records
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 13
 ################### -format=go ##################
 a
 b
@@ -1293,8 +1179,8 @@ Beginning LOAD at record number: 3
 %YDB-E-NOTGBL, Expected a global variable name starting with an up-arrow (^): 1
 		Global variable : 
 %YDB-E-RECLOAD, Error loading record number: 4
-
 LOAD TOTAL		Key Cnt: 4  Max Subsc Len: 3  Max Data Len: 1
+%YDB-E-FAILEDRECCOUNT, LOAD unable to process 1 records
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 13
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
