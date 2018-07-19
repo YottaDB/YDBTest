@@ -3,6 +3,9 @@
  * Copyright (c) 2015 Fidelity National Information 		*
  * Services, Inc. and/or its subsidiaries. All rights reserved.	*
  *								*
+ * Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	*
+ * All rights reserved.						*
+ *								*
  *	This source code contains the intellectual property	*
  *	of its copyright holder(s), and is made available	*
  *	under a license.  If you do not know the terms of	*
@@ -16,9 +19,11 @@
 #include "cli.h"
 #include "compiler.h"
 #include "nametabtyp.h"
+#include "funsvn.h"
 
 LITREF nametabent svn_names[];
 LITREF unsigned char svn_index[];
+LITREF svn_data_type svn_data[];
 
 GBLDEF  CLI_ENTRY       *cmd_ary = NULL; /* This test does not have any command tables so initialize command array to NULL */
 
@@ -35,8 +40,13 @@ int main( int argc, char *argv[])
 	printf("\tset $etrap=\"do ^incretrap\"\n");
 	/* Iterate over all the names and print them out */
 	for (i = 0; i < totalsvns; i++)
-		printf("\tset svn=$$strip(\"$%s\"),val=$$pull(svn) write svn,\"=\",$$enq(val),?48 zwrite @svn\n",
-				svn_names[i].name);
+	{
+		if (svn_data[i].os_syst & UNIX_OS)
+		{
+			printf("\tset svn=$$strip(\"$%s\"),val=$$pull(svn) write svn,\"=\",$$enq(val),?48 zwrite @svn\n",
+					svn_names[i].name);
+		}
+	}
 	printf("\twrite !\tzhalt error\n");
 	/* svn_names[] entries (as defined in expritem.c) may have a trailing asterisk, strip that in MUMPS */
 	printf("strip(svn)\n quit $translate(svn,\"*\")\n");
