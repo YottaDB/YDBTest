@@ -104,7 +104,6 @@ LOAD TOTAL		Key Cnt: 2413  Max Subsc Len: 42  Max Data Len: 78
 ##ALLOW_OUTPUT  COLLATION
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 184
 ##ALLOW_OUTPUT  NON_COLLATION
-
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -119,12 +118,7 @@ YDB>
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/load.dat created
 ##SOURCE_PATH##/mupip load -format=zwr ＤＡＴＡ.ＺＷＲ
 我能吞下玻璃而不伤身体 UTF-8
-##SUSPEND_OUTPUT  COLLATION
-##TEST_AWK.*
-##SUSPEND_OUTPUT  NON_COLLATION
-##ALLOW_OUTPUT  COLLATION
-##TEST_AWK.*
-##ALLOW_OUTPUT  NON_COLLATION
+##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 543981  Max Subsc Len: 130  Max Data Len: 78
