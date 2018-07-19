@@ -924,15 +924,10 @@ mupip load load.go2
 Beginning LOAD at record number: 3
 
 %YDB-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/mumps.mjl for database file ##TEST_PATH##/mumps.dat
-		Global variable : ^g
-%YDB-E-RECLOAD, Error loading record number: 3
-
-%YDB-E-JNLFILOPN, Error opening journal file ##TEST_PATH##/mumps.mjl for database file ##TEST_PATH##/mumps.dat
-		Global variable : ^h
-%YDB-E-RECLOAD, Error loading record number: 4
-
-LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 3  Max Data Len: 11
-%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
+%YDB-E-RECLOAD, Error loading record number: 3 to 4
+LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
+%YDB-E-FAILEDRECCOUNT, LOAD unable to process 2 records
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 4
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -947,15 +942,10 @@ mupip load load.go3
 Beginning LOAD at record number: 3
 
 %YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/mumps.dat
-		Global variable : ^d
-%YDB-E-RECLOAD, Error loading record number: 3
-
-%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/mumps.dat
-		Global variable : ^e
-%YDB-E-RECLOAD, Error loading record number: 4
-
-LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 3  Max Data Len: 248
-%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
+%YDB-E-RECLOAD, Error loading record number: 3 to 4
+LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
+%YDB-E-FAILEDRECCOUNT, LOAD unable to process 2 records
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 4
 OK.
 
 ##SOURCE_PATH##/mupip
@@ -970,15 +960,10 @@ mupip load load.go2
 Beginning LOAD at record number: 3
 
 %YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/mumps.dat
-		Global variable : ^g
-%YDB-E-RECLOAD, Error loading record number: 3
-
-%YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/mumps.dat
-		Global variable : ^h
-%YDB-E-RECLOAD, Error loading record number: 4
-
-LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 3  Max Data Len: 11
-%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
+%YDB-E-RECLOAD, Error loading record number: 3 to 4
+LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
+%YDB-E-FAILEDRECCOUNT, LOAD unable to process 2 records
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 4
 OK.
 
 ##SOURCE_PATH##/mupip
