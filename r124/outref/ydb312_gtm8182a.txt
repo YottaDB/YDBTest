@@ -1,0 +1,28 @@
+# Create the DB
+
+
+# start INST1-INST2 and INST3-INST4 connections
+==Executing MULTISITE_REPLIC 'START INST1 INST2'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+==Executing MULTISITE_REPLIC 'START INST3 INST4'==
+Starting Primary Source Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
+
+# run updateINST3^ydb312gtm8182a.m to write variable to INST3 DB to read later
+
+# run ydb312gtm8182a.m to:
+#  	-update INST1
+#  	-read from INST3
+#  	-show attached processes of each INST JNLPOOL
+
+    Update the INST1 DB
+    Read from INST3 DB
+        Django: Unchained
+    number of processes attached to JNLPOOL1: 2
+    number of processes attached to JNLPOOL2: 2
+
+
+# Check and shutdown the DB
+----------------------------------------------------------------------------
+# DB has shutdown gracefully
