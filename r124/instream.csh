@@ -21,6 +21,7 @@
 # jnlunxpcterr     [nars]  Test that MUPIP JOURNAL -EXTRACT does not issue JNLUNXPCTERR error in the face of concurrent udpates
 # ydb293	   [vinay] Tests the update process operates correctly with triggers and SET $ZGBLDIR
 # ydb297	   [vinay] Demonstrates LOCK commands work correctly when there are more than 31 subscripts that hash to the same value
+# ydb312	   [jake]  Tests a fix for the wrong instace DB being frozen by an error in a process accessing mulitple instances
 #-------------------------------------------------------------------------------------------------------------
 
 echo "r124 test starts..."
@@ -30,7 +31,7 @@ setenv subtest_list_common     ""
 setenv subtest_list_non_replic ""
 setenv subtest_list_non_replic "$subtest_list_non_replic readonly ydb275socketpass ydb280socketwait jnlunxpcterr ydb297"
 setenv subtest_list_replic     ""
-setenv subtest_list_replic     "$subtest_list_replic ydb282srcsrvrerr ydb293"
+setenv subtest_list_replic     "$subtest_list_replic ydb282srcsrvrerr ydb293 ydb312_gtm8182c"
 
 setenv subtest_exclude_list    ""
 # filter out white box tests that cannot run in pro
