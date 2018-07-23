@@ -1,0 +1,26 @@
+Create the DB
+
+
+# Start INST1 INST2 replication
+==Executing MULTISITE_REPLIC 'START INST1 INST2'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+
+# Start INST3 INST4 replication
+==Executing MULTISITE_REPLIC 'START INST3 INST4'==
+Starting Primary Source Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
+
+# Run ydb312gtm8182f.m to attempt to lock a variable in INST3 before attempting to set it
+
+# Stop INST3 INST4 replication
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##
+==Executing MULTISITE_REPLIC 'STOP INST3 INST4'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
+Shutting down Primary Source Server Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+
+Check and shutdown the DB
+----------------------------------------------------------------------------
+DB has shutdown gracefully
