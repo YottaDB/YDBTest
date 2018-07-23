@@ -19,3 +19,7 @@ if ($status) then
 endif
 perl $gtm_tst/com/expectsanitize.pl expect.outx > expect_sanitized.outx
 cat expect_sanitized.outx
+echo ""
+echo '# Running $GDE asdfasdfasdf from the shell prompt, expect the same error status'
+$GDE asdfasdfasdf;echo $status
+$ydb_dist/mumps -run gtm8711
