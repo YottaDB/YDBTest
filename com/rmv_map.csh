@@ -11,6 +11,18 @@
 #								#
 #################################################################
 #
+# $GDE CHANGE -INSTANCE -FILE_NAME=\"\" will not work inside of an MSR RUN <inst name>
+# command becuase of how special characters are handled.
+#
+# This script is desinged to be called inside of the MSR RUN command in order to
+# work around this issue and effectively run a $GDE CHANGE -INSTANCE -FILE_NAME=""
+# on the specified instance
+#
+# USAGE:
+#	$MSR RUN <inst name> "$gtm_tst/com/rmv_map.csh"
+# 	or
+#	$gtm_tst/com/rmv_map.csh
+
 setenv gtmgbldir `pwd`/mumps.gld
 setenv ydb_gbldir `pwd`/mumps.gld
 
