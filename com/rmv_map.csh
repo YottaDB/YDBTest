@@ -11,5 +11,7 @@
 #								#
 #################################################################
 #
+setenv gtmgbldir `pwd`/mumps.gld
+setenv ydb_gbldir `pwd`/mumps.gld
 
 $GDE CHANGE -INSTANCE -FILE_NAME=\"\"
