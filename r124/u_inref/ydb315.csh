@@ -11,6 +11,10 @@
 #								#
 #################################################################
 #
+#The compile env vars are unset to avoid complications from parent environment
+unsetenv ydb_compile
+unsetenv gtmcompile
+
 echo "# Run nosetZcomp^ydb315.m to attempt to compile blktoodeep.m with no '-nowarning' flag (expecting warnings)"
 $ydb_dist/mumps -run nosetZcomp^ydb315
 echo ""
