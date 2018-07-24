@@ -19,3 +19,29 @@ GDE> exit
 > echo $status
 114
 > 
+# Running $GDE asdfasdfasdf from the shell prompt, expect the same error status
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+%GDE-E-KEYWRDBAD, ASDFASDFASDF is not a valid verb in this context
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+114
+
+
+# Simulating EOF on $PRINCIPAL
+spawn /usr/local/bin/tcsh -f
+> # Expect the shell prompt
+stty cols 132
+# Invoking GDE Directly From Shell
+$ydb_dist/mumps -run ^GDE
+> $ydb_dist/mumps -run ^GDE
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+GDE> # Executing Ungraceful Shutdown of Terminal (EOF)
+ASSOCIATED DUMP FILE:
+GDEDUMP.DMP

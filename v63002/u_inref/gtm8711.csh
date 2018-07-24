@@ -21,5 +21,17 @@ perl $gtm_tst/com/expectsanitize.pl expect.outx > expect_sanitized.outx
 cat expect_sanitized.outx
 echo ""
 echo '# Running $GDE asdfasdfasdf from the shell prompt, expect the same error status'
-$GDE asdfasdfasdf;echo $status
-$ydb_dist/mumps -run gtm8711
+$GDE asdfasdfasdf
+echo $status
+
+echo ""
+echo ""
+echo '# Simulating EOF on $PRINCIPAL'
+(expect -d $gtm_tst/$tst/u_inref/gtm8711b.exp > expect.outx) >& xpect.dbg
+if ($status) then
+	echo "EXPECT FAILED"
+endif
+perl $gtm_tst/com/expectsanitize.pl expect.outx > expect_sanitized.outx
+cat expect_sanitized.outx
+echo "ASSOCIATED DUMP FILE:"
+ls *DUMP*
