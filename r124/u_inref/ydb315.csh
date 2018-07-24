@@ -15,19 +15,48 @@ echo "# Run nosetZcomp^ydb315.m to attempt to compile blktoodeep.m with no '-now
 $ydb_dist/mumps -run nosetZcomp^ydb315
 echo ""
 
-echo "# Run setZcomp^ydb315.m to attempt to compile blktoodeep.m with the '-nowarning' flag set directly (expecting no warnings)"
-$ydb_dist/mumps -run setZcomp^ydb315
+echo "# Run setZcompNoWarning^ydb315.m to attempt to compile blktoodeep.m with the '-nowarning' flag set directly (expecting no warnings)"
+$ydb_dist/mumps -run setZcompNoWarning^ydb315
 echo ""
 
 setenv ydb_compile "-nowarning"
-unsetenv ydb_compile
-echo "# Run noZcomp^ydb315.m to attempt to compile blktoodeep.m with the '-nowarning' flag set in "'$'"ydb_compile (expecting no warnings)"
-$ydb_dist/mumps -run setZcomp^ydb315
+echo "# Run nosetZcomp^ydb315.m to attempt to compile blktoodeep.m with the '-nowarning' flag set in "'$'"ydb_compile (expecting no warnings)"
+$ydb_dist/mumps -run nosetZcomp^ydb315
 echo ""
 
+unsetenv ydb_compile
+
 setenv gtmcompile "-nowarning"
-echo "# Run noZcomp^ydb315.m to attempt to compile blktoodeep.m with the '-nowarning' flag set in "'$'"gtmcompile (expecting no warnings)"
-$ydb_dist/mumps -run setZcomp^ydb315
+echo "# Run nosetZcomp^ydb315.m to attempt to compile blktoodeep.m with the '-nowarning' flag set in "'$'"gtmcompile (expecting no warnings)"
+$ydb_dist/mumps -run nosetZcomp^ydb315
 echo ""
 
 unsetenv gtmcompile
+
+setenv gtmcompile "-warning"
+echo "# Run setZcompNoWarning^ydb315.m to attempt to compile blktoodeep.m with the '-warning' flag set in "'$'"gtmcompile  and the '-nowarning' flag set directly (expecting no warnings)"
+$ydb_dist/mumps -run setZcompNoWarning^ydb315
+echo ""
+
+unsetenv gtmcompile
+
+setenv ydb_compile "-warning"
+echo "# Run setZcompNoWarning^ydb315.m to attempt to compile blktoodeep.m with the '-warning' flag set in "'$'"ydb_compile  and the '-nowarning' flag set directly (expecting no warnings)"
+$ydb_dist/mumps -run setZcompNoWarning^ydb315
+echo ""
+
+unsetenv ydb_compile
+
+setenv gtmcompile "-nowarning"
+echo "# Run setZcompWarning^ydb315.m to attempt to compile blktoodeep.m with the '-nowarning' flag set in "'$'"gtmcompile  and the '-warning' flag set directly (expecting warnings)"
+$ydb_dist/mumps -run setZcompWarning^ydb315
+echo ""
+
+unsetenv gtmcompile
+
+setenv ydb_compile "-nowarning"
+echo "# Run setZcompWarning^ydb315.m to attempt to compile blktoodeep.m with the '-nowarning' flag set in "'$'"ydb_compile  and the '-warning' flag set directly (expecting warnings)"
+$ydb_dist/mumps -run setZcompWarning^ydb315
+echo ""
+
+unsetenv ydb_compile

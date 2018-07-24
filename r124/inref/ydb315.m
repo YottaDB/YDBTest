@@ -11,21 +11,23 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 ydb315
-	WRITE "nosetZcomp"
-	DO nosetZcomp
-	WRITE !
 
-	WRITE "setZcomp"
-	DO setZcomp
-	WRITE !
-
-	quit
-
-setZcomp
-	SET $ZCOMPILE=$ZCOMPILE_" -nowarning"
-	ZCOMPILE "$gtm_tst/r124/inref/blktoodeep.m"
 	quit
 
 nosetZcomp
 	ZCOMPILE "$gtm_tst/r124/inref/blktoodeep.m"
+
         quit
+
+setZcompNoWarning
+	SET $ZCOMPILE=$ZCOMPILE_" -nowarning"
+	ZCOMPILE "$gtm_tst/r124/inref/blktoodeep.m"
+
+	quit
+
+
+setZcompWarning
+	SET $ZCOMPILE=$ZCOMPILE_" -warning"
+	ZCOMPILE "$gtm_tst/r124/inref/blktoodeep.m"
+
+	quit
