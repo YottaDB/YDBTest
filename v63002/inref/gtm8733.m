@@ -12,7 +12,6 @@
 ;
 gtm8733
 	view "NOBADCHAR"
-	write $zchset,!
-	write $view("BADCHAR"),!
-	write $zconvert("gtm8733","U")
+	set z=$zconvert($zch(128),"U")
+	zwrite
 	quit

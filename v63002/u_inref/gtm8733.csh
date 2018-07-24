@@ -13,5 +13,7 @@
 #
 #
 #
+echo "# Switching to UTF-8 Mode"
 $switch_chset "UTF-8"
+echo '# Running $ZCONVERT in NOBADCHAR mode'
 $ydb_dist/mumps -run gtm8733
