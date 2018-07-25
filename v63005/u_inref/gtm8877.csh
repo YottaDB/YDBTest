@@ -28,7 +28,6 @@ cat > $ydb_dist/restrict.txt << EOF
 ZSYSTEM_FILTER:filterfn^gtm8877
 PIPE_FILTER:filterfn^gtm8877
 EOF
-touch $ydb_dist/restrct.txt
 chmod -w $ydb_dist/restrict.txt
 echo "# FILTER RETURNING -1"
 $ydb_dist/mumps -run tpzsystemfn^gtm8877
@@ -42,7 +41,6 @@ cat > $ydb_dist/restrict.txt << EOF
 ZSYSTEM_FILTER:filterfn2^gtm8877
 PIPE_FILTER:filterfn2^gtm8877
 EOF
-touch $ydb_dist/restrict.txt
 chmod -w $ydb_dist/restrict.txt
 echo "# FILTER RETURNING A STRING"
 $ydb_dist/mumps -run zsystemfn^gtm8877
@@ -65,7 +63,6 @@ PIPE_OPEN
 ZSYSTEM_FILTER:filterfn2^gtm8877
 PIPE_FILTER:filterfn2^gtm8877
 EOF
-touch $ydb_dist/restrict.txt
 chmod -w $ydb_dist/restrict.txt
 echo "# FILTER WITH ZSYSTEM AND PIPE_OPEN RESTRICTED"
 $ydb_dist/mumps -run zsystemfn^gtm8877
@@ -79,7 +76,6 @@ cat > $ydb_dist/restrict.txt << EOF
 ZSYSTEM_FILTER:reczsystfilter^gtm8877
 PIPE_FILTER:recpipefilter^gtm8877
 EOF
-touch $ydb_dist/restrict.txt
 chmod -w $ydb_dist/restrict.txt
 echo "# RECURSIVE FILTERS"
 $ydb_dist/mumps -run zsystemfn^gtm8877
