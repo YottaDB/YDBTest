@@ -1,0 +1,43 @@
+Create the DB
+
+
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/GBL1.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/GBL1.gld
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/GBL2.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/GBL2.gld
+# Start INST1 INST2 replication
+==Executing MULTISITE_REPLIC 'START INST1 INST2'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+
+# Run ydb312gtm8182g.m to update DB through GBL1 and GBL2
+
+     Before updates: 
+     ----------------: 
+     Attached processes: 1
+     ##TEST_AWKJNLPOOL ftok : mumps.repl : \(semval=1, semncnt=0, semzcnt=0, sempid=[0-9]*\)
+
+     Updating through GBL1.gld
+     Updating through GBL2.gld
+
+     After updates: 
+     ----------------: 
+     Attached processes: 2
+     ##TEST_AWKJNLPOOL ftok : mumps.repl : \(semval=2, semncnt=0, semzcnt=0, sempid=[0-9]*\)
+
+
+# Write variables to the screen from mumps.gld
+#     ^Protagonist: Hamilton
+#     ^Antagonist : Burr
+
+Check and shutdown the DB
+----------------------------------------------------------------------------
+DB has shutdown gracefully
