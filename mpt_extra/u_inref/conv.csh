@@ -4,6 +4,9 @@
 # Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -93,6 +96,7 @@ echo "#####################"$cnt"###################"
 @ cnt = $cnt + 1
 $GTM << \GTMEND
 WRITE "E:",$$FUNC^%HD("E")
+WRITE """"":",$$FUNC^%HD("")
 WRITE "0xE:",$$FUNC^%HD("0xE")
 WRITE "0xe:",$$FUNC^%HD("0xe")
 WRITE "0XE:",$$FUNC^%HD("0XE")

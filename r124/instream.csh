@@ -21,6 +21,7 @@
 # jnlunxpcterr     [nars]  Test that MUPIP JOURNAL -EXTRACT does not issue JNLUNXPCTERR error in the face of concurrent udpates
 # ydb293	   [vinay] Tests the update process operates correctly with triggers and SET $ZGBLDIR
 # ydb297	   [vinay] Demonstrates LOCK commands work correctly when there are more than 31 subscripts that hash to the same value
+# ydb315	   [jake]  Tests that the ZCOMPILE operation will not display warning if $ZCOMPILE contains "-nowarnings"
 # ydb312_gtm8182e  [jake]  Tests a fix for an incorrect GTMASSERT2 error when [gtm/ydb]_repl_instance env vars are unset and an instance has no repl file mapping
 #-------------------------------------------------------------------------------------------------------------
 
@@ -29,7 +30,7 @@ echo "r124 test starts..."
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic ""
-setenv subtest_list_non_replic "$subtest_list_non_replic readonly ydb275socketpass ydb280socketwait jnlunxpcterr ydb297"
+setenv subtest_list_non_replic "$subtest_list_non_replic readonly ydb275socketpass ydb280socketwait jnlunxpcterr ydb297 ydb315"
 setenv subtest_list_replic     ""
 setenv subtest_list_replic     "$subtest_list_replic ydb282srcsrvrerr ydb293 ydb312_gtm8182e"
 
