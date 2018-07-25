@@ -36,7 +36,7 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
     Change to INST1 global directory and set ^a
     Change to mumps.gld global directory and set ^a
     (Expecting REPLINSTMISMTCH error)
-##TEST_AWK%YDB-E-REPLINSTMISMTCH, Process has replication instance file ##TEST_PATH##/mumps.repl \(jnlpool shmid = [0-9]*\) open but database ##REMOTE_TEST_PATH##/instance3/mumps.dat is bound to instance file ##REMOTE_TEST_PATH##/instance3/mumps.repl \(jnlpool shmid = [0-9]*\)
+%YDB-E-REPLINSTUNDEF, Replication instance environment variable $ydb_repl_instance/$gtm_repl_instance is undefined
 		At M source location ydb312gtm8182e+10^ydb312gtm8182e
 
 YDB>
@@ -53,4 +53,4 @@ Shutting down Primary Source Server Server in ##FILTERED##_REMOTE_TEST_PATH_/ins
 ----------------------------------------------------------------------------
 # DB has shutdown gracefully
 spencer:##TEST_PATH##/msr_execute_12.out
-##TEST_AWK%YDB-E-REPLINSTMISMTCH, Process has replication instance file ##TEST_PATH##/mumps.repl \(jnlpool shmid = [0-9]*\) open but database ##REMOTE_TEST_PATH##/instance3/mumps.dat is bound to instance file ##REMOTE_TEST_PATH##/instance3/mumps.repl \(jnlpool shmid = [0-9]*\)
+%YDB-E-REPLINSTUNDEF, Replication instance environment variable $ydb_repl_instance/$gtm_repl_instance is undefined
