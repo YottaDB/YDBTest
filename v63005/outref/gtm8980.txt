@@ -1,0 +1,70 @@
+# Testing
+# Create a 3 region DB with gbl_dir mumps.gld and regions DEFAULT, AREG, and BREG
+
+
+# Run test1a^gtm8980.m and test1b^gtm8980.m
+Testing that VIEW can take an empty string without seg fault
+--------------------------------------------------------------------------
+
+VIEW "" 
+%YDB-E-VIEWNOTFOUND, View parameter  not valid
+		At M source location test1a+5^gtm8980
+
+YDB>
+
+Testing that $VIEW can take an empty string without seg fault
+--------------------------------------------------------------------------
+
+$VIEW ("") 
+%YDB-E-VIEWNOTFOUND, View parameter  not valid
+		At M source location test1b+5^gtm8980
+
+YDB>
+
+# Run test2^gtm8980.m
+Testing that $VIEW("STATSHARE") returns the correct values
+--------------------------------------------------------------------------
+
+VIEW "STATSHARE" 
+$VIEW("STATSHARE"): 
+1
+
+VIEW "NOSTATSHARE" 
+$VIEW("STATSHARE"): 
+0
+
+VIEW "STATSHARE":"AREG" 
+$VIEW("STATSHARE"): 
+2
+
+
+# Run test3^gtm8980.m
+Test $VIEW("STATSHARE","<region>") for selectively disabled region
+--------------------------------------------------------------------------
+
+VIEW "NOSTATSHARE" 
+VIEW "NOSTATSHARE":"BREG" 
+$VIEW("STATSHARE","BREG"): 
+0
+
+
+# Run test4^gtm8980.m
+Test $VIEW("GARBAGE PARAMETER") error message for parameter name
+--------------------------------------------------------------------------
+
+$VIEW("GARBAGE PARAMETER"): 
+%YDB-E-VIEWNOTFOUND, View parameter GARBAGE PARAMETER not valid
+		At M source location test4a+5^gtm8980
+
+YDB>
+
+Test VIEW "GARBAGE PARAMETER" error message for parameter name
+--------------------------------------------------------------------------
+
+VIEW "GARBAGE PARAMETER" 
+%YDB-E-VIEWNOTFOUND, View parameter GARBAGE PARAMETER not valid
+		At M source location test4b+5^gtm8980
+
+YDB>
+
+# Shut down the DB and backup necessary files to sub directory

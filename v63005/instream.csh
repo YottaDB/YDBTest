@@ -13,8 +13,9 @@
 #
 #-------------------------------------------------------------------------------------
 # List of subtests of the form "subtestname [author] description"
-#-------------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------------------------------------
+# gtm8980 [jake] Tests VIEW & $VIEW for avoiding sig-11 in certain rare use cases and for changes in certain output values.
+#----------------------------------------------------------------------------------------------------------------------------
 
 echo "v63005 test starts..."
 
@@ -22,6 +23,7 @@ echo "v63005 test starts..."
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic ""
 setenv subtest_list_replic     ""
+setenv subtest_list_replic     "$subtest_list_replic gtm8980"
 
 
 if ($?test_replic == 1) then
