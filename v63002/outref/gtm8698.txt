@@ -1,0 +1,7 @@
+# Changing the region to AUTODB and setting the file to an invalid .dat file
+# This will trigger an error when we attempt to update the database
+
+# Attempting to update the database
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/a/a.dat_%YGTM
+# Checking the syslog
+%YDB-E-MUCREFILERR, Error in/at %XCMD+5^%XCMD creating database ##TEST_PATH##/a/a.dat_%YGTM (region DEFAULT), 

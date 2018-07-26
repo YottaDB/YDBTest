@@ -27,9 +27,11 @@ tpntpupd;
 	; it will access the different global directories either by (re)setting $ZGBLDIR or with external references (^|"x.gld"|x)
 	; if the two global directories use the same database files, this will test C9E04-002596
 	;
+	set $etrap="zshow ""*"" halt"
 	set nreg=8
 	set tpopers=1+$r(5)	; # of database operations within a TP transaction
 	set tpopers=2**tpopers	; is randomly chosen anywhere from 2**1 to 2**5
+	set tpnomultigld=$select(($ztrnlnm("test_subtest_name")="C9E04002596")&(""'=$ztrnlnm("test_replic")):1,1:0)
 	;
 	; Test that NOISOLATION commands for non-existent globals in the default global directory work fine even if
 	; there is a huge list of non-existent globals that are specified. This is specifically present to test that
@@ -87,7 +89,7 @@ tpntpupd;
 	.	if type=0 do nontp
 	.	if type=1 do tp
 	;
-	if $data(^secgldno)&(secgldno'<4) do
+	if $data(^secgldno)&(secgldno'<4)&('tpnomultigld) do
 	.	; Before quitting, check that conflicting NOISOLATION statuses for the same global variable have
 	.	; been resolved AFTER the database was opened. It is possible that the tp and nontp tests above did
 	.	; not open all regions in all global directories. To work around that, open all regions before doing
@@ -114,6 +116,7 @@ tpntpupd;
 nontp	;
 	set space=$j(" ",$tl+1)
 	do oper
+	if $data(secgldno) do pickgld
 	write space,str,!
 	xecute str
 	quit
@@ -124,13 +127,17 @@ tp	;
 	set count=$r(tpopers)
 	write space,"tstart ():serial",!
 	tstart ():serial
+	if tpnomultigld&($tlevel=1)&$data(secgldno) do
+	. set str="set tpgld="""_secgldnm_$random(secgldno)_".gld"""
+	. write space,str,!
+	. xecute str
 	do space
 	write space,"$trestart = ",$trestart,!
 	for i=1:1:count  do
 	.	set nest=$r(2)
 	.	if nest=1 do tpnest
 	.	do oper
-	.	if $data(secgldno) do pickgld
+	.	if ($data(secgldno))&(str'["tpgld") do pickgld
 	.	write space,str,!
 	.	if str'="" xecute str
 	do space
@@ -165,14 +172,18 @@ oper	;
 	if operation=5 do noop
 	quit
 
+tpnomultigldcheck(str)
+	if tpnomultigld set str="set $zgbldir=tpgld "_str
+	quit
+
 xset	;
-	; VMS does not support spanning nodes so use huge nodes only in Unix
-	if $zv["VMS" set str="set ^"_global_"("_index_")="_$j
-	else         set str="set ^"_global_"("_index_")=$j($j,10+$r(7500))"
+	set str="set ^"_global_"("_index_")=$j($j,10+$r(7500))"
+	do tpnomultigldcheck(.str)
 	quit
 
 xkill	;
 	set str="kill ^"_global_"("_index_")"
+	do tpnomultigldcheck(.str)
 	quit
 
 xget	;
@@ -184,6 +195,7 @@ xlock	;
 	quit
 xincr	;
 	set str="set x=$increment(^"_global_"("_index_"))"
+	do tpnomultigldcheck(.str)
 	quit
 
 noop	;

@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -19,9 +22,11 @@ $gtm_exe/mupip set -file -journal=on,nobe,enable mumps.dat
 $gtm_exe/mupip set -file -journal=on,nobe,enable a.dat
 $gtm_exe/mupip set -file -journal=on,nobe,enable b.dat
 
-$gtm_exe/mupip journal -extract=extd1.out -forward mumps.mjl
-$gtm_exe/mupip journal -extract=exta1.out -forward a.mjl
-$gtm_exe/mupip journal -extract=extb1.out -forward b.mjl
+alias jnlext '$gtm_exe/mupip journal -extract=\!:1 -forward \!:2 |& $grep -v "Backward processing"'
+
+jnlext extd1.out mumps.mjl
+jnlext exta1.out a.mjl
+jnlext extb1.out b.mjl
 
 $GTM << endt
 w !,"Starting tests via viagtcm^tstswjnl",! do viagtcm^tstswjnl
@@ -31,9 +36,9 @@ endt
 #Since we are doing connections across OMI the regions will be open the issue is similar to switching journal files on the fly.
 
 $gtm_exe/mupip set -file -journal=off mumps.dat
-$gtm_exe/mupip journal -extract=extd2.out -forward mumps.mjl
-$gtm_exe/mupip journal -extract=exta2.out -forward a.mjl
-$gtm_exe/mupip journal -extract=extb2.out -forward b.mjl
+jnlext extd2.out mumps.mjl
+jnlext exta2.out a.mjl
+jnlext extb2.out b.mjl
 $gtm_exe/mupip set -file -journal=on,nobe mumps.dat
 
 $GTM << wxyz
@@ -46,9 +51,9 @@ $GTM << wxyz
 w "h",! h
 wxyz
 
-$gtm_exe/mupip journal -extract=extd3.out -forward mumps.mjl
-$gtm_exe/mupip journal -extract=exta3.out -forward a.mjl
-$gtm_exe/mupip journal -extract=extb3.out -forward b.mjl
+jnlext extd3.out mumps.mjl
+jnlext exta3.out a.mjl
+jnlext extb3.out b.mjl
 
 $gtm_tst/$tst/u_inref/gtcm_stop.csh >& gtcm_stop.log
 $gtm_tst/com/dbcheck.csh
