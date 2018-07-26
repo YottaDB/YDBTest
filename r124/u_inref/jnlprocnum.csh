@@ -11,20 +11,21 @@
 #								#
 #################################################################
 #
+cd $path_INST1
 
 # Get Shared Memory ID of the INST1 JNLPOOL
 $ydb_dist/mupip ftok -jnlpool mumps.repl |& $grep mumps.repl | $tst_awk '{print $6}' >& shm1.out
 
-# Get Shared Memory ID of the INST1 JNLPOOL
+# Get Shared Memory ID of the INST3 JNLPOOL
 cd $path_INST3
 $ydb_dist/mupip ftok -jnlpool mumps.repl |& $grep mumps.repl | $tst_awk '{print $6}' >& $path_INST1/shm2.out
 cd $path_INST1
 
 # Use the JNLPOOL Shared MEMORY IDs to get the # of processes attached ot each JNLPOOL
-echo -n "    number of processes attached to JNLPOOL1: "
+echo -n "    number of processes attached to JNLPOOL of INST1: "
 ipcs -a | $grep `cat ./shm1.out` | $tst_awk '{print $NF}'
 
-echo -n "    number of processes attached to JNLPOOL2: "
+echo -n "    number of processes attached to JNLPOOL of INST3: "
 ipcs -a | $grep `cat ./shm2.out` | $tst_awk '{print $NF}'
 
 echo ""

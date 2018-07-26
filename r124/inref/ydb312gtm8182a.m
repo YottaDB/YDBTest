@@ -19,7 +19,7 @@ gtm8182a
 	WRITE "    Read from INST3 DB",!
 	WRITE "        Django: ",^|INST3gbldir|Django,!
 
-	;call jnlprocnum.csh to return the number or processes attached
+	;call jnlprocnum.csh to return the number of processes attached
 	;to our JNL pools
 	ZSYSTEM "$gtm_tst/r124/u_inref/jnlprocnum.csh"
 
