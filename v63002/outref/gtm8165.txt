@@ -1,6 +1,6 @@
 # Setting gtm_tpnotacidtime to .123 seconds
 # Testing write timeout (writeslashwait) greater than .123 (Expect a TPNOTACID message in the syslog)
-##TEST_AWKDB Crit of DEFAULT owned by pid = [0-9]*
+DB Crit of DEFAULT owned by pid = xxxx as expected
 Post Transaction DB Crit of DEFAULT owned by pid = 0
 # Checking the syslog
 %YDB-I-TPNOTACID, OPEN at writeslashwait+5^gtm8165 violates ACID properties of a TRANSACTION and could exceed .123 seconds; 
@@ -8,7 +8,7 @@ Post Transaction DB Crit of DEFAULT owned by pid = 0
 ---------------------------------------------------------------------------------
 
 # Testing write timeout (writeslashpass) greater than .123 (Expect a TPNOTACID message in the syslog)
-##TEST_AWKDB Crit of DEFAULT owned by pid = [0-9]*
+DB Crit of DEFAULT owned by pid = xxxx as expected
 Post Transaction DB Crit of DEFAULT owned by pid = 0
 # Checking the syslog
 %YDB-I-TPNOTACID, OPEN at writeslashpass+6^gtm8165 violates ACID properties of a TRANSACTION and could exceed .123 seconds; 
@@ -16,7 +16,7 @@ Post Transaction DB Crit of DEFAULT owned by pid = 0
 ---------------------------------------------------------------------------------
 
 # Testing write timeout (writeslashaccept) greater than .123 (Expect a TPNOTACID message in the syslog)
-##TEST_AWKDB Crit of DEFAULT owned by pid = [0-9]*
+DB Crit of DEFAULT owned by pid = xxxx as expected
 Post Transaction DB Crit of DEFAULT owned by pid = 0
 # Checking the syslog
 %YDB-I-TPNOTACID, OPEN at writeslashaccept+6^gtm8165 violates ACID properties of a TRANSACTION and could exceed .123 seconds; 
@@ -24,7 +24,7 @@ Post Transaction DB Crit of DEFAULT owned by pid = 0
 ---------------------------------------------------------------------------------
 
 # Testing write timeout (writeslashtls) greater than .123 (Expect a TPNOTACID message in the syslog)
-##TEST_AWKDB Crit of DEFAULT owned by pid = [0-9]*
+DB Crit of DEFAULT owned by pid = xxxx as expected
 Post Transaction DB Crit of DEFAULT owned by pid = 0
 # Checking the syslog
 %YDB-I-TPNOTACID, OPEN at writeslashtls+6^gtm8165 violates ACID properties of a TRANSACTION and could exceed .123 seconds; 

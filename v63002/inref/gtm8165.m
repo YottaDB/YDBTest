@@ -14,14 +14,14 @@
 writeslashwait
 	tstart ():(serial:transaction="BA")
 	if $trestart>2  do
-	. write:($job=$$^%PEEKBYNAME("node_local.in_crit","DEFAULT")) "DB Crit of DEFAULT owned by pid = ",$$^%PEEKBYNAME("node_local.in_crit","DEFAULT"),!
+	. write:($job=$$^%PEEKBYNAME("node_local.in_crit","DEFAULT")) "DB Crit of DEFAULT owned by pid = xxxx as expected",!
 	. set sock="gtm8165.socket"
 	. open sock:(LISTEN="gtm8165sock.socket:LOCAL":attach="handle")::"SOCKET"
 	. use sock
 	. if $ZTRNLNM("timeout")  write /wait(.999)
 	. if '$ZTRNLNM("timeout")  write /wait
 	. close sock
-	if $trestart<=2  do
+	if $trestart<=2  do ;cannot use else because this commit changes the value of $test, similar usages throughout the test
 	. set ^Y=$increment(^i)
 	. zsystem "$ydb_dist/mumps -run ^%XCMD 'set ^Y=$increment(^i)'"
 	tcommit
@@ -33,7 +33,7 @@ writeslashpass
 	set ^stop=0
 	tstart ():(serial:transaction="BA")
 	if $trestart>2  do
-	. write:($job=$$^%PEEKBYNAME("node_local.in_crit","DEFAULT")) "DB Crit of DEFAULT owned by pid = ",$$^%PEEKBYNAME("node_local.in_crit","DEFAULT"),!
+	. write:($job=$$^%PEEKBYNAME("node_local.in_crit","DEFAULT")) "DB Crit of DEFAULT owned by pid = xxxx as expected",!
         . set sock="gtm8165pass.socket"
         . open sock:(LISTEN="passsocket1:LOCAL":attach="passhandle1")::"SOCKET"
         . use sock:(detach="passhandle1")
@@ -51,6 +51,7 @@ writeslashpass
 	set ^stop=1
 	use $p
         write "Post Transaction DB Crit of DEFAULT owned by pid = ",$$^%PEEKBYNAME("node_local.in_crit","DEFAULT"),!
+	zsystem "$gtm_tst/com/wait_for_proc_to_die.csh "_$zjob
 	quit
 
 passchild
@@ -63,18 +64,16 @@ passchild
 	open sock:(CONNECT="passsocket2:LOCAL")::"SOCKET"
 	use sock
 	use $p
-	for  quit:^stop
+	for  hang .1  quit:^stop
 	quit
 
 writeslashaccept
 	set ^stop=0
 	tstart ():(serial:transaction="BA")
 	if $trestart>2  do
-	. write:($job=$$^%PEEKBYNAME("node_local.in_crit","DEFAULT")) "DB Crit of DEFAULT owned by pid = ",$$^%PEEKBYNAME("node_local.in_crit","DEFAULT"),!
+	. write:($job=$$^%PEEKBYNAME("node_local.in_crit","DEFAULT")) "DB Crit of DEFAULT owned by pid = xxxx as expected",!
         . set sock="gtm8165pass.socket"
-        . open sock:(LISTEN="acceptsocket1:LOCAL":attach="accepthandle1")::"SOCKET"
-        . use sock:(detach="accepthandle1")
-	. open sock:(LISTEN="acceptsocket2:LOCAL":attach="accepthandle2")::"SOCKET"
+	. open sock:(LISTEN="acceptsocket:LOCAL":attach="accepthandle")::"SOCKET"
 	. use sock
 	. job acceptchild
 	. write /wait
@@ -88,6 +87,7 @@ writeslashaccept
 	set ^stop=1
 	use $p
         write "Post Transaction DB Crit of DEFAULT owned by pid = ",$$^%PEEKBYNAME("node_local.in_crit","DEFAULT"),!
+	zsystem "$gtm_tst/com/wait_for_proc_to_die.csh "_$zjob
 	quit
 
 acceptchild
@@ -97,10 +97,10 @@ acceptchild
 	write $job
 	close pid2
 	set sock="socket"
-	open sock:(CONNECT="acceptsocket2:LOCAL")::"SOCKET"
+	open sock:(CONNECT="acceptsocket:LOCAL")::"SOCKET"
 	use sock
 	use $p
-	for  quit:^stop
+	for  hang .1  quit:^stop
 	quit
 
 
@@ -108,7 +108,7 @@ writeslashtls
 	set ^stop=0
 	tstart ():(serial:transaction="BA")
 	if $trestart>2  do
-	. write:($job=$$^%PEEKBYNAME("node_local.in_crit","DEFAULT")) "DB Crit of DEFAULT owned by pid = ",$$^%PEEKBYNAME("node_local.in_crit","DEFAULT"),!
+	. write:($job=$$^%PEEKBYNAME("node_local.in_crit","DEFAULT")) "DB Crit of DEFAULT owned by pid = xxxx as expected",!
 	. set sock="gtm8165.socket"
 	. open sock:(LISTEN="3000:TCP":attach="handle")::"SOCKET"
 	. use sock

@@ -20,6 +20,7 @@ setenv timeout 1
 foreach arg("writeslashwait" "writeslashpass" "writeslashaccept" "writeslashtls")
 	echo "# Testing write timeout ($arg) greater than .123 (Expect a TPNOTACID message in the syslog)"
 	set t = `date +"%b %e %H:%M:%S"`
+	# Sleeps included to avoid timing issues with getoper.csh
 	sleep 1
 	$ydb_dist/mumps -run $arg^gtm8165
 	$gtm_tst/com/getoper.csh "$t" "" getoper.txt
@@ -30,7 +31,6 @@ foreach arg("writeslashwait" "writeslashpass" "writeslashaccept" "writeslashtls"
 	echo "---------------------------------------------------------------------------------"
 	echo ""
 end
-sleep 1
 setenv timeout 0
 foreach arg("writeslashwait" "writeslashpass" "writeslashaccept" "writeslashtls")
 	echo "# Testing write without timeout ($arg), Expect a TPNOTACID message in the syslog still"
