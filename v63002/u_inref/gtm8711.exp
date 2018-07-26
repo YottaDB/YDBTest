@@ -37,7 +37,7 @@ send -- "asdfasdfasdf\r"
 expect "GDE>"
 send -- "exit\r"
 expect -exact ">"
-send -- "echo \$status\r"
+send -- "echo \"error status=\$status\"\r"
 expect -exact ">"
 send -- "\r"
 
