@@ -19,6 +19,7 @@ if ($status) then
 	echo "EXPECT FAILED"
 endif
 perl $gtm_tst/com/expectsanitize.pl expect.outx > expect_sanitized.outx
+$grep KEYWRDBAD expect_sanitized.outx
 $grep "error status" expect_sanitized.outx |& tail -1
 echo ""
 echo '# Running $GDE asdfasdfasdf from the shell prompt, expect the same error status'
