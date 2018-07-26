@@ -19,6 +19,7 @@ $MUPIP set -region default -journal=disable
 echo "# Backing up Database with -BKUPDBJNL=OFF"
 $MUPIP BACKUP -BKUPDBJNL=OFF default backup
 cp backup mumps.dat
+echo "# Verifying journal state in backup database using DSE DUMP -FILE"
 $DSE DUMP -FILE |& $grep "Journal State"
 
 $gtm_tst/com/dbcheck.csh >>& dbcheck.out
