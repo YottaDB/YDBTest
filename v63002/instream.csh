@@ -22,7 +22,7 @@
 # gtm8760	    [vinay] Tests YottaDB properly handles environment variables whose contesnts are over 32K in size
 # gtm5250	    [vinay] Tests YottaDB supports fractional timeouts
 # gtm8736	    [vinay] Tests $zroutines defaults to "." when $gtmroutines is undefined
-# gtm8698	    [vinay] Tests GTM issues a MUCREFILERR identifying the application code entryref when it encounters an error creating an AutoDB Database
+# gtm8698	    [vinay] Tests YottaDB issues a MUCREFILERR in the syslog identifying the application code entryref when it encounters an error creating an AutoDB Database
 #-------------------------------------------------------------------------------------
 
 echo "v63002 test starts..."
