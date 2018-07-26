@@ -26,7 +26,7 @@ ydb231gtm8182b
 
 	quit
 
-zpeek ;
+zpeek
 	; Doing a \$zpeek instead of PEEKBYNAME in order to avoid ^incrtrap issues
 	; write \$\$^%PEEKBYNAME("jnlpool_ctl_struct.ftok_counter_halted")
 	set ret=$zpeek("JPCREPL",3708,4,"I")
@@ -35,10 +35,10 @@ zpeek ;
 
 
 getPaths
-	SET INST1path=$ZTRNLNM("path_INST1","","","","","VALUE")
+	SET INST1path=$ZTRNLNM("path_INST1")
 	SET INST1gbldir=INST1path_"/mumps.gld"
 
-	SET INST3path=$ZTRNLNM("path_INST3","","","","","VALUE")
+	SET INST3path=$ZTRNLNM("path_INST3")
 	SET INST3gbldir=INST3path_"/mumps.gld"
 
 	quit
