@@ -29,7 +29,7 @@ ZSYSTEM_FILTER:filterfn^gtm8877
 PIPE_FILTER:filterfn^gtm8877
 EOF
 chmod -w $ydb_dist/restrict.txt
-echo "# FILTER RETURNING -1"
+echo "# FILTER RETURNING -1 (expect a COMMFILTERERR in the syslog in addition to the RESTRICTEDOP error)"
 $ydb_dist/mumps -run tpzsystemfn^gtm8877
 $ydb_dist/mumps -run pipeopenfn^gtm8877
 echo ""
@@ -82,5 +82,14 @@ $ydb_dist/mumps -run zsystemfn^gtm8877
 $ydb_dist/mumps -run pipeopenfn^gtm8877
 echo ""
 
-
+# NO LABEL SPECIFIED IN FILTER
+rm $ydb_dist/restrict.txt
+cat > $ydb_dist/restrict.txt << EOF
+ZSYSTEM_FILTER
+PIPE_FILTER
+EOF
+chmod -w $ydb_dist/restrict.txt
+echo "# No label specified in filters"
+$ydb_dist/mumps -run zsystemfn^gtm8877
+$ydb_dist/mumps -run pipeopenfn^gtm8877
 $gtm_tst/com/dbcheck.csh >>& dbcheck.out
