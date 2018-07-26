@@ -15,5 +15,5 @@
 #
 echo "# Switching to UTF-8 Mode"
 $switch_chset "UTF-8"
-echo '# Running $ZCONVERT in NOBADCHAR mode'
+echo '# Running $ZCONVERT in NOBADCHAR mode on $ZCHAR(128) (which is an invalid UTF8 byte sequence) but we expect no BADCHAR error'
 $ydb_dist/mumps -run gtm8733

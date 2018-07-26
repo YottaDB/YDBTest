@@ -13,5 +13,5 @@
 gtm8733
 	view "NOBADCHAR"
 	set z=$zconvert($zch(128),"U")
-	zwrite
+	zwrite ; Note: Cannot use "write" as that would cause a BADCHAR error even with VIEW "NOBADCHAR"
 	quit
