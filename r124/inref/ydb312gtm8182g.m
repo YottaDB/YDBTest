@@ -41,7 +41,7 @@ ydb312gtm8182g
 
 getPaths
 
-	SET INST1path=$ZTRNLNM("path_INST1","","","","","VALUE")
+	SET INST1path=$ZTRNLNM("path_INST1")
 	SET INST1gbldir=INST1path_"/mumps.gld"
 
 	SET GBL1path=INST1path_"/GBL1.gld"
