@@ -11,12 +11,7 @@
 #								#
 #################################################################
 #
-# Set white box testing environment to avoid assert failures along with REPLMULTINSTUPDATE error
-setenv gtm_white_box_test_case_enable 1
-setenv gtm_white_box_test_case_number 137
-setenv gtm_repl_instance "mumps.repl"
-
-$MULTISITE_REPLIC_PREPARE 4
+$MULTISITE_REPLIC_PREPARE 2
 
 echo "Create the DB"
 $gtm_tst/com/dbcreate.csh mumps 1 -gld_has_db_fullpath >>& dbcreate.out
@@ -32,12 +27,8 @@ echo ""
 echo "# Start INST1 INST2 replication"
 $MSR START INST1 INST2
 echo ""
-echo "# Start INST3 INST4 replication"
-$MSR START INST3 INST4
-echo ""
 
 setenv path_INST1 `$tst_awk '{-F " "; if ($1" "$2 ~ /INST1 DBDIR/)  print $3}' $tst_working_dir/msr_instance_config.txt`
-setenv path_INST3 `$tst_awk '{-F " "; if ($1" "$2 ~ /INST3 DBDIR/)  print $3}' $tst_working_dir/msr_instance_config.txt`
 
 
 echo "# Run ydb312gtm8182b to store results of ZREALSTOR to a file before and after 1000 ZPEEKs"
@@ -50,9 +41,9 @@ setenv zpeek_before `$grep 'BEFORE $ZPEEK' zpeeks.txt | $tst_awk '{print $6}'`
 setenv zpeek_after `$grep 'AFTER  $ZPEEK' zpeeks.txt | $tst_awk '{print $6}'`
 
 if ( $zpeek_before == $zpeek_after ) then
-	echo "# NO MEMORY LEAK DETECTED"
+	echo "# PASS: NO MEMORY LEAK DETECTED"
 else
-	echo "# MEMORY LEAK DETECTED"
+	echo "# FAIL: MEMORY LEAK DETECTED"
 endif
 
 echo ""

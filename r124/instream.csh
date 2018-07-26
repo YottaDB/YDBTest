@@ -21,7 +21,7 @@
 # jnlunxpcterr     [nars]  Test that MUPIP JOURNAL -EXTRACT does not issue JNLUNXPCTERR error in the face of concurrent udpates
 # ydb293	   [vinay] Tests the update process operates correctly with triggers and SET $ZGBLDIR
 # ydb297	   [vinay] Demonstrates LOCK commands work correctly when there are more than 31 subscripts that hash to the same value
-# ydb312_gtm8182b  [jake]  Test $zpeek to ensure there is no longer a memory leak issue with jnlpool_init()
+# ydb312_gtm8182b  [jake]  Test $zpeek of journal pool to ensure there is no longer a memory leak issue with jnlpool_init()
 #-------------------------------------------------------------------------------------------------------------
 
 echo "r124 test starts..."
