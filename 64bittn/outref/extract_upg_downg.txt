@@ -16,8 +16,7 @@ GT.M MUPIP EXTRACT
 Beginning LOAD at record number: 3
 
 LOAD TOTAL:         Key cnt: ##KEYCOUNT## max subsc len: ##MAX_SUBSC_LEN## max data len: ##MAX_DATA_LEN##
-##TEST_AWKLast LOAD record number: [0-9]*
-
+##TEST_AWK%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: [0-9]*
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -29,8 +28,7 @@ Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................
 Beginning LOAD at record number: 2
 
 LOAD TOTAL:         Key cnt: ##KEYCOUNT## max subsc len: ##MAX_SUBSC_LEN## max data len: ##MAX_DATA_LEN##
-##TEST_AWKLast LOAD record number: [0-9]*
-
+##TEST_AWK%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: [0-9]*
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -52,8 +50,7 @@ MUPIP load v5.zwr
 GT.M MUPIP EXTRACT
 ##FILTERED##..-...-....  ..:..:.. ZWR
 LOAD TOTAL:         Key cnt: ##KEYCOUNT## max subsc len: ##MAX_SUBSC_LEN## max data len: ##MAX_DATA_LEN##
-##TEST_AWKLast LOAD record number: [0-9]*
-
+##TEST_AWK%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: [0-9]*
 MUPIP load -format=bin v5.bin
 The expected error (LDBINFMT) was issued (V44 versions)
 ##V4VER##/mupip
