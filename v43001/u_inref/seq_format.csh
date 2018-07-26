@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -70,6 +73,11 @@ sort -n -k6,6 -t\\ seq_format.out1 > seq_format.out
 # Mask off volatile journal record fields like nodeflags (different between trigger supporting and trigger non-supporting
 # platforms), timestamp and pid. Since the PFIN and PINI records do not contain sequence numbers and the purpose of this
 # test is to sort the journal records by sequence number, it is okay not to include the PINI and PFIN in the final output
-check_mjf seq_format.out | $grep -v -E "^01|^02"
+# Additionally, EOF records do contain sequence numbers but they show up sometimes in a different order (corresponding
+# to the 3 regions) which is likely because of the way "sort" operates when the sorting key (-k6,6 above i.e. the jnl_seqno)
+# is the same across the 3 EOF records but the dbtn (-k2,2) is different in DEFAULT compared to AREG and BREG. To avoid
+# test failures due to this, filter out the last 3 lines in the first output and sort them separately a second time on dbtn.
+check_mjf seq_format.out | head -n -3 | $grep -v -E "^01|^02"
+check_mjf seq_format.out | tail -n 3 | sort -k2,2
 
 echo "End seq_format test."

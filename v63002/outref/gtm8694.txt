@@ -9,7 +9,7 @@ Zbreak command successfully ignored
 # TESTING ZCMDLINE
 
 # TESTING ZEDIT
-ZSTATUS=zeditfn+4^gtm8694,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: ZEDIT
+ZSTATUS=zeditfn+3^gtm8694,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: ZEDIT
 # TESTING ZSYSTEM
 ZSTATUS=zsystemfn+3^gtm8694,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: ZSYSTEM
 # TESTING PIPE
@@ -39,7 +39,7 @@ Zbreak command successfully ignored
 # TESTING ZCMDLINE
 
 # TESTING ZEDIT
-ZSTATUS=zeditfn+4^gtm8694,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: ZEDIT
+ZSTATUS=zeditfn+3^gtm8694,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: ZEDIT
 # TESTING ZSYSTEM
 ZSTATUS=zsystemfn+3^gtm8694,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: ZSYSTEM
 # TESTING PIPE
@@ -94,7 +94,7 @@ Region	DEFAULT
 DSE> 
 # TESTING CENABLE
 YDB>#<CTRL-C>
-YDB>%YDB-I-CTRLC, CTRL_C encountered
+##TEST_AWK.*YDB-I-CTRLC, CTRL_C encountered
 
 # -------------------------------------------------------------------------
 
@@ -138,7 +138,7 @@ Region	DEFAULT
 DSE> 
 # TESTING CENABLE
 YDB>#<CTRL-C>
-YDB>%YDB-I-CTRLC, CTRL_C encountered
+##TEST_AWK.*YDB-I-CTRLC, CTRL_C encountered
 
 # -----------------------------------------------------------------------
 

@@ -72,28 +72,28 @@ echo "# remove journal files"
 
 $gtm_tst/com/backup_dbjnl.csh "" "*.mjl*" "mv"
 
-echo "# rollback"
+echo "# start MUPIP JOURNAL -ROLLBACK -BACKWARD which should trigger instance freeze"
 
 set syslog_before1 = `date +"%b %e %H:%M:%S"`
 echo "$syslog_before1" > syslog_before1.txt
 
-sleep 2		# Managed to slip out of the getoper window somehow, so give it a couple seconds to be safe.
+sleep 1		# Managed to slip out of the getoper window somehow, so give it a second to be safe.
 
-# just in case rollback hangs on freeze, run it in the background
-# This relies on the $! being the pid of the rollback process. So pass "-backward" explicitly as otherwise a hidden
-# "-forward" rollback is attempted by the mupip_rollback.csh script and the $! calculations are disturbed.
-($gtm_tst/com/mupip_rollback.csh -backward -resync=10000 '*' >& rollback.outx & ; echo $! > rollback_pid.txt) >& /dev/null
+# do not use mupip_rollback.csh since we want to know the rollback pid which is not possible if we use a wrapper script
+($MUPIP journal -rollback -backward -resync=10000 '*' >& rollback.outx & ; echo $! > rollback_pid.txt) >& /dev/null
 
-$gtm_tst/com/getoper.csh "$syslog_before1" "" syslog1.txt "" "REPLINSTFROZEN"
-$gtm_tst/com/getoper.csh "$syslog_before1" "" syslog2.txt "" "encountered JNLFILEOPNERR"
+set rollbackpid = `cat rollback_pid.txt`
+$gtm_tst/com/wait_for_proc_to_die.csh $rollbackpid
+
+echo "# check syslog to confirm instance freeze related messages (REPLINSTFROZEN/JNLFILEOPNERR) are seen from the rollback pid"
+$gtm_tst/com/getoper.csh "$syslog_before1" "" syslog1.txt
+$grep -E "\<$rollbackpid\>.*REPLINSTFROZEN|\<$rollbackpid\>.*JNLFILEOPNERR" syslog1.txt | sed 's/.*%YDB/%YDB/;s/ -- .*//' | sed 's/'$rollbackpid'/xxxx/'
 
 echo "# unfreeze and wait"
 $MUPIP replic -source -freeze=off >&! freeze_off.outx
 
 # YDB-E-NOJNLPOOL can occur if an argumentless rundown is done by some other test in this timeframe
 $grep -v 'YDB-E-NOJNLPOOL' freeze_off.outx
-
-$gtm_tst/com/wait_for_proc_to_die.csh `cat rollback_pid.txt`
 
 echo "# final rundown"
 

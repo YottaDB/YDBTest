@@ -1,0 +1,39 @@
+# Create a single region DB with region DEFAULT
+# Check the DB
+
+# Testing MUPIP SET -[NO]ENCRYPT in a properly set up environment
+# --------------------------------------------------------------------------------------------------------------------
+# \##SOURCE_PATH##/mupip set -ENCRYPTABLE -REGION 'DEFAULT'
+Database file ##TEST_PATH##/mumps.dat now has encryptable flag set to  TRUE
+
+# \##SOURCE_PATH##/mupip set -NOENCRYPTABLE -REGION 'DEFAULT'
+Database file ##TEST_PATH##/mumps.dat now has encryptable flag set to FALSE
+
+
+# Testing MUPIP SET -[NO]ENCRYPT  with no set gtm_passwd (expecting failure for ENCRYPT and success for NOENCRYPT)
+# --------------------------------------------------------------------------------------------------------------------
+# \##SOURCE_PATH##/mupip set -ENCRYPTABLE -REGION 'DEFAULT'
+%YDB-E-CRYPTINIT2, Could not initialize encryption library during GT.M startup. Environment variable ydb_passwd/gtm_passwd not set
+
+# \##SOURCE_PATH##/mupip set -NOENCRYPTABLE -REGION 'DEFAULT'
+Database file ##TEST_PATH##/mumps.dat now has encryptable flag set to FALSE
+
+
+# Testing MUPIP SET -[NO]ENCRYPT  with set garbage GNUPGHOME (expecting failure for ENCRYPT and success for NOENCRYPT)
+# --------------------------------------------------------------------------------------------------------------------
+GNUPGHOME: garbageValue
+# \##SOURCE_PATH##/mupip set -ENCRYPTABLE -REGION 'DEFAULT'
+%YDB-E-CRYPTINIT2, Could not initialize encryption library during GT.M startup. Cannot stat on garbageValue - 2
+
+# \##SOURCE_PATH##/mupip set -NOENCRYPTABLE -REGION 'DEFAULT'
+Database file ##TEST_PATH##/mumps.dat now has encryptable flag set to FALSE
+
+
+# Testing MUPIP SET -[NO]ENCRYPT  with encryptable flag set true and GNUPGHOME and gtm_passwd is randomly set
+# --------------------------------------------------------------------------------------------------------------------
+# \##SOURCE_PATH##/mupip set -ENCRYPTABLE -REGION 'DEFAULT'
+Database file ##TEST_PATH##/mumps.dat now has encryptable flag set to  TRUE
+##TEST_AWK^#.*GNUPGHOME.*
+##TEST_AWK^#.*gtm_passwd.*
+# \##SOURCE_PATH##/mupip set -NOENCRYPTABLE -REGION 'DEFAULT'
+Database file ##TEST_PATH##/mumps.dat now has encryptable flag set to FALSE
