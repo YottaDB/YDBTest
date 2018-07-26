@@ -29,13 +29,13 @@ if ( 1 > $# ) then
 	echo "$gtm_tst/com/getoper.csh time_before time_after <output_file> <syslog_file> <message> <count>"
 	exit 1
 endif
-if (5 <= $# && "" != "$5") set message = "$5"
+# If $5 is non-null, then we wait for that message in the syslog before returning.
+if (5 <= $#) set message = "$5"
 
 if (6 == $#) then
 	set count = $6
 else
 	set count = 1
-	set message = `$ydb_dist/mumps -run ^%XCMD 'write $$^%RANDSTR(32)'`
 endif
 
 if ( "" == $3 ) then
@@ -60,6 +60,18 @@ if (-X journalctl) then
 	set time_before = `date -d "$1" +"$datefmt"`
 	if ("$2" == "") then
 		set time_after = ""
+		if (! $?message) then
+			# When ending time ($2) is specified as "", doing a "journalctl -a" is not sometimes enough to get all
+			# syslog messages till the current point in time. It is possible for messages to be in transit so
+			# we generate a random syslog message and wait for that to show up (which implies all in-transit
+			# messages would automatically show up too). Note that we want to do this only if the user has not
+			# already specified a non-null $5. If they did, then we should be searching for that string instead
+			# and not this random string. Hence the check for "! $?message" above.
+			set message = `$ydb_dist/mumps -run ^%XCMD 'write $$^%RANDSTR(32)'`
+			# Generate the random string message to syslog.
+			set a = '$ZSYSLOG("'$message'")'
+			$ydb_dist/mumps -run ^%XCMD "set y=$a"
+		endif
 	else
 		# Advance by a second because journalctl does not include the messages encountered at --until timestamp
 		# On top of a second advance one more because we have seen one second delay between syslog message's timstamp and systemd journal wallclock timestamp
@@ -81,9 +93,7 @@ else
 	set time_after = "$2"
 endif
 
-if ("" == "$time_after") then
-	set a = '$ZSYSLOG("'$message'")'
-	$ydb_dist/mumps -run ^%XCMD "set y=$a"
+if ($?message) then
 	set sleepinc = 5
 	set found = 0
 	set end_time = "$time_after"
@@ -98,7 +108,9 @@ if ("" == "$time_after") then
 	@ timeout = $starttime + $maxwait
 	while ($nowtime <= $timeout)
 		set nowtime = `date +%s`
-		set end_time = `date +"$datefmt"`
+		if ("" == "$time_after") then
+			set end_time = `date +"$datefmt"`
+		endif
 		if (-f $output_file) \rm -f $output_file
 		## START - PREVIOUS GENERATION SYSLOG SEARCH
 		if (! ($?no_prev_search)) then
@@ -141,6 +153,9 @@ if ("" == "$time_after") then
 		exit 1
 	endif
 else
+	if ("" == "$time_after") then
+		set end_time = `date +"$datefmt"`
+	endif
 	## START - PREVIOUS GENERATION SYSLOG SEARCH
 	if (! ($?no_prev_search)) then
 		set search_prev_syslog = `$tst_awk -f $gtm_tst/com/get_time.awk -v before="$time_before" --source '{first_entry = get_time($1" "$2" "$3); search_start_time = get_time(before); print (search_start_time <= first_entry); exit}' $syslog_file`

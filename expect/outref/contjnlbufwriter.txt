@@ -3,7 +3,13 @@ Using: ##SOURCE_PATH##/mumps -run GDE
 mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
+##TEST_AWKProcess 1 pid = .*
+##TEST_AWKProcess 2 pid = .*
+# Verify that proc1 has written Suspended message on terminal
 Suspended (signal) is present in the file gtm4661c.expected
+# Verify that proc2 finds proc1 no longer owns jnl qio lock
+jnl qio lock owner pid = 0 
+##TEST_AWK.*%YDB-I-SUSPENDING, Process Received Signal 19. Suspending processing on user request or attempt to do terminal I/O while running in the background -- .*
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
