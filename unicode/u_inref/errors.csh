@@ -168,7 +168,7 @@ $gtm_tst/com/dbcreate.csh mumps 1
 # edit the extract
 sed 's/\^a("abc")/\^a(\$C(55296)/' extract.zwr >&! modext.zwr
 $MUPIP load modext.zwr >&! dlrcillegal.out
-$gtm_tst/com/check_error_exist.csh dlrcillegal.out "DLRCILLEGAL" "RECLOAD"
+$gtm_tst/com/check_error_exist.csh dlrcillegal.out "DLRCILLEGAL" "RECLOAD" "FAILEDRECCOUNT"
 echo "Testing WIDTHTOOSMALL error"
 $GTM << eof >&! widthtoosmall.out
 use \$P:(width=1)

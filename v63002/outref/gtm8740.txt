@@ -1,0 +1,18 @@
+==Executing MULTISITE_REPLIC 'START INST1 INST2'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+
+CTL Custom Errors Loaded                             FALSE
+$$^%PEEKBYNAME('jnlpool_ctl_struct.instfreeze_environ_inited')=0
+# Starting a background process so the jnl pool does not get shut down when the source server is stopped
+
+# Shutting down primary
+==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST2'==
+
+# Uploading custom errors
+
+# Restarting primary
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2'==
+
+CTL Custom Errors Loaded                              TRUE
+$$^%PEEKBYNAME('jnlpool_ctl_struct.instfreeze_environ_inited')=1

@@ -64,8 +64,7 @@ Beginning LOAD at record number: 3
 
 %YDB-I-TRIGDATAIGNORE, Ignoring trigger data ^#t("c","#LABEL"). Use MUPIP TRIGGER to load trigger definitions
 ##TEST_AWKLOAD TOTAL		Key Cnt: [0-9]+  Max Subsc Len: [0-9]+  Max Data Len: [0-9]+
-##TEST_AWKLast LOAD record number: [0-9]*
-
+##TEST_AWK%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: [0-9]*
 
 Global Directory
 
@@ -117,8 +116,7 @@ Beginning LOAD at record number: 3
 
 %YDB-I-TRIGDATAIGNORE, Ignoring trigger data ^#t("c","#LABEL")="2". Use MUPIP TRIGGER to load trigger definitions
 ##TEST_AWKLOAD TOTAL		Key Cnt: [0-9]+  Max Subsc Len: [0-9]+  Max Data Len: [0-9]+
-##TEST_AWKLast LOAD record number: [0-9]*
-
+##TEST_AWK%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: [0-9]*
 
 Global Directory
 
@@ -169,8 +167,7 @@ Total of 0 globals.
 Beginning LOAD at record number: 2
 
 ##TEST_AWKLOAD TOTAL		Key Cnt: [0-9]+  Max Subsc Len: [0-9]+  Max Data Len: [0-9]+
-##TEST_AWKLast LOAD record number: [0-9]*
-
+##TEST_AWK%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: [0-9]*
 
 Global Directory
 
