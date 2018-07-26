@@ -80,7 +80,7 @@ writeslashpass
 	set ^stop=0
         set sock="gtm8165pass.socket"
         open sock:(LISTEN="passsocket1:LOCAL":attach="passhandle1")::"SOCKET"
-        use sock:(detach="passhandle1")
+	use sock:(detach="passhandle1")
 	open sock:(LISTEN="passsocket2:LOCAL":attach="passhandle2")::"SOCKET"
 	job passchild
 	use sock
@@ -92,14 +92,14 @@ writeslashpass
 	. use sock
 	. if $ZTRNLNM("timeout")  write /pass(,.999,"passhandle1")
 	. if '$ZTRNLNM("timeout")  write /pass(,,"passhandle1")
-        . close sock
+	. close sock
 	if $trestart<=2  do
 	. set ^Y=$increment(^i)
 	. zsystem "$ydb_dist/mumps -run ^%XCMD 'set ^Y=$increment(^i)'"
 	tcommit
 	set ^stop=1
 	use $p
-        write "Post Transaction DB Crit of DEFAULT owned by pid = ",$$^%PEEKBYNAME("node_local.in_crit","DEFAULT"),!
+	write "Post Transaction DB Crit of DEFAULT owned by pid = ",$$^%PEEKBYNAME("node_local.in_crit","DEFAULT"),!
 	zsystem "$gtm_tst/com/wait_for_proc_to_die.csh "_$zjob
 	quit
 
@@ -130,14 +130,14 @@ writeslashaccept
 	. use sock
 	. write:($ZTRNLNM("timeout")) /accept(.handle,,.999,)
 	. write:('$ZTRNLNM("timeout")) /accept(.handle,,,)
-        . close sock
+	. close sock
 	if $trestart<=2  do
 	. set ^Y=$increment(^i)
 	. zsystem "$ydb_dist/mumps -run ^%XCMD 'set ^Y=$increment(^i)'"
 	tcommit
 	set ^stop=1
 	use $p
-        write "Post Transaction DB Crit of DEFAULT owned by pid = ",$$^%PEEKBYNAME("node_local.in_crit","DEFAULT"),!
+	write "Post Transaction DB Crit of DEFAULT owned by pid = ",$$^%PEEKBYNAME("node_local.in_crit","DEFAULT"),!
 	zsystem "$gtm_tst/com/wait_for_proc_to_die.csh "_$zjob
 	quit
 

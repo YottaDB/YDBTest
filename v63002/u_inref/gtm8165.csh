@@ -20,10 +20,9 @@ setenv timeout 1
 foreach arg("writeslashwait" "writeslashpass" "writeslashaccept" "writeslashtls" "locktimeout" "opentimeout")
 	echo "# Testing command timeout ($arg) greater than .123 (Expect a TPNOTACID message in the syslog)"
 	set t = `date +"%b %e %H:%M:%S"`
-	# Sleeps included to avoid timing issues with getoper.csh
-	sleep 1
 	$ydb_dist/mumps -run $arg^gtm8165
 	$gtm_tst/com/getoper.csh "$t" "" getoper.txt
+	# Sleep included to avoid 1 iteration reading the message from a previous one
 	sleep 1
 	echo "# Checking the syslog"
 	$grep TPNOTACID getoper.txt |& sed 's/.*%YDB-I-TPNOTACID/%YDB-I-TPNOTACID/' |& sed 's/$TRESTART.*//' |& $grep gtm8165
@@ -35,7 +34,6 @@ setenv timeout 0
 foreach arg("writeslashwait" "writeslashpass" "writeslashaccept" "writeslashtls" "locktimeout" "opentimeout")
 	echo "# Testing command without a specified timeout ($arg), Expect a TPNOTACID message in the syslog still"
 	set t = `date +"%b %e %H:%M:%S"`
-	sleep 1
 	(($ydb_dist/mumps -run $arg^gtm8165>>&tpnotacid.out)&;echo $!>&pid.out)>& bckg.out
 	set pid=`cat pid.out`
 	$gtm_tst/com/getoper.csh "$t" "" getoper.txt "" "TPNOTACID"
@@ -44,6 +42,7 @@ foreach arg("writeslashwait" "writeslashpass" "writeslashaccept" "writeslashtls"
 		set pid2=`cat $arg.txt`
 		kill -9 $pid2
 	endif
+	# Sleep included to avoid 1 iteration reading the message from a previous one
 	sleep 1
 	$grep TPNOTACID getoper.txt |& sed 's/.*%YDB-I-TPNOTACID/%YDB-I-TPNOTACID/' |& sed 's/$TRESTART.*//' |& $grep gtm8165
 	echo ""
