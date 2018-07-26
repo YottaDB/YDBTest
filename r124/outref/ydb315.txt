@@ -1,0 +1,28 @@
+# Run nosetZcomp^ydb315.m to attempt to compile blktoodeep.m with no '-nowarning' flag (expecting warnings)
+	        . WRITE !," o  Directory does not exist: "_XOBDIR
+	          ^-----
+		At column 11, line 15, source module ##IN_TEST_PATH##/inref/blktoodeep.m
+%YDB-W-BLKTOODEEP, Block level too deep
+
+# Run setZcompNoWarning^ydb315.m to attempt to compile blktoodeep.m with the '-nowarning' flag set directly (expecting no warnings)
+
+# Run nosetZcomp^ydb315.m to attempt to compile blktoodeep.m with the '-nowarning' flag set in $ydb_compile (expecting no warnings)
+
+# Run nosetZcomp^ydb315.m to attempt to compile blktoodeep.m with the '-nowarning' flag set in $gtmcompile (expecting no warnings)
+
+# Run setZcompNoWarning^ydb315.m to attempt to compile blktoodeep.m with the '-warning' flag set in $gtmcompile  and the '-nowarning' flag set directly (expecting no warnings)
+
+# Run setZcompNoWarning^ydb315.m to attempt to compile blktoodeep.m with the '-warning' flag set in $ydb_compile  and the '-nowarning' flag set directly (expecting no warnings)
+
+# Run setZcompWarning^ydb315.m to attempt to compile blktoodeep.m with the '-nowarning' flag set in $gtmcompile  and the '-warning' flag set directly (expecting warnings)
+	        . WRITE !," o  Directory does not exist: "_XOBDIR
+	          ^-----
+		At column 11, line 15, source module ##IN_TEST_PATH##/inref/blktoodeep.m
+%YDB-W-BLKTOODEEP, Block level too deep
+
+# Run setZcompWarning^ydb315.m to attempt to compile blktoodeep.m with the '-nowarning' flag set in $ydb_compile  and the '-warning' flag set directly (expecting warnings)
+	        . WRITE !," o  Directory does not exist: "_XOBDIR
+	          ^-----
+		At column 11, line 15, source module ##IN_TEST_PATH##/inref/blktoodeep.m
+%YDB-W-BLKTOODEEP, Block level too deep
+

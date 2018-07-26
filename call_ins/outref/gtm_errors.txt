@@ -60,5 +60,9 @@ TEST: Unable to open call table:
  150379602,\(Call-In\),%YDB-E-CITABOPN, Unable to open call-in table: call.tab,%YDB-E-SYSCALL, Error received from system call fopen -- called from module ##TEST_AWK.*/exttab_parse.c at line [0-9]*
 --------------------------------------------------------------------------------
 TEST: Multiple caret:
- 150375994,(Call-In),%YDB-E-RUNPARAMERR, Error accessing parameter for run command
+%YDB-I-EXTSRCLIN, 	    getcode: gtm_char_t*  ccode^getrec2^nothere(I:gtm_long_t)
+
+							     ^-----
+%YDB-I-EXTSRCLOC, 		At column 37, line 1, source module mulcar.tab
+ 150379610,(Call-In),%YDB-E-CIENTNAME, No label reference found for this entry in call-in table
 --------------------------------------------------------------------------------
