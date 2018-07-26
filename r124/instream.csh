@@ -33,16 +33,22 @@ setenv subtest_list_non_replic "$subtest_list_non_replic readonly ydb275socketpa
 setenv subtest_list_replic     ""
 setenv subtest_list_replic     "$subtest_list_replic ydb282srcsrvrerr ydb293"
 
+if ($?test_replic == 1) then
+	setenv subtest_list "$subtest_list_common $subtest_list_replic"
+else
+	setenv subtest_list "$subtest_list_common $subtest_list_non_replic"
+endif
+
 setenv subtest_exclude_list    ""
+
 # filter out white box tests that cannot run in pro
 if ("pro" == "$tst_image") then
 	setenv subtest_exclude_list "$subtest_exclude_list ydb282srcsrvrerr"
 endif
 
-if ($?test_replic == 1) then
-	setenv subtest_list "$subtest_list_common $subtest_list_replic"
-else
-	setenv subtest_list "$subtest_list_common $subtest_list_non_replic"
+if ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) then
+	# filter out below test on 32-bit ARM since it relies on hash collisions which happen only on Linux x86_64 currently
+	setenv subtest_exclude_list "$subtest_exclude_list ydb297"
 endif
 
 # Submit the list of subtests
