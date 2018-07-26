@@ -17,8 +17,8 @@ $gtm_tst/com/dbcreate.csh mumps 1 >>& dbcreate.out
 echo "# Setting gtm_tpnotacidtime to .123 seconds"
 setenv gtm_tpnotacidtime .123
 setenv timeout 1
-foreach arg("writeslashwait" "writeslashpass" "writeslashaccept" "writeslashtls")
-	echo "# Testing write timeout ($arg) greater than .123 (Expect a TPNOTACID message in the syslog)"
+foreach arg("writeslashwait" "writeslashpass" "writeslashaccept" "writeslashtls" "locktimeout" "opentimeout")
+	echo "# Testing command timeout ($arg) greater than .123 (Expect a TPNOTACID message in the syslog)"
 	set t = `date +"%b %e %H:%M:%S"`
 	# Sleeps included to avoid timing issues with getoper.csh
 	sleep 1
@@ -32,15 +32,15 @@ foreach arg("writeslashwait" "writeslashpass" "writeslashaccept" "writeslashtls"
 	echo ""
 end
 setenv timeout 0
-foreach arg("writeslashwait" "writeslashpass" "writeslashaccept" "writeslashtls")
-	echo "# Testing write without timeout ($arg), Expect a TPNOTACID message in the syslog still"
+foreach arg("writeslashwait" "writeslashpass" "writeslashaccept" "writeslashtls" "locktimeout" "opentimeout")
+	echo "# Testing command without a specified timeout ($arg), Expect a TPNOTACID message in the syslog still"
 	set t = `date +"%b %e %H:%M:%S"`
 	sleep 1
 	(($ydb_dist/mumps -run $arg^gtm8165>>&tpnotacid.out)&;echo $!>&pid.out)>& bckg.out
 	set pid=`cat pid.out`
 	$gtm_tst/com/getoper.csh "$t" "" getoper.txt "" "TPNOTACID"
 	kill -9 $pid
-	if ( "writeslashwait" != $arg) then
+	if ( "writeslashwait" != $arg && "opentimeout" != $arg) then
 		set pid2=`cat $arg.txt`
 		kill -9 $pid2
 	endif
