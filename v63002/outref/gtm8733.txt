@@ -1,0 +1,5 @@
+# Switching to UTF-8 Mode
+setenv gtm_chset UTF-8
+unset echo
+# Running $ZCONVERT in NOBADCHAR mode on $ZCHAR(128) (which is an invalid UTF8 byte sequence) but we expect no BADCHAR error
+z=$ZCH(128)

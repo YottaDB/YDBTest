@@ -4,6 +4,9 @@
 # Copyright (c) 2010-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -42,9 +45,12 @@ if (! -d $tst_dir/$gtm_tst_out/utilobj/$gtm_verno ) then
 endif
 
 if (($?gtm_tst) && ($?tst)) then
-   setenv gtmroutines "$tst_dir/$gtm_tst_out/utilobj/$gtm_verno($gtm_test_com_individual) $gtm_exe .($gtm_tst/$tst/inref .)"
+	setenv gtmroutines "$tst_dir/$gtm_tst_out/utilobj/$gtm_verno($gtm_test_com_individual) $gtm_exe"
+	if (-e $gtm_tst/$tst/inref) then
+		setenv gtmroutines "$gtmroutines .($gtm_tst/$tst/inref .)"
+	endif
 else
-   setenv gtmroutines "$tst_dir/$gtm_tst_out/utilobj/$gtm_verno($gtm_test_com_individual) $gtm_exe"
+	setenv gtmroutines "$tst_dir/$gtm_tst_out/utilobj/$gtm_verno($gtm_test_com_individual) $gtm_exe"
 endif
 
 # This need to be unset, otherwise if $argv[2-] contain Unicode, it won't be displayed correctly.
