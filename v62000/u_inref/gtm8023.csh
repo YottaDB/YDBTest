@@ -23,6 +23,11 @@ setenv acc_meth			"BG"	# The test plays with "Dirty Global Buffers"
 setenv gtm_test_jnlfileonly	0	# With a huge flush_time, nothing would be replicated from journal files.
 unsetenv gtm_test_jnlpool_sync		# ditto
 setenv gtm_test_updhelpers	0	# As described below, we don't want extra flushing.
+# After merging GT.M V6.3-005, for reasons not yet clear this test started failing (only in dbg) whenever "gtm_test_fake_enospc"
+# env var was set to a non-zero value. The failure was that the "zwr ^noreorg" command did not hang in the background process like
+# it usually does when the instance is frozen. In pro though, it passed fine. Since the fake enospc setting is not crucial to this
+# test (it does instance freeze on and off manually), this env var is being disabled.
+unsetenv gtm_test_fake_enospc
 
 $MULTISITE_REPLIC_PREPARE 3
 $gtm_tst/com/dbcreate.csh mumps 1 125 256 512 -glo=256
