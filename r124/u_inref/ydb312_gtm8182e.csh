@@ -38,8 +38,7 @@ setenv path_INST3 `$tst_awk '{-F " "; if ($1" "$2 ~ /INST3 DBDIR/)  print $3}' $
 
 echo "# Running rmv_map script in INST3 to remove instance file mapping"
 # We set the instance file name of INST3 to NULL so that it no longer has the full path
-$MSR RUN INST3 "$gtm_tst/com/rmv_map.csh"
-$MSR RUN INST3 "$GDE SHOW -INSTANCE  "
+$MSR RUN INST3 "$gtm_tst/com/rmv_map.csh" >& rmv_map1.txt
 echo ""
 echo ""
 
@@ -48,13 +47,25 @@ cp $gtm_tst/r124/inref/ydb312gtm8182e.m $path_INST3
 
 echo "# Unset [ydb/gtm]_repl_instance env variables  and run ydb312gtm8182e.m to set globals on INST1 and INST3 from INST3"
 $MSR RUN INST3 'unsetenv ydb_repl_instance; unsetenv gtm_repl_instance; $gtm_dist/mumps -run ydb312gtm8182e'
+echo ""
 
 echo "# Reset the _repl_instance env vars in INST3"
 $MSR RUN INST3 'setenv gtm_repl_instance "mumps.repl"'
 $MSR RUN INST3 'setenv ydb_repl_instance "mumps.repl"'
+echo ""
 
+echo "# Stop INST1 INST2 replication"
 $MSR STOP INST1 INST2
+echo ""
+echo "# Stop INST3 INST4 replication"
 $MSR STOP INST3 INST4
+echo ""
+echo ""
+
+echo "# Check msr*.out file for REPLINSTUNDEF error"
+$gtm_tst/com/check_error_exist.csh msr_execute_11.out REPLINSTUNDEF
+echo ""
+echo ""
 
 echo "# Check and shutdown the DB"
 echo "----------------------------------------------------------------------------"

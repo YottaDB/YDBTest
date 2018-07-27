@@ -23,6 +23,7 @@
 # 	or
 #	$gtm_tst/com/rmv_map.csh
 
+# Current global directory is assumed to be `pwd`/mumps.gld
 setenv gtmgbldir `pwd`/mumps.gld
 setenv ydb_gbldir `pwd`/mumps.gld
 

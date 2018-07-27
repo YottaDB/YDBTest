@@ -13,44 +13,42 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
 
 
 # Running rmv_map script in INST3 to remove instance file mapping
-==Executing MULTISITE_REPLIC 'RUN INST3 ##TEST_COM_PATH##/rmv_map.csh'==
-%GDE-I-LOADGD, Loading Global Directory file 
-	##REMOTE_TEST_PATH##/instance3/mumps.gld
-%GDE-I-VERIFY, Verification OK
-
-%GDE-I-VERIFY, Verification OK
-
-%GDE-I-GDUPDATE, Updating Global Directory file 
-	##REMOTE_TEST_PATH##/instance3/mumps.gld
-==Executing MULTISITE_REPLIC 'RUN INST3 ##SOURCE_PATH##/mumps -run GDE SHOW -INSTANCE  '==
-%GDE-I-LOADGD, Loading Global Directory file 
-	##REMOTE_TEST_PATH##/instance3/mumps.gld
-%GDE-I-VERIFY, Verification OK
-
-%GDE-I-NOACTION, Not updating Global Directory ##REMOTE_TEST_PATH##/instance3/mumps.gld
 
 
 # Copy ydb312gtm8182e.m to INST3
 # Unset [ydb/gtm]_repl_instance env variables  and run ydb312gtm8182e.m to set globals on INST1 and INST3 from INST3
 ==Executing MULTISITE_REPLIC 'RUN INST3 unsetenv ydb_repl_instance; unsetenv gtm_repl_instance; $gtm_dist/mumps -run ydb312gtm8182e'==
     Change to INST1 global directory and set ^a
-    Change to mumps.gld global directory and set ^a
-    (Expecting REPLINSTMISMTCH error)
+    Change to INST3 global directory and set ^a
+    (Expecting REPLINSTUNDEF error)
 %YDB-E-REPLINSTUNDEF, Replication instance environment variable $ydb_repl_instance/$gtm_repl_instance is undefined
 		At M source location ydb312gtm8182e+10^ydb312gtm8182e
 
 YDB>
+
 # Reset the _repl_instance env vars in INST3
 ==Executing MULTISITE_REPLIC 'RUN INST3 setenv gtm_repl_instance "mumps.repl"'==
 ==Executing MULTISITE_REPLIC 'RUN INST3 setenv ydb_repl_instance "mumps.repl"'==
+
+# Stop INST1 INST2 replication
 ==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
 Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
 Shutting down Primary Source Server Server in ##TEST_PATH##
+
+# Stop INST3 INST4 replication
 ==Executing MULTISITE_REPLIC 'STOP INST3 INST4'==
 Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
 Shutting down Primary Source Server Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+
+
+# Check msr*.out file for REPLINSTUNDEF error
+----------
+Error REPLINSTUNDEF seen in msr_execute_##FILTERED##NO.out as expected:
+    (Expecting REPLINSTUNDEF error)
+%YDB-E-REPLINSTUNDEF, Replication instance environment variable $ydb_repl_instance/$gtm_repl_instance is undefined
+----------
+
+
 # Check and shutdown the DB
 ----------------------------------------------------------------------------
 # DB has shutdown gracefully
-spencer:##TEST_PATH##/msr_execute_12.out
-%YDB-E-REPLINSTUNDEF, Replication instance environment variable $ydb_repl_instance/$gtm_repl_instance is undefined

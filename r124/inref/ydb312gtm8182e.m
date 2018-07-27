@@ -18,9 +18,9 @@ ydb312gtm8182e
 	WRITE "    Change to INST1 global directory and set ^a",!
 	SET $ZGBLDIR=INST1gbldir
 	SET ^a=1
-	WRITE "    Change to mumps.gld global directory and set ^a",!
-	WRITE "    (Expecting REPLINSTMISMTCH error)",!
-	SET $ZGBLDIR="mumps.gld"
+	WRITE "    Change to INST3 global directory and set ^a",!
+	WRITE "    (Expecting REPLINSTUNDEF error)",!
+	SET $ZGBLDIR=INST3gbldir
 	SET ^a=1
 
 	quit
