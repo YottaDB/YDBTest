@@ -112,7 +112,9 @@ chmod -w $ydb_dist/restrict.txt
 echo "# No label specified in filters"
 $ydb_dist/mumps -run zsystemfn^gtm8877
 $ydb_dist/mumps -run pipeopenfn^gtm8877
-echo "# Checking th Sys Log"
+echo "# Checking the Sys Log"
+# getoper.csh calls an m script, which creates excess RESTRICTSYNTAX errors in the syslog
+rm $ydb_dist/restrict.txt
 $gtm_tst/com/getoper.csh "$t" "" getoper.txt
 $grep RESTRICTSYNTAX getoper.txt |& sed 's/.*%YDB-E/%YDB-E/'
 $gtm_tst/com/dbcheck.csh >>& dbcheck.out
