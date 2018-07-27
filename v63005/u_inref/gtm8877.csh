@@ -29,11 +29,15 @@ ZSYSTEM_FILTER:filterfn^gtm8877
 PIPE_FILTER:filterfn^gtm8877
 EOF
 chmod -w $ydb_dist/restrict.txt
-echo "# FILTER RETURNING -1 (expect a COMMFILTERERR in the syslog in addition to the RESTRICTEDOP error)"
+set t = `date +"%b %e %H:%M:%S"`
+echo "# FILTER RETURNING -1 (attempting to use the pipe device after the open fails will cause an IONOTOPEN error)"
 $ydb_dist/mumps -run tpzsystemfn^gtm8877
 $ydb_dist/mumps -run pipeopenfn^gtm8877
+echo "# Checking the Sys Log"
+$gtm_tst/com/getoper.csh "$t" "" getoper.txt
+$grep RESTRICTEDOP getoper.txt |& sed 's/.*%YDB-E/%YDB-E/'
 echo ""
-
+sleep 1
 
 # FILTER RETURNING A STRING
 rm $ydb_dist/restrict.txt
@@ -47,11 +51,21 @@ $ydb_dist/mumps -run zsystemfn^gtm8877
 $ydb_dist/mumps -run pipeopenfn^gtm8877
 echo ""
 
-
 # TRIGGERING A FILTER IN A TP TRANSACTION
 echo "# FILTER INVOCATION IN A TP TRANSACTION"
 $ydb_dist/mumps -run tpzsystemfn^gtm8877
 $ydb_dist/mumps -run tppipeopenfn^gtm8877
+echo ""
+
+
+# TRIGGERING A FILTER IN A TP TRANSACTION
+echo "# TRIGGERING A RESTART OF A TP TRANSACTION WITHIN A FILTER"
+rm $ydb_dist/restrict.txt
+cat > $ydb_dist/restrict.txt << EOF
+PIPE_FILTER:tpfilter^gtm8877
+EOF
+chmod -w $ydb_dist/restrict.txt
+$ydb_dist/mumps -run tprestartfn^gtm8877
 echo ""
 
 
@@ -69,7 +83,6 @@ $ydb_dist/mumps -run zsystemfn^gtm8877
 $ydb_dist/mumps -run pipeopenfn^gtm8877
 echo ""
 
-
 # RECURSIVE FILTERS
 rm $ydb_dist/restrict.txt
 cat > $ydb_dist/restrict.txt << EOF
@@ -78,9 +91,15 @@ PIPE_FILTER:recpipefilter^gtm8877
 EOF
 chmod -w $ydb_dist/restrict.txt
 echo "# RECURSIVE FILTERS"
+set t = `date +"%b %e %H:%M:%S"`
 $ydb_dist/mumps -run zsystemfn^gtm8877
 $ydb_dist/mumps -run pipeopenfn^gtm8877
+echo "# Checking the Sys Log"
+$gtm_tst/com/getoper.csh "$t" "" getoper.txt
+$grep FILTERNEST getoper.txt |& sed 's/.*%YDB-E/%YDB-E/'
+$grep COMMFILTERERR getoper.txt |& sed 's/.*%YDB-E-COMMFILTERERR/%YDB-E-COMMFILTERERR/'
 echo ""
+sleep 1
 
 # NO LABEL SPECIFIED IN FILTER
 rm $ydb_dist/restrict.txt
@@ -88,8 +107,12 @@ cat > $ydb_dist/restrict.txt << EOF
 ZSYSTEM_FILTER
 PIPE_FILTER
 EOF
+set t = `date +"%b %e %H:%M:%S"`
 chmod -w $ydb_dist/restrict.txt
 echo "# No label specified in filters"
 $ydb_dist/mumps -run zsystemfn^gtm8877
 $ydb_dist/mumps -run pipeopenfn^gtm8877
+echo "# Checking th Sys Log"
+$gtm_tst/com/getoper.csh "$t" "" getoper.txt
+$grep RESTRICTSYNTAX getoper.txt |& sed 's/.*%YDB-E/%YDB-E/'
 $gtm_tst/com/dbcheck.csh >>& dbcheck.out
