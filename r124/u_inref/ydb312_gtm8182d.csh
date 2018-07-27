@@ -11,11 +11,6 @@
 #								#
 #################################################################
 #
-# Set white box testing environment to avoid assert failures along with REPLMULTINSTUPDATE error
-#setenv gtm_white_box_test_case_enable 1
-#setenv gtm_white_box_test_case_number 137
-#setenv gtm_repl_instance "mumps.repl"
-
 $MULTISITE_REPLIC_PREPARE 2
 
 setenv gtm_custom_errors /dev/null
@@ -36,14 +31,12 @@ echo ""
 echo "# Stop INST1 INST2 replication"
 $MSR STOP INST1 INST2
 echo ""
-
 setenv path_INST1 `$tst_awk '{-F " "; if ($1" "$2 ~ /INST1 DBDIR/)  print $3}' $tst_working_dir/msr_instance_config.txt`
 
-
-#$GDE SHOW -INSTANCE  >& show.log
-#$GDE CHANGE -INSTANCE -FILE_NAME=\"\" >>& GDEchangeINST1_3.log
-#$MSR SYNC INST1 INST2
-#$MSR RUN INST4 '$MUPIP extract INST4_3_extract.glo'
+echo "# Run ydb312gtm8182d.m to:"
+echo "#		- attempt to read from DB"
+echo "#		- start replicattion"
+echo "#		- attempt to write to DB"
 $gtm_dist/mumps -run ydb312gtm8182d
 echo ""
 

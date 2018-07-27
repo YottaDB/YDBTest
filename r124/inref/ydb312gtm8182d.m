@@ -13,11 +13,18 @@
 
 gtm8182
 	DO getPaths
-
+	set tab="    "
 	SET $ZGBLDIR=INST1gbldir
+	WRITE tab_"Attempting to read from DB",!
 	SET x=$get(^a)
-	; ZSYSTEM "$ydb_dist/mupip replic -source -start -log=source.log -buf=1 -instsecondary=DUMMY -passive -updok"
+	WRITE !
+
+	
+	WRITE tab_"Start INST1 INST2 replication",!
 	ZSYSTEM "$MSR STARTSRC INST1 INST2"
+	WRITE !
+
+	WRITE tab_"Attempting to write to DB",!
 	SET ^a=1
 
 	quit
