@@ -27,95 +27,146 @@ setenv gtm_test_freeze_on_error 1
 
 $MULTISITE_REPLIC_PREPARE 4
 
-echo "Test A: INST3-INST4 jnlpool is up on INST3"
-echo "-------------------------------------------------"
-echo ""
-echo "# Create the DB"
-#$gtm_tst/com/dbcreate.csh mumps 1 $keysize -gld_has_db_fullpath >>& dbcreate.out
-$gtm_tst/com/dbcreate.csh mumps 1 -key_size=5 -gld_has_db_fullpath >>& dbcreate.out
-if ($status) then
-	echo "DB Create Failed, Output Below"
-	cat dbcreate.out
-	exit -1
-endif
+#echo "Test A: INST3-INST4 jnlpool is up on INST3"
+#echo "-------------------------------------------------"
+#echo ""
+#echo "# Create the DB"
+##$gtm_tst/com/dbcreate.csh mumps 1 $keysize -gld_has_db_fullpath >>& dbcreate.out
+#$gtm_tst/com/dbcreate.csh mumps 1 -key_size=5 -gld_has_db_fullpath >>& dbcreate.out
+#if ($status) then
+#	echo "DB Create Failed, Output Below"
+#	cat dbcreate.out
+#	exit -1
+#endif
+#
+#echo "# Start INST1 INST2 replication"
+#$MSR START INST1 INST2
+#echo ""
+#echo "# Start INST3 INST4 replication"
+#$MSR START INST3 INST4
+#echo ""
+#
+##These env vars will be needed by ydb312gtm8182c.m and will still be valid after
+##the new db is created in Test B
+#setenv path_INST1 `$tst_awk '{-F " "; if ($1" "$2 ~ /INST1 DBDIR/)  print $3}' $tst_working_dir/msr_instance_config.txt`
+#setenv path_INST3 `$tst_awk '{-F " "; if ($1" "$2 ~ /INST3 DBDIR/)  print $3}' $tst_working_dir/msr_instance_config.txt`
+#
+#echo "# Run ydb312gtm8182c.m to trigger a KEY2BIG error in INST3 (should cause INST3 to freeze)"
+#$gtm_dist/mumps -run ydb312gtm8182c
+#echo ""
+#
+#echo "# Unfreeze INST3"
+##-freeze=off needs to be done before shutting down INST3-INST4 source server
+#$MSR RUN INST3 "$MUPIP replic -source -freeze=off"
+#echo ""
+#
+#echo "# Check and shutdown the DB"
+#$gtm_tst/com/dbcheck.csh >>& check.out
+#if ($status) then
+#	echo "DB Check Failed, Output Below"
+#	cat check.out
+#	exit -1
+#endif
+#
+#echo "# DB has shutdown gracefully"
+#echo ""
+#
+#
+#echo "Test B: INST3-INST4 jnlpool is down on INST3"
+#echo "-------------------------------------------------"
+#echo ""
+#
+#echo "# Create the DB"
+##$gtm_tst/com/dbcreate.csh mumps 1 $keysize -gld_has_db_fullpath >>& dbcreate.out
+#$gtm_tst/com/dbcreate.csh mumps 1 -key_size=5 -gld_has_db_fullpath >>& dbcreate.out
+#if ($status) then
+#	echo "DB Create Failed, Output Below"
+#	cat dbcreate.out
+#	exit -1
+#endif
+#
+#echo "# Start INST1 INST2 replication"
+#$MSR START INST1 INST2
+#echo ""
+#echo "# Start INST3 INST4 replication"
+#$MSR START INST3 INST4
+#echo ""
+#echo "# Stop INST3 INST4 replication"
+#$MSR STOP INST3 INST4
+#echo ""
+#
+#echo "# Run ydb312gtm8182c.m to trigger a KEY2BIG error in INST3"
+#$gtm_dist/mumps -run ydb312gtm8182c
+#echo ""
+#
+#
+#echo "# Check and shutdown the DB"
+#$gtm_tst/com/dbcheck.csh >>& check.out
+#if ($status) then
+#	echo "DB Check Failed, Output Below"
+#	cat check.out
+#	exit -1
+#endif
+#echo "# DB has shutdown gracefully"
 
-echo "# Start INST1 INST2 replication"
-$MSR START INST1 INST2
-echo ""
-echo "# Start INST3 INST4 replication"
-$MSR START INST3 INST4
-echo ""
+set testA="Test A"
+set testB="Test B"
 
-#These env vars will be needed by ydb312gtm8182c.m and will still be valid after
-#the new db is created in Test B
-setenv path_INST1 `$tst_awk '{-F " "; if ($1" "$2 ~ /INST1 DBDIR/)  print $3}' $tst_working_dir/msr_instance_config.txt`
-setenv path_INST3 `$tst_awk '{-F " "; if ($1" "$2 ~ /INST3 DBDIR/)  print $3}' $tst_working_dir/msr_instance_config.txt`
+foreach test ("$testA" "$testB")
 
-echo "# Run ydb312gtm8182c.m to trigger a KEY2BIG error in INST3 (should cause INST3 to freeze)"
-$gtm_dist/mumps -run ydb312gtm8182c
-echo ""
+	echo "$test"": INST3-INST4 jnlpool is down on INST3"
+	echo "-------------------------------------------------"
+	echo ""
 
-echo "# Unfreeze INST3"
-#-freeze=off needs to be done before shutting down INST3-INST4 source server
-$MSR RUN INST3 "$MUPIP replic -source -freeze=off"
-echo ""
+	echo "# Create the DB with maximum key size set to 5 characters"
+	#$gtm_tst/com/dbcreate.csh mumps 1 $keysize -gld_has_db_fullpath >>& dbcreate.out
+	$gtm_tst/com/dbcreate.csh mumps 1 -key_size=5 -gld_has_db_fullpath >>& dbcreate.out
+	if ($status) then
+		echo "DB Create Failed, Output Below"
+		cat dbcreate.out
+		exit -1
+	endif
 
-echo "# Stop INST1 INST2 replication"
-$MSR STOP INST1 INST2
-echo ""
-echo "# Stop INST3 INST4 replication"
-$MSR STOP INST3 INST4
-echo ""
+	echo "# Start INST1 INST2 replication"
+	$MSR START INST1 INST2
+	echo ""
+	echo "# Start INST3 INST4 replication"
+	$MSR START INST3 INST4
+	echo ""
 
-echo "# Check and shutdown the DB"
-$gtm_tst/com/dbcheck.csh >>& check.out
-if ($status) then
-	echo "DB Check Failed, Output Below"
-	cat check.out
-	exit -1
-endif
+	if ("$test" == "$testB") then
+		echo "# Stop INST3 INST4 replication"
+		$MSR STOP INST3 INST4
+		echo ""
+	endif
 
-echo "# DB has shutdown gracefully"
-echo ""
+	#These env vars will be needed by ydb312gtm8182c.m
+	setenv path_INST1 `$tst_awk '{-F " "; if ($1" "$2 ~ /INST1 DBDIR/)  print $3}' $tst_working_dir/msr_instance_config.txt`
+	setenv path_INST3 `$tst_awk '{-F " "; if ($1" "$2 ~ /INST3 DBDIR/)  print $3}' $tst_working_dir/msr_instance_config.txt`
 
+	#The echoed message should specify that INST3 will feeze for test A only
+	echo -n "# Run ydb312gtm8182c.m to trigger a KEY2BIG error in INST3 "
+	if ("$test" == "$testA") then
+		echo -n "(should cause INST3 to freeze)"
+	endif
+	echo ""
+	$gtm_dist/mumps -run ydb312gtm8182c
+	echo ""
 
-echo "Test B: INST3-INST4 jnlpool is down on INST3"
-echo "-------------------------------------------------"
-echo ""
+	if ("$test" == "$testA") then
+		echo "# Unfreeze INST3"
+		#-freeze=off needs to be done before shutting down INST3-INST4 source server
+		$MSR RUN INST3 "$MUPIP replic -source -freeze=off"
+		echo ""
+	endif
 
-echo "# Create the DB"
-#$gtm_tst/com/dbcreate.csh mumps 1 $keysize -gld_has_db_fullpath >>& dbcreate.out
-$gtm_tst/com/dbcreate.csh mumps 1 -key_size=5 -gld_has_db_fullpath >>& dbcreate.out
-if ($status) then
-	echo "DB Create Failed, Output Below"
-	cat dbcreate.out
-	exit -1
-endif
+	echo "# Check and shutdown the DB"
+	$gtm_tst/com/dbcheck.csh >>& check.out
+	if ($status) then
+		echo "DB Check Failed, Output Below"
+		cat check.out
+		exit -1
+	endif
+	echo "# DB has shutdown gracefully"
 
-echo "# Start INST1 INST2 replication"
-$MSR START INST1 INST2
-echo ""
-echo "# Start INST3 INST4 replication"
-$MSR START INST3 INST4
-echo ""
-echo "# Stop INST3 INST4 replication"
-$MSR STOP INST3 INST4
-echo ""
-
-echo "# Run ydb312gtm8182c.m to trigger a KEY2BIG error in INST3"
-$gtm_dist/mumps -run ydb312gtm8182c
-echo ""
-
-echo "# Stop INST1 INST2 replication"
-$MSR STOP INST1 INST2
-echo ""
-
-
-echo "# Check and shutdown the DB"
-$gtm_tst/com/dbcheck.csh >>& check.out
-if ($status) then
-	echo "DB Check Failed, Output Below"
-	cat check.out
-	exit -1
-endif
-echo "# DB has shutdown gracefully"
+end
