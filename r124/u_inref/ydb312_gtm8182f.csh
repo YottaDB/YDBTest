@@ -11,9 +11,6 @@
 #								#
 #################################################################
 #
-# Set white box testing environment to avoid assert failures along with REPLMULTINSTUPDATE error
-setenv gtm_white_box_test_case_enable 1
-setenv gtm_white_box_test_case_number 137
 setenv gtm_repl_instance "mumps.repl"
 
 $MULTISITE_REPLIC_PREPARE 4
@@ -38,7 +35,7 @@ echo ""
 setenv path_INST1 `$tst_awk '{-F " "; if ($1" "$2 ~ /INST1 DBDIR/)  print $3}' $tst_working_dir/msr_instance_config.txt`
 setenv path_INST3 `$tst_awk '{-F " "; if ($1" "$2 ~ /INST3 DBDIR/)  print $3}' $tst_working_dir/msr_instance_config.txt`
 
-echo "# Run ydb312gtm8182f.m to attempt to lock a variable in INST3 before attempting to set it"
+echo "# Run ydb312gtm8182f.m to do a SET in INST1, a LOCK in INST3, and a SET in INST3"
 $gtm_dist/mumps -run ydb312gtm8182f
 echo ""
 
