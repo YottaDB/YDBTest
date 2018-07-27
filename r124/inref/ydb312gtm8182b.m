@@ -28,7 +28,7 @@ ydb231gtm8182b
 
 zpeek
 	; Doing a $zpeek instead of PEEKBYNAME in order to avoid ^incrtrap issues
-	; write \$\$^%PEEKBYNAME("jnlpool_ctl_struct.ftok_counter_halted")
+	; write $$^%PEEKBYNAME("jnlpool_ctl_struct.ftok_counter_halted")
 	set ret=$zpeek("JPCREPL",3708,4,"I")
 
 	quit
