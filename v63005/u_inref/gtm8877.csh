@@ -33,7 +33,7 @@ set t = `date +"%b %e %H:%M:%S"`
 echo "# FILTER RETURNING -1 (attempting to use the pipe device after the open fails will cause an IONOTOPEN error)"
 $ydb_dist/mumps -run tpzsystemfn^gtm8877
 $ydb_dist/mumps -run pipeopenfn^gtm8877
-echo "# Checking the Sys Log"
+echo "# Checking the syslog"
 $gtm_tst/com/getoper.csh "$t" "" getoper.txt
 $grep RESTRICTEDOP getoper.txt |& sed 's/.*%YDB-E/%YDB-E/'
 echo ""
@@ -94,7 +94,7 @@ echo "# RECURSIVE FILTERS"
 set t = `date +"%b %e %H:%M:%S"`
 $ydb_dist/mumps -run zsystemfn^gtm8877
 $ydb_dist/mumps -run pipeopenfn^gtm8877
-echo "# Checking the Sys Log"
+echo "# Checking the syslog"
 $gtm_tst/com/getoper.csh "$t" "" getoper.txt
 $grep FILTERNEST getoper.txt |& sed 's/.*%YDB-E/%YDB-E/'
 $grep COMMFILTERERR getoper.txt |& sed 's/.*%YDB-E-COMMFILTERERR/%YDB-E-COMMFILTERERR/'
@@ -112,8 +112,8 @@ chmod -w $ydb_dist/restrict.txt
 echo "# No label specified in filters"
 $ydb_dist/mumps -run zsystemfn^gtm8877
 $ydb_dist/mumps -run pipeopenfn^gtm8877
-echo "# Checking the Sys Log"
-# getoper.csh calls an m script, which creates excess RESTRICTSYNTAX errors in the syslog
+echo "# Checking the syslog"
+# Avoid extra RESTRICTSYNTAX errors from getoper.csh (which does mumps -run) by removing restrict.txt before the call
 rm $ydb_dist/restrict.txt
 $gtm_tst/com/getoper.csh "$t" "" getoper.txt
 $grep RESTRICTSYNTAX getoper.txt |& sed 's/.*%YDB-E/%YDB-E/'
