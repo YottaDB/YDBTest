@@ -1,0 +1,57 @@
+# NO RESTRICTIONS
+original input
+original input
+
+# FILTER RETURNING -1 (attempting to use the pipe device after the open fails will cause an IONOTOPEN error)
+%YDB-E-COMMFILTERERR, Error executing the command filter for gtmzsystem. RESTRICTEDOP
+%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: echo 'original input'
+%YDB-E-COMMFILTERERR, Error executing the command filter for gtmpipeopen. RESTRICTEDOP
+%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: echo 'original input'
+ZSTATUS=pipeopenfn+4^gtm8877,%YDB-E-IONOTOPEN, Attempt to USE an I/O device which has not been opened
+
+# Checking the syslog
+##TEST_AWK%YDB-E-COMMFILTERERR, Error executing the command filter for gtmzsystem. RESTRICTEDOP -- generated from 0x.*
+##TEST_AWK%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: echo 'original input' -- generated from 0x.*
+##TEST_AWK%YDB-E-COMMFILTERERR, Error executing the command filter for gtmpipeopen. RESTRICTEDOP -- generated from 0x.*
+##TEST_AWK%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: echo 'original input' -- generated from 0x.*
+
+# FILTER RETURNING A STRING
+filtered output
+filtered output
+
+# FILTER INVOCATION IN A TP TRANSACTION
+filtered output
+filtered output
+
+# TRIGGERING A RESTART OF A TP TRANSACTION WITHIN A FILTER
+Attempting to trigger a restart
+restart occured outside of filter function
+$trestart = 1
+restart occured within filter function
+$trestart = 2
+restart occured within filter function
+$trestart = 3
+
+# FILTER WITH ZSYSTEM AND PIPE_OPEN RESTRICTED
+ZSTATUS=zsystemfn+2^gtm8877,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: ZSYSTEM
+ZSTATUS=pipeopenfn+3^gtm8877,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: OPEN PIPE
+
+# RECURSIVE FILTERS
+ZSTATUS=reczsystfilter+2^gtm8877,%YDB-E-NOFILTERNEST, Filter nesting not allowed
+%YDB-E-COMMFILTERERR, Error executing the command filter for gtmzsystem. 150374450,reczsystfilter+3^gtm8877,%YDB-E-NOTEXTRINSIC, QUIT/ZHALT does not return to an extrinsic function: argument not allowed
+ZSTATUS=recpipefilter+3^gtm8877,%YDB-E-NOFILTERNEST, Filter nesting not allowed
+%YDB-E-COMMFILTERERR, Error executing the command filter for gtmpipeopen. 150374450,recpipefilter+4^gtm8877,%YDB-E-NOTEXTRINSIC, QUIT/ZHALT does not return to an extrinsic function: argument not allowed
+ZSTATUS=pipeopenfn+4^gtm8877,%YDB-E-IONOTOPEN, Attempt to USE an I/O device which has not been opened
+
+# Checking the syslog
+##TEST_AWK%YDB-E-NOFILTERNEST, Filter nesting not allowed -- generated from 0x.*
+##TEST_AWK%YDB-E-NOFILTERNEST, Filter nesting not allowed -- generated from 0x.*
+##TEST_AWK%YDB-E-COMMFILTERERR, Error executing the command filter for gtmzsystem. 150374450,reczsystfilter\+3\^gtm8877,%YDB-E-NOTEXTRINSIC, QUIT/ZHALT does not return to an extrinsic function: argument not allowed -- generated from 0x.*
+##TEST_AWK%YDB-E-COMMFILTERERR, Error executing the command filter for gtmpipeopen. 150374450,recpipefilter\+4\^gtm8877,%YDB-E-NOTEXTRINSIC, QUIT/ZHALT does not return to an extrinsic function: argument not allowed -- generated from 0x.*
+
+# No label specified in filters
+ZSTATUS=zsystemfn+2^gtm8877,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: ZSYSTEM
+ZSTATUS=pipeopenfn+3^gtm8877,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: OPEN PIPE
+# Checking the syslog
+##TEST_AWK%YDB-E-RESTRICTSYNTAX, Syntax error in file ##TEST_PATH##/ydb_temp_dist/restrict.txt at line number 1. All facilities restricted for process. -- generated from 0x.*
+##TEST_AWK%YDB-E-RESTRICTSYNTAX, Syntax error in file ##TEST_PATH##/ydb_temp_dist/restrict.txt at line number 1. All facilities restricted for process. -- generated from 0x.*
