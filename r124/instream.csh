@@ -21,7 +21,7 @@
 # jnlunxpcterr     [nars]  Test that MUPIP JOURNAL -EXTRACT does not issue JNLUNXPCTERR error in the face of concurrent udpates
 # ydb293	   [vinay] Tests the update process operates correctly with triggers and SET $ZGBLDIR
 # ydb297	   [vinay] Demonstrates LOCK commands work correctly when there are more than 31 subscripts that hash to the same value
-# ydb312	   [jake]  Tests a fix for the wrong instace DB being frozen by an error in a process accessing mulitple instances
+# ydb312	   [jake]  Tests that an error in DB freezes only the instance corresponding to that DB and not an unrelated instance
 #-------------------------------------------------------------------------------------------------------------
 
 echo "r124 test starts..."

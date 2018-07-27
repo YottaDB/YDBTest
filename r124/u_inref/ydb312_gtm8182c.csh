@@ -13,25 +13,26 @@
 #
 setenv gtm_repl_instance "mumps.repl"
 
-# Assign the KEY2BIG error to the list of 'serious' errors worth freezing the DB for
+# Assign the KEY2BIG error to the list of 'serious' errors worth freezing the instance for
 cp $ydb_dist/custom_errors_sample.txt .
 setenv gtm_custom_errors `pwd`/custom_errors_sample.txt
 chmod +w `pwd`/custom_errors_sample.txt
 echo "KEY2BIG" >> `pwd`/custom_errors_sample.txt
 unsetenv ydb_custom_errors
 
-# once the error is generated we'll freeze the associated instances DB
+# once the error is generated we'll freeze the associated instance
 setenv gtm_test_freeze_on_error 1
-# global key of >5 characters will trigger the KEY2BIG error
-setenv keysize 5
+### global key of >5 characters will trigger the KEY2BIG error
+##setenv keysize 5
 
 $MULTISITE_REPLIC_PREPARE 4
 
-echo "Test A: INST3-INST4 replicating instance is on"
+echo "Test A: INST3-INST4 jnlpool is up on INST3"
 echo "-------------------------------------------------"
 echo ""
 echo "# Create the DB"
-$gtm_tst/com/dbcreate.csh mumps 1 $keysize -gld_has_db_fullpath >>& dbcreate.out
+#$gtm_tst/com/dbcreate.csh mumps 1 $keysize -gld_has_db_fullpath >>& dbcreate.out
+$gtm_tst/com/dbcreate.csh mumps 1 -key_size=5 -gld_has_db_fullpath >>& dbcreate.out
 if ($status) then
 	echo "DB Create Failed, Output Below"
 	cat dbcreate.out
@@ -78,12 +79,13 @@ echo "# DB has shutdown gracefully"
 echo ""
 
 
-echo "Test B: INST3-INST4 replicating instance is off"
+echo "Test B: INST3-INST4 jnlpool is down on INST3"
 echo "-------------------------------------------------"
 echo ""
 
 echo "# Create the DB"
-$gtm_tst/com/dbcreate.csh mumps 1 $keysize -gld_has_db_fullpath >>& dbcreate.out
+#$gtm_tst/com/dbcreate.csh mumps 1 $keysize -gld_has_db_fullpath >>& dbcreate.out
+$gtm_tst/com/dbcreate.csh mumps 1 -key_size=5 -gld_has_db_fullpath >>& dbcreate.out
 if ($status) then
 	echo "DB Create Failed, Output Below"
 	cat dbcreate.out
