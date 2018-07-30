@@ -14,6 +14,8 @@
 #
 #
 $gtm_tst/com/dbcreate.csh mumps 1 >>& dbcreate.out
+# writeslashtls^gtm8165 requires a port number to communicate. So allocate one from the test system framework.
+source $gtm_tst/com/portno_acquire.csh >>& portno.out	# portno env var will be set to the alloted portno
 echo "# Setting gtm_tpnotacidtime to .123 seconds"
 setenv gtm_tpnotacidtime .123
 setenv timeout 1
@@ -50,4 +52,5 @@ foreach arg("writeslashwait" "writeslashpass" "writeslashaccept" "writeslashtls"
 	echo ""
 end
 
+$gtm_tst/com/portno_release.csh	# Release the portno allocated above by portno_acquire.csh
 $gtm_tst/com/dbcheck.csh >>& dbcheck.out

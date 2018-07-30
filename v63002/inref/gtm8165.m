@@ -158,7 +158,7 @@ acceptchild
 writeslashtls
 	set ^stop=0
 	set sock="gtm8165.socket"
-	open sock:(LISTEN="3000:TCP":attach="handle")::"SOCKET"
+	open sock:(LISTEN=$ztrnlnm("portno")_":TCP":attach="handle")::"SOCKET"
 	use sock
 	job tlschild
 	write /wait
@@ -187,7 +187,7 @@ tlschild
 	write $job
 	close pid2
 	set sock="socket"
-	open sock:(CONNECT="localhost:3000:TCP":attach="handle")::"SOCKET"
+	open sock:(CONNECT="localhost:"_$ztrnlnm("portno")_":TCP":attach="handle")::"SOCKET"
 	use sock
 	for  quit:^stop  hang 0.1
 	quit
