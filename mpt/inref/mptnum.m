@@ -1,3 +1,16 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; This module is derived from FIS GT.M.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 MPTNUM	;validation of %numeric conversions + string conversions
 	S PASS=0,FAIL=0,ITEM=""
 	W !!,"MPTNUM: TEST OF %NUMERIC CONVERSIONS and STRING CONVERSIONS"
@@ -22,11 +35,17 @@ MPTNUM	;validation of %numeric conversions + string conversions
 	F i=1:1:4  S X=X+X+X+X  S %DH=X  D ^%DH  S %HD=%DH  D ^%HD S VCOMP=VCOMP_%DH_"-"_%HD_" "
  	S VCORR="FFF-4095 FFC-4092 FF0-4080 FC0-4032 F00-3840 "
 	D EXAMINER
-	S ITEM="I-152/153.3  decimal to hex and reverse - high negative"
-	S %DL=4
+	S ITEM="I-152/153.3  decimal to hex and reverse - high negative - %DL=4"
+	S %DL=4,saveX=X
 	S VCOMP=""  S X=1024*32*X
 	F i=9:1:12  S X=X+X+X+X  S %DH=X  D ^%DH  S %HD=%DH  D ^%HD S VCOMP=VCOMP_%DH_"-"_%HD_" "
-	S VCORR="F110000-252772352 9110000-152109056 F1110000-4044423168 91110000-2433810432 "
+	S VCORR="E000000-234881024 8000000-134217728 E0000000-3758096384 80000000-2147483648 "
+	D EXAMINER
+	S ITEM="I-152/153.4  decimal to hex and reverse - high negative - %DL=8"
+	S %DL=8,X=saveX
+	S VCOMP=""  S X=1024*32*X
+	F i=9:1:12  S X=X+X+X+X  S %DH=X  D ^%DH  S %HD=%DH  D ^%HD S VCOMP=VCOMP_%DH_"-"_%HD_" "
+	S VCORR="FE000000-4261412864 F8000000-4160749568 E0000000-3758096384 80000000-2147483648 "
 	D EXAMINER
 	;
 154	W !,"I-152/154  decimal to octal and reverse conversion "
@@ -49,11 +68,17 @@ MPTNUM	;validation of %numeric conversions + string conversions
 	F i=1:1:4  S X=X+X+X+X  S %DO=X  D ^%DO  S %OD=%DO  D ^%OD S VCOMP=VCOMP_%DO_"-"_%OD_" "
  	S VCORR="777-511 774-508 760-496 700-448 400-256 "
 	D EXAMINER
-	S ITEM="I-152/154.3  decimal to octal and reverse - high negative"
-	S %DL=4
+	S ITEM="I-152/154.3  decimal to octal and reverse - high negative - %DL=4"
+	S %DL=4,saveX=X
 	S VCOMP=""  S X=1024*32*X
 	F i=9:1:12  S X=X+X+X+X  S %DO=X  D ^%DO  S %OD=%DO  D ^%OD S VCOMP=VCOMP_%DO_"-"_%OD_" "
-	S VCORR="711110000-119836672 111110000-19173376 5111110000-690262016 71111110000-7669583872 "
+	S VCORR="600000000-100663296 7000000000-939524096 4000000000-536870912 60000000000-6442450944 "
+	D EXAMINER
+	S ITEM="I-152/154.4  decimal to octal and reverse - high negative - %DL=11"
+	S %DL=11,X=saveX
+	S VCOMP=""  S X=1024*32*X
+	F i=9:1:12  S X=X+X+X+X  S %DO=X  D ^%DO  S %OD=%DO  D ^%OD S VCOMP=VCOMP_%DO_"-"_%OD_" "
+	S VCORR="77600000000-8556380160 77000000000-8455716864 74000000000-8053063680 60000000000-6442450944 "
 	D EXAMINER
 	;
 
@@ -74,9 +99,9 @@ MPTNUM	;validation of %numeric conversions + string conversions
 156	W !,"I-152/156  exponentiation - "
 	S ITEM="I-152/156.0  exponentiation"
 	S VCOMP=""
-	F K=0:1:2  S %I=0,%J=K  D ^%EXP S VCOMP=VCOMP_"0^"_K_"="_%I_" " 
-	F K=0:1:2  S %I=1,%J=K  D ^%EXP S VCOMP=VCOMP_"1^"_K_"="_%I_" " 
-	F K=0:1:4  S %I=2,%J=K  D ^%EXP S VCOMP=VCOMP_"2^"_K_"="_%I_" " 
+	F K=0:1:2  S %I=0,%J=K  D ^%EXP S VCOMP=VCOMP_"0^"_K_"="_%I_" "
+	F K=0:1:2  S %I=1,%J=K  D ^%EXP S VCOMP=VCOMP_"1^"_K_"="_%I_" "
+	F K=0:1:4  S %I=2,%J=K  D ^%EXP S VCOMP=VCOMP_"2^"_K_"="_%I_" "
 	S VCORR="0^0=1 0^1=0 0^2=0 1^0=1 1^1=1 1^2=1 2^0=1 2^1=2 2^2=4 2^3=8 2^4=16 "
 	D EXAMINER
 	;

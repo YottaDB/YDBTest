@@ -1,0 +1,28 @@
+Current Stack Level = 0
+Xecutes that precompile will have a stack level of 1
+Xecutes that compile at runtime will have a stack level of 2
+
+
+# Testing Normal Xecute
+stack level = 1
+
+# Testing Xecute containing a QUIT
+stack level = 2
+
+# Testing Xecute containing a GOTO
+stack level = 2
+
+# Testing Xecute containing a NEW
+stack level = 2
+
+# Testing Xecute containing a nested XECUTE
+stack level = 2
+
+# Testing Xecute containing indirection
+stack level = 2
+
+# Testing Xecute containing a QUIT which never gets executed
+stack level = 2
+
+# Testing Xecute containing a QUIT which breaks a forloop
+stack level = 2
