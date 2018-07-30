@@ -14,7 +14,9 @@
 #
 #
 
-# Default used for DSE crit seize, AREG used to dictate order of execution, BREG used as an eventlog
+setenv gtm_test_spanreg 0	# Disable spanning regions as this test relies on ^a updates going to AREG, ^b updates going to BREG
+				# and none of these going to DEFAULT since that region would have crit seized by DSE
+# DEFAULT region used for DSE crit seize, AREG used to dictate order of execution, BREG used as an eventlog
 $gtm_tst/com/dbcreate.csh mumps 3>>&dbcreate.out
 if ($status) then
 	cat dbcreate.out
