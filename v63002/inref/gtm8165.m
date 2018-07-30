@@ -68,7 +68,7 @@ writeslashwait
 	. write:($ZTRNLNM("timeout")) /wait(.999)
 	. write:('$ZTRNLNM("timeout")) /wait
 	. close sock
-	if $trestart<=2  do ;cannot use else because this commit changes the value of $test, similar usages throughout the test
+	if $trestart<=2  do  ;cannot use else because this commit changes the value of $test, similar usages throughout the test
 	. set ^Y=$increment(^i)
 	. zsystem "$ydb_dist/mumps -run ^%XCMD 'set ^Y=$increment(^i)'"
 	tcommit
@@ -113,7 +113,7 @@ passchild
 	open sock:(CONNECT="passsocket2:LOCAL")::"SOCKET"
 	use sock
 	use $p
-	for  hang .1  quit:^stop
+	for  quit:^stop  hang .1
 	quit
 
 writeslashaccept
@@ -151,7 +151,7 @@ acceptchild
 	open sock:(CONNECT="acceptsocket:LOCAL")::"SOCKET"
 	use sock
 	use $p
-	for  hang .1  quit:^stop
+	for  quit:^stop  hang .1
 	quit
 
 
@@ -189,5 +189,5 @@ tlschild
 	set sock="socket"
 	open sock:(CONNECT="localhost:3000:TCP":attach="handle")::"SOCKET"
 	use sock
-	for  quit:^stop
+	for  quit:^stop  hang 0.1
 	quit

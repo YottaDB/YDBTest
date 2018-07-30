@@ -21,11 +21,11 @@ foreach arg("writeslashwait" "writeslashpass" "writeslashaccept" "writeslashtls"
 	echo "# Testing command timeout ($arg) greater than .123 (Expect a TPNOTACID message in the syslog)"
 	set t = `date +"%b %e %H:%M:%S"`
 	$ydb_dist/mumps -run $arg^gtm8165
-	$gtm_tst/com/getoper.csh "$t" "" getoper.txt
+	$gtm_tst/com/getoper.csh "$t" "" getoper1_$arg.txt
 	# Sleep included to avoid 1 iteration reading the message from a previous one
 	sleep 1
 	echo "# Checking the syslog"
-	$grep TPNOTACID getoper.txt |& sed 's/.*%YDB-I-TPNOTACID/%YDB-I-TPNOTACID/' |& sed 's/$TRESTART.*//' |& $grep gtm8165
+	$grep TPNOTACID getoper1_$arg.txt |& sed 's/.*%YDB-I-TPNOTACID/%YDB-I-TPNOTACID/' |& sed 's/$TRESTART.*//' |& $grep gtm8165
 	echo ""
 	echo "---------------------------------------------------------------------------------"
 	echo ""
@@ -34,9 +34,9 @@ setenv timeout 0
 foreach arg("writeslashwait" "writeslashpass" "writeslashaccept" "writeslashtls" "locktimeout" "opentimeout")
 	echo "# Testing command without a specified timeout ($arg), Expect a TPNOTACID message in the syslog still"
 	set t = `date +"%b %e %H:%M:%S"`
-	(($ydb_dist/mumps -run $arg^gtm8165>>&tpnotacid.out)&;echo $!>&pid.out)>& bckg.out
+	(($ydb_dist/mumps -run $arg^gtm8165 >& tpnotacid_$arg.out)&;echo $!>&pid.out)>& bckg.out
 	set pid=`cat pid.out`
-	$gtm_tst/com/getoper.csh "$t" "" getoper.txt "" "TPNOTACID"
+	$gtm_tst/com/getoper.csh "$t" "" getoper2_$arg.txt "" "TPNOTACID"
 	kill -9 $pid
 	if ( "writeslashwait" != $arg && "opentimeout" != $arg) then
 		set pid2=`cat $arg.txt`
@@ -44,7 +44,7 @@ foreach arg("writeslashwait" "writeslashpass" "writeslashaccept" "writeslashtls"
 	endif
 	# Sleep included to avoid 1 iteration reading the message from a previous one
 	sleep 1
-	$grep TPNOTACID getoper.txt |& sed 's/.*%YDB-I-TPNOTACID/%YDB-I-TPNOTACID/' |& sed 's/$TRESTART.*//' |& $grep gtm8165
+	$grep TPNOTACID getoper2_$arg.txt |& sed 's/.*%YDB-I-TPNOTACID/%YDB-I-TPNOTACID/' |& sed 's/$TRESTART.*//' |& $grep gtm8165
 	echo ""
 	echo "---------------------------------------------------------------------------------"
 	echo ""
