@@ -33,10 +33,7 @@ $MSR STOP INST1 INST2
 echo ""
 setenv path_INST1 `$tst_awk '{-F " "; if ($1" "$2 ~ /INST1 DBDIR/)  print $3}' $tst_working_dir/msr_instance_config.txt`
 
-echo "# Run ydb312gtm8182d.m to:"
-echo "#		- attempt to read from DB"
-echo "#		- start replicattion"
-echo "#		- attempt to write to DB"
+echo "# Run ydb312gtm8182d.m"
 $gtm_dist/mumps -run ydb312gtm8182d
 echo ""
 
