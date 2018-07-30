@@ -51,8 +51,7 @@ test
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 5040  Max Subsc Len: 38  Max Data Len: 14
-Last LOAD record number: 5042
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 5042
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/load.dat created
 ##SOURCE_PATH##/mupip load extr.go -format=go
@@ -61,8 +60,7 @@ test
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 5040  Max Subsc Len: 38  Max Data Len: 14
-Last LOAD record number: 10082
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 10082
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/load.dat created
 ##SOURCE_PATH##/mupip load extr.bin -format=bin
@@ -71,8 +69,7 @@ Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................
 Beginning LOAD at record number: 2
 
 LOAD TOTAL		Key Cnt: 5040  Max Subsc Len: 38  Max Data Len: 14
-Last LOAD record number: 51
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 51
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/load.dat created
 ##SOURCE_PATH##/mupip load -stdin < extr.bin
@@ -81,8 +78,7 @@ Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................
 Beginning LOAD at record number: 2
 
 LOAD TOTAL		Key Cnt: 5040  Max Subsc Len: 38  Max Data Len: 14
-Last LOAD record number: 51
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 51
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/load.dat created
 ##SOURCE_PATH##/mupip load extr.zwr -format=bin
@@ -129,15 +125,13 @@ GT.M MUPIP EXTRACT
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 4294967346  Max Subsc Len: 7  Max Data Len: 1
-Last LOAD record number: 152
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 152
 # MUPIP load fextr.bin
 
 Beginning LOAD at record number: 2
 
 LOAD TOTAL		Key Cnt: 4294967346  Max Subsc Len: 7  Max Data Len: 1
-Last LOAD record number: 2
-
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 2
 ##SUSPEND_OUTPUT  NON_REPLIC
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 Shutting down Primary Source Server Server in ##TEST_PATH##
