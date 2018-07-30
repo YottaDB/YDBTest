@@ -15,7 +15,6 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
 # Running rmv_map script in INST3 to remove instance file mapping
 
 
-# Copy ydb312gtm8182e.m to INST3
 # Unset [ydb/gtm]_repl_instance env variables  and run ydb312gtm8182e.m to set globals on INST1 and INST3 from INST3
 ==Executing MULTISITE_REPLIC 'RUN INST3 unsetenv ydb_repl_instance; unsetenv gtm_repl_instance; $gtm_dist/mumps -run ydb312gtm8182e'==
     Change to INST1 global directory and set ^a

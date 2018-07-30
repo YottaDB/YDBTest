@@ -42,9 +42,6 @@ $MSR RUN INST3 "$gtm_tst/com/rmv_map.csh" >& rmv_map1.txt
 echo ""
 echo ""
 
-echo "# Copy ydb312gtm8182e.m to INST3"
-cp $gtm_tst/r124/inref/ydb312gtm8182e.m $path_INST3
-
 echo "# Unset [ydb/gtm]_repl_instance env variables  and run ydb312gtm8182e.m to set globals on INST1 and INST3 from INST3"
 $MSR RUN INST3 'unsetenv ydb_repl_instance; unsetenv gtm_repl_instance; $gtm_dist/mumps -run ydb312gtm8182e'
 echo ""
