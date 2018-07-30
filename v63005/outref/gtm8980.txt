@@ -1,27 +1,13 @@
-# Testing
+# Running v63005/gtm8980.csh to test that rare uses of VIEW and $VIEW are handled correctly 
+
 # Create a 3 region DB with gbl_dir mumps.gld and regions DEFAULT, AREG, and BREG
 
 
-# Run test1a^gtm8980.m and test1b^gtm8980.m
-Testing that VIEW can take an empty string without seg fault
---------------------------------------------------------------------------
+# GTM-8980 calls for testing calls of VIEW and $VIEW with an empty string
+# This test case is already handled by r122/viewcmdfunc subtest and will be skipped
+# (in test6^viewcmdfunc and test7^viewcmdfunc)
 
-VIEW "" 
-%YDB-E-VIEWNOTFOUND, View parameter  not valid
-		At M source location test1a+5^gtm8980
-
-YDB>
-
-Testing that $VIEW can take an empty string without seg fault
---------------------------------------------------------------------------
-
-$VIEW ("") 
-%YDB-E-VIEWNOTFOUND, View parameter  not valid
-		At M source location test1b+5^gtm8980
-
-YDB>
-
-# Run test2^gtm8980.m
+# Run test1^gtm8980.m
 Testing that $VIEW("STATSHARE") returns the correct values
 --------------------------------------------------------------------------
 
@@ -38,7 +24,7 @@ $VIEW("STATSHARE"):
 2
 
 
-# Run test3^gtm8980.m
+# Run test2^gtm8980.m
 Test $VIEW("STATSHARE","<region>") for selectively disabled region
 --------------------------------------------------------------------------
 
@@ -48,23 +34,33 @@ $VIEW("STATSHARE","BREG"):
 0
 
 
-# Run test4^gtm8980.m
+# Run test3a^gtm8980.m, test3b^gtm8980.m, test3c^gtm8980.m
 Test $VIEW("GARBAGE PARAMETER") error message for parameter name
 --------------------------------------------------------------------------
 
 $VIEW("GARBAGE PARAMETER"): 
-%YDB-E-VIEWNOTFOUND, View parameter GARBAGE PARAMETER not valid
-		At M source location test4a+5^gtm8980
+%GTM-E-VIEWNOTFOUND, View parameter GARBAGE PARAMETER not valid
+		At M source location test3a+5^gtm8980
 
-YDB>
+GTM>
 
 Test VIEW "GARBAGE PARAMETER" error message for parameter name
 --------------------------------------------------------------------------
 
 VIEW "GARBAGE PARAMETER" 
-%YDB-E-VIEWNOTFOUND, View parameter GARBAGE PARAMETER not valid
-		At M source location test4b+5^gtm8980
+%GTM-E-VIEWNOTFOUND, View parameter GARBAGE PARAMETER not valid
+		At M source location test3b+5^gtm8980
 
-YDB>
+GTM>
 
-# Shut down the DB and backup necessary files to sub directory
+Test VIEW "BREAKMSG":32 error message for second parameter name
+--------------------------------------------------------------------------
+
+VIEW "BREAKMSG":31 
+VIEW "BREAKMSG":32 
+%GTM-E-VIEWCMD, View parameter 32 is not valid with the VIEW command
+		At M source location test3c+7^gtm8980
+
+GTM>
+
+# Shut down the DB

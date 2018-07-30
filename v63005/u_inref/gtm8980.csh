@@ -11,8 +11,8 @@
 #								#
 #################################################################
 #
-echo '# Testing'
-
+echo '# Running v63005/gtm8980.csh to test that rare uses of VIEW and $VIEW are handled correctly '
+echo ''
 
 echo "# Create a 3 region DB with gbl_dir mumps.gld and regions DEFAULT, AREG, and BREG"
 $gtm_tst/com/dbcreate.csh mumps 3 >>& dbcreate_log.txt
@@ -23,28 +23,29 @@ endif
 echo ""
 echo ""
 
-echo '# Run test1a^gtm8980.m and test1b^gtm8980.m'
-$ydb_dist/mumps -run test1a^gtm8980
-echo ""
-$ydb_dist/mumps -run test1b^gtm8980
+echo '# GTM-8980 calls for testing calls of VIEW and $VIEW with an empty string'
+echo '# This test case is already handled by r122/viewcmdfunc subtest and will be skipped'
+echo '# (in test6^viewcmdfunc and test7^viewcmdfunc)'
+echo ''
+
+echo '# Run test1^gtm8980.m'
+$ydb_dist/mumps -run test1^gtm8980
 echo ""
 
 echo '# Run test2^gtm8980.m'
 $ydb_dist/mumps -run test2^gtm8980
 echo ""
 
-echo '# Run test3^gtm8980.m'
-$ydb_dist/mumps -run test3^gtm8980
+echo '# Run test3a^gtm8980.m, test3b^gtm8980.m, test3c^gtm8980.m'
+$ydb_dist/mumps -run test3a^gtm8980
 echo ""
-
-echo '# Run test4^gtm8980.m'
-$ydb_dist/mumps -run test4a^gtm8980
+$ydb_dist/mumps -run test3b^gtm8980
 echo ""
-$ydb_dist/mumps -run test4b^gtm8980
+$ydb_dist/mumps -run test3c^gtm8980
 echo ""
 #####MAKE SURE TEST 3 IS IMPLEMENTED CORRECTLY#####
 
-echo '# Shut down the DB and backup necessary files to sub directory'
+echo '# Shut down the DB'
 $gtm_tst/com/dbcheck.csh >>& dbcheck_log.txt
 if ($status) then
 	echo "DB Check Failed, Output Below"

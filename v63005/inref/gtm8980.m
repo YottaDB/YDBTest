@@ -13,25 +13,7 @@
 gtm8980
 	quit
 
-test1a
-	WRITE "Testing that VIEW can take an empty string without seg fault",!
-	WRITE "--------------------------------------------------------------------------",!!
-
-	WRITE "VIEW """" ",!
-	VIEW ""
-
-	quit
-
-test1b
-	WRITE "Testing that $VIEW can take an empty string without seg fault",!
-	WRITE "--------------------------------------------------------------------------",!!
-
-	WRITE "$VIEW ("""") ",!
-	WRITE $VIEW("")
-
-	quit
-
-test2
+test1
 	WRITE "Testing that $VIEW(""STATSHARE"") returns the correct values",!
 	WRITE "--------------------------------------------------------------------------",!!
 
@@ -62,7 +44,7 @@ test2
 
 	quit
 
-test3
+test2
 	WRITE "Test $VIEW(""STATSHARE"",""<region>"") for selectively disabled region",!
 	WRITE "--------------------------------------------------------------------------",!!
 
@@ -80,7 +62,7 @@ test3
 
 	quit
 
-test4a
+test3a
 	WRITE "Test $VIEW(""GARBAGE PARAMETER"") error message for parameter name",!
 	WRITE "--------------------------------------------------------------------------",!!
 
@@ -90,12 +72,23 @@ test4a
 
 	quit
 
-test4b
+test3b
 	WRITE "Test VIEW ""GARBAGE PARAMETER"" error message for parameter name",!
 	WRITE "--------------------------------------------------------------------------",!!
 
 	WRITE "VIEW ""GARBAGE PARAMETER"" "
 	VIEW "GARBAGE PARAMETER"
 	WRITE !
+
+	quit
+
+test3c
+	WRITE "Test VIEW ""BREAKMSG"":32 error message for second parameter name",!
+	WRITE "--------------------------------------------------------------------------",!!
+
+	WRITE "VIEW ""BREAKMSG"":31 ",!
+	VIEW "BREAKMSG":31
+	WRITE "VIEW ""BREAKMSG"":32 ",!
+	VIEW "BREAKMSG":32
 
 	quit
