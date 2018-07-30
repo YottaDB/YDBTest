@@ -13,6 +13,8 @@
 #
 # Tests that when over 31 locks hash to the same value, LOCK commands work correctly
 #
+unsetenv ydb_lockhash_n_bits	# This env var will affect the hash values of the carefully chosen subscripts in this test
+				# resulting in fewer collisions on the same hash value than the test expects so disable it
 $gtm_tst/com/dbcreate.csh mumps 1 >>& dbcreate.out
 # Simulates 2 errors in prior versions, either inappropriately seizes ownership of a lock or test hangs
 # Randomly chooses an option (1 will cause the test to hang, 0 will cause locks to be inappropriately seized)

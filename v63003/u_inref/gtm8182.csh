@@ -75,7 +75,7 @@ echo "# Show INST3 mapped instance file"
 $MSR RUN INST3 "$GDE SHOW -INSTANCE  ">& show.log; $grep -e 'extra' show.log | $grep 'repl'
 
 echo "# Remove INST3 mapping"
-$MSR RUN INST3 "$gtm_tst/v63003/u_inref/gtm8182_rmv_map.csh" >>& GDEchangeINST3_1.log
+$MSR RUN INST3 "$gtm_tst/com/rmv_map.csh" >>& GDEchangeINST3_1.log
 echo "# Change INST3 mapped instance file"
 $MSR RUN INST3 "$GDE CHANGE -INSTANCE -FILE_NAME=$path_INST3/mumps.repl" >>& GDEchangeINST3_1.log
 
@@ -118,7 +118,7 @@ echo "# Remove mapping from both INST1 and INST3 in order to test for error"
 echo "# upon using both instances in a single process"
 echo "----------------------------------------------------------------------------"
 echo "# Remove INST3 mapping"
-$MSR RUN INST3 "$gtm_tst/v63003/u_inref/gtm8182_rmv_map.csh" >>& GDEchangeINST3_2.log
+$MSR RUN INST3 "$gtm_tst/com/rmv_map.csh" >>& GDEchangeINST3_2.log
 echo "# Remove INST1 mapping"
 $GDE CHANGE -INSTANCE -FILE_NAME=\"\" >>& GDEchangeINST1_2.log
 echo "# Run gtm8182.m again"

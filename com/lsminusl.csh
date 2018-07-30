@@ -19,4 +19,4 @@
 # All test scripts that do an "ls -l" and redirect that output to a test reference file need to use
 # "$gtm_tst/com/lsminusl.csh" instead to have a portable reference file.
 
-ls -l $* | $tst_awk '{if ($1 ~ /[-l].*\./) gsub("\\.","",$1); print $0}'
+ls -l $* | $tst_awk '{if ($1 ~ /[-ld].*\./) gsub("\\.","",$1); print $0}'
