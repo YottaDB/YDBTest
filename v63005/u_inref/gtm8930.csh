@@ -70,7 +70,6 @@ echo ''
 
 echo "# Re-set gtm_repl_instance for shutdown"
 setenv gtm_repl_instance "mumps.repl"
-echo "gtm_rep_instance: $gtm_repl_instance"
 echo ''
 
 echo '# Shut down the DB'
