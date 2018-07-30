@@ -34,3 +34,11 @@ test2
 	WRITE tab_"$VIEW(""JNLPOOL"")="_$VIEW("JNLPOOL"),!!
 
 	quit
+
+test3
+	SET tab="    "
+
+	WRITE tab_"$VIEW(""JNLPOOL"") with no file mapping and a garbage gtm_repl_instance",!
+	WRITE tab_"$VIEW(""JNLPOOL"")="_$VIEW("JNLPOOL"),!!
+
+	quit
