@@ -1,0 +1,35 @@
+# Create the DB
+
+
+# start INST1-INST2 and INST3-INST4 connections
+==Executing MULTISITE_REPLIC 'START INST1 INST2'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+==Executing MULTISITE_REPLIC 'START INST3 INST4'==
+Starting Primary Source Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
+
+# Unset gtm_custom_error if it exists as ydb312_gtm8182a relies on this
+
+# run updateINST3^ydb312gtm8182a.m to write variable to INST3 DB to read later
+
+# Reset gtm_custom_error if it was unset
+
+
+# run ydb312gtm8182a.m to:
+#  	-update INST1
+#  	-read from INST3
+#  	-show attached processes of each INST JNLPOOL (SRC server will be 1 of these processes)
+# We expect 2 processes attached to INST1 JNLPOOL and only 1 process attached to INST3 JNLPOOL.
+# To confirm that the mumps process only attaches to INST1 JNLPOOL.
+
+    Update the INST1 DB
+    Read from INST3 DB
+        Django: Unchained
+    number of processes attached to JNLPOOL of INST1: 2
+    number of processes attached to JNLPOOL of INST3: 1
+
+
+# Check and shutdown the DB
+----------------------------------------------------------------------------
+# DB has shutdown gracefully
