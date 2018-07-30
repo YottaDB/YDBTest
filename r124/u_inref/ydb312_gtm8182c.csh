@@ -30,7 +30,14 @@ set testB="Test B"
 
 foreach test ("$testA" "$testB")
 
-	echo "$test"": INST3-INST4 jnlpool is down on INST3"
+	if ("$test" == "$testA") then
+		set state="up"
+	else
+		set state="down"
+	endif
+
+	echo "-------------------------------------------------"
+	echo "$test"": INST3 jnlpool is $state"
 	echo "-------------------------------------------------"
 	echo ""
 
@@ -67,8 +74,18 @@ foreach test ("$testA" "$testB")
 	echo ""
 	$gtm_dist/mumps -run ydb312gtm8182c
 	echo ""
+	echo ""
 
 	if ("$test" == "$testA") then
+
+		echo "# Check if INST1 is frozen"
+		$MSR RUN INST1 "$MUPIP replicate -source -checkhealth" | grep "Warning: Instance Freeze is ON"
+		echo ""
+		echo "# Check if INST3 is frozen"
+		$MSR RUN INST3 "$MUPIP replicate -source -checkhealth" | grep "Warning: Instance Freeze is ON"
+		echo ""
+		echo ""
+
 		echo "# Unfreeze INST3"
 		#-freeze=off needs to be done before shutting down INST3-INST4 source server
 		$MSR RUN INST3 "$MUPIP replic -source -freeze=off"
@@ -83,5 +100,7 @@ foreach test ("$testA" "$testB")
 		exit -1
 	endif
 	echo "# DB has shutdown gracefully"
+
+	echo ''
 
 end

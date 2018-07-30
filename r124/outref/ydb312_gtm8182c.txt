@@ -1,4 +1,5 @@
-Test A: INST3-INST4 jnlpool is down on INST3
+-------------------------------------------------
+Test A: INST3 jnlpool is up
 -------------------------------------------------
 
 # Create the DB with maximum key size set to 5 characters
@@ -15,12 +16,21 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
 # Run ydb312gtm8182c.m to trigger a KEY2BIG error in INST3 (should cause INST3 to freeze)
 $ZSTATUS="150373178,ydb312gtm8182c+10^ydb312gtm8182c,%YDB-E-KEY2BIG, Key size (18) is greater than maximum (5) for region: DEFAULT,%YDB-I-GVIS, "_$C(9,9)_"Global variable: ^abcdefghijklmnop"
 
+
+# Check if INST1 is frozen
+
+# Check if INST3 is frozen
+Warning: Instance Freeze is ON
+
+
 # Unfreeze INST3
 ==Executing MULTISITE_REPLIC 'RUN INST3 ##SOURCE_PATH##/mupip replic -source -freeze=off'==
 
 # Check and shutdown the DB
 # DB has shutdown gracefully
-Test B: INST3-INST4 jnlpool is down on INST3
+
+-------------------------------------------------
+Test B: INST3 jnlpool is down
 -------------------------------------------------
 
 # Create the DB with maximum key size set to 5 characters
@@ -42,5 +52,7 @@ Shutting down Primary Source Server Server in ##FILTERED##_REMOTE_TEST_PATH_/ins
 # Run ydb312gtm8182c.m to trigger a KEY2BIG error in INST3 
 $ZSTATUS="150373178,ydb312gtm8182c+10^ydb312gtm8182c,%YDB-E-KEY2BIG, Key size (18) is greater than maximum (5) for region: DEFAULT,%YDB-I-GVIS, "_$C(9,9)_"Global variable: ^abcdefghijklmnop"
 
+
 # Check and shutdown the DB
 # DB has shutdown gracefully
+
