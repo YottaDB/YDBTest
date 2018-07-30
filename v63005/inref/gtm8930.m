@@ -17,13 +17,13 @@ test1
 	SET tab="    "
 
 	WRITE tab_"$VIEW(""JNLPOOL"") with unopened JNLPOOL",!
-	WRITE tab_$VIEW("JNLPOOL"),!!
+	WRITE tab_"$VIEW(""JNLPOOL"")="_$VIEW("JNLPOOL"),!!
 
-	WRITE tab_"Updatig DB",!!
+	WRITE tab_"Updating DB",!!
 	SET ^Tenth="David Tennant"
 
 	WRITE tab_"$VIEW(""JNLPOOL"") with opened JNLPOOL",!
-	WRITE tab_$VIEW("JNLPOOL"),!!
+	WRITE tab_"$VIEW(""JNLPOOL"")="_$VIEW("JNLPOOL"),!!
 
 	quit
 
@@ -31,6 +31,6 @@ test2
 	SET tab="    "
 
 	WRITE tab_"$VIEW(""JNLPOOL"") with no replication instance file defined",!
-	WRITE tab_$VIEW("JNLPOOL"),!!
+	WRITE tab_"$VIEW(""JNLPOOL"")="_$VIEW("JNLPOOL"),!!
 
 	quit

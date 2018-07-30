@@ -38,26 +38,18 @@ echo "# Remove instance file mapping in GDE"
 $GDE CHANGE -INSTANCE -FILE_NAME=\"\" >& gdeChange.txt
 echo ''
 
-echo "# Unset gtm_repl_instance and ydb_repl_instance"
+echo "# Unset gtm_repl_instance"
 unsetenv gtm_repl_instance
-unsetenv ydb_repl_instance
 echo ''
 
 echo '# Run test2^gtm8930.m to test $VIEW("JNLPOOL") with no replication instance file defined'
 $ydb_dist/mumps -run test2^gtm8930
 echo ''
 
-echo "# Re-set gtm_repl_instance and ydb_repl_instance for shutdown"
-setenv ydb_repl_instance "mumps.repl"
-setenv gtm_repl_instance $ydb_repl_instance
-echo "ydb_rep_instance: $ydb_repl_instance"
+echo "# Re-set gtm_repl_instance for shutdown"
+setenv gtm_repl_instance "mumps.repl"
 echo "gtm_rep_instance: $gtm_repl_instance"
 echo ''
-
-echo "Stop replication"
-$MSR STOP INST1 INST2
-echo ''
-
 
 echo '# Shut down the DB'
 $gtm_tst/com/dbcheck.csh >>& dbcheck_log.txt
