@@ -63,10 +63,10 @@ test2
 	quit
 
 test3a
-	WRITE "Test $VIEW(""JNLWAIT"":""DEFAULT"") error message for parameter name",!
+	WRITE "Test $VIEW(""JNLWAIT"") error message for parameter name",!
 	WRITE "--------------------------------------------------------------------------",!!
 
-	WRITE "$VIEW(""JNLWAIT"":""DEFAULT""): ",!
+	WRITE "$VIEW(""JNLWAIT""): ",!
 	WRITE $VIEW("JNLWAIT"),!
 	WRITE !
 
