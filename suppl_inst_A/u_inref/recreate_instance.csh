@@ -31,9 +31,15 @@ if (! $?gtm_test_nopriorgtmver) then
 	endif
 	source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver
 
+	echo "# Switching to prior version"
 	source $gtm_tst/com/switch_gtm_version.csh ${prior_ver} $tst_image
+	echo "# Creating replication instance file using prior version"
 	$MUPIP replicate -instance_create -name=INST1 $gtm_test_qdbrundown_parms
+	echo "# Switching back to current version"
 	source $gtm_tst/com/switch_gtm_version.csh $tst_ver $tst_image
+	echo "# Creating global directory as source server startup requires it even if it is going to issue a REPLINSTFMT error"
+	$GDE exit >& oldver_gde_create.out
+	echo "# Start source server. Expect REPLINSTFMT error"
 	$MUPIP replic -source -start -instsecondary=nobody -secondary=localhost:12345 -log=SRC.log
 
 	# Just mumps.repl file would have been created. Rename it in case it is required for debugging later.

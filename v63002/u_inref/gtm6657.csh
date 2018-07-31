@@ -13,8 +13,13 @@
 #
 #
 #
-setenv SHELL /usr/local/bin/tcsh
-$ydb_dist/mumps -run shellfn^gtm8644
-$ydb_dist/mumps -run psforestfn^gtm8644 >& processtree.out
-cat processtree.out |& $grep -A 2 "gtm8644.csh" |& sed 's/ | //g' |& $tst_awk '{print $8,$9,$10,$11,$12,$13}'
-$ydb_dist/mumps -run quotesfn^gtm8644
+$gtm_tst/com/dbcreate.csh mumps 1 >>& dbcreate.out
+echo "# Disabling Journaling on the Database"
+$MUPIP set -region default -journal=disable
+echo "# Backing up Database with -BKUPDBJNL=OFF"
+$MUPIP BACKUP -BKUPDBJNL=OFF default backup
+cp backup mumps.dat
+echo "# Verifying journal state in backup database using DSE DUMP -FILE"
+$DSE DUMP -FILE |& $grep "Journal State"
+
+$gtm_tst/com/dbcheck.csh >>& dbcheck.out

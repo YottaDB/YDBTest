@@ -1,0 +1,13 @@
+# Running expect script in which we enter GDE and run an invalid command
+%GDE-E-KEYWRDBAD, ASDFASDFASDF is not a valid verb in this context
+error status=114
+
+# Running $GDE asdfasdfasdf from the shell prompt, expect the same error status
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+
+%GDE-E-KEYWRDBAD, ASDFASDFASDF is not a valid verb in this context
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+error status=114

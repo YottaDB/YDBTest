@@ -1,0 +1,17 @@
+Create the DB
+
+
+# Start INST1 INST2 replication
+==Executing MULTISITE_REPLIC 'START INST1 INST2'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+
+# Run ydb312gtm8182b to store results of ZREALSTOR to a file before and after 1000 ZPEEKs
+##TEST_AWK\$zrealstor BEFORE \$ZPEEK of jnlpool_ctl_struct.ftok_counter_halted loop is [0-9]*
+##TEST_AWK\$zrealstor AFTER  \$ZPEEK of jnlpool_ctl_struct.ftok_counter_halted loop is [0-9]*
+
+# PASS: NO MEMORY LEAK DETECTED
+
+Check and shutdown the DB
+----------------------------------------------------------------------------
+DB has shutdown gracefully
