@@ -1,0 +1,68 @@
+-------------------------------------------------
+Test A: INST3 jnlpool is up
+-------------------------------------------------
+
+# Create the DB with maximum key size set to 5 characters
+# Start INST1 INST2 replication
+==Executing MULTISITE_REPLIC 'START INST1 INST2'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+
+# Start INST3 INST4 replication
+==Executing MULTISITE_REPLIC 'START INST3 INST4'==
+Starting Primary Source Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
+
+# Run ydb312gtm8182c.m to trigger a KEY2BIG error in INST3 (should cause INST3 to freeze)
+$ZSTATUS="150373178,ydb312gtm8182c+10^ydb312gtm8182c,%YDB-E-KEY2BIG, Key size (18) is greater than maximum (5) for region: DEFAULT,%YDB-I-GVIS, "_$C(9,9)_"Global variable: ^abcdefghijklmnop"
+
+
+# Check if INST1 is frozen
+
+# Check if INST3 is frozen
+Warning: Instance Freeze is ON
+
+
+# Unfreeze INST3
+==Executing MULTISITE_REPLIC 'RUN INST3 ##SOURCE_PATH##/mupip replic -source -freeze=off'==
+
+# Check and shutdown the DB
+# DB has shutdown gracefully
+
+-------------------------------------------------
+Test B: INST3 jnlpool is down
+-------------------------------------------------
+
+# Create the DB with maximum key size set to 5 characters
+# Start INST1 INST2 replication
+==Executing MULTISITE_REPLIC 'START INST1 INST2'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+
+# Start INST3 INST4 replication
+==Executing MULTISITE_REPLIC 'START INST3 INST4'==
+Starting Primary Source Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
+
+# Stop INST3 INST4 replication
+==Executing MULTISITE_REPLIC 'STOP INST3 INST4'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
+Shutting down Primary Source Server Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+
+# Run ydb312gtm8182c.m to trigger a KEY2BIG error in INST3 
+$ZSTATUS="150373178,ydb312gtm8182c+10^ydb312gtm8182c,%YDB-E-KEY2BIG, Key size (18) is greater than maximum (5) for region: DEFAULT,%YDB-I-GVIS, "_$C(9,9)_"Global variable: ^abcdefghijklmnop"
+
+
+# Check if INST1 is frozen
+
+# Check if INST3 is frozen
+
+
+----------
+Error NOJNLPOOL seen in msr_execute_##FILTERED##NO.out as expected:
+%YDB-E-NOJNLPOOL, No journal pool info found in the replication instance of ##REMOTE_TEST_PATH##/instance3/mumps.repl
+----------
+
+# Check and shutdown the DB
+# DB has shutdown gracefully
+

@@ -10,22 +10,17 @@
 ;								;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
+ydb312gtm8182c
 
-gtm8182
 	DO getPaths
-	set tab="    "
+
+	SET $etrap="zwrite $zstatus  halt"
+
 	SET $ZGBLDIR=INST1gbldir
-	WRITE tab_"Attempting to read from DB",!
 	SET x=$get(^a)
-	WRITE !
 
-
-	WRITE tab_"Start INST1 INST2 replication",!
-	ZSYSTEM "$MSR STARTSRC INST1 INST2"
-	WRITE !
-
-	WRITE tab_"Attempting to write to DB",!
-	SET ^a=1
+	SET $ZGBLDIR=INST3gbldir
+	SET x=$get(^abcdefghijklmnop)
 
 	quit
 
@@ -33,5 +28,8 @@ getPaths
 
 	SET INST1path=$ZTRNLNM("path_INST1")
 	SET INST1gbldir=INST1path_"/mumps.gld"
+
+	SET INST3path=$ZTRNLNM("path_INST3")
+	SET INST3gbldir=INST3path_"/mumps.gld"
 
 	quit

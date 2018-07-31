@@ -23,6 +23,7 @@
 # ydb297	   [vinay] Demonstrates LOCK commands work correctly when there are more than 31 subscripts that hash to the same value
 # ydb312_gtm8182a  [Jake]  Test that when Instance Freeze is disabled a process attaches a region to an instance at the first update to that region.
 # ydb312_gtm8182b  [jake]  Test $zpeek of journal pool to ensure there is no longer a memory leak issue with jnlpool_init()
+# ydb312_gtm8182c  [jake]  Tests that an error in DB freezes only the instance corresponding to that DB and not an unrelated instance
 # ydb312_gtm8182d  [jake]  Tests that opening the jnlpool as part of an update works fine after unsuccessfully opening the jnlpool as part of a read
 # ydb312_gtm8182e  [jake]  Tests a fix for an incorrect GTMASSERT2 error when [gtm/ydb]_repl_instance env vars are unset and an instance has no repl file mapping
 # ydb312_gtm8182f  [jake]  Tests a fix for an incorrectly issued REPLINSTMISMTCH error in a LOCK command with extended references in a process that accesses multiple instances
@@ -37,8 +38,8 @@ setenv subtest_list_common     ""
 setenv subtest_list_non_replic ""
 setenv subtest_list_non_replic "$subtest_list_non_replic readonly ydb275socketpass ydb280socketwait jnlunxpcterr ydb297 ydb315"
 setenv subtest_list_replic     ""
-setenv subtest_list_replic     "$subtest_list_replic ydb282srcsrvrerr ydb293 ydb312_gtm8182a ydb312_gtm8182b ydb312_gtm8182d ydb312_gtm8182e ydb312_gtm8182f"
-setenv subtest_list_replic     "$subtest_list_replic ydb312_gtm8182g"
+setenv subtest_list_replic     "$subtest_list_replic ydb282srcsrvrerr ydb293 ydb312_gtm8182a ydb312_gtm8182b  ydb312_gtm8182c"
+setenv subtest_list_replic     "$subtest_list_replic ydb312_gtm8182d ydb312_gtm8182e ydb312_gtm8182f ydb312_gtm8182g"
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
