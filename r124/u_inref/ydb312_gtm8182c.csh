@@ -76,21 +76,23 @@ foreach test ("$testA" "$testB")
 	echo ""
 	echo ""
 
-	if ("$test" == "$testA") then
+	echo "# Check if INST1 is frozen"
+	$MSR RUN INST1 "$MUPIP replicate -source -checkhealth" | grep "Warning: Instance Freeze is ON"
+	echo ""
+	echo "# Check if INST3 is frozen"
+	$MSR RUN INST3 "$MUPIP replicate -source -checkhealth" | grep "Warning: Instance Freeze is ON"
+	echo ""
+	echo ""
 
-		echo "# Check if INST1 is frozen"
-		$MSR RUN INST1 "$MUPIP replicate -source -checkhealth" | grep "Warning: Instance Freeze is ON"
-		echo ""
-		echo "# Check if INST3 is frozen"
-		$MSR RUN INST3 "$MUPIP replicate -source -checkhealth" | grep "Warning: Instance Freeze is ON"
-		echo ""
-		echo ""
+	if ("$test" == "$testA") then
 
 		echo "# Unfreeze INST3"
 		#-freeze=off needs to be done before shutting down INST3-INST4 source server
 		$MSR RUN INST3 "$MUPIP replic -source -freeze=off"
-		echo ""
+	else
+		$gtm_tst/com/check_error_exist.csh msr_execute_27.out "NOJNLPOOL"
 	endif
+	echo ""
 
 	echo "# Check and shutdown the DB"
 	$gtm_tst/com/dbcheck.csh >>& check.out

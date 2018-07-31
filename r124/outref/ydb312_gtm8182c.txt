@@ -53,6 +53,16 @@ Shutting down Primary Source Server Server in ##FILTERED##_REMOTE_TEST_PATH_/ins
 $ZSTATUS="150373178,ydb312gtm8182c+10^ydb312gtm8182c,%YDB-E-KEY2BIG, Key size (18) is greater than maximum (5) for region: DEFAULT,%YDB-I-GVIS, "_$C(9,9)_"Global variable: ^abcdefghijklmnop"
 
 
+# Check if INST1 is frozen
+
+# Check if INST3 is frozen
+
+
+----------
+Error NOJNLPOOL seen in msr_execute_##FILTERED##NO.out as expected:
+%YDB-E-NOJNLPOOL, No journal pool info found in the replication instance of ##REMOTE_TEST_PATH##/instance3/mumps.repl
+----------
+
 # Check and shutdown the DB
 # DB has shutdown gracefully
 
