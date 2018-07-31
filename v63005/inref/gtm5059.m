@@ -9,37 +9,15 @@
 ;	the license, please stop and do not read further.	;
 ;								;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-gtm8930
+
+gtm5059	;Recursive function designed to fill up the stack
+	;set $ETRAP="zshow ""*"" halt"
+	set ^x=0
+	do recurse
 	quit
 
-test1
-	SET tab="    "
-
-	WRITE tab_"$VIEW(""JNLPOOL"") with unopened JNLPOOL",!
-	WRITE tab_"$VIEW(""JNLPOOL"")="_$VIEW("JNLPOOL"),!!
-
-	WRITE tab_"Updating DB",!!
-	SET ^Tenth="David Tennant"
-
-	WRITE tab_"$VIEW(""JNLPOOL"") with opened JNLPOOL",!
-	WRITE tab_"$VIEW(""JNLPOOL"")="_$VIEW("JNLPOOL"),!!
-
-	quit
-
-test2
-	SET tab="    "
-
-	WRITE tab_"$VIEW(""JNLPOOL"") with no replication instance file defined",!
-	WRITE tab_"$VIEW(""JNLPOOL"")="_$VIEW("JNLPOOL"),!!
-
-	quit
-
-test3
-	SET tab="    "
-
-	WRITE tab_"$VIEW(""JNLPOOL"") with no file mapping and a garbage gtm_repl_instance",!
-	WRITE tab_"$VIEW(""JNLPOOL"")="_$VIEW("JNLPOOL"),!!
-
+recurse	;
+	if $increment(^x) ; increment global while recursing so the caller script can later see the recursion depth
+	do recurse
 	quit
 

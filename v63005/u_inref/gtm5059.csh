@@ -11,70 +11,140 @@
 #								#
 #################################################################
 #
-echo '# Running GTM-8930 subtest to test $VIEW("JNLPOOL") '
-echo '--------------------------------------------------------------------------------'
-echo ''
 
-
-$MULTISITE_REPLIC_PREPARE 2
-
-echo "# Create a 1 region DB with gbl_dir mumps.gld and region DEFAULT" # , AREG, and BREG"
-$gtm_tst/com/dbcreate.csh mumps 1 >>& dbcreate_log.txt
+echo "# Create a single region DB with region DEFAULT"
+$gtm_tst/com/dbcreate.csh mumps >>& dbcreate_log.txt
 if ($status) then
 	echo "DB Create Failed, Output Below"
 	cat dbcreate_log.txt
 endif
+
+set dep = 0		; #The actual depth of each recursive call before overflow (calculated later)
+set expDep = 0		; #The expected depth of each recursive call before overflow (calculated later)
+set minKiB = 25		; #Minimum Mstack size
+set maxKiB = 10000	; #Maximum Mstack size
+set defKiB = 272	; #Default Mstack size
+
+echo "# Establishing baseline of (recursive calls / KiB)"
+echo "# Set gtm_mstack_size = minKiB"
+setenv gtm_mstack_size $minKiB
+echo "# Run gtm5059.m recursively until stack overflow"
+$ydb_dist/mumps -run gtm5059 >>& gtm5059.m.baseline.log0
+unsetenv gtm_mstack_size
+set min=`$ydb_dist/mumps -run ^%XCMD 'write ^x'`
+echo "# Set gtm_mstack_size = maxKiB"
+setenv gtm_mstack_size $maxKiB
+echo "# Run gtm5059.m recursively until stack overflow"
+$ydb_dist/mumps -run gtm5059 >>& gtm5059.m.baseline.log0
+unsetenv gtm_mstack_size
+set max=`$ydb_dist/mumps -run ^%XCMD 'write ^x' `
+echo "# Calculate baseline calls / KiB"
+set baseline=`$ydb_dist/mumps -run ^%XCMD 'write ('$max'-'$min')/('$maxKiB'-'$minKiB')' `
+echo "# Calculate calls lost to stack overhead"
+set lostcalls=`$ydb_dist/mumps -run ^%XCMD 'write ('$baseline'*'$maxKiB')-'$max'' `
+echo ""
+
+@ maxKiB2 = $maxKiB + 1000
+@ minKiB2 = $minKiB - 5
+
+#setting gtm_mstack_size to 10000 KiB means that (100 * our threshold %) = (KiB used)
+#when the warning is recieved and will greatly simplify calculations
+setenv gtm_mstack_size "10000"
+
+#set lostcalls=`$ydb_dist/mumps -run ^%XCMD 'write '$lostcalls'/1' `
+#set baseline=`$ydb_dist/mumps -run ^%XCMD 'write '$baseline'/1' `
+
+echo "gtm_mstack_crit_threshold set to 15"
+setenv gtm_mstack_crit_threshold "15"
+$ydb_dist/mumps -run gtm5059
+echo -n "x: "
+$ydb_dist/mumps -run ^%XCMD 'write ^x'
+set kib_used=`$ydb_dist/mumps -run ^%XCMD 'write (^x-'$lostcalls')/('$baseline')'`
+echo "kib_used: $kib_used"
+echo "lostcalls: $lostcalls"
+echo "baseline: $baseline"
+echo ''
+set expDep=`$ydb_dist/mumps -run ^%XCMD 'write ('1500'*'$baseline')-'$lostcalls''`
+echo "expDep: $expDep"
+set match=`$ydb_dist/mumps -run ^%XCMD 'write '$dep'<=('$expDep'+1)&('$dep'>=('$expDep'-1))'`
+echo ''
+echo '---------------------------------------------------------------------------'
+echo ''
+echo "gtm_mstack_crit_threshold set to 30"
+setenv gtm_mstack_crit_threshold "30"
+$ydb_dist/mumps -run gtm5059
+echo -n "x: "
+$ydb_dist/mumps -run ^%XCMD 'write ^x'
+set kib_used=`$ydb_dist/mumps -run ^%XCMD 'write (^x-'$lostcalls')/('$baseline')'`
+echo "kib_used: $kib_used"
+echo "lostcalls: $lostcalls"
+echo "baseline: $baseline"
+echo ''
+set expDep=`$ydb_dist/mumps -run ^%XCMD 'write ('3000'*'$baseline')-'$lostcalls''`
+echo "expDep: $expDep"
+set match=`$ydb_dist/mumps -run ^%XCMD 'write '$dep'<=('$expDep'+1)&('$dep'>=('$expDep'-1))'`
+echo ''
+echo '---------------------------------------------------------------------------'
+echo ''
+echo ''
+echo "gtm_mstack_crit_threshold set to 90"
+setenv gtm_mstack_crit_threshold "90"
+$ydb_dist/mumps -run gtm5059
+echo -n "x: "
+$ydb_dist/mumps -run ^%XCMD 'write ^x'
+set kib_used=`$ydb_dist/mumps -run ^%XCMD 'write (^x-'$lostcalls')/('$baseline')'`
+echo "kib_used: $kib_used"
+echo "lostcalls: $lostcalls"
+echo "baseline: $baseline"
+echo ''
+set expDep=`$ydb_dist/mumps -run ^%XCMD 'write ('9000'*'$baseline')-'$lostcalls''`
+echo "expDep: $expDep"
+set match=`$ydb_dist/mumps -run ^%XCMD 'write '$dep'<=('$expDep'+1)&('$dep'>=('$expDep'-1))'`
+echo ''
+echo '---------------------------------------------------------------------------'
 echo ''
 
-echo "# Start replication"
-$MSR START INST1 INST2
-echo ''
+foreach envKiB ($defKiB 0 5000 $maxKiB $maxKiB2 $minKiB2)
+	if ($defKiB == $envKiB) then
+		echo "# Unset gtm_mstack_size (defaults to defKiB)"
+		unsetenv gtm_mstack_size
+		set expKiB = $defKiB
+	else
+		setenv gtm_mstack_size $envKiB
+		if (0 == $envKiB) then
+			echo "# Set gtm_mstack_size to 0 (defaults to defKiB)"
+			set expKiB = $defKiB
+		else if (5000 == $envKiB) then
+			echo "# Set gtm_mstack_size to 5000"
+			set expKiB = $envKiB
+		else if ($maxKiB == $envKiB) then
+			echo "# Set gtm_mstack_size to maxKiB"
+			set expKiB = $envKiB
+		else if ($maxKiB2 == $envKiB) then
+			echo "# Set gtm_mstack_size to maxKiB + 10000 (defaults to maxKiB)"
+			set expKiB = $maxKiB
+		else if ($minKiB2 == $envKiB) then
+			echo "# Set gtm_mstack_size to minKiB - 5 (defaults to minKiB)"
+			set expKiB = $minKiB
+		endif
+	endif
+	echo "# Run gtm5059.m recursively until stack overflow"
+	$ydb_dist/mumps -run gtm5059 >& gtm5059.$envKiB.logx
+	unsetenv gtm_mstack_size	# so below mumps -run commands are not affected by above mstack size setting
+	set dep=`$ydb_dist/mumps -run ^%XCMD 'write ^x'`
+	set expDep=`$ydb_dist/mumps -run ^%XCMD 'write ('$expKiB'*'$baseline')-'$lostcalls''`
+	set match=`$ydb_dist/mumps -run ^%XCMD 'write '$dep'<=('$expDep'+1)&('$dep'>=('$expDep'-1))'`
+	if (1 == $match)  then
+		echo "# Depth matches expected"
+	else
+		echo "# DEPTH DOES NOT MATCH EXPECTED"
+	endif
+	echo ""
+end
 
-set rand=`$gtm_tst/com/genrandnumbers.csh`
-
-if ($rand) then
-	echo "# gtm_repl_instance set to mumps.repl"
-	setenv gtm_repl_instance "mumps.repl"
-else
-	echo "# gtm_repl_instance set to arbitrary.repl (garbage value)"
-	setenv gtm_repl_instance "arbitrary.repl"
-endif
-echo ''
-
-echo "# Map INST1 global directory to mumps.repl"
-$GDE CHANGE -INSTANCE -FILE_NAME="mumps.repl" >& gdeChange.txt
-
-echo '# Run test1^gtm8930.m to test $VIEW("JNLPOOL") before and after opening JNLPOOL'
-$ydb_dist/mumps -run test1^gtm8930
-echo ''
-
-
-echo "# Remove instance file mapping in GDE"
-$GDE CHANGE -INSTANCE -FILE_NAME=\"\" >& gdeChange.txt
-echo ''
-
-echo "# Unset gtm_repl_instance"
-unsetenv gtm_repl_instance
-echo ''
-
-echo '# Run test2^gtm8930.m to test $VIEW("JNLPOOL") with no replication instance file defined'
-$ydb_dist/mumps -run test2^gtm8930
-echo ''
-
-
-echo '# Run test3^gtm8930.m to test $VIEW("JNLPOOL") with no instance file mapped and gtm_repl_instance set to an arbitrary value'
-setenv gtm_repl_instance "arbitrary.repl"
-$ydb_dist/mumps -run test3^gtm8930
-echo ''
-
-
-echo "# Re-set gtm_repl_instance for shutdown"
-setenv gtm_repl_instance "mumps.repl"
-echo ''
-
-echo '# Shut down the DB'
 $gtm_tst/com/dbcheck.csh >>& dbcheck_log.txt
 if ($status) then
 	echo "DB Check Failed, Output Below"
 	cat dbcheck_log.txt
 endif
+
