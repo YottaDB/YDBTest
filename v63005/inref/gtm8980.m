@@ -63,23 +63,22 @@ test2
 	quit
 
 test3a
-	WRITE "Test $VIEW(""GARBAGE PARAMETER"") error message for parameter name",!
+	WRITE "Test $VIEW(""JNLWAIT"":""DEFAULT"") error message for parameter name",!
 	WRITE "--------------------------------------------------------------------------",!!
 
-	WRITE "$VIEW(""GARBAGE PARAMETER""): ",!
-	WRITE $VIEW("GARBAGE PARAMETER"),!
+	WRITE "$VIEW(""JNLWAIT"":""DEFAULT""): ",!
+	WRITE $VIEW("JNLWAIT"),!
 	WRITE !
 
 	quit
 
 test3b
-	WRITE "Test VIEW ""GARBAGE PARAMETER"" error message for parameter name",!
+	WRITE "Test VIEW ""GVFILE"":""DEFAULT"" error message for parameter name",!
 	WRITE "--------------------------------------------------------------------------",!!
 
-	WRITE "VIEW ""GARBAGE PARAMETER"" "
-	VIEW "GARBAGE PARAMETER"
+	WRITE "VIEW ""GVFILE"":""DEFAULT"" "
+	VIEW "GVFILE":"DEFAULT"
 	WRITE !
-
 	quit
 
 test3c
