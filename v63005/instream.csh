@@ -15,6 +15,7 @@
 # List of subtests of the form "subtestname [author] description"
 #-------------------------------------------------------------------------------------
 # gtm8877	     [vinay]  Tests the funcionality of ZSYSTEM_FILTER and PIPE_FILTER
+# gtm8930      [jake] Tests the $VIEW("JNLPOOL") output for unopened/opened JNLPOOL and undefined replication instance file
 #-------------------------------------------------------------------------------------
 
 echo "v63005 test starts..."
@@ -23,6 +24,7 @@ echo "v63005 test starts..."
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic "gtm8877"
 setenv subtest_list_replic     ""
+setenv subtest_list_replic     "$subtest_list_replic gtm8930"
 
 
 if ($?test_replic == 1) then
