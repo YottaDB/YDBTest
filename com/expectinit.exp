@@ -1,0 +1,54 @@
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+#
+# expectinit.exp is meant to be sourced from all test framework expect scripts in order
+# to set up each expect environment uniformly. This way test output does not depend upon
+# what the shell is like where the expect is called from.
+#
+#	USAGE:  source from within your expect script AFTER spawning your expect scripts shell
+#
+#		set timeout 60					#time out is set independently
+#		spawn /usr/local/bin/tcsh -f			#spawn shel first
+#		source $::env(gtm_tst)/com/expectinit.exp	#source expetinit.exp
+#
+# 	Note: environment variabls in .exp srcipts must be accessed with $::env(<var>)
+
+
+# Have columns higher than 80 as that can cause test failures on lines that are just above 80 columns in length
+expect -exact ">"
+send -- "stty cols 132\r"
+expect "stty cols 132\r"
+expect -exact ">"
+
+# Change shell prompt to something other than ">" as that is a substring of many YDB prompts
+# and can cause incorrect match later when we wait for the shell prompt.
+expect -exact ">"
+# Note: Changing the shell prompt to SHELL might seem easily achieved as follows.
+#	send -- "set prompt=SHELL\r"
+#	expect -exact "SHELL"
+# But that will not work because it is possible the "expect" matches the SHELL from the "set prompt=SHELL" input.
+# To avoid this, we first store the "SHELL" string in a variable and use that to set the prompt.
+send -- "set shellprompt=SHELL\r"
+expect -exact ">"
+send -- "set prompt=\$shellprompt\r"
+expect -exact "SHELL"
+
+
+# Set uniform behaivor for handeling a timeout
+expect_after {
+	timeout { timeout_procedure }
+}
+
+proc timeout_procedure { } {
+	puts "timeout occurred"
+	exit -1
+}
