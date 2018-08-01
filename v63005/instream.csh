@@ -14,7 +14,7 @@
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 # List of subtests of the form "subtestname [author] description"
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
-# gtm8877	[vinay] Tests the funcionality of ZSYSTEM_FILTER and PIPE_FILTER
+# gtm8877	[vinay] Tests the functionality of ZSYSTEM_FILTER and PIPE_FILTER
 # gtm8930	[jake]  Tests the $VIEW("JNLPOOL") output for unopened/opened JNLPOOL and undefined replication instance file
 # gtm5059	[jake]  Tests new gtm_mstack_crit_threshold variable for setting which percentage of the mstack memory is used before a STACKCRIT error is issued
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------

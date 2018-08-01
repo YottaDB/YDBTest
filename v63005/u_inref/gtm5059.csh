@@ -11,6 +11,18 @@
 #								#
 #################################################################
 #
+# GTM-5059
+# tests the gtm_mstack_crit_threshold environment variable for its abiltiy
+# to set the percentage of an M-stack that can be filled before issuing a
+# STACKCRIT error
+#
+# This patch is very similar to v63004/gtm1042 and as a result uses many of the same
+# routines, calculations, and methodologies.
+
+
+# GTM-5059 uses the same m routine as GTM-1042 from v63004 to fill up the M-stack
+cp $gtm_tst/v63004/inref/gtm1042.m gtm5059.m
+
 echo "# Create a single region DB with region DEFAULT"
 $gtm_tst/com/dbcreate.csh mumps >>& dbcreate_log.txt
 if ($status) then
@@ -51,13 +63,13 @@ set lostcalls=`$ydb_dist/mumps -run ^%XCMD 'write ('$baseline'*('$maxKiB'/2))-'$
 
 set failFlag=0
 
+echo "# setting gtm_mstack_size to 10000 KiB means that (100 * our threshold %) = (KiB used)"
+echo "# when the warning is recieved and will greatly simplify calculations"
+setenv gtm_mstack_size "10000"
+
 foreach threshold (15 25 50 75 90 95 -20 10 0 96 100 1996 "unset")
 	echo ""
 	echo ""
-
-	#setting gtm_mstack_size to 10000 KiB means that (100 * our threshold %) = (KiB used)
-	#when the warning is recieved and will greatly simplify calculations
-	setenv gtm_mstack_size "10000"
 
 	if ($threshold == "unset") then
 		unset gtm_mstack_size

@@ -7,6 +7,8 @@
 # Run gtm5059.m recursively until STACKCRIT error
 # Calculate baseline calls / KiB
 # Calculate calls lost to stack overhead
+# setting gtm_mstack_size to 10000 KiB means that (100 * our threshold %) = (KiB used)
+# when the warning is recieved and will greatly simplify calculations
 
 
 Testing with gtm_mstack_crit_threshold set to 15 (expecting 1500 KiB to be used)
