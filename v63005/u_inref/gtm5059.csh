@@ -45,12 +45,13 @@ set baseline=`$ydb_dist/mumps -run ^%XCMD 'write ('$max'-'$min')/(('$maxKiB'-'$m
 echo "# Calculate calls lost to stack overhead"
 # lostcalls uses maxKiB / 2 since the gtm_mstack_crit_threshold is set to 50%
 set lostcalls=`$ydb_dist/mumps -run ^%XCMD 'write ('$baseline'*('$maxKiB'/2))-'$max'' `
-echo ""
 
 @ maxKiB2 = $maxKiB + 1000
 @ minKiB2 = $minKiB - 5
 
-foreach threshold (15 25 50 75 90 95 -20 10 0 96 100)
+set failFlag=0
+
+foreach threshold (15 25 50 75 90 95 -20 10 0 96 100 1996 "unset")
 	echo ""
 	echo ""
 
@@ -58,13 +59,16 @@ foreach threshold (15 25 50 75 90 95 -20 10 0 96 100)
 	#when the warning is recieved and will greatly simplify calculations
 	setenv gtm_mstack_size "10000"
 
-
-	if ( 15 <= $threshold && $threshold <= 95) then
+	if ($threshold == "unset") then
+		unset gtm_mstack_size
+		# The default critical threshold is 90%
+		@ expKiB = 90 * 100
+	else if ( 15 <= $threshold && $threshold <= 95) then
 		@ expKiB = $threshold * 100
 	else if ( $threshold > 15 ) then
-		@ expKiB = 9500
+		@ expKiB = 95 * 100
 	else
-		@ expKiB = 1500
+		@ expKiB = 15 * 100
 	endif
 
 	echo "Testing with gtm_mstack_crit_threshold set to $threshold (expecting $expKiB KiB to be used)"
@@ -83,8 +87,22 @@ foreach threshold (15 25 50 75 90 95 -20 10 0 96 100)
 		echo "Recursion depth matches expected"
 	else
 		echo "Recursion depth does NOT match expected"
+		set failFlag=1
 	endif
 end
+
+echo ""
+echo ""
+echo '_________________________________________________________________________________________________'
+
+if ($failFlag) then
+	echo "FAILURE: some recursion depths did not match expected values"
+else
+	echo "SUCCESS: all recursion depths match expected values"
+endif
+echo '_________________________________________________________________________________________________'
+echo ""
+
 
 $gtm_tst/com/dbcheck.csh >>& dbcheck_log.txt
 if ($status) then

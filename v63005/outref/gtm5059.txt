@@ -9,7 +9,6 @@
 # Calculate calls lost to stack overhead
 
 
-
 Testing with gtm_mstack_crit_threshold set to 15 (expecting 1500 KiB to be used)
 -------------------------------------------------------------------------------------------------
 # Run gtm5059.m recursively until STACKCRIT error
@@ -74,3 +73,21 @@ Testing with gtm_mstack_crit_threshold set to 100 (expecting 9500 KiB to be used
 -------------------------------------------------------------------------------------------------
 # Run gtm5059.m recursively until STACKCRIT error
 Recursion depth matches expected
+
+
+Testing with gtm_mstack_crit_threshold set to 1996 (expecting 9500 KiB to be used)
+-------------------------------------------------------------------------------------------------
+# Run gtm5059.m recursively until STACKCRIT error
+Recursion depth matches expected
+
+
+Testing with gtm_mstack_crit_threshold set to unset (expecting 9000 KiB to be used)
+-------------------------------------------------------------------------------------------------
+# Run gtm5059.m recursively until STACKCRIT error
+Recursion depth matches expected
+
+
+_________________________________________________________________________________________________
+SUCCESS: all recursion depths match expected values
+_________________________________________________________________________________________________
+
