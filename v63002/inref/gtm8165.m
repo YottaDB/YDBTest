@@ -48,7 +48,7 @@ locktimeout
 
 lockchild
 	set pid="locktimeout.txt"
-	open pid
+	open pid:(newversion)
 	use pid
 	write $job
 	close pid
@@ -105,7 +105,7 @@ writeslashpass
 
 passchild
 	set pid2="writeslashpass.txt"
-	open pid2
+	open pid2:(newversion)
 	use pid2
 	write $job
 	close pid2
@@ -143,7 +143,7 @@ writeslashaccept
 
 acceptchild
 	set pid2="writeslashaccept.txt"
-	open pid2
+	open pid2:(newversion)
 	use pid2
 	write $job
 	close pid2
@@ -182,7 +182,7 @@ writeslashtls
 
 tlschild
 	set pid2="writeslashtls.txt"
-	open pid2
+	open pid2:(newversion)
 	use pid2
 	write $job
 	close pid2
