@@ -11,19 +11,19 @@
 #								#
 #################################################################
 #
-#-------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------
 # List of subtests of the form "subtestname [author] description"
-#----------------------------------------------------------------------------------------------------------------------------
-# gtm8877	     [vinay]  Tests the funcionality of ZSYSTEM_FILTER and PIPE_FILTER
-# gtm8930            [jake]   Tests the $VIEW("JNLPOOL") output for unopened/opened JNLPOOL and undefined replication instance file
-# gtm8980 	     [jake]   Tests VIEW & $VIEW for avoiding sig-11 in certain rare use cases and for changes in certain output values.
-#----------------------------------------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------
+# gtm8877	[vinay] Tests the functionality of ZSYSTEM_FILTER and PIPE_FILTER
+# gtm8930	[jake]  Tests the $VIEW("JNLPOOL") output for unopened/opened JNLPOOL and undefined replication instance file
+# gtm5059	[jake]  Tests new gtm_mstack_crit_threshold variable for setting which percentage of the mstack memory is used before a STACKCRIT error is issued
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "v63005 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "gtm8877 gtm8980"
+setenv subtest_list_non_replic "gtm8877 gtm8980 gtm5059"
 setenv subtest_list_replic     ""
 setenv subtest_list_replic     "$subtest_list_replic gtm8930"
 
