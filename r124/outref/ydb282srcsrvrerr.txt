@@ -5,6 +5,8 @@
 # Set access method to BG since with MM -jnl_prefix= does not work in dbcreate.csh
 # Set autoswitch to the lowest setting to maximize switching
 ==Executing MULTISITE_REPLIC 'RUN INST2 mkdir -p jnldir'==
+# Create single region database with jnl auto switch limit of 8Mb
+# Set huge flush timer in db file header to avoid a potential hang when running lots of updates below
 # Start only source server (not receiver server) so no connection happens
 # This will ensure journal files are not opened now by source server but later after directory permissions have been changed
 ==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
@@ -12,10 +14,16 @@
 drwxrwxr-x jnldir
 # Run lots of updates with white-box case enabled (202) to ensure a FILEDELFAIL codepath is later exercised in source server
 # This will also turn write permissions OFF in [jnldir] directory and result in JNLEXTEND/JNLNOCREATE errors
+# And will freeze the instance
 %YDB-E-JNLEXTEND, Journal file extension error for file ##TEST_PATH##/jnldir/mumps.mjl
 %YDB-E-JNLNOCREATE, Journal file  not created
-# Permissions of [jnldir] after change
+# Verify [jnldir] permissions changed during updates
 dr-xr-xr-x jnldir
+# Verify instance did freeze during updates by running a checkhealth
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating CHECKHEALTH operation on source server pid [##PID##] for secondary instance name [INSTANCE2]
+PID ##FILTERED##[##PID##] Source server is alive in ACTIVE mode
+Warning: Instance Freeze is ON
+##TEST_AWK   Freeze Comment: PID [0-9]* encountered JNLEXTEND; Instance frozen
 # Start receiver server so source server connects and opens journal file and exercise FILEDELFAIL codepath
 ==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
 # Ensure source and receiver are in sync
@@ -32,6 +40,8 @@ dr-xr-xr-x jnldir
 # Set access method to BG since with MM -jnl_prefix= does not work in dbcreate.csh
 # Set autoswitch to the lowest setting to maximize switching
 ==Executing MULTISITE_REPLIC 'RUN INST2 mkdir -p jnldir'==
+# Create single region database with jnl auto switch limit of 8Mb
+# Set huge flush timer in db file header to avoid a potential hang when running lots of updates below
 # Start only source server (not receiver server) so no connection happens
 # This will ensure journal files are not opened now by source server but later after directory permissions have been changed
 ==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
@@ -39,10 +49,16 @@ dr-xr-xr-x jnldir
 drwxrwxrwx jnldir
 # Run lots of updates with white-box case enabled (202) to ensure a RENAMEFAIL codepath is later exercised in source server
 # This will also turn write permissions OFF in [jnldir] directory and result in JNLEXTEND/JNLNOCREATE errors
+# And will freeze the instance
 %YDB-E-JNLEXTEND, Journal file extension error for file ##TEST_PATH##/jnldir/mumps.mjl
 %YDB-E-JNLNOCREATE, Journal file  not created
-# Permissions of [jnldir] after change
+# Verify [jnldir] permissions changed during updates
 dr-xr-xr-x jnldir
+# Verify instance did freeze during updates by running a checkhealth
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating CHECKHEALTH operation on source server pid [##PID##] for secondary instance name [INSTANCE2]
+PID ##FILTERED##[##PID##] Source server is alive in ACTIVE mode
+Warning: Instance Freeze is ON
+##TEST_AWK   Freeze Comment: PID [0-9]* encountered JNLEXTEND; Instance frozen
 # Start receiver server so source server connects and opens journal file and exercise RENAMEFAIL codepath
 ==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
 # Ensure source and receiver are in sync

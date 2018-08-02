@@ -1,0 +1,27 @@
+# Tests that Error inside indirection usage in direct mode using $ETRAP (not $ZTRAP) does not terminate process
+
+YDB>
+
+YDB>
+# Trigger DIVZERO error without using indirection in direct mode using $ETRAP
+
+YDB>
+%YDB-E-DIVZERO, Attempt to divide by zero
+
+YDB>
+# Trigger DIVZERO error using indirection in direct mode using $ETRAP (this used to terminate process before #324 fixes)
+
+YDB>
+%YDB-E-DIVZERO, Attempt to divide by zero
+
+YDB>
+# Process is still alive
+
+YDB>
+# Test that XECUTE "ZMESSAGE 2" issues an ENO2 error in direct mode (this used to assert fail in an interim state of #324 code)
+
+YDB>
+2,+1^GTM$DMOD,%SYSTEM-E-ENO2, No such file or directory
+%SYSTEM-E-ENO2, No such file or directory
+
+YDB>
