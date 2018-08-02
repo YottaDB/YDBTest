@@ -19,33 +19,8 @@
 # Note: Timeout set at 1 hour below since an arbitrary input script (<cmd>) is executed
 # and could take a lot longer than the usual 1 minute that we have for expect command timeout.
 set timeout 3600
-
 spawn /usr/local/bin/tcsh -f
-
-expect_after {
-	timeout { timeout_procedure }
-}
-proc timeout_procedure { } {
-	puts "timeout occurred"
-	exit -1
-}
-# Change shell prompt to something other than ">" as that is a substring of prompts like "LKE>", "YDB>", "DSE>", "MUPIP>" etc.
-# and can cause incorrect match later when we wait for the shell prompt.
-expect -exact ">"
-
-# Note: Changing the shell prompt to SHELL might seem easily achieved as follows.
-#	send -- "set prompt=SHELL\r"
-#	expect -exact "SHELL"
-# But that will not work because it is possible the "expect" matches the SHELL from the "set prompt=SHELL" input
-# instead of from the SHELL prompt later spewed out by the shell. To avoid this, we first store the "SHELL" string
-# in a shell variable and use that variable in another line to set the prompt.
-send -- "set shellprompt=SHELL\r"
-expect -exact ">"
-send -- "set prompt=\$shellprompt\r"
-expect -exact "SHELL"
-
-send -- "set prompt=\$shellprompt\r"
-expect -exact "SHELL"
+source $::env(gtm_tst)/com/expectinit.exp
 
 # Send the first argument as a command
 set cmd [lindex $argv 0]
@@ -54,4 +29,3 @@ send -- "\r"
 
 # Wait for shell prompt to return
 expect -exact "SHELL"
-
