@@ -3,10 +3,9 @@
 # Terminal Display:
 
 spawn /usr/local/bin/tcsh -f
-> # Expect the shell prompt
-set shellprompt=SHELL
+> stty cols 132
+> set shellprompt=SHELL
 > set prompt=$shellprompt
-SHELLstty cols 132
 SHELLYDB
 $ydb_dist/mumps -dir
 YDB>zhelp
