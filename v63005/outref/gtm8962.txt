@@ -1,0 +1,16 @@
+# Confirming $ZPIN=$PRINCIPAL, searching for $ZPIN in the output of ZSHOW "I"
+YDB>write:($ZPIN=$PRINCIPAL) "# $ZPIN = $PRINCIPAL"
+# $ZPIN = $PRINCIPAL
+$ZPIN="/dev/pts/3"
+
+# Confirming $ZOUT=$PRINCIPAL, searching for $ZOUT in the output of ZSHOW "I"
+YDB>write:($ZPOUT=$PRINCIPAL) "# $ZPOUT = $PRINCIPAL"
+# $ZPOUT = $PRINCIPAL
+$ZPOUT="/dev/pts/3"
+
+# Searching for $ZPROCESS in the output of ZSHOW "I"
+
+# Showing $ZTNAME the lines surrounding it in the output of ZSHOW "I" to confirm $ZTNAME occurs in alphabetical order
+$ZTLEVEL=0
+$ZTNAME=""
+$ZTOLDVAL=""

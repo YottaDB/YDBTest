@@ -15,13 +15,14 @@
 # List of subtests of the form "subtestname [author] description"
 #-------------------------------------------------------------------------------------
 # gtm8877	     [vinay]  Tests the funcionality of ZSYSTEM_FILTER and PIPE_FILTER
+# gtm8951	     [vinay]  Tests ZSHOW "I" shows $ZPIN and $ZPOUT even if they are the same as $PRINCIPAL
 #-------------------------------------------------------------------------------------
 
 echo "v63005 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "gtm8877"
+setenv subtest_list_non_replic "gtm8877 gtm8962"
 setenv subtest_list_replic     ""
 
 
