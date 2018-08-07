@@ -254,12 +254,11 @@ $gtm_tst/com/lsminusl.csh $ydb_dist/restrict.txt | $tst_awk '{print $1,$9}'
 $MUPIP trigger -triggerfile=trigger.trg >>& trigger.txt
 set rand='$'`$gtm_tst/com/genrandnumbers.csh 1 1 7`
 set fn=`$tst_awk "{print $rand}" fnlist.txt`
-set t1 = `date +"%b %e %H:%M:%S"`
+set t = `date +"%b %e %H:%M:%S"`
 $ydb_dist/mumps -run $fn^gtm8694>&output.txt
-set t2 = `date +"%b %e %H:%M:%S"`
 # Included to avoid the syntax error in the syslog created when calling getoper (which invokes an m function)
-sleep 1
-$gtm_tst/com/getoper.csh "$t1" "$t2" getoper.txt
+rm $ydb_dist/restrict.txt
+$gtm_tst/com/getoper.csh "$t" "" getoper.txt "" "RESTRICTSYNTAX"
 echo "# CHECKING THE SYSLOG"
 $grep %YDB-E-RESTRICTSYNTAX getoper.txt |& sed  's/.*%YDB-E-RESTRICTSYNTAX/%YDB-E-RESTRICTSYNTAX/'
 $gtm_tst/com/dbcheck.csh >>& dbcheck.out
