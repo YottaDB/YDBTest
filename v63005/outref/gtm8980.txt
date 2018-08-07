@@ -1,0 +1,73 @@
+# Running v63005/gtm8980.csh to test that rare uses of VIEW and $VIEW are handled correctly 
+
+# Create a 3 region DB with gbl_dir mumps.gld and regions DEFAULT, AREG, and BREG
+
+
+# GTM-8980 calls for testing calls of VIEW and $VIEW with an empty string: 
+#     VIEW and $VIEW() with a empty string or inappropriate region-list works appropriately;
+#      in V6.3-004 these could cause inappropriate results, including a segmentation violation (SIG-11)
+# This test case is already handled by r122/viewcmdfunc subtest and will be skipped
+# (in test6^viewcmdfunc and test7^viewcmdfunc)
+
+# Run test1^gtm8980.m
+Testing that $VIEW("STATSHARE") returns the correct values
+--------------------------------------------------------------------------
+
+VIEW "STATSHARE" 
+$VIEW("STATSHARE"): 
+1
+
+VIEW "NOSTATSHARE" 
+$VIEW("STATSHARE"): 
+0
+
+VIEW "STATSHARE":"AREG" 
+$VIEW("STATSHARE"): 
+2
+
+
+# Run test2^gtm8980.m
+# $VIEW("statshare","") works appropriately even if the region had been selectively disabled
+# when full sharing is disabled and the region had not been opened.
+# In V6.3-004, this set of conditions produced a segmentation violation (SIG-11)
+Test $VIEW("STATSHARE","<region>") for selectively disabled region
+--------------------------------------------------------------------------
+
+VIEW "NOSTATSHARE" 
+VIEW "NOSTATSHARE":"BREG" 
+$VIEW("STATSHARE","BREG"): 
+0
+
+
+# Run test3a^gtm8980.m, test3b^gtm8980.m, test3c^gtm8980.m
+# The error messages when invalid parameters are passed to VIEW/$VIEW() print the name of the parameter;
+# previously such error messages did not have the name of the parameter.
+Test $VIEW("JNLWAIT") error message for parameter name
+--------------------------------------------------------------------------
+
+$VIEW("JNLWAIT"): 
+%YDB-E-VIEWFN, View parameter JNLWAIT is not valid with the $VIEW() function
+		At M source location test3a+5^gtm8980
+
+YDB>
+
+Test VIEW "GVFILE":"DEFAULT" error message for parameter name
+--------------------------------------------------------------------------
+
+VIEW "GVFILE":"DEFAULT" 
+%YDB-E-VIEWCMD, View parameter GVFILE is not valid with the VIEW command
+		At M source location test3b+5^gtm8980
+
+YDB>
+
+Test VIEW "BREAKMSG":32 error message for second parameter name
+--------------------------------------------------------------------------
+
+VIEW "BREAKMSG":31 
+VIEW "BREAKMSG":32 
+%YDB-E-VIEWCMD, View parameter 32 is not valid with the VIEW command
+		At M source location test3c+7^gtm8980
+
+YDB>
+
+# Shut down the DB

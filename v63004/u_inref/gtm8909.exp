@@ -12,29 +12,27 @@
 #
 set timeout 60
 set promptList {LKE DSE MUPIP}
-
 spawn /usr/local/bin/tcsh -f
+source $::env(gtm_tst)/com/expectinit.exp
 
-expect_after {
-	timeout { timeout_procedure }
-}
-
-proc timeout_procedure { } {
-	puts "timeout occurred"
-	exit -1
-}
-
-expect -exact ">"
-puts "# Expect the shell prompt"
-
-# Have columns higher than 80 as that can cause test failures on lines that are just above 80 columns in length
-send -- "stty cols 132\r"
-expect "stty cols 132\r"
+#expect_after {
+#	timeout { timeout_procedure }
+#}
+#
+#proc timeout_procedure { } {
+#	puts "timeout occurred"
+#	exit -1
+#}
+#
+#expect -exact ">"
+#puts "# Expect the shell prompt"
+#
+## Have columns higher than 80 as that can cause test failures on lines that are just above 80 columns in length
+#send -- "stty cols 132\r"
+#expect "stty cols 132\r"
 
 
 foreach prompt $promptList {
-	expect -exact ">"
-	puts "# Expect the shell prompt"
 	puts "# Start $prompt help facility"
 	send -- "\$gtm_dist/[string tolower $prompt]\r"
 	expect -exact "$prompt>"
@@ -47,7 +45,5 @@ foreach prompt $promptList {
 	puts "\n# Exit $prompt>"
 	expect -exact "$prompt>"
 	send -- "exit\r"
+	expect "SHELL"
 	}
-
-puts "# Expect the shell prompt"
-expect -exact ">"

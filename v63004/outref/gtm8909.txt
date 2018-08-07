@@ -1,8 +1,8 @@
 spawn /usr/local/bin/tcsh -f
-> # Expect the shell prompt
-stty cols 132
-> # Expect the shell prompt
-# Start LKE help facility
+> stty cols 132
+> set shellprompt=SHELL
+> set prompt=$shellprompt
+SHELL# Start LKE help facility
 $gtm_dist/lke
 LKE> help
 Additional information available: 
@@ -13,8 +13,7 @@ Commands    Copyright   Introduction            Summary
 Topic? 
 # Exit LKE>
 LKE> exit
-> # Expect the shell prompt
-# Start DSE help facility
+SHELL# Start DSE help facility
 $gtm_dist/dse
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
@@ -27,8 +26,7 @@ Commands    Copyright   Operations  Summary
 Topic? 
 # Exit DSE>
 DSE> exit
-> # Expect the shell prompt
-# Start MUPIP help facility
+SHELL# Start MUPIP help facility
 $gtm_dist/mupip
 MUPIP> help
 Additional information available: 
@@ -40,6 +38,5 @@ Copyright   GDM         Introduction            Journaling  Replication
 Summary     
 Topic? 
 # Exit MUPIP>
-MUPIP> # Expect the shell prompt
-exit
-> 
+MUPIP> exit
+SHELL

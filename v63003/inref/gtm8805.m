@@ -19,13 +19,13 @@ gtm8805
 
 child
 
-	for  quit:^a(jobindex)
+	for  quit:^a(jobindex)  hang 0.1
 	; Lock ^x, await a signal to trigger an ungraceful shutdown
 	if jobindex=1 do
 	. lock +^x
 	. set:($test) ^B($increment(^b))="# Process 1: Currently holds ^x"
 	. set ^a(2)=1
-	. for  quit:^a(4)
+	. for  quit:^a(4)  hang 0.1
 	. set ^B($increment(^b))="# Process 1: Issuing a kill -9"
 	. zsystem "kill -9 "_$j
 
@@ -37,7 +37,7 @@ child
 	. use p
 	. write "find -region=DEFAULT",!
 	. write "crit -seize",!
-	. for  read x($incr(x))  quit:(x(x)["Seized")  hang 1
+	. for  read x($incr(x))  quit:(x(x)["Seized")  hang 0.1
 	. set ^B($increment(^b))="# Process 2: "_x(x)
 	. set ^a(3)=1
 
@@ -51,6 +51,6 @@ child
 	. set ^B($increment(^b))="# Process 3: Lock successfully acquired by Process 3 after ungraceful shutdown of process 1"
 	. set ^a(5)=1
 
-	for  quit:^a(5)
+	for  quit:^a(5)  hang 0.1
 
 	quit

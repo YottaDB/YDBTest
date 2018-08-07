@@ -14,7 +14,7 @@
 # Test that FILEDELFAIL and RENAMEFAIL error codepaths are handled appropriately by source server.
 #
 set errlist = (FILEDELFAIL RENAMEFAIL)
-set errwbox = (201 202)
+set errwbox = (201 202)	# 201 == WBTEST_YDB_FILEDELFAIL, 202 == WBTEST_YDB_RENAMEFAIL
 
 foreach errcode (1 2)
 	set wbox = $errwbox[$errcode]
@@ -39,12 +39,15 @@ foreach errcode (1 2)
 		$MSR RUN INST2 mkdir -p $jnldir
 	endif
 	source $gtm_tst/com/gtm_test_setbgaccess.csh
+	echo "# Create single region database with jnl auto switch limit of 8Mb"
 	$gtm_tst/com/dbcreate.csh mumps 1 -jnl_auto=16384 -jnl_prefix=${jnldir}/ >& ${err}_dbcreate.out
 	if ($status) then
 		echo "# dbcreate failed. cat ${err}_dbcreate.out follows"
 		cat ${err}_dbcreate.out
 		exit -1
 	endif
+	echo "# Set huge flush timer in db file header to avoid a potential hang when running lots of updates below"
+	$MUPIP set -region "*" -flush_time=1:0:0 # Prevent interruptions from flush timers
 
 	set syslog_start = `date +"%b %e %H:%M:%S"`
 
@@ -57,12 +60,16 @@ foreach errcode (1 2)
 
 	echo "# Run lots of updates with white-box case enabled (202) to ensure a $err codepath is later exercised in source server"
 	echo "# This will also turn write permissions OFF in [jnldir] directory and result in JNLEXTEND/JNLNOCREATE errors"
+	echo "# And will freeze the instance"
 	setenv ydb_white_box_test_case_enable 1
 	setenv ydb_white_box_test_case_number $wbox
 	$ydb_dist/mumps -run ^%XCMD 'for i=1:1:200000 set ^x=i'
 
-	echo "# Permissions of [jnldir] after change"
+	echo "# Verify [jnldir] permissions changed during updates"
 	$gtm_tst/com/lsminusl.csh -d jnldir | $tst_awk '{print($1,$NF);}'
+
+	echo "# Verify instance did freeze during updates by running a checkhealth"
+	$MUPIP replicate -source -checkhealth
 
 	echo "# Start receiver server so source server connects and opens journal file and exercise $err codepath"
 	$MSR STARTRCV INST1 INST2
