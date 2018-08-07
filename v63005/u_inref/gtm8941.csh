@@ -19,4 +19,10 @@ $ydb_dist/lke show -crit
 echo ""
 echo '# Running the command $ydb_dist/lke show -critical'
 $ydb_dist/lke show -critical
+echo ""
+echo '# Running the command $ydb_dist/lke show -nocrit'
+$ydb_dist/lke show -nocrit
+echo ""
+echo '# Running the command $ydb_dist/lke show -nocritical'
+$ydb_dist/lke show -nocritical
 $gtm_tst/com/dbcheck.csh >>& dbcheck.out
