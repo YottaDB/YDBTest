@@ -72,7 +72,6 @@ foreach threshold (15 25 50 75 90 95 -20 10 0 96 100 1996 "unset")
 	echo ""
 
 	if ($threshold == "unset") then
-		unset gtm_mstack_size
 		# The default critical threshold is 90%
 		@ expKiB = 90 * 100
 	else if ( 15 <= $threshold && $threshold <= 95) then
@@ -86,7 +85,11 @@ foreach threshold (15 25 50 75 90 95 -20 10 0 96 100 1996 "unset")
 	echo "Testing with gtm_mstack_crit_threshold set to $threshold (expecting $expKiB KiB to be used)"
 	echo '-------------------------------------------------------------------------------------------------'
 
-	setenv gtm_mstack_crit_threshold $threshold
+	if ($threshold == "unset") then
+		unsetenv gtm_mstack_size_threshold
+	else
+		setenv gtm_mstack_crit_threshold $threshold
+	endif
 	echo "# Run gtm5059.m recursively until STACKCRIT error"
 	$ydb_dist/mumps -run gtm5059 >& mlog_$threshold.logx
 	unsetenv gtm_mstack_crit_threshold
@@ -98,7 +101,7 @@ foreach threshold (15 25 50 75 90 95 -20 10 0 96 100 1996 "unset")
 	if ($match) then
 		echo "Recursion depth matches expected"
 	else
-		echo "Recursion depth does NOT match expected"
+		echo "Recursion depth does NOT match expected. Expected depth = $expDep : Actual depth = $dep"
 		set failFlag=1
 	endif
 end
