@@ -27,6 +27,7 @@ cat > gtm8959ci.c << EOF
 int main()
 {
 	int status = gtm_ci("gtm8959");
+	printf("# ZGOTO 0 returned to C program\n");
 	return 0;
 	}
 EOF
@@ -45,5 +46,5 @@ echo "# Running a c program that will execute a call in with a ZGOTO 0, this wou
 if ($status) then
 	echo "# Error encountered while running program"
 else
-	echo "# No Sig-11 error"
+	echo "# Status 0 returned from gtm8959ci"
 endif
