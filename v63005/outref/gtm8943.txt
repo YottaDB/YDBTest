@@ -1,0 +1,16 @@
+# Running a c program that will execute a call in (without calling gtm_init()) with a ZGOTO 0, this would previously produce a SIG-11 error
+Entering Call In M Function
+
+Stepping STARTED
+gtm8943+3^gtm8943   :	do child1
+child1+1^gtm8943    :	do child2
+child2+1^gtm8943    :	ZGOTO 0
+ZGOTO 0 Returned to C Program
+No Sig-11 error
+# Running same M program directly from shell script, ZGOTO 0 should terminate the process
+Entering Call In M Function
+
+Stepping STARTED
+gtm8943+3^gtm8943   :	do child1
+child1+1^gtm8943    :	do child2
+child2+1^gtm8943    :	ZGOTO 0
