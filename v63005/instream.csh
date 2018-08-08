@@ -15,6 +15,7 @@
 # List of subtests of the form "subtestname [author] description"
 #-------------------------------------------------------------------------------------
 # gtm8877	     [vinay]  Tests the funcionality of ZSYSTEM_FILTER and PIPE_FILTER
+# gtm8951	     [vinay]  Tests ZSHOW "I" shows $ZPIN and $ZPOUT even if they are the same as $PRINCIPAL
 # gtm8961	     [vinay]  Tests the path reported by ZSHOW "D", $KEY and $ZSOCKET("","LOCALADDRESS",) for local sockets passed by JOB or WRITE /PASS is correct
 # gtm8941	     [vinay]  Tests LKE recognizes the full keyword for the -CRITICAL qualifier
 # gtm8877	     [vinay]  Tests the functionality of ZSYSTEM_FILTER and PIPE_FILTER
@@ -26,7 +27,7 @@ echo "v63005 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "gtm8877 gtm8961 gtm8941 gtm8980 gtm5059"
+setenv subtest_list_non_replic "gtm8877 gtm8951 gtm8961 gtm8941 gtm8980 gtm5059"
 setenv subtest_list_replic     ""
 setenv subtest_list_replic     "$subtest_list_replic gtm8930"
 
