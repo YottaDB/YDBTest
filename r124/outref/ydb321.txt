@@ -1,0 +1,19 @@
+# --------------------------------------------------------------------
+# Test that journal records fed to external filters include timestamps
+# --------------------------------------------------------------------
+# Create database
+# Define external filter for both source and receiver server as <mumps -run extfilter^ydb321>
+==Executing MULTISITE_REPLIC 'START INST1 INST2'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+# Do one update on INST1
+==Executing MULTISITE_REPLIC 'RUN INST1 $ydb_dist/mumps -run oneupdate^ydb321'==
+# Wait for update to get played on receiver side before looking at external filter log files for timestamp
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+# Note down timestamp of update (from a MUPIP JOURNAL -EXTRACT) in time_jnlext.txt
+# Note down timestamp received by source server external filter in time_src_extfilter.txt
+==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST2 $gtm_tst/com/cp_remote_file.csh _REMOTEINFO___RCV_DIR__/log.extout __SRC_DIR__/log.extout.rcvr'==
+# Note down timestamp received by receiver server external filter in time_receiver_extfilter.txt
+# Check that time_jnlext.txt and time_src_extfilter.txt are identical : PASS
+# Check that time_jnlext.txt and time_rcvr_extfilter.txt are identical : PASS
+# Shutdown database
