@@ -86,10 +86,10 @@ tpntpupd;
 	for  quit:^stop=1  do
 	.	set level=0
 	.	set type=$random(2)
-	.	if type=0 do nontp
-	.	if type=1 do tp
+	.	do:type=0 nontp
+	.	do:type=1 tp
 	;
-	if $data(^secgldno)&(secgldno'<4)&('tpnomultigld) do
+	do:$data(^secgldno)&(secgldno'<4)&('tpnomultigld)
 	.	; Before quitting, check that conflicting NOISOLATION statuses for the same global variable have
 	.	; been resolved AFTER the database was opened. It is possible that the tp and nontp tests above did
 	.	; not open all regions in all global directories. To work around that, open all regions before doing
@@ -104,10 +104,10 @@ tpntpupd;
 	.	.	.	set $zgbldir=secgld
 	.	.	.	for j=1:1:len  do
 	.	.	.	.	set gbl="^"_$extract(globalstr,j)_"zzzz"
-	.	.	.	.	if iter=1 set x=+$get(@gbl)	; ensure database file is opened in first iteration
-	.	.	.	.	if iter=2  do
+	.	.	.	.	set:iter=1 x=+$get(@gbl)	; ensure database file is opened in first iteration
+	.	.	.	.	do:iter=2
 	.	.	.	.	.	set stat=$VIEW("NOISOLATION",gbl)
-	.	.	.	.	.	if stat'=+$get(expect(secgld,gbl)) do
+	.	.	.	.	.	do:stat'=+$get(expect(secgld,gbl))
 	.	.	.	.	.	.	; print out an error and ensure the test will fail
 	.	.	.	.	.	.	; as long as '-E- is in the string, it will get caught by the test system
 	.	.	.	.	.	.	write "TEST-E-NOISOL: Gld[",secgld,"] Gbl[",gbl,"] NOISOLATION[",stat,"]",!
@@ -116,7 +116,7 @@ tpntpupd;
 nontp	;
 	set space=$j(" ",$tl+1)
 	do oper
-	if $data(secgldno) do pickgld
+	do:$data(secgldno) pickgld
 	write space,str,!
 	xecute str
 	quit
@@ -127,7 +127,7 @@ tp	;
 	set count=$r(tpopers)
 	write space,"tstart ():serial",!
 	tstart ():serial
-	if tpnomultigld&($tlevel=1)&$data(secgldno) do
+	do:tpnomultigld&($tlevel=1)&$data(secgldno)
 	. set str="set tpgld="""_secgldnm_$random(secgldno)_".gld"""
 	. write space,str,!
 	. xecute str
@@ -135,11 +135,11 @@ tp	;
 	write space,"$trestart = ",$trestart,!
 	for i=1:1:count  do
 	.	set nest=$r(2)
-	.	if nest=1 do tpnest
+	.	do:nest=1 tpnest
 	.	do oper
-	.	if ($data(secgldno))&(str'["tpgld") do pickgld
+	.	do:($data(secgldno))&(str'["tpgld") pickgld
 	.	write space,str,!
-	.	if str'="" xecute str
+	.	xecute:str'="" str
 	do space
 	set tptype=$r(2)
 	;i tptype=0 w space,"trollback ",$tl-1,! trollback $tl-1
@@ -149,7 +149,7 @@ tp	;
 	quit
 
 tpnest	;
-	if level>1 quit
+	quit:level>1
 	set level=level+1
 	do tp
 	set level=level-1
@@ -164,16 +164,16 @@ oper	;
 	set global=$e(fullstr,reg+1)_"databaseoperationintpntpupdate"
 	set index=$r(maxindex)
 	set operation=$r(6)
-	if operation=0 do xset
-	if operation=1 do xkill
-	if operation=2 do xget
-	if operation=3 do xlock
-	if operation=4 do xincr
-	if operation=5 do noop
+	do:operation=0 xset
+	do:operation=1 xkill
+	do:operation=2 xget
+	do:operation=3 xlock
+	do:operation=4 xincr
+	do:operation=5 noop
 	quit
 
 tpnomultigldcheck(str)
-	if tpnomultigld set str="set $zgbldir=tpgld "_str
+	set:tpnomultigld str="set $zgbldir=tpgld "_str
 	quit
 
 xset	;
@@ -214,9 +214,9 @@ pickgld	;
 	if 2=rgld set tmpstr="set $ZGBLDIR=""""" write space,tmpstr,! xecute tmpstr
 	if 3=rgld do
 	.	set up=$find(str,"^")
-	.	if 'up quit
+	.	quit:'up
 	.	set str=$extract(str,1,up-1)_"|"""_actgld_"""|"_$extract(str,up,$length(str))
 	.	set up=$find(str,"^",up+1)
-	.	if 'up quit
+	.	quit:'up
 	.	set str=$extract(str,1,up-1)_"|"""_actgld_"""|"_$extract(str,up,$length(str))
 	quit

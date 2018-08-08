@@ -38,7 +38,6 @@ foreach testDir ("NULLCOLLtest" "REPLOFFJNLONtest" "REPLINSTNOHISTtest" "SECNOTS
 
 	echo "RUNNING $testDir.csh IN A NEW TERMINAL"
 	echo "----------------------------------------------------------"
-	#(expect -d $gtm_tst/$tst/u_inref/ydb210.exp > expect.out) >& expect.dbg
 	set cmd='echo "Running: $errorTest"; '
 	set cmd="$cmd"'$errorTest; '
 
