@@ -13,22 +13,8 @@
 set timeout 60
 
 spawn /usr/local/bin/tcsh -f
+source $::env(gtm_tst)/com/expectinit.exp
 
-expect_after {
-	timeout { timeout_procedure }
-}
-
-proc timeout_procedure { } {
-	puts "timeout occurred"
-	exit -1
-}
-
-expect -exact ">"
-puts "# Expect the shell prompt"
-
-# Have columns higher than 80 as that can cause test failures on lines that are just above 80 columns in length
-send -- "stty cols 132\r"
-expect "stty cols 132\r"
 send -- "\$ydb_dist/mumps -dir\r"
 expect "YDB>"
 send "use \$principal:(cenable)\r"
@@ -37,6 +23,6 @@ puts "#<CTRL-C>"
 send -- "\x03\r"
 expect "YDB>"
 send "halt\r"
-expect ">"
+expect "SHELL"
 
 

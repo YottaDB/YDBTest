@@ -42,7 +42,6 @@ else
 	 set cmds="$cmd1; $cmd2"
 
 	(expect -d $gtm_tst/com/runcmd.exp "$cmds" > expect_SECNOTSUPPLEMENTARY.out) >& expect_SECNOTSUPPLEMENTARY.dbg
-	#(expect -d $gtm_tst/$tst/u_inref/SECNOTSUPPLEMENTARYtest.exp > expect_SECNOTSUPPLEMENTARY.out) >& expect_SECNOTSUPPLEMENTARY.dbg
 	if ($status) then
 		echo "EXPECT-E-FAIL : expect returned non-zero exit status" >> $outputFile
 		echo '' >> $outputFile

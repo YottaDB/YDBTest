@@ -48,7 +48,7 @@ locktimeout
 
 lockchild
 	set pid="locktimeout.txt"
-	open pid
+	open pid:(newversion)
 	use pid
 	write $job
 	close pid
@@ -68,7 +68,7 @@ writeslashwait
 	. write:($ZTRNLNM("timeout")) /wait(.999)
 	. write:('$ZTRNLNM("timeout")) /wait
 	. close sock
-	if $trestart<=2  do ;cannot use else because this commit changes the value of $test, similar usages throughout the test
+	if $trestart<=2  do  ;cannot use else because this commit changes the value of $test, similar usages throughout the test
 	. set ^Y=$increment(^i)
 	. zsystem "$ydb_dist/mumps -run ^%XCMD 'set ^Y=$increment(^i)'"
 	tcommit
@@ -105,7 +105,7 @@ writeslashpass
 
 passchild
 	set pid2="writeslashpass.txt"
-	open pid2
+	open pid2:(newversion)
 	use pid2
 	write $job
 	close pid2
@@ -113,7 +113,7 @@ passchild
 	open sock:(CONNECT="passsocket2:LOCAL")::"SOCKET"
 	use sock
 	use $p
-	for  hang .1  quit:^stop
+	for  quit:^stop  hang .1
 	quit
 
 writeslashaccept
@@ -143,7 +143,7 @@ writeslashaccept
 
 acceptchild
 	set pid2="writeslashaccept.txt"
-	open pid2
+	open pid2:(newversion)
 	use pid2
 	write $job
 	close pid2
@@ -151,14 +151,14 @@ acceptchild
 	open sock:(CONNECT="acceptsocket:LOCAL")::"SOCKET"
 	use sock
 	use $p
-	for  hang .1  quit:^stop
+	for  quit:^stop  hang .1
 	quit
 
 
 writeslashtls
 	set ^stop=0
 	set sock="gtm8165.socket"
-	open sock:(LISTEN="3000:TCP":attach="handle")::"SOCKET"
+	open sock:(LISTEN=$ztrnlnm("portno")_":TCP":attach="handle")::"SOCKET"
 	use sock
 	job tlschild
 	write /wait
@@ -182,12 +182,12 @@ writeslashtls
 
 tlschild
 	set pid2="writeslashtls.txt"
-	open pid2
+	open pid2:(newversion)
 	use pid2
 	write $job
 	close pid2
 	set sock="socket"
-	open sock:(CONNECT="localhost:3000:TCP":attach="handle")::"SOCKET"
+	open sock:(CONNECT="localhost:"_$ztrnlnm("portno")_":TCP":attach="handle")::"SOCKET"
 	use sock
-	for  quit:^stop
+	for  quit:^stop  hang 0.1
 	quit

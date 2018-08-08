@@ -1,0 +1,95 @@
+# Create a single region DB with region DEFAULT
+# Establishing baseline of (recursive calls / KiB)
+# gtm_mstack_crit_threshold set to 50 (threshold can not be set to 100% and 50 is the next easiest to calculate)
+# Set gtm_mstack_size = minKiB
+# Run gtm5059.m recursively until STACKCRIT error
+# Set gtm_mstack_size = maxKiB
+# Run gtm5059.m recursively until STACKCRIT error
+# Calculate baseline calls / KiB
+# Calculate calls lost to stack overhead
+# setting gtm_mstack_size to 10000 KiB means that (100 * our threshold %) = (KiB used)
+# when the warning is recieved and will greatly simplify calculations
+
+
+Testing with gtm_mstack_crit_threshold set to 15 (expecting 1500 KiB to be used)
+-------------------------------------------------------------------------------------------------
+# Run gtm5059.m recursively until STACKCRIT error
+Recursion depth matches expected
+
+
+Testing with gtm_mstack_crit_threshold set to 25 (expecting 2500 KiB to be used)
+-------------------------------------------------------------------------------------------------
+# Run gtm5059.m recursively until STACKCRIT error
+Recursion depth matches expected
+
+
+Testing with gtm_mstack_crit_threshold set to 50 (expecting 5000 KiB to be used)
+-------------------------------------------------------------------------------------------------
+# Run gtm5059.m recursively until STACKCRIT error
+Recursion depth matches expected
+
+
+Testing with gtm_mstack_crit_threshold set to 75 (expecting 7500 KiB to be used)
+-------------------------------------------------------------------------------------------------
+# Run gtm5059.m recursively until STACKCRIT error
+Recursion depth matches expected
+
+
+Testing with gtm_mstack_crit_threshold set to 90 (expecting 9000 KiB to be used)
+-------------------------------------------------------------------------------------------------
+# Run gtm5059.m recursively until STACKCRIT error
+Recursion depth matches expected
+
+
+Testing with gtm_mstack_crit_threshold set to 95 (expecting 9500 KiB to be used)
+-------------------------------------------------------------------------------------------------
+# Run gtm5059.m recursively until STACKCRIT error
+Recursion depth matches expected
+
+
+Testing with gtm_mstack_crit_threshold set to -20 (expecting 1500 KiB to be used)
+-------------------------------------------------------------------------------------------------
+# Run gtm5059.m recursively until STACKCRIT error
+Recursion depth matches expected
+
+
+Testing with gtm_mstack_crit_threshold set to 10 (expecting 1500 KiB to be used)
+-------------------------------------------------------------------------------------------------
+# Run gtm5059.m recursively until STACKCRIT error
+Recursion depth matches expected
+
+
+Testing with gtm_mstack_crit_threshold set to 0 (expecting 1500 KiB to be used)
+-------------------------------------------------------------------------------------------------
+# Run gtm5059.m recursively until STACKCRIT error
+Recursion depth matches expected
+
+
+Testing with gtm_mstack_crit_threshold set to 96 (expecting 9500 KiB to be used)
+-------------------------------------------------------------------------------------------------
+# Run gtm5059.m recursively until STACKCRIT error
+Recursion depth matches expected
+
+
+Testing with gtm_mstack_crit_threshold set to 100 (expecting 9500 KiB to be used)
+-------------------------------------------------------------------------------------------------
+# Run gtm5059.m recursively until STACKCRIT error
+Recursion depth matches expected
+
+
+Testing with gtm_mstack_crit_threshold set to 1996 (expecting 9500 KiB to be used)
+-------------------------------------------------------------------------------------------------
+# Run gtm5059.m recursively until STACKCRIT error
+Recursion depth matches expected
+
+
+Testing with gtm_mstack_crit_threshold set to unset (expecting 9000 KiB to be used)
+-------------------------------------------------------------------------------------------------
+# Run gtm5059.m recursively until STACKCRIT error
+Recursion depth matches expected
+
+
+_________________________________________________________________________________________________
+SUCCESS: all recursion depths match expected values
+_________________________________________________________________________________________________
+

@@ -1,6 +1,9 @@
 /****************************************************************
 *								*
-*	Copyright 2013 Fidelity Information Services, Inc	*
+* Copyright 2013 Fidelity Information Services, Inc		*
+*								*
+* Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	*
+* All rights reserved.						*
 *								*
 *	This source code contains the intellectual property	*
 *	of its copyright holder(s), and is made available	*
@@ -27,7 +30,12 @@ public class M {
 
 			if (global)
 				builder.append("^");
-
+			/* We have had test failures where the generated M variable name matches a java keyword
+			 * (e.g. "try", "null" which are disallowed as variables in java code).
+			 * To avoid such issues, we prefix a "z" to all variable names (which still keeps it a valid M name).
+			 * This assumes no java keyword begins with "z".
+			 */
+			builder.append("z");
 			for (int i = 0; i < length; i++)
 				builder.append((char)(97 + (int)(Math.random() * 26)));
 		} while (mVarNames.contains(builder.toString()));

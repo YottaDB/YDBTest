@@ -92,10 +92,11 @@ if ($status) then
 endif
 echo '' >> $outputFile
 
+#REPLINSTFROZEN errors can show up in rare circumstances but are ignored for this test
 echo "# INST1 INST2 source server log errors:" >> $outputFile
-$grep -e "-E-" $srcLog1  >> $outputFile
+$grep -e "-E-" $srcLog1 | $grep -v "REPLINSTFROZEN" >> $outputFile
 echo "# INST1 INST3 source server log errors:" >> $outputFile
-$grep -e "-E-" $srcLog2  >> $outputFile
+$grep -e "-E-" $srcLog2 | $grep -v "REPLINSTFROZEN" >> $outputFile
 echo '' >> $outputFile
 
 #Clean $srcLog2 of expected errors

@@ -1,0 +1,17 @@
+# Confirming $ZPIN=$PRINCIPAL, searching for $ZPIN in the output of ZSHOW "I"
+$ZPIN = $PRINCIPAL
+##TEST_AWK\$ZPIN="/dev/pts/[0-9]*"
+
+# Confirming $ZPOUT=$PRINCIPAL, searching for $ZPOUT in the output of ZSHOW "I"
+$ZPOUT = $PRINCIPAL
+##TEST_AWK\$ZPOUT="/dev/pts/[0-9]*"
+
+# Searching for $PRINCIPAL in the output of ZSHOW "I"
+##TEST_AWK\$PRINCIPAL="/dev/pts/[0-9]*"
+
+# Searching for $ZPROCESS in the output of ZSHOW "I"
+
+# Showing $ZTNAME the lines surrounding it in the output of ZSHOW "I" to confirm $ZTNAME occurs in alphabetical order
+$ZTLEVEL=0
+$ZTNAME=""
+$ZTOLDVAL=""
