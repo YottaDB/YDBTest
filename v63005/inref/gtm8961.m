@@ -13,7 +13,7 @@
 
 writeslashpass
 	set ^stop=0
-        set sock="socket"
+	set sock="socket"
         open sock:(LISTEN="passsocket1:LOCAL":attach="passhandle1")::"SOCKET"
 	use sock:(detach="passhandle1")
 	open sock:(LISTEN="passsocket2:LOCAL":attach="passhandle2")::"SOCKET"
