@@ -13,3 +13,21 @@
 #
 #
 #
+source $gtm_tst/relink/u_inref/enable_autorelink_dirs.csh
+env | $grep relink
+env | $grep routines
+
+
+cat > temp.m << EOF
+oldtemp
+	write "Old Program",!
+	quit
+EOF
+
+cat > newtemp.m <<EOF
+newtemp
+	write "New Program",!
+	quit
+EOF
+
+$ydb_dist/mumps -run gtm8951
