@@ -30,6 +30,7 @@
 # ydb312_gtm8182g  [jake]  Tests that updating DB1, in GLD1, and DB2, in GLD2, will only attach to the journal pool once when DB1/2 are both within GLD3 ( associate with a replicating source server)
 # ydb315           [jake]  Tests that the ZCOMPILE operation will not display warning if $ZCOMPILE contains "-nowarnings"
 # ydb324           [nars]  Tests that Error inside indirection usage in direct mode using $ETRAP (not $ZTRAP) does not terminate process
+# ydb321           [nars]  Tests that journal records fed to external filters include timestamps
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r124 test starts..."
@@ -41,7 +42,7 @@ setenv subtest_list_non_replic "$subtest_list_non_replic readonly ydb275socketpa
 setenv subtest_list_non_replic "$subtest_list_non_replic ydb324"
 setenv subtest_list_replic     ""
 setenv subtest_list_replic     "$subtest_list_replic ydb282srcsrvrerr ydb293 ydb312_gtm8182a ydb312_gtm8182b  ydb312_gtm8182c"
-setenv subtest_list_replic     "$subtest_list_replic ydb312_gtm8182d ydb312_gtm8182e ydb312_gtm8182f ydb312_gtm8182g"
+setenv subtest_list_replic     "$subtest_list_replic ydb312_gtm8182d ydb312_gtm8182e ydb312_gtm8182f ydb312_gtm8182g ydb321"
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
