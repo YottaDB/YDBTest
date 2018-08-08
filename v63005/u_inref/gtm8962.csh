@@ -24,7 +24,7 @@ perl $gtm_tst/com/expectsanitize.pl expect.outx > expect_sanitized.outx
 echo '# Confirming $ZPIN=$PRINCIPAL, searching for $ZPIN in the output of ZSHOW "I"'
 $grep '^$ZPIN' expect_sanitized.outx
 echo ""
-echo '# Confirming $ZOUT=$PRINCIPAL, searching for $ZOUT in the output of ZSHOW "I"'
+echo '# Confirming $ZPOUT=$PRINCIPAL, searching for $ZPOUT in the output of ZSHOW "I"'
 $grep '^$ZPOUT' expect_sanitized.outx
 echo ""
 echo '# Searching for $PRINCIPAL in the output of ZSHOW "I"'
