@@ -1,0 +1,36 @@
+# Create the DB
+
+
+# GBL1.gld is created to point to mumps.dat and mumps.repl
+
+# GBL2.gld is created to point to a.dat and mumps.repl
+
+# Change back to original global directory
+
+# Start INST1 INST2 replication with mumps.gld as $zgbldir
+==Executing MULTISITE_REPLIC 'START INST1 INST2'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+
+# Run ydb312gtm8182g.m to update DB through GBL1.gld and GBL2.gld
+
+     Before updates: 
+     ----------------: 
+     Number of processes attached to journal pool of mumps.repl: 1
+##TEST_AWK     JNLPOOL ftok : mumps.repl : \(semval=1, semncnt=0, semzcnt=0, sempid=[0-9]*\)
+
+     Updating through GBL1.gld
+     Updating through GBL2.gld
+
+     After updates: 
+     ----------------: 
+     Number of processes attached to journal pool of mumps.repl: 2
+##TEST_AWK     JNLPOOL ftok : mumps.repl : \(semval=2, semncnt=0, semzcnt=0, sempid=[0-9]*\)
+
+
+# Write variables to the screen from mumps.gld
+#     ^Protagonist: Hamilton
+#     ^Antagonist : Burr
+
+# Check and shutdown the DB
+DB has shutdown gracefully

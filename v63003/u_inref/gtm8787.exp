@@ -13,22 +13,8 @@
 set timeout 60
 
 spawn /usr/local/bin/tcsh -f
+source $::env(gtm_tst)/com/expectinit.exp
 
-expect_after {
-	timeout { timeout_procedure }
-}
-
-proc timeout_procedure { } {
-	puts "timeout occurred"
-	exit -1
-}
-
-
-# Have columns higher than 80 as that can cause test failures on lines that are just above 80 columns in length
-send -- "stty cols 132\r"
-expect "stty cols 132\r"
-
-expect -exact ">"
 send -- "\$MUPIP Journal -Extract=-stdout -forward mumps.mjl & \r"
 expect -exact "x(10)"
 send -- "exit \r"

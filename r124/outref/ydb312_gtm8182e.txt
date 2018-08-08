@@ -1,0 +1,53 @@
+# Create the DB
+
+
+# Start INST1 INST2 replication
+==Executing MULTISITE_REPLIC 'START INST1 INST2'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+
+# Start INST3 INST4 replication
+==Executing MULTISITE_REPLIC 'START INST3 INST4'==
+Starting Primary Source Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
+
+
+# Running rmv_map script in INST3 to remove instance file mapping
+
+
+# Unset [ydb/gtm]_repl_instance env variables  and run ydb312gtm8182e.m to set globals on INST1 and INST3 from INST3
+==Executing MULTISITE_REPLIC 'RUN INST3 unsetenv ydb_repl_instance; unsetenv gtm_repl_instance; $gtm_dist/mumps -run ydb312gtm8182e'==
+    Change to INST1 global directory and set ^a
+    Change to INST3 global directory and set ^a
+    (Expecting REPLINSTUNDEF error)
+%YDB-E-REPLINSTUNDEF, Replication instance environment variable $ydb_repl_instance/$gtm_repl_instance is undefined
+		At M source location ydb312gtm8182e+10^ydb312gtm8182e
+
+YDB>
+
+# Reset the _repl_instance env vars in INST3
+==Executing MULTISITE_REPLIC 'RUN INST3 setenv gtm_repl_instance "mumps.repl"'==
+==Executing MULTISITE_REPLIC 'RUN INST3 setenv ydb_repl_instance "mumps.repl"'==
+
+# Stop INST1 INST2 replication
+==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+Shutting down Primary Source Server Server in ##TEST_PATH##
+
+# Stop INST3 INST4 replication
+==Executing MULTISITE_REPLIC 'STOP INST3 INST4'==
+Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance4
+Shutting down Primary Source Server Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+
+
+# Check msr*.out file for REPLINSTUNDEF error
+----------
+Error REPLINSTUNDEF seen in msr_execute_##FILTERED##NO.out as expected:
+    (Expecting REPLINSTUNDEF error)
+%YDB-E-REPLINSTUNDEF, Replication instance environment variable $ydb_repl_instance/$gtm_repl_instance is undefined
+----------
+
+
+# Check and shutdown the DB
+----------------------------------------------------------------------------
+# DB has shutdown gracefully

@@ -11,5 +11,9 @@
 #								#
 #################################################################
 #
-
-$GDE CHANGE -INSTANCE -FILE_NAME=\"\"
+#
+#
+$gtm_tst/com/dbcreate.csh mumps 1 >>& dbcreate.csh
+$ydb_dist/mumps -run gtm8961
+$gtm_tst/com/dbcheck.csh >>& dbcheck.csh
+cat output.txt

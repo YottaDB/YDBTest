@@ -1,0 +1,40 @@
+# Running GTM-8930 subtest to test $VIEW("JNLPOOL") 
+--------------------------------------------------------------------------------
+
+# Create a 1 region DB with gbl_dir mumps.gld and region DEFAULT
+
+# Start replication
+==Executing MULTISITE_REPLIC 'START INST1 INST2'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+
+##TEST_AWK# gtm_repl_instance set to .*
+
+# Map INST1 global directory to mumps.repl
+# Run test1^gtm8930.m to test $VIEW("JNLPOOL") before and after opening JNLPOOL
+    $VIEW("JNLPOOL") with unopened JNLPOOL
+    $VIEW("JNLPOOL")=##TEST_PATH##/mumps.repl*
+
+    Updating DB
+
+    $VIEW("JNLPOOL") with opened JNLPOOL
+    $VIEW("JNLPOOL")=##TEST_PATH##/mumps.repl
+
+
+# Remove instance file mapping in GDE
+
+# Unset gtm_repl_instance
+
+# Run test2^gtm8930.m to test $VIEW("JNLPOOL") with no replication instance file defined
+    $VIEW("JNLPOOL") with no replication instance file defined
+    $VIEW("JNLPOOL")=No replication instance defined
+
+
+# Run test3^gtm8930.m to test $VIEW("JNLPOOL") with no instance file mapped and gtm_repl_instance set to an arbitrary value
+    $VIEW("JNLPOOL") with no file mapping and a garbage gtm_repl_instance
+    $VIEW("JNLPOOL")=##TEST_PATH##/arbitrary.repl*
+
+
+# Re-set gtm_repl_instance for shutdown
+
+# Shut down the DB

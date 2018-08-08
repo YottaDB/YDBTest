@@ -1,4 +1,9 @@
 ##SUSPEND_OUTPUT PLATFORM_NO_PRIORGTM
+# Switching to prior version
+# Creating replication instance file using prior version
+# Switching back to current version
+# Creating global directory as source server startup requires it even if it is going to issue a REPLINSTFMT error
+# Start source server. Expect REPLINSTFMT error
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating START of source server for secondary instance [nobody]
 %YDB-E-REPLINSTFMT, Format error encountered while reading replication instance file ##TEST_PATH##/mumps.repl. Expected GDSRPLUNX##TEST_AWK[0-9]*. Found GDSRPLUNX[0-9]*.
 ##ALLOW_OUTPUT PLATFORM_NO_PRIORGTM
