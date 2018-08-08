@@ -10,7 +10,8 @@
 ;								;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
-gtm8959
-	set ^A=1
-	write "Return to invoked function"
+gtm8959()
+	write "# Call-in from C program Executed Properly",!
+	ZGOTO 0
+	write "ZGOTO not successful",!
 	quit
