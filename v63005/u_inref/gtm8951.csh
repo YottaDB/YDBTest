@@ -14,9 +14,6 @@
 #
 #
 source $gtm_tst/relink/u_inref/enable_autorelink_dirs.csh
-env | $grep relink
-env | $grep routines
-
 
 cat > temp.m << EOF
 oldtemp

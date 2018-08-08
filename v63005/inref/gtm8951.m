@@ -12,12 +12,15 @@
 ;
 
 gtm8951
+	do ^temp
 	write "$TEXT = ",$TEXT(^temp),!
 	write "ZPRINT OUTPUT:",!
 	ZPRINT ^temp
-	hang 1
 	zsystem "\cp -f newtemp.m temp.m"
+	zrupdate "temp.o"
+	do ^temp
 	write "$TEXT = ",$TEXT(^temp),!
 	write "ZRINT OUTPUT:",!
 	ZPRINT ^temp
 	quit
+
