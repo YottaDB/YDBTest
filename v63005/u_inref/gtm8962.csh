@@ -22,13 +22,13 @@ endif
 perl $gtm_tst/com/expectsanitize.pl expect.outx > expect_sanitized.outx
 
 echo '# Confirming $ZPIN=$PRINCIPAL, searching for $ZPIN in the output of ZSHOW "I"'
-$grep ZPIN expect_sanitized.outx
+$grep '^$ZPIN' expect_sanitized.outx
 echo ""
 echo '# Confirming $ZOUT=$PRINCIPAL, searching for $ZOUT in the output of ZSHOW "I"'
-$grep ZPOUT expect_sanitized.outx
+$grep '^$ZPOUT' expect_sanitized.outx
 echo ""
 echo '# Searching for $PRINCIPAL in the output of ZSHOW "I"'
-$grep PRINCIPAL expect_sanitized.outx
+$grep '^$PRINCIPAL' expect_sanitized.outx
 echo ""
 echo '# Searching for $ZPROCESS in the output of ZSHOW "I"'
 $grep ZPROCESS expect_sanitized.outx
