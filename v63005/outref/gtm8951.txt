@@ -1,0 +1,26 @@
+# Enabling auto relink
+$TEXT = oldtemp
+ZPRINT OUTPUT:
+oldtemp
+	write "Old Program",!
+	quit
+--------------Updating temp.m file--------------------
+$TEXT = newtemp
+ZRINT OUTPUT:
+newtemp
+	write "New Program",!
+	quit
+
+
+# Disabling auto relink
+$TEXT = oldtemp
+ZPRINT OUTPUT:
+oldtemp
+	write "Old Program",!
+	quit
+--------------Updating temp.m file--------------------
+$TEXT = oldtemp
+ZRINT OUTPUT:
+oldtemp
+	write "Old Program",!
+	quit
