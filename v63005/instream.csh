@@ -23,6 +23,7 @@
 # gtm5059	     [jake]   Tests new gtm_mstack_crit_threshold variable for setting which percentage of the mstack memory is used before a STACKCRIT error is issued
 # gtm8943	     [vinay]  Tests ZGOTO 0 returns to the invoking C routine on call ins
 # gtm8930	     [jake]   Tests the $VIEW("JNLPOOL") output for unopened/opened JNLPOOL and undefined replication instance file
+# gtm5574	     [vinay]  Tests conversion utility routines handle conversions with numbers up to the max string length in size
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "v63005 test starts..."
