@@ -24,13 +24,14 @@
 # gtm8943	     [vinay]  Tests ZGOTO 0 returns to the invoking C routine on call ins
 # gtm8930	     [jake]   Tests the $VIEW("JNLPOOL") output for unopened/opened JNLPOOL and undefined replication instance file
 # gtm8951      [vinay]  Tests $TEXT and ZPRINT use auto relink when it is enabled and their argument includes a routine name 
+# gtm5574	     [vinay]  Tests conversion utility routines handle conversions with numbers up to the max string length in size
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "v63005 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "gtm8877 gtm8959 gtm8962 gtm8961 gtm8941 gtm8980 gtm5059 gtm8943 gtm8951"
+setenv subtest_list_non_replic "gtm8877 gtm8959 gtm8962 gtm8961 gtm8941 gtm8980 gtm5059 gtm8943 gtm8951 gtm5574"
 setenv subtest_list_replic     ""
 setenv subtest_list_replic     "$subtest_list_replic gtm8930"
 
