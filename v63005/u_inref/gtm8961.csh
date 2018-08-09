@@ -1,3 +1,4 @@
+#!/usr/local/bin/tcsh -f
 #################################################################
 #								#
 # Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
@@ -10,11 +11,9 @@
 #								#
 #################################################################
 #
-set timeout 60
-
-spawn /usr/local/bin/tcsh -f
-source $::env(gtm_tst)/com/expectinit.exp
-
-send -- "\$MUPIP Journal -Extract=-stdout -forward mumps.mjl & \r"
-expect -exact "x(10)"
-send -- "exit \r"
+#
+#
+$gtm_tst/com/dbcreate.csh mumps 1 >>& dbcreate.csh
+$ydb_dist/mumps -run gtm8961
+$gtm_tst/com/dbcheck.csh >>& dbcheck.csh
+cat output.txt

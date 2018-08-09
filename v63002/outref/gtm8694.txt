@@ -154,3 +154,11 @@ PIPE_OPEN acted as expected
 DIRECT_MODE acted as expected
 DSE acted as expected
 TRIGGER_MOD acted as expected
+
+#----------------------------------------------------------------------
+
+TESTING A RANDOM FUNCTION WHEN THERE IS A SYNTAX ERROR IN RESTRICT.TXT AND CHECKING THE SYSLOG
+
+-r--r--r-- ydb_temp_dist/restrict.txt
+# CHECKING THE SYSLOG
+##TEST_AWK%YDB-E-RESTRICTSYNTAX, Syntax error in file ##TEST_PATH##/ydb_temp_dist/restrict.txt at line number 1. All facilities restricted for process. -- generated from 0x.*

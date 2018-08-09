@@ -38,7 +38,6 @@ expect -exact ">"
 
 # Change shell prompt to something other than ">" as that is a substring of many YDB prompts
 # and can cause incorrect match later when we wait for the shell prompt.
-expect -exact ">"
 # Note: Changing the shell prompt to SHELL might seem easily achieved as follows.
 #	send -- "set prompt=SHELL\r"
 #	expect -exact "SHELL"

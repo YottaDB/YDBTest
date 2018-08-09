@@ -37,6 +37,7 @@ TRIGGER_MOD
 EOF
 # Not including CENABLE in this list because of logistics reasons
 echo "BREAK ZBREAK ZCMDLINE ZEDIT ZSYSTEM PIPE_OPEN DIRECT_MODE DSE TRIGGER_MOD">restrictlist.txt
+echo "breakfn zbreakfn zcmdlnefn zeditfn zsystemfn pipefn trigmodfn">fnlist.txt
 chmod -w $ydb_dist/restrict.txt
 
 cat > dummy.txt <<EOF
@@ -239,5 +240,25 @@ foreach restrict (`cat restrictlist.txt`)
 		endif
 	endif
 end
-
+echo ""
+echo "#----------------------------------------------------------------------"
+echo ""
+echo "TESTING A RANDOM FUNCTION WHEN THERE IS A SYNTAX ERROR IN RESTRICT.TXT AND CHECKING THE SYSLOG"
+echo ""
+rm $ydb_dist/restrict.txt
+cat > $ydb_dist/restrict.txt << EOF
+syntax error
+EOF
+chmod -w $ydb_dist/restrict.txt
+$gtm_tst/com/lsminusl.csh $ydb_dist/restrict.txt | $tst_awk '{print $1,$9}'
+$MUPIP trigger -triggerfile=trigger.trg >>& trigger.txt
+set rand='$'`$gtm_tst/com/genrandnumbers.csh 1 1 7`
+set fn=`$tst_awk "{print $rand}" fnlist.txt`
+set t = `date +"%b %e %H:%M:%S"`
+$ydb_dist/mumps -run $fn^gtm8694>&output.txt
+# Included to avoid the syntax error in the syslog created when calling getoper (which invokes an m function)
+rm $ydb_dist/restrict.txt
+$gtm_tst/com/getoper.csh "$t" "" getoper.txt "" "RESTRICTSYNTAX"
+echo "# CHECKING THE SYSLOG"
+$grep %YDB-E-RESTRICTSYNTAX getoper.txt |& sed  's/.*%YDB-E-RESTRICTSYNTAX/%YDB-E-RESTRICTSYNTAX/'
 $gtm_tst/com/dbcheck.csh >>& dbcheck.out
