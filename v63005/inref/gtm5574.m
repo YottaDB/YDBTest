@@ -26,13 +26,32 @@ gtm5574
 	read noct
 	use $p
 	close o
-	set fourgig=4294967296
+	if $ZCMDLINE<0 do neg
+	else  do pos
+	quit
 
+neg
+	set %DH=n
+	set %DO=n
+	set %DL=1
+
+	do ^%DH
+	do verify(nhex,%DH,16)
+	write:(status=0) "%DH-----Correct Conversion",!
+	write:(status'=0) "FAILED: DH= ",%DH,"   bcoutput= ",nhex,"   diff=",status,!
+
+	do ^%DO
+	do verify(noct,%DO,8)
+	write:(status=0) "%DO-----Correct Conversion",!
+	write:(status'=0) "FAILED: DO= ",%DO,"   bcoutput= ",noct,!
+	quit
+
+pos
 	set %DH=n
 	do ^%DH
 	do verify(nhex,%DH,16)
 	write:(status=0) "%DH-----Correct Conversion",!
-	write:(status'=0) "FAILED: DH= ",%DH,"   bc output= ",nhex,!
+	write:(status'=0) "FAILED: DH= ",%DH,"   bcoutput= ",nhex,"   diff=",status,!
 
 	set %HO=%DH
 	do ^%HO
@@ -84,6 +103,8 @@ verify(bcout,percentout,ibase)
 	use v
 	read status
 	close v
-	set status=status#fourgig
 	use $p
+	if $ZCMDLINE<0 do
+	. if ibase=8 set status=status#(2**(3*$length(percentout)))
+	. if ibase=16 set status=status#(2**(4*$length(percentout)))
 	quit

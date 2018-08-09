@@ -11,10 +11,10 @@
 #								#
 #################################################################
 #
-#
+# Tests conversion utility routines can handle numbers with more than 18 digits
 #
 
-# Set to avoid wrapping from bc
+# Set to avoid wrapping at 68 columns or so which breaks long numbers into multiple lines otherwise
 setenv BC_LINE_LENGTH 0
 # The release note says that the conversion can handle numbers with digits up to the max string length, but chose to cap at 256 as the test would take too long otherwise
 set rand=`$gtm_tst/com/genrandnumbers.csh 1 1 256`
@@ -23,7 +23,7 @@ foreach n (18 19 20 255 256 $rand -5 -10)
 		echo "# Conversions using a random $n digit number"
 	else
 		set negn=`expr "0" - "$n"`
-		echo "# Conversions using a random $negn digit negative number"
+		echo "# Conversions using a random $negn digit negative number (Specified length is not long enough represent the fully converted number)"
 	endif
 
 	$ydb_dist/mumps -run gtm5574 $n
