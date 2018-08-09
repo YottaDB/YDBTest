@@ -34,7 +34,7 @@ neg
 	set %DH=n
 	set %DO=n
 	kill %DL
-	set:($random(1)) %DL=1+$random(16)
+	set:($random(2)) %DL=1+$random(16)
 
 	do ^%DH
 	do verify(nhex,%DH,16)
