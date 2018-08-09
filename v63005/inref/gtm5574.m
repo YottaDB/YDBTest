@@ -33,7 +33,8 @@ gtm5574
 neg
 	set %DH=n
 	set %DO=n
-	set %DL=1
+	kill %DL
+	set:($random(1)) %DL=1+$random(16)
 
 	do ^%DH
 	do verify(nhex,%DH,16)
