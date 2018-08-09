@@ -26,43 +26,43 @@ gtm5574
 	read noct
 	use $p
 	close o
-	set twogig=4294967296
+	set fourgig=4294967296
 
 	set %DH=n
 	do ^%DH
 	do verify(nhex,%DH,16)
 	write:(status=0) "%DH-----Correct Conversion",!
-	write:(status'=0) "FAILED: DH= ",%DH,!
+	write:(status'=0) "FAILED: DH= ",%DH,"   bc output= ",nhex,!
 
-	set %HO=nhex
+	set %HO=%DH
 	do ^%HO
 	do verify(noct,%HO,8)
 	write:(status=0) "%HO-----Correct Conversion",!
-	write:(status'=0) "FAILED: HO= ",%HO,!
+	write:(status'=0) "FAILED: HO= ",%HO,"   bcoutput= ",noct,!
 
-	;set %OD=noct
-	;do ^%OD
-	;do verify(ndec,%OD,10)
-	;write:(status=0) "%OD-----Correct Conversion",!
-	;write:(status'=0) "FAILED: OD= ",%OD,!
+	set %OD=%HO
+	do ^%OD
+	do verify(ndec,%OD,10)
+	write:(status=0) "%OD-----Correct Conversion",!
+	write:(status'=0) "FAILED: OD= ",%OD,"   bcoutput= ",ndec,!
 
-	set %DO=ndec
+	set %DO=%OD
 	do ^%DO
 	do verify(noct,%DO,8)
 	write:(status=0) "%DO-----Correct Conversion",!
-	write:(status'=0) "FAILED: DO= ",%DO,!
+	write:(status'=0) "FAILED: DO= ",%DO,"   bcoutput= ",noct,!
 
-	;set %OH=noct
-	;do ^%OH
-	;do verify(nhex,%OH,16)
-	;write:(status=0) "%OH-----Correct Conversion",!
-	;write:(status'=0) "FAILED: OH= ",%OH,!
+	set %OH=%DO
+	do ^%OH
+	do verify(nhex,%OH,16)
+	write:(status=0) "%OH-----Correct Conversion",!
+	write:(status'=0) "FAILED: OH= ",%OH,"   bcoutput= ",nhex,!
 
-	set %HD=nhex
+	set %HD=%OH
 	do ^%HD
 	do verify(ndec,%HD,10)
 	write:(status=0) "%HD-----Correct Conversion",!
-	write:(status'=0) "FAILED: HD= ",%HD,!
+	write:(status'=0) "FAILED: HD= ",%HD,"   bcoutput= ",ndec,!
 	quit
 
 genrandint
@@ -77,13 +77,13 @@ genrandint
 	quit
 
 verify(bcout,percentout,ibase)
-	set zsyst="echo 'ibase="_ibase_"; "_percentout_"-("_bcout_");' | bc >> verify.out"
+	set zsyst="echo 'ibase="_ibase_"; "_percentout_"-("_bcout_");' | bc > verify.out"
 	zsystem zsyst
 	set v="verify.out"
 	open v
 	use v
 	read status
 	close v
+	set status=status#fourgig
 	use $p
-	if $zcmdline<0 set status=status-twogig
 	quit

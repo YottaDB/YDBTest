@@ -16,8 +16,16 @@
 
 # Set to avoid wrapping from bc
 setenv BC_LINE_LENGTH 0
-foreach n (10)
-	echo "# Conversions using an $n digit number"
+# The release note says that the conversion can handle numbers with digits up to the max string length, but chose to cap at 256 as the test would take too long otherwise
+set rand=`$gtm_tst/com/genrandnumbers.csh 1 1 256`
+foreach n (18 19 20 255 256 $rand -5 -10)
+	if ($n>0) then
+		echo "# Conversions using a random $n digit number"
+	else
+		set negn=`expr "0" - "$n"`
+		echo "# Conversions using a random $negn digit negative number"
+	endif
+
 	$ydb_dist/mumps -run gtm5574 $n
 	echo "-------------------------------------------"
 end

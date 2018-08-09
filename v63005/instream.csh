@@ -29,7 +29,7 @@ echo "v63005 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "gtm8877 gtm8959 gtm8962 gtm8961 gtm8941 gtm8980 gtm5059 gtm8943"
+setenv subtest_list_non_replic "gtm8877 gtm8959 gtm8962 gtm8961 gtm8941 gtm8980 gtm5059 gtm8943 gtm5574"
 setenv subtest_list_replic     ""
 setenv subtest_list_replic     "$subtest_list_replic gtm8930"
 
