@@ -1,0 +1,17 @@
+# ----------------------------------------------------------------------------
+# Test that epoch_interval setting is honored even if an idle epoch is written
+# ----------------------------------------------------------------------------
+# Enable journaling on the database
+# Set epoch_interval of 2 seconds
+# Create database
+# Invoke : mumps -run ydb341
+Perform update SET ^x=1
+Sleep for 8 seconds to ensure an idle epoch gets written
+Confirm an idle epoch did get written : JRI gvstat increased by 1
+Perform update SET ^x=2
+Sleep for anywhere from 1 to 5 seconds
+Perform update SET ^x=3
+Sleep for 1 second
+Perform update SET ^x=4
+Confirm a regular epoch got written in between updates ^x=2 and ^x=4 : JRE gvstat increased by 1
+# Do dbcheck on database
