@@ -138,10 +138,10 @@ else
 tcpverify
 endif
 #
-$MUPIP restore online66.dat "tcp://${tst_org_host}/" >&! badtcp1.outx
-$gtm_tst/com/check_string_exist.csh badtcp1.outx any 'YDB-E-GETADDRINFO, Error in getting address info'
-$MUPIP restore online66.dat "tcp://bogus@host:7777" >&! badtcp2.outx
-$gtm_tst/com/check_string_exist.csh badtcp2.outx any 'YDB-E-GETADDRINFO, Error in getting address info'
+$MUPIP restore online66.dat -nettimeout=2 "tcp://${tst_org_host}/" >&! badtcp1.outx
+$gtm_tst/com/check_string_exist.csh badtcp1.outx any 'YDB-E-TCPCONNTIMEOUT, Connection wait timeout'
+$MUPIP restore online66.dat -nettimeout=2 "tcp://bogus@host:7777" >&! badtcp2.outx
+$gtm_tst/com/check_string_exist.csh badtcp2.outx any 'YDB-E-TCPCONNTIMEOUT, Connection wait timeout'
 $MUPIP restore online66.dat "tcp://${tst_org_host}:77D77" >&! badtcp3.outx
 $gtm_tst/com/check_string_exist.csh badtcp3.outx any 'YDB-E-SYSCALL, Error received from system call bind'
 echo LEAVING ONLINE6
