@@ -1,0 +1,16 @@
+# -------------------------------------------------------------------------------------------------------
+# Test that update helper writer process avoids retrying the epoch repeatedly in case of an idle instance
+# -------------------------------------------------------------------------------------------------------
+# Set 1 writer and 0 reader update helper processes
+# Set epoch_interval to small value (1 second) so as to measure helper writer process across multiple epoch intervals
+# Create database on INST1/INST2
+==Executing MULTISITE_REPLIC 'START INST1 INST2'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+==Executing MULTISITE_REPLIC 'RUN INST2 $ydb_dist/mumps -run gtm8708'==
+Since one needs crit to attempt an epoch, CAT gvstat (# of crit acquired total successes) is a good test of this
+Record CAT gvstat (# of crit acquired total successes) at start
+Wait for 5 seconds (i.e. 5 epoch intervals since epoch_interval is set to 1 second)
+Record CAT gvstat (# of crit acquired total successes) at end
+Confirm CAT gvstat at start and end is identical (i.e. no unnecessary epoch attempts were made) : PASS
+# Do dbcheck on INST1/INST2
