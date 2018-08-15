@@ -19,7 +19,7 @@ open a:(comm="$ integ -file mumps.dat":parse)::"pipe"
 STAT=gtm7964+11^gtm7964,%YDB-E-DEVOPENFAIL, Error opening PP,%YDB-I-TEXT, Invalid command string: $
 open a:(comm="$/ integ -file mumps.dat":parse)::"pipe"
 STAT=gtm7964+13^gtm7964,%YDB-E-DEVOPENFAIL, Error opening PP,%YDB-I-TEXT, Invalid command string: $/
-open a:(comm="$gtm_dist/geteuid":parse:readonly)::"pipe"
+open a:(comm="id -un | sed 's/'$user'/other/g'":parse:readonly)::"pipe"
 other
 open a:(comm="/bin/cat | nl":parse)::"pipe"
      1	one
