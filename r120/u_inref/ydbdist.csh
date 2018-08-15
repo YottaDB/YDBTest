@@ -21,7 +21,7 @@ source $gtm_tst/com/portno_acquire.csh >>& portno.out
 # "gtcm_play" is not included in the below list because it produces some timing issues in the test runs
 # Not sure what that is and since this is a helper executable for a mostly unused functionality (GTCM OMI),
 # it is not considered as essential to test that out here.
-set executables = "mumps mupip dbcertify dse ftok geteuid gtcm_gnp_server gtcm_pkdisp gtcm_server gtcm_shmclean gtmsecshr lke semstat2"
+set executables = "mumps mupip dbcertify dse ftok gtcm_gnp_server gtcm_pkdisp gtcm_server gtcm_shmclean gtmsecshr lke semstat2"
 
 $echoline
 echo "# Test of <ydb_dist/gtm_dist> env vars and how they affect how executables in $saveydbdist are invoked"

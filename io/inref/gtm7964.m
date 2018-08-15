@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-;	Copyright 2014 Fidelity Information Services, Inc	;
+; Copyright 2014 Fidelity Information Services, Inc		;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -22,8 +25,8 @@ gtm7964
 	open a:(comm="$ integ -file mumps.dat":parse)::"pipe"
 	write "open a:(comm=""$/ integ -file mumps.dat"":parse)::""pipe""",!
 	open a:(comm="$/ integ -file mumps.dat":parse)::"pipe"
-	write "open a:(comm=""$gtm_dist/geteuid"":parse:readonly)::""pipe""",!
-	open a:(comm="$gtm_dist/geteuid":parse:readonly)::"pipe"
+	write "open a:(comm=""id -un | sed 's/'$user'/other/g'"":parse:readonly)::""pipe""",!
+	open a:(comm="id -un | sed 's/'$user'/other/g'":parse:readonly)::"pipe"
 	use a
 	read x
 	use $P

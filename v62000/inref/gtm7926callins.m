@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-;	Copyright 2014 Fidelity Information Services, Inc	;
+; Copyright 2014 Fidelity Information Services, Inc		;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -40,7 +43,7 @@ secshr
 iopi
 	set $ETRAP="zwrite $zstatus halt"
 	set pipe="pipe"
-	open pipe:(shell="/bin/sh":command="geteuid":parse)::"PIPE"
+	open pipe:(shell="/usr/local/bin/tcsh":command="id -un | sed 's/'$user'/other/g'":parse)::"PIPE"
 	use pipe
 	read euid
 	close pipe

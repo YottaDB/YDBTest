@@ -4,6 +4,9 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -55,7 +58,7 @@ if ( "${port}" == "" ) then
 endif
 
 # check user credentials
-set id = `$gtm_exe/geteuid`
+set id = `id -un`
 if ("${cmd}" == "client") then
 	if ( "${id}" == "root") then
 		echo "You need to be user to execute ${cmd}"
