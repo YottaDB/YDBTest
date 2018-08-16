@@ -3,6 +3,9 @@
 ; Copyright (c) 2015 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -59,7 +62,12 @@ gen	;
 	. . ; append a random string (only if ret is "yes" or "true" for TRUE case)
 	. . ; $r(2*len)-len increases the probability of negative numbers.
 	. . ; RANDSTR returns null for negative length which would result in retaining the original string
-	. . if ((0=type)!("yes"=retx)!("true"=retx)) set ret=ret_$$^%RANDSTR($random(2*len)-len)
+	. . if ((0=type)!("yes"=retx)!("true"=retx)) do
+	. . . ; Note it is possible in the FALSE (type=0) case that "ret" is 0 and "suffix" is a numeric value (all decimal digits)
+	. . . ; in which case appending "suffix" to "ret" would cause "ret" to evaluates to a non-zero number (i.e. TRUE)
+	. . . ; hence the $$istrue check below
+	. . . for  set suffix=$$^%RANDSTR($random(2*len)-len)  quit:(type=1)!('$$istrue(ret_suffix))
+	. . . set ret=ret_suffix
 	. use debugfile write $zdate($horolog,"DD-MON-YEAR 24:60:SS")_" : "_type_" : "_ret,!
 	. use $PRINCIPAL write ret,!
 	quit
