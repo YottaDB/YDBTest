@@ -1,0 +1,17 @@
+# Create database
+# Create global ^x with lots of nodes (10000) so a ZWRITE ^x takes a long time and is interruptible
+# Test that use of a local variable after a Ctrl-C'ed ZWRITE in direct mode does not issue assert failure
+spawn /usr/local/bin/tcsh -f
+> stty cols 132
+> set shellprompt=SHELL
+> set prompt=$shellprompt
+SHELL$ydb_dist/mumps -direct
+
+YDB>zwrite ^x
+%YDB-I-CTRLC, CTRL_C encountered
+
+YDB>set x=1
+
+YDB>halt
+SHELL
+# Shut down the DB

@@ -23,15 +23,16 @@
 # ydb297           [vinay] Demonstrates LOCK commands work correctly when there are more than 31 subscripts that hash to the same value
 # ydb312_gtm8182a  [Jake]  Test that when Instance Freeze is disabled a process attaches a region to an instance at the first update to that region.
 # ydb312_gtm8182b  [jake]  Test $zpeek of journal pool to ensure there is no longer a memory leak issue with jnlpool_init()
-# ydb312_gtm8182c  [jake]  Tests that an error in DB freezes only the instance corresponding to that DB and not an unrelated instance
-# ydb312_gtm8182d  [jake]  Tests that opening the jnlpool as part of an update works fine after unsuccessfully opening the jnlpool as part of a read
-# ydb312_gtm8182e  [jake]  Tests a fix for an incorrect GTMASSERT2 error when [gtm/ydb]_repl_instance env vars are unset and an instance has no repl file mapping
-# ydb312_gtm8182f  [jake]  Tests a fix for an incorrectly issued REPLINSTMISMTCH error in a LOCK command with extended references in a process that accesses multiple instances
-# ydb312_gtm8182g  [jake]  Tests that updating DB1, in GLD1, and DB2, in GLD2, will only attach to the journal pool once when DB1/2 are both within GLD3 ( associate with a replicating source server)
-# ydb315           [jake]  Tests that the ZCOMPILE operation will not display warning if $ZCOMPILE contains "-nowarnings"
-# ydb324           [nars]  Tests that Error inside indirection usage in direct mode using $ETRAP (not $ZTRAP) does not terminate process
-# ydb321           [nars]  Tests that journal records fed to external filters include timestamps
-# ydb341           [nars]  Tests that epoch_interval setting is honored even if an idle epoch is written
+# ydb312_gtm8182c  [jake]  Test that an error in DB freezes only the instance corresponding to that DB and not an unrelated instance
+# ydb312_gtm8182d  [jake]  Test that opening the jnlpool as part of an update works fine after unsuccessfully opening the jnlpool as part of a read
+# ydb312_gtm8182e  [jake]  Test a fix for an incorrect GTMASSERT2 error when [gtm/ydb]_repl_instance env vars are unset and an instance has no repl file mapping
+# ydb312_gtm8182f  [jake]  Test a fix for an incorrectly issued REPLINSTMISMTCH error in a LOCK command with extended references in a process that accesses multiple instances
+# ydb312_gtm8182g  [jake]  Test that updating DB1, in GLD1, and DB2, in GLD2, will only attach to the journal pool once when DB1/2 are both within GLD3 ( associate with a replicating source server)
+# ydb315           [jake]  Test that the ZCOMPILE operation will not display warning if $ZCOMPILE contains "-nowarnings"
+# ydb324           [nars]  Test that Error inside indirection usage in direct mode using $ETRAP (not $ZTRAP) does not terminate process
+# ydb321           [nars]  Test that journal records fed to external filters include timestamps
+# ydb341           [nars]  Test that epoch_interval setting is honored even if an idle epoch is written
+# ydb343           [nars]  Test that use of a local variable after a Ctrl-C'ed ZWRITE in direct mode does not issue assert failure
 # ydb346           [nars]  Test that WRITE ?1 in direct mode after setting LENGTH of $PRINCIPAL to 0 does not assert fail
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -41,7 +42,7 @@ echo "r124 test starts..."
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic ""
 setenv subtest_list_non_replic "$subtest_list_non_replic readonly ydb275socketpass ydb280socketwait jnlunxpcterr ydb297 ydb315"
-setenv subtest_list_non_replic "$subtest_list_non_replic ydb324 ydb341 ydb346"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb324 ydb341 ydb343 ydb346"
 setenv subtest_list_replic     ""
 setenv subtest_list_replic     "$subtest_list_replic ydb282srcsrvrerr ydb293 ydb312_gtm8182a ydb312_gtm8182b  ydb312_gtm8182c"
 setenv subtest_list_replic     "$subtest_list_replic ydb312_gtm8182d ydb312_gtm8182e ydb312_gtm8182f ydb312_gtm8182g ydb321"
