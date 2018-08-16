@@ -1,0 +1,13 @@
+# Test that WRITE ?1 in direct mode after setting LENGTH of $PRINCIPAL to 0 does not assert fail
+spawn /usr/local/bin/tcsh -f
+> stty cols 132
+> set shellprompt=SHELL
+> set prompt=$shellprompt
+SHELL$ydb_dist/mumps -direct
+
+YDB>use $principal:(length=0)
+
+YDB>write ?1
+ 
+YDB>halt
+SHELL
