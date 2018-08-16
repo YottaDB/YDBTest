@@ -54,9 +54,11 @@ set max=`$ydb_dist/mumps -run ^%XCMD 'write ^x' `
 echo "# Calculate baseline calls / KiB"
 # (maxKib - minKiB) is divided by 2 since gtm_mstack_crit_threshold is set to 50%
 set baseline=`$ydb_dist/mumps -run ^%XCMD 'write ('$max'-'$min')/(('$maxKiB'-'$minKiB')/2)' `
+echo $baseline > baseline.txt
 echo "# Calculate calls lost to stack overhead"
 # lostcalls uses maxKiB / 2 since the gtm_mstack_crit_threshold is set to 50%
 set lostcalls=`$ydb_dist/mumps -run ^%XCMD 'write ('$baseline'*('$maxKiB'/2))-'$max'' `
+echo $lostcalls > lostcalls.txt
 
 @ maxKiB2 = $maxKiB + 1000
 @ minKiB2 = $minKiB - 5
@@ -96,7 +98,7 @@ foreach threshold (15 25 50 75 90 95 -20 10 0 96 100 1996 "unset")
 
 	set dep=`$ydb_dist/mumps -run ^%XCMD 'write ^x'`
 	set expDep=`$ydb_dist/mumps -run ^%XCMD 'write ('$expKiB'*'$baseline')-'$lostcalls''`
-	set match=`$ydb_dist/mumps -run ^%XCMD 'write '$dep'<=('$expDep'+1)&('$dep'>=('$expDep'-1))'`
+	set match=`$ydb_dist/mumps -run ^%XCMD 'write '$dep'<=('$expDep'+1)&('$dep'>=('$expDep'-2))'`
 
 	if ($match) then
 		echo "Recursion depth matches expected"
