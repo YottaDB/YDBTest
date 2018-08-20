@@ -29,7 +29,27 @@ if ($status) then
 endif
 mv expect.out expect.outx	# move .out to .outx to avoid -E- from being caught by test framework
 perl $gtm_tst/com/expectsanitize.pl expect.outx > expect_sanitized.outx
-$grep -vE '^\$|^\^x' expect_sanitized.outx
+
+# The expect_sanitized.outx contains "zwrite ^x" output that is interrupted. Normally one would see "zwrite ^x"
+# followed by a set of lines "^x(...)=..." and then a YDB-I-CTRLC line. But in some cases we found the output
+# to contain "zwrite ^x" followed by the "^x(...)=..." section with some missing output. Examples of such output are
+#
+# ^x(1991)=1991
+# 1992)=1992		<-- In this case, "^x(" is missing
+# ^x(1993)=1993
+#
+# ^x(188)=188
+# =189			<-- In this case, "^x(189)" is missing
+# ^x(190)=190
+#
+# ^x(30)=30
+# =189			<-- In this case, not just "^x(189)" is missing but a lot of lines from "^x(31)=31" to "^x(188)=188"
+# ^x(190)=190
+#
+# All cases of missing output were seen in the ARM platform. Not sure why though.
+# Since the purpose of this test is to ensure a YDB-I-CTRLC line shows up, we filter anything that shows up
+# between the "zwrite ^x" and "%YDB-I-CTRLC" lines using the ydb343.awk script below.
+$tst_awk -f $gtm_tst/$tst/u_inref/ydb343.awk expect_sanitized.outx
 
 echo '# Shut down the DB'
 $gtm_tst/com/dbcheck.csh >>& dbcheck_log.txt
