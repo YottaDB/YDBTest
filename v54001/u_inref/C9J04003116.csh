@@ -64,6 +64,8 @@ $echoline
 # Pause the background jobs before proceeding so that gzip command does not fail
 # due to concurrent file modifications
 $gtm_exe/mumps -run %XCMD 'do pause^pauseimptp'
+# Ensure JNLFLUSH is done (see comment in pause^pauseimptp as to why this is necessary)
+$gtm_exe/mumps -run %XCMD 'view "JNLFLUSH"'
 $tst_gzip mumps.mjl ; $tst_gunzip mumps.mjl.gz
 
 set syslog_before1 = `date +"%b %e %H:%M:%S"`
