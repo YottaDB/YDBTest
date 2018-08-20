@@ -16,6 +16,11 @@
 #
 $MULTISITE_REPLIC_PREPARE 4
 $gtm_tst/com/dbcreate.csh mumps 1 -gld_has_db_fullpath>>& dbcreate.out
+if ($status) then
+	echo "DB Create Failed, Output Below"
+	cat dbcreate.out
+	exit -1
+endif
 $MSR START INST1 INST2
 # Uploading triggers, trig will occur on instance 1 (and will be replicated by instance 2), trigx will occur on instance 3 and 4
 cat > trigx.trg <<EOF
@@ -41,7 +46,14 @@ $MSR RUN INST1 '$ydb_dist/mumps -run ydb293'
 
 # Dump globals on primary and secondary side
 echo "Dumping globals on primary side"; echo "--------------------------------"; $ydb_dist/mumps -run dump^ydb293
-sleep 1 # to ensure stuff is replicated across to secondary
+
+$MSR SYNC INST1 INST2 # to ensure stuff is replicated across to secondary before dumping globals on secondary side
 echo "Dumping globals on secondary side"; echo "--------------------------------"; $sec_shell "$sec_getenv; cd $SEC_SIDE; $ydb_dist/mumps -run dump^ydb293"
+
 $gtm_tst/com/dbcheck.csh >>& dbcheck.out
+if ($status) then
+	echo "DB Check Failed, Output Below"
+	cat dbcheck.out
+	exit -1
+endif
 
