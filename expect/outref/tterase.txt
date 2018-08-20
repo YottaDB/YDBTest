@@ -1,1 +1,245 @@
-56 terminal interactions involving ERASE special input character, BACKSPACE and DELETE keys are successsful.
+# Verify the effect ERASE, BACKSAPCE and DELETE key on empty and noempty terminal with various combinations of
+#         [NO]EMPTERM [NO]ESCAP and [NO]EDIT deviceparameters.
+
+spawn /usr/local/bin/tcsh -f
+> stty cols 132
+> set shellprompt=SHELL
+> set prompt=$shellprompt
+SHELLstty cols 256
+SHELLuname
+Linux
+SHELL$ydb_dist/mumps -run tterase
+-------------------------------------------------------------------------
+case:(ESCAPE:EDIT:EMPTERM)
+
+Enter ERASE special terminal input character on empty read buffer
+
+PASS
+Enter BACKSPACE key on empty read buffer
+
+PASS
+Enter DELETE key on empty read buffer
+
+PASS
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+case:(ESCAPE:EDIT:EMPTERM)
+
+Enter ERASE special terminal input character on nonempty read buffer - Use string GTMM - followed by newline character
+GTMM 
+PASS
+Enter string GTM. Go to beginning by pressing LEFT arrow key thrice. Enter ERASE special terminal input character followed by newline character
+GTM
+PASS
+Enter BACKSPACE key on nonempty read buffer - Use string GTMM - followed by newline character
+GTMM 
+PASS
+Enter string GTM. Go to beginning by pressing LEFT arrow key thrice. Enter BACKSPACE followed by newline character
+GTM
+PASS
+Enter DELETE key on nonempty read buffer - Use string GTMM - followed by newline character
+GTMM
+PASS
+Enter string GTM. Go to beginning by pressing LEFT arrow key thrice. Enter DELETE followed by newline character
+GTM   TM
+PASS
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+case:(ESCAPE:EDIT:NOEMPTERM)
+
+Enter ERASE special terminal input character on empty read buffer followed by newline character
+
+PASS
+Enter BACKSPACE key on empty read buffer followed by newline character
+
+PASS
+Enter DELETE key on empty read buffer followed by newline character
+
+PASS
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+case:(ESCAPE:EDIT:NOEMPTERM)
+
+Enter ERASE special terminal input character on nonempty read buffer - Use string GTMM - followed by newline character
+GTMM 
+PASS
+Enter string GTM. Go to beginning by pressing LEFT arrow key thrice. Enter ERASE special terminal input character followed by newline character
+GTM
+PASS
+Enter BACKSPACE key on nonempty read buffer - Use string GTMM - followed by newline character
+GTMM 
+PASS
+Enter string GTM. Go to beginning by pressing LEFT arrow key thrice. Enter BACKSPACE followed by newline character
+GTM
+PASS
+Enter DELETE key on nonempty read buffer - Use string GTMM - followed by newline character
+GTMM
+PASS
+Enter string GTM. Go to beginning by pressing LEFT arrow key thrice. Enter DELETE followed by newline character
+GTM   TM
+PASS
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+case:(ESCAPE:NOEDIT:EMPTERM)
+
+Enter ERASE special terminal input character on empty read buffer
+
+PASS
+Enter BACKSPACE key on empty read buffer
+
+PASS
+Enter DELETE key on empty read buffer
+
+PASS
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+case:(ESCAPE:NOEDIT:EMPTERM)
+
+Enter ERASE special terminal input character on nonempty read buffer - Use string GTMM - followed by newline character
+GTMM 
+PASS
+Enter BACKSPACE key on nonempty read buffer - Use string GTMM - followed by newline character
+GTMM 
+PASS
+Enter DELETE key on nonempty read buffer - Use string GTMM -
+GTMM
+PASS
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+case:(ESCAPE:NOEDIT:NOEMPTERM)
+
+Enter ERASE special terminal input character on empty read buffer followed by newline character
+
+PASS
+Enter BACKSPACE key on empty read buffer followed by newline character
+
+PASS
+Enter DELETE key on empty read buffer
+
+PASS
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+case:(ESCAPE:NOEDIT:NOEMPTERM)
+
+Enter ERASE special terminal input character on nonempty read buffer - Use string GTMM - followed by newline character
+GTMM 
+PASS
+Enter BACKSPACE key on nonempty read buffer - Use string GTMM - followed by newline character
+GTMM 
+PASS
+Enter DELETE key on nonempty read buffer - Use string GTMM -
+GTMM
+PASS
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+case:(NOESCAPE:EDIT:EMPTERM)
+
+Enter ERASE special terminal input character on empty read buffer
+
+PASS
+Enter BACKSPACE key on empty read buffer
+
+PASS
+Enter DELETE key on empty read buffer
+
+PASS
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+case:(NOESCAPE:EDIT:EMPTERM)
+
+Enter ERASE special terminal input character on nonempty read buffer - Use string GTMM - followed by newline character
+GTMM 
+PASS
+Enter string GTM. Go to beginning by pressing LEFT arrow key thrice. Enter ERASE special terminal input character followed by newline character
+GTM
+PASS
+Enter BACKSPACE key on nonempty read buffer - Use string GTMM - followed by newline character
+GTMM 
+PASS
+Enter string GTM. Go to beginning by pressing LEFT arrow key thrice. Enter BACKSPACE followed by newline character
+GTM
+PASS
+Enter DELETE key on nonempty read buffer - Use string GTMM - followed by newline character
+GTMM
+PASS
+Enter string GTM. Go to beginning by pressing LEFT arrow key thrice. Enter DELETE followed by newline character
+GTM   TM
+PASS
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+case:(NOESCAPE:EDIT:NOEMPTERM)
+
+Enter ERASE special terminal input character on empty read buffer followed by newline character
+
+PASS
+Enter BACKSPACE key on empty read buffer followed by newline character
+
+PASS
+Enter DELETE key on empty read buffer followed by newline character
+
+PASS
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+case:(NOESCAPE:EDIT:NOEMPTERM)
+
+Enter ERASE special terminal input character on nonempty read buffer - Use string GTMM - followed by newline character
+GTMM 
+PASS
+Enter string GTM. Go to beginning by pressing LEFT arrow key thrice. Enter ERASE special terminal input character followed by newline character
+GTM
+PASS
+Enter BACKSPACE key on nonempty read buffer - Use string GTMM - followed by newline character
+GTMM 
+PASS
+Enter string GTM. Go to beginning by pressing LEFT arrow key thrice. Enter BACKSPACE followed by newline character
+GTM
+PASS
+Enter DELETE key on nonempty read buffer - Use string GTMM - followed by newline character
+GTMM
+PASS
+Enter string GTM. Go to beginning by pressing LEFT arrow key thrice. Enter DELETE followed by newline character
+GTM   TM
+PASS
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+case:(NOESCAPE:NOEDIT:EMPTERM)
+
+Enter ERASE special terminal input character on empty read buffer
+
+PASS
+Enter BACKSPACE key on empty read buffer
+
+PASS
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+case:(NOESCAPE:NOEDIT:EMPTERM)
+
+Enter ERASE special terminal input character on nonempty read buffer - Use string GTMM - followed by newline character
+GTMM 
+PASS
+Enter BACKSPACE key on nonempty read buffer - Use string GTMM - followed by newline character
+GTMM 
+PASS
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+case:(NOESCAPE:NOEDIT:NOEMPTERM)
+
+Enter ERASE special terminal input character on empty read buffer followed by newline character
+
+PASS
+Enter BACKSPACE key on empty read buffer followed by newline character
+
+PASS
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+case:(NOESCAPE:NOEDIT:NOEMPTERM)
+
+Enter ERASE special terminal input character on nonempty read buffer - Use string GTMM - followed by newline character
+GTMM 
+PASS
+Enter BACKSPACE key on nonempty read buffer - Use string GTMM - followed by newline character
+GTMM 
+PASS
+-------------------------------------------------------------------------
+SHELLexit
+exit

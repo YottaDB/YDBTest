@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2013 Fidelity Information Services, Inc	#
+# Copyright 2013 Fidelity Information Services, Inc		#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -9,8 +12,10 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
-# Verify the effect ERASE, BACKSAPCE and DELETE key on empty and noempty terminal with various combinations of [NO]EMPTERM,
-# [NO]ESCAP and [NO]EDIT deviceparameters.
+
+echo "# Verify the effect ERASE, BACKSAPCE and DELETE key on empty and noempty terminal with various combinations of"
+echo "#         [NO]EMPTERM [NO]ESCAP and [NO]EDIT deviceparameters."
+echo ""
 
 # Test system does not start off with TERM set to anything
 if !($?TERM) setenv TERM xterm
@@ -23,6 +28,11 @@ if ( "sunos" == "$gtm_test_osname" ) then
 	setenv TERM vt320
 endif
 
-expect -f $gtm_tst/$tst/inref/tterase.exp >&! tterase.exp.output
-@ interactions = `$grep PASS tterase.exp.output | wc -l`
-echo "$interactions terminal interactions involving ERASE special input character, BACKSPACE and DELETE keys are successsful."
+# Turn on expect debugging using "-d". The debug output would be in expect.dbg in case needed to analyze stray timing failures.
+(expect -d $gtm_tst/$tst/inref/tterase.exp > expect.out) >& expect.dbg
+if ($status) then
+	echo "EXPECT-E-FAIL : expect returned non-zero exit status"
+endif
+perl $gtm_tst/com/expectsanitize.pl expect.out > expect_sanitized.out
+cat expect_sanitized.out
+
