@@ -18,6 +18,6 @@ zshow
     for i=1:1:99 set ^x(i)=$justify(" ",2500)
     write "===================zshow ""G""===================",!
     zshow "G":val
-    do out^zshowgfilter(.val,"DWT,CAT,BTD")	; filter out DWT/CAT/BTD as they could contain varying output
+    do out^zshowgfilter(.val,"DWT,CAT,BTD,DRD")	; filter out a few gvstats as they could contain varying output
     zwrite val
     quit
