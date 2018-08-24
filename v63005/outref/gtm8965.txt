@@ -1,0 +1,18 @@
+# Test that the pattern match operator with alternation does not SIG-11 with input string as small as 16K
+# This is an issue that was tracked https://gitlab.com/YottaDB/DB/YDB/issues/26
+# But we noticed this was fixed when GT.M V6.3-005 was released as part of GTM-8965
+# The new/correct behavior is a PATALTER2LARGE error (expected in the below output)
+$zlength(x)=2 : x?.(1"1",1" ") = 1
+$zlength(x)=4 : x?.(1"1",1" ") = 1
+$zlength(x)=8 : x?.(1"1",1" ") = 1
+$zlength(x)=16 : x?.(1"1",1" ") = 1
+$zlength(x)=32 : x?.(1"1",1" ") = 1
+$zlength(x)=64 : x?.(1"1",1" ") = 1
+$zlength(x)=128 : x?.(1"1",1" ") = 1
+$zlength(x)=256 : x?.(1"1",1" ") = 1
+$zlength(x)=512 : x?.(1"1",1" ") = 1
+$zlength(x)=1024 : x?.(1"1",1" ") = 1
+$zlength(x)=2048 : x?.(1"1",1" ") = 1
+$zlength(x)=4096 : x?.(1"1",1" ") = 1
+$zlength(x)=8192 : x?.(1"1",1" ") = 1
+$zlength(x)=16384 : x?.(1"1",1" ") = %YDB-E-PATALTER2LARGE, Pattern match alternation exceeded the 16384 repetition limit on prospective matches
