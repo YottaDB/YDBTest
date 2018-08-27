@@ -71,15 +71,24 @@ foreach dir ($ydb_dist/*.gld)
 	setenv ydb_gbldir $dir
 	$DSE dump -file |& $grep "Read Only"
 	echo "# Attempting to change to no read only"
-	# Occasionally there is a READONLYLKFAIL Error instead of the desired DBFILEOPERR. We have the program retry
-	# if it encounters this
-	while (1)
+	# Occasionally there is a READONLYLKFAIL Error instead of the desired DBFILEOPERR.
+	# This is possible if the help database file is opened by another concurrently running test.
+	# We have the program retry in a sleep-loop if it encounters this.
+	set num = 300	# wait for a max of 300 seconds before signaling a failure
+	while ($num)
 		$MUPIP SET -region DEFAULT -NOREAD_ONLY >& temp.out
 		$grep READONLYLKFAIL temp.out > /dev/null
 		if ($status) then
 			break
 		endif
+		sleep 1
+		@ num = $num - 1
 	end
+	if (0 == $num) then
+		# Timed out in above while loop. Find out which process still has the help database file open.
+		echo "# Below processes still have the help database file $dir open"
+		fuser $dir:r.dat >> temp.out
+	endif
 	cat temp.out
 	rm temp.out
 	echo "# Attempting to write to database"
