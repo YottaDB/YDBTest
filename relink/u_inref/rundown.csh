@@ -45,7 +45,8 @@ cat mupip_rundown_rctl2.logx
 echo
 
 echo "3a. MUMPS on a directory whose relinkctl file has not been run down due to a crash."
-$gtm_dist/mumps -run %XCMD 'set $zroutines=".*" write:($zsigproc($job,9)) "TEST-E-FAIL, Suicide (pid "_$job_") failed.",! hang 30 write "TEST-E-FAIL, Process "_$job_" did not die in 30 seconds",!'
+# not using %XCMD below since it has TEST-E-FAIL usage which would show up in ps -ef listing of other tests causing them to fail
+$gtm_dist/mumps -run suicide^rundown
 $gtm_dist/mumps -run %XCMD 'set $zroutines=".*"' >&! mumps_rctl3a.logx
 cat mumps_rctl3a.logx
 echo

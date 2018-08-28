@@ -4,6 +4,9 @@
 # Copyright (c) 2014-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -65,7 +68,8 @@ echo "Case #4"
 chmod a+w newj1.mjl
 
 $gtm_tst/com/simplebgupdate.csh 10 >& bgup.txt
-$gtm_exe/mumps -run %XCMD 'for i=1:1:120 write:i=120 "TEST-E-FAIL No update by the bg process",! quit:$data(^GBL)!(i=120)  hang 0.5'
+# not using %XCMD below since it has TEST-E-FAIL usage which would show up in ps -ef listing of other tests causing them to fail
+$gtm_exe/mumps -run waitforGBL^gtm7976
 
 chmod a-w newj1.mjl
 
