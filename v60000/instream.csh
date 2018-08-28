@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -127,6 +127,15 @@ endif
 if ($?gtm_test_temporary_disable) then
        setenv subtest_exclude_list "$subtest_exclude_list gtm7413"
 endif
+# Disable certain time-sensitive tests on single-cpu systems
+if ($gtm_test_singlecpu) then
+	# gtm6571 uses gdb to get C-stack for every MUTEXLCKALERT. It generates MUTEXLCKALERT messages every 30 seconds
+	# but we have seen 1-CPU systems run so slow that it takes nearly 3 minutes for a gdb attach/detach sequence
+	# to occur resulting in lot more MUTEXLCKALERT messages than the test expects to see and false failures.
+	# So disable this subtest on 1-CPU systems.
+	setenv subtest_exclude_list "$subtest_exclude_list gtm6571"
+endif
+
 #
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh

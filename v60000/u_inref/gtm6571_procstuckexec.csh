@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2012, 2013 Fidelity Information Services, Inc	#
+# Copyright 2012, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -13,17 +16,9 @@
 	set trace = "invoke_trace.$2"
 	echo $gtm_tst/com/gtmprocstuck_get_stack_trace.csh $1 $2 $3 $4	>>&! $trace
 	$gtm_tst/com/gtmprocstuck_get_stack_trace.csh $1 $2 $3 $4
-	if ("HOST_HP-UX_PA_RISC" == "$gtm_test_os_machtype") then
-		$grep "has been disabled" TRACE_$1_$2_$3.outx		>>&! $trace
-		set stat1 = $status
-	else if ("$HOSTOS" == "OSF1") then
-		$grep stop TRACE_$1_$2_$3.outx				>>&! $trace
-		set stat1 = $status
-	else
-		$grep tach TRACE_$1_$2_$3.outx | $grep $3		>>&! $trace
-		set stat1 = $status
-	endif
-	echo $stat1							>>&! $trace
-	if ( 0 == $stat1 ) \rm mutexlckalert_?
-	$grep -s foo mutexlckalert_?					>>&! $trace
+	$grep tach TRACE_$1_$2_$3.outx | $grep $3		>>&! $trace
+	set stat1 = $status
+	echo "gtmprocstuck_get_stack_trace.csh $1 $2 $3 $4 : Exit status is $stat1"	>>&! $trace
+	set file = mutexlckalert_?
+	\mv $file ${file}_$2
 	exit ( $stat1 )
