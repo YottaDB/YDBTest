@@ -4,6 +4,9 @@
 # Copyright (c) 2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -33,11 +36,11 @@ if ($2 == "") then
 		endif
 	endif
 	echo "# doing explicit rundown : rundown -reg '*' $opts"	>>! $outfile
-	$MUPIP rundown -reg "*" $opts >>& $outfile
+	source $gtm_tst/com/mupip_rundown_handle_ftok_collision.csh -reg "*" $opts >>& $outfile
 	if ($?save_gtm_repl_instance) then
 		setenv gtm_repl_instance $save_gtm_repl_instance
 	endif
 else
 	echo "# doing explicit rundown : rundown -file $2 $opts"	>>! $outfile
-	$MUPIP rundown -file $2 $opts >>& $outfile
+	source $gtm_tst/com/mupip_rundown_handle_ftok_collision.csh -file $2 $opts >>& $outfile
 endif
