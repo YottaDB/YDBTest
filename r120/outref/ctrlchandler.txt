@@ -1,9 +1,12 @@
 # Test that Device exception handlers are dispatched when Ctrl-C is entered
 spawn /usr/local/bin/tcsh -f
-stty cols 132
+> stty cols 132
+> set shellprompt=SHELL
+> set prompt=$shellprompt
+SHELL$gtm_dist/mumps -run ctrlchandler CENABLE
 Invoking mumps with $zcmdline = CENABLE
 Hit ^C now
-Made it to ctrl-C handler
+^CMade it to ctrl-C handler
 %YDB-I-BREAK, Break instruction encountered
 		At M source location gotctrlc+2^ctrlchandler
 
@@ -12,6 +15,7 @@ gotctrlc+2^ctrlchandler    (Direct mode)
 +21^ctrlchandler    (Device Error)
 
 YDB>halt
+SHELL$gtm_dist/mumps -direct
 
 YDB>write "Invoking mumps with $zcmdline=""""",!
 Invoking mumps with $zcmdline=""
@@ -22,7 +26,7 @@ YDB>use $Principal:(CTRAP=$char(3):exception="do gotctrlc^ctrlchandler":CENABLE)
 
 YDB>write "Hit ^C now",!  hang 15
 Hit ^C now
-%YDB-E-CTRAP, Character trap $C(3) encountered
+^C%YDB-E-CTRAP, Character trap $C(3) encountered
 
 YDB>zshow "S"
 +1^GTM$DMOD    (Direct mode) 
@@ -33,15 +37,16 @@ YDB>use $Principal:(CTRAP=$char(3):exception="do gotctrlc^ctrlchandler":CENABLE)
 
 YDB>write "Hit ^C now",!  hang 15
 Hit ^C now
-%YDB-E-CTRAP, Character trap $C(3) encountered
+^C%YDB-E-CTRAP, Character trap $C(3) encountered
 
 YDB>zshow "S"
 +1^GTM$DMOD    (Direct mode) 
 
 YDB>halt
+SHELL$gtm_dist/mumps -run ctrlchandler NOCENABLE
 Invoking mumps with $zcmdline = NOCENABLE
 Hit ^C now
-Made it to ctrl-C handler
+^CMade it to ctrl-C handler
 %YDB-I-BREAK, Break instruction encountered
 		At M source location gotctrlc+2^ctrlchandler
 
@@ -50,6 +55,7 @@ gotctrlc+2^ctrlchandler    (Direct mode)
 +21^ctrlchandler    (Device Error)
 
 YDB>halt
+SHELL$gtm_dist/mumps -direct
 
 YDB>write "Invoking mumps with $zcmdline=""""",!
 Invoking mumps with $zcmdline=""
@@ -60,7 +66,7 @@ YDB>use $Principal:(CTRAP=$char(3):exception="do gotctrlc^ctrlchandler":NOCENABL
 
 YDB>write "Hit ^C now",!  hang 15
 Hit ^C now
-%YDB-E-CTRAP, Character trap $C(3) encountered
+^C%YDB-E-CTRAP, Character trap $C(3) encountered
 
 YDB>zshow "S"
 +1^GTM$DMOD    (Direct mode) 
@@ -71,9 +77,10 @@ YDB>use $Principal:(CTRAP=$char(3):exception="do gotctrlc^ctrlchandler":NOCENABL
 
 YDB>write "Hit ^C now",!  hang 15
 Hit ^C now
-%YDB-E-CTRAP, Character trap $C(3) encountered
+^C%YDB-E-CTRAP, Character trap $C(3) encountered
 
 YDB>zshow "S"
 +1^GTM$DMOD    (Direct mode) 
 
 YDB>halt
+SHELL

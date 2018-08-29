@@ -12,9 +12,7 @@
 
 set timeout 60
 spawn /usr/local/bin/tcsh -f
-# Have columns higher than 80 as that can cause test failures on lines that are just above 80 columns in length
-send -- "stty cols 132\r"
-expect "stty cols 132"
+source $::env(gtm_tst)/com/expectinit.exp
 set cenable(0) "CENABLE"
 set cenable(1) "NOCENABLE"
 for {set i 0} {$i < 2} {incr i 1} {
@@ -26,7 +24,7 @@ for {set i 0} {$i < 2} {incr i 1} {
 	send -- "zshow \"S\"\r"
 	expect -exact "YDB>"
 	send -- "halt\r"
-	expect -exact ">"
+	expect -exact "SHELL"
 	send -- "\$gtm_dist/mumps -direct\r"
 	expect -exact "YDB>"
 	send -- "write \"Invoking mumps with \$zcmdline=\"\"\"\"\",!\r"
@@ -50,5 +48,5 @@ for {set i 0} {$i < 2} {incr i 1} {
 	send -- "zshow \"S\"\r"
 	expect -exact "YDB>"
 	send -- "halt\r"
-	expect -exact ">"
+	expect -exact "SHELL"
 }
