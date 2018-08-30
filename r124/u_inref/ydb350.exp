@@ -1,0 +1,62 @@
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+#
+set timeout 60
+
+spawn /usr/local/bin/tcsh -f
+source $::env(gtm_tst)/com/expectinit.exp
+
+# store current tty name in env var later used by ydb350_sttydisp.c
+send -- "setenv term_env `tty`\r"
+expect -exact "SHELL"
+
+puts "\n# Record initial terminal ECHO setting"
+send -- "stty -a | grep -w echo\r"
+expect -exact "SHELL"
+
+puts "\n----------------------------------------------------------------------------------------"
+puts "# Test that terminal still has ECHO characteristics after WRITE command"
+puts "# Also test using strace that terminal ECHO characteristics are unchanged by WRITE command"
+puts "----------------------------------------------------------------------------------------"
+# Redirect strace output to .outx file as otherwise a "EACCESS Permission denied" message gets caught by test framework at end
+send -- "strace -o trace1.outx \$ydb_dist/mumps -run writecmd^ydb350\r"
+expect -exact "SHELL"
+puts "\n# Expecting 1 line below : 1 tcsetattr call in (init_gtm -> gtm_startup -> cenable -> op_use) and 0 calls due to WRITE"
+send -- "grep ioctl trace1.outx | grep TCSETS\r"
+expect -exact "SHELL"
+
+puts "\n-------------------------------------------------------------------------------------------------------"
+puts "# Test that terminal still has ECHO characteristics after READ command as seen by an external call"
+puts "# Also test using strace that terminal ECHO characteristics are changed twice (set/reset) by READ command"
+puts "-------------------------------------------------------------------------------------------------------"
+send -- "strace -o trace2.outx \$ydb_dist/mumps -run readcmd^ydb350\r"
+send -- "1\r"
+expect -exact "SHELL"
+puts "\n# Expecting 3 lines below : 1 tcsetattr call in op_use and 2 tcsetattr calls in iott_readfl command (one to set -echo and one to set echo)"
+send -- "grep ioctl trace2.outx | grep TCSETS\r"
+expect -exact "SHELL"
+
+puts "\n--------------------------------------------------------------------------"
+puts "# Test that terminal still has ECHO characteristics after DIRECT-MODE reads"
+puts "--------------------------------------------------------------------------"
+send -- "strace -o trace3.outx \$ydb_dist/mumps -direct\r"
+expect -exact "YDB>"
+# use $principal done below to ensure the terminal output gets flushed (i.e. a newline gets displayed after "do &sttydisp" before the stty -a output)
+send -- "use \$principal do &sttydisp\r"
+expect -exact "YDB>"
+send -- "halt\r"
+expect -exact "SHELL"
+
+puts "\n# Expecting 5 lines below : 1 tcsetattr call in op_use and 2 tcsetattr calls in dm_read for 2 M lines of input (do &sttydisp LINE and halt LINE)"
+send -- "grep ioctl trace3.outx | grep TCSETS\r"
+expect -exact "SHELL"
+

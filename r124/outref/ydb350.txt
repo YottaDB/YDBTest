@@ -1,0 +1,59 @@
+spawn /usr/local/bin/tcsh -f
+> stty cols 132
+> set shellprompt=SHELL
+> set prompt=$shellprompt
+SHELLsetenv term_env `tty`
+SHELL
+# Record initial terminal ECHO setting
+stty -a | grep -w echo
+isig icanon iexten echo echoe echok -echonl -noflsh -xcase -tostop -echoprt
+SHELL
+----------------------------------------------------------------------------------------
+# Test that terminal still has ECHO characteristics after WRITE command
+# Also test using strace that terminal ECHO characteristics are unchanged by WRITE command
+----------------------------------------------------------------------------------------
+strace -o trace1.outx $ydb_dist/mumps -run writecmd^ydb350
+; Below are terminal settings BEFORE WRITE command
+isig icanon iexten echo echoe echok -echonl -noflsh -xcase -tostop -echoprt
+dummy
+; Below are terminal settings AFTER  WRITE command
+isig icanon iexten echo echoe echok -echonl -noflsh -xcase -tostop -echoprt
+SHELL
+# Expecting 1 line below : 1 tcsetattr call in (init_gtm -> gtm_startup -> cenable -> op_use) and 0 calls due to WRITE
+grep ioctl trace1.outx | grep TCSETS
+ioctl(0, SNDCTL_TMR_START or TCSETS, {B38400 opost isig icanon echo ...}) = 0
+SHELL
+-------------------------------------------------------------------------------------------------------
+# Test that terminal still has ECHO characteristics after READ command as seen by an external call
+# Also test using strace that terminal ECHO characteristics are changed twice (set/reset) by READ command
+-------------------------------------------------------------------------------------------------------
+strace -o trace2.outx $ydb_dist/mumps -run readcmd^ydb350
+; Below are terminal settings BEFORE READ command
+isig icanon iexten echo echoe echok -echonl -noflsh -xcase -tostop -echoprt
+1; Below are terminal settings AFTER  READ command
+isig icanon iexten echo echoe echok -echonl -noflsh -xcase -tostop -echoprt
+SHELL
+# Expecting 3 lines below : 1 tcsetattr call in op_use and 2 tcsetattr calls in iott_readfl command (one to set -echo and one to set echo)
+grep ioctl trace2.outx | grep TCSETS
+ioctl(0, SNDCTL_TMR_START or TCSETS, {B38400 opost isig icanon echo ...}) = 0
+ioctl(0, SNDCTL_TMR_START or TCSETS, {B38400 opost isig -icanon -echo ...}) = 0
+ioctl(0, SNDCTL_TMR_START or TCSETS, {B38400 opost isig icanon echo ...}) = 0
+SHELL
+--------------------------------------------------------------------------
+# Test that terminal still has ECHO characteristics after DIRECT-MODE reads
+--------------------------------------------------------------------------
+strace -o trace3.outx $ydb_dist/mumps -direct
+
+YDB>use $principal do &sttydisp
+isig icanon iexten echo echoe echok -echonl -noflsh -xcase -tostop -echoprt
+
+YDB>halt
+SHELL
+# Expecting 5 lines below : 1 tcsetattr call in op_use and 2 tcsetattr calls in dm_read for 2 M lines of input (do &sttydisp LINE and halt LINE)
+grep ioctl trace3.outx | grep TCSETS
+ioctl(0, SNDCTL_TMR_START or TCSETS, {B38400 opost isig icanon echo ...}) = 0
+ioctl(0, SNDCTL_TMR_START or TCSETS, {B38400 opost isig -icanon -echo ...}) = 0
+ioctl(0, SNDCTL_TMR_START or TCSETS, {B38400 opost isig icanon echo ...}) = 0
+ioctl(0, SNDCTL_TMR_START or TCSETS, {B38400 opost isig -icanon -echo ...}) = 0
+ioctl(0, SNDCTL_TMR_START or TCSETS, {B38400 opost isig icanon echo ...}) = 0
+SHELL
