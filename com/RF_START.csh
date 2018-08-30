@@ -95,7 +95,7 @@ if ($status != 0) then
 	echo "Continuing without checking the connection using $netstat!"
 else
 	set fail=1
-	set wait_time = 60			# Wait for a maximum of 60 seconds
+	set wait_time = 300			# Wait for a maximum of 300 seconds
 	set sleeptime = 1			# Start with 1 sec sleep between attempts
 	set now_time = `date +%s`
 	@ max_wait = $now_time + $wait_time
