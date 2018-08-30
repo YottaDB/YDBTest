@@ -59,9 +59,9 @@ spawn $gtm_dist/mumps -direct
 match_max 100000
 expect -exact "\r
 \rYDB>\[?1h="
-send -- "use \$p:escape  r *x s z=\$zb  zwrite\r"
-expect -exact "u\[Cs\[Ce\[C \[C\$\[Cp\[C:\[Ce\[Cs\[Cc\[Ca\[Cp\[Ce\[C \[C \[Cr\[C \[C*\[Cx\[C \[Cs\[C \[Cz\[C=\[C\$\[Cz\[Cb\[C \[C \[Cz\[Cw\[Cr\[Ci\[Ct\[Ce\[C\[?1l>\r
-"
+send -- "use \$principal:escape  hang 1  read *x  set z=\$zb  write !  zwrite\r"
+expect -exact "u\[Cs\[Ce\[C \[C\$\[Cp\[C:\[Ce\[Cs\[Cc\[Ca\[Cp\[Ce\[C \[C \[Cr\[C \[C*\[Cx\[C \[Cs\[C \[Cz\[C=\[C\$\[Cz\[Cb\[C \[C \[Cz\[Cw\[Cr\[Ci\[Ct\[Ce\[C\[?1l>\r"
+# Press F11 (below we send the corresponding escape sequence for F11 on xterm)
 send -- "\[23~"
 expect -exact "x=27\r
 z=\$C(27)_\"\[23~\"\r
