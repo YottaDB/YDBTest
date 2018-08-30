@@ -26,6 +26,7 @@ expect  "INTRPT issued to process "
 exp_pid
 expect "YDB>%YDB-E-ZINTRECURSEIO, Attempt to do IO to the active device in \$ZINTERRUPT"
 expect "%YDB-E-ERRWZINTR, Error while processing \$ZINTERRUPT"
+expect  "YDB>"
 send -- "\r"
 expect  "YDB>"
 send -- "h"

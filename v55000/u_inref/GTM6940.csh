@@ -18,4 +18,7 @@
 #
 setenv TERM xterm
 (expect -d -f $gtm_tst/$tst/u_inref/GTM6940.exp $gtm_dist > GTM6940_expect.logs) >& expect.dbg
+if ($status) then
+	echo "EXPECT-E-FAIL : expect returned non-zero exit status"
+endif
 perl $gtm_tst/com/expectsanitize.pl GTM6940_expect.logs
