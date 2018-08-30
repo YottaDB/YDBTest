@@ -15,5 +15,8 @@
 
 setenv TERM vt320
 echo "# Running expect (output: expect.out) : Expecting a YDB-I-CTRLC message"
-expect $gtm_tst/$tst/u_inref/gtm8206.exp > expect.out
+(expect -d -f $gtm_tst/$tst/u_inref/gtm8206.exp > expect.out) >& expect.dbg
+if ($status) then
+	echo "EXPECT-E-FAIL : expect returned non-zero exit status"
+endif
 $grep CTRL_C expect.out
