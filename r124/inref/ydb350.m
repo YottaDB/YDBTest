@@ -21,6 +21,14 @@ readcmd	;
 	do &sttydisp
 	quit
 
+readstarcmd ;
+	write "; Below are terminal settings BEFORE READ * command",!  use $p	; to flush terminal output
+	do &sttydisp
+	read *x
+	write "; Below are terminal settings AFTER  READ * command",!  use $p	; to flush terminal output
+	do &sttydisp
+	quit
+
 writecmd ;
 	write "; Below are terminal settings BEFORE WRITE command",!  use $p	; to flush terminal output
 	do &sttydisp
