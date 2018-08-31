@@ -48,6 +48,9 @@ expect -exact ">"
 send -- "set prompt=\$shellprompt\r"
 expect -exact "SHELL"
 
+# store spawned terminal name in term_env.txt; may be used later by wait_for_stty_echo_off.csh
+send -- "setenv term_env `tty`; echo \$term_env > term_env.txt\r"
+expect -exact "SHELL"
 
 # Set uniform behaivor for handling a timeout
 expect_after {

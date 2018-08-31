@@ -2,6 +2,7 @@ spawn /usr/local/bin/tcsh -f
 > stty cols 132
 > set shellprompt=SHELL
 > set prompt=$shellprompt
+SHELLsetenv term_env `tty`; echo $term_env > term_env.txt
 SHELL# Start LKE help facility
 $gtm_dist/lke
 LKE> help

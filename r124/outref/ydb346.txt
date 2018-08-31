@@ -3,6 +3,7 @@ spawn /usr/local/bin/tcsh -f
 > stty cols 132
 > set shellprompt=SHELL
 > set prompt=$shellprompt
+SHELLsetenv term_env `tty`; echo $term_env > term_env.txt
 SHELL$ydb_dist/mumps -direct
 
 YDB>use $principal:(length=0)

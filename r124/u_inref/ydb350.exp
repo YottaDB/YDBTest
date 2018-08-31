@@ -15,10 +15,6 @@ set timeout 60
 spawn /usr/local/bin/tcsh -f
 source $::env(gtm_tst)/com/expectinit.exp
 
-# store spawned terminal name in term_env.txt; used later by wait_for_stty_echo_off.csh
-send -- "setenv term_env `tty`; echo \$term_env > term_env.txt\r"
-expect -exact "SHELL"
-
 puts "\n# Record initial terminal ECHO setting"
 send -- "stty -a | grep -w echo\r"
 expect -exact "SHELL"
@@ -39,7 +35,7 @@ puts "# Test that terminal still has ECHO characteristics after READ command"
 puts "# Also test using strace that terminal ECHO characteristics are changed twice (set/reset) by READ command"
 puts "-------------------------------------------------------------------------------------------------------"
 send -- "strace -o trace2.outx \$ydb_dist/mumps -run readcmd^ydb350\r"
-system $::env(gtm_tst)/$::env(tst)/u_inref/wait_for_stty_echo_off.csh
+system $::env(gtm_tst)/com/wait_for_stty_echo_off.csh
 send -- "1\r"
 expect -exact "SHELL"
 puts "\n# Expecting 3 lines below : 1 tcsetattr call in op_use and 2 tcsetattr calls in iott_readfl (one to set -echo and one to set echo)"
@@ -51,7 +47,7 @@ puts "# Test that terminal still has ECHO characteristics after READ * command"
 puts "# Also test using strace that terminal ECHO characteristics are changed twice (set/reset) by READ * command"
 puts "-------------------------------------------------------------------------------------------------------"
 send -- "strace -o trace3.outx \$ydb_dist/mumps -run readstarcmd^ydb350\r"
-system $::env(gtm_tst)/$::env(tst)/u_inref/wait_for_stty_echo_off.csh
+system $::env(gtm_tst)/com/wait_for_stty_echo_off.csh
 send -- "1"
 expect -exact "SHELL"
 puts "\n# Expecting 3 lines below : 1 tcsetattr call in op_use and 2 tcsetattr calls in iott_rdone (one to set -echo and one to set echo)"
