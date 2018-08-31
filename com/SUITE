@@ -77,9 +77,9 @@ v230 E REPLIC
 v234 L
 v234 E
 v234 E REPLIC
-v320  L GT.M
-v320  E GT.M
-v320  E GT.M REPLIC
+v320  L
+v320  E
+v320  E REPLIC
 v42000 E
 v42000 L
 v43000 L
@@ -354,11 +354,15 @@ ideminter_rolrec E
 # The M suite is for tests that are automated (hence can be run with the test system), but are not meant to run at every E_ALL cycle.
 manually_start M
 manually_start M REPLIC
-gtmpcat M
+# The below test requires "gtmpcat", a tool that is not open source so it is disabled in YDB environments
+# gtmpcat M
 rundown_argless	M
 rundown_argless	M REPLIC
+timing M
+timing M REPLIC
 ###########################################################
 # The following are the timing (performance) tests
-#speed T
-profile T
-profile T REPLIC
+speed T
+# The below test requires "profile", a product that is not open source so it is disabled in YDB environments
+# profile T
+# profile T REPLIC

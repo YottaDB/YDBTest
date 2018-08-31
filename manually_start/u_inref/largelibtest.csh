@@ -4,6 +4,9 @@
 # Copyright (c) 2008-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -12,6 +15,8 @@
 #################################################################
 
 # test to make sure GT.M can build shared libraries >4GB
+
+unsetenv gtmdbglvl	# turn off gtmdbglvl checking for this particular subtest due to run time constraints
 
 # There is a memory bloating on Solaris with dbg image. Until it is resolved, test must be run as pro image.
 if (( "sunos" == "$gtm_test_osname" ) && ( "dbg" == "$tst_image" )) then
@@ -44,12 +49,10 @@ setenv sourcedir "$PWD/src"
 
 echo "# Setup directories"
 
-mkdir -p g o r		# directories for globals, object and routines
+mkdir -p g o 	# directories for globals, object (for routines, "r" directory is already there in the .tar.gz file)
 
 echo "# Unpack routines"
-cd r
 $tst_gunzip -d < $gtm_test/big_files/largelibtest/WorldVistAEHRv10FT01_routines.tar.gz |tar -xf -
-cd ..
 
 # The directories are created with proper permissions. The untar of WorldVista... causes the directory
 # permission to go read-only so it needs to be set writeable. Note: the change of permission by the

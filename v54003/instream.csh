@@ -39,7 +39,6 @@
 # dbnammismatch2.csh  	[Bahirs]	Test DBNAMEMISMATCH error in mu_rndwn_file"
 # dbshmmismatch1.csh  	[Bahirs]	Test DBSHMMISMATCH error"
 # dbshmmismatch2.csh  	[Bahirs]	Test DBSHMMISMATCH error"
-# mprndwnnoarg.csh    	[Bahirs]	Test argumentless mupip rundown behavior"
 # shmsemremlog.csh    	[Bahirs]	Test if shared memory removal and semaphore removal is logged in operator log"
 # C9K12003344 		[Karthik] 	Ensure that JOURNAL RECOVER resets cs_data->fully_upgraded correctly
 # C9H04002840 		[sopini]	Ensure that mutex_wakeup does not error out on EPERM error and uses continue_proc instead
@@ -86,7 +85,7 @@ setenv subtest_list_common     ""
 setenv subtest_list_non_replic "zshowintr C9L03003393 C9L03003394 zhalt C9L04003407 C9K08003315 dbjnlsync_clean1 dbjnlsync_clean2"
 setenv subtest_list_non_replic "$subtest_list_non_replic dbjnlsync_clean3 dblagjnl_crash dbaheadjnl_crash1 dbaheadjnl_crash2"
 setenv subtest_list_non_replic "$subtest_list_non_replic C9J03003100 dbnammismatch1 dbnammismatch2 dbshmmismatch1 dbshmmismatch2"
-setenv subtest_list_non_replic "$subtest_list_non_replic mprndwnnoarg dbidmismatch1 shmsemremlog"
+setenv subtest_list_non_replic "$subtest_list_non_replic dbidmismatch1 shmsemremlog"
 setenv subtest_list_non_replic "$subtest_list_non_replic C9K12003344 C9H04002840 etrapinfinalretry D9L06002816 transbig1 transbig2"
 setenv subtest_list_non_replic "$subtest_list_non_replic incrollback dsejnlrectype dbinit_honor_userwait C9I12003062 D9I08002697"
 setenv subtest_list_non_replic "$subtest_list_non_replic deferred_mupip_stop C9I05002991 C9K11003340 gtm6957 indrindrdo gtm6994 C9L06003421"

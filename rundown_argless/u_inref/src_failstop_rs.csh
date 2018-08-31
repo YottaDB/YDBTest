@@ -15,6 +15,11 @@
 #
 # TEST : SOURCE SERVER STOPS/FAILS, BACKLOG AND RESTART
 #
+# This subtest was originally in the "crash_fail" test and inherited some of its env vars from the test level instream.csh.
+# That is now moved to a file crash_fail/u_inref/subtest_settings.csh which crash_fail/instream.csh continues to source.
+# And this subtest (now in the "rundown_argless" test) sources that script too to avoid duplication of that code.
+source $gtm_tst/crash_fail/u_inref/subtest_settings.csh
+
 if !($?gtm_test_replay) then
 	set stop_fail_todo = `$gtm_exe/mumps -run rand 2`
 	echo "# Randomly chosen stop/fail option : $stop_fail_todo"	>>&! settings.csh

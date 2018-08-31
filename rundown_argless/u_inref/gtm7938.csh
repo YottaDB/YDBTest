@@ -3,17 +3,9 @@
 #								#
 # Copyright (c) 2014-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
-#################################################################
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
-#								#
-#	This source code contains the intellectual property	#
-#	of its copyright holder(s), and is made available	#
-#	under a license.  If you do not know the terms of	#
-#	the license, please stop and do not read further.	#
-#								#
-#################################################################
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -37,12 +29,18 @@ if ("ENCRYPT" == "$test_encryption") then
         unsetenv encrypt_env_rerun
 endif
 
-set prior_ver = `$gtm_tst/com/random_ver.csh -gte V61000 -lte V61000`
+set prior_ver = `$gtm_tst/com/random_ver.csh -gte V61000`
 if ("$prior_ver" =~ "*-E-*") then
 	echo "No such prior version : $prior_ver"
 	exit -1
 endif
 source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver
+# If this test chose r120 as the prior version, GDE won't work with that version unless ydb_msgprefix is set to "GTM".
+# (https://github.com/YottaDB/YottaDB/issues/193). Therefore, set ydb_msgprefix to "GTM" in that case.
+if ($prior_ver == "V63003A_R120") then
+	setenv ydb_msgprefix "GTM"
+endif
+
 echo "# Launching a source and a receiver with $prior_ver"
 
 # Do not use DBG version below as it can create a core in MUPIP RUNDOWN

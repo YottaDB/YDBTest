@@ -47,7 +47,6 @@
 # gtm8842	    [vinay] Tests TRIGGER_MOD appropriately restricts ZBREAK and ZSTEP
 # gtm8858	    [vinay] Demonstrates the improved available information in cases of apparent database integrity issues
 # gtm8805	    [vinay] Tests YottaDB manages LOCK concurrency correctly when checking for abandoned locks
-# gtm8680	    [vinay] Tests YDB does not slow down significantly when holding a large number of locks and/or processes
 # gtm8732r	    [vinay] Tests the valid inputs of HELPERS and LOG_INTERVAL for the MUPIP REPLICATE command
 # gtm8844	    [vinay] Tests the functionality of HALT and ZHALT in trigger logic and when restricted
 # gtm8182	    [jake]  Tests the updating of globals belonging to a different source instance using global references
@@ -60,7 +59,7 @@ setenv subtest_list_common     "gtm8795 gtm8794 gtm8850"
 setenv subtest_list_non_replic "gtm8788 gtm7986 gtm8186 gtm8804 gtm8832 gtm8617 gtm4212 gtm8732nr gtm8767 gtm8735 gtm8779 gtm8798"
 setenv subtest_list_non_replic "$subtest_list_non_replic gtm8846 gtm8780 gtm8787 gtm8889 gtm8856 gtm8857 gtm8854 gtm8839"
 setenv subtest_list_non_replic "$subtest_list_non_replic gtm8781 gtm8849 gtm8790 gtm8587 gtm8855 gtm8847 gtm8801"
-setenv subtest_list_non_replic "$subtest_list_non_replic gtm8842 gtm8858 gtm8805 gtm8680"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm8842 gtm8858 gtm8805"
 setenv subtest_list_replic     "gtm8732r gtm8844 gtm8182"
 
 if ($?test_replic == 1) then
@@ -74,10 +73,6 @@ setenv subtest_exclude_list	""
 # Filter out white box tests that cannot run in pro
 if ("pro" == "$tst_image") then
 	setenv subtest_exclude_list "$subtest_exclude_list gtm8839"
-endif
-# Disable tests that are timing senstive and start lots of processes on ARM boxes as response times have been seen to be non-deterministic
-if ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) then
-	setenv subtest_exclude_list "$subtest_exclude_list gtm8680"
 endif
 
 # Submit the list of subtests

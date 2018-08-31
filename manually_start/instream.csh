@@ -4,6 +4,9 @@
 # Copyright (c) 2003-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -44,11 +47,6 @@ endif
 # EXCLUSIONS
 setenv subtest_exclude_list ""
 
-# Disable triggers on platform which don't support it (like HPPA)
-if ($gtm_platform_triggers_support == 0) then
-	setenv subtest_exclude_list "$subtest_exclude_list maxtrignames"
-endif
-
 ## Disable align_string testing until string alignment is handled completely
 setenv subtest_exclude_list "$subtest_exclude_list align_string"
 
@@ -57,21 +55,14 @@ if ($?gtm_platform_no_V4) then
 	setenv subtest_exclude_list "$subtest_exclude_list 4g_dbcertify"
 endif
 
-## Disable largelibtest on non-64-bit machines and machine too small to run it
+## Disable largelibtest on non-64-bit machines
 set hostn = $HOST:r:r:r
-if (($gtm_platform_size != 64) || ("lespaul" == "$hostn") || ("snail" == "$hostn") || ("turtle" == "$hostn") || ("OS/390" == "$HOSTOS")) then
+if ($gtm_platform_size != 64) then
 	setenv subtest_exclude_list "$subtest_exclude_list largelibtest"
 endif
 
-## Disable sem_counter everywhere but sphere. It is the only server capable of launching 32 processes without coming to a near-halt
-if ("sphere" != "$hostn") then
-	setenv subtest_exclude_list "$subtest_exclude_list sem_counter"
-endif
-
-# CMake builds have not been successful on HPUX + AIX and z/OS has not been tested
-if (("hp-ux" == "$gtm_test_osname") || ("aix" == "$gtm_test_osname") || ("os390" == "$gtm_test_osname")) then
-	setenv subtest_exclude_list	"$subtest_exclude_list ossmake"
-endif
+## Disable sem_counter everywhere for now. It needs 32K processes which can halt a system without LOTS of memory.
+# setenv subtest_exclude_list "$subtest_exclude_list sem_counter"
 
 $gtm_tst/com/submit_subtest.csh
 echo "Manually_Start tests DONE."
