@@ -32,9 +32,17 @@ $tst_awk '/YDB-E-DEVPARMNEG/{sub(/-E-/,"-X-")} /^.dev/{sub(/^.dev[^ ]+ /,"/dev/t
 $echoline
 echo 'Step 6 - another terminal test (expect to see "$Y:1" and "$Y:9999")'
 expect -f $gtm_tst/$tst/inref/terminal6.exp >& terminal6.outx
-cat terminal6.outx |& $gtm_dist/mumps -run LOOP^%XCMD \
-	--xec=';write:%l["$Y should be" (%NR-1),":",$tr(%l2,$char(13)),$char(10),%NR,":",$tr(%l,$char(13)),$char(10) set %l2=%l;'
 
+# Explanation for why the "$grep -v" is done below. test2^terminal has code to do the following in one M line
+#	write "Hit any key to continue, q to quit",! read *x
+# The expect script terminal6.exp waits for "Hit any key to continue, q to quit" and then sends a "\r"
+# On a slow system, it is possible the \r is sent by the expect script after the "write" command executes in mumps
+# but before the "read" starts executing. That means the \r would be echoed on to the terminal which would mean an
+# extra line in the output file terminal6.outx. That would disturb the line # where we find the "$Y should be" string
+# in terminal6.outx. Hence filter out empty lines from terminal6.outx before passing it to LOOP^%XCMD which prints
+# the line # along with the pattern occurrence.
+$grep -v '^$' terminal6.outx |& $gtm_dist/mumps -run LOOP^%XCMD \
+	--xec=';write:%l["$Y should be" (%NR-1),":",$tr(%l2,$char(13)),$char(10),%NR,":",$tr(%l,$char(13)),$char(10) set %l2=%l;'
 $echoline
 echo "Step 7 - writing 35000 bytes should not error out"
 expect -f $gtm_tst/$tst/inref/terminal7.exp >& terminal7.out
