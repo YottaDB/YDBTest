@@ -20,7 +20,19 @@ expect "YDB>"
 send "use \$principal:(cenable)\r"
 expect "YDB>"
 puts "#<CTRL-C>"
+# The parent script (gtm8694.csh) invokes this expect script twice. One with CENABLE in the restrict.txt file
+# and another without. For the first invocation, we need to send a Ctrl-C followed by a newline in order to
+# see the YDB> prompt. For the second invocation, we do not need the newline. Sending the newline for the
+# second invocation gives a sequences of two YDB> prompts (one for the Ctrl-C press) and one for the newline.
+# If we do an expect of "YDB>" after the send, it is possible we get control back after the first "YDB>" gets
+# displayed in which case it is possible (after the recent #350 code changes) that the "halt" we issue afterwards
+# will be sent while the terminal has ECHO set which means it will show up in the output and cause a test failure.
+# To avoid that, we wait for the "YDB>" prompt after a specific string shows up. We cannot print the string as is
+# as it can cause incorrect match when we later wait for that (same issue as SHELL prompt dealt with in com/expectinit.exp)
+# and hence we use $char() notation to print it first.
 send -- "\x03\r"
+send -- "write \$char(65,66,67,68),!\r"
+expect "ABCD"
 expect "YDB>"
 send "halt\r"
 expect "SHELL"

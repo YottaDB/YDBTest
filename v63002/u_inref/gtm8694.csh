@@ -74,13 +74,13 @@ cat > $ydb_dist/restrict.txt << EOF
 CENABLE
 EOF
 chmod -w  $ydb_dist/restrict.txt
-(expect -d $gtm_tst/$tst/u_inref/gtm8694.exp > expect.outx) >& xpect.dbg
+(expect -d $gtm_tst/$tst/u_inref/gtm8694.exp > expect.outx1) >& xpect.dbg1
 if ($status) then
 	echo "EXPECT FAILED"
 endif
 echo "# TESTING CENABLE"
-perl $gtm_tst/com/expectsanitize.pl expect.outx > expect_sanitized.outx
-cat expect_sanitized.outx |& $grep CTRL >& restrictedcenable.txt
+perl $gtm_tst/com/expectsanitize.pl expect.outx1 > expect_sanitized.outx1
+cat expect_sanitized.outx1 |& $grep CTRL >& restrictedcenable.txt
 cat restrictedcenable.txt
 echo ""
 echo "# -----------------------------------------------------------------------------"
@@ -155,13 +155,13 @@ echo "# TESTING DSE"
 $ydb_dist/dse >& unrestrictedDSE.txt
 cat unrestrictedDSE.txt
 echo ""
-(expect -d $gtm_tst/$tst/u_inref/gtm8694.exp > expect.outx) >& xpect.dbg
+(expect -d $gtm_tst/$tst/u_inref/gtm8694.exp > expect.outx2) >& xpect.dbg2
 if ($status) then
 	echo "EXPECT FAILED"
 endif
 echo "# TESTING CENABLE"
-perl $gtm_tst/com/expectsanitize.pl expect.outx > expect_sanitized.outx
-cat expect_sanitized.outx |& $grep CTRL
+perl $gtm_tst/com/expectsanitize.pl expect.outx2 > expect_sanitized.outx2
+cat expect_sanitized.outx2 |& $grep CTRL
 
 echo ""
 echo "# -------------------------------------------------------------------------"
