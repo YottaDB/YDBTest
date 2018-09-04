@@ -36,6 +36,7 @@
 # ydb346           [nars]  Test that WRITE ?1 in direct mode after setting LENGTH of $PRINCIPAL to 0 does not assert fail
 # ydb350           [nars]  Test that terminal has ECHO characteristics after READ or WRITE or direct-mode-read commands
 # ydb352           [nars]  Test that ydb_ci() call with an error after a ydb_set_s() of a spanning node does not GTMASSERT2
+# ydb353           [nars]  Test that VIEW "NOISOLATION" optimization affects atomicity of $INCREMENT inside TSTART/TCOMMIT
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r124 test starts..."
@@ -44,7 +45,7 @@ echo "r124 test starts..."
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic ""
 setenv subtest_list_non_replic "$subtest_list_non_replic readonly ydb275socketpass ydb280socketwait jnlunxpcterr ydb297 ydb315"
-setenv subtest_list_non_replic "$subtest_list_non_replic ydb324 ydb341 ydb343 ydb346 ydb350 ydb352"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb324 ydb341 ydb343 ydb346 ydb350 ydb352 ydb353"
 setenv subtest_list_replic     ""
 setenv subtest_list_replic     "$subtest_list_replic ydb282srcsrvrerr ydb293 ydb312_gtm8182a ydb312_gtm8182b  ydb312_gtm8182c"
 setenv subtest_list_replic     "$subtest_list_replic ydb312_gtm8182d ydb312_gtm8182e ydb312_gtm8182f ydb312_gtm8182g ydb321"

@@ -1,0 +1,31 @@
+# Test that VIEW "NOISOLATION" optimization affects atomicity of $INCREMENT inside TSTART/TCOMMIT
+# In the below test, ^x is updated using $INCREMENT inside a TSTART/TCOMMIT by multiple processes
+# Case (1) : Without VIEW "NOISOLATION", the transaction will restart due to a concurrent $INCREMENT
+#     This means the final value of ^x would be exactly the # of transactions that committed
+# Case (2) : But with VIEW "NOISOLATION", the user gives a guarantee that nodes updates by one process are not
+#     updated by the same process. Therefore the transaction is not restarted in case of a concurrent
+#     $INCREMENT thus resulting in the final value of ^x being way different from what it was in Case (1)
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Case (1) : Invoking :mumps -run ydb353: with VIEW NOISOLATION turned OFF
+^x=25000
+^x(1)=5000
+^x(2)=5000
+^x(3)=5000
+^x(4)=5000
+^x(5)=5000
+ISOLATION : PASS : ^x is equal to (^max*^njobs)/2 as expected
+# Case (2) : Invoking :mumps -run ydb353: with VIEW NOISOLATION turned ON
+##TEST_AWK\^x=[0-9]*
+^x(1)=5000
+^x(2)=5000
+^x(3)=5000
+^x(4)=5000
+^x(5)=5000
+NOISOLATION : PASS : ^x is NOT equal to (^max*^njobs)/2 as expected
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
