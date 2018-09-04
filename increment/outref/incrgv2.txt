@@ -1,32 +1,20 @@
-incrgv2 subtest -  increment within TP of global variables that are NOISOLATED
+# incrgv2 subtest -  increment within TP of global variables that are NOISOLATED
 Files Created in ##TEST_PATH##:
 Using: ##SOURCE_PATH##/mumps -run GDE
 mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
-##SUSPEND_OUTPUT  NON_REPLIC
-Files Created in ##REMOTE_TEST_PATH##:
-Using: ##SOURCE_PATH##/mumps -run GDE
-mumps.gld
-Using: ##SOURCE_PATH##/mupip
-mumps.dat
-Starting Primary Source Server in ##TEST_PATH##
-Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
-##ALLOW_OUTPUT  NON_REPLIC
+# Verify incrementing a NOISOLATION variable works (used to fail with GVINCRISOLATION - an error since removed)
 
-YDB>
-%YDB-E-GVINCRISOLATION, $INCREMENT cannot be performed on global ^xglobalname as it has NOISOLATION turned ON
-		At M source location incrgv2+4^incrgv2
-
-YDB>
-##SUSPEND_OUTPUT  NON_REPLIC
-Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
-Shutting down Primary Source Server Server in ##TEST_PATH##
+Stepping STARTED
+incrgv2+2^incrgv2   :	view "NOISOLATION":"^xglobalname"
+incrgv2+3^incrgv2   :	set ^xglobalname=1
+incrgv2+4^incrgv2   :	tstart ():serial
+incrgv2+5^incrgv2   :	write $incr(^xglobalname,1)
+2
+incrgv2+6^incrgv2   :	tcommit
+incrgv2+7^incrgv2   :	quit
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
-##ALLOW_OUTPUT  NON_REPLIC
-##SOURCE_PATH##/mupip
-##SOURCE_PATH##/mupip integ -REG *
-No errors detected by integ.
-End  of subtest
+# End  of subtest
