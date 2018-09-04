@@ -148,7 +148,7 @@ int main()
 	ret_value = save_ret_value;
 	printf("# Test of INVSTRLEN error\n"); fflush(stdout);
 	printf("Attempting get with ret_value->len_alloc=0 : Expect INVSTRLEN error\n");
-	ret_value.len_alloc = 0;
+	ret_value.len_alloc = 3;
 	ret_value.len_used = getpid() % 2;	/* this value does not matter to the final error, hence the randomization */
 	status = ydb_get_s(&basevar, 0, NULL, &ret_value);
 	if (YDB_OK != status)

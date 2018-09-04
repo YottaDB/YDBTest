@@ -181,7 +181,7 @@ Attempting get with ret_value->buf_addr=NULL when return value is a non-NULL str
 ydb_get_s() [145]: 151027770,(SimpleAPI),%YDB-E-PARAMINVALID, NULL ret_value->buf_addr parameter specified in ydb_get_s() call
 # Test of INVSTRLEN error
 Attempting get with ret_value->len_alloc=0 : Expect INVSTRLEN error
-ydb_get_s() [157]: 150375522,(SimpleAPI),%YDB-E-INVSTRLEN, Invalid string length 0: max 0 : ret_value->len_used = 10 after call
+ydb_get_s() [157]: 150375522,(SimpleAPI),%YDB-E-INVSTRLEN, Invalid string length 10: max 3 : ret_value->len_used = 10 after call
 Attempting get with ret_value->len_alloc set to value returned in ret_value->len_used after INVSTRLEN error. Expect NO error
 ydb_get_s() returned [A question]
 # Test of SUBSARRAYNULL error
