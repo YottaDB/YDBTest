@@ -30,17 +30,18 @@
 # The following subtests have been moved from other tests to the "rundown_argless" test because they
 # involve use of argumentless rundown and have caused failures of other tests when run in an E_ALL/D_ALL.
 # #################################################################################################
-# multiple_jnlpools  [kishore] (moved from "v55000"     test) : Various test cases of multiple jnlpool issues
-# src_failstop_rs    [...]     (moved from "crash_fail" test) : ...
-# readonly_dbflag    [nars]    (moved from "r120"       test) : Test various issues identified with the READ_ONLY db characteristic (new feature in GT.M V6.3-003)
-# mprndwnnoarg.csh   [Bahirs]  (moved from "v54003"     test) : Test argumentless mupip rundown behavior
+# multiple_jnlpools [kishore] (moved from "v55000"     test) : Various test cases of multiple jnlpool issues
+# src_failstop_rs   [...]     (moved from "crash_fail" test) : ...
+# readonly_dbflag   [nars]    (moved from "r120"       test) : Test various issues identified with the READ_ONLY db characteristic (new feature in GT.M V6.3-003)
+# mprndwnnoarg      [Bahirs]  (moved from "v54003"     test) : Test argumentless mupip rundown behavior
+# gtm8616           [vinay]   (moved from "v63002"     test) : Tests argumentless MUPIP RUNDOWN logs a message in the syslog containing the pid, uid and current working directory
 #-------------------------------------------------------------------------------------
 
 echo "rundown_argless test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "orphanshm dbidmismatch2 mupip_rundown_ipcs readonly_dbflag mprndwnnoarg"
+setenv subtest_list_non_replic "orphanshm dbidmismatch2 mupip_rundown_ipcs readonly_dbflag mprndwnnoarg gtm8616"
 setenv subtest_list_replic     "gtm7010 gtm7485 gtm7706 gtm7938 ipcsnoreset mu_rundown_no_ipcrm1"
 setenv subtest_list_replic     "$subtest_list_replic multiple_jnlpools src_failstop_rs"
 

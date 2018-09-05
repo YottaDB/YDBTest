@@ -26,7 +26,6 @@
 # gtm8711  [vinay] Tests GDE appropriately maintains return status when invoked from the shell
 # gtm8733  [vinay] Tests $ZCONVERT operates appropriately in UTF-8 NOBADCHAR mode
 # gtm8718  [vinay] Tests setting $ZROUTINES to an invalid string leaves the previous value of $ZROUTINES as it is
-# gtm8616  [vinay] Tests argumentless MUPIP RUNDOWN logs a message in the syslog containing the pid, uid and current working directory
 # gtm8766  [vinay] Tests MUPIP and GDE behave appropriately when trying to set global buffer values too high
 # gtm5754  [vinay] Tests that certain XECUTE literals compile at run time while the rest precompile
 # gtm8165  [vinay] Tests a WRITE / timeout greater than $gtm_tpnotacidtime when $TRESTART>2 produces a TPNOTACID error in the syslog
@@ -40,7 +39,7 @@ echo "v63002 test starts..."
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic "gtm8694 gtm8281 gtm5178 gtm8717 gtm8644 gtm8760 gtm5250 gtm8736 gtm8698 gtm8711 gtm8733"
-setenv subtest_list_non_replic "$subtest_list_non_replic gtm8718 gtm8616 gtm8766 gtm5754 gtm8165 gtm6657"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm8718 gtm8766 gtm5754 gtm8165 gtm6657"
 setenv subtest_list_replic     "gtm8740 gtm8708"
 
 if ($?test_replic == 1) then
