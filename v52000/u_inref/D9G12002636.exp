@@ -55,6 +55,8 @@ if {$force_conservative} {
 
 set timeout 360
 spawn $env(SHELL) -f
+source $::env(gtm_tst)/com/expectinit.exp
+
 match_max 100000
 set send_slow {1 .01}
 set GTM_SHORT_SLEEP .5
@@ -66,20 +68,16 @@ proc send_wait {arg} {
 	sleep 1.5
 	}
 
-# wait for shell to start
-sleep 5
-
-# set prompt "(%|#|:|\\$) $"          ;# default prompt
-# catch {set prompt $env(EXPECT_PROMPT)}
-# expect -re $prompt
-
 send -- "\$gtm_exe/mumps -run d002636\r"
 expect "for interrupt: "
 sleep 15
 send -- "end of wait for interrupt\r"
-# send input in chunks with sleeps to allow the iterrupter to interrupt
+# send input in chunks with sleeps to allow the interrupter to interrupt
 # need -s to avoid overruning GTM input especially for direct mode or edit
 expect "enter the alphabet: "
+# Ensure we have entered the READ command and are waiting for input.
+# The only way to ensure that is by checking that ECHO setting is turned OFF in the terminal.
+system $::env(gtm_tst)/com/wait_for_stty_echo_off.csh
 sleep $GTM_SHORT_SLEEP
 send_wait "abcde"
 send_wait "fghij"

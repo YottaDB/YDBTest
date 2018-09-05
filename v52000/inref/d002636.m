@@ -37,8 +37,8 @@ d002636	;
 	w !,"TERM = ",$ztrnlnm("TERM"),!
 	; The following definitions govern the number of inner and outer loop iterations
 	; and thus how long the test runs.
-	s maxi=2000
-	s maxj=500
+	s maxi=200
+	s maxj=100
 	;
 	; we want our interrupt line to cause a ztrap every zintr interrupts
 	s zintrini=4
@@ -91,7 +91,6 @@ d002636	;
 	. . s a(j)=$get(a(j))+1+$ZINI
 	. . s ^(j)=$get(^(j))+1+$ZINI
 	. . s lastj=j,lasti=i
-
 	s ^alphabetcnt(0)=^cnt,^alphabettime(0)=$H
 	r !,"enter the alphabet: ",alphabet
 	s ^alphabetcnt(1)=^cnt,^alphabettime(1)=$H
@@ -100,7 +99,8 @@ d002636	;
 	if $get(^showcounts) w !,"interrupts during terminal input = ",^alphabetcnt(1)-^alphabetcnt(0),!
 	w !
 	zwrite alphabet
-	if alphabet'="abcdefghijklmnopqrstuvwxyz" w "FAIL iott_read",!
+	set expect="abcdefghijklmnopqrstuvwxyz"
+	if alphabet'=expect w "FAIL iott_read : alphabet is : Actual=",alphabet,":Expected=",expect,!
 	else  w "PASS iott_read",!
 	; remove divide by zero from $zinterrupt before entering direct mode
 	S $Zint="s b=b+1 s d(b)=i_""_""_j_""_""_lasti_""_""_lastj s b(i)=$get(b(i))+1 s b(j)=$get(b(j))+1 if 1=1 s ^(0)=^b(0)+$ZINI+$T s c=c+1"
