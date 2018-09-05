@@ -247,6 +247,8 @@ BEGIN {
 	option_names[++no_options] = "gtm_test_linux_distrib"
 	if ("arch" == ENVIRON["gtm_test_linux_distrib"])
 		envir[no_options] = "ARCH_LINUX"
+	else if ("ubuntu" == ENVIRON["gtm_test_linux_distrib"])
+		envir[no_options] = "UBUNTU_LINUX"
 	#
 	option_names[++no_options] = "gtm_test_singlecpu"
 	if (1 == ENVIRON["gtm_test_singlecpu"])
