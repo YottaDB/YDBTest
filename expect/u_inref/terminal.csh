@@ -41,7 +41,10 @@ expect -f $gtm_tst/$tst/inref/terminal6.exp >& terminal6.outx
 # extra line in the output file terminal6.outx. That would disturb the line # where we find the "$Y should be" string
 # in terminal6.outx. Hence filter out empty lines from terminal6.outx before passing it to LOOP^%XCMD which prints
 # the line # along with the pattern occurrence.
-$grep -v '^$' terminal6.outx |& $gtm_dist/mumps -run LOOP^%XCMD \
+# One more thing to note is that terminal6.outx could contain CRLF line endings instead of just LF (not sure exactly
+# when "expect" decides to switch to this format). If CRLF ('\r\n') is line ending, grep -v '^$' will not work since
+# it expects only LF (\n). So use sed to replace CRLF with just LF.
+sed 's/\r$//' terminal6.outx | $grep -v '^$' |& $gtm_dist/mumps -run LOOP^%XCMD \
 	--xec=';write:%l["$Y should be" (%NR-1),":",$tr(%l2,$char(13)),$char(10),%NR,":",$tr(%l,$char(13)),$char(10) set %l2=%l;'
 $echoline
 echo "Step 7 - writing 35000 bytes should not error out"
