@@ -11,15 +11,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 gtm5730()
-
-	FOR i=1:1:1000 DO
-	. TSTART
+	for i=1:1:1000 do
+	. tstart ():(serial:transaction="BATCH") ; use BATCH to avoid test slowdown due to jnl hardening for every TCOMMIT
  	. set ^x(i)=i
-	. TCOMMIT
-
-	FOR i=1001:1:2000 set ^x(i)=i ;
-
-	KILL ^x
-
-	 quit
-
+	. tcommit
+	for i=1001:1:2000 set ^x(i)=i ;
+	kill ^x
+	quit
