@@ -30,7 +30,11 @@ for {set i 0} {$i < 2} {incr i 1} {
 	send -- "write \"Invoking mumps with \$zcmdline=\"\"\"\"\",!\r"
 	expect -exact "YDB>"
 	send -- "set savelvl=\$zlevel set \$etrap=\"do etraperror^ctrlchandler\"\r"
+	# Ensure ECHO is turned OFF in terminal (i.e. we are inside direct mode read) before sending in keystrokes
+	# as this avoids false test failures due to the keystrokes being displayed more than once.
+	system $::env(gtm_tst)/com/wait_for_stty_echo_off.csh
 	send -- "use \$Principal:(CTRAP=\$char(3):exception=\"do gotctrlc^ctrlchandler\":$cenable($i))\r"
+	system $::env(gtm_tst)/com/wait_for_stty_echo_off.csh
 	send -- "write \"Hit ^C now\",!  hang 15\r"
 	expect -exact "Hit ^C now\r"
 	# Send <Ctrl-C>
@@ -39,7 +43,9 @@ for {set i 0} {$i < 2} {incr i 1} {
 	send -- "zshow \"S\"\r"
 	expect -exact "YDB>"
 	send -- "set savelvl=\$zlevel set \$etrap=\"do etraperror^ctrlchandler\"\r"
+	system $::env(gtm_tst)/com/wait_for_stty_echo_off.csh
 	send -- "use \$Principal:(CTRAP=\$char(3):exception=\"do gotctrlc^ctrlchandler\":$cenable($i))\r"
+	system $::env(gtm_tst)/com/wait_for_stty_echo_off.csh
 	send -- "write \"Hit ^C now\",!  hang 15\r"
 	expect -exact "Hit ^C now\r"
 	# Send <Ctrl-C>
