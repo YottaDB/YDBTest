@@ -455,7 +455,7 @@ ydb_tp_s() exit status = -150376106 : 150376106,(SimpleAPI),%YDB-E-TPTOODEEP, $T
  --> Running tp5_TPTIMEOUT.c <---
 ### Test timeout in ydb_tp_s() works correctly (TPTIMEOUT error)###
 Set $zmaxtptime to 1 second
-Timeout test PASSED for ydb_tp_s() : Timeout expected = 1 second. Actual timeout = 1 seconds
+##TEST_AWKTimeout test PASSED for ydb_tp_s\(\) : Timeout expected = 1 second. Actual timeout = [12] seconds
 ydb_tp_s() exit status = -150377322 : 150377322,(SimpleAPI),%YDB-E-TPTIMEOUT, Transaction timeout
 
  --> Running tp6_NAMECOUNT2HI.c <---
