@@ -30,7 +30,10 @@ puts "#<CTRL-C>"
 # To avoid that, we wait for the "YDB>" prompt after a specific string shows up. We cannot print the string as is
 # as it can cause incorrect match when we later wait for that (same issue as SHELL prompt dealt with in com/expectinit.exp)
 # and hence we use $char() notation to print it first.
-send -- "\x03\r"
+send -- "\x03"
+# Ensure ECHO is turned OFF in terminal (i.e. we are inside direct mode read) before sending in keystrokes
+# as this avoids false test failures due to the keystrokes being displayed more than once.
+system $::env(gtm_tst)/com/wait_for_stty_echo_off.csh
 send -- "write \$char(65,66,67,68),!\r"
 expect "ABCD"
 expect "YDB>"
