@@ -108,6 +108,7 @@ for {set j 0} {$j < $ncursorupordowncnt} {incr j 1} {
 	expect -exact "${keypad_local}\r\n\rYDB>${keypad_xmit}"
 	# Increment ^failcnt if test failed
 	send -- "if x($i)'=\"${newstr}\" write \"Expected x($i)=$newstr but actual=\",x($i),! if \$incr(^failcnt)\r"
+	expect -exact "YDB>"
 	# Increment ^passcnt if test passed
 	send -- "if x($i)=\"${newstr}\" if \$incr(^passcnt)\r"
 	expect -exact "YDB>"
