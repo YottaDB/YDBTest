@@ -49,7 +49,7 @@ GTM_EOF
 $gtm_tst/com/endtp.csh >>&! imptp.out
 set syslog_after = `date +"%b %e %H:%M:%S"`
 $gtm_tst/com/getoper.csh "$syslog_before" "$syslog_after" syslog.txt
-$gtm_tst/com/check_error_exist.csh syslog.txt "YDB-E-JNLCNTRL, Journal control unsynchronized" >>& Test.logx
+$gtm_tst/com/check_error_exist.csh syslog.txt "YDB-E-JNLCNTRL, Journal control unsynchronized.*`pwd`" >>& Test.logx
 if ($status) then
 	echo "SUBTEST PASS"
 else
