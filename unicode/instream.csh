@@ -4,6 +4,9 @@
 # Copyright (c) 2006-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -86,6 +89,12 @@ endif
 # Disable repl_log on shrug <shrug_unicodedir_CRYPTKEYFETCHFAILED>
 if ($shorthost =~ "shrug") then
 	setenv subtest_exclude_list "$subtest_exclude_list repl_log"
+endif
+
+if ("arch" == $gtm_test_linux_distrib) then
+	# Temporarily disable the below subtest on Arch Linux (ICU 62.1) as there seems to be a regression that causes
+	# lower-case/upper-case conversions to return incorrect results. Will be re-enabled once the ICU issue is fixed.
+	setenv subtest_exclude_list "$subtest_exclude_list functions"
 endif
 
 $gtm_tst/com/submit_subtest.csh
