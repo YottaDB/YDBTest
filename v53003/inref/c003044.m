@@ -167,7 +167,8 @@ test1f;
 	tstart ():serial kill ^nonexist(i) tcommit 		   ; should NOT increment KIL, TTW
 	tstart ():serial zwithdraw ^nonexist(i) tcommit  	   ; should NOT increment KIL, TTW
 	zshow "G":val
-	do out^zshowgfilter(.val,"DWT:")	; filter out DWT category as it could contain varying output
+	do out^zshowgfilter(.val,"DWT,JFB,JFW")	; filter out categories that could contain varying output (possible due to
+						; flush timer popping in "test1f" section from updates in "test1e" section)
 	write val("G",0),!
 	;
 	; A view "RESETGVSTATS" is done below to start at a fresh point. This also serves as a test
