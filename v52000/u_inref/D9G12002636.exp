@@ -54,7 +54,7 @@ if {$force_conservative} {
 # -Don
 
 set timeout 360
-spawn $env(SHELL) -f
+spawn /usr/local/bin/tcsh -f
 source $::env(gtm_tst)/com/expectinit.exp
 
 match_max 100000
