@@ -1,0 +1,45 @@
+----------------------------------------------------------------------------------------------------------------------
+ydb348a : Test that OPEN of a SOCKET that was closed after a TPTIMEOUT error (during a SOCKET READ) does not GTMASSERT
+----------------------------------------------------------------------------------------------------------------------
+# Setting $ZTRAP to run "do ztrap" when TPTIMEOUT error occurs
+# Open a listening socket
+# Jobbing off child
+# Waiting for socket connection from child
+# Setting $ZMAXTPTIME to 1 second
+# Start TP transaction
+# READ from socket device (child will never write to this so READ will eventually cause TPTIMEOUT)
+# Entered $ZTRAP due to TPTIMEOUT error : $ZSTATUS = 150377322,parent+25^ydb348a,%YDB-E-TPTIMEOUT, Transaction timeout
+# Verify the socket device is NOT interrupted (i.e. ZINTERRUPT does not show up in ZSHOW D output of "socket" device)
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+socket OPEN SOCKET TOTAL=2 CURRENT=1 
+##TEST_AWK        SOCKET\[0\]=h[0-9]* DESC=[0-9]* LISTENING PASSIVE  NOTRAP  REMOTE= LOCAL=socket1 
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 NODELIMITER 
+##TEST_AWK        SOCKET\[1\]=h[0-9]* DESC=[0-9]* CONNECTED ACTIVE  NOTRAP  REMOTE= LOCAL=socket1 
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 NODELIMITER 
+# CLOSE the connected socket device while still in $ZTRAP
+# OPEN the interrupted socket device again while still in $ZTRAP. This used to GTMASSERT before #348 fixes
+
+------------------------------------------------------------------------------------------------------------------------------
+ydb348b : Test that OPEN of a SOCKET that was closed inside $ZINTERRUPT (during a SOCKET READ) issues ZINTRECURSEIO error
+          Note that this error showed up even before #348 fixes so this is not a regression test but is an error codepath test
+------------------------------------------------------------------------------------------------------------------------------
+# Setting $ZINTERRUPT to run "do zintr" when MUPIP INTRPT occurs
+# Open a listening socket
+# Jobbing off child
+# Waiting for socket connection from child
+# Signal to child that parent is now ready to do a "READ" that can be interrupted
+# READ from socket device (child will never write to this so READ will eventually cause TPTIMEOUT)
+# Entered $ZINTERRUPT due to MUPIP INTRPT
+$ZININTERRUPT=1
+# Verify the socket device is interrupted (i.e. ZINTERRUPT does show up in ZSHOW D output of "socket" device)
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+socket OPEN SOCKET TOTAL=2 CURRENT=1 ZINTERRUPT 
+##TEST_AWK        SOCKET\[0\]=h[0-9]* DESC=[0-9]* LISTENING PASSIVE  NOTRAP  REMOTE= LOCAL=socket2 
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 NODELIMITER 
+##TEST_AWK        SOCKET\[1\]=h[0-9]* DESC=[0-9]* CONNECTED ACTIVE  NOTRAP  REMOTE= LOCAL=socket2 
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 NODELIMITER 
+# CLOSE the connected socket device while still in $ZINTERRUPT code
+# OPEN the interrupted socket device again while in $ZINTERRUPT code. This should issue ZINTRECURSIO error
+$ZSTATUS="150381194,zintr+10^ydb348b,%YDB-E-ZINTRECURSEIO, Attempt to do IO to the active device in $ZINTERRUPT"
