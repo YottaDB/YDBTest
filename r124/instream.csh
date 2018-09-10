@@ -38,6 +38,7 @@
 # ydb352           [nars]  Test that ydb_ci() call with an error after a ydb_set_s() of a spanning node does not GTMASSERT2
 # ydb353           [nars]  Test that VIEW "NOISOLATION" optimization affects atomicity of $INCREMENT inside TSTART/TCOMMIT
 # ydb348           [nars]  Test that OPEN of a SOCKET that was closed after a TPTIMEOUT error (during a SOCKET READ) does not GTMASSERT
+# ydb358           [nars]  Test that AIO writes in simpleAPI parent and child work fine (no DBIOERR error)
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r124 test starts..."
@@ -46,7 +47,7 @@ echo "r124 test starts..."
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic ""
 setenv subtest_list_non_replic "$subtest_list_non_replic readonly ydb275socketpass ydb280socketwait jnlunxpcterr ydb297 ydb315"
-setenv subtest_list_non_replic "$subtest_list_non_replic ydb324 ydb341 ydb343 ydb346 ydb350 ydb352 ydb353 ydb348"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb324 ydb341 ydb343 ydb346 ydb350 ydb352 ydb353 ydb348 ydb358"
 setenv subtest_list_replic     ""
 setenv subtest_list_replic     "$subtest_list_replic ydb282srcsrvrerr ydb293 ydb312_gtm8182a ydb312_gtm8182b  ydb312_gtm8182c"
 setenv subtest_list_replic     "$subtest_list_replic ydb312_gtm8182d ydb312_gtm8182e ydb312_gtm8182f ydb312_gtm8182g ydb321"
@@ -76,6 +77,11 @@ if (("arch" == $gtm_test_linux_distrib) || ("ubuntu" == $gtm_test_linux_distrib)
 	# For reasons not yet clear, this happens currently only on our Ubuntu and Arch Linux boxes, never on RHEL or ARM boxes.
 	# So disable this subtest on those affected platforms.
 	setenv subtest_exclude_list "$subtest_exclude_list jnlunxpcterr"
+endif
+
+if ($gtm_platform_size != 64) then
+	# Disable ydb358 subtest on 32-bit platforms as it requires ASYNCIO which is not enabled there
+	setenv subtest_exclude_list "$subtest_exclude_list ydb358"
 endif
 
 # Submit the list of subtests

@@ -21,15 +21,15 @@ CAT_EOF
 
 setenv ydb_ci ydb352.xc	# needed to invoke ydb352.m from ydb352.c below
 
-echo "# Compiling/Linking ydb352.c into executable ydb352 and executing it"
 set file="ydb352.c"
-cp $gtm_tst/$tst/inref/$file .
 set exefile = $file:r
+echo "# Compiling/Linking $file into executable $exefile and executing it"
+cp $gtm_tst/$tst/inref/$file .
 $gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $file
 $gt_ld_linker $gt_ld_option_output $exefile $gt_ld_options_common $exefile.o $gt_ld_sysrtns $ci_ldpath$gtm_dist -L$gtm_dist $tst_ld_yottadb $gt_ld_syslibs >& $exefile.map
 if (0 != $status) then
 	echo "YDB352-E-LINKFAIL : Linking $exefile failed. See $exefile.map for details"
-	continue
+	exit -1
 endif
 rm $exefile.o	# since we will later create ydb352.o from ydb352.m, we remove ydb352.o created here from ydb352.c
 `pwd`/$exefile
