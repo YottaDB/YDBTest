@@ -4,6 +4,9 @@
 # Copyright (c) 2014-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -37,8 +40,8 @@ endif
 if ($new_shm_count) then
 	echo "TEST-E-FAIL, There are left-over shared memory segments:"
 	if ("Linux" == $HOSTOS) then
-		$tst_awk '$3 ~ mymatch {print $0}' mymatch="^($pids)\$" shms${index}.log
+		$tst_awk '$3 ~ mymatch {print $0}' mymatch='^('$pids')$' shms${index}.log
 	else
-		$tst_awk '$7 ~ mymatch {print $0}' mymatch="^($pids)\$" shms${index}.log
+		$tst_awk '$7 ~ mymatch {print $0}' mymatch='^('$pids)')$' shms${index}.log
 	endif
 endif

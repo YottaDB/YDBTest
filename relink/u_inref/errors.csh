@@ -58,6 +58,7 @@ eof
 
 @ pid1 = `cat pid-1.1.out`
 @ pid2 = `cat pid-1.2.out`
+$gtm_tst/com/wait_for_proc_to_die.csh $pid2 300	# wait for backgrounded process to finish before checking its relinkctl files
 $gtm_tst/$tst/u_inref/report_new_ipcs.csh 1 "$pid1|$pid2"
 echo
 
@@ -78,6 +79,7 @@ eof
 
 @ pid1 = `cat pid-2.1.out`
 @ pid2 = `cat pid-2.2.out`
+$gtm_tst/com/wait_for_proc_to_die.csh $pid2 300	# wait for backgrounded process to finish before checking its relinkctl files
 $gtm_tst/$tst/u_inref/report_new_ipcs.csh 2 "$pid1|$pid2"
 echo
 
@@ -146,6 +148,7 @@ eof
 
 @ pid1 = `cat pid-5.1.out`
 @ pid2 = `cat pid-5.2.out`
+$gtm_tst/com/wait_for_proc_to_die.csh $pid2 300	# wait for backgrounded process to finish before checking its relinkctl files
 $gtm_tst/$tst/u_inref/report_new_ipcs.csh 5 "$pid1|$pid2"
 echo
 
