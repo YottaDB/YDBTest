@@ -18,7 +18,7 @@ utfseek
 	set $ztrap="goto errorAndCont^errorAndCont"
 	set pp="ppipe"
 	; no actual I/O is done over the pipe but want it to run in M mode and be cleaned up automatically
-	open pp:(comm="unsetenv gtm_chset; unsetenv ydb_chset; $gtm_exe/mumps -r utfseekinit":write)::"pipe"
+	open pp:(comm="source $gtm_tst/$tst/u_inref/switch_chset_m.csh; $gtm_exe/mumps -r utfseekinit "_p:write)::"pipe"
 	write "**********************************",!
 	write "UTF-8 WITH BOM NON-FIXED SEEK FOLLOW AND NOFOLLOW",!
 	write "**********************************",!

@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-;	Copyright 2013, 2014 Fidelity Information Services, Inc	;
+; Copyright 2013, 2014 Fidelity Information Services, Inc	;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -15,6 +18,7 @@ utftimeoutinit
 	; The structure of these routines is the same, but there are differences in
 	; the files and strings being created.  The "wait" routine is common, but there
 	; are differences in routines such as "modfile".
+	do ^sstepgbl
 	set key=$ztrnlnm("gtmcrypt_key")
 	set iv=$ztrnlnm("gtmcrypt_iv")
 	do utfinitstr(.utfstr,"utf8_timeout_with_bom")

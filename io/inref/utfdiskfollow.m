@@ -625,7 +625,7 @@ writer(p)
 	; test is using a pipe device to start the mumps process "utfinit" in M mode instead of zsystem
 	; no actual I/O is done over the pipe, but in case test cleanup is necessary, just killing
 	; the writer process will also kill the child process.
-	open pp:(comm="unsetenv gtm_chset; unsetenv ydb_chset; $gtm_exe/mumps -r utfinit "_p:write)::"pipe"
+	open pp:(comm="source $gtm_tst/$tst/u_inref/switch_chset_m.csh; $gtm_exe/mumps -r utfinit "_p:write)::"pipe"
 	do wait("rdone")
 	close pp
 	quit

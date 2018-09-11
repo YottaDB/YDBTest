@@ -27,6 +27,7 @@ utffollowtimeout
 	;	utffixfollow.m which uses utffixinit.m
 	;	utffollowtimeout.m which uses utftimeoutinit.m
 	;
+	do ^sstepgbl
 	write "setting ^a to a",!
 	set ^a="start"
 	set p="utftimeoutfile"
@@ -39,6 +40,7 @@ utffollowtimeout
 	quit
 
 reader(p)
+	do ^sstepgbl
 	set $Zint="Set ^Zreadcnt("""_p_""")=^Zreadcnt("""_p_""")+1"
 	new x,dh1,dh2
 	set key=$ztrnlnm("gtmcrypt_key")
@@ -404,17 +406,19 @@ reader(p)
 	quit
 
 writer(p)
+	do ^sstepgbl
 	do savepid("utfwriter_timeout")
 	set pp="apipe"
 	; test is using a pipe device to start the mumps process "utftimeoutinit" in M mode instead of zsystem
 	; no actual I/O is done over the pipe, but in case test cleanup is necessary, just killing
 	; the writer process will also kill the child process.
-	open pp:(comm="unsetenv gtm_chset; unsetenv ydb_chset; $gtm_exe/mumps -r utftimeoutinit "_p:write)::"pipe"
+	open pp:(comm="source $gtm_tst/$tst/u_inref/switch_chset_m.csh; $gtm_exe/mumps -r utftimeoutinit "_p:write)::"pipe"
 	do wait("timeoutrdone")
 	close pp
 	quit
 
 sendintr(type)
+	do ^sstepgbl
 	do savepid("utfsendintr_timeout")
 	; randomly decide whether to send interrupts to the reader
 	if $Random(2) do savepid("utfsendintr_timeout_not") quit
