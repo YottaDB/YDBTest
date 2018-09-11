@@ -15,7 +15,9 @@ PASS from pipeintrpt
 PASS from fifointrpt
 PASS from disk_follow
 PASS from diskintrpt
+##SUSPEND_OUTPUT EXCLUDE_DISKFOLLOW_TIMEOUT
 PASS from diskfollow_timeout
+##ALLOW_OUTPUT EXCLUDE_DISKFOLLOW_TIMEOUT
 PASS from closestatus
 PASS from sdseek
 PASS from write_anywhere
