@@ -39,6 +39,7 @@
 # ydb353           [nars]  Test that VIEW "NOISOLATION" optimization affects atomicity of $INCREMENT inside TSTART/TCOMMIT
 # ydb348           [nars]  Test that OPEN of a SOCKET that was closed after a TPTIMEOUT error (during a SOCKET READ) does not GTMASSERT
 # ydb358           [nars]  Test that AIO writes in simpleAPI parent and child work fine (no DBIOERR error)
+# ydb359           [nars]  Test that ZSTEP actions continue to work after a MUPIP INTRPT
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r124 test starts..."
@@ -47,7 +48,7 @@ echo "r124 test starts..."
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic ""
 setenv subtest_list_non_replic "$subtest_list_non_replic readonly ydb275socketpass ydb280socketwait jnlunxpcterr ydb297 ydb315"
-setenv subtest_list_non_replic "$subtest_list_non_replic ydb324 ydb341 ydb343 ydb346 ydb350 ydb352 ydb353 ydb348 ydb358"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb324 ydb341 ydb343 ydb346 ydb350 ydb352 ydb353 ydb348 ydb358 ydb359"
 setenv subtest_list_replic     ""
 setenv subtest_list_replic     "$subtest_list_replic ydb282srcsrvrerr ydb293 ydb312_gtm8182a ydb312_gtm8182b  ydb312_gtm8182c"
 setenv subtest_list_replic     "$subtest_list_replic ydb312_gtm8182d ydb312_gtm8182e ydb312_gtm8182f ydb312_gtm8182g ydb321"
