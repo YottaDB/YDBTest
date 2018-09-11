@@ -262,6 +262,10 @@ BEGIN {
 	if (1 == ENVIRON["ydb_test_exclude_diskfollow_timeout"])
 		envir[no_options] = "EXCLUDE_DISKFOLLOW_TIMEOUT"
 	#
+	option_names[++no_options] = "real_mach_type"
+	if ("armv6l" == ENVIRON["real_mach_type"])
+		envir[no_options] = "MACHTYPE_ARMV6L"
+	#
 	option_names[++no_options] = "gtm_test_dynamic_literals"
 	if ("DYNAMIC_LITERALS" == ENVIRON["gtm_test_dynamic_literals"])
 		envir[no_options] = "DYNAMIC_LITERALS"

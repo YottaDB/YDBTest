@@ -23,6 +23,7 @@ Post Transaction DB Crit of DEFAULT owned by pid = 0
 
 ---------------------------------------------------------------------------------
 
+##SUSPEND_OUTPUT MACHTYPE_ARMV6L
 # Testing command timeout (writeslashtls) greater than .123 (Expect a TPNOTACID message in the syslog)
 DB Crit of DEFAULT owned by pid = xxxx as expected
 Post Transaction DB Crit of DEFAULT owned by pid = 0
@@ -31,6 +32,7 @@ Post Transaction DB Crit of DEFAULT owned by pid = 0
 
 ---------------------------------------------------------------------------------
 
+##ALLOW_OUTPUT MACHTYPE_ARMV6L
 # Testing command timeout (locktimeout) greater than .123 (Expect a TPNOTACID message in the syslog)
 DB Crit of DEFAULT owned by pid = xxxx as expected
 Post Transaction DB Crit of DEFAULT owned by pid = 0
@@ -62,11 +64,13 @@ Post Transaction DB Crit of DEFAULT owned by pid = 0
 
 ---------------------------------------------------------------------------------
 
+##SUSPEND_OUTPUT MACHTYPE_ARMV6L
 # Testing command without a specified timeout (writeslashtls), Expect a TPNOTACID message in the syslog still
 %YDB-I-TPNOTACID, /TLS at writeslashtls+13^gtm8165 violates ACID properties of a TRANSACTION and could exceed .123 seconds; 
 
 ---------------------------------------------------------------------------------
 
+##ALLOW_OUTPUT MACHTYPE_ARMV6L
 # Testing command without a specified timeout (locktimeout), Expect a TPNOTACID message in the syslog still
 %YDB-I-TPNOTACID, LOCK at locktimeout+9^gtm8165 violates ACID properties of a TRANSACTION and could exceed .123 seconds; 
 

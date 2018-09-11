@@ -14,12 +14,41 @@
 #
 #
 $gtm_tst/com/dbcreate.csh mumps 1 >>& dbcreate.out
+
+# The "writeslashtls" portion of the below test hangs weirdly on ARMV6L for reasons not yet clear.
+# The hang is in the below M line in writeslashtls^gtm8165.
+#
+#	v63002/inref/gtm8165.m
+#	----------------------
+#	    158 writeslashtls
+#	      .
+#	    170         . if $ZTRNLNM("timeout")  write /tls("client",.999)
+#
+# At the time of the hang, the C-stack of the hung process has just the following.
+#	(gdb) where
+#	#0  0xb6e150c8 in read () at ../sysdeps/unix/syscall-template.S:84
+#	#1  0xb4f30834 in ?? () from /usr/lib/arm-linux-gnueabihf/libcrypto.so.1.1
+# There is no YottaDB function in the stack (e.g. iosocket_iocontrol()).
+# And if one sends a MUPIP INTRPT to this hung process, it magically clears the hang
+#	and continues executing the rest of the test.
+# This looks like some tls package related issue on ARMV6L so for now this part of the test is disabled there.
+
+if ("armv6l" == `uname -m`) then
+	set writeslashtls_disabled = 1
+	set writeslashtls = ""
+else
+	set writeslashtls_disabled = 0
+	set writeslashtls = "writeslashtls"
+endif
+
+set testlist = "writeslashwait writeslashpass writeslashaccept $writeslashtls locktimeout opentimeout"
+
 # writeslashtls^gtm8165 requires a port number to communicate. So allocate one from the test system framework.
 source $gtm_tst/com/portno_acquire.csh >>& portno.out	# portno env var will be set to the alloted portno
 echo "# Setting gtm_tpnotacidtime to .123 seconds"
 setenv gtm_tpnotacidtime .123
 setenv timeout 1
-foreach arg("writeslashwait" "writeslashpass" "writeslashaccept" "writeslashtls" "locktimeout" "opentimeout")
+foreach arg ($testlist)
 	echo "# Testing command timeout ($arg) greater than .123 (Expect a TPNOTACID message in the syslog)"
 	set t = `date +"%b %e %H:%M:%S"`
 	$ydb_dist/mumps -run $arg^gtm8165
@@ -33,7 +62,7 @@ foreach arg("writeslashwait" "writeslashpass" "writeslashaccept" "writeslashtls"
 	echo ""
 end
 setenv timeout 0
-foreach arg("writeslashwait" "writeslashpass" "writeslashaccept" "writeslashtls" "locktimeout" "opentimeout")
+foreach arg ($testlist)
 	echo "# Testing command without a specified timeout ($arg), Expect a TPNOTACID message in the syslog still"
 	set t = `date +"%b %e %H:%M:%S"`
 	(($ydb_dist/mumps -run $arg^gtm8165 >& tpnotacid_$arg.out)&;echo $!>&pid.out)>& bckg.out

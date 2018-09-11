@@ -128,4 +128,8 @@ endif
 set glibcver = `ldd --version | head -1 | awk '{print $NF}'`
 setenv gtm_test_glibc_225_plus `echo "$glibcver > 2.25" | bc`
 
+# Set an env var to indicate real mach_type (used later for whether this is an ARMV6L platform).
+# We cannot use mach_type since that has already been modified to say ARMVXL for ARMV7L or ARMV6L
+setenv real_mach_type `uname -m`
+
 ##### HOST SPECIFIC FUNNIES ####
