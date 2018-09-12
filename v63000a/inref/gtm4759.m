@@ -3,6 +3,9 @@
 ; Copyright (c) 2016 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -17,7 +20,7 @@ gtm4759
 	.	set cmd="test"_i_"^gtm4759:(OUTPUT=""test"_i_".mjo"":ERROR=""test"_i_".mjo"":GBLDIR="""_gld_""")"
 	.	job @(cmd)
 	.	set waitlist($zjob)=1
-	.	do ^waitforproctodie($zjob,10)  ; Cannot use locks here because we are fuzzing the global directory settings
+	.	do ^waitforproctodie($zjob,300)  ; Cannot use locks here because we are fuzzing the global directory settings
 	set i=""
 	for  set i=$order(waitlist(i)) quit:""=i  do ^waitforproctodie(i,30)
 	quit
