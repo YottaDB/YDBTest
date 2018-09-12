@@ -39,7 +39,7 @@
 # ydb353           [nars]  Test that VIEW "NOISOLATION" optimization affects atomicity of $INCREMENT inside TSTART/TCOMMIT
 # ydb348           [nars]  Test that OPEN of a SOCKET that was closed after a TPTIMEOUT error (during a SOCKET READ) does not GTMASSERT
 # ydb358           [nars]  Test that AIO writes in simpleAPI parent and child work fine (no DBIOERR error)
-# ydb359           [nars]  Test that ZSTEP actions continue to work after a MUPIP INTRPT
+# ydb359           [nars]  Test that ZSTEP actions continue to work after a MUPIP INTRPT if $ZINTERRUPT is appropriately set
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r124 test starts..."

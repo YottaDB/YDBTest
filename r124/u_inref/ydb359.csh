@@ -10,14 +10,10 @@
 #								#
 #################################################################
 #
-echo "# Test that ZSTEP actions continue to work after a MUPIP INTRPT"
+echo '# Test that ZSTEP actions continue to work after a MUPIP INTRPT if $ZINTERRUPT is appropriately set'
 echo '# Invoke "do ^sstep" in ydb359.m at the beginning so it prints each M line as it executes'
 echo "# Send a MUPIP INTRPT to self in between"
-echo "# Expect the M line printing to continue even after the MUPIP INTRPT"
-echo "# Note that the M line that is first executed to handle the MUPIP INTRPT will not be printed even with #359 fixes."
-echo "# This is because, the transfer table entry for OC_LINESTART at the start of that line will handle the MUPIP INTRPT request"
-echo "# So the ZSTEP activity will resume only from the following M line onwards. But that is still better than never resuming"
-echo "#     which was the case prior to #359 fixes"
+echo '# Expect the M line printing to continue even after the MUPIP INTRPT as long as ZSTEP is done inside $ZINTERRUPT code'
 echo ""
 
 $ydb_dist/mumps -run ydb359

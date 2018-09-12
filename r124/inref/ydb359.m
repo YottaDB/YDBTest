@@ -11,10 +11,14 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 ydb359
-        do ^sstep
+	set $zinterrupt="do zintr" do ^sstep
         set x=1
         zsystem "mupip intrpt "_$j
         set y=2
         set z=3
         write "x = ",x," : y = ",y," : z = ",z,!
         quit
+
+zintr	;
+	if $ZJOBEXAM()
+	zstep into  quit
