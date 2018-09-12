@@ -10,6 +10,6 @@
 ;								;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 sstepgbl;
-        kill ^%sstepgbl set $zstep="set ^%sstepgbl($incr(^%sstepgbl),$h,$j)=$j($zpos,20)_"" : ""_$text(@$zpos) zstep into"
+        set $zstep="set ^%sstepgbl($incr(^%sstepgbl),$h,$j)=$j($zpos,20)_"" : ""_$text(@$zpos) zstep into"
         zb sstepgbl+3^sstepgbl:"zstep into"
         quit
