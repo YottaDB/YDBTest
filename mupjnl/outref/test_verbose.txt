@@ -103,7 +103,7 @@ YDB>
 %YDB-I-MUINFOUINT4,     Record Offset : 65744 [0x000100D0]
 ##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_forward:Reached EOF before tp_resolve_time at .*
 ##TEST_AWK%YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
-%YDB-I-MUINFOUINT4,     Record Offset : 75024 [0x00012510]
+##TEST_AWK%YDB-I-MUINFOUINT4,     Record Offset : (75024|76472) \[0x00012(510|AB8)\]
 ##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_forward:at the end at .*
 ##TEST_AWK%YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
 ##TEST_AWK%YDB-I-MUINFOUINT4,     Record Offset : [0-9]* .0x[0-9a-fA-F]*.
