@@ -29,5 +29,5 @@ sleep 1
 echo '# Testing fractional timeout for $gtm_tpnotacidtime (Expect a TPNOTACID message in the syslog)'
 $ydb_dist/mumps -run tpnotacid^gtm5250
 $gtm_tst/com/getoper.csh "$t" "" getoper.txt
-$grep TPNOTACID getoper.txt |& sed 's/.*%YDB-I-TPNOTACID/%YDB-I-TPNOTACID/' |& sed 's/$TRESTART.*//'
+$grep "TPNOTACID.*gtm5250" getoper.txt |& sed 's/.*%YDB-I-TPNOTACID/%YDB-I-TPNOTACID/' |& sed 's/$TRESTART.*//'
 $gtm_tst/com/dbcheck.csh >>& dbcheck.out
