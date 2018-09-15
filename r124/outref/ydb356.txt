@@ -1,0 +1,21 @@
+# Test of an extended reference that gets a NETDBOPNERR error as the first database access when $ydb_gbldir is not set
+# Before #356 fixes, this used to SIG-11
+# Expect only a NETDBOPNERR error below, no SIG-11
+unsetenv gtmgbldir
+
+setenv ydb_gbldir mumps.gld
+
+$ydb_dist/mumps -run GDE change -seg DEFAULT -file=dummyhostname:mumps.dat
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+
+unsetenv ydb_gbldir
+
+$ydb_dist/mumps -run ^%XCMD 'set ^|"mumps.gld"|a=1'
+%YDB-E-NETDBOPNERR, Error while attempting to open database across net
+%CMI-E-NOSERVENT, Sevices data lookup failure
+
