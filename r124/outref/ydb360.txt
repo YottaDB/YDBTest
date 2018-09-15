@@ -1,0 +1,24 @@
+# Test that $ZEDITOR reflects exit status of the last ZEDIT invocation
+
+------------------------------------------------------
+# Test that $ZEDITOR is 0 at first and then is 120
+------------------------------------------------------
+echo "#!/usr/local/bin/tcsh" > tmp.csh
+echo "exit $value" >> tmp.csh
+chmod +x tmp.csh
+$ydb_dist/mumps -run ^%XCMD 'zwrite $zeditor  zedit "x.m"  zwrite $zeditor'
+$ZEDITOR=0
+$ZEDITOR=120
+unset verbose
+
+------------------------------------------------------
+# Test that $ZEDITOR is 0 at first and then is 250
+------------------------------------------------------
+echo "#!/usr/local/bin/tcsh" > tmp.csh
+echo "exit $value" >> tmp.csh
+chmod +x tmp.csh
+$ydb_dist/mumps -run ^%XCMD 'zwrite $zeditor  zedit "x.m"  zwrite $zeditor'
+$ZEDITOR=0
+$ZEDITOR=250
+unset verbose
+
