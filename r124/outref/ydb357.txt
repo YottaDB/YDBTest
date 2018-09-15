@@ -1,0 +1,32 @@
+-----------------------------------------------------------------------------------------------------------
+# Test that SIGQUIT (kill -3) sent to a mumps process during ZSYSTEM is handled little later but not lost
+# Send signal SIGQUIT after Step2 but before Step3
+# Step1, Step2 and Step3 should be seen in output but Step4 should not be
+-----------------------------------------------------------------------------------------------------------
+
+##SOURCE_PATH##/mumps -run ^%XCMD write "Step1",! zsystem "echo ""Step2""; kill -3 "_$j_"; echo ""Step3""" write "Step4",!
+Step1
+Step2
+Step3
+##TEST_AWK%YDB-F-KILLBYSIGUINFO, YottaDB process [0-9]* has been killed by a signal 3 from process [0-9]* with userid number [0-9]*
+unset echo
+
+-----------------------------------------------------------------------------------------------------------
+# Test that SIGQUIT (kill -3) sent to a mumps process during ZEDIT is handled little later but not lost
+# Send signal SIGQUIT after Step2 but before Step3
+# Step1, Step2 and Step3 should be seen in output but Step4 should not be
+-----------------------------------------------------------------------------------------------------------
+
+setenv EDITOR tmp.csh
+cat tmp.csh
+#!/usr/local/bin/tcsh
+echo Step2
+source kill.csh
+echo Step3
+##SOURCE_PATH##/mumps -run ^%XCMD write "Step1",! zsystem "echo ""kill -3 "_$j_""" > kill.csh" zedit "x.m" write "Step4",!
+Step1
+Step2
+Step3
+##TEST_AWK%YDB-F-KILLBYSIGUINFO, YottaDB process [0-9]* has been killed by a signal 3 from process [0-9]* with userid number [0-9]*
+unset echo
+
