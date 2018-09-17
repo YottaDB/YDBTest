@@ -39,9 +39,6 @@ ls TRACE_WRITERSTUCK* | $tst_awk '{sub(/WRITERSTUCK_.*/,"WRITERSTUCK_##FILTERED#
 mkdir test1
 mv TRACE_WRITERSTUCK* test1
 
-# Put in timing info for getoper
-set syslog_after1 = `date +"%b %e %H:%M:%S"`
-echo "# Time after test case 1 : GTM_TEST_DEBUGINFO $syslog_after1"
 # Check if the error/messages are logged in operator log
 set dsepid = `cat dse.pid_1`
 echo "# Check the operator log for the messages YDB-I-STUCKACT and YDB-E-WRITERSTUCK"
@@ -57,6 +54,8 @@ cp $gtm_tst/com/gtmprocstuck_get_stack_trace.csh .
 echo "# Remove execute permission from the file"
 chmod -x gtmprocstuck_get_stack_trace.csh
 source $gtm_tst/com/set_ydb_env_var_random.csh ydb_procstuckexec gtm_procstuckexec `pwd`/gtmprocstuck_get_stack_trace.csh
+sleep 1	# Needed so syslog_before2 is guaranteed to be at least one second more than syslog_before1
+	# which in turn ensures syslog messages from Test case 1 do not interferer with Test case 2
 set syslog_before2 = `date +"%b %e %H:%M:%S"`
 echo "# Time before test case 2 : GTM_TEST_DEBUGINFO $syslog_before2"
 echo "# Starting the dse process now"
@@ -70,9 +69,6 @@ $gtm_tst/$tst/u_inref/get_dse_pid.csh 2
 if (0 != $status) echo "Did not get DSE PID, status: $status"
 # HERE WAIT FOR THE DSE PROCESS TO EXIT
 $gtm_tst/com/wait_for_log.csh -log do_dse_flush.done_2
-# Put in timing info for getoper
-set syslog_after2 = `date +"%b %e %H:%M:%S"`
-echo "# Time after test case 2 : GTM_TEST_DEBUGINFO $syslog_after2"
 echo "# Check if 'permission denied' or 'cannot execute' error is issued"
 $gtm_tst/com/check_string_exist.csh dse_flush.out_2 ANY "gtmprocstuck_get_stack_trace.csh.*ermission denied" "gtmprocstuck_get_stack_trace.csh.*cannot execute"
 echo "# Check that WRITERSTUCK file is not generated now"
@@ -89,6 +85,7 @@ echo ""
 echo $banner
 echo "# Test case 3: File does not exist"
 source $gtm_tst/com/set_ydb_env_var_random.csh ydb_procstuckexec gtm_procstuckexec `pwd`/noexist.csh
+sleep 1	# See comment against "sleep 1" above for why this is needed at the start of each Test case
 set syslog_before3 = `date +"%b %e %H:%M:%S"`
 echo "# Time before test case 3 : GTM_TEST_DEBUGINFO $syslog_before3"
 echo "# Starting the dse process now"
@@ -99,9 +96,6 @@ $gtm_tst/$tst/u_inref/get_dse_pid.csh 3
 if (0 != $status) echo "Did not get DSE PID, status: $status"
 # HERE WAIT FOR THE DSE PROCESS TO EXIT
 $gtm_tst/com/wait_for_log.csh -log do_dse_flush.done_3
-# Put in timing info for getoper
-set syslog_after3 = `date +"%b %e %H:%M:%S"`
-echo "# Time after test case 3 : GTM_TEST_DEBUGINFO $syslog_after3"
 # Depending on the OS the actual error message might differ slightly
 # Use the tool to check if one of the specified pattern of error message appears
 # If an OS prints a different message, tweak the below or include a new parameter at the end. ref.file fix not needed

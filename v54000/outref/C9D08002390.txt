@@ -12,7 +12,6 @@
 # Starting the dse process now
 # Test if the output file exists
 TRACE_WRITERSTUCK_##FILTERED##
-# Time after test case 1 : ##FILTERED##GTM_TEST_DEBUGINFO.*
 # Check the operator log for the messages YDB-I-STUCKACT and YDB-E-WRITERSTUCK
 YDB-I-STUCKACT, Process stuck script invoked: SUCCESS : ##TEST_COM_PATH##/gtmprocstuck_get_stack_trace.csh
 YDB-E-WRITERSTUCK, Buffer flush stuck waiting for [0x00000001] concurrent writers to finish writing to database file ##TEST_PATH##/mumps.dat
@@ -22,7 +21,6 @@ YDB-E-WRITERSTUCK, Buffer flush stuck waiting for [0x00000001] concurrent writer
 # Remove execute permission from the file
 # Time before test case 2 : ##FILTERED##GTM_TEST_DEBUGINFO.*
 # Starting the dse process now
-# Time after test case 2 : ##FILTERED##GTM_TEST_DEBUGINFO.*
 # Check if 'permission denied' or 'cannot execute' error is issued
 CHECK_STRING_EXIST-I-FOUND. At least one of the messages passed is found in the file dse_flush.out_2
 # Check that WRITERSTUCK file is not generated now
@@ -34,7 +32,6 @@ YDB-E-WRITERSTUCK, Buffer flush stuck waiting for [0x00000001] concurrent writer
 # Test case 3: File does not exist
 # Time before test case 3 : ##FILTERED##GTM_TEST_DEBUGINFO.*
 # Starting the dse process now
-# Time after test case 3 : ##FILTERED##GTM_TEST_DEBUGINFO.*
 # Check if 'File not found' or 'no such file' error is issued
 CHECK_STRING_EXIST-I-FOUND. At least one of the messages passed is found in the file dse_flush.out_3
 # Check that WRITERSTUCK file is not generated now
