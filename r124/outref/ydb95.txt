@@ -1,0 +1,37 @@
+# Test that MUPIP LOAD on an empty ZWR file reports 0 loaded records and no errors
+
+# Create database file
+# Set a single node in database : ^x=123
+##SUSPEND_OUTPUT UNICODE_MODE
+# Create an empty GO format extract file x.GO by using just the first 2 lines of the output of MUPIP EXTRACT -FORMAT=GO
+# Load empty GO format extract file x.GO using MUPIP LOAD -FORMAT=GO x.GO
+##TEST_AWKGT.M MUPIP EXTRACT( UTF-8|)
+##FILTERED##..-...-....  ..:..:..
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 2
+# Load empty GO format extract file x.GO using MUPIP LOAD x.GO
+##TEST_AWKGT.M MUPIP EXTRACT( UTF-8|)
+##FILTERED##..-...-....  ..:..:..
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 2
+##ALLOW_OUTPUT UNICODE_MODE
+# Create an empty ZWR format extract file x.ZWR by using just the first 2 lines of the output of MUPIP EXTRACT -FORMAT=ZWR
+# Load empty ZWR format extract file x.ZWR using MUPIP LOAD -FORMAT=ZWR x.ZWR
+##TEST_AWKGT.M MUPIP EXTRACT( UTF-8|)
+##FILTERED##..-...-....  ..:..:.. ZWR
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 2
+# Load empty ZWR format extract file x.ZWR using MUPIP LOAD x.ZWR
+##TEST_AWKGT.M MUPIP EXTRACT( UTF-8|)
+##FILTERED##..-...-....  ..:..:.. ZWR
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 2
+# Do dbcheck.csh
