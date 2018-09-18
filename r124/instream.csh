@@ -13,6 +13,9 @@
 #
 #---------------------------------------------------------------------------------------------------------------------------------------------------
 # List of subtests of the form "subtestname [author] description"
+# Subtests with "mr" suffix in their name correspond to merge requests whereas no "mr" implies issues (the most common case).
+# So "ydb346mr" is a test for code changes in !346 (merge request 346) (note: merge requests are indicated by !) whereas
+#    "ydb346"   is a test for code changes in #346 (issue 346)
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 # readonly         [nars]  Test update on database with READ_ONLY flag through multiple global directories
 # ydb275socketpass [nars]  Test that LISTENING sockets can be passed through JOB or WRITE /PASS and WRITE /ACCEPT
@@ -33,7 +36,7 @@
 # ydb321           [nars]  Test that journal records fed to external filters include timestamps
 # ydb341           [nars]  Test that epoch_interval setting is honored even if an idle epoch is written
 # ydb343           [nars]  Test that use of a local variable after a Ctrl-C'ed ZWRITE in direct mode does not issue assert failure
-# ydb346           [nars]  Test that WRITE ?1 in direct mode after setting LENGTH of $PRINCIPAL to 0 does not assert fail
+# ydb346mr         [nars]  Test that WRITE ?1 in direct mode after setting LENGTH of $PRINCIPAL to 0 does not assert fail
 # ydb350           [nars]  Test that terminal has ECHO characteristics after READ or WRITE or direct-mode-read commands
 # ydb352           [nars]  Test that ydb_ci() call with an error after a ydb_set_s() of a spanning node does not GTMASSERT2
 # ydb353           [nars]  Test that VIEW "NOISOLATION" optimization affects atomicity of $INCREMENT inside TSTART/TCOMMIT
@@ -43,6 +46,7 @@
 # ydb356           [nars]  Test that an extended reference that gets a NETDBOPNERR error when $ydb_gbldir is not set does not SIG-11
 # ydb360           [nars]  Test that $ZEDITOR reflects exit status of the last ZEDIT invocation
 # ydb357           [nars]  Test that SIGQUIT (kill -3) sent to a mumps process during ZSYSTEM/ZEDIT is handled little later but not lost
+# ydb346           [nars]  Test that MUPIP INTEG, DSE DUMP and MUMPS do not infinite loop in case of INVSPECREC error
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r124 test starts..."
@@ -51,8 +55,8 @@ echo "r124 test starts..."
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic ""
 setenv subtest_list_non_replic "$subtest_list_non_replic readonly ydb275socketpass ydb280socketwait jnlunxpcterr ydb297 ydb315"
-setenv subtest_list_non_replic "$subtest_list_non_replic ydb324 ydb341 ydb343 ydb346 ydb350 ydb352 ydb353 ydb348 ydb358 ydb359"
-setenv subtest_list_non_replic "$subtest_list_non_replic ydb356 ydb360 ydb357"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb324 ydb341 ydb343 ydb346mr ydb350 ydb352 ydb353 ydb348 ydb358 ydb359"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb356 ydb360 ydb357 ydb346"
 setenv subtest_list_replic     ""
 setenv subtest_list_replic     "$subtest_list_replic ydb282srcsrvrerr ydb293 ydb312_gtm8182a ydb312_gtm8182b  ydb312_gtm8182c"
 setenv subtest_list_replic     "$subtest_list_replic ydb312_gtm8182d ydb312_gtm8182e ydb312_gtm8182f ydb312_gtm8182g ydb321"

@@ -1,14 +1,196 @@
-# Test that WRITE ?1 in direct mode after setting LENGTH of $PRINCIPAL to 0 does not assert fail
-spawn /usr/local/bin/tcsh -f
-> stty cols 132
-> set shellprompt=SHELL
-> set prompt=$shellprompt
-SHELLsetenv term_env `tty`; echo $term_env > term_env.txt
-SHELL$ydb_dist/mumps -direct
+# Test that MUPIP INTEG, DSE DUMP and MUMPS do not infinite loop in case of INVSPECREC error
 
-YDB>use $principal:(length=0)
+# Create database file
+# Create shared library for alternate collation # 1 (reverse collation)
+# Set alternate collation (act) = 1 and numeric collation (nct) = 0 for global name ^x using $$set^%GBLDEF
+# Dump contents of block=2 using DSE DUMP to verify 4-byte collation header in Directory Tree Leaf record
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+Block 2   Size 1F   Level 0   TN 7 V6
+Rec:1  Blk 2  Off 10  Size F  Cmpc 0  Ptr 4  Key ^x
+      10 : |  F  0  0  0 78  0  0  4  0  0  0  1  0  1  0               |
+           |  .  .  .  .  x  .  .  .  .  .  .  .  .  .  .               |
 
-YDB>write ?1
- 
-YDB>halt
-SHELL
+#--------------------------------------------------
+# Test 1st byte of 4-byte collation header = 0
+#--------------------------------------------------
+# Use DSE OVERWRITE to set the 1st byte of 4-byte collation header to 0
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+# Use MUMPS to access global name ^x. Should not see INVSPECREC error.
+# Also should see ^x("a") only if 1st byte of collation header is 1. Should see ^x($ZCH(158)) or ^x($C(158)) otherwise.
+##TEST_AWK\^x\(\$(C|ZCH)\(158\)\)=1
+# Use DSE DUMP to dump block 2 contents of global name ^x. Should see no INVSPECREC error
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+Block 2   Size 1F   Level 0   TN 9 V6
+Rec:1  Blk 2  Off 10  Size F  Cmpc 0  Ptr 4  Key ^x
+      10 : |  F  0  0  0 78  0  0  4  0  0  0  0  0  1  0               |
+           |  .  .  .  .  x  .  .  .  .  .  .  .  .  .  .               |
+# Use MUPIP INTEG to check integrity of database. Should see INVSPECREC error if 1st byte of collation header is not 1
+Block:Offset Level
+%YDB-E-INVSPECREC, 
+       2:10     0  Invalid global modifier record
+                   Directory Path:  1:10, 2:10
+Keys from ^x to the end are suspect.
+Total error count from integ:		1.
+Type           Blocks         Records          % Used      Adjacent
+Directory           2               2           0.671            NA
+Index               1               1           0.585             1
+Data                1               1           0.659             1
+Free               96              NA              NA            NA
+Total             100               4              NA             2
+%YDB-E-INTEGERRS, Database integrity errors
+
+#--------------------------------------------------
+# Test 1st byte of 4-byte collation header = 1
+#--------------------------------------------------
+# Use DSE OVERWRITE to set the 1st byte of 4-byte collation header to 1
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+# Use MUMPS to access global name ^x. Should not see INVSPECREC error.
+# Also should see ^x("a") only if 1st byte of collation header is 1. Should see ^x($ZCH(158)) or ^x($C(158)) otherwise.
+^x("a")=1
+# Use DSE DUMP to dump block 2 contents of global name ^x. Should see no INVSPECREC error
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+Block 2   Size 1F   Level 0   TN A V6
+Rec:1  Blk 2  Off 10  Size F  Cmpc 0  Ptr 4  Key ^x
+      10 : |  F  0  0  0 78  0  0  4  0  0  0  1  0  1  0               |
+           |  .  .  .  .  x  .  .  .  .  .  .  .  .  .  .               |
+# Use MUPIP INTEG to check integrity of database. Should see INVSPECREC error if 1st byte of collation header is not 1
+No errors detected by integ.
+Type           Blocks         Records          % Used      Adjacent
+Directory           2               2           0.671            NA
+Index               1               1           0.585             1
+Data                1               1           0.659             1
+Free               96              NA              NA            NA
+Total             100               4              NA             2
+
+#--------------------------------------------------
+# Test 1st byte of 4-byte collation header = 2
+#--------------------------------------------------
+# Use DSE OVERWRITE to set the 1st byte of 4-byte collation header to 2
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+# Use MUMPS to access global name ^x. Should not see INVSPECREC error.
+# Also should see ^x("a") only if 1st byte of collation header is 1. Should see ^x($ZCH(158)) or ^x($C(158)) otherwise.
+##TEST_AWK\^x\(\$(C|ZCH)\(158\)\)=1
+# Use DSE DUMP to dump block 2 contents of global name ^x. Should see no INVSPECREC error
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+Block 2   Size 1F   Level 0   TN B V6
+Rec:1  Blk 2  Off 10  Size F  Cmpc 0  Ptr 4  Key ^x
+      10 : |  F  0  0  0 78  0  0  4  0  0  0  2  0  1  0               |
+           |  .  .  .  .  x  .  .  .  .  .  .  .  .  .  .               |
+# Use MUPIP INTEG to check integrity of database. Should see INVSPECREC error if 1st byte of collation header is not 1
+Block:Offset Level
+%YDB-E-INVSPECREC, 
+       2:10     0  Invalid global modifier record
+                   Directory Path:  1:10, 2:10
+Keys from ^x to the end are suspect.
+Total error count from integ:		1.
+Type           Blocks         Records          % Used      Adjacent
+Directory           2               2           0.671            NA
+Index               1               1           0.585             1
+Data                1               1           0.659             1
+Free               96              NA              NA            NA
+Total             100               4              NA             2
+%YDB-E-INTEGERRS, Database integrity errors
+
+#--------------------------------------------------
+# Test 1st byte of 4-byte collation header = 127
+#--------------------------------------------------
+# Use DSE OVERWRITE to set the 1st byte of 4-byte collation header to 127
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+# Use MUMPS to access global name ^x. Should not see INVSPECREC error.
+# Also should see ^x("a") only if 1st byte of collation header is 1. Should see ^x($ZCH(158)) or ^x($C(158)) otherwise.
+##TEST_AWK\^x\(\$(C|ZCH)\(158\)\)=1
+# Use DSE DUMP to dump block 2 contents of global name ^x. Should see no INVSPECREC error
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+Block 2   Size 1F   Level 0   TN C V6
+Rec:1  Blk 2  Off 10  Size F  Cmpc 0  Ptr 4  Key ^x
+      10 : |  F  0  0  0 78  0  0  4  0  0  0 12 37  1  0               |
+           |  .  .  .  .  x  .  .  .  .  .  .  .  7  .  .               |
+# Use MUPIP INTEG to check integrity of database. Should see INVSPECREC error if 1st byte of collation header is not 1
+Block:Offset Level
+%YDB-E-INVSPECREC, 
+       2:10     0  Invalid global modifier record
+                   Directory Path:  1:10, 2:10
+Keys from ^x to the end are suspect.
+Total error count from integ:		1.
+Type           Blocks         Records          % Used      Adjacent
+Directory           2               2           0.671            NA
+Index               1               1           0.585             1
+Data                1               1           0.659             1
+Free               96              NA              NA            NA
+Total             100               4              NA             2
+%YDB-E-INTEGERRS, Database integrity errors
+
+#--------------------------------------------------
+# Test 1st byte of 4-byte collation header = 128
+#--------------------------------------------------
+# Use DSE OVERWRITE to set the 1st byte of 4-byte collation header to 128
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+# Use MUMPS to access global name ^x. Should not see INVSPECREC error.
+# Also should see ^x("a") only if 1st byte of collation header is 1. Should see ^x($ZCH(158)) or ^x($C(158)) otherwise.
+##TEST_AWK\^x\(\$(C|ZCH)\(158\)\)=1
+# Use DSE DUMP to dump block 2 contents of global name ^x. Should see no INVSPECREC error
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+Block 2   Size 1F   Level 0   TN D V6
+Rec:1  Blk 2  Off 10  Size F  Cmpc 0  Ptr 4  Key ^x
+      10 : |  F  0  0  0 78  0  0  4  0  0  0 12 38  1  0               |
+           |  .  .  .  .  x  .  .  .  .  .  .  .  8  .  .               |
+# Use MUPIP INTEG to check integrity of database. Should see INVSPECREC error if 1st byte of collation header is not 1
+Block:Offset Level
+%YDB-E-INVSPECREC, 
+       2:10     0  Invalid global modifier record
+                   Directory Path:  1:10, 2:10
+Keys from ^x to the end are suspect.
+Total error count from integ:		1.
+Type           Blocks         Records          % Used      Adjacent
+Directory           2               2           0.671            NA
+Index               1               1           0.585             1
+Data                1               1           0.659             1
+Free               96              NA              NA            NA
+Total             100               4              NA             2
+%YDB-E-INTEGERRS, Database integrity errors
+
+#--------------------------------------------------
+# Test 1st byte of 4-byte collation header = 255
+#--------------------------------------------------
+# Use DSE OVERWRITE to set the 1st byte of 4-byte collation header to 255
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+# Use MUMPS to access global name ^x. Should not see INVSPECREC error.
+# Also should see ^x("a") only if 1st byte of collation header is 1. Should see ^x($ZCH(158)) or ^x($C(158)) otherwise.
+##TEST_AWK\^x\(\$(C|ZCH)\(158\)\)=1
+# Use DSE DUMP to dump block 2 contents of global name ^x. Should see no INVSPECREC error
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+Block 2   Size 1F   Level 0   TN E V6
+Rec:1  Blk 2  Off 10  Size F  Cmpc 0  Ptr 4  Key ^x
+      10 : |  F  0  0  0 78  0  0  4  0  0  0 25 35  1  0               |
+           |  .  .  .  .  x  .  .  .  .  .  .  %  5  .  .               |
+# Use MUPIP INTEG to check integrity of database. Should see INVSPECREC error if 1st byte of collation header is not 1
+Block:Offset Level
+%YDB-E-INVSPECREC, 
+       2:10     0  Invalid global modifier record
+                   Directory Path:  1:10, 2:10
+Keys from ^x to the end are suspect.
+Total error count from integ:		1.
+Type           Blocks         Records          % Used      Adjacent
+Directory           2               2           0.671            NA
+Index               1               1           0.585             1
+Data                1               1           0.659             1
+Free               96              NA              NA            NA
+Total             100               4              NA             2
+%YDB-E-INTEGERRS, Database integrity errors
+# Use DSE OVERWRITE to set the 1st byte of 4-byte collation header to 1 (so dbcheck will pass)
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+# Do dbcheck.csh
