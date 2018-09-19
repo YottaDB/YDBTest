@@ -42,6 +42,11 @@ if ("dbg" == "$tst_image") then
 	setenv subtest_exclude_list "$subtest_exclude_list gctest"
 endif
 
+# Disable tests that start lots of processes on ARM boxes as response times on that platform have been seen to be non-deterministic
+if ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) then
+	setenv subtest_exclude_list "$subtest_exclude_list gtm8680"
+endif
+
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh
 
