@@ -19,12 +19,13 @@
 # List of subtests of the form "subtestname [author] description"
 #-------------------------------------------------------------------------------------
 # gtm8680  [vinay]  (moved from "v63003" test) Tests YDB does not slow down significantly when holding a large number of locks and/or processes
+# gctest   [nars]   (moved from "r120"   test) Test stringpool garbage collection performance with lots of strings in the pool
 #-------------------------------------------------------------------------------------
 echo "timing test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "gtm8680"
+setenv subtest_list_non_replic "gtm8680 gctest"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
@@ -35,6 +36,11 @@ endif
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
 setenv subtest_exclude_list	""
+
+if ("dbg" == "$tst_image") then
+	# gctest subtest stresses the stringpool garbage collection and runs very slow in dbg so disable it there.
+	setenv subtest_exclude_list "$subtest_exclude_list gctest"
+endif
 
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh

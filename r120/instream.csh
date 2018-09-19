@@ -16,7 +16,6 @@
 #-------------------------------------------------------------------------------------
 # zindcacheoverflow [ashok] Test fix to indirect code cache stats 4-byte overflow error
 # largelvarray      [nars]  Test local array performance does not deteriorate exponentially with large # of nodes
-# gctest            [nars]  Test stringpool garbage collection performance with lots of strings in the pool
 # patnotfound       [nars]  Test runtime behavior after PATNOTFOUND compile-time error
 # readtimeout       [nars]  Test that READ X:TIMEOUT works correctly if TIMEOUT is a fraction with more than 3 decimal digits
 # miximage          [nars]  Test MIXIMAGE error is appropriately issued when multiple images are mixed in same process
@@ -39,7 +38,7 @@ echo "r120 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "zindcacheoverflow largelvarray gctest patnotfound readtimeout miximage zeofprocfs"
+setenv subtest_list_non_replic "zindcacheoverflow largelvarray patnotfound readtimeout miximage zeofprocfs"
 setenv subtest_list_non_replic "$subtest_list_non_replic libyottadb zstepoveroutof msgprefix ydbdist divzero"
 setenv subtest_list_non_replic "$subtest_list_non_replic readcmdrecallhist nestedtriggers"
 setenv subtest_list_non_replic "$subtest_list_non_replic ctrlchandler ydb_gbldir ydb_maxtptime ydb_dbglvl"
@@ -63,11 +62,6 @@ endif
 # Disable certain time-sensitive tests on single-cpu systems as it uses expect (a terminal and interactive activity)
 if ($gtm_test_singlecpu) then
 	setenv subtest_exclude_list "$subtest_exclude_list readtimeout"
-endif
-
-if ("dbg" == "$tst_image") then
-	# gctest subtest stresses the stringpool garbage collection and runs very slow in dbg so disable it there.
-	setenv subtest_exclude_list "$subtest_exclude_list gctest"
 endif
 
 # Submit the list of subtests
