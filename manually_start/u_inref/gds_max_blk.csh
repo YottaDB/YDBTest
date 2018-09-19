@@ -4,6 +4,9 @@
 # Copyright (c) 2009-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -32,6 +35,15 @@ endif
 echo "################ TEST CASE 1 ################"
 echo "# Create a data base with 992M blocks"
 setenv gtm_test_disable_randomdbtn 1
+
+if ($gtm_platform_size != 64) then
+	# Disable MM on 32-bit platforms as an mmap of this 40Gb sized database would just not work.
+	# With BG though, we don't have such issues since only a subset of the database is cached in the global buffers.
+	setenv acc_meth BG
+	echo "# override acc_meth in test to BG (since MM on 32-bit platforms for 40GB db will not work)" >>&! settings.csh
+	echo "setenv acc_meth BG" >>&! settings.csh
+endif
+
 # Create data base with allocation of 1M
 $gtm_tst/com/dbcreate.csh mumps 1 . . 512 1048576 . . . . . $acc_meth
 
