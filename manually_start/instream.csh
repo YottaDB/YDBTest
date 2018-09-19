@@ -61,8 +61,8 @@ if ($gtm_platform_size != 64) then
 	setenv subtest_exclude_list "$subtest_exclude_list largelibtest"
 endif
 
-## Disable sem_counter everywhere for now. It needs 32K processes which can halt a system without LOTS of memory.
-# setenv subtest_exclude_list "$subtest_exclude_list sem_counter"
+# Disable sem_counter everywhere for now. It needs 32K processes which can halt a system without LOTS of memory.
+setenv subtest_exclude_list "$subtest_exclude_list sem_counter"
 
 $gtm_tst/com/submit_subtest.csh
 echo "Manually_Start tests DONE."
