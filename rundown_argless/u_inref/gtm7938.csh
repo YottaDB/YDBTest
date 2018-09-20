@@ -16,6 +16,11 @@
 
 # Verify that mu_rndwn_replpool_ch is not called outside of the mu_rndwn_replpool function
 
+unsetenv gtm_db_counter_sem_incr	# avoid semaphore counter overflow. This is needed in case $tst_image is dbg as that
+					# honors counter semaphore overflow (whereas prior_version always uses pro which does not).
+					# We do not want current/newer version to overflow the counter semaphore on a
+					# leftover shared memory created by an older version.
+
 # This test switches DIST directories. Do not rely on the default encryption
 # key setup as it depends on $gtm_dist, which will be different between
 # dbcreate and the following tests. Instead use gtm_obfuscation_key to have it
