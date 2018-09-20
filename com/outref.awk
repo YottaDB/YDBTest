@@ -262,6 +262,10 @@ BEGIN {
 	if (1 == ENVIRON["ydb_test_exclude_diskfollow_timeout"])
 		envir[no_options] = "EXCLUDE_DISKFOLLOW_TIMEOUT"
 	#
+	option_names[++no_options] = "ydb_test_exclude_sem_counter"
+	if (1 == ENVIRON["ydb_test_exclude_sem_counter"])
+		envir[no_options] = "EXCLUDE_SEM_COUNTER"
+	#
 	option_names[++no_options] = "is_tst_dir_ssd"
 	if (1 == ENVIRON["is_tst_dir_ssd"])
 		envir[no_options] = "TST_DIR_SSD"

@@ -86,8 +86,12 @@ if ($gtm_test_singlecpu) then
 
 endif
 
-# Disable sem_counter everywhere for now. It needs 32K processes which can halt a system without LOTS of memory.
-setenv subtest_exclude_list "$subtest_exclude_list sem_counter"
+if ($?ydb_test_exclude_sem_counter) then
+	if ($ydb_test_exclude_sem_counter) then
+		# An environment variable is defined to indicate the below subtest needs to be disabled on this host
+		setenv subtest_exclude_list "$subtest_exclude_list sem_counter"
+	endif
+endif
 
 $gtm_tst/com/submit_subtest.csh
 echo "Manually_Start tests DONE."
