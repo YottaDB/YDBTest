@@ -65,7 +65,13 @@ endif
 
 $MSR START INST1 INST2
 
-$gtm_tst/com/primary_crash.csh "NO_IPCRM"
+# The primary_crash.csh script below uses mupip/ftok etc. If this is a RHEL7 box and V63000A_R100 is the chosen
+# random prior version, we would see messages of the following form
+#	usr/library/V63000A_R100/pro/mupip: /usr/lib64/libtinfo.so.5: no version information available (required by /usr/library/V63000A_R100/pro/mupip)
+# This is a benign known issue due to that particular version on RHEL7 being a binary copied over from an Ubuntu box
+# which had a higher version of libtinfo (libtinfo.so.6). This is a warning and does not affect the functionality of
+# mupip/ftok etc. so we just filter such messages out below.
+$gtm_tst/com/primary_crash.csh "NO_IPCRM" |& $grep -v "libtinfo.so.5: no version information available"
 
 echo "# Switch to the current version now"
 source $gtm_tst/com/switch_gtm_version.csh $tst_ver $tst_image
