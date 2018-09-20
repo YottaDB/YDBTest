@@ -4,6 +4,9 @@
 # Copyright (c) 2010-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -76,9 +79,6 @@
 # turn off gtmdbglvl checking for this particular subtest due to run time
 # constraints
 unsetenv gtmdbglvl
-
-setenv gtm_white_box_test_case_enable 1
-setenv gtm_white_box_test_case_number 116
 
 $gtm_tst/com/dbcreate.csh mumps 5
 $gtm_exe/mumps -run setup^maxtrignames >&! setup.log

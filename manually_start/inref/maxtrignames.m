@@ -3,6 +3,9 @@
 ; Copyright (c) 2010-2015 Fidelity National Information 	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -162,7 +165,7 @@ setup
 	do text^dollarztrigger("gde"_reg($r(5))_"^maxtrignames","maxtrignames.gde")
 	do text^dollarztrigger("tfile^maxtrignames","maxtrignames.trg")
 	zsystem "$gtm_dist/mumps -run GDE @maxtrignames.gde"
-	set ^maxtrignames=$select(($ztrnlnm("gtm_dist")["/dbg"):1000,1:1000000)
+	set ^maxtrignames=1000000
 	quit
 
 
