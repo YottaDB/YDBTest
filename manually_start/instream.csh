@@ -78,9 +78,12 @@ if ($gtm_platform_size != 64) then
 	setenv subtest_exclude_list "$subtest_exclude_list largelibtest"
 endif
 
-# Disable heavyweight alsmemleak subtest on single-cpu systems (takes forever to run otherwise).
 if ($gtm_test_singlecpu) then
+	# Disable heavyweight alsmemleak subtest on single-cpu systems (takes forever to run otherwise).
 	setenv subtest_exclude_list "$subtest_exclude_list alsmemleak"
+	# Disable heavyweight maxtrignames subtest on single-cpu systems (takes > 10 hours to run).
+	setenv subtest_exclude_list "$subtest_exclude_list maxtrignames"
+
 endif
 
 # Disable sem_counter everywhere for now. It needs 32K processes which can halt a system without LOTS of memory.
