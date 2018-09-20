@@ -50,6 +50,11 @@ setenv subtest_exclude_list ""
 ## Disable align_string testing until string alignment is handled completely
 setenv subtest_exclude_list "$subtest_exclude_list align_string"
 
+# Disable ossmake as that requires a GT.M development environment setup
+# Besides, YottaDB builds are always cmake builds so no special need for this test like is the case with GT.M who
+# have a different in-house build compared to the cmake build.
+setenv subtest_exclude_list "$subtest_exclude_list ossmake"
+
 ## Disale 4g_dbcertify on platforms without a V4 version
 if ($?gtm_platform_no_V4) then
 	setenv subtest_exclude_list "$subtest_exclude_list 4g_dbcertify"
