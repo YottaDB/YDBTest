@@ -55,6 +55,12 @@ setenv subtest_exclude_list "$subtest_exclude_list align_string"
 # have a different in-house build compared to the cmake build.
 setenv subtest_exclude_list "$subtest_exclude_list ossmake"
 
+# Disable gds_max_blk subtest on hosts that do not have an SSD.
+# On HDD, a simple MUPIP INTEG on the 20TB database takes hours to finish.
+if (! $is_tst_dir_ssd) then
+	setenv subtest_exclude_list "$subtest_exclude_list gds_max_blk"
+endif
+
 ## Disale 4g_dbcertify on platforms without a V4 version
 if ($?gtm_platform_no_V4) then
 	setenv subtest_exclude_list "$subtest_exclude_list 4g_dbcertify"

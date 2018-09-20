@@ -20,7 +20,7 @@ setenv gtm_white_box_test_case_number 24
 # Avoid NOSPACECRE error so that sparse DB of big size can be created.
 setenv gtmdbglvl 0x00100000
 # With defer allocate, the space needed for the database file in the filesystem is 40Gb
-# Without defer allocate the space needed would be 512 times this i.e. 20Tb which is definitely not available. So force defer allocate
+# Without defer allocate the space needed would be 512 times this i.e. 20TB which is definitely not available. So force defer allocate
 setenv gtm_test_defer_allocate 1
 # Disable random 4-byte collation header in DT leaf block since this test output is sensitive to DT leaf block layout
 setenv gtm_dirtree_collhdr_always 1
@@ -37,10 +37,10 @@ echo "# Create a data base with 992M blocks"
 setenv gtm_test_disable_randomdbtn 1
 
 if ($gtm_platform_size != 64) then
-	# Disable MM on 32-bit platforms as an mmap of this 40Gb sized database would just not work.
+	# Disable MM on 32-bit platforms as an mmap of this 20TB sized database would just not work.
 	# With BG though, we don't have such issues since only a subset of the database is cached in the global buffers.
 	setenv acc_meth BG
-	echo "# override acc_meth in test to BG (since MM on 32-bit platforms for 40GB db will not work)" >>&! settings.csh
+	echo "# override acc_meth in test to BG (since MM on 32-bit platforms for 20TB db will not work)" >>&! settings.csh
 	echo "setenv acc_meth BG" >>&! settings.csh
 endif
 
@@ -60,7 +60,7 @@ set max=495
 set i = 1
 while ( $i != $max)
 	foreach reg ($regions)
-		$MUPIP extend $reg -block=2097152 >>& extend_992.log
+		$MUPIP extend $reg -block=2097152 >& extend_$i.log
 	end
 	@ i = $i + 1
 end
@@ -72,21 +72,21 @@ end
 #			 = 1114112
 
 foreach reg ($regions)
-	$MUPIP extend $reg -block=1114112 >>& extend_992.log
+	$MUPIP extend $reg -block=1114112 >& extend_${reg}_992.log
 end
 echo "# Check the integrity of the database"
-$MUPIP integ -region "*"
+$MUPIP integ -region "*" |& tee integ1.log
 
 echo "# Do an update"
-$gtm_exe/mumps -run %XCMD 'set ^x=50'
+$gtm_exe/mumps -run %XCMD 'set ^x=50' |& tee update.log
 
 echo "# Check the integrity of the database"
-$MUPIP integ -region "*"
+$MUPIP integ -region "*" |& tee integ2.log
 
 # Total blocks = 1040187392
 # last local bit map block = (1038155776 - 512) = 1040186880 = 0x3DFFFE00
 echo "# Dump the last local bitmap block"
-$DSE <<EOF
+$DSE << EOF |& tee dse.log
 find -reg=DEFAULT
 dump -bl=3DFFFE00
 EOF
@@ -96,7 +96,8 @@ echo "# Try to extend data base to greater than 992M value and expect it to erro
 
 echo "# extend database blocks to 992M + 1 blocks"
 foreach reg ($regions)
-	$MUPIP extend $reg -block=1
+	# Use .logx (not .log) below to avoid MUNOACTION error from being caught by test framework later
+	$MUPIP extend $reg -block=1 |& tee extend_${reg}_test2.logx
 end
 
 $gtm_tst/com/dbcheck.csh

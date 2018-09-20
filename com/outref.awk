@@ -262,6 +262,12 @@ BEGIN {
 	if (1 == ENVIRON["ydb_test_exclude_diskfollow_timeout"])
 		envir[no_options] = "EXCLUDE_DISKFOLLOW_TIMEOUT"
 	#
+	option_names[++no_options] = "is_tst_dir_ssd"
+	if (1 == ENVIRON["is_tst_dir_ssd"])
+		envir[no_options] = "TST_DIR_SSD"
+	else
+		envir[no_options] = "TST_DIR_HDD"
+	#
 	option_names[++no_options] = "real_mach_type"
 	if ("armv6l" == ENVIRON["real_mach_type"])
 		envir[no_options] = "MACHTYPE_ARMV6L"
