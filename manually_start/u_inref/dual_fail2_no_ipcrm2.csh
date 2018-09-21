@@ -28,6 +28,7 @@
 #-------------------------------------------------------|---------------------------------------
 #
 #
+
 source $gtm_tst/$tst/u_inref/setenvdualfail.csh
 # For this test buffer size is forced to be 16 MB
 setenv tst_buffsize 16777216

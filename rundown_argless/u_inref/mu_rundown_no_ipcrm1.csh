@@ -23,6 +23,9 @@
 ## !!! NOTE !!! ##
 setenv gtm_test_crash 1
 
+# Below is needed since this test does a "NO_IPCRM" and we do not want DBDANGER messages from freezing the instance
+source $gtm_tst/com/adjust_custom_errors_for_no_ipcrm_test.csh
+
 $gtm_tst/com/dbcreate.csh mumps 8 125 1000
 
 echo "GTM Process starts in background..."

@@ -23,14 +23,8 @@
 ## !!! NOTE !!! ##
 setenv gtm_test_crash 1
 
-if ($?gtm_custom_errors) then
-	# Since this test does a kill -9, it is possible we get a DBDANGER in the syslog. If custom errors is turned on,
-	# that would cause an instance freeze which would hang this test. So remove DBDANGER from the list of errors
-	# that can turn on instance freeze.
-	$grep -v 'DBDANGER' $gtm_custom_errors >&! new_custom_errors_sample.txt
-	$cprcp new_custom_errors_sample.txt $SEC_SIDE
-	setenv gtm_custom_errors new_custom_errors_sample.txt
-endif
+# Below is needed since this test does a "NO_IPCRM" and we do not want DBDANGER messages from freezing the instance
+source $gtm_tst/com/adjust_custom_errors_for_no_ipcrm_test.csh
 
 $gtm_tst/com/dbcreate.csh mumps 8 125 1000
 
