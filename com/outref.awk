@@ -276,6 +276,12 @@ BEGIN {
 	if ("armv6l" == ENVIRON["real_mach_type"])
 		envir[no_options] = "MACHTYPE_ARMV6L"
 	#
+	option_names[++no_options] = "big_files_present"
+	if ("0" == ENVIRON["big_files_present"])
+		envir[no_options] = "BIG_FILES_ABSENT"
+	else
+		envir[no_options] = "BIG_FILES_PRESENT"
+	#
 	option_names[++no_options] = "gtm_test_dynamic_literals"
 	if ("DYNAMIC_LITERALS" == ENVIRON["gtm_test_dynamic_literals"])
 		envir[no_options] = "DYNAMIC_LITERALS"

@@ -65,17 +65,17 @@ endif
 # On HDD, it takes many hours to finish that the TEST-E-HANG alert kicks in.
 if (! $is_tst_dir_ssd) then
 	setenv subtest_exclude_list "$subtest_exclude_list largelibtest"
+else if (0 == $big_files_present) then
+	# $gtm_test/big_files directory is not present. So exclude this subtest as it needs files from there.
+	setenv subtest_exclude_list "$subtest_exclude_list largelibtest"
+else if ($gtm_platform_size != 64) then
+	## Disable largelibtest on non-64-bit machines
+	setenv subtest_exclude_list "$subtest_exclude_list largelibtest"
 endif
 
 ## Disable 4g_dbcertify on platforms without a V4 version
 if ($?gtm_platform_no_V4) then
 	setenv subtest_exclude_list "$subtest_exclude_list 4g_dbcertify"
-endif
-
-## Disable largelibtest on non-64-bit machines
-set hostn = $HOST:r:r:r
-if ($gtm_platform_size != 64) then
-	setenv subtest_exclude_list "$subtest_exclude_list largelibtest"
 endif
 
 if ($gtm_test_singlecpu) then

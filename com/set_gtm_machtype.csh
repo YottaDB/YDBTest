@@ -132,4 +132,11 @@ setenv gtm_test_glibc_225_plus `echo "$glibcver > 2.25" | bc`
 # We cannot use mach_type since that has already been modified to say ARMVXL for ARMV7L or ARMV6L
 setenv real_mach_type `uname -m`
 
+# Determine if big_files directory is available. Used later to decide whether a few subtests can be enabled or not.
+if (-e $gtm_test/big_files) then
+	setenv big_files_present 1
+else
+	setenv big_files_present 0
+endif
+
 ##### HOST SPECIFIC FUNNIES ####
