@@ -3,17 +3,9 @@
 #								#
 # Copyright (c) 2009-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
-#################################################################
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
-#								#
-#	This source code contains the intellectual property	#
-#	of its copyright holder(s), and is made available	#
-#	under a license.  If you do not know the terms of	#
-#	the license, please stop and do not read further.	#
-#								#
-#################################################################
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -33,7 +25,6 @@
 # ointeg6    [s7kk]     test online integ with encryption
 # ointeg8    [s7kk]     test that kill is handled properly including during rundown
 # ointegcli  [maimoneb] command line parameter combinations
-# profileOLI [maimoneb] run the profile test with OLIs in the background
 # 4GBOLI     [maimoneb] test >4GB database and multiple simultaneous snapshots
 # ointegbkg  [maimoneb] run OLI in the background, e.g., for profile perf test
 # ointeg9    [s7kk]	run OLI in the background on a WorldVista DB and issue Kill -15 to ensure cleanup is done
@@ -42,7 +33,7 @@ echo "online_integ test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "ointeg1 ointeg2 ointeg3 ointeg5 ointeg6 ointeg8 ointegcli 4GBOLI profileOLI ointeg9 fast_integ"
+setenv subtest_list_non_replic "ointeg1 ointeg2 ointeg3 ointeg5 ointeg6 ointeg8 ointegcli 4GBOLI ointeg9 fast_integ"
 setenv subtest_list_replic     "ointeg4"
 
 # Use subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
@@ -87,11 +78,6 @@ if (("MM" == "$acc_meth") || ("NON_ENCRYPT" == "$test_encryption")) then
 	setenv subtest_exclude_list "$subtest_exclude_list ointeg6"
 endif
 
-# On z/OS, temporarily filter out profileOLI test until the profile perf test is available on z/OS
-if ( "os390" == $gtm_test_osname ) then
-	setenv subtest_exclude_list "$subtest_exclude_list profileOLI"
-endif
-
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
 else
@@ -99,18 +85,12 @@ else
 endif
 
 if ($LFE == "L") then
-	setenv subtest_exclude_list "$subtest_exclude_list profileOLI 4GBOLI"
-endif
-
-# Exclude profileOLI test for atlst2000 since run time takes too long since moving to Profile v734
-set hostn = $HOST:r:r:r
-if ("atlst2000" == "$hostn") then
-	setenv subtest_exclude_list "$subtest_exclude_list profileOLI"
+	setenv subtest_exclude_list "$subtest_exclude_list 4GBOLI"
 endif
 
 if ($?gtm_test_temporary_disable) then
 	# All of the below need $gtm_test/big_files/online_integ/
-	setenv subtest_exclude_list "$subtest_exclude_list 4GBOLI profileOLI ointeg9"
+	setenv subtest_exclude_list "$subtest_exclude_list 4GBOLI ointeg9"
 endif
 
 # default to V5 database (ointeg2 will change to V4) and randomly enable journalling
