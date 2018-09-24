@@ -16,6 +16,14 @@ set nreadswithinput [expr {int(rand()*${maxindex}*2)}]
 send -- "set ^nreadswithinput=$nreadswithinput\r"
 expect -exact "YDB>"
 
+puts "# Record parent pid in ^parent for child to send MUPIP INTRPT"
+send -- "set ^parent=\$j\r"
+expect -exact "YDB>"
+
+puts "# Start a background process to send MUPIP INTRPT in the middle of READs"
+send -- "do start^readcmdrecallhist\r"
+expect -exact "YDB>"
+
 set ncursorupordowncnt [expr {int(rand()*8)} + 1]
 send -- "set ^ncursorupordowncnt=$ncursorupordowncnt\r"
 expect -exact "YDB>"
@@ -120,6 +128,10 @@ for {set j 0} {$j < $ncursorupordowncnt} {incr j 1} {
 	set readhistindex $curreadhistindex
 	incr i 1
 }
+
+puts "# Wait for the backgrounded MUPIP INTRPT process to terminate"
+send -- "do stop^readcmdrecallhist\r"
+expect -exact "YDB>"
 
 puts "\n# Halt"
 send -- "halt\r"

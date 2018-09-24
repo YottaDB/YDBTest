@@ -51,6 +51,7 @@ foreach file (readcmd1_simple.exp readcmd2_complex.exp)
 			echo "# Also test that additions to history don't happen if it is a duplicate of most recently added line"
 			echo "# Also test that additions to history don't happen if it is an empty line"
 			echo "# Also test using UTF-8 characters (which are multi-byte as well as have multi-column display width)"
+			echo "# Also test that MUPIP INTRPT in the middle of READs is handled even if partial input has been read"
 			echo "-----------------------------------------------------------------------"
 
 			# Cannot display full contents of complex test as it is random output
