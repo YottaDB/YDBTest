@@ -60,7 +60,7 @@ setenv gtm_white_box_test_case_number 29
 echo "Doing Fail over."
 $DO_FAIL_OVER
 
-$pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/backup_dbjnl.csh bak1 '*.dat *.mjl*,*.gld,*.repl' cp nozip"
+$pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/backup_dbjnl.csh bak1 '*.dat *.mjl* *.gld *.repl' cp nozip"
 
 # ROLLBACK ON PRIMARY SIDE (B)
 echo "Doing rollback on (B):"

@@ -60,16 +60,12 @@ setenv gtm_white_box_test_case_number 29
 echo "Doing Fail over."
 $DO_FAIL_OVER
 
-$pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/backup_dbjnl.csh bak1 '*.dat *.mjl*,*.gld,*.repl' cp nozip"
-$pri_shell "$pri_getenv; cd $PRI_SIDE;"'echo Do rundown on B:'
-$pri_shell "$pri_getenv; cd $PRI_SIDE;"'$MUPIP rundown -override -reg "*"' >& rundown1.tmp
-$grep "%YDB-I-MUFILRNDWNSUC" rundown1.tmp | sort -f
-$grep "%YDB-I-MUJPOOLRNDWNSUC" rundown1.tmp | $tst_awk 'sub(/ [0-9]+/," xxx")'| sort -f
+$pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/backup_dbjnl.csh bak1 '*.dat *.mjl* *.gld *.repl' cp nozip"
 
 # ROLLBACK ON PRIMARY SIDE (B)
 echo "Doing rollback on B:"
-$pri_shell "$pri_getenv; cd $PRI_SIDE;"'echo $gtm_tst/com/mupip_rollback.csh -losttrans=lost1.glo >>&! rollback1.log'
-$pri_shell "$pri_getenv; cd $PRI_SIDE;"'$gtm_tst/com/mupip_rollback.csh -losttrans=lost1.glo "*" >>&! rollback1.log; $grep "successful" rollback1.log'
+$pri_shell "$pri_getenv; cd $PRI_SIDE;"'echo $MUPIP journal -rollback -backward -losttrans=lost1.glo "*" >>&! rollback1.log'
+$pri_shell "$pri_getenv; cd $PRI_SIDE;"'$MUPIP journal -rollback -backward -losttrans=lost1.glo "*" >>&! rollback1.log; $grep -w "successful" rollback1.log'
 # PRIMARY SIDE (B) UP
 echo "Restarting (B) as primary..."
 setenv start_time `date +%H_%M_%S`
@@ -80,15 +76,11 @@ $pri_shell "$pri_getenv; $gtm_tst/com/srcstat.csh "AFTER_PRI_B_UP:" < /dev/null"
 # SECONDARY SIDE (A) UP
 cd $SEC_SIDE
 $gtm_tst/com/backup_dbjnl.csh bak2 '*.dat *.mjl* *.gld *.repl' cp nozip
-echo "Doing rundown on (A):"
-$MUPIP rundown -override -reg "*" >& rundown2.tmp
-$grep "%YDB-I-MUFILRNDWNSUC" rundown2.tmp | sort -f
-$grep "%YDB-I-MUJPOOLRNDWNSUC" rundown2.tmp | $tst_awk 'sub(/ [0-9]+/," xxx")'| sort -f
 #
 echo "Doing rollback on (A):"
-echo "$gtm_tst/com/mupip_rollback.csh -fetchresync=$portno -losttrans=fetch.glo " >>&! rollback2.log
-$gtm_tst/com/mupip_rollback.csh -fetchresync=$portno -losttrans=fetch.glo "*" >>&! rollback2.log
-$grep "successful" rollback2.log
+echo "$MUPIP journal -rollback -backward -fetchresync=$portno -losttrans=fetch.glo " >>&! rollback2.log
+$MUPIP journal -rollback -backward -fetchresync=$portno -losttrans=fetch.glo "*" >>&! rollback2.log
+$grep -w "successful" rollback2.log
 echo "Restarting (A) as secondary..."
 $gtm_tst/com/RCVR.csh "." $portno $start_time >&!  START_${start_time}.out
 $gtm_tst/com/rfstatus.csh "BOTH_UP:"

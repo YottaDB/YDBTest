@@ -297,7 +297,7 @@ BEGIN {
 	if ($0 ~ /PID        NODE             USER         TERM JPV_TIME/) jnl_flag1line++
 	###
 	# Journal file label
-	strexp = "Journal file label      GDSJNL27"
+	strexp = "Journal file label      YDBJNL44"
 	strrep = "Journal file label      ##FILTERED##"
 	gsub(strexp,strrep)
 	# Journal Creation Time         2009/03/12 08:24:17

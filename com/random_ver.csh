@@ -15,13 +15,11 @@
 #################################################################
 #
 # the script picks a random version to test from a list of available set of versions.
-# The script is called with an argument that will say which list of versions to be picked up.
-# It can be
+# The script is called with one or more arguments that will say which list of versions to be picked up.
+# The -type qualifier, if specified, can be followed by one of the following choices
 #	"V4"         - pickup a random V4 version
-#	"ds"	     - pick up a random V4 or V5 (that is dualsite) version
-#	"ms"         - pick up any of the available prior multisite versions
+#	"ms"         - pick up any of the available prior multisite versions that are supported with the current version
 #	"any"        - pick up any of all available prior versions
-#	"non_replcmp"- pick any version prior to V53003 that does not support compression with replication
 #
 # To force the prior version to always be one version at test start-up, either doall.csh or
 # gtmtest.csh, add -env gtm_force_prior_ver=VERSION to the command.
@@ -147,15 +145,8 @@ if ($?vertype) then
 		set maximum = "$tst_ver"
 		set islt    = "<"
 	breaksw
-	case "ds":
-		set minimum = "V44002" # V44002 is the min supported version after triggers
-		set isgt    = ">="
-		set maximum = "V51000" # V51000 is the first MULTISITE version. So anything before that
-		set islt    = "<"
-	breaksw
 	case "ms":
-		set minimum = "V54001"	# V51000 is the first multisite version, but we have 64-bit build only from V54001
-					# hence this minimum choice.
+		set minimum = "V60000"	# Starting r1.24, GT.M V6.0-000 is the earliest supported version for replication
 		set isgt    = ">="
 		set maximum = "$tst_ver" # A version before the current version
 		set islt    = "<"
@@ -164,12 +155,6 @@ if ($?vertype) then
 		set minimum = "V44002" # V44002 is the min supported version after triggers
 		set isgt    = ">="
 		set maximum = "$tst_ver" # A version before the current version
-		set islt    = "<"
-	breaksw
-	case "non_replcmp":
-		set minimum = "V44002" # V44002 is the min supported version after triggers
-		set isgt    = ">="
-		set maximum = "V53003" # The first version with replication compression feature is V53003
 		set islt    = "<"
 	breaksw
 	case "shlib_mismatch":

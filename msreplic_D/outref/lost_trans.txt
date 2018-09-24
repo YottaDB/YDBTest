@@ -246,7 +246,7 @@ Snapshot of instance file on INST4 written into instancefile_##FILTERED##NO.out
   	--> We expect transactions with seqnos 71-100 to be in lost1_INST1.glo (L1). Also check the first line of the
 	    lost transaction file, the third field should show PRIMARY (newly introduced field that shows
 	    (previous)PRIMARY or (previous)SECONDARY).
-GDSJEX07 ROLLBACK PRIMARY INSTANCE1
+YDBJEX08 ROLLBACK PRIMARY INSTANCE1
 ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/analyze_jnl_extract.csh lost1_INST1.glo 71 100'==
 05 71 ^GBLA(1)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
 05 72 ^GBLA(2)="3_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
@@ -816,7 +816,7 @@ PASS from lost transaction analysis
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST2 RCV=INST1 $gtm_tst/com/cp_remote_file.csh __SRC_DIR__/lost2_INST2.glo _REMOTEINFO___RCV_DIR__/'==
 #  Transfer lost2_INST2.glo to INST3
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST2 RCV=INST3 $gtm_tst/com/cp_remote_file.csh __SRC_DIR__/lost2_INST2.glo _REMOTEINFO___RCV_DIR__/'==
-GDSJEX07 ROLLBACK PRIMARY INSTANCE2
+YDBJEX08 ROLLBACK PRIMARY INSTANCE2
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST3 RCV=INST2 setenv gtm_repl_instsecondary __RCV_INSTNAME__; $MUPIP replic -source -needrestart'==
 	--> We expect a "DOES NOT NEED to be restarted" message since a rollback command was run. (Note we are
 	    testing the usage of gtm_repl_instsecondary as well).
@@ -925,7 +925,7 @@ The Zqgblmod seqno value is as expected, (0 vs 0)
   	--> We expect transactions with seqnos 101-130 in lost2_INST1.glo (X1). Note we will not need to apply this
 	    since the same lost transactions (and more) are already in L2. Also check that the first line indicates
 	    SECONDARY type of lost transaction file.
-GDSJEX07 ROLLBACK SECONDARY INSTANCE1
+YDBJEX08 ROLLBACK SECONDARY INSTANCE1
 ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/analyze_jnl_extract.csh lost2_INST1.glo 101 130'==
 05 101 ^GBLA(31)="4_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"
 05 102 ^GBLA(32)="4_A...zABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr"

@@ -1,6 +1,9 @@
 #################################################################
 #								#
-#	Copyright 2003, 2014 Fidelity Information Services, Inc	#
+# Copyright 2003, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -24,7 +27,7 @@
 #        40 <-- ... variable length content
 #
 ####################################
-# PLAIN extract : GDSJEX07
+# PLAIN extract : YDBJEX08
 # -------------------------
 # NULL    00\time\tnum\pid\clntpid\jsnum
 # PINI(U) 01\time\tnum\pid\nnam\unam\term\clntpid\clntnnam\clntunam\clntterm
@@ -42,7 +45,7 @@
 # ZTRIG   12\time\tnum\pid\clntpid\token_seq\strm_num\strm_seq\updnum\nodeflags\node
 # LGTRIG  13\time\tnum\pid\clntpid\token_seq\strm_num\strm_seq\updnum\lgtrig
 #
-# DETAIL extract : GDSJDX07
+# DETAIL extract : YDBJDX07
 # --------------------------
 # PINI(U) time\tnum\chksum\pid\nnam\unam\term\clntpid\clntnnam\clntunam\clntterm
 # PINI(V) time\tnum\chksum\pid\nnam\unam\term\mode\logintime\image_count\pname\clntpid\clntnnam\clntunam\clntterm\clntmode\clntlogintime\clntimage_count\clntpname

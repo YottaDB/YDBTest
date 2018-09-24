@@ -1,12 +1,5 @@
-# If a pre V5.5-000 receiver uses -UPDATERESYNC and connects to post V5.5-000 source no error is thrown
-==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2'==
-==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2 updateresync'==
-==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
-==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
-Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
-Shutting down Primary Source Server Server in ##TEST_PATH##
 # If a supplementary instance passive source is started without -updok, activation should NOT be allowed if other processes are accessing the instance
-==Executing MULTISITE_REPLIC 'RUN INST4 $MUPIP replic -instance_create -name=$gtm_test_msr_INSTNAME4 -supplementary ; $gtm_tst/com/jnl_on.csh $test_jnldir -replic=on'==
+==Executing MULTISITE_REPLIC 'RUN INST4 $MUPIP replic -instance_create $gtm_test_qdbrundown_parms -name=$gtm_test_msr_INSTNAME4 -supplementary ; $gtm_tst/com/jnl_on.csh $test_jnldir -replic=on'==
 ==Executing MULTISITE_REPLIC 'RUN INST4 $MUPIP replic -source -start -passive -log=passive_INST4.log -instsecondary=$gtm_test_msr_INSTNAME1'==
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating START of source server for secondary instance [INSTANCE1]
 # Now activate the passive source server
@@ -27,29 +20,6 @@ Error UPDSYNCINSTFILE seen in ##FILTERED##RCVR_##TIMESTAMP##.log as expected:
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST5 SRC=INST4 $MUPIP replic -source -shutdown -timeout=0 -instsecondary=__SRC_INSTNAME__ >&! passivesrc_shut_INST4INST5.out'==
 ==Executing MULTISITE_REPLIC 'REFRESHLINK INST4 INST5'==
 ==Executing MULTISITE_REPLIC 'STOPSRC INST4 INST5'==
-# Expect the rcvr to exit with YDB-E-REPL2OLD if it attempts to connect to pre V5.5-000 source
-==Executing MULTISITE_REPLIC 'STARTSRC INST2 INST4 RP'==
-==Executing MULTISITE_REPLIC 'RUN INST4 $gtm_tst/com/wait_for_log.csh -log ##FILTERED##RCVR_##TIMESTAMP##.log -message REPL2OLD -duration 120 -waitcreation'==
-==Executing MULTISITE_REPLIC 'RUN INST4 ##TEST_COM_PATH##/check_error_exist.csh ##FILTERED##RCVR_##TIMESTAMP##.log REPL2OLD'==
-----------
-Error REPL2OLD seen in ##FILTERED##RCVR_##TIMESTAMP##.log as expected:
-%YDB-E-REPL2OLD, Instance INSTANCE2 uses a GT.M/YottaDB version that does not support connection with the current version on instance INSTANCE4
-----------
-# The receiver would have exited with the above error. Manually shutdown the update process and passive server
-==Executing MULTISITE_REPLIC 'RUN INST4 set msr_dont_chk_stat ; $MUPIP replic -receiver -shutdown -timeout=0 >&! updateproc_shut_IST2INST4.out'==
-==Executing MULTISITE_REPLIC 'RUN RCV=INST4 SRC=INST2 $MUPIP replic -source -shutdown -timeout=0 -instsecondary=__SRC_INSTNAME__ >&! passivesrc_shut_INST2INST4.out'==
-==Executing MULTISITE_REPLIC 'REFRESHLINK INST2 INST4'==
-==Executing MULTISITE_REPLIC 'STOPSRC INST2 INST4'==
-# Expect the src to exit with YDB-E-REPL2OLD if it attempts to connect to pre V5.5-000 receiver
-==Executing MULTISITE_REPLIC 'STARTRCV INST4 INST2'==
-==Executing MULTISITE_REPLIC 'RUN INST4 $gtm_tst/com/wait_for_log.csh -log ##FILTERED##SRC_##TIMESTAMP##.log -message REPL2OLD -duration 120 -waitcreation'==
-==Executing MULTISITE_REPLIC 'RUN INST4 ##TEST_COM_PATH##/check_error_exist.csh ##FILTERED##SRC_##TIMESTAMP##.log REPL2OLD'==
-----------
-Error REPL2OLD seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
-%YDB-E-REPL2OLD, Instance INSTANCE2 uses a GT.M/YottaDB version that does not support connection with the current version on instance INSTANCE4
-----------
-==Executing MULTISITE_REPLIC 'REFRESHLINK INST4 INST2'==
-==Executing MULTISITE_REPLIC 'STOPRCV INST4 INST2'==
 # Expect src of INST4 which is supplementary to exit with YDB-E-SECNOTSUPPLEMENTARY when it tries to connect to rcvr of INST1, which is non-supplementary
 ==Executing MULTISITE_REPLIC 'STARTRCV INST4 INST1'==
 ==Executing MULTISITE_REPLIC 'RUN INST4 $gtm_tst/com/wait_for_log.csh -log ##FILTERED##SRC_##TIMESTAMP##.log -message SECNOTSUPPLEMENTARY -duration 120 -waitcreation'==

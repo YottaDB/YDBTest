@@ -3,6 +3,9 @@
 ; Copyright (c) 2015 Fidelity National Information 		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -34,7 +37,7 @@ timecheck;
 	set prev=0
 	for i=1:1:max do
 	. set time=$piece(line(i),"\",2)
-	. if time="" quit  ; those lines that dont contain a timestamp ignore them (e.g. first line contains "GDSJDX07")
+	. if time="" quit  ; those lines that dont contain a timestamp ignore them (e.g. first line contains "YDBJDX07")
 	. set time=$piece(time,",",1)*24*60*60+$piece(time,",",2)
 	. if prev>time write "Time Verification FAILED",!  zshow "*"  halt
 	. set prev=time

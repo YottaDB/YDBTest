@@ -65,7 +65,6 @@
 # maxparse_default	[ABS] test parsing of maximum values with a default sized DB
 # maxparse_medium	[ABS] test parsing of maximum values with a medium (aka half of max values) sized DB
 # maxparse_large	[ABS] test parsing of maximum values with a large (all max values) sized DB
-# trig2notrig		[ABS] test trig2notrig warnings
 # trigzsy		[ABS] test zsystem calls from a trigger
 # ztrigio		[MSC] test io inside of triggers
 # symmetry		[ABS] symmetry of trigger installation
@@ -181,8 +180,8 @@ setenv subtest_list_non_replic "$subtest_list_non_replic gtm8273 gtm8389 gtm8399
 setenv subtest_list_non_replic_FE "trigthrash"
 
 # Replic tests
-setenv subtest_list_replic     "replictrigger ztworm_restart_rlbk ztworepl trigreplstate trig2notrig trigdefnosync"
-setenv subtest_list_replic     "$subtest_list_replic trigreplstack gtm7509 gtm8207stdnull gtm7083a trigrepl_priorver"
+setenv subtest_list_replic     "replictrigger ztworm_restart_rlbk ztworepl trigreplstate trigdefnosync"
+setenv subtest_list_replic     "$subtest_list_replic trigreplstack gtm7509 gtm8207stdnull gtm7083a"
 
 # Unicode tests
 setenv unicode_testlist		"testxecuteunicode testpiecesunicode trigcolunicode "
@@ -225,22 +224,12 @@ endif
 
 # If the platform/host does not have prior GT.M versions, disable tests that require them
 if ($?gtm_test_nopriorgtmver) then
-       setenv subtest_exclude_list "$subtest_exclude_list gtm7083 trig2notrig gtm7509 gtm7083a trigrepl_priorver"
+       setenv subtest_exclude_list "$subtest_exclude_list gtm7083 gtm7083a"
 else if ("dbg" == "$tst_image") then
        # We do not have dbg builds of versions [V54002,V62000] needed by the gtm7083 subtest so disable it.
        setenv subtest_exclude_list "$subtest_exclude_list gtm7083"
-       # We do not have dbg builds of versions [V51000,V54000) needed by the trig2notrig subtest so disable it.
-       setenv subtest_exclude_list "$subtest_exclude_list trig2notrig"
-       # We do not have dbg builds of versions [V54002,V61000] needed by the gtm7509 subtest so disable it.
-       setenv subtest_exclude_list "$subtest_exclude_list gtm7509"
        # We do not have dbg builds of V62000 needed by the gtm7083a subtest so disable it.
        setenv subtest_exclude_list "$subtest_exclude_list gtm7083a"
-       # We do not have dbg builds of V62000 or [V54000,V61000] needed by the trigrepl_priorver subtest so disable it.
-       setenv subtest_exclude_list "$subtest_exclude_list trigrepl_priorver"
-else if ($?ydb_environment_init) then
-	# In a YDB environment (i.e. non-GG setup), we do not have prior versions that are needed
-	# by the below subtest. Therefore disable it.
-       setenv subtest_exclude_list "$subtest_exclude_list trig2notrig"
 endif
 
 # Submit the list of subtests

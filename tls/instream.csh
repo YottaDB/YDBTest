@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -18,7 +18,6 @@
 # List of subtests of the form "subtestname [author] description"
 #-------------------------------------------------------------------------------------
 
-# replnotls [karthikk]	Verify that when SSL/TLS enabled replication servers issue REPLNOTLS when connecting to older versions.
 # errors    [karthikk]	Test various error scenarios.
 # libconfig [karthikk]	Test that both encryption and TLS configuration files can reside in the same file.
 
@@ -32,7 +31,7 @@ endif
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic ""
-setenv subtest_list_replic     "replnotls errors libconfig"
+setenv subtest_list_replic     "errors libconfig"
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
@@ -44,25 +43,6 @@ endif
 setenv subtest_exclude_list	""
 if ("NON_ENCRYPT" == "$test_encryption") then
 	setenv subtest_exclude_list "$subtest_exclude_list libconfig"
-else
-	setenv subtest_exclude_list "$subtest_exclude_list replnotls"
-endif
-
-# If the platform/host does not have prior GT.M versions, disable tests that require them
-if ($?gtm_test_nopriorgtmver) then
-	setenv subtest_exclude_list "$subtest_exclude_list replnotls"
-else if ($?ydb_environment_init) then
-	# We are in a YDB environment (i.e. non-GG setup)
-	source $gtm_tst/com/set_gtm_machtype.csh	# to setenv "gtm_test_linux_distrib"
-	if ("dbg" == "$tst_image") then
-		# We do not have dbg builds of versions [V53004,V60003] needed by the below subtest so disable it.
-		setenv subtest_exclude_list "$subtest_exclude_list replnotls"
-	else if ("arch" == $gtm_test_linux_distrib) then
-		# The pro builds of versions [V51000,V54003] needed by the below subtest occasionally get SIG-11 on certain hosts.
-		# This is due to a known issue that is fixed in V55000 but this test requires those older versions.
-		# So disable this test on those hosts.
-		setenv subtest_exclude_list "$subtest_exclude_list replnotls"
-	endif
 endif
 
 # Submit the list of subtests

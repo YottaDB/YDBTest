@@ -46,12 +46,12 @@ DB Extract
 ^c(1)="1"
 ^c(3)="3"
 Broken transaction file
-##TEST_AWKGDSJEX.*
+##TEST_AWKYDBJEX.*
 08\#TIMESTAMP#\2\##pid##\0\#TOKENSEQ1#\0\#STRMSEQNO#
 05\#TIMESTAMP#\2\##pid##\0\#TOKENSEQ1#\0\#STRMSEQNO#\2\#NODEFLAGS#\^b(2)="2"
 09\#TIMESTAMP#\2\##pid##\0\#TOKENSEQ1#\0\#STRMSEQNO#\2\
 Lost transaction file
-##TEST_AWKGDSJEX.* RECOVER
+##TEST_AWKYDBJEX.* RECOVER
 02\#TIMESTAMP#\3\##pid##\0
 03\#TIMESTAMP#\3\##pid##\0\0
 ##SOURCE_PATH##/mupip

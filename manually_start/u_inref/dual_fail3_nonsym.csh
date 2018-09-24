@@ -75,12 +75,8 @@ $pri_shell "$pri_getenv; $gtm_tst/com/primary_crash.csh ""NO_IPCRM"""
 sleep 5
 
 # RESTART PRIMARY SIDE (B)
-$pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/backup_dbjnl.csh bak1 '*.dat *.mjl*,*.gld,*.repl' cp nozip"
+$pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/backup_dbjnl.csh bak1 '*.dat *.mjl* *.gld *.repl' cp nozip"
 setenv start_time `date +%H_%M_%S`
-echo "Doing rundown on (B):"
-$pri_shell "$pri_getenv; cd $PRI_SIDE;"'$MUPIP rundown -override -reg "*"' >& rundown1.tmp
-$grep ""%YDB-I-MUFILRNDWNSUC"" rundown1.tmp | sort -f
-$grep ""%YDB-I-MUJPOOLRNDWNSUC"" rundown1.tmp | $tst_awk 'sub(/ [0-9]+/," xxx")'| sort -f
 echo "Doing rollback on (B):"
 $pri_shell "$pri_getenv; cd $PRI_SIDE;"'echo $gtm_tst/com/mupip_rollback.csh -losttrans=lost1.glo >>&! rollback1.log'
 $pri_shell "$pri_getenv; cd $PRI_SIDE;"'$gtm_tst/com/mupip_rollback.csh -losttrans=lost1.glo "*" >>&! rollback1.log; $grep "successful" rollback1.log'
@@ -92,10 +88,6 @@ $pri_shell "$pri_getenv; $gtm_tst/com/srcstat.csh "AFTER_PRI_B_UP2:" < /dev/null
 
 # RESTART SECONDARY (A)
 $gtm_tst/com/backup_dbjnl.csh bak2 '*.dat *.mjl* *.gld *.repl' cp nozip
-echo "Doing rundown on A:"
-$MUPIP rundown -override -reg "*"  >& rundown2.tmp
-$grep "%YDB-I-MUFILRNDWNSUC" rundown2.tmp | sort -f
-$grep "%YDB-I-MUJPOOLRNDWNSUC" rundown2.tmp | $tst_awk 'sub(/ [0-9]+/," xxx")'| sort -f
 echo "Doing Rollback on side A"
 echo "$gtm_tst/com/mupip_rollback.csh -fetchresync=$portno -losttrans=fetch.glo *" >>&! rollback2.log
 $gtm_tst/com/mupip_rollback.csh -fetchresync=$portno -losttrans=fetch.glo "*" >>&! rollback2.log

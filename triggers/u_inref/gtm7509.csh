@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -19,40 +19,9 @@ if ($?gtm_custom_errors) then
 	setenv save_gtm_custom_errors $gtm_custom_errors
 	unsetenv gtm_custom_errors
 endif
-# The test switches to prior versions. The default encryption is different for each version (random)
-# Turn off encryption for the first test case.
-setenv save_test_encryption $test_encryption
-setenv test_encryption NON_ENCRYPT
-# Versions prior to V62001 do not support triggers AND spanning regions; disable it. GTM-7877 added support
-setenv gtm_test_spanreg 0
-
-if (! $?gtm_test_replay) then
-	set gtm7509_prior_ver = `$gtm_tst/com/random_ver.csh -gte V54002 -lte V61000`
-	if ("$gtm7509_prior_ver" =~ "*-E-*") then
-		echo "The requested prior version is not available: $gtm7509_prior_ver"
-		exit 1
-	endif
-	echo "setenv gtm7509_prior_ver $gtm7509_prior_ver"	>>&! settings.csh
-endif
-source $gtm_tst/com/ydb_prior_ver_check.csh $gtm7509_prior_ver
 
 $MULTISITE_REPLIC_PREPARE 2
-echo "# Test case 1 : Trying mupip trigger -select using a prior version, with a multi-line trigger created with current version"
 $gtm_tst/com/dbcreate_base.csh mumps 1
-
-$gtm_exe/mumps -run itemmultiline^gtm7509    # will create mumps[1-5].dat that we need to try out with V61000
-mv mumps.gld mumps.gld_orig
-source $gtm_tst/com/switch_gtm_version.csh $gtm7509_prior_ver $tst_image
-$GDE exit >&! oldvergde.out
-foreach file (mumps[0-9]*.dat)
-	cp $file mumps.dat
-	echo "# Trying $file (multi-line trigger created with current version) with prior version trigger select"
-	cat /dev/null | $MUPIP trigger -select
-	echo "------------------------------------------------------------------------------------"
-end
-source $gtm_tst/com/switch_gtm_version.csh $tst_ver $tst_image
-mv mumps.gld mumps.gld_olver
-mv mumps.gld_orig mumps.gld
 
 echo '# Test case 5: While deleting triggers do not consider $c(10) as part of trigger'
 echo "# Since the below two operations do not touch the db, just reuse the db of the current test case"
@@ -62,9 +31,6 @@ $gtm_tst/com/dbcheck_base.csh
 
 # Backup the databases before proceeding to the next test case
 $gtm_tst/com/backup_dbjnl.csh testcase1 "*.dat *.gld" "mv"
-
-# Restore encryption
-setenv test_encryption $save_test_encryption
 
 echo "# Test case 2 : Doing a trigger select when the XECUTE string in the ^#t global is corrupted such that the last newline is instead some other character"
 echo "# should not SIG-11(pro) or assert fail(dbg)"

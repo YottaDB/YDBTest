@@ -3,17 +3,9 @@
 #								#
 # Copyright (c) 2011-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
-#################################################################
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
-#								#
-#	This source code contains the intellectual property	#
-#	of its copyright holder(s), and is made available	#
-#	under a license.  If you do not know the terms of	#
-#	the license, please stop and do not read further.	#
-#								#
-#################################################################
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -32,14 +24,8 @@ $switch_chset "M" >&! switch_chset1.out
 
 $MULTISITE_REPLIC_PREPARE 3
 
-if (2 == $test_replic_mh_type) then
-	set minver = "V54002"
-else
-	set minver = "V51000"
-endif
-# Versions prior to V54002 has a bug in receiver server misinterpreting incoming journal record format if it comes from a cross-endian source.
-set prior_ver2 = `$MSR RUN INST2 "set msr_dont_trace ; $gtm_tst/com/random_ver.csh -gte $minver"`
-set prior_ver3 = `$MSR RUN INST3 "set msr_dont_trace ; $gtm_tst/com/random_ver.csh -gte $minver"`
+set prior_ver2 = `$MSR RUN INST2 "set msr_dont_trace ; $gtm_tst/com/random_ver.csh -type ms"`
+set prior_ver3 = `$MSR RUN INST3 "set msr_dont_trace ; $gtm_tst/com/random_ver.csh -type ms"`
 if ( "${prior_ver2}" =~ "*-E-*" || "${prior_ver3}" =~ "*-E-*" ) then
 	echo "Either prior_ver2 or prior_ver3 is bad"
 	echo "prior_ver2 : '${prior_ver2}'"
