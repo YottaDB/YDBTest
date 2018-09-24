@@ -1,0 +1,8 @@
+# Test that Receiver Server does not issue REPLINSTNOHIST error on restart after first A->P connection
+
+# Set replication type to be A->P
+# Create database file
+# Wait for "Received REPL_WILL_RESTART_WITH_INFO message" to show up in Receiver Server log
+# Now shut down Receiver Server to try shut it before "New History Content" shows up in Receiver Server log
+# Restart Receiver Server
+# Do dbcheck.csh

@@ -48,6 +48,7 @@
 # ydb357           [nars]  Test that SIGQUIT (kill -3) sent to a mumps process during ZSYSTEM/ZEDIT is handled little later but not lost
 # ydb346           [nars]  Test that MUPIP INTEG, DSE DUMP and MUMPS do not infinite loop in case of INVSPECREC error
 # ydb95            [nars]  Test that MUPIP LOAD on an empty ZWR file reports 0 loaded records and no errors
+# ydb361           [nars]  Test that Receiver Server does not issue REPLINSTNOHIST error on restart after first A->P connection
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r124 test starts..."
@@ -61,6 +62,7 @@ setenv subtest_list_non_replic "$subtest_list_non_replic ydb356 ydb360 ydb357 yd
 setenv subtest_list_replic     ""
 setenv subtest_list_replic     "$subtest_list_replic ydb282srcsrvrerr ydb293 ydb312_gtm8182a ydb312_gtm8182b  ydb312_gtm8182c"
 setenv subtest_list_replic     "$subtest_list_replic ydb312_gtm8182d ydb312_gtm8182e ydb312_gtm8182f ydb312_gtm8182g ydb321"
+setenv subtest_list_replic     "$subtest_list_replic ydb361"
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
