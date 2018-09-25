@@ -78,12 +78,11 @@ if ($?gtm_platform_no_V4) then
 	setenv subtest_exclude_list "$subtest_exclude_list 4g_dbcertify"
 endif
 
-if ($gtm_test_singlecpu) then
-	# Disable heavyweight alsmemleak subtest on single-cpu systems (takes forever to run otherwise).
-	setenv subtest_exclude_list "$subtest_exclude_list alsmemleak"
-	# Disable heavyweight maxtrignames subtest on single-cpu systems (takes > 10 hours to run).
-	setenv subtest_exclude_list "$subtest_exclude_list maxtrignames"
-
+# Disable heavyweight subtests on ARM platform as it takes a long time to run.
+# Also disable these subtests on 1-CPU boxes as it would take a long time to run.
+# The test mostly exercises portable code so it is okay if only multi-CPU x86_64 boxes runs these tests.
+if ($gtm_test_singlecpu || ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype)) then
+	setenv subtest_exclude_list "$subtest_exclude_list alsmemleak maxtrignames"
 endif
 
 if ($?ydb_test_exclude_sem_counter) then
