@@ -49,6 +49,7 @@
 # ydb346           [nars]  Test that MUPIP INTEG, DSE DUMP and MUMPS do not infinite loop in case of INVSPECREC error
 # ydb95            [nars]  Test that MUPIP LOAD on an empty ZWR file reports 0 loaded records and no errors
 # ydb361           [nars]  Test that Receiver Server does not issue REPLINSTNOHIST error on restart after first A->P connection
+# ydb333           [nars]  Test that $VIEW("PROBECRIT") has CPT statistic with nanosecond (not microsecond) resolution
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r124 test starts..."
@@ -58,7 +59,7 @@ setenv subtest_list_common     ""
 setenv subtest_list_non_replic ""
 setenv subtest_list_non_replic "$subtest_list_non_replic readonly ydb275socketpass ydb280socketwait jnlunxpcterr ydb297 ydb315"
 setenv subtest_list_non_replic "$subtest_list_non_replic ydb324 ydb341 ydb343 ydb346mr ydb350 ydb352 ydb353 ydb348 ydb358 ydb359"
-setenv subtest_list_non_replic "$subtest_list_non_replic ydb356 ydb360 ydb357 ydb346 ydb95"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb356 ydb360 ydb357 ydb346 ydb95 ydb333"
 setenv subtest_list_replic     ""
 setenv subtest_list_replic     "$subtest_list_replic ydb282srcsrvrerr ydb293 ydb312_gtm8182a ydb312_gtm8182b  ydb312_gtm8182c"
 setenv subtest_list_replic     "$subtest_list_replic ydb312_gtm8182d ydb312_gtm8182e ydb312_gtm8182f ydb312_gtm8182g ydb321"

@@ -1,0 +1,7 @@
+# Test that $VIEW("PROBECRIT") has CPT statistic with nanosecond (not microsecond) resolution
+
+# Create database file
+# Do : mumps -run ydb333
+Do $VIEW("PROBECRIT","DEFAULT") 20 times to see if CPT (nanoseconds) is not a multiple of 1000 at least once
+PASS : Found CPT stat that is not a multiple of 1000 proving nanosecond (not microsecond) granularity
+# Do dbcheck.csh
