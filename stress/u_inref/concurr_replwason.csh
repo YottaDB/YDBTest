@@ -216,7 +216,8 @@ dse_eof
 # Check that AREG has replication state WAS_ON
 echo "=>Check that AREG has replication state WAS_ON"
 set cntr = 0
-while ($cntr < 1000)
+set maxwait = 3600	# 3600 seconds == 1 hour
+while ($cntr < $maxwait)
 	if (-e dse_df.log) then
 		mv dse_df.log dse_df_`date +%H%M%S`.log
 	endif
@@ -229,8 +230,8 @@ while ($cntr < 1000)
 	sleep 1
 	@ cntr = $cntr + 1
 end
-if ($cntr >= 1000) then
-	echo "AREG did not reach [WAS_ON] state even after 1000 seconds of wait. Exiting.."
+if ($cntr >= $maxwait) then
+	echo "AREG did not reach [WAS_ON] state even after $maxwait seconds of wait. Exiting.."
 	echo "=>Stop running GT.M processes"
 	$GTM << xyz
 		do stop^replwason
