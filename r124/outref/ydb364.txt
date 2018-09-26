@@ -1,0 +1,14 @@
+# Test that Source Server shutdown command says it did not delete jnlpool ipcs even if the instance is frozen
+
+# Create database file. Source server is now running in the background.
+# Randomly decide to start a background mumps process that attaches to the journal pool
+# Freeze the instance
+# Shut down the source server. Verify that "Not deleting jnlpool ipcs." message shows up
+##FILTERED##... ... .. ..:..:.. 20.. : Forcing immediate shutdown
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHUTDOWN operation on source server pid [##PID##] for secondary instance [INSTANCE2]
+##FILTERED##... ... .. ..:..:.. 20.. : Waiting for upto XXX seconds for the source server to shutdown
+##FILTERED##... ... .. ..:..:.. 20.. : Not deleting jnlpool ipcs. Instance is frozen
+# Restart the source server
+# Unfreeze the instance
+# Stop backgrounded mumps process if it was randomly started before
+# Do dbcheck.csh
