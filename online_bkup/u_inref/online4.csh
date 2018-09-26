@@ -25,6 +25,14 @@ chmod 777 $bkp_dir
 if (-f $gtm_tst/$tst/inref/mrtst_$acc_meth.gde) then
 	setenv test_specific_gde $gtm_tst/$tst/inref/mrtst_$acc_meth.gde
 endif
+
+setenv gtm_test_jnlfileonly 0	# The test checks at one step that the journal files are untouched when trying to update the
+				# backed up database. If gtm_test_jnlfileonly is 1, the source server could open the journal
+				# file any time in between as part of clearing the replication backlog and that could write
+				# to the journal file header (opening the journal file in shared memory causes that even if
+				# it is the source server which only reads from the journal file) which in turn can cause
+				# that part of the test to fail. Therefore gtm_test_fileonly.
+
 $gtm_tst/com/dbcreate.csh online4 4
 if ("ENCRYPT" == $test_encryption) then
 	mv $gtmcrypt_config ${gtmcrypt_config}.orig
@@ -45,6 +53,8 @@ cat *.mje*
 $grep "BACKUP COMPLETED" online4b.log
 #
 #
+
+alias ls 'ls --full-time'	# Get micro/nano-second level granularity of time when comparing timestamps below (using "diff")
 
 # do an update to the backed up database and expect an error
 # make sure no new journal files were cut
@@ -69,7 +79,7 @@ cd ..
 # if encrypted then reset gtmcrypt_config
 if ($?gtmcrypt_config) setenv gtmcrypt_config "gtmcrypt.cfg"
 
-# save the .dat and .mjl files for comparison to show no modification do data or journal files by the attempt to modify
+# save the .dat and .mjl files for comparison to show no modification to db or jnl files by the attempt to modify
 # the backed-up database
 
 ls -al *.dat *.mjl* > after_back_update.log
