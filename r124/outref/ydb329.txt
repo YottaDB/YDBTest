@@ -1,0 +1,10 @@
+# Test that compiling M program in UTF-8 mode issues an appropriate INVDLRCVAL error without a GTMASSERT2
+
+# Switch to UTF8 mode
+setenv gtm_chset UTF-8
+unset echo
+# Run : mumps ydb329.m
+		if $translate($justify(" ",0)," ",$select(($zchset="UTF-8"):$char(65535),1:$char(255)))
+		                                                                       ^-----
+		At column 73, line 14, source module ##TEST_PATH##/ydb329.m
+%YDB-E-INVDLRCVAL, Invalid $CHAR() value 65535
