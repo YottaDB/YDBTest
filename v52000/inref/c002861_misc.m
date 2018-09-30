@@ -1,3 +1,16 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; This module is derived from FIS GT.M.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
  write $x+$l(bb,2E22222222222222222222222233))
  set VL=""_$J($piece(T(T),2E22222222222222222222222233,6),"")
  set V="M"?@($MN("A",2E22222222222222222222222233)?.N)
@@ -73,3 +86,21 @@
  set ($ZY,$$x(y))($piece($h,"",2E22222222222222222222222233)*0)+15
  set ($ZY,$piece(x(y),"x"))=($piece($h,"",2E22222222222222222222222233)*0)+15
  S Y="%" F  M:$D(@Y) @(X_"Y)="_Y) S Y=$O(@Y) Q:Y=""  ; exposed duplicate triple insertion bug in m_merge.c
+ write $x+$l(bb,2E22222222222222222222222233)		; Below cases are additions due to [YDB#371]
+ write $x+$l("abcd",2E22222222222222222222222233)
+ set VL=""_$J($piece("abcd",2E22222222222222222222222233,6),"")
+ write $data(@($piece("abcd",2E22222222222222222222222233,$MN)?.N))
+ write $data(@($piece("abcd",$MN,2E22222222222222222222222233)?.N))
+ write $get(@($piece("abcd",$MN,2E22222222222222222222222233)?.N))
+ write $get(@($piece("abcd",2E22222222222222222222222233,$MN)?.N))
+ write $incr("abcd",$piece("abcd",2E22222222222222222222222233,$MN)?.N)
+ write $incr("abcd",$piece("abcd",$MN,2E22222222222222222222222233)?.N)
+ write $incr("abcd",@($piece("abcd",$MN,2E22222222222222222222222233)?.N))
+ write $incr("abcd",@($piece("abcd",$MN,$MN(2E22222222222222222222222233))?.N))
+ write $order(@($piece("abcd",$MN,$MN(2E22222222222222222222222233)?.N)))
+ write $zprevious(@($piece("abcd",$MN,$MN(2E22222222222222222222222233)?.N)))
+ write $zqgblmod(@($piece("abcd",$MN,$MN(2E22222222222222222222222233)?.N)))
+ write $order(@($piece("abcd",$MN,$MN(1)?.N)),@($piece("abcd",$MN,$MN(2E22222222222222222222222233))?.N))
+ write $query(@($piece("abcd",$MN,$MN(2E22222222222222222222222233)?.N)))
+ write $select(0:@($piece("abcd",$MN,$MN(1)?.N)),1:@($piece("abcd",$MN,$MN(2E22222222222222222222222233)?.N)))
+ xecute @($piece("abcd",$MN,$MN(2E22222222222222222222222233)?.N))

@@ -14,15 +14,20 @@
 #								#
 #################################################################
 #
-# C9H05-002861 BADCHAR in expression causes GTMASSERT in emit_code.c during compile in V52000
-#
+echo "# C9H05-002861 BADCHAR in expression causes GTMASSERT in emit_code.c during compile in V52000"
+echo "# Do test in M mode and UTF8 mode (randomly chosen by the framework)"
+echo "# Due to the presence of YDB-W-LITNOGRAPH AND YDB-W-BADCHAR in UTF-8 mode for a lot of cases in the run below"
+echo "# it is much simpler (to maintain) to have the entire output in two sections"
+echo "# one for M mode and another for UTF-8 mode"
+echo ""
 
-#
-# Do test in M mode and UTF8 mode (randomly chosen by the framework)
-# Due to the presence of YDB-W-LITNOGRAPH AND YDB-W-BADCHAR in UTF-8 mode for a lot of cases in the run below,
-# it is much simpler (to maintain) to have the entire output in two sections
-# one for M mode, surrounded by SUSPEND/ALLOW UNICODE_MODE
-# another for UTF-8 mode, surrounded by SUSPEND/ALLOW NONUNICODE_MODE
-#
 cp $gtm_tst/$tst/inref/c002861_*.m .
-$gtm_exe/mumps -run c002861
+foreach mode ("M" "UTF-8")
+	echo "# ----------------------------------------------"
+	echo "# Switching test to $mode mode"
+	echo "# ----------------------------------------------"
+	echo "# Running : mumps -run c002861"
+	$switch_chset $mode
+	$gtm_exe/mumps -run c002861
+	rm *.o	# remove object code created by one iteration before next iteration starts (to avoid errors due to CHSET diff)
+end

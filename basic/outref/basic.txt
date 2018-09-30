@@ -598,40 +598,40 @@ s ^x("1E60",1)=23 zwr ^x("1E60",*)
 YDB>
 d ^largeexp2
 		k f s f(1E111)="1E111" zwr f
-		       ^-----
-		At column 9, line 4, source module ##IN_TEST_PATH##/inref/largeexp2.m
+		        ^-----
+		At column 10, line 4, source module ##IN_TEST_PATH##/inref/largeexp2.m
 %YDB-E-NUMOFLOW, Numeric overflow
 		k f s f(1E11111111111111111)="1Ealot" zwr f
-		       ^-----
-		At column 9, line 6, source module ##IN_TEST_PATH##/inref/largeexp2.m
+		        ^-----
+		At column 10, line 6, source module ##IN_TEST_PATH##/inref/largeexp2.m
 %YDB-E-NUMOFLOW, Numeric overflow
 		k f s f(1E1111111111111111111111)="1Ealotalot" zwr f
-		       ^-----
-		At column 9, line 8, source module ##IN_TEST_PATH##/inref/largeexp2.m
+		        ^-----
+		At column 10, line 8, source module ##IN_TEST_PATH##/inref/largeexp2.m
 %YDB-E-NUMOFLOW, Numeric overflow
 		k ^f s ^f(1E111)="1E111" zwr ^f
-		         ^-----
-		At column 11, line 10, source module ##IN_TEST_PATH##/inref/largeexp2.m
+		          ^-----
+		At column 12, line 10, source module ##IN_TEST_PATH##/inref/largeexp2.m
 %YDB-E-NUMOFLOW, Numeric overflow
 		k ^f s ^f(1E11111111111111111)="1Ealot" zwr ^f
-		         ^-----
-		At column 11, line 12, source module ##IN_TEST_PATH##/inref/largeexp2.m
+		          ^-----
+		At column 12, line 12, source module ##IN_TEST_PATH##/inref/largeexp2.m
 %YDB-E-NUMOFLOW, Numeric overflow
 		k ^f s ^f(1E1111111111111111111111)="1Ealotalot" zwr ^f
-		         ^-----
-		At column 11, line 14, source module ##IN_TEST_PATH##/inref/largeexp2.m
+		          ^-----
+		At column 12, line 14, source module ##IN_TEST_PATH##/inref/largeexp2.m
 %YDB-E-NUMOFLOW, Numeric overflow
 		w "s x=1E111 w x,!",! s x=1E111 w x,!
-		                         ^-----
-		At column 27, line 15, source module ##IN_TEST_PATH##/inref/largeexp2.m
+		                          ^-----
+		At column 28, line 15, source module ##IN_TEST_PATH##/inref/largeexp2.m
 %YDB-E-NUMOFLOW, Numeric overflow
 		w "s x=1E11111111111111111 w x,!",! s x=1E11111111111111111 w x,!
-		                                       ^-----
-		At column 41, line 16, source module ##IN_TEST_PATH##/inref/largeexp2.m
+		                                        ^-----
+		At column 42, line 16, source module ##IN_TEST_PATH##/inref/largeexp2.m
 %YDB-E-NUMOFLOW, Numeric overflow
 		w "s x=1E47 w x,!",! s x=1E47 w x,!
-		                        ^-----
-		At column 26, line 17, source module ##IN_TEST_PATH##/inref/largeexp2.m
+		                         ^-----
+		At column 27, line 17, source module ##IN_TEST_PATH##/inref/largeexp2.m
 %YDB-E-NUMOFLOW, Numeric overflow
 k f s f(1E111)="1E111" zwr f
 %YDB-E-NUMOFLOW, Numeric overflow
@@ -640,12 +640,12 @@ k f s f(1E111)="1E111" zwr f
 YDB>
 d ^largeexp3
 		k f s f(1E1111111111111111111111)="1Ealotalot" zwr f
-		       ^-----
-		At column 9, line 4, source module ##IN_TEST_PATH##/inref/largeexp3.m
+		        ^-----
+		At column 10, line 4, source module ##IN_TEST_PATH##/inref/largeexp3.m
 %YDB-E-NUMOFLOW, Numeric overflow
 		k ^f s ^f(1E1111111111111111111111)="1Ealotalot" zwr ^f
-		         ^-----
-		At column 11, line 6, source module ##IN_TEST_PATH##/inref/largeexp3.m
+		          ^-----
+		At column 12, line 6, source module ##IN_TEST_PATH##/inref/largeexp3.m
 %YDB-E-NUMOFLOW, Numeric overflow
 k f s f(1E1111111111111111111111)="1Ealotalot" zwr f
 %YDB-E-NUMOFLOW, Numeric overflow

@@ -1,4 +1,15 @@
-##SUSPEND_OUTPUT UNICODE_MODE
+# C9H05-002861 BADCHAR in expression causes GTMASSERT in emit_code.c during compile in V52000
+# Do test in M mode and UTF8 mode (randomly chosen by the framework)
+# Due to the presence of YDB-W-LITNOGRAPH AND YDB-W-BADCHAR in UTF-8 mode for a lot of cases in the run below
+# it is much simpler (to maintain) to have the entire output in two sections
+# one for M mode and another for UTF-8 mode
+
+# ----------------------------------------------
+# Switching test to M mode
+# ----------------------------------------------
+# Running : mumps -run c002861
+setenv gtm_chset M
+unset echo
 ######################################################################
 ------------------------ Compiling profile1.m ------------------------
 
@@ -112,28 +123,32 @@ profile12.o
 ######################################################################
 ------------------------ Compiling misc1.m ------------------------
 	 write $x+$l(bb,2E22222222222222222222222233))
-	               ^-----
-		At column 16, line 2, source module ##TEST_PATH##/misc1.m
+	                ^-----
+		At column 17, line 2, source module ##TEST_PATH##/misc1.m
 %YDB-E-NUMOFLOW, Numeric overflow
+	 write $x+$l(bb,2E22222222222222222222222233))
+	                                             ^-----
+		At column 46, line 2, source module ##TEST_PATH##/misc1.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
 
 ------------------------ Checking if .o file was created misc1.m ------------------------
 misc1.o
 
 ------------------------ Running   misc1.m ------------------------
-150373506,+2^misc1,%YDB-E-NUMOFLOW, Numeric overflow
+150373706,+2^misc1,%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
 
 ######################################################################
 ------------------------ Compiling misc2.m ------------------------
 	 set VL=""_$J($piece(T(T),2E22222222222222222222222233,6),"")
-	                         ^-----
-		At column 26, line 2, source module ##TEST_PATH##/misc2.m
+	                          ^-----
+		At column 27, line 2, source module ##TEST_PATH##/misc2.m
 %YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc2.m ------------------------
 misc2.o
 
 ------------------------ Running   misc2.m ------------------------
-150373506,+2^misc2,%YDB-E-NUMOFLOW, Numeric overflow
+150373850,+2^misc2,%YDB-E-LVUNDEF, Undefined local variable: T
 
 ######################################################################
 ------------------------ Compiling misc3.m ------------------------
@@ -141,23 +156,23 @@ misc2.o
 	              ^-----
 		At column 15, line 2, source module ##TEST_PATH##/misc3.m
 %YDB-E-INVFCN, Invalid function name
-	 set V="M"?@($MN("A",2E22222222222222222222222233)?.N)
-	                    ^-----
-		At column 21, line 2, source module ##TEST_PATH##/misc3.m
-%YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc3.m ------------------------
 misc3.o
 
 ------------------------ Running   misc3.m ------------------------
-150373506,+2^misc3,%YDB-E-NUMOFLOW, Numeric overflow
+150373058,+2^misc3,%YDB-E-INVFCN, Invalid function name
 
 ######################################################################
 ------------------------ Compiling misc4.m ------------------------
 	 set V="M"?@($piece("A",2E22222222222222222222222233,$MN)?.N)
-	                       ^-----
-		At column 24, line 2, source module ##TEST_PATH##/misc4.m
+	                        ^-----
+		At column 25, line 2, source module ##TEST_PATH##/misc4.m
 %YDB-E-NUMOFLOW, Numeric overflow
+	 set V="M"?@($piece("A",2E22222222222222222222222233,$MN)?.N)
+	                                                      ^-----
+		At column 55, line 2, source module ##TEST_PATH##/misc4.m
+%YDB-E-INVSVN, Invalid special variable name
 
 ------------------------ Checking if .o file was created misc4.m ------------------------
 misc4.o
@@ -185,15 +200,15 @@ misc5.o
 		At column 24, line 2, source module ##TEST_PATH##/misc6.m
 %YDB-E-INVFCN, Invalid function name
 	 set %=$x do @($piece($MN("A",2E22222222222222222222222233)?.N))
-	                             ^-----
-		At column 30, line 2, source module ##TEST_PATH##/misc6.m
-%YDB-E-NUMOFLOW, Numeric overflow
+	                                                              ^-----
+		At column 63, line 2, source module ##TEST_PATH##/misc6.m
+%YDB-E-COMMA, Comma expected in this context
 
 ------------------------ Checking if .o file was created misc6.m ------------------------
 misc6.o
 
 ------------------------ Running   misc6.m ------------------------
-150373506,+2^misc6,%YDB-E-NUMOFLOW, Numeric overflow
+150372474,+2^misc6,%YDB-E-COMMA, Comma expected in this context
 
 ######################################################################
 ------------------------ Compiling misc7.m ------------------------
@@ -215,15 +230,15 @@ misc7.o
 		At column 26, line 2, source module ##TEST_PATH##/misc8.m
 %YDB-E-INVFCN, Invalid function name
 	 set %=$x goto @($piece($MN("A",2E22222222222222222222222233)?.N))
-	                               ^-----
-		At column 32, line 2, source module ##TEST_PATH##/misc8.m
-%YDB-E-NUMOFLOW, Numeric overflow
+	                                                                ^-----
+		At column 65, line 2, source module ##TEST_PATH##/misc8.m
+%YDB-E-COMMA, Comma expected in this context
 
 ------------------------ Checking if .o file was created misc8.m ------------------------
 misc8.o
 
 ------------------------ Running   misc8.m ------------------------
-150373506,+2^misc8,%YDB-E-NUMOFLOW, Numeric overflow
+150372474,+2^misc8,%YDB-E-COMMA, Comma expected in this context
 
 ######################################################################
 ------------------------ Compiling misc9.m ------------------------
@@ -232,15 +247,15 @@ misc8.o
 		At column 26, line 2, source module ##TEST_PATH##/misc9.m
 %YDB-E-INVFCN, Invalid function name
 	 set %=$x goto @($piece($MN(2E22222222222222222222222233,2E22222222222222222222222233)?.N))
-	                           ^-----
-		At column 28, line 2, source module ##TEST_PATH##/misc9.m
-%YDB-E-NUMOFLOW, Numeric overflow
+	                                                                                         ^-----
+		At column 90, line 2, source module ##TEST_PATH##/misc9.m
+%YDB-E-COMMA, Comma expected in this context
 
 ------------------------ Checking if .o file was created misc9.m ------------------------
 misc9.o
 
 ------------------------ Running   misc9.m ------------------------
-150373506,+2^misc9,%YDB-E-NUMOFLOW, Numeric overflow
+150372474,+2^misc9,%YDB-E-COMMA, Comma expected in this context
 
 ######################################################################
 ------------------------ Compiling misc10.m ------------------------
@@ -249,15 +264,15 @@ misc9.o
 		At column 27, line 2, source module ##TEST_PATH##/misc10.m
 %YDB-E-INVFCN, Invalid function name
 	 set %=$x zgoto @($piece($MN("A",2E22222222222222222222222233)?.N))
-	                                ^-----
-		At column 33, line 2, source module ##TEST_PATH##/misc10.m
-%YDB-E-NUMOFLOW, Numeric overflow
+	                                                                 ^-----
+		At column 66, line 2, source module ##TEST_PATH##/misc10.m
+%YDB-E-COMMA, Comma expected in this context
 
 ------------------------ Checking if .o file was created misc10.m ------------------------
 misc10.o
 
 ------------------------ Running   misc10.m ------------------------
-150373506,+2^misc10,%YDB-E-NUMOFLOW, Numeric overflow
+150372474,+2^misc10,%YDB-E-COMMA, Comma expected in this context
 
 ######################################################################
 ------------------------ Compiling misc11.m ------------------------
@@ -266,15 +281,15 @@ misc10.o
 		At column 27, line 2, source module ##TEST_PATH##/misc11.m
 %YDB-E-INVFCN, Invalid function name
 	 set %=$x zgoto @($piece($MN(2E22222222222222222222222233,2E22222222222222222222222233)?.N))
-	                            ^-----
-		At column 29, line 2, source module ##TEST_PATH##/misc11.m
-%YDB-E-NUMOFLOW, Numeric overflow
+	                                                                                          ^-----
+		At column 91, line 2, source module ##TEST_PATH##/misc11.m
+%YDB-E-COMMA, Comma expected in this context
 
 ------------------------ Checking if .o file was created misc11.m ------------------------
 misc11.o
 
 ------------------------ Running   misc11.m ------------------------
-150373506,+2^misc11,%YDB-E-NUMOFLOW, Numeric overflow
+150372474,+2^misc11,%YDB-E-COMMA, Comma expected in this context
 
 ######################################################################
 ------------------------ Compiling misc12.m ------------------------
@@ -292,15 +307,19 @@ misc12.o
 ######################################################################
 ------------------------ Compiling misc13.m ------------------------
 	 write $data(@($piece(x(x),2E22222222222222222222222233,$MN)?.N))
-	                          ^-----
-		At column 27, line 2, source module ##TEST_PATH##/misc13.m
+	                           ^-----
+		At column 28, line 2, source module ##TEST_PATH##/misc13.m
 %YDB-E-NUMOFLOW, Numeric overflow
+	 write $data(@($piece(x(x),2E22222222222222222222222233,$MN)?.N))
+	                                                         ^-----
+		At column 58, line 2, source module ##TEST_PATH##/misc13.m
+%YDB-E-INVSVN, Invalid special variable name
 
 ------------------------ Checking if .o file was created misc13.m ------------------------
 misc13.o
 
 ------------------------ Running   misc13.m ------------------------
-150373506,+2^misc13,%YDB-E-NUMOFLOW, Numeric overflow
+150373850,+2^misc13,%YDB-E-LVUNDEF, Undefined local variable: x
 
 ######################################################################
 ------------------------ Compiling misc14.m ------------------------
@@ -309,15 +328,15 @@ misc13.o
 		At column 29, line 2, source module ##TEST_PATH##/misc14.m
 %YDB-E-INVSVN, Invalid special variable name
 	 write $data(@($piece(x(x),$MN,2E22222222222222222222222233)?.N))
-	                              ^-----
-		At column 31, line 2, source module ##TEST_PATH##/misc14.m
+	                               ^-----
+		At column 32, line 2, source module ##TEST_PATH##/misc14.m
 %YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc14.m ------------------------
 misc14.o
 
 ------------------------ Running   misc14.m ------------------------
-150373506,+2^misc14,%YDB-E-NUMOFLOW, Numeric overflow
+150373850,+2^misc14,%YDB-E-LVUNDEF, Undefined local variable: x
 
 ######################################################################
 ------------------------ Compiling misc15.m ------------------------
@@ -326,41 +345,49 @@ misc14.o
 		At column 28, line 2, source module ##TEST_PATH##/misc15.m
 %YDB-E-INVSVN, Invalid special variable name
 	 write $get(@($piece(x(x),$MN,2E22222222222222222222222233)?.N))
-	                             ^-----
-		At column 30, line 2, source module ##TEST_PATH##/misc15.m
+	                              ^-----
+		At column 31, line 2, source module ##TEST_PATH##/misc15.m
 %YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc15.m ------------------------
 misc15.o
 
 ------------------------ Running   misc15.m ------------------------
-150373506,+2^misc15,%YDB-E-NUMOFLOW, Numeric overflow
+150373850,+2^misc15,%YDB-E-LVUNDEF, Undefined local variable: x
 
 ######################################################################
 ------------------------ Compiling misc16.m ------------------------
 	 write $get(@($piece(x(x),2E22222222222222222222222233,$MN)?.N))
-	                         ^-----
-		At column 26, line 2, source module ##TEST_PATH##/misc16.m
+	                          ^-----
+		At column 27, line 2, source module ##TEST_PATH##/misc16.m
 %YDB-E-NUMOFLOW, Numeric overflow
+	 write $get(@($piece(x(x),2E22222222222222222222222233,$MN)?.N))
+	                                                        ^-----
+		At column 57, line 2, source module ##TEST_PATH##/misc16.m
+%YDB-E-INVSVN, Invalid special variable name
 
 ------------------------ Checking if .o file was created misc16.m ------------------------
 misc16.o
 
 ------------------------ Running   misc16.m ------------------------
-150373506,+2^misc16,%YDB-E-NUMOFLOW, Numeric overflow
+150373850,+2^misc16,%YDB-E-LVUNDEF, Undefined local variable: x
 
 ######################################################################
 ------------------------ Compiling misc17.m ------------------------
 	 write $incr(x(x),$piece(x(x),2E22222222222222222222222233,$MN)?.N)
-	                             ^-----
-		At column 30, line 2, source module ##TEST_PATH##/misc17.m
+	                              ^-----
+		At column 31, line 2, source module ##TEST_PATH##/misc17.m
 %YDB-E-NUMOFLOW, Numeric overflow
+	 write $incr(x(x),$piece(x(x),2E22222222222222222222222233,$MN)?.N)
+	                                                            ^-----
+		At column 61, line 2, source module ##TEST_PATH##/misc17.m
+%YDB-E-INVSVN, Invalid special variable name
 
 ------------------------ Checking if .o file was created misc17.m ------------------------
 misc17.o
 
 ------------------------ Running   misc17.m ------------------------
-150373506,+2^misc17,%YDB-E-NUMOFLOW, Numeric overflow
+150373850,+2^misc17,%YDB-E-LVUNDEF, Undefined local variable: x
 
 ######################################################################
 ------------------------ Compiling misc18.m ------------------------
@@ -369,15 +396,15 @@ misc17.o
 		At column 32, line 2, source module ##TEST_PATH##/misc18.m
 %YDB-E-INVSVN, Invalid special variable name
 	 write $incr(x(x),$piece(x(x),$MN,2E22222222222222222222222233)?.N)
-	                                 ^-----
-		At column 34, line 2, source module ##TEST_PATH##/misc18.m
+	                                  ^-----
+		At column 35, line 2, source module ##TEST_PATH##/misc18.m
 %YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc18.m ------------------------
 misc18.o
 
 ------------------------ Running   misc18.m ------------------------
-150373506,+2^misc18,%YDB-E-NUMOFLOW, Numeric overflow
+150373850,+2^misc18,%YDB-E-LVUNDEF, Undefined local variable: x
 
 ######################################################################
 ------------------------ Compiling misc19.m ------------------------
@@ -386,15 +413,15 @@ misc18.o
 		At column 34, line 2, source module ##TEST_PATH##/misc19.m
 %YDB-E-INVSVN, Invalid special variable name
 	 write $incr(x(x),@($piece(x(x),$MN,2E22222222222222222222222233)?.N))
-	                                   ^-----
-		At column 36, line 2, source module ##TEST_PATH##/misc19.m
+	                                    ^-----
+		At column 37, line 2, source module ##TEST_PATH##/misc19.m
 %YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc19.m ------------------------
 misc19.o
 
 ------------------------ Running   misc19.m ------------------------
-150373506,+2^misc19,%YDB-E-NUMOFLOW, Numeric overflow
+150373850,+2^misc19,%YDB-E-LVUNDEF, Undefined local variable: x
 
 ######################################################################
 ------------------------ Compiling misc20.m ------------------------
@@ -406,16 +433,12 @@ misc19.o
 	                                     ^-----
 		At column 38, line 2, source module ##TEST_PATH##/misc20.m
 %YDB-E-INVFCN, Invalid function name
-	 write $incr(x(x),@($piece(x(x),$MN,$MN(2E22222222222222222222222233))?.N))
-	                                       ^-----
-		At column 40, line 2, source module ##TEST_PATH##/misc20.m
-%YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc20.m ------------------------
 misc20.o
 
 ------------------------ Running   misc20.m ------------------------
-150373506,+2^misc20,%YDB-E-NUMOFLOW, Numeric overflow
+150373850,+2^misc20,%YDB-E-LVUNDEF, Undefined local variable: x
 
 ######################################################################
 ------------------------ Compiling misc21.m ------------------------
@@ -427,16 +450,12 @@ misc20.o
 	                                 ^-----
 		At column 34, line 2, source module ##TEST_PATH##/misc21.m
 %YDB-E-INVFCN, Invalid function name
-	 write $order(@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
-	                                   ^-----
-		At column 36, line 2, source module ##TEST_PATH##/misc21.m
-%YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc21.m ------------------------
 misc21.o
 
 ------------------------ Running   misc21.m ------------------------
-150373506,+2^misc21,%YDB-E-NUMOFLOW, Numeric overflow
+150373850,+2^misc21,%YDB-E-LVUNDEF, Undefined local variable: x
 
 ######################################################################
 ------------------------ Compiling misc22.m ------------------------
@@ -448,16 +467,12 @@ misc21.o
 	                                     ^-----
 		At column 38, line 2, source module ##TEST_PATH##/misc22.m
 %YDB-E-INVFCN, Invalid function name
-	 write $zprevious(@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
-	                                       ^-----
-		At column 40, line 2, source module ##TEST_PATH##/misc22.m
-%YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc22.m ------------------------
 misc22.o
 
 ------------------------ Running   misc22.m ------------------------
-150373506,+2^misc22,%YDB-E-NUMOFLOW, Numeric overflow
+150373850,+2^misc22,%YDB-E-LVUNDEF, Undefined local variable: x
 
 ######################################################################
 ------------------------ Compiling misc23.m ------------------------
@@ -469,16 +484,12 @@ misc22.o
 	                                    ^-----
 		At column 37, line 2, source module ##TEST_PATH##/misc23.m
 %YDB-E-INVFCN, Invalid function name
-	 write $zqgblmod(@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
-	                                      ^-----
-		At column 39, line 2, source module ##TEST_PATH##/misc23.m
-%YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc23.m ------------------------
 misc23.o
 
 ------------------------ Running   misc23.m ------------------------
-150373506,+2^misc23,%YDB-E-NUMOFLOW, Numeric overflow
+150373850,+2^misc23,%YDB-E-LVUNDEF, Undefined local variable: x
 
 ######################################################################
 ------------------------ Compiling misc24.m ------------------------
@@ -498,16 +509,12 @@ misc23.o
 	                                                               ^-----
 		At column 64, line 2, source module ##TEST_PATH##/misc24.m
 %YDB-E-INVFCN, Invalid function name
-	 write $order(@($piece(x(x),$MN,$MN(1)?.N)),@($piece(x(x),$MN,$MN(2E22222222222222222222222233))?.N))
-	                                                                 ^-----
-		At column 66, line 2, source module ##TEST_PATH##/misc24.m
-%YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc24.m ------------------------
 misc24.o
 
 ------------------------ Running   misc24.m ------------------------
-150373506,+2^misc24,%YDB-E-NUMOFLOW, Numeric overflow
+150373850,+2^misc24,%YDB-E-LVUNDEF, Undefined local variable: x
 
 ######################################################################
 ------------------------ Compiling misc25.m ------------------------
@@ -519,16 +526,12 @@ misc24.o
 	                                 ^-----
 		At column 34, line 2, source module ##TEST_PATH##/misc25.m
 %YDB-E-INVFCN, Invalid function name
-	 write $query(@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
-	                                   ^-----
-		At column 36, line 2, source module ##TEST_PATH##/misc25.m
-%YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc25.m ------------------------
 misc25.o
 
 ------------------------ Running   misc25.m ------------------------
-150373506,+2^misc25,%YDB-E-NUMOFLOW, Numeric overflow
+150373850,+2^misc25,%YDB-E-LVUNDEF, Undefined local variable: x
 
 ######################################################################
 ------------------------ Compiling misc26.m ------------------------
@@ -548,16 +551,12 @@ misc25.o
 	                                                                    ^-----
 		At column 69, line 2, source module ##TEST_PATH##/misc26.m
 %YDB-E-INVFCN, Invalid function name
-	 write $select(0:@($piece(x(x),$MN,$MN(1)?.N)),1:@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
-	                                                                      ^-----
-		At column 71, line 2, source module ##TEST_PATH##/misc26.m
-%YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc26.m ------------------------
 misc26.o
 
 ------------------------ Running   misc26.m ------------------------
-150373506,+2^misc26,%YDB-E-NUMOFLOW, Numeric overflow
+150373850,+2^misc26,%YDB-E-LVUNDEF, Undefined local variable: x
 
 ######################################################################
 ------------------------ Compiling misc27.m ------------------------
@@ -569,16 +568,12 @@ misc26.o
 	                           ^-----
 		At column 28, line 2, source module ##TEST_PATH##/misc27.m
 %YDB-E-INVFCN, Invalid function name
-	 xecute @($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N))
-	                             ^-----
-		At column 30, line 2, source module ##TEST_PATH##/misc27.m
-%YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc27.m ------------------------
 misc27.o
 
 ------------------------ Running   misc27.m ------------------------
-150373506,+2^misc27,%YDB-E-NUMOFLOW, Numeric overflow
+150373850,+2^misc27,%YDB-E-LVUNDEF, Undefined local variable: x
 
 ######################################################################
 ------------------------ Compiling misc28.m ------------------------
@@ -695,15 +690,15 @@ misc35.o
 		At column 26, line 2, source module ##TEST_PATH##/misc36.m
 %YDB-E-INVFCN, Invalid function name
 	 set %=$x goto @($piece($MN(2E22222222222222222222222233,"€")?.N))
-	                           ^-----
-		At column 28, line 2, source module ##TEST_PATH##/misc36.m
-%YDB-E-NUMOFLOW, Numeric overflow
+	                                                                ^-----
+		At column 65, line 2, source module ##TEST_PATH##/misc36.m
+%YDB-E-COMMA, Comma expected in this context
 
 ------------------------ Checking if .o file was created misc36.m ------------------------
 misc36.o
 
 ------------------------ Running   misc36.m ------------------------
-150373506,+2^misc36,%YDB-E-NUMOFLOW, Numeric overflow
+150372474,+2^misc36,%YDB-E-COMMA, Comma expected in this context
 
 ######################################################################
 ------------------------ Compiling misc37.m ------------------------
@@ -729,15 +724,15 @@ misc37.o
 		At column 27, line 2, source module ##TEST_PATH##/misc38.m
 %YDB-E-INVFCN, Invalid function name
 	 set %=$x zgoto @($piece($MN(2E22222222222222222222222233,"€")?.N))
-	                            ^-----
-		At column 29, line 2, source module ##TEST_PATH##/misc38.m
-%YDB-E-NUMOFLOW, Numeric overflow
+	                                                                 ^-----
+		At column 66, line 2, source module ##TEST_PATH##/misc38.m
+%YDB-E-COMMA, Comma expected in this context
 
 ------------------------ Checking if .o file was created misc38.m ------------------------
 misc38.o
 
 ------------------------ Running   misc38.m ------------------------
-150373506,+2^misc38,%YDB-E-NUMOFLOW, Numeric overflow
+150372474,+2^misc38,%YDB-E-COMMA, Comma expected in this context
 
 ######################################################################
 ------------------------ Compiling misc39.m ------------------------
@@ -1010,8 +1005,8 @@ misc54.o
 		At column 10, line 2, source module ##TEST_PATH##/misc55.m
 %YDB-E-INVSVN, Invalid special variable name
 	 set (x,$ZY,z(2E22222222222222222222222233))=($piece($h,"","",2)*0)+15
-	             ^-----
-		At column 14, line 2, source module ##TEST_PATH##/misc55.m
+	              ^-----
+		At column 15, line 2, source module ##TEST_PATH##/misc55.m
 %YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc55.m ------------------------
@@ -1027,15 +1022,15 @@ misc55.o
 		At column 10, line 2, source module ##TEST_PATH##/misc56.m
 %YDB-E-INVSVN, Invalid special variable name
 	 set (x,$ZY,z(x))=($piece($h,"",2E22222222222222222222222233)*0)+15
-	                               ^-----
-		At column 32, line 2, source module ##TEST_PATH##/misc56.m
+	                                ^-----
+		At column 33, line 2, source module ##TEST_PATH##/misc56.m
 %YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc56.m ------------------------
 misc56.o
 
 ------------------------ Running   misc56.m ------------------------
-150373506,+2^misc56,%YDB-E-NUMOFLOW, Numeric overflow
+150373850,+2^misc56,%YDB-E-LVUNDEF, Undefined local variable: x
 
 ######################################################################
 ------------------------ Compiling misc57.m ------------------------
@@ -1044,15 +1039,19 @@ misc56.o
 		At column 8, line 2, source module ##TEST_PATH##/misc57.m
 %YDB-E-INVSVN, Invalid special variable name
 	 set ($ZY,z(2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
-	           ^-----
-		At column 12, line 2, source module ##TEST_PATH##/misc57.m
+	            ^-----
+		At column 13, line 2, source module ##TEST_PATH##/misc57.m
+%YDB-E-NUMOFLOW, Numeric overflow
+	 set ($ZY,z(2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	                                                         ^-----
+		At column 58, line 2, source module ##TEST_PATH##/misc57.m
 %YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc57.m ------------------------
 misc57.o
 
 ------------------------ Running   misc57.m ------------------------
-150373506,+2^misc57,%YDB-E-NUMOFLOW, Numeric overflow
+150373074,+2^misc57,%YDB-E-INVSVN, Invalid special variable name
 
 ######################################################################
 ------------------------ Compiling misc58.m ------------------------
@@ -1061,15 +1060,19 @@ misc57.o
 		At column 8, line 2, source module ##TEST_PATH##/misc58.m
 %YDB-E-INVSVN, Invalid special variable name
 	 set ($ZY,^z(2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
-	            ^-----
-		At column 13, line 2, source module ##TEST_PATH##/misc58.m
+	             ^-----
+		At column 14, line 2, source module ##TEST_PATH##/misc58.m
+%YDB-E-NUMOFLOW, Numeric overflow
+	 set ($ZY,^z(2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	                                                          ^-----
+		At column 59, line 2, source module ##TEST_PATH##/misc58.m
 %YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc58.m ------------------------
 misc58.o
 
 ------------------------ Running   misc58.m ------------------------
-150373506,+2^misc58,%YDB-E-NUMOFLOW, Numeric overflow
+150373074,+2^misc58,%YDB-E-INVSVN, Invalid special variable name
 
 ######################################################################
 ------------------------ Compiling misc59.m ------------------------
@@ -1078,15 +1081,19 @@ misc58.o
 		At column 8, line 2, source module ##TEST_PATH##/misc59.m
 %YDB-E-INVSVN, Invalid special variable name
 	 set ($ZY,@y(2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
-	            ^-----
-		At column 13, line 2, source module ##TEST_PATH##/misc59.m
+	             ^-----
+		At column 14, line 2, source module ##TEST_PATH##/misc59.m
+%YDB-E-NUMOFLOW, Numeric overflow
+	 set ($ZY,@y(2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	                                                          ^-----
+		At column 59, line 2, source module ##TEST_PATH##/misc59.m
 %YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc59.m ------------------------
 misc59.o
 
 ------------------------ Running   misc59.m ------------------------
-150373506,+2^misc59,%YDB-E-NUMOFLOW, Numeric overflow
+150373074,+2^misc59,%YDB-E-INVSVN, Invalid special variable name
 
 ######################################################################
 ------------------------ Compiling misc60.m ------------------------
@@ -1129,15 +1136,19 @@ misc61.o
 		At column 8, line 2, source module ##TEST_PATH##/misc62.m
 %YDB-E-INVSVN, Invalid special variable name
 	 set ($ZY,$piece(x(2E22222222222222222222222233)))=($piece($h,"",2E22222222222222222222222233)*0)+15
-	                  ^-----
-		At column 19, line 2, source module ##TEST_PATH##/misc62.m
+	                   ^-----
+		At column 20, line 2, source module ##TEST_PATH##/misc62.m
 %YDB-E-NUMOFLOW, Numeric overflow
+	 set ($ZY,$piece(x(2E22222222222222222222222233)))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	                                                ^-----
+		At column 49, line 2, source module ##TEST_PATH##/misc62.m
+%YDB-E-COMMA, Comma expected in this context
 
 ------------------------ Checking if .o file was created misc62.m ------------------------
 misc62.o
 
 ------------------------ Running   misc62.m ------------------------
-150373506,+2^misc62,%YDB-E-NUMOFLOW, Numeric overflow
+150372474,+2^misc62,%YDB-E-COMMA, Comma expected in this context
 
 ######################################################################
 ------------------------ Compiling misc63.m ------------------------
@@ -1146,15 +1157,19 @@ misc62.o
 		At column 8, line 2, source module ##TEST_PATH##/misc63.m
 %YDB-E-INVSVN, Invalid special variable name
 	 set ($ZY,$piece(^z(2E22222222222222222222222233)))=($piece($h,"",2E22222222222222222222222233)*0)+15
-	                   ^-----
-		At column 20, line 2, source module ##TEST_PATH##/misc63.m
+	                    ^-----
+		At column 21, line 2, source module ##TEST_PATH##/misc63.m
 %YDB-E-NUMOFLOW, Numeric overflow
+	 set ($ZY,$piece(^z(2E22222222222222222222222233)))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	                                                 ^-----
+		At column 50, line 2, source module ##TEST_PATH##/misc63.m
+%YDB-E-COMMA, Comma expected in this context
 
 ------------------------ Checking if .o file was created misc63.m ------------------------
 misc63.o
 
 ------------------------ Running   misc63.m ------------------------
-150373506,+2^misc63,%YDB-E-NUMOFLOW, Numeric overflow
+150372474,+2^misc63,%YDB-E-COMMA, Comma expected in this context
 
 ######################################################################
 ------------------------ Compiling misc64.m ------------------------
@@ -1163,15 +1178,19 @@ misc63.o
 		At column 8, line 2, source module ##TEST_PATH##/misc64.m
 %YDB-E-INVSVN, Invalid special variable name
 	 set ($ZY,$piece(@y(2E22222222222222222222222233)))=($piece($h,"",2E22222222222222222222222233)*0)+15
-	                   ^-----
-		At column 20, line 2, source module ##TEST_PATH##/misc64.m
+	                    ^-----
+		At column 21, line 2, source module ##TEST_PATH##/misc64.m
 %YDB-E-NUMOFLOW, Numeric overflow
+	 set ($ZY,$piece(@y(2E22222222222222222222222233)))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	                                                 ^-----
+		At column 50, line 2, source module ##TEST_PATH##/misc64.m
+%YDB-E-COMMA, Comma expected in this context
 
 ------------------------ Checking if .o file was created misc64.m ------------------------
 misc64.o
 
 ------------------------ Running   misc64.m ------------------------
-150373506,+2^misc64,%YDB-E-NUMOFLOW, Numeric overflow
+150372474,+2^misc64,%YDB-E-COMMA, Comma expected in this context
 
 ######################################################################
 ------------------------ Compiling misc65.m ------------------------
@@ -1214,15 +1233,19 @@ misc66.o
 		At column 8, line 2, source module ##TEST_PATH##/misc67.m
 %YDB-E-INVSVN, Invalid special variable name
 	 set ($ZY,$piece(x(y),2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
-	                     ^-----
-		At column 22, line 2, source module ##TEST_PATH##/misc67.m
+	                      ^-----
+		At column 23, line 2, source module ##TEST_PATH##/misc67.m
+%YDB-E-NUMOFLOW, Numeric overflow
+	 set ($ZY,$piece(x(y),2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	                                                                   ^-----
+		At column 68, line 2, source module ##TEST_PATH##/misc67.m
 %YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc67.m ------------------------
 misc67.o
 
 ------------------------ Running   misc67.m ------------------------
-150373506,+2^misc67,%YDB-E-NUMOFLOW, Numeric overflow
+150373074,+2^misc67,%YDB-E-INVSVN, Invalid special variable name
 
 ######################################################################
 ------------------------ Compiling misc68.m ------------------------
@@ -1231,15 +1254,19 @@ misc67.o
 		At column 8, line 2, source module ##TEST_PATH##/misc68.m
 %YDB-E-INVSVN, Invalid special variable name
 	 set ($ZY,$piece(x(y),"x",2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
-	                         ^-----
-		At column 26, line 2, source module ##TEST_PATH##/misc68.m
+	                          ^-----
+		At column 27, line 2, source module ##TEST_PATH##/misc68.m
+%YDB-E-NUMOFLOW, Numeric overflow
+	 set ($ZY,$piece(x(y),"x",2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	                                                                       ^-----
+		At column 72, line 2, source module ##TEST_PATH##/misc68.m
 %YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc68.m ------------------------
 misc68.o
 
 ------------------------ Running   misc68.m ------------------------
-150373506,+2^misc68,%YDB-E-NUMOFLOW, Numeric overflow
+150373074,+2^misc68,%YDB-E-INVSVN, Invalid special variable name
 
 ######################################################################
 ------------------------ Compiling misc69.m ------------------------
@@ -1248,15 +1275,15 @@ misc68.o
 		At column 8, line 2, source module ##TEST_PATH##/misc69.m
 %YDB-E-INVSVN, Invalid special variable name
 	 set ($ZY,$extract(x(y)))=($piece($h,"",2E22222222222222222222222233)*0)+15
-	                                       ^-----
-		At column 40, line 2, source module ##TEST_PATH##/misc69.m
+	                                        ^-----
+		At column 41, line 2, source module ##TEST_PATH##/misc69.m
 %YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc69.m ------------------------
 misc69.o
 
 ------------------------ Running   misc69.m ------------------------
-150373506,+2^misc69,%YDB-E-NUMOFLOW, Numeric overflow
+150373074,+2^misc69,%YDB-E-INVSVN, Invalid special variable name
 
 ######################################################################
 ------------------------ Compiling misc70.m ------------------------
@@ -1265,15 +1292,19 @@ misc69.o
 		At column 8, line 2, source module ##TEST_PATH##/misc70.m
 %YDB-E-INVSVN, Invalid special variable name
 	 set ($ZY,$extract(x(y),2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
-	                       ^-----
-		At column 24, line 2, source module ##TEST_PATH##/misc70.m
+	                        ^-----
+		At column 25, line 2, source module ##TEST_PATH##/misc70.m
+%YDB-E-NUMOFLOW, Numeric overflow
+	 set ($ZY,$extract(x(y),2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	                                                                     ^-----
+		At column 70, line 2, source module ##TEST_PATH##/misc70.m
 %YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc70.m ------------------------
 misc70.o
 
 ------------------------ Running   misc70.m ------------------------
-150373506,+2^misc70,%YDB-E-NUMOFLOW, Numeric overflow
+150373074,+2^misc70,%YDB-E-INVSVN, Invalid special variable name
 
 ######################################################################
 ------------------------ Compiling misc71.m ------------------------
@@ -1333,15 +1364,15 @@ misc73.o
 		At column 8, line 2, source module ##TEST_PATH##/misc74.m
 %YDB-E-INVSVN, Invalid special variable name
 	 set ($ZY,$piece(x(y),"x"))=($piece($h,"",2E22222222222222222222222233)*0)+15
-	                                         ^-----
-		At column 42, line 2, source module ##TEST_PATH##/misc74.m
+	                                          ^-----
+		At column 43, line 2, source module ##TEST_PATH##/misc74.m
 %YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc74.m ------------------------
 misc74.o
 
 ------------------------ Running   misc74.m ------------------------
-150373506,+2^misc74,%YDB-E-NUMOFLOW, Numeric overflow
+150373074,+2^misc74,%YDB-E-INVSVN, Invalid special variable name
 
 ######################################################################
 ------------------------ Compiling misc75.m ------------------------
@@ -1352,8 +1383,306 @@ misc75.o
 ------------------------ Running   misc75.m ------------------------
 150373850,+2^misc75,%YDB-E-LVUNDEF, Undefined local variable: X
 
-##ALLOW_OUTPUT UNICODE_MODE
-##SUSPEND_OUTPUT NONUNICODE_MODE
+######################################################################
+------------------------ Compiling misc76.m ------------------------
+	 write $x+$l(bb,2E22222222222222222222222233)		; Below cases are additions due to [YDB#371]
+	                ^-----
+		At column 17, line 2, source module ##TEST_PATH##/misc76.m
+%YDB-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc76.m ------------------------
+misc76.o
+
+------------------------ Running   misc76.m ------------------------
+150373506,+2^misc76,%YDB-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc77.m ------------------------
+	 write $x+$l("abcd",2E22222222222222222222222233)
+	                    ^-----
+		At column 21, line 2, source module ##TEST_PATH##/misc77.m
+%YDB-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc77.m ------------------------
+misc77.o
+
+------------------------ Running   misc77.m ------------------------
+150373506,+2^misc77,%YDB-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc78.m ------------------------
+	 set VL=""_$J($piece("abcd",2E22222222222222222222222233,6),"")
+	                            ^-----
+		At column 29, line 2, source module ##TEST_PATH##/misc78.m
+%YDB-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc78.m ------------------------
+misc78.o
+
+------------------------ Running   misc78.m ------------------------
+150373506,+2^misc78,%YDB-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc79.m ------------------------
+	 write $data(@($piece("abcd",2E22222222222222222222222233,$MN)?.N))
+	                             ^-----
+		At column 30, line 2, source module ##TEST_PATH##/misc79.m
+%YDB-E-NUMOFLOW, Numeric overflow
+	 write $data(@($piece("abcd",2E22222222222222222222222233,$MN)?.N))
+	                                                           ^-----
+		At column 60, line 2, source module ##TEST_PATH##/misc79.m
+%YDB-E-INVSVN, Invalid special variable name
+
+------------------------ Checking if .o file was created misc79.m ------------------------
+misc79.o
+
+------------------------ Running   misc79.m ------------------------
+150373506,+2^misc79,%YDB-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc80.m ------------------------
+	 write $data(@($piece("abcd",$MN,2E22222222222222222222222233)?.N))
+	                              ^-----
+		At column 31, line 2, source module ##TEST_PATH##/misc80.m
+%YDB-E-INVSVN, Invalid special variable name
+	 write $data(@($piece("abcd",$MN,2E22222222222222222222222233)?.N))
+	                                 ^-----
+		At column 34, line 2, source module ##TEST_PATH##/misc80.m
+%YDB-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc80.m ------------------------
+misc80.o
+
+------------------------ Running   misc80.m ------------------------
+150373074,+2^misc80,%YDB-E-INVSVN, Invalid special variable name
+
+######################################################################
+------------------------ Compiling misc81.m ------------------------
+	 write $get(@($piece("abcd",$MN,2E22222222222222222222222233)?.N))
+	                             ^-----
+		At column 30, line 2, source module ##TEST_PATH##/misc81.m
+%YDB-E-INVSVN, Invalid special variable name
+	 write $get(@($piece("abcd",$MN,2E22222222222222222222222233)?.N))
+	                                ^-----
+		At column 33, line 2, source module ##TEST_PATH##/misc81.m
+%YDB-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc81.m ------------------------
+misc81.o
+
+------------------------ Running   misc81.m ------------------------
+150373074,+2^misc81,%YDB-E-INVSVN, Invalid special variable name
+
+######################################################################
+------------------------ Compiling misc82.m ------------------------
+	 write $get(@($piece("abcd",2E22222222222222222222222233,$MN)?.N))
+	                            ^-----
+		At column 29, line 2, source module ##TEST_PATH##/misc82.m
+%YDB-E-NUMOFLOW, Numeric overflow
+	 write $get(@($piece("abcd",2E22222222222222222222222233,$MN)?.N))
+	                                                          ^-----
+		At column 59, line 2, source module ##TEST_PATH##/misc82.m
+%YDB-E-INVSVN, Invalid special variable name
+
+------------------------ Checking if .o file was created misc82.m ------------------------
+misc82.o
+
+------------------------ Running   misc82.m ------------------------
+150373506,+2^misc82,%YDB-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc83.m ------------------------
+	 write $incr("abcd",$piece("abcd",2E22222222222222222222222233,$MN)?.N)
+	             ^-----
+		At column 14, line 2, source module ##TEST_PATH##/misc83.m
+%YDB-E-EXPR, Expression expected but not found
+
+------------------------ Checking if .o file was created misc83.m ------------------------
+misc83.o
+
+------------------------ Running   misc83.m ------------------------
+150372778,+2^misc83,%YDB-E-EXPR, Expression expected but not found
+
+######################################################################
+------------------------ Compiling misc84.m ------------------------
+	 write $incr("abcd",$piece("abcd",$MN,2E22222222222222222222222233)?.N)
+	             ^-----
+		At column 14, line 2, source module ##TEST_PATH##/misc84.m
+%YDB-E-EXPR, Expression expected but not found
+
+------------------------ Checking if .o file was created misc84.m ------------------------
+misc84.o
+
+------------------------ Running   misc84.m ------------------------
+150372778,+2^misc84,%YDB-E-EXPR, Expression expected but not found
+
+######################################################################
+------------------------ Compiling misc85.m ------------------------
+	 write $incr("abcd",@($piece("abcd",$MN,2E22222222222222222222222233)?.N))
+	             ^-----
+		At column 14, line 2, source module ##TEST_PATH##/misc85.m
+%YDB-E-EXPR, Expression expected but not found
+
+------------------------ Checking if .o file was created misc85.m ------------------------
+misc85.o
+
+------------------------ Running   misc85.m ------------------------
+150372778,+2^misc85,%YDB-E-EXPR, Expression expected but not found
+
+######################################################################
+------------------------ Compiling misc86.m ------------------------
+	 write $incr("abcd",@($piece("abcd",$MN,$MN(2E22222222222222222222222233))?.N))
+	             ^-----
+		At column 14, line 2, source module ##TEST_PATH##/misc86.m
+%YDB-E-EXPR, Expression expected but not found
+
+------------------------ Checking if .o file was created misc86.m ------------------------
+misc86.o
+
+------------------------ Running   misc86.m ------------------------
+150372778,+2^misc86,%YDB-E-EXPR, Expression expected but not found
+
+######################################################################
+------------------------ Compiling misc87.m ------------------------
+	 write $order(@($piece("abcd",$MN,$MN(2E22222222222222222222222233)?.N)))
+	                               ^-----
+		At column 32, line 2, source module ##TEST_PATH##/misc87.m
+%YDB-E-INVSVN, Invalid special variable name
+	 write $order(@($piece("abcd",$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                   ^-----
+		At column 36, line 2, source module ##TEST_PATH##/misc87.m
+%YDB-E-INVFCN, Invalid function name
+
+------------------------ Checking if .o file was created misc87.m ------------------------
+misc87.o
+
+------------------------ Running   misc87.m ------------------------
+150373074,+2^misc87,%YDB-E-INVSVN, Invalid special variable name
+
+######################################################################
+------------------------ Compiling misc88.m ------------------------
+	 write $zprevious(@($piece("abcd",$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                   ^-----
+		At column 36, line 2, source module ##TEST_PATH##/misc88.m
+%YDB-E-INVSVN, Invalid special variable name
+	 write $zprevious(@($piece("abcd",$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                       ^-----
+		At column 40, line 2, source module ##TEST_PATH##/misc88.m
+%YDB-E-INVFCN, Invalid function name
+
+------------------------ Checking if .o file was created misc88.m ------------------------
+misc88.o
+
+------------------------ Running   misc88.m ------------------------
+150373074,+2^misc88,%YDB-E-INVSVN, Invalid special variable name
+
+######################################################################
+------------------------ Compiling misc89.m ------------------------
+	 write $zqgblmod(@($piece("abcd",$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                  ^-----
+		At column 35, line 2, source module ##TEST_PATH##/misc89.m
+%YDB-E-INVSVN, Invalid special variable name
+	 write $zqgblmod(@($piece("abcd",$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                      ^-----
+		At column 39, line 2, source module ##TEST_PATH##/misc89.m
+%YDB-E-INVFCN, Invalid function name
+
+------------------------ Checking if .o file was created misc89.m ------------------------
+misc89.o
+
+------------------------ Running   misc89.m ------------------------
+150373074,+2^misc89,%YDB-E-INVSVN, Invalid special variable name
+
+######################################################################
+------------------------ Compiling misc90.m ------------------------
+	 write $order(@($piece("abcd",$MN,$MN(1)?.N)),@($piece("abcd",$MN,$MN(2E22222222222222222222222233))?.N))
+	                               ^-----
+		At column 32, line 2, source module ##TEST_PATH##/misc90.m
+%YDB-E-INVSVN, Invalid special variable name
+	 write $order(@($piece("abcd",$MN,$MN(1)?.N)),@($piece("abcd",$MN,$MN(2E22222222222222222222222233))?.N))
+	                                   ^-----
+		At column 36, line 2, source module ##TEST_PATH##/misc90.m
+%YDB-E-INVFCN, Invalid function name
+	 write $order(@($piece("abcd",$MN,$MN(1)?.N)),@($piece("abcd",$MN,$MN(2E22222222222222222222222233))?.N))
+	                                                               ^-----
+		At column 64, line 2, source module ##TEST_PATH##/misc90.m
+%YDB-E-INVSVN, Invalid special variable name
+	 write $order(@($piece("abcd",$MN,$MN(1)?.N)),@($piece("abcd",$MN,$MN(2E22222222222222222222222233))?.N))
+	                                                                   ^-----
+		At column 68, line 2, source module ##TEST_PATH##/misc90.m
+%YDB-E-INVFCN, Invalid function name
+
+------------------------ Checking if .o file was created misc90.m ------------------------
+misc90.o
+
+------------------------ Running   misc90.m ------------------------
+150373074,+2^misc90,%YDB-E-INVSVN, Invalid special variable name
+
+######################################################################
+------------------------ Compiling misc91.m ------------------------
+	 write $query(@($piece("abcd",$MN,$MN(2E22222222222222222222222233)?.N)))
+	                               ^-----
+		At column 32, line 2, source module ##TEST_PATH##/misc91.m
+%YDB-E-INVSVN, Invalid special variable name
+	 write $query(@($piece("abcd",$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                   ^-----
+		At column 36, line 2, source module ##TEST_PATH##/misc91.m
+%YDB-E-INVFCN, Invalid function name
+
+------------------------ Checking if .o file was created misc91.m ------------------------
+misc91.o
+
+------------------------ Running   misc91.m ------------------------
+150373074,+2^misc91,%YDB-E-INVSVN, Invalid special variable name
+
+######################################################################
+------------------------ Compiling misc92.m ------------------------
+	 write $select(0:@($piece("abcd",$MN,$MN(1)?.N)),1:@($piece("abcd",$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                  ^-----
+		At column 35, line 2, source module ##TEST_PATH##/misc92.m
+%YDB-E-INVSVN, Invalid special variable name
+	 write $select(0:@($piece("abcd",$MN,$MN(1)?.N)),1:@($piece("abcd",$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                      ^-----
+		At column 39, line 2, source module ##TEST_PATH##/misc92.m
+%YDB-E-INVFCN, Invalid function name
+	 write $select(0:@($piece("abcd",$MN,$MN(1)?.N)),1:@($piece("abcd",$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                                                    ^-----
+		At column 69, line 2, source module ##TEST_PATH##/misc92.m
+%YDB-E-INVSVN, Invalid special variable name
+	 write $select(0:@($piece("abcd",$MN,$MN(1)?.N)),1:@($piece("abcd",$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                                                        ^-----
+		At column 73, line 2, source module ##TEST_PATH##/misc92.m
+%YDB-E-INVFCN, Invalid function name
+
+------------------------ Checking if .o file was created misc92.m ------------------------
+misc92.o
+
+------------------------ Running   misc92.m ------------------------
+150373074,+2^misc92,%YDB-E-INVSVN, Invalid special variable name
+
+######################################################################
+------------------------ Compiling misc93.m ------------------------
+	 xecute @($piece("abcd",$MN,$MN(2E22222222222222222222222233)?.N))
+	                         ^-----
+		At column 26, line 2, source module ##TEST_PATH##/misc93.m
+%YDB-E-INVSVN, Invalid special variable name
+	 xecute @($piece("abcd",$MN,$MN(2E22222222222222222222222233)?.N))
+	                             ^-----
+		At column 30, line 2, source module ##TEST_PATH##/misc93.m
+%YDB-E-INVFCN, Invalid function name
+
+------------------------ Checking if .o file was created misc93.m ------------------------
+misc93.o
+
+------------------------ Running   misc93.m ------------------------
+150373074,+2^misc93,%YDB-E-INVSVN, Invalid special variable name
+
+# ----------------------------------------------
+# Switching test to UTF-8 mode
+# ----------------------------------------------
+# Running : mumps -run c002861
+setenv gtm_chset UTF-8
+unset echo
 ######################################################################
 ------------------------ Compiling profile1.m ------------------------
 	 set $x=$x_$J("",48-$L($x))_$J($FN($piece(x(x),".",2),",",2),18)
@@ -1563,28 +1892,32 @@ profile12.o
 ######################################################################
 ------------------------ Compiling misc1.m ------------------------
 	 write $x+$l(bb,2E22222222222222222222222233))
-	               ^-----
-		At column 16, line 2, source module ##TEST_PATH##/misc1.m
+	                ^-----
+		At column 17, line 2, source module ##TEST_PATH##/misc1.m
 %YDB-E-NUMOFLOW, Numeric overflow
+	 write $x+$l(bb,2E22222222222222222222222233))
+	                                             ^-----
+		At column 46, line 2, source module ##TEST_PATH##/misc1.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
 
 ------------------------ Checking if .o file was created misc1.m ------------------------
 misc1.o
 
 ------------------------ Running   misc1.m ------------------------
-150373506,+2^misc1,%YDB-E-NUMOFLOW, Numeric overflow
+150373706,+2^misc1,%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
 
 ######################################################################
 ------------------------ Compiling misc2.m ------------------------
 	 set VL=""_$J($piece(T(T),2E22222222222222222222222233,6),"")
-	                         ^-----
-		At column 26, line 2, source module ##TEST_PATH##/misc2.m
+	                          ^-----
+		At column 27, line 2, source module ##TEST_PATH##/misc2.m
 %YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc2.m ------------------------
 misc2.o
 
 ------------------------ Running   misc2.m ------------------------
-150373506,+2^misc2,%YDB-E-NUMOFLOW, Numeric overflow
+150373850,+2^misc2,%YDB-E-LVUNDEF, Undefined local variable: T
 
 ######################################################################
 ------------------------ Compiling misc3.m ------------------------
@@ -1592,23 +1925,23 @@ misc2.o
 	              ^-----
 		At column 15, line 2, source module ##TEST_PATH##/misc3.m
 %YDB-E-INVFCN, Invalid function name
-	 set V="M"?@($MN("A",2E22222222222222222222222233)?.N)
-	                    ^-----
-		At column 21, line 2, source module ##TEST_PATH##/misc3.m
-%YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc3.m ------------------------
 misc3.o
 
 ------------------------ Running   misc3.m ------------------------
-150373506,+2^misc3,%YDB-E-NUMOFLOW, Numeric overflow
+150373058,+2^misc3,%YDB-E-INVFCN, Invalid function name
 
 ######################################################################
 ------------------------ Compiling misc4.m ------------------------
 	 set V="M"?@($piece("A",2E22222222222222222222222233,$MN)?.N)
-	                       ^-----
-		At column 24, line 2, source module ##TEST_PATH##/misc4.m
+	                        ^-----
+		At column 25, line 2, source module ##TEST_PATH##/misc4.m
 %YDB-E-NUMOFLOW, Numeric overflow
+	 set V="M"?@($piece("A",2E22222222222222222222222233,$MN)?.N)
+	                                                      ^-----
+		At column 55, line 2, source module ##TEST_PATH##/misc4.m
+%YDB-E-INVSVN, Invalid special variable name
 
 ------------------------ Checking if .o file was created misc4.m ------------------------
 misc4.o
@@ -1636,15 +1969,15 @@ misc5.o
 		At column 24, line 2, source module ##TEST_PATH##/misc6.m
 %YDB-E-INVFCN, Invalid function name
 	 set %=$x do @($piece($MN("A",2E22222222222222222222222233)?.N))
-	                             ^-----
-		At column 30, line 2, source module ##TEST_PATH##/misc6.m
-%YDB-E-NUMOFLOW, Numeric overflow
+	                                                              ^-----
+		At column 63, line 2, source module ##TEST_PATH##/misc6.m
+%YDB-E-COMMA, Comma expected in this context
 
 ------------------------ Checking if .o file was created misc6.m ------------------------
 misc6.o
 
 ------------------------ Running   misc6.m ------------------------
-150373506,+2^misc6,%YDB-E-NUMOFLOW, Numeric overflow
+150372474,+2^misc6,%YDB-E-COMMA, Comma expected in this context
 
 ######################################################################
 ------------------------ Compiling misc7.m ------------------------
@@ -1666,15 +1999,15 @@ misc7.o
 		At column 26, line 2, source module ##TEST_PATH##/misc8.m
 %YDB-E-INVFCN, Invalid function name
 	 set %=$x goto @($piece($MN("A",2E22222222222222222222222233)?.N))
-	                               ^-----
-		At column 32, line 2, source module ##TEST_PATH##/misc8.m
-%YDB-E-NUMOFLOW, Numeric overflow
+	                                                                ^-----
+		At column 65, line 2, source module ##TEST_PATH##/misc8.m
+%YDB-E-COMMA, Comma expected in this context
 
 ------------------------ Checking if .o file was created misc8.m ------------------------
 misc8.o
 
 ------------------------ Running   misc8.m ------------------------
-150373506,+2^misc8,%YDB-E-NUMOFLOW, Numeric overflow
+150372474,+2^misc8,%YDB-E-COMMA, Comma expected in this context
 
 ######################################################################
 ------------------------ Compiling misc9.m ------------------------
@@ -1683,15 +2016,15 @@ misc8.o
 		At column 26, line 2, source module ##TEST_PATH##/misc9.m
 %YDB-E-INVFCN, Invalid function name
 	 set %=$x goto @($piece($MN(2E22222222222222222222222233,2E22222222222222222222222233)?.N))
-	                           ^-----
-		At column 28, line 2, source module ##TEST_PATH##/misc9.m
-%YDB-E-NUMOFLOW, Numeric overflow
+	                                                                                         ^-----
+		At column 90, line 2, source module ##TEST_PATH##/misc9.m
+%YDB-E-COMMA, Comma expected in this context
 
 ------------------------ Checking if .o file was created misc9.m ------------------------
 misc9.o
 
 ------------------------ Running   misc9.m ------------------------
-150373506,+2^misc9,%YDB-E-NUMOFLOW, Numeric overflow
+150372474,+2^misc9,%YDB-E-COMMA, Comma expected in this context
 
 ######################################################################
 ------------------------ Compiling misc10.m ------------------------
@@ -1700,15 +2033,15 @@ misc9.o
 		At column 27, line 2, source module ##TEST_PATH##/misc10.m
 %YDB-E-INVFCN, Invalid function name
 	 set %=$x zgoto @($piece($MN("A",2E22222222222222222222222233)?.N))
-	                                ^-----
-		At column 33, line 2, source module ##TEST_PATH##/misc10.m
-%YDB-E-NUMOFLOW, Numeric overflow
+	                                                                 ^-----
+		At column 66, line 2, source module ##TEST_PATH##/misc10.m
+%YDB-E-COMMA, Comma expected in this context
 
 ------------------------ Checking if .o file was created misc10.m ------------------------
 misc10.o
 
 ------------------------ Running   misc10.m ------------------------
-150373506,+2^misc10,%YDB-E-NUMOFLOW, Numeric overflow
+150372474,+2^misc10,%YDB-E-COMMA, Comma expected in this context
 
 ######################################################################
 ------------------------ Compiling misc11.m ------------------------
@@ -1717,15 +2050,15 @@ misc10.o
 		At column 27, line 2, source module ##TEST_PATH##/misc11.m
 %YDB-E-INVFCN, Invalid function name
 	 set %=$x zgoto @($piece($MN(2E22222222222222222222222233,2E22222222222222222222222233)?.N))
-	                            ^-----
-		At column 29, line 2, source module ##TEST_PATH##/misc11.m
-%YDB-E-NUMOFLOW, Numeric overflow
+	                                                                                          ^-----
+		At column 91, line 2, source module ##TEST_PATH##/misc11.m
+%YDB-E-COMMA, Comma expected in this context
 
 ------------------------ Checking if .o file was created misc11.m ------------------------
 misc11.o
 
 ------------------------ Running   misc11.m ------------------------
-150373506,+2^misc11,%YDB-E-NUMOFLOW, Numeric overflow
+150372474,+2^misc11,%YDB-E-COMMA, Comma expected in this context
 
 ######################################################################
 ------------------------ Compiling misc12.m ------------------------
@@ -1743,15 +2076,19 @@ misc12.o
 ######################################################################
 ------------------------ Compiling misc13.m ------------------------
 	 write $data(@($piece(x(x),2E22222222222222222222222233,$MN)?.N))
-	                          ^-----
-		At column 27, line 2, source module ##TEST_PATH##/misc13.m
+	                           ^-----
+		At column 28, line 2, source module ##TEST_PATH##/misc13.m
 %YDB-E-NUMOFLOW, Numeric overflow
+	 write $data(@($piece(x(x),2E22222222222222222222222233,$MN)?.N))
+	                                                         ^-----
+		At column 58, line 2, source module ##TEST_PATH##/misc13.m
+%YDB-E-INVSVN, Invalid special variable name
 
 ------------------------ Checking if .o file was created misc13.m ------------------------
 misc13.o
 
 ------------------------ Running   misc13.m ------------------------
-150373506,+2^misc13,%YDB-E-NUMOFLOW, Numeric overflow
+150373850,+2^misc13,%YDB-E-LVUNDEF, Undefined local variable: x
 
 ######################################################################
 ------------------------ Compiling misc14.m ------------------------
@@ -1760,15 +2097,15 @@ misc13.o
 		At column 29, line 2, source module ##TEST_PATH##/misc14.m
 %YDB-E-INVSVN, Invalid special variable name
 	 write $data(@($piece(x(x),$MN,2E22222222222222222222222233)?.N))
-	                              ^-----
-		At column 31, line 2, source module ##TEST_PATH##/misc14.m
+	                               ^-----
+		At column 32, line 2, source module ##TEST_PATH##/misc14.m
 %YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc14.m ------------------------
 misc14.o
 
 ------------------------ Running   misc14.m ------------------------
-150373506,+2^misc14,%YDB-E-NUMOFLOW, Numeric overflow
+150373850,+2^misc14,%YDB-E-LVUNDEF, Undefined local variable: x
 
 ######################################################################
 ------------------------ Compiling misc15.m ------------------------
@@ -1777,41 +2114,49 @@ misc14.o
 		At column 28, line 2, source module ##TEST_PATH##/misc15.m
 %YDB-E-INVSVN, Invalid special variable name
 	 write $get(@($piece(x(x),$MN,2E22222222222222222222222233)?.N))
-	                             ^-----
-		At column 30, line 2, source module ##TEST_PATH##/misc15.m
+	                              ^-----
+		At column 31, line 2, source module ##TEST_PATH##/misc15.m
 %YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc15.m ------------------------
 misc15.o
 
 ------------------------ Running   misc15.m ------------------------
-150373506,+2^misc15,%YDB-E-NUMOFLOW, Numeric overflow
+150373850,+2^misc15,%YDB-E-LVUNDEF, Undefined local variable: x
 
 ######################################################################
 ------------------------ Compiling misc16.m ------------------------
 	 write $get(@($piece(x(x),2E22222222222222222222222233,$MN)?.N))
-	                         ^-----
-		At column 26, line 2, source module ##TEST_PATH##/misc16.m
+	                          ^-----
+		At column 27, line 2, source module ##TEST_PATH##/misc16.m
 %YDB-E-NUMOFLOW, Numeric overflow
+	 write $get(@($piece(x(x),2E22222222222222222222222233,$MN)?.N))
+	                                                        ^-----
+		At column 57, line 2, source module ##TEST_PATH##/misc16.m
+%YDB-E-INVSVN, Invalid special variable name
 
 ------------------------ Checking if .o file was created misc16.m ------------------------
 misc16.o
 
 ------------------------ Running   misc16.m ------------------------
-150373506,+2^misc16,%YDB-E-NUMOFLOW, Numeric overflow
+150373850,+2^misc16,%YDB-E-LVUNDEF, Undefined local variable: x
 
 ######################################################################
 ------------------------ Compiling misc17.m ------------------------
 	 write $incr(x(x),$piece(x(x),2E22222222222222222222222233,$MN)?.N)
-	                             ^-----
-		At column 30, line 2, source module ##TEST_PATH##/misc17.m
+	                              ^-----
+		At column 31, line 2, source module ##TEST_PATH##/misc17.m
 %YDB-E-NUMOFLOW, Numeric overflow
+	 write $incr(x(x),$piece(x(x),2E22222222222222222222222233,$MN)?.N)
+	                                                            ^-----
+		At column 61, line 2, source module ##TEST_PATH##/misc17.m
+%YDB-E-INVSVN, Invalid special variable name
 
 ------------------------ Checking if .o file was created misc17.m ------------------------
 misc17.o
 
 ------------------------ Running   misc17.m ------------------------
-150373506,+2^misc17,%YDB-E-NUMOFLOW, Numeric overflow
+150373850,+2^misc17,%YDB-E-LVUNDEF, Undefined local variable: x
 
 ######################################################################
 ------------------------ Compiling misc18.m ------------------------
@@ -1820,15 +2165,15 @@ misc17.o
 		At column 32, line 2, source module ##TEST_PATH##/misc18.m
 %YDB-E-INVSVN, Invalid special variable name
 	 write $incr(x(x),$piece(x(x),$MN,2E22222222222222222222222233)?.N)
-	                                 ^-----
-		At column 34, line 2, source module ##TEST_PATH##/misc18.m
+	                                  ^-----
+		At column 35, line 2, source module ##TEST_PATH##/misc18.m
 %YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc18.m ------------------------
 misc18.o
 
 ------------------------ Running   misc18.m ------------------------
-150373506,+2^misc18,%YDB-E-NUMOFLOW, Numeric overflow
+150373850,+2^misc18,%YDB-E-LVUNDEF, Undefined local variable: x
 
 ######################################################################
 ------------------------ Compiling misc19.m ------------------------
@@ -1837,15 +2182,15 @@ misc18.o
 		At column 34, line 2, source module ##TEST_PATH##/misc19.m
 %YDB-E-INVSVN, Invalid special variable name
 	 write $incr(x(x),@($piece(x(x),$MN,2E22222222222222222222222233)?.N))
-	                                   ^-----
-		At column 36, line 2, source module ##TEST_PATH##/misc19.m
+	                                    ^-----
+		At column 37, line 2, source module ##TEST_PATH##/misc19.m
 %YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc19.m ------------------------
 misc19.o
 
 ------------------------ Running   misc19.m ------------------------
-150373506,+2^misc19,%YDB-E-NUMOFLOW, Numeric overflow
+150373850,+2^misc19,%YDB-E-LVUNDEF, Undefined local variable: x
 
 ######################################################################
 ------------------------ Compiling misc20.m ------------------------
@@ -1857,16 +2202,12 @@ misc19.o
 	                                     ^-----
 		At column 38, line 2, source module ##TEST_PATH##/misc20.m
 %YDB-E-INVFCN, Invalid function name
-	 write $incr(x(x),@($piece(x(x),$MN,$MN(2E22222222222222222222222233))?.N))
-	                                       ^-----
-		At column 40, line 2, source module ##TEST_PATH##/misc20.m
-%YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc20.m ------------------------
 misc20.o
 
 ------------------------ Running   misc20.m ------------------------
-150373506,+2^misc20,%YDB-E-NUMOFLOW, Numeric overflow
+150373850,+2^misc20,%YDB-E-LVUNDEF, Undefined local variable: x
 
 ######################################################################
 ------------------------ Compiling misc21.m ------------------------
@@ -1878,16 +2219,12 @@ misc20.o
 	                                 ^-----
 		At column 34, line 2, source module ##TEST_PATH##/misc21.m
 %YDB-E-INVFCN, Invalid function name
-	 write $order(@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
-	                                   ^-----
-		At column 36, line 2, source module ##TEST_PATH##/misc21.m
-%YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc21.m ------------------------
 misc21.o
 
 ------------------------ Running   misc21.m ------------------------
-150373506,+2^misc21,%YDB-E-NUMOFLOW, Numeric overflow
+150373850,+2^misc21,%YDB-E-LVUNDEF, Undefined local variable: x
 
 ######################################################################
 ------------------------ Compiling misc22.m ------------------------
@@ -1899,16 +2236,12 @@ misc21.o
 	                                     ^-----
 		At column 38, line 2, source module ##TEST_PATH##/misc22.m
 %YDB-E-INVFCN, Invalid function name
-	 write $zprevious(@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
-	                                       ^-----
-		At column 40, line 2, source module ##TEST_PATH##/misc22.m
-%YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc22.m ------------------------
 misc22.o
 
 ------------------------ Running   misc22.m ------------------------
-150373506,+2^misc22,%YDB-E-NUMOFLOW, Numeric overflow
+150373850,+2^misc22,%YDB-E-LVUNDEF, Undefined local variable: x
 
 ######################################################################
 ------------------------ Compiling misc23.m ------------------------
@@ -1920,16 +2253,12 @@ misc22.o
 	                                    ^-----
 		At column 37, line 2, source module ##TEST_PATH##/misc23.m
 %YDB-E-INVFCN, Invalid function name
-	 write $zqgblmod(@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
-	                                      ^-----
-		At column 39, line 2, source module ##TEST_PATH##/misc23.m
-%YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc23.m ------------------------
 misc23.o
 
 ------------------------ Running   misc23.m ------------------------
-150373506,+2^misc23,%YDB-E-NUMOFLOW, Numeric overflow
+150373850,+2^misc23,%YDB-E-LVUNDEF, Undefined local variable: x
 
 ######################################################################
 ------------------------ Compiling misc24.m ------------------------
@@ -1949,16 +2278,12 @@ misc23.o
 	                                                               ^-----
 		At column 64, line 2, source module ##TEST_PATH##/misc24.m
 %YDB-E-INVFCN, Invalid function name
-	 write $order(@($piece(x(x),$MN,$MN(1)?.N)),@($piece(x(x),$MN,$MN(2E22222222222222222222222233))?.N))
-	                                                                 ^-----
-		At column 66, line 2, source module ##TEST_PATH##/misc24.m
-%YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc24.m ------------------------
 misc24.o
 
 ------------------------ Running   misc24.m ------------------------
-150373506,+2^misc24,%YDB-E-NUMOFLOW, Numeric overflow
+150373850,+2^misc24,%YDB-E-LVUNDEF, Undefined local variable: x
 
 ######################################################################
 ------------------------ Compiling misc25.m ------------------------
@@ -1970,16 +2295,12 @@ misc24.o
 	                                 ^-----
 		At column 34, line 2, source module ##TEST_PATH##/misc25.m
 %YDB-E-INVFCN, Invalid function name
-	 write $query(@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
-	                                   ^-----
-		At column 36, line 2, source module ##TEST_PATH##/misc25.m
-%YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc25.m ------------------------
 misc25.o
 
 ------------------------ Running   misc25.m ------------------------
-150373506,+2^misc25,%YDB-E-NUMOFLOW, Numeric overflow
+150373850,+2^misc25,%YDB-E-LVUNDEF, Undefined local variable: x
 
 ######################################################################
 ------------------------ Compiling misc26.m ------------------------
@@ -1999,16 +2320,12 @@ misc25.o
 	                                                                    ^-----
 		At column 69, line 2, source module ##TEST_PATH##/misc26.m
 %YDB-E-INVFCN, Invalid function name
-	 write $select(0:@($piece(x(x),$MN,$MN(1)?.N)),1:@($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N)))
-	                                                                      ^-----
-		At column 71, line 2, source module ##TEST_PATH##/misc26.m
-%YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc26.m ------------------------
 misc26.o
 
 ------------------------ Running   misc26.m ------------------------
-150373506,+2^misc26,%YDB-E-NUMOFLOW, Numeric overflow
+150373850,+2^misc26,%YDB-E-LVUNDEF, Undefined local variable: x
 
 ######################################################################
 ------------------------ Compiling misc27.m ------------------------
@@ -2020,16 +2337,12 @@ misc26.o
 	                           ^-----
 		At column 28, line 2, source module ##TEST_PATH##/misc27.m
 %YDB-E-INVFCN, Invalid function name
-	 xecute @($piece(x(x),$MN,$MN(2E22222222222222222222222233)?.N))
-	                             ^-----
-		At column 30, line 2, source module ##TEST_PATH##/misc27.m
-%YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc27.m ------------------------
 misc27.o
 
 ------------------------ Running   misc27.m ------------------------
-150373506,+2^misc27,%YDB-E-NUMOFLOW, Numeric overflow
+150373850,+2^misc27,%YDB-E-LVUNDEF, Undefined local variable: x
 
 ######################################################################
 ------------------------ Compiling misc28.m ------------------------
@@ -2198,15 +2511,23 @@ misc35.o
 		At column 26, line 2, source module ##TEST_PATH##/misc36.m
 %YDB-E-INVFCN, Invalid function name
 	 set %=$x goto @($piece($MN(2E22222222222222222222222233,".")?.N))
-	                           ^-----
-		At column 28, line 2, source module ##TEST_PATH##/misc36.m
-%YDB-E-NUMOFLOW, Numeric overflow
+	                                                          ^-----
+		At column 59, line 2, source module ##TEST_PATH##/misc36.m
+%YDB-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(128)
+	 set %=$x goto @($piece($MN(2E22222222222222222222222233,".")?.N))
+	                                                          ^-----
+		At column 59, line 2, source module ##TEST_PATH##/misc36.m
+%YDB-W-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+	 set %=$x goto @($piece($MN(2E22222222222222222222222233,".")?.N))
+	                                                               ^-----
+		At column 65, line 2, source module ##TEST_PATH##/misc36.m
+%YDB-E-COMMA, Comma expected in this context
 
 ------------------------ Checking if .o file was created misc36.m ------------------------
 misc36.o
 
 ------------------------ Running   misc36.m ------------------------
-150373506,+2^misc36,%YDB-E-NUMOFLOW, Numeric overflow
+150372474,+2^misc36,%YDB-E-COMMA, Comma expected in this context
 
 ######################################################################
 ------------------------ Compiling misc37.m ------------------------
@@ -2240,15 +2561,23 @@ misc37.o
 		At column 27, line 2, source module ##TEST_PATH##/misc38.m
 %YDB-E-INVFCN, Invalid function name
 	 set %=$x zgoto @($piece($MN(2E22222222222222222222222233,".")?.N))
-	                            ^-----
-		At column 29, line 2, source module ##TEST_PATH##/misc38.m
-%YDB-E-NUMOFLOW, Numeric overflow
+	                                                           ^-----
+		At column 60, line 2, source module ##TEST_PATH##/misc38.m
+%YDB-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(128)
+	 set %=$x zgoto @($piece($MN(2E22222222222222222222222233,".")?.N))
+	                                                           ^-----
+		At column 60, line 2, source module ##TEST_PATH##/misc38.m
+%YDB-W-BADCHAR, $ZCHAR(128) is not a valid character in the UTF-8 encoding form
+	 set %=$x zgoto @($piece($MN(2E22222222222222222222222233,".")?.N))
+	                                                                ^-----
+		At column 66, line 2, source module ##TEST_PATH##/misc38.m
+%YDB-E-COMMA, Comma expected in this context
 
 ------------------------ Checking if .o file was created misc38.m ------------------------
 misc38.o
 
 ------------------------ Running   misc38.m ------------------------
-150373506,+2^misc38,%YDB-E-NUMOFLOW, Numeric overflow
+150372474,+2^misc38,%YDB-E-COMMA, Comma expected in this context
 
 ######################################################################
 ------------------------ Compiling misc39.m ------------------------
@@ -2625,8 +2954,8 @@ misc54.o
 		At column 10, line 2, source module ##TEST_PATH##/misc55.m
 %YDB-E-INVSVN, Invalid special variable name
 	 set (x,$ZY,z(2E22222222222222222222222233))=($piece($h,"","",2)*0)+15
-	             ^-----
-		At column 14, line 2, source module ##TEST_PATH##/misc55.m
+	              ^-----
+		At column 15, line 2, source module ##TEST_PATH##/misc55.m
 %YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc55.m ------------------------
@@ -2642,15 +2971,15 @@ misc55.o
 		At column 10, line 2, source module ##TEST_PATH##/misc56.m
 %YDB-E-INVSVN, Invalid special variable name
 	 set (x,$ZY,z(x))=($piece($h,"",2E22222222222222222222222233)*0)+15
-	                               ^-----
-		At column 32, line 2, source module ##TEST_PATH##/misc56.m
+	                                ^-----
+		At column 33, line 2, source module ##TEST_PATH##/misc56.m
 %YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc56.m ------------------------
 misc56.o
 
 ------------------------ Running   misc56.m ------------------------
-150373506,+2^misc56,%YDB-E-NUMOFLOW, Numeric overflow
+150373850,+2^misc56,%YDB-E-LVUNDEF, Undefined local variable: x
 
 ######################################################################
 ------------------------ Compiling misc57.m ------------------------
@@ -2659,15 +2988,19 @@ misc56.o
 		At column 8, line 2, source module ##TEST_PATH##/misc57.m
 %YDB-E-INVSVN, Invalid special variable name
 	 set ($ZY,z(2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
-	           ^-----
-		At column 12, line 2, source module ##TEST_PATH##/misc57.m
+	            ^-----
+		At column 13, line 2, source module ##TEST_PATH##/misc57.m
+%YDB-E-NUMOFLOW, Numeric overflow
+	 set ($ZY,z(2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	                                                         ^-----
+		At column 58, line 2, source module ##TEST_PATH##/misc57.m
 %YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc57.m ------------------------
 misc57.o
 
 ------------------------ Running   misc57.m ------------------------
-150373506,+2^misc57,%YDB-E-NUMOFLOW, Numeric overflow
+150373074,+2^misc57,%YDB-E-INVSVN, Invalid special variable name
 
 ######################################################################
 ------------------------ Compiling misc58.m ------------------------
@@ -2676,15 +3009,19 @@ misc57.o
 		At column 8, line 2, source module ##TEST_PATH##/misc58.m
 %YDB-E-INVSVN, Invalid special variable name
 	 set ($ZY,^z(2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
-	            ^-----
-		At column 13, line 2, source module ##TEST_PATH##/misc58.m
+	             ^-----
+		At column 14, line 2, source module ##TEST_PATH##/misc58.m
+%YDB-E-NUMOFLOW, Numeric overflow
+	 set ($ZY,^z(2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	                                                          ^-----
+		At column 59, line 2, source module ##TEST_PATH##/misc58.m
 %YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc58.m ------------------------
 misc58.o
 
 ------------------------ Running   misc58.m ------------------------
-150373506,+2^misc58,%YDB-E-NUMOFLOW, Numeric overflow
+150373074,+2^misc58,%YDB-E-INVSVN, Invalid special variable name
 
 ######################################################################
 ------------------------ Compiling misc59.m ------------------------
@@ -2693,15 +3030,19 @@ misc58.o
 		At column 8, line 2, source module ##TEST_PATH##/misc59.m
 %YDB-E-INVSVN, Invalid special variable name
 	 set ($ZY,@y(2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
-	            ^-----
-		At column 13, line 2, source module ##TEST_PATH##/misc59.m
+	             ^-----
+		At column 14, line 2, source module ##TEST_PATH##/misc59.m
+%YDB-E-NUMOFLOW, Numeric overflow
+	 set ($ZY,@y(2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	                                                          ^-----
+		At column 59, line 2, source module ##TEST_PATH##/misc59.m
 %YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc59.m ------------------------
 misc59.o
 
 ------------------------ Running   misc59.m ------------------------
-150373506,+2^misc59,%YDB-E-NUMOFLOW, Numeric overflow
+150373074,+2^misc59,%YDB-E-INVSVN, Invalid special variable name
 
 ######################################################################
 ------------------------ Compiling misc60.m ------------------------
@@ -2744,15 +3085,19 @@ misc61.o
 		At column 8, line 2, source module ##TEST_PATH##/misc62.m
 %YDB-E-INVSVN, Invalid special variable name
 	 set ($ZY,$piece(x(2E22222222222222222222222233)))=($piece($h,"",2E22222222222222222222222233)*0)+15
-	                  ^-----
-		At column 19, line 2, source module ##TEST_PATH##/misc62.m
+	                   ^-----
+		At column 20, line 2, source module ##TEST_PATH##/misc62.m
 %YDB-E-NUMOFLOW, Numeric overflow
+	 set ($ZY,$piece(x(2E22222222222222222222222233)))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	                                                ^-----
+		At column 49, line 2, source module ##TEST_PATH##/misc62.m
+%YDB-E-COMMA, Comma expected in this context
 
 ------------------------ Checking if .o file was created misc62.m ------------------------
 misc62.o
 
 ------------------------ Running   misc62.m ------------------------
-150373506,+2^misc62,%YDB-E-NUMOFLOW, Numeric overflow
+150372474,+2^misc62,%YDB-E-COMMA, Comma expected in this context
 
 ######################################################################
 ------------------------ Compiling misc63.m ------------------------
@@ -2761,15 +3106,19 @@ misc62.o
 		At column 8, line 2, source module ##TEST_PATH##/misc63.m
 %YDB-E-INVSVN, Invalid special variable name
 	 set ($ZY,$piece(^z(2E22222222222222222222222233)))=($piece($h,"",2E22222222222222222222222233)*0)+15
-	                   ^-----
-		At column 20, line 2, source module ##TEST_PATH##/misc63.m
+	                    ^-----
+		At column 21, line 2, source module ##TEST_PATH##/misc63.m
 %YDB-E-NUMOFLOW, Numeric overflow
+	 set ($ZY,$piece(^z(2E22222222222222222222222233)))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	                                                 ^-----
+		At column 50, line 2, source module ##TEST_PATH##/misc63.m
+%YDB-E-COMMA, Comma expected in this context
 
 ------------------------ Checking if .o file was created misc63.m ------------------------
 misc63.o
 
 ------------------------ Running   misc63.m ------------------------
-150373506,+2^misc63,%YDB-E-NUMOFLOW, Numeric overflow
+150372474,+2^misc63,%YDB-E-COMMA, Comma expected in this context
 
 ######################################################################
 ------------------------ Compiling misc64.m ------------------------
@@ -2778,15 +3127,19 @@ misc63.o
 		At column 8, line 2, source module ##TEST_PATH##/misc64.m
 %YDB-E-INVSVN, Invalid special variable name
 	 set ($ZY,$piece(@y(2E22222222222222222222222233)))=($piece($h,"",2E22222222222222222222222233)*0)+15
-	                   ^-----
-		At column 20, line 2, source module ##TEST_PATH##/misc64.m
+	                    ^-----
+		At column 21, line 2, source module ##TEST_PATH##/misc64.m
 %YDB-E-NUMOFLOW, Numeric overflow
+	 set ($ZY,$piece(@y(2E22222222222222222222222233)))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	                                                 ^-----
+		At column 50, line 2, source module ##TEST_PATH##/misc64.m
+%YDB-E-COMMA, Comma expected in this context
 
 ------------------------ Checking if .o file was created misc64.m ------------------------
 misc64.o
 
 ------------------------ Running   misc64.m ------------------------
-150373506,+2^misc64,%YDB-E-NUMOFLOW, Numeric overflow
+150372474,+2^misc64,%YDB-E-COMMA, Comma expected in this context
 
 ######################################################################
 ------------------------ Compiling misc65.m ------------------------
@@ -2829,15 +3182,19 @@ misc66.o
 		At column 8, line 2, source module ##TEST_PATH##/misc67.m
 %YDB-E-INVSVN, Invalid special variable name
 	 set ($ZY,$piece(x(y),2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
-	                     ^-----
-		At column 22, line 2, source module ##TEST_PATH##/misc67.m
+	                      ^-----
+		At column 23, line 2, source module ##TEST_PATH##/misc67.m
+%YDB-E-NUMOFLOW, Numeric overflow
+	 set ($ZY,$piece(x(y),2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	                                                                   ^-----
+		At column 68, line 2, source module ##TEST_PATH##/misc67.m
 %YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc67.m ------------------------
 misc67.o
 
 ------------------------ Running   misc67.m ------------------------
-150373506,+2^misc67,%YDB-E-NUMOFLOW, Numeric overflow
+150373074,+2^misc67,%YDB-E-INVSVN, Invalid special variable name
 
 ######################################################################
 ------------------------ Compiling misc68.m ------------------------
@@ -2846,15 +3203,19 @@ misc67.o
 		At column 8, line 2, source module ##TEST_PATH##/misc68.m
 %YDB-E-INVSVN, Invalid special variable name
 	 set ($ZY,$piece(x(y),"x",2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
-	                         ^-----
-		At column 26, line 2, source module ##TEST_PATH##/misc68.m
+	                          ^-----
+		At column 27, line 2, source module ##TEST_PATH##/misc68.m
+%YDB-E-NUMOFLOW, Numeric overflow
+	 set ($ZY,$piece(x(y),"x",2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	                                                                       ^-----
+		At column 72, line 2, source module ##TEST_PATH##/misc68.m
 %YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc68.m ------------------------
 misc68.o
 
 ------------------------ Running   misc68.m ------------------------
-150373506,+2^misc68,%YDB-E-NUMOFLOW, Numeric overflow
+150373074,+2^misc68,%YDB-E-INVSVN, Invalid special variable name
 
 ######################################################################
 ------------------------ Compiling misc69.m ------------------------
@@ -2863,15 +3224,15 @@ misc68.o
 		At column 8, line 2, source module ##TEST_PATH##/misc69.m
 %YDB-E-INVSVN, Invalid special variable name
 	 set ($ZY,$extract(x(y)))=($piece($h,"",2E22222222222222222222222233)*0)+15
-	                                       ^-----
-		At column 40, line 2, source module ##TEST_PATH##/misc69.m
+	                                        ^-----
+		At column 41, line 2, source module ##TEST_PATH##/misc69.m
 %YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc69.m ------------------------
 misc69.o
 
 ------------------------ Running   misc69.m ------------------------
-150373506,+2^misc69,%YDB-E-NUMOFLOW, Numeric overflow
+150373074,+2^misc69,%YDB-E-INVSVN, Invalid special variable name
 
 ######################################################################
 ------------------------ Compiling misc70.m ------------------------
@@ -2880,15 +3241,19 @@ misc69.o
 		At column 8, line 2, source module ##TEST_PATH##/misc70.m
 %YDB-E-INVSVN, Invalid special variable name
 	 set ($ZY,$extract(x(y),2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
-	                       ^-----
-		At column 24, line 2, source module ##TEST_PATH##/misc70.m
+	                        ^-----
+		At column 25, line 2, source module ##TEST_PATH##/misc70.m
+%YDB-E-NUMOFLOW, Numeric overflow
+	 set ($ZY,$extract(x(y),2E22222222222222222222222233))=($piece($h,"",2E22222222222222222222222233)*0)+15
+	                                                                     ^-----
+		At column 70, line 2, source module ##TEST_PATH##/misc70.m
 %YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc70.m ------------------------
 misc70.o
 
 ------------------------ Running   misc70.m ------------------------
-150373506,+2^misc70,%YDB-E-NUMOFLOW, Numeric overflow
+150373074,+2^misc70,%YDB-E-INVSVN, Invalid special variable name
 
 ######################################################################
 ------------------------ Compiling misc71.m ------------------------
@@ -2948,15 +3313,15 @@ misc73.o
 		At column 8, line 2, source module ##TEST_PATH##/misc74.m
 %YDB-E-INVSVN, Invalid special variable name
 	 set ($ZY,$piece(x(y),"x"))=($piece($h,"",2E22222222222222222222222233)*0)+15
-	                                         ^-----
-		At column 42, line 2, source module ##TEST_PATH##/misc74.m
+	                                          ^-----
+		At column 43, line 2, source module ##TEST_PATH##/misc74.m
 %YDB-E-NUMOFLOW, Numeric overflow
 
 ------------------------ Checking if .o file was created misc74.m ------------------------
 misc74.o
 
 ------------------------ Running   misc74.m ------------------------
-150373506,+2^misc74,%YDB-E-NUMOFLOW, Numeric overflow
+150373074,+2^misc74,%YDB-E-INVSVN, Invalid special variable name
 
 ######################################################################
 ------------------------ Compiling misc75.m ------------------------
@@ -2967,4 +3332,297 @@ misc75.o
 ------------------------ Running   misc75.m ------------------------
 150373850,+2^misc75,%YDB-E-LVUNDEF, Undefined local variable: X
 
-##ALLOW_OUTPUT NONUNICODE_MODE
+######################################################################
+------------------------ Compiling misc76.m ------------------------
+	 write $x+$l(bb,2E22222222222222222222222233)		; Below cases are additions due to [YDB#371]
+	                ^-----
+		At column 17, line 2, source module ##TEST_PATH##/misc76.m
+%YDB-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc76.m ------------------------
+misc76.o
+
+------------------------ Running   misc76.m ------------------------
+150373506,+2^misc76,%YDB-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc77.m ------------------------
+	 write $x+$l("abcd",2E22222222222222222222222233)
+	                    ^-----
+		At column 21, line 2, source module ##TEST_PATH##/misc77.m
+%YDB-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc77.m ------------------------
+misc77.o
+
+------------------------ Running   misc77.m ------------------------
+150373506,+2^misc77,%YDB-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc78.m ------------------------
+	 set VL=""_$J($piece("abcd",2E22222222222222222222222233,6),"")
+	                            ^-----
+		At column 29, line 2, source module ##TEST_PATH##/misc78.m
+%YDB-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc78.m ------------------------
+misc78.o
+
+------------------------ Running   misc78.m ------------------------
+150373506,+2^misc78,%YDB-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc79.m ------------------------
+	 write $data(@($piece("abcd",2E22222222222222222222222233,$MN)?.N))
+	                             ^-----
+		At column 30, line 2, source module ##TEST_PATH##/misc79.m
+%YDB-E-NUMOFLOW, Numeric overflow
+	 write $data(@($piece("abcd",2E22222222222222222222222233,$MN)?.N))
+	                                                           ^-----
+		At column 60, line 2, source module ##TEST_PATH##/misc79.m
+%YDB-E-INVSVN, Invalid special variable name
+
+------------------------ Checking if .o file was created misc79.m ------------------------
+misc79.o
+
+------------------------ Running   misc79.m ------------------------
+150373506,+2^misc79,%YDB-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc80.m ------------------------
+	 write $data(@($piece("abcd",$MN,2E22222222222222222222222233)?.N))
+	                              ^-----
+		At column 31, line 2, source module ##TEST_PATH##/misc80.m
+%YDB-E-INVSVN, Invalid special variable name
+	 write $data(@($piece("abcd",$MN,2E22222222222222222222222233)?.N))
+	                                 ^-----
+		At column 34, line 2, source module ##TEST_PATH##/misc80.m
+%YDB-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc80.m ------------------------
+misc80.o
+
+------------------------ Running   misc80.m ------------------------
+150373074,+2^misc80,%YDB-E-INVSVN, Invalid special variable name
+
+######################################################################
+------------------------ Compiling misc81.m ------------------------
+	 write $get(@($piece("abcd",$MN,2E22222222222222222222222233)?.N))
+	                             ^-----
+		At column 30, line 2, source module ##TEST_PATH##/misc81.m
+%YDB-E-INVSVN, Invalid special variable name
+	 write $get(@($piece("abcd",$MN,2E22222222222222222222222233)?.N))
+	                                ^-----
+		At column 33, line 2, source module ##TEST_PATH##/misc81.m
+%YDB-E-NUMOFLOW, Numeric overflow
+
+------------------------ Checking if .o file was created misc81.m ------------------------
+misc81.o
+
+------------------------ Running   misc81.m ------------------------
+150373074,+2^misc81,%YDB-E-INVSVN, Invalid special variable name
+
+######################################################################
+------------------------ Compiling misc82.m ------------------------
+	 write $get(@($piece("abcd",2E22222222222222222222222233,$MN)?.N))
+	                            ^-----
+		At column 29, line 2, source module ##TEST_PATH##/misc82.m
+%YDB-E-NUMOFLOW, Numeric overflow
+	 write $get(@($piece("abcd",2E22222222222222222222222233,$MN)?.N))
+	                                                          ^-----
+		At column 59, line 2, source module ##TEST_PATH##/misc82.m
+%YDB-E-INVSVN, Invalid special variable name
+
+------------------------ Checking if .o file was created misc82.m ------------------------
+misc82.o
+
+------------------------ Running   misc82.m ------------------------
+150373506,+2^misc82,%YDB-E-NUMOFLOW, Numeric overflow
+
+######################################################################
+------------------------ Compiling misc83.m ------------------------
+	 write $incr("abcd",$piece("abcd",2E22222222222222222222222233,$MN)?.N)
+	             ^-----
+		At column 14, line 2, source module ##TEST_PATH##/misc83.m
+%YDB-E-EXPR, Expression expected but not found
+
+------------------------ Checking if .o file was created misc83.m ------------------------
+misc83.o
+
+------------------------ Running   misc83.m ------------------------
+150372778,+2^misc83,%YDB-E-EXPR, Expression expected but not found
+
+######################################################################
+------------------------ Compiling misc84.m ------------------------
+	 write $incr("abcd",$piece("abcd",$MN,2E22222222222222222222222233)?.N)
+	             ^-----
+		At column 14, line 2, source module ##TEST_PATH##/misc84.m
+%YDB-E-EXPR, Expression expected but not found
+
+------------------------ Checking if .o file was created misc84.m ------------------------
+misc84.o
+
+------------------------ Running   misc84.m ------------------------
+150372778,+2^misc84,%YDB-E-EXPR, Expression expected but not found
+
+######################################################################
+------------------------ Compiling misc85.m ------------------------
+	 write $incr("abcd",@($piece("abcd",$MN,2E22222222222222222222222233)?.N))
+	             ^-----
+		At column 14, line 2, source module ##TEST_PATH##/misc85.m
+%YDB-E-EXPR, Expression expected but not found
+
+------------------------ Checking if .o file was created misc85.m ------------------------
+misc85.o
+
+------------------------ Running   misc85.m ------------------------
+150372778,+2^misc85,%YDB-E-EXPR, Expression expected but not found
+
+######################################################################
+------------------------ Compiling misc86.m ------------------------
+	 write $incr("abcd",@($piece("abcd",$MN,$MN(2E22222222222222222222222233))?.N))
+	             ^-----
+		At column 14, line 2, source module ##TEST_PATH##/misc86.m
+%YDB-E-EXPR, Expression expected but not found
+
+------------------------ Checking if .o file was created misc86.m ------------------------
+misc86.o
+
+------------------------ Running   misc86.m ------------------------
+150372778,+2^misc86,%YDB-E-EXPR, Expression expected but not found
+
+######################################################################
+------------------------ Compiling misc87.m ------------------------
+	 write $order(@($piece("abcd",$MN,$MN(2E22222222222222222222222233)?.N)))
+	                               ^-----
+		At column 32, line 2, source module ##TEST_PATH##/misc87.m
+%YDB-E-INVSVN, Invalid special variable name
+	 write $order(@($piece("abcd",$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                   ^-----
+		At column 36, line 2, source module ##TEST_PATH##/misc87.m
+%YDB-E-INVFCN, Invalid function name
+
+------------------------ Checking if .o file was created misc87.m ------------------------
+misc87.o
+
+------------------------ Running   misc87.m ------------------------
+150373074,+2^misc87,%YDB-E-INVSVN, Invalid special variable name
+
+######################################################################
+------------------------ Compiling misc88.m ------------------------
+	 write $zprevious(@($piece("abcd",$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                   ^-----
+		At column 36, line 2, source module ##TEST_PATH##/misc88.m
+%YDB-E-INVSVN, Invalid special variable name
+	 write $zprevious(@($piece("abcd",$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                       ^-----
+		At column 40, line 2, source module ##TEST_PATH##/misc88.m
+%YDB-E-INVFCN, Invalid function name
+
+------------------------ Checking if .o file was created misc88.m ------------------------
+misc88.o
+
+------------------------ Running   misc88.m ------------------------
+150373074,+2^misc88,%YDB-E-INVSVN, Invalid special variable name
+
+######################################################################
+------------------------ Compiling misc89.m ------------------------
+	 write $zqgblmod(@($piece("abcd",$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                  ^-----
+		At column 35, line 2, source module ##TEST_PATH##/misc89.m
+%YDB-E-INVSVN, Invalid special variable name
+	 write $zqgblmod(@($piece("abcd",$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                      ^-----
+		At column 39, line 2, source module ##TEST_PATH##/misc89.m
+%YDB-E-INVFCN, Invalid function name
+
+------------------------ Checking if .o file was created misc89.m ------------------------
+misc89.o
+
+------------------------ Running   misc89.m ------------------------
+150373074,+2^misc89,%YDB-E-INVSVN, Invalid special variable name
+
+######################################################################
+------------------------ Compiling misc90.m ------------------------
+	 write $order(@($piece("abcd",$MN,$MN(1)?.N)),@($piece("abcd",$MN,$MN(2E22222222222222222222222233))?.N))
+	                               ^-----
+		At column 32, line 2, source module ##TEST_PATH##/misc90.m
+%YDB-E-INVSVN, Invalid special variable name
+	 write $order(@($piece("abcd",$MN,$MN(1)?.N)),@($piece("abcd",$MN,$MN(2E22222222222222222222222233))?.N))
+	                                   ^-----
+		At column 36, line 2, source module ##TEST_PATH##/misc90.m
+%YDB-E-INVFCN, Invalid function name
+	 write $order(@($piece("abcd",$MN,$MN(1)?.N)),@($piece("abcd",$MN,$MN(2E22222222222222222222222233))?.N))
+	                                                               ^-----
+		At column 64, line 2, source module ##TEST_PATH##/misc90.m
+%YDB-E-INVSVN, Invalid special variable name
+	 write $order(@($piece("abcd",$MN,$MN(1)?.N)),@($piece("abcd",$MN,$MN(2E22222222222222222222222233))?.N))
+	                                                                   ^-----
+		At column 68, line 2, source module ##TEST_PATH##/misc90.m
+%YDB-E-INVFCN, Invalid function name
+
+------------------------ Checking if .o file was created misc90.m ------------------------
+misc90.o
+
+------------------------ Running   misc90.m ------------------------
+150373074,+2^misc90,%YDB-E-INVSVN, Invalid special variable name
+
+######################################################################
+------------------------ Compiling misc91.m ------------------------
+	 write $query(@($piece("abcd",$MN,$MN(2E22222222222222222222222233)?.N)))
+	                               ^-----
+		At column 32, line 2, source module ##TEST_PATH##/misc91.m
+%YDB-E-INVSVN, Invalid special variable name
+	 write $query(@($piece("abcd",$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                   ^-----
+		At column 36, line 2, source module ##TEST_PATH##/misc91.m
+%YDB-E-INVFCN, Invalid function name
+
+------------------------ Checking if .o file was created misc91.m ------------------------
+misc91.o
+
+------------------------ Running   misc91.m ------------------------
+150373074,+2^misc91,%YDB-E-INVSVN, Invalid special variable name
+
+######################################################################
+------------------------ Compiling misc92.m ------------------------
+	 write $select(0:@($piece("abcd",$MN,$MN(1)?.N)),1:@($piece("abcd",$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                  ^-----
+		At column 35, line 2, source module ##TEST_PATH##/misc92.m
+%YDB-E-INVSVN, Invalid special variable name
+	 write $select(0:@($piece("abcd",$MN,$MN(1)?.N)),1:@($piece("abcd",$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                      ^-----
+		At column 39, line 2, source module ##TEST_PATH##/misc92.m
+%YDB-E-INVFCN, Invalid function name
+	 write $select(0:@($piece("abcd",$MN,$MN(1)?.N)),1:@($piece("abcd",$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                                                    ^-----
+		At column 69, line 2, source module ##TEST_PATH##/misc92.m
+%YDB-E-INVSVN, Invalid special variable name
+	 write $select(0:@($piece("abcd",$MN,$MN(1)?.N)),1:@($piece("abcd",$MN,$MN(2E22222222222222222222222233)?.N)))
+	                                                                        ^-----
+		At column 73, line 2, source module ##TEST_PATH##/misc92.m
+%YDB-E-INVFCN, Invalid function name
+
+------------------------ Checking if .o file was created misc92.m ------------------------
+misc92.o
+
+------------------------ Running   misc92.m ------------------------
+150373074,+2^misc92,%YDB-E-INVSVN, Invalid special variable name
+
+######################################################################
+------------------------ Compiling misc93.m ------------------------
+	 xecute @($piece("abcd",$MN,$MN(2E22222222222222222222222233)?.N))
+	                         ^-----
+		At column 26, line 2, source module ##TEST_PATH##/misc93.m
+%YDB-E-INVSVN, Invalid special variable name
+	 xecute @($piece("abcd",$MN,$MN(2E22222222222222222222222233)?.N))
+	                             ^-----
+		At column 30, line 2, source module ##TEST_PATH##/misc93.m
+%YDB-E-INVFCN, Invalid function name
+
+------------------------ Checking if .o file was created misc93.m ------------------------
+misc93.o
+
+------------------------ Running   misc93.m ------------------------
+150373074,+2^misc93,%YDB-E-INVSVN, Invalid special variable name
+

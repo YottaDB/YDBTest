@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-;	Copyright 2007, 2013 Fidelity Information Services, Inc	;
+; Copyright 2007, 2013 Fidelity Information Services, Inc	;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -34,7 +37,7 @@ c002861	;
 	.	set cnt=0
 	.	for  quit:$zeof=1  do
 	.	.	use rdfile
-	.	.	read line
+	.	.	for  read line  quit:$zextract(line,1)'=";"  ; skip lines starting with a comment
 	.	.	set cnt=cnt+1
 	.	.	set wtfile=wtfileprefix_cnt_".m"
 	.	.	set ts1=$ZDATE($H,"60SS")
