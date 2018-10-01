@@ -29,12 +29,12 @@ $MUPIP replic -source -freeze=on -comment="ydb364"
 echo '# Shut down the source server. Verify that "Not deleting jnlpool ipcs." message shows up'
 $MUPIP replic -source -shutdown -timeout=0
 
+echo "# Unfreeze the instance. Note that this needs to be done before restarting the source server as the latter can hang otherwise."
+$MUPIP replic -source -freeze=off
+
 echo "# Restart the source server"
 setenv portno `$sec_shell '$sec_getenv; cat $SEC_DIR/portno'`
 $gtm_tst/com/SRC.csh "." $portno "" >>&! START_2.out
-
-echo "# Unfreeze the instance"
-$MUPIP replic -source -freeze=off
 
 echo "# Stop backgrounded mumps process if it was randomly started before"
 $ydb_dist/mumps -run stop^ydb364

@@ -8,7 +8,7 @@
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHUTDOWN operation on source server pid [##PID##] for secondary instance [INSTANCE2]
 ##FILTERED##... ... .. ..:..:.. 20.. : Waiting for upto XXX seconds for the source server to shutdown
 ##FILTERED##... ... .. ..:..:.. 20.. : Not deleting jnlpool ipcs. Instance is frozen
+# Unfreeze the instance. Note that this needs to be done before restarting the source server as the latter can hang otherwise.
 # Restart the source server
-# Unfreeze the instance
 # Stop backgrounded mumps process if it was randomly started before
 # Do dbcheck.csh
