@@ -13,7 +13,7 @@
 ydb333	;
 	set success=0
 	write "Do $VIEW(""PROBECRIT"",""DEFAULT"") 20 times to see if CPT (nanoseconds) is not a multiple of 1000 at least once",!
-	for i=1:1:20 do  quit:success
+	for i=1:1:100 do  quit:success
 	. set critstats=$view("PROBECRIT","DEFAULT")
 	. set cptpiece=$piece(critstats,",",1)
 	. set cptstat=$piece(cptpiece,":",2)

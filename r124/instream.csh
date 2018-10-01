@@ -99,6 +99,13 @@ if ($gtm_platform_size != 64) then
 	setenv subtest_exclude_list "$subtest_exclude_list ydb358"
 endif
 
+if ("armv6l" == `uname -m`) then
+	# The ydb333 test requires nanosecond-resolution clock. On ARMV6L we have found the clock to be microsecond-resolution,
+	# i.e. the CPT values always are a multiple of 1000 or in rare cases end in 999 but never any other value between 1 and 998.
+	# So disable this subtest on the ARMV6L.
+	setenv subtest_exclude_list "$subtest_exclude_list ydb333"
+endif
+
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh
 
