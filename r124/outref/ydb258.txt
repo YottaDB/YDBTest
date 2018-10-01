@@ -1,0 +1,13 @@
+# Tests that literal indirection does not give a YDB-F-KILLBYSIGSINFO1 error.
+# Test first case for when literal evaluates to FALSE.
+
+Stepping STARTED
+test1+2^ydb258      :	s cond="0,1"
+test1+3^ydb258      :	i @cond w !
+test1+4^ydb258      :	quit
+# Test second case for when literal evaluates to TRUE.
+
+Stepping STARTED
+test2+2^ydb258      :	s cond="1,0"
+test2+3^ydb258      :	i @cond w !
+test2+4^ydb258      :	quit
