@@ -1,0 +1,33 @@
+# Test that after calling ydb_zwr2str_s(), no subsequent SimpleAPI calls get a SIMPLAPINEST error.
+
+ --> Running ydb344.c <---
+Calling all ydb_s() functions twice in a loop to ensure no ydb_s() call causes a SIMPLEAPINEST error in any other subsequent ydb*_s() call.
+Executing iteration 1
+Calling ydb_set_s()
+Calling ydb_zwr2str_s()
+Calling ydb_get_s()
+Calling ydb_data_s()
+Calling ydb_subscript_next_s()
+Calling ydb_subscript_previous_s()
+Calling ydb_node_next_s()
+Calling ydb_node_previous_s()
+Calling ydb_lock_s()
+Calling ydb_delete_s()
+Calling ydb_incr_s()
+Calling ydb_delete_excl_s()
+Calling ydb_str2zwr_s()
+Executing iteration 2
+Calling ydb_set_s()
+Calling ydb_zwr2str_s()
+Calling ydb_get_s()
+Calling ydb_data_s()
+Calling ydb_subscript_next_s()
+Calling ydb_subscript_previous_s()
+Calling ydb_node_next_s()
+Calling ydb_node_previous_s()
+Calling ydb_lock_s()
+Calling ydb_delete_s()
+Calling ydb_incr_s()
+Calling ydb_delete_excl_s()
+Calling ydb_str2zwr_s()
+All SimpleApi have executed successfully
