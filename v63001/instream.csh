@@ -11,16 +11,18 @@
 #                                                              #
 #################################################################
 #
-#-------------------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------------------------------
 # List of subtests of the form "subtestname [author] description"
-#-------------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------------------------------
+# gtm4283	[quinn]	Test that GT.M compiler accepts input with <CR><LF> line termination.
+#-----------------------------------------------------------------------------------------------------------
 
 echo "v63001 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic ""
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm4283"
 setenv subtest_list_replic     ""
 
 

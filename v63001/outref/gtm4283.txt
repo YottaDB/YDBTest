@@ -1,0 +1,15 @@
+# Test that GT.M compiler accepts <CR><LF> line termination. Previously the compiler would return a GTM-E-SPOREOL error.
+
+# First see if UNIX mumps file runs correctly.
+
+Stepping STARTED
++14^gtm4283         :	set x="Test"
++15^gtm4283         :	write x
+Test
+# Next convert UNIX to DOS.
+# Now see if DOS mumps file runs correctly.
+
+Stepping STARTED
++14^gtm4283dos      :	set x="Test"
++15^gtm4283dos      :	write x
+Test
