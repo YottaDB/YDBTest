@@ -47,7 +47,7 @@ foreach errcode (1 2)
 		exit -1
 	endif
 	echo "# Set huge flush timer in db file header to avoid a potential hang when running lots of updates below"
-	$MUPIP set -region "*" -flush_time=1:0:0 # Prevent interruptions from flush timers
+	$MUPIP set -region "*" -flush_time=1:0:0:0 # Prevent interruptions from flush timers by setting timer to 1 hour
 
 	set syslog_start = `date +"%b %e %H:%M:%S"`
 
