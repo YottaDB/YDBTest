@@ -1,0 +1,28 @@
+-----------------------------------------------------------------------------------------------------------------------------------
+#(GTM-6793):MERGE into a local variable (lvn) target limits the number of target subscripts to the maximum number supported by GT.M
+#(currently 31); previously, MERGE could produce variables with 32 subscripts which could cause subsequent problems.
+-----------------------------------------------------------------------------------------------------------------------------------
+
+# Test that a Merge of two local variables that would result in 32 subscripts gives a YDB-E-MAXNRSUBSRIPTS error.
+
+# Create the DB
+# Set two local variables, one with 31 subscripts, one with a subscript, and merge for a total of 32 subscripts.
+
+Stepping STARTED
+test1+1^gtm6793     :        Set lvn(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31)="Test"
+test1+2^gtm6793     :        Set lvn2(2,32)="Test"
+test1+3^gtm6793     :        Merge lvn(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31)=lvn2(2)
+%YDB-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
+		At M source location test1+3^gtm6793
+
+YDB>
+# Set a local variable with 31 subscripts and a global variable with a subscript, and merge for a total of 32 subscripts.
+
+Stepping STARTED
+test2+1^gtm6793     :	Set lvn(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31)="Test"
+test2+2^gtm6793     :        Set ^gvn2(2,32)="Test"
+test2+3^gtm6793     :        Merge lvn(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31)=^gvn2(2)
+%YDB-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
+		At M source location test2+3^gtm6793
+
+YDB>

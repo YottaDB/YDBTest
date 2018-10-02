@@ -11,18 +11,19 @@
 #                                                              #
 #################################################################
 #
-#-----------------------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------------------------------------------
 # List of subtests of the form "subtestname [author] description"
-#-----------------------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------------------------------------------
 # gtm4283	[quinn]	Test that GT.M compiler accepts input with <CR><LF> line termination.
-#-----------------------------------------------------------------------------------------------------------
+# gtm6793	[quinn]	Test that Merge of two local variables that would result in 32 subscripts gives a YDB-E-MAXNRSUBSCRIPTS error
+#----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v63001 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic ""
-setenv subtest_list_non_replic "$subtest_list_non_replic gtm4283"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm4283 gtm6793"
 setenv subtest_list_replic     ""
 
 
