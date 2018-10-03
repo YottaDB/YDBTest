@@ -1,0 +1,53 @@
+---------------------------------------------------------------------------------------------------------------------------
+ Release Note that is being tested:
+---------------------------------------------------------------------------------------------------------------------------
+(GTM-8573) : When the argument of an IF command is a literal value or expression, the GT.M compiler generates code to set
+$TEST appropriately and ignores the rest of the line. When the argument of a command postconditional is a literal value or
+expression, the GT.M compiler evaluates the postconditional and either generates code for an unconditional command or omits
+generation for the command. Previously, the computation was performed at run time. Note that literal postconditionals 
+evaluating to 0 result in smaller object modules than literal postconditionals evaluating to non-zero values.
+---------------------------------------------------------------------------------------------------------------------------
+
+# Test that the GT.M compiler computes the IF condition or postconditional and appropriately ignores the remainder of the line.
+
+# Each subtest will be compiled in mumps and print out the machine operations.
+# Without compiler optimization, there would be a dozen opcodes, but now there should be no more than four.
+
+# Generate the subtest m files.
+
+Subtest tst1.m
+	if 1 Set X=1
+# Running tst1.m subtest
+# Generate opcodes for tst1.m
+# Display the opcodes.
+OC_LINEFETCH
+OC_SETTEST
+##TEST_AWK(OC_STOLIT|OC_LITC)
+OC_RET
+
+Subtest tst2.m
+	if 0 Set X=1
+# Running tst2.m subtest
+# Generate opcodes for tst2.m
+# Display the opcodes.
+OC_LINEFETCH
+OC_CLRTEST
+OC_RET
+
+Subtest tst3.m
+	Set:1 X=1
+# Running tst3.m subtest
+# Generate opcodes for tst3.m
+# Display the opcodes.
+OC_LINEFETCH
+##TEST_AWK(OC_STOLIT|OC_LITC)
+OC_RET
+
+Subtest tst4.m
+	Set:0 X=1
+# Running tst4.m subtest
+# Generate opcodes for tst4.m
+# Display the opcodes.
+OC_LINEFETCH
+OC_RET
+

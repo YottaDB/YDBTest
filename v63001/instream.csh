@@ -17,14 +17,15 @@
 # gtm4283	[quinn]	Test that GT.M compiler accepts input with <CR><LF> line termination.
 # gtm6793	[quinn]	Test that Merge of two local variables that would result in 32 subscripts gives a YDB-E-MAXNRSUBSCRIPTS error
 # gtm8357	[quinn] Tests that setting the value of $ydb_zstep or $gtm_step will change the value of $ZSTEP instead of defaulting to "B"
-#-----------------------------------------------------------------------------------------------------------
+# gtm8573	[quinn] Test that the GT.M compiler computes the IF condition or postconditional and appropriately ignores the remainder of the line."
+#----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v63001 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic ""
-setenv subtest_list_non_replic "$subtest_list_non_replic gtm4283 gtm6793 gtm8357"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm4283 gtm6793 gtm8357 gtm8573"
 setenv subtest_list_replic     ""
 
 
