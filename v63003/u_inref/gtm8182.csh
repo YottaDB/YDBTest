@@ -33,8 +33,8 @@ echo ""
 
 
 echo "# Show INST1 mapped instance file"
-$GDE SHOW -INSTANCE  >& show.log
-$grep -e "extra" show.log | $grep "repl"
+$GDE SHOW -INSTANCE  >& show1.log
+$grep "mumps.repl" show1.log
 echo ""
 
 echo "# Remove INST1 gld mapping to instance file"
@@ -46,8 +46,8 @@ $GDE CHANGE -INSTANCE -FILE_NAME=\"\" >>& GDEchangeINST1_1.log
 echo ""
 
 echo "# Show INST1 mapped instance file"
-$GDE SHOW -INSTANCE  >& show.log
-$grep -e "extra" show.log | $grep "repl"
+$GDE SHOW -INSTANCE  >& show2.log
+$grep "mumps.repl" show2.log
 echo ""
 
 
@@ -72,7 +72,7 @@ echo "# to test that .repl file mapping overrides the gtm_repl_instname env var.
 echo "----------------------------------------------------------------------------"
 
 echo "# Show INST3 mapped instance file"
-$MSR RUN INST3 "$GDE SHOW -INSTANCE  ">& show.log; $grep -e 'extra' show.log | $grep 'repl'
+$MSR RUN INST3 "$GDE SHOW -INSTANCE  ">& show1.log; $grep "mumps.repl" show1.log
 
 echo "# Remove INST3 mapping"
 $MSR RUN INST3 "$gtm_tst/com/rmv_map.csh" >>& GDEchangeINST3_1.log
@@ -80,7 +80,7 @@ echo "# Change INST3 mapped instance file"
 $MSR RUN INST3 "$GDE CHANGE -INSTANCE -FILE_NAME=$path_INST3/mumps.repl" >>& GDEchangeINST3_1.log
 
 echo "# Show INST3 mapped instance file"
-$MSR RUN INST3 "$GDE SHOW -INSTANCE " >& show.log; $grep -e 'extra' show.log | $grep 'repl'
+$MSR RUN INST3 "$GDE SHOW -INSTANCE " >& show2.log; $grep "mumps.repl" show2.log
 echo ""
 echo ""
 
@@ -95,8 +95,8 @@ $gtm_dist/mumps -run gtm8182
 setenv gtm_repl_instance "mumps.repl"
 
 echo "# Show INST1 mapped instance file"
-$GDE SHOW -INSTANCE  >& show.log
-$grep -e "extra" show.log | $grep "repl"
+$GDE SHOW -INSTANCE  >& show3.log
+$grep "mumps.repl" show3.log
 echo ""
 
 echo "# Sync originating and replicating instances"
