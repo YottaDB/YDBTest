@@ -43,7 +43,7 @@ Error YDB-E-GVRUNDOWN seen in wcs_wtstart_errs.out as expected:
 %YDB-E-GVRUNDOWN, Error during global database rundown
 ----------
 ----------
-Error DBIOERR seen in syslog.txt as expected:
+Error DBIOERR.*##TEST_PATH## seen in syslog.txt as expected:
 %YDB-E-DBIOERR, Error while doing write operation on region DEFAULT (##TEST_PATH##/mumps.dat), %SYSTEM-E-ENO2, No such file or directory -- 
 ----------
 ##SOURCE_PATH##/mupip

@@ -76,7 +76,7 @@ $gtm_tst/com/getoper.csh "$syslog_before" "" syslog.txt "" DBIOERR
 
 set stat = $status
 if (0 == $stat) then
-	$gtm_tst/com/check_error_exist.csh syslog.txt DBIOERR | sed 's/^.*YDB-E-/%YDB-E-/g' | sed 's/generated.*//g'
+	$gtm_tst/com/check_error_exist.csh syslog.txt "DBIOERR.*`pwd`" | sed 's/^.*YDB-E-/%YDB-E-/g' | sed 's/generated.*//g'
 else
 	echo "TEST-E-FAILED: DBIOERR not found in the syslog. Please check syslog1.txt for more details"
 endif
