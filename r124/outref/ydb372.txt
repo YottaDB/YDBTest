@@ -1,0 +1,360 @@
+# Tests using indirection in a setleft works correctly even if it is preceeded by a setleft which has an invalid ISV usage.
+# Previously such a usage would fail with a fatal GTMASSERT2 error during compilation.
+
+# Generate and compile each m file. Then run the m file in -run mode and -direct mode. An error is expected, but not a GTMASSERT2 error.
+
+# Generate true.m for specific test cases.
+test()
+	write "true",!
+	quit 1
+-----------------------------------------------
+Subtest tst1.m
+	set (x,@y(1E47))=1
+# Compile the m file
+		set (x,@y(1E47))=1
+		          ^-----
+		At column 12, line 1, source module ##TEST_PATH##/tst1.m
+%YDB-E-NUMOFLOW, Numeric overflow
+
+# Run the m file using mumps -run
+%YDB-E-NUMOFLOW, Numeric overflow
+		At M source location +1^tst1
+
+YDB>
+
+# Compile/Run the m file using mumps -direct
+
+YDB>
+%YDB-E-NUMOFLOW, Numeric overflow
+
+YDB>
+-----------------------------------------------
+Subtest tst10.m
+	set ($x,@^y(2))=1
+# Compile the m file
+
+# Run the m file using mumps -run
+%YDB-E-GVUNDEF, Global variable undefined: ^y(2)
+		At M source location +1^tst10
+
+YDB>
+
+# Compile/Run the m file using mumps -direct
+
+YDB>
+%YDB-E-GVUNDEF, Global variable undefined: ^y(2)
+
+YDB>
+-----------------------------------------------
+Subtest tst11.m
+        set ($x,$iv,@y(2))=1
+# Compile the m file
+	        set ($x,$iv,@y(2))=1
+	                 ^-----
+		At column 18, line 1, source module ##TEST_PATH##/tst11.m
+%YDB-E-INVSVN, Invalid special variable name
+
+# Run the m file using mumps -run
+%YDB-E-LVUNDEF, Undefined local variable: y(2)
+		At M source location +1^tst11
+
+YDB>
+
+# Compile/Run the m file using mumps -direct
+
+YDB>
+%YDB-E-LVUNDEF, Undefined local variable: y(2)
+
+YDB>
+-----------------------------------------------
+Subtest tst12.m
+	set ($x,$iv,@^y(2))=1
+# Compile the m file
+		set ($x,$iv,@^y(2))=1
+		         ^-----
+		At column 11, line 1, source module ##TEST_PATH##/tst12.m
+%YDB-E-INVSVN, Invalid special variable name
+
+# Run the m file using mumps -run
+%YDB-E-GVUNDEF, Global variable undefined: ^y(2)
+		At M source location +1^tst12
+
+YDB>
+
+# Compile/Run the m file using mumps -direct
+
+YDB>
+%YDB-E-GVUNDEF, Global variable undefined: ^y(2)
+
+YDB>
+-----------------------------------------------
+Subtest tst13.m
+        set y(2)="x" set ($x,$iv,@y(2))=1
+# Compile the m file
+	        set y(2)="x" set ($x,$iv,@y(2))=1
+	                              ^-----
+		At column 31, line 1, source module ##TEST_PATH##/tst13.m
+%YDB-E-INVSVN, Invalid special variable name
+
+# Run the m file using mumps -run
+
+%YDB-E-INVSVN, Invalid special variable name
+		At M source location +1^tst13
+
+YDB>
+
+# Compile/Run the m file using mumps -direct
+
+YDB>
+
+%YDB-E-INVSVN, Invalid special variable name
+
+YDB>
+-----------------------------------------------
+Subtest tst14.m
+	set ^y(2)="x" set ($x,$iv,@^y(2))=1
+# Compile the m file
+		set ^y(2)="x" set ($x,$iv,@^y(2))=1
+		                       ^-----
+		At column 25, line 1, source module ##TEST_PATH##/tst14.m
+%YDB-E-INVSVN, Invalid special variable name
+
+# Run the m file using mumps -run
+
+%YDB-E-INVSVN, Invalid special variable name
+		At M source location +1^tst14
+
+YDB>
+
+# Compile/Run the m file using mumps -direct
+
+YDB>
+
+%YDB-E-INVSVN, Invalid special variable name
+
+YDB>
+-----------------------------------------------
+Subtest tst15.m
+	kill z set (z,$p(x,"|",1E48))=(1!$s($$^true&0:"","1E47":"ok",1:1)) zwrite z
+# Compile the m file
+		kill z set (z,$p(x,"|",1E48))=(1!$s($$^true&0:"","1E47":"ok",1:1)) zwrite z
+		                       ^-----
+		At column 25, line 1, source module ##TEST_PATH##/tst15.m
+%YDB-E-NUMOFLOW, Numeric overflow
+
+# Run the m file using mumps -run
+%YDB-E-NUMOFLOW, Numeric overflow
+		At M source location +1^tst15
+
+YDB>
+
+# Compile/Run the m file using mumps -direct
+
+YDB>
+%YDB-E-NUMOFLOW, Numeric overflow
+
+YDB>
+-----------------------------------------------
+Subtest tst16.m
+        kill z set (z,$iv)=(1!$s($$^true&0:"","1E47":"ok",1:1)) zwrite z
+# Compile the m file
+	        kill z set (z,$iv)=(1!$s($$^true&0:"","1E47":"ok",1:1)) zwrite z
+	                       ^-----
+		At column 24, line 1, source module ##TEST_PATH##/tst16.m
+%YDB-E-INVSVN, Invalid special variable name
+
+# Run the m file using mumps -run
+true
+%YDB-E-INVSVN, Invalid special variable name
+		At M source location +1^tst16
+
+YDB>
+
+# Compile/Run the m file using mumps -direct
+
+YDB>
+true
+%YDB-E-INVSVN, Invalid special variable name
+
+YDB>
+-----------------------------------------------
+Subtest tst2.m
+	set (x,@^y(1E47))=1
+# Compile the m file
+		set (x,@^y(1E47))=1
+		           ^-----
+		At column 13, line 1, source module ##TEST_PATH##/tst2.m
+%YDB-E-NUMOFLOW, Numeric overflow
+
+# Run the m file using mumps -run
+%YDB-E-NUMOFLOW, Numeric overflow
+		At M source location +1^tst2
+
+YDB>
+
+# Compile/Run the m file using mumps -direct
+
+YDB>
+%YDB-E-NUMOFLOW, Numeric overflow
+
+YDB>
+-----------------------------------------------
+Subtest tst3.m
+        set ($iv,@y(1E47))=1
+# Compile the m file
+	        set ($iv,@y(1E47))=1
+	              ^-----
+		At column 15, line 1, source module ##TEST_PATH##/tst3.m
+%YDB-E-INVSVN, Invalid special variable name
+	        set ($iv,@y(1E47))=1
+	                    ^-----
+		At column 21, line 1, source module ##TEST_PATH##/tst3.m
+%YDB-E-NUMOFLOW, Numeric overflow
+
+# Run the m file using mumps -run
+%YDB-E-INVSVN, Invalid special variable name
+		At M source location +1^tst3
+
+YDB>
+
+# Compile/Run the m file using mumps -direct
+
+YDB>
+%YDB-E-INVSVN, Invalid special variable name
+
+YDB>
+-----------------------------------------------
+Subtest tst4.m
+	set ($iv,@^y(1E47))=1
+# Compile the m file
+		set ($iv,@^y(1E47))=1
+		      ^-----
+		At column 8, line 1, source module ##TEST_PATH##/tst4.m
+%YDB-E-INVSVN, Invalid special variable name
+		set ($iv,@^y(1E47))=1
+		             ^-----
+		At column 15, line 1, source module ##TEST_PATH##/tst4.m
+%YDB-E-NUMOFLOW, Numeric overflow
+
+# Run the m file using mumps -run
+%YDB-E-INVSVN, Invalid special variable name
+		At M source location +1^tst4
+
+YDB>
+
+# Compile/Run the m file using mumps -direct
+
+YDB>
+%YDB-E-INVSVN, Invalid special variable name
+
+YDB>
+-----------------------------------------------
+Subtest tst5.m
+        set ($iv,@g($iz))=1
+# Compile the m file
+	        set ($iv,@g($iz))=1
+	              ^-----
+		At column 15, line 1, source module ##TEST_PATH##/tst5.m
+%YDB-E-INVSVN, Invalid special variable name
+	        set ($iv,@g($iz))=1
+	                     ^-----
+		At column 22, line 1, source module ##TEST_PATH##/tst5.m
+%YDB-E-INVSVN, Invalid special variable name
+
+# Run the m file using mumps -run
+%YDB-E-INVSVN, Invalid special variable name
+		At M source location +1^tst5
+
+YDB>
+
+# Compile/Run the m file using mumps -direct
+
+YDB>
+%YDB-E-INVSVN, Invalid special variable name
+
+YDB>
+-----------------------------------------------
+Subtest tst6.m
+	set ($iv,@^g($iz))=1
+# Compile the m file
+		set ($iv,@^g($iz))=1
+		      ^-----
+		At column 8, line 1, source module ##TEST_PATH##/tst6.m
+%YDB-E-INVSVN, Invalid special variable name
+		set ($iv,@^g($iz))=1
+		              ^-----
+		At column 16, line 1, source module ##TEST_PATH##/tst6.m
+%YDB-E-INVSVN, Invalid special variable name
+
+# Run the m file using mumps -run
+%YDB-E-INVSVN, Invalid special variable name
+		At M source location +1^tst6
+
+YDB>
+
+# Compile/Run the m file using mumps -direct
+
+YDB>
+%YDB-E-INVSVN, Invalid special variable name
+
+YDB>
+-----------------------------------------------
+Subtest tst7.m
+        set ($iv,@y(2))=1
+# Compile the m file
+	        set ($iv,@y(2))=1
+	              ^-----
+		At column 15, line 1, source module ##TEST_PATH##/tst7.m
+%YDB-E-INVSVN, Invalid special variable name
+
+# Run the m file using mumps -run
+%YDB-E-INVSVN, Invalid special variable name
+		At M source location +1^tst7
+
+YDB>
+
+# Compile/Run the m file using mumps -direct
+
+YDB>
+%YDB-E-INVSVN, Invalid special variable name
+
+YDB>
+-----------------------------------------------
+Subtest tst8.m
+	set ($iv,@^y(2))=1
+# Compile the m file
+		set ($iv,@^y(2))=1
+		      ^-----
+		At column 8, line 1, source module ##TEST_PATH##/tst8.m
+%YDB-E-INVSVN, Invalid special variable name
+
+# Run the m file using mumps -run
+%YDB-E-INVSVN, Invalid special variable name
+		At M source location +1^tst8
+
+YDB>
+
+# Compile/Run the m file using mumps -direct
+
+YDB>
+%YDB-E-INVSVN, Invalid special variable name
+
+YDB>
+-----------------------------------------------
+Subtest tst9.m
+        set ($x,@y(2))=1
+# Compile the m file
+
+# Run the m file using mumps -run
+%YDB-E-LVUNDEF, Undefined local variable: y(2)
+		At M source location +1^tst9
+
+YDB>
+
+# Compile/Run the m file using mumps -direct
+
+YDB>
+%YDB-E-LVUNDEF, Undefined local variable: y(2)
+
+YDB>
+-----------------------------------------------
