@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-;	Copyright 2012, 2014 Fidelity Information Services, Inc	;
+; Copyright 2012, 2014 Fidelity Information Services, Inc	;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -31,9 +34,10 @@ gtm6571	; Evil program to produce MUTEXLCKALERT to test procstuckexec
 	trollback
 	use $principal
 	write line,!,$select(good:"PASS",1:"FAIL")," from ",$text(+0),!
+	set maxtimeout=300	; seconds to wait for process to die
 	for i=1:1:jobCount do
-	. for j=1:1:30 set success=$zsigproc(jobs(i),0) quit:(success)  hang 1
-	. if ('success) write "JOB "_jobs(i)_" did not die in 30 seconds",!
+	. for j=1:1:maxtimeout set success=$zsigproc(jobs(i),0) quit:(success)  hang 1
+	. if ('success) write "JOB "_jobs(i)_" did not die in "_maxtimeout_" seconds",!
 	quit
 silly
 	set file="silly"_$job_".txt"
