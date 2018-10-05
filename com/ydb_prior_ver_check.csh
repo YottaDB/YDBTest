@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -34,6 +34,19 @@ if ($?ydb_environment_init) then
 		# gets chosen on an Arch linux host
 		if (`expr "V63000A" \>= "$1"`) then
 			echo "# Overriding setting of gtm_test_tls by ydb_prior_ver_check.csh (prior_ver = $1)" >>&! settings.csh
+			echo "setenv gtm_test_tls FALSE" >>&! settings.csh
+			setenv gtm_test_tls "FALSE"
+		endif
+		# On Arch Linux, in Oct 2018, OpenSSL 1.1.1 became the currently installed version and that started supporting
+		# TLS V1.3 which the TLS plugin in YottaDB does not support. YottaDB builds do not have an issue with this since
+		# they have a CMakeLists.txt override that forces one to use OpenSSL 1.0 (instead of 1.1*). Pure GT.M builds
+		# do not have those changes and so if the test randomly chosen TLS, the source and receiver server assert
+		# fail (SIG-6) in gtm_tls_impl.c line 1667 "assert(FALSE && ssl_version)". Therefore, disable TLS on Arch Linux
+		# if ever we randomly chose a pure GT.M build (which is identified by the version name being Vxxxx without the
+		# trailing _Ryyyy suffix). For example V63004 is a pure GT.M build but V63004_R122 is a YottaDB build of
+		# the YottaDB mainline which had GT.M V6.3-004 integrated into it.
+		if (!($1 =~ "V*_R*")) then
+			echo "# Overriding setting of gtm_test_tls by ydb_prior_ver_check.csh TLS V1.3(prior_ver = $1)" >>&! settings.csh
 			echo "setenv gtm_test_tls FALSE" >>&! settings.csh
 			setenv gtm_test_tls "FALSE"
 		endif
