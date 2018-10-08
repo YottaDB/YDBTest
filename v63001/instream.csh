@@ -25,7 +25,7 @@ echo "v63001 test starts..."
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic ""
-setenv subtest_list_non_replic "$subtest_list_non_replic gtm4283 gtm6793 gtm8357 gtm8573"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm4283 gtm6793 gtm8357"
 setenv subtest_list_replic     ""
 
 
@@ -37,9 +37,9 @@ endif
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
 setenv subtest_exclude_list    ""
-# Filter out white box tests that cannot run in pro
+# Filter out mumps -machine -list tests that cannot run in pro
 if ("pro" == "$tst_image") then
-       setenv subtest_exclude_list "$subtest_exclude_list"
+       setenv subtest_exclude_list "$subtest_exclude_list gtm8573"
 endif
 
 # Submit the list of subtests
