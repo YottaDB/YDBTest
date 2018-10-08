@@ -1,0 +1,433 @@
+# Test that $SELECT stops evaluating tvexprs or exprs once a true tvexpr is seen even in case later tvexprs or exprs contain a NUMOFLOW or INVDLRCVAL error.
+# Previously a NUMOFLOW or INVDLRCVAL runtime error would be incorrectly issued.
+
+# Generate and compile each m file.
+
+# Generate true.m for specific test cases.
+test()
+	write "true",!
+	quit 1
+
+# Generate echoAndRet.m for specific test cases.
+echoAndRet(A,B)
+	write A,!
+	quit B
+-----------------------------------------------
+Running with ydb_boolean/gtm_boolean env var set to 0
+Subtest tst01.m
+	if $select(1:1,1:10*10*(10**45),1:3)  write "Hello "
+# Compile the m file
+		if $select(1:1,1:10*10*(10**45),1:3)  write "Hello "
+		                               ^-----
+		At column 33, line 1, source module ##TEST_PATH##/tst01.m
+%YDB-E-NUMOFLOW, Numeric overflow
+
+# Run the m file using -run
+Hello 
+
+# Compile/Run the m file using mumps -direct
+
+YDB>
+%YDB-E-NUMOFLOW, Numeric overflow
+		if $select(1:1,1:10*10*(10**45),1:3)  write "Hello "
+		                               ^-----
+
+YDB>
+-----------------------------------------------
+Subtest tst02.m
+	if $select(1:1,1:1E47,1:3)  write "Hello "
+# Compile the m file
+		if $select(1:1,1:1E47,1:3)  write "Hello "
+		                 ^-----
+		At column 19, line 1, source module ##TEST_PATH##/tst02.m
+%YDB-E-NUMOFLOW, Numeric overflow
+
+# Run the m file using -run
+Hello 
+
+# Compile/Run the m file using mumps -direct
+
+YDB>
+Hello 
+YDB>
+-----------------------------------------------
+Subtest tst03.m
+	if $select(1:1,($zchset="UTF-8"):$INVALIDISV,1:3)
+# Compile the m file
+		if $select(1:1,($zchset="UTF-8"):$INVALIDISV,1:3)
+		                                  ^-----
+		At column 36, line 1, source module ##TEST_PATH##/tst03.m
+%YDB-E-INVSVN, Invalid special variable name
+
+# Run the m file using -run
+
+# Compile/Run the m file using mumps -direct
+
+YDB>
+
+YDB>
+-----------------------------------------------
+Subtest tst04.m
+	if $select(1:1,1:1/0,1:3)  write "Hello "
+# Compile the m file
+
+# Run the m file using -run
+Hello 
+
+# Compile/Run the m file using mumps -direct
+
+YDB>
+Hello 
+YDB>
+-----------------------------------------------
+Subtest tst05.m
+	if $select(0:1,($zchset="UTF-8"):$INVALIDISV,1:3)
+# Compile the m file
+		if $select(0:1,($zchset="UTF-8"):$INVALIDISV,1:3)
+		                                  ^-----
+		At column 36, line 1, source module ##TEST_PATH##/tst05.m
+%YDB-E-INVSVN, Invalid special variable name
+
+# Run the m file using -run
+##SUSPEND_OUTPUT NONUNICODE_MODE
+%YDB-E-INVSVN, Invalid special variable name
+		At M source location +1^tst05
+
+YDB>
+##ALLOW_OUTPUT NONUNICODE_MODE
+
+# Compile/Run the m file using mumps -direct
+
+YDB>
+##SUSPEND_OUTPUT NONUNICODE_MODE
+%YDB-E-INVSVN, Invalid special variable name
+##ALLOW_OUTPUT NONUNICODE_MODE
+
+YDB>
+-----------------------------------------------
+Subtest tst06.m
+	if $select(0:1,0:1E47,1:3)
+# Compile the m file
+		if $select(0:1,0:1E47,1:3)
+		                 ^-----
+		At column 19, line 1, source module ##TEST_PATH##/tst06.m
+%YDB-E-NUMOFLOW, Numeric overflow
+
+# Run the m file using -run
+
+# Compile/Run the m file using mumps -direct
+
+YDB>
+
+YDB>
+-----------------------------------------------
+Subtest tst07.m
+	if $select(0:1E47,1:3)
+# Compile the m file
+		if $select(0:1E47,1:3)
+		             ^-----
+		At column 15, line 1, source module ##TEST_PATH##/tst07.m
+%YDB-E-NUMOFLOW, Numeric overflow
+
+# Run the m file using -run
+
+# Compile/Run the m file using mumps -direct
+
+YDB>
+
+YDB>
+-----------------------------------------------
+Subtest tst08.m
+	if $select(0:$INVALID,1:3)
+# Compile the m file
+		if $select(0:$INVALID,1:3)
+		              ^-----
+		At column 16, line 1, source module ##TEST_PATH##/tst08.m
+%YDB-E-INVSVN, Invalid special variable name
+
+# Run the m file using -run
+
+# Compile/Run the m file using mumps -direct
+
+YDB>
+
+YDB>
+-----------------------------------------------
+Subtest tst09.m
+	if $select(1:1,1:"1E47"&1)
+# Compile the m file
+		if $select(1:1,1:"1E47"&1)
+		                         ^-----
+		At column 27, line 1, source module ##TEST_PATH##/tst09.m
+%YDB-E-NUMOFLOW, Numeric overflow
+
+# Run the m file using -run
+
+# Compile/Run the m file using mumps -direct
+
+YDB>
+
+YDB>
+-----------------------------------------------
+Subtest tst10.m
+        if $select(1:1,1:$char(65535))
+# Compile the m file
+##SUSPEND_OUTPUT NONUNICODE_MODE
+	        if $select(1:1,1:$char(65535))
+	                                    ^-----
+		At column 37, line 1, source module ##TEST_PATH##/tst10.m
+%YDB-E-INVDLRCVAL, Invalid $CHAR() value 65535
+##ALLOW_OUTPUT NONUNICODE_MODE
+
+# Run the m file using -run
+
+# Compile/Run the m file using mumps -direct
+
+YDB>
+
+YDB>
+-----------------------------------------------
+Subtest tst11.m
+	write 1!$$^echoAndRet("Hello",0)!$S($$^echoAndRet("World",0):5)
+# Compile the m file
+
+# Run the m file using -run
+World
+%YDB-E-SELECTFALSE, No argument to $SELECT was true
+		At M source location +1^tst11
+
+YDB>
+
+# Compile/Run the m file using mumps -direct
+
+YDB>
+World
+%YDB-E-SELECTFALSE, No argument to $SELECT was true
+
+YDB>
+-----------------------------------------------
+Subtest tst12.m
+	write 1!'$s($$^true:5)
+# Compile the m file
+
+# Run the m file using -run
+true
+1
+
+# Compile/Run the m file using mumps -direct
+
+YDB>
+true
+1
+YDB>
+-----------------------------------------------
+Running with ydb_boolean/gtm_boolean env var set to 1
+Subtest tst01.m
+	if $select(1:1,1:10*10*(10**45),1:3)  write "Hello "
+# Compile the m file
+		if $select(1:1,1:10*10*(10**45),1:3)  write "Hello "
+		                               ^-----
+		At column 33, line 1, source module ##TEST_PATH##/tst01.m
+%YDB-E-NUMOFLOW, Numeric overflow
+
+# Run the m file using -run
+Hello 
+
+# Compile/Run the m file using mumps -direct
+
+YDB>
+%YDB-E-NUMOFLOW, Numeric overflow
+		if $select(1:1,1:10*10*(10**45),1:3)  write "Hello "
+		                               ^-----
+
+YDB>
+-----------------------------------------------
+Subtest tst02.m
+	if $select(1:1,1:1E47,1:3)  write "Hello "
+# Compile the m file
+		if $select(1:1,1:1E47,1:3)  write "Hello "
+		                 ^-----
+		At column 19, line 1, source module ##TEST_PATH##/tst02.m
+%YDB-E-NUMOFLOW, Numeric overflow
+
+# Run the m file using -run
+Hello 
+
+# Compile/Run the m file using mumps -direct
+
+YDB>
+Hello 
+YDB>
+-----------------------------------------------
+Subtest tst03.m
+	if $select(1:1,($zchset="UTF-8"):$INVALIDISV,1:3)
+# Compile the m file
+		if $select(1:1,($zchset="UTF-8"):$INVALIDISV,1:3)
+		                                  ^-----
+		At column 36, line 1, source module ##TEST_PATH##/tst03.m
+%YDB-E-INVSVN, Invalid special variable name
+
+# Run the m file using -run
+
+# Compile/Run the m file using mumps -direct
+
+YDB>
+
+YDB>
+-----------------------------------------------
+Subtest tst04.m
+	if $select(1:1,1:1/0,1:3)  write "Hello "
+# Compile the m file
+
+# Run the m file using -run
+Hello 
+
+# Compile/Run the m file using mumps -direct
+
+YDB>
+Hello 
+YDB>
+-----------------------------------------------
+Subtest tst05.m
+	if $select(0:1,($zchset="UTF-8"):$INVALIDISV,1:3)
+# Compile the m file
+		if $select(0:1,($zchset="UTF-8"):$INVALIDISV,1:3)
+		                                  ^-----
+		At column 36, line 1, source module ##TEST_PATH##/tst05.m
+%YDB-E-INVSVN, Invalid special variable name
+
+# Run the m file using -run
+##SUSPEND_OUTPUT NONUNICODE_MODE
+%YDB-E-INVSVN, Invalid special variable name
+		At M source location +1^tst05
+
+YDB>
+##ALLOW_OUTPUT NONUNICODE_MODE
+
+# Compile/Run the m file using mumps -direct
+
+YDB>
+##SUSPEND_OUTPUT NONUNICODE_MODE
+%YDB-E-INVSVN, Invalid special variable name
+##ALLOW_OUTPUT NONUNICODE_MODE
+
+YDB>
+-----------------------------------------------
+Subtest tst06.m
+	if $select(0:1,0:1E47,1:3)
+# Compile the m file
+		if $select(0:1,0:1E47,1:3)
+		                 ^-----
+		At column 19, line 1, source module ##TEST_PATH##/tst06.m
+%YDB-E-NUMOFLOW, Numeric overflow
+
+# Run the m file using -run
+
+# Compile/Run the m file using mumps -direct
+
+YDB>
+
+YDB>
+-----------------------------------------------
+Subtest tst07.m
+	if $select(0:1E47,1:3)
+# Compile the m file
+		if $select(0:1E47,1:3)
+		             ^-----
+		At column 15, line 1, source module ##TEST_PATH##/tst07.m
+%YDB-E-NUMOFLOW, Numeric overflow
+
+# Run the m file using -run
+
+# Compile/Run the m file using mumps -direct
+
+YDB>
+
+YDB>
+-----------------------------------------------
+Subtest tst08.m
+	if $select(0:$INVALID,1:3)
+# Compile the m file
+		if $select(0:$INVALID,1:3)
+		              ^-----
+		At column 16, line 1, source module ##TEST_PATH##/tst08.m
+%YDB-E-INVSVN, Invalid special variable name
+
+# Run the m file using -run
+
+# Compile/Run the m file using mumps -direct
+
+YDB>
+
+YDB>
+-----------------------------------------------
+Subtest tst09.m
+	if $select(1:1,1:"1E47"&1)
+# Compile the m file
+		if $select(1:1,1:"1E47"&1)
+		                         ^-----
+		At column 27, line 1, source module ##TEST_PATH##/tst09.m
+%YDB-E-NUMOFLOW, Numeric overflow
+
+# Run the m file using -run
+
+# Compile/Run the m file using mumps -direct
+
+YDB>
+
+YDB>
+-----------------------------------------------
+Subtest tst10.m
+        if $select(1:1,1:$char(65535))
+# Compile the m file
+##SUSPEND_OUTPUT NONUNICODE_MODE
+	        if $select(1:1,1:$char(65535))
+	                                    ^-----
+		At column 37, line 1, source module ##TEST_PATH##/tst10.m
+%YDB-E-INVDLRCVAL, Invalid $CHAR() value 65535
+##ALLOW_OUTPUT NONUNICODE_MODE
+
+# Run the m file using -run
+
+# Compile/Run the m file using mumps -direct
+
+YDB>
+
+YDB>
+-----------------------------------------------
+Subtest tst11.m
+	write 1!$$^echoAndRet("Hello",0)!$S($$^echoAndRet("World",0):5)
+# Compile the m file
+
+# Run the m file using -run
+Hello
+World
+%YDB-E-SELECTFALSE, No argument to $SELECT was true
+		At M source location +1^tst11
+
+YDB>
+
+# Compile/Run the m file using mumps -direct
+
+YDB>
+Hello
+World
+%YDB-E-SELECTFALSE, No argument to $SELECT was true
+
+YDB>
+-----------------------------------------------
+Subtest tst12.m
+	write 1!'$s($$^true:5)
+# Compile the m file
+
+# Run the m file using -run
+true
+1
+
+# Compile/Run the m file using mumps -direct
+
+YDB>
+true
+1
+YDB>
+-----------------------------------------------

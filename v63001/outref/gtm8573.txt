@@ -15,38 +15,38 @@ evaluating to 0 result in smaller object modules than literal postconditionals e
 
 # Generate the subtest m files.
 
-Subtest tst1.m
+Subtest tst01.m
 	if 1 Set X=1
-# Running tst1.m subtest
-# Generate opcodes for tst1.m
+# Running tst01.m subtest
+# Generate opcodes for tst01.m
 # Display the opcodes.
 OC_LINEFETCH
 OC_SETTEST
 ##TEST_AWK(OC_STOLIT|OC_LITC)
 OC_RET
 
-Subtest tst2.m
+Subtest tst02.m
 	if 0 Set X=1
-# Running tst2.m subtest
-# Generate opcodes for tst2.m
+# Running tst02.m subtest
+# Generate opcodes for tst02.m
 # Display the opcodes.
 OC_LINEFETCH
 OC_CLRTEST
 OC_RET
 
-Subtest tst3.m
+Subtest tst03.m
 	Set:1 X=1
-# Running tst3.m subtest
-# Generate opcodes for tst3.m
+# Running tst03.m subtest
+# Generate opcodes for tst03.m
 # Display the opcodes.
 OC_LINEFETCH
 ##TEST_AWK(OC_STOLIT|OC_LITC)
 OC_RET
 
-Subtest tst4.m
+Subtest tst04.m
 	Set:0 X=1
-# Running tst4.m subtest
-# Generate opcodes for tst4.m
+# Running tst04.m subtest
+# Generate opcodes for tst04.m
 # Display the opcodes.
 OC_LINEFETCH
 OC_RET
