@@ -30,7 +30,7 @@ if ( $limit < 0) then
 endif
 
 if ($2 == "") then
-	set maxwait=1800
+	set maxwait=1800	# keep in sync with com/wait_until_rcvr_backlog_clear.csh
 else
 	set maxwait=$2
 endif
