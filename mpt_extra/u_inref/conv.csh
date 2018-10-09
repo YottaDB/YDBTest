@@ -104,6 +104,11 @@ WRITE "0Xe:",$$FUNC^%HD("0Xe")
 WRITE "0xax3:",$$FUNC^%HD("0xax3")
 WRITE "1xa:",$$FUNC^%HD("1xa")
 WRITE "1xax3:",$$FUNC^%HD("1xax3")
+WRITE "E.8:",$$FUNC^%HD("E.8")
+WRITE "E.159:",$$FUNC^%HD("E.159")
+WRITE "0xE.8:",$$FUNC^%HD("0xE.8")
+WRITE "0XE.8:",$$FUNC^%HD("0XE.8")
+WRITE "0Xe.8:",$$FUNC^%HD("0Xe.8")
 \GTMEND
 
 echo "#####################"$cnt"###################"
