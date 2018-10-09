@@ -1,0 +1,81 @@
+---------------------------------------------------------------------------------------------------------------------------
+# Test that ydb_env_set changes ydb_routines/gtmroutines/ydb_gbldir/gtmgbldir values appropriately whether preset or unset.
+---------------------------------------------------------------------------------------------------------------------------
+# First set ydb_routines/gtmroutines/ydb_gbldir/gtmgbldir to arbitrary values.
+ydb_routines: a
+gtmroutines: b
+ydb_gbldir: c
+gtmgbldir: d
+----------------------------------------------------
+# Now test to see if sourcing ydb_env_set changes the gtm* values to the ydb_* values
+ydb_routines: a
+gtmroutines: a
+ydb_gbldir: c
+gtmgbldir: c
+----------------------------------------------------
+# Now test to see if unsetting ydb_*, setting gtm*, and sourcing ydb_env_set, sets ydb_* to the gtm* value
+ydb_routines: b
+gtmroutines: b
+ydb_gbldir: d
+gtmgbldir: d
+----------------------------------------------------
+# Now test to see if unsetting gtm*, setting ydb_*, and sourcing ydb_env_set, sets gtm* to the ydb_* value
+ydb_routines: a
+gtmroutines: a
+ydb_gbldir: c
+gtmgbldir: c
+----------------------------------------------------
+# Now test to see if unsetting both ydb_* and gtm* and sourcing ydb_env_set sets ydb_* and gtm* to the default values
+##SUSPEND_OUTPUT UNICODE_MODE
+##TEST_AWKydb_routines: ##HOME_PATH##/.yottadb/r.*/o.*\(##HOME_PATH##/.yottadb/r.*/r ##HOME_PATH##/.yottadb/r\) ##SOURCE_REALPATH##/plugin/o/_POSIX.so ##SOURCE_REALPATH##/libyottadbutil.so
+##TEST_AWKgtmroutines: ##HOME_PATH##/.yottadb/r.*/o.*\(##HOME_PATH##/.yottadb/r.*/r ##HOME_PATH##/.yottadb/r\) ##SOURCE_REALPATH##/plugin/o/_POSIX.so ##SOURCE_REALPATH##/libyottadbutil.so
+##ALLOW_OUTPUT UNICODE_MODE
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##TEST_AWKydb_routines: ##HOME_PATH##/.yottadb/r.*/o/utf8.*\(##HOME_PATH##/.yottadb/r.*/r ##HOME_PATH##/.yottadb/r\) ##SOURCE_REALPATH##/plugin/o/utf8/_POSIX.so ##SOURCE_REALPATH##/utf8/libyottadbutil.so
+##TEST_AWKgtmroutines: ##HOME_PATH##/.yottadb/r.*/o/utf8.*\(##HOME_PATH##/.yottadb/r.*/r ##HOME_PATH##/.yottadb/r\) ##SOURCE_REALPATH##/plugin/o/utf8/_POSIX.so ##SOURCE_REALPATH##/utf8/libyottadbutil.so
+##ALLOW_OUTPUT NONUNICODE_MODE
+##TEST_AWKydb_gbldir: ##HOME_PATH##/.yottadb/r.*/g/yottadb.gld
+##TEST_AWKgtmgbldir: ##HOME_PATH##/.yottadb/r.*/g/yottadb.gld
+----------------------------------------------------
+# Environment variables set after sourcing ydb_env_set.
+----------------------------------------------------
+##SUSPEND_OUTPUT UNICODE_MODE
+gtm_dist=##SOURCE_PATH##
+##ALLOW_OUTPUT UNICODE_MODE
+##SUSPEND_OUTPUT NONUNICODE_MODE
+gtm_dist=##SOURCE_REALPATH##/utf8
+##ALLOW_OUTPUT NONUNICODE_MODE
+gtm_etrap=Write:(0=$STACK) "Error occurred: ",$ZStatus,!
+##TEST_AWKgtm_log=.*
+##TEST_AWKgtm_repl_instance=##HOME_PATH##/.yottadb/r.*/g/yottadb.repl
+gtm_retention=42
+##TEST_AWKgtm_tmp=.*
+gtmdir=##HOME_PATH##/.fis-gtm
+##TEST_AWKgtmgbldir=##HOME_PATH##/.yottadb/r.*/g/yottadb.gld
+##SUSPEND_OUTPUT UNICODE_MODE
+##TEST_AWKgtmroutines=##HOME_PATH##/.yottadb/r.*/o.*\(##HOME_PATH##/.yottadb/r.*/r ##HOME_PATH##/.yottadb/r\) ##SOURCE_REALPATH##/plugin/o/_POSIX.so ##SOURCE_REALPATH##/libyottadbutil.so
+##ALLOW_OUTPUT UNICODE_MODE
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##TEST_AWKgtmroutines=##HOME_PATH##/.yottadb/r.*/o/utf8.*\(##HOME_PATH##/.yottadb/r.*/r ##HOME_PATH##/.yottadb/r\) ##SOURCE_REALPATH##/plugin/o/utf8/_POSIX.so ##SOURCE_REALPATH##/utf8/libyottadbutil.so
+##ALLOW_OUTPUT NONUNICODE_MODE
+##TEST_AWKgtmver=.*
+ydb_dir=##HOME_PATH##/.yottadb
+##SUSPEND_OUTPUT UNICODE_MODE
+ydb_dist=##SOURCE_PATH##
+##ALLOW_OUTPUT UNICODE_MODE
+##SUSPEND_OUTPUT NONUNICODE_MODE
+ydb_dist=##SOURCE_REALPATH##/utf8
+##ALLOW_OUTPUT NONUNICODE_MODE
+ydb_etrap=Write:(0=$STACK) "Error occurred: ",$ZStatus,!
+##TEST_AWKydb_gbldir=##HOME_PATH##/.yottadb/r.*/g/yottadb.gld
+##TEST_AWKydb_log=.*
+##TEST_AWKydb_rel=r.*
+##TEST_AWKydb_repl_instance=##HOME_PATH##/.yottadb/r.*/g/yottadb.repl
+ydb_retention=42
+##SUSPEND_OUTPUT UNICODE_MODE
+##TEST_AWKydb_routines=##HOME_PATH##/.yottadb/r.*/o.*\(##HOME_PATH##/.yottadb/r.*/r ##HOME_PATH##/.yottadb/r\) ##SOURCE_REALPATH##/plugin/o/_POSIX.so ##SOURCE_REALPATH##/libyottadbutil.so
+##ALLOW_OUTPUT UNICODE_MODE
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##TEST_AWKydb_routines=##HOME_PATH##/.yottadb/r.*/o/utf8.*\(##HOME_PATH##/.yottadb/r.*/r ##HOME_PATH##/.yottadb/r\) ##SOURCE_REALPATH##/plugin/o/utf8/_POSIX.so ##SOURCE_REALPATH##/utf8/libyottadbutil.so
+##ALLOW_OUTPUT NONUNICODE_MODE
+##TEST_AWKydb_tmp=.*
