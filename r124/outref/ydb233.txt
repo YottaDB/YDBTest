@@ -1,0 +1,46 @@
+-------------------------------------------------------------------------------------------------------
+# Test that MUPIP SET -REORG_SLEEP_NSEC is correctly set, and is accurate during a MUPIP REORG process.
+-------------------------------------------------------------------------------------------------------
+# Create database
+------------------------------------------------------------------------
+# Set REORG_SLEEP_NSEC to 10**9
+%YDB-W-MUPIPSET2BIG, 1000000000 too large, maximum REORG_SLEEP_NSEC allowed is 999999999
+%YDB-E-WCERRNOTCHG, Not all specified database files were changed
+
+# Generate random value > 10**9 (one more than the maximum nanosecond sleep value that can be specificed in REORG_SLEEP_NSEC
+# Set REORG_SLEEP_NSEC to the random value
+%YDB-W-MUPIPSET2BIG, ##HUGERANDOMSLEEP## too large, maximum REORG_SLEEP_NSEC allowed is 999999999
+%YDB-E-WCERRNOTCHG, Not all specified database files were changed
+------------------------------------------------------------------------
+# Set REORG_SLEEP_NSEC to the max value, 999999999
+Database file ##TEST_PATH##/mumps.dat now has reorg sleep nanoseconds 999999999
+
+# Generate random value < 10**9
+# Set REORG_SLEEP_NSEC to the random value
+Database file ##TEST_PATH##/mumps.dat now has reorg sleep nanoseconds ##VALIDNANOSECSLEEP##
+------------------------------------------------------------------------
+# Check that PEEKBYNAME shows the correct value of reorg_sleep_mode
+------>PEEKBYNAME successfully shows the correct value.
+
+# Check the dump to make sure reorg_sleep_nsec was correctly set
+------>DSE DUMP -FILE successfully shows the correct value.
+------------------------------------------------------------------------
+# Generate global variables to fill database, then kill half of the global variables
+# This creates work for MUPIP REORG below
+
+YDB>
+
+YDB>
+
+YDB>
+
+# Use strace to test that mupip reorg honors reorg_sleep_nsec value
+strace -T -o trace1.outx $ydb_dist/mupip reorg >& mupipreorg.txt
+# Calculate the sleep time across various clock_nanosecond() calls for mupip reorg, and compare it to what was set
+# For every coalesced block, MUPIP REORG does at least one clock_nanosleep(REORG_SLEEP_NSEC) call.
+  (Calls could be more than 1 in the case of EINTR interrupts, but the total time slept is the same accross multiple calls)
+  This is why the total call from clock_nanosleep() calls is obtained from strace -T and divided by the # of blocks coalesced.
+  This average is compared to the time set for REORG_SLEEP_NSEC.
+
+# Calculate percent error of MUPIP REORG sleep time to see if it is accurate
+------>The sleep time for mupip reorg gives a percent error within the +/- 10% threshold, which is acceptable.
