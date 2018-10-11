@@ -58,6 +58,7 @@
 # ydb372	   [quinn] Test that using indirection in a setleft works even if a preceeding setleft has an invalid ISV usage, and does not give a GTMASSERT2 error.
 # ydb363	   [quinn] Test that YottaDB correctly issues NUMOFLOW errors for literal expressions whic contain large numeric values stored as strings.
 # ydb371	   [quinn] Test that $SELECT stops evaluating tvexprs or exprs once a true tvexpr is seen even in case later tvexprs or exprs contain a NUMOFLOW or INVDLRCVAL error.
+# ydb349	   [nars]  Test that MUPIP REORG on database file with non-zero RESERVED_BYTES does not cause integrity errors
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r124 test starts..."
@@ -68,7 +69,7 @@ setenv subtest_list_non_replic ""
 setenv subtest_list_non_replic "$subtest_list_non_replic readonly ydb275socketpass ydb280socketwait jnlunxpcterr ydb297 ydb315"
 setenv subtest_list_non_replic "$subtest_list_non_replic ydb324 ydb341 ydb343 ydb346mr ydb350 ydb352 ydb353 ydb348 ydb358 ydb359"
 setenv subtest_list_non_replic "$subtest_list_non_replic ydb356 ydb360 ydb357 ydb346 ydb95 ydb333 ydb329 ydb344 ydb258 ydb374"
-setenv subtest_list_non_replic "$subtest_list_non_replic ydb372 ydb363 ydb371"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb372 ydb363 ydb371 ydb349"
 setenv subtest_list_replic     ""
 setenv subtest_list_replic     "$subtest_list_replic ydb282srcsrvrerr ydb293 ydb312_gtm8182a ydb312_gtm8182b  ydb312_gtm8182c"
 setenv subtest_list_replic     "$subtest_list_replic ydb312_gtm8182d ydb312_gtm8182e ydb312_gtm8182f ydb312_gtm8182g ydb321"
