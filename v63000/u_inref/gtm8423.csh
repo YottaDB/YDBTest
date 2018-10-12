@@ -22,11 +22,7 @@ source $gtm_tst/com/disable_settings_msr_priorver.csh
 # Prepare local and remote directories
 $MULTISITE_REPLIC_PREPARE 2
 
-# Set the remote prior version to any prior ms version (note the V54002B introduced the last journal size increase), except when using MM. In that
-# case, use V53003 as the minimum version.
-set rand_range="-type ms"
-if ("MM" == $acc_meth) set rand_range="-gte V53003"
-set prior_ver=`$gtm_tst/com/random_ver.csh ${rand_range}`
+set prior_ver=`$gtm_tst/com/random_ver.csh -type ms`
 if ("$prior_ver" =~ "*-E-*") then
 	echo "No prior versions available: $prior_ver"
 	exit -1
