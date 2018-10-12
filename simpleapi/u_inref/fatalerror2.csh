@@ -36,8 +36,13 @@ foreach file (fatalerror.c)
 	limit vmemoryuse 200000
 	echo "# unsetenv gtmdbglvl (needed for FATALERROR2)"
 	unsetenv gtmdbglvl
-
-	`pwd`/$exefile
+	# We background the executable to get its pid. This is needed so we can search for FATALERROR2 message in syslog
+	# from just this pid. That way we avoid failing the test due to other FATALERROR2 messages in syslog from concurrent tests.
+	# Normally we would use the test output directory in the syslog search string to address such issues but this is not
+	# possible because FATALERROR2 message does not include the absolute path of the current directory.
+	( `pwd`/$exefile & ; echo $! >&! bg.pid)
+	set bgpid = `cat bg.pid`
+	$gtm_tst/com/wait_for_proc_to_die.csh $bgpid
 	echo ""
 end
 
@@ -45,7 +50,7 @@ echo "# Reset vmemoryuse back to unlimited to avoid memory errors in the getoper
 limit vmemoryuse unlimited
 
 $gtm_tst/com/getoper.csh "$syslog_time1" "" syslog1.txt "" "FATALERROR2"
-$grep FATALERROR2 syslog1.txt | sed 's/.*%YDB-F-FATALERROR2/%YDB-F-FATALERROR2/;s/ Error:.*//;'
+$grep "\<$bgpid\>.*FATALERROR2" syslog1.txt | sed 's/.*%YDB-F-FATALERROR2/%YDB-F-FATALERROR2/;s/ Error:.*//;'
 # Unlike the FATALERROR1 case, we do not expect a core file in the FATALERROR2 case.
 # But we do not need to do any checks for this. The test framework will automatically fail the test if it finds a core file.
 if (-e YDB_FATAL_ERROR*) then

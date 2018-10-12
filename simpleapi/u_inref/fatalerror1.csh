@@ -36,8 +36,13 @@ foreach file (fatalerror.c)
 	limit vmemoryuse 200000
 	echo "# setenv gtmdbglvl 0x400 (needed for FATALERROR1)"
 	setenv gtmdbglvl 0x400
-	`pwd`/$exefile
-
+	# We background the executable to get its pid. This is needed so we can search for FATALERROR1 message in syslog
+	# from just this pid. That way we avoid failing the test due to other FATALERROR1 messages in syslog from concurrent tests.
+	# Normally we would use the test output directory in the syslog search string to address such issues but this is not
+	# possible because FATALERROR1 message does not include the absolute path of the current directory.
+	( `pwd`/$exefile & ; echo $! >&! bg.pid)
+	set bgpid = `cat bg.pid`
+	$gtm_tst/com/wait_for_proc_to_die.csh $bgpid
 	echo ""
 end
 
@@ -45,7 +50,7 @@ echo "# Reset vmemoryuse back to unlimited to avoid memory errors in the getoper
 limit vmemoryuse unlimited
 
 $gtm_tst/com/getoper.csh "$syslog_time1" "" syslog1.txt "" "FATALERROR1"
-$grep FATALERROR1 syslog1.txt | sed 's/.*%YDB-F-FATALERROR1/%YDB-F-FATALERROR1/;s/ Error:.*//;'
+$grep "\<$bgpid\>.*FATALERROR1" syslog1.txt | sed 's/.*%YDB-F-FATALERROR1/%YDB-F-FATALERROR1/;s/ Error:.*//;'
 if (-e core*) then
 	set corefile = core*
 	mv $corefile fatalerror1_$corefile

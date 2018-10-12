@@ -9,6 +9,7 @@ mumps.dat
  --> Running fatalerror.c <---
 # Set vmemoryuse limit to 200Mb; Eventually triggers YDB-F-MEMORY (and in turn FATALERROR2 error in syslog)
 # unsetenv gtmdbglvl (needed for FATALERROR2)
+##TEST_AWK\[1\] [0-9]*
  ### Test FATALERROR1 error ###
  # This test triggers a YDB-F-MEMORY error which then sends the FATALERROR1 message to syslog #
  # Set subscripts indefinitely to trigger a YDB-F-MEMORY error #
