@@ -15,9 +15,15 @@
 setenv gtm_test_spanreg     0              # Test requires traditional global mappings, so disable spanning regions
 $gtm_tst/com/dbcreate.csh mumps 3
 
-set rand = `$ydb_dist/mumps -run rand 5 1 1`	# Return random numbers in the range [1,3]
+if ($gtm_test_singlecpu) then
+	# On 1-CPU systems, TPRESTART messages are relatively less frequent so do logging for every restart that way
+	# we avoid test failures due to lack of TPRESTART messages because of a high logging delta.
+	set rand = 1
+else
+	set rand = `$ydb_dist/mumps -run rand 5 1 1`	# Return random numbers in the range [1,5]
+endif
 
-setenv ydb_tprestart_log_delta $rand # Enable TPRESTART logging
+setenv ydb_tprestart_log_delta $rand	# Enable TPRESTART logging
 setenv gtm_tprestart_log_delta $rand	# Also set gtm* env var so this test can be run with pre-r122 versions
 
 set syslog_time_before = `date +"%b %e %H:%M:%S"`
