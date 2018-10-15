@@ -42,7 +42,9 @@ foreach file (fatalerror.c)
 	# possible because FATALERROR1 message does not include the absolute path of the current directory.
 	( `pwd`/$exefile & ; echo $! >&! bg.pid)
 	set bgpid = `cat bg.pid`
-	$gtm_tst/com/wait_for_proc_to_die.csh $bgpid
+	# The process could take a while to reach the FATALERROR1 point and some more time to generate a core file on
+	# slower/loaded systems (e.g. ARMV6L or ARMV7L) so wait generously of instead of the default 1 minute hence the -1 below.
+	$gtm_tst/com/wait_for_proc_to_die.csh $bgpid -1
 	echo ""
 end
 
