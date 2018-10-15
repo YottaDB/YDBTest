@@ -18,6 +18,7 @@
 # viewcmdfunc [nars]  Test various VIEW commands and $VIEW functions (used to SIG-11/SIG-6/GTMASSERT2 in V6.3-004)
 # blktoodeep  [nars]  Test that BLKTOODEEP error is not issued if -NOWARNING is specified at compile time
 # ydb210      [jake]  Test that source server errors are sent to source server log file when started from the terminal
+# ydb218      [quinn] Test that ydb_app_ensures_isolation env var can be set to a length > 1k of global variables < 1k"
 #-------------------------------------------------------------------------------------------------------------
 
 echo "r122 test starts..."
@@ -25,7 +26,7 @@ echo "r122 test starts..."
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic ""
-setenv subtest_list_non_replic "$subtest_list_non_replic tprestart viewcmdfunc blktoodeep"
+setenv subtest_list_non_replic "$subtest_list_non_replic tprestart viewcmdfunc blktoodeep ydb218"
 setenv subtest_list_replic     ""
 setenv subtest_list_replic "$subtest_list_replic ydb210"
 

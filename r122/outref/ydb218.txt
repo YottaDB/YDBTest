@@ -1,0 +1,14 @@
+------------------------------------------------------------------------------------------------------------------------
+# Test that ydb_app_ensures_isolation env var can be set to a length > 1k of global variables "^a1,^a2,...,^a999,^a1000"
+------------------------------------------------------------------------------------------------------------------------
+# Test that ydb_app_ensures_isolation can be set using setenv
+# Generate global variable list noisolist
+# Set noisolist using: setenv ydb_app_ensures_isolation "$noisolist"
+# Use $VIEW "NOISOLATION" to ensure each global variable has no isolation set.
+------>ydb_app_ensures_isolation is successfully set
+------------------------------------------------------------------------------------------------------------------------
+# Test that ydb_app_ensures_isolation can be set using "VIEW NOISOLATION"
+# Generate global variable list noisolist using mumps
+# Set noisolist using: VIEW "NOISOLATION": noisolist
+# Use $VIEW "NOISOLATION" to ensure each global variable has no isolation set.
+------>ydb_app_ensures_isolation is successfully set
