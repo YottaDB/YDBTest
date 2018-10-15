@@ -124,11 +124,22 @@ $gtm_tst/com/knownerror.csh $msr_execute_last_out YDB-E-REPLINSTSECLEN
 $gtm_tst/com/knownerror.csh $msr_execute_last_out YDB-E-MUPCLIERR
 # The above STARTSRC would have reserved a port in INST2 and wouldn't have removed it.
 $MSR RUN INST2 'set msr_dont_trace ; source $gtm_tst/com/portno_release.csh'
+
+# Just like we set the env var gtm_test_repl_skipsrcchkhlth to 1 for the $MSR STARTSRC INST1 INST2 RP command above,
+# we want to do the same for the $MSR STARTSRC INST4 INST5 RP command below.  This way STARTSRC on INST4 does not do
+# a checkhealth which otherwise would cause REPLINSTSECLEN/MUPCLIERR messages to be duplicated due to one extra set of
+# messages from the checkhealth.  But in case this is a multi-host test (randomly chosen by the test framework), setting
+# env vars in INST1 is the same as setting the env var in this script but the same is not true for INST2/INST3/etc. which
+# could be in a different host. Therefore we use env_supplementary.csh to ensure the env var is set on INST4.
+$MSR RUN INST4 'set msr_dont_trace ; echo setenv gtm_test_repl_skipsrcchkhlth 1 >> env_supplementary.csh'
 $MSR STARTSRC INST4 INST5 RP >&! STARTSRC_INST4_INT5_RP.outx
 get_msrtime
 $MSR RUN INST4 "$msr_err_chk START_$time_msr.out REPLINSTSECLEN MUPCLIERR"
 $gtm_tst/com/knownerror.csh $msr_execute_last_out YDB-E-REPLINSTSECLEN
 $gtm_tst/com/knownerror.csh $msr_execute_last_out YDB-E-MUPCLIERR
+# Now that $time_msr and $msr_execute_last_out usages are done (they reflect the most recent MSR command which we want
+# to be the $MSR STARTSRC INST4 INST5 command), we can go ahead and unsetenv the temporarily env var setting.
+$MSR RUN INST4 'set msr_dont_trace ; echo unsetenv gtm_test_repl_skipsrcchkhlth >> env_supplementary.csh'
 unsetenv gtm_test_repl_skipsrcchkhlth
 # The above STARTSRC would have reserved a port in INST5 and wouldn't have removed it.
 $MSR RUN INST5 'set msr_dont_trace ; source $gtm_tst/com/portno_release.csh'
