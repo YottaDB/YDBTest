@@ -26,13 +26,14 @@
 # gtm8951  [vinay]  Tests $TEXT and ZPRINT use auto relink when it is enabled and their argument includes a routine name
 # gtm5574  [vinay]  Tests conversion utility routines handle conversions with numbers up to the max string length in size
 # gtm8965  [nars]   Tests pattern match operator with alternation does not SIG-11 with input string as small as 16K
+# gtm8956  [quinn]  Tests that GT.M compile with -NOWARNING flag supresses BADCHAR, BLKTOODEEP, and LITNONGRAPH errors.
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "v63005 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "gtm8877 gtm8959 gtm8962 gtm8961 gtm8941 gtm8980 gtm5059 gtm8943 gtm8951 gtm5574 gtm8965"
+setenv subtest_list_non_replic "gtm8877 gtm8959 gtm8962 gtm8961 gtm8941 gtm8980 gtm5059 gtm8943 gtm8951 gtm5574 gtm8965 gtm8956"
 setenv subtest_list_replic     ""
 setenv subtest_list_replic     "$subtest_list_replic gtm8930"
 
