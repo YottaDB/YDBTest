@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------------
+# Test that invoking ydb_env_set does not reset gtm_prompt if ydb_prompt is undefined
+-------------------------------------------------------------------------------------
+
+# Define gtm_prompt
+gtm_prompt: test
+
+# invoke ydb_env_set
+. $ydb_dist/ydb_env_set
+
+# test that gtm_prompt remains unchanged
+gtm_prompt: test
