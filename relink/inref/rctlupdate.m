@@ -27,7 +27,7 @@ rctlupdate
 
 	set TRUE=1
 	set FALSE=0
-	if $&gtmposix.filemodeconst("S_IRWXU",.FMODE)
+	if $&ydbposix.filemodeconst("S_IRWXU",.FMODE)
 	set LOG="log.txt"
 	open LOG:newversion
 
@@ -60,7 +60,7 @@ rctlupdate
 	.	do &relink.removeDirectory(zdirectory_dir)
 	.
 	.	; Create and (make it our current) working directory for this iteration.
-	.	if $&gtmposix.mkdir(zdirectory_dir,FMODE,.errno)
+	.	if $&ydbposix.mkdir(zdirectory_dir,FMODE,.errno)
 	.	set $zdirectory=zdirectory_dir
 	.
 	.	; Create random files in the current working directory.
@@ -185,7 +185,7 @@ setExpectations(arg,setup,cycles,expect)
 	.	quit:(wildcarded&((".o"'=extension)!(name'?1(1"_",1A).(1A,1N))))
 	.	do log(" - @ point 3")
 	.
-	.	do &gtmposix.realpath($select(""=directory:".",1:directory),.realDir,.errno)
+	.	do &ydbposix.realpath($select(""=directory:".",1:directory),.realDir,.errno)
 	.	set:(""'=realDir) realDir=realDir_"/",expect(realDir)=1
 	.	do log(" - realDir is "_realDir)
 	.
@@ -194,7 +194,7 @@ setExpectations(arg,setup,cycles,expect)
 	.	if ((directory["dir4")!(directory["dir3")) do:('wildcarded)  quit		; Note the quit.
 	.	.	set expect("error",1)="YDB-E-FILEPARSE, Error parsing file specification: "_arg
 	.	.	set:("/"'=$extract(directory)) directory=$zdirectory_directory
-	.	.	do &gtmposix.realpath($$canonicalizePath(directory_"/.."),.realDir,.errno)
+	.	.	do &ydbposix.realpath($$canonicalizePath(directory_"/.."),.realDir,.errno)
 	.	.	set:(""'=realDir) realDir=realDir_"/"
 	.	.	if ('$data(setup(realDir,"dir3"))) set expect("error",2)="SYSTEM-E-ENO2, No such file or directory"
 	.	.	else  do
@@ -348,7 +348,7 @@ createRandomFiles(dirs,files,setup)
 	.	.	.	set file=$piece(files," ",j)
 	.	.	.	do writeFile(dir,file,'dirCreated)
 	.	.	.	set:unreadableFiles&('$random(10))&(file'["l2") unreadableFiles(dir_"/"_file)=1
-	.	.	.	do &gtmposix.realpath(dir,.realpath,.errno)
+	.	.	.	do &ydbposix.realpath(dir,.realpath,.errno)
 	.	.	.	set setup(realpath_"/",file)=1
 	.	.	.	set dirCreated=1
 	.	.	.	set:("dir1"=dir) dir1Exists=TRUE
@@ -361,22 +361,22 @@ createRandomFiles(dirs,files,setup)
 	; Additional file configurations to explore:
 	do:($random(2))
 	.	; Create circular soft link references.
-	.	if $&gtmposix.symlink("dir4","dir3",.errno)
-	.	if $&gtmposix.symlink("dir3","dir4",.errno)
+	.	if $&ydbposix.symlink("dir4","dir3",.errno)
+	.	if $&ydbposix.symlink("dir3","dir4",.errno)
 	.	set setup($zdirectory,"dir3")=1
 
 	do:(unreadableFiles)
 	.	; Make certain files unreadable.
 	.	set file=""
-	.	for  set file=$order(unreadableFiles(file)) quit:(""=file)  if $&gtmposix.chmod(file,0,.errno)
+	.	for  set file=$order(unreadableFiles(file)) quit:(""=file)  if $&ydbposix.chmod(file,0,.errno)
 
 	do:($random(2)&(dir1Exists!dir2Exists))
 	.	; Make certain directory unreadable.
 	.	if ('dir1Exists) set dir="dir2"
 	.	if ('dir2Exists) set dir="dir1"
 	.	if (dir1Exists&dir2Exists) set dir=$select($random(2):"dir1",1:"dir2")
-	.	if $&gtmposix.chmod(dir,0,.errno)
-	.	do &gtmposix.realpath(dir,.realpath,.errno)
+	.	if $&ydbposix.chmod(dir,0,.errno)
+	.	do &ydbposix.realpath(dir,.realpath,.errno)
 	.	set setup(realpath_"/","unreadable")=TRUE
 
 	quit
@@ -397,7 +397,7 @@ writeFile(dir,name,createDir)
 	.	set baseName=$extract(baseName,3,99)
 	.	set pos=$find(baseName,"dot")
 	.	set:(pos) baseName=$extract(baseName,1,pos-4)_"."_$extract(baseName,pos,99)
-	.	if $&gtmposix.symlink(baseName,dir_"/"_name,.errno)
+	.	if $&ydbposix.symlink(baseName,dir_"/"_name,.errno)
 	else  do
 	.	set file=dir_"/"_name
 	.	open file:newversion
@@ -413,7 +413,7 @@ writeFile(dir,name,createDir)
 createDir(dir)
 	new errno
 
-	if $&gtmposix.mkdir(dir,FMODE,.errno)
+	if $&ydbposix.mkdir(dir,FMODE,.errno)
 	quit
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -35,7 +35,7 @@
 #				by VIEW "LOGTPRESTART":<intval> and by gtm_tprestart_log_first and
 #				gtm_tprestart_log_delta environment variables.
 # verifyview	[bahirs]	verify VIEW "NOLOGTPRESTART" and $view("LOGTPRESTART") functionality.
-# gtm_posix	[cronem]	Test the posix plugin installed in $gtm_com/gtmposix
+# gtm_posix	[cronem]	Test the ydbposix plugin
 # gtm7443	[nars]		Test that idle EPOCHs (JRI gvstat) are not written unnecessarily
 # gtm7292	[fayazia]	MUPIP SIZE interface
 # gtm3907	[rog]		Order of evaluation tests for side effects

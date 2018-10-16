@@ -95,4 +95,5 @@ if ($ydbenv) then
 	setenv gtm_inc $gtm_inc_list
 	setenv gtm_vrt $gtm_ver
 	setenv gt_cc_option_I "-I$gtm_inc"
+	setenv ydb_xc_ydbposix $ydb_dist/plugin/ydbposix.xc
 endif

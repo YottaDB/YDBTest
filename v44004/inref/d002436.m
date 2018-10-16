@@ -3,6 +3,9 @@
 ; Copyright (c) 2004-2015 Fidelity National Information 	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -74,7 +77,7 @@ d002436 ;
 
 	Write !,"Shutdown complete",!
 
-	Set message="The required loops to get "_zi_" interrupts during MERGE: "_miloop 
+	Set message="The required loops to get "_zi_" interrupts during MERGE: "_miloop
 	Do:mi=0  ; While the above loop will attempt 10 hits over 60s, relax the passing criteria to just 1 to avoid rare failures
 	. Set err=err+1
 	. Set message="Loop exhausted prior to reaching even 1 interrupt (mi="_mi_",neededin="_neededin_"). Number of interrupted merges:"_zi
@@ -89,7 +92,7 @@ d002436 ;
 
 intrdrv(pid,unix)
 	Set $ZTRAP="S $ZT="""" s ^drvactive=0 ZSHOW ""*"" Halt"
-	If unix Set x=$&gtmposix.signalval("SIGUSR1",.sigval),sigusr1=sigval
+	If unix Set x=$&ydbposix.signalval("SIGUSR1",.sigval),sigusr1=sigval
 	Else  Set sigusr1=16,hangtime=.02 ; Restrict $ZSIGPROC to 50 interrupts/sec
 	Set ^drvactive=1
 	Lock +^interrupter ; wait until the parent lets go of the lock

@@ -48,7 +48,7 @@ intrpt
 	set waittime=10,waitstatus=-1
 	set intrptcnt=$increment(^intrptcnt)
 	; Get value of SIGUSR1
-	if $&gtmposix.signalval("SIGUSR1",.sigusr1)
+	if $&ydbposix.signalval("SIGUSR1",.sigusr1)
 	; titan and carmen get here frequently before the first process was setup
 	for i=1:1:60 quit:$data(^c003274)  hang 0.25
 	if 0=$data(^c003274),$zjobexam() quit

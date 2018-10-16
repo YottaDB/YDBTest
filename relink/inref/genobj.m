@@ -34,7 +34,7 @@ genobj(name,size)
 
 	; Find out the initial file size.
 	zcompile file
-	if $&gtmposix.stat(object,,,,,,,,.curSize,,,,,,,,,.errno)
+	if $&ydbposix.stat(object,,,,,,,,.curSize,,,,,,,,,.errno)
 
 	; Recheck the size after the first write, upon which adjust the safe rate at which to recheck
 	; whether we are approaching the desired limit.
@@ -53,7 +53,7 @@ genobj(name,size)
 	.	; If it is time to recheck, do so and adjust the rate.
 	.	if (i>=checkRate) do
 	.	.	zcompile file
-	.	.	if $&gtmposix.stat(object,,,,,,,,.curSize,,,,,,,,,.errno)
+	.	.	if $&ydbposix.stat(object,,,,,,,,.curSize,,,,,,,,,.errno)
 	.	.	set checkRate=(size-curSize)\charsPerLine\2
 	.	.	set:(checkRate>20) checkRate=20
 	.	.	set i=0

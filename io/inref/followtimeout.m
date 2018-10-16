@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-;	Copyright 2013, 2014 Fidelity Information Services, Inc	;
+; Copyright 2013, 2014 Fidelity Information Services, Inc	;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -215,7 +218,7 @@ usenofollow(p)
 getTime(dollartest)
 	; Invoke the gettimeofday() routine via an external call.
 	new tvSec,tvUsec,errNum
-	if $&gtmposix.gettimeofday(.tvSec,.tvUsec,.errNum)
+	if $&ydbposix.gettimeofday(.tvSec,.tvUsec,.errNum)
 	if dollartest
 	; return the current time in microseconds.
 	quit (1E6*tvSec)+tvUsec

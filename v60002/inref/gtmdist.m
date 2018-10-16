@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-;	Copyright 2013 Fidelity Information Services, Inc	;
+; Copyright 2013 Fidelity Information Services, Inc		;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -23,7 +26,7 @@ gtmdist
 	set newdist=currdist
 	set $piece(newdist,"/",i)=curpro
 	; change $gtm_dist to newdist
-	set retval=$&gtmposix.setenv("gtm_dist",newdist,1,.errno)
+	set retval=$&ydbposix.setenv("gtm_dist",newdist,1,.errno)
 	; fire off job
 	job test^gtmdist
 	; wait for the job using waitchld^job. Need to set the below for it to work

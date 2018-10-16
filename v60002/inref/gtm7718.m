@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-;	Copyright 2013, 2014 Fidelity Information Services, Inc	;
+; Copyright 2013, 2014 Fidelity Information Services, Inc	;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -22,9 +25,9 @@ gtm7718	;
 
 timedhang(x)
 	new errno,tvsec1,tvusec1,tvsec2,tvusec2,a,b
-	if $&gtmposix.gettimeofday(.tvsec1,.tvusec1,.errno)
+	if $&ydbposix.gettimeofday(.tvsec1,.tvusec1,.errno)
 	hang x
-	if $&gtmposix.gettimeofday(.tvsec2,.tvusec2,.errno)
+	if $&ydbposix.gettimeofday(.tvsec2,.tvusec2,.errno)
 	set a=tvsec1+(tvusec1*1E-6)
 	set b=tvsec2+(tvusec2*1E-6)
 	quit b-a

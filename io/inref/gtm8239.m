@@ -17,7 +17,7 @@
 case9
 case8
 case7
-	if $&gtmposix.signalval("SIGQUIT",.quitVal)
+	if $&ydbposix.signalval("SIGQUIT",.quitVal)
 	lock +intr
 	set jmaxwait=0
 	do ^job("interrupter^gtm8239",1,""""_$job_","_quitVal_","_0_"""")
@@ -32,7 +32,7 @@ case11
 	use:('$get(pipe)) $principal:follow
 	set $etrap="write $zstatus,! zhalt 1"
 case10
-	if $&gtmposix.signalval("SIGUSR1",.usr1Val)
+	if $&ydbposix.signalval("SIGUSR1",.usr1Val)
 	set $zinterrupt="set x=1/0"
 	lock +intr
 	set jmaxwait=0
@@ -52,7 +52,7 @@ case16
 case15
 	use:('$get(pipe)) $principal:follow
 case14
-	if $&gtmposix.signalval("SIGTERM",.termVal)
+	if $&ydbposix.signalval("SIGTERM",.termVal)
 	lock +intr
 	set jmaxwait=0
 	do ^job("interrupter^gtm8239",1,""""_$job_","_termVal_","_$get(pipe)_"""")
@@ -69,7 +69,7 @@ case18
 	set $zinterrupt="write ""hey"",! zhalt 0"
 	set zintr=1
 case17
-	if $&gtmposix.signalval("SIGUSR1",.usr1Val)
+	if $&ydbposix.signalval("SIGUSR1",.usr1Val)
 	set:('$get(zintr)) $zinterrupt="write ""hey"",!"
 	lock +intr
 	set jmaxwait=0

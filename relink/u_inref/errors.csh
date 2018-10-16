@@ -52,7 +52,7 @@ set \$zroutines=".*"
 do ^a
 zshow "A":rctl
 set rctlfile=\$piece(rctl("A",2),": ",2)
-if \$&gtmposix.chmod(rctlfile,0,.errno)
+if \$&ydbposix.chmod(rctlfile,0,.errno)
 zsystem "(\$gtm_dist/mumps -run a &; echo \$! > pid-1.2.out; wait) | grep -v mumps"
 eof
 

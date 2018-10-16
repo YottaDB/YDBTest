@@ -71,10 +71,6 @@ endif
 
 set gtm_routines_var = "$gtm_routines_var $gtm_tst/com ."
 
-if (-e $gtm_com/gtmposix) then
-	set gtm_routines_var = "$gtm_routines_var $gtm_com/gtmposix"
-endif
-
 if (-e $gtm_com/gtmji) then
 	set gtm_routines_var = "$gtm_routines_var $gtm_com/gtmji"
 endif

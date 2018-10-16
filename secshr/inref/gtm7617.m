@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-;	Copyright 2013 Fidelity Information Services, Inc	;
+; Copyright 2013 Fidelity Information Services, Inc		;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -39,7 +42,7 @@ gtm7617
 
 test(dist,path)
 	new retval,env,expected
-	set retval=$&gtmposix.setenv("gtm_dist",path,1,.errno)
+	set retval=$&ydbposix.setenv("gtm_dist",path,1,.errno)
 	set env=$ztrnlnm("gtm_dist")
 	set expected=""
 	if $piece(path,$char(0),1)'=env write "TEST-W-WARN",! zwrite path,env

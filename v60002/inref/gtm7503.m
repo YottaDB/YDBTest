@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-;	Copyright 2013 Fidelity Information Services, Inc	;
+; Copyright 2013 Fidelity Information Services, Inc		;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -21,7 +24,7 @@ gtm7503
 	for elapsed=1:1:timeout quit:'$$^isprcalv(pid)  hang 1
 	close "troubledproc"
 	; Kill the child and print the error if we timed out
-	if (elapsed=timeout) if $&gtmposix.signalval("SIGUSR1",.sigval)!$zsigproc(pid,sigval) write "TEST-E-ERROR, Child has been killed (SIGUSR1) because it did not quit within "_timeout_" seconds.",!
+	if (elapsed=timeout) if $&ydbposix.signalval("SIGUSR1",.sigval)!$zsigproc(pid,sigval) write "TEST-E-ERROR, Child has been killed (SIGUSR1) because it did not quit within "_timeout_" seconds.",!
 	quit
 
 simpleupdate

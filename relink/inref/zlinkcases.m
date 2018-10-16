@@ -3,6 +3,9 @@
 ; Copyright (c) 2014, 2015 Fidelity National Information	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -229,7 +232,7 @@ zlinkcases
 getzlinktarget(basename)
 	new %RSELname,%ZR,ext,fullpathname,i,name
 	set name=""
-	do &gtmposix.realpath(".",.fullpathname,.errno)	; always maintain fullpathname because we need it for ^%RSEL checking
+	do &ydbposix.realpath(".",.fullpathname,.errno)	; always maintain fullpathname because we need it for ^%RSEL checking
 	set fullpathname=fullpathname_"/"
 	if usefullpathonzlink set name=fullpathname
 	if targetdir'="" set name=name_targetdir_"/",fullpathname=fullpathname_targetdir_"/"
@@ -325,11 +328,11 @@ waitfor1timeinterval
 ;
 genbothwithobjectnewer(basename)
 	set filenamebase=$$getcptarget(basename)
-	if $&gtmposix.cp("pass.m",filenamebase_".m",.errno) write "copyFile(pass.m "_filenamebase_".m)"
+	if $&ydbposix.cp("pass.m",filenamebase_".m",.errno) write "copyFile(pass.m "_filenamebase_".m)"
 	do compile(basename_".m")
-	if $&gtmposix.cp("fail.m",filenamebase_".m",.errno) write "copyFile(fail.m "_filenamebase_".m)"
+	if $&ydbposix.cp("fail.m",filenamebase_".m",.errno) write "copyFile(fail.m "_filenamebase_".m)"
 	do waitfor1timeinterval ; ensure object file time is interpreted as greater than source file time
-	if $&gtmposix.utimes(filenamebase_".o",.errno) write "touchFile("_filenamebase_".o)"
+	if $&ydbposix.utimes(filenamebase_".o",.errno) write "touchFile("_filenamebase_".o)"
 	quit
 
 ;
@@ -337,13 +340,13 @@ genbothwithobjectnewer(basename)
 ;
 genbothwithobjectnewerzlink(basename)
 	set filenamebase=$$getcptarget(basename)
-	if $&gtmposix.cp("pass.m",filenamebase_".m",.errno) write "copyFile(pass.m "_filenamebase_".m)"
+	if $&ydbposix.cp("pass.m",filenamebase_".m",.errno) write "copyFile(pass.m "_filenamebase_".m)"
 	do compile(basename_".m")
 	zlink filenamebase
 	set origcyclenum=$$getrtncyclenum(basename)
-	if $&gtmposix.cp("fail.m",filenamebase_".m",.errno) write "copyFile(fail.m "_filenamebase_".m)"
+	if $&ydbposix.cp("fail.m",filenamebase_".m",.errno) write "copyFile(fail.m "_filenamebase_".m)"
 	do waitfor1timeinterval ; ensure object file time is interpreted as greater than source file time
-	if $&gtmposix.utimes(filenamebase_".o",.errno) write "touchFile("_filenamebase_".o)"
+	if $&ydbposix.utimes(filenamebase_".o",.errno) write "touchFile("_filenamebase_".o)"
 	quit
 
 ;
@@ -352,10 +355,10 @@ genbothwithobjectnewerzlink(basename)
 ;
 genbothuseobject(basename)
 	set filenamebase=$$getcptarget(basename)
-	if $&gtmposix.cp("pass.m",filenamebase_".m",.errno) write "copyFile(pass.m "_filenamebase_".m)"
+	if $&ydbposix.cp("pass.m",filenamebase_".m",.errno) write "copyFile(pass.m "_filenamebase_".m)"
 	do compile(basename_".m")
 	do waitfor1timeinterval ; ensure source file time is interpreted as greater than object file time
-	if $&gtmposix.cp("fail.m",filenamebase_".m",.errno) write "copyFile(fail.m "_filenamebase_".m)"
+	if $&ydbposix.cp("fail.m",filenamebase_".m",.errno) write "copyFile(fail.m "_filenamebase_".m)"
 	quit
 
 ;
@@ -365,12 +368,12 @@ genbothuseobject(basename)
 ;
 genbothuseobjectzlink(basename)
 	set filenamebase=$$getcptarget(basename)
-	if $&gtmposix.cp("pass.m",filenamebase_".m",.errno) write "copyFile(pass.m "_filenamebase_".m)"
+	if $&ydbposix.cp("pass.m",filenamebase_".m",.errno) write "copyFile(pass.m "_filenamebase_".m)"
 	do compile(basename_".m")
 	zlink filenamebase
 	set origcyclenum=$$getrtncyclenum(basename)
 	do waitfor1timeinterval ; ensure source file time is interpreted as greater than source file time
-	if $&gtmposix.cp("fail.m",filenamebase_".m",.errno) write "copyFile(fail.m "_filenamebase_".m)"
+	if $&ydbposix.cp("fail.m",filenamebase_".m",.errno) write "copyFile(fail.m "_filenamebase_".m)"
 	quit
 
 ;
@@ -378,11 +381,11 @@ genbothuseobjectzlink(basename)
 ;
 genbothwithsourcenewer(basename)
 	set filenamebase=$$getcptarget(basename)
-	if $&gtmposix.cp("fail.m",filenamebase_".m",.errno) write "copyFile(fail.m "_filenamebase_".m)"
+	if $&ydbposix.cp("fail.m",filenamebase_".m",.errno) write "copyFile(fail.m "_filenamebase_".m)"
 	do compile(basename_".m")
 	do waitfor1timeinterval ; ensure source file time is interpreted as greater than object file time
-	if $&gtmposix.cp("pass.m",filenamebase_".m",.errno) write "copyFile(pass.m "_filenamebase_".m)"
-	if $&gtmposix.utimes(filenamebase_".m",.errno) write "touchFile("_filenamebase_".m)"
+	if $&ydbposix.cp("pass.m",filenamebase_".m",.errno) write "copyFile(pass.m "_filenamebase_".m)"
+	if $&ydbposix.utimes(filenamebase_".m",.errno) write "touchFile("_filenamebase_".m)"
 	quit
 
 ;
@@ -391,13 +394,13 @@ genbothwithsourcenewer(basename)
 ;
 genbothwithsourcenewerzlink(basename)
 	set filenamebase=$$getcptarget(basename)
-	if $&gtmposix.cp("fail.m",filenamebase_".m",.errno) write "copyFile(fail.m "_filenamebase_".m)"
+	if $&ydbposix.cp("fail.m",filenamebase_".m",.errno) write "copyFile(fail.m "_filenamebase_".m)"
 	do compile(basename_".m")
 	zlink filenamebase_".m"
 	set origcyclenum=$$getrtncyclenum(basename)
 	do waitfor1timeinterval ; ensure source file time is interpreted as greater than object file time
-	if $&gtmposix.cp("pass.m",filenamebase_".m",.errno) write "copyFile(pass.m "_filenamebase_".m)"
-	if $&gtmposix.utimes(filenamebase_".m",.errno) write "touchFile("_filenamebase_".m)"
+	if $&ydbposix.cp("pass.m",filenamebase_".m",.errno) write "copyFile(pass.m "_filenamebase_".m)"
+	if $&ydbposix.utimes(filenamebase_".m",.errno) write "touchFile("_filenamebase_".m)"
 	quit
 
 ;
@@ -405,11 +408,11 @@ genbothwithsourcenewerzlink(basename)
 ;
 genbothwithsourcenewernochange(basename)
 	set filenamebase=$$getcptarget(basename)
-	if $&gtmposix.cp("pass.m",filenamebase_".m",.errno) write "copyFile(pass.m "_filenamebase_".m)"
+	if $&ydbposix.cp("pass.m",filenamebase_".m",.errno) write "copyFile(pass.m "_filenamebase_".m)"
 	do compile(basename_".m")
 	set origcyclenum=$$getrtncyclenum(basename)
 	do waitfor1timeinterval ; ensure source file time is interpreted as greater than object file time
-	if $&gtmposix.utimes(filenamebase_".m",.errno) write "touchFile("_filenamebase_".m)"
+	if $&ydbposix.utimes(filenamebase_".m",.errno) write "touchFile("_filenamebase_".m)"
 	quit
 
 ;
@@ -417,10 +420,10 @@ genbothwithsourcenewernochange(basename)
 ;
 genbothusesource(basename)
 	set filenamebase=$$getcptarget(basename)
-	if $&gtmposix.cp("fail.m",filenamebase_".m",.errno) write "copyFile(fail.m "_filenamebase_".m)"
+	if $&ydbposix.cp("fail.m",filenamebase_".m",.errno) write "copyFile(fail.m "_filenamebase_".m)"
 	do compile(basename_".m")
 	do waitfor1timeinterval ; ensure source file time is interpreted as greater than object file time
-	if $&gtmposix.cp("pass.m",filenamebase_".m",.errno) write "copyFile(pass.m "_filenamebase_".m)"
+	if $&ydbposix.cp("pass.m",filenamebase_".m",.errno) write "copyFile(pass.m "_filenamebase_".m)"
 	quit
 
 ;
@@ -429,12 +432,12 @@ genbothusesource(basename)
 ;
 genbothusesourcezlink(basename)
 	set filenamebase=$$getcptarget(basename)
-	if $&gtmposix.cp("fail.m",filenamebase_".m",.errno) write "copyFile(fail.m "_filenamebase_".m)"
+	if $&ydbposix.cp("fail.m",filenamebase_".m",.errno) write "copyFile(fail.m "_filenamebase_".m)"
 	do compile(basename_".m")
 	zlink filenamebase_".m"
 	set origcyclenum=$$getrtncyclenum(basename)
 	do waitfor1timeinterval ; ensure source file time is interpreted as greater than object file time
-	if $&gtmposix.cp("pass.m",filenamebase_".m",.errno) write "copyFile(pass.m "_filenamebase_".m)"
+	if $&ydbposix.cp("pass.m",filenamebase_".m",.errno) write "copyFile(pass.m "_filenamebase_".m)"
 	quit
 
 ;
@@ -442,7 +445,7 @@ genbothusesourcezlink(basename)
 ;
 genonlysource(basename)
 	set filenamebase=$$getcptarget(basename)
-	if $&gtmposix.cp("pass.m",filenamebase_".m",.errno) write "copyFile(pass.m "_filenamebase_".m)"
+	if $&ydbposix.cp("pass.m",filenamebase_".m",.errno) write "copyFile(pass.m "_filenamebase_".m)"
 	quit
 
 ;
@@ -450,7 +453,7 @@ genonlysource(basename)
 ;
 genonlyobject(basename)
 	set filenamebase=$$getcptarget(basename)
-	if $&gtmposix.cp("pass.m",filenamebase_".m",.errno) write "copyFile(pass.m "_filenamebase_".m)"
+	if $&ydbposix.cp("pass.m",filenamebase_".m",.errno) write "copyFile(pass.m "_filenamebase_".m)"
 	do compile(basename_".m")
 	if $&relink.removeFile(filenamebase_".m") write "removeFile("_filenamebase_".m)"
 	quit
@@ -460,7 +463,7 @@ genonlyobject(basename)
 ;
 genonlyobjectzlink(basename)
 	set filenamebase=$$getcptarget(basename)
-	if $&gtmposix.cp("pass.m",filenamebase_".m",.errno) write "copyFile(pass.m "_filenamebase_".m)"
+	if $&ydbposix.cp("pass.m",filenamebase_".m",.errno) write "copyFile(pass.m "_filenamebase_".m)"
 	do compile(basename_".m")
 	if $&relink.removeFile(filenamebase_".m") write "removeFile("_filenamebase_".m)"
 	zlink filenamebase

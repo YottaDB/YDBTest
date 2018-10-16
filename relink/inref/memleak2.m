@@ -3,6 +3,9 @@
 ; Copyright (c) 2015 Fidelity National Information 		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -27,7 +30,7 @@ memleak2
 	; Create alternative versions.
         for i=1:1:nx do
         .	set file="x"_i_".m"
-        .	if $&gtmposix.cp("x0.m",file,.errno)
+        .	if $&ydbposix.cp("x0.m",file,.errno)
         .	open file:append
         .	use file
         .	write $c(9)_"; this is version "_$translate($justify(i,3)," ","0")_" of x.m",!
@@ -36,7 +39,7 @@ memleak2
 	; Prepare the base version of the routine.
         set iteration=0
         view "LINK":"RECURSIVE"
-        if $&gtmposix.cp("x0.m","x.m",.errno) write "copyFile(x0.m x.m)"
+        if $&ydbposix.cp("x0.m","x.m",.errno) write "copyFile(x0.m x.m)"
         zcompile "x.m"
         zrupdate "x.o"
 
@@ -64,7 +67,7 @@ x(curi,maxi,depth,breadth)
         for iters=1:1:breadth do
         .	set newi=curi+1
         .	set:(newi>maxi) newi=1
-        .	if $&gtmposix.cp("x"_newi_".m","x.m",.errno)
+        .	if $&ydbposix.cp("x"_newi_".m","x.m",.errno)
         .	zcompile "x.m"
         .	zrupdate "x.o"
         .	do ^x(newi,maxi,depth,breadth)

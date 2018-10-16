@@ -3,6 +3,9 @@
 ; Copyright (c) 2014, 2015 Fidelity National Information	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -53,9 +56,9 @@ zlink
 	write "Pass 4: auto-relink with bogus directory",!,!
 	set iteration="pass4"
 	; this is needed so the subsequent set will not complain
-	if $&gtmposix.mkdir("kiwi",666,.errno)
+	if $&ydbposix.mkdir("kiwi",666,.errno)
 	set $zroutines="apple* banana* kiwi* orange* "_origzroutines
-	if $&gtmposix.rmdir("kiwi",.errno)
+	if $&ydbposix.rmdir("kiwi",.errno)
 	set targetdir="apple"
 	set autorelinkinuse=1
 	do ^zlinkcases
@@ -116,8 +119,8 @@ zlink
 init
 	new errno
 	; setup subdirectories
-	if $&gtmposix.umask(0,,.errno)
-	if $&gtmposix.mkdir("apple",511,.errno)
-	if $&gtmposix.mkdir("banana",511,.errno)
-	if $&gtmposix.mkdir("orange",511,.errno)
+	if $&ydbposix.umask(0,,.errno)
+	if $&ydbposix.mkdir("apple",511,.errno)
+	if $&ydbposix.mkdir("banana",511,.errno)
+	if $&ydbposix.mkdir("orange",511,.errno)
 	quit

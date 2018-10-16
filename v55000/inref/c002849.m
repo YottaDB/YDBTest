@@ -3,6 +3,9 @@
 ; Copyright (c) 2012-2015 Fidelity National Information 	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -25,7 +28,7 @@ c002849
 	set $zinterrupt=""
 
 	; Take the hit reading the external calls table now.
-	if ($&gtmposix.gettimeofday(.TVSEC1,.TVUSEC1,.errno))
+	if ($&ydbposix.gettimeofday(.TVSEC1,.TVUSEC1,.errno))
 
 	write:DEBUG "Starting main process (pid "_$job_")",!
 
@@ -105,7 +108,7 @@ interrupter(parentPid,interruptsToSend,WAITTIMEOUT,DEBUG)
 	write:DEBUG "Parent pid is "_parentPid,!
 	set $etrap="set $etrap=""zhalt 1"",x=$zjobexam() zhalt 1"
 	; Obtain platform-specific value for the SIGUSR1 signal.
-	if $&gtmposix.signalval("SIGUSR1",.sigusrNumber)
+	if $&ydbposix.signalval("SIGUSR1",.sigusrNumber)
 	lock +^timedLock
 	set ^interrupterWaits=0
 	for i=1:1:4 do
@@ -164,18 +167,18 @@ exit(message,status,parent)
 
 timelock
 	new errno
-	if $&gtmposix.gettimeofday(.TVSEC1,.TVUSEC1,.errno)
+	if $&ydbposix.gettimeofday(.TVSEC1,.TVUSEC1,.errno)
 	write:DEBUG i_": Got TVSEC1 ("_TVSEC1_") and TVUSEC1 ("_TVUSEC1_")",!
 	lock +^timedLock:lockTimeout
-	if $&gtmposix.gettimeofday(.TVSEC2,.TVUSEC2,.errno)
+	if $&ydbposix.gettimeofday(.TVSEC2,.TVUSEC2,.errno)
 	write:DEBUG i_": Got TVSEC2 ("_TVSEC2_") and TVUSEC2 ("_TVUSEC2_")",!
 	quit
 
 timehang
 	new errno
-	if $&gtmposix.gettimeofday(.TVSEC1,.TVUSEC1,.errno)
+	if $&ydbposix.gettimeofday(.TVSEC1,.TVUSEC1,.errno)
 	write:DEBUG i_": Got TVSEC1 ("_TVSEC1_") and TVUSEC1 ("_TVUSEC1_")",!
 	hang lockTimeout
-	if $&gtmposix.gettimeofday(.TVSEC2,.TVUSEC2,.errno)
+	if $&ydbposix.gettimeofday(.TVSEC2,.TVUSEC2,.errno)
 	write:DEBUG i_": Got TVSEC2 ("_TVSEC2_") and TVUSEC2 ("_TVUSEC2_")",!
 	quit

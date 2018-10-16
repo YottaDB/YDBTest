@@ -3,17 +3,9 @@
 #								#
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
-#################################################################
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
-#								#
-#	This source code contains the intellectual property	#
-#	of its copyright holder(s), and is made available	#
-#	under a license.  If you do not know the terms of	#
-#	the license, please stop and do not read further.	#
-#								#
-#################################################################
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -46,11 +38,6 @@ endif
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
 setenv subtest_exclude_list	""
-
-# On lester (HPPA), snail (Solaris 8), and turtle (Solaris 9), the gtmposix plugin does not implement setenv()
-if ("HOST_HP-UX_PA_RISC" == "${gtm_test_os_machtype}" || "snail" == "${HOST:r:r:r}" || "turtle" == "${HOST:r:r:r}") then
-	setenv subtest_exclude_list	"${subtest_exclude_list} gtm7617"
-endif
 
 # If IGS is not available, filter out tests that need it
 if ($?gtm_test_noIGS) then

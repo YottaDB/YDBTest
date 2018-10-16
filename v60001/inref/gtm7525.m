@@ -1,3 +1,17 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; This module is derived from FIS GT.M.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 ; Launches a single child that does a blocking wait on a lock and then sends an INTRPT signal
 gtm7525
 	set jmaxwait=0
@@ -10,7 +24,7 @@ gtm7525
 	do ^job("childlock^gtm7525",1,"""""")
 	do waitgrab
 	; send INTRPT to the child
-	if $&gtmposix.signalval("SIGUSR1",.sigval)!$zsigproc(^childpid,sigval)
+	if $&ydbposix.signalval("SIGUSR1",.sigval)!$zsigproc(^childpid,sigval)
 	; If child is not dead within 3 seconds, SUCCESS!
 	for i=1:1:15 hang 1 quit:1=^received
 	write:('^received)&(15=i) "TEST-E-FAIL: Child did not receive interrupt signal within 15 seconds."

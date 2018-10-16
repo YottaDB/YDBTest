@@ -3,6 +3,9 @@
 ; Copyright (c) 2015 Fidelity National Information 		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -16,11 +19,11 @@ relinkctlfull
 	set $etrap="set $ecode="""""
 	set $zroutines=".*"
 	; Duplicate this routine as x.
-	if $&gtmposix.cp("relinkctlfull.o","x.o",.errno)
+	if $&ydbposix.cp("relinkctlfull.o","x.o",.errno)
 	; Fill up the relinkctl routine quota. We are not linking in the copied objects but merely ZRUPDATEing them to avoid a
 	; linking error due to object and source files having different names.
 	for i=1:1:100 do
-	.	if $&gtmposix.cp("relinkctlfull.o","x"_i_".o",.errno)
+	.	if $&ydbposix.cp("relinkctlfull.o","x"_i_".o",.errno)
 	.	zrupdate @("""x"_i_".o""")
 	; Have the $etrap go off once to have all necessary memory allocated.
 	do

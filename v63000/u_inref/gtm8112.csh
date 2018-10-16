@@ -40,9 +40,9 @@ $gtm_tst/com/dbcreate.csh mumps 1 >&! dbcreate_$$.log
 
 # This caused prior versions to core dump
 source $gtm_tst/com/set_ydb_env_var_random.csh ydb_etrap gtm_etrap 'write:$zstatus["INVSTRLEN" "PASS INVSTRLEN in zsystem",\! zhalt +$zstatus'
-$gtm_dist/mumps -run %XCMD 'set x=$&gtmposix.setenv("SHELL",$justify($ztrnlnm("SHELL"),5000),1,.errno) zsystem "echo should not get here"'
+$gtm_dist/mumps -run %XCMD 'set x=$&ydbposix.setenv("SHELL",$justify($ztrnlnm("SHELL"),5000),1,.errno) zsystem "echo should not get here"'
 # This fits inside the buffer, so it works " -c 'echo PASS SHELL'" is 21 bytes
-$gtm_dist/mumps -run %XCMD 'set x=$&gtmposix.setenv("SHELL",$justify($ztrnlnm("SHELL"),4075),1,.errno) zsystem "echo PASS SHELL"'
+$gtm_dist/mumps -run %XCMD 'set x=$&ydbposix.setenv("SHELL",$justify($ztrnlnm("SHELL"),4075),1,.errno) zsystem "echo PASS SHELL"'
 
 # This causes prior versions to core dump in the child
 source $gtm_tst/com/set_ydb_env_var_random.csh ydb_etrap gtm_etrap 'write:$zstatus["ZGBLDIR" "PASS GTMGBLDIR in JOB",\! zhalt +$zstatus'
@@ -58,7 +58,7 @@ $gtm_tst/com/wait_for_proc_to_die.csh $pid 300
 if ("ENCRYPT" == "$test_encryption") then
 	# This causes prior versions to core dump during encryption initialization
 	source $gtm_tst/com/set_ydb_env_var_random.csh ydb_etrap gtm_etrap 'write:$zstatus["CRYPTINIT" "PASS GNUPGHOME",\! zhalt +$zstatus'
-	$gtm_dist/mumps -run %XCMD 'set x=$&gtmposix.setenv("GNUPGHOME",$justify($ztrnlnm("GNUPGHOME"),5000),1,.errno) kill ^a write "how did we get here? Shoulda errored out",!'
+	$gtm_dist/mumps -run %XCMD 'set x=$&ydbposix.setenv("GNUPGHOME",$justify($ztrnlnm("GNUPGHOME"),5000),1,.errno) kill ^a write "how did we get here? Shoulda errored out",!'
 endif
 $gtm_tst/com/dbcheck.csh >&! dbcheck_$$.log
 

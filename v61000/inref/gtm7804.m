@@ -3,6 +3,9 @@
 ; Copyright (c) 2013-2016 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -29,7 +32,7 @@ updateandwait
 letgo
 	set jdetach=1
 	set jmaxwait=0
-	if $&gtmposix.signalval("SIGUSR1",.sigval)
+	if $&ydbposix.signalval("SIGUSR1",.sigval)
 	for  quit:^index=^numjobs  hang 0.1
 	set localindex=^index
 	merge pidslocal=^pids

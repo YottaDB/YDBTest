@@ -19,7 +19,7 @@ start	;
 
 child	;
 	; Find out signal # for SIGUSR1 from posix plugin
-	if $&gtmposix.signalval("SIGUSR1",.sigval)
+	if $&ydbposix.signalval("SIGUSR1",.sigval)
 	; Send SIGUSR1 to parent process with random sleep in between until parent signals us to stop interrupting
 	for  quit:^stop=1  hang (0.01)*$random(10) if $zsigproc(^parent,sigval)
 	quit

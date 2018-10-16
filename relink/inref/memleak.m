@@ -3,6 +3,9 @@
 ; Copyright (c) 2014-2015 Fidelity National Information 	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -153,7 +156,7 @@ ctlopen
 	set $zroutines=".*"
 	zshow "A":zshow
 	set ctlfile=$piece(zshow("A",2),": ",2)
-	if $&gtmposix.chmod(ctlfile,0,.errno)
+	if $&ydbposix.chmod(ctlfile,0,.errno)
 	zsystem "$gtm_dist/mumps -run ctlopensub^memleak"
 	quit
 

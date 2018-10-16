@@ -3,6 +3,9 @@
 ; Copyright (c) 2014, 2015 Fidelity National Information	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -25,7 +28,7 @@
 ;   callback
 ;    set $zroutines="dir(dir)"						Change or keep dir's autorelink status.
 ;    quit:($stack=0)							Do not continue in the base frame (optional).
-;    hang 0.01 if $&gtmposix.cp("dir/rtn.m.copy","dir/rtn.m",.errno)	Replace rtn.m with a new version (optional).
+;    hang 0.01 if $&ydbposix.cp("dir/rtn.m.copy","dir/rtn.m",.errno)	Replace rtn.m with a new version (optional).
 ;    do
 ;    . new $etrap
 ;    . set $etrap="write ""ZLINK FAILED: ..."",! set $ecode="""""
@@ -46,11 +49,11 @@ zbreak
 	set LIBSUFFIX=$ztrnlnm("gt_ld_shl_suffix")
 	set:(""=LIBSUFFIX) LIBSUFFIX=".so"
 
-	if $&gtmposix.umask(0,,.errno)
+	if $&ydbposix.umask(0,,.errno)
 	set fmode=511
 	set dir="dir"
 	set rtn="rtn"
-	if $&gtmposix.mkdir(dir,fmode,.errno)
+	if $&ydbposix.mkdir(dir,fmode,.errno)
 
 	do generateRoutine(dir_"/rtn.m","write ""This is rtn"",!")
 	do generateRoutine(dir_"/rtn.m.orig","write ""This is rtn"",!")
@@ -114,7 +117,7 @@ zbreak
 	.	.	.	.	set lines(9)=" set $zroutines="""_dir_"/lib"_rtn_sharedLibSuffix_LIBSUFFIX_""""
 	.	.	.	set lines(11)=""
 	.	.	else  do
-	.	.	.	set lines(11)=" hang 0.01 if $&gtmposix.cp("""_dir_"/"_rtn_".m.copy"","""_dir_"/"_rtn_".m"",.errno)"
+	.	.	.	set lines(11)=" hang 0.01 if $&ydbposix.cp("""_dir_"/"_rtn_".m.copy"","""_dir_"/"_rtn_".m"",.errno)"
 	.	.
 	.	.	; Will we relink the potentially different version of the routine?
 	.	.	if (RELINKRTN) do

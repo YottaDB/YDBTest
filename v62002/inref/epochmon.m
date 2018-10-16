@@ -3,6 +3,9 @@
 ; Copyright (c) 2015 Fidelity National Information 		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -44,7 +47,7 @@ getinfo(reg)
 
 
 	do displayjpcfield("epoch_interval","Epoch Interval")
-	if $&gtmposix.gettimeofday(.secs,.usecs,.errno)
+	if $&ydbposix.gettimeofday(.secs,.usecs,.errno)
 	set secs2epoch=($$getjpcfield("next_epoch_time")-secs)
  	write:(secs2epoch>-1) "Seconds until Epoch:"_secs2epoch,!
  	write:(secs2epoch<0) "Seconds until Epoch: No Epoch Pending",!

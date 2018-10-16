@@ -507,7 +507,7 @@ usenofollow(p)
 getTime(dollartest)
 	; Invoke the gettimeofday() routine via an external call.
 	new tvSec,tvUsec,errNum
-	if $&gtmposix.gettimeofday(.tvSec,.tvUsec,.errNum)
+	if $&ydbposix.gettimeofday(.tvSec,.tvUsec,.errNum)
 	if dollartest
 	; return the current time in microseconds.
 	quit (1E6*tvSec)+tvUsec

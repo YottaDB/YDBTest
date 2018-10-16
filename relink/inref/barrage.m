@@ -53,7 +53,7 @@
 ;
 ; For ease of testing and debugging, the program stipulates a few simple requirements: First of all, the global directory, database,
 ; and the program's object file should be kept outside the test bed to avoid accidental removal and linking problems. Secondly, the
-; test relies on the gtmposix plug-in, so the appropriate environment variable should be set. Finally, the program defines a few
+; test relies on the ydbposix plug-in, so the appropriate environment variable should be set. Finally, the program defines a few
 ; external functions of its own, which should also be kept separately from the test produce. Here is my sample environment:
 ;
 ;    /testarea1/sopini/autorelink
@@ -73,7 +73,7 @@
 ;
 ; Relevant environment variables:
 ;
-;    GTMXC_gtmposix		- Path to gtmposix's external calls table (typically, /usr/library/com/gtmposix/gtmposix.xc).
+;    ydb_xc_ydbposix		- Path to ydbposix's external calls table (typically $ydb_dist/plugin/ydbposix.xc).
 ;    GTMXC_relink		- Path to relink's external calls table (<test dir>/tmp/relink.xc).
 ;    gtmroutines		- References to object and source directories ("<test dir>/obj(. $gtm_tst/$tst/inref) $gtm_dist").
 ;    gtmgbldir			- Path to the global directory (<test dir>/db/mumps.gld).
@@ -390,7 +390,7 @@ testParent
 	zsystem "cat "_FIFO_" > "_TESTLOG_" &"
 
 	; Get a time reference point.
-	do &gtmposix.gettimeofday(.tvSec,.tvUsec,.errNum)
+	do &ydbposix.gettimeofday(.tvSec,.tvUsec,.errNum)
 	set (^STARTTIME,STARTTIME)=tvSec
 
 	do generateFiles
@@ -455,7 +455,7 @@ generateFiles
 	new i,time,dirName,name,altName,fileName,fmode,errno,dirs,dirIndex,sources,srcIndex,text
 
 	set (dirIndex,srcIndex)=1
-	if $&gtmposix.umask(0,,.errno)
+	if $&ydbposix.umask(0,,.errno)
 	set fmode=511
 
 	set time=$$getTime()
@@ -465,7 +465,7 @@ generateFiles
 	.	set dirName=OBJDIRPREFIX_$$generateName()
 	.	set ^REFS("OBJDIRS",i)=dirName
 	.	set ^OBJDIRS(dirName)=i
-	.	if $&gtmposix.mkdir(dirName,fmode,.errno)
+	.	if $&ydbposix.mkdir(dirName,fmode,.errno)
 	.	do logMakedir($job,dirName,fmode)
 	.	set dirs(dirIndex)=dirName
 	.	set dirs(dirIndex,"src")=FALSE
@@ -476,7 +476,7 @@ generateFiles
 	.	set dirName=SRCDIRPREFIX_$$generateName()
 	.	set ^REFS("SRCDIRS",i)=dirName
 	.	set ^SRCDIRS(dirName)=i
-	.	if $&gtmposix.mkdir(dirName,fmode,.errno)
+	.	if $&ydbposix.mkdir(dirName,fmode,.errno)
 	.	do logMakedir($job,dirName,fmode)
 	.	set ^SRCDIRS(dirName,"rtns")=0
 	.	set dirs(dirIndex)=dirName
@@ -910,7 +910,7 @@ deleteFile(path)
 getTime()
 	new tvSec,tvUsec,errNum
 
-	do &gtmposix.gettimeofday(.tvSec,.tvUsec,.errNum)
+	do &ydbposix.gettimeofday(.tvSec,.tvUsec,.errNum)
 	quit (tvSec-STARTTIME)*1E9+tvUsec
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1002,7 +1002,7 @@ log(message,pid)
 ;            fmode   - Directory permissions to use.                                                                ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 logMakedir(pid,dirName,fmode)
-	do log("if $&gtmposix.mkdir("""_dirName_""","_fmode_",.errno)",pid)
+	do log("if $&ydbposix.mkdir("""_dirName_""","_fmode_",.errno)",pid)
 	quit
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1196,7 +1196,7 @@ replayAnalyzeParent(replay,analyze,logToScreen,logToFile,breakOnErrors)
 
 	do assert(replay!analyze)
 
-	if $&gtmposix.umask(0,,.errno)
+	if $&ydbposix.umask(0,,.errno)
 	set fmode=511
 
 	; In case we will be logging to a file, make sure to delete previous logs.
@@ -1217,7 +1217,7 @@ replayAnalyzeParent(replay,analyze,logToScreen,logToFile,breakOnErrors)
 	.
 	.	; (Re)create the replay directory.
 	.	do &relink.removeDirectory("replay")
-	.	if $&gtmposix.mkdir(REPLAYDIR,fmode,.errno)
+	.	if $&ydbposix.mkdir(REPLAYDIR,fmode,.errno)
 	.
 	.	; Start the replay jobs.
 	.	set ^PARENTPID=$job
@@ -1373,7 +1373,7 @@ replayAnalyzeParent(replay,analyze,logToScreen,logToFile,breakOnErrors)
 	.	.	.	.	set dir=^LOG(time,pid,"mkdir",j)
 	.	.	.	.	write:(logToScreen) "ACTMAKEDIRS: "_dir_" ("_pid_")",!
 	.	.	.	.	if (replay) do
-	.	.	.	.	.	if $&gtmposix.mkdir(dir,fmode,.errno)
+	.	.	.	.	.	if $&ydbposix.mkdir(dir,fmode,.errno)
 	.	.	.	.	if (analyze) do
 	.	.	.	.	.	set isSrcDir=^LOG(time,pid,"mkdir",j,"src")
 	.	.	.	.	.	set:(isSrcDir) SRCDIRS(dir)=0
