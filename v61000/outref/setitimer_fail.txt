@@ -1,17 +1,36 @@
-Case 1. Generate a SETITIMERFAILED error from direct mode.
+# This test simulates, via a white-box logic, an error return from timer_create()/setitimer(), which is used to
+# start a new system timer or cancel an existing one. We expect appropriate error messages to be printed in the console.
+# Set the white-box test that simulates an error return from timer_create()/setitimer().
+setenv ydb_white_box_test_case_enable 1
+setenv ydb_white_box_test_case_number 98
+unset echo
+##################################################################
+# Case 1. A timer_create()/setitimer() failure from direct mode. #
+##################################################################
 ###################################################################
-##TEST_AWKcore[0-9.a-z]*
-----------
-Error SETITIMERFAILED seen in mumps-dir.out as expected:
-##TEST_AWK%YDB-F-SETITIMERFAILED, A setitimer\(\) call returned an error status of [0-9]*
-----------
-##TEST_AWK.*%YDB-F-SETITIMERFAILED, A setitimer\(\) call returned an error status of [0-9]*, %YDB-I-TEXT, Timer: ITIMER_REAL; timer_active: 0; sys_timer.it_value: \[tv_sec: 0; tv_usec: 1[0-1]0000\]; sys_timer.it_interval: \[tv_sec: 0; tv_usec: 0\] -- generated from 0x[0-9A-F]*.
+# Try to issue a hang from direct mode, thus invoking the white-box test logic.
 
-Case 2. Generate a SETITIMERFAILED error from an M routine.
+YDB>
+%YDB-E-SYSCALL, Error received from system call timer_settime() -- called from module /Distrib/YottaDB/V998/sr_unix/gt_timers.c at line 612
+%SYSTEM-E-ENO22, Invalid argument
+
+YDB>
+
+YDB>
+%YDB-E-SYSCALL, Error received from system call timer_settime() -- called from module /Distrib/YottaDB/V998/sr_unix/gt_timers.c at line 612
+%SYSTEM-E-ENO22, Invalid argument
+%YDB-E-LKRUNDOWN, Error during LOCK database rundown
+
 ###################################################################
-##TEST_AWKcore[0-9.a-z]*
-----------
-Error SETITIMERFAILED seen in mumps-run.out as expected:
-##TEST_AWK%YDB-F-SETITIMERFAILED, A setitimer\(\) call returned an error status of [0-9]*
-----------
-##TEST_AWK.*%YDB-F-SETITIMERFAILED, A setitimer\(\) call returned an error status of [0-9]*, %YDB-I-TEXT, Timer: ITIMER_REAL; timer_active: 0; sys_timer.it_value: \[tv_sec: 0; tv_usec: 2[0-1]0000\]; sys_timer.it_interval: \[tv_sec: 0; tv_usec: 0\] -- generated from 0x[0-9A-F]*.
+# Case 2. A timer_create()/setitimer() failure from an M routine. #
+###################################################################
+###################################################################
+# Produce a simple M file test.m for testing.
+# Invoke the M program with a hang, thus triggering the white-box test logic.
+%YDB-E-SYSCALL, Error received from system call timer_settime() -- called from module /Distrib/YottaDB/V998/sr_unix/gt_timers.c at line 612,%SYSTEM-E-ENO22, Invalid argument
+		At M source location test+1^test
+
+YDB>
+%YDB-E-SYSCALL, Error received from system call timer_settime() -- called from module /Distrib/YottaDB/V998/sr_unix/gt_timers.c at line 612
+%SYSTEM-E-ENO22, Invalid argument
+%YDB-E-LKRUNDOWN, Error during LOCK database rundown

@@ -4,6 +4,9 @@
 # Copyright (c) 2013, 2015 Fidelity National Information	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -59,6 +62,11 @@ setenv subtest_exclude_list	""
 # Filter out white box tests that cannot run in pro
 if ("pro" == "$tst_image") then
 	setenv subtest_exclude_list	"$subtest_exclude_list intrpt_wcs_wtstart setitimer_fail gtm7858 repl_crash_err2"
+else if ("linux" != $gtm_test_osname) then
+	# Filter out white box tests that cannot run even in dbg on non-linux platforms (e.g. cygwin, MacOS)
+	# The setitimer_fail subtest script has been reworked to reflect the POSIX timer changes (#205) which affect
+	# only linux. So this subtest will fail on non-linux platforms which continue to use non-posix timers (setitimer()).
+	setenv subtest_exclude_list	"$subtest_exclude_list setitimer_fail"
 endif
 
 # The below subtest should always run in UTF-8 mode. Disable if unicode is not supported
