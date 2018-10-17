@@ -43,7 +43,7 @@ GDE>
  -------------------------------------------------------------------------------------------------------------------------------------------
  AREG                            ASEG                               1      512   256 ALWAYS    Y    Y   Y      Y     Y     N      Y     Sep
  BREG                            BSEG                               0      256    64 NEVER     N    Y   N      N     Y     N      Y     Sep
- DEFAULT                         DEFAULT                            0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
+ DEFAULT                         DEFAULT                            0      256    64 NEVER     Y    N   N      N     Y     N      Y     Sep
 
                           *** JOURNALING INFORMATION ***
  Region                          Jnl File (def ext: .mjl)  Before Buff      Alloc      Exten   AutoSwitch
@@ -64,8 +64,8 @@ GDE>
 46c45,47
 < ADD -REGION DEFAULT -DYNAMIC_SEGMENT=DEFAULT
 ---
-> ADD -REGION AREG -COLLATION_DEFAULT=1 -DYNAMIC_SEGMENT=ASEG -INST_FREEZE_ON_ERROR -JOURNAL=(ALLOCATION=200,AUTOSWITCHLIMIT=32768,BUFFER_SIZE=32768,EXTENSION=100,FILE_NAME="abcd-efgh=ijkl/?ijk!a(.)bc") -KEY_SIZE=256 -NULL_SUBSCRIPTS=ALWAYS -QDBRUNDOWN -RECORD_SIZE=512 -STDNULLCOLL
-> ADD -REGION BREG -DYNAMIC_SEGMENT=BSEG -JOURNAL=(NOBEFORE_IMAGE,FILE_NAME="x.mjl")
+> ADD -REGION AREG -COLLATION_DEFAULT=1 -DYNAMIC_SEGMENT=ASEG -INST_FREEZE_ON_ERROR -JOURNAL=(ALLOCATION=200,AUTOSWITCHLIMIT=32768,BUFFER_SIZE=32768,EXTENSION=100,FILE_NAME="abcd-efgh=ijkl/?ijk!a(.)bc") -KEY_SIZE=256 -NULL_SUBSCRIPTS=ALWAYS -QDBRUNDOWN -RECORD_SIZE=512
+> ADD -REGION BREG -DYNAMIC_SEGMENT=BSEG -JOURNAL=(NOBEFORE_IMAGE,FILE_NAME="x.mjl") -NOSTDNULLCOLL
 > ADD -REGION DEFAULT -DYNAMIC_SEGMENT=DEFAULT -NOJOURNAL
 47a49,50
 > ADD -SEGMENT ASEG -FILE_NAME="a.dat -acc=BG"

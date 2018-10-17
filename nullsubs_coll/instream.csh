@@ -4,6 +4,9 @@
 # Copyright (c) 2004, 2015 Fidelity National Information	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -22,7 +25,8 @@ setenv gtm_test_disable_randomdbtn
 
 setenv subtest_list_common ""
 #
-setenv subtest_list_non_replic "call_zwr_go gde_com_nullsub merge_glob_loc multipledb_binload stdnullcoll checkfunc_alex jnl_extract mu_bin_xtract_load multipledb_binxtract lclvarquery"
+setenv subtest_list_non_replic "call_zwr_go gde_com_nullsub merge_glob_loc multipledb_binload stdnullcoll checkfunc_alex"
+setenv subtest_list_non_replic "$subtest_list_non_replic jnl_extract mu_bin_xtract_load multipledb_binxtract lclvarquery"
 setenv subtest_list_replic     ""
 
 #####################################################

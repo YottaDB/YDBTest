@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2004, 2013 Fidelity Information Services, Inc	#
+# Copyright 2004, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -20,6 +23,9 @@ setenv gtm_test_spanreg 0
 $gtm_tst/com/dbcreate.csh mumps 2 200
 # change collating order for the two databases.
 $DSE << dse_eof
+find -reg=DEFAULT
+change -fileheader -stdnullcoll=FALSE
+find -reg=AREG
 change -fileheader -stdnullcoll=TRUE -null_subscripts=ALWAYS
 dump -fileheader
 find -region=DEFAULT

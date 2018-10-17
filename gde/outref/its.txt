@@ -6,7 +6,7 @@
 !                                            Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
 !Region                                     Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
 !----------------------------------------------------------------------------------------------------------------------
-!<default>                                     0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
+!<default>                                     0      256    64 NEVER     Y    N   N      N     Y     N      Y     Sep
 !
 !Segment          Active              Acc Typ Block      Alloc Exten Options
 !------------------------------------------------------------------------------
@@ -184,12 +184,12 @@
 !                                Dynamic                          Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
 !Region                          Segment                         Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
 !-------------------------------------------------------------------------------------------------------------------------------------------
-!COMMON                          COMMON                             0      256    64 NEVER     N    Y   N      N     Y     N      Y     Sep
-!CTS                             CTS                                0      600    72 NEVER     N    Y   N      N     Y     N      Y     Sep
-!LIB                             LIB                                0      600    72 NEVER     N    Y   N      N     Y     N      Y     Sep
-!MISC                            MISC                               0      600    72 NEVER     N    Y   N      N     Y     N      Y     Sep
-!SCRATCH                         SCRATCH                            0      800   255 NEVER     N    N   N      N     Y     N      Y     Sep
-!TABLES                          TABLES                             0      600    72 NEVER     N    Y   N      N     Y     N      Y     Sep
+!COMMON                          COMMON                             0      256    64 NEVER     Y    Y   N      N     Y     N      Y     Sep
+!CTS                             CTS                                0      600    72 NEVER     Y    Y   N      N     Y     N      Y     Sep
+!LIB                             LIB                                0      600    72 NEVER     Y    Y   N      N     Y     N      Y     Sep
+!MISC                            MISC                               0      600    72 NEVER     Y    Y   N      N     Y     N      Y     Sep
+!SCRATCH                         SCRATCH                            0      800   255 NEVER     Y    N   N      N     Y     N      Y     Sep
+!TABLES                          TABLES                             0      600    72 NEVER     Y    Y   N      N     Y     N      Y     Sep
 !
 !                         *** JOURNALING INFORMATION ***
 !Region                          Jnl File (def ext: .mjl)  Before Buff      Alloc      Exten   AutoSwitch

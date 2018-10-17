@@ -13,7 +13,7 @@ GDE>
  AREG                            ASEG                               0      256    64 ALWAYS    Y    N   N      N     Y     N      Y     Sep
  BREG                            BSEG                               0      256    64 ALWAYS    N    N   N      N     Y     N      Y     Sep
  CREG                            CSEG                               0      256    64 ALWAYS    Y    N   N      N     Y     N      Y     Sep
- DEFAULT                         DEFAULT                            0      256    64 ALWAYS    N    N   N      N     Y     N      Y     Sep
+ DEFAULT                         DEFAULT                            0      256    64 ALWAYS    Y    N   N      N     Y     N      Y     Sep
 GDE> 
 %GDE-I-VERIFY, Verification OK
 
@@ -38,10 +38,10 @@ YDB>
 ^c(3,"")=33
 ^c(3,"",1)=333
 ^c(3,"",3)=700
+^d("")=40
 ^d(4)=4
 ^d(4,"")=44
 ^d(4,"",1)=444
-^d("")=40
 =====================================================
 MERGE global=global
 MERGING ^aglobalvar(1)=^c(3,") Result in std.nullcollation
@@ -55,12 +55,12 @@ naked reference now is^aglobalvar(1)
 naked indicator checked, value written should be 11
 ^aglobalvar(1,"")=11
 MERGING ^d(4)=^aglobalvar(1) Result in nostd.nullcollation
+^d("")=40
 ^d(4)=33
-^d(4,1)=333
-^d(4,3)=700
 ^d(4,"")=11
 ^d(4,"",1)=111
-^d("")=40
+^d(4,1)=333
+^d(4,3)=700
 naked reference now is^d(4)
 naked indicator checked, value written should be 11
 ^d(4,"")=11
@@ -199,10 +199,10 @@ GDE>
                                  Dynamic                          Def      Rec   Key Null      Null     Freeze Qdb   Epoch              LOCK
  Region                          Segment                         Coll     Size  Size Subs      Coll Jnl on Err Rndwn Taper AutoDB Stats Crit
  -------------------------------------------------------------------------------------------------------------------------------------------
- AREG                            ASEG                               0      256    64 ALWAYS    N    N   N      N     Y     N      Y     Sep
- BREG                            BSEG                               0      256    64 ALWAYS    N    N   N      N     Y     N      Y     Sep
- CREG                            CSEG                               0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
- DEFAULT                         DEFAULT                            0      256    64 NEVER     N    N   N      N     Y     N      Y     Sep
+ AREG                            ASEG                               0      256    64 ALWAYS    Y    N   N      N     Y     N      Y     Sep
+ BREG                            BSEG                               0      256    64 ALWAYS    Y    N   N      N     Y     N      Y     Sep
+ CREG                            CSEG                               0      256    64 NEVER     Y    N   N      N     Y     N      Y     Sep
+ DEFAULT                         DEFAULT                            0      256    64 NEVER     Y    N   N      N     Y     N      Y     Sep
 GDE> 
 %GDE-I-VERIFY, Verification OK
 
@@ -290,40 +290,40 @@ YDB>
 Merging global1 (ALWAYS) with global2 (NEVER) should pass
 
 ^defaultregion(1)=33
-^defaultregion(1,2)=333
 ^defaultregion(1,"",1)=999
+^defaultregion(1,2)=333
 Merging global1 (ALWAYS) with global2 (ALWAYS) should pass
 
 ^defaultregion(1)="iam B null"
+^defaultregion(1,"",1)=999
 ^defaultregion(1,1)=22
 ^defaultregion(1,2)=333
-^defaultregion(1,"",1)=999
 Merging global1 (ALWAYS) with global2 (EXISTING) should pass
 
 ^defaultregion(1)="iam A null"
-^defaultregion(1,1)=11
-^defaultregion(1,2)=333
 ^defaultregion(1,"",1)=999
-^defaultregion(1)="iam A null"
 ^defaultregion(1,1)=11
 ^defaultregion(1,2)=333
+^defaultregion(1)="iam A null"
 ^defaultregion(1,"",1)="iam A null"
 ^defaultregion(1,"",1,1)=11
+^defaultregion(1,1)=11
+^defaultregion(1,2)=333
 Merging global1 (ALWAYS) with local (with null_subs) should pass
 
 ^defaultregion(1)="1NULL"
-^defaultregion(1,1)="1NULL1"
-^defaultregion(1,2)=333
 ^defaultregion(1,"",1)="iam A null"
 ^defaultregion(1,"",1,1)=11
+^defaultregion(1,1)="1NULL1"
+^defaultregion(1,2)=333
 Merging global1 (ALWAYS) with local (without null_subs) should pass
 
 ^defaultregion(1)=66
-^defaultregion(1,1)="1NULL1"
-^defaultregion(1,2)=333
 ^defaultregion(1,"")="1NULL"
 ^defaultregion(1,"",1)="1NULL1"
 ^defaultregion(1,"",1,1)=11
+^defaultregion(1,1)="1NULL1"
+^defaultregion(1,2)=333
 
 YDB>
 
@@ -350,20 +350,20 @@ YDB>
 Merging global1 (EXIST) with global2 (NEVER) should pass
 
 ^defaultregion(1)=33
-^defaultregion(1,1)="1NULL1"
-^defaultregion(1,2)=333
 ^defaultregion(1,"")="1NULL"
 ^defaultregion(1,"",1)="1NULL1"
 ^defaultregion(1,"",1,1)=11
+^defaultregion(1,1)="1NULL1"
+^defaultregion(1,2)=333
 Merging global1 (EXIST) with global2 (ALWAYS) should pass as global2 has no null_sub descendants
 
 ^defaultregion(1)="null"
-^defaultregion(1,1)="null1"
-^defaultregion(1,1,"abc")="null1str"
-^defaultregion(1,2)="null2"
 ^defaultregion(1,"")="1NULL"
 ^defaultregion(1,"",1)="1NULL1"
 ^defaultregion(1,"",1,1)=11
+^defaultregion(1,1)="null1"
+^defaultregion(1,1,"abc")="null1str"
+^defaultregion(1,2)="null2"
 
 YDB>
 Merging global1 (EXIST) with global2 (NEVER) should error out as LHS contains null_subs

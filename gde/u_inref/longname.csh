@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -35,7 +38,7 @@ echo "STEP1. test long name name-space (gde_long1.csh)"
 # create a gld using the pre-defined command file
 source $gtm_tst/$tst/u_inref/gde_long1.csh >&! dbcreate1.out
 $grep -v "mumps.gld" dbcreate1.out >! dbcreate1.out1
-$tst_awk -f $gtm_tst/com/process.awk -f $gtm_tst/com/outref.awk dbcreate1.out1 $gtm_tst/$tst/outref/dbcreate1.out >&! dbcreate1.cmp
+$tst_awk -f $gtm_tst/com/process.awk -f $gtm_tst/com/outref.awk dbcreate1.out1 $gtm_tst/$tst/outref/dbcreate1.txt >&! dbcreate1.cmp
 \diff dbcreate1.cmp dbcreate1.out1 >& dbcreate1.dif
 if ($status) then
 	echo "#######################################"
@@ -70,7 +73,7 @@ foreach fname (a b d mumps temp)
 	echo "### gde_long1_$fname.out ###" >>&! gde_long1_combined.out
 	sed 's/GT.M MUPIP EXTRACT.*/GT.M MUPIP EXTRACT/g' gde_long1_$fname.out >>&! gde_long1_combined.out
 end #end of foreach
-\diff $gtm_tst/$tst/outref/gde_long1.out gde_long1_combined.out >& gde_long1_combined.dif
+\diff $gtm_tst/$tst/u_inref/gde_long1.txt gde_long1_combined.out >& gde_long1_combined.dif
 if ($status) then
 	echo "#######################################"
 	echo "TEST-E-FAIL, gde_long1 FAILURE: some globals are not in the correct database."
@@ -143,7 +146,7 @@ while ($iter <= $maxlen)
 	sed 's/GT.M MUPIP EXTRACT.*/GT.M MUPIP EXTRACT/g' gde_long2_$fname.out >>&! gde_long2_combined.out
 	@ iter = $iter + 1
 end
-\diff $gtm_tst/$tst/outref/gde_long2.out gde_long2_combined.out >& gde_long2.dif
+\diff $gtm_tst/$tst/u_inref/gde_long2.txt gde_long2_combined.out >& gde_long2.dif
 if ($status) then
 	echo "#######################################"
 	echo "TEST-E-FAIL, gde_long2 FAILURE: some globals are not in the correct databases."
@@ -203,7 +206,7 @@ while ($iter <= 61)
 	sed 's/GT.M MUPIP EXTRACT.*/GT.M MUPIP EXTRACT/g' gde_long3_$fname.out >>&! gde_long3_combined.out
 	@ iter = $iter + 1
 end
-\diff $gtm_tst/$tst/outref/gde_long3.out gde_long3_combined.out >& gde_long3.dif
+\diff $gtm_tst/$tst/u_inref/gde_long3.txt gde_long3_combined.out >& gde_long3.dif
 if ($status) then
 	echo "#######################################"
 	echo "TEST-E-FAIL, gde_long3 FAILURE: some globals are not in the correct database."

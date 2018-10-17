@@ -1,6 +1,9 @@
 #################################################################
 #								#
-#	Copyright 2013 Fidelity Information Services, Inc	#
+# Copyright 2013 Fidelity Information Services, Inc		#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -110,19 +113,18 @@ abc
 	else
 		echo "show -command is successful for $i" > $i.success
 	endif
-# Testing for the gde 'command' qualifier: ends
+	# Testing for the gde 'command' qualifier: ends
 
-
-if("ENCRYPT" == $test_encryption) then
-	$gtm_tst/com/create_key_file.csh >& create_key_file_dbload.out
-endif
+	if("ENCRYPT" == $test_encryption) then
+		$gtm_tst/com/create_key_file.csh >& create_key_file_dbload.out
+	endif
 	$GTM << xxy > /dev/null
 	do ^GDE
 	log -on=reload.log
 	show -all
 	ex
 xxy
-	$tst_awk -f $gtm_tst/com/process.awk -f $gtm_tst/com/outref.awk reload.log $gtm_tst/$tst/outref/$i.log >$i.cmp
+	$tst_awk -f $gtm_tst/com/process.awk -f $gtm_tst/com/outref.awk reload.log $gtm_tst/$tst/outref/$i.txt >$i.cmp
 	mv reload.log $i.log
 	echo "gdeshowdiff.csh $i.cmp $i.log"
 	$gtm_tst/com/gdeshowdiff.csh $i.cmp $i.log

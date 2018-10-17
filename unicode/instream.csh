@@ -54,23 +54,23 @@ if ( "TRUE" == "$gtm_test_unicode_support" ) then
 	setenv gtm_test_unicode "TRUE"
 	$switch_chset "UTF-8" >&! switch_utf8.log
 	if (0 == $?test_replic) then
-		setenv unicode_testlist "badchar chset errors filenames gde gtmroutines limits recompile functions dse "
-		setenv unicode_testlist "$unicode_testlist unicode_comments_literals  unicode_job  unicode_prompt  unicode_simple_updates unicode_do"
-		setenv unicode_testlist "$unicode_testlist unicode_misc unicode_dir unicode_piece"
-		setenv unicode_testlist "$unicode_testlist unicodePatternTest  unicodeZwritePattern d002577 c001953 ugc2mpatcmap gtm6858 gtm8352"
+		setenv subtest_list "badchar chset errors filenames gde gtmroutines limits recompile functions dse "
+		setenv subtest_list "$subtest_list unicode_comments_literals unicode_job unicode_prompt unicode_simple_updates"
+		setenv subtest_list "$subtest_list unicode_do unicode_misc unicode_dir unicode_piece unicodePatternTest"
+		setenv subtest_list "$subtest_list unicodeZwritePattern d002577 c001953 ugc2mpatcmap gtm6858 gtm8352"
 		# Test this only on AIX
 		if ("HOST_AIX_RS6000" == "$gtm_test_os_machtype") then
-			setenv unicode_testlist "$unicode_testlist gtm7886"
+			setenv subtest_list "$subtest_list gtm7886"
 		endif
 	else
-		setenv unicode_testlist "repl_log unicode_tptype"
+		setenv subtest_list "repl_log unicode_tptype"
 	endif
 else
-	setenv unicode_testlist "no_ICU"
+	setenv subtest_list "no_ICU"
 endif
 # filter out some subtests for some servers
 # Disable dse and functions subtests on platforms that don't support unicode 5.0 (4 byte unicode chars)
-setenv subtest_list "$unicode_testlist"
+setenv subtest_list "$subtest_list"
 setenv subtest_exclude_list ""
 if ("1" == "$gtm_platform_no_4byte_utf8") then
 	setenv subtest_exclude_list "$subtest_exclude_list dse functions"

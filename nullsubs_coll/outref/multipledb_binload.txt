@@ -24,16 +24,16 @@ YDB>
 all globals should collate same as GT.M null collation
 
 YDB>
+^aregvar("")="iam null"
 ^aregvar(68,"",56)="some num mix"
 ^aregvar(100)=1078
-^aregvar("")="iam null"
 ^aregvar("odakyo")="iam string"
-^bregvar(89,45)=1078
 ^bregvar("")="iam null"
 ^bregvar("","hi",34)=456
+^bregvar(89,45)=1078
 ^bregvar("sakuraya")="iam string"
-^cregvar(89)=1078
 ^cregvar("")="iam null"
+^cregvar(89)=1078
 ^cregvar("gogo",56,"")=789
 ^cregvar("samurai")="iam string"
 
@@ -101,7 +101,7 @@ Region          BREG
   Maximum record size                   256  Starting VBN                   513
   Maximum key size                      200  Total blocks            0x00000065
   Null subscripts                    ALWAYS  Free blocks             0x00000062
-  Standard Null Collation             FALSE  Free space              0x00000000
+  Standard Null Collation              TRUE  Free space              0x00000000
   Last Record Backup     0x0000000000000001  Extension Count                100
   Last Database Backup   0x0000000000000001  Number of local maps             1
   Last Bytestream Backup 0x0000000000000001  Lock space              0x00000028
@@ -141,7 +141,7 @@ Region          DEFAULT
   Maximum record size                   256  Starting VBN                   513
   Maximum key size                      200  Total blocks            0x00000065
   Null subscripts                    ALWAYS  Free blocks             0x00000062
-  Standard Null Collation             FALSE  Free space              0x00000000
+  Standard Null Collation              TRUE  Free space              0x00000000
   Last Record Backup     0x0000000000000001  Extension Count                100
   Last Database Backup   0x0000000000000001  Number of local maps             1
   Last Bytestream Backup 0x0000000000000001  Lock space              0x00000028
@@ -177,12 +177,12 @@ YDB>
 ^aregvar(68,"",56)="some num mix"
 ^aregvar(100)=1078
 ^aregvar("odakyo")="iam string"
-^bregvar(89,45)=1078
 ^bregvar("")="iam null"
 ^bregvar("","hi",34)=456
+^bregvar(89,45)=1078
 ^bregvar("sakuraya")="iam string"
-^cregvar(89)=1078
 ^cregvar("")="iam null"
+^cregvar(89)=1078
 ^cregvar("gogo",56,"")=789
 ^cregvar("samurai")="iam string"
 
@@ -253,7 +253,7 @@ Region          AREG
   Maximum record size                   256  Starting VBN                   513
   Maximum key size                      200  Total blocks            0x00000065
   Null subscripts                    ALWAYS  Free blocks             0x00000062
-  Standard Null Collation             FALSE  Free space              0x00000000
+  Standard Null Collation              TRUE  Free space              0x00000000
   Last Record Backup     0x0000000000000001  Extension Count                100
   Last Database Backup   0x0000000000000001  Number of local maps             1
   Last Bytestream Backup 0x0000000000000001  Lock space              0x00000028
@@ -333,7 +333,7 @@ Region          DEFAULT
   Maximum record size                   256  Starting VBN                   513
   Maximum key size                      200  Total blocks            0x00000065
   Null subscripts                    ALWAYS  Free blocks             0x00000062
-  Standard Null Collation             FALSE  Free space              0x00000000
+  Standard Null Collation              TRUE  Free space              0x00000000
   Last Record Backup     0x0000000000000001  Extension Count                100
   Last Database Backup   0x0000000000000001  Number of local maps             1
   Last Bytestream Backup 0x0000000000000001  Lock space              0x00000028
@@ -365,16 +365,16 @@ YDB>
 BREG should collate as M.std. rest as GT.M null collation.
 
 YDB>
+^aregvar("")="iam null"
 ^aregvar(68,"",56)="some num mix"
 ^aregvar(100)=1078
-^aregvar("")="iam null"
 ^aregvar("odakyo")="iam string"
 ^bregvar("")="iam null"
 ^bregvar("","hi",34)=456
 ^bregvar(89,45)=1078
 ^bregvar("sakuraya")="iam string"
-^cregvar(89)=1078
 ^cregvar("")="iam null"
+^cregvar(89)=1078
 ^cregvar("gogo",56,"")=789
 ^cregvar("samurai")="iam string"
 

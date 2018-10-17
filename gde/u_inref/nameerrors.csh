@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2013, 2014 Fidelity Information Services, Inc	#
+# Copyright 2013, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -38,6 +41,8 @@ mv mumps.gld mumps.gld_$case
 
 echo "# Test that all regions comprising a spanning global need to be checked for stdnullcoll"
 $GDE << GDE_EOF
+template -region -nostdnullcoll
+change -region DEFAULT -nostdnullcoll
 add -reg AREG -d=ASEG
 add -seg ASEG -f=a.dat
 add -name A(1:100) -reg=AREG
