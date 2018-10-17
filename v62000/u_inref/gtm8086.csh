@@ -45,8 +45,11 @@ endif
 
 @ num_regions = 4
 
+set autoswitch = 16384
+setenv tst_jnl_str "$tst_jnl_str,allocation=$autoswitch,extension=$autoswitch"
+
 # Set autoswitch to the lowest setting to maximize switching
-$gtm_tst/com/dbcreate.csh mumps $num_regions 125 1000 4096 2000 4096 2000 -jnl_auto=16384 -jnl_prefix=${jnldir}/ >& dbcreate.log
+$gtm_tst/com/dbcreate.csh mumps $num_regions 125 1000 4096 2000 4096 2000 -jnl_auto=$autoswitch -jnl_prefix=${jnldir}/ >& dbcreate.log
 
 if ($?test_replic) then
 	# Start creates the instance file, which we need for the set
