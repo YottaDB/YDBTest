@@ -643,7 +643,7 @@ int	impjob(int childnum)
 	int		I, J, loop;
 	int		parm_array[16];
 	int		is_gtm8086_subtest;
-	ydb_buffer_t	starvar;
+	ydb_buffer_t	starvar, *valueptr;
 
 	process_id = getpid();
 	pidvalue.len_used = sprintf(pidvalue.buf_addr, "%d", (int)process_id);
@@ -948,7 +948,9 @@ int	impjob(int childnum)
 	YDB_COPY_STRING_TO_BUFF("jsyncnt", &subscr[1]);
 	status = ydb_lock_incr_s(LOCK_TIMEOUT, &ygbl_pctimptp, 2, subscr);
 	YDB_ASSERT(YDB_OK == status);
-	status = ydb_incr_s(&ygbl_pctimptp, 2, subscr, NULL, &value);
+	rand = (int)(2 * drand48());
+	valueptr = (0 == rand) ? &value : NULL;	/* Randomly test that "ydb_incr_s" is fine with a NULL "ret_value" parameter */
+	status = ydb_incr_s(&ygbl_pctimptp, 2, subscr, NULL, valueptr);
 	YDB_ASSERT(YDB_OK == status);
 	status = ydb_lock_decr_s(&ygbl_pctimptp, 2, subscr);
 	YDB_ASSERT(YDB_OK == status);
