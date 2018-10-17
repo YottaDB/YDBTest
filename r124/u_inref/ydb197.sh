@@ -76,4 +76,4 @@ echo "ydb_routines: $ydb_routines" ; echo "gtmroutines: $gtmroutines" ; echo "yd
 echo "----------------------------------------------------"
 echo '# Environment variables set after sourcing ydb_env_set.'
 echo "----------------------------------------------------"
-env | grep -f envsearch.txt | sort
+env | grep -f envsearch.txt -w | sort
