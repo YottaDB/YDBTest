@@ -11,15 +11,15 @@ unset echo
 # Compile without -nowarning to obtain errors
 		set c=$PIECE("Hello "_$ZCH(190)_" world!",$ZCH(191),1,2)
 		                                                       ^-----
-		At column 57, line 16, source module ##GTM_LIBRARY_PATH##/gtm_test/T997/v63005/inref/gtm8956.m
+		At column 57, line 16, source module ##IN_TEST_PATH##/inref/gtm8956.m
 %YDB-W-BADCHAR, $ZCHAR(190) is not a valid character in the UTF-8 encoding form
 		. WRITE !," o  File to be imported does not exist: "_XOBPATH
 		  ^-----
-		At column 4, line 20, source module ##GTM_LIBRARY_PATH##/gtm_test/T997/v63005/inref/gtm8956.m
+		At column 4, line 20, source module ##IN_TEST_PATH##/inref/gtm8956.m
 %YDB-W-BLKTOODEEP, Block level too deep
 		write !,"This is an incorrect string literal	with a tab or something"
 		                                            ^-----
-		At column 46, line 24, source module ##GTM_LIBRARY_PATH##/gtm_test/T997/v63005/inref/gtm8956.m
+		At column 46, line 24, source module ##IN_TEST_PATH##/inref/gtm8956.m
 %YDB-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(9)
 --------------------------------------------------------------------------------------------------------------------
 # Compile with -nowarning, should not receive errors
@@ -31,15 +31,15 @@ YDB>
 YDB>
 		set c=$PIECE("Hello "_$ZCH(190)_" world!",$ZCH(191),1,2)
 		                                                       ^-----
-		At column 57, line 16, source module ##GTM_LIBRARY_PATH##/gtm_test/T997/v63005/inref/gtm8956.m
+		At column 57, line 16, source module ##IN_TEST_PATH##/inref/gtm8956.m
 %YDB-W-BADCHAR, $ZCHAR(190) is not a valid character in the UTF-8 encoding form
 		. WRITE !," o  File to be imported does not exist: "_XOBPATH
 		  ^-----
-		At column 4, line 20, source module ##GTM_LIBRARY_PATH##/gtm_test/T997/v63005/inref/gtm8956.m
+		At column 4, line 20, source module ##IN_TEST_PATH##/inref/gtm8956.m
 %YDB-W-BLKTOODEEP, Block level too deep
 		write !,"This is an incorrect string literal	with a tab or something"
 		                                            ^-----
-		At column 46, line 24, source module ##GTM_LIBRARY_PATH##/gtm_test/T997/v63005/inref/gtm8956.m
+		At column 46, line 24, source module ##IN_TEST_PATH##/inref/gtm8956.m
 %YDB-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(9)
 
 YDB>
@@ -60,11 +60,11 @@ unset echo
 # Compile without -nowarning to obtain errors
 		. WRITE !," o  File to be imported does not exist: "_XOBPATH
 		  ^-----
-		At column 4, line 20, source module ##GTM_LIBRARY_PATH##/gtm_test/T997/v63005/inref/gtm8956.m
+		At column 4, line 20, source module ##IN_TEST_PATH##/inref/gtm8956.m
 %YDB-W-BLKTOODEEP, Block level too deep
 		write !,"This is an incorrect string literal	with a tab or something"
 		                                            ^-----
-		At column 46, line 24, source module ##GTM_LIBRARY_PATH##/gtm_test/T997/v63005/inref/gtm8956.m
+		At column 46, line 24, source module ##IN_TEST_PATH##/inref/gtm8956.m
 %YDB-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(9)
 --------------------------------------------------------------------------------------------------------------------
 # Compile with -nowarning, should not receive errors
@@ -76,11 +76,11 @@ YDB>
 YDB>
 		. WRITE !," o  File to be imported does not exist: "_XOBPATH
 		  ^-----
-		At column 4, line 20, source module ##GTM_LIBRARY_PATH##/gtm_test/T997/v63005/inref/gtm8956.m
+		At column 4, line 20, source module ##IN_TEST_PATH##/inref/gtm8956.m
 %YDB-W-BLKTOODEEP, Block level too deep
 		write !,"This is an incorrect string literal	with a tab or something"
 		                                            ^-----
-		At column 46, line 24, source module ##GTM_LIBRARY_PATH##/gtm_test/T997/v63005/inref/gtm8956.m
+		At column 46, line 24, source module ##IN_TEST_PATH##/inref/gtm8956.m
 %YDB-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(9)
 
 YDB>
