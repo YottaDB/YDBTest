@@ -63,6 +63,8 @@
 # ydb233	   [quinn] Test of mupip set -reorg_sleep_nsec
 # ydb309	   [quinn] Test that invoking ydb_env_set does not clear the value of gtm_prompt if ydb_prompt is undefined.
 # ydb383           [nars]  Test that ydb_tp_s() returns negative error code for GBLOFLOW error
+# ydb362a	   [quinn] Test that connecting to a Source instance with a version prior to V60000 gives a YDB-E-UNIMPLOP and YDB-I-TEXT error.
+# ydb362b	   [quinn] Test that connecting to a Receiver instance with a version prior to V60000 gives a YDB-E-UNIMPLOP and YDB-I-TEXT error.
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r124 test starts..."
@@ -77,7 +79,7 @@ setenv subtest_list_non_replic "$subtest_list_non_replic ydb372 ydb363 ydb371 yd
 setenv subtest_list_replic     ""
 setenv subtest_list_replic     "$subtest_list_replic ydb282srcsrvrerr ydb293 ydb312_gtm8182a ydb312_gtm8182b  ydb312_gtm8182c"
 setenv subtest_list_replic     "$subtest_list_replic ydb312_gtm8182d ydb312_gtm8182e ydb312_gtm8182f ydb312_gtm8182g ydb321"
-setenv subtest_list_replic     "$subtest_list_replic ydb361 ydb364"
+setenv subtest_list_replic     "$subtest_list_replic ydb361 ydb364 ydb362a ydb362b"
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
@@ -90,6 +92,11 @@ setenv subtest_exclude_list    ""
 # filter out white box tests that cannot run in pro
 if ("pro" == "$tst_image") then
 	setenv subtest_exclude_list "$subtest_exclude_list ydb282srcsrvrerr"
+endif
+
+# filter out replication tests that use pre-V60000 versions because these versions do not have dbg builds.
+if ("dbg" == "$tst_image") then
+	setenv subtest_exclude_list "$subtest_exclude_list ydb362a ydb362b"
 endif
 
 if ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) then

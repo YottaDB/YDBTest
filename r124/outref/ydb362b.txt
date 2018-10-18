@@ -1,0 +1,28 @@
+--------------------------------------------------------------------------------------------------------------------------------------
+# Test that connecting a pre-V60000 Receiver server to a current source server gives a YDB-E-UNIMPLOP/YDB-I-TEXT error in source side.
+--------------------------------------------------------------------------------------------------------------------------------------
+# Choose a random version prior to V60000
+# Generate config file for Replication
+# Alter the msr_instance_config file to update the receiver side version with the older version
+------------------------------------------------------------------------------------------------
+# Create a single region DB with region DEFAULT
+------------------------------------------------------------------------------------------------
+# Start the source server and receiver server
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+# Waiting for Source instance to die
+# Stop the receiving instance
+==Executing MULTISITE_REPLIC 'STOPRCV INST1 INST2'==
+------------------------------------------------------------------------------------------------
+# Use $msr_err_chk to search the SRC_*.log file for YDB-E-UNIMPLOP and YDB-I-TEXT errors
+----------
+Error YDB-E-UNIMPLOP seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
+%YDB-E-UNIMPLOP, Unimplemented construct encountered
+----------
+----------
+Error YDB-I-TEXT seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
+%YDB-I-TEXT, Replication not supported between these two GT.M versions
+----------
+# Start and Stop the source instance to clear up remaining ipcs
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST2'==
