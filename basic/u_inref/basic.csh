@@ -187,10 +187,16 @@ w "d ^kill1",!  d ^kill1
 w "d ^set",!  d ^set
 w "d ^globals",!  d ^globals
 zyx
+
 if ($test_collation_no != 0) echo "Running with alternative collation. ZPREVIOUS test will fail:"
+# Randomly choose STDNULLCOLL or NOSTDNULLCOLL for local variable null collation. ^zprev knows to handle this
+set stdnullcoll = `$ydb_dist/mumps -run rand 2`
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_lct_stdnull gtm_lct_stdnull $stdnullcoll
 $GTM << zyx
 w "d ^zprev",!  d ^zprev
 zyx
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_lct_stdnull gtm_lct_stdnull
+
 $GTM << zyx
 Do ^%GI
 $gtm_tst/$tst/inref/asw.glo

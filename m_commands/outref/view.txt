@@ -11,45 +11,45 @@ YDB>
 view "LVNULLSUBS"
 
 -----> zwrite LVNULLSUBS 1 <------
+abcdefgh("")=1
 abcdefgh(1)=12
 abcdefgh(1,"",2)=123
-abcdefgh("")=1
 lvnullsubs="LVNULLSUBS"
 
 
 -----> zwrite LVNULLSUBS 2 <------
+abcdefgh("")=1
 abcdefgh(1)=12
 abcdefgh(1,"",2)=123
-abcdefgh("")=1
+abcdefghi("")=91
 abcdefghi(1)=912
 abcdefghi(1,"",2)=9123
-abcdefghi("")=91
 lvnullsubs="LVNULLSUBS"
 
 
 -----> zwrite LVNULLSUBS 3 <------
+abcdefgh("")=1
 abcdefgh(1)=12
 abcdefgh(1,"",2)=123
-abcdefgh("")=1
+abcdefghi("")=91
 abcdefghi(1)=912
 abcdefghi(1,"",2)=9123
-abcdefghi("")=91
+abcdefghi0123456789012345678901("")=31
 abcdefghi0123456789012345678901(1)=312
 abcdefghi0123456789012345678901(1,"",2)=3123
-abcdefghi0123456789012345678901("")=31
 lvnullsubs="LVNULLSUBS"
 
 
 -----> zwrite LVNULLSUBS 4 <------
+abcdefgh("")=1
 abcdefgh(1)=12
 abcdefgh(1,"",2)=123
-abcdefgh("")=1
+abcdefghi("")=91
 abcdefghi(1)=912
 abcdefghi(1,"",2)=9123
-abcdefghi("")=91
+abcdefghi0123456789012345678901("")=31
 abcdefghi0123456789012345678901(1)=312
 abcdefghi0123456789012345678901(1,"",2)=3123
-abcdefghi0123456789012345678901("")=31
 i=31
 len=31
 lvnullsubs="LVNULLSUBS"
@@ -67,15 +67,15 @@ view "NOLVNULLSUBS"
 --> ERROR (expected) : $ZSTATUS=nolvnull+6^viewnull,%YDB-E-LVNULLSUBS, Null subscripts not allowed in local variables
 
 -----> zwrite NOLVNULLSUBS 1 <------
+abcdefgh("")=1
 abcdefgh(1)=12
 abcdefgh(1,"",2)=123
-abcdefgh("")=1
+abcdefghi("")=91
 abcdefghi(1)=912
 abcdefghi(1,"",2)=9123
-abcdefghi("")=91
+abcdefghi0123456789012345678901("")=31
 abcdefghi0123456789012345678901(1)="xx312"
 abcdefghi0123456789012345678901(1,"",2)=3123
-abcdefghi0123456789012345678901("")=31
 i=31
 len=31
 lvnullsubs="LVNULLSUBS"
@@ -92,15 +92,15 @@ var4567890123456789012345678901("")="var31"
 --> ERROR (expected) : $ZSTATUS=nolvnull+11^viewnull,%YDB-E-LVNULLSUBS, Null subscripts not allowed in local variables
 
 -----> zwrite NOLVNULLSUBS 2 <------
+abcdefgh("")=1
 abcdefgh(1)="xx12"
 abcdefgh(1,"",2)=123
-abcdefgh("")=1
+abcdefghi("")=91
 abcdefghi(1)=912
 abcdefghi(1,"",2)=9123
-abcdefghi("")=91
+abcdefghi0123456789012345678901("")=31
 abcdefghi0123456789012345678901(1)="xx312"
 abcdefghi0123456789012345678901(1,"",2)=3123
-abcdefghi0123456789012345678901("")=31
 i=31
 len=31
 lvnullsubs="LVNULLSUBS"
@@ -117,15 +117,15 @@ var4567890123456789012345678901("")="var31"
 --> ERROR (expected) : $ZSTATUS=nolvnull+16^viewnull,%YDB-E-LVNULLSUBS, Null subscripts not allowed in local variables
 
 -----> zwrite NOLVNULLSUBS 3 <------
+abcdefgh("")=1
 abcdefgh(1)="xx12"
 abcdefgh(1,"",2)=123
-abcdefgh("")=1
+abcdefghi("")=91
 abcdefghi(1)="xx912"
 abcdefghi(1,"",2)=9123
-abcdefghi("")=91
+abcdefghi0123456789012345678901("")=31
 abcdefghi0123456789012345678901(1)="xx312"
 abcdefghi0123456789012345678901(1,"",2)=3123
-abcdefghi0123456789012345678901("")=31
 i=31
 len=31
 lvnullsubs="LVNULLSUBS"
@@ -144,15 +144,15 @@ var4567890123456789012345678901("")="var31"
 --> ERROR (expected) : $ZSTATUS=nolvnull+34^viewnull,%YDB-E-LVNULLSUBS, Null subscripts not allowed in local variables
 
 -----> zwrite NOLVNULLSUBS 4 <------
+abcdefgh("")=1
 abcdefgh(1)="xx12"
 abcdefgh(1,"",2)=123
-abcdefgh("")=1
+abcdefghi("")=91
 abcdefghi(1)="xx912"
 abcdefghi(1,"",2)=9123
-abcdefghi("")=91
+abcdefghi0123456789012345678901("")=31
 abcdefghi0123456789012345678901(1)="xx312"
 abcdefghi0123456789012345678901(1,"",2)=3123
-abcdefghi0123456789012345678901("")=31
 i=31
 len=31
 lvnullsubs="LVNULLSUBS"

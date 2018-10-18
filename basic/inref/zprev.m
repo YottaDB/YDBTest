@@ -1,3 +1,17 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; This module is derived from FIS GT.M.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 zprev	; Test of $ZPrevious.
 	New
 	Do begin^header($TEXT(+0))
@@ -25,8 +39,9 @@ zprev	; Test of $ZPrevious.
 	Do ^examine($ZPREVIOUS(X(0)),"","No previous subscript: X(0)")
 	Do ^examine($ZPREVIOUS(X(2)),1.125,"Fractional subscript: X(2)")
 	Do ^examine($ZPREVIOUS(X(3.111)),1.125,"Fractional subscript: X(3.111)")
-	Do ^examine($ZPREVIOUS(X("A")),"","Null subscript: X(""A"")")
-	Kill X("")
+	if '$$getncol^%LCLCOL do
+	.	Do ^examine($ZPREVIOUS(X("A")),"","Null subscript: X(""A"")")
+	.	Kill X("")
 	Do ^examine($ZPREVIOUS(X("A")),9999,"No Null subscript: X(""A"")")
 	Do ^examine($ZPREVIOUS(X("Ab")),"ABCDE","X(""Ab"")")
 	Do ^examine($ZPREVIOUS(X("Ac")),"Abcde","X(""Ac"")")

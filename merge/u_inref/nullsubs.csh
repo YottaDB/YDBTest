@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2002, 2013 Fidelity Information Services, Inc	#
+# Copyright 2002, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -16,6 +19,7 @@ setenv test_reorg "NON_REORG"
 setenv gtmgbldir null.gld
 setenv test_specific_gde $gtm_tst/$tst/inref/null.gde
 source $gtm_tst/com/dbcreate.csh null 4
+setenv ydb_lct_stdnull 0	# set local null collation to a non-default value as this subtest reference file relies on that
 #
 $gtm_exe/mumps -dir << GTM_EOF
 view "gdscert":1
