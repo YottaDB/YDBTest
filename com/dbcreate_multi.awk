@@ -79,6 +79,12 @@ BEGIN { split("file_name n_regions key_size record_size block_size allocation gl
       }
 
 END {
+      # Randomly add "@" prefix to hostname (should be a no-op since "@" prevents short-circuiting which we are sure
+      # we will not run into since we add @ only to a hostname that is guaranteed remote). Use random boolean values
+      # already generated in submit_test.csh (and stored in env var "tst_gtcm_server_at_prefix_list")
+      split(ENVIRON["tst_gtcm_server_at_prefix_list"], at_prefix_array, " ");
+      at_prefix[0] = ""
+      at_prefix[1] = "@"
       if (value["test_gtcm"])
       {
 	#if the value is a "x;y,z" x is the local host, this means, just create the regions for that one.y or z must be same as x
@@ -95,7 +101,8 @@ END {
 	if (this_is_a_gtcm_server)
 		for (serv in gtcm_servers)
 			if (!index(gtcm_servers[serv],this_host":")) gtcm_servers[serv]=""
-	gtcm_serv_no=1
+	gtcm_serv_no = 1;
+	rand_at_prefix = at_prefix[at_prefix_array[gtcm_serv_no]];
 	cur_gtcm_server = gtcm_servers[gtcm_serv_no++]
       }
       default_filename="mumps"
@@ -166,11 +173,14 @@ END {
 	command3 = "sed -n 's/template.*-region/change -region DEFAULT/gp' "value["template"]
 	system(command1" ; "command2" ; "command3)
       }
-
       {	#DEFAULT region
-	      if (this_is_a_gtcm_server) cur_gtcm_server = "" ; #local
+	      if (this_is_a_gtcm_server)
+	      {
+	        rand_at_prefix = "";	# local
+		cur_gtcm_server = "" ;	# local
+	      }
 	      sub(/\.[^:]*:/,":",cur_gtcm_server)
-	      print "change -segment DEFAULT -file_name=" cur_gtcm_server value["file_name"] ".dat"
+	      print "change -segment DEFAULT -file_name=" rand_at_prefix cur_gtcm_server value["file_name"] ".dat"
 	      if (value["access_method"] ~ /MM/)
 		  {
 		   if (value["global_buffer_count"] !~/..*/ || value["global_buffer_count"] ~/\./)
@@ -189,7 +199,13 @@ END {
 	    skip=0
 	    if (value["test_gtcm"])
 	    {
-		    if (1 != i) {cur_gtcm_server = gtcm_servers[gtcm_serv_no++]; if (gtcm_serv_no > total_gtcm_serv_no) gtcm_serv_no=1}
+		    if (1 != i)
+		    {
+			rand_at_prefix = at_prefix[at_prefix_array[gtcm_serv_no]];
+			cur_gtcm_server = gtcm_servers[gtcm_serv_no++];
+			if (gtcm_serv_no > total_gtcm_serv_no)
+				gtcm_serv_no = 1;
+		    }
 		    #print "#Region no:"i " Server:" cur_gtcm_server
 		    if ("" == cur_gtcm_server) skip = 1
 		    # i=1 means region A, which is going to be local on the original (client) server
@@ -207,7 +223,11 @@ END {
 	    }
 	    if (!skip)
 	    {
-		    if ((1 == i)||(this_is_a_gtcm_server)) cur_gtcm_server = "" #local
+		    if ((1 == i) || this_is_a_gtcm_server)
+		    {
+			rand_at_prefix = "";	# local
+			cur_gtcm_server = "" ;	# local
+		    }
 		    if (tst_on_remote && value["different_gld"])
 		    {
 			    print "! different_gld-specified-in-input"	# this output is relied upon by dbcreate_base.csh
@@ -231,14 +251,14 @@ END {
 		    {
 			print "add -region " reg " -dyn=" seg
 			if ((0 != value["test_gtcm"])&&(i>1))
-			{
-				   print "add -segment " seg " -file=" cur_gtcm_server fname
-				   # to test broken database
-				   # print "add -segment " seg " -file=" cur_gtcm_server fname
+			{	# Randomly add "@" prefix to hostname (should be a no-op since "@" prevents short-circuiting)
+				print "add -segment " seg " -file_name=" rand_at_prefix cur_gtcm_server fname
+				# to test broken database
+				# print "add -segment " seg " -file_name=" rand_at_prefix cur_gtcm_server fname
 			} else
-				    print "add -segment " seg " -file=" fname
+				print "add -segment " seg " -file_name=" fname
 			if (! value["template"])
-				    print_block(seg, reg)
+				print_block(seg, reg)
 			# for all regions but A, change collation
 			if (value["test_collation"]) if (i>1) print "change -region " reg " -collation_default=" value["test_collation"]
 		    }

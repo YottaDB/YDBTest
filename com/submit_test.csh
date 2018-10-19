@@ -200,6 +200,13 @@ if ($?test_gtm_gtcm_one) then
 		exit 4
 	endif
 	set serverstocheck = "$tst_gtcm_server_list"
+	# Generate a list of random boolean values, one per gtcm host. This will later be used by dbcreate_multi.awk
+	# to add a "@" prefix to the <hostname>:<filename> syntax for remote file name specified in gtcm tests.
+	setenv tst_gtcm_server_at_prefix_list ""
+	foreach srvr ($serverstocheck)
+		set rand_no = `date | $tst_awk '{srand() ; print (int(rand() * 2))}'`
+		setenv tst_gtcm_server_at_prefix_list "$tst_gtcm_server_at_prefix_list $rand_no"
+	end
 else if ($?test_replic) then
 	if ("MULTISITE" == "$test_replic") then
 		set serverstocheck = "$tst_other_servers_list_ms"

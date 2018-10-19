@@ -313,6 +313,11 @@ BEGIN {
 	# A is missing since it is local!
 	database_layout = "DEFAULT B C D E F G H I J K L"
 	max_regions = split(database_layout, database_layout_array, " ");
+	# dbcreate_multi.awk would have randomly added "@" prefix to <hostname>:<filename> in remote file specification
+	# for gtcm tests. Take that into account to generate the *.cmp file from the *.txt reference file.
+	split(ENVIRON["tst_gtcm_server_at_prefix_list"], at_prefix_array, " ");
+	at_prefix[0] = ""
+	at_prefix[1] = "@"
 }
 $1 ~ /##ALLOW_OUTPUT/ {
 	tstring = sprintf("##ALLOW_OUTPUT")
@@ -420,7 +425,7 @@ FILENAME ~/outref/ {
 					gsub(/##TEST_REMOTE_HOST_GTCM##/, server_list_array[hostno], line);
 					node_name = server_list_array[hostno]
 					sub(/\..*$/,"",node_name)
-					gsub(/##TEST_REMOTE_NODE_PATH_GTCM##/, node_name ":" dir_gtcm_array[hostno], line);
+					gsub(/##TEST_REMOTE_NODE_PATH_GTCM##/, at_prefix[at_prefix_array[hostno]] node_name ":" dir_gtcm_array[hostno], line);
 					print line;
 				}
 				hostno++; if (hostno > no_gtcm_hosts) hostno = 1;
@@ -443,7 +448,7 @@ FILENAME ~/outref/ {
 			gsub(/##TEST_REMOTE_HOST_GTCM##/, server_list_array[hostno]);
 			node_name = server_list_array[hostno]
 			sub(/\..*$/,"",node_name)
-			gsub(/##TEST_REMOTE_NODE_PATH_GTCM##/, node_name ":" dir_gtcm_array[hostno])
+			gsub(/##TEST_REMOTE_NODE_PATH_GTCM##/, at_prefix[at_prefix_array[hostno]] node_name ":" dir_gtcm_array[hostno])
 		}
 		#########
 		if ($0 ~ /##TEST_AWK/)
@@ -473,12 +478,12 @@ function replace_flags()
 	gsub(/##TEST_REMOTE_PATH_GTCM_1##/, dir_gtcm_array[1]);
 	node_name = server_list_array[1]
 	sub(/\..*$/,"",node_name)
-	gsub(/##TEST_REMOTE_NODE_PATH_GTCM_1##/, node_name ":" dir_gtcm_array[1])
+	gsub(/##TEST_REMOTE_NODE_PATH_GTCM_1##/, at_prefix[at_prefix_array[1]] node_name ":" dir_gtcm_array[1])
 	gsub(/##TEST_REMOTE_HOST_GTCM_2##/, server_list_array[2]);
 	gsub(/##TEST_REMOTE_PATH_GTCM_2##/, dir_gtcm_array[2]);
 	node_name = server_list_array[2]
 	sub(/\..*$/,"",node_name)
-	gsub(/##TEST_REMOTE_NODE_PATH_GTCM_2##/, node_name ":" dir_gtcm_array[2])
+	gsub(/##TEST_REMOTE_NODE_PATH_GTCM_2##/, at_prefix[at_prefix_array[2]] node_name ":" dir_gtcm_array[2])
 	if ("" == remote_tst_dir)
 		gsub(/##REMOTE_TEST_PATH##/, tst_remote_dir"/"gtm_tst_out"/"testname"/tmp")
 	else
