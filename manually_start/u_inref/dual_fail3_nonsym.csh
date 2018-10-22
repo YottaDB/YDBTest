@@ -78,8 +78,8 @@ sleep 5
 $pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/backup_dbjnl.csh bak1 '*.dat *.mjl* *.gld *.repl' cp nozip"
 setenv start_time `date +%H_%M_%S`
 echo "Doing rollback on (B):"
-$pri_shell "$pri_getenv; cd $PRI_SIDE;"'echo $gtm_tst/com/mupip_rollback.csh -losttrans=lost1.glo >>&! rollback1.log'
-$pri_shell "$pri_getenv; cd $PRI_SIDE;"'$gtm_tst/com/mupip_rollback.csh -losttrans=lost1.glo "*" >>&! rollback1.log; $grep "successful" rollback1.log'
+$pri_shell "$pri_getenv; cd $PRI_SIDE;"'echo $MUPIP journal -rollback -backward -losttrans=lost1.glo >>&! rollback1.log'
+$pri_shell "$pri_getenv; cd $PRI_SIDE;"'$MUPIP journal -rollback -backward -losttrans=lost1.glo "*" >>&! rollback1.log; $grep -w "successful" rollback1.log'
 echo "Restarting Primary (B) ..."
 $pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/SRC.csh "." $portno $start_time < /dev/null "">>&!"" START_${start_time}.out"
 $pri_shell "$pri_getenv; $gtm_tst/com/srcstat.csh "AFTER_PRI_B_UP2:" < /dev/null"
@@ -89,9 +89,9 @@ $pri_shell "$pri_getenv; $gtm_tst/com/srcstat.csh "AFTER_PRI_B_UP2:" < /dev/null
 # RESTART SECONDARY (A)
 $gtm_tst/com/backup_dbjnl.csh bak2 '*.dat *.mjl* *.gld *.repl' cp nozip
 echo "Doing Rollback on side A"
-echo "$gtm_tst/com/mupip_rollback.csh -fetchresync=$portno -losttrans=fetch.glo *" >>&! rollback2.log
-$gtm_tst/com/mupip_rollback.csh -fetchresync=$portno -losttrans=fetch.glo "*" >>&! rollback2.log
-$grep "successful" rollback2.log
+echo "$MUPIP journal -rollback -backward -fetchresync=$portno -losttrans=fetch.glo *" >>&! rollback2.log
+$MUPIP journal -rollback -backward -fetchresync=$portno -losttrans=fetch.glo "*" >>&! rollback2.log
+$grep -w "successful" rollback2.log
 $gtm_tst/com/RCVR.csh "." $portno $start_time >&!  START_${start_time}.out
 $gtm_tst/com/rfstatus.csh "BOTH_UP:"
 
