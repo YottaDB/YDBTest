@@ -36,6 +36,9 @@ setenv start2_time `date +%H_%M_%S`
 setenv portno `$sec_shell '$sec_getenv; cat $SEC_DIR/portno'`
 $sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/RCVR.csh ""."" $portno $start2_time < /dev/null "">&!"" $SEC_SIDE/RCVR_${start2_time}.out"
 
+echo "# Do a few updates on A and ensure they go through to P fine"
+$ydb_dist/mumps -run ^%XCMD 'for i=1:1:10 set ^x=i'
+
 echo "# Do dbcheck.csh"
 $gtm_tst/com/dbcheck.csh >>& dbcheck_log.txt
 if ($status) then
