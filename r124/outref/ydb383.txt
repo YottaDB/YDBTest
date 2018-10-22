@@ -1,0 +1,59 @@
+# Test that ydb_tp_s() returns negative error code for GBLOFLOW error
+# Create database with minimum blocksize (512), allocation (10) and extension (0) to create GBLOFLOW error as soon as possible
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Compiling/Linking ydb383.c into executable ydb383 and executing it
+
+### --------------------------- ###
+### Running gvnset() without TP ###
+### --------------------------- ###
+Running ydb_set_s() to set node ^tp1(0)
+Running ydb_set_s() to set node ^tp1(1)
+Running ydb_set_s() to set node ^tp1(2)
+Running ydb_set_s() to set node ^tp1(3)
+Running ydb_set_s() to set node ^tp1(4)
+Running ydb_set_s() to set node ^tp1(5)
+Running ydb_set_s() to set node ^tp1(6)
+Running ydb_set_s() to set node ^tp1(7)
+Running ydb_set_s() to set node ^tp1(8)
+Running ydb_set_s() to set node ^tp1(9)
+Running ydb_set_s() to set node ^tp1(10)
+Running ydb_set_s() to set node ^tp1(11)
+Running ydb_set_s() to set node ^tp1(12)
+Running ydb_set_s() to set node ^tp1(13)
+Running ydb_set_s() to set node ^tp1(14)
+ydb_set_s() : status = -150372882 : 150372882,(SimpleAPI),%YDB-E-GBLOFLOW, Database segment is full,%YDB-I-GVIS, 		Global variable: ^tp1(14)
+
+### --------------------------- ###
+### Running gvnset() inside  TP ###
+### --------------------------- ###
+Entering ydb_tp_s()
+Running ydb_set_s() to set node ^tp1(0)
+Running ydb_set_s() to set node ^tp1(1)
+Running ydb_set_s() to set node ^tp1(2)
+Running ydb_set_s() to set node ^tp1(3)
+Running ydb_set_s() to set node ^tp1(4)
+Running ydb_set_s() to set node ^tp1(5)
+Running ydb_set_s() to set node ^tp1(6)
+Running ydb_set_s() to set node ^tp1(7)
+Running ydb_set_s() to set node ^tp1(8)
+Running ydb_set_s() to set node ^tp1(9)
+Running ydb_set_s() to set node ^tp1(10)
+Running ydb_set_s() to set node ^tp1(11)
+Running ydb_set_s() to set node ^tp1(12)
+Running ydb_set_s() to set node ^tp1(13)
+Running ydb_set_s() to set node ^tp1(14)
+Running ydb_set_s() to set node ^tp1(15)
+Running ydb_set_s() to set node ^tp1(16)
+Running ydb_set_s() to set node ^tp1(17)
+Running ydb_set_s() to set node ^tp1(18)
+Running ydb_set_s() to set node ^tp1(19)
+ydb_tp_s() [1]: status = -150372882 : 150372882,(SimpleAPI),%YDB-E-GBLOFLOW, Database segment is full,%YDB-I-GVIS, 		Global variable: ^tp1(19)
+ydb383 returned with exit status : 0
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
