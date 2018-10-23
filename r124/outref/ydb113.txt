@@ -1,0 +1,29 @@
+------------------------------------------------------------------------------------------------------------
+# Test that $$getncol^%LCLCOL returns expected values when ydb_lct_stdnull env var is set to various values.
+------------------------------------------------------------------------------------------------------------
+# Unset ydb_lct_stdnull to test with undefined settings
+1
+
+# Set ydb_lct_stdnull to 0
+0
+
+# Set ydb_lct_stdnull to N, NO, no etc.
+0
+
+# Set ydb_lct_stdnull to F, FA, FAL, FALS, FALSE, false etc.
+0
+
+# Set ydb_lct_stdnull to a number XXX < 0.
+0
+
+# Set ydb_lct_stdnull to 1
+1
+
+# Set ydb_lct_stdnull to Y, YE, YES, yes etc.
+1
+
+# Set ydb_lct_stdnull to T,TR,TRU,TRUE, true etc.
+1
+
+# Set ydb_lct_stdnull to a number XXX > 1.
+1
