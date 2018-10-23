@@ -14,7 +14,7 @@
 #								#
 #################################################################
 
-set hostn = "$HOST:r:r:r"
+setenv ydb_xc_ydbposix $ydb_dist/plugin/ydbposix.xc
 
 # create test file for linerepl.m
 cat >& tempfile <<EOF
@@ -34,9 +34,6 @@ $gtm_exe/mumps -r linerepl --match=/the/ --replace=:A: tempfile
 echo
 echo "Contents of tempfile after linerepl change:"
 cat tempfile
-
-# need to setup syslog_info for some Linux boxes as rules in posixtest.m have conflicts
-if ((jackal == $hostn) || (carmen == $hostn) || (tuatara == $hostn)) setenv syslog_info /var/log/messages
 
 echo ""
 echo "Executing posixtest and expect PASS for all"

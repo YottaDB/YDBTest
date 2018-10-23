@@ -84,9 +84,6 @@ endif
 if ("pro" == "$tst_image") then
 	setenv subtest_exclude_list "$subtest_exclude_list concbkup gtm7454"
 endif
-if ($?gtm_test_temporary_disable) then
-       setenv subtest_exclude_list "$subtest_exclude_list gtm_posix"
-endif
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh
 
