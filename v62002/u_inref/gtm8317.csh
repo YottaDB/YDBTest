@@ -43,9 +43,7 @@ echo
 echo "gtm_tmp is bogus - expect INVTMPDIR from mumps (1)"
 source $gtm_tst/com/set_ydb_env_var_random.csh ydb_tmp gtm_tmp "bogus"
 $gtm_dist/mumps -run gtm8317util
-sleep 1
-set syslog_end = `date +"%b %e %H:%M:%S"`
-$gtm_tst/com/getoper.csh "$syslog_start" "$syslog_end" test_syslog1.txt
+$gtm_tst/com/getoper.csh "$syslog_start" "" test_syslog1.txt	# now that mumps returned, get all syslog messages until this point
 $grep INVTMPDIR test_syslog1.txt | $grep -c `cat runningMpid.txt`
 
 #
@@ -64,9 +62,9 @@ if ("HOST_AIX_RS6000" != "$gtm_test_os_machtype") then
     echo
     echo "gtm_tmp is bogus - expect INVTMPDIR from gtmsecshr (1)"
     $gtm_dist/gtmsecshr
-    sleep 1
-    set syslog_end = `date +"%b %e %H:%M:%S"`
-    $gtm_tst/com/getoper.csh "$syslog_start" "$syslog_end" test_syslog2.txt
+    # Since gtmsecshr runs in the background, it could send the INVTMPDIR a little later than when getoper.csh searches
+    # the syslog so we need to pass "INVTMPDIR" specifically to getoper.csh that way it waits for this message to show up.
+    $gtm_tst/com/getoper.csh "$syslog_start" "" test_syslog2.txt "INVTMPDIR"
     $grep INVTMPDIR test_syslog2.txt | $grep -c "SECSHR"
 endif
 
@@ -82,9 +80,7 @@ if ((HOST_LINUX_IX86 != "$gtm_test_os_machtype") && (HOST_HP-UX_IA64 != "$gtm_te
     echo "gtm_tmp and gtm_linktmpdir are bogus - expect INVTMPDIR and INVLINKTMPDIR from mumps (2)"
     setenv gtm_linktmpdir "bogus"
     $gtm_dist/mumps -run gtm8317util
-    sleep 1
-    set syslog_end = `date +"%b %e %H:%M:%S"`
-    $gtm_tst/com/getoper.csh "$syslog_start" "$syslog_end" test_syslog3.txt
+    $gtm_tst/com/getoper.csh "$syslog_start" "" test_syslog3.txt
     grep -E "INVTMPDIR|INVLINKTMPDIR" test_syslog3.txt | $grep -c `cat runningMpid.txt`
 
     echo
@@ -95,9 +91,7 @@ if ((HOST_LINUX_IX86 != "$gtm_test_os_machtype") && (HOST_HP-UX_IA64 != "$gtm_te
     echo "gtm_linktmpdir is bogus - expect INVLINKTMPDIR from mumps (1)"
     source $gtm_tst/com/unset_ydb_env_var.csh ydb_tmp gtm_tmp
     $gtm_dist/mumps -run gtm8317util
-    sleep 1
-    set syslog_end = `date +"%b %e %H:%M:%S"`
-    $gtm_tst/com/getoper.csh "$syslog_start" "$syslog_end" test_syslog4.txt
+    $gtm_tst/com/getoper.csh "$syslog_start" "" test_syslog4.txt
     $grep INVLINKTMPDIR test_syslog4.txt | $grep -c `cat runningMpid.txt`
 
     echo
@@ -107,9 +101,10 @@ if ((HOST_LINUX_IX86 != "$gtm_test_os_machtype") && (HOST_HP-UX_IA64 != "$gtm_te
     echo
     echo "gtm_linktmpdir is bogus - expect gtmsecshr to not care (0)"
     $gtm_dist/gtmsecshr
+    # Since we are not expecting any messages, let us wait for 1 second to ensure any delayed messages from gtmsecshr
+    # are caught (and a failure is signaled) by the test. Hence the sleep 1 below.
     sleep 1
-    set syslog_end = `date +"%b %e %H:%M:%S"`
-    $gtm_tst/com/getoper.csh "$syslog_start" "$syslog_end" test_syslog5.txt
+    $gtm_tst/com/getoper.csh "$syslog_start" "" test_syslog5.txt
     $grep INVLINKTMPDIR test_syslog5.txt | $grep -c "SECSHR"
 endif
 
