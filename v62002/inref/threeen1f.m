@@ -98,8 +98,8 @@ digits  ;zero;eins;deux;tres;quattro;пять;ستة;सात;捌;ஒன்ப�
 	. if ^count write !,^count," jobs did not start"
         . Lock -l1                               ; Release lock so processes can run
         . Set startat=$HOROLOG                   ; Get starting time
-        . Lock +l2:$select($ztrnlnm("gtm_poollimit"):900,1:600)   ; Wait for processes to finish (may take longer with a poollimit)
-        . else  kill ^limits write !,"some jobs have not finished in 10 minutes"
+        . Lock +l2:3600
+        . else  kill ^limits write !,"some jobs have not finished in 1 hour"
         .
         . ; When parent gets lock l2, child processes have completed and parent gathers and reports results.
         . set endat=$HOROLOG                     ; Get ending time - time between startat and endat is the elapsed time

@@ -34,7 +34,7 @@
 	YDB_ASSERT(copy_done);					\
 }
 
-#define	LOCK_TIMEOUT	(unsigned long long)900000000000	/* 900 * 10^9 nanoseconds == 900 seconds == 15 minutes */
+#define	LOCK_TIMEOUT	(unsigned long long)3600000000000	/* 3600 * 10^9 nanoseconds == 3600 seconds == 1 hour */
 #define	MAXCHILDREN	32
 
 ydb_buffer_t	ylcl_di, ylcl_ds, ylcl_l1, ylcl_l2;
