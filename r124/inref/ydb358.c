@@ -15,12 +15,14 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include <errno.h>
+
 #include <sys/types.h>
 #include <sys/wait.h>
 
 int main()
 {
-	int		status, stat, ret;
+	int		status, stat, ret, save_errno;
 	ydb_buffer_t	parentvar, childvar, value;
 	char		valuebuff[64];
 	pid_t		child, pid;
@@ -55,7 +57,11 @@ int main()
 	{	/* parent */
 		/* Wait for child to terminate */
 		printf("Parent pid : Waiting for child to terminate\n"); fflush(stdout);
-		ret = waitpid(child, &stat, 0);
+		do
+		{
+			ret = waitpid(child, &stat, 0);
+			save_errno = errno;
+		} while ((-1 == ret) && (EINTR == save_errno));
 		YDB_ASSERT(-1 != ret);
 		printf("Parent pid : Halting\n"); fflush(stdout);
 	}
