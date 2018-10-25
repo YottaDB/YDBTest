@@ -1,0 +1,18 @@
+-------------------------------------------------------------------------------------------------------------
+# Test that a new version does not change whatever STDNULLCOLL settings are set in a global db set in a previous version.
+-------------------------------------------------------------------------------------------------------------
+# Choose a random version prior to the current version. If version is older than V63003 it will not be able to check STDNULLCOLL
+# Set the test version to the previous version
+# Create DBs DEFAULT, AREG, and BREG in previous version
+
+# If version permits, randomly set STDNULLCOLL in each region.
+# Perform some operations in mumps, and extract the global variables
+
+# Switch the test version back to the current version.
+# Test that .gld file from older version can be upgraded by newer version GDE without issues.
+
+# If version permits, check if STDNULLCOLL values are maintained.
+# Check if Global Variables are maintained.
+-----> Global Variables match
+
+# Check and shutdown the DB
