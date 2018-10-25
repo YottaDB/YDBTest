@@ -67,6 +67,7 @@
 # ydb362b	   [quinn] Test that connecting to a Receiver instance with a version prior to V60000 gives a YDB-E-UNIMPLOP and YDB-I-TEXT error.
 # ydb113	   [quinn] Test that $$getncol^%LCLCOL returns expected values when ydb_lct_stdnull env var is set to various values.
 # ydb114	   [quinn] Test that a new version does not change whatever settings are set in a global db set in a previous version.
+# ydb191	   [quinn] Test that remote file name specifications in the client side GLD use the GT.CM GNP server as appropriate.
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r124 test starts..."
@@ -78,6 +79,7 @@ setenv subtest_list_non_replic "$subtest_list_non_replic readonly ydb275socketpa
 setenv subtest_list_non_replic "$subtest_list_non_replic ydb324 ydb341 ydb343 ydb346mr ydb350 ydb352 ydb353 ydb348 ydb358 ydb359"
 setenv subtest_list_non_replic "$subtest_list_non_replic ydb356 ydb360 ydb357 ydb346 ydb95 ydb333 ydb329 ydb344 ydb258 ydb374"
 setenv subtest_list_non_replic "$subtest_list_non_replic ydb372 ydb363 ydb371 ydb349 ydb197 ydb233 ydb309 ydb383 ydb113 ydb114"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb191"
 setenv subtest_list_replic     ""
 setenv subtest_list_replic     "$subtest_list_replic ydb282srcsrvrerr ydb293 ydb312_gtm8182a ydb312_gtm8182b  ydb312_gtm8182c"
 setenv subtest_list_replic     "$subtest_list_replic ydb312_gtm8182d ydb312_gtm8182e ydb312_gtm8182f ydb312_gtm8182g ydb321"

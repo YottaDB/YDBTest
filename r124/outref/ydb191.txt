@@ -1,0 +1,37 @@
+----------------------------------------------------------------------------------------------------------
+# Test that remote file name specifications in the client side GLD use the GT.CM GNP server as appropriate
+----------------------------------------------------------------------------------------------------------
+
+# Create database with fullpath enabled
+# Use mumps to obtain the fullpath to the database
+
+# Change the DEFAULT segment in the database using the syntax: <hostname>:<filepath>.
+# This should use short-circuiting as <hostname> is the local host name and no @ syntax specified.
+# And so can satisfy the database reference locally (i.e. should not need the GNP server) without any error.
+
+# Change the DEFAULT segment in the database using the syntax: @<hostname>:<filepath>.
+# This should use the GNP server even though <hostname> is local due to the @ syntax.
+# Since there is no GNP server started, we expect a database access to error out.
+%YDB-E-NETDBOPNERR, Error while attempting to open database across net,%CMI-E-NOSERVENT, Sevices data lookup failure
+		At M source location case2+1^ydb191
+
+YDB>
+
+# Using fabricated remote server 'ghosthost' as a non-local hostname for the subtest.
+
+# Change the DEFAULT segment in the database using the syntax: <ghosthost>:<filepath>.
+# Since <ghosthost> is not a local hostname, this should need the GNP server irrespective of the presence/absence of @ syntax.
+# Since there is no GNP server started, we expect a database access to error out.
+%YDB-E-NETDBOPNERR, Error while attempting to open database across net,%CMI-E-NOSERVENT, Sevices data lookup failure
+		At M source location case3+1^ydb191
+
+YDB>
+
+# Change the DEFAULT segment in the database using the syntax: @<ghosthost>:<filename>.
+# Since <ghosthost> is not a local hostname, this should need the GNP server irrespective of the presence/absence of @ syntax.
+# Since there is no GNP server started, we expect a database access to error out.
+%YDB-E-NETDBOPNERR, Error while attempting to open database across net,%CMI-E-NOSERVENT, Sevices data lookup failure
+		At M source location case4+1^ydb191
+
+YDB>
+
