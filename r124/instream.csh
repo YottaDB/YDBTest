@@ -104,6 +104,9 @@ endif
 if ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) then
 	# filter out below test on 32-bit ARM since it relies on hash collisions which happen only on Linux x86_64 currently
 	setenv subtest_exclude_list "$subtest_exclude_list ydb297"
+
+	# filter out below test because it relies on versions prior to V60000, which do not exist on 32-bit ARM
+	setenv subtest_exclud_list "$subtest_exclude_list ydb362a ydb362b"
 endif
 
 source $gtm_tst/com/set_gtm_machtype.csh	# to setenv "gtm_test_linux_distrib"
