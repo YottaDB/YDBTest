@@ -1,0 +1,19 @@
+-------------------------------------------------------------------------------------------------------------------------------
+# Tests that opening a PIPE device issues a STDERRALREADYOPEN error if STDERR is specified and points to an already open device
+-------------------------------------------------------------------------------------------------------------------------------
+
+Run test case x.m. Previously produces unpredictable results as $PRINCIPAL is used in the STDERR.
+i = 1
+151027882,x+6^ydb345,%YDB-E-STDERRALREADYOPEN, STDERR deviceparameter specifies an already open device 0
+
+Run test case y.m. Previously closes $PRINCIPAL automatically and incorrectly if the PIPE device was closed.
+%YDB-E-STDERRALREADYOPEN, STDERR deviceparameter specifies an already open device 0
+		At M source location y+4^ydb345
+
+YDB>
+
+Run Test case z.m. Previously $PRINCIPAL would become READ-ONLY device when used as the STDERR for the OPEN of a PIPE.
+%YDB-E-STDERRALREADYOPEN, STDERR deviceparameter specifies an already open device 0
+		At M source location z+4^ydb345
+
+YDB>
