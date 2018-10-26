@@ -4,6 +4,9 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -90,9 +93,12 @@ wait_for_log "MUINSTFROZEN" freeze.out
 unfreeze
 wait_for_log "MUINSTUNFROZEN" freeze.out
 check_error_exist freeze.out "MUINSTFROZEN" "MUINSTUNFROZEN"
+# Wait for MUPIP FREEZE -ON process (running in the background) to terminate before attempting UNFREEZE.
+# Or else it is possible the UNFREEZE finishes even before the FREEZE has frozen all regions resulting in a frozen
+# region for the next stage of the test (which would cause a test hang).
+wait_for_proc_to_die `cat freeze.pid`
 # Unfreeze the region FREEZE itself for things to proceed for the purpose of the test.
 $MUPIP freeze -off "*" >&! unfreeze.out
-wait_for_proc_to_die `cat freeze.pid`
 
 echo ""
 echo "# MUPIP SET -JOURNAL"
