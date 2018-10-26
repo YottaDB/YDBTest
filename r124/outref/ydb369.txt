@@ -1,0 +1,127 @@
+-----------------------------------------------------------------------------------------------------------------------
+# Test that environmental variables can be set and unset using the VIEW "SETENV" and VIEW "UNSETENV" commands in mumps.
+-----------------------------------------------------------------------------------------------------------------------
+
+# Initialize the environment variable ydb369_var
+initialized
+
+# Case 1: VIEW "SETENV":"ydb369_var":case1, where case1="case1", should be successful
+
+Stepping STARTED
+ydb369+2^ydb369     :	do @$ZCMDLINE
+case1+1^ydb369      :	set case1="case1"
+case1+2^ydb369      :	VIEW "SETENV":"ydb369_var":case1
+case1+3^ydb369      :	write $ZTRNLNM("ydb369_var")
+case1
+case1+4^ydb369      :	quit
+ydb369+3^ydb369     :	quit
+
+# Case 2:  VIEW "SETENV":"ydb369_var":case2, where case2="case=2", should be successful
+
+Stepping STARTED
+ydb369+2^ydb369     :	do @$ZCMDLINE
+case2+1^ydb369      :	set case2="case=2"
+case2+2^ydb369      :	VIEW "SETENV":"ydb369_var":case2
+case2+3^ydb369      :	write $ZTRNLNM("ydb369_var")
+case=2
+case2+4^ydb369      :	quit
+ydb369+3^ydb369     :	quit
+
+# Case 3:  VIEW "SETENV":"ydb369_var":"abc""def", should be succesful
+
+Stepping STARTED
+ydb369+2^ydb369     :	do @$ZCMDLINE
+case3+1^ydb369      :	VIEW "SETENV":"ydb369_var":"abc""def"
+case3+2^ydb369      :	write $ZTRNLNM("ydb369_var")
+abc"def
+case3+3^ydb369      :	quit
+ydb369+3^ydb369     :	quit
+
+# Case 4:  VIEW "SETENV", should issue a VIEWARGCNT error
+
+Stepping STARTED
+ydb369+2^ydb369     :	do @$ZCMDLINE
+case4+1^ydb369      :	VIEW "SETENV"
+%YDB-E-VIEWARGCNT, View parameter SETENV has inappropriate number of subparameters
+		At M source location case4+1^ydb369
+
+YDB>
+
+# Case 5:  VIEW "SETENV":"", should result in no-op since env var name is null
+
+Stepping STARTED
+ydb369+2^ydb369     :	do @$ZCMDLINE
+case5+1^ydb369      :	VIEW "SETENV":""
+case5+2^ydb369      :	quit
+ydb369+3^ydb369     :	quit
+
+# Case 6:  VIEW "SETENV":"":"", should result in no-op since env var name is null
+
+Stepping STARTED
+ydb369+2^ydb369     :	do @$ZCMDLINE
+case6+1^ydb369      :	VIEW "SETENV":"":""
+case6+2^ydb369      :	quit
+ydb369+3^ydb369     :	quit
+
+# Case 7:  VIEW "SETENV":"ydb369_var":"", should set ydb369_var to ""
+
+Stepping STARTED
+ydb369+2^ydb369     :	do @$ZCMDLINE
+case7+1^ydb369      :	VIEW "SETENV":"ydb369_var":""
+case7+2^ydb369      :	write $ZTRNLNM("ydb369_var")
+case7+3^ydb369      :	quit
+ydb369+3^ydb369     :	quit
+
+# Case 8:  VIEW "SETENV":"ydb369_var":"case8", should set ydb369_var to case8
+
+Stepping STARTED
+ydb369+2^ydb369     :	do @$ZCMDLINE
+case8+1^ydb369      :	VIEW "SETENV":"ydb369_var":"case8"
+case8+2^ydb369      :	write $ZTRNLNM("ydb369_var")
+case8
+case8+3^ydb369      :	quit
+ydb369+3^ydb369     :	quit
+
+# Case 9:  VIEW "SETENV":"ydb369_var":"case9":"extra", should set ydb369_var to case9 and ignore extra
+
+Stepping STARTED
+ydb369+2^ydb369     :	do @$ZCMDLINE
+case9+1^ydb369      :	VIEW "SETENV":"ydb369_var":"case9":"extra"
+case9+2^ydb369      :	write $ZTRNLNM("ydb369_var")
+case9
+case9+3^ydb369      :	quit
+ydb369+3^ydb369     :	quit
+
+# Case 10:  VIEW "SETENV":"x=y":"case10":"extra", should issues a SETENVFAIL error
+
+Stepping STARTED
+ydb369+2^ydb369     :	do @$ZCMDLINE
+case10+1^ydb369     :	VIEW "SETENV":"x=y":"case10":"extra"
+##TEST_AWK%YDB-E-SETENVFAIL, VIEW "SETENV":"x=y" failed in setenv\(\) system call,%YDB-E-SYSCALL, Error received from system call setenv\(\) -- called from module .*/op_view.c at line .*,%SYSTEM-E-ENO22, Invalid argument
+		At M source location case10+1^ydb369
+
+YDB>
+
+# Case 11:  VIEW "SETENV":a:b, should succesfully set the value set in b to the env var set in a
+
+Stepping STARTED
+ydb369+2^ydb369     :	do @$ZCMDLINE
+case11+1^ydb369     :	set a="ydb369_var"
+case11+2^ydb369     :	set b="case11"
+case11+3^ydb369     :	VIEW "SETENV":a:b
+case11+4^ydb369     :	write $ZTRNLNM("ydb369_var")
+case11
+case11+5^ydb369     :	quit
+ydb369+3^ydb369     :	quit
+
+# Case 12:  VIEW "SETENV":"ydb369_var":"case12", then VIEW "UNSETENV":"ydb369_var", should successfully unset ydb369_var
+
+Stepping STARTED
+ydb369+2^ydb369     :	do @$ZCMDLINE
+case12+1^ydb369     :	VIEW "SETENV":"ydb369_var":"case12"
+case12+2^ydb369     :	write $ZTRNLNM("ydb369_var")
+case12
+case12+3^ydb369     :	VIEW "UNSETENV":"ydb369_var"
+case12+4^ydb369     :	write $ZTRNLNM("ydb369_var")
+case12+5^ydb369     :	quit
+ydb369+3^ydb369     :	quit
