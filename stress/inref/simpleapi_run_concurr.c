@@ -16,6 +16,7 @@
 
 #include <stdio.h>	/* for "printf" */
 #include <string.h>	/* for "strlen" */
+#include <errno.h>	/* for "errno" */
 
 #include <unistd.h>	/* needed for "getpid" and "sleep" */
 #include <fcntl.h>	/* for "creat" prototype */
@@ -97,6 +98,7 @@ int main(int argc, char *argv[])
 {
 	int		childcnt, i, status, stat[NCHILDREN + 1], ret[NCHILDREN + 1];
 	pid_t		child_pid[NCHILDREN + 1];
+	int		save_errno;
 
 	process_id = getpid();
 
@@ -188,7 +190,11 @@ int main(int argc, char *argv[])
 	/* Wait for children to terminate */
 	for (child = 1; child <= NCHILDREN; child++)
 	{
-		ret[child] = waitpid(child_pid[child], &stat[child], 0);
+		do
+		{
+			ret[child] = waitpid(child_pid[child], &stat[child], 0);
+			save_errno = errno;
+		} while ((-1 == ret[child]) && (EINTR == save_errno));
 		YDB_ASSERT(-1 != ret[child]);
 	}
 	/* write !,"Each job will exit now or has already exited",! : stress^stress */
