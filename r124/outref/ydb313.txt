@@ -1,0 +1,79 @@
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+# Test that MUPIP FTOK -JNLPOOL and MUPIP FTOK -RECVPOOL operate on the specified instance file and ignore ydb_repl_instance/gtm_repl_instance env var.
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Create the DB
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+
+# Perform some operations in mumps
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+# Create a non .repl file and a .repl file to be used in subtest
+==Executing MULTISITE_REPLIC 'RUN INST2 echo "This is not the replication file you are looking for" > droids.txt'==
+==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST2 $gtm_tst/com/cp_remote_file.csh __SRC_DIR__/mumps.repl _REMOTEINFO___RCV_DIR__/droids.repl'==
+--------------------------------------------------------------------------------------------------------------------------
+# Test that the commands work fine when ydb_repl_instance/gtm_repl_instance are undefined
+# MUPIP FTOK -JNLPOOL
+# MUPIP FTOK -RECVPOOL
+# $$^%PEEKBYNAME("repl_inst_hdr.jnlpool_semid") and $$^%PEEKBYNAME("repl_inst_hdr.jnlpool_shmid")
+# $$^%PEEKBYNAME("repl_inst_hdr.recvpool_semid") and $$^%PEEKBYNAME("repl_inst_hdr.recvpool_shmid")
+
+# Check IPC keys to make sure Semaphore IDs are found
+jnlpool Semaphore ID found
+recvpool Semaphore ID found
+jnlpool Semaphore ID from PEEKBYNAME matches jnlpool Semaphore ID from MUPIP FTOK -JNLPOOL
+recvpool Semaphore ID from PEEKBYNAME matches recvpool Semaphore ID from MUPIP FTOK -RECVPOOL
+
+# Check IPC keys to make sure Memory IDs are found
+jnlpool Memory ID found
+recvpool Memory ID found
+jnlpool Memory ID from PEEKBYNAME matches jnlpool Memory ID from MUPIP FTOK -JNLPOOL
+recvpool Memory ID from PEEKBYNAME matches recvpool Memory ID from MUPIP FTOK -RECVPOOL
+--------------------------------------------------------------------------------------------------------------------------
+# Test that the commands work fine when ydb_repl_instance/gtm_repl_instance are set to non .repl files
+# MUPIP FTOK -JNLPOOL
+# MUPIP FTOK -RECVPOOL
+# $$^%PEEKBYNAME("repl_inst_hdr.jnlpool_semid") and $$^%PEEKBYNAME("repl_inst_hdr.jnlpool_shmid")
+# $$^%PEEKBYNAME("repl_inst_hdr.recvpool_semid") and $$^%PEEKBYNAME("repl_inst_hdr.recvpool_shmid")
+
+# Check IPC keys to make sure Semaphore IDs are found
+jnlpool Semaphore ID found
+recvpool Semaphore ID found
+jnlpool Semaphore ID from PEEKBYNAME matches jnlpool Semaphore ID from MUPIP FTOK -JNLPOOL
+recvpool Semaphore ID from PEEKBYNAME matches recvpool Semaphore ID from MUPIP FTOK -RECVPOOL
+
+# Check IPC keys to make sure Memory IDs are found
+jnlpool Memory ID found
+recvpool Memory ID found
+jnlpool Memory ID from PEEKBYNAME matches jnlpool Memory ID from MUPIP FTOK -JNLPOOL
+recvpool Memory ID from PEEKBYNAME matches recvpool Memory ID from MUPIP FTOK -RECVPOOL
+--------------------------------------------------------------------------------------------------------------------------
+# Test that the commands work fine when ydb_repl_instance/gtm_repl_instance are set to some other .repl files
+# MUPIP FTOK -JNLPOOL
+# MUPIP FTOK -RECVPOOL
+# $$^%PEEKBYNAME("repl_inst_hdr.jnlpool_semid") and $$^%PEEKBYNAME("repl_inst_hdr.jnlpool_shmid")
+# $$^%PEEKBYNAME("repl_inst_hdr.recvpool_semid") and $$^%PEEKBYNAME("repl_inst_hdr.recvpool_shmid")
+
+# Check IPC keys to make sure Semaphore IDs are found
+jnlpool Semaphore ID found
+recvpool Semaphore ID found
+jnlpool Semaphore ID from PEEKBYNAME matches jnlpool Semaphore ID from MUPIP FTOK -JNLPOOL
+recvpool Semaphore ID from PEEKBYNAME matches recvpool Semaphore ID from MUPIP FTOK -RECVPOOL
+
+# Check IPC keys to make sure Memory IDs are found
+jnlpool Memory ID found
+recvpool Memory ID found
+jnlpool Memory ID from PEEKBYNAME matches jnlpool Memory ID from MUPIP FTOK -JNLPOOL
+recvpool Memory ID from PEEKBYNAME matches recvpool Memory ID from MUPIP FTOK -RECVPOOL
+--------------------------------------------------------------------------------------------------------------------------
+
+# Check and shutdown the DB

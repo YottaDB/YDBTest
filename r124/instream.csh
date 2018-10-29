@@ -70,6 +70,7 @@
 # ydb191	   [quinn] Test that remote file name specifications in the client side GLD use the GT.CM GNP server as appropriate.
 # ydb345	   [quinn] Tests that opening a PIPE device issues an error if STDERR is specified and points to an already open device.
 # ydb369	   [quinn] Test that environmental variables can be set and unset using the VIEW "SETENV" and VIEW "UNSETENV" commands in mumps.
+# ydb313	   [quinn] Test that MUPIP FTOK -JNLPOOL and MUPIP FTOK -RECVPOOL operate on the specified instance file and ignore ydb_repl_instance/gtm_repl_instance env var.
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r124 test starts..."
@@ -85,7 +86,7 @@ setenv subtest_list_non_replic "$subtest_list_non_replic ydb191 ydb345 ydb369"
 setenv subtest_list_replic     ""
 setenv subtest_list_replic     "$subtest_list_replic ydb282srcsrvrerr ydb293 ydb312_gtm8182a ydb312_gtm8182b  ydb312_gtm8182c"
 setenv subtest_list_replic     "$subtest_list_replic ydb312_gtm8182d ydb312_gtm8182e ydb312_gtm8182f ydb312_gtm8182g ydb321"
-setenv subtest_list_replic     "$subtest_list_replic ydb361 ydb364 ydb362a ydb362b"
+setenv subtest_list_replic     "$subtest_list_replic ydb361 ydb364 ydb362a ydb362b ydb313"
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
