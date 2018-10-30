@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-;	Copyright 2014 Fidelity Information Services, Inc	;
+; Copyright 2014 Fidelity Information Services, Inc		;
+;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -14,7 +17,8 @@ gtm8146	;$ZSEARCH() range and interaction with ZCOMPILE
 	if '$data(act) new act set act="use $p write !,$zpos,! zprint @$zpos zshow ""v"""
 	new $etrap,$estack; zbreak err:"zstep into"
 	set $ecode="",$etrap="goto err",zl=$zlevel;,$zstep="zprint @$zpositio zstep into"
-	set expect="ZSRCHSTRMCT",x=$zsearch("*.m",-1) if $increment(cnt) xecute act	; check below range detection
+	; $zsearch(expr,NEG) is valid only if NEG=-1 and invalid for all other negative NEG. Test that below using $random.
+	set expect="ZSRCHSTRMCT",x=$zsearch("*.m",-(2+$random(255))) if $increment(cnt) xecute act	; check below range detection
 	set x=$zsearch("*.m",256) if $increment(cnt) xecute act	; check above range detection
 	set expect="",$zcompile="-noobject -nowarning"
 	set:$zversion["VMS" $zcompile=$translate($zcompile,"-","/")	; but $ZCOMPILE doesn't work in VMS
