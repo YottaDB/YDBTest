@@ -1,16 +1,30 @@
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+# This module is derived from FIS GT.M.
+#################################################################
+
 set gtm_dist [lrange $argv 0 0]
 spawn $gtm_dist/mupip journal -recover -forward mumps.mjl,copy.mjl -nochecktn
-# Wait 15 second so the process gets running, and to be sure that the prompt won't be reprinted upon EINTR
-expect -timeout 15
-# check that CTRL-D is considered as a NO
+puts "# Wait until the recover prompts for input, and to be sure that the prompt won't be reprinted upon EINTR"
+# Use {} syntax below to avoid escaping [ and ] which are special characters if used within double-quotes
+expect -exact {Proceed? [Y/N]: }
+puts "# Check that CTRL-D is considered as a NO"
 send -- \004
-expect -timeout 30
-wait
+expect eof
 spawn $gtm_dist/mupip journal -recover -forward mumps.mjl,copy.mjl -nochecktn
-expect -timeout 10
-# check that pressing ENTER get the prompt reprinted
+# Use {} syntax below to avoid escaping [ and ] which are special characters if used within double-quotes
+expect -exact {Proceed? [Y/N]: }
+puts "# Check that pressing ENTER get the prompt reprinted"
 send -- "\r"
-expect -timeout 5
+expect -exact "Please enter Y or N:"
 send -- "N\r"
-expect -timeout 30
-wait
+expect eof
