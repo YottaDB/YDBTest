@@ -15,7 +15,6 @@
 # List of subtests of the form "subtestname [author] description"
 #-------------------------------------------------------------------------------------
 # zindcacheoverflow [ashok] Test fix to indirect code cache stats 4-byte overflow error
-# largelvarray      [nars]  Test local array performance does not deteriorate exponentially with large # of nodes
 # patnotfound       [nars]  Test runtime behavior after PATNOTFOUND compile-time error
 # readtimeout       [nars]  Test that READ X:TIMEOUT works correctly if TIMEOUT is a fraction with more than 3 decimal digits
 # miximage          [nars]  Test MIXIMAGE error is appropriately issued when multiple images are mixed in same process
@@ -38,7 +37,7 @@ echo "r120 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "zindcacheoverflow largelvarray patnotfound readtimeout miximage zeofprocfs"
+setenv subtest_list_non_replic "zindcacheoverflow patnotfound readtimeout miximage zeofprocfs"
 setenv subtest_list_non_replic "$subtest_list_non_replic libyottadb zstepoveroutof msgprefix ydbdist divzero"
 setenv subtest_list_non_replic "$subtest_list_non_replic readcmdrecallhist nestedtriggers"
 setenv subtest_list_non_replic "$subtest_list_non_replic ctrlchandler ydb_gbldir ydb_maxtptime ydb_dbglvl"
@@ -53,11 +52,6 @@ endif
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
 setenv subtest_exclude_list	""
-
-# Disable certain heavyweight tests on single-cpu systems
-if ($gtm_test_singlecpu) then
-	setenv subtest_exclude_list "$subtest_exclude_list largelvarray"
-endif
 
 # Disable certain time-sensitive tests on single-cpu systems as it uses expect (a terminal and interactive activity)
 if ($gtm_test_singlecpu) then
