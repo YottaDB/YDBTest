@@ -3,7 +3,7 @@
 #								#
 #	Copyright 2002, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -461,5 +461,15 @@ $grep "Flush trigger" change.log
 # test for NULL_SUBSCRIPTS included in add.csh
 
 # YET TO BE TESTED : TIMERS_PENDING
+
+echo "--------------------- Test 39 ---------------------"
+echo "# Test that MUPIP JOURNAL EXTRACT shows the DSE commands as AIMG records"
+# Extracting from mumps.mjl and a.mjl
+if ($?test_replic == 1) then
+	foreach mjl( *.mjl )
+		$ydb_dist/mupip journal -extract -detail -forward $mjl >>& extr_report.txt
+		cat $mjl:r.mjf | grep "AIMG" | awk -F\\ '{print "AIMG "$11}'
+	end
+endif
 $gtm_tst/com/dbcheck.csh
 

@@ -1,0 +1,20 @@
+--------------------------------------------------------------------------------------------
+# Test that executed DSE commands appear as AIMG records after extracting from a journal.
+--------------------------------------------------------------------------------------------
+# Set Test to Enable Journaling in dbcreate.csh
+
+# Create a Database
+# Perform various DSE commands
+
+##TEST_AWKFile  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+##TEST_AWKFile  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+# Perform a Journal Extract
+AIMG change -block=2 -bsiz=0xFA0
+AIMG overwrite -block=2 -data=ydb96 -offset=CA
+
+# Check and Close the Database

@@ -5,16 +5,16 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 a.dat
 mumps.dat
-##SUSPEND_OUTPUT  NON_REPLIC
+##SUSPEND_OUTPUT NON_REPLIC
 Files Created in ##REMOTE_TEST_PATH##:
-Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+Using: ##SOURCE_PATH##/mumps -run GDE
 mumps.gld
-Using: ##REMOTE_SOURCE_PATH##/mupip
+Using: ##SOURCE_PATH##/mupip
 a.dat
 mumps.dat
 Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
-##ALLOW_OUTPUT  NON_REPLIC
+##ALLOW_OUTPUT NON_REPLIC
 
 YDB>
 
@@ -116,7 +116,7 @@ Block      1E0:	|  ........  ........  ........  ........  |
 'X' == BUSY  '.' == FREE  ':' == REUSABLE  '?' == CORRUPT
 
 %YDB-E-BITMAPSBAD, Database bit maps are incorrect
-##TEST_AWKDSE. Database ##TEST_PATH##/a.dat . CRIT Owned by pid .*
+##TEST_AWKDSE> Database ##TEST_PATH##/a.dat : CRIT Owned by pid .*
 DSE> 
 Restoring block 0 from version 1
 
@@ -155,17 +155,23 @@ DSE>
 
 DSE> Error:  offset must be specified.
 DSE> Error:  data must be specified.
-##SUSPEND_OUTPUT  NON_REPLIC
-DSE> DSE> Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+DSE> DSE> # Test that MUPIP JOURNAL EXTRACT shows the DSE commands as AIMG records
+##SUSPEND_OUTPUT NONREPLIC
+AIMG overwrite -data="as" -off=10
+AIMG restore -bl=0 -ver=1
+AIMG overwrite -block=3 -data="datahave" -off=45
+AIMG overwrite -data="as" -off=10
+AIMG restore -bl=0 -ver=1
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 Shutting down Primary Source Server Server in ##TEST_PATH##
 ##SOURCE_PATH##/mupip
-##SUSPEND_OUTPUT  REPLIC
-##ALLOW_OUTPUT  NON_REPLIC
-DSE> DSE> ##SOURCE_PATH##/mupip
-##ALLOW_OUTPUT  REPLIC
+##SUSPEND_OUTPUT REPLIC
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##ALLOW_OUTPUT REPLIC
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
-##SUSPEND_OUTPUT  NON_REPLIC
+##SUSPEND_OUTPUT NON_REPLIC
 ##REMOTE_SOURCE_PATH##/mupip
 ##REMOTE_SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

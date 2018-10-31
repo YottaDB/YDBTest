@@ -1,4 +1,17 @@
 #! /usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+# This module is derived from FIS GT.M.
+#################################################################
 
 # Test dse -overwrite command
 
@@ -53,7 +66,7 @@ restore -bl=0 -ver=1
 
 DSE_EOF
 
-# do same test as above except use crit -seize before that; in this case, dse should keep holding onto crit 
+# do same test as above except use crit -seize before that; in this case, dse should keep holding onto crit
 # also test that even if we dont do crit -release, dse halts out fine.
 
 $DSE << DSE_EOF
@@ -85,6 +98,15 @@ overwrite -data="king"
 overwrite -offset=23
 
 DSE_EOF
+
+echo "# Test that MUPIP JOURNAL EXTRACT shows the DSE commands as AIMG records"
+# Extracting from mumps.mjl and a.mjl
+if ($?test_replic == 1) then
+	foreach mjl( *.mjl )
+		$ydb_dist/mupip journal -extract -detail -forward $mjl >>& extr_report.txt
+		cat $mjl:r.mjf | grep "AIMG" | awk -F\\ '{print "AIMG "$11}'
+	end
+endif
 
 # Verify if the above operations have done any damage to the database
 $gtm_tst/com/dbcheck.csh

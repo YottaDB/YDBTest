@@ -4,7 +4,7 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 a.dat
 mumps.dat
-##SUSPEND_OUTPUT  NON_REPLIC
+##SUSPEND_OUTPUT NON_REPLIC
 Files Created in ##REMOTE_TEST_PATH##:
 Using: ##SOURCE_PATH##/mumps -run GDE
 mumps.gld
@@ -13,7 +13,7 @@ a.dat
 mumps.dat
 Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
-##ALLOW_OUTPUT  NON_REPLIC
+##ALLOW_OUTPUT NON_REPLIC
 
 YDB>
 
@@ -34,7 +34,7 @@ Region	AREG
 DSE> DSE> 
 Seized write critical section.
 
-##TEST_AWKDSE. DSE. Database ##TEST_PATH##/a.dat . CRIT Owned by pid .*
+##TEST_AWKDSE> DSE> Database ##TEST_PATH##/a.dat : CRIT Owned by pid .*
 DSE> Error: invalid level for a bit map block.
 DSE> DSE> DSE> --------------------- Test 3 ---------------------
 
@@ -194,7 +194,7 @@ Seized write critical section.
 
 DSE> DSE> %YDB-E-REC2BIG, Record size (23) is greater than maximum (22) for region: AREG
 %YDB-I-GVIS, 		Global variable: aglobal
-##TEST_AWKDSE. Database ##TEST_PATH##/a.dat . CRIT Owned by pid .*
+##TEST_AWKDSE> Database ##TEST_PATH##/a.dat : CRIT Owned by pid \[.*\]
 DSE> --------------------- Test 20 ---------------------
 
 File  	##TEST_PATH##/a.dat
@@ -203,7 +203,6 @@ Region	AREG
 DSE> DSE> DSE> DSE> DSE> DSE> 
 Rec:2  Blk 27  Off 45  Size AE  Cmpc 8  Key ^aglobal("abcdefghij","klmnopqrstuvwxyz")
 
-##SUSPEND_OUTPUT MM_FILE_NO_EXT
 DSE> DSE> DSE> --------------------- Test 21 ---------------------
 
 File  	##TEST_PATH##/a.dat
@@ -218,10 +217,6 @@ DSE> DSE> DSE>
 Rec:E  Blk 27  Off 247  Size 2B  Cmpc A  Key ^aglobal(1234,44424)
 
 DSE> DSE> --------------------- Test 22 ---------------------
-##ALLOW_OUTPUT   MM_FILE_NO_EXT
-##SUSPEND_OUTPUT MM_FILE_EXT
-DSE> DSE> DSE> --------------------- Test 22 ---------------------
-##ALLOW_OUTPUT   MM_FILE_EXT
 
 File  	##TEST_PATH##/a.dat
 Region	AREG
@@ -283,14 +278,39 @@ Region	AREG
 
 DSE> DSE> DSE> --------------------- Test 38 ---------------------
   Freeze match                   0x00000000  Flush trigger                 1024
-##SUSPEND_OUTPUT  NON_REPLIC
+--------------------- Test 39 ---------------------
+# Test that MUPIP JOURNAL EXTRACT shows the DSE commands as AIMG records
+##SUSPEND_OUTPUT NON_REPLIC
+AIMG change -block=0 -bsiz=90
+AIMG change -block=0 -tn=10
+AIMG change -block=0 -level=FF
+AIMG change  -leve=1 -block=27
+AIMG change -block=27 -level=0
+AIMG change  -tn=1000 -block=27
+AIMG change  -tn=4D2 -block=27
+AIMG change  -reco=4 -cmpc=0 -block=27
+AIMG change -reco=4 -cm=A -block=27
+AIMG change -record=4 -rs=4 -block=27
+AIMG change -record=4 -rsiz=3B  -block=27
+AIMG change -record=4 -rsiz=2B -block=27
+AIMG change  -offs=9E -cmpc=0 -block=27
+AIMG change -offs=9E -cmpc=A -block=27
+AIMG change -offset=9E -rsiz=4 -block=27
+AIMG change -offset=9E -rsiz=3B -block=27
+AIMG change -offset=9E -rsiz=2B -block=27
+AIMG change -bsiz=10 -block=27
+AIMG change  -bsiz=272  -block=27
+AIMG change -offset=10 -cmpc=A -block=27
+AIMG change -offset=10 -cmpc=0 -block=27
+AIMG change -offset=271 -cmpc=0 -block=27
+AIMG change -offset=271 -cmpc=A -block=27
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 Shutting down Primary Source Server Server in ##TEST_PATH##
-##ALLOW_OUTPUT  NON_REPLIC
+##ALLOW_OUTPUT NON_REPLIC
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
-##SUSPEND_OUTPUT  NON_REPLIC
+##SUSPEND_OUTPUT NON_REPLIC
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
