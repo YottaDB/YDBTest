@@ -65,7 +65,12 @@ if !(("hp-ux" == "$gtm_test_osname") || ("aix" == "$gtm_test_osname")) then
 		echo "setenv gtm_test_vlimit $gtm_test_vlimit"		>>&! settings.csh
 	endif
 
-	$gtm_exe/mumps -run gtm8047 >& gtm8047.outx
+	# Get strace output to help debug cases where mumps process abruptly terminates without issuing a MEMORY error.
+	# Keep strace output in trace.outx file (not trace.out) since it could have error messages (e.g. EACCESS) which
+	# later get caught by test system framework signaling a false failure.
+	set stracek = `strace -h | grep "\-k" | $tst_awk '{print $1}'`	# Find if strace -k is supported. If so, it helps
+									# even more with debugging since it gives YottaDB C-stack
+	strace $stracek -o trace.outx $gtm_exe/mumps -run gtm8047 >& gtm8047.outx
 
 	# The test will create YDB_FATAL_* files in most cases but in some cases it might not. So filter that out.
 	mv -f YDB_FATAL* filter.ZSHOW_DMP >& mv.out
