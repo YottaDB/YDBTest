@@ -16,15 +16,15 @@ set gtm_dist [lrange $argv 0 0]
 spawn $gtm_dist/mupip journal -recover -forward mumps.mjl,copy.mjl -nochecktn
 puts "# Wait until the recover prompts for input, and to be sure that the prompt won't be reprinted upon EINTR"
 # Use {} syntax below to avoid escaping [ and ] which are special characters if used within double-quotes
-expect -exact {Proceed? [Y/N]: }
+expect -exact {Proceed? [Y/N]: \r}
 puts "# Check that CTRL-D is considered as a NO"
 send -- \004
 expect eof
 spawn $gtm_dist/mupip journal -recover -forward mumps.mjl,copy.mjl -nochecktn
 # Use {} syntax below to avoid escaping [ and ] which are special characters if used within double-quotes
-expect -exact {Proceed? [Y/N]: }
-puts "# Check that pressing ENTER get the prompt reprinted"
+expect -exact {Proceed? [Y/N]: \r}
+puts "# Check that pressing ENTER gets the prompt reprinted"
 send -- "\r"
-expect -exact "Please enter Y or N:"
+expect -exact "Please enter Y or N: \r"
 send -- "N\r"
 expect eof

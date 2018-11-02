@@ -51,7 +51,7 @@ spawn ##SOURCE_PATH##/mupip journal -recover -forward mumps.mjl,copy.mjl -nochec
 ##TEST_AWK.*%YDB-I-TEXT, Transaction number continuity check failed: \[0x[0-9A-F]*\] vs \[0x[0-9A-F]*\]
 ##TEST_AWK.*%YDB-E-JNLBADRECFMT, Journal File Record Format Error encountered for file ##TEST_PATH##/copy.mjl at disk address 0x##TEST_AWK.*
 Proceed? [Y/N]: 
-# Check that pressing ENTER get the prompt reprinted
+# Check that pressing ENTER gets the prompt reprinted
 
 Please enter Y or N: 
 N
