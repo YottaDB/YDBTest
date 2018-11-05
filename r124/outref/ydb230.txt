@@ -1,0 +1,59 @@
+---------------------------------------------------------------------------------------------------------------------------
+# Tests that using -1 as the optional parameter for $zsearch() returns the first file match instead of a ZSRCHSTRMCT error.
+---------------------------------------------------------------------------------------------------------------------------
+# Create a set of files to search for
+# Case 1: Use $zsearch() with a second parameter between 0-255
+##TEST_PATH##/ydb230_a.txt
+##TEST_PATH##/ydb230_b.txt
+##TEST_PATH##/ydb230_c.txt
+
+# Case 2: Use $zsearch() with a second parameter of -1, it should print the first file found no matter how many times repeated
+##TEST_PATH##/ydb230_a.txt
+##TEST_PATH##/ydb230_a.txt
+##TEST_PATH##/ydb230_a.txt
+
+# Case 3: Use $zsearch() with a second paramter of 0-9 or -1, and test to see if streams maintain file when randomized.
+Files from Stream -1
+##TEST_PATH##/ydb230_a.txt
+##TEST_PATH##/ydb230_a.txt
+##TEST_PATH##/ydb230_a.txt
+Files from Random Stream # between 0 and 255 (inclusive)
+##TEST_PATH##/ydb230_a.txt
+##TEST_PATH##/ydb230_b.txt
+##TEST_PATH##/ydb230_c.txt
+Files from Random Stream # between 0 and 255 (inclusive)
+##TEST_PATH##/ydb230_a.txt
+##TEST_PATH##/ydb230_b.txt
+##TEST_PATH##/ydb230_c.txt
+Files from Random Stream # between 0 and 255 (inclusive)
+##TEST_PATH##/ydb230_a.txt
+##TEST_PATH##/ydb230_b.txt
+##TEST_PATH##/ydb230_c.txt
+Files from Random Stream # between 0 and 255 (inclusive)
+##TEST_PATH##/ydb230_a.txt
+##TEST_PATH##/ydb230_b.txt
+##TEST_PATH##/ydb230_c.txt
+Files from Random Stream # between 0 and 255 (inclusive)
+##TEST_PATH##/ydb230_a.txt
+##TEST_PATH##/ydb230_b.txt
+##TEST_PATH##/ydb230_c.txt
+Files from Random Stream # between 0 and 255 (inclusive)
+##TEST_PATH##/ydb230_a.txt
+##TEST_PATH##/ydb230_b.txt
+##TEST_PATH##/ydb230_c.txt
+Files from Random Stream # between 0 and 255 (inclusive)
+##TEST_PATH##/ydb230_a.txt
+##TEST_PATH##/ydb230_b.txt
+##TEST_PATH##/ydb230_c.txt
+Files from Random Stream # between 0 and 255 (inclusive)
+##TEST_PATH##/ydb230_a.txt
+##TEST_PATH##/ydb230_b.txt
+##TEST_PATH##/ydb230_c.txt
+Files from Random Stream # between 0 and 255 (inclusive)
+##TEST_PATH##/ydb230_a.txt
+##TEST_PATH##/ydb230_b.txt
+##TEST_PATH##/ydb230_c.txt
+Files from Random Stream # between 0 and 255 (inclusive)
+##TEST_PATH##/ydb230_a.txt
+##TEST_PATH##/ydb230_b.txt
+##TEST_PATH##/ydb230_c.txt
