@@ -13,6 +13,22 @@ TEST CASE 1: Small value for verify-depth should issue an appropriate error.
 
 ==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
 ==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+----------
+Error W-TLSHANDSHAKE seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
+%YDB-W-TLSHANDSHAKE, Connection to remote side using TLS/SSL protocol failed
+----------
+----------
+Error YDB-I-TEXT seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
+##TEST_AWK%YDB-I-TEXT, error:.*:SSL routines:(tls_process_server_certificate|ssl3_get_server_certificate):certificate verify failed
+----------
+----------
+Error W-TLSHANDSHAKE seen in ##FILTERED##RCVR_##TIMESTAMP##.log as expected:
+%YDB-W-TLSHANDSHAKE, Connection to remote side using TLS/SSL protocol failed
+----------
+----------
+Error YDB-I-TEXT seen in ##FILTERED##RCVR_##TIMESTAMP##.log as expected:
+%YDB-I-TEXT, error:14094418:SSL routines:ssl3_read_bytes:tlsv1 alert unknown ca
+----------
 
 TEST-I-PASSED, TLSHANDSHAKE is found in replication logs as expected.
 
@@ -30,7 +46,7 @@ Error W-TLSCONVSOCK seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
 ----------
 ----------
 Error YDB-I-TEXT seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
-%YDB-I-TEXT, Failed to read private key ##TEST_PATH##/demoCA/private/client.key. Reason: error:0906D066:PEM routines:PEM_read_bio:bad end line
+##TEST_AWK%YDB-I-TEXT, Failed to read private key ##TEST_PATH##/demoCA/private/client.key. Reason: error:.*:PEM routines:(PEM_read_bio|get_header_and_data):bad end line
 ----------
 ==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
 Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
@@ -40,6 +56,22 @@ TEST CASE 3: Test that specifying neither CAfile nor CApath leads to an error du
 
 ==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
 ==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+----------
+Error W-TLSHANDSHAKE seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
+%YDB-W-TLSHANDSHAKE, Connection to remote side using TLS/SSL protocol failed
+----------
+----------
+Error YDB-I-TEXT seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
+##TEST_AWK%YDB-I-TEXT, error:.*:SSL routines:(tls_process_server_certificate|ssl3_get_server_certificate):certificate verify failed
+----------
+----------
+Error W-TLSHANDSHAKE seen in ##FILTERED##RCVR_##TIMESTAMP##.log as expected:
+%YDB-W-TLSHANDSHAKE, Connection to remote side using TLS/SSL protocol failed
+----------
+----------
+Error YDB-I-TEXT seen in ##FILTERED##RCVR_##TIMESTAMP##.log as expected:
+%YDB-I-TEXT, error:14094418:SSL routines:ssl3_read_bytes:tlsv1 alert unknown ca
+----------
 
 TEST-I-PASSED, TLSHANDSHAKE is found in replication logs as expected.
 
@@ -67,6 +99,30 @@ TEST CASE 5: Test that expired certificates issues appropriate errors.
 
 ==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
 ==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+##SUSPEND_OUTPUT TLS1.3MINUS
+----------
+Error W-TLSIOERROR seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
+%YDB-W-TLSIOERROR, Error during TLS/SSL recv operation
+----------
+##ALLOW_OUTPUT TLS1.3MINUS
+##SUSPEND_OUTPUT TLS1.3PLUS
+----------
+Error W-TLSHANDSHAKE seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
+%YDB-W-TLSHANDSHAKE, Connection to remote side using TLS/SSL protocol failed
+----------
+##ALLOW_OUTPUT TLS1.3PLUS
+----------
+Error YDB-I-TEXT seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
+%YDB-I-TEXT, error:14094415:SSL routines:ssl3_read_bytes:sslv3 alert certificate expired
+----------
+----------
+Error W-TLSHANDSHAKE seen in ##FILTERED##RCVR_##TIMESTAMP##.log as expected:
+%YDB-W-TLSHANDSHAKE, Connection to remote side using TLS/SSL protocol failed
+----------
+----------
+Error YDB-I-TEXT seen in ##FILTERED##RCVR_##TIMESTAMP##.log as expected:
+##TEST_AWK%YDB-I-TEXT, error:.*:SSL routines:(tls_process_client_certificate|ssl3_get_client_certificate):certificate verify failed
+----------
 
 TEST-I-PASSED, TLSHANDSHAKE is found in replication logs as expected.
 
@@ -94,6 +150,22 @@ TEST CASE 7: Test that revoked certificates issues appropriate errors.
 
 ==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
 ==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+----------
+Error W-TLSHANDSHAKE seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
+%YDB-W-TLSHANDSHAKE, Connection to remote side using TLS/SSL protocol failed
+----------
+----------
+Error YDB-I-TEXT seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
+##TEST_AWK%YDB-I-TEXT, error:.*:SSL routines:(tls_process_server_certificate|ssl3_get_server_certificate):certificate verify failed
+----------
+----------
+Error W-TLSHANDSHAKE seen in ##FILTERED##RCVR_##TIMESTAMP##.log as expected:
+%YDB-W-TLSHANDSHAKE, Connection to remote side using TLS/SSL protocol failed
+----------
+----------
+Error YDB-I-TEXT seen in ##FILTERED##RCVR_##TIMESTAMP##.log as expected:
+%YDB-I-TEXT, error:14094418:SSL routines:ssl3_read_bytes:tlsv1 alert unknown ca
+----------
 
 TEST-I-PASSED, TLSHANDSHAKE is found in replication logs as expected.
 

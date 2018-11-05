@@ -3,7 +3,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -81,8 +81,8 @@ else if (option ~ /^ENCRYPT/)           {oput="ENCRYPT";	var="test_encryption"		
 else if (option ~ /^NON_ENCRYPT/)	{oput="NON_ENCRYPT";	var="test_encryption"		}
 else if (option ~ /^TRIGGER/)           {oput="TRIGGER";		var="gtm_test_trigger"		}
 else if (option ~ /^NOTRIGGER/)		{oput="NOTRIGGER";		var="gtm_test_trigger"		}
-else if (option ~ /^TLS/)           	{oput="TLS";			var="gtm_test_tls"		}
-else if (option ~ /^NOTLS/)           	{oput="NOTLS";			var="gtm_test_tls"		}
+else if (option ~ /^TLS$/)           	{oput="TLS";			var="gtm_test_tls"		}
+else if (option ~ /^NOTLS$/)           	{oput="NOTLS";			var="gtm_test_tls"		}
 else if (option ~ /^SPANNING_REGIONS/)		{oput="SPANNING_REGIONS";	var="gtm_test_spanreg"	}
 else if (option ~ /^NONSPANNING_REGIONS/)	{oput="NONSPANNING_REGIONS";	var="gtm_test_spanreg"	}
 else {oput = option; var="NULL"}
