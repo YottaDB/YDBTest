@@ -72,6 +72,7 @@
 # ydb369	   [quinn] Test that environmental variables can be set and unset using the VIEW "SETENV" and VIEW "UNSETENV" commands in mumps.
 # ydb313	   [quinn] Test that MUPIP FTOK -JNLPOOL and MUPIP FTOK -RECVPOOL operate on the specified instance file and ignore ydb_repl_instance/gtm_repl_instance env var.
 # ydb96		   [quinn] Test that executed DSE commands appear as AIMG records after extracting from a journal.
+# ydb272	   [quinn] Test that the environment variable ydb_poollimit is honored by MUMPS and DSE.
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r124 test starts..."
@@ -83,7 +84,7 @@ setenv subtest_list_non_replic "$subtest_list_non_replic readonly ydb275socketpa
 setenv subtest_list_non_replic "$subtest_list_non_replic ydb324 ydb341 ydb343 ydb346mr ydb350 ydb352 ydb353 ydb348 ydb358 ydb359"
 setenv subtest_list_non_replic "$subtest_list_non_replic ydb356 ydb360 ydb357 ydb346 ydb95 ydb333 ydb329 ydb344 ydb258 ydb374"
 setenv subtest_list_non_replic "$subtest_list_non_replic ydb372 ydb363 ydb371 ydb349 ydb197 ydb233 ydb309 ydb383 ydb113 ydb114"
-setenv subtest_list_non_replic "$subtest_list_non_replic ydb191 ydb345 ydb369 ydb96"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb191 ydb345 ydb369 ydb96 ydb272"
 setenv subtest_list_replic     ""
 setenv subtest_list_replic     "$subtest_list_replic ydb282srcsrvrerr ydb293 ydb312_gtm8182a ydb312_gtm8182b  ydb312_gtm8182c"
 setenv subtest_list_replic     "$subtest_list_replic ydb312_gtm8182d ydb312_gtm8182e ydb312_gtm8182f ydb312_gtm8182g ydb321"
