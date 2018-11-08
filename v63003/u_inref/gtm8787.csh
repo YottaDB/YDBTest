@@ -44,13 +44,14 @@ endif
 $gtm_tst/com/getoper.csh "$t"
 # Syslog messages captured in getoper will be logged to syslog.txt
 
-echo "# Searching Sys Log for a KILLBYSIG Error (Expecting nothing, would be found in previous versions)"
-cat syslog.txt |& $grep KILLBYSIG |& $tst_awk '{print $6,$7,$8,$9,$10,$11,$12}'
+set extractpid = `cat extract.pid`	# Note down pid of MUPIP JOURNAL EXTRACT
+echo "# Searching Sys Log for a KILLBYSIG Error from MUPIP JOURNAL EXTRACT (Expecting nothing, would be found in previous versions)"
+cat syslog.txt |& $grep "MUPIP.*\<$extractpid\>.*KILLBYSIG" |& $tst_awk '{print $6,$7,$8,$9,$10,$11,$12}'
 echo ""
 echo "# Searching Sys Log for a NOPRINCIO Error"
-# MUPIP LOAD can sometimes produce either one or two NOPRINCIO Errors, for uniformity we are just looking for the first instance
+# MUPIP JOURNAL -EXTRACT can sometimes produce either one or two NOPRINCIO Errors,
+# for uniformity we are just looking for the first instance
 cat syslog.txt |& $grep "MUPIP.*NOPRINCIO" |& $tst_awk '{print $6,$7,$8,$9,$10,$11,$12}' | sort -u
-
 
 $gtm_tst/com/dbcheck.csh >>& check.out
 if ($status) then

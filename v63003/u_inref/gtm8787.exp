@@ -16,5 +16,6 @@ spawn /usr/local/bin/tcsh -f
 source $::env(gtm_tst)/com/expectinit.exp
 
 send -- "\$MUPIP Journal -Extract=-stdout -forward mumps.mjl & \r"
+send -- "echo \$! > extract.pid \r"
 expect -exact "x(10)"
 send -- "exit \r"
