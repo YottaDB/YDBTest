@@ -28,12 +28,12 @@ set recvSemYdb = `cat $4 | cut -d ',' -f 1`
 set recvMemYdb = `cat $4 | cut -d ',' -f 2`
 
 echo "# Check IPC keys to make sure Semaphore IDs are found"
-ipcs -s | grep -w -q $jnlSem
+ipcs -s | grep -w $jnlSem >& /dev/null
 if ( $? == 0 ) then
 	echo "jnlpool Semaphore ID found"
 endif
 
-ipcs -s | grep -w -q $recvSem
+ipcs -s | grep -w $recvSem >& /dev/null
 if ( $? == 0 ) then
 	echo "recvpool Semaphore ID found"
 endif
@@ -47,12 +47,12 @@ if ( "$recvSemYdb" == "$recvSem" ) then
 endif
 echo ""
 echo "# Check IPC keys to make sure Memory IDs are found"
-ipcs -m | grep -w -q $jnlMem
+ipcs -m | grep -w $jnlMem >& /dev/null
 if ( $? == 0 ) then
 	echo "jnlpool Memory ID found"
 endif
 
-ipcs -m | grep -w -q $recvMem
+ipcs -m | grep -w $recvMem >& /dev/null
 if ( $? == 0 ) then
 	echo "recvpool Memory ID found"
 endif
