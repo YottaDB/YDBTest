@@ -21,7 +21,7 @@ setenv gtm_test_dynamic_literals "NODYNAMIC_LITERALS"
 setenv test_no_ipv6_ver 1
 setenv gtm_test_embed_source "FALSE"
 unsetenv gtmcompile
-setenv gtm_test_repl_skipsrcchkhlth 1 #We skip SRC.csh's checkhealth as we expect an error
+setenv gtm_test_repl_skipsrcchkhlth 1 #We skip source server checkhealth as we expect an error
 
 echo "--------------------------------------------------------------------------------------------------------------------------------------"
 echo "# Test that connecting a pre-V60000 Receiver server to a current source server gives a YDB-E-UNIMPLOP/YDB-I-TEXT error in source side."
