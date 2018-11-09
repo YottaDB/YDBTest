@@ -59,7 +59,7 @@ if ("dbg" == "$tst_image") then
 	setenv subtest_exclude_list "$subtest_exclude_list gtm8906"
 endif
 
-if ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) then
+if (("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) || ("HOST_LINUX_AARCH64" == $gtm_test_os_machtype)) then
 	# gtm8906 subtest could take 1 hour or more on the slower (relative to x86_64) ARM boxes even with pro so disable it there.
 	setenv subtest_exclude_list "$subtest_exclude_list gtm8906"
 endif

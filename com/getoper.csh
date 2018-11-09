@@ -99,7 +99,7 @@ if ($?message) then
 	set end_time = "$time_after"
 	set nowtime = `date +%s`
 	set starttime = $nowtime
-	if ("HOST_LINUX_ARMVXL" != $gtm_test_os_machtype) then
+	if (("HOST_LINUX_ARMVXL" != $gtm_test_os_machtype) && ("HOST_LINUX_AARCH64" != $gtm_test_os_machtype)) then
 		set maxwait = 300
 	else
 		# Linux on ARM has been seen to be slow (IO, CPU etc.) so give it more time for syslog message to show up

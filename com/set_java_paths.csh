@@ -35,7 +35,7 @@ if ("" == $JAVA_HOME) then
 endif
 
 if ("Linux" == $HOSTOS) then
-	foreach dir (amd64 i386 arm i686 doesnotexist)
+	foreach dir (amd64 i386 arm aarch64 i686 doesnotexist)
 		if (-d $JAVA_HOME/jre/lib/$dir) then
 			set sodir = $dir
 			break

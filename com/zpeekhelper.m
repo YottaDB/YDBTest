@@ -64,6 +64,7 @@ init
 	. Set env("HP-UX","IA64")="1|1"
 	. Set env("Linux","IA64")="0|1"
 	. Set env("Linux","S390X")="1|1"
+	. Set env("Linux","aarch64")="0|0"
 	. Set env("Linux","armv7l")="0|0"
 	. Set env("Linux","armv6l")="0|0"
 	. Set env("Linux","x86")="0|0"

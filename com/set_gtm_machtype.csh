@@ -29,6 +29,7 @@ set gtm_platform=`echo 'write $piece($zversion," ",4),! halt' | $gtm_exe/mumps -
 set mach_type = `echo $MACHTYPE | sed 's/\///g' | tr '[A-Z]' '[a-z]' | sed 's/i.86/ix86/g'`
 if ($mach_type =~ "x86_64*") set mach_type = "x86_64"
 if ($mach_type =~ "armv*l") set mach_type = "armvxl"	# ARMV6L and ARMV7L are together considered ARMVXL
+if ($mach_type =~ "aarch64*") set mach_type = "aarch64"
 if ( ($gtm_platform != "x86_64") && ($mach_type == "x86_64") ) then
         set mach_type = "ix86"
 endif

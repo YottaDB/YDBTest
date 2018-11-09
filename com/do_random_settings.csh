@@ -127,6 +127,10 @@ if !($?test_align) then
 			# Pick a power of 2 between (inclusive) 2^[12, 17] -- [4096, 131072]
 			set align = `date | $tst_awk '{srand () ; print 2^(12 + int(rand() * 6))}'`
 			breaksw
+		case "HOST_LINUX_AARCH64":
+			# Pick a power of 2 between (inclusive) 2^[12, 17] -- [4096, 131072]
+			set align = `date | $tst_awk '{srand () ; print 2^(12 + int(rand() * 8))}'`
+			breaksw
 		case "HOST_LINUX_ARMVXL":
 		default:
 			set align = 4096

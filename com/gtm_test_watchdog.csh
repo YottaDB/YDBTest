@@ -22,7 +22,7 @@ set shorthost = $HOST:r:r:r:r
 set format="%Y.%m.%d.%H.%M.%S.%Z"
 set timestart = `date +"$format"`
 if (! $?gtm_test_hang_alert_sec) then
-	if ($gtm_test_singlecpu || ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype)) then
+	if ($gtm_test_singlecpu || ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) || ("HOST_LINUX_AARCH64" == $gtm_test_os_machtype)) then
 		# 1-CPU armv7l/armv6l/x86_64 box or a Multi-CPU armv7l/armv6l box. Set a high hang alert.
 		# We have seen test runtimes as high as 13 hours (msreplic_H_1/max_connections) on 1-CPU armv6l
 		# and 10.25 hours (msreplic_H_1/max_connections) on 4-CPU armv7l so keep max at 16 hours.

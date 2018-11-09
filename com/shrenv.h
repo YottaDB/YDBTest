@@ -6,7 +6,7 @@
 #endif
 
 /* Conditional macro to have some things different on 64 bit platforms. */
-#if defined(__ia64) || defined(_AIX) || defined(__x86_64__) || defined(__sparc) || defined(__MVS__) || defined (__s390__)
+#if defined(__ia64) || defined(_AIX) || defined(__x86_64__) || defined(__sparc) || defined(__MVS__) || defined (__s390__) || defined(__aarch64__)
 #       define GTM64_ONLY(X)    X
 #       define NON_GTM64_ONLY(X)
 #else

@@ -29,6 +29,7 @@ signals()
 	. else  set platform="s390"
 	else  if $ZVersion["armv7l" set platform="armvxl"
 	else  if $ZVersion["armv6l" set platform="armvxl"
+	else  if $ZVersion["aarch64" set platform="aarch64"
 	else  set platform="default"
 	quit $PIECE($TEXT(@platform+1),"#",2)
 
@@ -68,6 +69,9 @@ linuxs390	;S390 and Linux
 	;signum #10
 
 armvxl	;ARMV7L or ARMV6L
+	;signum #10
+
+aarch64	;AARCH64
 	;signum #10
 
 default	;default platform

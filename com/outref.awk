@@ -28,6 +28,7 @@
 #HOST_CYGWIN_IX86
 #HOST_LINUX_X86_64
 #HOST_LINUX_ARMVXL	# ARMVXL is for ARMV6L, ARMV7L etc.
+#HOST_LINUX_AARCH64
 # and machine type. For example:
 #IA64 (for Itanium machines)
 # and OS name. For example: AIX

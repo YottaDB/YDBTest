@@ -317,6 +317,7 @@ decimal(x,y)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 is64Bit()
 	if ($zversion["x86") quit:($zversion["64") 1 quit 0
+	quit:($zversion["aarch64") 1
 	quit:($zversion["AIX") 1
 	quit:($zversion["OSF1") 0
 	quit:($zversion["Solaris") 1
