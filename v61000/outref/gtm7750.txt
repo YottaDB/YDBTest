@@ -1,12 +1,25 @@
+# This test ensures that YottaDB does not zlink an M file only if the timestamp of the corresponding object file is at least a nanosecond older
+# Create a simple M routine test.m
+# Compile the M routine.
+# Compile the helper program stat.c
+--------------------------------------------------------------
 Test 1. Object is more than a second older than source (test.o, a).
+--------------------------------------------------------------
+# Make sure that a recompile happens if the source's and object's timestamps are more than a second apart.
 hello, world!
 test.o
 a
+--------------------------------------------------------------
 Test 2. Object is slightly older than source (test.o, b).
+--------------------------------------------------------------
+# Make sure that a recompile happens if the source's and object's timestamps are within the same second, but at least one nanosecond apart.
 hello, world!
 test.o
 b
+--------------------------------------------------------------
 Test 3. Object and source have the same timestamp (c, test.o).
+--------------------------------------------------------------
+# Make sure that a recompile happens even if the source's and object's timestamps match to the nanosecond.
 hello, world!
-c
 test.o
+c
