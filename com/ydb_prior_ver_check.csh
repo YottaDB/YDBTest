@@ -37,19 +37,6 @@ if ($?ydb_environment_init) then
 			echo "setenv gtm_test_tls FALSE" >>&! settings.csh
 			setenv gtm_test_tls "FALSE"
 		endif
-		# On Arch Linux, in Oct 2018, OpenSSL 1.1.1 became the currently installed version and that started supporting
-		# TLS V1.3 which the TLS plugin in YottaDB does not support. YottaDB builds do not have an issue with this since
-		# they have a CMakeLists.txt override that forces one to use OpenSSL 1.0 (instead of 1.1*). Pure GT.M builds
-		# do not have those changes and so if the test randomly chosen TLS, the source and receiver server assert
-		# fail (SIG-6) in gtm_tls_impl.c line 1667 "assert(FALSE && ssl_version)". Therefore, disable TLS on Arch Linux
-		# if ever we randomly chose a pure GT.M build (which is identified by the version name being Vxxxx without the
-		# trailing _Ryyyy suffix). For example V63004 is a pure GT.M build but V63004_R122 is a YottaDB build of
-		# the YottaDB mainline which had GT.M V6.3-004 integrated into it.
-		if (!($1 =~ "V*_R*")) then
-			echo "# Overriding setting of gtm_test_tls by ydb_prior_ver_check.csh TLS V1.3(prior_ver = $1)" >>&! settings.csh
-			echo "setenv gtm_test_tls FALSE" >>&! settings.csh
-			setenv gtm_test_tls "FALSE"
-		endif
 	endif
 	# On Arch Linux, GT.M V62001 binaries installed from Sourceforge issue SIG-11 when trying to create multi-region gld
 	# files with a gtmdbglvl setting of 0x1F0. Therefore disable gtmdbglvl in that case.
@@ -57,5 +44,30 @@ if ($?ydb_environment_init) then
 		echo "# Overriding setting of gtmdbglvl by ydb_prior_ver_check.csh (prior_ver = $1)" >>&! settings.csh
 		echo "unsetenv gtmdbglvl" >>&! settings.csh
 		unsetenv gtmdbglvl
+	endif
+	if ($ydb_test_tls13_plus) then
+		# This is a system having TLS V1.3 which is not supported by the TLS plugin in pre-r1.24 builds of YottaDB.
+		# If the test framework randomly chosen TLS, the source and/or receiver server running the pre-r1.24 build
+		# would assert fail (SIG-6) in gtm_tls_impl.c line 1667 "assert(FALSE && ssl_version)". Therefore, disable
+		# TLS in that case. In case the build is a pure GT.M build, TLS V1.3 is not supported either so disable TLS
+		# in that case too. For example V63004 is a pure GT.M build but V63004_R122 is a YottaDB build of R1.22
+		# (which had GT.M GT.M V6.3-004 integrated into it).
+		if (!($1 =~ "V*_R*")) then
+			# This is a pure GT.M build because it does not have a _Rxxx suffix (e.g. _R122)
+			set disabletls = 1
+		else
+			# Check if the YottaDB release i.e. xxx in Rxxx is less than 124.
+			set ydbrel = `echo $1 | sed 's/.*_R//g'`
+			if ($ydbrel < 124) then
+				set disabletls = 1
+			else
+				set disabletls = 0
+			endif
+		endif
+		if ($disabletls) then
+			echo "# Overriding setting of gtm_test_tls by ydb_prior_ver_check.csh TLS V1.3(prior_ver = $1)" >>&! settings.csh
+			echo "setenv gtm_test_tls FALSE" >>&! settings.csh
+			setenv gtm_test_tls "FALSE"
+		endif
 	endif
 endif
