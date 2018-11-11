@@ -112,9 +112,15 @@ Journal state (expected DISABLED): DISABLED
 Test case 07
 [NO]BEFORE qualifier
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: JOURNAL DISABLE OFF BEFORE_IMAGES BEFORE_IMAGES
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: JOURNAL DISABLE OFF BEFORE_IMAGES BEFORE_IMAGES
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: JOURNAL DISABLE OFF BEFORE_IMAGES BEFORE_IMAGES
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with BEFORE_IMAGES
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
@@ -168,7 +174,7 @@ OFF option does have any effect if journaling is not enabled
 ##SOURCE_PATH##/mupip set -journal=enable,off,alignsize=4096,allocation=2048,autoswitchlimit=16448,buffer_size=2308,extension=100,filename=abcd.mjl,sync_io,yield_limit=1000 -file mumps.dat
 %YDB-W-JNLBUFFDBUPD, Journal file buffer size for database file ##TEST_PATH##/mumps.dat has been adjusted from 2308 to 2312.
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
-  Journal State                         OFF  Journal Before imaging       FALSE
+  Journal State                         OFF  Journal Before imaging        TRUE
   Journal Allocation                   2048  Journal Extension              100
   Journal Buffer Size                  2312  Journal Alignsize             4096
 ##TEST_AWK  Journal AutoSwitchLimit             16448  Journal Epoch Interval         ( 30|300)

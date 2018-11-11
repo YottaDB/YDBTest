@@ -5,10 +5,11 @@ Using: ##SOURCE_PATH##/mupip
 a.dat
 b.dat
 mumps.dat
-echo This should error out, since effectively, [NO]BEFORE_IMAGES is not specified
-This should error out, since effectively, [NO]BEFORE_IMAGES is not specified
-##SOURCE_PATH##/mupip set -journal=on,before -file mumps.dat -journal=on
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: JOURNAL DISABLE OFF BEFORE_IMAGES BEFORE_IMAGES
+echo This should error out, since effectively, ENABLE is not specified in the second (and overriding) -journal= specification
+This should error out, since effectively, ENABLE is not specified in the second (and overriding) -journal= specification
+##SOURCE_PATH##/mupip set -journal=on,before,enable -file mumps.dat -journal=on
+%YDB-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/mumps.dat
+%YDB-W-MUNOFINISH, MUPIP unable to finish all requested actions
 echo 
 
 echo This should start journalling with BEFORE images

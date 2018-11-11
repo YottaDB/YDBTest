@@ -3,6 +3,9 @@
 # Copyright (c) 2002-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -16,8 +19,8 @@ setenv gtm_test_jnl NON_SETJNL
 $gtm_tst/com/dbcreate.csh . 3
 
 set echo
-echo "This should error out, since effectively, [NO]BEFORE_IMAGES is not specified"
-$MUPIP set -journal="on,before" -file mumps.dat -journal="on"
+echo "This should error out, since effectively, ENABLE is not specified in the second (and overriding) -journal= specification"
+$MUPIP set -journal="on,before,enable" -file mumps.dat -journal="on"
 
 
 echo ""

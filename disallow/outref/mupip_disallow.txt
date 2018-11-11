@@ -333,27 +333,6 @@ YDB>
 --------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -nojournal="nobefore_images" ------------
 %YDB-E-CLIERR, Assignment is not allowed for this option : JOURNAL
 !
-!	DISALLOW(journal AND NOT(journal.disable OR journal.off OR journal.before_images OR NEG journal.before_images))
-!
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="on" ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: JOURNAL DISABLE OFF BEFORE_IMAGES BEFORE_IMAGES
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="enable,on" ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: JOURNAL DISABLE OFF BEFORE_IMAGES BEFORE_IMAGES
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="enable,on,filename=dummy.mjl" ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: JOURNAL DISABLE OFF BEFORE_IMAGES BEFORE_IMAGES
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="enable,on,allocation=10" ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: JOURNAL DISABLE OFF BEFORE_IMAGES BEFORE_IMAGES
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="enable,on,extension=15" ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: JOURNAL DISABLE OFF BEFORE_IMAGES BEFORE_IMAGES
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="enable,on,buffer_size=25" ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: JOURNAL DISABLE OFF BEFORE_IMAGES BEFORE_IMAGES
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="enable,on,alignsize=100" ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: JOURNAL DISABLE OFF BEFORE_IMAGES BEFORE_IMAGES
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="enable,on,epoch_interval=40" ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: JOURNAL DISABLE OFF BEFORE_IMAGES BEFORE_IMAGES
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="enable,on,autoswitchlimit=85" ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: JOURNAL DISABLE OFF BEFORE_IMAGES BEFORE_IMAGES
-!
 !	DISALLOW(replication.on AND replication.off)
 !
 --------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -replication="off,on" ------------

@@ -237,18 +237,6 @@ p set dummy_region -reg -nojournal="epoch_interval=100"
 p set dummy_region -reg -nojournal="autoswitchlimit=2048"
 p set dummy_region -reg -nojournal="nobefore_images"
 !
-!	DISALLOW(journal AND NOT(journal.disable OR journal.off OR journal.before_images OR NEG journal.before_images))
-!
-p set dummy_region -reg -journal="on"
-p set dummy_region -reg -journal="enable,on"
-p set dummy_region -reg -journal="enable,on,filename=dummy.mjl"
-p set dummy_region -reg -journal="enable,on,allocation=10"
-p set dummy_region -reg -journal="enable,on,extension=15"
-p set dummy_region -reg -journal="enable,on,buffer_size=25"
-p set dummy_region -reg -journal="enable,on,alignsize=100"
-p set dummy_region -reg -journal="enable,on,epoch_interval=40"
-p set dummy_region -reg -journal="enable,on,autoswitchlimit=85"
-!
 !	DISALLOW(replication.on AND replication.off)
 !
 p set dummy_region -reg -replication="off,on"
