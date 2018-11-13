@@ -46,9 +46,9 @@ int main()
 		pid = getpid();
 		status = ydb_child_init(NULL);	/* needed in child pid right after a fork() */
 		YDB_ASSERT(YDB_OK == status);
-		value.len_used = sprintf(value.buf_addr, "%d", (int)pid);
 		printf("Child pid : Set ^child=<childpid> with ydb_set_s()\n"); fflush(stdout);
-		status = ydb_set_s(&childvar, 0, NULL, NULL);
+		value.len_used = sprintf(value.buf_addr, "%d", (int)pid);
+		status = ydb_set_s(&parentvar, 0, NULL, &value);
 		YDB_ASSERT(YDB_OK == status);
 		printf("Child pid : Sleep 2 seconds so flush timer in child will do AIO writes to DB\n"); fflush(stdout);
 		sleep(2);

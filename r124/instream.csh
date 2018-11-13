@@ -124,11 +124,6 @@ if (("arch" == $gtm_test_linux_distrib) || ("ubuntu" == $gtm_test_linux_distrib)
 	setenv subtest_exclude_list "$subtest_exclude_list jnlunxpcterr"
 endif
 
-if ($gtm_platform_size != 64) then
-	# Disable ydb358 subtest on 32-bit platforms as it requires ASYNCIO which is not enabled there
-	setenv subtest_exclude_list "$subtest_exclude_list ydb358"
-endif
-
 if ("armv6l" == `uname -m`) then
 	# The ydb333 test requires nanosecond-resolution clock. On ARMV6L we have found the clock to be microsecond-resolution,
 	# i.e. the CPT values always are a multiple of 1000 or in rare cases end in 999 but never any other value between 1 and 998.

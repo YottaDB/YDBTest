@@ -72,11 +72,6 @@ foreach var ($envlist)
 	if (("gtm_autorelink_keeprtn" == $envvar) && (! $?gtm_test_autorelink_support)) then
 		continue
 	endif
-	# "ydb_aio_nr_events"/"gtm_aio_nr_events" is only supported on 64-bit builds (32-bit uses posix aio, not libaio)
-	# To avoid maintaining different reference files for 64 vs 32 bit builds, skip this unsupported env var on 32-bit builds.
-	if ((("gtm_aio_nr_events" == $envvar) || ("ydb_aio_nr_events" == $envvar)) && ($gtm_platform_size == 32)) then
-		continue
-	endif
 	# Skip dbg-only env vars in pro testing as their output will be different for dbg vs pro and we do not want
 	# to maintain two different reference files for the same env var.
 	if (("pro" == "$tst_image") && ("ydb_dbgflags" == $envvar)) then
