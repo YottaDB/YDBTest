@@ -68,8 +68,16 @@ if !(("hp-ux" == "$gtm_test_osname") || ("aix" == "$gtm_test_osname")) then
 	# Get strace output to help debug cases where mumps process abruptly terminates without issuing a MEMORY error.
 	# Keep strace output in trace.outx file (not trace.out) since it could have error messages (e.g. EACCESS) which
 	# later get caught by test system framework signaling a false failure.
-	set stracek = `strace -h | grep "\-k" | $tst_awk '{print $1}'`	# Find if strace -k is supported. If so, it helps
-									# even more with debugging since it gives YottaDB C-stack
+
+	# Find if strace -k is supported. If so, it helps even more with debugging since it gives YottaDB C-stack.
+	strace -k date >& /dev/null
+	if (0 == $status) then
+		# strace -k works for a simple case. Use it for the real test.
+		set stracek = "-k"
+	else
+		# strace -k does not work for a simple example case. So skip it.
+		set stracek = ""
+	endif
 	strace $stracek -o trace.outx $gtm_exe/mumps -run gtm8047 >& gtm8047.outx
 
 	# The test will create YDB_FATAL_* files in most cases but in some cases it might not. So filter that out.
