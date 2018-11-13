@@ -18,6 +18,7 @@ if ($status) then
 	echo "DB Create failed"
 	cat dbcreate.out
 endif
+cp mumps.dat mumpsorig.dat # Take a backup of database with default (i.e. small) global buffers for later restore before dbcheck
 $GDE change -segment DEFAULT -access_method=BG >& accessmethod.out
 if ($status) then
 	echo "# UNABLE TO CHANGE ACCESS METHOD"
@@ -46,6 +47,16 @@ foreach val ($smallvalminus1 $smallval 2147483647 2147483648)
 	echo ""
 	echo "----------------------------------------------------------------------------------"
 end
+# The database file has just now been modified to have a huge # of global buffers.
+# It is possible that even though the YottaDB build allowed that maximum global buffer value to be set in the
+# database file header, the system where this test runs does not have enough RAM to create a shared memory of that size.
+# That would then cause errors like the below in the dbcheck.csh (i.e. mupip integ) call.
+#	%YDB-I-TEXT, Error with database shmget
+#	%SYSTEM-E-ENO12, Cannot allocate memory
+# Therefore bring the global buffer count database to a low value that will work i.e. restore database file from after dbcreate.
+#	(before the global buffer count was bumped to a high value).
+mv mumps.dat mumpsnew.dat
+cp mumpsorig.dat mumps.dat
 $gtm_tst/com/dbcheck.csh >>& dbcheck.out
 if ($status) then
 	echo "DB Check failed"
