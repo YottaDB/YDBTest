@@ -15,11 +15,12 @@
 ; correctly even when interrupted.
 dointerrupts
 	write "Starting...",!
+	set $etrap="zshow ""*"" halt"
 
 	; specify various configuration parameters
 	set ^intrptdelay=0.0001
 	set limit=10000000
-	set maxintrptcnt=5000
+	set minintrptcnt=100,minelapsedtime=30
 
 	; prepare iterators and counters
 	set intrptcnt=0
@@ -52,9 +53,11 @@ dointerrupts
 	; wait for the interrupter to get ready
 	for  quit:^continue  hang 0.25
 
+	set starttime=$horolog
 	; launch the interrupter and start making calls with arguments
 	lock -^intrptlock
-	for i=1:1:limit quit:intrptcnt>maxintrptcnt  do adder(i,i*2,i*3,i*4,i*5)
+	; Exit the loop if at least "minintrptcnt" interrupts have been seen AND "minelapsedtime" seconds have elapsed
+	for i=1:1:limit quit:(intrptcnt>minintrptcnt)&(minelapsedtime>$$^difftime($horolog,starttime))  do adder(i,i*2,i*3,i*4,i*5)
 
 	write "Stopping...",!
 
@@ -89,11 +92,10 @@ dointerrupts
 	.	write "  y3: "_y3,!
 	.	write "  y4: "_y4,!
 	.	write "  y5: "_y5,!
-
+	.	if $data(error) zwrite error
 	write "  interrupt count: "_intrptcnt,!
 	write "  iteration count: "_i,!
 	write "All done.",!
-
 	quit
 
 interrupter
@@ -108,6 +110,12 @@ interrupter
 	quit
 
 adder(i0,i1,i2,i3,i4)
+	; Check if actual parameters i1 thru i4 are what we expect. If not, record the difference in "error" local.
+	; This local will be displayed at the end of the test.
+	set:(2*i0'=i1) error(i0,2)=(2*i0-i1)
+	set:(3*i0'=i2) error(i0,3)=(3*i0-i2)
+	set:(4*i0'=i3) error(i0,4)=(4*i0-i3)
+	set:(5*i0'=i4) error(i0,5)=(5*i0-i4)
 	set y0=y0+i0
 	set y1=y1+i1
 	set y2=y2+i2
