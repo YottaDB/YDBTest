@@ -1,7 +1,10 @@
 #! /usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2002, 2013 Fidelity Information Services, Inc	#
+# Copyright 2002, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -33,7 +36,6 @@ $GTM << EOF
 d ^socdev
 h
 EOF
-sleep 10
 $gtm_tst/com/dbcheck.csh -extract mumps
 mkdir test1
 cp -p *.* test1

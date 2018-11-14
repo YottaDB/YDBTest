@@ -3,6 +3,9 @@
 ; Copyright (c) 2004-2015 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -94,6 +97,11 @@ client  ;;;	the process that writes
 	. zwrite
 	. lock					;;; tells the driver we are done with this data
 	. set ^clientflag(i)="FINISHED"
+	; At this point, it is possible the server is still reading some data that the client wrote.
+	; If we terminate now, it is possible for the server to receive a ECONNRESET from the read() system call
+	; which would cause the server to read only partial data and cause a test failure. Therefore wait for
+	; the server to be done with all reads before exiting from the client.
+	for  quit:$get(^serverflag(i))="FINISHED"  hang 0.01
 	quit
 consrv	;;;	connect server without delimiter specified
 	set portno=^configasalongvariablename78901("portno"),delim=^configasalongvariablename78901("delim")
