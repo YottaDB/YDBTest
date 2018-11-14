@@ -4,7 +4,7 @@
 # Copyright (c) 2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -63,8 +63,12 @@ if ($?ydb_environment_init) then
                # Disable gtm8177 subtest until V63002 is available as it can assert fail in V63000A (has been fixed post-V63001A)
                setenv subtest_exclude_list "$subtest_exclude_list gtm8177"
        endif
-	# Disable certain heavyweight tests on single-cpu systems
-	if ($gtm_test_singlecpu) then
+	# Disable the gtm8539 subtest on single-cpu systems or slower ARM systems
+	# It has been seen to fail occasionally on these boxes. The test takes anywhere from 30 minutes to 1 hour to run
+	# on these boxes. It does 5 million updates with a 5 minute epoch interval and expects less than 10 DFS gvstat counter.
+	# But if the test runs long enough the DFS can go more than the arbitrarily chosen 10 and fail the test.
+	# Faster x86_64 boxes run this test in 1 minute so it is not considered worth it to run this test on slow platforms.
+	if ($gtm_test_singlecpu || ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) || ("HOST_LINUX_AARCH64" == $gtm_test_os_machtype)) then
 		setenv subtest_exclude_list "$subtest_exclude_list gtm8539"
 	endif
 endif
