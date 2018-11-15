@@ -1,6 +1,9 @@
 #################################################################
 #								#
-#	Copyright 2006, 2014 Fidelity Information Services, Inc	#
+# Copyright 2006, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -176,7 +179,9 @@ function do_multisite_action(task)
 		REPLIC_ENVIRON(arg_list[2],arg_list[3]);
 		gen_upd_portno(arg_list[2],arg_list[3]);
 		if ("needupdatersync" in ENVIRON) print "setenv needupdatersync \"" ENVIRON["needupdatersync"]"\""
-		# if gtm_test_repl_skiprcvrchkhlth is in the environment make available in remote host
+		# if gtm_test_repl_skipsrcchkhlth is in the environment make available on source side (in case test is multi host and src instance is not INST1)
+		if ( "STARTSRC" == task && "gtm_test_repl_skipsrcchkhlth" in ENVIRON ) print "setenv gtm_test_repl_skipsrcchkhlth"
+		# if gtm_test_repl_skiprcvrchkhlth is in the environment make available on receiver side (in case test is multi host)
 		if ( "STARTRCV" == task && "gtm_test_repl_skiprcvrchkhlth" in ENVIRON ) print "setenv gtm_test_repl_skiprcvrchkhlth"
 		# if gtm_tst_ext_filter_rcvr is in the environment make available in remote host
 		if ( "STARTRCV" == task && "gtm_tst_ext_filter_rcvr" in ENVIRON ) print "setenv gtm_tst_ext_filter_rcvr \"" ENVIRON["gtm_tst_ext_filter_rcvr"]"\""
