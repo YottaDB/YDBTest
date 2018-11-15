@@ -128,13 +128,15 @@ echo ""
 echo '# Test 5 : gtmsecshr issues a SECSHRNOYDBDIST error if ydb_dist env var is not set'
 sleep 1	# sleep to ensure syslog_start is a different time than the time previous tests ran (as they also produce SECSHRNOYDBDIST message)
 set syslog_start = `date +"%b %e %H:%M:%S"`
-$saveydbdist/gtmsecshr
+($saveydbdist/gtmsecshr &; echo $! >&! gtmsecshr.pid) >& gtmsecshr_bg.out
+set gtmsecshrpid = `cat gtmsecshr.pid`
 
 # Restore ydb_dist/gtm_dist (as getoper.csh needs it)
 setenv ydb_dist $saveydbdist
 setenv gtm_dist $saveydbdist
 
-$gtm_tst/com/getoper.csh "$syslog_start" "" "syslog1.txt" "" "SECSHRNOYDBDIST"
+# Search for SECSHRNOYDBDIST message from the specific gtmsecshr pid that we backgrounded a few lines above
+$gtm_tst/com/getoper.csh "$syslog_start" "" "syslog1.txt" "" "\<$gtmsecshrpid\>.*SECSHRNOYDBDIST"
 $gtm_tst/com/check_error_exist.csh syslog1.txt SECSHRNOYDBDIST
 
 echo "# Remove portno allocation file"
