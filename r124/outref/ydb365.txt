@@ -1,0 +1,209 @@
+-------------------------------------------------------------------------------------
+# Test various MUPIP SET JOURNAL scenarios when BEFORE or NOBEFORE is not specified.
+-------------------------------------------------------------------------------------
+# Create database
+
+# Test Case 1: Test that previously disallowed commands are now allowed
+# These are commands that were removed from disallow/inref/mupip_cmd_disallow.txt as part of https://gitlab.com/YottaDB/DB/YDBTest/merge_requests/548of https://gitlab.com/YottaDB/DB/YDBTest/merge_requests/548
+
+$ydb_dist/mupip set -reg DEFAULT -journal="on"
+%YDB-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/dir1/mumps.dat
+%YDB-W-MUNOFINISH, MUPIP unable to finish all requested actions
+$ydb_dist/mupip set -reg DEFAULT -journal="enable,on"
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/dir1/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+$ydb_dist/mupip set -reg DEFAULT -journal="enable,on,filename=dummy.mjl"
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/dir1/dummy.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+$ydb_dist/mupip set -reg DEFAULT -journal="enable,on,allocation=4096"
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/dir1/dummy.mjl is renamed to ##TEST_PATH##/dir1/dummy.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/dir1/dummy.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+$ydb_dist/mupip set -reg DEFAULT -journal="enable,on,extension=16"
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/dir1/dummy.mjl is renamed to ##TEST_PATH##/dir1/dummy.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/dir1/dummy.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+$ydb_dist/mupip set -reg DEFAULT -journal="enable,on,buffer_size=2312"
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/dir1/dummy.mjl is renamed to ##TEST_PATH##/dir1/dummy.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/dir1/dummy.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+$ydb_dist/mupip set -reg DEFAULT -journal="enable,on,alignsize=4096"
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/dir1/dummy.mjl is renamed to ##TEST_PATH##/dir1/dummy.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/dir1/dummy.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+$ydb_dist/mupip set -reg DEFAULT -journal="enable,on,epoch_interval=40"
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/dir1/dummy.mjl is renamed to ##TEST_PATH##/dir1/dummy.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/dir1/dummy.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+$ydb_dist/mupip set -reg DEFAULT -journal="enable,on,autoswitchlimit=16384"
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/dir1/dummy.mjl is renamed to ##TEST_PATH##/dir1/dummy.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/dir1/dummy.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+# Check database
+-----------------------------------------------------------------------------------------------------
+# Test Case 2: Test that MUPIP SET -JOURNAL=ENABLE,ON creates journal file with BEFORE_IMAGE journaling for database with BG access method
+# Create database with BG access method
+$ydb_dist/mupip set -reg DEFAULT -journal="enable,on"
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/dir2/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+# Check database
+-----------------------------------------------------------------------------------------------------
+# Test Case 3: Test that MUPIP SET -JOURNAL=ENABLE,ON creates journal file with NOBEFORE_IMAGE journaling for database with MM access method
+# Create database with MM access method
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/dir3/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+# Check database
+-----------------------------------------------------------------------------------------------------
+# Test Case 4: Test that MUPIP SET -REPLICATION=ON creates journal file with BEFORE_IMAGE journaling for database with BG access method
+# Create database with BG access method
+$ydb_dist/mupip set -reg DEFAULT -REPLICATION=ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/dir4/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-REPLSTATE, Replication state for region DEFAULT is now ON
+# Check database
+-----------------------------------------------------------------------------------------------------
+# Test Case 5: Test that MUPIP SET -REPLICATION=ON creates journal with NOBEFORE_IMAGE journaling for database with MM access method
+# Create database with MM access method
+$ydb_dist/mupip set -reg DEFAULT -REPLICATION=ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/dir5/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-REPLSTATE, Replication state for region DEFAULT is now ON
+# Check database
+-----------------------------------------------------------------------------------------------------
+# Test Case 6: Test that MUPIP SET -ACCESS_METHOD=BG -JOURNAL=ENABLE,ON -reg "*" creates a journal with BEFORE_IMAGE journaling for database with MM access method
+# Create database with MM access method
+$ydb_dist/mupip set -ACCESS_METHOD=BG -JOURNAL="enable,on" -reg "*"
+Database file ##TEST_PATH##/dir6/mumps.dat now has BG access method
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/dir6/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+# Check database
+-----------------------------------------------------------------------------------------------------
+# Test Case 7: Test that MUPIP SET -ACCESS_METHOD=MM -JOURNAL=ENABLE,ON -reg "*" creates journal with NOBEFORE_IMAGE journaling for database with BG access method
+# Create database with BG access method
+$ydb_dist/mupip set -ACCESS_METHOD=MM -JOURNAL="enable,on" -reg "*"
+Database file ##TEST_PATH##/dir7/mumps.dat now has MM access method
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/dir7/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+# Check database
+-----------------------------------------------------------------------------------------------------
+# Test Case 8: Test that MUPIP SET -ACCESS_METHOD=BG -REPLICATION=ON -reg "*" creates journal with BEFORE_IMAGE journaling for database with MM access method
+# Create database with MM access method
+$ydb_dist/mupip set -ACCESS_METHOD=BG -REPLICATION=ON -reg "*"
+Database file ##TEST_PATH##/dir8/mumps.dat now has BG access method
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/dir8/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-REPLSTATE, Replication state for region DEFAULT is now ON
+# Check database
+-----------------------------------------------------------------------------------------------------
+# Test Case 9: Test that MUPIP SET -ACCESS_METHOD=MM -REPLICATION=ON -reg "*" creates journal with NOBEFORE_IMAGE journaling with BG access method
+# Create database with BG access method
+$ydb_dist/mupip set -ACCESS_METHOD=MM -REPLICATION=ON -reg "*"
+Database file ##TEST_PATH##/dir9/mumps.dat now has MM access method
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/dir9/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-REPLSTATE, Replication state for region DEFAULT is now ON
+# Check database
+-----------------------------------------------------------------------------------------------------
+# Test Case 10: Test that MUPIP SET -ACCESS_METHOD=BG and MUPIP SET -JOURNAL=ENABLE,ON create journal with BEFORE_IMAGE journaling for database with MM access method
+# Create database with MM access method
+$ydb_dist/mupip set -FILE "mumps.dat" -ACCESS_METHOD=BG
+Database file mumps.dat now has BG access method
+$ydb_dist/mupip set -reg "*" -JOURNAL="enable,on"
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/dir10/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+# Check database
+-----------------------------------------------------------------------------------------------------
+# Test Case 10: Test that MUPIP SET -ACCESS_METHOD=MM and MUPIP SET -JOURNAL=ENABLE,ON create journal with NOBEFORE_IMAGE journaling for database with BG access method
+# Create database with BG access method
+$ydb_dist/mupip set -FILE "mumps.dat" -ACCESS_METHOD=MM
+Database file mumps.dat now has MM access method
+$ydb_dist/mupip set -reg "*" -JOURNAL="enable,on"
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/dir11/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+# Check database
+-----------------------------------------------------------------------------------------------------
+# Test Case 12: Test that MUPIP SET -ACCESS_METHOD=BG and MUPIP SET -REPLICATION=ON create journal with BEFORE_IMAGE journaling for database with MM access method
+# Create database with MM access method
+$ydb_dist/mupip set -FILE "mumps.dat" -ACCESS_METHOD=BG
+Database file mumps.dat now has BG access method
+$ydb_dist/mupip set -reg "*" -REPLICATION=ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/dir12/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-REPLSTATE, Replication state for region DEFAULT is now ON
+# Check database
+-----------------------------------------------------------------------------------------------------
+# Test Case 13: Test that MUPIP SET -ACCESS_METHOD=MM and MUPIP SET -REPLICATION=ON create journal with NOBEFORE_IMAGE journaling with BG access method
+# Create database with BG access method
+$ydb_dist/mupip set -FILE "mumps.dat" -ACCESS_METHOD=MM
+Database file mumps.dat now has MM access method
+$ydb_dist/mupip set -reg "*" -REPLICATION=ON
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/dir13/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-REPLSTATE, Replication state for region DEFAULT is now ON
+# Check database
+-----------------------------------------------------------------------------------------------------
+# Test Case 14: Test that MUPIP SET -JOURNAL=ON creates journal file with BEFORE_IMAGE journaling for database with BG access method
+  even if access method was switched to MM temporarily while journaling was OFF
+# Create database with BG access method
+$ydb_dist/mupip set -journal="enable,on" -reg "*"
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/dir14/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+$ydb_dist/mupip set -journal=off -reg "*"
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now OFF
+$ydb_dist/mupip set -acc=MM -reg "*"
+Database file ##TEST_PATH##/dir14/mumps.dat now has MM access method
+$ydb_dist/mupip set -acc=BG -reg "*"
+Database file ##TEST_PATH##/dir14/mumps.dat now has BG access method
+$ydb_dist/mupip set -journal=on -reg "*"
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/dir14/mumps.mjl is renamed to ##TEST_PATH##/dir14/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/dir14/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+# Check database
+-----------------------------------------------------------------------------------------------------
+# Test Case 15: Test that MUPIP SET -JOURNAL=ON creates journal file with NOBEFORE_IMAGE journaling for database with MM access method
+  even if access method was switched to BG temporarily while journaling was OFF
+# Create database with MM access method
+$ydb_dist/mupip set -journal="enable,on" -reg "*"
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/dir15/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+$ydb_dist/mupip set -journal=off -reg "*"
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now OFF
+$ydb_dist/mupip set -acc=BG -reg "*"
+Database file ##TEST_PATH##/dir15/mumps.dat now has BG access method
+$ydb_dist/mupip set -acc=MM -reg "*"
+Database file ##TEST_PATH##/dir15/mumps.dat now has MM access method
+$ydb_dist/mupip set -journal=on -reg "*"
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/dir15/mumps.mjl is renamed to ##TEST_PATH##/dir15/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/dir15/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+# Check database
+-----------------------------------------------------------------------------------------------------
+# Test Case 16: Test that DB File Header State is used to determine current BEFORE_IMAGE or NOBEFORE_IMAGE journaling status.
+# Create database with BG access method
+# Turn on Journaling with NOBEFORE set, then turn off Journaling.
+$ydb_dist/mupip set -JOURNAL="enable,on,nobefore" -reg "*"
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/dir16/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+$ydb_dist/mupip set -JOURNAL="off" -reg "*"
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now OFF
+# Turn on Journaling again, should be NOBEFORE_IMAGE Journaling
+$ydb_dist/mupip set -JOURNAL="on" -reg "*"
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/dir16/mumps.mjl is renamed to ##TEST_PATH##/dir16/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/dir16/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+# Check database
+-----------------------------------------------------------------------------------------------------
+# Test Case 17: Test that a MUPIP SET -ACC=BG command that does not change access method does not reset the default journaling type to BEFORE_IMAGE
+# Create database with BG access method
+$ydb_dist/mupip set -journal="enable,on,nobefore" -reg "*"
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/dir17/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+$ydb_dist/mupip set -journal=off -reg "*"
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now OFF
+$ydb_dist/mupip set -acc=BG -reg "*"
+Database file ##TEST_PATH##/dir17/mumps.dat now has BG access method
+$ydb_dist/mupip set -journal=on -reg "*"
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/dir17/mumps.mjl is renamed to ##TEST_PATH##/dir17/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/dir17/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+# Check database
