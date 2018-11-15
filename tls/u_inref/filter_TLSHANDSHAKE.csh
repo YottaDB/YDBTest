@@ -22,6 +22,14 @@ set time_rcvr = $2
 set src_logfile = SRC_${time_src}.log
 set rcv_logfile = RCVR_${time_rcvr}.log
 
+if ($3 == "ALLOW_REPLNOTLS") then
+	# This is a special indication by the caller that if TLS 1.3 is being used, allow either TLSIOERROR or REPLNOTLS
+	# in the source server log file.
+	set allow_replnotls = 1
+else
+	set allow_replnotls = 0
+endif
+
 # First wait for a successful connection. This is guaranteed to happen because after the initial handshake failure, the connection
 # will fallback to plaintext and proceed successfully.
 $MSR RUN INST2 "set msr_dont_trace; $gtm_tst/com/wait_for_log.csh -log $rcv_logfile -message 'New History Content'"
@@ -34,12 +42,23 @@ set stat1 = `$MSR RUN INST1 'set msr_dont_trace; $grep -q TLSHANDSHAKE '$src_log
 if (0 == $stat1) then
 	$MSR RUN INST1 "set msr_dont_trace; $msr_err_chk $src_logfile 'W-TLSHANDSHAKE' 'YDB-I-TEXT'"
 	$gtm_tst/com/knownerror.csh $msr_execute_last_out "YDB-W-TLSHANDSHAKE"
-else
+else if (0 == $allow_replnotls) then
 	# We did not see a TLSHANDSHAKE message. Then it is possible we see a TLSIOERROR message. Check that.
 	set stat1 = `$MSR RUN INST1 'set msr_dont_trace; $grep -q TLSIOERROR '$src_logfile'; echo $status'`
 	if (0 == $stat1) then
 		$MSR RUN INST1 "set msr_dont_trace; $msr_err_chk $src_logfile 'W-TLSIOERROR' 'YDB-I-TEXT'"
 		$gtm_tst/com/knownerror.csh $msr_execute_last_out "YDB-W-TLSIOERROR"
+	endif
+else
+	# We did not see a TLSHANDSHAKE message. Allow for a TLSIOERROR or REPLNOTLS message in source server log.
+	# In this case, we cannot include either the TLSIOERROR or REPLNOTLS warning full text in the reference file
+	# (to keep reference file deterministic) so we just check the occurrence of one of these messages and signal success.
+	set stat1 = `$MSR RUN INST1 'set msr_dont_trace; $grep -q TLSIOERROR '$src_logfile'; echo $status'`
+	set stat2 = `$MSR RUN INST1 'set msr_dont_trace; $grep -q W-REPLNOTLS '$src_logfile'; echo $status'`
+	if ((0 == $stat1) || (0 == $stat2)) then
+		echo "TEST-I-PASS, Found a TLSIOERROR or REPLNOTLS message in source server log file as expected"
+	else
+		echo "TEST-E-FAIL, Expected but did not find either TLSIOERROR or REPLNOTLS message in source server log file"
 	endif
 endif
 

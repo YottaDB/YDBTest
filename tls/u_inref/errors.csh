@@ -273,7 +273,13 @@ $MSR STARTRCV INST1 INST2
 get_msrtime
 set time_rcvr = "$time_msr"
 
-source $gtm_tst/$tst/u_inref/filter_TLSHANDSHAKE.csh $time_src $time_rcvr
+# In this case of an expired certificate, the source server will see a TLSHANDSHAKE error in case of pre-TLS1.3
+# and TLSIOERROR in most cases in TLS 1.3. But in rare cases, the source server could instead have a REPLNOTLS message.
+# This is because the receiver server (which is an independently running process) had seen the expired source server certificate
+# and disconnected BEFORE the source server got a chance to send the first application data. And so the source server
+# re-connected with the receiver which had by now fallen back to plaintext communication causing the YDB-W-REPLNOTLS warning
+# in the source server log. Let callee script know to allow the possible REPLNOTLS message by passing "ALLOW_REPLNOTLS".
+source $gtm_tst/$tst/u_inref/filter_TLSHANDSHAKE.csh $time_src $time_rcvr "ALLOW_REPLNOTLS"
 
 $MSR STOP INST1 INST2
 
