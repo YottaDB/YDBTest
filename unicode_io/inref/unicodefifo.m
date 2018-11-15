@@ -17,7 +17,7 @@ unicodefifo(encoding);
 	;there is a comprehensive unicodefifo test in basic
 	;If this routine is modified then a corresponding change to zunicodefifo.m may be required
 	set ^B=0
-	set $ZTRAP="do error^unicodefifo"
+	set $ZTRAP="do error^unicodefifo" do ^sstepgbl
 	set verbose=1 set is16=encoding["UTF-16" set isM=encoding["M"
 	set mainlvl=$ZLEVEL
 	set file="unicodefifo"_encoding_".pipe"
