@@ -51,12 +51,18 @@ setenv timeout 1
 foreach arg ($testlist)
 	echo "# Testing command timeout ($arg) greater than .123 (Expect a TPNOTACID message in the syslog)"
 	set t = `date +"%b %e %H:%M:%S"`
-	$ydb_dist/mumps -run $arg^gtm8165
+	# We want to run the mumps -run command in the foreground but in order to avoid TPNOTACID messages from other
+	# concurrently running tests from affecting this test, we note down the pid and search for messages only from that pid.
+	# Hence the backgrounding (to note down the pid) and later wait for the pid to die before searching for messages in syslog.
+	($ydb_dist/mumps -run $arg^gtm8165 >& tpnotacid1_$arg.out &; echo $! >& pid1_$arg.out) >& bckg1_$arg.out
+	set pid = `cat pid1_$arg.out`
+	$gtm_tst/com/wait_for_proc_to_die.csh $pid
+	cat tpnotacid1_$arg.out
 	$gtm_tst/com/getoper.csh "$t" "" getoper1_$arg.txt
 	# Sleep included to avoid 1 iteration reading the message from a previous one
 	sleep 1
 	echo "# Checking the syslog"
-	$grep TPNOTACID getoper1_$arg.txt |& sed 's/.*%YDB-I-TPNOTACID/%YDB-I-TPNOTACID/' |& sed 's/$TRESTART.*//' |& $grep gtm8165
+	$grep "MUMPS\[\<$pid\>\].*TPNOTACID" getoper1_$arg.txt |& sed 's/.*%YDB-I-TPNOTACID/%YDB-I-TPNOTACID/' |& sed 's/$TRESTART.*//'
 	echo ""
 	echo "---------------------------------------------------------------------------------"
 	echo ""
@@ -65,9 +71,9 @@ setenv timeout 0
 foreach arg ($testlist)
 	echo "# Testing command without a specified timeout ($arg), Expect a TPNOTACID message in the syslog still"
 	set t = `date +"%b %e %H:%M:%S"`
-	(($ydb_dist/mumps -run $arg^gtm8165 >& tpnotacid_$arg.out)&;echo $!>&pid.out)>& bckg.out
-	set pid=`cat pid.out`
-	$gtm_tst/com/getoper.csh "$t" "" getoper2_$arg.txt "" "TPNOTACID"
+	($ydb_dist/mumps -run $arg^gtm8165 >& tpnotacid2_$arg.out &; echo $! >& pid2_$arg.out) >& bckg2_$arg.out
+	set pid = `cat pid2_$arg.out`
+	$gtm_tst/com/getoper.csh "$t" "" getoper2_$arg.txt "" "MUMPS\[\<$pid\>\].*TPNOTACID"
 	kill -9 $pid
 	if ( "writeslashwait" != $arg && "opentimeout" != $arg) then
 		set pid2=`cat $arg.txt`
@@ -75,7 +81,7 @@ foreach arg ($testlist)
 	endif
 	# Sleep included to avoid 1 iteration reading the message from a previous one
 	sleep 1
-	$grep TPNOTACID getoper2_$arg.txt |& sed 's/.*%YDB-I-TPNOTACID/%YDB-I-TPNOTACID/' |& sed 's/$TRESTART.*//' |& $grep gtm8165
+	$grep "MUMPS\[\<$pid\>\].*TPNOTACID" getoper2_$arg.txt |& sed 's/.*%YDB-I-TPNOTACID/%YDB-I-TPNOTACID/' |& sed 's/$TRESTART.*//'
 	echo ""
 	echo "---------------------------------------------------------------------------------"
 	echo ""
