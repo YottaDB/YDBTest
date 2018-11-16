@@ -57,6 +57,15 @@ else
 	set stat2 = `$MSR RUN INST1 'set msr_dont_trace; $grep -q W-REPLNOTLS '$src_logfile'; echo $status'`
 	if ((0 == $stat1) || (0 == $stat2)) then
 		echo "TEST-I-PASS, Found a TLSIOERROR or REPLNOTLS message in source server log file as expected"
+		if (0 == $stat1) then
+			# We know a YDB-W-TLSIOERROR showed up in the source server log. Remove it as otherwise the
+			# test framework will catch it later causing a test failure.
+			$gtm_tst/com/knownerror.csh $src_logfile "YDB-W-TLSIOERROR"
+		else
+			# We know a YDB-W-REPLNOTLS showed up in the source server log. Remove it as otherwise the
+			# test framework will catch it later causing a test failure.
+			$gtm_tst/com/knownerror.csh $src_logfile "YDB-W-REPLNOTLS"
+		endif
 	else
 		echo "TEST-E-FAIL, Expected but did not find either TLSIOERROR or REPLNOTLS message in source server log file"
 	endif
