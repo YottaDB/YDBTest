@@ -31,6 +31,7 @@
 # ydb_maxtptime     [nars]  Test for new ydb_maxtptime env var
 # ydb_dbglvl        [nars]  Test for new ydb_dbglvl env var
 # callgassert       [nars]  Test an assert in CALLG.C line 96 for expression (fnptr == (callgfnptr)push_parm)
+# ydb184	    [quinn] Test that terminal settings are reset after exiting a ydb_ci() process
 #-------------------------------------------------------------------------------------
 
 echo "r120 test starts..."
@@ -41,7 +42,7 @@ setenv subtest_list_non_replic "zindcacheoverflow patnotfound readtimeout mixima
 setenv subtest_list_non_replic "$subtest_list_non_replic libyottadb zstepoveroutof msgprefix ydbdist divzero"
 setenv subtest_list_non_replic "$subtest_list_non_replic readcmdrecallhist nestedtriggers"
 setenv subtest_list_non_replic "$subtest_list_non_replic ctrlchandler ydb_gbldir ydb_maxtptime ydb_dbglvl"
-setenv subtest_list_non_replic "$subtest_list_non_replic callgassert"
+setenv subtest_list_non_replic "$subtest_list_non_replic callgassert ydb184"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then

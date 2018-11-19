@@ -1,0 +1,26 @@
+---------------------------------------------------------------------------
+# Test that terminal settings are reset after exiting a ydb_ci() process
+---------------------------------------------------------------------------
+# Setting up ydb184.xc and ydb_ci env var to point to it
+# Compiling/Linking ydb184.c into executable ydb184 and executing it
+spawn /usr/local/bin/tcsh -f
+> stty cols 132
+> set shellprompt=SHELL
+> set prompt=$shellprompt
+SHELLsetenv term_env `tty`; echo $term_env > term_env.txt
+SHELL
+# Record initial terminal settings
+stty -a > settings1.txt
+SHELL
+-------------------------------------------------------------------------------
+# Run the c program, which will call-in and execute ydb184.m
+`pwd`/ydb184
+ydb184.c : Do a call-in invocation of ydb184.m with ydb_ci()
+# Inside ydb184.m, the write command will allow YottaDB to change terminal characteristics
+SHELL
+# Record terminal settings after the C program process.
+stty -a > settings2.txt
+SHELL
+# Compare the settings files to see if they match. Without #184 code fixes, the stty settings used to differ
+diff settings1.txt settings2.txt
+SHELL

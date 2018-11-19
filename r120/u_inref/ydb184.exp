@@ -1,0 +1,32 @@
+#!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+#
+set timeout 60
+
+spawn /usr/local/bin/tcsh -f
+source $::env(gtm_tst)/com/expectinit.exp
+
+puts "\n# Record initial terminal settings"
+send -- "stty -a > settings1.txt\r"
+expect -exact "SHELL"
+
+puts "\n-------------------------------------------------------------------------------"
+puts "# Run the c program, which will call-in and execute ydb184.m"
+send -- "`pwd`/ydb184\r"
+expect -exact "SHELL"
+puts "\n# Record terminal settings after the C program process."
+send -- "stty -a > settings2.txt\r"
+expect -exact "SHELL"
+puts "\n# Compare the settings files to see if they match. Without #184 code fixes, the stty settings used to differ"
+send -- "diff settings1.txt settings2.txt\r"
+expect -exact "SHELL"
