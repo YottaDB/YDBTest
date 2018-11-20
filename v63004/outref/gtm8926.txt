@@ -1,0 +1,23 @@
+-----------------------------------------------------------------------------------------------------------------------
+# Test that an external call from MUMPS will defer processing a flush timer until after the external process concludes.
+-----------------------------------------------------------------------------------------------------------------------
+
+# Create a Database with 2 regions, DEFAULT and AREG
+# Compiling/Linking gtm8926.c into executable gtm8926
+# Run m script, which will start two job processes
+# The first job process will set ^X to a value, call an external c program,and wait until ^A is set to True to exit the external call
+# The second job will wait until ^X is set to a value, and if no flush has occured, it will set ^A to True.
+^A="True"
+^A(1)="1: In gtm8926.m: job 1"
+^A(2)="1: Calling gtm8926.c"
+^A(3)="1: In gtm8926.c"
+^A(4)="1: ^Ar set to Ready"
+^A(5)="1: Sleeping in intervals of 2 seconds waiting for confirmation that a flush has not occurred"
+^A(6)="1: Sleep time is 2 since the time to flush is 1 second"
+^A(7)="2: In gtm8926.m: job 2"
+^A(8)="2: Hanging in intervals of 1 second, peeking the value of Disk Writes to see if it has changed"
+^A(9)="2: After 5 intervals, No Flush has occured"
+^A(10)="1: ^A found to be True"
+^A(11)="1: External call succesfully delayed database flush"
+
+# Check and Close Database
