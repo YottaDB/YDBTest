@@ -1,0 +1,26 @@
+------------------------------------------------------------------------------------------------------
+# Test that ydb_linktmpdir/gtm_linktmpdir env var default to ydb_tmp/gtm_tmp before defaulting to /tmp
+------------------------------------------------------------------------------------------------------
+# Create test output directories to be set as env vars
+
+# Test Case 1: Test that when neither ydb_linktmpdir/gtm_linktmpdir or ydb_tmp/gtm_tmp are set, the path for Relinkctl is /tmp
+
+# Relinkctl should be set to the path of /tmp
+##TEST_AWKRelinkctl filename       : /tmp/ydb-relinkctl-.*
+
+------------------------------------------------------------------------------------------------------
+# Test Case 2: Test that when ydb_linktmpdir/gtm_linktmpdir is unset and ydb_tmp/gtm_tmp is set, the path for Relinkctl is the same as ydb_tmp/gtm_tmp
+
+# Randomly set either ydb_tmp or gtm_tmp to case2-dir
+
+# Relinkctl should be set to the path of case2-dir
+##TEST_AWKRelinkctl filename       : case2-dir/ydb-relinkctl-.*
+
+------------------------------------------------------------------------------------------------------
+# Test Case 3: Test that when ydb_linktmpdir/gtm_linktmpdir and ydb_tmp/gtm_tmp are set, the path for Relinkctl is the same as ydb_linktmpdir/gtm_linktmpdir
+
+# Randomly set either ydb_linktmpdir or gtm_linktmpdir to case3a-dir
+# Randomly set either ydb_tmp or gtm_tmp to case3b-dir
+
+# Relinkctl should be set to the path of case3a-dir
+##TEST_AWKRelinkctl filename       : case3a-dir/ydb-relinkctl-.*
