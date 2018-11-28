@@ -102,13 +102,17 @@ echo "Run 3n+1 to generate some dirty buffers"
 set nthreads = `grep -c ^processor /proc/cpuinfo`	# Use # of CPUs as the # of threads to avoid swamping the system
 # Randomly choose to run M or C (simpleAPI) version of the test
 if !($?gtm_test_replay) then
-	set usesimpleapi = `$gtm_exe/mumps -run rand 2`
+	set usesimpleapi = `$gtm_exe/mumps -run rand 3`
 	echo "setenv usesimpleapi $usesimpleapi" >> settings.csh
 endif
 
 if ($usesimpleapi) then
 	# Run simpleAPI equivalent of run^concurr
-	set file="simpleapi_threeen1f.c"
+	if (1 == $usesimpleapi) then
+		set file="simpleapi_threeen1f.c"
+	else
+		set file="simplethreadapi_threeen1f.c"
+	endif
 	cp $gtm_tst/$tst/inref/$file .
 	set exefile = $file:r
 	$gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$ydb_dist $file
