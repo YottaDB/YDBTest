@@ -27,12 +27,17 @@ endif
 if ("run" == "$1") then
 	# Randomly choose to run M or C (simpleAPI) version of the test
 	if !($?gtm_test_replay) then
-		set usesimpleapi = `$gtm_exe/mumps -run rand 2`
+		set usesimpleapi = `$gtm_exe/mumps -run rand 3`
 		echo "setenv usesimpleapi $usesimpleapi" >> settings.csh
 	endif
 	if ($usesimpleapi) then
-		# Run simpleAPI equivalent of run^concurr
-		set file="simpleapi_run_concurr.c"
+		if (1 == $usesimpleapi) then
+			# Run SimpleAPI equivalent of run^concurr
+			set file="simpleapi_run_concurr.c"
+		else
+			# Run SimpleThreadAPI equivalent of run^concurr
+			set file="simplethreadapi_run_concurr.c"
+		endif
 		cp $gtm_tst/$tst/inref/$file .
 		set exefile = $file:r
 		$gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$ydb_dist $file

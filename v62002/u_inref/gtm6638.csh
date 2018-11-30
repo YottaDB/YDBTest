@@ -107,10 +107,11 @@ if !($?gtm_test_replay) then
 endif
 
 if ($usesimpleapi) then
-	# Run simpleAPI equivalent of run^concurr
 	if (1 == $usesimpleapi) then
+		# Run SimpleAPI equivalent of ^threeen1f
 		set file="simpleapi_threeen1f.c"
 	else
+		# Run SimpleThreadAPI equivalent of ^threeen1f
 		set file="simplethreadapi_threeen1f.c"
 	endif
 	cp $gtm_tst/$tst/inref/$file .
