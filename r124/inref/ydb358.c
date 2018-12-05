@@ -44,8 +44,6 @@ int main()
 	if (0 == child)
 	{	/* child */
 		pid = getpid();
-		status = ydb_child_init(NULL);	/* needed in child pid right after a fork() */
-		YDB_ASSERT(YDB_OK == status);
 		printf("Child pid : Set ^child=<childpid> with ydb_set_s()\n"); fflush(stdout);
 		value.len_used = sprintf(value.buf_addr, "%d", (int)pid);
 		status = ydb_set_s(&parentvar, 0, NULL, &value);

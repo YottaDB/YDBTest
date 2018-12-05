@@ -50,8 +50,6 @@ int main()
 	YDB_ASSERT(0 <= child_pid);
 	if (0 == child_pid)
 	{
-		status = ydb_child_init(NULL);	/* needed in child pid right after a fork() */
-		YDB_ASSERT(YDB_OK == status);
 		childfn();	/* this is the child */
 		return YDB_OK;
 	}

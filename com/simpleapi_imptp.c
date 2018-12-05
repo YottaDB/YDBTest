@@ -539,9 +539,15 @@ int main(int argc, char *argv[])
 	value.len_used = sprintf(value.buf_addr, "%d", 0);
 	status = ydb_set_s(&ygbl_pctjobwait, 2, subscr, &value);
 	YDB_ASSERT(YDB_OK == status);
+	/* Wherever "ydb_child_init" is called below, randomly choose not to call it.
+	 * It should not be required at all since it is now automatically invoked after a "fork" by YottaDB.
+	 */
 	/* Call "ydb_child_init" in parent BEFORE fork to ensure it is a no-op */
-	status = ydb_child_init(NULL);
-	YDB_ASSERT(YDB_OK == status);
+	if ((int)(2 * drand48()))
+	{
+		status = ydb_child_init(NULL);
+		YDB_ASSERT(YDB_OK == status);
+	}
 	/* do ^job("impjob^imptp",jobcnt,"""""")	: com/imptp.m */
 	for (child = 1; child <= jobcnt; child++)
 	{
@@ -549,10 +555,16 @@ int main(int argc, char *argv[])
 		YDB_ASSERT(0 <= child_pid[child]);
 		if (0 == child_pid[child])
 		{
-			status = ydb_child_init(NULL);	/* needed in child pid right after a fork() */
-			YDB_ASSERT(YDB_OK == status);
-			status = ydb_child_init(NULL);	/* do it again to ensure it is a no-op the second time */
-			YDB_ASSERT(YDB_OK == status);
+			if ((int)(2 * drand48()))
+			{
+				status = ydb_child_init(NULL);	/* needed in child pid right after a fork() */
+				YDB_ASSERT(YDB_OK == status);
+			}
+			if ((int)(2 * drand48()))
+			{
+				status = ydb_child_init(NULL);	/* do it again to ensure it is a no-op the second time */
+				YDB_ASSERT(YDB_OK == status);
+			}
 			impjob(child);	/* this is the child */
 			return YDB_OK;
 		}
@@ -565,9 +577,11 @@ int main(int argc, char *argv[])
 		status = ydb_set_s(&ylcl_jobindex, 1, &subscr[1], &value);
 		YDB_ASSERT(YDB_OK == status);
 	}
-	/* Call "ydb_child_init" in parent AFTER fork to ensure it is a no-op */
-	status = ydb_child_init(NULL);
-	YDB_ASSERT(YDB_OK == status);
+	if ((int)(2 * drand48()))
+	{	/* Call "ydb_child_init" in parent AFTER fork to ensure it is a no-op */
+		status = ydb_child_init(NULL);
+		YDB_ASSERT(YDB_OK == status);
+	}
 	/* do writecrashfileifneeded			: com/job.m */
 	status = ydb_ci("writecrashfileifneeded");
 	YDB_ASSERT(YDB_OK == status);

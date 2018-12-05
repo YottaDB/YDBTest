@@ -148,11 +148,7 @@ int main(int argc, char *argv[])
 		child_pid[child] = fork();
 		YDB_ASSERT(0 <= child_pid[child]);
 		if (0 == child_pid[child])
-		{
-			status = ydb_child_init(NULL);	/* needed in child pid right after a fork() */
-			YDB_ASSERT(YDB_OK == status);
 			return m_job_stress();	/* this is the child */
-		}
 	}
 
 	/* Wait for all children to reach the "lock +^permit($j)" point before continuing forward : job^stress */

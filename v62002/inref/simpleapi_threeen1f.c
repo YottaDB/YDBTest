@@ -195,8 +195,6 @@ int main(int argc, char *argv[])
 			YDB_ASSERT(0 <= child_pid[s]);
 			if (0 == child_pid[s])
 			{
-				status = ydb_child_init(NULL);	/* needed in child pid right after a fork() */
-				YDB_ASSERT(YDB_OK == status);
 				doblk(i, s);	/* this is the child */
 				return YDB_OK;
 			}

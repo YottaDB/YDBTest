@@ -78,11 +78,7 @@ int main(int argc, char *argv[])
 			child_pid[child] = fork();
 			YDB_ASSERT(0 <= child_pid[child]);
 			if (0 == child_pid[child])
-			{
-				status = ydb_child_init(NULL);	/* needed in child pid right after a fork() */
-				YDB_ASSERT(YDB_OK == status);
 				return do_tp(numincrs);	/* this is the child */
-			}
 		}
 		for (child = 0; child < NCHILDREN; child++)
 		{
