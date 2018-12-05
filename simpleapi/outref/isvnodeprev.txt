@@ -1,0 +1,7 @@
+Copy all C programs that need to be tested
+ --> Running isvnodeprev1_errors.c <---
+### Test error scenarios in ydb_node_previous_s() of Intrinsic Special Variables ###
+
+# Attempting ydb_node_previous_s() of ISV should issue UNIMPLOP error
+ydb_node_previous_s() [a]: 150373858,(SimpleAPI),%YDB-E-UNIMPLOP, Unimplemented construct encountered
+

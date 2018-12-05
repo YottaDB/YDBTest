@@ -30,8 +30,8 @@
 int main()
 {
 	int		i, status;
-	ydb_buffer_t	basevar, nextvar, subscr[2], nextsubscr[2], value1, value2, value3, badbasevar, ret_value;
-	char		errbuf[ERRBUF_SIZE], retvaluebuff[64];
+	ydb_buffer_t	basevar, nextvar, subscr[2], nextsubscr[2], value1, value2, value3, badbasevar, ret_value1, ret_value2;
+	char		errbuf[ERRBUF_SIZE], retvaluebuff1[64], retvaluebuff2[64];
 
 	printf("### Test simple ydb_subscript_next_s() of Global Variables ###\n"); fflush(stdout);
 	/* Initialize varname, subscript, and value buffers */
@@ -42,9 +42,9 @@ int main()
 	YDB_LITERAL_TO_BUFFER(VALUE1, &value1);
 	YDB_LITERAL_TO_BUFFER(VALUE2, &value2);
 	YDB_LITERAL_TO_BUFFER(VALUE3, &value3);
-	ret_value.buf_addr = retvaluebuff;
-	ret_value.len_alloc = sizeof(retvaluebuff);
-	ret_value.len_used = 0;
+	ret_value1.buf_addr = retvaluebuff1;
+	ret_value1.len_alloc = sizeof(retvaluebuff1);
+	ret_value1.len_used = 0;
 	printf("Initialize call-in environment\n"); fflush(stdout);
 	status = ydb_init();
 	if (0 != status)
@@ -109,7 +109,7 @@ int main()
 		return YDB_OK;
 	}
 	printf("Get next global variable of global variable with 0 subscripts\n"); fflush(stdout);
-	status = ydb_subscript_next_s(&basevar, 0, NULL, &ret_value);
+	status = ydb_subscript_next_s(&basevar, 0, NULL, &ret_value1);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
@@ -117,10 +117,10 @@ int main()
 		fflush(stdout);
 		return YDB_OK;
 	}
-	ret_value.buf_addr[ret_value.len_used] = '\0';
-	printf("ydb_subscript_next_s() returned [%s]\n", ret_value.buf_addr);
+	ret_value1.buf_addr[ret_value1.len_used] = '\0';
+	printf("ydb_subscript_next_s() returned [%s]\n", ret_value1.buf_addr);
 	printf("Get next subscript of global variable with 1 subscript\n"); fflush(stdout);
-	status = ydb_subscript_next_s(&basevar, 1, subscr, &ret_value);
+	status = ydb_subscript_next_s(&basevar, 1, subscr, &ret_value1);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
@@ -128,10 +128,10 @@ int main()
 		fflush(stdout);
 		return YDB_OK;
 	}
-	ret_value.buf_addr[ret_value.len_used] = '\0';
-	printf("ydb_subscript_next_s() returned [%s]\n", ret_value.buf_addr);
+	ret_value1.buf_addr[ret_value1.len_used] = '\0';
+	printf("ydb_subscript_next_s() returned [%s]\n", ret_value1.buf_addr);
 	printf("Get next subscript of global variable with 2 subscripts\n"); fflush(stdout);
-	status = ydb_subscript_next_s(&basevar, 2, subscr, &ret_value);
+	status = ydb_subscript_next_s(&basevar, 2, subscr, &ret_value1);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
@@ -139,8 +139,8 @@ int main()
 		fflush(stdout);
 		return YDB_OK;
 	}
-	ret_value.buf_addr[ret_value.len_used] = '\0';
-	printf("ydb_subscript_next_s() returned [%s]\n", ret_value.buf_addr);
+	ret_value1.buf_addr[ret_value1.len_used] = '\0';
+	printf("ydb_subscript_next_s() returned [%s]\n", ret_value1.buf_addr);
 	printf("Demonstrate our progress by executing a gvnZWRITE in a call-in\n"); fflush(stdout);
 	status = ydb_ci("gvnZWRITE");
 	if (status)

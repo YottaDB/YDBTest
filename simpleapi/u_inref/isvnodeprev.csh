@@ -11,18 +11,18 @@
 #								#
 #################################################################
 #
-# Test of ydb_node_next_s() function for Intrinsic Special variables in the simpleAPI
+# Test of ydb_node_previous_s() function for Intrinsic Special variables in the simpleAPI
 #
 echo "Copy all C programs that need to be tested"
-cp $gtm_tst/$tst/inref/isvnodenext*.c .
+cp $gtm_tst/$tst/inref/isvnodeprev*.c .
 
-foreach file (isvnodenext*.c)
+foreach file (isvnodeprev*.c)
 	echo " --> Running $file <---"
 	set exefile = $file:r
 	$gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $file
 	$gt_ld_linker $gt_ld_option_output $exefile $gt_ld_options_common $exefile.o $gt_ld_sysrtns $ci_ldpath$gtm_dist -L$gtm_dist $tst_ld_yottadb $gt_ld_syslibs >& $exefile.map
 	if (0 != $status) then
-		echo "ISVNODENEXT-E-LINKFAIL : Linking $exefile failed. See $exefile.map for details"
+		echo "ISVNODEPREV-E-LINKFAIL : Linking $exefile failed. See $exefile.map for details"
 		continue
 	endif
 	`pwd`/$exefile

@@ -1,0 +1,342 @@
+# Test of ydb_node_previous_s() function for Global and Local variables in the simpleAPI
+# Now run gvnlvnnodeprev*.c (all tests driven by a C routine)
+
+---> Running gvnlvnnodeprev1_simple for Global Variables <---
+### Test simple ydb_node_previous_s() of Global Variables ###
+# Initialize call-in environment
+# Set a Global variable with 0 subscripts
+# Get the previous node of Global variable with 0 subscripts
+Starting at ^X()
+ydb_node_previous_s() returned NODE_ERR_NODEEND
+# Set a Global variable with 1 subscript
+# Get the previous node of Global variable with 1 subscript
+Starting at ^X(1)
+Call 1: ydb_node_previous_s() returned ^X()
+ydb_node_previous_s() returned NODE_ERR_NODEEND
+# Set a Global variable with a 2-depth index
+# Get the first node of Global variable using two calls to ydb_node_previous_s()
+Starting at ^X(1,2)
+Call 1: ydb_node_previous_s() returned ^X(1)
+Call 2: ydb_node_next_s() returned ^X()
+ydb_node_previous_s() returned NODE_ERR_NODEEND
+# Set another Global variable with another 1-depth index
+# Get the first node of Global variable with 3 calls to ydb_node_previous_s()
+Starting at ^X(3)
+Call 1: ydb_node_previous_s() returned ^X(1, 2)
+Call 2: ydb_node_previous_s() returned ^X(1)
+Call 3: ydb_node_previous_s() returned ^X()
+ydb_node_previous_s() returned NODE_ERR_NODEEND
+
+---> Running gvnlvnnodeprev2_31subs for Global Variables <---
+### Test 31-level (max-deep) subscripts can be got using ydb_node_previous_s() of Global Variables ###
+# Set a Global variable (and next subscript) with 0 subscripts
+# Set a Global variable (and next subscript) with 1 subscripts
+# Set a Global variable (and next subscript) with 2 subscripts
+# Set a Global variable (and next subscript) with 3 subscripts
+# Set a Global variable (and next subscript) with 4 subscripts
+# Set a Global variable (and next subscript) with 5 subscripts
+# Set a Global variable (and next subscript) with 6 subscripts
+# Set a Global variable (and next subscript) with 7 subscripts
+# Set a Global variable (and next subscript) with 8 subscripts
+# Set a Global variable (and next subscript) with 9 subscripts
+# Set a Global variable (and next subscript) with 10 subscripts
+# Set a Global variable (and next subscript) with 11 subscripts
+# Set a Global variable (and next subscript) with 12 subscripts
+# Set a Global variable (and next subscript) with 13 subscripts
+# Set a Global variable (and next subscript) with 14 subscripts
+# Set a Global variable (and next subscript) with 15 subscripts
+# Set a Global variable (and next subscript) with 16 subscripts
+# Set a Global variable (and next subscript) with 17 subscripts
+# Set a Global variable (and next subscript) with 18 subscripts
+# Set a Global variable (and next subscript) with 19 subscripts
+# Set a Global variable (and next subscript) with 20 subscripts
+# Set a Global variable (and next subscript) with 21 subscripts
+# Set a Global variable (and next subscript) with 22 subscripts
+# Set a Global variable (and next subscript) with 23 subscripts
+# Set a Global variable (and next subscript) with 24 subscripts
+# Set a Global variable (and next subscript) with 25 subscripts
+# Set a Global variable (and next subscript) with 26 subscripts
+# Set a Global variable (and next subscript) with 27 subscripts
+# Set a Global variable (and next subscript) with 28 subscripts
+# Set a Global variable (and next subscript) with 29 subscripts
+# Set a Global variable (and next subscript) with 30 subscripts
+# Set a Global variable (and next subscript) with 31 subscripts
+Starting at ^X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31)
+# Get the previous node after a node at 31 subscript depth
+ydb_node_previous_s() returned ^X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30)
+# Get the previous node after a node at 30 subscript depth
+ydb_node_previous_s() returned ^X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29)
+# Get the previous node after a node at 29 subscript depth
+ydb_node_previous_s() returned ^X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28)
+# Get the previous node after a node at 28 subscript depth
+ydb_node_previous_s() returned ^X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27)
+# Get the previous node after a node at 27 subscript depth
+ydb_node_previous_s() returned ^X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26)
+# Get the previous node after a node at 26 subscript depth
+ydb_node_previous_s() returned ^X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25)
+# Get the previous node after a node at 25 subscript depth
+ydb_node_previous_s() returned ^X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24)
+# Get the previous node after a node at 24 subscript depth
+ydb_node_previous_s() returned ^X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23)
+# Get the previous node after a node at 23 subscript depth
+ydb_node_previous_s() returned ^X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22)
+# Get the previous node after a node at 22 subscript depth
+ydb_node_previous_s() returned ^X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21)
+# Get the previous node after a node at 21 subscript depth
+ydb_node_previous_s() returned ^X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20)
+# Get the previous node after a node at 20 subscript depth
+ydb_node_previous_s() returned ^X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19)
+# Get the previous node after a node at 19 subscript depth
+ydb_node_previous_s() returned ^X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18)
+# Get the previous node after a node at 18 subscript depth
+ydb_node_previous_s() returned ^X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17)
+# Get the previous node after a node at 17 subscript depth
+ydb_node_previous_s() returned ^X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16)
+# Get the previous node after a node at 16 subscript depth
+ydb_node_previous_s() returned ^X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15)
+# Get the previous node after a node at 15 subscript depth
+ydb_node_previous_s() returned ^X(1,2,3,4,5,6,7,8,9,10,11,12,13,14)
+# Get the previous node after a node at 14 subscript depth
+ydb_node_previous_s() returned ^X(1,2,3,4,5,6,7,8,9,10,11,12,13)
+# Get the previous node after a node at 13 subscript depth
+ydb_node_previous_s() returned ^X(1,2,3,4,5,6,7,8,9,10,11,12)
+# Get the previous node after a node at 12 subscript depth
+ydb_node_previous_s() returned ^X(1,2,3,4,5,6,7,8,9,10,11)
+# Get the previous node after a node at 11 subscript depth
+ydb_node_previous_s() returned ^X(1,2,3,4,5,6,7,8,9,10)
+# Get the previous node after a node at 10 subscript depth
+ydb_node_previous_s() returned ^X(1,2,3,4,5,6,7,8,9)
+# Get the previous node after a node at 9 subscript depth
+ydb_node_previous_s() returned ^X(1,2,3,4,5,6,7,8)
+# Get the previous node after a node at 8 subscript depth
+ydb_node_previous_s() returned ^X(1,2,3,4,5,6,7)
+# Get the previous node after a node at 7 subscript depth
+ydb_node_previous_s() returned ^X(1,2,3,4,5,6)
+# Get the previous node after a node at 6 subscript depth
+ydb_node_previous_s() returned ^X(1,2,3,4,5)
+# Get the previous node after a node at 5 subscript depth
+ydb_node_previous_s() returned ^X(1,2,3,4)
+# Get the previous node after a node at 4 subscript depth
+ydb_node_previous_s() returned ^X(1,2,3)
+# Get the previous node after a node at 3 subscript depth
+ydb_node_previous_s() returned ^X(1,2)
+# Get the previous node after a node at 2 subscript depth
+ydb_node_previous_s() returned ^X(1)
+# Get the previous node after a node at 1 subscript depth
+ydb_node_previous_s() returned ^X()
+# Get the previous node after a node at 0 subscript depth
+ydb_node_previous_s() returned YDB_ERR_NODEEND
+
+---> Running gvnlvnnodeprev3_errors for Global Variables <---
+### Test error scenarios in ydb_node_previous_s() of Global Variables ###
+
+# Test of INVVARNAME error
+# Attempting ydb_node_previous_s() of bad basevar (% in middle of name): ^B%dbasevarInvChar
+ydb_node_previous_s() [99]: 151027762,(SimpleAPI),%YDB-E-INVVARNAME, Invalid local/global/ISV variable name supplied to API call
+# Attempting ydb_node_previous_s() of bad basevar (first letter in name is digit): ^1namestartswithdigit
+ydb_node_previous_s() [107]: 151027762,(SimpleAPI),%YDB-E-INVVARNAME, Invalid local/global/ISV variable name supplied to API call
+
+# Test of VARNAME2LONG error
+# Attempting ydb_node_previous_s() of bad basevar (> 31 characters): ^Verylongbasevarthatexceedsmaxlength
+ydb_node_previous_s() [116]: 151027842,(SimpleAPI),%YDB-E-VARNAME2LONG, Variable name length exceeds maximum allowed (31)
+
+# Test of MAXNRSUBSCRIPTS error
+# Attempting ydb_node_previous_s() of basevar with 32 subscripts
+ydb_node_previous_s() [128]: 150373282,(SimpleAPI),%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
+
+# Test of MINNRSUBSCRIPTS error
+# Attempting ydb_node_previous_s() of basevar with -1 subscripts
+ydb_node_previous_s() [138]: 151027786,(SimpleAPI),%YDB-E-MINNRSUBSCRIPTS, Number of subscripts cannot be a negative number
+
+# Test of INSUFFSUBS error
+# Attempting ydb_node_previous_s() with *ret_subs_used=0 : Expect INSUFFSUBS error
+ydb_node_previous_s() [164]: 151027778,(SimpleAPI),%YDB-E-INSUFFSUBS, Return subscript array for ydb_node_previous_s() call too small - needs at least 1 entries for this call
+
+# Test of INVSTRLEN
+# Attempting ydb_node_previous_s() with ret_sub_array[0]:len_alloc set to 0 whereas return value is of length 1 : Expect INVSTRLEN error
+ydb_node_previous_s() [174]: 150375522,(SimpleAPI),%YDB-E-INVSTRLEN, Invalid string length 1: max 0
+
+# Test of PARAMINVALID error in ret_subarray parameter
+# Attempting ydb_node_previous_s() with ret_subarray->buf_addr = NULL : Expect PARAMINVALID error
+ydb_node_previous_s() [193]: 151027770,(SimpleAPI),%YDB-E-PARAMINVALID, NULL ret_subsarray->buf_addr parameter specified in ydb_node_previous_s() call
+# Attempting ydb_node_previous_s() with *ret_subarray = NULL : Expect PARAMINVALID error
+ydb_node_previous_s() [201]: 151027770,(SimpleAPI),%YDB-E-PARAMINVALID, NULL ret_subsarray parameter specified in ydb_node_previous_s() call
+# Attempting ydb_node_previous_s() with ret_subs_used = NULL : Expect PARAMINVALID error
+ydb_node_previous_s() [209]: 151027770,(SimpleAPI),%YDB-E-PARAMINVALID, NULL ret_subs_used parameter specified in ydb_node_previous_s() call
+# Attempting ydb_node_previous_s() with the previous node subscript = "" and ret_value->buf_addr = NULL : Expect NO PARAMINVALID error
+Set ^X variable to null string: ^X() set to test
+ydb_node_previous_s() returns ^X("")
+
+# Test of SUBSARRAYNULL error
+# Attempting ydb_node_previous_s() with *subsarray = NULL : Expect SUBSARRAYNULL error
+ydb_node_previous_s() [245]: 151027794,(SimpleAPI),%YDB-E-SUBSARRAYNULL, Non-zero number of subscripts [1] specified but subscript array parameter is NULL in ydb_node_previous_s() call
+
+---> Running gvnlvnnodeprev1_simple for Local Variables <---
+### Test simple ydb_node_previous_s() of Local Variables ###
+# Initialize call-in environment
+# Set a Local variable with 0 subscripts
+# Get the previous node of Local variable with 0 subscripts
+Starting at X()
+ydb_node_previous_s() returned NODE_ERR_NODEEND
+# Set a Local variable with 1 subscript
+# Get the previous node of Local variable with 1 subscript
+Starting at X(1)
+Call 1: ydb_node_previous_s() returned X()
+ydb_node_previous_s() returned NODE_ERR_NODEEND
+# Set a Local variable with a 2-depth index
+# Get the first node of Local variable using two calls to ydb_node_previous_s()
+Starting at X(1,2)
+Call 1: ydb_node_previous_s() returned X(1)
+Call 2: ydb_node_next_s() returned X()
+ydb_node_previous_s() returned NODE_ERR_NODEEND
+# Set another Local variable with another 1-depth index
+# Get the first node of Local variable with 3 calls to ydb_node_previous_s()
+Starting at X(3)
+Call 1: ydb_node_previous_s() returned X(1, 2)
+Call 2: ydb_node_previous_s() returned X(1)
+Call 3: ydb_node_previous_s() returned X()
+ydb_node_previous_s() returned NODE_ERR_NODEEND
+
+---> Running gvnlvnnodeprev2_31subs for Local Variables <---
+### Test 31-level (max-deep) subscripts can be got using ydb_node_previous_s() of Local Variables ###
+# Set a Local variable (and next subscript) with 0 subscripts
+# Set a Local variable (and next subscript) with 1 subscripts
+# Set a Local variable (and next subscript) with 2 subscripts
+# Set a Local variable (and next subscript) with 3 subscripts
+# Set a Local variable (and next subscript) with 4 subscripts
+# Set a Local variable (and next subscript) with 5 subscripts
+# Set a Local variable (and next subscript) with 6 subscripts
+# Set a Local variable (and next subscript) with 7 subscripts
+# Set a Local variable (and next subscript) with 8 subscripts
+# Set a Local variable (and next subscript) with 9 subscripts
+# Set a Local variable (and next subscript) with 10 subscripts
+# Set a Local variable (and next subscript) with 11 subscripts
+# Set a Local variable (and next subscript) with 12 subscripts
+# Set a Local variable (and next subscript) with 13 subscripts
+# Set a Local variable (and next subscript) with 14 subscripts
+# Set a Local variable (and next subscript) with 15 subscripts
+# Set a Local variable (and next subscript) with 16 subscripts
+# Set a Local variable (and next subscript) with 17 subscripts
+# Set a Local variable (and next subscript) with 18 subscripts
+# Set a Local variable (and next subscript) with 19 subscripts
+# Set a Local variable (and next subscript) with 20 subscripts
+# Set a Local variable (and next subscript) with 21 subscripts
+# Set a Local variable (and next subscript) with 22 subscripts
+# Set a Local variable (and next subscript) with 23 subscripts
+# Set a Local variable (and next subscript) with 24 subscripts
+# Set a Local variable (and next subscript) with 25 subscripts
+# Set a Local variable (and next subscript) with 26 subscripts
+# Set a Local variable (and next subscript) with 27 subscripts
+# Set a Local variable (and next subscript) with 28 subscripts
+# Set a Local variable (and next subscript) with 29 subscripts
+# Set a Local variable (and next subscript) with 30 subscripts
+# Set a Local variable (and next subscript) with 31 subscripts
+Starting at X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31)
+# Get the previous node after a node at 31 subscript depth
+ydb_node_previous_s() returned X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30)
+# Get the previous node after a node at 30 subscript depth
+ydb_node_previous_s() returned X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29)
+# Get the previous node after a node at 29 subscript depth
+ydb_node_previous_s() returned X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28)
+# Get the previous node after a node at 28 subscript depth
+ydb_node_previous_s() returned X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27)
+# Get the previous node after a node at 27 subscript depth
+ydb_node_previous_s() returned X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26)
+# Get the previous node after a node at 26 subscript depth
+ydb_node_previous_s() returned X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25)
+# Get the previous node after a node at 25 subscript depth
+ydb_node_previous_s() returned X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24)
+# Get the previous node after a node at 24 subscript depth
+ydb_node_previous_s() returned X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23)
+# Get the previous node after a node at 23 subscript depth
+ydb_node_previous_s() returned X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22)
+# Get the previous node after a node at 22 subscript depth
+ydb_node_previous_s() returned X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21)
+# Get the previous node after a node at 21 subscript depth
+ydb_node_previous_s() returned X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20)
+# Get the previous node after a node at 20 subscript depth
+ydb_node_previous_s() returned X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19)
+# Get the previous node after a node at 19 subscript depth
+ydb_node_previous_s() returned X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18)
+# Get the previous node after a node at 18 subscript depth
+ydb_node_previous_s() returned X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17)
+# Get the previous node after a node at 17 subscript depth
+ydb_node_previous_s() returned X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16)
+# Get the previous node after a node at 16 subscript depth
+ydb_node_previous_s() returned X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15)
+# Get the previous node after a node at 15 subscript depth
+ydb_node_previous_s() returned X(1,2,3,4,5,6,7,8,9,10,11,12,13,14)
+# Get the previous node after a node at 14 subscript depth
+ydb_node_previous_s() returned X(1,2,3,4,5,6,7,8,9,10,11,12,13)
+# Get the previous node after a node at 13 subscript depth
+ydb_node_previous_s() returned X(1,2,3,4,5,6,7,8,9,10,11,12)
+# Get the previous node after a node at 12 subscript depth
+ydb_node_previous_s() returned X(1,2,3,4,5,6,7,8,9,10,11)
+# Get the previous node after a node at 11 subscript depth
+ydb_node_previous_s() returned X(1,2,3,4,5,6,7,8,9,10)
+# Get the previous node after a node at 10 subscript depth
+ydb_node_previous_s() returned X(1,2,3,4,5,6,7,8,9)
+# Get the previous node after a node at 9 subscript depth
+ydb_node_previous_s() returned X(1,2,3,4,5,6,7,8)
+# Get the previous node after a node at 8 subscript depth
+ydb_node_previous_s() returned X(1,2,3,4,5,6,7)
+# Get the previous node after a node at 7 subscript depth
+ydb_node_previous_s() returned X(1,2,3,4,5,6)
+# Get the previous node after a node at 6 subscript depth
+ydb_node_previous_s() returned X(1,2,3,4,5)
+# Get the previous node after a node at 5 subscript depth
+ydb_node_previous_s() returned X(1,2,3,4)
+# Get the previous node after a node at 4 subscript depth
+ydb_node_previous_s() returned X(1,2,3)
+# Get the previous node after a node at 3 subscript depth
+ydb_node_previous_s() returned X(1,2)
+# Get the previous node after a node at 2 subscript depth
+ydb_node_previous_s() returned X(1)
+# Get the previous node after a node at 1 subscript depth
+ydb_node_previous_s() returned X()
+# Get the previous node after a node at 0 subscript depth
+ydb_node_previous_s() returned YDB_ERR_NODEEND
+
+---> Running gvnlvnnodeprev3_errors for Local Variables <---
+### Test error scenarios in ydb_node_previous_s() of Global Variables ###
+
+# Test of INVVARNAME error
+# Attempting ydb_node_previous_s() of bad basevar (% in middle of name): ^B%dbasevarInvChar
+ydb_node_previous_s() [99]: 151027762,(SimpleAPI),%YDB-E-INVVARNAME, Invalid local/global/ISV variable name supplied to API call
+# Attempting ydb_node_previous_s() of bad basevar (first letter in name is digit): ^1namestartswithdigit
+ydb_node_previous_s() [107]: 151027762,(SimpleAPI),%YDB-E-INVVARNAME, Invalid local/global/ISV variable name supplied to API call
+
+# Test of VARNAME2LONG error
+# Attempting ydb_node_previous_s() of bad basevar (> 31 characters): ^Verylongbasevarthatexceedsmaxlength
+ydb_node_previous_s() [116]: 151027842,(SimpleAPI),%YDB-E-VARNAME2LONG, Variable name length exceeds maximum allowed (31)
+
+# Test of MAXNRSUBSCRIPTS error
+# Attempting ydb_node_previous_s() of basevar with 32 subscripts
+ydb_node_previous_s() [128]: 150373282,(SimpleAPI),%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
+
+# Test of MINNRSUBSCRIPTS error
+# Attempting ydb_node_previous_s() of basevar with -1 subscripts
+ydb_node_previous_s() [138]: 151027786,(SimpleAPI),%YDB-E-MINNRSUBSCRIPTS, Number of subscripts cannot be a negative number
+
+# Test of INSUFFSUBS error
+# Attempting ydb_node_previous_s() with *ret_subs_used=0 : Expect INSUFFSUBS error
+ydb_node_previous_s() [164]: 151027778,(SimpleAPI),%YDB-E-INSUFFSUBS, Return subscript array for ydb_node_previous_s() call too small - needs at least 1 entries for this call
+
+# Test of INVSTRLEN
+# Attempting ydb_node_previous_s() with ret_sub_array[0]:len_alloc set to 0 whereas return value is of length 1 : Expect INVSTRLEN error
+ydb_node_previous_s() [174]: 150375522,(SimpleAPI),%YDB-E-INVSTRLEN, Invalid string length 1: max 0
+
+# Test of PARAMINVALID error in ret_subarray parameter
+# Attempting ydb_node_previous_s() with ret_subarray->buf_addr = NULL : Expect PARAMINVALID error
+ydb_node_previous_s() [193]: 151027770,(SimpleAPI),%YDB-E-PARAMINVALID, NULL ret_subsarray->buf_addr parameter specified in ydb_node_previous_s() call
+# Attempting ydb_node_previous_s() with *ret_subarray = NULL : Expect PARAMINVALID error
+ydb_node_previous_s() [201]: 151027770,(SimpleAPI),%YDB-E-PARAMINVALID, NULL ret_subsarray parameter specified in ydb_node_previous_s() call
+# Attempting ydb_node_previous_s() with ret_subs_used = NULL : Expect PARAMINVALID error
+ydb_node_previous_s() [209]: 151027770,(SimpleAPI),%YDB-E-PARAMINVALID, NULL ret_subs_used parameter specified in ydb_node_previous_s() call
+# Attempting ydb_node_previous_s() with the previous node subscript = "" and ret_value->buf_addr = NULL : Expect NO PARAMINVALID error
+Set X variable to null string: X() set to test
+ydb_node_previous_s() returns X("")
+
+# Test of SUBSARRAYNULL error
+# Attempting ydb_node_previous_s() with *subsarray = NULL : Expect SUBSARRAYNULL error
+ydb_node_previous_s() [245]: 151027794,(SimpleAPI),%YDB-E-SUBSARRAYNULL, Non-zero number of subscripts [1] specified but subscript array parameter is NULL in ydb_node_previous_s() call

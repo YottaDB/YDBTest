@@ -114,6 +114,8 @@ int main()
 		printf("ydb_subscript_next_s() [%d]: %s\n", __LINE__, errbuf);
 		fflush(stdout);
 	}
+	if (ret_value.buf_addr == NULL)
+		printf("ydb_subscript_next_s() returns NULL\n");
 	printf("Attempting ydb_subscript_next_s() with NULL ret_value when return value is a NULL string : Expect PARAMINVALID error\n");
 	status = ydb_subscript_next_s(&basevar, 0, NULL, NULL);
 	if (YDB_OK != status)
