@@ -141,10 +141,15 @@ else
 endif
 
 # Determine whether openssl version is 1.1.1 or more (i.e. tls 1.3). Some tests have different output based on this.
-set libsslpath = `ldd $ydb_dist/plugin/libgtmtls.so | grep libssl | awk '{print $3}'`
-set opensslver = `strings $libsslpath | grep -w '^OpenSSL' | awk '{print $2}'`
-if ( `expr "$opensslver" \>= "1.1.1"` ) then
-	setenv ydb_test_tls13_plus 1
+# If $ydb_dist/plugin/libgtmtls.so is not present, then assume openssl version is < 1.1.1 (i.e. not tls 1.3)
+if (-e $ydb_dist/plugin/libgtmtls.so) then
+	set libsslpath = `ldd $ydb_dist/plugin/libgtmtls.so | grep libssl | awk '{print $3}'`
+	set opensslver = `strings $libsslpath | grep -w '^OpenSSL' | awk '{print $2}'`
+	if ( `expr "$opensslver" \>= "1.1.1"` ) then
+		setenv ydb_test_tls13_plus 1
+	else
+		setenv ydb_test_tls13_plus 0
+	endif
 else
 	setenv ydb_test_tls13_plus 0
 endif
