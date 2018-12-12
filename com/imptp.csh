@@ -64,7 +64,7 @@ if ($gtm_test_dbfill == "IMPTP" || $gtm_test_dbfill == "IMPZTP") then
 	setenv gtm_badchar "no"
 	# Randomly choose to run M or C (simpleAPI) version of the test
 	if !($?gtm_test_replay) then
-		set usesimpleapi = `$gtm_exe/mumps -run rand 2`
+		set usesimpleapi = `$gtm_exe/mumps -run rand 3`
 		echo "setenv usesimpleapi $usesimpleapi" >> settings.csh
 	else
 		set usesimpleapi = $usesimpleapi
@@ -92,8 +92,13 @@ if ($gtm_test_dbfill == "IMPTP" || $gtm_test_dbfill == "IMPZTP") then
 xyz
 
 	else
-		# Run simpleAPI equivalent of ^imptp
-		set file="simpleapi_imptp.c"
+		if (1 == $usesimpleapi) then
+			# Run SimpleAPI equivalent of ^imptp
+			set file="simpleapi_imptp.c"
+		else
+			# Run SimpleThreadAPI equivalent of ^imptp
+			set file="simplethreadapi_imptp.c"
+		endif
 		cp $gtm_tst/com/$file .
 		set exefile = $file:r
 		$gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$ydb_dist $file
