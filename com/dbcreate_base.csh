@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -169,6 +172,7 @@ if ($?test_specific_gde) then
 endif
 
 #source the output of AWK
+unsetenv ydb_app_ensures_isolation # in case it is set on test replay (else ZGBLDIRACC errors on non-existent gld file are possible)
 source tmp.com >>&! dbcreate.out
 if ($status) echo "TEST-E-DBCREATE ERROR from tmp.com Check dbcreate.out for details"
 
