@@ -20,7 +20,7 @@
 #define AREG_VAR "^A"
 #define VALUE1 "Ready"
 #define COUNT_IND "^An"
-char string[20];
+char string[64];
 int status, copy_done;
 ydb_buffer_t def, areg, value1, count, return_test, return_count, ydb_log;
 char	errbuf[1024], retvaluebuff[64], countvaluebuff[64], ydblogbuf[128];
