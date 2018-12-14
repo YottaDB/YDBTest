@@ -14,20 +14,60 @@
 
 echo "# Run the Go wrapper unit tests; if there is a failure, additional output will cause the test to fail"
 
-# We need to set the global directory to an absolute path because "go test" does a chdir at some point
-setenv ydb_gbldir `pwd`/mumps.gld
+# Use -gld_has_db_fullpath to ensure gld is created with full paths pointing to the database file
+# (see comment before "setenv ydb_gbldir" done below for why).
+if ($?test_replic) then
+	# Need to use MSR framework whenever -gld_has_db_fullpath is in use (non-MSR replication does not work currently)
+	$MULTISITE_REPLIC_PREPARE 2	# Create two instances INST1 (primary side) and INST2 (secondary side)
+endif
 
-$gtm_tst/com/dbcreate.csh mumps -gld_has_db_fullpath >>& dbcreate_log.txt
+$gtm_tst/com/dbcreate.csh mumps -gld_has_db_fullpath >>& dbcreate.out
+if ($status) then
+        echo "# dbcreate failed. Output of dbcreate.out follows"
+        cat dbcreate.out
+endif
 
+set tstpath = `pwd`
 setenv PKG_CONFIG_PATH $ydb_dist
-setenv GOPATH `pwd`/go/
+setenv GOPATH $tstpath/go/
 set go_repo="lang.yottadb.com/go/yottadb"
 
 mkdir go
 
-echo "# Fetching $go_repo"
+@ skip_go_test = 0
+echo "# Running : go get -t $go_repo"
 go get -t $go_repo
-echo "# Running tests from $go_repo"
-go test $go_repo
+if ($status) then
+	echo "TEST-E-FAILED : go get -t $go_repo returned failure status of $status"
+	@ skip_go_test = 1
+endif
 
-$gtm_tst/com/dbcheck.csh >>& dbcheck_log.txt
+if (0 == $skip_go_test) then
+	echo "# Running : go test $go_repo"
+
+	# We need to set the global directory to an absolute path because "go test" operates in a subdirectory
+	# ($tstpath/go/src/lang.yottadb.com/go/yottadb) where the default test framework assignment of ydb_gbldir
+	# to a relative path (i.e. mumps.gld) is no longer relevant.
+	setenv ydb_gbldir $tstpath/mumps.gld
+
+	if ($?test_replic) then
+		# In case of replication tests, set replication instance env var too just like we did the gld above
+		setenv ydb_repl_instance $tstpath/mumps.repl
+	endif
+
+	go test $go_repo
+	if ($status) then
+		echo "TEST-E-FAILED : go test $go_repo returned failure status of $status"
+	endif
+
+	if ($?test_replic) then
+		unsetenv ydb_repl_instance
+	endif
+	unsetenv ydb_gbldir
+endif
+
+$gtm_tst/com/dbcheck.csh >>& dbcheck.out
+if ($status) then
+        echo "# dbcheck failed. Output of dbcheck.out follows"
+        cat dbcheck.out
+endif
