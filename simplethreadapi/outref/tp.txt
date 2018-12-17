@@ -1,0 +1,467 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Copy all C programs that need to be tested
+ --> Running tp1_simple.c <---
+### Function to do a simple set of 3 Global variable nodes inside of a TP transaction ###
+zwrarg=""
+^tp1="A question"
+^tp1(42)="One less than 43"
+^tp1(42,"answer:")="Life, the universe, and everything"
+##SUSPEND_OUTPUT NOTRIGGER
+^tp1lvtrig="A question"
+##ALLOW_OUTPUT NOTRIGGER
+
+ --> Running tp2_complex_and_nested.c <---
+### Function to test $increment implemented inside TP across multiple processes using ydb_tp_st()###
+### Function to also test nested TP calls through ydb_tp_st()###
+PASS from tp2
+##SUSPEND_OUTPUT NOTRIGGER
+PASS from tp2trig
+##ALLOW_OUTPUT NOTRIGGER
+
+ --> Running tp3_preservelvn.c <---
+### Function to test that list of variable names to be preserved (across TP restarts) works fine###
+  --> set x0 to a value
+  --> set x2 to a value
+
+----------------------------------------------------------
+## About to invoke gvnset2 with x1,x2,x3,...x35 as varlist
+----------------------------------------------------------
+TSTART : dollar_trestart = 0
+  --> Verifying x1 is UNDEFINED
+  --> Verifying x2 is UNCHANGED after restart
+  --> x2 = 
+  --> Increment x2
+  --> set x1 to a value
+  --> Verifying x1 is DEFINED
+  --> Signaling a TP restart
+TSTART : dollar_trestart = 1
+  --> Verifying x1 is UNDEFINED
+  --> Verifying x2 is UNCHANGED after restart
+  --> x2 = 1
+  --> Increment x2
+  --> set x1 to a value
+  --> Verifying x1 is DEFINED
+  --> Signaling a TP restart
+TSTART : dollar_trestart = 2
+  --> Verifying x1 is UNDEFINED
+  --> Verifying x2 is UNCHANGED after restart
+  --> x2 = 2
+  --> Increment x2
+  --> set x1 to a value
+  --> Verifying x1 is DEFINED
+  --> Committing the TP transaction
+
+----------------------------------------------------------
+## About to invoke gvnset2 with x1,x2,x3,...x35 as varlist
+----------------------------------------------------------
+TSTART : dollar_trestart = 0
+Do ZWRITE of lvns
+x0=""
+x2=3
+  --> Verifying x0 is UNCHANGED after restart
+  --> x0 = 
+  --> Increment x0
+  --> Increment x1, x2, ..., x35
+  --> set x1, x2, ... x35 to a value
+  --> Verifying x1, x2, ... x35 is DEFINED
+Do ZWRITE of lvns
+x0=1
+x11="TP with comma-separated list of variable names to be preserved"
+x14="TP with comma-separated list of variable names to be preserved"
+x17="TP with comma-separated list of variable names to be preserved"
+x2="TP with comma-separated list of variable names to be preserved"
+x20="TP with comma-separated list of variable names to be preserved"
+x23="TP with comma-separated list of variable names to be preserved"
+x26="TP with comma-separated list of variable names to be preserved"
+x29="TP with comma-separated list of variable names to be preserved"
+x32="TP with comma-separated list of variable names to be preserved"
+x35="TP with comma-separated list of variable names to be preserved"
+x5="TP with comma-separated list of variable names to be preserved"
+x8="TP with comma-separated list of variable names to be preserved"
+  --> Signaling a TP restart
+TSTART : dollar_trestart = 1
+Do ZWRITE of lvns
+x0=1
+x2=3
+  --> Verifying x0 is UNCHANGED after restart
+  --> x0 = 1
+  --> Increment x0
+  --> Increment x1, x2, ..., x35
+  --> set x1, x2, ... x35 to a value
+  --> Verifying x1, x2, ... x35 is DEFINED
+Do ZWRITE of lvns
+x0=2
+x11="TP with comma-separated list of variable names to be preserved"
+x14="TP with comma-separated list of variable names to be preserved"
+x17="TP with comma-separated list of variable names to be preserved"
+x2="TP with comma-separated list of variable names to be preserved"
+x20="TP with comma-separated list of variable names to be preserved"
+x23="TP with comma-separated list of variable names to be preserved"
+x26="TP with comma-separated list of variable names to be preserved"
+x29="TP with comma-separated list of variable names to be preserved"
+x32="TP with comma-separated list of variable names to be preserved"
+x35="TP with comma-separated list of variable names to be preserved"
+x5="TP with comma-separated list of variable names to be preserved"
+x8="TP with comma-separated list of variable names to be preserved"
+  --> Signaling a TP restart
+TSTART : dollar_trestart = 2
+Do ZWRITE of lvns
+x0=2
+x2=3
+  --> Verifying x0 is UNCHANGED after restart
+  --> x0 = 2
+  --> Increment x0
+  --> Increment x1, x2, ..., x35
+  --> set x1, x2, ... x35 to a value
+  --> Verifying x1, x2, ... x35 is DEFINED
+Do ZWRITE of lvns
+x0=3
+x11="TP with comma-separated list of variable names to be preserved"
+x14="TP with comma-separated list of variable names to be preserved"
+x17="TP with comma-separated list of variable names to be preserved"
+x2="TP with comma-separated list of variable names to be preserved"
+x20="TP with comma-separated list of variable names to be preserved"
+x23="TP with comma-separated list of variable names to be preserved"
+x26="TP with comma-separated list of variable names to be preserved"
+x29="TP with comma-separated list of variable names to be preserved"
+x32="TP with comma-separated list of variable names to be preserved"
+x35="TP with comma-separated list of variable names to be preserved"
+x5="TP with comma-separated list of variable names to be preserved"
+x8="TP with comma-separated list of variable names to be preserved"
+  --> Committing the TP transaction
+Do ZWRITE of lvns
+x0=3
+x11="TP with comma-separated list of variable names to be preserved"
+x14="TP with comma-separated list of variable names to be preserved"
+x17="TP with comma-separated list of variable names to be preserved"
+x2="TP with comma-separated list of variable names to be preserved"
+x20="TP with comma-separated list of variable names to be preserved"
+x23="TP with comma-separated list of variable names to be preserved"
+x26="TP with comma-separated list of variable names to be preserved"
+x29="TP with comma-separated list of variable names to be preserved"
+x32="TP with comma-separated list of variable names to be preserved"
+x35="TP with comma-separated list of variable names to be preserved"
+x5="TP with comma-separated list of variable names to be preserved"
+x8="TP with comma-separated list of variable names to be preserved"
+
+----------------------------------------------------------
+## About to invoke gvnset2 with * as varlist
+----------------------------------------------------------
+TSTART : dollar_trestart = 0
+Do ZWRITE of lvns
+x0=3
+x11="TP with comma-separated list of variable names to be preserved"
+x14="TP with comma-separated list of variable names to be preserved"
+x17="TP with comma-separated list of variable names to be preserved"
+x2="TP with comma-separated list of variable names to be preserved"
+x20="TP with comma-separated list of variable names to be preserved"
+x23="TP with comma-separated list of variable names to be preserved"
+x26="TP with comma-separated list of variable names to be preserved"
+x29="TP with comma-separated list of variable names to be preserved"
+x32="TP with comma-separated list of variable names to be preserved"
+x35="TP with comma-separated list of variable names to be preserved"
+x5="TP with comma-separated list of variable names to be preserved"
+x8="TP with comma-separated list of variable names to be preserved"
+  --> Verifying x0 is UNCHANGED after restart
+  --> x0 = 3
+  --> Increment x0
+  --> Increment x1, x2, ..., x35
+  --> set x1, x2, ... x35 to a value
+  --> Verifying x1, x2, ... x35 is DEFINED
+Do ZWRITE of lvns
+x0=4
+x11="TP with comma-separated list of variable names to be preserved"
+x14="TP with comma-separated list of variable names to be preserved"
+x17="TP with comma-separated list of variable names to be preserved"
+x2="TP with comma-separated list of variable names to be preserved"
+x20="TP with comma-separated list of variable names to be preserved"
+x23="TP with comma-separated list of variable names to be preserved"
+x26="TP with comma-separated list of variable names to be preserved"
+x29="TP with comma-separated list of variable names to be preserved"
+x32="TP with comma-separated list of variable names to be preserved"
+x35="TP with comma-separated list of variable names to be preserved"
+x5="TP with comma-separated list of variable names to be preserved"
+x8="TP with comma-separated list of variable names to be preserved"
+  --> Signaling a TP restart
+TSTART : dollar_trestart = 1
+Do ZWRITE of lvns
+x0=3
+x11="TP with comma-separated list of variable names to be preserved"
+x14="TP with comma-separated list of variable names to be preserved"
+x17="TP with comma-separated list of variable names to be preserved"
+x2="TP with comma-separated list of variable names to be preserved"
+x20="TP with comma-separated list of variable names to be preserved"
+x23="TP with comma-separated list of variable names to be preserved"
+x26="TP with comma-separated list of variable names to be preserved"
+x29="TP with comma-separated list of variable names to be preserved"
+x32="TP with comma-separated list of variable names to be preserved"
+x35="TP with comma-separated list of variable names to be preserved"
+x5="TP with comma-separated list of variable names to be preserved"
+x8="TP with comma-separated list of variable names to be preserved"
+  --> Verifying x0 is UNCHANGED after restart
+  --> x0 = 3
+  --> Increment x0
+  --> Increment x1, x2, ..., x35
+  --> set x1, x2, ... x35 to a value
+  --> Verifying x1, x2, ... x35 is DEFINED
+Do ZWRITE of lvns
+x0=4
+x11="TP with comma-separated list of variable names to be preserved"
+x14="TP with comma-separated list of variable names to be preserved"
+x17="TP with comma-separated list of variable names to be preserved"
+x2="TP with comma-separated list of variable names to be preserved"
+x20="TP with comma-separated list of variable names to be preserved"
+x23="TP with comma-separated list of variable names to be preserved"
+x26="TP with comma-separated list of variable names to be preserved"
+x29="TP with comma-separated list of variable names to be preserved"
+x32="TP with comma-separated list of variable names to be preserved"
+x35="TP with comma-separated list of variable names to be preserved"
+x5="TP with comma-separated list of variable names to be preserved"
+x8="TP with comma-separated list of variable names to be preserved"
+  --> Signaling a TP restart
+TSTART : dollar_trestart = 2
+Do ZWRITE of lvns
+x0=3
+x11="TP with comma-separated list of variable names to be preserved"
+x14="TP with comma-separated list of variable names to be preserved"
+x17="TP with comma-separated list of variable names to be preserved"
+x2="TP with comma-separated list of variable names to be preserved"
+x20="TP with comma-separated list of variable names to be preserved"
+x23="TP with comma-separated list of variable names to be preserved"
+x26="TP with comma-separated list of variable names to be preserved"
+x29="TP with comma-separated list of variable names to be preserved"
+x32="TP with comma-separated list of variable names to be preserved"
+x35="TP with comma-separated list of variable names to be preserved"
+x5="TP with comma-separated list of variable names to be preserved"
+x8="TP with comma-separated list of variable names to be preserved"
+  --> Verifying x0 is UNCHANGED after restart
+  --> x0 = 3
+  --> Increment x0
+  --> Increment x1, x2, ..., x35
+  --> set x1, x2, ... x35 to a value
+  --> Verifying x1, x2, ... x35 is DEFINED
+Do ZWRITE of lvns
+x0=4
+x11="TP with comma-separated list of variable names to be preserved"
+x14="TP with comma-separated list of variable names to be preserved"
+x17="TP with comma-separated list of variable names to be preserved"
+x2="TP with comma-separated list of variable names to be preserved"
+x20="TP with comma-separated list of variable names to be preserved"
+x23="TP with comma-separated list of variable names to be preserved"
+x26="TP with comma-separated list of variable names to be preserved"
+x29="TP with comma-separated list of variable names to be preserved"
+x32="TP with comma-separated list of variable names to be preserved"
+x35="TP with comma-separated list of variable names to be preserved"
+x5="TP with comma-separated list of variable names to be preserved"
+x8="TP with comma-separated list of variable names to be preserved"
+  --> Committing the TP transaction
+Do ZWRITE of lvns
+x0=4
+x11="TP with comma-separated list of variable names to be preserved"
+x14="TP with comma-separated list of variable names to be preserved"
+x17="TP with comma-separated list of variable names to be preserved"
+x2="TP with comma-separated list of variable names to be preserved"
+x20="TP with comma-separated list of variable names to be preserved"
+x23="TP with comma-separated list of variable names to be preserved"
+x26="TP with comma-separated list of variable names to be preserved"
+x29="TP with comma-separated list of variable names to be preserved"
+x32="TP with comma-separated list of variable names to be preserved"
+x35="TP with comma-separated list of variable names to be preserved"
+x5="TP with comma-separated list of variable names to be preserved"
+x8="TP with comma-separated list of variable names to be preserved"
+
+----------------------------------------------------------
+## About to invoke gvnset3A with * as varlist and x1 passed/bound as a parameter from C to M
+----------------------------------------------------------
+TSTART : dollar_trestart = 0
+Do ZWRITE of lvns. Verify x1 is UNDEFINED at the beginning of every restart
+Do call-in to set a few nodes in [x1] lv tree
+Do ZWRITE of lvns after call-in. Verify x1 is DEFINED
+  --> Signaling a TP restart
+TSTART : dollar_trestart = 1
+Do ZWRITE of lvns. Verify x1 is UNDEFINED at the beginning of every restart
+Do call-in to set a few nodes in [x1] lv tree
+Do ZWRITE of lvns after call-in. Verify x1 is DEFINED
+  --> Signaling a TP restart
+TSTART : dollar_trestart = 2
+Do ZWRITE of lvns. Verify x1 is UNDEFINED at the beginning of every restart
+Do call-in to set a few nodes in [x1] lv tree
+Do ZWRITE of lvns after call-in. Verify x1 is DEFINED
+  --> Committing the TP transaction
+Do ZWRITE of lvns
+
+----------------------------------------------------------
+## About to invoke gvnset3B with * as varlist and x1 not passed/bound as a parameter from C to M
+----------------------------------------------------------
+TSTART : dollar_trestart = 0
+Do ZWRITE of lvns. Verify x1 is UNDEFINED at the beginning of every restart
+Do call-in to set a few nodes in [x1] lv tree
+Do ZWRITE of lvns after call-in. Verify x1 is DEFINED
+x1(1)=1
+x1(1,2,3,4,5)=3
+  --> Signaling a TP restart
+TSTART : dollar_trestart = 1
+Do ZWRITE of lvns. Verify x1 is UNDEFINED at the beginning of every restart
+Do call-in to set a few nodes in [x1] lv tree
+Do ZWRITE of lvns after call-in. Verify x1 is DEFINED
+x1(1)=1
+x1(1,2,3,4,5)=3
+  --> Signaling a TP restart
+TSTART : dollar_trestart = 2
+Do ZWRITE of lvns. Verify x1 is UNDEFINED at the beginning of every restart
+Do call-in to set a few nodes in [x1] lv tree
+Do ZWRITE of lvns after call-in. Verify x1 is DEFINED
+x1(1)=1
+x1(1,2,3,4,5)=3
+  --> Committing the TP transaction
+Do ZWRITE of lvns
+x1(1)=1
+x1(1,2,3,4,5)=3
+
+ --> Running tp4_TPTOODEEP.c <---
+ ### Test TPTOODEEP error ###
+Entering ydb_tp_st() : Level = 0
+Entering ydb_tp_st() : Level = 1
+Entering ydb_tp_st() : Level = 2
+Entering ydb_tp_st() : Level = 3
+Entering ydb_tp_st() : Level = 4
+Entering ydb_tp_st() : Level = 5
+Entering ydb_tp_st() : Level = 6
+Entering ydb_tp_st() : Level = 7
+Entering ydb_tp_st() : Level = 8
+Entering ydb_tp_st() : Level = 9
+Entering ydb_tp_st() : Level = 10
+Entering ydb_tp_st() : Level = 11
+Entering ydb_tp_st() : Level = 12
+Entering ydb_tp_st() : Level = 13
+Entering ydb_tp_st() : Level = 14
+Entering ydb_tp_st() : Level = 15
+Entering ydb_tp_st() : Level = 16
+Entering ydb_tp_st() : Level = 17
+Entering ydb_tp_st() : Level = 18
+Entering ydb_tp_st() : Level = 19
+Entering ydb_tp_st() : Level = 20
+Entering ydb_tp_st() : Level = 21
+Entering ydb_tp_st() : Level = 22
+Entering ydb_tp_st() : Level = 23
+Entering ydb_tp_st() : Level = 24
+Entering ydb_tp_st() : Level = 25
+Entering ydb_tp_st() : Level = 26
+Entering ydb_tp_st() : Level = 27
+Entering ydb_tp_st() : Level = 28
+Entering ydb_tp_st() : Level = 29
+Entering ydb_tp_st() : Level = 30
+Entering ydb_tp_st() : Level = 31
+Entering ydb_tp_st() : Level = 32
+Entering ydb_tp_st() : Level = 33
+Entering ydb_tp_st() : Level = 34
+Entering ydb_tp_st() : Level = 35
+Entering ydb_tp_st() : Level = 36
+Entering ydb_tp_st() : Level = 37
+Entering ydb_tp_st() : Level = 38
+Entering ydb_tp_st() : Level = 39
+Entering ydb_tp_st() : Level = 40
+Entering ydb_tp_st() : Level = 41
+Entering ydb_tp_st() : Level = 42
+Entering ydb_tp_st() : Level = 43
+Entering ydb_tp_st() : Level = 44
+Entering ydb_tp_st() : Level = 45
+Entering ydb_tp_st() : Level = 46
+Entering ydb_tp_st() : Level = 47
+Entering ydb_tp_st() : Level = 48
+Entering ydb_tp_st() : Level = 49
+Entering ydb_tp_st() : Level = 50
+Entering ydb_tp_st() : Level = 51
+Entering ydb_tp_st() : Level = 52
+Entering ydb_tp_st() : Level = 53
+Entering ydb_tp_st() : Level = 54
+Entering ydb_tp_st() : Level = 55
+Entering ydb_tp_st() : Level = 56
+Entering ydb_tp_st() : Level = 57
+Entering ydb_tp_st() : Level = 58
+Entering ydb_tp_st() : Level = 59
+Entering ydb_tp_st() : Level = 60
+Entering ydb_tp_st() : Level = 61
+Entering ydb_tp_st() : Level = 62
+Entering ydb_tp_st() : Level = 63
+Entering ydb_tp_st() : Level = 64
+Entering ydb_tp_st() : Level = 65
+Entering ydb_tp_st() : Level = 66
+Entering ydb_tp_st() : Level = 67
+Entering ydb_tp_st() : Level = 68
+Entering ydb_tp_st() : Level = 69
+Entering ydb_tp_st() : Level = 70
+Entering ydb_tp_st() : Level = 71
+Entering ydb_tp_st() : Level = 72
+Entering ydb_tp_st() : Level = 73
+Entering ydb_tp_st() : Level = 74
+Entering ydb_tp_st() : Level = 75
+Entering ydb_tp_st() : Level = 76
+Entering ydb_tp_st() : Level = 77
+Entering ydb_tp_st() : Level = 78
+Entering ydb_tp_st() : Level = 79
+Entering ydb_tp_st() : Level = 80
+Entering ydb_tp_st() : Level = 81
+Entering ydb_tp_st() : Level = 82
+Entering ydb_tp_st() : Level = 83
+Entering ydb_tp_st() : Level = 84
+Entering ydb_tp_st() : Level = 85
+Entering ydb_tp_st() : Level = 86
+Entering ydb_tp_st() : Level = 87
+Entering ydb_tp_st() : Level = 88
+Entering ydb_tp_st() : Level = 89
+Entering ydb_tp_st() : Level = 90
+Entering ydb_tp_st() : Level = 91
+Entering ydb_tp_st() : Level = 92
+Entering ydb_tp_st() : Level = 93
+Entering ydb_tp_st() : Level = 94
+Entering ydb_tp_st() : Level = 95
+Entering ydb_tp_st() : Level = 96
+Entering ydb_tp_st() : Level = 97
+Entering ydb_tp_st() : Level = 98
+Entering ydb_tp_st() : Level = 99
+Entering ydb_tp_st() : Level = 100
+Entering ydb_tp_st() : Level = 101
+Entering ydb_tp_st() : Level = 102
+Entering ydb_tp_st() : Level = 103
+Entering ydb_tp_st() : Level = 104
+Entering ydb_tp_st() : Level = 105
+Entering ydb_tp_st() : Level = 106
+Entering ydb_tp_st() : Level = 107
+Entering ydb_tp_st() : Level = 108
+Entering ydb_tp_st() : Level = 109
+Entering ydb_tp_st() : Level = 110
+Entering ydb_tp_st() : Level = 111
+Entering ydb_tp_st() : Level = 112
+Entering ydb_tp_st() : Level = 113
+Entering ydb_tp_st() : Level = 114
+Entering ydb_tp_st() : Level = 115
+Entering ydb_tp_st() : Level = 116
+Entering ydb_tp_st() : Level = 117
+Entering ydb_tp_st() : Level = 118
+Entering ydb_tp_st() : Level = 119
+Entering ydb_tp_st() : Level = 120
+Entering ydb_tp_st() : Level = 121
+Entering ydb_tp_st() : Level = 122
+Entering ydb_tp_st() : Level = 123
+Entering ydb_tp_st() : Level = 124
+Entering ydb_tp_st() : Level = 125
+ydb_tp_st() exit status = -150376106 : 150376106,(SimpleThreadAPI),%YDB-E-TPTOODEEP, $TLEVEL cannot exceed 126
+
+ --> Running tp5_TPTIMEOUT.c <---
+### Test timeout in ydb_tp_st() works correctly (TPTIMEOUT error)###
+Set $zmaxtptime to 1 second
+##TEST_AWKTimeout test PASSED for ydb_tp_s\(\) : Timeout expected = 1 second. Actual timeout = [12] seconds
+ydb_tp_st() exit status = -150377322 : 150377322,(SimpleThreadAPI),%YDB-E-TPTIMEOUT, Transaction timeout
+
+ --> Running tp6_NAMECOUNT2HI.c <---
+### Test NAMECOUNT2HI error ###
+ydb_tp_st() : Exit Status = -151027810 : Exit string = 151027810,(SimpleThreadAPI),%YDB-E-NAMECOUNT2HI, Number of varnames (namecount parameter in a ydb_tp_st() call) exceeds maximum (35)
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

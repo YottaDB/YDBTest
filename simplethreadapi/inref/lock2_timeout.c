@@ -15,6 +15,7 @@
 #include <unistd.h>	/* for "fork" */
 #include <sys/wait.h>	/* for "waitpid" prototype */
 #include <time.h>	/* for "time" prototype */
+#include <errno.h>	/* for "errno" */
 
 #include "libyottadb.h"
 #include "libydberrors.h"       /* for YDB_LOCK_TIMEOUT */
@@ -37,6 +38,7 @@ int main()
 	unsigned int	ret_dlrdata;
 	pid_t		child_pid;
 	time_t		begin, end;
+	int		save_errno;
 
 	YDB_LITERAL_TO_BUFFER(LOCK2, &lock2);
 	YDB_LITERAL_TO_BUFFER(SUBS, &subs);
@@ -95,7 +97,11 @@ int main()
 	YDB_ASSERT(YDB_OK == status);
 
 	/* Wait for child to terminate */
-	ret = waitpid(child_pid, &stat, 0);
+	do
+	{
+		ret = waitpid(child_pid, &stat, 0);
+		save_errno = errno;
+	} while ((-1 == ret) && (EINTR == save_errno));
 	YDB_ASSERT(-1 != ret);
 
 	return YDB_OK;

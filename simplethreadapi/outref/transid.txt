@@ -1,0 +1,16 @@
+# Enable journaling in test
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+ --> Running transid.c <---
+
+# Extract journal files and dump transid in TCOM record
+TCOM : transid=BA
+TCOM : transid=CS
+TCOM : transid=any str
+TCOM : transid=verylong
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

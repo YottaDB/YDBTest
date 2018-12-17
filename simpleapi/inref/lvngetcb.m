@@ -44,7 +44,7 @@ lvngetcb
 	use %outfn
 	for %indx=1:1 set %line=$get(%lvvardump("V",%indx),"") quit:(""=%line)  write %line,!
 	close %outfn
-	write "lvngetcb: Variables written - driving external call for call-backs via tp_get_s() in the simpleAPI",!
+	write "lvngetcb: Variables written - driving external call for call-backs via ydb_get_s() in the simpleAPI",!
 	;
 	; Now drive external call that will call back in via ydb_get_s() to fetch these same vars/values
 	; and will write its own file that we will compare afterwards.

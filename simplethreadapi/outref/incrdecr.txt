@@ -1,0 +1,59 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+incrdecr: List of locks after setting the 1st set of vars:
+
+DEFAULT
+##TEST_AWK\^lockA Owned by PID= [1-9][0-9]* which is an existing process
+##TEST_AWKlockA Owned by PID= [1-9][0-9]* which is an existing process
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 2/(120|184); name space not full
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: 9[89]. of 40 pages
+
+
+incrdecr: List of locks after adding the 2nd set of vars:
+
+DEFAULT
+##TEST_AWK\^lockA Owned by PID= [1-9][0-9]* which is an existing process
+##TEST_AWK\^lockA\(42\) Owned by PID= [1-9][0-9]* which is an existing process
+##TEST_AWKlockA Owned by PID= [1-9][0-9]* which is an existing process
+##TEST_AWKlockA\(42\) Owned by PID= [1-9][0-9]* which is an existing process
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 4/(120|184); name space not full
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: 9[67]. of 40 pages
+
+
+incrdecr: List of locks after removing the 1st set:
+
+DEFAULT
+##TEST_AWK\^lockA\(42\) Owned by PID= [1-9][0-9]* which is an existing process
+##TEST_AWKlockA\(42\) Owned by PID= [1-9][0-9]* which is an existing process
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 4/(120|184); name space not full
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: 9[67]. of 40 pages
+
+
+incrdecr: List of locks after adding 3rd set and removing 1st var of second set:
+
+DEFAULT
+^lockA("simpleAPI","lock","uh-huh","oooooh","shiney!")
+##TEST_AWK                         Owned by PID= [1-9][0-9]* which is an existing process
+##TEST_AWKlockA\(42\) Owned by PID= [1-9][0-9]* which is an existing process
+lockA("simpleAPI","lock","uh-huh","oooooh","shiney!")
+##TEST_AWK                         Owned by PID= [1-9][0-9]* which is an existing process
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 13/(120|184); name space not full
+##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: (89|92). of 40 pages
+
+
+incrdecr: List of locks after zero argument call to ydb_lock_st() which should release all locks:
+
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+
+incrdecr complete
+
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

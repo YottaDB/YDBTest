@@ -1,0 +1,18 @@
+# Set ydb_lct_stdnull to 1 to enable Standard Null Collation (needed for SimpleThreadAPI when using null subscripts)
+# Create database using maximum keysize of ~1K and record size = 4K
+# Allow null subscripts in database since randomly generated subscripts could be null
+# Set Standard Null Collation (needed for SimpleThreadAPI when using null subscripts) on all created database files
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Prepare stresstest executable from stresstest.c
+ --> Running stresstest.c <---
+# Run stresstest.m (will talk to stresstest.c and generate genstresstest.m and genstresstest.cmp)
+# Run genstresstest.m to generate genstresstest.log
+# Verify operations done through the SimpleThreadAPI by the C program against the same operations done by an M program
+PASS from stresstest
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

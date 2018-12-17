@@ -37,7 +37,7 @@
 		{										\
 			ydb_zstatus(errbuf, ERRBUF_SIZE);					\
 			fflush(stdout);								\
-			fprintf(stderr, "ydb_lock_s() [%d]: %s\n", __LINE__, errbuf);		\
+			fprintf(stderr, "ydb_lock_st() [%d]: %s\n", __LINE__, errbuf);		\
 			fflush(stderr);								\
 		}										\
 		return STATUS;									\

@@ -1,0 +1,39 @@
+# Test of SIMPLEAPINEST error
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+File simpleapinest.trg, Line 1: Added SET and/or Non-SET trigger on ^basevar named basevar#1
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+ --> Running simpleapinest.c <---
+### Test of SIMPLEAPINEST error###
+# Do SET of global that invokes a trigger###
+In trigger M code. This in turn will invoke an external call
+# In external call C program. Now try ydb_*_st() calls to try SIMPLEAPINEST error#
+[Line 50]: 151027850,(SimpleThreadAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_st() with a call to ydb_set_st() - nesting calls is not permitted in the Simple API
+[Line 51]: 151027850,(SimpleThreadAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_st() with a call to ydb_get_st() - nesting calls is not permitted in the Simple API
+[Line 52]: 151027850,(SimpleThreadAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_st() with a call to ydb_data_st() - nesting calls is not permitted in the Simple API
+[Line 53]: 151027850,(SimpleThreadAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_st() with a call to ydb_subscript_next_st() - nesting calls is not permitted in the Simple API
+[Line 54]: 151027850,(SimpleThreadAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_st() with a call to ydb_subscript_previous_st() - nesting calls is not permitted in the Simple API
+[Line 55]: 151027850,(SimpleThreadAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_st() with a call to ydb_node_next_st() - nesting calls is not permitted in the Simple API
+[Line 56]: 151027850,(SimpleThreadAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_st() with a call to ydb_node_previous_st() - nesting calls is not permitted in the Simple API
+[Line 57]: 151027850,(SimpleThreadAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_st() with a call to ydb_lock_decr_st() - nesting calls is not permitted in the Simple API
+[Line 58]: 151027850,(SimpleThreadAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_st() with a call to ydb_lock_incr_st() - nesting calls is not permitted in the Simple API
+[Line 59]: 151027850,(SimpleThreadAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_st() with a call to ydb_lock_st() - nesting calls is not permitted in the Simple API
+[Line 60]: 151027850,(SimpleThreadAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_st() with a call to ydb_tp_st() - nesting calls is not permitted in the Simple API
+[Line 61]: 151027850,(SimpleThreadAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_st() with a call to ydb_delete_st() - nesting calls is not permitted in the Simple API
+[Line 62]: 151027850,(SimpleThreadAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_st() with a call to ydb_incr_st() - nesting calls is not permitted in the Simple API
+[Line 63]: 151027850,(SimpleThreadAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_st() with a call to ydb_delete_excl_st() - nesting calls is not permitted in the Simple API
+[Line 64]: 151027850,(SimpleThreadAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_st() with a call to ydb_zwr2str_st() - nesting calls is not permitted in the Simple API
+[Line 65]: 151027850,(SimpleThreadAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_st() with a call to ydb_str2zwr_st() - nesting calls is not permitted in the Simple API
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

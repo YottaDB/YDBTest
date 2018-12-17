@@ -1,0 +1,12 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+ --> Running wordfreq.c <---
+# Running : diff ##IN_TEST_PATH##/outref/wordfreq_output.txt wordfreq.out
+  --> PASS from wordfreq
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

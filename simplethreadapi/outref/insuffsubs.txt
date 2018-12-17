@@ -1,0 +1,16 @@
+# Test of INSUFFSUBS error
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Copy all C programs that need to be tested
+ --> Running insuffsubs.c <---
+ydb_node_next_st() : varname = basevar : outsubscnt = 3 : Returned error : 151027778,(SimpleThreadAPI),%YDB-E-INSUFFSUBS, Return subscript array for ydb_node_next_st() call too small - needs at least 3 entries for this call
+ydb_node_previous_st() : varname = basevar : outsubscnt = 3 : Returned error : 151027778,(SimpleThreadAPI),%YDB-E-INSUFFSUBS, Return subscript array for ydb_node_previous_st() call too small - needs at least 3 entries for this call
+ydb_node_next_st() : varname = ^basevar : outsubscnt = 3 : Returned error : 151027778,(SimpleThreadAPI),%YDB-E-INSUFFSUBS, Return subscript array for ydb_node_next_st() call too small - needs at least 3 entries for this call
+ydb_node_previous_st() : varname = ^basevar : outsubscnt = 3 : Returned error : 151027778,(SimpleThreadAPI),%YDB-E-INSUFFSUBS, Return subscript array for ydb_node_previous_st() call too small - needs at least 3 entries for this call
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

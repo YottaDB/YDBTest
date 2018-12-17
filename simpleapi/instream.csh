@@ -70,7 +70,7 @@ setenv subtest_list_non_replic "$subtest_list_non_replic gvnsubsnext gvnsubsprev
 #NARSTODO setenv subtest_list_non_replic "$subtest_list_non_replic gvnsubsprev gvnnodenext gvndata gvnincr"
 setenv subtest_list_non_replic "$subtest_list_non_replic lvnsubsnext lvnsubsprev"
 #NARSTODO setenv subtest_list_non_replic "$subtest_list_non_replic lvnnodenext lvndata lvnincr"
-#NARSTODO setenv subtest_list_non_replic "$subtest_list_non_replic isvsubsnext isvsubsprev isvnodenext isvdata isvincr"
+setenv subtest_list_non_replic "$subtest_list_non_replic isvsubsnext isvsubsprev isvnodenext isvdata isvincr"
 #NARSTODO setenv subtest_list_non_replic "$subtest_list_non_replic str2zwr zwr2str"
 #NARSTODO setenv subtest_list_non_replic "$subtest_list_non_replic gvnnodeprev"
 #NARSTODO setenv subtest_list_non_replic "$subtest_list_non_replic lvnnodeprev"

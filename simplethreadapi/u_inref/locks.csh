@@ -11,8 +11,7 @@
 #								#
 #################################################################
 #
-# Test of ydb_lock_st() function in the simpleAPI
-# (note this is a duplicate of the locks subtest in the simpleapi suite except we test the simplethreadapi version here
+# Test of ydb_lock_st() function in the SimpleThreadAPI
 #
 $gtm_tst/com/dbcreate.csh mumps 1
 
