@@ -52,8 +52,8 @@
 # callintrollback [nars]        Test of CALLINTROLLBACK error
 # fatalerror1     [nars]        Test of FATALERROR1 error
 # fatalerror2     [nars]        Test of FATALERROR2 error
-# gvnlvndata      [....]        Test of ydb_data_s() function for global and local variables in the simpleAPI
-# gvnlvnincr      [....]        Test of ydb_incr_s() function for global and local variables in the simpleAPI
+# gvnlvndata      [quinn]        Test of ydb_data_s() function for global and local variables in the simpleAPI
+# gvnlvnincr      [quinn]        Test of ydb_incr_s() function for global and local variables in the simpleAPI
 # gvnlvndelete    [....]        Test of ydb_delete_s() function for global and local variables in the simpleAPI
 # str2zwr         [....]        Test of ydb_str2zwr_s() function in the simpleAPI
 # zwr2str         [....]        Test of ydb_zwr2str_s() function in the simpleAPI
@@ -64,6 +64,7 @@ echo "simpleapi test starts..."
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic "lvnset lvnsetstress stresstest gvnset isvset tp transid lvnget gvnget isvget wordfreq"
+setenv subtest_list_non_replic "$subtest_list_non_replic gvnlvndata"
 setenv subtest_list_non_replic "$subtest_list_non_replic gvnsubsnext gvnsubsprev"
 setenv subtest_list_non_replic "$subtest_list_non_replic lvnsubsnext lvnsubsprev"
 setenv subtest_list_non_replic "$subtest_list_non_replic isvsubsnext isvsubsprev isvnodenext isvnodeprev isvdata isvincr"
@@ -71,7 +72,8 @@ setenv subtest_list_non_replic "$subtest_list_non_replic gvnlvnnodenext gvnlvnno
 setenv subtest_list_non_replic "$subtest_list_non_replic nodenext nodeprev forkncore locks incrdecr simpleapinest"
 setenv subtest_list_non_replic "$subtest_list_non_replic time2long insuffsubs invnamecount namecount2hi delete_excl"
 setenv subtest_list_non_replic "$subtest_list_non_replic callintcommit callintrollback fatalerror1 fatalerror2"
-# setenv subtest_list_non_replic "$subtest_list_non_replic gvnlvndata gvnlvnincr gvnlvndelete str2zwr zwr2str"
+setenv subtest_list_non_replic "$subtest_list_non_replic gvnlvndata gvnlvnincr"
+# gvnlvndelete str2zwr zwr2str"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
