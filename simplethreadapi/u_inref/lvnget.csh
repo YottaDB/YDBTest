@@ -14,8 +14,12 @@
 # Test of ydb_get_st() function for Local variables in the SimpleThreadAPI
 #
 unsetenv gtmdbglvl   # Disable storage debugging as that can turn this 1 minute job into an hour
-echo "# Run lvngetcb.m first since it is driven by an M routine"
-echo " --> Running lvngetcb.m <--"
+
+# ------------------------------------------------------------------------
+# Note: The below section of driving an M routine is taken care of by driving the C routine lvnget0_cb.c in the later section.
+# ------------------------------------------------------------------------
+# Run lvngetcb.m first since it is driven by an M routine"
+# echo " --> Running lvngetcb.m <--"
 $gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $gtm_tst/$tst/inref/lvngetcb.c
 $gt_ld_shl_linker ${gt_ld_option_output}liblvngetcb${gt_ld_shl_suffix} $gt_ld_shl_options lvngetcb.o $gt_ld_syslibs
 \rm lvngetcb.o
@@ -24,14 +28,22 @@ echo "`pwd`/liblvngetcb${gt_ld_shl_suffix}" > $GTMXC
 cat >> $GTMXC << xx
 lvngetcb:		void	lvngetcb()
 xx
-$gtm_dist/mumps -run lvngetcb
 
 cat > lvnget.xc << CAT_EOF
 driveZWRITE: void driveZWRITE(I:ydb_string_t *)
+drivelvngetcb: void lvngetcb()
 CAT_EOF
 
-setenv GTMCI lvnget.xc	# needed to invoke driveZWRITE.m from lvnget*.c below
+setenv GTMCI lvnget.xc	# needed to invoke driveZWRITE.m and lvngetcb.m from lvnget*.c below
 
+# The "simpleapi" version of this test does a "$gtm_dist/mumps -run lvngetcb"
+# But we cannot do that here because an M invocation would make the process a SimpleAPI user at process startup
+# which would then make it impossible to later do SimpleThreadAPI calls (happening through an external call at the end
+# of the M program) so invoke the C program as the base and invoke the M program as a call-in (using ydb_ci_t).
+
+# ------------------------------------------------------------------------
+# Note: This is where all C routines are driven including lvnget0_cb.c corresponding to the M program lvngetcb.m
+# ------------------------------------------------------------------------
 echo ""
 echo "# Now run lvnget*.c (all tests driven by a C routine)"
 cp $gtm_tst/$tst/inref/lvnget*.c .

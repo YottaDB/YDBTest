@@ -148,7 +148,6 @@ void lvngetcb(void)
 		}
 	}
 	fclose(infile);
-	printf("Processed %d records\n", linenum);
 	return;
 }
 

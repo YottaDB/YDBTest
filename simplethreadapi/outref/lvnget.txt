@@ -1,5 +1,7 @@
-# Run lvngetcb.m first since it is driven by an M routine
- --> Running lvngetcb.m <--
+
+# Now run lvnget*.c (all tests driven by a C routine)
+
+ --> Running lvnget0_cb.c <---
 lvngetcb: Generating 3000 variables
 lvngetcb: Variables generated - ZSHOWing them to internal array
 lvngetcb: Variables generated - writing out to lvngetcb-M-extract.txt
@@ -7,8 +9,6 @@ lvngetcb: Variables written - driving external call for call-backs via ydb_get_s
 lvngetcb: Entered external call - processing key/value pair file..
 
 lvngetcb: Complete
-
-# Now run lvnget*.c (all tests driven by a C routine)
 
  --> Running lvnget1_simple.c <---
 ### Test simple gets in ydb_get_st() of Local Variables ###
