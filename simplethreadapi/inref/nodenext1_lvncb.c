@@ -23,7 +23,7 @@ int main()
 	int	status;
 	char	errbuf[ERRBUF_SIZE];
 
-	status = ydb_ci_t(YDB_NOTTP, "drivelvngetcb");
+	status = ydb_ci_t(YDB_NOTTP, "drivelvnnodenextcb");
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);

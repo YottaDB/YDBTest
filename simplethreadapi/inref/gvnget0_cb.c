@@ -27,7 +27,7 @@ int main()
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("driveZWRITE error: %s\n", errbuf);
+		printf("ydb_ci_t error: %s\n", errbuf);
 		fflush(stdout);
 		return status;
 	}

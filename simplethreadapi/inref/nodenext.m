@@ -77,3 +77,11 @@ nodenext(lvgn)
 	;
 	write !,"Completed",!
 	quit
+
+lvn	;
+	do nodenext("Avar")
+	quit
+
+gvn	;
+	do nodenext("^Avar")
+	quit
