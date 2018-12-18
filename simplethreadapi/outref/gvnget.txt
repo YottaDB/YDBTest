@@ -1,10 +1,11 @@
+# Now run gvnget*.c (all tests driven by a C routine)
+
+ --> Running gvnget0_cb.c <---
 Files Created in ##TEST_PATH##:
 Using: ##SOURCE_PATH##/mumps -run GDE
 mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
-# Run gvngetcb.m first since it is driven by an M routine
- --> Running gvngetcb.m <--
 gvngetcb: Generating 3000 variables
 gvngetcb: Variables generated - writing them to file gvngetcb-M-extract.txt
 gvngetcb: Variables written - driving external call for call-backs via ydb_get_st() in the simpleAPI
@@ -14,8 +15,6 @@ gvngetcb: Complete
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
-
-# Now run gvnget*.c (all tests driven by a C routine)
 
  --> Running gvnget1_simple.c <---
 Files Created in ##TEST_PATH##:

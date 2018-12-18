@@ -39,7 +39,7 @@ setenv GTMCI lvnget.xc	# needed to invoke driveZWRITE.m and lvngetcb.m from lvng
 # The "simpleapi" version of this test does a "$gtm_dist/mumps -run lvngetcb"
 # But we cannot do that here because an M invocation would make the process a SimpleAPI user at process startup
 # which would then make it impossible to later do SimpleThreadAPI calls (happening through an external call at the end
-# of the M program) so invoke the C program as the base and invoke the M program as a call-in (using ydb_ci_t).
+# of the M program) so invoke the C program as the base (lvnget0_cb.c) and invoke the M program as a call-in (using ydb_ci_t).
 
 # ------------------------------------------------------------------------
 # Note: This is where all C routines are driven including lvnget0_cb.c corresponding to the M program lvngetcb.m
