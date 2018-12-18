@@ -83,3 +83,11 @@ nodeprevious(lvgn)
 	;
 	write !,"Completed",!
 	quit
+
+lvn	;
+	do nodeprevious("Avar")
+	quit
+
+gvn	;
+	do nodeprevious("^Avar")
+	quit

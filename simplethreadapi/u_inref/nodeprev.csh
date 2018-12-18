@@ -25,34 +25,38 @@ echo "`pwd`/nodepreviouscb${gt_ld_shl_suffix}" > $GTMXC
 cat >> $GTMXC << xx
 nodepreviouscb: void nodepreviouscb(I:ydb_string_t *)
 xx
-#
-# First drive routine for local variables
-#
-$gtm_exe/mumps -dir << EOF
-do ^nodeprevious("AVar")
-EOF
-#
-# Compare the two output files
-#
-diff nodeprevioussublist_M.txt nodeprevioussublist_SAPI.txt
-if (0 != $status) then
-    echo "Test failed - The nodeprevioussublist_M.txt and nodeprevioussublist_SAPI.txt files differ for local variables"
-    exit 1
-endif
-rm -f nodeprevioussublist_M.txt nodeprevioussublist_SAPI.txt
-#
-# Now drive the global variable version
-#
-$gtm_exe/mumps -dir << EOF
-do ^nodeprevious("^AVar")
-EOF
-#
-# Compare the two output files
-#
-diff nodeprevioussublist_M.txt nodeprevioussublist_SAPI.txt
-if (0 != $status) then
-    echo "Test failed - The nodeprevioussublist_M.txt and nodeprevioussublist_SAPI.txt files differ for global variables"
-    exit 1
-endif
-#
+
+cat > nodeprevious.xc << CAT_EOF
+drivelvnnodepreviouscb:	void lvn^nodeprevious()
+drivegvnnodepreviouscb:	void gvn^nodeprevious()
+CAT_EOF
+
+setenv GTMCI nodeprevious.xc	# needed to invoke nodepreviouscb.m from nodeprevious*.c below
+
+echo ""
+echo "# Now run nodeprevious*.c (all tests driven by a C routine)"
+cp $gtm_tst/$tst/inref/nodeprevious*.c .
+set drivenbyMlist = "nodepreviouscb.c" # List of C routines that are driven by an M program elsewhere so they should not be invoked here
+rm -f $drivenbyMlist
+foreach file (nodeprevious*.c)
+	echo ""
+	echo " --> Running $file <---"
+	cp $gtm_tst/$tst/inref/$file .
+	set exefile = $file:r
+	$gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $file
+	$gt_ld_linker $gt_ld_option_output $exefile $gt_ld_options_common $exefile.o $gt_ld_sysrtns $ci_ldpath$gtm_dist -L$gtm_dist $tst_ld_yottadb $gt_ld_syslibs >& $exefile.map
+	if (0 != $status) then
+		echo "LVNGET-E-LINKFAIL : Linking $exefile failed. See $exefile.map for details"
+		exit -1
+	endif
+	`pwd`/$exefile
+	# Compare the two output files
+	diff nodeprevioussublist_M.txt nodeprevioussublist_SAPI.txt
+	if (0 != $status) then
+	    echo "Test failed - The nodeprevioussublist_M.txt and nodeprevioussublist_SAPI.txt files differ for $file"
+	    exit 1
+	endif
+	mv nodeprevioussublist_M.txt{,_$file}
+	mv nodeprevioussublist_SAPI.txt{,_$file}
+end
 $gtm_tst/com/dbcheck.csh
