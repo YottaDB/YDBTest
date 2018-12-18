@@ -44,7 +44,7 @@ rm -f nodenextsublist_M.txt nodenextsublist_SAPI.txt
 # Now drive the global variable version
 #
 $gtm_exe/mumps -dir << EOF
-do ^nodenext("AVar")
+do ^nodenext("^AVar")
 EOF
 #
 # Compare the two output files

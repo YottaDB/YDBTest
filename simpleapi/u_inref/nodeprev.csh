@@ -44,7 +44,7 @@ rm -f nodeprevioussublist_M.txt nodeprevioussublist_SAPI.txt
 # Now drive the global variable version
 #
 $gtm_exe/mumps -dir << EOF
-do ^nodeprevious("AVar")
+do ^nodeprevious("^AVar")
 EOF
 #
 # Compare the two output files
