@@ -70,6 +70,10 @@ int main(int argc, char *argv[])
 	start_time = time(NULL);
 	numincrs = 10;
 	cumulincrs = 0;
+	/* Use SimpleAPI calls in the parent before the fork. This is because if we use SimpleThreadAPI we will
+	 * have to do an exec() after the fork() (or else a STAPIFORKEXEC error is issued). Once we fork off, we
+	 * can start using SimpleThreadAPI in the child (which is the bulk of the test).
+	 */
 	for (iters = 0; ; iters++)
 	{
 		for (child = 0; child < NCHILDREN; child++)
@@ -87,7 +91,7 @@ int main(int argc, char *argv[])
 		}
 		cumulincrs += (NCHILDREN * numincrs);
 		/* Check the value of global BASEVAR after each iteration. That should be the same irrespective of order of TP operations inside children */
-		status = ydb_get_st(YDB_NOTTP, &basevar, 0, NULL, &value);
+		status = ydb_get_s(&basevar, 0, NULL, &value);
 		YDB_ASSERT(YDB_OK == status);
 		result = strtoul(value.buf_addr, NULL, 10);
 		if ((int)result != cumulincrs)
@@ -114,7 +118,7 @@ int main(int argc, char *argv[])
 		for (i = 1; i <= cumulincrs; i++)
 		{
 			subs.len_used = sprintf(subs.buf_addr, "%d", i);
-			status = ydb_get_st(YDB_NOTTP, &basevar, 1, &subs, &value);
+			status = ydb_get_s(&basevar, 1, &subs, &value);
 			YDB_ASSERT(YDB_OK == status);
 			YDB_ASSERT(0 == value.len_used);
 		}
