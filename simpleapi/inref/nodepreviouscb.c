@@ -109,9 +109,9 @@ void nodepreviouscb(int parmcnt, ydb_string_t *basevar_in)
 		subs_out_cnt = YDB_MAX_SUBS;
 		YDB_ASSERT(0 <= subs_in_cnt);	/* Could have 0 count on last record (unsubscripted var) */
 		status = ydb_node_previous_s(&basevar, subs_in_cnt, subs_in, &subs_out_cnt, subs_out);
-		SAPI_VALIDATE_RETURN(status, "ydb_node_previous()", TRUE);
-		if (YDB_NODE_END == subs_out_cnt)
+		if (YDB_ERR_NODEEND == status)
 			break;
+		SAPI_VALIDATE_RETURN(status, "ydb_node_previous()", TRUE);
 		YDB_ASSERT(YDB_MAX_SUBS >= subs_out_cnt);
 		YDB_ASSERT(0 <= subs_out_cnt);
 		if (0 != subs_out_cnt)

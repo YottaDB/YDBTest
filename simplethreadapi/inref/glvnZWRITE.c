@@ -11,7 +11,6 @@
  ****************************************************************/
 
 #include "libyottadb.h"
-#include "libydberrors.h"
 
 #include <sys/types.h>	/* needed for "getpid" */
 #include <unistd.h>	/* needed for "getpid" */
@@ -188,9 +187,9 @@ void glvnZWRITEsubtree(uint64_t tptoken, ydb_buffer_t *basevar, int nsubs, ydb_b
 		{
 			glvnPrintNodeIfExists(tptoken, basevar, src_used, src, node_must_exist);
 			status = ydb_node_next_st(tptoken, basevar, src_used, src, &dst_used, dst);
-			YDB_ASSERT(YDB_OK == status);
-			if (YDB_NODE_END == dst_used)
+			if (YDB_ERR_NODEEND == status)
 				break;
+			YDB_ASSERT(YDB_OK == status);
 			node_must_exist = NODE_MUST_EXIST_TRUE;
 			src_used = dst_used;
 			dst_used = YDB_MAX_SUBS + 1;
