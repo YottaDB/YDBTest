@@ -13,6 +13,7 @@
 #include "libyottadb.h"
 #include "libydberrors.h"	/* for YDB_ERR_TPTIMEOUT */
 #include <time.h>		/* for "time" prototype */
+#include <unistd.h>		/* for "usleep" prototype */
 
 #include <stdio.h>
 
@@ -74,7 +75,7 @@ int gvnset(uint64_t tptoken)
 		status = ydb_set_st(tptoken, &ygbl_tp5, 1, &value, &value);
 		if (YDB_OK != status)
 			break;
-		ydb_hiber_start(1000000);	/* sleep for 10**6 nanoseconds = 1 milli-second */
+		usleep(1000);	/* sleep for 1000 microseconds = 1 milli-second */
 	}
 	return status;
 }
