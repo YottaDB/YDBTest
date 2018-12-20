@@ -215,7 +215,7 @@ Attempting ydb_subscript_previous_st() with subsarray[0].len_alloc=0 and subsarr
 Attempting ydb_subscript_previous_st() with subsarray[0].len_alloc=1 and subsarray[0].len_used=0 : Expect NO PARAMINVALID error
 Attempting ydb_subscript_previous_st() with subsarray[0].len_alloc=1 and subsarray[0].len_used=1 : Expect NO PARAMINVALID error
 Attempting ydb_subscript_previous_st() with subscr32[0].buf_addr=NULL and subscr32[0].len_used=1 : Expect PARAMINVALID error
-ydb_subscript_previous_st() [258]: 151027770,(SimpleThreadAPI),%YDB-E-PARAMINVALID, Invalid subsarray (index 0) parameter specified in ydb_subscript_previous_st() call
+ydb_subscript_previous_st() [261]: 151027770,(SimpleThreadAPI),%YDB-E-PARAMINVALID, Invalid subsarray (index 0) parameter specified in ydb_subscript_previous_st() call
 Attempting ydb_subscript_previous_st() with subscr32[0].buf_addr=NULL and subscr32[0].len_used=0 : Expect NO PARAMINVALID error
 Attempting ydb_subscript_previous_st() with subsarray[3].len_alloc=0 and subsarray[3].len_used=2 : Expect PARAMINVALID error
 ydb_subscript_previous_st() [197]: 151027770,(SimpleThreadAPI),%YDB-E-PARAMINVALID, Invalid subsarray (index 3) parameter specified in ydb_subscript_previous_st() call
@@ -223,10 +223,10 @@ Attempting ydb_subscript_previous_st() with subsarray[3].len_alloc=0 and subsarr
 Attempting ydb_subscript_previous_st() with subsarray[3].len_alloc=1 and subsarray[3].len_used=0 : Expect NO PARAMINVALID error
 Attempting ydb_subscript_previous_st() with subsarray[3].len_alloc=1 and subsarray[3].len_used=1 : Expect NO PARAMINVALID error
 Attempting ydb_subscript_previous_st() with subscr32[3].buf_addr=NULL and subscr32[3].len_used=1 : Expect PARAMINVALID error
-ydb_subscript_previous_st() [258]: 151027770,(SimpleThreadAPI),%YDB-E-PARAMINVALID, Invalid subsarray (index 3) parameter specified in ydb_subscript_previous_st() call
+ydb_subscript_previous_st() [261]: 151027770,(SimpleThreadAPI),%YDB-E-PARAMINVALID, Invalid subsarray (index 3) parameter specified in ydb_subscript_previous_st() call
 Attempting ydb_subscript_previous_st() with subscr32[3].buf_addr=NULL and subscr32[3].len_used=0 : Expect NO PARAMINVALID error
 # Test that LVUNDEF error is NOT issued by ydb_subscript_previous_st()
-ydb_subscript_previous_st() returned []
+ydb_subscript_previous_st() returned YDB_ERR_NODEEND
 Demonstrate our progress by executing a ZWRITE in a call-in
 baselv="A question"
 baselv("","x","x","x","x")=""

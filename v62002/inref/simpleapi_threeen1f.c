@@ -620,9 +620,10 @@ void	dostep(int first, int last)
 			for ( ; ; )
 			{
 				status = ydb_subscript_next_s(&ylcl_currpath, 1, subscr, &value);
-				YDB_ASSERT(YDB_OK == status);
-				if (0 == value.len_used)
+				if (YDB_ERR_NODEEND == status)
 					break;
+				YDB_ASSERT(YDB_OK == status);
+				YDB_ASSERT(0 != value.len_used);
 				value.buf_addr[value.len_used] = '\0';
 				tmp1 = atoi(value.buf_addr);
 				YDB_COPY_BUFF_TO_BUFF(&value, &subscr[0]);	/* take a copy before it changes */

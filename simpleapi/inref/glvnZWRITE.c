@@ -85,8 +85,8 @@ void glvnZWRITE(char *startname)
 	for (iters=0; ; iters++)
 	{
 		status = ydb_subscript_next_s(&basevar, 0, NULL, &retvalue);
-		YDB_ASSERT(YDB_OK == status);
-		reached_end = (0 == retvalue.len_used);
+		YDB_ASSERT((YDB_OK == status) || (YDB_ERR_NODEEND == status));
+		reached_end = (YDB_ERR_NODEEND == status);
 		if (reached_end)
 		{	/* Reached end of subscripts. In order to find last subscript do reverse $order of "zzzzzzzzzzzzzz...". */
 			if ('^' == basevar.buf_addr[0])
@@ -97,7 +97,7 @@ void glvnZWRITE(char *startname)
 			memcpy(retvalue.buf_addr, name, retvalue.len_used);
 		}
 		status = ydb_subscript_previous_s(&retvalue, 0, NULL, &tmpvalue);
-		YDB_ASSERT(YDB_OK == status);
+		YDB_ASSERT((YDB_OK == status) || (YDB_ERR_NODEEND == status));
 		YDB_ASSERT((tmpvalue.len_used == basevar.len_used)
 			|| (!tmpvalue.len_used && !iters)
 			|| !tmpvalue.len_used
@@ -143,11 +143,15 @@ void glvnZWRITEsubtree(ydb_buffer_t *basevar, int nsubs, ydb_buffer_t *subscr)
 		for ( ; ; )
 		{
 			status = ydb_subscript_next_s(basevar, nsubs + 1, subscr, &retvalue);
-			YDB_ASSERT(YDB_OK == status);
+			YDB_ASSERT((YDB_OK == status) || (YDB_ERR_NODEEND == status));
+			if (YDB_ERR_NODEEND == status)
+				retvalue.len_used = 0;
 			tmpvalue2 = subscr[nsubs];
 			subscr[nsubs] = retvalue;
 			status = ydb_subscript_previous_s(basevar, nsubs + 1, subscr, &tmpvalue);
-			YDB_ASSERT(YDB_OK == status);
+			YDB_ASSERT((YDB_OK == status) || (YDB_ERR_NODEEND == status));
+			if (YDB_ERR_NODEEND == status)
+				tmpvalue.len_used = 0;
 			YDB_ASSERT(tmpvalue.len_used == tmpvalue2.len_used);
 			YDB_ASSERT(!tmpvalue.len_used || (!memcmp(tmpvalue.buf_addr, tmpvalue2.buf_addr, tmpvalue2.len_used)));
 			subscr[nsubs] = tmpvalue2;

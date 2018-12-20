@@ -68,7 +68,9 @@ int main()
 			return YDB_OK;
 		}
 		status = ydb_subscript_previous_s(&basevar, subs, subsbuff, &ret_value);
-		if (YDB_OK != status)
+		if (YDB_ERR_NODEEND == status)
+			ret_value.len_used = 0;
+		else if (YDB_OK != status)
 		{
 			ydb_zstatus(errbuf, ERRBUF_SIZE);
 			printf("ydb_subscript_previous_s() : subsbuff [%d]: %s\n", subs, errbuf);

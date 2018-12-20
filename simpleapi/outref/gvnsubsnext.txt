@@ -213,7 +213,7 @@ Attempting ydb_subscript_next_s() with subsarray[0].len_alloc=0 and subsarray[0]
 Attempting ydb_subscript_next_s() with subsarray[0].len_alloc=1 and subsarray[0].len_used=0 : Expect NO PARAMINVALID error
 Attempting ydb_subscript_next_s() with subsarray[0].len_alloc=1 and subsarray[0].len_used=1 : Expect NO PARAMINVALID error
 Attempting ydb_subscript_next_s() with subscr32[0].buf_addr=NULL and subscr32[0].len_used=1 : Expect PARAMINVALID error
-ydb_subscript_next_s() [257]: 151027770,(SimpleAPI),%YDB-E-PARAMINVALID, Invalid subsarray (index 0) parameter specified in ydb_subscript_next_s() call
+ydb_subscript_next_s() [260]: 151027770,(SimpleAPI),%YDB-E-PARAMINVALID, Invalid subsarray (index 0) parameter specified in ydb_subscript_next_s() call
 Attempting ydb_subscript_next_s() with subscr32[0].buf_addr=NULL and subscr32[0].len_used=0 : Expect NO PARAMINVALID error
 Attempting ydb_subscript_next_s() with subsarray[3].len_alloc=0 and subsarray[3].len_used=2 : Expect PARAMINVALID error
 ydb_subscript_next_s() [196]: 151027770,(SimpleAPI),%YDB-E-PARAMINVALID, Invalid subsarray (index 3) parameter specified in ydb_subscript_next_s() call
@@ -221,10 +221,10 @@ Attempting ydb_subscript_next_s() with subsarray[3].len_alloc=0 and subsarray[3]
 Attempting ydb_subscript_next_s() with subsarray[3].len_alloc=1 and subsarray[3].len_used=0 : Expect NO PARAMINVALID error
 Attempting ydb_subscript_next_s() with subsarray[3].len_alloc=1 and subsarray[3].len_used=1 : Expect NO PARAMINVALID error
 Attempting ydb_subscript_next_s() with subscr32[3].buf_addr=NULL and subscr32[3].len_used=1 : Expect PARAMINVALID error
-ydb_subscript_next_s() [257]: 151027770,(SimpleAPI),%YDB-E-PARAMINVALID, Invalid subsarray (index 3) parameter specified in ydb_subscript_next_s() call
+ydb_subscript_next_s() [260]: 151027770,(SimpleAPI),%YDB-E-PARAMINVALID, Invalid subsarray (index 3) parameter specified in ydb_subscript_next_s() call
 Attempting ydb_subscript_next_s() with subscr32[3].buf_addr=NULL and subscr32[3].len_used=0 : Expect NO PARAMINVALID error
 # Test that GVUNDEF error is NOT issued by ydb_subscript_next_s()
-ydb_subscript_next_s() returned []
+ydb_subscript_next_s() returned YDB_ERR_NODEEND
 # Demonstrate our progress by executing a gvnZWRITE in a call-in
 ^baselv="A question"
 ^baselv("","x","x","x","x")=""

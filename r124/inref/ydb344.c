@@ -27,7 +27,7 @@ int main(void);
 
 #define	CHECK_STATUS(status)					\
 {								\
-	if (YDB_OK != status)					\
+	if ((YDB_OK != status) && (YDB_ERR_NODEEND != status))	\
 	{							\
 		ydb_zstatus(errbuf, ERRBUF_SIZE);		\
 		printf("[Line %d]: %s\n", __LINE__, errbuf);	\

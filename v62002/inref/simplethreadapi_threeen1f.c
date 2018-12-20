@@ -581,9 +581,10 @@ void	dostep(int first, int last, gvstats_parm_t *gvstats_parm)
 			for ( ; ; )
 			{
 				status = ydb_subscript_next_st(YDB_NOTTP, &ylcl_currpath, 1, subscr, &value);
-				YDB_ASSERT(YDB_OK == status);
-				if (0 == value.len_used)
+				if (YDB_ERR_NODEEND == status)
 					break;
+				YDB_ASSERT(YDB_OK == status);
+				YDB_ASSERT(0 != value.len_used);
 				value.buf_addr[value.len_used] = '\0';
 				tmp1 = atoi(value.buf_addr);
 				gvstats_parm->updates++;

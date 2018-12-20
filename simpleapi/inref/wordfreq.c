@@ -82,9 +82,10 @@ int main()
 	do
 	{
 		status = ydb_subscript_next_s(&words, 1, &tmp1, &tmp1);	/* M line : set tmp1=$order(words(tmp1)) */
-		YDB_ASSERT(YDB_OK == status);
-		if (0 == tmp1.len_used)
+		if (YDB_ERR_NODEEND == status)
 			break;
+		YDB_ASSERT(YDB_OK == status);
+		YDB_ASSERT(0 != tmp1.len_used);
 		status = ydb_get_s(&words, 1, &tmp1, &words_tmp1);	/* M line : set words_tmp1=words(tmp1) */
 		YDB_ASSERT(YDB_OK == status);
 		index_subscr[0] = words_tmp1;
@@ -95,9 +96,10 @@ int main()
 	do
 	{
 		status = ydb_subscript_previous_s(&index, 1, &tmp1, &tmp1);	/* M line : set tmp1=$order(index(tmp1),-1) */
-		YDB_ASSERT(YDB_OK == status);
-		if (0 == tmp1.len_used)
+		if (YDB_ERR_NODEEND == status)
 			break;
+		YDB_ASSERT(YDB_OK == status);
+		YDB_ASSERT(0 != tmp1.len_used);
 		tmp2.buf_addr = tmp2buff;			/* M line : set tmp2="" */
 		tmp2.len_used = 0;
 		tmp2.len_alloc = sizeof(tmp2buff);
@@ -106,9 +108,10 @@ int main()
 		do
 		{
 			status = ydb_subscript_next_s(&index, 2, index_subscr, &tmp2); /* M line : set tmp2=$order(index(tmp1,tmp2)) */
-			YDB_ASSERT(YDB_OK == status);
-			if (0 == tmp2.len_used)
+			if (YDB_ERR_NODEEND == status)
 				break;
+			YDB_ASSERT(YDB_OK == status);
+			YDB_ASSERT(0 != tmp2.len_used);
 			tmp1.buf_addr[tmp1.len_used] = '\0';
 			tmp2.buf_addr[tmp2.len_used] = '\0';
 			printf("%s\t%s\n", tmp1.buf_addr, tmp2.buf_addr);
