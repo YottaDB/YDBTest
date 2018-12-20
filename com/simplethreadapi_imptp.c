@@ -16,8 +16,7 @@
  *	2) SimpleAPI is still used in the parent process (as SimpleThreadAPI cannot be used before a "fork")
  */
 
-#include "libyottadb.h"		/* for ydb_* macros/prototypes/typedefs */
-#include "libydberrors.h"	/* for YDB_ERR_* macros */
+#include "libyottadb.h"		/* for ydb_* macros/prototypes/typedefs and YDB_ERR_* macros */
 
 #include <stdio.h>	/* for "printf" */
 #include <unistd.h>	/* for "sysconf" and "usleep" */
@@ -77,10 +76,22 @@ char		subsbuff[MAXVALUELEN], Ibuff[MAXVALUELEN];
 ydb_buffer_t	ybuff_tptype, ybuff_subsMAX, ybuff_val, ybuff_valALT, ybuff_valMAX, ybuff_subs, ybuff_I;
 int		crash, trigger;
 
+ci_name_descriptor	getdatinfo_cid, writecrashfileifneeded_cid, writejobinfofileifneeded_cid, tpnoiso_cid;
+ci_name_descriptor	dupsetnoop_cid, helper1_cid, helper2_cid, helper3_cid, noop_cid, ztwormstr_cid, ztrcmd_cid;
+ci_name_descriptor	imptpdztrig_cid;
+
 int	impjob(int child);
 char	*get_curtime(void);
 int	tpfn_stage1();
 int	tpfn_stage3();
+
+/* Initialize a "ci_name_descriptor" structure for later use by "ydb_cip" or "ydb_cip_t" */
+#define	YDB_CIP_DESC_INIT(CID, RTNNAME)				\
+{								\
+	CID.rtn_name.address = (RTNNAME);			\
+	CID.rtn_name.length = strlen(CID.rtn_name.address);	\
+	CID.handle = NULL;					\
+}
 
 /* Implements below M code in com/imptp.csh.
  *
@@ -164,6 +175,21 @@ int main(int argc, char *argv[])
 	YDB_LITERAL_TO_BUFFER("$zroutines", &yisv_zroutines);
 	YDB_LITERAL_TO_BUFFER("$trestart", &yisv_trestart);
 
+	/* Initialize ydb_cip descriptors */
+	YDB_CIP_DESC_INIT(getdatinfo_cid, "getdatinfo");
+	YDB_CIP_DESC_INIT(writecrashfileifneeded_cid,   "writecrashfileifneeded");
+	YDB_CIP_DESC_INIT(writejobinfofileifneeded_cid, "writejobinfofileifneeded");
+	YDB_CIP_DESC_INIT(tpnoiso_cid, "tpnoiso");
+	YDB_CIP_DESC_INIT(dupsetnoop_cid, "dupsetnoop");
+	YDB_CIP_DESC_INIT(helper1_cid, "helper1");
+	YDB_CIP_DESC_INIT(helper2_cid, "helper2");
+	YDB_CIP_DESC_INIT(helper3_cid, "helper3");
+	YDB_CIP_DESC_INIT(noop_cid, "noop");
+	YDB_CIP_DESC_INIT(ztwormstr_cid, "ztwormstr");
+	YDB_CIP_DESC_INIT(ztrcmd_cid, "ztrcmd");
+	YDB_CIP_DESC_INIT(imptpdztrig_cid, "imptpdztrig");
+
+	/* Initialize ydb_buffer_t structures */
 	value.buf_addr = valuebuff;
 	value.len_alloc = sizeof(valuebuff);
 	pidvalue.buf_addr = pidvaluebuff;
@@ -379,7 +405,7 @@ int main(int argc, char *argv[])
 	/* ; Grab the key and record size from DSE
 	 * do get^datinfo("^%imptp("_fillid_")")
 	 */
-	status = ydb_ci("getdatinfo");
+	status = ydb_cip(&getdatinfo_cid);
 	YDB_ASSERT(YDB_OK == status);
 
 	/* set ^%imptp(fillid,"gtm_test_spannode")=+$ztrnlnm("gtm_test_spannode") */
@@ -591,10 +617,10 @@ int main(int argc, char *argv[])
 		YDB_ASSERT(YDB_OK == status);
 	}
 	/* do writecrashfileifneeded			: com/job.m */
-	status = ydb_ci("writecrashfileifneeded");
+	status = ydb_cip(&writecrashfileifneeded_cid);
 	YDB_ASSERT(YDB_OK == status);
 	/* do writejobinfofileifneeded			: com/job.m */
-	status = ydb_ci("writejobinfofileifneeded");
+	status = ydb_cip(&writejobinfofileifneeded_cid);
 	YDB_ASSERT(YDB_OK == status);
 	/* ; Wait until the first update on all regions happen
 	 * set start=$horolog
@@ -712,7 +738,7 @@ int	impjob(int childnum)
 	if (rand)
 	{	/* Randomly chose ydb_ci method to run child (impjob^imptp) */
 		/* do impjob^imptp */
-		status = ydb_ci_t(YDB_NOTTP, "impjob");
+		status = ydb_ci_t(YDB_NOTTP, "impjob_cid"); /* Use "ydb_ci_t" (not ydb_cip_t) intentionally to test "ydb_ci_t" */
 		/* If the caller is the "gtm8086" subtest, it creates a situation where JNLEXTEND or JNLSWITCHFAIL
 		 * errors can happen in the imptp child process and that is expected. Account for that in the below YDB_ASSERT.
 		 */
@@ -999,14 +1025,14 @@ int	impjob(int childnum)
 	/* if tpnoiso do tpnoiso^imptp */
 	if (tpnoiso)
 	{
-		status = ydb_ci_t(YDB_NOTTP, "tpnoiso"); /* Use call-in for this as it contains VIEW commands which are not yet supported in SimpleAPI/SimpleThreadAPI */
+		status = ydb_cip_t(YDB_NOTTP, &tpnoiso_cid); /* Use call-in for this as it contains VIEW commands which are not yet supported in SimpleAPI/SimpleThreadAPI */
 		YDB_ASSERT(YDB_OK == status);
 	}
 
 	/* if dupset view "GVDUPSETNOOP":1 */
 	if (dupset)
 	{
-		status = ydb_ci_t(YDB_NOTTP, "dupsetnoop"); /* Use call-in for this as it contains VIEW commands which are not yet supported in SimpleAPI/SimpleThreadAPI */
+		status = ydb_cip_t(YDB_NOTTP, &dupsetnoop_cid); /* Use call-in for this as it contains VIEW commands which are not yet supported in SimpleAPI/SimpleThreadAPI */
 		YDB_ASSERT(YDB_OK == status);
 	}
 
@@ -1080,7 +1106,7 @@ int	impjob(int childnum)
 		 * set subsMAX=$j(subs,keypad)
 		 * if $$^dzlenproxy(subsMAX)>keysize write $$^dzlenproxy(subsMAX),?4 zwr subs,I,loop
 		 */
-		status = ydb_ci_t(YDB_NOTTP, "helper1");	/* Use call-in to implement the block of M code commented above */
+		status = ydb_cip_t(YDB_NOTTP, &helper1_cid);	/* Use call-in to implement the block of M code commented above */
 		YDB_ASSERT(YDB_OK == status);
 
 		/* Copy variable names to parameter array */
@@ -1137,7 +1163,7 @@ int	impjob(int childnum)
 		/* . . xecute ztrigstr */
 		/* . . if (trig=("-"_trigname))&(ztrigret=0) set ztrigret=1	; trigger does not exist, ignore delete-by-name error */
 		/* . . goto:'ztrigret ERROR */
-		status = ydb_ci_t(YDB_NOTTP, "helper2");	/* $ztrigger is anyways not supported in SimpleAPI/SimpleThreadAPI so use call-ins instead */
+		status = ydb_cip_t(YDB_NOTTP, &helper2_cid);	/* $ztrigger is anyways not supported in SimpleAPI/SimpleThreadAPI so use call-ins instead */
 		YDB_ASSERT(YDB_OK == status);
 
 		/* . set ^antp(fillid,subs)=val */
@@ -1177,7 +1203,7 @@ int	impjob(int childnum)
 		/* if istp=1 tcommit */
 
 		/* . ; Stage 4 thru 11*/
-		status = ydb_ci_t(YDB_NOTTP, "helper3");
+		status = ydb_cip_t(YDB_NOTTP, &helper3_cid);
 		YDB_ASSERT(YDB_OK == status);
 
 		/* . ; Stage 4 */
@@ -1371,9 +1397,9 @@ int	tpfn_stage1(uint64_t tptoken, int *parm_array)
 		{
 			if (1 == rndm)
 			{
-				status = ydb_ci_t(tptoken, "noop");
+				status = ydb_cip_t(tptoken, &noop_cid);
 				/* Unlike SimpleAPI/SimpleThreadAPI which only returns YDB_ERR_* codes (all negative numbers),
-				 * "ydb_ci_t" can return ERR_TPRETRY (a positive number). An easy way to check that is to
+				 * "ydb_cip_t" can return ERR_TPRETRY (a positive number). An easy way to check that is to
 				 * take negation of YDB_ERR_TPRETRY (which is == ERR_TPRETRY) and compare that against
 				 * the return value. In that case, return YDB_TP_RESTART from this function as that
 				 * is what the caller ("ydb_tp_s") knows to handle.
@@ -1462,7 +1488,7 @@ int	tpfn_stage1(uint64_t tptoken, int *parm_array)
 	} else
 	{
 		/* . if trigger xecute ztwormstr	; fill in $ztwormhole for below update that requires "subs" */
-		status = ydb_ci_t(tptoken, "ztwormstr");
+		status = ydb_cip_t(tptoken, &ztwormstr_cid);
 		if (-YDB_ERR_TPRETRY == status)
 			return YDB_TP_RESTART;
 		YDB_ASSERT(YDB_OK == status);
@@ -1498,7 +1524,7 @@ int	tpfn_stage1(uint64_t tptoken, int *parm_array)
 		/* . if istp'=0 xecute:ztr ztrcmd set ^lasti(fillid,jobno)=loop */
 		if (ztr)
 		{
-			status = ydb_ci_t(tptoken, "ztrcmd");
+			status = ydb_cip_t(tptoken, &ztrcmd_cid);
 			if (-YDB_ERR_TPRETRY == status)
 				return YDB_TP_RESTART;
 			YDB_ASSERT(YDB_OK == status);
@@ -1525,7 +1551,7 @@ int	tpfn_stage3(uint64_t tptoken, int *parm_array)
 	/* . do:dztrig ^imptpdztrig(2,istp<2) */
 	if (dztrig)
 	{
-		status = ydb_ci_t(tptoken, "imptpdztrig");
+		status = ydb_cip_t(tptoken, &imptpdztrig_cid);
 		if (-YDB_ERR_TPRETRY == status)
 			return YDB_TP_RESTART;
 		YDB_ASSERT(YDB_OK == status);
