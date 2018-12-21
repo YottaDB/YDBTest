@@ -738,7 +738,7 @@ int	impjob(int childnum)
 	if (rand)
 	{	/* Randomly chose ydb_ci method to run child (impjob^imptp) */
 		/* do impjob^imptp */
-		status = ydb_ci_t(YDB_NOTTP, "impjob_cid"); /* Use "ydb_ci_t" (not ydb_cip_t) intentionally to test "ydb_ci_t" */
+		status = ydb_ci_t(YDB_NOTTP, "impjob"); /* Use "ydb_ci_t" (not ydb_cip_t) intentionally to test "ydb_ci_t" */
 		/* If the caller is the "gtm8086" subtest, it creates a situation where JNLEXTEND or JNLSWITCHFAIL
 		 * errors can happen in the imptp child process and that is expected. Account for that in the below YDB_ASSERT.
 		 */
