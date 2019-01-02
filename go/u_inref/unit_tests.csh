@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #                                                               #
-# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.      #
+# Copyright (c) 2019 YottaDB LLC. and/or its subsidiaries.      #
 # All rights reserved.                                          #
 #                                                               #
 #       This source code contains the intellectual property     #
@@ -49,6 +49,11 @@ if (0 == $skip_go_test) then
 	# ($tstpath/go/src/lang.yottadb.com/go/yottadb) where the default test framework assignment of ydb_gbldir
 	# to a relative path (i.e. mumps.gld) is no longer relevant.
 	setenv ydb_gbldir $tstpath/mumps.gld
+	# Set ydb_ci to the calltab for the Go routines, and ensure the ydb_routines
+	#  path includes the folder housing the helper routines used by some go tests
+	setenv ydb_ci "$GOPATH/src/$go_repo/calltab.ci"
+	# We use gtmroutines here since the test framework still uses it, rather than ydb_routines
+	setenv gtmroutines ".($GOPATH/src/$go_repo/m_routines/) $gtmroutines"
 
 	if ($?test_replic) then
 		# In case of replication tests, set replication instance env var too just like we did the gld above
