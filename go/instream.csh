@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -11,12 +11,18 @@
 #								#
 #################################################################
 #
-
+#-------------------------------------------------------------------------------------
+# List of subtests of the form "subtestname [author] description"
+#-------------------------------------------------------------------------------------
+# unit_tests		[hathawayc]	Drive 'go test' test harness
+# simpleapithreeen1f	[estess]	Drive golang version of 3n+1 routine as a test/demo
+# wordfreq		[estess]	Drive golang vesion of wordfreq routine as a test/demo
+#
 echo "go test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
-setenv subtest_list_common     "unit_tests"
-setenv subtest_list_non_replic ""
+setenv subtest_list_common     "unit_tests simpleapithreeenp1f"
+setenv subtest_list_non_replic "wordfreq"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then

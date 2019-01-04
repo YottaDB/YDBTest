@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #                                                               #
-# Copyright (c) 2019 YottaDB LLC. and/or its subsidiaries.      #
+# Copyright (c) 2018-2019 YottaDB LLC. and/or its subsidiaries. #
 # All rights reserved.                                          #
 #                                                               #
 #       This source code contains the intellectual property     #
@@ -25,6 +25,9 @@ $gtm_tst/com/dbcreate.csh mumps -gld_has_db_fullpath >>& dbcreate.out
 if ($status) then
         echo "# dbcreate failed. Output of dbcreate.out follows"
         cat dbcreate.out
+endif
+if ($?test_replic) then
+    $MSR START INST1 INST2 # Start replication servers
 endif
 
 set tstpath = `pwd`
@@ -74,7 +77,7 @@ if (0 == $skip_go_test) then
 	unsetenv ydb_gbldir
 endif
 
-$gtm_tst/com/dbcheck.csh >>& dbcheck.out
+$gtm_tst/com/dbcheck.csh -extract >>& dbcheck.out
 if ($status) then
         echo "# dbcheck failed. Output of dbcheck.out follows"
         cat dbcheck.out
