@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	*
+ * Copyright (c) 2018-2019 YottaDB LLC. and/or its subsidiaries.*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -29,7 +29,7 @@ int main()
 	printf(" ### Test FATALERROR1 error ###\n"); fflush(stdout);
 	printf(" # This test triggers a YDB-F-MEMORY error which then sends the FATALERROR1 message to syslog #\n"); fflush(stdout);
         tpfn = &gvnset;
-        status = ydb_tp_st(YDB_NOTTP, tpfn, NULL, NULL, 0, NULL);
+        status = ydb_tp_st(YDB_NOTTP, NULL, tpfn, NULL, NULL, 0, NULL);
         ydb_zstatus(errbuf, ERRBUF_SIZE);
         printf("status = %d : %s\n", status, errbuf);
         fflush(stdout);
@@ -37,7 +37,7 @@ int main()
 }
 
 /* Function to set a global variable */
-int gvnset(uint64_t tptoken)
+int gvnset(uint64_t tptoken, ydb_buffer_t *errstr)
 {
         int             status, i;
         ydb_buffer_t    basevar, value;
@@ -53,6 +53,6 @@ int gvnset(uint64_t tptoken)
         for (i = 0; ; i++)
         {
                 subs.len_used = sprintf(subs.buf_addr, "%d", i);
-                ydb_set_st(tptoken, &basevar, 1, &subs, NULL);
+                ydb_set_st(tptoken, errstr, &basevar, 1, &subs, NULL);
         }
 }

@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	*
+ * Copyright (c) 2018-2019 YottaDB LLC. and/or its subsidiaries.*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -29,7 +29,7 @@ int main()
 	fflush(stdout);
 
 	tpfn = &gvnset;
-	status = ydb_tp_st(YDB_NOTTP, tpfn, NULL, NULL, 0, NULL);
+	status = ydb_tp_st(YDB_NOTTP, NULL, tpfn, NULL, NULL, 0, NULL);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
@@ -40,10 +40,10 @@ int main()
 }
 
 /* Function to set a global variable */
-int gvnset(uint64_t tptoken)
+int gvnset(uint64_t tptoken, ydb_buffer_t *errstr)
 {
 	int		status;
 
 	printf("Entering ydb_tp_st() : Level = %d\n", level++);
-	return ydb_tp_st(tptoken, tpfn, NULL, NULL, 0, NULL);
+	return ydb_tp_st(tptoken, errstr, tpfn, NULL, NULL, 0, NULL);
 }

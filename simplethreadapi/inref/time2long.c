@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	*
+ * Copyright (c) 2018-2019 YottaDB LLC. and/or its subsidiaries.*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -42,9 +42,9 @@ int main()
 		for (j = 0; j < 5; j++)
 		{
 			if (0 == j)
-				status = ydb_lock_st(YDB_NOTTP, time[i], 1, &basevar, 0, NULL);
+				status = ydb_lock_st(YDB_NOTTP, NULL, time[i], 1, &basevar, 0, NULL);
 			else if (1 == j)
-				status = ydb_lock_incr_st(YDB_NOTTP, time[i], &basevar, 0, NULL);
+				status = ydb_lock_incr_st(YDB_NOTTP, NULL, time[i], &basevar, 0, NULL);
 			else
 			{	/* For the remaining functions, a good huge timeout will cause the test to run
 				 * for a long time so disable the good value.

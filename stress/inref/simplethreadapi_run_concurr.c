@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.*
+ * Copyright (c) 2017-2019 YottaDB LLC. and/or its subsidiaries.*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -91,10 +91,10 @@ tpflag_t	tpflag;
 
 /* Helper function prototypes */
 int	m_job_stress(void);
-int	job_stress_tpfn(uint64_t tptoken, void *i);
-int	m_randfill(act_t act, uint64_t tptoken, int pno, int iter);
-int	m_filling_randfill(act_t act, uint64_t tptoken, int prime, int root, int iter);
-void	m_EXAM_randfill(uint64_t tptoken, char *pos, ydb_buffer_t *vcorr, ydb_buffer_t *vcomp);
+int	job_stress_tpfn(uint64_t tptoken, ydb_buffer_t *errstr, void *i);
+int	m_randfill(act_t act, uint64_t tptoken, ydb_buffer_t *errstr, int pno, int iter);
+int	m_filling_randfill(act_t act, uint64_t tptoken, ydb_buffer_t *errstr, int prime, int root, int iter);
+void	m_EXAM_randfill(uint64_t tptoken, ydb_buffer_t *errstr, char *pos, ydb_buffer_t *vcorr, ydb_buffer_t *vcomp);
 char	*get_curtime(void);
 
 /* Implements M entryref run^concurr */
@@ -258,28 +258,28 @@ int	m_job_stress(void)
 	/* SET jobno=child# : job^stress */
 	YDB_LITERAL_TO_BUFFER("jobno", &ylcl_jobno);
 	value.len_used = sprintf(value.buf_addr, "%d", child);
-	status = ydb_set_st(YDB_NOTTP, &ylcl_jobno, 0, NULL, &value);
+	status = ydb_set_st(YDB_NOTTP, NULL, &ylcl_jobno, 0, NULL, &value);
 	YDB_ASSERT(YDB_OK == status);
 
 	/* SET ^PID(jobno,localinstance)=$j : job^stress */
-	status = ydb_get_st(YDB_NOTTP, &ylcl_jobno, 0, NULL, &subscr[0]);
+	status = ydb_get_st(YDB_NOTTP, NULL, &ylcl_jobno, 0, NULL, &subscr[0]);
 	YDB_ASSERT(YDB_OK == status);
-	status = ydb_get_st(YDB_NOTTP, &ylcl_localinstance, 0, NULL, &subscr[1]);
+	status = ydb_get_st(YDB_NOTTP, NULL, &ylcl_localinstance, 0, NULL, &subscr[1]);
 	YDB_ASSERT(YDB_OK == status);
-	status = ydb_set_st(YDB_NOTTP, &ygbl_PID, 2, subscr, &pidvalue);
+	status = ydb_set_st(YDB_NOTTP, NULL, &ygbl_PID, 2, subscr, &pidvalue);
 	YDB_ASSERT(YDB_OK == status);
 
 	/* Do the increment so parent can know when all children have reached this point */
 	YDB_COPY_BUFF_TO_BUFF(&subscr[1], &subscr[0]);	/* copy over "localinstance" into 1st subscript */
-	status = ydb_incr_st(YDB_NOTTP, &ygbl_permit, 1, subscr, NULL, &value);
+	status = ydb_incr_st(YDB_NOTTP, NULL, &ygbl_permit, 1, subscr, NULL, &value);
 
 	/* Wait for parent to release lock for children */
 	/* lock +^permit($j) : job^stress */
 	YDB_COPY_BUFF_TO_BUFF(&pidvalue, &subscr[0]);	/* copy over "$j" into 1st subscript */
-	status = ydb_lock_incr_st(YDB_NOTTP, LOCK_TIMEOUT, &ygbl_permit, 1, subscr);
+	status = ydb_lock_incr_st(YDB_NOTTP, NULL, LOCK_TIMEOUT, &ygbl_permit, 1, subscr);
 	YDB_ASSERT(YDB_OK == status);
 
-	status = ydb_get_st(YDB_NOTTP, &ylcl_iterate, 0, NULL, &value);
+	status = ydb_get_st(YDB_NOTTP, NULL, &ylcl_iterate, 0, NULL, &value);
 	YDB_ASSERT(YDB_OK == status);
 	value.buf_addr[value.len_used] = '\0';
 	iterate = atoi(value.buf_addr);
@@ -299,7 +299,7 @@ int	m_job_stress(void)
 	YDB_LITERAL_TO_BUFFER("^lasti", &ygbl_lasti);
 
 	/* NEW loop */
-	status = ydb_delete_st(YDB_NOTTP, &ylcl_loop, 0, NULL, YDB_DEL_TREE);
+	status = ydb_delete_st(YDB_NOTTP, NULL, &ylcl_loop, 0, NULL, YDB_DEL_TREE);
 	YDB_ASSERT(YDB_OK == status);
 
 	/* F loop=1:1:iterate DO : job^stress */
@@ -317,49 +317,49 @@ int	m_job_stress(void)
 		YDB_ASSERT(nbytes < value.len_alloc);
 
 		/* NEW efill,ffill,gfill,hfill */
-		status = ydb_delete_st(YDB_NOTTP, &ylcl_efill, 0, NULL, YDB_DEL_TREE);
+		status = ydb_delete_st(YDB_NOTTP, NULL, &ylcl_efill, 0, NULL, YDB_DEL_TREE);
 		YDB_ASSERT(YDB_OK == status);
-		status = ydb_delete_st(YDB_NOTTP, &ylcl_ffill, 0, NULL, YDB_DEL_TREE);
+		status = ydb_delete_st(YDB_NOTTP, NULL, &ylcl_ffill, 0, NULL, YDB_DEL_TREE);
 		YDB_ASSERT(YDB_OK == status);
-		status = ydb_delete_st(YDB_NOTTP, &ylcl_gfill, 0, NULL, YDB_DEL_TREE);
+		status = ydb_delete_st(YDB_NOTTP, NULL, &ylcl_gfill, 0, NULL, YDB_DEL_TREE);
 		YDB_ASSERT(YDB_OK == status);
-		status = ydb_delete_st(YDB_NOTTP, &ylcl_hfill, 0, NULL, YDB_DEL_TREE);
+		status = ydb_delete_st(YDB_NOTTP, NULL, &ylcl_hfill, 0, NULL, YDB_DEL_TREE);
 		YDB_ASSERT(YDB_OK == status);
 
 		/* SET loop=... (set M local variable loop to C local variable loop) */
 		value.len_used = sprintf(value.buf_addr, "%d", (int)loop);
-		status = ydb_set_st(YDB_NOTTP, &ylcl_loop, 0, NULL, &value);
+		status = ydb_set_st(YDB_NOTTP, NULL, &ylcl_loop, 0, NULL, &value);
 		YDB_ASSERT(YDB_OK == status);
 		/* SET (efill(loop),ffill(loop),gfill(loop),hfill(loop))=loop */
-		status = ydb_get_st(YDB_NOTTP, &ylcl_loop, 0, NULL, &subscr[0]);
+		status = ydb_get_st(YDB_NOTTP, NULL, &ylcl_loop, 0, NULL, &subscr[0]);
 		YDB_ASSERT(YDB_OK == status);
-		status = ydb_set_st(YDB_NOTTP, &ylcl_efill, 1, subscr, &subscr[0]);
+		status = ydb_set_st(YDB_NOTTP, NULL, &ylcl_efill, 1, subscr, &subscr[0]);
 		YDB_ASSERT(YDB_OK == status);
-		status = ydb_set_st(YDB_NOTTP, &ylcl_ffill, 1, subscr, &subscr[0]);
+		status = ydb_set_st(YDB_NOTTP, NULL, &ylcl_ffill, 1, subscr, &subscr[0]);
 		YDB_ASSERT(YDB_OK == status);
-		status = ydb_set_st(YDB_NOTTP, &ylcl_gfill, 1, subscr, &subscr[0]);
+		status = ydb_set_st(YDB_NOTTP, NULL, &ylcl_gfill, 1, subscr, &subscr[0]);
 		YDB_ASSERT(YDB_OK == status);
-		status = ydb_set_st(YDB_NOTTP, &ylcl_hfill, 1, subscr, &subscr[0]);
+		status = ydb_set_st(YDB_NOTTP, NULL, &ylcl_hfill, 1, subscr, &subscr[0]);
 		YDB_ASSERT(YDB_OK == status);
 
 		/* if tpflag'="NTP" TSTART (efill,ffill,gfill,hfill):(serial:transaction="BA") */
 		if (NTP != tpflag)
 		{
-			status = ydb_tp_st(YDB_NOTTP, &job_stress_tpfn, &loop, "BA", 4, (ydb_buffer_t *)&varnames);
+			status = ydb_tp_st(YDB_NOTTP, NULL, &job_stress_tpfn, &loop, "BA", 4, (ydb_buffer_t *)&varnames);
 			YDB_ASSERT((YDB_OK == status) || (YDB_TP_ROLLBACK == status));
 		} else
 		{
-			status = job_stress_tpfn(YDB_NOTTP, &loop);
+			status = job_stress_tpfn(YDB_NOTTP, NULL, &loop);
 			YDB_ASSERT(YDB_OK == status);
 		}
 		/* S ^lasti(jobno,localinstance)=loop */
-		status = ydb_get_st(YDB_NOTTP, &ylcl_jobno, 0, NULL, &subscr[0]);
+		status = ydb_get_st(YDB_NOTTP, NULL, &ylcl_jobno, 0, NULL, &subscr[0]);
 		YDB_ASSERT(YDB_OK == status);
-		status = ydb_get_st(YDB_NOTTP, &ylcl_localinstance, 0, NULL, &subscr[1]);
+		status = ydb_get_st(YDB_NOTTP, NULL, &ylcl_localinstance, 0, NULL, &subscr[1]);
 		YDB_ASSERT(YDB_OK == status);
-		status = ydb_get_st(YDB_NOTTP, &ylcl_loop, 0, NULL, &value);
+		status = ydb_get_st(YDB_NOTTP, NULL, &ylcl_loop, 0, NULL, &value);
 		YDB_ASSERT(YDB_OK == status);
-		status = ydb_set_st(YDB_NOTTP, &ygbl_lasti, 2, subscr, &value);
+		status = ydb_set_st(YDB_NOTTP, NULL, &ygbl_lasti, 2, subscr, &value);
 		YDB_ASSERT(YDB_OK == status);
 	}
 	/* w "Successful : ",$zdate($H,"24:60:SS"),! */
@@ -371,7 +371,7 @@ int	m_job_stress(void)
 	return YDB_OK;
 }
 
-int	job_stress_tpfn(uint64_t tptoken, void *i)
+int	job_stress_tpfn(uint64_t tptoken, ydb_buffer_t *errstr, void *i)
 {
 	int		loop, pno, trestart, tlevel;
 	ydb_buffer_t	yisv_trestart, yisv_tlevel;
@@ -381,19 +381,19 @@ int	job_stress_tpfn(uint64_t tptoken, void *i)
 	loop_ptr = (int *)i;
 	loop = *loop_ptr;
 	pno = (2 * loop) % 10 + 1;	/* loop+loop#10+1 */
-	status = m_randfill(KILL, tptoken, pno, loop);
+	status = m_randfill(KILL, tptoken, errstr, pno, loop);
 	if (YDB_TP_RESTART == status)
 		return status;
-	status = m_randfill(SET, tptoken, pno, loop);
+	status = m_randfill(SET, tptoken, errstr, pno, loop);
 	if (YDB_TP_RESTART == status)
 		return status;
-	status = m_randfill(VER, tptoken, pno, loop);
+	status = m_randfill(VER, tptoken, errstr, pno, loop);
 	if (YDB_TP_RESTART == status)
 		return status;
 
 	/* if $TRESTART WRITE "TRESTART = ",$TRESTART," For Loop=",loop," TLEVEL=",$TLEVEL,! */
 	YDB_LITERAL_TO_BUFFER("$trestart", &yisv_trestart);
-	status = ydb_get_st(tptoken, &yisv_trestart, 0, NULL, &value);
+	status = ydb_get_st(tptoken, errstr, &yisv_trestart, 0, NULL, &value);
 	YDB_ASSERT(YDB_OK == status);
 	value.buf_addr[value.len_used] = '\0';
 	trestart = atoi(value.buf_addr);
@@ -402,7 +402,7 @@ int	job_stress_tpfn(uint64_t tptoken, void *i)
 	{
 		YDB_ASSERT(NTP != tpflag);
 		YDB_LITERAL_TO_BUFFER("$tlevel", &yisv_tlevel);
-		status = ydb_get_st(tptoken, &yisv_tlevel, 0, NULL, &value);
+		status = ydb_get_st(tptoken, errstr, &yisv_tlevel, 0, NULL, &value);
 		YDB_ASSERT(YDB_OK == status);
 		value.buf_addr[value.len_used] = '\0';
 		tlevel = atoi(value.buf_addr);
@@ -424,7 +424,7 @@ int	job_stress_tpfn(uint64_t tptoken, void *i)
 }
 
 /* Implements M entryref ^randfill */
-int	m_randfill(act_t act, uint64_t tptoken, int pno, int iter)
+int	m_randfill(act_t act, uint64_t tptoken, ydb_buffer_t *errstr, int pno, int iter)
 {
 	ydb_buffer_t	ygbl_root, ygbl_prime;
 	int		prime, root;
@@ -433,7 +433,7 @@ int	m_randfill(act_t act, uint64_t tptoken, int pno, int iter)
 	/* Get root(pno) */
 	YDB_LITERAL_TO_BUFFER("^root", &ygbl_root);
 	subscr[0].len_used = sprintf(subscr[0].buf_addr, "%d", pno);
-	status = ydb_get_st(tptoken, &ygbl_root, 1, subscr, &value);
+	status = ydb_get_st(tptoken, errstr, &ygbl_root, 1, subscr, &value);
 	if (YDB_TP_RESTART == status)
 		return status;
 	YDB_ASSERT(YDB_OK == status);
@@ -442,18 +442,18 @@ int	m_randfill(act_t act, uint64_t tptoken, int pno, int iter)
 
 	/* Get ^prime */
 	YDB_LITERAL_TO_BUFFER("^prime", &ygbl_prime);
-	status = ydb_get_st(tptoken, &ygbl_prime, 0, NULL, &value);
+	status = ydb_get_st(tptoken, errstr, &ygbl_prime, 0, NULL, &value);
 	if (YDB_TP_RESTART == status)
 		return status;
 	YDB_ASSERT(YDB_OK == status);
 	value.buf_addr[value.len_used] = '\0';
 	prime = atoi(value.buf_addr);
 
-	return m_filling_randfill(act, tptoken, prime, root, iter);
+	return m_filling_randfill(act, tptoken, errstr, prime, root, iter);
 }
 
 /* Implements M entryref filling^randfill */
-int	m_filling_randfill(act_t act, uint64_t tptoken, int prime, int root, int iter)
+int	m_filling_randfill(act_t act, uint64_t tptoken, ydb_buffer_t *errstr, int prime, int root, int iter)
 {
 	ydb_buffer_t	ylcl_MAXERR, ylcl_ndx;
 	ydb_buffer_t	ygbl_cust, ygbl_afill, ygbl_b, ygbl_cfill, ygbl_dfill, ygbl_e, ygbl_efill, ygbl_ffill;
@@ -472,20 +472,20 @@ int	m_filling_randfill(act_t act, uint64_t tptoken, int prime, int root, int ite
 	/* set ERR=0 */
 	YDB_LITERAL_TO_BUFFER("ERR", &ylcl_ERR);
 	value.len_used = sprintf(value.buf_addr, "%d", 0);
-	status = ydb_set_st(tptoken, &ylcl_ERR, 0, NULL, &value);
+	status = ydb_set_st(tptoken, errstr, &ylcl_ERR, 0, NULL, &value);
 	YDB_ASSERT(YDB_OK == status);
 
 	/* set MAXERR=10 */
 	YDB_LITERAL_TO_BUFFER("MAXERR", &ylcl_MAXERR);
 	value.len_used = sprintf(value.buf_addr, "%d", 10);
-	status = ydb_set_st(tptoken, &ylcl_MAXERR, 0, NULL, &value);
+	status = ydb_set_st(tptoken, errstr, &ylcl_MAXERR, 0, NULL, &value);
 	YDB_ASSERT(YDB_OK == status);
 
 	/* set ndx=1 */
 	YDB_LITERAL_TO_BUFFER("ndx", &ylcl_ndx);
 	ndx = 1;
 	value.len_used = sprintf(value.buf_addr, "%d", ndx);
-	status = ydb_set_st(tptoken, &ylcl_ndx, 0, NULL, &value);
+	status = ydb_set_st(tptoken, errstr, &ylcl_ndx, 0, NULL, &value);
 	YDB_ASSERT(YDB_OK == status);
 
 	YDB_LITERAL_TO_BUFFER("obj", &ylcl_obj);
@@ -507,48 +507,48 @@ int	m_filling_randfill(act_t act, uint64_t tptoken, int prime, int root, int ite
 		for (i = 0; i < prime - 1; i++)
 		{
 			/* SET obj=^cust(ndx,^instance)*/
-			status = ydb_get_st(tptoken, &ylcl_ndx, 0, NULL, &subscr[0]);
+			status = ydb_get_st(tptoken, errstr, &ylcl_ndx, 0, NULL, &subscr[0]);
 			YDB_ASSERT(YDB_OK == status);
-			status = ydb_get_st(tptoken, &ygbl_instance, 0, NULL, &subscr[1]);
+			status = ydb_get_st(tptoken, errstr, &ygbl_instance, 0, NULL, &subscr[1]);
 			if (YDB_TP_RESTART == status)
 				return status;
 			YDB_ASSERT(YDB_OK == status);
-			status = ydb_get_st(tptoken, &ygbl_cust, 2, subscr, &value);
+			status = ydb_get_st(tptoken, errstr, &ygbl_cust, 2, subscr, &value);
 			if (YDB_TP_RESTART == status)
 				return status;
 			YDB_ASSERT(YDB_OK == status);
-			status = ydb_set_st(tptoken, &ylcl_obj, 0, NULL, &value);
+			status = ydb_set_st(tptoken, errstr, &ylcl_obj, 0, NULL, &value);
 			YDB_ASSERT(YDB_OK == status);
 
 			/* SET ^afill(ndx,obj,iter)=ndx*/
 			/* subscr[0] already holds "ndx" */
 			YDB_COPY_BUFF_TO_BUFF(&value, &subscr[1]);	/* copy over "obj" to subscr[1] */
 			subscr[2].len_used = sprintf(subscr[2].buf_addr, "%d", iter);
-			status = ydb_set_st(tptoken, &ygbl_afill, 3, subscr, &subscr[0]);
+			status = ydb_set_st(tptoken, errstr, &ygbl_afill, 3, subscr, &subscr[0]);
 			if (YDB_TP_RESTART == status)
 				return status;
 			YDB_ASSERT(YDB_OK == status);
 
 			/* SET ^e(ndx,obj,iter)=ndx*/
-			status = ydb_set_st(tptoken, &ygbl_e, 3, subscr, &subscr[0]);
+			status = ydb_set_st(tptoken, errstr, &ygbl_e, 3, subscr, &subscr[0]);
 			if (YDB_TP_RESTART == status)
 				return status;
 			YDB_ASSERT(YDB_OK == status);
 
 			/* SET ^cfill(ndx,obj,iter)=ndx*/
-			status = ydb_set_st(tptoken, &ygbl_cfill, 3, subscr, &subscr[0]);
+			status = ydb_set_st(tptoken, errstr, &ygbl_cfill, 3, subscr, &subscr[0]);
 			if (YDB_TP_RESTART == status)
 				return status;
 			YDB_ASSERT(YDB_OK == status);
 
 			/* SET ^dfill(ndx,obj,iter)=ndx*/
-			status = ydb_set_st(tptoken, &ygbl_dfill, 3, subscr, &subscr[0]);
+			status = ydb_set_st(tptoken, errstr, &ygbl_dfill, 3, subscr, &subscr[0]);
 			if (YDB_TP_RESTART == status)
 				return status;
 			YDB_ASSERT(YDB_OK == status);
 
 			/* SET ^ffill(ndx,obj,iter)=ndx*/
-			status = ydb_set_st(tptoken, &ygbl_ffill, 3, subscr, &subscr[0]);
+			status = ydb_set_st(tptoken, errstr, &ygbl_ffill, 3, subscr, &subscr[0]);
 			if (YDB_TP_RESTART == status)
 				return status;
 			YDB_ASSERT(YDB_OK == status);
@@ -558,7 +558,7 @@ int	m_filling_randfill(act_t act, uint64_t tptoken, int prime, int root, int ite
 			/* SET ^efill(ndx,obj,^PID(jobno,^instance),iter)=efill(ndx)*/
 			YDB_COPY_BUFF_TO_BUFF(&subscr[2], &subscr[3]);	/* copy over "iter" from 3rd into 4th subscript */
 			YDB_COPY_BUFF_TO_BUFF(&pidvalue, &subscr[2]);	/* copy over "$j" into 3rd subscript */
-			status = ydb_get_st(tptoken, &ygbl_efill, 4, subscr, &value);
+			status = ydb_get_st(tptoken, errstr, &ygbl_efill, 4, subscr, &value);
 			if (YDB_TP_RESTART == status)
 				return status;
 			if (YDB_ERR_GVUNDEF == status)
@@ -571,7 +571,7 @@ int	m_filling_randfill(act_t act, uint64_t tptoken, int prime, int root, int ite
 			}
 			tmp += prime;
 			value.len_used = sprintf(value.buf_addr, "%d", tmp);
-			status = ydb_set_st(tptoken, &ygbl_efill, 4, subscr, &value);
+			status = ydb_set_st(tptoken, errstr, &ygbl_efill, 4, subscr, &value);
 			if (YDB_TP_RESTART == status)
 				return status;
 			YDB_ASSERT(YDB_OK == status);
@@ -579,7 +579,7 @@ int	m_filling_randfill(act_t act, uint64_t tptoken, int prime, int root, int ite
 			/* SET %1(ndx)=$GET(^%1(ndx,obj,^PID(jobno,^instance),iter))*/
 			/* SET %1(ndx)=%1(ndx)+prime*/
 			/* SET ^%1(ndx,obj,^PID(jobno,^instance),iter)=%1(ndx)*/
-			status = ydb_get_st(tptoken, &ygbl_pct1, 4, subscr, &value);
+			status = ydb_get_st(tptoken, errstr, &ygbl_pct1, 4, subscr, &value);
 			if (YDB_TP_RESTART == status)
 				return status;
 			if (YDB_ERR_GVUNDEF == status)
@@ -592,7 +592,7 @@ int	m_filling_randfill(act_t act, uint64_t tptoken, int prime, int root, int ite
 			}
 			tmp += prime;
 			value.len_used = sprintf(value.buf_addr, "%d", tmp);
-			status = ydb_set_st(tptoken, &ygbl_pct1, 4, subscr, &value);
+			status = ydb_set_st(tptoken, errstr, &ygbl_pct1, 4, subscr, &value);
 			if (YDB_TP_RESTART == status)
 				return status;
 			YDB_ASSERT(YDB_OK == status);
@@ -600,7 +600,7 @@ int	m_filling_randfill(act_t act, uint64_t tptoken, int prime, int root, int ite
 			/* SET b(ndx)=$GET(^b(ndx,obj,^PID(jobno,^instance),iter))*/
 			/* SET b(ndx)=b(ndx)+prime*/
 			/* SET ^b(ndx,obj,^PID(jobno,^instance),iter)=b(ndx)*/
-			status = ydb_get_st(tptoken, &ygbl_b, 4, subscr, &value);
+			status = ydb_get_st(tptoken, errstr, &ygbl_b, 4, subscr, &value);
 			if (YDB_TP_RESTART == status)
 				return status;
 			if (YDB_ERR_GVUNDEF == status)
@@ -613,7 +613,7 @@ int	m_filling_randfill(act_t act, uint64_t tptoken, int prime, int root, int ite
 			}
 			tmp += prime;
 			value.len_used = sprintf(value.buf_addr, "%d", tmp);
-			status = ydb_set_st(tptoken, &ygbl_b, 4, subscr, &value);
+			status = ydb_set_st(tptoken, errstr, &ygbl_b, 4, subscr, &value);
 			if (YDB_TP_RESTART == status)
 				return status;
 			YDB_ASSERT(YDB_OK == status);
@@ -621,7 +621,7 @@ int	m_filling_randfill(act_t act, uint64_t tptoken, int prime, int root, int ite
 			/* SET bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb(ndx)=$GET(^bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb(ndx,obj,^PID(jobno,^instance),iter))*/
 			/* SET bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb(ndx)=bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb(ndx)+prime*/
 			/* SET ^bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb(ndx,obj,^PID(jobno,^instance),iter)=bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb(ndx)*/
-			status = ydb_get_st(tptoken, &ygbl_bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb, 4, subscr, &value);
+			status = ydb_get_st(tptoken, errstr, &ygbl_bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb, 4, subscr, &value);
 			if (YDB_TP_RESTART == status)
 				return status;
 			if (YDB_ERR_GVUNDEF == status)
@@ -634,7 +634,7 @@ int	m_filling_randfill(act_t act, uint64_t tptoken, int prime, int root, int ite
 			}
 			tmp += prime;
 			value.len_used = sprintf(value.buf_addr, "%d", tmp);
-			status = ydb_set_st(tptoken, &ygbl_bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb, 4, subscr, &value);
+			status = ydb_set_st(tptoken, errstr, &ygbl_bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb, 4, subscr, &value);
 			if (YDB_TP_RESTART == status)
 				return status;
 			YDB_ASSERT(YDB_OK == status);
@@ -642,15 +642,15 @@ int	m_filling_randfill(act_t act, uint64_t tptoken, int prime, int root, int ite
 			/* SET ndx=(ndx*root)#prime*/
 			ndx = (ndx * root) % prime;
 			value.len_used = sprintf(value.buf_addr, "%d", ndx);
-			status = ydb_set_st(tptoken, &ylcl_ndx, 0, NULL, &value);
+			status = ydb_set_st(tptoken, errstr, &ylcl_ndx, 0, NULL, &value);
 			YDB_ASSERT(YDB_OK == status);
 
 			/* QUIT:ERR>MAXERR */
-			status = ydb_get_st(tptoken, &ylcl_ERR, 0, NULL, &value);
+			status = ydb_get_st(tptoken, errstr, &ylcl_ERR, 0, NULL, &value);
 			YDB_ASSERT(YDB_OK == status);
 			value.buf_addr[value.len_used] = '\0';
 			ERR = atoi(value.buf_addr);
-			status = ydb_get_st(tptoken, &ylcl_MAXERR, 0, NULL, &value);
+			status = ydb_get_st(tptoken, errstr, &ylcl_MAXERR, 0, NULL, &value);
 			YDB_ASSERT(YDB_OK == status);
 			value.buf_addr[value.len_used] = '\0';
 			MAXERR = atoi(value.buf_addr);
@@ -662,25 +662,25 @@ int	m_filling_randfill(act_t act, uint64_t tptoken, int prime, int root, int ite
 		for (i = 0; i < prime - 1; i++)
 		{
 			/* SET obj=^cust(ndx,^instance)*/
-			status = ydb_get_st(tptoken, &ylcl_ndx, 0, NULL, &subscr[0]);
+			status = ydb_get_st(tptoken, errstr, &ylcl_ndx, 0, NULL, &subscr[0]);
 			YDB_ASSERT(YDB_OK == status);
 			YDB_COPY_BUFF_TO_BUFF(&subscr[0], &tmp1);	/* take a copy for later use */
-			status = ydb_get_st(tptoken, &ygbl_instance, 0, NULL, &subscr[1]);
+			status = ydb_get_st(tptoken, errstr, &ygbl_instance, 0, NULL, &subscr[1]);
 			if (YDB_TP_RESTART == status)
 				return status;
 			YDB_ASSERT(YDB_OK == status);
-			status = ydb_get_st(tptoken, &ygbl_cust, 2, subscr, &value);
+			status = ydb_get_st(tptoken, errstr, &ygbl_cust, 2, subscr, &value);
 			if (YDB_TP_RESTART == status)
 				return status;
 			YDB_ASSERT(YDB_OK == status);
-			status = ydb_set_st(tptoken, &ylcl_obj, 0, NULL, &value);
+			status = ydb_set_st(tptoken, errstr, &ylcl_obj, 0, NULL, &value);
 			YDB_ASSERT(YDB_OK == status);
 
 			/*  do EXAM("^afill("_ndx_","_obj_","_iter_")",ndx,^afill(ndx,obj,iter)) */
 			/* subscr[0] already holds "ndx" */
 			YDB_COPY_BUFF_TO_BUFF(&value, &subscr[1]);	/* copy over "obj" to subscr[1] */
 			subscr[2].len_used = sprintf(subscr[2].buf_addr, "%d", iter);
-			status = ydb_get_st(tptoken, &ygbl_afill, 3, subscr, &tmp2);
+			status = ydb_get_st(tptoken, errstr, &ygbl_afill, 3, subscr, &tmp2);
 			if (YDB_TP_RESTART == status)
 				return status;
 			YDB_ASSERT(YDB_OK == status);
@@ -688,48 +688,48 @@ int	m_filling_randfill(act_t act, uint64_t tptoken, int prime, int root, int ite
 				subscr[j].buf_addr[subscr[j].len_used] = '\0';
 			len = sprintf(errstrbuff, "^afill(%s,%s,%s)", subscr[0].buf_addr, subscr[1].buf_addr, subscr[2].buf_addr);
 			YDB_ASSERT(len < sizeof(errstrbuff));
-			m_EXAM_randfill(tptoken, errstrbuff, &tmp1, &tmp2);
+			m_EXAM_randfill(tptoken, errstr, errstrbuff, &tmp1, &tmp2);
 
 			/*  do EXAM("^e("_ndx_","_obj_","_iter_")",ndx,^e(ndx,obj,iter)) */
-			status = ydb_get_st(tptoken, &ygbl_e, 3, subscr, &tmp2);
+			status = ydb_get_st(tptoken, errstr, &ygbl_e, 3, subscr, &tmp2);
 			if (YDB_TP_RESTART == status)
 				return status;
 			YDB_ASSERT(YDB_OK == status);
 			len = sprintf(errstrbuff, "^e(%s,%s,%s)", subscr[0].buf_addr, subscr[1].buf_addr, subscr[2].buf_addr);
 			YDB_ASSERT(len < sizeof(errstrbuff));
-			m_EXAM_randfill(tptoken, errstrbuff, &tmp1, &tmp2);
+			m_EXAM_randfill(tptoken, errstr, errstrbuff, &tmp1, &tmp2);
 
 			/* do EXAM("^cfill("_ndx_","_obj_","_iter_")",ndx,^cfill(ndx,obj,iter)) */
-			status = ydb_get_st(tptoken, &ygbl_cfill, 3, subscr, &tmp2);
+			status = ydb_get_st(tptoken, errstr, &ygbl_cfill, 3, subscr, &tmp2);
 			if (YDB_TP_RESTART == status)
 				return status;
 			YDB_ASSERT(YDB_OK == status);
 			len = sprintf(errstrbuff, "^cfill(%s,%s,%s)", subscr[0].buf_addr, subscr[1].buf_addr, subscr[2].buf_addr);
 			YDB_ASSERT(len < sizeof(errstrbuff));
-			m_EXAM_randfill(tptoken, errstrbuff, &tmp1, &tmp2);
+			m_EXAM_randfill(tptoken, errstr, errstrbuff, &tmp1, &tmp2);
 
 			/* do EXAM("^dfill("_ndx_","_obj_","_iter_")",ndx,^dfill(ndx,obj,iter)) */
-			status = ydb_get_st(tptoken, &ygbl_dfill, 3, subscr, &tmp2);
+			status = ydb_get_st(tptoken, errstr, &ygbl_dfill, 3, subscr, &tmp2);
 			if (YDB_TP_RESTART == status)
 				return status;
 			YDB_ASSERT(YDB_OK == status);
 			len = sprintf(errstrbuff, "^dfill(%s,%s,%s)", subscr[0].buf_addr, subscr[1].buf_addr, subscr[2].buf_addr);
 			YDB_ASSERT(len < sizeof(errstrbuff));
-			m_EXAM_randfill(tptoken, errstrbuff, &tmp1, &tmp2);
+			m_EXAM_randfill(tptoken, errstr, errstrbuff, &tmp1, &tmp2);
 
 			/* do EXAM("^ffill("_ndx_","_obj_","_iter_")",ndx,^ffill(ndx,obj,iter)) */
-			status = ydb_get_st(tptoken, &ygbl_ffill, 3, subscr, &tmp2);
+			status = ydb_get_st(tptoken, errstr, &ygbl_ffill, 3, subscr, &tmp2);
 			if (YDB_TP_RESTART == status)
 				return status;
 			YDB_ASSERT(YDB_OK == status);
 			len = sprintf(errstrbuff, "^ffill(%s,%s,%s)", subscr[0].buf_addr, subscr[1].buf_addr, subscr[2].buf_addr);
 			YDB_ASSERT(len < sizeof(errstrbuff));
-			m_EXAM_randfill(tptoken, errstrbuff, &tmp1, &tmp2);
+			m_EXAM_randfill(tptoken, errstr, errstrbuff, &tmp1, &tmp2);
 
 			/* do EXAM("^efill("_ndx_","_obj_","_^PID(jobno,^instance)_","_iter_")",prime,^efill(ndx,obj,^PID(jobno,^instance),iter)) */
 			YDB_COPY_BUFF_TO_BUFF(&subscr[2], &subscr[3]);	/* copy over "iter" from 3rd into 4th subscript */
 			YDB_COPY_BUFF_TO_BUFF(&pidvalue, &subscr[2]);	/* copy over "$j" into 3rd subscript */
-			status = ydb_get_st(tptoken, &ygbl_efill, 4, subscr, &tmp2);
+			status = ydb_get_st(tptoken, errstr, &ygbl_efill, 4, subscr, &tmp2);
 			if (YDB_TP_RESTART == status)
 				return status;
 			YDB_ASSERT(YDB_OK == status);
@@ -739,47 +739,47 @@ int	m_filling_randfill(act_t act, uint64_t tptoken, int prime, int root, int ite
 			YDB_ASSERT(len < sizeof(errstrbuff));
 			tmp1.len_used = sprintf(tmp1.buf_addr, "%d", prime);
 			tmp1.buf_addr[tmp1.len_used] = '\0';
-			m_EXAM_randfill(tptoken, errstrbuff, &tmp1, &tmp2);
+			m_EXAM_randfill(tptoken, errstr, errstrbuff, &tmp1, &tmp2);
 
 			/* do EXAM("^%1("_ndx_","_obj_","_^PID(jobno,^instance)_","_iter_")",prime,^%1(ndx,obj,^PID(jobno,^instance),iter)) */
-			status = ydb_get_st(tptoken, &ygbl_pct1, 4, subscr, &tmp2);
+			status = ydb_get_st(tptoken, errstr, &ygbl_pct1, 4, subscr, &tmp2);
 			if (YDB_TP_RESTART == status)
 				return status;
 			YDB_ASSERT(YDB_OK == status);
 			len = sprintf(errstrbuff, "^%%1(%s,%s,%s,%s)", subscr[0].buf_addr, subscr[1].buf_addr, subscr[2].buf_addr, subscr[3].buf_addr);
 			YDB_ASSERT(len < sizeof(errstrbuff));
-			m_EXAM_randfill(tptoken, errstrbuff, &tmp1, &tmp2);
+			m_EXAM_randfill(tptoken, errstr, errstrbuff, &tmp1, &tmp2);
 
 			/* do EXAM("^b("_ndx_","_obj_","_^PID(jobno,^instance)_","_iter_")",prime,^b(ndx,obj,^PID(jobno,^instance),iter)) */
-			status = ydb_get_st(tptoken, &ygbl_b, 4, subscr, &tmp2);
+			status = ydb_get_st(tptoken, errstr, &ygbl_b, 4, subscr, &tmp2);
 			if (YDB_TP_RESTART == status)
 				return status;
 			YDB_ASSERT(YDB_OK == status);
 			len = sprintf(errstrbuff, "^b(%s,%s,%s,%s)", subscr[0].buf_addr, subscr[1].buf_addr, subscr[2].buf_addr, subscr[3].buf_addr);
 			YDB_ASSERT(len < sizeof(errstrbuff));
-			m_EXAM_randfill(tptoken, errstrbuff, &tmp1, &tmp2);
+			m_EXAM_randfill(tptoken, errstr, errstrbuff, &tmp1, &tmp2);
 
 			/* do EXAM("^bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb("_ndx_","_obj_","_^PID(jobno,^instance)_","_iter_")",prime,^bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb(ndx,obj,^PID(jobno,^instance),iter)) */
-			status = ydb_get_st(tptoken, &ygbl_bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb, 4, subscr, &tmp2);
+			status = ydb_get_st(tptoken, errstr, &ygbl_bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb, 4, subscr, &tmp2);
 			if (YDB_TP_RESTART == status)
 				return status;
 			YDB_ASSERT(YDB_OK == status);
 			len = sprintf(errstrbuff, "^bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb(%s,%s,%s,%s)", subscr[0].buf_addr, subscr[1].buf_addr, subscr[2].buf_addr, subscr[3].buf_addr);
 			YDB_ASSERT(len < sizeof(errstrbuff));
-			m_EXAM_randfill(tptoken, errstrbuff, &tmp1, &tmp2);
+			m_EXAM_randfill(tptoken, errstr, errstrbuff, &tmp1, &tmp2);
 
 			/* SET ndx=(ndx*root)#prime*/
 			ndx = (ndx * root) % prime;
 			value.len_used = sprintf(value.buf_addr, "%d", ndx);
-			status = ydb_set_st(tptoken, &ylcl_ndx, 0, NULL, &value);
+			status = ydb_set_st(tptoken, errstr, &ylcl_ndx, 0, NULL, &value);
 			YDB_ASSERT(YDB_OK == status);
 
 			/* QUIT:ERR>MAXERR */
-			status = ydb_get_st(tptoken, &ylcl_ERR, 0, NULL, &value);
+			status = ydb_get_st(tptoken, errstr, &ylcl_ERR, 0, NULL, &value);
 			YDB_ASSERT(YDB_OK == status);
 			value.buf_addr[value.len_used] = '\0';
 			ERR = atoi(value.buf_addr);
-			status = ydb_get_st(tptoken, &ylcl_MAXERR, 0, NULL, &value);
+			status = ydb_get_st(tptoken, errstr, &ylcl_MAXERR, 0, NULL, &value);
 			YDB_ASSERT(YDB_OK == status);
 			value.buf_addr[value.len_used] = '\0';
 			MAXERR = atoi(value.buf_addr);
@@ -790,48 +790,48 @@ int	m_filling_randfill(act_t act, uint64_t tptoken, int prime, int root, int ite
 	case KILL:
 		for (i = 0; i < prime - 1; i++) {
 			/* SET obj=^cust(ndx,^instance)*/
-			status = ydb_get_st(tptoken, &ylcl_ndx, 0, NULL, &subscr[0]);
+			status = ydb_get_st(tptoken, errstr, &ylcl_ndx, 0, NULL, &subscr[0]);
 			YDB_ASSERT(YDB_OK == status);
-			status = ydb_get_st(tptoken, &ygbl_instance, 0, NULL, &subscr[1]);
+			status = ydb_get_st(tptoken, errstr, &ygbl_instance, 0, NULL, &subscr[1]);
 			if (YDB_TP_RESTART == status)
 				return status;
 			YDB_ASSERT(YDB_OK == status);
-			status = ydb_get_st(tptoken, &ygbl_cust, 2, subscr, &value);
+			status = ydb_get_st(tptoken, errstr, &ygbl_cust, 2, subscr, &value);
 			if (YDB_TP_RESTART == status)
 				return status;
 			YDB_ASSERT(YDB_OK == status);
-			status = ydb_set_st(tptoken, &ylcl_obj, 0, NULL, &value);
+			status = ydb_set_st(tptoken, errstr, &ylcl_obj, 0, NULL, &value);
 			YDB_ASSERT(YDB_OK == status);
 
 			/* KILL ^afill(ndx,obj,iter) */
 			/* subscr[0] already holds "ndx" */
 			YDB_COPY_BUFF_TO_BUFF(&value, &subscr[1]);	/* copy over "obj" to subscr[1] */
 			subscr[2].len_used = sprintf(subscr[2].buf_addr, "%d", iter);
-			status = ydb_delete_st(tptoken, &ygbl_afill, 3, subscr, YDB_DEL_TREE);
+			status = ydb_delete_st(tptoken, errstr, &ygbl_afill, 3, subscr, YDB_DEL_TREE);
 			if (YDB_TP_RESTART == status)
 				return status;
 			YDB_ASSERT(YDB_OK == status);
 
 			/* KILL ^e(ndx,obj,iter) */
-			status = ydb_delete_st(tptoken, &ygbl_e, 3, subscr, YDB_DEL_TREE);
+			status = ydb_delete_st(tptoken, errstr, &ygbl_e, 3, subscr, YDB_DEL_TREE);
 			if (YDB_TP_RESTART == status)
 				return status;
 			YDB_ASSERT(YDB_OK == status);
 
 			/* KILL ^cfill(ndx,obj,iter) */
-			status = ydb_delete_st(tptoken, &ygbl_cfill, 3, subscr, YDB_DEL_TREE);
+			status = ydb_delete_st(tptoken, errstr, &ygbl_cfill, 3, subscr, YDB_DEL_TREE);
 			if (YDB_TP_RESTART == status)
 				return status;
 			YDB_ASSERT(YDB_OK == status);
 
 			/* KILL ^dfill(ndx,obj,iter) */
-			status = ydb_delete_st(tptoken, &ygbl_dfill, 3, subscr, YDB_DEL_TREE);
+			status = ydb_delete_st(tptoken, errstr, &ygbl_dfill, 3, subscr, YDB_DEL_TREE);
 			if (YDB_TP_RESTART == status)
 				return status;
 			YDB_ASSERT(YDB_OK == status);
 
 			/* KILL ^ffill(ndx,obj,iter) */
-			status = ydb_delete_st(tptoken, &ygbl_ffill, 3, subscr, YDB_DEL_TREE);
+			status = ydb_delete_st(tptoken, errstr, &ygbl_ffill, 3, subscr, YDB_DEL_TREE);
 			if (YDB_TP_RESTART == status)
 				return status;
 			YDB_ASSERT(YDB_OK == status);
@@ -839,25 +839,25 @@ int	m_filling_randfill(act_t act, uint64_t tptoken, int prime, int root, int ite
 			/* KILL ^efill(ndx,obj,^PID(jobno,^instance),iter) */
 			YDB_COPY_BUFF_TO_BUFF(&subscr[2], &subscr[3]);	/* copy over "iter" from 3rd into 4th subscript */
 			YDB_COPY_BUFF_TO_BUFF(&pidvalue, &subscr[2]);	/* copy over "$j" into 3rd subscript */
-			status = ydb_delete_st(tptoken, &ygbl_efill, 4, subscr, YDB_DEL_TREE);
+			status = ydb_delete_st(tptoken, errstr, &ygbl_efill, 4, subscr, YDB_DEL_TREE);
 			if (YDB_TP_RESTART == status)
 				return status;
 			YDB_ASSERT(YDB_OK == status);
 
 			/* KILL ^%1(ndx,obj,^PID(jobno,^instance),iter)) */
-			status = ydb_delete_st(tptoken, &ygbl_pct1, 4, subscr, YDB_DEL_TREE);
+			status = ydb_delete_st(tptoken, errstr, &ygbl_pct1, 4, subscr, YDB_DEL_TREE);
 			if (YDB_TP_RESTART == status)
 				return status;
 			YDB_ASSERT(YDB_OK == status);
 
 			/* KILL ^b(ndx,obj,^PID(jobno,^instance),iter) */
-			status = ydb_delete_st(tptoken, &ygbl_b, 4, subscr, YDB_DEL_TREE);
+			status = ydb_delete_st(tptoken, errstr, &ygbl_b, 4, subscr, YDB_DEL_TREE);
 			if (YDB_TP_RESTART == status)
 				return status;
 			YDB_ASSERT(YDB_OK == status);
 
 			/* KILL ^bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb(ndx,obj,^PID(jobno,^instance),iter) */
-			status = ydb_delete_st(tptoken, &ygbl_bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb, 4, subscr, YDB_DEL_TREE);
+			status = ydb_delete_st(tptoken, errstr, &ygbl_bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb, 4, subscr, YDB_DEL_TREE);
 			if (YDB_TP_RESTART == status)
 				return status;
 			YDB_ASSERT(YDB_OK == status);
@@ -865,15 +865,15 @@ int	m_filling_randfill(act_t act, uint64_t tptoken, int prime, int root, int ite
 			/* SET ndx=(ndx*root)#prime*/
 			ndx = (ndx * root) % prime;
 			value.len_used = sprintf(value.buf_addr, "%d", ndx);
-			status = ydb_set_st(tptoken, &ylcl_ndx, 0, NULL, &value);
+			status = ydb_set_st(tptoken, errstr, &ylcl_ndx, 0, NULL, &value);
 			YDB_ASSERT(YDB_OK == status);
 
 			/* QUIT:ERR>MAXERR */
-			status = ydb_get_st(tptoken, &ylcl_ERR, 0, NULL, &value);
+			status = ydb_get_st(tptoken, errstr, &ylcl_ERR, 0, NULL, &value);
 			YDB_ASSERT(YDB_OK == status);
 			value.buf_addr[value.len_used] = '\0';
 			ERR = atoi(value.buf_addr);
-			status = ydb_get_st(tptoken, &ylcl_MAXERR, 0, NULL, &value);
+			status = ydb_get_st(tptoken, errstr, &ylcl_MAXERR, 0, NULL, &value);
 			YDB_ASSERT(YDB_OK == status);
 			value.buf_addr[value.len_used] = '\0';
 			MAXERR = atoi(value.buf_addr);
@@ -886,7 +886,7 @@ int	m_filling_randfill(act_t act, uint64_t tptoken, int prime, int root, int ite
 		break;
 	}
 	/* i ERR'=0 w act," FAIL",! */
-	status = ydb_get_st(tptoken, &ylcl_ERR, 0, NULL, &value);
+	status = ydb_get_st(tptoken, errstr, &ylcl_ERR, 0, NULL, &value);
 	YDB_ASSERT(YDB_OK == status);
 	value.buf_addr[value.len_used] = '\0';
 	ERR = atoi(value.buf_addr);
@@ -901,7 +901,7 @@ int	m_filling_randfill(act_t act, uint64_t tptoken, int prime, int root, int ite
 }
 
 /* Implements M entryref EXAM^randfill */
-void	m_EXAM_randfill(uint64_t tptoken, char *pos, ydb_buffer_t *vcorr, ydb_buffer_t *vcomp)
+void	m_EXAM_randfill(uint64_t tptoken, ydb_buffer_t *errstr, char *pos, ydb_buffer_t *vcorr, ydb_buffer_t *vcomp)
 {
 	int	status;
 
@@ -930,7 +930,7 @@ void	m_EXAM_randfill(uint64_t tptoken, char *pos, ydb_buffer_t *vcorr, ydb_buffe
 	YDB_ASSERT(nbytes < value.len_alloc);
 
 	/* SET ERR=ERR+1 */
-	status = ydb_incr_st(tptoken, &ylcl_ERR, 0, NULL, NULL, &value);
+	status = ydb_incr_st(tptoken, errstr, &ylcl_ERR, 0, NULL, NULL, &value);
 	YDB_ASSERT(YDB_OK == status);
 
 	/* QUIT */

@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.*
+ * Copyright (c) 2017-2019 YottaDB LLC. and/or its subsidiaries.*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -35,9 +35,9 @@ int main()
 		subsbuff[subs].len_used = subsbuff[subs].len_alloc = sprintf(subsstrlit[subs], "%d", subs);
 		subsbuff[subs].buf_addr = subsstrlit[subs];
 		if (subs % 2)
-			status = ydb_set_st(YDB_NOTTP, &basevar, subs, subsbuff, &subsbuff[subs]);
+			status = ydb_set_st(YDB_NOTTP, NULL, &basevar, subs, subsbuff, &subsbuff[subs]);
 		else
-			status = ydb_set_st(YDB_NOTTP, &basevar, subs, subsbuff, NULL);
+			status = ydb_set_st(YDB_NOTTP, NULL, &basevar, subs, subsbuff, NULL);
 		if (YDB_OK != status)
 		{
 			ydb_zstatus(errbuf, ERRBUF_SIZE);
@@ -47,7 +47,7 @@ int main()
 		}
 	}
 	printf("Demonstrate our progress by executing a gvnZWRITE in a call-in\n"); fflush(stdout);
-	status = ydb_ci_t(YDB_NOTTP, "gvnZWRITE");
+	status = ydb_ci_t(YDB_NOTTP, NULL, "gvnZWRITE");
 	if (status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);

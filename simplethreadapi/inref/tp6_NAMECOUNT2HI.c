@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.*
+ * Copyright (c) 2017-2019 YottaDB LLC. and/or its subsidiaries.*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -47,7 +47,7 @@ int main()
 		varnames[i].len_used = varnames[i].len_alloc = sprintf(spfbufptr, "x%i", i);
 		spfbufptr += varnames[i].len_used;
 	}
-	status = ydb_tp_st(YDB_NOTTP, &gvnset, NULL, NULL, YDB_MAX_NAMES + 1, (ydb_buffer_t *)&varnames);
+	status = ydb_tp_st(YDB_NOTTP, NULL, &gvnset, NULL, NULL, YDB_MAX_NAMES + 1, (ydb_buffer_t *)&varnames);
 	YDB_ASSERT(YDB_OK != status);
 	ydb_zstatus(errbuf, ERRBUF_SIZE);
 	printf("ydb_tp_st() : Exit Status = %d : Exit string = %s\n", status, errbuf);
@@ -56,11 +56,11 @@ int main()
 }
 
 /* Function to set a global variable */
-int gvnset(uint64_t tptoken)
+int gvnset(uint64_t tptoken, ydb_buffer_t *errstr)
 {
 	int		status;
 
 	/* Set a base variable, no subscripts */
-	status = ydb_set_st(tptoken, &basevar, 0, NULL, &value1);
+	status = ydb_set_st(tptoken, errstr, &basevar, 0, NULL, &value1);
 	return status;
 }

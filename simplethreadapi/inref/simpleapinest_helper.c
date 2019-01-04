@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	*
+ * Copyright (c) 2018-2019 YottaDB LLC. and/or its subsidiaries.*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -47,21 +47,21 @@ int simpleapinest_helper(void)
 	YDB_LITERAL_TO_BUFFER(BASEVAR, &basevar);
 	YDB_LITERAL_TO_BUFFER(VALUE1, &value1);
 
-	status = ydb_set_st(YDB_NOTTP, &basevar, 0, NULL, &value1); CHECK_STATUS(status);
-	status = ydb_get_st(YDB_NOTTP, &basevar, 0, NULL, &value1); CHECK_STATUS(status);
-	status = ydb_data_st(YDB_NOTTP, &basevar, 0, NULL, &data_value); CHECK_STATUS(status);
-	status = ydb_subscript_next_st(YDB_NOTTP, &basevar, 0, NULL, &value1); CHECK_STATUS(status);
-	status = ydb_subscript_previous_st(YDB_NOTTP, &basevar, 0, NULL, &value1); CHECK_STATUS(status);
-	status = ydb_node_next_st(YDB_NOTTP, &basevar, 0, NULL, &dst_used, &value1); CHECK_STATUS(status);
-	status = ydb_node_previous_st(YDB_NOTTP, &basevar, 0, NULL, &dst_used, &value1); CHECK_STATUS(status);
-	status = ydb_lock_decr_st(YDB_NOTTP, &basevar, 0, NULL); CHECK_STATUS(status);
-	status = ydb_lock_incr_st(YDB_NOTTP, 1000000, &basevar, 0, NULL); CHECK_STATUS(status);
-	status = ydb_lock_st(YDB_NOTTP, 1000000, 0); CHECK_STATUS(status);
-	status = ydb_tp_st(YDB_NOTTP, (ydb_tp2fnptr_t)NULL, NULL, NULL, 0, NULL); CHECK_STATUS(status);
-	status = ydb_delete_st(YDB_NOTTP, &basevar, 0, NULL, YDB_DEL_NODE); CHECK_STATUS(status);
-	status = ydb_incr_st(YDB_NOTTP, &basevar, 0, NULL, NULL, &value1); CHECK_STATUS(status);
-	status = ydb_delete_excl_st(YDB_NOTTP, 0, NULL); CHECK_STATUS(status);
-	status = ydb_zwr2str_st(YDB_NOTTP, NULL, NULL); CHECK_STATUS(status);
-	status = ydb_str2zwr_st(YDB_NOTTP, NULL, NULL); CHECK_STATUS(status);
+	status = ydb_set_st(YDB_NOTTP, NULL, &basevar, 0, NULL, &value1); CHECK_STATUS(status);
+	status = ydb_get_st(YDB_NOTTP, NULL, &basevar, 0, NULL, &value1); CHECK_STATUS(status);
+	status = ydb_data_st(YDB_NOTTP, NULL, &basevar, 0, NULL, &data_value); CHECK_STATUS(status);
+	status = ydb_subscript_next_st(YDB_NOTTP, NULL, &basevar, 0, NULL, &value1); CHECK_STATUS(status);
+	status = ydb_subscript_previous_st(YDB_NOTTP, NULL, &basevar, 0, NULL, &value1); CHECK_STATUS(status);
+	status = ydb_node_next_st(YDB_NOTTP, NULL, &basevar, 0, NULL, &dst_used, &value1); CHECK_STATUS(status);
+	status = ydb_node_previous_st(YDB_NOTTP, NULL, &basevar, 0, NULL, &dst_used, &value1); CHECK_STATUS(status);
+	status = ydb_lock_decr_st(YDB_NOTTP, NULL, &basevar, 0, NULL); CHECK_STATUS(status);
+	status = ydb_lock_incr_st(YDB_NOTTP, NULL, 1000000, &basevar, 0, NULL); CHECK_STATUS(status);
+	status = ydb_lock_st(YDB_NOTTP, NULL, 1000000, 0); CHECK_STATUS(status);
+	status = ydb_tp_st(YDB_NOTTP, NULL, (ydb_tp2fnptr_t)NULL, NULL, NULL, 0, NULL); CHECK_STATUS(status);
+	status = ydb_delete_st(YDB_NOTTP, NULL, &basevar, 0, NULL, YDB_DEL_NODE); CHECK_STATUS(status);
+	status = ydb_incr_st(YDB_NOTTP, NULL, &basevar, 0, NULL, NULL, &value1); CHECK_STATUS(status);
+	status = ydb_delete_excl_st(YDB_NOTTP, NULL, 0, NULL); CHECK_STATUS(status);
+	status = ydb_zwr2str_st(YDB_NOTTP, NULL, NULL, NULL); CHECK_STATUS(status);
+	status = ydb_str2zwr_st(YDB_NOTTP, NULL, NULL, NULL); CHECK_STATUS(status);
 	return status;
 }

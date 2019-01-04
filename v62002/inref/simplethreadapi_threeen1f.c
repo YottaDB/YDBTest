@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	*
+ * Copyright (c) 2018-2019 YottaDB LLC. and/or its subsidiaries.*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -68,8 +68,8 @@ void		doblk(int allfirst, int childnum);
 void		dostep(int first, int last, gvstats_parm_t *gvstats_parm);
 void		inttostr(long long n, ydb_buffer_t *buff);
 long long	strtoint(ydb_buffer_t *s);
-int		tp_gvstatsincr(uint64_t tptoken, void *gvstats_parm);
-int		tp_setmaximum(uint64_t tptoken, void *i);
+int		tp_gvstatsincr(uint64_t tptoken, ydb_buffer_t *errstr, void *gvstats_parm);
+int		tp_setmaximum(uint64_t tptoken, ydb_buffer_t *errstr, void *i);
 void		*childthread(void *threadparm);
 
 /* Find the maximum number of steps for the 3n+1 problem for all integers through two input integers.
@@ -171,7 +171,7 @@ int main(int argc, char *argv[])
 		}
 
 		/* Define blocks of integers for child processes to work on */
-		status = ydb_delete_st(YDB_NOTTP, &ygbl_limits, 0, NULL, YDB_DEL_TREE);
+		status = ydb_delete_st(YDB_NOTTP, NULL, &ygbl_limits, 0, NULL, YDB_DEL_TREE);
 		YDB_ASSERT(YDB_OK == status);
 		tmp = i - 1;
 		for (count = 1; tmp != j; count++)
@@ -181,17 +181,17 @@ int main(int argc, char *argv[])
 				tmp = j;
 			subscr[0].len_used = sprintf(subscr[0].buf_addr, "%d", count);
 			value.len_used = sprintf(value.buf_addr, "%d", tmp);
-			status = ydb_set_st(YDB_NOTTP, &ygbl_limits, 1, subscr, &value);
+			status = ydb_set_st(YDB_NOTTP, NULL, &ygbl_limits, 1, subscr, &value);
 			YDB_ASSERT(YDB_OK == status);
 		}
 
 		/* Launch threads */
 		value.len_used = sprintf(value.buf_addr, "%d", 0);
-		status = ydb_set_st(YDB_NOTTP, &ygbl_count, 0, NULL, &value);	/* Clear ^count - may have residual value if restarting from crash */
+		status = ydb_set_st(YDB_NOTTP, NULL, &ygbl_count, 0, NULL, &value);	/* Clear ^count - may have residual value if restarting from crash */
 		YDB_ASSERT(YDB_OK == status);
 		for (s = 1; s <= k; s++)
 		{
-			status = ydb_incr_st(YDB_NOTTP, &ygbl_count, 0, NULL, NULL, &value);	/* Atomic increment of counter in database for thread synchronization */
+			status = ydb_incr_st(YDB_NOTTP, NULL, &ygbl_count, 0, NULL, NULL, &value);	/* Atomic increment of counter in database for thread synchronization */
 			YDB_ASSERT(YDB_OK == status);
 			threadparm[s].allfirst = i;
 			threadparm[s].childnum = s;
@@ -211,25 +211,25 @@ int main(int argc, char *argv[])
 		endat = time(NULL);	/* Get ending time - time between startat and endat is the elapsed time */
 		duration = (int)(endat - startat);
 
-		status = ydb_get_st(YDB_NOTTP, &ygbl_result, 0, NULL, &value);
+		status = ydb_get_st(YDB_NOTTP, NULL, &ygbl_result, 0, NULL, &value);
 		YDB_ASSERT(YDB_OK == status);
 		value.buf_addr[value.len_used] = '\0';
 		printf(" %s", value.buf_addr);
 
-		status = ydb_get_st(YDB_NOTTP, &ygbl_highest, 0, NULL, &value);
+		status = ydb_get_st(YDB_NOTTP, NULL, &ygbl_highest, 0, NULL, &value);
 		YDB_ASSERT(YDB_OK == status);
 		value.buf_addr[value.len_used] = '\0';
 		printf(" %s", value.buf_addr);
 
 		printf(" %d", duration);
 
-		status = ydb_get_st(YDB_NOTTP, &ygbl_updates, 0, NULL, &value);
+		status = ydb_get_st(YDB_NOTTP, NULL, &ygbl_updates, 0, NULL, &value);
 		YDB_ASSERT(YDB_OK == status);
 		value.buf_addr[value.len_used] = '\0';
 		updates = atoi(value.buf_addr);
 		printf(" %s", value.buf_addr);
 
-		status = ydb_get_st(YDB_NOTTP, &ygbl_reads, 0, NULL, &value);
+		status = ydb_get_st(YDB_NOTTP, NULL, &ygbl_reads, 0, NULL, &value);
 		YDB_ASSERT(YDB_OK == status);
 		value.buf_addr[value.len_used] = '\0';
 		reads = atoi(value.buf_addr);
@@ -255,17 +255,17 @@ void	dbinit()
 	YDB_MALLOC_BUFFER(&value, MAXVALUELEN);
 	/* Entryref dbinit clears database between lines */
 	value.len_used = sprintf(value.buf_addr, "%d", 0);
-	status = ydb_set_st(YDB_NOTTP, &ygbl_count, 0, NULL, &value);
+	status = ydb_set_st(YDB_NOTTP, NULL, &ygbl_count, 0, NULL, &value);
 	YDB_ASSERT(YDB_OK == status);
-	status = ydb_set_st(YDB_NOTTP, &ygbl_highest, 0, NULL, &value);
+	status = ydb_set_st(YDB_NOTTP, NULL, &ygbl_highest, 0, NULL, &value);
 	YDB_ASSERT(YDB_OK == status);
-	status = ydb_set_st(YDB_NOTTP, &ygbl_reads, 0, NULL, &value);
+	status = ydb_set_st(YDB_NOTTP, NULL, &ygbl_reads, 0, NULL, &value);
 	YDB_ASSERT(YDB_OK == status);
-	status = ydb_set_st(YDB_NOTTP, &ygbl_result, 0, NULL, &value);
+	status = ydb_set_st(YDB_NOTTP, NULL, &ygbl_result, 0, NULL, &value);
 	YDB_ASSERT(YDB_OK == status);
-	status = ydb_set_st(YDB_NOTTP, &ygbl_step, 0, NULL, &value);
+	status = ydb_set_st(YDB_NOTTP, NULL, &ygbl_step, 0, NULL, &value);
 	YDB_ASSERT(YDB_OK == status);
-	status = ydb_set_st(YDB_NOTTP, &ygbl_updates, 0, NULL, &value);
+	status = ydb_set_st(YDB_NOTTP, NULL, &ygbl_updates, 0, NULL, &value);
 	YDB_ASSERT(YDB_OK == status);
 	YDB_FREE_BUFFER(&value);
 	return;
@@ -295,9 +295,9 @@ void	digitsinit()
 	{
 		subscr.len_used = sprintf(subscr.buf_addr, "%s", digitstrings[i]);
 		value.len_used = sprintf(value.buf_addr, "%d", i);
-		status = ydb_set_st(YDB_NOTTP, &ylcl_di, 1, &subscr, &value);
+		status = ydb_set_st(YDB_NOTTP, NULL, &ylcl_di, 1, &subscr, &value);
 		YDB_ASSERT(YDB_OK == status);
-		status = ydb_set_st(YDB_NOTTP, &ylcl_ds, 1, &value, &subscr);
+		status = ydb_set_st(YDB_NOTTP, NULL, &ylcl_ds, 1, &value, &subscr);
 		YDB_ASSERT(YDB_OK == status);
 	}
 	YDB_FREE_BUFFER(&value);
@@ -320,7 +320,7 @@ void	inttostr(long long n, ydb_buffer_t *buff)
 	{
 		digit = nstr[i] - '0';
 		tmpvalue1.len_used = sprintf(tmpvalue1.buf_addr, "%d", digit);
-		status = ydb_get_st(YDB_NOTTP, &ylcl_ds, 1, &tmpvalue1, &tmpvalue2);
+		status = ydb_get_st(YDB_NOTTP, NULL, &ylcl_ds, 1, &tmpvalue1, &tmpvalue2);
 		YDB_ASSERT(YDB_OK == status);
 		tmpvalue2.buf_addr[tmpvalue2.len_used] = '\0';	/* needed for sprintf below */
 		if (0 == i)
@@ -359,7 +359,7 @@ long long strtoint(ydb_buffer_t *s)
 		if (NULL == ptr)
 			break;
 		tmpvalue3.len_used = sprintf(tmpvalue3.buf_addr, "%s", ptr);
-		status = ydb_get_st(YDB_NOTTP, &ylcl_di, 1, &tmpvalue3, &tmpvalue4);
+		status = ydb_get_st(YDB_NOTTP, NULL, &ylcl_di, 1, &tmpvalue3, &tmpvalue4);
 		YDB_ASSERT(YDB_OK == status);
 		tmpvalue4.buf_addr[tmpvalue4.len_used] = '\0';
 		curdigit = atoi(tmpvalue4.buf_addr);
@@ -392,7 +392,7 @@ void	doblk(int allfirst, int childnum)
 	/* Decrement ^count to say this thread is alive */
 	YDB_MALLOC_BUFFER(&tmpvalue, MAXVALUELEN);
 	tmpvalue.len_used = sprintf(tmpvalue.buf_addr, "%d", -1);
-	status = ydb_incr_st(YDB_NOTTP, &ygbl_count, 0, NULL, &tmpvalue, NULL);
+	status = ydb_incr_st(YDB_NOTTP, NULL, &ygbl_count, 0, NULL, &tmpvalue, NULL);
 	YDB_ASSERT(YDB_OK == status);
 	YDB_FREE_BUFFER(&tmpvalue);
 
@@ -407,13 +407,13 @@ void	doblk(int allfirst, int childnum)
 	{
 		tmp++;
 		subscr[0].len_used = sprintf(subscr[0].buf_addr, "%d", tmp);
-		status = ydb_data_st(YDB_NOTTP, &ygbl_limits, 1, subscr, &data_value);
+		status = ydb_data_st(YDB_NOTTP, NULL, &ygbl_limits, 1, subscr, &data_value);
 		YDB_ASSERT(YDB_OK == status);
 		if (0 == data_value)
 			break;
 
 		subscr[1].len_used = sprintf(subscr[1].buf_addr, "%d", 1);
-		status = ydb_incr_st(YDB_NOTTP, &ygbl_limits, 2, subscr, NULL, &value);
+		status = ydb_incr_st(YDB_NOTTP, NULL, &ygbl_limits, 2, subscr, NULL, &value);
 		YDB_ASSERT(YDB_OK == status);
 		value.buf_addr[value.len_used] = '\0';
 		cnt = atoi(value.buf_addr);
@@ -421,7 +421,7 @@ void	doblk(int allfirst, int childnum)
 			continue;
 
 		subscr[0].len_used = sprintf(subscr[0].buf_addr, "%d", tmp - 1);
-		status = ydb_get_st(YDB_NOTTP, &ygbl_limits, 1, subscr, &value);
+		status = ydb_get_st(YDB_NOTTP, NULL, &ygbl_limits, 1, subscr, &value);
 		if (YDB_ERR_GVUNDEF != status)
 		{
 			YDB_ASSERT(YDB_OK == status);
@@ -433,7 +433,7 @@ void	doblk(int allfirst, int childnum)
 		first = cnt;
 
 		subscr[0].len_used = sprintf(subscr[0].buf_addr, "%d", tmp);
-		status = ydb_get_st(YDB_NOTTP, &ygbl_limits, 1, subscr, &value);
+		status = ydb_get_st(YDB_NOTTP, NULL, &ygbl_limits, 1, subscr, &value);
 		YDB_ASSERT(YDB_OK == status);
 		value.buf_addr[value.len_used] = '\0';
 		cnt = atoi(value.buf_addr);
@@ -445,7 +445,7 @@ void	doblk(int allfirst, int childnum)
 	YDB_FREE_BUFFER(&value);
 	/* Update global statistics inside a transaction */
 	tp2fn = &tp_gvstatsincr;
-	status = ydb_tp_st(YDB_NOTTP, tp2fn, &gvstats_parm, NULL, 0, NULL);
+	status = ydb_tp_st(YDB_NOTTP, NULL, tp2fn, &gvstats_parm, NULL, 0, NULL);
 	YDB_ASSERT(YDB_OK == status);
 	return;
 }
@@ -454,7 +454,7 @@ void	doblk(int allfirst, int childnum)
  * number of reads & writes performed by all threads, and sets the highest for all threads if the
  * highest calculated by this thread is greater than that calculated so far for all threads
  */
-int tp_gvstatsincr(uint64_t tptoken, void *gvstats_parm)
+int tp_gvstatsincr(uint64_t tptoken, ydb_buffer_t *errstr, void *gvstats_parm)
 {
 	int		highest_gbl, highest_lcl;
 	int		status;
@@ -462,7 +462,7 @@ int tp_gvstatsincr(uint64_t tptoken, void *gvstats_parm)
 
 	YDB_MALLOC_BUFFER(&value, MAXVALUELEN);
 	value.len_used = sprintf(value.buf_addr, "%lld", ((gvstats_parm_t *)gvstats_parm)->reads);
-	status = ydb_incr_st(tptoken, &ygbl_reads, 0, NULL, &value, NULL);
+	status = ydb_incr_st(tptoken, errstr, &ygbl_reads, 0, NULL, &value, NULL);
 	if (YDB_TP_RESTART == status)
 	{
 		YDB_FREE_BUFFER(&value);
@@ -471,7 +471,7 @@ int tp_gvstatsincr(uint64_t tptoken, void *gvstats_parm)
 	YDB_ASSERT(YDB_OK == status);
 
 	value.len_used = sprintf(value.buf_addr, "%lld", ((gvstats_parm_t *)gvstats_parm)->updates);
-	status = ydb_incr_st(tptoken, &ygbl_updates, 0, NULL, &value, NULL);
+	status = ydb_incr_st(tptoken, errstr, &ygbl_updates, 0, NULL, &value, NULL);
 	if (YDB_TP_RESTART == status)
 	{
 		YDB_FREE_BUFFER(&value);
@@ -479,7 +479,7 @@ int tp_gvstatsincr(uint64_t tptoken, void *gvstats_parm)
 	}
 	YDB_ASSERT(YDB_OK == status);
 
-	status = ydb_get_st(tptoken, &ygbl_highest, 0, NULL, &value);
+	status = ydb_get_st(tptoken, errstr, &ygbl_highest, 0, NULL, &value);
 	if (YDB_TP_RESTART == status)
 	{
 		YDB_FREE_BUFFER(&value);
@@ -495,7 +495,7 @@ int tp_gvstatsincr(uint64_t tptoken, void *gvstats_parm)
 	if (((gvstats_parm_t *)gvstats_parm)->highest > highest_gbl)
 	{
 		value.len_used = sprintf(value.buf_addr, "%lld", ((gvstats_parm_t *)gvstats_parm)->highest);
-		status = ydb_set_st(tptoken, &ygbl_highest, 0, NULL, &value);
+		status = ydb_set_st(tptoken, errstr, &ygbl_highest, 0, NULL, &value);
 		if (YDB_TP_RESTART == status)
 		{
 			YDB_FREE_BUFFER(&value);
@@ -530,7 +530,7 @@ void	dostep(int first, int last, gvstats_parm_t *gvstats_parm)
 		n = current;
 
 		/* Currpath holds path to 1 for current */
-		status = ydb_delete_st(YDB_NOTTP, &ylcl_currpath, 0, NULL, YDB_DEL_TREE);
+		status = ydb_delete_st(YDB_NOTTP, NULL, &ylcl_currpath, 0, NULL, YDB_DEL_TREE);
 		YDB_ASSERT(YDB_OK == status);
 
 		/* Go till we reach 1 or a number with a known number of steps */
@@ -542,7 +542,7 @@ void	dostep(int first, int last, gvstats_parm_t *gvstats_parm)
 				break;
 
 			inttostr(n, &subscr[0]);
-			status = ydb_data_st(YDB_NOTTP, &ygbl_step, 1, subscr, &data_value);
+			status = ydb_data_st(YDB_NOTTP, NULL, &ygbl_step, 1, subscr, &data_value);
 			YDB_ASSERT(YDB_OK == status);
 			if (data_value)
 				break;
@@ -550,7 +550,7 @@ void	dostep(int first, int last, gvstats_parm_t *gvstats_parm)
 			/* log n as current number in sequence */
 			value.len_used = sprintf(value.buf_addr, "%lld", n);
 			subscr[0].len_used = sprintf(subscr[0].buf_addr, "%lld", i);
-			status = ydb_set_st(YDB_NOTTP, &ylcl_currpath, 1, subscr, &value);
+			status = ydb_set_st(YDB_NOTTP, NULL, &ylcl_currpath, 1, subscr, &value);
 			YDB_ASSERT(YDB_OK == status);
 
 			/* compute the next number */
@@ -569,18 +569,18 @@ void	dostep(int first, int last, gvstats_parm_t *gvstats_parm)
 			if (1 < n)
 			{
 				inttostr(n, &subscr[0]);
-				status = ydb_get_st(YDB_NOTTP, &ygbl_step, 1, subscr, &value);
+				status = ydb_get_st(YDB_NOTTP, NULL, &ygbl_step, 1, subscr, &value);
 				YDB_ASSERT(YDB_OK == status);
 				i = i + strtoint(&value);
 			}
 			/* Atomically set maximum */
 			tp2fn = &tp_setmaximum;
-			status = ydb_tp_st(YDB_NOTTP, tp2fn, &i, NULL, 0, NULL);
+			status = ydb_tp_st(YDB_NOTTP, NULL, tp2fn, &i, NULL, 0, NULL);
 			YDB_ASSERT(YDB_OK == status);
 			subscr[0].len_used = 0;	/* to start $order */
 			for ( ; ; )
 			{
-				status = ydb_subscript_next_st(YDB_NOTTP, &ylcl_currpath, 1, subscr, &value);
+				status = ydb_subscript_next_st(YDB_NOTTP, NULL, &ylcl_currpath, 1, subscr, &value);
 				if (YDB_ERR_NODEEND == status)
 					break;
 				YDB_ASSERT(YDB_OK == status);
@@ -590,13 +590,13 @@ void	dostep(int first, int last, gvstats_parm_t *gvstats_parm)
 				gvstats_parm->updates++;
 
 				YDB_COPY_BUFF_TO_BUFF(&value, &subscr[0]);	/* take a copy before it changes */
-				status = ydb_get_st(YDB_NOTTP, &ylcl_currpath, 1, subscr, &value);
+				status = ydb_get_st(YDB_NOTTP, NULL, &ylcl_currpath, 1, subscr, &value);
 				YDB_ASSERT(YDB_OK == status);
 				value.buf_addr[value.len_used] = '\0';
 				tmp2 = atoll(value.buf_addr);
 				inttostr(tmp2, &subscr[0]);
 				inttostr(i - tmp1, &value);
-				status = ydb_set_st(YDB_NOTTP, &ygbl_step, 1, subscr, &value);
+				status = ydb_set_st(YDB_NOTTP, NULL, &ygbl_step, 1, subscr, &value);
 				YDB_ASSERT(YDB_OK == status);
 				subscr[0].len_used = sprintf(subscr[0].buf_addr, "%lld", tmp1);
 			}
@@ -607,14 +607,14 @@ void	dostep(int first, int last, gvstats_parm_t *gvstats_parm)
 	YDB_FREE_BUFFER(&ylcl_currpath);
 }
 
-int tp_setmaximum(uint64_t tptoken, void *i)
+int tp_setmaximum(uint64_t tptoken, ydb_buffer_t *errstr, void *i)
 {
 	int		result;
 	int		status;
 	ydb_buffer_t	value;
 
 	YDB_MALLOC_BUFFER(&value, MAXVALUELEN);
-	status = ydb_get_st(tptoken, &ygbl_result, 0, NULL, &value);
+	status = ydb_get_st(tptoken, errstr, &ygbl_result, 0, NULL, &value);
 	if (YDB_TP_RESTART == status)
 	{
 		YDB_FREE_BUFFER(&value);
@@ -630,7 +630,7 @@ int tp_setmaximum(uint64_t tptoken, void *i)
 	if (*(long long *)i > result)
 	{
 		value.len_used = sprintf(value.buf_addr, "%lld", *(long long *)i);
-		status = ydb_set_st(tptoken, &ygbl_result, 0, NULL, &value);
+		status = ydb_set_st(tptoken, errstr, &ygbl_result, 0, NULL, &value);
 		if (YDB_TP_RESTART == status)
 		{
 			YDB_FREE_BUFFER(&value);

@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.*
+ * Copyright (c) 2017-2019 YottaDB LLC. and/or its subsidiaries.*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -145,16 +145,16 @@ int do_tp(int numincrs)
 	for (i = 0; i < numincrs; i++)
 	{
 		if (use_ydb_incr_s_outside_tp)
-			status = ydb_incr_st(YDB_NOTTP, &basevar, 0, NULL, NULL, &value);
+			status = ydb_incr_st(YDB_NOTTP, NULL, &basevar, 0, NULL, NULL, &value);
 		else
-			status = ydb_tp_st(YDB_NOTTP, tpfn, &i, NULL, 0, NULL);
+			status = ydb_tp_st(YDB_NOTTP, NULL, tpfn, &i, NULL, 0, NULL);
 		YDB_ASSERT(YDB_OK == status);
 	}
 	return YDB_OK;
 }
 
 /* Function to do a $increment on a global variable node */
-int gvnincr(uint64_t tptoken, int *i)	/* $tlevel = 1 TP */
+int gvnincr(uint64_t tptoken, ydb_buffer_t *errstr, int *i)	/* $tlevel = 1 TP */
 {
 	int		status, use_ydb_set_s_inside_nested_tp;
 	unsigned long	result;
@@ -162,10 +162,10 @@ int gvnincr(uint64_t tptoken, int *i)	/* $tlevel = 1 TP */
 
 	/* Implement $INCR(^x) using ydb_incr_st() or a ydb_get_st()/ydb_set_st() sequence */
 	if (use_ydb_incr_s_inside_tp)
-		status = ydb_incr_st(tptoken, &basevar, 0, NULL, NULL, &value);
+		status = ydb_incr_st(tptoken, errstr, &basevar, 0, NULL, NULL, &value);
 	else
 	{
-		status = ydb_get_st(tptoken, &basevar, 0, NULL, &value);
+		status = ydb_get_st(tptoken, errstr, &basevar, 0, NULL, &value);
 		if (YDB_TP_RESTART == status)
 			return status;
 		if (YDB_ERR_GVUNDEF != status)
@@ -178,11 +178,11 @@ int gvnincr(uint64_t tptoken, int *i)	/* $tlevel = 1 TP */
 		value.len_used = sprintf(value.buf_addr, "%d", (int)result);
 		use_ydb_set_s_inside_nested_tp = (2 * drand48());
 		if (!use_ydb_set_s_inside_nested_tp)
-			status = ydb_set_st(tptoken, &basevar, 0, NULL, &value);
+			status = ydb_set_st(tptoken, errstr, &basevar, 0, NULL, &value);
 		else
 		{
 			tpfn2 = &gvnincr2;
-			status = ydb_tp_st(tptoken, tpfn2, NULL, NULL, 0, NULL);
+			status = ydb_tp_st(tptoken, errstr, tpfn2, NULL, NULL, 0, NULL);
 		}
 	}
 	if (YDB_TP_RESTART == status)
@@ -191,17 +191,17 @@ int gvnincr(uint64_t tptoken, int *i)	/* $tlevel = 1 TP */
 	return YDB_OK;
 }
 
-int gvnincr2(uint64_t tptoken, void *ptr)	/* $tlevel = 2 TP (i.e. nested TP) */
+int gvnincr2(uint64_t tptoken, ydb_buffer_t *errstr, void *ptr)	/* $tlevel = 2 TP (i.e. nested TP) */
 {
 	int	status;
 	int	use_callin;
 
 	use_callin = (2 * drand48());
 	if (!use_callin)
-		status = ydb_set_st(tptoken, &basevar, 0, NULL, &value);
+		status = ydb_set_st(tptoken, errstr, &basevar, 0, NULL, &value);
 	else
 	{
-		status = ydb_ci_t(tptoken, "gvnincr2callin");	/* Test TP restarts in C->M and C->M->C->M */
+		status = ydb_ci_t(tptoken, errstr, "gvnincr2callin");	/* Test TP restarts in C->M and C->M->C->M */
 		/* Unlike simpleAPI which only returns YDB_ERR_* codes (all negative numbers),
 		 * "ydb_ci" can return ERR_TPRETRY (a positive number). An easy way to check that is to
 		 * take negation of YDB_ERR_TPRETRY (which is == ERR_TPRETRY) and compare that against the return value.

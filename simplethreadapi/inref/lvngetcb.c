@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.*
+ * Copyright (c) 2017-2019 YottaDB LLC. and/or its subsidiaries.*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -190,7 +190,7 @@ int drive_ydb_get_st(uint64_t tptoken, ydb_buffer_t *varvalue, int subcnt, ydb_b
 	int	status;
 	char	errbuf[ERRBUF_SIZE];
 
-	status = ydb_get_st(tptoken, varname, subcnt, subscrs, varvalue);
+	status = ydb_get_st(tptoken, NULL, varname, subcnt, subscrs, varvalue);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);

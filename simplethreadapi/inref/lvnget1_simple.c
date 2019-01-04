@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.*
+ * Copyright (c) 2017-2019 YottaDB LLC. and/or its subsidiaries.*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -52,7 +52,7 @@ int main()
 		return YDB_OK;
 	}
 	printf("Set a local variable with 0 subscripts\n"); fflush(stdout);
-	status = ydb_set_st(YDB_NOTTP, &basevar, 0, NULL, &value1);
+	status = ydb_set_st(YDB_NOTTP, NULL, &basevar, 0, NULL, &value1);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
@@ -61,7 +61,7 @@ int main()
 		return YDB_OK;
 	}
 	printf("Set a local variable with 1 subscript\n"); fflush(stdout);
-	status = ydb_set_st(YDB_NOTTP, &basevar, 1, subscr, &value2);
+	status = ydb_set_st(YDB_NOTTP, NULL, &basevar, 1, subscr, &value2);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
@@ -70,7 +70,7 @@ int main()
 		return YDB_OK;
 	}
 	printf("Set a local variable with 2 subscripts\n"); fflush(stdout);
-	status = ydb_set_st(YDB_NOTTP, &basevar, 2, subscr, &value3);
+	status = ydb_set_st(YDB_NOTTP, NULL, &basevar, 2, subscr, &value3);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
@@ -79,7 +79,7 @@ int main()
 		return YDB_OK;
 	}
 	printf("Get the local variable with 0 subscripts\n"); fflush(stdout);
-	status = ydb_get_st(YDB_NOTTP, &basevar, 0, NULL, &ret_value);
+	status = ydb_get_st(YDB_NOTTP, NULL, &basevar, 0, NULL, &ret_value);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
@@ -90,7 +90,7 @@ int main()
 	ret_value.buf_addr[ret_value.len_used] = '\0';
 	printf("ydb_get_st() [1b] : ydb_get_st() returned [%s]\n", ret_value.buf_addr);
 	printf("Get the local variable with 1 subscript\n"); fflush(stdout);
-	status = ydb_get_st(YDB_NOTTP, &basevar, 1, subscr, &ret_value);
+	status = ydb_get_st(YDB_NOTTP, NULL, &basevar, 1, subscr, &ret_value);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
@@ -101,7 +101,7 @@ int main()
 	ret_value.buf_addr[ret_value.len_used] = '\0';
 	printf("ydb_get_st() [1b] : ydb_get_st() returned [%s]\n", ret_value.buf_addr);
 	printf("Get the local variable with 2 subscripts\n"); fflush(stdout);
-	status = ydb_get_st(YDB_NOTTP, &basevar, 2, subscr, &ret_value);
+	status = ydb_get_st(YDB_NOTTP, NULL, &basevar, 2, subscr, &ret_value);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
@@ -114,7 +114,7 @@ int main()
 	printf("Demonstrate our progress by executing a ZWRITE in a call-in\n"); fflush(stdout);
 	zwrarg.address = NULL;			/* Create a null string argument so dumps all locals */
 	zwrarg.length = 0;
-	status = ydb_ci_t(YDB_NOTTP, "driveZWRITE", &zwrarg);
+	status = ydb_ci_t(YDB_NOTTP, NULL, "driveZWRITE", &zwrarg);
 	if (status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);

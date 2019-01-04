@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	*
+ * Copyright (c) 2018-2019 YottaDB LLC. and/or its subsidiaries.*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -50,38 +50,38 @@ int main()
 		}
 
 		/* Set a node for ydb_node_next_st() and ydb_node_previous_st() to return */
-		status = ydb_set_st(YDB_NOTTP, &basevar, nsubs, subs, NULL);
+		status = ydb_set_st(YDB_NOTTP, NULL, &basevar, nsubs, subs, NULL);
 		YDB_ASSERT(YDB_OK == status);
 
 		/* Test ydb_node_next_st() */
 		/* Randomly choose a subscnt that is < MAX_SUBS so we get INSUFFSUBS error */
 		outsubscnt = (MAX_SUBS * drand48());
-		status = ydb_node_next_st(YDB_NOTTP, &basevar, 0, NULL, &outsubscnt, outsubs);
+		status = ydb_node_next_st(YDB_NOTTP, NULL, &basevar, 0, NULL, &outsubscnt, outsubs);
 		YDB_ASSERT(YDB_ERR_INSUFFSUBS == status);
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
 		printf("ydb_node_next_st() : varname = %s : outsubscnt = %d : Returned error : %s\n", basevar.buf_addr, outsubscnt, errbuf); fflush(stdout);
 
 		/* Randomly choose a subscnt that is >= MAX_SUBS so we do not get INSUFFSUBS error */
 		outsubscnt = MAX_SUBS + ((YDB_MAX_SUBS + 1 - MAX_SUBS) * drand48());
-		status = ydb_node_next_st(YDB_NOTTP, &basevar, 0, NULL, &outsubscnt, outsubs);
+		status = ydb_node_next_st(YDB_NOTTP, NULL, &basevar, 0, NULL, &outsubscnt, outsubs);
 		YDB_ASSERT(YDB_OK == status);
 
 		/* Test ydb_node_previous_st() */
 		YDB_LITERAL_TO_BUFFER("100", &maxsub);	/* Choose a value that is greater than current value of subs[0] = "0" */
 		/* Randomly choose a subscnt that is < MAX_SUBS so we get INSUFFSUBS error */
 		outsubscnt = (MAX_SUBS * drand48());
-		status = ydb_node_previous_st(YDB_NOTTP, &basevar, 1, &maxsub, &outsubscnt, outsubs);
+		status = ydb_node_previous_st(YDB_NOTTP, NULL, &basevar, 1, &maxsub, &outsubscnt, outsubs);
 		YDB_ASSERT(YDB_ERR_INSUFFSUBS == status);
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
 		printf("ydb_node_previous_st() : varname = %s : outsubscnt = %d : Returned error : %s\n", basevar.buf_addr, outsubscnt, errbuf); fflush(stdout);
 
 		/* Randomly choose a subscnt that is >= MAX_SUBS so we do not get INSUFFSUBS error */
 		outsubscnt = MAX_SUBS + ((YDB_MAX_SUBS + 1 - MAX_SUBS) * drand48());
-		status = ydb_node_previous_st(YDB_NOTTP, &basevar, 1, &maxsub, &outsubscnt, outsubs);
+		status = ydb_node_previous_st(YDB_NOTTP, NULL, &basevar, 1, &maxsub, &outsubscnt, outsubs);
 		YDB_ASSERT(YDB_OK == status);
 
 		/* Kill the set node (cleanup) before next iteration */
-		status = ydb_delete_st(YDB_NOTTP, &basevar, nsubs, subs, YDB_DEL_NODE);
+		status = ydb_delete_st(YDB_NOTTP, NULL, &basevar, nsubs, subs, YDB_DEL_NODE);
 		YDB_ASSERT(YDB_OK == status);
 	}
 	return YDB_OK;

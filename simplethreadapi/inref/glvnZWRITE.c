@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.*
+ * Copyright (c) 2017-2019 YottaDB LLC. and/or its subsidiaries.*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -79,12 +79,12 @@ void glvnZWRITE(uint64_t tptoken, char *startname)
 	retvalue.buf_addr = retvaluebuff;
 	retvalue.len_alloc = sizeof(retvaluebuff);
 	retvalue.len_used = 0;
-	status = ydb_data_st(tptoken, &basevar, 0, subscr, &ret_dlrdata);
+	status = ydb_data_st(tptoken, NULL, &basevar, 0, subscr, &ret_dlrdata);
 	if (ret_dlrdata)
 		glvnZWRITEsubtree(tptoken, &basevar, 0, subscr);
 	for (iters=0; ; iters++)
 	{
-		status = ydb_subscript_next_st(tptoken, &basevar, 0, NULL, &retvalue);
+		status = ydb_subscript_next_st(tptoken, NULL, &basevar, 0, NULL, &retvalue);
 		YDB_ASSERT((YDB_OK == status) || (YDB_ERR_NODEEND == status));
 		reached_end = (YDB_ERR_NODEEND == status);
 		if (reached_end)
@@ -96,7 +96,7 @@ void glvnZWRITE(uint64_t tptoken, char *startname)
 			retvalue.len_used = strlen(name);
 			memcpy(retvalue.buf_addr, name, retvalue.len_used);
 		}
-		status = ydb_subscript_previous_st(tptoken, &retvalue, 0, NULL, &tmpvalue);
+		status = ydb_subscript_previous_st(tptoken, NULL, &retvalue, 0, NULL, &tmpvalue);
 		YDB_ASSERT((YDB_OK == status) || (YDB_ERR_NODEEND == status));
 		YDB_ASSERT((tmpvalue.len_used == basevar.len_used)
 			|| (!tmpvalue.len_used && !iters)
@@ -133,7 +133,7 @@ void glvnZWRITEsubtree(uint64_t tptoken, ydb_buffer_t *basevar, int nsubs, ydb_b
 		cursubs->buf_addr = subsbuff;
 		cursubs->len_alloc = sizeof(subsbuff);
 		cursubs->len_used = 0;
-		status = ydb_data_st(tptoken, basevar, nsubs + 1, subscr, &ret_dlrdata);
+		status = ydb_data_st(tptoken, NULL, basevar, nsubs + 1, subscr, &ret_dlrdata);
 		if (ret_dlrdata)
 			glvnZWRITEsubtree(tptoken, basevar, nsubs + 1, subscr);
 		cursubs->len_used = 0;
@@ -142,13 +142,13 @@ void glvnZWRITEsubtree(uint64_t tptoken, ydb_buffer_t *basevar, int nsubs, ydb_b
 		tmpvalue.len_used = 0;
 		for ( ; ; )
 		{
-			status = ydb_subscript_next_st(tptoken, basevar, nsubs + 1, subscr, &retvalue);
+			status = ydb_subscript_next_st(tptoken, NULL, basevar, nsubs + 1, subscr, &retvalue);
 			YDB_ASSERT((YDB_OK == status) || (YDB_ERR_NODEEND == status));
 			if (YDB_ERR_NODEEND == status)
 				retvalue.len_used = 0;
 			tmpvalue2 = subscr[nsubs];
 			subscr[nsubs] = retvalue;
-			status = ydb_subscript_previous_st(tptoken, basevar, nsubs + 1, subscr, &tmpvalue);
+			status = ydb_subscript_previous_st(tptoken, NULL, basevar, nsubs + 1, subscr, &tmpvalue);
 			YDB_ASSERT((YDB_OK == status) || (YDB_ERR_NODEEND == status));
 			if (YDB_ERR_NODEEND == status)
 				tmpvalue.len_used = 0;
@@ -190,7 +190,7 @@ void glvnZWRITEsubtree(uint64_t tptoken, ydb_buffer_t *basevar, int nsubs, ydb_b
 		do
 		{
 			glvnPrintNodeIfExists(tptoken, basevar, src_used, src, node_must_exist);
-			status = ydb_node_next_st(tptoken, basevar, src_used, src, &dst_used, dst);
+			status = ydb_node_next_st(tptoken, NULL, basevar, src_used, src, &dst_used, dst);
 			if (YDB_ERR_NODEEND == status)
 				break;
 			YDB_ASSERT(YDB_OK == status);
@@ -217,7 +217,7 @@ void	glvnPrintNodeIfExists(uint64_t tptoken, ydb_buffer_t *basevar, int nsubs, y
 	retvalue.buf_addr = retvaluebuff;
 	retvalue.len_alloc = sizeof(retvaluebuff);
 	retvalue.len_used = 0;
-	status = ydb_get_st(tptoken, basevar, nsubs, subscr, &retvalue);
+	status = ydb_get_st(tptoken, NULL, basevar, nsubs, subscr, &retvalue);
 	if ((('^' != basevar->buf_addr[0]) && (YDB_ERR_LVUNDEF == status))
 			|| (('^' == basevar->buf_addr[0]) && (YDB_ERR_GVUNDEF == status)))
 	{
@@ -237,7 +237,7 @@ void	glvnPrintNodeIfExists(uint64_t tptoken, ydb_buffer_t *basevar, int nsubs, y
 		*ptr++ = '(';
 		for (i = 0; ; )
 		{
-			status = ydb_str2zwr_st(tptoken, &subscr[i], &zwr);
+			status = ydb_str2zwr_st(tptoken, NULL, &subscr[i], &zwr);
 			YDB_ASSERT(YDB_OK == status);
 			memcpy(ptr, zwr.buf_addr, zwr.len_used);
 			ptr += zwr.len_used;
@@ -250,7 +250,7 @@ void	glvnPrintNodeIfExists(uint64_t tptoken, ydb_buffer_t *basevar, int nsubs, y
 		*ptr++ = ')';
 	}
 	*ptr++ = '=';
-	status = ydb_str2zwr_st(tptoken, &retvalue, &zwr);
+	status = ydb_str2zwr_st(tptoken, NULL, &retvalue, &zwr);
 	YDB_ASSERT(YDB_OK == status);
 	memcpy(ptr, zwr.buf_addr, zwr.len_used);
 	ptr += zwr.len_used;

@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	*
+ * Copyright (c) 2018-2019 YottaDB LLC. and/or its subsidiaries.*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -56,7 +56,7 @@ int main()
 	printf("Wait for child to have done LOCK ^lock2\n"); fflush(stdout);
 	for ( ; ;)
 	{
-		status = ydb_data_st(YDB_NOTTP, &lock2, 0, NULL, &ret_dlrdata);
+		status = ydb_data_st(YDB_NOTTP, NULL, &lock2, 0, NULL, &ret_dlrdata);
 		if (ret_dlrdata)
 			break;
 		usleep(1);
@@ -64,7 +64,7 @@ int main()
 
 	printf("Attempt to lock ^lock2(42) in parent : Expect YDB_LOCK_TIMEOUT error\n"); fflush(stdout);
 	begin = time(NULL);
-	status = ydb_lock_st(YDB_NOTTP, LOCK_TIMEOUT, 1, &lock2, 0, &subs);
+	status = ydb_lock_st(YDB_NOTTP, NULL, LOCK_TIMEOUT, 1, &lock2, 0, &subs);
 	end = time(NULL);
 	YDB_ASSERT(YDB_LOCK_TIMEOUT == status);
 	if (2 < (end - begin))
@@ -79,7 +79,7 @@ int main()
 
 	printf("Attempt to lock +^lock2(42) in parent : Expect YDB_LOCK_TIMEOUT error\n"); fflush(stdout);
 	begin = time(NULL);
-	status = ydb_lock_incr_st(YDB_NOTTP, LOCK_TIMEOUT, &lock2, 0, &subs);
+	status = ydb_lock_incr_st(YDB_NOTTP, NULL, LOCK_TIMEOUT, &lock2, 0, &subs);
 	end = time(NULL);
 	YDB_ASSERT(YDB_LOCK_TIMEOUT == status);
 	if (2 < (end - begin))
@@ -93,7 +93,7 @@ int main()
 	}
 
 	/* Signal child to die */
-	status = ydb_delete_st(YDB_NOTTP, &lock2, 0, NULL, YDB_DEL_NODE);
+	status = ydb_delete_st(YDB_NOTTP, NULL, &lock2, 0, NULL, YDB_DEL_NODE);
 	YDB_ASSERT(YDB_OK == status);
 
 	/* Wait for child to terminate */
@@ -113,16 +113,16 @@ void	childfn(void)
 	unsigned int	ret_dlrdata;
 
 	/* First lock ^lock2 */
-	status = ydb_lock_st(YDB_NOTTP, LOCK_TIMEOUT, 1, &lock2, 0, NULL);
+	status = ydb_lock_st(YDB_NOTTP, NULL, LOCK_TIMEOUT, 1, &lock2, 0, NULL);
 	YDB_ASSERT(YDB_OK == status);
 
 	/* Next set ^lock2=1 so parent knows it can proceed to attempt lock ^lock2(42) */
-	status = ydb_set_st(YDB_NOTTP, &lock2, 0, NULL, NULL);
+	status = ydb_set_st(YDB_NOTTP, NULL, &lock2, 0, NULL, NULL);
 
 	/* Wait for parent to be done */
 	for ( ; ;)
 	{
-		status = ydb_data_st(YDB_NOTTP, &lock2, 0, NULL, &ret_dlrdata);
+		status = ydb_data_st(YDB_NOTTP, NULL, &lock2, 0, NULL, &ret_dlrdata);
 		if (!ret_dlrdata)
 			break;
 		usleep(1);

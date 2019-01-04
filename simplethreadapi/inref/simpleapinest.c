@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	*
+ * Copyright (c) 2018-2019 YottaDB LLC. and/or its subsidiaries.*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -32,7 +32,7 @@ int main()
 	YDB_LITERAL_TO_BUFFER(VALUE1, &value1);
 
 	printf("# Do SET of global that invokes a trigger###\n"); fflush(stdout);
-	status = ydb_set_st(YDB_NOTTP, &basevar, 0, NULL, &value1);
+	status = ydb_set_st(YDB_NOTTP, NULL, &basevar, 0, NULL, &value1);
 	YDB_ASSERT(YDB_OK == status);
 	return YDB_OK;
 }

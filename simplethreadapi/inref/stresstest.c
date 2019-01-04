@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.*
+ * Copyright (c) 2017-2019 YottaDB LLC. and/or its subsidiaries.*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
 		 * and do exactly the same set of updates (through a call-in) that the test did and then invoke zwrite of
 		 * local nodes and global nodes using simpleAPI.
 		 */
-		status = ydb_ci_t(YDB_NOTTP, "genstresstest");
+		status = ydb_ci_t(YDB_NOTTP, NULL, "genstresstest");
 		YDB_ASSERT(0 == status);
 	}
 	for (reccnt = 0; ; reccnt++)
@@ -134,22 +134,22 @@ int main(int argc, char *argv[])
 		/* Now do the set. Since we don't know the # of subscripts, we code it for the max # = 32 */
 		if (YDBSET == action)
 		{
-			status = ydb_set_st(YDB_NOTTP, &basevar, nsubs, subscr, &value);
+			status = ydb_set_st(YDB_NOTTP, NULL, &basevar, nsubs, subscr, &value);
 			YDB_ASSERT(YDB_OK == status);
 		} else if (YDBKILL == action)
 		{
-			status = ydb_delete_st(YDB_NOTTP, &basevar, nsubs, subscr, YDB_DEL_TREE);
+			status = ydb_delete_st(YDB_NOTTP, NULL, &basevar, nsubs, subscr, YDB_DEL_TREE);
 			YDB_ASSERT(YDB_OK == status);
 		} else if (YDBZKILL == action)
 		{
-			status = ydb_delete_st(YDB_NOTTP, &basevar, nsubs, subscr, YDB_DEL_NODE);
+			status = ydb_delete_st(YDB_NOTTP, NULL, &basevar, nsubs, subscr, YDB_DEL_NODE);
 			YDB_ASSERT(YDB_OK == status);
 		} else if (YDBGET == action)
 		{
 			retvalue.buf_addr = retvaluebuff;
 			retvalue.len_alloc = sizeof(retvaluebuff);
 			retvalue.len_used = 0;
-			status = ydb_get_st(YDB_NOTTP, &basevar, nsubs, subscr, &retvalue);
+			status = ydb_get_st(YDB_NOTTP, NULL, &basevar, nsubs, subscr, &retvalue);
 			YDB_ASSERT(YDB_OK == status);
 			YDB_ASSERT((retvalue.len_used == value.len_used)
 				   && (!memcmp(retvalue.buf_addr, value.buf_addr, value.len_used)));

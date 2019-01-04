@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	;
+; Copyright (c) 2017-2019 YottaDB LLC. and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -74,8 +74,8 @@ stresstest;
 helper	;
 	new i,varname,nsubs,subs,optype
 	set oprtype=$select(killchoice=0:9,1:$random(10))
-	; oprtype=0       implies ZKILL i.e. ydb_delete_st(YDB_NOTTP, ..., YDB_DEL_NODE)
-	; oprtype=1,2     implies KILL  i.e. ydb_delete_st(YDB_NOTTP, ..., YDB_DEL_TREE)
+	; oprtype=0       implies ZKILL i.e. ydb_delete_st(YDB_NOTTP, NULL, ..., YDB_DEL_NODE)
+	; oprtype=1,2     implies KILL  i.e. ydb_delete_st(YDB_NOTTP, NULL, ..., YDB_DEL_TREE)
 	; oprtype=3,...,9 implies SET   i.e. ydb_set_st()
 	set optype=$select(oprtype=0:YDBZKILL,(oprtype=1)!(oprtype=2):YDBKILL,1:YDBSET)
 	set varname=$$getvarname(),varnamelen=$length(varname)	; Generate random variable name to do set/kill on

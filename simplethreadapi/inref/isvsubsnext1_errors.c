@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.*
+ * Copyright (c) 2017-2019 YottaDB LLC. and/or its subsidiaries.*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -33,7 +33,7 @@ int main()
 	ret_value.len_used = 0;
 
 	printf("# Attempting ydb_subscript_next_st() of ISV should issue UNIMPLOP error\n"); fflush(stdout);
-	status = ydb_subscript_next_st(YDB_NOTTP, &basevar, 0, NULL, &ret_value);
+	status = ydb_subscript_next_st(YDB_NOTTP, NULL, &basevar, 0, NULL, &ret_value);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);

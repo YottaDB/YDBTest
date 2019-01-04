@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	*
+ * Copyright (c) 2018-2019 YottaDB LLC. and/or its subsidiaries.*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -34,11 +34,11 @@ int main()
 	for (i = 0; i < 3; i++)
 	{
 		if (0 == i)
-			status = ydb_tp_st(YDB_NOTTP, NULL, NULL, NULL, namecount, NULL);
+			status = ydb_tp_st(YDB_NOTTP, NULL, NULL, NULL, NULL, namecount, NULL);
 		else if (1 == i)
-			status = ydb_lock_st(YDB_NOTTP, 1000000000, namecount, NULL, 0, NULL);
+			status = ydb_lock_st(YDB_NOTTP, NULL, 1000000000, namecount, NULL, 0, NULL);
 		else
-			status = ydb_delete_excl_st(YDB_NOTTP, namecount, NULL);
+			status = ydb_delete_excl_st(YDB_NOTTP, NULL, namecount, NULL);
 		YDB_ASSERT(YDB_ERR_INVNAMECOUNT == status)
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
 		printf("Returned error : %s\n", errbuf);

@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	;
+; Copyright (c) 2017-2019 YottaDB LLC. and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -53,7 +53,7 @@ lvnsetstress;
 	use cfile
 	write " zwrarg.address = NULL;",!
 	write " zwrarg.length = 0;",!
-	write " status = ydb_ci_t(YDB_NOTTP, ""driveZWRITE"", &zwrarg);",!
+	write " status = ydb_ci_t(YDB_NOTTP, NULL, ""driveZWRITE"", &zwrarg);",!
 	write " if (YDB_OK != status) { ydb_zstatus(errbuf, ERRBUF_SIZE); printf(""driveZWRITE() : %s\n"", errbuf); fflush(stdout); }",!
 	write " return status;",!
 	write "}",!
@@ -88,7 +88,7 @@ lvnsetstresshelper	;
 	write "  YDB_LITERAL_TO_BUFFER("_$$forcequote($zwrite(value))_", &value);",!
 	for i=0:1:(nsubs-1) write "  YDB_LITERAL_TO_BUFFER("_$$forcequote($zwrite(subs((i+1))))_", &subscr["_i_"]);",!
 	write "",!
-	write "  status = ydb_set_st(YDB_NOTTP, &basevar, "_nsubs_", subscr, &value);",!
+	write "  status = ydb_set_st(YDB_NOTTP, NULL, &basevar, "_nsubs_", subscr, &value);",!
 	write "  if (YDB_OK != status) { ydb_zstatus(errbuf, ERRBUF_SIZE); printf(""ydb_set_st() : %s\n"", errbuf); fflush(stdout); }",!
 	write " }",!
 	quit

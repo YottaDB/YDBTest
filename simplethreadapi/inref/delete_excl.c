@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	*
+ * Copyright (c) 2018-2019 YottaDB LLC. and/or its subsidiaries.*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -30,10 +30,10 @@ int main()
 	zwrarg.length = 0;
 
 	printf(" --> Set a few local variables\n"); fflush(stdout);
-	status = ydb_ci_t(YDB_NOTTP, "setlocals");
+	status = ydb_ci_t(YDB_NOTTP, NULL, "setlocals");
 	YDB_ASSERT(YDB_OK == status);
 	printf("\n --> Dump the local variables\n"); fflush(stdout);
-	status = ydb_ci_t(YDB_NOTTP, "driveZWRITE", &zwrarg);
+	status = ydb_ci_t(YDB_NOTTP, NULL, "driveZWRITE", &zwrarg);
 	YDB_ASSERT(YDB_OK == status);
 
 	YDB_LITERAL_TO_BUFFER("y", &varnames[0]);
@@ -44,38 +44,38 @@ int main()
 	YDB_LITERAL_TO_BUFFER("mm", &varnames[5]);
 
 	printf("\n --> Use ydb_delete_excl_st() to delete all local variables except [y]\n"); fflush(stdout);
-	status = ydb_delete_excl_st(YDB_NOTTP, 1, varnames);
+	status = ydb_delete_excl_st(YDB_NOTTP, NULL, 1, varnames);
 	printf("\n --> Dump the local variables\n"); fflush(stdout);
-	status = ydb_ci_t(YDB_NOTTP, "driveZWRITE", &zwrarg);
+	status = ydb_ci_t(YDB_NOTTP, NULL, "driveZWRITE", &zwrarg);
 	YDB_ASSERT(YDB_OK == status);
 
 	printf(" --> Set the few local variables again\n"); fflush(stdout);
-	status = ydb_ci_t(YDB_NOTTP, "setlocals");
+	status = ydb_ci_t(YDB_NOTTP, NULL, "setlocals");
 	YDB_ASSERT(YDB_OK == status);
 	printf("\n --> Use ydb_delete_excl_st() to delete all local variables except [x] and [%%z]\n"); fflush(stdout);
-	status = ydb_delete_excl_st(YDB_NOTTP, 2, &varnames[1]);
+	status = ydb_delete_excl_st(YDB_NOTTP, NULL, 2, &varnames[1]);
 	printf("\n --> Dump the local variables\n"); fflush(stdout);
-	status = ydb_ci_t(YDB_NOTTP, "driveZWRITE", &zwrarg);
+	status = ydb_ci_t(YDB_NOTTP, NULL, "driveZWRITE", &zwrarg);
 	YDB_ASSERT(YDB_OK == status);
 
 	printf(" --> Set the few local variables again\n"); fflush(stdout);
-	status = ydb_ci_t(YDB_NOTTP, "setlocals");
+	status = ydb_ci_t(YDB_NOTTP, NULL, "setlocals");
 	YDB_ASSERT(YDB_OK == status);
 	printf("\n --> Use ydb_delete_excl_st() to delete all local variables\n"); fflush(stdout);
-	status = ydb_delete_excl_st(YDB_NOTTP, 0, NULL);
+	status = ydb_delete_excl_st(YDB_NOTTP, NULL, 0, NULL);
 	printf("\n --> Dump the local variables\n"); fflush(stdout);
-	status = ydb_ci_t(YDB_NOTTP, "driveZWRITE", &zwrarg);
+	status = ydb_ci_t(YDB_NOTTP, NULL, "driveZWRITE", &zwrarg);
 	YDB_ASSERT(YDB_OK == status);
 
 	printf("\n --> Check that ydb_delete_excl_st() issues INVVARNAME error if global variable name is input\n"); fflush(stdout);
-	status = ydb_delete_excl_st(YDB_NOTTP, 4, &varnames[2]);
+	status = ydb_delete_excl_st(YDB_NOTTP, NULL, 4, &varnames[2]);
 	YDB_ASSERT(YDB_ERR_INVVARNAME == status)
 	ydb_zstatus(errbuf, ERRBUF_SIZE);
 	printf("Returned error : %s\n", errbuf);
 	fflush(stdout);
 
 	printf("\n --> Check that ydb_delete_excl_st() issues INVVARNAME error if intrinsic special variable is input\n"); fflush(stdout);
-	status = ydb_delete_excl_st(YDB_NOTTP, 2, &varnames[4]);
+	status = ydb_delete_excl_st(YDB_NOTTP, NULL, 2, &varnames[4]);
 	YDB_ASSERT(YDB_ERR_INVVARNAME == status)
 	ydb_zstatus(errbuf, ERRBUF_SIZE);
 	printf("Returned error : %s\n", errbuf);

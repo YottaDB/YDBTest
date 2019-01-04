@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	*
+ * Copyright (c) 2018-2019 YottaDB LLC. and/or its subsidiaries.*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -18,5 +18,5 @@
 
 int c2m2c()
 {
-        return ydb_ci_t(YDB_NOTTP, "gvnincr2callin");
+        return ydb_ci_t(YDB_NOTTP, NULL, "gvnincr2callin");
 }

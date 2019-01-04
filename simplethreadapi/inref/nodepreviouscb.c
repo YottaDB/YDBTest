@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.*
+ * Copyright (c) 2017-2019 YottaDB LLC. and/or its subsidiaries.*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -108,7 +108,7 @@ void nodepreviouscb(int parmcnt, ydb_string_t *basevar_in)
 		/* Reset our output count so all subs are available for output and make our call */
 		subs_out_cnt = YDB_MAX_SUBS;
 		YDB_ASSERT(0 <= subs_in_cnt);	/* Could have 0 count on last record (unsubscripted var) */
-		status = ydb_node_previous_st(YDB_NOTTP, &basevar, subs_in_cnt, subs_in, &subs_out_cnt, subs_out);
+		status = ydb_node_previous_st(YDB_NOTTP, NULL, &basevar, subs_in_cnt, subs_in, &subs_out_cnt, subs_out);
 		if (YDB_ERR_NODEEND == status)
 			break;
 		SAPI_VALIDATE_RETURN(status, "ydb_node_previous()", TRUE);

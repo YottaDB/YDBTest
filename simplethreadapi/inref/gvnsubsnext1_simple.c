@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.*
+ * Copyright (c) 2017-2019 YottaDB LLC. and/or its subsidiaries.*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -55,7 +55,7 @@ int main()
 		return YDB_OK;
 	}
 	printf("Set a global variable (and a next global variable) with 0 subscripts\n"); fflush(stdout);
-	status = ydb_set_st(YDB_NOTTP, &basevar, 0, NULL, &value1);
+	status = ydb_set_st(YDB_NOTTP, NULL, &basevar, 0, NULL, &value1);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
@@ -63,7 +63,7 @@ int main()
 		fflush(stdout);
 		return YDB_OK;
 	}
-	status = ydb_set_st(YDB_NOTTP, &nextvar, 0, NULL, &value1);
+	status = ydb_set_st(YDB_NOTTP, NULL, &nextvar, 0, NULL, &value1);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
@@ -72,7 +72,7 @@ int main()
 		return YDB_OK;
 	}
 	printf("Set global variable node (and a next subscript) with 1 subscript\n"); fflush(stdout);
-	status = ydb_set_st(YDB_NOTTP, &basevar, 1, subscr, &value2);
+	status = ydb_set_st(YDB_NOTTP, NULL, &basevar, 1, subscr, &value2);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
@@ -81,7 +81,7 @@ int main()
 		return YDB_OK;
 	}
 	YDB_LITERAL_TO_BUFFER(NEXTSUBSCR1, &nextsubscr[0]);
-	status = ydb_set_st(YDB_NOTTP, &basevar, 1, nextsubscr, &value2);
+	status = ydb_set_st(YDB_NOTTP, NULL, &basevar, 1, nextsubscr, &value2);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
@@ -90,7 +90,7 @@ int main()
 		return YDB_OK;
 	}
 	printf("Set a global variable node (and a next subscript) with 2 subscripts\n"); fflush(stdout);
-	status = ydb_set_st(YDB_NOTTP, &basevar, 2, subscr, &value3);
+	status = ydb_set_st(YDB_NOTTP, NULL, &basevar, 2, subscr, &value3);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
@@ -100,7 +100,7 @@ int main()
 	}
 	nextsubscr[0] = subscr[0];
 	YDB_LITERAL_TO_BUFFER(NEXTSUBSCR2, &nextsubscr[1]);
-	status = ydb_set_st(YDB_NOTTP, &basevar, 2, nextsubscr, &value3);
+	status = ydb_set_st(YDB_NOTTP, NULL, &basevar, 2, nextsubscr, &value3);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
@@ -109,7 +109,7 @@ int main()
 		return YDB_OK;
 	}
 	printf("Get next global variable of global variable with 0 subscripts\n"); fflush(stdout);
-	status = ydb_subscript_next_st(YDB_NOTTP, &basevar, 0, NULL, &ret_value);
+	status = ydb_subscript_next_st(YDB_NOTTP, NULL, &basevar, 0, NULL, &ret_value);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
@@ -120,7 +120,7 @@ int main()
 	ret_value.buf_addr[ret_value.len_used] = '\0';
 	printf("ydb_subscript_next_st() returned [%s]\n", ret_value.buf_addr);
 	printf("Get next subscript of global variable with 1 subscript\n"); fflush(stdout);
-	status = ydb_subscript_next_st(YDB_NOTTP, &basevar, 1, subscr, &ret_value);
+	status = ydb_subscript_next_st(YDB_NOTTP, NULL, &basevar, 1, subscr, &ret_value);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
@@ -131,7 +131,7 @@ int main()
 	ret_value.buf_addr[ret_value.len_used] = '\0';
 	printf("ydb_subscript_next_st() returned [%s]\n", ret_value.buf_addr);
 	printf("Get next subscript of global variable with 2 subscripts\n"); fflush(stdout);
-	status = ydb_subscript_next_st(YDB_NOTTP, &basevar, 2, subscr, &ret_value);
+	status = ydb_subscript_next_st(YDB_NOTTP, NULL, &basevar, 2, subscr, &ret_value);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
@@ -142,7 +142,7 @@ int main()
 	ret_value.buf_addr[ret_value.len_used] = '\0';
 	printf("ydb_subscript_next_st() returned [%s]\n", ret_value.buf_addr);
 	printf("Demonstrate our progress by executing a gvnZWRITE in a call-in\n"); fflush(stdout);
-	status = ydb_ci_t(YDB_NOTTP, "gvnZWRITE");
+	status = ydb_ci_t(YDB_NOTTP, NULL, "gvnZWRITE");
 	if (status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);

@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.*
+ * Copyright (c) 2017-2019 YottaDB LLC. and/or its subsidiaries.*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -51,7 +51,7 @@ int main()
 	fflush(stdout);							/* Keep in sync with non-stream IO of YDB */
 	zshowarg.address = "\"I\"";
 	zshowarg.length = sizeof("\"I\"") - 1;
-	status = ydb_ci_t(YDB_NOTTP, "driveZSHOW", &zshowarg);
+	status = ydb_ci_t(YDB_NOTTP, NULL, "driveZSHOW", &zshowarg);
 	if (status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
@@ -71,7 +71,7 @@ int main()
 
 		/* Note - no call to ydb_init() to verify it happens automatically */
 
-		status = ydb_set_st(YDB_NOTTP, &isvvar, 0, NULL, &isvvalue);
+		status = ydb_set_st(YDB_NOTTP, NULL, &isvvar, 0, NULL, &isvvalue);
 		if (YDB_OK != status)
 		{
 			ydb_zstatus(errbuf, ERRBUF_SIZE);
@@ -85,7 +85,7 @@ int main()
 	fflush(stdout); fflush(stderr);
 	printf("\n\n\nZSHOW *after* setting new values for some ISVs\n");
 	fflush(stdout);							/* Keep in sync with non-stream IO of YDB */
-	status = ydb_ci_t(YDB_NOTTP, "driveZSHOW", &zshowarg);
+	status = ydb_ci_t(YDB_NOTTP, NULL, "driveZSHOW", &zshowarg);
 	if (status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);

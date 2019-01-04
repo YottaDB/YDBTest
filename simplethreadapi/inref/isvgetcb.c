@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.*
+ * Copyright (c) 2017-2019 YottaDB LLC. and/or its subsidiaries.*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -110,7 +110,7 @@ void isvgetcb(int count, ydb_string_t *ISVlist, ydb_string_t *ISVvals)
 		ISVname.len_used = ISVname.len_alloc = toklen;
 		ISVvalue.buf_addr = ISVbuffer;
 		ISVvalue.len_used = ISVvalue.len_alloc = MAX_VALUE_LEN;
-		status = ydb_get_st(YDB_NOTTP, &ISVname, 0, NULL, &ISVvalue);
+		status = ydb_get_st(YDB_NOTTP, NULL, &ISVname, 0, NULL, &ISVvalue);
 		if (YDB_OK != status)
 		{
 			ydb_zstatus(errbuf, ERRBUF_SIZE);

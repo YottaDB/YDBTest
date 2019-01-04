@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	*
+ * Copyright (c) 2018-2019 YottaDB LLC. and/or its subsidiaries.*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -82,44 +82,44 @@ int main()
 	YDB_LITERAL_TO_BUFFER(SUB35, &subary3[4]);
 
 	/* Do the first and second lock sets */
-	status = ydb_lock_st(YDB_NOTTP, LOCK_TIMEOUT, 2, &varname1, 0, NULL, &varname2, 0, NULL);
+	status = ydb_lock_st(YDB_NOTTP, NULL, LOCK_TIMEOUT, 2, &varname1, 0, NULL, &varname2, 0, NULL);
 	CHECK_FOR_ERROR(status);
 	/* Show list of locks we have obtained */
 	printf("\nincrdecr: List of locks after setting the 1st set of vars:\n");
 	fflush(stdout);
 	system("$gtm_dist/lke show -all -wait");
 	/* Add in the second set as incremental locks */
-	status = ydb_lock_incr_st(YDB_NOTTP, LOCK_TIMEOUT, &varname1, 1, &subary2);
+	status = ydb_lock_incr_st(YDB_NOTTP, NULL, LOCK_TIMEOUT, &varname1, 1, &subary2);
 	CHECK_FOR_ERROR(status);
-	status = ydb_lock_incr_st(YDB_NOTTP, LOCK_TIMEOUT, &varname2, 1, &subary2);
+	status = ydb_lock_incr_st(YDB_NOTTP, NULL, LOCK_TIMEOUT, &varname2, 1, &subary2);
 	CHECK_FOR_ERROR(status);
 	/* Show list of locks we have obtained to verify first and 2nd set are locked */
 	printf("\n\nincrdecr: List of locks after adding the 2nd set of vars:\n");
 	fflush(stdout);
 	system("$gtm_dist/lke show -all -wait");
 	/* Now release the first set of locks */
-	status = ydb_lock_decr_st(YDB_NOTTP, &varname1, 0, NULL);
+	status = ydb_lock_decr_st(YDB_NOTTP, NULL, &varname1, 0, NULL);
 	CHECK_FOR_ERROR(status);
-	status = ydb_lock_decr_st(YDB_NOTTP, &varname2, 0, NULL);
+	status = ydb_lock_decr_st(YDB_NOTTP, NULL, &varname2, 0, NULL);
 	CHECK_FOR_ERROR(status);
 	/* Show list of locks we have obtained to verify both first and 2nd sets are locked */
 	printf("\n\nincrdecr: List of locks after removing the 1st set:\n");
 	fflush(stdout);
 	system("$gtm_dist/lke show -all -wait");
 	/* Add in the 3rd set of vars */
-	status = ydb_lock_incr_st(YDB_NOTTP, LOCK_TIMEOUT, &varname1, 5, (ydb_buffer_t *)&subary3);
+	status = ydb_lock_incr_st(YDB_NOTTP, NULL, LOCK_TIMEOUT, &varname1, 5, (ydb_buffer_t *)&subary3);
 	CHECK_FOR_ERROR(status);
-	status = ydb_lock_incr_st(YDB_NOTTP, LOCK_TIMEOUT, &varname2, 5, (ydb_buffer_t *)&subary3);
+	status = ydb_lock_incr_st(YDB_NOTTP, NULL, LOCK_TIMEOUT, &varname2, 5, (ydb_buffer_t *)&subary3);
 	CHECK_FOR_ERROR(status);
 	/* Remove the second var from the second set */
-	status = ydb_lock_decr_st(YDB_NOTTP, &varname2, 1, &subary2);
+	status = ydb_lock_decr_st(YDB_NOTTP, NULL, &varname2, 1, &subary2);
 	CHECK_FOR_ERROR(status);
 	/* Show list of locks to verify 3rd set and first var of second set are locked */
 	printf("\n\nincrdecr: List of locks after adding 3rd set and removing 1st var of second set:\n");
 	fflush(stdout);
 	system("$gtm_dist/lke show -all -wait");
 	/* Now a final check to see if running ydb_lock_s with no parmcnt unlocks all locks */
-	status = ydb_lock_st(YDB_NOTTP, LOCK_TIMEOUT, 0);
+	status = ydb_lock_st(YDB_NOTTP, NULL, LOCK_TIMEOUT, 0);
 	CHECK_FOR_ERROR(status);
 	/* See what locks are left if any (should all be gone) */
 	printf("\n\nincrdecr: List of locks after zero argument call to ydb_lock_st() which should release all locks:\n\n");

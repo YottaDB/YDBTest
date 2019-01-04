@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.*
+ * Copyright (c) 2017-2019 YottaDB LLC. and/or its subsidiaries.*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -35,9 +35,9 @@ int main()
 	} else
 	{
 		YDB_LITERAL_TO_BUFFER("^words", &words);
-		ydb_delete_st(YDB_NOTTP, &words, 0, NULL, YDB_DEL_TREE);
+		ydb_delete_st(YDB_NOTTP, NULL, &words, 0, NULL, YDB_DEL_TREE);
 		YDB_LITERAL_TO_BUFFER("^index", &index);
-		ydb_delete_st(YDB_NOTTP, &index, 0, NULL, YDB_DEL_TREE);
+		ydb_delete_st(YDB_NOTTP, NULL, &index, 0, NULL, YDB_DEL_TREE);
 	}
 	value.buf_addr = &valuebuff[0];
 	value.len_used = 0;
@@ -64,7 +64,7 @@ int main()
 			if (tmp1.len_used)
 			{
 				tmp1.len_alloc = tmp1.len_used;
-				status = ydb_incr_st(YDB_NOTTP, &words, 1, &tmp1, NULL, &value);	/* M line : set value=$incr(words(tmp1)) */
+				status = ydb_incr_st(YDB_NOTTP, NULL, &words, 1, &tmp1, NULL, &value);	/* M line : set value=$incr(words(tmp1)) */
 				YDB_ASSERT(YDB_OK == status);
 			}
 			ptr = strtok(NULL, " ");
@@ -81,21 +81,21 @@ int main()
 	null.len_alloc = 0;
 	do
 	{
-		status = ydb_subscript_next_st(YDB_NOTTP, &words, 1, &tmp1, &tmp1);	/* M line : set tmp1=$order(words(tmp1)) */
+		status = ydb_subscript_next_st(YDB_NOTTP, NULL, &words, 1, &tmp1, &tmp1);	/* M line : set tmp1=$order(words(tmp1)) */
 		if (YDB_ERR_NODEEND == status)
 			break;
 		YDB_ASSERT(YDB_OK == status);
 		YDB_ASSERT(0 != tmp1.len_used);
-		status = ydb_get_st(YDB_NOTTP, &words, 1, &tmp1, &words_tmp1);	/* M line : set words_tmp1=words(tmp1) */
+		status = ydb_get_st(YDB_NOTTP, NULL, &words, 1, &tmp1, &words_tmp1);	/* M line : set words_tmp1=words(tmp1) */
 		YDB_ASSERT(YDB_OK == status);
 		index_subscr[0] = words_tmp1;
 		index_subscr[1] = tmp1;
-		status = ydb_set_st(YDB_NOTTP, &index, 2, index_subscr, &null);	/* M line : set index(words_tmp1,tmp1)="" */
+		status = ydb_set_st(YDB_NOTTP, NULL, &index, 2, index_subscr, &null);	/* M line : set index(words_tmp1,tmp1)="" */
 		YDB_ASSERT(YDB_OK == status);
 	} while (1);
 	do
 	{
-		status = ydb_subscript_previous_st(YDB_NOTTP, &index, 1, &tmp1, &tmp1);	/* M line : set tmp1=$order(index(tmp1),-1) */
+		status = ydb_subscript_previous_st(YDB_NOTTP, NULL, &index, 1, &tmp1, &tmp1);	/* M line : set tmp1=$order(index(tmp1),-1) */
 		if (YDB_ERR_NODEEND == status)
 			break;
 		YDB_ASSERT(YDB_OK == status);
@@ -107,7 +107,7 @@ int main()
 		index_subscr[1] = tmp2;
 		do
 		{
-			status = ydb_subscript_next_st(YDB_NOTTP, &index, 2, index_subscr, &tmp2); /* M line : set tmp2=$order(index(tmp1,tmp2)) */
+			status = ydb_subscript_next_st(YDB_NOTTP, NULL, &index, 2, index_subscr, &tmp2); /* M line : set tmp2=$order(index(tmp1,tmp2)) */
 			if (YDB_ERR_NODEEND == status)
 				break;
 			YDB_ASSERT(YDB_OK == status);
