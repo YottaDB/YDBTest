@@ -10,7 +10,7 @@
  *								*
  ****************************************************************/
 
-/* Routine to help test simpleAPI ydb_node_previous_st(). It is a call-in routine from a MUMPS main process.
+/* Routine to help test SimpleThreadAPI ydb_node_previous_st(). It is a call-in routine from a MUMPS main process.
  *
  * See nodeprevious.m routine for full description of the overall test and how this routine works.
  *

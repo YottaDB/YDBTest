@@ -15,7 +15,7 @@ stresstest;
 	; For now, this program does a lot of SETs of local variables and passes the same information
 	; to the C program for it to do the same operation using ydb_set_st(). And at the end the
 	; M program and C program do a ZWRITE to verify both have the same Local variable state.
-	; As other operations in the simpleAPI are implemented (ydb_get_s etc.), those would be added here.
+	; As other operations in the SimpleThreadAPI are implemented (ydb_get_s etc.), those would be added here.
 	;
 	; Set etrap first
 	set $etrap="use $principal zshow ""*"" halt"

@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	;
+; Copyright (c) 2017-2019 YottaDB LLC. and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -48,7 +48,7 @@ gvngetcb
 	set %outfn="gvngetcb-M-extract.txt"
 	write "gvngetcb: Variables generated - writing them to file ",%outfn,!
 	zsystem "$gtm_dist/mupip extract -format=zwr "_%outfn_" >& mupip-extract-out.txt"
-	write "gvngetcb: Variables written - driving external call for call-backs via ydb_get_st() in the simpleAPI",!
+	write "gvngetcb: Variables written - driving external call for call-backs via ydb_get_st() in the SimpleThreadAPI",!
 	;
 	; Now drive external call that will call back in via ydb_get_st() to fetch these same vars/values
 	; and will write its own file that we will compare afterwards.

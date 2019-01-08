@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2019 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -19,44 +19,29 @@
 # stresstest      [nars]        Stress test of all ydb_*() functions in the simpleAPI
 # gvnset          [estess,nars] Test of ydb_set_s() function for Global variables in the simpleAPI
 # isvset          [estess]      Test of ydb_set_s() function for Intrinsic Special Variables in the simpleAPI
-#
 # tp              [nars]        Test of ydb_tp_s() function in the simpleAPI
 # transid         [nars]        Test that transid specified in ydb_tp_s() does go into journal file
-#
 # lvnget          [estess,nars] Test of ydb_get_s() function for local variables in the simpleAPI
 # gvnget          [estess,nars] Test of ydb_get_s() function for global variables in the simpleAPI
 # isvget          [estess]      Test of ydb_get_s() function for ISVs in the simpleAPI
-#
 # wordfreq        [nars]        Use simpleAPI to find the frequency of words in an input text file
-#
 # gvnsubsnext     [nars]        Test of ydb_subscript_next_s() function for global variables in the simpleAPI
-# lvnsubsnext     [nars]        Test of ydb_subscript_next_s() function for local variables in the simpleAPI
-# isvsubsnext     [nars]        Test of ydb_subscript_next_s() function for intrinsic special variables in the simpleAPI
 # gvnsubsprev     [nars]        Test of ydb_subscript_previous_s() function for global variables in the simpleAPI
+# lvnsubsnext     [nars]        Test of ydb_subscript_next_s() function for local variables in the simpleAPI
 # lvnsubsprev     [nars]        Test of ydb_subscript_previous_s() function for local variables in the simpleAPI
+# isvsubsnext     [nars]        Test of ydb_subscript_next_s() function for intrinsic special variables in the simpleAPI
 # isvsubsprev     [nars]        Test of ydb_subscript_previous_s() function for intrinsic special variables in the simpleAPI
-#
-# gvnlvnnodenext  [quinn]        Test of ydb_node_next_s() function for global and local variables in the simpleAPI
-# isvnodenext     [quinn]        Test of ydb_node_next_s() function for intrinsic special variables in the simpleAPI
-# gvnlvnnodeprev  [quinn]        Test of ydb_node_previous_s() function for global and local variables in the simpleAPI
-# isvnodeprev     [quinn]        Test of ydb_node_previous_s() function for intrinsic special variables in the simpleAPI
-# nodenext        [estess]      Test of ydb_node_next_s() function in the simpleAPI (both local and global vars)
-#
-# gvndata         [nars]        Test of ydb_data_s() function for global variables in the simpleAPI
-# lvndata         [nars]        Test of ydb_data_s() function for local variables in the simpleAPI
+# isvnodenext     [quinn]       Test of ydb_node_next_s() function for intrinsic special variables in the simpleAPI
+# isvnodeprev     [quinn]       Test of ydb_node_previous_s() function for intrinsic special variables in the simpleAPI
 # isvdata         [nars]        Test of ydb_data_s() function for intrinsic special variables in the simpleAPI
-#
-# gvnincr         [nars]        Test of ydb_incr_s() function for global variables in the simpleAPI
-# lvnincr         [nars]        Test of ydb_incr_s() function for local variables in the simpleAPI
 # isvincr         [nars]        Test of ydb_incr_s() function for intrinsic special variables in the simpleAPI
-#
-# str2zwr         [nars]        Test of ydb_str2zwr_s() function in the simpleAPI
-# zwr2str         [nars]        Test of ydb_zwr2str_s() function in the simpleAPI
-#
+# gvnlvnnodenext  [quinn]       Test of ydb_node_next_s() function for global and local variables in the simpleAPI
+# gvnlvnnodeprev  [quinn]       Test of ydb_node_previous_s() function for global and local variables in the simpleAPI
+# nodenext        [estess]      Test of ydb_node_next_s() function in the simpleAPI (both local and global vars)
+# nodeprev        [estess]      Test of ydb_node_previous_s() function in the simpleAPI (both local and global vars)
 # forkncore       [estess]      Test of ydb_fork_n_core() function in the simpleAPI
 # locks           [estess]      Test of ydb_lock_s() function in the simpleAPI
 # incrdecr        [estess]      Test of ydb_lock_incr_s() and ydb_lock_decr_s() functions in the simpleAPI
-#
 # simpleapinest   [nars]        Test of SIMPLEAPINEST error
 # time2long       [nars]        Test of TIME2LONG error
 # insuffsubs      [nars]        Test of INSUFFSUBS error
@@ -67,6 +52,11 @@
 # callintrollback [nars]        Test of CALLINTROLLBACK error
 # fatalerror1     [nars]        Test of FATALERROR1 error
 # fatalerror2     [nars]        Test of FATALERROR2 error
+# gvnlvndata      [....]        Test of ydb_data_s() function for global and local variables in the simpleAPI
+# gvnlvnincr      [....]        Test of ydb_incr_s() function for global and local variables in the simpleAPI
+# gvnlvndelete    [....]        Test of ydb_delete_s() function for global and local variables in the simpleAPI
+# str2zwr         [....]        Test of ydb_str2zwr_s() function in the simpleAPI
+# zwr2str         [....]        Test of ydb_zwr2str_s() function in the simpleAPI
 #-------------------------------------------------------------------------------------
 
 echo "simpleapi test starts..."
@@ -75,15 +65,13 @@ echo "simpleapi test starts..."
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic "lvnset lvnsetstress stresstest gvnset isvset tp transid lvnget gvnget isvget wordfreq"
 setenv subtest_list_non_replic "$subtest_list_non_replic gvnsubsnext gvnsubsprev"
-#NARSTODO setenv subtest_list_non_replic "$subtest_list_non_replic gvndata gvnincr"
 setenv subtest_list_non_replic "$subtest_list_non_replic lvnsubsnext lvnsubsprev"
-#NARSTODO setenv subtest_list_non_replic "$subtest_list_non_replic lvndata lvnincr"
 setenv subtest_list_non_replic "$subtest_list_non_replic isvsubsnext isvsubsprev isvnodenext isvnodeprev isvdata isvincr"
-#NARSTODO setenv subtest_list_non_replic "$subtest_list_non_replic str2zwr zwr2str"
 setenv subtest_list_non_replic "$subtest_list_non_replic gvnlvnnodenext gvnlvnnodeprev"
 setenv subtest_list_non_replic "$subtest_list_non_replic nodenext nodeprev forkncore locks incrdecr simpleapinest"
 setenv subtest_list_non_replic "$subtest_list_non_replic time2long insuffsubs invnamecount namecount2hi delete_excl"
 setenv subtest_list_non_replic "$subtest_list_non_replic callintcommit callintrollback fatalerror1 fatalerror2"
+# setenv subtest_list_non_replic "$subtest_list_non_replic gvnlvndata gvnlvnincr gvnlvndelete str2zwr zwr2str"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then

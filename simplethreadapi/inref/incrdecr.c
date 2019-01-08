@@ -26,7 +26,7 @@
 #define VARNAME1	"lockA"
 #define VARNAME2	"^lockA"
 #define SUB21		"42"
-#define SUB31		"simpleAPI"
+#define SUB31		"SimpleThreadAPI"
 #define SUB32		"lock"
 #define SUB33		"uh-huh"
 #define SUB34		"oooooh"
@@ -57,7 +57,7 @@
  * Locks to create:
  *   - lockA, ^lockB
  *   - lockA(42), ^lockB(42)
- *   - lockA("simpleAPI","lock","uh-huh","oooooh","shiney!"), ^lockB("simpleAPI","lock","uh-huh","oooooh","shiney!")
+ *   - lockA("SimpleThreadAPI","lock","uh-huh","oooooh","shiney!"), ^lockB("SimpleThreadAPI","lock","uh-huh","oooooh","shiney!")
  *
  * Create the first two locks from the first set using one call. The rest of the locks are created using ydb_lock_incr_st()
  * with periodic ydb_lock_decr_st() calls on vars and using LKE to display the current state of the locks.

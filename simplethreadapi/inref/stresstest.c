@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
 	if (argc != 1)
 	{	/* This is for debug purposes. To rerun as say "./stresstest 1 < /dev/zero" and that will invoke genstresstest.m
 		 * and do exactly the same set of updates (through a call-in) that the test did and then invoke zwrite of
-		 * local nodes and global nodes using simpleAPI.
+		 * local nodes and global nodes using SimpleThreadAPI.
 		 */
 		status = ydb_ci_t(YDB_NOTTP, NULL, "genstresstest");
 		YDB_ASSERT(0 == status);

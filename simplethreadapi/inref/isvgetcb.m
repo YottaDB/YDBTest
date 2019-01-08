@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	;
+; Copyright (c) 2017-2019 YottaDB LLC. and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -10,10 +10,10 @@
 ;								;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
-; Routine to test ISV fetching via ydb_get_st() simpleAPI interface
+; Routine to test ISV fetching via ydb_get_st() SimpleThreadAPI interface
 ;
 ; Create a piece string delimited by '|' (won't appear in any values) that contains the name of the ISVs we want to
-; fetch via the simpleAPI. Send this list to an external call that will call back in via ydb_get_st() to fetch the
+; fetch via the SimpleThreadAPI. Send this list to an external call that will call back in via ydb_get_st() to fetch the
 ; values for the given set of ISVs and return a delimited string of the values that this routine can compare.
 ;
 ; Notes:

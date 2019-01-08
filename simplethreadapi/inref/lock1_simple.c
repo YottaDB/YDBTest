@@ -18,7 +18,7 @@
 #define VARNAME1	"lockA"
 #define VARNAME2	"^lockA"
 #define SUB21		"42"
-#define SUB31		"simpleAPI"
+#define SUB31		"SimpleThreadAPI"
 #define SUB32		"lock"
 #define SUB33		"uh-huh"
 #define SUB34		"oooooh"
@@ -49,7 +49,7 @@
  * Locks to create:
  *   - lockA, ^lockB
  *   - lockA(42), ^lockB(42)
- *   - lockA("simpleAPI","lock","uh-huh","oooooh","shiney!"), ^lockB("simpleAPI","lock","uh-huh","oooooh","shiney!")
+ *   - lockA("SimpleThreadAPI","lock","uh-huh","oooooh","shiney!"), ^lockB("SimpleThreadAPI","lock","uh-huh","oooooh","shiney!")
  *
  * The first two sets are created in one call (with an LKE check), and the 3rd set is created by itself which should
  * cause the first two sets to be released.
