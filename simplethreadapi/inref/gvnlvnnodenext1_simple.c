@@ -98,7 +98,7 @@ int main(int argc, char** argv)
 		printf("*ret_subs_used was unaltered.\n");
 		fflush(stdout);
 	}
-	sub = 1;
+	sub = 1; /* Set to avoid random YDB_ERR_INSUFFSUBS error */
 	printf("# Set a %s variable with 1 subscript\n", argv[1]); fflush(stdout);
 	status = ydb_set_st(YDB_NOTTP,NULL,&basevar,1,&node1,&value);
 	if (YDB_OK != status)
@@ -172,8 +172,8 @@ int main(int argc, char** argv)
 	{
 		ret_value1.buf_addr[ret_value1.len_used] = '\0';
 		printf("Call 1: ydb_node_next_st() returned %s(%s)\n", basevar.buf_addr, ret_value1.buf_addr); fflush(stdout);
-		sub = 2;
 	}
+	sub = 2;
 	status = ydb_node_next_st(YDB_NOTTP,NULL,&basevar,1,&ret_value1,&sub,&ret_value2[0]);
 	if (YDB_OK != status)
 	{
@@ -210,6 +210,7 @@ int main(int argc, char** argv)
 		printf("*ret_subs_used was unaltered.\n");
 		fflush(stdout);
 	}
+	sub = 1;
 	printf("# Set another %s variable with another 1-depth index\n", argv[1]); fflush(stdout);
 	status = ydb_set_st(YDB_NOTTP,NULL,&basevar,1,&node3,&value);
 	if (YDB_OK != status)
