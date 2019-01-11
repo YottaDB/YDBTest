@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2017-2019 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2019 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -54,9 +54,9 @@
 # fatalerror2     [nars]        Test of FATALERROR2 error
 # gvnlvndata      [quinn]       Test of ydb_data_s() function for global and local variables in the simpleAPI
 # gvnlvnincr      [quinn]       Test of ydb_incr_s() function for global and local variables in the simpleAPI
-# gvnlvndelete    [....]        Test of ydb_delete_s() function for global and local variables in the simpleAPI
-# str2zwr         [....]        Test of ydb_str2zwr_s() function in the simpleAPI
-# zwr2str         [....]        Test of ydb_zwr2str_s() function in the simpleAPI
+# gvnlvndelete    [quinn]       Test of ydb_delete_s() function for global and local variables in the simpleAPI
+# isvdelete	  [quinn]	Test of ydb_delete_s() function for intrinsic special variables in the simpleAPI
+# str2zwr         [quinn]       Test of ydb_str2zwr_s() and ydb_zwr2str_s() functions in the simpleAPI
 #-------------------------------------------------------------------------------------
 
 echo "simpleapi test starts..."
@@ -71,8 +71,7 @@ setenv subtest_list_non_replic "$subtest_list_non_replic gvnlvnnodenext gvnlvnno
 setenv subtest_list_non_replic "$subtest_list_non_replic nodenext nodeprev forkncore locks incrdecr simpleapinest"
 setenv subtest_list_non_replic "$subtest_list_non_replic time2long insuffsubs invnamecount namecount2hi delete_excl"
 setenv subtest_list_non_replic "$subtest_list_non_replic callintcommit callintrollback fatalerror1 fatalerror2"
-setenv subtest_list_non_replic "$subtest_list_non_replic gvnlvndata gvnlvnincr"
-# gvnlvndelete str2zwr zwr2str"
+setenv subtest_list_non_replic "$subtest_list_non_replic gvnlvndata gvnlvnincr gvnlvndelete isvdelete str2zwr"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then

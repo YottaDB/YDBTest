@@ -1,0 +1,26 @@
+# Test of ydb_delete_s() function for Global and Local Variables in the simpleAPI
+# Now run str2zwr*.c (all tests driven by a C routine)
+
+---> Running str2zwr1_simple <---
+### Test of simple ydb_str2zwr_s() and ydb_zwr2str_s() ###
+# Test ydb_str2zwr_s() using the string "X\0ABC"
+ydb_str2zwr_s() returns: "X"_$C(0)_"ABC"
+# Test ydb_zwr2str_s() using the previous return value
+ydb_zwr2str_s() returned the original string.
+
+---> Running str2zwr2_errors <---
+### Test error scenarios of ydb_str2zwr_s() and ydb_zwr2str_s()
+# Test of INVSTRLEN error
+# Attempting ydb_str2zwr_s() with zwr->len_alloc too short
+ydb_str2zwr_s() [49]: 150375522,(SimpleAPI),%YDB-E-INVSTRLEN, Invalid string length 15: max 14
+# Attempting ydb_zwr2str_s() with str->len_alloc too short
+ydb_zwr2str_s() [66]: 150375522,(SimpleAPI),%YDB-E-INVSTRLEN, Invalid string length 5: max 4
+# Test of PARAMINVALID error
+# Attempting ydb_str2zwr_s() with zwr = NULL
+ydb_str2zwr_s() [76]: 151027770,(SimpleAPI),%YDB-E-PARAMINVALID, NULL zwr parameter specified in ydb_str2zwr_s() call
+# Attempting ydb_str2zwr_s() with zwr->buf_addr set to NULL and zwr->len_used is non-zero.
+ydb_str2zwr_s() [85]: 151027770,(SimpleAPI),%YDB-E-PARAMINVALID, NULL zwr->buf_addr parameter specified in ydb_str2zwr_s() call
+# Attempting ydb_zwr2str_s() with str = NULL
+ydb_zwr2str_s() [94]: 151027770,(SimpleAPI),%YDB-E-PARAMINVALID, NULL str parameter specified in ydb_zwr2str_s() call
+# Attempting ydb_str2zwr_s() with zwr->buf_addr set to NULL and zwr->len_used is non-zero.
+ydb_zwr2str_s() [103]: 151027770,(SimpleAPI),%YDB-E-PARAMINVALID, NULL str->buf_addr parameter specified in ydb_zwr2str_s() call

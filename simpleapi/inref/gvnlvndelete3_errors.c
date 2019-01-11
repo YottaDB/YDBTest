@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2019 YottaDB LLC. and/or its subsidiaries.	*
+ * Copyright (c) 2017-2019 YottaDB LLC. and/or its subsidiaries.*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -19,141 +19,139 @@
 
 #define ERRBUF_SIZE	1024
 
-#define SUBSCR32 	"subs"
-#define VALUE		"test"
-#define NODE1		"1"
+#define SUBSCR32	"subs"
 #define SUBSCR1		"1"
-#define null 		""
+#define VALUE		"test"
 
 int main(int argc, char** argv)
 {
-	unsigned int	i, cnt, status, copy_done, ret_value;
-	ydb_buffer_t	subscr32[32], badbasevar, basevar, badvar1, badvar2, badvar3, node1, value, subscr1;
-	char		errbuf[ERRBUF_SIZE];
-	char		retvaluebuff[64], basevarbuff[64], badvarbuff1[64], badvarbuff2[64], badvarbuff3[64];
+	int 		status, copy_done, i;
+	ydb_buffer_t 	basevar, badvar1, badvar2, badvar3, value, subscr1, subscr32[32];
+	char 		errbuf[ERRBUF_SIZE], basevarbuf[64], badvarbuf1[64], badvarbuf2[64], badvarbuf3[64];
 
-	printf("### Test error scenarios in ydb_data_s() of %s Variables ###\n", argv[1]); fflush(stdout);
+
+	printf("### Test error scenarios in ydb_delete_s() of %s Variables ###\n\n", argv[1]); fflush(stdout);
 	/* Initialize varname and value buffers */
-	basevar.buf_addr = &basevarbuff[0];
+	basevar.buf_addr = &basevarbuf[0];
         basevar.len_used = 0;
 	basevar.len_alloc = 64;
 	YDB_COPY_STRING_TO_BUFFER(argv[2], &basevar, copy_done);
 	YDB_ASSERT(copy_done);
         basevar.buf_addr[basevar.len_used]='\0';
 
-	badvar1.buf_addr = &badvarbuff1[0];
+	badvar1.buf_addr = &badvarbuf1[0];
 	badvar1.len_used = 0;
 	badvar1.len_alloc = 64;
 	YDB_COPY_STRING_TO_BUFFER(argv[4], &badvar1, copy_done);
 	YDB_ASSERT(copy_done);
 	badvar1.buf_addr[badvar1.len_used]='\0';
 
-	badvar2.buf_addr = &badvarbuff2[0];
+	badvar2.buf_addr = &badvarbuf2[0];
 	badvar2.len_used = 0;
 	badvar2.len_alloc = 64;
 	YDB_COPY_STRING_TO_BUFFER(argv[5], &badvar2, copy_done);
 	YDB_ASSERT(copy_done);
 	badvar2.buf_addr[badvar2.len_used]='\0';
 
-	badvar3.buf_addr = &badvarbuff3[0];
+	badvar3.buf_addr = &badvarbuf3[0];
 	badvar3.len_used = 0;
 	badvar3.len_alloc = 64;
 	YDB_COPY_STRING_TO_BUFFER(argv[6], &badvar3, copy_done);
 	YDB_ASSERT(copy_done);
 	badvar3.buf_addr[badvar3.len_used]='\0';
 
-	YDB_LITERAL_TO_BUFFER(NODE1, &node1);
 	YDB_LITERAL_TO_BUFFER(VALUE, &value);
 	YDB_LITERAL_TO_BUFFER(SUBSCR1, &subscr1);
-
-	status = ydb_set_s(&basevar, 1, &node1, &value);
+	status = ydb_set_s(&basevar, 0, NULL, &value);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
 		printf("ydb_set_s() [%d]: %s\n", __LINE__, errbuf);
 		fflush(stdout);
 	}
-	printf("\n# Test of INVVARNAME error\n"); fflush(stdout);
-	printf("# Attemping ydb_data_s() of bad basevar (%% in middle of name): %s\n", badvar1.buf_addr); fflush(stdout);
-	status = ydb_data_s(&badvar1, 0, NULL, &ret_value);
+
+	printf("# Test of INVVARNAME error\n"); fflush(stdout);
+	printf("# Attemping ydb_delete_s() of bad basevar (%% in middle of name): %s\n", badvar1.buf_addr); fflush(stdout);
+	status = ydb_delete_s(&badvar1, 0, NULL, YDB_DEL_NODE);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("ydb_data_s() [%d]: %s\n", __LINE__, errbuf);
+		printf("ydb_delete_s() [%d]: %s\n", __LINE__, errbuf);
 		fflush(stdout);
 	}
-	printf("# Attemping ydb_data_s() of bad basevar (first letter in name is digit): %s\n", badvar2.buf_addr); fflush(stdout);
-	status = ydb_data_s(&badvar2, 0, NULL, &ret_value);
+	printf("# Attemping ydb_delete_s() of bad basevar (first letter in name is digit): %s\n", badvar2.buf_addr); fflush(stdout);
+	status = ydb_delete_s(&badvar2, 0, NULL, YDB_DEL_NODE);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("ydb_data_s() [%d]: %s\n", __LINE__, errbuf);
+		printf("ydb_delete_s() [%d]: %s\n", __LINE__, errbuf);
 		fflush(stdout);
 	}
 	printf("\n# Test of VARNAME2LONG error\n"); fflush(stdout);
-	printf("# Attemping ydb_data_s() of bad basevar (> 31 characters): %s\n", badvar3.buf_addr); fflush(stdout);
-	status = ydb_data_s(&badvar3, 0, NULL, &ret_value);
+	printf("# Attemping ydb_delete_s() of bad basevar (> 31 characters): %s\n", badvar3.buf_addr); fflush(stdout);
+	status = ydb_delete_s(&badvar3, 0, NULL, YDB_DEL_NODE);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("ydb_data_s() [%d]: %s\n", __LINE__, errbuf);
+		printf("ydb_delete_s() [%d]: %s\n", __LINE__, errbuf);
 		fflush(stdout);
 	}
 	printf("\n# Test of MAXNRSUBSCRIPTS error\n"); fflush(stdout);
-	printf("# Attempting ydb_data_s() of basevar with 32 subscripts\n"); fflush(stdout);
+	printf("# Attempting ydb_delete_s() of basevar with 32 subscripts\n"); fflush(stdout);
 	for (i = 0; i < 32; i++)
 		YDB_LITERAL_TO_BUFFER(SUBSCR32, &subscr32[i]);
-	status = ydb_data_s(&basevar, 32, subscr32, &ret_value);
+	status = ydb_delete_s(&basevar, 32, subscr32, YDB_DEL_NODE);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("ydb_data_s() [%d]: %s\n", __LINE__, errbuf);
+		printf("ydb_delete_s() [%d]: %s\n", __LINE__, errbuf);
 		fflush(stdout);
 	}
 	printf("\n# Test of MINNRSUBSCRIPTS error\n"); fflush(stdout);
-	printf("# Attemtpin ydb_data_s() of basevar with -1 subscripts\n"); fflush(stdout);
-	status = ydb_data_s(&basevar, -1, NULL, &ret_value);
+	printf("# Attempting ydb_delete_s() of basevar with -1 subscripts\n"); fflush(stdout);
+	status = ydb_delete_s(&basevar, -1, NULL, YDB_DEL_NODE);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("ydb_data_s() [%d]: %s\n", __LINE__, errbuf);
+		printf("ydb_delete_s() [%d]: %s\n", __LINE__, errbuf);
+		fflush(stdout);
+	}
+	printf("\n# Test of UNIMPLOP error\n"); fflush(stdout);
+	printf("# Attempting ydb_delete_s() with deltype != YDB_DEL_NODE/YDB_DEL_TREE\n"); fflush(stdout);
+	status = ydb_delete_s(&basevar, 0, NULL, YDB_DEL_NODE+100);
+	if (YDB_OK != status)
+	{
+		ydb_zstatus(errbuf, ERRBUF_SIZE);
+		printf("ydb_delete_s() [%d]: %s\n", __LINE__, errbuf);
 		fflush(stdout);
 	}
 	printf("\n# Test of PARAMINVALID error\n"); fflush(stdout);
-	printf("# Attempting ydb_data_s() with ret_value = NULL : Expect PARAMINVALID error\n"); fflush(stdout);
-	status = ydb_data_s(&basevar, 0, NULL, NULL);
-	if (YDB_OK != status)
-	{
-		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("ydb_data_s() [%d]: %s\n", __LINE__, errbuf);
-		fflush(stdout);
-	}
-	printf("# Attempting ydb_data_s() with *subsarray->len_alloc < *subsarray->len_used\n"); fflush(stdout);
+	printf("# Attempting ydb_delete_s() with *subsarray->len_alloc < *subsarray->len_used\n"); fflush(stdout);
 	subscr1.len_used = subscr1.len_alloc + 1;
-	status = ydb_data_s(&basevar, 1, &subscr1, &ret_value);
+	status = ydb_delete_s(&basevar, 1, &subscr1, YDB_DEL_NODE);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("ydb_data_s() [%d]: %s\n", __LINE__, errbuf);
+		printf("ydb_delete_s() [%d]: %s\n", __LINE__, errbuf);
 		fflush(stdout);
 	}
 	subscr1.len_used = 1;
-	printf("# Attempting ydb_incr_s() with *subsarray->buf_addr set to NULL, and *subsarray->len_used is non-zero\n"); fflush(stdout);
+	printf("# Attempting ydb_delete_s() with *subsarray->buf_addr set to NULL, and *subsarray->len_used is non-zero\n"); fflush(stdout);
 	subscr1.buf_addr = NULL;
-	status = ydb_data_s(&basevar, 1, &subscr1, &ret_value);
+	status = ydb_delete_s(&basevar, 1, &subscr1, YDB_DEL_NODE);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("ydb_data_s() [%d]: %s\n", __LINE__, errbuf);
+		printf("ydb_delete_s() [%d]: %s\n", __LINE__, errbuf);
 		fflush(stdout);
 	}
 	printf("\n# Test of SUBSARRAYNULL error\n"); fflush(stdout);
-	printf("# Attempting ydb_data_s() with *subarray = NULL : Expect SUBSARRAYNULL error\n"); fflush(stdout);
-	status = ydb_data_s(&basevar, 1, NULL, &ret_value);
+	printf("# Attempting ydb_delete_s() with *subsarray = NULL\n"); fflush(stdout);
+	status = ydb_delete_s(&basevar, 1, NULL, YDB_DEL_NODE);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("ydb_data_s() [%d]: %s\n", __LINE__, errbuf);
+		printf("ydb_delete_s() [%d]: %s\n", __LINE__, errbuf);
 		fflush(stdout);
 	}
 	return YDB_OK;
