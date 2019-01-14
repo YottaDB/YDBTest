@@ -60,10 +60,13 @@ if (0 == $skip_go_test) then
 		setenv ydb_repl_instance $tstpath/mumps.repl
 	endif
 
-	go test $go_repo
+	pushd $GOPATH/src/$go_repo/ > /dev/null
+	go test -c -o test_exe $go_repo
+	./test_exe
 	if ($status) then
 		echo "TEST-E-FAILED : go test $go_repo returned failure status of $status"
 	endif
+	popd > /dev/null
 
 	if ($?test_replic) then
 		unsetenv ydb_repl_instance
