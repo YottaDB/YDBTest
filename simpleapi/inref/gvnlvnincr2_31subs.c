@@ -26,13 +26,16 @@ void print_subs(int subs, ydb_buffer_t *basevar, ydb_buffer_t *ret_array)
 {
 	int	j;
 	printf("%s(", basevar->buf_addr);
-	for (j = 0; j < subs-1; j++)
+	for (j = 0; j < subs; j++)
 	{
-		printf("%s,", ret_array[j].buf_addr);
-
+		if (j == (subs -1))
+			printf("%s", ret_array[j].buf_addr);
+		else
+			printf("%s,", ret_array[j].buf_addr);
 	}
-	printf("%s)", ret_array[subs-1].buf_addr);
+	printf(")");
 	fflush(stdout);
+
 }
 
 int main(int argc, char** argv)

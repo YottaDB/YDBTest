@@ -56,7 +56,7 @@ ydb_get_s() returns -8
 ### Test 31-level (max-deep) subscripts can be used while using ydb_incr_s() of Global Variables ###
 # Each variable will be initially set to 1, and then incremented by 2 to result in 3
 # Set a Global variable with 0 subscripts to 1
-# Increment ^X((null)) by 1
+# Increment ^X() by 1
 # To confirm the value has incremented, get the new value
 ydb_get_s() returns 3
 # Set a Global variable with 1 subscripts to 1
@@ -288,7 +288,7 @@ ydb_get_s() returns -8
 ### Test 31-level (max-deep) subscripts can be used while using ydb_incr_s() of Local Variables ###
 # Each variable will be initially set to 1, and then incremented by 2 to result in 3
 # Set a Local variable with 0 subscripts to 1
-# Increment X((null)) by 1
+# Increment X() by 1
 # To confirm the value has incremented, get the new value
 ydb_get_s() returns 3
 # Set a Local variable with 1 subscripts to 1
