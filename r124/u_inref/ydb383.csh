@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -10,7 +10,7 @@
 #								#
 #################################################################
 #
-echo "# Test that ydb_tp_s() returns negative error code for GBLOFLOW error"
+echo "# Test that ydb_tp_s()/ydb_tp_st() returns negative error code for GBLOFLOW error"
 
 echo "# Create database with minimum blocksize (512), allocation (10) and extension (0) to create GBLOFLOW error as soon as possible"
 $gtm_tst/com/dbcreate.csh mumps 1 -block_size=512 -allocation=10 -extension_count=0

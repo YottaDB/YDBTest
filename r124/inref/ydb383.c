@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	*
+ * Copyright (c) 2018-2019 YottaDB LLC. and/or its subsidiaries.*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -13,6 +13,9 @@
 #include "libyottadb.h"
 
 #include <stdio.h>
+#include <time.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 #define ERRBUF_SIZE	1024
 
@@ -24,31 +27,41 @@
 #define VALUE3 	"Life, the universe, and everything"
 
 char	errbuf[ERRBUF_SIZE];
+int	use_simplethreadapi;
 
 int	gvnset();
 
 int main()
 {
 	int		status;
-	ydb_tpfnptr_t	tpfn;
+	ydb_tp2fnptr_t	tp2fn;
 	ydb_string_t	zwrarg;
+	int             seed;
+
+	/* Initialize random number seed */
+	seed = (time(NULL) * getpid());
+	srand48(seed);
+	use_simplethreadapi = (int)(2 * drand48());
+	printf("# Random choice : use_simplethreadapi = %d\n", use_simplethreadapi); fflush(stdout);
 
 	printf("### --------------------------- ###\n");
 	printf("### Running gvnset() without TP ###\n");
 	printf("### --------------------------- ###\n");
 	fflush(stdout);
-	gvnset();
+	gvnset(YDB_NOTTP, NULL);
 	printf("\n### --------------------------- ###\n");
 	printf("### Running gvnset() inside  TP ###\n");
 	printf("### --------------------------- ###\n");
 	fflush(stdout);
-	tpfn = &gvnset;
-	printf("Entering ydb_tp_s()\n");
-	status = ydb_tp_s(tpfn, NULL, NULL, 0, NULL);
+	tp2fn = &gvnset;
+	printf("Entering ydb_tp_s()/ydb_tp_st()\n");
+	status = use_simplethreadapi
+			? ydb_tp_st(YDB_NOTTP, NULL, tp2fn, NULL, NULL, 0, NULL)
+			: ydb_tp_s((ydb_tpfnptr_t)tp2fn, NULL, NULL, 0, NULL);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("ydb_tp_s() [1]: status = %d : %s\n", status, errbuf);
+		printf("ydb_tp_s()/ydb_tp_st() [1]: status = %d : %s\n", status, errbuf);
 		fflush(stdout);
 		return YDB_OK;
 	}
@@ -56,7 +69,7 @@ int main()
 }
 
 /* Function to set a global variable */
-int gvnset()
+int gvnset(uint64_t tptoken, ydb_buffer_t *errstr)
 {
 	int		status, i;
 	ydb_buffer_t	basevar, subscr, value;
@@ -73,13 +86,15 @@ int gvnset()
 	/* Set single subscript value */
 	for (i = 0; i < 20; i++)
 	{
-		printf("Running ydb_set_s() to set node %s(%d)\n", BASEVAR, i);
+		printf("Running ydb_set_s()/ydb_set_st() to set node %s(%d)\n", BASEVAR, i);
 		subscr.len_used = sprintf(subscr.buf_addr, "%d", i);
-		status = ydb_set_s(&basevar, 1, &subscr, &value);
+		status = use_simplethreadapi
+				? ydb_set_st(tptoken, errstr, &basevar, 1, &subscr, &value)
+				: ydb_set_s(&basevar, 1, &subscr, &value);
 		if (YDB_OK != status)
 		{
 			ydb_zstatus(errbuf, ERRBUF_SIZE);
-			printf("ydb_set_s() : status = %d : %s\n", status, errbuf);
+			printf("ydb_set_s()/ydb_set_st() : status = %d : %s\n", status, errbuf);
 			fflush(stdout);
 			return status;
 		}
