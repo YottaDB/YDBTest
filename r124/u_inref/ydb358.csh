@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -10,7 +10,7 @@
 #								#
 #################################################################
 #
-echo "# Test that ASYNCIO writes in simpleAPI parent and child work fine (no DBIOERR error)"
+echo "# Test that ASYNCIO writes in SimpleAPI/SimpleThreadAPI parent and child work fine (no DBIOERR error)"
 echo ""
 
 echo "# Create ASYNCIO=ON database"
