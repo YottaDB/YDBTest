@@ -1,17 +1,17 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
-#                                                               #
-# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.      #
-# All rights reserved.                                          #
-#                                                               #
-#       This source code contains the intellectual property     #
-#       of its copyright holder(s), and is made available       #
-#       under a license.  If you do not know the terms of       #
-#       the license, please stop and do not read further.       #
-#                                                               #
+#								#
+# Copyright (c) 2018-2019 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
 #################################################################
 #
-echo "# Test that after calling ydb_zwr2str_s(), no subsequent SimpleAPI calls get a SIMPLAPINEST error."
+echo "# Test that after calling ydb_zwr2str_s()/ydb_zwr2str_st(), no subsequent SimpleAPI/SimpleThreadAPI calls get a SIMPLAPINEST error."
 echo ""
 
 
