@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -10,7 +10,7 @@
 #								#
 #################################################################
 #
-echo "# Test that ydb_ci() call with an error after a ydb_set_s() of a spanning node does not GTMASSERT2"
+echo "# Test that ydb_ci() call with an error after a ydb_set_s()/ydb_set_st() of a spanning node does not GTMASSERT2"
 
 $gtm_tst/com/dbcreate.csh mumps 1 -block_size=512 -record_size=1024
 
