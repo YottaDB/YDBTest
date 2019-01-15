@@ -24,7 +24,6 @@
 
 #define VALUE	"test"
 
-
 void print_subs(int subs, ydb_buffer_t *basevar, ydb_buffer_t *ret_array)
 {
 	int	j;
@@ -37,7 +36,7 @@ void print_subs(int subs, ydb_buffer_t *basevar, ydb_buffer_t *ret_array)
 			printf("%s,", ret_array[j].buf_addr);
 	}
 	printf(")\n");
-	fflush(stdout);}
+	fflush(stdout);
 }
 
 int main(int argc, char** argv)

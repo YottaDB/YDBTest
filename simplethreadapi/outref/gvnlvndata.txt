@@ -1,0 +1,127 @@
+# Copy all C files that need to be tested
+# Now run gvnlvndata*.c (all tests driven by a C routine)
+ --> Running gvnlvndata1_simple.c for Global Variables <---
+### Test data return in ydb_data_st() of Global Variables ###
+Perform ydb_data_st() on ^X, which has no value and no subtree
+ydb_data_st() returned 0
+Set the Global variable ^X to test
+Perform ydb_data_st() on ^X, which has a value and no subtree
+ydb_data_st() returned 1
+Set the Global variable ^Y(1) to test
+Perform ydb_data_st() on ^Y, which has no value and a subtree
+ydb_data_st() returned 10
+Set the Global variable ^Y to test
+Perform ydb_data_st() on ^Y, which has a value and a subtree
+ydb_data_st() returned 11
+
+ --> Running gvnlvndata2_31subs.c for Global Variables <---
+### Test data return in ydb_data_st() of Global Variables ###
+Initialize the ydb_buffer_t for 31-depth Global variable
+Perform ydb_data_st() on ^X, which has no value and no subtree
+ydb_data_st() returned 0
+Set the Global variable ^X to test
+Perform ydb_data_st() on ^X, which has a value and no subtree
+ydb_data_st() returned 1
+Set the Global variable ^Y(,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,1) to test
+Perform ydb_data_st() on ^Y, which has no value and a subtree
+ydb_data_st() returned 10
+Set the Global variable ^Y to test
+Perform ydb_data_st() on ^Y, which has a value and a subtree
+ydb_data_st() returned 11
+
+ --> Running gvnlvndata3_errors.c for Global Variables <---
+### Test error scenarios in ydb_data_st() of Global Variables ###
+
+# Test of INVVARNAME error
+# Attemping ydb_data_st() of bad basevar (% in middle of name): ^B%dbasevarInvChar
+ydb_data_st() [82]: 151027762,(SimpleThreadAPI),%YDB-E-INVVARNAME, Invalid local/global/ISV variable name supplied to API call
+# Attemping ydb_data_st() of bad basevar (first letter in name is digit): ^1namestartswithdigit
+ydb_data_st() [90]: 151027762,(SimpleThreadAPI),%YDB-E-INVVARNAME, Invalid local/global/ISV variable name supplied to API call
+
+# Test of VARNAME2LONG error
+# Attemping ydb_data_st() of bad basevar (> 31 characters): ^Verylongbasevarthatexceedsmaxlength
+ydb_data_st() [99]: 151027842,(SimpleThreadAPI),%YDB-E-VARNAME2LONG, Variable name length exceeds maximum allowed (31)
+
+# Test of MAXNRSUBSCRIPTS error
+# Attempting ydb_data_st() of basevar with 32 subscripts
+ydb_data_st() [110]: 150373282,(SimpleThreadAPI),%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
+
+# Test of MINNRSUBSCRIPTS error
+# Attemtpin ydb_data_st() of basevar with -1 subscripts
+ydb_data_st() [119]: 151027786,(SimpleThreadAPI),%YDB-E-MINNRSUBSCRIPTS, Number of subscripts cannot be a negative number
+
+# Test of PARAMINVALID error
+# Attempting ydb_data_st() with ret_value = NULL : Expect PARAMINVALID error
+ydb_data_st() [128]: 151027770,(SimpleThreadAPI),%YDB-E-PARAMINVALID, NULL ret_value parameter specified in ydb_data_st() call
+# Attempting ydb_data_st() with *subsarray->len_alloc < *subsarray->len_used
+ydb_data_st() [137]: 151027770,(SimpleThreadAPI),%YDB-E-PARAMINVALID, Invalid subsarray (index 0) parameter specified in ydb_data_st() call
+# Attempting ydb_incr_st() with *subsarray->buf_addr set to NULL, and *subsarray->len_used is non-zero
+ydb_data_st() [147]: 151027770,(SimpleThreadAPI),%YDB-E-PARAMINVALID, Invalid subsarray (index 0) parameter specified in ydb_data_st() call
+
+# Test of SUBSARRAYNULL error
+# Attempting ydb_data_st() with *subarray = NULL : Expect SUBSARRAYNULL error
+ydb_data_st() [156]: 151027794,(SimpleThreadAPI),%YDB-E-SUBSARRAYNULL, Non-zero number of subscripts [1] specified but subscript array parameter is NULL in ydb_data_st() call
+
+# Now run gvnlvndata*.c (all tests driven by a C routine)
+ --> Running gvnlvndata1_simple.c for Local Variables <---
+### Test data return in ydb_data_st() of Local Variables ###
+Perform ydb_data_st() on X, which has no value and no subtree
+ydb_data_st() returned 0
+Set the Local variable X to test
+Perform ydb_data_st() on X, which has a value and no subtree
+ydb_data_st() returned 1
+Set the Local variable Y(1) to test
+Perform ydb_data_st() on Y, which has no value and a subtree
+ydb_data_st() returned 10
+Set the Local variable Y to test
+Perform ydb_data_st() on Y, which has a value and a subtree
+ydb_data_st() returned 11
+
+ --> Running gvnlvndata2_31subs.c for Local Variables <---
+### Test data return in ydb_data_st() of Local Variables ###
+Initialize the ydb_buffer_t for 31-depth Local variable
+Perform ydb_data_st() on X, which has no value and no subtree
+ydb_data_st() returned 0
+Set the Local variable X to test
+Perform ydb_data_st() on X, which has a value and no subtree
+ydb_data_st() returned 1
+Set the Local variable Y(,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,1) to test
+Perform ydb_data_st() on Y, which has no value and a subtree
+ydb_data_st() returned 10
+Set the Local variable Y to test
+Perform ydb_data_st() on Y, which has a value and a subtree
+ydb_data_st() returned 11
+
+ --> Running gvnlvndata3_errors.c for Local Variables <---
+### Test error scenarios in ydb_data_st() of Local Variables ###
+
+# Test of INVVARNAME error
+# Attemping ydb_data_st() of bad basevar (% in middle of name): B%dbasevarInvChar
+ydb_data_st() [82]: 151027762,(SimpleThreadAPI),%YDB-E-INVVARNAME, Invalid local/global/ISV variable name supplied to API call
+# Attemping ydb_data_st() of bad basevar (first letter in name is digit): 1namestartswithdigit
+ydb_data_st() [90]: 151027762,(SimpleThreadAPI),%YDB-E-INVVARNAME, Invalid local/global/ISV variable name supplied to API call
+
+# Test of VARNAME2LONG error
+# Attemping ydb_data_st() of bad basevar (> 31 characters): Verylongbasevarthatexceedsmaxlength
+ydb_data_st() [99]: 151027842,(SimpleThreadAPI),%YDB-E-VARNAME2LONG, Variable name length exceeds maximum allowed (31)
+
+# Test of MAXNRSUBSCRIPTS error
+# Attempting ydb_data_st() of basevar with 32 subscripts
+ydb_data_st() [110]: 150373282,(SimpleThreadAPI),%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
+
+# Test of MINNRSUBSCRIPTS error
+# Attemtpin ydb_data_st() of basevar with -1 subscripts
+ydb_data_st() [119]: 151027786,(SimpleThreadAPI),%YDB-E-MINNRSUBSCRIPTS, Number of subscripts cannot be a negative number
+
+# Test of PARAMINVALID error
+# Attempting ydb_data_st() with ret_value = NULL : Expect PARAMINVALID error
+ydb_data_st() [128]: 151027770,(SimpleThreadAPI),%YDB-E-PARAMINVALID, NULL ret_value parameter specified in ydb_data_st() call
+# Attempting ydb_data_st() with *subsarray->len_alloc < *subsarray->len_used
+ydb_data_st() [137]: 151027770,(SimpleThreadAPI),%YDB-E-PARAMINVALID, Invalid subsarray (index 0) parameter specified in ydb_data_st() call
+# Attempting ydb_incr_st() with *subsarray->buf_addr set to NULL, and *subsarray->len_used is non-zero
+ydb_data_st() [147]: 151027770,(SimpleThreadAPI),%YDB-E-PARAMINVALID, Invalid subsarray (index 0) parameter specified in ydb_data_st() call
+
+# Test of SUBSARRAYNULL error
+# Attempting ydb_data_st() with *subarray = NULL : Expect SUBSARRAYNULL error
+ydb_data_st() [156]: 151027794,(SimpleThreadAPI),%YDB-E-SUBSARRAYNULL, Non-zero number of subscripts [1] specified but subscript array parameter is NULL in ydb_data_st() call
+

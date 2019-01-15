@@ -52,8 +52,8 @@
 # callintrollback [nars]        Test of CALLINTROLLBACK error
 # fatalerror1     [nars]        Test of FATALERROR1 error
 # fatalerror2     [nars]        Test of FATALERROR2 error
-# gvnlvndata      [....]        Test of ydb_data_st() function for global and local variables in the SimpleThreadAPI
-# gvnlvnincr      [....]        Test of ydb_incr_st() function for global and local variables in the SimpleThreadAPI
+# gvnlvndata      [quinn]       Test of ydb_data_st() function for global and local variables in the SimpleThreadAPI
+# gvnlvnincr      [quinn]       Test of ydb_incr_st() function for global and local variables in the SimpleThreadAPI
 # gvnlvndelete    [....]        Test of ydb_delete_st() function for global and local variables in the SimpleThreadAPI
 # str2zwr         [....]        Test of ydb_str2zwr_st() function in the SimpleThreadAPI
 # zwr2str         [....]        Test of ydb_zwr2str_st() function in the SimpleThreadAPI
@@ -71,7 +71,7 @@ setenv subtest_list_non_replic "$subtest_list_non_replic gvnlvnnodenext gvnlvnno
 setenv subtest_list_non_replic "$subtest_list_non_replic nodenext nodeprev forkncore locks incrdecr simpleapinest"
 setenv subtest_list_non_replic "$subtest_list_non_replic time2long insuffsubs invnamecount namecount2hi delete_excl"
 setenv subtest_list_non_replic "$subtest_list_non_replic callintcommit callintrollback fatalerror1 fatalerror2"
-# setenv subtest_list_non_replic "$subtest_list_non_replic gvnlvndata gvnlvnincr gvnlvndelete str2zwr zwr2str"
+setenv subtest_list_non_replic "$subtest_list_non_replic gvnlvndata gvnlvnincr"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
