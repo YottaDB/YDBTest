@@ -61,6 +61,7 @@
 # str2zwr         		[quinn]       Test of ydb_str2zwr_s() and ydb_zwr2str_s() functions in the simpleAPI
 # utils_file	  		[quinn]	      Test of ydb_file_name_to_id(), ydb_file_is_identical(), and ydb_file_id_free() in the SimpleAPI
 # simpleapinotallowed	 	[quinn]	      Test of errors in the SimpleAPI
+# utilfuncs       		[quinn]       Test of Utility Functions in the SimpleAPI
 #-------------------------------------------------------------------------------------
 
 echo "simpleapi test starts..."
@@ -77,7 +78,7 @@ setenv subtest_list_non_replic "$subtest_list_non_replic time2long insuffsubs in
 setenv subtest_list_non_replic "$subtest_list_non_replic callintcommit callintrollback fatalerror1 fatalerror2 key2big"
 setenv subtest_list_non_replic "$subtest_list_non_replic gvsuboflow"
 setenv subtest_list_non_replic "$subtest_list_non_replic gvnlvndata gvnlvnincr gvnlvndelete isvdelete str2zwr utils_file"
-setenv subtest_list_non_replic "$subtest_list_non_replic simpleapinotallowed"
+setenv subtest_list_non_replic "$subtest_list_non_replic simpleapinotallowed utilfuncs"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then

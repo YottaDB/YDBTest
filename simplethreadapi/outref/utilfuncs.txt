@@ -1,0 +1,167 @@
+# Test of Utility Functions in the SimpleThreadAPI
+# Now run utilfuncs*.c (all tests driven by a C routine)
+
+ --> Running utilfuncs1_message.c <---
+### Test Functionality of ydb_message_t() in the SimpleThreadAPI ###
+
+# Test ydb_message_t() with the errnum for YDB_ERR_PARAMINVALID: -151027770
+ydb_message_t() returns 
+%YDB-E-PARAMINVALID, !AD parameter specified in !AD call
+
+### Test Error scenarios of ydb_message_t() in the SimpleThreadAPI ###
+# Test of YDB_ERR_UNKNOWNSYSERR error
+Line[70]: 151027906,(SimpleThreadAPI),%YDB-E-UNKNOWNSYSERR, [2147483647] does not correspond to a known YottaDB error code
+and msg_buff remains unchanged
+
+# Test of YDB_ERR_INVSTRLEN error
+Line[90]: 150375522,(SimpleThreadAPI),%YDB-E-INVSTRLEN, Invalid string length 56: max 5
+
+# Test of YDB_ERR_PARAMINVALID error
+# Test with msg_buff->buf_addr = NULL
+Line[109]: 151027770,(SimpleThreadAPI),%YDB-E-PARAMINVALID, NULL msg_buff->buf_addr parameter specified in ydb_message_t() call
+# Test with msg_buff = NULL
+Line[118]: 151027770,(SimpleThreadAPI),%YDB-E-PARAMINVALID, NULL msg_buff parameter specified in ydb_message_t() call
+
+ --> Running utilfuncs1_timer.c <---
+### Test Functionality of ydb_timer_start_t()/ydb_timer_cancel_t() in the SimpleAPI ###
+
+# Test ydb_timer_set_t() sets a timer which will consequently call a handle function.
+# Execute ydb_timer_set_t() with limit_nsec set to 3 seconds
+ydb_timer_start_t() successfully called timer_done()
+Correct amount of time passed after ydb_timer_start_t()
+
+# Test ydb_timer_cancel_t() cancels a set timer, which prevents the handle function from being called
+# Set ydb_timer_cancel_t() to cancel after 1 second
+ydb_timer_start_t() successfully cancelled
+
+ --> Running utilfuncs2_CALLINAFTERXIT.c <---
+### Test that any SimpleThreadAPI call after ydb_exit() returns YDB_ERR_CALLINAFTERXIT error ###
+# Invoke ydb_set_st() to initialize SimpleThreadAPI environment
+# Invoke ydb_exit() to shutdown/close SimpleThreadAPI environment
+ --> Invoke ydb_data_st()                after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_delete_excl_st()         after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_delete_st()              after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_get_st()                 after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_incr_st()                after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_lock_st()                after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_lock_decr_st()           after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_lock_incr_st()           after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_node_next_st()           after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_node_previous_st()       after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_set_st()                 after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_str2zwr_st()             after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_subscript_next_st()      after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_subscript_previous_st()  after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_tp_st()                  after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_zwr2str_st()             after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_child_init()             after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_exit()                   after ydb_exit() : Return value is YDB_OK as expected
+ --> Invoke ydb_file_id_free_t()         after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_file_is_identical_t()    after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_file_name_to_id_t()      after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_init()                   after ydb_exit() : Return value is -YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_message_t()              after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_stdout_stderr_adjust_t() after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_thread_is_main()         after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_timer_cancel()           after ydb_exit() : There is no return value since function is void
+ --> Invoke ydb_timer_start_t()          after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+
+ --> Running utilfuncs2_STAPIFORKEXEC.c <---
+### Test that any SimpleAPI call in child process after fork() returns YDB_ERR_STAPIFORKEXEC error if exec() isn't used ###
+# Invoke ydb_set_st() to initialize SimpleAPI environment
+# Fork the process and test SimpleThreadAPI calls
+# Inside Child process
+ --> Invoke ydb_data_st()                in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_delete_excl_st()         in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_delete_st()              in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_get_st()                 in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_incr_st()                in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_lock_st()                in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_lock_decr_st()           in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_lock_incr_st()           in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_node_next_st()           in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_node_previous_st()       in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_set_st()                 in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_str2zwr_st()             in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_subscript_next_st()      in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_subscript_previous_st()  in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_tp_st()                  in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_zwr2str_st()             in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_child_init()             in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_exit()                   in the child process after fork() : Return value is YDB_OK as expected
+ --> Invoke ydb_file_id_free_t()         in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_file_is_identical_t()    in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_file_name_to_id_t()      in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_init()                   in the child process after fork() : Return value is -YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_message_t()              in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_stdout_stderr_adjust_t() in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_timer_cancel()           in the child process after fork() : There is no return value since function is void
+ --> Invoke ydb_timer_start_t()          in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+# Child Process has finished
+
+ --> Running utilfuncs3_MT_CALLINAFTERXIT.c <---
+### Test that any SimpleThreadAPI call after ydb_exit() returns YDB_ERR_CALLINAFTERXIT error ###
+# Invoke ydb_set_st() to initialize SimpleThreadAPI environment
+# Invoke ydb_exit() to shutdown/close SimpleThreadAPI environment
+Expected Output:
+ --> Invoke ydb_data_st()                after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_delete_excl_st()         after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_delete_st()              after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_get_st()                 after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_incr_st()                after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_lock_st()                after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_lock_decr_st()           after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_lock_incr_st()           after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_node_next_st()           after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_node_previous_st()       after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_set_st()                 after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_str2zwr_st()             after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_subscript_next_st()      after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_subscript_previous_st()  after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_tp_st()                  after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_zwr2str_st()             after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_child_init()             after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_exit()                   after ydb_exit() : Return value is YDB_OK as expected
+ --> Invoke ydb_file_id_free_t()         after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_file_is_identical_t()    after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_file_name_to_id_t()      after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_init()                   after ydb_exit() : Return value is -YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_message_t()              after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_stdout_stderr_adjust_t() after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_thread_is_main()         after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_timer_cancel()           after ydb_exit() : There is no return value since function is void
+ --> Invoke ydb_timer_start_t()          after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+All 8 Threads returned expected output
+
+ --> Running utilfuncs3_MT_STAPIFORKEXEC.c <---
+### Test that any SimpleAPI call in child process after fork() returns YDB_ERR_STAPIFORKEXEC error if exec() isn't used ###
+# Invoke ydb_set_st() to initialize SimpleThreadAPI environment
+# Within each thread, fork the process and test SimpleThreadAPI calls
+Expected Output:
+ --> Invoke ydb_data_st()                in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_delete_excl_st()         in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_delete_st()              in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_get_st()                 in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_incr_st()                in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_lock_st()                in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_lock_decr_st()           in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_lock_incr_st()           in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_node_next_st()           in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_node_previous_st()       in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_set_st()                 in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_str2zwr_st()             in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_subscript_next_st()      in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_subscript_previous_st()  in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_tp_st()                  in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_zwr2str_st()             in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_child_init()             in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_exit()                   in the child process after fork() : Return value is YDB_OK as expected
+ --> Invoke ydb_file_id_free_t()         in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_file_is_identical_t()    in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_file_name_to_id_t()      in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_init()                   in the child process after fork() : Return value is -YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_message_t()              in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_stdout_stderr_adjust_t() in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_timer_cancel()           in the child process after fork() : There is no return value since function is void
+ --> Invoke ydb_timer_start_t()          in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+All 8 Threads returned expected output
