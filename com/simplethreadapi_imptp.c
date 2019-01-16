@@ -1358,6 +1358,10 @@ char *get_curtime()
 	return timeString;
 }
 
+/* In the TP callback functions, note that it is possible for a SimpleThreadAPI call to return with YDB_ERR_CALLINAFTERXIT.
+ * This indicates the process has started exit handling and is waiting for the TP worker threads to terminate.
+ * Therefore return from the TP callback function right away in that case.
+ */
 int	tpfn_stage1(uint64_t tptoken, ydb_buffer_t *errstr, int *parm_array)
 {
 	int	crash, trigger, istp, fillid, loop, jobno, I, ztr;
@@ -1378,7 +1382,7 @@ int	tpfn_stage1(uint64_t tptoken, ydb_buffer_t *errstr, int *parm_array)
 	subscr[0].len_used = sprintf(subscr[0].buf_addr, "%d", fillid);
 	YDB_COPY_BUFF_TO_BUFF(&ybuff_subsMAX, &subscr[1]);
 	status = ydb_set_st(tptoken, errstr, &ygbl_arandom, 2, subscr, &ybuff_val);
-	if (YDB_TP_RESTART == status)
+	if ((YDB_TP_RESTART == status) || (YDB_ERR_CALLINAFTERXIT == status))
 		return status;
 	YDB_ASSERT(YDB_OK == status);
 
@@ -1421,14 +1425,14 @@ int	tpfn_stage1(uint64_t tptoken, ydb_buffer_t *errstr, int *parm_array)
 			YDB_COPY_BUFF_TO_BUFF(&value, &subscr[2]);
 			value.len_used = sprintf(value.buf_addr, "%d", jobno);
 			status = ydb_set_st(tptoken, errstr, &ygbl_zdummy, 1, &subscr[2], &value);
-			if (YDB_TP_RESTART == status)
+			if ((YDB_TP_RESTART == status) || (YDB_ERR_CALLINAFTERXIT == status))
 				return status;
 			YDB_ASSERT(YDB_OK == status);
 		}
 	}
 	/* . set ^brandomv(fillid,subsMAX)=valALT */
 	status = ydb_set_st(tptoken, errstr, &ygbl_brandomv, 2, subscr, &ybuff_valALT);
-	if (YDB_TP_RESTART == status)
+	if ((YDB_TP_RESTART == status) || (YDB_ERR_CALLINAFTERXIT == status))
 		return status;
 	YDB_ASSERT(YDB_OK == status);
 
@@ -1437,7 +1441,7 @@ int	tpfn_stage1(uint64_t tptoken, ydb_buffer_t *errstr, int *parm_array)
 	{
 		/* . . set ^crandomva(fillid,subsMAX)=valALT */
 		status = ydb_set_st(tptoken, errstr, &ygbl_crandomva, 2, subscr, &ybuff_valALT);
-		if (YDB_TP_RESTART == status)
+		if ((YDB_TP_RESTART == status) || (YDB_ERR_CALLINAFTERXIT == status))
 			return status;
 		YDB_ASSERT(YDB_OK == status);
 	}
@@ -1445,7 +1449,7 @@ int	tpfn_stage1(uint64_t tptoken, ydb_buffer_t *errstr, int *parm_array)
 	/* . set ^drandomvariable(fillid,subs)=valALT */
 	YDB_COPY_BUFF_TO_BUFF(&ybuff_subs, &subscr[1]);
 	status = ydb_set_st(tptoken, errstr, &ygbl_drandomvariable, 2, subscr, &ybuff_valALT);
-	if (YDB_TP_RESTART == status)
+	if ((YDB_TP_RESTART == status) || (YDB_ERR_CALLINAFTERXIT == status))
 		return status;
 	YDB_ASSERT(YDB_OK == status);
 
@@ -1454,20 +1458,20 @@ int	tpfn_stage1(uint64_t tptoken, ydb_buffer_t *errstr, int *parm_array)
 	{
 		/* . . set ^erandomvariableimptp(fillid,subs)=valALT */
 		status = ydb_set_st(tptoken, errstr, &ygbl_erandomvariableimptp, 2, subscr, &ybuff_valALT);
-		if (YDB_TP_RESTART == status)
+		if ((YDB_TP_RESTART == status) || (YDB_ERR_CALLINAFTERXIT == status))
 			return status;
 		YDB_ASSERT(YDB_OK == status);
 
 		/* . . set ^frandomvariableinimptp(fillid,subs)=valALT */
 		status = ydb_set_st(tptoken, errstr, &ygbl_frandomvariableinimptp, 2, subscr, &ybuff_valALT);
-		if (YDB_TP_RESTART == status)
+		if ((YDB_TP_RESTART == status) || (YDB_ERR_CALLINAFTERXIT == status))
 			return status;
 		YDB_ASSERT(YDB_OK == status);
 	}
 
 	/* . set ^grandomvariableinimptpfill(fillid,subs)=val */
 	status = ydb_set_st(tptoken, errstr, &ygbl_grandomvariableinimptpfill, 2, subscr, &ybuff_val);
-	if (YDB_TP_RESTART == status)
+	if ((YDB_TP_RESTART == status) || (YDB_ERR_CALLINAFTERXIT == status))
 		return status;
 	YDB_ASSERT(YDB_OK == status);
 
@@ -1476,13 +1480,13 @@ int	tpfn_stage1(uint64_t tptoken, ydb_buffer_t *errstr, int *parm_array)
 	{
 		/* . . set ^hrandomvariableinimptpfilling(fillid,subs)=val */
 		status = ydb_set_st(tptoken, errstr, &ygbl_hrandomvariableinimptpfilling, 2, subscr, &ybuff_val);
-		if (YDB_TP_RESTART == status)
+		if ((YDB_TP_RESTART == status) || (YDB_ERR_CALLINAFTERXIT == status))
 			return status;
 		YDB_ASSERT(YDB_OK == status);
 
 		/* . . set ^irandomvariableinimptpfillprgrm(fillid,subs)=val */
 		status = ydb_set_st(tptoken, errstr, &ygbl_irandomvariableinimptpfillprgrm, 2, subscr, &ybuff_val);
-		if (YDB_TP_RESTART == status)
+		if ((YDB_TP_RESTART == status) || (YDB_ERR_CALLINAFTERXIT == status))
 			return status;
 		YDB_ASSERT(YDB_OK == status);
 	} else
@@ -1497,7 +1501,7 @@ int	tpfn_stage1(uint64_t tptoken, ydb_buffer_t *errstr, int *parm_array)
 	/* . set ^jrandomvariableinimptpfillprogram(fillid,I)=val */
 	YDB_COPY_BUFF_TO_BUFF(&ybuff_I, &subscr[1]);
 	status = ydb_set_st(tptoken, errstr, &ygbl_jrandomvariableinimptpfillprogram, 2, subscr, &ybuff_val);
-	if (YDB_TP_RESTART == status)
+	if ((YDB_TP_RESTART == status) || (YDB_ERR_CALLINAFTERXIT == status))
 		return status;
 	YDB_ASSERT(YDB_OK == status);
 
@@ -1507,14 +1511,14 @@ int	tpfn_stage1(uint64_t tptoken, ydb_buffer_t *errstr, int *parm_array)
 		/* . . set ^jrandomvariableinimptpfillprogram(fillid,I,I)=val */
 		YDB_COPY_BUFF_TO_BUFF(&ybuff_I, &subscr[2]);
 		status = ydb_set_st(tptoken, errstr, &ygbl_jrandomvariableinimptpfillprogram, 3, subscr, &ybuff_val);
-		if (YDB_TP_RESTART == status)
+		if ((YDB_TP_RESTART == status) || (YDB_ERR_CALLINAFTERXIT == status))
 			return status;
 		YDB_ASSERT(YDB_OK == status);
 
 		/* . . set ^jrandomvariableinimptpfillprogram(fillid,I,I,subs)=val */
 		YDB_COPY_BUFF_TO_BUFF(&ybuff_subs, &subscr[3]);
 		status = ydb_set_st(tptoken, errstr, &ygbl_jrandomvariableinimptpfillprogram, 4, subscr, &ybuff_val);
-		if (YDB_TP_RESTART == status)
+		if ((YDB_TP_RESTART == status) || (YDB_ERR_CALLINAFTERXIT == status))
 			return status;
 		YDB_ASSERT(YDB_OK == status);
 	}
@@ -1532,7 +1536,7 @@ int	tpfn_stage1(uint64_t tptoken, ydb_buffer_t *errstr, int *parm_array)
 		subscr[1].len_used = sprintf(subscr[1].buf_addr, "%d", jobno);
 		value.len_used = sprintf(value.buf_addr, "%d", loop);
 		status = ydb_set_st(tptoken, errstr, &ygbl_lasti, 2, subscr, &value);
-		if (YDB_TP_RESTART == status)
+		if ((YDB_TP_RESTART == status) || (YDB_ERR_CALLINAFTERXIT == status))
 			return status;
 		YDB_ASSERT(YDB_OK == status);
 	}
@@ -1561,7 +1565,7 @@ int	tpfn_stage3(uint64_t tptoken, ydb_buffer_t *errstr, int *parm_array)
 	/* subscr[0] already has <fillid> value in it */
 	YDB_COPY_BUFF_TO_BUFF(&ybuff_subs, &subscr[1]);
 	status = ydb_set_st(tptoken, errstr, &ygbl_entp, 2, subscr, &ybuff_val);
-	if (YDB_TP_RESTART == status)
+	if ((YDB_TP_RESTART == status) || (YDB_ERR_CALLINAFTERXIT == status))
 		return status;
 	YDB_ASSERT(YDB_OK == status);
 
@@ -1570,7 +1574,7 @@ int	tpfn_stage3(uint64_t tptoken, ydb_buffer_t *errstr, int *parm_array)
 	{
 		/* . . set ^fntp(fillid,subs)=val */
 		status = ydb_set_st(tptoken, errstr, &ygbl_fntp, 2, subscr, &ybuff_val);
-		if (YDB_TP_RESTART == status)
+		if ((YDB_TP_RESTART == status) || (YDB_ERR_CALLINAFTERXIT == status))
 			return status;
 		YDB_ASSERT(YDB_OK == status);
 	} else
@@ -1578,7 +1582,7 @@ int	tpfn_stage3(uint64_t tptoken, ydb_buffer_t *errstr, int *parm_array)
 		/* . if trigger do */
 		/* . . set ^fntp(fillid,subs)=$extract(^fntp(fillid,subs),1,$length(^fntp(fillid,subs))-$length("suffix")) */
 		status = ydb_get_st(tptoken, errstr, &ygbl_fntp, 2, subscr, &value);
-		if (YDB_TP_RESTART == status)
+		if ((YDB_TP_RESTART == status) || (YDB_ERR_CALLINAFTERXIT == status))
 			return status;
 		YDB_ASSERT(YDB_OK == status);
 		if (6 <= value.len_used)
@@ -1589,14 +1593,14 @@ int	tpfn_stage3(uint64_t tptoken, ydb_buffer_t *errstr, int *parm_array)
 			return YDB_TP_RESTART;	/* This is a restartable situation (TP isolation violated). Signal a restart. */
 		}
 		status = ydb_set_st(tptoken, errstr, &ygbl_fntp, 2, subscr, &value);
-		if (YDB_TP_RESTART == status)
+		if ((YDB_TP_RESTART == status) || (YDB_ERR_CALLINAFTERXIT == status))
 			return status;
 		YDB_ASSERT(YDB_OK == status);
 	}
 	/* . set ^gntp(fillid,subsMAX)=valMAX */
 	YDB_COPY_BUFF_TO_BUFF(&ybuff_subsMAX, &subscr[1]);
 	status = ydb_set_st(tptoken, errstr, &ygbl_gntp, 2, subscr, &ybuff_valMAX);
-	if (YDB_TP_RESTART == status)
+	if ((YDB_TP_RESTART == status) || (YDB_ERR_CALLINAFTERXIT == status))
 		return status;
 	YDB_ASSERT(YDB_OK == status);
 
@@ -1605,18 +1609,18 @@ int	tpfn_stage3(uint64_t tptoken, ydb_buffer_t *errstr, int *parm_array)
 	{
 		/* . . set ^hntp(fillid,subsMAX)=valMAX */
 		status = ydb_set_st(tptoken, errstr, &ygbl_hntp, 2, subscr, &ybuff_valMAX);
-		if (YDB_TP_RESTART == status)
+		if ((YDB_TP_RESTART == status) || (YDB_ERR_CALLINAFTERXIT == status))
 			return status;
 		YDB_ASSERT(YDB_OK == status);
 
 		/* . . set ^intp(fillid,subsMAX)=valMAX */
 		status = ydb_set_st(tptoken, errstr, &ygbl_intp, 2, subscr, &ybuff_valMAX);
-		if (YDB_TP_RESTART == status)
+		if ((YDB_TP_RESTART == status) || (YDB_ERR_CALLINAFTERXIT == status))
 			return status;
 
 		/* . . set ^bntp(fillid,subsMAX)=valMAX */
 		status = ydb_set_st(tptoken, errstr, &ygbl_bntp, 2, subscr, &ybuff_valMAX);
-		if (YDB_TP_RESTART == status)
+		if ((YDB_TP_RESTART == status) || (YDB_ERR_CALLINAFTERXIT == status))
 			return status;
 	}
 	return YDB_OK;
