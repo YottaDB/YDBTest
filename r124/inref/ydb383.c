@@ -89,7 +89,7 @@ int gvnset(uint64_t tptoken, ydb_buffer_t *errstr)
 		printf("Running ydb_set_s()/ydb_set_st() to set node %s(%d)\n", BASEVAR, i);
 		subscr.len_used = sprintf(subscr.buf_addr, "%d", i);
 		status = use_simplethreadapi
-				? ydb_set_st(tptoken, errstr, &basevar, 1, &subscr, &value)
+				? ydb_set_st(tptoken, NULL, &basevar, 1, &subscr, &value)
 				: ydb_set_s(&basevar, 1, &subscr, &value);
 		if (YDB_OK != status)
 		{
