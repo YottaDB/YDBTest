@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -114,8 +114,10 @@ endif
 if ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) then
 	# filter out below test on 32-bit ARM since it relies on hash collisions which happen only on Linux x86_64 currently
 	setenv subtest_exclude_list "$subtest_exclude_list ydb297"
+endif
 
-	# filter out below test because it relies on versions prior to V60000, which do not exist on 32-bit ARM
+if (("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) || ("HOST_LINUX_AARCH64" == $gtm_test_os_machtype)) then
+	# filter out below test because it relies on versions prior to V60000, which do not exist on 32-bit or 64-bit ARM
 	setenv subtest_exclude_list "$subtest_exclude_list ydb362a ydb362b"
 endif
 
