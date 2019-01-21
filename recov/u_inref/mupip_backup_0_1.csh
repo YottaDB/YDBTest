@@ -3,7 +3,7 @@
 #								#
 # Copyright 2002, 2013 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -31,6 +31,9 @@ echo "$MUPIP backup * -newj ./backup"
 $MUPIP backup "*" -newj ./backup  >& back.out
 if ($status) then
 	echo "TEST-E-BACKUPFAIL Mupip backup failed. Test Failed"
+	# Pause the IMPTP processes before exiting as otherwise they would soon fill up the disk
+	# Do not stop/kill them as they might have important debugging information in case of process hangs etc.
+	$ydb_dist/mumps -run %XCMD 'do pause^pauseimptp'
 	exit
 endif
 $grep BACKUP back.out
