@@ -8,17 +8,30 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
 ### Test simple ydb_subscript_next_st() of Local Variables ###
-Initialize call-in environment
-Set a local variable (and a next local variable) with 0 subscripts
-Set local variable node (and a next subscript) with 1 subscript
-Set a local variable node (and a next subscript) with 2 subscripts
-Get next local variable of local variable with 0 subscripts
+# Initialize call-in environment
+# Set a local variable (and a next local variable) with 0 subscripts
+# Set local variable node (and a next subscript) with 1 subscript
+# Set a local variable node (and a next subscript) with 2 subscripts
+
+# Get next local variable of local variable with 0 subscripts
 ydb_subscript_next_st() returned [nextlv]
-Get next subscript of local variable with 1 subscript
+# Get next local variable of local variable with 0 subscripts
+ydb_subscript_next_st() returned YDB_ERR_NODEEND
+*ret_value.len_used and ret_value.buf_addr were unaltered.
+
+# Get next subscript of local variable with 1 subscript
 ydb_subscript_next_st() returned [43]
-Get next subscript of local variable with 2 subscripts
+# Get next local variable of local variable with 1 subscripts
+ydb_subscript_next_st() returned YDB_ERR_NODEEND
+*ret_value.len_used and ret_value.buf_addr were unaltered.
+
+# Get next subscript of local variable with 2 subscripts
 ydb_subscript_next_st() returned [answer2]
-Demonstrate our progress by executing a ZWRITE in a call-in
+# Get next local variable of local variable with 3 subscripts
+ydb_subscript_next_st() returned YDB_ERR_NODEEND
+*ret_value.len_used and ret_value.buf_addr were unaltered.
+
+# Demonstrate our progress by executing a ZWRITE in a call-in
 baselv="A question"
 baselv(42)="One less than 43"
 baselv(42,"answer")="Life, the universe, and everything"
@@ -37,71 +50,169 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
 ### Test 31-level (max-deep) subscripts can be got using ydb_subscript_next_st() of Local Variables ###
-Set a local variable (and next subscript) with 0 subscripts
+
+# Set a local variable (and next subscript) with 0 subscripts
 ydb_subscript_next_st() : [level 0] returned [nextlv]
-Set a local variable (and next subscript) with 1 subscripts
+# Get next local variable of local variable with 0 subscripts
+ydb_subscript_next_st() returned YDB_ERR_NODEEND
+*ret_value.len_used and ret_value.buf_addr were unaltered.
+# Set a local variable (and next subscript) with 1 subscripts
 ydb_subscript_next_st() : [level 1] returned [1]
-Set a local variable (and next subscript) with 2 subscripts
+# Get next local variable of local variable with 1 subscripts
+ydb_subscript_next_st() returned YDB_ERR_NODEEND
+*ret_value.len_used and ret_value.buf_addr were unaltered.
+# Set a local variable (and next subscript) with 2 subscripts
 ydb_subscript_next_st() : [level 2] returned [2]
-Set a local variable (and next subscript) with 3 subscripts
+# Get next local variable of local variable with 2 subscripts
+ydb_subscript_next_st() returned YDB_ERR_NODEEND
+*ret_value.len_used and ret_value.buf_addr were unaltered.
+# Set a local variable (and next subscript) with 3 subscripts
 ydb_subscript_next_st() : [level 3] returned [3]
-Set a local variable (and next subscript) with 4 subscripts
+# Get next local variable of local variable with 3 subscripts
+ydb_subscript_next_st() returned YDB_ERR_NODEEND
+*ret_value.len_used and ret_value.buf_addr were unaltered.
+# Set a local variable (and next subscript) with 4 subscripts
 ydb_subscript_next_st() : [level 4] returned [4]
-Set a local variable (and next subscript) with 5 subscripts
+# Get next local variable of local variable with 4 subscripts
+ydb_subscript_next_st() returned YDB_ERR_NODEEND
+*ret_value.len_used and ret_value.buf_addr were unaltered.
+# Set a local variable (and next subscript) with 5 subscripts
 ydb_subscript_next_st() : [level 5] returned [5]
-Set a local variable (and next subscript) with 6 subscripts
+# Get next local variable of local variable with 5 subscripts
+ydb_subscript_next_st() returned YDB_ERR_NODEEND
+*ret_value.len_used and ret_value.buf_addr were unaltered.
+# Set a local variable (and next subscript) with 6 subscripts
 ydb_subscript_next_st() : [level 6] returned [6]
-Set a local variable (and next subscript) with 7 subscripts
+# Get next local variable of local variable with 6 subscripts
+ydb_subscript_next_st() returned YDB_ERR_NODEEND
+*ret_value.len_used and ret_value.buf_addr were unaltered.
+# Set a local variable (and next subscript) with 7 subscripts
 ydb_subscript_next_st() : [level 7] returned [7]
-Set a local variable (and next subscript) with 8 subscripts
+# Get next local variable of local variable with 7 subscripts
+ydb_subscript_next_st() returned YDB_ERR_NODEEND
+*ret_value.len_used and ret_value.buf_addr were unaltered.
+# Set a local variable (and next subscript) with 8 subscripts
 ydb_subscript_next_st() : [level 8] returned [8]
-Set a local variable (and next subscript) with 9 subscripts
+# Get next local variable of local variable with 8 subscripts
+ydb_subscript_next_st() returned YDB_ERR_NODEEND
+*ret_value.len_used and ret_value.buf_addr were unaltered.
+# Set a local variable (and next subscript) with 9 subscripts
 ydb_subscript_next_st() : [level 9] returned [9]
-Set a local variable (and next subscript) with 10 subscripts
+# Get next local variable of local variable with 9 subscripts
+ydb_subscript_next_st() returned YDB_ERR_NODEEND
+*ret_value.len_used and ret_value.buf_addr were unaltered.
+# Set a local variable (and next subscript) with 10 subscripts
 ydb_subscript_next_st() : [level 10] returned [10]
-Set a local variable (and next subscript) with 11 subscripts
+# Get next local variable of local variable with 10 subscripts
+ydb_subscript_next_st() returned YDB_ERR_NODEEND
+*ret_value.len_used and ret_value.buf_addr were unaltered.
+# Set a local variable (and next subscript) with 11 subscripts
 ydb_subscript_next_st() : [level 11] returned [11]
-Set a local variable (and next subscript) with 12 subscripts
+# Get next local variable of local variable with 11 subscripts
+ydb_subscript_next_st() returned YDB_ERR_NODEEND
+*ret_value.len_used and ret_value.buf_addr were unaltered.
+# Set a local variable (and next subscript) with 12 subscripts
 ydb_subscript_next_st() : [level 12] returned [12]
-Set a local variable (and next subscript) with 13 subscripts
+# Get next local variable of local variable with 12 subscripts
+ydb_subscript_next_st() returned YDB_ERR_NODEEND
+*ret_value.len_used and ret_value.buf_addr were unaltered.
+# Set a local variable (and next subscript) with 13 subscripts
 ydb_subscript_next_st() : [level 13] returned [13]
-Set a local variable (and next subscript) with 14 subscripts
+# Get next local variable of local variable with 13 subscripts
+ydb_subscript_next_st() returned YDB_ERR_NODEEND
+*ret_value.len_used and ret_value.buf_addr were unaltered.
+# Set a local variable (and next subscript) with 14 subscripts
 ydb_subscript_next_st() : [level 14] returned [14]
-Set a local variable (and next subscript) with 15 subscripts
+# Get next local variable of local variable with 14 subscripts
+ydb_subscript_next_st() returned YDB_ERR_NODEEND
+*ret_value.len_used and ret_value.buf_addr were unaltered.
+# Set a local variable (and next subscript) with 15 subscripts
 ydb_subscript_next_st() : [level 15] returned [15]
-Set a local variable (and next subscript) with 16 subscripts
+# Get next local variable of local variable with 15 subscripts
+ydb_subscript_next_st() returned YDB_ERR_NODEEND
+*ret_value.len_used and ret_value.buf_addr were unaltered.
+# Set a local variable (and next subscript) with 16 subscripts
 ydb_subscript_next_st() : [level 16] returned [16]
-Set a local variable (and next subscript) with 17 subscripts
+# Get next local variable of local variable with 16 subscripts
+ydb_subscript_next_st() returned YDB_ERR_NODEEND
+*ret_value.len_used and ret_value.buf_addr were unaltered.
+# Set a local variable (and next subscript) with 17 subscripts
 ydb_subscript_next_st() : [level 17] returned [17]
-Set a local variable (and next subscript) with 18 subscripts
+# Get next local variable of local variable with 17 subscripts
+ydb_subscript_next_st() returned YDB_ERR_NODEEND
+*ret_value.len_used and ret_value.buf_addr were unaltered.
+# Set a local variable (and next subscript) with 18 subscripts
 ydb_subscript_next_st() : [level 18] returned [18]
-Set a local variable (and next subscript) with 19 subscripts
+# Get next local variable of local variable with 18 subscripts
+ydb_subscript_next_st() returned YDB_ERR_NODEEND
+*ret_value.len_used and ret_value.buf_addr were unaltered.
+# Set a local variable (and next subscript) with 19 subscripts
 ydb_subscript_next_st() : [level 19] returned [19]
-Set a local variable (and next subscript) with 20 subscripts
+# Get next local variable of local variable with 19 subscripts
+ydb_subscript_next_st() returned YDB_ERR_NODEEND
+*ret_value.len_used and ret_value.buf_addr were unaltered.
+# Set a local variable (and next subscript) with 20 subscripts
 ydb_subscript_next_st() : [level 20] returned [20]
-Set a local variable (and next subscript) with 21 subscripts
+# Get next local variable of local variable with 20 subscripts
+ydb_subscript_next_st() returned YDB_ERR_NODEEND
+*ret_value.len_used and ret_value.buf_addr were unaltered.
+# Set a local variable (and next subscript) with 21 subscripts
 ydb_subscript_next_st() : [level 21] returned [21]
-Set a local variable (and next subscript) with 22 subscripts
+# Get next local variable of local variable with 21 subscripts
+ydb_subscript_next_st() returned YDB_ERR_NODEEND
+*ret_value.len_used and ret_value.buf_addr were unaltered.
+# Set a local variable (and next subscript) with 22 subscripts
 ydb_subscript_next_st() : [level 22] returned [22]
-Set a local variable (and next subscript) with 23 subscripts
+# Get next local variable of local variable with 22 subscripts
+ydb_subscript_next_st() returned YDB_ERR_NODEEND
+*ret_value.len_used and ret_value.buf_addr were unaltered.
+# Set a local variable (and next subscript) with 23 subscripts
 ydb_subscript_next_st() : [level 23] returned [23]
-Set a local variable (and next subscript) with 24 subscripts
+# Get next local variable of local variable with 23 subscripts
+ydb_subscript_next_st() returned YDB_ERR_NODEEND
+*ret_value.len_used and ret_value.buf_addr were unaltered.
+# Set a local variable (and next subscript) with 24 subscripts
 ydb_subscript_next_st() : [level 24] returned [24]
-Set a local variable (and next subscript) with 25 subscripts
+# Get next local variable of local variable with 24 subscripts
+ydb_subscript_next_st() returned YDB_ERR_NODEEND
+*ret_value.len_used and ret_value.buf_addr were unaltered.
+# Set a local variable (and next subscript) with 25 subscripts
 ydb_subscript_next_st() : [level 25] returned [25]
-Set a local variable (and next subscript) with 26 subscripts
+# Get next local variable of local variable with 25 subscripts
+ydb_subscript_next_st() returned YDB_ERR_NODEEND
+*ret_value.len_used and ret_value.buf_addr were unaltered.
+# Set a local variable (and next subscript) with 26 subscripts
 ydb_subscript_next_st() : [level 26] returned [26]
-Set a local variable (and next subscript) with 27 subscripts
+# Get next local variable of local variable with 26 subscripts
+ydb_subscript_next_st() returned YDB_ERR_NODEEND
+*ret_value.len_used and ret_value.buf_addr were unaltered.
+# Set a local variable (and next subscript) with 27 subscripts
 ydb_subscript_next_st() : [level 27] returned [27]
-Set a local variable (and next subscript) with 28 subscripts
+# Get next local variable of local variable with 27 subscripts
+ydb_subscript_next_st() returned YDB_ERR_NODEEND
+*ret_value.len_used and ret_value.buf_addr were unaltered.
+# Set a local variable (and next subscript) with 28 subscripts
 ydb_subscript_next_st() : [level 28] returned [28]
-Set a local variable (and next subscript) with 29 subscripts
+# Get next local variable of local variable with 28 subscripts
+ydb_subscript_next_st() returned YDB_ERR_NODEEND
+*ret_value.len_used and ret_value.buf_addr were unaltered.
+# Set a local variable (and next subscript) with 29 subscripts
 ydb_subscript_next_st() : [level 29] returned [29]
-Set a local variable (and next subscript) with 30 subscripts
+# Get next local variable of local variable with 29 subscripts
+ydb_subscript_next_st() returned YDB_ERR_NODEEND
+*ret_value.len_used and ret_value.buf_addr were unaltered.
+# Set a local variable (and next subscript) with 30 subscripts
 ydb_subscript_next_st() : [level 30] returned [30]
-Set a local variable (and next subscript) with 31 subscripts
+# Get next local variable of local variable with 30 subscripts
+ydb_subscript_next_st() returned YDB_ERR_NODEEND
+*ret_value.len_used and ret_value.buf_addr were unaltered.
+# Set a local variable (and next subscript) with 31 subscripts
 ydb_subscript_next_st() : [level 31] returned [31]
-Demonstrate our progress by executing a ZWRITE in a call-in
+# Get next local variable of local variable with 31 subscripts
+ydb_subscript_next_st() returned YDB_ERR_NODEEND
+*ret_value.len_used and ret_value.buf_addr were unaltered.
+
+# Demonstrate our progress by executing a ZWRITE in a call-in
 baselv=""
 baselv(0)=1
 baselv(0,1)=""
@@ -180,54 +291,62 @@ mumps.dat
 ### Test error scenarios in ydb_subscript_next_st() of Local Variables ###
 
 # Test of INVVARNAME error
-Attempting ydb_subscript_next_st() of bad basevar (% in middle of name) B%dbasevarInvChar
+# Attempting ydb_subscript_next_st() of bad basevar (% in middle of name) B%dbasevarInvChar
 ydb_subscript_next_st() [57]: 151027762,(SimpleThreadAPI),%YDB-E-INVVARNAME, Invalid local/global/ISV variable name supplied to API call
-Attempting ydb_subscript_next_st() of bad basevar (> 31 characters) Verylongbasevarthatexceedsmaxlength
+# Attempting ydb_subscript_next_st() of bad basevar (> 31 characters) Verylongbasevarthatexceedsmaxlength
 ydb_subscript_next_st() [66]: 151027842,(SimpleThreadAPI),%YDB-E-VARNAME2LONG, Variable name length exceeds maximum allowed (31)
-Attempting ydb_subscript_next_st() of bad basevar (first letter in name is digit) 1namestartswithdigit
+# Attempting ydb_subscript_next_st() of bad basevar (first letter in name is digit) 1namestartswithdigit
 ydb_subscript_next_st() [75]: 151027762,(SimpleThreadAPI),%YDB-E-INVVARNAME, Invalid local/global/ISV variable name supplied to API call
+
 # Test of MAXNRSUBSCRIPTS error
-Attempting ydb_subscript_next_st() of basevar with 32 subscripts
+# Attempting ydb_subscript_next_st() of basevar with 32 subscripts
 ydb_subscript_next_st() [87]: 150373282,(SimpleThreadAPI),%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
+
 # Test of MINNRSUBSCRIPTS error
-Attempting ydb_subscript_next_st() of basevar with -1 subscripts
+# Attempting ydb_subscript_next_st() of basevar with -1 subscripts
 ydb_subscript_next_st() [97]: 151027786,(SimpleThreadAPI),%YDB-E-MINNRSUBSCRIPTS, Number of subscripts cannot be a negative number
+
 # Test of PARAMINVALID error in ret_value parameter
-Attempting ydb_subscript_next_st() with ret_value->buf_addr=NULL when return value is a NULL string : Expect NO PARAMINVALID error
-Attempting ydb_subscript_next_st() with NULL ret_value when return value is a NULL string : Expect PARAMINVALID error
+# Attempting ydb_subscript_next_st() with ret_value->buf_addr=NULL when return value is a NULL string : Expect NO PARAMINVALID error
+# Attempting ydb_subscript_next_st() with NULL ret_value when return value is a NULL string : Expect PARAMINVALID error
 ydb_subscript_next_st() [123]: 151027770,(SimpleThreadAPI),%YDB-E-PARAMINVALID, NULL ret_value parameter specified in ydb_subscript_next_st() call
-Attempting ydb_subscript_next_st() with NULL ret_value when return value is a non-NULL string : Expect PARAMINVALID error
+# Attempting ydb_subscript_next_st() with NULL ret_value when return value is a non-NULL string : Expect PARAMINVALID error
 ydb_subscript_next_st() [138]: 151027770,(SimpleThreadAPI),%YDB-E-PARAMINVALID, NULL ret_value parameter specified in ydb_subscript_next_st() call
-Attempting ydb_subscript_next_st() with ret_value->buf_addr=NULL when return value is a non-NULL string : Expect PARAMINVALID error
+# Attempting ydb_subscript_next_st() with ret_value->buf_addr=NULL when return value is a non-NULL string : Expect PARAMINVALID error
 ydb_subscript_next_st() [148]: 151027770,(SimpleThreadAPI),%YDB-E-PARAMINVALID, NULL ret_value->buf_addr parameter specified in ydb_subscript_next_st() call
+
 # Test of INVSTRLEN error
-Attempting ydb_subscript_next_st() with ret_value->len_alloc=0 : Expect INVSTRLEN error
+# Attempting ydb_subscript_next_st() with ret_value->len_alloc=0 : Expect INVSTRLEN error
 ydb_subscript_next_st() [160]: 150375522,(SimpleThreadAPI),%YDB-E-INVSTRLEN, Invalid string length 6: max 0 : ret_value->len_used = 6 after call
-Attempting ydb_subscript_next_st() with ret_value->len_alloc set to value returned in ret_value->len_used after INVSTRLEN error. Expect NO error
+# Attempting ydb_subscript_next_st() with ret_value->len_alloc set to value returned in ret_value->len_used after INVSTRLEN error. Expect NO error
 ydb_subscript_next_st() returned [baselv]
+
 # Test of SUBSARRAYNULL error
-Attempting ydb_subscript_next_st() of basevar with NULL subsarray parameter. Expect SUBSARRAYNULL error
+# Attempting ydb_subscript_next_st() of basevar with NULL subsarray parameter. Expect SUBSARRAYNULL error
 ydb_subscript_next_st() [182]: 151027794,(SimpleThreadAPI),%YDB-E-SUBSARRAYNULL, Non-zero number of subscripts [1] specified but subscript array parameter is NULL in ydb_subscript_next_st() call
+
 # Test of PARAMINVALID error in subsarray parameter
-Attempting ydb_subscript_next_st() with subsarray[0].len_alloc=0 and subsarray[0].len_used=2 : Expect PARAMINVALID error
+# Attempting ydb_subscript_next_st() with subsarray[0].len_alloc=0 and subsarray[0].len_used=2 : Expect PARAMINVALID error
 ydb_subscript_next_st() [197]: 151027770,(SimpleThreadAPI),%YDB-E-PARAMINVALID, Invalid subsarray (index 0) parameter specified in ydb_subscript_next_st() call
-Attempting ydb_subscript_next_st() with subsarray[0].len_alloc=0 and subsarray[0].len_used=0 : Expect NO PARAMINVALID error
-Attempting ydb_subscript_next_st() with subsarray[0].len_alloc=1 and subsarray[0].len_used=0 : Expect NO PARAMINVALID error
-Attempting ydb_subscript_next_st() with subsarray[0].len_alloc=1 and subsarray[0].len_used=1 : Expect NO PARAMINVALID error
-Attempting ydb_subscript_next_st() with subscr32[0].buf_addr=NULL and subscr32[0].len_used=1 : Expect PARAMINVALID error
+# Attempting ydb_subscript_next_st() with subsarray[0].len_alloc=0 and subsarray[0].len_used=0 : Expect NO PARAMINVALID error
+# Attempting ydb_subscript_next_st() with subsarray[0].len_alloc=1 and subsarray[0].len_used=0 : Expect NO PARAMINVALID error
+# Attempting ydb_subscript_next_st() with subsarray[0].len_alloc=1 and subsarray[0].len_used=1 : Expect NO PARAMINVALID error
+# Attempting ydb_subscript_next_st() with subscr32[0].buf_addr=NULL and subscr32[0].len_used=1 : Expect PARAMINVALID error
 ydb_subscript_next_st() [261]: 151027770,(SimpleThreadAPI),%YDB-E-PARAMINVALID, Invalid subsarray (index 0) parameter specified in ydb_subscript_next_st() call
-Attempting ydb_subscript_next_st() with subscr32[0].buf_addr=NULL and subscr32[0].len_used=0 : Expect NO PARAMINVALID error
-Attempting ydb_subscript_next_st() with subsarray[3].len_alloc=0 and subsarray[3].len_used=2 : Expect PARAMINVALID error
+# Attempting ydb_subscript_next_st() with subscr32[0].buf_addr=NULL and subscr32[0].len_used=0 : Expect NO PARAMINVALID error
+# Attempting ydb_subscript_next_st() with subsarray[3].len_alloc=0 and subsarray[3].len_used=2 : Expect PARAMINVALID error
 ydb_subscript_next_st() [197]: 151027770,(SimpleThreadAPI),%YDB-E-PARAMINVALID, Invalid subsarray (index 3) parameter specified in ydb_subscript_next_st() call
-Attempting ydb_subscript_next_st() with subsarray[3].len_alloc=0 and subsarray[3].len_used=0 : Expect NO PARAMINVALID error
-Attempting ydb_subscript_next_st() with subsarray[3].len_alloc=1 and subsarray[3].len_used=0 : Expect NO PARAMINVALID error
-Attempting ydb_subscript_next_st() with subsarray[3].len_alloc=1 and subsarray[3].len_used=1 : Expect NO PARAMINVALID error
-Attempting ydb_subscript_next_st() with subscr32[3].buf_addr=NULL and subscr32[3].len_used=1 : Expect PARAMINVALID error
+# Attempting ydb_subscript_next_st() with subsarray[3].len_alloc=0 and subsarray[3].len_used=0 : Expect NO PARAMINVALID error
+# Attempting ydb_subscript_next_st() with subsarray[3].len_alloc=1 and subsarray[3].len_used=0 : Expect NO PARAMINVALID error
+# Attempting ydb_subscript_next_st() with subsarray[3].len_alloc=1 and subsarray[3].len_used=1 : Expect NO PARAMINVALID error
+# Attempting ydb_subscript_next_st() with subscr32[3].buf_addr=NULL and subscr32[3].len_used=1 : Expect PARAMINVALID error
 ydb_subscript_next_st() [261]: 151027770,(SimpleThreadAPI),%YDB-E-PARAMINVALID, Invalid subsarray (index 3) parameter specified in ydb_subscript_next_st() call
-Attempting ydb_subscript_next_st() with subscr32[3].buf_addr=NULL and subscr32[3].len_used=0 : Expect NO PARAMINVALID error
+# Attempting ydb_subscript_next_st() with subscr32[3].buf_addr=NULL and subscr32[3].len_used=0 : Expect NO PARAMINVALID error
+
 # Test that LVUNDEF error is NOT issued by ydb_subscript_next_st()
 ydb_subscript_next_st() returned YDB_ERR_NODEEND
-Demonstrate our progress by executing a ZWRITE in a call-in
+
+# Demonstrate our progress by executing a ZWRITE in a call-in
 baselv="A question"
 baselv("","x","x","x","x")=""
 baselv("x","x","x","","x")=""

@@ -39,9 +39,10 @@ void print_subs(int subs, ydb_buffer_t *basevar, ydb_buffer_t *ret_array)
 
 int main(int argc, char** argv)
 {
-	int		status, subs, k, i, tmpsubs, copy_done;
+	int		status, subs, k, i, tmpsubs, copy_done, ret_test;
 	ydb_buffer_t	basevar, value, subsbuff[MAX_SUBS + 1], ret_value1[MAX_SUBS], ret_value2[MAX_SUBS];
 	char		errbuf[ERRBUF_SIZE], basevarbuff[64], subsstrlit[MAX_SUBS][3], retvaluebuff1[MAX_SUBS][64], retvaluebuff2[MAX_SUBS][64];
+	char		rettestbuff[64];
 
 	/* Initialize varname, subscript, and value buffers */
 	basevar.buf_addr = &basevarbuff[0];
@@ -85,6 +86,8 @@ int main(int argc, char** argv)
 
 		if (subs % 2)
 		{
+			ret_test = ret_value1[subs].len_used;
+			memcpy(rettestbuff, ret_value1[subs].buf_addr, ret_value1[subs].len_used);
 			status = ydb_node_previous_s(&basevar, subs, ret_value2, &tmpsubs, ret_value1);
 			if (YDB_OK != status)
 			{
@@ -94,33 +97,36 @@ int main(int argc, char** argv)
 					printf("ydb_node_previous_s() [odd] : subsbuff [%d]: %s\n", subs, errbuf);
 					fflush(stdout);
 					return YDB_OK;
-				}
-				else if (tmpsubs != MAX_SUBS)
+				} else if (tmpsubs != MAX_SUBS)
 				{
 					printf("ydb_node_previous_s(): *ret_subs_used was altered: %d\n", tmpsubs);
 					fflush(stdout);
-				}
-				else
+				} else if (ret_test != ret_value1[subs].len_used || memcmp(rettestbuff, ret_value1[subs].buf_addr, ret_value1[subs].len_used) != 0)
+				{
+					printf("ydb_node_next_s(): *ret_value was altered\n");
+					fflush(stdout);
+				} else
 				{
 					printf("ydb_node_previous_s() returned YDB_ERR_NODEEND\n");
+					printf("*ret_subs_used was unaltered\n");
+					printf("*ret_value was unaltered\n");
 					fflush(stdout);
 				}
-			}
-			else if (tmpsubs != subs-1)
+			} else if (tmpsubs != subs-1)
 			{
 				printf("ydb_node_previous_s() returned the wrong amount of subscripts: %d\n", tmpsubs);
 				fflush(stdout);
-			}
-			else
+			} else
 			{
 				for (k = 0; k <= subs; k++)
 					ret_value1[k].buf_addr[ret_value1[k].len_used] = '\0';
 				printf("ydb_node_previous_s() returned "); fflush(stdout);
 				print_subs(tmpsubs, &basevar, ret_value1);
 			}
-		}
-		else
+		} else
 		{
+			ret_test = ret_value2[subs].len_used;
+			memcpy(rettestbuff, ret_value2[subs].buf_addr, ret_value2[subs].len_used);
 			status = ydb_node_previous_s(&basevar, subs, ret_value1, &tmpsubs, ret_value2);
 			if (YDB_OK != status)
 			{
@@ -130,24 +136,26 @@ int main(int argc, char** argv)
 					printf("ydb_node_previous_s() [even] : subsbuff [%d]: %s\n", subs, errbuf);
 					fflush(stdout);
 					return YDB_OK;
-				}
-				else if (tmpsubs != MAX_SUBS)
+				} else if (tmpsubs != MAX_SUBS)
 				{
 					printf("ydb_node_previous_s(): *ret_subs_used was altered: %d\n", tmpsubs);
 					fflush(stdout);
-				}
-				else
+				} else if (ret_test != ret_value2[subs].len_used || memcmp(rettestbuff, ret_value2[subs].buf_addr, ret_value2[subs].len_used) != 0)
+				{
+					printf("ydb_node_next_s(): *ret_value was altered\n");
+					fflush(stdout);
+				} else
 				{
 					printf("ydb_node_previous_s() returned YDB_ERR_NODEEND\n");
+					printf("*ret_subs_used was unaltered\n");
+					printf("*ret_value was unaltered\n");
 					fflush(stdout);
 				}
-			}
-			else if (tmpsubs != subs-1)
+			} else if (tmpsubs != subs-1)
 			{
 				printf("ydb_node_previous_s() returned the wrong amount of subscripts: %d\n", tmpsubs);
 				fflush(stdout);
-			}
-			else
+			} else
 			{
 				for (k = 0; k <= subs; k++)
 					ret_value2[k].buf_addr[ret_value2[k].len_used] = '\0';

@@ -9,27 +9,31 @@
 Starting at ^X()
 ydb_node_next_s() returned YDB_ERR_NODEEND
 *ret_subs_used was unaltered.
+*ret_value was unaltered.
 # Set a Global variable with 1 subscript
 # Get the next node of Global variable with 1 subscript
 Starting at ^X()
-Call 1: ydb_node_next_s() returned ^X(1)
+# Call 1: ydb_node_next_s() returned ^X(1)
 ydb_node_next_s() returned YDB_ERR_NODEEND
 *ret_subs_used was unaltered.
+*ret_value was unaltered.
 # Set a Global variable with a 2-depth index
 # Get the last node of Global variable using two calls to ydb_node_next_s()
 Starting at ^X()
-Call 1: ydb_node_next_s() returned ^X(1)
-Call 2: ydb_node_next_s() returned ^X(1, 2)
+# Call 1: ydb_node_next_s() returned ^X(1)
+# Call 2: ydb_node_next_s() returned ^X(1, 2)
 ydb_node_next_s() returned YDB_ERR_NODEEND
 *ret_subs_used was unaltered.
+*ret_value was unaltered.
 # Set another Global variable with another 1-depth index
 # Get the last node of Global variable with 3 calls to ydb_node_next_s()
 Starting at ^X()
-Call 1: ydb_node_next_s() returned ^X(1)
-Call 2: ydb_node_next_s() returned ^X(1, 2)
-Call 3: ydb_node_next_s() returned ^X(3)
+# Call 1: ydb_node_next_s() returned ^X(1)
+# Call 2: ydb_node_next_s() returned ^X(1, 2)
+# Call 3: ydb_node_next_s() returned ^X(3)
 ydb_node_next_s() returned YDB_ERR_NODEEND
 *ret_subs_used was unaltered.
+*ret_value was unaltered.
 
 ---> Running gvnlvnnodenext2_31subs for Global Variables <---
 ### Test 31-level (max-deep) subscripts can be got using ydb_node_next_s() of Global Variables ###
@@ -130,6 +134,8 @@ ydb_node_next_s() returned ^X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20
 ydb_node_next_s() returned ^X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31)
 # Get the next node after a node at 31 subscript depth
 ydb_node_next_s() returned YDB_ERR_NODEEND
+*ret_subs_used was unaltered
+*ret_value was unaltered
 
 ---> Running gvnlvnnodenext3_errors for Global Variables <---
 ### Test error scenarios in ydb_node_next_s() of Global Variables ###
@@ -183,27 +189,31 @@ ydb_node_next_s() [232]: 151027794,(SimpleAPI),%YDB-E-SUBSARRAYNULL, Non-zero nu
 Starting at X()
 ydb_node_next_s() returned YDB_ERR_NODEEND
 *ret_subs_used was unaltered.
+*ret_value was unaltered.
 # Set a Local variable with 1 subscript
 # Get the next node of Local variable with 1 subscript
 Starting at X()
-Call 1: ydb_node_next_s() returned X(1)
+# Call 1: ydb_node_next_s() returned X(1)
 ydb_node_next_s() returned YDB_ERR_NODEEND
 *ret_subs_used was unaltered.
+*ret_value was unaltered.
 # Set a Local variable with a 2-depth index
 # Get the last node of Local variable using two calls to ydb_node_next_s()
 Starting at X()
-Call 1: ydb_node_next_s() returned X(1)
-Call 2: ydb_node_next_s() returned X(1, 2)
+# Call 1: ydb_node_next_s() returned X(1)
+# Call 2: ydb_node_next_s() returned X(1, 2)
 ydb_node_next_s() returned YDB_ERR_NODEEND
 *ret_subs_used was unaltered.
+*ret_value was unaltered.
 # Set another Local variable with another 1-depth index
 # Get the last node of Local variable with 3 calls to ydb_node_next_s()
 Starting at X()
-Call 1: ydb_node_next_s() returned X(1)
-Call 2: ydb_node_next_s() returned X(1, 2)
-Call 3: ydb_node_next_s() returned X(3)
+# Call 1: ydb_node_next_s() returned X(1)
+# Call 2: ydb_node_next_s() returned X(1, 2)
+# Call 3: ydb_node_next_s() returned X(3)
 ydb_node_next_s() returned YDB_ERR_NODEEND
 *ret_subs_used was unaltered.
+*ret_value was unaltered.
 
 ---> Running gvnlvnnodenext2_31subs for Local Variables <---
 ### Test 31-level (max-deep) subscripts can be got using ydb_node_next_s() of Local Variables ###
@@ -304,6 +314,8 @@ ydb_node_next_s() returned X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,
 ydb_node_next_s() returned X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31)
 # Get the next node after a node at 31 subscript depth
 ydb_node_next_s() returned YDB_ERR_NODEEND
+*ret_subs_used was unaltered
+*ret_value was unaltered
 
 ---> Running gvnlvnnodenext3_errors for Local Variables <---
 ### Test error scenarios in ydb_node_next_s() of Local Variables ###

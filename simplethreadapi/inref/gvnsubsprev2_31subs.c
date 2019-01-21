@@ -13,6 +13,7 @@
 #include "libyottadb.h"
 
 #include <stdio.h>
+#include <string.h>
 
 #define ERRBUF_SIZE	1024
 #define	MAX_SUBS	32
@@ -22,14 +23,15 @@
 
 int main()
 {
-	int		status, subs, subs2;
-	ydb_buffer_t	basevar, subsbuff[MAX_SUBS + 1], tmpsubs, ret_value;
+	int		status, subs, subs2, ret_test;
+	ydb_buffer_t	basevar, prevvar, subsbuff[MAX_SUBS + 1], tmpsubs, ret_value;
 	char		errbuf[ERRBUF_SIZE], subsstrlit[MAX_SUBS][3];	/* 3 to hold 2 digit decimal # + trailing null char */
-	char		retvaluebuff[64];
+	char		retvaluebuff[64], rettestbuff[64];
 
 	printf("### Test 31-level (max-deep) subscripts can be got using ydb_subscript_previous_st() of Global Variables ###\n"); fflush(stdout);
 	/* Initialize varname, subscript, and value buffers */
 	YDB_LITERAL_TO_BUFFER(BASEVAR, &basevar);
+	YDB_LITERAL_TO_BUFFER(PREVVAR, &prevvar);
 	ret_value.buf_addr = retvaluebuff;
 	ret_value.len_alloc = sizeof(retvaluebuff);
 	ret_value.len_used = 0;
@@ -83,8 +85,29 @@ int main()
 			subsbuff[subs2] = tmpsubs;
 		ret_value.buf_addr[ret_value.len_used] = '\0';
 		printf("ydb_subscript_previous_st() : [level %d] returned [%s]\n", subs, ret_value.buf_addr);
+
+		printf("# Get prev global variable of global variable with %d subscripts\n", subs); fflush(stdout);
+		ret_test = ret_value.len_used;
+		memcpy(rettestbuff, ret_value.buf_addr, ret_value.len_used);
+		status = ydb_subscript_previous_st(YDB_NOTTP, NULL, &prevvar, subs, subsbuff, &ret_value);
+		if (YDB_ERR_NODEEND != status)
+		{
+			ydb_zstatus(errbuf, ERRBUF_SIZE);
+			printf("ydb_subscript_previous_st() did not return YDB_ERR_NODEEND: %s\n", errbuf);
+			fflush(stdout);
+			return YDB_OK;
+		} else if (ret_value.len_used != ret_test || memcmp(rettestbuff, ret_value.buf_addr, ret_value.len_used) != 0)
+		{
+			printf("ydb_subscript_previous_st(): *ret_value was altered\n");
+			fflush(stdout);
+		} else
+		{
+			printf("ydb_subscript_previous_st() returned YDB_ERR_NODEEND\n");
+			printf("*ret_value.len_used and ret_value.buf_addr were unaltered.\n");
+			fflush(stdout);
+		}
 	}
-	printf("Demonstrate our progress by executing a gvnZWRITE in a call-in\n"); fflush(stdout);
+	printf("\n# Demonstrate our progress by executing a gvnZWRITE in a call-in\n"); fflush(stdout);
 	status = ydb_ci_t(YDB_NOTTP, NULL, "gvnZWRITE");
 	if (status)
 	{

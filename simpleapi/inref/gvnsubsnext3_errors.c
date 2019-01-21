@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2017-2019 YottaDB LLC. and/or its subsidiaries.*
+ * Copyright (c) 2019 YottaDB LLC. and/or its subsidiaries.*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -45,8 +45,8 @@ int main()
 	memcpy(ret_value.buf_addr, VALUE1, ret_value.len_used);
 	save_ret_value = ret_value;
 
-	printf("# Test of INVVARNAME error\n"); fflush(stdout);
-	printf("Attempting ydb_subscript_next_s() of bad basevar (%% in middle of name) %s\n", BADBASEVAR1);
+	printf("\n# Test of INVVARNAME error\n"); fflush(stdout);
+	printf("# Attempting ydb_subscript_next_s() of bad basevar (%% in middle of name) %s\n", BADBASEVAR1);
 	fflush(stdout);
 	YDB_LITERAL_TO_BUFFER(BADBASEVAR1, &badbasevar);
 	status = ydb_subscript_next_s(&badbasevar, 0, NULL, &ret_value);
@@ -56,7 +56,7 @@ int main()
 		printf("ydb_subscript_next_s() [%d]: %s\n", __LINE__, errbuf);
 		fflush(stdout);
 	}
-	printf("Attempting ydb_subscript_next_s() of bad basevar (> 31 characters) %s\n", BADBASEVAR2);
+	printf("# Attempting ydb_subscript_next_s() of bad basevar (> 31 characters) %s\n", BADBASEVAR2);
 	YDB_LITERAL_TO_BUFFER(BADBASEVAR2, &badbasevar);
 	status = ydb_subscript_next_s(&badbasevar, 0, NULL, &ret_value);
 	if (YDB_OK != status)
@@ -65,7 +65,7 @@ int main()
 		printf("ydb_subscript_next_s() [%d]: %s\n", __LINE__, errbuf);
 		fflush(stdout);
 	}
-	printf("Attempting ydb_subscript_next_s() of bad basevar (first letter in name is digit) %s\n", BADBASEVAR3);
+	printf("# Attempting ydb_subscript_next_s() of bad basevar (first letter in name is digit) %s\n", BADBASEVAR3);
 	YDB_LITERAL_TO_BUFFER(BADBASEVAR3, &badbasevar);
 	status = ydb_subscript_next_s(&badbasevar, 0, NULL, &ret_value);
 	if (YDB_OK != status)
@@ -74,7 +74,7 @@ int main()
 		printf("ydb_subscript_next_s() [%d]: %s\n", __LINE__, errbuf);
 		fflush(stdout);
 	}
-	printf("# Test of MAXNRSUBSCRIPTS error\n"); fflush(stdout);
+	printf("\n# Test of MAXNRSUBSCRIPTS error\n"); fflush(stdout);
 	/* Now try getting > 31 subscripts */
 	printf("Attempting ydb_subscript_next_s() of basevar with 32 subscripts\n");
 	for (i = 0; i < 32; i++)
@@ -86,7 +86,7 @@ int main()
 		printf("ydb_subscript_next_s() [%d]: %s\n", __LINE__, errbuf);
 		fflush(stdout);
 	}
-	printf("# Test of MINNRSUBSCRIPTS error\n"); fflush(stdout);
+	printf("\n# Test of MINNRSUBSCRIPTS error\n"); fflush(stdout);
 	/* Now try getting < 0 subscripts */
 	printf("Attempting ydb_subscript_next_s() of basevar with -1 subscripts\n");
 	status = ydb_subscript_next_s(&basevar, -1, NULL, &ret_value);
@@ -96,8 +96,8 @@ int main()
 		printf("ydb_subscript_next_s() [%d]: %s\n", __LINE__, errbuf);
 		fflush(stdout);
 	}
-	printf("# Test of PARAMINVALID error in ret_value parameter\n"); fflush(stdout);
-	printf("Attempting ydb_subscript_next_s() with ret_value->buf_addr=NULL when return value is a NULL string : Expect NO PARAMINVALID error\n");
+	printf("\n# Test of PARAMINVALID error in ret_value parameter\n"); fflush(stdout);
+	printf("# Attempting ydb_subscript_next_s() with ret_value->buf_addr=NULL when return value is a NULL string : Expect NO PARAMINVALID error\n");
 	status = ydb_set_s(&basevar, 0, NULL, NULL);
 	if (YDB_OK != status)
 	{
@@ -114,7 +114,7 @@ int main()
 		printf("ydb_subscript_next_s() [%d]: %s\n", __LINE__, errbuf);
 		fflush(stdout);
 	}
-	printf("Attempting ydb_subscript_next_s() with NULL ret_value when return value is a NULL string : Expect PARAMINVALID error\n");
+	printf("# Attempting ydb_subscript_next_s() with NULL ret_value when return value is a NULL string : Expect PARAMINVALID error\n");
 	status = ydb_subscript_next_s(&basevar, 0, NULL, NULL);
 	if (YDB_OK != status)
 	{
@@ -122,7 +122,7 @@ int main()
 		printf("ydb_subscript_next_s() [%d]: %s\n", __LINE__, errbuf);
 		fflush(stdout);
 	}
-	printf("Attempting ydb_subscript_next_s() with NULL ret_value when return value is a non-NULL string : Expect PARAMINVALID error\n");
+	printf("# Attempting ydb_subscript_next_s() with NULL ret_value when return value is a non-NULL string : Expect PARAMINVALID error\n");
 	status = ydb_set_s(&basevar, 0, NULL, &save_ret_value);
 	if (YDB_OK != status)
 	{
@@ -137,7 +137,7 @@ int main()
 		printf("ydb_subscript_next_s() [%d]: %s\n", __LINE__, errbuf);
 		fflush(stdout);
 	}
-	printf("Attempting ydb_subscript_next_s() with ret_value->buf_addr=NULL when return value is a non-NULL string : Expect PARAMINVALID error\n");
+	printf("# Attempting ydb_subscript_next_s() with ret_value->buf_addr=NULL when return value is a non-NULL string : Expect PARAMINVALID error\n");
 	ret_value.buf_addr = NULL;
 	ret_value.len_used = getpid() % 2;	/* this value does not matter to the final error, hence the randomization */
 	status = ydb_subscript_next_s(&prevvar, 0, NULL, &ret_value);
@@ -148,8 +148,8 @@ int main()
 		fflush(stdout);
 	}
 	ret_value = save_ret_value;
-	printf("# Test of INVSTRLEN error\n"); fflush(stdout);
-	printf("Attempting ydb_subscript_next_s() with ret_value->len_alloc=0 : Expect INVSTRLEN error\n");
+	printf("\n# Test of INVSTRLEN error\n"); fflush(stdout);
+	printf("# Attempting ydb_subscript_next_s() with ret_value->len_alloc=0 : Expect INVSTRLEN error\n");
 	ret_value.len_alloc = 4;
 	ret_value.len_used = getpid() % 2;	/* this value does not matter to the final error, hence the randomization */
 	status = ydb_subscript_next_s(&prevvar, 0, NULL, &ret_value);
@@ -160,7 +160,7 @@ int main()
 		fflush(stdout);
 	}
 	ret_value.len_alloc = ret_value.len_used;
-	printf("Attempting ydb_subscript_next_s() with ret_value->len_alloc set to value returned in ret_value->len_used after INVSTRLEN error. Expect NO error\n");
+	printf("# Attempting ydb_subscript_next_s() with ret_value->len_alloc set to value returned in ret_value->len_used after INVSTRLEN error. Expect NO error\n");
 	status = ydb_subscript_next_s(&prevvar, 0, NULL, &ret_value);
 	if (YDB_OK != status)
 	{
@@ -172,8 +172,8 @@ int main()
 		ret_value.buf_addr[ret_value.len_used] = '\0';
 		printf("ydb_subscript_next_s() returned [%s]\n", ret_value.buf_addr);
 	}
-	printf("# Test of SUBSARRAYNULL error\n"); fflush(stdout);
-	printf("Attempting ydb_subscript_next_s() of basevar with NULL subsarray parameter. Expect SUBSARRAYNULL error\n");
+	printf("\n# Test of SUBSARRAYNULL error\n"); fflush(stdout);
+	printf("# Attempting ydb_subscript_next_s() of basevar with NULL subsarray parameter. Expect SUBSARRAYNULL error\n");
 	status = ydb_subscript_next_s(&basevar, 1, NULL, &ret_value);
 	if (YDB_OK != status)
 	{
@@ -182,10 +182,10 @@ int main()
 		fflush(stdout);
 	}
 	ret_value = save_ret_value;	/* Restore ret_value to its good original value */
-	printf("# Test of PARAMINVALID error in subsarray parameter\n"); fflush(stdout);
+	printf("\n# Test of PARAMINVALID error in subsarray parameter\n"); fflush(stdout);
 	for (i = 0, cnt = 0; cnt < 2; i = 3, cnt++)
 	{
-		printf("Attempting ydb_subscript_next_s() with subsarray[%d].len_alloc=0 and subsarray[%d].len_used=2 : Expect PARAMINVALID error\n", i, i);
+		printf("# Attempting ydb_subscript_next_s() with subsarray[%d].len_alloc=0 and subsarray[%d].len_used=2 : Expect PARAMINVALID error\n", i, i);
 		save_subscr32 = subscr32[i];
 		subscr32[i].len_alloc = 0;
 		subscr32[i].len_used = 2;
@@ -196,7 +196,7 @@ int main()
 			printf("ydb_subscript_next_s() [%d]: %s\n", __LINE__, errbuf);
 			fflush(stdout);
 		}
-		printf("Attempting ydb_subscript_next_s() with subsarray[%d].len_alloc=0 and subsarray[%d].len_used=0 : Expect NO PARAMINVALID error\n", i, i);
+		printf("# Attempting ydb_subscript_next_s() with subsarray[%d].len_alloc=0 and subsarray[%d].len_used=0 : Expect NO PARAMINVALID error\n", i, i);
 		subscr32[i].len_alloc = 0;
 		subscr32[i].len_used = 0;
 		status = ydb_set_s(&basevar, 5, subscr32, &ret_value);
@@ -214,7 +214,7 @@ int main()
 			fflush(stdout);
 		} else
 			ret_value.len_used = 0;
-		printf("Attempting ydb_subscript_next_s() with subsarray[%d].len_alloc=1 and subsarray[%d].len_used=0 : Expect NO PARAMINVALID error\n", i, i);
+		printf("# Attempting ydb_subscript_next_s() with subsarray[%d].len_alloc=1 and subsarray[%d].len_used=0 : Expect NO PARAMINVALID error\n", i, i);
 		subscr32[i].len_alloc = 1;
 		subscr32[i].len_used = 0;
 		status = ydb_set_s(&basevar, 5, subscr32, &ret_value);
@@ -232,7 +232,7 @@ int main()
 			fflush(stdout);
 		} else
 			ret_value.len_used = 0;
-		printf("Attempting ydb_subscript_next_s() with subsarray[%d].len_alloc=1 and subsarray[%d].len_used=1 : Expect NO PARAMINVALID error\n", i, i);
+		printf("# Attempting ydb_subscript_next_s() with subsarray[%d].len_alloc=1 and subsarray[%d].len_used=1 : Expect NO PARAMINVALID error\n", i, i);
 		subscr32[i].len_alloc = 1;
 		subscr32[i].len_used = 1;
 		status = ydb_set_s(&basevar, 5, subscr32, &ret_value);
@@ -250,7 +250,7 @@ int main()
 			fflush(stdout);
 		} else
 			ret_value.len_used = 0;
-		printf("Attempting ydb_subscript_next_s() with subscr32[%d].buf_addr=NULL and subscr32[%d].len_used=1 : Expect PARAMINVALID error\n", i, i);
+		printf("# Attempting ydb_subscript_next_s() with subscr32[%d].buf_addr=NULL and subscr32[%d].len_used=1 : Expect PARAMINVALID error\n", i, i);
 		subscr32[i].buf_addr = NULL;
 		subscr32[i].len_used = 1;
 		status = ydb_subscript_next_s(&basevar, 5, subscr32, &ret_value);
@@ -260,7 +260,7 @@ int main()
 			printf("ydb_subscript_next_s() [%d]: %s\n", __LINE__, errbuf);
 			fflush(stdout);
 		}
-		printf("Attempting ydb_subscript_next_s() with subscr32[%d].buf_addr=NULL and subscr32[%d].len_used=0 : Expect NO PARAMINVALID error\n", i, i);
+		printf("# Attempting ydb_subscript_next_s() with subscr32[%d].buf_addr=NULL and subscr32[%d].len_used=0 : Expect NO PARAMINVALID error\n", i, i);
 		subscr32[i].buf_addr = NULL;
 		subscr32[i].len_used = 0;
 		status = ydb_set_s(&basevar, 5, subscr32, &ret_value);
@@ -280,7 +280,7 @@ int main()
 			ret_value.len_used = 0;
 		subscr32[i] = save_subscr32;
 	}
-	printf("# Test that GVUNDEF error is NOT issued by ydb_subscript_next_s()\n"); fflush(stdout);
+	printf("\n# Test that GVUNDEF error is NOT issued by ydb_subscript_next_s()\n"); fflush(stdout);
 	status = ydb_subscript_next_s(&basevar, 2, subscr32, &ret_value);
 	if (YDB_ERR_NODEEND == status)
 		printf("ydb_subscript_next_s() returned YDB_ERR_NODEEND\n");
@@ -294,7 +294,7 @@ int main()
 		ret_value.buf_addr[ret_value.len_used] = '\0';
 		printf("ydb_subscript_next_s() returned [%s]\n", ret_value.buf_addr);
 	}
-	printf("# Demonstrate our progress by executing a gvnZWRITE in a call-in\n"); fflush(stdout);
+	printf("\n# Demonstrate our progress by executing a gvnZWRITE in a call-in\n"); fflush(stdout);
 	status = ydb_ci("gvnZWRITE");
 	if (status)
 	{

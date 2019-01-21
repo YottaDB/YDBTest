@@ -41,9 +41,10 @@ void print_subs(int subs, ydb_buffer_t *basevar, ydb_buffer_t *ret_array)
 
 int main(int argc, char** argv)
 {
-	int		status, subs, k, i, tmpsubs, copy_done;
+	int		status, subs, k, i, tmpsubs, copy_done, ret_test;
 	ydb_buffer_t	basevar, value, subsbuff[MAX_SUBS + 1], ret_value1[32], ret_value2[32];
 	char		errbuf[ERRBUF_SIZE], basevarbuff[64], subsstrlit[MAX_SUBS][3], retvaluebuff1[32][64], retvaluebuff2[32][64];
+	char		rettestbuff[64];
 
 	/* Initialize varname, subscript, and value buffers */
 	basevar.buf_addr = &basevarbuff[0];
@@ -69,7 +70,7 @@ int main(int argc, char** argv)
 		printf("# Set a %s variable (and next subscript) with %d subscripts\n", argv[1], subs); fflush(stdout);
 		subsbuff[subs].len_used = subsbuff[subs].len_alloc = sprintf(subsstrlit[subs], "%d", subs+1);
 		subsbuff[subs].buf_addr = subsstrlit[subs];
-		status = ydb_set_st(YDB_NOTTP,NULL,&basevar, subs, subsbuff, &value);
+		status = ydb_set_st(YDB_NOTTP, NULL, &basevar, subs, subsbuff, &value);
 		if (YDB_OK != status)
 		{
 			ydb_zstatus(errbuf, ERRBUF_SIZE);
@@ -86,7 +87,9 @@ int main(int argc, char** argv)
 		printf("# Get the next node after a node at %d subscript depth\n", subs); fflush(stdout);
 		if (subs % 2)
 		{
-			status = ydb_node_next_st(YDB_NOTTP,NULL,&basevar, subs, ret_value2, &tmpsubs, ret_value1);
+			ret_test = ret_value1[subs].len_used;
+			memcpy(rettestbuff, ret_value1[subs].buf_addr, ret_value1[subs].len_used);
+			status = ydb_node_next_st(YDB_NOTTP, NULL, &basevar, subs, ret_value2, &tmpsubs, ret_value1);
 			if (YDB_OK != status)
 			{
 				if (YDB_ERR_NODEEND != status)
@@ -99,9 +102,15 @@ int main(int argc, char** argv)
 				{
 					printf("ydb_node_next_st(): *ret_subs_used was altered: %d\n", tmpsubs);
 					fflush(stdout);
+				} else if (ret_test != ret_value1[subs].len_used || memcmp(rettestbuff, ret_value1[subs].buf_addr, ret_value1[subs].len_used) != 0)
+				{
+					printf("ydb_node_next_st(): *ret_value was altered\n");
+					fflush(stdout);
 				} else
 				{
 					printf("ydb_node_next_st() returned YDB_ERR_NODEEND\n");
+					printf("*ret_subs_used was unaltered\n");
+					printf("*ret_value was unaltered\n");
 					fflush(stdout);
 				}
 			} else if (tmpsubs != subs+1)
@@ -117,7 +126,9 @@ int main(int argc, char** argv)
 			}
 		} else
 		{
-			status = ydb_node_next_st(YDB_NOTTP,NULL,&basevar, subs, ret_value1, &tmpsubs, ret_value2);
+			ret_test = ret_value2[subs].len_used;
+			memcpy(rettestbuff, ret_value2[subs].buf_addr, ret_value2[subs].len_used);
+			status = ydb_node_next_st(YDB_NOTTP, NULL, &basevar, subs, ret_value1, &tmpsubs, ret_value2);
 			if (YDB_OK != status)
 			{
 				if (YDB_ERR_NODEEND != status)
@@ -130,9 +141,15 @@ int main(int argc, char** argv)
 				{
 					printf("ydb_node_next_st(): *ret_subs_used was altered: %d\n", tmpsubs);
 					fflush(stdout);
+				} else if (ret_test != ret_value2[subs].len_used || memcmp(rettestbuff, ret_value2[subs].buf_addr, ret_value2[subs].len_used) != 0)
+				{
+					printf("ydb_node_next_st(): *ret_value was altered\n");
+					fflush(stdout);
 				} else
 				{
 					printf("ydb_node_next_st() returned YDB_ERR_NODEEND\n");
+					printf("*ret_subs_used was unaltered\n");
+					printf("*ret_value was unaltered\n");
 					fflush(stdout);
 				}
 			} else if (tmpsubs != subs+1)

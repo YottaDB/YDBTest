@@ -29,9 +29,9 @@
 
 int main()
 {
-	int		i, status;
+	int		i, status, ret_test;
 	ydb_buffer_t	basevar, prevvar, subscr[2], prevsubscr[2], value1, value2, value3, badbasevar, ret_value;
-	char		errbuf[ERRBUF_SIZE], retvaluebuff[64];
+	char		errbuf[ERRBUF_SIZE], retvaluebuff[64], rettestbuff[64];
 
 	printf("### Test simple ydb_subscript_previous_st() of Global Variables ###\n"); fflush(stdout);
 	/* Initialize varname, subscript, and value buffers */
@@ -45,7 +45,7 @@ int main()
 	ret_value.buf_addr = retvaluebuff;
 	ret_value.len_alloc = sizeof(retvaluebuff);
 	ret_value.len_used = 0;
-	printf("Initialize call-in environment\n"); fflush(stdout);
+	printf("# Initialize call-in environment\n"); fflush(stdout);
 	status = ydb_init();
 	if (0 != status)
 	{
@@ -54,7 +54,7 @@ int main()
 		fflush(stdout);
 		return YDB_OK;
 	}
-	printf("Set a global variable (and a prev global variable) with 0 subscripts\n"); fflush(stdout);
+	printf("# Set a global variable (and a prev global variable) with 0 subscripts\n"); fflush(stdout);
 	status = ydb_set_st(YDB_NOTTP, NULL, &basevar, 0, NULL, &value1);
 	if (YDB_OK != status)
 	{
@@ -71,7 +71,7 @@ int main()
 		fflush(stdout);
 		return YDB_OK;
 	}
-	printf("Set global variable node (and a prev subscript) with 1 subscript\n"); fflush(stdout);
+	printf("# Set global variable node (and a prev subscript) with 1 subscript\n"); fflush(stdout);
 	status = ydb_set_st(YDB_NOTTP, NULL, &basevar, 1, subscr, &value2);
 	if (YDB_OK != status)
 	{
@@ -89,7 +89,7 @@ int main()
 		fflush(stdout);
 		return YDB_OK;
 	}
-	printf("Set a global variable node (and a prev subscript) with 2 subscripts\n"); fflush(stdout);
+	printf("# Set a global variable node (and a prev subscript) with 2 subscripts\n"); fflush(stdout);
 	status = ydb_set_st(YDB_NOTTP, NULL, &basevar, 2, subscr, &value3);
 	if (YDB_OK != status)
 	{
@@ -108,7 +108,7 @@ int main()
 		fflush(stdout);
 		return YDB_OK;
 	}
-	printf("Get prev global variable of global variable with 0 subscripts\n"); fflush(stdout);
+	printf("\n# Get prev global variable of global variable with 0 subscripts\n"); fflush(stdout);
 	status = ydb_subscript_previous_st(YDB_NOTTP, NULL, &basevar, 0, NULL, &ret_value);
 	if (YDB_OK != status)
 	{
@@ -119,7 +119,27 @@ int main()
 	}
 	ret_value.buf_addr[ret_value.len_used] = '\0';
 	printf("ydb_subscript_previous_st() returned [%s]\n", ret_value.buf_addr);
-	printf("Get prev subscript of global variable with 1 subscript\n"); fflush(stdout);
+	printf("# Get prev global variable of global variable with 0 subscripts\n"); fflush(stdout);
+	ret_test = ret_value.len_used;
+	memcpy(rettestbuff, ret_value.buf_addr, ret_value.len_used);
+	status = ydb_subscript_previous_st(YDB_NOTTP, NULL, &prevvar, 0, NULL, &ret_value);
+	if (YDB_ERR_NODEEND != status)
+	{
+		ydb_zstatus(errbuf, ERRBUF_SIZE);
+		printf("ydb_subscript_previous_st() did not return YDB_ERR_NODEEND: %s\n", errbuf);
+		fflush(stdout);
+		return YDB_OK;
+	} else if (ret_value.len_used != ret_test || memcmp(rettestbuff, ret_value.buf_addr, ret_value.len_used) != 0)
+	{
+		printf("ydb_subscript_previous_st(): *ret_value was altered\n");
+		fflush(stdout);
+	} else
+	{
+		printf("ydb_subscript_previous_st() returned YDB_ERR_NODEEND\n");
+		printf("*ret_value.len_used and ret_value.buf_addr were unaltered.\n");
+		fflush(stdout);
+	}
+	printf("\n# Get prev subscript of global variable with 1 subscript\n"); fflush(stdout);
 	status = ydb_subscript_previous_st(YDB_NOTTP, NULL, &basevar, 1, subscr, &ret_value);
 	if (YDB_OK != status)
 	{
@@ -130,7 +150,27 @@ int main()
 	}
 	ret_value.buf_addr[ret_value.len_used] = '\0';
 	printf("ydb_subscript_previous_st() returned [%s]\n", ret_value.buf_addr);
-	printf("Get prev subscript of global variable with 2 subscripts\n"); fflush(stdout);
+	printf("# Get prev global variable of global variable with 1 subscripts\n"); fflush(stdout);
+	ret_test = ret_value.len_used;
+	memcpy(rettestbuff, ret_value.buf_addr, ret_value.len_used);
+	status = ydb_subscript_previous_st(YDB_NOTTP, NULL, &prevvar, 0, NULL, &ret_value);
+	if (YDB_ERR_NODEEND != status)
+	{
+		ydb_zstatus(errbuf, ERRBUF_SIZE);
+		printf("ydb_subscript_previous_st() did not return YDB_ERR_NODEEND: %s\n", errbuf);
+		fflush(stdout);
+		return YDB_OK;
+	} else if (ret_value.len_used != ret_test || memcmp(rettestbuff, ret_value.buf_addr, ret_value.len_used) != 0)
+	{
+		printf("ydb_subscript_previous_st(): *ret_value was altered\n");
+		fflush(stdout);
+	} else
+	{
+		printf("ydb_subscript_previous_st() returned YDB_ERR_NODEEND\n");
+		printf("*ret_value.len_used and ret_value.buf_addr were unaltered.\n");
+		fflush(stdout);
+	}
+	printf("\n# Get prev subscript of global variable with 2 subscripts\n"); fflush(stdout);
 	status = ydb_subscript_previous_st(YDB_NOTTP, NULL, &basevar, 2, subscr, &ret_value);
 	if (YDB_OK != status)
 	{
@@ -141,7 +181,27 @@ int main()
 	}
 	ret_value.buf_addr[ret_value.len_used] = '\0';
 	printf("ydb_subscript_previous_st() returned [%s]\n", ret_value.buf_addr);
-	printf("Demonstrate our progress by executing a gvnZWRITE in a call-in\n"); fflush(stdout);
+	printf("# Get prev global variable of global variable with 2 subscripts\n"); fflush(stdout);
+	ret_test = ret_value.len_used;
+	memcpy(rettestbuff, ret_value.buf_addr, ret_value.len_used);
+	status = ydb_subscript_previous_st(YDB_NOTTP, NULL, &prevvar, 0, NULL, &ret_value);
+	if (YDB_ERR_NODEEND != status)
+	{
+		ydb_zstatus(errbuf, ERRBUF_SIZE);
+		printf("ydb_subscript_previous_st() did not return YDB_ERR_NODEEND: %s\n", errbuf);
+		fflush(stdout);
+		return YDB_OK;
+	} else if (ret_value.len_used != ret_test || memcmp(rettestbuff, ret_value.buf_addr, ret_value.len_used) != 0)
+	{
+		printf("ydb_subscript_previous_st(): *ret_value was altered\n");
+		fflush(stdout);
+	} else
+	{
+		printf("ydb_subscript_previous_st() returned YDB_ERR_NODEEND\n");
+		printf("*ret_value.len_used and ret_value.buf_addr were unaltered.\n");
+		fflush(stdout);
+	}
+	printf("\n# Demonstrate our progress by executing a gvnZWRITE in a call-in\n"); fflush(stdout);
 	status = ydb_ci_t(YDB_NOTTP, NULL, "gvnZWRITE");
 	if (status)
 	{

@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.*
+ * Copyright (c) 2019 YottaDB LLC. and/or its subsidiaries.*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -13,6 +13,7 @@
 #include "libyottadb.h"
 
 #include <stdio.h>
+#include <string.h>
 
 #define ERRBUF_SIZE	1024
 #define	MAX_SUBS	32
@@ -22,15 +23,16 @@
 
 int main()
 {
-	int		status, subs, subs2;
-	ydb_buffer_t	basevar, subsbuff[MAX_SUBS + 1], tmpsubs, ret_value;
+	int		status, subs, subs2, ret_test;
+	ydb_buffer_t	basevar, nextvar, subsbuff[MAX_SUBS + 1], tmpsubs, ret_value;
 	char		errbuf[ERRBUF_SIZE], subsstrlit[MAX_SUBS][3];	/* 3 to hold 2 digit decimal # + trailing null char */
-	char		retvaluebuff[64];
+	char		retvaluebuff[64], rettestbuff[64];
 	ydb_string_t	zwrarg;
 
 	printf("### Test 31-level (max-deep) subscripts can be got using ydb_subscript_next_s() of Local Variables ###\n"); fflush(stdout);
 	/* Initialize varname, subscript, and value buffers */
 	YDB_LITERAL_TO_BUFFER(BASEVAR, &basevar);
+	YDB_LITERAL_TO_BUFFER(NEXTVAR, &nextvar);
 	ret_value.buf_addr = retvaluebuff;
 	ret_value.len_alloc = sizeof(retvaluebuff);
 	ret_value.len_used = 0;
@@ -82,8 +84,29 @@ int main()
 		}
 		ret_value.buf_addr[ret_value.len_used] = '\0';
 		printf("ydb_subscript_next_s() : [level %d] returned [%s]\n", subs, ret_value.buf_addr);
+
+		printf("# Get next local variable of local variable with %d subscripts\n", subs); fflush(stdout);
+		ret_test = ret_value.len_used;
+		memcpy(rettestbuff, ret_value.buf_addr, ret_value.len_used);
+		status = ydb_subscript_next_s(&nextvar, subs, subsbuff, &ret_value);
+		if (YDB_ERR_NODEEND != status)
+		{
+			ydb_zstatus(errbuf, ERRBUF_SIZE);
+			printf("ydb_subscript_next_s() did not return YDB_ERR_NODEEND: %s\n", errbuf);
+			fflush(stdout);
+			return YDB_OK;
+		} else if (ret_value.len_used != ret_test || memcmp(rettestbuff, ret_value.buf_addr, ret_value.len_used) != 0)
+		{
+			printf("ydb_subscript_next_s(): *ret_value was altered\n");
+			fflush(stdout);
+		} else
+		{
+			printf("ydb_subscript_next_s() returned YDB_ERR_NODEEND\n");
+			printf("*ret_value.len_used and ret_value.buf_addr were unaltered.\n");
+			fflush(stdout);
+		}
 	}
-	printf("Demonstrate our progress by executing a ZWRITE in a call-in\n"); fflush(stdout);
+	printf("\n# Demonstrate our progress by executing a ZWRITE in a call-in\n"); fflush(stdout);
 	zwrarg.address = NULL;			/* Create a null string argument so dumps all locals */
 	zwrarg.length = 0;
 	status = ydb_ci("driveZWRITE", &zwrarg);
