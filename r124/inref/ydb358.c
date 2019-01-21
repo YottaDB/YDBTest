@@ -65,7 +65,6 @@ int main()
 	} else
 	{	/* parent */
 		/* Wait for child to terminate */
-		printf("Parent pid : Waiting for child to terminate\n"); fflush(stdout);
 		do
 		{
 			ret = waitpid(child, &stat, 0);

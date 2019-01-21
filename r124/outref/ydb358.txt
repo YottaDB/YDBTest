@@ -11,7 +11,6 @@ Database file ##TEST_PATH##/mumps.dat now has asyncio enabled
 Parent pid : Set ^parent=<parentpid> with ydb_set_s() : Cannot use ydb_set_st() here due to impending fork() (else STAPIFORKEXEC error)
 Parent pid : Sleep 2 seconds so flush timer will do AIO writes to DB
 Parent pid : Fork child after parent has done AIO writes
-Parent pid : Waiting for child to terminate
 Child pid : Set ^child=<childpid> with ydb_set_s()/ydb_set_st()
 Child pid : Sleep 2 seconds so flush timer in child will do AIO writes to DB
 Child pid : Halting
