@@ -23,6 +23,39 @@ mkdir go
 echo "# Running : go get -t $go_repo"
 go get -t $go_repo
 if ($status) then
-	echo "TEST-E-FAILED : go get -t $go_repo returned failure status of $status"
+	echo "TEST-E-FAILED : [go get -t $go_repo] returned failure status of $status"
 	exit 1
 endif
+
+if ($?ydb_test_go_repo_dir) then
+	# If env var "ydb_test_go_repo_dir" is defined, use this as the path of the go repo instead of the go repo on gitlab.
+	cd go/src/$go_repo
+	git remote add tmp $ydb_test_go_repo_dir
+	if ($status) then
+		echo "TEST-E-FAILED : [git remote add tmp $ydb_test_go_repo_dir] returned failure status of $status"
+		exit 1
+	endif
+	git fetch tmp >& git_fetch.log
+	if ($status) then
+		echo "TEST-E-FAILED : [git fetch tmp] returned failure status of $status"
+		exit 1
+	endif
+	if ($?ydb_test_go_repo_branch) then
+		# If env var "ydb_test_go_repo_branch" is defined, use that as the branch
+		git checkout -b tmp tmp/$ydb_test_go_repo_branch >& git_checkout.log
+		if ($status) then
+			echo "TEST-E-FAILED : [git checkout -b tmp tmp/$ydb_test_go_repo_branch] returned failure status of $status"
+			exit 1
+		endif
+	else
+		# Else use "master" branch as the default
+		git checkout -b tmp tmp/master >& git_checkout.log
+		if ($status) then
+			echo "TEST-E-FAILED : [git checkout -b tmp tmp/master] returned failure status of $status"
+			exit 1
+		endif
+	endif
+	cd -
+endif
+
+exit 0

@@ -31,7 +31,12 @@ endif
 #
 # Set up the golang environment and sets up our repo
 #
-source $gtm_tst/$tst/u_inref/setupgoenv.csh # Do our golang setup (sets $tstpath)
+source $gtm_tst/$tst/u_inref/setupgoenv.csh # Do our golang setup (sets $tstpath, $PKG_CONFIG_PATH, $GOPATH, $go_repo)
+if ($status) then
+	echo "[source $gtm_tst/$tst/u_inref/setupgoenv.csh] failed with status [$status]. Exiting..."
+	exit 1
+endif
+
 cd go/src
 mkdir simpleapithreeenp1f
 cd simpleapithreeenp1f

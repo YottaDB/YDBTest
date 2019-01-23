@@ -30,22 +30,9 @@ if ($?test_replic) then
     $MSR START INST1 INST2 # Start replication servers
 endif
 
-set tstpath = `pwd`
-setenv PKG_CONFIG_PATH $ydb_dist
-setenv GOPATH $tstpath/go/
-set go_repo="lang.yottadb.com/go/yottadb"
+source $gtm_tst/$tst/u_inref/setupgoenv.csh # Do our golang setup (sets $tstpath, $PKG_CONFIG_PATH, $GOPATH, $go_repo)
 
-mkdir go
-
-@ skip_go_test = 0
-echo "# Running : go get -t $go_repo"
-go get -t $go_repo
-if ($status) then
-	echo "TEST-E-FAILED : go get -t $go_repo returned failure status of $status"
-	@ skip_go_test = 1
-endif
-
-if (0 == $skip_go_test) then
+if (0 == $status) then
 	echo "# Running : go test $go_repo"
 
 	# We need to set the global directory to an absolute path because "go test" operates in a subdirectory
