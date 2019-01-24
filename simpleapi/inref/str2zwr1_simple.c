@@ -49,6 +49,7 @@ int main()
 		return YDB_OK;
 	} else
 	{
+		zwr_ret.buf_addr[zwr_ret.len_used] = '\0';
 		printf("ydb_str2zwr_s() returns: %s\n", zwr_ret.buf_addr);
 		fflush(stdout);
 	}
