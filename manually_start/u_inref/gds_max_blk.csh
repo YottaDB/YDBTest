@@ -4,7 +4,7 @@
 # Copyright (c) 2009-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -86,15 +86,17 @@ while ( $i != $max)
 		echo ""
 		($MUPIP integ -region "*" >& integsyslog.out &; echo $! >& pid1_integ.out) >& bckg1_integ.out
 		set pid1integ = `cat pid1_integ.out`
-		$gtm_tst/com/wait_for_proc_to_die.csh $pid1integ
+		# On slow systems (e.g. ARM platform), it is possible this huge database file takes more than the
+		# default of 60 seconds to integ. So wait indefinitely using -1 as the second parameter below.
+		$gtm_tst/com/wait_for_proc_to_die.csh $pid1integ -1
 
 		($MUPIP size -region="*" >& sizesyslog.out &; echo $! >& pid1_size.out) >& bckg1_size.out
 		set pid1size = `cat pid1_size.out`
-		$gtm_tst/com/wait_for_proc_to_die.csh $pid1size
+		$gtm_tst/com/wait_for_proc_to_die.csh $pid1size -1
 
 		($MUPIP extend $regions -block=10401874 >& extend_$i.log &; echo $! >& pid1_extend.out) >& bckg1_extend.out
 		set pid1extend = `cat pid1_extend.out`
-		$gtm_tst/com/wait_for_proc_to_die.csh $pid1extend
+		$gtm_tst/com/wait_for_proc_to_die.csh $pid1extend -1
 
 	else if ( $i == $rand_under ) then
 		echo "# Run MUPIP INTEG and MUPIP SIZE during a random iteration before 88% memory is reached"
@@ -102,15 +104,15 @@ while ( $i != $max)
 		echo ""
 		($MUPIP extend $regions -block=2097152 >& extend_$i.log &; echo $! >& pid2_extend.out) >& bckg2_extend.out
 		set pid2extend = `cat pid2_extend.out`
-		$gtm_tst/com/wait_for_proc_to_die.csh $pid2extend
+		$gtm_tst/com/wait_for_proc_to_die.csh $pid2extend -1
 
 		($MUPIP integ -region "*" >& integsyslog.out &; echo $! >& pid2_integ.out) >& bckg2_integ.out
 		set pid2integ = `cat pid2_integ.out`
-		$gtm_tst/com/wait_for_proc_to_die.csh $pid2integ
+		$gtm_tst/com/wait_for_proc_to_die.csh $pid2integ -1
 
 		($MUPIP size -region="*" >& sizesyslog.out &; echo $! >& pid2_size.out) >& bckg2_size.out
 		set pid2size = `cat pid2_size.out`
-		$gtm_tst/com/wait_for_proc_to_die.csh $pid2size
+		$gtm_tst/com/wait_for_proc_to_die.csh $pid2size -1
 	else
 		foreach reg($regions)
 			$MUPIP extend $reg -block=2097152 >& extend_$i.logx
