@@ -26,7 +26,7 @@ int main()
 	ydb_buffer_t 	strstring, zwr_ret, str_ret;
 	char		errbuf[ERRBUF_SIZE], retvaluebuf[64];
 
-	printf("### Test of simple ydb_str2zwr_s() and ydb_zwr2str_s() ###\n"); fflush(stdout);
+	printf("### Test of simple ydb_str2zwr_st() and ydb_zwr2str_st() ###\n"); fflush(stdout);
 	/* Initialize varname, subscript, and value buffers */
 
 	YDB_LITERAL_TO_BUFFER(STR_STRING, &strstring);
@@ -39,31 +39,31 @@ int main()
 	str_ret.len_alloc = sizeof(retvaluebuf);
 	str_ret.len_used = 0;
 
-	printf("# Test ydb_str2zwr_s() using the string \"X\\0ABC\"\n"); fflush(stdout);
-	status = ydb_str2zwr_s(&strstring, &zwr_ret);
+	printf("# Test ydb_str2zwr_st() using the string \"X\\0ABC\"\n"); fflush(stdout);
+	status = ydb_str2zwr_st(YDB_NOTTP, NULL, &strstring, &zwr_ret);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("ydb_str2zwr_s(): %s\n", errbuf);
+		printf("ydb_str2zwr_st(): %s\n", errbuf);
 		fflush(stdout);
 		return YDB_OK;
 	} else
 	{
 		zwr_ret.buf_addr[zwr_ret.len_used] = '\0';
-		printf("ydb_str2zwr_s() returns: %s\n", zwr_ret.buf_addr);
+		printf("ydb_str2zwr_st() returns: %s\n", zwr_ret.buf_addr);
 		fflush(stdout);
 	}
-	printf("# Test ydb_zwr2str_s() using the previous return value\n"); fflush(stdout);
-	status = ydb_zwr2str_s(&zwr_ret, &str_ret);
+	printf("# Test ydb_zwr2str_st() using the previous return value\n"); fflush(stdout);
+	status = ydb_zwr2str_st(YDB_NOTTP, NULL, &zwr_ret, &str_ret);
 	if (YDB_OK != status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("ydb_zwr2str_s(): %s\n", errbuf);
+		printf("ydb_zwr2str_st(): %s\n", errbuf);
 		fflush(stdout);
 		return YDB_OK;
 	} else if (memcmp(str_ret.buf_addr, STR_STRING, 5) == 0)
 	{
-		printf("ydb_zwr2str_s() returned the original string.\n");
+		printf("ydb_zwr2str_st() returned the original string.\n");
 		fflush(stdout);
 	}
 	return YDB_OK;

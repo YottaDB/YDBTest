@@ -34,7 +34,7 @@ void ZWrite( char* var_type )
 
 	if (memcmp(var_type, "Global", 5) == 0)
 	{
-		status = ydb_ci("gvnZWRITE");
+		status = ydb_ci_t(YDB_NOTTP, NULL, "gvnZWRITE");
 		if (status != YDB_OK)
 		{
 			ydb_zstatus(errbuf, ERRBUF_SIZE);
@@ -45,7 +45,7 @@ void ZWrite( char* var_type )
 	{
 		zwrarg.address = NULL;
 		zwrarg.length = 0;
-		status = ydb_ci("driveZWRITE", &zwrarg);
+		status = ydb_ci_t(YDB_NOTTP, NULL, "driveZWRITE", &zwrarg);
 		if (status != YDB_OK)
 		{
 			ydb_zstatus(errbuf, ERRBUF_SIZE);
@@ -78,127 +78,127 @@ int main(int argc, char** argv)
 	ret_value.len_alloc = sizeof(retvaluebuf);
 	ret_value.len_used = 0;
 
-	printf("### Test simple ydb_delete_s() of %s Variables ###\n", argv[1]); fflush(stdout);
+	printf("### Test simple ydb_delete_st() of %s Variables ###\n", argv[1]); fflush(stdout);
 	printf("# Set %s tree nodes to %s\n", basevar.buf_addr, VALUE);
-	status = ydb_set_s(&basevar, 0, NULL, &value);
+	status = ydb_set_st(YDB_NOTTP, NULL, &basevar, 0, NULL, &value);
 	if (status != YDB_OK)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("ydb_set_s(): %s\n", errbuf);
+		printf("ydb_set_st(YDB_NOTTP, NULL, ): %s\n", errbuf);
 		fflush(stdout);
 		return YDB_OK;
 	}
-	status = ydb_set_s(&basevar, 1, &node1, &value);
+	status = ydb_set_st(YDB_NOTTP, NULL, &basevar, 1, &node1, &value);
 	if (status != YDB_OK)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("ydb_set_s(): %s\n", errbuf);
+		printf("ydb_set_st(YDB_NOTTP, NULL, ): %s\n", errbuf);
 		fflush(stdout);
 		return YDB_OK;
 	}
-	status = ydb_set_s(&basevar, 2, node12, &value);
+	status = ydb_set_st(YDB_NOTTP, NULL, &basevar, 2, node12, &value);
 	if (status != YDB_OK)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("ydb_set_s(): %s\n", errbuf);
+		printf("ydb_set_st(YDB_NOTTP, NULL, ): %s\n", errbuf);
 		fflush(stdout);
 		return YDB_OK;
 	}
 	printf("# Print the current tree\n"); fflush(stdout);
 	ZWrite( argv[1] );
-	printf("\n# Test ydb_delete_s() on %s(1,2) with deltype = YDB_DEL_NODE\n", basevar.buf_addr); fflush(stdout);
-	status = ydb_delete_s(&basevar, 2, node12, YDB_DEL_NODE);
+	printf("\n# Test ydb_delete_st() on %s(1,2) with deltype = YDB_DEL_NODE\n", basevar.buf_addr); fflush(stdout);
+	status = ydb_delete_st(YDB_NOTTP, NULL, &basevar, 2, node12, YDB_DEL_NODE);
 	if (status != YDB_OK)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("ydb_delete_s() error: %s\n", errbuf);
+		printf("ydb_delete_st() error: %s\n", errbuf);
 		fflush(stdout);
 		return YDB_OK;
 	}
 	printf("# Print the current tree\n"); fflush(stdout);
 	ZWrite( argv[1] );
 	printf("# Reset the value at %s(1,2)\n", basevar.buf_addr); fflush(stdout);
-	status = ydb_set_s(&basevar, 2, node12, &value);
+	status = ydb_set_st(YDB_NOTTP, NULL, &basevar, 2, node12, &value);
 	if (status != YDB_OK)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("ydb_set_s(): %s\n", errbuf);
+		printf("ydb_set_st(YDB_NOTTP, NULL, ): %s\n", errbuf);
 		fflush(stdout);
 		return YDB_OK;
 	}
-	printf("\n# Test ydb_delete_s() on %s with deltype = YDB_DEL_NODE\n", basevar.buf_addr); fflush(stdout);
-	status = ydb_delete_s(&basevar, 0, NULL, YDB_DEL_NODE);
+	printf("\n# Test ydb_delete_st() on %s with deltype = YDB_DEL_NODE\n", basevar.buf_addr); fflush(stdout);
+	status = ydb_delete_st(YDB_NOTTP, NULL, &basevar, 0, NULL, YDB_DEL_NODE);
 	if (status != YDB_OK)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("ydb_delete_s() error: %s\n", errbuf);
+		printf("ydb_delete_st() error: %s\n", errbuf);
 		fflush(stdout);
 		return YDB_OK;
 	}
 	printf("# Print the current tree\n"); fflush(stdout);
 	ZWrite( argv[1] );
 	printf("# Reset the value at %s\n", basevar.buf_addr); fflush(stdout);
-	status = ydb_set_s(&basevar, 0, NULL, &value);
+	status = ydb_set_st(YDB_NOTTP, NULL, &basevar, 0, NULL, &value);
 	if (status != YDB_OK)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("ydb_set_s(): %s\n", errbuf);
+		printf("ydb_set_st(YDB_NOTTP, NULL, ): %s\n", errbuf);
 		fflush(stdout);
 		return YDB_OK;
 	}
-	printf("\n# Test ydb_delete_s() on %s with deltype = YDB_DEL_TREE : This should delete all child nodes as well\n", basevar.buf_addr); fflush(stdout);
-	status = ydb_delete_s(&basevar, 0, NULL, YDB_DEL_TREE);
+	printf("\n# Test ydb_delete_st() on %s with deltype = YDB_DEL_TREE : This should delete all child nodes as well\n", basevar.buf_addr); fflush(stdout);
+	status = ydb_delete_st(YDB_NOTTP, NULL, &basevar, 0, NULL, YDB_DEL_TREE);
 	if (status != YDB_OK)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("ydb_delete_s() error: %s\n", errbuf);
+		printf("ydb_delete_st() error: %s\n", errbuf);
 		fflush(stdout);
 		return YDB_OK;
 	}
 	printf("# Print the current tree\n"); fflush(stdout);
 	ZWrite( argv[1] );
 	printf("# Reset the deleted nodes\n"); fflush(stdout);
-	status = ydb_set_s(&basevar, 0, NULL, &value);
+	status = ydb_set_st(YDB_NOTTP, NULL, &basevar, 0, NULL, &value);
 	if (status != YDB_OK)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("ydb_set_s(): %s\n", errbuf);
+		printf("ydb_set_st(YDB_NOTTP, NULL, ): %s\n", errbuf);
 		fflush(stdout);
 		return YDB_OK;
 	}
-	status = ydb_set_s(&basevar, 1, &node1, &value);
+	status = ydb_set_st(YDB_NOTTP, NULL, &basevar, 1, &node1, &value);
 	if (status != YDB_OK)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("ydb_set_s(): %s\n", errbuf);
+		printf("ydb_set_st(YDB_NOTTP, NULL, ): %s\n", errbuf);
 		fflush(stdout);
 		return YDB_OK;
 	}
-	status = ydb_set_s(&basevar, 2, node12, &value);
+	status = ydb_set_st(YDB_NOTTP, NULL, &basevar, 2, node12, &value);
 	if (status != YDB_OK)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("ydb_set_s(): %s\n", errbuf);
+		printf("ydb_set_st(YDB_NOTTP, NULL, ): %s\n", errbuf);
 		fflush(stdout);
 		return YDB_OK;
 	}
 	printf("\n# Set variable %s(2) to %s\n", basevar.buf_addr, value.buf_addr); fflush(stdout);
-	status = ydb_set_s(&basevar, 1, &node2, &value);
+	status = ydb_set_st(YDB_NOTTP, NULL, &basevar, 1, &node2, &value);
 	if (status != YDB_OK)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("ydb_set_s(): %s\n", errbuf);
+		printf("ydb_set_st(YDB_NOTTP, NULL, ): %s\n", errbuf);
 		fflush(stdout);
 		return YDB_OK;
 	}
 	printf("# Print the current tree\n"); fflush(stdout);
 	ZWrite( argv[1] );
-	printf("\n# Test ydb_delete_s() on %s(1) with deltype = YDB_DEL_TREE : This should not affect %s or %s(2)\n", basevar.buf_addr, basevar.buf_addr, basevar.buf_addr); fflush(stdout);
-	status = ydb_delete_s(&basevar, 1, &node1, YDB_DEL_TREE);
+	printf("\n# Test ydb_delete_st() on %s(1) with deltype = YDB_DEL_TREE : This should not affect %s or %s(2)\n", basevar.buf_addr, basevar.buf_addr, basevar.buf_addr); fflush(stdout);
+	status = ydb_delete_st(YDB_NOTTP, NULL, &basevar, 1, &node1, YDB_DEL_TREE);
 	if (status != YDB_OK)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("ydb_delete_s() error: %s\n", errbuf);
+		printf("ydb_delete_st() error: %s\n", errbuf);
 		fflush(stdout);
 		return YDB_OK;
 	}

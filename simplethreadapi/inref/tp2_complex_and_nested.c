@@ -203,7 +203,7 @@ int gvnincr2(uint64_t tptoken, ydb_buffer_t *errstr, void *ptr)	/* $tlevel = 2 T
 	{
 		status = ydb_ci_t(tptoken, errstr, "gvnincr2callin");	/* Test TP restarts in C->M and C->M->C->M */
 		/* Unlike SimpleThreadAPI which only returns YDB_ERR_* codes (all negative numbers),
-		 * "ydb_ci" can return ERR_TPRETRY (a positive number). An easy way to check that is to
+		 * "ydb_ci_t" can return ERR_TPRETRY (a positive number). An easy way to check that is to
 		 * take negation of YDB_ERR_TPRETRY (which is == ERR_TPRETRY) and compare that against the return value.
 		 */
 		if (-YDB_ERR_TPRETRY == status)

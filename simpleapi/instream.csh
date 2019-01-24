@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2019 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -55,7 +55,7 @@
 # gvnlvndata      [quinn]       Test of ydb_data_s() function for global and local variables in the simpleAPI
 # gvnlvnincr      [quinn]       Test of ydb_incr_s() function for global and local variables in the simpleAPI
 # gvnlvndelete    [quinn]       Test of ydb_delete_s() function for global and local variables in the simpleAPI
-# isvdelete	  [quinn]	Test of ydb_delete_s() function for intrinsic special variables in the simpleAPI
+# isvdelete       [quinn]       Test of ydb_delete_s() function for intrinsic special variables in the simpleAPI
 # str2zwr         [quinn]       Test of ydb_str2zwr_s() and ydb_zwr2str_s() functions in the simpleAPI
 #-------------------------------------------------------------------------------------
 
