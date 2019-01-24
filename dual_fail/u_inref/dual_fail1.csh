@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2019 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -64,7 +67,12 @@ setenv gtm_test_jobid 2
 $gtm_tst/com/imptp.csh >>&! imptp.out
 $gtm_tst/com/wait_for_transaction_seqno.csh +$test_tn_count SRC $test_sleep_sec "" noerror
 echo "Restarting Secondary (B)..."
-$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/RCVR.csh "." $portno $start_time < /dev/null "">>&!"" $SEC_SIDE/START_${start_time}.out"
+# Note that even though A ran more transactions after B was crashed (before crashing A), it is possible B gets rolled back
+# to a higher seqno than A in rare situations (because the journal files on A were not flushed to disk as fast as those on B).
+# And since we do not use -fetchresync to start the receiver, it is possible we get a REPL_ROLLBACK_FIRST error in the
+# receiver server startup in case the receiver side is ahead of the source side in terms of seqno. Therefore use -autorollback
+# in the receiver server startup so an automatic rollback is done in case the receiver is ahead of the source.
+$sec_shell "$sec_getenv; cd $SEC_SIDE; setenv gtm_test_autorollback TRUE; $gtm_tst/com/RCVR.csh "." $portno $start_time < /dev/null "">>&!"" $SEC_SIDE/START_${start_time}.out"
 $gtm_tst/com/rfstatus.csh "BOTH_UP:"
 $gtm_tst/com/wait_for_transaction_seqno.csh +$test_tn_count_short SRC $test_sleep_sec_short "" noerror
 echo "Now GTM process will end."
