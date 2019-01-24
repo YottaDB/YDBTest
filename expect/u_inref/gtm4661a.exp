@@ -1,7 +1,7 @@
 #!/usr/bin/expect -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -26,4 +26,5 @@ expect "termmumps >"
 # execute sigproc.m - send TERM signal to process
 send -- "\$gtm_exe/mumps -run %XCMD 'write \"proc1=\"_\$j,! do ^sigproc(\"TERM\")'\r"
 expect "*%YDB-F-FORCEDHALT*\r"
+send -- "\$gtm_exe/mumps -run waitforjobtodie^sigproc\r"
 send -- "exit\r"

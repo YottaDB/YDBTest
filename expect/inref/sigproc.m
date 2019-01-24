@@ -3,6 +3,9 @@
 ; Copyright (c) 2012-2016 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2019 YottaDB LLC. and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -22,8 +25,12 @@ sigproc(sig); JOB a mumps process which will send the parent process TERM or TST
         zsy
         quit
 shootme
+	set ^jobpid=$JOB
         lock +^dontshootme
         zsy "kill -"_^signal_" "_^myjob
         lock -^dontshootme
 	write "DONE",!
         quit
+waitforjobtodie
+	do ^waitforproctodie(^jobpid)
+	quit

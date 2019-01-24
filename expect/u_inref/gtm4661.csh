@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -30,6 +30,7 @@ set syslog_start = `date +"%b %e %H:%M:%S"`
 expect -f $gtm_tst/$tst/u_inref/gtm4661b.exp | tr '\r' ' ' >&! gtm4661b.expected
 
 @ proc_pid2 = `$gtm_exe/mumps -run %XCMD 'write ^myjob'`
+$gtm_tst/com/wait_for_proc_to_die.csh $proc_pid2 120
 
 $gtm_tst/com/getoper.csh "$syslog_start" "" test_syslog.txt "" REQ2RESUME
 $gtm_tst/com/grepfile.csh "YDB-I-SUSPENDING" test_syslog.txt 1 >&! grepresult.txt
