@@ -10,9 +10,9 @@ ydb_lock_st() : time = 0x7a11ffff0bdc0 : Returned success
 ydb_lock_incr_st() : time = 0x7a11ffff0bdc0 : Returned success
 ydb_lock_st() : time = 0x7a11ffff0bdc1 : Returned error : 151027834,(SimpleThreadAPI),%YDB-E-TIME2LONG, Specified time value [0x0007A11FFFF0BDC1] exceeds supported maximum [0x0007A11FFFF0BDC0]
 ydb_lock_incr_st() : time = 0x7a11ffff0bdc1 : Returned error : 151027834,(SimpleThreadAPI),%YDB-E-TIME2LONG, Specified time value [0x0007A11FFFF0BDC1] exceeds supported maximum [0x0007A11FFFF0BDC0]
-ydb_timer_start() : time = 0x7a11ffff0bdc1 : Returned error : 151027946,(SimpleThreadAPI),%YDB-E-INVAPIMODE, Process not allowed to first use threaded Simple API then switch to using Simple API
-ydb_hiber_start() : time = 0x7a11ffff0bdc1 : Returned error : 151027946,(SimpleThreadAPI),%YDB-E-INVAPIMODE, Process not allowed to first use threaded Simple API then switch to using Simple API
-ydb_hiber_start_wait_any() : time = 0x7a11ffff0bdc1 : Returned error : 151027946,(SimpleThreadAPI),%YDB-E-INVAPIMODE, Process not allowed to first use threaded Simple API then switch to using Simple API
+ydb_timer_start() : time = 0x7a11ffff0bdc1 : Returned error : 151027954,(SimpleThreadAPI),%YDB-E-SIMPLEAPINOTALLOWED, Process cannot switch to using Simple API while already using threaded Simple API
+ydb_hiber_start() : time = 0x7a11ffff0bdc1 : Returned error : 151027954,(SimpleThreadAPI),%YDB-E-SIMPLEAPINOTALLOWED, Process cannot switch to using Simple API while already using threaded Simple API
+ydb_hiber_start_wait_any() : time = 0x7a11ffff0bdc1 : Returned error : 151027954,(SimpleThreadAPI),%YDB-E-SIMPLEAPINOTALLOWED, Process cannot switch to using Simple API while already using threaded Simple API
 
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
