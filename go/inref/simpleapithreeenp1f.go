@@ -109,40 +109,31 @@ func main() {
 	defer yottadb.Exit()
 	// Initialize
 	value.Alloc(32)
-	defer value.Free()
 	errstr.Alloc(2048)
-	defer errstr.Free()
-	defer yottadb.Exit() // Be sure to drive cleanup at process exit
 	limitsGbl.Alloc(7, 2, 18) // Only 2 subs but allow full 18 digit value
-	defer limitsGbl.Free()
 	err = limitsGbl.Varnm.SetValStrLit(tptoken, &errstr, "^limits")
 	if checkErrorReturn(err) { }
 	resultGbl.Alloc(7, 0, 0)
-	defer resultGbl.Free()
 	err = resultGbl.Varnm.SetValStrLit(tptoken, &errstr, "^result")
 	if checkErrorReturn(err) { }
 	err = resultGbl.DeleteST(tptoken, &errstr, yottadb.YDB_DEL_TREE) // Start afresh - kill ^result
 	if checkErrorReturn(err) { }
 	highestGbl.Alloc(8, 0, 0)
-	defer highestGbl.Free()
 	err = highestGbl.Varnm.SetValStrLit(tptoken, &errstr, "^highest")
 	if checkErrorReturn(err) { }
 	err = highestGbl.DeleteST(tptoken, &errstr, yottadb.YDB_DEL_TREE) // Start afresh - kill ^highest
 	if checkErrorReturn(err) { }
 	updatesGbl.Alloc(8, 0, 0)
-	defer updatesGbl.Free()
 	err = updatesGbl.Varnm.SetValStrLit(tptoken, &errstr, "^updates")
 	if checkErrorReturn(err) { }
 	err = updatesGbl.DeleteST(tptoken, &errstr, yottadb.YDB_DEL_TREE) // Start afresh - kill ^updates
 	if checkErrorReturn(err) { }
 	readsGbl.Alloc(6, 0, 0)
-	defer readsGbl.Free()
 	err = readsGbl.Varnm.SetValStrLit(tptoken, &errstr, "^reads")
 	if checkErrorReturn(err) { }
 	err = readsGbl.DeleteST(tptoken, &errstr, yottadb.YDB_DEL_TREE) // Start afresh - kill ^reads
 	if checkErrorReturn(err) { }
 	stepGbl.Alloc(5, 1, 18)
-	defer stepGbl.Free()
 	err = stepGbl.Varnm.SetValStrLit(tptoken, &errstr, "^step")
 	if checkErrorReturn(err) { }
 	err = stepGbl.DeleteST(tptoken, &errstr, yottadb.YDB_DEL_TREE) // Start afresh - kill ^updates
@@ -318,35 +309,28 @@ func doblk(index int64) {
 
 	debugPrint(fmt.Sprintf("Entering doblk() (goroutine # %d) - now released", index))
 	errstr.Alloc(2048)
-	defer errstr.Free()
 	// Have to create new data access structs for this goroutine so we don't collide with others
 	readsGbl.Alloc(6, 0, 0)
-	defer readsGbl.Free()
 	err = readsGbl.Varnm.SetValStrLit(tptoken, &errstr, "^reads")
 	if checkErrorReturn(err) { }
 	updatesGbl.Alloc(8, 0, 0)
-	defer updatesGbl.Free()
 	err = updatesGbl.Varnm.SetValStrLit(tptoken, &errstr, "^updates")
 	if checkErrorReturn(err) { }
 	highestGbl.Alloc(8, 0, 0)
-	defer highestGbl.Free()
 	err = highestGbl.Varnm.SetValStrLit(tptoken, &errstr, "^highest")
 	if checkErrorReturn(err) { }
 	limitsGbl.Alloc(7, 2, 18) // Only 2 subs but allow full 18 digit value
-	defer limitsGbl.Free()
 	err = limitsGbl.Varnm.SetValStrLit(tptoken, &errstr, "^limits")
 	if checkErrorReturn(err) { }
 	// Set the second subscript of ^limits which will always only ever be '1' in this routine.
 	err = limitsGbl.Subary.SetValStrLit(tptoken, &errstr, 1, "1")
 	if checkErrorReturn(err) { }
 	stepGbl.Alloc(5, 1, 18)
-	defer stepGbl.Free()
 	err = stepGbl.Varnm.SetValStrLit(tptoken, &errstr, "^step")
 	if checkErrorReturn(err) { }
 	err = stepGbl.Subary.SetElemUsed(tptoken, &errstr, 1)
 	if checkErrorReturn(err) { }
 	resultGbl.Alloc(7, 0, 0)
-	defer resultGbl.Free()
 	err = resultGbl.Varnm.SetValStrLit(tptoken, &errstr, "^result")
 	if checkErrorReturn(err) { }
 	// Note these local variable creations set a single subscript with the passed in starting index which
@@ -354,7 +338,6 @@ func doblk(index int64) {
 	// ever become fully threaded. Create the subscript value before creating the keys.
 	subscr := fmt.Sprintf("%d", index) // Create anti-collide subscr for this goroutine
 	readsLcl.Alloc(6, 1, 18)
-	defer readsLcl.Free()
 	err = readsLcl.Varnm.SetValStrLit(tptoken, &errstr, "reads")
 	if checkErrorReturn(err) { }
 	err = readsLcl.Subary.SetValStr(tptoken, &errstr, 0, &subscr)
@@ -362,7 +345,6 @@ func doblk(index int64) {
 	err = readsLcl.Subary.SetElemUsed(tptoken, &errstr, 1)
 	if checkErrorReturn(err) { }
 	updatesLcl.Alloc(8, 1, 18)
-	defer updatesLcl.Free()
 	err = updatesLcl.Varnm.SetValStrLit(tptoken, &errstr, "updates")
 	if checkErrorReturn(err) { }
 	err = updatesLcl.Subary.SetValStr(tptoken, &errstr, 0, &subscr)
@@ -370,7 +352,6 @@ func doblk(index int64) {
 	err = updatesLcl.Subary.SetElemUsed(tptoken, &errstr, 1)
 	if checkErrorReturn(err) { }
 	highestLcl.Alloc(8, 1, 18)
-	defer highestLcl.Free()
 	err = highestLcl.Varnm.SetValStrLit(tptoken, &errstr, "highest")
 	if checkErrorReturn(err) { }
 	err = highestLcl.Subary.SetValStr(tptoken, &errstr, 0, &subscr)
@@ -378,7 +359,6 @@ func doblk(index int64) {
 	err = highestLcl.Subary.SetElemUsed(tptoken, &errstr, 1)
 	if checkErrorReturn(err) { }
 	currpathLcl.Alloc(8, 2, 18)
-	defer currpathLcl.Free()
 	err = currpathLcl.Varnm.SetValStrLit(tptoken, &errstr, "currpath")
 	if checkErrorReturn(err) { }
 	err = currpathLcl.Subary.SetValStr(tptoken, &errstr, 0, &subscr)
@@ -387,9 +367,7 @@ func doblk(index int64) {
 	//
 	// Allocate values keys
 	value.Alloc(32)
-	defer value.Free()
 	value2.Alloc(32)
-	defer value2.Free()
 	// Initialize local reads, updates, and highest to zero.
 	err = value.SetValStrLit(tptoken, &errstr, "0")
 	if checkErrorReturn(err) { }

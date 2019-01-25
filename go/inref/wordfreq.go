@@ -106,9 +106,7 @@ func main() {
 	defer yottadb.Exit()            // Be sure to drive cleanup at process exit
 	// Allocate and set up auto-free our two keys
 	wordsvar.Alloc(maxvarnmlen, maxwordssubs, maxwordlen)
-	defer wordsvar.Free()
 	indexvar.Alloc(maxvarnmlen, maxindexsubs, maxwordlen)
-	defer indexvar.Free()
 
 	// Decide on local or global vars and initialize varname in the KeyT structures (even/odd of process id). Note
 	// the output showing which choice was made is commented out for ease in testing.
@@ -140,13 +138,9 @@ func main() {
 
 	// Some structure setup for our word loop below - allocation, and subscript usage
 	value.Alloc(maxwordlen)
-	defer value.Free()
 	tmp1.Alloc(maxwordlen)
-	defer tmp1.Free()
 	tmp2.Alloc(maxwordlen)
-	defer tmp2.Free()
 	wordsTmp1.Alloc(maxwordlen)
-	defer wordsTmp1.Free()
 
 	// Create a reader for stdin
 	readin := bufio.NewReader(os.Stdin)
