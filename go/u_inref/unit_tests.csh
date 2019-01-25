@@ -30,7 +30,10 @@ if ($?test_replic) then
     $MSR START INST1 INST2 # Start replication servers
 endif
 
-source $gtm_tst/$tst/u_inref/setupgoenv.csh # Do our golang setup (sets $tstpath, $PKG_CONFIG_PATH, $GOPATH, $go_repo)
+# This script is invoked from the "go" test and the "timing" test.
+# Since we do not want to maintain a duplicate copy in each test, we keep it in only the "go" test
+# and hence we explicitly use "go/u_inref" below instead of "$tst/u_inref" like is the usual convention.
+source $gtm_tst/go/u_inref/setupgoenv.csh # Do our golang setup (sets $tstpath, $PKG_CONFIG_PATH, $GOPATH, $go_repo)
 
 if (0 == $status) then
 	echo "# Running : go test $go_repo"
@@ -42,8 +45,13 @@ if (0 == $status) then
 	# Set ydb_ci to the calltab for the Go routines, and ensure the ydb_routines
 	#  path includes the folder housing the helper routines used by some go tests
 	setenv ydb_ci "$GOPATH/src/$go_repo/calltab.ci"
-	# Skip timing tests
-	setenv YDB_GO_SKIP_TIMED_TESTS "yes"
+	if ($tst == "timing") then
+		# We run the timing tests in this version.
+		# So we do not set the YDB_GO_SKIP_TIMED_TESTS env var to "yes" like we do for the non-timing test case.
+	else
+		# Skip timing tests
+		setenv YDB_GO_SKIP_TIMED_TESTS "yes"
+	endif
 	# We use gtmroutines here since the test framework still uses it, rather than ydb_routines
 	setenv gtmroutines ".($GOPATH/src/$go_repo/m_routines/) $gtmroutines"
 
