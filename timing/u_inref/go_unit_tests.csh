@@ -42,8 +42,8 @@ if (0 == $status) then
 	# Set ydb_ci to the calltab for the Go routines, and ensure the ydb_routines
 	#  path includes the folder housing the helper routines used by some go tests
 	setenv ydb_ci "$GOPATH/src/$go_repo/calltab.ci"
-	# Skip timing tests
-	setenv YDB_GO_SKIP_TIMED_TESTS "yes"
+	# We run the timing tests in this version
+	#setenv YDB_GO_SKIP_TIMED_TESTS "yes"
 	# We use gtmroutines here since the test framework still uses it, rather than ydb_routines
 	setenv gtmroutines ".($GOPATH/src/$go_repo/m_routines/) $gtmroutines"
 

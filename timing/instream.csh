@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -21,13 +21,14 @@
 # gtm8680      [vinay] (moved from "v63003" test) Tests YDB does not slow down significantly when holding a large number of locks and/or processes
 # gctest       [nars]  (moved from "r120"   test) Test stringpool garbage collection performance with lots of strings in the pool
 # largelvarray [nars]  (moved from "r120"   test) Test local array performance does not deteriorate exponentially with large # of nodes
+# go_unit_tests [hathawayc] (copied from go/unit_tests) run unit tests with time-sensitive tests enabled
 #-------------------------------------------------------------------------------------
 
 echo "timing test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "gtm8680 gctest largelvarray"
+setenv subtest_list_non_replic "gtm8680 gctest largelvarray go_unit_tests"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
