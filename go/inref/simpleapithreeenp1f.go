@@ -163,18 +163,18 @@ func main() {
 		linetokens = strings.Fields(input)
 		tokncnt = int64(len(linetokens))
 		if 0 < tokncnt {
-			endnum, err = strconv.ParseInt(linetokens[0], 10, 0) // aka 'j' in the M version
+			endnum, err = strconv.ParseInt(linetokens[0], 10, 64) // aka 'j' in the M version
 			if checkErrorReturn(err) { }
 		} else {
 			// Blank line ends input
 			break
 		}
 		if 1 < tokncnt {
-			streams, err = strconv.ParseInt(linetokens[1], 10, 0) // Resets streams from the default set above
+			streams, err = strconv.ParseInt(linetokens[1], 10, 64) // Resets streams from the default set above
 			if checkErrorReturn(err) { }
 		}
 		if 2 < tokncnt {
-			blk, err = strconv.ParseInt(linetokens[2], 10, 0)
+			blk, err = strconv.ParseInt(linetokens[2], 10, 64)
 			if checkErrorReturn(err) { }
 		}
 		if 3 < tokncnt {
@@ -262,14 +262,14 @@ func main() {
 		valstrp, err = value.ValStr(tptoken, &errstr)
 		if checkErrorReturn(err) { }
 		fmt.Printf(" %s", *valstrp) // ^updates
-		updatecnt, err = strconv.ParseInt(*valstrp, 10, 0)
+		updatecnt, err = strconv.ParseInt(*valstrp, 10, 64)
 		if checkErrorReturn(err) { }
 		err = readsGbl.ValST(tptoken, &errstr, &value)
 		if checkErrorReturn(err) { }
 		valstrp, err = value.ValStr(tptoken, &errstr)
 		if checkErrorReturn(err) { }
 		fmt.Printf(" %s", *valstrp) // reads
-		readcnt, err = strconv.ParseInt(*valstrp, 10, 0)
+		readcnt, err = strconv.ParseInt(*valstrp, 10, 64)
 		if checkErrorReturn(err) { }
 		if 0 < runelaps {
 			// If duration is greater than 0, display update and read rates
@@ -426,7 +426,7 @@ func doblk(index int64) {
 				if checkErrorReturn(err) { }
 				strvalp, err = value.ValStr(tptoken, &errstr)
 				if checkErrorReturn(err) { }
-				highestDB, err = strconv.ParseInt(*strvalp, 10, 0)
+				highestDB, err = strconv.ParseInt(*strvalp, 10, 64)
 				if checkErrorReturn(err) { }
 				if n > highestDB {
 					// Reset our high water mark
@@ -444,7 +444,7 @@ func doblk(index int64) {
 					if checkErrorReturn(err) { }
 					strvalp, err = value.ValStr(tptoken, &errstr)
 					if checkErrorReturn(err) { }
-					stepval, err = strconv.ParseInt(*strvalp, 10, 0)
+					stepval, err = strconv.ParseInt(*strvalp, 10, 64)
 					if checkErrorReturn(err) { }
 					i += stepval
 				}
@@ -465,7 +465,7 @@ func doblk(index int64) {
 					} else {
 						strvalp, err = value.ValStr(tptoken, errstrp)
 						if checkErrorReturn(err) { return int32(yottadb.ErrorCode(err)) }
-						resultDB, err = strconv.ParseInt(*strvalp, 10, 0)
+						resultDB, err = strconv.ParseInt(*strvalp, 10, 64)
 						if checkErrorReturn(err) { return int32(yottadb.ErrorCode(err)) }
 					}
 					if i > resultDB {
@@ -495,7 +495,7 @@ func doblk(index int64) {
 					err = currpathLcl.Subary.SetValStr(tptoken, &errstr, 1, strvalp)
 					if checkErrorReturn(err) { }
 					// We want to save the returned subscript value as 'n'
-					n, err = strconv.ParseInt(*strvalp, 10, 0)
+					n, err = strconv.ParseInt(*strvalp, 10, 64)
 					if checkErrorReturn(err) { }
 					// Increment local updates
 					err = updatesLcl.IncrST(tptoken, &errstr, nil, &value)
@@ -547,7 +547,7 @@ func doblk(index int64) {
 		if checkErrorReturn(err) { }
 		strvalp, err = value.ValStr(tptoken, &errstr)
 		if checkErrorReturn(err) { }
-		blkend, err = strconv.ParseInt(*strvalp, 10, 0)
+		blkend, err = strconv.ParseInt(*strvalp, 10, 64)
 		if checkErrorReturn(err) { }
 		if 1 == index {
 			blkstart = 1
@@ -558,7 +558,7 @@ func doblk(index int64) {
 			if checkErrorReturn(err) { }
 			strvalp, err = value.ValStr(tptoken, &errstr)
 			if checkErrorReturn(err) { }
-			blkstart, err = strconv.ParseInt(*strvalp, 10, 0)
+			blkstart, err = strconv.ParseInt(*strvalp, 10, 64)
 			if checkErrorReturn(err) { }
 			blkstart++
 		}
@@ -588,14 +588,14 @@ func doblk(index int64) {
 		} else {
 			strvalp, err = value.ValStr(tptoken, errstr)
 			if checkErrorReturn(err) { return int32(yottadb.ErrorCode(err)) }
-			highestDB, err = strconv.ParseInt(*strvalp, 10, 0)
+			highestDB, err = strconv.ParseInt(*strvalp, 10, 64)
 			if checkErrorReturn(err) { return int32(yottadb.ErrorCode(err)) }
 		}
 		err = highestLcl.ValST(tptoken, errstr, &value2)
 		if checkErrorReturn(err) { return int32(yottadb.ErrorCode(err)) }
 		strvalp, err = value2.ValStr(tptoken, errstr)
 		if checkErrorReturn(err) { return int32(yottadb.ErrorCode(err)) }
-		highestLCL, err = strconv.ParseInt(*strvalp, 10 , 0)
+		highestLCL, err = strconv.ParseInt(*strvalp, 10 , 64)
 		if checkErrorReturn(err) { return int32(yottadb.ErrorCode(err)) }
 		if highestDB < highestLCL {
 			// Local value is higher - update into DB
