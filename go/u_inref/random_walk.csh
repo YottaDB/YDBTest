@@ -38,7 +38,8 @@ endif
 
 echo "# Running Go program"
 # Since there are many outputs, and more will come over time, just grep for problems after
-go test -bench=. > output.txt
+go test -c -o random_walk_exe
+`pwd`/random_walk_exe -test.bench=. > output.txt
 
 grep "panic" output.txt
 
