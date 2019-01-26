@@ -93,6 +93,12 @@ int	tpfn_stage3();
 	CID.handle = NULL;					\
 }
 
+/* Since there are tests (e.g. dual_fail_extend/dual_fail2_mustop_sigquit subtest) that send SIG-15 to simplethreadapi_imptp
+ * while it is running, it is possible any of the ydb_*_st() or ydb_*_t() calls done could return YDB_ERR_CALLINAFTERXIT.
+ * In that case, we need to shut down the process. This macro is invoked from all such calls.
+ */
+#define	RETURN_IF_YDB_ERR_CALLINAFTERXIT(STATUS)	if (YDB_ERR_CALLINAFTERXIT == STATUS) return YDB_OK;
+
 /* Implements below M code in com/imptp.csh.
  *
  *	set jobcnt=$$^jobcnt
@@ -717,12 +723,12 @@ int	impjob(int childnum)
 	 * Or else we would end up with error messages in *.mjo (instead of *.mje).
 	 */
 	status = ydb_stdout_stderr_adjust_t(YDB_NOTTP, NULL);
-	YDB_ASSERT(YDB_OK == status);
+	RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 
 	/* set jobindex=index */
 	value.len_used = sprintf(value.buf_addr, "%d", childnum);
 	status = ydb_set_st(YDB_NOTTP, NULL, &ylcl_jobindex, 0, NULL, &value);
-	YDB_ASSERT(YDB_OK == status);
+	RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 
 	rand = (int)(2 * drand48());
 	is_gtm8086_subtest = (!memcmp(getenv("test_subtest_name"), "gtm8086", sizeof("gtm8086")));
@@ -753,7 +759,7 @@ int	impjob(int childnum)
 	printf("%s\n", value.buf_addr);
 	/* write "$zro=",$zro,!	*/
 	status = ydb_get_st(YDB_NOTTP, NULL, &yisv_zroutines, 0, NULL, &value);
-	YDB_ASSERT(YDB_OK == status);
+	RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 	value.buf_addr[value.len_used] = '\0';
 	printf("$zro=%s\n", value.buf_addr);
 
@@ -764,7 +770,7 @@ int	impjob(int childnum)
 	jobno = childnum;
 	value.len_used = sprintf(value.buf_addr, "%d", jobno);
 	status = ydb_set_st(YDB_NOTTP, NULL, &ylcl_jobno, 0, NULL, &value);
-	YDB_ASSERT(YDB_OK == status);
+	RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 
 	/* set jobid=+$ztrnlnm("gtm_test_jobid") */
 	/* Already done earlier in this function */
@@ -773,7 +779,7 @@ int	impjob(int childnum)
 	YDB_COPY_STRING_TO_BUFF("fillid", &subscr[0]);
 	subscr[1].len_used = sprintf(subscr[1].buf_addr, "%d", jobid);
 	status = ydb_get_st(YDB_NOTTP, NULL, &ygbl_pctimptp, 2, subscr, &value);
-	YDB_ASSERT(YDB_OK == status);
+	RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 	value.buf_addr[value.len_used] = '\0';
 	fillid = atoi(value.buf_addr);
 
@@ -781,21 +787,21 @@ int	impjob(int childnum)
 	subscr[0].len_used = sprintf(subscr[0].buf_addr, "%d", fillid);
 	YDB_COPY_STRING_TO_BUFF("totaljob", &subscr[1]);
 	status = ydb_get_st(YDB_NOTTP, NULL, &ygbl_pctimptp, 2, subscr, &value);
-	YDB_ASSERT(YDB_OK == status);
+	RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 	value.buf_addr[value.len_used] = '\0';
 	jobcnt = atoi(value.buf_addr);
 
 	/* set prime=^%imptp(fillid,"prime") */
 	YDB_COPY_STRING_TO_BUFF("prime", &subscr[1]);
 	status = ydb_get_st(YDB_NOTTP, NULL, &ygbl_pctimptp, 2, subscr, &value);
-	YDB_ASSERT(YDB_OK == status);
+	RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 	value.buf_addr[value.len_used] = '\0';
 	prime = atoi(value.buf_addr);
 
 	/* set root=^%imptp(fillid,"root") */
 	YDB_COPY_STRING_TO_BUFF("root", &subscr[1]);
 	status = ydb_get_st(YDB_NOTTP, NULL, &ygbl_pctimptp, 2, subscr, &value);
-	YDB_ASSERT(YDB_OK == status);
+	RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 	value.buf_addr[value.len_used] = '\0';
 	root = atoi(value.buf_addr);
 
@@ -806,7 +812,7 @@ int	impjob(int childnum)
 		top = 0;
 	else
 	{
-		YDB_ASSERT(YDB_OK == status);
+		RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 		value.buf_addr[value.len_used] = '\0';
 		top = atoi(value.buf_addr);
 	}
@@ -818,16 +824,16 @@ int	impjob(int childnum)
 	/* set istp=^%imptp(fillid,"istp") */
 	YDB_COPY_STRING_TO_BUFF("istp", &subscr[1]);
 	status = ydb_get_st(YDB_NOTTP, NULL, &ygbl_pctimptp, 2, subscr, &value);
-	YDB_ASSERT(YDB_OK == status);
+	RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 	value.buf_addr[value.len_used] = '\0';
 	istp = atoi(value.buf_addr);
 
 	/* set tptype=^%imptp(fillid,"tptype") */
 	YDB_COPY_STRING_TO_BUFF("tptype", &subscr[1]);
 	status = ydb_get_st(YDB_NOTTP, NULL, &ygbl_pctimptp, 2, subscr, &value);
-	YDB_ASSERT(YDB_OK == status);
+	RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 	status = ydb_set_st(YDB_NOTTP, NULL, &ylcl_tptype, 0, NULL, &value);
-	YDB_ASSERT(YDB_OK == status);
+	RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 	/* Initialize "tptype" global string for later use by various functions */
 	YDB_COPY_BUFF_TO_BUFF(&value, &ybuff_tptype);
 	ybuff_tptype.buf_addr[ybuff_tptype.len_used] = '\0';
@@ -835,39 +841,39 @@ int	impjob(int childnum)
 	/* set tpnoiso=^%imptp(fillid,"tpnoiso") */
 	YDB_COPY_STRING_TO_BUFF("tpnoiso", &subscr[1]);
 	status = ydb_get_st(YDB_NOTTP, NULL, &ygbl_pctimptp, 2, subscr, &value);
-	YDB_ASSERT(YDB_OK == status);
+	RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 	value.buf_addr[value.len_used] = '\0';
 	tpnoiso = atoi(value.buf_addr);
 
 	/* set dupset=^%imptp(fillid,"dupset") */
 	YDB_COPY_STRING_TO_BUFF("dupset", &subscr[1]);
 	status = ydb_get_st(YDB_NOTTP, NULL, &ygbl_pctimptp, 2, subscr, &value);
-	YDB_ASSERT(YDB_OK == status);
+	RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 	value.buf_addr[value.len_used] = '\0';
 	dupset = atoi(value.buf_addr);
 
 	/* set skipreg=^%imptp(fillid,"skipreg") */
 	YDB_COPY_STRING_TO_BUFF("skipreg", &subscr[1]);
 	status = ydb_get_st(YDB_NOTTP, NULL, &ygbl_pctimptp, 2, subscr, &value);
-	YDB_ASSERT(YDB_OK == status);
+	RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 	value.buf_addr[value.len_used] = '\0';
 	skipreg = atoi(value.buf_addr);
 
 	/* set crash=^%imptp(fillid,"crash") */
 	YDB_COPY_STRING_TO_BUFF("crash", &subscr[1]);
 	status = ydb_get_st(YDB_NOTTP, NULL, &ygbl_pctimptp, 2, subscr, &value);
-	YDB_ASSERT(YDB_OK == status);
+	RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 	value.buf_addr[value.len_used] = '\0';
 	crash = atoi(value.buf_addr);
 	/* Set "crash" M variable */
 	value.len_used = sprintf(value.buf_addr, "%d", crash);
 	status = ydb_set_st(YDB_NOTTP, NULL, &ylcl_crash, 0, NULL, &value);
-	YDB_ASSERT(YDB_OK == status);
+	RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 
 	/* set gtcm=^%imptp(fillid,"gtcm") */
 	YDB_COPY_STRING_TO_BUFF("gtcm", &subscr[1]);
 	status = ydb_get_st(YDB_NOTTP, NULL, &ygbl_pctimptp, 2, subscr, &value);
-	YDB_ASSERT(YDB_OK == status);
+	RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 	value.buf_addr[value.len_used] = '\0';
 	gtcm = atoi(value.buf_addr);
 
@@ -885,39 +891,39 @@ int	impjob(int childnum)
 	/* Set "orlbkintp" M variable */
 	value.len_used = sprintf(value.buf_addr, "%d", 0);
 	status = ydb_set_st(YDB_NOTTP, NULL, &ylcl_orlbkintp, 0, NULL, &value);
-	YDB_ASSERT(YDB_OK == status);
+	RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 
 	/* ; Node Spanning Blocks - BEGIN */
 
 	/* set keysize=^%imptp(fillid,"key_size") */
 	YDB_COPY_STRING_TO_BUFF("key_size", &subscr[1]);
 	status = ydb_get_st(YDB_NOTTP, NULL, &ygbl_pctimptp, 2, subscr, &value);
-	YDB_ASSERT(YDB_OK == status);
+	RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 	value.buf_addr[value.len_used] = '\0';
 	keysize = atoi(value.buf_addr);
 	value.len_used = sprintf(value.buf_addr, "%d", keysize);
 	status = ydb_set_st(YDB_NOTTP, NULL, &ylcl_keysize, 0, NULL, &value);
-	YDB_ASSERT(YDB_OK == status);
+	RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 
 	/* set recsize=^%imptp(fillid,"record_size") */
 	YDB_COPY_STRING_TO_BUFF("record_size", &subscr[1]);
 	status = ydb_get_st(YDB_NOTTP, NULL, &ygbl_pctimptp, 2, subscr, &value);
-	YDB_ASSERT(YDB_OK == status);
+	RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 	value.buf_addr[value.len_used] = '\0';
 	recsize = atoi(value.buf_addr);
 	value.len_used = sprintf(value.buf_addr, "%d", recsize);
 	status = ydb_set_st(YDB_NOTTP, NULL, &ylcl_recsize, 0, NULL, &value);
-	YDB_ASSERT(YDB_OK == status);
+	RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 
 	/* set span=+^%imptp(fillid,"gtm_test_spannode") */
 	YDB_COPY_STRING_TO_BUFF("gtm_test_spannode", &subscr[1]);
 	status = ydb_get_st(YDB_NOTTP, NULL, &ygbl_pctimptp, 2, subscr, &value);
-	YDB_ASSERT(YDB_OK == status);
+	RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 	value.buf_addr[value.len_used] = '\0';
 	span = atoi(value.buf_addr);
 	value.len_used = sprintf(value.buf_addr, "%d", span);
 	status = ydb_set_st(YDB_NOTTP, NULL, &ylcl_span, 0, NULL, &value);
-	YDB_ASSERT(YDB_OK == status);
+	RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 
 	/* ; Node Spanning Blocks - END */
 
@@ -929,17 +935,17 @@ int	impjob(int childnum)
 	/* set trigger=^%imptp(fillid,"trigger"),ztrcmd="ztrigger ^lasti(fillid,jobno,loop)",ztr=0,dztrig=0 */
 	YDB_COPY_STRING_TO_BUFF("trigger", &subscr[1]);
 	status = ydb_get_st(YDB_NOTTP, NULL, &ygbl_pctimptp, 2, subscr, &value);
-	YDB_ASSERT(YDB_OK == status);
+	RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 	value.buf_addr[value.len_used] = '\0';
 	trigger = atoi(value.buf_addr);
 	/* Set "trigger" M variable */
 	value.len_used = sprintf(value.buf_addr, "%d", trigger);
 	status = ydb_set_st(YDB_NOTTP, NULL, &ylcl_trigger, 0, NULL, &value);
-	YDB_ASSERT(YDB_OK == status);
+	RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 
 	YDB_COPY_STRING_TO_BUFF("ztrigger ^lasti(fillid,jobno,loop)", &value);
 	status = ydb_set_st(YDB_NOTTP, NULL, &ylcl_ztrcmd, 0, NULL, &value);
-	YDB_ASSERT(YDB_OK == status);
+	RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 	ztr = 0;
 	dztrig = 0;
 
@@ -949,12 +955,12 @@ int	impjob(int childnum)
 		/* . set trigname="triggernameforinsertsanddels" */
 		YDB_COPY_STRING_TO_BUFF("triggernameforinsertsanddels", &value);
 		status = ydb_set_st(YDB_NOTTP, NULL, &ylcl_trigname, 0, NULL, &value);
-		YDB_ASSERT(YDB_OK == status);
+		RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 
 		/* . set fulltrig="^unusedbyothersdummytrigger -commands=S -xecute=""do ^nothing"" -name="_trigname */
 		YDB_COPY_STRING_TO_BUFF("^unusedbyothersdummytrigger -commands=S -xecute=\"do ^nothing\" -name=triggernameforinsertsanddels", &value);
 		status = ydb_set_st(YDB_NOTTP, NULL, &ylcl_fulltrig, 0, NULL, &value);
-		YDB_ASSERT(YDB_OK == status);
+		RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 
 		/* . set ztr=(trigger#10)>1  ; ZTRigger command testing */
 		ztr = ((trigger % 10) > 1);
@@ -964,7 +970,7 @@ int	impjob(int childnum)
 	}
 	value.len_used = sprintf(value.buf_addr, "%d", dztrig);
 	status = ydb_set_st(YDB_NOTTP, NULL, &ylcl_dztrig, 0, NULL, &value);
-	YDB_ASSERT(YDB_OK == status);
+	RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 
 	/* ; TRIGGERS -  END */
 
@@ -995,13 +1001,13 @@ int	impjob(int childnum)
 	 */
 	YDB_COPY_STRING_TO_BUFF("jsyncnt", &subscr[1]);
 	status = ydb_lock_incr_st(YDB_NOTTP, NULL, LOCK_TIMEOUT, &ygbl_pctimptp, 2, subscr);
-	YDB_ASSERT(YDB_OK == status);
+	RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 	rand = (int)(2 * drand48());
 	valueptr = (0 == rand) ? &value : NULL;	/* Randomly test that "ydb_incr_s" is fine with a NULL "ret_value" parameter */
 	status = ydb_incr_st(YDB_NOTTP, NULL, &ygbl_pctimptp, 2, subscr, NULL, valueptr);
-	YDB_ASSERT(YDB_OK == status);
+	RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 	status = ydb_lock_decr_st(YDB_NOTTP, NULL, &ygbl_pctimptp, 2, subscr);
-	YDB_ASSERT(YDB_OK == status);
+	RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 
 	/* ; lfence is used for the fence type of last segment of updates of *ndxarr at the end
 	 * ; For non-tp and crash test meaningful application checking is very difficult
@@ -1020,20 +1026,20 @@ int	impjob(int childnum)
 	/* Set "lfence" M variable */
 	value.len_used = sprintf(value.buf_addr, "%d", lfence);
 	status = ydb_set_st(YDB_NOTTP, NULL, &ylcl_lfence, 0, NULL, &value);
-	YDB_ASSERT(YDB_OK == status);
+	RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 
 	/* if tpnoiso do tpnoiso^imptp */
 	if (tpnoiso)
 	{
 		status = ydb_cip_t(YDB_NOTTP, NULL, &tpnoiso_cid); /* Use call-in for this as it contains VIEW commands which are not yet supported in SimpleAPI/SimpleThreadAPI */
-		YDB_ASSERT(YDB_OK == status);
+		RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 	}
 
 	/* if dupset view "GVDUPSETNOOP":1 */
 	if (dupset)
 	{
 		status = ydb_cip_t(YDB_NOTTP, NULL, &dupsetnoop_cid); /* Use call-in for this as it contains VIEW commands which are not yet supported in SimpleAPI/SimpleThreadAPI */
-		YDB_ASSERT(YDB_OK == status);
+		RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 	}
 
 	/* set nroot=1
@@ -1051,7 +1057,7 @@ int	impjob(int childnum)
 		lasti = 0;
 	else
 	{
-		YDB_ASSERT(YDB_OK == status);
+		RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 		value.buf_addr[value.len_used] = '\0';
 		lasti = atoi(value.buf_addr);
 	}
@@ -1089,10 +1095,10 @@ int	impjob(int childnum)
 		/* Set I and loop M variables (needed by "helper1" call-in code) */
 		value.len_used = sprintf(value.buf_addr, "%d", I);
 		status = ydb_set_st(YDB_NOTTP, NULL, &ylcl_I, 0, NULL, &value);
-		YDB_ASSERT(YDB_OK == status);
+		RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 		value.len_used = sprintf(value.buf_addr, "%d", loop);
 		status = ydb_set_st(YDB_NOTTP, NULL, &ylcl_loop, 0, NULL, &value);
-		YDB_ASSERT(YDB_OK == status);
+		RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 
 		/* ; Go to the sleep cycle if a ^pause is requested. Wait until ^resume is called
 		 * do pauseifneeded^pauseimptp
@@ -1107,7 +1113,7 @@ int	impjob(int childnum)
 		 * if $$^dzlenproxy(subsMAX)>keysize write $$^dzlenproxy(subsMAX),?4 zwr subs,I,loop
 		 */
 		status = ydb_cip_t(YDB_NOTTP, NULL, &helper1_cid);	/* Use call-in to implement the block of M code commented above */
-		YDB_ASSERT(YDB_OK == status);
+		RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 
 		/* Copy variable names to parameter array */
 		parm_array[0] = crash;
@@ -1122,22 +1128,22 @@ int	impjob(int childnum)
 
 		/* Initialize variables subsMAX, val, valALT, valMAX, subs for use by later function calls ("tpfn_stage1", etc.) */
 		status = ydb_get_st(YDB_NOTTP, NULL, &ylcl_subsMAX, 0, NULL, &value);
-		YDB_ASSERT(YDB_OK == status);
+		RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 		YDB_COPY_BUFF_TO_BUFF(&value, &ybuff_subsMAX);
 		status = ydb_get_st(YDB_NOTTP, NULL, &ylcl_val, 0, NULL, &value);
-		YDB_ASSERT(YDB_OK == status);
+		RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 		YDB_COPY_BUFF_TO_BUFF(&value, &ybuff_val);
 		status = ydb_get_st(YDB_NOTTP, NULL, &ylcl_valALT, 0, NULL, &value);
-		YDB_ASSERT(YDB_OK == status);
+		RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 		YDB_COPY_BUFF_TO_BUFF(&value, &ybuff_valALT);
 		status = ydb_get_st(YDB_NOTTP, NULL, &ylcl_valMAX, 0, NULL, &value);
-		YDB_ASSERT(YDB_OK == status);
+		RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 		YDB_COPY_BUFF_TO_BUFF(&value, &ybuff_valMAX);
 		status = ydb_get_st(YDB_NOTTP, NULL, &ylcl_subs, 0, NULL, &value);
-		YDB_ASSERT(YDB_OK == status);
+		RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 		YDB_COPY_BUFF_TO_BUFF(&value, &ybuff_subs);
 		status = ydb_get_st(YDB_NOTTP, NULL, &ylcl_I, 0, NULL, &value);
-		YDB_ASSERT(YDB_OK == status);
+		RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 		YDB_COPY_BUFF_TO_BUFF(&value, &ybuff_I);
 
 		/* . ; Stage 1 */
@@ -1146,11 +1152,11 @@ int	impjob(int childnum)
 		if (istp)
 		{
 			status = ydb_tp_st(YDB_NOTTP, NULL, &tpfn_stage1, parm_array, (const char *)ybuff_tptype.buf_addr, 1, &starvar);
-			YDB_ASSERT(YDB_OK == status);
+			RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 		} else
 		{
 			status = tpfn_stage1(YDB_NOTTP, NULL, parm_array);
-			YDB_ASSERT(YDB_OK == status);
+			RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 		}
 		/* if istp=1 tcommit */
 
@@ -1164,29 +1170,29 @@ int	impjob(int childnum)
 		/* . . if (trig=("-"_trigname))&(ztrigret=0) set ztrigret=1	; trigger does not exist, ignore delete-by-name error */
 		/* . . goto:'ztrigret ERROR */
 		status = ydb_cip_t(YDB_NOTTP, NULL, &helper2_cid);	/* $ztrigger is anyways not supported in SimpleAPI/SimpleThreadAPI so use call-ins instead */
-		YDB_ASSERT(YDB_OK == status);
+		RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 
 		/* . set ^antp(fillid,subs)=val */
 		/* subscr[0] already has <fillid> value in it */
 		YDB_COPY_BUFF_TO_BUFF(&ybuff_subs, &subscr[1]);
 		status = ydb_set_st(YDB_NOTTP, NULL, &ygbl_antp, 2, subscr, &ybuff_val);
-		YDB_ASSERT(YDB_OK == status);
+		RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 
 		/* . if 'trigger do */
 		if (!trigger)
 		{
 			/* . . set ^bntp(fillid,subs)=val */
 			status = ydb_set_st(YDB_NOTTP, NULL, &ygbl_bntp, 2, subscr, &ybuff_val);
-			YDB_ASSERT(YDB_OK == status);
+			RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 
 			/* . . set ^cntp(fillid,subs)=val */
 			status = ydb_set_st(YDB_NOTTP, NULL, &ygbl_cntp, 2, subscr, &ybuff_val);
-			YDB_ASSERT(YDB_OK == status);
+			RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 		}
 
 		/* . . set ^dntp(fillid,subs)=valALT */
 		status = ydb_set_st(YDB_NOTTP, NULL, &ygbl_dntp, 2, subscr, &ybuff_valALT);
-		YDB_ASSERT(YDB_OK == status);
+		RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 
 		/* . ; Stage 3 */
 		/* . if istp=1 tstart ():(serial:transaction=tptype) */
@@ -1194,17 +1200,17 @@ int	impjob(int childnum)
 		if (istp)
 		{
 			status = ydb_tp_st(YDB_NOTTP, NULL, &tpfn_stage3, parm_array, (const char *)ybuff_tptype.buf_addr, 0, NULL);
-			YDB_ASSERT(YDB_OK == status);
+			RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 		} else
 		{
 			status = tpfn_stage3(YDB_NOTTP, NULL, parm_array);
-			YDB_ASSERT(YDB_OK == status);
+			RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 		}
 		/* if istp=1 tcommit */
 
 		/* . ; Stage 4 thru 11*/
 		status = ydb_cip_t(YDB_NOTTP, NULL, &helper3_cid);
-		YDB_ASSERT(YDB_OK == status);
+		RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 
 		/* . ; Stage 4 */
 		/* . for J=1:1:jobcnt D */
@@ -1322,7 +1328,7 @@ int	impjob(int childnum)
 		status = ydb_get_st(YDB_NOTTP, NULL, &ygbl_endloop, 1, subscr, &value);
 		if (YDB_ERR_GVUNDEF == status)
 			continue;
-		YDB_ASSERT(YDB_OK == status);
+		RETURN_IF_YDB_ERR_CALLINAFTERXIT(status); YDB_ASSERT(YDB_OK == status);
 		value.buf_addr[value.len_used] = '\0';
 		if (atoi(value.buf_addr))
 			break;
