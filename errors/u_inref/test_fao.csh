@@ -28,7 +28,8 @@ endif
 # in case of "pro" builds (which have -flto turned on). They only work with the "gold" linker. Not sure why "ld" does not work
 # but since linking with libmumps.a is not representative of the YottaDB user (they only have libyottadb.so, not libmumps.a)
 # we consider this acceptable and add the gold linker directive ("-fuse-ld=gold") whenever "-lmumps" is used in the test system.
-$gt_ld_linker $gt_ld_options_common -o runfaotest test_fao.o -L$gtm_obj -lmumps -fuse-ld=gold $gt_ld_extra_libs $gt_ld_syslibs >& linker.out
+# Also use $gtt_ld_shl_options to ensure we use same compilation flags at link time too (necessary for LTO).
+$gt_ld_linker $gt_ld_options_common $gtt_ld_shl_options -o runfaotest test_fao.o -L$gtm_obj -lmumps -fuse-ld=gold $gt_ld_extra_libs $gt_ld_syslibs >& linker.out
 if ($status) then
 	echo "TEST-E-LINK Error from Linker ($gt_cc_compiler).  See file linker.out for details"
 	exit 1

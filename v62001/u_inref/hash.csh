@@ -22,8 +22,8 @@ if ($tst_image == "dbg") set opts=($gt_cc_option_debug $gt_cc_option_DDEBUG)
 echo "Compiling Hash Test"
 $gt_cc_compiler -o ./hash.o $gtt_cc_shl_options $gt_cc_option_I $opts $gtm_tst/$tst/inref/hash.c
 echo "Linking Hash Test"
-# See comment in errors/u_inref/test_fao.csh about why -fuse-ld=gold is needed when -lmumps is used.
-$gt_ld_linker $gt_ld_option_output ./hash $gt_ld_options_common ./hash.o -L$gtm_dist/obj -lmumps -fuse-ld=gold $gt_ld_sysrtns $gt_ld_syslibs >& makeexe.out
+# See comment in errors/u_inref/test_fao.csh about why -fuse-ld=gold and $gtt_ld_shl_options are needed when -lmumps is used.
+$gt_ld_linker $gt_ld_option_output ./hash $gt_ld_options_common $gtt_ld_shl_options ./hash.o -L$gtm_dist/obj -lmumps -fuse-ld=gold $gt_ld_sysrtns $gt_ld_syslibs >& makeexe.out
 
 echo "Starting Hash Test"
 ./hash

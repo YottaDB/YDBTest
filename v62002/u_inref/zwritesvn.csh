@@ -20,8 +20,8 @@ if ($tst_image == "dbg") set opts=($gt_cc_option_debug $gt_cc_option_DDEBUG)
 
 # Compile and link svndump
 $gt_cc_compiler $gtt_cc_shl_options $opts $gtm_tst/$tst/inref/svndump.c -o svndump.o -I$gtm_inc >&! compile.out
-# See comment in errors/u_inref/test_fao.csh about why -fuse-ld=gold is needed when -lmumps is used.
-$gt_ld_linker $gt_ld_options_common -o svndump svndump.o -L$gtm_dist/obj -lmumps -fuse-ld=gold $gt_ld_sysrtns $gt_ld_syslibs >&! link.out
+# See comment in errors/u_inref/test_fao.csh about why -fuse-ld=gold and $gtt_ld_shl_options are needed when -lmumps is used.
+$gt_ld_linker $gt_ld_options_common $gtt_ld_shl_options -o svndump svndump.o -L$gtm_dist/obj -lmumps -fuse-ld=gold $gt_ld_sysrtns $gt_ld_syslibs >&! link.out
 if ( ! -e svndump ) then
 	echo "Compilation of svndump failed, exiting"
 	exit 0

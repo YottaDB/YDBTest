@@ -3,7 +3,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2019 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -214,6 +214,10 @@ if ($?gtt_cc_shl_options && $?gt_cc_options_common) then
 	# of fixing all the test C programs to define prototypes we just disable that benign warning for the test system.
 	# Similarly, -Wreturn-type can cause lots of benign warnings (and in turn test failures). Disable that too.
 	setenv gtt_cc_shl_options "$gtt_cc_shl_options $gt_cc_options_common -Wno-missing-prototypes -Wno-return-type"
+	# Set link flags just like compile flags (needed since we use LTO in a few tests (errors/test_fao, v62001/hash
+	# and v62002/zwritesvn subtests) that link directly against libmumps.a instead of libyottadb.so.
+	# For that remove the "-c" option (since we are no longer compiling, but linking) and use the rest.
+	setenv gtt_ld_shl_options "`echo $gtt_cc_shl_options | sed 's/ -c//g;s/^-c //g'`"
 endif
 
 which gpg2 >&! /dev/null
