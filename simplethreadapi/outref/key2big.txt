@@ -1,0 +1,23 @@
+# Test of KEY2BIG error in the simpleAPI
+# Now run key2big.c (all tests driven by a C routine)
+
+# Calling all ydb_*_st() functions to ensure each generates a KEY2BIG error
+# Calling ydb_set_st()
+[Line 56]: 150373178,(SimpleThreadAPI),%YDB-E-KEY2BIG, Key size (9) is greater than maximum (5) for region: DEFAULT,%YDB-I-GVIS, 		Global variable: ^toolong
+# Calling ydb_get_st()
+[Line 60]: 150373178,(SimpleThreadAPI),%YDB-E-KEY2BIG, Key size (9) is greater than maximum (5) for region: DEFAULT,%YDB-I-GVIS, 		Global variable: ^toolong
+# Calling ydb_data_st()
+[Line 64]: 150373178,(SimpleThreadAPI),%YDB-E-KEY2BIG, Key size (9) is greater than maximum (5) for region: DEFAULT,%YDB-I-GVIS, 		Global variable: ^toolong
+# Calling ydb_subscript_next_st()
+[Line 68]: 150373178,(SimpleThreadAPI),%YDB-E-KEY2BIG, Key size (9) is greater than maximum (5) for region: DEFAULT,%YDB-I-GVIS, 		Global variable: ^toolong
+# Calling ydb_subscript_previous_st()
+[Line 72]: 150373178,(SimpleThreadAPI),%YDB-E-KEY2BIG, Key size (9) is greater than maximum (5) for region: DEFAULT,%YDB-I-GVIS, 		Global variable: ^toolong
+# Calling ydb_node_next_st()
+[Line 76]: 150373178,(SimpleThreadAPI),%YDB-E-KEY2BIG, Key size (9) is greater than maximum (5) for region: DEFAULT,%YDB-I-GVIS, 		Global variable: ^toolong
+# Calling ydb_node_previous_st()
+[Line 80]: 150373178,(SimpleThreadAPI),%YDB-E-KEY2BIG, Key size (9) is greater than maximum (5) for region: DEFAULT,%YDB-I-GVIS, 		Global variable: ^toolong
+# Calling ydb_delete_st()
+[Line 84]: 150373178,(SimpleThreadAPI),%YDB-E-KEY2BIG, Key size (9) is greater than maximum (5) for region: DEFAULT,%YDB-I-GVIS, 		Global variable: ^toolong
+# Calling ydb_incr_st()
+[Line 88]: 150373178,(SimpleThreadAPI),%YDB-E-KEY2BIG, Key size (9) is greater than maximum (5) for region: DEFAULT,%YDB-I-GVIS, 		Global variable: ^toolong
+All SimpleApi have been tested
