@@ -1,0 +1,23 @@
+# Test of GVSUBOFLOW error in the simpleThreadAPI
+# Now run gvsuboflow.c (all tests driven by a C routine)
+
+# Calling all ydb_*_st() functions to ensure each generates a GVSUBOFLOW error
+# Calling ydb_set_st()
+[Line 61]: 150372986,(SimpleThreadAPI),%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%YDB-I-GVIS, 		Global variable: ^ok(1,1,1,1)
+# Calling ydb_get_st()
+[Line 65]: 150372986,(SimpleThreadAPI),%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%YDB-I-GVIS, 		Global variable: ^ok(1,1,1,1)
+# Calling ydb_data_st()
+[Line 69]: 150372986,(SimpleThreadAPI),%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%YDB-I-GVIS, 		Global variable: ^ok(1,1,1,1)
+# Calling ydb_subscript_next_st()
+[Line 73]: 150372986,(SimpleThreadAPI),%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%YDB-I-GVIS, 		Global variable: ^ok(1,1,1,1)
+# Calling ydb_subscript_previous_st()
+[Line 77]: 150372986,(SimpleThreadAPI),%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%YDB-I-GVIS, 		Global variable: ^ok(1,1,1,1)
+# Calling ydb_node_next_st()
+[Line 81]: 150372986,(SimpleThreadAPI),%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%YDB-I-GVIS, 		Global variable: ^ok(1,1,1,1)
+# Calling ydb_node_previous_st()
+[Line 85]: 150372986,(SimpleThreadAPI),%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%YDB-I-GVIS, 		Global variable: ^ok(1,1,1,1)
+# Calling ydb_delete_st()
+[Line 89]: 150372986,(SimpleThreadAPI),%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%YDB-I-GVIS, 		Global variable: ^ok(1,1,1,1)
+# Calling ydb_incr_st()
+[Line 93]: 150372986,(SimpleThreadAPI),%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%YDB-I-GVIS, 		Global variable: ^ok(1,1,1,1)
+All SimpleApi have been tested

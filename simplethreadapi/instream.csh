@@ -53,6 +53,7 @@
 # fatalerror1     [nars]        Test of FATALERROR1 error
 # fatalerror2     [nars]        Test of FATALERROR2 error
 # key2big	  [quinn]	Test of KEY2BIG error
+# gvsuboflow	  [quinn]	Test of GVSUBOFLOW error
 # gvnlvndata      [quinn]       Test of ydb_data_st() function for global and local variables in the SimpleThreadAPI
 # gvnlvnincr      [quinn]       Test of ydb_incr_st() function for global and local variables in the SimpleThreadAPI
 # gvnlvndelete    [quinn]       Test of ydb_delete_st() function for global and local variables in the SimpleThreadAPI
@@ -72,6 +73,7 @@ setenv subtest_list_non_replic "$subtest_list_non_replic gvnlvnnodenext gvnlvnno
 setenv subtest_list_non_replic "$subtest_list_non_replic nodenext nodeprev forkncore locks incrdecr simpleapinest"
 setenv subtest_list_non_replic "$subtest_list_non_replic time2long insuffsubs invnamecount namecount2hi delete_excl"
 setenv subtest_list_non_replic "$subtest_list_non_replic callintcommit callintrollback fatalerror1 fatalerror2 key2big"
+setenv subtest_list_non_replic "$subtest_list_non_replic gvsuboflow"
 setenv subtest_list_non_replic "$subtest_list_non_replic gvnlvndata gvnlvnincr gvnlvndelete isvdelete str2zwr"
 setenv subtest_list_replic     ""
 
