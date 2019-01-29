@@ -461,7 +461,7 @@ func doblk(index int64) {
 				// This allows us use of the stack vars we've already built in this routine or its
 				// enclosing routine - specifically, we can use the data structures already set up
 				// (e.g. resultGbl, value, etc).
-				err = yottadb.TpE2(tptoken, &errstr, func(tptoken uint64, errstrp *yottadb.BufferT) int32 {
+				err = yottadb.TpE(tptoken, &errstr, func(tptoken uint64, errstrp *yottadb.BufferT) int32 {
 					var resultDB int64
 
 					err = resultGbl.ValST(tptoken, errstrp, &value)
@@ -576,7 +576,7 @@ func doblk(index int64) {
         // Adds the number of reads & writes performed by this goroutine to the number of reads & writes performed by all
 	// goroutines, and sets the highest for all goroutines if the highest calculated by this process is greater than
 	// that calculated so far for all goroutines. Do this in a transaction so is done atomically.
-	err = yottadb.TpE2(tptoken, &errstr, func(tptoken uint64, errstr *yottadb.BufferT) int32 {
+	err = yottadb.TpE(tptoken, &errstr, func(tptoken uint64, errstr *yottadb.BufferT) int32 {
 		// Increment ^reads and ^updates by their respective local values
 		err = readsLcl.ValST(tptoken, errstr, &value) // Fetch local reads
 		if checkErrorReturn(err) { return int32(yottadb.ErrorCode(err)) }
