@@ -36,11 +36,19 @@ func debugPrint(lineText string) {
 	}
 }
 
-// Given that a handful of valid errors codes are possible, this function returns true if we hit a valid error code and should "restart"
-// For TP, this means returning from the TP callback and letting the engine call it again, for a subscript/node next operation, exit the loop
+// Given that a handful of valid errors codes are possible, this function returns true if we hit a valid error code and should
+// "restart". For TP, this means returning from the TP callback and letting the engine call it again. For non-TP, it means we
+// caught a CALLINAFTEREXIT error which is possible if the C managed thread that detected a fatal condition shutsdown YDB but
+// another thread running a goroutine doesn't know it yet and tries a call. If a thread gets a CALLINAFTEREXIT in the normal
+// course of things it either a programming error - where a call has been made after intentionally shutting down YDB by
+// driving yottadb.Exit() or it is unintentional with YDB shutting the process down but some goroutines not yet aware of it.
 //
-// Any other error types are problems that we can't reasonably recover from without knowledge of the calling application. Customize this to your
-//  needs, paying special attention to cases where more than one valid error code could happen (i.e., a NODEEND inside a TP callback)
+// Any other error types are problems that we can't reasonably recover from without knowledge of the calling application.
+// Customize this to your needs, paying special attention to cases where more than one valid error code could happen (i.e.,
+// a NODEEND inside a TP callback)
+//
+// Note the action taken if this routine returns true is currently just "return" because for the errors possible in each
+// section
 func checkErrorReturn(err error) bool {
 	if err == nil {
 		return false
@@ -48,30 +56,31 @@ func checkErrorReturn(err error) bool {
 	if ydb_err, ok := err.(*yottadb.YDBError); ok {
 		switch yottadb.ErrorCode(ydb_err) {
 		case yottadb.YDB_TP_RESTART:
-			// If an appplication uses transactions, TP_RESTART must be handled inside the transaction callback; it is here
-			//  for completeness, but ensure that one modifies this routine as needed, or copies bits from it
-			// A transaction must be restarted; this can happen if some other process modifies a value
-			//  we read before we commit the transaction
+			// If an appplication uses transactions, TP_RESTART must be handled inside the transaction callback;
+			// it is here. For completeness, but ensure that one modifies this routine as needed, or copies bits
+			// from it. A transaction must be restarted; this can happen if some other process modifies a value
+			// we read before we commit the transaction.
 			return true
 		case yottadb.YDB_TP_ROLLBACK:
-			// If an appplication uses transactions, TP_ROLLBACK must be handled inside the transaction callback; it is here
-			//  for completeness, but ensure that one modifies this routine as needed, or copies bits from it
-			// The transaction should be aborted; this can happen if a subtransaction return YDB_TP_ROLLBACK
-			//  This return will be a bit more situational
+			// If an appplication uses transactions, TP_ROLLBACK must be handled inside the transaction callback;
+			// it is here for completeness, but ensure that one modifies this routine as needed, or copies bits
+			// from it. The transaction should be aborted; this can happen if a subtransaction return YDB_TP_ROLLBACK
+			// This return will be a bit more situational.
 			return true
-		//case yottadb.YDB_ERR_CALLINAFTERXIT:
-			// The database engines was told to close, yet we tried to perform an operation. Either reopen the database,
-			//  or exit the program. Since the behavior of this depends on how your program should behave, it is commented out
-			//  so that a panic is raised
-			//return true
+		case yottadb.YDB_ERR_CALLINAFTERXIT:
+			// The database engines was told to close, yet we tried to perform an operation. Either reopen the
+			// database, or exit the program. Since the behavior of this depends on how your program should behave,
+			// it is commented out so that a panic is raised.
+			return true
 		case yottadb.YDB_ERR_NODEEND:
-			// This should be detected seperately, and handled by the looping function; calling a more generic error checker
-			//  should be done to check for other errors that can be encountered
+			// This should be detected seperately, and handled by the looping function; calling a more generic error
+			// checker should be done to check for other errors that can be encountered
 			panic("YDB_ERR_NODEEND encountered; this should be handled before in the code local to the subscript/node function")
 		default:
 			_, file, line, ok := runtime.Caller(1)
 			if ok {
-				panic(fmt.Sprintf("Assertion failure in %v at line %v with error (%d): %v", file, line, yottadb.ErrorCode(err), err))
+				panic(fmt.Sprintf("Assertion failure in %v at line %v with error (%d): %v", file, line,
+					yottadb.ErrorCode(err), err))
 			} else {
 				panic(fmt.Sprintf("Assertion failure (%d): %v", yottadb.ErrorCode(err), err))
 			}
@@ -112,32 +121,32 @@ func main() {
 	errstr.Alloc(2048)
 	limitsGbl.Alloc(7, 2, 18) // Only 2 subs but allow full 18 digit value
 	err = limitsGbl.Varnm.SetValStrLit(tptoken, &errstr, "^limits")
-	if checkErrorReturn(err) { }
+	if checkErrorReturn(err) { return }
 	resultGbl.Alloc(7, 0, 0)
 	err = resultGbl.Varnm.SetValStrLit(tptoken, &errstr, "^result")
-	if checkErrorReturn(err) { }
+	if checkErrorReturn(err) { return }
 	err = resultGbl.DeleteST(tptoken, &errstr, yottadb.YDB_DEL_TREE) // Start afresh - kill ^result
-	if checkErrorReturn(err) { }
+	if checkErrorReturn(err) { return }
 	highestGbl.Alloc(8, 0, 0)
 	err = highestGbl.Varnm.SetValStrLit(tptoken, &errstr, "^highest")
-	if checkErrorReturn(err) { }
+	if checkErrorReturn(err) { return }
 	err = highestGbl.DeleteST(tptoken, &errstr, yottadb.YDB_DEL_TREE) // Start afresh - kill ^highest
-	if checkErrorReturn(err) { }
+	if checkErrorReturn(err) { return }
 	updatesGbl.Alloc(8, 0, 0)
 	err = updatesGbl.Varnm.SetValStrLit(tptoken, &errstr, "^updates")
-	if checkErrorReturn(err) { }
+	if checkErrorReturn(err) { return }
 	err = updatesGbl.DeleteST(tptoken, &errstr, yottadb.YDB_DEL_TREE) // Start afresh - kill ^updates
-	if checkErrorReturn(err) { }
+	if checkErrorReturn(err) { return }
 	readsGbl.Alloc(6, 0, 0)
 	err = readsGbl.Varnm.SetValStrLit(tptoken, &errstr, "^reads")
-	if checkErrorReturn(err) { }
+	if checkErrorReturn(err) { return }
 	err = readsGbl.DeleteST(tptoken, &errstr, yottadb.YDB_DEL_TREE) // Start afresh - kill ^reads
-	if checkErrorReturn(err) { }
+	if checkErrorReturn(err) { return }
 	stepGbl.Alloc(5, 1, 18)
 	err = stepGbl.Varnm.SetValStrLit(tptoken, &errstr, "^step")
-	if checkErrorReturn(err) { }
+	if checkErrorReturn(err) { return }
 	err = stepGbl.DeleteST(tptoken, &errstr, yottadb.YDB_DEL_TREE) // Start afresh - kill ^updates
-	if checkErrorReturn(err) { }
+	if checkErrorReturn(err) { return }
 	// Get the number of CPUs from /proc/cpuinfo and calculate default number of execution streams
 	cpucnt := runtime.NumCPU()
 	cpuStreams := 2 * cpucnt // Max of 'streams' concurrent goroutines
@@ -159,23 +168,23 @@ func main() {
 		if (nil != err) && (io.EOF == err) {
 			break
 		}
-		if checkErrorReturn(err) { } // Takes care of the rest of the errors
+		if checkErrorReturn(err) { return } // Takes care of the rest of the errors
 		linetokens = strings.Fields(input)
 		tokncnt = int64(len(linetokens))
 		if 0 < tokncnt {
 			endnum, err = strconv.ParseInt(linetokens[0], 10, 64) // aka 'j' in the M version
-			if checkErrorReturn(err) { }
+			if checkErrorReturn(err) { } // No return here as no special YDB return codes possible
 		} else {
 			// Blank line ends input
 			break
 		}
 		if 1 < tokncnt {
 			streams, err = strconv.ParseInt(linetokens[1], 10, 64) // Resets streams from the default set above
-			if checkErrorReturn(err) { }
+			if checkErrorReturn(err) { } // No return here as no special YDB return codes possible
 		}
 		if 2 < tokncnt {
 			blk, err = strconv.ParseInt(linetokens[2], 10, 64)
-			if checkErrorReturn(err) { }
+			if checkErrorReturn(err) { } // No return here as no special YDB return codes possible
 		}
 		if 3 < tokncnt {
 			fmt.Println("Excess tokens in input line (max 3) - args: <maximum> <streamcnt> <maxnumsperstream>")
@@ -194,12 +203,12 @@ func main() {
 		}
 		// Define blocks of integers for child processes to work on
 		err = limitsGbl.Subary.SetElemUsed(tptoken, &errstr, 0) // No subscripts so we kill the entire ^limits global
-		if checkErrorReturn(err) { }
+		if checkErrorReturn(err) { return }
 		err = limitsGbl.DeleteST(tptoken, &errstr, yottadb.YDB_DEL_TREE) // kill ^limits (all of it)
-		if checkErrorReturn(err) { }
+		if checkErrorReturn(err) { return }
 		tmp = 0
 		err = limitsGbl.Subary.SetElemUsed(tptoken, &errstr, 1) // Single subscript
-		if checkErrorReturn(err) { }
+		if checkErrorReturn(err) { return }
 		for i := 1; ; i++ {
 			if tmp == endnum {
 				break
@@ -208,17 +217,17 @@ func main() {
 			if tmp > endnum {
 				tmp = endnum
 				err = value.SetValStrLit(tptoken, &errstr, fmt.Sprintf("%d", tmp))
-				if checkErrorReturn(err) { }
+				if checkErrorReturn(err) { return }
 				err = limitsGbl.SetValST(tptoken, &errstr, &value)
-				if checkErrorReturn(err) { }
+				if checkErrorReturn(err) { return }
 				break
 			}
 			err = limitsGbl.Subary.SetValStrLit(tptoken, &errstr, 0, fmt.Sprintf("%d", i)) // ^limits(i)
-			if checkErrorReturn(err) { }
+			if checkErrorReturn(err) { return }
 			err = value.SetValStrLit(tptoken, &errstr, fmt.Sprintf("%d", tmp))
-			if checkErrorReturn(err) { }
+			if checkErrorReturn(err) { return }
 			err = limitsGbl.SetValST(tptoken, &errstr, &value)
-			if checkErrorReturn(err) { }
+			if checkErrorReturn(err) { return }
 		}
 		// Launch goroutines.  The M and C versions use M locks for synchronization but in this golang version,
 		// we use a Waitgroup. All the synchronization is here. None is needed in the doblk and other routines.
@@ -247,30 +256,30 @@ func main() {
 		debugPrint(fmt.Sprintf("All (%d) goroutines completed - elapsed run time: %f", streams, runelaps))
 		// Fetch and output results
 		err = resultGbl.ValST(tptoken, &errstr, &value)
-		if checkErrorReturn(err) { }
+		if checkErrorReturn(err) { return }
 		valstrp, err = value.ValStr(tptoken, &errstr)
-		if checkErrorReturn(err) { }
+		if checkErrorReturn(err) { return }
 		fmt.Printf(" %s", *valstrp) // ^result
 		err = highestGbl.ValST(tptoken, &errstr, &value)
-		if checkErrorReturn(err) { }
+		if checkErrorReturn(err) { return }
 		valstrp, err = value.ValStr(tptoken, &errstr)
-		if checkErrorReturn(err) { }
+		if checkErrorReturn(err) { return }
 		fmt.Printf(" %s", *valstrp) // ^highest
 		fmt.Printf(" %.3f", runelaps) // Test elapsed time in seconds
 		err = updatesGbl.ValST(tptoken, &errstr, &value)
-		if checkErrorReturn(err) { }
+		if checkErrorReturn(err) { return }
 		valstrp, err = value.ValStr(tptoken, &errstr)
-		if checkErrorReturn(err) { }
+		if checkErrorReturn(err) { return }
 		fmt.Printf(" %s", *valstrp) // ^updates
 		updatecnt, err = strconv.ParseInt(*valstrp, 10, 64)
-		if checkErrorReturn(err) { }
+		if checkErrorReturn(err) { } // No return here as no special YDB return codes possible
 		err = readsGbl.ValST(tptoken, &errstr, &value)
-		if checkErrorReturn(err) { }
+		if checkErrorReturn(err) { return }
 		valstrp, err = value.ValStr(tptoken, &errstr)
-		if checkErrorReturn(err) { }
+		if checkErrorReturn(err) { return }
 		fmt.Printf(" %s", *valstrp) // reads
 		readcnt, err = strconv.ParseInt(*valstrp, 10, 64)
-		if checkErrorReturn(err) { }
+		if checkErrorReturn(err) { } // No return here as no special return codes possible
 		if 0 < runelaps {
 			// If duration is greater than 0, display update and read rates
 			fmt.Printf(" %.0f %.0f", float64(updatecnt) / runelaps, float64(readcnt) / runelaps)
@@ -278,19 +287,19 @@ func main() {
 		fmt.Printf("\n")
 		// This run is complete - reinitialize the database for the next run
 		err = value.SetValStrLit(tptoken, &errstr, "0")
-		if checkErrorReturn(err) { }
+		if checkErrorReturn(err) { return }
 		err = highestGbl.SetValST(tptoken, &errstr, &value)
-		if checkErrorReturn(err) { }
+		if checkErrorReturn(err) { return }
 		err = readsGbl.SetValST(tptoken, &errstr, &value)
-		if checkErrorReturn(err) { }
+		if checkErrorReturn(err) { return }
 		err = resultGbl.SetValST(tptoken, &errstr, &value)
-		if checkErrorReturn(err) { }
+		if checkErrorReturn(err) { return }
 		err = updatesGbl.SetValST(tptoken, &errstr, &value)
-		if checkErrorReturn(err) { }
+		if checkErrorReturn(err) { return }
 		err = stepGbl.Subary.SetElemUsed(tptoken, &errstr, 0)
-		if checkErrorReturn(err) { }
+		if checkErrorReturn(err) { return }
 		err = stepGbl.DeleteST(tptoken, &errstr, yottadb.YDB_DEL_TREE)
-		if checkErrorReturn(err) { }
+		if checkErrorReturn(err) { return }
 	}
 }
 
@@ -312,57 +321,57 @@ func doblk(index int64) {
 	// Have to create new data access structs for this goroutine so we don't collide with others
 	readsGbl.Alloc(6, 0, 0)
 	err = readsGbl.Varnm.SetValStrLit(tptoken, &errstr, "^reads")
-	if checkErrorReturn(err) { }
+	if checkErrorReturn(err) { return }
 	updatesGbl.Alloc(8, 0, 0)
 	err = updatesGbl.Varnm.SetValStrLit(tptoken, &errstr, "^updates")
-	if checkErrorReturn(err) { }
+	if checkErrorReturn(err) { return }
 	highestGbl.Alloc(8, 0, 0)
 	err = highestGbl.Varnm.SetValStrLit(tptoken, &errstr, "^highest")
-	if checkErrorReturn(err) { }
+	if checkErrorReturn(err) { return }
 	limitsGbl.Alloc(7, 2, 18) // Only 2 subs but allow full 18 digit value
 	err = limitsGbl.Varnm.SetValStrLit(tptoken, &errstr, "^limits")
-	if checkErrorReturn(err) { }
+	if checkErrorReturn(err) { return }
 	// Set the second subscript of ^limits which will always only ever be '1' in this routine.
 	err = limitsGbl.Subary.SetValStrLit(tptoken, &errstr, 1, "1")
-	if checkErrorReturn(err) { }
+	if checkErrorReturn(err) { return }
 	stepGbl.Alloc(5, 1, 18)
 	err = stepGbl.Varnm.SetValStrLit(tptoken, &errstr, "^step")
-	if checkErrorReturn(err) { }
+	if checkErrorReturn(err) { return }
 	err = stepGbl.Subary.SetElemUsed(tptoken, &errstr, 1)
-	if checkErrorReturn(err) { }
+	if checkErrorReturn(err) { return }
 	resultGbl.Alloc(7, 0, 0)
 	err = resultGbl.Varnm.SetValStrLit(tptoken, &errstr, "^result")
-	if checkErrorReturn(err) { }
+	if checkErrorReturn(err) { return }
 	// Note these local variable creations set a single subscript with the passed in starting index which
 	// is unique amongst these goroutines so we can prevent collisions between goroutines should the YDB code
 	// ever become fully threaded. Create the subscript value before creating the keys.
 	subscr := fmt.Sprintf("%d", index) // Create anti-collide subscr for this goroutine
 	readsLcl.Alloc(6, 1, 18)
 	err = readsLcl.Varnm.SetValStrLit(tptoken, &errstr, "reads")
-	if checkErrorReturn(err) { }
+	if checkErrorReturn(err) { return }
 	err = readsLcl.Subary.SetValStr(tptoken, &errstr, 0, &subscr)
-	if checkErrorReturn(err) { }
+	if checkErrorReturn(err) { return }
 	err = readsLcl.Subary.SetElemUsed(tptoken, &errstr, 1)
-	if checkErrorReturn(err) { }
+	if checkErrorReturn(err) { return }
 	updatesLcl.Alloc(8, 1, 18)
 	err = updatesLcl.Varnm.SetValStrLit(tptoken, &errstr, "updates")
-	if checkErrorReturn(err) { }
+	if checkErrorReturn(err) { return }
 	err = updatesLcl.Subary.SetValStr(tptoken, &errstr, 0, &subscr)
-	if checkErrorReturn(err) { }
+	if checkErrorReturn(err) { return }
 	err = updatesLcl.Subary.SetElemUsed(tptoken, &errstr, 1)
-	if checkErrorReturn(err) { }
+	if checkErrorReturn(err) { return }
 	highestLcl.Alloc(8, 1, 18)
 	err = highestLcl.Varnm.SetValStrLit(tptoken, &errstr, "highest")
-	if checkErrorReturn(err) { }
+	if checkErrorReturn(err) { return }
 	err = highestLcl.Subary.SetValStr(tptoken, &errstr, 0, &subscr)
-	if checkErrorReturn(err) { }
+	if checkErrorReturn(err) { return }
 	err = highestLcl.Subary.SetElemUsed(tptoken, &errstr, 1)
-	if checkErrorReturn(err) { }
+	if checkErrorReturn(err) { return }
 	currpathLcl.Alloc(8, 2, 18)
 	err = currpathLcl.Varnm.SetValStrLit(tptoken, &errstr, "currpath")
-	if checkErrorReturn(err) { }
+	if checkErrorReturn(err) { return }
 	err = currpathLcl.Subary.SetValStr(tptoken, &errstr, 0, &subscr)
-	if checkErrorReturn(err) { }
+	if checkErrorReturn(err) { return }
 	// (SetElemUsed for curpathLcl is done later)
 	//
 	// Allocate values keys
@@ -370,13 +379,13 @@ func doblk(index int64) {
 	value2.Alloc(32)
 	// Initialize local reads, updates, and highest to zero.
 	err = value.SetValStrLit(tptoken, &errstr, "0")
-	if checkErrorReturn(err) { }
+	if checkErrorReturn(err) { return }
 	err = readsLcl.SetValST(tptoken, &errstr, &value)
-	if checkErrorReturn(err) { }
+	if checkErrorReturn(err) { return }
 	err = updatesLcl.SetValST(tptoken, &errstr, &value)
-	if checkErrorReturn(err) { }
+	if checkErrorReturn(err) { return }
 	err = highestLcl.SetValST(tptoken, &errstr, &value)
-	if checkErrorReturn(err) { }
+	if checkErrorReturn(err) { return }
 	// Define the function we call below (dostep) here so we can share the structures we just built with
 	// it and not have to either pass them or create them all over again.
 	//
@@ -393,28 +402,28 @@ func doblk(index int64) {
 			// Kill the current currpath. Need to set elements used to 1 temporarily so we delete
 			// all of our goroutine's nodes.
 			err = currpathLcl.Subary.SetElemUsed(tptoken, &errstr, 1)
-			if checkErrorReturn(err) { }
+			if checkErrorReturn(err) { return }
 			err = currpathLcl.DeleteST(tptoken, &errstr, yottadb.YDB_DEL_TREE)
-			if checkErrorReturn(err) { }
+			if checkErrorReturn(err) { return }
 			err = currpathLcl.Subary.SetElemUsed(tptoken, &errstr, 2)
-			if checkErrorReturn(err) { }
+			if checkErrorReturn(err) { return }
 			// Go till we reach 1 or a number with a known number of steps
 			for i = 0; ; i++ {
 				err = readsLcl.IncrST(tptoken, &errstr, nil, &value) // Bump local reads
-				if checkErrorReturn(err) { }
+				if checkErrorReturn(err) { return }
 				err = stepGbl.Subary.SetValStrLit(tptoken, &errstr, 0, fmt.Sprintf("%d", n)) // Subscript n
-				if checkErrorReturn(err) { }
+				if checkErrorReturn(err) { return }
 				dataval, err = stepGbl.DataST(tptoken, &errstr) // $DATA(^step(n)
-				if checkErrorReturn(err) { }
+				if checkErrorReturn(err) { return }
 				if (0 != dataval) || (1 == n) {
 					break // This value is done by someone else so stop here
 				}
 				err = currpathLcl.Subary.SetValStrLit(tptoken, &errstr, 1, fmt.Sprintf("%d", i))
-				if checkErrorReturn(err) { }
+				if checkErrorReturn(err) { return }
 				err = value.SetValStrLit(tptoken, &errstr, fmt.Sprintf("%d", n))
-				if checkErrorReturn(err) { }
+				if checkErrorReturn(err) { return }
 				err = currpathLcl.SetValST(tptoken, &errstr, &value) // currpath(index, i) = n
-				if checkErrorReturn(err) { }
+				if checkErrorReturn(err) { return }
 				// Modify n according to 3n+1 rules
 				if 0 == (n & 0x1) {
 					n = n / 2 // Even numbers are halved
@@ -423,29 +432,29 @@ func doblk(index int64) {
 				}
 				// If n is > highest then set highest = n
 				err = highestLcl.ValST(tptoken, &errstr, &value)
-				if checkErrorReturn(err) { }
+				if checkErrorReturn(err) { return }
 				strvalp, err = value.ValStr(tptoken, &errstr)
-				if checkErrorReturn(err) { }
+				if checkErrorReturn(err) { return }
 				highestDB, err = strconv.ParseInt(*strvalp, 10, 64)
-				if checkErrorReturn(err) { }
+				if checkErrorReturn(err) { } // No return here as no special YDB return codes possible
 				if n > highestDB {
 					// Reset our high water mark
 					err = value.SetValStrLit(tptoken, &errstr, fmt.Sprintf("%d", n)) // Subscript n
-					if checkErrorReturn(err) { }
+					if checkErrorReturn(err) { return }
 					err = highestLcl.SetValST(tptoken, &errstr, &value) // highest = n
-					if checkErrorReturn(err) { }
+					if checkErrorReturn(err) { return }
 				}
 			}
 			if 0 < i { // if 0=i we already have an answer for n, nothing to do here
 				if 1 < n {
 					err = stepGbl.Subary.SetValStrLit(tptoken, &errstr, 0, fmt.Sprintf("%d", n)) // Subscript n
-					if checkErrorReturn(err) { }
+					if checkErrorReturn(err) { return }
 					err = stepGbl.ValST(tptoken, &errstr, &value) // fetch ^step(n)
-					if checkErrorReturn(err) { }
+					if checkErrorReturn(err) { return }
 					strvalp, err = value.ValStr(tptoken, &errstr)
-					if checkErrorReturn(err) { }
+					if checkErrorReturn(err) { return }
 					stepval, err = strconv.ParseInt(*strvalp, 10, 64)
-					if checkErrorReturn(err) { }
+					if checkErrorReturn(err) { } // No return here as no special YDB return code possible
 					i += stepval
 				}
 				// Atomically set maximum value with a transaction driven as a "closure" type routine.
@@ -466,7 +475,7 @@ func doblk(index int64) {
 						strvalp, err = value.ValStr(tptoken, errstrp)
 						if checkErrorReturn(err) { return int32(yottadb.ErrorCode(err)) }
 						resultDB, err = strconv.ParseInt(*strvalp, 10, 64)
-						if checkErrorReturn(err) { return int32(yottadb.ErrorCode(err)) }
+						if checkErrorReturn(err) { } // No return here as no special YDB return codes possible
 					}
 					if i > resultDB {
 						// Have a new longest path so set it into ^result replacing old value
@@ -477,40 +486,40 @@ func doblk(index int64) {
 					}
 					return 0
 				}, "BATCH", []string{})
-				if checkErrorReturn(err) { }
+				if checkErrorReturn(err) { return }
 				// For each value in series, set ^step() to the number of values until 1
 				err = currpathLcl.Subary.SetElemLenUsed(tptoken, &errstr, 1, 0) // Start with a null subscript
-				if checkErrorReturn(err) { }
+				if checkErrorReturn(err) { return }
 				for {
 					err = currpathLcl.SubNextST(tptoken, &errstr, &value) // Fetch next subscript
 					if (nil != err) {
 						if (yottadb.YDB_ERR_NODEEND != yottadb.ErrorCode(err)) {
-							if checkErrorReturn(err) { }
+							if checkErrorReturn(err) { return }
 						}
 						break
 					}
 					// Set retrieved subscript back into currpathLcl key
 					strvalp, err = value.ValStr(tptoken, &errstr)
-					if checkErrorReturn(err) { }
+					if checkErrorReturn(err) { return }
 					err = currpathLcl.Subary.SetValStr(tptoken, &errstr, 1, strvalp)
-					if checkErrorReturn(err) { }
+					if checkErrorReturn(err) { return }
 					// We want to save the returned subscript value as 'n'
 					n, err = strconv.ParseInt(*strvalp, 10, 64)
-					if checkErrorReturn(err) { }
+					if checkErrorReturn(err) { } // No return here as no special YDB return codes possible
 					// Increment local updates
 					err = updatesLcl.IncrST(tptoken, &errstr, nil, &value)
-					if checkErrorReturn(err) { }
+					if checkErrorReturn(err) { return }
 					// ^step(currpath(n)) = i - n
 					err = currpathLcl.ValST(tptoken, &errstr, &value) // current value of currpath(n)
-					if checkErrorReturn(err) { }
+					if checkErrorReturn(err) { return }
 					strvalp, err = value.ValStr(tptoken, &errstr)
-					if checkErrorReturn(err) { }
+					if checkErrorReturn(err) { return }
 					err = stepGbl.Subary.SetValStr(tptoken, &errstr, 0, strvalp) // Set value as subscript of ^step
-					if checkErrorReturn(err) { }
+					if checkErrorReturn(err) { return }
 					err = value.SetValStrLit(tptoken, &errstr, fmt.Sprintf("%d", i - n))
-					if checkErrorReturn(err) { }
+					if checkErrorReturn(err) { return }
 					err = stepGbl.SetValST(tptoken, &errstr, &value)
-					if checkErrorReturn(err) { }
+					if checkErrorReturn(err) { return }
 				}
 			}
 		}
@@ -521,45 +530,45 @@ func doblk(index int64) {
 	for {
 		index++
 		err = limitsGbl.Subary.SetElemUsed(tptoken, &errstr, 1) // Make sure set for 1 subscript
-		if checkErrorReturn(err) { }
+		if checkErrorReturn(err) { return }
 		err = limitsGbl.Subary.SetValStrLit(tptoken, &errstr, 0, fmt.Sprintf("%d", index)) // ^limits(index)
-		if checkErrorReturn(err) { }
+		if checkErrorReturn(err) { return }
 		dataval, err = limitsGbl.DataST(tptoken, &errstr)
-		if checkErrorReturn(err) { }
+		if checkErrorReturn(err) { return }
 		if 0 == dataval {
 			break // limit index does not exist - we're done
 		}
 		// Need to access ^limits with 2 subscripts now
 		err = limitsGbl.Subary.SetElemUsed(tptoken, &errstr, 2)
-		if checkErrorReturn(err) { }
+		if checkErrorReturn(err) { return }
 		// Bump ^limits(index,1) to attempt to "lock" this block (or at least mark it as being worked on to
 		// other goroutines).
 		err = limitsGbl.IncrST(tptoken, &errstr, nil, &value)
-		if checkErrorReturn(err) { }
+		if checkErrorReturn(err) { return }
 		strvalp, err = value.ValStr(tptoken, &errstr)
-		if checkErrorReturn(err) { }
+		if checkErrorReturn(err) { return }
 		if "1" != *strvalp {
 			continue
 		}
 		err = limitsGbl.Subary.SetElemUsed(tptoken, &errstr, 1) // Make sure set for 1 subscript again
-		if checkErrorReturn(err) { }
+		if checkErrorReturn(err) { return }
 		err = limitsGbl.ValST(tptoken, &errstr, &value) // Fetch the value of ^limits(index) which is the 2nd parm to dostep()
-		if checkErrorReturn(err) { }
+		if checkErrorReturn(err) { return }
 		strvalp, err = value.ValStr(tptoken, &errstr)
-		if checkErrorReturn(err) { }
+		if checkErrorReturn(err) { return }
 		blkend, err = strconv.ParseInt(*strvalp, 10, 64)
-		if checkErrorReturn(err) { }
+		if checkErrorReturn(err) { } // No return here as no special YDB return codes possible
 		if 1 == index {
 			blkstart = 1
 		} else {
 			err = limitsGbl.Subary.SetValStrLit(tptoken, &errstr, 0, fmt.Sprintf("%d", index - 1)) // ^limits(index - 1)
-			if checkErrorReturn(err) { }
+			if checkErrorReturn(err) { return }
 			err = limitsGbl.ValST(tptoken, &errstr, &value)
-			if checkErrorReturn(err) { }
+			if checkErrorReturn(err) { return }
 			strvalp, err = value.ValStr(tptoken, &errstr)
-			if checkErrorReturn(err) { }
+			if checkErrorReturn(err) { return }
 			blkstart, err = strconv.ParseInt(*strvalp, 10, 64)
-			if checkErrorReturn(err) { }
+			if checkErrorReturn(err) { } // No return here as no special YDB return code possible
 			blkstart++
 		}
 		dostep(blkstart, blkend)
@@ -589,14 +598,14 @@ func doblk(index int64) {
 			strvalp, err = value.ValStr(tptoken, errstr)
 			if checkErrorReturn(err) { return int32(yottadb.ErrorCode(err)) }
 			highestDB, err = strconv.ParseInt(*strvalp, 10, 64)
-			if checkErrorReturn(err) { return int32(yottadb.ErrorCode(err)) }
+			if checkErrorReturn(err) { } // No return here as no special YDB return codes possible
 		}
 		err = highestLcl.ValST(tptoken, errstr, &value2)
 		if checkErrorReturn(err) { return int32(yottadb.ErrorCode(err)) }
 		strvalp, err = value2.ValStr(tptoken, errstr)
 		if checkErrorReturn(err) { return int32(yottadb.ErrorCode(err)) }
 		highestLCL, err = strconv.ParseInt(*strvalp, 10 , 64)
-		if checkErrorReturn(err) { return int32(yottadb.ErrorCode(err)) }
+		if checkErrorReturn(err) { } // No return here as no special YDB return codes possible
 		if highestDB < highestLCL {
 			// Local value is higher - update into DB
 			err = highestGbl.SetValST(tptoken, errstr, &value2)
@@ -605,5 +614,5 @@ func doblk(index int64) {
 		return 0
 		// Commit happens on return to ydb_tp_st()/ydb_tp_s().
 	}, "BATCH", []string{})
-	if checkErrorReturn(err) { }
+	if checkErrorReturn(err) { return }
 }
