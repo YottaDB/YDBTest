@@ -40,7 +40,7 @@ gtmgbldir: c
 # Environment variables set after sourcing ydb_env_set.
 ----------------------------------------------------
 ##SUSPEND_OUTPUT UNICODE_MODE
-gtm_dist=##SOURCE_PATH##
+gtm_dist=##SOURCE_REALPATH##
 ##ALLOW_OUTPUT UNICODE_MODE
 ##SUSPEND_OUTPUT NONUNICODE_MODE
 gtm_dist=##SOURCE_REALPATH##/utf8
@@ -61,7 +61,7 @@ gtmdir=##HOME_PATH##/.fis-gtm
 ##TEST_AWKgtmver=.*
 ydb_dir=##HOME_PATH##/.yottadb
 ##SUSPEND_OUTPUT UNICODE_MODE
-ydb_dist=##SOURCE_PATH##
+ydb_dist=##SOURCE_REALPATH##
 ##ALLOW_OUTPUT UNICODE_MODE
 ##SUSPEND_OUTPUT NONUNICODE_MODE
 ydb_dist=##SOURCE_REALPATH##/utf8
