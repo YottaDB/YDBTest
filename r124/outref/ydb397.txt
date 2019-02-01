@@ -1,0 +1,56 @@
+# Test that a ZGBLDIRACC error is issued when accessing the SimpleAPI while ydb_app_ensures_isolation is set to a non-null value but a global directory does not exist
+
+# Set ydb_app_ensures_isolation to a non-null value
+ydb_app_ensures_isolation set to test
+
+# Since no global directory is created, each call to the SimpleAPI/SimpleThreadAPI should return ZGBLDIRACC error
+
+--> Running ydb397_sa.c <---
+
+# Testing SimpleAPI function ydb_set_s() to ensure ZGBLDIRACC error occurs
+
+# Attempting ydb_set_s()
+[Line 41]: 150374122,(Call-In),%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.,%SYSTEM-E-ENO2, No such file or directory
+
+--> Running ydb397_sb.c <---
+
+# Testing SimpleAPI function ydb_get_s() to ensure ZGBLDIRACC error occurs
+
+# Attempting ydb_get_s()
+[Line 41]: 150374122,(Call-In),%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.,%SYSTEM-E-ENO2, No such file or directory
+
+--> Running ydb397_sc.c <---
+
+# Testing SimpleAPI function ydb_init() to ensure ZGBLDIRACC error occurs
+
+# Attempting ydb_init()
+[Line 41]: 150374122,(Call-In),%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.,%SYSTEM-E-ENO2, No such file or directory
+
+--> Running ydb397_sd.c <---
+
+# Testing SimpleAPI function ydb_ci() to ensure ZGBLDIRACC error occurs
+
+# Attempting ydb_ci()
+[Line 41]: 150374122,(Call-In),%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.,%SYSTEM-E-ENO2, No such file or directory
+
+--> Running ydb397_sta.c <---
+
+# Testing SimpleThreadAPI function ydb_set_st() to ensure ZGBLDIRACC error occurs
+
+# Attempting ydb_set_st()
+[Line 41]: 150374122,(Call-In),%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.,%SYSTEM-E-ENO2, No such file or directory
+
+--> Running ydb397_stb.c <---
+
+# Testing SimpleThreadAPI function ydb_get_st() to ensure ZGBLDIRACC error occurs
+
+# Attempting ydb_get_st()
+[Line 41]: 150374122,(Call-In),%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.,%SYSTEM-E-ENO2, No such file or directory
+
+--> Running ydb397_std.c <---
+
+# Testing SimpleThreadAPI function ydb_ci_t() to ensure ZGBLDIRACC error occurs
+
+# Attempting ydb_ci_t()
+[Line 41]: 150374122,(Call-In),%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue.,%SYSTEM-E-ENO2, No such file or directory
+
