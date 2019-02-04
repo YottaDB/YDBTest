@@ -1,0 +1,20 @@
+# Test that using a non-existent local variable with ydb_subscript_next_s()/ydb_subscript_previous_s() returns an empty string
+
+---> Running ydb394.c <---
+
+# Test that ydb_subscript_next_s() with nonexistent local variable with 1 subscript returns an empty string
+ydb_subscript_next_s() returned an empty string
+ydb_subscript_next_s() returned YDB_ERR_NODEEND
+
+# Test that ydb_subscript_previous_s() with nonexistent local variable with 1 subscript returns an empty string
+ydb_subscript_previous_s() returned an empty string
+ydb_subscript_previous_s() returned YDB_ERR_NODEEND
+
+# Test that ydb_subscript_next_s() with nonexistent local variable with 0 subscripts returns an empty string
+ydb_subscript_next_s() returned an empty string
+ydb_subscript_next_s() returned YDB_ERR_NODEEND
+
+# Test that ydb_subscript_previous_s() with nonexistent local variable with 0 subscripts returns an empty string
+ydb_subscript_previous_s() returned an empty string
+ydb_subscript_previous_s() returned YDB_ERR_NODEEND
+
