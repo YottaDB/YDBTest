@@ -26,6 +26,7 @@
 #	     P (201 - d, R = 95)				|	S (B = min(95, 95) = 95, LT = none)
 #---------------------------------------------------------------|---------------------------------------
 #
+setenv gtm_test_mupip_set_version "disable" # ONLINE ROLLBACK (used by -autorollback below) cannot work with V4 format databases
 $gtm_tst/com/dbcreate.csh mumps 5 $rand_args 2000 4096 2000
 
 setenv portno `$sec_shell "$sec_getenv; cat $SEC_DIR/portno"`
