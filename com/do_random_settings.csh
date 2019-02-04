@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2019 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -128,11 +128,11 @@ if !($?test_align) then
 			set align = `date | $tst_awk '{srand () ; print 2^(12 + int(rand() * 6))}'`
 			breaksw
 		case "HOST_LINUX_AARCH64":
-			# Pick a power of 2 between (inclusive) 2^[12, 17] -- [4096, 131072]
-			set align = `date | $tst_awk '{srand () ; print 2^(12 + int(rand() * 8))}'`
-			breaksw
 		case "HOST_LINUX_ARMVXL":
 		default:
+			# 64-bit ARM and 32-bit ARM have limited memory capacities so limit alignsize on those platforms.
+			# Or else tests which use many journal files (e.g. stress/concurr) could use gigabytes of memory
+			# just for the source server and that can bring the ARM system down.
 			set align = 4096
 			breaksw
 		endsw
