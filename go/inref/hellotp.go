@@ -11,36 +11,24 @@
 //////////////////////////////////////////////////////////////////
 package main
 
-import "C"
-
 import (
 	"fmt"
 	"lang.yottadb.com/go/yottadb"
-	"unsafe"
 )
-
-//go:generate gengluecode -pkg main -func myGoCallback
-
-//export MyGoCallback
-func MyGoCallback(tptoken uint64, errptr unsafe.Pointer, tpfnarg unsafe.Pointer) int {
-	var errstr yottadb.BufferT
-	errstr.BufferTFromPtr(errptr)
-
-	err := yottadb.SetValE(tptoken, &errstr, "Hello world", "^hello", []string{})
-	if err != nil {
-		errcode := yottadb.ErrorCode(err)
-		return errcode
-	}
-	return yottadb.YDB_OK
-}
 
 func main() {
 	var errstr yottadb.BufferT
 
 	errstr.Alloc(64)
 
-	err := yottadb.TpE(yottadb.NOTTP, &errstr, GetMyGoCallbackCgo(), nil, "BATCH", []string{})
-
+	err := yottadb.TpE(yottadb.NOTTP, &errstr, func(tptoken uint64, errptr *yottadb.BufferT) int32 {
+		err := yottadb.SetValE(tptoken, &errstr, "Hello world", "^hello", []string{})
+		if nil != err {
+			errcode := yottadb.ErrorCode(err)
+			return errcode
+		}
+		return yottadb.YDB_OK
+	}, "BATCH", []string{})
 	if err != nil {
 		errval, _ := errstr.ValStr(yottadb.NOTTP, nil)
 		fmt.Printf("Error encountered! %s\n", *errval)

@@ -233,7 +233,7 @@ func run_proc(tptoken uint64, errstr *yottadb.BufferT, settings testSettings, cu
 		if curDepth > settings.maxDepth {
 			return 0
 		}
-		yottadb.TpE2(tptoken, errstr, func(tptoken uint64, errstr *yottadb.BufferT) int32 {
+		yottadb.TpE(tptoken, errstr, func(tptoken uint64, errstr *yottadb.BufferT) int32 {
 			var wg sync.WaitGroup
 			//fmt.Printf("TpToken: %d\n", tptoken)
 			for i := 0; i < 10; i++ {

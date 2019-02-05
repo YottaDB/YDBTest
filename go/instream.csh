@@ -17,13 +17,12 @@
 # unit_tests		[hathawayc]	Drive 'go test' test harness
 # simpleapithreeen1f	[estess]	Drive golang version of 3n+1 routine as a test/demo
 # wordfreq		[estess]	Drive golang vesion of wordfreq routine as a test/demo
-# gengluecode           [hathawayc]     Drive tests which verify TP glue code generation works
 # random_walk           [hathawayc]     Drive test which randomly walks Go commands
 #
 echo "go test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
-setenv subtest_list_common     "unit_tests simpleapithreeenp1f gengluecode random_walk"
+setenv subtest_list_common     "unit_tests simpleapithreeenp1f random_walk"
 setenv subtest_list_non_replic "wordfreq"
 setenv subtest_list_replic     ""
 
