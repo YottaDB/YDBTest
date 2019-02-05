@@ -3,7 +3,7 @@
 ; Copyright (c) 2006-2015 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
-; Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	;
+; Copyright (c) 2018-2019 YottaDB LLC. and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -104,7 +104,7 @@ error	;
 	zgoto mainlvl
 	quit
 unicodefifo2(file,encoding) ;
-	set $ZTRAP="do error2^unicodefifo"
+	set $ZTRAP="do error2^unicodefifo" do ^sstepgbl
 	write "$J:",$J,!
 	write "file=",file,!
 	write "encoding=",encoding,!
@@ -118,7 +118,7 @@ unicodefifo2(file,encoding) ;
 	set ^B=2
 	quit
 unicodefifo3(file,encoding) ;
-	set $ZTRAP="do error2^unicodefifo"
+	set $ZTRAP="do error2^unicodefifo" do ^sstepgbl
 	for i=1:1:900 quit:^A  hang 1
 	if 0=^A write "Writer process is missing",! quit
 	; make sure writer happens first so file is deleted on writer open error
