@@ -77,6 +77,7 @@
 # ydb365	   [quinn] Test various MUPIP SET JOURNAL scenarios when BEFORE or NOBEFORE is not specified.
 # ydb392	   [quinn] Test that ydb_linktmpdir/gtm_linktmpdir env var default to ydb_tmp/gtm_tmp before defaulting to /tmp
 # ydb394	   [quinn] Test that when using a non-existent local variable, ydb_subscript_next_s()/ydb_subscript_previous_s() returns an empty string
+# ydb402	   [quinn] Test that gtm_init(), gtm_ci(), and gtm_cip() can be successfully called to access M code
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r124 test starts..."
@@ -89,6 +90,7 @@ setenv subtest_list_non_replic "$subtest_list_non_replic ydb324 ydb341 ydb343 yd
 setenv subtest_list_non_replic "$subtest_list_non_replic ydb356 ydb360 ydb357 ydb346 ydb95 ydb333 ydb329 ydb344 ydb258 ydb374"
 setenv subtest_list_non_replic "$subtest_list_non_replic ydb372 ydb363 ydb371 ydb349 ydb197 ydb233 ydb309 ydb383 ydb113 ydb114"
 setenv subtest_list_non_replic "$subtest_list_non_replic ydb191 ydb345 ydb369 ydb96 ydb272 ydb230 ydb365 ydb392 ydb394"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb402"
 setenv subtest_list_replic     ""
 setenv subtest_list_replic     "$subtest_list_replic ydb282srcsrvrerr ydb293 ydb312_gtm8182a ydb312_gtm8182b  ydb312_gtm8182c"
 setenv subtest_list_replic     "$subtest_list_replic ydb312_gtm8182d ydb312_gtm8182e ydb312_gtm8182f ydb312_gtm8182g ydb321"
