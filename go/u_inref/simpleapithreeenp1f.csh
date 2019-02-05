@@ -67,7 +67,8 @@ endif
 # Run simpleapithreeenp1f with one range
 #
 `pwd`/simpleapithreeenp1f << EOF
-250000
+150000
+100000
 EOF
 #
 # Validate DB
