@@ -11,5 +11,5 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ydb402	;
-	write "GTM Call-in Succesful"
+	write "Inside M code",!
 	quit
