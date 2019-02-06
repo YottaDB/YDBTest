@@ -4,7 +4,7 @@
 # Copyright (c) 2003-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC. and/or its subsidiaries. #
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -27,10 +27,12 @@
 # gtm8416	[partridger] Verify 1 second HANG between global SETs ensures that each journal record falls in a different second
 #				The above test is manually started because takes a long time, but it's not computationally intensive
 # sem_counter	[base]  Launch over 32K processes and ensure they can connect to the database if -qdbrundown is on
-
+# ydb395	[quinn] Test that /tmp/yottadb/$ydb_ver has read-write-execute permissions for all users permitted to execute YottaDB
+#				The above test is manually started because it needs standalone access to the /tmp directory
+#
 setenv subtest_list_common "4g_journal align_string"
 setenv subtest_list_non_replic "4g_dbcertify alsmemleak largelibtest gds_max_blk maxtrignames ossmake"
-setenv subtest_list_non_replic "$subtest_list_non_replic gtm8416 sem_counter"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm8416 sem_counter ydb395"
 setenv subtest_list_replic ""
 
 if ($?test_replic == 1) then
