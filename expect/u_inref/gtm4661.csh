@@ -18,19 +18,33 @@
 $gtm_tst/com/dbcreate.csh mumps 1
 setenv TERM xterm
 # Process does not stuck up after receiving TERM signal while running in background.
-expect -f $gtm_tst/$tst/u_inref/gtm4661a.exp | tr '\r' ' ' >&! gtm4661a.expected
-
-$gtm_tst/com/grepfile.csh 'YDB-F-FORCEDHALT' gtm4661a.expected 1
+# Turn on expect debugging using "-d". The debug output would be in expect.dbg in case needed to analyze stray timing failures.
+(expect -d $gtm_tst/$tst/u_inref/gtm4661a.exp > expect_4661a.out) >& expect_4661a.dbg
+if ($status) then
+	echo "EXPECT-E-FAIL : expect_4661a returned non-zero exit status"
+endif
+mv expect_4661a.out expect_4661a.outx	# move .out to .outx to avoid -E- from being caught by test framework
+perl $gtm_tst/com/expectsanitize.pl expect_4661a.outx > expect_4661a_sanitized.outx
+$gtm_tst/com/grepfile.csh 'YDB-F-FORCEDHALT' expect_4661a_sanitized.outx 1
 @ proc_pid1 = `$gtm_exe/mumps -run %XCMD 'write ^myjob'`
 # if process did not die after 2 min after receiving TERM signal, it indicates that the process is stuck up.
 $gtm_tst/com/wait_for_proc_to_die.csh $proc_pid1 120
+# wait for jobbed off process (that sends the TERM signal in gtm4661a.exp) to die
+$gtm_exe/mumps -run waitforjobtodie^sigproc
 
 # Verify that process sends only one SUSPENDING message to operator log after receiving TSTP signal.
 set syslog_start = `date +"%b %e %H:%M:%S"`
-expect -f $gtm_tst/$tst/u_inref/gtm4661b.exp | tr '\r' ' ' >&! gtm4661b.expected
+(expect -d $gtm_tst/$tst/u_inref/gtm4661b.exp > expect_4661b.out) >& expect_4661b.dbg
+if ($status) then
+	echo "EXPECT-E-FAIL : expect_4661b returned non-zero exit status"
+endif
+mv expect_4661b.out expect_4661b.outx	# move .out to .outx to avoid -E- from being caught by test framework
+perl $gtm_tst/com/expectsanitize.pl expect_4661b.outx > expect_4661b_sanitized.outx
 
 @ proc_pid2 = `$gtm_exe/mumps -run %XCMD 'write ^myjob'`
 $gtm_tst/com/wait_for_proc_to_die.csh $proc_pid2 120
+# wait for jobbed off process (that sends the TSTP signal in gtm4661b.exp) to die
+$gtm_exe/mumps -run waitforjobtodie^sigproc
 
 $gtm_tst/com/getoper.csh "$syslog_start" "" test_syslog.txt "" REQ2RESUME
 $gtm_tst/com/grepfile.csh "YDB-I-SUSPENDING" test_syslog.txt 1 >&! grepresult.txt

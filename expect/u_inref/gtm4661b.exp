@@ -34,5 +34,3 @@ expect {
 	timeout {puts "TEST-W-WARN timed out <$expect_out(buffer)>"}
 	eof {puts "TEST-W-WARN reached EOF <$expect_out(buffer)>"}
 }
-send -- "\$gtm_exe/mumps -run waitforjobtodie^sigproc\r"
-send -- "exit\r"

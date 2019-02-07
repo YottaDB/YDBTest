@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -153,6 +153,9 @@ if ("endoftest" == "$2") then
 		if !($?tst_dont_send_mail) then
 			cat $log_file | mailx -s "$sub" $mailing_list
 		endif
+		# Capture ps -ef state at the time of the LSOF report. This would be helpful in finding out
+		# more details on the pids identified in the lsof_* report above.
+		ps -ef --forest >& lsof_psfu_${test_subtest_name}.out
 	else
 		\rm $log_file
 		# If there are no processes running, check if there are any ipcs left over

@@ -26,5 +26,3 @@ expect "termmumps >"
 # execute sigproc.m - send TERM signal to process
 send -- "\$gtm_exe/mumps -run %XCMD 'write \"proc1=\"_\$j,! do ^sigproc(\"TERM\")'\r"
 expect "*%YDB-F-FORCEDHALT*\r"
-send -- "\$gtm_exe/mumps -run waitforjobtodie^sigproc\r"
-send -- "exit\r"
