@@ -175,7 +175,7 @@ information returned for each semaphore in set:
 
 # Test 5 : gtmsecshr issues a SECSHRNOYDBDIST error if ydb_dist env var is not set
 ----------
-Error SECSHRNOYDBDIST seen in syslog1.txt as expected:
+##TEST_AWKError .*SECSHRNOYDBDIST seen in syslog1.txt as expected:
 ##TEST_AWK.* GTMSECSHRINIT\[.*\]: %YDB-E-SECSHRNOYDBDIST, ydb_dist env var does not exist. gtmsecshr will not be started
 ----------
 # Remove portno allocation file

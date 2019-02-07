@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -137,7 +137,7 @@ setenv gtm_dist $saveydbdist
 
 # Search for SECSHRNOYDBDIST message from the specific gtmsecshr pid that we backgrounded a few lines above
 $gtm_tst/com/getoper.csh "$syslog_start" "" "syslog1.txt" "" "\<$gtmsecshrpid\>.*SECSHRNOYDBDIST"
-$gtm_tst/com/check_error_exist.csh syslog1.txt SECSHRNOYDBDIST
+$gtm_tst/com/check_error_exist.csh syslog1.txt "\<$gtmsecshrpid\>.*SECSHRNOYDBDIST"
 
 echo "# Remove portno allocation file"
 $gtm_tst/com/portno_release.csh
