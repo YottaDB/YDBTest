@@ -27,9 +27,9 @@ if ($status) then
 	exit 1
 endif
 
+cd go/src/$go_repo
 if ($?ydb_test_go_repo_dir) then
 	# If env var "ydb_test_go_repo_dir" is defined, use this as the path of the go repo instead of the go repo on gitlab.
-	cd go/src/$go_repo
 	git remote add tmp $ydb_test_go_repo_dir
 	if ($status) then
 		echo "TEST-E-FAILED : [git remote add tmp $ydb_test_go_repo_dir] returned failure status of $status"
@@ -55,15 +55,15 @@ if ($?ydb_test_go_repo_dir) then
 			exit 1
 		endif
 	endif
-	cd -
 else
 	# We used the go repo on gitlab. By default, "go get" would checkout the "master" branch.
 	# But we want to checkout the "develop" branch.
-	git checkout develop
+	git checkout develop >& git_checkout.log
 	if ($status) then
 		echo "TEST-E-FAILED : [git checkout develop] returned failure status of $status"
 		exit 1
 	endif
 endif
+cd -
 
 exit 0
