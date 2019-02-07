@@ -1,0 +1,31 @@
+#################################################################
+#								#
+# Copyright (c) 2019 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+#
+export GTMCI=$(CURDIR)/callin.tab
+export GTMXC=$(CURDIR)/extcall.tab
+export plugin=$(CURDIR)/ydb401_plugin.so
+export gtmroutines=
+export ydb_routines=$(CURDIR)($(CURDIR))
+
+all: ydb401 ydb401_plugin.so
+
+ydb401: ydb401.c
+	gcc -Wall -o ydb401 ydb401.c -fPIC -L$(ydb_dist) -lyottadb -Wl,-rpath,$(ydb_dist) -I$(ydb_dist)
+
+ydb401_plugin.so: ydb401_plugin.c
+	gcc -Wall -shared -o ydb401_plugin.so ydb401_plugin.c -fPIC -L$(ydb_dist) -lyottadb -I$(ydb_dist)
+
+run: all
+	$(CURDIR)/ydb401
+
+clean:
+	rm -f ydb401 ydb401_plugin.so ydb401.o
