@@ -48,14 +48,22 @@ if ($?ydb_test_go_repo_dir) then
 			exit 1
 		endif
 	else
-		# Else use "master" branch as the default
-		git checkout -b tmp tmp/master >& git_checkout.log
+		# Else use "develop" branch as the default ("master" branch is latest released code, not latest developed code)
+		git checkout -b tmp tmp/develop >& git_checkout.log
 		if ($status) then
-			echo "TEST-E-FAILED : [git checkout -b tmp tmp/master] returned failure status of $status"
+			echo "TEST-E-FAILED : [git checkout -b tmp tmp/develop] returned failure status of $status"
 			exit 1
 		endif
 	endif
 	cd -
+else
+	# We used the go repo on gitlab. By default, "go get" would checkout the "master" branch.
+	# But we want to checkout the "develop" branch.
+	git checkout develop
+	if ($status) then
+		echo "TEST-E-FAILED : [git checkout develop] returned failure status of $status"
+		exit 1
+	endif
 endif
 
 exit 0
