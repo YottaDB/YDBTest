@@ -10,9 +10,11 @@
 #								#
 #################################################################
 #
-# This test/demo drives the golang flavor of the 3n+1 routine
+# This test/demo drives the golang flavor of the 3n+1 routine that uses separate routines driven by the TP callback closure
+# function using a block of storage to share keys and such between routines. This differs from threeenp1B1 which puts everything
+# in closure routines so everything can always be shared which works for small stuff but not so much for larger things.
 #
-# Create database simpleapithreeenp1f needs:
+# Create database threeenp1B2 needs:
 #
 # Use -gld_has_db_fullpath to ensure gld is created with full paths pointing to the database file
 # (see comment before "setenv ydb_gbldir" done below for why).
@@ -38,25 +40,25 @@ if ($status) then
 endif
 
 cd go/src
-mkdir simpleapithreeenp1f
-cd simpleapithreeenp1f
-ln -s $gtm_tst/$tst/inref/simpleapithreeenp1f.go .
+mkdir threeenp1B2
+cd threeenp1B2
+ln -s $gtm_tst/$tst/inref/threeenp1B2.go .
 if (0 != $status) then
-    echo "TEST-E-FAILED : Unable to soft link simpleapithreeenp1f.go to current directory ($PWD)"
+    echo "TEST-E-FAILED : Unable to soft link threeenp1B2.go to current directory ($PWD)"
     exit 1
 endif
 # Build our routine (must be built due to use of cgo).
-echo "# Building simpleapithreeenp1f"
+echo "# Building threeenp1B2"
 go build
 if (0 != $status) then
-    echo "TEST-E-FAILED : Unable to build simpleapithreeenp1f.go"
+    echo "TEST-E-FAILED : Unable to build threeenp1B2.go"
     exit 1
 endif
 #
 # Run it with one range
 #
 # Note: We need to set the global directory to an absolute path because we are operating in a subdirectory
-# ($tstpath/go/src/simpleapithreeenp1f) where the default test framework assignment of ydb_gbldir
+# ($tstpath/go/src/threeenp1B2) where the default test framework assignment of ydb_gbldir
 # to a relative path (i.e. mumps.gld) is no longer relevant.
 setenv ydb_gbldir $tstpath/mumps.gld
 if ($?test_replic) then
@@ -64,10 +66,10 @@ if ($?test_replic) then
 	setenv ydb_repl_instance $tstpath/mumps.repl
 endif
 #
-# Run simpleapithreeenp1f with one range
+# Run threeenp1B2 with one range
 #
-`pwd`/simpleapithreeenp1f << EOF
-150000
+`pwd`/threeenp1B2 << EOF
+100000
 100000
 EOF
 #

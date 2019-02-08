@@ -25,6 +25,14 @@ import (
 	"time"
 )
 
+// This is an implementation of 3n+1 in Golang. This is the first of two flavors that differ as follows:
+// - threeenp1B1 - All of the entry entry points except the two right up top are implemented as closure functions including
+//                 the TP callback functions. This allows them to share variables and not have to pass them individually.
+//                 This is suitable for small callback functions but not so much for large ones.
+// - threeenp1B2 - All of the functions are separate functions with the exception of the one line TP callback closure
+//                 functions. These routine pass around a large block that contains all the keys, buffers, etc that need
+//                 to be referenced by the routines. This allows callback functions to even be in separate files.
+
 // Constant definitions
 const tptoken uint64 = yottadb.NOTTP
 const debugMode bool = false
@@ -48,7 +56,10 @@ func debugPrint(lineText string) {
 // a NODEEND inside a TP callback)
 //
 // Note the action taken if this routine returns true is currently just "return" because for the errors possible in each
-// section
+// section return is the correct action as described in the comments below. This applies to calls to the yottadb package.
+// When the macro is used to check error codes from system services, there is no return as the only reason the check is done
+// is to look for panic type errors it handles.
+
 func checkErrorReturn(err error) bool {
 	if err == nil {
 		return false
@@ -74,7 +85,7 @@ func checkErrorReturn(err error) bool {
 			return true
 		case yottadb.YDB_ERR_NODEEND:
 			// This should be detected seperately, and handled by the looping function; calling a more generic error
-			// checker should be done to check for other errors that can be encountered
+			// checker should be done to check for other errors that can be encountered.
 			panic("YDB_ERR_NODEEND encountered; this should be handled before in the code local to the subscript/node function")
 		default:
 			_, file, line, ok := runtime.Caller(1)
@@ -145,7 +156,7 @@ func main() {
 	stepGbl.Alloc(5, 1, 18)
 	err = stepGbl.Varnm.SetValStrLit(tptoken, &errstr, "^step")
 	if checkErrorReturn(err) { return }
-	err = stepGbl.DeleteST(tptoken, &errstr, yottadb.YDB_DEL_TREE) // Start afresh - kill ^updates
+	err = stepGbl.DeleteST(tptoken, &errstr, yottadb.YDB_DEL_TREE) // Start afresh - kill ^step
 	if checkErrorReturn(err) { return }
 	// Get the number of CPUs from /proc/cpuinfo and calculate default number of execution streams
 	cpucnt := runtime.NumCPU()
