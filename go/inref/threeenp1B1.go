@@ -25,7 +25,9 @@ import (
 	"time"
 )
 
-// This is an implementation of 3n+1 in Golang. This is the first of two flavors that differ as follows:
+// This is an implementation of 3n+1 in Golang. See "Solving the 3n+1 Problem with YottaDB" at
+// https://yottadb.com/solving-the-3n1-problem-with-yottadb/ for details.
+// This is the first of two flavors that differ as follows:
 // - threeenp1B1 - All of the entry entry points except the two right up top are implemented as closure functions including
 //                 the TP callback functions. This allows them to share variables and not have to pass them individually.
 //                 This is suitable for small callback functions but not so much for large ones.
@@ -104,10 +106,9 @@ func checkErrorReturn(err error) bool {
 //
 // Main routine threenp1 implements 3n+1 problem.
 //
-// Find the maximum number of steps for the 3n+1 problem for all integers through two input integers.
-// See http://docs.google.com/View?id=dd5f3337_24gcvprmcw
-// Assumes input format is 3 integers separated by a space, of which only the first is required:
-//  - the largest number for which the 3n+1 sequence must be computed
+// Find the maximum number of steps for the 3n+1 problem for all integers through an input integer.
+// Assumes input is lines of 3 integers separated by a space, of which only the first is required:
+//  - the largest number for which the 3n+1 sequence must be computed (>1)
 //  - the number of parallel exection streams (defaults to 2× the number of CPUs)
 //  - the sizes of blocks of integers on which spawned child processes operate
 //    (defaults to approximately the range divided by the number execution streams)
@@ -354,8 +355,8 @@ func doblk(index int64) {
 	err = resultGbl.Varnm.SetValStrLit(tptoken, &errstr, "^result")
 	if checkErrorReturn(err) { return }
 	// Note these local variable creations set a single subscript with the passed in starting index which
-	// is unique amongst these goroutines so we can prevent collisions between goroutines should the YDB code
-	// ever become fully threaded. Create the subscript value before creating the keys.
+	// is unique amongst these goroutines so we can prevent collisions between goroutines when the YDB code
+	// becomes fully threaded in the future. Create the subscript value before creating the keys.
 	subscr := fmt.Sprintf("%d", index) // Create anti-collide subscr for this goroutine
 	readsLcl.Alloc(6, 1, 18)
 	err = readsLcl.Varnm.SetValStrLit(tptoken, &errstr, "reads")
