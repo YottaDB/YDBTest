@@ -1,0 +1,44 @@
+# Test of ydb_file_name_to_id_t(), ydb_file_is_identical_t(), and ydb_file_id_free_t() in the SimpleThreadAPI
+
+# Create empty files to be tested.
+# Compile and run the C code
+
+### Test Functionality of ydb_file_name_to_id_t(), ydb_file_is_identical_t(), and ydb_file_id_free_t() ###
+
+## Test 1: Two files assigned to two fileid ##
+# Convert the file names to IDs using ydb_file_name_to_id_t()
+# Compare the two fileid using ydb_file_is_identical_t(), should return YDB_NOTOK
+ydb_file_is_identical_t() returned YDB_NOTOK (Files are not identical)
+# Use ydb_file_id_free_t() to free the memory of the fileid used
+
+## Test 2: Two files, one as a soft link to the other ##
+# Convert the file names to IDs using ydb_file_name_to_id_t()
+# Compare the two fileid using ydb_file_is_identical_t(), should return YDB_OK
+ydb_file_is_identical_t() returned YDB_OK (Files are identical)
+# Use ydb_file_id_free_t() to free the memory of the fileid used
+
+## Test 3: Two soft links which link to the same file ##
+# Convert the file names to IDs using ydb_file_name_to_id_t()
+# Compare the two fileid using ydb_file_is_identical_t(), should return YDB_OK
+ydb_file_is_identical_t() returned YDB_OK (Files are identical)
+# Use ydb_file_id_free_t() to free the memory of the fileid used
+
+## Test 4: One file assigned to two different fileid ##
+# Convert the file names to IDs using ydb_file_name_to_id_t()
+# Compare the two fileid using ydb_file_is_identical_t(), should return YDB_OK
+ydb_file_is_identical_t() returned YDB_OK (Files are identical)
+# Use ydb_file_id_free_t() to free the memory of the fileid used
+
+### Test error scenarios for ydb_file_name_to_id_t(), ydb_file_is_identical_t(), and ydb_file_id_free_t() ###
+
+## Test of PARAMINVALID error ##
+# Attempting ydb_file_name_to_id_t() with *filename = NULL
+ydb_file_name_to_id[273]: 151027770,(SimpleThreadAPI),%YDB-E-PARAMINVALID, NULL filename parameter specified in ydb_file_name_to_id_t() call
+# Attempting ydb_file_name_to_id_t() with *fileid = NULL
+ydb_file_name_to_id[282]: 151027770,(SimpleThreadAPI),%YDB-E-PARAMINVALID, NULL fileid parameter specified in ydb_file_name_to_id_t() call
+# Attempting ydb_file_is_identical_t() with fileid1 = NULL
+ydb_file_is_identical[291]: 151027770,(SimpleThreadAPI),%YDB-E-PARAMINVALID, NULL fileid1 parameter specified in ydb_file_is_identical_t() call
+# Attempting ydb_file_is_identical_t() with fileid2 = NULL
+ydb_file_is_identical[300]: 151027770,(SimpleThreadAPI),%YDB-E-PARAMINVALID, NULL fileid2 parameter specified in ydb_file_is_identical_t() call
+# Attempting ydb_file_id_free_t() with fileid = NULL
+ydb_file_id_free[308]: 151027770,(SimpleThreadAPI),%YDB-E-PARAMINVALID, NULL fileid2 parameter specified in ydb_file_is_identical_t() call

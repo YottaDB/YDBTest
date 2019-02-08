@@ -59,6 +59,7 @@
 # gvnlvndelete    [quinn]       Test of ydb_delete_st() function for global and local variables in the SimpleThreadAPI
 # isvdelete       [quinn]       Test of ydb_delete_st() function for intrinsic special variables in the simpleAPI
 # str2zwr         [quinn]       Test of ydb_str2zwr_st() and ydb_zwr2str_st() functions in the simpleAPI
+# utils_file	  [quinn]	Test of ydb_file_name_to_id_t(), ydb_file_is_identical_t(), and ydb_file_id_free_t() in the SimpleThreadAPI
 #-------------------------------------------------------------------------------------
 
 echo "simplethreadapi test starts..."
@@ -74,7 +75,7 @@ setenv subtest_list_non_replic "$subtest_list_non_replic nodenext nodeprev forkn
 setenv subtest_list_non_replic "$subtest_list_non_replic time2long insuffsubs invnamecount namecount2hi delete_excl"
 setenv subtest_list_non_replic "$subtest_list_non_replic callintcommit callintrollback fatalerror1 fatalerror2 key2big"
 setenv subtest_list_non_replic "$subtest_list_non_replic gvsuboflow"
-setenv subtest_list_non_replic "$subtest_list_non_replic gvnlvndata gvnlvnincr gvnlvndelete isvdelete str2zwr"
+setenv subtest_list_non_replic "$subtest_list_non_replic gvnlvndata gvnlvnincr gvnlvndelete isvdelete str2zwr utils_file"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
