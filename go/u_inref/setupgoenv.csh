@@ -21,9 +21,10 @@ mkdir go
 
 # Retrieve yottadb package from the repository
 echo "# Running : go get -t $go_repo"
-go get -t $go_repo
-if ($status) then
-	echo "TEST-E-FAILED : [go get -t $go_repo] returned failure status of $status"
+go get -v -x -t $go_repo |& $tst_awk '{print strftime("%T"),":",$0}' >& go_get.log
+set status1 = $status
+if ($status1) then
+	echo "TEST-E-FAILED : [go get -t $go_repo] returned failure status of $status1"
 	exit 1
 endif
 
@@ -31,27 +32,31 @@ cd go/src/$go_repo
 if ($?ydb_test_go_repo_dir) then
 	# If env var "ydb_test_go_repo_dir" is defined, use this as the path of the go repo instead of the go repo on gitlab.
 	git remote add tmp $ydb_test_go_repo_dir
-	if ($status) then
-		echo "TEST-E-FAILED : [git remote add tmp $ydb_test_go_repo_dir] returned failure status of $status"
+	set status1 = $status
+	if ($status1) then
+		echo "TEST-E-FAILED : [git remote add tmp $ydb_test_go_repo_dir] returned failure status of $status1"
 		exit 1
 	endif
 	git fetch tmp >& git_fetch.log
-	if ($status) then
-		echo "TEST-E-FAILED : [git fetch tmp] returned failure status of $status"
+	set status1 = $status
+	if ($status1) then
+		echo "TEST-E-FAILED : [git fetch tmp] returned failure status of $status1"
 		exit 1
 	endif
 	if ($?ydb_test_go_repo_branch) then
 		# If env var "ydb_test_go_repo_branch" is defined, use that as the branch
 		git checkout -b tmp tmp/$ydb_test_go_repo_branch >& git_checkout.log
-		if ($status) then
-			echo "TEST-E-FAILED : [git checkout -b tmp tmp/$ydb_test_go_repo_branch] returned failure status of $status"
+		set status1 = $status
+		if ($status1) then
+			echo "TEST-E-FAILED : [git checkout -b tmp tmp/$ydb_test_go_repo_branch] returned failure status of $status1"
 			exit 1
 		endif
 	else
 		# Else use "develop" branch as the default ("master" branch is latest released code, not latest developed code)
 		git checkout -b tmp tmp/develop >& git_checkout.log
-		if ($status) then
-			echo "TEST-E-FAILED : [git checkout -b tmp tmp/develop] returned failure status of $status"
+		set status1 = $status
+		if ($status1) then
+			echo "TEST-E-FAILED : [git checkout -b tmp tmp/develop] returned failure status of $status1"
 			exit 1
 		endif
 	endif
@@ -59,8 +64,9 @@ else
 	# We used the go repo on gitlab. By default, "go get" would checkout the "master" branch.
 	# But we want to checkout the "develop" branch.
 	git checkout develop >& git_checkout.log
-	if ($status) then
-		echo "TEST-E-FAILED : [git checkout develop] returned failure status of $status"
+	set status1 = $status
+	if ($status1) then
+		echo "TEST-E-FAILED : [git checkout develop] returned failure status of $status1"
 		exit 1
 	endif
 endif
