@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2019 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -21,6 +21,7 @@ if ($?gtm_custom_errors) then
 endif
 
 $MULTISITE_REPLIC_PREPARE 2
+setenv gtm_test_sprgde_id "ID1"	# to differentiate multiple dbcreates done in the same subtest
 $gtm_tst/com/dbcreate_base.csh mumps 1
 
 echo '# Test case 5: While deleting triggers do not consider $c(10) as part of trigger'
@@ -34,6 +35,7 @@ $gtm_tst/com/backup_dbjnl.csh testcase1 "*.dat *.gld" "mv"
 
 echo "# Test case 2 : Doing a trigger select when the XECUTE string in the ^#t global is corrupted such that the last newline is instead some other character"
 echo "# should not SIG-11(pro) or assert fail(dbg)"
+setenv gtm_test_sprgde_id "ID2"	# to differentiate multiple dbcreates done in the same subtest
 $gtm_tst/com/dbcreate_base.csh mumps 1
 cat > testcase2.trg << CAT_EOF
 +^a -commands=S -name=abcd -xecute=<<
@@ -66,6 +68,7 @@ $gtm_tst/com/backup_dbjnl.csh testcase2 "*.dat *.gld" "mv"
 echo "# Test case 3a : while doing a wildcard trig deletion,"
 echo "# a TLGTRIG record should be written to only one journaled region"
 
+setenv gtm_test_sprgde_id "ID3"	# to differentiate multiple dbcreates done in the same subtest
 $gtm_tst/com/dbcreate.csh mumps 4
 cat >> testcase3.trg << cat_EOF
 +^aglobal   -commands=set -xecute="do ^twork"
@@ -87,6 +90,7 @@ $MSR RUN INST2 '$gtm_tst/com/backup_dbjnl.csh testcase3a "*.dat *.gld *.mjl* *.m
 
 echo "# Test case 3b : For a wildcard trigger deletion, if none of the trigger participating regions are journaled"
 echo "# TLGTRIG should NOT be written to a non-participating region"
+setenv gtm_test_sprgde_id "ID4"	# to differentiate multiple dbcreates done in the same subtest
 $gtm_tst/com/dbcreate_base.csh mumps 4
 $MUPIP set ${tst_jnl_str} -reg CREG >&! jnl_on_case3b.out
 echo "# Install triggers in regions AREG And BREG"
@@ -103,6 +107,7 @@ echo "# Test case 4 : Replication with multiline and large triggers"
 if ($?save_gtm_custom_errors) then
 	setenv gtm_custom_errors $save_gtm_custom_errors
 endif
+setenv gtm_test_sprgde_id "ID5"	# to differentiate multiple dbcreates done in the same subtest
 $gtm_tst/com/dbcreate_base.csh mumps 2 -record_size=1024 -glob=65536
 $MSR RUN INST2 "$gtm_tst/com/dbcreate_base.csh mumps 2 -record_size=512 -glob=65536"
 $MSR START INST1 INST2
