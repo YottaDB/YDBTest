@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -51,8 +51,14 @@ end
 echo "# Reset vmemoryuse back to unlimited to avoid memory errors in the getoper.csh call (or dbcheck.csh) below"
 limit vmemoryuse unlimited
 
-$gtm_tst/com/getoper.csh "$syslog_time1" "" syslog1.txt "" "FATALERROR2"
-$grep "\<$bgpid\>.*FATALERROR2" syslog1.txt | sed 's/.*%YDB-F-FATALERROR2/%YDB-F-FATALERROR2/;s/ Error:.*//;'
+set searchpattern = "\<$bgpid\>.*FATALERROR2|fatalerror.*\<$bgpid\>.*out of memory"
+$gtm_tst/com/getoper.csh "$syslog_time1" "" syslog1.txt "" "$searchpattern"
+$grep -E "$searchpattern" syslog1.txt >& /dev/null
+if (! $status) then
+	echo "FATALERROR2 message seen in syslog (as expected)"
+else
+	echo "FATALERROR2 message expected but NOT seen in syslog"
+endif
 # Unlike the FATALERROR1 case, we do not expect a core file in the FATALERROR2 case.
 # But we do not need to do any checks for this. The test framework will automatically fail the test if it finds a core file.
 if (-e YDB_FATAL_ERROR*) then
