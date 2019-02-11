@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017,2018 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017,2019 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -94,6 +94,8 @@ while !( -e $exit_file)
 			set syslog_before = `cat start_time_syslog.txt`
 			set syslog_after = `date +"%b %e %H:%M:%S"`
 			$gtm_tst/com/getoper.csh "$syslog_before" "$syslog_after" syslog_${cursubtestdir}_HANG.txt
+			# Copy settings.csh to debuglogs
+			if (-e settings.csh) cp settings.csh $gtm_test_debuglogs_dir/${testname}_${cursubtestdir}_HANG_settings.csh
 			cd -
 			# Send TEST-E-HANG email
 			echo $msg | mailx -s "TEST-E-HANG $shorthost : ${watch_dir:h}/$cursubtestdir" $mailing_list
@@ -111,6 +113,8 @@ while !( -e $exit_file)
 			set syslog_before = `cat start_time_syslog.txt`
 			set syslog_after = `date +"%b %e %H:%M:%S"`
 			$gtm_tst/com/getoper.csh "$syslog_before" "$syslog_after" syslog_${cursubtestdir}_TIMEDOUT.txt
+			# Copy settings.csh to debuglogs
+			if (-e settings.csh) cp settings.csh $gtm_test_debuglogs_dir/${testname}_${cursubtestdir}_TIMEDOUT_settings.csh
 			cd -
 			# Kill just submit_test.csh
 			cd $tst_general_dir
