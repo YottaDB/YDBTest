@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2013 Fidelity Information Services, Inc	#
+# Copyright 2013 Fidelity Information Services, Inc		#
+#								#
+# Copyright (c) 2018-2019 YottaDB LLC. and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -97,5 +100,5 @@ if ($dbfsync_before_60 > $dbfsync_before_5_3X) then
 	echo "TEST-I-PASS. The # of DB fsyncs in a before image case increased significantly between 5 sec update and 60 sec update"
 else
 	echo "TEST-E-FAIL. The # of DB fsyncs in a before image case is expected to increase at least 2x times between a 5 sec update and 60sec update"
-	echo "But they were $fsync_before_5 for 5 seconds update and $fsync_before_60 for 60 seconds update"
+	echo "But they were $dbfsync_before_5 for 5 seconds update and $dbfsync_before_60 for 60 seconds update"
 endif
