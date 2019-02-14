@@ -22,11 +22,12 @@
 
 #define ERRBUF_SIZE	1024
 #define	MAXINT4		0x7fffffff
+#define	VARNAMESLIT	"varnames "
 
 int main()
 {
-	int	i, status, seed, namecount;
-	char	errbuf[ERRBUF_SIZE];
+	int	i, status, seed, namecount, actualnamecount;
+	char	ch, errbuf[ERRBUF_SIZE], *varnamesptr, *endptr;
 
 	seed = (time(NULL) * getpid());
 	srand48(seed);
@@ -43,7 +44,20 @@ int main()
 			status = ydb_delete_excl_st(YDB_NOTTP, NULL, namecount, NULL);
 		YDB_ASSERT(YDB_ERR_NAMECOUNT2HI == status)
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("Returned error : %s\n", errbuf);
+		/* Remove "namecount" value printed (after checking it) to make the output deterministic */
+		varnamesptr = strstr(errbuf, VARNAMESLIT);
+		YDB_ASSERT(NULL != varnamesptr);
+		varnamesptr += strlen(VARNAMESLIT);
+		ch = varnamesptr[0];
+		varnamesptr[0] = '\0';
+		printf("Returned error : %s", errbuf);
+		varnamesptr[0] = ch;
+		actualnamecount = strtoul(varnamesptr, &endptr, 10);
+		if (namecount == actualnamecount)
+			printf("NNNN");	/* Replace variable namecount parameter with deterministic NNNN */
+		else
+			printf("Expected : %d : Actual = %d", namecount, actualnamecount);
+		printf("%s\n", endptr);
 		fflush(stdout);
 	}
 	return YDB_OK;
