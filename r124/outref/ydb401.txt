@@ -10,7 +10,7 @@ gcc -Wall -o ydb401 ydb401.c -fPIC -L##SOURCE_PATH## -lyottadb -Wl,-rpath,##SOUR
 gcc -Wall -shared -o ydb401_plugin##TEST_SHL_SUFFIX## ydb401_plugin.c -fPIC -L##SOURCE_PATH## -lyottadb -I##SOURCE_PATH##
 ##TEST_PATH##/ydb401
 Call-in to echo()
-zyre=YottaDB r999 Linux x86_64
+##TEST_AWKzyre=YottaDB .* Linux .*
 echo(): 150373850,echo+2^ydb401,%YDB-E-LVUNDEF, Undefined local variable: c
 Call-in to test1()
 test1(): 150373850,test1+1^ydb401,%YDB-E-LVUNDEF, Undefined local variable: v
