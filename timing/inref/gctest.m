@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	;
+; Copyright (c) 2017-2019 YottaDB LLC. and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -56,12 +56,13 @@ done    if '$zeof write $zstatus,!
         close file
 	set errcnt=0
 	set i=i-1
-	set allowedscale=3 ; see comments in r120/u_inref/gctest.csh about allowing 3x increase every iteration
+	set allowedscale=2.5 ; see comments in timing/u_inref/gctest.csh about allowing 2.5x increase every iteration
 	for j=1:1:i-1  do
-	. set actualscale=(cpu(j+1)/cpu(j))*100\1/100
-	. if actualscale>allowedscale do
-	. . write "TEST-E-FAIL : cpu(",j+1,")=",cpu(j+1)," is ",actualscale,"x times cpu(",j,")=",cpu(j)," but max allowed is ",allowedscale,"x",!
-	. . if $incr(errcnt)
+	. set actualscale(j)=(cpu(j+1)/cpu(j))*100\1/100
+	. if $incr(actualscale,actualscale(j))
+	if actualscale>(allowedscale*j) do
+	. write "TEST-E-FAIL : cpu(",j+1,")=",cpu(j+1)," is ",actualscale,"x times cpu(1)=",cpu(1)," but max allowed is ",allowedscale*j,"x",!
+	. if $incr(errcnt)
 	if errcnt=0 write "TEST-E-PASS",!
 	else        write !,"ZSHOW ""V"" output follows",! zshow "v"
         quit

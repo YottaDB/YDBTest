@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2017-2019 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -17,8 +17,8 @@
 #	We allow the test to run 3 times as long. Anything longer is considered a failure.
 # We double it once more and do the same time verification.
 # If stpg_sort algorithm is O(n^2), the time taken for double the input size would be 4x.
-# Having the threshold as 3x, we expect to catch the O(n^2) algorithm in stpg_sort.
-# With a O(nlogn) algorithm in stpg_sort, we expect almost linear growth (i.e. 2x to 3x output for 2x input).
+# Having the threshold as 2.5x, we expect to catch the O(n^2) algorithm in stpg_sort.
+# With a O(nlogn) algorithm in stpg_sort, we expect almost linear growth (i.e. 2x to 2.5x output for 2x input).
 #
 
 foreach value (10000 20000 40000 80000)
