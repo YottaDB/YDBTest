@@ -14,6 +14,11 @@
 echo "# Test that after calling ydb_zwr2str_s()/ydb_zwr2str_st(), no subsequent SimpleAPI/SimpleThreadAPI calls get a SIMPLAPINEST error."
 echo ""
 
+$gtm_tst/com/dbcreate.csh mumps >>& dbcreate.out
+if ($status) then
+	echo "DB Create failed, output below:"
+	cat dbcreate.out
+endif
 
 set file = "ydb344.c"
 cp $gtm_tst/$tst/inref/$file .
@@ -28,4 +33,9 @@ endif
 rm $exefile.o
 `pwd`/$exefile
 echo ""
+$gtm_tst/com/dbcheck.csh >>& dbcheck.out
+if ($status) then
+	echo "DB Check failed, output below:"
+	cat dbcheck.out
+endif
 

@@ -27,6 +27,10 @@ ydb_buffer_t	basevar, value1, value2, badbasevar;
 
 int main(void);
 
+int gvnset_s();
+
+int gvnset_st();
+
 #define	CHECK_STATUS(status)					\
 {								\
 	if ((YDB_OK != status) && (YDB_ERR_NODEEND != status))	\
@@ -39,12 +43,15 @@ int main(void);
 
 int main(void)
 {
-	int		status;
-	unsigned int	data_value;
-	int		dst_used;
-	char		valuebuff[64];
-	int		i;
-	int             seed, use_simplethreadapi;
+	int			status;
+	unsigned int		data_value;
+	int			dst_used;
+	char			valuebuff[64];
+	int			i;
+	int             	seed, use_simplethreadapi;
+	unsigned long long	timet;
+	ydb_tpfnptr_t 		tpfn1;
+	ydb_tp2fnptr_t		tpfn2;
 
 	/* Initialize random number seed */
 	seed = (time(NULL) * getpid());
@@ -58,6 +65,9 @@ int main(void)
 	value2.buf_addr = &valuebuff[0];
 	value2.len_used = 0;
 	value2.len_alloc = sizeof(valuebuff);
+
+	tpfn1 = &gvnset_s;
+	tpfn2 = &gvnset_st;
 
 	printf("Calling all ydb_*_s()/ydb_*_st() functions twice in a loop to ensure no ydb_*_s()/ydb_*_st() call causes a SIMPLEAPINEST error in any other subsequent ydb_*_s()/ydb_*_st() call.\n");
 
@@ -118,6 +128,24 @@ int main(void)
 				: ydb_lock_s(1000000, 0);
 		CHECK_STATUS(status);
 
+		printf("Calling ydb_lock_decr_s()/ydb_lock_decr_st()\n");
+		status = use_simplethreadapi
+				? ydb_lock_decr_st(YDB_NOTTP, NULL, &basevar, 0, NULL)
+				: ydb_lock_decr_s(&basevar, 0, NULL);
+		CHECK_STATUS(status);
+
+		printf("Calling ydb_lock_incr_s()/ydb_lock_incr_st()\n");
+		status = use_simplethreadapi
+				? ydb_lock_incr_st(YDB_NOTTP, NULL, timet, &basevar, 0, NULL)
+				: ydb_lock_incr_s(timet, &basevar, 0, NULL);
+		CHECK_STATUS(status);
+
+		printf("Calling ydb_tp_s()/ydb_tp_st()\n");
+		status = use_simplethreadapi
+				? ydb_tp_st(YDB_NOTTP, NULL, tpfn2, NULL, NULL, 0, NULL)
+				: ydb_tp_s(tpfn1, NULL, NULL, 0, NULL);
+		CHECK_STATUS(status);
+
 		printf("Calling ydb_delete_s()/ydb_delete_st()\n");
 		status = use_simplethreadapi
 				? ydb_delete_st(YDB_NOTTP, NULL, &basevar, 0, NULL, YDB_DEL_NODE)
@@ -145,4 +173,42 @@ int main(void)
 
 	printf("All SimpleApi have executed successfully");
 	return status;
+}
+
+/* Function for ydb_tp_s() */
+int gvnset_s()
+{
+	int		statusg;
+	ydb_buffer_t	basevarg, value1g;
+
+	YDB_LITERAL_TO_BUFFER(BASEVAR, &basevarg);
+	YDB_LITERAL_TO_BUFFER(VALUE1, &value1g);
+	statusg = ydb_set_s(&basevarg, 0, NULL, &value1g);
+	if (YDB_OK != statusg)
+	{
+		ydb_zstatus(errbuf, ERRBUF_SIZE);
+		printf("ydb_set_s() [1]: %s\n", errbuf);
+		fflush(stdout);
+		return YDB_OK;
+	}
+	return YDB_OK;
+}
+
+/* Function for ydb_tp_st() */
+int gvnset_st()
+{
+	int		statusg;
+	ydb_buffer_t	basevarg, value1g;
+
+	YDB_LITERAL_TO_BUFFER(BASEVAR, &basevarg);
+	YDB_LITERAL_TO_BUFFER(VALUE1, &value1g);
+	statusg = ydb_set_st(YDB_NOTTP, NULL, &basevarg, 0, NULL, &value1g);
+	if (YDB_OK != statusg)
+	{
+		ydb_zstatus(errbuf, ERRBUF_SIZE);
+		printf("ydb_set_s() [1]: %s\n", errbuf);
+		fflush(stdout);
+		return YDB_OK;
+	}
+	return YDB_OK;
 }

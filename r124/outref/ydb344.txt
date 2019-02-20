@@ -1,7 +1,7 @@
 # Test that after calling ydb_zwr2str_s()/ydb_zwr2str_st(), no subsequent SimpleAPI/SimpleThreadAPI calls get a SIMPLAPINEST error.
 
  --> Running ydb344.c <---
-##TEST_AWK# Random choice : use_simplethreadapi = [01]
+# Random choice : use_simplethreadapi = 0
 Calling all ydb_*_s()/ydb_*_st() functions twice in a loop to ensure no ydb_*_s()/ydb_*_st() call causes a SIMPLEAPINEST error in any other subsequent ydb_*_s()/ydb_*_st() call.
 Executing iteration 1
 Calling ydb_set_s()/ydb_set_st()
@@ -13,6 +13,9 @@ Calling ydb_subscript_previous_s()/ydb_subscript_previous_st()
 Calling ydb_node_next_s()/ydb_node_next_st()
 Calling ydb_node_previous_s()/ydb_node_previous_st()
 Calling ydb_lock_s()/ydb_lock_st()
+Calling ydb_lock_decr_s()/ydb_lock_decr_st()
+Calling ydb_lock_incr_s()/ydb_lock_incr_st()
+Calling ydb_tp_s()/ydb_tp_st()
 Calling ydb_delete_s()/ydb_delete_st()
 Calling ydb_incr_s()/ydb_incr_st()
 Calling ydb_delete_excl_s()/ydb_delete_excl_st()
@@ -27,6 +30,9 @@ Calling ydb_subscript_previous_s()/ydb_subscript_previous_st()
 Calling ydb_node_next_s()/ydb_node_next_st()
 Calling ydb_node_previous_s()/ydb_node_previous_st()
 Calling ydb_lock_s()/ydb_lock_st()
+Calling ydb_lock_decr_s()/ydb_lock_decr_st()
+Calling ydb_lock_incr_s()/ydb_lock_incr_st()
+Calling ydb_tp_s()/ydb_tp_st()
 Calling ydb_delete_s()/ydb_delete_st()
 Calling ydb_incr_s()/ydb_incr_st()
 Calling ydb_delete_excl_s()/ydb_delete_excl_st()
