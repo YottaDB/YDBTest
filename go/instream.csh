@@ -15,15 +15,16 @@
 # List of subtests of the form "subtestname [author] description"
 #-------------------------------------------------------------------------------------
 # unit_tests		[hathawayc]	Drive 'go test' test harness
-# threeenp1B1		[estess]	Drive golang version B1 of 3n+1 routine as a test/demo (embedded TP callback rtns)
-# threeenp1B2		[estess]	Drive golang version B2 of 3n+1 routine as a test/demo (not-embedded TP callback rtns)
+# threeenp1B1		[estess]	Drive golang version B1 of 3n+1 routine as a test/demo (embedded TP callback rtns) (goroutines)
+# threeenp1B2		[estess]	Drive golang version B2 of 3n+1 routine as a test/demo (not-embedded TP callback rtns) (goroutines)
 # wordfreq		[estess]	Drive golang vesion of wordfreq routine as a test/demo
 # random_walk           [hathawayc]     Drive test which randomly walks Go commands
+# threeenp1C2		[estess]	Drive golang version B2 of 3n+1 routine as a test/demo (not-embedded TP callback rtns) (processes)
 #
 echo "go test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
-setenv subtest_list_common     "unit_tests threeenp1B1 threeenp1B2 random_walk"
+setenv subtest_list_common     "unit_tests threeenp1B1 threeenp1B2 random_walk threeenp1C2"
 setenv subtest_list_non_replic "wordfreq"
 setenv subtest_list_replic     ""
 

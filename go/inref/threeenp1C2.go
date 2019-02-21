@@ -18,16 +18,16 @@ import (
 	"io"
 	"lang.yottadb.com/go/yottadb"
 	"os"
+	"os/exec"
 	"runtime"
 	"strconv"
 	"strings"
-	"sync"
 	"time"
 )
 
 // This is an implementation of 3n+1 in Golang. See "Solving the 3n+1 Problem with YottaDB" at
 // https://yottadb.com/solving-the-3n1-problem-with-yottadb/ for details.
-// This is the second of two flavors that differ as follows:
+// This is the third of three golang flavors that differ as follows:
 // - threeenp1B1 - All of the entry entry points except the two right up top are implemented as closure functions including
 //                 the TP callback functions. This allows them to share variables and not have to pass them individually.
 //                 This is suitable for small callback functions but not so much for large ones. This routine drives
@@ -37,10 +37,17 @@ import (
 //                 to be referenced by the routines. This allows callback functions to even be in separate files. This
 //                 routine drives multiple goroutines as workers.
 // - threeenp1C2 - Similar to threeenp1B2 except uses separate processes instead of of goroutines.
+//
+// This is a multi-process version of 3n+1 so needs to be invoked once as a main routine and multiple times as
+// "worker-bee" processes. The main routine takes no parameters while the worker-bees need parms to know what they
+// are supposed to be doing. This is done with a "marker" parm that designates the invocation as a worker-bee with
+// subsequent parms telling the process what it needs to be doing. This is described in subsequent comments.
 
 // Constant definitions
 const tptoken uint64 = yottadb.NOTTP
 const debugMode bool = false
+const workerTag string = "WoRkEr"
+const timeOut uint64 = uint64(5 * time.Minute)
 
 // Define structure passed between routines containing KeyT and, BufferT structures plus a statistical field that allows these
 // fields to be shared between routines and most importantly shared with TP callback routines. Additional benefit is the keys
@@ -121,7 +128,7 @@ func checkErrorReturn(err error) bool {
 // Find the maximum number of steps for the 3n+1 problem for all integers through an input integer.
 // Assumes input is lines of 3 integers separated by a space, of which only the first is required:
 //  - the largest number for which the 3n+1 sequence must be computed (>1)
-//  - the number of parallel exection streams (defaults to 2× the number of CPUs)
+//  - the number of parallel exection streams (defaults to 2x the number of CPUs)
 //  - the sizes of blocks of integers on which spawned child processes operate
 //    (defaults to approximately the range divided by the number execution streams)
 //    If the block size is larger than the range divided by the number of execution streams,
@@ -132,15 +139,37 @@ func main() {
 	var linetokens []string
 	var input  string
 	var valstrp *string
-	var endnum, streams, maxblk, blk, tmp, tokncnt, updatecnt, readcnt, index int64
+	var endnum, streams, maxblk, blk, tmp, tokncnt, updatecnt, readcnt, index, idx int64
 	var limitsGbl, resultGbl, highestGbl, updatesGbl, readsGbl, stepGbl yottadb.KeyT
 	var value, errstr yottadb.BufferT
-	var wgStart, wgEnd, wgInit sync.WaitGroup
 	var err error
 
-	debugPrint("Start of main()")
 	defer yottadb.Exit()
+	// Check if we are a worker-bee process or not by checking to see if we have a parameter and if it
+	// is the first one. If we are not a worker-bee, then continue on with main routine initialization.
+	if 1 < len(os.Args) {
+		// One or more arguments were supplied - see what we got
+		if workerTag != os.Args[1] {
+			fmt.Println("threeenp1C2: No arguments allowed/accepted")
+			os.Exit(1)
+		}
+		// We are a worker-bee - parse the arguments so we know what we are supposed to do
+		if 3 < len(os.Args) { // Too many args - only one (index) allowed
+			fmt.Println("threeenp1C2: Only 1 parm after tag allowed")
+			os.Exit(1)
+		}
+		// Turn the argument into a numeric index value (if possible)
+		indexParm, err := strconv.ParseInt(os.Args[2], 10, 64)
+		if nil != err {
+			fmt.Println("threeenp1C2: Invalid parameter (not integer)")
+			os.Exit(1)
+		}
+		// Have index now, drive doblk() appropriately
+		doblk(indexParm)
+		os.Exit(0)
+	}
 	// Initialize
+	debugPrint("Start of main()")
 	value.Alloc(32)
 	errstr.Alloc(2048)
 	limitsGbl.Alloc(7, 2, 18) // Only 2 subs but allow full 18 digit value
@@ -173,7 +202,7 @@ func main() {
 	if checkErrorReturn(err) { return }
 	// Get the number of CPUs from /proc/cpuinfo and calculate default number of execution streams
 	cpucnt := runtime.NumCPU()
-	cpuStreams := 2 * cpucnt // Max of 'streams' concurrent goroutines
+	cpuStreams := 2 * cpucnt // Max of 'streams' concurrent processes
 	// At the top level, the program reads and processes input lines, one at a time.  Each line specifies
         // one problem to solve.  Since the program is designed to resume after a crash and reuse partial
         // results computed before the crash, data in the database at the beginning is assumed to be partial
@@ -253,31 +282,54 @@ func main() {
 			err = limitsGbl.SetValST(tptoken, &errstr, &value)
 			if checkErrorReturn(err) { return }
 		}
-		// Launch goroutines.  The M and C versions use M locks for synchronization but in this golang version,
-		// we use a Waitgroup. All the synchronization is here. None is needed in the doblk and other routines.
+		// Launch worker processes. Like the M routine, this Golang multi-process implementation of 3n+1 uses
+		// M-locks to synchronize worker process startup and completion.
 		// Note start this loop at 0 since index is incremented first thing in doblk().
-		debugPrint("\nLaunching goroutines for this run")
-		wgStart.Add(1) // Initial value all started goroutines will wait for
+		debugPrint("\nLaunching processes for this run")
+		// Clear out ^count and lock "lock1"
+		err = yottadb.DeleteE(tptoken, &errstr, yottadb.YDB_DEL_TREE, "^count", []string{})
+		if checkErrorReturn(err) { return }
+		err = yottadb.LockIncrE(tptoken, &errstr, timeOut, "lock1", []string{})
+		if checkErrorReturn(err) { return }
+		// Launch each worker process
+		proc := make([]*exec.Cmd, streams, streams)
 		for index = 0; index < streams; index++ {
-			wgInit.Add(1) // Add one for each goroutine so we know when they are initialized
-			wgEnd.Add(1) // Add one for each goroutine so we know when they are finished
-			go func(indexlcl int64) { // Goroutine code
-				debugPrint(fmt.Sprintf("Initiate goroutine # %d - awaiting release", indexlcl))
-				wgInit.Done() // This goroutine is now up and running
-				wgStart.Wait() // Wait till main tells us to start
-				doblk(indexlcl) // The meat of this goroutine
-				wgEnd.Done() // Signal this goroutine is complete
-			}(index)
+			_, err = yottadb.IncrE(tptoken, &errstr, "1", "^count", []string{})
+			if checkErrorReturn(err) { return }
+			proc[index] = exec.Command("threeenp1C2", workerTag, fmt.Sprintf("%d", index))
+			proc[index].Stdout = os.Stdout // cmd.Stdout -> stdout
+			proc[index].Stderr = os.Stderr // cmd.Stderr -> stderr
+			err := proc[index].Start() // Start new process
+			if checkErrorReturn(err) { }
 		}
-		debugPrint(fmt.Sprintf("All %d goroutines launched - wait till they are all initialized", streams))
-		wgInit.Wait()
-		debugPrint("All goroutines initialized - release them to start running")
-		wgStart.Done() // Signals all goroutines to start running!
-		runstart := time.Now() // When goroutines start running
-		wgEnd.Wait() // Wait for all goroutines to complete
-		runelap := time.Since(runstart) // Calculate elapsed time (duration) in seconds
+		debugPrint(fmt.Sprintf("All %d processes launched - wait till they are all initialized", streams))
+		// Wait until all processes have launched and are waiting on lock2
+		for {
+			countstr, err := yottadb.ValE(tptoken, &errstr, "^count", []string{})
+			if nil != err {
+				if yottadb.YDB_ERR_GVUNDEF != yottadb.ErrorCode(err) {
+					// GVUNDEF gets a pass, it might not yet exist
+					if checkErrorReturn(err) { return }
+				}
+			} else if "0" == countstr { // All worker processes initialized so wait is done
+				break
+			}
+			time.Sleep(100 * time.Millisecond)
+		}
+		debugPrint("All processes initialized - release them to start running")
+		err = yottadb.LockDecrE(tptoken, &errstr, "lock1", []string{})
+		if checkErrorReturn(err) { return }
+		runstart := time.Now() // When processes start running
+		// Now do a Wait() on each process we launched
+		for idx = 0; idx < streams; idx++ {
+			err := proc[idx].Wait()
+			if nil != err {
+ 				fmt.Printf("Process %d finished with error: %s\n", idx, err)
+			}
+		}
+ 		runelap := time.Since(runstart) // Calculate elapsed time (duration) in seconds
 		runelaps := runelap.Seconds()
-		debugPrint(fmt.Sprintf("All (%d) goroutines completed - elapsed run time: %f", streams, runelaps))
+		debugPrint(fmt.Sprintf("All (%d) processes completed - elapsed run time: %f", streams, runelaps))
 		// Fetch and output results
 		err = resultGbl.ValST(tptoken, &errstr, &value)
 		if checkErrorReturn(err) { return }
@@ -327,7 +379,7 @@ func main() {
 	}
 }
 
-// doblk is the entry for our goroutine. It runs through the blocks assigned to this goroutine. The parameter
+// doblk is the entry for our process. It runs through the blocks assigned to this process. The parameter
 // is a starting index into the work array (^limits) where this routine picks its work from.
 func doblk(index int64) {
 	var blkstart, blkend int64
@@ -335,10 +387,11 @@ func doblk(index int64) {
 	var strvalp *string
 	var err error
 	var shrstuff shrStuff
+	var procStart time.Time
 
-	debugPrint(fmt.Sprintf("Entering doblk() (goroutine # %d) - now released", index))
 	shrstuffp := &shrstuff
-	// Have to create new data access structs for this goroutine so we don't collide with others
+	indexParm := index
+	// Have to create new data access structs for this process so we don't collide with others
 	//
 	// Allocate values keys
 	shrstuffp.value.Alloc(32)
@@ -407,6 +460,17 @@ func doblk(index int64) {
 	if checkErrorReturn(err) { return }
 	err = shrstuffp.highestLcl.SetValST(tptoken, &shrstuffp.errstr, &shrstuffp.value)
 	if checkErrorReturn(err) { return }
+	// Initialization complete - notify main we are ready to rock by first decrementing ^count then waiting
+	// on ^lock1(index) to await main's signal to start work when it releases the higher level lock it holds
+	// (^lock1) that blocks our aquisition until all are ready to start.
+	_, err = yottadb.IncrE(tptoken, &shrstuffp.errstr, "-1", "^count", []string{})
+	if checkErrorReturn(err) { return }
+	err = yottadb.LockIncrE(tptoken, &shrstuffp.errstr, timeOut, "lock1", []string{subscr}) // Wait for release
+        if checkErrorReturn(err) { return }
+	if debugMode {
+		procStart = time.Now()
+		debugPrint(fmt.Sprintf("threeenp1C2: Entering doblk() (process # %d) - initialized and released", indexParm))
+	}
 	// Find and process the next block in ^limits that needs processing; quit when no more blocks to process.
 	// ^limits(index,1)=0 means that that block defined by ^limits(index) has not been claimed by a job
 	// for processing.
@@ -425,7 +489,7 @@ func doblk(index int64) {
 		err = shrstuffp.limitsGbl.Subary.SetElemUsed(tptoken, &shrstuffp.errstr, 2)
 		if checkErrorReturn(err) { return }
 		// Bump ^limits(index,1) to attempt to "lock" this block (or at least mark it as being worked on to
-		// other goroutines).
+		// other processes).
 		err = shrstuffp.limitsGbl.IncrST(tptoken, &shrstuffp.errstr, nil, &shrstuffp.value)
 		if checkErrorReturn(err) { return }
 		strvalp, err = shrstuffp.value.ValStr(tptoken, &shrstuffp.errstr)
@@ -456,13 +520,19 @@ func doblk(index int64) {
 		}
 		dostep(blkstart, blkend, shrstuffp)
 	}
-        // Adds the number of reads & writes performed by this goroutine to the number of reads & writes performed by all
-	// goroutines, and sets the highest for all goroutines if the highest calculated by this process is greater than
-	// that calculated so far for all goroutines. Do this in a transaction so is done atomically.
+        // Adds the number of reads & writes performed by this process to the number of reads & writes performed by all
+	// processes, and sets the highest for all processes if the highest calculated by this process is greater than
+	// that calculated so far for all processes. Do this in a transaction so is done atomically.
 	err = yottadb.TpE(tptoken, &shrstuffp.errstr, func(tptoken uint64, errstrp *yottadb.BufferT) int32 {
 		return doblkTpRtn(tptoken, errstrp, shrstuffp)
 	}, "BATCH", []string{})
 	if checkErrorReturn(err) { return }
+	if debugMode {
+		procElap := time.Since(procStart)
+		procElaps := procElap.Seconds()
+		debugPrint(fmt.Sprintf("threeenp1C2: Completed doblk() (process # %d) - elapsed time: %f",
+			indexParm, procElaps))
+	}
 }
 
 // doblkTpRtn is the TP callback routine for the TP transaction in the doblk() routine
@@ -522,7 +592,7 @@ func dostep(blkstart, blkend int64, shrstuffp *shrStuff) {
 	for current = blkstart; current <= blkend; current++ {
 		n = current
 		// Kill the current currpath. Need to set elements used to 1 temporarily so we delete
-		// all of our goroutine's nodes.
+		// all of our process's nodes.
 		err = shrstuffp.currpathLcl.Subary.SetElemUsed(tptoken, &shrstuffp.errstr, 1)
 		if checkErrorReturn(err) { return }
 		err = shrstuffp.currpathLcl.DeleteST(tptoken, &shrstuffp.errstr, yottadb.YDB_DEL_TREE)

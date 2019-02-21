@@ -30,10 +30,13 @@ import (
 // This is the first of two flavors that differ as follows:
 // - threeenp1B1 - All of the entry entry points except the two right up top are implemented as closure functions including
 //                 the TP callback functions. This allows them to share variables and not have to pass them individually.
-//                 This is suitable for small callback functions but not so much for large ones.
+//                 This is suitable for small callback functions but not so much for large ones. This routine drives
+//                 multiple goroutines as workers.
 // - threeenp1B2 - All of the functions are separate functions with the exception of the one line TP callback closure
-//                 functions. These routine pass around a large block that contains all the keys, buffers, etc that need
-//                 to be referenced by the routines. This allows callback functions to even be in separate files.
+//                 functions. These functions pass around a large block that contains all the keys, buffers, etc that need
+//                 to be referenced by the routines. This allows callback functions to even be in separate files. This
+//                 routine drives multiple goroutines as workers.
+// - threeenp1C2 - Similar to threeenp1B2 except uses separate processes instead of of goroutines.
 
 // Constant definitions
 const tptoken uint64 = yottadb.NOTTP
