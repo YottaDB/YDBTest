@@ -2,7 +2,7 @@
 ;								;
 ; Copyright 2013 Fidelity Information Services, Inc		;
 ;								;
-; Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -23,7 +23,7 @@ gtm7617
 	set ^stop="STOP"_msg
 	set badpath="/"
 	; Set a flag in syslog to start at
-	if $$syslog^%POSIX(^start,"LOG_USER","LOG_INFO")
+	if $$syslog^%ydbposix(^start,"LOG_USER","LOG_INFO")
 	;
 	; String of control characters, each preceded by the integer value
 	for i=1:1:34 set badpath=badpath_i_$char(i)
@@ -37,7 +37,7 @@ gtm7617
 	set randpath="/"_$$^%RANDSTR(128,"1:1:126","E")
 	do test(realdist,randpath)
 	; Set a flag in syslog to stop at
-	if $$syslog^%POSIX(^stop,"LOG_USER","LOG_INFO")
+	if $$syslog^%ydbposix(^stop,"LOG_USER","LOG_INFO")
 	quit
 
 test(dist,path)

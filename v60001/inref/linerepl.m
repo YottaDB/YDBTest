@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -72,7 +72,7 @@ linerepl	; Replace lines that do / don't contain a string
 
 modefile(f,u,g,w)	; get symbolic modes of file
 	new i,stat,tmp
-	do statfile^%POSIX(f,.stat)
+	do statfile^%ydbposix(f,.stat)
 	set tmp=stat("mode")
 	set w=$select(tmp#2:"x",1:""),tmp=tmp\2,w=$select(tmp#2:"w",1:"")_w,tmp=tmp\2,w=$select(tmp#2:"r",1:"")_w,tmp=tmp\2
 	set g=$select(tmp#2:"x",1:""),tmp=tmp\2,g=$select(tmp#2:"w",1:"")_g,tmp=tmp\2,g=$select(tmp#2:"r",1:"")_g,tmp=tmp\2

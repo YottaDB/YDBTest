@@ -3,7 +3,7 @@
 ; Copyright (c) 2014-2015 Fidelity National Information 	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
-; Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -130,10 +130,10 @@ doopen(expected,clienttls)
 	quit
 dotls(expected,tlsid)
 	If $get(^sunsetpasswd,0) Do
-	. Do unsetenv^%POSIX("gtmtls_passwd_"_tlsid)
+	. Do unsetenv^%ydbposix("gtmtls_passwd_"_tlsid)
 	. Set ^checkjob(^case,"sunsetpasswd")=^sunsetpasswd Kill ^sunsetpasswd
 	If $get(^sunsetconfig,0) Do
-	. Do unsetenv^%POSIX("gtmcrypt_config")
+	. Do unsetenv^%ydbposix("gtmcrypt_config")
 	. Set ^checkjob(^case,"sunsetconfig")=^sunsetconfig Kill ^sunsetconfig
 	Set writetls="write /tls(""server"",60,tlsid"
 	If $get(^spasswd,"")'="" Set writetls=writetls_",^spasswd",^checkjob(^case,"spasswd")=^spasswd
@@ -255,7 +255,7 @@ tsocclnt(wanttls,gettls,clntid)	;client
 	set ^checkjob(^case,"tsocclnt")=wanttls_"|"_gettls_"|"_clntid
 	set cconfig=""
 	if ^case["cunset" do
-	. do unsetenv^%POSIX("gtmcrypt_config")
+	. do unsetenv^%ydbposix("gtmcrypt_config")
 	. set ^checkjob(^case,"unsetenv")=$ztrnlnm("gtmcrypt_config")
 	. if ^checkjob(^case,"unsetenv")'="" do error("client","FAILED to unsetenv gtmcrypt_config: "_^checkjob(^case,"unsetenv"))
 	. if gettls do

@@ -20,35 +20,31 @@ PASS $ZHOROLOG
 ##TEST_AWKDaylight Savings Time is (not )*in effect
 PASS mktime()
 PASS Microsecond resolution
-PASS regmatch^%POSIX 1
-PASS regfree^%POSIX
-PASS REGMATCH^%POSIX 1
-PASS REGFREE^%POSIX
-PASS regmatch^%POSIX 2
-PASS REGMATCH^%POSIX 2
-PASS regmatch^%POSIX 3
-PASS REGMATCH^%POSIX 3
-PASS regmatch^%POSIX 3
-PASS REGMATCH^%POSIX 3
-PASS regmatch^%POSIX 4
-PASS REGMATCH^%POSIX 4
-PASS regmatch^%POSIX 5
-PASS REGMATCH^%POSIX 5
+PASS regmatch^%ydbposix 1
+PASS regfree^%ydbposix
+PASS REGMATCH^%ydbposix 1
+PASS REGFREE^%ydbposix
+PASS regmatch^%ydbposix 2
+PASS REGMATCH^%ydbposix 2
+PASS regmatch^%ydbposix 3
+PASS REGMATCH^%ydbposix 3
+PASS regmatch^%ydbposix 3
+PASS REGMATCH^%ydbposix 3
+PASS regmatch^%ydbposix 4
+PASS REGMATCH^%ydbposix 4
+PASS regmatch^%ydbposix 5
+PASS REGMATCH^%ydbposix 5
 PASS mktmpdir
 PASS statfile.times
 PASS statfile.ids
-PASS filemodeconst^%POSIX
+PASS filemodeconst^%ydbposix
 PASS signal
 PASS STATFILE.times
 PASS STATFILE.ids
-##SUSPEND_OUTPUT UNICODE_MODE
-PASS syslog
-PASS SYSLOG
-##ALLOW_OUTPUT UNICODE_MODE
-##SUSPEND_OUTPUT HOST_HP-UX_PA_RISC SNAIL TURTLE
+PASS syslog1
+PASS syslog2
 PASS setenv
 PASS unsetenv
-##ALLOW_OUTPUT HOST_HP-UX_PA_RISC SNAIL TURTLE
 PASS rmdir
 PASS MKTMPDIR
 PASS mkdir

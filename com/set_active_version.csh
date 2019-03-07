@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -30,8 +30,8 @@ if ($?gtmroutines) then
 		@ rtncnt = $#rtns
 		# Strip off "$gtm_exe/plugin/o($gtm_exe/plugin/r)" if present; assumption, it's last in the list
 		if ("$rtns[$rtncnt]" =~ "*/plugin/o*(*/plugin/r)") @ rtncnt--
-		# Strip off "$gtm_exe/plugin/o/_POSIX.so" if present; assumption, it's last but one in the list
-		if ("$rtns[$rtncnt]" =~ "*/plugin/o*/_POSIX.so") @ rtncnt--
+		# Strip off "$gtm_exe/plugin/o/_ydbposix.so" if present; assumption, it's last but one in the list
+		if ("$rtns[$rtncnt]" =~ "*/plugin/o*/_ydbposix.so") @ rtncnt--
 		setenv gtmroutines "$rtns[-$rtncnt]"
 		unset rtncnt
 	else
