@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -81,7 +81,12 @@ set allverlist = `echo $allverlist`
 @ cnt = 1
 set actualverlist = ""
 # Ensure actualverlist never contains any version > gtm_verno
-set maxver = "$gtm_verno"
+# In case "$gtm_curpro" env var is defined, ensure actualverlist never contains any version > that.
+if ($?gtm_curpro) then
+	set maxver = "$gtm_curpro"
+else
+	set maxver = "$gtm_verno"
+endif
 while ($cnt <= $numvers)
 	if (`expr "$allverlist[$cnt]" "<=" "$maxver"`) then
 		set actualverlist = `echo $actualverlist $allverlist[$cnt]`
