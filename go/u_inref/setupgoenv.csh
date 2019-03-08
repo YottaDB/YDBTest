@@ -19,12 +19,14 @@ setenv GOPATH $tstpath/go/
 set go_repo="lang.yottadb.com/go/yottadb"
 mkdir go
 
-# Retrieve yottadb package from the repository
-echo "# Running : go get -t $go_repo"
-go get -v -x -t $go_repo |& $tst_awk '{print strftime("%T"),":",$0}' >& go_get.log
+# Retrieve yottadb package from the repository using "go get".
+set cmdtorun = "go get -v -x -t $go_repo"
+echo "# Running : $cmdtorun"
+$cmdtorun |& $tst_awk '{print strftime("%T"),":",$0}' >& go_get.log
 set status1 = $status
 if ($status1) then
-	echo "TEST-E-FAILED : [go get -t $go_repo] returned failure status of $status1"
+	echo "TEST-E-FAILED : [$cmdtorun] returned failure status of $status1. Output below and in go_get.log"
+	cat go_get.log
 	exit 1
 endif
 
@@ -40,7 +42,8 @@ if ($?ydb_test_go_repo_dir) then
 	git fetch tmp >& git_fetch.log
 	set status1 = $status
 	if ($status1) then
-		echo "TEST-E-FAILED : [git fetch tmp] returned failure status of $status1"
+		echo "TEST-E-FAILED : [git fetch tmp] returned failure status of $status1. Output below and in git_fetch.log"
+		cat git_fetch.log
 		exit 1
 	endif
 	if ($?ydb_test_go_repo_branch) then
@@ -48,7 +51,8 @@ if ($?ydb_test_go_repo_dir) then
 		git checkout -b tmp tmp/$ydb_test_go_repo_branch >& git_checkout.log
 		set status1 = $status
 		if ($status1) then
-			echo "TEST-E-FAILED : [git checkout -b tmp tmp/$ydb_test_go_repo_branch] returned failure status of $status1"
+			echo "TEST-E-FAILED : [git checkout -b tmp tmp/$ydb_test_go_repo_branch] returned failure status of $status1. Output below and in git_checkout.log"
+			cat git_checkout.log
 			exit 1
 		endif
 	else
@@ -56,7 +60,8 @@ if ($?ydb_test_go_repo_dir) then
 		git checkout -b tmp tmp/develop >& git_checkout.log
 		set status1 = $status
 		if ($status1) then
-			echo "TEST-E-FAILED : [git checkout -b tmp tmp/develop] returned failure status of $status1"
+			echo "TEST-E-FAILED : [git checkout -b tmp tmp/develop] returned failure status of $status1. Output below and in git_checkout.log"
+			cat git_checkout.log
 			exit 1
 		endif
 	endif
@@ -66,7 +71,8 @@ else
 	git checkout develop >& git_checkout.log
 	set status1 = $status
 	if ($status1) then
-		echo "TEST-E-FAILED : [git checkout develop] returned failure status of $status1"
+		echo "TEST-E-FAILED : [git checkout develop] returned failure status of $status1. Output below and in git_checkout.log"
+		cat git_checkout.log
 		exit 1
 	endif
 endif
