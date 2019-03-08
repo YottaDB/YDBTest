@@ -1,7 +1,7 @@
 # Test that after calling ydb_zwr2str_s()/ydb_zwr2str_st(), no subsequent SimpleAPI/SimpleThreadAPI calls get a SIMPLAPINEST error.
 
  --> Running ydb344.c <---
-# Random choice : use_simplethreadapi = 0
+##TEST_AWK# Random choice : use_simplethreadapi = .*
 Calling all ydb_*_s()/ydb_*_st() functions twice in a loop to ensure no ydb_*_s()/ydb_*_st() call causes a SIMPLEAPINEST error in any other subsequent ydb_*_s()/ydb_*_st() call.
 Executing iteration 1
 Calling ydb_set_s()/ydb_set_st()

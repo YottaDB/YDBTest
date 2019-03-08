@@ -195,14 +195,14 @@ int gvnset_s()
 }
 
 /* Function for ydb_tp_st() */
-int gvnset_st()
+int gvnset_st(uint64_t tptoken, ydb_buffer_t *errstr, void *tpfnparm)
 {
 	int		statusg;
 	ydb_buffer_t	basevarg, value1g;
 
 	YDB_LITERAL_TO_BUFFER(BASEVAR, &basevarg);
 	YDB_LITERAL_TO_BUFFER(VALUE1, &value1g);
-	statusg = ydb_set_st(YDB_NOTTP, NULL, &basevarg, 0, NULL, &value1g);
+	statusg = ydb_set_st(tptoken, errstr, &basevarg, 0, NULL, &value1g);
 	if (YDB_OK != statusg)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
