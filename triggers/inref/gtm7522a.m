@@ -3,6 +3,9 @@
 ; Copyright (c) 2014-2015 Fidelity National Information 	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -14,6 +17,7 @@ gtm7522a;
         for i=0:1:9 do
         . set xstr="set X=$ZTRIGGER(""ITEM"",""+^SAMPLE("_i_") -commands=S -xecute=""""w 123"""" -name=myname"_i_""")"
         . xecute xstr
+	. if X=0 write "TEST-E-FAIL : Trigger addition using $ZTRIGGER failed unexpectedly. Exiting...",!  zwrite  halt
 	set jmaxwait=0
 	do ^job("child^gtm7522a",^njobs,"""""")
 	; run the test for about 15 seconds (stop sooner if a failure is detected)
@@ -31,9 +35,11 @@ child	;
         .       set xstr="set X=$ZTRIGGER(""ITEM"",""-^SAMPLE("_i_") -commands=S -xecute=""""w 123"""" -name=myname"_i_""")"
         .       write xstr,!
         .       xecute xstr
+	.	if X=0 write "TEST-E-FAIL : Trigger deletion using $ZTRIGGER failed unexpectedly. Exiting...",!  set ^stop=1 quit
         .       set xstr="set X=$ZTRIGGER(""ITEM"",""+^SAMPLE("_i_") -commands=S -xecute=""""w 123"""" -name=myname"_i_""")"
         .       write xstr,!
         .       xecute xstr
+	.	if X=0 write "TEST-E-FAIL : Trigger addition using $ZTRIGGER failed unexpectedly. Exiting...",!  set ^stop=1 quit
         quit
 select	;
 	new trignum,cycle,i,j,k,expect,seen,missing,error,misscnt,njobs,sfile,vfile
