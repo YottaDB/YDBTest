@@ -14,52 +14,53 @@
 #-------------------------------------------------------------------------------------
 # List of subtests of the form "subtestname [author] description"
 #-------------------------------------------------------------------------------------
-# lvnset          [nars]        Test of ydb_set_s() function for Local variables in the simpleAPI
-# lvnsetstress    [nars]        Stress test of ydb_set_s() function for Local variables in the simpleAPI
-# stresstest      [nars]        Stress test of all ydb_*() functions in the simpleAPI
-# gvnset          [estess,nars] Test of ydb_set_s() function for Global variables in the simpleAPI
-# isvset          [estess]      Test of ydb_set_s() function for Intrinsic Special Variables in the simpleAPI
-# tp              [nars]        Test of ydb_tp_s() function in the simpleAPI
-# transid         [nars]        Test that transid specified in ydb_tp_s() does go into journal file
-# lvnget          [estess,nars] Test of ydb_get_s() function for local variables in the simpleAPI
-# gvnget          [estess,nars] Test of ydb_get_s() function for global variables in the simpleAPI
-# isvget          [estess]      Test of ydb_get_s() function for ISVs in the simpleAPI
-# wordfreq        [nars]        Use simpleAPI to find the frequency of words in an input text file
-# gvnsubsnext     [nars]        Test of ydb_subscript_next_s() function for global variables in the simpleAPI
-# gvnsubsprev     [nars]        Test of ydb_subscript_previous_s() function for global variables in the simpleAPI
-# lvnsubsnext     [nars]        Test of ydb_subscript_next_s() function for local variables in the simpleAPI
-# lvnsubsprev     [nars]        Test of ydb_subscript_previous_s() function for local variables in the simpleAPI
-# isvsubsnext     [nars]        Test of ydb_subscript_next_s() function for intrinsic special variables in the simpleAPI
-# isvsubsprev     [nars]        Test of ydb_subscript_previous_s() function for intrinsic special variables in the simpleAPI
-# isvnodenext     [quinn]       Test of ydb_node_next_s() function for intrinsic special variables in the simpleAPI
-# isvnodeprev     [quinn]       Test of ydb_node_previous_s() function for intrinsic special variables in the simpleAPI
-# isvdata         [nars]        Test of ydb_data_s() function for intrinsic special variables in the simpleAPI
-# isvincr         [nars]        Test of ydb_incr_s() function for intrinsic special variables in the simpleAPI
-# gvnlvnnodenext  [quinn]       Test of ydb_node_next_s() function for global and local variables in the simpleAPI
-# gvnlvnnodeprev  [quinn]       Test of ydb_node_previous_s() function for global and local variables in the simpleAPI
-# nodenext        [estess]      Test of ydb_node_next_s() function in the simpleAPI (both local and global vars)
-# nodeprev        [estess]      Test of ydb_node_previous_s() function in the simpleAPI (both local and global vars)
-# forkncore       [estess]      Test of ydb_fork_n_core() function in the simpleAPI
-# locks           [estess]      Test of ydb_lock_s() function in the simpleAPI
-# incrdecr        [estess]      Test of ydb_lock_incr_s() and ydb_lock_decr_s() functions in the simpleAPI
-# simpleapinest   [nars]        Test of SIMPLEAPINEST error
-# time2long       [nars]        Test of TIME2LONG error
-# insuffsubs      [nars]        Test of INSUFFSUBS error
-# invnamecount    [nars]        Test of INVNAMECOUNT error
-# namecount2hi    [nars]        Test of NAMECOUNT2HI error
-# delete_excl     [nars]        Test of ydb_delete_excl_s()
-# callintcommit   [nars]        Test of CALLINTCOMMIT error
-# callintrollback [nars]        Test of CALLINTROLLBACK error
-# fatalerror1     [nars]        Test of FATALERROR1 error
-# fatalerror2     [nars]        Test of FATALERROR2 error
-# key2big	  [quinn]	Test of KEY2BIG error
-# gvsuboflow	  [quinn]	Test of GVSUBOFLOW error
-# gvnlvndata      [quinn]       Test of ydb_data_s() function for global and local variables in the simpleAPI
-# gvnlvnincr      [quinn]       Test of ydb_incr_s() function for global and local variables in the simpleAPI
-# gvnlvndelete    [quinn]       Test of ydb_delete_s() function for global and local variables in the simpleAPI
-# isvdelete       [quinn]       Test of ydb_delete_s() function for intrinsic special variables in the simpleAPI
-# str2zwr         [quinn]       Test of ydb_str2zwr_s() and ydb_zwr2str_s() functions in the simpleAPI
-# utils_file	  [quinn]	Test of ydb_file_name_to_id(), ydb_file_is_identical(), and ydb_file_id_free() in the SimpleAPI
+# lvnset          		[nars]        Test of ydb_set_s() function for Local variables in the simpleAPI
+# lvnsetstress    		[nars]        Stress test of ydb_set_s() function for Local variables in the simpleAPI
+# stresstest      		[nars]        Stress test of all ydb_*() functions in the simpleAPI
+# gvnset          		[estess,nars] Test of ydb_set_s() function for Global variables in the simpleAPI
+# isvset          		[estess]      Test of ydb_set_s() function for Intrinsic Special Variables in the simpleAPI
+# tp              		[nars]        Test of ydb_tp_s() function in the simpleAPI
+# transid         		[nars]        Test that transid specified in ydb_tp_s() does go into journal file
+# lvnget          		[estess,nars] Test of ydb_get_s() function for local variables in the simpleAPI
+# gvnget          		[estess,nars] Test of ydb_get_s() function for global variables in the simpleAPI
+# isvget          		[estess]      Test of ydb_get_s() function for ISVs in the simpleAPI
+# wordfreq        		[nars]        Use simpleAPI to find the frequency of words in an input text file
+# gvnsubsnext     		[nars]        Test of ydb_subscript_next_s() function for global variables in the simpleAPI
+# gvnsubsprev     		[nars]        Test of ydb_subscript_previous_s() function for global variables in the simpleAPI
+# lvnsubsnext     		[nars]        Test of ydb_subscript_next_s() function for local variables in the simpleAPI
+# lvnsubsprev     		[nars]        Test of ydb_subscript_previous_s() function for local variables in the simpleAPI
+# isvsubsnext     		[nars]        Test of ydb_subscript_next_s() function for intrinsic special variables in the simpleAPI
+# isvsubsprev     		[nars]        Test of ydb_subscript_previous_s() function for intrinsic special variables in the simpleAPI
+# isvnodenext     		[quinn]       Test of ydb_node_next_s() function for intrinsic special variables in the simpleAPI
+# isvnodeprev     		[quinn]       Test of ydb_node_previous_s() function for intrinsic special variables in the simpleAPI
+# isvdata         		[nars]        Test of ydb_data_s() function for intrinsic special variables in the simpleAPI
+# isvincr         		[nars]        Test of ydb_incr_s() function for intrinsic special variables in the simpleAPI
+# gvnlvnnodenext  		[quinn]       Test of ydb_node_next_s() function for global and local variables in the simpleAPI
+# gvnlvnnodeprev  		[quinn]       Test of ydb_node_previous_s() function for global and local variables in the simpleAPI
+# nodenext        		[estess]      Test of ydb_node_next_s() function in the simpleAPI (both local and global vars)
+# nodeprev        		[estess]      Test of ydb_node_previous_s() function in the simpleAPI (both local and global vars)
+# forkncore       		[estess]      Test of ydb_fork_n_core() function in the simpleAPI
+# locks           		[estess]      Test of ydb_lock_s() function in the simpleAPI
+# incrdecr        		[estess]      Test of ydb_lock_incr_s() and ydb_lock_decr_s() functions in the simpleAPI
+# simpleapinest   		[nars]        Test of SIMPLEAPINEST error
+# time2long       		[nars]        Test of TIME2LONG error
+# insuffsubs      		[nars]        Test of INSUFFSUBS error
+# invnamecount    		[nars]        Test of INVNAMECOUNT error
+# namecount2hi    		[nars]        Test of NAMECOUNT2HI error
+# delete_excl     		[nars]        Test of ydb_delete_excl_s()
+# callintcommit   		[nars]        Test of CALLINTCOMMIT error
+# callintrollback 		[nars]        Test of CALLINTROLLBACK error
+# fatalerror1     		[nars]        Test of FATALERROR1 error
+# fatalerror2     		[nars]        Test of FATALERROR2 error
+# key2big	  		[quinn]	      Test of KEY2BIG error
+# gvsuboflow	  		[quinn]	      Test of GVSUBOFLOW error
+# gvnlvndata      		[quinn]       Test of ydb_data_s() function for global and local variables in the simpleAPI
+# gvnlvnincr      		[quinn]       Test of ydb_incr_s() function for global and local variables in the simpleAPI
+# gvnlvndelete    		[quinn]       Test of ydb_delete_s() function for global and local variables in the simpleAPI
+# isvdelete       		[quinn]       Test of ydb_delete_s() function for intrinsic special variables in the simpleAPI
+# str2zwr         		[quinn]       Test of ydb_str2zwr_s() and ydb_zwr2str_s() functions in the simpleAPI
+# utils_file	  		[quinn]	      Test of ydb_file_name_to_id(), ydb_file_is_identical(), and ydb_file_id_free() in the SimpleAPI
+# simpleapinotallowed	 	[quinn]	      Test of errors in the SimpleAPI
 #-------------------------------------------------------------------------------------
 
 echo "simpleapi test starts..."
@@ -76,6 +77,7 @@ setenv subtest_list_non_replic "$subtest_list_non_replic time2long insuffsubs in
 setenv subtest_list_non_replic "$subtest_list_non_replic callintcommit callintrollback fatalerror1 fatalerror2 key2big"
 setenv subtest_list_non_replic "$subtest_list_non_replic gvsuboflow"
 setenv subtest_list_non_replic "$subtest_list_non_replic gvnlvndata gvnlvnincr gvnlvndelete isvdelete str2zwr utils_file"
+setenv subtest_list_non_replic "$subtest_list_non_replic simpleapinotallowed"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then

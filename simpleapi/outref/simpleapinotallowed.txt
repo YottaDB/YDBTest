@@ -1,0 +1,38 @@
+# Test of YDB_ERR_SIMPLEAPINOTALLOWED error in the SimpleAPI
+# Now run simpleapinotallowed*.c (all tests driven by a C routine)
+
+ --> Running simpleapinotallowed.c <---
+### Test that any SimpleAPI call after using a SimpleThreadAPI call returns YDB_ERR_SIMPLEAPINOTALLOWED error ###
+# Invoke ydb_set_st() to initialize SimpleThreadAPI environment
+# Test SimpleAPI functions for YDB_ERR_SIMPLEAPINOTALLOWED error
+ --> Invoke ydb_data_s()                 after SimpleThreadAPI call : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
+ --> Invoke ydb_delete_excl_s()          after SimpleThreadAPI call : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
+ --> Invoke ydb_delete_s()               after SimpleThreadAPI call : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
+ --> Invoke ydb_get_s()                  after SimpleThreadAPI call : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
+ --> Invoke ydb_incr_s()                 after SimpleThreadAPI call : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
+ --> Invoke ydb_lock_s()                 after SimpleThreadAPI call : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
+ --> Invoke ydb_lock_decr_s()            after SimpleThreadAPI call : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
+ --> Invoke ydb_lock_incr_s()            after SimpleThreadAPI call : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
+ --> Invoke ydb_node_next_s()            after SimpleThreadAPI call : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
+ --> Invoke ydb_node_previous_s()        after SimpleThreadAPI call : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
+ --> Invoke ydb_set_s()                  after SimpleThreadAPI call : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
+ --> Invoke ydb_str2zwr_s()              after SimpleThreadAPI call : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
+ --> Invoke ydb_subscript_next_s()       after SimpleThreadAPI call : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
+ --> Invoke ydb_subscript_previous_s()   after SimpleThreadAPI call : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
+ --> Invoke ydb_tp_s()                   after SimpleThreadAPI call : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
+ --> Invoke ydb_zwr2str_s()              after SimpleThreadAPI call : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
+ --> Invoke ydb_child_init()             after SimpleThreadAPI call : Return value is YDB_OK as expected
+ --> Invoke ydb_file_id_free()           after SimpleThreadAPI call : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
+ --> Invoke ydb_file_is_identical()      after SimpleThreadAPI call : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
+ --> Invoke ydb_file_name_to_id()        after SimpleThreadAPI call : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
+ --> Invoke ydb_free()                   after SimpleThreadAPI call : There is no return value since function is void
+ --> Invoke ydb_hiber_start()            after SimpleThreadAPI call : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
+ --> Invoke ydb_hiber_start_wait_any()   after SimpleThreadAPI call : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
+ --> Invoke ydb_init()                   after SimpleThreadAPI call : Return value is YDB_OK as expected
+ --> Invoke ydb_malloc()                 after SimpleThreadAPI call : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
+ --> Invoke ydb_message()                after SimpleThreadAPI call : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
+ --> Invoke ydb_stdout_stderr_adjust()   after SimpleThreadAPI call : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
+ --> Invoke ydb_thread_is_main()         after SimpleThreadAPI call : Return value is YDB_NOTOK as expected
+ --> Invoke ydb_timer_cancel()           after SimpleThreadAPI call : There is no return value since function is void
+ --> Invoke ydb_timer_start()            after SimpleThreadAPI call : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
+ --> Invoke ydb_exit()                   after SimpleThreadAPI call : Return value is YDB_OK as expected
