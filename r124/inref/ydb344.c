@@ -21,6 +21,7 @@
 
 #define BASEVAR "basevar"
 #define VALUE1	"value"
+#define LOCK_TIMEOUT    (unsigned long long)1000000000  /* 1 * 10^9 nanoseconds == 1 second */
 
 char		errbuf[ERRBUF_SIZE];
 ydb_buffer_t	basevar, value1, value2, badbasevar;
@@ -49,7 +50,6 @@ int main(void)
 	char			valuebuff[64];
 	int			i;
 	int             	seed, use_simplethreadapi;
-	unsigned long long	timet;
 	ydb_tpfnptr_t 		tpfn1;
 	ydb_tp2fnptr_t		tpfn2;
 
@@ -136,8 +136,8 @@ int main(void)
 
 		printf("Calling ydb_lock_incr_s()/ydb_lock_incr_st()\n");
 		status = use_simplethreadapi
-				? ydb_lock_incr_st(YDB_NOTTP, NULL, timet, &basevar, 0, NULL)
-				: ydb_lock_incr_s(timet, &basevar, 0, NULL);
+				? ydb_lock_incr_st(YDB_NOTTP, NULL, LOCK_TIMEOUT, &basevar, 0, NULL)
+				: ydb_lock_incr_s(LOCK_TIMEOUT, &basevar, 0, NULL);
 		CHECK_STATUS(status);
 
 		printf("Calling ydb_tp_s()/ydb_tp_st()\n");
