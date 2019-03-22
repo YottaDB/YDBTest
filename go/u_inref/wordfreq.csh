@@ -37,7 +37,7 @@ if (0 != $status) then
 endif
 # Build our routine (must be built due to use of cgo).
 echo "# Building wordfreq"
-go build
+$gobuild
 if (0 != $status) then
     echo "TEST-E-FAILED : Unable to build wordfreq.go"
     exit 1

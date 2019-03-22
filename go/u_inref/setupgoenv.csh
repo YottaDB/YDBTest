@@ -99,4 +99,17 @@ else
 endif
 cd -
 
+set gobuild = "go build"
+set gotest = "go test"
+
+if (! $?ydb_go_race_detector_on) then
+	setenv ydb_go_race_detector_on `$gtm_tst/com/genrandnumbers.csh 1 0 1`
+endif
+if ($ydb_go_race_detector_on) then
+	# Randomly enable go race detector
+	set gobuild = "$gobuild -race"
+	set gotest = "$gotest -race"
+endif
+# Capture random setting in file for later analysis in case of test failures
+set | $grep ^go >& govars.txt
 exit 0
