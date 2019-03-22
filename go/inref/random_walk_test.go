@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////
 //								//
-// Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries. //
+// Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.//
 // All rights reserved.						//
 //								//
 //	This source code contains the intellectual property	//
@@ -33,10 +33,8 @@ import (
 	"fmt"
 	"lang.yottadb.com/go/yottadb"
 	"math/rand"
-//	"time"
 	"sync"
-  "testing"
-//	"runtime"
+	"testing"
 )
 
 func Ok() {
@@ -46,14 +44,14 @@ func Ok() {
 type operationCounter chan int
 
 type testSettings struct {
-	counter operationCounter
-	maxDepth int
+	counter      operationCounter
+	maxDepth     int
 	nestedTpRate float64
 }
 
 func genGlobalName() []string {
 	var ret []string
-	num_subs := rand.Int() % 4 + 1
+	num_subs := rand.Int()%4 + 1
 	global_id := rand.Int() % 2
 	switch global_id {
 	case 0:
@@ -70,8 +68,6 @@ func genGlobalName() []string {
 func run_proc(tptoken uint64, errstr *yottadb.BufferT, settings testSettings, curDepth int) int32 {
 	action := rand.Float64() * 100
 
-	//fmt.Printf("Action: %d\n", action)
-
 	if action < 10 {
 		// Get a global
 		t := genGlobalName()
@@ -79,7 +75,6 @@ func run_proc(tptoken uint64, errstr *yottadb.BufferT, settings testSettings, cu
 		subs := t[1:]
 		_, err := yottadb.ValE(tptoken, errstr, varname, subs)
 		settings.counter <- 1
-		//fmt.Printf("Done with ValE")
 		// There are some error codes we accept; anything other than that, raise an error
 		if err != nil {
 			errcode := yottadb.ErrorCode(err)
@@ -94,13 +89,12 @@ func run_proc(tptoken uint64, errstr *yottadb.BufferT, settings testSettings, cu
 				panic(fmt.Sprintf("Unexpected return code (%d) issued! %s", errcode, err))
 			}
 		}
-	} else if action < 20 {// Get a global
+	} else if action < 20 { // Get a global
 		t := genGlobalName()
 		varname := t[0]
 		subs := t[1:]
 		err := yottadb.SetValE(tptoken, errstr, "MySecretValue", varname, subs)
 		settings.counter <- 1
-		//fmt.Printf("Done with SetValE")
 		// There are some error codes we accept; anything other than that, raise an error
 		if err != nil {
 			errcode := yottadb.ErrorCode(err)
@@ -122,7 +116,6 @@ func run_proc(tptoken uint64, errstr *yottadb.BufferT, settings testSettings, cu
 		subs := t[1:]
 		res, err := yottadb.DataE(tptoken, errstr, varname, subs)
 		settings.counter <- 1
-		//fmt.Printf("Done with DataE")
 		// There are some error codes we accept; anything other than that, raise an error
 		if err != nil {
 			errcode := yottadb.ErrorCode(err)
@@ -156,7 +149,6 @@ func run_proc(tptoken uint64, errstr *yottadb.BufferT, settings testSettings, cu
 		subs := t[1:]
 		err := yottadb.DeleteE(tptoken, errstr, yottadb.YDB_DEL_TREE, varname, subs)
 		settings.counter <- 1
-		//fmt.Printf("Done with DeleteE")
 		// There are some error codes we accept; anything other than that, raise an error
 		if err != nil {
 			panic(err)
@@ -183,7 +175,6 @@ func run_proc(tptoken uint64, errstr *yottadb.BufferT, settings testSettings, cu
 				t, err = yottadb.NodePrevE(tptoken, errstr, varname, subs)
 			}
 			settings.counter <- 1
-			//fmt.Printf("Done with NodeNextE")
 			retcode = yottadb.ErrorCode(err)
 			subs = t
 		}
@@ -202,7 +193,6 @@ func run_proc(tptoken uint64, errstr *yottadb.BufferT, settings testSettings, cu
 			direction = -1
 		}
 		retcode := 0
-		// TODO: is the documentation for the SIMPLE API still listing as YDB_NODE_END
 		for retcode != yottadb.YDB_ERR_NODEEND {
 			var t string
 			var err error
@@ -212,16 +202,15 @@ func run_proc(tptoken uint64, errstr *yottadb.BufferT, settings testSettings, cu
 				t, err = yottadb.SubPrevE(tptoken, errstr, varname, subs)
 			}
 			settings.counter <- 1
-			//fmt.Printf("Done with SubNextE")
 			retcode = yottadb.ErrorCode(err)
 			subs[len(subs)-1] = t
 		}
 		if retcode != yottadb.YDB_ERR_NODEEND {
 			panic(fmt.Sprintf("Unexpected return code (%d) issued!", retcode))
 		}
-	} else if action < 100 - (100 * settings.nestedTpRate) {
+	} else if action < 100-(100*settings.nestedTpRate) {
 		t := genGlobalName()
-		incr_amount := rand.Float64() * 10 - 5
+		incr_amount := rand.Float64()*10 - 5
 		varname := t[0]
 		subs := t[1:]
 		_, err := yottadb.IncrE(tptoken, errstr, fmt.Sprintf("%f", incr_amount), varname, subs)
@@ -235,7 +224,6 @@ func run_proc(tptoken uint64, errstr *yottadb.BufferT, settings testSettings, cu
 		}
 		yottadb.TpE(tptoken, errstr, func(tptoken uint64, errstr *yottadb.BufferT) int32 {
 			var wg sync.WaitGroup
-			//fmt.Printf("TpToken: %d\n", tptoken)
 			for i := 0; i < 10; i++ {
 				wg.Add(1)
 				go func() {
@@ -247,26 +235,25 @@ func run_proc(tptoken uint64, errstr *yottadb.BufferT, settings testSettings, cu
 			return 0
 		}, "BATCH", []string{})
 		settings.counter <- 1
-		//fmt.Printf("Done with TpE2")
 	} else {
 		panic("Huh, random number out of range")
 	}
 	return 0
 }
 
-func BenchmarkRW1threads10depth5tp(b *testing.B) { benchmarkRandomWalk(b, 1, 10, .05) }
-func BenchmarkRW10threads10depth5tp(b *testing.B) { benchmarkRandomWalk(b, 10, 10, .05) }
-func BenchmarkRW100threads10depth5tp(b *testing.B) { benchmarkRandomWalk(b, 100, 10, .05) }
+func BenchmarkRW1threads10depth5tp(b *testing.B)    { benchmarkRandomWalk(b, 1, 10, .05) }
+func BenchmarkRW10threads10depth5tp(b *testing.B)   { benchmarkRandomWalk(b, 10, 10, .05) }
+func BenchmarkRW100threads10depth5tp(b *testing.B)  { benchmarkRandomWalk(b, 100, 10, .05) }
 func BenchmarkRW1000threads10depth5tp(b *testing.B) { benchmarkRandomWalk(b, 1000, 10, .05) }
 
-func BenchmarkRW1threads50depth5tp(b *testing.B) { benchmarkRandomWalk(b, 1, 50, .05) }
-func BenchmarkRW10threads50depth5tp(b *testing.B) { benchmarkRandomWalk(b, 10, 50, .05) }
-func BenchmarkRW100threads50depth5tp(b *testing.B) { benchmarkRandomWalk(b, 100, 50, .05) }
+func BenchmarkRW1threads50depth5tp(b *testing.B)    { benchmarkRandomWalk(b, 1, 50, .05) }
+func BenchmarkRW10threads50depth5tp(b *testing.B)   { benchmarkRandomWalk(b, 10, 50, .05) }
+func BenchmarkRW100threads50depth5tp(b *testing.B)  { benchmarkRandomWalk(b, 100, 50, .05) }
 func BenchmarkRW1000threads50depth5tp(b *testing.B) { benchmarkRandomWalk(b, 1000, 50, .05) }
 
-func BenchmarkRW1threads100depth5tp(b *testing.B) { benchmarkRandomWalk(b, 1, 100, .05) }
-func BenchmarkRW10threads100depth5tp(b *testing.B) { benchmarkRandomWalk(b, 10, 100, .05) }
-func BenchmarkRW100threads100depth5tp(b *testing.B) { benchmarkRandomWalk(b, 100, 100, .05) }
+func BenchmarkRW1threads100depth5tp(b *testing.B)    { benchmarkRandomWalk(b, 1, 100, .05) }
+func BenchmarkRW10threads100depth5tp(b *testing.B)   { benchmarkRandomWalk(b, 10, 100, .05) }
+func BenchmarkRW100threads100depth5tp(b *testing.B)  { benchmarkRandomWalk(b, 100, 100, .05) }
 func BenchmarkRW1000threads100depth5tp(b *testing.B) { benchmarkRandomWalk(b, 1000, 100, .05) }
 
 /*
@@ -306,16 +293,12 @@ func BenchmarkRW1000threads100depth15tp(b *testing.B) { benchmarkRandomWalk(b, 1
 
 func benchmarkRandomWalk(b *testing.B, threads int, depth int, nestedTpRate float64) {
 	var wg sync.WaitGroup
+	var doneMutex sync.Mutex
 
-	ch := make(operationCounter)
+	// Big random number to prevent threads from queing when sending operation
+	// updates after we enter wg.Wait() below
+	ch := make(operationCounter, 1000000)
 	operations := 0
-
-	go func() {
-		for range ch {
-			operations++
-		}
-	}()
-
 
 	tptoken := yottadb.NOTTP
 	done := false
@@ -323,13 +306,18 @@ func benchmarkRandomWalk(b *testing.B, threads int, depth int, nestedTpRate floa
 	for i := 0; i < threads; i++ {
 		wg.Add(1)
 		go func() {
-			for !done {
+			for {
+				doneMutex.Lock()
+				d := done
+				doneMutex.Unlock()
+				if d {
+					break
+				}
 				run_proc(tptoken, nil, testSettings{
 					ch,
 					depth,
 					nestedTpRate,
 				}, 0)
-				//runtime.GC()
 			}
 			wg.Done()
 		}()
@@ -341,7 +329,9 @@ func benchmarkRandomWalk(b *testing.B, threads int, depth int, nestedTpRate floa
 			break
 		}
 	}
+	doneMutex.Lock()
 	done = true
+	doneMutex.Unlock()
 	wg.Wait()
 	close(ch)
 }
