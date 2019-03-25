@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -14,7 +14,13 @@
 echo "# Test of SIMPLEAPINEST error"
 #
 
-$gtm_tst/com/dbcreate.csh mumps 1
+cp $gtm_tst/$tst/inref/simpleapinest* .
+
+$gtm_tst/com/dbcreate.csh mumps 1 >> create.txt
+if ($status != 0) then
+	echo "dbcreate failed:"
+	cat create.txt
+endif
 
 cat > simpleapinest.trg << CAT_EOF
 +^basevar -commands=Set,Kill -xecute="do ^simpleapinestm"
@@ -25,7 +31,11 @@ $gtm_exe/mupip trigger -noprompt -trigger=simpleapinest.trg
 cat > simpleapinestm.m << CAT_EOF
 simpleapinest	;
 	write "In trigger M code. This in turn will invoke an external call",!
-	do &callout
+	do &callouthelp
+	quit
+simpleapinestci ;
+	write "In ci M code level: "_\$increment(^count)_". This in turn will invoke an external call",!
+	do &calloutci
 	quit
 CAT_EOF
 
@@ -33,18 +43,24 @@ setenv GTMXC `pwd`/libsimpleapinest.xc
 
 cat > libsimpleapinest.xc << CAT_EOF
 `pwd`/libsimpleapinest.so
-callout: int simpleapinest_helper()
+callouthelp: int simpleapinest_helper()
+calloutci: int simpleapinest_ci()
+CAT_EOF
+
+setenv GTMCI `pwd`/libsimpleapinest.ci
+
+cat > libsimpleapinest.ci << CAT_EOF
+simpleapinestci: void simpleapinestci^simpleapinestm()
 CAT_EOF
 
 # Compile simpleapinest_helper.c
 set file = simpleapinest_helper.c
-cp $gtm_tst/$tst/inref/$file .
 set exefile = $file:r
 $gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist -g $file
 $gt_cc_compiler ${gt_ld_shl_options} ${gt_ld_option_output} libsimpleapinest.so $exefile.o
 
+# Compile simpleapinest.c
 set file = "simpleapinest.c"
-cp $gtm_tst/$tst/inref/$file .
 echo " --> Running $file <---"
 set exefile = $file:r
 $gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $file
@@ -57,4 +73,8 @@ rm $exefile.o
 `pwd`/$exefile
 echo ""
 
-$gtm_tst/com/dbcheck.csh
+$gtm_tst/com/dbcheck.csh >> dbcheck.txt
+if ($status != 0) then
+	echo "Check failed:"
+	cat dbcheck.txt
+endif

@@ -1,9 +1,4 @@
 # Test of SIMPLEAPINEST error
-Files Created in ##TEST_PATH##:
-Using: ##SOURCE_PATH##/mumps -run GDE
-mumps.gld
-Using: ##SOURCE_PATH##/mupip
-mumps.dat
 File simpleapinest.trg, Line 1: Added SET and/or Non-SET trigger on ^basevar named basevar#1
 =========================================
 1 triggers added
@@ -17,23 +12,46 @@ File simpleapinest.trg, Line 1: Added SET and/or Non-SET trigger on ^basevar nam
 # Do SET of global that invokes a trigger###
 In trigger M code. This in turn will invoke an external call
 # In external call C program. Now try ydb_*_s() calls to try SIMPLEAPINEST error#
-[Line 50]: 151027850,(SimpleAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_s() with a call to ydb_set_s() - nesting calls is not permitted in the Simple API
-[Line 51]: 151027850,(SimpleAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_s() with a call to ydb_get_s() - nesting calls is not permitted in the Simple API
-[Line 52]: 151027850,(SimpleAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_s() with a call to ydb_data_s() - nesting calls is not permitted in the Simple API
-[Line 53]: 151027850,(SimpleAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_s() with a call to ydb_subscript_next_s() - nesting calls is not permitted in the Simple API
-[Line 54]: 151027850,(SimpleAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_s() with a call to ydb_subscript_previous_s() - nesting calls is not permitted in the Simple API
-[Line 55]: 151027850,(SimpleAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_s() with a call to ydb_node_next_s() - nesting calls is not permitted in the Simple API
-[Line 56]: 151027850,(SimpleAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_s() with a call to ydb_node_previous_s() - nesting calls is not permitted in the Simple API
-[Line 57]: 151027850,(SimpleAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_s() with a call to ydb_lock_decr_s() - nesting calls is not permitted in the Simple API
-[Line 58]: 151027850,(SimpleAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_s() with a call to ydb_lock_incr_s() - nesting calls is not permitted in the Simple API
-[Line 59]: 151027850,(SimpleAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_s() with a call to ydb_lock_s() - nesting calls is not permitted in the Simple API
-[Line 60]: 151027850,(SimpleAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_s() with a call to ydb_tp_s() - nesting calls is not permitted in the Simple API
-[Line 61]: 151027850,(SimpleAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_s() with a call to ydb_delete_s() - nesting calls is not permitted in the Simple API
-[Line 62]: 151027850,(SimpleAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_s() with a call to ydb_incr_s() - nesting calls is not permitted in the Simple API
-[Line 63]: 151027850,(SimpleAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_s() with a call to ydb_delete_excl_s() - nesting calls is not permitted in the Simple API
-[Line 64]: 151027850,(SimpleAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_s() with a call to ydb_zwr2str_s() - nesting calls is not permitted in the Simple API
-[Line 65]: 151027850,(SimpleAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_s() with a call to ydb_str2zwr_s() - nesting calls is not permitted in the Simple API
+[Line 54]: 151027850,(SimpleAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_s() with a call to ydb_set_s() - nesting calls is not permitted in the Simple API
+[Line 55]: 151027850,(SimpleAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_s() with a call to ydb_get_s() - nesting calls is not permitted in the Simple API
+[Line 56]: 151027850,(SimpleAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_s() with a call to ydb_data_s() - nesting calls is not permitted in the Simple API
+[Line 57]: 151027850,(SimpleAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_s() with a call to ydb_subscript_next_s() - nesting calls is not permitted in the Simple API
+[Line 58]: 151027850,(SimpleAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_s() with a call to ydb_subscript_previous_s() - nesting calls is not permitted in the Simple API
+[Line 59]: 151027850,(SimpleAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_s() with a call to ydb_node_next_s() - nesting calls is not permitted in the Simple API
+[Line 60]: 151027850,(SimpleAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_s() with a call to ydb_node_previous_s() - nesting calls is not permitted in the Simple API
+[Line 61]: 151027850,(SimpleAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_s() with a call to ydb_lock_decr_s() - nesting calls is not permitted in the Simple API
+[Line 62]: 151027850,(SimpleAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_s() with a call to ydb_lock_incr_s() - nesting calls is not permitted in the Simple API
+[Line 63]: 151027850,(SimpleAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_s() with a call to ydb_lock_s() - nesting calls is not permitted in the Simple API
+[Line 64]: 151027850,(SimpleAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_s() with a call to ydb_tp_s() - nesting calls is not permitted in the Simple API
+[Line 65]: 151027850,(SimpleAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_s() with a call to ydb_delete_s() - nesting calls is not permitted in the Simple API
+[Line 66]: 151027850,(SimpleAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_s() with a call to ydb_incr_s() - nesting calls is not permitted in the Simple API
+[Line 67]: 151027850,(SimpleAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_s() with a call to ydb_delete_excl_s() - nesting calls is not permitted in the Simple API
+[Line 68]: 151027850,(SimpleAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_s() with a call to ydb_zwr2str_s() - nesting calls is not permitted in the Simple API
+[Line 69]: 151027850,(SimpleAPI),%YDB-E-SIMPLEAPINEST, Attempt to nest call of ydb_set_s() with a call to ydb_str2zwr_s() - nesting calls is not permitted in the Simple API
 
-##SOURCE_PATH##/mupip
-##SOURCE_PATH##/mupip integ -REG *
-No errors detected by integ.
+# Test that YDB_ERR_SIMPLEAPINEST error is not issued when using ydb_ci()/ydb_cip()
+# Test randomly starting with ydb_ci()/ydb_cip()
+In ci M code level: 1. This in turn will invoke an external call
+# In external call C program. Now randomly try ydb_ci() or ydb_cip() call #
+In ci M code level: 2. This in turn will invoke an external call
+# In external call C program. Now randomly try ydb_ci() or ydb_cip() call #
+In ci M code level: 3. This in turn will invoke an external call
+# In external call C program. Now randomly try ydb_ci() or ydb_cip() call #
+In ci M code level: 4. This in turn will invoke an external call
+# In external call C program. Now randomly try ydb_ci() or ydb_cip() call #
+In ci M code level: 5. This in turn will invoke an external call
+# In external call C program. Now randomly try ydb_ci() or ydb_cip() call #
+In ci M code level: 6. This in turn will invoke an external call
+# In external call C program. Now randomly try ydb_ci() or ydb_cip() call #
+In ci M code level: 7. This in turn will invoke an external call
+# In external call C program. Now randomly try ydb_ci() or ydb_cip() call #
+In ci M code level: 8. This in turn will invoke an external call
+# In external call C program. Now randomly try ydb_ci() or ydb_cip() call #
+In ci M code level: 9. This in turn will invoke an external call
+# In external call C program. Now randomly try ydb_ci() or ydb_cip() call #
+In ci M code level: 10. This in turn will invoke an external call
+# In external call C program. Now randomly try ydb_ci() or ydb_cip() call #
+In ci M code level: 11. This in turn will invoke an external call
+# In external call C program. Now randomly try ydb_ci() or ydb_cip() call #
+Max CI levels reached
+

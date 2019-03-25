@@ -14,6 +14,8 @@
 #include "libydberrors.h"	/* for YDB_ERR_SIMPLEAPINEST */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 #define ERRBUF_SIZE	1024
 
@@ -24,6 +26,8 @@ char		errbuf[ERRBUF_SIZE];
 ydb_buffer_t	basevar, value1, badbasevar;
 
 int simpleapinest_helper(void);
+
+int simpleapinest_ci(void);
 
 #define	CHECK_STATUS(status)					\
 {								\
@@ -63,5 +67,41 @@ int simpleapinest_helper(void)
 	status = ydb_delete_excl_st(YDB_NOTTP, NULL, 0, NULL); CHECK_STATUS(status);
 	status = ydb_zwr2str_st(YDB_NOTTP, NULL, NULL, NULL); CHECK_STATUS(status);
 	status = ydb_str2zwr_st(YDB_NOTTP, NULL, NULL, NULL); CHECK_STATUS(status);
+	return status;
+}
+
+int simpleapinest_ci(void)
+{
+	int			status, n;
+	ci_name_descriptor	callin;
+
+	callin.rtn_name.address = ("simpleapinestci");
+	callin.rtn_name.length = strlen(callin.rtn_name.address);
+	callin.handle = NULL;
+
+	printf("# In external call C program. Now randomly try ydb_ci_t() or ydb_cip_t() call #\n"); fflush(stdout);
+
+	srand(time(NULL));
+	n = rand() % 2;
+
+	if (n == 0)
+	{
+		status = ydb_ci_t(YDB_NOTTP, NULL, "simpleapinestci");
+		if (YDB_ERR_CIMAXLEVELS == status)
+		{
+			printf("Max CI levels reached\n");
+			fflush(stdout);
+			return status;
+		}
+	} else
+	{
+		status = ydb_cip_t(YDB_NOTTP, NULL, &callin);
+		if (YDB_ERR_CIMAXLEVELS == status)
+		{
+			printf("Max CI levels reached\n");
+			fflush(stdout);
+			return status;
+		}
+	}
 	return status;
 }
