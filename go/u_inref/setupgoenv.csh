@@ -104,6 +104,10 @@ set gotest = "go test"
 
 if (! $?ydb_go_race_detector_on) then
 	setenv ydb_go_race_detector_on `$gtm_tst/com/genrandnumbers.csh 1 0 1`
+	if (("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) || ("HOST_LINUX_AARCH64" == $gtm_test_os_machtype)) then
+		# -race is not supported in "go" on the ARM platform. So disable the random choice there.
+		setenv ydb_go_race_detector_on 0
+	endif
 endif
 if ($ydb_go_race_detector_on) then
 	# Randomly enable go race detector
