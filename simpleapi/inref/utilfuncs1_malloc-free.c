@@ -23,7 +23,6 @@
 #define BASEVAR "basevar"
 #define VALUE1	"value"
 
-
 int main()
 {
 
@@ -32,6 +31,7 @@ int main()
 	ydb_char_t	*astr;
 	char		errbuf[ERRBUF_SIZE];
 	void		*ptr1, *ptr2, *array[1000];
+	int		size_array[] = { (1 << 15), (1 << 16), (1 << 20) };
 
 	size1 = 1024;
 	srand(time(NULL));
@@ -68,41 +68,21 @@ int main()
 
 	printf("# Free the allocations of the pointers in the array\n"); fflush(stdout);
 	for (i = 0; i < 1000; i++)
-	{
 		ydb_free(array[i]);
-	}
 
 	printf("\n## Test 3: Test using the routine of a separate call-in subtest that uses ydb_malloc()/ydb_free() ##\n"); fflush(stdout);
 
-	astr = (ydb_char_t*)ydb_malloc(32767);
-	memset(astr, 'A', 32766);
-	astr[32766] = '\0';
-	status = ydb_ci("maxstr", astr);
-	if (YDB_OK != status)
+	for (i = 0; i < sizeof(size_array) / sizeof(size_array[0]); i++)
 	{
-		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("Line[%d]: %s\n", __LINE__, errbuf);
+		astr = (ydb_char_t*)ydb_malloc(size_array[i] + 1);
+		memset(astr, 'A', size_array[i]);
+		astr[size_array[i]] = '\0';
+		status = ydb_ci("maxstr", astr);
+		if (YDB_OK != status)
+		{
+			ydb_zstatus(errbuf, ERRBUF_SIZE);
+			printf("Line[%d]: %s\n", __LINE__, errbuf);
+		}
 	}
-
-	astr = (ydb_char_t*)ydb_malloc(65536);
-	memset(astr, 'A', 65535);
-	astr[65535] = '\0';
-	status = ydb_ci("maxstr", astr);
-	if (YDB_OK != status)
-	{
-		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("Line[%d]: %s\n", __LINE__, errbuf);
-	}
-
-	astr = (ydb_char_t*)ydb_malloc(1048576);
-	memset(astr, 'A', 1048576);
-	astr[1048576] = '\0';
-	status = ydb_ci("maxstr", astr);
-	if (YDB_OK != status)
-	{
-		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("Line[%d]: %s\n", __LINE__, errbuf);
-	}
-
 	return YDB_OK;
 }
