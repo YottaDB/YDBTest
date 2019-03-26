@@ -20,14 +20,14 @@
 
 #include "libydberrors.h"
 
-#define ERRBUF_SIZE	1024
-#define	MAXINT4		0x7fffffff
-#define	VARNAMESLIT	"varnames "
+#define ERRBUF_SIZE		1024
+#define	MAXINT4			0x7fffffff
+#define	CALLWITHPARENSLIT	"call ("
 
 int main()
 {
 	int	i, status, seed, namecount, actualnamecount;
-	char	ch, errbuf[ERRBUF_SIZE], *varnamesptr, *endptr;
+	char	ch, errbuf[ERRBUF_SIZE], *callwithparensptr, *endptr;
 
 	seed = (time(NULL) * getpid());
 	srand48(seed);
@@ -45,14 +45,14 @@ int main()
 		YDB_ASSERT(YDB_ERR_NAMECOUNT2HI == status)
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
 		/* Remove "namecount" value printed (after checking it) to make the output deterministic */
-		varnamesptr = strstr(errbuf, VARNAMESLIT);
-		YDB_ASSERT(NULL != varnamesptr);
-		varnamesptr += strlen(VARNAMESLIT);
-		ch = varnamesptr[0];
-		varnamesptr[0] = '\0';
+		callwithparensptr = strstr(errbuf, CALLWITHPARENSLIT);
+		YDB_ASSERT(NULL != callwithparensptr);
+		callwithparensptr += strlen(CALLWITHPARENSLIT);
+		ch = callwithparensptr[0];
+		callwithparensptr[0] = '\0';
 		printf("Returned error : %s", errbuf);
-		varnamesptr[0] = ch;
-		actualnamecount = strtoul(varnamesptr, &endptr, 10);
+		callwithparensptr[0] = ch;
+		actualnamecount = strtoul(callwithparensptr, &endptr, 10);
 		if (namecount == actualnamecount)
 			printf("NNNN");	/* Replace variable namecount parameter with deterministic NNNN */
 		else
