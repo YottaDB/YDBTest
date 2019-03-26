@@ -70,6 +70,8 @@
 
 void		*childthread(void *threadparm);
 
+pthread_mutex_t		lock;
+
 int main()
 {
 	int			s, status;
@@ -96,6 +98,10 @@ int main()
 
 	printf("# Within each thread, fork the process and test SimpleThreadAPI calls\n");
 	fflush(stdout);
+
+	/* Initialize pthread mutex lock before spawning off threads that will try to lock it */
+	status = pthread_mutex_init(&lock, NULL);
+	YDB_ASSERT(status == 0);
 
 	for (s = 1; s <= MAXTHREADS; s++)
 	{
@@ -129,14 +135,11 @@ void *childthread(void *threadparm)
 	intptr_t		timer_id;
 	void			*ptr;
 	pid_t			tid, child;
-	pthread_mutex_t		lock;
 
 	tid = syscall(SYS_gettid);
 	sprintf(fileprint, "STAPIFORKEXEC_%d.txt", tid);
 	FILE *fp = fopen(fileprint, "ab+");
 
-	status = pthread_mutex_init(&lock, NULL);
-	YDB_ASSERT(status == 0);
 	status = pthread_mutex_lock(&lock);
 	YDB_ASSERT(status == 0);
 
