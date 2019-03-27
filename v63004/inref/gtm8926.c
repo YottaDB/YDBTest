@@ -1,6 +1,6 @@
 /****************************************************************
  *                                                              *
- * Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.      *
+ * Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries. *
  * All rights reserved.                                         *
  *                                                              *
  *      This source code contains the intellectual property     *
@@ -68,7 +68,6 @@ int callout()
 	}
 	return_test.buf_addr[return_test.len_used] = '\0';
 	printLog("1: In gtm8926.c", return_count, count);
-	status = ydb_set_s(&def,0,NULL,&value1);
 	sprintf(string, "1: %s set to %s", DEF_VAR, VALUE1);
 	printLog(string, return_count, count);
 
@@ -76,13 +75,14 @@ int callout()
 	   we want to wait in the C call at least twice this duration.				   */
 	printLog("1: Sleeping in intervals of 2 seconds waiting for confirmation that a flush has not occurred", return_count, count);
 	printLog("1: Sleep time is 2 since the time to flush is 1 second", return_count, count);
-	sleep(2);
+	status = ydb_set_s(&def,0,NULL,&value1);
 	if (0 != status)
 	{
 		ydb_zstatus(errbuf, 1024);
 		printf("ydb_set_s: %s\n", errbuf);
 		return status;
 	}
+	sleep(2);
 
 	while(1)
 	{
