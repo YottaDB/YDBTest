@@ -1,0 +1,30 @@
+### Test of YDB_ERR_INVTPTRANS error ###
+
+# Test Case 1: Call ydb_get_st() with tptoken = non-zero value (when a ydb_tp_st() has not already been done)
+Line[59]: 151027938,(SimpleThreadAPI),%YDB-E-INVTPTRANS, Invalid TP transaction - either invalid TP token or transaction not in progress
+
+# Test Case 2: Call ydb_get_st() with tptoken = (1 << 56) | (0)
+  Should issue INVTPTRANS error. This checks that low order 56 bits of 0 in tptoken issues an error.
+Line[96]: 151027938,(SimpleThreadAPI),%YDB-E-INVTPTRANS, Invalid TP transaction - either invalid TP token or transaction not in progress
+
+# Test Case 3: Call ydb_get_st() with tptoken = (1 << 56) | (3)
+  Should issue INVTPTRANS error. Because expected lower order 56 bits is 2 but we are specifying 3.
+Line[106]: 151027938,(SimpleThreadAPI),%YDB-E-INVTPTRANS, Invalid TP transaction - either invalid TP token or transaction not in progress
+
+# Test Case 4: Call ydb_get_st() with tptoken = (1 << 56) | (2)
+  Should issue INVTPTRANS error. Because expected lower order 56 bits is 3 but we are specifying 2.
+Line[116]: 151027938,(SimpleThreadAPI),%YDB-E-INVTPTRANS, Invalid TP transaction - either invalid TP token or transaction not in progress
+
+# Test Case 5: Call ydb_get_st() with tptoken = (0 << 56) | (4)
+  Should issue INVTPTRANS error. This checks that high order 8 bits of 0 in tptoken issues an error.
+Line[126]: 151027938,(SimpleThreadAPI),%YDB-E-INVTPTRANS, Invalid TP transaction - either invalid TP token or transaction not in progress
+
+# Test Case 6: Call ydb_get_st() with tptoken = (2 << 56) | (5)
+  Should issue INVTPTRANS error. Because expected high order 8 bits is 1 but we are specifying 2.
+Line[136]: 151027938,(SimpleThreadAPI),%YDB-E-INVTPTRANS, Invalid TP transaction - either invalid TP token or transaction not in progress
+
+# Test Case 7: Call ydb_tp_st() again to another callback function
+# Call ydb_get_st() with tptoken = (3 << 56) | (6)
+  Should issue INVTPTRANS error. Because expected high order 8 bits is 2 but we are specifying 3.
+Line[171]: 151027938,(SimpleThreadAPI),%YDB-E-INVTPTRANS, Invalid TP transaction - either invalid TP token or transaction not in progress
+

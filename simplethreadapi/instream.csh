@@ -62,6 +62,7 @@
 # utils_file	  		[quinn]       Test of ydb_file_name_to_id_t(), ydb_file_is_identical_t(), and ydb_file_id_free_t() in the SimpleThreadAPI
 # threadedapinotallowed		[quinn]	      Test of THREADEDAPINOTALLOWED error
 # utilfuncs       		[quinn]       Test of Utility Functions in the SimpleThreadAPI
+# invtptrans			[quinn]	      test of INVTPTRANS error
 #-------------------------------------------------------------------------------------
 
 echo "simplethreadapi test starts..."
@@ -78,7 +79,7 @@ setenv subtest_list_non_replic "$subtest_list_non_replic time2long insuffsubs in
 setenv subtest_list_non_replic "$subtest_list_non_replic callintcommit callintrollback fatalerror1 fatalerror2 key2big"
 setenv subtest_list_non_replic "$subtest_list_non_replic gvsuboflow"
 setenv subtest_list_non_replic "$subtest_list_non_replic gvnlvndata gvnlvnincr gvnlvndelete isvdelete str2zwr utils_file"
-setenv subtest_list_non_replic "$subtest_list_non_replic threadedapinotallowed utilfuncs"
+setenv subtest_list_non_replic "$subtest_list_non_replic threadedapinotallowed utilfuncs invtptrans"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
