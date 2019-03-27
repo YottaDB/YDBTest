@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -191,7 +194,7 @@ $gtm_tst/com/getoper.csh "$syslog_before2" "" syslog2.txt "" "REPLINSTUNFROZEN"
 
 setenv gtm_test_jobid 2
 setenv gtm_test_dbfillid 2
-@ max_sleep = 300		# 30 was too short on some slower machines under load; normal case will be much shorter
+@ max_sleep = 600		# 300 was a little short on some slower machines under load; normal case will be much shorter
 $gtm_exe/mumps -r '%XCMD' "do startwait^gtm4525b(${gtm_test_dbfillid},${max_sleep})" >&! imptp_start_wait_${gtm_test_dbfillid}.out
 
 echo ""
