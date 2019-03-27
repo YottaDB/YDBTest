@@ -96,14 +96,14 @@ int main()
 	status = ydb_exit();
 	YDB_ASSERT(0 == status);
 
-	for (s = 1; s <= MAXTHREADS; s++)
+	for (s = 0; s < MAXTHREADS; s++)
 	{
 		status = pthread_create(&thread_id[s], NULL, childthread, NULL);
 		YDB_ASSERT(0 == status);
 	}
 
 	/* Wait for threads to finish */
-	for (s = 1; s <= MAXTHREADS; s++)
+	for (s = 0; s < MAXTHREADS; s++)
 	{
 		status = pthread_join(thread_id[s], NULL);
 		YDB_ASSERT(0 == status);

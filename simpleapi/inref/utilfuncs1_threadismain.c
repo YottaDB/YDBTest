@@ -34,7 +34,7 @@ int main()
 	int		status;
 	ydb_buffer_t	basevar, value1;
 	char		errbuf[ERRBUF_SIZE];
-	pthread_t	thread_id[1];
+	pthread_t	thread_id;
 
 
 
@@ -65,11 +65,11 @@ int main()
 	printf("\n# Run ydb_thread_is_main() in separate thread, expect YDB_NOTOK return\n");
 	fflush(stdout);
 
-	status = pthread_create(&thread_id[1], NULL, childthread, NULL);
+	status = pthread_create(&thread_id, NULL, childthread, NULL);
 	YDB_ASSERT(0 == status);
 
 	/* Wait for thread to finish */
-	status = pthread_join(thread_id[1], NULL);
+	status = pthread_join(thread_id, NULL);
 	YDB_ASSERT(0 == status);
 
 
