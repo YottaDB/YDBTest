@@ -48,10 +48,10 @@ int main()
 
 	/* Can be slower on slower boxes */
 	if (ftime >= (int)time2 && ftime <= (int)time2 + 1)
-	{
 		printf("ydb_hiber_start() successfully slept for 2 seconds\n");
-		fflush(stdout);
-	}
+	else
+		printf("ydb_hiber_start() slept incorrectly; Expected: 2 seconds, Actual: %d seconds\n", ftime);
+	fflush(stdout);
 
 	printf("\n# Test ydb_hiber_start_wait_any() with sleep_nsec set to 2 seconds\n");
 	stime = time(NULL);
@@ -67,10 +67,10 @@ int main()
 	ftime = etime - stime;
 
 	if (ftime >= (int)time2 && ftime <= (int)time2 + 1)
-	{
 		printf("ydb_hiber_start_wait_any() successfully slept for 2 seconds\n");
-		fflush(stdout);
-	}
+	else
+		printf("ydb_hiber_start_wait_any() slept incorrectly; Expected: 2 seconds, Actual: %d seconds\n", ftime);
+	fflush(stdout);
 
 	printf("\n# Test that ydb_hiber_start_wait_any() will stop sleeping after recieving a signal\n");
 	printf("# Set sleep_nsec to 20 seconds\n");
@@ -100,10 +100,10 @@ int main()
 	etime = time(NULL);
 	ftime = etime - stime;
 	if (ftime >= (int)time2 && ftime <= (int)time2 + 1)
-	{
 		printf("ydb_hiber_start_wait_any() was successfully interrupted after 2 seconds\n");
-		fflush(stdout);
-	}
+	else
+		printf("ydb_hiber_start_wait_any() was incorrectly interrupted; Expected: 2 seconds, Actual: %d seconds\n", ftime);
+	fflush(stdout);
 
 	return YDB_OK;
 }

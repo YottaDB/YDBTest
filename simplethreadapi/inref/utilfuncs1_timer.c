@@ -85,8 +85,10 @@ void timer_done(intptr_t timer_id, unsigned int handler_data_len, char *handler_
 
 	etime = time(NULL);
 	ftime = etime - * (int *)handler_data;
-	if (ftime >= 3 && ftime < 4)
+	if (ftime >= 3 && ftime <= 4)
 		printf("Correct amount of time passed after ydb_timer_start_t()\n");
+	else
+		printf("Incorrect amount of time passed; Expected: 3 seconds, Actual: %d seconds\n", ftime);
 	fflush(stdout);
 	is_done = 0;
 }
