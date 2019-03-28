@@ -1,0 +1,1218 @@
+# Test that $ZTRIGGER and MUPIP TRIGGER work with numeric subscripts having a decimal point.
+# Also test that triggers for ^x(2) or ^x(2.0) or ^x("2") are treated as identical.
+
+
+#########################################################################3
+# Test 1 : Use ZTRIGGER(FILE)
+#########################################################################3
+# Create database
+# Testing input1_10.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x(2)      -commands=SET -xecute="write ""trigger"",!"
+File input1_10.trg, Line 1: Added SET trigger on ^x named x#1
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input1_11.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x(2.)      -commands=SET -xecute="write ""trigger"",!"
+File input1_11.trg, Line 1: SET trigger on ^x already present in trigger named x#1 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input1_12.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x(2.0)      -commands=SET -xecute="write ""trigger"",!"
+File input1_12.trg, Line 1: SET trigger on ^x already present in trigger named x#1 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input1_13.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x(2.00)      -commands=SET -xecute="write ""trigger"",!"
+File input1_13.trg, Line 1: SET trigger on ^x already present in trigger named x#1 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input1_14.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x(02)      -commands=SET -xecute="write ""trigger"",!"
+File input1_14.trg, Line 1: SET trigger on ^x already present in trigger named x#1 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input1_15.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x(002)      -commands=SET -xecute="write ""trigger"",!"
+File input1_15.trg, Line 1: SET trigger on ^x already present in trigger named x#1 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input1_16.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x(2.2)      -commands=SET -xecute="write ""trigger"",!"
+File input1_16.trg, Line 1: Added SET trigger on ^x named x#2
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input1_17.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x(2.200)      -commands=SET -xecute="write ""trigger"",!"
+File input1_17.trg, Line 1: SET trigger on ^x already present in trigger named x#2 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input1_18.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x(2.2001)      -commands=SET -xecute="write ""trigger"",!"
+File input1_18.trg, Line 1: Added SET trigger on ^x named x#3
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input1_19.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x(.02)      -commands=SET -xecute="write ""trigger"",!"
+File input1_19.trg, Line 1: Added SET trigger on ^x named x#4
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input1_20.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x(.020)      -commands=SET -xecute="write ""trigger"",!"
+File input1_20.trg, Line 1: SET trigger on ^x already present in trigger named x#4 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input2_10.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x(-2)      -commands=SET -xecute="write ""trigger"",!"
+File input2_10.trg, Line 1: Added SET trigger on ^x named x#5
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input2_11.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x(-2.)      -commands=SET -xecute="write ""trigger"",!"
+File input2_11.trg, Line 1: SET trigger on ^x already present in trigger named x#5 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input2_12.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x(-2.0)      -commands=SET -xecute="write ""trigger"",!"
+File input2_12.trg, Line 1: SET trigger on ^x already present in trigger named x#5 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input2_13.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x(-2.00)      -commands=SET -xecute="write ""trigger"",!"
+File input2_13.trg, Line 1: SET trigger on ^x already present in trigger named x#5 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input2_14.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x(-02)      -commands=SET -xecute="write ""trigger"",!"
+File input2_14.trg, Line 1: SET trigger on ^x already present in trigger named x#5 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input2_15.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x(-002)      -commands=SET -xecute="write ""trigger"",!"
+File input2_15.trg, Line 1: SET trigger on ^x already present in trigger named x#5 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input2_16.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x(-2.2)      -commands=SET -xecute="write ""trigger"",!"
+File input2_16.trg, Line 1: Added SET trigger on ^x named x#6
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input2_17.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x(-2.200)      -commands=SET -xecute="write ""trigger"",!"
+File input2_17.trg, Line 1: SET trigger on ^x already present in trigger named x#6 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input2_18.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x(-2.2001)      -commands=SET -xecute="write ""trigger"",!"
+File input2_18.trg, Line 1: Added SET trigger on ^x named x#7
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input2_19.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x(-.02)      -commands=SET -xecute="write ""trigger"",!"
+File input2_19.trg, Line 1: Added SET trigger on ^x named x#8
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input2_20.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x(-.020)      -commands=SET -xecute="write ""trigger"",!"
+File input2_20.trg, Line 1: SET trigger on ^x already present in trigger named x#8 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input3_10.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x("2")  -commands=SET -xecute="write ""trigger"",!"
+File input3_10.trg, Line 1: SET trigger on ^x already present in trigger named x#1 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input3_11.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x("2.")  -commands=SET -xecute="write ""trigger"",!"
+File input3_11.trg, Line 1: Added SET trigger on ^x named x#9
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input3_12.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x("2.0")  -commands=SET -xecute="write ""trigger"",!"
+File input3_12.trg, Line 1: Added SET trigger on ^x named x#10
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input3_13.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x("2.00")  -commands=SET -xecute="write ""trigger"",!"
+File input3_13.trg, Line 1: Added SET trigger on ^x named x#11
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input3_14.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x("02")  -commands=SET -xecute="write ""trigger"",!"
+File input3_14.trg, Line 1: Added SET trigger on ^x named x#12
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input3_15.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x("002")  -commands=SET -xecute="write ""trigger"",!"
+File input3_15.trg, Line 1: Added SET trigger on ^x named x#13
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input3_16.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x("2.2")  -commands=SET -xecute="write ""trigger"",!"
+File input3_16.trg, Line 1: SET trigger on ^x already present in trigger named x#2 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input3_17.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x("2.200")  -commands=SET -xecute="write ""trigger"",!"
+File input3_17.trg, Line 1: Added SET trigger on ^x named x#14
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input3_18.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x("2.2001")  -commands=SET -xecute="write ""trigger"",!"
+File input3_18.trg, Line 1: SET trigger on ^x already present in trigger named x#3 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input3_19.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x(".02")  -commands=SET -xecute="write ""trigger"",!"
+File input3_19.trg, Line 1: SET trigger on ^x already present in trigger named x#4 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input3_20.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x(".020")  -commands=SET -xecute="write ""trigger"",!"
+File input3_20.trg, Line 1: Added SET trigger on ^x named x#15
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input4_10.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x("-2") -commands=SET -xecute="write ""trigger"",!"
+File input4_10.trg, Line 1: SET trigger on ^x already present in trigger named x#5 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input4_11.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x("-2.") -commands=SET -xecute="write ""trigger"",!"
+File input4_11.trg, Line 1: Added SET trigger on ^x named x#16
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input4_12.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x("-2.0") -commands=SET -xecute="write ""trigger"",!"
+File input4_12.trg, Line 1: Added SET trigger on ^x named x#17
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input4_13.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x("-2.00") -commands=SET -xecute="write ""trigger"",!"
+File input4_13.trg, Line 1: Added SET trigger on ^x named x#18
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input4_14.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x("-02") -commands=SET -xecute="write ""trigger"",!"
+File input4_14.trg, Line 1: Added SET trigger on ^x named x#19
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input4_15.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x("-002") -commands=SET -xecute="write ""trigger"",!"
+File input4_15.trg, Line 1: Added SET trigger on ^x named x#20
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input4_16.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x("-2.2") -commands=SET -xecute="write ""trigger"",!"
+File input4_16.trg, Line 1: SET trigger on ^x already present in trigger named x#6 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input4_17.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x("-2.200") -commands=SET -xecute="write ""trigger"",!"
+File input4_17.trg, Line 1: Added SET trigger on ^x named x#21
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input4_18.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x("-2.2001") -commands=SET -xecute="write ""trigger"",!"
+File input4_18.trg, Line 1: SET trigger on ^x already present in trigger named x#7 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input4_19.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x("-.02") -commands=SET -xecute="write ""trigger"",!"
+File input4_19.trg, Line 1: SET trigger on ^x already present in trigger named x#8 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+1
+# Testing input4_20.trg with : WRITE $ZTRIGGER("FILE"),!
+# File contents : +^x("-.020") -commands=SET -xecute="write ""trigger"",!"
+File input4_20.trg, Line 1: Added SET trigger on ^x named x#22
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+1
+# Display triggers at end of Test 1
+Output File: 
+;trigger name: x#1 (region DEFAULT)  cycle: 22
++^x(2) -commands=S -xecute="write ""trigger"",!"
+;trigger name: x#2 (region DEFAULT)  cycle: 22
++^x(2.2) -commands=S -xecute="write ""trigger"",!"
+;trigger name: x#3 (region DEFAULT)  cycle: 22
++^x(2.2001) -commands=S -xecute="write ""trigger"",!"
+;trigger name: x#4 (region DEFAULT)  cycle: 22
++^x(.02) -commands=S -xecute="write ""trigger"",!"
+;trigger name: x#5 (region DEFAULT)  cycle: 22
++^x(-2) -commands=S -xecute="write ""trigger"",!"
+;trigger name: x#6 (region DEFAULT)  cycle: 22
++^x(-2.2) -commands=S -xecute="write ""trigger"",!"
+;trigger name: x#7 (region DEFAULT)  cycle: 22
++^x(-2.2001) -commands=S -xecute="write ""trigger"",!"
+;trigger name: x#8 (region DEFAULT)  cycle: 22
++^x(-.02) -commands=S -xecute="write ""trigger"",!"
+;trigger name: x#9 (region DEFAULT)  cycle: 22
++^x("2.") -commands=S -xecute="write ""trigger"",!"
+;trigger name: x#10 (region DEFAULT)  cycle: 22
++^x("2.0") -commands=S -xecute="write ""trigger"",!"
+;trigger name: x#11 (region DEFAULT)  cycle: 22
++^x("2.00") -commands=S -xecute="write ""trigger"",!"
+;trigger name: x#12 (region DEFAULT)  cycle: 22
++^x("02") -commands=S -xecute="write ""trigger"",!"
+;trigger name: x#13 (region DEFAULT)  cycle: 22
++^x("002") -commands=S -xecute="write ""trigger"",!"
+;trigger name: x#14 (region DEFAULT)  cycle: 22
++^x("2.200") -commands=S -xecute="write ""trigger"",!"
+;trigger name: x#15 (region DEFAULT)  cycle: 22
++^x(".020") -commands=S -xecute="write ""trigger"",!"
+;trigger name: x#16 (region DEFAULT)  cycle: 22
++^x("-2.") -commands=S -xecute="write ""trigger"",!"
+;trigger name: x#17 (region DEFAULT)  cycle: 22
++^x("-2.0") -commands=S -xecute="write ""trigger"",!"
+;trigger name: x#18 (region DEFAULT)  cycle: 22
++^x("-2.00") -commands=S -xecute="write ""trigger"",!"
+;trigger name: x#19 (region DEFAULT)  cycle: 22
++^x("-02") -commands=S -xecute="write ""trigger"",!"
+;trigger name: x#20 (region DEFAULT)  cycle: 22
++^x("-002") -commands=S -xecute="write ""trigger"",!"
+;trigger name: x#21 (region DEFAULT)  cycle: 22
++^x("-2.200") -commands=S -xecute="write ""trigger"",!"
+;trigger name: x#22 (region DEFAULT)  cycle: 22
++^x("-.020") -commands=S -xecute="write ""trigger"",!"
+# Check that exactly ONE trigger (neither higher or lower) is invoked for SET of every possible node
+
+Stepping STARTED
++2^drivetrig        :	set ^x(2)=1_10
++1^x#1#             : write "trigger",!
+trigger
++3^drivetrig        :	set ^x(-2)=2_10
++1^x#5#             : write "trigger",!
+trigger
++4^drivetrig        :	set ^x("2")=3_10
++1^x#1#             : write "trigger",!
+trigger
++5^drivetrig        :	set ^x("-2")=4_10
++1^x#5#             : write "trigger",!
+trigger
++6^drivetrig        :	set ^x(2.)=1_11
++1^x#1#             : write "trigger",!
+trigger
++7^drivetrig        :	set ^x(-2.)=2_11
++1^x#5#             : write "trigger",!
+trigger
++8^drivetrig        :	set ^x("2.")=3_11
++1^x#9#             : write "trigger",!
+trigger
++9^drivetrig        :	set ^x("-2.")=4_11
++1^x#16#            : write "trigger",!
+trigger
++10^drivetrig       :	set ^x(2.0)=1_12
++1^x#1#             : write "trigger",!
+trigger
++11^drivetrig       :	set ^x(-2.0)=2_12
++1^x#5#             : write "trigger",!
+trigger
++12^drivetrig       :	set ^x("2.0")=3_12
++1^x#10#            : write "trigger",!
+trigger
++13^drivetrig       :	set ^x("-2.0")=4_12
++1^x#17#            : write "trigger",!
+trigger
++14^drivetrig       :	set ^x(2.00)=1_13
++1^x#1#             : write "trigger",!
+trigger
++15^drivetrig       :	set ^x(-2.00)=2_13
++1^x#5#             : write "trigger",!
+trigger
++16^drivetrig       :	set ^x("2.00")=3_13
++1^x#11#            : write "trigger",!
+trigger
++17^drivetrig       :	set ^x("-2.00")=4_13
++1^x#18#            : write "trigger",!
+trigger
++18^drivetrig       :	set ^x(02)=1_14
++1^x#1#             : write "trigger",!
+trigger
++19^drivetrig       :	set ^x(-02)=2_14
++1^x#5#             : write "trigger",!
+trigger
++20^drivetrig       :	set ^x("02")=3_14
++1^x#12#            : write "trigger",!
+trigger
++21^drivetrig       :	set ^x("-02")=4_14
++1^x#19#            : write "trigger",!
+trigger
++22^drivetrig       :	set ^x(002)=1_15
++1^x#1#             : write "trigger",!
+trigger
++23^drivetrig       :	set ^x(-002)=2_15
++1^x#5#             : write "trigger",!
+trigger
++24^drivetrig       :	set ^x("002")=3_15
++1^x#13#            : write "trigger",!
+trigger
++25^drivetrig       :	set ^x("-002")=4_15
++1^x#20#            : write "trigger",!
+trigger
++26^drivetrig       :	set ^x(2.2)=1_16
++1^x#2#             : write "trigger",!
+trigger
++27^drivetrig       :	set ^x(-2.2)=2_16
++1^x#6#             : write "trigger",!
+trigger
++28^drivetrig       :	set ^x("2.2")=3_16
++1^x#2#             : write "trigger",!
+trigger
++29^drivetrig       :	set ^x("-2.2")=4_16
++1^x#6#             : write "trigger",!
+trigger
++30^drivetrig       :	set ^x(2.200)=1_17
++1^x#2#             : write "trigger",!
+trigger
++31^drivetrig       :	set ^x(-2.200)=2_17
++1^x#6#             : write "trigger",!
+trigger
++32^drivetrig       :	set ^x("2.200")=3_17
++1^x#14#            : write "trigger",!
+trigger
++33^drivetrig       :	set ^x("-2.200")=4_17
++1^x#21#            : write "trigger",!
+trigger
++34^drivetrig       :	set ^x(2.2001)=1_18
++1^x#3#             : write "trigger",!
+trigger
++35^drivetrig       :	set ^x(-2.2001)=2_18
++1^x#7#             : write "trigger",!
+trigger
++36^drivetrig       :	set ^x("2.2001")=3_18
++1^x#3#             : write "trigger",!
+trigger
++37^drivetrig       :	set ^x("-2.2001")=4_18
++1^x#7#             : write "trigger",!
+trigger
++38^drivetrig       :	set ^x(.02)=1_19
++1^x#4#             : write "trigger",!
+trigger
++39^drivetrig       :	set ^x(-.02)=2_19
++1^x#8#             : write "trigger",!
+trigger
++40^drivetrig       :	set ^x(".02")=3_19
++1^x#4#             : write "trigger",!
+trigger
++41^drivetrig       :	set ^x("-.02")=4_19
++1^x#8#             : write "trigger",!
+trigger
++42^drivetrig       :	set ^x(.020)=1_20
++1^x#4#             : write "trigger",!
+trigger
++43^drivetrig       :	set ^x(-.020)=2_20
++1^x#8#             : write "trigger",!
+trigger
++44^drivetrig       :	set ^x(".020")=3_20
++1^x#15#            : write "trigger",!
+trigger
++45^drivetrig       :	set ^x("-.020")=4_20
++1^x#22#            : write "trigger",!
+trigger
+# Check and shutdown the DB
+
+#########################################################################3
+# Test 2 : Use ZTRIGGER(ITEM)
+#########################################################################3
+# Create database
+# Testing input1_10.trg with $ZTRIGGER("ITEM")
+Added SET trigger on ^x named x#1
+1
+# Testing input1_11.trg with $ZTRIGGER("ITEM")
+SET trigger on ^x already present in trigger named x#1 - no action taken
+1
+# Testing input1_12.trg with $ZTRIGGER("ITEM")
+SET trigger on ^x already present in trigger named x#1 - no action taken
+1
+# Testing input1_13.trg with $ZTRIGGER("ITEM")
+SET trigger on ^x already present in trigger named x#1 - no action taken
+1
+# Testing input1_14.trg with $ZTRIGGER("ITEM")
+SET trigger on ^x already present in trigger named x#1 - no action taken
+1
+# Testing input1_15.trg with $ZTRIGGER("ITEM")
+SET trigger on ^x already present in trigger named x#1 - no action taken
+1
+# Testing input1_16.trg with $ZTRIGGER("ITEM")
+Added SET trigger on ^x named x#2
+1
+# Testing input1_17.trg with $ZTRIGGER("ITEM")
+SET trigger on ^x already present in trigger named x#2 - no action taken
+1
+# Testing input1_18.trg with $ZTRIGGER("ITEM")
+Added SET trigger on ^x named x#3
+1
+# Testing input1_19.trg with $ZTRIGGER("ITEM")
+Added SET trigger on ^x named x#4
+1
+# Testing input1_20.trg with $ZTRIGGER("ITEM")
+SET trigger on ^x already present in trigger named x#4 - no action taken
+1
+# Testing input2_10.trg with $ZTRIGGER("ITEM")
+Added SET trigger on ^x named x#5
+1
+# Testing input2_11.trg with $ZTRIGGER("ITEM")
+SET trigger on ^x already present in trigger named x#5 - no action taken
+1
+# Testing input2_12.trg with $ZTRIGGER("ITEM")
+SET trigger on ^x already present in trigger named x#5 - no action taken
+1
+# Testing input2_13.trg with $ZTRIGGER("ITEM")
+SET trigger on ^x already present in trigger named x#5 - no action taken
+1
+# Testing input2_14.trg with $ZTRIGGER("ITEM")
+SET trigger on ^x already present in trigger named x#5 - no action taken
+1
+# Testing input2_15.trg with $ZTRIGGER("ITEM")
+SET trigger on ^x already present in trigger named x#5 - no action taken
+1
+# Testing input2_16.trg with $ZTRIGGER("ITEM")
+Added SET trigger on ^x named x#6
+1
+# Testing input2_17.trg with $ZTRIGGER("ITEM")
+SET trigger on ^x already present in trigger named x#6 - no action taken
+1
+# Testing input2_18.trg with $ZTRIGGER("ITEM")
+Added SET trigger on ^x named x#7
+1
+# Testing input2_19.trg with $ZTRIGGER("ITEM")
+Added SET trigger on ^x named x#8
+1
+# Testing input2_20.trg with $ZTRIGGER("ITEM")
+SET trigger on ^x already present in trigger named x#8 - no action taken
+1
+# Testing input3_10.trg with $ZTRIGGER("ITEM")
+SET trigger on ^x already present in trigger named x#1 - no action taken
+1
+# Testing input3_11.trg with $ZTRIGGER("ITEM")
+Added SET trigger on ^x named x#9
+1
+# Testing input3_12.trg with $ZTRIGGER("ITEM")
+Added SET trigger on ^x named x#10
+1
+# Testing input3_13.trg with $ZTRIGGER("ITEM")
+Added SET trigger on ^x named x#11
+1
+# Testing input3_14.trg with $ZTRIGGER("ITEM")
+Added SET trigger on ^x named x#12
+1
+# Testing input3_15.trg with $ZTRIGGER("ITEM")
+Added SET trigger on ^x named x#13
+1
+# Testing input3_16.trg with $ZTRIGGER("ITEM")
+SET trigger on ^x already present in trigger named x#2 - no action taken
+1
+# Testing input3_17.trg with $ZTRIGGER("ITEM")
+Added SET trigger on ^x named x#14
+1
+# Testing input3_18.trg with $ZTRIGGER("ITEM")
+SET trigger on ^x already present in trigger named x#3 - no action taken
+1
+# Testing input3_19.trg with $ZTRIGGER("ITEM")
+SET trigger on ^x already present in trigger named x#4 - no action taken
+1
+# Testing input3_20.trg with $ZTRIGGER("ITEM")
+Added SET trigger on ^x named x#15
+1
+# Testing input4_10.trg with $ZTRIGGER("ITEM")
+SET trigger on ^x already present in trigger named x#5 - no action taken
+1
+# Testing input4_11.trg with $ZTRIGGER("ITEM")
+Added SET trigger on ^x named x#16
+1
+# Testing input4_12.trg with $ZTRIGGER("ITEM")
+Added SET trigger on ^x named x#17
+1
+# Testing input4_13.trg with $ZTRIGGER("ITEM")
+Added SET trigger on ^x named x#18
+1
+# Testing input4_14.trg with $ZTRIGGER("ITEM")
+Added SET trigger on ^x named x#19
+1
+# Testing input4_15.trg with $ZTRIGGER("ITEM")
+Added SET trigger on ^x named x#20
+1
+# Testing input4_16.trg with $ZTRIGGER("ITEM")
+SET trigger on ^x already present in trigger named x#6 - no action taken
+1
+# Testing input4_17.trg with $ZTRIGGER("ITEM")
+Added SET trigger on ^x named x#21
+1
+# Testing input4_18.trg with $ZTRIGGER("ITEM")
+SET trigger on ^x already present in trigger named x#7 - no action taken
+1
+# Testing input4_19.trg with $ZTRIGGER("ITEM")
+SET trigger on ^x already present in trigger named x#8 - no action taken
+1
+# Testing input4_20.trg with $ZTRIGGER("ITEM")
+Added SET trigger on ^x named x#22
+1
+# Verify Test 2 created same triggers as Test 1
+# diff trig1.txt trig2.txt. Expect no output
+# Check and shutdown the DB
+
+#########################################################################3
+# Test 3 : Use MUPIP TRIGGER -TRIGGER=
+#########################################################################3
+# Create database
+# Testing input1_10.trg with MUPIP TRIGGER
+File input1_10.trg, Line 1: Added SET trigger on ^x named x#1
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Testing input1_11.trg with MUPIP TRIGGER
+File input1_11.trg, Line 1: SET trigger on ^x already present in trigger named x#1 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+# Testing input1_12.trg with MUPIP TRIGGER
+File input1_12.trg, Line 1: SET trigger on ^x already present in trigger named x#1 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+# Testing input1_13.trg with MUPIP TRIGGER
+File input1_13.trg, Line 1: SET trigger on ^x already present in trigger named x#1 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+# Testing input1_14.trg with MUPIP TRIGGER
+File input1_14.trg, Line 1: SET trigger on ^x already present in trigger named x#1 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+# Testing input1_15.trg with MUPIP TRIGGER
+File input1_15.trg, Line 1: SET trigger on ^x already present in trigger named x#1 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+# Testing input1_16.trg with MUPIP TRIGGER
+File input1_16.trg, Line 1: Added SET trigger on ^x named x#2
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Testing input1_17.trg with MUPIP TRIGGER
+File input1_17.trg, Line 1: SET trigger on ^x already present in trigger named x#2 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+# Testing input1_18.trg with MUPIP TRIGGER
+File input1_18.trg, Line 1: Added SET trigger on ^x named x#3
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Testing input1_19.trg with MUPIP TRIGGER
+File input1_19.trg, Line 1: Added SET trigger on ^x named x#4
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Testing input1_20.trg with MUPIP TRIGGER
+File input1_20.trg, Line 1: SET trigger on ^x already present in trigger named x#4 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+# Testing input2_10.trg with MUPIP TRIGGER
+File input2_10.trg, Line 1: Added SET trigger on ^x named x#5
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Testing input2_11.trg with MUPIP TRIGGER
+File input2_11.trg, Line 1: SET trigger on ^x already present in trigger named x#5 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+# Testing input2_12.trg with MUPIP TRIGGER
+File input2_12.trg, Line 1: SET trigger on ^x already present in trigger named x#5 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+# Testing input2_13.trg with MUPIP TRIGGER
+File input2_13.trg, Line 1: SET trigger on ^x already present in trigger named x#5 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+# Testing input2_14.trg with MUPIP TRIGGER
+File input2_14.trg, Line 1: SET trigger on ^x already present in trigger named x#5 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+# Testing input2_15.trg with MUPIP TRIGGER
+File input2_15.trg, Line 1: SET trigger on ^x already present in trigger named x#5 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+# Testing input2_16.trg with MUPIP TRIGGER
+File input2_16.trg, Line 1: Added SET trigger on ^x named x#6
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Testing input2_17.trg with MUPIP TRIGGER
+File input2_17.trg, Line 1: SET trigger on ^x already present in trigger named x#6 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+# Testing input2_18.trg with MUPIP TRIGGER
+File input2_18.trg, Line 1: Added SET trigger on ^x named x#7
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Testing input2_19.trg with MUPIP TRIGGER
+File input2_19.trg, Line 1: Added SET trigger on ^x named x#8
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Testing input2_20.trg with MUPIP TRIGGER
+File input2_20.trg, Line 1: SET trigger on ^x already present in trigger named x#8 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+# Testing input3_10.trg with MUPIP TRIGGER
+File input3_10.trg, Line 1: SET trigger on ^x already present in trigger named x#1 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+# Testing input3_11.trg with MUPIP TRIGGER
+File input3_11.trg, Line 1: Added SET trigger on ^x named x#9
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Testing input3_12.trg with MUPIP TRIGGER
+File input3_12.trg, Line 1: Added SET trigger on ^x named x#10
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Testing input3_13.trg with MUPIP TRIGGER
+File input3_13.trg, Line 1: Added SET trigger on ^x named x#11
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Testing input3_14.trg with MUPIP TRIGGER
+File input3_14.trg, Line 1: Added SET trigger on ^x named x#12
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Testing input3_15.trg with MUPIP TRIGGER
+File input3_15.trg, Line 1: Added SET trigger on ^x named x#13
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Testing input3_16.trg with MUPIP TRIGGER
+File input3_16.trg, Line 1: SET trigger on ^x already present in trigger named x#2 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+# Testing input3_17.trg with MUPIP TRIGGER
+File input3_17.trg, Line 1: Added SET trigger on ^x named x#14
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Testing input3_18.trg with MUPIP TRIGGER
+File input3_18.trg, Line 1: SET trigger on ^x already present in trigger named x#3 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+# Testing input3_19.trg with MUPIP TRIGGER
+File input3_19.trg, Line 1: SET trigger on ^x already present in trigger named x#4 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+# Testing input3_20.trg with MUPIP TRIGGER
+File input3_20.trg, Line 1: Added SET trigger on ^x named x#15
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Testing input4_10.trg with MUPIP TRIGGER
+File input4_10.trg, Line 1: SET trigger on ^x already present in trigger named x#5 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+# Testing input4_11.trg with MUPIP TRIGGER
+File input4_11.trg, Line 1: Added SET trigger on ^x named x#16
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Testing input4_12.trg with MUPIP TRIGGER
+File input4_12.trg, Line 1: Added SET trigger on ^x named x#17
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Testing input4_13.trg with MUPIP TRIGGER
+File input4_13.trg, Line 1: Added SET trigger on ^x named x#18
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Testing input4_14.trg with MUPIP TRIGGER
+File input4_14.trg, Line 1: Added SET trigger on ^x named x#19
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Testing input4_15.trg with MUPIP TRIGGER
+File input4_15.trg, Line 1: Added SET trigger on ^x named x#20
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Testing input4_16.trg with MUPIP TRIGGER
+File input4_16.trg, Line 1: SET trigger on ^x already present in trigger named x#6 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+# Testing input4_17.trg with MUPIP TRIGGER
+File input4_17.trg, Line 1: Added SET trigger on ^x named x#21
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Testing input4_18.trg with MUPIP TRIGGER
+File input4_18.trg, Line 1: SET trigger on ^x already present in trigger named x#7 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+# Testing input4_19.trg with MUPIP TRIGGER
+File input4_19.trg, Line 1: SET trigger on ^x already present in trigger named x#8 - no action taken
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+# Testing input4_20.trg with MUPIP TRIGGER
+File input4_20.trg, Line 1: Added SET trigger on ^x named x#22
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Verify Test 3 created same triggers as Test 1
+# diff trig1.txt trig3.txt. Expect no output
+# Check and shutdown the DB
