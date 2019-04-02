@@ -17,12 +17,23 @@
 #define ERRBUF_SIZE	1024
 #define	NUMTABLES	3
 
+/* Initialize a "ci_name_descriptor" structure for later use by "ydb_cip" or "ydb_cip_t" */
+#define	YDB_CIP_DESC_INIT(CID, RTNNAME)				\
+{								\
+	CID.rtn_name.address = (RTNNAME);			\
+	CID.rtn_name.length = strlen(CID.rtn_name.address);	\
+	CID.handle = NULL;					\
+}
+
 int main()
 {
 	int			i, status;
 	uintptr_t		ret_handle[NUMTABLES], old_handle[NUMTABLES], prev_handle;
 	char			errbuf[ERRBUF_SIZE];
 	char			citabstr[16];
+	ci_name_descriptor	citabtest_cid;
+
+	YDB_CIP_DESC_INIT(citabtest_cid, "citabtest");
 
 	printf("### Test Functionality of ydb_ci_tab_open_t()/ydb_ci_tab_switch_t() in the SimpleThreadAPI ###\n"); fflush(stdout);
 
@@ -39,7 +50,19 @@ int main()
 	printf("# Open default call-in table using env var ydb_ci\n");
 
 	status = ydb_ci_t(YDB_NOTTP, NULL, "citabcreate", NUMTABLES);
-	YDB_ASSERT(YDB_OK == status);
+	if (YDB_OK == status)
+		printf("Got YDB_OK as expected\n");
+	else
+		printf("Line [%d]: Expected return [%d] but Actual return [%d]\n", __LINE__, YDB_OK, status);
+	fflush(stdout);
+
+	printf("\n# Do a ydb_cip_t(citabtest) call now; Will be used to test ydb_cip_t() later\n"); fflush(stdout);
+	status = ydb_cip_t(YDB_NOTTP, NULL, &citabtest_cid);
+	if (YDB_OK == status)
+		printf("Got YDB_OK as expected\n");
+	else
+		printf("Line [%d]: Expected return [%d] but Actual return [%d]\n", __LINE__, YDB_OK, status);
+	fflush(stdout);
 
 	printf("\n# ydb_ci_tab_open_t() : Test of YDB_ERR_PARAMINVALID error for NULL fname\n");
 	status = ydb_ci_tab_open_t(YDB_NOTTP, NULL, NULL, &ret_handle[0]);
@@ -143,6 +166,16 @@ int main()
 		printf("\n# Test that ydb_ci_t() call uses call-in table from %s\n", citabstr);
 		fflush(stdout);
 		status = ydb_ci_t(YDB_NOTTP, NULL, "crtnname");
+		if (YDB_OK == status)
+			printf("Got YDB_OK as expected\n");
+		else
+			printf("Line [%d]: Expected return [%d] but Actual return [%d]\n", __LINE__, YDB_OK, status);
+		fflush(stdout);
+
+		printf("\n# Test that ydb_cip_t() call with non-zero handle/descriptor is unaffected by ydb_ci_tab_switch()\n");
+		printf("# That is, ydb_cip_t() still uses the original call-in table and not the currently active call-in table\n");
+		fflush(stdout);
+		status = ydb_cip_t(YDB_NOTTP, NULL, &citabtest_cid);
 		if (YDB_OK == status)
 			printf("Got YDB_OK as expected\n");
 		else

@@ -191,6 +191,11 @@ Got YDB_OK as expected
 # Create call-in table files citable1.tab thru citable3.tab
 # Create M routines citable1.m thru citable3.m
 # Open default call-in table using env var ydb_ci
+Got YDB_OK as expected
+
+# Do a ydb_cip_t(citabtest) call now; Will be used to test ydb_cip_t() later
+In citabtest^utilfuncs (using call-in table [callin.tab])
+Got YDB_OK as expected
 
 # ydb_ci_tab_open_t() : Test of YDB_ERR_PARAMINVALID error for NULL fname
 Got YDB_ERR_PARAMINVALID error as expected : ydb_zstatus() returned : 151027770,(SimpleThreadAPI),%YDB-E-PARAMINVALID, NULL fname parameter specified in ydb_ci_tab_open_t() call
@@ -220,42 +225,57 @@ Got YDB_ERR_CITABOPN error as expected : ydb_zstatus() returned : 150379602,(Sim
 Got YDB_OK as expected
 
 # Test that ydb_ci_t() call uses call-in table from citable1.tab
-Inside M program citable1.m
+Inside M program citable1.m (using call-in table [citable1.tab])
 Got YDB_OK as expected
 
 # ydb_ci_tab_switch_t() : Test switch to valid call-in table file citable2.tab returns YDB_OK
 Got YDB_OK as expected
 
 # Test that ydb_ci_t() call uses call-in table from citable2.tab
-Inside M program citable2.m
+Inside M program citable2.m (using call-in table [citable2.tab])
 Got YDB_OK as expected
 
 # ydb_ci_tab_switch_t() : Test switch to valid call-in table file citable3.tab returns YDB_OK
 Got YDB_OK as expected
 
 # Test that ydb_ci_t() call uses call-in table from citable3.tab
-Inside M program citable3.m
+Inside M program citable3.m (using call-in table [citable3.tab])
 Got YDB_OK as expected
 
 # ydb_ci_tab_switch_t() : Test switch to valid call-in table file citable3.tab returns YDB_OK
 Got YDB_OK as expected
 
 # Test that ydb_ci_t() call uses call-in table from citable3.tab
-Inside M program citable3.m
+Inside M program citable3.m (using call-in table [citable3.tab])
+Got YDB_OK as expected
+
+# Test that ydb_cip_t() call with non-zero handle/descriptor is unaffected by ydb_ci_tab_switch()
+# That is, ydb_cip_t() still uses the original call-in table and not the currently active call-in table
+In citabtest^utilfuncs (using call-in table [callin.tab])
 Got YDB_OK as expected
 
 # ydb_ci_tab_switch_t() : Test switch to valid call-in table file citable2.tab returns YDB_OK
 Got YDB_OK as expected
 
 # Test that ydb_ci_t() call uses call-in table from citable2.tab
-Inside M program citable2.m
+Inside M program citable2.m (using call-in table [citable2.tab])
+Got YDB_OK as expected
+
+# Test that ydb_cip_t() call with non-zero handle/descriptor is unaffected by ydb_ci_tab_switch()
+# That is, ydb_cip_t() still uses the original call-in table and not the currently active call-in table
+In citabtest^utilfuncs (using call-in table [callin.tab])
 Got YDB_OK as expected
 
 # ydb_ci_tab_switch_t() : Test switch to valid call-in table file citable1.tab returns YDB_OK
 Got YDB_OK as expected
 
 # Test that ydb_ci_t() call uses call-in table from citable1.tab
-Inside M program citable1.m
+Inside M program citable1.m (using call-in table [citable1.tab])
+Got YDB_OK as expected
+
+# Test that ydb_cip_t() call with non-zero handle/descriptor is unaffected by ydb_ci_tab_switch()
+# That is, ydb_cip_t() still uses the original call-in table and not the currently active call-in table
+In citabtest^utilfuncs (using call-in table [callin.tab])
 Got YDB_OK as expected
 
 # ydb_ci_tab_switch_t() : Test that passing NULL as new_handle returns YDB_OK even if default call-in:table file [callin.tab] has already been opened
@@ -265,7 +285,7 @@ Got YDB_OK as expected
 Got 0 return from rename(callin.tab, tmpcallin.tab) as expected
 
 # Test that already open default call-in table is still accessible for ydb_ci_t() calls
-In citabtest^utilfuncs
+In citabtest^utilfuncs (using call-in table [callin.tab])
 Got YDB_OK as expected
 
 # Test that ydb_ci_t() calls that rely on non-default call-in table fail when used with default call-in table
