@@ -202,7 +202,7 @@ Got YDB_OK as expected
 Got YDB_OK as expected
 
 # ydb_ci_tab_open() : Test that non-existent call-in table file citable4.tab returns YDB_ERR_CITABOPN
-Got YDB_ERR_CITABOPN error as expected : ydb_zstatus() returned : 150379602,(SimpleAPI),%YDB-E-CITABOPN, Unable to open call-in table: citable4.tab,%YDB-E-SYSCALL, Error received from system call fopen -- called from module /Distrib/YottaDB/V998/sr_unix/exttab_parse.c at line 775
+##TEST_AWKGot YDB_ERR_CITABOPN error as expected : ydb_zstatus\(\) returned : 150379602,\(SimpleAPI\),%YDB-E-CITABOPN, Unable to open call-in table: citable4.tab,%YDB-E-SYSCALL, Error received from system call fopen -- called from module .*/exttab_parse.c at line [0-9]*
 
 # ydb_ci_tab_switch() : Test switch to valid call-in table file citable1.tab returns YDB_OK
 Got YDB_OK as expected
