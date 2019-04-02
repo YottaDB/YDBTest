@@ -55,6 +55,10 @@ ydb_timer_start_t() successfully cancelled
  --> Invoke ydb_tp_st()                  after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
  --> Invoke ydb_zwr2str_st()             after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
  --> Invoke ydb_child_init()             after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_ci_t()                   after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_cip_t()                  after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_ci_tab_open_t()          after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_ci_tab_switch_t()        after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
  --> Invoke ydb_exit()                   after ydb_exit() : Return value is YDB_OK as expected
  --> Invoke ydb_file_id_free_t()         after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
  --> Invoke ydb_file_is_identical_t()    after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
@@ -88,6 +92,10 @@ ydb_timer_start_t() successfully cancelled
  --> Invoke ydb_tp_st()                  in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
  --> Invoke ydb_zwr2str_st()             in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
  --> Invoke ydb_child_init()             in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_ci_t()                   in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_cip_t()                  in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_ci_tab_open_t()          in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_ci_tab_switch_t()        in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
  --> Invoke ydb_exit()                   in the child process after fork() : Return value is YDB_OK as expected
  --> Invoke ydb_file_id_free_t()         in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
  --> Invoke ydb_file_is_identical_t()    in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
@@ -121,6 +129,10 @@ Expected Output:
  --> Invoke ydb_tp_st()                  after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
  --> Invoke ydb_zwr2str_st()             after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
  --> Invoke ydb_child_init()             after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_ci_t()                   after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_cip_t()                  after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_ci_tab_open_t()          after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_ci_tab_switch_t()        after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
  --> Invoke ydb_exit()                   after ydb_exit() : Return value is YDB_OK as expected
  --> Invoke ydb_file_id_free_t()         after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
  --> Invoke ydb_file_is_identical_t()    after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
@@ -155,6 +167,10 @@ Expected Output:
  --> Invoke ydb_tp_st()                  in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
  --> Invoke ydb_zwr2str_st()             in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
  --> Invoke ydb_child_init()             in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_ci_t()                   in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_cip_t()                  in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_ci_tab_open_t()          in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_ci_tab_switch_t()        in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
  --> Invoke ydb_exit()                   in the child process after fork() : Return value is YDB_OK as expected
  --> Invoke ydb_file_id_free_t()         in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
  --> Invoke ydb_file_is_identical_t()    in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected

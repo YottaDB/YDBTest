@@ -36,7 +36,7 @@ foreach file (utilfuncs*.c)
 
 
 	if ($file == "utilfuncs3_MT_CALLINAFTERXIT.c") then
-		sed -n '41,67p' $gtm_tst/$tst/outref/utilfuncs.txt > CALLINAFTERXIT.txt
+		sed -n '41,71p' $gtm_tst/$tst/outref/utilfuncs.txt > CALLINAFTERXIT.txt
 		echo "Expected Output:"
 		cat CALLINAFTERXIT.txt
 		@ i = 0
@@ -56,7 +56,7 @@ foreach file (utilfuncs*.c)
 	endif
 
 	if ($file == "utilfuncs3_MT_STAPIFORKEXEC.c") then
-		sed -n '74,99p' $gtm_tst/$tst/outref/utilfuncs.txt > STAPIFORKEXEC.txt
+		sed -n '78,107p' $gtm_tst/$tst/outref/utilfuncs.txt > STAPIFORKEXEC.txt
 		echo "Expected Output:"
 		cat STAPIFORKEXEC.txt
 		@ i = 0

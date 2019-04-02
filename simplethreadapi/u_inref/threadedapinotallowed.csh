@@ -36,7 +36,7 @@ foreach file (threadedapinotallowed*.c)
 
 
 	if ($file == "threadedapinotallowed2_MT.c") then
-		sed -n '8,33p' $gtm_tst/$tst/outref/errors.txt > THREADEDAPINOTALLOWED.txt
+		sed -n '8,35p' $gtm_tst/$tst/outref/errors.txt > THREADEDAPINOTALLOWED.txt
 		echo "Expected Output:"
 		cat THREADEDAPINOTALLOWED.txt
 		@ i = 0

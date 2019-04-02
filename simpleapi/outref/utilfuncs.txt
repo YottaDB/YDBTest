@@ -103,6 +103,10 @@ ydb_timer_start() successfully cancelled
  --> Invoke ydb_tp_s()                   after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
  --> Invoke ydb_zwr2str_s()              after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
  --> Invoke ydb_child_init()             after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_ci()                     after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_cip()                    after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_ci_tab_open()            after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_ci_tab_switch()          after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
  --> Invoke ydb_exit()                   after ydb_exit() : Return value is YDB_OK as expected
  --> Invoke ydb_file_id_free()           after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
  --> Invoke ydb_file_is_identical()      after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
@@ -142,6 +146,10 @@ ydb_timer_start() successfully cancelled
  --> Invoke ydb_tp_s()                   in the child process after fork() : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
  --> Invoke ydb_zwr2str_s()              in the child process after fork() : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
  --> Invoke ydb_child_init()             in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+ --> Invoke ydb_ci()                     in the child process after fork() : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
+ --> Invoke ydb_cip()                    in the child process after fork() : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
+ --> Invoke ydb_ci_tab_open()            in the child process after fork() : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
+ --> Invoke ydb_ci_tab_switch()          in the child process after fork() : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
  --> Invoke ydb_file_id_free()           in the child process after fork() : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
  --> Invoke ydb_file_is_identical()      in the child process after fork() : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
  --> Invoke ydb_file_name_to_id()        in the child process after fork() : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
