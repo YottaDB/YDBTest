@@ -15,16 +15,26 @@ echo "# Test of Utility Functions in the SimpleThreadAPI"
 #
 echo "# Now run utilfuncs*.c (all tests driven by a C routine)"
 cp $gtm_tst/$tst/inref/utilfuncs*.c .
+cp $gtm_tst/simpleapi/inref/utilfuncs.m .	# needed by utilfuncs4_ydb_ci_tab_open_and_ydb_ci_tab_switch.c
 $gtm_tst/com/dbcreate.csh mumps >& create.txt
 if ($status) then
 	echo "# DB Create failed: "
 	cat create.txt
 endif
 
+cat >> callin.tab << CALLIN_EOF
+citabcreate:	void	citabcreate^utilfuncs(I:ydb_int_t)
+citabtest:	void	citabtest^utilfuncs()
+CALLIN_EOF
+
 foreach file (utilfuncs*.c)
 	echo ""
 	echo " --> Running $file <---"
 	set exefile = $file:r
+
+	if (($file == "utilfuncs4_ydb_ci_tab_open_and_ydb_ci_tab_switch.c")) then
+		setenv GTMCI callin.tab
+	endif
 
 	$gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $file
 	$gt_ld_linker $gt_ld_option_output $exefile $gt_ld_options_common $exefile.o $gt_ld_sysrtns $ci_ldpath$gtm_dist -L$gtm_dist $tst_ld_yottadb $gt_ld_syslibs >& $exefile.map
@@ -34,6 +44,7 @@ foreach file (utilfuncs*.c)
 	endif
 	`pwd`/$exefile
 
+	unsetenv GTMCI
 
 	if ($file == "utilfuncs3_MT_CALLINAFTERXIT.c") then
 		sed -n '41,71p' $gtm_tst/$tst/outref/utilfuncs.txt > CALLINAFTERXIT.txt
