@@ -29,10 +29,10 @@ citabcreate(numtables);
 	. set file="citable"_i_".m"
 	. open file:newversion
 	. use file
-	. write " write ""Inside M program citable"_i_".m"",!",!
+	. write " write ""Inside M program citable"_i_".m (using call-in table [citable"_i_".tab])"",!",!
 	. close file
 	quit
 
 citabtest	;
-	write "In citabtest^utilfuncs",!
+	write "In citabtest^utilfuncs (using call-in table [callin.tab])",!
 	quit
