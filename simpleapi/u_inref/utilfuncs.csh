@@ -21,17 +21,19 @@ if ($status) then
 	cat create.txt
 endif
 
+cat >> callin.tab << CALLIN_EOF
+maxstr:		void	mmaxstr^utilfuncs(I:ydb_char_t*)
+citabcreate:	void	citabcreate^utilfuncs(I:ydb_int_t)
+citabtest:	void	citabtest^utilfuncs()
+CALLIN_EOF
+
 foreach file (utilfuncs*.c)
 	echo ""
 	echo " --> Running $file <---"
 	set exefile = $file:r
 
-	if ($file == "utilfuncs1_malloc-free.c") then
+	if (($file == "utilfuncs1_malloc-free.c") || ($file == "utilfuncs3_ydb_ci_tab_open_and_ydb_ci_tab_switch.c")) then
 		setenv GTMCI callin.tab
-		cat >> $GTMCI << aa
-maxstr: void  mmaxstr^utilfuncsmmaxstr(I:ydb_char_t*)
-aa
-
 	endif
 
 	if ($file == "utilfuncs1_stdout-stderr.c") then

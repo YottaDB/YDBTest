@@ -164,3 +164,95 @@ ydb_timer_start() successfully cancelled
  --> Invoke ydb_timer_cancel()           in the child process after fork() : There is no return value since function is void
  --> Invoke ydb_timer_start()            in the child process after fork() : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
 # Child Process has finished
+
+ --> Running utilfuncs3_ydb_ci_tab_open_and_ydb_ci_tab_switch.c <---
+### Test Functionality of ydb_ci_tab_open()/ydb_ci_tab_switch() in the SimpleAPI ###
+
+# ydb_ci_tab_switch() : Test that passing NULL as new_handle returns YDB_OK if default call-in table file [callin.tab] is not yet open
+Got YDB_OK as expected
+
+# Create call-in table files citable1.tab thru citable3.tab
+# Create M routines citable1.m thru citable3.m
+# Open default call-in table using env var ydb_ci
+
+# ydb_ci_tab_open() : Test of YDB_ERR_PARAMINVALID error for NULL fname
+Got YDB_ERR_PARAMINVALID error as expected : ydb_zstatus() returned : 151027770,(SimpleAPI),%YDB-E-PARAMINVALID, NULL fname parameter specified in ydb_ci_tab_open() call
+
+# ydb_ci_tab_open() : Test of YDB_ERR_PARAMINVALID error for NULL ret_handle
+Got YDB_ERR_PARAMINVALID error as expected : ydb_zstatus() returned : 151027770,(SimpleAPI),%YDB-E-PARAMINVALID, NULL ret_handle parameter specified in ydb_ci_tab_open() call
+
+# ydb_ci_tab_switch() : Test of YDB_ERR_PARAMINVALID error for NULL ret_old_handle
+Got YDB_ERR_PARAMINVALID error as expected : ydb_zstatus() returned : 151027770,(SimpleAPI),%YDB-E-PARAMINVALID, NULL ret_old_handle parameter specified in ydb_ci_tab_switch() call
+
+# ydb_ci_tab_switch() : Test of YDB_ERR_PARAMINVALID error for Invalid new_handle
+Got YDB_ERR_PARAMINVALID error as expected : ydb_zstatus() returned : 151027770,(SimpleAPI),%YDB-E-PARAMINVALID, Invalid new_handle parameter specified in ydb_ci_tab_switch() call
+
+# ydb_ci_tab_open() : Test that valid call-in table file citable1.tab returns YDB_OK
+Got YDB_OK as expected
+
+# ydb_ci_tab_open() : Test that valid call-in table file citable2.tab returns YDB_OK
+Got YDB_OK as expected
+
+# ydb_ci_tab_open() : Test that valid call-in table file citable3.tab returns YDB_OK
+Got YDB_OK as expected
+
+# ydb_ci_tab_open() : Test that non-existent call-in table file citable4.tab returns YDB_ERR_CITABOPN
+Got YDB_ERR_CITABOPN error as expected : ydb_zstatus() returned : 150379602,(SimpleAPI),%YDB-E-CITABOPN, Unable to open call-in table: citable4.tab,%YDB-E-SYSCALL, Error received from system call fopen -- called from module /Distrib/YottaDB/V998/sr_unix/exttab_parse.c at line 775
+
+# ydb_ci_tab_switch() : Test switch to valid call-in table file citable1.tab returns YDB_OK
+Got YDB_OK as expected
+
+# Test that ydb_ci() call uses call-in table from citable1.tab
+Inside M program citable1.m
+Got YDB_OK as expected
+
+# ydb_ci_tab_switch() : Test switch to valid call-in table file citable2.tab returns YDB_OK
+Got YDB_OK as expected
+
+# Test that ydb_ci() call uses call-in table from citable2.tab
+Inside M program citable2.m
+Got YDB_OK as expected
+
+# ydb_ci_tab_switch() : Test switch to valid call-in table file citable3.tab returns YDB_OK
+Got YDB_OK as expected
+
+# Test that ydb_ci() call uses call-in table from citable3.tab
+Inside M program citable3.m
+Got YDB_OK as expected
+
+# ydb_ci_tab_switch() : Test switch to valid call-in table file citable3.tab returns YDB_OK
+Got YDB_OK as expected
+
+# Test that ydb_ci() call uses call-in table from citable3.tab
+Inside M program citable3.m
+Got YDB_OK as expected
+
+# ydb_ci_tab_switch() : Test switch to valid call-in table file citable2.tab returns YDB_OK
+Got YDB_OK as expected
+
+# Test that ydb_ci() call uses call-in table from citable2.tab
+Inside M program citable2.m
+Got YDB_OK as expected
+
+# ydb_ci_tab_switch() : Test switch to valid call-in table file citable1.tab returns YDB_OK
+Got YDB_OK as expected
+
+# Test that ydb_ci() call uses call-in table from citable1.tab
+Inside M program citable1.m
+Got YDB_OK as expected
+
+# ydb_ci_tab_switch() : Test that passing NULL as new_handle returns YDB_OK even if default call-in:table file [callin.tab] has already been opened
+Got YDB_OK as expected
+
+# Temporarily rename default call-in table file [callin.tab] as [tmpcallin.tab]
+Got 0 return from rename(callin.tab, tmpcallin.tab) as expected
+
+# Test that already open default call-in table is still accessible for ydb_ci() calls
+In citabtest^utilfuncs
+Got YDB_OK as expected
+
+# Test that ydb_ci() calls that rely on non-default call-in table fail when used with default call-in table
+Got -YDB_ERR_CINOENTRY error as expected : ydb_zstatus() returned : 150379666,(Call-In),%YDB-E-CINOENTRY, No entry specified for crtnname in the call-in table
+
+# Rename default call-in table file back from [tmpcallin.tab] to [callin.tab]
+Got 0 return from rename(tmpcallin.tab, callin.tab) as expected
