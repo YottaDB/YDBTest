@@ -1,6 +1,6 @@
 # Test that using a non-existent local variable with ydb_subscript_next_s()/ydb_subscript_previous_s() returns an empty string
 
----> Running ydb394.c <---
+---> Running ydb394a.c <---
 
 # Test that ydb_subscript_next_s() with nonexistent local variable with 1 subscript returns an empty string
 ydb_subscript_next_s() returned YDB_ERR_NODEEND as expected
@@ -17,4 +17,22 @@ ydb_subscript_next_s() left ret_value->len_used untouched as expected
 # Test that ydb_subscript_previous_s() with nonexistent local variable with 0 subscripts returns an empty string
 ydb_subscript_previous_s() returned YDB_ERR_NODEEND as expected
 ydb_subscript_previous_s() left ret_value->len_used untouched as expected
+
+---> Running ydb394b.c <---
+
+# Test that ydb_subscript_next_st() with nonexistent local variable with 1 subscript returns an empty string
+ydb_subscript_next_st() returned YDB_ERR_NODEEND as expected
+ydb_subscript_next_st() left ret_value->len_used untouched as expected
+
+# Test that ydb_subscript_previous_st() with nonexistent local variable with 1 subscript returns an empty string
+ydb_subscript_previous_st() returned YDB_ERR_NODEEND as expected
+ydb_subscript_previous_st() left ret_value->len_used untouched as expected
+
+# Test that ydb_subscript_next_st() with nonexistent local variable with 0 subscript returns an empty string
+ydb_subscript_next_st() returned YDB_ERR_NODEEND as expected
+ydb_subscript_next_st() left ret_value->len_used untouched as expected
+
+# Test that ydb_subscript_previous_st() with nonexistent local variable with 0 subscript returns an empty string
+ydb_subscript_previous_st() returned YDB_ERR_NODEEND as expected
+ydb_subscript_previous_st() left ret_value->len_used untouched as expected
 

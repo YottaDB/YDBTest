@@ -14,16 +14,18 @@
 echo "# Test that using a non-existent local variable with ydb_subscript_next_s()/ydb_subscript_previous_s() returns an empty string"
 echo ""
 
-set file = "ydb394.c"
-cp $gtm_tst/$tst/inref/$file .
-echo "---> Running $file <---"
-set exefile = $file:r
-$gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $file
-$gt_ld_linker $gt_ld_option_output $exefile $gt_ld_options_common $exefile.o $gt_ld_sysrtns $ci_ldpath$gtm_dist -L$gtm_dist $tst_ld_yottadb $gt_ld_syslibs >& $exefile.map
-if (0 != $status) then
-        echo "YDB394-E-LINKFAIL : Linking $exefile failed. See $exefile.map for details"
-        continue
-endif
-rm $exefile.o
-`pwd`/$exefile
-echo ""
+cp $gtm_tst/$tst/inref/ydb394*.c .
+
+foreach file ( ydb394*.c )
+	echo "---> Running $file <---"
+	set exefile = $file:r
+	$gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $file
+	$gt_ld_linker $gt_ld_option_output $exefile $gt_ld_options_common $exefile.o $gt_ld_sysrtns $ci_ldpath$gtm_dist -L$gtm_dist $tst_ld_yottadb $gt_ld_syslibs >& $exefile.map
+	if (0 != $status) then
+   	     echo "YDB394-E-LINKFAIL : Linking $exefile failed. See $exefile.map for details"
+   	     continue
+	endif
+	rm $exefile.o
+	`pwd`/$exefile
+	echo ""
+end

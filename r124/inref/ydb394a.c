@@ -65,4 +65,5 @@ int main(void)
 	status = ydb_subscript_previous_s(&basevar, 0, NULL, &ret_value);
 	check_ret_value("ydb_subscript_previous_s", status, &ret_value);
 	return YDB_OK;
+
 }
