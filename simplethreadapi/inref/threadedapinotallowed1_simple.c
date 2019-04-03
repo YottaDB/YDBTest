@@ -101,7 +101,7 @@ int main()
 	status = ydb_ci_t(YDB_NOTTP, NULL, "CALL-IN"); CHECK_STATUS("ydb_ci_t()", status);
 	status = ydb_cip_t(YDB_NOTTP, NULL, &callin); CHECK_STATUS("ydb_cip_t()", status);
 	status = ydb_ci_tab_open_t(YDB_NOTTP, NULL, "", NULL); CHECK_STATUS("ydb_ci_tab_open_t()", status);
-	status = ydb_ci_tab_switch_t(YDB_NOTTP, NULL, (uint64_t)NULL, NULL); CHECK_STATUS("ydb_ci_tab_switch_t()", status);
+	status = ydb_ci_tab_switch_t(YDB_NOTTP, NULL, (uintptr_t)NULL, NULL); CHECK_STATUS("ydb_ci_tab_switch_t()", status);
 	status = ydb_file_id_free_t(YDB_NOTTP, NULL, NULL); CHECK_STATUS("ydb_file_id_free_t()", status);
 	status = ydb_file_is_identical_t(YDB_NOTTP, NULL, &fileid1, &fileid2); CHECK_STATUS("ydb_file_is_identical_t()", status);
 	status = ydb_file_name_to_id_t(YDB_NOTTP, NULL, &filename, &fileid1); CHECK_STATUS("ydb_file_name_to_id_t()", status);

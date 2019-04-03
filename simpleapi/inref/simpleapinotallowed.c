@@ -132,7 +132,7 @@ int main()
 	status = ydb_ci(""); CHECK_STATUS("ydb_ci()", status);
 	status = ydb_cip(NULL); CHECK_STATUS("ydb_cip()", status);
 	status = ydb_ci_tab_open("", NULL); CHECK_STATUS("ydb_ci_tab_open()", status);
-	status = ydb_ci_tab_switch((uint64_t)NULL, NULL); CHECK_STATUS("ydb_ci_tab_switch()", status);
+	status = ydb_ci_tab_switch((uintptr_t)NULL, NULL); CHECK_STATUS("ydb_ci_tab_switch()", status);
 	status = ydb_file_id_free(NULL); CHECK_STATUS("ydb_file_id_free()", status);
 	status = ydb_file_is_identical(&fileid1, &fileid2); CHECK_STATUS("ydb_file_is_identical()", status);
 	status = ydb_file_name_to_id(&filename, &fileid1); CHECK_STATUS("ydb_file_name_to_id()", status);
