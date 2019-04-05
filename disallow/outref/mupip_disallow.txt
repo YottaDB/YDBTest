@@ -694,7 +694,7 @@ YDB>
 ! -jnlpool's disallow takes over and that is why it expects either a CHANGE or SHOW in the command line and does not find any
 ! keep this comment till the software gets fixed
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -shutdown -jnlpool ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW NAME QDBRUNDOWN QDBRUNDOWN
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW NAME QDBRUNDOWN QDBRUNDOWN CLEANSLOTS
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -activate -deactivate ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -activate -checkhealth ------------
@@ -733,7 +733,7 @@ YDB>
 ! -jnlpool's disallow takes over and that is why it expects either a CHANGE or SHOW in the command line and does not find any
 ! keep this comment till the software gets fixed
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -deactivate -jnlpool ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW NAME QDBRUNDOWN QDBRUNDOWN
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW NAME QDBRUNDOWN QDBRUNDOWN CLEANSLOTS
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -checkhealth -statslog="dummylog" ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -checkhealth -showbacklog ------------
@@ -747,7 +747,7 @@ YDB>
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -checkhealth -needrestart ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -checkhealth -jnlpool ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW NAME QDBRUNDOWN QDBRUNDOWN
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW NAME QDBRUNDOWN QDBRUNDOWN CLEANSLOTS
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -statslog="dummylog" -showbacklog ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -statslog="dummylog" -changelog ------------
@@ -759,7 +759,7 @@ YDB>
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -statslog="dummylog" -needrestart ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -statslog="dummylog" -jnlpool ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW NAME QDBRUNDOWN QDBRUNDOWN
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW NAME QDBRUNDOWN QDBRUNDOWN CLEANSLOTS
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -showbacklog -changelog ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -showbacklog -stopsourcefilter ------------
@@ -783,13 +783,13 @@ YDB>
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -stopsourcefilter -needrestart ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -stopsourcefilter -jnlpool ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW NAME QDBRUNDOWN QDBRUNDOWN
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW NAME QDBRUNDOWN QDBRUNDOWN CLEANSLOTS
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -losttncomplete -needrestart ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN ACTIVATE DEACTIVATE CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPSOURCEFILTER LOSTTNCOMPLETE NEEDRESTART JNLPOOL FREEZE
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -losttncomplete -jnlpool ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW NAME QDBRUNDOWN QDBRUNDOWN
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW NAME QDBRUNDOWN QDBRUNDOWN CLEANSLOTS
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -needrestart -jnlpool ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW NAME QDBRUNDOWN QDBRUNDOWN
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW NAME QDBRUNDOWN QDBRUNDOWN CLEANSLOTS
 !
 !	DISALLOW (statslog AND log)
 !
@@ -1109,7 +1109,7 @@ YDB>
 !
 !	DISALLOW NOT(change OR show)
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -editinstance dummy ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW NAME QDBRUNDOWN QDBRUNDOWN
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW NAME QDBRUNDOWN QDBRUNDOWN CLEANSLOTS
 !	DISALLOW (change AND show)
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -editinstance -show -change -offset=0xFFFFFFFF -value=0xFFFFFFFF -size=0x00000001 ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CHANGE SHOW
