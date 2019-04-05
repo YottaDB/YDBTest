@@ -1,19 +1,19 @@
 # Running the command $ydb_dist/lke show -crit
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); SUBSCRIPT slot bytes in use: 0/5052
 %YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
 %YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
 
 # Running the command $ydb_dist/lke show -critical
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); SUBSCRIPT slot bytes in use: 0/5052
 %YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
 %YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
 
 # Running the command $ydb_dist/lke show -nocrit
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); SUBSCRIPT slot bytes in use: 0/5052
 %YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
 %YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
 
 # Running the command $ydb_dist/lke show -nocritical
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); SUBSCRIPT slot bytes in use: 0/5052
 %YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
 %YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages

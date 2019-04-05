@@ -8,36 +8,38 @@ mumps.dat
 Start M program that acquires M locks and holds onto it until process exit
 Wait for M program to hold the M lock
 Verify child process does hold lock
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); SUBSCRIPT slot bytes in use: 0/5052
 %YDB-I-NOLOCKMATCH, No matching locks were found in AREG
 %YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
 
 DEFAULT
 ##TEST_AWK\^holdontillexit Owned by PID\= [1-9][0-9]* which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|184); name space not full
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|184); SUBSCRIPT slot bytes in use: 24/5052
 %YDB-I-LOCKSPACEUSE, Estimated free lock space: 99% of 40 pages
 Do a DSE CRIT -SEIZE to hold crit
 Signal M program to die while holding M lock
 Verify child process was able to release lock
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); SUBSCRIPT slot bytes in use: 0/5052
 %YDB-I-NOLOCKMATCH, No matching locks were found in AREG
 %YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|184); name space not full
+%YDB-I-LOCKCRITOWNER, LOCK crit is held by: 0
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|184); SUBSCRIPT slot bytes in use: 24/5052
 %YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
 %YDB-I-LOCKSPACEUSE, Estimated free lock space: 99% of 40 pages
+%YDB-I-LOCKCRITOWNER, LOCK crit is held by: 0
 Test PASS : Process was able to release M lock and exit without needing crit
 Do DSE CRIT -RELEASE to release crit
 Show that lke accepts multiple inputs by writing "show locks" twice to the input
-##TEST_AWKLKE> %YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+##TEST_AWKLKE> %YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); SUBSCRIPT slot bytes in use: 0/5052
 %YDB-I-NOLOCKMATCH, No matching locks were found in AREG
 %YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); SUBSCRIPT slot bytes in use: 0/5052
 %YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
 %YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
-##TEST_AWKLKE> %YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+##TEST_AWKLKE> %YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); SUBSCRIPT slot bytes in use: 0/5052
 %YDB-I-NOLOCKMATCH, No matching locks were found in AREG
 %YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); SUBSCRIPT slot bytes in use: 0/5052
 %YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
 %YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
 LKE> 
