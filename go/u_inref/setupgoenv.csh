@@ -20,7 +20,7 @@ set go_repo="lang.yottadb.com/go/yottadb"
 mkdir go
 
 # Retrieve yottadb package from the repository using "go get".
-set cmdtorun = "go get -v -x -t $go_repo"
+set cmdtorun = "go get -d -v -x -t $go_repo"
 echo "# Running : $cmdtorun"
 # Occasionally we have seen "TLS handshake timeout" failures on slow boxes if the "go get" takes approximately
 # more than 15 seconds to finish (which can happen on the slow ARMV6L boxes). That timeout does not seem to be
