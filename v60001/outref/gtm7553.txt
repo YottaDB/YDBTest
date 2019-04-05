@@ -3,7 +3,9 @@ Using: ##SOURCE_PATH##/mumps -run GDE
 mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
-##TEST_AWK	\^a : \[shrblk\] [0-9a-z]* : \[shrsub\] [0-9a-z]*
+##TEST_AWK	\^a : \[shrblk\] 0x[0-9a-f]* : \[shrsub\] 0x[0-9a-f]* \(len=2\) : \[shrhash\] [0-9a-f]* : \[parent\] \(nil\) : \[children\] \(nil\) : \[pending\] \(nil\) : \[owner\] [0-9]* : \[auxowner\] 0
+##TEST_AWK110	: \[shrblk\] 0x[0-9a-f]* : \[hash\] [0-9a-f]* : \[usedmap\] 1
+	: [num_buckets] 181
 ##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|184); SUBSCRIPT slot bytes in use: 8/5052
 %YDB-I-LOCKSPACEUSE, Estimated free lock space: 99% of 40 pages
 ##SOURCE_PATH##/mupip
