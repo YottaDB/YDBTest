@@ -17,7 +17,7 @@ unicodefifo(encoding);
 	;there is a comprehensive unicodefifo test in basic
 	;If this routine is modified then a corresponding change to zunicodefifo.m may be required
 	set ^B=0
-	set $ZTRAP="do error^unicodefifo" do ^sstepgbl
+	set $ZTRAP="do error^unicodefifo" do:($ztrnlnm("acc_meth")'="MM")!($ztrnlnm("gtm_platform_size")'=32) ^sstepgbl
 	set verbose=1 set is16=encoding["UTF-16" set isM=encoding["M"
 	set mainlvl=$ZLEVEL
 	set file="unicodefifo"_encoding_".pipe"
@@ -104,7 +104,7 @@ error	;
 	zgoto mainlvl
 	quit
 unicodefifo2(file,encoding) ;
-	set $ZTRAP="do error2^unicodefifo" do ^sstepgbl
+	set $ZTRAP="do error2^unicodefifo" do:($ztrnlnm("acc_meth")'="MM")!($ztrnlnm("gtm_platform_size")'=32) ^sstepgbl
 	write "$J:",$J,!
 	write "file=",file,!
 	write "encoding=",encoding,!
@@ -118,7 +118,7 @@ unicodefifo2(file,encoding) ;
 	set ^B=2
 	quit
 unicodefifo3(file,encoding) ;
-	set $ZTRAP="do error2^unicodefifo" do ^sstepgbl
+	set $ZTRAP="do error2^unicodefifo" do:($ztrnlnm("acc_meth")'="MM")!($ztrnlnm("gtm_platform_size")'=32) ^sstepgbl
 	for i=1:1:900 quit:^A  hang 1
 	if 0=^A write "Writer process is missing",! quit
 	; make sure writer happens first so file is deleted on writer open error
