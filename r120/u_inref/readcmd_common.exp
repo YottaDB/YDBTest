@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -20,7 +20,8 @@ set keypad_xmit "\[?1h="
 set uparrow "OA"
 set downarrow "OB"
 
-set timeout 15
+# We have seen occasional timeout failures on slow boxes with a 15 second timeout, hence a higher timeout of 60
+set timeout 60
 
 spawn /usr/local/bin/tcsh -f
 

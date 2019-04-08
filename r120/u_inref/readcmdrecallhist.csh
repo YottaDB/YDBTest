@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -64,6 +64,13 @@ foreach file (readcmd1_simple.exp readcmd2_complex.exp)
 GTM_EOF
 
 		endif
+	endif
+	if ($file == "readcmd2_complex.exp") then
+		# The backgrounded MUPIP INTRPT process in "readcmd2_complex.exp" needs to be terminated.
+		# Or else it would keep sending SIGUSR1 to random processes in future tests (that take on the same pid
+		# as ^parent) and cause all sorts of failures (e.g. processes terminate suddenly with a "User signal 1" symptom).
+		# Therefore stop it.
+		$ydb_dist/mumps -run ^%XCMD 'do stop^readcmdrecallhist'
 	endif
 end
 

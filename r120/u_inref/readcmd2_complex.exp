@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -128,10 +128,6 @@ for {set j 0} {$j < $ncursorupordowncnt} {incr j 1} {
 	set readhistindex $curreadhistindex
 	incr i 1
 }
-
-puts "# Wait for the backgrounded MUPIP INTRPT process to terminate"
-send -- "do stop^readcmdrecallhist\r"
-expect -exact "YDB>"
 
 puts "\n# Halt"
 send -- "halt\r"
