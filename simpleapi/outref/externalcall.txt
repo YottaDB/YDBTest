@@ -1,0 +1,73 @@
+# test of all SimpleAPI and Utility functions on a nestedcall (c -> m -> c)
+# each function is ran, checked that it worked properly then prints either a pass or fail
+##TEST_PATH##/externalcall.tab
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+ydb_set_s(): PASS
+ydb_data_s(): PASS
+ydb_get_s(): PASS
+ydb_incr_s(): PASS
+ydb_node_next_s(): PASS
+ydb_node_previous_s(): PASS
+ydb_str2zwr_s(): PASS
+ydb_zwr2srt_s(): PASS
+ydb_subscript_next_s(): PASS
+ydb_subscript_previous_s(): PASS
+ydb_delete_s(): PASS
+ydb_delete_excl_s(): PASS
+ydb_tp_s(): PASS
+ydb_lock_s(): 
+
+List of locks...
+DEFAULT
+##TEST_AWK\^a Owned by PID= [1-9][0-9]* which is an existing process
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|184); name space not full
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 99% of 40 pages
+Release of locks...
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+PASS
+
+ydb_lock_incr_s(): 
+List of locks...
+DEFAULT
+##TEST_AWK\^a Owned by PID= [1-9][0-9]* which is an existing process
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|184); name space not full
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 99% of 40 pages
+PASS
+
+ydb_lock_decr_s(): 
+List of locks...
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); name space not full
+%YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+PASS
+
+ydb_file_name_to_id(): PASS
+ydb_file_is_identical(): PASS
+ydb_file_id_free(): PASS
+##SUSPEND_OUTPUT DBG
+Pro build, calling ydb_fork_n_core() 
+##ALLOW_OUTPUT DBG
+Debug build, skipping ydb_fork_n_core()
+##ALLOW_OUTPUT DBG PRO
+ydb_hiber_start(): PASS
+ydb_hiber_start_wait_any(): PASS
+ydb_malloc(): PASS
+ydb_free(): PASS
+ydb_message(): PASS
+ydb_thread_is_main(): PASS
+ydb_timer_start() (timer should trigger): timer triggered
+ydb_timer_cancel() (timer should not trigger): 
+ydb_exit(): PASS
+ydb_ci(): PASS
+ydb_cip(): PASS
+ydb_ci_tab_open(): PASS
+ydb_ci_tab_swtich(): PASS
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
