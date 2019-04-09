@@ -4,7 +4,7 @@
 # Copyright (c) 2005-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -224,8 +224,8 @@ if (! $?gtm_test_unicode_support) then
 	setenv gtm_test_unicode_support "FALSE"
 	set chkhost=`uname -s`
 	if ("CYGWIN*" !~ $chkhost) then
-		if ( -e $gtm_tools/check_unicode_support.csh ) then
-			if ( "TRUE" == `$gtm_tools/check_unicode_support.csh` ) setenv gtm_test_unicode_support "TRUE"
+		if ( -e $gtm_tools/check_utf8_support.csh ) then
+			if ( "TRUE" == `$gtm_tools/check_utf8_support.csh` ) setenv gtm_test_unicode_support "TRUE"
 		endif
 	endif
 endif

@@ -3,7 +3,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -457,7 +457,7 @@ set hostn = $HOST:r:r:r
 if ($?test_replic) then
 	if ("MULTISITE" == $test_replic) then
 		# make sure tool exists on remote host first
-		setenv h1_check `$rsh $tst_other_servers_list_ms[1] file $gtm_exe $gtm_tools/check_unicode_support.csh |& $grep -E 'cannot open|Connection'`
+		setenv h1_check `$rsh $tst_other_servers_list_ms[1] file $gtm_exe $gtm_tools/check_utf8_support.csh |& $grep -E 'cannot open|Connection'`
 		if ( "" != "$h1_check" ) then
 			# output the actual error found first
 			echo $h1_check >>! $tst_general_dir/diff.log
@@ -469,10 +469,10 @@ if ($?test_replic) then
 			endif
 			exit 2
 		endif
-		set cmd1=`$rsh $tst_other_servers_list_ms[1] "$gtm_tools/check_unicode_support.csh"`
+		set cmd1=`$rsh $tst_other_servers_list_ms[1] "$gtm_tools/check_utf8_support.csh"`
 		setenv h1_utf8 "$cmd1"
 		# make sure tool exists on remote host first
-		setenv h2_check `$rsh $tst_other_servers_list_ms[2] file $gtm_exe $gtm_tools/check_unicode_support.csh |& $grep -E 'cannot open|Connection'`
+		setenv h2_check `$rsh $tst_other_servers_list_ms[2] file $gtm_exe $gtm_tools/check_utf8_support.csh |& $grep -E 'cannot open|Connection'`
 		if ( "" != "$h2_check" ) then
 			# output the actual error found first
 			echo $h2_check >>! $tst_general_dir/diff.log
@@ -484,13 +484,13 @@ if ($?test_replic) then
 			endif
 			exit 2
 		endif
-		set cmd2=`$rsh $tst_other_servers_list_ms[2] "$gtm_tools/check_unicode_support.csh"`
+		set cmd2=`$rsh $tst_other_servers_list_ms[2] "$gtm_tools/check_utf8_support.csh"`
 		setenv h2_utf8 "$cmd2"
 
 		if ( "FALSE" == "$h1_utf8" || "FALSE" == "$h2_utf8" ) setenv tst_remote_nonunicode
 	else
 		if ($tst_org_host != $tst_remote_host) then
-			set cmd3=`$rsh $tst_remote_host "$gtm_tools/check_unicode_support.csh"`
+			set cmd3=`$rsh $tst_remote_host "$gtm_tools/check_utf8_support.csh"`
 			if ("FALSE" == "$cmd3") setenv tst_remote_nonunicode
 		endif
 	endif
