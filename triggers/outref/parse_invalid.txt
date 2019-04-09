@@ -278,21 +278,21 @@ PASS invalid_option
 =======================
 Control Characters in error lines
 File control_chars.trg, Line 1: No matching triggers found for deletion
-File control_chars.trg, Line 2: Error : missing +/- at start of line: Long line without +/- . and few control chars
-File control_chars.trg, Line 3: Error : missing +/- at start of line: Long line without +/- .........
-File control_chars.trg, Line 4: Error : missing +/- at start of line: ..................... !"#$%&'()*+,-./012 and few control chars
-File control_chars.trg, Line 5: Error : missing +/- at start of line: Long line without +/- 3456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcd and ...
+File control_chars.trg, Line 2: Error : missing +/- at start of line: "Long line without +/- "_$C(0)_" and few control chars"
+File control_chars.trg, Line 3: Error : missing +/- at start of line: "Long line without +/- "_$C(1,2,3,4,5,6,7,8,9)
+File control_chars.trg, Line 4: Error : missing +/- at start of line: $C(11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31)_" !""#$%&'()*+,-./012 and few control chars"
+File control_chars.trg, Line 5: Error : missing +/- at start of line: "Long line without +/- 3456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcd and few control chars"
 ##SUSPEND_OUTPUT UNICODE_MODE
-File control_chars.trg, Line 6: Error : missing +/- at start of line: Long line without +/- efghijklmnopqrstuvwxyz{|}~........................ and ...
-File control_chars.trg, Line 7: Error : missing +/- at start of line: Long line without +/- ......... ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈ and ...
-File control_chars.trg, Line 8: Error : missing +/- at start of line: Long line without +/- ÉÊËÌÍÎÏĞÑÒÓÔÕÖ×ØÙÚÛÜİŞßàáâãäåæçèéêëìíîïğñòóôõö÷øùú and ...
-File control_chars.trg, Line 9: Error : missing +/- at start of line: Long line without +/- ûüış.
+File control_chars.trg, Line 6: Error : missing +/- at start of line: "Long line without +/- efghijklmnopqrstuvwxyz{|}~"_$C(127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150)_" and few control chars"
+File control_chars.trg, Line 7: Error : missing +/- at start of line: "Long line without +/- "_$C(151,152,153,154,155,156,157,158,159)_" ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈ and few control chars"
+File control_chars.trg, Line 8: Error : missing +/- at start of line: "Long line without +/- ÉÊËÌÍÎÏĞÑÒÓÔÕÖ×ØÙÚÛÜİŞßàáâãäåæçèéêëìíîïğñòóôõö÷øùú and few control chars"
+File control_chars.trg, Line 9: Error : missing +/- at start of line: "Long line without +/- ûüış"_$C(255)
 ##ALLOW_OUTPUT UNICODE_MODE
 ##SUSPEND_OUTPUT NONUNICODE_MODE
-File control_chars.trg, Line 6: Error : missing +/- at start of line: Long line without +/- efghijklmnopqrstuvwxyz{|}~................................
-File control_chars.trg, Line 7: Error : missing +/- at start of line: Long line without +/- ..................Â Â¡Â¢Â£Â¤Â¥Â¦Â§Â¨Â©ÂªÂ«Â¬..Â®Â¯Â°Â±...
-File control_chars.trg, Line 8: Error : missing +/- at start of line: Long line without +/- Ã‰ÃŠÃ‹ÃŒÃÃÃÃÃ‘Ã’Ã“Ã”Ã•Ã–Ã—Ã˜Ã™ÃšÃ›ÃœÃÃÃŸÃ Ã¡Ã¢Ã£...
-File control_chars.trg, Line 9: Error : missing +/- at start of line: Long line without +/- Ã»Ã¼Ã½Ã¾Ã¿
+File control_chars.trg, Line 6: Error : missing +/- at start of line: "Long line without +/- efghijklmnopqrstuvwxyz{|}~"_$C(127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150)_" and few control chars"
+File control_chars.trg, Line 7: Error : missing +/- at start of line: "Long line without +/- "_$C(151,152,153,154,155,156,157,158,159)_"Â Â¡Â¢Â£Â¤Â¥Â¦Â§Â¨Â©ÂªÂ«Â¬"_$C(173)_"Â®Â¯Â°Â±Â²Â³Â´ÂµÂ¶Â·Â¸Â¹ÂºÂ»Â¼Â½Â¾Â¿Ã€ÃÃ‚ÃƒÃ„Ã…Ã†Ã‡Ãˆ and few control chars"
+File control_chars.trg, Line 8: Error : missing +/- at start of line: "Long line without +/- Ã‰ÃŠÃ‹ÃŒÃÃÃÃÃ‘Ã’Ã“Ã”Ã•Ã–Ã—Ã˜Ã™ÃšÃ›ÃœÃÃÃŸÃ Ã¡Ã¢Ã£Ã¤Ã¥Ã¦Ã§Ã¨Ã©ÃªÃ«Ã¬Ã­Ã®Ã¯Ã°Ã±Ã²Ã³Ã´ÃµÃ¶Ã·Ã¸Ã¹Ãº and few control chars"
+File control_chars.trg, Line 9: Error : missing +/- at start of line: "Long line without +/- Ã»Ã¼Ã½Ã¾Ã¿"
 ##ALLOW_OUTPUT NONUNICODE_MODE
 =========================================
 8 trigger file entries have errors
