@@ -63,6 +63,7 @@
 # threadedapinotallowed		[quinn]	      Test of THREADEDAPINOTALLOWED error
 # utilfuncs       		[quinn]       Test of Utility Functions in the SimpleThreadAPI
 # invtptrans			[quinn]	      test of INVTPTRANS error
+# externalcall			[mmr]	      Test of SimpleThreadAPI and Utility functions on external calls
 #-------------------------------------------------------------------------------------
 
 echo "simplethreadapi test starts..."
@@ -79,7 +80,7 @@ setenv subtest_list_non_replic "$subtest_list_non_replic time2long insuffsubs in
 setenv subtest_list_non_replic "$subtest_list_non_replic callintcommit callintrollback fatalerror1 fatalerror2 key2big"
 setenv subtest_list_non_replic "$subtest_list_non_replic gvsuboflow"
 setenv subtest_list_non_replic "$subtest_list_non_replic gvnlvndata gvnlvnincr gvnlvndelete isvdelete str2zwr utils_file"
-setenv subtest_list_non_replic "$subtest_list_non_replic threadedapinotallowed utilfuncs invtptrans"
+setenv subtest_list_non_replic "$subtest_list_non_replic threadedapinotallowed utilfuncs invtptrans externalcall"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
