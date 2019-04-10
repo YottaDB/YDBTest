@@ -5,7 +5,8 @@
 
 # Test 1 : mumps/mupip/dse/lke etc. invoked through a soft link of a different name should work
 #  Invoking executable : mumps
-What file: %YDB-E-FILENOTFND, File  not found
+What file: 
+%YDB-E-FILENOTFND, File .m not found
 #  Invoking executable : mupip
 MUPIP> #  Invoking executable : dbcertify
 %YDB-E-CLIERR, No parameters specified
@@ -48,7 +49,8 @@ information returned for each semaphore in set:
 # Test 2 : Copy of mumps/mupip/dse/lke etc. invoked from a directory that also contains a copy of libyottadb##TEST_SHL_SUFFIX## should work
 #          Previously this would issue an IMAGENAME error for the "mumps" case. That is no longer the case
 #  Invoking executable : mumps
-What file: %YDB-E-FILENOTFND, File  not found
+What file: 
+%YDB-E-FILENOTFND, File .m not found
 #  Invoking executable : mupip
 MUPIP> #  Invoking executable : dbcertify
 %YDB-E-CLIERR, No parameters specified
@@ -133,7 +135,8 @@ information returned for each semaphore in set:
 
 # Test 4 : mumps/mupip/dse/lke etc. invoked from a current directory where they do not exist, but are found in $PATH, should work
 #  Invoking executable : mumps
-What file: %YDB-E-FILENOTFND, File  not found
+What file: 
+%YDB-E-FILENOTFND, File .m not found
 #  Invoking executable : mupip
 MUPIP> #  Invoking executable : dbcertify
 %YDB-E-CLIERR, No parameters specified
