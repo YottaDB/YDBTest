@@ -1,0 +1,13 @@
+# Test that ydb_exit() issues INVYDBEXIT error when called inside TP
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+ydb_exit() inside ydb_tp_s() returned -YDB_ERR_INVYDBEXIT as expected
+ydb_set_s() still works
+ydb_tp_s() returned YDB_OK as expected
+ydb_get_s() still works
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
