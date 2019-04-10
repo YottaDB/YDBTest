@@ -50,11 +50,12 @@ PASS
 ydb_file_name_to_id(): PASS
 ydb_file_is_identical(): PASS
 ydb_file_id_free(): PASS
-##SUSPEND_OUTPUT DBG
-Pro build, calling ydb_fork_n_core() 
-##ALLOW_OUTPUT DBG
+##SUSPEND_OUTPUT dbg
+Pro build, calling ydb_fork_n_core()
+##ALLOW_OUTPUT dbg
+##SUSPEND_OUTPUT pro
 Debug build, skipping ydb_fork_n_core()
-##ALLOW_OUTPUT DBG PRO
+##ALLOW_OUTPUT pro
 ydb_hiber_start(): PASS
 ydb_hiber_start_wait_any(): PASS
 ydb_malloc(): PASS
@@ -68,6 +69,9 @@ ydb_ci(): PASS
 ydb_cip(): PASS
 ydb_ci_tab_open(): PASS
 ydb_ci_tab_swtich(): PASS
+##SUSPEND_OUTPUT dbg
+ydb_fork_n_core(): PASS
+##ALLOW_OUTPUT dbg
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

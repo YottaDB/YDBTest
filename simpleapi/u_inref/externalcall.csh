@@ -20,7 +20,7 @@ echo '# test of all SimpleAPI and Utility functions on a nestedcall (c -> m -> c
 echo '# each function is ran, checked that it worked properly then prints either a pass or fail'
 
 #SETUP of the driver C file
-$gt_cc_compiler $gt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $gtm_tst/$tst/inref/externalcallD.c
+$gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $gtm_tst/$tst/inref/externalcallD.c
 $gt_ld_linker $gt_ld_option_output externalcallD $gt_ld_options_common externalcallD.o $gt_ld_sysrtns $ci_ldpath$gtm_dist -L$gtm_dist $tst_ld_yottadb $gt_ld_syslibs >& externalcall.map
 
 setenv GTMCI `pwd`/externalcall.tab
@@ -66,7 +66,7 @@ cat >> externalcallSwtich.tab << xxxx
 mSwitchHelper: void mSwitchHelper^externalcallHb()
 xxxx
 #SETUP of the helper C file
-$gt_cc_compiler $gt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $gtm_tst/$tst/inref/externalcallH.c
+$gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $gtm_tst/$tst/inref/externalcallH.c
 $gt_ld_shl_linker ${gt_ld_option_output}externalcallH${gt_ld_shl_suffix} $gt_ld_shl_options externalcallH.o $gt_ld_syslibs
 
 setenv GTMXC `pwd`/externalcall.xc
