@@ -24,10 +24,10 @@ ydb_lock_st():
 List of locks...
 DEFAULT
 ##TEST_AWK\^a Owned by PID= [1-9][0-9]* which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|184); SUBSCRIPT slot bytes in use: 16/5052
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|164|184); SUBSCRIPT slot bytes in use: (8|16)/(5036|5052)
 %YDB-I-LOCKSPACEUSE, Estimated free lock space: 99% of 40 pages
 Release of locks...
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); SUBSCRIPT slot bytes in use: 0/5052
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|164|184); SUBSCRIPT slot bytes in use: 0/(5036|5052)
 %YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
 %YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
 PASS
@@ -36,13 +36,13 @@ ydb_lock_incr_st():
 List of locks...
 DEFAULT
 ##TEST_AWK\^a Owned by PID= [1-9][0-9]* which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|184); SUBSCRIPT slot bytes in use: 16/5052
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|164|184); SUBSCRIPT slot bytes in use: (8|16)/(5036|5052)
 %YDB-I-LOCKSPACEUSE, Estimated free lock space: 99% of 40 pages
 PASS
 
 ydb_lock_decr_st(): 
 List of locks...
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); SUBSCRIPT slot bytes in use: 0/5052
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|164|184); SUBSCRIPT slot bytes in use: 0/(5036|5052)
 %YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
 %YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
 PASS

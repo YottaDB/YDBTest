@@ -18,14 +18,14 @@ Lock status from remote host 2:
 
 BREG
 ^b Owned by PID= <PID> which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|184); SUBSCRIPT slot bytes in use: 16/5052
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|164|184); SUBSCRIPT slot bytes in use: (8|16)/(5036|5052)
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 
 DEFAULT
 ^d Owned by PID= <PID> which is an existing process
 a Owned by PID= <PID> which is an existing process
 b Owned by PID= <PID> which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 3/(120|184); SUBSCRIPT slot bytes in use: 48/5052
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 3/(120|164|184); SUBSCRIPT slot bytes in use: (24|48)/(5036|5052)
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 ##TEST_AWK.1. [0-9]*
 ##TEST_AWK.*Done.*##SOURCE_PATH##/mumps -run lbcl . /dev/null .. lockb_on_client.log
