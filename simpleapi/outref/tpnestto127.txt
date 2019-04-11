@@ -1,0 +1,268 @@
+# Test of ydb_tp_s() after TPTOODEEP error still finishes transactions
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+$TLEVEL is correctly starting at 0
+Starting nest until TPTOODEEP and setting
+$TLEVEL is 1
+$TLEVEL is 2
+$TLEVEL is 3
+$TLEVEL is 4
+$TLEVEL is 5
+$TLEVEL is 6
+$TLEVEL is 7
+$TLEVEL is 8
+$TLEVEL is 9
+$TLEVEL is 10
+$TLEVEL is 11
+$TLEVEL is 12
+$TLEVEL is 13
+$TLEVEL is 14
+$TLEVEL is 15
+$TLEVEL is 16
+$TLEVEL is 17
+$TLEVEL is 18
+$TLEVEL is 19
+$TLEVEL is 20
+$TLEVEL is 21
+$TLEVEL is 22
+$TLEVEL is 23
+$TLEVEL is 24
+$TLEVEL is 25
+$TLEVEL is 26
+$TLEVEL is 27
+$TLEVEL is 28
+$TLEVEL is 29
+$TLEVEL is 30
+$TLEVEL is 31
+$TLEVEL is 32
+$TLEVEL is 33
+$TLEVEL is 34
+$TLEVEL is 35
+$TLEVEL is 36
+$TLEVEL is 37
+$TLEVEL is 38
+$TLEVEL is 39
+$TLEVEL is 40
+$TLEVEL is 41
+$TLEVEL is 42
+$TLEVEL is 43
+$TLEVEL is 44
+$TLEVEL is 45
+$TLEVEL is 46
+$TLEVEL is 47
+$TLEVEL is 48
+$TLEVEL is 49
+$TLEVEL is 50
+$TLEVEL is 51
+$TLEVEL is 52
+$TLEVEL is 53
+$TLEVEL is 54
+$TLEVEL is 55
+$TLEVEL is 56
+$TLEVEL is 57
+$TLEVEL is 58
+$TLEVEL is 59
+$TLEVEL is 60
+$TLEVEL is 61
+$TLEVEL is 62
+$TLEVEL is 63
+$TLEVEL is 64
+$TLEVEL is 65
+$TLEVEL is 66
+$TLEVEL is 67
+$TLEVEL is 68
+$TLEVEL is 69
+$TLEVEL is 70
+$TLEVEL is 71
+$TLEVEL is 72
+$TLEVEL is 73
+$TLEVEL is 74
+$TLEVEL is 75
+$TLEVEL is 76
+$TLEVEL is 77
+$TLEVEL is 78
+$TLEVEL is 79
+$TLEVEL is 80
+$TLEVEL is 81
+$TLEVEL is 82
+$TLEVEL is 83
+$TLEVEL is 84
+$TLEVEL is 85
+$TLEVEL is 86
+$TLEVEL is 87
+$TLEVEL is 88
+$TLEVEL is 89
+$TLEVEL is 90
+$TLEVEL is 91
+$TLEVEL is 92
+$TLEVEL is 93
+$TLEVEL is 94
+$TLEVEL is 95
+$TLEVEL is 96
+$TLEVEL is 97
+$TLEVEL is 98
+$TLEVEL is 99
+$TLEVEL is 100
+$TLEVEL is 101
+$TLEVEL is 102
+$TLEVEL is 103
+$TLEVEL is 104
+$TLEVEL is 105
+$TLEVEL is 106
+$TLEVEL is 107
+$TLEVEL is 108
+$TLEVEL is 109
+$TLEVEL is 110
+$TLEVEL is 111
+$TLEVEL is 112
+$TLEVEL is 113
+$TLEVEL is 114
+$TLEVEL is 115
+$TLEVEL is 116
+$TLEVEL is 117
+$TLEVEL is 118
+$TLEVEL is 119
+$TLEVEL is 120
+$TLEVEL is 121
+$TLEVEL is 122
+$TLEVEL is 123
+$TLEVEL is 124
+$TLEVEL is 125
+$TLEVEL is 126
+Returned YDB_ERR_TPTOODEEP
+Performing sets now
+ydb_tp_s() nest returned YDB_OK as expected
+$TLEVEL returned to 0 as expected
+ydb_get_s() for $TLEVEL 1 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 2 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 3 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 4 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 5 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 6 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 7 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 8 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 9 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 10 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 11 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 12 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 13 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 14 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 15 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 16 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 17 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 18 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 19 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 20 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 21 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 22 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 23 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 24 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 25 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 26 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 27 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 28 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 29 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 30 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 31 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 32 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 33 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 34 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 35 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 36 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 37 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 38 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 39 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 40 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 41 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 42 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 43 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 44 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 45 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 46 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 47 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 48 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 49 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 50 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 51 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 52 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 53 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 54 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 55 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 56 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 57 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 58 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 59 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 60 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 61 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 62 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 63 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 64 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 65 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 66 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 67 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 68 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 69 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 70 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 71 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 72 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 73 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 74 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 75 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 76 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 77 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 78 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 79 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 80 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 81 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 82 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 83 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 84 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 85 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 86 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 87 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 88 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 89 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 90 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 91 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 92 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 93 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 94 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 95 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 96 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 97 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 98 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 99 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 100 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 101 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 102 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 103 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 104 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 105 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 106 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 107 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 108 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 109 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 110 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 111 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 112 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 113 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 114 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 115 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 116 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 117 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 118 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 119 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 120 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 121 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 122 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 123 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 124 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 125 returned YDB_OK and value was correct as expected
+ydb_get_s() for $TLEVEL 126 returned YDB_OK and value was correct as expected
+TP nest till TPTOODEEP correctly completes transactions
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
