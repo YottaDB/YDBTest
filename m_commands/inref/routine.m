@@ -2,7 +2,7 @@
 ;								;
 ; Copyright 2004, 2013 Fidelity Information Services, Inc	;
 ;								;
-; Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -54,10 +54,11 @@ link	; test zlink
 	. do ^examine($ZSEARCH(rout_objformat),"","object file should not exist at "_$ZPOSITION)
 	. zlink rout
 	. write "rout:",rout,!
-	. if unix do
-	.. do ^examine($ZPARSE($ZSEARCH(rout_objformat),"name"),rout,"object file should exist at "_$ZPOSITION)
+	. if ri=32 do
+	. . ; for 32-byte routine name, only 31-byte object file is created so 32-byte .o file will not be found
+	. . do ^examine($ZPARSE($ZSEARCH(rout_objformat),"name"),"","object file should not exist at "_$ZPOSITION)
 	. else  do
-	.. do ^examine($ZPARSE($ZSEARCH(rout_objformat),"name"),$$FUNC^%UCASE(rout),"object file should exist at "_$ZPOSITION)
+	. . do ^examine($ZPARSE($ZSEARCH(rout_objformat),"name"),rout,"object file should exist at "_$ZPOSITION)
 	set rout=routines(10)
 	write "rout:",rout,!
 	do ^examine($ZSEARCH(rout_objformat),"","object file should not exist at "_$ZPOSITION)
