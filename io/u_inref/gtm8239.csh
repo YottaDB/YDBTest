@@ -4,7 +4,7 @@
 # Copyright (c) 2015 Fidelity National Information 		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -25,15 +25,12 @@ echo "Case 1."
 expect > case1.expect.outx <<eof
 set timeout 120
 spawn /usr/local/bin/tcsh -f
-expect "*>"
-send -- "set prompt=\"termmumps > \"\r"
-expect "*set prompt=\"termmumps > \""
-expect "termmumps >"
+source \$::env(gtm_tst)/com/expectinit.exp
 send -- "$GTM\r"
 expect "YDB>"
 send -- "zcompile \"xyz\"\r"
 send -- "halt\r"
-expect "termmumps >"
+expect -exact "SHELL"
 send -- "exit\r"
 expect eof
 eof
@@ -59,14 +56,11 @@ $gtm_dist/mumps -run case2 >&! case2.mumps.out+err
 expect > case2.expect.outx <<eof
 set timeout 120
 spawn /usr/local/bin/tcsh -f
-expect "*>"
-send -- "set prompt=\"termmumps > \"\r"
-expect "*set prompt=\"termmumps > \""
-expect "termmumps >"
+source \$::env(gtm_tst)/com/expectinit.exp
 send -- "$gtm_dist/mumps -run case2\r"
 expect "YDB>"
 send -- "halt\r"
-expect "termmumps >"
+expect -exact "SHELL"
 send -- "exit\r"
 expect eof
 eof
@@ -105,12 +99,9 @@ $gtm_dist/mumps -run case3 >&! case3.mumps.out+err
 expect > case3.expect.outx <<eof
 set timeout 120
 spawn /usr/local/bin/tcsh -f
-expect "*>"
-send -- "set prompt=\"termmumps > \"\r"
-expect "*set prompt=\"termmumps > \""
-expect "termmumps >"
+source \$::env(gtm_tst)/com/expectinit.exp
 send -- "$gtm_dist/mumps -run case3\r"
-expect "termmumps >"
+expect -exact "SHELL"
 send -- "exit\r"
 expect eof
 eof
@@ -167,15 +158,12 @@ echo "Case 6."
 expect > case6.expect.outx <<eof
 set timeout 120
 spawn /usr/local/bin/tcsh -f
-expect "*>"
-send -- "set prompt=\"termmumps > \"\r"
-expect "*set prompt=\"termmumps > \""
-expect "termmumps >"
+source \$::env(gtm_tst)/com/expectinit.exp
 send -- "$GTM\r"
 expect "YDB>"
 send -- "zcompile \"xyz\" write \"\\\$y is \"_\\\$y\r"
 send -- "halt\r"
-expect "termmumps >"
+expect -exact "SHELL"
 send -- "exit\r"
 expect eof
 eof
@@ -210,12 +198,9 @@ echo "Case 7."
 expect > case7.expect.outx <<eof
 set timeout 120
 spawn /usr/local/bin/tcsh -f
-expect "*>"
-send -- "set prompt=\"termmumps > \"\r"
-expect "*set prompt=\"termmumps > \""
-expect "termmumps >"
+source \$::env(gtm_tst)/com/expectinit.exp
 send -- "$gtm_dist/mumps -run case7^gtm8239\r"
-expect "termmumps >"
+expect -exact "SHELL"
 send -- "exit\r"
 expect eof
 eof
@@ -249,14 +234,11 @@ echo "Case 10."
 expect > case10.expect.outx <<eof
 set timeout 120
 spawn /usr/local/bin/tcsh -f
-expect "*>"
-send -- "set prompt=\"termmumps > \"\r"
-expect "*set prompt=\"termmumps > \""
-expect "termmumps >"
+source \$::env(gtm_tst)/com/expectinit.exp
 send -- "$gtm_dist/mumps -run case10^gtm8239\r"
 expect "YDB>"
 send -- "halt\r"
-expect "termmumps >"
+expect -exact "SHELL"
 send -- "exit\r"
 expect eof
 eof
@@ -292,14 +274,12 @@ setenv gtm_linktmpdir .
 
 expect > case13.expect.outx <<eof
 set timeout 120
-set stty_init "columns 240 rows 54"
 spawn /usr/local/bin/tcsh -f
-expect "*>"
-send -- "set prompt=\"termmumps > \"\r"
-expect "*set prompt=\"termmumps > \""
-expect "termmumps >"
+source \$::env(gtm_tst)/com/expectinit.exp
+send -- "stty cols 240 rows 54\r"
+expect -exact "SHELL"
 send -- "$gtm_dist/mumps -run case13^gtm8239\r"
-expect "termmumps >"
+expect -exact "SHELL"
 send -- "exit\r"
 expect eof
 eof
@@ -315,12 +295,9 @@ echo "Case 14."
 expect > case14.expect.outx <<eof
 set timeout 120
 spawn /usr/local/bin/tcsh -f
-expect "*>"
-send -- "set prompt=\"termmumps > \"\r"
-expect "*set prompt=\"termmumps > \""
-expect "termmumps >"
+source \$::env(gtm_tst)/com/expectinit.exp
 send -- "$gtm_dist/mumps -run case14^gtm8239\r"
-expect "termmumps >"
+expect -exact "SHELL"
 send -- "exit\r"
 expect eof
 eof
@@ -355,14 +332,11 @@ echo "Case 17."
 expect > case17.expect.outx <<eof
 set timeout 120
 spawn /usr/local/bin/tcsh -f
-expect "*>"
-send -- "set prompt=\"termmumps > \"\r"
-expect "*set prompt=\"termmumps > \""
-expect "termmumps >"
+source \$::env(gtm_tst)/com/expectinit.exp
 send -- "$gtm_dist/mumps -run case17^gtm8239\r"
 expect "YDB>"
 send -- "halt\r"
-expect "termmumps >"
+expect -exact "SHELL"
 send -- "exit\r"
 expect eof
 eof
