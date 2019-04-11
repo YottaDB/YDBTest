@@ -1320,7 +1320,8 @@ File            ##TEST_PATH##/安办在.好
 %YDB-I-RECORDSTAT, ^xyz:	  Key cnt: 10  max subsc len: 8  max rec len: 14  max node len: 24
 %YDB-I-RECORDSTAT, ^zvar:	  Key cnt: 90  max subsc len: 47  max rec len: 25  max node len: 76
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 264  max subsc len: 47  max rec len: 25  max node len: 76
-Output File: %YDB-I-RECORDSTAT, ^a:	  Key cnt: 10  max subsc len: 6  max rec len: 14  max node len: 22
+Output File: 
+%YDB-I-RECORDSTAT, ^a:	  Key cnt: 10  max subsc len: 6  max rec len: 14  max node len: 22
 %YDB-I-RECORDSTAT, ^avar:	  Key cnt: 18  max subsc len: 47  max rec len: 25  max node len: 76
 %YDB-I-RECORDSTAT, ^binregb:	  Key cnt: 10  max subsc len: 12  max rec len: 14  max node len: 28
 %YDB-I-RECORDSTAT, ^bvar:	  Key cnt: 22  max subsc len: 47  max rec len: 25  max node len: 76
@@ -1413,14 +1414,14 @@ YDB>
 
 AREG
 ##TEST_AWK.a."ａｂｃ". Owned by PID= [1-9][0-9]* which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 2/(120|184); SUBSCRIPT slot bytes in use: 0/5052
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 2/(120|184); SUBSCRIPT slot bytes in use: 40/5052
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 
 BREG
 ##TEST_AWK.b.1,"ａｂｃ". Owned by PID= [1-9][0-9]* which is an existing process
 ^b("我能吞下玻璃而不伤身体")
 ##TEST_AWK                         Owned by PID= [1-9][0-9]* which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(160|213); LOCK slots in use: 4/(120|184); SUBSCRIPT slot bytes in use: 0/5052
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(160|213); LOCK slots in use: 4/(120|184); SUBSCRIPT slot bytes in use: 104/5052
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 ##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: CREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); SUBSCRIPT slot bytes in use: 0/5052
 %YDB-I-NOLOCKMATCH, No matching locks were found in CREG
@@ -1429,7 +1430,7 @@ BREG
 DEFAULT
 z("我能吞下玻璃而不伤身体")
 ##TEST_AWK                         Owned by PID= [1-9][0-9]* which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 2/(120|184); SUBSCRIPT slot bytes in use: 0/5052
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 2/(120|184); SUBSCRIPT slot bytes in use: 64/5052
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 40 pages
 ##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|184); SUBSCRIPT slot bytes in use: 0/5052
 %YDB-I-NOLOCKMATCH, No matching locks were found in DREG
