@@ -1,0 +1,11 @@
+# Test that ydb_init() issues YDB_OK when called inside ydb_tp_st()
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+ydb_init() inside ydb_tp_st() returned YDB_OK as expected
+ydb_tp_st() returned YDB_OK as expected
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

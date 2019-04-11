@@ -110,7 +110,7 @@ xxx
 $gtm_tst/com/dbcreate.csh mumps 1 -block_size=4096 -record_size=4000 -key_size=1019 -glob=8192
 
 # Run driver C
-./externalcallD
+`pwd`/externalcallD
 
 # ydb_fork_n_core check
 if ($tst_image == 'pro') then

@@ -64,7 +64,8 @@
 # utilfuncs       		[quinn]       Test of Utility Functions in the SimpleThreadAPI
 # invtptrans			[quinn]	      test of INVTPTRANS error
 # externalcall			[mmr]	      Test of SimpleThreadAPI and Utility functions on external calls
-# exitFromTp			[mmr]	      Test that ydb_exit() issues INVYDBEXIT error when called inside TP_st
+# exitFromTp			[mmr]	      Test that ydb_exit() issues INVYDBEXIT error when called inside ydb_tp_st()
+# initFromTp			[mmr]	      Test that ydb_init() issues YDB_OK when called inside ydb_tp_st()
 #-------------------------------------------------------------------------------------
 
 echo "simplethreadapi test starts..."
@@ -82,6 +83,7 @@ setenv subtest_list_non_replic "$subtest_list_non_replic callintcommit callintro
 setenv subtest_list_non_replic "$subtest_list_non_replic gvsuboflow"
 setenv subtest_list_non_replic "$subtest_list_non_replic gvnlvndata gvnlvnincr gvnlvndelete isvdelete str2zwr utils_file"
 setenv subtest_list_non_replic "$subtest_list_non_replic threadedapinotallowed utilfuncs invtptrans externalcall exitFromTp"
+setenv subtest_list_non_replic "$subtest_list_non_replic initFromTp"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then

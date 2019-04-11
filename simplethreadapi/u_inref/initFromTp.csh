@@ -11,19 +11,19 @@
 #								#
 #################################################################
 #
-# Test that ydb_exit() does not hang when called from ydb_tp_s()
+# Test that ydb_init() does not hang when called from ydb_tp_st()
 #
 unsetenv gtmdbglvl   # Disable storage debugging as that can turn this 1 minute job into an hour
 
-echo '# Test that ydb_exit() issues INVYDBEXIT error when called inside ydb_tp_st()'
+echo '# Test that ydb_init() issues YDB_OK when called inside ydb_tp_st()'
 
 #SETUP of the driver C file
-$gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $gtm_tst/$tst/inref/exitFromTp.c
-$gt_ld_linker $gt_ld_option_output exitFromTp $gt_ld_options_common exitFromTp.o $gt_ld_sysrtns $ci_ldpath$gtm_dist -L$gtm_dist $tst_ld_yottadb $gt_ld_syslibs >& exitFromTp.map
+$gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $gtm_tst/$tst/inref/initFromTp.c
+$gt_ld_linker $gt_ld_option_output initFromTp $gt_ld_options_common initFromTp.o $gt_ld_sysrtns $ci_ldpath$gtm_dist -L$gtm_dist $tst_ld_yottadb $gt_ld_syslibs >& initFromTp.map
 
 $gtm_tst/com/dbcreate.csh mumps
 
 # Run driver C
-`pwd`/exitFromTp
+`pwd`/initFromTp
 
 $gtm_tst/com/dbcheck.csh

@@ -15,7 +15,7 @@
 #
 unsetenv gtmdbglvl   # Disable storage debugging as that can turn this 1 minute job into an hour
 
-echo '# Test that ydb_exit() issues INVYDBEXIT error when called inside TP'
+echo '# Test that ydb_exit() issues INVYDBEXIT error when called inside ydb_tp_s()'
 
 #SETUP of the driver C file
 $gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $gtm_tst/$tst/inref/exitFromTp.c
@@ -24,6 +24,6 @@ $gt_ld_linker $gt_ld_option_output exitFromTp $gt_ld_options_common exitFromTp.o
 $gtm_tst/com/dbcreate.csh mumps
 
 # Run driver C
-./exitFromTp
+`pwd`/exitFromTp
 
 $gtm_tst/com/dbcheck.csh
