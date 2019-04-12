@@ -36,6 +36,14 @@ foreach file (simpleapinotallowed*.c)
 
 	unsetenv GTMCI
 end
+
+# ydb_fork_n_core check
+if ($tst_image == 'pro') then
+	foreach file (core*)
+		mv $file noprint.$file
+	end
+endif
+
 $gtm_tst/com/dbcheck.csh >& check.txt
 if ($status) then
 	echo "# DB Check failed: "

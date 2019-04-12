@@ -148,10 +148,10 @@ void *childthread(void *threadparm)
 	status = ydb_file_id_free_t(YDB_NOTTP, NULL, NULL); CHECK_STATUS("ydb_file_id_free_t()", status, fp);
 	status = ydb_file_is_identical_t(YDB_NOTTP, NULL, &fileid1, &fileid2); CHECK_STATUS("ydb_file_is_identical_t()", status, fp);
 	status = ydb_file_name_to_id_t(YDB_NOTTP, NULL, &filename, &fileid1); CHECK_STATUS("ydb_file_name_to_id_t()", status, fp);
-/*	To be fixed later: function returns error code that cannot be redirected
-	fprintf(fp, " --> Invoke ydb_fork_n_core()            after SimpleAPI call : There is no return value since function is void\n"); fflush(stdout);
-	ydb_fork_n_core();
-*/
+	if(0 == strcmp(getenv("tst_image"), "pro")){
+		fprintf(fp, " --> Invoke ydb_fork_n_core()            after SimpleAPI call : There is no return value since function is void\n"); fflush(stdout);
+		ydb_fork_n_core();
+	}
 	status = ydb_init(); CHECK_STATUS("ydb_init()", status, fp);
 	status = ydb_message_t(YDB_NOTTP, NULL, 0, &value1); CHECK_STATUS("ydb_message_t()", status, fp);
 	status = ydb_stdout_stderr_adjust_t(YDB_NOTTP, NULL); CHECK_STATUS("ydb_stdout_stderr_adjust_t()", status, fp);

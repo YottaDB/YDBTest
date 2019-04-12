@@ -63,6 +63,10 @@ ydb_timer_start_t() successfully cancelled
  --> Invoke ydb_file_id_free_t()         after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
  --> Invoke ydb_file_is_identical_t()    after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
  --> Invoke ydb_file_name_to_id_t()      after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+##SUSPEND_OUTPUT dbg
+ --> Invoke ydb_fork_n_core()            after ydb_exit() : There is no return value since function is void
+YDB-F-YDBNOTACTIVE The ydb_fork_n_core() facility is not available until the YottaDB runtime is initialized - Core generation request denied
+##ALLOW_OUTPUT dbg
  --> Invoke ydb_init()                   after ydb_exit() : Return value is -YDB_ERR_CALLINAFTERXIT as expected
  --> Invoke ydb_message_t()              after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
  --> Invoke ydb_stdout_stderr_adjust_t() after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
@@ -100,6 +104,10 @@ ydb_timer_start_t() successfully cancelled
  --> Invoke ydb_file_id_free_t()         in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
  --> Invoke ydb_file_is_identical_t()    in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
  --> Invoke ydb_file_name_to_id_t()      in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+##SUSPEND_OUTPUT dbg
+ --> Invoke ydb_fork_n_core()            in the child process after fork() : There is no return value since function is void
+YDB-F-YDBNOTACTIVE The ydb_fork_n_core() facility is not available until the YottaDB runtime is initialized - Core generation request denied
+##ALLOW_OUTPUT dbg
  --> Invoke ydb_init()                   in the child process after fork() : Return value is -YDB_ERR_STAPIFORKEXEC as expected
  --> Invoke ydb_message_t()              in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
  --> Invoke ydb_stdout_stderr_adjust_t() in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
@@ -111,6 +119,16 @@ ydb_timer_start_t() successfully cancelled
 ### Test that any SimpleThreadAPI call after ydb_exit() returns YDB_ERR_CALLINAFTERXIT error ###
 # Invoke ydb_set_st() to initialize SimpleThreadAPI environment
 # Invoke ydb_exit() to shutdown/close SimpleThreadAPI environment
+##SUSPEND_OUTPUT dbg
+YDB-F-YDBNOTACTIVE The ydb_fork_n_core() facility is not available until the YottaDB runtime is initialized - Core generation request denied
+YDB-F-YDBNOTACTIVE The ydb_fork_n_core() facility is not available until the YottaDB runtime is initialized - Core generation request denied
+YDB-F-YDBNOTACTIVE The ydb_fork_n_core() facility is not available until the YottaDB runtime is initialized - Core generation request denied
+YDB-F-YDBNOTACTIVE The ydb_fork_n_core() facility is not available until the YottaDB runtime is initialized - Core generation request denied
+YDB-F-YDBNOTACTIVE The ydb_fork_n_core() facility is not available until the YottaDB runtime is initialized - Core generation request denied
+YDB-F-YDBNOTACTIVE The ydb_fork_n_core() facility is not available until the YottaDB runtime is initialized - Core generation request denied
+YDB-F-YDBNOTACTIVE The ydb_fork_n_core() facility is not available until the YottaDB runtime is initialized - Core generation request denied
+YDB-F-YDBNOTACTIVE The ydb_fork_n_core() facility is not available until the YottaDB runtime is initialized - Core generation request denied
+##ALLOW_OUTPUT dbg
 Expected Output:
  --> Invoke ydb_data_st()                after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
  --> Invoke ydb_delete_excl_st()         after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
@@ -137,6 +155,9 @@ Expected Output:
  --> Invoke ydb_file_id_free_t()         after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
  --> Invoke ydb_file_is_identical_t()    after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
  --> Invoke ydb_file_name_to_id_t()      after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+##SUSPEND_OUTPUT dbg
+ --> Invoke ydb_fork_n_core()            after ydb_exit() : There is no return value since function is void
+##ALLOW_OUTPUT dbg
  --> Invoke ydb_init()                   after ydb_exit() : Return value is -YDB_ERR_CALLINAFTERXIT as expected
  --> Invoke ydb_message_t()              after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
  --> Invoke ydb_stdout_stderr_adjust_t() after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
@@ -149,6 +170,16 @@ All 8 Threads returned expected output
 ### Test that any SimpleAPI call in child process after fork() returns YDB_ERR_STAPIFORKEXEC error if exec() isn't used ###
 # Invoke ydb_set_st() to initialize SimpleThreadAPI environment
 # Within each thread, fork the process and test SimpleThreadAPI calls
+##SUSPEND_OUTPUT dbg
+YDB-F-YDBNOTACTIVE The ydb_fork_n_core() facility is not available until the YottaDB runtime is initialized - Core generation request denied
+YDB-F-YDBNOTACTIVE The ydb_fork_n_core() facility is not available until the YottaDB runtime is initialized - Core generation request denied
+YDB-F-YDBNOTACTIVE The ydb_fork_n_core() facility is not available until the YottaDB runtime is initialized - Core generation request denied
+YDB-F-YDBNOTACTIVE The ydb_fork_n_core() facility is not available until the YottaDB runtime is initialized - Core generation request denied
+YDB-F-YDBNOTACTIVE The ydb_fork_n_core() facility is not available until the YottaDB runtime is initialized - Core generation request denied
+YDB-F-YDBNOTACTIVE The ydb_fork_n_core() facility is not available until the YottaDB runtime is initialized - Core generation request denied
+YDB-F-YDBNOTACTIVE The ydb_fork_n_core() facility is not available until the YottaDB runtime is initialized - Core generation request denied
+YDB-F-YDBNOTACTIVE The ydb_fork_n_core() facility is not available until the YottaDB runtime is initialized - Core generation request denied
+##ALLOW_OUTPUT dbg
 Expected Output:
  --> Invoke ydb_data_st()                in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
  --> Invoke ydb_delete_excl_st()         in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
@@ -175,6 +206,9 @@ Expected Output:
  --> Invoke ydb_file_id_free_t()         in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
  --> Invoke ydb_file_is_identical_t()    in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
  --> Invoke ydb_file_name_to_id_t()      in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
+##SUSPEND_OUTPUT dbg
+ --> Invoke ydb_fork_n_core()            in the child process after fork() : There is no return value since function is void
+##ALLOW_OUTPUT dbg
  --> Invoke ydb_init()                   in the child process after fork() : Return value is -YDB_ERR_STAPIFORKEXEC as expected
  --> Invoke ydb_message_t()              in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
  --> Invoke ydb_stdout_stderr_adjust_t() in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected

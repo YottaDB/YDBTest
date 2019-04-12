@@ -28,6 +28,9 @@
  --> Invoke ydb_file_id_free_t()         after SimpleAPI call : Return value is YDB_ERR_THREADEDAPINOTALLOWED as expected
  --> Invoke ydb_file_is_identical_t()    after SimpleAPI call : Return value is YDB_ERR_THREADEDAPINOTALLOWED as expected
  --> Invoke ydb_file_name_to_id_t()      after SimpleAPI call : Return value is YDB_ERR_THREADEDAPINOTALLOWED as expected
+##SUSPEND_OUTPUT dbg
+ --> Invoke ydb_fork_n_core()            after SimpleAPI call : There is no return value since function is void
+##ALLOW_OUTPUT dbg
  --> Invoke ydb_init()                   after SimpleAPI call : Return value is YDB_OK as expected
  --> Invoke ydb_message_t()              after SimpleAPI call : Return value is YDB_ERR_THREADEDAPINOTALLOWED as expected
  --> Invoke ydb_stdout_stderr_adjust_t() after SimpleAPI call : Return value is YDB_ERR_THREADEDAPINOTALLOWED as expected
@@ -62,6 +65,9 @@ Expected Output:
  --> Invoke ydb_file_id_free_t()         after SimpleAPI call : Return value is YDB_ERR_THREADEDAPINOTALLOWED as expected
  --> Invoke ydb_file_is_identical_t()    after SimpleAPI call : Return value is YDB_ERR_THREADEDAPINOTALLOWED as expected
  --> Invoke ydb_file_name_to_id_t()      after SimpleAPI call : Return value is YDB_ERR_THREADEDAPINOTALLOWED as expected
+##SUSPEND_OUTPUT dbg
+ --> Invoke ydb_fork_n_core()            after SimpleAPI call : There is no return value since function is void
+##ALLOW_OUTPUT dbg
  --> Invoke ydb_init()                   after SimpleAPI call : Return value is YDB_OK as expected
  --> Invoke ydb_message_t()              after SimpleAPI call : Return value is YDB_ERR_THREADEDAPINOTALLOWED as expected
  --> Invoke ydb_stdout_stderr_adjust_t() after SimpleAPI call : Return value is YDB_ERR_THREADEDAPINOTALLOWED as expected

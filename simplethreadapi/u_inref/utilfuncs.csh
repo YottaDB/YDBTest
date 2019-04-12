@@ -47,7 +47,7 @@ foreach file (utilfuncs*.c)
 	unsetenv GTMCI
 
 	if ($file == "utilfuncs3_MT_CALLINAFTERXIT.c") then
-		sed -n '41,71p' $gtm_tst/$tst/outref/utilfuncs.txt > CALLINAFTERXIT.txt
+		$tst_awk -f $gtm_tst/com/process.awk -f $gtm_tst/com/outref.awk $gtm_tst/$tst/outref/utilfuncsthreadA.txt >&! CALLINAFTERXIT.txt
 		echo "Expected Output:"
 		cat CALLINAFTERXIT.txt
 		@ i = 0
@@ -67,7 +67,7 @@ foreach file (utilfuncs*.c)
 	endif
 
 	if ($file == "utilfuncs3_MT_STAPIFORKEXEC.c") then
-		sed -n '78,107p' $gtm_tst/$tst/outref/utilfuncs.txt > STAPIFORKEXEC.txt
+		$tst_awk -f $gtm_tst/com/process.awk -f $gtm_tst/com/outref.awk $gtm_tst/$tst/outref/utilfuncsthreadB.txt >&! STAPIFORKEXEC.txt
 		echo "Expected Output:"
 		cat STAPIFORKEXEC.txt
 		@ i = 0

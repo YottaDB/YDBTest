@@ -111,6 +111,10 @@ ydb_timer_start() successfully cancelled
  --> Invoke ydb_file_id_free()           after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
  --> Invoke ydb_file_is_identical()      after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
  --> Invoke ydb_file_name_to_id()        after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+##SUSPEND_OUTPUT dbg
+ --> Invoke ydb_fork_n_core()            after ydb_exit() : There is no return value since function is void
+YDB-F-YDBNOTACTIVE The ydb_fork_n_core() facility is not available until the YottaDB runtime is initialized - Core generation request denied
+##ALLOW_OUTPUT dbg
  --> Invoke ydb_free()                   after ydb_exit() : There is no return value since function is void
  --> Invoke ydb_hiber_start()            after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
  --> Invoke ydb_hiber_start_wait_any()   after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
@@ -153,6 +157,10 @@ ydb_timer_start() successfully cancelled
  --> Invoke ydb_file_id_free()           in the child process after fork() : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
  --> Invoke ydb_file_is_identical()      in the child process after fork() : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
  --> Invoke ydb_file_name_to_id()        in the child process after fork() : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
+##SUSPEND_OUTPUT dbg
+ --> Invoke ydb_fork_n_core()            in the child process after fork() : There is no return value since function is void
+YDB-F-YDBNOTACTIVE The ydb_fork_n_core() facility is not available until the YottaDB runtime is initialized - Core generation request denied
+##ALLOW_OUTPUT dbg
  --> Invoke ydb_free()                   in the child process after fork() : There is no return value since function is void
  --> Invoke ydb_hiber_start()            in the child process after fork() : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
  --> Invoke ydb_hiber_start_wait_any()   in the child process after fork() : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected

@@ -129,10 +129,10 @@ int main()
 	status = ydb_file_id_free(NULL); CHECK_STATUS("ydb_file_id_free()", status);
 	status = ydb_file_is_identical(&fileid1, &fileid2); CHECK_STATUS("ydb_file_is_identical()", status);
 	status = ydb_file_name_to_id(&filename, &fileid1); CHECK_STATUS("ydb_file_name_to_id()", status);
-/*	To be fixed later: function returns error code that cannot be redirected
-	printf(" --> Invoke ydb_fork_n_core()            after ydb_exit() : There is no return value since function is void\n"); fflush(stdout);
-	ydb_fork_n_core();
-*/
+	if(0 == strcmp(getenv("tst_image"), "pro")){
+		printf(" --> Invoke ydb_fork_n_core()            after ydb_exit() : There is no return value since function is void\n"); fflush(stdout);
+		ydb_fork_n_core();
+	}
 	printf(" --> Invoke ydb_free()                   after ydb_exit() : There is no return value since function is void\n"); fflush(stdout);
 	ydb_free(&fileid1);
 	status = ydb_hiber_start(time); CHECK_STATUS("ydb_hiber_start()", status);

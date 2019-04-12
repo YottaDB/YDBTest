@@ -1,0 +1,34 @@
+ --> Invoke ydb_data_st()                after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_delete_excl_st()         after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_delete_st()              after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_get_st()                 after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_incr_st()                after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_lock_st()                after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_lock_decr_st()           after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_lock_incr_st()           after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_node_next_st()           after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_node_previous_st()       after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_set_st()                 after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_str2zwr_st()             after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_subscript_next_st()      after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_subscript_previous_st()  after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_tp_st()                  after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_zwr2str_st()             after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_child_init()             after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_ci_t()                   after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_cip_t()                  after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_ci_tab_open_t()          after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_ci_tab_switch_t()        after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_exit()                   after ydb_exit() : Return value is YDB_OK as expected
+ --> Invoke ydb_file_id_free_t()         after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_file_is_identical_t()    after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_file_name_to_id_t()      after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+##SUSPEND_OUTPUT dbg
+ --> Invoke ydb_fork_n_core()            after ydb_exit() : There is no return value since function is void
+##ALLOW_OUTPUT dbg
+ --> Invoke ydb_init()                   after ydb_exit() : Return value is -YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_message_t()              after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_stdout_stderr_adjust_t() after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_thread_is_main()         after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
+ --> Invoke ydb_timer_cancel()           after ydb_exit() : There is no return value since function is void
+ --> Invoke ydb_timer_start_t()          after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected

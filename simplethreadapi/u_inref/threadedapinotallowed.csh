@@ -36,7 +36,7 @@ foreach file (threadedapinotallowed*.c)
 
 
 	if ($file == "threadedapinotallowed2_MT.c") then
-		sed -n '8,35p' $gtm_tst/$tst/outref/errors.txt > THREADEDAPINOTALLOWED.txt
+		$tst_awk -f $gtm_tst/com/process.awk -f $gtm_tst/com/outref.awk $gtm_tst/$tst/outref/threadedapinotallowedthread.txt >&! THREADEDAPINOTALLOWED.txt
 		echo "Expected Output:"
 		cat THREADEDAPINOTALLOWED.txt
 		@ i = 0
@@ -56,6 +56,13 @@ foreach file (threadedapinotallowed*.c)
 	endif
 
 end
+
+if ($tst_image == 'pro') then
+	foreach file (core*)
+		mv $file noprint.$file
+	end
+endif
+
 $gtm_tst/com/dbcheck.csh >& check.txt
 if ($status) then
 	echo "# DB Check failed: "

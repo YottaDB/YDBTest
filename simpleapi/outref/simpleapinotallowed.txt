@@ -29,6 +29,9 @@
  --> Invoke ydb_file_id_free()           after SimpleThreadAPI call : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
  --> Invoke ydb_file_is_identical()      after SimpleThreadAPI call : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
  --> Invoke ydb_file_name_to_id()        after SimpleThreadAPI call : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
+##SUSPEND_OUTPUT dbg
+ --> Invoke ydb_fork_n_core()            after SimpleThreadAPI call : There is no return value since function is void
+##ALLOW_OUTPUT dbg
  --> Invoke ydb_free()                   after SimpleThreadAPI call : There is no return value since function is void
  --> Invoke ydb_hiber_start()            after SimpleThreadAPI call : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
  --> Invoke ydb_hiber_start_wait_any()   after SimpleThreadAPI call : Return value is YDB_ERR_SIMPLEAPINOTALLOWED as expected
