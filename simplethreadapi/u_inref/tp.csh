@@ -38,7 +38,7 @@ CAT_EOF
 endif
 
 echo "Copy all C programs that need to be tested"
-cp $gtm_tst/$tst/inref/{tp*.c,glvnZWRITE.c} .
+cp $gtm_tst/$tst/inref/{tp[0-9]*.c,glvnZWRITE.c} .
 
 cat > tp.xc << CAT_EOF
 driveZWRITE: void driveZWRITE(I:ydb_string_t *)
