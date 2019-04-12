@@ -67,7 +67,8 @@
 # exitFromTp			[mmr]	      Test that ydb_exit() issues INVYDBEXIT error when called inside ydb_tp_st()
 # initFromTp			[mmr]	      Test that ydb_init() issues YDB_OK when called inside ydb_tp_st()
 # tpnestto127			[mmr]	      Test of ydb_tp_st() after TPTOODEEP error still finishes transactions
-#-------------------------------------------------------------------------------------
+# isMainMT			[mmr]	      Test of ydb_thread_is_main() works when called from multiple threads
+# #-------------------------------------------------------------------------------------
 
 echo "simplethreadapi test starts..."
 
@@ -84,7 +85,7 @@ setenv subtest_list_non_replic "$subtest_list_non_replic callintcommit callintro
 setenv subtest_list_non_replic "$subtest_list_non_replic gvsuboflow"
 setenv subtest_list_non_replic "$subtest_list_non_replic gvnlvndata gvnlvnincr gvnlvndelete isvdelete str2zwr utils_file"
 setenv subtest_list_non_replic "$subtest_list_non_replic threadedapinotallowed utilfuncs invtptrans externalcall exitFromTp"
-setenv subtest_list_non_replic "$subtest_list_non_replic initFromTp tpnestto127"
+setenv subtest_list_non_replic "$subtest_list_non_replic initFromTp tpnestto127 isMainMT"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
