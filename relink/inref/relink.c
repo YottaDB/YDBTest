@@ -3,7 +3,7 @@
  * Copyright (c) 2014, 2015 Fidelity National Information	*
  * Services, Inc. and/or its subsidiaries. All rights reserved.	*
  *								*
- * Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	*
+ * Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -43,7 +43,6 @@
 #include "gtmxc_types.h"
 
 static char		buffer[131072];
-static gtm_string_t	result;
 
 /* Select the index-th file from the specified directory, looping through the list more than once, if needed.
  * Return an error if no files are found.
@@ -127,12 +126,12 @@ gtm_status_t remove_directory(int argc, gtm_char_t *directory)
  */
 gtm_string_t *match_files(int argc, gtm_char_t *pattern)
 {
-	glob_t			globbuf;
-	int			i, count, status, length;
-	char			*pos, *match;
+	glob_t		globbuf;
+	int		i, count, status, length;
+	char		*pos, *match;
+	gtm_string_t	*result;
 
-	result.address = buffer;
-	result.length = 0;
+	length = 0;
 	if (0 == (status = glob(pattern, LINUX_ONLY(GLOB_PERIOD | )GLOB_NOSORT, (int (*)(const char *, int))NULL, &globbuf)))
 	{
 		pos = buffer;
@@ -152,45 +151,49 @@ gtm_string_t *match_files(int argc, gtm_char_t *pattern)
 			pos += length + 1;
 			count++;
 		}
-		result.length = (pos - buffer);
+		length = (pos - buffer);
 		if (count > 0)
-			result.length--;
+			length--;
 		globfree(&globbuf);
 	} else if (GLOB_NOMATCH)
-	{
 		globfree(&globbuf);
-	}
-	return &result;
+	result = ydb_malloc(sizeof(gtm_string_t));
+	result->address = ydb_malloc(length);
+	if (length)
+		memcpy(result->address, buffer, length);
+	result->length = length;
+	return result;
 }
 
 /* Return a hexadecimal string containing the 128-bit murmur hash of the specified file. */
 gtm_string_t *murmur_hash(int argc, gtm_char_t *source)
 {
-	int			fd, size, read_count;
-	gtm_uint16		hash_value;
-	struct stat		stat_info;
+	int		fd, size, read_count;
+	int		length;
+	gtm_uint16	hash_value;
+	struct stat	stat_info;
+	gtm_string_t	*result;
 
-	result.length = 0;
-	result.address = buffer;
+	result = ydb_malloc(sizeof(gtm_string_t));
+	length = 32;
+	result->address = ydb_malloc(length);
+	result->length = 0;	/* initialize to 0 for error return codepaths */
 
 	if (0 <= (fd = open(source, O_RDONLY)))
 	{
-		if (-1 == fstat(fd, &stat_info))
-			return &result;
-
-		size = (int)stat_info.st_size;
-		read_count = read(fd, buffer, size);
-
-		assert(read_count == size);
-
+		if (-1 != fstat(fd, &stat_info))
+		{
+			size = (int)stat_info.st_size;
+			read_count = read(fd, buffer, size);
+			assert(read_count == size);
+			gtmmrhash_128(buffer, size, 0, &hash_value);
+			gtmmrhash_128_hex(&hash_value, (unsigned char *)buffer);
+			result->length = length;
+			memcpy(result->address, buffer, result->length);
+		}
 		close(fd);
-
-		gtmmrhash_128(buffer, size, 0, &hash_value);
-		gtmmrhash_128_hex(&hash_value, (unsigned char *)result.address);
-		result.length = 32;
 	}
-
-	return &result;
+	return result;
 }
 
 /* Change permissions of the specified shared memory segment to those corresponding to mode. */
