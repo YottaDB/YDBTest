@@ -1,0 +1,21 @@
+# Test of ydb_init() works when called from multiple threads while the process is in SimpleThreadAPI mode
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Calling ydb_get_st() to get the process in SimpleThreadAPI mode
+ydb_init() correctly returns YDB_OK in main thread
+Testing ydb_init() works properly when called concurrently
+Creating 8 threads
+Thread 0: PASS ydb_init() returned YDB_OK as expected
+Thread 1: PASS ydb_init() returned YDB_OK as expected
+Thread 2: PASS ydb_init() returned YDB_OK as expected
+Thread 3: PASS ydb_init() returned YDB_OK as expected
+Thread 4: PASS ydb_init() returned YDB_OK as expected
+Thread 5: PASS ydb_init() returned YDB_OK as expected
+Thread 6: PASS ydb_init() returned YDB_OK as expected
+Thread 7: PASS ydb_init() returned YDB_OK as expected
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
