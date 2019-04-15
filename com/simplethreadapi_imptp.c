@@ -979,7 +979,7 @@ int	impjob(int childnum)
 	/* xecute zwrcmd */
 	printf("jobno=%d\n", jobno);
 	printf("istp=%d\n", istp);
-	printf("tptype=%s\n", tmpvalue.buf_addr);
+	printf("tptype=%s\n", ybuff_tptype.buf_addr);
 	printf("tpnoiso=%d\n", tpnoiso);
 	printf("orlbkintp=0\n");
 	printf("dupset=%d\n", dupset);
