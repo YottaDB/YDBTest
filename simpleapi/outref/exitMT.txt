@@ -1,0 +1,21 @@
+# Test of ydb_exit() works when called from multiple threads while the process is in SimpleAPI mode
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Calling ydb_get_s() to get the process in SimpleAPI mode
+Testing ydb_exit() works properly when called concurrently
+Creating 8 threads
+Thread 0: PASS ydb_exit() returned YDB_OK as expected
+Thread 1: PASS ydb_exit() returned YDB_OK as expected
+Thread 2: PASS ydb_exit() returned YDB_OK as expected
+Thread 3: PASS ydb_exit() returned YDB_OK as expected
+Thread 4: PASS ydb_exit() returned YDB_OK as expected
+Thread 5: PASS ydb_exit() returned YDB_OK as expected
+Thread 6: PASS ydb_exit() returned YDB_OK as expected
+Thread 7: PASS ydb_exit() returned YDB_OK as expected
+ydb_exit() correctly returns YDB_OK in main thread
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -68,6 +68,7 @@
 # tpnestto127			[mmr]	      Test of ydb_tp_s() after TPTOODEEP error still finishes transactions
 # isMainMT			[mmr]	      Test of ydb_thread_is_main() works when called from multiple threads
 # initMT			[mmr]	      Test of ydb_init() works when called from multiple threads while the process is in SimpleAPI mode 
+# exitMT			[mmr]	      Test of ydb_exit() works when called from multiple threads while the process is in SimpleAPI mode
 #-------------------------------------------------------------------------------------
 
 echo "simpleapi test starts..."
@@ -85,7 +86,7 @@ setenv subtest_list_non_replic "$subtest_list_non_replic callintcommit callintro
 setenv subtest_list_non_replic "$subtest_list_non_replic gvsuboflow"
 setenv subtest_list_non_replic "$subtest_list_non_replic gvnlvndata gvnlvnincr gvnlvndelete isvdelete str2zwr utils_file"
 setenv subtest_list_non_replic "$subtest_list_non_replic simpleapinotallowed utilfuncs externalcall exitFromTp initFromTp"
-setenv subtest_list_non_replic "$subtest_list_non_replic tpnestto127 isMainMT initMT"
+setenv subtest_list_non_replic "$subtest_list_non_replic tpnestto127 isMainMT initMT exitMT"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
