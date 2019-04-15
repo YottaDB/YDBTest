@@ -24,9 +24,9 @@ set timestart = `date +"$format"`
 if (! $?gtm_test_hang_alert_sec) then
 	if ($gtm_test_singlecpu || ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) || ("HOST_LINUX_AARCH64" == $gtm_test_os_machtype)) then
 		# 1-CPU armv7l/armv6l/x86_64 box or a Multi-CPU armv7l/armv6l box. Set a high hang alert.
-		# We have seen test runtimes as high as 13 hours (msreplic_H_1/max_connections) on 1-CPU armv6l
-		# and 10.25 hours (msreplic_H_1/max_connections) on 4-CPU armv7l so keep max at 16 hours.
-		set gtm_test_hang_alert_sec = 57600 # A subtest running for 16 hours on a 1-CPU system is suspected to be hung
+		# We have seen test runtimes as high as 21 hours (msreplic_H_1/max_connections) on 1-CPU armv6l
+		# and 10.25 hours (msreplic_H_1/max_connections) on 4-CPU armv7l so keep max at 24 hours.
+		set gtm_test_hang_alert_sec = 86400 # A subtest running for 24 hours on a 1-CPU system is suspected to be hung
 	else
 		# Multi-CPU x86_64 box
 		set gtm_test_hang_alert_sec = 9000 # A subtest running for 2.5 hours on x86_64 boxes is suspected to be hung
