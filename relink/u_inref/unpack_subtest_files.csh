@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2014 Fidelity Information Services, Inc	#
+# Copyright 2014 Fidelity Information Services, Inc		#
+#								#
+# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -33,5 +36,5 @@ foreach src ( $gtm_tst/$tst/inref/$subtest-* )
 	set b = ${strip:e}					# second extension (e.g. "edit" in file.edit.m)
 	if ( ($a == "m") && ($b =~ "edit*") ) set dst = $strip	# remove extension
 	mkdir -p $dir
-	cp $src $dir/$dst
+	cp $src $dir/${strip}.m
 end
