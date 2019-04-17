@@ -3,7 +3,7 @@
 ; Copyright (c) 2014, 2015 Fidelity National Information	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
-; Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -34,7 +34,10 @@ rctlupdate
 	set pwd=$ztrnlnm("PWD")
 	set dir="testing"
 
-	set files="a.m b.m a.o b.o abc abc.o cba _def _ghi.o _jk_lm.o n-o-p.o bbb.o c.m .o d.m.o d.abc a_b.o %ccc.o l2cba.o l2cba l2adoto.m l2adoto.o l2adoto l2dir1adoto.o"
+	; Starting V63006, the routine name for d.m.o is set to "d" (not "d.m"). That is, a .o extension is first removed
+	; and if a .m extension is seen after that, it is also removed from the file name to form the routine name.
+	; Test this by defining file names as "d.m.o" as well as "d.nonm.o" where the extension after the .o is removed is not .m.
+	set files="a.m b.m a.o b.o abc abc.o cba _def _ghi.o _jk_lm.o n-o-p.o bbb.o c.m .o d.m.o d.nonm.o d.abc a_b.o %ccc.o l2cba.o l2cba l2adoto.m l2adoto.o l2adoto l2dir1adoto.o"
 	set dirs="dir1 dir2 l2dir1 . "
 	set args="* */* dir* dir*/* dir1 dir2/ dir1/* dir1/*.* dir2/*.m dir2/* dir1/a* dir2/b* dir1/*.m dir2/*.o dir3* dir3/* dir3/a.o "
 	set args=args_"? */? dir? dir?/* dir1/? dir2/?.? dir?/?.? dir1/?.* dir2/*.? dir?/???* dir1/?* dir2/b* dir1/?.m dir2/?.o dir3? dir3/?.* dir?/a.o"
@@ -180,6 +183,11 @@ setExpectations(arg,setup,cycles,expect)
 	.
 	.	set directory=parse("dir")
 	.	set name=parse("name")
+	.	; Starting V63006, a trailing .m is removed from the routine name if it exists so do the same in the test
+	.	do
+	.	.	new len
+	.	.	set len=$zlength(name)
+	.	.	set:$zextract(name,len-1,len)=".m" name=$zextract(name,1,len-2)
 	.	set extension=parse("ext")
 	.
 	.	quit:(wildcarded&((".o"'=extension)!(name'?1(1"_",1A).(1A,1N))))
