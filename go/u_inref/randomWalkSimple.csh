@@ -10,7 +10,8 @@
 #								#
 #################################################################
 #
-# This test verifies that the tools to generate glue code work
+# Run for a specified duration calling random features of the YottaDB Go Simple API.
+echo '# Run for a specified duration calling random features of the YottaDB Go Simple API.'
 #
 # Use -gld_has_db_fullpath to ensure gld is created with full paths pointing to the database file
 # (see comment before "setenv ydb_gbldir" done below for why).
@@ -30,7 +31,7 @@ endif
 # Set up the golang environment and sets up our repo
 #
 source $gtm_tst/com/setupgoenv.csh # Do our golang setup (sets $tstpath)
-ln -s $gtm_tst/$tst/inref/random_walk_test.go .
+ln -s $gtm_tst/$tst/inref/randomWalkSimple.go .
 if (0 != $status) then
     echo "TEST-E-FAILED : Unable to soft link go source file"
     exit 1
@@ -38,13 +39,13 @@ endif
 
 echo "# Running Go program"
 # Since there are many outputs, and more will come over time, just grep for problems after
-$gotest -c -o random_walk_exe >& go_test.log
+$gobuild >& go_build.log
 if (0 != $status) then
-    echo "TEST-E-FAILED : [$gotest -c -o random_walk_exe] failed for random_walk_test.go. go_test.log output follows."
-    cat go_test.log
-    exit 1
+	echo "TEST-E-FAILED : build of test failed"
+	cat go_build.log
+	exit 1
 endif
-`pwd`/random_walk_exe -test.bench=. > output.txt
+`pwd`/randomWalkSimple > output.txt
 
 grep "panic" output.txt
 

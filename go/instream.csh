@@ -18,16 +18,17 @@
 # threeenp1B1		[estess]	Drive golang version B1 of 3n+1 routine as a test/demo (embedded TP callback rtns) (goroutines)
 # threeenp1B2		[estess]	Drive golang version B2 of 3n+1 routine as a test/demo (not-embedded TP callback rtns) (goroutines)
 # wordfreq		[estess]	Drive golang vesion of wordfreq routine as a test/demo
-# random_walk           [hathawayc]     Drive test which randomly walks Go commands
+# randomWalk		[hathawayc, mmr]     Drive test which randomly walks Go EasyAPI commands
 # threeenp1C2		[estess]	Drive golang version B2 of 3n+1 routine as a test/demo (not-embedded TP callback rtns) (processes)
 # pseudoBank		[mmr]		Test of simulated banking transactions using Go Simple API with 10 goroutines in ONE process
 # CallMTRetLen		[mmr]		Test of CallMT() and CallMDescT() functions in Go Simple API
+# randomWalkSimple	[mmr]     	Drive test which randomly walks Go SimpleAPI commands
 #
 echo "go test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
-setenv subtest_list_common     "unit_tests threeenp1B1 threeenp1B2 random_walk threeenp1C2"
-setenv subtest_list_non_replic "wordfreq pseudoBank CallMTRetLen"
+setenv subtest_list_common     "unit_tests threeenp1B1 threeenp1B2 randomWalk threeenp1C2"
+setenv subtest_list_non_replic "wordfreq pseudoBank CallMTRetLen randomWalkSimple"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
@@ -40,7 +41,7 @@ setenv subtest_exclude_list    ""
 
 if ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) then
 	# filter out below subtest on 32-bit ARM since it could use memory >= 2Gb, a lot on a 32-bit process
-	setenv subtest_exclude_list "$subtest_exclude_list random_walk"
+	setenv subtest_exclude_list "$subtest_exclude_list randomWalk"
 endif
 
 # Submit the list of subtests
