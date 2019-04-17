@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	*
+ * Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -716,7 +716,7 @@ int	impjob(int childnum)
 	status = ydb_set_s(&ylcl_jobindex, 0, NULL, &value);
 	YDB_ASSERT(YDB_OK == status);
 
-	rand = (int)(2 * drand48());
+	rand = (int)(20 * drand48());	/* 5% chance we use M call-in else we use C Simple API */
 	is_gtm8086_subtest = (!memcmp(getenv("test_subtest_name"), "gtm8086", sizeof("gtm8086")));
 	/* If the caller is the "gtm8086" subtest, it creates a situation where JNLEXTEND or JNLSWITCHFAIL
 	 * errors can happen in the imptp child process and that is expected. This is easily handled if we
@@ -726,9 +726,9 @@ int	impjob(int childnum)
 	 * only for this specific test.
 	 */
 	if (is_gtm8086_subtest)
-		rand = 1;
-	if (rand)
-	{	/* Randomly chose ydb_ci method to run child (impjob^imptp) */
+		rand = 0;
+	if (0 == rand)
+	{	/* Randomly chose ydb_ci method (~20% chance) to run child (impjob^imptp) */
 		/* do impjob^imptp */
 		status = ydb_ci("impjob"); /* Use "ydb_ci" (not ydb_cip) intentionally to test "ydb_ci" */
 		/* If the caller is the "gtm8086" subtest, it creates a situation where JNLEXTEND or JNLSWITCHFAIL

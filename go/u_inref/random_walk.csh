@@ -29,7 +29,7 @@ endif
 #
 # Set up the golang environment and sets up our repo
 #
-source $gtm_tst/$tst/u_inref/setupgoenv.csh # Do our golang setup (sets $tstpath)
+source $gtm_tst/com/setupgoenv.csh # Do our golang setup (sets $tstpath)
 ln -s $gtm_tst/$tst/inref/random_walk_test.go .
 if (0 != $status) then
     echo "TEST-E-FAILED : Unable to soft link go source file"

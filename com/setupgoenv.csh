@@ -22,9 +22,10 @@ mkdir go
 # Retrieve yottadb package from the repository using "go get".
 set cmdtorun = "go get -d -v -x -t $go_repo"
 echo "# Running : $cmdtorun"
-# Occasionally we have seen "TLS handshake timeout" failures on slow boxes if the "go get" takes approximately
-# more than 15 seconds to finish (which can happen on the slow ARMV6L boxes). That timeout does not seem to be
-# user configurable either so we handle that by retrying the "go get" for a few times before signaling failure.
+# Occasionally we have seen "TLS handshake timeout" or "i/o timeout" failures on slow boxes if the "go get" takes
+# approximately more than 15 seconds to finish (which can happen on the slow ARMV6L boxes or over less than ideal
+# internet connections). That timeout does not seem to be user configurable either so we handle that by retrying
+# the "go get" for a few times before signaling failure.
 set retry = 0
 set maxretry = 5
 while ($retry < $maxretry)
@@ -35,9 +36,9 @@ while ($retry < $maxretry)
 		# "go get" succeeded. Break out of retry loop.
 		break
 	endif
-	$grep -q "net/http: TLS handshake timeout" go_get_$retry.log
+	$grep -q -e "net/http: TLS handshake timeout" -e "i/o timeout" go_get_$retry.log
 	if ($status) then
-		# Failure was not a TLS handshake timeout. Do not retry those kinds of "go get" failures.
+		# Some error other than TLS handshake or i/o type timeout happened we don't retry
 		break
 	endif
 	@ retry = $retry + 1

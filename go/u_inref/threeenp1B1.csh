@@ -32,7 +32,7 @@ endif
 #
 # Set up the golang environment and sets up our repo
 #
-source $gtm_tst/$tst/u_inref/setupgoenv.csh # Do our golang setup (sets $tstpath, $PKG_CONFIG_PATH, $GOPATH, $go_repo)
+source $gtm_tst/com/setupgoenv.csh # Do our golang setup (sets $tstpath, $PKG_CONFIG_PATH, $GOPATH, $go_repo)
 set status1 = $status
 if ($status1) then
 	echo "[source $gtm_tst/$tst/u_inref/setupgoenv.csh] failed with status [$status1]. Exiting..."

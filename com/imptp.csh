@@ -1,10 +1,10 @@
-#!/usr/local/bin/tcsh -f
+#!/usr/local/bin/tcsh
 #################################################################
 #								#
 # Copyright (c) 2002-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -18,7 +18,6 @@
 # Always output should be redirected to a file by caller.
 # Because otherwise verbose output from job.m causes reference file problem
 # By default usage of job.m from the M programs below cause verbose output
-#
 #
 # If non-TP is chosen for crash tests to do application level verification some TP transactions are used in imptp.m.
 # But GT.CM does not support TP for now, we will not use any TP transactions for it at all.
@@ -62,43 +61,54 @@ if ($gtm_test_dbfill == "IMPTP" || $gtm_test_dbfill == "IMPZTP") then
 		$gtm_exe/mumps -run ztrsupport 'if $ztrigger("file",$ztrnlnm("gtm_tst")_"/com/imptpztr.trg")'
 	endif
 	setenv gtm_badchar "no"
-	# Randomly choose to run M or C (simpleAPI) version of the test
+	# Randomly choose to run M (rand=0), C simpleAPI (rand=1), C simpleThreadedAPI (rand=2) or Golang (rand=3) version of imptp
 	if !($?gtm_test_replay) then
-		set usesimpleapi = `$gtm_exe/mumps -run rand 3`
-		echo "setenv usesimpleapi $usesimpleapi" >> settings.csh
+		set imptpflavor = `$gtm_exe/mumps -run rand 4`
+		if ($?ydb_imptp_flavor) then
+			if ((0 > $ydb_imptp_flavor) || ("3" < $ydb_imptp_flavor)) then
+				echo "TEST-E-FAIL Invalid flavor of imptp specified: $ydb_imptp_flavor - allowed values, 0, 1, 2, or 3"
+				exit 1
+			endif
+			set imptpflavor = $ydb_imptp_flavor # Override and force a given flavor
+		endif
+		echo "imptpflavor: $imptpflavor"
+		echo "setenv imptpflavor $imptpflavor" >> settings.csh
 	else
-		set usesimpleapi = $usesimpleapi
+		set imptpflavor = $imptpflavor
 	endif
 	# If using a version that is other than the currently tested version, disable simpleapi for the older version.
 	if ("$gtm_verno" != "$tst_ver") then
-		set usesimpleapi = 0
+		set imptpflavor = 0
 		echo "# Disabling simpleapi due to using current version $gtm_verno (other than test version $tst_ver)"
-		echo "setenv usesimpleapi $usesimpleapi" >> settings.csh
+		echo "setenv imptpflavor $imptpflavor" >> settings.csh
 	endif
 	# If online rollback test, then disable simpleapi. This is because imptp.m transfers control to an M label
 	# "orlbkres^imptp" etc. for online rollbacks and that is not straightforward with simpleAPI.
 	if ($?gtm_test_onlinerollback) then
 		if ($gtm_test_onlinerollback == "TRUE") then
-			set usesimpleapi = 0
+			set imptpflavor = 0
 			echo "# Disabling simpleapi due to using online rollback"
-			echo "setenv usesimpleapi $usesimpleapi" >> settings.csh
+			echo "setenv imptpflavor $imptpflavor" >> settings.csh
 		endif
 	endif
-	if (! $usesimpleapi) then
+	set file = ""
+	switch ($imptpflavor)
+	case 0: # Run M flavor of imptp
 		$GTM << xyz
 		set jobcnt=\$\$^jobcnt
 		w "do ^imptp(jobcnt)",!  do ^imptp(jobcnt)
 		h
 xyz
-
-	else
-		if (1 == $usesimpleapi) then
-			# Run SimpleAPI equivalent of ^imptp
-			set file="simpleapi_imptp.c"
-		else
-			# Run SimpleThreadAPI equivalent of ^imptp
-			set file="simplethreadapi_imptp.c"
+		exit $status # Nothing left to do in this script after driving M version
+		breaksw
+	case 1:	# Run C SimpleAPI flavor of imptp
+		set file = "simpleapi_imptp.c"
+		# Fall into next case
+	case 2: # Run C SimpleThreadAPI flavor of imptp
+		if ("" == "$file") then
+			set file = "simplethreadapi_imptp.c"
 		endif
+		# common code for our two C flavors
 		cp $gtm_tst/com/$file .
 		set exefile = $file:r
 		$gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$ydb_dist $file
@@ -107,8 +117,57 @@ xyz
 			echo "LVNSET-E-LINKFAIL : Linking $exefile failed. See $exefile.map for details"
 			exit -1
 		endif
-		# Setup call-in table : Need call-ins to do a few tasks that are not easily done through simpleAPI
-		cat > imptp.xc << CAT_EOF
+		breaksw
+	case 3: # Run Golang wrapper (uses SimpleThreadAPI) flavor of imptp
+		if (! -e go) then # if no go environment setup yet, do it
+			source $gtm_tst/com/setupgoenv.csh # Do our golang setup (sets $tstpath)
+		endif
+		if (! -e imptpgo) then # if imptpgo hasn't been built yet, get it and impjobgo built
+			cd go/src
+			mkdir imp
+			mkdir imptpgo
+			mkdir impjobgo
+			ln -s $gtm_tst/com/imp.go imp/imp.go
+			set status1 = $status
+			if ($status1) then
+				echo "TEST-E-FAILED : Unable to soft link imp.go to current directory ($PWD)"
+				exit 1
+			endif
+			ln -s $gtm_tst/com/imptpgo.go imptpgo/imptpgo.go
+			if ($status1) then
+				echo "TEST-E-FAILED : Unable to soft link imptpgo.go to current directory ($PWD)"
+				exit 1
+			endif
+			ln -s $gtm_tst/com/impjobgo.go impjobgo/impjobgo.go
+			if ($status1) then
+				echo "TEST-E-FAILED : Unable to soft link impjobgo.go to current directory ($PWD)"
+				exit 1
+			endif
+			cd imptpgo
+			$gobuild
+			if (0 != $status) then
+				echo "TEST-E-FAILED : Unable to build imptpgo.go"
+				exit 1
+			endif
+			cd ../impjobgo
+			$gobuild
+			if (0 != $status) then
+				echo "TEST-E-FAILED : Unable to build impjobgo.go"
+				exit 1
+			endif
+			cd ../../.. # back to main test directory
+			# Now make a link to imptpgo from main test directory
+			ln -s go/src/imptpgo/imptpgo .
+			if ($status1) then
+				echo "TEST-E-FAILED : Unable to soft link imptpgo.go to main test directory ($PWD)"
+				exit 1
+			endif
+		endif
+		set exefile = "imptpgo"
+		breaksw
+	endsw
+	# Setup call-in table : Need call-ins to do a few tasks that are not easily done through simpleAPI
+	cat > imptp.xc << CAT_EOF
 dupsetnoop: void dupsetnoop^imptpxc()
 getdatinfo: void getdatinfo^imptpxc()
 helper1: void helper1^imptpxc()
@@ -123,10 +182,9 @@ writejobinfofileifneeded: void writejobinfofileifneeded^job()
 ztrcmd: void ztrcmd^imptpxc()
 ztwormstr: void ztwormstr^imptpxc()
 CAT_EOF
-		source $gtm_tst/com/set_ydb_env_var_random.csh ydb_ci GTMCI imptp.xc
-		# Run simpleAPI executable
-		`pwd`/$exefile
-	endif
+	source $gtm_tst/com/set_ydb_env_var_random.csh ydb_ci GTMCI imptp.xc
+	# Run simpleAPI executable
+	`pwd`/$exefile
 else if ($gtm_test_dbfill == "IMPRTP") then
 	$GTM << xyz
 	w "do imprtp",!  do ^imprtp

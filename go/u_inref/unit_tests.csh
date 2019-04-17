@@ -33,7 +33,7 @@ endif
 # This script is invoked from the "go" test and the "timing" test.
 # Since we do not want to maintain a duplicate copy in each test, we keep it in only the "go" test
 # and hence we explicitly use "go/u_inref" below instead of "$tst/u_inref" like is the usual convention.
-source $gtm_tst/go/u_inref/setupgoenv.csh # Do our golang setup (sets $tstpath, $PKG_CONFIG_PATH, $GOPATH, $go_repo)
+source $gtm_tst/com/setupgoenv.csh # Do our golang setup (sets $tstpath, $PKG_CONFIG_PATH, $GOPATH, $go_repo)
 
 if (0 == $status) then
 	echo "# Running : go test $go_repo"
