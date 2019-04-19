@@ -31,9 +31,10 @@ cp base.m base.m.template
 
 echo "# Fill ./patch, so after we set ZROUTINES=./patch, we access the version 2 routine"
 mkdir -p ./patch
-$gtm_exe/mumps -run %XCMD 'ZCompile "bar.edit"'
-cp bar.edit.m bar2.edit.m
-$gtm_exe/mumps -run %XCMD 'ZCompile "bar2.edit"'	# note: $text(^bar2) will look in current directory, whose path is saved in the .o file
+cp bar.edit.m bar.m
+$gtm_exe/mumps -run %XCMD 'ZCompile "bar"'
+cp bar.edit.m bar2.m
+$gtm_exe/mumps -run %XCMD 'ZCompile "bar2"'	# note: $text(^bar2) will look in current directory, whose path is saved in the .o file
 mv bar.o bar2.o ./patch
 
 setenv gtmroutines '.* '"$gtmroutines"
