@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -18,6 +18,8 @@
 ;		   instead of the correct YDB-E-LABELUNKNOWN error.
 ;
 per2968	d ^per2968a
-	zlink "per2968b.edit"
+	zsystem "cp $gtm_tst/$tst/inref/per2968b.edit per2968b.m"
+	zcompile "per2968b.m"
+	zlink "per2968b"
 	d ^per2968a
 	q
