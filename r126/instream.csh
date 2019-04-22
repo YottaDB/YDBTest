@@ -16,6 +16,7 @@
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 # ydb430	   [nars]  Test that $ZTRIGGER and MUPIP TRIGGER work with numeric subscripts having a decimal point
 #                          Also test that triggers for ^x(2) or ^x(2.0) or ^x("2") are treated as identical.
+# pseudoBank	   [mmr]   Test of simulated banking transactions using M with 10 processes/jobs
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r126 test starts..."
@@ -23,7 +24,7 @@ echo "r126 test starts..."
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic ""
-setenv subtest_list_non_replic "$subtest_list_non_replic ydb430"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb430 pseudoBank"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then

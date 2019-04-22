@@ -1,0 +1,12 @@
+# Test of simulated banking transactions using M with 10 processes/jobs
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+init data
+init data done
+##TEST_AWKNumber of transactions performed [0-9]*
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

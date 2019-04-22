@@ -10,8 +10,11 @@
 #								#
 #################################################################
 #
-# This test/demo drives the golang flavor of the word frequency test.
+# Test of simulated banking transactions using threaded tp calls
 #
+
+echo "# Test of simulated banking transactions using Go Simple API with 10 goroutines in ONE process"
+
 $gtm_tst/com/dbcreate.csh mumps -gld_has_db_fullpath >>& dbcreate.out
 if ($status) then
         echo "# dbcreate failed. Output of dbcreate.out follows"
@@ -28,42 +31,49 @@ if ($status1) then
 endif
 
 cd go/src
-mkdir wordfreq
-cd wordfreq
-ln -s $gtm_tst/$tst/inref/wordfreq.go .
+# test driver
+mkdir pseudoBank
+cd pseudoBank
+ln -s $gtm_tst/$tst/inref/pseudoBank.go .
 if (0 != $status) then
-    echo "TEST-E-FAILED : Unable to soft link wordfreq.go to current directory ($PWD)"
+    echo "TEST-E-FAILED : Unable to soft link pseudoBank.go to current directory ($PWD)"
     exit 1
 endif
-# Build our routine (must be built due to use of cgo).
-echo "# Building wordfreq"
-$gobuild
+
+# class files
+mkdir dataObject
+ln -s $gtm_tst/$tst/inref/pseudoBank_*.go dataObject/
 if (0 != $status) then
-    echo "TEST-E-FAILED : Unable to build wordfreq.go"
+	echo "TEST-E-FAILED : Unable to soft link class files to directoy ($PWD/dataObject)"
+	exit 1
+endif
+
+
+# Build our routine (must be built due to use of cgo).
+echo "# Building pseudoBank"
+go build
+if (0 != $status) then
+    echo "TEST-E-FAILED : Unable to build pseudoBank.go"
     exit 1
 endif
 #
-# Run wordfreq
+# Run pseudoBank
 #
 # Note: We need to set the global directory to an absolute path because we are operating in a subdirectory
 # ($tstpath/go/src/wordfreq) where the default test framework assignment of ydb_gbldir
 # to a relative path (i.e. mumps.gld) is no longer relevant.
 setenv ydb_gbldir $tstpath/mumps.gld
 #
-# Run wordfreq with our standard input and save the output
+# Run pseudoBank with our standard input and save the output
 #
-echo "# Running wordfreq"
-`pwd`/wordfreq < $gtm_tst/$tst/outref/wordfreq_input.txt >& wordfreq.out
-echo "# Running diff with expected output"
-diff $gtm_tst/$tst/outref/wordfreq_output.txt wordfreq.out
-if ($status) then
-	echo "WORDFREQ-E-FAIL : diff failed"
-else
-	echo "  --> PASS from wordfreq"
-endif
+echo "# Running pseudoBank"
+`pwd`/pseudoBank
+
 #
 # Validate DB
 #
 cd ../../..
+cp $gtm_tst/com/pseudoBankDisp.m .
+$gtm_dist/mumps -r pseudoBankDisp
 unsetenv ydb_gbldir
 $gtm_tst/com/dbcheck.csh
