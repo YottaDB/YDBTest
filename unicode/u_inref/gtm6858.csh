@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -31,7 +31,7 @@ end
 $switch_chset UTF-8 >& switch_chset.out
 
 # For each found library, use the library's version number for gtm_icu_version. Note that these numbers are always
-# <major><minor> as opposed to icu-config's responses which varied over time. The test system always provides the
+# <major><minor> as opposed to pkg-config's responses which varied over time. The test system always provides the
 # old style gtm_icu_version
 foreach ver ( $libvers )
 	$echoline											>>& gtm6858.outx

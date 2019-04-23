@@ -4,6 +4,9 @@
 # Copyright (c) 2011-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -131,7 +134,7 @@ endif
 if ( $?gtm_icu_version ) then
 	set icuver=$gtm_icu_version
 else
-	which icu-config && set icuver=`icu-config --version`
+	which pkg-config && set icuver=`pkg-config --modversion icu-io`
 endif
 
 # Prefer GNU make if it is not the default make
@@ -177,7 +180,8 @@ else
 endif
 set utflocale = `locale -a | grep $binaryopt -iE 'en_us\.utf.?8$' | head -n 1`  # BYPASSOK grep head
 # MAYBE
-# set libpath = `icu-config --ldflags-searchpath`
+# set libpath = `icu-config --ldflags-searchpath`	# If ever this line is uncommented, we need to
+							# find the equivalent pkg-config command for this.
 set libpath="/usr/local/lib64:/usr/local/lib:/usr/local/ssl/lib"
 set lpwd = $PWD
 if ( "" == "${withcurpro}" ) then
