@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -239,8 +242,8 @@ if (1 == $?test_replic) then
 	# Ensure the journal files are open before setting the corrupted flags. If the journal files are not open before the
 	# file_corrupt flag is set, then the source server causes DBFLCORRP. We don't want that so we ensure the journal files are
 	# open by making sure at least one update is sent from source to server.
-	setenv start_time `cat start_time`
-	$sec_shell '$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/wait_for_log.csh -log RCVR_'${start_time}'.log.updproc -message "New History Content" -duration 120'
+	$ydb_dist/mumps -run %XCMD 'set ^dummyupdate=1'
+	$gtm_tst/com/wait_until_src_backlog_below.csh 0
 endif
 
 echo "# Checking database file corrupt status"
