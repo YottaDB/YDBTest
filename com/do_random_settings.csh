@@ -89,41 +89,8 @@ setenv tst_random_all "$tst_random_all gtm_test_jnl_nobefore"
 #
 # Do this random choice only if -align is not already passed to gtmtest.csh
 if !($?test_align) then
-	setenv test_align "4096"	# default value
-	if (64 == $gtm_platform_size) then
-		switch ($gtm_test_os_machtype)
-		case "HOST_HP-UX_IA64":
-			# Pick a power of 2 between (inclusive) 2^[12, 17] -- [4096, 131072]
-			set align = `date | $tst_awk '{srand () ; print 2^(12 + int(rand() * 6))}'`
-			breaksw
-		case "HOST_SUNOS_SPARC":
-			# Pick a power of 2 between (inclusive) 2^[12, 16] -- [4096, 65536]
-			set align = `date | $tst_awk '{srand () ; print 2^(12 + int(rand() * 5))}'`
-			breaksw
+	switch ($gtm_test_os_machtype)
 		case "HOST_LINUX_X86_64":
-			# Pick a power of 2 between (inclusive) 2^[12, 19] -- [4096, 524288]
-			set align = `date | $tst_awk '{srand () ; print 2^(12 + int(rand() * 8))}'`
-			breaksw
-		case "HOST_LINUX_IA64":
-			# Pick a power of 2 between (inclusive) 2^[12, 19] -- [4096, 524288]
-			set align = `date | $tst_awk '{srand () ; print 2^(12 + int(rand() * 8))}'`
-			breaksw
-		case "HOST_LINUX_S390X":
-			# Pick a power of 2 between (inclusive) 2^[12, 18] -- [4096, 262144]
-			set align = `date | $tst_awk '{srand () ; print 2^(12 + int(rand() * 7))}'`
-			breaksw
-		case "HOST_AIX_RS6000":
-			# On pfloyd, we have seen YDB-F-MEMORY failures in source server due to huge alignsize
-			# So restrict it to 64K there while keep the max at 512K on other AIX boxes.
-			if ("$shorthost" == "pfloyd") then
-				# Pick a power of 2 between (inclusive) 2^[12, 16] -- [4096, 65536]
-				set align = `date | $tst_awk '{srand () ; print 2^(12 + int(rand() * 5))}'`
-			else
-				# Pick a power of 2 between (inclusive) 2^[12, 19] -- [4096, 524288]
-				set align = `date | $tst_awk '{srand () ; print 2^(12 + int(rand() * 8))}'`
-			endif
-			breaksw
-		case "HOST_OS390_S390":
 			# Pick a power of 2 between (inclusive) 2^[12, 17] -- [4096, 131072]
 			set align = `date | $tst_awk '{srand () ; print 2^(12 + int(rand() * 6))}'`
 			breaksw
@@ -135,9 +102,8 @@ if !($?test_align) then
 			# just for the source server and that can bring the ARM system down.
 			set align = 4096
 			breaksw
-		endsw
-		setenv test_align  "$align"
-	endif
+	endsw
+	setenv test_align  "$align"
 	echo "# test_align randomly set by do_random_settings.csh"		>>&! $settingsfile
 else
 	echo "# test_align was set before coming into do_random_settings.csh"	>>&! $settingsfile
