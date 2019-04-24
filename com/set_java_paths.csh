@@ -15,40 +15,44 @@
 #################################################################
 
 # This script sets JAVA_HOME, JAVA_SO_HOME, and JVM_SO_HOME environment variables to reflect the paths to
-# the JDK installation, libjava.so, and libjvm.so. The purpose is to provide an easy way for GT.M tests
+# the JDK installation, libjava.so, and libjvm.so. The purpose is to provide an easy way for YottaDB tests
 # (by sourcing this script) to set up environment for Java call-ins and call-outs.
 
 setenv JAVA_HOME `$tst_awk '$1 == "'$HOST:ar'" {print $10}' $gtm_test_serverconf_file`
 if ("NA" == $JAVA_HOME) then
-	# Check if /usr/lib/jvm/*/jre directory can be found. If so use that.
-	set nonomatch = 1 ; set jrelist = /usr/lib/jvm/*/jre; unset nonomatch
-	if ("$jrelist" != '/usr/lib/jvm/*/jre') then
-		# There might be multiple versions. In that case, choose the last one (hopefully the latest in terms of version)
-		setenv JAVA_HOME $jrelist[$#jrelist]:h
-	else
-		setenv JAVA_HOME ""
+	# Check if /usr/lib/jvm/* directory can be found such that it contains libjava.so. If so use that.
+	# There might be multiple versions. In that case, choose the last one (hopefully the latest in terms of version)
+	set jvmdir = "/usr/lib/jvm"
+	setenv JAVA_HOME ""	# set to default value to be overridden below
+	if (-e $jvmdir) then
+		cd $jvmdir
+		set javasohome = `find . -name libjava.so |& grep libjava.so | tail -1`
+		cd -
+		if ("$javasohome " != "") then
+			setenv JAVA_HOME $jvmdir/`echo $javasohome | sed 's,^./,,g;s,/.*,,g'`
+		endif
 	endif
 endif
 if ("" == $JAVA_HOME) then
-	echo "Java is not available on this platform, or the installation path is missing in $gtm_test_serverconf_file"
+	echo "TEST-E-FAIL : Java is not available on this platform, or the installation path is missing in $gtm_test_serverconf_file"
 	exit 1
 endif
 
 if ("Linux" == $HOSTOS) then
 	cd $JAVA_HOME
-	set javasodir = `find . -name libjava.so`
-	if ($javasodir == "") then
+	set javasohome = `find . -name libjava.so |& grep libjava.so | tail -1`
+	if ($javasohome == "") then
 		setenv JAVA_SO_HOME ""
 		echo "TEST-E-FAIL : Could not set JAVA_SO_HOME to a non-null file path"
 	else
-		setenv JAVA_SO_HOME $JAVA_HOME/${javasodir:h}
+		setenv JAVA_SO_HOME $JAVA_HOME/${javasohome:h}
 	endif
-	set jvmsodir = `find . -name libjvm.so`
-	if ($jvmsodir == "") then
+	set jvmsohome = `find . -name libjvm.so |& grep libjvm.so | tail -1`
+	if ($jvmsohome == "") then
 		setenv JVM_SO_HOME ""
 		echo "TEST-E-FAIL : Could not set JVM_SO_HOME to a non-null file path"
 	else
-		setenv JVM_SO_HOME $JAVA_HOME/${jvmsodir:h}
+		setenv JVM_SO_HOME $JAVA_HOME/${jvmsohome:h}
 	endif
 	cd -
 else
