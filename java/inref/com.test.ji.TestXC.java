@@ -3,7 +3,7 @@
  * Copyright (c) 2013, 2015 Fidelity National Information	*
  * Services, Inc. and/or its subsidiaries. All rights reserved.	*
  *								*
- * Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries. *
+ * Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries. *
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -461,17 +461,32 @@ public class TestXC {
 	 */
 	public static void getTest3() throws Exception {
 		final String[] errorCodes = new String[]{
-				"\t\tObject x = new Integer(0);\n\t\tSystem.out.println((String)x);\n",
+				"\t\tObject x = Integer.valueOf(0);\n\t\tSystem.out.println((String)x);\n",
 				"\t\tSystem.out.println(new char[]{'a', 'b'}[3]);\n",
 				"\t\tSystem.out.println(1 / 0);\n"};
-		final String[] errorTexts = new String[]{
-				"java.lang.ClassCastException: java.lang.Integer cannot be cast to java.lang.String",
-				"java.lang.ArrayIndexOutOfBoundsException: 3",
-				"java.lang.ArithmeticException: / by zero"};
-
+		final String[] errorTexts;
 		int numOfErrorCases = errorCodes.length;
-
 		TestCase[] testCases = new TestCase[numOfErrorCases];
+		String javaVersion = System.getProperty("java.version");
+		/* Starting Java 11.* (e.g. 11.0.3) we have found the error string to be more descriptive
+		 * so allow for that below. So we split the version string into 2 parts with "." as delimiter.
+		 * The first part is the major version we are looking for. As long as it is < 11, we use the older
+		 * error message. Otherwise we use the newer error message format.
+		 */
+		int	intver = Integer.parseInt(javaVersion.split("\\.")[0]);
+		if (intver >= 11)
+		{
+			errorTexts = new String[]{
+					"java.lang.ClassCastException: class java.lang.Integer cannot be cast to class java.lang.String (java.lang.Integer and java.lang.String are in module java.base of loader 'bootstrap')",
+					"java.lang.ArrayIndexOutOfBoundsException: Index 3 out of bounds for length 2",
+					"java.lang.ArithmeticException: / by zero"};
+		} else
+		{
+			errorTexts = new String[]{
+					"java.lang.ClassCastException: java.lang.Integer cannot be cast to java.lang.String",
+					"java.lang.ArrayIndexOutOfBoundsException: 3",
+					"java.lang.ArithmeticException: / by zero"};
+		}
 
 		for (int errorCase = 0; errorCase < numOfErrorCases; errorCase++) {
 			final int errorIndex = errorCase;
