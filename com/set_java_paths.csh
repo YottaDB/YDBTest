@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -35,27 +35,22 @@ if ("" == $JAVA_HOME) then
 endif
 
 if ("Linux" == $HOSTOS) then
-	foreach dir (amd64 i386 arm aarch64 i686 doesnotexist)
-		if (-d $JAVA_HOME/jre/lib/$dir) then
-			set sodir = $dir
-			break
-		endif
-	end
-	setenv JAVA_SO_HOME $JAVA_HOME/jre/lib/$sodir
-	if (! -e $JAVA_SO_HOME) then
-		echo "YDB_CSHRC-E-FAIL : JAVA_SO_HOME = $JAVA_SO_HOME does not exist"
+	cd $JAVA_HOME
+	set javasodir = `find . -name libjava.so`
+	if ($javasodir == "") then
+		setenv JAVA_SO_HOME ""
+		echo "TEST-E-FAIL : Could not set JAVA_SO_HOME to a non-null file path"
+	else
+		setenv JAVA_SO_HOME $JAVA_HOME/${javasodir:h}
 	endif
-	set jvm_so_fullpath = `find $JAVA_SO_HOME -name libjvm.so | head -1`
-	if (! -e $jvm_so_fullpath) then
-		echo "YDB_CSHRC-E-FAIL : JVM_SO_HOME = $jvm_so_fullpath does not exist"
+	set jvmsodir = `find . -name libjvm.so`
+	if ($jvmsodir == "") then
+		setenv JVM_SO_HOME ""
+		echo "TEST-E-FAIL : Could not set JVM_SO_HOME to a non-null file path"
+	else
+		setenv JVM_SO_HOME $JAVA_HOME/${jvmsodir:h}
 	endif
-	setenv JVM_SO_HOME $jvm_so_fullpath:h
-else if ("SunOS" == $HOSTOS) then
-	setenv JAVA_SO_HOME $JAVA_HOME/jre/lib/sparcv9
-	setenv JVM_SO_HOME $JAVA_HOME/jre/lib/sparcv9/server
-else if ("AIX" == $HOSTOS) then
-	setenv JAVA_SO_HOME $JAVA_HOME/jre/lib/ppc64
-	setenv JVM_SO_HOME $JAVA_HOME/jre/lib/ppc64/j9vm
+	cd -
 else
 	exit 1
 endif
