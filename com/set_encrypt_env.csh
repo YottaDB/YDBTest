@@ -3,6 +3,9 @@
 #								#
 # Copyright (c) 2009-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
+#                                                               #
+# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -39,7 +42,7 @@ if ($USER == "gtmtest1") then
 	setenv gtm_test_gpghome_passwd $USER
 	setenv gtm_test_gpghome_uid $USER
 else
-	setenv gtm_test_gpghome_passwd "gtmrocks"
+	setenv gtm_test_gpghome_passwd "ydbrocks"
 	setenv gtm_test_gpghome_uid "gtm"
 endif
 

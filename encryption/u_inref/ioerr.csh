@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -36,7 +36,7 @@ set string = "Hello, world!"
 
 setenv iv `$gtm_dist/mumps -run %XCMD 'write $$^%RANDSTR(16,,"AN")'`
 echo $iv > iv.txt
-setenv password "gtmrocks"
+setenv password "ydbrocks"
 setenv gtm_passwd `echo $password | $gtm_dist/plugin/gtmcrypt/maskpass | cut -f3 -d' '`
 
 cat > gtmPrompt.outx <<EOF

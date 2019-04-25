@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -100,7 +100,7 @@ $gtm_tst/com/dbcreate.csh mumps 1 . $RAND_RECORD_SIZE . . 4096
 if ($unencrypted) then
 	setenv gtmcrypt_config gtmcrypt.cfg
 	setenv gtm_dbkeys db_mapping_file
-	setenv gtm_passwd `echo gtmrocks | $gtm_dist/plugin/gtmcrypt/maskpass | cut -f 3 -d ' '`
+	setenv gtm_passwd `echo ydbrocks | $gtm_dist/plugin/gtmcrypt/maskpass | cut -f 3 -d ' '`
 	touch $gtm_dbkeys
 	touch $gtmcrypt_config
 	$MUPIP set -encryptable -region "*" >&! mupip_set_encryptable.out

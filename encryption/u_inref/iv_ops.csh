@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -41,7 +41,7 @@ $switch_chset "M" >& switch_chset.log
 
 # Prepare a few constants.
 set concat_hex_dump = 'for  read line quit:$zeof  for i=2:1:$length(line," ") set p=$piece(line," ",i) write:(1=$length(p)) "0" write p'
-setenv password "gtmrocks"
+setenv password "ydbrocks"
 @ first_data_block = 3			# First block in the database that contains globals
 @ block_header_size = 16		# Size of the block header
 @ simple_record_size = 8		# Size of a record of type ^a=1

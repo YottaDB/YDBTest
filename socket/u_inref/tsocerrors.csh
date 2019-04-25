@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -39,8 +39,8 @@ sed 's/^dir.*/dir = .\/demoCA/' $config_file >&! openssl.cnf
 
 # First generate a rootca, intermediate-ca-1, intermediate-ca-2 and the client/server certificates.
 # Generate rootca.
-set subj = "/C=US/ST=PA/L=Malvern/O=FISGlobal/OU=Certificate Authority/CN=www.fisglobal.com/emailAddress=security@fisglobal.com"
-$SH $gtm_tst/com/gencert.sh CA --config ./openssl.cnf --out rootca.pem --days 365 --keysize 1024 --pass gtmrocks --subj "$subj"	\
+set subj = "/C=US/ST=PA/L=Malvern/O=YottaDB LLC/OU=Certificate Authority/CN=www.yottadb.com/emailAddress=security@yottadb.com"
+$SH $gtm_tst/com/gencert.sh CA --config ./openssl.cnf --out rootca.pem --days 365 --keysize 1024 --pass ydbrocks --subj "$subj"	\
 												--self-sign >&! rootca.log
 if ($status) then
 	echo "Failed to generate rootca certificate. See rootca.log. Exiting.."
@@ -48,18 +48,18 @@ if ($status) then
 endif
 
 # Generate intermediate-ca-1 (signed by rootca)
-set subj = "/C=US/ST=PA/L=Malvern/O=FISGlobal/OU=Intermediate CA-1/CN=www.fisglobal.com/emailAddress=security@fisglobal.com"
-$SH $gtm_tst/com/gencert.sh CA --config ./openssl.cnf --out intermediate-ca-1.pem --days 365 --keysize 1024 --pass gtmrocks 	\
-					--subj "$subj" --signca rootca.pem --signpass gtmrocks	>&! intermediate-ca-1.log
+set subj = "/C=US/ST=PA/L=Malvern/O=YottaDB LLC/OU=Intermediate CA-1/CN=www.yottadb.com/emailAddress=security@yottadb.com"
+$SH $gtm_tst/com/gencert.sh CA --config ./openssl.cnf --out intermediate-ca-1.pem --days 365 --keysize 1024 --pass ydbrocks 	\
+					--subj "$subj" --signca rootca.pem --signpass ydbrocks	>&! intermediate-ca-1.log
 if ($status) then
 	echo "Failed to generate intermediate-ca-1 certificate. See intermediate-ca-1.log. Exiting"
 	exit -1
 endif
 
 # Generate intermediate-ca-2 (signed by intermediate-ca-1)
-set subj = "/C=US/ST=PA/L=Malvern/O=FISGlobal/OU=Intermediate CA-2/CN=www.fisglobal.com/emailAddress=security@fisglobal.com"
-$SH $gtm_tst/com/gencert.sh CA --config ./openssl.cnf --out intermediate-ca-2.pem --days 365 --keysize 1024 --pass gtmrocks 	\
-			--subj "$subj" --signca intermediate-ca-1.pem --signpass gtmrocks	>&! intermediate-ca-2.log
+set subj = "/C=US/ST=PA/L=Malvern/O=YottaDB LLC/OU=Intermediate CA-2/CN=www.yottadb.com/emailAddress=security@yottadb.com"
+$SH $gtm_tst/com/gencert.sh CA --config ./openssl.cnf --out intermediate-ca-2.pem --days 365 --keysize 1024 --pass ydbrocks 	\
+			--subj "$subj" --signca intermediate-ca-1.pem --signpass ydbrocks	>&! intermediate-ca-2.log
 if ($status) then
 	echo "Failed to generate intermediate-ca-2 certificate. See intermediate-ca-2.log. Exiting"
 	exit -1
@@ -67,18 +67,18 @@ endif
 
 
 # Generate client certificate (signed by intermediate-ca-2)
-set subj = "/C=US/ST=PA/L=Malvern/O=FISGlobal/OU=INSTANCE1/CN=www.fisglobal.com/emailAddress=INST1@fisglobal.com"
-$SH $gtm_tst/com/gencert.sh CERT --config ./openssl.cnf --out client.pem --days 365 --keysize 1024 --pass gtmrocks --subj "$subj" \
-			--signca intermediate-ca-2.pem --signpass gtmrocks			>&! clientcert.log
+set subj = "/C=US/ST=PA/L=Malvern/O=YottaDB LLC/OU=INSTANCE1/CN=www.yottadb.com/emailAddress=INST1@yottadb.com"
+$SH $gtm_tst/com/gencert.sh CERT --config ./openssl.cnf --out client.pem --days 365 --keysize 1024 --pass ydbrocks --subj "$subj" \
+			--signca intermediate-ca-2.pem --signpass ydbrocks			>&! clientcert.log
 if ($status) then
 	echo "Failed to generate client certificate. See clientcert.log. Exiting"
 	exit -1
 endif
 
 # Generate server certificate (also signed by intermediate-ca-2)
-set subj = "/C=US/ST=PA/L=Malvern/O=FISGlobal/OU=INSTANCE2/CN=www.fisglobal.com/emailAddress=INST2@fisglobal.com"
-$SH $gtm_tst/com/gencert.sh CERT --config ./openssl.cnf --out server.pem --days 365 --keysize 1024 --pass gtmrocks --subj "$subj" \
-			--signca intermediate-ca-2.pem --signpass gtmrocks			>&! servercert.log
+set subj = "/C=US/ST=PA/L=Malvern/O=YottaDB LLC/OU=INSTANCE2/CN=www.yottadb.com/emailAddress=INST2@yottadb.com"
+$SH $gtm_tst/com/gencert.sh CERT --config ./openssl.cnf --out server.pem --days 365 --keysize 1024 --pass ydbrocks --subj "$subj" \
+			--signca intermediate-ca-2.pem --signpass ydbrocks			>&! servercert.log
 if ($status) then
 	echo "Failed to generate server certificate. See servercert.log. Exiting"
 	exit -1
@@ -90,21 +90,21 @@ cat ./demoCA/rootca.pem ./demoCA/intermediate-ca-1.pem ./demoCA/intermediate-ca-
 # To avoid adding extra stuff onto the config file later, add a dummy crl and when it is time to use it, just update the
 # CRL. Note: we have to generate a dummy CRL for each CA that will be verified during exchange of certificates.
 $CA -config ./openssl.cnf -gencrl -out gtm-inter-1.crl -cert ./demoCA/intermediate-ca-2.pem 	\
-		-keyfile ./demoCA/private/intermediate-ca-2.key -passin pass:gtmrocks >>&! gencrl.log
+		-keyfile ./demoCA/private/intermediate-ca-2.key -passin pass:ydbrocks >>&! gencrl.log
 if ($status) then
 	echo "TEST-E-FAILED, Failed to generate certificate revocation list for intermediate-ca-2. Exiting.."
 	exit -1
 endif
 
 $CA -config ./openssl.cnf -gencrl -out gtm-inter-2.crl -cert ./demoCA/intermediate-ca-1.pem	\
-		-keyfile ./demoCA/private/intermediate-ca-1.key -passin pass:gtmrocks >>&! gencrl.log
+		-keyfile ./demoCA/private/intermediate-ca-1.key -passin pass:ydbrocks >>&! gencrl.log
 if ($status) then
 	echo "TEST-E-FAILED, Failed to generate certificate revocation list for intermediate-ca-1. Exiting.."
 	exit -1
 endif
 
 $CA -config ./openssl.cnf -gencrl -out gtm-rootca.crl -cert ./demoCA/rootca.pem		\
-		-keyfile ./demoCA/private/rootca.key -passin pass:gtmrocks >>&! gencrl.log
+		-keyfile ./demoCA/private/rootca.key -passin pass:ydbrocks >>&! gencrl.log
 if ($status) then
 	echo "TEST-E-FAILED, Failed to generate certificate revocation list for rootca. Exiting.."
 	exit -1

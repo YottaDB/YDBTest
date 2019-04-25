@@ -3,6 +3,9 @@
 #								#
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
+#                                                               #
+# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -65,7 +68,7 @@ set gtm_dbkeys_common = "${dbkeys_base}.both"
 if ($unencrypted) then
 	setenv gtmcrypt_config gtmcrypt.cfg
 	setenv gtm_dbkeys $dbkeys_base
-	setenv gtm_passwd `echo gtmrocks | $gtm_dist/plugin/gtmcrypt/maskpass | cut -f 3 -d ' '`
+	setenv gtm_passwd `echo ydbrocks | $gtm_dist/plugin/gtmcrypt/maskpass | cut -f 3 -d ' '`
 	touch $gtm_dbkeys
 
 	$MUPIP set -encryptable -region "*" >&! mupip_set_encryptable.out

@@ -3,6 +3,9 @@
 #								#
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
+#                                                               #
+# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -19,7 +22,7 @@ if ("TRUE" == $gtm_test_tls) then
 	# to be able to obtain TLS settings.
 	setenv gtmcrypt_config gtmcrypt.cfg
 	set cntr = 1
-	set passwd = `echo gtmrocks | $gtm_dist/plugin/gtmcrypt/maskpass | cut -f3 -d ' '`
+	set passwd = `echo ydbrocks | $gtm_dist/plugin/gtmcrypt/maskpass | cut -f3 -d ' '`
 	while ($cntr <= 16)
 		set inst = "INSTANCE$cntr"
 		# Set the password for each INSTANCE's private key.

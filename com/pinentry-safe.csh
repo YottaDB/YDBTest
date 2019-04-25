@@ -3,6 +3,9 @@
 #								#
 # Copyright (c) 2014-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
+#                                                               #
+# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -21,7 +24,7 @@ if (`expr $gtm_verno "<" "V62002"`) then
 		echo "OK"
 		set word = "$<"
 	end
-	echo "D gtmrocks"
+	echo "D ydbrocks"
 	echo "OK"
 else
 	$gtm_dist/mumps -run $pinentry

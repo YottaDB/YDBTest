@@ -3,6 +3,9 @@
 #								#
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
+#                                                               #
+# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -38,8 +41,8 @@ sed 's/^dir.*/dir = .\/demoCA/' $config_file >&! openssl.cnf
 
 # First generate rootca and server certificates.
 # Generate rootca.
-set subj = "/C=US/ST=PA/L=Malvern/O=FISGlobal/OU=Certificate Authority/CN=$HOST/emailAddress=gtmtest@fisglobal.com"
-$SH $gtm_tst/com/gencert.sh CA --config ./openssl.cnf --out rootca.pem --days 365 --keysize 1024 --pass gtmrocks --subj "$subj"	\
+set subj = "/C=US/ST=PA/L=Malvern/O=YottaDB LLC/OU=Certificate Authority/CN=$HOST/emailAddress=ydbtest@yottadb.com"
+$SH $gtm_tst/com/gencert.sh CA --config ./openssl.cnf --out rootca.pem --days 365 --keysize 1024 --pass ydbrocks --subj "$subj"	\
 												--self-sign >&! rootca.log
 if ($status) then
 	echo "Failed to generate rootca certificate. See rootca.log. Exiting.."
@@ -47,9 +50,9 @@ if ($status) then
 endif
 
 # Generate server certificate (signed by rootca)
-set subj = "/C=US/ST=PA/L=Malvern/O=FISGlobal/OU=GT.M/CN=$HOST/emailAddress=gtmtest@fisglobal.com"
-$SH $gtm_tst/com/gencert.sh CERT --config ./openssl.cnf --out server.pem --days 365 --keysize 1024 --pass gtmrocks 	\
-					--subj "$subj" --signca rootca.pem --signpass gtmrocks	>&! server-cert.log
+set subj = "/C=US/ST=PA/L=Malvern/O=YottaDB LLC/OU=GT.M/CN=$HOST/emailAddress=ydbtest@yottadb.com"
+$SH $gtm_tst/com/gencert.sh CERT --config ./openssl.cnf --out server.pem --days 365 --keysize 1024 --pass ydbrocks 	\
+					--subj "$subj" --signca rootca.pem --signpass ydbrocks	>&! server-cert.log
 if ($status) then
 	echo "Failed to generate server certificate. See server-cert.log. Exiting"
 	exit -1

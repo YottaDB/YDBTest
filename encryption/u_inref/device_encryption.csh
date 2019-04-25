@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -68,7 +68,7 @@ echo
 # Test correct behavior of encryption usage in conjunction with legitimate and illegitimate deviceparameters and
 # various devices.
 ####################################################################################################################
-setenv password "gtmrocks"
+setenv password "ydbrocks"
 setenv string1 "The quick brown fox jumped over the lazy little dog."
 setenv string2 "dog little lazy the over jumped fox brown quick the."
 setenv string3 "${string1}${string2}"

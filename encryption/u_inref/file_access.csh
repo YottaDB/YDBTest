@@ -3,6 +3,9 @@
 #								#
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
+#                                                               #
+# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -70,7 +73,7 @@ chmod a-r obf_key;			\\
 alias setValidObf '			\\
 echo setValidObf >> $file;		\\
 cp randStr obf_key;			\\
-setenv gtm_passwd `echo gtmrocks | $gtm_dist/plugin/gtmcrypt/maskpass | cut -f 3 -d '"' '"'`; \\
+setenv gtm_passwd `echo ydbrocks | $gtm_dist/plugin/gtmcrypt/maskpass | cut -f 3 -d '"' '"'`; \\
 '
 ###############################
 #  Symmetric Key file changes #

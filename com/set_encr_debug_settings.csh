@@ -3,6 +3,9 @@
 #								#
 # Copyright (c) 2009-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
+#                                                               #
+# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -77,7 +80,7 @@ version $gtm_tst_ver_used $gtm_tst_img_used
 # Override the gtm_passwd by computing based on $USER currently logged in. This is done so that user other
 # than the one who ran the test initially, could essentially debug it as well.
 if ("$USER" != "gtmtest1") then
-	set gtm_test_gpghome_passwd = "gtmrocks"
+	set gtm_test_gpghome_passwd = "ydbrocks"
 else
 	set gtm_test_gpghome_passwd = "gtmtest1"
 endif

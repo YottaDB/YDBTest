@@ -3,6 +3,9 @@
 #								#
 # Copyright (c) 2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
+#                                                               #
+# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -24,7 +27,7 @@ if (! $status) then
 endif
 $gtm_dist/plugin/gtmcrypt/gen_sym_key.sh 0 agentcheck.key >&! gen_sym_key.out
 $gtm_tst/com/reset_gpg_agent.csh
-setenv gtm_passwd `echo gtmrocks | $gtm_dist/plugin/gtmcrypt/maskpass | cut -f 3 -d ' '`
+setenv gtm_passwd `echo ydbrocks | $gtm_dist/plugin/gtmcrypt/maskpass | cut -f 3 -d ' '`
 setenv GTMXC_gpgagent $gtm_dist/plugin/gpgagent.tab
 set result = `$gpg --no-tty --batch -d agentcheck.key | wc -c`
 rm agentcheck.key

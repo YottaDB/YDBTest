@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -57,7 +57,7 @@ if ("mupip_create" == $operation) then
 	setenv gtm_encrypt_notty "--no-permission-warning"
 	$gtm_tst_ver_gtmcrypt_dir/gen_sym_key.sh 0 mumps_dat_key
 	unsetenv gtm_encrypt_notty
-	source $gtm_tst/com/set_ydb_env_var_random.csh ydb_passwd gtm_passwd `echo gtmrocks | $gtm_dist/plugin/gtmcrypt/maskpass | cut -f 3 -d ' '`
+	source $gtm_tst/com/set_ydb_env_var_random.csh ydb_passwd gtm_passwd `echo ydbrocks | $gtm_dist/plugin/gtmcrypt/maskpass | cut -f 3 -d ' '`
 	setenv GTMXC_gpgagent $gtm_dist/plugin/gpgagent.tab
 else
 	$gtm_tst/com/dbcreate.csh mumps 1 >&! dbcreate1.out
@@ -151,7 +151,7 @@ echo $operation > operation3.txt
 # Prepare the environment based on the selected operation.
 if ("mupip_create" == $operation) then
 	$gtm_dist/mumps -run GDE change -seg DEFAULT -encr >&! gde3.out
-	source $gtm_tst/com/set_ydb_env_var_random.csh ydb_passwd gtm_passwd `echo gtmrocks | $gtm_dist/plugin/gtmcrypt/maskpass | cut -f 3 -d ' '`
+	source $gtm_tst/com/set_ydb_env_var_random.csh ydb_passwd gtm_passwd `echo ydbrocks | $gtm_dist/plugin/gtmcrypt/maskpass | cut -f 3 -d ' '`
 	setenv GTMXC_gpgagent $gtm_dist/plugin/gpgagent.tab
 else
 	$gtm_tst/com/dbcreate.csh mumps 1 >&! dbcreate3.out
@@ -197,7 +197,7 @@ echo $operation > operation4.txt
 # Prepare the environment based on the selected operation.
 if ("mupip_create" == $operation) then
 	$gtm_dist/mumps -run GDE change -seg DEFAULT -encr >&! gde4.out
-	source $gtm_tst/com/set_ydb_env_var_random.csh ydb_passwd gtm_passwd `echo gtmrocks | $gtm_dist/plugin/gtmcrypt/maskpass | cut -f 3 -d ' '`
+	source $gtm_tst/com/set_ydb_env_var_random.csh ydb_passwd gtm_passwd `echo ydbrocks | $gtm_dist/plugin/gtmcrypt/maskpass | cut -f 3 -d ' '`
 	setenv GTMXC_gpgagent $gtm_dist/plugin/gpgagent.tab
 	setenv gtm_encrypt_notty "--no-permission-warning"
 	$gtm_tst_ver_gtmcrypt_dir/gen_sym_key.sh 0 mumps_dat_key
@@ -248,7 +248,7 @@ echo $operation > operation5.txt
 # Prepare the environment based on the selected operation.
 if ("mupip_create" == $operation) then
 	$gtm_dist/mumps -run GDE change -seg DEFAULT -encr >&! gde5.out
-	source $gtm_tst/com/set_ydb_env_var_random.csh ydb_passwd gtm_passwd `echo gtmrocks | $gtm_dist/plugin/gtmcrypt/maskpass | cut -f 3 -d ' '`
+	source $gtm_tst/com/set_ydb_env_var_random.csh ydb_passwd gtm_passwd `echo ydbrocks | $gtm_dist/plugin/gtmcrypt/maskpass | cut -f 3 -d ' '`
 	setenv GTMXC_gpgagent $gtm_dist/plugin/gpgagent.tab
 	setenv gtm_encrypt_notty "--no-permission-warning"
 	$gtm_tst_ver_gtmcrypt_dir/gen_sym_key.sh 0 mumps_dat_key

@@ -3,6 +3,9 @@
 ; Copyright (c) 2014-2015 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -114,9 +117,9 @@ generateGtmPasswd(state,error)
 	if (VALID=state) do
 	.	set case=$random(2)+1
 	.	if (1=case) do
-	.	.	set return="`echo gtmrocks | $gtm_dist/plugin/gtmcrypt/maskpass | cut -f 3 -d ' '`"
+	.	.	set return="`echo ydbrocks | $gtm_dist/plugin/gtmcrypt/maskpass | cut -f 3 -d ' '`"
 	.	if (2=case) do
-	.	.	set return="`echo gtmrocks | $gtm_dist/plugin/gtmcrypt/maskpass | cut -f 3 -d ' ' | tr '[:upper:]' '[:lower:]'`"
+	.	.	set return="`echo ydbrocks | $gtm_dist/plugin/gtmcrypt/maskpass | cut -f 3 -d ' ' | tr '[:upper:]' '[:lower:]'`"
 	.	set error=""
 	else  do
 	.	set case=$random(3)+1

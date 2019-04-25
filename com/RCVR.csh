@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -71,7 +71,7 @@ if (("TRUE" == $gtm_test_tls) && (`expr $ver ">" "V60003"`)) then
 			#     on the remote side's password parameters (inode of the mumps executable).
 			# (b) The source and receiver are run with different versions both of which support TLS (like
 			#     v61000 vs v990).
-			set passwd = `echo gtmrocks | $gtm_exe/plugin/gtmcrypt/maskpass | cut -f3 -d ' '`
+			set passwd = `echo ydbrocks | $gtm_exe/plugin/gtmcrypt/maskpass | cut -f3 -d ' '`
 			setenv gtmtls_passwd_${gtm_test_cur_sec_name} $passwd
 		endif
 		set passwd = `eval echo '$gtmtls_passwd_'${gtm_test_cur_pri_name}`

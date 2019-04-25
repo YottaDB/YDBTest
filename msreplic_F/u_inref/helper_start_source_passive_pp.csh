@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh
 #################################################################
 #								#
-#	Copyright 2009, 2013 Fidelity Information Services, Inc	#
+# Copyright 2009, 2013 Fidelity Information Services, Inc	#
+#                                                               #
+# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -13,7 +16,7 @@ set log=passive_INST2
 if ("TRUE" == $gtm_test_tls) then
 	set INST2_tlsid_param = "-tlsid=INSTANCE2"
 	# Set the password in case this script is run in a remote host.
-	setenv gtmtls_passwd_INSTANCE2 `echo gtmrocks | $gtm_dist/plugin/gtmcrypt/maskpass | cut -f3 -d ' '`
+	setenv gtmtls_passwd_INSTANCE2 `echo ydbrocks | $gtm_dist/plugin/gtmcrypt/maskpass | cut -f3 -d ' '`
 else
 	set INST2_tlsid_param = ""
 endif
