@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -185,7 +185,14 @@ end
 cp tmp.mupip $mupip_err_file
 $grep "Total error count from integ" tmp.mupip
 if ($status == 0) then
-	date
+	# In Debian 10, we noticed that the "date" command prints output in a different format in M vs UTF8 mode
+	# (LC_TIME or LC_ALL env var).
+	#	LC_TIME=C          : Thu Apr 25 15:42:11 EDT 2019
+	#	LC_TIME=en_US.utf8 : Thu 25 Apr 2019 03:43:14 PM EDT
+	# This causes some test failures in tests which have the date output format embedded in them.
+	# So keep the output format consistent by switching LC_ALL/LC_TIME to C before doing the "date".
+	# We set LC_ALL (instead of LC_TIME) since that overrides LC_TIME anyways.
+	(setenv LC_ALL C; date)
 	\cat tmp.mupip
 	set stat=1
 else
