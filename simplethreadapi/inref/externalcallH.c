@@ -1,3 +1,14 @@
+/****************************************************************
+ *								*
+ * Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	*
+ * All rights reserved.						*
+ *								*
+ *	This source code contains the intellectual property	*
+ *	of its copyright holder(s), and is made available	*
+ *	under a license.  If you do not know the terms of	*
+ *	the license, please stop and do not read further.	*
+ *								*
+ ****************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -28,13 +39,13 @@
 int tpHelper();
 void timerHelper();
 void* glbPtr;
-ydb_fileid_ptr_t fileidA, fileidB; 
+ydb_fileid_ptr_t fileidA, fileidB;
 uintptr_t tabHandle;
 
 
 /* ydb_set_st inside an external call
  * also serves to set up the data base for the other functions
- * check for this function is in the mumps code 
+ * check for this function is in the mumps code
  * although the set works if the other functions work too
  */
 int cSet(){
@@ -116,7 +127,7 @@ int cGet(){
 	YDB_LITERAL_TO_BUFFER(globalVarB, &basevar);
 	status = ydb_get_st(YDB_NOTTP, NULL, &basevar, 0, NULL, &outvalue);
 	YDB_ASSERT(status == YDB_OK);
-	
+
 	outvalue.buf_addr[outvalue.len_used] = '\0';
 	if (strcmp(outvalue.buf_addr, strValue) == 0){
 		printff("PASS\n");
@@ -128,7 +139,7 @@ int cGet(){
 }
 
 /* ydb_incr_st inside an external call
- * increments ^a from 42 to 43 
+ * increments ^a from 42 to 43
  * should return 43
  * also then decrements ^a from 43 to 42
  * no check for this just preserving the value of ^a
@@ -146,7 +157,7 @@ int cIncr(){
 	status = ydb_incr_st(YDB_NOTTP, NULL, &basevar, 0, NULL, &increment, &outvalue);
 	YDB_ASSERT(status == YDB_OK);
 	outvalue.buf_addr[outvalue.len_used] = '\0';
-	
+
 	if (strcmp(outvalue.buf_addr, "43") == 0){
 		printff("PASS\n");
 		YDB_LITERAL_TO_BUFFER("-1", &increment);
@@ -187,7 +198,7 @@ int cNodeNext(){
 }
 
 /* ydb_node_previous_st inside an external call
- * calls on globalVarA and [subA, subB] ^a("subA","subB") 
+ * calls on globalVarA and [subA, subB] ^a("subA","subB")
  * should return 1 subscript with the name "subA"
  */
 int cNodePrev(){
@@ -338,7 +349,7 @@ int cDelete(){
 	retValue.buf_addr = &outbuf[0];
 	retValue.len_used = 0;
 	retValue.len_alloc = sizeof(outbuf);
-	
+
 	YDB_LITERAL_TO_BUFFER(globalVarA, &basevar);
 	status = ydb_delete_st(YDB_NOTTP, NULL, &basevar, 0, NULL, YDB_DEL_NODE);
 	YDB_ASSERT(status == YDB_OK);

@@ -1,3 +1,14 @@
+/****************************************************************
+ *								*
+ * Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	*
+ * All rights reserved.						*
+ *								*
+ *	This source code contains the intellectual property	*
+ *	of its copyright holder(s), and is made available	*
+ *	under a license.  If you do not know the terms of	*
+ *	the license, please stop and do not read further.	*
+ *								*
+ ****************************************************************/
 #include <stdio.h>
 #include <string.h>
 #include "libyottadb.h"
@@ -93,13 +104,13 @@ int tpNest(uint64_t tptoken, ydb_buffer_t* errstr){
 	status = ydb_tp_st(tptoken, errstr, tpfn, NULL, NULL, 0, NULL);
 	if(status == YDB_ERR_TPTOODEEP)
 		printf("Returned YDB_ERR_TPTOODEEP\nPerforming sets now\n");
-	
+
 	ydb_buffer_t basevar;
 
 	getTLevel(tptoken, errstr);
 	YDB_MALLOC_BUFFER(&basevar, 5);
 	sprintf(buf, "^a%s", tLevel.buf_addr); //prepend ^a to $TLEVEL to use as a global
-	YDB_COPY_STRING_TO_BUFFER(buf, &basevar, status); 
+	YDB_COPY_STRING_TO_BUFFER(buf, &basevar, status);
 	status = ydb_set_st(tptoken, errstr, &basevar, 0, NULL, &basevar);
 	YDB_ASSERT(status == YDB_OK);
 	YDB_FREE_BUFFER(&basevar);

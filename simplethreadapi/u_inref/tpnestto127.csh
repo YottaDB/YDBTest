@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -14,7 +14,6 @@
 # Test of ydb_tp_st() after TPTOODEEP error still finishes transactions
 #
 #
-unsetenv gtmdbglvl   # Disable storage debugging as that can turn this 1 minute job into an hour
 
 echo '# Test of ydb_tp_st() after TPTOODEEP error still finishes transactions'
 
