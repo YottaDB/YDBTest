@@ -16,30 +16,30 @@ Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 Test zsystem from inside a trigger
 Added SET trigger on ^a named a#1
 Added SET trigger on ^b named b#1
-          ^a=date
-##TEST_AWK... ... .. ..:..:.. ... 2...
-          ^b=date
-##TEST_AWK... ... .. ..:..:.. ... 2...
+          ^a=date +%d-%b-%Y_%H:%M:%S
+##TEST_AWK..-...-2..._..:..:..
+          ^b=date +%d-%b-%Y_%H:%M:%S
+##TEST_AWK..-...-2..._..:..:..
 ###################################################################
 
 Testing zsystem inside nested triggers
 Added SET trigger on ^c named c#1
           ^c=date +%Y%m%d_%H%M
 ##TEST_AWK2[0-9]*_[0-9]*
-          ^a=date
-##TEST_AWK... ... .. ..:..:.. ... 2...
+          ^a=date +%d-%b-%Y_%H:%M:%S
+##TEST_AWK..-...-2..._..:..:..
 ###################################################################
 
 Testing zsystem inside chained and nested triggers
 Added SET trigger on ^c named c#2
           ^c=date +%D_%H:%M
 ##TEST_AWK[0-9]*/[0-9]*/[0-9]*_[0-9]*:[0-9]*
-##TEST_AWK          .[ab]=date
-##TEST_AWK... ... .. ..:..:.. ... 2...
+##TEST_AWK          .[ab]=date \+%d-%b-%Y_%H:%M:%S
+##TEST_AWK..-...-2..._..:..:..
           ^c=date +%D_%H:%M
 ##TEST_AWK[0-9]*/[0-9]*/[0-9]*_[0-9]*:[0-9]*
-##TEST_AWK          .[ab]=date
-##TEST_AWK... ... .. ..:..:.. ... 2...
+##TEST_AWK          .[ab]=date \+%d-%b-%Y_%H:%M:%S
+##TEST_AWK..-...-2..._..:..:..
 ###################################################################
 ##SUSPEND_OUTPUT NON_REPLIC
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
