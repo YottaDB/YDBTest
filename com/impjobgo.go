@@ -236,7 +236,7 @@ func main() {
 	// We have randomly chosen to use Go Simple API to run this child
 	//
 	// MCode: write "Start Time : ",$ZD($H,"DD-MON-YEAR 24:60:SS"),!
-	fmt.Println("Start Time:", time.Now().Format("01/02/2019 01:02:03.000"))
+	fmt.Println("Start Time:", time.Now().Format("02-Jan-2006 03:04:05.000"))
 	// MCode: write "$zro=",$zro,!
 	valstr, err = yottadb.ValE(tptoken, nil, "$ZROUTINES", []string{})
 	if imp.CheckErrorReturn(err) {
@@ -906,7 +906,7 @@ func main() {
 	// MCode: write "Job completion successful",!
 	fmt.Println("Job completion successful")
 	// MCode: write "End Time : ",$ZD($H,"DD-MON-YEAR 24:60:SS"),!
-	fmt.Println("End Time :", time.Now().Format("01/02/2019 01:02:03.000"))
+	fmt.Println("End Time :", time.Now().Format("02-Jan-2006 03:04:05.000"))
 	return
 }
 

@@ -74,7 +74,7 @@ func main() {
 	// Implement M entryref : imptp^imptp
 	//
 	// MCode: write "Start Time of parent:",$ZD($H,"DD-MON-YEAR 24:60:SS"),!
-	fmt.Println("Start time of parent:", time.Now().Format("01/02/2019 01:02:03.000"))
+	fmt.Println("Start time of parent:", time.Now().Format("02-Jan-2006 03:04:05.000"))
 	// MCode: write "$zro=",$zro,!
 	zro, err := yottadb.ValE(tptoken, nil, "$zroutines", []string{})
 	if imp.CheckErrorReturn(err) {
@@ -515,7 +515,7 @@ func main() {
 		panic("TEST-F-NOONLINEROLLBACK Online rollback cannot be supported with the Simple[Thread]API")
 	}
 	// MCode: write "End   Time of parent:",$ZD($H,"DD-MON-YEAR 24:60:SS"),!
-	fmt.Println("End   Time of parent:", time.Now().Format("01/02/2019 01:02:03.000"))
+	fmt.Println("End   Time of parent:", time.Now().Format("02-Jan-2006 03:04:05.000"))
 	// MCode: quit
 	return
 }
