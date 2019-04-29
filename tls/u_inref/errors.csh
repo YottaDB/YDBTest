@@ -35,7 +35,7 @@ sed 's/^dir.*/dir = .\/demoCA/' $config_file >&! openssl.cnf
 # First generate a rootca, intermediate-ca-1, intermediate-ca-2 and the client/server certificates.
 # Generate rootca.
 set subj = "/C=US/ST=PA/L=Malvern/O=YottaDB LLC/OU=Certificate Authority/CN=www.yottadb.com/emailAddress=security@yottadb.com"
-$SH $gtm_tst/com/gencert.sh CA --config ./openssl.cnf --out rootca.pem --days 365 --keysize 1024 --pass ydbrocks --subj "$subj"	\
+$SH $gtm_tst/com/gencert.sh CA --config ./openssl.cnf --out rootca.pem --days 365 --keysize 4096 --pass ydbrocks --subj "$subj"	\
 												--self-sign >&! rootca.log
 if ($status) then
 	echo "Failed to generate rootca certificate. See rootca.log. Exiting.."
@@ -44,7 +44,7 @@ endif
 
 # Generate intermediate-ca-1 (signed by rootca)
 set subj = "/C=US/ST=PA/L=Malvern/O=YottaDB LLC/OU=Intermediate CA-1/CN=www.yottadb.com/emailAddress=security@yottadb.com"
-$SH $gtm_tst/com/gencert.sh CA --config ./openssl.cnf --out intermediate-ca-1.pem --days 365 --keysize 1024 --pass ydbrocks 	\
+$SH $gtm_tst/com/gencert.sh CA --config ./openssl.cnf --out intermediate-ca-1.pem --days 365 --keysize 4096 --pass ydbrocks 	\
 					--subj "$subj" --signca rootca.pem --signpass ydbrocks	>&! intermediate-ca-1.log
 if ($status) then
 	echo "Failed to generate intermediate-ca-1 certificate. See intermediate-ca-1.log. Exiting"
@@ -53,7 +53,7 @@ endif
 
 # Generate intermediate-ca-2 (signed by intermediate-ca-1)
 set subj = "/C=US/ST=PA/L=Malvern/O=YottaDB LLC/OU=Intermediate CA-2/CN=www.yottadb.com/emailAddress=security@yottadb.com"
-$SH $gtm_tst/com/gencert.sh CA --config ./openssl.cnf --out intermediate-ca-2.pem --days 365 --keysize 1024 --pass ydbrocks 	\
+$SH $gtm_tst/com/gencert.sh CA --config ./openssl.cnf --out intermediate-ca-2.pem --days 365 --keysize 4096 --pass ydbrocks 	\
 			--subj "$subj" --signca intermediate-ca-1.pem --signpass ydbrocks	>&! intermediate-ca-2.log
 if ($status) then
 	echo "Failed to generate intermediate-ca-2 certificate. See intermediate-ca-2.log. Exiting"
@@ -63,7 +63,7 @@ endif
 
 # Generate client certificate (signed by intermediate-ca-2)
 set subj = "/C=US/ST=PA/L=Malvern/O=YottaDB LLC/OU=INSTANCE1/CN=www.yottadb.com/emailAddress=INST1@yottadb.com"
-$SH $gtm_tst/com/gencert.sh CERT --config ./openssl.cnf --out client.pem --days 365 --keysize 1024 --pass ydbrocks --subj "$subj" \
+$SH $gtm_tst/com/gencert.sh CERT --config ./openssl.cnf --out client.pem --days 365 --keysize 4096 --pass ydbrocks --subj "$subj" \
 			--signca intermediate-ca-2.pem --signpass ydbrocks			>&! clientcert.log
 if ($status) then
 	echo "Failed to generate client certificate. See clientcert.log. Exiting"
@@ -72,7 +72,7 @@ endif
 
 # Generate server certificate (also signed by intermediate-ca-2)
 set subj = "/C=US/ST=PA/L=Malvern/O=YottaDB LLC/OU=INSTANCE2/CN=www.yottadb.com/emailAddress=INST2@yottadb.com"
-$SH $gtm_tst/com/gencert.sh CERT --config ./openssl.cnf --out server.pem --days 365 --keysize 1024 --pass ydbrocks --subj "$subj" \
+$SH $gtm_tst/com/gencert.sh CERT --config ./openssl.cnf --out server.pem --days 365 --keysize 4096 --pass ydbrocks --subj "$subj" \
 			--signca intermediate-ca-2.pem --signpass ydbrocks			>&! servercert.log
 if ($status) then
 	echo "Failed to generate server certificate. See servercert.log. Exiting"
@@ -254,7 +254,7 @@ sleep 1
 set enddate=`date +%y%m%d%H%M%S`Z
 sleep 1
 set subj = "/C=US/ST=PA/L=Malvern/O=YottaDB LLC/OU=EXPIRED/CN=www.yottadb.com/emailAddress=EXPIRED@yottadb.com"
-$SH $gtm_tst/com/gencert.sh CERT --config ./openssl.cnf --out expired.pem --startdate $startdate --enddate $enddate --keysize 1024 \
+$SH $gtm_tst/com/gencert.sh CERT --config ./openssl.cnf --out expired.pem --startdate $startdate --enddate $enddate --keysize 4096 \
 			--pass ydbrocks --subj "$subj" --signca intermediate-ca-2.pem --signpass ydbrocks	>&! expiredcert.log
 if ($status) then
 	echo "Failed to generate server certificate. See servercert.log. Exiting"
