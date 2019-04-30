@@ -227,11 +227,11 @@ func main() {
 		if nil != err {
 			errcode := yottadb.ErrorCode(err)
 			if isGtm8086Subtest && ((-yottadb.YDB_ERR_JNLEXTEND == errcode) || (-yottadb.YDB_ERR_JNLSWITCHFAIL == errcode)) {
-				os.Exit(yottadb.YDB_OK)
+				return;
 			}
 			panic(fmt.Sprintf("impjob: Driving impjob^imptp failed with error: %s", err))
 		}
-		os.Exit(yottadb.YDB_OK)
+		return
 	}
 	// We have randomly chosen to use Go Simple API to run this child
 	//
