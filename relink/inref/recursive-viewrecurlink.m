@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-;	Copyright 2013, 2014 Fidelity Information Services, Inc	;
+; Copyright 2013, 2014 Fidelity Information Services, Inc	;
+;								;
+; Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -14,12 +17,14 @@ viewrecurlink
 	View "LINK":"RECURSIVE"
 	Write $View("LINK"),!
 	Write $View("RTNCHECKSUM","viewrecurlink"),!
-	ZLink "viewrecurlink.edit"
+	zsystem "cp viewrecurlink.edit.m viewrecurlinkedit.m; $ydb_dist/mumps -nameofrtn=viewrecurlink viewrecurlinkedit.m"
+	ZLink "viewrecurlink.o"
 	Do recurse^viewrecurlink
 	View "LINK":"NORECURSIVE"
 	Write $View("LINK"),!
 	Write $View("RTNCHECKSUM","viewrecurlink"),!
-	ZLink "viewrecurlink.edit"	; expect LOADRUNNING error
+	zsystem "cp viewrecurlink.edit.m viewrecurlinkedit.m; $ydb_dist/mumps -nameofrtn=viewrecurlink viewrecurlinkedit.m"
+	ZLink "viewrecurlink.o"	; expect LOADRUNNING error
 	Write "DONE",!
 	Quit
 

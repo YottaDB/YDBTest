@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-;	Copyright 2013, 2014 Fidelity Information Services, Inc	;
+; Copyright 2013, 2014 Fidelity Information Services, Inc	;
+;								;
+; Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -17,5 +20,6 @@ undefindr ; version 1
 lab	write "lab v1",!
 	quit
 
-f()	zlink "undefindr.edit"
+f()	zsystem "cp undefindr.edit.m undefindredit.m; $ydb_dist/mumps -nameofrtn=undefindr undefindredit.m"
+	zlink "undefindr.o"
 	quit 0

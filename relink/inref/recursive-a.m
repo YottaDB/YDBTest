@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-;	Copyright 2013, 2014 Fidelity Information Services, Inc	;
+; Copyright 2013, 2014 Fidelity Information Services, Inc	;
+;								;
+; Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -13,7 +16,8 @@ a	;
 	write "version 1",!
 	if $incr(i)>1 write "ERROR",! halt
 	zlink "b"
-	zlink "a.edit"
+	zsystem "cp a.edit.m aedit.m; $ydb_dist/mumps -nameofrtn=a aedit.m"
+	zlink "a.o"
 	do ^b
 	write $view("RTNCHECKSUM","a"),!
 	quit

@@ -23,8 +23,8 @@ source $gtm_tst/$tst/u_inref/unpack_subtest_files.csh "zrupdate" `pwd`
 # Take a copy of the template, so we can repeatedly fill in base.m
 cp base.m base.m.template
 
-cp bar.edit.m bar2.edit.m
-$gtm_exe/mumps -run %XCMD 'ZCompile "bar2.edit"'
+cp bar.edit.m bar2edit.m
+$ydb_dist/mumps -nameofrtn=bar2 bar2edit.m
 
 setenv gtmroutines '.* '"$gtmroutines"
 

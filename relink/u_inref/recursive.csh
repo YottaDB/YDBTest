@@ -3,7 +3,7 @@
 #								#
 # Copyright 2013, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -50,7 +50,8 @@ $gtm_exe/mumps -run undefindr
 echo ""
 echo "# More than 2 versions on the stack at once"
 # compile multiver.edit1
-$gtm_exe/mumps -run %XCMD 'zlink "multiver.edit1"'
+cp multiver.edit1.m multiveredit1.m
+$ydb_dist/mumps -nameofrtn=multiver multiveredit1.m
 $gtm_exe/mumps -run multiver
 
 echo ""
@@ -59,7 +60,8 @@ echo "# Test recursive relink + shared libraries"
 $gtm_exe/mumps c.m
 $gt_ld_m_shl_linker ${gt_ld_option_output} shlib$gt_ld_shl_suffix c.o ${gt_ld_m_shl_options} >& link1_ld.outx
 # compile c.edit
-$gtm_exe/mumps -run %XCMD 'zlink "c.edit"'
+cp c.edit.m cedit.m
+$ydb_dist/mumps -nameofrtn=c cedit.m
 $gt_ld_m_shl_linker ${gt_ld_option_output} editshlib$gt_ld_shl_suffix c.o ${gt_ld_m_shl_options} >& link2_ld.outx
 # run test
 $gtm_exe/mumps -run crun
