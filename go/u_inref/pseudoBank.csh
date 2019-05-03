@@ -51,9 +51,10 @@ endif
 
 # Build our routine (must be built due to use of cgo).
 echo "# Building pseudoBank"
-go build
+$gobuild >& go_build.log
 if (0 != $status) then
-    echo "TEST-E-FAILED : Unable to build pseudoBank.go"
+    echo "TEST-E-FAILED : Unable to build pseudoBank.go. go_build.log output follows."
+    cat go_build.log
     exit 1
 endif
 #

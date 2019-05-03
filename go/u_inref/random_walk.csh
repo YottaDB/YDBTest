@@ -38,7 +38,12 @@ endif
 
 echo "# Running Go program"
 # Since there are many outputs, and more will come over time, just grep for problems after
-$gotest -c -o random_walk_exe
+$gotest -c -o random_walk_exe >& go_test.log
+if (0 != $status) then
+    echo "TEST-E-FAILED : [$gotest -c -o random_walk_exe] failed for random_walk_test.go. go_test.log output follows."
+    cat go_test.log
+    exit 1
+endif
 `pwd`/random_walk_exe -test.bench=. > output.txt
 
 grep "panic" output.txt

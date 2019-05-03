@@ -50,9 +50,10 @@ if (0 != $status) then
 endif
 # Build our routine (must be built due to use of cgo).
 echo "# Building threeenp1B2"
-$gobuild
+$gobuild >& go_build.log
 if (0 != $status) then
-    echo "TEST-E-FAILED : Unable to build threeenp1B2.go"
+    echo "TEST-E-FAILED : Unable to build threeenp1B2.go. go_build.log output follows."
+    cat go_build.log
     exit 1
 endif
 #

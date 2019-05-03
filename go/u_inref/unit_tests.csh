@@ -61,7 +61,12 @@ if (0 == $status) then
 	endif
 
 	pushd $GOPATH/src/$go_repo/ > /dev/null
-	$gotest -c -o unit_tests_exe $go_repo
+	$gotest -c -o unit_tests_exe $go_repo >& go_test.log
+	if (0 != $status) then
+		echo "TEST-E-FAILED : [$gotest -c -o unit_tests_exe $go_repo] failed. go_test.log output follows."
+		cat go_test.log
+		exit 1
+	endif
 	`pwd`/unit_tests_exe
 	if ($status) then
 		echo "TEST-E-FAILED : go test $go_repo returned failure status of $status"
