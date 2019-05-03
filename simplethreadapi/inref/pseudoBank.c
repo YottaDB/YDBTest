@@ -31,7 +31,7 @@
 pthread_t tids[NUM_THREADS];
 pthread_t timeout;
 int isTimeout;
-int idShift = ceil(log10(NUM_THREADS));
+int idShift;
 
 /* structs to pass arguments */
 struct threadArgs{
@@ -106,6 +106,7 @@ int main(){
 
 	int user = rand();
 	struct threadArgs argsArr[NUM_THREADS];
+	idShift = ceil(log10(NUM_THREADS));
 
 	isTimeout = 0;
 	pthread_create(&timeout, NULL, &toggleTimeout, NULL);
