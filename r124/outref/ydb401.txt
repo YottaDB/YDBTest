@@ -6,8 +6,6 @@ https://gitlab.com/YottaDB/DB/YDB/issues/401 or https://github.com/YottaDB/YDB/i
 
 # Copy relevant files
 # Running the make file
-gcc -Wall -o ydb401 ydb401.c -fPIC -L##SOURCE_PATH## -lyottadb -Wl,-rpath,##SOURCE_PATH## -I##SOURCE_PATH##
-gcc -Wall -shared -o ydb401_plugin##TEST_SHL_SUFFIX## ydb401_plugin.c -fPIC -L##SOURCE_PATH## -lyottadb -I##SOURCE_PATH##
 ##TEST_PATH##/ydb401
 Call-in to echo()
 ##TEST_AWKzyre=YottaDB .* Linux .*

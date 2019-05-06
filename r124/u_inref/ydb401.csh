@@ -35,4 +35,10 @@ call:	void call^ydb401()
 CAT_EOF
 
 echo "# Running the make file"
+make -f ydb401_Makefile all >& link.err
+if ($status) then
+	echo "Linking callinerr.o failed. See below output (also in link.err)"
+	cat link.err
+	exit -1
+endif
 make -f ydb401_Makefile run
