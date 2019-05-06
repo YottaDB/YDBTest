@@ -4,6 +4,9 @@
 # Copyright (c) 2004-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -60,7 +63,7 @@ if ( ("Linux" == "$HOSTOS") || ("HP-UX" == "$HOSTOS") ) then
 	else
 		set args = "-pid $pid"
 	endif
-	echo "" | $tst_awk '{printf "info threads\nthread apply all bt\ndetach\nquit\n"}'	>& $cmdfile
+	echo "" | $tst_awk '{printf "info threads\nset backtrace limit 100\nthread apply all bt\ndetach\nquit\n"}'	>& $cmdfile
 	$dbx $image $args --command=$cmdfile
 else if ("AIX" == "$HOSTOS") then
 	if ($?corefile) then
