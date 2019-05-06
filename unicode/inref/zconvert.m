@@ -3,6 +3,9 @@
 ; Copyright (c) 2006-2016 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -101,7 +104,7 @@ longstring ;
 		else  set str=$$^longstr(10000) set strout=$ZCONVERT($ZCONVERT(str,"U"),"L")
 		set fname="longstr"_$ZCHSET_".out"
 		open fname:(new) use fname write strout close fname
-		ZSYSTEM "diff longstr"_$ZCHSET_".out $gtm_tst/$tst/outref/"
+		ZSYSTEM "diff longstr"_$ZCHSET_".{cmp,out}"
 threeargs ;
 		if ("UTF-8"'=$ZCHSET) quit
 		write "******* Testing ZCONVERT three argument form*******",!
