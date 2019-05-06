@@ -3,7 +3,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -245,11 +245,16 @@ BEGIN {
 	else
 		envir[no_options] = "MUPJNL_PARALLEL"
 	#
-	option_names[++no_options] = "gtm_test_linux_distrib"
-	if ("arch" == ENVIRON["gtm_test_linux_distrib"])
-		envir[no_options] = "ARCH_LINUX"
-	else if ("ubuntu" == ENVIRON["gtm_test_linux_distrib"])
-		envir[no_options] = "UBUNTU_LINUX"
+	if ("x86_64" == ENVIRON["real_mach_type"])
+	{
+		option_names[++no_options] = "gtm_test_linux_distrib"
+		if ("arch" == ENVIRON["gtm_test_linux_distrib"])
+			envir[no_options] = "ARCH_LINUX_X86_64"
+		else if ("debian" == ENVIRON["gtm_test_linux_distrib"])
+			envir[no_options] = "DEBIAN_LINUX_X86_64"
+		else if ("ubuntu" == ENVIRON["gtm_test_linux_distrib"])
+			envir[no_options] = "UBUNTU_LINUX_X86_64"
+	}
 	#
 	option_names[++no_options] = "gtm_test_singlecpu"
 	if (1 == ENVIRON["gtm_test_singlecpu"])

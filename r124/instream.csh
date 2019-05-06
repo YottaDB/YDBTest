@@ -127,10 +127,14 @@ if (("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) || ("HOST_LINUX_AARCH64" == $
 endif
 
 source $gtm_tst/com/set_gtm_machtype.csh	# to setenv "gtm_test_linux_distrib"
-if (("arch" == $gtm_test_linux_distrib) || ("ubuntu" == $gtm_test_linux_distrib)) then
+if (("HOST_LINUX_X86_64" == $gtm_test_os_machtype)			\
+		&& (("arch" == $gtm_test_linux_distrib)			\
+			|| ("ubuntu" == $gtm_test_linux_distrib)	\
+			|| ("debian" == $gtm_test_linux_distrib))) then
 	# The "jnlunxpcterr" subtest has seen to frequently cause a CPU soft lockup.
 	# The actual error message in syslog is "watchdog: BUG: soft lockup - CPU#1 stuck for 22s! [mupip:19422]"
-	# For reasons not yet clear, this happens currently only on our Ubuntu and Arch Linux boxes, never on RHEL or ARM boxes.
+	# For reasons not yet clear, this happens currently only on our Ubuntu/Arch/Debian x86_64 linux boxes,
+	# never on RHEL x86_64 or any of the ARM boxes (even if they run Ubuntu/Arch/Debian).
 	# So disable this subtest on those affected platforms.
 	setenv subtest_exclude_list "$subtest_exclude_list jnlunxpcterr"
 endif
