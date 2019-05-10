@@ -40,8 +40,9 @@ echo "################ TEST CASE 1 ################"
 echo "# Create a data base with 992M blocks"
 setenv gtm_test_disable_randomdbtn 1
 
-if ($gtm_platform_size != 64) then
-	# Disable MM on 32-bit platforms as an mmap of this 20TB sized database would just not work.
+if ( "HOST_LINUX_X86_64" != $gtm_test_os_machtype) then
+	# Disable MM on 32-bit platforms (ARMV7L, ARMV6L) or 64-bit ARM (AARCH64) as an mmap of this 20TB sized database
+	# would fail with a "%SYSTEM-E-ENO12, Cannot allocate memory" error.
 	# With BG though, we don't have such issues since only a subset of the database is cached in the global buffers.
 	setenv acc_meth BG
 	echo "# override acc_meth in test to BG (since MM on 32-bit platforms for 20TB db will not work)" >>&! settings.csh
