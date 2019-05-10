@@ -2,7 +2,7 @@
 ;								;
 ; Copyright 2012, 2013 Fidelity Information Services, Inc	;
 ;								;
-; Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -104,9 +104,7 @@ interrupter
 	set mainpid=^mainpid
 	set intrptdelay=^intrptdelay
 	lock +^intrptlock
-	for  quit:^quit  do
-	.	if $zsigproc(mainpid,signal)
-	.	hang intrptdelay*(1+$random(10))
+	for  quit:(^quit!$zsigproc(mainpid,signal))  hang intrptdelay*(1+$random(10))
 	quit
 
 adder(i0,i1,i2,i3,i4)
