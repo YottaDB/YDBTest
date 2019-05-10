@@ -69,12 +69,12 @@ int main()
 	YDB_ASSERT(YDB_LOCK_TIMEOUT == status);
 	if (2 < (end - begin))
 	{
-		printf("Lock timeout test failed for ydb_lock_st() : Timeout expected = 1 second. Actual timeout = %d seconds\n",
-			(int)(end - begin)); fflush(stdout);
+		printf("Lock timeout test failed for ydb_lock_st() : Timeout expected = 1 or 2 seconds."
+			" Actual timeout = %d seconds\n", (int)(end - begin)); fflush(stdout);
 	} else
 	{
-		printf("Lock timeout test PASSED for ydb_lock_st() : Timeout expected = 1 second. Actual timeout = %d seconds\n",
-			(int)(end - begin)); fflush(stdout);
+		printf("Lock timeout test PASSED for ydb_lock_st() : Timeout expected = 1 or 2 seconds."
+			" Actual timeout = 1 or 2 seconds\n"); fflush(stdout);
 	}
 
 	printf("Attempt to lock +^lock2(42) in parent : Expect YDB_LOCK_TIMEOUT error\n"); fflush(stdout);
@@ -84,12 +84,12 @@ int main()
 	YDB_ASSERT(YDB_LOCK_TIMEOUT == status);
 	if (2 < (end - begin))
 	{
-		printf("Lock timeout test failed for ydb_lock_incr_st() : Timeout expected = 1 second. Actual timeout = "
-			"%d seconds\n", (int)(end - begin)); fflush(stdout);
+		printf("Lock timeout test failed for ydb_lock_incr_st() : Timeout expected = 1 or 2 seconds."
+			" Actual timeout = %d seconds\n", (int)(end - begin)); fflush(stdout);
 	} else
 	{
-		printf("Lock timeout test PASSED for ydb_lock_incr_st() : Timeout expected = 1 second. Actual timeout = "
-			"%d seconds\n", (int)(end - begin)); fflush(stdout);
+		printf("Lock timeout test PASSED for ydb_lock_incr_st() : Timeout expected = 1 or 2 seconds."
+			" Actual timeout = 1 or 2 seconds\n"); fflush(stdout);
 	}
 
 	/* Signal child to die */

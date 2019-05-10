@@ -39,9 +39,9 @@ lock1_simple complete
 First lock ^lock2 in child
 Wait for child to have done LOCK ^lock2
 Attempt to lock ^lock2(42) in parent : Expect YDB_LOCK_TIMEOUT error
-Lock timeout test PASSED for ydb_lock_st() : Timeout expected = 1 second. Actual timeout = 1 seconds
+Lock timeout test PASSED for ydb_lock_st() : Timeout expected = 1 or 2 seconds. Actual timeout = 1 or 2 seconds
 Attempt to lock +^lock2(42) in parent : Expect YDB_LOCK_TIMEOUT error
-Lock timeout test PASSED for ydb_lock_incr_st() : Timeout expected = 1 second. Actual timeout = 1 seconds
+Lock timeout test PASSED for ydb_lock_incr_st() : Timeout expected = 1 or 2 seconds. Actual timeout = 1 or 2 seconds
 
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
