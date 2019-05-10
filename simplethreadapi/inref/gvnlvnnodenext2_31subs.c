@@ -98,9 +98,9 @@ int main(int argc, char** argv)
 					printf("ydb_node_next_st() [odd] : subsbuff [%d]: %s\n", subs, errbuf);
 					fflush(stdout);
 					return YDB_OK;
-				} else if (tmpsubs != MAX_SUBS)
+				} else if (0 != tmpsubs)
 				{
-					printf("ydb_node_next_st(): *ret_subs_used was altered: %d\n", tmpsubs);
+					printf("ydb_node_next_st(): *ret_subs_used was set/left as %d instead of being set to 0\n", tmpsubs);
 					fflush(stdout);
 				} else if (ret_test != ret_value1[subs].len_used || memcmp(rettestbuff, ret_value1[subs].buf_addr, ret_value1[subs].len_used) != 0)
 				{
@@ -109,7 +109,7 @@ int main(int argc, char** argv)
 				} else
 				{
 					printf("ydb_node_next_st() returned YDB_ERR_NODEEND\n");
-					printf("*ret_subs_used was unaltered\n");
+					printf("*ret_subs_used was set to 0\n");
 					printf("*ret_value was unaltered\n");
 					fflush(stdout);
 				}
@@ -137,9 +137,9 @@ int main(int argc, char** argv)
 					printf("ydb_node_next_st() [odd] : subsbuff [%d]: %s\n", subs, errbuf);
 					fflush(stdout);
 					return YDB_OK;
-				} else if (tmpsubs != MAX_SUBS)
+				} else if (0 != tmpsubs)
 				{
-					printf("ydb_node_next_st(): *ret_subs_used was altered: %d\n", tmpsubs);
+					printf("ydb_node_next_st(): *ret_subs_used was set/left as %d instead of being set to 0\n", tmpsubs);
 					fflush(stdout);
 				} else if (ret_test != ret_value2[subs].len_used || memcmp(rettestbuff, ret_value2[subs].buf_addr, ret_value2[subs].len_used) != 0)
 				{
@@ -148,7 +148,7 @@ int main(int argc, char** argv)
 				} else
 				{
 					printf("ydb_node_next_st() returned YDB_ERR_NODEEND\n");
-					printf("*ret_subs_used was unaltered\n");
+					printf("*ret_subs_used was set to 0\n");
 					printf("*ret_value was unaltered\n");
 					fflush(stdout);
 				}

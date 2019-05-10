@@ -9,7 +9,7 @@
 # Get the next node of Global variable with 0 subscripts
 Starting at ^X()
 ydb_node_next_st() returned YDB_ERR_NODEEND
-*ret_subs_used was unaltered.
+*ret_subs_used was set to 0.
 *ret_value was unaltered.
 
 # Set a Global variable with 1 subscript
@@ -17,7 +17,7 @@ ydb_node_next_st() returned YDB_ERR_NODEEND
 Starting at ^X()
 Call 1: ydb_node_next_st() returned ^X(1)
 ydb_node_next_st() returned YDB_ERR_NODEEND
-*ret_subs_used was unaltered.
+*ret_subs_used was set to 0.
 *ret_value was unaltered.
 
 # Set a Global variable with a 2-depth index
@@ -26,7 +26,7 @@ Starting at ^X()
 Call 1: ydb_node_next_st() returned ^X(1)
 Call 2: ydb_node_next_st() returned ^X(1, 2)
 ydb_node_next_st() returned YDB_ERR_NODEEND
-*ret_subs_used was unaltered.
+*ret_subs_used was set to 0.
 *ret_value was unaltered.
 
 # Set another Global variable with another 1-depth index
@@ -36,7 +36,7 @@ Call 1: ydb_node_next_st() returned ^X(1)
 Call 2: ydb_node_next_st() returned ^X(1, 2)
 Call 3: ydb_node_next_st() returned ^X(3)
 ydb_node_next_st() returned YDB_ERR_NODEEND
-*ret_subs_used was unaltered.
+*ret_subs_used was set to 0.
 *ret_value was unaltered.
 
 ---> Running gvnlvnnodenext2_31subs for Global Variables <---
@@ -138,7 +138,7 @@ ydb_node_next_st() returned ^X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,2
 ydb_node_next_st() returned ^X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31)
 # Get the next node after a node at 31 subscript depth
 ydb_node_next_st() returned YDB_ERR_NODEEND
-*ret_subs_used was unaltered
+*ret_subs_used was set to 0
 *ret_value was unaltered
 
 ---> Running gvnlvnnodenext3_errors for Global Variables <---
@@ -193,7 +193,7 @@ ydb_node_next_st() [232]: 151027794,(SimpleThreadAPI),%YDB-E-SUBSARRAYNULL, Non-
 # Get the next node of Local variable with 0 subscripts
 Starting at X()
 ydb_node_next_st() returned YDB_ERR_NODEEND
-*ret_subs_used was unaltered.
+*ret_subs_used was set to 0.
 *ret_value was unaltered.
 
 # Set a Local variable with 1 subscript
@@ -201,7 +201,7 @@ ydb_node_next_st() returned YDB_ERR_NODEEND
 Starting at X()
 Call 1: ydb_node_next_st() returned X(1)
 ydb_node_next_st() returned YDB_ERR_NODEEND
-*ret_subs_used was unaltered.
+*ret_subs_used was set to 0.
 *ret_value was unaltered.
 
 # Set a Local variable with a 2-depth index
@@ -210,7 +210,7 @@ Starting at X()
 Call 1: ydb_node_next_st() returned X(1)
 Call 2: ydb_node_next_st() returned X(1, 2)
 ydb_node_next_st() returned YDB_ERR_NODEEND
-*ret_subs_used was unaltered.
+*ret_subs_used was set to 0.
 *ret_value was unaltered.
 
 # Set another Local variable with another 1-depth index
@@ -220,7 +220,7 @@ Call 1: ydb_node_next_st() returned X(1)
 Call 2: ydb_node_next_st() returned X(1, 2)
 Call 3: ydb_node_next_st() returned X(3)
 ydb_node_next_st() returned YDB_ERR_NODEEND
-*ret_subs_used was unaltered.
+*ret_subs_used was set to 0.
 *ret_value was unaltered.
 
 ---> Running gvnlvnnodenext2_31subs for Local Variables <---
@@ -322,7 +322,7 @@ ydb_node_next_st() returned X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20
 ydb_node_next_st() returned X(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31)
 # Get the next node after a node at 31 subscript depth
 ydb_node_next_st() returned YDB_ERR_NODEEND
-*ret_subs_used was unaltered
+*ret_subs_used was set to 0
 *ret_value was unaltered
 
 ---> Running gvnlvnnodenext3_errors for Local Variables <---

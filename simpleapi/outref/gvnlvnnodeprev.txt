@@ -8,14 +8,14 @@
 # Get the previous node of Global variable with 0 subscripts
 Starting at ^X()
 ydb_node_previous_s() returned YDB_ERR_NODEEND
-*ret_subs_used was unaltered.
+*ret_subs_used was set to 0.
 *ret_value was unaltered.
 # Set a Global variable with 1 subscript
 # Get the previous node of Global variable with 1 subscript
 Starting at ^X(1)
 # Call 1: ydb_node_previous_s() returned ^X()
 ydb_node_previous_s() returned YDB_ERR_NODEEND
-*ret_subs_used was unaltered.
+*ret_subs_used was set to 0.
 *ret_value was unaltered.
 # Set a Global variable with a 2-depth index
 # Get the first node of Global variable using two calls to ydb_node_previous_s()
@@ -23,7 +23,7 @@ Starting at ^X(1,2)
 # Call 1: ydb_node_previous_s() returned ^X(1)
 # Call 2: ydb_node_next_s() returned ^X()
 ydb_node_previous_s() returned YDB_ERR_NODEEND
-*ret_subs_used was unaltered.
+*ret_subs_used was set to 0.
 *ret_value was unaltered.
 # Set another Global variable with another 1-depth index
 # Get the first node of Global variable with 3 calls to ydb_node_previous_s()
@@ -32,7 +32,7 @@ Starting at ^X(3)
 # Call 2: ydb_node_previous_s() returned ^X(1)
 # Call 3: ydb_node_previous_s() returned ^X()
 ydb_node_previous_s() returned YDB_ERR_NODEEND
-*ret_subs_used was unaltered.
+*ret_subs_used was set to 0.
 *ret_value was unaltered.
 
 ---> Running gvnlvnnodeprev2_31subs for Global Variables <---
@@ -134,7 +134,7 @@ ydb_node_previous_s() returned ^X(1)
 ydb_node_previous_s() returned ^X()
 # Get the previous node after a node at 0 subscript depth
 ydb_node_previous_s() returned YDB_ERR_NODEEND
-*ret_subs_used was unaltered
+*ret_subs_used was set to 0
 *ret_value was unaltered
 
 ---> Running gvnlvnnodeprev3_errors for Global Variables <---
@@ -188,14 +188,14 @@ ydb_node_previous_s() [245]: 151027794,(SimpleAPI),%YDB-E-SUBSARRAYNULL, Non-zer
 # Get the previous node of Local variable with 0 subscripts
 Starting at X()
 ydb_node_previous_s() returned YDB_ERR_NODEEND
-*ret_subs_used was unaltered.
+*ret_subs_used was set to 0.
 *ret_value was unaltered.
 # Set a Local variable with 1 subscript
 # Get the previous node of Local variable with 1 subscript
 Starting at X(1)
 # Call 1: ydb_node_previous_s() returned X()
 ydb_node_previous_s() returned YDB_ERR_NODEEND
-*ret_subs_used was unaltered.
+*ret_subs_used was set to 0.
 *ret_value was unaltered.
 # Set a Local variable with a 2-depth index
 # Get the first node of Local variable using two calls to ydb_node_previous_s()
@@ -203,7 +203,7 @@ Starting at X(1,2)
 # Call 1: ydb_node_previous_s() returned X(1)
 # Call 2: ydb_node_next_s() returned X()
 ydb_node_previous_s() returned YDB_ERR_NODEEND
-*ret_subs_used was unaltered.
+*ret_subs_used was set to 0.
 *ret_value was unaltered.
 # Set another Local variable with another 1-depth index
 # Get the first node of Local variable with 3 calls to ydb_node_previous_s()
@@ -212,7 +212,7 @@ Starting at X(3)
 # Call 2: ydb_node_previous_s() returned X(1)
 # Call 3: ydb_node_previous_s() returned X()
 ydb_node_previous_s() returned YDB_ERR_NODEEND
-*ret_subs_used was unaltered.
+*ret_subs_used was set to 0.
 *ret_value was unaltered.
 
 ---> Running gvnlvnnodeprev2_31subs for Local Variables <---
@@ -314,7 +314,7 @@ ydb_node_previous_s() returned X(1)
 ydb_node_previous_s() returned X()
 # Get the previous node after a node at 0 subscript depth
 ydb_node_previous_s() returned YDB_ERR_NODEEND
-*ret_subs_used was unaltered
+*ret_subs_used was set to 0
 *ret_value was unaltered
 
 ---> Running gvnlvnnodeprev3_errors for Local Variables <---
