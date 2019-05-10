@@ -20,7 +20,9 @@ set go_repo="lang.yottadb.com/go/yottadb"
 mkdir go
 
 # Retrieve yottadb package from the repository using "go get".
-set cmdtorun = "go get -d -v -x -t $go_repo"
+set cmdtorunprefix = "go get"
+set cmdtorunsuffix = "-d -v -x -t $go_repo"
+set cmdtorun = "$cmdtorunprefix $cmdtorunsuffix"
 echo "# Running : $cmdtorun"
 # Occasionally we have seen "TLS handshake timeout" or "i/o timeout" failures on slow boxes if the "go get" takes
 # approximately more than 15 seconds to finish (which can happen on the slow ARMV6L boxes or over less than ideal
@@ -40,6 +42,14 @@ while ($retry < $maxretry)
 	if ($status) then
 		# Some error other than TLS handshake or i/o type timeout happened we don't retry
 		break
+	endif
+	$grep -q -e "net/http: TLS handshake timeout" go_get_$retry.log
+	if ($status) then
+		# It was a TLS handshake timeout error. Try with "-insecure" to see if that helps.
+		# This has been seen to really make a difference at least on 1-CPU systems that are otherwise loaded.
+		set cmdtorun = "$cmdtorunprefix -insecure $cmdtorunsuffix"
+	else
+		set cmdtorun = "$cmdtorunprefix $cmdtorunsuffix"
 	endif
 	@ retry = $retry + 1
 end
