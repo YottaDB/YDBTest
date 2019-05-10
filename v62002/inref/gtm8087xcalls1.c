@@ -3,7 +3,7 @@
  * Copyright (c) 2014-2015 Fidelity National Information 	*
  * Services, Inc. and/or its subsidiaries. All rights reserved.	*
  *								*
- * Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	*
+ * Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -172,8 +172,8 @@ gtm_string_t *murmur_hash(int argc, gtm_char_t *source)
 
 		close(fd);
 
-		gtmmrhash_128(buffer, size, 0, &hash_value);
-		gtmmrhash_128_hex(&hash_value, (unsigned char *)result.address);
+		ydb_mmrhash_128(buffer, size, 0, &hash_value);
+		ydb_mmrhash_128_hex(&hash_value, (unsigned char *)result.address);
 		result.length = 32;
 	}
 

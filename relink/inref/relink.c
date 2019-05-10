@@ -186,8 +186,8 @@ gtm_string_t *murmur_hash(int argc, gtm_char_t *source)
 			size = (int)stat_info.st_size;
 			read_count = read(fd, buffer, size);
 			assert(read_count == size);
-			gtmmrhash_128(buffer, size, 0, &hash_value);
-			gtmmrhash_128_hex(&hash_value, (unsigned char *)buffer);
+			ydb_mmrhash_128(buffer, size, 0, &hash_value);
+			ydb_mmrhash_128_hex(&hash_value, (unsigned char *)buffer);
 			result->length = length;
 			memcpy(result->address, buffer, result->length);
 		}

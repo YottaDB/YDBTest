@@ -1,6 +1,9 @@
 /****************************************************************
  *								*
- *	Copyright 2014 Fidelity Information Services, Inc	*
+ * Copyright 2014 Fidelity Information Services, Inc		*
+ *								*
+ * Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	*
+ * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
  *	of its copyright holder(s), and is made available	*
@@ -148,11 +151,11 @@ void do_test_equiv(int urfd, int size, int zfd, int align)
 	DEBUG_PRINTF("MurmurHash3_x86_128: %08X%08X%08X%08X\n", hashval_128[0], hashval_128[1], hashval_128[2], hashval_128[3]);
 	MurmurHash3_x64_128(buf, data_size, 0, &hashval_128_64);
 	DEBUG_PRINTF("%-30s %016lX%016lX\n", "MurmurHash3_x64_128:", hashval_128_64[0], hashval_128_64[1]);
-	gtmmrhash_128(buf, data_size, 0, &phashval_128);
-	DEBUG_PRINTF("%-30s %016lX%016lX\n", "gtmmrhash_128:", phashval_128.one, phashval_128.two);
+	ydb_mmrhash_128(buf, data_size, 0, &phashval_128);
+	DEBUG_PRINTF("%-30s %016lX%016lX\n", "ydb_mmrhash_128:", phashval_128.one, phashval_128.two);
 	assertpro((hashval_128_64[0] == phashval_128.one) && (hashval_128_64[1] == phashval_128.two));
-	gtmmrhash_128(unaligned_buf + align_offset, data_size, 0, &ua_phashval_128);
-	DEBUG_PRINTF("%-30s %016lX%016lX\n", "gtmmrhash_128(unaligned):", ua_phashval_128.one, ua_phashval_128.two);
+	ydb_mmrhash_128(unaligned_buf + align_offset, data_size, 0, &ua_phashval_128);
+	DEBUG_PRINTF("%-30s %016lX%016lX\n", "ydb_mmrhash_128(unaligned):", ua_phashval_128.one, ua_phashval_128.two);
 	assertpro((hashval_128_64[0] == ua_phashval_128.one) && (hashval_128_64[1] == ua_phashval_128.two));
 
 	/* Test 128-bit incremental hashing */
@@ -164,11 +167,11 @@ void do_test_equiv(int urfd, int size, int zfd, int align)
 		assertpro(0 == status);
 		if (inc_size + i > data_size)
 			inc_size = data_size - i;
-		gtmmrhash_128_ingest(&phash_state_128, unaligned_buf + align_offset + i, inc_size);
+		ydb_mmrhash_128_ingest(&phash_state_128, unaligned_buf + align_offset + i, inc_size);
 	}
 	DEBUG_PRINTF("%d\n", data_size);
-	gtmmrhash_128_result(&phash_state_128, data_size, &inc_phashval_128);
-	DEBUG_PRINTF("%-30s %016lX%016lX\n", "gtmmrhash_128(incremental):", inc_phashval_128.one, inc_phashval_128.two);
+	ydb_mmrhash_128_result(&phash_state_128, data_size, &inc_phashval_128);
+	DEBUG_PRINTF("%-30s %016lX%016lX\n", "ydb_mmrhash_128(incremental):", inc_phashval_128.one, inc_phashval_128.two);
 	assertpro((hashval_128_64[0] == inc_phashval_128.one) && (hashval_128_64[1] == inc_phashval_128.two));
 
 	/* Test md5 */
@@ -241,9 +244,9 @@ void do_test_perf(void)
 	now = time(0);
 	mypid = getpid();
 	HASH128_STATE_INIT(phash_state_128, 0);
-	gtmmrhash_128_ingest(&phash_state_128, &now, SIZEOF(now));
-	gtmmrhash_128_ingest(&phash_state_128, &mypid, SIZEOF(mypid));
-	gtmmrhash_128_result(&phash_state_128, SIZEOF(now) + SIZEOF(mypid), &phashval_128);
+	ydb_mmrhash_128_ingest(&phash_state_128, &now, SIZEOF(now));
+	ydb_mmrhash_128_ingest(&phash_state_128, &mypid, SIZEOF(mypid));
+	ydb_mmrhash_128_result(&phash_state_128, SIZEOF(now) + SIZEOF(mypid), &phashval_128);
 	srandom((unsigned int)phashval_128.one);
 
 	for (i = 0; i < MAX_INCREMENTS; i++)
@@ -288,9 +291,9 @@ void do_test_perf(void)
 			/* Progressive 128-bit hash */
 			getrusage(RUSAGE_SELF, &before);
 			for (i = 0; i < ITERATIONS; i++)
-				gtmmrhash_128(unaligned_buf + align_offset, data_size, 0, &phashval_128);
+				ydb_mmrhash_128(unaligned_buf + align_offset, data_size, 0, &phashval_128);
 			getrusage(RUSAGE_SELF, &after);
-			REAL_PRINTF("%-30s %.3f kbytes/ms\n", "gtmmrhash_128:",
+			REAL_PRINTF("%-30s %.3f kbytes/ms\n", "ydb_mmrhash_128:",
 					(double)data_size * ITERATIONS / 1024 / TIMEVAL_DIFF_MS(after.ru_utime, before.ru_utime));
 
 			assertpro((hashval_128_64[0] == phashval_128.one) && (hashval_128_64[1] == phashval_128.two));
@@ -305,12 +308,12 @@ void do_test_perf(void)
 					inc_size = increments[inc_num % MAX_INCREMENTS];
 					if (inc_size + i > data_size)
 						inc_size = data_size - i;
-					gtmmrhash_128_ingest(&phash_state_128, unaligned_buf + align_offset + i, inc_size);
+					ydb_mmrhash_128_ingest(&phash_state_128, unaligned_buf + align_offset + i, inc_size);
 				}
-				gtmmrhash_128_result(&phash_state_128, data_size, &phashval_128);
+				ydb_mmrhash_128_result(&phash_state_128, data_size, &phashval_128);
 			}
 			getrusage(RUSAGE_SELF, &after);
-			REAL_PRINTF("%-30s %.3f kbytes/ms\n", "gtmmrhash_128 (incremental):",
+			REAL_PRINTF("%-30s %.3f kbytes/ms\n", "ydb_mmrhash_128 (incremental):",
 					(double)data_size * ITERATIONS / 1024 / TIMEVAL_DIFF_MS(after.ru_utime, before.ru_utime));
 			assertpro((hashval_128_64[0] == phashval_128.one) && (hashval_128_64[1] == phashval_128.two));
 
@@ -367,18 +370,18 @@ void do_test_stable(void)
 	hash128_state_t		phash_state_128;
 
 	DEBUG_PRINTF("Hello\n=====\n");
-	gtmmrhash_128(hello_str, SIZEOF(hello_str), 0, &phashval_128);
-	DEBUG_PRINTF("%-30s %016lX%016lX\n", "gtmmrhash_128:", phashval_128.one, phashval_128.two);
+	ydb_mmrhash_128(hello_str, SIZEOF(hello_str), 0, &phashval_128);
+	DEBUG_PRINTF("%-30s %016lX%016lX\n", "ydb_mmrhash_128:", phashval_128.one, phashval_128.two);
 	assertpro((phashval_128.one == hello_hash_expected.one) && (phashval_128.two == hello_hash_expected.two));
 
 	DEBUG_PRINTF("\nAlpha\n=====\n");
-	gtmmrhash_128(alpha_str, SIZEOF(alpha_str), 0, &phashval_128);
-	DEBUG_PRINTF("%-30s %016lX%016lX\n", "gtmmrhash_128:", phashval_128.one, phashval_128.two);
+	ydb_mmrhash_128(alpha_str, SIZEOF(alpha_str), 0, &phashval_128);
+	DEBUG_PRINTF("%-30s %016lX%016lX\n", "ydb_mmrhash_128:", phashval_128.one, phashval_128.two);
 	assertpro((phashval_128.one == alpha_hash_expected.one) && (phashval_128.two == alpha_hash_expected.two));
 
 	DEBUG_PRINTF("\nTime\n====\n");
-	gtmmrhash_128(time_str, SIZEOF(time_str), 0, &phashval_128);
-	DEBUG_PRINTF("%-30s %016lX%016lX\n", "gtmmrhash_128:", phashval_128.one, phashval_128.two);
+	ydb_mmrhash_128(time_str, SIZEOF(time_str), 0, &phashval_128);
+	DEBUG_PRINTF("%-30s %016lX%016lX\n", "ydb_mmrhash_128:", phashval_128.one, phashval_128.two);
 	assertpro((phashval_128.one == time_hash_expected.one) && (phashval_128.two == time_hash_expected.two));
 }
 

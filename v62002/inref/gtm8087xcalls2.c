@@ -2,6 +2,9 @@
  *                                                              *
  * Copyright (c) 2011-2015 Fidelity National Information 	*
  * Services, Inc. and/or its subsidiaries. All rights reserved.	*
+ *								*
+ * Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	*
+ * All rights reserved.						*
  *                                                              *
  *      This source code contains the intellectual property     *
  *      of its copyright holder(s), and is made available       *
@@ -675,33 +678,33 @@ MBSTART {													\
 #define UNALIGNED_SAFE	(defined(__i386) || defined(__x86_64__) || defined(_AIX))
 
 /* This is an endian-independent 16-byte murmur hash function */
-void gtmmrhash_128(const void *key, int len, uint4 seed, gtm_uint16 *out)
+void ydb_mmrhash_128(const void *key, int len, uint4 seed, gtm_uint16 *out)
 {
 	hash128_state_t state;
 
 	HASH128_STATE_INIT(state, seed);
 	assert((state.carry_bytes == 0) && (state.c.one == 0) && (state.c.two == 0));
-	gtmmrhash_128_ingest(&state, key, len);
-	gtmmrhash_128_result(&state, len, out);
+	ydb_mmrhash_128_ingest(&state, key, len);
+	ydb_mmrhash_128_result(&state, len, out);
 }
 
-/* This is the same as gtmmrhash_128 (i.e. is endian independent) except that it generates a 4-byte hash
+/* This is the same as ydb_mmrhash_128 (i.e. is endian independent) except that it generates a 4-byte hash
  * (needed e.g. by STR_HASH macro). To avoid the overhead of an extra function call, we duplicate the
  * code of "gtmmmrhash_128" here.
  */
-void gtmmrhash_32(const void *key, int len, uint4 seed, uint4 *out4)
+void ydb_mmrhash_32(const void *key, int len, uint4 seed, uint4 *out4)
 {
 	hash128_state_t state;
 	gtm_uint16	out16;
 
 	HASH128_STATE_INIT(state, seed);
 	assert((state.carry_bytes == 0) && (state.c.one == 0) && (state.c.two == 0));
-	gtmmrhash_128_ingest(&state, key, len);
-	gtmmrhash_128_result(&state, len, &out16);
+	ydb_mmrhash_128_ingest(&state, key, len);
+	ydb_mmrhash_128_result(&state, len, &out16);
 	*out4 = (uint4)out16.one;
 }
 
-void gtmmrhash_128_ingest(hash128_state_t *state, const void *key, int len)
+void ydb_mmrhash_128_ingest(hash128_state_t *state, const void *key, int len)
 {
 	int			i;
 	gtm_uint8		k1, k2;
@@ -732,7 +735,7 @@ void gtmmrhash_128_ingest(hash128_state_t *state, const void *key, int len)
 		PROCESS_BYTES(state, keyptr, len);
 }
 
-void gtmmrhash_128_result(hash128_state_t *state, uint4 total_len, gtm_uint16 *out)
+void ydb_mmrhash_128_result(hash128_state_t *state, uint4 total_len, gtm_uint16 *out)
 {
 	gtm_uint8		k1, k2, h1, h2;
 
@@ -765,7 +768,7 @@ void gtmmrhash_128_result(hash128_state_t *state, uint4 total_len, gtm_uint16 *o
 	out->two = h2;
 }
 
-void gtmmrhash_128_bytes(const gtm_uint16 *hash, unsigned char *out)
+void ydb_mmrhash_128_bytes(const gtm_uint16 *hash, unsigned char *out)
 {
 #	ifdef BIGENDIAN
 #	define EXTRACT_BYTE(X, N)	(((uint64_t)(X) & ((uint64_t)0xff << (N) * 8)) >> (N) * 8)
@@ -791,12 +794,12 @@ void gtmmrhash_128_bytes(const gtm_uint16 *hash, unsigned char *out)
 #	endif
 }
 
-void gtmmrhash_128_hex(const gtm_uint16 *hash, unsigned char *out)
+void ydb_mmrhash_128_hex(const gtm_uint16 *hash, unsigned char *out)
 {
 	int			i;
 	unsigned char		bytes[16], n;
 
-	gtmmrhash_128_bytes(hash, bytes);
+	ydb_mmrhash_128_bytes(hash, bytes);
 	for (i = 0; i < 16; i++)
 	{
 		n = bytes[i] & 0xf;
