@@ -406,7 +406,7 @@ echo "# Attempt mupip set on Frozen Instance"
 echo ""
 
 ($MUPIP set -region "*" -journal=before -replic=on >&! set_frozen.out & ; echo $! >! mupip_set_pid.out)	>> mupip_set_bkgrnded.out
-$gtm_tst/com/wait_for_log.csh -message MUINSTFROZEN -log set_frozen.out -duration 15
+$gtm_tst/com/wait_for_log.csh -message MUINSTFROZEN -log set_frozen.out -duration 60
 
 # Verify that we are still frozen
 @ still_frozen++
