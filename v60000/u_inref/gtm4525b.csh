@@ -194,7 +194,8 @@ $gtm_tst/com/getoper.csh "$syslog_before2" "" syslog2.txt "" "REPLINSTUNFROZEN"
 
 setenv gtm_test_jobid 2
 setenv gtm_test_dbfillid 2
-@ max_sleep = 600		# 300 was a little short on some slower machines under load; normal case will be much shorter
+# max_sleep of 600 was a little short on some slower machines under load hence bumped up to 3600; normal case will be much shorter
+@ max_sleep = 3600
 $gtm_exe/mumps -r '%XCMD' "do startwait^gtm4525b(${gtm_test_dbfillid},${max_sleep})" >&! imptp_start_wait_${gtm_test_dbfillid}.out
 
 echo ""
