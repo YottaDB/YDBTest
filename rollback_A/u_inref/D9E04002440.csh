@@ -4,6 +4,9 @@
 # Copyright (c) 2005-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -45,7 +48,7 @@ sleep 290
 $gtm_tst/com/rfstatus.csh "BEFORE_SEC_B_CRASH:"
 $sec_shell "$sec_getenv; $gtm_tst/com/receiver_crash.csh"
 $sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/corrupt_jnlrec.csh a b c >>& corrupt_jnlrec.out "
-$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/backup_dbjnl.csh bak22 '*.dat *.mjl* *.gld *.repl' cp nozip"
+$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/backup_dbjnl.csh bak22 '*.dat *.mjl* *.gld *.repl' cp"
 # primary continues to run and creates a backlog
 sleep 60
 
@@ -53,7 +56,7 @@ sleep 60
 $gtm_tst/com/srcstat.csh "BEFORE_PRI_A_CRASH"
 $gtm_tst/com/primary_crash.csh
 $gtm_tst/com/corrupt_jnlrec.csh c e >>& corrupt_jnlrec.out
-$gtm_tst/com/backup_dbjnl.csh bak11 '*.dat *.mjl* *.gld *.repl' cp nozip
+$gtm_tst/com/backup_dbjnl.csh bak11 '*.dat *.mjl* *.gld *.repl' cp
 
 # FAIL OVER #
 echo "Doing Fail over."
