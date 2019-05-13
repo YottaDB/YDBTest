@@ -1,0 +1,11 @@
+# Test of CallMT() and CallMDescT() functions in Go Simple API
+# Running : go get -d -v -x -t lang.yottadb.com/go/yottadb
+##TEST_PATH##/CallMTRetLen.tab
+# Running Go program
+CallMT test
+ciret: Return value:  abcdefghijklmnopqrstuvwxyz
+ciret: Return value length:  26
+CallMDescT test
+ciret: Return value:  abcdefghijklmnopqrstuvwxyz
+ciret: Return value length:  26
+# Done!
