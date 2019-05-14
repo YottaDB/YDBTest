@@ -41,7 +41,12 @@ setenv subtest_exclude_list    ""
 
 if ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) then
 	# filter out below subtest on 32-bit ARM since it could use memory >= 2Gb, a lot on a 32-bit process
-	setenv subtest_exclude_list "$subtest_exclude_list randomWalk"
+	setenv subtest_exclude_list "$subtest_exclude_list randomWalk randomWalkSimple"
+endif
+
+if ($gtm_test_singlecpu) then
+	# disable the random walk tests on single core systems due to use of cgo in YDBGo (which creates 1 thread per goroutine)
+	setenv subtest_exclude_list "$subtest_exclude_list randomWalk randomWalkSimple"
 endif
 
 # Submit the list of subtests
