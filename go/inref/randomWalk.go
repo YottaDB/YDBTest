@@ -337,6 +337,7 @@ func runProc(tptoken uint64, errstr *yottadb.BufferT, settings testSettings, cur
 }
 
 func main() {
+	defer yottadb.Exit()
 	var wg sync.WaitGroup
 	var doneMutex sync.Mutex
 

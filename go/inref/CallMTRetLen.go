@@ -27,6 +27,7 @@ const tptoken uint64 = yottadb.NOTTP
  */
 
 func main() {
+	defer yottadb.Exit()
 
 	/* CallMT section */
 	fmt.Println("CallMT test")

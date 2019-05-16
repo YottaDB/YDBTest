@@ -46,6 +46,7 @@ const startCid = 100001
 const accountNeeded = 1000
 
 func main() {
+	defer yottadb.Exit()
 	id := strconv.Itoa(rand.Int())
 	fmt.Println("init data")
 	initData(accountNeeded)
@@ -96,7 +97,6 @@ func main() {
 	waitGroup.Wait()
 
 	fmt.Println("Done")
-	yottadb.Exit()
 }
 
 func initData(accountNeeded int) {

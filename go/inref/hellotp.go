@@ -17,6 +17,7 @@ import (
 )
 
 func main() {
+	defer yottadb.Exit()
 	var errstr yottadb.BufferT
 
 	errstr.Alloc(64)

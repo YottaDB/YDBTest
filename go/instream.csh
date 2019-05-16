@@ -27,8 +27,8 @@
 echo "go test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
-setenv subtest_list_common     "unit_tests threeenp1B1 threeenp1B2 randomWalk threeenp1C2"
-setenv subtest_list_non_replic "wordfreq pseudoBank CallMTRetLen randomWalkSimple"
+setenv subtest_list_common     "unit_tests threeenp1B1 threeenp1B2 randomWalk randomWalkSimple threeenp1C2"
+setenv subtest_list_non_replic "wordfreq pseudoBank CallMTRetLen"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
