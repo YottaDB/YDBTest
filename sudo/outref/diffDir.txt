@@ -1,0 +1,17 @@
+# Test that invoking ydbinstall (with appropriate full path) from another directory that does not contain ydbinstall
+##TEST_AWKYottaDB version r.* installed successfully at ##TEST_PATH##/install
+##TEST_AWKSkipping YottaDB pkg-config file install for r.* as newer version r.* exists at /usr/share/pkgconfig/yottadb.pc
+
+YDB>
+##TEST_AWKYottaDB r.* Linux .*
+YDB>
+##TEST_AWK[0-9]* [0-9]*:[0-9]*
+YDB>
+
+YDB>
+
+YDB>
+a="Hello,"
+a(1)="World!"
+
+YDB>
