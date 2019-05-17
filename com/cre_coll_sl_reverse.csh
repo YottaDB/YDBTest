@@ -4,7 +4,7 @@
 # Copyright (c) 2003-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -16,14 +16,8 @@
 #create collation shared libraries for a "reverse" sequence ([1-255] -> [255-1])
 setenv cur_dir `pwd`
 set machine_type = `uname -m`
-if ("$gtm_test_osname" == "hp-ux") then
-	set is64bit_gtm=`file $gtm_exe/mumps | $grep -c "IA64"`
-else if ("$gtm_test_osname" == "os390") then
-		set is64bit_gtm = 1
-	else
-		set is64bit_gtm = `file $gtm_exe/mumps | $grep -c "64-bit"`
-	endif
-endif
+source $gtm_tst/com/is_64bitgtm.csh
+set is64bit_gtm = $cur_platform_size
 
 if (("$machine_type" == "x86_64") && ($is64bit_gtm == 0)) then
 	setenv  gtt_cc_shl_options      "$gtt_cc_shl_options -m32"
