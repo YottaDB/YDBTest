@@ -1,2 +1,6 @@
-# gtmroutines is not defined
-$ZROUTINES="."
+# Tests that $zroutines defaults to $ydb_dist/libyottadbutil##TEST_SHL_SUFFIX## when ydb_routines/gtmroutines is not defined
+
+YDB>
+$ZROUTINES="$ydb_dist/libyottadbutil##TEST_SHL_SUFFIX##"
+
+YDB>
