@@ -237,7 +237,7 @@ ydb_incr_s() [229]: 151027794,(SimpleAPI),%YDB-E-SUBSARRAYNULL, Non-zero number 
 
 # Test ydb_incr_s() on X, which is not initially set.
 # Check to make sure X is not set
-ydb_get_s[73]: 150373850,(SimpleAPI),%YDB-E-LVUNDEF, Undefined local variable: 
+ydb_get_s[73]: 150373850,(SimpleAPI),%YDB-E-LVUNDEF, Undefined local variable: X
 # ydb_incr_s() will set the value of X to 0, and then perform the increment.
 # *increment is set to NULL, which defaults to 1
 # Get X to confirm the value has incremented.
