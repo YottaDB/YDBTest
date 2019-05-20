@@ -13,8 +13,8 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include <unistd.h>
-
 #include <string.h>
+
 #include "libyottadb.h"
 
 
@@ -555,7 +555,7 @@ int runProc(uint64_t tptoken, ydb_buffer_t* errstr, testSettings* settings, int 
 			args.settings = settings;
 			args.curDepth = curDepth + 1;
 			int choice = rand();
-			if (choice < RAND_MAX / 2 || curThreads > MAX_THREADS){ //if we are above MAX_THREADS always do ydb_tp_st()
+			if (choice < RAND_MAX / 2 || curThreads > MAX_THREADS - THREADS_TO_MAKE){ //if we are above MAX_THREADS always do ydb_tp_st()
 				/* ydb_tp_st() call */
 				status = ydb_tp_st(tptoken, errstr, tpfn, &args, "BATCH", 0 , NULL);
 				YDB_ASSERT(status == YDB_OK);
@@ -570,6 +570,8 @@ int runProc(uint64_t tptoken, ydb_buffer_t* errstr, testSettings* settings, int 
 					status = pthread_create(&tid[i], NULL, &threadHelper, &args);
 					if(status != 0){
 						printf("there was an issue with creating a thread somewhere\n");
+						perror("pthread_create() failed");
+						YDB_ASSERT(0); //we want to see a core in this case, so always fail the assert
 					}
 				}
 				for(i = 0; i < THREADS_TO_MAKE; ++i){
@@ -578,7 +580,8 @@ int runProc(uint64_t tptoken, ydb_buffer_t* errstr, testSettings* settings, int 
 					curThreads--; //decrement number of threads after they exit
 					pthread_mutex_unlock(&lock);
 					if (status != 0){
-						printf("there was a thread that failed some where\n");
+						printf("there was a thread that failed some where. status: %d\n", status);
+
 					}
 				}
 			}
