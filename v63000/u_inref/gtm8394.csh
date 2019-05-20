@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -83,6 +83,7 @@ echo ">>> Find one value of <limit vmemoryuse> that will cause a YDB-F-MEMORY er
 # Phase 1 : Towards that first find out a value of <limit vmemoryuse> that causes rollback to succeed but half of it causes failure
 echo "Phase 1" >>! rollback_filename_order.txt
 set mem = 32768  # start out with 32Mb as the vmemoryuse limit and use binary search to figure it out
+
 @ max = 0
 while (1)
 	# Since we are limiting vmemoryuse for the rollback, various YDB-E-xxx messages are possible.
@@ -193,7 +194,8 @@ end
 
 echo ">>> Induce out-of-memory error in first rollback by setting vmemoryuse to GTM_TEST_DEBUGINFO [$mid]"
 cp bak/* .  # Restore db/jnl from bak subdirectory before first YDB-F-MEMORY rollback
-(limit vmemoryuse $mid; $gtm_tst/com/mupip_rollback.csh "" -back -verbose -resync=50001 "*" >& rollback1.out)
+(source $gtm_tst/com/limit_vmemoryuse.csh $mid; $gtm_tst/com/mupip_rollback.csh "" -back -verbose -resync=50001 "*" >& rollback1.out)
+
 $gtm_tst/com/backup_dbjnl.csh bak1 "*.gld *.repl *.dat *.mjl*" cp nozip # Dont use "mv". Want next rollback to use this db/jnl
 
 echo ">>> Verify out-of-memory error in first rollback (logfile = rollback1.out)"
@@ -222,7 +224,7 @@ $MUPIP set -journal="enable,on,before" -reg BREG
 $MUPIP set -journal="enable,on,before" -reg DEFAULT
 
 echo ">>> Induce out-of-memory error in second rollback by setting vmemoryuse to same value"
-(limit vmemoryuse $mid; $gtm_tst/com/mupip_rollback.csh "" -back -verbose -resync=1 "*" >& rollback2.out)
+(source $gtm_tst/com/limit_vmemoryuse.csh $mid; $gtm_tst/com/mupip_rollback.csh "" -back -verbose -resync=1 "*" >& rollback2.out)
 $gtm_tst/com/backup_dbjnl.csh bak2 "*.gld *.repl *.dat *.mjl*" cp nozip # Dont use "mv". Want next rollback to use this db/jnl
 
 echo ">>> Verify out-of-memory error in second rollback (logfile = rollback2.out)"

@@ -33,7 +33,7 @@ foreach file (fatalerror.c)
 	endif
 
 	echo "# Set vmemoryuse limit to 200Mb; Eventually triggers YDB-F-MEMORY (and in turn FATALERROR2 error in syslog)"
-	limit vmemoryuse 200000
+	source $gtm_tst/com/limit_vmemoryuse.csh 200000
 	echo "# unsetenv gtmdbglvl (needed for FATALERROR2)"
 	unsetenv gtmdbglvl
 	# We background the executable to get its pid. This is needed so we can search for FATALERROR2 message in syslog

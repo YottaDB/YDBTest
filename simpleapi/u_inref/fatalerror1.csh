@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -33,7 +33,7 @@ foreach file (fatalerror.c)
 	endif
 
 	echo "# Set vmemoryuse limit to 200Mb; Eventually triggers YDB-F-MEMORY (and in turn FATALERROR1 error in syslog)"
-	limit vmemoryuse 200000
+	source $gtm_tst/com/limit_vmemoryuse.csh 200000
 	echo "# setenv gtmdbglvl 0x400 (needed for FATALERROR1)"
 	setenv gtmdbglvl 0x400
 	# We background the executable to get its pid. This is needed so we can search for FATALERROR1 message in syslog
