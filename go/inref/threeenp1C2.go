@@ -296,7 +296,8 @@ func main() {
 		for index = 0; index < streams; index++ {
 			_, err = yottadb.IncrE(tptoken, &errstr, "1", "^count", []string{})
 			if checkErrorReturn(err) { return }
-			proc[index] = exec.Command("threeenp1C2", workerTag, fmt.Sprintf("%d", index))
+			dir, _ := os.Getwd()
+			proc[index] = exec.Command(dir+"/threeenp1C2", workerTag, fmt.Sprintf("%d", index))
 			proc[index].Stdout = os.Stdout // cmd.Stdout -> stdout
 			proc[index].Stderr = os.Stderr // cmd.Stderr -> stderr
 			err := proc[index].Start() // Start new process
