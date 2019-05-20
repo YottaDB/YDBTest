@@ -85,9 +85,11 @@ else if (! -z CORE.lis) then
 				# core.598100.05125351: AIX core file fulldump 64-bit, mumps
 				set exe = `file "$core" | cut -d " " -f 7`
  			else
-				# Everywhere else, there are quotes around it, and possibly a space if arguments are shown as well :
-				# core.13825: ELF 64-bit LSB core file x86-64, version 1 (SYSV), SVR4-style, from '/usr/library/V984/dbg/mumps -direct'
-				set exe = `file "$core" | cut -d "'" -f 2 | cut -d " " -f 1`
+				# Use the "file" command on Linux and extract out the "execfn" field from the output.
+				# Below is a sample output
+				# core.31474: ELF 64-bit LSB core file x86-64, version 1 (SYSV), SVR4-style, from 'dbg/mumps -direct', real uid: 28, effective uid: 28, real gid: 1, effective gid: 1, execfn: 'dbg/mumps', platform: 'x86_64'
+				# And the below command extracts out the "dbg/mumps" usage that comes after "execfn:" above.
+				set exe = `file core* | tr ',' '\n' | grep execfn | awk '{print $2}' | sed "s/'//g"`
 			endif
 			if (-f "$gtm_exe/$exe") then
 				set exe = "$gtm_exe/$exe"
