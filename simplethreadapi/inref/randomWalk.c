@@ -569,8 +569,9 @@ int runProc(uint64_t tptoken, ydb_buffer_t* errstr, testSettings* settings, int 
 					pthread_mutex_unlock(&lock);
 					status = pthread_create(&tid[i], NULL, &threadHelper, &args);
 					if(status != 0){
-						printf("there was an issue with creating a thread somewhere\n");
-						perror("pthread_create() failed");
+						char strerr[1024];
+						strerror_r(status, strerr, sizeof(strerr));
+						printf("pthread_create() failed with status: %d, strerror: %s\n", status, strerr);
 						YDB_ASSERT(0); //we want to see a core in this case, so always fail the assert
 					}
 				}
@@ -580,8 +581,10 @@ int runProc(uint64_t tptoken, ydb_buffer_t* errstr, testSettings* settings, int 
 					curThreads--; //decrement number of threads after they exit
 					pthread_mutex_unlock(&lock);
 					if (status != 0){
-						printf("there was a thread that failed some where. status: %d\n", status);
-
+						char strerr[1024];
+						strerror_r(status, strerr, sizeof(strerr));
+						printf("pthread_join() failed with status: %d, strerror: %s\n", status, strerr);
+						YDB_ASSERT(0); //we want to see a core in this case, so always fail the assert
 					}
 				}
 			}
