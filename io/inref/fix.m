@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-;	Copyright 2008, 2014 Fidelity Information Services, Inc	;
+; Copyright 2008, 2014 Fidelity Information Services, Inc	;
+;								;
+; Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -16,7 +19,7 @@ fix
 	for i=1:1:10 do
 	. use p
 	. write "12345678901234567890123456789012345678901234567890123456789012345678901234567890"
-	. for  read x(i):0 quit:x(i)'=""
+	. read x(i)
 	. use $p
 	. write i," - ",x(i),!
 	use p
@@ -37,7 +40,7 @@ fix
 	. use p
 	. write "1234567890123456789012345678901234567890"
 	. write "1234567890123456789012345678901234567890"
-	. for  read x(i):0 quit:x(i)'=""
+	. read x(i)
 	. use $p
 	. write i," - ",x(i),!
 	use $p
@@ -52,8 +55,8 @@ fix
 	for i=1:1:10 do
 	. use p
 	. write "12345678901234567890123456789012345678901234567890123456789012345678901234567890abc"
-	. for  read x(i):0 quit:x(i)'=""
-	. for  read y(i):0 quit:y(i)'=""
+	. read x(i)
+	. read y(i)
 	. use $p
 	. write i," - ",x(i),!
 	. write i," - ",y(i),!
@@ -70,9 +73,9 @@ fix
 	for i=1:1:10 do
 	. use p
 	. write "123456789012345678901234567890123456789012345678901234567890abc",!
-	. for  read x(i):0 quit:x(i)'=""
+	. read x(i)
 	. read y(i)
-	. for  read z(i):0 quit:z(i)'=""
+	. read z(i)
 	. use $p
 	. write i," - ",x(i),!
 	. write i," - ",y(i),!
@@ -88,7 +91,7 @@ fix
 	for i=1:1:10 do
 	. use p
 	. write "1234567890abc"
-	. for  read x(i):0 quit:x(i)'=""
+	. read x(i)
 	. use $p
 	. write i," - ",x(i),!
 	; add a short write and a write /eof followed by a read to verify operation
