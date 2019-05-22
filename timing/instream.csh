@@ -43,6 +43,9 @@ setenv subtest_exclude_list	""
 if ("dbg" == "$tst_image") then
 	# gctest subtest stresses the stringpool garbage collection and runs very slow in dbg so disable it there.
 	setenv subtest_exclude_list "$subtest_exclude_list gctest"
+	# go_unit_tests has timing tests that have been seen to fail with varying thresholds using dbg even on x86_64
+	# boxes so disable it on all platforms. It is enough to test this with "pro".
+	setenv subtest_exclude_list "$subtest_exclude_list go_unit_tests"
 endif
 
 # Disable tests that start lots of processes on ARM boxes as response times on that platform have been seen to be non-deterministic
