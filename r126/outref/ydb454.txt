@@ -1,0 +1,26 @@
+# test of default value of ydb_routines if not set on yottadb/mumps process startup
+
+$zroutines after source ydb_env_set
+YDB>
+##SUSPEND_OUTPUT UNICODE_MODE
+##TEST_AWK.*\(##GTM_LIBRARY_PATH##/gtm_test/T[0-9]*/r.*/inref ##GTM_LIBRARY_PATH##/gtm_test/T[0-9]*/com \.\) ##SOURCE_PATH##.* ##SOURCE_PATH##/plugin/o/_ydbposix##TEST_SHL_SUFFIX##  ##SOURCE_PATH##/plugin/o.*\(##SOURCE_PATH##/plugin/r\)
+##ALLOW_OUTPUT UNICODE_MODE
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##TEST_AWK.*\(##GTM_LIBRARY_PATH##/gtm_test/T[0-9]*/r.*/inref ##GTM_LIBRARY_PATH##/gtm_test/T[0-9]*/com \.\) ##SOURCE_PATH##/utf8.* ##SOURCE_PATH##/plugin/o/utf8/_ydbposix##TEST_SHL_SUFFIX##  ##SOURCE_PATH##/plugin/o/utf8.*\(##SOURCE_PATH##/plugin/r\)
+##ALLOW_OUTPUT NONUNICODE_MODE
+YDB>
+
+$zroutines after unset of $ydb_routines and $gtmroutines
+YDB>
+$ydb_dist/libyottadbutil##TEST_SHL_SUFFIX##
+YDB>
+
+$zroutines after $ydb_routines and $gtmroutines are set to ""
+YDB>
+$ydb_dist/libyottadbutil##TEST_SHL_SUFFIX##
+YDB>
+
+$zroutines when $ydb_routines and $gtmroutines are unset, and $ydb_dist/libyottadbutil##TEST_SHL_SUFFIX## does not exist
+YDB>
+$ydb_dist
+YDB>

@@ -19,8 +19,9 @@
 ######################################################################
 #
 # sourceInstall		[mmr]		Test that ydbinstall.sh when sourced will give an error then exit
+# diffDir		[mmr]		Test that ydbinstall.sh when called from anothre directory will still install properly
 #
-setenv subtest_list_common "sourceInstall diffDir"
+setenv subtest_list_common "sourceInstall diffDir "
 setenv subtest_list_non_replic ""
 setenv subtest_list_non_replic "$subtest_list_non_replic"
 setenv subtest_list_replic ""
