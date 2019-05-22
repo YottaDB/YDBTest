@@ -1,14 +1,14 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
-#                                                               #
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.       #
-# All rights reserved.                                          #
-#                                                               #
-#       This source code contains the intellectual property     #
-#       of its copyright holder(s), and is made available       #
-#       under a license.  If you do not know the terms of       #
-#       the license, please stop and do not read further.       #
-#                                                               #
+#								#
+# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
 #################################################################
 #
 echo "-------------------------------------------------------------------------------------------------------"
@@ -98,11 +98,8 @@ Actual sleep time: $reorgTA
 Amount of Coalesced Blocks: $coalvar
 EOF
 
-# Compute the percent error based on the theoretical and actual elasped time and print the percent error ensuring output will be positive
-set percenterror=`$ydb_dist/mumps -run ^%XCMD "Write (($reorgTA-$reorgTT)/$reorgTT)*100"`
-
 echo "# Calculate percent error of MUPIP REORG sleep time to see if it is accurate"
-$ydb_dist/mumps -run percent^ydb233 $percenterror
+$ydb_dist/mumps -run percent^ydb233 $reorgTA $reorgTT
 
 # Because strace uses microsecond rounding, we allow for +/- 10% error.
 
