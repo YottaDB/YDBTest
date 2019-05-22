@@ -20,6 +20,8 @@
 # ydb431	   [mmr]   Test of default value of ydb_routines if not set on yottadb/mumps process startup
 # v63006	   [mmr]   Test that 'ZCompile "bar2.edit"' issues NOTMNAME error instead of compiling
 # ydb432	   [mmr]   Test that mumps -object will strip from the tail of a file one .o and/or one .m in that order
+# ydb431	   [mmr]   test of default value of ydb_routines if not set on yottadb/mumps process startup
+# ydb449	   [mmr]   Test that reverse $order/$query functions work correctly when $increment is in use
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r126 test starts..."
@@ -28,6 +30,7 @@ echo "r126 test starts..."
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic ""
 setenv subtest_list_non_replic "$subtest_list_non_replic ydb430 pseudoBank randomWalk ydb431 ydb454 v63006 ydb432"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb449"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
