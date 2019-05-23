@@ -1,0 +1,53 @@
+# Test that mumps -object will strip from the tail of a file one .o and/or one .m in that order
+
+Testing all permutations of relative and absolute paths
+mumps -o=x.m.o x.m
+mumps -o=y.m x.m
+mumps -o=tmp/x.m.o x.m
+mumps -o=tmp/y.m x.m
+mumps -o=##TEST_PATH##/x.m.o x.m
+mumps -o=##TEST_PATH##/y.m x.m
+mumps -o=##TEST_PATH##/tmp/x.m.o x.m
+mumps -o=##TEST_PATH##/tmp/y.m x.m
+
+mumps -o=x.m.o tmp/x.m
+mumps -o=y.m tmp/x.m
+mumps -o=tmp/x.m.o tmp/x.m
+mumps -o=tmp/y.m tmp/x.m
+mumps -o=##TEST_PATH##/x.m.o tmp/x.m
+mumps -o=##TEST_PATH##/y.m tmp/x.m
+mumps -o=##TEST_PATH##/tmp/x.m.o tmp/x.m
+mumps -o=##TEST_PATH##/tmp/y.m tmp/x.m
+
+mumps -o=x.m.o ##TEST_PATH##/x.m
+mumps -o=y.m ##TEST_PATH##/x.m
+mumps -o=tmp/x.m.o ##TEST_PATH##/x.m
+mumps -o=tmp/y.m ##TEST_PATH##/x.m
+mumps -o=##TEST_PATH##/x.m.o ##TEST_PATH##/x.m
+mumps -o=##TEST_PATH##/y.m ##TEST_PATH##/x.m
+mumps -o=##TEST_PATH##/tmp/x.m.o ##TEST_PATH##/x.m
+mumps -o=##TEST_PATH##/tmp/y.m ##TEST_PATH##/x.m
+
+mumps -o=x.m.o ##TEST_PATH##/tmp/x.m
+mumps -o=y.m ##TEST_PATH##/tmp/x.m
+mumps -o=tmp/x.m.o ##TEST_PATH##/tmp/x.m
+mumps -o=tmp/y.m ##TEST_PATH##/tmp/x.m
+mumps -o=##TEST_PATH##/x.m.o ##TEST_PATH##/tmp/x.m
+mumps -o=##TEST_PATH##/y.m ##TEST_PATH##/tmp/x.m
+mumps -o=##TEST_PATH##/tmp/x.m.o ##TEST_PATH##/tmp/x.m
+mumps -o=##TEST_PATH##/tmp/y.m ##TEST_PATH##/tmp/x.m
+
+
+Error Checks
+mumps -o=y.o.m x.m
+%YDB-E-NOTMNAME, y.o is not a valid M name
+%YDB-E-ZLNOOBJECT, No object module was produced
+mumps -o=tmp/y.o.m x.m
+%YDB-E-NOTMNAME, y.o is not a valid M name
+%YDB-E-ZLNOOBJECT, No object module was produced
+mumps -o=y.o.m tmp/x.m
+%YDB-E-NOTMNAME, y.o is not a valid M name
+%YDB-E-ZLNOOBJECT, No object module was produced
+mumps -o=tmp/y.o.m tmp/x.m
+%YDB-E-NOTMNAME, y.o is not a valid M name
+%YDB-E-ZLNOOBJECT, No object module was produced
