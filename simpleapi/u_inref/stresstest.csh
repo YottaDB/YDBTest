@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -10,6 +10,13 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+
+# This test opens a PIPE device from an M process to write to the stdin of a C process.
+# We have seen WRITE commands to that PIPE device occasionally fail with an ENO11 (EAGAIN) on the ARM boxes.
+# Writes to a PIPE device are done in a non-blocking fashion and retried for a default of 10 times with each retry
+# 100 millisecond apart. The retry count is now increased to 1000 (i.e. 1000 * 100 milliseconds = 100 seconds instead
+# of the default wait of 10 * 100 milliseconds = 1 second) to avoid those occasional failures using the below env var.
+setenv ydb_non_blocked_write_retries 1000
 
 unsetenv gtmdbglvl # or else test runs for too long
 
