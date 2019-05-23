@@ -425,7 +425,7 @@ func main() {
 	for child := int32(1); child <= jobcnt; child++ {
 		childstr = fmt.Sprintf("%d", child)
 		dir, _ := os.Getwd()
-		proc[child] = exec.Command(dir+"/impjobgo", childstr)
+		proc[child] = exec.Command(dir + "/go/src/impjobgo/impjobgo", childstr)
 		// We have the command we want to fork off but setup its stdout/stderr to go directly to output files
 		stdoutp, err = os.Create("./impjob_imptp" + jobidstr + ".mjo" + childstr) // should be gjo/gje but easier for testsystem this way
 		if imp.CheckErrorReturn(err) {
