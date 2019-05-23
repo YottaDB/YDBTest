@@ -2,7 +2,7 @@
 ;								;
 ; Copyright 2007, 2013 Fidelity Information Services, Inc	;
 ;								;
-; Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -116,10 +116,9 @@ d002636	;
 	W "Exiting interrupt stage -- waiting for interrupter to shutdown",!
 
 	S ^done=1
-	w "."		; to have at least one .
-	for k=1:1 Q:^drvactive=0  W "." Hang 1
+	for k=1:1 Q:^drvactive=0  Hang 1
 
-	W !,"Shutdown complete",!
+	W "Shutdown complete",!
 	W !,"Stats: ",!,^a(0)," transactions were done",!,^cnt," interrupts were sent",!
 	W b," interrupt handlers were started or restarted",!,ztcnt," interrupts generated ztraps that were handled",!
 	W c," interrupts ran to completion",!!
