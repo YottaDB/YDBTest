@@ -23,7 +23,8 @@
 # ydb431	   [mmr]   test of default value of ydb_routines if not set on yottadb/mumps process startup
 # ydb449	   [mmr]   Test that reverse $order/$query functions work correctly when $increment is in use
 # v63007	   [mmr]   Test that sr_port/code_gen.c does not check triple chain validity in case of compile error
-
+# ydb431	   [mmr]   Test of default value of ydb_routines if not set on yottadb/mumps process startup
+# ydb438	   [mmr]   Test that LOCK with timeout of 0 always returns a unowned lock
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r126 test starts..."
@@ -32,7 +33,7 @@ echo "r126 test starts..."
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic ""
 setenv subtest_list_non_replic "$subtest_list_non_replic ydb430 pseudoBank randomWalk ydb431 ydb454 v63006 ydb432"
-setenv subtest_list_non_replic "$subtest_list_non_replic ydb449 v63007"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb449 v63007 ydb438"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then

@@ -1,0 +1,44 @@
+# Test that LOCK with timeout of 0 always returns a unowned lock
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Attempting LOCK +^a(154829319):0 : SUCCESS (i.e. $test is 1 as expected)
+Attempting LOCK +^a(154965468):0 : SUCCESS (i.e. $test is 1 as expected)
+Attempting LOCK +^a(193440695):0 : SUCCESS (i.e. $test is 1 as expected)
+Attempting LOCK +^a(204173403):0 : SUCCESS (i.e. $test is 1 as expected)
+Attempting LOCK +^a(209932114):0 : SUCCESS (i.e. $test is 1 as expected)
+Attempting LOCK +^a(224936551):0 : SUCCESS (i.e. $test is 1 as expected)
+Attempting LOCK +^a(265212792):0 : SUCCESS (i.e. $test is 1 as expected)
+Attempting LOCK +^a(284417672):0 : SUCCESS (i.e. $test is 1 as expected)
+Attempting LOCK +^a(315769862):0 : SUCCESS (i.e. $test is 1 as expected)
+Attempting LOCK +^a(317450506):0 : SUCCESS (i.e. $test is 1 as expected)
+Attempting LOCK +^a(340022374):0 : SUCCESS (i.e. $test is 1 as expected)
+Attempting LOCK +^a(341027206):0 : SUCCESS (i.e. $test is 1 as expected)
+Attempting LOCK +^a(345736704):0 : SUCCESS (i.e. $test is 1 as expected)
+Attempting LOCK +^a(373826961):0 : SUCCESS (i.e. $test is 1 as expected)
+Attempting LOCK +^a(397977264):0 : SUCCESS (i.e. $test is 1 as expected)
+Attempting LOCK +^a(403115609):0 : SUCCESS (i.e. $test is 1 as expected)
+Attempting LOCK +^a(408969348):0 : SUCCESS (i.e. $test is 1 as expected)
+Attempting LOCK +^a(414557936):0 : SUCCESS (i.e. $test is 1 as expected)
+Attempting LOCK +^a(443599391):0 : SUCCESS (i.e. $test is 1 as expected)
+Attempting LOCK +^a(472558137):0 : SUCCESS (i.e. $test is 1 as expected)
+Attempting LOCK +^a(486991648):0 : SUCCESS (i.e. $test is 1 as expected)
+Attempting LOCK +^a(497704556):0 : SUCCESS (i.e. $test is 1 as expected)
+Attempting LOCK +^a(500192246):0 : SUCCESS (i.e. $test is 1 as expected)
+Attempting LOCK +^a(520087944):0 : SUCCESS (i.e. $test is 1 as expected)
+Attempting LOCK +^a(531940999):0 : SUCCESS (i.e. $test is 1 as expected)
+Attempting LOCK +^a(534499480):0 : SUCCESS (i.e. $test is 1 as expected)
+Attempting LOCK +^a(545251804):0 : SUCCESS (i.e. $test is 1 as expected)
+Attempting LOCK +^a(568820091):0 : SUCCESS (i.e. $test is 1 as expected)
+Attempting LOCK +^a(573990913):0 : SUCCESS (i.e. $test is 1 as expected)
+Attempting LOCK +^a(584631025):0 : SUCCESS (i.e. $test is 1 as expected)
+Attempting LOCK +^a(585786198):0 : SUCCESS (i.e. $test is 1 as expected)
+Attempting LOCK +^a(589920280):0 : SUCCESS (i.e. $test is 1 as expected)
+Attempting LOCK +^a(597278425):0 : SUCCESS (i.e. $test is 1 as expected)
+Attempting LOCK +^a(608457999):0 : SUCCESS (i.e. $test is 1 as expected)
+Attempting LOCK +^a(647434494):0 : SUCCESS (i.e. $test is 1 as expected)
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
