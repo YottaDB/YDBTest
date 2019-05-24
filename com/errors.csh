@@ -89,7 +89,7 @@ else if (! -z CORE.lis) then
 				# Below is a sample output
 				# core.31474: ELF 64-bit LSB core file x86-64, version 1 (SYSV), SVR4-style, from 'dbg/mumps -direct', real uid: 28, effective uid: 28, real gid: 1, effective gid: 1, execfn: 'dbg/mumps', platform: 'x86_64'
 				# And the below command extracts out the "dbg/mumps" usage that comes after "execfn:" above.
-				set exe = `file core* | tr ',' '\n' | grep execfn | awk '{print $2}' | sed "s/'//g"`
+				set exe = `file $core | tr ',' '\n' | grep execfn | awk '{print $2}' | sed "s/'//g"`
 			endif
 			if (-f "$gtm_exe/$exe") then
 				set exe = "$gtm_exe/$exe"
