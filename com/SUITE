@@ -355,9 +355,6 @@ reorg E REORG
 online_integ L
 online_integ E
 ideminter_rolrec E
-########################################
-# Need some work before enabling this
-# manual_tests E REPLIC
 ###########################################################
 # The M suite is for tests that are automated (hence can be run with the test system), but are not meant to run at every E_ALL cycle.
 manually_start M
@@ -366,9 +363,14 @@ rundown_argless	M
 rundown_argless	M REPLIC
 timing M
 timing M REPLIC
-# the sudo tests must be run from a terminal with sudo access
-sudo M
-sudo M REPLIC
 ###########################################################
 # The following are the timing (performance) tests
 speed T
+########################################
+# Need some work before enabling this
+# manual_tests E REPLIC
+########################################
+# The sudo tests must be run from a terminal with sudo access
+# hence they are currently commented out from the automatically run list.
+# sudo E
+# sudo E REPLIC
