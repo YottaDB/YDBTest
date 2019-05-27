@@ -80,21 +80,22 @@ else if (! -z CORE.lis) then
 		chmod a+r "$core"
 		# report the cores if it has not already been reported in the test output
 		if (0 == $assert_reported) then
-			if ("AIX" == "$HOSTOS") then
-				# On AIX, the executable is no inside quotes :
-				# core.598100.05125351: AIX core file fulldump 64-bit, mumps
-				set exe = `file "$core" | cut -d " " -f 7`
- 			else
-				# Use the "file" command on Linux and extract out the "execfn" field from the output.
-				# Below is a sample output
-				# core.31474: ELF 64-bit LSB core file x86-64, version 1 (SYSV), SVR4-style, from 'dbg/mumps -direct', real uid: 28, effective uid: 28, real gid: 1, effective gid: 1, execfn: 'dbg/mumps', platform: 'x86_64'
-				# And the below command extracts out the "dbg/mumps" usage that comes after "execfn:" above.
-				set exe = `file $core | tr ',' '\n' | grep execfn | awk '{print $2}' | sed "s/'//g"`
+			# Use the "file" command on Linux and extract out the "execfn" field from the output.
+			# Below is a sample output
+			# core.31474: ELF 64-bit LSB core file x86-64, version 1 (SYSV), SVR4-style, from 'dbg/mumps -direct', real uid: 28, effective uid: 28, real gid: 1, effective gid: 1, execfn: 'dbg/mumps', platform: 'x86_64'
+			# And the below command extracts out the "dbg/mumps" usage that comes after "execfn:" above.
+			set exe = `file $core | tr ',' '\n' | grep execfn | awk '{print $2}' | sed "s/'//g"`
+			if (! -e "$exe") then
+				# Sometimes (e.g. older distributions like Ubuntu 16.04) the output of the "file" command does
+				# not contain "execfn:". In that case, the following seems to work (suggestion found at
+				#	https://stackoverflow.com/questions/13308922/find-which-program-caused-a-core-dump-file)
+				set exe = `strings $core | grep '^/' | tail -1`
 			endif
-			if (-f "$gtm_exe/$exe") then
-				set exe = "$gtm_exe/$exe"
-			else
-				set exe = `which "$exe"`
+			if (! -e "$exe") then
+				# Record the fact that we had a core whose executable was not determined.
+				# Signal a test failure for this by generating a "-E-" string that way we find out
+				# how to fix that situation and avoid it in future test runs.
+				echo "ERRORS.CSH-E-FINDEXE : Could not determine executable of core file [$core]"
 			endif
 			if ( ("$dbx" == "$exe") || ("tcsh" == "$exe:t") ) then
 				# Sometimes GDB cores with "A problem internal to GDB has been detected". Check <gdb_aborts_on_attach>
