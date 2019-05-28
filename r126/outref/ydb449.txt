@@ -1,4 +1,7 @@
 # Test that reverse $order/$query functions work correctly when $increment/VIEW "NOISOLATION" is in use
+# No GDB output will be printed if the test passes
+# If it fails the bad lines will end up in the log file
+# The full gdb output is in the gdb*.out files
 Files Created in ##TEST_PATH##:
 Using: ##SOURCE_PATH##/mumps -run GDE
 mumps.gld
@@ -6,32 +9,16 @@ Using: ##SOURCE_PATH##/mupip
 mumps.dat
 
 isNoIso = 0, isOrder = 0
-Function "gvcst_incr" not defined.
-Breakpoint 1 (gvcst_incr) pending.
-##TEST_AWKBreakpoint 1.*
-##TEST_AWKBreakpoint 2.*t_end.c.*
-##TEST_AWKBreakpoint 2, t_end.*
+PASS
 
 isNoIso = 0, isOrder = 1
-Function "gvcst_incr" not defined.
-Breakpoint 1 (gvcst_incr) pending.
-##TEST_AWKBreakpoint 1.*
-##TEST_AWKBreakpoint 2.*t_end.c.*
-##TEST_AWKBreakpoint 2, t_end.*
+PASS
 
 isNoIso = 1, isOrder = 0
-Function "op_tcommit" not defined.
-Breakpoint 1 (op_tcommit) pending.
-Breakpoint 1, op_tcommit ()
-##TEST_AWKBreakpoint 2.*tp_tend.c.*
-##TEST_AWKBreakpoint 2, tp_tend.*
+PASS
 
 isNoIso = 1, isOrder = 1
-Function "op_tcommit" not defined.
-Breakpoint 1 (op_tcommit) pending.
-Breakpoint 1, op_tcommit ()
-##TEST_AWKBreakpoint 2.*tp_tend.c.*
-##TEST_AWKBreakpoint 2, tp_tend.*
+PASS
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
