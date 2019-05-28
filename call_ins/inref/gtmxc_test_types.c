@@ -3,7 +3,7 @@
  * Copyright (c) 2007-2014 Fidelity National Information	*
  * Services, Inc. and/or its subsidiaries. All rights reserved.	*
  *								*
- * Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	*
+ * Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -61,7 +61,6 @@ int main()
 	ci_name_descriptor	ydb_test9;
 
 	fflush(stdout);
-	retval8.address = buf;
 	init = gtm_init();
 	if (0 != init)
 	{
@@ -188,6 +187,8 @@ int main()
 	fflush(stdout);
 
 	/* test8 returns gtm_string_t * */
+	retval8.address = buf;
+	retval8.length = sizeof(buf);	/* set length to allocated (i.e. maximum available) length before "gtm_ci" call */
 	status = gtm_ci("gtmxc_test8", &retval8, arg1, &arg1, arg2, &arg2, arg3, &arg3, arg4, &arg4, arg5, &arg5, arg6, &arg6,
 			arg7, &arg8);
 	if (status)
@@ -435,6 +436,7 @@ int main()
 		  &arg1, &arg2, &arg3, &arg4, &arg5, &arg6, arg7, buf0, &arg8);
 
 	/* test16 returns gtm_string_t * */
+	retval8.length = sizeof(buf);	/* set length to allocated (i.e. maximum available) length before "gtm_ci" call */
 	status = gtm_ci("gtmxc_test16", &retval8, &arg1, &arg2, &arg3, &arg4, &arg5, &arg6, arg7, &arg8);
 	if (status)
 	{
@@ -694,6 +696,7 @@ int main()
 		  &arg1, &arg2, &arg3, &arg4, &arg5, &arg6, arg7, buf0, &arg8);
 
 	/* test24 returns gtm_string_t * */
+	retval8.length = sizeof(buf);	/* set length to allocated (i.e. maximum available) length before "gtm_ci" call */
 	status = gtm_ci("gtmxc_test24", &retval8, &arg1, &arg2, &arg3, &arg4, &arg5, &arg6, arg7, &arg8);
 	if (status)
 	{

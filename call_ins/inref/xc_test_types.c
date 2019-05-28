@@ -1,13 +1,16 @@
 /****************************************************************
-*								*
-*	Copyright 2007, 2014 Fidelity Information Services, Inc	*
-*								*
-*	This source code contains the intellectual property	*
-*	of its copyright holder(s), and is made available	*
-*	under a license.  If you do not know the terms of	*
-*	the license, please stop and do not read further.	*
-*								*
-****************************************************************/
+ *								*
+ * Copyright 2007, 2014 Fidelity Information Services, Inc	*
+ *								*
+ * Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	*
+ * All rights reserved.						*
+ *								*
+ *	This source code contains the intellectual property	*
+ *	of its copyright holder(s), and is made available	*
+ *	under a license.  If you do not know the terms of	*
+ *	the license, please stop and do not read further.	*
+ *								*
+ ****************************************************************/
 /* The following tests exercise call_ins to M from C routines using all the gtm types from
    gtmxc_types.h.  For the I: types pointer and non-pointer arguments are valid.  For the IO:
    and O: types only pointer arguments are valid.  The first 8 are I: tests where the C routine
@@ -56,7 +59,6 @@ int main()
 	xc_char_t buf[100];
 
 	fflush(stdout);
-	retval8.address = buf;
 	init = gtm_init();
 	if (0 != init)
 	{
@@ -179,6 +181,8 @@ int main()
 	fflush(stdout);
 
 	/* test8 returns xc_string_t * */
+	retval8.address = buf;
+	retval8.length = sizeof(buf);	/* set length to allocated (i.e. maximum available) length before "gtm_ci" call */
 	status = gtm_ci("xc_test8", &retval8, arg1, &arg1, arg2, &arg2, arg3, &arg3, arg4, &arg4, arg5, &arg5, arg6, &arg6,
 			arg7, &arg8);
 	if (status)
@@ -423,6 +427,7 @@ int main()
 		  &arg1, &arg2, &arg3, &arg4, &arg5, &arg6, arg7, buf0, &arg8);
 
 	/* test16 returns xc_string_t * */
+	retval8.length = sizeof(buf);	/* set length to allocated (i.e. maximum available) length before "gtm_ci" call */
 	status = gtm_ci("xc_test16", &retval8, &arg1, &arg2, &arg3, &arg4, &arg5, &arg6, arg7, &arg8);
 	if (status)
 	{
@@ -682,6 +687,7 @@ int main()
 		  &arg1, &arg2, &arg3, &arg4, &arg5, &arg6, arg7, buf0, &arg8);
 
 	/* test24 returns xc_string_t * */
+	retval8.length = sizeof(buf);	/* set length to allocated (i.e. maximum available) length before "gtm_ci" call */
 	status = gtm_ci("xc_test24", &retval8, &arg1, &arg2, &arg3, &arg4, &arg5, &arg6, arg7, &arg8);
 	if (status)
 	{
