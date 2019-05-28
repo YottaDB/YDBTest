@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -13,7 +13,7 @@
 ; Generating an m program which prints a string that is too long
 ;
 gtm7986
-	set bigstring=$justify(1,8192,8192)
+	set bigstring=$justify(1,32768,32768)
 	set x="temp.m"
 	open x
         use x write " write "_bigstring,!

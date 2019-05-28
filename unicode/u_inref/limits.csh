@@ -4,7 +4,7 @@
 # Copyright (c) 2006-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -28,19 +28,19 @@ $echoline
 $gtm_exe/mumps -run ^error1MB
 #
 $echoline
-# 8192 byte source code line length limit
+# 32766 byte source code line length limit
 # All the usage of awk to generate string, redirect to file and use it to generate m routine is because
 # setting into a variable is not possible because of tcsh shell limits
 #
-# 8177 is based on a calculation that if two unicode literals are added to str
-# along with the write statement in the routine will exceed 8192 bytes
-echo ""|$tst_awk '{ for (i=0;i<8177;i++) printf "a"}' > str.out
+# 32751 is based on a calculation that if two unicode literals are added to str
+# along with the write statement in the routine will exceed 32766 bytes
+echo ""|$tst_awk '{ for (i=0;i<32751;i++) printf "a"}' > str.out
 #
-# 2045 * 4 = 8180 ==> add some more literals to have it in 2038 or 2037 threshold for an error and no error respectively.
-echo ""|$tst_awk '{ for (i=0;i<2045;i++) printf "𝐀"}' > strunicode.out
+# 8188 * 4 = 32752 ==> add some more literals to have it in threshold for an error and no error respectively.
+echo ""|$tst_awk '{ for (i=0;i<8188;i++) printf "𝐀"}' > strunicode.out
 # database key and record size limit - construct a record and key that has the maximum bytes
 #
-echo ""|$tst_awk '{i=0;while(i<32764) {printf "a";i++}}' > maxreclength.out
+echo ""|$tst_awk '{i=0;while(i<32762) {printf "a";i++}}' > maxreclength.out
 echo ""|$tst_awk '{i=0;while(i<247) {printf "a";i++}}' > maxkeylength.out
 echo ""|$tst_awk '{print "";i=0;while(i<247) {printf "b";i++}}' >> maxkeylength.out
 $convert_to_gtm_chset maxreclength.out
@@ -53,18 +53,18 @@ foreach check (noerror error)
 		setenv str3byte "ஊAA"
 		# add a four byte and two byte character to str
 		setenv str4byte "𝐀A"
-		# add one more byte to this 4 byte unicode string cross 8192
+		# add one more byte to this 4 byte unicode string cross 32766
 		set rec="ಚಘ"
 		set key="ఉఏ"
-		set foruni="¥"
+		set foruni="¥¥"
 	else
-		# keep within the limit of 8192 bytes - it should not croak
+		# keep within the limit of 32766 bytes - it should not croak
 		setenv str2byte "£ę"
 		setenv str3byte "ஊA"
 		setenv str4byte "𝐀"
 		set rec="ಚ"
 		set key="ఉ"
-		set foruni="A"
+		set foruni="¥"
 	endif
 #
 	foreach bytestr (str2byte str3byte str4byte strunicode1)
@@ -76,7 +76,7 @@ foreach check (noerror error)
 			echo '	write "'`cat str.out`$writestr'",!'		>>&! $bytestr$check.m
 		endif
 		echo "	quit"					>>&! $bytestr$check.m
-		# error expected on the routine when it gets executed because of source line length > 8192 bytes
+		# error expected on the routine when it gets executed because of source line length > 32766 bytes
 $GTM << gtm_eof >&! $bytestr$check.out
 do ^$bytestr$check
 gtm_eof

@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -11,7 +11,7 @@
 #								#
 #################################################################
 #
-# Test that a line length greater than 8192 bytes produces a LSEXPECTED warning
+# Test that a line length greater than 32768 bytes produces a LSEXPECTED warning
 #
 
 echo "# Generating an M file with big string"

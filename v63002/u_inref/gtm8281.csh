@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -11,13 +11,13 @@
 #								#
 #################################################################
 #
-# Tests that the new maximum for source lines, xecute strings and direct mode input all accept up to 8192 bytes
+# Tests that the new maximum for source lines, xecute strings and direct mode input all accept up to 32766 bytes
 #
 
 # 1 terminating characters and 7 other characters outside of the big string
-# Expect the line to be too long as a source line when n=8184, and too long as
-# an xecute string or command in direct mode when n=8185
-foreach n (8182 8183 8184 8185 8186)
+# Expect the line to be too long as a source line when n=32758, and too long as
+# an xecute string or command in direct mode when n=32759
+foreach n (32756 32757 32758 32759 32760)
 	echo "# Generating big string with $n characters"
 	$ydb_dist/mumps -run gtm8281 $n "temp$n.m"
 	echo ""

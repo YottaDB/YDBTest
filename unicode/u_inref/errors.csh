@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -121,10 +121,10 @@ $gtm_tst/com/check_error_exist.csh go.log "LOADINVCHSET" "MUNOFINISH"
 $gtm_tst/com/check_error_exist.csh zwr.log "LOADINVCHSET" "MUNOFINISH"
 #
 $echoline
-# the source lines limit of 2048 is taken care in limits subtest
+# the source lines limit of 32KiB-2 is taken care in limits subtest
 echo "Test for INDRMAXLEN limit "
 $GTM << eof >&! indrmaxlen.out
-set cmd="set somevar=""abcdｅｆｇｈ娃开始绔娃开"_\$\$^longstr(8146)_""""
+set cmd="set somevar=""abcdｅｆｇｈ娃开始绔娃开"_\$\$^longstr(2**15-48)_""""
 xecute cmd
 eof
 #

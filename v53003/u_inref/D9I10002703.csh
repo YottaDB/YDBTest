@@ -4,7 +4,7 @@
 # Copyright (c) 2008-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -57,7 +57,11 @@ set envlist = `$tst_awk -F\" '/^YDBENVINDX_TABLE_ENTRY.*/ { var[1]=$2; var[2]=$4
 echo "$envlist" > envvar.list
 set command0 = "$gtm_dist/mumps -direct"
 set corecheck = "$tst_tcsh $gtm_tst/$tst/u_inref/D9I10002703_corecheck.csh"
-set maxstr = `$gtm_dist/mumps -run %XCMD 'Set $ZPiece(x,"0",9999)="" Write x,!'`
+# Note: Need to use a length that is greater than MAX_SRCLINE (i.e. 32766) as otherwise (for example, if it is 8192 etc.)
+# it causes issues with environment variables that hold M code (e.g. ydb_etrap etc.) as they will issue an error while trying
+# to evaluate the invalid M code. If the length of the string is greater than MAX_SRCLINE, the env var is not read in and
+# so we will not try to compile the invalid M code.
+set maxstr = `$gtm_dist/mumps -run %XCMD 'Set $ZPiece(x,"0",32768)="" Write x,!'`
 echo $maxstr > maxstr.txt	# for debugging purposes
 echo "-------------------------------------------------------------------------------------------"
 
