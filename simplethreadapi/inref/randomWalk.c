@@ -90,6 +90,9 @@ int main(){
 	}
 
 	//test driver
+	status = ydb_init(); //needed incase an assert fails without having done a ydb call yet
+	YDB_ASSERT(status == YDB_OK);
+
 	testSettings settings;
 	settings.maxDepth = MAX_DEPTH;
 	settings.nestRate = NEST_RATE;
@@ -572,6 +575,7 @@ int runProc(uint64_t tptoken, ydb_buffer_t* errstr, testSettings* settings, int 
 						char strerr[1024];
 						strerror_r(status, strerr, sizeof(strerr));
 						printf("pthread_create() failed with status: %d, strerror: %s\n", status, strerr);
+						printf("Number of threads at this  point: %d\n", curThreads);
 						YDB_ASSERT(0); //we want to see a core in this case, so always fail the assert
 					}
 				}
@@ -584,6 +588,7 @@ int runProc(uint64_t tptoken, ydb_buffer_t* errstr, testSettings* settings, int 
 						char strerr[1024];
 						strerror_r(status, strerr, sizeof(strerr));
 						printf("pthread_join() failed with status: %d, strerror: %s\n", status, strerr);
+						printf("Number of threads at this  point: %d\n", curThreads);
 						YDB_ASSERT(0); //we want to see a core in this case, so always fail the assert
 					}
 				}
