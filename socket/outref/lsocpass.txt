@@ -13,14 +13,7 @@ Test no badpid
 Got LOCAL connection
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
-passersockdev OPEN SOCKET TOTAL=2 CURRENT=1 
-##TEST_AWK        SOCKET\[0\]=llistener DESC=[0-9]+ LISTENING PASSIVE  TRAP  REMOTE= LOCAL=local.socket 
-                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 
-                DELIMITER $C(10) 
-##TEST_AWK        SOCKET\[1\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  TRAP  REMOTE= LOCAL=local.socket 
-                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 
-                DELIMITER $C(10) 
-socketpool OPEN SOCKET TOTAL=22 CURRENT=21 
+YGTMSOCKETPOOL OPEN SOCKET TOTAL=22 CURRENT=21 
 ##TEST_AWK        SOCKET\[0\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  TRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
 ##TEST_AWK                ZDELAY  ZBFSIZE=[0-9]+ ZIBFSIZE=[0-9]+ 
                 DELIMITER $C(10) 
@@ -86,6 +79,13 @@ socketpool OPEN SOCKET TOTAL=22 CURRENT=21
                 DELIMITER $C(10) 
 ##TEST_AWK        SOCKET\[21\]=ssh DESC=[0-9]+ CONNECTED ACTIVE  TRAP  REMOTE=[^@]+@22 LOCAL=[^@]+@[0-9]+ 
 ##TEST_AWK                ZDELAY  ZBFSIZE=[0-9]+ ZIBFSIZE=[0-9]+ NODELIMITER 
+passersockdev OPEN SOCKET TOTAL=2 CURRENT=1 
+##TEST_AWK        SOCKET\[0\]=llistener DESC=[0-9]+ LISTENING PASSIVE  TRAP  REMOTE= LOCAL=local.socket 
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 
+                DELIMITER $C(10) 
+##TEST_AWK        SOCKET\[1\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  TRAP  REMOTE= LOCAL=local.socket 
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 
+                DELIMITER $C(10) 
 Passed TCP sockets
 Clients done
 
@@ -103,11 +103,7 @@ acceptersockdev OPEN SOCKET TOTAL=1 CURRENT=0
 ##TEST_AWKhandles="passed1\|h[0-9]+\|passed3\|h[0-9]+\|h[0-9]+\|h[0-9]+\|h[0-9]+\|h[0-9]+\|h[0-9]+\|h[0-9]+\|h[0-9]+\|h[0-9]+\|h[0-9]+\|h[0-9]+\|h[0-9]+\|h[0-9]+\|h[0-9]+\|h[0-9]+\|h[0-9]+\|h[0-9]+|h[0-9]+|ssh"
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
-acceptersockdev OPEN SOCKET TOTAL=1 CURRENT=0 
-##TEST_AWK        SOCKET\[0\]=accepter DESC=[0-9]+ CONNECTED ACTIVE  TRAP  REMOTE= LOCAL=local.socket 
-                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 
-                DELIMITER $C(10) 
-socketpool OPEN SOCKET TOTAL=22 CURRENT=21 
+YGTMSOCKETPOOL OPEN SOCKET TOTAL=22 CURRENT=21 
 ##TEST_AWK        SOCKET\[0\]=passed1 DESC=[0-9]+ CONNECTED ACTIVE  NOTRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
                 ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 NODELIMITER 
 ##TEST_AWK        SOCKET\[1\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  NOTRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
@@ -152,15 +148,19 @@ socketpool OPEN SOCKET TOTAL=22 CURRENT=21
                 ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 NODELIMITER 
 ##TEST_AWK        SOCKET\[21\]=ssh DESC=[0-9]+ CONNECTED ACTIVE  NOTRAP  REMOTE=[^@]+@22 LOCAL=[^@]+@[0-9]+ 
                 ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 NODELIMITER 
-##TEST_AWKSSH Server Id: SSH-([^-]*)-([^ ]*).*
-Correct messages received from all clients
-0 OPEN RMS STREAM NOWRAP 
-0-out OPEN RMS STREAM NOWRAP 
 acceptersockdev OPEN SOCKET TOTAL=1 CURRENT=0 
 ##TEST_AWK        SOCKET\[0\]=accepter DESC=[0-9]+ CONNECTED ACTIVE  TRAP  REMOTE= LOCAL=local.socket 
                 ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 
                 DELIMITER $C(10) 
-socketpool OPEN SOCKET TOTAL=0 CURRENT=-1 
+##TEST_AWKSSH Server Id: SSH-([^-]*)-([^ ]*).*
+Correct messages received from all clients
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+YGTMSOCKETPOOL OPEN SOCKET TOTAL=0 CURRENT=-1 
+acceptersockdev OPEN SOCKET TOTAL=1 CURRENT=0 
+##TEST_AWK        SOCKET\[0\]=accepter DESC=[0-9]+ CONNECTED ACTIVE  TRAP  REMOTE= LOCAL=local.socket 
+                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=0 
+                DELIMITER $C(10) 
 
 ##SUSPEND_OUTPUT HOST_HP-UX_IA64
 ----------
