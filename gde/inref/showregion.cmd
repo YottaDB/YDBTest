@@ -1,15 +1,29 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!								!
+! Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	!
+! All rights reserved.						!
+!								!
+!	This source code contains the intellectual property	!
+!	of its copyright holder(s), and is made available	!
+!	under a license.  If you do not know the terms of	!
+!	the license, please stop and do not read further.	!
+!								!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! This module is derived from FIS GT.M.
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 add ~name A ~reg=AREG	! more regions to make sure a change to one region doesn't change TEMPLATE
 add ~region AREG ~dyn=ASEG
 add ~segment ASEG ~file=a.dat ~acc=BG
 add ~name B ~reg=BREG
-add ~region BREG ~dyn=BSEG		
+add ~region BREG ~dyn=BSEG
 add ~ segment BSEG ~ file = "b.dat" ~acc=BG	! Spaces are intentional
 change ~region AREG ~collation=1	! randomize between 0-255
 change ~region BREG ~nostdnullcoll
 change ~region AREG ~stdnullcoll
 change ~region AREG ~INST_FREEZE_ON_ERROR
 change ~region BREG ~noinst_freeze_on_error
-change ~region AREG ~journal=alloc=200 		! randomize between 200-8388607 (8388607 is limit of autoswitchlimit)
+change ~region AREG ~journal=alloc=2048		! randomize between 2048-8388607 (8388607 is limit of autoswitchlimit)
 change ~region AREG ~journal=autoswitch=32768	! randomize between 16384-8388607
 change ~region AREG ~journal=buffer=32768		! randomize between 2307-32768
 change ~region AREG ~journal=before

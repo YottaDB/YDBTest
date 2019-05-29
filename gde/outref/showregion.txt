@@ -26,6 +26,20 @@ GDE>
 GDE> 
 GDE> 
 GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
 %GDE-I-VERIFY, Verification OK
 
 %GDE-I-GDCREATE, Creating Global Directory file 
@@ -49,7 +63,7 @@ GDE>
  Region                          Jnl File (def ext: .mjl)  Before Buff      Alloc      Exten   AutoSwitch
  --------------------------------------------------------------------------------------------------------
  AREG                            abcd-efgh=ijkl/?ijk!a(.)bc
-                                                           Y     32768        200        100        32768
+                                                           Y     32768       2048        100        32768
 
  BREG                            x.mjl                     N      2312       2048       2048      8386560
 %GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
@@ -64,7 +78,7 @@ GDE>
 46c45,47
 < ADD -REGION DEFAULT -DYNAMIC_SEGMENT=DEFAULT
 ---
-> ADD -REGION AREG -COLLATION_DEFAULT=1 -DYNAMIC_SEGMENT=ASEG -INST_FREEZE_ON_ERROR -JOURNAL=(ALLOCATION=200,AUTOSWITCHLIMIT=32768,BUFFER_SIZE=32768,EXTENSION=100,FILE_NAME="abcd-efgh=ijkl/?ijk!a(.)bc") -KEY_SIZE=256 -NULL_SUBSCRIPTS=ALWAYS -QDBRUNDOWN -RECORD_SIZE=512
+> ADD -REGION AREG -COLLATION_DEFAULT=1 -DYNAMIC_SEGMENT=ASEG -INST_FREEZE_ON_ERROR -JOURNAL=(AUTOSWITCHLIMIT=32768,BUFFER_SIZE=32768,EXTENSION=100,FILE_NAME="abcd-efgh=ijkl/?ijk!a(.)bc") -KEY_SIZE=256 -NULL_SUBSCRIPTS=ALWAYS -QDBRUNDOWN -RECORD_SIZE=512
 > ADD -REGION BREG -DYNAMIC_SEGMENT=BSEG -JOURNAL=(NOBEFORE_IMAGE,FILE_NAME="x.mjl") -NOSTDNULLCOLL
 > ADD -REGION DEFAULT -DYNAMIC_SEGMENT=DEFAULT -NOJOURNAL
 47a49,50
