@@ -5,8 +5,8 @@ GDE>
 GDE> 
 GDE> 
 %GDE-I-EXECOM, Executing command file ##IN_TEST_PATH##/inref/gde63.cmd
-%GDE-I-MAPBAD, Region DECADE3 for Name PRODAGE("30":"") does not exist
-%GDE-I-MAPBAD, Region D2 for Name PRODAGE(20:"30") does not exist
+%GDE-I-MAPBAD, Region DECADE3 for Name PRODAGE("a30":"") does not exist
+%GDE-I-MAPBAD, Region D2 for Name PRODAGE(20:"a30") does not exist
 %GDE-I-STDNULLCOLLREQ, Region DECADE3 needs Standard Null Collation enabled because global ^PRODAGE spans through it
 %GDE-I-STDNULLCOLLREQ, Region D2 needs Standard Null Collation enabled because global ^PRODAGE spans through it
 %GDE-I-STDNULLCOLLREQ, Region DEFAULT needs Standard Null Collation enabled because global ^PRODAGE spans through it
@@ -19,8 +19,8 @@ GDE>
  Global                             Region
  ------------------------------------------------------------------------------
  *                                  DEFAULT
- PRODAGE(20:"30")                   D2
- PRODAGE("30":"")                   DECADE3
+ PRODAGE(20:"a30")                  D2
+ PRODAGE("a30":"")                  DECADE3
 
                                   *** MAP ***
    -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
@@ -29,10 +29,10 @@ GDE>
  %                               PRODAGE(20)                      REG = DEFAULT
                                                                   SEG = DEFAULT
                                                                   FILE = mumps.dat
- PRODAGE(20)                     PRODAGE("30")                    REG = D2
+ PRODAGE(20)                     PRODAGE("a30")                   REG = D2
                                                                   SEG = D2
                                                                   FILE = D2.dat
- PRODAGE("30")                   PRODAGE0                         REG = DECADE3
+ PRODAGE("a30")                  PRODAGE0                         REG = DECADE3
                                                                   SEG = DECADE3
                                                                   FILE = DECADE3.dat
  PRODAGE0                        ...                              REG = DEFAULT

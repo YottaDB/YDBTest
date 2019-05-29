@@ -1,3 +1,17 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!								!
+! Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	!
+! All rights reserved.						!
+!								!
+!	This source code contains the intellectual property	!
+!	of its copyright holder(s), and is made available	!
+!	under a license.  If you do not know the terms of	!
+!	the license, please stop and do not read further.	!
+!								!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! This module is derived from FIS GT.M.
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 template -region -std
 change -region DEFAULT -std
 !
@@ -15,11 +29,11 @@ add -name efgh(3) -region=REG5
 add -name efgh(3,4:) -region=REG6
 add -name efgh(3:) -region=REG6
 add -name efgh("z":"a") -region=REG1
-add -name efgh($zchar(49):$zchar(1)) -region=REG2
-add -name efgh($char(97):$char(50)) -region=REG3
+add -name efgh($zchar(46):$zchar(1)) -region=REG2
+add -name efgh($char(97):$char(47)) -region=REG3
 add -name nocol("a":"h") -region=REG1
-add -name nocol($zchar(1):$zchar(49)) -region=REG2
-add -name nocol($char(50):$char(97)) -region=REG3
+add -name nocol($zchar(1):$zchar(46)) -region=REG2
+add -name nocol($char(47):$char(97)) -region=REG3
 add -name nocol($char(75),1:10) -region=REG4
 add -name nocol($char(75),$zchar(75),11:20) -region=REG5
 add -name reg3 -region=REG3
