@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -165,7 +165,7 @@ if (! $gtm_test_jnl_nobefore) then
 	echo "mupip integ"
 	$MUPIP integ -reg "*"
 	# Output redirected to outx since we are expecting CORRPUT_FILE error
-	$DSE dump -file -all >& dse_dump_5.outx
+	$DSE dump -file >& dse_dump_5.outx
 	$grep "Recover interrupted" dse_dump_5.outx
 
 	echo "Set -partial_recov_bypass"
@@ -185,11 +185,11 @@ if (! $gtm_test_jnl_nobefore) then
 	# Test journal recovery
 	echo "Attempt a journal backward recovery"
 	$MUPIP journal -recover -backward mumps.mjl
-	$DSE dump -file -all >& dse_dump_6.out
+	$DSE dump -file >& dse_dump_6.out
 	$grep "Recover interrupted" dse_dump_6.out
 	echo "Set -interrupted_recov=FALSE"
 	$DSE  change -file -interrupted_recov=FALSE
-	$DSE dump -file -all >& dse_dump_7.out
+	$DSE dump -file >& dse_dump_7.out
 	$grep "Recover interrupted" dse_dump_7.out
 	# Journal recovery should now pass
 	echo "Retry backward journal recovery, after setting interrupted_recov=FALSE"
