@@ -3,7 +3,7 @@
 #								#
 # Copyright 2013, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -64,7 +64,7 @@ echo "# Test case to check for LOCK SPACE max check and the new GDE command for 
 $gtm_exe/mumps -run %XCMD 'do ^gengdefile("'$gtm_tst/$tst/inref/locksmutexres.cmd'")'
 
 echo "$GDE << gde_eof"			>>&! locksmutexres_script.csh
-cat gdelocksmutexres.cmd			>>&! locksmutexres_script.csh
+cat gdelocksmutexres.cmd		>>&! locksmutexres_script.csh
 echo "gde_eof"				>>&! locksmutexres_script.csh
 
 chmod +x locksmutexres_script.csh
