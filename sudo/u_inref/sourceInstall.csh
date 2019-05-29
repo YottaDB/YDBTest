@@ -23,8 +23,10 @@ mkdir gtmsecshrdir
 chmod -R 755 .
 
 cp $gtm_tst/$tst/u_inref/sourceInstall.sh ..
-sudo sh ../sourceInstall.sh $gtm_verno $tst_image `pwd`
 
+# Pass "--force-install" to ydbinstall.sh if this is a platform that is not currently offically supported for YottaDB.
+source $gtm_tst/$tst/u_inref/setinstalloptions.csh	# sets the variable "installoptions" (e.g. "--force-install" if needed)
+sudo sh ../sourceInstall.sh $gtm_verno $tst_image `pwd` "$installoptions"
 
 if (`ls -1 | wc -l` != 1) then
 	echo "ydbinstall created files in the install directory when it shouldn't have"

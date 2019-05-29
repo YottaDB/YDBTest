@@ -11,12 +11,13 @@
 #								#
 #################################################################
 
-# attempts to install yottadb to the testing directory, from the users home directory
-cd /home/$4
-/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --overwrite-existing
+# attempts to install yottadb to the testing directory from a different directory (/tmp in this case)
+cd /tmp
+/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --overwrite-existing $4
 
 if [ 0 != $? ]; then
 	echo "ydbinstall returned a non-zero status: $?"
+	exit $?
 fi
 
-return $?
+exit 0

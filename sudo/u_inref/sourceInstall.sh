@@ -11,10 +11,11 @@
 #								#
 #################################################################
 
-. /Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --overwrite-existing --user $USER
+. /Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --overwrite-existing --user $USER $4
 
 if [ 0 != $? ]; then
 	echo "ydbinstall returned a non-zero status: $?"
+	exit $?
 fi
 
-return $?
+exit 0

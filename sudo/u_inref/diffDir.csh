@@ -24,7 +24,8 @@ chmod -R 755 .
 
 cp $gtm_tst/$tst/u_inref/diffDir.sh  .
 # we pass these things as variables to diffDir.sh because it doesn't inherit the tcsh envirnment variables
-sudo sh ./diffDir.sh $gtm_verno $tst_image `pwd` $USER
+source $gtm_tst/$tst/u_inref/setinstalloptions.csh	# sets the variable "installoptions" (e.g. "--force-install" if needed)
+sudo sh ./diffDir.sh $gtm_verno $tst_image `pwd` "$installoptions"
 
 # run a few mumps commands to test the install works
 cat >> ../mumpsTest.txt << xx
