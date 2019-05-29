@@ -12,6 +12,20 @@ GDE>
 GDE> 
 GDE> 
 GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
 
          *** NAMES ***
  Global                             Region
@@ -53,6 +67,8 @@ GDE>
 GDE> 
 GDE> 
 GDE> 
+%GDE-E-OBJDUP, Name A(1) already exists
+
 GDE> 
 %GDE-E-OBJDUP, Name A(1) already exists
 
@@ -65,7 +81,6 @@ GDE>
  *                                  DEFAULT
  A(1)                               AREG
  A("0.1E1")                         AREG
- A("1")                             AREG
  A("abcd",1:"")                     AREG
  A("efgh","":1)                     AREG
  B("":"")                           BREG
@@ -94,7 +109,6 @@ GDE>
  *                                  DEFAULT
  A(1)                               AREG
  A("0.1E1")                         AREG
- A("1")                             AREG
  A("abcd",1:"")                     AREG
  A("efgh","":1)                     AREG
  B("":"")                           BREG
@@ -121,7 +135,6 @@ GDE>
  *                                  DEFAULT
  A(1)                               AREG
  A("0.1E1")                         AREG
- A("1")                             AREG
  A("abcd",1:"")                     AREG
  A("efgh","":1)                     AREG
  B("":"")                           BREG
@@ -136,16 +149,16 @@ GDE>
  pointa(1)                          AREG
  pointa(1:10)                       BREG
 GDE> 
-%GDE-E-NAMRANGEOVERLAP, Range in name specifications PRODAGE("":"10") and PRODAGE(20:"") overlap using collation sequence #0
+%GDE-E-OBJDUP, Name PRODAGE("":10) already exists
 
 GDE> 
-%GDE-E-NAMRANGEOVERLAP, Range in name specifications PRODAGE(10:"20") and PRODAGE(20:"") overlap using collation sequence #0
+%GDE-E-OBJDUP, Name PRODAGE(10:20) already exists
+
+GDE> 
+%GDE-E-OBJDUP, Name PRODAGE(10:20) already exists
 
 GDE> 
 GDE> 
-GDE> 
-%GDE-E-OBJDUP, Name PRODAGE("20":"") already exists
-
 GDE> 
 
          *** NAMES ***
@@ -154,18 +167,15 @@ GDE>
  *                                  DEFAULT
  A(1)                               AREG
  A("0.1E1")                         AREG
- A("1")                             AREG
  A("abcd",1:"")                     AREG
  A("efgh","":1)                     AREG
  B("":"")                           BREG
  PRODAGE("")                        DEFAULT
  PRODAGE("":10)                     DECADE0
  PRODAGE(10:20)                     DECADE1
- PRODAGE(20:"10")                   DECADE2
- PRODAGE("10":"100")                DECADE1
- PRODAGE("100":"120")               DECADE0
- PRODAGE("120":"20")                DECADE1
- PRODAGE("20":"")                   DECADE2
+ PRODAGE(20:100)                    DECADE2
+ PRODAGE(100:120)                   DECADE0
+ PRODAGE(120:"")                    DECADE2
  X("":"")                           AREG
  X(2,"":"")                         BREG
  Y("":"")                           AREG
@@ -187,9 +197,7 @@ GDE>
  A(1)                            A(1)++                           REG = AREG
  A(1)++                          A("0.1E1")                       REG = DEFAULT
  A("0.1E1")                      A("0.1E1")++                     REG = AREG
- A("0.1E1")++                    A("1")                           REG = DEFAULT
- A("1")                          A("1")++                         REG = AREG
- A("1")++                        A("abcd",1)                      REG = DEFAULT
+ A("0.1E1")++                    A("abcd",1)                      REG = DEFAULT
  A("abcd",1)                     A("abcd")++                      REG = AREG
  A("abcd")++                     A("efgh","")                     REG = DEFAULT
  A("efgh","")                    A("efgh",1)                      REG = AREG
@@ -198,11 +206,9 @@ GDE>
  B0                              PRODAGE("")++                    REG = DEFAULT
  PRODAGE("")++                   PRODAGE(10)                      REG = DECADE0
  PRODAGE(10)                     PRODAGE(20)                      REG = DECADE1
- PRODAGE(20)                     PRODAGE("10")                    REG = DECADE2
- PRODAGE("10")                   PRODAGE("100")                   REG = DECADE1
- PRODAGE("100")                  PRODAGE("120")                   REG = DECADE0
- PRODAGE("120")                  PRODAGE("20")                    REG = DECADE1
- PRODAGE("20")                   PRODAGE0                         REG = DECADE2
+ PRODAGE(20)                     PRODAGE(100)                     REG = DECADE2
+ PRODAGE(100)                    PRODAGE(120)                     REG = DECADE0
+ PRODAGE(120)                    PRODAGE0                         REG = DECADE2
  PRODAGE0                        X("")                            REG = DEFAULT
  X("")                           X(2,"")                          REG = AREG
  X(2,"")                         X(2)++                           REG = BREG

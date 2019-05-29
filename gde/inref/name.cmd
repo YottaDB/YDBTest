@@ -1,3 +1,17 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!								!
+! Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	!
+! All rights reserved.						!
+!								!
+!	This source code contains the intellectual property	!
+!	of its copyright holder(s), and is made available	!
+!	under a license.  If you do not know the terms of	!
+!	the license, please stop and do not read further.	!
+!								!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! This module is derived from FIS GT.M.
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 template ~region ~stdnullcoll	! spanning regions requires Standard Null Collation enabled
 change ~region DEFAULT ~stdnullcoll
 add ~region AREG ~dyn=ASEG
@@ -21,11 +35,11 @@ add ~name X(:) ~region=AREG
 add ~name X(2,:) ~region=BREG
 add ~name Y(:) ~region=AREG
 add ~name Y(2) ~region=BREG
-! Test equivalence of 1 and 0.1E1 when specified in numeric form but not if specified in string form
+! Test equivalence of 1 and 0.1E1 when specified in numeric form and if specified in string form
 add ~name A("1") ~reg=AREG
-add ~name A(1) ~reg=AREG
+add ~name A(1) ~reg=AREG	! Should throw %GDE-E-OBJDUP, Name A(1) already exists
 add ~name A(0.1E1) ~reg=AREG	! Should throw %GDE-E-OBJDUP, Name A(1) already exists
-add ~name A("0.1E1") ~reg=AREG
+add ~name A("0.1E1") ~reg=AREG	! "0.1E1" should be treated differently from 0.1E1 and so no OBJDUP error expected here
 show ~name
 ! Test a range where left and right ends are identical is treated as a point and not a range
 ADD ~NAME pointa(1:1)      ~REG=AREG
