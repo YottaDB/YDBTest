@@ -17,7 +17,7 @@ Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
 ----------
 Error GBLOFLOW seen in ##FILTERED##RCVR_##TIMESTAMP##.log.updproc as expected:
-%YDB-E-GBLOFLOW, Database segment is full
+##TEST_AWK%YDB-E-GBLOFLOW, Database file ##REMOTE_TEST_PATH##/instance2/(a|b|mumps).dat is full
 ----------
 ==Executing MULTISITE_REPLIC 'STOP INST1'==
 ==Executing MULTISITE_REPLIC 'STOP INST2'==

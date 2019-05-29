@@ -26,7 +26,7 @@ Running ydb_set_s()/ydb_set_st() to set node ^tp1(11)
 Running ydb_set_s()/ydb_set_st() to set node ^tp1(12)
 Running ydb_set_s()/ydb_set_st() to set node ^tp1(13)
 Running ydb_set_s()/ydb_set_st() to set node ^tp1(14)
-##TEST_AWKydb_set_s\(\)/ydb_set_st\(\) : status = -150372882 : 150372882,\((SimpleAPI|SimpleThreadAPI)\),%YDB-E-GBLOFLOW, Database segment is full,%YDB-I-GVIS, 		Global variable: \^tp1\(14\)
+##TEST_AWKydb_set_s\(\)/ydb_set_st\(\) : status = -150372882 : 150372882,\((SimpleAPI|SimpleThreadAPI)\),%YDB-E-GBLOFLOW, Database file ##TEST_PATH##/mumps.dat is full
 
 ### --------------------------- ###
 ### Running gvnset() inside  TP ###
@@ -52,7 +52,7 @@ Running ydb_set_s()/ydb_set_st() to set node ^tp1(16)
 Running ydb_set_s()/ydb_set_st() to set node ^tp1(17)
 Running ydb_set_s()/ydb_set_st() to set node ^tp1(18)
 Running ydb_set_s()/ydb_set_st() to set node ^tp1(19)
-##TEST_AWKydb_tp_s\(\)/ydb_tp_st\(\) \[1\]: status = -150372882 : 150372882,\((SimpleAPI|SimpleThreadAPI)\),%YDB-E-GBLOFLOW, Database segment is full,%YDB-I-GVIS, 		Global variable: \^tp1\(19\)
+##TEST_AWKydb_tp_s\(\)/ydb_tp_st\(\) \[1\]: status = -150372882 : 150372882,\((SimpleAPI|SimpleThreadAPI)\),%YDB-E-GBLOFLOW, Database file ##TEST_PATH##/mumps.dat is full
 ydb383 returned with exit status : 0
 
 ##SOURCE_PATH##/mupip
