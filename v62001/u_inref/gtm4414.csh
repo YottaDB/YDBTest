@@ -4,6 +4,9 @@
 # Copyright (c) 2014-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -33,30 +36,9 @@ if ("" != `$grep TEST\-I\-PASS gtm4414b.mjo`) then
 endif
 
 echo "# Triggering the JOBLVN2LONG error"
-# Make trace extension outx because truss produces other strings that the test framework incorrectly captures
-# as errors in the outref: e.g EACCES
 $truss -o trace.outx -f $gtm_exe/mumps -run joblvn2longmsg >& joblvnerror.outx
-$gtm_tst/com/grepfile.csh JOBLVN2LONG joblvnerror.outx 1
-echo "# Wait for grandchild to quit"
-# The second execve() call is made by the grandchild so take its PID
-if ("AIX" == "$HOSTOS") then
-	# Two execve() calls do not reliably show up in the truss output on AIX so use another message
-	$gtm_tst/com/wait_for_log.csh -log trace.outx -message '[^0-9]*\([0-9]*\).*returning as child' -count 2
-	set procs = `sed -n 's/[^0-9]*\([0-9]*\).*returning as child.*/\1/p' trace.outx`
-else
-	$gtm_tst/com/wait_for_log.csh -log trace.outx -message '[^0-9]*\([0-9]*\).*execve' -count 2
-	set procs = `sed -n 's/[^0-9]*\([0-9]*\).*execve.*/\1/p' trace.outx`
-endif
-set proctowait = $procs[1]
-if ("" == $proctowait) then
-	echo "TEST-E-FAIL could not capture PID to wait"
-	exit 1
-endif
-echo $proctowait > proctowait.pid
-$gtm_tst/com/wait_for_proc_to_die.csh $proctowait
-$gtm_tst/com/wait_for_log.csh -log joblvn2longmsg.mje -message JOBLVN2LONG
-mv joblvn2longmsg.{mje,out} # Rename it because any error inside *mje* is picked up by the outref
-$gtm_tst/com/check_error_exist.csh joblvn2longmsg.out JOBLVN2LONG
+cat joblvnerror.outx
+echo "# No need to wait for grandchild to quit as it would not have been started due to the JOBLVN2LONG error in grandparent"
 if ($?gtm_test_autorelink_support) then
 	echo "Check that relinkctl ipcs are not left over in case of JOBLVN2LONG error (GTM-8224)."
 	echo "Running mupip rctldump . and verifying # of routines is 0 and # of attached processes is 1"
