@@ -3,6 +3,9 @@
 ; Copyright (c) 2012-2016 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -14,7 +17,7 @@ merrorhandling
 
 start
 	do text^dollarztrigger("tfile^merrorhandling","merrorhandling.trg")
-	do file^dollarztrigger("merrorhandling.trg",1)
+	if $ztrigger("file","merrorhandling.trg")
 	quit
 
 testetrap
