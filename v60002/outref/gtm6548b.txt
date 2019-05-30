@@ -47,3 +47,6 @@ YDB>
 %YDB-I-TEXT, Job error in routine specification. Label and offset not found in created process
 
 YDB>
+##TEST_PATH##/k.mje
+%YDB-E-ZLINKFILE, Error while zlinking "k"
+%YDB-E-FILENOTFND, File k not found
