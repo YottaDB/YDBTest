@@ -36,33 +36,33 @@ Invalid M code in the Xecute string
 	 ^-----
 ##TEST_AWK		At column 2, line 1, source module .*trgtmp.*
 %YDB-E-INVCMD, Invalid command keyword encountered
-FAIL, see compile_fail.trg.trigout
+Error : Parsing XECUTE string: " set $ZTRIggerop=99"
+Error : Parsing XECUTE string: " for quit:x=0 set x=0"
+Error : Parsing XECUTE string: " set ""=0"
+Error : Parsing XECUTE string: " set a=1 write a!"
+Error : Parsing XECUTE string: " do DoesNotExist"
+Error : Parsing XECUTE string: " TPRestart"
+=========================================
+6 trigger file entries have errors
+0 trigger file entries have no errors
+=========================================
 ###################################################################
 Invalid code the will pass compilation
 	 TPRestart:(2>$TRestart)
 	 ^-----
 ##TEST_AWK		At column 2, line 1, source module .*trgtmp.*
 %YDB-W-INVCMD, Invalid command keyword encountered
-;trigger name: b#1 (region DEFAULT)  cycle: 1
-+^b -commands=S -xecute="xecute ""set $ZTRIggerop=99"""
-;trigger name: c#1 (region DEFAULT)  cycle: 1
-+^c -commands=S -xecute="set a=""$ZTRIggerop"" xecute ""set @a=99"""
-;trigger name: d#1 (region DEFAULT)  cycle: 1
-+^d -commands=S -xecute="do ^DoesNotExist"
-;trigger name: postconditionalbad (region DEFAULT)  cycle: 1
-+^e -name=postconditionalbad -commands=S -xecute="TPRestart:(2>$TRestart)"
-;trigger name: z#1 (region DEFAULT)  cycle: 1
-+^z -commands=K -xecute="do ^selflink"
+File compile_badpass.trg, Line 2: Error : Parsing XECUTE string: " xecute ""set $ZTRIggerop=99"""
+File compile_badpass.trg, Line 3: No errors processing trigger for global ^c
+File compile_badpass.trg, Line 4: No errors processing trigger for global ^d
+Error : Parsing XECUTE string: " TPRestart:(2>$TRestart)"
+File compile_badpass.trg, Line 8: No errors processing trigger for global ^z
+=========================================
+2 trigger file entries have errors
+3 trigger file entries have no errors
+=========================================
 ###################################################################
 Routines that will and won't pass compilation
-;trigger name: b#1 (region DEFAULT)  cycle: 1
-+^b -commands=S -xecute="xecute ""set $ZTRIggerop=99"""
-;trigger name: c#1 (region DEFAULT)  cycle: 1
-+^c -commands=S -xecute="set a=""$ZTRIggerop"" xecute ""set @a=99"""
-;trigger name: d#1 (region DEFAULT)  cycle: 1
-+^d -commands=S -xecute="do ^DoesNotExist"
-;trigger name: postconditionalbad (region DEFAULT)  cycle: 1
-+^e -name=postconditionalbad -commands=S -xecute="TPRestart:(2>$TRestart)"
 ;trigger name: dobad (region DEFAULT)  cycle: 4
 +^r(subs=*) -name=dobad -commands=S -xecute="set level=2 do ^badcompile"
 ;trigger name: gotobad (region DEFAULT)  cycle: 4
@@ -71,22 +71,12 @@ Routines that will and won't pass compilation
 +^r(subs=*) -name=dogood -commands=S -xecute="set level=2 do good^compile"
 ;trigger name: gotogood (region DEFAULT)  cycle: 4
 +^r(subs=*) -name=gotogood -commands=S -xecute="set level=1 goto good^compile"
-;trigger name: z#1 (region DEFAULT)  cycle: 1
-+^z -commands=K -xecute="do ^selflink"
 ###################################################################
 Valid M code in the Xecute string
 ;trigger name: a#1 (region DEFAULT)  cycle: 2
 +^a -commands=S -xecute="xecute ""write $ZTCOde,!"" ztrigger ^a"
 ;trigger name: a#2 (region DEFAULT)  cycle: 2
 +^a -commands=ZTR -xecute="set b=""$ztco"" xecute ""write @b,!"""
-;trigger name: b#1 (region DEFAULT)  cycle: 1
-+^b -commands=S -xecute="xecute ""set $ZTRIggerop=99"""
-;trigger name: c#1 (region DEFAULT)  cycle: 1
-+^c -commands=S -xecute="set a=""$ZTRIggerop"" xecute ""set @a=99"""
-;trigger name: d#1 (region DEFAULT)  cycle: 1
-+^d -commands=S -xecute="do ^DoesNotExist"
-;trigger name: postconditionalbad (region DEFAULT)  cycle: 1
-+^e -name=postconditionalbad -commands=S -xecute="TPRestart:(2>$TRestart)"
 ;trigger name: dobad (region DEFAULT)  cycle: 4
 +^r(subs=*) -name=dobad -commands=S -xecute="set level=2 do ^badcompile"
 ;trigger name: gotobad (region DEFAULT)  cycle: 4
@@ -95,28 +85,21 @@ Valid M code in the Xecute string
 +^r(subs=*) -name=dogood -commands=S -xecute="set level=2 do good^compile"
 ;trigger name: gotogood (region DEFAULT)  cycle: 4
 +^r(subs=*) -name=gotogood -commands=S -xecute="set level=1 goto good^compile"
-;trigger name: z#1 (region DEFAULT)  cycle: 1
-+^z -commands=K -xecute="do ^selflink"
 ###################################################################
 ###################################################################
-failing cases first
-	$ZSTATUS=150373866,+1^c#1#,%YDB-E-VAREXPECTED, Variable expected in this context
-	$ZSTATUS=150373770,+1^b#1#,%YDB-E-SVNOSET, Cannot SET this special variable
-	$ZSTATUS=150373978,+1^d#1#,%YDB-E-ZLINKFILE, Error while zlinking "DoesNotExist",%YDB-E-FILENOTFND, File DoesNotExist not found
-	 TPRestart:(2>$TRestart)
-	 ^-----
-##TEST_AWK		At column 2, line 1, source module .*trgtmp.*
-%YDB-W-INVCMD, Invalid command keyword encountered
-	$ZSTATUS=150373050,+1^postconditionalbad#,%YDB-E-INVCMD, Invalid command keyword encountered
-	$ZSTATUS=150373866,+1^c#1#,%YDB-E-VAREXPECTED, Variable expected in this context
-	$ZSTATUS=150373770,+1^b#1#,%YDB-E-SVNOSET, Cannot SET this special variable
-	$ZSTATUS=150373978,+1^d#1#,%YDB-E-ZLINKFILE, Error while zlinking "DoesNotExist",%YDB-E-FILENOTFND, File DoesNotExist not found
-	$ZSTATUS=150373050,+1^postconditionalbad#,%YDB-E-INVCMD, Invalid command keyword encountered
-zlink myself
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_LINUX_IX86
-	$ZSTATUS=150373234,selflink+3^selflink,%YDB-E-LOADRUNNING, Cannot ZLINK an active routine selflink
-##ALLOW_OUTPUT HOST_ALL
+failing cases first (none of these updates would fail because their triggers were not installed in the first place)
+
+Stepping STARTED
+failing+4^compile   :	set (^c,^b,^d,^e)="FAIL"
+failing+5^compile   :	kill ^c,^b,^d,^e
+failing+6^compile   :	set ^c="FAIL"
+failing+7^compile   :	set ^b="FAIL"
+failing+8^compile   :	set ^d="FAIL"
+failing+9^compile   :	set ^e="FAIL"
+failing+10^compile  :	set ^z="FAIL"
+failing+11^compile  :	kill ^z
+failing+12^compile  :	zb -*  set $zstep=""	; stop display of M lines
+failing+13^compile  :	do ^echoline
 ###################################################################
 ###################################################################
 These will suceed
@@ -177,16 +160,6 @@ No errors detected by integ.
 No errors detected by integ.
 ##SUSPEND_OUTPUT NON_REPLIC
 ##TEST_AWK##TEST_HOST_SHORT##:##REMOTE_TEST_PATH##/RCVR_[0-9][0-9]_[0-9][0-9]_[0-9][0-9].log.updproc
-%YDB-W-INVCMD, Invalid command keyword encountered
-	$ZSTATUS=150373866,+1^c#1#,%YDB-E-VAREXPECTED, Variable expected in this context
-	$ZSTATUS=150373770,+1^b#1#,%YDB-E-SVNOSET, Cannot SET this special variable
-	$ZSTATUS=150373978,+1^d#1#,%YDB-E-ZLINKFILE, Error while zlinking "DoesNotExist",%YDB-E-FILENOTFND, File DoesNotExist not found
-%YDB-W-INVCMD, Invalid command keyword encountered
-	$ZSTATUS=150373050,+1^postconditionalbad#,%YDB-E-INVCMD, Invalid command keyword encountered
-	$ZSTATUS=150373866,+1^c#1#,%YDB-E-VAREXPECTED, Variable expected in this context
-	$ZSTATUS=150373770,+1^b#1#,%YDB-E-SVNOSET, Cannot SET this special variable
-	$ZSTATUS=150373978,+1^d#1#,%YDB-E-ZLINKFILE, Error while zlinking "DoesNotExist",%YDB-E-FILENOTFND, File DoesNotExist not found
-	$ZSTATUS=150373050,+1^postconditionalbad#,%YDB-E-INVCMD, Invalid command keyword encountered
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_LINUX_IX86
 ##SUSPEND_OUTPUT NON_REPLIC

@@ -3,6 +3,9 @@
 ; Copyright (c) 2010-2016 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -29,13 +32,13 @@ install
 	do ^echoline
 	write "Invalid M code in the Xecute string",!
 	do text^dollarztrigger("tfilefail^compile","compile_fail.trg")
-	do file^dollarztrigger("compile_fail.trg",1)
+	if $ztrigger("file","compile_fail.trg")
 	do all^dollarztrigger
 
 	do ^echoline
 	write "Invalid code the will pass compilation",!
 	do text^dollarztrigger("tfilebadpass^compile","compile_badpass.trg")
-	do file^dollarztrigger("compile_badpass.trg",1)
+	if $ztrigger("file","compile_badpass.trg")
 	do all^dollarztrigger
 
 	do ^echoline
@@ -54,7 +57,8 @@ install
 
 failing
 	do ^echoline
-	write "failing cases first",!
+	write "failing cases first (none of these updates would fail because their triggers were not installed in the first place)",!
+	do ^sstep	; display each M line (for reference file) as it executes updates of globals
 	set (^c,^b,^d,^e)="FAIL"
 	kill ^c,^b,^d,^e
 	set ^c="FAIL"
@@ -63,6 +67,7 @@ failing
 	set ^e="FAIL"
 	set ^z="FAIL"
 	kill ^z
+	zb -*  set $zstep=""	; stop display of M lines
 	do ^echoline
 	quit
 
