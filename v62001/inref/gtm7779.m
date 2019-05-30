@@ -3,6 +3,9 @@
 ; Copyright (c) 2014-2015 Fidelity National Information 	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -34,7 +37,7 @@ gtm7779	; generate some contention to show the effect on crit data in gvstats
 	if queslots<CQE,$increment(cnt) write !,CQE," should not be greater than default slots: ",queslots
 	do wait^job	; wait for children to terminate
 	zshow "G":val
-	do in^zshowgfilter(.val,"CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT")
+	do in^zshowgfilter(.val,"CAT,CFE,CFS,CFT")
 	set t=val("G",0)
 	kill ^t
 	merge ^t=t
@@ -42,9 +45,9 @@ gtm7779	; generate some contention to show the effect on crit data in gvstats
 	. write !,"Expected non-zero value for ",name," but:"
 	. zwrite @name
 	if CFE>CFT,$increment(cnt) write !,"CFE should not be more than CFT",! zwrite CFE,CFT
-	for name="CFT","CQT","CYT" set square=$extract(name,1,2)_"S" if @name>@square,$increment(cnt) do
+	for name="CFT" set square=$extract(name,1,2)_"S" if @name>@square,$increment(cnt) do
 	. write !,name," should be less than ",square,! zwrite @name,@square
-	for name="CFT","CQT","CYT" set pname=$extract(name,1,2)_"N" if @pname>@name,$increment(cnt) do
+	for name="CFT" set pname=$extract(name,1,2)_"N" if @pname>@name,$increment(cnt) do
 	. write !,pname," should be less than ",name,! zwrite @pname,@name
 	if PCAT<CAT,$increment(cnt) do
 	. write !,"the probecrit CAT should be more than that from the process private CAT",! zwrite PCAT,CAT
