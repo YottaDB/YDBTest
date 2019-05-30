@@ -31,25 +31,25 @@ YDB>#<CTRL-C>
 # Not testing cenable, since this should restrict direct mode, which is necessary for testing cenable
 # Randomly choosing what is listed as restricted, since everything should get restricted regardless
 ---------- ydb_temp_dist/restrict.txt
-# TESTING BREAK
-Break command successfully ignored
-# TESTING ZBREAK
-ZSTATUS=zbreakfn+4^gtm8694,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: ZBREAK
-Zbreak command successfully ignored
-# TESTING ZCMDLINE
-
-# TESTING ZEDIT
-ZSTATUS=zeditfn+3^gtm8694,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: ZEDIT
-# TESTING ZSYSTEM
-ZSTATUS=zsystemfn+3^gtm8694,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: ZSYSTEM
-# TESTING PIPE
-ZSTATUS=pipefn+4^gtm8694,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: OPEN PIPE
-# TESTING TRIGMOD
-ZSTATUS=trigmodfn+3^gtm8694,%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: $ZTRIGGER(FILE)
+ydb_temp_dist/mumps -run breakfn^gtm8694
+##TEST_AWK%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: dlopen\(##TEST_PATH##/ydb_temp_dist/plugin/.*##TEST_SHL_SUFFIX##)
+ydb_temp_dist/mumps -run zbreakfn^gtm8694
+##TEST_AWK%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: dlopen\(##TEST_PATH##/ydb_temp_dist/plugin/.*##TEST_SHL_SUFFIX##)
+ydb_temp_dist/mumps -run zcmdlnefn^gtm8694 ZCMDLNE was not ignored
+##TEST_AWK%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: dlopen\(##TEST_PATH##/ydb_temp_dist/plugin/.*##TEST_SHL_SUFFIX##)
+ydb_temp_dist/mumps -run zeditfn^gtm8694
+##TEST_AWK%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: dlopen\(##TEST_PATH##/ydb_temp_dist/plugin/.*##TEST_SHL_SUFFIX##)
+ydb_temp_dist/mumps -run zsystemfn^gtm8694
+##TEST_AWK%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: dlopen\(##TEST_PATH##/ydb_temp_dist/plugin/.*##TEST_SHL_SUFFIX##)
+ydb_temp_dist/mumps -run pipefn^gtm8694
+##TEST_AWK%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: dlopen\(##TEST_PATH##/ydb_temp_dist/plugin/.*##TEST_SHL_SUFFIX##)
+ydb_temp_dist/mumps -run trigmodfn^gtm8694
+##TEST_AWK%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: dlopen\(##TEST_PATH##/ydb_temp_dist/plugin/.*##TEST_SHL_SUFFIX##)
+unset echo
 # TESTING DIRECTMODE
-%YDB-F-RESTRICTEDOP, Attempt to perform a restricted operation: mumps -direct
+##TEST_AWK%YDB-[FE]-RESTRICTEDOP, Attempt to perform a restricted operation: (mumps -direct|dlopen.*libicuio.so.)
 # TESTING DSE
-%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: DSE
+##TEST_AWK%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: (DSE|dlopen.*libicuio.so.)
 
 
 # ----------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -93,6 +93,7 @@ rm $ydb_dist/restrict.txt
 $ydb_dist/mumps -run randrestrict^gtm8694
 chmod -r -w $ydb_dist/restrict.txt
 $gtm_tst/com/lsminusl.csh $ydb_dist/restrict.txt | $tst_awk '{print $1,$9}'
+set echo
 $ydb_dist/mumps -run breakfn^gtm8694
 $ydb_dist/mumps -run zbreakfn^gtm8694
 $ydb_dist/mumps -run zcmdlnefn^gtm8694 "ZCMDLNE was not ignored"
@@ -100,6 +101,7 @@ $ydb_dist/mumps -run zeditfn^gtm8694
 $ydb_dist/mumps -run zsystemfn^gtm8694
 $ydb_dist/mumps -run pipefn^gtm8694
 $ydb_dist/mumps -run trigmodfn^gtm8694
+unset echo
 echo "# TESTING DIRECTMODE"
 $ydb_dist/mumps -dir
 echo "# TESTING DSE"

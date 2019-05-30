@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -110,8 +110,10 @@ EOF
 set t = `date +"%b %e %H:%M:%S"`
 chmod -w $ydb_dist/restrict.txt
 echo "# No label specified in filters"
+set echo
 $ydb_dist/mumps -run zsystemfn^gtm8877
 $ydb_dist/mumps -run pipeopenfn^gtm8877
+unset echo
 echo "# Checking the syslog"
 # Avoid extra RESTRICTSYNTAX errors from getoper.csh (which does mumps -run) by removing restrict.txt before the call
 rm $ydb_dist/restrict.txt
