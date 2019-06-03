@@ -32,7 +32,14 @@ setenv gtmgbldir yottadb.gld
 
 cp $gtm_tst/$tst/inref/ydb429.sh .
 
-foreach i (A B C D E F G)
+foreach i (A B C D E F G H)
 	echo "\n"
 	sh `pwd`/ydb429.sh test$i
+	if ( $status == 1 ) then
+		echo "dbcreate failed exiting"
+		exit 1
+	else if ( $status == 2 ) then
+		echo "dbcheck failed exiting"
+		exit 2
+	endif
 end
