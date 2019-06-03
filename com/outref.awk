@@ -272,6 +272,10 @@ BEGIN {
 	if (1 == ENVIRON["ydb_test_exclude_sem_counter"])
 		envir[no_options] = "EXCLUDE_SEM_COUNTER"
 	#
+	option_names[++no_options] = "ydb_test_exclude_gds_max_blk"
+	if (1 == ENVIRON["ydb_test_exclude_gds_max_blk"])
+		envir[no_options] = "EXCLUDE_GDS_MAX_BLK"
+	#
 	option_names[++no_options] = "is_tst_dir_ssd"
 	if (1 == ENVIRON["is_tst_dir_ssd"])
 		envir[no_options] = "TST_DIR_SSD"
