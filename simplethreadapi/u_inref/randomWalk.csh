@@ -19,7 +19,13 @@ unsetenv gtmdbglvl   # Disable storage debugging as that can turn this 1 minute 
 echo '# Test of various SimpleThreadAPI commands in multiple threads similar to the go/randomWalk subtest'
 
 #SETUP of the driver C file
-$gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $gtm_tst/$tst/inref/randomWalk.c
+# if this system is armv7l set a flag that reduces the number of threads the test creates
+if (`uname -m` == "armv7l") then
+	set ISARM7 = "-DISARM7=1"
+else
+	set ISARM7 = ""
+endif
+$gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $gtm_tst/$tst/inref/randomWalk.c $ISARM7
 $gt_ld_linker $gt_ld_option_output randomWalk $gt_ld_options_common randomWalk.o $gt_ld_sysrtns $ci_ldpath$gtm_dist -L$gtm_dist $tst_ld_yottadb $gt_ld_syslibs >& randomWalk.map
 
 $gtm_tst/com/dbcreate.csh mumps

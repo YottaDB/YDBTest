@@ -25,13 +25,19 @@
 #define BASE_LEN	11 //includes \0
 #define SUB_LEN		5  //includes \0
 
+#ifdef ISARM7
+#define MAX_THREADS 10
+#define THREADS_TO_MAKE 2
+#else
 #define MAX_THREADS 	50
 #define THREADS_TO_MAKE	10
+#endif
 #define TEST_TIMEOUT	120 //test time out in seconds
 #define DRIVER_THREADS	8
 
 #define MAX_DEPTH	10  //max depth for nesting
 #define NEST_RATE	0.20
+
 
 /* struct for storing a string array mallocs to one large buffer */
 typedef struct strArr {
@@ -70,6 +76,7 @@ int curThreads;
 int isTimeout;
 
 int main(){
+	printf("MAX_THREADS %d\tTHREADS_TO_MAKE %d\n", MAX_THREADS, THREADS_TO_MAKE);
 	srand(time(NULL));
 	int status;
 
