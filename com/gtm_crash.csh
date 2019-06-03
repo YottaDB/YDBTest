@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -17,15 +17,27 @@
 # Kill all GTM processes
 #
 if ($1 == "") echo "Simulating kill of GTM Processes in `pwd`"
+# if the first argument is PID_ then treat all other arguments as PID's and crash them
+# it is the calling programs job to pass the correct PID's
+if ($1 == "PID_") then
+	echo -n "Simulating kill of GTM/YDB Processes with PID "
+	set pids=""
+	# set the PID's list
+	foreach i (`seq 2 1 $#`)
+		set pids="$pids $argv[$i]"
+	end
+	echo $pids
+else
+	set pids=`$tst_awk '$1 ~ /PID/ {print $2}' *${gtm_test_jobid}.mjo*`
+endif
 setenv kill_time `date +%H_%M_%S`
 setenv KILL_LOG pkill_${kill_time}.logx
 
 echo "Before Kill >>>>" >>& $KILL_LOG
 $gtm_tst/com/ipcs -a | $grep $USER >>  $KILL_LOG
-$psuser | $grep -E "mupip|mumps|simpleapi" >>& $KILL_LOG
+$psuser | $grep -E "mupip|mumps|simpleapi|yottadb" >>& $KILL_LOG
 
 # PID for mumps
-set pids=`$tst_awk '$1 ~ /PID/ {print $2}' *${gtm_test_jobid}.mjo*`
 set pidcheck = "${pids:as/ /|/}"
 
 # IPCS
@@ -53,7 +65,7 @@ $kill9 $pids
 date >>& $KILL_LOG
 #
 $gtm_tst/com/ipcrm $dbipc_private >>& $KILL_LOG
-$gtm_tst/com/rem_ftok_sem.csh # arguments $ftok_key
+$gtm_tst/com/rem_ftok_sem.csh $ftok_key # arguments $ftok_key
 # Collecting the IDs of relinkctl shared memory segments from the RCTLDUMP is prohibitive, so clean directly.
 $MUPIP rundown -relinkctl >>& $KILL_LOG
 #################################

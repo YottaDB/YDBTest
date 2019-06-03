@@ -1,6 +1,6 @@
 #################################################################
 #                                                               #
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.       #
+# Copyright (c) 2018, 2019 YottaDB LLC and/or its subsidiaries. #
 # All rights reserved.                                          #
 #                                                               #
 #       This source code contains the intellectual property     #
@@ -37,31 +37,31 @@ gtmroutines
 gtm_tmp
 EOF
 #
-echo "# First set ydb_routines/gtmroutines/ydb_gbldir/gtmgbldir to arbitrary values."
+echo "# First set ydb_routines/gtmroutines/gtmgbldir to arbitrary values and ydb_gbldir to mumps.gld."
 #
-export ydb_routines="a" ; export gtmroutines="b" ; export ydb_gbldir="c" ; export gtmgbldir="d"
+export ydb_routines="a" ; export gtmroutines="b" ; export ydb_gbldir="mumps.gld" ; export gtmgbldir="d"
 echo "ydb_routines: $ydb_routines" ; echo "gtmroutines: $gtmroutines" ; echo "ydb_gbldir: $ydb_gbldir" ; echo "gtmgbldir: $gtmgbldir"
 #
 echo "----------------------------------------------------"
-echo '# Now test to see if sourcing ydb_env_set changes the gtm* values to the ydb_* values'
+echo '# Now test to see that *routines are set to defaults and gtmgbldir is set to ydb_gbldir'
 #
 . $ydb_dist/ydb_env_set
 #
 echo "ydb_routines: $ydb_routines" ; echo "gtmroutines: $gtmroutines" ; echo "ydb_gbldir: $ydb_gbldir" ; echo "gtmgbldir: $gtmgbldir"
 #
 echo "----------------------------------------------------"
-echo '# Now test to see if unsetting ydb_*, setting gtm*, and sourcing ydb_env_set, sets ydb_* to the gtm* value'
-#
+echo '# Now test to see if unsetting ydb_*, setting gtm*, and sourcing ydb_env_set, sets *routines to defaults and ydb_gbldir to gtmgbldir'
+
 unset ydb_routines ; unset gtmroutines ; unset ydb_gbldir ; unset gtmgbldir
-export gtmroutines="b" ; export gtmgbldir="d"
+export gtmroutines="b" ; export gtmgbldir="mumps.gld"
 . $ydb_dist/ydb_env_set
 echo "ydb_routines: $ydb_routines" ; echo "gtmroutines: $gtmroutines" ; echo "ydb_gbldir: $ydb_gbldir" ; echo "gtmgbldir: $gtmgbldir"
 #
 echo "----------------------------------------------------"
-echo '# Now test to see if unsetting gtm*, setting ydb_*, and sourcing ydb_env_set, sets gtm* to the ydb_* value'
+echo '# Now test to see if unsetting gtm*, setting ydb_*, and sourcing ydb_env_set, sets *routines to defaults and gtmgbldir to ydb_gbldir'
 #
 unset ydb_routines ; unset gtmroutines ; unset ydb_gbldir ; unset gtmgbldir
-export ydb_routines="a" ; export ydb_gbldir="c"
+export ydb_routines="a" ; export ydb_gbldir="mumps.gld"
 . $ydb_dist/ydb_env_set
 echo "ydb_routines: $ydb_routines" ; echo "gtmroutines: $gtmroutines" ; echo "ydb_gbldir: $ydb_gbldir" ; echo "gtmgbldir: $gtmgbldir"
 #

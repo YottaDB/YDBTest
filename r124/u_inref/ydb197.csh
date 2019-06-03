@@ -1,6 +1,6 @@
 #################################################################
 #                                                               #
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.       #
+# Copyright (c) 2018, 2019 YottaDB LLC and/or its subsidiaries. #
 # All rights reserved.                                          #
 #                                                               #
 #       This source code contains the intellectual property     #
@@ -10,5 +10,10 @@
 #                                                               #
 #################################################################
 #
+
+# we need to create a database so that there is a valid .gld file (needed by ydb_env_set)
+$gtm_tst/com/dbcreate.csh mumps
 # ydb_env_set only works in sh, which is why this csh redirects to ydb197.sh.
 sh $gtm_tst/$tst/u_inref/ydb197.sh
+
+$gtm_tst/com/dbcheck.csh

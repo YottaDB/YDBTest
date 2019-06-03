@@ -1,0 +1,289 @@
+# Test of all ydb_env_set/unset functions
+# Environment variables are set correctly
+# Environment variables are restored correctly after unset
+# Will create a working database at $HOME/.yottadb if $ydb_dir is not set
+# Will create new regions if the .gld has changed
+# Will create a UTF-8 database if $ydb_chset is set to UtF-8
+# Will create a working database at $ydb_dir if none exists there
+# Will recover a database with before journaling after a crash and will error on nobefore/disable journaling
+# A database with nobefore/disable journaling will start up normally after ydb_env_set
+
+
+# Test 1
+# Checks that ydb_env_set sets all of the expected environment variables
+# This case is on a "fresh" environment with no preexisting variables set
+# That ydb_env_unset unsets all of the expected environment variables
+# That ydb_env_set creates the directory $HOME/.yottadb if it does not exist
+# source ydb_env_set
+# wc -l of envCmpA.txt, and setEnvA.txt should be the same
+PASS
+# source ydb_env_unset
+# Check that no ydb*, gtm*, GTM* environment variables are set
+PASS
+# Check that .yottadb was created at $HOME
+PASS
+
+
+# Test 2
+# Checks that ydb_env_set sets all of the expected environment variables
+# This case is on an environment with preexisting variables
+# That ydb_env_unset unsets all of the expected environment variables
+# That ydb_env_set creates the directory $HOME/.yottadb if it does not exist
+# source ydb_env_set
+# wc -l of envCmpB.txt, and setEnvB.txt should be the same
+PASS
+# source ydb_env_unset
+# wc -l of envCmpC.txt, and unsetEnvB.txt should be the same
+PASS
+# Check that .yottadb was created at $HOME
+PASS
+
+
+# Test 3
+# Test that ydb_env_set sets up a working database
+# Running subtest basic/globals to test that database is properly setup
+
+Test of access to MUMPS globals
+d  PASS
+i  PASS
+u  PASS
+# Creating a second region and confirming that ydb_env_set creates it
+PASS
+
+
+# Test 4
+# Test that setting ydb_chset to UtF-8 prior to ydb_env_set will use a UTF-8 database
+# Setting ydb_chset to UtF-8 to verify ydb_env_set properly sets up UTF-8 mode
+# Checking yottadb $zchset value
+UTF-8
+PASS
+
+
+# Test 5
+# Test that ydb_env_set creates the database files at ydb_dir when it is set
+# Setting ydb_dir to nonexistent directory tmp and testing environment works
+# Copying subtest basic/globals to test new environment
+
+Test of access to MUMPS globals
+d  PASS
+i  PASS
+u  PASS
+##TEST_AWK# Checking tmp/.*/o for the global object file
+##TEST_AWKtmp/.*/o/globals.o
+PASS
+
+
+# Test [6-11]
+# Simulating crashes and recoveries of database with properties
+#	Single Region before journaling
+#	2 Region before journaling
+#	Single Region nobefore journaling
+#	2 Region nobefore journaling
+#	Single Region no journaling
+#	2 Region no journaling
+# Test 6
+# Simulating a database crash and recovery with ydb_env_set with 1 regions with enable,on,before journaling
+Files Created in ##TEST_PATH##/tmp:
+Using: ##SOURCE_PATH##/mumps -run GDE
+yottadb.gld
+Using: ##SOURCE_PATH##/mupip
+yottadb.dat
+# Crashing database
+##TEST_AWKSimulating kill of GTM/YDB Processes with PID [0-9]*
+# Confirming it is crashed
+##TEST_AWKError occurred: 150379986,%XCMD\+5\^%XCMD,%YDB-E-REQRECOV.*
+# Attempting recovery
+Checking the recovered database with $data(^a), $data(^b) Expected: 10 10; Actual: 10 10
+
+
+
+# Test 7
+# Simulating a database crash and recovery with ydb_env_set with 2 regions with enable,on,before journaling
+Files Created in ##TEST_PATH##/tmp:
+Using: ##SOURCE_PATH##/mumps -run GDE
+yottadb.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+yottadb.dat
+# Crashing database
+##TEST_AWKSimulating kill of GTM/YDB Processes with PID [0-9]*
+# Confirming it is crashed
+##TEST_AWKError occurred: 150379986,%XCMD\+5\^%XCMD,%YDB-E-REQRECOV.*
+# Attempting recovery
+Checking the recovered database with $data(^a), $data(^b) Expected: 10 10; Actual: 10 10
+
+
+
+# Test 8
+# Simulating a database crash and recovery with ydb_env_set with 1 regions with enable,on,nobefore journaling
+Files Created in ##TEST_PATH##/tmp:
+Using: ##SOURCE_PATH##/mumps -run GDE
+yottadb.gld
+Using: ##SOURCE_PATH##/mupip
+yottadb.dat
+# Crashing database
+##TEST_AWKSimulating kill of GTM/YDB Processes with PID [0-9]*
+# Confirming it is crashed
+##TEST_AWKError occurred: 150379986,%XCMD\+5\^%XCMD,%YDB-E-REQRECOV.*
+# Attempting recovery
+##TEST_AWKError file at .*is:
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK%YDB-E-JNLNOBIJBACK, MUPIP JOURNAL BACKWARD.* does not have before image journaling
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##TEST_AWK%YDBENV-F-MUPIPERR command "\$ydb_dist/mupip journal -recover -backward.* terminated with non-zero status \(130\)
+# Cannot do a dbcheck as non-before journaling types will have integ errors
+
+
+
+# Test 9
+# Simulating a database crash and recovery with ydb_env_set with 2 regions with enable,on,nobefore journaling
+Files Created in ##TEST_PATH##/tmp:
+Using: ##SOURCE_PATH##/mumps -run GDE
+yottadb.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+yottadb.dat
+# Crashing database
+##TEST_AWKSimulating kill of GTM/YDB Processes with PID [0-9]*
+# Confirming it is crashed
+##TEST_AWKError occurred: 150379986,%XCMD\+5\^%XCMD,%YDB-E-REQRECOV.*
+# Attempting recovery
+##TEST_AWKError file at .*is:
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK%YDB-E-JNLNOBIJBACK, MUPIP JOURNAL BACKWARD.* does not have before image journaling
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+##TEST_AWK%YDBENV-F-MUPIPERR command "\$ydb_dist/mupip journal -recover -backward.* terminated with non-zero status \(130\)
+# Cannot do a dbcheck as non-before journaling types will have integ errors
+
+
+
+# Test 10
+# Simulating a database crash and recovery with ydb_env_set with 1 regions with disable journaling
+Files Created in ##TEST_PATH##/tmp:
+Using: ##SOURCE_PATH##/mumps -run GDE
+yottadb.gld
+Using: ##SOURCE_PATH##/mupip
+yottadb.dat
+# Crashing database
+##TEST_AWKSimulating kill of GTM/YDB Processes with PID [0-9]*
+# Confirming it is crashed
+##TEST_AWKError occurred: 150374954,%XCMD\+5\^%XCMD,%YDB-E-REQRUNDOWN.*
+# Attempting recovery
+##TEST_AWKError file at .*is:
+%YDBENV-F-NOTBEFOREIMAGEJOURNAL backward rollback/recover not possible because region "DEFAULT" does not have before-image journaling
+# Cannot do a dbcheck as non-before journaling types will have integ errors
+
+
+
+# Test 11
+# Simulating a database crash and recovery with ydb_env_set with 2 regions with disable journaling
+Files Created in ##TEST_PATH##/tmp:
+Using: ##SOURCE_PATH##/mumps -run GDE
+yottadb.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+yottadb.dat
+# Crashing database
+##TEST_AWKSimulating kill of GTM/YDB Processes with PID [0-9]*
+# Confirming it is crashed
+##TEST_AWKError occurred: 150374954,%XCMD\+5\^%XCMD,%YDB-E-REQRUNDOWN.*
+# Attempting recovery
+##TEST_AWKError file at .*is:
+%YDBENV-F-NOTBEFOREIMAGEJOURNAL backward rollback/recover not possible because region "AREG" does not have before-image journaling
+# Cannot do a dbcheck as non-before journaling types will have integ errors
+
+
+
+
+
+# Test [12-17]
+# Testing that databases can shutdown cleanly and come back without errors with properties
+#	Single Region before journaling
+#	2 Region before journaling
+#	Single Region nobefore journaling
+#	2 Region nobefore journaling
+#	Single Region no journaling
+#	2 Region no journaling
+# Test 12
+# Opening and closing cleanly database with 1 regions with enable,on,before journaling
+Files Created in ##TEST_PATH##/tmp:
+Using: ##SOURCE_PATH##/mumps -run GDE
+yottadb.gld
+Using: ##SOURCE_PATH##/mupip
+yottadb.dat
+# Setting ^a and ^b and exiting
+# Toggling ydb_env_unset/ydb_env_set
+Checking $data(^a), $data(^b) Expected: 1 1; Actual: 1 1
+
+
+
+# Test 13
+# Opening and closing cleanly database with 2 regions with enable,on,before journaling
+Files Created in ##TEST_PATH##/tmp:
+Using: ##SOURCE_PATH##/mumps -run GDE
+yottadb.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+yottadb.dat
+# Setting ^a and ^b and exiting
+# Toggling ydb_env_unset/ydb_env_set
+Checking $data(^a), $data(^b) Expected: 1 1; Actual: 1 1
+
+
+
+# Test 14
+# Opening and closing cleanly database with 1 regions with enable,on,nobefore journaling
+Files Created in ##TEST_PATH##/tmp:
+Using: ##SOURCE_PATH##/mumps -run GDE
+yottadb.gld
+Using: ##SOURCE_PATH##/mupip
+yottadb.dat
+# Setting ^a and ^b and exiting
+# Toggling ydb_env_unset/ydb_env_set
+Checking $data(^a), $data(^b) Expected: 1 1; Actual: 1 1
+
+
+
+# Test 15
+# Opening and closing cleanly database with 2 regions with enable,on,nobefore journaling
+Files Created in ##TEST_PATH##/tmp:
+Using: ##SOURCE_PATH##/mumps -run GDE
+yottadb.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+yottadb.dat
+# Setting ^a and ^b and exiting
+# Toggling ydb_env_unset/ydb_env_set
+Checking $data(^a), $data(^b) Expected: 1 1; Actual: 1 1
+
+
+
+# Test 16
+# Opening and closing cleanly database with 1 regions with disable journaling
+Files Created in ##TEST_PATH##/tmp:
+Using: ##SOURCE_PATH##/mumps -run GDE
+yottadb.gld
+Using: ##SOURCE_PATH##/mupip
+yottadb.dat
+# Setting ^a and ^b and exiting
+# Toggling ydb_env_unset/ydb_env_set
+Checking $data(^a), $data(^b) Expected: 1 1; Actual: 1 1
+
+
+
+# Test 17
+# Opening and closing cleanly database with 2 regions with disable journaling
+Files Created in ##TEST_PATH##/tmp:
+Using: ##SOURCE_PATH##/mumps -run GDE
+yottadb.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+yottadb.dat
+# Setting ^a and ^b and exiting
+# Toggling ydb_env_unset/ydb_env_set
+Checking $data(^a), $data(^b) Expected: 1 1; Actual: 1 1
+
+
+
