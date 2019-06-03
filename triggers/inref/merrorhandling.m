@@ -239,7 +239,7 @@ tfile
 	;+^etrap("xecutetrap")	-command=ZTR -xecute="set $ETrap=""set $ecode="""""""" write $zstatus,! zgoto"""
 	;+^etrap("xecutetrap")	-command=S,K -xecute="do ^twork ztrigger ^etrap(""xecutetrap"") do ^twork write $ZTVAlue/0"
 	;
-	;+^etrap("bustedxecute")	-command=S,ZK -xecute="xecute ""set 1=1"""
+	;+^etrap("bustedxecute")	-command=S,ZK -xecute="xecute ""set 1=1"" quit"
 	;
 	;; recursive failure tests
 	;+^CIF(:) -commands=SET -xecute=<<

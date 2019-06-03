@@ -28,6 +28,30 @@ Not in a trigger operation
 	$ZTrap:B
 	$ZTLEvel:0	$ZLevel:2	$TLevel:0
 	twork+7^twork
+File merrorhandling.trg, Line 1: No matching triggers found for deletion
+File merrorhandling.trg, Line 5: Added SET and/or Non-SET trigger on ^etrap named etrap#1
+File merrorhandling.trg, Line 6: Added Non-SET trigger on ^etrap named etrap#2
+File merrorhandling.trg, Line 8: Added SET and/or Non-SET trigger on ^etrap named etrap#3
+File merrorhandling.trg, Line 10: Added Non-SET trigger on ^etrap named etrap#4
+File merrorhandling.trg, Line 11: Added SET and/or Non-SET trigger on ^etrap named etrap#5
+File merrorhandling.trg, Line 13: Added SET and/or Non-SET trigger on ^etrap named etrap#6
+File merrorhandling.trg, Line 16: Added SET trigger on ^CIF named CIF#1
+File merrorhandling.trg, Line 31: Added SET and/or Non-SET trigger on ^etrap named etrap#7
+File merrorhandling.trg, Line 35: Added SET and/or Non-SET trigger on ^etrap named etrap#8
+File merrorhandling.trg, Line 36: Added SET and/or Non-SET trigger on ^etrap named etrap#9
+File merrorhandling.trg, Line 40: Added SET trigger on ^etrap named etrap#10
+File merrorhandling.trg, Line 45: Added SET trigger on ^etrap named etrap#11
+File merrorhandling.trg, Line 52: Added SET and/or Non-SET trigger on ^etrap named etrap#12
+File merrorhandling.trg, Line 53: Added SET and/or Non-SET trigger on ^etrap named etrap#13
+File merrorhandling.trg, Line 54: Added SET and/or Non-SET trigger on ^etrap named etrap#14
+File merrorhandling.trg, Line 55: Added SET and/or Non-SET trigger on ^etrap named etrap#15
+=========================================
+16 triggers added
+0 triggers deleted
+0 triggers modified
+16 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
 The trigger etrap#1# is doing S
 	$Reference:^etrap("show")	$Test:1
 	$ZTDAta :0	$ZTVAlue:show me that there is NO ETRAP
@@ -142,7 +166,7 @@ Error handling with broken compile
 
      ecode     ,M39,Z150373866,
      place     +1^etrap#6#
-     mcode      xecute "set 1=1"
+     mcode      xecute "set 1=1" quit
 150381666,dispatch+1^eHandle,%YDB-E-NOZTRAPINTRIG, Use of $ZTRAP in a database trigger environment ($ZTLEVEL greater than 0) is not supported
 ,M39,Z150373866,Z150381666,
 ###################################################################
