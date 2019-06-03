@@ -147,10 +147,9 @@ void* childThread(void* args){
 		toPass.to = 0;
 		toPass.amt = TRAN_AMT;
 		toPass.user = info->user;
-		while (toPass.from == toPass.to){
-			toPass.from = START_CID + RAND_INT(0, ACC_NEEDED);
-			toPass.to = START_CID + RAND_INT(0, ACC_NEEDED);
-		}
+		toPass.from = START_CID + RAND_INT(0, ACC_NEEDED);
+		toPass.to = START_CID + RAND_INT(0, ACC_NEEDED-1);
+		if (toPass.to == toPass.from) toPass.to++;
 		status = ydb_tp_st(YDB_NOTTP, NULL, tpfn, &toPass, "BATCH", 0, NULL);
 		YDB_ASSERT(status == YDB_OK);
 		++i;

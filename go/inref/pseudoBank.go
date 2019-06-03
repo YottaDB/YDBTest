@@ -79,14 +79,9 @@ func main() {
 					ref := guid + (t * int(math.Pow10(int(idShift))))
 					key := strconv.Itoa(ref)
 					from := startCid + rand.Intn(accountNeeded)
-					to := startCid + rand.Intn(accountNeeded)
+					to := startCid + rand.Intn(accountNeeded-1)
 					if from == to {
-						for {
-							to = startCid + rand.Intn(accountNeeded)
-							if from != to {
-								break
-							}
-						}
+						to += 1
 					}
 					postTranfer(key , from, to, tranAmt, user)
 					t++

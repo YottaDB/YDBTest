@@ -69,7 +69,7 @@
 # isMainMT			[mmr]	      Test of ydb_thread_is_main() works when called from multiple threads
 # initMT			[mmr]	      Test of ydb_init() works when called from multiple threads while the process is in SimpleAPI mode
 # exitMT			[mmr]	      Test of ydb_exit() works when called from multiple threads while the process is in SimpleAPI mode
-# pseudoBank			[mmr]	      Test of simulated banking transactions using SimpleAPI with 10 threads in ONE process
+# pseudoBank			[mmr]	      Test of simulated banking transactions using SimpleAPI with 10 processes
 # randomWalk			[mmr]	      Test of various SimpleAPI commands in multiple processes similar to the go/randomWalk subtest
 # ciVoidReturn			[mmr]	      Test of ydb_ci() when taking a string as a parameter, and returning void, properly processes the string parameter
 # ciVoidReturnStack		[mmr]	      Test of ydb_ci() when taking a string as a parameter, and returning void, properly processes the string parameter

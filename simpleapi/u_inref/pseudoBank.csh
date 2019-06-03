@@ -11,11 +11,11 @@
 #								#
 #################################################################
 #
-# Test of simulated banking transactions using threaded tp calls
+# Test of simulated banking transactions using SimpleAPI with 10 processes
 #
 #
 
-echo '# Test of simulated banking transactions using SimpleAPI with 10 threads in ONE process'
+echo '# Test of simulated banking transactions using SimpleAPI with 10 processes'
 
 #SETUP of the driver C file
 $gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $gtm_tst/$tst/inref/pseudoBank.c

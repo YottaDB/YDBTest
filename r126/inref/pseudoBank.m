@@ -39,7 +39,8 @@ child(jobindex);
 	for  do  quit:^isTimeout
 	. set ref=guid+(t*(10**idShift))
 	. set from=startCid+$random(accountNeeded)
-	. for  set to=startCid+$random(accountNeeded)  quit:to'=from
+	. set to=startCid+$random(accountNeeded-1)
+	. set:from=to to=to+1
 	. do postTransfer(ref,from,to,tranAmt,user)
 	. set t=t+1
 	quit

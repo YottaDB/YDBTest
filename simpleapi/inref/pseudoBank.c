@@ -12,8 +12,10 @@
 
 #include <stdio.h>
 #include <unistd.h>
-#include <pthread.h>
 #include <math.h>
+#include <time.h>
+#include <sys/wait.h>
+#include <errno.h>
 #include "libyottadb.h"
 
 #define RAND_INT(a, b) rand() % (b - a) + a
@@ -28,18 +30,16 @@
 
 /* thread globals */
 #define NUM_THREADS	10
-#define TIMEOUT_LEN 	120 // timeout in seconds to stop doing transactions
-pthread_t tids[NUM_THREADS];
-pthread_t timeout;
-int isTimeout;
-pthread_mutex_t lockTP;
+#define TEST_TIMEOUT 	120 // timeout in seconds to stop doing transactions
 int idShift;
+time_t startTime;
 
 
 /* structs to pass arguments */
 struct threadArgs{
 	int guid;
 	int user;
+	int numRuns;
 };
 
 struct tpArgs{
@@ -83,8 +83,8 @@ typedef struct TrnLog {
 } TrnLog;
 
 /* prototypes */
-void* toggleTimeout();
-void* childThread(void* args);
+int childThread_driver(struct threadArgs* settings);
+int childThread(struct threadArgs* args);
 ydb_tpfnptr_t tpfn;
 int postTransfer(void* tpfnparam);
 int initData();
@@ -101,10 +101,7 @@ int Trn_SetTrnLogKey(ydb_buffer_t* basevarP, ydb_buffer_t* subsP, int guid, int 
 
 /* creates 10 threads which each do TRAN_PER_THREAD transactions */
 int main(){
-	if(pthread_mutex_init(&lockTP, NULL) != 0){
-		printf("Mutex init failed\n");
-		return 1;
-	}
+	startTime = time(NULL);
 	tpfn = &postTransfer;
 
 	initData();
@@ -113,28 +110,56 @@ int main(){
 	struct threadArgs argsArr[NUM_THREADS];
 	idShift = ceil(log10(NUM_THREADS));
 
-	isTimeout = 0;
-	pthread_create(&timeout, NULL, &toggleTimeout, NULL);
+	pid_t childProcess;
 
 	int i;
 	for(i = 0; i < NUM_THREADS; ++i){
 		int guid = i;
 		argsArr[i].guid = guid;
 		argsArr[i].user = user;
+		argsArr[i].numRuns = 0;
 
-		pthread_create(&tids[i], NULL, &childThread, &argsArr[i]);
+		childProcess = fork();
+		if (childProcess == 0){
+			return childThread_driver(&argsArr[i]);
+		}
 	}
 
-	for(i = 0; i < NUM_THREADS; ++i){
-		pthread_join(tids[i], NULL);
+	int status = 0;
+	while(1){
+		if ((i = wait(&status)) == -1){
+			if (errno == EINTR) continue;
+			break;
+		}
 	}
-	pthread_join(timeout, NULL);
+
 	return 0;
 }
 
-void* toggleTimeout(){
-	sleep(TIMEOUT_LEN);
-	isTimeout = 1;
+/* runs the test for TEST_TIMEOUT
+ * runs most of the tests in batches of 100
+ * to avoid (relatively) expensive time() calls
+ */
+int childThread_driver(struct threadArgs *settings){
+	srand(getpid());
+	/* estimation of test run time
+	 * under-estimates in order to ensure TEST_TIMEOUT runtime
+	 */
+	int i;
+	time_t estimate = 0;
+	/* do operations in batches of 100
+	 * checking time elapsed after each loop
+	 */
+	while (estimate < 110){
+		for(i = 0; i < 100; i++){
+			childThread(settings);
+		}
+		estimate = time(NULL) - startTime;
+	}
+	/* loop till TEST_TIMEOUT */
+	while(time(NULL) - startTime < TEST_TIMEOUT){
+		childThread(settings);
+	}
 	return 0;
 }
 
@@ -142,26 +167,21 @@ void* toggleTimeout(){
  * generates 2 account ID's
  * then uses ydb_tp_st() to call postTransfer
  */
-void* childThread(void* args){
-	struct threadArgs* info = (struct threadArgs*) args;
+int childThread(struct threadArgs *args){
 	int status;
 	struct tpArgs toPass;
-	int i = 0;
-	while(!isTimeout){
-		toPass.ref = info->guid + (i * pow(10, idShift));
-		toPass.from = 0;
-		toPass.to = 0;
-		toPass.amt = TRAN_AMT;
-		while (toPass.from == toPass.to){
-			toPass.from = START_CID + RAND_INT(0, ACC_NEEDED);
-			toPass.to = START_CID + RAND_INT(0, ACC_NEEDED);
-		}
-		pthread_mutex_lock(&lockTP);
-		status = ydb_tp_s(tpfn, &toPass, "BATCH", 0, NULL);
-		pthread_mutex_unlock(&lockTP);
-		YDB_ASSERT(status == YDB_OK);
-		++i;
+	toPass.ref = args->guid + (args->numRuns * pow(10, idShift));
+	toPass.from = 0;
+	toPass.to = 0;
+	toPass.amt = TRAN_AMT;
+	toPass.from = START_CID + RAND_INT(0, ACC_NEEDED);
+	toPass.to = START_CID + RAND_INT(0, ACC_NEEDED-1);
+	if (toPass.from == toPass.to){
+		toPass.to++;
 	}
+	status = ydb_tp_s(tpfn, &toPass, "BATCH", 0, NULL);
+	YDB_ASSERT(status == YDB_OK);
+	args->numRuns++;
 }
 
 /* driver function for the transaction
@@ -191,7 +211,9 @@ int postTransfer(void* tpfnparam){
 
 	/* Load the 2 account ID's modify their values and save them */
 	status = Account_Load(&keyAcctVar, keyAcctSubs, args->from, &accountFrom);
+	if (status == YDB_TP_RESTART) return status;
 	status = Account_Load(&keyAcctVar, keyAcctSubs, args->to, &accountTo);
+	if (status == YDB_TP_RESTART) return status;
 
 	accountFrom.histSeq += 1;
 	accountFrom.bal -= args->amt;
@@ -199,7 +221,9 @@ int postTransfer(void* tpfnparam){
 	accountTo.bal += args->amt;
 
 	status = Account_Save(&keyAcctVar, keyAcctSubs, &accountFrom);
+	if (status == YDB_TP_RESTART) return status;
 	status = Account_Save(&keyAcctVar, keyAcctSubs, &accountTo);
+	if (status == YDB_TP_RESTART) return status;
 
 	/* Load the 2 account histories add the new transaction to them */
 	histFrom.cid = args->from;
