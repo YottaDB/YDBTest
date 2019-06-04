@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -19,15 +19,13 @@ ydb297
 	quit
 lockhang
 	for  quit:^X(jobindex)
-	set substr="10096 10153 10221 10304 10789 11114 11121 11302 "
-        set substr=substr_"11348 11367 11396 11464 11675 12120 12158 12311 "
-        set substr=substr_"12371 12459 12766 13021 13248 13432 13448 13537 "
-        set substr=substr_"13618 13845 13986 14060 14156 14347 14854 15148 "
-        set substr=substr_"15207 15227 15720 15818 15967 16199 16407 16514 "
-        set substr=substr_"16586 17021 17083 17399 17449 17489 17633 17674 "
-        set substr=substr_"17711 17741 18189 18450 18495 18684 18799 18949 "
-        set substr=substr_"19049 19291 19399 19478 19615 19875 19908 20057 "
-        set substr=substr_"20182 20190 20500 20545 20619 20934 20994 21039"
+        ; Below are subscripts that hash to the same value (3857812303) modulo 4G (i.e.2**32)
+        set substr="1445240077 4097034630 4388659035 4630999867 5407955935 6251931759 11417300836 10290985601"
+        set substr=substr_" 11005068295 11434779216 12514012645 12676101741 17058576286 18738986112 18480244186 17280277179"
+        set substr=substr_" 18379984114 24440525326 21696035853 25089805580 25561658649 29582647612 30357044280 27414314996"
+        set substr=substr_" 32074740586 28582294681 31467579889 36848531774 46427764934 41893554996 48113940994 43052926029"
+        set substr=substr_" 44129775493 47697200707 54939630888 55988509030 57060549750 51493002061 60309326336 53984812611"
+        set substr=substr_" 54917189673 61308148430 56066818915 56431408489 63495468474 68545605854 66623834096"
 	for i=1:1:$length(substr," ") do mylock($piece(substr," ",i))
 	zsystem "$LKE show |& $grep SPACEINFO"
 	set ^X(jobindex+1)=1
@@ -43,5 +41,3 @@ mylock(subs)
         if $test=1  write " : SUCCESS",!
         else        write " :  -------------------------> FAILURE",!
         quit
-
-
