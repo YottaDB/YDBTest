@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -99,6 +99,31 @@ if ($?test_replic) then
 	echo $sleepcnt > instfreeze_sleepcnt.txt
 	if ($jnlswitchretry) then
 		$MSR STARTRCV INST1 INST2 >& jnlswitchretry_2.log
+		#
+		# Below is the first fix that was tried. We have that recorded here in case it helps at a later point in time.
+		# ----------------------------------
+		# At this point, while we are guaranteed to have the latest generation journal file of one region in
+		# the JNLSWITCHRETRY state, it is also possible for another region (this is a multi-region test) to
+		# have unflushed buffers (i.e. jb->dskaddr < jb->freeaddr) when the instance froze. In that case,
+		# the source server will not be able to send those journal records across (to sync INST1 with INST2)
+		# until the instance is unfrozen (it would log REPL_WARN messages to the source server indicating it
+		# is waiting for journal records to be written to the journal file, i.e. the test would hang). But
+		# unfreezing the instance defeats the purpose of this portion of the test which is to ensure the region
+		# where the JNLSWITCHRETRY state occurred (where all of the journal records are guaranteed flushed to
+		# disk) gets all of its journal records sent across by the source server even in the instance freeze state.
+		# Therefore we set an env var that the $MSR SYNC command (com/RF_sync.csh script specifically) invoked below
+		# will check and if set will do a DSE ALL -BUFF (to flush the journal buffers) if the source server backlog
+		# is not clearing fast enough. We expect this to fix the rare test hang scenario.
+		# ----------------------------------
+		# After the above fix, we noticed yet another rare hang. This is where the source server needs to get crit
+		# in order to open the journal file but crit is held by some other process which is waiting for the
+		# instance to be unfrozen before it can release crit. This is a situation where a DSE ALL -BUFF will
+		# not help since even that requires crit. Therefore, the above solution of an env var is still kept
+		# but the env var is used to do an instance unfreeze (instead of a DSE ALL -BUFF) in RF_sync.csh
+		# if the source server backlog is not clearing fast enough. This way we do not unfreeze the instance
+		# unless absolutely unavoidable.
+		#
+		setenv ydb_test_rf_sync_run_instance_unfreeze 1
 		$MSR SYNC INST1 INST2 >& jnlswitchretry_3.log
 	endif
 else

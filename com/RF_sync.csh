@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -119,6 +119,28 @@ while ($nowtime <= $timeout)
 	if ( $pribacklog == "0" ) break
 
 	if ( $prev_pribacklog == $pribacklog) then
+		# Now that we have done at least one invocation of wait_until_src_backlog_below.csh above
+		# and failed to clear the source side backlog (i.e. it is a test hang situation), check if
+		# caller subtest script wants us to do special stuff.
+		if ($?ydb_test_rf_sync_run_instance_unfreeze) then
+			if ($ydb_test_rf_sync_run_instance_unfreeze) then
+				# This is a signal from the v62000/gtm8086 subtest that it is a test hang situation
+				# that needs a manual instance unfreeze to clear the hang. So do that and retry the RF_sync loop.
+				echo "date : `date`" >>& inst_unfreeze.out
+				# First check if the instance is frozen. Do the unfreeze only if it is frozen.
+				set isfrozen = `$MUPIP replic -source -checkhealth |& $grep -c "Warning: Instance Freeze is ON"`
+				if (1 == $isfrozen) then
+					echo "Found instance freeze to be ON. Proceeding with instance unfreeze." >>& inst_unfreeze.out
+					$MUPIP replic -source -freeze=off >>& inst_unfreeze.out
+					# Now that we have cleared the instance freeze, do not descend into following code
+					# which will print a RFSYNC-E-NOPROGRESS thereby causing an unnecessary test failure.
+					# Instead retry the wait for backlog to clear.
+					continue
+				else
+					echo "Found instance freeze to be OFF. Not doing instance unfreeze." >>& inst_unfreeze.out
+				endif
+			endif
+		endif
 		# Take stack trace of receiver server for debugging
 		$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/get_rcvr_stack_trace.csh ${logfile:r}"
 		# Check if the update process has some progress
