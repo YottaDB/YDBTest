@@ -4,7 +4,7 @@
 # Copyright (c) 2010-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -13,6 +13,12 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+
+# This subtest reference file has trigger load output which will change if spanning regions are enabled
+# (region name will be included; the same trigger would get loaded across all the spanned regions causing
+# the # of triggers to also be different; etc.). So disable spanning regions.
+setenv gtm_test_spanreg 0		# Disable spanning regions for reasons described above
+
 source $gtm_tst/com/dbcreate.csh mumps 5
 $echoline
 $gtm_exe/mumps -run twork
