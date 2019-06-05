@@ -76,7 +76,6 @@ int curThreads;
 int isTimeout;
 
 int main(){
-	printf("MAX_THREADS %d\tTHREADS_TO_MAKE %d\n", MAX_THREADS, THREADS_TO_MAKE);
 	srand(time(NULL));
 	int status;
 
