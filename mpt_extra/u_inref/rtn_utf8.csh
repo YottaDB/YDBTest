@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh
 #################################################################
 #								#
-#	Copyright 2006, 2014 Fidelity Information Services, Inc	#
+# Copyright 2006, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -11,7 +14,7 @@
 #################################################################
 # test for conversion utility routines
 # these are the tests in the manual
-# for utf8 character set 
+# for utf8 character set
 #
 $switch_chset "UTF-8"
 setenv save_gtmroutines "$gtmroutines"
@@ -24,11 +27,7 @@ foreach i (unicodertn unicodetmpy unicodetmpz unicodet unicodertnx unicodertn1 u
 	set fname = "dirｄｉｒｅｃｔｏｒｙ/rtns/${i}.m"
 	echo "$i	;; " >&! $fname
 	echo "	;; This is the description for $i" >>&! $fname
-	echo "	; Ｙａｄａ ｙａｄａ" >>&! $fname
-	echo '	w "ಕಖಗಘಙ	",!' >>&! $fname
-	echo '	set ^xyz1="Ｙａｄａ",^xyz2="ｙａｄａ"' >>&! $fname
-	echo '	write "安刀就开始开始",!' >>&! $fname
-	echo "	q" >>&! $fname
+	cat $gtm_tst/mpt_extra/inref/rtn_utf8a.inp >>&! $fname
 	$convert_to_gtm_chset $fname
 end
 set cnt = 1
@@ -49,56 +48,18 @@ EOF
 echo "#####################"$cnt"###################"
 @ cnt = $cnt + 1
 echo "Testing RCE 1"
-$GTM << EOF
-D ^%RCE
-unicodetmp*
-
-始开始OLD
-开开开NEW
-
-
-
-zwr
-D ^%RCE
-unicodertn*
-
-ಕಖಗಘಙ	
-ಚ	ಛಜಝಞ
-
-
-
-zwr
-EOF
+$GTM < $gtm_tst/mpt_extra/inref/rtn_utf8b.inp
 #
 echo "#####################"$cnt"###################"
 @ cnt = $cnt + 1
 echo "Testing RCE 2"
-$GTM << EOF
-d ^%RCE
-unicodertn*
-
-Ｙａｄａ
-Ａｄａｙ
-n
-zwr
-EOF
+$GTM < $gtm_tst/mpt_extra/inref/rtn_utf8c.inp
 #
 echo "#####################"$cnt"###################"
 @ cnt = $cnt + 1
 echo "Testing RSEL and CALL RCE 1"
 cat $rtndir/unicodertn1.m
-$GTM << EOF
-d ^%RSEL
-unicodertn1
-
-s %ZF="Ａｄａｙ"
-s %ZN="☀★☃☂☁☢"
-S %ZC=1
-s %ZD="ｒｓｅ.out"
-open %ZD
-d CALL^%RCE
-zwr
-EOF
+$GTM < $gtm_tst/mpt_extra/inref/rtn_utf8d.inp
 #
 cat ｒｓｅ.out
 cat $rtndir/unicodertn1.m
@@ -107,47 +68,17 @@ echo "#####################"$cnt"###################"
 @ cnt = $cnt + 1
 echo "Testing RSE 1"
 #
-$GTM << EOF
-d ^%RSE
-unicodertn*
-unicodetmp*
--unicodertn*
-
-开开开NEW
-
-zwr
-EOF
+$GTM < $gtm_tst/mpt_extra/inref/rtn_utf8e.inp
 #
 echo "#####################"$cnt"###################"
 @ cnt = $cnt + 1
 echo "Testing RSE 2"
-$GTM << EOF
-write "RSE SHOULD NOT match the string below"
-d ^%RSE
-unicodertn*
-
-ಚಛಜಝಞ
-
-zwr
-EOF
+$GTM < $gtm_tst/mpt_extra/inref/rtn_utf8f.inp
 #
 echo "#####################"$cnt"###################"
 @ cnt = $cnt + 1
 echo "Testing RSEL and CALL RCE 2"
-$GTM << EOF
-d ^%RSEL
-unicodertn1
-unicodezz
-
-s %ZF="ಕಖಗಘಙ"
-d CALL^%RSE
-zwr
-s %ZD="callｒｓｅ.out"
-open %ZD
-d CALL^%RSE
-zwr
-close %ZD
-EOF
+$GTM < $gtm_tst/mpt_extra/inref/rtn_utf8g.inp
 #
 cat callｒｓｅ.out
 #

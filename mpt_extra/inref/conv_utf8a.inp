@@ -1,0 +1,19 @@
+do ^caseconv
+write "Test the interactive label INT of LCASE and UCASE",!
+do INT^%LCASE
+!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
+do INT^%UCASE
+!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
+do INT^%LCASE
+ľāťīň 'ō ľāťīň Ľāťīň 'Ō Ľāťīň ĽĀŤĪŇ 'Ō ĽĀŤĪŇ
+do INT^%UCASE
+ľāťīň 'ō ľāťīň Ľāťīň 'Ō Ľāťīň ĽĀŤĪŇ 'Ō ĽĀŤĪŇ
+do INT^%LCASE
+Chinese Should Not Change 北齊書  周書  南史  北史  隋書
+do INT^%UCASE
+Chinese Should Not Change 北齊書  周書  南史  北史  隋書
+do INT^%LCASE
+Ok some Tamil with JUICY comBIning chars எ ன ̇க̇ கு மா ற̇ ற ம̇ இ ல̇ ைல
+do INT^%UCASE
+Ok some Tamil with juicy comBIning chars எ ன ̇க̇ கு மா ற̇ ற ம̇ இ ல̇ ைல
+halt

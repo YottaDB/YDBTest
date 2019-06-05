@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -26,32 +26,7 @@ echo ""
 echo "########################################## "$cnt" ########################################"
 @ cnt = $cnt + 1
 echo "Testing %G 1"
-$GTM << EOF >&! gblinit.outx
-do unicode^gblinit
-D ^%G
-
-*
-
-D ^%G
-
-?D
-
-?D
-unia
-uniA
-unia*
-
-
-d ^%GD
-*
-
-D ^%GD
-samplegbl
-uni:^z
-%uni*
-*
-
-EOF
+$GTM < $gtm_tst/mpt_extra/inref/gbl_utf8a.inp >&! gblinit.outx
 #
 # Filter out the %YDB-W-LITNONGRAPH, warnings
 $tst_awk -f $gtm_tst/com/filter_litnongraph.awk gblinit.outx
@@ -59,41 +34,9 @@ echo ""
 echo "########################################## "$cnt" ########################################"
 @ cnt = $cnt + 1
 echo "Testing %G 2"
-$GTM << EOF
-s str="...Ｘ..."
-s x="Ｘ"
-D ^%G
+$GTM < $gtm_tst/mpt_extra/inref/gbl_utf8b.inp
 
-?1"uniA".E
-?4A1"TMP"
-?.E("ＤＩＥＧＯ")
-uniX123(599,*)
-uniX123(599,\$E(str,4,4))
-uniX123(599,x)
-uniA(1:10)
-uniCTMP(?.E1"Ｉ".E)
-uniCTMP(?.E3N)
-uniX123(*)
-
-EOF
-
-$GTM << EOF
-d ^%G
-
-samplegbl("我":"下")
-samplegbl("下":"我")
-samplegbl("３":"６")
-samplegbl("Τ")
-samplegbl("２",*)
-samplegbl("levels",?.E1"▄".E)
-samplegbl(\$ZCHAR(240,144,128,131))
-samplegbl("我能吞下玻璃而不伤身体")
-samplegbl("的编纂",*)
-samplegbl("¾",*)
-samplegbl(-5:27)
-
-
-EOF
+$GTM < $gtm_tst/mpt_extra/inref/gbl_utf8c.inp
 
 echo ""
 echo "########################################## "$cnt" ########################################"
@@ -116,94 +59,32 @@ echo ""
 echo "########################################## "$cnt" ########################################"
 @ cnt = $cnt + 1
 echo "Testing %GC"
-$GTM << EOF
-do ^%GCE
-?
-%uniYYY:^uniX123
-?D
-
-♚♝
-♞♘
-?
-
-?
-
-
-EOF
+$GTM < $gtm_tst/mpt_extra/inref/gbl_utf8d.inp
 #
 echo ""
 echo "########################################## "$cnt" ########################################"
 @ cnt = $cnt + 1
 echo "Testing %GCE"
-$GTM << EOF
-s ^cc("₁₂")="₁₂"
-s ^cc("₁₂2")="₁₂2"
-s ^cc("30")=65612
-s ^cc("45")=344
-s ^cc("₁₂₁₂")="0₁₂2₁₂"
-do ^%GCE
-cc
-
-₁₂
-₃₅
-
-
-
-do ^%G
-
-cc
-
-EOF
+$GTM < $gtm_tst/mpt_extra/inref/gbl_utf8e.inp
 #
 echo ""
 echo "########################################## "$cnt" ########################################"
 @ cnt = $cnt + 1
 echo "Testing %GO"
-$GTM << EOF
-do ^%GO
-samplegbl
-?
-?D
-
-SINGLEBYTEＭＵＬＴＩＢＹＴＥ
-ZWR
-unicodefileａｂｃ.zwr
-zwrite
-do ^%GO
-samplegbl
-?
-?D
-
-ＭＵＬＴＩＢＹＴＥSINGLEBYTE
-GO
-unicodefileａｂｃ.go
-zwrite
-EOF
+$GTM < $gtm_tst/mpt_extra/inref/gbl_utf8f.inp
 #
 # do an extract of the database with all the globals
 $MUPIP extract orig.ext
 $tail -n +3 orig.ext >&! orig1.ext
 #
-$GTM << EOF
-k ^samplegbl
-d ^%GI
-unicodefileａｂｃ.zwr
-
-zwr
-EOF
+$GTM < $gtm_tst/mpt_extra/inref/gbl_utf8g.inp
 #
 # compare whether the global that got killed is restored by doing a mupip extract now and checking with the saved copy
 $MUPIP extract gioutput_zwr.ext
 $tail -n +3 gioutput_zwr.ext >&! gioutput_zwr1.ext
 diff orig1.ext gioutput_zwr1.ext
 #
-$GTM << EOF
-k ^samplegbl
-d ^%GI
-unicodefileａｂｃ.go
-
-zwr
-EOF
+$GTM < $gtm_tst/mpt_extra/inref/gbl_utf8h.inp
 #
 $MUPIP extract gioutput_go.ext
 $tail -n +3 gioutput_go.ext >&! gioutput_go1.ext
@@ -213,46 +94,6 @@ echo ""
 echo "########################################## "$cnt" ########################################"
 @ cnt = $cnt + 1
 echo "Testing %GSE"
-$GTM << EOF
-d ^%GSE
-
-samplegbl*
-?
-?D
-'samplegblcp
-%*
-a?cd
-?D
-A*
-c
-
-♞♘
-%*
-A
-
-ｅ	♞♘
-samplegbl*
-
-ü
-samplegbl*
-
-ü
-samplegbl*
-
-u¨
-mix*
-
-我能 end here
-mix*
-
-♋
-mix*
-
-我能吞下玻璃而不伤身体 end here
-mix*
-
-我能吞下玻而不伤身体 end here
-
-EOF
+$GTM < $gtm_tst/mpt_extra/inref/gbl_utf8i.inp
 #
 $gtm_tst/com/dbcheck.csh

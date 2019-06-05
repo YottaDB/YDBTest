@@ -1,4 +1,17 @@
 #!/usr/local/bin/tcsh
+#################################################################
+#								#
+# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+# This module is derived from FIS GT.M.
+#################################################################
 # test for conversion utility routines
 # these are the tests in the manual
 # for utf8 characters
@@ -11,25 +24,5 @@
 $switch_chset "UTF-8"
 $tst_awk -f $gtm_tst/com/convert.awk $gtm_tst/com/special_casing.txt
 #
-$GTM << \GTMEND
-do ^caseconv
-write "Test the interactive label INT of LCASE and UCASE",!
-do INT^%LCASE
-!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
-do INT^%UCASE
-!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
-do INT^%LCASE
-ľāťīň 'ō ľāťīň Ľāťīň 'Ō Ľāťīň ĽĀŤĪŇ 'Ō ĽĀŤĪŇ
-do INT^%UCASE
-ľāťīň 'ō ľāťīň Ľāťīň 'Ō Ľāťīň ĽĀŤĪŇ 'Ō ĽĀŤĪŇ
-do INT^%LCASE
-Chinese Should Not Change 北齊書  周書  南史  北史  隋書
-do INT^%UCASE
-Chinese Should Not Change 北齊書  周書  南史  北史  隋書
-do INT^%LCASE
-Ok some Tamil with JUICY comBIning chars எ ன ̇க̇ கு மா ற̇ ற ம̇ இ ல̇ ைல
-do INT^%UCASE
-Ok some Tamil with juicy comBIning chars எ ன ̇க̇ கு மா ற̇ ற ம̇ இ ல̇ ைல
-halt
-\GTMEND
+$GTM < $gtm_tst/mpt_extra/inref/conv_utf8a.inp
 #
