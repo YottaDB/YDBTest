@@ -556,7 +556,7 @@ Index               1               3           1.245             1
 Data                3            1000          81.013             3
 Free               94              NA              NA            NA
 Total             100            1005              NA             4
-%YDB-E-DBTNLTCTN, Transaction numbers greater than the current transaction were found
+%YDB-E-DBTNLTCTN, Transaction numbers greater than or equal to the current transaction were found
 
 Largest transaction number found in database was 3E8
 Current transaction number is                    3E8
@@ -586,7 +586,7 @@ Index               1               3           1.245             1
 Data                3            1000          81.013             3
 Free               94              NA              NA            NA
 Total             100            1005              NA             4
-%YDB-E-DBTNLTCTN, Transaction numbers greater than the current transaction were found
+%YDB-E-DBTNLTCTN, Transaction numbers greater than or equal to the current transaction were found
 
 Largest transaction number found in database was 3E8
 Current transaction number is                    3E8
@@ -630,5 +630,5 @@ No errors detected by integ.
 %YDB-E-NOREGION, REGION not found: BREG
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##TEST_PATH##/mupip.err_##TEST_AWK.*
-%YDB-E-DBTNLTCTN, Transaction numbers greater than the current transaction were found
+%YDB-E-DBTNLTCTN, Transaction numbers greater than or equal to the current transaction were found
 %YDB-E-INTEGERRS, Database integrity errors

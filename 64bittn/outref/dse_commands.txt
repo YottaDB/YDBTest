@@ -184,7 +184,7 @@ Index               1               1           0.585             1
 Data                1               1           0.585             1
 Free               96              NA              NA            NA
 Total             100               4              NA             2
-%YDB-E-DBTNLTCTN, Transaction numbers greater than the current transaction were found
+%YDB-E-DBTNLTCTN, Transaction numbers greater than or equal to the current transaction were found
 
 Largest transaction number found in database was FFFFFFFF
 Current transaction number is                    12
@@ -678,7 +678,7 @@ Hex:  FFFFFFFFFFFF   Dec:  281474976710655
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
 ##TEST_PATH##/mupip.err_##TEST_AWK[0-9_]+
-%YDB-E-DBTNLTCTN, Transaction numbers greater than the current transaction were found
+%YDB-E-DBTNLTCTN, Transaction numbers greater than or equal to the current transaction were found
 %YDB-E-INTEGERRS, Database integrity errors
 ##TEST_PATH##/mupip.err_##TEST_AWK[0-9_]+
 %YDB-W-MUTNWARN, Database file ##TEST_PATH##/mumps.dat has 0x0000000000000000 more transactions to go before reaching the transaction number limit (0xFFFFFFF000000000). Renew database with MUPIP INTEG TN_RESET
