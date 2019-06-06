@@ -27,6 +27,7 @@
 # ydb438	   [mmr]   Test that LOCK with timeout of 0 always returns a unowned lock
 # ydb446	   [mmr]   Test that ydb_ci/p() and ydb_ci/p_t() do not sig11 if the M callin return length is greater than the allocated buffer
 # ydb440	   [mmr]   Test that yottadb will not optimize xecute lines if more commands follow it
+# ydb460 	   [mmr]   Test of maximum line length for M source files currently 32766 (32KiB-2) characters
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r126 test starts..."
@@ -35,7 +36,7 @@ echo "r126 test starts..."
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic ""
 setenv subtest_list_non_replic "$subtest_list_non_replic ydb430 pseudoBank randomWalk ydb431 ydb454 v63006 ydb432"
-setenv subtest_list_non_replic "$subtest_list_non_replic ydb449 v63007 ydb438 ydb446 ydb440"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb449 v63007 ydb438 ydb446 ydb440 ydb460"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
