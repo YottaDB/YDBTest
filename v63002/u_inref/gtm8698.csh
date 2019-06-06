@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -25,7 +25,9 @@ echo "# Attempting to update the database"
 $ydb_dist/mumps -run ^%XCMD 'set ^A=1'
 echo "# Checking the syslog"
 $gtm_tst/com/getoper.csh "$t" "" getoper.txt
-$grep "MUCREFILERR" getoper.txt |& sed 's/.*%YDB-E-MUCREFILERR/%YDB-E-MUCREFILERR/'|& sed 's/%YDB-E-DBOPNERR.*//'
+# Use gtm8698 below in search string to avoid MUCREFILERR messages from other concurrently running tests
+# from causing this test to fail with extra messages than expected.
+$grep "MUCREFILERR.*gtm8698" getoper.txt |& sed 's/.*%YDB-E-MUCREFILERR/%YDB-E-MUCREFILERR/'|& sed 's/%YDB-E-DBOPNERR.*//'
 # Fixing everything so the dbcheck can operate appropriately
 $GDE change -segment DEFAULT -file_name="mumps.dat" >& fix.out
 $ydb_dist/mumps -run ^%XCMD 'set ^A=1' >& setvar.out
