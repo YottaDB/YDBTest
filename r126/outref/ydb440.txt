@@ -1,0 +1,77 @@
+# Test that yottadb will not optimize XECUTE lines if more commands follow it
+
+##ALLOW_OUTPUT DYNAMIC_LITERALS
+##SUSPEND_OUTPUTS NODYNAMIC_LITERALS
+# mumps -machine -lis=xecutebug.lis xecutebugA.m
+# greping for "OC_" should see "OC_COMMARG" output if compiled correctly
+# the OC_COMMARG corresponds to an unoptimized XECUTE
+          1      JSB         @B^xf_linestart(R11)                     ;OC_LINESTART
+          2      PUSHL       I^#1                                     ;OC_WTEOL
+          4      PUSHAB      @GTM$LITERAL+0x40                        ;OC_LITC
+          7      PUSHAB      B^0(r9)                                  ;OC_WRITE
+          9      PUSHAB      @GTM$LITERAL+0x20                        ;OC_LITC
+          12     PUSHL       I^#19                                    ;OC_COMMARG
+          15     PUSHL       I^#1                                     ;OC_WTEOL
+          17     PUSHAB      @GTM$LITERAL+0x0                         ;OC_LITC
+          20     PUSHAB      B^0(r9)                                  ;OC_WRITE
+          22     JSB         @B^xf_linestart(R11)                     ;OC_LINESTART
+          23     JSB         @B^xf_ret(R11)                           ;OC_RET
+          24     JSB         @B^xf_ret(R11)                           ;OC_RET
+
+# mumps -machine -lis=xecutebug.lis xecutebugB.m
+# greping for "OC_" should not see "OC_COMMARG" in the output if compiled correctly
+# the OC_COMMARG corresponds to an unoptimized XECUTE
+          1      PUSHL       I^#0                                     ;OC_LINEFETCH
+          3      PUSHL       I^#1                                     ;OC_WTEOL
+          5      PUSHAB      @GTM$LITERAL+0x60                        ;OC_LITC
+          8      PUSHAB      B^0(r9)                                  ;OC_WRITE
+          10     PUSHAB      @GTM$LITERAL+0x20                        ;OC_LITC
+          13     MOVAB       B^0(r9)                                  ;OC_STOTEMP
+          16     MOVAB       B^32(r9)                                 ;OC_CONUM
+          18     MOVAB       B^32(r9)                                 ;OC_STO
+          21     PUSHAB      @GTM$LITERAL+0x20                        ;OC_LITC
+          24     PUSHAB      @GTM$LITERAL+0x0                         ;OC_LITC
+          27     PUSHAB      B^32(r9)                                 ;OC_FORINIT
+##TEST_AWK          31     BGTR        x\^0x[A-F0-9]*                                   ;OC_JMPGTR
+          32     JSB         @W^xf_restartpc(R11)                     ;OC_FORCHK1
+          34     PUSHL       I^#1                                     ;OC_WTEOL
+          36     PUSHAB      @B^0(r8)                                 ;OC_WRITE
+          38     PUSHAB      @GTM$LITERAL+0x20                        ;OC_LITC
+          41     PUSHAB      @GTM$LITERAL+0x0                         ;OC_LITC
+          44     JSB         @W^xf_restartpc(R11)                     ;OC_FORLOOP
+          50     JSB         @B^xf_linestart(R11)                     ;OC_LINESTART
+          51     JSB         @B^xf_ret(R11)                           ;OC_RET
+          52     JSB         @B^xf_ret(R11)                           ;OC_RET
+##SUSPEND_OUTPUT DYNAMIC_LITERALS
+##ALLOW_OUTPUT NODYNAMIC_LITERALS
+# mumps -machine -lis=xecutebug.lis xecutebugA.m
+# greping for "OC_" should see "OC_COMMARG" output if compiled correctly
+# the OC_COMMARG corresponds to an unoptimized XECUTE
+          1      JSB         @B^xf_linestart(R11)                     ;OC_LINESTART
+          2      PUSHL       I^#1                                     ;OC_WTEOL
+          4      PUSHAB      @GTM$LITERAL+0x40                        ;OC_WRITE
+          6      PUSHL       I^#19                                    ;OC_COMMARG
+          9      PUSHL       I^#1                                     ;OC_WTEOL
+          11     PUSHAB      @GTM$LITERAL+0x0                         ;OC_WRITE
+          13     JSB         @B^xf_linestart(R11)                     ;OC_LINESTART
+          14     JSB         @B^xf_ret(R11)                           ;OC_RET
+          15     JSB         @B^xf_ret(R11)                           ;OC_RET
+
+# mumps -machine -lis=xecutebug.lis xecutebugB.m
+# greping for "OC_" should not see "OC_COMMARG" in the output if compiled correctly
+# the OC_COMMARG corresponds to an unoptimized XECUTE
+          1      PUSHL       I^#0                                     ;OC_LINEFETCH
+          3      PUSHL       I^#1                                     ;OC_WTEOL
+          5      PUSHAB      @GTM$LITERAL+0x60                        ;OC_WRITE
+          7      MOVAB       @GTM$LITERAL+0x20                        ;OC_STOTEMP
+          10     MOVAB       B^0(r9)                                  ;OC_CONUM
+          12     MOVAB       B^0(r9)                                  ;OC_STO
+          15     PUSHAB      @GTM$LITERAL+0x0                         ;OC_FORINIT
+##TEST_AWK          19     BGTR        x\^0x[A-F0-9]*                                   ;OC_JMPGTR
+          20     JSB         @W^xf_restartpc(R11)                     ;OC_FORCHK1
+          22     PUSHL       I^#1                                     ;OC_WTEOL
+          24     PUSHAB      @B^0(r8)                                 ;OC_WRITE
+          26     JSB         @W^xf_restartpc(R11)                     ;OC_FORLOOP
+          32     JSB         @B^xf_linestart(R11)                     ;OC_LINESTART
+          33     JSB         @B^xf_ret(R11)                           ;OC_RET
+          34     JSB         @B^xf_ret(R11)                           ;OC_RET
