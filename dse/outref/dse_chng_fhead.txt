@@ -65,7 +65,7 @@ File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
 DSE> %YDB-E-CLIERR, Unrecognized value: \, HEX number expected
-DSE> %YDB-E-CLIERR, Unrecognized value: z, Decimal number expected
+DSE> %YDB-E-CLIERR, Unrecognized value: z, Decimal integer expected
 DSE> %YDB-E-CLIERR, Unrecognized value: Z, HEX number expected
 DSE> %YDB-E-SIZENOTVALID8, Size (in bytes) must be either 1, 2, 4, or 8
 DSE> Location 5632 [0x00001600] : Old Value = 0 [0x00] : New Value = 0 [0x00] : Size = 1 [0x01]
@@ -236,13 +236,13 @@ dse change -file -fully_upgraded=TRUE it should give an error
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%YDB-E-CLIERR, Unrecognized value: TRUE, Decimal number expected
+%YDB-E-CLIERR, Unrecognized value: TRUE, Decimal integer expected
 dse change -file fully_upgraded=-7
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%YDB-E-CLIERR, Unrecognized value: -7, Decimal number expected
+%YDB-E-CLIERR, Unrecognized value: -7, Decimal integer expected
 dse change -file fully_upgraded=7
 
 File  	##TEST_PATH##/mumps.dat

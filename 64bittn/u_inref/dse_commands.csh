@@ -3,7 +3,7 @@
 #								#
 # Copyright 2005, 2013 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018, 2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -114,7 +114,7 @@ $DSE change -fileheader -db_write_fmt="V3"					# Should issue error message sinc
 echo "====================   MBM_SIZE   ===================="
 echo ""
 $DSE dump -fileheader |&  $tst_awk '/Master Bitmap Size/ { print $1,$2,$3,$4}'	# should display 64
-$DSE change -fileheader -mbm_size=abe0						# should issue "%YDB-E-CLIERR, Unrecognized value: abe0, Decimal number expected"
+$DSE change -fileheader -mbm_size=abe0						# should issue "%YDB-E-CLIERR, Unrecognized value: abe0, Decimal integer expected"
 $DSE dump -fileheader |&  $tst_awk '/Master Bitmap Size/ { print $1,$2,$3,$4}'	# should display 64
 $DSE change -fileheader -mbm_size=32
 $DSE dump -fileheader |&  $tst_awk '/Master Bitmap Size/ { print $1,$2,$3,$4}'	# should display 32

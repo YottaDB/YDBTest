@@ -120,9 +120,9 @@ MUPIP SIZE cannot proceed with above errors
 
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 $MUPIP size -heuristic="arsample,samples=-3"
-%YDB-E-CLIERR, Unrecognized value: -3, Decimal number expected
+%YDB-E-CLIERR, Unrecognized value: -3, Decimal integer expected
 $MUPIP size -heuristic="arsample,samples=34s"
-%YDB-E-CLIERR, Unrecognized value: 34s, Decimal number expected
+%YDB-E-CLIERR, Unrecognized value: 34s, Decimal integer expected
 $MUPIP size -heuristic="arsample,dummy=110"
 %YDB-E-CLIERR, Unrecognized option : DUMMY
 $MUPIP size -heuristic="arsample,dummy"
@@ -319,9 +319,9 @@ MUPIP SIZE cannot proceed with above errors
 
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 $MUPIP size -heuristic="impsample,samples=-3"
-%YDB-E-CLIERR, Unrecognized value: -3, Decimal number expected
+%YDB-E-CLIERR, Unrecognized value: -3, Decimal integer expected
 $MUPIP size -heuristic="impsample,samples=34s"
-%YDB-E-CLIERR, Unrecognized value: 34s, Decimal number expected
+%YDB-E-CLIERR, Unrecognized value: 34s, Decimal integer expected
 $MUPIP size -heuristic="impsample,dummy=110"
 %YDB-E-CLIERR, Unrecognized option : DUMMY
 $MUPIP size -heuristic="impsample,dummy"
@@ -1110,9 +1110,9 @@ Global: d (region DEFAULT)
 Level          Blocks          Records         Adjacent
     1               1               35             1135
 $MUPIP size -heuristic="scan" -adjacency=-200
-%YDB-E-CLIERR, Unrecognized value: -200, Decimal number expected
+%YDB-E-CLIERR, Unrecognized value: -200, Decimal integer expected
 $MUPIP size -heuristic="scan" -adjacency=foo
-%YDB-E-CLIERR, Unrecognized value: foo, Decimal number expected
+%YDB-E-CLIERR, Unrecognized value: foo, Decimal integer expected
 unset verbose
 Done!
 ##ALLOW_OUTPUT SPANNING_REGIONS
@@ -1256,9 +1256,9 @@ MUPIP SIZE cannot proceed with above errors
 
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 $MUPIP size -heuristic="arsample,samples=-3"
-%YDB-E-CLIERR, Unrecognized value: -3, Decimal number expected
+%YDB-E-CLIERR, Unrecognized value: -3, Decimal integer expected
 $MUPIP size -heuristic="arsample,samples=34s"
-%YDB-E-CLIERR, Unrecognized value: 34s, Decimal number expected
+%YDB-E-CLIERR, Unrecognized value: 34s, Decimal integer expected
 $MUPIP size -heuristic="arsample,dummy=110"
 %YDB-E-CLIERR, Unrecognized option : DUMMY
 $MUPIP size -heuristic="arsample,dummy"
@@ -1581,9 +1581,9 @@ MUPIP SIZE cannot proceed with above errors
 
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 $MUPIP size -heuristic="impsample,samples=-3"
-%YDB-E-CLIERR, Unrecognized value: -3, Decimal number expected
+%YDB-E-CLIERR, Unrecognized value: -3, Decimal integer expected
 $MUPIP size -heuristic="impsample,samples=34s"
-%YDB-E-CLIERR, Unrecognized value: 34s, Decimal number expected
+%YDB-E-CLIERR, Unrecognized value: 34s, Decimal integer expected
 $MUPIP size -heuristic="impsample,dummy=110"
 %YDB-E-CLIERR, Unrecognized option : DUMMY
 $MUPIP size -heuristic="impsample,dummy"
@@ -2842,9 +2842,9 @@ Global: d (region DEFAULT)
 Level          Blocks          Records         Adjacent
     1               1                6             1104
 $MUPIP size -heuristic="scan" -adjacency=-200
-%YDB-E-CLIERR, Unrecognized value: -200, Decimal number expected
+%YDB-E-CLIERR, Unrecognized value: -200, Decimal integer expected
 $MUPIP size -heuristic="scan" -adjacency=foo
-%YDB-E-CLIERR, Unrecognized value: foo, Decimal number expected
+%YDB-E-CLIERR, Unrecognized value: foo, Decimal integer expected
 unset verbose
 Done!
 ##ALLOW_OUTPUT NONSPANNING_REGIONS

@@ -194,7 +194,7 @@ journal epoch_interval=: expected 32767 sec, but actual 32767
 Test Case 28
 EXTENSION option
 ##SOURCE_PATH##/mupip set -journal=[no]before,extension=-1 -file mumps.dat
-%YDB-E-CLIERR, Unrecognized value: -1, Decimal number expected
+%YDB-E-CLIERR, Unrecognized value: -1, Decimal integer expected
 journal extension=: expected 2048 blocks, but actual 2048
 ##SOURCE_PATH##/mupip set -journal=[no]before,alloc=20000,autoswitch=20000,extension=0 -file mumps.dat
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
@@ -227,7 +227,7 @@ journal extension=: expected 1073741824 blocks, but actual 1073741823
 Test Case 29
 YIELD_LIMIT option
 ##SOURCE_PATH##/mupip set -journal=[no]before,yield_limit=-1 -file mumps.dat
-%YDB-E-CLIERR, Unrecognized value: -1, Decimal number expected
+%YDB-E-CLIERR, Unrecognized value: -1, Decimal integer expected
 journal yield_limit=: expected 8, but actual 8
 ##SOURCE_PATH##/mupip set -journal=[no]before,yield_limit=0 -file mumps.dat
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
