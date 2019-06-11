@@ -4,6 +4,9 @@
 # Copyright (c) 2003-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -44,13 +47,13 @@ if ("CRASH" == "$crash_stop_idemp") then
 	setenv gtm_white_box_test_case_number 29
 endif
 if ($?gtm_white_box_test_case_number) then
-	echo "# $crash_stop_idemp forces the following whitebox test case"						>> settings.csh
-	echo "setenv gtm_white_box_test_case_enable $gtm_white_box_test_case_enable"					>> settings.csh
-	echo "setenv gtm_white_box_test_case_number $gtm_white_box_test_case_number"					>> settings.csh
+	echo "# $crash_stop_idemp forces the following whitebox test case"				>> settings.csh
+	echo "setenv gtm_white_box_test_case_enable $gtm_white_box_test_case_enable"			>> settings.csh
+	echo "setenv gtm_white_box_test_case_number $gtm_white_box_test_case_number"			>> settings.csh
 endif
 
 if ($?gtm_test_replay) then
-	echo "TEST-I-JNL_REPLAY will be replaying $gtm_test_replay"							>>! replay.log
+	echo "TEST-I-JNL_REPLAY will be replaying $gtm_test_replay"					>>! replay.log
 	if (! -e $gtm_test_replay) then
 		echo "TEST-E-JNL_REPLAYFILE the gtm_test_replay file cannot be found ("'$gtm_test_replay:' "$gtm_test_replay"
 		echo "Will not continue."
@@ -59,10 +62,25 @@ if ($?gtm_test_replay) then
 	source $gtm_test_replay
 else
 	# not replay, choose randomly
-	echo "# $round_no ##############################################"						>> settings.csh
-	set crash_gtm_updates = 0
+	echo "# $round_no ##############################################"				>> settings.csh
+	set crash_updates = 0
 	set rand = `$gtm_exe/mumps -run rand 10`
-	if (3 < $rand) set crash_gtm_updates = 1
+	if (6 < $rand) set crash_updates = 1
+	echo "# randomly chosen option to crash updates"						>> settings.csh
+	echo "# 0 - 30% of the time, cleanly shut down the processes"					>> settings.csh
+	echo "# 1 - 70% of the time, SIGKILL the processes"						>> settings.csh
+	echo "set crash_updates = $crash_updates"							>> settings.csh
+	# This test does kill -9 of mumps/mupip processes. A kill -9 could hit the running process while it
+	# is in the middle of executing wcs_wtstart. This could potentially leave some dirty buffers hanging in the shared
+	# memory. So, set the white box test case to avoid asserts in wcs_flu.c when a later mumps/mupip process comes to flush.
+	if (1 == $crash_updates) then
+		# When crashing GT.M
+		setenv gtm_white_box_test_case_enable 1
+		setenv gtm_white_box_test_case_number 29
+		echo "# Random choice crash_updates == 1 forces the following whitebox test case"	>> settings.csh
+		echo "setenv gtm_white_box_test_case_enable $gtm_white_box_test_case_enable"		>> settings.csh
+		echo "setenv gtm_white_box_test_case_number $gtm_white_box_test_case_number"		>> settings.csh
+	endif
 	if ("ROLLBACK" == "$test_rol_or_rec") then
 		set usedblockver = `$gtm_tst/com/check_for_V4_blocks.csh`
 		if (("STOP" == "$crash_stop_idemp") || ("V4" == "$usedblockver")) then
@@ -74,31 +92,19 @@ else
 		else
 			setenv gtm_test_onlinerollback "`$gtm_exe/mumps -run chooseamong TRUE FALSE`"
 		endif
-		echo "# randomly chosen Online Rollback status"								>> settings.csh
-		echo "setenv gtm_test_onlinerollback $gtm_test_onlinerollback"						>> settings.csh
+		echo "# randomly chosen Online Rollback status"						>> settings.csh
+		echo "setenv gtm_test_onlinerollback $gtm_test_onlinerollback"				>> settings.csh
 		if ("TRUE" == "$gtm_test_onlinerollback") then
 			setenv gtm_test_mupip_set_version "V5" # online rollback is incompatible with V4 blocks
-			echo "setenv gtm_test_mupip_set_version $gtm_test_mupip_set_version"				>> settings.csh
+			echo "setenv gtm_test_mupip_set_version $gtm_test_mupip_set_version"		>> settings.csh
 			setenv rollbackmethod "-online"
-			if (0 == $crash_gtm_updates) then
-				# when crashing GT.M
-				setenv gtm_white_box_test_case_enable 1
-				setenv gtm_white_box_test_case_number 29
-				echo "# Online Rollback does not clean out shared memory and ipcs after a crash"	>> settings.csh
-				echo "# set this white box test case to avoid errant assert failures."			>> settings.csh
-				echo "setenv gtm_white_box_test_case_enable $gtm_white_box_test_case_enable"		>> settings.csh
-				echo "setenv gtm_white_box_test_case_number $gtm_white_box_test_case_number"		>> settings.csh
-			endif
+
 		else
 			setenv rollbackmethod "`$gtm_exe/mumps -run chooseamong "" -noonline`"
 		endif
-		echo "# randomly chosen rollback method"								>> settings.csh
-		echo "setenv rollbackmethod '$rollbackmethod'"								>> settings.csh
+		echo "# randomly chosen rollback method"						>> settings.csh
+		echo "setenv rollbackmethod '$rollbackmethod'"						>> settings.csh
 	endif
-	echo "# randomly chosen option to crash gtm updates"								>> settings.csh
-	echo "# 0 - 30% of the time, cleanly shut down the GT.M processes"						>> settings.csh
-	echo "# 1 - 70% of the time, SIGKILL the GT.M processes"							>> settings.csh
-	echo "set crash_gtm_updates = $crash_gtm_updates"								>> settings.csh
 endif
 if (1 == $round_no) then
 	$gtm_tst/com/dbcreate.csh mumps 8 125-1019 400-1024 ${tst_rand_blksize} -alloc=5000
@@ -170,7 +176,7 @@ $gtm_tst/com/abs_time.csh time1 | sed 's/: /:GTM_TEST_DEBUGINFO/'
 set time1 = `cat time1_abs`
 setenv gtm_test_jobcnt 5
 # gtm_test_crash should be set before imptp is called
-setenv gtm_test_crash $crash_gtm_updates
+setenv gtm_test_crash $crash_updates
 setenv gtm_test_noisolation TPNOISO
 echo "setenv test_noisolation TPNOISO" >> settings.csh
 setenv gtm_test_dbfill "IMPTP"
@@ -225,9 +231,9 @@ if (1 != $round_no) then
 	set time1 = `cat time1_abs`
 endif
 echo "Stop the updates either with endtp (shutdown.out) or crash (crash.out) (30%-70%). Check which one of crash.out or shutdown.out exists."
-echo "set crash_gtm_updates = $crash_gtm_updates " >>! jnl_settings.txt
+echo "set crash_updates = $crash_updates " >>! jnl_settings.txt
 
-if ($crash_gtm_updates == 1) then
+if (! $crash_updates) then
 	echo "GT.M will be shutdown nicely" 			>>& shutdown.out
 	date							>>& shutdown.out
 	$gtm_tst/com/endtp.csh					>>& shutdown.out
