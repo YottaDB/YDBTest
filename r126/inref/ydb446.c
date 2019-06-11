@@ -46,8 +46,8 @@ int sapi(){
 		printf("PASS: ydb_ci() returned INVSTRLEN\n");
 	}
 	if(0 != strcmp(errBuf, "150375522,(Call-In),%YDB-E-INVSTRLEN, Invalid string length 20: max 15")){
-		printf("FAIL: ydb_ci() did not return the correct error message. Got: %s; Expected: \
-				\"150375522,(Call-In),%%YDB-E-INVSTRLEN, Invalid string length 20: max 15\"\n", errBuf);
+		printf("FAIL: ydb_ci() did not return the correct error message. Got: \"%s\"; Expected: "
+				"\"150375522,(Call-In),%%YDB-E-INVSTRLEN, Invalid string length 20: max 15\"\n", errBuf);
 	} else {
 		printf("PASS: ydb_ci() returned the correct error message\n");
 	}
@@ -80,8 +80,8 @@ int sapi(){
 		printf("PASS: ydb_cip() returned INVSTRLEN\n");
 	}
 	if(0 != strcmp(errBuf, "150375522,(Call-In),%YDB-E-INVSTRLEN, Invalid string length 20: max 15")){
-		printf("FAIL: ydb_ci() did not return the correct error message. Got: %s; Expected: \
-				\"150375522,(Call-In),i%%YDB-E-INVSTRLEN, Invalid string length 20: max 15\"\n", errBuf);
+		printf("FAIL: ydb_ci() did not return the correct error message. Got: \"%s\"; Expected: "
+				"\"150375522,(Call-In),i%%YDB-E-INVSTRLEN, Invalid string length 20: max 15\"\n", errBuf);
 	} else {
 		printf("PASS: ydb_ci() returned the correct error message\n");
 	}
@@ -91,14 +91,18 @@ int stapi(){
 	int status;
 	char goodBuf[21], badBuf[15], errBuf[1024];
 	ydb_string_t goodStr, badStr;
+	ydb_buffer_t errstr;
 	goodStr.address = goodBuf;
 	goodStr.length = 21;
 	badStr.address = badBuf;
 	badStr.length = 15;
+	errstr.buf_addr = errBuf;
+	errstr.len_alloc = sizeof(errBuf);
+	errstr.len_used = 0;
 
 	printf("\n\nydb_ci_t() tests\n");
 	printf("ydb_ci_t() on a properly allocated buffer should return no error\n");
-	status = ydb_ci_t(YDB_NOTTP, NULL, "retStr", &goodStr);
+	status = ydb_ci_t(YDB_NOTTP, &errstr, "retStr", &goodStr);
 	if(YDB_OK != status){
 		printf("FAIL: ydb_ci_t() did not return the correct status. Got: %d; Expected: %d\n", status, YDB_OK);
 	} else {
@@ -112,18 +116,18 @@ int stapi(){
 	}
 
 	printf("\nydb_ci_t() on a improperly (too small) buffer; should return INVSTRLEN\n");
-	status = ydb_ci_t(YDB_NOTTP, NULL, "retStr", &badStr);
-	ydb_zstatus(errBuf, 1024);
+	status = ydb_ci_t(YDB_NOTTP, &errstr, "retStr", &badStr);
+	errstr.buf_addr[errstr.len_used] = '\0';
 	if(-YDB_ERR_INVSTRLEN != status){
 		printf("FAIL: ydb_ci_t() did not return the correct status. Got: %d; Expected: %d\n", status, -YDB_ERR_INVSTRLEN);
 	} else {
 		printf("PASS: ydb_ci_t() returned INVSTRLEN\n");
 	}
-	if(0 != strcmp(errBuf, "150375522,(Call-In),%YDB-E-INVSTRLEN, Invalid string length 20: max 15")){
-		printf("FAIL: ydb_ci() did not return the correct error message. Got: %s; Expected: \
-				\"150375522,(Call-In),%%YDB-E-INVSTRLEN, Invalid string length 20: max 15\"\n", errBuf);
+	if(0 != strcmp(errBuf, "150375522,(SimpleThreadAPI),%YDB-E-INVSTRLEN, Invalid string length 20: max 15")){
+		printf("FAIL: ydb_ci_t() did not return the correct error message. Got: \"%s\"; Expected: "
+				"\"150375522,(SimpleThreadAPI),%%YDB-E-INVSTRLEN, Invalid string length 20: max 15\"\n", errBuf);
 	} else {
-		printf("PASS: ydb_ci() returned the correct error message\n");
+		printf("PASS: ydb_ci_t() returned the correct error message\n");
 	}
 
 
@@ -133,7 +137,7 @@ int stapi(){
 	callin.rtn_name.length = 6;
 	callin.handle = NULL;
 	printf("ydb_cip_t() on a properly allocated buffer should return no error\n");
-	status = ydb_cip_t(YDB_NOTTP, NULL, &callin, &goodStr);
+	status = ydb_cip_t(YDB_NOTTP, &errstr, &callin, &goodStr);
 	if(YDB_OK != status){
 		printf("FAIL: ydb_cip_t() did not return the correct status. Got: %d; Expected: %d\n", status, YDB_OK);
 	} else {
@@ -147,18 +151,18 @@ int stapi(){
 	}
 
 	printf("\nydb_cip_t() on a improperly (too small) buffer; should return INVSTRLEN\n");
-	status = ydb_cip_t(YDB_NOTTP, NULL, &callin, &badStr);
-	ydb_zstatus(errBuf, 1024);
+	status = ydb_cip_t(YDB_NOTTP, &errstr, &callin, &badStr);
+	errstr.buf_addr[errstr.len_used] = '\0';
 	if(-YDB_ERR_INVSTRLEN != status){
 		printf("FAIL: ydb_cip_t() did not return the correct status. Got: %d; Expected: %d\n", status, -YDB_ERR_INVSTRLEN);
 	} else {
 		printf("PASS: ydb_cip_t() returned INVSTRLEN\n");
 	}
-	if(0 != strcmp(errBuf, "150375522,(Call-In),%YDB-E-INVSTRLEN, Invalid string length 20: max 15")){
-		printf("FAIL: ydb_ci() did not return the correct error message. Got: %s; Expected: \
-				\"150375522,(Call-In),%%YDB-E-INVSTRLEN, Invalid string length 20: max 15\"\n", errBuf);
+	if(0 != strcmp(errBuf, "150375522,(SimpleThreadAPI),%YDB-E-INVSTRLEN, Invalid string length 20: max 15")){
+		printf("FAIL: ydb_cip_t() did not return the correct error message. Got: \"%s\"; Expected: "
+				"\"150375522,(SimpleThreadAPI),%%YDB-E-INVSTRLEN, Invalid string length 20: max 15\"\n", errBuf);
 	} else {
-		printf("PASS: ydb_ci() returned the correct error message\n");
+		printf("PASS: ydb_cip_t() returned the correct error message\n");
 	}
 	return 0;
 }
