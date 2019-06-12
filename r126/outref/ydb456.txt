@@ -1,0 +1,31 @@
+# Test of SIG-11 from ZWRITE of global after a name-level $ORDER if some database files do not exist
+# Creating a 3 region database DEFAULT, AREG, BREG
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+# Moving b.dat so it cannot be found
+# do ^%GD zwrite ^b
+
+YDB>
+
+Global Directory
+
+Global ^
+
+search+1^%GSEL,%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat,%SYSTEM-E-ENO2, No such file or directory
+
+YDB>
+
+YDB>
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/b.dat
+%SYSTEM-E-ENO2, No such file or directory
+
+YDB>
+# Moving b.dat back and doing dbcheck
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

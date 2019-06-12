@@ -29,6 +29,7 @@
 # ydb440	   [mmr]   Test that yottadb will not optimize xecute lines if more commands follow it
 # ydb460 	   [mmr]   Test of maximum line length for M source files currently 32766 (32KiB-2) characters
 # ydb429	   [mmr]   Test of all ydb_env_set/unset functions
+# ydb456	   [mmr]   Test of SIG-11 from ZWRITE of global after a name-level $ORDER if some database files do not exist
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r126 test starts..."
@@ -37,7 +38,7 @@ echo "r126 test starts..."
 setenv subtest_list_common     "ydb429"
 setenv subtest_list_non_replic ""
 setenv subtest_list_non_replic "$subtest_list_non_replic ydb430 pseudoBank randomWalk ydb431 ydb454 v63006 ydb432"
-setenv subtest_list_non_replic "$subtest_list_non_replic ydb449 v63007 ydb438 ydb446 ydb440 ydb460"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb449 v63007 ydb438 ydb446 ydb440 ydb460 ydb456"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
