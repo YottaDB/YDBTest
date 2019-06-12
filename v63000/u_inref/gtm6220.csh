@@ -4,6 +4,9 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -28,10 +31,7 @@ echo ">>> Enable journaling with before images"
 $MUPIP set -journal="enable,on,before" -reg "*" >& mupip_set_jnl.log
 
 # get time 10 seconds after start of journaled updates
-$GTM << GTM_EOF > aftertime.txt
-	set myhorolog=\$p(\$HOROLOG,",",1)_","_(\$p(\$HOROLOG,",",2)+10)
-	write \$zdate(myhorolog,"DD-MON-YEAR 24:60:SS")
-GTM_EOF
+$ydb_dist/mumps -run %XCMD 'write $zdate($$addtime^difftime($horolog,10),"DD-MON-YEAR 24:60:SS"),!' > aftertime.txt
 
 echo ">>> Do approximately two minutes of journaled update"
 $GTM << GTM_EOF
@@ -39,10 +39,7 @@ $GTM << GTM_EOF
 GTM_EOF
 
 # get time 10 seconds before end of journaled updates
-$GTM << GTM_EOF > beforetime.txt
-	set myhorolog=\$p(\$HOROLOG,",",1)_","_(\$p(\$HOROLOG,",",2)-10)
-	write \$zdate(myhorolog,"DD-MON-YEAR 24:60:SS")
-GTM_EOF
+$ydb_dist/mumps -run %XCMD 'write $zdate($$addtime^difftime($horolog,-10),"DD-MON-YEAR 24:60:SS"),!' > beforetime.txt
 
 set beforetime=`$grep \^\[0-9\] beforetime.txt`
 set aftertime=`$grep \^\[0-9\] aftertime.txt`
