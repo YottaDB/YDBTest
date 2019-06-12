@@ -38,17 +38,14 @@ while ($retry < $maxretry)
 		# "go get" succeeded. Break out of retry loop.
 		break
 	endif
-	$grep -q -e "net/http: TLS handshake timeout" -e "i/o timeout" go_get_$retry.log
-	if ($status) then
-		# Some error other than TLS handshake or i/o type timeout happened we don't retry
-		break
-	endif
 	$grep -q -e "net/http: TLS handshake timeout" go_get_$retry.log
 	if (! $status) then
 		# It was a TLS handshake timeout error. Try with "-insecure" to see if that helps.
 		# This has been seen to really make a difference at least on 1-CPU systems that are otherwise loaded.
 		set cmdtorun = "$cmdtorunprefix -insecure $cmdtorunsuffix"
 	else
+		# It was some other error (e.g. "i/o timeout" or "The requested URL returned error: 500")
+		# We retry on all types of errors.
 		set cmdtorun = "$cmdtorunprefix $cmdtorunsuffix"
 	endif
 	@ retry = $retry + 1
