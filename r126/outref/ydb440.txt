@@ -1,7 +1,7 @@
 # Test that yottadb will not optimize XECUTE lines if more commands follow it
 
 ##ALLOW_OUTPUT DYNAMIC_LITERALS
-##SUSPEND_OUTPUTS NODYNAMIC_LITERALS
+##SUSPEND_OUTPUT NODYNAMIC_LITERALS
 # mumps -machine -lis=xecutebug.lis xecutebugA.m
 # greping for "OC_" should see "OC_COMMARG" output if compiled correctly
 # the OC_COMMARG corresponds to an unoptimized XECUTE

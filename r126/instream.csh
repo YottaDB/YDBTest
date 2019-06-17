@@ -48,6 +48,11 @@ endif
 
 setenv subtest_exclude_list    ""
 
+# on pro builds filter out ydb440 as mumps -machine -lis does not work there
+if ("pro" == "$tst_image") then
+	setenv subtest_exclude_list "$subtest_exclude_list ydb440"
+endif
+
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh
 
