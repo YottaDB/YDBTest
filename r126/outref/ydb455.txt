@@ -1,0 +1,12 @@
+# Test that tls interface headers (*interface.h) are exposed in $ydb_dist
+# ls for $ydb_dist/*interface.h. Should see 4 files
+##SOURCE_PATH##/gtm_tls_interface.h
+##SOURCE_PATH##/gtmcrypt_interface.h
+##SOURCE_PATH##/ydb_tls_interface.h
+##SOURCE_PATH##/ydbcrypt_interface.h
+
+# ls for $ydb_dist/utf8/*interface.h. Should see 4 file
+##SOURCE_PATH##/utf8/gtm_tls_interface.h
+##SOURCE_PATH##/utf8/gtmcrypt_interface.h
+##SOURCE_PATH##/utf8/ydb_tls_interface.h
+##SOURCE_PATH##/utf8/ydbcrypt_interface.h
