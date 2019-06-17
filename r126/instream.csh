@@ -31,6 +31,7 @@
 # ydb429	   [mmr]   Test of all ydb_env_set/unset functions
 # ydb456	   [mmr]   Test of SIG-11 from ZWRITE of global after a name-level $ORDER if some database files do not exist
 # ydb455	   [mmr]   Test that tls interface headers (*interface.h) are exposed in $ydb_dist
+# ydb439	   [mmr]   Test that causing setting greater than 33 lock collisions does not cause a hang and runaway shared memory usage
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r126 test starts..."
@@ -40,6 +41,7 @@ setenv subtest_list_common     "ydb429"
 setenv subtest_list_non_replic ""
 setenv subtest_list_non_replic "$subtest_list_non_replic ydb430 pseudoBank randomWalk ydb431 ydb454 v63006 ydb432"
 setenv subtest_list_non_replic "$subtest_list_non_replic ydb449 v63007 ydb438 ydb446 ydb440 ydb460 ydb456 ydb455"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb439"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
