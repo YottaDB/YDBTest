@@ -15,7 +15,9 @@
 #include <pthread.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <errno.h>
 #include <time.h>
+#include <fcntl.h>
 
 #include <string.h>
 #include "libyottadb.h"
@@ -64,6 +66,7 @@ int runProc(testSettings* settings, int curDepth);
 int tpHelper(void* tpfnparm);
 int runProc_driver(testSettings *args);
 void logprint(char *prefix, strArr *var, char *suffix);
+int storePID(void);
 
 /* process globals */
 time_t startTime;
@@ -71,10 +74,12 @@ FILE *logfile;
 
 int main(){
 	startTime = time(NULL);
+	srand(startTime);
 	TEST_TIMEOUT = RAND_INT(15,120);
 	DRIVER_THREADS = RAND_INT(2,10);
 	MAX_DEPTH = RAND_INT(2, 20);
 	TP_NEST_RATE = (float) (RAND_INT(0,20)) / 100;
+	int status;
 
 	//test driver
 	pid_t childProcess;
@@ -88,8 +93,17 @@ int main(){
 			return runProc_driver(&settings);
 		}
 	}
-	int status = 0;
-	while((i = wait(&status)) > 0); //wait for child processes to exit
+	status = 0;
+	/* wait for all child processes to die
+	 * have to check for EINTR from yottadb
+	 * other wise the parent will exit early
+	 */
+	while(1){
+		if ((i = wait(&status)) == -1){
+			if (errno == EINTR) continue;
+			break;
+		}
+	}
 
 	return 0;
 }
@@ -97,8 +111,27 @@ int main(){
 int runProc_driver(testSettings *settings){
 	srand(getpid());
 	char filename[16];
+	int status;
 	sprintf(filename, "pid%d.log", getpid());
+
+	/* for ydb464 which uses this source code we redirect all logging to /dev/null
+ 	* since it is unimportant and clutters the test directory with log files
+	* we also want to change the stdout/stderr redirect to a unique file to avoid clobber
+ 	*/
+#ifndef NO_PRINT
 	logfile = fopen(filename, "w");
+#else
+	status = storePID();
+	YDB_ASSERT(status == YDB_OK);
+	logfile = fopen("/dev/null", "w");
+	char redirectName[16];
+	sprintf(redirectName, "child%d.log", getpid());
+	int redirect = open(redirectName, O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR);
+	status = dup2(redirect, STDOUT_FILENO);
+	YDB_ASSERT(STDOUT_FILENO == status);
+	status = dup2(redirect, STDERR_FILENO);
+	YDB_ASSERT(STDERR_FILENO == status);
+#endif
 	/* estimation of test run time
 	 * under estimates in order to ensure TEST_TIMEOUT runtime
 	 */
@@ -122,7 +155,12 @@ int runProc_driver(testSettings *settings){
 	while(time(NULL) - startTime < TEST_TIMEOUT){
 		runProc(settings, 0);
 	}
-	fclose(logfile);
+	status = fclose(logfile);
+	YDB_ASSERT(0 == status);
+#ifdef NO_PRINT
+	status = close(redirect);
+	YDB_ASSERT(0 == status);
+#endif
 	return 0;
 }
 
@@ -667,4 +705,25 @@ void logprint(char *prefix, strArr *var, char* suffix){
 	fprintf(logfile, "%s\n", suffix);
 }
 
-
+/* for ydb464 which needs the pid's of the forked processes
+ * store them in a global ^pids(i) where i is the test iteration set by ydb464
+ */
+int storePID(){
+	char pidStrA[8], pidStrB[8];
+	ydb_buffer_t pidGlobal, pidSubs[2];
+	int status;
+	/* base global */
+	YDB_LITERAL_TO_BUFFER("^pids", &pidGlobal);
+	/* get the last subscript set and store it in pidSubs */
+	pidSubs[0].buf_addr = pidStrA;
+	pidSubs[0].len_alloc = 8;
+	pidSubs[0].len_used = 0;
+	status = ydb_subscript_previous_s(&pidGlobal, 1, pidSubs, &pidSubs[0]);
+	YDB_ASSERT(status == YDB_OK);
+	/* set the node to the pid of the process */
+	pidSubs[1].buf_addr = pidStrB;
+	pidSubs[1].len_alloc = 8;
+	pidSubs[1].len_used = sprintf(pidSubs[1].buf_addr, "%d", getpid());
+	status = ydb_set_s(&pidGlobal, 2, pidSubs, &pidSubs[1]);
+	return status;
+}

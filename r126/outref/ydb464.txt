@@ -1,0 +1,19 @@
+# Test that SIGINT (Ctrl-C) leaves the database clean using SimpleaAPI/SimpleThreadAPI
+# simpleapi tests
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+simpleapi.gld
+Using: ##SOURCE_PATH##/mupip
+simpleapi.dat
+# kill -2 3 randomWalk processes
+PASS: No database errors found
+
+# simplethreadapi tests
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+simplethreadapi.gld
+Using: ##SOURCE_PATH##/mupip
+simplethreadapi.dat
+# kill -2 3 randomWalk processes
+PASS: No database errors found
+
