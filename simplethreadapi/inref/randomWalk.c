@@ -25,7 +25,7 @@
 #define BASE_LEN	11 //includes \0
 #define SUB_LEN		5  //includes \0
 
-#ifdef ISARM7
+#ifdef ISARM
 #define MAX_THREADS 10
 #define THREADS_TO_MAKE 2
 #else
