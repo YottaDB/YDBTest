@@ -25,18 +25,23 @@
 #define BASE_LEN	11 //includes \0
 #define SUB_LEN		5  //includes \0
 
-#ifdef ISARM
-#define MAX_THREADS 10
-#define THREADS_TO_MAKE 2
-#else
-#define MAX_THREADS 	50
-#define THREADS_TO_MAKE	10
+/* if the arm toggle isn't set the default to 0 */
+#ifndef ISARM
+#define ISARM 0
 #endif
-#define TEST_TIMEOUT	120 //test time out in seconds
-#define DRIVER_THREADS	8
 
-#define MAX_DEPTH	10  //max depth for nesting
-#define NEST_RATE	0.20
+/* macro returns a random integer between [a,b] */
+#define RAND_INT(a, b) rand() % (b - a + 1) + a
+
+/* globals that are randomly assigned at the init of the program
+ * as such they are not constants but should be treated as such
+ */
+int TEST_TIMEOUT; 	//test time out in seconds
+int DRIVER_THREADS;
+int MAX_THREADS;
+int THREADS_TO_MAKE;
+int MAX_DEPTH;
+float NEST_RATE;	// max depth for nesting
 
 
 /* struct for storing a string array mallocs to one large buffer */
@@ -70,13 +75,25 @@ void* toggleTimeout(void* args);
 void* runProc_driver(void* args);
 
 /* thread globals */
-pthread_t tids[DRIVER_THREADS];
 pthread_mutex_t lock;
 int curThreads;
 int isTimeout;
 
 int main(){
 	srand(time(NULL));
+	TEST_TIMEOUT = RAND_INT(15,120);
+	/* to prevent a rare failure arm machines make less threads */
+	if (ISARM) {
+		MAX_THREADS = RAND_INT(2, 10);
+		THREADS_TO_MAKE = RAND_INT(0,2);
+	} else {
+		MAX_THREADS = RAND_INT(4, 50);
+		THREADS_TO_MAKE = RAND_INT(0,10);
+	}
+	DRIVER_THREADS = RAND_INT(2,10);
+	MAX_DEPTH = RAND_INT(2, 20);
+	NEST_RATE = (float) (RAND_INT(0,20)) / 100;
+	pthread_t tids[DRIVER_THREADS];
 	int status;
 
 	//thread setup

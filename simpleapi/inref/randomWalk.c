@@ -27,11 +27,16 @@
 #define BASE_LEN	11 //includes \0
 #define SUB_LEN		5  //includes \0
 
-#define TEST_TIMEOUT	120 //test time out in seconds
-#define DRIVER_THREADS	10
+/* macro returns a random integer between [a,b] */
+#define RAND_INT(a, b) rand() % (b - a + 1) + a
 
-#define MAX_DEPTH	10
-#define TP_NEST_RATE	0.20
+/* globals that are randomly assigned at the init of the program
+ * as such they are not constants but should be treated as such
+ */
+int TEST_TIMEOUT; 	// test time out in seconds
+int DRIVER_THREADS;
+int MAX_DEPTH;		// max depth alowed for tp nesting
+float TP_NEST_RATE;
 
 /* struct for storing a string array mallocs to one large buffer */
 typedef struct strArr {
@@ -66,6 +71,10 @@ FILE *logfile;
 
 int main(){
 	startTime = time(NULL);
+	TEST_TIMEOUT = RAND_INT(15,120);
+	DRIVER_THREADS = RAND_INT(2,10);
+	MAX_DEPTH = RAND_INT(2, 20);
+	TP_NEST_RATE = (float) (RAND_INT(0,20)) / 100;
 
 	//test driver
 	pid_t childProcess;
