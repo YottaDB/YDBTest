@@ -3,6 +3,9 @@
 ; Copyright (c) 2015 Fidelity National Information 		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -15,6 +18,11 @@ gtm8167
 	set jobcomm="job child(arg1"
 	for i=1:1:31 set jobcomm=jobcomm_",arg1"
 	set jobcomm=jobcomm_")"
+	;
+	; The below increases the chances that we are left with a full stringpool at "dollar_system_init()" invocation
+	; inside the JOB command. See https://gitlab.com/YottaDB/DB/YDB/merge_requests/640 for details on the issue.
+	view "setenv":"gtm_sysid":$translate($justify(1,1+$random(256))," ","1")
+	;
 	xecute jobcomm
 	do ^waitforproctodie($zjob)
 	quit
