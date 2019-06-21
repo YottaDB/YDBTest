@@ -39,11 +39,12 @@ import (
 	"time"
 )
 
-const THREADS_TO_MAKE	= 10
-const DRIVER_THREADS	= 10
-const MAX_DEPTH		= 10
-const NEST_RATE		= 0.20
-const TEST_TIMEOUT	= 120 // test timeout in seconds for the driver threads to stop
+// This are set randomly at the start of the test but should be treated as constants
+var THREADS_TO_MAKE int
+var DRIVER_THREADS  int
+var MAX_DEPTH	    int
+var NEST_RATE	float64
+var TEST_TIMEOUT    int
 
 func Ok(){
 	//Noop that means everything is OK
@@ -407,6 +408,12 @@ func runProc(tptoken uint64, errstr *yottadb.BufferT, settings testSettings, cur
 }
 
 func main() {
+	rand.Seed(time.Now().UTC().UnixNano())
+	THREADS_TO_MAKE = rand.Intn(17) + 4 	//[4,20]
+	DRIVER_THREADS 	= rand.Intn(9) + 2	//[2,10]
+	MAX_DEPTH 	= rand.Intn(19) + 2	//[2,20]
+	NEST_RATE	= float64(rand.Intn(21)) / 100	//[0,0.20]
+	TEST_TIMEOUT	= rand.Intn(106) + 15 //[15,120] test timeout in seconds for the driver threads to stop
 	defer yottadb.Exit()
 	var wg sync.WaitGroup
 	var doneMutex sync.Mutex
@@ -415,7 +422,7 @@ func main() {
 	done := false
 
 	go func() { //wait for test timeout then set done to true
-		time.Sleep(TEST_TIMEOUT * time.Second)
+		time.Sleep(time.Duration(TEST_TIMEOUT) * time.Second)
 		doneMutex.Lock()
 		done = true
 		doneMutex.Unlock()

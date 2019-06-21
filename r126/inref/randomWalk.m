@@ -12,10 +12,10 @@
 
 randomWalk	;
 	; test configs
-	set concurrent=10
-	set testTimeout=120
-	set ^tpNestRate=0.10
-	set ^maxDepth=10
+	set testTimeout=$random(106)+15 ; [15,120]
+	set concurrent=$random(9)+2 ; [2,10]
+	set ^tpNestRate=$random(21)*.01 ; [0,0.20]
+	set ^maxDepth=$random(19)+2 ; [2,20]
 
 	; start concurrent child processes
 	set ^isTimeout=0

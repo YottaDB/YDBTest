@@ -11,11 +11,10 @@
 #								#
 #################################################################
 #
-# Test of simulated banking transactions using M with multiple jobs
 #
 #
 
-echo '# Test of simulated banking transactions using M with 10 processes/jobs'
+echo '# Test of various M commands in multiple processes similar to the go/randomWalk subtest'
 
 #SETUP of the driver M file
 cp $gtm_tst/$tst/inref/randomWalk.m .
