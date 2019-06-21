@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -17,7 +17,8 @@ mkdir online1 baktmp
 source $gtm_tst/com/set_ydb_env_var_random.csh ydb_baktmpdir gtm_baktmpdir `pwd`/baktmp
 source $gtm_tst/$tst/u_inref/createdb_start_updates.csh 1
 ($gtm_tst/$tst/u_inref/find_tmpfiles.csh >>& find_tmpfiles.out&) >&! find_tmpfiles.log
-$MUPIP backup -online "*" ./online1 >&! online1.out
+# Use -dbg qualifier to backup to get more information about start and end time of backup in case of test failures
+$MUPIP backup -online "*" ./online1 -dbg >&! online1.out
 date >>& online1.out
 $grep "BACKUP COMPLETED" online1.out
 if ($status) then

@@ -1,7 +1,7 @@
 #! /usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -24,6 +24,9 @@ setenv gtm_test_disable_randomdbtn
 # mupip will error out with YDB-W-JNLALIGNTOOSM. So disable the randomly chosen align size
 setenv tst_jnl_str `echo "$tst_jnl_str" | sed 's/,align=[1-9][0-9]*//'`
 #
+setenv gtm_test_spanreg     0	# this test expects ^b maps to b.dat (and hence only changes permission of BREG temporary file)
+				# and therefore disable spanning regions as it could defeat that assumption and increase likelihood
+				# of false test failures.
 #On linux the limit to shared memory is 32MB
 # To compensate the increase in the size in database block size limit global buffers to 512
 $gtm_tst/com/dbcreate.csh mumps 4 255 32240 32256 -global_buffer_count=512
