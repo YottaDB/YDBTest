@@ -16,14 +16,16 @@
 
 echo '# Test that causing setting greater than 33 lock collisions does not cause a hang and runaway shared memory usage'
 
-echo '# Testing 100 lock collisions when ydb_lockhash_n_bits=1'
-echo '# The value of sgmnt_data.lock_hash_bucket_full_cntr should be 70 as all the buckets are full after the 30th lock'
-$gtm_tst/com/dbcreate.csh mumps
-setenv ydb_lockhash_n_bits 1
-$ydb_dist/mumps -run lockMonitorA^ydb439 &
-$ydb_dist/mumps -run lockhashloopA^ydb439
-wait
-$gtm_tst/com/dbcheck.csh
+if ($tst_image == "dbg") then
+	echo '# Testing 100 lock collisions when ydb_lockhash_n_bits=1'
+	echo '# The value of sgmnt_data.lock_hash_bucket_full_cntr should be 70 as all the buckets are full after the 30th lock'
+	$gtm_tst/com/dbcreate.csh mumps
+	setenv ydb_lockhash_n_bits 1
+	$ydb_dist/mumps -run lockMonitorA^ydb439 &
+	$ydb_dist/mumps -run lockhashloopA^ydb439
+	wait
+	$gtm_tst/com/dbcheck.csh
+endif
 
 
 echo; echo '# Testing 47 lock collisions when ydb_lockhas_n_bits is unset'

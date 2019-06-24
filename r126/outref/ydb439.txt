@@ -1,4 +1,5 @@
 # Test that causing setting greater than 33 lock collisions does not cause a hang and runaway shared memory usage
+##SUSPEND_OUTPUT PRO
 # Testing 100 lock collisions when ydb_lockhash_n_bits=1
 # The value of sgmnt_data.lock_hash_bucket_full_cntr should be 70 as all the buckets are full after the 30th lock
 Files Created in ##TEST_PATH##:
@@ -109,10 +110,11 @@ lock +^a(99)
 lock +^a(100)
 PASS: numCollisions is correctly 70
 PASS: lockhashloopA got ^a(100)
-[1]  + Done                          ##SOURCE_PATH##/mumps -run lockMonitorA^ydb439
+##TEST_AWK\[1\]  . Done                          ##SOURCE_PATH##/mumps -run lockMonitorA\^ydb439
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
+##ALLOW_OUTPUT PRO
 
 # Testing 47 lock collisions when ydb_lockhas_n_bits is unset
 # The value of sgmnt_data.lock_hash_bucket_full_cntr should be 16 as all the buckets are full after the 30th lock
@@ -171,7 +173,7 @@ lock +^a(68545605854)
 lock +^a(66623834096)
 PASS: numCollisions is correctly 16
 PASS: lockhashloopA got ^a(66623834096)
-[1]  + Done                          ##SOURCE_PATH##/mumps -run lockMonitorB^ydb439
+##TEST_AWK\[1\]  . Done                          ##SOURCE_PATH##/mumps -run lockMonitorB\^ydb439
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
