@@ -1,0 +1,28 @@
+# Name-level $ORDER(,-1) and $ZPREVIOUS() return an empty string when they reach the trigger definitions (stored in ^#t) as it is not a normally accessible global
+# Since the introduction of triggers in V5.4-000 if there were trigger definitions, these functions could return ^#t
+
+# This does not sucessfully test the above release note as this simple case does not reproduce the issue
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Setting the trigger
+File trigger.trg, Line 1: Added SET trigger on ^a named a#1
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Setting ^a, and ^b
+# Printing all globals using $order(^b,-1) should only see ^a, and ^b
+i: ^b
+i: ^a
+# Printing all globals using $zprevious(^b) should only see ^a, and ^b
+i: ^b
+i: ^a
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
