@@ -21,13 +21,14 @@
 # gtm9005	[mmr]		Test that mupip load returns a non-zero error code when there are record errors in the load file
 # gtm7952	[estess]	Verify SIGSAFE exteral call table attribute works as documented
 # gtm7952b	[mmr]		Second half of 7952. Tests call out EXTCALLBOUNDS/EXCEEDSPREALLOC when exceeding preallocation of gtm_string_t/gtm_char_t
+# gtm6125	[mmr]		Test of all the functions of the ISV $ztimeout
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "v63006 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "gtm9011 gtm8017 gtm8947 gtm7433 gtm9005 gtm7952 gtm7952b"
+setenv subtest_list_non_replic "gtm9011 gtm8017 gtm8947 gtm7433 gtm9005 gtm7952 gtm7952b gtm6135"
 setenv subtest_list_replic     ""
 
 

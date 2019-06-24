@@ -1,0 +1,54 @@
+# Test of all the functions of the ISV $ztimeout
+# The $ZTIMeout=([timeout][:labelref]) Intrinsic Special Variable (ISV) controls a single process wide timer
+# The optional timeout in seconds specifies with millisecond accuracy how long from the current time the timer interrupts the process
+# If the specified timeout is negative, GT.M cancels the timer
+# If the timeout is zero, GT.M treats it as it would a DO of the vector
+# The optional labelref specifies a code vector defining a fragment of M code to which GT.M transfers control as if with a DO when the timeout expires
+# If the timeout is missing, the assignment must start with a colon and only changes the vector, and in this case, if the vector is the empty string, GT.M removes any current vector
+# Note that GT.M only recognizes interrupts, such as those from $ZTIMEOUT at points where it can properly resume operation, for example, at the beginning of a line, when waiting on a command with a timeout, or when starting a FOR iteration
+# When a ztimeout occurs, if the last assignment specified no vector, GT.M uses the current $ETRAP or $ZTRAP with a status warning of ZTIMEOUT
+# GT.M rejects an attempted KILL of $ZTIMeout with an error of %GTM-E-VAREXPECTED, and an attempted NEW of $ZTIMeout with an error of %GTM-E-SVNONEW.
+
+# This test does not test the millisecond accuracy (just that it does not trigger before expected)
+# Does not test interuption only at start of lines/forloops, or in hangs
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# There will be compile issues here with new $ztimeout and kill $ztimeout; this is part of the test
+		new $ztimeout
+		     ^-----
+##TEST_AWK		At column 7, line 91, source module .*/gtm6135.m
+%GTM-E-SVNONEW, Cannot NEW this special variable
+		kill $ztimeout
+		     ^-----
+##TEST_AWK		At column 7, line 98, source module .*/gtm6135.m
+%GTM-E-VAREXPECTED, Variable expected in this context
+Check that $ztimeout starting value is -1: PASS $ztimeout started at -1
+Check that 'set $ztimeout="2:a(1)=0"' after 2 seconds and not before: PASS a(1) is correctly 0
+Check that 'set $ztimeout=3' will reuse a(1)=0: PASS a(1) is correctly 0
+Check that 'set $ztimeout=2' and then 'set $ztimeout=":set a(2)=0"' before the timeout will change the vector without affecting the time remaining: PASS a(2) is correctly 0
+Check that 'set $ztimeout=0' will trigger a(2)=0 immediately: PASS a(2) is correctly 0
+Check that 'set $ztimeout=-1' will cancel the running timeout: PASS a(2) is correctly unset
+Check that 'set $ztimeout="2:"' will set the trigger vector to $ztrap instead of $etrap if it is set
+$ztrap is currently set to 'set c(1)=0': PASS c(1) is correctly 0
+Check that 'set $ztimeout="2:"' will set the trigger vector to $etrap when $ztrap is not set
+$etrap is currently set to 'set b(1)=0': PASS b(1) is correctly 0
+Trying new of $ztimeout should give error %GTM-E-SVNONEW
+%GTM-E-SVNONEW, Cannot NEW this special variable
+		At M source location newztimeout+2^gtm6135
+
+GTM>
+Trying a kill of $ztimeout should give error %GTM-E-VAREXPECTED
+%GTM-E-VAREXPECTED, Variable expected in this context
+		At M source location killztimeout+2^gtm6135
+
+GTM>
+Check that $ztimeout is different for each process
+Starting timeouts in two different processes one does set ^a(1)
+The other does set ^a(2) and both globals should be set
+PASS ^a(1) and ^a(2) are correctly 1
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
