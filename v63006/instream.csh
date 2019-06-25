@@ -15,13 +15,14 @@
 # List of subtests of the form "subtestname [author] description"
 #-------------------------------------------------------------------------------------
 # gtm9011	[mmr]		Test that MUPIP SET accepts -KEY_SIZE or -RESERVED_BYTES and -RECORD_SIZE in the same command
+# gtm8017	[mmr]		Test of optional second argument to ^%TRIM that specifies which characters get trimmed
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "v63006 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "gtm9011"
+setenv subtest_list_non_replic "gtm9011 gtm8017"
 setenv subtest_list_replic     ""
 
 

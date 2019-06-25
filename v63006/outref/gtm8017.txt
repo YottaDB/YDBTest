@@ -1,0 +1,25 @@
+# The ^%TRIM() utility allows the specification of what character(s) to trim from either the left and/or right hand side of a given string
+# The default trim characters are $CHAR(32,9) (<SP> and <TAB>), these can be overridden by passing a string consisting of the desired characters in the optional second parameter.This functionality has existed for some time but was undocumented and not regularly tested
+
+# Testing $$FUNC^%TRIM varients of %TRIM
+Testing default behavior of %TRIM (trimming <TAB> <SP>)
+String before LR trimming: 	  	<- Trim this, and that ->  		| space marker
+String after LR trimming: <- Trim this, and that ->| space marker
+
+String before L trimming: 	  	<- Trim this, and that ->  		| space marker
+String after L trimming: <- Trim this, and that ->  		| space marker
+
+String before R trimming: 	  	<- Trim this, and that ->  		| space marker
+String after R trimming: 	  	<- Trim this, and that ->| space marker
+
+Testing optional second argument of %TRIM
+Trimming "abc"
+String before LR trimming: ababcccc<- Trim this, and that ->abcabcabc
+String after LR trimming: <- Trim this, and that ->
+
+String before L trimming: ababcccc<- Trim this, and that ->abcabcabc
+String after L trimming: <- Trim this, and that ->abcabcabc
+
+String before R trimming: ababcccc<- Trim this, and that ->abcabcabc
+String after R trimming: ababcccc<- Trim this, and that ->
+
