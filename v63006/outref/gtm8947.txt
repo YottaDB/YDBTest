@@ -1,0 +1,19 @@
+# When the second and third argument of $TRANSLATE are literals, the GT.M compiler calculates the tables used by the translation
+# Previously the tables were always prepared at run-time
+
+# compiling $translate("qwerty","werty","uickl") to assembly
+# greping for "OC_FNZTRANSLATE_FAST|OC_FNTRANSLATE_FAST" which should appear if optimized correctly
+##TEST_AWK.*;OC_FN.?TRANSLATE_FAST
+grep status Expected: 0; Actual: 0
+
+# compiling $translate("qwerty","werty",^a) to assembly
+# greping for "OC_FNZTRANSLATE_FAST|OC_FNTRANSLATE_FAST" which should not appear if optimized correctly
+grep status Expected: 1; Actual: 1
+
+# compiling $translate("qwerty",^a,"uickl") to assembly
+# greping for "OC_FNZTRANSLATE_FAST|OC_FNTRANSLATE_FAST" which should not appear if optimized correctly
+grep status Expected: 1; Actual: 1
+
+# compiling $translate("qwerty",^a,^b) to assembly
+# greping for "OC_FNZTRANSLATE_FAST|OC_FNTRANSLATE_FAST" which should not appear if optimized correctly
+grep status Expected: 1; Actual: 1

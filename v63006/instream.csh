@@ -16,13 +16,14 @@
 #-------------------------------------------------------------------------------------
 # gtm9011	[mmr]		Test that MUPIP SET accepts -KEY_SIZE or -RESERVED_BYTES and -RECORD_SIZE in the same command
 # gtm8017	[mmr]		Test of optional second argument to ^%TRIM that specifies which characters get trimmed
+# gtm8947	[mmr]		Test of $translate() compile time optimization when it's second and third arguments are literals
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "v63006 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "gtm9011 gtm8017"
+setenv subtest_list_non_replic "gtm9011 gtm8017 gtm8947"
 setenv subtest_list_replic     ""
 
 
@@ -35,8 +36,9 @@ endif
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
 setenv subtest_exclude_list	""
 # Filter out white box tests that cannot run in pro
+# gtm8947 does not work on pro because it uses the yottadb -lis switch
 if ("pro" == "$tst_image") then
-	setenv subtest_exclude_list "$subtest_exclude_list"
+	setenv subtest_exclude_list "$subtest_exclude_list gtm8947"
 endif
 
 # Submit the list of subtests
