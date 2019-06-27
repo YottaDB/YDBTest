@@ -1,0 +1,37 @@
+# MUPIP LOAD returns non-zero exit status for load errors
+# Previously in some cases it inappropriately returned a 0 (Zero) exit status when it had been unable to load one or more records.
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+yottadb.gld
+Using: ##SOURCE_PATH##/mupip
+yottadb.dat
+# Trying to load zwrite file with errors in it
+Contents of file:
+##TEST_AWK(10     chars)|(UTF-8 10 chars)
+ZWR 10 chars
+^aa=1
+^bb=1
+^cc=1
+^d d=1
+^ee=1
+^f f=1
+# Loading should get error status of 18
+##TEST_AWK(10     chars)|(UTF-8 10 chars)
+ZWR 10 chars
+Beginning LOAD at record number: 3
+
+%GTM-E-GVINVALID, 	^d d
+			Invalid global name
+		Global variable : 
+%GTM-E-RECLOAD, Error loading record number: 6
+%GTM-E-GVINVALID, 	^f f
+			Invalid global name
+		Global variable : 
+%GTM-E-RECLOAD, Error loading record number: 8
+LOAD TOTAL		Key Cnt: 4  Max Subsc Len: 4  Max Data Len: 1
+%GTM-E-FAILEDRECCOUNT, LOAD unable to process 2 records
+%GTM-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 8
+PASS: $status is correctly 18
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

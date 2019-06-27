@@ -18,13 +18,14 @@
 # gtm8017	[mmr]		Test of optional second argument to ^%TRIM that specifies which characters get trimmed
 # gtm8947	[mmr]		Test of $translate() compile time optimization when it's second and third arguments are literals
 # gtm7433	[mmr]		Test that $order(,-1) and $zprevious() do not print out the trigger global variable (^#t)
+# gtm9005	[mmr]		Test that mupip load returns a non-zero error code when there are record errors in the load file
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "v63006 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "gtm9011 gtm8017 gtm8947 gtm7433"
+setenv subtest_list_non_replic "gtm9011 gtm8017 gtm8947 gtm7433 gtm9005"
 setenv subtest_list_replic     ""
 
 
