@@ -1,0 +1,16 @@
+# MUPIP SET accepts -KEY_SIZE or -RESERVED_BYTES and -RECORD_SIZE in the same command; beginning with V6.0-000 they are not incompatible, but MUPIP SET continued to give an error when they were combined
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+yottadb.gld
+Using: ##SOURCE_PATH##/mupip
+yottadb.dat
+# Testing -KEY_SIZE=999 and -RECORD_SIZE=999 together
+Database file ##TEST_PATH##/yottadb.dat now has maximum key size 999
+Database file ##TEST_PATH##/yottadb.dat now has maximum record size 999
+
+# Testing -RESERVED_BYTES=999 and -RECORD_SIZE=999 together
+Database file ##TEST_PATH##/yottadb.dat now has maximum record size 999
+Database file ##TEST_PATH##/yottadb.dat now has 999 reserved bytes
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
