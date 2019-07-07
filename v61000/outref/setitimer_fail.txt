@@ -1,3 +1,8 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
 # This test simulates, via a white-box logic, an error return from timer_create()/setitimer(), which is used to
 # start a new system timer or cancel an existing one. We expect appropriate error messages to be printed in the console.
 # Set the white-box test that simulates an error return from timer_create()/setitimer().
@@ -8,7 +13,7 @@ unset echo
 # Case 1. A timer_create()/setitimer() failure from direct mode. #
 ##################################################################
 ###################################################################
-# Try to issue a hang from direct mode, thus invoking the white-box test logic.
+# Try to do a database update from direct mode, thus starting a timer and invoking the white-box test logic.
 
 YDB>
 ##TEST_AWK%YDB-E-SYSCALL, Error received from system call timer_settime\(\) -- called from module .*/gt_timers.c at line [0-9]*
@@ -26,7 +31,7 @@ YDB>
 ###################################################################
 ###################################################################
 # Produce a simple M file test.m for testing.
-# Invoke the M program with a hang, thus triggering the white-box test logic.
+# Invoke the M program with a database update, thus starting a timer and triggering the white-box test logic.
 ##TEST_AWK%YDB-E-SYSCALL, Error received from system call timer_settime\(\) -- called from module .*/gt_timers.c at line [0-9]*,%SYSTEM-E-ENO22, Invalid argument
 		At M source location test+1^test
 
@@ -34,3 +39,6 @@ YDB>
 ##TEST_AWK%YDB-E-SYSCALL, Error received from system call timer_settime\(\) -- called from module .*/gt_timers.c at line [0-9]*
 %SYSTEM-E-ENO22, Invalid argument
 %YDB-E-LKRUNDOWN, Error during LOCK database rundown
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

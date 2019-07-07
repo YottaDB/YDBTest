@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -14,6 +14,7 @@
 #								#
 #################################################################
 
+$gtm_tst/com/dbcreate.csh mumps
 echo "# This test simulates, via a white-box logic, an error return from timer_create()/setitimer(), which is used to"
 echo "# start a new system timer or cancel an existing one. We expect appropriate error messages to be printed in the console."
 
@@ -28,9 +29,9 @@ echo "# Case 1. A timer_create()/setitimer() failure from direct mode. #"
 echo "##################################################################"
 $echoline
 
-echo "# Try to issue a hang from direct mode, thus invoking the white-box test logic."
+echo "# Try to do a database update from direct mode, thus starting a timer and invoking the white-box test logic."
 $ydb_dist/mumps -direct <<EOF
-hang 0.1
+set ^x=1
 quit
 EOF
 
@@ -44,11 +45,12 @@ $echoline
 echo "# Produce a simple M file test.m for testing."
 cat <<EOF >&! test.m
 test
-  hang 0.2
+  set ^x=2
   quit
 EOF
 
-echo "# Invoke the M program with a hang, thus triggering the white-box test logic."
+echo "# Invoke the M program with a database update, thus starting a timer and triggering the white-box test logic."
 $ydb_dist/mumps -run test
 
 unsetenv ydb_white_box_test_case_enable
+$gtm_tst/com/dbcheck.csh

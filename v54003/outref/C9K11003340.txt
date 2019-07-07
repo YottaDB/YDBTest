@@ -9,8 +9,6 @@ YDB>
 YDB>
 OP_HANG: will sleep for 20 seconds
 TIMER_HANDLER: deferred a timer
-TIMER_HANDLER: deferred a timer
-TIMER_HANDLER: handled a timer
 OP_HANG: done sleeping
 TIMER_HANDLER: handled a timer
 TIMER_HANDLER: handled a timer
@@ -18,11 +16,10 @@ TIMER_HANDLER: handled a timer
 YDB>
 TIMER_HANDLER: handled a timer
 TIMER_HANDLER: handled a timer
-TIMER_HANDLER: handled a timer
 
 YDB>
 CANCEL_ALL_TIMERS:
- Timer pops handled: 6
+ Timer pops handled: 4
  Timers canceled: 0
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
@@ -42,15 +39,12 @@ YDB>
 YDB>
 OP_HANG: will sleep for 20 seconds
 TIMER_HANDLER: deferred a timer
-TIMER_HANDLER: deferred a timer
-TIMER_HANDLER: handled a timer
 OP_HANG: done sleeping
 %YDB-F-FORCEDHALT, Image HALTed by MUPIP STOP
 DEFERRED_SIGNAL_HANDLER: will sleep for 20 seconds
-TIMER_HANDLER: handled a timer
 DEFERRED_SIGNAL_HANDLER: done sleeping
 CANCEL_ALL_TIMERS:
- Timer pops handled: 2
+ Timer pops handled: 0
  Timers canceled: 2
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
