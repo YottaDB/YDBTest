@@ -274,7 +274,8 @@ testF() {
 			. $ydbDistTmp/ydb_env_unset
 			# if replic before recovery stop the replicating server
 			if [ $test_repl = "REPLIC" ]; then $sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/RCVR_SHUT.csh \".\" < /dev/null >>& $SEC_SIDE/SHUT_${start_time}.out"; fi
-			. $ydbDistTmp/ydb_env_set
+			. $ydbDistTmp/ydb_env_set > ydb_env_set.txt
+			sed -e '/$DEVICE/,$d' ydb_env_set.txt # the error is the lines before $DEVICE, which marks the start of ZSHOW "*"
 			# this one only needs to run when recovery is possible
 			if [ $jnl_type = "enable,on,before" ]; then
 				echo -n 'Checking the recovered database with $data(^a), $data(^b) Expected: 0|10 0|10; Actual: '
