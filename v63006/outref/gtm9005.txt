@@ -20,17 +20,17 @@ ZWR 10 chars
 ZWR 10 chars
 Beginning LOAD at record number: 3
 
-%GTM-E-GVINVALID, 	^d d
+##TEST_AWK%(GTM|YDB)-E-GVINVALID, 	\^d d
 			Invalid global name
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 6
-%GTM-E-GVINVALID, 	^f f
+##TEST_AWK%(GTM|YDB)-E-RECLOAD, Error loading record number: 6
+##TEST_AWK%(GTM|YDB)-E-GVINVALID, 	\^f f
 			Invalid global name
 		Global variable : 
-%GTM-E-RECLOAD, Error loading record number: 8
+##TEST_AWK%(GTM|YDB)-E-RECLOAD, Error loading record number: 8
 LOAD TOTAL		Key Cnt: 4  Max Subsc Len: 4  Max Data Len: 1
-%GTM-E-FAILEDRECCOUNT, LOAD unable to process 2 records
-%GTM-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 8
+##TEST_AWK%(GTM|YDB)-E-FAILEDRECCOUNT, LOAD unable to process 2 records
+##TEST_AWK%(GTM|YDB)-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 8
 PASS: $status is correctly 18
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
