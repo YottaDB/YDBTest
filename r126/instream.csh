@@ -33,6 +33,7 @@
 # ydb455	   [mmr]   Test that tls interface headers (*interface.h) are exposed in $ydb_dist
 # ydb439	   [mmr]   Test that causing setting greater than 33 lock collisions does not cause a hang and runaway shared memory usage
 # ydb464	   [mmr]   Test that sigint (Ctrl-C) does not cause database error on simpleapi|simplethreadapi/randomWalk subtests
+# find_timer_assert [mmr]  Test that M OPEN command with timeout should cancel timer if Ctrl-C aborts it
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r126 test starts..."
@@ -42,7 +43,7 @@ setenv subtest_list_common     "ydb429"
 setenv subtest_list_non_replic ""
 setenv subtest_list_non_replic "$subtest_list_non_replic ydb430 pseudoBank randomWalk ydb431 ydb454 v63006 ydb432"
 setenv subtest_list_non_replic "$subtest_list_non_replic ydb449 v63007 ydb438 ydb446 ydb440 ydb460 ydb456 ydb455"
-setenv subtest_list_non_replic "$subtest_list_non_replic ydb439 ydb464"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb439 ydb464 find_timer_assert"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then

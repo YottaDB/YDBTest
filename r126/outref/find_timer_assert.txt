@@ -1,0 +1,27 @@
+# Test that M OPEN command with timeout should cancel timer if Ctrl-C aborts it
+# In r1.24 dbg builds, one would see an assert failure in find_timer.c line 977 for expression (NULL == find_timer(tid, &tpp))
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+#Running expect script
+# expect output:
+spawn /usr/local/bin/tcsh -f
+> stty cols 132
+> set shellprompt=SHELL
+> set prompt=$shellprompt
+SHELLsetenv term_env `tty`; echo $term_env > term_env.txt
+SHELL$ydb_dist/mumps -direct
+
+YDB>OPEN "unicodefifoM.pipe":(FIFO:WRITE:RECORDSIZE=-1:CHSET="M"):60
+^C%YDB-I-CTRLC, CTRL_C encountered
+
+YDB>OPEN "unicodefifoM.pipe":(FIFO:WRITE:RECORDSIZE=-1:CHSET="M"):60
+^C%YDB-I-CTRLC, CTRL_C encountered
+
+YDB>halt
+SHELL
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

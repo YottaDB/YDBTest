@@ -1,0 +1,34 @@
+#!/usr/bin/expect -f
+#################################################################
+#								#
+# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
+spawn /usr/local/bin/tcsh -f
+source $::env(gtm_tst)/com/expectinit.exp
+
+send -- "\$ydb_dist/mumps -direct\r"
+expect -exact "YDB>"
+
+# open pipe with a 60 second timeout and send it a Ctrl-C
+send -- "OPEN \"unicodefifoM.pipe\":(FIFO:WRITE:RECORDSIZE=-1:CHSET=\"M\"):60\r"
+expect -exact "\r"
+send \x03
+expect -exact "%YDB-I-CTRLC, CTRL_C encountered"
+expect -exact "YDB>"
+send -- "OPEN \"unicodefifoM.pipe\":(FIFO:WRITE:RECORDSIZE=-1:CHSET=\"M\"):60\r"
+expect -exact "\r"
+# send another Ctrl-C so the expect script can continue
+send \x03
+expect -exact "%YDB-I-CTRLC, CTRL_C encountered"
+expect -exact "YDB>"
+send -- "halt\r"
+expect -exact "SHELL"
+send "exit\r"
