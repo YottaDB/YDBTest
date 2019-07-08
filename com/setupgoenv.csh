@@ -124,4 +124,5 @@ if ($ydb_go_race_detector_on) then
 endif
 # Capture random setting in file for later analysis in case of test failures
 set | $grep ^go >& govars.txt
+echo "setenv ydb_go_race_detector_on $ydb_go_race_detector_on" >> settings.csh
 exit 0

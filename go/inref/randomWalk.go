@@ -42,6 +42,7 @@ import (
 // This are set randomly at the start of the test but should be treated as constants
 var THREADS_TO_MAKE int
 var DRIVER_THREADS  int
+var MAX_THREADS     int
 var MAX_DEPTH	    int
 var NEST_RATE	float64
 var TEST_TIMEOUT    int
@@ -54,6 +55,8 @@ type testSettings struct {
 	maxDepth     int
 	nestedTpRate float64
 }
+var countMutex sync.Mutex
+var rtnCount int
 
 /* Generate a variable to be used in runProc()
  */
@@ -308,7 +311,11 @@ func runProc(tptoken uint64, errstr *yottadb.BufferT, settings testSettings, cur
 		}
 		var err error
 		makeThreads := rand.Float64() //half the time do a TP, else create THREADS_TO_MAKE routines
-		if makeThreads < 0.5 {
+		// have to save this to a local variable to prevent dataraces in the 'if' clause
+		countMutex.Lock()
+		curCount := rtnCount
+		countMutex.Unlock()
+		if makeThreads < 0.5 || curCount >= MAX_THREADS {
 			err = yottadb.TpE(tptoken, errstr, func(tptoken uint64, errstr *yottadb.BufferT) int32 {
 				n := rand.Int() % 20
 				for i := 0; i < n; i++ {
@@ -321,7 +328,13 @@ func runProc(tptoken uint64, errstr *yottadb.BufferT, settings testSettings, cur
 			for i := 0; i < THREADS_TO_MAKE; i++ {
 				wg.Add(1)
 				go func() {
+					countMutex.Lock()
+					rtnCount++
+					countMutex.Unlock()
 					runProc(tptoken, errstr, testSettings{MAX_DEPTH, NEST_RATE/2}, curDepth+1)
+					countMutex.Lock()
+					rtnCount--
+					countMutex.Unlock()
 					wg.Done()
 				}()
 			}
@@ -341,6 +354,7 @@ func main() {
 	rand.Seed(time.Now().UTC().UnixNano())
 	THREADS_TO_MAKE = rand.Intn(17) + 4 	//[4,20]
 	DRIVER_THREADS 	= rand.Intn(9) + 2	//[2,10]
+	MAX_THREADS	= 1000
 	MAX_DEPTH 	= rand.Intn(19) + 2	//[2,20]
 	NEST_RATE	= float64(rand.Intn(21)) / 100	//[0,0.20]
 	TEST_TIMEOUT	= rand.Intn(106) + 15 //[15,120] test timeout in seconds for the driver threads to stop
@@ -362,6 +376,9 @@ func main() {
 	for i := 0; i < DRIVER_THREADS; i++ {
 		wg.Add(1)
 		go func() {
+			countMutex.Lock()
+			rtnCount++
+			countMutex.Unlock()
 			for { //loop until test timeout then break
 				doneMutex.Lock()
 				d := done
@@ -374,6 +391,9 @@ func main() {
 					NEST_RATE,
 				}, 0)
 			}
+			countMutex.Lock()
+			rtnCount--
+			countMutex.Unlock()
 			wg.Done()
 		}()
 	}
