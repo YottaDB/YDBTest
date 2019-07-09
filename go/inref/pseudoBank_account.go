@@ -26,14 +26,14 @@ import (
 const accountGlobal = "^ZACN"
 
 type Account struct {
-	Cid int
-	Bal int
+	Cid     int
+	Bal     int
 	HistSeq int
 }
 
 func (a *Account) Load(tptoken uint64, cid int, key *yottadb.KeyT, data *yottadb.BufferT, errStr *yottadb.BufferT) error {
 	var err error
-	var val1 *string
+	var val1 string
 
 	// get account information from database and set it to account
 	err = setAccountKey(tptoken, cid, key, errStr)
@@ -48,11 +48,11 @@ func (a *Account) Load(tptoken uint64, cid int, key *yottadb.KeyT, data *yottadb
 		return err
 	}
 	val1, err = data.ValStr(tptoken, errStr)
-	values := strings.Split(*val1, "|")
+	values := strings.Split(val1, "|")
 
 	a.Cid = cid
-	a.HistSeq,_ = strconv.Atoi(values[0])
-	a.Bal,_ = strconv.Atoi(values[1])
+	a.HistSeq, _ = strconv.Atoi(values[0])
+	a.Bal, _ = strconv.Atoi(values[1])
 
 	return nil
 }
@@ -70,7 +70,7 @@ func (a *Account) Save(tptoken uint64, key *yottadb.KeyT, data *yottadb.BufferT,
 	data.Alloc(64)
 
 	// set value
-	err = data.SetValStrLit(tptoken, errStr, stringData)
+	err = data.SetValStr(tptoken, errStr, stringData)
 	if err != nil {
 		return err
 	}
@@ -88,7 +88,7 @@ func (a *Account) getTextData() string {
 
 func setAccountKey(tptoken uint64, cid int, key *yottadb.KeyT, errStr *yottadb.BufferT) error {
 	var err error
-	err = key.Varnm.SetValStrLit(tptoken, errStr, accountGlobal)
+	err = key.Varnm.SetValStr(tptoken, errStr, accountGlobal)
 	if err != nil {
 		return err
 	}
@@ -96,11 +96,9 @@ func setAccountKey(tptoken uint64, cid int, key *yottadb.KeyT, errStr *yottadb.B
 	if err != nil {
 		return err
 	}
-	err = key.Subary.SetValStrLit(tptoken, errStr, 0, strconv.Itoa(cid))
+	err = key.Subary.SetValStr(tptoken, errStr, 0, strconv.Itoa(cid))
 	if err != nil {
 		return err
 	}
 	return nil
 }
-
-

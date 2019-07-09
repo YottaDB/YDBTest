@@ -41,20 +41,21 @@ import (
 
 // This are set randomly at the start of the test but should be treated as constants
 var THREADS_TO_MAKE int
-var DRIVER_THREADS  int
-var MAX_THREADS     int
-var MAX_DEPTH	    int
-var NEST_RATE	float64
-var TEST_TIMEOUT    int
+var DRIVER_THREADS int
+var MAX_THREADS int
+var MAX_DEPTH int
+var NEST_RATE float64
+var TEST_TIMEOUT int
 
-func Ok(){
+func Ok() {
 	//Noop that means everything is OK
 }
 
 type testSettings struct {
-	maxDepth	int
-	nestedTpRate	float64
+	maxDepth     int
+	nestedTpRate float64
 }
+
 var countMutex sync.Mutex
 var rtnCount int
 
@@ -91,9 +92,9 @@ func runProc(tptoken uint64, errstr *yottadb.BufferT, settings testSettings, cur
 	defer varname.Free()
 
 	varname.Alloc(uint32(len(t[0])), 4, 4)
-	varname.Varnm.SetValStr(tptoken, errstr, &t[0])
+	varname.Varnm.SetValStr(tptoken, errstr, t[0])
 	for i, elem := range t[1:] {
-		varname.Subary.SetValStr(tptoken, errstr, uint32(i), &elem)
+		varname.Subary.SetValStr(tptoken, errstr, uint32(i), elem)
 	}
 	varname.Subary.SetElemUsed(tptoken, errstr, uint32(len(t[1:])))
 	action := rand.Float64() * 100
@@ -103,7 +104,7 @@ func runProc(tptoken uint64, errstr *yottadb.BufferT, settings testSettings, cur
 		defer value.Free()
 
 		value.Alloc(16)
-		value.SetValStrLit(tptoken, errstr, "MySecretValue")
+		value.SetValStr(tptoken, errstr, "MySecretValue")
 		// There are some error codes we accept; anything other than that, raise an error
 		err := varname.SetValST(tptoken, errstr, &value)
 		if err != nil {
@@ -119,7 +120,7 @@ func runProc(tptoken uint64, errstr *yottadb.BufferT, settings testSettings, cur
 				panic(fmt.Sprintf("Unexpected return code (%d) issued! %s", errcode, err))
 			}
 		}
-	} else if action < 20 + remainingOdds*(1 / 12.0) {
+	} else if action < 20+remainingOdds*(1/12.0) {
 		var value yottadb.BufferT
 		defer value.Free()
 
@@ -140,7 +141,7 @@ func runProc(tptoken uint64, errstr *yottadb.BufferT, settings testSettings, cur
 				panic(fmt.Sprintf("Unexpected return code (%d) issued! %s", errcode, err))
 			}
 		}
-	} else if action < 20 + remainingOdds*(2 / 12.0) {
+	} else if action < 20+remainingOdds*(2/12.0) {
 		res, err := varname.DataST(tptoken, errstr)
 		// There are some error codes we accept; anything other than that, raise an error
 		if err != nil {
@@ -168,7 +169,7 @@ func runProc(tptoken uint64, errstr *yottadb.BufferT, settings testSettings, cur
 		default:
 			panic("Unexpected data value issued!")
 		}
-	} else if action < 20 + remainingOdds*(3 / 12.0) {
+	} else if action < 20+remainingOdds*(3/12.0) {
 		delType := rand.Float64()
 		var err error
 		if delType < 0.5 {
@@ -180,7 +181,7 @@ func runProc(tptoken uint64, errstr *yottadb.BufferT, settings testSettings, cur
 			errcode := yottadb.ErrorCode(err)
 			panic(fmt.Sprintf("Unexpected return code (%d) issued %s", errcode, err))
 		}
-	} else if action < 20 + remainingOdds*(4 / 12.0) {
+	} else if action < 20+remainingOdds*(4/12.0) {
 		var basevar yottadb.BufferTArray
 		defer basevar.Free()
 
@@ -192,7 +193,7 @@ func runProc(tptoken uint64, errstr *yottadb.BufferT, settings testSettings, cur
 			errcode := yottadb.ErrorCode(err)
 			panic(fmt.Sprintf("Unexpected return code (%d) issued %s", errcode, err))
 		}
-	} else if action < 20 + remainingOdds*(5 / 12.0) {
+	} else if action < 20+remainingOdds*(5/12.0) {
 		direction := rand.Float64()
 		if direction < 0.5 {
 			direction = 1
@@ -223,7 +224,7 @@ func runProc(tptoken uint64, errstr *yottadb.BufferT, settings testSettings, cur
 		if errcode != yottadb.YDB_ERR_NODEEND {
 			panic(fmt.Sprintf("Unexpected return code (%d) issued! %s", errcode, err))
 		}
-	} else if action < 20 + remainingOdds*(6 / 12.0) {
+	} else if action < 20+remainingOdds*(6/12.0) {
 		direction := rand.Float64()
 		if direction < 0.5 {
 			direction = 1
@@ -254,19 +255,19 @@ func runProc(tptoken uint64, errstr *yottadb.BufferT, settings testSettings, cur
 		if errcode != yottadb.YDB_ERR_NODEEND {
 			panic(fmt.Sprintf("Unexpected return code (%d) issued! %s", errcode, err))
 		}
-	} else if action < 20 + remainingOdds*(7 / 12.0) {
-		incr_amount := fmt.Sprintf("%f", rand.Float64()*10 - 5)
+	} else if action < 20+remainingOdds*(7/12.0) {
+		incr_amount := fmt.Sprintf("%f", rand.Float64()*10-5)
 		var incrVal yottadb.BufferT
 		defer incrVal.Free()
 
 		incrVal.Alloc(2)
-		incrVal.SetValStr(tptoken, errstr, &incr_amount)
+		incrVal.SetValStr(tptoken, errstr, incr_amount)
 		err := varname.IncrST(tptoken, errstr, &incrVal, nil)
 		if err != nil {
 			errcode := yottadb.ErrorCode(err)
 			panic(fmt.Sprintf("Unexpected return code (%d) issued! %s", errcode, err))
 		}
-	} else if action < 20 + remainingOdds*(8 / 12.0) {
+	} else if action < 20+remainingOdds*(8/12.0) {
 		var err error
 		err = yottadb.LockST(tptoken, errstr, 0, &varname)
 		// There are some error codes we accept; anything other than that, raise an error
@@ -336,7 +337,7 @@ func runProc(tptoken uint64, errstr *yottadb.BufferT, settings testSettings, cur
 				panic(fmt.Sprintf("Unexpected return code (%d) issued! %s", errcode, err))
 			}
 		}
-	} else if action < 20 + remainingOdds*(10 / 12.0) {
+	} else if action < 20+remainingOdds*(10/12.0) {
 		var strIn, strOut yottadb.BufferT
 		compStr := "\"a\"_$C(10,9)_\"b\"_$C(0)_\"c\""
 		defer strIn.Free()
@@ -344,17 +345,17 @@ func runProc(tptoken uint64, errstr *yottadb.BufferT, settings testSettings, cur
 
 		strIn.Alloc(32)
 		strOut.Alloc(32)
-		strIn.SetValStrLit(tptoken, errstr, "a\n\tb\000c")
-		err := strIn.Str2ZwrST(tptoken, errstr, &strOut);
+		strIn.SetValStr(tptoken, errstr, "a\n\tb\000c")
+		err := strIn.Str2ZwrST(tptoken, errstr, &strOut)
 		if err != nil {
 			errcode := yottadb.ErrorCode(err)
 			panic(fmt.Sprintf("Unexpected return code (%d) issued! %s", errcode, err))
 		}
 		s, _ := strOut.ValStr(tptoken, errstr)
-		if compStr != *s {
+		if compStr != s {
 			panic("Str2Zwr did not return the right value")
 		}
-	} else if action < 20 + remainingOdds*(11 / 12.0) {
+	} else if action < 20+remainingOdds*(11/12.0) {
 		var strIn, strOut yottadb.BufferT
 		compStr := "a\n\tb\000c"
 		defer strIn.Free()
@@ -362,17 +363,17 @@ func runProc(tptoken uint64, errstr *yottadb.BufferT, settings testSettings, cur
 
 		strIn.Alloc(32)
 		strOut.Alloc(32)
-		strIn.SetValStrLit(tptoken, errstr, "\"a\"_$C(10,9)_\"b\"_$C(0)_\"c\"")
-		err := strIn.Zwr2StrST(tptoken, errstr, &strOut);
+		strIn.SetValStr(tptoken, errstr, "\"a\"_$C(10,9)_\"b\"_$C(0)_\"c\"")
+		err := strIn.Zwr2StrST(tptoken, errstr, &strOut)
 		if err != nil {
 			errcode := yottadb.ErrorCode(err)
 			panic(fmt.Sprintf("Unexpected return code (%d) issued! %s", errcode, err))
 		}
 		s, _ := strOut.ValStr(tptoken, errstr)
-		if compStr != *s {
+		if compStr != s {
 			panic("Zwr2Str did not return the right value")
 		}
-	} else if action < 20 + remainingOdds*(12 / 12.0) {
+	} else if action < 20+remainingOdds*(12/12.0) {
 		yottadb.ReleaseT(tptoken, errstr)
 	} else if action <= 100 {
 		if curDepth > settings.maxDepth {
@@ -401,7 +402,7 @@ func runProc(tptoken uint64, errstr *yottadb.BufferT, settings testSettings, cur
 					countMutex.Lock()
 					rtnCount++
 					countMutex.Unlock()
-					runProc(tptoken, errstr, testSettings{MAX_DEPTH, NEST_RATE/2}, curDepth+1)
+					runProc(tptoken, errstr, testSettings{MAX_DEPTH, NEST_RATE / 2}, curDepth+1)
 					countMutex.Lock()
 					rtnCount--
 					countMutex.Unlock()
@@ -422,12 +423,12 @@ func runProc(tptoken uint64, errstr *yottadb.BufferT, settings testSettings, cur
 
 func main() {
 	rand.Seed(time.Now().UTC().UnixNano())
-	THREADS_TO_MAKE = rand.Intn(17) + 4 	//[4,20]
-	DRIVER_THREADS 	= rand.Intn(9) + 2	//[2,10]
-	MAX_THREADS	= 1000
-	MAX_DEPTH 	= rand.Intn(19) + 2	//[2,20]
-	NEST_RATE	= float64(rand.Intn(21)) / 100	//[0,0.20]
-	TEST_TIMEOUT	= rand.Intn(106) + 15 //[15,120] test timeout in seconds for the driver threads to stop
+	THREADS_TO_MAKE = rand.Intn(17) + 4 //[4,20]
+	DRIVER_THREADS = rand.Intn(9) + 2   //[2,10]
+	MAX_THREADS = 1000
+	MAX_DEPTH = rand.Intn(19) + 2            //[2,20]
+	NEST_RATE = float64(rand.Intn(21)) / 100 //[0,0.20]
+	TEST_TIMEOUT = rand.Intn(106) + 15       //[15,120] test timeout in seconds for the driver threads to stop
 	defer yottadb.Exit()
 	var wg sync.WaitGroup
 	var doneMutex sync.Mutex
@@ -440,7 +441,7 @@ func main() {
 		doneMutex.Lock()
 		done = true
 		doneMutex.Unlock()
-	} ()
+	}()
 
 	for i := 0; i < DRIVER_THREADS; i++ {
 		wg.Add(1)

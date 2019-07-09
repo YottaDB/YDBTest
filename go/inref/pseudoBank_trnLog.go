@@ -17,8 +17,8 @@ package dataObject
 
 import (
 	// "errors"
-	"strconv"
 	"lang.yottadb.com/go/yottadb"
+	"strconv"
 	"time"
 )
 
@@ -26,12 +26,12 @@ type TrnLog struct {
 	Guid string
 	Tseq int
 
-	Comment string
+	Comment   string
 	TDateTime time.Time
-	Cid int
-	Amt int
-	Endbal int
-	User string
+	Cid       int
+	Amt       int
+	Endbal    int
+	User      string
 }
 
 const trnLogGlobal = "^ZTRNLOG"
@@ -49,7 +49,7 @@ func (t *TrnLog) Save(tptoken uint64, key *yottadb.KeyT, data *yottadb.BufferT, 
 	data.Alloc(128)
 
 	// set value
-	err = data.SetValStrLit(tptoken, errStr, stringData)
+	err = data.SetValStr(tptoken, errStr, stringData)
 	if err != nil {
 		return err
 	}
@@ -68,7 +68,7 @@ func (t *TrnLog) getTextData() string {
 
 func setTrnLogKey(tptoken uint64, guid string, tseq int, key *yottadb.KeyT, errStr *yottadb.BufferT) error {
 	var err error
-	err = key.Varnm.SetValStrLit(tptoken, errStr, trnLogGlobal)
+	err = key.Varnm.SetValStr(tptoken, errStr, trnLogGlobal)
 	if err != nil {
 		return err
 	}
@@ -76,11 +76,11 @@ func setTrnLogKey(tptoken uint64, guid string, tseq int, key *yottadb.KeyT, errS
 	if err != nil {
 		return err
 	}
-	err = key.Subary.SetValStrLit(tptoken, errStr, 0, guid)
+	err = key.Subary.SetValStr(tptoken, errStr, 0, guid)
 	if err != nil {
 		return err
 	}
-	err = key.Subary.SetValStrLit(tptoken, errStr, 1, strconv.Itoa(tseq))
+	err = key.Subary.SetValStr(tptoken, errStr, 1, strconv.Itoa(tseq))
 	if err != nil {
 		return err
 	}

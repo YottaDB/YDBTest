@@ -16,15 +16,15 @@
 package main
 
 import (
-	"lang.yottadb.com/go/yottadb"
 	"fmt"
-	"pseudoBank/dataObject"
-	"strconv"
-	"math/rand"
+	"lang.yottadb.com/go/yottadb"
 	"math"
-	"time"
+	"math/rand"
+	"pseudoBank/dataObject"
 	"runtime"
+	"strconv"
 	"sync"
+	"time"
 )
 
 // #cgo pkg-config: yottadb
@@ -33,6 +33,7 @@ import (
 // int TestTpRtn_cgo(uint64_t tptoken, uintptr_t in); // Forward declaration
 // void ydb_ci_t_wrapper(unsigned long tptoken, char *name, ydb_string_t *arg);
 import "C"
+
 /*
 const YDB_DEL_TREE  = 1
 const AryDim uint32 = 10                        // Dimension (capacity) of array of YDBBufferT struct
@@ -56,7 +57,7 @@ func main() {
 
 	waitGroup.Add(1)
 	timeout := make(chan bool)
-	go func(){
+	go func() {
 		time.Sleep(120 * time.Second)
 		for i := 0; i < concurrent; i++ {
 			timeout <- false
@@ -68,12 +69,12 @@ func main() {
 	for i := 0; i < concurrent; i++ {
 		guid := i
 		user := id
-		go func (user string) {
+		go func(user string) {
 			defer waitGroup.Done()
 			var t int
 			for {
 				select {
-				case <- timeout:
+				case <-timeout:
 					return
 				default:
 					ref := guid + (t * int(math.Pow10(int(idShift))))
@@ -83,11 +84,11 @@ func main() {
 					if from == to {
 						to += 1
 					}
-					postTranfer(key , from, to, tranAmt, user)
+					postTranfer(key, from, to, tranAmt, user)
 					t++
 				}
 			}
-		} (user)
+		}(user)
 	}
 	waitGroup.Wait()
 
@@ -97,8 +98,8 @@ func main() {
 func initData(accountNeeded int) {
 
 	// init data
-	var key1,key2 yottadb.KeyT
-	var buff1,buff2,errStr yottadb.BufferT
+	var key1, key2 yottadb.KeyT
+	var buff1, buff2, errStr yottadb.BufferT
 	var tptoken uint64
 	var err error
 	var cid string
@@ -118,40 +119,40 @@ func initData(accountNeeded int) {
 	errStr.Alloc(128)
 
 	// account
-	err = key1.Varnm.SetValStrLit(tptoken, &errStr, "^ZACN")
+	err = key1.Varnm.SetValStr(tptoken, &errStr, "^ZACN")
 	handleError(err)
 	err = key1.Subary.SetElemUsed(tptoken, &errStr, 1)
 	handleError(err)
-	err = buff1.SetValStrLit(tptoken, &errStr, "1|10000000")
+	err = buff1.SetValStr(tptoken, &errStr, "1|10000000")
 	handleError(err)
 
 	for i := 0; i < accountNeeded; i++ {
 		cid = strconv.Itoa(startCid + i)
-		err = key1.Subary.SetValStrLit(tptoken, &errStr, 0, cid)
+		err = key1.Subary.SetValStr(tptoken, &errStr, 0, cid)
 		handleError(err)
 		err = key1.SetValST(tptoken, &errStr, &buff1)
 		handleError(err)
 	}
 
 	// history
-	err = key2.Varnm.SetValStrLit(tptoken, &errStr, "^ZHIST")
+	err = key2.Varnm.SetValStr(tptoken, &errStr, "^ZHIST")
 	handleError(err)
 	err = key2.Subary.SetElemUsed(tptoken, &errStr, 2)
 	handleError(err)
-	err = key2.Subary.SetValStrLit(tptoken, &errStr, 1, "1")
+	err = key2.Subary.SetValStr(tptoken, &errStr, 1, "1")
 	handleError(err)
-	err = buff2.SetValStrLit(tptoken, &errStr, "Account Create||10000000")
+	err = buff2.SetValStr(tptoken, &errStr, "Account Create||10000000")
 	handleError(err)
 	for i := 0; i < accountNeeded; i++ {
 		cid = strconv.Itoa(100001 + i)
-		err = key2.Subary.SetValStrLit(tptoken, &errStr, 0, cid)
+		err = key2.Subary.SetValStr(tptoken, &errStr, 0, cid)
 		handleError(err)
 		err = key2.SetValST(tptoken, &errStr, &buff2)
 		handleError(err)
 	}
 }
 
-func postTranfer(ref string,from,to,amt int, user string) {
+func postTranfer(ref string, from, to, amt int, user string) {
 
 	var keyAcct, keyHist yottadb.KeyT
 	var buffAcct, buffHist, errStr yottadb.BufferT
@@ -180,9 +181,13 @@ func postTranfer(ref string,from,to,amt int, user string) {
 
 		var accountFrom, accountTo dataObject.Account
 		err = accountFrom.Load(tptoken, from, &keyAcct, &buffAcct, &errStr)
-		if handleError(err) { return int32(yottadb.ErrorCode(err)) }
+		if handleError(err) {
+			return int32(yottadb.ErrorCode(err))
+		}
 		err = accountTo.Load(tptoken, to, &keyAcct, &buffAcct, &errStr)
-		if handleError(err) { return int32(yottadb.ErrorCode(err)) }
+		if handleError(err) {
+			return int32(yottadb.ErrorCode(err))
+		}
 
 		accountFrom.HistSeq += 1
 		accountFrom.Bal -= amt
@@ -190,9 +195,13 @@ func postTranfer(ref string,from,to,amt int, user string) {
 		accountTo.Bal += amt
 
 		err = accountFrom.Save(tptoken, &keyAcct, &buffAcct, &errStr)
-		if handleError(err) { return int32(yottadb.ErrorCode(err)) }
+		if handleError(err) {
+			return int32(yottadb.ErrorCode(err))
+		}
 		err = accountTo.Save(tptoken, &keyAcct, &buffAcct, &errStr)
-		if handleError(err) { return int32(yottadb.ErrorCode(err)) }
+		if handleError(err) {
+			return int32(yottadb.ErrorCode(err))
+		}
 
 		var histFrom, histTo dataObject.HistRecord
 		histFrom.Cid = from
@@ -202,7 +211,9 @@ func postTranfer(ref string,from,to,amt int, user string) {
 		histFrom.Endbal = accountFrom.Bal
 		histFrom.User = guid
 		err = histFrom.Save(tptoken, &keyAcct, &buffAcct, &errStr)
-		if handleError(err) { return int32(yottadb.ErrorCode(err)) }
+		if handleError(err) {
+			return int32(yottadb.ErrorCode(err))
+		}
 
 		histTo.Cid = to
 		histTo.HistSeq = accountTo.HistSeq
@@ -211,7 +222,9 @@ func postTranfer(ref string,from,to,amt int, user string) {
 		histTo.Endbal = accountTo.Bal
 		histTo.User = guid
 		err = histTo.Save(tptoken, &keyAcct, &buffAcct, &errStr)
-		if handleError(err) { return int32(yottadb.ErrorCode(err)) }
+		if handleError(err) {
+			return int32(yottadb.ErrorCode(err))
+		}
 
 		dt := time.Now()
 		// guid := strconv.Itoa(ref)
@@ -226,7 +239,9 @@ func postTranfer(ref string,from,to,amt int, user string) {
 		trnLogFrom.Endbal = accountFrom.Bal
 		trnLogFrom.User = user
 		err = trnLogFrom.Save(tptoken, &keyAcct, &buffAcct, &errStr)
-		if handleError(err) { return int32(yottadb.ErrorCode(err)) }
+		if handleError(err) {
+			return int32(yottadb.ErrorCode(err))
+		}
 
 		trnLogTo.Guid = guid
 		trnLogTo.Tseq = 2
@@ -237,7 +252,9 @@ func postTranfer(ref string,from,to,amt int, user string) {
 		trnLogTo.Endbal = accountTo.Bal
 		trnLogTo.User = user
 		err = trnLogTo.Save(tptoken, &keyAcct, &buffAcct, &errStr)
-		if handleError(err) { return int32(yottadb.ErrorCode(err)) }
+		if handleError(err) {
+			return int32(yottadb.ErrorCode(err))
+		}
 
 		return 0
 

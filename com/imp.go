@@ -23,6 +23,7 @@ import (
 
 // LockTimeout is the maximum wait for a lock to be granted by LockST(), LockE(), LockIncrST(), or LockIncrE()
 const LockTimeout uint64 = uint64(15 * time.Minute)
+
 // MaxValueLen is the maximum size of a "normal" value
 const MaxValueLen uint32 = 256 // Maximum length of value returned for most nodes (keeps buffers small)
 // BigMaxValueLen is the maximum size of a "magnum" value (quite a bit bigger than "normal")
@@ -90,7 +91,7 @@ func NewKeyT(tptoken uint64, errstr *yottadb.BufferT, varname string, elemcnt, e
 	var newkey yottadb.KeyT
 
 	newkey.Alloc(uint32(len(varname)), elemcnt, elemlen)
-	err := newkey.Varnm.SetValStr(tptoken, errstr, &varname)
+	err := newkey.Varnm.SetValStr(tptoken, errstr, varname)
 	if CheckErrorReturn(err) {
 		panic(err)
 	}

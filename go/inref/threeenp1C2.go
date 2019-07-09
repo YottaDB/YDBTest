@@ -54,9 +54,9 @@ const timeOut uint64 = uint64(5 * time.Minute)
 // don't need to be recreated for every call.
 type shrStuff struct {
 	readsGbl, updatesGbl, highestGbl, limitsGbl, stepGbl, resultGbl yottadb.KeyT
-	readsLcl, updatesLcl, highestLcl, currpathLcl yottadb.KeyT
-	value, value2, errstr yottadb.BufferT
-	maxpath int64
+	readsLcl, updatesLcl, highestLcl, currpathLcl                   yottadb.KeyT
+	value, value2, errstr                                           yottadb.BufferT
+	maxpath                                                         int64
 }
 
 // Routine to print lines of debugging information if debugging is enabled
@@ -137,8 +137,8 @@ func checkErrorReturn(err error) bool {
 //
 func main() {
 	var linetokens []string
-	var input  string
-	var valstrp *string
+	var input string
+	var valstr string
 	var endnum, streams, maxblk, blk, tmp, tokncnt, updatecnt, readcnt, index, idx int64
 	var limitsGbl, resultGbl, highestGbl, updatesGbl, readsGbl, stepGbl yottadb.KeyT
 	var value, errstr yottadb.BufferT
@@ -173,43 +173,65 @@ func main() {
 	value.Alloc(32)
 	errstr.Alloc(2048)
 	limitsGbl.Alloc(7, 2, 18) // Only 2 subs but allow full 18 digit value
-	err = limitsGbl.Varnm.SetValStrLit(tptoken, &errstr, "^limits")
-	if checkErrorReturn(err) { return }
+	err = limitsGbl.Varnm.SetValStr(tptoken, &errstr, "^limits")
+	if checkErrorReturn(err) {
+		return
+	}
 	resultGbl.Alloc(7, 0, 0)
-	err = resultGbl.Varnm.SetValStrLit(tptoken, &errstr, "^result")
-	if checkErrorReturn(err) { return }
+	err = resultGbl.Varnm.SetValStr(tptoken, &errstr, "^result")
+	if checkErrorReturn(err) {
+		return
+	}
 	err = resultGbl.DeleteST(tptoken, &errstr, yottadb.YDB_DEL_TREE) // Start afresh - kill ^result
-	if checkErrorReturn(err) { return }
+	if checkErrorReturn(err) {
+		return
+	}
 	highestGbl.Alloc(8, 0, 0)
-	err = highestGbl.Varnm.SetValStrLit(tptoken, &errstr, "^highest")
-	if checkErrorReturn(err) { return }
+	err = highestGbl.Varnm.SetValStr(tptoken, &errstr, "^highest")
+	if checkErrorReturn(err) {
+		return
+	}
 	err = highestGbl.DeleteST(tptoken, &errstr, yottadb.YDB_DEL_TREE) // Start afresh - kill ^highest
-	if checkErrorReturn(err) { return }
+	if checkErrorReturn(err) {
+		return
+	}
 	updatesGbl.Alloc(8, 0, 0)
-	err = updatesGbl.Varnm.SetValStrLit(tptoken, &errstr, "^updates")
-	if checkErrorReturn(err) { return }
+	err = updatesGbl.Varnm.SetValStr(tptoken, &errstr, "^updates")
+	if checkErrorReturn(err) {
+		return
+	}
 	err = updatesGbl.DeleteST(tptoken, &errstr, yottadb.YDB_DEL_TREE) // Start afresh - kill ^updates
-	if checkErrorReturn(err) { return }
+	if checkErrorReturn(err) {
+		return
+	}
 	readsGbl.Alloc(6, 0, 0)
-	err = readsGbl.Varnm.SetValStrLit(tptoken, &errstr, "^reads")
-	if checkErrorReturn(err) { return }
+	err = readsGbl.Varnm.SetValStr(tptoken, &errstr, "^reads")
+	if checkErrorReturn(err) {
+		return
+	}
 	err = readsGbl.DeleteST(tptoken, &errstr, yottadb.YDB_DEL_TREE) // Start afresh - kill ^reads
-	if checkErrorReturn(err) { return }
+	if checkErrorReturn(err) {
+		return
+	}
 	stepGbl.Alloc(5, 1, 18)
-	err = stepGbl.Varnm.SetValStrLit(tptoken, &errstr, "^step")
-	if checkErrorReturn(err) { return }
+	err = stepGbl.Varnm.SetValStr(tptoken, &errstr, "^step")
+	if checkErrorReturn(err) {
+		return
+	}
 	err = stepGbl.DeleteST(tptoken, &errstr, yottadb.YDB_DEL_TREE) // Start afresh - kill ^step
-	if checkErrorReturn(err) { return }
+	if checkErrorReturn(err) {
+		return
+	}
 	// Get the number of CPUs from /proc/cpuinfo and calculate default number of execution streams
 	cpucnt := runtime.NumCPU()
 	cpuStreams := 2 * cpucnt // Max of 'streams' concurrent processes
 	// At the top level, the program reads and processes input lines, one at a time.  Each line specifies
-        // one problem to solve.  Since the program is designed to resume after a crash and reuse partial
-        // results computed before the crash, data in the database at the beginning is assumed to be partial
-        // results from the previous run.  After computing and writing results for a line, the database is
-        // cleared for next line of input or next run of the program.
+	// one problem to solve.  Since the program is designed to resume after a crash and reuse partial
+	// results computed before the crash, data in the database at the beginning is assumed to be partial
+	// results from the previous run.  After computing and writing results for a line, the database is
+	// cleared for next line of input or next run of the program.
 	//
-        // Loop for ever, read a line (quit on end of file or an empty line), process that line - Create a reader
+	// Loop for ever, read a line (quit on end of file or an empty line), process that line - Create a reader
 	// for stdin.
 	readin := bufio.NewReader(os.Stdin)
 	for {
@@ -221,23 +243,28 @@ func main() {
 		if (nil != err) && (io.EOF == err) {
 			break
 		}
-		if checkErrorReturn(err) { return } // Takes care of the rest of the errors
+		if checkErrorReturn(err) {
+			return
+		} // Takes care of the rest of the errors
 		linetokens = strings.Fields(input)
 		tokncnt = int64(len(linetokens))
 		if 0 < tokncnt {
 			endnum, err = strconv.ParseInt(linetokens[0], 10, 64) // aka 'j' in the M version
-			if checkErrorReturn(err) { } // No return here as no special YDB return codes possible
+			if checkErrorReturn(err) {
+			} // No return here as no special YDB return codes possible
 		} else {
 			// Blank line ends input
 			break
 		}
 		if 1 < tokncnt {
 			streams, err = strconv.ParseInt(linetokens[1], 10, 64) // Resets streams from the default set above
-			if checkErrorReturn(err) { } // No return here as no special YDB return codes possible
+			if checkErrorReturn(err) {
+			} // No return here as no special YDB return codes possible
 		}
 		if 2 < tokncnt {
 			blk, err = strconv.ParseInt(linetokens[2], 10, 64)
-			if checkErrorReturn(err) { } // No return here as no special YDB return codes possible
+			if checkErrorReturn(err) {
+			} // No return here as no special YDB return codes possible
 		}
 		if 3 < tokncnt {
 			fmt.Println("Excess tokens in input line (max 3) - args: <maximum> <streamcnt> <maxnumsperstream>")
@@ -256,12 +283,18 @@ func main() {
 		}
 		// Define blocks of integers for child processes to work on
 		err = limitsGbl.Subary.SetElemUsed(tptoken, &errstr, 0) // No subscripts so we kill the entire ^limits global
-		if checkErrorReturn(err) { return }
+		if checkErrorReturn(err) {
+			return
+		}
 		err = limitsGbl.DeleteST(tptoken, &errstr, yottadb.YDB_DEL_TREE) // kill ^limits (all of it)
-		if checkErrorReturn(err) { return }
+		if checkErrorReturn(err) {
+			return
+		}
 		tmp = 0
 		err = limitsGbl.Subary.SetElemUsed(tptoken, &errstr, 1) // Single subscript
-		if checkErrorReturn(err) { return }
+		if checkErrorReturn(err) {
+			return
+		}
 		for i := 1; ; i++ {
 			if tmp == endnum {
 				break
@@ -269,18 +302,28 @@ func main() {
 			tmp += blk
 			if tmp > endnum {
 				tmp = endnum
-				err = value.SetValStrLit(tptoken, &errstr, fmt.Sprintf("%d", tmp))
-				if checkErrorReturn(err) { return }
+				err = value.SetValStr(tptoken, &errstr, fmt.Sprintf("%d", tmp))
+				if checkErrorReturn(err) {
+					return
+				}
 				err = limitsGbl.SetValST(tptoken, &errstr, &value)
-				if checkErrorReturn(err) { return }
+				if checkErrorReturn(err) {
+					return
+				}
 				break
 			}
-			err = limitsGbl.Subary.SetValStrLit(tptoken, &errstr, 0, fmt.Sprintf("%d", i)) // ^limits(i)
-			if checkErrorReturn(err) { return }
-			err = value.SetValStrLit(tptoken, &errstr, fmt.Sprintf("%d", tmp))
-			if checkErrorReturn(err) { return }
+			err = limitsGbl.Subary.SetValStr(tptoken, &errstr, 0, fmt.Sprintf("%d", i)) // ^limits(i)
+			if checkErrorReturn(err) {
+				return
+			}
+			err = value.SetValStr(tptoken, &errstr, fmt.Sprintf("%d", tmp))
+			if checkErrorReturn(err) {
+				return
+			}
 			err = limitsGbl.SetValST(tptoken, &errstr, &value)
-			if checkErrorReturn(err) { return }
+			if checkErrorReturn(err) {
+				return
+			}
 		}
 		// Launch worker processes. Like the M routine, this Golang multi-process implementation of 3n+1 uses
 		// M-locks to synchronize worker process startup and completion.
@@ -288,20 +331,27 @@ func main() {
 		debugPrint("\nLaunching processes for this run")
 		// Clear out ^count and lock "lock1"
 		err = yottadb.DeleteE(tptoken, &errstr, yottadb.YDB_DEL_TREE, "^count", []string{})
-		if checkErrorReturn(err) { return }
+		if checkErrorReturn(err) {
+			return
+		}
 		err = yottadb.LockIncrE(tptoken, &errstr, timeOut, "lock1", []string{})
-		if checkErrorReturn(err) { return }
+		if checkErrorReturn(err) {
+			return
+		}
 		// Launch each worker process
 		proc := make([]*exec.Cmd, streams, streams)
 		for index = 0; index < streams; index++ {
 			_, err = yottadb.IncrE(tptoken, &errstr, "1", "^count", []string{})
-			if checkErrorReturn(err) { return }
+			if checkErrorReturn(err) {
+				return
+			}
 			dir, _ := os.Getwd()
 			proc[index] = exec.Command(dir+"/threeenp1C2", workerTag, fmt.Sprintf("%d", index))
 			proc[index].Stdout = os.Stdout // cmd.Stdout -> stdout
 			proc[index].Stderr = os.Stderr // cmd.Stderr -> stderr
-			err := proc[index].Start() // Start new process
-			if checkErrorReturn(err) { }
+			err := proc[index].Start()     // Start new process
+			if checkErrorReturn(err) {
+			}
 		}
 		debugPrint(fmt.Sprintf("All %d processes launched - wait till they are all initialized", streams))
 		// Wait until all processes have launched and are waiting on lock2
@@ -310,7 +360,9 @@ func main() {
 			if nil != err {
 				if yottadb.YDB_ERR_GVUNDEF != yottadb.ErrorCode(err) {
 					// GVUNDEF gets a pass, it might not yet exist
-					if checkErrorReturn(err) { return }
+					if checkErrorReturn(err) {
+						return
+					}
 				}
 			} else if "0" == countstr { // All worker processes initialized so wait is done
 				break
@@ -319,64 +371,98 @@ func main() {
 		}
 		debugPrint("All processes initialized - release them to start running")
 		err = yottadb.LockDecrE(tptoken, &errstr, "lock1", []string{})
-		if checkErrorReturn(err) { return }
+		if checkErrorReturn(err) {
+			return
+		}
 		runstart := time.Now() // When processes start running
 		// Now do a Wait() on each process we launched
 		for idx = 0; idx < streams; idx++ {
 			err := proc[idx].Wait()
 			if nil != err {
- 				fmt.Printf("Process %d finished with error: %s\n", idx, err)
+				fmt.Printf("Process %d finished with error: %s\n", idx, err)
 			}
 		}
- 		runelap := time.Since(runstart) // Calculate elapsed time (duration) in seconds
+		runelap := time.Since(runstart) // Calculate elapsed time (duration) in seconds
 		runelaps := runelap.Seconds()
 		debugPrint(fmt.Sprintf("All (%d) processes completed - elapsed run time: %f", streams, runelaps))
 		// Fetch and output results
 		err = resultGbl.ValST(tptoken, &errstr, &value)
-		if checkErrorReturn(err) { return }
-		valstrp, err = value.ValStr(tptoken, &errstr)
-		if checkErrorReturn(err) { return }
-		fmt.Printf(" %s", *valstrp) // ^result
+		if checkErrorReturn(err) {
+			return
+		}
+		valstr, err = value.ValStr(tptoken, &errstr)
+		if checkErrorReturn(err) {
+			return
+		}
+		fmt.Printf(" %s", valstr) // ^result
 		err = highestGbl.ValST(tptoken, &errstr, &value)
-		if checkErrorReturn(err) { return }
-		valstrp, err = value.ValStr(tptoken, &errstr)
-		if checkErrorReturn(err) { return }
-		fmt.Printf(" %s", *valstrp) // ^highest
+		if checkErrorReturn(err) {
+			return
+		}
+		valstr, err = value.ValStr(tptoken, &errstr)
+		if checkErrorReturn(err) {
+			return
+		}
+		fmt.Printf(" %s", valstr)     // ^highest
 		fmt.Printf(" %.3f", runelaps) // Test elapsed time in seconds
 		err = updatesGbl.ValST(tptoken, &errstr, &value)
-		if checkErrorReturn(err) { return }
-		valstrp, err = value.ValStr(tptoken, &errstr)
-		if checkErrorReturn(err) { return }
-		fmt.Printf(" %s", *valstrp) // ^updates
-		updatecnt, err = strconv.ParseInt(*valstrp, 10, 64)
-		if checkErrorReturn(err) { } // No return here as no special YDB return codes possible
+		if checkErrorReturn(err) {
+			return
+		}
+		valstr, err = value.ValStr(tptoken, &errstr)
+		if checkErrorReturn(err) {
+			return
+		}
+		fmt.Printf(" %s", valstr) // ^updates
+		updatecnt, err = strconv.ParseInt(valstr, 10, 64)
+		if checkErrorReturn(err) {
+		} // No return here as no special YDB return codes possible
 		err = readsGbl.ValST(tptoken, &errstr, &value)
-		if checkErrorReturn(err) { return }
-		valstrp, err = value.ValStr(tptoken, &errstr)
-		if checkErrorReturn(err) { return }
-		fmt.Printf(" %s", *valstrp) // reads
-		readcnt, err = strconv.ParseInt(*valstrp, 10, 64)
-		if checkErrorReturn(err) { } // No return here as no special return codes possible
+		if checkErrorReturn(err) {
+			return
+		}
+		valstr, err = value.ValStr(tptoken, &errstr)
+		if checkErrorReturn(err) {
+			return
+		}
+		fmt.Printf(" %s", valstr) // reads
+		readcnt, err = strconv.ParseInt(valstr, 10, 64)
+		if checkErrorReturn(err) {
+		} // No return here as no special return codes possible
 		if 0 < runelaps {
 			// If duration is greater than 0, display update and read rates
-			fmt.Printf(" %.0f %.0f", float64(updatecnt) / runelaps, float64(readcnt) / runelaps)
+			fmt.Printf(" %.0f %.0f", float64(updatecnt)/runelaps, float64(readcnt)/runelaps)
 		}
 		fmt.Printf("\n")
 		// This run is complete - reinitialize the database for the next run
-		err = value.SetValStrLit(tptoken, &errstr, "0")
-		if checkErrorReturn(err) { return }
+		err = value.SetValStr(tptoken, &errstr, "0")
+		if checkErrorReturn(err) {
+			return
+		}
 		err = highestGbl.SetValST(tptoken, &errstr, &value)
-		if checkErrorReturn(err) { return }
+		if checkErrorReturn(err) {
+			return
+		}
 		err = readsGbl.SetValST(tptoken, &errstr, &value)
-		if checkErrorReturn(err) { return }
+		if checkErrorReturn(err) {
+			return
+		}
 		err = resultGbl.SetValST(tptoken, &errstr, &value)
-		if checkErrorReturn(err) { return }
+		if checkErrorReturn(err) {
+			return
+		}
 		err = updatesGbl.SetValST(tptoken, &errstr, &value)
-		if checkErrorReturn(err) { return }
+		if checkErrorReturn(err) {
+			return
+		}
 		err = stepGbl.Subary.SetElemUsed(tptoken, &errstr, 0)
-		if checkErrorReturn(err) { return }
+		if checkErrorReturn(err) {
+			return
+		}
 		err = stepGbl.DeleteST(tptoken, &errstr, yottadb.YDB_DEL_TREE)
-		if checkErrorReturn(err) { return }
+		if checkErrorReturn(err) {
+			return
+		}
 	}
 }
 
@@ -385,7 +471,7 @@ func main() {
 func doblk(index int64) {
 	var blkstart, blkend int64
 	var dataval uint32
-	var strvalp *string
+	var strval string
 	var err error
 	var shrstuff shrStuff
 	var procStart time.Time
@@ -399,75 +485,125 @@ func doblk(index int64) {
 	shrstuffp.value2.Alloc(32)
 	shrstuffp.errstr.Alloc(2048)
 	shrstuffp.readsGbl.Alloc(6, 0, 0)
-	err = shrstuffp.readsGbl.Varnm.SetValStrLit(tptoken, &shrstuffp.errstr, "^reads")
-	if checkErrorReturn(err) { return }
+	err = shrstuffp.readsGbl.Varnm.SetValStr(tptoken, &shrstuffp.errstr, "^reads")
+	if checkErrorReturn(err) {
+		return
+	}
 	shrstuffp.updatesGbl.Alloc(8, 0, 0)
-	err = shrstuffp.updatesGbl.Varnm.SetValStrLit(tptoken, &shrstuffp.errstr, "^updates")
-	if checkErrorReturn(err) { return }
+	err = shrstuffp.updatesGbl.Varnm.SetValStr(tptoken, &shrstuffp.errstr, "^updates")
+	if checkErrorReturn(err) {
+		return
+	}
 	shrstuffp.highestGbl.Alloc(8, 0, 0)
-	err = shrstuffp.highestGbl.Varnm.SetValStrLit(tptoken, &shrstuffp.errstr, "^highest")
-	if checkErrorReturn(err) { return }
+	err = shrstuffp.highestGbl.Varnm.SetValStr(tptoken, &shrstuffp.errstr, "^highest")
+	if checkErrorReturn(err) {
+		return
+	}
 	shrstuffp.limitsGbl.Alloc(7, 2, 18) // Only 2 subs but allow full 18 digit value
-	err = shrstuffp.limitsGbl.Varnm.SetValStrLit(tptoken, &shrstuffp.errstr, "^limits")
-	if checkErrorReturn(err) { return }
+	err = shrstuffp.limitsGbl.Varnm.SetValStr(tptoken, &shrstuffp.errstr, "^limits")
+	if checkErrorReturn(err) {
+		return
+	}
 	// Set the second subscript of ^limits which will always only ever be '1' in this routine.
-	err = shrstuffp.limitsGbl.Subary.SetValStrLit(tptoken, &shrstuffp.errstr, 1, "1")
-	if checkErrorReturn(err) { return }
+	err = shrstuffp.limitsGbl.Subary.SetValStr(tptoken, &shrstuffp.errstr, 1, "1")
+	if checkErrorReturn(err) {
+		return
+	}
 	shrstuffp.stepGbl.Alloc(5, 1, 18)
-	err = shrstuffp.stepGbl.Varnm.SetValStrLit(tptoken, &shrstuffp.errstr, "^step")
-	if checkErrorReturn(err) { return }
+	err = shrstuffp.stepGbl.Varnm.SetValStr(tptoken, &shrstuffp.errstr, "^step")
+	if checkErrorReturn(err) {
+		return
+	}
 	err = shrstuffp.stepGbl.Subary.SetElemUsed(tptoken, &shrstuffp.errstr, 1)
-	if checkErrorReturn(err) { return }
+	if checkErrorReturn(err) {
+		return
+	}
 	shrstuffp.resultGbl.Alloc(7, 0, 0)
-	err = shrstuffp.resultGbl.Varnm.SetValStrLit(tptoken, &shrstuffp.errstr, "^result")
-	if checkErrorReturn(err) { return }
+	err = shrstuffp.resultGbl.Varnm.SetValStr(tptoken, &shrstuffp.errstr, "^result")
+	if checkErrorReturn(err) {
+		return
+	}
 	// Note these local variable creations set a single subscript with the passed in starting index which
 	// is unique amongst these goroutines so we can prevent collisions between goroutines when the YDB code
 	// becomes fully threaded in the future. Create the subscript value before creating the keys.
 	subscr := fmt.Sprintf("%d", index) // Create anti-collide subscr for this goroutine
 	shrstuffp.readsLcl.Alloc(6, 1, 18)
-	err = shrstuffp.readsLcl.Varnm.SetValStrLit(tptoken, &shrstuffp.errstr, "reads")
-	if checkErrorReturn(err) { return }
-	err = shrstuffp.readsLcl.Subary.SetValStr(tptoken, &shrstuffp.errstr, 0, &subscr)
-	if checkErrorReturn(err) { return }
+	err = shrstuffp.readsLcl.Varnm.SetValStr(tptoken, &shrstuffp.errstr, "reads")
+	if checkErrorReturn(err) {
+		return
+	}
+	err = shrstuffp.readsLcl.Subary.SetValStr(tptoken, &shrstuffp.errstr, 0, subscr)
+	if checkErrorReturn(err) {
+		return
+	}
 	err = shrstuffp.readsLcl.Subary.SetElemUsed(tptoken, &shrstuffp.errstr, 1)
-	if checkErrorReturn(err) { return }
+	if checkErrorReturn(err) {
+		return
+	}
 	shrstuffp.updatesLcl.Alloc(8, 1, 18)
-	err = shrstuffp.updatesLcl.Varnm.SetValStrLit(tptoken, &shrstuffp.errstr, "updates")
-	if checkErrorReturn(err) { return }
-	err = shrstuffp.updatesLcl.Subary.SetValStr(tptoken, &shrstuffp.errstr, 0, &subscr)
-	if checkErrorReturn(err) { return }
+	err = shrstuffp.updatesLcl.Varnm.SetValStr(tptoken, &shrstuffp.errstr, "updates")
+	if checkErrorReturn(err) {
+		return
+	}
+	err = shrstuffp.updatesLcl.Subary.SetValStr(tptoken, &shrstuffp.errstr, 0, subscr)
+	if checkErrorReturn(err) {
+		return
+	}
 	err = shrstuffp.updatesLcl.Subary.SetElemUsed(tptoken, &shrstuffp.errstr, 1)
-	if checkErrorReturn(err) { return }
+	if checkErrorReturn(err) {
+		return
+	}
 	shrstuffp.highestLcl.Alloc(8, 1, 18)
-	err = shrstuffp.highestLcl.Varnm.SetValStrLit(tptoken, &shrstuffp.errstr, "highest")
-	if checkErrorReturn(err) { return }
-	err = shrstuffp.highestLcl.Subary.SetValStr(tptoken, &shrstuffp.errstr, 0, &subscr)
-	if checkErrorReturn(err) { return }
+	err = shrstuffp.highestLcl.Varnm.SetValStr(tptoken, &shrstuffp.errstr, "highest")
+	if checkErrorReturn(err) {
+		return
+	}
+	err = shrstuffp.highestLcl.Subary.SetValStr(tptoken, &shrstuffp.errstr, 0, subscr)
+	if checkErrorReturn(err) {
+		return
+	}
 	err = shrstuffp.highestLcl.Subary.SetElemUsed(tptoken, &shrstuffp.errstr, 1)
-	if checkErrorReturn(err) { return }
+	if checkErrorReturn(err) {
+		return
+	}
 	shrstuffp.currpathLcl.Alloc(8, 2, 18)
-	err = shrstuffp.currpathLcl.Varnm.SetValStrLit(tptoken, &shrstuffp.errstr, "currpath")
-	if checkErrorReturn(err) { return }
-	err = shrstuffp.currpathLcl.Subary.SetValStr(tptoken, &shrstuffp.errstr, 0, &subscr)
-	if checkErrorReturn(err) { return }
+	err = shrstuffp.currpathLcl.Varnm.SetValStr(tptoken, &shrstuffp.errstr, "currpath")
+	if checkErrorReturn(err) {
+		return
+	}
+	err = shrstuffp.currpathLcl.Subary.SetValStr(tptoken, &shrstuffp.errstr, 0, subscr)
+	if checkErrorReturn(err) {
+		return
+	}
 	// (SetElemUsed for curpathLcl is done later)
 	// Initialize local reads, updates, and highest to zero.
-	err = shrstuffp.value.SetValStrLit(tptoken, &shrstuffp.errstr, "0")
-	if checkErrorReturn(err) { return }
+	err = shrstuffp.value.SetValStr(tptoken, &shrstuffp.errstr, "0")
+	if checkErrorReturn(err) {
+		return
+	}
 	err = shrstuffp.readsLcl.SetValST(tptoken, &shrstuffp.errstr, &shrstuffp.value)
-	if checkErrorReturn(err) { return }
+	if checkErrorReturn(err) {
+		return
+	}
 	err = shrstuffp.updatesLcl.SetValST(tptoken, &shrstuffp.errstr, &shrstuffp.value)
-	if checkErrorReturn(err) { return }
+	if checkErrorReturn(err) {
+		return
+	}
 	err = shrstuffp.highestLcl.SetValST(tptoken, &shrstuffp.errstr, &shrstuffp.value)
-	if checkErrorReturn(err) { return }
+	if checkErrorReturn(err) {
+		return
+	}
 	// Initialization complete - notify main we are ready to rock by first decrementing ^count then waiting
 	// on ^lock1(index) to await main's signal to start work when it releases the higher level lock it holds
 	// (^lock1) that blocks our aquisition until all are ready to start.
 	_, err = yottadb.IncrE(tptoken, &shrstuffp.errstr, "-1", "^count", []string{})
-	if checkErrorReturn(err) { return }
+	if checkErrorReturn(err) {
+		return
+	}
 	err = yottadb.LockIncrE(tptoken, &shrstuffp.errstr, timeOut, "lock1", []string{subscr}) // Wait for release
-        if checkErrorReturn(err) { return }
+	if checkErrorReturn(err) {
+		return
+	}
 	if debugMode {
 		procStart = time.Now()
 		debugPrint(fmt.Sprintf("threeenp1C2: Entering doblk() (process # %d) - initialized and released", indexParm))
@@ -478,56 +614,84 @@ func doblk(index int64) {
 	for {
 		index++
 		err = shrstuffp.limitsGbl.Subary.SetElemUsed(tptoken, &shrstuffp.errstr, 1) // Make sure set for 1 subscript
-		if checkErrorReturn(err) { return }
-		err = shrstuffp.limitsGbl.Subary.SetValStrLit(tptoken, &shrstuffp.errstr, 0, fmt.Sprintf("%d", index)) // ^limits(index)
-		if checkErrorReturn(err) { return }
+		if checkErrorReturn(err) {
+			return
+		}
+		err = shrstuffp.limitsGbl.Subary.SetValStr(tptoken, &shrstuffp.errstr, 0, fmt.Sprintf("%d", index)) // ^limits(index)
+		if checkErrorReturn(err) {
+			return
+		}
 		dataval, err = shrstuffp.limitsGbl.DataST(tptoken, &shrstuffp.errstr)
-		if checkErrorReturn(err) { return }
+		if checkErrorReturn(err) {
+			return
+		}
 		if 0 == dataval {
 			break // limit index does not exist - we're done
 		}
 		// Need to access ^limits with 2 subscripts now
 		err = shrstuffp.limitsGbl.Subary.SetElemUsed(tptoken, &shrstuffp.errstr, 2)
-		if checkErrorReturn(err) { return }
+		if checkErrorReturn(err) {
+			return
+		}
 		// Bump ^limits(index,1) to attempt to "lock" this block (or at least mark it as being worked on to
 		// other processes).
 		err = shrstuffp.limitsGbl.IncrST(tptoken, &shrstuffp.errstr, nil, &shrstuffp.value)
-		if checkErrorReturn(err) { return }
-		strvalp, err = shrstuffp.value.ValStr(tptoken, &shrstuffp.errstr)
-		if checkErrorReturn(err) { return }
-		if "1" != *strvalp {
+		if checkErrorReturn(err) {
+			return
+		}
+		strval, err = shrstuffp.value.ValStr(tptoken, &shrstuffp.errstr)
+		if checkErrorReturn(err) {
+			return
+		}
+		if "1" != strval {
 			continue
 		}
 		err = shrstuffp.limitsGbl.Subary.SetElemUsed(tptoken, &shrstuffp.errstr, 1) // Make sure set for 1 subscript again
-		if checkErrorReturn(err) { return }
+		if checkErrorReturn(err) {
+			return
+		}
 		err = shrstuffp.limitsGbl.ValST(tptoken, &shrstuffp.errstr, &shrstuffp.value) // Fetch the value of ^limits(index) which is the 2nd parm to dostep()
-		if checkErrorReturn(err) { return }
-		strvalp, err = shrstuffp.value.ValStr(tptoken, &shrstuffp.errstr)
-		if checkErrorReturn(err) { return }
-		blkend, err = strconv.ParseInt(*strvalp, 10, 64)
-		if checkErrorReturn(err) { } // No return here as no special YDB return codes possible
+		if checkErrorReturn(err) {
+			return
+		}
+		strval, err = shrstuffp.value.ValStr(tptoken, &shrstuffp.errstr)
+		if checkErrorReturn(err) {
+			return
+		}
+		blkend, err = strconv.ParseInt(strval, 10, 64)
+		if checkErrorReturn(err) {
+		} // No return here as no special YDB return codes possible
 		if 1 == index {
 			blkstart = 1
 		} else {
-			err = shrstuffp.limitsGbl.Subary.SetValStrLit(tptoken, &shrstuffp.errstr, 0, fmt.Sprintf("%d", index - 1)) // ^limits(index - 1)
-			if checkErrorReturn(err) { return }
+			err = shrstuffp.limitsGbl.Subary.SetValStr(tptoken, &shrstuffp.errstr, 0, fmt.Sprintf("%d", index-1)) // ^limits(index - 1)
+			if checkErrorReturn(err) {
+				return
+			}
 			err = shrstuffp.limitsGbl.ValST(tptoken, &shrstuffp.errstr, &shrstuffp.value)
-			if checkErrorReturn(err) { return }
-			strvalp, err = shrstuffp.value.ValStr(tptoken, &shrstuffp.errstr)
-			if checkErrorReturn(err) { return }
-			blkstart, err = strconv.ParseInt(*strvalp, 10, 64)
-			if checkErrorReturn(err) { } // No return here as no special YDB return code possible
+			if checkErrorReturn(err) {
+				return
+			}
+			strval, err = shrstuffp.value.ValStr(tptoken, &shrstuffp.errstr)
+			if checkErrorReturn(err) {
+				return
+			}
+			blkstart, err = strconv.ParseInt(strval, 10, 64)
+			if checkErrorReturn(err) {
+			} // No return here as no special YDB return code possible
 			blkstart++
 		}
 		dostep(blkstart, blkend, shrstuffp)
 	}
-        // Adds the number of reads & writes performed by this process to the number of reads & writes performed by all
+	// Adds the number of reads & writes performed by this process to the number of reads & writes performed by all
 	// processes, and sets the highest for all processes if the highest calculated by this process is greater than
 	// that calculated so far for all processes. Do this in a transaction so is done atomically.
 	err = yottadb.TpE(tptoken, &shrstuffp.errstr, func(tptoken uint64, errstrp *yottadb.BufferT) int32 {
 		return doblkTpRtn(tptoken, errstrp, shrstuffp)
 	}, "BATCH", []string{})
-	if checkErrorReturn(err) { return }
+	if checkErrorReturn(err) {
+		return
+	}
 	if debugMode {
 		procElap := time.Since(procStart)
 		procElaps := procElap.Seconds()
@@ -540,41 +704,61 @@ func doblk(index int64) {
 func doblkTpRtn(tptoken uint64, errstrp *yottadb.BufferT, shrstuffp *shrStuff) int32 {
 	var highestLCL, highestDB int64
 	var err error
-	var strvalp *string
+	var strval string
 
 	// Increment ^reads and ^updates by their respective local values
 	err = shrstuffp.readsLcl.ValST(tptoken, errstrp, &shrstuffp.value) // Fetch local reads
-	if checkErrorReturn(err) { return int32(yottadb.ErrorCode(err)) }
+	if checkErrorReturn(err) {
+		return int32(yottadb.ErrorCode(err))
+	}
 	err = shrstuffp.readsGbl.IncrST(tptoken, errstrp, &shrstuffp.value, &shrstuffp.value2)
-	if checkErrorReturn(err) { return int32(yottadb.ErrorCode(err)) }
+	if checkErrorReturn(err) {
+		return int32(yottadb.ErrorCode(err))
+	}
 	err = shrstuffp.updatesLcl.ValST(tptoken, errstrp, &shrstuffp.value)
-	if checkErrorReturn(err) { return int32(yottadb.ErrorCode(err)) }
+	if checkErrorReturn(err) {
+		return int32(yottadb.ErrorCode(err))
+	}
 	err = shrstuffp.updatesGbl.IncrST(tptoken, errstrp, &shrstuffp.value, &shrstuffp.value2)
-	if checkErrorReturn(err) { return int32(yottadb.ErrorCode(err)) }
+	if checkErrorReturn(err) {
+		return int32(yottadb.ErrorCode(err))
+	}
 	// Fetch ^highest to see if it is greater than our local highest - if so, update it to new higher value.
 	err = shrstuffp.highestGbl.ValST(tptoken, errstrp, &shrstuffp.value)
-	if (nil != err) {
+	if nil != err {
 		// Ignore GVUNDEF error - treat as 0 value
-		if (yottadb.YDB_ERR_GVUNDEF != yottadb.ErrorCode(err)) {
-			if checkErrorReturn(err) { return int32(yottadb.ErrorCode(err)) }
+		if yottadb.YDB_ERR_GVUNDEF != yottadb.ErrorCode(err) {
+			if checkErrorReturn(err) {
+				return int32(yottadb.ErrorCode(err))
+			}
 		}
 		highestDB = 0
 	} else {
-		strvalp, err = shrstuffp.value.ValStr(tptoken, errstrp)
-		if checkErrorReturn(err) { return int32(yottadb.ErrorCode(err)) }
-		highestDB, err = strconv.ParseInt(*strvalp, 10, 64)
-		if checkErrorReturn(err) { } // No return here as no special YDB return codes possible
+		strval, err = shrstuffp.value.ValStr(tptoken, errstrp)
+		if checkErrorReturn(err) {
+			return int32(yottadb.ErrorCode(err))
+		}
+		highestDB, err = strconv.ParseInt(strval, 10, 64)
+		if checkErrorReturn(err) {
+		} // No return here as no special YDB return codes possible
 	}
 	err = shrstuffp.highestLcl.ValST(tptoken, errstrp, &shrstuffp.value2)
-	if checkErrorReturn(err) { return int32(yottadb.ErrorCode(err)) }
-	strvalp, err = shrstuffp.value2.ValStr(tptoken, errstrp)
-	if checkErrorReturn(err) { return int32(yottadb.ErrorCode(err)) }
-	highestLCL, err = strconv.ParseInt(*strvalp, 10 , 64)
-	if checkErrorReturn(err) { } // No return here as no special YDB return codes possible
+	if checkErrorReturn(err) {
+		return int32(yottadb.ErrorCode(err))
+	}
+	strval, err = shrstuffp.value2.ValStr(tptoken, errstrp)
+	if checkErrorReturn(err) {
+		return int32(yottadb.ErrorCode(err))
+	}
+	highestLCL, err = strconv.ParseInt(strval, 10, 64)
+	if checkErrorReturn(err) {
+	} // No return here as no special YDB return codes possible
 	if highestDB < highestLCL {
 		// Local value is higher - update into DB
 		err = shrstuffp.highestGbl.SetValST(tptoken, errstrp, &shrstuffp.value2)
-		if checkErrorReturn(err) { return int32(yottadb.ErrorCode(err)) }
+		if checkErrorReturn(err) {
+			return int32(yottadb.ErrorCode(err))
+		}
 	}
 	return 0
 	// Commit happens on return to ydb_tp_st()/ydb_tp_s().
@@ -587,7 +771,7 @@ func dostep(blkstart, blkend int64, shrstuffp *shrStuff) {
 	var current, i, n, highestDB, stepval int64
 	var dataval uint32
 	var err error
-	var strvalp *string
+	var strval string
 
 	// Loop through the numbers in the block
 	for current = blkstart; current <= blkend; current++ {
@@ -595,28 +779,46 @@ func dostep(blkstart, blkend int64, shrstuffp *shrStuff) {
 		// Kill the current currpath. Need to set elements used to 1 temporarily so we delete
 		// all of our process's nodes.
 		err = shrstuffp.currpathLcl.Subary.SetElemUsed(tptoken, &shrstuffp.errstr, 1)
-		if checkErrorReturn(err) { return }
+		if checkErrorReturn(err) {
+			return
+		}
 		err = shrstuffp.currpathLcl.DeleteST(tptoken, &shrstuffp.errstr, yottadb.YDB_DEL_TREE)
-		if checkErrorReturn(err) { return }
+		if checkErrorReturn(err) {
+			return
+		}
 		err = shrstuffp.currpathLcl.Subary.SetElemUsed(tptoken, &shrstuffp.errstr, 2)
-		if checkErrorReturn(err) { return }
+		if checkErrorReturn(err) {
+			return
+		}
 		// Go till we reach 1 or a number with a known number of steps
 		for i = 0; ; i++ {
 			err = shrstuffp.readsLcl.IncrST(tptoken, &shrstuffp.errstr, nil, &shrstuffp.value) // Bump local reads
-			if checkErrorReturn(err) { return }
-			err = shrstuffp.stepGbl.Subary.SetValStrLit(tptoken, &shrstuffp.errstr, 0, fmt.Sprintf("%d", n)) // Subscript n
-			if checkErrorReturn(err) { return }
+			if checkErrorReturn(err) {
+				return
+			}
+			err = shrstuffp.stepGbl.Subary.SetValStr(tptoken, &shrstuffp.errstr, 0, fmt.Sprintf("%d", n)) // Subscript n
+			if checkErrorReturn(err) {
+				return
+			}
 			dataval, err = shrstuffp.stepGbl.DataST(tptoken, &shrstuffp.errstr) // $DATA(^step(n)
-			if checkErrorReturn(err) { return }
+			if checkErrorReturn(err) {
+				return
+			}
 			if (0 != dataval) || (1 == n) {
 				break // This value is done by someone else so stop here
 			}
-			err = shrstuffp.currpathLcl.Subary.SetValStrLit(tptoken, &shrstuffp.errstr, 1, fmt.Sprintf("%d", i))
-			if checkErrorReturn(err) { return }
-			err = shrstuffp.value.SetValStrLit(tptoken, &shrstuffp.errstr, fmt.Sprintf("%d", n))
-			if checkErrorReturn(err) { return }
+			err = shrstuffp.currpathLcl.Subary.SetValStr(tptoken, &shrstuffp.errstr, 1, fmt.Sprintf("%d", i))
+			if checkErrorReturn(err) {
+				return
+			}
+			err = shrstuffp.value.SetValStr(tptoken, &shrstuffp.errstr, fmt.Sprintf("%d", n))
+			if checkErrorReturn(err) {
+				return
+			}
 			err = shrstuffp.currpathLcl.SetValST(tptoken, &shrstuffp.errstr, &shrstuffp.value) // currpath(index, i) = n
-			if checkErrorReturn(err) { return }
+			if checkErrorReturn(err) {
+				return
+			}
 			// Modify n according to 3n+1 rules
 			if 0 == (n & 0x1) {
 				n = n / 2 // Even numbers are halved
@@ -625,29 +827,45 @@ func dostep(blkstart, blkend int64, shrstuffp *shrStuff) {
 			}
 			// If n is > highest then set highest = n
 			err = shrstuffp.highestLcl.ValST(tptoken, &shrstuffp.errstr, &shrstuffp.value)
-			if checkErrorReturn(err) { return }
-			strvalp, err = shrstuffp.value.ValStr(tptoken, &shrstuffp.errstr)
-			if checkErrorReturn(err) { return }
-			highestDB, err = strconv.ParseInt(*strvalp, 10, 64)
-			if checkErrorReturn(err) { } // No return here as no special YDB return codes possible
+			if checkErrorReturn(err) {
+				return
+			}
+			strval, err = shrstuffp.value.ValStr(tptoken, &shrstuffp.errstr)
+			if checkErrorReturn(err) {
+				return
+			}
+			highestDB, err = strconv.ParseInt(strval, 10, 64)
+			if checkErrorReturn(err) {
+			} // No return here as no special YDB return codes possible
 			if n > highestDB {
 				// Reset our high water mark
-				err = shrstuffp.value.SetValStrLit(tptoken, &shrstuffp.errstr, fmt.Sprintf("%d", n)) // Subscript n
-				if checkErrorReturn(err) { return }
+				err = shrstuffp.value.SetValStr(tptoken, &shrstuffp.errstr, fmt.Sprintf("%d", n)) // Subscript n
+				if checkErrorReturn(err) {
+					return
+				}
 				err = shrstuffp.highestLcl.SetValST(tptoken, &shrstuffp.errstr, &shrstuffp.value) // highest = n
-				if checkErrorReturn(err) { return }
+				if checkErrorReturn(err) {
+					return
+				}
 			}
 		}
 		if 0 < i { // if 0=i we already have an answer for n, nothing to do here
 			if 1 < n {
-				err = shrstuffp.stepGbl.Subary.SetValStrLit(tptoken, &shrstuffp.errstr, 0, fmt.Sprintf("%d", n)) // Subscript n
-				if checkErrorReturn(err) { return }
+				err = shrstuffp.stepGbl.Subary.SetValStr(tptoken, &shrstuffp.errstr, 0, fmt.Sprintf("%d", n)) // Subscript n
+				if checkErrorReturn(err) {
+					return
+				}
 				err = shrstuffp.stepGbl.ValST(tptoken, &shrstuffp.errstr, &shrstuffp.value) // fetch ^step(n)
-				if checkErrorReturn(err) { return }
-				strvalp, err = shrstuffp.value.ValStr(tptoken, &shrstuffp.errstr)
-				if checkErrorReturn(err) { return }
-				stepval, err = strconv.ParseInt(*strvalp, 10, 64)
-				if checkErrorReturn(err) { } // No return here as no special YDB return code possible
+				if checkErrorReturn(err) {
+					return
+				}
+				strval, err = shrstuffp.value.ValStr(tptoken, &shrstuffp.errstr)
+				if checkErrorReturn(err) {
+					return
+				}
+				stepval, err = strconv.ParseInt(strval, 10, 64)
+				if checkErrorReturn(err) {
+				} // No return here as no special YDB return code possible
 				i += stepval
 			}
 			// Atomically set maximum value with a transaction driven as a "closure" type routine.
@@ -657,41 +875,64 @@ func dostep(blkstart, blkend int64, shrstuffp *shrStuff) {
 			shrstuffp.maxpath = i
 			err = yottadb.TpE(tptoken, &shrstuffp.errstr, func(tptoken uint64, errstrp *yottadb.BufferT) int32 {
 				return dostepTpRtn(tptoken, errstrp, shrstuffp)
-			},  "BATCH", []string{})
-			if checkErrorReturn(err) { return }
+			}, "BATCH", []string{})
+			if checkErrorReturn(err) {
+				return
+			}
 			// For each value in series, set ^step() to the number of values until 1
 			err = shrstuffp.currpathLcl.Subary.SetElemLenUsed(tptoken, &shrstuffp.errstr, 1, 0) // Start with a null subscript
-			if checkErrorReturn(err) { return }
+			if checkErrorReturn(err) {
+				return
+			}
 			for {
 				err = shrstuffp.currpathLcl.SubNextST(tptoken, &shrstuffp.errstr, &shrstuffp.value) // Fetch next subscript
-				if (nil != err) {
-					if (yottadb.YDB_ERR_NODEEND != yottadb.ErrorCode(err)) {
-						if checkErrorReturn(err) { return }
+				if nil != err {
+					if yottadb.YDB_ERR_NODEEND != yottadb.ErrorCode(err) {
+						if checkErrorReturn(err) {
+							return
+						}
 					}
 					break
 				}
 				// Set retrieved subscript back into shrstuffp.currpathLcl key
-				strvalp, err = shrstuffp.value.ValStr(tptoken, &shrstuffp.errstr)
-				if checkErrorReturn(err) { return }
-				err = shrstuffp.currpathLcl.Subary.SetValStr(tptoken, &shrstuffp.errstr, 1, strvalp)
-				if checkErrorReturn(err) { return }
+				strval, err = shrstuffp.value.ValStr(tptoken, &shrstuffp.errstr)
+				if checkErrorReturn(err) {
+					return
+				}
+				err = shrstuffp.currpathLcl.Subary.SetValStr(tptoken, &shrstuffp.errstr, 1, strval)
+				if checkErrorReturn(err) {
+					return
+				}
 				// We want to save the returned subscript value as 'n'
-				n, err = strconv.ParseInt(*strvalp, 10, 64)
-				if checkErrorReturn(err) { } // No return here as no special YDB return codes possible
+				n, err = strconv.ParseInt(strval, 10, 64)
+				if checkErrorReturn(err) {
+				} // No return here as no special YDB return codes possible
 				// Increment local updates
 				err = shrstuffp.updatesLcl.IncrST(tptoken, &shrstuffp.errstr, nil, &shrstuffp.value)
-				if checkErrorReturn(err) { return }
+				if checkErrorReturn(err) {
+					return
+				}
 				// ^step(currpath(n)) = i - n
 				err = shrstuffp.currpathLcl.ValST(tptoken, &shrstuffp.errstr, &shrstuffp.value) // current value of currpath(n)
-				if checkErrorReturn(err) { return }
-				strvalp, err = shrstuffp.value.ValStr(tptoken, &shrstuffp.errstr)
-				if checkErrorReturn(err) { return }
-				err = shrstuffp.stepGbl.Subary.SetValStr(tptoken, &shrstuffp.errstr, 0, strvalp) // Set value as subscript of ^step
-				if checkErrorReturn(err) { return }
-				err = shrstuffp.value.SetValStrLit(tptoken, &shrstuffp.errstr, fmt.Sprintf("%d", i - n))
-				if checkErrorReturn(err) { return }
+				if checkErrorReturn(err) {
+					return
+				}
+				strval, err = shrstuffp.value.ValStr(tptoken, &shrstuffp.errstr)
+				if checkErrorReturn(err) {
+					return
+				}
+				err = shrstuffp.stepGbl.Subary.SetValStr(tptoken, &shrstuffp.errstr, 0, strval) // Set value as subscript of ^step
+				if checkErrorReturn(err) {
+					return
+				}
+				err = shrstuffp.value.SetValStr(tptoken, &shrstuffp.errstr, fmt.Sprintf("%d", i-n))
+				if checkErrorReturn(err) {
+					return
+				}
 				err = shrstuffp.stepGbl.SetValST(tptoken, &shrstuffp.errstr, &shrstuffp.value)
-				if checkErrorReturn(err) { return }
+				if checkErrorReturn(err) {
+					return
+				}
 			}
 		}
 	}
@@ -701,27 +942,36 @@ func dostep(blkstart, blkend int64, shrstuffp *shrStuff) {
 func dostepTpRtn(tptoken uint64, errstrp *yottadb.BufferT, shrstuffp *shrStuff) int32 {
 	var resultDB int64
 	var err error
-	var strvalp *string
+	var strval string
 
 	err = shrstuffp.resultGbl.ValST(tptoken, errstrp, &shrstuffp.value)
-	if (nil != err) {
+	if nil != err {
 		// If this was a GVUNDEF ignore it and treat the value as 0
 		if yottadb.YDB_ERR_GVUNDEF != yottadb.ErrorCode(err) {
-			if checkErrorReturn(err) { return int32(yottadb.ErrorCode(err)) }
+			if checkErrorReturn(err) {
+				return int32(yottadb.ErrorCode(err))
+			}
 		}
 		resultDB = 0
 	} else {
-		strvalp, err = shrstuffp.value.ValStr(tptoken, errstrp)
-		if checkErrorReturn(err) { return int32(yottadb.ErrorCode(err)) }
-		resultDB, err = strconv.ParseInt(*strvalp, 10, 64)
-		if checkErrorReturn(err) { } // No return here as no special YDB return codes possible
+		strval, err = shrstuffp.value.ValStr(tptoken, errstrp)
+		if checkErrorReturn(err) {
+			return int32(yottadb.ErrorCode(err))
+		}
+		resultDB, err = strconv.ParseInt(strval, 10, 64)
+		if checkErrorReturn(err) {
+		} // No return here as no special YDB return codes possible
 	}
 	if shrstuffp.maxpath > resultDB {
 		// Have a new longest path so set it into ^result replacing old value
-		err = shrstuffp.value.SetValStrLit(tptoken, errstrp, fmt.Sprintf("%d", shrstuffp.maxpath))
-		if checkErrorReturn(err) { return int32(yottadb.ErrorCode(err)) }
+		err = shrstuffp.value.SetValStr(tptoken, errstrp, fmt.Sprintf("%d", shrstuffp.maxpath))
+		if checkErrorReturn(err) {
+			return int32(yottadb.ErrorCode(err))
+		}
 		err = shrstuffp.resultGbl.SetValST(tptoken, errstrp, &shrstuffp.value)
-		if checkErrorReturn(err) { return int32(yottadb.ErrorCode(err)) }
+		if checkErrorReturn(err) {
+			return int32(yottadb.ErrorCode(err))
+		}
 	}
 	return 0
 }

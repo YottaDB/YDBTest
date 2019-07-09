@@ -16,18 +16,18 @@
 package dataObject
 
 import (
-	"strconv"
 	"lang.yottadb.com/go/yottadb"
+	"strconv"
 )
 
 type HistRecord struct {
-	Cid int
+	Cid     int
 	HistSeq int
 
 	Comment string
-	Amt int
-	Endbal int
-	User string
+	Amt     int
+	Endbal  int
+	User    string
 }
 
 const histGlobal = "^ZHIST"
@@ -45,7 +45,7 @@ func (h *HistRecord) Save(tptoken uint64, key *yottadb.KeyT, data *yottadb.Buffe
 	data.Alloc(128)
 
 	// set value
-	err = data.SetValStrLit(tptoken, errStr, stringData)
+	err = data.SetValStr(tptoken, errStr, stringData)
 	if err != nil {
 		return err
 	}
@@ -63,7 +63,7 @@ func (h *HistRecord) getTextData() string {
 
 func setHistKey(tptoken uint64, cid, histSeq int, key *yottadb.KeyT, errStr *yottadb.BufferT) error {
 	var err error
-	err = key.Varnm.SetValStrLit(tptoken, errStr, histGlobal)
+	err = key.Varnm.SetValStr(tptoken, errStr, histGlobal)
 	if err != nil {
 		return err
 	}
@@ -71,11 +71,11 @@ func setHistKey(tptoken uint64, cid, histSeq int, key *yottadb.KeyT, errStr *yot
 	if err != nil {
 		return err
 	}
-	err = key.Subary.SetValStrLit(tptoken, errStr, 0, strconv.Itoa(cid))
+	err = key.Subary.SetValStr(tptoken, errStr, 0, strconv.Itoa(cid))
 	if err != nil {
 		return err
 	}
-	err = key.Subary.SetValStrLit(tptoken, errStr, 1, strconv.Itoa(histSeq))
+	err = key.Subary.SetValStr(tptoken, errStr, 1, strconv.Itoa(histSeq))
 	if err != nil {
 		return err
 	}
