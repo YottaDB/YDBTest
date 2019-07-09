@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2012, 2014 Fidelity Information Services, Inc	#
+# Copyright 2012, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -19,7 +22,13 @@ if ($HOSTOS == "HP-UX") then
 else if ($HOSTOS == "SunOS") then
     set thr = 75
 else
-    set thr = 95
+    # We used to have the threshold at 95%. But as part of [YottaDB/Lang/YDBGo#18] changes, op_lock2.c
+    # was reworked to not use timers which meant the process releasing the lock will send a SIGALRM to the
+    # first waiting process but it is more likely some other waiting process gets the lock first since each
+    # waiting process does not respond to the SIGALRM/timer interrupt. Even with that, we have seen almost
+    # all systems pass tests with 95% but very rarely one host gets a threshold of 89% so we set the threshold
+    # to 85% to avoid rare false test failures.
+    set thr = 85
 endif
 
 $MUPIP set -file mumps.dat -flush_time=5:0:0 # Prevent interruptions from flush timers
