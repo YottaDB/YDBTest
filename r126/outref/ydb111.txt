@@ -1,0 +1,16 @@
+# Test that mupip rundown does not hang indefinitely after abnormal process shutdown
+# Enabling before journalling which is needed to see the failure
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Enabling whitebox test case 145 with count 80
+Killed
+# Disabling whitebox testcase and doing rundown
+##TEST_AWK%YDB-I-SHMREMOVED, Removed Shared Memory id [0-9]* corresponding to file ##TEST_PATH##/mumps.dat
+##TEST_AWK%YDB-I-SEMREMOVED, Semaphore id [0-9]* removed from the system
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
