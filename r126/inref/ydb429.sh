@@ -291,7 +291,7 @@ testF() {
 			export gtmroutines="$old_gtmroutines" # this is needed because when ydb_env_set fails gtmroutines is not reset properly
 			export gtm_chset="$old_gtm_chset"
 			if [ $jnl_type = "enable,on,before" ]; then
-				$gtm_tst/com/dbcheck.csh -noshut > dbcheck.log 2>&1;
+				$gtm_tst/com/dbcheck.csh -noshut > dbcheck$testNum.log 2>&1;
 				if [ $? != "0" ]; then dbRet=$? echo "dbcheck failed with status: $dbRet" exit 2; fi
 			else
 				echo '# Cannot do a dbcheck as non-before journaling types will have integ errors'
@@ -351,7 +351,7 @@ testG() {
 
 			# cleanup
 			. $ydbDistTmp/ydb_env_unset
-			$gtm_tst/com/dbcheck.csh > dbcheck.log 2>&1
+			$gtm_tst/com/dbcheck.csh > dbcheck$testNum.log 2>&1
 			if [ $? != "0" ]; then dbRet=$? echo "dbcheck failed with status: $dbRet" exit 2; fi
 			ls -1 > filesB.list
 			diff --changed-group-format='%<' --unchanged-group-format='' filesB.list filesA.list | xargs mv -t test$testNum
@@ -414,7 +414,7 @@ testH() {
 			# cleanup
 			$ydb_dist/mupip stop $ydbPID > stop.log 2>&1 # just stop the process not crash
 			. $ydbDistTmp/ydb_env_unset
-			$gtm_tst/com/dbcheck.csh > dbcheck.log 2>&1
+			$gtm_tst/com/dbcheck.csh > dbcheck$testNum.log 2>&1
 			if [ $? != "0" ]; then dbRet=$? echo "dbcheck failed with status: $dbRet" exit 2; fi
 			ls -1 > filesB.list
 			diff --changed-group-format='%<' --unchanged-group-format='' filesB.list filesA.list | xargs mv -t test$testNum
