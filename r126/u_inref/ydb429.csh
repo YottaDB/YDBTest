@@ -29,6 +29,7 @@ echo '# A database with nobefore/disable journaling will start up normally after
 setenv HOME `pwd` # change $HOME to the test dir so we can test things that default to $HOME
 setenv ydbDistTmp $ydb_dist
 setenv gtmgbldir yottadb.gld
+unsetenv gtm_test_fake_enospc # unset this because it can cause test hangs (due to a frozen instance) because of mupip stop of mumps followed right away by a dbcheck
 
 cp $gtm_tst/$tst/inref/ydb429.sh .
 
