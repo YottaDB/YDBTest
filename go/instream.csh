@@ -23,12 +23,13 @@
 # pseudoBank		[mmr]		Test of simulated banking transactions using Go Simple API with 10 goroutines in ONE process
 # CallMTRetLen		[mmr]		Test of CallMT() and CallMDescT() functions in Go Simple API
 # randomWalkSimple	[mmr]     	Drive test which randomly walks Go SimpleAPI commands
+# sigterm		[mmr]		New go/sigterm subtest to test that SIGTERM (SIG-15) cleanly shuts down YDBGo process with no cores
 #
 echo "go test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     "unit_tests threeenp1B1 threeenp1B2 randomWalk randomWalkSimple threeenp1C2"
-setenv subtest_list_non_replic "wordfreq pseudoBank CallMTRetLen"
+setenv subtest_list_non_replic "wordfreq pseudoBank CallMTRetLen sigterm"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
