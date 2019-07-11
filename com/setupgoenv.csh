@@ -110,13 +110,24 @@ cd -
 set gobuild = "go build"
 set gotest = "go test"
 
-if (! $?ydb_go_race_detector_on) then
+# Random Go environment settings
+# ydb_go_race_detector - determines if the go -race flag should be used
+# GOGC - The rate Go does garbage collection; a smaller value increases frequency; default is 100
+if (! $?gtm_test_replay) then
+	echo "# Go environment variables" >> settings.csh
 	setenv ydb_go_race_detector_on `$gtm_tst/com/genrandnumbers.csh 1 0 1`
 	if (("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) || ("HOST_LINUX_AARCH64" == $gtm_test_os_machtype)) then
 		# -race is not supported in "go" on the ARM platform. So disable the random choice there.
 		setenv ydb_go_race_detector_on 0
 	endif
+	echo "setenv ydb_go_race_detector_on $ydb_go_race_detector_on" >> settings.csh
+	# GOGC is either 1 or the default (100)
+	if(1 == `$gtm_tst/com/genrandnumbers.csh 1 0 1`) then
+		setenv GOGC 1
+		echo "setenv GOGC $GOGC" >> settings.csh
+	endif
 endif
+
 if ($ydb_go_race_detector_on) then
 	# Randomly enable go race detector
 	set gobuild = "$gobuild -race"
@@ -124,5 +135,4 @@ if ($ydb_go_race_detector_on) then
 endif
 # Capture random setting in file for later analysis in case of test failures
 set | $grep ^go >& govars.txt
-echo "setenv ydb_go_race_detector_on $ydb_go_race_detector_on" >> settings.csh
 exit 0
