@@ -1,0 +1,140 @@
+# Test that "lke clnup" will clears unowned locks
+# The LKE CLNUP command clears the lock space of locks abandoned by processes that exited abnormally
+# In addition to the standard -region and -all flags, the command has two optional command line flags:
+#	While the command by default runs once and terminates, the -periodic=n qualifier instructs LKE CLNUP to run in a loop, performing a cleanup every n seconds, a lighter weight operation than invoking the LKE command every n seconds from a shell script.
+#	The -integ option instructs the command to also validate the data structures in the lock space for structural integrity.
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+
+# locks prior to doing anything
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/[0-9]*; LOCK slots in use: 0/[0-9]*; SUBSCRIPT slot bytes in use: 0/[0-9]*
+%YDB-I-NOLOCKMATCH, No matching locks were found in AREG
+##TEST_AWK%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of [0-9]* pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/[0-9]*; LOCK slots in use: 0/[0-9]*; SUBSCRIPT slot bytes in use: 0/[0-9]*
+%YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+##TEST_AWK%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of [0-9]* pages
+# settings 3 locks and kill9ing their processes
+Killed
+Killed
+Killed
+# clnup no locks should be left
+%YDB-I-MLKCLEANED, LOCK garbage collection freed 1 lock slots for region AREG
+%YDB-I-MLKCLEANED, LOCK garbage collection freed 2 lock slots for region DEFAULT
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/[0-9]*; LOCK slots in use: 0/[0-9]*; SUBSCRIPT slot bytes in use: 0/[0-9]*
+%YDB-I-NOLOCKMATCH, No matching locks were found in AREG
+##TEST_AWK%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of [0-9]* pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/[0-9]*; LOCK slots in use: 0/[0-9]*; SUBSCRIPT slot bytes in use: 0/[0-9]*
+%YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+##TEST_AWK%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of [0-9]* pages
+
+# settings 3 locks and kill9ing their processes
+Killed
+Killed
+Killed
+# clnup -region=AREG locks should be left on ^b and ^c
+%YDB-I-MLKCLEANED, LOCK garbage collection freed 1 lock slots for region AREG
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/[0-9]*; LOCK slots in use: 0/[0-9]*; SUBSCRIPT slot bytes in use: 0/[0-9]*
+%YDB-I-NOLOCKMATCH, No matching locks were found in AREG
+##TEST_AWK%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of [0-9]* pages
+
+DEFAULT
+##TEST_AWK\^b Owned by PID= [0-9]* which is a nonexistent process
+##TEST_AWK\^c Owned by PID= [0-9]* which is a nonexistent process
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/[0-9]*; LOCK slots in use: 2/[0-9]*; SUBSCRIPT slot bytes in use: 32/[0-9]*
+##TEST_AWK%YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*% of [0-9]* pages
+##TEST_AWKSTOP issued to process [0-9]*
+
+# settings 3 locks and kill9ing their processes
+Killed
+Killed
+Killed
+# clnup -all no locks should be left
+%YDB-I-MLKCLEANED, LOCK garbage collection freed 1 lock slots for region AREG
+%YDB-I-MLKCLEANED, LOCK garbage collection freed 2 lock slots for region DEFAULT
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/[0-9]*; LOCK slots in use: 0/[0-9]*; SUBSCRIPT slot bytes in use: 0/[0-9]*
+%YDB-I-NOLOCKMATCH, No matching locks were found in AREG
+##TEST_AWK%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of [0-9]* pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/[0-9]*; LOCK slots in use: 0/[0-9]*; SUBSCRIPT slot bytes in use: 0/[0-9]*
+%YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+##TEST_AWK%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of [0-9]* pages
+##TEST_AWKSTOP issued to process [0-9]*
+
+# setting 2 orphaned locks: ^a, ^b; then locking: ^a, ^c in an open process
+Killed
+Killed
+# cleanup there should be a lock on ^c, and ^a
+%YDB-I-MLKCLEANED, LOCK garbage collection freed 1 lock slots for region DEFAULT
+
+AREG
+##TEST_AWK\^a Owned by PID= [0-9]* which is an existing process
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/[0-9]*; LOCK slots in use: 1/[0-9]*; SUBSCRIPT slot bytes in use: 16/[0-9]*
+##TEST_AWK%YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*% of [0-9]* pages
+
+DEFAULT
+##TEST_AWK\^c Owned by PID= [0-9]* which is an existing process
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/[0-9]*; LOCK slots in use: 1/[0-9]*; SUBSCRIPT slot bytes in use: 16/[0-9]*
+##TEST_AWK%YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*% of [0-9]* pages
+##TEST_AWKSTOP issued to process [0-9]*
+
+# testing -periodic switch
+Killed
+Killed
+Killed
+# list of locks before lke clnup -periodic triggers
+
+AREG
+##TEST_AWK\^a Owned by PID= [0-9]* which is a nonexistent process
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/[0-9]*; LOCK slots in use: 1/[0-9]*; SUBSCRIPT slot bytes in use: 16/[0-9]*
+##TEST_AWK%YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*% of [0-9]* pages
+
+DEFAULT
+##TEST_AWK\^b Owned by PID= [0-9]* which is a nonexistent process
+##TEST_AWK\^c Owned by PID= [0-9]* which is a nonexistent process
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/[0-9]*; LOCK slots in use: 2/[0-9]*; SUBSCRIPT slot bytes in use: 32/[0-9]*
+##TEST_AWK%YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*% of [0-9]* pages
+# waiting for periodic to trigger
+# clnup no locks should be left
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/[0-9]*; LOCK slots in use: 0/[0-9]*; SUBSCRIPT slot bytes in use: 0/[0-9]*
+%YDB-I-NOLOCKMATCH, No matching locks were found in AREG
+##TEST_AWK%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of [0-9]* pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/[0-9]*; LOCK slots in use: 0/[0-9]*; SUBSCRIPT slot bytes in use: 0/[0-9]*
+%YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+##TEST_AWK%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of [0-9]* pages
+##TEST_AWKSTOP issued to process [0-9]*
+
+# testing -integ switch
+# settings 3 locks and kill9ing their processes
+Killed
+Killed
+Killed
+# clnup -integ no locks should be left and lock space should be clean
+%YDB-I-MLKCLEANED, LOCK garbage collection freed 1 lock slots for region AREG
+%YDB-I-MLKCLEANED, LOCK garbage collection freed 2 lock slots for region DEFAULT
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/[0-9]*; LOCK slots in use: 0/[0-9]*; SUBSCRIPT slot bytes in use: 0/[0-9]*
+%YDB-I-NOLOCKMATCH, No matching locks were found in AREG
+##TEST_AWK%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of [0-9]* pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/[0-9]*; LOCK slots in use: 0/[0-9]*; SUBSCRIPT slot bytes in use: 0/[0-9]*
+%YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+##TEST_AWK%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of [0-9]* pages
+
+# setting 3 orphaned locks set by 3 processes, while one ydb process is left open
+Killed
+Killed
+Killed
+# clnup no locks should be left
+%YDB-I-MLKCLEANED, LOCK garbage collection freed 1 lock slots for region AREG
+%YDB-I-MLKCLEANED, LOCK garbage collection freed 2 lock slots for region DEFAULT
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/[0-9]*; LOCK slots in use: 0/[0-9]*; SUBSCRIPT slot bytes in use: 0/[0-9]*
+%YDB-I-NOLOCKMATCH, No matching locks were found in AREG
+##TEST_AWK%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of [0-9]* pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/[0-9]*; LOCK slots in use: 0/[0-9]*; SUBSCRIPT slot bytes in use: 0/[0-9]*
+%YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
+##TEST_AWK%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of [0-9]* pages
+##TEST_AWKSTOP issued to process [0-9]*
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
