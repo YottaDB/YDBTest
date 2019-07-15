@@ -67,12 +67,16 @@ EOF
 		sleep `shuf -i 1-5 -n 1` # give some time for database processes to occur
 		# since threeenp1C2 creates multiple processes we need to loop through all the pids
 		set goPID = ""
-		foreach pid (`ps | grep "$prog" | cut -f 1 -d" "`)
+		set pathto = `pwd`
+		# filter out "grep" because the first grep command will contain the string to match as an argument
+		# the sed is because ps output is not left justifed; when the pid of the process is less than 5 characters
+		# the cut command will just return the empty string ""
+		foreach pid (`ps -x | grep $pathto/$prog | grep -v "grep" | sed 's/^ *//g' | cut -f 1 -d" "`)
 			set goPID = "$goPID $pid"
 		end
+		echo "goPID $goPID"
 		kill -15 $goPID
 		$gtm_tst/com/wait_for_proc_to_die.csh $goPID
-		echo "goPID $goPID"
 	end
 	cd ../../.. # back up to the top of the test directory
 	$gtm_tst/com/dbcheck.csh >& dbcheck$prog.outx
