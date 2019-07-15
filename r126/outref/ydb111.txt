@@ -6,10 +6,14 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
 # Enabling whitebox test case 145 with count 80
+##SUSPEND_OUTPUT PRO
 Killed
+##ALLOW_OUTPUT PRO
 # Disabling whitebox testcase and doing rundown
+##SUSPEND_OUTPUT PRO
 ##TEST_AWK%YDB-I-SHMREMOVED, Removed Shared Memory id [0-9]* corresponding to file ##TEST_PATH##/mumps.dat
 ##TEST_AWK%YDB-I-SEMREMOVED, Semaphore id [0-9]* removed from the system
+##ALLOW_OUTPUT PRO
 %YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
