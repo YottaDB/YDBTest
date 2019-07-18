@@ -15,13 +15,14 @@
 # List of subtests of the form "subtestname [author] description"
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 # v63006		[mmr]		Test that causing >32 lock collisions during a table resize does not fail the >32 collisions assert
+# v63006B		[mmr]		New r128/V63006B subtest to test that mumps command will compile multiple M files interactively
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r128 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "v63006"
+setenv subtest_list_non_replic "v63006 v63006B"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
