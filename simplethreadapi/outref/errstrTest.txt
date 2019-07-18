@@ -1,0 +1,11 @@
+# New simplethreadapi/errstrTest subtest to test errstr parameter of SimpleThreadAPI similar to the go/unit_tests/key_t_test.go/TestKeyTSetWithDifferentErrors() test
+# 20 threads concurrently cause GVUNDEF and INVSTRLEN errors and check that errstr is correctly set each time in both cases
+# There should be no output unless the test fails
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -74,6 +74,7 @@
 # randomWalk			[mmr]	      Test of various SimpleThreadAPI commands in multiple threads similar to the go/randomWalk subtest
 # ciVoidReturn			[mmr]	      Test of ydb_ci() when taking a string as a parameter, and returning void, properly processes the string parameter
 # ciVoidReturnStack		[mmr]	      Test of ydb_ci() when taking a string as a parameter, and returning void, properly processes the string parameter
+# errstrTest			[mmr]	      New simplethreadapi/errstrTest subtest to test errstr parameter of SimpleThreadAPI
 # -------------------------------------------------------------------------------------
 
 echo "simplethreadapi test starts..."
@@ -92,7 +93,7 @@ setenv subtest_list_non_replic "$subtest_list_non_replic gvsuboflow"
 setenv subtest_list_non_replic "$subtest_list_non_replic gvnlvndata gvnlvnincr gvnlvndelete isvdelete str2zwr utils_file"
 setenv subtest_list_non_replic "$subtest_list_non_replic threadedapinotallowed utilfuncs invtptrans externalcall exitFromTp"
 setenv subtest_list_non_replic "$subtest_list_non_replic initFromTp tpnestto127 isMainMT initMT exitMT pseudoBank randomWalk"
-setenv subtest_list_non_replic "$subtest_list_non_replic ciVoidReturn ciVoidReturnStack"
+setenv subtest_list_non_replic "$subtest_list_non_replic ciVoidReturn ciVoidReturnStack errstrTest"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
