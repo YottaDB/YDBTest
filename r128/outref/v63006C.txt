@@ -1,0 +1,19 @@
+# New r128/V63006C subtest to test that mupip trigger -select prints a newline (just a newline) after being ran interactively
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Running expect script
+# expect output:
+spawn /usr/local/bin/tcsh -f
+> stty cols 132
+> set shellprompt=SHELL
+> set prompt=$shellprompt
+SHELLsetenv term_env `tty`; echo $term_env > term_env.txt
+SHELL$ydb_dist/mupip trigger -select
+Output File: x.xx
+SHELL
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
