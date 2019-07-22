@@ -1,0 +1,42 @@
+# MUPIP INTEG reports an interrupted MUPIP JOURNAL -RECOVER/-ROLLBACK operation on the database
+# Previously, a MUPIP INTEG on such a database did not report an interrupted recovery
+# Note: The "MUPIP dumpfhead" command already provided this information
+# GT.M reports the "Recover interrupted" field with DSE DUMP -FILEHEADER even when journal is turned off
+# Previously, GT.M reported the "Recovery interrupted" field only with DSE DUMP -FILEHEADER -ALL and only when journaling was turned ON
+# Enabling journaling as it is needed for the test
+# Testing -recover swtich
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumpsrecover.gld
+Using: ##SOURCE_PATH##/mupip
+mumpsrecover.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumpsrecover.gld
+Using: ##SOURCE_PATH##/mupip
+mumpsrecover.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+# Interrupting recover
+# greping integ output for "Recover Interrupted.*TRUE"
+PASS
+##SUSPEND_OUTPUT NON_REPLIC
+# Testing -rollback swtich
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumpsrollback.gld
+Using: ##SOURCE_PATH##/mupip
+mumpsrollback.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumpsrollback.gld
+Using: ##SOURCE_PATH##/mupip
+mumpsrollback.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+# Interrupting rollback
+# greping integ output for "Recover Interrupted.*TRUE"
+PASS
+##ALLOW_OUTPUT NON_REPLIC
