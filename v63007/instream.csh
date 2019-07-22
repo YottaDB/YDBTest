@@ -14,13 +14,14 @@
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 # List of subtests of the form "subtestname [author] description"
 #-------------------------------------------------------------------------------------
+# gtm8130		[mmr]		Test of %GSEL changes to ignore subscripts and issue errors on bad inputs
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "v63007 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic ""
+setenv subtest_list_non_replic "gtm8130"
 setenv subtest_list_replic     ""
 
 

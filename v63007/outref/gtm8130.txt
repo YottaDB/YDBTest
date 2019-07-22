@@ -1,0 +1,351 @@
+# The %GSEL utility now silently ignores any subscript in the search string and throws a non-fatal error if the input contains an invalid character
+# Previously, %GSEL would remove invalid characters and then perform the search
+# This could cause problems if a subscript was present because the utility removed "(" and ")" from the search pattern but not what was between them
+# This change also applies to %GCE, %GD, %GO, and %GSE which use GD^%GSEL to search for globals
+# In addition, when used interactively, it attempts to preserve the original I/O state of the caller; previously it tended to leave that state disrupted
+# This does not test the I/O state disruption
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Testing GSEL - cat of commands file
+do ^%GSEL
+b("thisIsNotASub")
+b@d
+a("b@dsub")
+*("thisShouldBeIgnored")
+
+zwrite %ZG
+
+YDB>
+
+Global ^
+^b        
+Current total of 1 global.
+
+Global ^
+%GSEL-E-INVALIDGBL Search string either uses invalid characters or is improperly formated
+
+Global ^
+^a        
+Current total of 2 globals.
+
+Global ^
+^aa       ^aaa      ^aaaa     ^aaaaa    ^aaaaaa   ^aaaaaaa  ^aaaaaaaa ^aaaaaaaaa          
+^aaaaaaaaaa         ^aaaaaaaaaaa        ^c        ^d        ^e        ^f        
+^g        ^h        ^i        ^j        ^k        ^l        ^m        ^n        
+^o        ^p        ^q        ^r        ^s        ^t        ^u        ^v        
+^w        ^x        ^y        ^z        
+Current total of 36 globals.
+
+Global ^
+
+YDB>
+%ZG=36
+%ZG("^a")=""
+%ZG("^aa")=""
+%ZG("^aaa")=""
+%ZG("^aaaa")=""
+%ZG("^aaaaa")=""
+%ZG("^aaaaaa")=""
+%ZG("^aaaaaaa")=""
+%ZG("^aaaaaaaa")=""
+%ZG("^aaaaaaaaa")=""
+%ZG("^aaaaaaaaaa")=""
+%ZG("^aaaaaaaaaaa")=""
+%ZG("^b")=""
+%ZG("^c")=""
+%ZG("^d")=""
+%ZG("^e")=""
+%ZG("^f")=""
+%ZG("^g")=""
+%ZG("^h")=""
+%ZG("^i")=""
+%ZG("^j")=""
+%ZG("^k")=""
+%ZG("^l")=""
+%ZG("^m")=""
+%ZG("^n")=""
+%ZG("^o")=""
+%ZG("^p")=""
+%ZG("^q")=""
+%ZG("^r")=""
+%ZG("^s")=""
+%ZG("^t")=""
+%ZG("^u")=""
+%ZG("^v")=""
+%ZG("^w")=""
+%ZG("^x")=""
+%ZG("^y")=""
+%ZG("^z")=""
+
+YDB>
+# Testing GCE - cat of commands file
+do ^%GCE
+b("thisIsNotASub")
+b@d
+a("b@dsub")
+
+0
+changed
+
+
+
+
+YDB>
+
+Global Change Every occurrence
+
+Global ^
+^b        
+Current total of 1 global.
+
+Global ^
+%GSEL-E-INVALIDGBL Search string either uses invalid characters or is improperly formated
+
+Global ^
+^a        
+Current total of 2 globals.
+
+Global ^
+
+Old string: 
+New string: 
+Show changed nodes <Yes>? 
+
+Output device: <terminal>: 
+^a        
+^a
+Was : 0
+Now : changed
+
+
+1 changes made in total 1 nodes.
+^b        
+^b(1,2,3,4,5,6,7,8,9,10)
+Was : 10
+Now : 1changed
+
+
+1 changes made in total 11 nodes.
+
+Global ^
+
+YDB>
+# Testing GD - cat of commands file
+do ^%GD
+b("thisIsNotASub")
+b@d
+a("b@dsub"):d
+*("thisShouldBeIgnored")
+
+
+YDB>
+
+Global Directory
+
+Global ^
+^b        
+Total of 1 global.
+
+Global ^
+%GSEL-E-INVALIDGBL Search string either uses invalid characters or is improperly formated
+
+Global ^
+^a        ^aa       ^aaa      ^aaaa     ^aaaaa    ^aaaaaa   ^aaaaaaa  ^aaaaaaaa 
+^aaaaaaaaa          ^aaaaaaaaaa         ^aaaaaaaaaaa        ^b        ^c        
+^d        
+Total of 14 globals.
+
+Global ^
+^a        ^aa       ^aaa      ^aaaa     ^aaaaa    ^aaaaaa   ^aaaaaaa  ^aaaaaaaa 
+^aaaaaaaaa          ^aaaaaaaaaa         ^aaaaaaaaaaa        ^b        ^c        
+^d        ^e        ^f        ^g        ^h        ^i        ^j        ^k        
+^l        ^m        ^n        ^o        ^p        ^q        ^r        ^s        
+^t        ^u        ^v        ^w        ^x        ^y        ^z        
+Total of 36 globals.
+
+Global ^
+
+YDB>
+# Testing GO - cat of commands file
+do ^%GO
+b("thisIsNotASub")
+b@d
+a("b@dsub")
+*("thisShouldBeIgnored")
+
+ZWR HEADER
+ZWR
+out.zwr
+
+YDB>
+
+Global Output Utility
+
+Global ^
+^b        
+Current total of 1 global.
+
+Global ^
+%GSEL-E-INVALIDGBL Search string either uses invalid characters or is improperly formated
+
+Global ^
+^a        
+Current total of 2 globals.
+
+Global ^
+^aa       ^aaa      ^aaaa     ^aaaaa    ^aaaaaa   ^aaaaaaa  ^aaaaaaaa ^aaaaaaaaa          
+^aaaaaaaaaa         ^aaaaaaaaaaa        ^c        ^d        ^e        ^f        
+^g        ^h        ^i        ^j        ^k        ^l        ^m        ^n        
+^o        ^p        ^q        ^r        ^s        ^t        ^u        ^v        
+^w        ^x        ^y        ^z        
+Current total of 36 globals.
+
+Global ^
+
+Header Label: 
+
+Output Format: GO or ZWR: 
+
+Output device: <terminal>: 
+
+
+^a        ^aa       ^aaa      ^aaaa     ^aaaaa    ^aaaaaa   ^aaaaaaa  ^aaaaaaaa 
+^aaaaaaaaa          ^aaaaaaaaaa         ^aaaaaaaaaaa        ^b        ^c        
+^d        ^e        ^f        ^g        ^h        ^i        ^j        ^k        
+^l        ^m        ^n        ^o        ^p        ^q        ^r        ^s        
+^t        ^u        ^v        ^w        ^x        ^y        ^z        
+
+Total of 46 nodes in 36 globals.
+
+
+YDB>
+# Testing GSE - cat of commands file
+do ^%GSE
+
+b("thisIsNotASub")
+b@d
+a("b@dsub")
+*("thisShouldBeIgnored")
+
+0
+
+
+YDB>
+
+Global Search for Every Occurrence
+
+Output device: <terminal>: 
+
+Global ^
+^b        
+Current total of 1 global.
+
+Global ^
+%GSEL-E-INVALIDGBL Search string either uses invalid characters or is improperly formated
+
+Global ^
+^a        
+Current total of 2 globals.
+
+Global ^
+^aa       ^aaa      ^aaaa     ^aaaaa    ^aaaaaa   ^aaaaaaa  ^aaaaaaaa ^aaaaaaaaa          
+^aaaaaaaaaa         ^aaaaaaaaaaa        ^c        ^d        ^e        ^f        
+^g        ^h        ^i        ^j        ^k        ^l        ^m        ^n        
+^o        ^p        ^q        ^r        ^s        ^t        ^u        ^v        
+^w        ^x        ^y        ^z        
+Current total of 36 globals.
+
+Global ^
+Find string: 
+
+^a        
+No matches found in 1 nodes.
+^aa       
+No matches found in 1 nodes.
+^aaa      
+No matches found in 1 nodes.
+^aaaa     
+No matches found in 1 nodes.
+^aaaaa    
+No matches found in 1 nodes.
+^aaaaaa   
+No matches found in 1 nodes.
+^aaaaaaa  
+No matches found in 1 nodes.
+^aaaaaaaa 
+No matches found in 1 nodes.
+^aaaaaaaaa          
+No matches found in 1 nodes.
+^aaaaaaaaaa         
+No matches found in 1 nodes.
+^aaaaaaaaaaa        
+^aaaaaaaaaaa    10
+                 ^
+
+Total 1 matches found in 1 nodes.
+^b        
+No matches found in 11 nodes.
+^c        
+No matches found in 1 nodes.
+^d        
+No matches found in 1 nodes.
+^e        
+No matches found in 1 nodes.
+^f        
+No matches found in 1 nodes.
+^g        
+No matches found in 1 nodes.
+^h        
+No matches found in 1 nodes.
+^i        
+No matches found in 1 nodes.
+^j        
+No matches found in 1 nodes.
+^k        
+^k              10
+                 ^
+
+Total 1 matches found in 1 nodes.
+^l        
+No matches found in 1 nodes.
+^m        
+No matches found in 1 nodes.
+^n        
+No matches found in 1 nodes.
+^o        
+No matches found in 1 nodes.
+^p        
+No matches found in 1 nodes.
+^q        
+No matches found in 1 nodes.
+^r        
+No matches found in 1 nodes.
+^s        
+No matches found in 1 nodes.
+^t        
+No matches found in 1 nodes.
+^u        
+^u              20
+                 ^
+
+Total 1 matches found in 1 nodes.
+^v        
+No matches found in 1 nodes.
+^w        
+No matches found in 1 nodes.
+^x        
+No matches found in 1 nodes.
+^y        
+No matches found in 1 nodes.
+^z        
+No matches found in 1 nodes.
+
+Global ^
+
+YDB>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
