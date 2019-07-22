@@ -16,13 +16,14 @@
 #-------------------------------------------------------------------------------------
 # gtm8130		[mmr]		Test of %GSEL changes to ignore subscripts and issue errors on bad inputs
 # gtm8665		[mmr]		Test that mupip integ reports interrupted -RECOVER/-ROLLBACK attempts
+# gtm8626		[mmr]		Test that if mupip journal switches -losttrans, -brokentrans have the same output file an error is raised
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "v63007 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     "gtm8665"
-setenv subtest_list_non_replic "gtm8130"
+setenv subtest_list_non_replic "gtm8130 gtm8626"
 setenv subtest_list_replic     ""
 
 
