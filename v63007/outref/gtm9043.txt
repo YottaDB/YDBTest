@@ -1,0 +1,14 @@
+# GT.M detects the case of more concatenation operands in a row than it can handle when parsing the source code; previously it detected this at code generation, which meant it always failed to create an object file in this case
+# Attemping to run M code with 254 concatinations in a row
+# Should give a MAXARGCNT error
+	 	set x=o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o
+	 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ^-----
+		At column 514, line 15, source module ##GTM_LIBRARY_PATH##/gtm_test/T997/v63007/inref/gtm9043.m
+%YDB-E-MAXARGCNT, Maximum number of arguments 253 exceeded
+%YDB-E-MAXARGCNT, Maximum number of arguments 0 exceeded
+		At M source location gtm9043+2^gtm9043
+
+YDB>
+# Checking that object file gtm9043.o was still created
+gtm9043.o
+PASS
