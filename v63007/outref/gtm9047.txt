@@ -1,0 +1,127 @@
+# $ZCSTATUS holds an indication of the result of the last ZCOMPILE, ZLINK, $ZTRIGGER() or auto-zlink compilation
+# One (1) indicates a clean compilation, a positive number greater than one is an error code you can turn into text with $ZMESSAGE(), and a negative number is a negated error code that indicates GT.M was not able to produce an object file
+# The error details appear in the compilation output, so $ZCSTATUS typically contains the code for ERRORSUMMARY
+# Previously, $ZSTATUS almost always indicated a one (1) except when object file creation failed
+# $ZTRIGGER() and MUPIP TRIGGER don't install trigger definitions with XECUTE strings that do not compile without error; previously they did
+# In addition, the value for $ZCSTATUS provided by ZSHOW "I" matches that provided by WRITE $ZCSTATUS; previously ZSHOW provided a zero (0) when it should have provided a one (1)
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+# Testing cmd: zcompile
+
+# Testing on file: cln
+$ZCSTATUS: 1
+zshow "I": $ZCSTATUS=1
+
+# Testing on file: bad
+	 set a=#
+	       ^-----
+		At column 8, line 1, source module ##TEST_PATH##/bad.m
+%YDB-E-EXPR, Expression expected but not found
+$ZCSTATUS: 150372730
+zshow "I": $ZCSTATUS=150372730
+$zmessage: %YDB-E-ERRORSUMMARY, Errors occurred during compilation
+
+# Testing on file: dne
+%YDB-E-FILENOTFND, File ##TEST_PATH##/dne.m not found
+$ZCSTATUS: -150372730
+zshow "I": $ZCSTATUS=-150372730
+
+# Testing cmd: zlink
+
+# Testing on file: cln
+$ZCSTATUS: 1
+zshow "I": $ZCSTATUS=1
+
+# Testing on file: bad
+	 set a=#
+	       ^-----
+		At column 8, line 1, source module ##TEST_PATH##/bad.m
+%YDB-E-EXPR, Expression expected but not found
+$ZCSTATUS: 150372730
+zshow "I": $ZCSTATUS=150372730
+$zmessage: %YDB-E-ERRORSUMMARY, Errors occurred during compilation
+
+# Testing on file: dne
+# Skipping "zlink dne" as it fails with unrelated error
+# Testing cmd: $ZTRIGGER()
+
+# Testing on trigger: cln.trg
+File cln.trg, Line 1: Added SET trigger on ^a named a#1
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+$ZCSTATUS: 1
+zshow "I": $ZCSTATUS=1
+
+# Testing on trigger: bad.trg
+	 set a=#
+	       ^-----
+##TEST_AWK		At column 8, line 1, source module /tmp/.*
+%YDB-E-EXPR, Expression expected but not found
+Error : Parsing XECUTE string: " set a=#"
+=========================================
+1 trigger file entries have errors
+0 trigger file entries have no errors
+=========================================
+$ZCSTATUS: 150372730
+zshow "I": $ZCSTATUS=150372730
+$zmessage: %YDB-E-ERRORSUMMARY, Errors occurred during compilation
+
+# Testing on trigger: badE.trg
+File badE.trg, Line 1: Error : Parsing XECUTE string: " xecute ""set a=#"""
+=========================================
+1 trigger file entries have errors
+0 trigger file entries have no errors
+=========================================
+$ZCSTATUS: 150372730
+zshow "I": $ZCSTATUS=150372730
+$zmessage: %YDB-E-ERRORSUMMARY, Errors occurred during compilation
+
+# Listing of installed triggers
+;trigger name: a#1 (region DEFAULT)  cycle: 1
++^a -commands=S -xecute="set a=1"
+1
+
+# Testing cmd: mupip trigger
+File clnB.trg, Line 1: Added SET trigger on ^b named b#1
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+	 set a=#
+	       ^-----
+##TEST_AWK		At column 8, line 1, source module /tmp/.*
+%YDB-E-EXPR, Expression expected but not found
+Error : Parsing XECUTE string: " set a=#"
+=========================================
+1 trigger file entries have errors
+0 trigger file entries have no errors
+=========================================
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
+File badEB.trg, Line 1: Error : Parsing XECUTE string: " xecute ""set a=#"""
+=========================================
+1 trigger file entries have errors
+0 trigger file entries have no errors
+=========================================
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
+
+# Listing of installed triggers
+;trigger name: a#1 (region DEFAULT)  cycle: 1
++^a -commands=S -xecute="set a=1"
+;trigger name: b#1 (region DEFAULT)  cycle: 1
++^b -commands=S -xecute="set a=1"
+1
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
