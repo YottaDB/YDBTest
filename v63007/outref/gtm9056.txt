@@ -1,0 +1,18 @@
+# MUPIP SET {-FILE|-REGION} accepts -TRIGGER_FLUSH=n and -WRITES_PER_FLUSH=n qualifiers; previously only DSE supported these qualifiers
+# Also, the trigger_flush value appears in MUPIP DUMPFHEAD as flush_trigger_top (original GTM was trigger_flush_top) and acts as a stable limit; previously GT.M tended to lose any user supplied value as it made adjustments intended to improve performance
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Setting -TRIGGER_FLUSH=777 on -reg "*"
+Database file ##TEST_PATH##/mumps.dat now has trigger_flush_limit 777
+# Setting -WRITES_PER_FLUSH=42 on -reg "*"
+Database file ##TEST_PATH##/mumps.dat now has writes per flush 42
+# Greping MUPIP DUMPFHEAD for flush_trigger_top should be set to 777
+Fileheader dump of region DEFAULT
+Dumping fileheader of ##TEST_PATH##/mumps.dat
+record("sgmnt_data.flush_trigger_top")=777
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
