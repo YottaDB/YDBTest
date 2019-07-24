@@ -20,13 +20,14 @@
 # gtm9047		[mmr]		Test of the ISV $ZCSTATUS under various conditions, and that triggers with "xecute" are not added if they contain errors
 # gtm9043		[mmr]		Test that YDB detects more concatenations than allowed when parsing source code and not at code generation
 # gtm9056		[mmr]		Test that MUPIP SET takes switches -TRIGGER_FLUSH=n and -WRITES_PER_FLUSH=n and that MUPIP DUMPFHEAD shows -TRIGGER_FLUSH setting
+# gtm9071		[mmr]		Test that ZMESSAGE with a boolean expression does not sig11
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "v63007 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     "gtm8665"
-setenv subtest_list_non_replic "gtm8130 gtm8626 gtm9047 gtm9043 gtm9056"
+setenv subtest_list_non_replic "gtm8130 gtm8626 gtm9047 gtm9043 gtm9056 gtm9071"
 setenv subtest_list_replic     ""
 
 
