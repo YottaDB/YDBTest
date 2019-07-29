@@ -44,7 +44,7 @@ Killed
 DEFAULT
 ##TEST_AWK\^b Owned by PID= [0-9]* which is a nonexistent process
 ##TEST_AWK\^c Owned by PID= [0-9]* which is a nonexistent process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/[0-9]*; LOCK slots in use: 2/[0-9]*; SUBSCRIPT slot bytes in use: 32/[0-9]*
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/[0-9]*; LOCK slots in use: 2/[0-9]*; SUBSCRIPT slot bytes in use: (16|32)/[0-9]*
 ##TEST_AWK%YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*% of [0-9]* pages
 ##TEST_AWKSTOP issued to process [0-9]*
 
@@ -71,12 +71,12 @@ Killed
 
 AREG
 ##TEST_AWK\^a Owned by PID= [0-9]* which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/[0-9]*; LOCK slots in use: 1/[0-9]*; SUBSCRIPT slot bytes in use: 16/[0-9]*
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/[0-9]*; LOCK slots in use: 1/[0-9]*; SUBSCRIPT slot bytes in use: (8|16)/[0-9]*
 ##TEST_AWK%YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*% of [0-9]* pages
 
 DEFAULT
 ##TEST_AWK\^c Owned by PID= [0-9]* which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/[0-9]*; LOCK slots in use: 1/[0-9]*; SUBSCRIPT slot bytes in use: 16/[0-9]*
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/[0-9]*; LOCK slots in use: 1/[0-9]*; SUBSCRIPT slot bytes in use: (8|16)/[0-9]*
 ##TEST_AWK%YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*% of [0-9]* pages
 ##TEST_AWKSTOP issued to process [0-9]*
 
@@ -88,13 +88,13 @@ Killed
 
 AREG
 ##TEST_AWK\^a Owned by PID= [0-9]* which is a nonexistent process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/[0-9]*; LOCK slots in use: 1/[0-9]*; SUBSCRIPT slot bytes in use: 16/[0-9]*
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/[0-9]*; LOCK slots in use: 1/[0-9]*; SUBSCRIPT slot bytes in use: (8|16)/[0-9]*
 ##TEST_AWK%YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*% of [0-9]* pages
 
 DEFAULT
 ##TEST_AWK\^b Owned by PID= [0-9]* which is a nonexistent process
 ##TEST_AWK\^c Owned by PID= [0-9]* which is a nonexistent process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/[0-9]*; LOCK slots in use: 2/[0-9]*; SUBSCRIPT slot bytes in use: 32/[0-9]*
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/[0-9]*; LOCK slots in use: 2/[0-9]*; SUBSCRIPT slot bytes in use: (16|32)/[0-9]*
 ##TEST_AWK%YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*% of [0-9]* pages
 # waiting for periodic to trigger
 # clnup no locks should be left
