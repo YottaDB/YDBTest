@@ -33,15 +33,18 @@ else
 	set types = "recover"
 endif
 foreach type ($types)
-	echo "# Testing -$type swtich"
+	echo "# Testing -$type switch"
 	$gtm_tst/com/dbcreate.csh mumps$type
 	setenv gtmgbldir mumps$type
 	echo "# Interrupting $type"
+	set format="%d-%b-%Y %H:%M:%S"
+	set time1=`date +"$format"`
 	# replication needs to be shutdown before attempting a rollback
 	if ($?test_replic == 1) then
 		$gtm_tst/com/RF_SHUT.csh >&! replicStop$type.outx
 	endif
-	($gtm_dist/mupip journal -$type mumps$type.mjl -forward &; echo $! >&! mupip$type.pid) >&! mupip$type.outx
+	$gtm_dist/mumps -run %XCMD 'set st=$h for i=0:1  quit:($$^difftime($h,st))>5  set ^a(i)=i'
+	($gtm_dist/mupip journal -$type mumps$type.mjl -backward -since=\"$time1\" &; echo $! >&! mupip$type.pid) >&! mupip$type.outx
 	# Busy wait till the correct string apears in the output file
 	# This is to ensure that the process is interupted at the correct step regardless of the speed of the system
 	set foundStr = 1

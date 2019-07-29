@@ -4,7 +4,7 @@
 # GT.M reports the "Recover interrupted" field with DSE DUMP -FILEHEADER even when journal is turned off
 # Previously, GT.M reported the "Recovery interrupted" field only with DSE DUMP -FILEHEADER -ALL and only when journaling was turned ON
 # Enabling journaling as it is needed for the test
-# Testing -recover swtich
+# Testing -recover switch
 Files Created in ##TEST_PATH##:
 Using: ##SOURCE_PATH##/mumps -run GDE
 mumpsrecover.gld
@@ -23,7 +23,7 @@ Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 # greping integ output for "Recover Interrupted.*TRUE"
 PASS
 ##SUSPEND_OUTPUT NON_REPLIC
-# Testing -rollback swtich
+# Testing -rollback switch
 Files Created in ##TEST_PATH##:
 Using: ##SOURCE_PATH##/mumps -run GDE
 mumpsrollback.gld
