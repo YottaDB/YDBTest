@@ -20,12 +20,8 @@ ydb410	;
 	for signum=1:1:64 do
 	. quit:(20<=signum)&(22>=signum)	; Bypass signals 20-22
 	. ; Find signal name for signum by using bash kill -L <signum>
-	. do pipecmd("kill -L "_signum,.rslt)
-	. if 1'=rslt(0) do
-	. . write "FAIL - pipecmd routine failed for kill -L ",signum,":",!
-	. . zwr rslt
-	. . zhalt 1
-	. set signame="SIG"_rslt(1)
+	. do pipecmd("bash -c ""kill -l "_signum_"""",.rslt)
+	. set signame=$select(1=rslt(0):"SIG"_rslt(1),1:"SIGunknown")
 	. ; signame name acquired
 	. write "Driving ydb410 ",signame," (",signum,"):",!
 	. zsystem "ydb410 "_signum
