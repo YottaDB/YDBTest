@@ -76,7 +76,10 @@ EOF
 		end
 		echo "goPID $goPID"
 		kill -15 $goPID
-		$gtm_tst/com/wait_for_proc_to_die.csh $goPID
+		# wait_for_proc_to_die.csh only works on one pid at a time
+		foreach pid ($goPID)
+			$gtm_tst/com/wait_for_proc_to_die.csh $pid
+		end
 	end
 	cd ../../.. # back up to the top of the test directory
 	$gtm_tst/com/dbcheck.csh >& dbcheck$prog.outx
