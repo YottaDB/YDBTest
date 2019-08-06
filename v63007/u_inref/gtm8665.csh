@@ -39,14 +39,25 @@ foreach type ($types)
 	echo "# Interrupting $type"
 	set format="%d-%b-%Y %H:%M:%S"
 	set time1=`date +"$format"`
-	# replication needs to be shutdown before attempting a rollback
-	if ($?test_replic == 1) then
-		$gtm_tst/com/RF_SHUT.csh >&! replicStop$type.outx
+	($gtm_dist/mumps -run %XCMD 'for i=0:1 set ^a(i)=i' &; echo $! >! ydb$type.pid) >&! ydb$type.outx
+	sleep 5
+	if($type == "rollback") then
+		# replication needs to be crashed before attempting a rollback
+		# fuser prints out the file name to stderr for some reason. It's junk so filter out
+		(fuser mumps$type.dat | cut -d ' ' -f 1- >! ydb$type.pid) >&! /dev/null
+		set ydbPid=`cat ydb$type.pid`
+		tcsh $gtm_tst/com/gtm_crash.csh "PID_" $ydbPid # crash the pid
+	else
+		# if it is a recover just stop the yottadb process
+		# and shut replication down normally
+		kill -15 `cat ydb$type.pid`
+		if($?test_replic == 1) then
+			$gtm_tst/com/RF_SHUT.csh >&! replicStop$type.outx
+		endif
 	endif
-	$gtm_dist/mumps -run %XCMD 'set st=$h for i=0:1  quit:($$^difftime($h,st))>5  set ^a(i)=i'
-	($gtm_dist/mupip journal -$type mumps$type.mjl -backward -since=\"$time1\" &; echo $! >&! mupip$type.pid) >&! mupip$type.outx
+	($gtm_dist/mupip journal -$type -backward -since=\"$time1\" -verbose "*" &; echo $! >&! mupip$type.pid) >&! mupip$type.outx
 	# Busy wait till the correct string apears in the output file
-	# This is to ensure that the process is interupted at the correct step regardless of the speed of the system
+	# This is to ensure that the process is interrupted at the correct step regardless of the speed of the system
 	set foundStr = 1
 	while (0 != $foundStr)
 		grep 'Backward' mupip$type.outx > /dev/null
@@ -56,12 +67,14 @@ foreach type ($types)
 	set pipPid = `cat mupip$type.pid`
 	kill -9 $pipPid # sigkill the pid
 	$gtm_tst/com/wait_for_proc_to_die.csh $pipPid
-
+	if ($type == "rollback" ) then
+		$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/RCVR_SHUT.csh '.' < /dev/null >>& $SEC_SIDE/SHUT_A.out"
+	endif
 	$gtm_dist/mupip rundown -reg "*" >&! rundown$type.outx
 	$gtm_dist/mupip integ -reg "*" >&! integ$type.outx
 	echo '# greping integ output for "Recover Interrupted.*TRUE"'
-	grep "Recover Interrupted\.*TRUE" integ$type.outx
-	if (0 != $status) then
+	grep "Recover Interrupted.*TRUE" integ$type.outx
+	if (0 == $status) then
 		echo 'PASS'
 	else
 		echo 'FAIL'

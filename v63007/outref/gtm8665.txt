@@ -21,6 +21,7 @@ Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 ##ALLOW_OUTPUT NON_REPLIC
 # Interrupting recover
 # greping integ output for "Recover Interrupted.*TRUE"
+Recover Interrupted flag is TRUE.
 PASS
 ##SUSPEND_OUTPUT NON_REPLIC
 # Testing -rollback switch
@@ -37,6 +38,8 @@ mumpsrollback.dat
 Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 # Interrupting rollback
+##TEST_AWKSimulating kill of GTM/YDB Processes with PID [0-9]* [0-9]*
 # greping integ output for "Recover Interrupted.*TRUE"
+Recover Interrupted flag is TRUE.
 PASS
 ##ALLOW_OUTPUT NON_REPLIC
