@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-;	Copyright 2007, 2013 Fidelity Information Services, Inc	;
+; Copyright 2007, 2013 Fidelity Information Services, Inc	;
+;								;
+; Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -28,7 +31,7 @@ d002572	;
 	;         3) Functions that trigger FNOTONSYS error --> $ZLKID(..) on Unix and $ZCONVERT(..) on VMS /* FNOTONSYS error */
 	;         4) SET valid-isv that is not settable     --> $TEST                                     /* SVNOSET error */
 	;         5) SET invalid isv                        --> $ZU                                       /* INVSVN error */
-	;         6) NEW valid-isv that is not newable      --> $TEST                                     /* SVNONEW error */
+	;         6) NEW valid-isv that is not newable      --> $QUIT                                     /* SVNONEW error */
 	;         7) NEW invalid isv                        --> $ZU                                       /* INVSVN error */
 	;         8) OPEN/USE/CLOSE invalid deviceparmeters --> Test DEVPARINAP, DEVPARUNK, DEVPARVALREQ errors.
 	;
@@ -103,7 +106,7 @@ helper	;
 	set xstr2("set",16)="$ZU(abcd,$length($piece(""()))"","")"",2))=x"	; test invalid function with nested paren as setleft
 	set xstr2("set",17)="$ZU(abcd,$length($piece(""()))"","")"",2))=x"	; test invalid function with badparen as setleft
 	set xstr2("new",1)="$zu"						; test NEW with invalid ISV
-	set xstr2("new",2)="$TEST"						; test NEW with ISV that is not NEWable
+	set xstr2("new",2)="$QUIT"						; test NEW with ISV that is not NEWable
 	for cmdstr="set","new" do
 	.	set index=$order(xstr2(cmdstr,""))
 	.	for  quit:index=""  do  set index=$order(xstr2(cmdstr,index))
