@@ -50,11 +50,16 @@ foreach type ($types)
 	else
 		# if it is a recover just stop the yottadb process
 		# and shut replication down normally
-		kill -15 `cat ydb$type.pid`
+		set ydbPid=`cat ydb$type.pid`
+		kill -15 $ydbPid
 		if($?test_replic == 1) then
 			$gtm_tst/com/RF_SHUT.csh >&! replicStop$type.outx
 		endif
 	endif
+	# wait for all mumps processes to die
+	foreach pid ($ydbPid)
+		$gtm_tst/com/wait_for_proc_to_die.csh $pid
+	end
 	($gtm_dist/mupip journal -$type -backward -since=\"$time1\" -verbose "*" &; echo $! >&! mupip$type.pid) >&! mupip$type.outx
 	# Busy wait till the correct string apears in the output file
 	# This is to ensure that the process is interrupted at the correct step regardless of the speed of the system
