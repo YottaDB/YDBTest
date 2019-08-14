@@ -25,8 +25,10 @@ setenv acc_meth "GC"
 setenv gtm_test_jnl "SETJNL"
 setenv tst_jnl_str '-journal="enable,on,before"'
 
-# rollback can only be done on replic tests
+# these two environment variables can cause the test to hang so unset them
 unsetenv gtm_db_counter_sem_incr
+unsetenv gtm_test_fake_enospc
+# rollback can only be done on replic tests
 if ($?test_replic == 1) then
 	set types = "recover rollback"
 else
@@ -54,6 +56,10 @@ foreach type ($types)
 		kill -15 $ydbPid
 		if($?test_replic == 1) then
 			$gtm_tst/com/RF_SHUT.csh >&! replicStop$type.outx
+			if($status != "0") then
+				echo "Replication shut down failed exiting"
+				exit
+			endif
 		endif
 	endif
 	# wait for all mumps processes to die
