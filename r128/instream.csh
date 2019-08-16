@@ -19,13 +19,14 @@
 # v63006C		[mmr]		New r128/V63006C subtest to test that mupip trigger -select prints a newline (just a newline) after being ran interactively
 # ydb469		[see]		Test new $FNUMBER() formatting option
 # ydb477		[see]		New test to verify that $TEST can be NEW'd
+# ydb478		[see]		New test to verify after ydb_exit() a Go signal handler altstack is still in place
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r128 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "v63006 v63006B v63006C ydb469 ydb477"
+setenv subtest_list_non_replic "v63006 v63006B v63006C ydb469 ydb477 ydb478"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
@@ -35,6 +36,10 @@ else
 endif
 
 setenv subtest_exclude_list    ""
+# filter out test that needs to run pro-only (dbg gets different results because of how gtm_fork_n_core() works)
+if ("pro" != "$tst_image") then
+       setenv subtest_exclude_list "$subtest_exclude_list ydb478"
+endif
 
 if ("pro" == "$tst_image") then
 	setenv subtest_exclude_list "$subtest_exclude_list"
