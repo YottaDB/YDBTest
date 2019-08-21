@@ -63,6 +63,8 @@ if (0 != $status) then
     cat go_build.log
     exit 1
 endif
+echo "# ydb478 built"
+echo
 #
 # Note: We need to set the global directory to an absolute path because we are operating in a subdirectory
 # ($tstpath/go/src/threeenp1B1) where the default test framework assignment of ydb_gbldir

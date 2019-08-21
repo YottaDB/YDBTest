@@ -17,6 +17,7 @@ ydb478	;
 	;
 	new signum,rslt,signame
 	set $etrap="zshow ""*"" zhalt 1"
+	write "**********************",!
 	for signum=1:1:64 do
 	. quit:(9=signum)			; Bypass signal 9 (SIGKILL) as it is uncatchable (and kills our test)
 	. quit:(20<=signum)&(22>=signum)	; Bypass signals 20-22

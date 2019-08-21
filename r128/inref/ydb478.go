@@ -38,17 +38,21 @@ func main() {
 		fmt.Println("Argument is not a valid signal number")
 		syscall.Exit(1);
 	}
+	proc, err := os.FindProcess(os.Getpid()) // Figure out our pid - needed for later
+	if nil != err {
+		panic(err)
+	}
 	// Buffered channel to receive signal on. Buffered so we don't miss a signal if it comes in and we aren't ready for it
 	// (unlikely but possible).
 	sigchan := make(chan os.Signal, 1)
-	// Dispatch a goroutine to sit and wait for this stuff
+	// Dispatch a goroutine to sit and wait for a signal
 	wg.Add(1)
 	go func() {
 		fmt.Println("goroutine: waiting for signal")
 		sig := <- sigchan
 		fmt.Println("goroutine: Received signal:", sig)
+		fmt.Println("goroutine: Exiting..")
 		wg.Done()
-		fmt.Println("goroutine: exiting..")
 	}()
 	// Request any signals be sent to sigchan when they occur
 	signal.Notify(sigchan)
@@ -61,18 +65,12 @@ func main() {
 	// Now make YDB exit
 	yottadb.Exit()
 	// Send ourselves the desired signal
-	proc, err := os.FindProcess(os.Getpid())
-	if nil != err {
-		panic(err)
-	}
-	fmt.Println("sending signal", signum, "to ourselves")
+	fmt.Println("sending signal", signum, "to ourselves - then waiting for goroutine")
 	err = proc.Signal(syscall.Signal(signum))
 	if nil != err {
 		panic(err)
 	}
-	fmt.Println("signal sent")
 	// Now wait for the signal to be recognized and the goroutine to finish
-	fmt.Println("waiting for goroutine")
 	wg.Wait()
 	fmt.Println("wait complete - exiting")
 }
