@@ -12,6 +12,5 @@
 #################################################################
 #
 #
-
 echo '# Test support for NEW $TEST'
 $ydb_dist/mumps -run ydb477

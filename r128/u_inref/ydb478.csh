@@ -1,3 +1,4 @@
+#!/usr/local/bin/tcsh -f
 #################################################################
 #								#
 # Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#

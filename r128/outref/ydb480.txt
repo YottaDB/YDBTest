@@ -1,0 +1,20 @@
+Test increment() of non-existant var or var with value 0 by a 7 or more digit literal
+returns the correct value and not a null value as happens without [YDB#480].
+
+Test with simple API - build executable
+
+Testing with simple API
+Setting '^test' to '0'.			set status: 0
+Getting '^test'.			get status: 0
+
+'^test' is '0'
+Incrementing '^test' by '1000000'.	incr status: 0
+increment result = '1000000' <-----
+Getting '^test'.			get status: 0
+'^test' is '1000000'  <-----
+
+Testing with M code
+PASS
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

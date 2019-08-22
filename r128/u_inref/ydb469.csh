@@ -12,6 +12,5 @@
 #################################################################
 #
 #
-
 echo '# Test new $FNUMBER() formatting option "." which changes formatting to European style e.g. 1.300.400,00'
 $ydb_dist/mumps -run ydb469
