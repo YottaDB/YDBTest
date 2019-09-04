@@ -99,11 +99,11 @@ int main() {
 
 	set(varname, "0");
 	value = get(varname);
-	printf("\n'%s' is '%s'\n", varname, value->buf_addr);
+	printf("\n'%s' is '%.*s'\n", varname, value->len_used, value->buf_addr);
 	YDB_FREE_BUFFER(value);
 	incr_result = incr(varname, "1000000");
 	printf("increment result = '%s' <-----\n", incr_result->buf_addr);
 	value = get(varname);
-	printf("'%s' is '%s'  <-----\n", varname, value->buf_addr);
+	printf("'%s' is '%.*s'  <-----\n", varname, value->len_used, value->buf_addr);
 	return YDB_OK;
 }
