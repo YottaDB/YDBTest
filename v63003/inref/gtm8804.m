@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -22,7 +22,7 @@ gtm8804
 	new g
 	ZSHOW "G":g
 	;filter out variable settings
-	do out^zshowgfilter(.g,"CTN,DFL,DFS,JFL,JFS,JBB,JFB,JFW,JRL,JRP,JRE,JRI,JRO,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD")
+	do out^zshowgfilter(.g,"CTN,DFL,DFS,DWT,JFL,JFS,JBB,JFB,JFW,JRL,JRP,JRE,JRI,JRO,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD")
 	ZWRITE g
 
 	write !,"output for zshow l",!
@@ -34,7 +34,7 @@ gtm8804
 	new t
 	ZSHOW "T":t
 	;filter out variable settings
-	do out^zshowgfilter(.t,"CTN,DFL,DFS,JFL,JFS,JBB,JFB,JFW,JRL,JRP,JRE,JRI,JRO,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD")
+	do out^zshowgfilter(.t,"CTN,DFL,DFS,DWT,JFL,JFS,JBB,JFB,JFW,JRL,JRP,JRE,JRI,JRO,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD")
 	ZWRITE t
 	quit
 
