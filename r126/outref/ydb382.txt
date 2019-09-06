@@ -1,4 +1,4 @@
-# Test that "lke clnup" will clears unowned locks
+# Test that "lke clnup" clears unowned locks
 # The LKE CLNUP command clears the lock space of locks abandoned by processes that exited abnormally
 # In addition to the standard -region and -all flags, the command has two optional command line flags:
 #	While the command by default runs once and terminates, the -periodic=n qualifier instructs LKE CLNUP to run in a loop, performing a cleanup every n seconds, a lighter weight operation than invoking the LKE command every n seconds from a shell script.
@@ -84,6 +84,7 @@ DEFAULT
 Killed
 Killed
 Killed
+Killed
 # list of locks before lke clnup -periodic triggers
 
 AREG
@@ -104,6 +105,7 @@ DEFAULT
 ##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/[0-9]*; LOCK slots in use: 0/[0-9]*; SUBSCRIPT slot bytes in use: 0/[0-9]*
 %YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
 ##TEST_AWK%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of [0-9]* pages
+##TEST_AWKSTOP issued to process [0-9]*
 ##TEST_AWKSTOP issued to process [0-9]*
 
 # testing -integ switch
