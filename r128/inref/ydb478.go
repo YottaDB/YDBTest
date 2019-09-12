@@ -44,11 +44,11 @@ func main() {
 	}
 	// Buffered channel to receive signal on. Buffered so we don't miss a signal if it comes in and we aren't ready for it
 	// (unlikely but possible).
-	sigchan := make(chan os.Signal, 1)
+	fmt.Println("dispatching goroutine to wait for signal")
 	// Dispatch a goroutine to sit and wait for a signal
+	sigchan := make(chan os.Signal, 1)
 	wg.Add(1)
 	go func() {
-		fmt.Println("goroutine: waiting for signal")
 		sig := <- sigchan
 		fmt.Println("goroutine: Received signal:", sig)
 		fmt.Println("goroutine: Exiting..")
