@@ -11,9 +11,12 @@
 #								#
 #################################################################
 
-#This tests ydb_init() to determine if it sets $gtm_dist when $ydb_dist is set and $gtm_dist is not set or set to a different value.
+# This tests ydb_init() to determine if it sets $gtm_dist when $ydb_dist is set and $gtm_dist is not set
+# or set to a different value.
 
-#make $gtm_dist undefined
+echo "Testing if ydb_init() sets an undefined gtm_dist to ydb_dist"
+
+# make $gtm_dist undefined
 unsetenv gtm_dist
 
 # Compile and link ydb470.c.
@@ -29,21 +32,13 @@ rm -f link.map
 # Invoke the executable.
 ydb470
 
-#set $gtm_dist to a non-existent version of GT.M
-setenv gtm_dist "/usr/library/old_gtm_version"
+echo "Testing if ydb_init() sets gtm_dist to ydb_dist when the 2 environment variables are different"
 
-# Compile and link ydb470.c.
-$gt_cc_compiler $gt_cc_shl_options $gtm_tst/$tst/inref/ydb470.c -I $ydb_dist -g -DDEBUG
-$gt_ld_linker $gt_ld_option_output ydb470 $gt_ld_options_common ydb470.o $gt_ld_sysrtns $ci_ldpath$ydb_dist -L$ydb_dist $tst_ld_yottadb $gt_ld_syslibs >& link.map
-if ($status) then
-	echo "Linking failed:"
-	cat link.map
-	exit 1
-endif
-rm -f link.map
+# set $gtm_dist to a non-existent version of GT.M
+setenv gtm_dist "/usr/library/old_gtm_version"
 
 # Invoke the executable.
 ydb470
 
-#restore the correct value of $gtm_dist
+# restore the correct value of $gtm_dist
 setenv gtm_dist $ydb_dist

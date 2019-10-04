@@ -21,17 +21,18 @@ is setting both values correctly.*/
 
 int main()
 {
+	const char *gtm_dist, *ydb_dist;
+
 	ydb_init();
-    const char *gtm_dist = getenv("gtm_dist");
-    const char *ydb_dist = getenv("ydb_dist");
-    if(!strcmp(gtm_dist, ydb_dist))
-    {
-        printf("passed\n");
-    }
-    else
-    {
-        printf("$gtm_dist = %s\n", gtm_dist);
-        printf("$ydb_dist = %s\n", ydb_dist);
-    }
-    return 0;
+	gtm_dist = getenv("gtm_dist");
+	ydb_dist = getenv("ydb_dist");
+	if (!strcmp(gtm_dist, ydb_dist))
+	{
+		printf("passed\n");
+	} else
+	{
+	printf("$gtm_dist = %s\n", gtm_dist);
+	printf("$ydb_dist = %s\n", ydb_dist);
+	}
+	return 0;
 }
