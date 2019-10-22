@@ -1,0 +1,105 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+a.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+ydb_env_translate is not defined
+
+YDB>
+
+YDB>
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+b.gld
+Using: ##SOURCE_PATH##/mupip
+b.dat
+
+YDB>
+
+YDB>
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+YDB>
+
+YDB>
+#########################################################################################
+Testing ydb_env_translate using a ydb_env_xlate function
+
+##TEST_AWKydb_env_translate = ##TEST_PATH##/libxlate.(s.|dll)
+0
+mumps.gld : THIS IS MUMPS
+a.gld     : THIS IS A
+a.gld     : THIS IS A
+a.gld     : THIS IS A
+mumps.gld : THIS IS MUMPS
+b.gld     : THIS IS B
+b.gld     : THIS IS B
+$ORDER(extref):1
+Try empty strings (should default to $ZGBLDIR
+$ZGBLDIR = ##TEST_PATH##/mumps.gld
+THIS IS MUMPS
+$ZGBLDIR = a
+THIS IS A
+Try $ZDIR
+$ZGBLDIR = a
+THIS IS MUMPS
+$ZGBLDIR = a
+THIS IS MUMPS
+Try a kill:
+Try empty strings (should default to $ZGBLDIR
+$ZGBLDIR = ##TEST_PATH##/mumps.gld
+THIS IS MUMPS
+$ZGBLDIR = a
+THIS IS A
+This will error: 
+%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/$b.gld.  Retaining ##TEST_PATH##/mumps.gld.,%SYSTEM-E-ENO2, No such file or directory
+		At M source location err1^basic
+
+YDB>
+This will error: 
+%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/badgld.gld.  Retaining ##TEST_PATH##/mumps.gld.,%SYSTEM-E-ENO2, No such file or directory
+		At M source location err2^basic
+
+YDB>
+This will error with a message:
+%YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm,%YDB-I-TEXT, This is an error from ydb_env_xlate
+		At M source location err3+2^basic
+
+YDB>
+This will error without a message:
+%YDB-E-XTRNTRANSERR, Error attempting to generate an environment using an external algorithm
+		At M source location err4+2^basic
+
+YDB>
+This will error with too long a return string (and success):  
+%YDB-E-XTRNRETVAL, Length of return value (33333) from extended reference translation algorithm is not in the range [0,32767]
+		At M source location err5+3^basic
+
+YDB>
+This will error without too long a return string (and error): 
+%YDB-E-XTRNRETVAL, Length of return value (33333) from extended reference translation algorithm is not in the range [0,32767]
+		At M source location err6^basic
+
+YDB>
+#########################################################################################
+Testing ydb_gbldir_translate functionality that translates ZGBLDIR into a global directory
+
+##TEST_AWKydb_gbldir_translate = ##TEST_PATH##/libxlategld.(s.|dll)
+0
+mumps.gld : THIS IS MUMPS
+a.gld     : THIS IS A
+b.gld     : THIS IS B
+#####################################################################################
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ a.dat
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ b.dat
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ mumps.dat
+No errors detected by integ.

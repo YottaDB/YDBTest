@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	*
+ * Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -54,9 +54,7 @@ void init_functable()
 	GTM_MALLOC = (int_fptr)functable[4];
 }
 
-
-
-int gtm_env_xlate(xc_string_t *ptr1, xc_string_t *ptr2, xc_string_t *ptr_zdir, xc_string_t *ret_ptr)
+int ydb_env_xlate(xc_string_t *ptr1, xc_string_t *ptr2, xc_string_t *ptr_zdir, xc_string_t *ret_ptr)
 {
 
 	init_functable();
@@ -68,7 +66,7 @@ int gtm_env_xlate(xc_string_t *ptr1, xc_string_t *ptr2, xc_string_t *ptr_zdir, x
 		{
 			tmp.address = (char *)GTM_MALLOC(36);
 			tmp.length = 35;
-			strcpy(tmp.address,"This is an error from gtm_env_xlate");
+			strcpy(tmp.address,"This is an error from ydb_env_xlate");
 			ret_ptr->length=tmp.length;
 			ret_ptr->address=tmp.address;
 			return -1;

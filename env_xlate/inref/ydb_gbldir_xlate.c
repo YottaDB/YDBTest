@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	*
+ * Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -56,34 +56,30 @@ void init_functable()
 
 
 
-int gtm_env_xlate(xc_string_t *ptr1, xc_string_t *ptr2, xc_string_t *ptr_zdir, xc_string_t *ret_ptr)
+int ydb_gbldir_xlate(xc_string_t *ptr1, xc_string_t *ptr2, xc_string_t *ptr_zdir, xc_string_t *ret_ptr)
 {
-
 	init_functable();
 	/* This is a dummy script that malloc's everytime.
 	 * It's whole purpose is to exercise the GT.M code */
-	if (ptr2->address)
+	if (ptr1->address)
 	{
-		if (*ptr2->address == 'X')
+		if (*ptr1->address == 'X')
 		{
 			tmp.address = (char *)GTM_MALLOC(36);
 			tmp.length = 35;
-			strcpy(tmp.address,"This is an error from gtm_env_xlate");
+			strcpy(tmp.address,"This is an error from ydb_env_xlate");
 			ret_ptr->length=tmp.length;
 			ret_ptr->address=tmp.address;
 			return -1;
-		}
-		else if (*ptr2->address == 'Y')
+		} else if (*ptr1->address == 'Y')
 		{
 			ret_ptr->length = 0;
 			return 100;
-		}
-		else if (*ptr2->address == 'Z')
+		} else if (*ptr1->address == 'Z')
 		{
 			ret_ptr->length = 33333;
 			return 1;
-		}
-		else if (*ptr2->address == 'T')
+		} else if (*ptr1->address == 'T')
 		{
 			ret_ptr->address = str;
 			memcpy(str, ptr_zdir->address,ptr_zdir->length);
@@ -92,9 +88,9 @@ int gtm_env_xlate(xc_string_t *ptr1, xc_string_t *ptr2, xc_string_t *ptr_zdir, x
 			return 0;
 		}
 	}
-	tmp.address = (char *)GTM_MALLOC(ptr2->length);
-	tmp.length = ptr2->length;
-	memcpy(tmp.address,ptr2->address,tmp.length);
+	tmp.address = (char *)GTM_MALLOC(ptr1->length);
+	tmp.length = ptr1->length;
+	memcpy(tmp.address,ptr1->address,tmp.length);
 	tmp.length=tmp.length;
 	ret_ptr->length=tmp.length;
 	ret_ptr->address=tmp.address;

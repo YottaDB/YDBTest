@@ -1,28 +1,6 @@
 mumps.gld: THIS IS MUMPS
 a.gld: 
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_AIX_RS6000
-%YDB-E-DLLNORTN, Failed to look up the location of the symbol gtm_env_xlate,%YDB-I-TEXT, Function not implemented (gtm_env_xlate)
-##SUSPEND_OUTPUT HOST_AIX_RS6000
-##ALLOW_OUTPUT HOST_HP-UX_PA_RISC
-%YDB-E-DLLNORTN, Failed to look up the location of the symbol gtm_env_xlate,%YDB-I-TEXT, Unresolved symbol: gtm_env_xlate
-##SUSPEND_OUTPUT HOST_HP-UX_PA_RISC
-##ALLOW_OUTPUT HOST_HP-UX_IA64
-%YDB-E-DLLNORTN, Failed to look up the location of the symbol gtm_env_xlate,%YDB-I-TEXT, dlsym: Unknown symbol gtm_env_xlate
-##SUSPEND_OUTPUT HOST_HP-UX_IA64
-##ALLOW_OUTPUT HOST_LINUX_IX86 HOST_LINUX_IA64 HOST_LINUX_X86_64 HOST_LINUX_ARMVXL HOST_LINUX_S390X HOST_LINUX_AARCH64
-%YDB-E-DLLNORTN, Failed to look up the location of the symbol gtm_env_xlate,##TEST_AWK%YDB-I-TEXT, .*: undefined symbol: gtm_env_xlate
-##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_LINUX_IA64 HOST_LINUX_X86_64 HOST_LINUX_ARMVXL HOST_LINUX_S390X HOST_LINUX_AARCH64
-##ALLOW_OUTPUT HOST_OS390_S390
-%YDB-E-DLLNORTN, Failed to look up the location of the symbol gtm_env_xlate,%YDB-I-TEXT, CEE3593I External symbol gtm_env_xlate was not found in DLL ##TEST_PATH##/liboops.dll.
-##SUSPEND_OUTPUT HOST_OS390_S390
-##ALLOW_OUTPUT HOST_OSF1_ALPHA
-%YDB-E-DLLNORTN, Failed to look up the location of the symbol gtm_env_xlate,%YDB-I-TEXT, dlsym: symbol "gtm_env_xlate" not found in "##TEST_PATH##/liboops.so"
-##SUSPEND_OUTPUT HOST_OSF1_ALPHA
-##ALLOW_OUTPUT HOST_SUNOS_SPARC
-##TEST_AWK%YDB-E-DLLNORTN, Failed to look up the location of the symbol gtm_env_xlate,%YDB-I-TEXT, ld.so.1:.*mumps: fatal: gtm_env_xlate: can't find symbol
-##SUSPEND_OUTPUT HOST_SUNOS_SPARC
-##ALLOW_OUTPUT HOST_ALL
+%YDB-E-DLLNORTN, Failed to look up the location of the symbol ydb_env_xlate,##TEST_AWK%YDB-I-TEXT, .*: undefined symbol: ydb_env_xlate
 		At M source location notdef+2^notdef
 
 YDB>
