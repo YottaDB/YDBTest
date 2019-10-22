@@ -15,9 +15,10 @@
 #include <string.h>
 #include <stdlib.h>
 
-/*This program calls ydb_init() and then prints out the
-values of $gtm_dist and $ydb_dist to ensure that ydb_init()
-is setting both values correctly.*/
+/* This program calls ydb_init() and then prints out the
+ * values of $gtm_dist and $ydb_dist to ensure that ydb_init()
+ * is setting both values correctly.
+ */
 
 int main()
 {
@@ -26,13 +27,12 @@ int main()
 	ydb_init();
 	gtm_dist = getenv("gtm_dist");
 	ydb_dist = getenv("ydb_dist");
-	if (!strcmp(gtm_dist, ydb_dist))
-	{
+	if ((NULL != gtm_dist) && (NULL != ydb_dist) && (!strcmp(gtm_dist, ydb_dist)))
 		printf("passed\n");
-	} else
+	else
 	{
-	printf("$gtm_dist = %s\n", gtm_dist);
-	printf("$ydb_dist = %s\n", ydb_dist);
+		printf("$gtm_dist = %s\n", (NULL == gtm_dist) ? "<NULL>" : gtm_dist);
+		printf("$ydb_dist = %s\n", (NULL == ydb_dist) ? "<NULL>" : ydb_dist);
 	}
 	return 0;
 }
