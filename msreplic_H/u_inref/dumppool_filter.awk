@@ -3,7 +3,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -84,7 +84,7 @@ BEGIN {
 	gsub(/: Currently Reading from                      (POOL|FILE)/, ": Currently Reading from          ##POOL_OR_FILE##");
 	gsub(/: Journal File Only                          ( TRUE|FALSE)/, ": Journal File Only              ##TRUE_OR_FALSE##");
 	# The following are machine specific fields
-	gsub(/Secondary HOSTNAME           *[a-zA-Z0-9\.\:]*/, "Secondary HOSTNAME                  ##HOSTNAME##")
+	gsub(/Secondary HOSTNAME           *[a-zA-Z0-9\.:]*/, "Secondary HOSTNAME                  ##HOSTNAME##")
 	gsub(/Secondary INET Address  *[0-9a-fA-F:\.]*/, "Secondary INET Address              ##INETADDR##")
 	gsub(/HDR Instance File Created Nodename         *[a-zA-Z0-9\.]*/, "HDR Instance File Created Nodename            ##HOSTNAME##")
 	gsub(/HDR LMS Group Created Nodename         *[a-zA-Z0-9\.]*/, "HDR LMS Group Created Nodename                ##HOSTNAME##")

@@ -150,7 +150,7 @@ No errors detected by integ.
 # Copy *.dat from $bkupdir1
 # Expect JNLDBTNNOMATCH error first when rollback -forward is attempted with -nochain
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##TEST_AWK\%YDB-E-JNLDBTNNOMATCH, Journal file ##TEST_PATH##/b.mjl has beginning transaction number .0x[0-9A-F]+., but database ##TEST_PATH##/b.dat has current transaction number .0x[0-9A-F]+. and journal end transaction number .0x[0-9A-F]+.
+##TEST_AWK%YDB-E-JNLDBTNNOMATCH, Journal file ##TEST_PATH##/b.mjl has beginning transaction number .0x[0-9A-F]+., but database ##TEST_PATH##/b.dat has current transaction number .0x[0-9A-F]+. and journal end transaction number .0x[0-9A-F]+.
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 # Fix TN to match so we can exercise the JNLDBSEQNOMATCH error
