@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -356,8 +356,10 @@ foreach sub_test ($subtest_list) # Mega for - practically all this script is in 
 		    else if ("GT.CM" == $test_gtm_gtcm) then
 			 $sec_shell "SEC_SHELL_GTCM SEC_GETENV_GTCM ; cd SEC_DIR_GTCM; source $gtm_tst/com/subtest_move_rm.csh rm >& /dev/null"
 		    endif
-		    # remove the subtest related directories
-		    cd .. ; rm -rf $tst_working_dir
+		    # set the permissions for entire related directories so we can remove them then do the removal
+		    cd ..
+		    chmod -R 775 $tst_working_dir >& chmod_${sub_test}.out
+		    rm -rf $tst_working_dir
 		    if ( -d $test_jnldir ) rm -rf $test_jnldir
 		    if ( -d $test_bakdir ) rm -rf $test_bakdir
 		endif
