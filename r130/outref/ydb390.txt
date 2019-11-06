@@ -1,0 +1,29 @@
+Testing $ZHASH from M code
+The hash of "test" with a salt of 0 is: 9de1bd74cc287dac824dbdf93182129a
+The hash of "test" with a salt of 5 is: ebc36fb5eaef57b81e12217b6e10c8b1
+The hash of "test" with no salt specified is: 9de1bd74cc287dac824dbdf93182129a
+The hash of "YottaDB" with a salt of 0 is: 7e5bbdc4a27017818c970a83f71169d2
+The hash of "This test was added in YottaDB version R1.30" with a salt of 63008 is: 3918af2730f8aefb1daeb7445f1f675c
+The hash of "YottaDB is a new kind of database company, delivering a proven database engine to your application, enhancing simplicity, security, stability and scalability." with a salt of 6441898 is: 6c406877a4a0db87d9da13dfbe26395d
+The hash of "YottaDB compiles XECUTE <literal> at compile time when the literal is valid YottaDB code that has minimal impact on the M virtual machine" with a hash of 1610 is: 172d0d14194ce9aa45c07ae369ea3a0f
+Finished test of hardcoded calls to $ZHASH from M code
+Starting test of random calls to $ZHASH from M code
+Finished test of random calls to $ZHASH from M code.
+Will now test an invalid string length. This should return an error.
+%YDB-E-MAXSTRLEN, Maximum string length exceeded
+		At M source location %RANDSTR+27^%RANDSTR
+
+YDB>
+Testing ydb_mmrhash_128 from C code
+The hash of "test" with a salt of 0 is: 9de1bd74cc287dac824dbdf93182129a
+The hash of "test" with a salt of 5 is: ebc36fb5eaef57b81e12217b6e10c8b1
+The hash of "test" with a salt of 0 is: 9de1bd74cc287dac824dbdf93182129a
+The hash of "YottaDB" with a salt of 0 is: 7e5bbdc4a27017818c970a83f71169d2
+The hash of "This test was added in YottaDB version R1.30" with a salt of 63008 is: 3918af2730f8aefb1daeb7445f1f675c
+The hash of "YottaDB is a new kind of database company, delivering a proven database engine to your application, enhancing simplicity, security, stability and scalability." with a salt of 6441898 is: 3918af2730f8aefb1daeb7445f1f675c
+The hash of "YottaDB compiles XECUTE <literal> at compile time when the literal is valid YottaDB code that has minimal impact on the M virtual machine" with a salt of 1610 is: 3918af2730f8aefb1daeb7445f1f675c
+Finished test of hardcoded calls to ydb_mmrhash_128 from C code
+Starting test of random calls to ydb_mmrhash_128 from C code
+Finished test of random calls to ydb_mmrhash_128 from C code
+Will now test an invalid string length. This should return an error.
+ydb_cip() returned YDB_ERR_MAXSTRLEN with status code 150373290

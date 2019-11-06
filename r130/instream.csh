@@ -17,13 +17,14 @@
 # ydb470                [bdw]           Tests ydb_init() to make sure that $gtm_dist is set correctly when it is initially null or different from $ydb_dist
 # ydb482                [bdw]           Tests $ZJOBEXAM with 2 parameters to ensure the second parameter is working correctly
 # ydb174                [bdw]           Ensures that naked references follow the max subscript limit
+# ydb390		[bdw]		Tests $ZHASH and ydb_mmrhash_128 to ensure that their outputs are equivalent
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r130 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "ydb470 ydb482 ydb174"
+setenv subtest_list_non_replic "ydb470 ydb482 ydb174 ydb390"
 setenv subtest_list_replic     ""
 
 
