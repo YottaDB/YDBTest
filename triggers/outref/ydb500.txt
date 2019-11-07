@@ -1,0 +1,15 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Added SET trigger on ^gbl named gbl#1
+----------------------------------------------------------------------
+Verify making simpleapi call that drives a trigger which gets an error
+properly recovers and returns:
+**********
+Expected failure of ydb_set_s(): 150373978,(SimpleAPI),%YDB-E-ZLINKFILE, Error while zlinking "gbl",%YDB-E-FILENOTFND, File gbl not found
+----------------------------------------------------------------------
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

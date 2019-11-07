@@ -4,7 +4,7 @@
 # Copyright (c) 2010-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -119,6 +119,7 @@
 # gtm8389		[ABS] ZPrint and $TEXT() of a deleted trigger that was previously ZPrint or $TEXT() should still work
 # gtm8399		[shaha] Trigger deletion should delete ^#t entries even in the face of TRIGDEFBAD
 # gtm8342		[shaha] Test to verify that MUPIP TRIGGER does not prompt for user input more than once
+# ydb500		[SE] Test simpleapi SET of global driving trigger driving nonexistent routine recovers properly
 #-------------------------------------------------------------------------------------
 
 setenv gtm_test_trigger 1
@@ -175,7 +176,7 @@ setenv subtest_list_non_replic "$subtest_list_non_replic maxparse_default maxpar
 setenv subtest_list_non_replic "$subtest_list_non_replic ztrigio chainVnest trigmprof nodztrigintrig trigzsyxplode"
 setenv subtest_list_non_replic "$subtest_list_non_replic zbspfortrig trigzsource trigxcalls trigreadonly nullsub"
 setenv subtest_list_non_replic "$subtest_list_non_replic gtm6901 gtm6901a gtm7678 gtm7877 gtm7877a gtm7083 zprint"
-setenv subtest_list_non_replic "$subtest_list_non_replic gtm8273 gtm8389 gtm8399 gtm8342 poundt"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm8273 gtm8389 gtm8399 gtm8342 poundt ydb500"
 
 setenv subtest_list_non_replic_FE "trigthrash"
 
