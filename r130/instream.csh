@@ -21,13 +21,14 @@
 # ydb476 [gm]   Tests $ZSigproc for its correctness with named string signal value as second argument
 # ydb511 [bdw]  Tests $translate with undefined variables for the 2nd and 3rd arguments.
 # ydb513 [nars] Test that $VIEW("REGION","^*") returns the name of the region mapped to by the `*` namespace
+# ydb485 [gm]	Tests $ZCONVERT with 3 parameters to ensure correct decimal to hexadecimal and vice versa conversion
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r130 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "ydb470 ydb482 ydb174 ydb390 ydb476 ydb511 ydb513"
+setenv subtest_list_non_replic "ydb470 ydb482 ydb174 ydb390 ydb476 ydb511 ydb513 ydb485"
 setenv subtest_list_replic     ""
 
 
