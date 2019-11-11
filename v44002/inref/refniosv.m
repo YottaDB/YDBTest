@@ -1,14 +1,17 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;                                                               ;
-; Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.       ;
-; All rights reserved.                                          ;
-;                                                               ;
-;       This source code contains the intellectual property     ;
-;       of its copyright holder(s), and is made available       ;
-;       under a license.  If you do not know the terms of       ;
-;       the license, please stop and do not read further.       ;
-;                                                               ;
+;								;
+; Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; This module was derived from FIS GT.M code.
+;
 cmmit
 	s $zint="d lthrint"
 	s $ZTE=1
@@ -64,7 +67,7 @@ rollbck
 	w !,"Interrupt signal sent....",!
 	i '$ZSigproc($j,"sigusr1") w !,"SIGUSR1 sent to process"
 	f i=1:1:4 d
-	s fact(i)=$$^fact(i)
+	. s fact(i)=$$^fact(i)
 	;
 	trollback
 	w !,"End of transaction....",!

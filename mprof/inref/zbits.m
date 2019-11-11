@@ -1,3 +1,17 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; This module was derived from FIS GT.M code.
+;
 zbits	; Test of bit string functions - $ZBIT prefix.
 	New
 	New $ZTRAP
@@ -79,7 +93,7 @@ zbits	; Test of bit string functions - $ZBIT prefix.
 	.  For j=1:1:i  Do
 	.  .  Set n=$ZBITFIND(str,1,j)
 	.  .  If n'=(j+1) Do ^examine(n,(j+1),"$ZBITFIND 1  "_i_"  "_j)
-	.  .  Set n=$ZBITFIND(str,0,j)  Do
+	.  .  Set n=$ZBITFIND(str,0,j)
 	.  .  If n'=0 Do ^examine(n,0,"$ZBITFIND 2  "_i_"  "_j)
 	.  Set n=$ZBITFIND(str,1,0)
 	.  If n'=2  Do ^examine(n,2,"$ZBITFIND 3  "_i)

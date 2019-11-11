@@ -102,7 +102,7 @@ int main() {
 	printf("\n'%s' is '%.*s'\n", varname, value->len_used, value->buf_addr);
 	YDB_FREE_BUFFER(value);
 	incr_result = incr(varname, "1000000");
-	printf("increment result = '%.*s' <-----\n", incr_result-> len_used, incr_result->buf_addr);
+	printf("increment result = '%.*s' <-----\n", incr_result->len_used, incr_result->buf_addr);
 	value = get(varname);
 	printf("'%s' is '%.*s'  <-----\n", varname, value->len_used, value->buf_addr);
 	return YDB_OK;

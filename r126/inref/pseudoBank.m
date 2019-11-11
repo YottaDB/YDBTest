@@ -32,7 +32,7 @@ child(jobindex);
 	do init
 	set temp=concurrent
 	set idShift=0
-	for  do  quit:temp<=1  set temp=temp/10 set idShift=idShift+1
+	for  quit:temp<=1  set temp=temp/10 set idShift=idShift+1
 	set guid=(jobindex-1)
 	set user=$char(64+jobindex)
 	set t=0

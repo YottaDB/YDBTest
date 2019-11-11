@@ -5,9 +5,13 @@ Using: ##SOURCE_PATH##/mupip
 mumps.dat
 # Test that sr_port/code_gen does not check triple chain validity in case of compile error
 # Testing with tigger file:
-+^e -command=S -xecute="xecute ""TPRestart:(2>$TRestart) quit""" -name=postconditionalbad
++^e -command=S -xecute="TPRestart:(2>$TRestart) quit" -name=postconditionalbad
 # Running file, should exit with errors
-File x.trg, Line 1: Error : Parsing XECUTE string: " xecute ""TPRestart:(2>$TRestart) quit"""
+	 TPRestart:(2>$TRestart) quit
+	 ^-----
+##TEST_AWK		At column 2, line 1, source module /tmp/.*
+%YDB-W-INVCMD, Invalid command keyword encountered
+Error : Parsing XECUTE string: " TPRestart:(2>$TRestart) quit"
 =========================================
 1 trigger file entries have errors
 0 trigger file entries have no errors

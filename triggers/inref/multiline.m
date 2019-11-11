@@ -3,6 +3,9 @@
 ; Copyright (c) 2010, 2015 Fidelity National Information	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -159,7 +162,7 @@ tfilevalid ; PASS
 	;	do l^mrtn()
 	;	; are comments parsed correctly?
 	;	if $increment(i) write "true if",!
-	;	if $increment(i) do  write "true if do",!
+	;	if $increment(i) write "true if do",!
 	;	if $increment(i) do
 	;	. write "true if do space indent",!
 	;	.	write "true if do tab indent",!
@@ -347,4 +350,3 @@ tfileerrorsgalore ; FAIL
 	;	do l^mrtn() set x="errorsgalore4"
 	;>>
 	quit
-

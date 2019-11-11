@@ -52,14 +52,14 @@ Invalid code the will pass compilation
 	 ^-----
 ##TEST_AWK		At column 2, line 1, source module .*trgtmp.*
 %YDB-W-INVCMD, Invalid command keyword encountered
-File compile_badpass.trg, Line 2: Error : Parsing XECUTE string: " xecute ""set $ZTRIggerop=99"""
-File compile_badpass.trg, Line 3: No errors processing trigger for global ^c
-File compile_badpass.trg, Line 4: No errors processing trigger for global ^d
+File compile_badpass.trg, Line 2: Added SET trigger on ^b named b#1
+File compile_badpass.trg, Line 3: Added SET trigger on ^c named c#1
+File compile_badpass.trg, Line 4: Added SET trigger on ^d named d#1
 Error : Parsing XECUTE string: " TPRestart:(2>$TRestart)"
 File compile_badpass.trg, Line 8: No errors processing trigger for global ^z
 =========================================
-2 trigger file entries have errors
-3 trigger file entries have no errors
+1 trigger file entries have errors
+4 trigger file entries have no errors
 =========================================
 ###################################################################
 Routines that will and won't pass compilation

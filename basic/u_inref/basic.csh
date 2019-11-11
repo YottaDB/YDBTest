@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -88,19 +88,44 @@ w "do ^ztvcmd3",!  do ^ztvcmd3
 EOF
 echo "end of valid ZTRAP cases..."
 
+# SUB4^ztidrv has issues with DYNAMIC_LITERALS because it causes a difference in where/how
+# the routine fails so turn it off for the duration of these subtets.
+if ($?ydb_compile) then
+    setenv save_compile "$ydb_compile"
+else if ($?gtmcompile) then
+    setenv save_compile "$gtmcompile"
+    setenv ydb_compile "$save_compile"
+else
+    setenv save_compile ""
+    setenv ydb_compile ""
+endif
+# If -DYNAMIC_LITERALS is specified, change it to -NODYNAMIC_LITERALS
+if ($?gtm_test_dynamic_literals) then
+    if ("DYNAMIC_LITERALS" == "$gtm_test_dynamic_literals") then
+	# Need to do a case-insensitive search/replace via the I following the regex expr. Note that
+	# this case insensitive search/replace option is NOT supported on Mac or other BSD.
+	setenv ydb_compile `echo $ydb_compile | sed s/-DYNAMIC_LITERALS//I`
+    endif
+endif
 echo "Testing invalid ZTRAP cases with gtm_ztrap_new set to TRUE..."
 source $gtm_tst/com/set_ydb_env_var_random.csh ydb_ztrap_new gtm_ztrap_new TRUE
 $GTM << EOF
 w "do ^ztidrv",!  do ^ztidrv
 h
 EOF
-
 echo "Testing invalid ZTRAP cases with NO gtm_ztrap_new ..."
 source $gtm_tst/com/unset_ydb_env_var.csh ydb_ztrap_new gtm_ztrap_new
 $GTM << EOF
 w "do ^ztidrv",!  do ^ztidrv
 h
 EOF
+# Restore or remove $gtmcompile setting
+if ("" != "$save_compile") then
+    setenv ydb_compile "$save_compile"
+else
+    source $gtm_tst/com/unset_ydb_env_var.csh ydb_compile gtmcompile
+endif
+unsetenv save_compile
 
 $GTM << EOF
 w "do ^zticmd1",!  do ^zticmd1

@@ -99,10 +99,6 @@ TEST CASE 5: Test that expired certificates issues appropriate errors.
 
 ==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
 ==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
-##SUSPEND_OUTPUT TLS1.3MINUS
-TEST-I-PASS, Found a TLSIOERROR or REPLNOTLS message in source server log file as expected
-##ALLOW_OUTPUT TLS1.3MINUS
-##SUSPEND_OUTPUT TLS1.3PLUS
 ----------
 Error W-TLSHANDSHAKE seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
 %YDB-W-TLSHANDSHAKE, Connection to remote side using TLS/SSL protocol failed
@@ -111,7 +107,6 @@ Error W-TLSHANDSHAKE seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
 Error YDB-I-TEXT seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
 %YDB-I-TEXT, error:14094415:SSL routines:ssl3_read_bytes:sslv3 alert certificate expired
 ----------
-##ALLOW_OUTPUT TLS1.3PLUS
 ----------
 Error W-TLSHANDSHAKE seen in ##FILTERED##RCVR_##TIMESTAMP##.log as expected:
 %YDB-W-TLSHANDSHAKE, Connection to remote side using TLS/SSL protocol failed

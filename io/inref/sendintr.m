@@ -1,8 +1,22 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; This module was derived from FIS GT.M code.
+;
 sendintr(type)
 	; The purpose this function is to interrupt the read process until we are requested to shutdown or we reach a system
 	; defined limit of interrupts or number of loops attempting to send the interrupt.  If we ever reach this limit it
 	; probably means we were orphaned and are just chewing up cpu time.
-	; It is passed a parameter of this same type to be used in globals such as ^loopcnt(type) where it stores the 
+	; It is passed a parameter of this same type to be used in globals such as ^loopcnt(type) where it stores the
 	; number of loops in case the read process dies without setting ^quit.  If this happens $ZSigproc will fail
 	; and not increment ^NumIntrSent(type).  Otherwise ^NumIntrSent(type) will contain the number of interrupts sent
 	; to the read process.  This function is used by both fifointrdriver.m and intrdriver.m.
@@ -13,8 +27,8 @@ sendintr(type)
 	close p
 	set ^loopcnt(type)=0
 	Write "Interrupt rate chosen - Minimum: ",^minsnooze/10000,"  Maximum: ",^maxsnooze/10000,"  Signum: ",^signum,!
-	for  do  quit:$data(^doreadpid(type))
-	; wait up to 30 sec for first read before sending interrupts	    
+	for  quit:$data(^doreadpid(type))
+	; wait up to 30 sec for first read before sending interrupts
 	set readdone=0
 	for i=1:1:30 do  quit:readdone
 	. hang 1

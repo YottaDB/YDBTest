@@ -20,11 +20,11 @@ Error Number=2
 STAT=mrgclnup+6^mrgclnup,%YDB-W-MERGEINCOMPL, Error encountered during MERGE; operation may be incomplete,%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded
 newc("",1)="58807,40083"
 Error Number=3
-STAT=mrgclnup+9^mrgclnup,%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%YDB-I-GVIS, 		Global variable: ^a("")
+STAT=mrgclnup+9^mrgclnup,%YDB-E-NULSUBSC, Update failed because null subscripts are not allowed for database file: ##TEST_PATH##/mrgclnup.dat,%YDB-I-GVIS, 		Global variable: ^a("")
 Error Number=4
-STAT=mrgclnup+10^mrgclnup,%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%YDB-I-GVIS, 		Global variable: ^a("","")
+STAT=mrgclnup+10^mrgclnup,%YDB-E-NULSUBSC, MERGE failed because null subscripts are not allowed for database file: ##TEST_PATH##/mrgclnup.dat,%YDB-I-GVIS, 		Global variable: ^a("","")
 Error Number=5
-STAT=mrgclnup+11^mrgclnup,%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%YDB-I-GVIS, 		Global variable: ^a("","")
+STAT=mrgclnup+11^mrgclnup,%YDB-E-NULSUBSC, MERGE failed because null subscripts are not allowed for database file: ##TEST_PATH##/mrgclnup.dat,%YDB-I-GVIS, 		Global variable: ^a("","")
 
 YDB>
 ##SUSPEND_OUTPUT  NON_REPLIC

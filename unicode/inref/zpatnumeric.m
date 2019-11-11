@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -26,8 +26,7 @@ zpatnumeric ;
 		;
 		if ("UTF-8"=$ZCHSET) do basic
 		quit
-basic ;
-		if ("UTF-8"=$ZCHSET) do
+basic		;
 		set samplestr(1)="०१२" ; # devanagari numerals
 		set samplestr(2)="३४५small" ; # devanagari samll numerals
 		set samplestr(3)="٤٦'೫೧" ; # Arabic and Kannada numerals

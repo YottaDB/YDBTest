@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -22,7 +22,7 @@ manylocks
 	set start=$h,cur=start,prev=start,previ=0,t=$$^difftime(cur,start)
 	for i=1:1 do  quit:(t>30)
 	. lock ^a(i#max):0
-	. set cur=$h,diff=$$^difftime(cur,prev)  do
+	. set cur=$h,diff=$$^difftime(cur,prev)
 	. if diff>0 do  set prev=cur,previ=i,t=$$^difftime(cur,start)
 	. . set its($increment(it))=i-previ
 	. . if i-previ<minit set minit=i-previ

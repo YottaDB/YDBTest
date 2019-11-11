@@ -287,11 +287,11 @@ M ^xgbl=^varlongvariablenamesworkfornull
 Next Command Will fail
 M ^agbl("newtree","")=^varlongvariablenamesworkfornull
 Error Number=1
-STAT=nullntp+9^nullntp,%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%YDB-I-GVIS, 		Global variable: ^agbl("newtree","",-100,100,-100)
+STAT=nullntp+9^nullntp,%YDB-E-NULSUBSC, Update failed because null subscripts are not allowed for database file: ##TEST_PATH##/a.dat,%YDB-I-GVIS, 		Global variable: ^agbl("newtree","",-100,100,-100)
 Next Command Will fail
 M ^agbl=^varlongvariablenamesworkfornull
 Error Number=2
-STAT=nullntp+11^nullntp,%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%YDB-I-GVIS, 		Global variable: ^agbl(-100,100,"")
+STAT=nullntp+11^nullntp,%YDB-E-NULSUBSC, MERGE failed because null subscripts are not allowed for database file: ##TEST_PATH##/a.dat,%YDB-I-GVIS, 		Global variable: ^agbl(-100,100,"")
 Verify MERGE
 
 Verify ^xgbl("newtree","")
@@ -311,16 +311,16 @@ ZWR ^agbl
 Test more:
 Next Command Will fail
 Error Number=3
-STAT=nullntp+23^nullntp,%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%YDB-I-GVIS, 		Global variable: ^aaa("I will not be created",1,"",200)
+STAT=nullntp+23^nullntp,%YDB-E-NULSUBSC, MERGE failed because null subscripts are not allowed for database file: ##TEST_PATH##/a.dat,%YDB-I-GVIS, 		Global variable: ^aaa("I will not be created",1,"",200)
 Next Command Will fail
 Error Number=4
-STAT=nullntp+25^nullntp,%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%YDB-I-GVIS, 		Global variable: ^aaa("I will not be created",2,"")
+STAT=nullntp+25^nullntp,%YDB-E-NULSUBSC, MERGE failed because null subscripts are not allowed for database file: ##TEST_PATH##/a.dat,%YDB-I-GVIS, 		Global variable: ^aaa("I will not be created",2,"")
 Next Command Will fail
 Error Number=5
-STAT=nullntp+27^nullntp,%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%YDB-I-GVIS, 		Global variable: ^aaa("I will not be created",3,"",200)
+STAT=nullntp+27^nullntp,%YDB-E-NULSUBSC, MERGE failed because null subscripts are not allowed for database file: ##TEST_PATH##/a.dat,%YDB-I-GVIS, 		Global variable: ^aaa("I will not be created",3,"",200)
 Next Command Will fail
 Error Number=6
-STAT=nullntp+29^nullntp,%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%YDB-I-GVIS, 		Global variable: ^aaa("I will not be created",3,"")
+STAT=nullntp+29^nullntp,%YDB-E-NULSUBSC, MERGE failed because null subscripts are not allowed for database file: ##TEST_PATH##/a.dat,%YDB-I-GVIS, 		Global variable: ^aaa("I will not be created",3,"")
 
 
 Test local to global:
@@ -328,7 +328,7 @@ M ^cgbl=varlongvariablenamesworkfornull
 Next Command Will fail
 M ^bgbl=varlongvariablenamesworkfornull
 Error Number=7
-STAT=nullntp+37^nullntp,%YDB-E-NULSUBSC, DB access failed because Null subscripts are not allowed for current region,%YDB-I-GVIS, 		Global variable: ^bgbl(-100,100,"")
+STAT=nullntp+37^nullntp,%YDB-E-NULSUBSC, MERGE failed because null subscripts are not allowed for database file: ##TEST_PATH##/b.dat,%YDB-I-GVIS, 		Global variable: ^bgbl(-100,100,"")
 Verify MERGE
 
 Verify ^cgbl

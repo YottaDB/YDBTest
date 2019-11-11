@@ -2,7 +2,7 @@
 ;								;
 ; Copyright 2013, 2014 Fidelity Information Services, Inc	;
 ;								;
-; Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -79,7 +79,7 @@ init1(type,t)
 	close p
 	set t=type_".disk"
 	set fname="^"_type_"ready"
-	for  do  quit:$data(@fname)
+	for  quit:$data(@fname)
 	quit
 
 processStr(type,t,a)
@@ -120,7 +120,7 @@ processLen(type,t)
 	. set ^charread(type)=^charread(type)+$Length(y)
 	. if $za!$zeof set za=$za set zeof=$zeof use $p write "$za= ",za," $zeof= ",zeof,! set ^quit=2 halt
 	use $p
-	for i=1:1:30 do  hang 1 quit:$data(^senddone(type))
+	for i=1:1:30 hang 1 quit:$data(^senddone(type))
 	if '$data(^senddone(type)) write "^senddone("_type_") not set after 30 seconds.",!
 	if ^charread(type)=^charsend(type) write type,": ","Input matches output",!
 	set ^quit=1

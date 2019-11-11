@@ -3,6 +3,9 @@
 ; Copyright (c) 2014-2015 Fidelity National Information 	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -231,7 +234,7 @@ gentrigload	;
 	. . . . . . new str
 	. . . . . . set str=$select((setspecified&killspecified):"SET and/or Non-SET",setspecified:"SET",1:"Non-SET")
 	. . . . . . if (setmod!killmod) do
-	. . . . . . . write "Modified ",str," trigger on ^",gvn," named ",gvn,"#",setindex,!  do
+	. . . . . . . write "Modified ",str," trigger on ^",gvn," named ",gvn,"#",setindex,!
 	. . . . . . . if $incr(trigs("modified"))
 	. . . . . . else  write str," trigger on ^",gvn," already present in trigger named ",gvn,"#",setindex," - no action taken",!
 	. . . else  do

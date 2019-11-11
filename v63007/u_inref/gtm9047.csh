@@ -20,7 +20,7 @@ set ddq = $dq$dq
 
 echo '# $ZCSTATUS holds an indication of the result of the last ZCOMPILE, ZLINK, $ZTRIGGER() or auto-zlink compilation'
 echo '# One (1) indicates a clean compilation, a positive number greater than one is an error code you can turn into text with $ZMESSAGE(), and a negative number is a negated error code that indicates GT.M was not able to produce an object file'
-echo '# The error details appear in the compilation output, so $ZCSTATUS typically contains the code for ERRORSUMMARY'
+echo '# The error details appear in the compilation output.'
 echo '# Previously, $ZSTATUS almost always indicated a one (1) except when object file creation failed'
 echo '# $ZTRIGGER() and MUPIP TRIGGER don'"'"'t install trigger definitions with XECUTE strings that do not compile without error; previously they did'
 echo '# In addition, the value for $ZCSTATUS provided by ZSHOW "I" matches that provided by WRITE $ZCSTATUS; previously ZSHOW provided a zero (0) when it should have provided a one (1)'

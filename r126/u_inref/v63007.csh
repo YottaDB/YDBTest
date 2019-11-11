@@ -17,7 +17,7 @@ $gtm_tst/com/dbcreate.csh mumps
 
 echo '# Test that sr_port/code_gen does not check triple chain validity in case of compile error'
 
-echo '+^e -command=S -xecute="xecute ""TPRestart:(2>$TRestart) quit""" -name=postconditionalbad' > x.trg
+echo '+^e -command=S -xecute="TPRestart:(2>$TRestart) quit" -name=postconditionalbad' > x.trg
 echo "# Testing with tigger file:"
 cat x.trg
 
