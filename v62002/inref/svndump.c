@@ -3,7 +3,7 @@
  * Copyright (c) 2015 Fidelity National Information 		*
  * Services, Inc. and/or its subsidiaries. All rights reserved.	*
  *								*
- * Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	*
+ * Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -25,12 +25,16 @@ LITREF nametabent svn_names[];
 LITREF unsigned char svn_index[];
 LITREF svn_data_type svn_data[];
 
+#define zysqlnull	"ZYSQLNULL"
+#define zysqlnull_len	(sizeof(zysqlnull) - 1)
+
 GBLDEF  CLI_ENTRY       *cmd_ary = NULL; /* This test does not have any command tables so initialize command array to NULL */
 
 int main( int argc, char *argv[])
 {
-	int i;
-	int totalsvns = (int) svn_index[26];
+	int	i;
+	int	totalsvns = (int)svn_index[26] - 1;		/* We don't want $ZYSQLNULL in this list */
+
 	/* Setup the top label, insert sstep for debugging, define error count as zero */
 	printf("svndump\n\tdo:0 ^sstep\n\tset error=0\n");
 	/* Intentionally do a failing zcompile to set $zc */
@@ -41,6 +45,8 @@ int main( int argc, char *argv[])
 	/* Iterate over all the names and print them out */
 	for (i = 0; i < totalsvns; i++)
 	{
+		if ((svn_names[i].len == zysqlnull_len) && (0 == memcmp(svn_names[i].name, zysqlnull, zysqlnull_len)))
+			continue;				/* Ignoring $ZYSQLNULL as by definition it has no value */
 		if (svn_data[i].os_syst & UNIX_OS)
 		{
 			printf("\tset svn=$$strip(\"$%s\"),val=$$pull(svn) write svn,\"=\",$$enq(val),?48 zwrite @svn\n",

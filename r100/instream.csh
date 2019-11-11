@@ -4,7 +4,7 @@
 # Copyright (c) 2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -21,13 +21,16 @@
 # prmptchk 	[estess]	Test prompt that it defaults to "YDB>" but can be overridden to "YDB>" if desired
 # objlvlchk	[estess]	Verify object level changes for YDB
 # dllversion	[estess]	Test DLLVERSION error for x8664 (sharedlib version is only 32 bit)
+#                               (this test temporarily disabled due to issues with object file format change
+#				but can be re-enabled after r1.32 is released though it needs to restrict
+#				previous verisons to r1.30).
 #-------------------------------------------------------------------------------------
 
 echo "r100 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "zlen2arg prmptchk objlvlchk dllversion"
+setenv subtest_list_non_replic "zlen2arg prmptchk objlvlchk"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then

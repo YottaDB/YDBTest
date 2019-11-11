@@ -13,7 +13,7 @@ Verify child process does hold lock
 %YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
 
 DEFAULT
-##TEST_AWK\^holdontillexit Owned by PID\= [1-9][0-9]* which is an existing process
+##TEST_AWK\^holdontillexit Owned by PID= [1-9][0-9]* which is an existing process
 ##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|164|184); SUBSCRIPT slot bytes in use: (20|24)/(5036|5052)
 %YDB-I-LOCKSPACEUSE, Estimated free lock space: 99% of 40 pages
 Do a DSE CRIT -SEIZE to hold crit
