@@ -208,7 +208,7 @@ Total             100               6              NA             2
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 MUPIP load extr2.bin -format=bin
-Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................GT.M MUPIP EXTRACT              
+Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................YottaDB MUPIP EXTRACT           
 
 Beginning LOAD at record number: 2
 
@@ -850,7 +850,7 @@ Total             100             198              NA             3
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 MUPIP load extr3.bin -format=bin
-Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................GT.M MUPIP EXTRACT              
+Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................YottaDB MUPIP EXTRACT           
 
 Beginning LOAD at record number: 2
 
@@ -1274,7 +1274,7 @@ Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 %YDB-I-RECORDSTAT, ^a:	  Key cnt: 15  max subsc len: 6  max rec len: 12  max node len: 20
 %YDB-I-RECORDSTAT, ^b:	  Key cnt: 1  max subsc len: 5  max rec len: 1  max node len: 10
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 16  max subsc len: 6  max rec len: 12  max node len: 20
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract a.zwr
 ##FILTERED##..-...-....  ..:..:.. ZWR
 ^a(6)="mumps.gld6"
 ^a(7)="mumps.gld7"
@@ -1349,7 +1349,7 @@ Region(s):
 %YDB-I-RECORDSTAT, ^c:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
 %YDB-I-RECORDSTAT, ^d:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 30  max subsc len: 6  max rec len: 2  max node len: 12
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract mext2a.zwr
 ##FILTERED##..-...-....  ..:..:.. ZWR
 ^a(1)="1"
 ^a(2)="2"
@@ -1385,7 +1385,7 @@ GT.M MUPIP EXTRACT
 %YDB-I-RECORDSTAT, ^a (region AREG):	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
 %YDB-I-RECORDSTAT, ^a:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract mext2b.zwr -region=AREG
 ##FILTERED##..-...-....  ..:..:.. ZWR
 ^a(1)="1"
 ^a(2)="2"
@@ -1398,7 +1398,7 @@ GT.M MUPIP EXTRACT
 %YDB-I-RECORDSTAT, ^b:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
 %YDB-I-RECORDSTAT, ^c:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 15  max subsc len: 6  max rec len: 2  max node len: 11
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract mext2c.zwr -region=brEG,CReg
 ##FILTERED##..-...-....  ..:..:.. ZWR
 ^a(6)="6"
 ^a(7)="7"
@@ -1423,7 +1423,7 @@ GT.M MUPIP EXTRACT
 %YDB-I-RECORDSTAT, ^b:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
 %YDB-I-RECORDSTAT, ^d:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 25  max subsc len: 6  max rec len: 2  max node len: 12
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract mext2d.zwr -region=BREG,AREG,DEFAULT
 ##FILTERED##..-...-....  ..:..:.. ZWR
 ^a(1)="1"
 ^a(2)="2"
@@ -1456,7 +1456,7 @@ GT.M MUPIP EXTRACT
 %YDB-I-RECORDSTAT, ^b:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
 %YDB-I-RECORDSTAT, ^c:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 15  max subsc len: 6  max rec len: 2  max node len: 11
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract mext2e.go -region=BREG,CREG -format=go
 ##FILTERED##..-...-....  ..:..:..
 ^a(6)
 6
@@ -1516,7 +1516,7 @@ b.dat
 c.dat
 mumps.dat
 # load the mext3c.bin file to new database
-Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................GT.M MUPIP EXTRACT              
+Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................YottaDB MUPIP EXTRACT           
 
 Beginning LOAD at record number: 2
 
@@ -1526,7 +1526,7 @@ LOAD TOTAL		Key Cnt: 15  Max Subsc Len: 6  Max Data Len: 2
 %YDB-I-RECORDSTAT, ^a:	  Key cnt: 10  max subsc len: 6  max rec len: 2  max node len: 11
 %YDB-I-RECORDSTAT, ^b:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 15  max subsc len: 6  max rec len: 2  max node len: 11
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract -format=zwr mext3c.zwr
 ##FILTERED##..-...-....  ..:..:.. ZWR
 ^a(1)="1"
 ^a(2)="2"

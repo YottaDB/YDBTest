@@ -40,16 +40,16 @@ LOAD TOTAL		Key Cnt: 2  Max Subsc Len: 6  Max Data Len: 1
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
 # 1b. Expect YDB-E-LDBINFMT, as .zwr is not a valid binary format
 ##SUSPEND_OUTPUT UNICODE_MODE
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.zwr -format=zwr
 ##FILTERED##..-...-....  ..:..:.. ZWR
 %YDB-E-LDBINFMT, Unrecognized header for load file
 # 1c. Expect YDB-E-LDBINFMT, as .go is not a valid binary format
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.go -format=go
 ##FILTERED##..-...-....  ..:..:..
 %YDB-E-LDBINFMT, Unrecognized header for load file
 ##SUSPEND_OUTPUT NONUNICODE_MODE
 ##ALLOW_OUTPUT UNICODE_MODE
-GT.M MUPIP EXTRACT UTF-8
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.zwr -format=zwr UTF-8
 ##FILTERED##..-...-....  ..:..:.. ZWR
 %YDB-E-LDBINFMT, Unrecognized header for load file
 ##ALLOW_OUTPUT NONUNICODE_MODE
@@ -65,10 +65,10 @@ a random
 # 2a. Expect YDB-E-DBFILERR, SYSTEM-E-ENO2 and YDB-E-RECLOAD as a.dat and b.dat database files are not present
 # load will continue for all keys in mumps.dat except when -onerror is stop or interactive
 ##SUSPEND_OUTPUT NONUNICODE_MODE
-GT.M MUPIP EXTRACT UTF-8
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.zwr -format=zwr UTF-8
 ##ALLOW_OUTPUT NONUNICODE_MODE
 ##SUSPEND_OUTPUT UNICODE_MODE
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.zwr -format=zwr
 ##ALLOW_OUTPUT UNICODE_MODE
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
@@ -96,7 +96,7 @@ LOAD TOTAL		Key Cnt: 2  Max Subsc Len: 6  Max Data Len: 1
 %YDB-E-LDBINFMT, Unrecognized header for load file
 ##SUSPEND_OUTPUT UNICODE_MODE
 # 2c. Expect YDB-E-LDBINFMT, as .go is not a valid zwr format
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.go -format=go
 ##FILTERED##..-...-....  ..:..:..
 %YDB-E-LDBINFMT, Unrecognized header for load file
 ##ALLOW_OUTPUT UNICODE_MODE
@@ -119,7 +119,7 @@ LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 # ### 3. Testing GO Format (no database file) ### #
 # 3a. Expect YDB-E-DBFILERR, SYSTEM-E-ENO2 and YDB-E-RECLOAD as a.dat and b.dat database files are not present
 # load will continue for all keys in mumps.dat except when -onerror is stop or interactive
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.go -format=go
 ##FILTERED##..-...-....  ..:..:..
 Beginning LOAD at record number: 3
 
@@ -143,7 +143,7 @@ LOAD TOTAL		Key Cnt: 2  Max Subsc Len: 6  Max Data Len: 1
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 22
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
 # 3b. Expect YDB-E-LDBINFMT, as .zwr is not a valid go format
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.zwr -format=zwr
 ##FILTERED##..-...-....  ..:..:.. ZWR
 %YDB-E-LDBINFMT, Unrecognized header for load file
 # 3c. Expect YDB-E-LDBINFMT, as .bin is not a valid go format
@@ -179,16 +179,16 @@ LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
 # 4b. Expect YDB-E-LDBINFMT, as .zwr is not a valid binary format
 ##SUSPEND_OUTPUT UNICODE_MODE
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.zwr -format=zwr
 ##FILTERED##..-...-....  ..:..:.. ZWR
 %YDB-E-LDBINFMT, Unrecognized header for load file
 # 4c. Expect YDB-E-LDBINFMT, as .go is not a valid binary format
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.go -format=go
 ##FILTERED##..-...-....  ..:..:..
 %YDB-E-LDBINFMT, Unrecognized header for load file
 ##SUSPEND_OUTPUT NONUNICODE_MODE
 ##ALLOW_OUTPUT UNICODE_MODE
-GT.M MUPIP EXTRACT UTF-8
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.zwr -format=zwr UTF-8
 ##FILTERED##..-...-....  ..:..:.. ZWR
 %YDB-E-LDBINFMT, Unrecognized header for load file
 ##ALLOW_OUTPUT NONUNICODE_MODE
@@ -214,10 +214,10 @@ LOAD TOTAL		Key Cnt: 7  Max Subsc Len: 8  Max Data Len: 10
 # ### 5. Testing ZWR Format ### #
 # 5a. Successfully load the x.zwr content in the database
 ##SUSPEND_OUTPUT NONUNICODE_MODE
-GT.M MUPIP EXTRACT UTF-8
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.zwr -format=zwr UTF-8
 ##ALLOW_OUTPUT NONUNICODE_MODE
 ##SUSPEND_OUTPUT UNICODE_MODE
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.zwr -format=zwr
 ##ALLOW_OUTPUT UNICODE_MODE
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
@@ -228,7 +228,7 @@ LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
 %YDB-E-LDBINFMT, Unrecognized header for load file
 ##SUSPEND_OUTPUT UNICODE_MODE
 # 5c. Expect YDB-E-LDBINFMT, as .go is not a valid zwr format
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.go -format=go
 ##FILTERED##..-...-....  ..:..:..
 %YDB-E-LDBINFMT, Unrecognized header for load file
 ##ALLOW_OUTPUT UNICODE_MODE
@@ -250,14 +250,14 @@ LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 ##SUSPEND_OUTPUT UNICODE_MODE
 # ### 6. Testing GO Format ### #
 # 6a. Successfully load the x.go content in the database
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.go -format=go
 ##FILTERED##..-...-....  ..:..:..
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 22
 # 6b. Expect YDB-E-LDBINFMT, as .zwr is not a valid go format
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.zwr -format=zwr
 ##FILTERED##..-...-....  ..:..:.. ZWR
 %YDB-E-LDBINFMT, Unrecognized header for load file
 # 6c. Expect YDB-E-LDBINFMT, as .bin is not a valid go format
@@ -294,16 +294,16 @@ LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 2
 # 7b. Expect YDB-E-LDBINFMT, as .zwr is not a valid binary format
 ##SUSPEND_OUTPUT UNICODE_MODE
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.zwr -format=zwr
 ##FILTERED##..-...-....  ..:..:.. ZWR
 %YDB-E-LDBINFMT, Unrecognized header for load file
 # 7c. Expect YDB-E-LDBINFMT, as .go is not a valid binary format
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.go -format=go
 ##FILTERED##..-...-....  ..:..:..
 %YDB-E-LDBINFMT, Unrecognized header for load file
 ##SUSPEND_OUTPUT NONUNICODE_MODE
 ##ALLOW_OUTPUT UNICODE_MODE
-GT.M MUPIP EXTRACT UTF-8
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.zwr -format=zwr UTF-8
 ##FILTERED##..-...-....  ..:..:.. ZWR
 %YDB-E-LDBINFMT, Unrecognized header for load file
 ##ALLOW_OUTPUT NONUNICODE_MODE
@@ -319,10 +319,10 @@ a random
 # 8a. Expect YDB-E-DBFILERR, SYSTEM-E-ENO2 and YDB-E-RECLOAD as a.dat and b.dat database files are not present
 # load will continue for all keys in mumps.dat except when -onerror is stop or interactive
 ##SUSPEND_OUTPUT NONUNICODE_MODE
-GT.M MUPIP EXTRACT UTF-8
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.zwr -format=zwr UTF-8
 ##ALLOW_OUTPUT NONUNICODE_MODE
 ##SUSPEND_OUTPUT UNICODE_MODE
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.zwr -format=zwr
 ##ALLOW_OUTPUT UNICODE_MODE
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
@@ -337,7 +337,7 @@ LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 %YDB-E-LDBINFMT, Unrecognized header for load file
 ##SUSPEND_OUTPUT UNICODE_MODE
 # 8c. Expect YDB-E-LDBINFMT, as .go is not a valid zwr format
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.go -format=go
 ##FILTERED##..-...-....  ..:..:..
 %YDB-E-LDBINFMT, Unrecognized header for load file
 ##ALLOW_OUTPUT UNICODE_MODE
@@ -361,7 +361,7 @@ LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 # ### 9. Testing GO Format (no database file) ### #
 # 9a. Expect YDB-E-DBFILERR, SYSTEM-E-ENO2 and YDB-E-RECLOAD as a.dat and b.dat database files are not present
 # load will continue for all keys in mumps.dat except when -onerror is stop or interactive
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.go -format=go
 ##FILTERED##..-...-....  ..:..:..
 Beginning LOAD at record number: 3
 
@@ -372,7 +372,7 @@ LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 %YDB-E-FAILEDRECCOUNT, LOAD unable to process 1 records
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
 # 9b. Expect YDB-E-LDBINFMT, as .zwr is not a valid go format
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.zwr -format=zwr
 ##FILTERED##..-...-....  ..:..:.. ZWR
 %YDB-E-LDBINFMT, Unrecognized header for load file
 # 9c. Expect YDB-E-LDBINFMT, as .bin is not a valid go format
@@ -408,16 +408,16 @@ LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
 # 10b. Expect YDB-E-LDBINFMT, as .zwr is not a valid binary format
 ##SUSPEND_OUTPUT UNICODE_MODE
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.zwr -format=zwr
 ##FILTERED##..-...-....  ..:..:.. ZWR
 %YDB-E-LDBINFMT, Unrecognized header for load file
 # 10c. Expect YDB-E-LDBINFMT, as .go is not a valid binary format
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.go -format=go
 ##FILTERED##..-...-....  ..:..:..
 %YDB-E-LDBINFMT, Unrecognized header for load file
 ##SUSPEND_OUTPUT NONUNICODE_MODE
 ##ALLOW_OUTPUT UNICODE_MODE
-GT.M MUPIP EXTRACT UTF-8
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.zwr -format=zwr UTF-8
 ##FILTERED##..-...-....  ..:..:.. ZWR
 %YDB-E-LDBINFMT, Unrecognized header for load file
 ##ALLOW_OUTPUT NONUNICODE_MODE
@@ -443,10 +443,10 @@ LOAD TOTAL		Key Cnt: 7  Max Subsc Len: 8  Max Data Len: 10
 # ### 11. Testing ZWR Format ### #
 # 11a. Successfully load the x.zwr content in the database
 ##SUSPEND_OUTPUT NONUNICODE_MODE
-GT.M MUPIP EXTRACT UTF-8
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.zwr -format=zwr UTF-8
 ##ALLOW_OUTPUT NONUNICODE_MODE
 ##SUSPEND_OUTPUT UNICODE_MODE
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.zwr -format=zwr
 ##ALLOW_OUTPUT UNICODE_MODE
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
@@ -457,7 +457,7 @@ LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
 %YDB-E-LDBINFMT, Unrecognized header for load file
 ##SUSPEND_OUTPUT UNICODE_MODE
 # 11c. Expect YDB-E-LDBINFMT, as .go is not a valid zwr format
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.go -format=go
 ##FILTERED##..-...-....  ..:..:..
 %YDB-E-LDBINFMT, Unrecognized header for load file
 ##ALLOW_OUTPUT UNICODE_MODE
@@ -479,14 +479,14 @@ LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 ##SUSPEND_OUTPUT UNICODE_MODE
 # ### 12. Testing GO Format ### #
 # 12a. Successfully load the x.go content in the database
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.go -format=go
 ##FILTERED##..-...-....  ..:..:..
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 22
 # 12b. Expect YDB-E-LDBINFMT, as .zwr is not a valid go format
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.zwr -format=zwr
 ##FILTERED##..-...-....  ..:..:.. ZWR
 %YDB-E-LDBINFMT, Unrecognized header for load file
 # 12c. Expect YDB-E-LDBINFMT, as .bin is not a valid go format
@@ -523,16 +523,16 @@ LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 2
 # 13b. Expect YDB-E-LDBINFMT, as .zwr is not a valid binary format
 ##SUSPEND_OUTPUT UNICODE_MODE
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.zwr -format=zwr
 ##FILTERED##..-...-....  ..:..:.. ZWR
 %YDB-E-LDBINFMT, Unrecognized header for load file
 # 13c. Expect YDB-E-LDBINFMT, as .go is not a valid binary format
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.go -format=go
 ##FILTERED##..-...-....  ..:..:..
 %YDB-E-LDBINFMT, Unrecognized header for load file
 ##SUSPEND_OUTPUT NONUNICODE_MODE
 ##ALLOW_OUTPUT UNICODE_MODE
-GT.M MUPIP EXTRACT UTF-8
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.zwr -format=zwr UTF-8
 ##FILTERED##..-...-....  ..:..:.. ZWR
 %YDB-E-LDBINFMT, Unrecognized header for load file
 ##ALLOW_OUTPUT NONUNICODE_MODE
@@ -548,10 +548,10 @@ a random
 # 14a. Expect YDB-E-DBFILERR, SYSTEM-E-ENO2 and YDB-E-RECLOAD as a.dat and b.dat database files are not present
 # load will continue for all keys in mumps.dat except when -onerror is stop or interactive
 ##SUSPEND_OUTPUT NONUNICODE_MODE
-GT.M MUPIP EXTRACT UTF-8
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.zwr -format=zwr UTF-8
 ##ALLOW_OUTPUT NONUNICODE_MODE
 ##SUSPEND_OUTPUT UNICODE_MODE
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.zwr -format=zwr
 ##ALLOW_OUTPUT UNICODE_MODE
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
@@ -566,7 +566,7 @@ LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 %YDB-E-LDBINFMT, Unrecognized header for load file
 ##SUSPEND_OUTPUT UNICODE_MODE
 # 14c. Expect YDB-E-LDBINFMT, as .go is not a valid zwr format
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.go -format=go
 ##FILTERED##..-...-....  ..:..:..
 %YDB-E-LDBINFMT, Unrecognized header for load file
 ##ALLOW_OUTPUT UNICODE_MODE
@@ -590,7 +590,7 @@ LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 # ### 15. Testing GO Format (no database file) ### #
 # 15a. Expect YDB-E-DBFILERR, SYSTEM-E-ENO2 and YDB-E-RECLOAD as a.dat and b.dat database files are not present
 # load will continue for all keys in mumps.dat except when -onerror is stop or interactive
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.go -format=go
 ##FILTERED##..-...-....  ..:..:..
 Beginning LOAD at record number: 3
 
@@ -601,7 +601,7 @@ LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 %YDB-E-FAILEDRECCOUNT, LOAD unable to process 1 records
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
 # 15b. Expect YDB-E-LDBINFMT, as .zwr is not a valid go format
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.zwr -format=zwr
 ##FILTERED##..-...-....  ..:..:.. ZWR
 %YDB-E-LDBINFMT, Unrecognized header for load file
 # 15c. Expect YDB-E-LDBINFMT, as .bin is not a valid go format
@@ -637,16 +637,16 @@ LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
 # 16b. Expect YDB-E-LDBINFMT, as .zwr is not a valid binary format
 ##SUSPEND_OUTPUT UNICODE_MODE
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.zwr -format=zwr
 ##FILTERED##..-...-....  ..:..:.. ZWR
 %YDB-E-LDBINFMT, Unrecognized header for load file
 # 16c. Expect YDB-E-LDBINFMT, as .go is not a valid binary format
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.go -format=go
 ##FILTERED##..-...-....  ..:..:..
 %YDB-E-LDBINFMT, Unrecognized header for load file
 ##SUSPEND_OUTPUT NONUNICODE_MODE
 ##ALLOW_OUTPUT UNICODE_MODE
-GT.M MUPIP EXTRACT UTF-8
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.zwr -format=zwr UTF-8
 ##FILTERED##..-...-....  ..:..:.. ZWR
 %YDB-E-LDBINFMT, Unrecognized header for load file
 ##ALLOW_OUTPUT NONUNICODE_MODE
@@ -672,10 +672,10 @@ LOAD TOTAL		Key Cnt: 7  Max Subsc Len: 8  Max Data Len: 10
 # ### 17. Testing ZWR Format ### #
 # 17a. Successfully load the x.zwr content in the database
 ##SUSPEND_OUTPUT NONUNICODE_MODE
-GT.M MUPIP EXTRACT UTF-8
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.zwr -format=zwr UTF-8
 ##ALLOW_OUTPUT NONUNICODE_MODE
 ##SUSPEND_OUTPUT UNICODE_MODE
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.zwr -format=zwr
 ##ALLOW_OUTPUT UNICODE_MODE
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
@@ -686,7 +686,7 @@ LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
 %YDB-E-LDBINFMT, Unrecognized header for load file
 ##SUSPEND_OUTPUT UNICODE_MODE
 # 17c. Expect YDB-E-LDBINFMT, as .go is not a valid zwr format
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.go -format=go
 ##FILTERED##..-...-....  ..:..:..
 %YDB-E-LDBINFMT, Unrecognized header for load file
 ##ALLOW_OUTPUT UNICODE_MODE
@@ -708,14 +708,14 @@ LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 ##SUSPEND_OUTPUT UNICODE_MODE
 # ### 18. Testing GO Format ### #
 # 18a. Successfully load the x.go content in the database
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.go -format=go
 ##FILTERED##..-...-....  ..:..:..
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 22
 # 18b. Expect YDB-E-LDBINFMT, as .zwr is not a valid go format
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.zwr -format=zwr
 ##FILTERED##..-...-....  ..:..:.. ZWR
 %YDB-E-LDBINFMT, Unrecognized header for load file
 # 18c. Expect YDB-E-LDBINFMT, as .bin is not a valid go format
@@ -739,10 +739,10 @@ LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 # ### 19. Testing Auto File Sensing ### #
 # 19a. Successfully load the x.zwr content in the database
 ##SUSPEND_OUTPUT NONUNICODE_MODE
-GT.M MUPIP EXTRACT UTF-8
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.zwr -format=zwr UTF-8
 ##ALLOW_OUTPUT NONUNICODE_MODE
 ##SUSPEND_OUTPUT UNICODE_MODE
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.zwr -format=zwr
 ##ALLOW_OUTPUT UNICODE_MODE
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
@@ -762,7 +762,7 @@ LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
 ##SUSPEND_OUTPUT UNICODE_MODE
 # 19c. Successfully load the x.go content in the database
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.go -format=go
 ##FILTERED##..-...-....  ..:..:..
 Beginning LOAD at record number: 3
 
@@ -780,10 +780,10 @@ a random
 # ### 20. Testing Auto File Sensing with -STDIN and FILE REDIRECTION ### #
 # 20a. Successfully load the x.zwr content in the database
 ##SUSPEND_OUTPUT NONUNICODE_MODE
-GT.M MUPIP EXTRACT UTF-8
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.zwr -format=zwr UTF-8
 ##ALLOW_OUTPUT NONUNICODE_MODE
 ##SUSPEND_OUTPUT UNICODE_MODE
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.zwr -format=zwr
 ##ALLOW_OUTPUT UNICODE_MODE
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
@@ -803,7 +803,7 @@ LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
 ##SUSPEND_OUTPUT UNICODE_MODE
 # 20c. Successfully load the x.go content in the database
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.go -format=go
 ##FILTERED##..-...-....  ..:..:..
 Beginning LOAD at record number: 3
 
@@ -821,10 +821,10 @@ tmp.nofile: No such file or directory.
 # ### 21. Testing Auto File Sensing with -STDIN and UNIX PIPE ### #
 # 21a. Successfully load the x.zwr content in the database
 ##SUSPEND_OUTPUT NONUNICODE_MODE
-GT.M MUPIP EXTRACT UTF-8
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.zwr -format=zwr UTF-8
 ##ALLOW_OUTPUT NONUNICODE_MODE
 ##SUSPEND_OUTPUT UNICODE_MODE
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.zwr -format=zwr
 ##ALLOW_OUTPUT UNICODE_MODE
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
@@ -844,7 +844,7 @@ LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
 ##SUSPEND_OUTPUT UNICODE_MODE
 # 21c. Successfully load the x.go content in the database
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.go -format=go
 ##FILTERED##..-...-....  ..:..:..
 Beginning LOAD at record number: 3
 
@@ -860,10 +860,10 @@ a random
 # ### 22. Testing Auto File Sensing with UNIX NAMED PIPE ### #
 # 22a. Successfully load the x.zwr content in the database
 ##SUSPEND_OUTPUT NONUNICODE_MODE
-GT.M MUPIP EXTRACT UTF-8
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.zwr -format=zwr UTF-8
 ##ALLOW_OUTPUT NONUNICODE_MODE
 ##SUSPEND_OUTPUT UNICODE_MODE
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.zwr -format=zwr
 ##ALLOW_OUTPUT UNICODE_MODE
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
@@ -883,7 +883,7 @@ LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 8  Max Data Len: 10
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
 ##SUSPEND_OUTPUT UNICODE_MODE
 # 22c. Successfully load the x.go content in the database
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract x.go -format=go
 ##FILTERED##..-...-....  ..:..:..
 Beginning LOAD at record number: 3
 

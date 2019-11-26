@@ -1,5 +1,17 @@
 #!/usr/local/bin/tcsh -f
-#
+#################################################################
+#                                                               #
+# Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.  #
+# All rights reserved.                                          #
+#                                                               #
+#       This source code contains the intellectual property     #
+#       of its copyright holder(s), and is made available       #
+#       under a license.  If you do not know the terms of       #
+#       the license, please stop and do not read further.       #
+#                                                               #
+#################################################################
+# This module is derived from FIS GT.M.
+#################################################################
 ######################################################################################
 # C9D03-002250 Support Long Names
 # [kishore] use of $ZGBLDIR and global variable name environments using Long Names
@@ -35,12 +47,12 @@ EOF
 setenv gtmgbldir "threereg.gld"
 echo "*** mupip extract threereg.glo ***"
 $MUPIP extract threereg.glo
-echo "*** cat threereg.glo ***" 
+echo "*** cat threereg.glo ***"
 cat threereg.glo
 setenv gtmgbldir "fourreg.gld"
 echo "*** mupip extract fourreg.glo ***"
 $MUPIP extract fourreg.glo
-echo "*** cat fourreg.glo ***" 
+echo "*** cat fourreg.glo ***"
 cat fourreg.glo
 
 echo "Trying to forward recover after fresh mupip create"
@@ -60,14 +72,9 @@ $MUPIP extract threereg_afterrecover.glo >>& threereg_extract_afterrecover.log
 setenv gtmgbldir "fourreg.gld"
 $MUPIP extract fourreg_afterrecover.glo >>& fourreg_extract_afterrecover.log
 
-foreach i (`ls *.glo`)
-grep -v 'ZWR$' $i > $i.2
+foreach file ("threereg" "fourreg")
+	echo "extractdiff.csh ${file}.glo ${file}_afterrecover.glo"
+	$gtm_tst/com/extractdiff.csh ${file}.glo ${file}_afterrecover.glo
 end
-
-echo "diff threereg.glo.2 threereg_afterrecover.glo.2"
-diff threereg.glo.2 threereg_afterrecover.glo.2
-echo "diff fourreg.glo.2 fourreg_afterrecover.glo.2"
-diff fourreg.glo.2 fourreg_afterrecover.glo.2
-
 echo "Long Names ZGBLDIR test DONE."
 $gtm_tst/com/dbcheck.csh

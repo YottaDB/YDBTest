@@ -77,7 +77,7 @@ $MUPIP extract x6.ext -select="^A91TLDvnf7ZRJBtld5XPHzrjb3VNFxpa"
 %YDB-I-RECORDSTAT, ^A91TLDvnf7ZRJBtld5XPHzrjb3VNFxp:	  Key cnt: 1  max subsc len: 76  max rec len: 75  max node len: 155
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 76  max rec len: 75  max node len: 155
 cat x6.ext
-##TEST_AWKGT.M MUPIP EXTRACT.*
+##TEST_AWKYottaDB MUPIP EXTRACT.*
 ##TEST_AWK.*
 ^A91TLDvnf7ZRJBtld5XPHzrjb3VNFxp(1,"A91TLDvnf7ZRJBtld5XPHzrjb3VNFxp",2,651)="^A91TLDvnf7ZRJBtld5XPHzrjb3VNFxp(1,""A91TLDvnf7ZRJBtld5XPHzrjb3VNFxp"",2,651)"
 echo ""
@@ -2124,7 +2124,7 @@ GDE>
 
 GDE> 
 %GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
-##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*YottaDB MUPIP EXTRACT *
 
 Beginning LOAD at record number: 2
 

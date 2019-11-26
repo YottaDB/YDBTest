@@ -22,7 +22,7 @@ endif
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=1 -end=1 all.$fmt
-##TEST_AWKGT.M MUPIP EXTRACT.*
+##TEST_AWKYottaDB MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
 
@@ -31,7 +31,7 @@ LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=1 -end=2 all.$fmt
-##TEST_AWKGT.M MUPIP EXTRACT.*
+##TEST_AWKYottaDB MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
 
@@ -40,7 +40,7 @@ LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=2 -end=2 all.$fmt
-##TEST_AWKGT.M MUPIP EXTRACT.*
+##TEST_AWKYottaDB MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
 
@@ -49,7 +49,7 @@ LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=1 -end=3 all.$fmt
-##TEST_AWKGT.M MUPIP EXTRACT.*
+##TEST_AWKYottaDB MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
 
@@ -58,7 +58,7 @@ LOAD TOTAL		Key Cnt: 1  Max Subsc Len: 6  Max Data Len: 400
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=2 -end=10 all.$fmt
-##TEST_AWKGT.M MUPIP EXTRACT.*
+##TEST_AWKYottaDB MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
 
@@ -67,7 +67,7 @@ LOAD TOTAL		Key Cnt: 8  Max Subsc Len: 6  Max Data Len: 400
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=3 -end=10 all.$fmt
-##TEST_AWKGT.M MUPIP EXTRACT.*
+##TEST_AWKYottaDB MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
 
@@ -76,7 +76,7 @@ LOAD TOTAL		Key Cnt: 8  Max Subsc Len: 6  Max Data Len: 400
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=3 all.$fmt
-##TEST_AWKGT.M MUPIP EXTRACT.*
+##TEST_AWKYottaDB MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
 
@@ -85,7 +85,7 @@ LOAD TOTAL		Key Cnt: 11  Max Subsc Len: 6  Max Data Len: 400
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -end=9 all.$fmt
-##TEST_AWKGT.M MUPIP EXTRACT.*
+##TEST_AWKYottaDB MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
 
@@ -94,7 +94,7 @@ LOAD TOTAL		Key Cnt: 7  Max Subsc Len: 6  Max Data Len: 400
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=9 -end=19 all.$fmt
-##TEST_AWKGT.M MUPIP EXTRACT.*
+##TEST_AWKYottaDB MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 9
 
@@ -103,7 +103,7 @@ LOAD TOTAL		Key Cnt: 5  Max Subsc Len: 6  Max Data Len: 400
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=3 -end=5 all.$fmt
-##TEST_AWKGT.M MUPIP EXTRACT.*
+##TEST_AWKYottaDB MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
 
@@ -112,7 +112,7 @@ LOAD TOTAL		Key Cnt: 3  Max Subsc Len: 6  Max Data Len: 400
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=4 -end=4 all.$fmt
-##TEST_AWKGT.M MUPIP EXTRACT.*
+##TEST_AWKYottaDB MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 4
 
@@ -125,7 +125,7 @@ $MUPIP load $fmtstr -begin=5 -end=4 all.$fmt
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=1000000000 -end=1000000000 all.$fmt
-##TEST_AWKGT.M MUPIP EXTRACT.*
+##TEST_AWKYottaDB MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:.. ZWR
 %YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 1000000000.  No records loaded.
 Error reading record number: 14
@@ -134,7 +134,7 @@ Error reading record number: 14
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=2000000000 -end=2000000000 all.$fmt
-##TEST_AWKGT.M MUPIP EXTRACT.*
+##TEST_AWKYottaDB MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:.. ZWR
 %YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 2000000000.  No records loaded.
 Error reading record number: 14
@@ -143,7 +143,7 @@ Error reading record number: 14
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=3000000000 -end=3000000000 all.$fmt
-##TEST_AWKGT.M MUPIP EXTRACT.*
+##TEST_AWKYottaDB MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:.. ZWR
 %YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 3000000000.  No records loaded.
 Error reading record number: 14
@@ -152,7 +152,7 @@ Error reading record number: 14
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=4000000000 -end=4000000000 all.$fmt
-##TEST_AWKGT.M MUPIP EXTRACT.*
+##TEST_AWKYottaDB MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:.. ZWR
 %YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 4000000000.  No records loaded.
 Error reading record number: 14
@@ -161,7 +161,7 @@ Error reading record number: 14
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=4294967295 -end=4294967295 all.$fmt
-##TEST_AWKGT.M MUPIP EXTRACT.*
+##TEST_AWKYottaDB MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:.. ZWR
 %YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 4294967295.  No records loaded.
 Error reading record number: 14
@@ -195,7 +195,7 @@ endif
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=1 -end=1 all.$fmt
-##TEST_AWKGT.M MUPIP EXTRACT.*
+##TEST_AWKYottaDB MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:..
 Beginning LOAD at record number: 3
 
@@ -204,7 +204,7 @@ LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=1 -end=2 all.$fmt
-##TEST_AWKGT.M MUPIP EXTRACT.*
+##TEST_AWKYottaDB MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:..
 Beginning LOAD at record number: 3
 
@@ -213,7 +213,7 @@ LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=2 -end=2 all.$fmt
-##TEST_AWKGT.M MUPIP EXTRACT.*
+##TEST_AWKYottaDB MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:..
 Beginning LOAD at record number: 3
 
@@ -222,7 +222,7 @@ LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=1 -end=3 all.$fmt
-##TEST_AWKGT.M MUPIP EXTRACT.*
+##TEST_AWKYottaDB MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:..
 Beginning LOAD at record number: 3
 
@@ -231,7 +231,7 @@ LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=2 -end=10 all.$fmt
-##TEST_AWKGT.M MUPIP EXTRACT.*
+##TEST_AWKYottaDB MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:..
 Beginning LOAD at record number: 3
 
@@ -240,7 +240,7 @@ LOAD TOTAL		Key Cnt: 4  Max Subsc Len: 6  Max Data Len: 400
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=3 -end=10 all.$fmt
-##TEST_AWKGT.M MUPIP EXTRACT.*
+##TEST_AWKYottaDB MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:..
 Beginning LOAD at record number: 3
 
@@ -249,7 +249,7 @@ LOAD TOTAL		Key Cnt: 4  Max Subsc Len: 6  Max Data Len: 400
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=3 all.$fmt
-##TEST_AWKGT.M MUPIP EXTRACT.*
+##TEST_AWKYottaDB MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:..
 Beginning LOAD at record number: 3
 
@@ -258,7 +258,7 @@ LOAD TOTAL		Key Cnt: 11  Max Subsc Len: 6  Max Data Len: 400
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -end=9 all.$fmt
-##TEST_AWKGT.M MUPIP EXTRACT.*
+##TEST_AWKYottaDB MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:..
 Beginning LOAD at record number: 3
 
@@ -267,7 +267,7 @@ LOAD TOTAL		Key Cnt: 3  Max Subsc Len: 6  Max Data Len: 400
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=9 -end=19 all.$fmt
-##TEST_AWKGT.M MUPIP EXTRACT.*
+##TEST_AWKYottaDB MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:..
 Beginning LOAD at record number: 9
 
@@ -276,7 +276,7 @@ LOAD TOTAL		Key Cnt: 5  Max Subsc Len: 6  Max Data Len: 400
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=3 -end=5 all.$fmt
-##TEST_AWKGT.M MUPIP EXTRACT.*
+##TEST_AWKYottaDB MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:..
 Beginning LOAD at record number: 3
 
@@ -285,7 +285,7 @@ LOAD TOTAL		Key Cnt: 1  Max Subsc Len: 6  Max Data Len: 400
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=4 -end=4 all.$fmt
-##TEST_AWKGT.M MUPIP EXTRACT.*
+##TEST_AWKYottaDB MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:..
 Beginning LOAD at record number: 4
 
@@ -302,7 +302,7 @@ $MUPIP load $fmtstr -begin=5 -end=4 all.$fmt
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=1000000000 -end=1000000000 all.$fmt
-##TEST_AWKGT.M MUPIP EXTRACT.*
+##TEST_AWKYottaDB MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:..
 %YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 1000000000.  No records loaded.
 Error reading record number: 25
@@ -311,7 +311,7 @@ Error reading record number: 25
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=2000000000 -end=2000000000 all.$fmt
-##TEST_AWKGT.M MUPIP EXTRACT.*
+##TEST_AWKYottaDB MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:..
 %YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 2000000000.  No records loaded.
 Error reading record number: 25
@@ -320,7 +320,7 @@ Error reading record number: 25
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=3000000000 -end=3000000000 all.$fmt
-##TEST_AWKGT.M MUPIP EXTRACT.*
+##TEST_AWKYottaDB MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:..
 %YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 3000000000.  No records loaded.
 Error reading record number: 25
@@ -329,7 +329,7 @@ Error reading record number: 25
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=4000000000 -end=4000000000 all.$fmt
-##TEST_AWKGT.M MUPIP EXTRACT.*
+##TEST_AWKYottaDB MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:..
 %YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 4000000000.  No records loaded.
 Error reading record number: 25
@@ -338,7 +338,7 @@ Error reading record number: 25
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=4294967295 -end=4294967295 all.$fmt
-##TEST_AWKGT.M MUPIP EXTRACT.*
+##TEST_AWKYottaDB MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:..
 %YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 4294967295.  No records loaded.
 Error reading record number: 25
@@ -371,7 +371,7 @@ else
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=1 -end=1 all.$fmt
-##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*YottaDB MUPIP EXTRACT.*
 
 Beginning LOAD at record number: 2
 
@@ -380,7 +380,7 @@ LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=1 -end=2 all.$fmt
-##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*YottaDB MUPIP EXTRACT.*
 
 Beginning LOAD at record number: 2
 
@@ -389,7 +389,7 @@ LOAD TOTAL		Key Cnt: 1  Max Subsc Len: 6  Max Data Len: 400
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=2 -end=2 all.$fmt
-##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*YottaDB MUPIP EXTRACT.*
 
 Beginning LOAD at record number: 2
 
@@ -398,7 +398,7 @@ LOAD TOTAL		Key Cnt: 1  Max Subsc Len: 6  Max Data Len: 400
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=1 -end=3 all.$fmt
-##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*YottaDB MUPIP EXTRACT.*
 
 Beginning LOAD at record number: 2
 
@@ -407,7 +407,7 @@ LOAD TOTAL		Key Cnt: 2  Max Subsc Len: 6  Max Data Len: 400
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=2 -end=10 all.$fmt
-##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*YottaDB MUPIP EXTRACT.*
 
 Beginning LOAD at record number: 2
 
@@ -416,7 +416,7 @@ LOAD TOTAL		Key Cnt: 9  Max Subsc Len: 6  Max Data Len: 400
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=3 -end=10 all.$fmt
-##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*YottaDB MUPIP EXTRACT.*
 
 Beginning LOAD at record number: 3
 
@@ -425,7 +425,7 @@ LOAD TOTAL		Key Cnt: 8  Max Subsc Len: 6  Max Data Len: 400
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=3 all.$fmt
-##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*YottaDB MUPIP EXTRACT.*
 
 Beginning LOAD at record number: 3
 
@@ -434,7 +434,7 @@ LOAD TOTAL		Key Cnt: 10  Max Subsc Len: 6  Max Data Len: 400
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -end=9 all.$fmt
-##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*YottaDB MUPIP EXTRACT.*
 
 Beginning LOAD at record number: 2
 
@@ -443,7 +443,7 @@ LOAD TOTAL		Key Cnt: 8  Max Subsc Len: 6  Max Data Len: 400
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=9 -end=19 all.$fmt
-##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*YottaDB MUPIP EXTRACT.*
 
 Beginning LOAD at record number: 9
 
@@ -452,7 +452,7 @@ LOAD TOTAL		Key Cnt: 4  Max Subsc Len: 6  Max Data Len: 400
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=3 -end=5 all.$fmt
-##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*YottaDB MUPIP EXTRACT.*
 
 Beginning LOAD at record number: 3
 
@@ -461,7 +461,7 @@ LOAD TOTAL		Key Cnt: 3  Max Subsc Len: 6  Max Data Len: 400
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=4 -end=4 all.$fmt
-##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*YottaDB MUPIP EXTRACT.*
 
 Beginning LOAD at record number: 4
 
@@ -474,7 +474,7 @@ $MUPIP load $fmtstr -begin=5 -end=4 all.$fmt
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=1000000000 -end=1000000000 all.$fmt
-##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*YottaDB MUPIP EXTRACT.*
 
 %YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 1000000000.  No records loaded.
 Error reading record number: 13
@@ -483,7 +483,7 @@ Error reading record number: 13
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=2000000000 -end=2000000000 all.$fmt
-##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*YottaDB MUPIP EXTRACT.*
 
 %YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 2000000000.  No records loaded.
 Error reading record number: 13
@@ -492,7 +492,7 @@ Error reading record number: 13
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=3000000000 -end=3000000000 all.$fmt
-##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*YottaDB MUPIP EXTRACT.*
 
 %YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 3000000000.  No records loaded.
 Error reading record number: 13
@@ -501,7 +501,7 @@ Error reading record number: 13
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=4000000000 -end=4000000000 all.$fmt
-##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*YottaDB MUPIP EXTRACT.*
 
 %YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 4000000000.  No records loaded.
 Error reading record number: 13
@@ -510,7 +510,7 @@ Error reading record number: 13
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=4294967295 -end=4294967295 all.$fmt
-##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*YottaDB MUPIP EXTRACT.*
 
 %YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 4294967295.  No records loaded.
 Error reading record number: 13

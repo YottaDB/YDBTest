@@ -120,7 +120,7 @@ Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 150  max subsc len: 7  max rec len: 1  max node len: 11
 # Setup white box test cases WBTEST_FAKE_BIG_KEY_COUNT to get a fake big key count.
 # MUPIP load fextr.zwr
-GT.M MUPIP EXTRACT
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract fextr.zwr -format=zwr
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
 

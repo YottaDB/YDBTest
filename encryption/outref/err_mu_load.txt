@@ -167,14 +167,14 @@ mumps.dat
 Mupip load without gtm_passwd
 ---------------------------------------
 unsetenv gtm_passwd
-##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*YottaDB MUPIP EXTRACT.*
 
 %YDB-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file ext1.bin. Environment variable ydb_passwd/gtm_passwd not set
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ---------------------------------------
 Mupip load with bad gtm_passwd
 ---------------------------------------
-##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*GT.M MUPIP EXTRACT *
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*YottaDB MUPIP EXTRACT.*
 
 ##TEST_AWK%YDB-E-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ext1.bin. .*
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions

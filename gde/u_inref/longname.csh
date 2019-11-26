@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -71,7 +71,7 @@ foreach fname (a b d mumps temp)
 	#
 	$grep -v ZWR ${fname}_extract.glo >! gde_long1_${fname}.out
 	echo "### gde_long1_$fname.out ###" >>&! gde_long1_combined.out
-	sed 's/GT.M MUPIP EXTRACT.*/GT.M MUPIP EXTRACT/g' gde_long1_$fname.out >>&! gde_long1_combined.out
+	sed 's/YottaDB MUPIP EXTRACT.*/YottaDB MUPIP EXTRACT/g' gde_long1_$fname.out >>&! gde_long1_combined.out
 end #end of foreach
 \diff $gtm_tst/$tst/u_inref/gde_long1.txt gde_long1_combined.out >& gde_long1_combined.dif
 if ($status) then
@@ -143,7 +143,7 @@ while ($iter <= $maxlen)
 	#
 	$grep -v ZWR ${fname}_extract.glo >! gde_long2_${fname}.out
 	echo "### gde_long2_$fname.out ###" >>&! gde_long2_combined.out
-	sed 's/GT.M MUPIP EXTRACT.*/GT.M MUPIP EXTRACT/g' gde_long2_$fname.out >>&! gde_long2_combined.out
+	sed 's/YottaDB MUPIP EXTRACT.*/YottaDB MUPIP EXTRACT/g' gde_long2_$fname.out >>&! gde_long2_combined.out
 	@ iter = $iter + 1
 end
 \diff $gtm_tst/$tst/u_inref/gde_long2.txt gde_long2_combined.out >& gde_long2.dif
@@ -203,7 +203,7 @@ while ($iter <= 61)
 	#
 	$grep -v ZWR ${fname}_extract.glo >! gde_long3_$fname.out
 	echo "### gde_long3_$fname.out ###" >>&! gde_long3_combined.out
-	sed 's/GT.M MUPIP EXTRACT.*/GT.M MUPIP EXTRACT/g' gde_long3_$fname.out >>&! gde_long3_combined.out
+	sed 's/YottaDB MUPIP EXTRACT.*/YottaDB MUPIP EXTRACT/g' gde_long3_$fname.out >>&! gde_long3_combined.out
 	@ iter = $iter + 1
 end
 \diff $gtm_tst/$tst/u_inref/gde_long3.txt gde_long3_combined.out >& gde_long3.dif

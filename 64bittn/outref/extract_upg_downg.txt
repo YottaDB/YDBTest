@@ -11,7 +11,7 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
 MUPIP load v4.zwr
-GT.M MUPIP EXTRACT
+TEST_AWKYottaDB MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
 
@@ -23,7 +23,7 @@ No errors detected by integ.
  --> Verify Directory Tree : PASS
  --> Verify all Global Variable Tree : PASS
 MUPIP load -format=bin v4.bin
-Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................GT.M MUPIP EXTRACT              
+Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................YottaDB MUPIP EXTRACT              
 
 Beginning LOAD at record number: 2
 
@@ -47,7 +47,7 @@ The GTM version is switched to ##FILTERED##PRIORVER##
 	##TEST_PATH##/mumps.gld
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 MUPIP load v5.zwr
-GT.M MUPIP EXTRACT
+TEST_AWKYottaDB MUPIP EXTRACT.*
 ##FILTERED##..-...-....  ..:..:.. ZWR
 LOAD TOTAL:         Key cnt: ##KEYCOUNT## max subsc len: ##MAX_SUBSC_LEN## max data len: ##MAX_DATA_LEN##
 ##TEST_AWK%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: [0-9]*

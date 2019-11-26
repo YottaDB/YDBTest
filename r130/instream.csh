@@ -30,6 +30,7 @@
 # ydb545 [see]  Test that a LOCK cmd subsequent to a LOCk cmd that failed with an error does not return BADLOCKNEST
 # ydb553 [nars] Test boolean expression compiles involving NOT operator (') and side effects (used to spin loop if ydb_boolean=1)
 # ydb547 [nars] Test that no SYSTEM-E-UNKNOWN/SIG-11 occurs on ARMV7L when invoked function is hundred thousands of M lines apart
+# ydb493 [gm]	Ensures default label seen with extract and load has yottadb, path, command & parameters
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r130 test starts..."
@@ -37,7 +38,7 @@ echo "r130 test starts..."
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic "ydb470 ydb482 ydb174 ydb390 ydb476 ydb511 ydb513 ydb485 ydb518 ydb520 ydb503 ydb515 ydb519 ydb545"
-setenv subtest_list_non_replic "${subtest_list_non_replic} ydb553 ydb547"
+setenv subtest_list_non_replic "${subtest_list_non_replic} ydb553 ydb547 ydb493"
 setenv subtest_list_replic     ""
 
 

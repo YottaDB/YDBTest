@@ -4,6 +4,9 @@
 # Copyright (c) 2012-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries. 	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -29,7 +32,5 @@ $gtm_exe/mupip extract kill.ext		# Expect NOSELECT error
 $gtm_exe/mupip load set.ext
 $gtm_exe/mumps -run verify^setexklo	# expect PASS
 $gtm_exe/mupip extract load.ext
-sed '2s/.*/##TIMESTAMP_FILTERED/' set.ext > set.ext.filtered
-sed '2s/.*/##TIMESTAMP_FILTERED/' load.ext > load.ext.filtered
-diff {set,load}.ext.filtered		# expect NO diff
+$gtm_tst/com/extractdiff.csh set.ext load.ext		# expect NO diff
 $gtm_tst/com/dbcheck.csh

@@ -1332,9 +1332,9 @@ Output File:
 %YDB-I-RECORDSTAT, ^xyz:	  Key cnt: 10  max subsc len: 8  max rec len: 14  max node len: 24
 %YDB-I-RECORDSTAT, ^zvar:	  Key cnt: 90  max subsc len: 47  max rec len: 25  max node len: 76
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 264  max subsc len: 47  max rec len: 25  max node len: 76
-GT.M MUPIP EXTRACT UTF-8
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract ｍｕｐｉｐｅｘｔ1.ext UTF-8
 ##FILTERED##..-...-....  ..:..:.. ZWR
-GT.M MUPIP EXTRACT UTF-8
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract UTF-8
 ##FILTERED##..-...-....  ..:..:.. ZWR
 ###################################################################
 #- mupip load using a filename with multi-byte characters.
@@ -1350,7 +1350,7 @@ GT.M MUPIP EXTRACT UTF-8
 %SYSTEM-E-ENO17, File exists
 %YDB-F-DBNOCRE, Not all specified database files, or their associated journal files were created
 # mupip load ｍｕｐｉｐｅｘｔ1.ext
-GT.M MUPIP EXTRACT UTF-8
+YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract ｍｕｐｉｐｅｘｔ1.ext UTF-8
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
 

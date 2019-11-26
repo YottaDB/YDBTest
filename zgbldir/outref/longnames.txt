@@ -106,7 +106,7 @@ YDB>
 %YDB-I-RECORDSTAT, ^xasalongvariable:	  Key cnt: 1  max subsc len: 18  max rec len: 21  max node len: 43
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 24  max subsc len: 33  max rec len: 48  max node len: 85
 *** cat threereg.glo ***
-##TEST_AWKGT.M.*
+##TEST_AWKYottaDB.*
 ##FILTERED##..-...-....  ..:..:.. ZWR
 ^abcdefghi="abcdefghi in fourreg.gld"
 ^abcdefghij="abcdefghij in fourreg.gld"
@@ -160,7 +160,7 @@ YDB>
 %YDB-I-RECORDSTAT, ^xasalongvariable2:	  Key cnt: 1  max subsc len: 19  max rec len: 22  max node len: 45
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 25  max subsc len: 33  max rec len: 47  max node len: 84
 *** cat fourreg.glo ***
-##TEST_AWKGT.M.*
+##TEST_AWKYottaDB.*
 ##FILTERED##..-...-....  ..:..:.. ZWR
 ^abcdefghi="abcdefghi in fourreg.gld"
 ^abcdefghij="abcdefghij in fourreg.gld"
@@ -190,8 +190,8 @@ YDB>
 Trying to forward recover after fresh mupip create
 Recreating the data files
 Recovering the database
-diff threereg.glo.2 threereg_afterrecover.glo.2
-diff fourreg.glo.2 fourreg_afterrecover.glo.2
+extractdiff.csh threereg.glo threereg_afterrecover.glo
+extractdiff.csh fourreg.glo fourreg_afterrecover.glo
 Long Names ZGBLDIR test DONE.
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
