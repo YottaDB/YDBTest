@@ -10,9 +10,9 @@
 #								#
 #################################################################
 # Never invoked as a base script. Always sourced from a caller tcsh script (e.g. sourceInstall.csh, diffDir.csh etc.).
-set linux_distrib = `awk -F= '$1 == "ID" {print $2}' /etc/os-release`
+set linux_distrib = `awk -F= '$1 == "ID" {print $2}' /etc/os-release | sed 's/"//g'`
 set osver = `awk -F= '$1 == "VERSION_ID" {print $2}' /etc/os-release | sed 's/"//g'`
 set installoptions = ""
-if (("$linux_distrib" == "arch") || (("$linux_distrib" == "debian") && (`uname -m` == "aarch64")) || (("$linux_distrib" == "ubuntu") && ("16.04" == "$osver"))) then
+if (("$linux_distrib" == "arch") || (("$linux_distrib" == "debian") && (`uname -m` == "aarch64")) || (("$linux_distrib" == "ubuntu") && ("16.04" == "$osver")) || ("centos" == "$linux_distrib")) then
 	set installoptions = "$installoptions --force-install"
 endif

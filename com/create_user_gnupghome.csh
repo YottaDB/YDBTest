@@ -4,6 +4,9 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -55,6 +58,7 @@ endif
 # If $gnupghome_source has been rebuilt, remove the user's copy, so it could be recreated.
 set tmp_dir = "$tmp_dir/$USER"
 if ((-M $gnupghome_source/gpg.conf) > (-M $tmp_dir/gpg.conf)) then
+	chmod -R 775 $tmp_dir >>&! $log_file		# Make things so we CAN remove dir
 	rm -rf $tmp_dir >>&! $log_file
 	if ($status) then
 		echo "Removing stale $tmp_dir failed"
