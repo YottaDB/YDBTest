@@ -15,7 +15,7 @@
 #
 echo '# The $translate command returns a string that results from replacing or dropping'
 echo 'characters in the first of its arguments as specified by the pattern of its other arguments.'
-echo 'In V6.3-006 and V6.3-007, it could cause a seg11 if a previous call to $translate had been'
+echo 'In V6.3-006 and V6.3-007, it could cause a sig11 if a previous call to $translate had been'
 echo 'passed an undefined argument.'
 
 echo '# Verifying that "$translate" does not sig11'

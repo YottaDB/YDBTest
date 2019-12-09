@@ -111,6 +111,7 @@ int main()
 	callin3.handle = NULL;
 	randStr.address = (char *)(malloc(YDB_MAX_STR));
 	zHash.address = (char *)(malloc(32));
+	zHash.length = 32;
 	for (int i = 0; i < 1000; i++)
 	{
 		randStr.length = YDB_MAX_STR;
