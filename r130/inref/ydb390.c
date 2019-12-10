@@ -37,7 +37,7 @@ int main()
 	len = 4;
 	ydb_mmrhash_128("test", len, salt, &out);
 	ydb_mmrhash_128_hex(&out, buffer);
-	printf("The hash of \"test\" with a salt of 0 is: ");
+	printf("The hash of \"test\" with a salt of 0 is: 0x");
 	for (int i = 0; i < 32; i++)
 	{
 		printf("%c", buffer[i]);
@@ -46,7 +46,7 @@ int main()
 	salt = 5;
 	ydb_mmrhash_128("test", len, salt, &out);
 	ydb_mmrhash_128_hex(&out, buffer);
-	printf("The hash of \"test\" with a salt of 5 is: ");
+	printf("The hash of \"test\" with a salt of 5 is: 0x");
 	for (int i = 0; i < 32; i++)
 	{
 		printf("%c", buffer[i]);
@@ -55,7 +55,7 @@ int main()
 	salt = 0;
 	ydb_mmrhash_128("test", len, salt, &out);
 	ydb_mmrhash_128_hex(&out, buffer);
-	printf("The hash of \"test\" with a salt of 0 is: ");
+	printf("The hash of \"test\" with a salt of 0 is: 0x");
 	for (int i = 0; i < 32; i++)
 	{
 		printf("%c", buffer[i]);
@@ -64,7 +64,7 @@ int main()
 	len = 7;
 	ydb_mmrhash_128("YottaDB", len, salt, &out);
 	ydb_mmrhash_128_hex(&out, buffer);
-	printf("The hash of \"YottaDB\" with a salt of 0 is: ");
+	printf("The hash of \"YottaDB\" with a salt of 0 is: 0x");
 	for (int i = 0; i < 32; i++)
 	{
 		printf("%c", buffer[i]);
@@ -74,7 +74,7 @@ int main()
 	salt = 63008;
 	ydb_mmrhash_128("This test was added in YottaDB version R1.30", len, salt, &out);
 	ydb_mmrhash_128_hex(&out, buffer);
-	printf("The hash of \"This test was added in YottaDB version R1.30\" with a salt of 63008 is: ");
+	printf("The hash of \"This test was added in YottaDB version R1.30\" with a salt of 63008 is: 0x");
 	for (int i = 0; i < 32; i++)
 	{
 		printf("%c", buffer[i]);
@@ -83,7 +83,8 @@ int main()
 	len = 158;
 	salt = 6441898;
 	ydb_mmrhash_128("YottaDB is a new kind of database company, delivering a proven database engine to your application, enhancing simplicity, security, stability and scalability.", len, salt, &out);
-	printf("The hash of \"YottaDB is a new kind of database company, delivering a proven database engine to your application, enhancing simplicity, security, stability and scalability.\" with a salt of 6441898 is: ");
+	ydb_mmrhash_128_hex(&out, buffer);
+	printf("The hash of \"YottaDB is a new kind of database company, delivering a proven database engine to your application, enhancing simplicity, security, stability and scalability.\" with a salt of 6441898 is: 0x");
 	for (int i = 0; i < 32; i++)
 	{
 		printf("%c", buffer[i]);
@@ -92,7 +93,8 @@ int main()
 	len = 137;
 	salt = 1610;
 	ydb_mmrhash_128("YottaDB compiles XECUTE <literal> at compile time when the literal is valid YottaDB code that has minimal impact on the M virtual machine", len, salt, &out);
-	printf("The hash of \"YottaDB compiles XECUTE <literal> at compile time when the literal is valid YottaDB code that has minimal impact on the M virtual machine\" with a salt of 1610 is: ");
+	ydb_mmrhash_128_hex(&out, buffer);
+	printf("The hash of \"YottaDB compiles XECUTE <literal> at compile time when the literal is valid YottaDB code that has minimal impact on the M virtual machine\" with a salt of 1610 is: 0x");
 	for (int i = 0; i < 32; i++)
 	{
 		printf("%c", buffer[i]);
@@ -110,8 +112,8 @@ int main()
 	callin3.rtn_name.length = 4;
 	callin3.handle = NULL;
 	randStr.address = (char *)(malloc(YDB_MAX_STR));
-	zHash.address = (char *)(malloc(32));
-	zHash.length = 32;
+	zHash.address = (char *)(malloc(34)); /* 2 for the "0x", 32 for the hash */
+	zHash.length = 34;
 	for (int i = 0; i < 1000; i++)
 	{
 		randStr.length = YDB_MAX_STR;
@@ -139,7 +141,7 @@ int main()
 			printf("FAIL: ydb_cip() did not return the correct status. Got: %d; Expected: %d\n", status, YDB_OK);
 			break;
 		}
-		if (!strcmp(buffer, zHash.address))
+		if (!strcmp(buffer, (zHash.address + 2)))
 		{
 			printf("FAIL: ydb_mmrhash_128 and $ZHASH returned different hashes on the same input string and salt.\n");
 			printf("The input string was \"");
@@ -154,7 +156,7 @@ int main()
 				printf("%c", buffer[i]);
 			}
 			printf("\nThe hash prodcuted by $ZHASH was: ");
-			for (int i = 0; i < 32; i++)
+			for (int i = 2; i < 34; i++)
 			{
 				printf("%c", zHash.address[i]);
 			}
