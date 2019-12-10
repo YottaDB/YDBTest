@@ -1,0 +1,34 @@
+
+Testing ZSigproc with invalid string signal name as second argument
+checking zsigproc's handling of invalid input having mixed value
+Completed
+
+
+Testing ZSigproc with valid string signal name as second argument
+Second argument as SIGUSR1
+$zinterrupt = write "interrupt occurred at : ",$stack($stack-1,"PLACE"),! set $ztexit=1
+delivering interrupt
+interrupt sent to process
+interrupt occurred at : zsigprocint+5^zsigprocint
+
+Second argument as 10
+$zinterrupt = write "interrupt occurred at : ",$stack($stack-1,"PLACE"),! set $ztexit=1
+delivering interrupt
+interrupt sent to process
+interrupt occurred at : zsigprocint+5^zsigprocint
+
+Second argument as string 10
+$zinterrupt = write "interrupt occurred at : ",$stack($stack-1,"PLACE"),! set $ztexit=1
+delivering interrupt
+interrupt sent to process
+interrupt occurred at : zsigprocint+5^zsigprocint
+
+Second argument as usr1
+$zinterrupt = write "interrupt occurred at : ",$stack($stack-1,"PLACE"),! set $ztexit=1
+delivering interrupt
+interrupt sent to process
+interrupt occurred at : zsigprocint+5^zsigprocint
+
+Completed
+
+

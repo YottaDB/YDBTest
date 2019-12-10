@@ -3,6 +3,9 @@
 ; Copyright (c) 2003-2015 Fidelity National Information 	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.       ;
+; All rights reserved.                                          ;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -59,7 +62,7 @@ discint
 	;
 	; Generate interrupt. SIGINT is represented by the
 	; sigusrval environment variable on each platform
-	i '$ZSigproc($j,$ztrnlnm("sigusrval")) w !,"SIGUSR1 sent to process",!
+	i '$ZSigproc($j,"SIGUSR1") w !,"SIGUSR1 sent to process",!
 	;
 	f j=x+1:1:y d
 	. s ^ZTEDEF(j)=$$fib(j)
@@ -119,7 +122,7 @@ fib(n)
 discard
 	s $ZTE="4rethrow"
 	w !,"Interrupt issued to process",!
-	i '$ZSigproc($j,$ztrnlnm("sigusrval")) w !,"SIGUSR1 sent to process"
+	i '$ZSigproc($j,"SIGUSR1") w !,"SIGUSR1 sent to process"
 	e  w !,"Interrupt discarded - can't interrput process while $ZINI=1"
 	w !,"**************************************************************",!
 	q

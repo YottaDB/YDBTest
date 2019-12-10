@@ -1,8 +1,19 @@
-cmmit  
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;                                                               ;
+; Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.       ;
+; All rights reserved.                                          ;
+;                                                               ;
+;       This source code contains the intellectual property     ;
+;       of its copyright holder(s), and is made available       ;
+;       under a license.  If you do not know the terms of       ;
+;       the license, please stop and do not read further.       ;
+;                                                               ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+cmmit
 	s $zint="d lthrint"
 	s $ZTE=1
 	s x=4
-	f j=1:1:x d 
+	f j=1:1:x d
 	. s num(j,"fibval")=$$fib(j)
 	;
 	tstart ()
@@ -10,7 +21,7 @@ cmmit
 	w !,"$ZTEXIT -> ",$ZTE
 	;
 	w !,"Interrupt signal sent....",!
-	i '$ZSigproc($j,$ztrnlnm("sigusrval")) w !,"SIGUSR1 sent to process"
+	i '$ZSigproc($j,"sigusr1") w !,"SIGUSR1 sent to process"
 	f i=1:1:4 d
 	s fact(i)=$$^fact(i)
 	;
@@ -26,7 +37,7 @@ cmmit
 	;
 	;
 	tcommit
-	w !,"End of transaction....",!    
+	w !,"End of transaction....",!
 	w !,"After rethrow..."
 	w !,"$reference -> ",$reference
 	w !,"$test -> ",$test
@@ -39,7 +50,7 @@ rollbck
 	s $ZTE=1
 	s x=4
 	;
-	f j=1:1:x d 
+	f j=1:1:x d
 	. s num(j,"fibval")=$$fib(j)
 	;
 	s ^aaa=1111          ;$reference
@@ -51,12 +62,12 @@ rollbck
 	w !,"$ZTEXIT -> ",$ZTE
 	;
 	w !,"Interrupt signal sent....",!
-	i '$ZSigproc($j,$ztrnlnm("sigusrval")) w !,"SIGUSR1 sent to process"
+	i '$ZSigproc($j,"sigusr1") w !,"SIGUSR1 sent to process"
 	f i=1:1:4 d
 	s fact(i)=$$^fact(i)
 	;
 	trollback
-	w !,"End of transaction....",!    
+	w !,"End of transaction....",!
 	w !,"After rethrow..."
 	w !,"$reference -> ",$reference
 	w !,"$test -> ",$test
