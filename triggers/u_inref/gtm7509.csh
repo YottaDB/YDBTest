@@ -107,6 +107,12 @@ echo "# Test case 4 : Replication with multiline and large triggers"
 if ($?save_gtm_custom_errors) then
 	setenv gtm_custom_errors $save_gtm_custom_errors
 endif
+# This part of the test has dependencies on variables not being mapping across regions (using spanning-regions) so disable spanning.
+# Not doing this causes message changes when triggers are added (additional are outputlines when trigger added for a global
+# that spans multiple regions) as well as records from journal extracts added to reference file appear in a different order when
+# that order gets spread across multiple regions.
+setenv save_test_spanreg "$gtm_test_spanreg"
+setenv gtm_test_spanreg 0
 setenv gtm_test_sprgde_id "ID5"	# to differentiate multiple dbcreates done in the same subtest
 $gtm_tst/com/dbcreate_base.csh mumps 2 -record_size=1024 -glob=65536
 $MSR RUN INST2 "$gtm_tst/com/dbcreate_base.csh mumps 2 -record_size=512 -glob=65536"
@@ -150,5 +156,6 @@ $MSR RUN SRC=INST1 RCV=INST2 '$gtm_tst/com/cp_remote_file.csh _REMOTEINFO___RCV_
 echo "# diff trigger extracts from INST1 and INST2. Expect only SAMPLE related diff"
 echo "# MULTILINE trigger should be the same and not show up in the diff below"
 diff INST1.trg INST2.trg
+setenv gtm_test_spanreg "$save_test_spanreg"
 # Both the database and the trigger definitions will be different on primary and secondary - do not do -extract
 $gtm_tst/com/dbcheck.csh
