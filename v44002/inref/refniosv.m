@@ -26,7 +26,7 @@ cmmit
 	w !,"Interrupt signal sent....",!
 	i '$ZSigproc($j,"sigusr1") w !,"SIGUSR1 sent to process"
 	f i=1:1:4 d
-	s fact(i)=$$^fact(i)
+	. s fact(i)=$$^fact(i)
 	;
 	s ^aaa=1111          ;$reference
 	i $d(^aaa) w !,"gbl var ^aaa set"
