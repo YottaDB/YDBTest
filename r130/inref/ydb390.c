@@ -26,7 +26,7 @@ int main()
 {
 	ydb_uint16		out;
 	uint4			salt;
-	int			len, status, randSalt;
+	int			len, status, randSalt, i;
 	unsigned char		buffer[32];
 	ydb_string_t		randStr, zHash;
 	ci_name_descriptor	callin1, callin2, callin3, callin4;
@@ -38,7 +38,7 @@ int main()
 	ydb_mmrhash_128("test", len, salt, &out);
 	ydb_mmrhash_128_hex(&out, buffer);
 	printf("The hash of \"test\" with a salt of 0 is: 0x");
-	for (int i = 0; i < 32; i++)
+	for (i = 0; i < 32; i++)
 	{
 		printf("%c", buffer[i]);
 	}
@@ -47,7 +47,7 @@ int main()
 	ydb_mmrhash_128("test", len, salt, &out);
 	ydb_mmrhash_128_hex(&out, buffer);
 	printf("The hash of \"test\" with a salt of 5 is: 0x");
-	for (int i = 0; i < 32; i++)
+	for (i = 0; i < 32; i++)
 	{
 		printf("%c", buffer[i]);
 	}
@@ -56,7 +56,7 @@ int main()
 	ydb_mmrhash_128("test", len, salt, &out);
 	ydb_mmrhash_128_hex(&out, buffer);
 	printf("The hash of \"test\" with a salt of 0 is: 0x");
-	for (int i = 0; i < 32; i++)
+	for (i = 0; i < 32; i++)
 	{
 		printf("%c", buffer[i]);
 	}
@@ -65,7 +65,7 @@ int main()
 	ydb_mmrhash_128("YottaDB", len, salt, &out);
 	ydb_mmrhash_128_hex(&out, buffer);
 	printf("The hash of \"YottaDB\" with a salt of 0 is: 0x");
-	for (int i = 0; i < 32; i++)
+	for (i = 0; i < 32; i++)
 	{
 		printf("%c", buffer[i]);
 	}
@@ -75,7 +75,7 @@ int main()
 	ydb_mmrhash_128("This test was added in YottaDB version R1.30", len, salt, &out);
 	ydb_mmrhash_128_hex(&out, buffer);
 	printf("The hash of \"This test was added in YottaDB version R1.30\" with a salt of 63008 is: 0x");
-	for (int i = 0; i < 32; i++)
+	for (i = 0; i < 32; i++)
 	{
 		printf("%c", buffer[i]);
 	}
@@ -85,7 +85,7 @@ int main()
 	ydb_mmrhash_128("YottaDB is a new kind of database company, delivering a proven database engine to your application, enhancing simplicity, security, stability and scalability.", len, salt, &out);
 	ydb_mmrhash_128_hex(&out, buffer);
 	printf("The hash of \"YottaDB is a new kind of database company, delivering a proven database engine to your application, enhancing simplicity, security, stability and scalability.\" with a salt of 6441898 is: 0x");
-	for (int i = 0; i < 32; i++)
+	for (i = 0; i < 32; i++)
 	{
 		printf("%c", buffer[i]);
 	}
@@ -95,7 +95,7 @@ int main()
 	ydb_mmrhash_128("YottaDB compiles XECUTE <literal> at compile time when the literal is valid YottaDB code that has minimal impact on the M virtual machine", len, salt, &out);
 	ydb_mmrhash_128_hex(&out, buffer);
 	printf("The hash of \"YottaDB compiles XECUTE <literal> at compile time when the literal is valid YottaDB code that has minimal impact on the M virtual machine\" with a salt of 1610 is: 0x");
-	for (int i = 0; i < 32; i++)
+	for (i = 0; i < 32; i++)
 	{
 		printf("%c", buffer[i]);
 	}
@@ -114,7 +114,7 @@ int main()
 	randStr.address = (char *)(malloc(YDB_MAX_STR));
 	zHash.address = (char *)(malloc(34)); /* 2 for the "0x", 32 for the hash */
 	zHash.length = 34;
-	for (int i = 0; i < 1000; i++)
+	for (i = 0; i < 1000; i++)
 	{
 		randStr.length = YDB_MAX_STR;
 		status = ydb_cip(&callin1, &randStr);
@@ -145,18 +145,18 @@ int main()
 		{
 			printf("FAIL: ydb_mmrhash_128 and $ZHASH returned different hashes on the same input string and salt.\n");
 			printf("The input string was \"");
-			for (int i = 0; i < 32; i++)
+			for (i = 0; i < 32; i++)
 			{
 				printf("%c", randStr.address[i]);
 			}
 			printf("\".\n");
 			printf("The hash produced by ydb_mmrhash_128 was: ");
-			for (int i = 0; i < 32; i++)
+			for (i = 0; i < 32; i++)
 			{
 				printf("%c", buffer[i]);
 			}
 			printf("\nThe hash prodcuted by $ZHASH was: ");
-			for (int i = 2; i < 34; i++)
+			for (i = 2; i < 34; i++)
 			{
 				printf("%c", zHash.address[i]);
 			}
