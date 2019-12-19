@@ -19,13 +19,14 @@
 # ydb174                [bdw]           Ensures that naked references follow the max subscript limit
 # ydb390		[bdw]		Tests $ZHASH and ydb_mmrhash_128 to ensure that their outputs are equivalent
 # ydb476		[gm]		Tests $ZSigproc for its correctness with named string signal value as second argument
+# ydb511		[bdw]		Tests $translate with undefined variables for the 2nd and 3rd arguments.
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r130 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "ydb470 ydb482 ydb174 ydb390 ydb476"
+setenv subtest_list_non_replic "ydb470 ydb482 ydb174 ydb390 ydb476 ydb511"
 setenv subtest_list_replic     ""
 
 
