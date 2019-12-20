@@ -17,10 +17,10 @@ $ydb_dist/yottadb -r ^%XCMD 'kill ^hello("one")'
 
 $ydb_dist/yottadb -r ^%XCMD 'write:$get(^hello("one"),0)="1" "Failed: data already exist"'
 
-echo "\n* mupip load $2 $1"
+echo "\n# mupip load $2 $1"
 $ydb_dist/mupip load $2 $1
 
-echo "\n* check if data is loaded"
+echo "\n# check if data is loaded"
 $ydb_dist/yottadb -r ^%XCMD 'write:$get(^hello("one"),0)="1" "LOAD PASSED"',!
 
 echo "\nDONE"

@@ -1,4 +1,4 @@
-* Invoking switch_chset.csh M
+# Invoking switch_chset.csh M
 setenv gtm_chset M
 unset echo
 ==========================================
@@ -10,19 +10,19 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
 
-* Setting ^hello(one)=1 in database
+# Setting ^hello(one)=1 in database
 
 ==========================================
 Part 2 extract 
 ==========================================
-* Extracting in zwr format
+# Extracting in zwr format
 %YDB-I-RECORDSTAT, ^hello:	  Key cnt: 1  max subsc len: 12  max rec len: 1  max node len: 17
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 12  max rec len: 1  max node len: 17
 YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract -format=zwr extr.zwr
 ##FILTERED##..-...-....  ..:..:.. ZWR
 ^hello("one")="1"
 
-* Extracting in go format
+# Extracting in go format
 %YDB-I-RECORDSTAT, ^hello:	  Key cnt: 1  max subsc len: 12  max rec len: 1  max node len: 17
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 12  max rec len: 1  max node len: 17
 YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract -format=go extr.go
@@ -33,48 +33,45 @@ YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract -format=go extr.go
 ==========================================
 Part 3 load 
 ==========================================
-* Removing .dat files to obtain a clean database for extr.zwr load
 
-* Creating default database
-%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
-
-* Check if the database doesn't have ^hello(one)=1 already
-%YDB-E-GVUNDEF, Global variable undefined: ^hello("one")
-
-* Performing mupip load with zwr format
+# mupip load extr.zwr -format=zwr
 YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract -format=zwr extr.zwr
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 1  Max Subsc Len: 12  Max Data Len: 1
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
+
+# check if data is loaded
 LOAD PASSED
-* Removing .dat files to obtain a clean database for extr.go load
 
-* Creating default database
-%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+DONE
 
-* Check if the database doesn't have ^hello(one)=1 already
-%YDB-E-GVUNDEF, Global variable undefined: ^hello("one")
-
-* Performing mupip load with go format
+# mupip load extr.go -format=go
 YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract -format=go extr.go
 ##FILTERED##..-...-....  ..:..:..
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 1  Max Subsc Len: 12  Max Data Len: 1
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 4
+
+# check if data is loaded
 LOAD PASSED
+
+DONE
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
 
 ===============================================
 Part 4 Extract and Load in ZWR format with UTF8 
 ================================================
 
-* Invoking switch_chset.csh UTF-8
+# Invoking switch_chset.csh UTF-8
 setenv gtm_chset UTF-8
 unset echo
 
-* Creating database
+# Creating database
 ##TEST_AWK.*Global Directory.*
 ##TEST_AWK.*mumps.gld.*
 ##TEST_AWK.*Verification OK.*
@@ -83,23 +80,16 @@ unset echo
 ##TEST_AWK.*mumps.gld.*
 ##TEST_AWK.*mumps.dat.*
 
-* Setting ^hello(one)=1 in database
+# Setting ^hello(one)=1 in database
 
-* Performing mupip extract with zwr format
+# Performing mupip extract with zwr format
 %YDB-I-RECORDSTAT, ^hello:	  Key cnt: 1  max subsc len: 12  max rec len: 1  max node len: 17
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 12  max rec len: 1  max node len: 17
 YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract -format=zwr extr3.zwr UTF-8
 ##FILTERED##..-...-....  ..:..:.. ZWR
 ^hello("one")="1"
-* Removing .dat files to obtain a clean database for extr.zwr load
 
-* Creating default database
-##TEST_AWK.*mumps.dat.*
-
-* Check if the database doesn't have ^hello(one)=1 already
-%YDB-E-GVUNDEF, Global variable undefined: ^hello("one")
-
-* Performing mupip load with zwr format
+# mupip load extr3.zwr -format=zwr
 YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract -format=zwr extr3.zwr UTF-8
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
@@ -107,20 +97,23 @@ Beginning LOAD at record number: 3
 LOAD TOTAL		Key Cnt: 1  Max Subsc Len: 12  Max Data Len: 1
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
 
-YDB>
+# check if data is loaded
 LOAD PASSED
 
-YDB>
+DONE
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
 
 ==========================================
 Part 5 Load onto older version
 ===========================================
 
-* Invoking switch_chset.csh M
+# Invoking switch_chset.csh M
 setenv gtm_chset M
 unset echo
 
-* Switching to older version
+# Switching to older version
 
 ##TEST_AWK.*Global Directory.*
 ##TEST_AWK.*mumps.gld.*
@@ -129,40 +122,42 @@ unset echo
 ##TEST_AWK.*Creating Global Directory file.*
 ##TEST_AWK.*mumps.gld.*
 
-* Creating database
+# Creating database
 ##TEST_AWK.*mumps.dat.*
 
-* Check if the database is empty
+# Check if the database is empty
 ##TEST_AWK.*Global variable undefined.*
 ##TEST_AWK.*
 
 ##TEST_AWK.*>
 
-* Performing mupip load with zwr format
-Has - 
+# Performing mupip load with zwr format
+
+# Check if YottaDB MUPIP EXTRACT is present
 YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract -format=zwr extr.zwr
 
-* Checking if data is loaded
+# Checking if data is loaded
 PASSED
 
-* Removing .dat file to obtain a clean database
+# Removing .dat file to obtain a clean database
 
-* Creating database
+# Creating database
 ##TEST_AWK.*mumps.dat.*
 
-* Check if the database is empty
+# Check if the database is empty
 ##TEST_AWK.*Global variable undefined.*
 ##TEST_AWK.*
 
 ##TEST_AWK.*>
 
-* Performing mupip load with go format
-Has - 
+# Performing mupip load with go format
+
+# Check if YottaDB MUPIP EXTRACT is present
 YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract -format=go extr.go
 
-* Checking if data is loaded
+# Checking if data is loaded
 PASSED
 
-* Removing .dat file to obtain a clean database
+# Removing .dat file to obtain a clean database
 
-* Completed
+# Completed

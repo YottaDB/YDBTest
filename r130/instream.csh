@@ -45,6 +45,7 @@
 # ydb589 [nars]      Test that buffered IO writes inside external call are flushed when YottaDB process output is piped
 # ydb592 [nars]      Test that ps identifies JOB'd process with the same name as the parent
 # ydb594 [nars]      Test SimpleAPI returns correct results if lvn was set using ydb_incr_s()
+# ydb494 [gm]        Ensures that mupip extract handles labels with spaces correctly
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r130 test starts..."
@@ -53,7 +54,7 @@ echo "r130 test starts..."
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic "ydb470 ydb482 ydb174 ydb390 ydb476 ydb511 ydb513 ydb485 ydb518 ydb520 ydb503 ydb515 ydb519 ydb545"
 setenv subtest_list_non_replic "${subtest_list_non_replic} ydb553 ydb547 ydb493 ydb549 ydb562 ydb554 ydb484 ydb534 ydb567 ydb576"
-setenv subtest_list_non_replic "${subtest_list_non_replic} ydb578 ydb492 ydb566 ydb569 ydb589 ydb592 ydb594"
+setenv subtest_list_non_replic "${subtest_list_non_replic} ydb578 ydb492 ydb566 ydb569 ydb589 ydb592 ydb594 ydb494"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then

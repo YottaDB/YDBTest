@@ -2,7 +2,7 @@
 ======================================================
 Part 1 Extract in ZWR, GO & BINARY format with M CHSET
 ======================================================
-* Invoking switch_chset.csh M
+# Invoking switch_chset.csh M
 setenv gtm_chset M
 unset echo
 Files Created in ##TEST_PATH##:
@@ -11,16 +11,16 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
 
-* Setting ^hello(one)=1 in database
-* Extracting in zwr format
+# Setting ^hello(one)=1 in database
+# Extracting in zwr format
 %YDB-I-RECORDSTAT, ^hello:	  Key cnt: 1  max subsc len: 12  max rec len: 1  max node len: 17
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 12  max rec len: 1  max node len: 17
 
-* Extracting in go format
+# Extracting in go format
 %YDB-I-RECORDSTAT, ^hello:	  Key cnt: 1  max subsc len: 12  max rec len: 1  max node len: 17
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 12  max rec len: 1  max node len: 17
 
-* Extracting in binary format
+# Extracting in binary format
 %YDB-I-RECORDSTAT, ^hello:	  Key cnt: 1  max subsc len: 12  max rec len: 1  max node len: 17
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 12  max rec len: 1  max node len: 17
 ##SOURCE_PATH##/mupip
@@ -31,24 +31,24 @@ No errors detected by integ.
 Part 2 Extract in ZWR & BINARY format with UTF8 CHSET
 =====================================================
 
-* Invoking switch_chset.csh UTF-8
+# Invoking switch_chset.csh UTF-8
 setenv gtm_chset UTF-8
 unset echo
 
-* Creating database
+# Creating database
 Files Created in ##TEST_PATH##:
 Using: ##SOURCE_PATH##/mumps -run GDE
 mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
 
-* Setting ^hello(one)=1 in database
+# Setting ^hello(one)=1 in database
 
-* Performing mupip extract with zwr format
+# Performing mupip extract with zwr format
 %YDB-I-RECORDSTAT, ^hello:	  Key cnt: 1  max subsc len: 12  max rec len: 1  max node len: 17
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 12  max rec len: 1  max node len: 17
 
-* Performing mupip extract with binary format
+# Performing mupip extract with binary format
 %YDB-I-RECORDSTAT, ^hello:	  Key cnt: 1  max subsc len: 12  max rec len: 1  max node len: 17
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 12  max rec len: 1  max node len: 17
 ##SOURCE_PATH##/mupip
@@ -59,9 +59,9 @@ No errors detected by integ.
 Part 3 load 
 ==========================================
 
-* loading M extracted files in UTF-8 mode
+# loading M extracted files in UTF-8 mode
 
-* mupip load -ignorechset extr.zwr
+# mupip load -ignorechset extr.zwr
 YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract -format=zwr extr.zwr
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
@@ -69,12 +69,12 @@ Beginning LOAD at record number: 3
 LOAD TOTAL		Key Cnt: 1  Max Subsc Len: 12  Max Data Len: 1
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
 
-* check if data is loaded
+# check if data is loaded
 LOAD PASSED
 
 DONE
 
-* mupip load -ignorechset extr.bin
+# mupip load -ignorechset extr.bin
 Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................YottaDB MUPIP EXTRACT           
 
 Beginning LOAD at record number: 2
@@ -82,12 +82,12 @@ Beginning LOAD at record number: 2
 LOAD TOTAL		Key Cnt: 1  Max Subsc Len: 12  Max Data Len: 1
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 2
 
-* check if data is loaded
+# check if data is loaded
 LOAD PASSED
 
 DONE
 
-* mupip load -ignorechset extr.go
+# mupip load -ignorechset extr.go
 YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract -format=go extr.go
 ##FILTERED##..-...-....  ..:..:..
 Beginning LOAD at record number: 3
@@ -95,14 +95,14 @@ Beginning LOAD at record number: 3
 LOAD TOTAL		Key Cnt: 1  Max Subsc Len: 12  Max Data Len: 1
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 4
 
-* check if data is loaded
+# check if data is loaded
 LOAD PASSED
 
 DONE
 
-* change chset from UTF-8 to M and create db
+# change chset from UTF-8 to M and create db
 
-* Invoking switch_chset.csh M
+# Invoking switch_chset.csh M
 setenv gtm_chset M
 unset echo
 Files Created in ##TEST_PATH##:
@@ -111,9 +111,9 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
 
-* loading UTF-8 extracted files in M mode
+# loading UTF-8 extracted files in M mode
 
-* mupip load -ignorechset extr3.zwr
+# mupip load -ignorechset extr3.zwr
 YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract -format=zwr extr3.zwr UTF-8
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
@@ -121,12 +121,12 @@ Beginning LOAD at record number: 3
 LOAD TOTAL		Key Cnt: 1  Max Subsc Len: 12  Max Data Len: 1
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
 
-* check if data is loaded
+# check if data is loaded
 LOAD PASSED
 
 DONE
 
-* mupip load -ignorechset extr3.bin
+# mupip load -ignorechset extr3.bin
 Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................UTF-8 YottaDB MUPIP EXTRACT     
 
 Beginning LOAD at record number: 2
@@ -134,7 +134,7 @@ Beginning LOAD at record number: 2
 LOAD TOTAL		Key Cnt: 1  Max Subsc Len: 12  Max Data Len: 1
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 2
 
-* check if data is loaded
+# check if data is loaded
 LOAD PASSED
 
 DONE
@@ -143,7 +143,7 @@ DONE
 Part 4 test optional part of -i[gnorechset]
 ==========================================
 
-* mupip load -i extr3.zwr
+# mupip load -i extr3.zwr
 YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract -format=zwr extr3.zwr UTF-8
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
@@ -151,12 +151,12 @@ Beginning LOAD at record number: 3
 LOAD TOTAL		Key Cnt: 1  Max Subsc Len: 12  Max Data Len: 1
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
 
-* check if data is loaded
+# check if data is loaded
 LOAD PASSED
 
 DONE
 
-* mupip load -ig extr3.zwr
+# mupip load -ig extr3.zwr
 YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract -format=zwr extr3.zwr UTF-8
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
@@ -164,12 +164,12 @@ Beginning LOAD at record number: 3
 LOAD TOTAL		Key Cnt: 1  Max Subsc Len: 12  Max Data Len: 1
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
 
-* check if data is loaded
+# check if data is loaded
 LOAD PASSED
 
 DONE
 
-* mupip load -ign extr3.zwr
+# mupip load -ign extr3.zwr
 YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract -format=zwr extr3.zwr UTF-8
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
@@ -177,12 +177,12 @@ Beginning LOAD at record number: 3
 LOAD TOTAL		Key Cnt: 1  Max Subsc Len: 12  Max Data Len: 1
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
 
-* check if data is loaded
+# check if data is loaded
 LOAD PASSED
 
 DONE
 
-* mupip load -igno extr3.zwr
+# mupip load -igno extr3.zwr
 YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract -format=zwr extr3.zwr UTF-8
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
@@ -190,12 +190,12 @@ Beginning LOAD at record number: 3
 LOAD TOTAL		Key Cnt: 1  Max Subsc Len: 12  Max Data Len: 1
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
 
-* check if data is loaded
+# check if data is loaded
 LOAD PASSED
 
 DONE
 
-* mupip load -ignor extr3.zwr
+# mupip load -ignor extr3.zwr
 YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract -format=zwr extr3.zwr UTF-8
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
@@ -203,12 +203,12 @@ Beginning LOAD at record number: 3
 LOAD TOTAL		Key Cnt: 1  Max Subsc Len: 12  Max Data Len: 1
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
 
-* check if data is loaded
+# check if data is loaded
 LOAD PASSED
 
 DONE
 
-* mupip load -ignore extr3.zwr
+# mupip load -ignore extr3.zwr
 YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract -format=zwr extr3.zwr UTF-8
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
@@ -216,12 +216,12 @@ Beginning LOAD at record number: 3
 LOAD TOTAL		Key Cnt: 1  Max Subsc Len: 12  Max Data Len: 1
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
 
-* check if data is loaded
+# check if data is loaded
 LOAD PASSED
 
 DONE
 
-* mupip load -ignorec extr3.zwr
+# mupip load -ignorec extr3.zwr
 YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract -format=zwr extr3.zwr UTF-8
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
@@ -229,12 +229,12 @@ Beginning LOAD at record number: 3
 LOAD TOTAL		Key Cnt: 1  Max Subsc Len: 12  Max Data Len: 1
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
 
-* check if data is loaded
+# check if data is loaded
 LOAD PASSED
 
 DONE
 
-* mupip load -ignorech extr3.zwr
+# mupip load -ignorech extr3.zwr
 YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract -format=zwr extr3.zwr UTF-8
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
@@ -242,12 +242,12 @@ Beginning LOAD at record number: 3
 LOAD TOTAL		Key Cnt: 1  Max Subsc Len: 12  Max Data Len: 1
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
 
-* check if data is loaded
+# check if data is loaded
 LOAD PASSED
 
 DONE
 
-* mupip load -ignorechs extr3.zwr
+# mupip load -ignorechs extr3.zwr
 YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract -format=zwr extr3.zwr UTF-8
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
@@ -255,12 +255,12 @@ Beginning LOAD at record number: 3
 LOAD TOTAL		Key Cnt: 1  Max Subsc Len: 12  Max Data Len: 1
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
 
-* check if data is loaded
+# check if data is loaded
 LOAD PASSED
 
 DONE
 
-* mupip load -ignorechse extr3.zwr
+# mupip load -ignorechse extr3.zwr
 YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract -format=zwr extr3.zwr UTF-8
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
@@ -268,7 +268,7 @@ Beginning LOAD at record number: 3
 LOAD TOTAL		Key Cnt: 1  Max Subsc Len: 12  Max Data Len: 1
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
 
-* check if data is loaded
+# check if data is loaded
 LOAD PASSED
 
 DONE
@@ -277,17 +277,17 @@ DONE
 Part 5 CHSET mismatch error when -ignorechset option is not used and the file is extracted in UTF-8 and being loaded to M
 ==========================================
 
-* mupip load  extr3.zwr
+# mupip load  extr3.zwr
 YottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract -format=zwr extr3.zwr UTF-8
 ##FILTERED##..-...-....  ..:..:.. ZWR
 %YDB-E-LOADINVCHSET, Extract file CHSET (UTF-8) is incompatible with ydb_chset/gtm_chset
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 
-* check if data is loaded
+# check if data is loaded
 
 DONE
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
 
-* Completed
+# Completed
