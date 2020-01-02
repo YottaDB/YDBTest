@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -14,19 +14,20 @@
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 # List of subtests of the form "subtestname [author] description"
 #-------------------------------------------------------------------------------------
-# ydb470                [bdw]           Tests ydb_init() to make sure that $gtm_dist is set correctly when it is initially null or different from $ydb_dist
-# ydb482                [bdw]           Tests $ZJOBEXAM with 2 parameters to ensure the second parameter is working correctly
-# ydb174                [bdw]           Ensures that naked references follow the max subscript limit
-# ydb390		[bdw]		Tests $ZHASH and ydb_mmrhash_128 to ensure that their outputs are equivalent
-# ydb476		[gm]		Tests $ZSigproc for its correctness with named string signal value as second argument
-# ydb511		[bdw]		Tests $translate with undefined variables for the 2nd and 3rd arguments.
+# ydb470 [bdw]  Tests ydb_init() to make sure that $gtm_dist is set correctly when it is initially null or different from $ydb_dist
+# ydb482 [bdw]  Tests $ZJOBEXAM with 2 parameters to ensure the second parameter is working correctly
+# ydb174 [bdw]  Ensures that naked references follow the max subscript limit
+# ydb390 [bdw]  Tests $ZHASH and ydb_mmrhash_128 to ensure that their outputs are equivalent
+# ydb476 [gm]   Tests $ZSigproc for its correctness with named string signal value as second argument
+# ydb511 [bdw]  Tests $translate with undefined variables for the 2nd and 3rd arguments.
+# ydb513 [nars] Test that $VIEW("REGION","^*") returns the name of the region mapped to by the `*` namespace
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r130 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "ydb470 ydb482 ydb174 ydb390 ydb476 ydb511"
+setenv subtest_list_non_replic "ydb470 ydb482 ydb174 ydb390 ydb476 ydb511 ydb513"
 setenv subtest_list_replic     ""
 
 
