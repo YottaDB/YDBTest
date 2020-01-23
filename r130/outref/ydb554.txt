@@ -1,0 +1,5 @@
+# Test that compiling boolean expressions involving side effects used in an integer context does not GTMASSERT if ydb_boolean=1
+ --> Test with ydb_boolean env var set to 0
+   -> Testing [yottadb -run ydb554a] : Expected output is 1 : Actual output is 1
+ --> Test with ydb_boolean env var set to 1
+   -> Testing [yottadb -run ydb554a] : Expected output is 1 : Actual output is 1

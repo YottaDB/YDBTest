@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -21,6 +21,13 @@ setenv gtm_test_mupip_set_version "disable"	# because the MM region can do a dyn
 setenv test_encryption NON_ENCRYPT		# even setting MMSEG to NOENCRYPTION doesn't keep encryption testing out of trouble
 $gtm_tst/com/dbcreate.csh mumps 3 -allocation=2048 -extension_count=2048
 source $gtm_tst/com/set_ydb_env_var_random.csh ydb_poollimit gtm_poollimit 10%
+
+# gtm8191.m induces errors in the middle of evaluating boolean expressions (`if $view("poollimit"),$increment(cnt)` where
+# `$view("poollimit")` has inappropriate number of subparameters) and moves on to execute more bool exprs
+# which can cause the boolexpr nesting depth to go more than 4 (the default allowed depth in the code). Therefore set
+# this dbg-only env var to a higher value to allow for more nesting depth just for this test.
+setenv ydb_max_boolexpr_nesting_depth 8
+
 $gtm_dist/mumps -run gtm8191
 $gtm_dist/mumps -run gtm8191a
 $gtm_tst/com/dbcheck.csh

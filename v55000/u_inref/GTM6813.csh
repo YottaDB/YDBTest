@@ -1,4 +1,17 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+# This module is derived from FIS GT.M.
+#################################################################
 
 ####################################################################################
 # This is the main script of v55000/GTM6813 test. It tests the functionality of DO #
@@ -11,6 +24,11 @@
 # Testing of various internal, external, DO, $$, and indirect invocations          #
 ####################################################################################
 echo 'Testing various types of invocations using DO and \$\$...'
+
+# docalls.m/doundefs.m etc. induce errors in the middle of evaluating boolean expressions and moves on to execute more
+# bool exprs which can cause the boolexpr nesting depth to go more than 4 (the default allowed depth in the code).
+# Therefore set this dbg-only env var to a higher value to allow for more nesting depth just for this test.
+setenv ydb_max_boolexpr_nesting_depth 16
 
 # this should generate several error messages
 $gtm_dist/mumps -run docalls

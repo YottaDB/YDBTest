@@ -3,6 +3,9 @@
 ; Copyright (c) 2012-2015 Fidelity National Information 	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -30,7 +33,9 @@
 	;
 	; Configuration parms
 	;
-	Set exprcnt=$Select(($ZVersion["VMS"):1500,1:5000)	; Create this many expressions - each is executed in all 3 places
+	; On armv7l and armv6l platforms, generating 5000 boolean expressions runs into YDB#547
+	; Therefore limit the # of expressions to a much smaller number (1500) there.
+	Set exprcnt=$Select(($ZVersion["armv"):1500,1:5000)	; Create this many expressions - each is executed in all 3 places
 	Set baseoprnpct=33	; Base open paren percentage. Is reduced by multiples of paren nesting
 	Set basecprnpct=40	; Base close paren percentage. Is increased by multiples of paren nesting
 	Set nxtopandpct=35	; Next operator this percent to be AND, else is an OR operator
@@ -103,7 +108,14 @@
 	Write "; First - some initialization of values used in the generated expressions.",!
 	Write ";",!
 	Write TAB,"Set $ETrap=""Set $ETrap="""""""" Write $ZStatus,! ZShow """"*"""" ZHalt 1""",!
-	Write "; TRUE & FALSE 1st lvns set in that order because we count on their $ZAHandle() values having an order",!
+	Write "; we count on $ZAHandle(TRUE)]$ZAHandle(FALSE) evaluate to a fixed value (say 0) across all versions",!
+	write "; hence we first allocate two dummy local vars and find out whose address is higher and assign that to",!
+	write "; alias variables TRUE and FALSE based on their value (since $ZAHandle of an alias variable is same as",!
+	write "; that of the base variable",!
+	write TAB,"Set dummyfalse=0,dummytrue=1",!
+	write TAB,"If $ZAHandle(dummyfalse)]$ZAHandle(dummytrue) Do",!
+	write TAB,". Set *TRUE=dummyfalse,*FALSE=dummytrue",!
+	write TAB,"Else  Set *TRUE=dummytrue,*FALSE=dummyfalse",!
 	Write TAB,"Set TRUE=1,FALSE=0,iTRUE=""TRUE"",TRUE(-1)=1,TRUE(0)=1,TRUE(1)=1,TRUE(2)=1",!
 	Write TAB,"Set ^iTRUE=""^TRUE"",^TRUE=1,^TRUE(-1)=1,^TRUE(0)=1,^TRUE(1)=1,^TRUE(2)=1",!
 	Write TAB,"Set iFALSE=""FALSE"",FALSE(-1)=0,FALSE(0)=0,FALSE(1)=0,FALSE(2)=0",!

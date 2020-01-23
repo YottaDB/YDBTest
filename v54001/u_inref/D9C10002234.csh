@@ -4,6 +4,9 @@
 # Copyright (c) 2010-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -15,6 +18,10 @@ echo Starting D9C10002234
 setenv D9C10002234_reset_jnl $gtm_test_jnl
 # turn off journaling as it doesn't really add anything to this test and it avoids block size - align size conflicts
 setenv gtm_test_jnl NON_SETJNL
+# D9C10002234.m induces errors in the middle of evaluating boolean expressions and moves on to execute more bool exprs
+# which can cause the boolexpr nesting depth to go more than 4 (the default allowed depth in the code). Therefore set
+# this dbg-only env var to a higher value to allow for more nesting depth just for this test.
+setenv ydb_max_boolexpr_nesting_depth 64
 $gtm_tst/com/dbcreate.csh mumps 1 255 16368 16384
 #
 # Do test in UTF8 mode (if applicable) and M mode
