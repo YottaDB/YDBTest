@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.      *
+ * Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -18,7 +18,7 @@
 #include "mmrhash.h"
 
 /* This program calls ydb_mmrhash_128 on several strings to determine their hashes.
- * It is run in conjunction with an equivalent M program that tests $ZHASH to ensure
+ * It is run in conjunction with an equivalent M program that tests $ZYHASH to ensure
  * equivalent output.
  */
 
@@ -28,7 +28,7 @@ int main()
 	uint4			salt;
 	int			len, status, randSalt, i;
 	unsigned char		buffer[32];
-	ydb_string_t		randStr, zHash;
+	ydb_string_t		randStr, zyHash;
 	ci_name_descriptor	callin1, callin2, callin3, callin4;
 
 	ydb_init();
@@ -112,8 +112,8 @@ int main()
 	callin3.rtn_name.length = 4;
 	callin3.handle = NULL;
 	randStr.address = (char *)(malloc(YDB_MAX_STR));
-	zHash.address = (char *)(malloc(34)); /* 2 for the "0x", 32 for the hash */
-	zHash.length = 34;
+	zyHash.address = (char *)(malloc(34)); /* 2 for the "0x", 32 for the hash */
+	zyHash.length = 34;
 	for (i = 0; i < 1000; i++)
 	{
 		randStr.length = YDB_MAX_STR;
@@ -134,16 +134,16 @@ int main()
 		}
 		ydb_mmrhash_128(randStr.address, randStr.length, randSalt, &out);
 		ydb_mmrhash_128_hex(&out, buffer);
-		status = ydb_cip(&callin3, &zHash, &randStr, &randSalt);
+		status = ydb_cip(&callin3, &zyHash, &randStr, &randSalt);
 		if (YDB_OK != status)
 		{
-			printf("Call-in to get zhash of random string and random salt failed on iteration %d\n", i);
+			printf("Call-in to get zyhash of random string and random salt failed on iteration %d\n", i);
 			printf("FAIL: ydb_cip() did not return the correct status. Got: %d; Expected: %d\n", status, YDB_OK);
 			break;
 		}
-		if (!strcmp(buffer, (zHash.address + 2)))
+		if (!strcmp(buffer, (zyHash.address + 2)))
 		{
-			printf("FAIL: ydb_mmrhash_128 and $ZHASH returned different hashes on the same input string and salt.\n");
+			printf("FAIL: ydb_mmrhash_128 and $ZYHASH returned different hashes on the same input string and salt.\n");
 			printf("The input string was \"");
 			for (i = 0; i < 32; i++)
 			{
@@ -155,16 +155,16 @@ int main()
 			{
 				printf("%c", buffer[i]);
 			}
-			printf("\nThe hash prodcuted by $ZHASH was: ");
+			printf("\nThe hash prodcuted by $ZYHASH was: ");
 			for (i = 2; i < 34; i++)
 			{
-				printf("%c", zHash.address[i]);
+				printf("%c", zyHash.address[i]);
 			}
 			printf("\n");
 		}
 	}
 	free(randStr.address);
-	free(zHash.address);
+	free(zyHash.address);
 	printf("Finished test of random calls to ydb_mmrhash_128 from C code\n");
 	printf("Will now test an invalid string length. This should return an error.\n");
 	randStr.address = (char *)(malloc(YDB_MAX_STR + 1));

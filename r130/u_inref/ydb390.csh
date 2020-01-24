@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -11,7 +11,7 @@
 #								#
 #################################################################
 
-# This tests $ZHASH and ydb_mmrhash_128 to make sure that they return equivalent and consistent hashes across runs
+# This tests $ZYHASH and ydb_mmrhash_128 to make sure that they return equivalent and consistent hashes across runs
 
 $ydb_dist/yottadb -run ydb390
 
@@ -42,7 +42,7 @@ toolong
 xxxxx
 cat >> hash.m << xxxxxx
 hash(str,slt)
-	set x=\$ZHASH(str,slt)
+	set x=\$ZYHASH(str,slt)
 	quit x
 xxxxxx
 
