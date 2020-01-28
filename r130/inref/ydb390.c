@@ -26,7 +26,7 @@ int main()
 {
 	ydb_uint16		out;
 	uint4			salt;
-	int			len, status, randSalt, i;
+	int			len, status, randSalt, i, j;
 	unsigned char		buffer[32];
 	ydb_string_t		randStr, zyHash;
 	ci_name_descriptor	callin1, callin2, callin3, callin4;
@@ -141,24 +141,25 @@ int main()
 			printf("FAIL: ydb_cip() did not return the correct status. Got: %d; Expected: %d\n", status, YDB_OK);
 			break;
 		}
-		if (!strcmp(buffer, (zyHash.address + 2)))
+		if (strncmp(buffer, (zyHash.address + 2), 32))
 		{
 			printf("FAIL: ydb_mmrhash_128 and $ZYHASH returned different hashes on the same input string and salt.\n");
 			printf("The input string was \"");
-			for (i = 0; i < 32; i++)
+			for (j = 0; j < randStr.length; j++)
 			{
-				printf("%c", randStr.address[i]);
+				printf("%c", randStr.address[j]);
 			}
 			printf("\".\n");
+			printf("The salt was \"%d\"\n",randSalt);
 			printf("The hash produced by ydb_mmrhash_128 was: ");
-			for (i = 0; i < 32; i++)
+			for (j = 0; j < 32; j++)
 			{
-				printf("%c", buffer[i]);
+				printf("%c", buffer[j]);
 			}
-			printf("\nThe hash prodcuted by $ZYHASH was: ");
-			for (i = 2; i < 34; i++)
+			printf("\nThe hash produced by $ZYHASH was: ");
+			for (j = 2; j < 34; j++)
 			{
-				printf("%c", zyHash.address[i]);
+				printf("%c", zyHash.address[j]);
 			}
 			printf("\n");
 		}
