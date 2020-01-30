@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	*
+ * Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -25,7 +25,7 @@
 #define strValue 	"qwerty"
 
 #define TIMER_10MS	10000000
-#define TIMER_100MS_uS  100000
+#define TIMER_100MS  100000000
 
 
 #define printff(format, ...) ({\
@@ -34,6 +34,26 @@
 		})
 
 #define ARRAYSIZE(arr) sizeof(arr)/sizeof(arr[0]) /* number of elements defined in the array */
+#define SLEEP(TIME)						\
+{								\
+	struct timespec rec, rem;				\
+	int ret;						\
+	rec.tv_sec = TIME / (int)1E9;				\
+	rec.tv_nsec = TIME % (int)1E9;				\
+	while ((0 < rec.tv_sec) || (0 < rec.tv_nsec))		\
+	{							\
+		ret = nanosleep(&rec, &rem);			\
+		if (0 != ret)					\
+		{						\
+			rec.tv_sec = rem.tv_sec;		\
+			rec.tv_nsec = rem.tv_nsec;		\
+		} else						\
+		{						\
+			rec.tv_sec = 0;				\
+			rec.tv_nsec = 0;			\
+		}						\
+	}							\
+}								\
 
 //globals that get set, and used in multiple tests
 void timerHelper();
@@ -649,7 +669,7 @@ int cTimerS(){
 	status = ydb_timer_start(timerId, TIMER_10MS, &timerHelper, sizeof(&stime), &stime);
 	YDB_ASSERT(status == YDB_OK);
 
-	usleep(TIMER_100MS_uS); //wait for the timer to trip
+	SLEEP(TIMER_100MS); //wait for the timer to trip
 
 	status = ydb_timer_start(timerIdToCancel, TIMER_10MS, &timerHelper, sizeof(&stime), &stime);
 	YDB_ASSERT(status == YDB_OK);
@@ -671,7 +691,7 @@ int cTimerC(){
 	 * this waits until the timer would have triggered if not canceled
 	 * which will print to the log and cause a test failure
 	 */
-	usleep(TIMER_100MS_uS);
+	SLEEP(TIMER_100MS);
 	return 0;
 }
 
