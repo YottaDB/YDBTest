@@ -22,8 +22,8 @@ Input: 18446744073709551615
 FFFFFFFFFFFFFFFF
 
 Testing $ZCONVERT DEC to HEX conversion of MAX -ve 64bit input value
-Input: -9223372036854775807
-8000000000000001
+Input: -9223372036854775808
+8000000000000000
 
 Testing ability of $ZCONVERT HEX to DEC to handle case agnostic input with leading 0x
 Input: 0xff
@@ -53,15 +53,15 @@ Completed
 
 Testing $ZCONVERT for larger than acceptable HEX input
 Input: 7FFFFFFFFFFFFFFFFFFFFFFFFFFFF
-%YDB-E-INVVALUE, Invalid HEX value for $ZCO[nvert] supports only 16 hexadecimal digits  : 7FFFFFFFFFFFFFFFFFFFFFFFFFFFF 
+%YDB-E-INVVALUE, 7FFFFFFFFFFFFFFFFFFFFFFFFFFFF is invalid HEX value for $ZCO[nvert]. Supports only hexadecimal value of length 16
 
 Testing $ZCONVERT for larger than acceptable DEC input
 Input: 184467440737095516155
-%YDB-E-INVVALUE, Invalid DEC value for $ZCO[nvert] supports conversion of positive numbers till 20 decimal digits '18446744073709551615'  : 184467440737095516155 
+%YDB-E-INVVALUE, 184467440737095516155 is invalid DEC value for $ZCO[nvert]. Supports conversion of positive numbers only in the range '0 to 18446744073709551615'
 
 Testing $ZCONVERT for larger than acceptable -ve DEC input
-Input: -9223372036854775808
-%YDB-E-INVVALUE, Invalid DEC value for $ZCO[nvert] supports conversion of negative numbers till 19 decimal digits '-9223372036854775807'  : 9223372036854775808 
+Input: -9223372036854775809
+%YDB-E-INVVALUE, -9223372036854775809 is invalid DEC value for $ZCO[nvert]. Supports conversion of negative numbers only in the range '-9223372036854775808 to 0'
 
 Testing $ZCONVERT, %DH and %HD for signed input value
 Checking $ZCONVERT for signed value input
@@ -121,3 +121,40 @@ Testing null input on %HD and %DH
 Checking the behavior of utility functions %HD and %DH when null input is given
 Completed
 
+
+Testing $ZCONVERT to not produce negative length result
+i=20
+j=19
+x=0
+y=0
+z=0
+
+Testing border cases in conversion
+DEC to HEX Input:-9 Output: F7
+DEC to HEX Input:-1 Output: F
+%DH Input:-9 Output: FFFFFFF7
+%DH Input:-1 Output: FFFFFFFF
+DEC to HEX Input:asdf Output: 0
+HEX to DEC Input:uiop Output: 0
+DEC to HEX Input:"" Output: 0
+HEX to DEC Input:"" Output: 0
+DEC to HEX Input:0 Output: 0
+HEX to DEC Input:0 Output: 0
+%DH Input:0 Output: 00000000
+%HD Input:0 Output: 0
+
+Testing $ZCONVERT for invalid category input in non-utf mode
+
+setenv gtm_chset M
+unset echo
+DEC to DEC Input:-9 Output: %YDB-E-INVZCONVERT, $ZCO[nvert] in M mode. Translation between DEC and DEC is not supported
+HEX to HEX Input:-9 Output: %YDB-E-INVZCONVERT, $ZCO[nvert] in M mode. Translation between HEX and HEX is not supported
+UTF-8 to HEX Input:-9 Output: %YDB-E-INVZCONVERT, $ZCO[nvert] in M mode. Translation between UTF-8 and HEX is not supported
+
+Testing $ZCONVERT for invalid category input in utf mode
+
+setenv gtm_chset UTF-8
+unset echo
+DEC to DEC Input:-9 Output: %YDB-E-INVZCONVERT, $ZCO[nvert] in M mode. Translation between DEC and DEC is not supported
+HEX to HEX Input:-9 Output: %YDB-E-INVZCONVERT, $ZCO[nvert] in M mode. Translation between HEX and HEX is not supported
+UTF-8 to HEX Input:-9 Output: %YDB-E-BADCHSET, HEX is not a valid character mapping in this context

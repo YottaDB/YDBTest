@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;                                                               ;
-; Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.       ;
+; Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.  ;
 ; All rights reserved.                                          ;
 ;                                                               ;
 ;       This source code contains the intellectual property     ;
@@ -300,6 +300,22 @@ comphextodec
         write:(ncnt<ocnt) "FAILED as performance is less than previous implementation ","new count:",ncnt," ","previous count:",ocnt," ",!
 	write "Completed",!,!
 	quit
+
+; Create a bunch of different literals all with 0's so we get a big string of them to
+; potentially throw off the zero leading zero cull in $ZCONVERT() from dec to hex.
+; First need to fill our stringpool with zeroes to cause wonky issues with $ZCONVERT().
+; Expected behavior: no errors if result length is > 0.
+neglengthresult
+        set x="0"
+        for i=1:1:20 do
+        . for j=1:1:19 do
+        . . set x=x_x
+        . set x="0"
+        set y=$zconvert(x,"dec","hex")
+	set z=$zconvert(x,"hex","dec")
+	zwrite
+        quit
+
 ;
 ; Previous implementation copied to below routines before change
 ;

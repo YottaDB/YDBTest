@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #                                                               #
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.       #
+# Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.  #
 # All rights reserved.                                          #
 #                                                               #
 #       This source code contains the intellectual property     #
@@ -27,8 +27,8 @@ echo "Input: 18446744073709551615"
 $ydb_dist/yottadb -r ^%XCMD 'write $ZCONVERT("18446744073709551615","DEC","HEX"),!'
 
 echo '\nTesting $ZCONVERT DEC to HEX conversion of MAX -ve 64bit input value'
-echo "Input: -9223372036854775807"
-$ydb_dist/yottadb -r ^%XCMD 'write $ZCONVERT("-9223372036854775807","DEC","HEX"),!'
+echo "Input: -9223372036854775808"
+$ydb_dist/yottadb -r ^%XCMD 'write $ZCONVERT("-9223372036854775808","DEC","HEX"),!'
 
 echo '\nTesting ability of $ZCONVERT HEX to DEC to handle case agnostic input with leading 0x'
 echo "Input: 0xff"
@@ -62,8 +62,8 @@ echo "Input: 184467440737095516155"
 $ydb_dist/yottadb -r ^%XCMD 'write $ZCONVERT("184467440737095516155","DEC","HEX"),!'
 
 echo '\nTesting $ZCONVERT for larger than acceptable -ve DEC input'
-echo "Input: -9223372036854775808"
-$ydb_dist/yottadb -r ^%XCMD 'write $ZCONVERT("-9223372036854775808","DEC","HEX"),!'
+echo "Input: -9223372036854775809"
+$ydb_dist/yottadb -r ^%XCMD 'write $ZCONVERT("-9223372036854775809","DEC","HEX"),!'
 
 echo '\nTesting $ZCONVERT, %DH and %HD for signed input value'
 $ydb_dist/yottadb -r signedvalinp^zconvert
@@ -100,3 +100,36 @@ $ydb_dist/yottadb -r ^%XCMD 'write $$FUNC^%HD()'
 
 echo '\nTesting null input on %HD and %DH'
 $ydb_dist/yottadb -r nullvalinp^zconvert
+
+echo '\nTesting $ZCONVERT to not produce negative length result'
+$ydb_dist/yottadb -r neglengthresult^zconvert
+
+echo '\nTesting border cases in conversion'
+$ydb_dist/yottadb -r ^%XCMD 'write "DEC to HEX Input:-9 ","Output: ",$ZCONVERT("-9","DEC","HEX"),!'
+$ydb_dist/yottadb -r ^%XCMD 'write "DEC to HEX Input:-1 ","Output: ",$ZCONVERT("-1","DEC","HEX"),!'
+$ydb_dist/yottadb -r ^%XCMD 'write "%DH Input:-9 ","Output: ",$$FUNC^%DH("-9"),!'
+$ydb_dist/yottadb -r ^%XCMD 'write "%DH Input:-1 ","Output: ",$$FUNC^%DH("-1"),!'
+$ydb_dist/yottadb -r ^%XCMD 'write "DEC to HEX Input:asdf ","Output: ",$ZCONVERT("asdf","DEC","HEX"),!'
+$ydb_dist/yottadb -r ^%XCMD 'write "HEX to DEC Input:uiop ","Output: ",$ZCONVERT("uiop","HEX","DEC"),!'
+$ydb_dist/yottadb -r ^%XCMD 'write "DEC to HEX Input:"""" ","Output: ",$ZCONVERT("","DEC","HEX"),!'
+$ydb_dist/yottadb -r ^%XCMD 'write "HEX to DEC Input:"""" ","Output: ",$ZCONVERT("","HEX","DEC"),!'
+$ydb_dist/yottadb -r ^%XCMD 'write "DEC to HEX Input:0 ","Output: ",$ZCONVERT("0","DEC","HEX"),!'
+$ydb_dist/yottadb -r ^%XCMD 'write "HEX to DEC Input:0 ","Output: ",$ZCONVERT("0","HEX","DEC"),!'
+$ydb_dist/yottadb -r ^%XCMD 'write "%DH Input:0 ","Output: ",$$FUNC^%DH("0"),!'
+$ydb_dist/yottadb -r ^%XCMD 'write "%HD Input:0 ","Output: ",$$FUNC^%HD("0"),!'
+
+
+echo '\nTesting $ZCONVERT for invalid category input in non-utf mode\n'
+setenv gtm_test_unicode "FALSE"
+$switch_chset "M"
+$ydb_dist/yottadb -r ^%XCMD 'write "DEC to DEC Input:-9 ","Output: ",$ZCONVERT("-9","DEC","DEC"),!'
+$ydb_dist/yottadb -r ^%XCMD 'write "HEX to HEX Input:-9 ","Output: ",$ZCONVERT("-9","HEX","HEX"),!'
+$ydb_dist/yottadb -r ^%XCMD 'write "UTF-8 to HEX Input:-9 ","Output: ",$ZCONVERT("-9","UTF-8","HEX"),!'
+
+echo '\nTesting $ZCONVERT for invalid category input in utf mode\n'
+setenv gtm_test_unicode "TRUE"
+$switch_chset "UTF-8"
+$ydb_dist/yottadb -r ^%XCMD 'write "DEC to DEC Input:-9 ","Output: ",$ZCONVERT("-9","DEC","DEC"),!'
+$ydb_dist/yottadb -r ^%XCMD 'write "HEX to HEX Input:-9 ","Output: ",$ZCONVERT("-9","HEX","HEX"),!'
+$ydb_dist/yottadb -r ^%XCMD 'write "UTF-8 to HEX Input:-9 ","Output: ",$ZCONVERT("-9","UTF-8","HEX"),!'
+
