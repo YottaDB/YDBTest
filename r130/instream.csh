@@ -23,13 +23,14 @@
 # ydb513 [nars] Test that $VIEW("REGION","^*") returns the name of the region mapped to by the `*` namespace
 # ydb485 [gm]	Tests $ZCONVERT with 3 parameters to ensure correct decimal to hexadecimal and vice versa conversion
 # ydb518 [bdw]  Tests call ins and external calls using ydb_int64_t and ydb_uint64_t
+# ydb520 [bdw]  Tests to ensure that $ETRAP and $ZTRAP are being set correctly
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r130 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "ydb470 ydb482 ydb174 ydb390 ydb476 ydb511 ydb513 ydb485 ydb518"
+setenv subtest_list_non_replic "ydb470 ydb482 ydb174 ydb390 ydb476 ydb511 ydb513 ydb485 ydb518 ydb520"
 setenv subtest_list_replic     ""
 
 
