@@ -25,13 +25,14 @@
 # ydb518 [bdw]  Tests call ins and external calls using ydb_int64_t and ydb_uint64_t
 # ydb520 [bdw]  Tests to ensure that $ETRAP and $ZTRAP are being set correctly
 # ydb503 [bdw]	Tests if DRD is incremented/not incremented correctly in both MM and BG access modes.
+# ydb515 [see]  Test that ydb_zstatus() does not write to null buffers
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r130 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "ydb470 ydb482 ydb174 ydb390 ydb476 ydb511 ydb513 ydb485 ydb518 ydb520 ydb503"
+setenv subtest_list_non_replic "ydb470 ydb482 ydb174 ydb390 ydb476 ydb511 ydb513 ydb485 ydb518 ydb520 ydb503 ydb515"
 setenv subtest_list_replic     ""
 
 
