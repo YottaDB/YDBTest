@@ -3,7 +3,7 @@
 ; Copyright (c) 2008-2015 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
-; Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -558,8 +558,9 @@ viewgvstats(type);
 	.	kill var("TR3"),var("TR4")
 	.	kill var("CFE"),var("CFS"),var("CFT"),var("CQS"),var("CQT"),var("CYS"),var("CYT"),var("BTD")
 	.	kill var("ZTR")	; no ztrigger commands in this test
-	.	; if running with MM, the DWT counter will be 0 always so skip that from the nonzero check as well
+	.	; if running with MM, the DWT and DRD counters will be 0 always so skip them from the nonzero check as well
 	.	if $ztrnlnm("acc_meth")="MM" kill var("DWT")
+	.	if $ztrnlnm("acc_meth")="MM" kill var("DRD")
 	.	; the following stats are journaling related and this test only randomly enables journaling
 	.	kill var("DFS"),var("JFL"),var("JFS"),var("JBB"),var("JFB"),var("JFW"),var("JRL"),var("JRP"),var("JRE"),var("JRI"),var("JRO")
 	.	; extensions might not have happened
@@ -584,6 +585,8 @@ viewgvstats(type);
 	.	kill var("DFS"),var("JFL"),var("JFS"),var("JBB"),var("JFB"),var("JFW"),var("JRL"),var("JRP"),var("JRE"),var("JRI"),var("JRO")
 	.	; extensions might not have happened
 	.	kill var("JEX"),var("DEX")
+	.	; DRD won't be incremented in MM mode so skip if in MM mode
+	.	if $ztrnlnm("acc_meth")="MM" kill var("DRD")
 	set fail=0
 	set subs="" for  set subs=$order(var(subs))  quit:subs=""  do
 	.	if "ZERO"=type if var(subs)'=0  set fail=fail+1
