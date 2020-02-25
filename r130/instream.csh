@@ -48,6 +48,10 @@ setenv subtest_exclude_list	""
 if ("pro" == "$tst_image") then
 	setenv subtest_exclude_list "$subtest_exclude_list "
 endif
+if ($gtm_platform_size != 64) then
+	## Disable ydb518 on non-64-bit machines
+	setenv subtest_exclude_list "$subtest_exclude_list ydb518"
+endif
 
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh
