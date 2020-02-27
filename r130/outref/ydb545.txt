@@ -1,0 +1,18 @@
+------------------------------------------------------------------------------------------------------
+Test that a LOCK command subsequent to a LOCK command that failed does not fail with BADLOCKNEST error
+------------------------------------------------------------------------------------------------------
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+YDB>
+%YDB-E-LVUNDEF, Undefined local variable: y
+
+YDB>
+
+YDB>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
