@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -23,7 +23,7 @@ endif
 echo "# Set a single node in database that can randomly occupy upto one GDS block of space"
 $ydb_dist/mumps -run ydb349
 
-echo "# Set reserved_bytes on database to a random value from 0 to 4012 (maximum reserved bytes for 4Kb block_size)"
+echo "# Set reserved_bytes on database to a random value from 0 to 4000 (maximum reserved bytes for 4Kb block_size)"
 set randreservedbytes = `$ydb_dist/mumps -run genreservedbytes^ydb349`
 $ydb_dist/mupip set -reserved=$randreservedbytes -reg "*" >& mu_set.log
 
