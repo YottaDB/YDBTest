@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -211,7 +211,7 @@ $gtm_tst/com/dbcheck.csh
 # NONUTF8LOCALE	<Locale has character encoding (!AD) which is not compatible with UTF-8 character set>/error/fao=2!/ansi=0
 # INVDLRCVAL    <Invalid $CHAR() value !UL>/error/fao=1!/ansi=0
 # ICUSYMNOTFOUND <Symbol !AD not found in the ICU libraries. ICU needs to be built with symbol-renaming disabled or gtm_icu_version environment variable needs to be specified>
-# LOADINVCHSET  <Extract file CHSET (!AD) is incompatible with gtm_chset>/error/fao=2!/ansi=0
+# LOADINVCHSET  <Extract file CHSET (!AD) is incompatible with ydb_chset/gtm_chset>/error/fao=2!/ansi=0
 # DLLCHSETM     <Routine !AD in library !AD was compiled with CHSET=M which is different from $ZCHSET. Recompile with CHSET=UTF-8 and re-link.>/error/fao=4!/ansi=0
 # DLLCHSETUTF8  <Routine !AD in library !AD was compiled with CHSET=UTF-8 which is different from $ZCHSET. Recompile with CHSET=M and re-link.>/error/fao=4!/ansi=0
 # BOMMISMATCH   <!AD Byte Order Marker found when !AD character set specified>/error/fao=4!/ansi=0
