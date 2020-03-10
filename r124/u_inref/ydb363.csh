@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #                                                               #
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.       #
+# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.       #
 # All rights reserved.                                          #
 #                                                               #
 #       This source code contains the intellectual property     #
@@ -16,7 +16,7 @@ echo "# Previously in some cases YottaDB would return potentially incorrect valu
 echo ""
 
 # Unset side effects and the boolean for ydb and gtm due to random test parameters.
-unsetenv gtm_side_effects
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_side_effects gtm_side_effects
 source $gtm_tst/com/unset_ydb_env_var.csh ydb_boolean gtm_boolean
 
 echo "# Generate and compile each m file. Then run the m file in -run mode and -direct mode."

@@ -1,0 +1,9 @@
+# Test that compiling boolean expressions involving NOT operator (') and side effects does not spin loop if ydb_boolean=1
+ --> Test with ydb_boolean env var set to 0
+   -> Testing [yottadb -run ydb553a] : Expected output is 1 : Actual output is 1
+   -> Testing [yottadb -run ydb553b] : Expected output is 1 : Actual output is 1
+   -> Testing [yottadb -run ydb553c] : Expected output is 1 : Actual output is 1
+ --> Test with ydb_boolean env var set to 1
+   -> Testing [yottadb -run ydb553a] : Expected output is 1 : Actual output is 1
+   -> Testing [yottadb -run ydb553b] : Expected output is 1 : Actual output is 1
+   -> Testing [yottadb -run ydb553c] : Expected output is 1 : Actual output is 1
