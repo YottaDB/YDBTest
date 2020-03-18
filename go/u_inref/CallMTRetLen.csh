@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -41,11 +41,14 @@ setenv ydb_ci `pwd`/CallMTRetLen.tab
 echo $ydb_ci
 cat >> CallMTRetLen.tab << xx
 testciret: ydb_string_t * ^testciret()
+TestROParmTypes: void TestROParmTypes1^tstmcallparms(I:ydb_string_t *, I:ydb_string_t *)
+Update2Parms: void updentry^tstmcallparms(IO:ydb_string_t *, I:ydb_string_t *, O:ydb_string_t *)
+Test32Parms: void rd32parms^tstmcallparms(I:ydb_string_t*, I:ydb_string_t*, I:ydb_string_t*, I:ydb_string_t*, I:ydb_string_t*, I:ydb_string_t*, I:ydb_string_t*, I:ydb_string_t*, I:ydb_string_t*, I:ydb_string_t*, I:ydb_string_t*, I:ydb_string_t*, I:ydb_string_t*, I:ydb_string_t*, I:ydb_string_t*, I:ydb_string_t*, I:ydb_string_t*, I:ydb_string_t*, I:ydb_string_t*, I:ydb_string_t*, I:ydb_string_t*, I:ydb_string_t*, I:ydb_string_t*, I:ydb_string_t*, I:ydb_string_t*, I:ydb_string_t*, I:ydb_string_t*, I:ydb_string_t*, I:ydb_string_t*, I:ydb_string_t*, I:ydb_string_t*, I:ydb_string_t*)
 xx
 
 echo "# Running Go program"
 # Since there are many outputs, and more will come over time, just grep for problems after
-$gobuild >& go_build.log
+$gobuild CallMTRetLen.go >& go_build.log
 if (0 != $status) then
 	echo "TEST-E-FAILED : Build of test failed"
 	cat go_build.log
@@ -59,10 +62,34 @@ xxx
 
 `pwd`/CallMTRetLen
 
+#########
+# Part 2 - test M call parameter passing with Go which for now is done with string types though the actual call
+#          with R/O parameters can use other types for those read-only parameters and the interface will convert
+#          them to string.
+#########
+echo
+echo "****** Part 2 - parameter testing"
+echo
+ln -s $gtm_tst/$tst/inref/CallMParmTesting.go .
+if (0 != $status) then
+    echo "TEST-E-FAILED : Unable to soft link go source file"
+    exit 1
+endif
+
+echo "# Running Go program"
+$gobuild CallMParmTesting.go >& go_build.log
+if (0 != $status) then
+	echo "TEST-E-FAILED : Build of test failed"
+	cat go_build.log
+	exit 1
+endif
+
+`pwd`/CallMParmTesting
+
+
 $gtm_tst/com/dbcheck.csh -extract >>& dbcheck.out
 if ($status) then
         echo "# dbcheck failed. Output of dbcheck.out follows"
         cat dbcheck.out
 endif
-
 echo "# Done!"
