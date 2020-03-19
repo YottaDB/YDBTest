@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -28,7 +28,7 @@ echo "GTM Process starts in background..."
 setenv gtm_test_jobid 1
 setenv gtm_test_dbfillid 1
 $gtm_tst/com/imptp.csh >>&! imptp.out
-# Wait for some transactions
+# Wait for 50,000 transactions to happen on primary side
 $gtm_tst/com/wait_for_transaction_seqno.csh +50000 SRC 3600
 
 if ($gtm_test_jnl_nobefore) then
@@ -41,6 +41,18 @@ if ($gtm_test_jnl_nobefore) then
 	set trns_bkup=`$grep "Journal Seqnos up to" backup.out | $tst_awk '{gsub("0x","") ; print $5}'`
 	set trnno=`$gtm_tst/com/radixconvert.csh h2d $trns_bkup | $tst_awk '{print $5}'`
 	$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/wait_until_rcvr_trn_processed_above.csh $trnno"
+else
+	# We waited above for 50,000 transactions to happen on primary side (A). But it is possible the secondary (B) received
+	# and/or processed almost none of this. So wait until at least a few transactions (1000) are processed on the secondary
+	# that way `^%imptp` settings (which are global sets done in the beginning of imptp.m) are available for later
+	# `checkdb.csh` call. This is needed since A is going to later start getting updates from B (when B becomes the primary)
+	# and if B received almost none of the updates with `gtm_test_fillid = 1`, then the `checkdb.csh` done at the end of the
+	# test for `gtm_test_dbfillid = 1` will fail due to almost none of the `^%imptp*` global nodes available.
+	# The failure symptom we have seen is the following (in a call from checkdb.m)
+	#	$ZSTATUS="2,loadinfofileifneeded+5^imptp,%SYSTEM-E-ENO2, No such file or directory"
+	# And this is because `^%imptp(fillid,"trigger")` was undefined and/or `^endloop` was undefined (both because
+	#	B had processed only 4 updates at the time it was shut down even though A had a backlog of 50000+ relative to B.
+	$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/wait_until_rcvr_trn_processed_above.csh 1000"
 endif
 
 $gtm_tst/com/rfstatus.csh "BEFORE_PRI_A_CRASH:"
