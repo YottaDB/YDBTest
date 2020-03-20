@@ -1,0 +1,63 @@
+------------------------------------------------------------------------------------------------------
+Test that ydb_dist is expanded in zroutines if ydb_routines and gtmroutines are not set
+------------------------------------------------------------------------------------------------------
+ -> unsetenv ydb_routines gtmroutines
+ -> $zroutines output follows
+YDB>
+##SOURCE_REALPATH##/libyottadbutil##TEST_SHL_SUFFIX##
+YDB>
+------------------------------------------------------------------------------------------------------
+Test that an error is issued if environment variables don't point to a valid directory
+------------------------------------------------------------------------------------------------------
+ -> setenv ydb_routines '$abcd $efgh'
+ -> $zroutines output follows
+YDB>
+%YDB-E-ZROSYNTAX, $ZROUTINES syntax error: $abcd $efgh
+%YDB-E-FILEPARSE, Error parsing file specification: $abcd
+%SYSTEM-E-ENO2, No such file or directory
+
+YDB>
+------------------------------------------------------------------------------------------------------
+Test that environment variables in ydb_routines are expanded when zroutines is initialized
+------------------------------------------------------------------------------------------------------
+ -> cd /tmp
+ -> PWD is /tmp
+ -> setenv ydb_routines $PWD
+ -> $zroutines output follows
+YDB>
+/tmp(/tmp)
+YDB>
+------------------------------------------------------------------------------------------------------
+Test that multiple env vars corresponding to valid directories in ydb_routines shows up expanded in zroutines
+------------------------------------------------------------------------------------------------------
+ -> setenv abcd /usr/lib
+ -> setenv efgh /usr/bin
+ -> setenv ydb_routines $abcd $efgh
+ -> $zroutines output follows
+YDB>
+/usr/lib(/usr/lib) /usr/bin(/usr/bin)
+YDB>
+------------------------------------------------------------------------------------------------------
+Test that . does not get expanded but $envvar does
+------------------------------------------------------------------------------------------------------
+ -> setenv ydb_routines .($ydb_dist)
+ -> $zroutines output follows
+YDB>
+.(##SOURCE_REALPATH##)
+YDB>
+------------------------------------------------------------------------------------------------------
+Test that * at end of directory in ydb_routines does show up in $zroutines
+------------------------------------------------------------------------------------------------------
+ -> setenv ydb_routines .(.) .*($ydb_dist)
+ -> $zroutines output follows
+YDB>
+.(.) .*(##SOURCE_REALPATH##)
+YDB>
+------------------------------------------------------------------------------------------------------
+Test that a long ydb_routines does expand properly into $zroutines; Include shared library too
+------------------------------------------------------------------------------------------------------
+ -> setenv ydb_routines $ydb_dist*($ydb_dist $ydb_dist $ydb_dist $ydb_dist $ydb_dist $ydb_dist .) $ydb_dist*($ydb_dist $ydb_dist $ydb_dist $ydb_dist $ydb_dist . $ydb_dist) $ydb_dist/libyottadbutil.so $ydb_dist*($ydb_dist $ydb_dist $ydb_dist $ydb_dist . $ydb_dist $ydb_dist) $ydb_dist*($ydb_dist $ydb_dist $ydb_dist . $ydb_dist $ydb_dist $ydb_dist) $ydb_dist*($ydb_dist $ydb_dist . $ydb_dist $ydb_dist $ydb_dist $ydb_dist) $ydb_dist*($ydb_dist . $ydb_dist $ydb_dist $ydb_dist $ydb_dist $ydb_dist)
+ -> $zroutines output follows
+YDB>
+##SOURCE_REALPATH##*(##SOURCE_REALPATH## ##SOURCE_REALPATH## ##SOURCE_REALPATH## ##SOURCE_REALPATH## ##SOURCE_REALPATH## ##SOURCE_REALPATH## .) ##SOURCE_REALPATH##*(##SOURCE_REALPATH## ##SOURCE_REALPATH## ##SOURCE_REALPATH## ##SOURCE_REALPATH## ##SOURCE_REALPATH## . ##SOURCE_REALPATH##) ##SOURCE_REALPATH##/libyottadbutil.so ##SOURCE_REALPATH##*(##SOURCE_REALPATH## ##SOURCE_REALPATH## ##SOURCE_REALPATH## ##SOURCE_REALPATH## . ##SOURCE_REALPATH## ##SOURCE_REALPATH##) ##SOURCE_REALPATH##*(##SOURCE_REALPATH## ##SOURCE_REALPATH## ##SOURCE_REALPATH## . ##SOURCE_REALPATH## ##SOURCE_REALPATH## ##SOURCE_REALPATH##) ##SOURCE_REALPATH##*(##SOURCE_REALPATH## ##SOURCE_REALPATH## . ##SOURCE_REALPATH## ##SOURCE_REALPATH## ##SOURCE_REALPATH## ##SOURCE_REALPATH##) ##SOURCE_REALPATH##*(##SOURCE_REALPATH## . ##SOURCE_REALPATH## ##SOURCE_REALPATH## ##SOURCE_REALPATH## ##SOURCE_REALPATH## ##SOURCE_REALPATH##)
+YDB>

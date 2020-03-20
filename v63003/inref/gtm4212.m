@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -20,7 +20,7 @@ genlongpath
 	set l=l+1
 	if l<$ZCMDLINE do
 	. for i=1:1:$ZCMDLINE-l do
-	. . if l#25=0  write "/"
+	. . if i#25=0  write "/"
 	. . else  write "a"
 	quit
 

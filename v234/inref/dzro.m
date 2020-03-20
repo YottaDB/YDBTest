@@ -1,3 +1,17 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; This module is derived from FIS GT.M.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 dzro	; ; ; Set, then reset $ZCOMPILE and $ZROUTINES, then check them.
 	;
 	New tmp
@@ -9,13 +23,14 @@ dzro	; ; ; Set, then reset $ZCOMPILE and $ZROUTINES, then check them.
 	Write !,$SELECT(x="/ignore/nolist/object/length=66/space=1":"OK",1:"BAD")," from DZRO"
 	Set $ZCOMPILE=tmp
 
-	If $ZVERSION["VMS"  Set zroutinesvariable89012345678901="[]/src=([],in$dir:[inref],gtm$vrtpct),gtm$vrtpct"
-	Else                Set zroutinesvariable89012345678901=".(. $gtm_tst/$tst/inref $gtm_exe) $gtm_exe"
+	Set zroutinesvariable89012345678901=".(. $gtm_tst/$tst/inref $gtm_exe) $gtm_exe"
 	Set tmp=$ZROUTINES
 	Set $ZROUTINES=zroutinesvariable89012345678901
-	Set x=$ZROUTINES                                  
+	Set x=$ZROUTINES
+	Set expectx=".(. "_$ztrnlnm("gtm_tst")_"/"_$ztrnlnm("tst")_"/inref "_$ztrnlnm("gtm_exe")_") "
+	Set expectx=expectx_$ztrnlnm("gtm_exe")_"("_$ztrnlnm("gtm_exe")_")"
 	Set $ZROUTINES=""
-	Write !,$SELECT(x=zroutinesvariable89012345678901:"OK",1:"BAD")," from DZRO"
+	Write !,$SELECT(x=expectx:"OK",1:"BAD")," from DZRO"
 	Set $ZROUTINES=tmp
 
 	Quit
