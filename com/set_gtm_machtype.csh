@@ -4,7 +4,7 @@
 # Copyright (c) 2008-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017,2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -112,7 +112,7 @@ setenv gtm_endian `echo -n A | od -h | awk '{if ($2 == "0041") {print "LITTLE_EN
 if (-X lsb_release) then
 	setenv gtm_test_linux_distrib `lsb_release -is | sed 's/ //g' | tr '[A-Z]' '[a-z]'`
 else if (-f /etc/os-release) then
-	setenv gtm_test_linux_distrib `awk -F= '$1 == "ID" {print $2}' /etc/os-release`
+	setenv gtm_test_linux_distrib `grep -w ID /etc/os-release | cut -d= -f2 | cut -d'"' -f2`
 else
 	setenv gtm_test_linux_distrib ""
 endif

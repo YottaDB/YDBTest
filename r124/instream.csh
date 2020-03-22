@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -130,12 +130,16 @@ source $gtm_tst/com/set_gtm_machtype.csh	# to setenv "gtm_test_linux_distrib"
 if (("HOST_LINUX_X86_64" == $gtm_test_os_machtype)			\
 		&& (("arch" == $gtm_test_linux_distrib)			\
 			|| ("ubuntu" == $gtm_test_linux_distrib)	\
+			|| ("centos" == $gtm_test_linux_distrib)	\
 			|| ("debian" == $gtm_test_linux_distrib))) then
 	# The "jnlunxpcterr" subtest has seen to frequently cause a CPU soft lockup.
 	# The actual error message in syslog is "watchdog: BUG: soft lockup - CPU#1 stuck for 22s! [mupip:19422]"
 	# For reasons not yet clear, this happens currently only on our Ubuntu/Arch/Debian x86_64 linux boxes,
 	# never on RHEL x86_64 or any of the ARM boxes (even if they run Ubuntu/Arch/Debian).
 	# So disable this subtest on those affected platforms.
+	# Update to above note: This test started hanging on a CentOS 8 box too with the following message in syslog.
+	#	"kernel: list_del corruption. next->prev should be ffff8a6ec1e091e0, but was dead000000000200"
+	# Hence the decision to disable on `centos` too in the above `if` check.
 	setenv subtest_exclude_list "$subtest_exclude_list jnlunxpcterr"
 endif
 
