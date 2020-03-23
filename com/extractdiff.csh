@@ -44,7 +44,7 @@ if ($ext1 != "bin") then
 endif
 
 if ($ext1 == "bin") then
-	cmp $1 $2
+	cmp --ignore-initial=100 $1 $2	# Header information (first 100 bytes) is ignored
 else
 	diff $1.filtered $2.filtered
 endif
