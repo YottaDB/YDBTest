@@ -93,12 +93,6 @@ if ($?ydb_test_exclude_sem_counter) then
 		setenv subtest_exclude_list "$subtest_exclude_list sem_counter"
 	endif
 endif
-if ($?ydb_test_exclude_gds_max_blk) then
-	if ($ydb_test_exclude_gds_max_blk) then
-		# An environment variable is defined to indicate the below subtest needs to be disabled on this host
-		setenv subtest_exclude_list "$subtest_exclude_list gds_max_blk"
-	endif
-endif
 
 $gtm_tst/com/submit_subtest.csh
 echo "Manually_Start tests DONE."

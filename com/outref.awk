@@ -3,7 +3,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -254,6 +254,10 @@ BEGIN {
 			envir[no_options] = "DEBIAN_LINUX_X86_64"
 		else if ("ubuntu" == ENVIRON["gtm_test_linux_distrib"])
 			envir[no_options] = "UBUNTU_LINUX_X86_64"
+		else if ("centos" == ENVIRON["gtm_test_linux_distrib"])
+			envir[no_options] = "CENTOS_LINUX_X86_64"
+		else if ("rhel" == ENVIRON["gtm_test_linux_distrib"])
+			envir[no_options] = "RHEL_LINUX_X86_64"
 	}
 	#
 	option_names[++no_options] = "gtm_test_singlecpu"
@@ -272,9 +276,9 @@ BEGIN {
 	if (1 == ENVIRON["ydb_test_exclude_sem_counter"])
 		envir[no_options] = "EXCLUDE_SEM_COUNTER"
 	#
-	option_names[++no_options] = "ydb_test_exclude_gds_max_blk"
-	if (1 == ENVIRON["ydb_test_exclude_gds_max_blk"])
-		envir[no_options] = "EXCLUDE_GDS_MAX_BLK"
+	option_names[++no_options] = "ydb_test_exclude_ydb362b"
+	if (1 == ENVIRON["ydb_test_exclude_ydb362b"])
+		envir[no_options] = "EXCLUDE_YDB362B"
 	#
 	option_names[++no_options] = "is_tst_dir_ssd"
 	if (1 == ENVIRON["is_tst_dir_ssd"])

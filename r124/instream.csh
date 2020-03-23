@@ -126,6 +126,13 @@ if (("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) || ("HOST_LINUX_AARCH64" == $
 	setenv subtest_exclude_list "$subtest_exclude_list ydb362a ydb362b"
 endif
 
+if ($?ydb_test_exclude_ydb362b) then
+	if ($ydb_test_exclude_ydb362b) then
+		# An environment variable is defined to indicate the below subtest needs to be disabled on this host
+		setenv subtest_exclude_list "$subtest_exclude_list ydb362b"
+	endif
+endif
+
 source $gtm_tst/com/set_gtm_machtype.csh	# to setenv "gtm_test_linux_distrib"
 if (("HOST_LINUX_X86_64" == $gtm_test_os_machtype)			\
 		&& (("arch" == $gtm_test_linux_distrib)			\
