@@ -15,13 +15,6 @@
 ;
 genlongpath
 	write $ZDIRECTORY
-	set l=$length($ZDIRECTORY)
-	write "a"
-	set l=l+1
-	if l<$ZCMDLINE do
-	. for i=1:1:$ZCMDLINE-l do
-	. . if i#25=0  write "/"
-	. . else  write "a"
-	quit
+	write $translate($justify(" ",$zcmdline-$length($zdirectory))," ","a")
 
 
