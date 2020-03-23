@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -94,6 +94,8 @@ set lkePID = `cat lkeA.pid`
 $gtm_dist/mupip stop $lkePID
 set ydbPID = `cat mumpsD.pid`
 $gtm_dist/mupip stop $ydbPID # stop YDB M process in a long HANG command
+# wait for process to die and remove db shm before next test starts
+$gtm_tst/com/wait_for_proc_to_die.csh $lkePID
 
 echo '\n# testing -integ switch'
 echo '# settings 3 locks and kill9ing their processes'
