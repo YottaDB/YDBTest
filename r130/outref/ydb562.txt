@@ -1,0 +1,11 @@
+------------------------------------------------------------------------------------------------------
+Test that SET $ZROUTINES="..." and SET $ZROUTINES="...." issue ZROSYNTAX error
+------------------------------------------------------------------------------------------------------
+ --> Test : set $zroutines="."
+ --> Test : set $zroutines=".."
+ --> Test : set $zroutines="..."
+ZSTATUS=ydb562+10^ydb562,%YDB-E-ZROSYNTAX, $ZROUTINES syntax error: ...,%YDB-E-FILEPARSE, Error parsing file specification: ...,%SYSTEM-E-ENO2, No such file or directory
+ --> Test : set $zroutines="...."
+ZSTATUS=ydb562+10^ydb562,%YDB-E-ZROSYNTAX, $ZROUTINES syntax error: ....,%YDB-E-FILEPARSE, Error parsing file specification: ....,%SYSTEM-E-ENO2, No such file or directory
+ --> Test : set $zroutines="....."
+ZSTATUS=ydb562+10^ydb562,%YDB-E-ZROSYNTAX, $ZROUTINES syntax error: .....,%YDB-E-FILEPARSE, Error parsing file specification: .....,%SYSTEM-E-ENO2, No such file or directory

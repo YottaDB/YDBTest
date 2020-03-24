@@ -32,6 +32,7 @@
 # ydb547 [nars]      Test that no SYSTEM-E-UNKNOWN/SIG-11 occurs on ARMV7L when invoked function is hundred thousands of M lines apart
 # ydb493 [gm]        Ensures default label seen with extract and load has yottadb, path, command & parameters
 # ydb549 [bdw,nars]  Ensure that environment variables are expanded correctly when initializing $zroutines
+# ydb562 [nars]      Test that SET $ZROUTINES="..." and SET $ZROUTINES="...." issue ZROSYNTAX error
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r130 test starts..."
@@ -39,7 +40,7 @@ echo "r130 test starts..."
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic "ydb470 ydb482 ydb174 ydb390 ydb476 ydb511 ydb513 ydb485 ydb518 ydb520 ydb503 ydb515 ydb519 ydb545"
-setenv subtest_list_non_replic "${subtest_list_non_replic} ydb553 ydb547 ydb493 ydb549"
+setenv subtest_list_non_replic "${subtest_list_non_replic} ydb553 ydb547 ydb493 ydb549 ydb562"
 setenv subtest_list_replic     ""
 
 
