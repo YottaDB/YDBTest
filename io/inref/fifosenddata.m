@@ -2,7 +2,7 @@
 ;								;
 ; Copyright 2011, 2014 Fidelity Information Services, Inc	;
 ;								;
-; Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -28,7 +28,7 @@ fixednonutf(type)
 	. set ^scnt(type)=i
 	. if '(i#100) hang .5
 	. write a
-	for  quit:$data(^quit)
+	for  hang 0.1 quit:$data(^quit)
 	quit
 
 streamnonutf(type)
@@ -41,7 +41,7 @@ streamnonutf(type)
 	. set ^scnt(type)=i
 	. if '(i#100) hang .5
 	. write a,!
-	for  quit:$data(^quit)
+	for  hang 0.1 quit:$data(^quit)
 	quit
 
 streamutf8(type)
@@ -57,7 +57,7 @@ streamutf8(type)
 	. set b=$Extract(a,1,randomlen)
 	. set ^charsend(type)=^charsend(type)+randomlen
 	. write b,!
-	for  quit:$data(^quit)
+	for  hang 0.1 quit:$data(^quit)
 	quit
 
 fixedutf8(type)
@@ -71,7 +71,7 @@ fixedutf8(type)
 	. set ^scnt(type)=i
 	. if '(i#100) hang .5
 	. write a(i#2)
-	for  quit:$data(^quit)
+	for  hang 0.1 quit:$data(^quit)
 	quit
 
 streamutf16(type)
@@ -87,7 +87,7 @@ streamutf16(type)
 	. set b=$Extract(a,1,randomlen)
 	. set ^charsend(type)=^charsend(type)+randomlen
 	. write b,!
-	for  quit:$data(^quit)
+	for  hang 0.1 quit:$data(^quit)
 	quit
 
 fixedutf16(type)
@@ -101,7 +101,7 @@ fixedutf16(type)
 	. set ^scnt(type)=i
 	. if '(i#100) hang .5
 	. write a(i#2)
-	for  quit:$data(^quit)
+	for  hang 0.1 quit:$data(^quit)
 	quit
 
 init1(type,t)

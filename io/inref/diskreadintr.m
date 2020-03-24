@@ -2,7 +2,7 @@
 ;								;
 ; Copyright 2013, 2014 Fidelity Information Services, Inc	;
 ;								;
-; Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -79,7 +79,7 @@ init1(type,t)
 	close p
 	set t=type_".disk"
 	set fname="^"_type_"ready"
-	for  quit:$data(@fname)
+	for  hang 0.1 quit:$data(@fname)
 	quit
 
 processStr(type,t,a)

@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -27,7 +27,7 @@ sendintr(type)
 	close p
 	set ^loopcnt(type)=0
 	Write "Interrupt rate chosen - Minimum: ",^minsnooze/10000,"  Maximum: ",^maxsnooze/10000,"  Signum: ",^signum,!
-	for  quit:$data(^doreadpid(type))
+	for  hang 0.1 quit:$data(^doreadpid(type))
 	; wait up to 30 sec for first read before sending interrupts
 	set readdone=0
 	for i=1:1:30 do  quit:readdone

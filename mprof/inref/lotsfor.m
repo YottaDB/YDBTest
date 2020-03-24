@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -34,8 +34,8 @@ dmulti	for s=1:1:10  d
 	q
 smulti	for s=1:1:10 d
 	. for x=1:1:10 d
-	. . for y=1:1:10
-	. . s sxy=1
+	. . for y=1:1:10 d
+	. . . s sxy=1
 	for s=1:1:10 s ss=1
 	for s=1:1:10 q:s=3  s ss=1
 zmany	for i=1:1:30 s j=1 f j=1:1:2000 f a=1:1:30 s k=1

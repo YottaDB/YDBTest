@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -13,14 +13,14 @@
 ; This module was derived from FIS GT.M code.
 ;
 fortst(timeout,longwait);
-	d ^init(timeout,longwait)
+	do ^init(timeout,longwait)
 	set passed=0
 	tstart ():serial
 	set tbegtp=$h
-	f i=1:1 set now=$h  set passed=$piece(now,",",2)-$piece(tbegtp,",",2)  set ^dummy(i#10)=$j(i*i/3.14,200) hang .001 q:passed>^longwait
-	W "Loop finished at i=",i,!
-	w "Message inside TP:TP Timeout does not work at all. Did not trap to the $ztrap routine!!!",!
+	for i=1:1 set now=$h  set passed=$piece(now,",",2)-$piece(tbegtp,",",2)  set ^dummy(i#10)=$j(i*i/3.14,200) hang .001 quit:passed>^longwait
+	write "Loop finished at i=",i,!
+	write "Message inside TP:TP Timeout does not work at all. Did not trap to the $ztrap routine!!!",!
 	tcommit
-	w "Message after TC: TP Timeout does not work at all. Did not trap to the $ztrap routine!!!",!
-	d ^finish
-	q
+	write "Message after TC: TP Timeout does not work at all. Did not trap to the $ztrap routine!!!",!
+	do ^finish
+	quit
