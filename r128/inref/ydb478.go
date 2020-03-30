@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////
 //								//
-// Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	//
+// Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.	//
 // All rights reserved.						//
 //								//
 //	This source code contains the intellectual property	//
@@ -54,8 +54,11 @@ func main() {
 		fmt.Println("goroutine: Exiting..")
 		wg.Done()
 	}()
-	// Request any signals be sent to sigchan when they occur
-	signal.Notify(sigchan)
+	// Request the signal of interest in this test to be sent to sigchan when it occurs.
+	// Note: Previously, we used to notify all signals as signals of interest but once in a while the test used to
+	// fail because an unrelated signal was received by the above signal handler (e.g. SIGURG shows up unexpectedly).
+	// Hence the request only for `signum` below.
+	signal.Notify(sigchan, syscall.Signal(signum))
 	// Initialize YDB runtime which sets up YDB signal handling. This call has no other purpose (i.e. we aren't
 	// trying to delete anything important).
 	err = yottadb.DeleteExclE(tptoken, nil, []string{})
