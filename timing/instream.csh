@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -49,7 +49,7 @@ if ("dbg" == "$tst_image") then
 endif
 
 # Disable tests that start lots of processes on ARM boxes as response times on that platform have been seen to be non-deterministic
-if ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) then
+if (("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) || ("HOST_LINUX_AARCH64" == $gtm_test_os_machtype)) then
 	setenv subtest_exclude_list "$subtest_exclude_list gtm8680"
 endif
 
