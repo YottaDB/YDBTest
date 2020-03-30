@@ -4,7 +4,7 @@
 # Copyright (c) 2013, 2015 Fidelity National Information	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -92,10 +92,10 @@ if ($?gtm_test_nopriorgtmver) then
 endif
 
 echo "# Test that endiancvt does not proceed if minor-dbver is not same as current version"
-echo "# We know that any version <= V63000A_R100 has a minor db-ver different from the current or any future version"
+echo "# We know that any version <= V63007_R128 has a minor db-ver different from the current or any future version"
 echo "# So create database using that older version and try to endiancvt it using the current version"
-echo "# Randomly choose a prior V5 version that is <= V63000A_R100 to create the database first."
-set prior_ver = `$gtm_tst/com/random_ver.csh -gte V50000 -lte V63000A_R100`
+echo "# Randomly choose a prior version to create the database first."
+set prior_ver = `$gtm_tst/com/random_ver.csh -gte V50000 -lte V63007_R128`
 if ("$prior_ver" =~ "*-E-*") then
 	echo "No prior versions available: $prior_ver"
 	exit -1
