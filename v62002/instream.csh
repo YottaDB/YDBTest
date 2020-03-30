@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -84,8 +84,19 @@ else if ($?ydb_environment_init) then
 	# In a YDB environment (i.e. non-GG setup), we do not have prior versions that are needed
 	# by the below subtest. Therefore disable it.
 	setenv subtest_exclude_list "$subtest_exclude_list gtm8277"
+	# For the gtm7949 subtest, look at two things (env var and dbg builds) to decide whether to disable it or not.
+	set exclude_gtm7949 = 0
+	if ($?ydb_test_exclude_gtm7949) then
+		if ($ydb_test_exclude_gtm7949) then
+			# An environment variable is defined to indicate the below subtest needs to be disabled on this host
+			set exclude_gtm7949 = 1
+		endif
+	endif
 	if ("dbg" == "$tst_image") then
 		# We do not have dbg builds of versions [V62001] needed by the below subtest so disable it.
+		set exclude_gtm7949 = 1
+	endif
+	if ($exclude_gtm7949) then
 		setenv subtest_exclude_list "$subtest_exclude_list gtm7949"
 	endif
 endif
