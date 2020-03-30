@@ -4,7 +4,7 @@
 # Copyright (c) 2010-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -134,8 +134,8 @@ setenv remove "$gtm_tst/com/trigger_load.csh"
 setenv drop "$gtm_tst/com/trigger_unload.csh"
 setenv show "$gtm_tst/com/trigger_select.csh"
 
-# Test on-the-fly trigger upgrade code if prior GT.M versions are available
-if (! $?gtm_test_nopriorgtmver) then
+# Test on-the-fly trigger upgrade code if prior GT.M versions are available AND trigger upgrade is not excluded through env var
+if ((! $?gtm_test_nopriorgtmver) && (! $?ydb_test_exclude_trig_upgrade)) then
 	setenv gtm_test_trig_upgrade 1
 endif
 
