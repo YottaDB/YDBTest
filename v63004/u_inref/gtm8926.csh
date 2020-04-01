@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -20,12 +20,6 @@ setenv gtm_test_spanreg 0
 
 # Pre-V63004 versions will pass in MM mode, so need to force BG mode
 setenv acc_meth BG
-
-# If this test chose r120 as the prior version, GDE won't work with that version unless ydb_msgprefix is set to "GTM".
-# (https://github.com/YottaDB/YottaDB/issues/193). Therefore, set ydb_msgprefix to "GTM" in that case.
-if ($tst_ver == "V63003A_R120") then
-	setenv ydb_msgprefix "GTM"
-endif
 
 echo ""
 echo "# Create a Database with 2 regions, DEFAULT and AREG"

@@ -71,8 +71,8 @@ mumps.dat
 %GDE-I-GDCREATE, Creating Global Directory file 
 	##TEST_PATH##/mumps.gld
 # Test that endiancvt does not proceed if minor_dbver is different
-%YDB-E-NOENDIANCVT, Unable to convert the endian format of file mumps.dat due to minor database format is not the current version
-%YDB-E-MUNOACTION, MUPIP unable to perform requested action
+%GTM-E-NOENDIANCVT, Unable to convert the endian format of file mumps.dat due to minor database format is not the current version
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
 # Test that endiancvt proceeds even if minor_dbver is different as long as OVERRIDE is specified
 # Test that endiancvt preserves the minor_dbver value as part of the conversion
 
@@ -83,13 +83,13 @@ Minor db version is the same
 Database file ##TEST_PATH##/mumps.dat now has desired DB format V4
   Maximum TN Warn        0x00000000D7FFFFFF  Desired DB Format               V4
 # Test that endiancvt does not proceed if desired_db_format is V4
-%YDB-E-NOENDIANCVT, Unable to convert the endian format of file mumps.dat due to database format is not the current version
-%YDB-E-NOENDIANCVT, Unable to convert the endian format of file mumps.dat due to some blocks are not upgraded to the current version
-%YDB-E-MUNOACTION, MUPIP unable to perform requested action
+%GTM-E-NOENDIANCVT, Unable to convert the endian format of file mumps.dat due to database format is not the current version
+%GTM-E-NOENDIANCVT, Unable to convert the endian format of file mumps.dat due to some blocks are not upgraded to the current version
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
 # Test that endiancvt does not proceed even if desired_db_format is V4 and OVERRIDE is specified
-%YDB-E-NOENDIANCVT, Unable to convert the endian format of file mumps.dat due to database format is not the current version
-%YDB-E-NOENDIANCVT, Unable to convert the endian format of file mumps.dat due to some blocks are not upgraded to the current version
-%YDB-E-MUNOACTION, MUPIP unable to perform requested action
+%GTM-E-NOENDIANCVT, Unable to convert the endian format of file mumps.dat due to database format is not the current version
+%GTM-E-NOENDIANCVT, Unable to convert the endian format of file mumps.dat due to some blocks are not upgraded to the current version
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
   Maximum TN Warn        0x00000000D7FFFFFF  Desired DB Format               V4
 # Set desired_db_format back to V6 before proceeding to next test
 Database file ##TEST_PATH##/mumps.dat now has desired DB format V6
@@ -115,11 +115,11 @@ Database file ##TEST_PATH##/mumps.dat now has desired DB format V6
   Database is Fully Upgraded                : FALSE
   Database WAS ONCE Fully Upgraded from V4  :  TRUE
 # Test that endiancvt does not proceed if fully_upgraded is FALSE
-%YDB-E-NOENDIANCVT, Unable to convert the endian format of file mumps.dat due to some blocks are not upgraded to the current version
-%YDB-E-MUNOACTION, MUPIP unable to perform requested action
+%GTM-E-NOENDIANCVT, Unable to convert the endian format of file mumps.dat due to some blocks are not upgraded to the current version
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
 # Test that endiancvt does not proceed even if fully_upgraded is FALSE and OVERRIDE is specified
-%YDB-E-NOENDIANCVT, Unable to convert the endian format of file mumps.dat due to some blocks are not upgraded to the current version
-%YDB-E-MUNOACTION, MUPIP unable to perform requested action
+%GTM-E-NOENDIANCVT, Unable to convert the endian format of file mumps.dat due to some blocks are not upgraded to the current version
+%GTM-E-MUNOACTION, MUPIP unable to perform requested action
   Database is Fully Upgraded                : FALSE
   Database WAS ONCE Fully Upgraded from V4  :  TRUE
 # Set fully_upgraded back to TRUE before proceeding to next test

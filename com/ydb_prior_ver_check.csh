@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -69,5 +69,10 @@ if ($?ydb_environment_init) then
 			echo "setenv gtm_test_tls FALSE" >>&! settings.csh
 			setenv gtm_test_tls "FALSE"
 		endif
+	endif
+	# If this test chose r120 as the prior version, GDE won't work with that version unless ydb_msgprefix is set to "GTM".
+	# (see https://gitlab.com/YottaDB/DB/YDB/issues/193 for details). Therefore, set ydb_msgprefix to "GTM" in that case.
+	if ($1 == "V63003A_R120") then
+		setenv ydb_msgprefix "GTM"
 	endif
 endif

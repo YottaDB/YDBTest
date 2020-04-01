@@ -4,7 +4,7 @@
 # Copyright (c) 2005-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -52,12 +52,6 @@ if (`expr "$msver" "<" "V62000"`) then
 	setenv gtm_test_trigger 0
 	# disable encryption for versions prior to V62000 as encryption setup (config files) changed from V62000
 	setenv test_encryption NON_ENCRYPT
-endif
-
-# If this test chose r120 as the prior version, GDE won't work with that version unless ydb_msgprefix is set to "GTM".
-# (https://github.com/YottaDB/YottaDB/issues/193). Therefore, set ydb_msgprefix to "GTM" in that case.
-if ($msver == "V63003A_R120") then
-	setenv ydb_msgprefix "GTM"
 endif
 
 # The default prompt is "GTM>" for versions < r1.00 and "YDB>" for other versions.

@@ -101,6 +101,11 @@ if ("$prior_ver" =~ "*-E-*") then
 	exit -1
 endif
 source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver
+
+# Since this test uses prior versions before r1.20, they issue error messages with GTM prefix (not YDB prefix).
+# To get this test to pass always, set ydb_msgprefix so versions r1.20 and later also use the same GTM prefix.
+setenv ydb_msgprefix "GTM"
+
 source $gtm_tst/com/ydb_temporary_disable.csh
 echo "$prior_ver" > priorver_nofilter.txt
 echo "Randomly chosen prior V5 version is : GTM_TEST_DEBUGINFO [$prior_ver]"

@@ -1,14 +1,14 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
-#                                                               #
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.       #
-# All rights reserved.                                          #
-#                                                               #
-#       This source code contains the intellectual property     #
-#       of its copyright holder(s), and is made available       #
-#       under a license.  If you do not know the terms of       #
-#       the license, please stop and do not read further.       #
-#                                                               #
+#								#
+# Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
 #################################################################
 #
 echo "-------------------------------------------------------------------------------------------------------------"
@@ -21,15 +21,8 @@ echo "rand_ver: $rand_ver" > debug.txt
 
 setenv gtm_test_spanreg 0 # Test requires traditional global mappings, so disable spanning regions
 
-# If this test chose r120 as the prior version, GDE won't work with that version unless ydb_msgprefix is set to "GTM".
-# (https://github.com/YottaDB/YottaDB/issues/193). Therefore, set ydb_msgprefix to "GTM" in that case.
-if ($rand_ver == "V63003A_R120") then
-	setenv ydb_msgprefix "GTM"
-endif
-
 echo "# Set the test version to the previous version"
 source $gtm_tst/com/switch_gtm_version.csh $rand_ver $tst_image
-
 
 echo "# Create DBs DEFAULT, AREG, and BREG in previous version"
 $gtm_tst/com/dbcreate.csh mumps 3 >>& dbcreate_log.txt
