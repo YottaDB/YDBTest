@@ -53,15 +53,15 @@ Completed
 
 Testing $ZCONVERT for larger than acceptable HEX input
 Input: 7FFFFFFFFFFFFFFFFFFFFFFFFFFFF
-%YDB-E-INVVALUE, 7FFFFFFFFFFFFFFFFFFFFFFFFFFFF is invalid HEX value for $ZCO[nvert]. Supports only hexadecimal value of length 16
+%YDB-E-INVVALUE, 7FFFFFFFFFFFFFFFFFFFFFFFFFFFF is invalid HEX value for $ZCO[nvert]. Range is '0 to FFFFFFFFFFFFFFFF'
 
 Testing $ZCONVERT for larger than acceptable DEC input
 Input: 184467440737095516155
-%YDB-E-INVVALUE, 184467440737095516155 is invalid DEC value for $ZCO[nvert]. Supports conversion of positive numbers only in the range '0 to 18446744073709551615'
+%YDB-E-INVVALUE, 184467440737095516155 is invalid DEC value for $ZCO[nvert]. Range is '0 to 18446744073709551615'
 
 Testing $ZCONVERT for larger than acceptable -ve DEC input
 Input: -9223372036854775809
-%YDB-E-INVVALUE, -9223372036854775809 is invalid DEC value for $ZCO[nvert]. Supports conversion of negative numbers only in the range '-9223372036854775808 to 0'
+%YDB-E-INVVALUE, -9223372036854775809 is invalid DEC value for $ZCO[nvert]. Range is '-9223372036854775808 to 0'
 
 Testing $ZCONVERT, %DH and %HD for signed input value
 Checking $ZCONVERT for signed value input
@@ -147,14 +147,14 @@ Testing $ZCONVERT for invalid category input in non-utf mode
 
 setenv gtm_chset M
 unset echo
-DEC to DEC Input:-9 Output: %YDB-E-INVZCONVERT, $ZCO[nvert] translation between DEC and DEC is not supported
-HEX to HEX Input:-9 Output: %YDB-E-INVZCONVERT, $ZCO[nvert] translation between HEX and HEX is not supported
-UTF-8 to HEX Input:-9 Output: %YDB-E-INVZCONVERT, $ZCO[nvert] translation between UTF-8 and HEX is not supported
+DEC to DEC Input:-9 Output: %YDB-E-INVZCONVERT, Translation between DEC and DEC is not supported
+HEX to HEX Input:-9 Output: %YDB-E-INVZCONVERT, Translation between HEX and HEX is not supported
+UTF-8 to HEX Input:-9 Output: %YDB-E-INVZCONVERT, Translation between UTF-8 and HEX is not supported
 
 Testing $ZCONVERT for invalid category input in utf mode
 
 setenv gtm_chset UTF-8
 unset echo
-DEC to DEC Input:-9 Output: %YDB-E-INVZCONVERT, $ZCO[nvert] translation between DEC and DEC is not supported
-HEX to HEX Input:-9 Output: %YDB-E-INVZCONVERT, $ZCO[nvert] translation between HEX and HEX is not supported
+DEC to DEC Input:-9 Output: %YDB-E-INVZCONVERT, Translation between DEC and DEC is not supported
+HEX to HEX Input:-9 Output: %YDB-E-INVZCONVERT, Translation between HEX and HEX is not supported
 UTF-8 to HEX Input:-9 Output: %YDB-E-BADCHSET, HEX is not a valid character mapping in this context
