@@ -58,8 +58,8 @@ echo "Input: 7FFFFFFFFFFFFFFFFFFFFFFFFFFFF"
 $ydb_dist/yottadb -r ^%XCMD 'write $ZCONVERT("7FFFFFFFFFFFFFFFFFFFFFFFFFFFF","HEX","DEC"),!'
 
 echo '\nTesting $ZCONVERT for larger than acceptable DEC input'
-echo "Input: 184467440737095516155"
-$ydb_dist/yottadb -r ^%XCMD 'write $ZCONVERT("184467440737095516155","DEC","HEX"),!'
+echo "Input: 18446744073709551616"
+$ydb_dist/yottadb -r ^%XCMD 'write $ZCONVERT("18446744073709551616","DEC","HEX"),!'
 
 echo '\nTesting $ZCONVERT for larger than acceptable -ve DEC input'
 echo "Input: -9223372036854775809"
