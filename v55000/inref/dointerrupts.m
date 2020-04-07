@@ -2,7 +2,7 @@
 ;								;
 ; Copyright 2012, 2013 Fidelity Information Services, Inc	;
 ;								;
-; Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -20,7 +20,7 @@ dointerrupts
 	; specify various configuration parameters
 	set ^intrptdelay=0.0001
 	set limit=10000000
-	set minintrptcnt=100,minelapsedtime=30
+	set minintrptcnt=100,minelapsedtime=15
 
 	; prepare iterators and counters
 	set intrptcnt=0
@@ -56,8 +56,8 @@ dointerrupts
 	set starttime=$horolog
 	; launch the interrupter and start making calls with arguments
 	lock -^intrptlock
-	; Exit the loop if at least "minintrptcnt" interrupts have been seen AND "minelapsedtime" seconds have elapsed
-	for i=1:1:limit quit:(intrptcnt>minintrptcnt)&(minelapsedtime>$$^difftime($horolog,starttime))  do adder(i,i*2,i*3,i*4,i*5)
+	; Exit the loop if at least "minintrptcnt" interrupts have been seen AND at least "minelapsedtime" seconds have elapsed
+	for i=1:1:limit quit:(intrptcnt>minintrptcnt)&(minelapsedtime'>$$^difftime($horolog,starttime))  do adder(i,i*2,i*3,i*4,i*5)
 
 	write "Stopping...",!
 
