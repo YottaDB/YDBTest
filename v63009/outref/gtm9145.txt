@@ -1,0 +1,57 @@
+# Test to check how well ^%RI and ^%RO handle long code line lengths up to 1MiB.
+# YDB will automatically break up lines longer than 8KiB since it will exceed the code line length limit.
+# Previously the code line length limit was 2044 characters.
+# This test verifies that the code line length limit is now greater than 2044 characters and will not have
+# an increased line count using both ^%RI and ^%RO.
+# Checking file size
+6009
+# Checking line count
+1 temp.m
+# Beginning test by using ^%RO
+
+GTM>
+
+Routine Output - Save selected routines into RO file.
+
+Routine: 
+temp      
+Current total of 1 routine.
+
+Routine: 
+
+Output device: <terminal>: 
+
+Header Label: 
+Strip comments <No>?: 
+temp      
+
+Total of 1 line in 1 routine.
+
+
+GTM>
+
+GTM>
+# Testing ^%RI
+
+GTM>
+
+Routine Input Utility - Converts RO file to *.m files.
+
+Formfeed delimited <No>? 
+Input device: <terminal>: 
+
+RO File to test code line length limit of %RI and %RO
+##TEST_AWKGT.M [0-9][0-9]-[A-Z][A-Z][A-Z]-[0-9][0-9][0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9]
+
+
+Output directory : 
+
+temp      
+
+
+Restored 1 line in 1 routine.
+GTM>
+
+GTM>
+# Verifying that there is only 1 line
+1 temp.m

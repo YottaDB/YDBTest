@@ -1,0 +1,15 @@
+# Starting from V6.3-009 MUPIP REORG -TRUNCATE supports -KEEP=|blocks|percent%
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Using -KEEP without percentage
+Fill Factor:: Index blocks 100%: Data blocks 100%
+%GTM-W-NOSELECT, None of the selected variables exist -- halting
+# Using -KEEP with percentage
+Fill Factor:: Index blocks 100%: Data blocks 100%
+%GTM-W-NOSELECT, None of the selected variables exist -- halting
+/usr/library/V63009/dbg/mupip
+/usr/library/V63009/dbg/mupip integ -REG *
+No errors detected by integ.
