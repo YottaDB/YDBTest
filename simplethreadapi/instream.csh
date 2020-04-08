@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -75,6 +75,7 @@
 # ciVoidReturn			[mmr]	      Test of ydb_ci() when taking a string as a parameter, and returning void, properly processes the string parameter
 # ciVoidReturnStack		[mmr]	      Test of ydb_ci() when taking a string as a parameter, and returning void, properly processes the string parameter
 # errstrTest			[mmr]	      New simplethreadapi/errstrTest subtest to test errstr parameter of SimpleThreadAPI
+# ydb550			[bdw]	      Test of nested ydb_tp_st() where the inner transaction rolls back but the outer transaction commits
 # -------------------------------------------------------------------------------------
 
 echo "simplethreadapi test starts..."
@@ -93,7 +94,7 @@ setenv subtest_list_non_replic "$subtest_list_non_replic gvsuboflow"
 setenv subtest_list_non_replic "$subtest_list_non_replic gvnlvndata gvnlvnincr gvnlvndelete isvdelete str2zwr utils_file"
 setenv subtest_list_non_replic "$subtest_list_non_replic threadedapinotallowed utilfuncs invtptrans externalcall exitFromTp"
 setenv subtest_list_non_replic "$subtest_list_non_replic initFromTp tpnestto127 isMainMT initMT exitMT pseudoBank randomWalk"
-setenv subtest_list_non_replic "$subtest_list_non_replic ciVoidReturn ciVoidReturnStack errstrTest"
+setenv subtest_list_non_replic "$subtest_list_non_replic ciVoidReturn ciVoidReturnStack errstrTest ydb550"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then

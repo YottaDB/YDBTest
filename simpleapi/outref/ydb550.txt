@@ -1,0 +1,48 @@
+# Test that a nested ydb_tp_s() rolls back correctly when the parent transaction commits
+# We also run a version of the test for 10 seconds with multiple processes without output to ensure that YDB_TP_RESTART is handled correctly
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Process P2:Test 1 : Test YDB_TP_ROLLBACK handling
+Process P2:a)	The flow is : CPROGRAM -> ydb_tp_s()1 -> CALLBACK1 -> ydb_tp_s()2 -> CALLBACK2. Here CPROGRAM is the C program which invokes ydb_tp_s(). CALLBACK1 is the user-specified TP callback function at TP depth 1 and CALLBACK2 is the user-specified TP callback function at TP depth 2.
+Process P2:CALLBACK1 will do some db updates using ydb_set_s() before calling ydb_tp_s()2 (first set of updates) which calls CALLBACK2.
+Process P2:CALLBACK2 will do some db updates (second set of updates) using ydb_set_s()
+Process P2:CALLBACK2 will return YDB_TP_ROLLBACK
+Process P2:CALLBACK1 will check that the return from ydb_tp_s()2 is actually YDB_TP_ROLLBACK.
+Process P2:Since control has returned from ydb_tp_s()2, CALLBACK1 will do some more updates (third set of updates) using ydb_set_s() then return YDB_OK.
+Process P2:ydb_tp_s()1 returned YDB_OK as expected
+Process P2:Since control has returned from ydb_tp_s()1 CPROGRAM will check that the first and third updates exist in the db but the second update doesn't.
+
+Process P2:Test 2 : Test user-specific-error-code handling
+Process P2:Flow is very similar to Test 1 but instead of returning YDB_TP_ROLLBACK, CALLBACK2 returns a user-specific status code (USER_SPECIFIC_STATUS_CODE).
+Process P2:CALLBACK1 will do some db updates using ydb_set_s() before calling ydb_tp_s()2 (first set of updates) which calls CALLBACK2.
+Process P2:CALLBACK2 will do some db updates (second set of updates) using ydb_set_s()
+Process P2:CALLBACK2 will return USER_SPECIFIC_STATUS_CODE
+Process P2:CALLBACK1 will check that the return from ydb_tp_s()2 is actually USER_SPECIFIC_STATUS_CODE.
+Process P2:Since control has returned from ydb_tp_s()2, CALLBACK1 will do some more updates (third set of updates) using ydb_set_s() then return YDB_OK.
+Process P2:ydb_tp_s()1 returned YDB_OK as expected
+Process P2:Since control has returned from ydb_tp_s()1 CPROGRAM will check that the first and third updates exist in the db but the second update doesn't.
+Process P1:Test 1 : Test YDB_TP_ROLLBACK handling
+Process P1:a)	The flow is : CPROGRAM -> ydb_tp_s()1 -> CALLBACK1 -> ydb_tp_s()2 -> CALLBACK2. Here CPROGRAM is the C program which invokes ydb_tp_s(). CALLBACK1 is the user-specified TP callback function at TP depth 1 and CALLBACK2 is the user-specified TP callback function at TP depth 2.
+Process P1:CALLBACK1 will do some db updates using ydb_set_s() before calling ydb_tp_s()2 (first set of updates) which calls CALLBACK2.
+Process P1:CALLBACK2 will do some db updates (second set of updates) using ydb_set_s()
+Process P1:CALLBACK2 will return YDB_TP_ROLLBACK
+Process P1:CALLBACK1 will check that the return from ydb_tp_s()2 is actually YDB_TP_ROLLBACK.
+Process P1:Since control has returned from ydb_tp_s()2, CALLBACK1 will do some more updates (third set of updates) using ydb_set_s() then return YDB_OK.
+Process P1:ydb_tp_s()1 returned YDB_OK as expected
+Process P1:Since control has returned from ydb_tp_s()1 CPROGRAM will check that the first and third updates exist in the db but the second update doesn't.
+
+Process P1:Test 2 : Test user-specific-error-code handling
+Process P1:Flow is very similar to Test 1 but instead of returning YDB_TP_ROLLBACK, CALLBACK2 returns a user-specific status code (USER_SPECIFIC_STATUS_CODE).
+Process P1:CALLBACK1 will do some db updates using ydb_set_s() before calling ydb_tp_s()2 (first set of updates) which calls CALLBACK2.
+Process P1:CALLBACK2 will do some db updates (second set of updates) using ydb_set_s()
+Process P1:CALLBACK2 will return USER_SPECIFIC_STATUS_CODE
+Process P1:CALLBACK1 will check that the return from ydb_tp_s()2 is actually USER_SPECIFIC_STATUS_CODE.
+Process P1:Since control has returned from ydb_tp_s()2, CALLBACK1 will do some more updates (third set of updates) using ydb_set_s() then return YDB_OK.
+Process P1:ydb_tp_s()1 returned YDB_OK as expected
+Process P1:Since control has returned from ydb_tp_s()1 CPROGRAM will check that the first and third updates exist in the db but the second update doesn't.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
