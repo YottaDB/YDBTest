@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -26,7 +26,7 @@ badchset ;
 		set cnt=cnt+1,type="M",type1="utf8" write $ZCONVERT("a",type1,type),!
 		set cnt=cnt+1,type="UTF16ME",type1="M" write $ZCONVERT("a",type1,type),!
 		set cnt=cnt+1,type="ＵＴＦ-８",type1="Ｍ" write $ZCONVERT("a",type1,type),!
-		do ^examine(errcnt,cnt,"TEST-E-ERROR expected BADCHSET missed")
+		do ^examine(errcnt,cnt,"TEST-E-ERROR expected BADCHSET/INVZCONVERT missed")
 		quit
 dlrzctoobig ;
 		set errcnt=0,cnt=0
@@ -73,7 +73,7 @@ bommismatch ;
 		quit
 errortrap ;
 		use $P
-		if (($FIND($zstatus,"YDB-E-BADCHSET")=0)&($FIND($zstatus,"YDB-E-BADCASECODE")=0)&($FIND($zstatus,"YDB-E-DLRZCTOOBIG")=0)&($FIND($zstatus,"YDB-E-BOMMISMATCH")=0)) set $ZTRAP="" w "TEST-E-UNEXPECTED "_$zstatus_" ERROR " quit
+		if (($FIND($zstatus,"YDB-E-BADCHSET")=0)&($FIND($zstatus,"YDB-E-BADCASECODE")=0)&($FIND($zstatus,"YDB-E-DLRZCTOOBIG")=0)&($FIND($zstatus,"YDB-E-BOMMISMATCH")=0)&($FIND($zstatus,"YDB-E-INVZCONVERT")=0)) set $ZTRAP="" w "TEST-E-UNEXPECTED "_$zstatus_" ERROR " quit
 		write $ZSTATUS,!
                 set lab=$PIECE(errpos,"+",1)
                 set offset=$PIECE($PIECE(errpos,"+",2),"^",1)+1

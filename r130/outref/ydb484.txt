@@ -2682,36 +2682,36 @@ set res=$zwrite("dummy",$ZYSQLNULL) zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E
 set res=$zwrite("dummy","") zwrite res res="""dummy"""
 $ZCONVERT 3 arg form
 ##SUSPEND_OUTPUT NONUNICODE_MODE
-set res=$zconvert($ZYSQLNULL,$ZYSQLNULL,$ZYSQLNULL) zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-BADCHSET,  is not a valid character mapping in this context
-set res=$zconvert("","","") zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-BADCHSET,  is not a valid character mapping in this context
-set res=$zconvert($ZYSQLNULL,$ZYSQLNULL,"HEX") zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-BADCHSET,  is not a valid character mapping in this context
-set res=$zconvert("","","HEX") zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-BADCHSET,  is not a valid character mapping in this context
-set res=$zconvert($ZYSQLNULL,"DEC",$ZYSQLNULL) zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-BADCHSET, DEC is not a valid character mapping in this context
-set res=$zconvert("","DEC","") zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-BADCHSET,  is not a valid character mapping in this context
+set res=$zconvert($ZYSQLNULL,$ZYSQLNULL,$ZYSQLNULL) zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-INVZCONVERT, Translation supported only between DEC/HEX OR between UTF-8/UTF-16/UTF-16LE/UTF-16BE
+set res=$zconvert("","","") zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-INVZCONVERT, Translation supported only between DEC/HEX OR between UTF-8/UTF-16/UTF-16LE/UTF-16BE
+set res=$zconvert($ZYSQLNULL,$ZYSQLNULL,"HEX") zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-INVZCONVERT, Translation supported only between DEC/HEX OR between UTF-8/UTF-16/UTF-16LE/UTF-16BE
+set res=$zconvert("","","HEX") zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-INVZCONVERT, Translation supported only between DEC/HEX OR between UTF-8/UTF-16/UTF-16LE/UTF-16BE
+set res=$zconvert($ZYSQLNULL,"DEC",$ZYSQLNULL) zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-INVZCONVERT, Translation supported only between DEC/HEX OR between UTF-8/UTF-16/UTF-16LE/UTF-16BE
+set res=$zconvert("","DEC","") zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-INVZCONVERT, Translation supported only between DEC/HEX OR between UTF-8/UTF-16/UTF-16LE/UTF-16BE
 set res=$zconvert($ZYSQLNULL,"DEC","HEX") zwrite res res=0
 set res=$zconvert("","DEC","HEX") zwrite res res=0
-set res=$zconvert(10,$ZYSQLNULL,$ZYSQLNULL) zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-BADCHSET,  is not a valid character mapping in this context
-set res=$zconvert(10,"","") zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-BADCHSET,  is not a valid character mapping in this context
-set res=$zconvert(10,$ZYSQLNULL,"HEX") zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-BADCHSET,  is not a valid character mapping in this context
-set res=$zconvert(10,"","HEX") zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-BADCHSET,  is not a valid character mapping in this context
-set res=$zconvert(10,"DEC",$ZYSQLNULL) zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-BADCHSET, DEC is not a valid character mapping in this context
-set res=$zconvert(10,"DEC","") zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-BADCHSET,  is not a valid character mapping in this context
+set res=$zconvert(10,$ZYSQLNULL,$ZYSQLNULL) zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-INVZCONVERT, Translation supported only between DEC/HEX OR between UTF-8/UTF-16/UTF-16LE/UTF-16BE
+set res=$zconvert(10,"","") zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-INVZCONVERT, Translation supported only between DEC/HEX OR between UTF-8/UTF-16/UTF-16LE/UTF-16BE
+set res=$zconvert(10,$ZYSQLNULL,"HEX") zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-INVZCONVERT, Translation supported only between DEC/HEX OR between UTF-8/UTF-16/UTF-16LE/UTF-16BE
+set res=$zconvert(10,"","HEX") zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-INVZCONVERT, Translation supported only between DEC/HEX OR between UTF-8/UTF-16/UTF-16LE/UTF-16BE
+set res=$zconvert(10,"DEC",$ZYSQLNULL) zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-INVZCONVERT, Translation supported only between DEC/HEX OR between UTF-8/UTF-16/UTF-16LE/UTF-16BE
+set res=$zconvert(10,"DEC","") zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-INVZCONVERT, Translation supported only between DEC/HEX OR between UTF-8/UTF-16/UTF-16LE/UTF-16BE
 ##SUSPEND_OUTPUT UNICODE_MODE
 ##ALLOW_OUTPUT NONUNICODE_MODE
-set res=$zconvert($ZYSQLNULL,$ZYSQLNULL,$ZYSQLNULL) zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-INVZCONVERT, $ZCO[nvert] in M mode. Translation between  and  is not supported
-set res=$zconvert("","","") zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-BADCHSET,  is not a valid character mapping in this context
-set res=$zconvert($ZYSQLNULL,$ZYSQLNULL,"HEX") zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-INVZCONVERT, $ZCO[nvert] in M mode. Translation between  and HEX is not supported
-set res=$zconvert("","","HEX") zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-BADCHSET,  is not a valid character mapping in this context
-set res=$zconvert($ZYSQLNULL,"DEC",$ZYSQLNULL) zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-INVZCONVERT, $ZCO[nvert] in M mode. Translation between DEC and  is not supported
-set res=$zconvert("","DEC","") zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-BADCHSET,  is not a valid character mapping in this context
+set res=$zconvert($ZYSQLNULL,$ZYSQLNULL,$ZYSQLNULL) zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-INVZCONVERT, Translation supported only between DEC/HEX OR between UTF-8/UTF-16/UTF-16LE/UTF-16BE
+set res=$zconvert("","","") zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-INVZCONVERT, Translation supported only between DEC/HEX OR between UTF-8/UTF-16/UTF-16LE/UTF-16BE
+set res=$zconvert($ZYSQLNULL,$ZYSQLNULL,"HEX") zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-INVZCONVERT, Translation supported only between DEC/HEX OR between UTF-8/UTF-16/UTF-16LE/UTF-16BE
+set res=$zconvert("","","HEX") zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-INVZCONVERT, Translation supported only between DEC/HEX OR between UTF-8/UTF-16/UTF-16LE/UTF-16BE
+set res=$zconvert($ZYSQLNULL,"DEC",$ZYSQLNULL) zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-INVZCONVERT, Translation supported only between DEC/HEX OR between UTF-8/UTF-16/UTF-16LE/UTF-16BE
+set res=$zconvert("","DEC","") zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-INVZCONVERT, Translation supported only between DEC/HEX OR between UTF-8/UTF-16/UTF-16LE/UTF-16BE
 set res=$zconvert($ZYSQLNULL,"DEC","HEX") zwrite res res=0
 set res=$zconvert("","DEC","HEX") zwrite res res=0
-set res=$zconvert(10,$ZYSQLNULL,$ZYSQLNULL) zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-INVZCONVERT, $ZCO[nvert] in M mode. Translation between  and  is not supported
-set res=$zconvert(10,"","") zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-BADCHSET,  is not a valid character mapping in this context
-set res=$zconvert(10,$ZYSQLNULL,"HEX") zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-INVZCONVERT, $ZCO[nvert] in M mode. Translation between  and HEX is not supported
-set res=$zconvert(10,"","HEX") zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-BADCHSET,  is not a valid character mapping in this context
-set res=$zconvert(10,"DEC",$ZYSQLNULL) zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-INVZCONVERT, $ZCO[nvert] in M mode. Translation between DEC and  is not supported
-set res=$zconvert(10,"DEC","") zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-BADCHSET,  is not a valid character mapping in this context
+set res=$zconvert(10,$ZYSQLNULL,$ZYSQLNULL) zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-INVZCONVERT, Translation supported only between DEC/HEX OR between UTF-8/UTF-16/UTF-16LE/UTF-16BE
+set res=$zconvert(10,"","") zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-INVZCONVERT, Translation supported only between DEC/HEX OR between UTF-8/UTF-16/UTF-16LE/UTF-16BE
+set res=$zconvert(10,$ZYSQLNULL,"HEX") zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-INVZCONVERT, Translation supported only between DEC/HEX OR between UTF-8/UTF-16/UTF-16LE/UTF-16BE
+set res=$zconvert(10,"","HEX") zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-INVZCONVERT, Translation supported only between DEC/HEX OR between UTF-8/UTF-16/UTF-16LE/UTF-16BE
+set res=$zconvert(10,"DEC",$ZYSQLNULL) zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-INVZCONVERT, Translation supported only between DEC/HEX OR between UTF-8/UTF-16/UTF-16LE/UTF-16BE
+set res=$zconvert(10,"DEC","") zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-INVZCONVERT, Translation supported only between DEC/HEX OR between UTF-8/UTF-16/UTF-16LE/UTF-16BE
 ##ALLOW_OUTPUT UNICODE_MODE
 $ZCONVERT 2 arg form
 set res=$zconvert($ZYSQLNULL,$ZYSQLNULL) zwrite res ZSTATUS=ydb484f+...^ydb484,%YDB-E-BADCASECODE,  is not a valid case conversion code

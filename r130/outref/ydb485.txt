@@ -147,14 +147,14 @@ Testing $ZCONVERT for invalid category input in non-utf mode
 
 setenv gtm_chset M
 unset echo
-DEC to DEC Input:-9 Output: %YDB-E-INVZCONVERT, Translation between DEC and DEC is not supported
-HEX to HEX Input:-9 Output: %YDB-E-INVZCONVERT, Translation between HEX and HEX is not supported
-UTF-8 to HEX Input:-9 Output: %YDB-E-INVZCONVERT, Translation between UTF-8 and HEX is not supported
+DEC to DEC Input:-9 Output: %YDB-E-INVZCONVERT, Translation supported only between DEC/HEX OR between UTF-8/UTF-16/UTF-16LE/UTF-16BE
+HEX to HEX Input:-9 Output: %YDB-E-INVZCONVERT, Translation supported only between DEC/HEX OR between UTF-8/UTF-16/UTF-16LE/UTF-16BE
+UTF-8 to HEX Input:-9 Output: %YDB-E-INVZCONVERT, Translation supported only between DEC/HEX OR between UTF-8/UTF-16/UTF-16LE/UTF-16BE
 
 Testing $ZCONVERT for invalid category input in utf mode
 
 setenv gtm_chset UTF-8
 unset echo
-DEC to DEC Input:-9 Output: %YDB-E-INVZCONVERT, Translation between DEC and DEC is not supported
-HEX to HEX Input:-9 Output: %YDB-E-INVZCONVERT, Translation between HEX and HEX is not supported
-UTF-8 to HEX Input:-9 Output: %YDB-E-BADCHSET, HEX is not a valid character mapping in this context
+DEC to DEC Input:-9 Output: %YDB-E-INVZCONVERT, Translation supported only between DEC/HEX OR between UTF-8/UTF-16/UTF-16LE/UTF-16BE
+HEX to HEX Input:-9 Output: %YDB-E-INVZCONVERT, Translation supported only between DEC/HEX OR between UTF-8/UTF-16/UTF-16LE/UTF-16BE
+UTF-8 to HEX Input:-9 Output: %YDB-E-INVZCONVERT, Translation supported only between DEC/HEX OR between UTF-8/UTF-16/UTF-16LE/UTF-16BE
