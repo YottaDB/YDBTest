@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -114,7 +114,7 @@ casetab	;S $ZE(j,k,k+1)=k;1-1;k
 	;B:k k;0;k
 	;S j=$ZCH(k);1-1;k
 	;S j=$ZCH(@k);0;j,k
-	;S j=$ZCO(k,k,k);0;k;BADCHSET
+	;S j=$ZCO(k,k,k);0;k;INVZCONVERT
 	;S j=$ZCO(@k,k);0;j,k
 	;S j=$ZCO(k,@k);0;j,k
 	;S j=$ZCO(k,k,@k);0;j,k
