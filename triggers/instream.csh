@@ -229,7 +229,21 @@ if ($?gtm_test_nopriorgtmver) then
 else if ("dbg" == "$tst_image") then
        # We do not have dbg builds of versions [V54002,V62000] needed by the gtm7083 subtest so disable it.
        setenv subtest_exclude_list "$subtest_exclude_list gtm7083"
+endif
+
+# For the gtm7083a subtest, look at two things (env var and dbg builds) to decide whether to disable it or not.
+set exclude_gtm7083a = 0
+if ($?ydb_test_exclude_gtm7083a) then
+	if ($ydb_test_exclude_gtm7083a) then
+		# An environment variable is defined to indicate the below subtest needs to be disabled on this host
+		set exclude_gtm7083a = 1
+	endif
+endif
+if ("dbg" == "$tst_image") then
        # We do not have dbg builds of V62000 needed by the gtm7083a subtest so disable it.
+	set exclude_gtm7083a = 1
+endif
+if ($exclude_gtm7083a) then
        setenv subtest_exclude_list "$subtest_exclude_list gtm7083a"
 endif
 
