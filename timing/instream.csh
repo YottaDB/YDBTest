@@ -48,7 +48,8 @@ endif
 # go_unit_tests has timing tests that have been seen to fail with varying thresholds using dbg even on x86_64
 # boxes so disable it on all platforms. It is enough to test this with "pro". That said, in "pro", ARMV6L has been seen
 # to fail this test once in a while. Even ARMV7L has been seen to fail it once in a while (but at a much lesser failure
-# rate compared to ARMV6L) so disable it on both those platforms.
+# rate compared to ARMV6L) so disable it on both those platforms. All of the code that is being tested here for performance
+# is portable and it is enough if we test it on x86_64 and AARCH64.
 if (("dbg" == "$tst_image") || ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype)) then
 	setenv subtest_exclude_list "$subtest_exclude_list go_unit_tests"
 endif

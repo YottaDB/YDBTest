@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -203,9 +203,9 @@ $gtm_tst/com/check_error_exist.csh rollback1.out "$oompattern" >>& check_error_r
 if ($status) then
 	echo "TEST-E-VERIFY : Out-of-memory error verification failed. See rollback1.out and check_error_rollback1.outx"
 endif
-# It is possible we optionally see "SYSTEM-E-ENO12", "YDB-E-MUNOACTION" and/or "SYSTEM-E-ENO11" messages
+# It is possible we optionally see "SYSTEM-E-ENO12", "YDB-E-MUNOACTION", "YDB-E-SYSCALL" and/or "SYSTEM-E-ENO11" messages
 # along with the "YDB-F-MEMORY message. If so filter those out as well to avoid the test framework from catching them.
-foreach message ("YDB-E-MUNOACTION" "SYSTEM-E-ENO12" "SYSTEM-E-ENO11")
+foreach message ("YDB-E-MUNOACTION" "SYSTEM-E-ENO12" "SYSTEM-E-ENO11" "YDB-E-SYSCALL")
 	$gtm_tst/com/check_error_exist.csh rollback1.out $message >>& check_error_rollback1.outx
 end
 echo ">> Move core file (from FATAL YDB-F-MEMORY) to avoid test framework from treating this as a test failure"
@@ -229,9 +229,9 @@ $gtm_tst/com/backup_dbjnl.csh bak2 "*.gld *.repl *.dat *.mjl*" cp nozip # Dont u
 
 echo ">>> Verify out-of-memory error in second rollback (logfile = rollback2.out)"
 $gtm_tst/com/check_error_exist.csh rollback2.out "$oompattern" >>& check_error_rollback2.outx
-# It is possible we optionally see "SYSTEM-E-ENO12", "YDB-E-MUNOACTION" and/or "SYSTEM-E-ENO11" messages
+# It is possible we optionally see "SYSTEM-E-ENO12", "YDB-E-MUNOACTION", "YDB-E-SYSCALL" and/or "SYSTEM-E-ENO11" messages
 # along with the "YDB-F-MEMORY message. If so filter those out as well to avoid the test framework from catching them.
-foreach message ("YDB-E-MUNOACTION" "SYSTEM-E-ENO12" "SYSTEM-E-ENO11")
+foreach message ("YDB-E-MUNOACTION" "SYSTEM-E-ENO12" "SYSTEM-E-ENO11" "YDB-E-SYSCALL")
 	$gtm_tst/com/check_error_exist.csh rollback2.out $message >>& check_error_rollback2.outx
 end
 echo ">> Move core file (from FATAL YDB-F-MEMORY) to avoid test framework from treating this as a test failure"
