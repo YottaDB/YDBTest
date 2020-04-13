@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -19,7 +19,7 @@ if ($?test_replic) then
 	# Need to use MSR framework whenever -gld_has_db_fullpath is in use (non-MSR replication does not work currently)
 	$MULTISITE_REPLIC_PREPARE 2	# Create two instances INST1 (primary side) and INST2 (secondary side)
 endif
-$gtm_tst/com/dbcreate.csh mumps -global_buffer=8192 -gld_has_db_fullpath >>& dbcreate.out
+$gtm_tst/com/dbcreate.csh mumps -global_buffer=16384 -gld_has_db_fullpath >>& dbcreate.out
 if ($status) then
         echo "# dbcreate failed. Output of dbcreate.out follows"
         cat dbcreate.out
