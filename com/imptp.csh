@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -63,24 +63,27 @@ if ($gtm_test_dbfill == "IMPTP" || $gtm_test_dbfill == "IMPZTP") then
 	setenv gtm_badchar "no"
 	# Randomly choose to run M (rand=0), C simpleAPI (rand=1), C simpleThreadedAPI (rand=2) or Golang (rand=3) version of imptp
 	if !($?gtm_test_replay) then
-		set imptpflavor = `$gtm_exe/mumps -run rand 4`
 		if ($?ydb_imptp_flavor) then
 			if ((0 > $ydb_imptp_flavor) || ("3" < $ydb_imptp_flavor)) then
 				echo "TEST-E-FAIL Invalid flavor of imptp specified: $ydb_imptp_flavor - allowed values, 0, 1, 2, or 3"
 				exit 1
 			endif
+			echo "# Inheriting imptpflavor from env var ydb_imptp_flavor"
 			set imptpflavor = $ydb_imptp_flavor # Override and force a given flavor
+		else
+			echo "# Choosing imptpflavor randomly"
+			set imptpflavor = `$gtm_exe/mumps -run rand 4`
 		endif
 		echo "imptpflavor: $imptpflavor"
-		echo "setenv imptpflavor $imptpflavor" >> settings.csh
+		echo "setenv ydb_imptp_flavor $imptpflavor" >> settings.csh
 	else
-		set imptpflavor = $imptpflavor
+		set imptpflavor = $ydb_imptp_flavor
 	endif
 	# If using a version that is other than the currently tested version, disable simpleapi for the older version.
 	if ("$gtm_verno" != "$tst_ver") then
 		set imptpflavor = 0
 		echo "# Disabling simpleapi due to using current version $gtm_verno (other than test version $tst_ver)"
-		echo "setenv imptpflavor $imptpflavor" >> settings.csh
+		echo "setenv ydb_imptp_flavor $imptpflavor" >> settings.csh
 	endif
 	# If online rollback test, then disable simpleapi. This is because imptp.m transfers control to an M label
 	# "orlbkres^imptp" etc. for online rollbacks and that is not straightforward with simpleAPI.
@@ -88,7 +91,7 @@ if ($gtm_test_dbfill == "IMPTP" || $gtm_test_dbfill == "IMPZTP") then
 		if ($gtm_test_onlinerollback == "TRUE") then
 			set imptpflavor = 0
 			echo "# Disabling simpleapi due to using online rollback"
-			echo "setenv imptpflavor $imptpflavor" >> settings.csh
+			echo "setenv ydb_imptp_flavor $imptpflavor" >> settings.csh
 		endif
 	endif
 	set file = ""

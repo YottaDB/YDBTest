@@ -4,6 +4,9 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -38,8 +41,11 @@ $MSR START INST1 INST3 RP
 unsetenv needupdatersync
 
 # Updates are made on non-supp (INST1) and supp (INST3) primaries
-$MSR RUN INST1 "setenv gtm_test_jobid 1 ; setenv gtm_test_dbfillid 1 ; $gtm_tst/com/imptp.csh" >&! imptp1.out
-$MSR RUN INST3 "setenv gtm_test_jobid 2 ; setenv gtm_test_dbfillid 2 ; $gtm_tst/com/imptp.csh" >&! imptp2.out
+# Choose "SLOWFILL" for imptp below since on 1-CPU systems, the regular fill INST1 imptp.csh invocation will swamp the system
+# enough that the INST3 imptp.csh invocation could error out with a "net/http: TLS handshake timeout" from go get if imptp chose
+# the go flavor (i.e. ydb_imptp_flavor = 3). We have seen such timeouts almost always on ARMV6L (which is a 1-CPU system).
+$MSR RUN INST1 'setenv gtm_test_jobid 1 ; setenv gtm_test_dbfillid 1 ; setenv gtm_test_dbfill "SLOWFILL" ; $gtm_tst/com/imptp.csh' >&! imptp1.out
+$MSR RUN INST3 'setenv gtm_test_jobid 2 ; setenv gtm_test_dbfillid 2 ; setenv gtm_test_dbfill "SLOWFILL" ; $gtm_tst/com/imptp.csh' >&! imptp2.out
 sleep 15
 $MSR SHOWBACKLOG INST1 INST3 SRC >&! backlog.txt
 # Implementation defered, see <receiv_showbacklog>
@@ -48,7 +54,7 @@ $MSR SHOWBACKLOG INST1 INST3 SRC >&! backlog.txt
 $MSR RUN INST1 "setenv gtm_test_jobid 1 ; setenv gtm_test_dbfillid 1 ; $gtm_tst/com/endtp.csh" >&! endtp1.out
 $MSR RUN INST3 "setenv gtm_test_jobid 2 ; setenv gtm_test_dbfillid 2 ; $gtm_tst/com/endtp.csh" >&! endtp2.out
 
-# Try an update on each secondary (will fails)
+# Try an update on each secondary (will fail)
 $gtm_tst/com/simplegblupd.csh -instance INST2 -count 1
 $gtm_tst/com/simplegblupd.csh -instance INST4 -count 1
 
