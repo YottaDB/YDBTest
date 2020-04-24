@@ -1,0 +1,150 @@
+#!/usr/local/bin/tcsh -f
+#
+#################################################################
+#                                                               #
+# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.       #
+# All rights reserved.                                          #
+#                                                               #
+#       This source code contains the intellectual property     #
+#       of its copyright holder(s), and is made available       #
+#       under a license.  If you do not know the terms of       #
+#       the license, please stop and do not read further.       #
+#                                                               #
+#################################################################
+#
+# -----------------------------------------------------------------
+# Pre-commit hook that
+#	1) Enforces YottaDB Copyright in changed modules
+#
+set referencefile_extensions = "txt out dat key crt cfg inp"
+
+set filelist = `git diff --name-only HEAD`
+set fixlist = ""
+set curyear = `date +%Y`
+@ exitstatus = 0
+foreach file ($filelist)
+	if (! -e $file) then
+		# If file is being deleted as part of this commit, skip copyright check on it
+		continue
+	endif
+	set extension = $file:e
+	# Extensions which indicate they are a reference file do not need copyrights
+	set skip = 0
+	foreach ext ($referencefile_extensions)
+		if ($ext == $extension) then
+			set skip = 1
+			break
+		endif
+	end
+	if (0 == $skip) then
+		# Below is a list of specific files that do not have a copyright so ignore them
+		set skiplist = "COPYING"
+		set skip = 0
+		foreach skipfile ($skiplist)
+			if ($file == $skipfile) then
+				set skip = 1
+				break
+			endif
+		end
+	endif
+	if ($skip) then
+		continue
+	endif
+	grep 'Copyright (c) .*'$curyear' YottaDB LLC' $file >& /dev/null
+	if ($status != 0) then
+		set fixlist = "$fixlist $file"
+	endif
+end
+if ("" != "$fixlist") then
+	echo "  --> Hook $0 returned non-zero status"
+	echo "  --> Below files are missing YottaDB Copyright notice and/or current year $curyear. Fix and retry commit"
+	foreach file ($fixlist)
+		echo "	$file"
+	end
+	@ exitstatus = 1
+endif
+
+# -----------------------------------------------------------------
+# 2) Removes trailing white space
+# -----------------------------------------------------------------
+set filelist = `git diff --name-only HEAD`	# recompute "filelist" in case Step (1) had regenerated new files
+foreach file ($filelist)
+	if (! -e $file) then
+		# If file is being deleted as part of this commit, skip whitespace conversion on it
+		continue
+	endif
+	set extension = $file:e
+	# Extensions which indicate they are a reference file should not have whitespace conversion done
+	# as that would cause test failures.
+	set skip = 0
+	foreach ext ($referencefile_extensions)
+		if ($ext == $extension) then
+			set skip = 1
+			break
+		endif
+	end
+	if ($skip) then
+		continue
+	endif
+	grep -q '[ 	][ 	]*$' $file
+	if ! ($status) then
+		echo $file
+		sed -i 's/[ 	][ 	]*$//' $file
+		git add $file
+		if ($status) then
+			@ exitstatus = 1
+			echo "GITADD-E-FAIL : Command failed after removing trailing whitespace : git add $file"
+		endif
+	endif
+end
+
+# -----------------------------------------------------------------
+# 3) Checks changes to outref/<subtest>.txt file implies instream.csh and outref/outref.txt contain this subtest
+# -----------------------------------------------------------------
+# "filelist" is usable since Step (2) did not regenerate any new files.
+foreach file ($filelist)
+	if (! -e $file) then
+		# If file is being deleted as part of this commit, skip <subtest>.txt check on this
+		continue
+	endif
+	if ($file !~ "*/outref/*.txt") then
+		# If file is not of the form <test>/outref/<subtest>.txt, then skip processing.
+		continue
+	endif
+	# There could be .txt files in outref directory even though there are no corresponding u_inref/<subtest>.csh files
+	# Skip those (e.g. ./v53003/outref/errors_ydb_gbldir.txt).
+	set subtest = $file:t:r
+	set test = $file:h:h
+	if (! -e $test/u_inref/$subtest.csh) then
+		continue
+	endif
+	# Check if outref.txt exists
+	if (! -e $test/outref/outref.txt) then
+		@ exitstatus = 1
+		echo "  --> File $test/outref/$subtest.txt exists but $test/outref/outref.txt does not. Create latter and retry commit"
+		continue
+	endif
+	# Check if outref.txt contains references to <subtest>
+	grep -q "PASS from \<$subtest\>" $test/outref/outref.txt
+	if ($status != 0) then
+		@ exitstatus = 1
+		echo "  --> File $test/outref/$subtest.txt exists but $subtest name not included in $test/outref/outref.txt; Include in latter and retry commit"
+		continue
+	endif
+	# Check if instream.csh contains references to <subtest>
+	grep -q "subtest_list.*\<$subtest\>" $test/instream.csh
+	if ($status != 0) then
+		@ exitstatus = 1
+		echo "  --> File $test/outref/$subtest.txt exists but $subtest name not included in $test/instream.csh; Include in latter and retry commit"
+		continue
+	endif
+	# Check if com/SUITE contains references to <test>
+	grep -q "^\<$test\>" com/SUITE
+	if ($status != 0) then
+		@ exitstatus = 1
+		echo "  --> File $test/outref/$subtest.txt exists but test $test not included in com/SUITE; Include in latter and retry commit"
+		continue
+	endif
+end
+
+exit $exitstatus

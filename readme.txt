@@ -7,6 +7,15 @@ OVERVIEW
 
 Documentation on usage is under development as time permits and will be released from time to time. For the present, please read the shell scripts. The .csh files are shell scripts written for the tcsh shell.
 
+-------------------------------------------------------------
+PRE-COMMIT HOOKS
+-------------------------------------------------------------
+
+To install the pre-commit hooks, run the following:
+
+```sh
+ln -s ../../pre-commit .git/hooks
+````
 
 -------------------------------------------------------------
 LICENSE

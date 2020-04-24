@@ -61,18 +61,30 @@ if ($gtm_test_dbfill == "IMPTP" || $gtm_test_dbfill == "IMPZTP") then
 		$gtm_exe/mumps -run ztrsupport 'if $ztrigger("file",$ztrnlnm("gtm_tst")_"/com/imptpztr.trg")'
 	endif
 	setenv gtm_badchar "no"
-	# Randomly choose to run M (rand=0), C simpleAPI (rand=1), C simpleThreadedAPI (rand=2) or Golang (rand=3) version of imptp
+	set rust_supported = `tcsh $gtm_tst/com/is_rust_supported.csh`
+	# Randomly choose to run M (rand=0), C simpleAPI (rand=1), C simpleThreadedAPI (rand=2), Golang (rand=3), or Rust (rand=4) version of imptp
 	if !($?gtm_test_replay) then
 		if ($?ydb_imptp_flavor) then
-			if ((0 > $ydb_imptp_flavor) || ("3" < $ydb_imptp_flavor)) then
-				echo "TEST-E-FAIL Invalid flavor of imptp specified: $ydb_imptp_flavor - allowed values, 0, 1, 2, or 3"
+			if ((0 > $ydb_imptp_flavor) || (4 < $ydb_imptp_flavor)) then
+				echo "TEST-E-FAIL Invalid flavor of imptp specified: $ydb_imptp_flavor - allowed values, 0, 1, 2, 3, or 4"
 				exit 1
+			else if (4 == $ydb_imptp_flavor && true != $rust_supported) then
+				echo "# Warning: rust flavor was explicitly specified, but Rust is not supported on this platform"
+				set imptpflavor = `$gtm_exe/mumps -run rand 4`
+				echo "Choosing flavor $imptpflavor instead"
+			else
+				echo "# Inheriting imptpflavor from env var ydb_imptp_flavor"
+				set imptpflavor = $ydb_imptp_flavor # Override and force a given flavor
 			endif
-			echo "# Inheriting imptpflavor from env var ydb_imptp_flavor"
-			set imptpflavor = $ydb_imptp_flavor # Override and force a given flavor
 		else
 			echo "# Choosing imptpflavor randomly"
-			set imptpflavor = `$gtm_exe/mumps -run rand 4`
+			if (true == $rust_supported) then
+				set rand = 5
+			else
+				set rand = 4
+			endif
+			set imptpflavor = `$gtm_exe/mumps -run rand $rand`
+			unset rand
 		endif
 		echo "imptpflavor: $imptpflavor"
 		echo "setenv ydb_imptp_flavor $imptpflavor" >> settings.csh
@@ -167,6 +179,47 @@ xyz
 			endif
 		endif
 		set exefile = "imptpgo"
+		breaksw
+	case 4: # Run Rust wrapper using SimpleThreadAPI flavor of imptp
+		if (true != $rust_supported) then
+			# This should never happen, it is caught above
+			echo "TEST-E-FAILED : Rust is not supported and yet was run"
+		endif
+
+		# Setup rust wrapper
+		source $gtm_tst/com/setuprustenv.csh
+		# Build the Rust imptp program if not already built
+		# NOTE: this only builds once for a single E_ALL test run,
+		# since imptp.rs takes a while to build
+		if (! -e $tst_dir/$gtm_tst_out/imptpjobrust) then
+			# Don't copy over target/ since it may be very large (as much as 10 GB)
+			rm -rf $gtm_tst/com/imptp-rs/target
+			cp -r $gtm_tst/com/imptp-rs/ $tst_dir/$gtm_tst_out/imptp-rs/
+			cd $tst_dir/$gtm_tst_out/imptp-rs
+			$cargo_build
+			if (0 != $status) then
+				echo "TEST-E-FAILED : Unable to build imptp.rs"
+				exit 1
+			endif
+			# Now move imptprust to main test directory
+			mv "target/$rust_target_dir/imptp" ../imptprust
+			mv "target/$rust_target_dir/imptpjob" ../imptpjobrust
+			# Go back to the original test directory
+			cd -
+		endif
+		ln -s "$tst_dir/$gtm_tst_out/imptpjobrust" .
+		set status1 = $status
+		if ($status1) then
+			echo "TEST-E-FAILED : Unable to soft link imptpjobrust to current directory ($PWD)"
+			exit 1
+		endif
+		ln -s "$tst_dir/$gtm_tst_out/imptprust" .
+		set status1 = $status
+		if ($status1) then
+			echo "TEST-E-FAILED : Unable to soft link imprust to current directory ($PWD)"
+			exit 1
+		endif
+		set exefile = "imptprust"
 		breaksw
 	endsw
 	# Setup call-in table : Need call-ins to do a few tasks that are not easily done through simpleAPI

@@ -1,0 +1,19 @@
+[package]
+name = "imptprust"
+authors = ["YottaDB Team <info@yottadb.com>"]
+edition = "2018"
+description = "Rust imptp test runner"
+version = "0.1.0"
+
+[dependencies]
+yottadb = { git = "https://gitlab.com/YottaDB/Lang/YDBRust.git" }
+chrono = "0.4"
+rand = "0.7"
+
+[[bin]]
+name = "imptp"
+path = "imptp.rs"
+
+[[bin]]
+name = "imptpjob"
+path = "imptpjob.rs"
