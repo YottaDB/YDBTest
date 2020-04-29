@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -55,6 +55,14 @@ else
 endif
 
 setenv subtest_exclude_list    ""
+
+if ("armv6l" == `uname -m`) then
+	# On the Pi Zero machines (Raspbian Linux based off Debian 10), we see gdb fail with a SIG-11 when running
+	# the ydb449 subtest. This did not happen when they were based off Debian 9. Not sure when that gdb issue will
+	# be fixed. Since other platforms run this test fine, we disable this subtest only on the Pi Zero architecture.
+	# This can be revisited at a later point in time to see if it works and if so re-enable it.
+	setenv subtest_exclude_list "$subtest_exclude_list ydb449"
+endif
 
 # on pro builds filter out ydb440 as mumps -machine -lis does not work there
 if ("pro" == "$tst_image") then
