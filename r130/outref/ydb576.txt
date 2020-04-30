@@ -1,0 +1,28 @@
+# Test that $PIECE in a database trigger returns correct results when invoked from SimpleAPI (e.g. ydb_set_s())
+
+# Create database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Create trigger definition file trigbl.trg
+# Load trigger in database
+File trigbl.trg, Line 1: Added SET trigger on ^trigbl named myname0
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Build executable [##TEST_PATH##/ydb576] from SimpleAPI C program ydb576.c
+Run executable [##TEST_PATH##/ydb576]
+# This test sets 2 different values both of the same length but having different first piece length
+# In order to exercise the bug, this test does the ydb_set_s() call at different C-stack depths
+# And initializes some memory in the C-stack at each depth to some non-zero value
+# And uses random recursion depths for enhanced testing
+# Without the code fixes of YDB#576, this test used to reliably fail with dbg and/or pro builds
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

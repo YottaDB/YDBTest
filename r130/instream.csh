@@ -37,6 +37,7 @@
 # ydb484 [nars]      Test of $ZYSQLNULL and $ZYISSQLNULL()
 # ydb534 [nars]      Test that SIGABRT generates core (default action for SIGABRT) in SimpleThreadAPI mode without any hangs
 # ydb567 [bdw]       Test that a MUPIP INTRPT in the middle of a hang in a for loop does not cause an assert failure
+# ydb576 [nars]      Test that $PIECE in a database trigger returns correct results when invoked from SimpleAPI (e.g. ydb_set_s())
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r130 test starts..."
@@ -44,7 +45,7 @@ echo "r130 test starts..."
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic "ydb470 ydb482 ydb174 ydb390 ydb476 ydb511 ydb513 ydb485 ydb518 ydb520 ydb503 ydb515 ydb519 ydb545"
-setenv subtest_list_non_replic "${subtest_list_non_replic} ydb553 ydb547 ydb493 ydb549 ydb562 ydb554 ydb484 ydb534 ydb567"
+setenv subtest_list_non_replic "${subtest_list_non_replic} ydb553 ydb547 ydb493 ydb549 ydb562 ydb554 ydb484 ydb534 ydb567 ydb576"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
