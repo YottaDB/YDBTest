@@ -192,11 +192,26 @@ if ($?gtm_icu_version) then
 endif
 source $gtm_tst/com/set_ydb_env_var_random.csh ydb_icu_version gtm_icu_version "3.2" # Set gtm_icu_version to a value less than 3.6
 $GTM >&! icuverlt36a.out
+$gtm_tst/com/check_error_exist.csh icuverlt36a.out "ICUVERLT36"
+#
+echo "# Test of ICUSYMNOTFOUND error when ydb_icu_version env var is defined to an incorrect value"
+setenv ydb_icu_version "garbage"
+$ydb_dist/yottadb -run ^%XCMD 'write 1' >& icusymnotfound1.out
+$gtm_tst/com/check_error_exist.csh icusymnotfound1.out "ICUSYMNOTFOUND"
+echo "# Test of ICUSYMNOTFOUND error when ydb_icu_version env var is not defined but gtm_icu_version env var is defined to an incorrect value"
+unsetenv ydb_icu_version
+setenv gtm_icu_version "garbage"
+$ydb_dist/yottadb -run ^%XCMD 'write 1' >& icusymnotfound2.out
+$gtm_tst/com/check_error_exist.csh icusymnotfound2.out "ICUSYMNOTFOUND"
+echo "# Test of ICUSYMNOTFOUND error when ydb_icu_version or gtm_icu_version env vars are not defined"
+unsetenv gtm_icu_version
+$ydb_dist/yottadb -run ^%XCMD 'write 1' >& icusymnotfound3.out
+$gtm_tst/com/check_error_exist.csh icusymnotfound3.out "ICUSYMNOTFOUND"
+#
 if ($?save_icu_version) then
 	setenv ydb_icu_version $save_icu_version
 	setenv gtm_icu_version $save_icu_version
 endif
-$gtm_tst/com/check_error_exist.csh icuverlt36a.out "ICUVERLT36"
 echo "END of errors"
 #
 $gtm_tst/com/dbcheck.csh

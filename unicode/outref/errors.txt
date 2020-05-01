@@ -194,14 +194,21 @@ Testing ICUVERLT36 error - case (a)
 Error ICUVERLT36 seen in icuverlt36a.out as expected:
 ##TEST_AWK%YDB-E-ICUVERLT36, \$(ydb|gtm)_icu_version is [0-9]*.[0-9]*. ICU version greater than or equal to 3.6 should be used
 ----------
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT SNAIL TURTLE ATLST2000 INTI
-Testing ICUVERLT36 error - case (b)
+# Test of ICUSYMNOTFOUND error when ydb_icu_version env var is defined to an incorrect value
 ----------
-Error ICUVERLT36 seen in icuverlt36b.out as expected:
-##TEST_AWK%YDB-E-ICUVERLT36, libicuio.so has version [0-9]*.[0-9]*. ICU version greater than or equal to 3.6 should be used
+Error ICUSYMNOTFOUND seen in icusymnotfound1.out as expected:
+%YDB-E-ICUSYMNOTFOUND, Symbol u_getVersion not found in the ICU libraries. ICU needs to be built with symbol-renaming disabled or ydb_icu_version environment variable needs to be properly specified
 ----------
-##ALLOW_OUTPUT HOST_ALL
+# Test of ICUSYMNOTFOUND error when ydb_icu_version env var is not defined but gtm_icu_version env var is defined to an incorrect value
+----------
+Error ICUSYMNOTFOUND seen in icusymnotfound2.out as expected:
+%YDB-E-ICUSYMNOTFOUND, Symbol u_getVersion not found in the ICU libraries. ICU needs to be built with symbol-renaming disabled or gtm_icu_version environment variable needs to be properly specified
+----------
+# Test of ICUSYMNOTFOUND error when ydb_icu_version or gtm_icu_version env vars are not defined
+----------
+Error ICUSYMNOTFOUND seen in icusymnotfound3.out as expected:
+%YDB-E-ICUSYMNOTFOUND, Symbol u_getVersion not found in the ICU libraries. ICU needs to be built with symbol-renaming disabled or ydb_icu_version/gtm_icu_version environment variable needs to be properly specified
+----------
 END of errors
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
