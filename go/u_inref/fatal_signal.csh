@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -10,10 +10,7 @@
 #								#
 #################################################################
 #
-#
-# Create database threeenp1B1 needs:
-#
-echo '# New go/sigterm subtest to test that SIGTERM (SIG-15) cleanly shuts down YDBGo process with no cores'
+echo '# Test that a fatal signgal (randomly uses either SIGINT or SIGTERM)  cleanly shuts down YDBGo process with no cores'
 echo '# This test uses the threeenp* subtests as sample processes'
 
 # Use -gld_has_db_fullpath to ensure gld is created with full paths pointing to the database file
@@ -36,8 +33,8 @@ foreach prog (threeenp1B1 threeenp1B2 threeenp1C2)
 	setenv ydb_gbldir $tstpath/$prog.gld
 	$gtm_tst/com/dbcreate.csh $prog -gld_has_db_fullpath >>& dbcreate.out
 	if ($status) then
-	       	 echo "# dbcreate failed. Output of dbcreate.out follows"
-		cat dbcreate.out
+	    echo "# dbcreate failed. Output of dbcreate.out follows"
+	    cat dbcreate.out
 	endif
 	cd go/src
 	mkdir $prog
@@ -62,9 +59,13 @@ foreach prog (threeenp1B1 threeenp1B2 threeenp1C2)
 63728126
 EOF
 	foreach run (`seq 1 1 3`)
+		# If this is threeenp1C2, we need to set $ydb_filepfx_threeenp1C2 properly to create output files with the
+		# proper prefix
+		if ("threeenp1C2" == "$prog") setenv ydb_filepfx_threeenp1C2 "$prog$run"
 		echo "Terminating $prog; Run $run"
 		(`pwd`/$prog < seed.input &) >&! $prog$run.outx
-		sleep `shuf -i 1-5 -n 1` # give some time for database processes to occur
+		unsetenv ydb_filepfx_threeenp1C2 # Don't leave it set
+		sleep `shuf -i 4-8 -n 1` # give some time for database processes to occur
 		# since threeenp1C2 creates multiple processes we need to loop through all the pids
 		set goPID = ""
 		set pathto = `pwd`
@@ -75,12 +76,25 @@ EOF
 			set goPID = "$goPID $pid"
 		end
 		echo "goPID $goPID"
-		kill -15 $goPID
+		# Select signal to kill processes with - 0 is kill -15 (SIGTERM), 1 is kill -2 (SIGINT)
+		set rand = `$ydb_dist/mumps -run rand 2`
+		if ("0" == "$rand") then
+		    set killsig = "15"
+		else
+		    set killsig = "2"
+		endif
+		kill -${killsig} $goPID
 		# wait_for_proc_to_die.csh only works on one pid at a time
 		foreach pid ($goPID)
-			$gtm_tst/com/wait_for_proc_to_die.csh $pid
+			$gtm_tst/com/wait_for_proc_to_die.csh $pid 300
 		end
 	end
+	# Until such time as the frame work scans output files for DATA RACE warnings (which are otherwise they are ignored
+	# (unless they are output as part of the reference file itself), do our own scan as these are important warnings
+	# from the Go runtime about race conditions the Go runtime has detected in the running program.
+	echo "Checking for DATA RACE warnings"
+	grep "WARNING: DATA RACE" *.outx
+	echo "done"
 	cd ../../.. # back up to the top of the test directory
 	$gtm_tst/com/dbcheck.csh >& dbcheck$prog.outx
 	if (0 != $status) then

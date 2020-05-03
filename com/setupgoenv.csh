@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -107,6 +107,8 @@ else
 endif
 cd -
 
+# When using a pure Go application, one can do 'go run xxx.go' and it will do that. This does not work when cgo is involved -
+# which is 100% of our Go applications currently since they all test the Go wrapper.
 set gobuild = "go build"
 set gotest = "go test"
 

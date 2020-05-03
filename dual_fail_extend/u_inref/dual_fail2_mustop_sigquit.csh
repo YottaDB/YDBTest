@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -38,7 +38,7 @@ if ($mustop_sigquit_todo) then
 	set expected_error = "YDB-F-FORCEDHALT"
 else
 	set mustop_sigquit = "SIGQUIT"
-	set expected_error = "YDB-F-KILLBYSIGUINFO"
+	set expected_error = "YDB-F-KILLBYSIG" # Note Go will put out KILLBYSIG while non-Go will put out KILLBYSIGUINFO
 endif
 # For this test buffer size is forced to be 16 MB
 setenv tst_buffsize 16777216

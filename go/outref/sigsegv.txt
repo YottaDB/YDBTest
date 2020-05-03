@@ -1,0 +1,6 @@
+# This test verifies a Go main can catch/recover from a SIGSEGV signal/panic once the YottaDB environment
+# has been initialized. Prior to YDB r1.30 and Go wrapper v1.1.0, this was not possible.
+# Running : go get -d -v -x -t lang.yottadb.com/go/yottadb
+# Building sigsegv
+# Running sigsegv
+Successful panic recovery! Panic message: runtime error: invalid memory address or nil pointer dereference

@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;                                                               ;
-; Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.       ;
+; Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.                                          ;
 ;                                                               ;
 ;       This source code contains the intellectual property     ;
@@ -14,13 +14,15 @@ ydb478	;
 	; Drive ydb478 for each of the (maximum) of 64 signals currently defined on Linux. Note on Linux, the signals
 	; 20, 21, and 22 (TSTP, TTIN, TTOU) cause process suspension so avoid those. If this test ever runs on alternate
 	; platforms with different numbers, this part of the test will need to be changed.
+	; Signal 23 is SIGURG which Go programs see a lot so may be something Go-ish but the spurious nature of this
+	; signal means rare failures in this test when it spuriously pops before the program sends it so we avoid it.
 	;
 	new signum,rslt,signame
 	set $etrap="zshow ""*"" zhalt 1"
 	write "**********************",!
 	for signum=1:1:64 do
 	. quit:(9=signum)			; Bypass signal 9 (SIGKILL) as it is uncatchable (and kills our test)
-	. quit:(20<=signum)&(22>=signum)	; Bypass signals 20-22
+	. quit:(20<=signum)&(23>=signum)	; Bypass signals 20-23 (SIGTSTP, SIGTTIN, SIGTTOU, SIGURG) - cause problems
 	. quit:(13=signum)			; Bypass 13 (SIGPIPE) as it hangs up Go
 	. quit:(19=signum)			; Bypass 19 (SIGSTOP) as it is uncatchable
 	. quit:(27=signum)			; Bypass 27 (SIGPROF) as it hangs up Go

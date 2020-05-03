@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -42,7 +42,7 @@ locktimeout
 	. zsystem "$ydb_dist/mumps -run ^%XCMD 'set ^Y=$increment(^i)'"
 	tcommit
 	use $p
-	write "Post Transaction DB Crit of DEFAULT owned by pid = ",$$^%PEEKBYNAME("node_local.in_crit","DEFAULT"),!
+	write "Post Transaction DB Crit of DEFAULT is ",$select(($job=$$^%PEEKBYNAME("node_local.in_crit","DEFAULT")):"",1:"NOT "),"owned by our pid",!
 	zsystem "$gtm_tst/com/wait_for_proc_to_die.csh "_$zjob
 	quit
 

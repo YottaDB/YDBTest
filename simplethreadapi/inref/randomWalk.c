@@ -81,7 +81,8 @@ pthread_mutex_t lock;
 int curThreads;
 int isTimeout;
 
-int main(){
+int main()
+{
 	srand(time(NULL));
 	TEST_TIMEOUT = RAND_INT(15,120);
 	/* to prevent a rare failure arm machines make less threads */
@@ -101,7 +102,8 @@ int main(){
 
 	//thread setup
 	status = pthread_mutex_init(&lock, NULL);
-	if(status != 0){
+	if(status != 0)
+	{
 		printf("Mutex init failed\n");
 		return 1;
 	}
@@ -110,7 +112,8 @@ int main(){
 	isTimeout = 0;
 	pthread_t timeout;
 	status = pthread_create(&timeout, NULL, &toggleTimeout, NULL);
-	if(status != 0){
+	if(status != 0)
+	{
 		printf("Something went wrong when creating the timeout\n");
 		return 1;
 	}
@@ -140,12 +143,19 @@ int main(){
 	return 0;
 }
 
-void* runProc_driver(void* args){
-	testSettings* settings = (testSettings* ) args;
-	while(!isTimeout){
-		runProc((uint64_t) YDB_NOTTP, NULL, settings, 0);
+void *runProc_driver(void *args) {
+	int rc;
+	testSettings *settings = (testSettings *)args;
+
+	while(!isTimeout)
+	{
+		rc = runProc((uint64_t) YDB_NOTTP, NULL, settings, 0);
+		if (YDB_ERR_CALLINAFTERXIT == rc)
+			break;
+		else if (YDB_OK != rc)
+			printf("runProc_driver: Error rc %d from runProc()\n", rc);
 	}
-	return 0;
+	return (void *)0;
 }
 
 /* generates a strArr struct to be turned in to a ydb_buffer_t
@@ -192,10 +202,11 @@ strArr genGlobalName(){
  * on exit it spawns more threads until maxDepth is hit
  */
 int runProc(uint64_t tptoken, ydb_buffer_t* errstr, testSettings* settings, int curDepth){
-	int status;
-	char errbuf[2048];
-	int remainingOdds = 80 - (100 * settings->nestRate);
-	ydb_buffer_t zstatusBuf;
+	int		status;
+	int		shutdown = 0;
+	char		errbuf[2048];
+	int		remainingOdds = 80 - (100 * settings->nestRate);
+	ydb_buffer_t	zstatusBuf;
 	YDB_MALLOC_BUFFER(&zstatusBuf, 2048);
 
 	//get a global
@@ -210,13 +221,10 @@ int runProc(uint64_t tptoken, ydb_buffer_t* errstr, testSettings* settings, int 
 		YDB_COPY_STRING_TO_BUFFER(t.arr[i + 1], &subs[i], status);
 		YDB_ASSERT(status);
 	}
-
 	int action = rand()/(RAND_MAX / 100); //generate random integer [0, 100]
-
 	if (action < 20) { //ydb_set_st() case gets bias towards occurance
 		ydb_buffer_t value;
 		YDB_LITERAL_TO_BUFFER("MySecretValue", &value);
-
 		status = ydb_set_st(tptoken, &zstatusBuf, &basevar, t.length-1, subs, &value);
 		//there are some error codes we accept; anything other than that, raise an error
 		if (status != YDB_OK){
@@ -230,12 +238,14 @@ int runProc(uint64_t tptoken, ydb_buffer_t* errstr, testSettings* settings, int 
 				case YDB_ERR_LVUNDEF:
 					status = YDB_OK;
 					break;
+				case YDB_ERR_CALLINAFTERXIT:
+					shutdown = 1;
+					break;
 				default:
 					zstatusBuf.buf_addr[zstatusBuf.len_used] = '\0';
 					printf("Unexpected return code (%d) from ydb_set_st() issued! %s\n", status, zstatusBuf.buf_addr);
 			}
 		}
-
 	} else if (action < 20 + remainingOdds * (2 / 15.0f)) { //ydb_get_st() case
 		ydb_buffer_t retvalue;
 		YDB_MALLOC_BUFFER(&retvalue, 16);
@@ -253,14 +263,15 @@ int runProc(uint64_t tptoken, ydb_buffer_t* errstr, testSettings* settings, int 
 				case YDB_ERR_LVUNDEF:
 					status = YDB_OK;
 					break;
+				case YDB_ERR_CALLINAFTERXIT:
+					shutdown = 1;
+					break;
 				default:
 					zstatusBuf.buf_addr[zstatusBuf.len_used] = '\0';
 					printf("Unexpected return code (%d) from ydb_get_st() issued! %s\n", status, zstatusBuf.buf_addr);
 			}
 		}
 		YDB_FREE_BUFFER(&retvalue);
-
-
 	} else if (action < 20 + remainingOdds * (3 / 15.0f)) { //ydb_data_st() case
 		unsigned int retvalue;
 
@@ -276,6 +287,9 @@ int runProc(uint64_t tptoken, ydb_buffer_t* errstr, testSettings* settings, int 
 					break;
 				case YDB_ERR_LVUNDEF:
 					status = YDB_OK;
+					break;
+				case YDB_ERR_CALLINAFTERXIT:
+					shutdown = 1;
 					break;
 				default:
 					zstatusBuf.buf_addr[zstatusBuf.len_used] = '\0';
@@ -294,30 +308,27 @@ int runProc(uint64_t tptoken, ydb_buffer_t* errstr, testSettings* settings, int 
 			default:
 				printf("Unexpected data value issued!");
 		}
-
 	} else if (action < 20 + remainingOdds * (4 / 15.0f)){ //ydb_node_next_st() and ydb_node_previous_st() case
 		int retnumsubs = 4; //max number of possible subs
+
 		ydb_buffer_t *subsList, retsubs[retnumsubs];
 		int i;
 		for(i = 0; i < retnumsubs; ++i)
 			YDB_MALLOC_BUFFER(&retsubs[i], SUB_LEN);
-
 		int direction = rand();
 		if (direction < RAND_MAX / 2){ //50% chance to move forward or backward
 			direction = 1;
 		} else {
 			direction = -1;
 		}
-
 		status = YDB_OK;
 		int numsubs = t.length-1; //the starting length
 		subsList = subs;      //the starting list
 		while (status == YDB_OK){ //while not at the end, or received another error
-			if (direction == 1){
+			if (direction == 1)
 				status = ydb_node_next_st(tptoken, &zstatusBuf, &basevar, numsubs, subsList, &retnumsubs, retsubs);
-			} else {
+			else
 				status = ydb_node_previous_st(tptoken, &zstatusBuf, &basevar, numsubs, subsList, &retnumsubs, retsubs);
-			}
 			numsubs = retnumsubs;
 			subsList = retsubs;//set the subsList to the new list
 			retnumsubs = 4; //reset the retsubs length
@@ -334,25 +345,25 @@ int runProc(uint64_t tptoken, ydb_buffer_t* errstr, testSettings* settings, int 
 				case YDB_ERR_LVUNDEF:
 					status = YDB_OK;
 					break;
+				case YDB_ERR_CALLINAFTERXIT:
+					shutdown = 1;
+					break;
 				default:
 					zstatusBuf.buf_addr[zstatusBuf.len_used] = '\0';
 					printf("Unexpected return code (%d) issued! %s\n", status, zstatusBuf.buf_addr);
 			}
 		}
 		for(i = 0; i < retnumsubs; ++i)
-		       YDB_FREE_BUFFER(&retsubs[i]);
-
+			YDB_FREE_BUFFER(&retsubs[i]);
 	} else if (action < 20 + remainingOdds * (5 / 15.0f)){ //ydb_subscript_next_st() and ydb_subscript_previous_st() calls
 		ydb_buffer_t retvalue;
+
 		YDB_MALLOC_BUFFER(&retvalue, 16);
-
 		int direction = rand();
-		if (direction < RAND_MAX / 2){ //50% chance to move forward or backward
+		if (direction < RAND_MAX / 2) //50% chance to move forward or backward
 			direction = 1;
-		} else {
+		else
 			direction = -1;
-		}
-
 		status = YDB_OK;
 		while (status == YDB_OK){ //while not at the end, or received another error
 			if (direction == 1) {
@@ -381,31 +392,34 @@ int runProc(uint64_t tptoken, ydb_buffer_t* errstr, testSettings* settings, int 
 				case YDB_ERR_LVUNDEF:
 					status = YDB_OK;
 					break;
+				case YDB_ERR_CALLINAFTERXIT:
+					shutdown = 1;
+					break;
 				default:
 					zstatusBuf.buf_addr[zstatusBuf.len_used] = '\0';
 					printf("Unexpected return code (%d) issued! %s\n", status, zstatusBuf.buf_addr);
 			}
 		}
 		YDB_FREE_BUFFER(&retvalue);
-
 	} else if (action < 20 + remainingOdds * (6 / 15.0f)){ //ydb_incr_st() case
 		int incr_amount = rand() / (RAND_MAX / 5); //rand int [0, 5]
 		char incr_str[2];
 		ydb_buffer_t increment, retvalue;
+
 		YDB_MALLOC_BUFFER(&retvalue, 16);
 		YDB_MALLOC_BUFFER(&increment, 2);
-
 		sprintf(incr_str, "%d", incr_amount);
 		YDB_COPY_STRING_TO_BUFFER(incr_str, &increment, status);
-
 		status = ydb_incr_st(tptoken, &zstatusBuf, &basevar, t.length-1, subs, &increment, &retvalue);
-		if (status != YDB_OK){
+		if (YDB_ERR_CALLINAFTERXIT == status)
+			shutdown = 1;
+		else if (status != YDB_OK)
+		{
 			zstatusBuf.buf_addr[zstatusBuf.len_used] = '\0';
 			printf("Unexpected return code (%d) from ydb_incr_st() issued! %s\n", status, zstatusBuf.buf_addr);
 		}
 		YDB_FREE_BUFFER(&retvalue);
 		YDB_FREE_BUFFER(&increment);
-
 	} else if (action < 20 + remainingOdds * (7 / 15.0f)){ //ydb_lock*_st() case
 		unsigned long long lockTimeout = 0;
 
@@ -424,12 +438,15 @@ int runProc(uint64_t tptoken, ydb_buffer_t* errstr, testSettings* settings, int 
 				case YDB_ERR_TPLOCK:
 					status = YDB_OK;
 					break;
+				case YDB_ERR_CALLINAFTERXIT:
+					shutdown = 1;
+					break;
 				default:
 					zstatusBuf.buf_addr[zstatusBuf.len_used] = '\0';
 					printf("Unexpected return code (%d) from ydb_lock_st() issued! %s\n", status, zstatusBuf.buf_addr);
 			}
 		}
-		status = ydb_lock_incr_st(tptoken, &zstatusBuf, lockTimeout, &basevar, t.length-1, subs);
+		status = ydb_lock_incr_st(tptoken, &zstatusBuf, lockTimeout, &basevar, t.length - 1, subs);
 		if (status != YDB_OK){
 			switch (status) {
 				case YDB_ERR_GVUNDEF:
@@ -443,6 +460,9 @@ int runProc(uint64_t tptoken, ydb_buffer_t* errstr, testSettings* settings, int 
 					break;
 				case YDB_ERR_TPLOCK:
 					status = YDB_OK;
+					break;
+				case YDB_ERR_CALLINAFTERXIT:
+					shutdown = 1;
 					break;
 				default:
 					zstatusBuf.buf_addr[zstatusBuf.len_used] = '\0';
@@ -464,6 +484,9 @@ int runProc(uint64_t tptoken, ydb_buffer_t* errstr, testSettings* settings, int 
 				case YDB_ERR_TPLOCK:
 					status = YDB_OK;
 					break;
+				case YDB_ERR_CALLINAFTERXIT:
+					shutdown = 1;
+					break;
 				default:
 					zstatusBuf.buf_addr[zstatusBuf.len_used] = '\0';
 					printf("Unexpected return code (%d) from ydb_lock_decr_st() issued! %s\n", status, zstatusBuf.buf_addr);
@@ -484,51 +507,62 @@ int runProc(uint64_t tptoken, ydb_buffer_t* errstr, testSettings* settings, int 
 				case YDB_ERR_TPLOCK:
 					status = YDB_OK;
 					break;
+				case YDB_ERR_CALLINAFTERXIT:
+					shutdown = 1;
+					break;
 				default:
 					zstatusBuf.buf_addr[zstatusBuf.len_used] = '\0';
 					printf("Unexpected return code (%d) from ydb_lock_st() issued! %s\n", status, zstatusBuf.buf_addr);
 			}
 		}
-
 	} else if (action < 20 + remainingOdds * (8 / 15.0f)){ //ydb_str2zwr case
 		ydb_buffer_t strIn, strOut;
 		char* compStr = "\"a\"_$C(10,9)_\"b\"_$C(0)_\"c\"";
 
-
 		YDB_LITERAL_TO_BUFFER("a\n\tb\0c", &strIn);
 		YDB_MALLOC_BUFFER(&strOut, 64);
 		status = ydb_str2zwr_st(tptoken, &zstatusBuf, &strIn, &strOut);
-		if (status != YDB_OK){
-			zstatusBuf.buf_addr[zstatusBuf.len_used] = '\0';
-			printf("Unexpected return code (%d) from ydb_str2zwr() issued! %s\n", status, zstatusBuf.buf_addr);
-		}
-		strOut.buf_addr[strOut.len_used] = '\0';
-		if (0 != strcmp(compStr, strOut.buf_addr)){
-			printf("ydb_str2zwr did not return the right value\n");
+		if (YDB_ERR_CALLINAFTERXIT == status)
+			shutdown = 1;
+		else
+		{
+			if (status != YDB_OK)
+			{
+				zstatusBuf.buf_addr[zstatusBuf.len_used] = '\0';
+				printf("Unexpected return code (%d) from ydb_str2zwr() issued! %s\n", status, zstatusBuf.buf_addr);
+			}
+			strOut.buf_addr[strOut.len_used] = '\0';
+			if (0 != strcmp(compStr, strOut.buf_addr))
+				printf("ydb_str2zwr did not return the right value\n");
 		}
 		YDB_FREE_BUFFER(&strOut);
-
 	} else if (action < 20 + remainingOdds * (9 / 15.0f)){ //ydb_zwr2str case
 		ydb_buffer_t strIn, strOut;
-		char* compStr = "a\n\tb\0c";
-
+		char *compStr = "a\n\tb\0c";
 
 		YDB_LITERAL_TO_BUFFER("\"a\"_$C(10,9)_\"b\"_$C(0)_\"c\"", &strIn);
 		YDB_MALLOC_BUFFER(&strOut, 64);
 		status = ydb_zwr2str_st(tptoken, &zstatusBuf, &strIn, &strOut);
-		if (status != YDB_OK){
-			zstatusBuf.buf_addr[zstatusBuf.len_used] = '\0';
-			printf("Unexpected return code (%d) from ydb_zwr2str() issued! %s\n", status, zstatusBuf.buf_addr);
-		}
-		strOut.buf_addr[strOut.len_used] = '\0';
-		if (0 != strcmp(compStr, strOut.buf_addr)){
-			printf("ydb_zwr2str did not return the right value\n");
+		if (YDB_ERR_CALLINAFTERXIT == status)
+			shutdown = 1;
+		else
+		{
+			if (status != YDB_OK)
+			{
+				zstatusBuf.buf_addr[zstatusBuf.len_used] = '\0';
+				printf("Unexpected return code (%d) from ydb_zwr2str() issued! %s\n", status, zstatusBuf.buf_addr);
+			}
+			strOut.buf_addr[strOut.len_used] = '\0';
+			if (0 != strcmp(compStr, strOut.buf_addr)){
+				printf("ydb_zwr2str did not return the right value\n");
+			}
 		}
 		YDB_FREE_BUFFER(&strOut);
 
 	} else if (action < 20 + remainingOdds * (10 / 15.0f) && tptoken != YDB_NOTTP){ //ydb_exit() case, don't call from main thread
 		status = ydb_exit();
-		if(status != -YDB_ERR_INVYDBEXIT){
+		if (status != -YDB_ERR_INVYDBEXIT)
+		{
 			zstatusBuf.buf_addr[zstatusBuf.len_used] = '\0';
 			printf("Unexpected return code (%d) from ydb_exit() issued! %s\n", status, zstatusBuf.buf_addr);
 		}
@@ -540,50 +574,58 @@ int runProc(uint64_t tptoken, ydb_buffer_t* errstr, testSettings* settings, int 
 			zstatusBuf.buf_addr[zstatusBuf.len_used] = '\0';
 			printf("Unexpected return code (%d) from ydb_init() issued! %s\n", status, zstatusBuf.buf_addr);
 		}
-
-	}else if (action < 20 + remainingOdds * (12 / 15.0f)){ //ydb_message_t() case
+	} else if (action < 20 + remainingOdds * (12 / 15.0f))
+	{	// ydb_message_t() case
 		ydb_buffer_t errOut;
 		YDB_MALLOC_BUFFER(&errOut, 2048);
 
 		status = ydb_message_t(tptoken, &zstatusBuf, -1, &errOut);
-		if (status != YDB_OK){
-			zstatusBuf.buf_addr[zstatusBuf.len_used] = '\0';
-			printf("Unexpected return code (%d) from ydb_message_t() issued! %s\n", status, zstatusBuf.buf_addr);
-		}
-		if (errOut.len_used == 0){
-			printf("ydb_message_t() did not correctly modify the buffer\n");
+		if (YDB_ERR_CALLINAFTERXIT == status)
+			shutdown = 1;
+		else
+		{
+			if (status != YDB_OK)
+			{
+				zstatusBuf.buf_addr[zstatusBuf.len_used] = '\0';
+				printf("Unexpected return code (%d) from ydb_message_t() issued! %s\n", status,
+				       zstatusBuf.buf_addr);
+			}
+			if (errOut.len_used == 0)
+				printf("ydb_message_t() did not correctly modify the buffer\n");
 		}
 		YDB_FREE_BUFFER(&errOut);
-	} else if (action < 20 + remainingOdds * (13 / 15.0f)){ //ydb_zstatus() case
+	} else if (action < 20 + remainingOdds * (13 / 15.0f)) //ydb_zstatus() case
 		zstatusBuf.buf_addr[zstatusBuf.len_used] = '\0';//no check can be done here just ensuring no sig11
-
-	}else if (action < 20 + remainingOdds * (14 / 15.0f)){ //ydb_delete_st() case
+	else if (action < 20 + remainingOdds * (14 / 15.0f)){ //ydb_delete_st() case
 		int type = rand();
-		if (type < RAND_MAX/2){
+		if (type < RAND_MAX/2)
 			status = ydb_delete_st(tptoken, &zstatusBuf, &basevar, t.length-1, subs, YDB_DEL_TREE);
-		} else {
+		else
 			status = ydb_delete_st(tptoken, &zstatusBuf, &basevar, t.length-1, subs, YDB_DEL_NODE);
-		}
-		if (status != YDB_OK){
+		if (YDB_ERR_CALLINAFTERXIT == status)
+			shutdown = 1;
+		else if (status != YDB_OK)
+		{
 			zstatusBuf.buf_addr[zstatusBuf.len_used] = '\0';
 			printf("Unexpected return code (%d) from ydb_delete_st() issued! %s\n", status, zstatusBuf.buf_addr);
 		}
-
 	} else if (action < 20 + remainingOdds * (15 / 15.0f)){ //ydb_delete_excl_st() case
-		if(t.arr[0][0] != '^'){
+		if(t.arr[0][0] != '^')
 			status = ydb_delete_excl_st(tptoken, &zstatusBuf, 1, &basevar);
-		} else {
+		else
 			status = YDB_OK;
-		}
-		if (status != YDB_OK){
+		if (YDB_ERR_CALLINAFTERXIT == status)
+			shutdown = 1;
+		else if (status != YDB_OK)
+		{
 			zstatusBuf.buf_addr[zstatusBuf.len_used] = '\0';
 			printf("Unexpected return code (%d) from ydb_delete_excl_st() issued! %s\n", status, zstatusBuf.buf_addr);
 		}
 
-	/* the last case either does a ydb_tp_st() call
-	 * or spawns new threads
-	 * if curThreads > MAX_THREADS then it always picks ydb_tp_st()
-	 */
+		/* the last case either does a ydb_tp_st() call
+		 * or spawns new threads
+		 * if curThreads > MAX_THREADS then it always picks ydb_tp_st()
+		 */
 	} else if (action <= 100){
 		if (curDepth < settings->maxDepth && !isTimeout){
 			// if max depth is reached, or the timeout is set, stop creating threads
@@ -598,13 +640,17 @@ int runProc(uint64_t tptoken, ydb_buffer_t* errstr, testSettings* settings, int 
 				// if we are above MAX_THREADS always do ydb_tp_st()
 				/* ydb_tp_st() call */
 				status = ydb_tp_st(tptoken, &zstatusBuf, tpfn, &args, "BATCH", 0 , NULL);
-				/* If the "ydb464" subtest is running this program, it is possible a Ctrl-C is received and
-				 * handled by one thread which takes the process to exit handling code. It is possible that
-				 * exit handling code has already done an "op_trollback()" by the time this thread does its
-				 * "ydb_tp_st()" call. That would result in a YDB_ERR_INVTPTRANS error. It is therefore an
-				 * expected error. Handle this case in the assert below.
-				 */
-				YDB_ASSERT((YDB_OK == status) || (is_ydb464_subtest && (YDB_ERR_INVTPTRANS == status)));
+				if (YDB_ERR_CALLINAFTERXIT == status)
+					shutdown = 1;
+				else
+				{	/* If the "ydb464" subtest is running this program, it is possible a Ctrl-C is received and
+					 * handled by one thread which takes the process to exit handling code. It is possible that
+					 * exit handling code has already done an "op_trollback()" by the time this thread does its
+					 * "ydb_tp_st()" call. That would result in a YDB_ERR_INVTPTRANS error. It is therefore an
+					 * expected error. Handle this case in the assert below.
+					 */
+					YDB_ASSERT((YDB_OK == status) || (is_ydb464_subtest && (YDB_ERR_INVTPTRANS == status)));
+				}
 			} else {
 				/* thread creation */
 				pthread_t tid[THREADS_TO_MAKE];
@@ -646,8 +692,8 @@ int runProc(uint64_t tptoken, ydb_buffer_t* errstr, testSettings* settings, int 
 	YDB_FREE_BUFFER(&basevar);
 	for(i = 0; i < t.length-1; ++i)
 		YDB_FREE_BUFFER(&subs[i]);
-	free(t.arr[0]);//this is the raw buffer allocated at the top
-	return 0;
+	free(t.arr[0]);		// This is the raw buffer allocated at the top
+	return shutdown ? YDB_ERR_CALLINAFTERXIT : 0;
 }
 
 /* called by ydb_tp_st()
@@ -657,6 +703,7 @@ int runProc(uint64_t tptoken, ydb_buffer_t* errstr, testSettings* settings, int 
 int tpHelper(uint64_t tptoken, ydb_buffer_t* errstr, void* tpfnparm){
 	int status;
 	struct runProc_args* args = (struct runProc_args*) tpfnparm;
+
 	args->tptoken = tptoken; //assign the correct tptoken
 	int n = rand() % 20;
 	int i;

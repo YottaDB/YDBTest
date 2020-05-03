@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////
 //								//
-// Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries. //
+// Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries. //
 // All rights reserved.						//
 //								//
 //	This source code contains the intellectual property	//
@@ -42,6 +42,10 @@ import (
 // "worker-bee" processes. The main routine takes no parameters while the worker-bees need parms to know what they
 // are supposed to be doing. This is done with a "marker" parm that designates the invocation as a worker-bee with
 // subsequent parms telling the process what it needs to be doing. This is described in subsequent comments.
+//
+// Note threeenp1C2, since it is multi-process, each spawned process writes to its own combined (stdout, stderr) output
+// file with the form "threeenp1C2_timestamp.outx". The "threeenp1C2" part of the filename can be replaced by the value
+// of the $ydb_filepfx_threeenp1C2 envvar if it is set.
 
 // Constant definitions
 const tptoken uint64 = yottadb.NOTTP
@@ -100,9 +104,8 @@ func checkErrorReturn(err error) bool {
 			// This return will be a bit more situational.
 			return true
 		case yottadb.YDB_ERR_CALLINAFTERXIT:
-			// The database engines was told to close, yet we tried to perform an operation. Either reopen the
-			// database, or exit the program. Since the behavior of this depends on how your program should behave,
-			// it is commented out so that a panic is raised.
+			// The database engine was told to close, yet we tried to perform an operation. Either reopen the
+			// database, or exit the program.
 			return true
 		case yottadb.YDB_ERR_NODEEND:
 			// This should be detected seperately, and handled by the looping function; calling a more generic error
@@ -143,6 +146,8 @@ func main() {
 	var limitsGbl, resultGbl, highestGbl, updatesGbl, readsGbl, stepGbl yottadb.KeyT
 	var value, errstr yottadb.BufferT
 	var err error
+	var outFilePfx string
+	var stdoutp *os.File
 
 	defer yottadb.Exit()
 	// Check if we are a worker-bee process or not by checking to see if we have a parameter and if it
@@ -222,6 +227,12 @@ func main() {
 	if checkErrorReturn(err) {
 		return
 	}
+	// See if $ydb_filepfx_threeenp1C2 is set to provide a filename prefix for the output files of each
+	// worker process. If not, the default is just "threeenp1C2".
+	outFilePfx = os.Getenv("ydb_filepfx_threeenp1C2")
+	if "" == outFilePfx {
+		outFilePfx = "threeenp1C2" // Set default if none (or null) specified
+	}
 	// Get the number of CPUs from /proc/cpuinfo and calculate default number of execution streams
 	cpucnt := runtime.NumCPU()
 	cpuStreams := 2 * cpucnt // Max of 'streams' concurrent processes
@@ -250,21 +261,18 @@ func main() {
 		tokncnt = int64(len(linetokens))
 		if 0 < tokncnt {
 			endnum, err = strconv.ParseInt(linetokens[0], 10, 64) // aka 'j' in the M version
-			if checkErrorReturn(err) {
-			} // No return here as no special YDB return codes possible
+			_ =  checkErrorReturn(err) // No return here as no special YDB return codes possible
 		} else {
 			// Blank line ends input
 			break
 		}
 		if 1 < tokncnt {
 			streams, err = strconv.ParseInt(linetokens[1], 10, 64) // Resets streams from the default set above
-			if checkErrorReturn(err) {
-			} // No return here as no special YDB return codes possible
+			_ = checkErrorReturn(err) // No return here as no special YDB return codes possible
 		}
 		if 2 < tokncnt {
 			blk, err = strconv.ParseInt(linetokens[2], 10, 64)
-			if checkErrorReturn(err) {
-			} // No return here as no special YDB return codes possible
+			_ = checkErrorReturn(err) // No return here as no special YDB return codes possible
 		}
 		if 3 < tokncnt {
 			fmt.Println("Excess tokens in input line (max 3) - args: <maximum> <streamcnt> <maxnumsperstream>")
@@ -347,11 +355,12 @@ func main() {
 			}
 			dir, _ := os.Getwd()
 			proc[index] = exec.Command(dir+"/threeenp1C2", workerTag, fmt.Sprintf("%d", index))
-			proc[index].Stdout = os.Stdout // cmd.Stdout -> stdout
-			proc[index].Stderr = os.Stderr // cmd.Stderr -> stderr
-			err := proc[index].Start()     // Start new process
-			if checkErrorReturn(err) {
-			}
+			stdoutp, err = os.Create("./" + outFilePfx + "-" + fmt.Sprintf("%d", index) + ".outx")
+			_ = checkErrorReturn(err)
+			proc[index].Stdout = stdoutp // cmd.Stdout -> output file
+			proc[index].Stderr = stdoutp // cmd.Stderr -> output file
+			err = proc[index].Start()     // Start new process
+			_ = checkErrorReturn(err)
 		}
 		debugPrint(fmt.Sprintf("All %d processes launched - wait till they are all initialized", streams))
 		// Wait until all processes have launched and are waiting on lock2
@@ -378,8 +387,8 @@ func main() {
 		// Now do a Wait() on each process we launched
 		for idx = 0; idx < streams; idx++ {
 			err := proc[idx].Wait()
-			if nil != err {
-				fmt.Printf("Process %d finished with error: %s\n", idx, err)
+			if (nil != err) && (yottadb.YDB_ERR_CALLINAFTERXIT != yottadb.ErrorCode(err)) {
+				fmt.Printf("threeenp1C2: Worker process %d finished with error: %s\n", idx, err)
 			}
 		}
 		runelap := time.Since(runstart) // Calculate elapsed time (duration) in seconds
@@ -415,8 +424,7 @@ func main() {
 		}
 		fmt.Printf(" %s", valstr) // ^updates
 		updatecnt, err = strconv.ParseInt(valstr, 10, 64)
-		if checkErrorReturn(err) {
-		} // No return here as no special YDB return codes possible
+		_ = checkErrorReturn(err) // No return here as no special YDB return codes possible
 		err = readsGbl.ValST(tptoken, &errstr, &value)
 		if checkErrorReturn(err) {
 			return
@@ -427,8 +435,7 @@ func main() {
 		}
 		fmt.Printf(" %s", valstr) // reads
 		readcnt, err = strconv.ParseInt(valstr, 10, 64)
-		if checkErrorReturn(err) {
-		} // No return here as no special return codes possible
+		_ = checkErrorReturn(err) // No return here as no special return codes possible
 		if 0 < runelaps {
 			// If duration is greater than 0, display update and read rates
 			fmt.Printf(" %.0f %.0f", float64(updatecnt)/runelaps, float64(readcnt)/runelaps)
@@ -476,6 +483,7 @@ func doblk(index int64) {
 	var shrstuff shrStuff
 	var procStart time.Time
 
+	fmt.Printf("%s: doblk started (index %d, processid %d)\n\n", time.Now(), index, os.Getpid())
 	shrstuffp := &shrstuff
 	indexParm := index
 	// Have to create new data access structs for this process so we don't collide with others
@@ -659,8 +667,7 @@ func doblk(index int64) {
 			return
 		}
 		blkend, err = strconv.ParseInt(strval, 10, 64)
-		if checkErrorReturn(err) {
-		} // No return here as no special YDB return codes possible
+		_ = checkErrorReturn(err) // No return here as no special YDB return codes possible
 		if 1 == index {
 			blkstart = 1
 		} else {
@@ -677,8 +684,7 @@ func doblk(index int64) {
 				return
 			}
 			blkstart, err = strconv.ParseInt(strval, 10, 64)
-			if checkErrorReturn(err) {
-			} // No return here as no special YDB return code possible
+			_ = checkErrorReturn(err) // No return here as no special YDB return code possible
 			blkstart++
 		}
 		dostep(blkstart, blkend, shrstuffp)
@@ -739,8 +745,7 @@ func doblkTpRtn(tptoken uint64, errstrp *yottadb.BufferT, shrstuffp *shrStuff) i
 			return int32(yottadb.ErrorCode(err))
 		}
 		highestDB, err = strconv.ParseInt(strval, 10, 64)
-		if checkErrorReturn(err) {
-		} // No return here as no special YDB return codes possible
+		_ = checkErrorReturn(err)// No return here as no special YDB return codes possible
 	}
 	err = shrstuffp.highestLcl.ValST(tptoken, errstrp, &shrstuffp.value2)
 	if checkErrorReturn(err) {
@@ -751,8 +756,7 @@ func doblkTpRtn(tptoken uint64, errstrp *yottadb.BufferT, shrstuffp *shrStuff) i
 		return int32(yottadb.ErrorCode(err))
 	}
 	highestLCL, err = strconv.ParseInt(strval, 10, 64)
-	if checkErrorReturn(err) {
-	} // No return here as no special YDB return codes possible
+	_ = checkErrorReturn(err) // No return here as no special YDB return codes possible
 	if highestDB < highestLCL {
 		// Local value is higher - update into DB
 		err = shrstuffp.highestGbl.SetValST(tptoken, errstrp, &shrstuffp.value2)
@@ -835,8 +839,7 @@ func dostep(blkstart, blkend int64, shrstuffp *shrStuff) {
 				return
 			}
 			highestDB, err = strconv.ParseInt(strval, 10, 64)
-			if checkErrorReturn(err) {
-			} // No return here as no special YDB return codes possible
+			_ = checkErrorReturn(err) // No return here as no special YDB return codes possible
 			if n > highestDB {
 				// Reset our high water mark
 				err = shrstuffp.value.SetValStr(tptoken, &shrstuffp.errstr, fmt.Sprintf("%d", n)) // Subscript n
@@ -864,8 +867,7 @@ func dostep(blkstart, blkend int64, shrstuffp *shrStuff) {
 					return
 				}
 				stepval, err = strconv.ParseInt(strval, 10, 64)
-				if checkErrorReturn(err) {
-				} // No return here as no special YDB return code possible
+				_ = checkErrorReturn(err) // No return here as no special YDB return code possible
 				i += stepval
 			}
 			// Atomically set maximum value with a transaction driven as a "closure" type routine.
@@ -905,8 +907,7 @@ func dostep(blkstart, blkend int64, shrstuffp *shrStuff) {
 				}
 				// We want to save the returned subscript value as 'n'
 				n, err = strconv.ParseInt(strval, 10, 64)
-				if checkErrorReturn(err) {
-				} // No return here as no special YDB return codes possible
+				_ = checkErrorReturn(err) // No return here as no special YDB return codes possible
 				// Increment local updates
 				err = shrstuffp.updatesLcl.IncrST(tptoken, &shrstuffp.errstr, nil, &shrstuffp.value)
 				if checkErrorReturn(err) {
@@ -959,8 +960,7 @@ func dostepTpRtn(tptoken uint64, errstrp *yottadb.BufferT, shrstuffp *shrStuff) 
 			return int32(yottadb.ErrorCode(err))
 		}
 		resultDB, err = strconv.ParseInt(strval, 10, 64)
-		if checkErrorReturn(err) {
-		} // No return here as no special YDB return codes possible
+		_= checkErrorReturn(err) // No return here as no special YDB return codes possible
 	}
 	if shrstuffp.maxpath > resultDB {
 		// Have a new longest path so set it into ^result replacing old value

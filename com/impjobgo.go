@@ -1,14 +1,14 @@
-//////////////////////////////////////////////////////////////////
-//                                                              //
-// Copyright (c) 2019 YottaDB LLC. and/or its subsidiaries.     //
-// All rights reserved.                                         //
-//                                                              //
-//      This source code contains the intellectual property     //
-//      of its copyright holder(s), and is made available       //
-//      under a license.  If you do not know the terms of       //
-//      the license, please stop and do not read further.       //
-//                                                              //
-//////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+//                                                               //
+// Copyright (c) 2019-2020 YottaDB LLC. and/or its subsidiaries. //
+// All rights reserved.                                          //
+//                                                               //
+//      This source code contains the intellectual property      //
+//      of its copyright holder(s), and is made available        //
+//      under a license.  If you do not know the terms of        //
+//      the license, please stop and do not read further.        //
+//                                                               //
+///////////////////////////////////////////////////////////////////
 
 package main
 
@@ -624,14 +624,16 @@ func main() {
 			err = shr.lclI.SetValST(tptoken, nil, shr.bufvalue)
 		}
 		if imp.CheckErrorReturn(err) {
-			return
+			fmt.Fprintln(os.Stderr, "IMPJOBGO: Stopping due to error:", err)
+			break
 		}
 		err = shr.bufvalue.SetValStr(tptoken, nil, fmt.Sprintf("%d", shr.loop))
 		if nil == err {
 			err = shr.lclloop.SetValST(tptoken, nil, shr.bufvalue)
 		}
 		if imp.CheckErrorReturn(err) {
-			return
+			fmt.Fprintln(os.Stderr, "IMPJOBGO: Stopping due to error:", err)
+			break
 		}
 		// MCode: ; Go to the sleep cycle if a ^pause is requested. Wait until ^resume is called
 		// MCode: do pauseifneeded^pauseimptp
@@ -646,32 +648,39 @@ func main() {
 		// MCode: if $$^dzlenproxy(subsMAX)>keysize write $$^dzlenproxy(subsMAX),?4 zwr subs,I,loop
 		_, err = shr.callhelper1.CallMDescT(tptoken, nil, 0)
 		if imp.CheckErrorReturn(err) {
-			return
+			fmt.Fprintln(os.Stderr, "IMPJOBGO: Stopping due to error:", err)
+			break
 		}
 		// Initialize some local variables for use by later function calls ("tpfnStage1", etc.)
 		err = shr.lclI.ValST(tptoken, nil, shr.bufI)
 		if imp.CheckErrorReturn(err) {
-			return
+			fmt.Fprintln(os.Stderr, "IMPJOBGO: Stopping due to error:", err)
+			break
 		}
 		err = shr.lclsubs.ValST(tptoken, nil, shr.bufsubs)
 		if imp.CheckErrorReturn(err) {
-			return
+			fmt.Fprintln(os.Stderr, "IMPJOBGO: Stopping due to error:", err)
+			break
 		}
 		err = shr.lclsubsMAX.ValST(tptoken, nil, shr.bufsubsMAX)
 		if imp.CheckErrorReturn(err) {
-			return
+			fmt.Fprintln(os.Stderr, "IMPJOBGO: Stopping due to error:", err)
+			break
 		}
 		err = shr.lclval.ValST(tptoken, nil, shr.bufval)
 		if imp.CheckErrorReturn(err) {
-			return
+			fmt.Fprintln(os.Stderr, "IMPJOBGO: Stopping due to error:", err)
+			break
 		}
 		err = shr.lclvalALT.ValST(tptoken, nil, shr.bufvalALT)
 		if imp.CheckErrorReturn(err) {
-			return
+			fmt.Fprintln(os.Stderr, "IMPJOBGO: Stopping due to error:", err)
+			break
 		}
 		err = shr.lclvalMAX.ValST(tptoken, nil, shr.bufvalMAX)
 		if imp.CheckErrorReturn(err) {
-			return
+			fmt.Fprintln(os.Stderr, "IMPJOBGO: Stopping due to error:", err)
+			break
 		}
 		// . ; Stage 1
 		// . if istp=1 tstart *:(serial:transaction=tptype)
@@ -681,13 +690,15 @@ func main() {
 				return tpfnStage1(tptoken, errstr, &shr)
 			}, tptypestr)
 			if imp.CheckErrorReturn(err) {
-				return
+				fmt.Fprintln(os.Stderr, "IMPJOBGO: Stopping due to error:", err)
+				break
 			}
 		} else {
 			rc = tpfnStage1(tptoken, nil, &shr)
 			if yottadb.YDB_OK != rc {
 				if yottadb.YDB_ERR_CALLINAFTERXIT == rc {
-					return
+					fmt.Fprintln(os.Stderr, "IMPJOBGO: Stopping due to error CALLINAFTERXIT")
+					break
 				}
 				panic(fmt.Sprintf("TP transaction (tpfnStage1) failed with rc = %d", rc))
 			}
@@ -704,7 +715,8 @@ func main() {
 		// MCode: . . goto:'ztrigret ERROR
 		_, err = shr.callhelper2.CallMDescT(tptoken, nil, 0)
 		if imp.CheckErrorReturn(err) {
-			return
+			fmt.Fprintln(os.Stderr, "IMPJOBGO: Stopping due to error:", err)
+			break
 		}
 		// MCode: . set ^antp(fillid,subs)=val
 		// Note: subscr[0] already has <fillid> value in it
@@ -716,7 +728,8 @@ func main() {
 			}
 		}
 		if imp.CheckErrorReturn(err) {
-			return
+			fmt.Fprintln(os.Stderr, "IMPJOBGO: Stopping due to error:", err)
+			break
 		}
 		// MCode: . if 'trigger do
 		if 0 == shr.trigger {
@@ -726,7 +739,8 @@ func main() {
 				err = shr.gblbntp.SetValST(tptoken, nil, shr.bufval)
 			}
 			if imp.CheckErrorReturn(err) {
-				return
+				fmt.Fprintln(os.Stderr, "IMPJOBGO: Stopping due to error:", err)
+				break
 			}
 			// MCode: . . set ^cntp(fillid,subs)=val
 			err = shr.gblcntp.Subary.SetValBAry(tptoken, nil, 1, baryp) // baryp still set from above
@@ -734,7 +748,8 @@ func main() {
 				err = shr.gblcntp.SetValST(tptoken, nil, shr.bufval)
 			}
 			if imp.CheckErrorReturn(err) {
-				return
+				fmt.Fprintln(os.Stderr, "IMPJOBGO: Stopping due to error:", err)
+				break
 			}
 		}
 		// MCode: . . set ^dntp(fillid,subs)=valALT
@@ -743,7 +758,8 @@ func main() {
 			err = shr.gbldntp.SetValST(tptoken, nil, shr.bufval)
 		}
 		if imp.CheckErrorReturn(err) {
-			return
+			fmt.Fprintln(os.Stderr, "IMPJOBGO: Stopping due to error:", err)
+			break
 		}
 
 		// MCode: . ; Stage 3
@@ -754,13 +770,15 @@ func main() {
 				return tpfnStage3(tptoken, errstr, &shr)
 			}, tptypestr)
 			if imp.CheckErrorReturn(err) {
-				return
+				fmt.Fprintln(os.Stderr, "IMPJOBGO: Stopping due to error:", err)
+				break
 			}
 		} else {
 			rc = tpfnStage3(tptoken, nil, &shr)
 			if yottadb.YDB_OK != rc {
 				if yottadb.YDB_ERR_CALLINAFTERXIT == rc {
-					return
+					fmt.Fprintln(os.Stderr, "IMPJOBGO: Stopping due to error CALLINAFTERXIT")
+					break
 				}
 				panic(fmt.Sprintf("TP transaction (tpfnStage3) failed with rc = %d", rc))
 			}
@@ -878,7 +896,8 @@ func main() {
 		// MCode: . if lfence=1 tcommit
 		_, err = shr.callhelper3.CallMDescT(tptoken, nil, 0)
 		if imp.CheckErrorReturn(err) {
-			return
+			fmt.Fprintln(os.Stderr, "IMPJOBGO: Stopping due to error:", err)
+			break
 		}
 		// MCode: . set I=(I*nroot)#prime
 		shr.I = int32((int64(shr.I) * int64(nroot)) % int64(prime))
@@ -889,7 +908,8 @@ func main() {
 				continue
 			}
 			if imp.CheckErrorReturn(err) {
-				return
+				fmt.Fprintln(os.Stderr, "IMPJOBGO: Stopping due to error:", err)
+				break
 			}
 		}
 		valstr, err = shr.bufvalue.ValStr(tptoken, nil)

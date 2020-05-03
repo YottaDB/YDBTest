@@ -1,4 +1,4 @@
-# New go/sigterm subtest to test that SIGTERM (SIG-15) cleanly shuts down YDBGo process with no cores
+# Test that a fatal signgal (randomly uses either SIGINT or SIGTERM)  cleanly shuts down YDBGo process with no cores
 # This test uses the threeenp* subtests as sample processes
 # Running : go get -d -v -x -t lang.yottadb.com/go/yottadb
 # Building threeenp1B1
@@ -8,6 +8,8 @@ Terminating threeenp1B1; Run 2
 ##TEST_AWKgoPID  [0-9]*
 Terminating threeenp1B1; Run 3
 ##TEST_AWKgoPID  [0-9]*
+Checking for DATA RACE warnings
+done
 # Building threeenp1B2
 Terminating threeenp1B2; Run 1
 ##TEST_AWKgoPID  [0-9]*
@@ -15,6 +17,8 @@ Terminating threeenp1B2; Run 2
 ##TEST_AWKgoPID  [0-9]*
 Terminating threeenp1B2; Run 3
 ##TEST_AWKgoPID  [0-9]*
+Checking for DATA RACE warnings
+done
 # Building threeenp1C2
 Terminating threeenp1C2; Run 1
 ##TEST_AWKgoPID  ([0-9]* )*[0-9]*
@@ -22,3 +26,5 @@ Terminating threeenp1C2; Run 2
 ##TEST_AWKgoPID  ([0-9]* )*[0-9]*
 Terminating threeenp1C2; Run 3
 ##TEST_AWKgoPID  ([0-9]* )*[0-9]*
+Checking for DATA RACE warnings
+done

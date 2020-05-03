@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////
 //								//
-// Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries. //
+// Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries. //
 // All rights reserved.						//
 //								//
 //	This source code contains the intellectual property	//
@@ -93,9 +93,8 @@ func checkErrorReturn(err error) bool {
 			// This return will be a bit more situational.
 			return true
 		case yottadb.YDB_ERR_CALLINAFTERXIT:
-			// The database engines was told to close, yet we tried to perform an operation. Either reopen the
-			// database, or exit the program. Since the behavior of this depends on how your program should behave,
-			// it is commented out so that a panic is raised.
+			// The database engine was told to close, yet we tried to perform an operation. Either reopen the
+			// database, or exit the program.
 			return true
 		case yottadb.YDB_ERR_NODEEND:
 			// This should be detected seperately, and handled by the looping function; calling a more generic error

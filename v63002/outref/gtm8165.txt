@@ -35,7 +35,7 @@ Post Transaction DB Crit of DEFAULT owned by pid = 0
 ##ALLOW_OUTPUT MACHTYPE_ARMV6L
 # Testing command timeout (locktimeout) greater than .123 (Expect a TPNOTACID message in the syslog)
 DB Crit of DEFAULT owned by pid = xxxx as expected
-Post Transaction DB Crit of DEFAULT owned by pid = 0
+Post Transaction DB Crit of DEFAULT is NOT owned by our pid
 # Checking the syslog
 %YDB-I-TPNOTACID, LOCK at locktimeout+8^gtm8165 violates ACID properties of a TRANSACTION and could exceed .123 seconds; 
 

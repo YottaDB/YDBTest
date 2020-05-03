@@ -450,7 +450,7 @@ HST #      5 : Stream  0: Last History Number            4 [0x00000004]
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST2 set msr_dont_chk_stat; $MUPIP replic -source -shutdown -instsecondary=__RCV_INSTNAME__ -timeout=0 >& ##FILTERED##SHUT_##TIMESTAMP##.out'==
 ----------
 Error Not deleting jnlpool ipcs. seen in ##FILTERED##SHUT_##TIMESTAMP##.out as expected:
-##FILTERED##... ... .. ..:..:.. 20.. : Not deleting jnlpool ipcs. 1 processes still attached to jnlpool
+##TEST_AWK##FILTERED##... ... .. ..:..:.. 20.. : Not deleting jnlpool ipcs.*
 ----------
 ==Executing MULTISITE_REPLIC 'REFRESHLINK INST1 INST2'==
 ###################################################################
