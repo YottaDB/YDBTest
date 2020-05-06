@@ -13,3 +13,13 @@ ZT:
 ET: G BOO
 ZT: 
 ET: G TRAP^XUTMG43
+Testing setting ZTRAP after sourcing ydb_env_set
+ZT: 
+ET: Write:(0=$STACK) "Error occurred: ",$ZStatus,!
+ZT: g boo
+ET: 
+Testing setting ZTRAP after setting ydb_etrap to break
+ZT: 
+ET: break
+ZT: goto boo
+ET: 

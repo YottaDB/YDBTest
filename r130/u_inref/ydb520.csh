@@ -16,9 +16,18 @@
 # fails with an assert failure on versions that contain this bug.
 # The second test ($ZT then $ET) should pass on all versions but
 # is included to ensure that both situations are covered by the
-# test system.
+# test system. The third test ensures that $ZT is set correctly
+# when the mval it is to be set to doesn't overlap in memory with
+# the stack frame pointer. It uses a ydb520.sh file because
+# sourcing ydb_env_set only works under sh. The fourth test does
+# the same thing as the third but without sourcing ydb_env_set.
 $gtm_tst/com/dbcreate.csh mumps
 echo "Testing ETRAP->ZTRAP->ETRAP->ZTRAP"
-$ydb_dist/mumps -r ydb520A
+$ydb_dist/yottadb -run ydb520A
 echo "Testing ZTRAP->ETRAP->ZTRAP->ETRAP"
-$ydb_dist/mumps -r ydb520B
+$ydb_dist/yottadb -run ydb520B
+echo "Testing setting ZTRAP after sourcing ydb_env_set"
+sh $gtm_tst/$tst/u_inref/ydb520.sh
+echo "Testing setting ZTRAP after setting ydb_etrap to break"
+setenv ydb_etrap 'break'
+$ydb_dist/yottadb -run ydb520D
