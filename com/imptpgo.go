@@ -406,7 +406,7 @@ func main() {
 	if imp.CheckErrorReturn(err) {
 		return
 	}
-	// MCode: set ^%jobwait(jobid,"jjoname")="impjob_imptp" ; Taken from com/job.m
+	// MCode: set ^%jobwait(jobid,"jmjoname")="impjob_imptp" ; Taken from com/job.m
 	err = yottadb.SetValE(tptoken, nil, "impjob_imptp", "^%jobwait", []string{jobidstr, "jmjoname"})
 	if imp.CheckErrorReturn(err) {
 		return
