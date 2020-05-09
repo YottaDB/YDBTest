@@ -1,7 +1,7 @@
 #!/bin/sh
 #################################################################
 #								#
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -241,7 +241,7 @@ testF() {
 			if [ $jnl_type != "disable" ]; then tst_jnl_str="$tst_jnl_str,epoch_interval=$epoInv"; fi
 			$gtm_tst/com/dbcreate.csh yottadb $num_regions
 			if [ $? != "0" ]; then dbRet=$? echo "dbcreate failed with status: $dbRet" exit 1; fi
-			ipcs -a > test$testNum.ipcs
+			$gtm_tst/com/ipcs -a > test$testNum.ipcs
 			export ydb_dir=$(pwd)
 			export ydb_gbldir=$gtmgbldir
 			. $ydbDistTmp/ydb_env_set

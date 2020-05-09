@@ -3,6 +3,9 @@
 #								#
 # Copyright (c) 2002-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
+#                                                               #
+# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -27,8 +30,8 @@ if ($?KILL_LOG == 0) then
 endif
 foreach key ($ftok_key)
 	# Though Linux has different format semid is still in column 2
-	# the sed filter is necessary to work-around the ipcs output missing a space after the "s" for long ids on HP-UX.
-	set sem_id = `$gtm_tst/com/ipcs -s | $grep $key | sed 's/s/s /'| $tst_awk '{printf("%s ",$2);}'`
+	# The "uniq" is needed for an ipcs regression (May 2020) where `ipcs -s` prints 2 (duplicate) lines per semaphore.
+	set sem_id = `$gtm_tst/com/ipcs -s | $grep $key | uniq | $tst_awk '{printf("%s ",$2);}'`
 	echo "sem_id is "$sem_id >>& $KILL_LOG
 	# It cound happen that due to ftok collision, another process removed this semaphore
 	# P1 opens DB1,creates FTOK1 and increment the counter semaphore to be 1.

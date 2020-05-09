@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -19,7 +19,7 @@ setenv compile  "$gt_cc_compiler $gtt_cc_shl_options $gt_cc_option_debug -I$gtm_
 setenv syslibs "-lc"
 setenv link	"$gt_ld_shl_linker $gt_ld_shl_options"
 
-ipcs -a > ipcs1.out
+$gtm_tst/com/ipcs -a > ipcs1.out
 $gtm_tst/com/dbcreate.csh a
 setenv gtmgbldir a.gld
 if ($?gtm_env_translate || $?ydb_env_translate) then

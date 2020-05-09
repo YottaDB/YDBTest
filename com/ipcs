@@ -3,6 +3,9 @@
 #								#
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
+#                                                               #
+# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -75,10 +78,13 @@ if (! $grep_status) then
 endif
 
 # Ensure a particular ordering of the command's output unless a 'c' flag was supplied.
+# The "sort -u" below is needed for an ipcs regression (noticed May 2020 after a system patch on Arch Linux)
+# where `ipcs` randomly prints lots of duplicate lines per semaphore.
+
 if (("$HOSTOS" == "Linux") && ("$argv" !~ *c*)) then
-	$tst_awk -f $gtm_tst/com/ipcs.awk $log_name
+	$tst_awk -f $gtm_tst/com/ipcs.awk $log_name | sort -u
 else
-	cat $log_name
+	cat $log_name | sort -u
 endif
 
 # Either append the result of the first / second attempt to the log file, or delete it if not needed.

@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -32,7 +32,7 @@ endif
 setenv syslibs "-lc"
 setenv link	"$gt_ld_shl_linker $gt_ld_shl_options"
 
-ipcs -a > ipcs1.out
+$gtm_tst/com/ipcs -a > ipcs1.out
 $gtm_tst/com/dbcreate.csh a
 setenv gtmgbldir a.gld
 if ($?gtm_env_translate || $?ydb_env_translate) then

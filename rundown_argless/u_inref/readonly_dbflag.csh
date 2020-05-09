@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -71,13 +71,13 @@ YDB_EOF
 	echo "# Test that ftok semaphore is not left around after halt from a READ_ONLY database"
 	cp ${permission}_bak/* .
 	set ftok_value = `$ydb_dist/ftok mumps.dat | $grep mumps.dat | $tst_awk '{print $5}'`
-	set before = `ipcs -a | $grep $ftok_value`
+	set before = `$gtm_tst/com/ipcs -a | $grep $ftok_value`
 	$GTM << YDB_EOF
 	write "Open the READ_ONLY database mumps.dat. Expect no errors during open",!  set x=\$get(^x)
 	write "Expect no errors while halting out"
 	quit
 YDB_EOF
-	set after = `ipcs -a | $grep $ftok_value`
+	set after = `$gtm_tst/com/ipcs -a | $grep $ftok_value`
 	if ("" != "$after") then
 		echo "TEST-E-FAIL : ftok semaphore is left around"
 		echo "ipcs before = $before"
