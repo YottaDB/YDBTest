@@ -27,7 +27,11 @@ $ydb_dist/yottadb -run ydb520A
 echo "Testing ZTRAP->ETRAP->ZTRAP->ETRAP"
 $ydb_dist/yottadb -run ydb520B
 echo "Testing setting ZTRAP after sourcing ydb_env_set"
-sh $gtm_tst/$tst/u_inref/ydb520.sh
+# We call bash instead of sh because this script sets a variable using
+# export and that was failing on some machines. When this script is called
+# with sh, the export command may result in a "bad variable name" error.
+# This does not happen with bash.
+bash $gtm_tst/$tst/u_inref/ydb520.sh
 echo "Testing setting ZTRAP after setting ydb_etrap to break"
 setenv ydb_etrap 'break'
 $ydb_dist/yottadb -run ydb520D
