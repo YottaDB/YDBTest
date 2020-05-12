@@ -1,0 +1,36 @@
+# %PEEKBYNAME now accepts the path to the directory where gtmhelp.gld and
+# gtmhelp.dat reside as an optional fourth parameter gldpath. If not provided
+# it picks data from $ydb_dist, the default location, which it did not previously
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+gtmhelp.gld
+Using: ##SOURCE_PATH##/mupip
+gtmhelp.dat
+# This test uses max_key_size as the primary parameter for ^%PEEKBYNAME and
+# verfies that the same output occurs with and without a optional fourth parameter
+# Testing ^%PEEKBYNAME with and without a fourth parameter
+# Testing ^%PEEKBYNAME with just three parameters
+64
+# Testing ^%PEEKBYNAME with the fourth parameter
+# and using the global directory with a max_key_size of 64
+64
+# Testing ^%PEEKBYNAME with the optional fourth parameter
+# and using the local directory with a max_key_size of 22.
+# the local directory has to include gtmhelp instead of
+# ydbhelp since it is hard coded in. Since the local gtmhelp
+# has not been populated an error occurs
+%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceeded,%YDB-I-GVIS, 		Global variable: ^gtmtypfldindx("gd_region","max_key_size")
+		At M source location %PEEKBYNAME+40^%PEEKBYNAME
+
+YDB>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ mumps.dat
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ gtmhelp.dat
+No errors detected by integ.

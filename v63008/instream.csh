@@ -16,13 +16,14 @@
 #-------------------------------------------------------------------------------------
 # gtm9093               [bdw]           Test of $translate that runs random inputs for 15 seconds checking for sig11s
 # gtm9079               [bdw]           Tests zcompile within nested xecute for correct error code
+# gtm9000               [michael]       Test for optional fourth parameter in PEEKBYNAME
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "v63008 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "gtm9093 gtm9079"
+setenv subtest_list_non_replic "gtm9093 gtm9079 gtm9000"
 setenv subtest_list_replic     ""
 
 
