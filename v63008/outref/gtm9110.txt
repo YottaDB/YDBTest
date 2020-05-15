@@ -1,0 +1,9 @@
+# In GT.M versions V6.3-008 and later when entering a shell
+# command line longer than 32KiB GT.M will issue an error of
+# either CLIERR or CLISTRTOOLONG. In V6.3-007 a regression
+# allowed this condition to cause a segmentation violation(SIG-11)
+# We attempted to produce the CLIERR but we were not able to reproduce
+# the error in our test
+# Verifying that a shell command line over 32KiB reports a CLISTRTOOLONG
+# Checking for CLISTRTOOLONG(in v63007 a segmentation fault occurs)
+%YDB-E-CLISTRTOOLONG, INFILE specified is 32983 bytes long which is greater than the allowed maximum of 255 bytes
