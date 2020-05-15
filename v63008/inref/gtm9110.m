@@ -15,7 +15,7 @@
 ;CLISTRTOOLONG will be produced by using -run to run a command string
 ;over 32KiB.
 	set cmdstr1="$ydb_dist/yottadb -run "
-	set cmdx=$justify("",33000,1)
+	set cmdx=$justify("",32970,1)
 	set cmdx=$translate(cmdx," ","x")
 	set cmdstr1=cmdstr1_cmdx
 	write "# Checking for CLISTRTOOLONG(in v63007 a segmentation fault occurs)",!
