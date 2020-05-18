@@ -9,10 +9,15 @@
  *	the license, please stop and do not read further.	*
  *								*
  ****************************************************************/
+
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
 #include <pthread.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <unistd.h>
+#include <errno.h>
 #include "libyottadb.h"
 
 #define ONESEC		((unsigned long long)1000000000)
@@ -20,7 +25,7 @@
 struct threadargs
 {
 	int	pid, tid;
-}
+};
 
 struct transargs
 {
@@ -51,7 +56,7 @@ int main()
 			break;
 		}
 	}
-	if(is_parent)
+	if (is_parent)
 		pid = 1;
 	args[0].tid = 1;
 	args[1].tid = 2;
@@ -69,25 +74,25 @@ int main()
 		status = pthread_join(tids[i], NULL);
 		YDB_ASSERT(0 == status);
 	}
-	return 0;
 
-	/* The below code to wait for child processes
-	 * was copied from simpleapi/inref/randomWalk.c
-	 */
-	/* wait for all child processes to die
-	 * have to check for EINTR from yottadb
-	 * other wise the parent will exit early
-	 */
-	while (1)
-	{
-		if (-1 == (i = wait(&status)))
+	if (is_parent) {
+		/* The below code to wait for child processes
+		 * was copied from simpleapi/inref/randomWalk.c
+		 */
+		/* wait for all child processes to die
+		 * have to check for EINTR from yottadb
+		 * other wise the parent will exit early
+		 */
+		while (1)
 		{
-			if (EINTR == errno)
-				continue;
-			break;
+			if (-1 == (i = wait(&status)))
+			{
+				if (EINTR == errno)
+					continue;
+				break;
+			}
 		}
 	}
-
 	return 0;
 }
 
@@ -97,7 +102,7 @@ void* start_thread(void *args)
 	int			status, *tid, timer_id, stime;
 	unsigned long long	timer_length;
 	ydb_buffer_t		varname;
-	struct threadargs	*vars
+	struct threadargs	*vars;
 	struct transargs	targs;
 
 	vars = (struct threadargs*) args;
@@ -123,7 +128,7 @@ void* start_thread(void *args)
 		check_updates(&targs);
 	}
 	/* Make sure some YDB_TP_RESTARTs were generated during the loop */
-	YDB_ASSERT(args.ok_iteration < args.total_iteration)
+	YDB_ASSERT(targs.ok_iteration < targs.total_iteration);
 }
 
 int callback1(uint64_t tptoken, ydb_buffer_t* errstr, struct transargs *args)
@@ -174,7 +179,7 @@ int callback2(uint64_t tptoken, ydb_buffer_t* errstr, struct transargs *args)
 	temp_sub[2] = '2';
 	subscript.buf_addr = temp_sub;
 	value.len_alloc = value.len_used = 1;
-	temp_val[1] = (char)('a' + (args->ok_iteration % 26));
+	temp_val[0] = (char)('a' + (args->ok_iteration % 26));
 	value.buf_addr = temp_val;
 	status = ydb_set_st(tptoken, errstr, args->varname, 1, &subscript, &value);
 	return YDB_TP_RESTART == status ? status : YDB_TP_ROLLBACK;
@@ -186,7 +191,7 @@ void check_updates(struct transargs *args)
 	char		temp_sub[3];
 	ydb_buffer_t	subscript, value;
 
-	subscript.len_alloc = subscript.len_used = 2;
+	subscript.len_alloc = subscript.len_used = 3;
 	temp_sub[0] = (char)('0' + args->pid);
 	temp_sub[1] = (char)('0' + args->tid);
 	temp_sub[2] = '1';
@@ -195,15 +200,15 @@ void check_updates(struct transargs *args)
 	value.len_used = 0;
 	value.buf_addr = (char *)malloc(1);
 	status = ydb_get_st(YDB_NOTTP, NULL, args->varname, 1, &subscript, &value);
-	YDB_ASSERT(YDB_OK == status)
-	YDB_ASSERT((char)('a' + ((args->ok_iteration - 1) % 26)) == value.buf_addr[0])
+	YDB_ASSERT(YDB_OK == status);
+	YDB_ASSERT((char)('a' + ((args->ok_iteration - 1) % 26)) == value.buf_addr[0]);
 	temp_sub[2] = '2';
 	status = ydb_get_st(YDB_NOTTP, NULL, args->varname, 1, &subscript, &value);
-	YDB_ASSERT(YDB_ERR_GVUNDEF == status)
+	YDB_ASSERT(YDB_ERR_GVUNDEF == status);
 	temp_sub[2] = '3';
 	status = ydb_get_st(YDB_NOTTP, NULL, args->varname, 1, &subscript, &value);
 	YDB_ASSERT(YDB_OK == status);
-	YDB_ASSERT((char)('a' + ((args->ok_iteration - 1) % 26)) == value.buf_addr[0])
+	YDB_ASSERT((char)('a' + ((args->ok_iteration - 1) % 26)) == value.buf_addr[0]);
 	free(value.buf_addr);
 }
 

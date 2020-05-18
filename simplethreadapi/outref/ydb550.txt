@@ -1,10 +1,10 @@
-# Test that a nested ydb_tp_st() rolls back correctly when the parent transaction commits
-# We also run a version of the test for 10 seconds with multiple threads without output to ensure that YDB_TP_RESTART is handled correctly
 Files Created in ##TEST_PATH##:
 Using: ##SOURCE_PATH##/mumps -run GDE
 mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
+# ydb550.c : Test that a nested ydb_tp_st() rolls back correctly when the parent transaction commits
+----------------------------------------------------------------------------------------------------
 start Thread 1
 Thread T1:Test 1 : Test YDB_TP_ROLLBACK handling
 Thread T1:a)	The flow is : CPROGRAM -> ydb_tp_st()1 -> CALLBACK1 -> ydb_tp_st()2 -> CALLBACK2. Here CPROGRAM is the C program which invokes ydb_tp_st(). CALLBACK1 is the user-specified TP callback function at TP depth 1 and CALLBACK2 is the user-specified TP callback function at TP depth 2.
@@ -92,6 +92,22 @@ Thread T4:Since control has returned from ydb_tp_st()2, CALLBACK1 will do some m
 Thread T4:ydb_tp_st()1 returned YDB_OK as expected
 Thread T4:Since control has returned from ydb_tp_st()1 CPROGRAM will check that the first and third updates exist in the db but the second update doesn't.
 end Thread 4
+
+
+# ydb550b.c : Run multiple processes/threads for 10 seconds to ensure that YDB_TP_RESTART is handled correctly
+----------------------------------------------------------------------------------------------------------------
+
+# ydb550c.c : Test user callback function initiated YDB_TP_RESTART is handled correctly
+-----------------------------------------------------------------------------------------
+main : Starting outer transaction
+outer_trans : Running outer transaction : First try
+inner_trans : Running inner transaction : First try : Returning YDB_TP_RESTART
+outer_trans : Finished inner transaction
+outer_trans : Finished First try, Returning YDB_TP_RESTART
+outer_trans : Running outer transaction : Second try
+inner_trans : Running inner transaction : Second try : Returning YDB_OK
+outer_trans : Finished inner transaction
+outer_trans : Finished Second try, Returning YDB_OK
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

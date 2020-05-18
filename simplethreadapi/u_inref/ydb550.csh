@@ -11,30 +11,35 @@
 #								#
 #################################################################
 
-echo '# Test that a nested ydb_tp_st() rolls back correctly when the parent transaction commits'
-echo '# We also run a version of the test for 10 seconds with multiple threads without output to ensure that YDB_TP_RESTART is handled correctly'
+$gtm_tst/com/dbcreate.csh mumps
 
-foreach file ("ydb550" "ydb550b")
+foreach file ("ydb550" "ydb550b" "ydb550c")
+	if ("ydb550" == $file) then
+		echo "# $file.c : Test that a nested ydb_tp_st() rolls back correctly when the parent transaction commits"
+		echo "----------------------------------------------------------------------------------------------------"
+	else if ("ydb550b" == $file) then
+		echo ""
+		echo "# $file.c : Run multiple processes/threads for 10 seconds to ensure that YDB_TP_RESTART is handled correctly"
+		echo "----------------------------------------------------------------------------------------------------------------"
+	else if ("ydb550c" == $file) then
+		echo ""
+		echo "# $file.c : Test user callback function initiated YDB_TP_RESTART is handled correctly"
+		echo "-----------------------------------------------------------------------------------------"
+	endif
 	#SETUP of the driver C file
 	$gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $gtm_tst/$tst/inref/$file.c
 	$gt_ld_linker $gt_ld_option_output $file $gt_ld_options_common $file.o $gt_ld_sysrtns $ci_ldpath$gtm_dist -L$gtm_dist $tst_ld_yottadb $gt_ld_syslibs >& $file.map
 
-	$gtm_tst/com/dbcreate.csh mumps
-
 	# Run driver C
 	`pwd`/$file
 
-echo "start Thread 1"
-cat thread1.out
-echo "end Thread 1\n"
-echo "start Thread 2"
-cat thread2.out
-echo "end Thread 2\n"
-echo "start Thread 3"
-cat thread3.out
-echo "end Thread 3\n"
-echo "start Thread 4"
-cat thread4.out
-echo "end Thread 4"
+	if ("ydb550" == $file) then
+		foreach thread (1 2 3 4)
+			echo "start Thread $thread"
+			cat thread${thread}.out
+			echo "end Thread $thread\n"
+		end
+	endif
+end
 
 $gtm_tst/com/dbcheck.csh
