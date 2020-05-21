@@ -3,7 +3,7 @@
  * Copyright (c) 2015 Fidelity National Information 		*
  * Services, Inc. and/or its subsidiaries. All rights reserved.	*
  *								*
- * Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	*
+ * Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -13,9 +13,12 @@
  *								*
  ****************************************************************/
 
+#include "mdef.h"
+
 #include "gtm_stdio.h"
 #include "gtm_stdlib.h"
-#include "mdef.h"
+#include "gtm_string.h"
+
 #include "cli.h"
 #include "compiler.h"
 #include "nametabtyp.h"
@@ -27,8 +30,6 @@ LITREF svn_data_type svn_data[];
 
 #define zysqlnull	"ZYSQLNULL"
 #define zysqlnull_len	(sizeof(zysqlnull) - 1)
-
-GBLDEF  CLI_ENTRY       *cmd_ary = NULL; /* This test does not have any command tables so initialize command array to NULL */
 
 int main( int argc, char *argv[])
 {

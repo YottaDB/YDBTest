@@ -1,8 +1,20 @@
+/****************************************************************
+ *								*
+ * Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	*
+ * All rights reserved.						*
+ *								*
+ *	This source code contains the intellectual property	*
+ *	of its copyright holder(s), and is made available	*
+ *	under a license.  If you do not know the terms of	*
+ *	the license, please stop and do not read further.	*
+ *								*
+ ****************************************************************/
+/* This module is derived from FIS GT.M.
+ ****************************************************************/
+
 #include <stdio.h>
 #include "mdef.h"
 #include "cli.h"
-
-GBLDEF	CLI_ENTRY	*cmd_ary = NULL; /* This test does not have any command tables so initialize command array to NULL */
 
 int main()
 {
@@ -14,7 +26,7 @@ int main()
 	gtm_uint64_t *vlongptr=&vlong;	/* used to test dereferencing '@' */
 
 	gtm_threadgbl_init();
-	/* 
+	/*
 	 * Note: The output of printf is 'grep'ed by test_fao.csh and used as reference to compare with the output
 	 * of util_out_print. If the printf statment is changed please make the corresponding changes into test_fao.csh
 	 */
@@ -28,7 +40,7 @@ int main()
 
 	util_out_print(" @XQ !@XQ @UQ !@UQ @ZQ !@ZQ", TRUE, vlongptr, vlongptr, vlongptr, vlongptr);
 	util_out_print(" @XJ !@XJ @UJ !@UJ @ZJ !@ZJ", TRUE, vlongptr, vlongptr, vlongptr, vlongptr);
-	
+
 	util_out_print(" 16@XQ !16@XQ 16@UQ !16@UQ 16@ZQ !16@ZQ", TRUE, vlongptr, vlongptr, vlongptr);
 	util_out_print(" 16@XJ !16@XJ 16@UJ !16@UJ 16@ZJ !16@ZJ", TRUE, vlongptr, vlongptr, vlongptr);
 
