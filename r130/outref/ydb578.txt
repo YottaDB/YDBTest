@@ -1,0 +1,5 @@
+# Test that LVUNDEF error displays string subscripts with surrounding double quotes
+
+$ydb_dist/mumps -run ^%XCMD 'write x(1,"abcd",$zysqlnull,$char(2,3))'
+%YDB-E-LVUNDEF, Undefined local variable: x(1,"abcd",$ZYSQLNULL,$C(2,3))
+

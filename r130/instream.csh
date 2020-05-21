@@ -21,10 +21,10 @@
 # ydb476 [gm]        Tests $ZSigproc for its correctness with named string signal value as second argument
 # ydb511 [bdw]       Tests $translate with undefined variables for the 2nd and 3rd arguments.
 # ydb513 [nars]      Test that $VIEW("REGION","^*") returns the name of the region mapped to by the `*` namespace
-# ydb485 [gm]	     Tests $ZCONVERT with 3 parameters to ensure correct decimal to hexadecimal and vice versa conversion
+# ydb485 [gm]        Tests $ZCONVERT with 3 parameters to ensure correct decimal to hexadecimal and vice versa conversion
 # ydb518 [bdw]       Tests call ins and external calls using ydb_int64_t and ydb_uint64_t
 # ydb520 [bdw]       Tests to ensure that $ETRAP and $ZTRAP are being set correctly
-# ydb503 [bdw]	     Tests if DRD is incremented/not incremented correctly in both MM and BG access modes.
+# ydb503 [bdw]       Tests if DRD is incremented/not incremented correctly in both MM and BG access modes.
 # ydb515 [see]       Test that ydb_zstatus() does not write to null buffers
 # ydb519 [bdw]       Tests opening sockets to ensure that user-specified timeouts are followed
 # ydb545 [see]       Test that a LOCK cmd subsequent to a LOCk cmd that failed with an error does not return BADLOCKNEST
@@ -38,6 +38,7 @@
 # ydb534 [nars]      Test that SIGABRT generates core (default action for SIGABRT) in SimpleThreadAPI mode without any hangs
 # ydb567 [bdw]       Test that a MUPIP INTRPT in the middle of a hang in a for loop does not cause an assert failure
 # ydb576 [nars]      Test that $PIECE in a database trigger returns correct results when invoked from SimpleAPI (e.g. ydb_set_s())
+# ydb578 [nars]      Test that LVUNDEF error displays string subscripts with surrounding double quotes
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r130 test starts..."
@@ -46,6 +47,7 @@ echo "r130 test starts..."
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic "ydb470 ydb482 ydb174 ydb390 ydb476 ydb511 ydb513 ydb485 ydb518 ydb520 ydb503 ydb515 ydb519 ydb545"
 setenv subtest_list_non_replic "${subtest_list_non_replic} ydb553 ydb547 ydb493 ydb549 ydb562 ydb554 ydb484 ydb534 ydb567 ydb576"
+setenv subtest_list_non_replic "${subtest_list_non_replic} ydb578"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
