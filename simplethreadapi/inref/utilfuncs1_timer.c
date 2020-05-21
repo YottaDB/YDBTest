@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2019 YottaDB LLC. and/or its subsidiaries.	*
+ * Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -28,7 +28,8 @@ void timer_done(intptr_t timer_id, unsigned int handler_data_len, char *handler_
 
 int main()
 {
-	int 			status, stime, etime, ftime, timer_id;
+	int 			status, stime, etime, ftime;
+	intptr_t		timer_id;
 	unsigned long long	time3;
 	char			errbuf[ERRBUF_SIZE], mes[64];
 
@@ -37,7 +38,8 @@ int main()
 	printf("\n# Test ydb_timer_set_t() sets a timer which will consequently call a handle function.\n");
 	printf("# Execute ydb_timer_set_t() with limit_nsec set to 3 seconds\n"); fflush(stdout);
 
-	timer_id = time3 = 3*ONESEC;
+	time3 = ONESEC * 3;
+	timer_id = (intptr_t)time3;
 	stime = time(NULL);
 	status = ydb_timer_start_t(YDB_NOTTP, NULL, timer_id, time3, &timer_done, sizeof(&stime), &stime);
 	if (YDB_OK != status)
