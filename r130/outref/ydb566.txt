@@ -1,0 +1,12 @@
+This test verifies that call-in tables support blank lines and comments. If it succeeds, it will print out a success message.
+Call-In Test Succeeded
+Testing a commented out call-in mapping to ensure that it is not called and returns ERR_CINOENTRY. If everything is working correctly, there will be no additional output.
+----------------------------------------------------
+This part of the test verifies that external call definitions support blank lines and comments.
+If the first external call succeeds, it will print out a success message.
+This test will also test a commented out external call mapping. This should return an M error message
+External Call Succeeded
+%YDB-E-ZCRTENOTF, External call routine printFailure not found
+		At M source location +2^ydb566M
+
+YDB>
