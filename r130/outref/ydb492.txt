@@ -1,0 +1,32 @@
+# Test $TRANSLATE with multi-byte string literals in UTF-8 mode does not SIG-11 if executed from shared library
+# -------------------------------------------------------------------------------------------------------------
+# Switch to UTF-8 mode
+setenv gtm_chset UTF-8
+unset echo
+# Compile ydb492.m into ydb492.o
+# Link ydb492.o into shared object ydb492##TEST_SHL_SUFFIX##
+# setenv ydb_routines (gtmroutines) = ydb492##TEST_SHL_SUFFIX##
+# Running : yottadb -run ydb492
+
+Stepping STARTED
+ydb492+2^ydb492     :	write $zwrite($translate("abcd"_$c(128)_"efgh"_$c(128),$c(128))),!
+"abcdefgh"
+ydb492+3^ydb492     :	write $zwrite($translate("abcd"_$c(1024)_"efgh"_$c(1025),"bcecyz"_$c(1024))),!
+"adfghЁ"
+ydb492+4^ydb492     :	write $zwrite($translate("abcd"_$c(1024)_"efgh"_$c(1025),$c(1025))),!
+"abcdЀefgh"
+ydb492+5^ydb492     :	write $zwrite($translate("a"_$c(1024)_"e"_$c(16384),$c(16384))),!
+"aЀe"
+ydb492+6^ydb492     :	write $zwrite($translate("a"_$c(1024)_"e"_$c(16384),"abcdfghijklmnopqrstuvwxyz"_$c(16384))),!
+"Ѐe"
+ydb492+7^ydb492     :	write $zwrite($translate("abcd"_$c(128)_"efgh"_$c(128),$c(128),"")),!
+"abcdefgh"
+ydb492+8^ydb492     :	write $zwrite($translate("abcd"_$c(1024)_"efgh"_$c(1025),"bcecyz"_$c(1024),"")),!
+"adfghЁ"
+ydb492+9^ydb492     :	write $zwrite($translate("abcd"_$c(1024)_"efgh"_$c(1025),$c(1025),"bcfhyz"_$c(1024))),!
+"abcdЀefghb"
+ydb492+10^ydb492    :	write $zwrite($translate("a"_$c(1024)_"e"_$c(16384),$c(16384),$c(65536))),!
+"aЀe𐀀"
+ydb492+11^ydb492    :	write $zwrite($translate("a"_$c(1024)_"e"_$c(16384),"abcdfghijklmnopqrstuvwxyz"_$c(16384),$c(65536)_"abcdefgh")),!
+"𐀀Ѐe"
+ydb492+12^ydb492    :	quit
