@@ -112,7 +112,11 @@ void* start_thread(void *args)
 	timer_length = 10 * ONESEC;
 	stime = time(NULL);
 	status = ydb_timer_start_t(YDB_NOTTP, NULL, timer_id, timer_length, &timer_done, 1, &stime);
-	YDB_ASSERT(YDB_OK == status);
+	if (YDB_OK != status)
+	{
+		printf("ydb_timer_start_t() did not return the correct status. Got: %d; Expected: %d\n", status, YDB_OK);
+		YDB_ASSERT(FALSE);
+	}
 	varname.len_alloc = varname.len_used = 8;
 	varname.buf_addr = "^VARNAME";
 	targs.varname = &varname;
@@ -127,8 +131,12 @@ void* start_thread(void *args)
 		targs.ok_iteration++;
 		check_updates(&targs);
 	}
-	/* Make sure some YDB_TP_RESTARTs were generated during the loop */
-	YDB_ASSERT(targs.ok_iteration < targs.total_iteration);
+	/* Make sure some YDB_TP_RESTARTs were generated during the loop
+	 * This check is disabled on 1-CPU machines because they might not
+	 * produce any YDB_TP_RESTARTs within the 10 second time limit.
+	 */
+	if (((int)sysconf(_SC_NPROCESSORS_ONLN)) > 1)
+		YDB_ASSERT(targs.ok_iteration < targs.total_iteration);
 }
 
 int callback1(uint64_t tptoken, ydb_buffer_t* errstr, struct transargs *args)
