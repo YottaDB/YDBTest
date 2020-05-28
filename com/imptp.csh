@@ -207,13 +207,15 @@ xyz
 			# Go back to the original test directory
 			cd -
 		endif
-		ln -s "$tst_dir/$gtm_tst_out/imptpjobrust" .
+		# Link the binaries to the current directory, replacing them if they already exist.
+		# Replacing the binary avoids failures if imptp is run multiple times in the same test.
+		ln -sf "$tst_dir/$gtm_tst_out/imptpjobrust" .
 		set status1 = $status
 		if ($status1) then
 			echo "TEST-E-FAILED : Unable to soft link imptpjobrust to current directory ($PWD)"
 			exit 1
 		endif
-		ln -s "$tst_dir/$gtm_tst_out/imptprust" .
+		ln -sf "$tst_dir/$gtm_tst_out/imptprust" .
 		set status1 = $status
 		if ($status1) then
 			echo "TEST-E-FAILED : Unable to soft link imprust to current directory ($PWD)"
