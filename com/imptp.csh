@@ -184,18 +184,25 @@ xyz
 		if (true != $rust_supported) then
 			# This should never happen, it is caught above
 			echo "TEST-E-FAILED : Rust is not supported and yet was run"
+			exit 1
 		endif
 
 		# Setup rust wrapper
 		source $gtm_tst/com/setuprustenv.csh
+		# See comments in `real_gtm_tst_out.csh` for details
+		set gtm_tst_out = `$gtm_tst/com/real_gtm_tst_out.csh $gtm_tst_out`
+		if (0 != $status) then
+			echo "TEST-E-FAILED : Failed to determine the absolute path of \$gtm_tst_out"
+			exit 1
+		endif
 		# Build the Rust imptp program if not already built
 		# NOTE: this only builds once for a single E_ALL test run,
 		# since imptp.rs takes a while to build
-		if (! -e $tst_dir/$gtm_tst_out/imptpjobrust) then
+		if (! -e $gtm_tst_out/imptpjobrust) then
 			# Don't copy over target/ since it may be very large (as much as 10 GB)
 			rm -rf $gtm_tst/com/imptp-rs/target
-			cp -r $gtm_tst/com/imptp-rs/ $tst_dir/$gtm_tst_out/imptp-rs/
-			cd $tst_dir/$gtm_tst_out/imptp-rs
+			cp -r $gtm_tst/com/imptp-rs/ $gtm_tst_out/imptp-rs/
+			cd $gtm_tst_out/imptp-rs
 			$cargo_build
 			if (0 != $status) then
 				echo "TEST-E-FAILED : Unable to build imptp.rs"
@@ -209,13 +216,13 @@ xyz
 		endif
 		# Link the binaries to the current directory, replacing them if they already exist.
 		# Replacing the binary avoids failures if imptp is run multiple times in the same test.
-		ln -sf "$tst_dir/$gtm_tst_out/imptpjobrust" .
+		ln -sf "$gtm_tst_out/imptpjobrust" .
 		set status1 = $status
 		if ($status1) then
 			echo "TEST-E-FAILED : Unable to soft link imptpjobrust to current directory ($PWD)"
 			exit 1
 		endif
-		ln -sf "$tst_dir/$gtm_tst_out/imptprust" .
+		ln -sf "$gtm_tst_out/imptprust" .
 		set status1 = $status
 		if ($status1) then
 			echo "TEST-E-FAILED : Unable to soft link imprust to current directory ($PWD)"
