@@ -1,0 +1,31 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+# IN^%YGBLSTAT returns a value of 1 for TRUE and 0 for FALSE whether or not
+# there are sharing statistics for the given process. If the process is invalid
+# or there is no sharing for a region then it returns an empty string. Also if the
+# region field is left empty or an asterisk it will return true if there is any
+# sharing for any process, otherwise it will return false
+Testing with empty region parameter
+Verifying that a process with sharing statistics returns TRUE
+1
+Verifying that a process with no sharing statistics returns FALSE
+0
+Verifying that an empty string is returned from an invalid pid
+
+Testing YGBLSTAT in a different region
+Verifying that a process with sharing statistics returns TRUE
+1
+Verifying that a process with no sharing statistics returns FALSE
+0
+Testing YGBLSTAT with different region parameters
+Using * for region parameter with a process using sharing statistics
+1
+Using random region name with a process using sharing statistics
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

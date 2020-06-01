@@ -18,13 +18,14 @@
 # gtm9079               [bdw]           Tests zcompile within nested xecute for correct error code
 # gtm9000               [michael]       Test for optional fourth parameter in PEEKBYNAME
 # gtm9110		[michael]	Test for the CLIERR or CLISTRTOOLONG error for a command line exceeding 32KiB
+# gtm9092		[michael]	Tests for the return value of TRUE(1) or FALSE(0) in $$IN^%YGBLSTAT
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "v63008 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "gtm9093 gtm9079 gtm9000 gtm9110"
+setenv subtest_list_non_replic "gtm9093 gtm9079 gtm9000 gtm9110 gtm9092"
 setenv subtest_list_replic     ""
 
 
