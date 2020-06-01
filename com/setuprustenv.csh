@@ -22,7 +22,9 @@ setenv PKG_CONFIG_PATH $ydb_dist
 set cargo_build = "cargo build"
 set rand = `$gtm_exe/mumps -run rand 4`
 
-if (0 == $rand) then
+# Rust is known to segfault on 32-bit platforms when compiling in release mode
+# (https://github.com/rust-lang/rust/issues/72894)
+if (0 == $rand || "armv6l" == `uname -m`) then
 	set rust_target_dir = "debug"
 else
 	set cargo_build = "$cargo_build --release"
