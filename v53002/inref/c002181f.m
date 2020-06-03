@@ -1,3 +1,17 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; This module is derived from FIS GT.M.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 c002181f;
 	; tnum = 6 needs special handling so it is done now.
 	; It is an example from the Error Processing chapter of the Programmer's Guide
@@ -27,7 +41,7 @@ SUB2    WRITE !,"THIS IS SUB2"
         SET (B,C,D)=$ZLEVEL
         DO SUB3
         QUIT
-SUB3    WRITE !,"THIS IS SUB3"
+SUB3    WRITE !,"THIS IS SUB3 : "
         NEW
         SET (A,C,D)=$ZLEVEL
         DO BAD

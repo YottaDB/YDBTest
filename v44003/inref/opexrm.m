@@ -1,4 +1,18 @@
-opexcep;; 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; This module is derived from FIS GT.M.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+opexcep;;
 	;; abc.txt does not exist
 	s unix=$ZV'["VMS"
 	s sd="abc.txt"
@@ -9,11 +23,5 @@ opexcep;;
 	Q
 BADOPEN;;
 	W "Inside Error handler",!
-	I unix d
-	. IF (($zversion["OS390")&(129=$P($ZS,",",1)))!(($zversion'["OS390")&(2=$P($ZS,",",1))) DO
-        . . W !,"The file ",sd," does not exist",!
- 	E  d
-	. I $ZS["-FNF" D
-	.. W !,"The file ",sd," does not exist",!
-	ZM +$ZS
+	ZWRITE $ZSTATUS
 	Q

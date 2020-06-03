@@ -5,13 +5,7 @@ Testing EXCEPTION parameter for close (try to rename the file to a directory tha
 exception_1.txt
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 Source of error was close
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-129,try+5^except,%SYSTEM-E-ENO129, No such file or directory
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 2,try+8^except,%SYSTEM-E-ENO2, No such file or directory
-##ALLOW_OUTPUT HOST_OS390_S390
 continue...
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ---------------------------------------------------------------
@@ -27,13 +21,7 @@ Testing EXCEPTION parameter for open (try to write into a file that is read-only
 tmp/exception_2.txt
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 Source of error was open
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-129,try+2^except,%SYSTEM-E-ENO129, No such file or directory
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
-2,try+5^except,%SYSTEM-E-ENO2, No such file or directory
-##ALLOW_OUTPUT HOST_OS390_S390
+150379354,try+5^except,%YDB-E-DEVOPENFAIL, Error opening tmp/exception_2.txt,%SYSTEM-E-ENO2, No such file or directory
 continue...
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ---------------------------------------------------------------
@@ -66,13 +54,7 @@ Testing EXCEPTION parameter for open (try to write into a file that is read-only
 tmp/exception_2.txt
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 Source of error was open
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-129,try+2^except,%SYSTEM-E-ENO129, No such file or directory
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
-2,try+5^except,%SYSTEM-E-ENO2, No such file or directory
-##ALLOW_OUTPUT HOST_OS390_S390
+150379354,try+5^except,%YDB-E-DEVOPENFAIL, Error opening tmp/exception_2.txt,%SYSTEM-E-ENO2, No such file or directory
 continue...
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ---------------------------------------------------------------
@@ -105,13 +87,7 @@ Testing EXCEPTION parameter for open (try to write into a file that is read-only
 tmp/exception_2.txt
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 Source of error was open
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-129,try+2^except,%SYSTEM-E-ENO129, No such file or directory
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
-2,try+5^except,%SYSTEM-E-ENO2, No such file or directory
-##ALLOW_OUTPUT HOST_OS390_S390
+150379354,try+5^except,%YDB-E-DEVOPENFAIL, Error opening tmp/exception_2.txt,%SYSTEM-E-ENO2, No such file or directory
 continue...
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ---------------------------------------------------------------

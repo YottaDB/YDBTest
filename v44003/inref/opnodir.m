@@ -1,4 +1,18 @@
-opnodir;; 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; This module is derived from FIS GT.M.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+opnodir;;
 	;; path component is not directory
 	s unix=$ZV'["VMS"
 	s sd="nosuchdir"
@@ -12,13 +26,7 @@ opnodir;;
 	u sd
 	F  U sd R x U $P W x,!
 	Q
-BADOPEN	
+BADOPEN
 	w "Inside error handler",!
-	if unix d
-	. I (($zversion["OS390")&(135=$P($ZS,",",1)))!(($zversion'["OS390")&(20=$P($ZS,",",1))) DO
-	.. W "The file ",sd," does not exist",!
-	else  d
-	. I $ZS["-DNF" D
-	.. W "The file ",sd," does not exist",!
-	ZM +$ZS
+	ZWRITE $ZSTATUS
 	Q

@@ -77,39 +77,22 @@ test4
 10:abcdefghijklmnopqrstuvwxyz abcdefghijklmnopqrstuvwxyz abcdefghijklmnopqrstuvwxyz
 Execute zshow to see which devices are open
 
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS STREAM REC=120 FILETAG=UNTAGGED TEXT 
-test1 OPEN PIPE SHELL="/bin/sh" COMMAND="cat -u" FILETAG=UNTAGGED TEXT 
-test2 OPEN PIPE SHELL="/bin/sh" COMMAND="cat -u" FILETAG=UNTAGGED TEXT 
-test3 OPEN PIPE SHELL="/usr/local/bin/tcsh" COMMAND="cat -u" FILETAG=UNTAGGED TEXT 
-test4 OPEN PIPE COMMAND="cat -u" FILETAG=UNTAGGED TEXT 
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM REC=120 
 0-out OPEN RMS STREAM REC=120 
 test1 OPEN PIPE SHELL="/bin/sh" COMMAND="cat -u" 
 test2 OPEN PIPE SHELL="/bin/sh" COMMAND="cat -u" 
 test3 OPEN PIPE SHELL="/usr/local/bin/tcsh" COMMAND="cat -u" 
 test4 OPEN PIPE COMMAND="cat -u" 
-##ALLOW_OUTPUT HOST_OS390_S390
 Execute zshow to show the pipe devices are closed
 
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS STREAM REC=120 FILETAG=UNTAGGED TEXT 
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM REC=120 
 0-out OPEN RMS STREAM REC=120 
-##SUSPEND_OUTPUT HOST_OSF1_ALPHA
 ###################################################################
 **************************** ioescape ****************************
 ###################################################################
 spawn ##SOURCE_PATH##/mumps -run ioescape
 $io is a TERMINAL
 test OPEN PIPE COMMAND="./echoback" STDERR="e1" 
-##ALLOW_OUTPUT HOST_ALL
 ###################################################################
 **************************** alternate ****************************
 ###################################################################
@@ -118,16 +101,9 @@ test OPEN PIPE COMMAND="./echoback" STDERR="e1"
 
 zshow after open
 
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS FILETAG=UNTAGGED TEXT 
-test OPEN PIPE COMMAND="./echoback" STDERR="e1" FILETAG=UNTAGGED TEXT 
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
 test OPEN PIPE COMMAND="./echoback" STDERR="e1" 
-##ALLOW_OUTPUT HOST_OS390_S390
 
 line= stdout - line one
 line= stdout - line three
@@ -136,52 +112,26 @@ eline= stderr - line four
 
 zshow after closing "e1" only:
 
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS FILETAG=UNTAGGED TEXT 
-test OPEN PIPE COMMAND="./echoback" FILETAG=UNTAGGED TEXT 
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
 test OPEN PIPE COMMAND="./echoback" 
-##ALLOW_OUTPUT HOST_OS390_S390
 
 zshow after closing "test":
 
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS FILETAG=UNTAGGED TEXT 
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
-##ALLOW_OUTPUT HOST_OS390_S390
 
 zshow after open
 
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS FILETAG=UNTAGGED TEXT 
-test OPEN PIPE COMMAND="boguscommand" STDERR="e1" FILETAG=UNTAGGED TEXT 
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
 test OPEN PIPE COMMAND="boguscommand" STDERR="e1" 
-##ALLOW_OUTPUT HOST_OS390_S390
 boguscommand: Command not found.
 
 zshow after closing "test":
 
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS FILETAG=UNTAGGED TEXT 
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
-##ALLOW_OUTPUT HOST_OS390_S390
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
 ###################################################################
 **************************** docat4 ******************************
@@ -201,34 +151,19 @@ tr will change number 7 to the letter z
 
 Execute zshow to see which devices are open
 
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
 test1 OPEN PIPE SHELL="/bin/csh" COMMAND="cat -u| tr -d e >out1" STDERR="e1" 
 test2 OPEN PIPE SHELL="/bin/sh" COMMAND="cat -u>out2" STDERR="e2" 
 test3 OPEN PIPE SHELL="/usr/local/bin/tcsh" COMMAND="cat -u>out3" STDERR="e3" 
 test4 OPEN PIPE COMMAND="tr 7 z > out4" STDERR="e4" 
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS FILETAG=UNTAGGED TEXT 
-test1 OPEN PIPE SHELL="/bin/tcsh" COMMAND="cat -u| tr -d e >out1" STDERR="e1" FILETAG=UNTAGGED TEXT 
-test2 OPEN PIPE SHELL="/bin/sh" COMMAND="cat -u>out2" STDERR="e2" FILETAG=UNTAGGED TEXT 
-test3 OPEN PIPE SHELL="/usr/local/bin/tcsh" COMMAND="cat -u>out3" STDERR="e3" FILETAG=UNTAGGED TEXT 
-test4 OPEN PIPE COMMAND="tr 7 z > out4" STDERR="e4" FILETAG=UNTAGGED TEXT 
-##ALLOW_OUTPUT HOST_ALL
 
 After writing the pipe handle name to the end of each open pipe device, each device is closed
 
 Execute zshow to show the pipe devices are closed
 
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS FILETAG=UNTAGGED TEXT 
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
-##ALLOW_OUTPUT HOST_OS390_S390
 Last 2 lines of out1:
 100:abcdfghijklmnopqrstuvwxyz abcdfghijklmnopqrstuvwxyz
 tst1
@@ -309,13 +244,7 @@ Expect last 5 lines with 50 utf8 characters per line and total number of charact
 49 - ՇՈՉՊՋՌՍՎՏՐՑՒՓՔՕՖ՗՘ՙ՚՛՜՝՞՟ՠաբգդեզէըթժիլխծկհձղճմյնշո
 50 - ՇՈՉՊՋՌՍՎՏՐՑՒՓՔՕՖ՗՘ՙ՚՛՜՝՞՟ՠաբգդեզէըթժիլխծկհձղճմյնշո
 zeof = 1
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
 total bytes = 5389
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
-total bytes = 5389
-##ALLOW_OUTPUT HOST_OS390_S390
 ###################################################################
 **************************** tutf4 ********************************
 ###################################################################
@@ -326,13 +255,7 @@ Expect last 5 lines with 50 utf8 characters per line and total number of charact
 49 - ՇՈՉՊՋՌՍՎՏՐՑՒՓՔՕՖ՗՘ՙ՚՛՜՝՞՟ՠաբգդեզէըթժիլխծկհձղճմյնշո
 50 - ՇՈՉՊՋՌՍՎՏՐՑՒՓՔՕՖ՗՘ՙ՚՛՜՝՞՟ՠաբգդեզէըթժիլխծկհձղճմյնշո
 zeof = 1
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
 total bytes = 5403
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
-total bytes = 5403
-##ALLOW_OUTPUT HOST_OS390_S390
 ###################################################################
 **************************** tutf5 ********************************
 ###################################################################
@@ -343,13 +266,7 @@ Expect last 6 lines with 35 utf8 characters on one line followed by 15 utf8 char
 48 - ժիլխծկհձղճմյնշո
 49 - ՇՈՉՊՋՌՍՎՏՐՑՒՓՔՕՖ՗՘ՙ՚՛՜՝՞՟ՠաբգդեզէըթ
 50 - ժիլխծկհձղճմյնշո
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
 total bytes = 2893
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
-total bytes = 2893
-##ALLOW_OUTPUT HOST_OS390_S390
 ###################################################################
 **************************** tutf6 ********************************
 ###################################################################
@@ -360,13 +277,7 @@ Expect last 6 lines with 35 utf8 characters per line and total number of charact
 48 - ՇՈՉՊՋՌՍՎՏՐՑՒՓՔՕՖ՗՘ՙ՚՛՜՝՞՟ՠաբգդեզէըթ
 49 - ՇՈՉՊՋՌՍՎՏՐՑՒՓՔՕՖ՗՘ՙ՚՛՜՝՞՟ՠաբգդեզէըթ
 50 - ՇՈՉՊՋՌՍՎՏՐՑՒՓՔՕՖ՗՘ՙ՚՛՜՝՞՟ՠաբգդեզէըթ
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
 total bytes = 3900
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
-total bytes = 3900
-##ALLOW_OUTPUT HOST_OS390_S390
 ###################################################################
 **************************** badinput2 ****************************
 ###################################################################
@@ -374,16 +285,9 @@ Testing for the non-fixed case in utf mode
 Testing input of the phrase "This is a test" where no newline is returned, but we want to get partial input
 For the read x:0 case we are testing to make sure it doesn't hang
 
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS FILETAG=UNTAGGED TEXT 
-test OPEN PIPE COMMAND="./strip_cr" FILETAG=UNTAGGED TEXT 
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
 test OPEN PIPE COMMAND="./strip_cr" 
-##ALLOW_OUTPUT HOST_OS390_S390
 
 testing r x:0
 ->ՇՈՉՊՋՌՍՎՏՐ<-
@@ -397,16 +301,9 @@ Testing for the fixed case in utf mode
 Testing input of the phrase "This is a test" where no newline is returned, but we want to get partial input
 strip_cr will strip out the newline and all spaces, so input will be less than recordsize
 
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS FILETAG=UNTAGGED TEXT 
-test OPEN PIPE COMMAND="./strip_cr 1" FIXED REC=30 FILETAG=UNTAGGED TEXT 
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
 test OPEN PIPE COMMAND="./strip_cr 1" FIXED REC=30 
-##ALLOW_OUTPUT HOST_OS390_S390
 
 testing r x:0
 ->ՇՈՉՊՋՌՍՎՏՐ<-
@@ -511,31 +408,19 @@ $zeof = 1
 ###################################################################
 **************************** newread2 *****************************
 ###################################################################
-##TEST_AWKstd... - 999:abcdjfghijklmnopqrstuvwxyz abcdjfghijklmnopqrstuvwxyz
-##TEST_AWKstd... - 1000:abcdjfghijklmnopqrstuvwxyz abcdjfghijklmnopqrstuvwxyz
+stdout - 999:abcdjfghijklmnopqrstuvwxyz abcdjfghijklmnopqrstuvwxyz
+stderr - 1000:abcdjfghijklmnopqrstuvwxyz abcdjfghijklmnopqrstuvwxyz
 ###################################################################
 **************************** badlabel^badhandler ******************
 ###################################################################
 
 YDB>
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS FILETAG=UNTAGGED TEXT 
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
-##ALLOW_OUTPUT HOST_OS390_S390
 150372746,BADLABEL+5^badhandler,%YDB-E-ERRWIOEXC, Error while processing I/O exception string,-YDB-E-LABELMISSING, Label referenced but not defined: ADOPEN
 in cont1
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS FILETAG=UNTAGGED TEXT 
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
-##ALLOW_OUTPUT HOST_OS390_S390
 
 YDB>
 ###################################################################
@@ -543,25 +428,13 @@ YDB>
 ###################################################################
 
 YDB>
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS FILETAG=UNTAGGED TEXT 
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
-##ALLOW_OUTPUT HOST_OS390_S390
 150373050,BADCOMMAND+5^badhandler,%YDB-E-INVCMD, Invalid command keyword encountered
 in cont1
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS FILETAG=UNTAGGED TEXT 
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
 test CLOSED 
-##ALLOW_OUTPUT HOST_OS390_S390
 
 YDB>
 ###################################################################
@@ -569,24 +442,12 @@ YDB>
 ###################################################################
 
 YDB>
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS FILETAG=UNTAGGED TEXT 
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
-##ALLOW_OUTPUT HOST_OS390_S390
 150372746,JUSTBADLABEL+5^badhandler,%YDB-E-ERRWIOEXC, Error while processing I/O exception string,-YDB-E-LABELMISSING, Label referenced but not defined: ADOPEN
 in cont1
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS FILETAG=UNTAGGED TEXT 
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
-##ALLOW_OUTPUT HOST_OS390_S390
 
 YDB>
 ###################################################################
@@ -594,25 +455,13 @@ YDB>
 ###################################################################
 
 YDB>
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS FILETAG=UNTAGGED TEXT 
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
-##ALLOW_OUTPUT HOST_OS390_S390
 
 badopen error
 150379354,JUSTGOODLABEL+5^badhandler,%YDB-E-DEVOPENFAIL, Error opening test,%YDB-I-TEXT, Invalid shell: jjj
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS FILETAG=UNTAGGED TEXT 
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
-##ALLOW_OUTPUT HOST_OS390_S390
 
 YDB>
 ###################################################################
@@ -620,24 +469,12 @@ YDB>
 ###################################################################
 
 YDB>
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS FILETAG=UNTAGGED TEXT 
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
-##ALLOW_OUTPUT HOST_OS390_S390
 150373010,BADCOMMAND+5^badhandler,%YDB-E-INDEXTRACHARS, Indirection string contains extra trailing characters
 in cont1
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS FILETAG=UNTAGGED TEXT 
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
-##ALLOW_OUTPUT HOST_OS390_S390
 
 YDB>
 ###################################################################
@@ -646,14 +483,8 @@ YDB>
 
 badopen error
 150379354,EX1+2^ex1,%YDB-E-DEVOPENFAIL, Error opening test,%YDB-I-TEXT, Invalid shell: jjj
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS FILETAG=UNTAGGED TEXT 
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
-##ALLOW_OUTPUT HOST_OS390_S390
 ###################################################################
 **************************** ex2 **********************************
 ###################################################################
@@ -666,30 +497,17 @@ EOF1
 try stderr
 EOF2
 Nothing in stderr
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS FILETAG=UNTAGGED TEXT 
-test OPEN PIPE SHELL="/usr/local/bin/tcsh" COMMAND="cat -u" STDERR="e1" FILETAG=UNTAGGED TEXT EXCE="G EOF1"
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
 test OPEN PIPE SHELL="/usr/local/bin/tcsh" COMMAND="cat -u" STDERR="e1" EXCE="G EOF1"
-##ALLOW_OUTPUT HOST_OS390_S390
 ###################################################################
 **************************** ex3 **********************************
 ###################################################################
 
 badopen error
 150379354,EX3+2^ex3,%YDB-E-DEVOPENFAIL, Error opening test,%YDB-I-TEXT, Invalid command string: jjj
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS FILETAG=UNTAGGED TEXT 
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
-##ALLOW_OUTPUT HOST_OS390_S390
 ###################################################################
 **************************** ex4 **********************************
 ###################################################################
@@ -700,16 +518,9 @@ EOF1
 150373082,EX4+5^ex4,%YDB-E-IOEOF, Attempt to read past an end-of-file
 look in ex4.log for stderr output
 END OF FILE SEEN
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS FILETAG=UNTAGGED TEXT 
-test OPEN PIPE SHELL="/bin/sh" COMMAND="kkk" STDERR="e1" FILETAG=UNTAGGED TEXT EXCE="G EOF1"
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
 test OPEN PIPE SHELL="/bin/sh" COMMAND="kkk" STDERR="e1" EXCE="G EOF1"
-##ALLOW_OUTPUT HOST_OS390_S390
 ###################################################################
 **************************** ex5 **********************************
 ###################################################################
@@ -768,47 +579,23 @@ $za = 0
 
 BADOPEN0 error
 150379354,exnull+2^exnull,%YDB-E-DEVOPENFAIL, Error opening test,%YDB-I-TEXT, Command string has no value
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS FILETAG=UNTAGGED TEXT 
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
-##ALLOW_OUTPUT HOST_OS390_S390
 
 BADOPEN1 error
 150379354,BADOPEN0+2^exnull,%YDB-E-DEVOPENFAIL, Error opening test,%YDB-I-TEXT, Missing command string
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS FILETAG=UNTAGGED TEXT 
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
-##ALLOW_OUTPUT HOST_OS390_S390
 
 BADOPEN2 error
 150379354,BADOPEN1+2^exnull,%YDB-E-DEVOPENFAIL, Error opening test,%YDB-I-TEXT, SHELL parameter has no value
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS FILETAG=UNTAGGED TEXT 
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
-##ALLOW_OUTPUT HOST_OS390_S390
 
 BADOPEN3 error
 150379354,BADOPEN2+2^exnull,%YDB-E-DEVOPENFAIL, Error opening test,%YDB-I-TEXT, STDERR parameter has no value
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS FILETAG=UNTAGGED TEXT 
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
-##ALLOW_OUTPUT HOST_OS390_S390
 ###################################################################
 ************ test DEVICEWRITEONLY for pipe and file*******************
 ###################################################################
@@ -829,16 +616,9 @@ hello
 ###################################################################
 **************************** fexception ****************************
 ###################################################################
-
-The file  jjjl does not exist.
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS FILETAG=UNTAGGED TEXT 
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
+$ZSTATUS="150379354,FEXCEPTION+2^fexception,%YDB-E-DEVOPENFAIL, Error opening jjjl,%SYSTEM-E-ENO2, No such file or directory"
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
-##ALLOW_OUTPUT HOST_OS390_S390
 ###################################################################
 **************************** mupipread ****************************
 ###################################################################
@@ -858,16 +638,9 @@ line= Total             100               4              NA             2
 
 Writing 10 lines each 80 chars in length and expect to output same but preceeded by line numbers
 
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS FILETAG=UNTAGGED TEXT 
-test OPEN PIPE COMMAND="cat -u" FIXED REC=80 FILETAG=UNTAGGED TEXT 
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
 test OPEN PIPE COMMAND="cat -u" FIXED REC=80 
-##ALLOW_OUTPUT HOST_OS390_S390
 1 - 12345678901234567890123456789012345678901234567890123456789012345678901234567890
 2 - 12345678901234567890123456789012345678901234567890123456789012345678901234567890
 3 - 12345678901234567890123456789012345678901234567890123456789012345678901234567890
@@ -883,16 +656,9 @@ zeof = 1
 Writing 10 lines each but separate each write into 2 with 40 chars each
  and expect to output 80 chars per line
 
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS FILETAG=UNTAGGED TEXT 
-test OPEN PIPE COMMAND="cat -u" FIXED REC=80 FILETAG=UNTAGGED TEXT 
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
 test OPEN PIPE COMMAND="cat -u" FIXED REC=80 
-##ALLOW_OUTPUT HOST_OS390_S390
 1 - 12345678901234567890123456789012345678901234567890123456789012345678901234567890
 2 - 12345678901234567890123456789012345678901234567890123456789012345678901234567890
 3 - 12345678901234567890123456789012345678901234567890123456789012345678901234567890
@@ -907,16 +673,9 @@ test OPEN PIPE COMMAND="cat -u" FIXED REC=80
 Writing 10 lines each with each one containing 83 characters
  and expect to output 80 chars on one line followed by 3 on the next line
 
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS FILETAG=UNTAGGED TEXT 
-test OPEN PIPE COMMAND="cat -u" FIXED REC=80 FILETAG=UNTAGGED TEXT 
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
 test OPEN PIPE COMMAND="cat -u" FIXED REC=80 
-##ALLOW_OUTPUT HOST_OS390_S390
 1 - 12345678901234567890123456789012345678901234567890123456789012345678901234567890
 1 - abc                                                                             
 2 - 12345678901234567890123456789012345678901234567890123456789012345678901234567890
@@ -942,16 +701,9 @@ This test has a recordsize of 60, but is not fixed format
 Writing 10 lines each with each one containing 63 characters
  and expect to output 60 chars on one line followed by a newline then by 3 on the next line
 
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS FILETAG=UNTAGGED TEXT 
-test OPEN PIPE COMMAND="cat -u" REC=60 FILETAG=UNTAGGED TEXT 
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
 test OPEN PIPE COMMAND="cat -u" REC=60 
-##ALLOW_OUTPUT HOST_OS390_S390
 1 - 123456789012345678901234567890123456789012345678901234567890
 1 - 
 1 - abc
@@ -986,16 +738,9 @@ test OPEN PIPE COMMAND="cat -u" REC=60
 Writing 10 lines each with each one containing 13 characters and with nowrap
  and expect to output the first 10 chars on each line
 
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS FILETAG=UNTAGGED TEXT 
-test OPEN PIPE COMMAND="cat -u" FIXED REC=10 NOWRAP FILETAG=UNTAGGED TEXT 
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
 test OPEN PIPE COMMAND="cat -u" FIXED REC=10 NOWRAP 
-##ALLOW_OUTPUT HOST_OS390_S390
 1 - 1234567890
 2 - 1234567890
 3 - 1234567890
@@ -1017,16 +762,9 @@ Show end of file seen after an extra read
 zeof= 1
 device= 1,Device detected EOF
 Show pipe device still open after write /eof
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS FILETAG=UNTAGGED TEXT 
-test OPEN PIPE COMMAND="cat -u" FIXED REC=10 NOWRAP FILETAG=UNTAGGED TEXT 
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
 test OPEN PIPE COMMAND="cat -u" FIXED REC=10 NOWRAP 
-##ALLOW_OUTPUT HOST_OS390_S390
 ###################################################################
 **************************** badinput ****************************
 ###################################################################
@@ -1034,16 +772,9 @@ Testing for the non-fixed case in M mode
 Testing input of the phrase "This is a test" where no newline is returned, but we want to get partial input
 For the read x:0 case we are testing to make sure it doesn't hang
 
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS FILETAG=UNTAGGED TEXT 
-test OPEN PIPE COMMAND="./strip_cr" FILETAG=UNTAGGED TEXT 
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
 test OPEN PIPE COMMAND="./strip_cr" 
-##ALLOW_OUTPUT HOST_OS390_S390
 
 testing r x:0
 ->This is a test<-
@@ -1057,16 +788,9 @@ Testing for the fixed case in M mode
 Testing input of the phrase "This is a test" where no newline is returned, but we want to get partial input
 strip_cr will strip out the newline and all spaces, so input will be less than recordsize
 
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS FILETAG=UNTAGGED TEXT 
-test OPEN PIPE COMMAND="./strip_cr 1" FIXED REC=20 FILETAG=UNTAGGED TEXT 
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
 test OPEN PIPE COMMAND="./strip_cr 1" FIXED REC=20 
-##ALLOW_OUTPUT HOST_OS390_S390
 
 testing r x:0
 ->Testingfixed<-
@@ -1084,20 +808,12 @@ ntestin still running
 Shell = sh
 simple test
 ntestin still running
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-Shell = tcsh
-simple test
-ntestin still running
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 Shell = csh
 simple test
 ntestin still running
 Shell = ksh
 simple test
 ntestin still running
-##ALLOW_OUTPUT HOST_OS390_S390
 ###################################################################
 **************************** fifozeof ****************************
 ###################################################################
@@ -1162,14 +878,8 @@ Testing fifo for the non-fixed case in M mode
 Testing input of the phrase "This is a test" where no newline is returned, but we want to get partial input
 For the read x:0 case we are testing to make sure it doesn't hang
 
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS FILETAG=UNTAGGED TEXT 
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
-##ALLOW_OUTPUT HOST_OS390_S390
 fifo.test OPEN FIFO 
 
 testing r x:0
@@ -1184,14 +894,8 @@ Testing fifo for the fixed case in M mode
 Testing input of the phrase "Testing fixed" where no newline is returned, but we want to get partial input
 strip_cr will strip out the newline and all spaces, so input will be less than recordsize
 
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS FILETAG=UNTAGGED TEXT 
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
-##ALLOW_OUTPUT HOST_OS390_S390
 fifo.test OPEN FIFO FIXED REC=20 
 
 testing r x:0
@@ -1646,16 +1350,9 @@ FIFO TESTS
 ###################################################################
 Testing fifo for the non-fixed case in utf mode
 Testing input of 10 utf characters produced by u10.m with newline and normal termination
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS FILETAG=UNTAGGED TEXT 
-fifo2.test OPEN FIFO CHSET=UTF-8 
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
 fifo2.test OPEN FIFO 
-##ALLOW_OUTPUT HOST_OS390_S390
 
 testing r x:0 with newline so no timeout
 ->ՇՈՉՊՋՌՍՎՏՐ<-
@@ -1666,16 +1363,9 @@ testing r x:5 with newline so no timeout
 $device = 0 $za = 0 $test = 1
 Testing fifo for the fixed case in utf mode
 Testing input of 10 utf characters and expect normal termination
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS FILETAG=UNTAGGED TEXT 
-fifo2.test OPEN FIFO FIXED REC=20 CHSET=UTF-8 
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
 fifo2.test OPEN FIFO FIXED REC=20 
-##ALLOW_OUTPUT HOST_OS390_S390
 
 testing r x:0
 ->ՇՈՉՊՋՌՍՎՏՐ<-
@@ -1689,16 +1379,9 @@ $device = 0 $za = 0 $test = 1
 ###################################################################
 Testing fifo for the non-fixed case in utf mode
 Testing input of 10 utf characters produced by u10.m where no newline is returned, but we want to get partial input
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS FILETAG=UNTAGGED TEXT 
-fifo.test OPEN FIFO CHSET=UTF-8 
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
 fifo.test OPEN FIFO 
-##ALLOW_OUTPUT HOST_OS390_S390
 
 testing r x:0
 ->ՇՈՉՊՋՌՍՎՏՐ<-
@@ -1712,16 +1395,9 @@ Testing fifo for the fixed case in utf mode
 Testing input of the phrase of 10 utf characters produced by u10.m where no newline is returned,
 strip_cr will strip out the newline so input will be less than recordsize
 
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-0 OPEN RMS FILETAG=UNTAGGED TEXT 
-fifo2.test OPEN FIFO FIXED REC=30 CHSET=UTF-8 
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
 fifo2.test OPEN FIFO FIXED REC=30 
-##ALLOW_OUTPUT HOST_OS390_S390
 
 testing r x:0
 ->ՇՈՉՊՋՌՍՎՏՐ<-

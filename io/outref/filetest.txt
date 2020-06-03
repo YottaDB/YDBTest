@@ -1040,13 +1040,7 @@ ZSHOW "D" output: test49.txt OPEN RMS
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 Got an error while testing: itera(openpararametertocontrolbehavior,usepar,closepar,len,expfail):
 --> itera("APPEND:SYSTEM="r":OWNER=ro:GROUP=ro:WORLD=ro","","",10,FAIL)
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-111,open+10^io,%SYSTEM-E-ENO111, EDC5111I Permission denied.
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
-13,open+10^io,%SYSTEM-E-ENO13, Permission denied
-##ALLOW_OUTPUT HOST_OS390_S390
+150379354,open+10^io,%YDB-E-DEVOPENFAIL, Error opening test49.txt,%SYSTEM-E-ENO13, Permission denied
 error+9^filetest
 open+10^io
     ($ZTRAP)
@@ -1116,13 +1110,7 @@ write strings of length: 10
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 Got an error while testing: itera(openpararametertocontrolbehavior,usepar,closepar,len,expfail):
 --> itera("NEWVERSION:READONLY","","",10,FAIL)
-##SUSPEND_OUTPUT HOST_ALL
-##ALLOW_OUTPUT HOST_OS390_S390
-121,open+10^io,%SYSTEM-E-ENO121, EDC5121I Invalid argument.
-##ALLOW_OUTPUT HOST_ALL
-##SUSPEND_OUTPUT HOST_OS390_S390
-2,open+10^io,%SYSTEM-E-ENO2, No such file or directory
-##ALLOW_OUTPUT HOST_OS390_S390
+150379354,open+10^io,%YDB-E-DEVOPENFAIL, Error opening test53.txt,%SYSTEM-E-ENO2, No such file or directory
 error+9^filetest
 open+10^io
     ($ZTRAP)
