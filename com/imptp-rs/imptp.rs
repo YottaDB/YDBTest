@@ -331,7 +331,10 @@ fn fill_database(ctx: &Context, fillid: &str, jobid: &str, jobcnt: &str) -> YDBR
             .expect("failed to create stderr file");
 
         // TODO: we should probably call `wait` on these `processes` at some point
-        let child_pid = Command::new("imptpjobrust")
+        // Use absolute paths so that it will be clear these are part of the test suite
+        let mut cmd = env::current_dir().expect("TEST-E-FAILED : Could not find current working directory");
+        cmd.push("imptpjobrust");
+        let child_pid = Command::new(cmd)
             .arg(&m_index)
             .stdout(out_file)
             .stderr(err_file)
