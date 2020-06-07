@@ -4,7 +4,7 @@
 # Copyright (c) 2005-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -32,9 +32,9 @@ endif
 setenv test_debug  1
 setenv gtm_test_crash 1
 $gtm_tst/com/dbcreate.csh mumps 8 125-325 900-1150 512,1024,4096 2000 4096 2000
-$MUPIP set -journal=enable,on,before,epoch=30 -reg AREG
-$MUPIP set -journal=enable,on,before,epoch=60 -reg BREG
-$MUPIP set -journal=enable,on,before,epoch=150 -reg DEFAULT
+$MUPIP set -journal=enable,on,before,epoch=10 -reg AREG
+$MUPIP set -journal=enable,on,before,epoch=20 -reg BREG
+$MUPIP set -journal=enable,on,before,epoch=25 -reg DEFAULT
 setenv portno `$sec_shell '$sec_getenv; cat $SEC_DIR/portno'`
 # GTM Process starts in background
 echo "Multi-process Multi-region GTM starts on primary (A)..."
@@ -42,7 +42,7 @@ setenv gtm_test_maxdim 15
 setenv gtm_test_parms "1,7"
 setenv gtm_test_dbfill "IMPRTP"
 $gtm_tst/com/imptp.csh >&! imptp.out
-sleep 290
+sleep 30
 
 # RECEIVER SIDE (B) CRASH
 $gtm_tst/com/rfstatus.csh "BEFORE_SEC_B_CRASH:"
@@ -50,7 +50,7 @@ $sec_shell "$sec_getenv; $gtm_tst/com/receiver_crash.csh"
 $sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/corrupt_jnlrec.csh a b c >>& corrupt_jnlrec.out "
 $sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/backup_dbjnl.csh bak22 '*.dat *.mjl* *.gld *.repl' cp"
 # primary continues to run and creates a backlog
-sleep 60
+sleep 20
 
 # PRIMARY SIDE (A) CRASH
 $gtm_tst/com/srcstat.csh "BEFORE_PRI_A_CRASH"
@@ -84,7 +84,7 @@ $gtm_tst/com/rfstatus.csh "BOTH_UP:"
 
 echo "Multi-process Multi-region GTM restarts on primary (B)..."
 $pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/imptp.csh < /dev/null "">>&!"" imptp.out"
-sleep 30
+sleep 10
 echo "Now GTM process ends"
 $pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/endtp.csh < /dev/null "">>&!"" endtp.out"
 $gtm_tst/com/dbcheck_filter.csh -extract
