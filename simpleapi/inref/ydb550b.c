@@ -65,7 +65,12 @@ int main()
 	timer_length = 10 * ONESEC;
 	stime = time(NULL);
 	status = ydb_timer_start(timer_id, timer_length, &timer_done, sizeof(&stime), &stime);
-	YDB_ASSERT(status == YDB_OK);
+	if (YDB_OK != status)
+	{
+		printf("ydb_timer_start() did not return the correct status. Got: %d; Expected: %d\n", status, YDB_OK);
+		YDB_ASSERT(FALSE);
+	}
+
 	while (!is_done)
 	{
 		status = ydb_tp_s(cb, &args, NULL, 0, NULL);
@@ -73,8 +78,12 @@ int main()
 		args.ok_iteration++;
 		check_updates(&args);
 	}
-	/* Make sure some YDB_TP_RESTARTs were generated during the loop */
-	YDB_ASSERT(args.ok_iteration < args.total_iteration)
+	/* Make sure some YDB_TP_RESTARTs were generated during the loop
+	 * This check is disabled on 1-CPU machines because they might not
+	 * produce any YDB_TP_RESTARTs within the 10 second time limit.
+	 */
+	if (((int)sysconf(_SC_NPROCESSORS_ONLN)) > 1)
+		YDB_ASSERT(args.ok_iteration < args.total_iteration);
 
 	/* The below code to wait for child processes
 	 * was copied from simpleapi/inref/randomWalk.c
