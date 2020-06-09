@@ -41,6 +41,7 @@
 # ydb578 [nars]      Test that LVUNDEF error displays string subscripts with surrounding double quotes
 # ydb492 [nars]      Test $TRANSLATE with multi-byte string literals in UTF-8 mode does not SIG-11 if executed from shared library
 # ydb566 [bdw]       Test that Call-In tables and External Call definitions support comments and blank lines
+# ydb569 [gm]        Ensures new -ignorechset option for mupip load is able to ignore extract file CHSET
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r130 test starts..."
@@ -49,7 +50,7 @@ echo "r130 test starts..."
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic "ydb470 ydb482 ydb174 ydb390 ydb476 ydb511 ydb513 ydb485 ydb518 ydb520 ydb503 ydb515 ydb519 ydb545"
 setenv subtest_list_non_replic "${subtest_list_non_replic} ydb553 ydb547 ydb493 ydb549 ydb562 ydb554 ydb484 ydb534 ydb567 ydb576"
-setenv subtest_list_non_replic "${subtest_list_non_replic} ydb578 ydb492 ydb566"
+setenv subtest_list_non_replic "${subtest_list_non_replic} ydb578 ydb492 ydb566 ydb569"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then

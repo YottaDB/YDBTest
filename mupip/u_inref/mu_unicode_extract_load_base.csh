@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2007, 2013 Fidelity Information Services, Inc	#
+# 	Copyright 2007, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.  	#
+# All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -118,16 +121,6 @@ echo Now load from different encoding
 #if ($status != 0) echo "Loading was unsuccessful as expected"
 #$switch_chset UTF-8
 #$gtm_tst/com/dbcheck.csh -nosprgde
-#
-\rm *.dat
-setenv gtm_chset M
-$MUPIP create
-echo $MUPIP load -format=binary ＸＹ.ＢＩＮ
-$MUPIP load -format=binary ＸＹ.ＢＩＮ
-if ($status != 0) echo "Loading was unsuccessful as expected"
-$switch_chset UTF-8
-$gtm_tst/com/dbcheck.csh -nosprgde
-#
 #
 \rm *.dat
 setenv gtm_chset M
