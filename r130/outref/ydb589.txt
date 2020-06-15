@@ -1,0 +1,5 @@
+# Test that buffered IO writes inside external call are flushed when YottaDB process output is piped.
+# Invoking command --> yottadb -run ydb589 | tee
+# We expect "Hello, world!" written in external call (in ydb589) to be flushed and seen in output.
+# Without the fix to YDB#589, this output would not be seen.
+Hello, world!
