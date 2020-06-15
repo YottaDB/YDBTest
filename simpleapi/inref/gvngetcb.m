@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -13,7 +13,7 @@
 ; Routine to test global variable fetching with or without subscripts via ydb_get_s() simple API interface
 ;
 gvngetcb
-	set GENVARCNT=3000						; Count of variables to generate
+	set GENVARCNT=2995						; Count of variables to generate
 	set MAXSUBS=10							; Keep within key size
 	set $etrap="use $principal write ""Error occurred: "",!! zshow ""*"" quit"
 	write "gvngetcb: Generating ",GENVARCNT," variables",!

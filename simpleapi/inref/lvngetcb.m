@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -13,7 +13,7 @@
 ; Routine to test local variable fetching with or without subscripts via ydb_get_s() simple API interface
 ;
 lvngetcb
-	set GENVARCNT=3000						; Count of variables to generate
+	set GENVARCNT=2996						; Count of variables to generate
 	set MAXSUBS=31
 	write "lvngetcb: Generating ",GENVARCNT," variables",!
 	do								; Vars NEWed/created in this block go away after
