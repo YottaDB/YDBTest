@@ -51,6 +51,7 @@ gtm9092
 	write "Using random region name with a process using sharing statistics",!
 	write $$IN^%YGBLSTAT(childpid(1),"","a"),!
 	lock -done
+	for i=1:-1:-2 do ^waitforproctodie(childpid(i))
 	quit
 
 
