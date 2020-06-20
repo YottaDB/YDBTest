@@ -4,7 +4,7 @@
 # Copyright (c) 2009-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -66,8 +66,10 @@ set syslog_start = `date +"%b %e %H:%M:%S"`
 echo "# extend database blocks to 992M"
 
 set max=495
-# Calculate in which iteration the memory will reach 88%, add 2 because \1 rounds down, and needs to add 1 for $random
-set thres=`$gtm_exe/mumps -run %XCMD "write $max*0.88+2\1"`
+# Calculate in which iteration the memory will reach 88%, add 1 for $random
+# Note that "thres" is not a rounded integer (i.e. has a fractional part) but it is okay since it is used
+# with $random() which anyways discards the fractional part. Hence no need to do "\1" to round down.
+set thres=`$gtm_exe/mumps -run %XCMD "write ($max*0.88)+1"`
 
 # Calculate iteration that will result in a LOWSPC warning for MUPIP EXTEND
 # Choose random value between 88% and 100% (non including)
