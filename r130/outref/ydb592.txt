@@ -1,0 +1,21 @@
+# Test that ps identifies JOB'd process with the same name as the parent
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Invoking command --> $ydb_dist/mumps -run ydb592 : Expecting jobbed child to show up as "mumps" in ps output
+Child pid shows up in ps -ef output as : ##SOURCE_REALPATH##/mumps -direct
+Parent pid shows up in ps -ef output as : ##SOURCE_PATH##/mumps -run ydb592
+
+# Invoking command --> $ydb_dist/yottadb -run ydb592 : Expecting jobbed child to show up as "yottadb" in ps output
+Child pid shows up in ps -ef output as : ##SOURCE_REALPATH##/yottadb -direct
+Parent pid shows up in ps -ef output as : ##SOURCE_PATH##/yottadb -run ydb592
+
+# Invoking command --> YottaDB runtime through ydb_ci() : Expecting jobbed child to show up as "yottadb" in ps output
+Child pid shows up in ps -ef output as : ##SOURCE_PATH##/yottadb -direct
+Parent pid shows up in ps -ef output as : ##TEST_PATH##/ydb592
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

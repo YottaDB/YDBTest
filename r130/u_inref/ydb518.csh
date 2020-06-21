@@ -48,6 +48,6 @@ if( $status != 0 ) then
 endif
 rm -f link2.map
 
-ydb518
+`pwd`/ydb518
 unsetenv ydb_ci
 unsetenv ydb_xc
