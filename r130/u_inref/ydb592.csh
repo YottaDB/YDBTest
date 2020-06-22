@@ -12,12 +12,26 @@
 #
 echo "# Test that ps identifies JOB'd process with the same name as the parent"
 $gtm_tst/com/dbcreate.csh mumps
+
+echo '# Add $ydb_dist to PATH to verify JOB command works fine even in that case'
+
 foreach exe (mumps yottadb)
-	echo '# Invoking command --> $ydb_dist/'$exe' -run ydb592 : Expecting jobbed child to show up as "'$exe'" in ps output'
-	$ydb_dist/$exe -run ydb592
-	set filename = `echo *.mjo`
-	cat $filename
-	mv $filename $filename.$exe
+	foreach pathname ("$ydb_dist/" "")
+		echo '# Invoking command --> '${pathname}${exe}' -run ydb592 : Expecting jobbed child to show up as "'$exe'" in ps output'
+		if ("" == "$pathname") then
+			# Add $ydb_dist to $PATH
+			set origpath=($path)
+			set path=($origpath $ydb_dist)
+		endif
+		${pathname}${exe} -run ydb592
+		if ("" == "$pathname") then
+			# Restore $PATH
+			set path=($origpath)
+		endif
+		set filename = `echo *.mjo`
+		cat $filename
+		mv $filename $filename.$exe.${pathname:h:t}
+	end
 end
 echo '# Invoking command --> YottaDB runtime through ydb_ci() : Expecting jobbed child to show up as "yottadb" in ps output'
 # Setup call-in table

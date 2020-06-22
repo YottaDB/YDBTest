@@ -29,7 +29,7 @@ jobstart
 	. ; first cut and sed is to remove the userid column (first column)
 	. ; next grep is to search for the desired pid
 	. ; next sed is to trim out everything until the first '/' which is the start of the command line of the process
-        . set zsystr="ps -ef | cut -d ' ' -f 2- | sed 's/^  *//g' | grep '"_pidstr_"' | sed 's,.* /,/,'"
+        . set zsystr="ps -ef | cut -d ' ' -f 2- | sed 's/^  *//g' | grep '"_pidstr_"' | sed 's,.* \(/\|mumps\|yottadb\),\1,'"
 	. zsystem zsystr
         quit
 
