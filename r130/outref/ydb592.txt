@@ -6,7 +6,7 @@ Using: ##SOURCE_PATH##/mupip
 mumps.dat
 # Add $ydb_dist to PATH to verify JOB command works fine even in that case
 # Invoking command --> ##SOURCE_PATH##/mumps -run ydb592 : Expecting jobbed child to show up as "mumps" in ps output
-Child pid shows up in ps -ef output as : ##SOURCE_REALPATH##/mumps -direct
+Child pid shows up in ps -ef output as : ##SOURCE_PATH##/mumps -direct
 Parent pid shows up in ps -ef output as : ##SOURCE_PATH##/mumps -run ydb592
 
 # Invoking command --> mumps -run ydb592 : Expecting jobbed child to show up as "mumps" in ps output
@@ -14,7 +14,7 @@ Child pid shows up in ps -ef output as : mumps -direct
 Parent pid shows up in ps -ef output as : mumps -run ydb592
 
 # Invoking command --> ##SOURCE_PATH##/yottadb -run ydb592 : Expecting jobbed child to show up as "yottadb" in ps output
-Child pid shows up in ps -ef output as : ##SOURCE_REALPATH##/yottadb -direct
+Child pid shows up in ps -ef output as : ##SOURCE_PATH##/yottadb -direct
 Parent pid shows up in ps -ef output as : ##SOURCE_PATH##/yottadb -run ydb592
 
 # Invoking command --> yottadb -run ydb592 : Expecting jobbed child to show up as "yottadb" in ps output
