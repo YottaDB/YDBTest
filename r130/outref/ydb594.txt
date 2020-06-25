@@ -1,0 +1,7 @@
+# Test that SimpleAPI returns correct results if lvn was set using ydb_incr_s()
+# -----------------------------------------------------------------------------
+# Compile ydb594.c
+# Set ydb_dbglvl to 0x40 to detect any use of freed memory
+# Run ./ydb594
+Do ydb_incr_s() : [baselv=1.234567]
+do ydb_get_s(baselv) : Expected = 1.234567 : Actual = 1.234567
