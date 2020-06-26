@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	#
 # all rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -15,6 +15,5 @@ echo '# Generating output for $zreldate'
 $ydb_dist/mumps -run gtm8894 >& temp.out
 set x = `cat temp.out`
 echo '# Verify output is in libyottadb.so and is correct format'
-strings  $ydb_dist/libyottadb.so | $grep "$x"
-
+strings $ydb_dist/libyottadb.so | $grep "$x"
 
