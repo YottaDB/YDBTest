@@ -3,6 +3,9 @@
 ; Copyright (c) 2010-2016 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -260,7 +263,6 @@ triginfo(level)
 ztriggercmdtfilefail
 	;;Failing INSTALLATION ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	;+^zt("ZTR fail") -command=ZTR 	 -xecute="do l^mrtn()" -piece=1 -delim="|" -name=FAIL1
-	;+^zt("ZTR fail") -command=ZTR 	 -xecute="do l^mrtn()" -delim="|"          -name=FAIL3
 	;+^zt("ZTR fail") -command=ZTR 	 -xecute="do l^mrtn()" -piece=1            -name=FAIL2
 	quit
 
@@ -326,6 +328,9 @@ ztriggercmdtfile
 	;;testing for MAXTRIGNEST
 	;+^ztriggerloop(lvn=1:129) -command=ZTR -xecute="do triginfo^ztriggercmd() if $ztlevel<lvn ztrigger ^ztriggerloop(lvn)" -name=ztriggerloop
 	;+^ztriggerloop2(lvn=1:129) -command=S,ZTR -xecute="do ztriggerloop^ztriggercmd(lvn)" -name=ztriggerloop2
+	;
+	;;what happens when ZTR and DELIM is specified
+	;+^zt("ZTR fail") -command=ZTR 	 -xecute="do l^mrtn()" -delim="|"          -name=ZTRDELIM
 	quit
 
 setup
