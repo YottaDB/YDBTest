@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -14,8 +14,15 @@
 #################################################################
 
 echo "# Begin gtm7412 - check operator log for warnings when database extension=0"
-# Get a random allocation value, between 100 and 20000
-set alloc = `$gtm_exe/mumps -run rand 19100 1 100`
+# Get a random allocation value, between 512 and 10240 (inclusive of both end points)
+# Note that for an allocation of 355 and 356, the FREEBLKSLOW message does not show up in the syslog
+# (whereas it shows up for allocation of 354 or 357) because the GBLOFLOW message shows up even before that.
+# This is because there is free space of 1 or 2 GDS blocks left at the point (whereas the FREEBLKSLOW message
+# requires one bitmap block to become fully used) and the next SET in the FOR loop below requires requires
+# 3 new blocks (1 new leaf block, 1 new level-1 index block due to block splits, 1 new level-2 root/index block).
+# This causes test failures if we keep the range below 357. In real world usages, there will be at least a few
+# bitmap blocks so this is not going to be an issue. Therefore keep at least 512 blocks in this test.
+set alloc = `$gtm_exe/mumps -run rand 9729 1 512`
 echo "# GTM_TEST_DEBUGINFO allocation : " $alloc
 
 # Create database
