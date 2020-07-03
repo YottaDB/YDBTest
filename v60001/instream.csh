@@ -77,6 +77,11 @@ endif
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
 setenv subtest_exclude_list	""
 # Filter out tests that cannot run on platforms that don't support triggers
+
+if ("dbg" == "$tst_image") then 
+	setenv subtest_exclude_list "$subtest_exclude_list gtm7254" 
+endif 
+
 if ("HOST_HP-UX_PA_RISC" == "$gtm_test_os_machtype") then
 	setenv subtest_exclude_list "$subtest_exclude_list gtm7497_trig gtm7355 gtm7495"
 endif
