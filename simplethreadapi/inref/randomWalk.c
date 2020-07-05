@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	*
+ * Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -36,13 +36,14 @@
 /* globals that are randomly assigned at the init of the program
  * as such they are not constants but should be treated as such
  */
-int TEST_TIMEOUT; 	//test time out in seconds
-int DRIVER_THREADS;
-int MAX_THREADS;
-int THREADS_TO_MAKE;
-int MAX_DEPTH;
-float NEST_RATE;	// max depth for nesting
+int	TEST_TIMEOUT; 	//test time out in seconds
+int	DRIVER_THREADS;
+int	MAX_THREADS;
+int	THREADS_TO_MAKE;
+int	MAX_DEPTH;
+float	NEST_RATE;	// max depth for nesting
 
+int	is_ydb464_subtest;
 
 /* struct for storing a string array mallocs to one large buffer */
 typedef struct strArr {
@@ -94,6 +95,7 @@ int main(){
 	DRIVER_THREADS = RAND_INT(2,10);
 	MAX_DEPTH = RAND_INT(2, 20);
 	NEST_RATE = (float) (RAND_INT(0,20)) / 100;
+	is_ydb464_subtest = (!memcmp(getenv("test_subtest_name"), "ydb464", sizeof("ydb464")));
 	pthread_t tids[DRIVER_THREADS];
 	int status;
 
@@ -583,7 +585,8 @@ int runProc(uint64_t tptoken, ydb_buffer_t* errstr, testSettings* settings, int 
 	 * if curThreads > MAX_THREADS then it always picks ydb_tp_st()
 	 */
 	} else if (action <= 100){
-		if (curDepth < settings->maxDepth && !isTimeout){ //if max depth is reached, or the timeout is set, stop creating threads
+		if (curDepth < settings->maxDepth && !isTimeout){
+			// if max depth is reached, or the timeout is set, stop creating threads
 			ydb_tp2fnptr_t tpfn = &tpHelper;
 
 			struct runProc_args args; //copy the test settings in to the struct
@@ -591,10 +594,17 @@ int runProc(uint64_t tptoken, ydb_buffer_t* errstr, testSettings* settings, int 
 			args.settings = settings;
 			args.curDepth = curDepth + 1;
 			int choice = rand();
-			if (choice < RAND_MAX / 2 || curThreads > MAX_THREADS - THREADS_TO_MAKE){ //if we are above MAX_THREADS always do ydb_tp_st()
+			if (choice < RAND_MAX / 2 || curThreads > MAX_THREADS - THREADS_TO_MAKE){
+				// if we are above MAX_THREADS always do ydb_tp_st()
 				/* ydb_tp_st() call */
 				status = ydb_tp_st(tptoken, &zstatusBuf, tpfn, &args, "BATCH", 0 , NULL);
-				YDB_ASSERT(status == YDB_OK);
+				/* If the "ydb464" subtest is running this program, it is possible a Ctrl-C is received and
+				 * handled by one thread which takes the process to exit handling code. It is possible that
+				 * exit handling code has already done an "op_trollback()" by the time this thread does its
+				 * "ydb_tp_st()" call. That would result in a YDB_ERR_INVTPTRANS error. It is therefore an
+				 * expected error. Handle this case in the assert below.
+				 */
+				YDB_ASSERT((YDB_OK == status) || (is_ydb464_subtest && (YDB_ERR_INVTPTRANS == status)));
 			} else {
 				/* thread creation */
 				pthread_t tid[THREADS_TO_MAKE];
