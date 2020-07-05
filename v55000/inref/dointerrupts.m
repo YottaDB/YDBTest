@@ -18,9 +18,13 @@ dointerrupts
 	set $etrap="zshow ""*"" halt"
 
 	; specify various configuration parameters
-	set ^intrptdelay=0.0001
+	set ^intrptdelay=0.001	; Note: A value of 0.0001 has been seen to cause a test failure/hang on ARMV7L.
+				; Not yet clear exactly why but what has been observed is that execution does not
+				; ever get back to mainline code. It stays for ever inside interrupt code.
+				; Hence this value is set to a higher value of 0.001 (1 millisecond) which has been
+				; seen not to suffer from this issue.
 	set limit=10000000
-	set minintrptcnt=100,minelapsedtime=15
+	set minintrptcnt=100,minelapsedtime=5
 
 	; prepare iterators and counters
 	set intrptcnt=0
