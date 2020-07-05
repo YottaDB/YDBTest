@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -27,8 +30,9 @@ endif
 #
 \touch $reorgend
 
-# Wait for a maximum of 90 minutes (from the maximum time we have seen reorg take)
-set timeout = 5400
+# Wait for a maximum of 360 minutes (i.e. 21600 seconds) for active reorg process to exit.
+# On the Pi-Zeros we have seen one reorg take 2 hours 20 minutes to finish in one case. Hence this huge timeout.
+set timeout = 21600
 while ($timeout > 0)
 	set nonomatch
 	set reorgfiles = $reorgpat
