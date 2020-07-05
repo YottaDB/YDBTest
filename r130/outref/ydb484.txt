@@ -1206,7 +1206,9 @@ x=$ZYSQLNULL
 ################################################################
  -> Test Command Postconditionals
     -> PASS from SETpostconditionaltest
+##SUSPEND_OUTPUT HOST_LINUX_ARMVXL HOST_LINUX_AARCH64
        -> PASS from HANG postconditionaltest
+##ALLOW_OUTPUT HOST_LINUX_ARMVXL HOST_LINUX_AARCH64
        -> PASS from IF postconditionaltest
        -> PASS from JOB postconditionaltest
        -> PASS from KILL postconditionaltest
@@ -1270,7 +1272,9 @@ x=$ZYSQLNULL
        -> PASS from TCOMMIT postconditionaltest
        -> PASS from TROLLBACK postconditionaltest
        -> PASS from TSTART postconditionaltest
+##SUSPEND_OUTPUT HOST_LINUX_ARMVXL HOST_LINUX_AARCH64
        -> PASS from HANG postconditionaltest
+##ALLOW_OUTPUT HOST_LINUX_ARMVXL HOST_LINUX_AARCH64
        -> PASS from IF postconditionaltest
        -> PASS from JOB postconditionaltest
        -> PASS from KILL postconditionaltest
