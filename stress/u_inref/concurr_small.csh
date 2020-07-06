@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -136,8 +139,8 @@ $MSR RUN RCV=INST2 SRC=INST1 "set msr_dont_trace ; $gtm_tst/com/rfstatus.csh BEF
 #
 $MSR RUN INST1 '$gtm_tst/$tst/u_inref/callstress.csh run 12 >&! callstress.out & ' >&! bg_callstress_INST1.out
 $MSR RUN INST2 '$gtm_tst/$tst/u_inref/callstress.csh run 12 >&! callstress.out & ' >&! bg_callstress_INST2.out
-$MSR RUN INST1 '$gtm_tst/com/wait_for_log.csh -log callstress.out -waitcreation -duration 1200 -message "Application Level Verification Ends"'
-$MSR RUN INST2 '$gtm_tst/com/wait_for_log.csh -log callstress.out -waitcreation -duration 1200 -message "Application Level Verification Ends"'
+$MSR RUN INST1 '$gtm_tst/com/wait_for_log.csh -log callstress.out -waitcreation -duration 3600 -message "Application Level Verification Ends"'
+$MSR RUN INST2 '$gtm_tst/com/wait_for_log.csh -log callstress.out -waitcreation -duration 3600 -message "Application Level Verification Ends"'
 #
 $MSR RUN SRC=INST1 RCV=INST2 "set msr_dont_trace ; $gtm_tst/com/rfstatus.csh AFTER"
 $MSR RUN RCV=INST2 SRC=INST1 "set msr_dont_trace ; $gtm_tst/com/rfstatus.csh AFTER: < /dev/null"
