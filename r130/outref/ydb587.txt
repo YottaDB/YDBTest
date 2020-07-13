@@ -1,0 +1,56 @@
+# Test that ensures that $dollar_truth variable is set when ydb is run
+==== Start Of Basic Test ====
+Setting ydb_dollartest to 1
+Value of ydb_dollartest now is 1
+Value of $TEST in YDB is 1
+Setting ydb_dollartest to 0
+Value of ydb_dollartest now is 0
+Value of $TEST in YDB is 0
+Unsetting ydb_dollartest
+Value of $TEST in YDB is 1
+==== End Of Basic Test ====
+
+
+==== Start Of Trigger Test ====
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/alt.gld
+
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/alt.gld
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/alt.dat created
+Setting ydb_dollartest 1
+Added SET trigger on ^CIF named xyz
+1
+Executing Trigger
+Value of $TEST is 1
+Setting ydb_dollartest 0
+Executing Trigger
+Value of $TEST is 0
+Unsetting ydb_dollartest
+Executing Trigger
+Value of $TEST is 1
+==== End Of Trigger Test ====
+
+
+==== Start Of Simple API Test ====
+Setting ydb_dollartest 1
+Value of $TEST is 1
+Setting ydb_dollartest 0
+Value of $TEST is 0
+Unsetting ydb_dollartest
+Value of $TEST is 1
+==== End Of Simple API Test ====
