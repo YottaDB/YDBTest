@@ -1,0 +1,12 @@
+# In V6.3-007, auto-upgrading the database file headers would not set the
+# flush_trigger_top field properly and would be set to 0 instead of the current flush_trigger value. This test verifies that
+# the flush_triger_top field is correctly auto-upgraded (i.e. does not require MUPIP -SET TRIGGER_FLUSH to fix)
+# Creating a database to a version prior to V63007
+# Checking the current value of Flush trigger
+Flush trigger                  960
+# Switching back to current version
+# Verifying that the file header has been automatically upgraded by
+# checking that flush_trigger_top is set to 960
+Fileheader dump of region DEFAULT
+Dumping fileheader of ##TEST_PATH##/mumps.dat
+record("sgmnt_data.flush_trigger_top")=960
