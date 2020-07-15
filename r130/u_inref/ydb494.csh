@@ -38,37 +38,51 @@ set bigstring=`cat maxstring.txt`
 
 echo "\n# Extracting in zwr format with label having max string value"
 $ydb_dist/mupip extract -format=zwr -label="$bigstring" extrbiglabel.zwr
-cat extrbiglabel.zwr
+set extrbiglabelzwr=`grep "^YottaDB MUPIP EXTRACT" extrbiglabel.zwr`
+
 echo "\n# Extracting in go format with label having max string value"
 $ydb_dist/mupip extract -format=go -label="$bigstring" extrbiglabel.go
-cat extrbiglabel.go
+set extrbiglabelgo=`grep "^YottaDB MUPIP EXTRACT" extrbiglabel.go`
 
-# Checking load when label with special characters is present in extract file
-# Checking load when label of maximum size is present in extract file
+# Checking load when label ( with special characters, of maximum size) is present in extract file
 foreach labeltype("biglabel" "speciallabel")
 	foreach format("zwr" "go")
 		set file="extr$labeltype.$format"
 		set file2="load$labeltype.$format.txt"
+		echo "\n# Loading $file"
 
 		$gtm_tst/$tst/u_inref/testloadcheck.csh "-format=$format" "$file">&! $file2
 
 		if ("biglabel" == $labeltype) then
-			# only certain amount of $bigstring is copied as label as the size is larger than allowed. So we use the reference file to test in this case.
-			# verifies label presence, error for passing extra long label and Load's success
-			cat $file2
+			# When the label length in mupip extract command is greater than (ZWR_GO_LABEL_MAX_SIZE or
+			# ZWR_GO_LABEL_MAX_SIZE - UTF-8_NAME_LEN) the default label is formed having path, cmd and arguments.
+			# Because of the size limit on the command line, it is possible some portion of the argument
+			# gets truncated in case the first argument (which is dependent on realpath of $ydb_dist and
+			# hence can vary depending on test env) is longer than usual.
+			# In such a case statically comparing the label using reference files fail , so, we verify label's
+			# presence and value by comparing the label seen in extract file and load. Expectation is they are same.
+			set loadbiglabel=`grep "^YottaDB MUPIP EXTRACT" $file2`
+			if (("zwr" == "$format") && ("$loadbiglabel" == "$extrbiglabelzwr")) then
+				echo "LABEL WITH MAX LEN FOUND"
+			else if (("go" == "$format") && ("$loadbiglabel" == "$extrbiglabelgo")) then
+				echo "LABEL WITH MAX LEN FOUND"
+			else
+				echo "EXPECTED:\n`grep '^YottaDB MUPIP EXTRACT' $file`\nFOUND:\n$loadbiglabel"
+				echo "LABEL WITH MAX LEN NOT FOUND IN $format"
+			endif
 		else
 			grep -Fxq "$speciallabel" $file2
-			if ($status == 0) then
-				echo "label with special characters found"
+			if (0 == $status) then
+				echo "LABEL WITH SPECIAL CHARACTERS FOUND"
 			else
-				echo "label with special characters not found"
+				echo "LABEL WITH SPECIAL CHARACTERS NOT FOUND"
 			endif
-			grep -Fxq "LOAD PASSED" $file2
-			if ($status == 0) then
-				echo "LOAD PASSED"
-			else
-				echo "LOAD FAILED"
-			endif
+		endif
+		grep -Fxq "LOAD PASSED" $file2
+		if (0 == $status) then
+			echo "DATA LOAD PASSED"
+		else
+			echo "DATA LOAD FAILED"
 		endif
 	end
 end
