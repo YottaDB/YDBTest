@@ -1,0 +1,37 @@
+# Test that Interrupted MUPIP EXTRACT STDOUT to a pipe does not leave terminal in unfriendly state
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Populate database with enough global variable nodes that take up more than a page of terminal output
+# Running expect script [ydb568.exp]
+# The expect script does an "echo 9876543" after the [mupip extract -stdout | more]
+# With the YDB#568 bug not fixed, the output of the "echo" command would show up but the "echo" command would not
+# With the YDB#568 bug fixed, we expect the "echo" command to also show up
+# Entire output of expect script pasted below
+spawn /usr/local/bin/tcsh -f
+> stty cols 132
+> set shellprompt=SHELL
+> set prompt=$shellprompt
+SHELLsetenv term_env `tty`; echo $term_env > term_env.txt
+SHELLbash
+SHELL$ echo 1234567
+1234567
+SHELL$ $ydb_dist/mupip extract -stdout | more
+##TEST_AWKYottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract -stdout(| UTF-8)
+##FILTERED##..-...-....  ..:..:.. ZWR
+##TEST_AWK--More--\^x\([0-9]*\)=" *[0-9]*"
+##TEST_AWK--More--\^x\([0-9]*\)=" *[0-9]*"
+--More--%SYSTEM-E-ENO32, Broken pipe
+MUPIP is not able to complete the extract due the the above error
+
+
+WARNING!!! Extract file  is incomplete!
+
+SHELL$ echo 9876543
+9876543
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
