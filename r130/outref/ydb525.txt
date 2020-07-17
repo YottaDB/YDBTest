@@ -1,0 +1,8 @@
+# This tests for the presence of bug ydb525 which involves $io incorrectly
+# being set to $principal after a SILENT^%RSEL. The test verifies that $io
+# is correctly set to a file both before and after the SILENT^%RSEL.
+# verify that $io is correct before the SILENT^%RSEL
+filename.txt
+# verify that $io is correct after the SILENT^%RSEL
+# should print filename.txt but will print $principal if bug is present
+filename.txt
