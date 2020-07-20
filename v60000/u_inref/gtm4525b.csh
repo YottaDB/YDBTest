@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -194,8 +194,10 @@ $gtm_tst/com/getoper.csh "$syslog_before2" "" syslog2.txt "" "REPLINSTUNFROZEN"
 
 setenv gtm_test_jobid 2
 setenv gtm_test_dbfillid 2
-# max_sleep of 600 was a little short on some slower machines under load hence bumped up to 3600; normal case will be much shorter
-@ max_sleep = 3600
+# max_sleep of 600 was a little short on some slower machines under load hence bumped up to 3600.
+# Turns out 3600 is also not enough on Pi Zeros if imptprust is randomly chosen (the rust compile itself could take 1-1/2 hours).
+# Hence setting the timeout to 3 hours. Normal case will be much shorter.
+@ max_sleep = 10800
 $gtm_exe/mumps -r '%XCMD' "do startwait^gtm4525b(${gtm_test_dbfillid},${max_sleep})" >&! imptp_start_wait_${gtm_test_dbfillid}.out
 
 echo ""
