@@ -1,7 +1,7 @@
-# In V6.3-007, auto-upgrading the database file headers would not set the
-# flush_trigger_top field properly and would be set to 0 instead of the current flush_trigger value. This test verifies that
+# In R1.26 and R1.28, auto-upgrading the database file headers would not set the flush_trigger_top field properly.
+# It would be set to 0 instead of the current flush_trigger value. This test verifies that
 # the flush_triger_top field is correctly auto-upgraded (i.e. does not require MUPIP -SET TRIGGER_FLUSH to fix)
-# Creating a database to a version prior to V63003 (r130/ydb607 subtest tests the case where version is between V63003 and V63007)
+# Creating a database in version R1.22, R1.24 or a GT.M version between V63003 and V63007
 # Checking the current value of Flush trigger
 Flush trigger                  960
 # Switching back to current version

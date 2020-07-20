@@ -48,6 +48,7 @@
 # ydb494 [gm]        Ensures that mupip extract handles labels with spaces correctly
 # ydb595 [mw]	     Tests $ydb_dist/yottadb -version to verify that it includes $ZYRELEASE, $ZVERSION, and $ZRELDATE
 # ydb525 [bdw]       That to verify that $io is set correctly after a SILENT^%RSEL
+# ydb607 [bdw]       Test that flush_trigger_top is auto-upgraded correctly when the old version is R1.22 or R1.24
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r130 test starts..."
@@ -57,6 +58,7 @@ setenv subtest_list_common     ""
 setenv subtest_list_non_replic "ydb470 ydb482 ydb174 ydb390 ydb476 ydb511 ydb513 ydb485 ydb518 ydb520 ydb503 ydb515 ydb519 ydb545"
 setenv subtest_list_non_replic "${subtest_list_non_replic} ydb553 ydb547 ydb493 ydb549 ydb562 ydb554 ydb484 ydb534 ydb567 ydb576"
 setenv subtest_list_non_replic "${subtest_list_non_replic} ydb578 ydb492 ydb566 ydb569 ydb589 ydb592 ydb594 ydb494 ydb595 ydb525"
+setenv subtest_list_non_replic "${subtest_list_non_replic} ydb607"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then

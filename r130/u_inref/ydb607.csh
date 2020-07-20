@@ -11,13 +11,13 @@
 #                                                               #
 #################################################################
 
-echo "# In V6.3-007, auto-upgrading the database file headers would not set the"
-echo "# flush_trigger_top field properly and would be set to 0 instead of the current flush_trigger value. This test verifies that"
+echo "# In R1.26 and R1.28, auto-upgrading the database file headers would not set the flush_trigger_top field properly."
+echo "# It would be set to 0 instead of the current flush_trigger value. This test verifies that"
 echo "# the flush_triger_top field is correctly auto-upgraded (i.e. does not require MUPIP -SET TRIGGER_FLUSH to fix)"
 
-echo "# Creating a database to a version prior to V63003 (r130/ydb607 subtest tests the case where version is between V63003 and V63007)"
+echo "# Creating a database in version R1.22, R1.24 or a GT.M version between V63003 and V63007"
 
-set rand_ver=`$gtm_tst/com/random_ver.csh -lt V63003`
+set rand_ver=`$gtm_tst/com/random_ver.csh -gte V63003 -lt V63007`
 source $gtm_tst/com/ydb_prior_ver_check.csh $rand_ver
 echo "# Set version to: $rand_ver" >& ver.log
 source $gtm_tst/com/switch_gtm_version.csh $rand_ver $tst_image
