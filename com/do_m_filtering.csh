@@ -4,7 +4,7 @@
 # Copyright (c) 2010-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -38,7 +38,16 @@ endif
 
 # Switch to M mode, so it can parse anything, including invalid Unicode stuff.
 # This is done manually since $switch_chset is not always availables as we are not always called in tests.
-unsetenv gtm_local_collate
+
+# Note that while unsetting the chset etc. we need to unset both gtm_chset and ydb_chset.
+# Unsetting just gtm_chset is not enough as this script could be invoked by a yottadb process (e.g. a MUTEXLCKALERT
+# causing the call graph : dse -> "gtmprocstuck_get_stack_trace.csh" -> "mtailhead.csh" -> "do_m_filtering.csh")
+# in which case the yottadb process would have gtm_chset and ydb_chset set (even though the test system only set gtm_chset)
+# and only unsetting gtm_chset will still let ydb_chset prevail resulting in a mismatch between ydb_chset and gtmroutines
+# causing an INVOBJFILE error due to CHSET mismatch. Hence the call to "unset_ydb_env_var.csh" below in various places.
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_chset gtm_chset
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_local_collate gtm_local_collate
+
 setenv gtm_chset "M"
 if (! -d $tst_dir/$gtm_tst_out/utilobj/$gtm_verno ) then
 	mkdir -p $tst_dir/$gtm_tst_out/utilobj/$gtm_verno
@@ -57,7 +66,7 @@ endif
 unsetenv LC_ALL
 
 # Unset to help with speed
-unsetenv gtmdbglvl
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_dbglvl gtmdbglvl
 
 cat $argv[2-] | $gtm_exe/mumps -run %XCMD $1
 exit $status

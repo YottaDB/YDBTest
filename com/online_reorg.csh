@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -30,7 +30,6 @@ while (1)
 	@ ff = $rand[1]
 	@ inff = $rand[2]
 	if ($cnt == 10) then
-		@ cnt = 1
 		@ ff = 100
 		@ inff = 100
 	endif
@@ -49,7 +48,7 @@ while (1)
 	# This is the case for multisrv_crash test case which deliberately kills online_reorg sub processes
 	set tmpoutput = "online_reorg_$$.outx.$cnt"
 	echo "# `date` : ===== Begin round $cnt of mupip size/reorg ($tmpoutput) ====="
-	echo "# `date` : cnt = $cnt ; ff = $ff ; inff = $inff"			>>&!  $tmpoutput
+	echo "# `date` : cnt = $cnt ; ff = $ff ; inff = $inff"			>&!  $tmpoutput
 	if ($cnt % 5 == 2) then
 		foreach heuristic ("arsample,samples=100000" "impsample,samples=100000" "scan,level=1")
 			echo "# `date` : $try_nice $MUPIP size -heuristic=\"$heuristic\""	>>& $tmpoutput
@@ -65,7 +64,7 @@ while (1)
 				break
 			endif
 		end
-	else if ($cnt < 5) then
+	else if (($cnt % 5) < 5) then
 		echo "# `date` : $try_nice $MUPIP reorg -fill=$ff -index=$inff -truncate"	>>&! $tmpoutput
 		$try_nice $MUPIP reorg -fill=$ff -index=$inff -truncate				>>&! $tmpoutput
 		set ret = $status

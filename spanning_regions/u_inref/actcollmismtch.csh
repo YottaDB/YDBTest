@@ -3,7 +3,7 @@
 #								#
 # Copyright 2013, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -25,8 +25,8 @@ endif
 # setup collation 1
 source $gtm_tst/com/cre_coll_sl_reverse.csh 1
 setenv back_gtm_collate_1 $gtm_collate_1
-$gtm_tst/com/unset_ydb_env_var.csh ydb_collate_1 gtm_collate_1
-$gtm_tst/com/unset_ydb_env_var.csh ydb_local_collate gtm_local_collate
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_collate_1 gtm_collate_1
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_local_collate gtm_local_collate
 echo "# Test case 1 :"
 $GDE exit
 $MUPIP create
