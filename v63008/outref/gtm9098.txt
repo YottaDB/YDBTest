@@ -1,0 +1,20 @@
+# In V6.3-008, GT.M now properly prints out the 64bit transaction number when
+# issuing a continuity check failure. Previously only the lower 32bits would be printed.
+# This test uses MUPIP JOURNAL -RECOVER -FORWARD on 3 journal files to create the continuity check failure.
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+YDB>
+
+YDB>
+# Verifying that 16 hex digits are represented for the transaction number
+##TEST_AWK%YDB-I-TEXT, Transaction number continuity check failed: \[0x[0-9A-F]{16}\] vs \[0x[0-9A-F]{16}\]
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##TEST_PATH##/continuity.log
+##TEST_AWK%YDB-E-JNLBADRECFMT, Journal File Record Format Error encountered for file ##TEST_PATH##/mumps.mjl at disk address.*
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action

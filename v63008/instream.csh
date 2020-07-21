@@ -20,13 +20,14 @@
 # gtm9110		[mw]		Test for the CLIERR or CLISTRTOOLONG error for a command line exceeding 32KiB
 # gtm9092		[mw]		Tests for the return value of TRUE(1) or FALSE(0) in $$IN^%YGBLSTAT
 # gtm9082		[mw]		Test that verifies flush_trigger_top is upgraded automatically
+# gtm9098		[mw]		Test showing that MUPIP JOURNAL reports a 64bit sequence number in continuity check failure
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "v63008 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "gtm9093 gtm9079 gtm9000 gtm9110 gtm9092 gtm9082"
+setenv subtest_list_non_replic "gtm9093 gtm9079 gtm9000 gtm9110 gtm9092 gtm9082 gtm9098"
 setenv subtest_list_replic     ""
 
 
