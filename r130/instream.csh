@@ -80,6 +80,10 @@ if ($gtm_platform_size != 64) then
 	## Disable ydb518 on non-64-bit machines
 	setenv subtest_exclude_list "$subtest_exclude_list ydb518"
 endif
+# If the platform/host does not have prior GT.M versions, disable tests that require them
+if ($?gtm_test_nopriorgtmver) then
+	setenv subtest_exclude_list "$subtest_exclude_list ydb607"
+endif
 
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh

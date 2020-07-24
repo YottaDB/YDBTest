@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -40,6 +40,10 @@ endif
 setenv subtest_exclude_list	""
 if ("pro" == "$tst_image") then
 	setenv subtest_exclude_list "$subtest_exclude_list "
+endif
+# If the platform/host does not have prior GT.M versions, disable tests that require them
+if ($?gtm_test_nopriorgtmver) then
+	setenv subtest_exclude_list "$subtest_exclude_list gtm9082"
 endif
 
 # Submit the list of subtests
