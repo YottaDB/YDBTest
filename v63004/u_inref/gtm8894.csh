@@ -16,9 +16,9 @@ $ydb_dist/mumps -run gtm8894 >& temp.out
 set x = `cat temp.out`
 echo '# Verify output is in libyottadb.so and is correct format'
 set y = `strings $ydb_dist/libyottadb.so | $grep -c "$x"`
-if ($y == 2) then
+if ($y > 0) then
 	echo "Output verified"
 else
-	echo "Incorrect output : Expected 2 lines : Actual $y lines"
+	echo "Incorrect output : Expected at least 1 line : Actual $y lines"
 endif
 
