@@ -29,6 +29,7 @@ send -- "q\r"
 expect -exact "SHELL$ "
 
 send -- "echo 9876543\r"
+expect -exact "9876543"
 expect -exact "SHELL$ "
 
 send -- "exit\r"
