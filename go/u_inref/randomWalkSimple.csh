@@ -19,7 +19,8 @@ if ($?test_replic) then
 	# Need to use MSR framework whenever -gld_has_db_fullpath is in use (non-MSR replication does not work currently)
 	$MULTISITE_REPLIC_PREPARE 2	# Create two instances INST1 (primary side) and INST2 (secondary side)
 endif
-$gtm_tst/com/dbcreate.csh mumps -global_buffer=16384 -gld_has_db_fullpath >>& dbcreate.out
+# We have seen occasional TRANS2BIG errors with global buffers as high as 16Kb so current setting is at 32Kb
+$gtm_tst/com/dbcreate.csh mumps -global_buffer=32768 -gld_has_db_fullpath >>& dbcreate.out
 if ($status) then
         echo "# dbcreate failed. Output of dbcreate.out follows"
         cat dbcreate.out
