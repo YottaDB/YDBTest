@@ -431,6 +431,14 @@ endif
 set mupip_set_pid = `cat mupip_set_pid.out`
 $gtm_tst/com/wait_for_proc_to_die.csh $mupip_set_pid 300 >&! wait_for_proc_to_die.out
 
+# Wait for all worker processes to terminate (they were only sent a MUPIP STOP, not a kill -9)
+# in case they take a little bit of time to rundown. Not waiting here could cause the rollback done in the
+# next step to notice worker processes still accessing the replication/database ftok/private sem/shm ipcs
+# and not remove it which would later cause the test framework to fail the test due to leftover ipcs.
+foreach pid ( `$tst_awk '{print $NF}' gtm_test_crash_jobs_${gtm_test_jobid}.csh` )
+	$gtm_tst/com/wait_for_proc_to_die.csh $pid 300 >&! wait_for_proc_to_die_${pid}.out
+end
+
 echo ""
 echo "# Rollback"
 echo ""
