@@ -10,7 +10,7 @@
 #								#
 #################################################################
 #
-echo '# Test that a fatal signgal (randomly uses either SIGINT or SIGTERM)  cleanly shuts down YDBGo process with no cores'
+echo '# Test that a fatal signal (randomly uses either SIGINT or SIGTERM) cleanly shuts down YDBGo process with no cores'
 echo '# This test uses the threeenp* subtests as sample processes'
 
 # Use -gld_has_db_fullpath to ensure gld is created with full paths pointing to the database file
@@ -63,7 +63,7 @@ EOF
 		# proper prefix
 		if ("threeenp1C2" == "$prog") setenv ydb_filepfx_threeenp1C2 "$prog$run"
 		echo "Terminating $prog; Run $run"
-		(`pwd`/$prog < seed.input &) >&! $prog$run.outx
+		(`pwd`/$prog < seed.input &) >&! $prog$run.out
 		unsetenv ydb_filepfx_threeenp1C2 # Don't leave it set
 		sleep `shuf -i 4-8 -n 1` # give some time for database processes to occur
 		# since threeenp1C2 creates multiple processes we need to loop through all the pids
@@ -79,26 +79,26 @@ EOF
 		# Select signal to kill processes with - 0 is kill -15 (SIGTERM), 1 is kill -2 (SIGINT)
 		set rand = `$ydb_dist/mumps -run rand 2`
 		if ("0" == "$rand") then
-		    set killsig = "15"
+			set killsig = "15"
 		else
-		    set killsig = "2"
+			set killsig = "2"
 		endif
 		kill -${killsig} $goPID
 		# wait_for_proc_to_die.csh only works on one pid at a time
 		foreach pid ($goPID)
 			$gtm_tst/com/wait_for_proc_to_die.csh $pid 300
 		end
+		if ("15" == $killsig) then
+			# In case of SIGTERM/SIG-15, a FORCEDHALT message is expected to show up.
+			# Filter that out so the error catching test framework does not see it.
+			$gtm_tst/com/check_error_exist.csh ${prog}${run}.out "%YDB-F-FORCEDHALT" >&! /dev/null
+		endif
 	end
-	# Until such time as the frame work scans output files for DATA RACE warnings (which are otherwise they are ignored
-	# (unless they are output as part of the reference file itself), do our own scan as these are important warnings
-	# from the Go runtime about race conditions the Go runtime has detected in the running program.
-	echo "Checking for DATA RACE warnings"
-	grep "WARNING: DATA RACE" *.outx
 	echo "done"
 	cd ../../.. # back up to the top of the test directory
-	$gtm_tst/com/dbcheck.csh >& dbcheck$prog.outx
+	$gtm_tst/com/dbcheck.csh >& dbcheck$prog.out
 	if (0 != $status) then
-		echo "# dbcheck failed. Output of dbcheck$prog.outx"
-		cat dbcheck$prog.outx
+		echo "# dbcheck failed. Output of dbcheck$prog.out"
+		cat dbcheck$prog.out
 	endif
 end
