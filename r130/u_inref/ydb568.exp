@@ -25,7 +25,7 @@ send -- "\$ydb_dist/mupip extract -stdout | more\r"
 expect -exact "--More--"
 send -- " \r"
 expect -exact "--More--"
-send -- "q\r"
+send -- "q"
 expect -exact "SHELL$ "
 
 send -- "echo 9876543\r"
