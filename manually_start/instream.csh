@@ -4,7 +4,7 @@
 # Copyright (c) 2003-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.  #
+# Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.  #
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -85,6 +85,13 @@ endif
 # The test mostly exercises portable code so it is okay if only multi-CPU x86_64 boxes runs these tests.
 if ($gtm_test_singlecpu || ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype)) then
 	setenv subtest_exclude_list "$subtest_exclude_list alsmemleak maxtrignames"
+endif
+if ($gtm_test_singlecpu) then
+	if ($?test_replic == 1) then
+		# Exclude heavyweight 4g_journal subtest on 1-CPU systems in -replic mode.
+		# This frequently times out as it takes more than 24 hours to finish.
+		setenv subtest_exclude_list "$subtest_exclude_list 4g_journal"
+	endif
 endif
 
 if ($?ydb_test_exclude_sem_counter) then
