@@ -15,9 +15,16 @@ Killed
 Case #2
 ###################################################################
 Killed
+##SUSPEND_OUTPUT BG
 %YDB-E-JNLORDBFLU, Error flushing database blocks to ##TEST_PATH##/mumps.dat. See related messages in the operator log
 %YDB-I-TEXT, To force the operation to proceed, use the OVERRIDE qualifier
 %YDB-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
+##ALLOW_OUTPUT BG
+##SUSPEND_OUTPUT MM
+##TEST_AWK%YDB-I-SHMREMOVED, Removed Shared Memory id [0-9]* corresponding to file ##TEST_PATH##/mumps.dat
+##TEST_AWK%YDB-I-SEMREMOVED, Semaphore id [0-9]* removed from the system
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+##ALLOW_OUTPUT MM
 
 Case #3
 ###################################################################
