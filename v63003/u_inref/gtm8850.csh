@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -34,7 +34,8 @@ echo "# Signal background scripts to stop"
 touch test.STOP
 # Wait for background processes to stop
 foreach bgpid(`cat bg.pid`)
-	$gtm_tst/com/wait_for_proc_to_die.csh $bgpid
+	# We have seen default 60 seconds not enough in rare cases hence a wait time of 300 seconds below
+	$gtm_tst/com/wait_for_proc_to_die.csh $bgpid 300
 end
 echo "# All processes exited correctly"
 $gtm_tst/com/dbcheck.csh >>& dbcheck.out
