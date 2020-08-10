@@ -32,8 +32,11 @@ mv expect.out expect.outx	# avoid SYSTEM-E-ENO32 Broken pipe error from being ca
 perl $gtm_tst/com/expectsanitize.pl expect.outx > expect_sanitized.outx
 echo '# Entire output of expect script pasted below'
 # Note: Some platform specific discrepancies in output are filtered out
+# e.g. Machines running an older version of expect display 2 lines starting with "--More--^x" while
+# machines running newer versions display 1 such line. Filter the extra line out.
+perl -wnle 'BEGIN {  $more_lines = 0; } $thisline = $_; if ($thisline =~ /^\-\-More\-\-\^x*/) { if (0 eq $more_lines) { print; } $more_lines++; } else { print; }' expect_sanitized.outx > expect_filtered.outx
 # e.g. RHEL7/CentOS show the old shell prompt followed by a Ctrl-G in addition to the new shell prompt. Filter the old one out.
-sed 's/.*SHELL$ /SHELL$ /;' expect_sanitized.outx | $grep -vE '^\^x|bashrc|^  |exit|^SHELL. $'
+sed 's/.*SHELL$ /SHELL$ /;' expect_filtered.outx | $grep -vE '^\^x|bashrc|^  |exit|^SHELL. $'
 echo ""
 
 $gtm_tst/com/dbcheck.csh
