@@ -1,3 +1,18 @@
+//! Rust implementation of imptp using multiple threads as workers.
+//! Adapted from `imptpgo.go` and `impjobgo.go`.
+
+/****************************************************************
+*                                                               *
+* Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.  *
+* All rights reserved.                                          *
+*                                                               *
+*       This source code contains the intellectual property     *
+*       of its copyright holder(s), and is made available       *
+*       under a license.  If you do not know the terms of       *
+*       the license, please stop and do not read further.       *
+*                                                               *
+****************************************************************/
+
 use std::env;
 use std::error::Error;
 use std::ffi::CStr;
@@ -75,20 +90,10 @@ macro_rules! zwrite {
     };
 }
 
-// `impjobgo.go` has the following comment:
-// > Unlike SimpleAPI/SimpleThreadAPI which only returns YDB_ERR_* codes (all negative numbers),
-// > "ydb_cip_t" can return ERR_TPRETRY (a positive number). An easy way to check that is to
-// > take negation of YDB_ERR_TPRETRY (which is == ERR_TPRETRY) and compare that against
-// > the return value. In that case, return YDB_TP_RESTART from this function as that
-// > is what the caller knows (or should know) how to handle.
-// This seems like something that should be handled in `tp_st`.
 // This is a macro so we can return from the handler itself
 macro_rules! call_check_retry {
     ($ctx: expr, $func: literal) => {
         match call($ctx, $func) {
-            Err(YDBError { status, .. }) if status == -craw::YDB_ERR_TPRETRY => {
-                return Ok(TransactionStatus::Restart);
-            }
             Err(err) => return Err(err.into()),
             Ok(_) => {}
         }
@@ -165,12 +170,12 @@ fn do_job(ctx: &Context, jobid: &str, jobindex: usize) -> YDBResult<()> {
             Err(err) => err,
         };
 
-        // GoCode: if isGtm8086Subtest && ((-yottadb.YDB_ERR_JNLEXTEND == errcode) || (-yottadb.YDB_ERR_JNLSWITCHFAIL == errcode)) {
+        // GoCode: if isGtm8086Subtest && ((yottadb.YDB_ERR_JNLEXTEND == errcode) || (yottadb.YDB_ERR_JNLSWITCHFAIL == errcode)) {
         // GoCode:      return
         // GoCode: }
         if gtm8086
-            && (err.status == -craw::YDB_ERR_JNLEXTEND
-                || err.status == -craw::YDB_ERR_JNLSWITCHFAIL)
+            && (err.status == craw::YDB_ERR_JNLEXTEND
+                || err.status == craw::YDB_ERR_JNLSWITCHFAIL)
         {
             return Ok(());
         } else {

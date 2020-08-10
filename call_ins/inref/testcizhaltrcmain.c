@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	*
+ * Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -27,7 +27,7 @@ enum {
 
 /*
  * See test_ci_z_halt_rc.csh for test description. Series of call-ins that terminate in various ways. We are testing to make sure
- * they termination in an acceptable fashion (i.e. lack of explosions and correct errors generated). Note the return value is
+ * they terminate in an acceptable fashion (i.e. lack of explosions and correct errors generated). Note the return value is
  * pre-set before each call so we can see under which conditions the return value is being left unset.
  */
 int main(void)

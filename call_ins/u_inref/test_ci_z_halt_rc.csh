@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -35,17 +35,21 @@ testcizhalt2manyargsint:  ydb_int_t    *testcizhaltrcint^testcizhaltrc(I:ydb_int
 testcizhalt2manyargsstr:  ydb_string_t *testcizhaltrcstr^testcizhaltrc(I:ydb_int_t, I:ydb_int_t)
 testcizhaltnoretv:        void          testcizhaltnoretval^testcizhaltrc(I:ydb_int_t)
 EOF
-#
-# Compile/build C main routine
-#
-$gt_cc_compiler $gtt_cc_shl_options $gtm_tst/$tst/inref/testcizhaltrcmain.c -I$gtm_dist
-$gt_ld_linker $gt_ld_option_output testcizhaltrcmain $gt_ld_options_common testcizhaltrcmain.o $gt_ld_sysrtns $ci_ldpath$gtm_dist -L$gtm_dist $tst_ld_yottadb $gt_ld_syslibs >& link.map
-if( $status != 0 ) then
-    cat link.map
-endif
-#
-# Drive main test
-#
-testcizhaltrcmain
+
+# Copy C program containing various "ydb_ci()" calls. Error return values are expected to be negative here.
+cp $gtm_tst/$tst/inref/testcizhaltrcmain.c ydb_ci.c
+# Create similar C program using "gtm_ci()" calls instead. Error return values are expected to be positive here.
+sed 's/ydb_ci/gtm_ci/g;s/libyottadb.h"/&\n#include "gtmxc_types.h"/;' ydb_ci.c > gtm_ci.c
+
+foreach file (gtm_ci ydb_ci)
+	echo "# Compile/build C file : $file.c"
+	$gt_cc_compiler $gtt_cc_shl_options $file.c -I$gtm_dist
+	$gt_ld_linker $gt_ld_option_output $file $gt_ld_options_common $file.o $gt_ld_sysrtns $ci_ldpath$gtm_dist -L$gtm_dist $tst_ld_yottadb $gt_ld_syslibs >& link.map
+	if (0 != $status) then
+		cat link.map
+	endif
+	echo "# Run executable : `pwd`/$file"
+	`pwd`/$file
+end
 #
 echo "End of test_ci_z_halt_rc subtest"

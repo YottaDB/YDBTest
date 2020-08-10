@@ -280,7 +280,7 @@ In citabtest^utilfuncs (using call-in table [callin.tab])
 Got YDB_OK as expected
 
 # Test that ydb_ci() calls that rely on non-default call-in table fail when used with default call-in table
-Got -YDB_ERR_CINOENTRY error as expected : ydb_zstatus() returned : 150379666,(Call-In),%YDB-E-CINOENTRY, No entry specified for crtnname in the call-in table
+Got YDB_ERR_CINOENTRY error as expected : ydb_zstatus() returned : 150379666,(Call-In),%YDB-E-CINOENTRY, No entry specified for crtnname in the call-in table
 
 # Rename default call-in table file back from [tmpcallin.tab] to [callin.tab]
 Got 0 return from rename(tmpcallin.tab, callin.tab) as expected

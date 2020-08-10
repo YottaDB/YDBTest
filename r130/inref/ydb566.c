@@ -45,9 +45,9 @@ int main()
 	printf("Testing a commented out call-in mapping to ensure that it is not called and returns ERR_CINOENTRY. ");
 	printf("If everything is working correctly, there will be no additional output.\n");
 	status = ydb_cip(&callin2, &ci_return_code);
-	if ((YDB_ERR_CINOENTRY * -1) != status)
-		printf("FAIL: ydb_cip() did not return the correct status. Got: %d; Expected: %d\n", status, (YDB_ERR_CINOENTRY * -1));
+	if (YDB_ERR_CINOENTRY != status)
+		printf("FAIL: ydb_cip() did not return the correct status. Got: %d; Expected: %d\n", status, YDB_ERR_CINOENTRY);
 	status = ydb_cip(&callin3, &ci_return_code);
-	if ((YDB_ERR_CINOENTRY * -1) != status)
-		printf("FAIL: ydb_cip() did not return the correct status. Got: %d; Expected: %d\n", status, (YDB_ERR_CINOENTRY * -1));
+	if (YDB_ERR_CINOENTRY != status)
+		printf("FAIL: ydb_cip() did not return the correct status. Got: %d; Expected: %d\n", status, YDB_ERR_CINOENTRY);
 }

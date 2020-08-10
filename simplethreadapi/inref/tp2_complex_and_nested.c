@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries. *
+ * Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries. *
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -200,15 +200,7 @@ int gvnincr2(uint64_t tptoken, ydb_buffer_t *errstr, void *ptr)	/* $tlevel = 2 T
 	if (!use_callin)
 		status = ydb_set_st(tptoken, errstr, &basevar, 0, NULL, &value);
 	else
-	{
 		status = ydb_ci_t(tptoken, errstr, "gvnincr2callin");	/* Test TP restarts in C->M and C->M->C->M */
-		/* Unlike SimpleThreadAPI which only returns YDB_ERR_* codes (all negative numbers),
-		 * "ydb_ci_t" can return ERR_TPRETRY (a positive number). An easy way to check that is to
-		 * take negation of YDB_ERR_TPRETRY (which is == ERR_TPRETRY) and compare that against the return value.
-		 */
-		if (-YDB_ERR_TPRETRY == status)
-			return YDB_TP_RESTART;
-	}
 	if (YDB_TP_RESTART == status)
 		return status;
 	YDB_ASSERT(YDB_OK == status);

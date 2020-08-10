@@ -225,7 +225,7 @@ func main() {
 		_, err = yottadb.CallMT(tptoken, nil, 0, "impjob")
 		if nil != err {
 			errcode := yottadb.ErrorCode(err)
-			if isGtm8086Subtest && ((-yottadb.YDB_ERR_JNLEXTEND == errcode) || (-yottadb.YDB_ERR_JNLSWITCHFAIL == errcode)) {
+			if isGtm8086Subtest && ((yottadb.YDB_ERR_JNLEXTEND == errcode) || (yottadb.YDB_ERR_JNLSWITCHFAIL == errcode)) {
 				return
 			}
 			panic(fmt.Sprintf("impjob: Driving impjob^imptp failed with error: %s", err))
@@ -965,14 +965,6 @@ func tpfnStage1(tptoken uint64, errstr *yottadb.BufferT, shr *shareStuff) int32 
 		if 2 < dollartrestart {
 			if 1 == rndm {
 				_, err = shr.callnoop.CallMDescT(tptoken, errstr, 0)
-				// Unlike SimpleAPI/SimpleThreadAPI which only returns YDB_ERR_* codes (all negative numbers),
-				// "ydb_cip_t" can return ERR_TPRETRY (a positive number). An easy way to check that is to
-				// take negation of YDB_ERR_TPRETRY (which is == ERR_TPRETRY) and compare that against
-				// the return value. In that case, return YDB_TP_RESTART from this function as that
-				// is what the caller knows (or should know) how to handle.
-				if -yottadb.YDB_ERR_TPRETRY == yottadb.ErrorCode(err) {
-					return yottadb.YDB_TP_RESTART
-				}
 				if imp.CheckErrorReturn(err) {
 					return int32(yottadb.ErrorCode(err))
 				}
@@ -1076,9 +1068,6 @@ func tpfnStage1(tptoken uint64, errstr *yottadb.BufferT, shr *shareStuff) int32 
 		// MCode: . if trigger xecute ztwormstr	; fill in $ztwormhole for below update that requires "subs"
 		_, err = shr.callztwormstr.CallMDescT(tptoken, errstr, 0)
 		if nil != err {
-			if -yottadb.YDB_ERR_TPRETRY == yottadb.ErrorCode(err) {
-				return yottadb.YDB_TP_RESTART
-			}
 			if imp.CheckErrorReturn(err) {
 				return int32(yottadb.ErrorCode(err))
 			}
@@ -1129,9 +1118,6 @@ func tpfnStage1(tptoken uint64, errstr *yottadb.BufferT, shr *shareStuff) int32 
 		if shr.ztr {
 			_, err = shr.callztrcmd.CallMDescT(tptoken, errstr, 0)
 			if nil != err {
-				if -yottadb.YDB_ERR_TPRETRY == yottadb.ErrorCode(err) {
-					return yottadb.YDB_TP_RESTART
-				}
 				if imp.CheckErrorReturn(err) {
 					return int32(yottadb.ErrorCode(err))
 				}
@@ -1156,9 +1142,6 @@ func tpfnStage3(tptoken uint64, errstr *yottadb.BufferT, shr *shareStuff) int32 
 	if shr.dztrig {
 		_, err = shr.callimptpdztrig.CallMDescT(tptoken, errstr, 0)
 		if nil != err {
-			if -yottadb.YDB_ERR_TPRETRY == yottadb.ErrorCode(err) {
-				return yottadb.YDB_TP_RESTART
-			}
 			if imp.CheckErrorReturn(err) {
 				return int32(yottadb.ErrorCode(err))
 			}

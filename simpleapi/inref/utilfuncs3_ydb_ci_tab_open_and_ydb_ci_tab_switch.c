@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2019 YottaDB LLC. and/or its subsidiaries.	*
+ * Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -210,10 +210,10 @@ int main()
 
 	printf("\n# Test that ydb_ci() calls that rely on non-default call-in table fail when used with default call-in table\n"); fflush(stdout);
 	status = ydb_ci("crtnname");
-	if (-YDB_ERR_CINOENTRY == status)
+	if (YDB_ERR_CINOENTRY == status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("Got -YDB_ERR_CINOENTRY error as expected : ydb_zstatus() returned : %s\n", errbuf);
+		printf("Got YDB_ERR_CINOENTRY error as expected : ydb_zstatus() returned : %s\n", errbuf);
 	} else
 		printf("Line [%d]: Expected return [%d] but Actual return [%d]\n", __LINE__, YDB_OK, status);
 	fflush(stdout);

@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	*
+ * Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -45,7 +45,7 @@ int gvnset()
 
 	printf("Do a call-in inside the function driven by ydb_tp_s()\n"); fflush(stdout);
 	status = ydb_ci("callintcommit");
-	YDB_ASSERT(-YDB_ERR_CALLINTCOMMIT == status);
+	YDB_ASSERT(YDB_ERR_CALLINTCOMMIT == status);
 	ydb_zstatus(errbuf, ERRBUF_SIZE);
 	printf("Returned error from gvnset() : %s\n", errbuf); fflush(stdout);
 	return YDB_ERR_CALLINTCOMMIT;

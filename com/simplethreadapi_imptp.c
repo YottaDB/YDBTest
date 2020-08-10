@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries. *
+ * Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries. *
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -749,7 +749,7 @@ int	impjob(int childnum)
 		 * errors can happen in the imptp child process and that is expected. Account for that in the below YDB_ASSERT.
 		 */
 		YDB_ASSERT((YDB_OK == status)
-			|| (is_gtm8086_subtest && (-YDB_ERR_JNLEXTEND == status) || (-YDB_ERR_JNLSWITCHFAIL == status)));
+			|| (is_gtm8086_subtest && (YDB_ERR_JNLEXTEND == status) || (YDB_ERR_JNLSWITCHFAIL == status)));
 		return YDB_OK;
 	}
 	/* Randomly chose SimpleAPI/SimpleThreadAPI method to run child (impjob^imptp) */
@@ -1408,14 +1408,8 @@ int	tpfn_stage1(uint64_t tptoken, ydb_buffer_t *errstr, int *parm_array)
 			if (1 == rndm)
 			{
 				status = ydb_cip_t(tptoken, errstr, &noop_cid);
-				/* Unlike SimpleAPI/SimpleThreadAPI which only returns YDB_ERR_* codes (all negative numbers),
-				 * "ydb_cip_t" can return ERR_TPRETRY (a positive number). An easy way to check that is to
-				 * take negation of YDB_ERR_TPRETRY (which is == ERR_TPRETRY) and compare that against
-				 * the return value. In that case, return YDB_TP_RESTART from this function as that
-				 * is what the caller ("ydb_tp_s") knows to handle.
-				 */
-				if (-YDB_ERR_TPRETRY == status)
-					return YDB_TP_RESTART;
+				if (YDB_TP_RESTART == status)
+					return status;
 				YDB_ASSERT(YDB_OK == status);
 			}
 			/* . . if rndm=2 if $TRESTART>2  h $r(10)		; Just randomly hold crit for long time */
@@ -1499,8 +1493,8 @@ int	tpfn_stage1(uint64_t tptoken, ydb_buffer_t *errstr, int *parm_array)
 	{
 		/* . if trigger xecute ztwormstr	; fill in $ztwormhole for below update that requires "subs" */
 		status = ydb_cip_t(tptoken, errstr, &ztwormstr_cid);
-		if (-YDB_ERR_TPRETRY == status)
-			return YDB_TP_RESTART;
+		if (YDB_TP_RESTART == status)
+			return status;
 		YDB_ASSERT(YDB_OK == status);
 	}
 
@@ -1535,8 +1529,8 @@ int	tpfn_stage1(uint64_t tptoken, ydb_buffer_t *errstr, int *parm_array)
 		if (ztr)
 		{
 			status = ydb_cip_t(tptoken, errstr, &ztrcmd_cid);
-			if (-YDB_ERR_TPRETRY == status)
-				return YDB_TP_RESTART;
+			if (YDB_TP_RESTART == status)
+				return status;
 			YDB_ASSERT(YDB_OK == status);
 		}
 		subscr[1].len_used = sprintf(subscr[1].buf_addr, "%d", jobno);
@@ -1562,8 +1556,8 @@ int	tpfn_stage3(uint64_t tptoken, ydb_buffer_t *errstr, int *parm_array)
 	if (dztrig)
 	{
 		status = ydb_cip_t(tptoken, errstr, &imptpdztrig_cid);
-		if (-YDB_ERR_TPRETRY == status)
-			return YDB_TP_RESTART;
+		if (YDB_TP_RESTART == status)
+			return status;
 		YDB_ASSERT(YDB_OK == status);
 	}
 

@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	*
+ * Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -40,8 +40,8 @@ int sapi(){
 	printf("\nydb_ci() on a improperly (too small) buffer; should return INVSTRLEN\n");
 	status = ydb_ci("retStr", &badStr);
 	ydb_zstatus(errBuf, 1024);
-	if(-YDB_ERR_INVSTRLEN != status){
-		printf("FAIL: ydb_ci() did not return the correct status. Got: %d; Expected: %d\n", status, -YDB_ERR_INVSTRLEN);
+	if (YDB_ERR_INVSTRLEN != status){
+		printf("FAIL: ydb_ci() did not return the correct status. Got: %d; Expected: %d\n", status, YDB_ERR_INVSTRLEN);
 	} else {
 		printf("PASS: ydb_ci() returned INVSTRLEN\n");
 	}
@@ -74,8 +74,8 @@ int sapi(){
 	printf("\nydb_cip() on a improperly (too small) buffer; should return INVSTRLEN\n");
 	status = ydb_cip(&callin, &badStr);
 	ydb_zstatus(errBuf, 1024);
-	if(-YDB_ERR_INVSTRLEN != status){
-		printf("FAIL: ydb_cip() did not return the correct status. Got: %d; Expected: %d\n", status, -YDB_ERR_INVSTRLEN);
+	if (YDB_ERR_INVSTRLEN != status){
+		printf("FAIL: ydb_cip() did not return the correct status. Got: %d; Expected: %d\n", status, YDB_ERR_INVSTRLEN);
 	} else {
 		printf("PASS: ydb_cip() returned INVSTRLEN\n");
 	}
@@ -118,8 +118,8 @@ int stapi(){
 	printf("\nydb_ci_t() on a improperly (too small) buffer; should return INVSTRLEN\n");
 	status = ydb_ci_t(YDB_NOTTP, &errstr, "retStr", &badStr);
 	errstr.buf_addr[errstr.len_used] = '\0';
-	if(-YDB_ERR_INVSTRLEN != status){
-		printf("FAIL: ydb_ci_t() did not return the correct status. Got: %d; Expected: %d\n", status, -YDB_ERR_INVSTRLEN);
+	if (YDB_ERR_INVSTRLEN != status){
+		printf("FAIL: ydb_ci_t() did not return the correct status. Got: %d; Expected: %d\n", status, YDB_ERR_INVSTRLEN);
 	} else {
 		printf("PASS: ydb_ci_t() returned INVSTRLEN\n");
 	}
@@ -153,8 +153,8 @@ int stapi(){
 	printf("\nydb_cip_t() on a improperly (too small) buffer; should return INVSTRLEN\n");
 	status = ydb_cip_t(YDB_NOTTP, &errstr, &callin, &badStr);
 	errstr.buf_addr[errstr.len_used] = '\0';
-	if(-YDB_ERR_INVSTRLEN != status){
-		printf("FAIL: ydb_cip_t() did not return the correct status. Got: %d; Expected: %d\n", status, -YDB_ERR_INVSTRLEN);
+	if (YDB_ERR_INVSTRLEN != status){
+		printf("FAIL: ydb_cip_t() did not return the correct status. Got: %d; Expected: %d\n", status, YDB_ERR_INVSTRLEN);
 	} else {
 		printf("PASS: ydb_cip_t() returned INVSTRLEN\n");
 	}
