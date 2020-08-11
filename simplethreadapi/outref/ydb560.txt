@@ -1,0 +1,46 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+-----------------------------------------------------------------------------------------------------
+# Test that ydb_eintr_handler_t() helps terminate SimpleThreadAPI application if a SIGINT/SIGTERM is received
+-----------------------------------------------------------------------------------------------------
+# Create ydb560loop.c from ydb560halt.c by removing ydb_eintr_handler_t() call
+# Comple/Link ydb560loop.c
+# Run SimpleThreadAPI application [##TEST_PATH##/ydb560loop] in background with signal number [SIG-15]
+# Sleep 1 second to give process some time to start
+# Sending : [kill -15] to backgrounded SimpleThreadAPI application
+# Waiting for backgrounded SimpleThreadAPI application to terminate
+# No ydb_eintr_handler_t() used : Process is not expected to terminate
+ --> Process did not terminate just like it was expected to
+# Sending : [kill -9] to backgrounded SimpleThreadAPI application to terminate it
+
+# Run SimpleThreadAPI application [##TEST_PATH##/ydb560loop] in background with signal number [SIG-2]
+# Sleep 1 second to give process some time to start
+# Sending : [kill -2] to backgrounded SimpleThreadAPI application
+# Waiting for backgrounded SimpleThreadAPI application to terminate
+# No ydb_eintr_handler_t() used : Process is not expected to terminate
+ --> Process did not terminate just like it was expected to
+# Sending : [kill -9] to backgrounded SimpleThreadAPI application to terminate it
+
+# Comple/Link ydb560halt.c
+# Run SimpleThreadAPI application [##TEST_PATH##/ydb560halt] in background with signal number [SIG-15]
+# Sleep 1 second to give process some time to start
+# Sending : [kill -15] to backgrounded SimpleThreadAPI application
+# Waiting for backgrounded SimpleThreadAPI application to terminate
+# ydb_eintr_handler_t() is used : Process is expected to terminate
+ --> Process terminated just like it was expected to
+# Expected to see FORCEDHALT message in stderr
+ -> YDB-F-FORCEDHALT seen in stderr as expected
+
+# Run SimpleThreadAPI application [##TEST_PATH##/ydb560halt] in background with signal number [SIG-2]
+# Sleep 1 second to give process some time to start
+# Sending : [kill -2] to backgrounded SimpleThreadAPI application
+# Waiting for backgrounded SimpleThreadAPI application to terminate
+# ydb_eintr_handler_t() is used : Process is expected to terminate
+ --> Process terminated just like it was expected to
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
