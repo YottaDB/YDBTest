@@ -12,8 +12,8 @@
 #
 echo "# This test verifies that, using the SimpleThreadAPI (via Go), if a TP restart is induced via a SimpleThreadAPI"
 echo "# call, it returns YDB_TP_RESTART (error text is a fast-path 'TPRESTART'). But we also want this return code if,"
-echo "in the transaction callback routine, some M code is driven which causes a TP restart. Prior to YDB#619, this"
-echo "flavor returned TPRETRY instead."
+echo "# in the transaction callback routine, some M code is driven which causes a TP restart. Prior to YDB#619, this"
+echo "# flavor returned TPRETRY instead."
 $gtm_tst/com/dbcreate.csh mumps -gld_has_db_fullpath >>& dbcreate.out
 if ($status) then
         echo "# dbcreate failed. Output of dbcreate.out follows"

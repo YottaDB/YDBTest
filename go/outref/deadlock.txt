@@ -1,0 +1,13 @@
+# Test to purposely create a deadlock by creating a TP transaction and then inside it doing a GET type call
+# but using yottadb.NOTTP as the tptoken instead of the tptoken created for us and passed into the callback
+# routine. Prior to a late fix to YDB#561, this was working anyway so this test is to make sure that does NOT
+# happen anymore. In the future, when we add a deadlock detector, this test should morph into a test for that
+# support.
+# Running : go get -d -v -x -t lang.yottadb.com/go/yottadb
+# Building deadlock
+# Running deadlock
+ --> Process did not terminate just like it was expected to
+# Sending : [kill -9] to backgrounded SimpleAPI application to terminate it
+
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+# Done!

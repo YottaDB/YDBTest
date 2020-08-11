@@ -27,13 +27,15 @@
 # 			      		no cores.
 # tptimeout		[estess]	Test that tptimeout works with Go
 # sigsegv		[@zapkub, estess] Add test that initializes YDB, then generates a SIGSEGV and see if can be caught
-# tprestart		[,estess] 	Check that restart in a transaction whether in M or in simpleAPI returns the same way
+# tprestart		[user, estess] 	Check that restart in a transaction whether in M or in simpleAPI returns the same way
+# deadlock		[user, estess]	Test that purposely creates a deadlock situation to verify code does not let engine lock acquire
+# 			       		requests run when they shouldn't.
 #
 echo "go test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     "unit_tests threeenp1B1 threeenp1B2 randomWalk randomWalkSimple threeenp1C2"
-setenv subtest_list_non_replic "wordfreq pseudoBank CallMTRetLen fatal_signal tptimeout sigsegv tprestart"
+setenv subtest_list_non_replic "wordfreq pseudoBank CallMTRetLen fatal_signal tptimeout sigsegv tprestart deadlock"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
