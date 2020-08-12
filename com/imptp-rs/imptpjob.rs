@@ -90,16 +90,6 @@ macro_rules! zwrite {
     };
 }
 
-// This is a macro so we can return from the handler itself
-macro_rules! call_check_retry {
-    ($ctx: expr, $func: literal) => {
-        match call($ctx, $func) {
-            Err(err) => return Err(err.into()),
-            Ok(_) => {}
-        }
-    };
-}
-
 ///
 /// We want to generate the data in a pseudo-random order,
 /// but still ensure that every number from 1 to p-1 (where p is a prime number) is present.
@@ -721,7 +711,7 @@ fn tp_stage1(ctx: &Context, jobno: usize, loop_: i64) -> Result<TransactionStatu
         let trestart: i32 = Key::variable(ctx, "$TRESTART").get_and_parse()?;
         if trestart > 2 {
             if rndm == 1 {
-                call_check_retry!(ctx, b"noop\0")
+                call(ctx, b"noop\0")?;
             // MCode: . . if rndm=2 if $TRESTART>2  h $r(10)		; Just randomly hold crit for long time
             } else if rndm == 2 {
                 thread::sleep(Duration::from_secs(rng.gen_range(1, 11)));
@@ -775,7 +765,7 @@ fn tp_stage1(ctx: &Context, jobno: usize, loop_: i64) -> Result<TransactionStatu
         // MCode: . if trigger xecute ztwormstr	; fill in $ztwormhole for below update that requires "subs"
         // GoCode: 	shr.callztwormstr = imp.NewCallMDesc("ztwormstr")
         // GoCode: _, err = shr.callztwormstr.CallMDescT(tptoken, errstr, 0)
-        call_check_retry!(ctx, b"ztwormstr\0");
+        call(ctx, b"ztwormstr\0")?;
     }
     // MCode: . set ^jrandomvariableinimptpfillprogram(fillid,I)=val
     let i = get(ctx, "I")?;
@@ -810,7 +800,7 @@ fn tp_stage1(ctx: &Context, jobno: usize, loop_: i64) -> Result<TransactionStatu
     let ztr: i32 = Key::variable(ctx, "ztr").get_and_parse()?;
     if istp != 0 {
         if ztr != 0 {
-            call_check_retry!(ctx, b"ztrcmd\0");
+            call(ctx, b"ztrcmd\0")?;
         }
         let lasti = Key::new(
             ctx,
@@ -829,7 +819,7 @@ fn tp_stage3(ctx: &Context) -> Result<TransactionStatus, Box<dyn Error>> {
     // GoCode:    _, err = shr.callimptpdztrig.CallMDescT(tptoken, errstr, 0)
     let dztrig = Key::variable(ctx, "dztrig").get_and_parse()?;
     if dztrig {
-        call_check_retry!(ctx, b"imptpdztrig\0");
+        call(ctx, b"imptpdztrig\0")?;
     }
     // MCode: . set ^entp(fillid,subs)=val
     let fillid = get(ctx, "fillid")?;
