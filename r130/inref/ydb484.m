@@ -164,7 +164,8 @@ ydb484c	;
 	write "--> Test : set x=$ZYSQLNULL write $ZYISSQLNULL(x) : "    set x=$ZYSQLNULL write $ZYISSQLNULL(x),!
 	write "--> Test : set x="" write $ZYISSQLNULL(x) : "            set x="" write $ZYISSQLNULL(x),!
 	write "--> Test : set x=0 write $ZYISSQLNULL(x) : "             set x=0 write $ZYISSQLNULL(x),!
-	write "--> Test : set x=-2.5 write $ZYISSQLNULL(x) : "          set x=2.5 write $ZYISSQLNULL(x),!
+	write "--> Test : set x=-2.5 write $ZYISSQLNULL(x) : "          set x=-2.5 write $ZYISSQLNULL(x),!
+	write "--> Test : set x=2.5 write $ZYISSQLNULL(x) : "           set x=2.5 write $ZYISSQLNULL(x),!
 	write "--> Test : set x=""abcd"" write $ZYISSQLNULL(x) : "      set x="abcd" write $ZYISSQLNULL(x),!
 	write !
 	quit
@@ -1746,9 +1747,12 @@ ydb484f	;
 	zgoto origzlevel-1
 	quit
 
+; Note: The below label is used as a target (for GOTO, ZPRINT etc.) by various tests in this M program
 dummydebug
 	set ^result=1
 	quit
+
+; Note: The below label points to an extrinsic function that is used by various tests in this M program
 dummydebugresult()
 	quit $ZYSQLNULL
 
