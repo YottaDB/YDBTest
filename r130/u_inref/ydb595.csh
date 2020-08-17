@@ -30,3 +30,9 @@ cat version.txt | grep 'Build date/time:' | sed "s/${zdate}/##ZRELDATE##/;"
 
 set sha=`$ydb_dist/yottadb -run ^%XCMD 'write $ZRELDATE' | awk '{print $3 " " $4}'`
 cat version.txt | grep 'Build commit SHA:' | sed "s/${sha}/##SHA##/;"
+# Checks that production releases do not contain the string (dirty) when using ZRELDATE and issues a failure if true
+if ( "$zyr" !~ *r9* && "$sha" =~ *\(dirty\)* ) then
+        echo 'FAILURE: $ZRELDATE contains "(dirty)" even though $ZYRELEASE is a production release (i.e. not r9*)'
+else
+	echo 'PASS: $ZRELDATE contains "(dirty)" only if $ZYRELEASE is a development release (i.e. r9*)'
+endif
