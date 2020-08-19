@@ -14,13 +14,14 @@
 #---------------------------------------------------------------------------------------------------------------------------------------------------
 # List of subtests of the form "subtestname [author] description"
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
+# ydb627 [nars]      Test that $FNUMBER(num,"",N)=num when N is non-zero returns 0
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r132 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic ""
+setenv subtest_list_non_replic "ydb627"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
