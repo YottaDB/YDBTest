@@ -1,0 +1,17 @@
+# Check for break in formating for ZSYSLOG() - Checks cases when FAO directive is used along with ZSYSLOG()
+# Testing $zsyslog(<date> <$PWD> Wine_$char(10,13). Expecting a return value of 1
+1
+# Testing $zsyslog("<date> <$PWD> Beer!_$char(10,13)". Expecting a return value of 1
+1
+# Testing $zsyslog("<date> <$PWD> Pizza!_$char(10,13)". Expecting a return value of 1
+1
+# Testing $zsyslog("!AD <$PWD> <date>"). Expecting a return value of 1
+1
+# Testing $zsyslog("<date> <$PWD> ZSYSLOGR). Expecting a return value of 1
+1
+# Verifying that strings sent using $zsyslog do show up in syslog
+Wine
+Beer!
+Pizza!
+!AD
+# End of ZSYSLOG Test
