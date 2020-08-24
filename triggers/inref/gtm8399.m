@@ -3,6 +3,9 @@
 ; Copyright (c) 2015 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -100,7 +103,9 @@ validate(origtotal,newtotal,msgcnt,trg,i)
 	zsystem "mkdir -p mangled ; $MUPIP backup ""*"" ./mangled/ >&! mangled.log"
 	set out="trg_delete.outx"
 	zsystem "$gtm_dist/mumps -run delete^gtm8399 "_trg_" >&! "_out
-	set pass=0,delstr="All existing triggers (count = "_newtotal_") deleted"
+	set pass=0
+	if newtotal=0 set delstr="No matching triggers found for deletion"
+	else  set delstr="All existing triggers (count = "_newtotal_") deleted"
 	open out:readonly
 	use out
 	for i=i:1  read line(i) quit:$zeof  do
