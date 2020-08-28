@@ -27,7 +27,7 @@ echo '# Testing $zsyslog("<date> <$PWD> ZSYSLOGR). Expecting a return value of 1
 $gtm_dist/mumps -r ^%XCMD 'write $zsyslog("'$date_signature $PWD $message'")'
 
 echo '# Verifying that strings sent using $zsyslog do show up in syslog'
-$gtm_test/$gtm_testver/com/getoper.csh "$syslog_start1" "" syslog1.txt "" $message
+$gtm_tst/com/getoper.csh "$syslog_start1" "" syslog1.txt "" $message
 $grep -o "${date_signature} $PWD Wine" syslog1.txt | awk '{print $4}'
 $grep -o "${date_signature} $PWD Beer!" syslog1.txt | awk '{print $4}'
 $grep -o "${date_signature} $PWD Pizza!" syslog1.txt | awk '{print $4}'
