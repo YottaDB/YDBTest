@@ -1,0 +1,19 @@
+# Test that interrupted and resumed TP callback routine does not hang if it drives ydb_exit()
+# Build ydb632 executable
+# Running ydb632..
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+tpcallback1: Entered
+ydb_set_st() completed successfully
+##TEST_AWK%YDB-F-KILLBYSIGSINFO1, YottaDB process [0-9]* has been killed by a signal 11 at address 0x[0-9a-zA-Z]* \(vaddr 0x[0]*\)
+%YDB-F-SIGMAPERR, Signal was caused by an address not mapped to an object
+tpcallback1: Entered
+tpcallback1: SIGSEGV seen - returning
+** Error return code from ydb_tp_st(): -150381530
+Main terminating - driving ydb_exit()
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
