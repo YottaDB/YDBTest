@@ -17,13 +17,14 @@
 # ydb627 [nars]      Test that $FNUMBER(num,"",N)=num when N is non-zero returns 0
 # ydb551 [sp]        Test to check $ZSYSLOG() doesn't break formatting when certain strings passed
 # ydb632 [estess]    Test if resuming after a signal in a TP callback routine can cause a hang.
+# ydb581 [sp]	     Test to see $ZPARSE() fetches symbolically linked files
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r132 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "ydb627 ydb551 ydb632"
+setenv subtest_list_non_replic "ydb627 ydb551 ydb632 ydb581"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then

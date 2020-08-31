@@ -1,0 +1,76 @@
+# Tests for symbolically linked file called moustache.q and link file (comb linked to moustache.q)
+# Tesing write $zparse("comb","","","","SYMLINK"): Expecting full details of file moustache.q in the order DIRECTORY, NAME, TYPE ALL
+##TEST_PATH##/
+moustache
+.q
+##TEST_PATH##/moustache.q
+
+# Tests for a link file which does not link to any file (notfound.q linked to no file)
+# Testing for write $zparse("deadlink.l","","","","SYMLINK"): Expecting details of link file deadlink.l in the order DIRECTORY, NAME, TYPE, ALL
+##TEST_PATH##/
+deadlink
+.l
+##TEST_PATH##/deadlink.l
+
+# Tests for a link file inside another folder (y.go linked to surge/x.ro)
+# Testing for write $zparse("y.go","","","","SYMLINK"): Expecting full details of link file surge/x.ro in the order DIRECTORY, NAME, TYPE, ALL
+##TEST_PATH##/surge/
+x
+.ro
+##TEST_PATH##/surge/x.ro
+
+# Tests for a link file inside another folder (tp/y.go linked to tp/abcd/x.ro)
+# Testing for write $zparse("tp/y.go","","","","SYMLINK"): Expecting full details of link file tp/abcd/x.ro in the order DIRECTORY, NAME, TYPE, ALL
+##TEST_PATH##/tp/abcd/
+x
+.ro
+##TEST_PATH##/tp/abcd/x.ro
+
+# Tests for a link file inside parent folder (ff/l.go linked to ch.ro)
+# Testing for write $zparse("ff/l.go","","","","SYMLINK"): Expecting full details of link file ch.ro in the order DIRECTORY, NAME, TYPE, ALL
+##TEST_PATH##/
+ch
+.ro
+##TEST_PATH##/ch.ro
+
+# Tests for a link file with no read permission (nn.go linked to noread.ro)
+# Testing for write $zparse("nn.go","","","","SYMLINK"): Expecting full details of link file noread.ro in the order DIRECTORY, NAME, TYPE, ALL
+##TEST_PATH##/
+noread
+.ro
+##TEST_PATH##/noread.ro
+
+# Tests for a link file with no read permission (nn.go linked to noread.ro) without SYMLINK parameter
+# Testing for write $zparse("nn.go",""): Expecting full details of file nn.go in the order DIRECTORY, NAME, TYPE, ALL
+##TEST_PATH##/
+nn
+.go
+##TEST_PATH##/nn.go
+
+# Tests for a linked file inside a folder without execute permission (np.go linked to noreaddir/q.ro)
+# Testing for write $zparse("np.go","","","","SYMLINK"): Expecting details of the file np.go in the order DIRECTORY, NAME, TYPE, ALL
+##TEST_PATH##/
+np
+.go
+##TEST_PATH##/np.go
+
+# Tests for a linked file inside a folder without execute permission (np.go linked to noreaddir/q.ro) without SYMLINK parameter
+# Testing for write $zparse("np.go",""): Expecting full details of file np.go in the order DIRECTORY, NAME, TYPE, ALL
+##TEST_PATH##/
+np
+.go
+##TEST_PATH##/np.go
+
+# Tests for a link file inside a folder without execute permission(noperm/nn.go linked to me.ro)
+# Testing for write $zparse("noperm/nn.go","","","","SYMLINK"): Expecting details of the file noperm/nn.go in the order DIRECTORY, NAME, TYPE, ALL
+##TEST_PATH##/noperm/
+nn
+.go
+##TEST_PATH##/noperm/nn.go
+
+# Tests for a link file inside a folder without execute permission(noperm/nn.go linked to me.ro) without SYMLINK parameter
+# Testing for write $zparse("noperm/nn.go",""): Expecting details of the file noperm/nn.go in the order DIRECTORY, NAME, TYPE, ALL
+##TEST_PATH##/noperm/
+nn
+.go
+##TEST_PATH##/noperm/nn.go
