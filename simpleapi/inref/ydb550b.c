@@ -31,20 +31,33 @@ int callback2();
 void check_updates(struct transargs *args);
 void timer_done(intptr_t timer_id, unsigned int handler_data_len, char *handler_data);
 
-int is_done;
+int is_done, check_for_restart;
 
 int main()
 {
 	ydb_tpfnptr_t		cb;
-	int			status, i, pid, stime, timer_id;
-	unsigned long long	timer_length;
-	ydb_buffer_t		varname;
+	int			status, check_status, i, pid, stime, timer_id, check_id, proc_done;
+	unsigned long long	timer_length, check_length;
+	ydb_buffer_t		varname, done_varname, done_value, incr_value, ret_value;
 	pid_t			is_parent;
 	struct transargs	args;
+	char			ret_value_buf[1];
 
 	cb = &callback1;
 	varname.len_alloc = varname.len_used = 8;
 	varname.buf_addr = "^VARNAME";
+	done_varname.len_alloc = done_varname.len_used = 8;
+	done_varname.buf_addr = "^NOTDONE";
+	done_value.buf_addr = "4";
+	done_value.len_alloc = done_value.len_used = 1;
+	incr_value.buf_addr = "-1";
+	incr_value.len_alloc = incr_value.len_used = 2;
+	status = ydb_set_s(&done_varname, 0, NULL, &done_value);
+	if (YDB_OK != status)
+	{
+		printf("ydb_set_s() did not return the correct status. Got: %d; Expected: %d\n", status, YDB_OK);
+		YDB_ASSERT(FALSE);
+	}
 	is_parent = fork();
 	YDB_ASSERT(is_parent != -1); // make sure fork succeeded
 	if (is_parent)
@@ -59,15 +72,28 @@ int main()
 	args.pid = pid;
 	args.ok_iteration = 1;
 	args.total_iteration = 1;
+	ret_value.buf_addr = ret_value_buf;
+	ret_value.len_alloc = sizeof(ret_value_buf);
+	ret_value.len_used = 0;
 
+	proc_done = 0;
 	is_done = 0;
+	check_for_restart = 0;
 	timer_id = 0;
-	timer_length = 10 * ONESEC;
+	check_id = 1;
+	timer_length = 60 * ONESEC;
+	check_length = 1 * ONESEC;
 	stime = time(NULL);
-	status = ydb_timer_start(timer_id, timer_length, &timer_done, sizeof(&stime), &stime);
+	status = ydb_timer_start((intptr_t)&timer_id, timer_length, &timer_done, sizeof(&stime), &stime);
 	if (YDB_OK != status)
 	{
 		printf("ydb_timer_start() did not return the correct status. Got: %d; Expected: %d\n", status, YDB_OK);
+		YDB_ASSERT(FALSE);
+	}
+	check_status = ydb_timer_start((intptr_t)&check_id, check_length, &timer_done, sizeof(&stime), &stime);
+	if (YDB_OK != check_status)
+	{
+		printf("ydb_timer_start() did not return the correct status. Got: %d; Expected: %d\n", check_status, YDB_OK);
 		YDB_ASSERT(FALSE);
 	}
 
@@ -77,12 +103,42 @@ int main()
 		YDB_ASSERT(YDB_OK == status)
 		args.ok_iteration++;
 		check_updates(&args);
+		if (check_for_restart)
+		{
+			check_for_restart = 0;
+			if (!proc_done && (args.ok_iteration < args.total_iteration))
+			{
+				proc_done = 1;
+				status = ydb_incr_s(&done_varname, 0, NULL, &incr_value, NULL);
+				if (YDB_OK != check_status)
+				{
+					printf("ydb_incr_s() did not return the correct status. Got: %d; Expected: %d\n", check_status, YDB_OK);
+					YDB_ASSERT(FALSE);
+				}
+			}
+			if (proc_done)
+			{
+				status = ydb_get_s(&done_varname, 0, NULL, &ret_value);
+				if ((YDB_OK == status) && (0 == strncmp("0", ret_value.buf_addr, 1)))
+					is_done = 1;
+			}
+			if (!is_done)
+			{
+				check_status = ydb_timer_start((intptr_t)&check_id, check_length, &timer_done, sizeof(&stime), &stime);
+				if (YDB_OK != check_status)
+				{
+					printf("ydb_timer_start() did not return the correct status. Got: %d; Expected: %d\n", check_status, YDB_OK);
+					YDB_ASSERT(FALSE);
+				}
+			}
+		}
+
 	}
-	/* Make sure some YDB_TP_RESTARTs were generated during the loop
-	 * This check is disabled on 1-CPU machines because they might not
-	 * produce any YDB_TP_RESTARTs within the 10 second time limit.
+	/* Make sure some YDB_TP_RESTARTs were generated during the loop if the
+	 * time limit expired. This check is disabled on 1-CPU machines because
+	 * they might not produce any YDB_TP_RESTARTs within the 60 second time limit.
 	 */
-	if (((int)sysconf(_SC_NPROCESSORS_ONLN)) > 1)
+	if (is_done && (((int)sysconf(_SC_NPROCESSORS_ONLN)) > 1))
 		YDB_ASSERT(args.ok_iteration < args.total_iteration);
 
 	/* The below code to wait for child processes
@@ -184,5 +240,8 @@ void check_updates(struct transargs *args)
 
 void timer_done(intptr_t timer_id, unsigned int handler_data_len, char *handler_data)
 {
-	is_done = 1;
+	if (0 == timer_id)
+		is_done = 1;
+	else
+		check_for_restart = 1;
 }
