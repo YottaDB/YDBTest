@@ -1,0 +1,30 @@
+# Starting from V6.3-009 MUPIP JOURNAL -EXTRACT supports -GVPATFILE qualifer. The new qualifier takes in
+# a pattern file and searches the region for any variable that contains a value matching the pattern.
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Using MUPIP JOURNAL EXTRACT with the GVPATFILE qualifer
+# Verify that all variables exept a(2) have been extracted
+0 ^a(1)="A"
+0 ^a(3)="AB"
+0 ^a(4)="A*..B"
+0 ^a(5)="A..B"
+0 ^a(6)="A1B1"
+# Using MUPIP JOURNAL EXTRACT with the GVPATFILE qualifer
+# Verify that a(1) and a(4) have been extracted
+0 ^a(1)="A"
+0 ^a(4)="A*..B"
+# Using MUPIP JOURNAL EXTRACT with the GVPATFILE qualifer
+# Verify that only a(6) has been extracted
+0 ^a(6)="A1B1"
+# Verify that when no file is passed to -GVPATFILE produces a FILEOPENFAIL error
+##TEST_AWK%YDB-I-MUJNLSTAT, Initial processing started at [A-Z][a-z][a-z] [A-Z][a-z][a-z]  [0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] [0-9][0-9][0-9][0-9]
+%YDB-E-FILEOPENFAIL, Failed to open file ##TEST_PATH##/pat4.txt
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
+%YDB-I-FILENOTCREATE, Journal extract file ex.mjf not created
+##TEST_AWK%GTM-I-MUJNLSTAT, End processing at [A-Z][a-z][a-z] [A-Z][a-z][a-z]  [0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] [0-9][0-9][0-9][0-9]
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
