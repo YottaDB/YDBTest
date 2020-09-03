@@ -407,35 +407,35 @@ YDB>
 !	DISALLOW ANY2(start, shutdown, checkhealth, statslog, showbacklog, changelog)
 !
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -start -shutdown ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPRECEIVERFILTER
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -start -checkhealth ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPRECEIVERFILTER
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -start -statslog="dummylog" ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPRECEIVERFILTER
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -start -showbacklog ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPRECEIVERFILTER
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -start -changelog ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPRECEIVERFILTER
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -shutdown -checkhealth ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPRECEIVERFILTER
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -shutdown -statslog="dummylog" ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPRECEIVERFILTER
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -shutdown -showbacklog ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPRECEIVERFILTER
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -shutdown -changelog ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPRECEIVERFILTER
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -checkhealth -statslog="dummylog" ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPRECEIVERFILTER
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -checkhealth -showbacklog ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPRECEIVERFILTER
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -checkhealth -changelog ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPRECEIVERFILTER
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -statslog="dummylog" -showbacklog ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPRECEIVERFILTER
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -statslog="dummylog" -changelog ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPRECEIVERFILTER
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -showbacklog -changelog ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPRECEIVERFILTER
 !
 !	VMS : DISALLOW noresync OR loadinst
 !
@@ -443,25 +443,25 @@ YDB>
 !	DISALLOW NOT(start OR shutdown OR checkhealth OR statslog OR showbacklog OR changelog)
 !
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPRECEIVERFILTER
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -buff=10 ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPRECEIVERFILTER
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -filter="abcd" ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPRECEIVERFILTER
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -listenport=15 ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPRECEIVERFILTER
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -log="dummylog" ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPRECEIVERFILTER
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -stopsourcefilter ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPRECEIVERFILTER
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -timeout ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPRECEIVERFILTER
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -notimeout ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPRECEIVERFILTER
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -updateonly ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPRECEIVERFILTER
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -receiver -updateresync ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPRECEIVERFILTER
 !
 !	DISALLOW (((start AND NOT(updateonly)) OR changelog) AND NOT(log))
 !
@@ -1215,11 +1215,11 @@ YDB>
 --------- Testing : ##SOURCE_PATH##/mupip  reorg -upgrade -index_fill_factor=5 ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT ENCRYPT EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR UPGRADE
 --------- Testing : ##SOURCE_PATH##/mupip  reorg -upgrade -resume ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT ENCRYPT EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR RESUME UPGRADE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT ENCRYPT EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR NOCOALESCE NOSPLIT NOSWAP RESUME UPGRADE
 --------- Testing : ##SOURCE_PATH##/mupip  reorg -upgrade -select="^*" ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT UPGRADE
 --------- Testing : ##SOURCE_PATH##/mupip  reorg -upgrade -user_defined_reorg="^*" ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT ENCRYPT EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR RESUME USER_DEFINED_REORG UPGRADE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT ENCRYPT EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR NOCOALESCE NOSPLIT NOSWAP RESUME TRUNCATE USER_DEFINED_REORG UPGRADE
 --------- Testing : ##SOURCE_PATH##/mupip  reorg -upgrade -downgrade ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: UPGRADE DOWNGRADE
 !
@@ -1232,11 +1232,11 @@ YDB>
 --------- Testing : ##SOURCE_PATH##/mupip  reorg -downgrade -index_fill_factor=5 ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT ENCRYPT EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR UPGRADE DOWNGRADE
 --------- Testing : ##SOURCE_PATH##/mupip  reorg -downgrade -resume ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT ENCRYPT EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR RESUME UPGRADE DOWNGRADE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT ENCRYPT EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR NOCOALESCE NOSPLIT NOSWAP RESUME UPGRADE DOWNGRADE
 --------- Testing : ##SOURCE_PATH##/mupip  reorg -downgrade -select="^*" ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT UPGRADE DOWNGRADE
 --------- Testing : ##SOURCE_PATH##/mupip  reorg -downgrade -user_defined_reorg="^*" ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT ENCRYPT EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR RESUME USER_DEFINED_REORG UPGRADE DOWNGRADE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT ENCRYPT EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR NOCOALESCE NOSPLIT NOSWAP RESUME TRUNCATE USER_DEFINED_REORG UPGRADE DOWNGRADE
 --------- Testing : ##SOURCE_PATH##/mupip  reorg -downgrade -upgrade ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: UPGRADE DOWNGRADE
 !
@@ -1288,9 +1288,9 @@ YDB>
 !
 !	DISALLOW (MUPIP REORG -TRUNCATE AND (UPGRADE OR DOWNGRADE OR SAFEJNL OR NOSAFEJNL))
 --------- Testing : ##SOURCE_PATH##/mupip  reorg -upgrade -truncate ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT ENCRYPT EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR RESUME USER_DEFINED_REORG TRUNCATE UPGRADE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT ENCRYPT EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR NOCOALESCE NOSPLIT NOSWAP RESUME TRUNCATE UPGRADE
 --------- Testing : ##SOURCE_PATH##/mupip  reorg -downgrade -truncate ------------
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT ENCRYPT EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR RESUME USER_DEFINED_REORG TRUNCATE UPGRADE DOWNGRADE
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT ENCRYPT EXCLUDE FILL_FACTOR INDEX_FILL_FACTOR NOCOALESCE NOSPLIT NOSWAP RESUME TRUNCATE UPGRADE DOWNGRADE
 --------- Testing : ##SOURCE_PATH##/mupip  reorg -safejnl -truncate ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SAFEJNL UPGRADE DOWNGRADE
 --------- Testing : ##SOURCE_PATH##/mupip  reorg -nosafejnl -truncate ------------

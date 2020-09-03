@@ -92,7 +92,7 @@ $MUPIP replicate -receiv -statslog=ON >> & RCVR4_ignore.out
 $MUPIP replicate -receiv -statslog=OFF >> & RCVR5_ignore.out
 $MUPIP replicate -receiv -statslog=OFF >> & RCVR6_ignore.out
 $MUPIP replicate -receiv -statslog=OFF -changelog -log=RCVR7.log
-%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: START SHUTDOWN CHECKHEALTH STATSLOG SHOWBACKLOG CHANGELOG STOPRECEIVERFILTER
 sleep 4
 $MUPIP replicate -receiv -changelog -log=RCVR8.log
 Change log initiated with file RCVR8.log
