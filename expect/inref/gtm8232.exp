@@ -4,6 +4,9 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -38,7 +41,10 @@ send "stty intr ^c\r"
 
 # Main test body, loosen timeout
 expect "NEXT_COMM"
-set timeout 30
+# This timeout was increased from 30 seconds to 60 seconds in September 2020
+# because we had a test failure on a 32 bit ARM machine due to this part of the
+# test timing out.
+set timeout 60
 expect_after {
     timeout { puts "TEST-F-FAIL timeout <$expect_out(buffer)>"; exit 1 }
 }
