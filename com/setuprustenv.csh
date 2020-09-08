@@ -31,6 +31,12 @@ else
 	set rust_target_dir = "release"
 endif
 
+# If `bindgen` is already installed, use that instead of compiling from source.
+# This can save almost half an hour when compiling on Raspberry PIs.
+if (`where bindgen` != "") then
+	set cargo_build = "$cargo_build --no-default-features"
+endif
+
 # Set link arguments for libyottadb.so
 setenv RUSTFLAGS "-C link-args=$ci_ldpath$ydb_dist -L$ydb_dist $tst_ld_yottadb"
 # Give a backtrace if the wrapper panics
