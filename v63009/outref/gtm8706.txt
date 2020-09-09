@@ -1,0 +1,19 @@
+# V6.3-009 now supports the -STOPRECEIVERFILTER qualifer for MUPIP REPLICATE and is not compatible with
+# any other -RECEIVER qualifer. Using the -STOPRECEIVERFILTER qualifer will turn off any active filter in
+# the receiver server without turning off the receiver server, if there is no active filter a non-success
+# code is returned.
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Starting source server and receiver server
+# Using -STOPRECEIVERFILTER with an active filters
+##TEST_AWK[A-Z][a-z][a-z] [A-Z][a-z][a-z] [ 0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] [0-9][0-9][0-9][0-9] : Initiating STOPRECEIVERFILTER operation on receiver server pid \[[0-9]{1,6}\]
+Stop filter initiated
+# Using -STOPRECEIVERFILTER with no active filters
+##TEST_AWK[A-Z][a-z][a-z] [A-Z][a-z][a-z] [ 0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] [0-9][0-9][0-9][0-9] : Initiating STOPRECEIVERFILTER operation on receiver server pid \[[0-9]{1,6}\]
+No filter currently active
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
