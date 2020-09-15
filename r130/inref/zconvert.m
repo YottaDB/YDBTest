@@ -326,7 +326,7 @@ FUNCPREVDECTOHEX(d,l)
 	if d["-" do
 	. s isn=1,d=$extract(d,2,$length(d))
 	if ($l(d)<18) do
-	. s h=$$FUNCFM^%DH(d,l)
+	. s h=$$FUNC^%DH(d,l)
 	else  do
 	. s h=$$CONVERTBASE^%CONVBASEUTIL(d,10,16)
 	if (isn&(h'="0")) do
@@ -339,6 +339,6 @@ FUNCPREVDECTOHEX(d,l)
 FUNCPREVHEXTODEC(h)
 	quit:"-"=$ze(h,1) ""
 	n d s d=$ze(h,1,2) s:("0x"=d)!("0X"=d) h=$ze(h,3,$zlength(h))
-	quit:$l(h)<15 $$FUNCFM^%HD(h)
+	quit:$l(h)<15 $$FUNC^%HD(h)
 	s h=$tr(h,"abcdef","ABCDEF")
 	quit $$CONVERTBASE^%CONVBASEUTIL(h,16,10)
