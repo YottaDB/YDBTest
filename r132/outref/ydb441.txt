@@ -1,0 +1,10 @@
+A regression was introduced in GT.M V6.3-006 that produced an
+assert failure or a GTMCHECK fatal error when this script was
+executed. This was fixed as part of V6.3-009. This test
+functions as a test for both YottaDB issue ydb441 and GT.M issue
+gtm-9114 verifying that auto-ZLINK works properly when zlinking
+a new version of an M routine after changing ZROUTINES.
+%YDB-E-ZLINKFILE, Error while zlinking "bar2",%YDB-E-ZLMODULE, Object file name does not match module name: bar
+		At M source location +3^base
+
+YDB>

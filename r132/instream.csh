@@ -20,13 +20,14 @@
 # ydb581 [sp]        Test to see $ZPARSE() fetches symbolically linked files
 # ydb657 [nars]      Test that replication connection happens using TLS 1.3 if OpenSSL >= 1.1.1 and TLS 1.2 otherwise
 # ydb630 [sp]        Test to see that $ZSYSLOG() uses consistent process names for ydb process
+# ydb441 [bdw]       Test that Auto-ZLINK works properly when zlinking a new version of an M file after changing $ZROUTINES
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r132 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "ydb627 ydb551 ydb632 ydb581 ydb630"
+setenv subtest_list_non_replic "ydb627 ydb551 ydb632 ydb581 ydb630 ydb441"
 setenv subtest_list_replic     "ydb657"
 
 if ($?test_replic == 1) then
