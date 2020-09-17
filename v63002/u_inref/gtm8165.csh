@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -56,7 +56,7 @@ foreach arg ($testlist)
 	# Hence the backgrounding (to note down the pid) and later wait for the pid to die before searching for messages in syslog.
 	($ydb_dist/mumps -run $arg^gtm8165 >& tpnotacid1_$arg.out &; echo $! >& pid1_$arg.out) >& bckg1_$arg.out
 	set pid = `cat pid1_$arg.out`
-	$gtm_tst/com/wait_for_proc_to_die.csh $pid
+	$gtm_tst/com/wait_for_proc_to_die.csh $pid 300
 	cat tpnotacid1_$arg.out
 	$gtm_tst/com/getoper.csh "$t" "" getoper1_$arg.txt
 	# Sleep included to avoid 1 iteration reading the message from a previous one
