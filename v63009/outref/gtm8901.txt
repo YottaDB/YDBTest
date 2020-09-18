@@ -20,11 +20,11 @@ mumps.dat
 # Verify that only a(6) has been extracted
 0 ^a(6)="A1B1"
 # Verify that when no file is passed to -GVPATFILE produces a FILEOPENFAIL error
-##TEST_AWK%YDB-I-MUJNLSTAT, Initial processing started at [A-Z][a-z][a-z] [A-Z][a-z][a-z]  [0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] [0-9][0-9][0-9][0-9]
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 %YDB-E-FILEOPENFAIL, Failed to open file ##TEST_PATH##/pat4.txt
 %YDB-E-MUPCLIERR, Action not taken due to CLI errors
 %YDB-I-FILENOTCREATE, Journal extract file ex.mjf not created
-##TEST_AWK%GTM-I-MUJNLSTAT, End processing at [A-Z][a-z][a-z] [A-Z][a-z][a-z]  [0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] [0-9][0-9][0-9][0-9]
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
