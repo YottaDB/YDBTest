@@ -1,34 +1,36 @@
 # YottaDB Test System
-All software in this package is part of YottaDB (https://yottadb.com) each
+
+All software in this package is part of YottaDB (<https://yottadb.com>) each
 file of which identifies its copyright holders. The software is made available
 to you under the terms of a license. Refer to the [LICENSE](LICENSE) file for details.
 
-Homepage: https://gitlab.com/YottaDB/DB/YDB
+Homepage: <https://gitlab.com/YottaDB/DB/YDB>
 
-Documentation: https://yottadb.com/resources/documentation/
+Documentation: <https://yottadb.com/resources/documentation/>
 
 
 # Overview
 
 Documentation on usage is under development as time permits and will be released from time to time. For the present, please read the shell scripts. The .csh files are shell scripts written for the tcsh shell.
 
-# Pre-commit hooks
+## Pre-commit hooks
 
 To install the pre-commit hooks, run the following:
 
 ```sh
 ln -s ../../pre-commit .git/hooks
-````
+```
 
-# License
+## License
 
 If you receive this package integrated with a YottaDB distribution, the license for your YottaDB regression test suite is that of YottaDB under the terms of its license.
 
 Simple aggregation or bundling of this package with another for distribution does not create a derivative work. To make clear the distinction between this package and another with which it is aggregated or bundled, it suffices to place the package in a separate directory or folder when distributing the aggregate or bundle.
 
-Should you receive this package not integrated with a YottaDB distribution, and missing a COPYING file, you may create a file called COPYING from the GNU Affero General Public License Version 3 or later (https://www.gnu.org/licenses/agpl.txt) and use this package under the terms of that license.
+Should you receive this package not integrated with a YottaDB distribution, and missing a COPYING file, you may create a file called COPYING from the GNU Affero General Public License Version 3 or later (<https://www.gnu.org/licenses/agpl.txt>) and use this package under the terms of that license.
 
-# Pre-requesites
+## Pre-requisites
+
 The following binaries are required to run the test system:
 
 - ksh
@@ -39,6 +41,7 @@ The following binaries are required to run the test system:
 - sort
 
 Currently tcsh is the only supported shell, make sure that tcsh is properly installed and switch to it with the following command:
+
 ```sh
 tcsh
 ```
@@ -50,14 +53,16 @@ sudo ln -s /usr/bin/tcsh /usr/local/bin/tcsh
 ```
 
 Make a directory to store all YottaDB related files taken from the repository
+
 ```sh
 sudo mkdir /testing
 ```
 
-# Environment variables
-Create a .cshrc file inside the home directory if there is not one already and add the following lines:
+## Environment variables
 
-```sh
+Create a `.cshrc` file inside the home directory if there is not one already and add the following lines:
+
+```csh
 set autolist
 set backslash_quote
 set dextract
@@ -78,9 +83,9 @@ set HOST=$HOST:r
 setenv HOST $HOST:r
 ```
 
-Create a .cshrc-int file inside the home directory with the following lines.
+Create a `.cshrc-int` file inside the home directory with the following lines.
 
-```sh
+```csh
 setenv mailid user@mail.com # Replace with your email here
 
 setenv verno R131
@@ -103,11 +108,12 @@ setenv tst_local /testarea1	# Can be replaced with any directory
 alias gtmtest $gtm_test/$gtm_testver/com/gtmtest.csh -ml $mailid -failmail -failsubtestmail -report on -nounicode -noencrypt -env eall_noinverse=1 $*
 ```
 
-# Install YottaDB
+## Install YottaDB
 
-Instructions to install YottaDB: https://gitlab.com/YottaDB/DB/YDB/-/blob/master/README.md
+Instructions to install YottaDB: <https://gitlab.com/YottaDB/DB/YDB/-/blob/master/README.md>
 
-Before installing YottaDB create a directory to store the build inside `$gtm_root`
+Before installing YottaDB, create a directory to store the build inside `$gtm_root`:
+
 ```sh
 cd $gtm_root
 sudo mkdir $verno ; cd $verno
@@ -116,20 +122,20 @@ sudo mkdir dbg pro
 
 Install the pro version in `$gtm_root/$verno/pro` and the dbg version in `$gtm_root/$verno/dbg`
 
-# Setting up the build
-Create and run the build.csh file inside the directory that YDB was cloned
+## Setting up the build
 
-```sh
-cat /testing/YDB/build.csh
+Create and run the `build.csh` file inside the directory that YDB was cloned
+
+```csh
 #!/usr/bin/tcsh
 if (! -d $gtm_dist/obj) then
         set sudostr = "sudo mkdir $gtm_dist/obj"
         $sudostr
         @ status1 = $status
 if ($status1) then
-	echo "BUILDREL_IMAGE_COMMON-E-SUDOFAIL : $sudostr failed with status = $status1. Exiting..."
-	exit -1
-	endif
+        echo "BUILDREL_IMAGE_COMMON-E-SUDOFAIL : $sudostr failed with status = $status1. Exiting..."
+        exit -1
+        endif
 endif
 cp -pa YDB/cmake/*.a $gtm_obj/
 
@@ -137,10 +143,10 @@ if (! -d $gtm_ver/tools) then
         set sudostr = "sudo mkdir $gtm_ver/tools"
         $sudostr
         @ status1 = $status
-if ($status1) then
-	echo "BUILDREL_IMAGE_COMMON-E-SUDOFAIL : $sudostr failed with status = $status1. Exiting..."
-	exit -1
-	endif
+        if ($status1) then
+                echo "BUILDREL_IMAGE_COMMON-E-SUDOFAIL : $sudostr failed with status = $status1. Exiting..."
+                exit -1
+        endif
 endif
 set sudostr = "sudo chown $user.gtc $gtm_ver/tools"
 $sudostr
@@ -183,17 +189,21 @@ foreach ext (c s msg h si)
         cp -pa YDB/sr_linux/*.$ext $gtm_ver/$dir/
 end
 ```
-# Getting the YDBTest repository
-Go into `$gtm_root` and create the gtm_test directory where the files for the test repository will be stored
+
+## Getting the YDBTest repository
+
+Go into `$gtm_root` and create the `gtm_test` directory where the files for the test repository will be stored
+
 ```sh
 cd $gtm_root
 sudo mkdir gtm_test ; cd gtm_test
 sudo mkdir T131
 ```
+
 Create a simple script within the `testing` directory that will sync files to the specified test version
 
 ```sh
-cat testing/synctest
+$ cat testing/synctest
 #!/usr/bin/tcsh -f
 if ("" == "$1") then
         echo "missing Test directory to sync"
@@ -206,7 +216,8 @@ endif
 sudo rsync -av --delete /testing/YDBTest/ $gtm_test/$1 # Change to wherever YDBTest repository is stored
 ```
 
-Get a clone of the YDBTest repository: 
+Get a clone of the YDBTest repository:
+
 ```sh
 git clone https://gitlab.com/YottaDB/DB/YDBTest.git
 ```
@@ -230,11 +241,15 @@ cat testing/YDBTest/com/check_setup_dependencies.csh
 #endif
 ...
 ```
+
 Now the test repository can be synced
+
 ```sh
 ../synctest T131
 ```
-# Create output directory
+
+## Create output directory
+
 Before the test can be run the output needs to be stored in an output directory, create a output directory with the proper permssions
 
 ```sh
@@ -243,11 +258,12 @@ cd /testarea1 ; sudo mkdir $user
 sudo chown -R $user.gtc $user
 ```
 
-# Running a test
-To run a test make sure that the shell is tcsh and source .cshrc-int with `s`
+## Running a test
+To run a test make sure that the shell is `tcsh` and source `.cshrc-int` with `s`
 
-Run a test by using `gtmtest`, the following arguments are needed to run the gtmtest properly
-1. `-s`: Calls a specific test version's gtmtest.csh
+Run a test by using `gtmtest`. The following arguments are needed to run the gtmtest properly:
+
+1. `-s`: Calls a specific test version's `gtmtest.csh`
 2. `-t`: Tells the test system to run a specific test
 3. `-st`: An optional argument that will run a specific subtest
 4. `-replic`: An optional argument that runs the test with replication turned on
@@ -258,12 +274,17 @@ An example of how to run the test system
 gtmtest -s T131 -t basic
 gtmtest -s T131 -t basic -replic
 ```
+
 ### Other useful arguments
+
 1. `-keep`: If a test passes, files related to the test will not be deleted
 2. `-nozip`: Leaves files unzipped in the output directory
-3. `-num_runs`: Using this qualifer followed by an integer will run the test for a specified number of times
+3. `-num_runs`: Using this qualifier followed by an integer will run the test for a specified number of times
 4. `-h`: Prints out all valid arguments and a description of what they do
 5. `-E_ALL`: Runs all tests (may take a long time to run all tests)
 
 ### Warnings
-Currently not all tests will run properly on the local test system. For example none of the Go tests will run without the YDBGo repository and multi-system tests will not work either.
+
+Currently not all tests will run properly on the local test system. For example none of the Go tests will run without the [YDBGo] repository and multi-system tests will not work either.
+
+[YDBGo]: https://gitlab.com/YottaDB/Lang/YDBGo
