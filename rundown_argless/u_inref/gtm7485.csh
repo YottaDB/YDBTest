@@ -4,6 +4,9 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -41,7 +44,9 @@ echo ""
 		; echo $! >&! recv_shut_pid.log)	>&! bg_recv_shut.out
 
 # Wait until the whitebox test case gives us a go
-$gtm_tst/com/wait_for_log.csh -log recv_shut.out -message 'GTMRECV_SHUTDOWN' -duration 30
+# This timeout was increased from 30 to 120 in September 2020 due to a failure on armv7l where it took
+# 53 seconds for the receiver server to shut down.
+$gtm_tst/com/wait_for_log.csh -log recv_shut.out -message 'GTMRECV_SHUTDOWN' -duration 120
 
 # Now, start an argument-less rundown
 $MUPIP rundown >&! mupip_rundown1.outx
