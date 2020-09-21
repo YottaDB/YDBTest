@@ -42,7 +42,12 @@ setenv gtm_test_maxdim 15
 setenv gtm_test_parms "1,7"
 setenv gtm_test_dbfill "IMPRTP"
 $gtm_tst/com/imptp.csh >&! imptp.out
-sleep 30
+
+# Sleep a random amount (10-30 seconds) and then make sure some activity has happened on the receiver side before
+# we crash it (sometimes takes slow PI systems more than the simple 30 second wait that used to be here).
+sleep `$ydb_dist/yottadb -run %XCMD 'write 10+$random(21)'`
+$gtm_tst/com/rfstatus.csh "WAIT_FOR_B_ACTIVITY"
+$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/wait_until_rcvr_trn_processed_above.csh +500 >>& RCVR_activity_wait.out "
 
 # RECEIVER SIDE (B) CRASH
 $gtm_tst/com/rfstatus.csh "BEFORE_SEC_B_CRASH:"

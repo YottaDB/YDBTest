@@ -16,6 +16,7 @@
 $gtm_tst/com/dbcreate.csh mumps 1 >>& dbcreate.out
 
 # The "writeslashtls" portion of the below test hangs weirdly on ARMV6L for reasons not yet clear.
+# ** Note, as of 09/2020, the same weird hang has started happening on ARMV7L as well.
 # The hang is in the below M line in writeslashtls^gtm8165.
 #
 #	v63002/inref/gtm8165.m
@@ -33,7 +34,8 @@ $gtm_tst/com/dbcreate.csh mumps 1 >>& dbcreate.out
 #	and continues executing the rest of the test.
 # This looks like some tls package related issue on ARMV6L so for now this part of the test is disabled there.
 
-if ("armv6l" == `uname -m`) then
+set sysarch = `uname -m`
+if (("armv6l" == "$sysarch") || ("armv7l" == "$sysarch")) then
 	set writeslashtls_disabled = 1
 	set writeslashtls = ""
 else
@@ -56,7 +58,7 @@ foreach arg ($testlist)
 	# Hence the backgrounding (to note down the pid) and later wait for the pid to die before searching for messages in syslog.
 	($ydb_dist/mumps -run $arg^gtm8165 >& tpnotacid1_$arg.out &; echo $! >& pid1_$arg.out) >& bckg1_$arg.out
 	set pid = `cat pid1_$arg.out`
-	$gtm_tst/com/wait_for_proc_to_die.csh $pid 300
+	$gtm_tst/com/wait_for_proc_to_die.csh $pid
 	cat tpnotacid1_$arg.out
 	$gtm_tst/com/getoper.csh "$t" "" getoper1_$arg.txt
 	# Sleep included to avoid 1 iteration reading the message from a previous one

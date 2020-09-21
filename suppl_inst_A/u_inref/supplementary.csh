@@ -16,6 +16,8 @@
 
 # Test basic supplementary replication
 #
+# Set gtm_test_spanreg to 0 so we avoid random mappings that can cause this test to fail.
+setenv gtm_test_spanreg 0
 
 source $gtm_tst/com/gtm_test_setbeforeimage.csh
 # 50% chances of using custom instance node name
