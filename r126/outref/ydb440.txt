@@ -25,23 +25,11 @@
           3      PUSHL       I^#1 [0x1]                               ;OC_WTEOL
           5      PUSHAB      @GTM$LITERAL+0x60                        ;OC_LITC
           8      PUSHAB      B^0(r9)                                  ;OC_WRITE
-          10     PUSHAB      @GTM$LITERAL+0x20                        ;OC_LITC
-          13     MOVAB       B^0(r9)                                  ;OC_STOTEMP
-          16     PUSHAB      B^32(r9)                                 ;OC_CONUM
-          18     MOVAB       B^32(r9)                                 ;OC_STO
-          21     PUSHAB      @GTM$LITERAL+0x20                        ;OC_LITC
-          24     PUSHAB      @GTM$LITERAL+0x0                         ;OC_LITC
-          27     PUSHAB      B^32(r9)                                 ;OC_FORINIT
-##TEST_AWK          31     BGTR        x\^0x[A-F0-9]*                                   ;OC_JMPGTR
-          32     JSB         @W^xf_restartpc(R11)                     ;OC_FORCHK1
-          34     PUSHL       I^#1 [0x1]                               ;OC_WTEOL
-          36     PUSHAB      @B^0(r8)                                 ;OC_WRITE
-          38     PUSHAB      @GTM$LITERAL+0x20                        ;OC_LITC
-          41     PUSHAB      @GTM$LITERAL+0x0                         ;OC_LITC
-          44     JSB         @W^xf_restartpc(R11)                     ;OC_FORLOOP
-          50     JSB         @B^xf_linestart(R11)                     ;OC_LINESTART
-          51     JSB         @B^xf_ret(R11)                           ;OC_RET
-          52     JSB         @B^xf_ret(R11)                           ;OC_RET
+          10     PUSHAB      @GTM$LITERAL+0x40                        ;OC_LITC
+          13     PUSHL       I^#19 [0x13]                             ;OC_COMMARG
+          16     JSB         @B^xf_linestart(R11)                     ;OC_LINESTART
+          17     JSB         @B^xf_ret(R11)                           ;OC_RET
+          18     JSB         @B^xf_ret(R11)                           ;OC_RET
 ##SUSPEND_OUTPUT DYNAMIC_LITERALS
 ##ALLOW_OUTPUT NODYNAMIC_LITERALS
 # mumps -machine -lis=xecutebug.lis xecutebugA.m
@@ -63,15 +51,7 @@
           1      PUSHL       I^#0 [0x0]                               ;OC_LINEFETCH
           3      PUSHL       I^#1 [0x1]                               ;OC_WTEOL
           5      PUSHAB      @GTM$LITERAL+0x60                        ;OC_WRITE
-          7      MOVAB       @GTM$LITERAL+0x20                        ;OC_STOTEMP
-          10     PUSHAB      B^0(r9)                                  ;OC_CONUM
-          12     MOVAB       B^0(r9)                                  ;OC_STO
-          15     PUSHAB      @GTM$LITERAL+0x0                         ;OC_FORINIT
-##TEST_AWK          19     BGTR        x\^0x[A-F0-9]*                                   ;OC_JMPGTR
-          20     JSB         @W^xf_restartpc(R11)                     ;OC_FORCHK1
-          22     PUSHL       I^#1 [0x1]                               ;OC_WTEOL
-          24     PUSHAB      @B^0(r8)                                 ;OC_WRITE
-          26     JSB         @W^xf_restartpc(R11)                     ;OC_FORLOOP
-          32     JSB         @B^xf_linestart(R11)                     ;OC_LINESTART
-          33     JSB         @B^xf_ret(R11)                           ;OC_RET
-          34     JSB         @B^xf_ret(R11)                           ;OC_RET
+          7      PUSHL       I^#19 [0x13]                             ;OC_COMMARG
+          10     JSB         @B^xf_linestart(R11)                     ;OC_LINESTART
+          11     JSB         @B^xf_ret(R11)                           ;OC_RET
+          12     JSB         @B^xf_ret(R11)                           ;OC_RET
