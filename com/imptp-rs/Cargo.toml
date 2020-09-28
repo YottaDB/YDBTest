@@ -6,9 +6,16 @@ description = "Rust imptp test runner"
 version = "0.1.0"
 
 [dependencies]
-yottadb = { git = "https://gitlab.com/YottaDB/Lang/YDBRust.git" }
 chrono = "0.4"
 rand = "0.7"
+
+[dependencies.yottadb]
+git = "https://gitlab.com/YottaDB/Lang/YDBRust.git"
+default-features = false
+
+[features]
+vendor = ["yottadb/vendor"]
+default = ["vendor"]
 
 [[bin]]
 name = "imptp"
