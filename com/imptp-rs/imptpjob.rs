@@ -472,7 +472,7 @@ fn do_job(ctx: &Context, jobid: &str, jobindex: usize) -> YDBResult<()> {
 
         // Returns whether the function returned `CALLINAFTERXIT`
         let call_allow_callinafterexit =
-            |f: &dyn Fn(&Context) -> Result<_, Box<dyn Error>>| match f(ctx) {
+            |f: &dyn Fn(&Context) -> Result<_, Box<dyn Error + Send + Sync>>| match f(ctx) {
                 Err(err) => match err.downcast_ref() {
                     Some(YDBError { status, .. }) if *status == craw::YDB_ERR_CALLINAFTERXIT => {
                         true
@@ -686,7 +686,7 @@ fn do_job(ctx: &Context, jobid: &str, jobindex: usize) -> YDBResult<()> {
 }
 
 // GoCode: tpfnStage1 is the stage 1 TP callback routine
-fn tp_stage1(ctx: &Context, jobno: usize, loop_: i64) -> Result<TransactionStatus, Box<dyn Error>> {
+fn tp_stage1(ctx: &Context, jobno: usize, loop_: i64) -> Result<TransactionStatus, Box<dyn Error + Send + Sync>> {
     let mut rng = rand::thread_rng();
 
     // MCode: . set ^arandom(fillid,subsMAX)=val
@@ -813,7 +813,7 @@ fn tp_stage1(ctx: &Context, jobno: usize, loop_: i64) -> Result<TransactionStatu
 }
 
 // GoCode: tpfnStage3 is the stage 3 TP callback routine
-fn tp_stage3(ctx: &Context) -> Result<TransactionStatus, Box<dyn Error>> {
+fn tp_stage3(ctx: &Context) -> Result<TransactionStatus, Box<dyn Error + Send + Sync>> {
     // MCode: . do:dztrig ^imptpdztrig(2,istp<2)
     // GoCode: if shr.dztrig {
     // GoCode:    _, err = shr.callimptpdztrig.CallMDescT(tptoken, errstr, 0)
