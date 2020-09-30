@@ -23,3 +23,14 @@ gpgkey-verify:
     - wget https://gitlab.com/YottaDB/DB/YDB/-/raw/master/ci/commit_gpgkey_verify.sh
     - chmod +x commit_gpgkey_verify.sh
     - ./commit_gpgkey_verify.sh
+
+# Test that imptp.rs builds with the latest commit of YDBRust
+build-imptp-rs:
+  image:
+      name: yottadb/yottadb-debian:latest
+      entrypoint: [""]
+  stage: build
+  script:
+    - apt-get update
+    - apt-get install -yq --no-install-recommends build-essential bindgen
+    - cd com/imptp-rs; cargo check --no-default-features
