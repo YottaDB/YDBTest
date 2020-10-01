@@ -3,7 +3,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -92,6 +92,8 @@ setenv gtm_test_jobid 0
 setenv gtm_test_dbfillid 0
 setenv gtm_test_is_gtcm 0
 setenv gtm_test_is_unicode_aware "FALSE" # this flag is for individual tests to reset when they use existing com files for UTF-8 specific operations
+# Reset default coredump_filter mask to include file-backed mapped memory for tests (default is 0x33).
+echo 0x3F > /proc/self/coredump_filter
 
 ###########################################################################################################
 #### set various random test options. This might change the environment variables set above this point

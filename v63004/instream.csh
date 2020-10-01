@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -64,13 +64,6 @@ endif
 if (("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) || ("HOST_LINUX_AARCH64" == $gtm_test_os_machtype)) then
 	# gtm8906 subtest could take 1 hour or more on the slower (relative to x86_64) ARM boxes even with pro so disable it there.
 	setenv subtest_exclude_list "$subtest_exclude_list gtm8906"
-endif
-
-if ($gtm_test_glibc_225_plus) then
-	# Systems with glibc version > 2.25 cause the v63004/gtm8916 subtest to hang in the receiver server
-	# in "pthread_cond_signal". The current suspicion is that it is a glibc issue with handling kill -9
-	# of processes using pthread_mutex_*() and pthread_cond_*() calls. Temporarily disable this test in those boxes.
-	setenv subtest_exclude_list "$subtest_exclude_list gtm8916"
 endif
 
 # Submit the list of subtests
