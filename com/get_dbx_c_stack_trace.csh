@@ -99,7 +99,11 @@ if (0 != $dbx_status) then
 	if ($?corefile) then
 		echo "TEST-E-DBXERROR : Unable to get C-stack trace using $dbx $image on the core file $corefile"
 	else
-		set pid_alive = `ps -p $pid -o pid | $tst_awk '/[0-9]+/ {print $1}'`	# BYPASSOK ps since it is specifically ps -p
+		if ( 0 != $pid) then
+			set pid_alive = `ps -p $pid -o pid | $tst_awk '/[0-9]+/ {print $1}'`	# BYPASSOK ps since it is specifically ps -p
+		else # skip the ps command if pid = 0 to avoid a process ID out of range error from the ps command
+			set pid_alive = 0
+		endif
 		if ( $pid_alive == "" ) then
 			echo "TEST-E-DBXPIDNOTALIVE : $pid is not alive. Unable to get C-stack trace using $dbx $image on it..."
 		else
