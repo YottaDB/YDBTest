@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh
 #################################################################
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -37,14 +37,5 @@ if ($timeout <= 0) then
 	echo "TEST-E-TIMEOUT waiting for NOT_DONE.OLI to be removed. Please check the ONLINE INTEG processes if it's hung"
 endif
 
-# Since the concurrent updates happening during the online integ include KILLs, it is possible to see MUKILLIP errors
-# (and associated secondary errors like DBMRKBUSY etc.) in the online integ output. Therefore filter them away from
-# the sight of error catching logic in test framework.
-$grep -q YDB-W-MUKILLIP stress_oli.out
-if (! $status) then
-	# Filter out YDB-W-MUKILLP and associated errors. The list of such errors can be found from dbcheck_base_filter.csh
-	# KILLABANDONED is removed from that list because that requires processes to be killed which is not the case in
-	# the stress test. But we might need to add that eventually since the test does do MUPIP STOP of reorg processes.
-	mv stress_oli.out stress_oli.outx
-	$grep -vE "MUKILLIP|DBMRKBUSY|DBLOCMBINC|DBMBPFLDLBM|INTEGERRS" stress_oli.outx >&! stress_oli.out
-endif
+# Filter MUKILLIP and associated errors out of streee_oli.out
+$gtm_tst/com/filter_mukillip_from_oli_output.csh stress_oli

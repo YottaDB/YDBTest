@@ -4,6 +4,9 @@
 # Copyright (c) 2009-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -40,5 +43,8 @@ if ($status) then
 	echo "# Exiting the test."
 	exit
 endif
+
+# Filter out MUKILLIP and associated errors from online_integ.out
+$gtm_tst/com/filter_mukillip_from_oli_output.csh online_integ
 
 $gtm_tst/com/dbcheck.csh
