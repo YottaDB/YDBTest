@@ -27,6 +27,12 @@ else if ("$release" =~ 'Red Hat Enterprise Linux*') then
         else
                 echo true
         endif
+else if ("armv6l" == `uname -m`)
+	# Rust is currently disabled on ARMV6L due to a compiler bug that sometimes causes
+	# it to SIG-11 while building imptp on ARMV6L machines. Once the bug is fixed in
+	# the Rust compiler, Rust should be re-enabled on ARMV6L machines.
+	# https://github.com/rust-lang/rust/issues/72894
+	echo false
 else
         echo true
 endif
