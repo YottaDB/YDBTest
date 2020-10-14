@@ -13,16 +13,18 @@
 stages:
   - build
 
-gpgkey-verify:
+commit-verify:
   image: ubuntu:18.04
   stage: build
   script:
     - apt-get update
     - apt-get install -yq git wget gnupg
-    # Copy commit gpg key verify script to build directory and execute
-    - wget https://gitlab.com/YottaDB/DB/YDB/-/raw/master/ci/commit_gpgkey_verify.sh
-    - chmod +x commit_gpgkey_verify.sh
-    - ./commit_gpgkey_verify.sh https://gitlab.com/YottaDB/DB/YDBTest
+    # Copy commit script to build directory and execute
+    - wget https://gitlab.com/YottaDB/DB/YDB/-/raw/master/ci/commit_verify.sh
+    - chmod +x commit_verify.sh
+    - ./commit_verify.sh com/needs_copyright.sh
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "external_pull_request" || $CI_PIPELINE_SOURCE == "merge_request_event"'
 
 # Test that imptp.rs builds with the latest commit of YDBRust
 build-imptp-rs:

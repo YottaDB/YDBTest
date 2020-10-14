@@ -23,31 +23,8 @@ set fixlist = ""
 set curyear = `date +%Y`
 @ exitstatus = 0
 foreach file ($filelist)
-	if (! -e $file) then
-		# If file is being deleted as part of this commit, skip copyright check on it
-		continue
-	endif
-	set extension = $file:e
-	# Extensions which indicate they are a reference file do not need copyrights
-	set skip = 0
-	foreach ext ($referencefile_extensions)
-		if ($ext == $extension) then
-			set skip = 1
-			break
-		endif
-	end
-	if (0 == $skip) then
-		# Below is a list of specific files that do not have a copyright so ignore them
-		set skiplist = "COPYING"
-		set skip = 0
-		foreach skipfile ($skiplist)
-			if ($file == $skipfile) then
-				set skip = 1
-				break
-			endif
-		end
-	endif
-	if ($skip) then
+	com/needs_copyright.sh $file
+	if ($status != 0) then
 		continue
 	endif
 	grep 'Copyright (c) .*'$curyear' YottaDB LLC' $file >& /dev/null
