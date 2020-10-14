@@ -22,9 +22,7 @@ commit-verify:
     # Copy commit script to build directory and execute
     - wget https://gitlab.com/YottaDB/DB/YDB/-/raw/master/ci/commit_verify.sh
     - chmod +x commit_verify.sh
-    - ./commit_verify.sh com/needs_copyright.sh
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "external_pull_request" || $CI_PIPELINE_SOURCE == "merge_request_event"'
+    - ./commit_verify.sh com/needs_copyright.sh https://gitlab.com/YottaDB/DB/YDBTest/
 
 # Test that imptp.rs builds with the latest commit of YDBRust
 build-imptp-rs:
