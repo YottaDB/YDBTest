@@ -1,0 +1,49 @@
+A regression was introduced in GT.M V6.3-009 that produced incorrect
+output on calls to %HO when the input was between DE0B6B3A7640001
+and FFFFFFFFFFFFFFF (1000000000000000001 to 1152921504606846975 in decimal).
+While this shows up as a rare failure for v63005/gtm5574, this test
+is intended to specifically test for this regression by generating only
+numbers in the range where %HO returns incorrect results. The test generates
+10 random numbers in this range because some numbers, particularly those
+where the final digit of the number is a 0, may be converted to the correct
+octal number.
+
+Start iteration 1 of test
+%DH-----Correct Conversion
+%HO-----Correct Conversion
+
+Start iteration 2 of test
+%DH-----Correct Conversion
+%HO-----Correct Conversion
+
+Start iteration 3 of test
+%DH-----Correct Conversion
+%HO-----Correct Conversion
+
+Start iteration 4 of test
+%DH-----Correct Conversion
+%HO-----Correct Conversion
+
+Start iteration 5 of test
+%DH-----Correct Conversion
+%HO-----Correct Conversion
+
+Start iteration 6 of test
+%DH-----Correct Conversion
+%HO-----Correct Conversion
+
+Start iteration 7 of test
+%DH-----Correct Conversion
+%HO-----Correct Conversion
+
+Start iteration 8 of test
+%DH-----Correct Conversion
+%HO-----Correct Conversion
+
+Start iteration 9 of test
+%DH-----Correct Conversion
+%HO-----Correct Conversion
+
+Start iteration 10 of test
+%DH-----Correct Conversion
+%HO-----Correct Conversion
