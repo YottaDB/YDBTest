@@ -20,6 +20,7 @@
 # gtm9145               [mw]            Test that the code line length has been increased for ^%RI and ^%RO
 # gtm8901		[mw]		Test the new quailfer -GVPATFILE for MUPIP JOURNAL -EXTRACT can extract patterns from a file
 # gtm8706		[mw]		Test the new qualifer -STOPRECEIVERFILTER in MUPIP REPLICATE -RECEIVER
+# gtm9155		[bdw]		Tests that certain nested selects and extrinsics work correctly
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -27,7 +28,7 @@ echo "v63009 test starts..."
 
 # List the subtests seperated by sspaces under the appropriate environment variable name
 setenv subtest_list_common	""
-setenv subtest_list_non_replic "gtm9142 gtm8203 gtm9145 gtm8901 gtm8706"
+setenv subtest_list_non_replic "gtm9142 gtm8203 gtm9145 gtm8901 gtm8706 gtm9155"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then

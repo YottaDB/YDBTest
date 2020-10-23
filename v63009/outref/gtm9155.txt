@@ -1,0 +1,17 @@
+# This tests nested select statements, some of them including extrinsics, that caused assert failures
+# on upstream versions V6.3-001 to V6.3-008. This verifies that the assert failures are gone and these
+# particular nested selects work correctly.
+running test 1
+running test 2
+result=0
+running test 3
+result=0
+running test 4
+result=0
+running test 5
+result=0
+running test 6
+result=0
+running test 7
+result=0
+$ZSTATUS="150374442,+2^test7,%YDB-E-FALLINTOFLST, Fall-through to a label with formallist is not allowed"
