@@ -5,7 +5,7 @@
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #################################################################
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -330,7 +330,17 @@ $gtm_tst/com/knownerror.csh $msr_execute_last_out YDB-E-REPLINSTNOHIST
 $MSR CHECKHEALTH INST2 INST3 SRC
 
 $MSR RUN INST3 "$msr_err_chk RCVR_$time_msr_rcv.log REPLINSTNOHIST"
-
+# Before attempting a shutdown of the passive source server, make sure the receiver server is dead.
+# Not doing so could cause the shutdown to fail as it expects only the passive source server to be attached
+# to the journal pool (the receiver server would also be attached to the journal pool if it is not yet dead).
+$MSR RUN INST3 "cat RCVR_$time_msr_rcv.log" >> INST3_RCVR.log
+# Pull process ID from reciever log
+setenv RCVR_PID `$grep -e "Replication Receiver Server with Pid" INST3_RCVR.log | $tst_awk '{ print substr($14,2,length($14)-2)}'`
+$gtm_tst/com/wait_for_proc_to_die.csh $RCVR_PID
+if ($status) then
+	echo "TEST-E-ERROR process $RCVR_PID did not die."
+endif
+# Now shut down the passive source server
 $MSR RUN RCV=INST3 SRC=INST2 'set msr_dont_trace ; $MUPIP replic -source -shutdown -timeout=0 -instsecondary=__SRC_INSTNAME__  >&! passivesrc_shut_INST2INST3.out'
  #The above is done because, the receiver will be shut down but the passive server will be alive still. The next STARTRCV will complain.
 $MSR REFRESHLINK INST2 INST3
