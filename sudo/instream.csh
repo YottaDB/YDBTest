@@ -21,8 +21,9 @@
 # sourceInstall		[mmr]		Test that ydbinstall.sh when sourced will give an error then exit
 # diffDir		[mmr]		Test that ydbinstall.sh when called from anothre directory will still install properly
 # ydb358		[kz]		Test that --zlib and --utf8 will run together with ydbinstall.sh
+# gtm9116		[bdw]		Test that ydbinstall.sh installs libyottadb.so with 755 permissions irrespective of what umask is set to
 #
-setenv subtest_list_common "sourceInstall diffDir ydb358"
+setenv subtest_list_common "sourceInstall diffDir ydb358 gtm9116"
 setenv subtest_list_non_replic ""
 setenv subtest_list_non_replic "$subtest_list_non_replic"
 setenv subtest_list_replic ""
