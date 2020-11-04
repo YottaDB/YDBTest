@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -20,8 +20,9 @@
 #
 # sourceInstall		[mmr]		Test that ydbinstall.sh when sourced will give an error then exit
 # diffDir		[mmr]		Test that ydbinstall.sh when called from anothre directory will still install properly
+# ydb358		[kz]		Test that --zlib and --utf8 will run together with ydbinstall.sh
 #
-setenv subtest_list_common "sourceInstall diffDir "
+setenv subtest_list_common "sourceInstall diffDir ydb358"
 setenv subtest_list_non_replic ""
 setenv subtest_list_non_replic "$subtest_list_non_replic"
 setenv subtest_list_replic ""
