@@ -1,0 +1,22 @@
+Creating jnl subdirectory
+Creating database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting journaling
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/jnl/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+Set a global variable 500 thousand times
+Removing write permissions on jnl subdirectory
+Set the global variable another 5 million times
+%YDB-E-JNLEXTEND, Journal file extension error for file ##TEST_PATH##/jnl/mumps.mjl
+%YDB-E-JNLNOCREATE, Journal file  not created
+Stop journaling
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
+Re-Enable write permissions on jnl subdirectory to avoid gzip errors
+Check the syslog for an %YDB-E-JNLEXTEND error. If not found, this will time out after 5 minutes (300 seconds).
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
