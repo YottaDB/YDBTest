@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -105,7 +105,5 @@ verify(bcout,percentout,ibase)
 	read status
 	close v
 	use $p
-	if $ZCMDLINE<0 do
-	. if ibase=8 set status=status#(2**(3*$length(percentout)))
-	. if ibase=16 set status=status#(2**(4*$length(percentout)))
+	set:$ZCMDLINE<0 status=status#(2**($select(ibase=8:3,ibase=16:4)*$length(percentout)))
 	quit

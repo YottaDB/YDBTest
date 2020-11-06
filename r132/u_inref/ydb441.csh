@@ -17,6 +17,8 @@ echo "executed. This was fixed as part of V6.3-009. This test"
 echo "functions as a test for both YottaDB issue ydb441 and GT.M issue"
 echo "gtm-9114 verifying that auto-ZLINK works properly when zlinking"
 echo "a new version of an M routine after changing ZROUTINES."
+echo ""
+echo "# This should produce a %YDB-E-ZLINKFILE error."
 mkdir -p patch
 touch bar.m
 $ydb_dist/mumps -run %XCMD 'ZCompile "bar"'; mv bar.o ./patch

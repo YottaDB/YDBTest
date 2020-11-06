@@ -19,36 +19,44 @@ setenv ydb_error_on_jnl_file_lost 1
 
 set syslog_begin = `date +"%b %e %H:%M:%S"`
 
-echo "Creating jnl subdirectory"
+$echoline
+echo "# Creating jnl subdirectory"
 mkdir jnl
 
-echo "Creating database"
+$echoline
+echo "# Creating database"
 $gtm_tst/com/dbcreate.csh mumps
 
-echo "Starting journaling"
+$echoline
+echo "# Starting journaling"
 $MUPIP set -journal="enable,nobefore,allocation=2048,autoswitchlimit=16384,file=jnl/mumps.mjl" -file mumps.dat
 
-echo "Set a global variable 500 thousand times"
+$echoline
+echo "# Set a global variable 500 thousand times"
 $gtm_exe/yottadb -run %XCMD 'for i=1:1:500000 set ^a=i'
 
 # Remove write permissions on "jnl" subdirectory
 # This will trigger a JNLCLOSED error whenever the current autoswitchlimit is exceeded on the current generation ajnl/a.mjl
-echo "Removing write permissions on jnl subdirectory"
+$echoline
+echo "# Removing write permissions on jnl subdirectory"
 chmod u-w jnl
 
-echo "Set the global variable another 5 million times"
+$echoline
+echo "# Set the global variable another 5 million times"
 $gtm_exe/yottadb -run %XCMD 'for i=1:1:5000000 set ^a=i'
 
-echo "Stop journaling"
+$echoline
+echo "# Stop journaling"
 $MUPIP set -journal=disable -file mumps.dat
 
 set syslog_after = `date +"%b %e %H:%M:%S"`
 
-echo "Re-Enable write permissions on jnl subdirectory to avoid gzip errors"
+$echoline
+echo "# Re-Enable write permissions on jnl subdirectory to avoid gzip errors"
 chmod u+w jnl
 
-
-echo "Check the syslog for an %YDB-E-JNLEXTEND error. If not found, this will time out after 5 minutes (300 seconds)."
+$echoline
+echo "# Check the syslog for an %YDB-E-JNLEXTEND error. If not found, this will time out after 5 minutes (300 seconds)."
 
 $gtm_tst/com/getoper.csh "$syslog_begin" "$syslog_after" syslog_jnlextend.txt "" "JNLEXTEND"
 
