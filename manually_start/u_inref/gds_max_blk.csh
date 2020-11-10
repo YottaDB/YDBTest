@@ -77,7 +77,7 @@ set over_thres=`$gtm_exe/mumps -run %XCMD 'write $random(11)+89'`
 set rand_over=`$gtm_exe/mumps -run %XCMD "write $max*0.$over_thres\1"`
 
 set i = 1
-set rand_under=`$gtm_exe/mumps -run %XCMD "set ^y="'$random'"($thres)  write ^y"`
+set rand_under=`$gtm_exe/mumps -run %XCMD "set ^y="'$random'"($thres-1)+1  write ^y"`
 echo "Over 88%: $rand_over\nUnder 88%:$rand_under\n" > random.out
 echo "# gtm7960: After 88% memory reached, MUPIP EXTEND will issue a LOWSPC Warning every 1% and"
 echo "# 	   MUPIP INTEG and MUPIP SIZE will issue a LOWSPC Warning on each command call"
