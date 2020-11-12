@@ -1,0 +1,15 @@
+# Test that various executables are properly identified when sending messages to the system log
+# Testing $zsyslog(<date> <$PWD> Wine_$char(10,13). Expecting a return value of 1
+1
+# Testing $zsyslog("<date> <$PWD> Beer!_$char(10,13)". Expecting a return value of 1
+1
+# Running Simple API Test
+Successfully Performed SimpleAPI Call
+# Testing $zsyslog("<date> <$PWD> ZSYSLOGR). Expecting a return value of 1
+1
+
+# Verifying executable names in syslog messages
+YDB-MUMPS
+YDB-YOTTADB
+YDB-YDB630
+# End of ZSYSLOG Test

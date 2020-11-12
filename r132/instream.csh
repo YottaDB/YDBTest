@@ -19,14 +19,16 @@
 # ydb632 [estess]    Test if resuming after a signal in a TP callback routine can cause a hang.
 # ydb581 [sp]        Test to see $ZPARSE() fetches symbolically linked files
 # ydb657 [nars]      Test that replication connection happens using TLS 1.3 if OpenSSL >= 1.1.1 and TLS 1.2 otherwise
+# ydb630 [sp]        Test to see that $ZSYSLOG() uses consistent process names for ydb process
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r132 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "ydb627 ydb551 ydb632 ydb581"
+setenv subtest_list_non_replic "ydb627 ydb551 ydb632 ydb581 ydb630"
 setenv subtest_list_replic     "ydb657"
+setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
