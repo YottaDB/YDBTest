@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2013 Fidelity Information Services, Inc	#
+# Copyright 2013 Fidelity Information Services, Inc		#
+#								#
+# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -9,6 +12,9 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+# This module is derived from FIS GT.M.
+#################################################################
+
 # The env variable gtm_procstuckexec points to this script. The script obtains the stack trace for the blocking pid
 # for various GT.M stuck messages.
 # Usage and params: gtmprocstuck_get_stack_trace.csh message waiting_pid blockingpid count
@@ -78,12 +84,6 @@ $gtm_tst/com/check_PC_INVAL_err.csh $blocker $log
 echo $border							>>&! $log
 echo "Now the time is: "`date`" dbx exit status: "$dbx_status	>>&! $log
 set cnt = `cat $monitor | wc -l`
-if ($type == "JNLPROCSTUCK" && ($?gtm_test_freeze_on_error)) then
-	if (1 == $gtm_test_freeze_on_error) then
-	    echo "Unfreezing to avoid instance freeze hang" >>&! $log
-	    $MUPIP replicate -source -freeze=off >>&! $log
-	endif
-endif
 # Send mail once in 10 times and send only 5 mails
 if ( !($cnt % 10 ) && ($cnt <= 50) )  then
 		($tail -n 100 $log) | mailx -s "$short_host : Time: $curtime; $type - No progress Check at $curdir" $mailing_list
