@@ -13,7 +13,7 @@
 set release = `grep ^NAME= /etc/os-release | cut -d = -f 2 | tr -d '"'`
 set version = `grep VERSION_ID= /etc/os-release | cut -d = -f 2 | tr -d '"'`
 
-if ("armv6l" == `uname -m`)
+if ("armv6l" == `uname -m`) then
 	# Rust is currently disabled on ARMV6L due to a compiler bug that sometimes causes
 	# it to SIG-11 while building imptp on ARMV6L machines. Once the bug is fixed in
 	# the Rust compiler, Rust should be re-enabled on ARMV6L machines.
