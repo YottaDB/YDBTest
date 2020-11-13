@@ -22,10 +22,13 @@ $ydb_dist/mupip ftok -jnlpool mumps.repl |& $grep mumps.repl | $tst_awk '{print 
 cd $path_INST1
 
 # Use the JNLPOOL Shared MEMORY IDs to get the # of processes attached ot each JNLPOOL
+$gtm_tst/com/ipcs -m >& ipcs_m.out
 echo -n "    number of processes attached to JNLPOOL of INST1: "
-$gtm_tst/com/ipcs -a | $grep -w `cat ./shm1.out` | $tst_awk '{print $NF}'
+set shm=`cat ./shm1.out`
+$tst_awk '$2 == '$shm' {print $NF}' ipcs_m.out
 
 echo -n "    number of processes attached to JNLPOOL of INST3: "
-$gtm_tst/com/ipcs -a | $grep -w `cat ./shm2.out` | $tst_awk '{print $NF}'
+set shm=`cat ./shm2.out`
+$tst_awk '$2 == '$shm' {print $NF}' ipcs_m.out
 
 echo ""
