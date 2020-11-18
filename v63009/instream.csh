@@ -21,7 +21,8 @@
 # gtm8901		[mw]		Test the new quailfer -GVPATFILE for MUPIP JOURNAL -EXTRACT can extract patterns from a file
 # gtm8706		[mw]		Test the new qualifer -STOPRECEIVERFILTER in MUPIP REPLICATE -RECEIVER
 # gtm9155		[bdw]		Tests that certain nested selects and extrinsics work correctly
-# gtm9037		[bdw]		Tests that an error message is printed to syslog if journaling is shut down or instance frozen due to disk or permissions error.
+# gtm9037		[bdw]		Tests that an error message is printed to syslog if journaling is shut down due to disk or permissions error.
+# gtm9037replic		[bdw]		Tests that an error message is printed to syslog if a replication instance is frozen due to to disk or permissions error.
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -30,7 +31,7 @@ echo "v63009 test starts..."
 # List the subtests seperated by sspaces under the appropriate environment variable name
 setenv subtest_list_common	""
 setenv subtest_list_non_replic "gtm9142 gtm8203 gtm9145 gtm8901 gtm8706 gtm9155 gtm9037"
-setenv subtest_list_replic	""
+setenv subtest_list_replic	"gtm9037replic"
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
