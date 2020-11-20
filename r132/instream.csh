@@ -28,7 +28,6 @@ echo "r132 test starts..."
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic "ydb627 ydb551 ydb632 ydb581 ydb630"
 setenv subtest_list_replic     "ydb657"
-setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
