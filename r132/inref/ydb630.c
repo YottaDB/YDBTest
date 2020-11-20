@@ -27,13 +27,13 @@ int main(int argc, char* argv[])
 	ci_name_descriptor	callin;
 	int			status;
 	int 			i;
-	char 			err[2048];
-	char 			log[5000];
-
+	char 			err[MAX_ERR_SIZE];
+	char 			log[MAX_LOG_SIZE];
+	log[0] = '\0';
 	for (i = 1; i < argc; i++)
 	{
-		strncat(log, argv[i], strlen(argv[i]));
-		strncat(log, " ", 1);
+		strncat(log, argv[i], MAX_LOG_SIZE - strlen(log));
+		strncat(log, " ", MAX_LOG_SIZE - strlen(log));
 	}
 	err[0] = '\0';
 	ydb_init();
