@@ -93,6 +93,10 @@ echo "# Set the global variable another million times"
 $gtm_exe/yottadb -run %XCMD 'for i=1:1:1000000 set ^a=i'
 
 $echoline
+echo "# Wait for the instance freeze to show up in the syslog before continuing"
+$gtm_tst/com/getoper.csh "$syslog_begin" "" syslog_replinstfrozen.txt "" "REPLINSTFROZEN"
+
+$echoline
 echo "# Re-Enable write permissions on jnl2 subdirectory and bring the receiver back into sync"
 chmod u+w $tst_working_dir/jnl2
 $MSR RUN INST2 '$MUPIP replic -source -freeze=off'

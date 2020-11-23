@@ -4,6 +4,9 @@
 # Copyright (c) 2003-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -112,14 +115,16 @@ endif
 	echo $time3 " " $time4 >& time_diff.txt
 	@ diff2=`$tst_awk -f $gtm_tst/com/diff_time.awk time_diff.txt`
 	@ diff3 = $diff2 - $diff1
-	if (($diff3 > 5) || ($diff3 < -5)) then
+	# Since $diff3 is the time taken by the "-show=header -for" minus the time taken
+	# by the "-show=header -back", it can be positive or negative. Therefore, we check
+	# both positive and negative. Specifically, time3-time2 and time4-time3 should be
+	# less than 60 seconds. This was increased from 5 seconds in November 2020 due to a
+	# failure on an ARMv7L machine where it took 17 seconds for one show=header.
+	if (($diff3 > 60) || ($diff3 < -60)) then
 		echo "Show=header should not take that long"
 		echo $time2 "," $time3 "," $time4
 		exit 1
 	endif
-#
-#	time3-time2 and time4-time3 should be less than 5 seconds
-#
 if ($?test_replic == 0) then
 #
 # 	save the original database and journal files

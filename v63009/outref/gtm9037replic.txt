@@ -37,6 +37,8 @@ Database file mumps.dat now has inst freeze on fail flag set to TRUE
 ###################################################################
 # Set the global variable another million times
 ###################################################################
+# Wait for the instance freeze to show up in the syslog before continuing
+###################################################################
 # Re-Enable write permissions on jnl2 subdirectory and bring the receiver back into sync
 ==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP replic -source -freeze=off'==
 ==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP replic -receiv -start -updateonly'==
