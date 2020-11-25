@@ -27,8 +27,10 @@ foreach prompt $promptList {
 	send -- "\x03"
 	expect  "Topic?"
 	send -- "\r"
-	puts "\n# Exit $prompt>"
-	expect -exact "$prompt>"
-	send -- "exit\r"
-	expect "SHELL"
+	if { $prompt != "MUPIP" } {
+		puts "\n# Exit $prompt>"
+		expect -exact "$prompt>"
+		send -- "exit\r"
 	}
+	expect "SHELL"
+}
