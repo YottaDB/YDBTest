@@ -1,14 +1,14 @@
-//////////////////////////////////////////////////////////////////
-//                                                              //
-// Copyright (c) 2019 YottaDB LLC. and/or its subsidiaries.     //
-// All rights reserved.                                         //
-//                                                              //
-//      This source code contains the intellectual property     //
-//      of its copyright holder(s), and is made available       //
-//      under a license.  If you do not know the terms of       //
-//      the license, please stop and do not read further.       //
-//                                                              //
-//////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+//                                                               //
+// Copyright (c) 2019-2020 YottaDB LLC. and/or its subsidiaries. //
+// All rights reserved.                                          //
+//                                                               //
+//      This source code contains the intellectual property      //
+//      of its copyright holder(s), and is made available        //
+//      under a license.  If you do not know the terms of        //
+//      the license, please stop and do not read further.        //
+//                                                               //
+///////////////////////////////////////////////////////////////////
 
 package main
 
@@ -45,8 +45,12 @@ func main() {
 	var pidstr, childstr string
 	var stdoutp, stderrp *os.File
 	var gblprefix = []string{"a", "b", "c", "d", "e", "f", "g", "h"}
+	var errstr yottadb.BufferT
 
 	defer yottadb.Exit() // Needed to assure proper cleanup
+	defer errstr.Free()
+
+	errstr.Alloc(yottadb.YDB_MAX_ERRORMSG)
 	processID := os.Getpid()
 	// Initialize random number generator seed
 	rand.Seed(time.Now().UnixNano())
@@ -67,7 +71,7 @@ func main() {
 	jobcnt := valint
 	fmt.Println("jobcnt =", jobcnt)
 	jobcntstr := fmt.Sprintf("%d", jobcnt)
-	err = yottadb.SetValE(tptoken, nil, jobcntstr, "jobcnt", []string{})
+	err = yottadb.SetValE(tptoken, &errstr, jobcntstr, "jobcnt", []string{})
 	if imp.CheckErrorReturn(err) {
 		return
 	}
@@ -76,7 +80,7 @@ func main() {
 	// MCode: write "Start Time of parent:",$ZD($H,"DD-MON-YEAR 24:60:SS"),!
 	fmt.Println("Start time of parent:", time.Now().Format("02-Jan-2006 03:04:05.000"))
 	// MCode: write "$zro=",$zro,!
-	zro, err := yottadb.ValE(tptoken, nil, "$zroutines", []string{})
+	zro, err := yottadb.ValE(tptoken, &errstr, "$zroutines", []string{})
 	if imp.CheckErrorReturn(err) {
 		return
 	}
@@ -101,7 +105,7 @@ func main() {
 	}
 	fillid := valint
 	fillidstr := fmt.Sprintf("%d", fillid)
-	err = yottadb.SetValE(tptoken, nil, fillidstr, "fillid", []string{})
+	err = yottadb.SetValE(tptoken, &errstr, fillidstr, "fillid", []string{})
 	if imp.CheckErrorReturn(err) {
 		return
 	}
@@ -128,11 +132,11 @@ func main() {
 		}
 	}
 	istpstr := fmt.Sprintf("%d", istp)
-	err = yottadb.SetValE(tptoken, nil, istpstr, "istp", []string{}) // set local istp
+	err = yottadb.SetValE(tptoken, &errstr, istpstr, "istp", []string{}) // set local istp
 	if imp.CheckErrorReturn(err) {
 		return
 	}
-	err = yottadb.SetValE(tptoken, nil, istpstr, "^%imptp", []string{fillidstr, "istp"})
+	err = yottadb.SetValE(tptoken, &errstr, istpstr, "^%imptp", []string{fillidstr, "istp"})
 	if imp.CheckErrorReturn(err) {
 		return
 	}
@@ -140,9 +144,9 @@ func main() {
 	// MCode: else  set ^%imptp(fillid,"tptype")="BATCH"
 	valstr = os.Getenv("gtm_test_tptype")
 	if ("" != valstr) && ("ONLINE" == valstr) {
-		err = yottadb.SetValE(tptoken, nil, "ONLINE", "^%imptp", []string{fillidstr, "tptype"})
+		err = yottadb.SetValE(tptoken, &errstr, "ONLINE", "^%imptp", []string{fillidstr, "tptype"})
 	} else {
-		err = yottadb.SetValE(tptoken, nil, "BATCH", "^%imptp", []string{fillidstr, "tptype"})
+		err = yottadb.SetValE(tptoken, &errstr, "BATCH", "^%imptp", []string{fillidstr, "tptype"})
 	}
 	if imp.CheckErrorReturn(err) {
 		return
@@ -151,7 +155,7 @@ func main() {
 	// MCode: if '$data(^%imptp(fillid,"tpnoiso")) do
 	// MCode: .  if (istp=1)&(($ztrnlnm("gtm_test_noisolation")="TPNOISO")!($random(2)=1)) set ^%imptp(fillid,"tpnoiso")=1
 	// MCode: .  else  set ^%imptp(fillid,"tpnoiso")=0
-	dataval, err = yottadb.DataE(tptoken, nil, "^%imptp", []string{fillidstr, "tpnoiso"})
+	dataval, err = yottadb.DataE(tptoken, &errstr, "^%imptp", []string{fillidstr, "tpnoiso"})
 	if imp.CheckErrorReturn(err) {
 		return
 	}
@@ -163,7 +167,7 @@ func main() {
 				tpnoiso = 1
 			}
 		}
-		err = yottadb.SetValE(tptoken, nil, fmt.Sprintf("%d", tpnoiso), "^%imptp", []string{fillidstr, "tpnoiso"})
+		err = yottadb.SetValE(tptoken, &errstr, fmt.Sprintf("%d", tpnoiso), "^%imptp", []string{fillidstr, "tpnoiso"})
 		if imp.CheckErrorReturn(err) {
 			return
 		}
@@ -172,13 +176,13 @@ func main() {
 	// MCode: if '$data(^%imptp(fillid,"dupset")) do
 	// MCode: .  if ($random(2)=1) set ^%imptp(fillid,"dupset")=1
 	// MCode: .  else  set ^%imptp(fillid,"dupset")=
-	dataval, err = yottadb.DataE(tptoken, nil, "^%imptp", []string{fillidstr, "dupset"})
+	dataval, err = yottadb.DataE(tptoken, &errstr, "^%imptp", []string{fillidstr, "dupset"})
 	if imp.CheckErrorReturn(err) {
 		return
 	}
 	if 0 == dataval {
 		dupset = int32(rand.Float64() * 2)
-		err = yottadb.SetValE(tptoken, nil, fmt.Sprintf("%d", dupset), "^%imptp", []string{fillidstr, "dupset"})
+		err = yottadb.SetValE(tptoken, &errstr, fmt.Sprintf("%d", dupset), "^%imptp", []string{fillidstr, "dupset"})
 		if imp.CheckErrorReturn(err) {
 			return
 		}
@@ -193,7 +197,7 @@ func main() {
 		valint = 0
 	}
 	crash := valint
-	err = yottadb.SetValE(tptoken, nil, fmt.Sprintf("%d", crash), "^%imptp", []string{fillidstr, "crash"})
+	err = yottadb.SetValE(tptoken, &errstr, fmt.Sprintf("%d", crash), "^%imptp", []string{fillidstr, "crash"})
 	if imp.CheckErrorReturn(err) {
 		return
 	}
@@ -207,7 +211,7 @@ func main() {
 		valint = 0
 	}
 	isgtcm := valint
-	err = yottadb.SetValE(tptoken, nil, fmt.Sprintf("%d", isgtcm), "^%imptp", []string{fillidstr, "gtcm"})
+	err = yottadb.SetValE(tptoken, &errstr, fmt.Sprintf("%d", isgtcm), "^%imptp", []string{fillidstr, "gtcm"})
 	if imp.CheckErrorReturn(err) {
 		return
 	}
@@ -221,7 +225,7 @@ func main() {
 		valint = 0
 	}
 	replnorepl := valint
-	err = yottadb.SetValE(tptoken, nil, fmt.Sprintf("%d", replnorepl), "^%imptp", []string{fillidstr, "skipreg"})
+	err = yottadb.SetValE(tptoken, &errstr, fmt.Sprintf("%d", replnorepl), "^%imptp", []string{fillidstr, "skipreg"})
 	if imp.CheckErrorReturn(err) {
 		return
 	}
@@ -236,12 +240,12 @@ func main() {
 	}
 	jobid := valint
 	jobidstr := fmt.Sprintf("%d", jobid)
-	err = yottadb.SetValE(tptoken, nil, jobidstr, "jobid", []string{})
+	err = yottadb.SetValE(tptoken, &errstr, jobidstr, "jobid", []string{})
 	if imp.CheckErrorReturn(err) {
 		return
 	}
 	// MCode: set ^%imptp("fillid",jobid)=fillid
-	err = yottadb.SetValE(tptoken, nil, fillidstr, "^%imptp", []string{"fillid", jobidstr})
+	err = yottadb.SetValE(tptoken, &errstr, fillidstr, "^%imptp", []string{"fillid", jobidstr})
 	if imp.CheckErrorReturn(err) {
 		return
 	}
@@ -251,7 +255,7 @@ func main() {
 	//
 	// MCode: ; Grab the key and record size from DSE
 	// MCode: do get^datinfo("^%imptp("_fillid_")")
-	_, err = yottadb.CallMT(tptoken, nil, 0, "getdatinfo")
+	_, err = yottadb.CallMT(tptoken, &errstr, 0, "getdatinfo")
 	if imp.CheckErrorReturn(err) {
 		return
 	}
@@ -265,7 +269,7 @@ func main() {
 		valint = 0
 	}
 	spannode := valint
-	err = yottadb.SetValE(tptoken, nil, fmt.Sprintf("%d", spannode), "^%imptp", []string{fillidstr, "gtm_test_spannode"})
+	err = yottadb.SetValE(tptoken, &errstr, fmt.Sprintf("%d", spannode), "^%imptp", []string{fillidstr, "gtm_test_spannode"})
 	if imp.CheckErrorReturn(err) {
 		return
 	}
@@ -273,23 +277,23 @@ func main() {
 	// MCode: ; for ^%imptp(fillid,"trigger") defined in test/com_u/imptp.trg and set
 	// MCode: ; ^%imptp(fillid,"trigger") to 1
 	// MCode: set ^%imptp(fillid,"trigger")=0
-	err = yottadb.SetValE(tptoken, nil, "0", "^%imptp", []string{fillidstr, "trigger"})
+	err = yottadb.SetValE(tptoken, &errstr, "0", "^%imptp", []string{fillidstr, "trigger"})
 	if imp.CheckErrorReturn(err) {
 		return
 	}
 	// MCode: if $DATA(^%imptp(fillid,"totaljob"))=0 set ^%imptp(fillid,"totaljob")=jobcnt
 	// MCode: else  if ^%imptp(fillid,"totaljob")'=jobcnt  write "IMPTP-E-MISMATCH: Job number mismatch",!  zwrite ^%imptp  h
-	dataval, err = yottadb.DataE(tptoken, nil, "^%imptp", []string{fillidstr, "totaljob"})
+	dataval, err = yottadb.DataE(tptoken, &errstr, "^%imptp", []string{fillidstr, "totaljob"})
 	if imp.CheckErrorReturn(err) {
 		return
 	}
 	if 0 == dataval {
-		err = yottadb.SetValE(tptoken, nil, jobcntstr, "^%imptp", []string{fillidstr, "totaljob"})
+		err = yottadb.SetValE(tptoken, &errstr, jobcntstr, "^%imptp", []string{fillidstr, "totaljob"})
 		if imp.CheckErrorReturn(err) {
 			return
 		}
 	} else {
-		valstr, err = yottadb.ValE(tptoken, nil, "^%imptp", []string{fillidstr, "totaljob"})
+		valstr, err = yottadb.ValE(tptoken, &errstr, "^%imptp", []string{fillidstr, "totaljob"})
 		if imp.CheckErrorReturn(err) {
 			return
 		}
@@ -318,44 +322,44 @@ func main() {
 	// MCode: ;   Precalculate primitive root for a prime and set them here
 	//
 	// MCode: set ^%imptp(fillid,"prime")=50000017	;Precalculated
-	err = yottadb.SetValE(tptoken, nil, "50000017", "^%imptp", []string{fillidstr, "prime"})
+	err = yottadb.SetValE(tptoken, &errstr, "50000017", "^%imptp", []string{fillidstr, "prime"})
 	if imp.CheckErrorReturn(err) {
 		return
 	}
 	// MCode: set ^%imptp(fillid,"root")=5          ;Precalculated
-	err = yottadb.SetValE(tptoken, nil, "5", "^%imptp", []string{fillidstr, "root"})
+	err = yottadb.SetValE(tptoken, &errstr, "5", "^%imptp", []string{fillidstr, "root"})
 	if imp.CheckErrorReturn(err) {
 		return
 	}
 	// MCode: set ^endloop(fillid)=0	;To stop infinite loop
-	err = yottadb.SetValE(tptoken, nil, "0", "^endloop", []string{fillidstr})
+	err = yottadb.SetValE(tptoken, &errstr, "0", "^endloop", []string{fillidstr})
 	if imp.CheckErrorReturn(err) {
 		return
 	}
 	// MCode: if $data(^cntloop(fillid))=0 set ^cntloop(fillid)=0	; Initialize before attempting $incr in child
-	dataval, err = yottadb.DataE(tptoken, nil, "^cntloop", []string{fillidstr})
+	dataval, err = yottadb.DataE(tptoken, &errstr, "^cntloop", []string{fillidstr})
 	if imp.CheckErrorReturn(err) {
 		return
 	}
 	if 0 == dataval {
-		err = yottadb.SetValE(tptoken, nil, "0", "^cntloop", []string{fillidstr})
+		err = yottadb.SetValE(tptoken, &errstr, "0", "^cntloop", []string{fillidstr})
 		if imp.CheckErrorReturn(err) {
 			return
 		}
 	}
 	// MCode: if $data(^cntseq(fillid))=0 set ^cntseq(fillid)=0	; Initialize before attempting $incr in child
-	dataval, err = yottadb.DataE(tptoken, nil, "^cntseq", []string{fillidstr})
+	dataval, err = yottadb.DataE(tptoken, &errstr, "^cntseq", []string{fillidstr})
 	if imp.CheckErrorReturn(err) {
 		return
 	}
 	if 0 == dataval {
-		err = yottadb.SetValE(tptoken, nil, "0", "^cntseq", []string{fillidstr})
+		err = yottadb.SetValE(tptoken, &errstr, "0", "^cntseq", []string{fillidstr})
 		if imp.CheckErrorReturn(err) {
 			return
 		}
 	}
 	// MCode: set ^%imptp(fillid,"jsyncnt")=0	; To count number of processes that are ready to be killed by crash scripts
-	err = yottadb.SetValE(tptoken, nil, "0", "^%imptp", []string{fillidstr, "jsyncnt"})
+	err = yottadb.SetValE(tptoken, &errstr, "0", "^%imptp", []string{fillidstr, "jsyncnt"})
 	if imp.CheckErrorReturn(err) {
 		return
 	}
@@ -367,7 +371,7 @@ func main() {
 	// MCode: set gblprefix="abcdefgh"
 	// MCode: for i=1:1:$length(gblprefix) set ^%sprgdeExcludeGbllist($extract(gblprefix,i)_"ndxarr")=""
 	for i = 0; i < len(gblprefix); i++ {
-		err = yottadb.SetValE(tptoken, nil, "", "^%sprgdeExcludeGbllist", []string{gblprefix[i] + "ndxarr"})
+		err = yottadb.SetValE(tptoken, &errstr, "", "^%sprgdeExcludeGbllist", []string{gblprefix[i] + "ndxarr"})
 		if imp.CheckErrorReturn(err) {
 			return
 		}
@@ -382,37 +386,37 @@ func main() {
 	// MCode: to point to those pids.
 	//
 	// MCode: set ^%jobwait(jobid,"njobs")=njobs   ; Taken from com/job.m
-	err = yottadb.SetValE(tptoken, nil, jobcntstr, "^%jobwait", []string{jobidstr, "njobs"})
+	err = yottadb.SetValE(tptoken, &errstr, jobcntstr, "^%jobwait", []string{jobidstr, "njobs"})
 	if imp.CheckErrorReturn(err) {
 		return
 	}
 	// MCode: set ^%jobwait(jobid,"jmaxwait")=7200 ; Taken from com/job.m
-	err = yottadb.SetValE(tptoken, nil, "7200", "^%jobwait", []string{jobidstr, "jmaxwait"})
+	err = yottadb.SetValE(tptoken, &errstr, "7200", "^%jobwait", []string{jobidstr, "jmaxwait"})
 	if imp.CheckErrorReturn(err) {
 		return
 	}
 	// MCode: set ^%jobwait(jobid,"jdefwait")=7200 ; Taken from com/job.m
-	err = yottadb.SetValE(tptoken, nil, "7200", "^%jobwait", []string{jobidstr, "jdefwait"})
+	err = yottadb.SetValE(tptoken, &errstr, "7200", "^%jobwait", []string{jobidstr, "jdefwait"})
 	if imp.CheckErrorReturn(err) {
 		return
 	}
 	// MCode: set ^%jobwait(jobid,"jprint")=0      ; Taken from com/job.m
-	err = yottadb.SetValE(tptoken, nil, "0", "^%jobwait", []string{jobidstr, "jprint"})
+	err = yottadb.SetValE(tptoken, &errstr, "0", "^%jobwait", []string{jobidstr, "jprint"})
 	if imp.CheckErrorReturn(err) {
 		return
 	}
 	// MCode: set ^%jobwait(jobid,"jroutine")="impjob_imptp" ; Taken from com/job.m
-	err = yottadb.SetValE(tptoken, nil, "impjob_imptp", "^%jobwait", []string{jobidstr, "jroutine"})
+	err = yottadb.SetValE(tptoken, &errstr, "impjob_imptp", "^%jobwait", []string{jobidstr, "jroutine"})
 	if imp.CheckErrorReturn(err) {
 		return
 	}
 	// MCode: set ^%jobwait(jobid,"jmjoname")="impjob_imptp" ; Taken from com/job.m
-	err = yottadb.SetValE(tptoken, nil, "impjob_imptp", "^%jobwait", []string{jobidstr, "jmjoname"})
+	err = yottadb.SetValE(tptoken, &errstr, "impjob_imptp", "^%jobwait", []string{jobidstr, "jmjoname"})
 	if imp.CheckErrorReturn(err) {
 		return
 	}
 	// MCode: set ^%jobwait(jobid,"jnoerrchk")="0" ; Taken from com/job.m
-	err = yottadb.SetValE(tptoken, nil, "0", "^%jobwait", []string{jobidstr, "jnoerrchk"})
+	err = yottadb.SetValE(tptoken, &errstr, "0", "^%jobwait", []string{jobidstr, "jnoerrchk"})
 	if imp.CheckErrorReturn(err) {
 		return
 	}
@@ -442,22 +446,22 @@ func main() {
 		}
 		// MCode: [for i=1:1:njobs]  set ^(i)=jobindex(i)	: com/job.m
 		pidstr = fmt.Sprintf("%d", proc[child].Process.Pid)
-		err = yottadb.SetValE(tptoken, nil, pidstr, "^%jobwait", []string{jobidstr, childstr})
+		err = yottadb.SetValE(tptoken, &errstr, pidstr, "^%jobwait", []string{jobidstr, childstr})
 		if imp.CheckErrorReturn(err) {
 			return
 		}
-		err = yottadb.SetValE(tptoken, nil, pidstr, "jobindex", []string{childstr})
+		err = yottadb.SetValE(tptoken, &errstr, pidstr, "jobindex", []string{childstr})
 		if imp.CheckErrorReturn(err) {
 			return
 		}
 	}
 	// MCode: do writecrashfileifneeded			: com/job.m
-	_, err = yottadb.CallMT(tptoken, nil, 0, "writecrashfileifneeded")
+	_, err = yottadb.CallMT(tptoken, &errstr, 0, "writecrashfileifneeded")
 	if imp.CheckErrorReturn(err) {
 		return
 	}
 	// MCode: do writejobinfofileifneeded			: com/job.m
-	_, err = yottadb.CallMT(tptoken, nil, 0, "writejobinfofileifneeded")
+	_, err = yottadb.CallMT(tptoken, &errstr, 0, "writejobinfofileifneeded")
 	if imp.CheckErrorReturn(err) {
 		return
 	}
@@ -466,7 +470,7 @@ func main() {
 	// MCode: for  set stop=$horolog quit:^cntloop(fillid)  quit:($$^difftime(stop,start)>300)  hang 1
 	// MCode: write:$$^difftime(stop,start)>300 "TEST-W-FIRSTUPD None of the jobs completed its first update across all the regions after 5 minutes!",!
 	for secs = 0; 300 > secs; secs++ {
-		valstr, err = yottadb.ValE(tptoken, nil, "^cntloop", []string{fillidstr})
+		valstr, err = yottadb.ValE(tptoken, &errstr, "^cntloop", []string{fillidstr})
 		if imp.CheckErrorReturn(err) {
 			return
 		}
@@ -488,14 +492,14 @@ func main() {
 	// MCode: . write "TEST-E-imptp.m time out for jobs to start and synch after ",timeout," seconds",!
 	// MCode: . zwrite ^%imptp
 	for secs = 0; 600 > secs; secs++ {
-		valstr, err = yottadb.ValE(tptoken, nil, "^%imptp", []string{fillidstr, "jsyncnt"})
+		valstr, err = yottadb.ValE(tptoken, &errstr, "^%imptp", []string{fillidstr, "jsyncnt"})
 		if imp.CheckErrorReturn(err) {
 			return
 		}
 		valint64, err = strconv.ParseInt(valstr, 10, 32)
 		imp.CheckErrorReturn(err) // Only panic-able errors should hit here
 		valint = int32(valint64)
-		valstr, err = yottadb.ValE(tptoken, nil, "^%imptp", []string{fillidstr, "totaljob"})
+		valstr, err = yottadb.ValE(tptoken, &errstr, "^%imptp", []string{fillidstr, "totaljob"})
 		if imp.CheckErrorReturn(err) {
 			return
 		}

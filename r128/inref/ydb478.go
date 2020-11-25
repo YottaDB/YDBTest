@@ -27,8 +27,11 @@ const tptoken uint64 = yottadb.NOTTP
 func main() {
 	var err error
 	var wg sync.WaitGroup
+	var errstr yottadb.BufferT
 
 	defer yottadb.Exit()
+	defer errstr.Free()
+	errstr.Alloc(yottadb.YDB_MAX_ERRORMSG)
 	if (1 >= len(os.Args)) || (3 <= len(os.Args)) {
 		fmt.Println("Missing/Invalid argument - Single argument with numeric signal")
 		return
@@ -61,7 +64,7 @@ func main() {
 	signal.Notify(sigchan, syscall.Signal(signum))
 	// Initialize YDB runtime which sets up YDB signal handling. This call has no other purpose (i.e. we aren't
 	// trying to delete anything important).
-	err = yottadb.DeleteExclE(tptoken, nil, []string{})
+	err = yottadb.DeleteExclE(tptoken, &errstr, []string{})
 	if nil != err {
 		panic(err)
 	}

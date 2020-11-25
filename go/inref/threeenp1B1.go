@@ -25,7 +25,7 @@ import (
 	"time"
 )
 
-// This is an implementation of 3n+1 in Golang. See "Solving the 3n+1 Problem with YottaDB" at
+// This is an implementation of 3n+1 in Go. See "Solving the 3n+1 Problem with YottaDB" at
 // https://yottadb.com/solving-the-3n1-problem-with-yottadb/ for details.
 // This is the first of two flavors that differ as follows:
 // - threeenp1B1 - All of the entry entry points except the two right up top are implemented as closure functions including

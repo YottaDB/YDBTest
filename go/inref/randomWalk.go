@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////
 //								//
-// Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries. //
+// Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries. //
 // All rights reserved.						//
 //								//
 //	This source code contains the intellectual property	//
@@ -376,6 +376,9 @@ func main() {
 	for i := 0; i < DRIVER_THREADS; i++ {
 		wg.Add(1)
 		go func() {
+			var errstr yottadb.BufferT
+			defer errstr.Free()
+			errstr.Alloc(yottadb.YDB_MAX_ERRORMSG)
 			countMutex.Lock()
 			rtnCount++
 			countMutex.Unlock()
@@ -386,7 +389,7 @@ func main() {
 				if d {
 					break
 				}
-				runProc(tptoken, nil, testSettings{
+				runProc(tptoken, &errstr, testSettings{
 					MAX_DEPTH,
 					NEST_RATE,
 				}, 0)

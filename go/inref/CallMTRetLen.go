@@ -3,7 +3,7 @@
 // Copyright (c) 2019 T.N. Incorporation Ltd (TNI) and/or	//
 // its subsidiaries. All rights reserved.			//
 //								//
-// Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	//
+// Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.	//
 // All rights reserved.						//
 //								//
 //	This source code contains the intellectual property	//
@@ -27,11 +27,15 @@ const tptoken uint64 = yottadb.NOTTP
  */
 
 func main() {
-	defer yottadb.Exit()
+	var errstr yottadb.BufferT
 
+	defer yottadb.Exit()
+	defer errstr.Free()
+
+	errstr.Alloc(yottadb.YDB_MAX_ERRORMSG)
 	/* CallMT section */
 	fmt.Println("CallMT test")
-	retval, err := yottadb.CallMT(tptoken, nil, 26, "testciret")
+	retval, err := yottadb.CallMT(tptoken, &errstr, 26, "testciret")
 	if nil != err {
 		panic(err)
 	}
@@ -42,7 +46,7 @@ func main() {
 	fmt.Println("CallMDescT test")
 	var mrtn yottadb.CallMDesc
 	mrtn.SetRtnName("testciret")
-	retval, err = mrtn.CallMDescT(yottadb.NOTTP, nil, 26)
+	retval, err = mrtn.CallMDescT(tptoken, &errstr, 26)
 	if nil != err {
 		panic(err)
 	}

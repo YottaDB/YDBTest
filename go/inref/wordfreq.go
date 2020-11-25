@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////
 //								//
-// Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries. //
+// Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries. //
 // All rights reserved.						//
 //								//
 //	This source code contains the intellectual property	//
@@ -111,9 +111,13 @@ func main() {
 	var word, linein, lineinlc string
 	var strval, tmp1val, tmp2val string
 	var words []string
+	var errstr yottadb.BufferT
 
 	defer yottadb.Exit() // Be sure to drive cleanup at process exit
+	defer errstr.Free()  // Cleanup this allocated string when it goes out-of-scope
+
 	// Allocate and set up auto-free our two keys
+	errstr.Alloc(yottadb.YDB_MAX_ERRORMSG)
 	wordsvar.Alloc(maxvarnmlen, maxwordssubs, maxwordlen)
 	indexvar.Alloc(maxvarnmlen, maxindexsubs, maxwordlen)
 	// Decide on local or global vars and initialize varname in the KeyT structures (even/odd of process id). Note
@@ -121,40 +125,40 @@ func main() {
 	ourPID := os.Getpid()
 	if 0 != (ourPID & 1) {
 		// fmt.Printf("Using local vars (PID=%d)\n", ourPID)
-		rce = wordsvar.Varnm.SetValStr(tptoken, nil, "words")
+		rce = wordsvar.Varnm.SetValStr(tptoken, &errstr, "words")
 		if checkErrorReturn(rce) {
 			return
 		}
-		rce = indexvar.Varnm.SetValStr(tptoken, nil, "index")
+		rce = indexvar.Varnm.SetValStr(tptoken, &errstr, "index")
 		if checkErrorReturn(rce) {
 			return
 		}
 	} else {
 		// fmt.Printf("Using global vars (PID=%d)\n", ourPID)
-		rce = wordsvar.Varnm.SetValStr(tptoken, nil, "^words")
+		rce = wordsvar.Varnm.SetValStr(tptoken, &errstr, "^words")
 		if checkErrorReturn(rce) {
 			return
 		}
-		rce = indexvar.Varnm.SetValStr(tptoken, nil, "^index")
+		rce = indexvar.Varnm.SetValStr(tptoken, &errstr, "^index")
 		if checkErrorReturn(rce) {
 			return
 		}
 		// Global vars get cleaned out first
-		rce = wordsvar.DeleteST(tptoken, nil, yottadb.YDB_DEL_TREE)
+		rce = wordsvar.DeleteST(tptoken, &errstr, yottadb.YDB_DEL_TREE)
 		if checkErrorReturn(rce) {
 			return
 		}
-		rce = indexvar.DeleteST(tptoken, nil, yottadb.YDB_DEL_TREE)
+		rce = indexvar.DeleteST(tptoken, &errstr, yottadb.YDB_DEL_TREE)
 		if checkErrorReturn(rce) {
 			return
 		}
 	}
 	// Set the number of subscripts typically used for our two keys
-	rce = wordsvar.Subary.SetElemUsed(tptoken, nil, maxwordssubs)
+	rce = wordsvar.Subary.SetElemUsed(tptoken, &errstr, maxwordssubs)
 	if checkErrorReturn(rce) {
 		return
 	}
-	rce = indexvar.Subary.SetElemUsed(tptoken, nil, maxindexsubs) // Reverts to single index temporarily later
+	rce = indexvar.Subary.SetElemUsed(tptoken, &errstr, maxindexsubs) // Reverts to single index temporarily later
 	if checkErrorReturn(rce) {
 		return
 	}
@@ -182,18 +186,18 @@ func main() {
 		// Loop over each word (whitespace delineated) in the input line and increment the counter for it in "words" array
 		for _, word = range words {
 			assert(0 < len(word))
-			rce = wordsvar.Subary.SetValStr(tptoken, nil, 0, word)
+			rce = wordsvar.Subary.SetValStr(tptoken, &errstr, 0, word)
 			if checkErrorReturn(rce) {
 				return
 			}
-			rce = wordsvar.IncrST(tptoken, nil, nil, &value) // Returned 'value' is ignored
+			rce = wordsvar.IncrST(tptoken, &errstr, nil, &value) // Returned 'value' is ignored
 			if checkErrorReturn(rce) {
 				return
 			}
 		}
 	}
 	// Init starting subscript to null string so find first element in the array
-	rce = wordsvar.Subary.SetValStr(tptoken, nil, 0, "")
+	rce = wordsvar.Subary.SetValStr(tptoken, &errstr, 0, "")
 	if checkErrorReturn(rce) {
 		return
 	}
@@ -203,7 +207,7 @@ func main() {
 	// value, not by string value).
 	for {
 		// Fetch next previous subscript
-		rce = wordsvar.SubNextST(tptoken, nil, &tmp1)
+		rce = wordsvar.SubNextST(tptoken, &errstr, &tmp1)
 		if nil != rce {
 			if int(yottadb.YDB_ERR_NODEEND) == yottadb.ErrorCode(rce) {
 				break
@@ -213,53 +217,53 @@ func main() {
 			}
 		}
 		// Set this subscript into wordsvar for fetching/previousing.
-		tmp1val, rce = tmp1.ValStr(tptoken, nil)
+		tmp1val, rce = tmp1.ValStr(tptoken, &errstr)
 		if checkErrorReturn(rce) {
 			return
 		}
-		rce = wordsvar.Subary.SetValStr(tptoken, nil, 0, tmp1val) // Set next subscript back into KeyT for next SubNextST() call
+		rce = wordsvar.Subary.SetValStr(tptoken, &errstr, 0, tmp1val) // Set next subscript back into KeyT for next SubNextST() call
 		if checkErrorReturn(rce) {
 			return
 		}
 		// Fetch the count for this word and set into index (set [^]index(count,var)="")
-		strval, rce = wordsvar.Subary.ValStr(tptoken, nil, 0)
+		strval, rce = wordsvar.Subary.ValStr(tptoken, &errstr, 0)
 		if checkErrorReturn(rce) {
 			return
 		}
-		rce = wordsvar.ValST(tptoken, nil, &wordsTmp1)
+		rce = wordsvar.ValST(tptoken, &errstr, &wordsTmp1)
 		if checkErrorReturn(rce) {
 			return
 		}
-		strval, rce = wordsTmp1.ValStr(tptoken, nil)
+		strval, rce = wordsTmp1.ValStr(tptoken, &errstr)
 		if checkErrorReturn(rce) {
 			return
 		}
-		rce = indexvar.Subary.SetValStr(tptoken, nil, 0, strval)
+		rce = indexvar.Subary.SetValStr(tptoken, &errstr, 0, strval)
 		if checkErrorReturn(rce) {
 			return
 		}
-		rce = indexvar.Subary.SetValStr(tptoken, nil, 1, tmp1val)
+		rce = indexvar.Subary.SetValStr(tptoken, &errstr, 1, tmp1val)
 		if checkErrorReturn(rce) {
 			return
 		}
-		rce = indexvar.SetValST(tptoken, nil, &nullval)
+		rce = indexvar.SetValST(tptoken, &errstr, &nullval)
 		if checkErrorReturn(rce) {
 			return
 		}
 	}
 	// Init first subscript to null string so find first non-null subscript
-	rce = indexvar.Subary.SetValStr(tptoken, nil, 0, "")
+	rce = indexvar.Subary.SetValStr(tptoken, &errstr, 0, "")
 	if checkErrorReturn(rce) {
 		return
 	}
 	//  Loop through [^]indexvar array in reverse to print most common words and their counts first.
 	for {
 		// We only use 1 subscript for this first subscript loop so temporarily set back to 1 sub
-		rce = indexvar.Subary.SetElemUsed(tptoken, nil, 1)
+		rce = indexvar.Subary.SetElemUsed(tptoken, &errstr, 1)
 		if checkErrorReturn(rce) {
 			return
 		}
-		rce = indexvar.SubPrevST(tptoken, nil, &tmp1)
+		rce = indexvar.SubPrevST(tptoken, &errstr, &tmp1)
 		if nil != rce {
 			if int(yottadb.YDB_ERR_NODEEND) == yottadb.ErrorCode(rce) {
 				break
@@ -268,25 +272,25 @@ func main() {
 				return
 			}
 		}
-		rce = indexvar.Subary.SetElemUsed(tptoken, nil, 2) // Revert to using two subscripts
+		rce = indexvar.Subary.SetElemUsed(tptoken, &errstr, 2) // Revert to using two subscripts
 		if checkErrorReturn(rce) {
 			return
 		}
-		tmp1val, rce = tmp1.ValStr(tptoken, nil)
+		tmp1val, rce = tmp1.ValStr(tptoken, &errstr)
 		if checkErrorReturn(rce) {
 			return
 		}
 		// Now loop through all the vars with this frequency count and print them
-		rce = indexvar.Subary.SetValStr(tptoken, nil, 0, tmp1val)
+		rce = indexvar.Subary.SetValStr(tptoken, &errstr, 0, tmp1val)
 		if checkErrorReturn(rce) {
 			return
 		}
-		rce = indexvar.Subary.SetValStr(tptoken, nil, 1, "") // Init first subscr at this level to run list
+		rce = indexvar.Subary.SetValStr(tptoken, &errstr, 1, "") // Init first subscr at this level to run list
 		if checkErrorReturn(rce) {
 			return
 		}
 		for {
-			rce = indexvar.SubNextST(tptoken, nil, &tmp2)
+			rce = indexvar.SubNextST(tptoken, &errstr, &tmp2)
 			if nil != rce {
 				if int(yottadb.YDB_ERR_NODEEND) == yottadb.ErrorCode(rce) {
 					break
@@ -295,17 +299,17 @@ func main() {
 					return
 				}
 			}
-			tmp2val, rce = tmp2.ValStr(tptoken, nil)
+			tmp2val, rce = tmp2.ValStr(tptoken, &errstr)
 			if checkErrorReturn(rce) {
 				return
 			}
-			rce = indexvar.Subary.SetValStr(tptoken, nil, 1, tmp2val) // Set value back into key for next SubNextST()
+			rce = indexvar.Subary.SetValStr(tptoken, &errstr, 1, tmp2val) // Set value back into key for next SubNextST()
 			if checkErrorReturn(rce) {
 				return
 			}
 
 			// Fetch current indexes as strings and print them
-			freqcnt, rce := tmp1.ValStr(tptoken, nil)
+			freqcnt, rce := tmp1.ValStr(tptoken, &errstr)
 			if checkErrorReturn(rce) {
 				return
 			}
