@@ -71,6 +71,7 @@ $gtm_tst/com/dbcreate.csh mumps
 $echoline
 echo "# Starting Replication and enable instance freeze on INST2"
 $MSR START INST1 INST2
+get_msrtime
 $MSR RUN INST2 '$MUPIP set -inst_freeze_on_error -file mumps.dat'
 
 $echoline
@@ -93,8 +94,9 @@ echo "# Set the global variable another million times"
 $gtm_exe/yottadb -run %XCMD 'for i=1:1:1000000 set ^a=i'
 
 $echoline
-echo "# Wait for the instance freeze to show up in the syslog before continuing"
-$gtm_tst/com/getoper.csh "$syslog_begin" "" syslog_replinstfrozen.txt "" "REPLINSTFROZEN"
+echo "# Wait for the receiver's update process to exit (which in turn implies the instance is already frozen) before continuing"
+echo "# This wait is necessary to prevent the test from restarting the update process before the instance freeze happens"
+$gtm_tst/com/wait_for_log.csh -log $gtm_test_msr_DBDIR2/RCVR_${time_msr}.log.updproc -message 'Update process exiting'
 
 $echoline
 echo "# Re-Enable write permissions on jnl2 subdirectory and bring the receiver back into sync"
