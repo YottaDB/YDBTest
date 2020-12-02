@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -687,7 +687,8 @@ setenv tst_random_all "$tst_random_all gtm_side_effects"
 #
 # Do this randomness if gtm_test_hugepages is not already passed to gtmtest.csh
 if !($?gtm_test_hugepages) then
-	if ( 5 >=  $randnumbers[22]) then
+	# Note - disable hugepage testing on Alpine until/unless we can set it up ##ALPINE_TODO##
+	if (("alpine" != "$gtm_test_linux_distrib") && ( 5 >=  $randnumbers[22])) then
 		setenv gtm_test_hugepages 1
 	else
 		setenv gtm_test_hugepages 0
@@ -696,6 +697,7 @@ if !($?gtm_test_hugepages) then
 else
 	echo "# gtm_test_hugepages was already set before coming into do_random_settings.csh"		>>&! $settingsfile
 endif
+
 if ($gtm_test_hugepages) then
 	setenv HUGETLB_SHM yes
 	if ( $randnumbers[23] >= 9) then

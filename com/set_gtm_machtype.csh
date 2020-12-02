@@ -107,7 +107,7 @@ endif
 # Set endianness
 setenv gtm_endian `echo -n A | od -h | awk '{if ($2 == "0041") {print "LITTLE_ENDIAN"} else if ($2 == "4100") {print "BIG_ENDIAN"} else {print "ENDIAN_UNDETERMINED"}; exit}'` #BYPASSOK awk
 # Set the linux distribution name if the current server is a linux server
-# gtm_test_linux_distrib will be set to one of ubuntu, redhatenterpriseserver, debian, centos, fedora, suselinux, arch
+# gtm_test_linux_distrib will be set to one of ubuntu, redhatenterpriseserver, debian, centos, fedora, suselinux, arch or alpine
 # on a linux server. It will be set to "" on other servers
 if (-X lsb_release) then
 	setenv gtm_test_linux_distrib `lsb_release -is | sed 's/ //g' | tr '[A-Z]' '[a-z]'`
@@ -137,9 +137,11 @@ else
 endif
 
 # Determine whether openssl version is 1.1.1 or more (i.e. tls 1.3). Some tests have different output based on this.
-# If $ydb_dist/plugin/libgtmtls.so is not present, then assume openssl version is < 1.1.1 (i.e. not tls 1.3)
+# If $ydb_dist/plugin/libgtmtls.so is not present, then assume openssl version is < 1.1.1 (i.e. not tls 1.3).
+# Note use '|&' coming out of ldd because on Alpine, ldd generates extra warning messages about gtm_malloc/free not
+# being satisfied.
 if (-e $ydb_dist/plugin/libgtmtls.so) then
-	set libsslpath = `ldd $ydb_dist/plugin/libgtmtls.so | grep libssl | awk '{print $3}'`
+	set libsslpath = `ldd $ydb_dist/plugin/libgtmtls.so |& grep libssl | awk '{print $3}'`
 	set opensslver = `strings $libsslpath | grep -w '^OpenSSL' | awk '{print $2}'`
 	if ( `expr "$opensslver" \>= "1.1.1"` ) then
 		setenv ydb_test_tls13_plus 1

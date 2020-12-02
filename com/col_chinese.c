@@ -1,6 +1,9 @@
 /****************************************************************
 *								*
-*	Copyright 2013 Fidelity Information Services, Inc	*
+* Copyright 2013 Fidelity Information Services, Inc		*
+*								*
+* Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	*
+* All rights reserved.						*
 *								*
 *	This source code contains the intellectual property	*
 *	of its copyright holder(s), and is made available	*
@@ -42,13 +45,19 @@
  *	dynamically allocated will need to be freed accordingly when time is
  * 	right. In case of globals, if the string after the transformation is longer
  *	than 255, then, an error code of ERR_SUB2LONG should be returned.
+ *
+ * Note this routine contains some changes for Chinese UTF8 under Alpine even though it
+ * does not (yet) work under Alpine. But these are the changes that are needed to make
+ * it work once that support is added (heard it was in an upstream repo) ##ALPINE_TODO##
  */
 
 #include <errno.h>
 #include <iconv.h>
 
-#include "gtm_stdio.h"
 #include "gtm_descript.h"
+#include "gtm_stdio.h"
+#include "gtm_stdlib.h"
+#include "gtm_string.h"
 
 #define SUCCESS			0
 #define FAILURE			1
@@ -69,7 +78,13 @@ long gtm_ac_xform ( gtm_descriptor *src, int level, gtm_descriptor *dst, int *ds
 	char		*outbuf;
 	size_t		inbytesleft;
 	size_t		outbytesleft;
+	char		*conv_from_chset, *conv_to_chset;
+#	ifdef __linux__
+	char		*distro;
+#	endif
 
+	conv_from_chset = "GB18030";
+	conv_to_chset = "UTF-8";	/* Default convert-to character set */
 	inbytesleft = src->len;
 	outbytesleft = dst->len;
 #if HAVE_NEW_ICONV
@@ -84,13 +99,19 @@ long gtm_ac_xform ( gtm_descriptor *src, int level, gtm_descriptor *dst, int *ds
 		src->len, dst->len);
 #endif
 
-#if defined (__hpux)
-	iconv_t cd = iconv_open("gb18030", "UTF-8");
-#elif defined(__MVS__)
-	iconv_t cd = iconv_open("IBM-1386", "UTF-8");
-#else
-	iconv_t cd = iconv_open("GB18030", "UTF-8");
-#endif
+#	ifdef __linux__
+	/* Alpine linux with musl uses a different set of conversion names - specifically names should be in lower case
+	 * and "UTF-8" should be "utf8".
+	 */
+	distro = getenv("gtm_test_linux_distrib");
+	if (distro && (0 == strncmp("alpine", distro, sizeof("alpine"))))	/* Note max compare includes null terminator */
+	{
+		conv_from_chset = "gb18030";
+		conv_to_chset = "utf8";
+	}
+#	endif
+
+	iconv_t cd = iconv_open(conv_from_chset, conv_to_chset);
 	if (cd == (iconv_t)(-1)) {
 		fprintf(stderr, "\ngt_ac_xform :: error number from iconv_open :: %d\n",
 				errno);

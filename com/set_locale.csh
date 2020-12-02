@@ -3,6 +3,9 @@
 # Copyright (c) 2006-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -32,7 +35,13 @@ if ("Linux" == "$HOSTOS") then
 else
 	set binaryopt = ""
 endif
-set utflocale = `locale -a | grep $binaryopt -iE 'en_us\.utf.?8$' | head -n 1`  #BYPASSOK grep head
+
+# If this is alpine, the UTF8 locale looks different so just set it
+if (("linux" == "$gtm_test_osname") && ("alpine" == "$gtm_test_linux_distrib")) then
+	set utflocale = "C.UTF8"  # Verify this is the one to use ##ALPINE_TODO##
+else
+	set utflocale = `locale -a | grep $binaryopt -iE 'en_us\.utf.?8$' | head -n 1`  #BYPASSOK grep head
+endif
 
 setenv LC_CTYPE $utflocale
 setenv LC_COLLATE C # because regular unix commands like ls, sort etc. rely on LC_COLLATE to be "C" for sorting names

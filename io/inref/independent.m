@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-;	Copyright 2008, 2013 Fidelity Information Services, Inc	;
+; Copyright 2008, 2013 Fidelity Information Services, Inc	;
+;								;
+; Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -14,6 +17,10 @@ independent
 	; the "independent" deviceparameter.  The ntestin executable is designed to run after the pipe is closed.
 	; This test will save the process id of this executable to be killed by the test script after this m
 	; routine has run.
+	;
+	; This convolution for the ps command is due to the differences with Alpine Linux. Fortunately, what we need to
+	; there and for glibc based Linux distros is the same.
+	set pscmd="ps -eo user,pid,ppid,args"
 	set shellpath=$zcmdline
 	set shellname=$zparse($zcmdline,"name")
 	set a="test"
@@ -25,11 +32,11 @@ independent
 	use $p
 	write x,!
 	; add debugging ps output
-	zsystem "ps -ef > "_shellname_".psef.outx"
+	zsystem pscmd_" > "_shellname_".psef.outx"
 	; set k to be a ps command to capture the child of the "key" process as the first line in ntestin.pid and if there is
 	; a shell process parent for ntestin it will be saved as the second line in ntestin.pid.
-	set k="ps -ef | grep -v grep | grep -v "_shellname_" | grep -w '"_key_"' | grep ntestin | awk '{print $2}' > ntestin.pid"
-	set k=k_";ps -ef | grep -v grep | grep "_shellname_" | grep -w '"_key_"' | grep ntestin | awk '{print $2}' >> ntestin.pid"
+	set k=pscmd_" | grep -v grep | grep -v "_shellname_" | grep -w '"_key_"' | grep ntestin | awk '{print $2}' > ntestin.pid"
+	set k=k_";"_pscmd_" | grep -v grep | grep "_shellname_" | grep -w '"_key_"' | grep ntestin | awk '{print $2}' >> ntestin.pid"
 	set b="getpid"
 	open b:(comm=k:writeonly)::"pipe"
 	; make sure the long command string defined in k has time to process ntestin.pid by adding a timeout to close

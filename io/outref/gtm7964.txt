@@ -43,8 +43,10 @@ stderr - two
 open a:(shell="/usr/local/bin/tcsh":comm="/bin/cat |& nl":parse)::"pipe"
      1	one
      2	two
+##SUSPEND_OUTPUT ALPINE
 open a:(comm="mupip integ -file mumps.dat":parse)::"pipe"
 No errors detected by integ.
+##ALLOW_OUTPUT ALPINE
 open a:(comm="$gtm_dist/mupip integ -file mumps.dat":parse)::"pipe"
 No errors detected by integ.
 open a:(comm="nohup cat":parse)::"pipe"

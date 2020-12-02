@@ -31,6 +31,7 @@ int main()
 	 * of util_out_print. If the printf statment is changed please make the corresponding changes into test_fao.csh
 	 */
 	printf(" Memory address used %lX %lu %ld\n", &pi, &pi, &pi);
+	fflush(stdout);		/* Force flush now so output predictable in Alpine and other Linuxen */
 	util_out_print(" XB !XB SB !SB UB !UB ZB !ZB", TRUE, schar, schar, schar, schar);
 	util_out_print(" XW !XW SW !SW UW !UW ZW !ZW", TRUE, pi, pi, pi, pi);
 	util_out_print(" XL !XL SL !SL UL !UL ZL !ZL", TRUE, pi, pi, pi, pi);

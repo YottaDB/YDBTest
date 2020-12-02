@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2013 Fidelity Information Services, Inc	#
+# Copyright 2013 Fidelity Information Services, Inc		#
+#								#
+# Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -30,5 +33,6 @@ $GDE show -region
 $GDE show -commands -file=final.com
 
 echo "# Display the difference between the default show -commands and the show -commands output after modifications above"
-diff fresh.com final.com
+# Note added -U0 flag as Alpine default for diff output was quite different so this flags makes the output the same.
+diff -U0 fresh.com final.com
 

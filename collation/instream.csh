@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -21,8 +21,12 @@ setenv unicode_testlist ""
 
 if ( $LFE == "E" ) then
 	setenv subtest_list "$subtest_list pol_to_pol pol_to_revpol local_col col_nct ylct"
-	if (("TRUE" == $gtm_test_unicode_support ) && ($gtm_test_osname != "osf1")) then
-		setenv subtest_list "$subtest_list def_to_chn local_chn col_nct_with_chn test_opers"
+	# If this is Alpine Linux with its musl C library, we cannot (yet?) support the chinese character set so disable
+	# subtests that depend on it. ##ALPINE_TODO##
+	if ("TRUE" == $gtm_test_unicode_support) then
+		if (("linux" != "$gtm_test_osname") || ("alpine" != "$gtm_test_linux_distrib")) then
+			setenv subtest_list "$subtest_list def_to_chn local_chn col_nct_with_chn test_opers"
+		endif
 	endif
 endif
 

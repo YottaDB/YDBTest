@@ -3,7 +3,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -100,7 +100,14 @@ case "SunOS":
 case "Linux":
    setenv grep "grep -a"		# Process a binary file as if it were text
    setenv truss "/usr/bin/strace -tT"
-   setenv ps "ps -efww"			# Double "w" to mean infinite width in ps output display
+   # Normally we could just test $gtm_test_linux_distrib but set_gtm_machtype.csh hasn't been run yet so do this
+   # check manually.
+   set distrib = `grep -w ID /etc/os-release | cut -d= -f2 | cut -d'"' -f2`
+   if ("alpine" == "$distrib") then
+	setenv ps "ps -ef"
+   else
+	setenv ps "ps -efww"		# Double "w" to mean infinite width in ps output display
+   endif
    setenv psuser "ps -fwwu $USER"
    setenv rsh_to_vms "rsh"
    setenv rcp_to_vms "rcp"
@@ -167,6 +174,7 @@ endsw
 # the command will just echo the tool name. This prevents test failures
 setenv fuser /usr/sbin/fuser
 if !(-e $fuser) setenv fuser /sbin/fuser
+if !(-e $fuser) setenv fuser /usr/bin/fuser
 if !(-e $fuser) setenv fuser /bin/fuser
 if !(-e $fuser) then
 	echo "TEST-E-FUSER, cannot find fuser. Tests relying on \$fuser will fail"

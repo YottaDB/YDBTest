@@ -4,6 +4,9 @@
 # Copyright (c) 2003-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -44,6 +47,7 @@ if !($?gtm_test_osname) then
 	set gtm_test_osname  = "$os_name"
 endif
 
+
 echo "checking $pidtowait at `date`" >>&! $logfile
 if ( "os390" == $gtm_test_osname ) then
 	# In zOS, a process could be shown by ps as alive even though it is actually dead (in a "canceled" state)
@@ -53,8 +57,15 @@ if ( "os390" == $gtm_test_osname ) then
 	kill -0 $pidtowait >>& $logfile # BYPASSOK kill
 	set stat = $status
 else if ("cygwin" != "$gtm_test_osname") then
-	ps -fp $pidtowait >>& $logfile # BYPASSOK ps
-	set stat = $status
+	# We need the distribution name to properly determine method as Alpine Linux does not have all the
+	# extra amenities that glibc provides.
+	if (("linux" == "$gtm_test_osname") && ("alpine" == "$gtm_test_linux_distrib")) then
+		kill -0 $pidtowait >>& $logfile # BYPASSOK kill
+		set stat = $status
+	else
+		ps -fp $pidtowait >>& $logfile # BYPASSOK ps
+		set stat = $status
+	endif
 else
 	ps -p $pidtowait |& $tst_awk '{ print $1 }' |& grep $pidtowait >>& $logfile # BYPASSOK ps
 	set stat = $status

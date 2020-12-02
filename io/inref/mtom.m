@@ -2,7 +2,7 @@
 ;								;
 ; Copyright 2008, 2013 Fidelity Information Services, Inc	;
 ;								;
-; Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -14,7 +14,9 @@
 mtom
 	; test to demonstrate communication with another GTM process over a pipe device
 	set p="test"
-	open p:(comm="mumps -dir")::"pipe"
+	; Added $ydb_dist here due to Alpine not being otherwise able to find the command as Alpine does this
+	; invocation differently. ##ALPINE_TODO##
+	open p:(comm="$ydb_dist/mumps -dir")::"pipe"
 	zsystem "sleep 1; ps -ef | grep mumps | grep -v grep | grep $user > mtom.log"
 	use p:exception="G PROB"
 	; read newline

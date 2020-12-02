@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-;	Copyright 2013 Fidelity Information Services, Inc	;
+; Copyright 2013 Fidelity Information Services, Inc		;
+;								;
+; Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
@@ -160,9 +163,12 @@ getchild(p,ps,linematch,command)
 	do testpipe(p,command,.totcom)
 	; use a pipe named psout to get lines matching the command
 	set psout="psout"
-	set comarg="ps -ef | grep -w "_command_" | grep -v grep"
+	; Normally we would use "ps -ef" command here but Alpine Linux does not have the same output that other
+	; glibc based distros have so specify a custom output that works on both flavors (glibc and Alpine/musl/busybox).
+	set comarg="ps -eo user,pid,ppid,args | grep -w "_command_" | grep -v grep"
 	do openpipe(psout,comarg)
 	use psout
+	kill ps
 	for i=1:1 read ps(i) quit:$zeof  do
 	. set a=ps(i)
 	. ; parse the first 3 fields
@@ -181,8 +187,8 @@ getchild(p,ps,linematch,command)
 	if 'linematch  do
 	. use $p write "Problem finding tcsh -c "_totcom_" - stopping test",!
 	. write "current process id = ",$job,!
-	. write "ps -ef output for debugging:",!
-	. for j=1:1:lines  write ps(j),!
+	. write "ps output for debugging:",!
+	. zwrite lines,ps
 	. halt
 	quit
 
