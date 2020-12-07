@@ -11,7 +11,7 @@
 #								#
 #################################################################
 
-echo "# Testing mupip responts to SIGINT by shutting down cleanly
+echo "# Testing mupip responds to SIGINT by shutting down cleanly"
 echo "# Running an expect test for mupip integ response to CTRL^C"
 expect $gtm_tst/$tst/u_inref/ydb635.exp > expect.out
 echo "# With the last line in expect.out (File or Region), we can verify that mupip closed successfully"
