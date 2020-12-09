@@ -115,4 +115,11 @@ echo "# Check the syslog for an %YDB-E-JNLEXTEND error. If not found, this will 
 
 $gtm_tst/com/getoper.csh "$syslog_begin" "$syslog_after" syslog_jnlextend.txt "" "JNLEXTEND"
 
+# Filter out potential RENAMEFAIL errors
+# A RENAMEFAIL error can occur when the test removes write permissions on the jnl2 subdirectory
+# which is used for the receiver's journal files. If the write permissions are revoked while the
+# receiver is renaming its journal files, the write will fail producing a RENAMEFAIL error and,
+# if not filtered out, cause the test to fail.
+$gtm_tst/com/check_error_exist.csh $gtm_test_msr_DBDIR2/RCVR_${time_msr}.log.updproc "YDB-W-RENAMEFAIL" >& renamefail.logx
+
 $gtm_tst/com/dbcheck.csh
