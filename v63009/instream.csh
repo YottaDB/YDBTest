@@ -23,6 +23,7 @@
 # gtm9155		[bdw]		Tests that certain nested selects and extrinsics work correctly
 # gtm9037		[bdw]		Tests that an error message is printed to syslog if journaling is shut down due to disk or permissions error.
 # gtm9037replic		[bdw]		Tests that an error message is printed to syslog if a replication instance is frozen due to to disk or permissions error.
+# gtm9144		[kz]		Test that loading a binary extract into a database with different null subscript collation type produces a DBDUPNULCOL error
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -30,7 +31,7 @@ echo "v63009 test starts..."
 
 # List the subtests seperated by sspaces under the appropriate environment variable name
 setenv subtest_list_common	""
-setenv subtest_list_non_replic "gtm9142 gtm8203 gtm9145 gtm8901 gtm8706 gtm9155 gtm9037"
+setenv subtest_list_non_replic "gtm9142 gtm8203 gtm9145 gtm8901 gtm8706 gtm9155 gtm9037 gtm9144"
 setenv subtest_list_replic	"gtm9037replic"
 
 if ($?test_replic == 1) then

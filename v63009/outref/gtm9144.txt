@@ -1,0 +1,60 @@
+# Initialize database 1 with GT.M null subscript collation
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Null collation set to GT.M in database 1
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+# Extract database 1 in Binary format
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+# Initialize database 2 with Standard null subscript collation
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps2.gld
+Using: ##SOURCE_PATH##/mupip
+mumps2.dat
+# Null collation set to Standard in database 2
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+# Loading binary extract from database 1 into database 2
+# Extract database 2 in Binary Format
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+Creating database 3 exactly like database 1
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps3.gld
+Using: ##SOURCE_PATH##/mupip
+mumps3.dat
+# Null collation set to GT.M in database 3
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+# Loading binary extract from database 2 into database 3
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##TEST_PATH##/mupip_load.out
+%YDB-E-DBDUPNULCOL, Discarding ^X("")=3 key due to duplicate null collation record
