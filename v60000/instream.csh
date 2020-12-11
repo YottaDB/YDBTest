@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -108,17 +108,26 @@ if ("linux" != "$gtm_test_osname") then
 	setenv subtest_exclude_list "$subtest_exclude_list inst_freeze_enospc"
 endif
 # If the platform/host does not have prior GT.M versions, disable tests that require them
+set disabledowngrade = 0
 if ($?gtm_test_nopriorgtmver) then
 	setenv subtest_exclude_list "$subtest_exclude_list mu_downgrade mu_upgrade"
+	set disabledowngrade = 1
 else if ("dbg" == "$tst_image") then
        # We do not have dbg builds in the range [V50000, V53003] needed by the mu_upgrade subtest so disable it.
        setenv subtest_exclude_list "$subtest_exclude_list mu_upgrade"
        # We do not have dbg V5* builds needed by the mu_downgrade subtest so disable it.
        setenv subtest_exclude_list "$subtest_exclude_list mu_downgrade"
+       set disabledowngrade = 1
 else if ($?ydb_environment_init) then
 	# In a YDB environment (i.e. non-GG setup), we do not have prior versions that are needed
 	# by the below subtest. Therefore disable it.
-       setenv subtest_exclude_list "$subtest_exclude_list mu_upgrade"
+	setenv subtest_exclude_list "$subtest_exclude_list mu_upgrade"
+endif
+# If we haven't already disabled mu_downgrade, check if we need to once again in case no V5 versions are available.
+if (!($disabledowngrade) && ($?ydb_test_exclude_V5_tests)) then
+	if ($ydb_test_exclude_V5_tests) then
+		setenv subtest_exclude_list "$subtest_exclude_list mu_downgrade"
+	endif
 endif
 # If IGS is not available, filter out tests that need it
 if ($?gtm_test_noIGS) then

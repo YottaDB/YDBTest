@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -18,8 +18,12 @@ if ($?gtm_test_replay) then
 	source $gtm_test_replay
 endif
 
-# If the platform/host does not have prior GT.M versions, disable first section of the test
-if (! $?gtm_test_nopriorgtmver) then
+# If the platform/host does not have prior V5 GT.M versions, disable first section of the test
+set V5_tests_excluded = 0
+if ($?ydb_test_exclude_V5_tests) then
+    set V5_tests_excluded = $ydb_test_exclude_V5_tests
+endif
+if (! $V5_tests_excluded) then
 	# Test that an instance file create by a previous GT.M version needs to be recreated before it can be used
 	if (! $?gtm_test_replay) then
 		set prior_ver = `$gtm_tst/com/random_ver.csh -gte V51000 -lt V55000`

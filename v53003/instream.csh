@@ -4,7 +4,7 @@
 # Copyright (c) 2008-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -65,13 +65,16 @@ if ("MM" == $acc_meth) then
 	setenv subtest_exclude_list "$subtest_exclude_list C9I06002996"
 endif
 # If the platform/host does not have prior GT.M versions, disable tests that require them
-if ($?gtm_test_nopriorgtmver) then
-	setenv subtest_exclude_list "$subtest_exclude_list C9I05002987"
-else if ($?ydb_environment_init) then
+if ($?ydb_environment_init) then
 	# We are in a YDB environment (i.e. non-GG setup)
 	if ("dbg" == "$tst_image") then
 		# We do not have dbg V5 builds needed by the C9805002987 subtest so disable it.
 		setenv subtest_exclude_list "$subtest_exclude_list C9I05002987"
+	else if ($?ydb_test_exclude_V5_tests) then
+		# If we are excluding subtests with a V5 prior version dependency, exclude C9I05002987
+		if ($ydb_test_exclude_V5_tests) then
+			setenv subtest_exclude_list "$subtest_exclude_list C9I05002987"
+		endif
 	endif
 endif
 # If the platform/host does not have GG structured build directory, disable tests that require them

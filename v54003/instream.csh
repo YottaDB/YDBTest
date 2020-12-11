@@ -4,7 +4,7 @@
 # Copyright (c) 2011-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -148,13 +148,16 @@ if ("beowulf" == "$HOST:r:r:r" || ("HOST_HP-UX_PA_RISC" == "$gtm_test_os_machtyp
 	setenv subtest_exclude_list	"$subtest_exclude_list C9I12003062"
 endif
 # If the platform/host does not have prior GT.M versions, disable tests that require them
-if ($?gtm_test_nopriorgtmver) then
-	setenv subtest_exclude_list "$subtest_exclude_list D9I08002697 gtm6811"
-else if ($?ydb_environment_init) then
+if ($?ydb_environment_init) then
 	# We are in a YDB environment (i.e. non-GG setup)
 	if ("dbg" == "$tst_image") then
 		# We do not have dbg V54002B builds needed by the gtm6811 subtest so disable it.
 		setenv subtest_exclude_list "$subtest_exclude_list gtm6811"
+	else if ($?ydb_test_exclude_V5_tests) then
+		# If we are excluding subtests with a V5 prior version dependency, exclude gtm6811
+		if ($ydb_test_exclude_V5_tests) then
+			setenv subtest_exclude_list "$subtest_exclude_list gtm6811"
+		endif
 	endif
 	# Temporarily disable below subtest as it requires "gld_mismatch" prior version which will be there once T63002 is released.
 	setenv subtest_exclude_list "$subtest_exclude_list D9I08002697"

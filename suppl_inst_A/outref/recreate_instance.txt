@@ -1,4 +1,4 @@
-##SUSPEND_OUTPUT PLATFORM_NO_PRIORGTM
+##SUSPEND_OUTPUT EXCLUDE_V5_TESTS
 # Switching to prior version
 # Creating replication instance file using prior version
 # Switching back to current version
@@ -6,7 +6,7 @@
 # Start source server. Expect REPLINSTFMT error
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating START of source server for secondary instance [nobody]
 %YDB-E-REPLINSTFMT, Format error encountered while reading replication instance file ##TEST_PATH##/mumps.repl. Expected GDSRPLUNX##TEST_AWK[0-9]*. Found GDSRPLUNX[0-9]*.
-##ALLOW_OUTPUT PLATFORM_NO_PRIORGTM
+##ALLOW_OUTPUT EXCLUDE_V5_TESTS
 Files Created in ##TEST_PATH##:
 Using: ##SOURCE_PATH##/mumps -run GDE
 mumps.gld

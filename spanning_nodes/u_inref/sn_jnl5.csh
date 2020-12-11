@@ -4,6 +4,9 @@
 # Copyright (c) 2013, 2015 Fidelity National Information	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -115,342 +118,343 @@ $gtm_tst/com/backup_dbjnl.csh case2 "" mv
 
 $echoline
 
-# The rest of the cases below require a prior version.
-# Exit the subtest now if the platform/host does not have prior version
-if ($?gtm_test_nopriorgtmver) then
-	exit
+# Those cases requiring V5 versions are excluded if V5 versions are not available.
+set V5_tests_excluded = 0
+if ($?ydb_test_exclude_V5_tests) then
+    set V5_tests_excluded = $ydb_test_exclude_V5_tests
 endif
+if (! $V5_tests_excluded) then
+    ###############################################################################################
+    # Case 3. Setting a low journal buffer size with an older GDE and ensuring that the value     #
+    # gets auto-adjusted and utilized on subsequent MUPIP create.                                 #
+    ###############################################################################################
+    echo "Case 3."
+    echo
 
-###############################################################################################
-# Case 3. Setting a low journal buffer size with an older GDE and ensuring that the value     #
-# gets auto-adjusted and utilized on subsequent MUPIP create.                                 #
-###############################################################################################
-echo "Case 3."
-echo
+    # Switch to a previous version
+    source $gtm_tst/$tst/u_inref/set_low_jnl_buff_prior_ver.csh 3
 
-# Switch to a previous version
-source $gtm_tst/$tst/u_inref/set_low_jnl_buff_prior_ver.csh 3
-
-# Set a low journal buffer size in the global directory
-cat > setlowbuffer.gde <<EOF
-  change -region DEFAULT -journal=(${b4nob4image}_image,buffer_size=$low_buffer_size)
-  exit
+    # Set a low journal buffer size in the global directory
+    cat > setlowbuffer.gde <<EOF
+	change -region DEFAULT -journal=(${b4nob4image}_image,buffer_size=$low_buffer_size)
+	exit
 EOF
-$GDE_SAFE @setlowbuffer.gde
+    $GDE_SAFE @setlowbuffer.gde
 
-# Switch back to the current version
-source $gtm_tst/com/switch_gtm_version.csh $tst_ver $tst_image
+    # Switch back to the current version
+    source $gtm_tst/com/switch_gtm_version.csh $tst_ver $tst_image
 
-# Upgrade the global directory
-$GDE exit
-echo
+    # Upgrade the global directory
+    $GDE exit
+    echo
 
-# Create a database. We should not see any errors; journaling should be enabled;
-# and the buffer size should be at new default.
-$MUPIP create
-echo
+    # Create a database. We should not see any errors; journaling should be enabled;
+    # and the buffer size should be at new default.
+    $MUPIP create
+    echo
 
-# Check the journaling state
-check_journaling
+    # Check the journaling state
+    check_journaling
 
-# Check the database
-$gtm_tst/com/dbcheck.csh	# MUPIP create done instead of dbcreate
+    # Check the database
+    $gtm_tst/com/dbcheck.csh    # MUPIP create done instead of dbcreate
 
-# Prepare for the next case
-$gtm_tst/com/backup_dbjnl.csh case3 "*.dat *.gld" mv
+    # Prepare for the next case
+    $gtm_tst/com/backup_dbjnl.csh case3 "*.dat *.gld" mv
 
-$echoline
+    $echoline
 
-###############################################################################################
-# Case 4. Setting a low journal buffer size with an older MUPIP version and ensuring that the #
-# value gets auto-adjusted on an update in the current version, at the shared-memory-         #
-# allocation time.                                                                            #
-###############################################################################################
-echo "Case 4."
-echo
+    ###############################################################################################
+    # Case 4. Setting a low journal buffer size with an older MUPIP version and ensuring that the #
+    # value gets auto-adjusted on an update in the current version, at the shared-memory-         #
+    # allocation time.                                                                            #
+    ###############################################################################################
+    echo "Case 4."
+    echo
 
-# Switch to a previous version
-source $gtm_tst/$tst/u_inref/set_low_jnl_buff_prior_ver.csh 4
+    # Switch to a previous version
+    source $gtm_tst/$tst/u_inref/set_low_jnl_buff_prior_ver.csh 4
 
-# Create a global directory
-$GDE_SAFE exit
-echo
+    # Create a global directory
+    $GDE_SAFE exit
+    echo
 
-# Create a database
-$MUPIP create
-echo
+    # Create a database
+    $MUPIP create
+    echo
 
-# Enable journaling with a journal buffer size below the current minimum
-$MUPIP set -journal=enable,on,$b4nob4image,buffer_size=$low_buffer_size -file mumps.dat
-echo
+    # Enable journaling with a journal buffer size below the current minimum
+    $MUPIP set -journal=enable,on,$b4nob4image,buffer_size=$low_buffer_size -file mumps.dat
+    echo
 
-# Switch back to the current version
-source $gtm_tst/com/switch_gtm_version.csh $tst_ver $tst_image
+    # Switch back to the current version
+    source $gtm_tst/com/switch_gtm_version.csh $tst_ver $tst_image
 
-# Upgrade the global directory
-$GDE exit
+    # Upgrade the global directory
+    $GDE exit
 
-# Remember the start time
-set time_before = `date +"%b %e %H:%M:%S"`
+    # Remember the start time
+    set time_before = `date +"%b %e %H:%M:%S"`
 
-# Try to write an update. We should not see any messages at this point, except in the syslog,
-# about journal buffer size being adjusted to the new minimum.
-$GTM -direct <<EOF
-  set ^x=1
+    # Try to write an update. We should not see any messages at this point, except in the syslog,
+    # about journal buffer size being adjusted to the new minimum.
+    $GTM -direct << EOF
+	set ^x=1
 EOF
+    echo
 
-echo
+    # Remember the end time
+    set time_after = `date +"%b %e %H:%M:%S"`
 
-# Remember the end time
-set time_after = `date +"%b %e %H:%M:%S"`
-
-# Verify that JNLBUFFREGUPD message is printed in the syslog
-$gtm_tst/com/getoper.csh "$time_before" "$time_after" "journal_buffer_adjust4.txt" "" "JNLBUFFREGUPD"
-if ($status) then
+    # Verify that JNLBUFFREGUPD message is printed in the syslog
+    $gtm_tst/com/getoper.csh "$time_before" "$time_after" "journal_buffer_adjust4.txt" "" "JNLBUFFREGUPD"
+    if ($status) then
 	echo "TEST-E-FAIL JNLBUFFREGUPD not found in operator log. Check journal_buffer_adjust4.txt."
 	echo
-endif
+    endif
 
-# Check the journaling state
-check_journaling
+    # Check the journaling state
+    check_journaling
 
-# Check the database
-$gtm_tst/com/dbcheck.csh	# MUPIP create done instead of dbcheck
+    # Check the database
+    $gtm_tst/com/dbcheck.csh	# MUPIP create done instead of dbcheck
 
-# Prepare for the next case
-$gtm_tst/com/backup_dbjnl.csh case4 "" mv
+    # Prepare for the next case
+    $gtm_tst/com/backup_dbjnl.csh case4 "" mv
 
-$echoline
+    $echoline
 
-###############################################################################################
-# Case 5. Setting a low journal buffer size with an older MUPIP version and verifying that in #
-# the current version the value gets properly auto-adjusted even if an invalid value is       #
-# explicitly specified in a MUPIP set command.                                                #
-###############################################################################################
-echo "Case 5."
-echo
+    ###############################################################################################
+    # Case 5. Setting a low journal buffer size with an older MUPIP version and verifying that in #
+    # the current version the value gets properly auto-adjusted even if an invalid value is       #
+    # explicitly specified in a MUPIP set command.                                                #
+    ###############################################################################################
+    echo "Case 5."
+    echo
 
-# Switch to a previous version
-source $gtm_tst/$tst/u_inref/set_low_jnl_buff_prior_ver.csh 5
+    # Switch to a previous version
+    source $gtm_tst/$tst/u_inref/set_low_jnl_buff_prior_ver.csh 5
 
-# Create a global directory
-$GDE_SAFE exit
-echo
+    # Create a global directory
+    $GDE_SAFE exit
+    echo
 
-# Create a database
-$MUPIP create
-echo
+    # Create a database
+    $MUPIP create
+    echo
 
-# Enable journaling with a journal buffer size below the current minimum
-$MUPIP set -journal=enable,on,$b4nob4image,buffer_size=$low_buffer_size -file mumps.dat
-echo
+    # Enable journaling with a journal buffer size below the current minimum
+    $MUPIP set -journal=enable,on,$b4nob4image,buffer_size=$low_buffer_size -file mumps.dat
+    echo
 
-# Switch back to the current version
-source $gtm_tst/com/switch_gtm_version.csh $tst_ver $tst_image
+    # Switch back to the current version
+    source $gtm_tst/com/switch_gtm_version.csh $tst_ver $tst_image
 
-# Upgrade the global directory
-$GDE exit
-echo
+    # Upgrade the global directory
+    $GDE exit
+    echo
 
-# Move an older-generation journal file out of the way
-\mv mumps.mjl mumps.mjl.old
+    # Move an older-generation journal file out of the way
+    \mv mumps.mjl mumps.mjl.old
 
-# Try setting the buffer size to an even lower value. We should get a warning message about
-# the buffer size specified being too low, and another, informational message that it has
-# been adjusted to the new minimum.
-$MUPIP set -journal=enable,on,$b4nob4image,buffer_size=$lower_buffer_size -file mumps.dat
-echo
+    # Try setting the buffer size to an even lower value. We should get a warning message about
+    # the buffer size specified being too low, and another, informational message that it has
+    # been adjusted to the new minimum.
+    $MUPIP set -journal=enable,on,$b4nob4image,buffer_size=$lower_buffer_size -file mumps.dat
+    echo
 
-# Check the journaling state
-check_journaling
+    # Check the journaling state
+    check_journaling
 
-# Check the database
-$gtm_tst/com/dbcheck.csh	# MUPIP create done instead of dbcheck
+    # Check the database
+    $gtm_tst/com/dbcheck.csh	# MUPIP create done instead of dbcheck
 
-# Prepare for the next case
-$gtm_tst/com/backup_dbjnl.csh case5 "" mv
+    # Prepare for the next case
+    $gtm_tst/com/backup_dbjnl.csh case5 "" mv
 
-$echoline
+    $echoline
 
-###############################################################################################
-# Case 6. Setting a low journal buffer size with an older MUPIP version and verifying that in #
-# the current version when specifying an explicit new value in an invalid (due to journal-    #
-# buffer-unrelated setting) MUPIP set command, the journal buffer size gets auto-adjusted to  #
-# the minimum and not default value.                                                          #
-###############################################################################################
-echo "Case 6."
-echo
+    ###############################################################################################
+    # Case 6. Setting a low journal buffer size with an older MUPIP version and verifying that in #
+    # the current version when specifying an explicit new value in an invalid (due to journal-    #
+    # buffer-unrelated setting) MUPIP set command, the journal buffer size gets auto-adjusted to  #
+    # the minimum and not default value.                                                          #
+    ###############################################################################################
+    echo "Case 6."
+    echo
 
-# Switch to a previous version
-source $gtm_tst/$tst/u_inref/set_low_jnl_buff_prior_ver.csh 6
+    # Switch to a previous version
+    source $gtm_tst/$tst/u_inref/set_low_jnl_buff_prior_ver.csh 6
 
-# Create a global directory
-$GDE_SAFE exit
-echo
+    # Create a global directory
+    $GDE_SAFE exit
+    echo
 
-# Create a database
-$MUPIP create
-echo
+    # Create a database
+    $MUPIP create
+    echo
 
-# Enable journaling with a journal buffer size below the current minimum
-$MUPIP set -journal=enable,on,$b4nob4image,buffer_size=$low_buffer_size -file mumps.dat
-echo
+    # Enable journaling with a journal buffer size below the current minimum
+    $MUPIP set -journal=enable,on,$b4nob4image,buffer_size=$low_buffer_size -file mumps.dat
+    echo
 
-# Switch back to the current version
-source $gtm_tst/com/switch_gtm_version.csh $tst_ver $tst_image
+    # Switch back to the current version
+    source $gtm_tst/com/switch_gtm_version.csh $tst_ver $tst_image
 
-# Upgrade the global directory
-$GDE exit
-echo
+    # Upgrade the global directory
+    $GDE exit
+    echo
 
-# Move an older-generation journal file out of the way
-\mv mumps.mjl mumps.mjl.old
+    # Move an older-generation journal file out of the way
+    \mv mumps.mjl mumps.mjl.old
 
-# Back up the database file
-cp mumps.dat mumps.dat.bak
+    # Back up the database file
+    cp mumps.dat mumps.dat.bak
 
-# Try setting both an invalid align size (first) and a valid buffer size (second) that is different
-# from the default. We should get an error message about the align size specified being too low.
-# The buffer size should remain at the old value.
-$MUPIP set -journal=enable,on,$b4nob4image,align=1,buffer_size=$valid_buffer_size -file mumps.dat
-echo
+    # Try setting both an invalid align size (first) and a valid buffer size (second) that is different
+    # from the default. We should get an error message about the align size specified being too low.
+    # The buffer size should remain at the old value.
+    $MUPIP set -journal=enable,on,$b4nob4image,align=1,buffer_size=$valid_buffer_size -file mumps.dat
+    echo
 
-# We cannot use DSE this time to check the state of journaling since it calls db_init, which
-# would case the auto-adjustment of journal buffer size. Instead, we will verify the fact
-# that no updates should have been made to the actual database file.
-diff mumps.dat mumps.dat.bak
+    # We cannot use DSE this time to check the state of journaling since it calls db_init, which
+    # would case the auto-adjustment of journal buffer size. Instead, we will verify the fact
+    # that no updates should have been made to the actual database file.
+    diff mumps.dat mumps.dat.bak
 
-# Check the database
-$gtm_tst/com/dbcheck.csh	# MUPIP create done instead of dbcheck
+    # Check the database
+    $gtm_tst/com/dbcheck.csh	# MUPIP create done instead of dbcheck
 
-# Prepare for the next case
-$gtm_tst/com/backup_dbjnl.csh case6 "" mv
+    # Prepare for the next case
+    $gtm_tst/com/backup_dbjnl.csh case6 "" mv
 
-$echoline
+    $echoline
 
-###############################################################################################
-# Case 7. Setting a low journal buffer size with an older MUPIP version and verifying that    #
-# reenabling journaling in the current version with no explicit settings (that is, all left   #
-# at default), the journal buffer gets auto-adjusted to the current minimum.                  #
-###############################################################################################
-echo "Case 7."
-echo
+    ###############################################################################################
+    # Case 7. Setting a low journal buffer size with an older MUPIP version and verifying that    #
+    # reenabling journaling in the current version with no explicit settings (that is, all left   #
+    # at default), the journal buffer gets auto-adjusted to the current minimum.                  #
+    ###############################################################################################
+    echo "Case 7."
+    echo
 
-# Switch to a previous version
-source $gtm_tst/$tst/u_inref/set_low_jnl_buff_prior_ver.csh 7
+    # Switch to a previous version
+    source $gtm_tst/$tst/u_inref/set_low_jnl_buff_prior_ver.csh 7
 
-# Create a global directory
-$GDE_SAFE exit
-echo
+    # Create a global directory
+    $GDE_SAFE exit
+    echo
 
-# Create a database
-$MUPIP create
-echo
+    # Create a database
+    $MUPIP create
+    echo
 
-# Enable journaling with a journal buffer size below the current minimum
-$MUPIP set -journal=enable,on,$b4nob4image,buffer_size=$low_buffer_size -file mumps.dat
-echo
+    # Enable journaling with a journal buffer size below the current minimum
+    $MUPIP set -journal=enable,on,$b4nob4image,buffer_size=$low_buffer_size -file mumps.dat
+    echo
 
-# Switch back to the current version
-source $gtm_tst/com/switch_gtm_version.csh $tst_ver $tst_image
+    # Switch back to the current version
+    source $gtm_tst/com/switch_gtm_version.csh $tst_ver $tst_image
 
-# Upgrade the global directory
-$GDE exit
-echo
+    # Upgrade the global directory
+    $GDE exit
+    echo
 
-# Move an older-generation journal file out of the way
-\mv mumps.mjl mumps.mjl.old
+    # Move an older-generation journal file out of the way
+    \mv mumps.mjl mumps.mjl.old
 
-# Remember the start time
-set time_before = `date +"%b %e %H:%M:%S"`
+    # Remember the start time
+    set time_before = `date +"%b %e %H:%M:%S"`
 
-# Try simply switching a journal file by reenabling already enabled journaling. The buffer size
-# should get adjusted to the new minimum, about which we should get a message in the syslog
-$MUPIP set -journal=enable,on,$b4nob4image -file mumps.dat
-echo
+    # Try simply switching a journal file by reenabling already enabled journaling. The buffer size
+    # should get adjusted to the new minimum, about which we should get a message in the syslog
+    $MUPIP set -journal=enable,on,$b4nob4image -file mumps.dat
+    echo
 
-# Remember the end time
-set time_after = `date +"%b %e %H:%M:%S"`
+    # Remember the end time
+    set time_after = `date +"%b %e %H:%M:%S"`
 
-# Verify that JNLBUFFREGUPD message is printed in the syslog
-$gtm_tst/com/getoper.csh "$time_before" "$time_after" "journal_buffer_adjust6.txt" "" "JNLBUFFREGUPD"
-if ($status) then
+    # Verify that JNLBUFFREGUPD message is printed in the syslog
+    $gtm_tst/com/getoper.csh "$time_before" "$time_after" "journal_buffer_adjust6.txt" "" "JNLBUFFREGUPD"
+    if ($status) then
 	echo "TEST-E-FAIL JNLBUFFREGUPD not found in operator log. Check journal_buffer_adjust6.txt."
 	echo
-endif
+    endif
 
-# Check the journaling state
-check_journaling
+    # Check the journaling state
+    check_journaling
 
-# Check the database
-$gtm_tst/com/dbcheck.csh	# MUPIP create done instead of dbcheck
+    # Check the database
+    $gtm_tst/com/dbcheck.csh	# MUPIP create done instead of dbcheck
 
-# Prepare for the next case
-$gtm_tst/com/backup_dbjnl.csh case7 "" mv
+    # Prepare for the next case
+    $gtm_tst/com/backup_dbjnl.csh case7 "" mv
 
-$echoline
+    $echoline
 
-###############################################################################################
-# Case 8. Creating an unjournaled older-version database and verifying that upon switching to #
-# the current version and writing an updated the auto-adjustment of journal buffer size       #
-# happens prior to allocating shared memory.                                                  #
-###############################################################################################
-echo "Case 8."
-echo
+    ###############################################################################################
+    # Case 8. Creating an unjournaled older-version database and verifying that upon switching to #
+    # the current version and writing an updated the auto-adjustment of journal buffer size       #
+    # happens prior to allocating shared memory.                                                  #
+    ###############################################################################################
+    echo "Case 8."
+    echo
 
-# Switch to a previous version
-source $gtm_tst/$tst/u_inref/set_low_jnl_buff_prior_ver.csh 8
+    # Switch to a previous version
+    source $gtm_tst/$tst/u_inref/set_low_jnl_buff_prior_ver.csh 8
 
-# Create a global directory
-$GDE_SAFE exit
-echo
+    # Create a global directory
+    $GDE_SAFE exit
+    echo
 
-# Create a database
-$MUPIP create
-echo
+    # Create a database
+    $MUPIP create
+    echo
 
-# Switch back to the current version
-source $gtm_tst/com/switch_gtm_version.csh $tst_ver $tst_image
+    # Switch back to the current version
+    source $gtm_tst/com/switch_gtm_version.csh $tst_ver $tst_image
 
-# Upgrade the global directory
-$GDE exit
-echo
+    # Upgrade the global directory
+    $GDE exit
+    echo
 
-# Remember the start time
-set time_before = `date +"%b %e %H:%M:%S"`
+    # Remember the start time
+    set time_before = `date +"%b %e %H:%M:%S"`
 
-# Try to write an update. We should not see any messages at this point, except in the syslog,
-# about journal buffer size being adjusted to the new minimum.
-$GTM -direct <<EOF
-  set ^x=1
+    # Try to write an update. We should not see any messages at this point, except in the syslog,
+    # about journal buffer size being adjusted to the new minimum.
+    $GTM -direct <<EOF
+	set ^x=1
 EOF
 
-echo
+    echo
 
-# Remember the end time
-set time_after = `date +"%b %e %H:%M:%S"`
+    # Remember the end time
+    set time_after = `date +"%b %e %H:%M:%S"`
 
-# Verify that JNLBUFFREGUPD message is printed in the syslog
-$gtm_tst/com/getoper.csh "$time_before" "$time_after" "journal_buffer_adjust8.txt" "" "JNLBUFFREGUPD"
-if ($status) then
+    # Verify that JNLBUFFREGUPD message is printed in the syslog
+    $gtm_tst/com/getoper.csh "$time_before" "$time_after" "journal_buffer_adjust8.txt" "" "JNLBUFFREGUPD"
+    if ($status) then
 	echo "TEST-E-FAIL JNLBUFFREGUPD not found in operator log. Check journal_buffer_adjust8.txt."
 	echo
-endif
+    endif
 
-# Enable journaling so that DSE dump will include the journal buffer size
-$MUPIP set -journal=enable,on,$b4nob4image -file mumps.dat
-echo
+    # Enable journaling so that DSE dump will include the journal buffer size
+    $MUPIP set -journal=enable,on,$b4nob4image -file mumps.dat
+    echo
 
-# Check the journaling state
-check_journaling
+    # Check the journaling state
+    check_journaling
 
-# Check the database
-$gtm_tst/com/dbcheck.csh	# MUPIP create done instead of dbcheck
+    # Check the database
+    $gtm_tst/com/dbcheck.csh	# MUPIP create done instead of dbcheck
 
-# Back up the last case's files for consistency
-$gtm_tst/com/backup_dbjnl.csh case8 "*.dat *.gld" mv
+    # Back up the last case's files for consistency
+    $gtm_tst/com/backup_dbjnl.csh case8 "*.dat *.gld" mv
 
-$echoline
+    $echoline
+
+endif # end of only if previous V5 versions exist
 
 ###############################################################################################
 # Case 9. Specifying the maximum possible journal buffer size in GDE and ensuring that this   #

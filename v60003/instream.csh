@@ -4,7 +4,7 @@
 # Copyright (c) 2013, 2015 Fidelity National Information	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -84,11 +84,14 @@ if ("HOST_HP-UX_PA_RISC" == "$gtm_test_os_machtype") then
 endif
 
 # If the platform/host does not have prior GT.M versions, disable tests that require them
-if ($?gtm_test_nopriorgtmver) then
-	setenv subtest_exclude_list "$subtest_exclude_list mupip_update_db_header"
-else if ("dbg" == "$tst_image") then
+if ("dbg" == "$tst_image") then
 	# We do not have dbg V5 builds needed by the mupip_update_db_header subtest so disable it.
 	setenv subtest_exclude_list "$subtest_exclude_list mupip_update_db_header"
+else if ($?ydb_test_exclude_V5_tests) then
+	# If we are excluding subtests with a V5 prior version dependency, exclude mupip_update_db_header
+	if ($ydb_test_exclude_V5_tests) then
+		setenv subtest_exclude_list "$subtest_exclude_list mupip_update_db_header"
+	endif
 endif
 if ($?gtm_test_temporary_disable) then
        setenv subtest_exclude_list "$subtest_exclude_list intrpt_timer_handler"

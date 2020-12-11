@@ -124,6 +124,11 @@ endif
 if (("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) || ("HOST_LINUX_AARCH64" == $gtm_test_os_machtype)) then
 	# filter out below test because it relies on versions prior to V60000, which do not exist on 32-bit or 64-bit ARM
 	setenv subtest_exclude_list "$subtest_exclude_list ydb362a ydb362b"
+else if ($?ydb_test_exclude_V5_tests) then
+	# If we are excluding subtests with a V5 prior version dependency, exclude ydb362a
+	if ($ydb_test_exclude_V5_tests) then
+		setenv subtest_exclude_list "$subtest_exclude_list ydb362a"
+	endif
 endif
 
 if ($?ydb_test_exclude_ydb362b) then
