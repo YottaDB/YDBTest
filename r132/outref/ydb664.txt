@@ -1,0 +1,68 @@
+--------------------------------------------------------------------------------------------------
+# Test that VIEW "ZTRIGGER_OUTPUT":0 disables $ZTRIGGER related output
+--------------------------------------------------------------------------------------------------
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+# Test that $VIEW("ZTRIGGER_OUTPUT") return 1 by default
+--------------------------------------------------------------------------------------------------
+WRITE $VIEW("ZTRIGGER_OUTPUT"),!
+1
+
+# Test that VIEW "ZTRIGGER_OUTPUT":0 causes $VIEW("ZTRIGGER_OUTPUT") to return 0
+--------------------------------------------------------------------------------------------------
+VIEW "ZTRIGGER_OUTPUT":0  WRITE $VIEW("ZTRIGGER_OUTPUT"),!
+0
+
+# Test that VIEW "ZTRIGGER_OUTPUT" causes $VIEW("ZTRIGGER_OUTPUT") to return 1
+--------------------------------------------------------------------------------------------------
+VIEW "ZTRIGGER_OUTPUT"  WRITE $VIEW("ZTRIGGER_OUTPUT"),!
+1
+
+# Test that VIEW "ZTRIGGER_OUTPUT":1 causes $VIEW("ZTRIGGER_OUTPUT") to return 1
+--------------------------------------------------------------------------------------------------
+# Since ZTRIGGER_OUTPUT setting is currently 1, reset it to 0 before testing it gets set to 1
+VIEW "ZTRIGGER_OUTPUT":0  WRITE $VIEW("ZTRIGGER_OUTPUT"),!
+0
+VIEW "ZTRIGGER_OUTPUT":1  WRITE $VIEW("ZTRIGGER_OUTPUT"),!
+1
+# Test that VIEW "ZTRIGGER_OUTPUT":0 disables output from $ZTRIGGER() if outside TSTART/TCOMMIT
+--------------------------------------------------------------------------------------------------
+VIEW "ZTRIGGER_OUTPUT":0  WRITE $VIEW("ZTRIGGER_OUTPUT"),!
+0
+set x=$ZTRIGGER("ITEM","+^myname1 -commands=S -xecute=""write $increment(^cntr),!"" -name=myname1")
+# Verify trigger actually got installed by doing a SET that will invoke the trigger
+set ^myname1=1
+2
+# Test that VIEW "ZTRIGGER_OUTPUT":0 disables output from $ZTRIGGER() if inside TSTART/TCOMMIT
+--------------------------------------------------------------------------------------------------
+VIEW "ZTRIGGER_OUTPUT":0  WRITE $VIEW("ZTRIGGER_OUTPUT"),!
+0
+set x=$ZTRIGGER("ITEM","+^myname2 -commands=S -xecute=""write $increment(^cntr),!"" -name=myname2")
+# Verify trigger actually got installed by doing a SET that will invoke the trigger
+set ^myname2=1
+3
+# Test that VIEW "ZTRIGGER_OUTPUT":1 enables output from $ZTRIGGER() if outside TSTART/TCOMMIT
+--------------------------------------------------------------------------------------------------
+VIEW "ZTRIGGER_OUTPUT":1  WRITE $VIEW("ZTRIGGER_OUTPUT"),!
+1
+set x=$ZTRIGGER("ITEM","+^myname3 -commands=S -xecute=""write $increment(^cntr),!"" -name=myname3")
+Added SET trigger on ^myname3 named myname3
+# Verify trigger actually got installed by doing a SET that will invoke the trigger
+set ^myname3=1
+4
+# Test that VIEW "ZTRIGGER_OUTPUT":1 enables output from $ZTRIGGER() if inside TSTART/TCOMMIT
+--------------------------------------------------------------------------------------------------
+VIEW "ZTRIGGER_OUTPUT":1  WRITE $VIEW("ZTRIGGER_OUTPUT"),!
+1
+set x=$ZTRIGGER("ITEM","+^myname4 -commands=S -xecute=""write $increment(^cntr),!"" -name=myname4")
+Added SET trigger on ^myname4 named myname4
+# Verify trigger actually got installed by doing a SET that will invoke the trigger
+set ^myname4=1
+5
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
