@@ -1,0 +1,24 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance2:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Start replication
+==Executing MULTISITE_REPLIC 'START INST1 INST2'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+# Stop the source server
+==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST2'==
+# Stop the receiver server
+==Executing MULTISITE_REPLIC 'STOPRCV INST1 INST2'==
+# Obtain the port number
+# Start receiver server and make it wait for a connection
+==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
+# Give receiver server bad input before connecting to source server
+# Start source server
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2'==
