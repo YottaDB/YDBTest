@@ -33,6 +33,13 @@ YDB>
 
 YDB>
 # Loading binary extract from database 1 into database 2
+Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................YottaDB MUPIP EXTRACT           
+
+Beginning LOAD at record number: 2
+
+%YDB-E-DBDUPNULCOL, Discarding ^X("")=3 key due to duplicate null collation record
+LOAD TOTAL		Key Cnt: 2  Max Subsc Len: 6  Max Data Len: 1
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 2
 # Extract database 2 in Binary Format
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
@@ -53,8 +60,13 @@ YDB>
 
 YDB>
 # Loading binary extract from database 2 into database 3
+Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................YottaDB MUPIP EXTRACT           
+
+Beginning LOAD at record number: 2
+
+%YDB-E-DBDUPNULCOL, Discarding ^X("")=3 key due to duplicate null collation record
+LOAD TOTAL		Key Cnt: 2  Max Subsc Len: 6  Max Data Len: 1
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 2
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
-##TEST_PATH##/mupip_load.out
-%YDB-E-DBDUPNULCOL, Discarding ^X("")=3 key due to duplicate null collation record

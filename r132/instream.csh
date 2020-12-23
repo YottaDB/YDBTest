@@ -24,13 +24,14 @@
 # ydb652 [bdw]       Test that %HO correctly converts input between DE0B6B3A7640001 and FFFFFFFFFFFFFFF to octal
 # ydb635 [sp]	     Test that checks MUPIP INTEG (no options) honors Ctrl-C and exits cleanly
 # ydb664 [nars]	     Test that VIEW "ZTRIGGER_OUTPUT":0 disables $ZTRIGGER related output
+# ydb663 [bdw]       Test that loading a binary extract back into the same database doesn't produce a DBDUPNULCOL error
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r132 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "ydb627 ydb551 ydb632 ydb581 ydb630 ydb441 ydb652 ydb635 ydb664"
+setenv subtest_list_non_replic "ydb627 ydb551 ydb632 ydb581 ydb630 ydb441 ydb652 ydb635 ydb664 ydb663"
 setenv subtest_list_replic     "ydb657"
 
 if ($?test_replic == 1) then

@@ -12,7 +12,7 @@
 #################################################################
 
 echo "# Initialize database 1 with GT.M null subscript collation"
-$gtm_tst/com/dbcreate.csh mumps 1 -nostdnull -null_subscripts=TRUE 
+$gtm_tst/com/dbcreate.csh mumps 1 -nostdnull -null_subscripts=TRUE
 
 echo "# Null collation set to GT.M in database 1"
 $GTM << EOF
@@ -42,7 +42,7 @@ set ^X("a")=4
 EOF
 
 echo "# Loading binary extract from database 1 into database 2"
-$MUPIP load -format=binary extr.bin >& mupip_load.out
+$MUPIP load -format=binary extr.bin
 
 echo "# Extract database 2 in Binary Format"
 $MUPIP extract -format=binary extr2.bin >&! mupip_extract_bin.out
@@ -52,7 +52,7 @@ if ($status) then
 endif
 
 $gtm_tst/com/dbcheck.csh
- 
+
 echo "Creating database 3 exactly like database 1"
 $gtm_tst/com/dbcreate.csh mumps3 1 -nostdnull -null_subscripts=TRUE
 setenv gtmgbldir mumps3.gld
@@ -65,7 +65,7 @@ set ^X("a")=4
 EOF
 
 echo "# Loading binary extract from database 2 into database 3"
-$MUPIP load -format=binary extr2.bin >& mupip_load.out
+$MUPIP load -format=binary extr2.bin
 
 $gtm_tst/com/dbcheck.csh
 

@@ -1,0 +1,56 @@
+# This tests that a MUPIP LOAD of a binary extract from the same database
+# will not produce a YDB-E-DBDUPNULCOL error. Previously, doing this would
+# result in an erroneous YDB-E-DBDUPNULCOL error message for both historical
+# and standard null subscript collation.
+###################################################################
+# Create database and set the null subscript collation type to historical
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumpshist.gld
+Using: ##SOURCE_PATH##/mupip
+mumpshist.dat
+###################################################################
+# Set a null subscript in database with historical collation
+###################################################################
+# Do a binary extract from database with historical collation
+%YDB-I-RECORDSTAT, ^Y:	  Key cnt: 1  max subsc len: 5  max rec len: 1  max node len: 10
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 5  max rec len: 1  max node len: 10
+###################################################################
+# Load the binary extract with historical collation back into the same database
+Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................YottaDB MUPIP EXTRACT           
+
+Beginning LOAD at record number: 2
+
+LOAD TOTAL		Key Cnt: 1  Max Subsc Len: 5  Max Data Len: 1
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 2
+###################################################################
+# Check database with historical collation for errors
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+###################################################################
+# Create another database and set the null subscript collation type to standard
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumpsstd.gld
+Using: ##SOURCE_PATH##/mupip
+mumpsstd.dat
+###################################################################
+# Set a null subscript in database with standard collation
+###################################################################
+# Do a binary extract from database with standard collation
+%YDB-I-RECORDSTAT, ^Y:	  Key cnt: 1  max subsc len: 5  max rec len: 1  max node len: 10
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 5  max rec len: 1  max node len: 10
+###################################################################
+# Load the binary extract with standard collation back into the same database
+Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................YottaDB MUPIP EXTRACT           
+
+Beginning LOAD at record number: 2
+
+LOAD TOTAL		Key Cnt: 1  Max Subsc Len: 5  Max Data Len: 1
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 2
+###################################################################
+# Check database with standard collation for errors
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
