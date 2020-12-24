@@ -1,0 +1,5 @@
+# Test that ZSHOW "*":lvn does not include the output of ZSHOW "I" in the
+# "V" section of the zshow output into the lvn
+
+# Running : set x=1 zshow "*":array zwrite array("V",*) only shows x
+array("V",1)="x=1"
