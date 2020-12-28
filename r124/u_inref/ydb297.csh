@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -40,3 +40,6 @@ if (0 == $hang) then
 endif
 $grep LOCKSPACEINFO lockhang_ydb297.mjo3
 $grep SEGMENT lockhang_ydb297.mjo3
+echo "# Verify DSE DUMP -FILE -ALL displays [Lock Hash Bucket Full] statistic with a non-zero value"
+# Filter out Transaction field as it can be non-deterministic due to "gtm_test_disable_randomdbtn"
+$DSE DUMP -FILE -ALL |& grep "Lock Hash" | sed 's/  *Transaction = .*//'
