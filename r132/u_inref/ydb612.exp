@@ -1,0 +1,70 @@
+#################################################################
+#								#
+# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+# NB: Sleeps after fg to prevent YottaDB from starting work until fg has reset
+# the terminal, as there is a race condition.
+set timeout 2
+
+# -f prevents us from loading .cshrc
+# Prompt makes it easy to just figure out that we are on a shell
+spawn /usr/local/bin/tcsh -f
+send -- "set prompt='# '\r"
+expect "# "
+
+# Run YottaDB Direct Mode
+send -- "\$ydb_dist/yottadb -dir\r"
+expect "YDB>"
+
+# send SIGSTOP, signal 19, check that we get back to prompt
+# https://stackoverflow.com/questions/32784013/bash-expect-script-to-control-execution/32785527
+# (\x1a (17) is not 19..., but 19 doesn't work in Octal or Hex)
+send -- \x1a
+expect "# "
+
+# See that we are listed as backgrounded
+send -- "jobs\r"
+expect "yottadb -dir"
+
+# Foreground, and let's make sure we still function (assert failure is here)
+send -- "fg\r"
+sleep 1
+send -- "\r"
+expect "YDB>"
+
+# Run Test case one to make sure echo is turned off after returning
+send -- "write \"abc"
+expect "c"
+send -- \x1a
+expect "# "
+send -- "fg\r"
+sleep 1
+send -- "d\"\r"
+expect "abcd"
+
+# Run Test case two to make sure canonical mode is turned on after returning
+# CTRL-A needs to go to the beginning, not be echoed out
+send -- "\"xyz\""
+expect "z"
+send -- \x1a
+expect "# "
+send -- "fg\r"
+sleep 1
+# CTRL-A
+send -- \x01
+# YottaDB implments CTRL-A to go the beginning of the line using backspaces (\x08)
+expect \x08 
+send -- "write \r"
+expect "xyz"
+expect "YDB>"
+
+# Exit YottaDB by sending CTRL-D
+send -- \x04
+expect "# "

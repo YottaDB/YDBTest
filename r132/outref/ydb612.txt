@@ -1,0 +1,30 @@
+# yottadb direct mode suspends from SIGSTOP and resumes again without
+# an assert
+spawn /usr/local/bin/tcsh -f
+set prompt='# '
+$ydb_dist/yottadb -dir
+> set prompt='# '
+# $ydb_dist/yottadb -dir
+
+YDB>
+Suspended (signal)
+# jobs
+[1]  + Suspended (signal)            ##SOURCE_PATH##/yottadb -dir
+# fg
+##SOURCE_PATH##/yottadb -dir
+
+
+YDB>write "abc
+Suspended (signal)
+# fg
+##SOURCE_PATH##/yottadb -dir
+d"
+abcd
+YDB>"xyz"
+Suspended (signal)
+# fg
+##SOURCE_PATH##/yottadb -dir
+     w"xyz"     r"xyz"     i"xyz"     t"xyz"     e"xyz"      "xyz"
+xyz
+YDB>
+# 
