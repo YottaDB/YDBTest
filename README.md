@@ -11,7 +11,7 @@ Documentation: <https://yottadb.com/resources/documentation/>
 
 # Overview
 
-Documentation on usage is under development as time permits and will be released from time to time. For the present, please read the shell scripts. The .csh files are shell scripts written for the tcsh shell.
+Documentation on usage is under development as time permits and will be released from time to time. For the present, please read the shell scripts. The .csh files are shell scripts written for the tcsh shell. There is now a Dockerfile, and that is probably the easiest way to run the test system. The instructions are at the bottom of this README.
 
 ## Pre-commit hooks
 
@@ -39,6 +39,13 @@ The following binaries are required to run the test system:
 - lsof
 - bc
 - sort
+- fuser
+- strace
+- expect
+- eu-elflint
+- netstat
+- nc
+- gdb
 
 Currently tcsh is the only supported shell, make sure that tcsh is properly installed and switch to it with the following command:
 
@@ -103,9 +110,11 @@ setenv gtm_obj $gtm_exe/obj
 setenv gtm_log $gtm_ver/log
 setenv gtm_testver T131
 setenv gtm_curpro $verno
-setenv tst_local /testarea1	# Can be replaced with any directory
+setenv gtm_com ""
+setenv gtm_icu_version `pkg-config --modversion icu-io`
+setenv tst_dir /testarea1	# Can be replaced with any directory
 
-alias gtmtest $gtm_test/$gtm_testver/com/gtmtest.csh -ml $mailid -failmail -failsubtestmail -report on -nounicode -noencrypt -env eall_noinverse=1 $*
+alias gtmtest $gtm_test/$gtm_testver/com/gtmtest.csh -report on -noencrypt -env eall_noinverse=1 $*
 ```
 
 ## Install YottaDB
@@ -154,7 +163,7 @@ cp -pa YDB/sr_unix/*.awk $gtm_tools/
 cp -pa YDB/sr_linux/*.csh $gtm_tools/
 rm -f $gtm_ver/tools/setactive{,1}.csh
 
-set machtype=`uname -n`
+set machtype=`uname -m`
 foreach ext (c s msg h si)
         if (($ext == "h") || ($ext == "si")) then
                 set dir = "inc"
@@ -253,7 +262,7 @@ Now the test repository can be synced
 Before the test can be run the output needs to be stored in an output directory, create a output directory with the proper permssions
 
 ```sh
-mkdir /testarea1	# The name of this directory should be the same as whatever $tst_local is set to
+mkdir /testarea1	# The name of this directory should be the same as whatever $tst_dir is set to
 cd /testarea1 ; sudo mkdir $user
 sudo chown -R $user.gtc $user
 ```
@@ -288,3 +297,30 @@ gtmtest -s T131 -t basic -replic
 Currently not all tests will run properly on the local test system. For example none of the Go tests will run without the [YDBGo] repository and multi-system tests will not work either.
 
 [YDBGo]: https://gitlab.com/YottaDB/Lang/YDBGo
+
+## Docker Set-up
+To build, you need to build from YDBTest root folder, not the docker
+folder. In this example, we tag our built image to be called "ydbtest".
+
+```sh
+docker build -f docker/Dockerfile -t ydbtest .
+```
+
+To run, you can do something like this (replacing `<local directory>` with a suitable directory):
+
+```sh
+docker run --init -it -v <local directory>:/testarea1/ --rm ydbtest -t r132
+```
+
+The arguments after "ydbtest" are regular `gtmtest.csh` arguments.
+
+To debug problems, there is an alternate entrypoint `docker/enter.csh` created. Use it as follows:
+
+```sh
+docker run --init -it -v <local directory>:/testarea1/ --entrypoint=/usr/library/gtm_test/T999/docker/enter.csh --rm ydbtest -t basic
+```
+
+A private note: You may see the message: not a block device for lsblk. To go
+around that, I found that you can do -v /dev:/dev, but I don't feel comfortable
+with that making that an official recommendation. We may need to just disable
+the check inside of YDBTest for docker containers.

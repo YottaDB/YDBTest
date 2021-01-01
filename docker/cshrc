@@ -1,0 +1,54 @@
+#################################################################
+#								#
+# Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+set autolist
+set backslash_quote
+set dextract
+set dunique
+set filec
+set history=10000
+set lineedit
+set matchbeep=nomatch
+set savehist
+setenv LC_ALL_C
+unset autologout
+unset glob
+set HOST=$HOST:r
+setenv HOST $HOST:r
+
+setenv verno V999_R999
+setenv gtm_root /usr/library
+setenv gtm_test $gtm_root/gtm_test
+setenv gtm_dist $gtm_root/$verno/dbg # change later
+setenv gtm_exe $gtm_dist
+setenv gtmroutines ". $gtm_dist"
+setenv gtm_tools $gtm_root/$verno/tools
+setenv gtm_inc $gtm_root/$verno/inc
+setenv gtm_source $gtm_root/$verno/src
+setenv gtm_verno $verno
+setenv gtm_ver $gtm_root/$verno
+setenv gtm_obj $gtm_exe/obj
+setenv gtm_log $gtm_ver/log
+setenv gtm_testver T999
+setenv gtm_curpro $verno
+setenv tst_dir /testarea1
+setenv gtm_com ""
+
+setenv gtm_test_noggsetup 1
+setenv gtm_test_serverconf_file $gtm_test/serverconf.txt
+
+setenv LC_ALL en_US.UTF-8
+setenv gtm_icu_version `pkg-config --modversion icu-io`
+
+if ( -f $gtm_tools/gtm_env.csh ) then
+	setenv HOSTOS `uname -s`
+	source $gtm_tools/gtm_env.csh
+endif

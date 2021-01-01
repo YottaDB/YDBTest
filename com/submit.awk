@@ -2,7 +2,7 @@
 #								#
 # Copyright 2002, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -16,8 +16,8 @@ BEGIN {
 	print "umask 002"
 	print "set stat = 0"
 	print "set short_host = $HOST:r:r:r:r"
-	print "if ($?test_no_background) echo The rough results:"
-	print "if ($?test_no_background) echo If there are other errors after the end of the test, these results might be wrong."
+	print "if ($?test_no_background && ($tst_stdout == 0)) echo The rough results:"
+	print "if ($?test_no_background && ($tst_stdout == 0)) echo If there are other errors after the end of the test, these results might be wrong."
 	gtm_tst_out = ENVIRON["gtm_tst_out"]
       }
 $1 !~ /#/ {testname = $2 "_" $1
@@ -77,7 +77,7 @@ $1 !~ /#/ {testname = $2 "_" $1
      print "setenv test_gtm_gtcm_one"
 
  if (!unnice) printf "nice +" ENVIRON["gtm_test_nice_level"]
- if (ENVIRON["tst_stdout"]==1)
+ if (ENVIRON["tst_stdout"] > 0)
     printf " $tst_tcsh $gtm_tst/com/submit_test.csh |& tee $tst_general_dir/$tst.log"
  else
     printf " $tst_tcsh $gtm_tst/com/submit_test.csh >& $tst_general_dir/$tst.log"

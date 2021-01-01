@@ -3,7 +3,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -13,8 +13,17 @@
 #								#
 #################################################################
 #############################################################################################
-set echo
-set verbose
+# If $tst_stdout is 0 (no -stdout), it means that the output is redirected to
+# a file. In that case, we would like the verbosity for later debugging.
+# If $tst_stdout is 2, the user specifically asked for verbosity -stdout 2
+# If $tst_stdout is 1, the user ased for limited verbosity.
+if ("$tst_stdout" == "2" || "$tst_stdout" == "0") then
+	set echo
+	set verbose
+else
+	unset echo
+	unset verbose
+endif
 # If any settings/configuration needs to be overridden AFTER the test has started, it should go in ~/.gtmtest_settings_override.csh
 if (-e  ~/.gtmtest_settings_override.csh) source  ~/.gtmtest_settings_override.csh
 umask 002
@@ -148,7 +157,10 @@ if ( ($?test_replic) && ($?test_gtm_gtcm_one) ) then
 	endif
 	exit 1
 endif
-set echo ; set verbose
+if ("$tst_stdout" == "2" || "$tst_stdout" == "0") then
+	set echo
+	set verbose
+endif
 set se_buddy1 = `$gtm_tst/com/get_buddy_server.csh SE1`
 set se_buddy2 = `$gtm_tst/com/get_buddy_server.csh SE2`
 set re_buddy1 = `$gtm_tst/com/get_buddy_server.csh RE`
@@ -563,23 +575,25 @@ if (! -e $testfilesdir) mkdir -p $testfilesdir
 #Collation setup
 source $gtm_tst/com/collation_setup.csh
 ##########################
-echo " "
-echo $gtmgbldir
-echo $YDB
-echo $MUPIP
-echo $DSE
-echo $GDE
-echo $LKE
-echo "$gtmroutines"
-echo " "
-echo Testing $tst
-if (($?test_replic)||("GT.CM" == $test_gtm_gtcm)) then
-   echo " "
-   echo "Original Host YDB:$gtm_exe"
-   echo "Remote Host   YDB:$remote_gtm_exe"
-   echo " "
+if ("$tst_stdout" == "2" || "$tst_stdout" == "0") then
+	echo " "
+	echo '$gtmgbldir: ' $gtmgbldir
+	echo '$YDB: ' $YDB
+	echo '$MUPIP: ' $MUPIP
+	echo '$DSE: ' $DSE
+	echo '$GDE: ' $GDE
+	echo '$LKE: ' $LKE
+	echo '$gtmroutines: ' "$gtmroutines"
+	echo " "
+	echo Testing $tst
+	if (($?test_replic)||("GT.CM" == $test_gtm_gtcm)) then
+		 echo " "
+		 echo "Original Host YDB:$gtm_exe"
+		 echo "Remote Host   YDB:$remote_gtm_exe"
+		 echo " "
+	endif
+	echo `pwd`
 endif
-echo `pwd`
 
 echo "ENVIRONMENT OF CURRENT TEST" 			>  $tst_general_dir/config.log
 echo "submit_test.csh PID :	$$"			>> $tst_general_dir/config.log
@@ -848,11 +862,14 @@ set dryrun_subtest = $status
 if ((! $?gtm_test_dryrun) || (! $dryrun_subtest)) then
   	source $gtm_tst/com/mm_nobefore.csh	  # Force NOBEFORE image journaling with MM
 	setenv tst_tslog_file $tst_general_dir/outstream.log_ts
-	unset echo ; unset verbose
-	source $gtm_tst/com/gtm_test_watchdog.csh $tst_general_dir/tmp &
-	set watchdogpid = $!
-	set echo ; set verbose
-	if ("$tst_stdout" == "1") then
+	unset echo; unset verbose
+	(source $gtm_tst/com/gtm_test_watchdog.csh $tst_general_dir/tmp & ; echo $! >&! gtm_test_watchdog.pid) >&! gtm_test_watchdog.out
+	set watchdogpid = `cat gtm_test_watchdog.pid`
+	if ("$tst_stdout" == "2" || "$tst_stdout" == "0") then
+	  set echo
+	  set verbose
+	endif
+	if ($tst_stdout > 0) then
 	   # tst_tslog_filter may have a pipe in it, so use eval to interpret it properly.
 	   eval "$prctl_comm $tst_tcsh $instream $tst_tslog_filter |& tee $tst_general_dir/outstream.log"
 	else
@@ -929,8 +946,10 @@ if ( "OS/390" == $HOSTOS ) then
 	unset verbose
 	cat $tst_general_dir/outstream.log_edc | sed 's/%SYSTEM-E-EN.*,//g' | sed 's/EDC[0-9][0-9][0-9][0-9][A-Z] \(.*\)\./\1/g' > $tst_general_dir/outstream.log
 	cat $tst_general_dir/outstream.cmp_edc | sed 's/%SYSTEM-E-EN.*,//g' | sed 's/EDC[0-9][0-9][0-9][0-9][A-Z] \(.*\)\./\1/g' > $tst_general_dir/outstream.cmp
-	set echo
-	set verbose
+	if ("$tst_stdout" == "2" || "$tst_stdout" == "0") then
+	  set echo
+	  set verbose
+	endif
 endif
 
 if ($?LC_CTYPE) then

@@ -36,7 +36,7 @@ fi
 
 # Below is a list of specific files that do not have a copyright so ignore them
 # The files below are planned to be public domain and so should not have copyright on them so that people can copy and paste.
-skiplist="COPYING call_ins/inref/_ydbaccess.m call_ins/inref/_ydbreturn.m call_ins/inref/ydbaccess.ci call_ins/inref/ydbaccess_ci.c call_ins/inref/ydbaccess_cip.c call_ins/inref/ydbreturn.ci call_ins/inref/ydbreturn_ci.c"
+skiplist="COPYING README.md call_ins/inref/_ydbaccess.m call_ins/inref/_ydbreturn.m call_ins/inref/ydbaccess.ci call_ins/inref/ydbaccess_ci.c call_ins/inref/ydbaccess_cip.c call_ins/inref/ydbreturn.ci call_ins/inref/ydbreturn_ci.c"
 skiplist="$skiplist socket/inref/VPRJREQ.m" # This file was obtained from the public domain so do not have a copyright for it.
 for skipfile in $skiplist; do
 	if [ $file = $skipfile ]; then

@@ -3,7 +3,7 @@
 #								#
 # Copyright 2014 Fidelity Information Services, Inc		#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -37,7 +37,6 @@ foreach hostvar (tst_org_host tst_now_primary tst_remote_host tst_remote_host_{1
 		foreach hostval_host ($hostval)
 			if ($hostval_host != $hostval_host:r:r:r:r) continue				# host suffix already provided
 			if ($hostval_host !~ {$v6_checked}) then
-				echo "# IPv6 settings for $hostval_host"
 				set ipv6_support=`host_ipv6_supported $hostval_host`
 				eval setenv host_ipv6_support_$hostval_host $ipv6_support
 				if (`eval echo '$?host_suffix_'${hostval_host}`) then 		# host suffix already defined

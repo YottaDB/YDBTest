@@ -1098,7 +1098,7 @@ setenv tst_random_all "$tst_random_all gtm_mupjnl_parallel"
 ###########################################################################
 ### Random option - 44 ### Randomly enable periodic forced journal overflow due to a simulated pool/record accounting sync problem
 if !($?gtm_test_jnlpool_sync) then
-	if ((1 != $gtm_test_jnlpool_sync) && (2 >= $randnumbers[44])) then
+	if ((1 != $gtm_test_jnlfileonly) && (2 >= $randnumbers[44])) then
 		setenv gtm_test_jnlpool_sync `$tst_awk 'BEGIN {srand () ; print (5000 + int (rand () * 20000))}'`
 	endif
 	if ($?gtm_test_jnlpool_sync) then
