@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -17,7 +17,8 @@ set timeout 2
 # Prompt makes it easy to just figure out that we are on a shell
 spawn /usr/local/bin/tcsh -f
 send -- "set prompt='# '\r"
-expect "# "
+# Expect regex checks that we are on a new line with a '# '
+expect -re {(?n)^# }
 
 # Run YottaDB Direct Mode
 send -- "\$ydb_dist/yottadb -dir\r"
@@ -32,10 +33,14 @@ expect "# "
 # See that we are listed as backgrounded
 send -- "jobs\r"
 expect "yottadb -dir"
+# Expect regex checks that we are on a new line with a '# '
+expect -re {(?n)^# }
 
 # Foreground, and let's make sure we still function (assert failure is here)
 send -- "fg\r"
-sleep 1
+# Sleep is needed to prevent race condition.
+sleep .1
+expect "fg"
 send -- "\r"
 expect "YDB>"
 
@@ -45,22 +50,32 @@ expect "c"
 send -- \x1a
 expect "# "
 send -- "fg\r"
-sleep 1
+# Sleep is needed to prevent race condition.
+sleep .1
+expect "fg"
 send -- "d\"\r"
 expect "abcd"
 
 # Run Test case two to make sure canonical mode is turned on after returning
 # CTRL-A needs to go to the beginning, not be echoed out
-send -- "\"xyz\""
+# "xyz" is split into two lines "xyz and " because the expect output cannot be
+# searched for z", as z contains a bunch of control characters around it. And
+# searching for " causes us to match the first quote. If we don't do this, a
+# test failure we saw is that CTRL-A will get sent before "xyz" is fully typed
+send -- "\"xyz"
 expect "z"
+send -- "\""
+expect "\""
 send -- \x1a
 expect "# "
 send -- "fg\r"
-sleep 1
+# Sleep is needed to prevent race condition.
+sleep .1
+expect "fg"
 # CTRL-A
 send -- \x01
 # YottaDB implments CTRL-A to go the beginning of the line using backspaces (\x08)
-expect \x08 
+expect \x08
 send -- "write \r"
 expect "xyz"
 expect "YDB>"
