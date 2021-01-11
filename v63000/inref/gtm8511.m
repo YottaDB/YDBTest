@@ -3,6 +3,9 @@
 ; Copyright (c) 2016 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -37,7 +40,7 @@ gtm8511
 	.	read prompt:1
 	.	use $principal
 	.	set corrupt(target,resp)=response
-	.	set corrupt(target,orig)=+$extract($tr($piece(response," ",9),"[]",""),3,99)
+	.	set corrupt(target,orig)=$extract($tr($piece(response," ",9),"[]",""),3,99)
 	.	; Drop block size to the minimum 512 bytes
 	.	do:target="blk_size"
 	.	.	set corrupt(target,override)=200

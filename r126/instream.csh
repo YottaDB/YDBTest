@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -40,12 +40,18 @@
 
 echo "r126 test starts..."
 
+# Note ydb439 is disabled (removed from subtest list) permanently but left in place in case it becomes useful. The conditions
+# for ydb439's reactivation disappeared when we decided that the M Lock changes in V63009 along with the 64 bit hash changes
+# were robust enough that we didn't need any additional changes to support increasing the neighborhood size dynamically. Since
+# the size of the hash value is a critical component of this support and since the ydb439 test hobbles the hash value down to
+# a single bit, there are no longer any prospects for correct functioning of the artificial conditions of the ydb439 test.
+
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     "ydb429"
 setenv subtest_list_non_replic ""
 setenv subtest_list_non_replic "$subtest_list_non_replic ydb430 pseudoBank randomWalk ydb431 ydb454 v63006 ydb432"
 setenv subtest_list_non_replic "$subtest_list_non_replic ydb449 v63007 ydb438 ydb446 ydb440 ydb460 ydb456 ydb455"
-setenv subtest_list_non_replic "$subtest_list_non_replic ydb439 ydb464 find_timer_assert ydb111 ydb382"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb464 find_timer_assert ydb111 ydb382"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then

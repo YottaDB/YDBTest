@@ -95,14 +95,14 @@ GDE>
 ##SUSPEND_OUTPUT NONUNICODE_MODE
  ASEG                            a.d                 BG  DYN  4096        100   100 GLOB=1024
 ##ALLOW_OUTPUT NONUNICODE_MODE
-                                                                                    LOCK=  40
+                                                                                    LOCK= 220
                                                                                     RES =   0
                                                                                     ENCR= OFF
                                                                                     MSLT=1024
                                                                                     DALL= YES
                                                                                     AIO = OFF
  DEFAULT                         mumps.dat           BG  DYN  4096        100   100 GLOB=1024
-                                                                                    LOCK=  40
+                                                                                    LOCK= 220
                                                                                     RES =   0
                                                                                     ENCR= OFF
                                                                                     MSLT=1024
@@ -246,7 +246,7 @@ GDE>
                                                                                     DALL= YES
  DEFAULT                         locksmutexdefault.dat
                                                      BG  DYN  4096        100   100 GLOB=1024
-                                                                                    LOCK=  40
+                                                                                    LOCK= 220
                                                                                     RES = 920
                                                                                     ENCR= OFF
                                                                                     MSLT=2048
@@ -260,7 +260,7 @@ GDE>
 %GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
 # GDE show -commands should have the correct values of lockspace, mutex slots and reserved bytes
 TEMPLATE -SEGMENT -ACCESS_METHOD=BG
-TEMPLATE -SEGMENT -LOCK_SPACE=40
+TEMPLATE -SEGMENT -LOCK_SPACE=220
 TEMPLATE -SEGMENT -MUTEX_SLOTS=2048
 TEMPLATE -SEGMENT -RESERVED_BYTES=920
 TEMPLATE -SEGMENT -ACCESS_METHOD=MM
@@ -295,7 +295,7 @@ Region          DEFAULT
  Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
  -------------------------------------------------------------------------------------------
  ABCD                            mumps.dat           BG  DYN  4096        100   100 GLOB=1024
-                                                                                    LOCK=  40
+                                                                                    LOCK= 220
                                                                                     RES =   0
                                                                                     ENCR= OFF
                                                                                     MSLT=1024
@@ -312,14 +312,14 @@ Region          DEFAULT
  Segment          Active              Acc Typ Block      Alloc Exten Options
  ------------------------------------------------------------------------------
  <default>          *                 BG  DYN  4096        100   100 GLOB =1024
-                                                                     LOCK =  40
+                                                                     LOCK = 220
                                                                      RES  =   0
                                                                      ENCR = OFF
                                                                      MSLT =2048
                                                                      DALL = YES
                                                                      AIO  = OFF
  <default>                            MM  DYN  4096        100   100 DEFER
-                                                                     LOCK =  40
+                                                                     LOCK = 220
                                                                      MSLT =1024
                                                                      DALL = YES
 %GDE-I-VERIFY, Verification OK
@@ -343,7 +343,7 @@ Region          DEFAULT
  Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
  -------------------------------------------------------------------------------------------
  ABCD                            mumps.dat           BG  DYN  4096        100   100 GLOB=1024
-                                                                                    LOCK=  40
+                                                                                    LOCK= 220
                                                                                     RES =   0
                                                                                     ENCR= OFF
                                                                                     MSLT=1024

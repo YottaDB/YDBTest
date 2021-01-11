@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -69,7 +69,7 @@ $head -n 6 show1.txtx
 set syslog_after1 = `date +"%b %e %H:%M:%S"`
 echo $syslog_before1 $syslog_after1 > time_window1.txt
 
-$grep -q "%YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]% of 40 pages" show1.txtx
+$grep -q "%YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]% of 220 pages" show1.txtx
 if ($? != 0) then
     echo "Error: Free lock space is outside of expected range. Check show1.txtx."
 endif
@@ -131,7 +131,7 @@ $head -n 6 show2.txtx
 set syslog_after1 = `date +"%b %e %H:%M:%S"`
 echo $syslog_before1 $syslog_after1 > time_window2.txt
 
-$grep -q "%YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]% of 40 pages" show2.txtx
+$grep -q "%YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]% of 220 pages" show2.txtx
 if ($? != 0) then
     echo "Error: Free lock space is not in expected range. Check show2.txtx."
 endif

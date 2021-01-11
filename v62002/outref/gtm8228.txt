@@ -8,40 +8,40 @@ mumps.dat
 Start M program that acquires M locks and holds onto it until process exit
 Wait for M program to hold the M lock
 Verify child process does hold lock
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|164|184); SUBSCRIPT slot bytes in use: 0/(5036|5052)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
 %YDB-I-NOLOCKMATCH, No matching locks were found in AREG
-%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 220 pages
 
 DEFAULT
 ##TEST_AWK\^holdontillexit Owned by PID= [1-9][0-9]* which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|164|184); SUBSCRIPT slot bytes in use: (20|24)/(5036|5052)
-%YDB-I-LOCKSPACEUSE, Estimated free lock space: 99% of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 1/(597|820); SUBSCRIPT slot bytes in use: (20|24)/(28080|28092)
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 99% of 220 pages
 Do a DSE CRIT -SEIZE to hold crit
 Signal M program to die while holding M lock
 Verify child process was able to release lock
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|164|184); SUBSCRIPT slot bytes in use: 0/(5036|5052)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
 %YDB-I-NOLOCKMATCH, No matching locks were found in AREG
-%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 220 pages
 %YDB-I-LOCKCRITOWNER, LOCK crit is held by: 0
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|164|184); SUBSCRIPT slot bytes in use: (20|24)/(5036|5052)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 1/(597|820); SUBSCRIPT slot bytes in use: (20|24)/(28080|28092)
 %YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
-%YDB-I-LOCKSPACEUSE, Estimated free lock space: 99% of 40 pages
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 99% of 220 pages
 %YDB-I-LOCKCRITOWNER, LOCK crit is held by: 0
 Test PASS : Process was able to release M lock and exit without needing crit
 Do DSE CRIT -RELEASE to release crit
 # Show that lke accepts multiple inputs by writing "show locks" twice to the input
-##TEST_AWKLKE> %YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|164|184); SUBSCRIPT slot bytes in use: 0/(5036|5052)
+##TEST_AWKLKE> %YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
 %YDB-I-NOLOCKMATCH, No matching locks were found in AREG
-%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|164|184); SUBSCRIPT slot bytes in use: 0/(5036|5052)
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 220 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
 %YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
-%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
-##TEST_AWKLKE> %YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|164|184); SUBSCRIPT slot bytes in use: 0/(5036|5052)
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 220 pages
+##TEST_AWKLKE> %YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
 %YDB-I-NOLOCKMATCH, No matching locks were found in AREG
-%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|164|184); SUBSCRIPT slot bytes in use: 0/(5036|5052)
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 220 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
 %YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
-%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 220 pages
 LKE> 
 # Show that mupip does not accept multi-line input by writing [integ] on one line and [mumps.dat] on another
 # This used to work prior to GT.M V6.3-006. In V6.3-006, the changes to GTM-4263 resulted in this no longer working

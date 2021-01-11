@@ -11,14 +11,14 @@
 !Segment          Active              Acc Typ Block      Alloc Exten Options
 !------------------------------------------------------------------------------
 !<default>          *                 BG  DYN  1024        100   100 GLOB =1024
-!                                                                    LOCK =  40
+!                                                                    LOCK = 220
 ##TEST_AWK!                                                                    RES  = *[0-9]*
 !                                                                    ENCR = OFF
 !                                                                    MSLT =1024
 !                                                                    DALL = YES
 !                                                                    AIO  = OFF
 !<default>                            MM  DYN  1024        100   100 DEFER
-!                                                                    LOCK =  40
+!                                                                    LOCK = 220
 !                                                                    MSLT =1024
 !                                                                    DALL = YES
 !
@@ -210,7 +210,7 @@
 !Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
 !-------------------------------------------------------------------------------------------
 !COMMON                          MUMPS_COMM          BG  DYN  2048        100   100 GLOB=  64
-!                                                                                   LOCK=  40
+!                                                                                   LOCK= 220
 !                                                                                   RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
 !                                                                                   ENCR= OFF
@@ -222,7 +222,7 @@
 !                                                                                   DALL= YES
 !                                                                                   AIO = OFF
 !CTS                             MUMPS_CTS           BG  DYN  2048        100   100 GLOB=  64
-!                                                                                   LOCK=  40
+!                                                                                   LOCK= 220
 !                                                                                   RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
 !                                                                                   ENCR= OFF
@@ -234,7 +234,7 @@
 !                                                                                   DALL= YES
 !                                                                                   AIO = OFF
 !LIB                             MUMPS_LIB           BG  DYN  2048        100   100 GLOB=  64
-!                                                                                   LOCK=  40
+!                                                                                   LOCK= 220
 !                                                                                   RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
 !                                                                                   ENCR= OFF
@@ -246,7 +246,7 @@
 !                                                                                   DALL= YES
 !                                                                                   AIO = OFF
 !MISC                            MUMPS_MISC          BG  DYN  2048        500   100 GLOB=  64
-!                                                                                   LOCK=  40
+!                                                                                   LOCK= 220
 !                                                                                   RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
 !                                                                                   ENCR= OFF
@@ -258,7 +258,7 @@
 !                                                                                   DALL= YES
 !                                                                                   AIO = OFF
 !SCRATCH                         MUMPS_SCRA          BG  DYN  2048        100   100 GLOB=  64
-!                                                                                   LOCK=  40
+!                                                                                   LOCK= 220
 !                                                                                   RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
 !                                                                                   ENCR= OFF
@@ -270,7 +270,7 @@
 !                                                                                   DALL= YES
 !                                                                                   AIO = OFF
 !TABLES                          MUMPS_TABL          BG  DYN  2048        100   100 GLOB=  64
-!                                                                                   LOCK=  40
+!                                                                                   LOCK= 220
 !                                                                                   RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
 !                                                                                   ENCR= OFF

@@ -10,7 +10,7 @@
 !Segment          Active              Acc Typ Block      Alloc Exten Options
 !------------------------------------------------------------------------------
 !<default>          *                 BG  DYN  4096        400   100 GLOB =1024
-!                                                                    LOCK = 40
+!                                                                    LOCK = 220
 ##TEST_AWK!                                                                    RES  = *[0-9]*
 ##SUSPEND_OUTPUT HOST_HP-UX_PA_RISC HOST_OSF1_ALPHA
 !                                                                    ENCR =  ON
@@ -22,7 +22,7 @@
 !                                                                    DALL = YES
 !                                                                    AIO  = OFF
 !<default>                            MM  DYN  4096        100   100 DEFER
-!                                                                    LOCK =  40
+!                                                                    LOCK = 220
 !                                                                    MSLT =1024
 !                                                                    DALL = YES
 !
@@ -291,7 +291,7 @@
 !Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
 !-------------------------------------------------------------------------------------------
 !DEFAULT                         maptst              BG  DYN  4096        400   100 GLOB=1024
-!                                                                                   LOCK=  40
+!                                                                                   LOCK= 220
 !                                                                                   RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
 !                                                                                   ENCR= OFF
@@ -303,7 +303,7 @@
 !                                                                                   DALL= YES
 !                                                                                   AIO = OFF
 !NAME1                           name1               BG  DYN  4096        400   100 GLOB=1024
-!                                                                                   LOCK=  40
+!                                                                                   LOCK= 220
 !                                                                                   RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
 !                                                                                   ENCR= OFF
@@ -315,7 +315,7 @@
 !                                                                                   DALL= YES
 !                                                                                   AIO = OFF
 !NAME2                           name2               BG  DYN  4096        400   100 GLOB=1024
-!                                                                                   LOCK=  40
+!                                                                                   LOCK= 220
 !                                                                                   RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
 !                                                                                   ENCR= OFF
@@ -327,7 +327,7 @@
 !                                                                                   DALL= YES
 !                                                                                   AIO = OFF
 !STAR1                           star1               BG  DYN  4096        400   100 GLOB=1024
-!                                                                                   LOCK=  40
+!                                                                                   LOCK= 220
 !                                                                                   RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
 !                                                                                   ENCR= OFF
@@ -339,7 +339,7 @@
 !                                                                                   DALL= YES
 !                                                                                   AIO = OFF
 !STAR2                           star2               BG  DYN  4096        400   100 GLOB=1024
-!                                                                                   LOCK=  40
+!                                                                                   LOCK= 220
 !                                                                                   RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
 !                                                                                   ENCR= OFF

@@ -3,14 +3,14 @@
 ##TEST_AWK# Max Iterations in a second=[0-9]*
 ##TEST_AWK# Min Iterations after max=[0-9]*
 # No Significant Slowdown Experienced
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/[0-9]*; LOCK slots in use: [0-9]*/[0-9]*; SUBSCRIPT slot bytes in use: 16000(16|32)/7679872
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/[0-9]*; LOCK slots in use: [0-9]*/[0-9]*; SUBSCRIPT slot bytes in use: 16000(16|32)/(7679872|7679952)
 
 # Running test with 100 processes, each holding 1000 locks
 # Locking ^a(1)-^a(100000) in child processes, attempting to lock ^a(i) in parent
 ##TEST_AWK# Max Iterations in a second=[0-9]*
 ##TEST_AWK# Min Iterations after max=[0-9]*
 # No Significant Slowdown Experienced
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/[0-9]*; LOCK slots in use: [0-9]*/[0-9]*; SUBSCRIPT slot bytes in use: 16000(16|32)/7679872
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/[0-9]*; LOCK slots in use: [0-9]*/[0-9]*; SUBSCRIPT slot bytes in use: 16000(16|32)/(7679872|7679952)
 
 # Test maximum lock space supported is increased from 65536 to 262144
 

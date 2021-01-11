@@ -8,37 +8,37 @@ b.dat
 c.dat
 mumps.dat
 #No locks. All lock space should be free
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|164|184); SUBSCRIPT slot bytes in use: 0/(5036|5052)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
 %YDB-I-NOLOCKMATCH, No matching locks were found in AREG
-%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|164|184); SUBSCRIPT slot bytes in use: 0/(5036|5052)
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 220 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
 %YDB-I-NOLOCKMATCH, No matching locks were found in BREG
-%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: CREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|164|184); SUBSCRIPT slot bytes in use: 0/(5036|5052)
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 220 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: CREG: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
 %YDB-I-NOLOCKMATCH, No matching locks were found in CREG
-%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|164|184); SUBSCRIPT slot bytes in use: 0/(5036|5052)
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 220 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
 %YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
-%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 220 pages
 #All but DEFAULT region should have free space
 
 YDB>
 
 YDB>
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|164|184); SUBSCRIPT slot bytes in use: 0/(5036|5052)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
 %YDB-I-NOLOCKMATCH, No matching locks were found in AREG
-%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|164|184); SUBSCRIPT slot bytes in use: 0/(5036|5052)
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 220 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
 %YDB-I-NOLOCKMATCH, No matching locks were found in BREG
-%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: CREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|164|184); SUBSCRIPT slot bytes in use: 0/(5036|5052)
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 220 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: CREG: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
 %YDB-I-NOLOCKMATCH, No matching locks were found in CREG
-%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 220 pages
 
 DEFAULT
 ##TEST_AWKa Owned by PID= [1-9][0-9]* which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|164|184); SUBSCRIPT slot bytes in use: (8|16)/(5036|5052)
-%YDB-I-LOCKSPACEUSE, Estimated free lock space: 99% of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 1/(597|820); SUBSCRIPT slot bytes in use: (8|16)/(28080|28092)
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 99% of 220 pages
 
 YDB>
 #All but AREG region should have free space
@@ -51,17 +51,17 @@ YDB>
 
 AREG
 ##TEST_AWK.avar Owned by PID= [1-9][0-9]* which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|164|184); SUBSCRIPT slot bytes in use: (12|16)/(5036|5052)
-%YDB-I-LOCKSPACEUSE, Estimated free lock space: 99% of 40 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|164|184); SUBSCRIPT slot bytes in use: 0/(5036|5052)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(880|1173); LOCK slots in use: 1/(597|820); SUBSCRIPT slot bytes in use: (12|16)/(28080|28092)
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 99% of 220 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
 %YDB-I-NOLOCKMATCH, No matching locks were found in BREG
-%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: CREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|164|184); SUBSCRIPT slot bytes in use: 0/(5036|5052)
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 220 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: CREG: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
 %YDB-I-NOLOCKMATCH, No matching locks were found in CREG
-%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|164|184); SUBSCRIPT slot bytes in use: 0/(5036|5052)
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 220 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
 %YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
-%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 220 pages
 
 YDB>
 #All but BREG region should have free space
@@ -71,20 +71,20 @@ YDB>
 YDB>
 
 YDB>
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|164|184); SUBSCRIPT slot bytes in use: 0/(5036|5052)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
 %YDB-I-NOLOCKMATCH, No matching locks were found in AREG
-%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 220 pages
 
 BREG
 ##TEST_AWK.bvar Owned by PID= [1-9][0-9]* which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|164|184); SUBSCRIPT slot bytes in use: (12|16)/(5036|5052)
-%YDB-I-LOCKSPACEUSE, Estimated free lock space: 99% of 40 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: CREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|164|184); SUBSCRIPT slot bytes in use: 0/(5036|5052)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(880|1173); LOCK slots in use: 1/(597|820); SUBSCRIPT slot bytes in use: (12|16)/(28080|28092)
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 99% of 220 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: CREG: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
 %YDB-I-NOLOCKMATCH, No matching locks were found in CREG
-%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|164|184); SUBSCRIPT slot bytes in use: 0/(5036|5052)
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 220 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
 %YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
-%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 220 pages
 
 YDB>
 #CREG and DEFAULT region should have free space
@@ -101,50 +101,50 @@ YDB>
 
 AREG
 ##TEST_AWK.avar Owned by PID= [1-9][0-9]* which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|164|184); SUBSCRIPT slot bytes in use: (12|16)/(5036|5052)
-%YDB-I-LOCKSPACEUSE, Estimated free lock space: 99% of 40 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(880|1173); LOCK slots in use: 1/(597|820); SUBSCRIPT slot bytes in use: (12|16)/(28080|28092)
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 99% of 220 pages
 
 BREG
 ##TEST_AWK.bvar Owned by PID= [1-9][0-9]* which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|164|184); SUBSCRIPT slot bytes in use: (12|16)/(5036|5052)
-%YDB-I-LOCKSPACEUSE, Estimated free lock space: 99% of 40 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: CREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|164|184); SUBSCRIPT slot bytes in use: 0/(5036|5052)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(880|1173); LOCK slots in use: 1/(597|820); SUBSCRIPT slot bytes in use: (12|16)/(28080|28092)
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 99% of 220 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: CREG: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
 %YDB-I-NOLOCKMATCH, No matching locks were found in CREG
-%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|164|184); SUBSCRIPT slot bytes in use: 0/(5036|5052)
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 220 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
 %YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
-%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 220 pages
 
 YDB>
 #No locks should be here
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|164|184); SUBSCRIPT slot bytes in use: 0/(5036|5052)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
 %YDB-I-NOLOCKMATCH, No matching locks were found in AREG
-%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|164|184); SUBSCRIPT slot bytes in use: 0/(5036|5052)
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 220 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
 %YDB-I-NOLOCKMATCH, No matching locks were found in BREG
-%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: CREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|164|184); SUBSCRIPT slot bytes in use: 0/(5036|5052)
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 220 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: CREG: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
 %YDB-I-NOLOCKMATCH, No matching locks were found in CREG
-%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|164|184); SUBSCRIPT slot bytes in use: 0/(5036|5052)
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 220 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
 %YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
-%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 220 pages
 #Trying to grab 1000 locks from DEFAULT (should hang before reaching 1000)
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|164|184); SUBSCRIPT slot bytes in use: 0/(5036|5052)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
 %YDB-I-NOLOCKMATCH, No matching locks were found in AREG
-%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|164|184); SUBSCRIPT slot bytes in use: 0/(5036|5052)
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 220 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
 %YDB-I-NOLOCKMATCH, No matching locks were found in BREG
-%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 220 pages
 TEST-I-PASS YDB-E-LOCKSPACEFULL found in operator log as expected.
 #Grabbing as many locks possible, releasing 2 of them, waiting on the bg
 #Adding 2 of the locks again. The lock space should be full but syslog should not have LOCKSPACEFULL
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|164|184); SUBSCRIPT slot bytes in use: 0/(5036|5052)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
 %YDB-I-NOLOCKMATCH, No matching locks were found in AREG
-%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(160|213); LOCK slots in use: 0/(120|164|184); SUBSCRIPT slot bytes in use: 0/(5036|5052)
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 220 pages
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
 %YDB-I-NOLOCKMATCH, No matching locks were found in BREG
-%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 40 pages
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 220 pages
 TEST-I-PASS YDB-E-LOCKSPACEFULL not found in operator log as expected.
 #Stop the process
 #Trying with 2 diffrent processes...

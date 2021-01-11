@@ -1,3 +1,16 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; This module is derived from FIS GT.M.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 lock	;
 	lock ^A1
 	lock +^B2
@@ -12,7 +25,7 @@ lock	;
 	write "Show only one lock with embedded = and quote",!
 	s showlock="$LKE show -lock=""^global(\""embedded = and\""\""\"")"""
 	zsystem showlock
-	write "Remove only one lock with embedded = and quote witout space",!
+	write "Remove only one lock with embedded = and quote without space",!
 	s clearlock="$LKE clear -nointeractive -lock=""^global(\""embed=and\""\""nospace\"")"""
 	zsystem clearlock
 	write !,"Remove only one lock ^global(two words)",!

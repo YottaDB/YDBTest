@@ -1,10 +1,8 @@
 # LOCKING RESOURCES THAT HASH TO THE SAME VALUE, EXPECT NUMBER OF LOCKS TO REMAIN CONSTANT ACROSS EACH RUN
 # INFO FROM RUN 1
-%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/160; LOCK slots in use: 48/120; SUBSCRIPT slot bytes in use: 1144/5052
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 48/(597|820); SUBSCRIPT slot bytes in use: (1144|760)/(28080|28092)
 # INFO FROM RUN 2
-%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/160; LOCK slots in use: 48/120; SUBSCRIPT slot bytes in use: 1144/5052
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 48/(597|820); SUBSCRIPT slot bytes in use: (1144|760)/(28080|28092)
 # INFO FROM RUN 3
-%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/160; LOCK slots in use: 48/120; SUBSCRIPT slot bytes in use: 1144/5052
-# SEGMENT DATA--NUMBER OF TIMES OVER 31 LOCKS HASHED TO THE SAME VALUE: 16
-# Verify DSE DUMP -FILE -ALL displays [Lock Hash Bucket Full] statistic with a non-zero value
-  Lock Hash Bucket Full   0x00000010
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 48/(597|820); SUBSCRIPT slot bytes in use: (1144|760)/(28080|28092)
+# SEGMENT DATA--NUMBER OF TIMES OVER 31 LOCKS HASHED TO THE SAME VALUE: 0

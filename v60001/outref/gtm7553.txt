@@ -3,11 +3,12 @@ Using: ##SOURCE_PATH##/mumps -run GDE
 mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
-##TEST_AWK	\^a : \[shrblk\] 0x[0-9a-f]* : \[shrsub\] 0x[0-9a-f]* \(len=2\) : \[shrhash\] [0-9a-f]* : \[parent\] \(nil\) : \[children\] \(nil\) : \[pending\] \(nil\) : \[owner\] [0-9]* : \[auxowner\] 0
-##TEST_AWK(110|139)	: \[shrblk\] 0x[0-9a-f]* : \[hash\] [0-9a-f]* : \[usedmap\] 1
-##TEST_AWK	: \[num_buckets\] (181|246)
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(160|213); LOCK slots in use: 1/(120|164|184); SUBSCRIPT slot bytes in use: (4|8)/(5036|5052)
-%YDB-I-LOCKSPACEUSE, Estimated free lock space: 99% of 40 pages
+##TEST_AWK\$Job = [0-9]*
+##TEST_AWK	\^a : \[shrblk\] 0x[0-9a-f]* : \[shrsub\] 0x[0-9a-f]* \(len=2\) : \[shrhash\] 0x[0-9a-f]* : \[parent\] \(nil\) : \[children\] \(nil\) : \[pending\] \(nil\) : \[owner\] [0-9]* : \[auxowner\] 0
+##TEST_AWK(431|343)	: \[shrblk\] 0x[0-9a-f]* : \[hash\] 0x[0-9a-f]* : \[usedmap\] 1
+##TEST_AWK	: \[num_buckets\] (814|1118)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 1/(597|820); SUBSCRIPT slot bytes in use: (4|8)/(28080|28092)
+%YDB-I-LOCKSPACEUSE, Estimated free lock space: 99% of 220 pages
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

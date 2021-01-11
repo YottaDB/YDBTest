@@ -13,7 +13,7 @@ YDB>
 # DSE dump -file
   Last Record Backup     0x0000000000000001  Extension Count                100
   Last Database Backup   0x0000000000000001  Number of local maps             1
-  Last Bytestream Backup 0x0000000000000001  Lock space              0x00000028
+  Last Bytestream Backup 0x0000000000000001  Lock space              0x000000DC
   Current transaction    0x0000000000000003  No. of writes/flush              7
 # Reset transaction mumber
 
@@ -31,7 +31,7 @@ Total             100               7              NA             4
 WARNING: Transaction number reset complete on all active blocks. Please do a DATABASE BACKUP before proceeding
   Last Record Backup     0x0000000000000001  Extension Count                100
   Last Database Backup   0x0000000000000001  Number of local maps             1
-  Last Bytestream Backup 0x0000000000000001  Lock space              0x00000028
+  Last Bytestream Backup 0x0000000000000001  Lock space              0x000000DC
   Current transaction    0x0000000000000002  No. of writes/flush              7
 # Try incremental backup after tn_reset, it should take backup
 MUPIP backup of database file ##TEST_PATH##/mumps.dat to inc1.dat
@@ -67,7 +67,7 @@ YDB>
 YDB>
   Last Record Backup     0x0000000000000002  Extension Count                100
   Last Database Backup   0x0000000000000001  Number of local maps             1
-  Last Bytestream Backup 0x0000000000000002  Lock space              0x00000028
+  Last Bytestream Backup 0x0000000000000002  Lock space              0x000000DC
   Current transaction    0x0000000000000003  No. of writes/flush              7
 # Try incremental backup after one more update, it should work
 MUPIP backup of database file ##TEST_PATH##/mumps.dat to inc3.dat

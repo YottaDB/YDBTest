@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -18,7 +18,7 @@ ydb297
 	do ^job("lockhang^ydb297",3,"""""")
 	quit
 lockhang
-	for  quit:^X(jobindex)
+	for  quit:^X(jobindex)  hang .05
         ; Below are subscripts that hash to the same value (3857812303) modulo 4G (i.e.2**32)
         set substr="1445240077 4097034630 4388659035 4630999867 5407955935 6251931759 11417300836 10290985601"
         set substr=substr_" 11005068295 11434779216 12514012645 12676101741 17058576286 18738986112 18480244186 17280277179"
@@ -29,7 +29,7 @@ lockhang
 	for i=1:1:$length(substr," ") do mylock($piece(substr," ",i))
 	zsystem "$LKE show |& $grep SPACEINFO"
 	set ^X(jobindex+1)=1
-	for  quit:^X(4)
+	for  quit:^X(4)  hang .05
 	write "# SEGMENT DATA--NUMBER OF TIMES OVER 31 LOCKS HASHED TO THE SAME VALUE: "
 	write $$^%PEEKBYNAME("sgmnt_data.lock_hash_bucket_full_cntr","DEFAULT")
 	quit

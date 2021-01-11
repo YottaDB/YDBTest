@@ -11,14 +11,14 @@
 !Segment          Active              Acc Typ Block      Alloc Exten Options
 !------------------------------------------------------------------------------
 !<default>          *                 BG  DYN  4096        100   100 GLOB =  64
-!                                                                    LOCK =  40
+!                                                                    LOCK = 220
 ##TEST_AWK!                                                                    RES  = *[0-9]*
 !                                                                    ENCR = OFF
 !                                                                    MSLT =1024
 !                                                                    DALL = YES
 !                                                                    AIO  = OFF
 !<default>                            MM  DYN  4096        100   100 DEFER
-!                                                                    LOCK =  40
+!                                                                    LOCK = 220
 !                                                                    MSLT =1024
 !                                                                    DALL = YES
 !
@@ -58,7 +58,7 @@
 !Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
 !-------------------------------------------------------------------------------------------
 !ACCOUNT                         ACCOUNT             BG  DYN  4096        100   100 GLOB=  64
-!                                                                                   LOCK=  40
+!                                                                                   LOCK= 220
 !                                                                                   RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
 !                                                                                   ENCR= OFF
@@ -70,7 +70,7 @@
 !                                                                                   DALL= YES
 !                                                                                   AIO = OFF
 !ACCOUNT0                        ACCOUNT0            BG  DYN  4096        100   100 GLOB=  64
-!                                                                                   LOCK=  40
+!                                                                                   LOCK= 220
 !                                                                                   RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
 !                                                                                   ENCR= OFF
@@ -82,7 +82,7 @@
 !                                                                                   DALL= YES
 !                                                                                   AIO = OFF
 !ARCHCER                         ARCHCER             BG  DYN  4096        100   100 GLOB=  64
-!                                                                                   LOCK=  40
+!                                                                                   LOCK= 220
 !                                                                                   RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
 !                                                                                   ENCR= OFF
@@ -94,7 +94,7 @@
 !                                                                                   DALL= YES
 !                                                                                   AIO = OFF
 !ARCHCERT                        ARCHCERT            BG  DYN  4096        100   100 GLOB=  64
-!                                                                                   LOCK=  40
+!                                                                                   LOCK= 220
 !                                                                                   RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
 !                                                                                   ENCR= OFF
@@ -106,7 +106,7 @@
 !                                                                                   DALL= YES
 !                                                                                   AIO = OFF
 !ARCHGROT                        ARCHGROT            BG  DYN  4096        100   100 GLOB=  64
-!                                                                                   LOCK=  40
+!                                                                                   LOCK= 220
 !                                                                                   RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
 !                                                                                   ENCR= OFF
@@ -118,7 +118,7 @@
 !                                                                                   DALL= YES
 !                                                                                   AIO = OFF
 !DEFAULT                         mumps.dat           BG  DYN  4096        100   100 GLOB=  64
-!                                                                                   LOCK=  40
+!                                                                                   LOCK= 220
 !                                                                                   RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
 !                                                                                   ENCR= OFF

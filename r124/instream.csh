@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -114,11 +114,6 @@ endif
 # filter out replication tests that use pre-V60000 versions because these versions do not have dbg builds.
 if ("dbg" == "$tst_image") then
 	setenv subtest_exclude_list "$subtest_exclude_list ydb362a ydb362b"
-endif
-
-if ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) then
-	# filter out below test on 32-bit ARM since it relies on hash collisions which happen only on Linux x86_64 currently
-	setenv subtest_exclude_list "$subtest_exclude_list ydb297"
 endif
 
 if ($?ydb_test_exclude_V5_tests) then

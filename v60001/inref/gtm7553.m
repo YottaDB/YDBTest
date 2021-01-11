@@ -1,7 +1,19 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; This module was derived from FIS GT.M.
+;
 gtm7553
-	set unix=$zversion'["VMS"
+	write "$Job = ",$job,!		; Useful in debugging to identify messages in log as THIS process
 	lock ^a
-	zsy:unix "lke show -mem"
-	zsy:'unix "lke show /mem"
+	zsystem "lke show -mem"
 	lock
 	quit

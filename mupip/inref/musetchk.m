@@ -3,7 +3,7 @@
 ; Copyright (c) 2015-2016 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
-; Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -67,9 +67,9 @@ eof	. close file
 	if +$get(badcnt) write !,"FAIL from badcnt : Expected 0 : Actual "_+$get(badcnt) set fail=1
 	if fail=0 write !,"PASS from ",$text(+0)
 	quit
-before	;XX;XX;100;1024;0x00000028;64;256;1024;128;XX;0;0x00000000
-	;XX;XX;100;1024;0x00000028;64;256;1024;128;XX;0;0x00000000
-	;XX;XX;100;1024;0x00000028;64;256;1024;128;XX;0;0x00000000
+before	;XX;XX;100;1024;0x000000DC;64;256;1024;128;XX;0;0x00000000
+	;XX;XX;100;1024;0x000000DC;64;256;1024;128;XX;0;0x00000000
+	;XX;XX;100;1024;0x000000DC;64;256;1024;128;XX;0;0x00000000
 after	;BG;FALSE;2000;2048;0x00000FA0;255;2048;1500;4;TRUE;7;0x00003000
 	;BG;FALSE;100;3096;0x00000FA0;255;256;1500;128;TRUE;7;0x00000000
 	;BG;FALSE;100;3096;0x00000FA0;255;256;1500;128;TRUE;7;0x00000000

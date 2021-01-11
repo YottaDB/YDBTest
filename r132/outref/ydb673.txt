@@ -1,0 +1,69 @@
+# Test that obtaining 32+ M Locks with same modulo hash value and a zero timeout can be obtained by retrying (internally)
+# after a garbage-collection, a rehash or a resize.
+
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+*** Executing ydb673 ***
+Attempting LOCK +x(155800):0 : SUCCESS
+Attempting LOCK +x(400988):0 : SUCCESS
+Attempting LOCK +x(606638):0 : SUCCESS
+Attempting LOCK +x(641040):0 : SUCCESS
+Attempting LOCK +x(1112116):0 : SUCCESS
+Attempting LOCK +x(1326373):0 : SUCCESS
+Attempting LOCK +x(1761409):0 : SUCCESS
+Attempting LOCK +x(1878858):0 : SUCCESS
+Attempting LOCK +x(2114883):0 : SUCCESS
+Attempting LOCK +x(2422980):0 : SUCCESS
+Attempting LOCK +x(2669839):0 : SUCCESS
+Attempting LOCK +x(2852966):0 : SUCCESS
+Attempting LOCK +x(3248953):0 : SUCCESS
+Attempting LOCK +x(3279500):0 : SUCCESS
+Attempting LOCK +x(3313281):0 : SUCCESS
+Attempting LOCK +x(3364214):0 : SUCCESS
+Attempting LOCK +x(3502498):0 : SUCCESS
+Attempting LOCK +x(3548913):0 : SUCCESS
+Attempting LOCK +x(3734921):0 : SUCCESS
+Attempting LOCK +x(4128107):0 : SUCCESS
+Attempting LOCK +x(4217835):0 : SUCCESS
+Attempting LOCK +x(4232011):0 : SUCCESS
+Attempting LOCK +x(4400044):0 : SUCCESS
+Attempting LOCK +x(4462539):0 : SUCCESS
+Attempting LOCK +x(4520810):0 : SUCCESS
+Attempting LOCK +x(4858665):0 : SUCCESS
+Attempting LOCK +x(5039476):0 : SUCCESS
+Attempting LOCK +x(5044597):0 : SUCCESS
+Attempting LOCK +x(5364586):0 : SUCCESS
+Attempting LOCK +x(5422757):0 : SUCCESS
+Attempting LOCK +x(5658325):0 : SUCCESS
+Attempting LOCK +x(5683384):0 : SUCCESS
+Attempting LOCK +x(6311005):0 : SUCCESS
+Attempting LOCK +x(6344061):0 : SUCCESS
+Attempting LOCK +x(6517532):0 : SUCCESS
+Attempting LOCK +x(6563137):0 : SUCCESS
+Attempting LOCK +x(6694683):0 : SUCCESS
+Attempting LOCK +x(6806176):0 : SUCCESS
+Attempting LOCK +x(7112467):0 : SUCCESS
+Attempting LOCK +x(7165953):0 : SUCCESS
+Attempting LOCK +x(7831563):0 : SUCCESS
+Attempting LOCK +x(7874626):0 : SUCCESS
+Attempting LOCK +x(7887309):0 : SUCCESS
+Attempting LOCK +x(8207267):0 : SUCCESS
+Attempting LOCK +x(8260435):0 : SUCCESS
+Attempting LOCK +x(8280795):0 : SUCCESS
+Attempting LOCK +x(8332349):0 : SUCCESS
+Attempting LOCK +x(8691930):0 : SUCCESS
+Attempting LOCK +x(8774756):0 : SUCCESS
+Attempting LOCK +x(9158172):0 : SUCCESS
+Attempting LOCK +x(9195370):0 : SUCCESS
+Attempting LOCK +x(9260478):0 : SUCCESS
+Attempting LOCK +x(9273682):0 : SUCCESS
+Attempting LOCK +x(9325923):0 : SUCCESS
+Attempting LOCK +x(9642001):0 : SUCCESS
+Attempting LOCK +x(9774660):0 : SUCCESS
+*** Run complete ***
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

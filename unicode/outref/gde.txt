@@ -75,14 +75,14 @@ GDE>
  Segment          Active              Acc Typ Block      Alloc Exten Options
  ------------------------------------------------------------------------------
  <default>          *                 BG  DYN  4096        100   100 GLOB =1024
-                                                                     LOCK =  40
+                                                                     LOCK = 220
 ##TEST_AWK                                                                     RES  = *[0-9]*
                                                                      ENCR = OFF
                                                                      MSLT =1024
                                                                      DALL = YES
                                                                      AIO  = OFF
  <default>                            MM  DYN  4096        100   100 DEFER
-                                                                     LOCK =  40
+                                                                     LOCK = 220
                                                                      MSLT =1024
                                                                      DALL = YES
 
@@ -104,7 +104,7 @@ GDE>
  Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
  -------------------------------------------------------------------------------------------
  ASEG                            ｍｕｍｐｓ3.dat     BG  DYN  4096        100   100 GLOB=1024
-                                                                                    LOCK=  40
+                                                                                    LOCK= 220
                                                                                     RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
                                                                                     ENCR= OFF
@@ -116,7 +116,7 @@ GDE>
                                                                                     DALL= YES
                                                                                     AIO = OFF
  DEFAULT                         mumps.dat           BG  DYN  4096        100   100 GLOB=1024
-                                                                                    LOCK=  40
+                                                                                    LOCK= 220
                                                                                     RES =   0
 ##SUSPEND_OUTPUT  ENCRYPT
                                                                                     ENCR= OFF
