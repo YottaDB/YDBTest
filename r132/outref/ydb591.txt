@@ -1,0 +1,19 @@
+# Checking that removal of #ifdef TCP_NODELAY leaves ZDELAY/ZNODELAY operational
+# ZDELAY (default if not specified in open) -> znodelay, zdelay (use) 
+# Should see TCP_NODELAY set to 0, 1, 0
+setsockopt(3, SOL_SOCKET, SO_REUSEADDR, [1], 4) = 0
+setsockopt(3, SOL_TCP, TCP_NODELAY, [0], 4) = 0
+setsockopt(3, SOL_TCP, TCP_NODELAY, [1], 4) = 0
+setsockopt(3, SOL_TCP, TCP_NODELAY, [0], 4) = 0
+# ZDELAY (explicitly specified in open) -> znodelay, zdelay (use) 
+# Should see TCP_NODELAY set to 0, 1, 0
+setsockopt(3, SOL_SOCKET, SO_REUSEADDR, [1], 4) = 0
+setsockopt(3, SOL_TCP, TCP_NODELAY, [0], 4) = 0
+setsockopt(3, SOL_TCP, TCP_NODELAY, [1], 4) = 0
+setsockopt(3, SOL_TCP, TCP_NODELAY, [0], 4) = 0
+# ZNODELAY (open) -> zdelay, znodelay (use) 
+# Should see TCP_NODELAY set to 1, 0, 1
+setsockopt(3, SOL_SOCKET, SO_REUSEADDR, [1], 4) = 0
+setsockopt(3, SOL_TCP, TCP_NODELAY, [1], 4) = 0
+setsockopt(3, SOL_TCP, TCP_NODELAY, [0], 4) = 0
+setsockopt(3, SOL_TCP, TCP_NODELAY, [1], 4) = 0

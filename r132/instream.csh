@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -27,13 +27,14 @@
 # ydb663 [bdw]       Test that loading a binary extract back into the same database doesn't produce a DBDUPNULCOL error
 # ydb558 [sam]       Test that zshow "*":lvn does not include zshow "I" output into zshow "V" values in lvn
 # ydb612 [sam]       Test that suspending (CTRL-Z) YottaDB direct mode and then foregrounding it doesn't cause an assert
+# ydb591 [sam]       Remove ifdef TCP_NODELAY from YottaDB codebase, test ZDELAY and ZNODELAY still work
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r132 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "ydb627 ydb551 ydb632 ydb581 ydb630 ydb441 ydb652 ydb635 ydb664 ydb663 ydb558 ydb612"
+setenv subtest_list_non_replic "ydb627 ydb551 ydb632 ydb581 ydb630 ydb441 ydb652 ydb635 ydb664 ydb663 ydb558 ydb612 ydb591"
 setenv subtest_list_replic     "ydb657"
 
 if ($?test_replic == 1) then
