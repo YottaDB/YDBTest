@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -42,7 +42,7 @@ $gtm_exe/mumps -run %XCMD 'for i=1:1:10000 set ^global(i)=$j(i,200) set ^noreorg
 $MSR SYNC ALL_LINKS
 $MSR RUN INST2 '$gtm_tst/$tst/u_inref/gtm8023_bgprocess.csh >&! bgprocess.out &' >&! inst2_bgprocess.out
 set bgprocesspid = `$tst_awk '{pid=$NF} END {print pid}' inst2_bgprocess.out`
-$MSR RUN INST2 "set msr_dont_trace ; $gtm_tst/com/wait_for_log.csh -log bgprocess.started -waitcreation"
+$MSR RUN INST2 "set msr_dont_trace ; $gtm_tst/com/wait_for_log.csh -duration 300 -log bgprocess.started -waitcreation"
 
 # Now that all the background processes have started, activate the passive server.
 $MSR STOPSRC INST1 INST2

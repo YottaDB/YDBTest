@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -35,7 +35,7 @@ $gtm_tst/com/dbcreate.csh mumps 1 >>& dbcreate.out
 # This looks like some tls package related issue on ARMV6L so for now this part of the test is disabled there.
 
 set sysarch = `uname -m`
-if (("armv6l" == "$sysarch") || ("armv7l" == "$sysarch")) then
+if (("armv6l" == "$sysarch") || ("armv7l" == "$sysarch") || ("aarch64" == "$sysarch")) then
 	set writeslashtls_disabled = 1
 	set writeslashtls = ""
 else
