@@ -1,0 +1,211 @@
+--------------------------------------------------------------------------------------------------
+# Verify $ZYINTRSIG is "" and $ZININTERRUPT=0 [ydb_treat_sigusr2_like_sigusr1 is undefined]
+# Also verify that ZWRITE $ZYINTRSIG works
+
+$ZYINTRSIG=""
+$ZININTERRUPT=0
+--------------------------------------------------------------------------------------------------
+# Verify $ZYINTRSIG is "SIGUSR1" and $ZININTERRUPT=1 inside $ZINTERRUPT code for SIGUSR1
+#    [ydb_treat_sigusr2_like_sigusr1 is undefined]
+
+# Trying KILL -SIGUSR1 on pid
+$ZYINTRSIG="SIGUSR1"
+$ZININTERRUPT=1
+
+# Trying MUPIP INTRPT on pid
+##TEST_AWKINTRPT issued to process [0-9]*
+$ZYINTRSIG="SIGUSR1"
+$ZININTERRUPT=1
+--------------------------------------------------------------------------------------------------
+# Verify $ZYINTRSIG is "SIGUSR2" and $ZININTERRUPT=1 inside $ZINTERRUPT code for SIGUSR2
+#    when ydb_treat_sigusr2_like_sigusr1 is 1, "yes" or "true".
+# And that $ZINTERRUPT is NOT invoked for SIGUSR2 (i.e. $ZYINTRSIG or $ZININTERRUPT do not show up below)
+#    when ydb_treat_sigusr2_like_sigusr1 is undefined, 0, "no", "false" or "RandomValue"
+
+--------------------------------------------------------------------------------------------------
+# Verify $ZYINTRSIG is "" and $ZININTERRUPT=0 [ydb_treat_sigusr2_like_sigusr1 is set to 0]
+# Also verify that ZWRITE $ZYINTRSIG works
+
+$ZYINTRSIG=""
+$ZININTERRUPT=0
+--------------------------------------------------------------------------------------------------
+# Verify $ZYINTRSIG is "SIGUSR1" and $ZININTERRUPT=1 inside $ZINTERRUPT code for SIGUSR1
+#    [ydb_treat_sigusr2_like_sigusr1 is set to 0]
+
+# Trying KILL -SIGUSR1 on pid
+$ZYINTRSIG="SIGUSR1"
+$ZININTERRUPT=1
+
+# Trying MUPIP INTRPT on pid
+##TEST_AWKINTRPT issued to process [0-9]*
+$ZYINTRSIG="SIGUSR1"
+$ZININTERRUPT=1
+--------------------------------------------------------------------------------------------------
+# Verify $ZYINTRSIG is "SIGUSR2" and $ZININTERRUPT=1 inside $ZINTERRUPT code for SIGUSR2
+#    when ydb_treat_sigusr2_like_sigusr1 is 1, "yes" or "true".
+# And that $ZINTERRUPT is NOT invoked for SIGUSR2 (i.e. $ZYINTRSIG or $ZININTERRUPT do not show up below)
+#    when ydb_treat_sigusr2_like_sigusr1 is undefined, 0, "no", "false" or "RandomValue"
+
+--------------------------------------------------------------------------------------------------
+# Verify $ZYINTRSIG is "" and $ZININTERRUPT=0 [ydb_treat_sigusr2_like_sigusr1 is set to no]
+# Also verify that ZWRITE $ZYINTRSIG works
+
+$ZYINTRSIG=""
+$ZININTERRUPT=0
+--------------------------------------------------------------------------------------------------
+# Verify $ZYINTRSIG is "SIGUSR1" and $ZININTERRUPT=1 inside $ZINTERRUPT code for SIGUSR1
+#    [ydb_treat_sigusr2_like_sigusr1 is set to no]
+
+# Trying KILL -SIGUSR1 on pid
+$ZYINTRSIG="SIGUSR1"
+$ZININTERRUPT=1
+
+# Trying MUPIP INTRPT on pid
+##TEST_AWKINTRPT issued to process [0-9]*
+$ZYINTRSIG="SIGUSR1"
+$ZININTERRUPT=1
+--------------------------------------------------------------------------------------------------
+# Verify $ZYINTRSIG is "SIGUSR2" and $ZININTERRUPT=1 inside $ZINTERRUPT code for SIGUSR2
+#    when ydb_treat_sigusr2_like_sigusr1 is 1, "yes" or "true".
+# And that $ZINTERRUPT is NOT invoked for SIGUSR2 (i.e. $ZYINTRSIG or $ZININTERRUPT do not show up below)
+#    when ydb_treat_sigusr2_like_sigusr1 is undefined, 0, "no", "false" or "RandomValue"
+
+--------------------------------------------------------------------------------------------------
+# Verify $ZYINTRSIG is "" and $ZININTERRUPT=0 [ydb_treat_sigusr2_like_sigusr1 is set to false]
+# Also verify that ZWRITE $ZYINTRSIG works
+
+$ZYINTRSIG=""
+$ZININTERRUPT=0
+--------------------------------------------------------------------------------------------------
+# Verify $ZYINTRSIG is "SIGUSR1" and $ZININTERRUPT=1 inside $ZINTERRUPT code for SIGUSR1
+#    [ydb_treat_sigusr2_like_sigusr1 is set to false]
+
+# Trying KILL -SIGUSR1 on pid
+$ZYINTRSIG="SIGUSR1"
+$ZININTERRUPT=1
+
+# Trying MUPIP INTRPT on pid
+##TEST_AWKINTRPT issued to process [0-9]*
+$ZYINTRSIG="SIGUSR1"
+$ZININTERRUPT=1
+--------------------------------------------------------------------------------------------------
+# Verify $ZYINTRSIG is "SIGUSR2" and $ZININTERRUPT=1 inside $ZINTERRUPT code for SIGUSR2
+#    when ydb_treat_sigusr2_like_sigusr1 is 1, "yes" or "true".
+# And that $ZINTERRUPT is NOT invoked for SIGUSR2 (i.e. $ZYINTRSIG or $ZININTERRUPT do not show up below)
+#    when ydb_treat_sigusr2_like_sigusr1 is undefined, 0, "no", "false" or "RandomValue"
+
+--------------------------------------------------------------------------------------------------
+# Verify $ZYINTRSIG is "" and $ZININTERRUPT=0 [ydb_treat_sigusr2_like_sigusr1 is set to RandomValue]
+# Also verify that ZWRITE $ZYINTRSIG works
+
+$ZYINTRSIG=""
+$ZININTERRUPT=0
+--------------------------------------------------------------------------------------------------
+# Verify $ZYINTRSIG is "SIGUSR1" and $ZININTERRUPT=1 inside $ZINTERRUPT code for SIGUSR1
+#    [ydb_treat_sigusr2_like_sigusr1 is set to RandomValue]
+
+# Trying KILL -SIGUSR1 on pid
+$ZYINTRSIG="SIGUSR1"
+$ZININTERRUPT=1
+
+# Trying MUPIP INTRPT on pid
+##TEST_AWKINTRPT issued to process [0-9]*
+$ZYINTRSIG="SIGUSR1"
+$ZININTERRUPT=1
+--------------------------------------------------------------------------------------------------
+# Verify $ZYINTRSIG is "SIGUSR2" and $ZININTERRUPT=1 inside $ZINTERRUPT code for SIGUSR2
+#    when ydb_treat_sigusr2_like_sigusr1 is 1, "yes" or "true".
+# And that $ZINTERRUPT is NOT invoked for SIGUSR2 (i.e. $ZYINTRSIG or $ZININTERRUPT do not show up below)
+#    when ydb_treat_sigusr2_like_sigusr1 is undefined, 0, "no", "false" or "RandomValue"
+
+--------------------------------------------------------------------------------------------------
+# Verify $ZYINTRSIG is "" and $ZININTERRUPT=0 [ydb_treat_sigusr2_like_sigusr1 is set to 1]
+# Also verify that ZWRITE $ZYINTRSIG works
+
+$ZYINTRSIG=""
+$ZININTERRUPT=0
+--------------------------------------------------------------------------------------------------
+# Verify $ZYINTRSIG is "SIGUSR1" and $ZININTERRUPT=1 inside $ZINTERRUPT code for SIGUSR1
+#    [ydb_treat_sigusr2_like_sigusr1 is set to 1]
+
+# Trying KILL -SIGUSR1 on pid
+$ZYINTRSIG="SIGUSR1"
+$ZININTERRUPT=1
+
+# Trying MUPIP INTRPT on pid
+##TEST_AWKINTRPT issued to process [0-9]*
+$ZYINTRSIG="SIGUSR1"
+$ZININTERRUPT=1
+--------------------------------------------------------------------------------------------------
+# Verify $ZYINTRSIG is "SIGUSR2" and $ZININTERRUPT=1 inside $ZINTERRUPT code for SIGUSR2
+#    when ydb_treat_sigusr2_like_sigusr1 is 1, "yes" or "true".
+# And that $ZINTERRUPT is NOT invoked for SIGUSR2 (i.e. $ZYINTRSIG or $ZININTERRUPT do not show up below)
+#    when ydb_treat_sigusr2_like_sigusr1 is undefined, 0, "no", "false" or "RandomValue"
+
+$ZYINTRSIG="SIGUSR2"
+$ZININTERRUPT=1
+--------------------------------------------------------------------------------------------------
+# Verify $ZYINTRSIG is "" and $ZININTERRUPT=0 [ydb_treat_sigusr2_like_sigusr1 is set to yes]
+# Also verify that ZWRITE $ZYINTRSIG works
+
+$ZYINTRSIG=""
+$ZININTERRUPT=0
+--------------------------------------------------------------------------------------------------
+# Verify $ZYINTRSIG is "SIGUSR1" and $ZININTERRUPT=1 inside $ZINTERRUPT code for SIGUSR1
+#    [ydb_treat_sigusr2_like_sigusr1 is set to yes]
+
+# Trying KILL -SIGUSR1 on pid
+$ZYINTRSIG="SIGUSR1"
+$ZININTERRUPT=1
+
+# Trying MUPIP INTRPT on pid
+##TEST_AWKINTRPT issued to process [0-9]*
+$ZYINTRSIG="SIGUSR1"
+$ZININTERRUPT=1
+--------------------------------------------------------------------------------------------------
+# Verify $ZYINTRSIG is "SIGUSR2" and $ZININTERRUPT=1 inside $ZINTERRUPT code for SIGUSR2
+#    when ydb_treat_sigusr2_like_sigusr1 is 1, "yes" or "true".
+# And that $ZINTERRUPT is NOT invoked for SIGUSR2 (i.e. $ZYINTRSIG or $ZININTERRUPT do not show up below)
+#    when ydb_treat_sigusr2_like_sigusr1 is undefined, 0, "no", "false" or "RandomValue"
+
+$ZYINTRSIG="SIGUSR2"
+$ZININTERRUPT=1
+--------------------------------------------------------------------------------------------------
+# Verify $ZYINTRSIG is "" and $ZININTERRUPT=0 [ydb_treat_sigusr2_like_sigusr1 is set to true]
+# Also verify that ZWRITE $ZYINTRSIG works
+
+$ZYINTRSIG=""
+$ZININTERRUPT=0
+--------------------------------------------------------------------------------------------------
+# Verify $ZYINTRSIG is "SIGUSR1" and $ZININTERRUPT=1 inside $ZINTERRUPT code for SIGUSR1
+#    [ydb_treat_sigusr2_like_sigusr1 is set to true]
+
+# Trying KILL -SIGUSR1 on pid
+$ZYINTRSIG="SIGUSR1"
+$ZININTERRUPT=1
+
+# Trying MUPIP INTRPT on pid
+##TEST_AWKINTRPT issued to process [0-9]*
+$ZYINTRSIG="SIGUSR1"
+$ZININTERRUPT=1
+--------------------------------------------------------------------------------------------------
+# Verify $ZYINTRSIG is "SIGUSR2" and $ZININTERRUPT=1 inside $ZINTERRUPT code for SIGUSR2
+#    when ydb_treat_sigusr2_like_sigusr1 is 1, "yes" or "true".
+# And that $ZINTERRUPT is NOT invoked for SIGUSR2 (i.e. $ZYINTRSIG or $ZININTERRUPT do not show up below)
+#    when ydb_treat_sigusr2_like_sigusr1 is undefined, 0, "no", "false" or "RandomValue"
+
+$ZYINTRSIG="SIGUSR2"
+$ZININTERRUPT=1
+--------------------------------------------------------------------------------------------------
+# Note: Test that ZSHOW "I" displays $ZYINTRSIG is verified in other existing tests of ZSHOW "*" output
+# So it is not specifically tested here
+
+--------------------------------------------------------------------------------------------------
+# Test that $ZYINTRSIG is a read-only ISV. Setting it should issue a SVNOSET error
+
+%YDB-E-SVNOSET, Cannot SET this special variable
+		At M source location setisv+1^ydb678
+
+YDB>
+
+--------------------------------------------------------------------------------------------------
