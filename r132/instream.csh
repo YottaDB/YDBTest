@@ -31,6 +31,7 @@
 # ydb391 [sam]       Implement $ZYSUFFIX: Provide name equivalent to 128-bit hash
 # ydb678 [nars]      Test of new ISV $ZYINTRSIG
 # ydb671 [sam]       Implement -stdin/-stdout for mupip trigger
+# ydb676 [bdw,nars]  Test that mupip journal -rollback -fetchresync resets the connection if it receives bad input
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r132 test starts..."
@@ -40,6 +41,7 @@ setenv subtest_list_common     ""
 setenv subtest_list_non_replic "ydb627 ydb551 ydb632 ydb581 ydb630 ydb441 ydb652 ydb635 ydb664 ydb663 ydb558 ydb612 ydb591 ydb391"
 setenv subtest_list_non_replic "$subtest_list_non_replic ydb678 ydb671"
 setenv subtest_list_replic     "ydb657"
+setenv subtest_list_replic     "ydb657 ydb676"
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"

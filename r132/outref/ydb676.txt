@@ -1,0 +1,29 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##FILTERED##_REMOTE_TEST_PATH_/instance2:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Start replication, do a dummy update, sync and stop to prepare for the fetchresync rollback.
+==Executing MULTISITE_REPLIC 'START INST1 INST2 RP'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS'==
+# Find port number of INST2 (i.e. value of __RCV_PORTNO__ inside MSR command) and store it for non-MSR use
+# Start fetchresync rollback as a background job
+##TEST_AWK==Executing MULTISITE_REPLIC 'RUN RCV=INST2 \$MUPIP journal -rollback -fetchresync=[0-9]* -backward -losttrans=fetch.glo "\*" >& rollback.log &'==
+##TEST_AWK\[1\] [0-9]*
+# Wait for rollback to reach the state where it is waiting for a connection before proceeding to "nc"
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/wait_for_log.csh -log rollback.log -message "Waiting for a connection" -waitcreation'==
+# Start nc to send bad input to fetchresync rollback to make sure it terminates gracefully
+# Previously, we saw the following failures:
+# Debug build : %YDB-F-ASSERT, Assert failed in sr_unix/gtmrecv_fetchresync.c line 454 for expression (FALSE)
+# Release build : Message of unknown type (2092475667) received
+# Wait for the background process to finish before proceeding to dbcheck.csh
+##TEST_HOST_SHORT##:##REMOTE_TEST_PATH##/instance2/rollback.log
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
