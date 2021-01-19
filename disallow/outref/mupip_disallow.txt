@@ -1296,5 +1296,52 @@ YDB>
 --------- Testing : ##SOURCE_PATH##/mupip  reorg -nosafejnl -truncate ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SAFEJNL SAFEJNL UPGRADE DOWNGRADE
 !
+! DISALLOW (MUPIP TRIGGER -NONSENSE)
+--------- Testing : ##SOURCE_PATH##/mupip  trigger -nonsense ------------
+%YDB-E-CLIERR, Unrecognized option : NSENSE
+!
+! DISALLOW (MUPIP TRIGGER -NOPROMPT AND (SELECT OR STDIN OR UPGRADE))
+--------- Testing : ##SOURCE_PATH##/mupip  trigger -noprompt -select ------------
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: NOPROMPT TRIGGERFILE
+--------- Testing : ##SOURCE_PATH##/mupip  trigger -noprompt -stdin ------------
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: NOPROMPT TRIGGERFILE
+--------- Testing : ##SOURCE_PATH##/mupip  trigger -noprompt -upgrade ------------
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: NOPROMPT TRIGGERFILE
+!
+! DISALLOW (MUPIP TRIGGER -STDOUT AND (TRIGGERFILE OR STDIN OR UPGRADE OR NOPROMPT))
+--------- Testing : ##SOURCE_PATH##/mupip  trigger -stdout -triggerfile=foo.txt ------------
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: STDOUT SELECT
+--------- Testing : ##SOURCE_PATH##/mupip  trigger -stdout -stdin ------------
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: STDOUT SELECT
+--------- Testing : ##SOURCE_PATH##/mupip  trigger -stdout -upgrade ------------
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: STDOUT SELECT
+--------- Testing : ##SOURCE_PATH##/mupip  trigger -stdout -noprompt ------------
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT TRIGGERFILE UPGRADE STDIN
+!
+! DISALLOW (MUPIP TRIGGER -SELECT AND (TRIGGERFILE OR STDIN OR UPGRADE OR NOPROMPT))
+--------- Testing : ##SOURCE_PATH##/mupip  trigger -select -triggerfile=foo.txt ------------
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT UPGRADE TRIGGERFILE
+--------- Testing : ##SOURCE_PATH##/mupip  trigger -select -stdin ------------
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT UPGRADE TRIGGERFILE STDIN
+--------- Testing : ##SOURCE_PATH##/mupip  trigger -select -upgrade ------------
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT UPGRADE
+--------- Testing : ##SOURCE_PATH##/mupip  trigger -select -noprompt ------------
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: NOPROMPT TRIGGERFILE
+!
+! DISALLOW (MUPIP TRIGGER -STDIN AND -TRIGGERFILE)
+--------- Testing : ##SOURCE_PATH##/mupip  trigger -select -stdin -triggerfile=foo.txt ------------
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT UPGRADE TRIGGERFILE
+!
+! DISALLOW (MUPIP UPGRADE AND (TRIGGERFILE OR STDIN OR NOPROMPT OR SELECT OR STDOUT))
+--------- Testing : ##SOURCE_PATH##/mupip  trigger -upgrade -triggerfile=foo.txt ------------
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: UPGRADE SELECT TRIGGERFILE
+--------- Testing : ##SOURCE_PATH##/mupip  trigger -upgrade -stdin ------------
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: UPGRADE SELECT TRIGGERFILE STDIN
+--------- Testing : ##SOURCE_PATH##/mupip  trigger -upgrade -noprompt ------------
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: NOPROMPT TRIGGERFILE
+--------- Testing : ##SOURCE_PATH##/mupip  trigger -upgrade -select ------------
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT UPGRADE
+--------- Testing : ##SOURCE_PATH##/mupip  trigger -upgrade -stdout ------------
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: STDOUT SELECT
 
 YDB>

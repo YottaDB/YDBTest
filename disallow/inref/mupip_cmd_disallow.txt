@@ -815,3 +815,32 @@ u reorg -downgrade -truncate
 u reorg -safejnl -truncate
 u reorg -nosafejnl -truncate
 !
+! DISALLOW (MUPIP TRIGGER -NONSENSE)
+u trigger -nonsense
+!
+! DISALLOW (MUPIP TRIGGER -NOPROMPT AND (SELECT OR STDIN OR UPGRADE))
+u trigger -noprompt -select
+u trigger -noprompt -stdin
+u trigger -noprompt -upgrade
+!
+! DISALLOW (MUPIP TRIGGER -STDOUT AND (TRIGGERFILE OR STDIN OR UPGRADE OR NOPROMPT))
+u trigger -stdout -triggerfile=foo.txt
+u trigger -stdout -stdin
+u trigger -stdout -upgrade
+u trigger -stdout -noprompt
+!
+! DISALLOW (MUPIP TRIGGER -SELECT AND (TRIGGERFILE OR STDIN OR UPGRADE OR NOPROMPT))
+u trigger -select -triggerfile=foo.txt
+u trigger -select -stdin
+u trigger -select -upgrade
+u trigger -select -noprompt
+!
+! DISALLOW (MUPIP TRIGGER -STDIN AND -TRIGGERFILE)
+u trigger -select -stdin -triggerfile=foo.txt
+!
+! DISALLOW (MUPIP UPGRADE AND (TRIGGERFILE OR STDIN OR NOPROMPT OR SELECT OR STDOUT))
+u trigger -upgrade -triggerfile=foo.txt
+u trigger -upgrade -stdin
+u trigger -upgrade -noprompt
+u trigger -upgrade -select
+u trigger -upgrade -stdout

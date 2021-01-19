@@ -1,0 +1,214 @@
+# This tests -stdin/-stdout for mupip trigger
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+mumps.dat
+
+# Loading triggers from -stdin
+STDIN, Line 1: Added SET trigger on ^a named a#1
+STDIN, Line 2: Added SET trigger on ^b named b#1
+STDIN, Line 3: Added SET trigger on ^c named c#1
+STDIN, Line 4: Added SET trigger on ^d named d#1
+STDIN, Line 5: Added SET and/or Non-SET trigger on ^a named a#2
+STDIN, Line 6: Added SET and/or Non-SET trigger on ^a named a#3
+STDIN, Line 7: Added SET and/or Non-SET trigger on ^a named a#4
+STDIN, Line 8: Added SET trigger on ^a named a#5
+STDIN, Line 9: Added SET trigger on ^a named a#6
+STDIN, Line 10: Added SET and/or Non-SET trigger on ^b named b#2
+STDIN, Line 11: Added SET and/or Non-SET trigger on ^c named c#2
+STDIN, Line 12: Added SET and/or Non-SET trigger on ^b named b#3
+STDIN, Line 13: Added SET trigger on ^drek named drek#1
+STDIN, Line 14: Added SET trigger on ^drek named drek#2
+=========================================
+14 triggers added
+0 triggers deleted
+0 triggers modified
+14 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+
+# -select with -stdout
+;trigger name: a#1 (region AREG)  cycle: 6
++^a -commands=S -xecute="do ^twork"
+;trigger name: a#2 (region AREG)  cycle: 6
++^a(0,*,*) -commands=S,K -options=I -xecute="do tsubrtn^twork"
+;trigger name: a#3 (region AREG)  cycle: 6
++^a(*) -commands=S,ZK,ZTK -xecute="do ^twork"
+;trigger name: a#4 (region AREG)  cycle: 6
++^a(:"b";"m":"x") -commands=S,ZK -options=NOI,NOC -delim="`" -pieces=1:8 -xecute="do ^tkilla"
+;trigger name: a#5 (region AREG)  cycle: 6
++^a(tvar=*,tvar2="t":"z",tvar3=:10;20) -commands=S -options=I,C -delim="""" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: a#6 (region AREG)  cycle: 6
++^a(tvar=*,tvar2="a";"g":"z",tvar3=:10;20) -commands=S -options=I,C -delim="^" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: b#1 (region BREG)  cycle: 3
++^b -commands=S -xecute="do ^twork"
+;trigger name: b#2 (region BREG)  cycle: 3
++^b(0,*,*) -commands=S,K -options=I -xecute="do tsubrtn^twork"
+;trigger name: b#3 (region BREG)  cycle: 3
++^b(:"b";"m":"x") -commands=S,ZK -options=NOI,NOC -delim="`" -pieces=1:8 -xecute="do ^tkilla"
+;trigger name: c#1 (region CREG)  cycle: 2
++^c -commands=S -xecute="do ^twork"
+;trigger name: c#2 (region CREG)  cycle: 2
++^c(*) -commands=S,ZK,ZTK -xecute="do ^twork"
+;trigger name: d#1 (region DREG)  cycle: 1
++^d -commands=S -xecute="do ^twork"
+;trigger name: drek#1 (region DREG)  cycle: 2
++^drek(tvar=*,tvar2="t":"z",tvar3=:10;20) -commands=S -options=I,C -delim="""" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: drek#2 (region DREG)  cycle: 2
++^drek(tvar=*,tvar2="a";"g":"z",tvar3=:10;20) -commands=S -options=I,C -delim="^" -pieces=4:6 -xecute="do tsubrtn^twork"
+
+# -select with global to file (pre-existing behavior)
+;trigger name: d#1 (region DREG)  cycle: 1
++^d -commands=S -xecute="do ^twork"
+;trigger name: drek#1 (region DREG)  cycle: 2
++^drek(tvar=*,tvar2="t":"z",tvar3=:10;20) -commands=S -options=I,C -delim="""" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: drek#2 (region DREG)  cycle: 2
++^drek(tvar=*,tvar2="a";"g":"z",tvar3=:10;20) -commands=S -options=I,C -delim="^" -pieces=4:6 -xecute="do tsubrtn^twork"
+
+# -select all to prompted file name (pre-existing behavior)
+Output File: 
+;trigger name: a#1 (region AREG)  cycle: 6
++^a -commands=S -xecute="do ^twork"
+;trigger name: a#2 (region AREG)  cycle: 6
++^a(0,*,*) -commands=S,K -options=I -xecute="do tsubrtn^twork"
+;trigger name: a#3 (region AREG)  cycle: 6
++^a(*) -commands=S,ZK,ZTK -xecute="do ^twork"
+;trigger name: a#4 (region AREG)  cycle: 6
++^a(:"b";"m":"x") -commands=S,ZK -options=NOI,NOC -delim="`" -pieces=1:8 -xecute="do ^tkilla"
+;trigger name: a#5 (region AREG)  cycle: 6
++^a(tvar=*,tvar2="t":"z",tvar3=:10;20) -commands=S -options=I,C -delim="""" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: a#6 (region AREG)  cycle: 6
++^a(tvar=*,tvar2="a";"g":"z",tvar3=:10;20) -commands=S -options=I,C -delim="^" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: b#1 (region BREG)  cycle: 3
++^b -commands=S -xecute="do ^twork"
+;trigger name: b#2 (region BREG)  cycle: 3
++^b(0,*,*) -commands=S,K -options=I -xecute="do tsubrtn^twork"
+;trigger name: b#3 (region BREG)  cycle: 3
++^b(:"b";"m":"x") -commands=S,ZK -options=NOI,NOC -delim="`" -pieces=1:8 -xecute="do ^tkilla"
+;trigger name: c#1 (region CREG)  cycle: 2
++^c -commands=S -xecute="do ^twork"
+;trigger name: c#2 (region CREG)  cycle: 2
++^c(*) -commands=S,ZK,ZTK -xecute="do ^twork"
+;trigger name: d#1 (region DREG)  cycle: 1
++^d -commands=S -xecute="do ^twork"
+;trigger name: drek#1 (region DREG)  cycle: 2
++^drek(tvar=*,tvar2="t":"z",tvar3=:10;20) -commands=S -options=I,C -delim="""" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: drek#2 (region DREG)  cycle: 2
++^drek(tvar=*,tvar2="a";"g":"z",tvar3=:10;20) -commands=S -options=I,C -delim="^" -pieces=4:6 -xecute="do tsubrtn^twork"
+
+# -select all to stdout after null file name (pre-existing behavior)
+Output File: 
+;trigger name: a#1 (region AREG)  cycle: 6
++^a -commands=S -xecute="do ^twork"
+;trigger name: a#2 (region AREG)  cycle: 6
++^a(0,*,*) -commands=S,K -options=I -xecute="do tsubrtn^twork"
+;trigger name: a#3 (region AREG)  cycle: 6
++^a(*) -commands=S,ZK,ZTK -xecute="do ^twork"
+;trigger name: a#4 (region AREG)  cycle: 6
++^a(:"b";"m":"x") -commands=S,ZK -options=NOI,NOC -delim="`" -pieces=1:8 -xecute="do ^tkilla"
+;trigger name: a#5 (region AREG)  cycle: 6
++^a(tvar=*,tvar2="t":"z",tvar3=:10;20) -commands=S -options=I,C -delim="""" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: a#6 (region AREG)  cycle: 6
++^a(tvar=*,tvar2="a";"g":"z",tvar3=:10;20) -commands=S -options=I,C -delim="^" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: b#1 (region BREG)  cycle: 3
++^b -commands=S -xecute="do ^twork"
+;trigger name: b#2 (region BREG)  cycle: 3
++^b(0,*,*) -commands=S,K -options=I -xecute="do tsubrtn^twork"
+;trigger name: b#3 (region BREG)  cycle: 3
++^b(:"b";"m":"x") -commands=S,ZK -options=NOI,NOC -delim="`" -pieces=1:8 -xecute="do ^tkilla"
+;trigger name: c#1 (region CREG)  cycle: 2
++^c -commands=S -xecute="do ^twork"
+;trigger name: c#2 (region CREG)  cycle: 2
++^c(*) -commands=S,ZK,ZTK -xecute="do ^twork"
+;trigger name: d#1 (region DREG)  cycle: 1
++^d -commands=S -xecute="do ^twork"
+;trigger name: drek#1 (region DREG)  cycle: 2
++^drek(tvar=*,tvar2="t":"z",tvar3=:10;20) -commands=S -options=I,C -delim="""" -pieces=4:6 -xecute="do tsubrtn^twork"
+;trigger name: drek#2 (region DREG)  cycle: 2
++^drek(tvar=*,tvar2="a";"g":"z",tvar3=:10;20) -commands=S -options=I,C -delim="^" -pieces=4:6 -xecute="do tsubrtn^twork"
+
+# Delete triggers from file (pre-existing behavior)
+File triggersm.trg, Line 1: Deleted SET trigger on ^a named a#1
+File triggersm.trg, Line 2: Deleted SET trigger on ^b named b#1
+File triggersm.trg, Line 3: Deleted SET trigger on ^c named c#1
+File triggersm.trg, Line 4: Deleted SET trigger on ^d named d#1
+File triggersm.trg, Line 5: Deleted SET and/or Non-SET trigger on ^a named a#2
+File triggersm.trg, Line 6: Deleted SET and/or Non-SET trigger on ^a named a#3
+File triggersm.trg, Line 7: Deleted SET and/or Non-SET trigger on ^a named a#4
+File triggersm.trg, Line 8: Deleted SET trigger on ^a named a#5
+File triggersm.trg, Line 9: Deleted SET trigger on ^a named a#6
+File triggersm.trg, Line 10: Deleted SET and/or Non-SET trigger on ^b named b#2
+File triggersm.trg, Line 11: Deleted SET and/or Non-SET trigger on ^c named c#2
+File triggersm.trg, Line 12: Deleted SET and/or Non-SET trigger on ^b named b#3
+File triggersm.trg, Line 13: Deleted SET trigger on ^drek named drek#1
+File triggersm.trg, Line 14: Deleted SET trigger on ^drek named drek#2
+=========================================
+0 triggers added
+14 triggers deleted
+0 triggers modified
+14 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+
+File triggers.trg, Line 1: Added SET trigger on ^a named a#1
+File triggers.trg, Line 2: Added SET trigger on ^b named b#1
+File triggers.trg, Line 3: Added SET trigger on ^c named c#1
+File triggers.trg, Line 4: Added SET trigger on ^d named d#1
+File triggers.trg, Line 5: Added SET and/or Non-SET trigger on ^a named a#2
+File triggers.trg, Line 6: Added SET and/or Non-SET trigger on ^a named a#3
+File triggers.trg, Line 7: Added SET and/or Non-SET trigger on ^a named a#4
+File triggers.trg, Line 8: Added SET trigger on ^a named a#5
+File triggers.trg, Line 9: Added SET trigger on ^a named a#6
+File triggers.trg, Line 10: Added SET and/or Non-SET trigger on ^b named b#2
+File triggers.trg, Line 11: Added SET and/or Non-SET trigger on ^c named c#2
+File triggers.trg, Line 12: Added SET and/or Non-SET trigger on ^b named b#3
+File triggers.trg, Line 13: Added SET trigger on ^drek named drek#1
+File triggers.trg, Line 14: Added SET trigger on ^drek named drek#2
+=========================================
+14 triggers added
+0 triggers deleted
+0 triggers modified
+14 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+
+# Test that PROMPT still works for -* deletions
+# Load
+# Prompt, answer N then answer Y
+File trmall.trg, Line 1: This operation will delete all triggers.
+Proceed? [Y/N]: 
+Triggers NOT deleted
+File trmall.trg, Line 1: This operation will delete all triggers.
+Proceed? [Y/N]: 
+All existing triggers (count = 14) deleted
+=========================================
+0 triggers added
+14 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Load and remove without prompting with -NOPROMPT
+File trmall.trg, Line 1: All existing triggers (count = 14) deleted
+=========================================
+0 triggers added
+14 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+
+# Test that -* from STDIN sets NOPROMPT
+STDIN, Line 1: All existing triggers (count = 14) deleted
+=========================================
+0 triggers added
+14 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
