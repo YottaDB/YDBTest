@@ -1,0 +1,168 @@
+
+Testing %DO, %OD, %HO and %OH conversion between DEC and OCT or HEX and OCT with valid input values
+Checking DEC to OCT and OCT to DEC conversion of 18 digit random positive numbers for 2 seconds
+Completed
+Checking OCT to DEC and DEC to OCT conversion of 21 digit random values for 2 seconds
+Completed
+Checking HEX to OCT and OCT to HEX conversion of 16 digit random values for 2 seconds
+Completed
+Checking OCT to HEX and HEX to OCT conversion of 21 digit random values for 2 seconds
+Completed
+
+Testing %DO, %OD, %HO and %OH conversion for 64 bit and 32 bit MAX values
+Checking DEC to OCT and OCT to DEC conversion of maximum 64 bit value
+Checking HEX to OCT and OCT to HEX conversion of maximum 64 bit value
+Checking DEC to OCT and OCT to DEC conversion of maximum 32 bit value
+Checking HEX to OCT and OCT to HEX conversion of maximum 64 bit value
+Completed
+
+Testing HEX to OCT conversion of MAX input value
+Input: FFFFFFFFFFFFFFFF
+1777777777777777777777
+
+Testing OCT to HEX conversion of MAX input value
+Input: 1777777777777777777777
+FFFFFFFFFFFFFFFF
+
+Testing OCT to DEC conversion of MAX input value
+Input: 1777777777777777777777
+18446744073709551615
+
+Testing DEC to OCT conversion of MAX input value which is 20 digit MAX unsigned 64bit value
+Input: 18446744073709551615
+1777777777777777777777
+
+Testing DEC to OCT conversion of MAX negative 64bit input value
+Input: -9223372036854775808
+7000000000000000000000
+
+Testing ability of HEX to OCT conversion to handle case agnostic input with leading 0x
+Input: 0xff
+377
+Input: 0Xff
+377
+
+Testing ability of DEC to OCT conversion to ignore leading zeros for computation
+Input: 000000000018446744073709551615
+1777777777777777777777
+
+Testing ability of HEX to OCT conversion to ignore leading zeros for computation
+Input: 0000000000FFFFFFFFFFFFFFFF
+1777777777777777777777
+
+Testing ability of OCT to DEC conversion to ignore leading zeros for computation
+Input: 000000000001777777777777777777777
+18446744073709551615
+
+Testing ability of OCT to HEX conversion to ignore leading zeros for computation
+Input: 000000000001777777777777777777777
+FFFFFFFFFFFFFFFF
+
+Testing mixed valued input (part of YDB#685 portion of test)
+Checking conversion for values such as 18446744073709551615vjj444, 177777777777777777777788 and FFFFFFFFFFFFFFFFhhh where only characters prior to the first occurence of an invalid character need to be considered
+Checking conversion of positive decimal number 18446744073709551615vjj444 expecting 18446744073709551615
+Checking conversion of negative decimal value -9223372036854775807aaa expecting 7000000000000000000001
+Checking conversion of hexadecimal number FFFFFFFFFFFFFFFFhhh expecting FFFFFFFFFFFFFFFF
+Completed
+
+Testing that invalid characters at end of input are handled correctly (YDB#685),!
+%OD Input: 778
+63
+%OD Input: 77A
+63
+%OH Input: 778
+3F
+%OH Input: 77A
+3F
+%DO Input: 512k
+000000001000
+%DH Input: 512k
+00000200
+%HD Input: FFk
+255
+%HO Input: FFk
+377
+
+Testing %HO for very large HEX input
+Input: 7FFFFFFFFFFFFFFFFFFFFFFFFFFFF
+177777777777777777777777777777777777777
+
+Testing %DO for very large DEC input
+Input: 18446744073709551616
+2000000000000000000000
+
+Testing %DO for very large negative DEC input
+Input: -9223372036854775809
+6777777777777777777777
+
+Testing %OH for very large OCT input
+Input: 77777777777777777777777777777777
+FFFFFFFFFFFFFFFFFFFFFFFF
+
+Testing %OD for very large OCT input
+Input: 77777777777777777777777777777777
+79228162514264337593543950335
+
+Testing %DO and %OD for signed input value
+Checking conversion utilities %DO and %OD for signed value input
+Completed
+
+Testing performance of current %DO vs previous %DO
+Comparing performance of current %DO implementation vs previous %DO implementation for 16 digit values
+##TEST_AWKPerformance: current [0-9]* previous [0-9]*
+Comparing performance of current %DO implementation vs previous %DO implementation for 20 digit values
+##TEST_AWKPerformance: current [0-9]* previous [0-9]*
+Completed
+
+Testing Performance of current %OD vs previous %OD
+Comparing performance of current %OD implementation vs previous %OD im plementation for 20 digit values
+##TEST_AWKPerformance: current [0-9]* previous [0-9]*
+Completed
+
+Testing Performance of current %HO vs previous %HO
+Comparing performance of current %HO implementation vs previous %HO implementation for 14 digit values
+##TEST_AWKPerformance: current [0-9]* previous [0-9]*
+Comparing performance of current %HO implementation vs previous %HO implementation for 16 digit values
+##TEST_AWKPerformance: current [0-9]* previous [0-9]*
+Completed
+
+Testing Performance of current %OH vs previous %OH
+Comparing performance of current %OH implementation vs previous %OH implementation for 16 digit values
+##TEST_AWKPerformance: current [0-9]* previous [0-9]*
+Comparing performance of current %OH implementation vs previous %OH implementation for 20 digit values
+##TEST_AWKPerformance: current [0-9]* previous [0-9]*
+Completed
+
+Testing correctness of current %DO vs previous %DO
+Checking that the new implementation of %DO produces the same values as the previous implementation
+Completed
+
+Testing correctness of current %OD vs previous %OD
+Checking that the new implementation of %OD produces the same values as the previous implementation
+Completed
+
+Testing correctness of current %HO vs previous %HO
+Checking that the new implementation of %HO produces the same values as the previous implementation
+Completed
+
+Testing correctness of current %OH vs previous %OH
+Checking that the new implementation of %OH produces the same values as the previous implementation
+Completed
+
+Testing that %HO rejects input starting with negative sign and returns null
+Checking if negative signed input to %HO is rejected and null is returned
+Completed
+
+Testing if default length of output for current %DO is still twelve digits like the pre-V6.3-009 implementation
+Verifying default 12 byte output value length of %DO
+Completed
+
+Testing invalid input expecting error as output from %DO, %OD, %OH and %HO
+0000000000
+%YDB-E-LVUNDEF, Undefined local variable: o
+0
+%YDB-E-LVUNDEF, Undefined local variable: h
+
+Testing null input on %HO, $OH, %OD and %DO
+Checking the behavior of utility functions %HO, %OH, %OD and %DO when null input is given
+Completed

@@ -26,6 +26,7 @@
 # gtm9144		[kz]		Test that loading a binary extract into a database with different null subscript collation type produces a DBDUPNULCOL error
 # gtm9134               [kz]            Tests that when a replication Receiver Server waiting for a connection detects bad input, it resets the connection
 # gtm9123		[kz] 		Tests that GT.M produces a correct result with gtm_side_effect set to one or two
+# gtm9115		[bdw]		Tests %HO, %OH, %DO and %OD for correctness and for performance improvement compared to pre V6.3-009 versions
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -33,7 +34,7 @@ echo "v63009 test starts..."
 
 # List the subtests seperated by sspaces under the appropriate environment variable name
 setenv subtest_list_common	""
-setenv subtest_list_non_replic "gtm9142 gtm8203 gtm9145 gtm8901 gtm8706 gtm9155 gtm9037 gtm9144 gtm9123"
+setenv subtest_list_non_replic "gtm9142 gtm8203 gtm9145 gtm8901 gtm8706 gtm9155 gtm9037 gtm9144 gtm9123 gtm9115"
 setenv subtest_list_replic	"gtm9037replic gtm9134"
 
 if ($?test_replic == 1) then
