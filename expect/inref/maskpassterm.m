@@ -3,6 +3,9 @@
 ; Copyright (c) 2014-2016 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -81,7 +84,8 @@ maskpassterm
 	.	; Ensure that maskpass terminates in 30 seconds on any of the fatal signals.
 	.	set killed=0
 	.	if ("INT"=signal)!("TERM"=signal)!("SEGV"=signal)!("ABRT"=signal)!("BUS"=signal)!("FPE"=signal)!("TRAP"=signal)!("KILL"=signal) do
-	.	.	for j=1:1:150 set:($zsigproc(maskpassPid,0)) killed=1 quit:killed  hang 0.2
+	.	.  	; Hang loop for 300 seconds (5 min)
+	.	.	for j=1:1:1500 set:($zsigproc(maskpassPid,0)) killed=1 quit:killed  hang 0.2
 	.	.	if ('killed) do
 	.	.	.	write "TEST-E-FAIL, Failed to terminate maskpass (pid "_maskpassPid_") with signal "_i_" ("_signal_").",!
 	.	.	.	zhalt 1
@@ -94,7 +98,8 @@ maskpassterm
 	if (0'=maskpassPid) do
 	.	if $zsigproc(maskpassPid,9) quit
 	.	set killed=0
-	.	for j=1:1:150 set:($zsigproc(maskpassPid,0)) killed=1 quit:killed  hang 0.2
+	.	; Hang loop for 300 seconds (5 min)
+	.	for j=1:1:1500 set:($zsigproc(maskpassPid,0)) killed=1 quit:killed  hang 0.2
 	.	if ('killed) do
 	.	.	write "TEST-E-FAIL, Failed to terminate maskpass (pid "_maskpassPid_") with signal 9 (KILL).",!
 	.	.	zhalt 1

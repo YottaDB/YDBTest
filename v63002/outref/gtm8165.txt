@@ -64,13 +64,13 @@ Post Transaction DB Crit of DEFAULT owned by pid = 0
 
 ---------------------------------------------------------------------------------
 
-##SUSPEND_OUTPUT HOST_LINUX_ARMVXL
+##SUSPEND_OUTPUT HOST_LINUX_ARMVXL HOST_LINUX_AARCH64
 # Testing command without a specified timeout (writeslashtls), Expect a TPNOTACID message in the syslog still
 %YDB-I-TPNOTACID, /TLS at writeslashtls+13^gtm8165 violates ACID properties of a TRANSACTION and could exceed .123 seconds; 
 
 ---------------------------------------------------------------------------------
 
-##ALLOW_OUTPUT HOST_LINUX_ARMVXL
+##ALLOW_OUTPUT HOST_LINUX_ARMVXL HOST_LINUX_AARCH64
 # Testing command without a specified timeout (locktimeout), Expect a TPNOTACID message in the syslog still
 %YDB-I-TPNOTACID, LOCK at locktimeout+9^gtm8165 violates ACID properties of a TRANSACTION and could exceed .123 seconds; 
 
