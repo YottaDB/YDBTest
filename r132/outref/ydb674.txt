@@ -1,0 +1,25 @@
+# This is a test for running ^%YDBAIM
+###################################################################
+# Create database w/ null subs, key of 1019, and rec of 1048576
+# Database can be MM or BG access_method
+# References: 
+# https://gitlab.com/YottaDB/DB/YDB/-/issues/674
+# https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/911#note_489079559
+# https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/911#note_489170240
+###################################################################
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+ydbaim.gld
+Using: ##SOURCE_PATH##/mupip
+ydbaim.dat
+###################################################################
+# Running test code...
+Starting 12 simulated application processes
+Starting 4 concurrent xrefs
+Cross reference processes complete
+Stopping simulated application
+Checking that a node exists for each cross reference PASS
+Checking that an xref exists for each global node PASS
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
