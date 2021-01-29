@@ -104,18 +104,6 @@ $ydb_dist/yottadb -r ^%XCMD 'set %OD="77777777777777777777777777777777" do ^%OD 
 echo '\nTesting %DO and %OD for signed input value'
 $ydb_dist/yottadb -r signedvalinp^gtm9115
 
-echo '\nTesting performance of current %DO vs previous %DO'
-$ydb_dist/yottadb -r compdectooct^gtm9115
-
-echo '\nTesting Performance of current %OD vs previous %OD'
-$ydb_dist/yottadb -r compocttodec^gtm9115
-
-echo '\nTesting Performance of current %HO vs previous %HO'
-$ydb_dist/yottadb -r comphextooct^gtm9115
-
-echo '\nTesting Performance of current %OH vs previous %OH'
-$ydb_dist/yottadb -r compocttohex^gtm9115
-
 echo '\nTesting correctness of current %DO vs previous %DO'
 $ydb_dist/yottadb -r correctnessdectooct^gtm9115
 

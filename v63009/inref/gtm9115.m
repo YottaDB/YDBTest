@@ -193,7 +193,7 @@ horejectsignedinput
 
 ; Correctness checking routines
 
-; The below routine checks that the current %DO implementation produces the same result as 
+; The below routine checks that the current %DO implementation produces the same result as
 ; the pre-V6.3-009 implementation for up to a 16 digit input.
 correctnessdectooct
 	write "Checking that the new implementation of %DO produces the same values as the previous implementation",!
@@ -204,7 +204,7 @@ correctnessdectooct
 	write "Completed",!
 	quit
 
-; The below routine checks that the current %OD implementation produces the same result as 
+; The below routine checks that the current %OD implementation produces the same result as
 ; the pre-V6.3-009 implementation for up to a 16 digit input.
 correctnessocttodec
 	write "Checking that the new implementation of %OD produces the same values as the previous implementation",!
@@ -215,7 +215,7 @@ correctnessocttodec
 	write "Completed",!
 	quit
 
-; The below routine checks that the current %HO implementation produces the same result as 
+; The below routine checks that the current %HO implementation produces the same result as
 ; the pre-V6.3-009 implementation for up to a 16 digit input.
 correctnesshextooct
 	write "Checking that the new implementation of %HO produces the same values as the previous implementation",!
@@ -226,7 +226,7 @@ correctnesshextooct
 	write "Completed",!
 	quit
 
-; The below routine checks that the current %OH implementation produces the same result as 
+; The below routine checks that the current %OH implementation produces the same result as
 ; the pre-V6.3-009 implementation for up to a 16 digit input.
 correctnessocttohex
 	write "Checking that the new implementation of %OH produces the same values as the previous implementation",!
@@ -234,205 +234,6 @@ correctnessocttohex
 	set prevohres=$$FUNCPREVOCTTOHEX(inpval)
 	set newohres=$$FUNC^%OH(inpval)
 	write:prevohres'=newohres "FAILED as conversion from dec to oct produced different values for pre-V6.3-009 and current implementations ",prevohres," ",newohres,!
-	write "Completed",!
-	quit
-
-; Performance checking routines
-
-; The below routine checks the performance of the current %DO implementation with the pre-V6.3-009 implementation.
-; Performance check is done for random input of exactly 16 digit and 20 digit length. Both implementations are run for a
-; 2 second loop keeping track of the number of conversions done and this is compared to verify that the current implementation
-; is faster. 16 digit and 20 digit inputs are used because they use different code paths in both versions of $DO.
-compdectooct
-	write "Comparing performance of current %DO implementation vs previous %DO implementation for 16 digit values",!
-	set interval=2000000
-   	set iend=$zut+interval
-   	set istart=1
-	set ncnt=1
-   	for  do  quit:iend<istart
-   	 . set istart=$zut
-	 . set ncnt=$increment(ncnt)
-   	 . quit:iend<istart
-   	 . set i=$$getrandnumdecexactlen(16)
-	 . set k=$$FUNC^%DO(i,16)
-	; checking previous m implementation
-	set iend=$zut+interval
-	set istart=1
-        set ocnt=1
-	for  do  quit:iend<istart
-         . set istart=$zut
-         . set ocnt=$increment(ocnt)
-         . quit:iend<istart
-         . set i=$$getrandnumdecexactlen(16)
-         . set k=$$FUNCPREVDECTOOCT(i,16)
-	write "Performance: current ",ncnt," ","previous ",ocnt,!
-	if (ncnt<ocnt) write "FAILED as performance is less than previous implementation ","new count:",ncnt," ","previous count:",ocnt," ",!
-	;
-	write "Comparing performance of current %DO implementation vs previous %DO implementation for 20 digit values",!
-        set iend=$zut+interval
-        set istart=1
-        set ncnt=1
-        for  do  quit:iend<istart
-         . set istart=$zut
-         . set ncnt=$increment(ncnt)
-         . quit:iend<istart
-         . set i=$$getrandnumdecexactlen(20)
-         . set k=$$FUNC^%DO(i,16)
-        ; checking previous m implementation
-        set iend=$zut+interval
-        set istart=1
-        set ocnt=1
-        for  do  quit:iend<istart
-         . set istart=$zut
-         . set ocnt=$increment(ocnt)
-         . quit:iend<istart
-         . set i=$$getrandnumdecexactlen(20)
-         . set k=$$FUNCPREVDECTOOCT(i,16)
-	write "Performance: current ",ncnt," ","previous ",ocnt,!
-        if (ncnt<ocnt) write "FAILED as performance is less than previous implementation ","new count:",ncnt," ","previous count:",ocnt," ",!
-	write "Completed",!
-	quit
-
-; The below routine checks the performance of the current %OD implementation with the pre-V6.3-009 implementation.
-; Performance check is done for random input of exactly 20 digit length. Both implementations are run for a 2 second
-; loop keeping track of the number of conversions done and this is compared to verify that the current implementation
-; is faster. Only 20 digit inputs are used the code for less than 19 digits was not changed in V6.3-009 and the new
-; implementation runs slightly slower for under 19 digits due to overhead but the new implementation runs faster for.
-; larger inputs.
-compocttodec
-	write "Comparing performance of current %OD implementation vs previous %OD im plementation for 20 digit values",!
-	set interval=2000000
-        set iend=$zut+interval
-        set istart=1
-        set ncnt=1
-        for  do  quit:iend<istart
-         . set istart=$zut
-         . set ncnt=$increment(ncnt)
-         . quit:iend<istart
-         . set i=$$getrandnumoctexactlen(20)
-         . set k=$$FUNC^%OD(i)
-        ; checking previous m implementation
-        set iend=$zut+interval
-        set istart=1
-        set ocnt=1
-        for  do  quit:iend<istart
-         . set istart=$zut
-         . set ocnt=$increment(ocnt)
-         . quit:iend<istart
-         . set i=$$getrandnumoctexactlen(20)
-         . set k=$$FUNCPREVOCTTODEC(i)
-	write "Performance: current ",ncnt," ","previous ",ocnt,!
-        if (ncnt<ocnt) write "FAILED as performance is less than previous implementation ","new count:",ncnt," ","previous count:",ocnt," ",!
-	write "Completed",!
-	quit
-
-; The below routine checks the performance of the current %HO implementation with the pre-V6.3-009 implementation.
-; Performance check is done for random input of exactly 14 digit and 16 digit length. Both implementations are run for a
-; 2 second loop keeping track of the number of conversions done and this is compared to verify that the current
-; implementation is faster. 14 digit and 16 digit inputs are used because they use different code paths in both versions of $HO.
-; Since the 14 digit implementation runs virtually identical code and occasionally performs slightly worse than the old, it is
-; compared to 95% of the old implementation's performance.
-comphextooct
-	write "Comparing performance of current %HO implementation vs previous %HO implementation for 14 digit values",!
-	set interval=2000000
-   	set iend=$zut+interval
-   	set istart=1
-	set ncnt=1
-   	for  do  quit:iend<istart
-   	 . set istart=$zut
-	 . set ncnt=$increment(ncnt)
-   	 . quit:iend<istart
-   	 . set i=$$getrandnumhexexactlen(14)
-	 . set k=$$FUNC^%HO(i)
-	; starting previous m implementation
-	set iend=$zut+interval
-	set istart=1
-        set ocnt=1
-	for  do  quit:iend<istart
-         . set istart=$zut
-         . set ocnt=$increment(ocnt)
-         . quit:iend<istart
-         . set i=$$getrandnumhexexactlen(14)
-	 . set k=$$FUNCPREVHEXTOOCT(i)
-	write "Performance: current ",ncnt," ","previous ",ocnt,!
-	write:(ncnt<(ocnt*0.95)) "FAILED as performance is less than 95% of previous implementation ","new count:",ncnt," ","previous count:",ocnt," ",!
-	;
-	write "Comparing performance of current %HO implementation vs previous %HO implementation for 16 digit values",!
-        set iend=$zut+interval
-        set istart=1
-        set ncnt=1
-        for  do  quit:iend<istart
-         . set istart=$zut
-         . set ncnt=$increment(ncnt)
-         . quit:iend<istart
-         . set i=$$getrandnumhexexactlen(16)
-         . set k=$$FUNC^%HO(i)
-        ; starting previous m implementation
-        set iend=$zut+interval
-        set istart=1
-        set ocnt=1
-        for  do  quit:iend<istart
-         . set istart=$zut
-         . set ocnt=$increment(ocnt)
-         . quit:iend<istart
-         . set i=$$getrandnumhexexactlen(16)
-         . set k=$$FUNCPREVHEXTOOCT(i)
-	write "Performance: current ",ncnt," ","previous ",ocnt,!
-        write:(ncnt<ocnt) "FAILED as performance is less than previous implementation ","new count:",ncnt," ","previous count:",ocnt," ",!
-	write "Completed",!
-	quit
-
-; The below routine checks the performance of the current %OH implementation with the pre-V6.3-009 implementation.
-; Performance check is done for random input of exactly 16 digit and 20 digit lengths. Both implementations are run for
-; a 2 second loop keeping track of the number of conversions done and this is compared to verify that the current
-; implementation is faster. 16 digit and 20 digit inputs are used because they use different code paths in both versions of $OH.
-compocttohex
-	write "Comparing performance of current %OH implementation vs previous %OH implementation for 16 digit values",!
-	set interval=2000000
-   	set iend=$zut+interval
-   	set istart=1
-	set ncnt=1
-   	for  do  quit:iend<istart
-   	 . set istart=$zut
-	 . set ncnt=$increment(ncnt)
-   	 . quit:iend<istart
-   	 . set i=$$getrandnumoctexactlen(16)
-	 . set k=$$FUNC^%OH(i)
-	; starting previous m implementation
-	set iend=$zut+interval
-	set istart=1
-        set ocnt=1
-	for  do  quit:iend<istart
-         . set istart=$zut
-         . set ocnt=$increment(ocnt)
-         . quit:iend<istart
-         . set i=$$getrandnumoctexactlen(16)
-	 . set k=$$FUNCPREVOCTTOHEX(i)
-	write "Performance: current ",ncnt," ","previous ",ocnt,!
-	write:(ncnt<ocnt) "FAILED as performance is less than previous implementation ","new count:",ncnt," ","previous count:",ocnt," ",!
-	;
-	write "Comparing performance of current %OH implementation vs previous %OH implementation for 20 digit values",!
-        set iend=$zut+interval
-        set istart=1
-        set ncnt=1
-        for  do  quit:iend<istart
-         . set istart=$zut
-         . set ncnt=$increment(ncnt)
-         . quit:iend<istart
-         . set i=$$getrandnumoctexactlen(20)
-         . set k=$$FUNC^%OH(i)
-        ; starting previous m implementation
-        set iend=$zut+interval
-        set istart=1
-        set ocnt=1
-        for  do  quit:iend<istart
-         . set istart=$zut
-         . set ocnt=$increment(ocnt)
-         . quit:iend<istart
-         . set i=$$getrandnumoctexactlen(20)
-         . set k=$$FUNCPREVOCTTOHEX(i)
-	write "Performance: current ",ncnt," ","previous ",ocnt,!
-        write:(ncnt<ocnt) "FAILED as performance is less than previous implementation ","new count:",ncnt," ","previous count:",ocnt," ",!
 	write "Completed",!
 	quit
 
