@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -28,6 +31,7 @@ if ( $#argv == 0 ) then
    echo ""
    exit
 endif
+if ($?gtm_tst) setenv gtm_test_com_individual $gtm_tst/com/
 if !($?gtm_test_com_individual) setenv gtm_test_com_individual $gtm_test/T990/com/
 source $gtm_test_com_individual/set_specific.csh
 set x=1
