@@ -192,23 +192,23 @@ correctnesshextodec
 ; Expected behavior: current version has higher number of computations than the previous version.
 compdectohex
 	write "Comparing performance of current %DH implementation vs previous %DH implementation for 16 digit values",!
-	set interval=2000000
-   	set iend=$zut+interval
+	set interval=200
+   	set iend=$zgetjpi(0,"CPUTIM")+interval
    	set istart=1
 	set ncnt=1
 	set seed=21474836 ; hard coded as this is a performance test
    	for  do  quit:iend<istart
-   	 . set istart=$zut
+   	 . set istart=$zgetjpi(0,"CPUTIM")
 	 . set ncnt=$increment(ncnt)
    	 . quit:iend<istart
    	 . set i=$random(seed)_$random(seed)
 	 . set k=$$FUNC^%DH(i,)
 	; checking previous m implementation
-	set iend=$zut+interval
+	set iend=$zgetjpi(0,"CPUTIM")+interval
 	set istart=1
         set ocnt=1
 	for  do  quit:iend<istart
-         . set istart=$zut
+         . set istart=$zgetjpi(0,"CPUTIM")
          . set ocnt=$increment(ocnt)
          . quit:iend<istart
          . set i=$random(seed)_$random(seed)
@@ -217,24 +217,24 @@ compdectohex
 	if (ncnt<ocnt) write "FAILED as performance is less than previous implementation ","new count:",ncnt," ","previous count:",ocnt," ",!
 	;
 	write "Comparing performance of current %DH implementation vs previous %DH implementation for 20 digit values",!
-        set iend=$zut+interval
+        set iend=$zgetjpi(0,"CPUTIM")+interval
         set istart=1
         set ncnt=1
 	; seed and seed2 hardcoded as this is a performance test
 	set seed=1844674407
 	set seed2=3709551615
         for  do  quit:iend<istart
-         . set istart=$zut
+         . set istart=$zgetjpi(0,"CPUTIM")
          . set ncnt=$increment(ncnt)
          . quit:iend<istart
          . set i=$random(seed)_$random(seed2)
          . set k=$$FUNC^%DH(i,)
         ; checking previous m implementation
-        set iend=$zut+interval
+        set iend=$zgetjpi(0,"CPUTIM")+interval
         set istart=1
         set ocnt=1
         for  do  quit:iend<istart
-         . set istart=$zut
+         . set istart=$zgetjpi(0,"CPUTIM")
          . set ocnt=$increment(ocnt)
          . quit:iend<istart
          . set i=$random(seed)_$random(seed2)
@@ -251,23 +251,23 @@ compdectohex
 ; Expected behavior: current version has higher number of computations than the previous version.
 comphextodec
 	write "Comparing performance of current %HD implementation vs previous %HD implementation with 14 digits",!
-	set interval=2000000
-   	set iend=$zut+interval
+	set interval=200
+   	set iend=$zgetjpi(0,"CPUTIM")+interval
    	set istart=1
 	set ncnt=1
 	set seed=2147483 ; hard coded as this is a performance test
    	for  do  quit:iend<istart
-   	 . set istart=$zut
+   	 . set istart=$zgetjpi(0,"CPUTIM")
 	 . set ncnt=$increment(ncnt)
    	 . quit:iend<istart
    	 . set i=$random(seed)_$random(seed)
 	 . set k=$$FUNC^%HD(i)
 	; starting previous m implementation
-	set iend=$zut+interval
+	set iend=$zgetjpi(0,"CPUTIM")+interval
 	set istart=1
         set ocnt=1
 	for  do  quit:iend<istart
-         . set istart=$zut
+         . set istart=$zgetjpi(0,"CPUTIM")
          . set ocnt=$increment(ocnt)
          . quit:iend<istart
          . set i=$random(seed)_$random(seed)
@@ -276,22 +276,22 @@ comphextodec
 	write:(ncnt<ocnt) "FAILED as performance is less than previous implementation ","new count:",ncnt," ","previous count:",ocnt," ",!
 	;
 	write "Comparing performance of current %HD implementation vs previous %HD implementation 16 digits",!
-        set iend=$zut+interval
+        set iend=$zgetjpi(0,"CPUTIM")+interval
         set istart=1
         set ncnt=1
 	set seed=21474836 ; hard coded as this is a performance test
         for  do  quit:iend<istart
-         . set istart=$zut
+         . set istart=$zgetjpi(0,"CPUTIM")
          . set ncnt=$increment(ncnt)
          . quit:iend<istart
          . set i=$random(seed)_$random(seed)
          . set k=$$FUNC^%HD(i)
         ; starting previous m implementation
-        set iend=$zut+interval
+        set iend=$zgetjpi(0,"CPUTIM")+interval
         set istart=1
         set ocnt=1
         for  do  quit:iend<istart
-         . set istart=$zut
+         . set istart=$zgetjpi(0,"CPUTIM")
          . set ocnt=$increment(ocnt)
          . quit:iend<istart
          . set i=$random(seed)_$random(seed)

@@ -19,22 +19,22 @@
 ; is faster. 16 digit and 20 digit inputs are used because they use different code paths in both versions of $DO.
 compdectooct
 	write "Comparing performance of current %DO implementation vs previous %DO implementation for 16 digit values",!
-	set interval=2000000
-   	set iend=$zut+interval
+	set interval=200
+   	set iend=$zgetjpi(0,"CPUTIM")+interval
    	set istart=1
 	set ncnt=1
    	for  do  quit:iend<istart
-   	 . set istart=$zut
+   	 . set istart=$zgetjpi(0,"CPUTIM")
 	 . set ncnt=$increment(ncnt)
    	 . quit:iend<istart
    	 . set i=$$getrandnumdecexactlen(16)
 	 . set k=$$FUNC^%DO(i,16)
 	; checking previous m implementation
-	set iend=$zut+interval
+	set iend=$zgetjpi(0,"CPUTIM")+interval
 	set istart=1
         set ocnt=1
 	for  do  quit:iend<istart
-         . set istart=$zut
+         . set istart=$zgetjpi(0,"CPUTIM")
          . set ocnt=$increment(ocnt)
          . quit:iend<istart
          . set i=$$getrandnumdecexactlen(16)
@@ -43,21 +43,21 @@ compdectooct
 	if (ncnt<ocnt) write "FAILED as performance is less than previous implementation ","new count:",ncnt," ","previous count:",ocnt," ",!
 	;
 	write "Comparing performance of current %DO implementation vs previous %DO implementation for 20 digit values",!
-        set iend=$zut+interval
+        set iend=$zgetjpi(0,"CPUTIM")+interval
         set istart=1
         set ncnt=1
         for  do  quit:iend<istart
-         . set istart=$zut
+         . set istart=$zgetjpi(0,"CPUTIM")
          . set ncnt=$increment(ncnt)
          . quit:iend<istart
          . set i=$$getrandnumdecexactlen(20)
          . set k=$$FUNC^%DO(i,16)
         ; checking previous m implementation
-        set iend=$zut+interval
+        set iend=$zgetjpi(0,"CPUTIM")+interval
         set istart=1
         set ocnt=1
         for  do  quit:iend<istart
-         . set istart=$zut
+         . set istart=$zgetjpi(0,"CPUTIM")
          . set ocnt=$increment(ocnt)
          . quit:iend<istart
          . set i=$$getrandnumdecexactlen(20)
@@ -75,22 +75,22 @@ compdectooct
 ; larger inputs.
 compocttodec
 	write "Comparing performance of current %OD implementation vs previous %OD im plementation for 20 digit values",!
-	set interval=2000000
-        set iend=$zut+interval
+	set interval=200
+        set iend=$zgetjpi(0,"CPUTIM")+interval
         set istart=1
         set ncnt=1
         for  do  quit:iend<istart
-         . set istart=$zut
+         . set istart=$zgetjpi(0,"CPUTIM")
          . set ncnt=$increment(ncnt)
          . quit:iend<istart
          . set i=$$getrandnumoctexactlen(20)
          . set k=$$FUNC^%OD(i)
         ; checking previous m implementation
-        set iend=$zut+interval
+        set iend=$zgetjpi(0,"CPUTIM")+interval
         set istart=1
         set ocnt=1
         for  do  quit:iend<istart
-         . set istart=$zut
+         . set istart=$zgetjpi(0,"CPUTIM")
          . set ocnt=$increment(ocnt)
          . quit:iend<istart
          . set i=$$getrandnumoctexactlen(20)
@@ -105,48 +105,48 @@ compocttodec
 ; 2 second loop keeping track of the number of conversions done and this is compared to verify that the current
 ; implementation is faster. 14 digit and 16 digit inputs are used because they use different code paths in both versions of $HO.
 ; Since the 14 digit implementation runs virtually identical code and occasionally performs slightly worse than the old, it is
-; compared to 95% of the old implementation's performance.
+; compared to 90% of the old implementation's performance.
 comphextooct
 	write "Comparing performance of current %HO implementation vs previous %HO implementation for 14 digit values",!
-	set interval=2000000
-   	set iend=$zut+interval
+	set interval=200
+   	set iend=$zgetjpi(0,"CPUTIM")+interval
    	set istart=1
 	set ncnt=1
    	for  do  quit:iend<istart
-   	 . set istart=$zut
+   	 . set istart=$zgetjpi(0,"CPUTIM")
 	 . set ncnt=$increment(ncnt)
    	 . quit:iend<istart
    	 . set i=$$getrandnumhexexactlen(14)
 	 . set k=$$FUNC^%HO(i)
 	; starting previous m implementation
-	set iend=$zut+interval
+	set iend=$zgetjpi(0,"CPUTIM")+interval
 	set istart=1
         set ocnt=1
 	for  do  quit:iend<istart
-         . set istart=$zut
+         . set istart=$zgetjpi(0,"CPUTIM")
          . set ocnt=$increment(ocnt)
          . quit:iend<istart
          . set i=$$getrandnumhexexactlen(14)
 	 . set k=$$FUNCPREVHEXTOOCT(i)
 	write "Performance: current ",ncnt," ","previous ",ocnt,!
-	write:(ncnt<(ocnt*0.95)) "FAILED as performance is less than 95% of previous implementation ","new count:",ncnt," ","previous count:",ocnt," ",!
+	write:(ncnt<(ocnt*0.9)) "FAILED as performance is less than 90% of previous implementation ","new count:",ncnt," ","previous count:",ocnt," ",!
 	;
 	write "Comparing performance of current %HO implementation vs previous %HO implementation for 16 digit values",!
-        set iend=$zut+interval
+        set iend=$zgetjpi(0,"CPUTIM")+interval
         set istart=1
         set ncnt=1
         for  do  quit:iend<istart
-         . set istart=$zut
+         . set istart=$zgetjpi(0,"CPUTIM")
          . set ncnt=$increment(ncnt)
          . quit:iend<istart
          . set i=$$getrandnumhexexactlen(16)
          . set k=$$FUNC^%HO(i)
         ; starting previous m implementation
-        set iend=$zut+interval
+        set iend=$zgetjpi(0,"CPUTIM")+interval
         set istart=1
         set ocnt=1
         for  do  quit:iend<istart
-         . set istart=$zut
+         . set istart=$zgetjpi(0,"CPUTIM")
          . set ocnt=$increment(ocnt)
          . quit:iend<istart
          . set i=$$getrandnumhexexactlen(16)
@@ -162,22 +162,22 @@ comphextooct
 ; implementation is faster. 16 digit and 20 digit inputs are used because they use different code paths in both versions of $OH.
 compocttohex
 	write "Comparing performance of current %OH implementation vs previous %OH implementation for 16 digit values",!
-	set interval=2000000
-   	set iend=$zut+interval
+	set interval=200
+   	set iend=$zgetjpi(0,"CPUTIM")+interval
    	set istart=1
 	set ncnt=1
    	for  do  quit:iend<istart
-   	 . set istart=$zut
+   	 . set istart=$zgetjpi(0,"CPUTIM")
 	 . set ncnt=$increment(ncnt)
    	 . quit:iend<istart
    	 . set i=$$getrandnumoctexactlen(16)
 	 . set k=$$FUNC^%OH(i)
 	; starting previous m implementation
-	set iend=$zut+interval
+	set iend=$zgetjpi(0,"CPUTIM")+interval
 	set istart=1
         set ocnt=1
 	for  do  quit:iend<istart
-         . set istart=$zut
+         . set istart=$zgetjpi(0,"CPUTIM")
          . set ocnt=$increment(ocnt)
          . quit:iend<istart
          . set i=$$getrandnumoctexactlen(16)
@@ -186,21 +186,21 @@ compocttohex
 	write:(ncnt<ocnt) "FAILED as performance is less than previous implementation ","new count:",ncnt," ","previous count:",ocnt," ",!
 	;
 	write "Comparing performance of current %OH implementation vs previous %OH implementation for 20 digit values",!
-        set iend=$zut+interval
+        set iend=$zgetjpi(0,"CPUTIM")+interval
         set istart=1
         set ncnt=1
         for  do  quit:iend<istart
-         . set istart=$zut
+         . set istart=$zgetjpi(0,"CPUTIM")
          . set ncnt=$increment(ncnt)
          . quit:iend<istart
          . set i=$$getrandnumoctexactlen(20)
          . set k=$$FUNC^%OH(i)
         ; starting previous m implementation
-        set iend=$zut+interval
+        set iend=$zgetjpi(0,"CPUTIM")+interval
         set istart=1
         set ocnt=1
         for  do  quit:iend<istart
-         . set istart=$zut
+         . set istart=$zgetjpi(0,"CPUTIM")
          . set ocnt=$increment(ocnt)
          . quit:iend<istart
          . set i=$$getrandnumoctexactlen(20)
