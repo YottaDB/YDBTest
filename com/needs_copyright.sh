@@ -2,7 +2,7 @@
 
 #################################################################
 #								#
-# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -24,7 +24,7 @@ fi
 
 file="$1"
 
-skipextensions="txt out dat key crt cfg inp"	# List of extensions that cannot have copyrights.
+skipextensions="txt out dat key crt cfg inp zwr"	# List of extensions that cannot have copyrights.
 if echo "$skipextensions" | grep -q -w "$(echo "$file" | awk -F . '{print $NF}')"; then
 	exit 1
 fi
