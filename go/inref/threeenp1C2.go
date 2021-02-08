@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////
 //								//
-// Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries. //
+// Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries. //
 // All rights reserved.						//
 //								//
 //	This source code contains the intellectual property	//
@@ -171,7 +171,7 @@ func main() {
 		}
 		// Have index now, drive doblk() appropriately
 		doblk(indexParm)
-		os.Exit(0)
+		return
 	}
 	// Initialize
 	debugPrint("Start of main()")
@@ -703,6 +703,8 @@ func doblk(index int64) {
 		procElaps := procElap.Seconds()
 		debugPrint(fmt.Sprintf("threeenp1C2: Completed doblk() (process # %d) - elapsed time: %f",
 			indexParm, procElaps))
+	} else {
+		fmt.Printf("threeenp1C2: Completed doblk()")
 	}
 }
 
