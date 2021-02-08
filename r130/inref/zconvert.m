@@ -188,11 +188,11 @@ correctnesshextodec
 ; The below routine checks the performance of %DH current implementation with previous implemenation.
 ; Performance check is being done for both 16 digit and 20 digit input.
 ; $Random is used to compute input values and that values are passed on to the conversion utility. Same procedure is run
-; for 2 seconds in a loop keeping track of number of computations done.
+; for 5 seconds in a loop keeping track of number of computations done.
 ; Expected behavior: current version has higher number of computations than the previous version.
 compdectohex
 	write "Comparing performance of current %DH implementation vs previous %DH implementation for 16 digit values",!
-	set interval=200
+	set interval=500
    	set iend=$zgetjpi(0,"CPUTIM")+interval
    	set istart=1
 	set ncnt=1
@@ -247,11 +247,11 @@ compdectohex
 ; The below routine checks the performance of current version %HD with previous version.
 ; Performance check is being done for both 14 digit input and 16 digit input as they both lead to different code paths.
 ; Random is used to compute input value and that value is passed on to the conversion utility. Same procedure is run
-; for 2 seconds in a loop keeping track of number of computations done.
+; for 5 seconds in a loop keeping track of number of computations done.
 ; Expected behavior: current version has higher number of computations than the previous version.
 comphextodec
 	write "Comparing performance of current %HD implementation vs previous %HD implementation with 14 digits",!
-	set interval=200
+	set interval=500
    	set iend=$zgetjpi(0,"CPUTIM")+interval
    	set istart=1
 	set ncnt=1

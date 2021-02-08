@@ -1,7 +1,7 @@
 #!/usr/bin/expect -f
 #################################################################
 #								#
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -11,6 +11,10 @@
 #								#
 #################################################################
 
+# The timeout for the expect is set to 300 to ensure that the expect won't timeout
+# after 10 seconds. This was added in February 2021 after this script timed out on
+# an armv7l machine while waiting for the second Ctrl-C.
+set timeout 300
 spawn /usr/local/bin/tcsh -f
 source $::env(gtm_tst)/com/expectinit.exp
 

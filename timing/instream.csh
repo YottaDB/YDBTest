@@ -56,8 +56,9 @@ if (("dbg" == "$tst_image") || ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype)) t
 endif
 
 # Disable tests that start lots of processes on ARM boxes as response times on that platform have been seen to be non-deterministic
+# Also disable the performance test for base conversions on ARM boxes as it sometimes fails unless the run time is extremely long
 if (("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) || ("HOST_LINUX_AARCH64" == $gtm_test_os_machtype)) then
-	setenv subtest_exclude_list "$subtest_exclude_list gtm8680"
+	setenv subtest_exclude_list "$subtest_exclude_list gtm8680 gtm9115"
 endif
 
 # Disable certain heavyweight tests on single-cpu systems
