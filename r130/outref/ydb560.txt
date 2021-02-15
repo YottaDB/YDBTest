@@ -1,5 +1,6 @@
 # Test that MUPIP STOP (SIG-15) and SIG-4 terminates an M program running an indefinite FOR loop
-# Create one line test M programs test1.m, test2.m and test3.m
+
+# Create simple test M programs test1.m, test2.m and test3.m
 # Create database
 Files Created in ##TEST_PATH##:
 Using: ##SOURCE_PATH##/mumps -run GDE
@@ -7,25 +8,25 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
 # Running : [yottadb -run test1] in the background
-# Sleep 1 second to give process some time to start
+# Sleep until we see iamalive.txt created to indicate process is running
 # Running : [kill -15] to backgrounded yottadb process
 # Waiting for backgrounded yottadb process to terminate
  -> YDB-F-FORCEDHALT seen in stderr as expected
 
 # Running : [yottadb -run test2] in the background
-# Sleep 1 second to give process some time to start
+# Sleep until we see iamalive.txt created to indicate process is running
 # Running : [kill -15] to backgrounded yottadb process
 # Waiting for backgrounded yottadb process to terminate
  -> YDB-F-FORCEDHALT seen in stderr as expected
 
 # Running : [yottadb -run test3] in the background
-# Sleep 1 second to give process some time to start
+# Sleep until we see iamalive.txt created to indicate process is running
 # Running : [kill -15] to backgrounded yottadb process
 # Waiting for backgrounded yottadb process to terminate
  -> YDB-F-FORCEDHALT seen in stderr as expected
 
 # Running : [yottadb -run test1] in the background
-# Sleep 1 second to give process some time to start
+# Sleep until we see iamalive.txt created to indicate process is running
 # Running : [kill -4] to backgrounded yottadb process
 # Waiting for backgrounded yottadb process to terminate
  -> Core file found as expected
@@ -33,7 +34,7 @@ mumps.dat
  -> YDB-F-KILLBYSIGUINFO seen in stderr as expected
 
 # Running : [yottadb -run test2] in the background
-# Sleep 1 second to give process some time to start
+# Sleep until we see iamalive.txt created to indicate process is running
 # Running : [kill -4] to backgrounded yottadb process
 # Waiting for backgrounded yottadb process to terminate
  -> Core file found as expected
@@ -41,7 +42,7 @@ mumps.dat
  -> YDB-F-KILLBYSIGUINFO seen in stderr as expected
 
 # Running : [yottadb -run test3] in the background
-# Sleep 1 second to give process some time to start
+# Sleep until we see iamalive.txt created to indicate process is running
 # Running : [kill -4] to backgrounded yottadb process
 # Waiting for backgrounded yottadb process to terminate
  -> Core file found as expected

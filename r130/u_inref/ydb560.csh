@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -12,11 +12,20 @@
 #################################################################
 
 echo "# Test that MUPIP STOP (SIG-15) and SIG-4 terminates an M program running an indefinite FOR loop"
-
-echo "# Create one line test M programs test1.m, test2.m and test3.m"
-echo ' for  quit:$data(^pid)' >& test1.m
-echo ' for  set x=1'          >& test2.m
-echo ' for i=1:1  set y=2'    >& test3.m
+echo
+echo "# Create simple test M programs test1.m, test2.m and test3.m"
+# Note, these 3 test programs are purposely testing fast tight loops. Since they only run for a short time
+# before being killed by signal (max one second but generally less), these should not cause a problem. Note
+# we put '\t' at the beginning of all strings but most importantly, at the front of the createiamrunning
+# string because if it is only a space, command substitution loses that preceding space then writing the
+# line in column 1 which doesn't work.
+set createiamrunning = '\tset running="iamalive.txt" open running:new use running write $job,! close running'
+echo $createiamrunning         >& test1.m
+echo '\tfor  quit:$data(^pid)' >> test1.m
+echo $createiamrunning         >& test2.m
+echo '\tfor  set x=1'          >> test2.m
+echo $createiamrunning         >& test3.m
+echo '\tfor i=1:1  set y=2'    >> test3.m
 
 echo "# Create database"
 $gtm_tst/com/dbcreate.csh mumps
@@ -24,9 +33,15 @@ $gtm_tst/com/dbcreate.csh mumps
 foreach sig (15 4)
 	foreach file (test*.m)
 		echo "# Running : [yottadb -run $file:r] in the background"
+		rm -f iamalive.txt # Remove process alive file flag
 		($ydb_dist/yottadb -run $file:r < /dev/null > $file.$sig.out & ; echo $! >&! $file.$sig.pid) >& $file.$sig.err
-		echo "# Sleep 1 second to give process some time to start"
-		sleep 1
+		echo "# Sleep until we see iamalive.txt created to indicate process is running"
+		$ydb_dist/yottadb -run waitforfilecreate iamalive.txt 60
+		set savestatus = $status
+		if (0 != $savestatus) then
+		    echo "TEST-E-BACKGRNDSTART Back ground process did not start in 60 seconds - waitforfilecreate.csh failed with rc $savestatus"
+		    exit $savestatus
+		endif
 		echo "# Running : [kill -$sig] to backgrounded yottadb process"
 		set bgpid = `cat $file.$sig.pid`
 		kill -$sig $bgpid
