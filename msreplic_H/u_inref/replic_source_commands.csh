@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -37,7 +37,7 @@ setenv instsecvar  "$2"
 setenv gtm_tst_ext_filter_src \""$gtm_exe/mumps -run ^extfilter"\"
 setenv filter_arg "-filter=$gtm_tst_ext_filter_src"
 setenv time_stamp `date +%H_%M_%S`
-setenv SRC_LOG_FILE "$PRI_SIDE/SRC_${time_stamp}.log"
+setenv SRC_LOG_FILE "$gtm_test_msr_DBDIR1/SRC_${time_stamp}_$$.log"
 setenv run_files
 #
 # if its an error case lets process the script as to not scream and say as expected instead
