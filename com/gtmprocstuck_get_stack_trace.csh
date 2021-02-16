@@ -3,7 +3,7 @@
 #								#
 # Copyright 2013 Fidelity Information Services, Inc		#
 #								#
-# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -84,6 +84,16 @@ $gtm_tst/com/check_PC_INVAL_err.csh $blocker $log
 echo $border							>>&! $log
 echo "Now the time is: "`date`" dbx exit status: "$dbx_status	>>&! $log
 set cnt = `cat $monitor | wc -l`
+# head/tail is an environment variable that usually points to mtailhead.csh which in turn invokes '$ydb_dist/yottadb'
+# to implement head/tail. But we have seen rare occasions when using `yottadb` ends up with an `INVOBJFILE` error
+# when locating `_XCMD.o` due to CHSET mismatch between `ydb_routines/gtmroutines` env var and `ydb_chset/gtm_chset`.
+# This causes a test failure due to an error in the `gtmprocstuck_get_stack_trace.csh` script even though there was
+# no actual test failure (this script is invoked only in case of situations like `MUTEXLCKALERT` and should capture
+# debug information in case there is a primary failure). It is not straightforward to determine the exact place where
+# the mismatch occurs and since this script is invoked only in rare occasions, we use the system head/tail in this
+# case instead of the usual yottadb head/tail versions that are used in the rest of the test system.
+setenv head head
+setenv tail tail
 # Send mail once in 10 times and send only 5 mails
 if ( !($cnt % 10 ) && ($cnt <= 50) )  then
 		($tail -n 100 $log) | mailx -s "$short_host : Time: $curtime; $type - No progress Check at $curdir" $mailing_list
