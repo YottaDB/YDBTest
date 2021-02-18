@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -14,7 +14,11 @@
 #								#
 #################################################################
 
-# This test exercises MUPIP and MUMPS functionality pertaining to relink control file rundown.
+echo "# -------------------------------------------------------------------------------------------------------------"
+echo "# This test exercises functionality pertaining to relink control file rundown."
+echo "# This also tests YDB#695 (REQLRLNKCTLRNDWN error is no longer issued) so server as the r132/ydb695 subtest too"
+echo "# -------------------------------------------------------------------------------------------------------------"
+echo ""
 
 # We do not want autorelink-enabled directories that have been randomly assigned by the test system because we are explicitly
 # testing the autorelink functionality, as opposed to the rest of the test system which may be testing it implicitly.

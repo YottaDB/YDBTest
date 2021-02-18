@@ -1,3 +1,8 @@
+# -------------------------------------------------------------------------------------------------------------
+# This test exercises functionality pertaining to relink control file rundown.
+# This also tests YDB#695 (REQLRLNKCTLRNDWN error is no longer issued) so server as the r132/ydb695 subtest too
+# -------------------------------------------------------------------------------------------------------------
+
 Files Created in ##TEST_PATH##:
 Using: ##SOURCE_PATH##/mumps -run GDE
 mumps.gld
@@ -15,9 +20,6 @@ Killed
 
 3b. MUMPS on a directory whose relinkctl file has not been run down due to a crash but shared memory removed.
 ##TEST_AWKTEST-I-INFO, Removed relinkctl shared memory segment [0-9]*.
-##TEST_AWK%YDB-E-REQRLNKCTLRNDWN, Error accessing relinkctl file ./ydb-relinkctl-[0-9a-f]* for \$ZROUTINES directory ##TEST_PATH##. Must be rundown
-##TEST_AWK%YDB-E-SYSCALL, Error received from system call shmat\(\) failed for shmid=.* shmsize=.* \[0x.*\] -- called from module .*/relinkctl.c at line .*
-##TEST_AWK%SYSTEM-E-ENO[1-9][0-9]*, .*
 
 3c. MUPIP RUNDOWN -RELINKCTL . on an unused relinkctl file with no routines.
 %YDB-I-RLNKCTLRNDWNSUC, Relinkctl file for $ZROUTINES directory ##TEST_PATH## successfully rundown
@@ -28,9 +30,6 @@ Killed
 4b. MUMPS on a directory whose relinkctl file has not been run down due to a crash but shared memory removed.
 ##TEST_AWKTEST-I-INFO, Removed rtnobj shared memory segment [0-9]*.
 ##TEST_AWKTEST-I-INFO, Removed relinkctl shared memory segment [0-9]*.
-##TEST_AWK%YDB-E-REQRLNKCTLRNDWN, Error accessing relinkctl file ./ydb-relinkctl-[0-9a-f]* for \$ZROUTINES directory ##TEST_PATH##. Must be rundown
-##TEST_AWK%YDB-E-SYSCALL, Error received from system call shmat\(\) failed for shmid=.* shmsize=.* \[0x.*\] -- called from module .*/relinkctl.c at line .*
-##TEST_AWK%SYSTEM-E-ENO[1-9][0-9]*, .*
 
 4c. MUPIP RUNDOWN -RELINKCTL . on an unused relinkctl file with routines.
 %YDB-I-RLNKCTLRNDWNSUC, Relinkctl file for $ZROUTINES directory ##TEST_PATH## successfully rundown
@@ -49,12 +48,9 @@ Killed
 7b. MUMPS on directories whose relinkctl files have not been run down due to a crash but shared memory removed.
 ##TEST_AWKTEST-I-INFO, Removed relinkctl shared memory segment [0-9]*.
 ##TEST_AWKTEST-I-INFO, Removed relinkctl shared memory segment [0-9]*.
-##TEST_AWK%YDB-E-REQRLNKCTLRNDWN, Error accessing relinkctl file ./ydb-relinkctl-[0-9a-f]* for \$ZROUTINES directory ##TEST_PATH##. Must be rundown
-##TEST_AWK%YDB-E-SYSCALL, Error received from system call shmat\(\) failed for shmid=.* shmsize=.* \[0x.*\] -- called from module .*/relinkctl.c at line .*
-##TEST_AWK%SYSTEM-E-ENO[1-9][0-9]*, .*
 
 7c. MUPIP RUNDOWN -RELINKCTL on unused relinkctl files with no routines.
-%YDB-I-RLNKCTLRNDWNSUC, Relinkctl file for $ZROUTINES directory ##TEST_PATH## successfully rundown
+%YDB-I-RLNKCTLRNDWNSUC, Relinkctl file for $ZROUTINES directory ##TEST_PATH##/ successfully rundown
 %YDB-I-RLNKCTLRNDWNSUC, Relinkctl file for $ZROUTINES directory ##TEST_PATH##/dir successfully rundown
 
 8a. MUMPS on directories whose relinkctl files have not been run down due to a crash.
@@ -65,12 +61,9 @@ Killed
 ##TEST_AWKTEST-I-INFO, Removed rtnobj shared memory segment [0-9]*.
 ##TEST_AWKTEST-I-INFO, Removed relinkctl shared memory segment [0-9]*.
 ##TEST_AWKTEST-I-INFO, Removed relinkctl shared memory segment [0-9]*.
-##TEST_AWK%YDB-E-REQRLNKCTLRNDWN, Error accessing relinkctl file ./ydb-relinkctl-[0-9a-f]* for \$ZROUTINES directory ##TEST_PATH##. Must be rundown
-##TEST_AWK%YDB-E-SYSCALL, Error received from system call shmat\(\) failed for shmid=.* shmsize=.* \[0x.*\] -- called from module .*/relinkctl.c at line .*
-##TEST_AWK%SYSTEM-E-ENO[1-9][0-9]*, .*
 
 8c. MUPIP RUNDOWN -RELINKCTL on unused relinkctl files with routines.
-%YDB-I-RLNKCTLRNDWNSUC, Relinkctl file for $ZROUTINES directory ##TEST_PATH## successfully rundown
+%YDB-I-RLNKCTLRNDWNSUC, Relinkctl file for $ZROUTINES directory ##TEST_PATH##/ successfully rundown
 %YDB-I-RLNKCTLRNDWNSUC, Relinkctl file for $ZROUTINES directory ##TEST_PATH##/dir successfully rundown
 
 9. MUPIP RUNDOWN -RELINKCTL on active relinkctl file with an incorrect attach count.
@@ -85,7 +78,7 @@ TEST-I-INFO, No left-over relinkctl IPCs found.
 11. MUPIP RUNDOWN -RELINKCTL on a non-existent directory.
 ##TEST_AWK%YDB-E-ZROSYNTAX, \$ZROUTINES syntax error: .* abc
 %YDB-E-FILEPARSE, Error parsing file specification: abc
-##TEST_AWK%SYSTEM-E-ENO[1-9][0-9]*, .*
+%SYSTEM-E-ENO2, No such file or directory
 
 12. MUPIP RUNDOWN -RELINKCTL on a directory that is non-autorelinked in $gtmroutines.
 
