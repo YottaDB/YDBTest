@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	*
+ * Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -43,10 +43,11 @@ ydb_buffer_t	ygbl_reads, ygbl_updates, ygbl_highest, ygbl_result, ygbl_step;
 ydb_buffer_t	ylcl_reads, ylcl_updates, ylcl_highest, ylcl_currpath;
 pid_t		process_id;
 
+#define	MAXSUBSLEN	2
 #define	MAXVALUELEN	256
 
-char		valuebuff[MAXVALUELEN], pidvaluebuff[MAXVALUELEN], tmpvaluebuff[MAXVALUELEN], subscrbuff[YDB_MAX_SUBS + 1][MAXVALUELEN];
-ydb_buffer_t	value, tmpvalue, pidvalue, subscr[YDB_MAX_SUBS + 1];
+char		valuebuff[MAXVALUELEN], pidvaluebuff[MAXVALUELEN], tmpvaluebuff[MAXVALUELEN], subscrbuff[MAXSUBSLEN][MAXVALUELEN];
+ydb_buffer_t	value, tmpvalue, pidvalue, subscr[MAXSUBSLEN];
 
 void		dbinit();
 void		digitsinit();
@@ -109,7 +110,7 @@ int main(int argc, char *argv[])
 	pidvalue.len_alloc = sizeof(pidvaluebuff);
 	tmpvalue.buf_addr = tmpvaluebuff;
 	tmpvalue.len_alloc = sizeof(tmpvaluebuff);
-	for (i = 0; i < YDB_MAX_SUBS + 1; i++)
+	for (i = 0; i < MAXSUBSLEN; i++)
 	{
 		subscr[i].buf_addr = subscrbuff[i];
 		subscr[i].len_alloc = sizeof(subscrbuff[i]);

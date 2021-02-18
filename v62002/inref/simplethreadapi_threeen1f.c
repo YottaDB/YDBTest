@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries. *
+ * Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries. *
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -99,8 +99,8 @@ int main(int argc, char *argv[])
 	int		updates, reads;
 	int		save_errno;
 	pthread_t	thread_id[MAXTHREADS];
-	char		valuebuff[MAXVALUELEN], subscrbuff[1][MAXVALUELEN];
-	ydb_buffer_t	value, subscr[1];
+	char		valuebuff[MAXVALUELEN], subscrbuff[MAXVALUELEN];
+	ydb_buffer_t	value, subscr;
 
 
 	/* Initialize all array variable names we are planning to later use */
@@ -117,11 +117,8 @@ int main(int argc, char *argv[])
 
 	value.buf_addr = valuebuff;
 	value.len_alloc = sizeof(valuebuff);
-	for (i = 0; i < YDB_MAX_SUBS + 1; i++)
-	{
-		subscr[i].buf_addr = subscrbuff[i];
-		subscr[i].len_alloc = sizeof(subscrbuff[i]);
-	}
+	subscr.buf_addr = subscrbuff;
+	subscr.len_alloc = sizeof(subscrbuff);
 
 	digitsinit();	/* Initialize data for conversion between integers and strings */
 
@@ -179,9 +176,9 @@ int main(int argc, char *argv[])
 			tmp += blk;
 			if (tmp > j)
 				tmp = j;
-			subscr[0].len_used = sprintf(subscr[0].buf_addr, "%d", count);
+			subscr.len_used = sprintf(subscr.buf_addr, "%d", count);
 			value.len_used = sprintf(value.buf_addr, "%d", tmp);
-			status = ydb_set_st(YDB_NOTTP, NULL, &ygbl_limits, 1, subscr, &value);
+			status = ydb_set_st(YDB_NOTTP, NULL, &ygbl_limits, 1, &subscr, &value);
 			YDB_ASSERT(YDB_OK == status);
 		}
 
