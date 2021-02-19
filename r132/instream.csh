@@ -36,6 +36,7 @@
 # ydb674 [sam,bhaskar] Test %YDBAIM (Application independent metadata driver)
 # ydb673 [nars,estess] Test that LOCK with 0 timeout successfully obtains an unowned lock if 32+ M lock hash values hash to same
 #                      bucket (neighborhood full issue).
+# ydb697 [bdw]       Test that %CONVNEG^%CONVBASEUTIL produces correct two's complement results for octal numbers
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r132 test starts..."
@@ -43,8 +44,7 @@ echo "r132 test starts..."
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic "ydb627 ydb551 ydb632 ydb581 ydb630 ydb441 ydb652 ydb635 ydb664 ydb663 ydb558 ydb612 ydb591 ydb391"
-setenv subtest_list_non_replic "$subtest_list_non_replic ydb678 ydb671 ydb682"
-setenv subtest_list_non_replic "$subtest_list_non_replic ydb674 ydb673"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb678 ydb671 ydb682 ydb674 ydb673 ydb697"
 setenv subtest_list_replic     "ydb657 ydb676"
 
 if ($?test_replic == 1) then

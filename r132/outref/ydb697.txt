@@ -1,0 +1,7 @@
+# This test checks that CONVNEG^%CONVBASEUTIL produces the correct output for octal input from 1 to 10 digits.
+# Due to a bug introduced in upstream version V6.3-009, CONVNEG would produce incorrect output if the first 2
+# octal digits were not zero and all remaining digits (if any) were zero which caused a rare failure in the
+# %DO with negative input section of v63009/gtm5574. This test generates random octal values from 1 to 10 digits
+# and tests each of those numbers. It also pads the random numbers with zeroes and tests these numbers up to 10
+# digits. All random octal numbers are generated with digits of 1-7 so no numbers will be repeated.
+Test complete
