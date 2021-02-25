@@ -1,0 +1,24 @@
+# Tests that R/O databases are rundown correctly. Prior to V63009, the semaphore was not properly run down
+# (see GTM-8921 added via YDBTest#336 for more information)
+#
+# Creating MM database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Set database to read/only (turning off stats as can't share stats with read/only else get READONLYNOSTATS error)
+Database file mumps.dat is now read-only
+Database file mumps.dat now has sharing of gvstats set to FALSE
+# Briefly open database for a moment with DSE to see if it leaves any IPCs laying around
+# See if any IPCs were left over - If any IPCs show up here, the test fails as there should be none
+Test PASSED
+# Rundown the file to clean any leftover IPCs. Note the only reliable way to get rid of this IPC on prior
+# versions (V63008 or prior based versions) that create it is to undo the read-only specification and only
+# THEN run it down.
+Database file mumps.dat is no longer read-only
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+# Integ check
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
