@@ -30,7 +30,7 @@ zwrite ^a
 
 # kill ^c ; merge ^c=^a ; zwrite ^c
 # Since CREG does not allow null subscripts, the below merge shoud error out
-STAT=mergecoll+16^mergecoll,%YDB-E-NULSUBSC, MERGE failed because null subscripts are not allowed for database file: ##TEST_PATH##/c.dat,%YDB-I-GVIS, 		Global variable: ^c(1,"")
+STAT=mergecoll+16^mergecoll,%YDB-E-NULSUBSC, MERGE failed because Null subscripts are not allowed for database file: ##TEST_PATH##/c.dat,%YDB-I-GVIS, 		Global variable: ^c(1,"")
 ^c(1)=900
 
 ##SUSPEND_OUTPUT NONSPANNING_REGIONS

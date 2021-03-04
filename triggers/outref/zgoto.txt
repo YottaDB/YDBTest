@@ -191,18 +191,24 @@ done	5:1	threadnoparm+20^job	        Indirection	unprimed+1^multilinezgoto	test+
 	6:1	threadnoparm+20^job	        Indirection	unprimed+1^multilinezgoto	test+13^multilinezgoto	+5^mline#2#	label3+1^mline#2#
 	zgoto $zlevel:^@$ZTNAme
 2   mline#2#
-150373978,+2^mline#2#,%YDB-E-ZLINKFILE, Error while zlinking "mline#3#",%YDB-E-FILENOTFND, File mline#3# not found
+150384450,+2^mline#2#,%YDB-E-NOTMNAME, mline#3# is not a valid M name,%YDB-E-ZLNOOBJECT, No object module was produced
 ###################################################################
 ###################################################################
 zgoto ^mline#3# from non-trigger land
 $ZLevel = 4	$ZTLevel = 0
-150373978,notfromtrig+5^multilinezgoto,%YDB-E-ZLINKFILE, Error while zlinking "mline#3#",%YDB-E-FILENOTFND, File mline#3# not found
+150384450,notfromtrig+5^multilinezgoto,%YDB-E-NOTMNAME, mline#3# is not a valid M name,%YDB-E-ZLNOOBJECT, No object module was produced
 ###################################################################
 ###################################################################
 lock +^%jobwait(1)
 ##TEST_AWKlock ..jobnonexistent.1,[0-9]*.
 d nonexistent^multilinezgoto
 1   malign#1# zgoto nonexistent mline#4#
+unexpected
+traphandler+2^malign#1#
++4^malign#1#    ($ZTRAP)
+nonexistent+3^multilinezgoto
+        Indirection
+threadnoparm+20^job
 
 ###################################################################
 ###################################################################
@@ -264,5 +270,5 @@ Dropping down from 7 to 3
 My nonce is too high
 ###################################################################
 ##TEST_AWK.*/unprimed_multilinezgoto.mjo1
-150373978,+2^mline#2#,%YDB-E-ZLINKFILE, Error while zlinking "mline#3#",%YDB-E-FILENOTFND, File mline#3# not found
-150373978,notfromtrig+5^multilinezgoto,%YDB-E-ZLINKFILE, Error while zlinking "mline#3#",%YDB-E-FILENOTFND, File mline#3# not found
+150384450,+2^mline#2#,%YDB-E-NOTMNAME, mline#3# is not a valid M name,%YDB-E-ZLNOOBJECT, No object module was produced
+150384450,notfromtrig+5^multilinezgoto,%YDB-E-NOTMNAME, mline#3# is not a valid M name,%YDB-E-ZLNOOBJECT, No object module was produced

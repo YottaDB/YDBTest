@@ -11,8 +11,8 @@ version 1
 version 1
 
 # Invalid ZLINK argument.
-%YDB-E-ZLINKFILE, Error while zlinking "y^1"
-%YDB-E-FILENOTFND, File y^1 not found
+%YDB-E-NOTMNAME, y^1 is not a valid M name
+%YDB-E-ZLNOOBJECT, No object module was produced
 
 # Non-existent non-autorelink directories with argumentless MUPIP RCTLDUMP.
 ##TEST_AWK%YDB-E-ZROSYNTAX, \$ZROUTINES syntax error: a b .*
@@ -66,7 +66,7 @@ Object Directory         : ##TEST_PATH##/a
 Recursive relink of the invoked routine not in $gtmroutines (with no autorelink directories).
 
 Recursive relink of the invoked routine not in $gtmroutines (with an autorelink directory).
-%YDB-E-ZLINKFILE, Error while zlinking "rtn1",%YDB-E-FILENOTFND, File rtn1 not found
+%YDB-E-ZLINKFILE, Error while zlinking "rtn1",%YDB-E-FILENOTFND, File rtn1.m not found,%YDB-E-FILENOTFND, File rtn1.o not found
 		At M source location rtn2+1^rtn2
 
 YDB>

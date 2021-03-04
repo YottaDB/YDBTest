@@ -45,7 +45,7 @@ Total error count from integ:		1.
 Integ of region DEFAULT
 
 Block:Offset Level
-%YDB-E-DBCOMPTOOLRG, 
+%YDB-E-DBCOMPTOOLRG,         Nature: #Data
        3:22     0  Record has too large compression count
                    Directory Path:  1:10, 2:10
                    Path:  4:10, 3:22
@@ -71,7 +71,7 @@ No errors detected by integ.
 Integ of region DEFAULT
 
 Block:Offset Level
-%YDB-E-DBCOMPTOOLRG, 
+%YDB-E-DBCOMPTOOLRG,         Nature: #Data
        3:22     0  Record has too large compression count
                    Directory Path:  1:10, 2:10
                    Path:  4:10, 3:22
@@ -143,7 +143,7 @@ Total error count from integ:		1.
 Integ of region DEFAULT
 
 Block:Offset Level
-%YDB-E-DBKEYORD, 
+%YDB-E-DBKEYORD,         Nature: #Data
        3:2A     0  Keys out of order
                    Directory Path:  1:10, 2:10
                    Path:  4:10, 3:2A
@@ -169,7 +169,7 @@ No errors detected by integ.
 Integ of region DEFAULT
 
 Block:Offset Level
-%YDB-E-DBKEYORD, 
+%YDB-E-DBKEYORD,         Nature: #Data
        3:2A     0  Keys out of order
                    Directory Path:  1:10, 2:10
                    Path:  4:10, 3:2A
@@ -284,7 +284,7 @@ Total error count from integ:		1.
 Integ of region DEFAULT
 
 Block:Offset Level
-%YDB-E-DBKEYORD, 
+%YDB-E-DBKEYORD,         Nature: #Data
        3:718    0  Keys out of order
                    Directory Path:  1:10, 2:10
                    Path:  4:10, 3:718
@@ -310,7 +310,7 @@ No errors detected by integ.
 Integ of region DEFAULT
 
 Block:Offset Level
-%YDB-E-DBKEYORD, 
+%YDB-E-DBKEYORD,         Nature: #Data
        3:718    0  Keys out of order
                    Directory Path:  1:10, 2:10
                    Path:  4:10, 3:718
@@ -1557,11 +1557,11 @@ No errors detected by integ.
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ##TEST_AWK##TEST_HOST_SHORT##:##TEST_PATH##/mupip.err_[0-9_]*
 ##ALLOW_OUTPUT  NON_REPLIC
-%YDB-E-DBCOMPTOOLRG, 
+%YDB-E-DBCOMPTOOLRG,         Nature: #Data
 %YDB-E-INTEGERRS, Database integrity errors
 ##TEST_AWK.*##TEST_PATH##/mupip.err_[0-9_]*
-%YDB-E-DBKEYORD, 
+%YDB-E-DBKEYORD,         Nature: #Data
 %YDB-E-INTEGERRS, Database integrity errors
 ##TEST_AWK.*##TEST_PATH##/mupip.err_[0-9_]*
-%YDB-E-DBKEYORD, 
+%YDB-E-DBKEYORD,         Nature: #Data
 %YDB-E-INTEGERRS, Database integrity errors

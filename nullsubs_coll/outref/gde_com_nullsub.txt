@@ -532,12 +532,12 @@ YDB>
 ^a(1,"")="1_null"
 
 YDB>
-%YDB-E-NULSUBSC, Update failed because null subscripts are not allowed for database file: ##TEST_PATH##/a.dat
+%YDB-E-NULSUBSC, Update failed because Null subscripts are not allowed for database file: ##TEST_PATH##/a.dat
 %YDB-I-GVIS, 		Global variable: ^a("")
 
 YDB>
 use of $incr function , should error out
-%YDB-E-NULSUBSC, $INCREMENT() failed because null subscripts are not allowed for database file: ##TEST_PATH##/a.dat
+%YDB-E-NULSUBSC, $INCREMENT() failed because Null subscripts are not allowed for database file: ##TEST_PATH##/a.dat
 %YDB-I-GVIS, 		Global variable: ^a("",2)
 
 YDB>
@@ -660,7 +660,7 @@ YDB>
 YDB>
 
 YDB>
-%YDB-E-NULSUBSC, Update failed because null subscripts are not allowed for database file: ##TEST_PATH##/c.dat
+%YDB-E-NULSUBSC, Update failed because Null subscripts are not allowed for database file: ##TEST_PATH##/c.dat
 %YDB-I-GVIS, 		Global variable: ^cregglobalvariable("",2)
 
 YDB>
@@ -687,7 +687,7 @@ YDB>
 set breg globals which is now EXISTING with null_subs,naked reference should error out
 
 YDB>
-%YDB-E-NULSUBSC, Update failed because null subscripts are not allowed for database file: ##TEST_PATH##/b.dat
+%YDB-E-NULSUBSC, Update failed because Null subscripts are not allowed for database file: ##TEST_PATH##/b.dat
 %YDB-I-GVIS, 		Global variable: ^bglobalvar(1,"",2,7)
 
 YDB>
@@ -696,7 +696,7 @@ YDB>
 set breg globals which is now EXISTING with null_subs,naked reference should error out
 
 YDB>
-%YDB-E-NULSUBSC, Update failed because null subscripts are not allowed for database file: ##TEST_PATH##/b.dat
+%YDB-E-NULSUBSC, Update failed because Null subscripts are not allowed for database file: ##TEST_PATH##/b.dat
 %YDB-I-GVIS, 		Global variable: ^bglobalvar(4,5,"")
 
 YDB>
@@ -742,7 +742,7 @@ YDB>
 set  null subscripts to extended.dat which is existing. Should Error out
 
 YDB>
-%YDB-E-NULSUBSC, Update failed because null subscripts are not allowed for database file: ##TEST_PATH##/extended.dat
+%YDB-E-NULSUBSC, Update failed because Null subscripts are not allowed for database file: ##TEST_PATH##/extended.dat
 %YDB-I-GVIS, 		Global variable: ^defaultregvariable("")
 
 YDB>
@@ -754,7 +754,7 @@ YDB>
 201
 YDB>
 Increment function used for extended gld(EXISTING),Should error out
-%YDB-E-NULSUBSC, $INCREMENT() failed because null subscripts are not allowed for database file: ##TEST_PATH##/extended.dat
+%YDB-E-NULSUBSC, $INCREMENT() failed because Null subscripts are not allowed for database file: ##TEST_PATH##/extended.dat
 %YDB-I-GVIS, 		Global variable: ^defaultregvariable("","extended")
 
 YDB>

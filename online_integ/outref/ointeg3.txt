@@ -16,9 +16,9 @@ Total error count from integ:		2.
 Integ of region DEFAULT
 
 Block:Offset Level
-%YDB-W-DBLOCMBINC, 
+%YDB-W-DBLOCMBINC,         Nature: #Benign
        0:0     FF  Local bit map incorrect
-%YDB-E-DBMRKFREE, 
+%YDB-E-DBMRKFREE,         Nature: #DANGER***
        3:0     FF  Block incorrectly marked free
 
 Total error count from integ:		2.
@@ -44,12 +44,12 @@ Total error count from integ:		2.
 Integ of region DEFAULT
 
 Block:Offset Level
-%YDB-E-DBINVGBL, 
+%YDB-E-DBINVGBL,         Nature: #Data
        3:10     0  Invalid mixing of global names
                    Directory Path:  1:10, 2:10
                    Path:  4:10, 3:10
 Keys from ^a to the end are suspect.
-%YDB-E-DBBDBALLOC, 
+%YDB-E-DBBDBALLOC,         Nature: #Data
        3:0      0  Block doubly allocated
                    Directory Path:  1:10, 2:1F
                    Path:  5:10, 3:0
@@ -66,10 +66,10 @@ Free               95              NA              NA            NA
 Total             100               6              NA             3
 %YDB-E-INTEGERRS, Database integrity errors
 ##TEST_PATH##/mupip.err_##TEST_AWK.*
-%YDB-W-DBLOCMBINC, 
-%YDB-E-DBMRKFREE, 
+%YDB-W-DBLOCMBINC,         Nature: #Benign
+%YDB-E-DBMRKFREE,         Nature: #DANGER***
 %YDB-E-INTEGERRS, Database integrity errors
 ##TEST_PATH##/mupip.err_##TEST_AWK.*
-%YDB-E-DBINVGBL, 
-%YDB-E-DBBDBALLOC, 
+%YDB-E-DBINVGBL,         Nature: #Data
+%YDB-E-DBBDBALLOC,         Nature: #Data
 %YDB-E-INTEGERRS, Database integrity errors

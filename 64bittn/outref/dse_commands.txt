@@ -165,13 +165,13 @@ Total error count from integ:		2.
 Integ of region DEFAULT
 
 Block:Offset Level
-%YDB-I-DBTNTOOLG, 
+%YDB-I-DBTNTOOLG,         Nature: #Transient
        4:0      1  Block transaction number too large
                    Directory Path:  1:10, 2:10
                    Path:  4:0
 Keys from ^x to the end are suspect.
 %YDB-I-DBTN, Block TN is 0x0000000023456789
-%YDB-I-DBMBTNSIZMX, 
+%YDB-I-DBMBTNSIZMX,         Nature: #Transient
        0:0     FF  Map block transaction number too large
 %YDB-I-DBTN, Block TN is 0x00000000FFFFFFFF
 
@@ -405,7 +405,7 @@ $error_free :  ; $no_regions = 1
 
 Integ of region DEFAULT
 %YDB-W-MUTNWARN, Database file ##TEST_PATH##/mumps.dat has 0x0000000000000000 more transactions to go before reaching the transaction number limit (0xFFFFFFF000000000). Renew database with MUPIP INTEG TN_RESET
-%YDB-E-DBHEADINV, 
+%YDB-E-DBHEADINV,         Nature: #Access
        0:0      0  Header size not valid for database
 %YDB-E-INTEGERRS, Database integrity errors
 ====================   MAX_TN and WARN_MAX_TN in Compatibility mode   ====================
@@ -682,7 +682,7 @@ No errors detected by integ.
 %YDB-E-INTEGERRS, Database integrity errors
 ##TEST_PATH##/mupip.err_##TEST_AWK[0-9_]+
 %YDB-W-MUTNWARN, Database file ##TEST_PATH##/mumps.dat has 0x0000000000000000 more transactions to go before reaching the transaction number limit (0xFFFFFFF000000000). Renew database with MUPIP INTEG TN_RESET
-%YDB-E-DBHEADINV, 
+%YDB-E-DBHEADINV,         Nature: #Access
 %YDB-E-INTEGERRS, Database integrity errors
 ##TEST_PATH##/mupip.err_##TEST_AWK[0-9_]+
 %YDB-W-MUTNWARN, Database file ##TEST_PATH##/mumps.dat has 0x000000000000000F more transactions to go before reaching the transaction number limit (0x00000000F7FFFFFF). Renew database with MUPIP INTEG TN_RESET

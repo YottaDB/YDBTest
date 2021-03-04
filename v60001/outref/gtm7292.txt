@@ -523,64 +523,86 @@ $MUPIP size -heuristic="scan"
 
 Global: a (region AREG)
 Level          Blocks          Records         Adjacent
-    1             113             4854                8
+    3               1                4                1
+Level          Blocks          Records         Adjacent
+    2               4              113                1
+Level          Blocks          Records         Adjacent
+    1             113             4854                0
 
 Global: b (region BREG)
 Level          Blocks          Records         Adjacent
-    1               1               35               24
+    1               1               35                1
 
 Global: c (region CREG)
 Level          Blocks          Records         Adjacent
-    1              13              523               41
+    2               1               13                1
+Level          Blocks          Records         Adjacent
+    1              13              523                0
 
 Global: c2 (region CREG)
 Level          Blocks          Records         Adjacent
-    1               9              382               49
+    2               1                9                0
+Level          Blocks          Records         Adjacent
+    1               9              382                0
 
 Global: c3 (region CREG)
 Level          Blocks          Records         Adjacent
-    1              15              686               61
+    2               1               15                0
+Level          Blocks          Records         Adjacent
+    1              15              686                1
 
 Global: d (region DEFAULT)
 Level          Blocks          Records         Adjacent
-    1               1               35               77
+    1               1               35                1
 $MUPIP size -heuristic="scan,level=1"
 
 Global: a (region AREG)
 Level          Blocks          Records         Adjacent
-    1             113             4854                8
+    3               1                4                1
+Level          Blocks          Records         Adjacent
+    2               4              113                1
+Level          Blocks          Records         Adjacent
+    1             113             4854                0
 
 Global: b (region BREG)
 Level          Blocks          Records         Adjacent
-    1               1               35               24
+    1               1               35                1
 
 Global: c (region CREG)
 Level          Blocks          Records         Adjacent
-    1              13              523               41
+    2               1               13                1
+Level          Blocks          Records         Adjacent
+    1              13              523                0
 
 Global: c2 (region CREG)
 Level          Blocks          Records         Adjacent
-    1               9              382               49
+    2               1                9                0
+Level          Blocks          Records         Adjacent
+    1               9              382                0
 
 Global: c3 (region CREG)
 Level          Blocks          Records         Adjacent
-    1              15              686               61
+    2               1               15                0
+Level          Blocks          Records         Adjacent
+    1              15              686                1
 
 Global: d (region DEFAULT)
 Level          Blocks          Records         Adjacent
-    1               1               35               77
+    1               1               35                1
 $MUPIP size -heuristic="scan,level=2"
 
 Global: a (region AREG)
 Level          Blocks          Records         Adjacent
-    2               4              113                0
+    3               1                4                1
+Level          Blocks          Records         Adjacent
+    2               4              113                1
 
 Global: b (region BREG)
 %YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: c (region CREG)
 Level          Blocks          Records         Adjacent
-    2               1               13                0
+    2               1               13                1
 
 Global: c2 (region CREG)
 Level          Blocks          Records         Adjacent
@@ -588,7 +610,7 @@ Level          Blocks          Records         Adjacent
 
 Global: c3 (region CREG)
 Level          Blocks          Records         Adjacent
-    2               1               15                1
+    2               1               15                0
 
 Global: d (region DEFAULT)
 %YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
@@ -597,72 +619,122 @@ $MUPIP size -heuristic="scan,level=0"
 
 Global: a (region AREG)
 Level          Blocks          Records         Adjacent
-    0            4854            57292                0
+    3               1                4                1
+Level          Blocks          Records         Adjacent
+    2               4              113                1
+Level          Blocks          Records         Adjacent
+    1             113             4854                0
+Level          Blocks          Records         Adjacent
+    0            4854            57292                8
 
 Global: b (region BREG)
 Level          Blocks          Records         Adjacent
-    0              35              354                0
+    1               1               35                1
+Level          Blocks          Records         Adjacent
+    0              35              354               16
 
 Global: c (region CREG)
 Level          Blocks          Records         Adjacent
-    0             523             6042                0
+    2               1               13                1
+Level          Blocks          Records         Adjacent
+    1              13              523                0
+Level          Blocks          Records         Adjacent
+    0             523             6042               17
 
 Global: c2 (region CREG)
 Level          Blocks          Records         Adjacent
-    0             382             4583                0
+    2               1                9                0
+Level          Blocks          Records         Adjacent
+    1               9              382                0
+Level          Blocks          Records         Adjacent
+    0             382             4583                8
 
 Global: c3 (region CREG)
 Level          Blocks          Records         Adjacent
-    0             686             8125                0
+    2               1               15                0
+Level          Blocks          Records         Adjacent
+    1              15              686                1
+Level          Blocks          Records         Adjacent
+    0             686             8125               12
 
 Global: d (region DEFAULT)
 Level          Blocks          Records         Adjacent
-    0              35              354                0
+    1               1               35                1
+Level          Blocks          Records         Adjacent
+    0              35              354               16
 $MUPIP size -heuristic="scan,level=-1"
 
 Global: a (region AREG)
 Level          Blocks          Records         Adjacent
-    2               4              113                0
+    3               1                4                1
+Level          Blocks          Records         Adjacent
+    2               4              113                1
 
 Global: b (region BREG)
 Level          Blocks          Records         Adjacent
-    0              35              354                0
+    1               1               35                1
+Level          Blocks          Records         Adjacent
+    0              35              354               16
 
 Global: c (region CREG)
 Level          Blocks          Records         Adjacent
-    1              13              523               17
+    2               1               13                1
+Level          Blocks          Records         Adjacent
+    1              13              523                0
 
 Global: c2 (region CREG)
 Level          Blocks          Records         Adjacent
-    1               9              382               25
+    2               1                9                0
+Level          Blocks          Records         Adjacent
+    1               9              382                0
 
 Global: c3 (region CREG)
 Level          Blocks          Records         Adjacent
-    1              15              686               37
+    2               1               15                0
+Level          Blocks          Records         Adjacent
+    1              15              686                1
 
 Global: d (region DEFAULT)
 Level          Blocks          Records         Adjacent
-    0              35              354               37
+    1               1               35                1
+Level          Blocks          Records         Adjacent
+    0              35              354               16
 $MUPIP size -heuristic="scan,level=-2"
 
 Global: a (region AREG)
 Level          Blocks          Records         Adjacent
-    1             113             4854                8
+    3               1                4                1
+Level          Blocks          Records         Adjacent
+    2               4              113                1
+Level          Blocks          Records         Adjacent
+    1             113             4854                0
 
 Global: b (region BREG)
 %YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: c (region CREG)
 Level          Blocks          Records         Adjacent
-    0             523             6042                8
+    2               1               13                1
+Level          Blocks          Records         Adjacent
+    1              13              523                0
+Level          Blocks          Records         Adjacent
+    0             523             6042               17
 
 Global: c2 (region CREG)
+Level          Blocks          Records         Adjacent
+    2               1                9                0
+Level          Blocks          Records         Adjacent
+    1               9              382                0
 Level          Blocks          Records         Adjacent
     0             382             4583                8
 
 Global: c3 (region CREG)
 Level          Blocks          Records         Adjacent
-    0             686             8125                8
+    2               1               15                0
+Level          Blocks          Records         Adjacent
+    1              15              686                1
+Level          Blocks          Records         Adjacent
+    0             686             8125               12
 
 Global: d (region DEFAULT)
 %YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
@@ -671,7 +743,13 @@ $MUPIP size -heuristic="scan,level=-3"
 
 Global: a (region AREG)
 Level          Blocks          Records         Adjacent
-    0            4854            57292                0
+    3               1                4                1
+Level          Blocks          Records         Adjacent
+    2               4              113                1
+Level          Blocks          Records         Adjacent
+    1             113             4854                0
+Level          Blocks          Records         Adjacent
+    0            4854            57292                8
 
 Global: b (region BREG)
 %YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
@@ -1088,27 +1166,37 @@ $MUPIP size -heuristic="scan" -adjacency=200
 
 Global: a (region AREG)
 Level          Blocks          Records         Adjacent
-    1             113             4854              217
+    3               1                4                1
+Level          Blocks          Records         Adjacent
+    2               4              113                1
+Level          Blocks          Records         Adjacent
+    1             113             4854                7
 
 Global: b (region BREG)
 Level          Blocks          Records         Adjacent
-    1               1               35              252
+    1               1               35                1
 
 Global: c (region CREG)
 Level          Blocks          Records         Adjacent
-    1              13              523              543
+    2               1               13                1
+Level          Blocks          Records         Adjacent
+    1              13              523                9
 
 Global: c2 (region CREG)
 Level          Blocks          Records         Adjacent
-    1               9              382              822
+    2               1                9                0
+Level          Blocks          Records         Adjacent
+    1               9              382                7
 
 Global: c3 (region CREG)
 Level          Blocks          Records         Adjacent
-    1              15              686             1101
+    2               1               15                0
+Level          Blocks          Records         Adjacent
+    1              15              686                5
 
 Global: d (region DEFAULT)
 Level          Blocks          Records         Adjacent
-    1               1               35             1135
+    1               1               35                1
 $MUPIP size -heuristic="scan" -adjacency=-200
 %YDB-E-CLIERR, Unrecognized value: -200, Decimal integer expected
 $MUPIP size -heuristic="scan" -adjacency=foo
@@ -1896,104 +1984,112 @@ $MUPIP size -heuristic="scan"
 
 Global: a (region AREG)
 Level          Blocks          Records         Adjacent
-    1               6              819               11
+    2               1                6                1
+Level          Blocks          Records         Adjacent
+    1               6              819                0
 
 Global: a (region CREG)
 Level          Blocks          Records         Adjacent
-    1               1               84               32
+    1               1               84                1
 
 Global: a (region DEFAULT)
 Level          Blocks          Records         Adjacent
-    1               2              343               51
+    2               1                2                1
+Level          Blocks          Records         Adjacent
+    1               2              343                1
 
 Global: b (region BREG)
 Level          Blocks          Records         Adjacent
-    1               1                6               57
+    1               1                6                1
 
 Global: c (region AREG)
 Level          Blocks          Records         Adjacent
-    1               1               17               72
+    1               1               17                0
 
 Global: c (region CREG)
 Level          Blocks          Records         Adjacent
-    1               1              112               93
+    1               1              112                0
 
 Global: c2 (region CREG)
 Level          Blocks          Records         Adjacent
-    1               1               42              118
+    1               1               42                0
 
 Global: c2 (region DEFAULT)
 Level          Blocks          Records         Adjacent
-    1               1               59              141
+    1               1               59                0
 
 Global: c3 (region AREG)
 Level          Blocks          Records         Adjacent
-    1               1               62              159
+    1               1               62                0
 
 Global: c3 (region CREG)
 Level          Blocks          Records         Adjacent
-    1               1              120              182
+    1               1              120                0
 
 Global: d (region DEFAULT)
 Level          Blocks          Records         Adjacent
-    1               1                6              187
+    1               1                6                0
 $MUPIP size -heuristic="scan,level=1"
 
 Global: a (region AREG)
 Level          Blocks          Records         Adjacent
-    1               6              819               11
+    2               1                6                1
+Level          Blocks          Records         Adjacent
+    1               6              819                0
 
 Global: a (region CREG)
 Level          Blocks          Records         Adjacent
-    1               1               84               32
+    1               1               84                1
 
 Global: a (region DEFAULT)
 Level          Blocks          Records         Adjacent
-    1               2              343               51
+    2               1                2                1
+Level          Blocks          Records         Adjacent
+    1               2              343                1
 
 Global: b (region BREG)
 Level          Blocks          Records         Adjacent
-    1               1                6               57
+    1               1                6                1
 
 Global: c (region AREG)
 Level          Blocks          Records         Adjacent
-    1               1               17               72
+    1               1               17                0
 
 Global: c (region CREG)
 Level          Blocks          Records         Adjacent
-    1               1              112               93
+    1               1              112                0
 
 Global: c2 (region CREG)
 Level          Blocks          Records         Adjacent
-    1               1               42              118
+    1               1               42                0
 
 Global: c2 (region DEFAULT)
 Level          Blocks          Records         Adjacent
-    1               1               59              141
+    1               1               59                0
 
 Global: c3 (region AREG)
 Level          Blocks          Records         Adjacent
-    1               1               62              159
+    1               1               62                0
 
 Global: c3 (region CREG)
 Level          Blocks          Records         Adjacent
-    1               1              120              182
+    1               1              120                0
 
 Global: d (region DEFAULT)
 Level          Blocks          Records         Adjacent
-    1               1                6              187
+    1               1                6                0
 $MUPIP size -heuristic="scan,level=2"
 
 Global: a (region AREG)
 Level          Blocks          Records         Adjacent
-    2               1                6                0
+    2               1                6                1
 
 Global: a (region CREG)
 %YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: a (region DEFAULT)
 Level          Blocks          Records         Adjacent
-    2               1                2                2
+    2               1                2                1
 
 Global: b (region BREG)
 %YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
@@ -2023,104 +2119,160 @@ $MUPIP size -heuristic="scan,level=0"
 
 Global: a (region AREG)
 Level          Blocks          Records         Adjacent
-    0             819            37345                0
+    2               1                6                1
+Level          Blocks          Records         Adjacent
+    1               6              819                0
+Level          Blocks          Records         Adjacent
+    0             819            37345               11
 
 Global: a (region CREG)
 Level          Blocks          Records         Adjacent
-    0              84             3909                0
+    1               1               84                1
+Level          Blocks          Records         Adjacent
+    0              84             3909               21
 
 Global: a (region DEFAULT)
 Level          Blocks          Records         Adjacent
-    0             343            16038                0
+    2               1                2                1
+Level          Blocks          Records         Adjacent
+    1               2              343                1
+Level          Blocks          Records         Adjacent
+    0             343            16038               19
 
 Global: b (region BREG)
 Level          Blocks          Records         Adjacent
-    0               6              354                0
+    1               1                6                1
+Level          Blocks          Records         Adjacent
+    0               6              354                6
 
 Global: c (region AREG)
 Level          Blocks          Records         Adjacent
-    0              17              769                0
+    1               1               17                0
+Level          Blocks          Records         Adjacent
+    0              17              769               15
 
 Global: c (region CREG)
 Level          Blocks          Records         Adjacent
-    0             112             5273                0
+    1               1              112                0
+Level          Blocks          Records         Adjacent
+    0             112             5273               21
 
 Global: c2 (region CREG)
 Level          Blocks          Records         Adjacent
-    0              42             1871                0
+    1               1               42                0
+Level          Blocks          Records         Adjacent
+    0              42             1871               25
 
 Global: c2 (region DEFAULT)
 Level          Blocks          Records         Adjacent
-    0              59             2712                0
+    1               1               59                0
+Level          Blocks          Records         Adjacent
+    0              59             2712               23
 
 Global: c3 (region AREG)
 Level          Blocks          Records         Adjacent
-    0              62             2663                0
+    1               1               62                0
+Level          Blocks          Records         Adjacent
+    0              62             2663               18
 
 Global: c3 (region CREG)
 Level          Blocks          Records         Adjacent
-    0             120             5462                0
+    1               1              120                0
+Level          Blocks          Records         Adjacent
+    0             120             5462               23
 
 Global: d (region DEFAULT)
 Level          Blocks          Records         Adjacent
-    0               6              354                0
+    1               1                6                0
+Level          Blocks          Records         Adjacent
+    0               6              354                5
 $MUPIP size -heuristic="scan,level=-1"
 
 Global: a (region AREG)
 Level          Blocks          Records         Adjacent
-    1               6              819               11
+    2               1                6                1
+Level          Blocks          Records         Adjacent
+    1               6              819                0
 
 Global: a (region CREG)
 Level          Blocks          Records         Adjacent
-    0              84             3909               11
+    1               1               84                1
+Level          Blocks          Records         Adjacent
+    0              84             3909               21
 
 Global: a (region DEFAULT)
 Level          Blocks          Records         Adjacent
-    1               2              343               30
+    2               1                2                1
+Level          Blocks          Records         Adjacent
+    1               2              343                1
 
 Global: b (region BREG)
 Level          Blocks          Records         Adjacent
-    0               6              354               30
+    1               1                6                1
+Level          Blocks          Records         Adjacent
+    0               6              354                6
 
 Global: c (region AREG)
 Level          Blocks          Records         Adjacent
-    0              17              769               30
+    1               1               17                0
+Level          Blocks          Records         Adjacent
+    0              17              769               15
 
 Global: c (region CREG)
 Level          Blocks          Records         Adjacent
-    0             112             5273               30
+    1               1              112                0
+Level          Blocks          Records         Adjacent
+    0             112             5273               21
 
 Global: c2 (region CREG)
 Level          Blocks          Records         Adjacent
-    0              42             1871               30
+    1               1               42                0
+Level          Blocks          Records         Adjacent
+    0              42             1871               25
 
 Global: c2 (region DEFAULT)
 Level          Blocks          Records         Adjacent
-    0              59             2712               30
+    1               1               59                0
+Level          Blocks          Records         Adjacent
+    0              59             2712               23
 
 Global: c3 (region AREG)
 Level          Blocks          Records         Adjacent
-    0              62             2663               30
+    1               1               62                0
+Level          Blocks          Records         Adjacent
+    0              62             2663               18
 
 Global: c3 (region CREG)
 Level          Blocks          Records         Adjacent
-    0             120             5462               30
+    1               1              120                0
+Level          Blocks          Records         Adjacent
+    0             120             5462               23
 
 Global: d (region DEFAULT)
 Level          Blocks          Records         Adjacent
-    0               6              354               30
+    1               1                6                0
+Level          Blocks          Records         Adjacent
+    0               6              354                5
 $MUPIP size -heuristic="scan,level=-2"
 
 Global: a (region AREG)
 Level          Blocks          Records         Adjacent
-    0             819            37345                0
+    2               1                6                1
+Level          Blocks          Records         Adjacent
+    1               6              819                0
+Level          Blocks          Records         Adjacent
+    0             819            37345               11
 
 Global: a (region CREG)
 %YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
 
 Global: a (region DEFAULT)
 Level          Blocks          Records         Adjacent
-    0             343            16038                0
+    2               1                2                1
+Level          Blocks          Records         Adjacent
+    1               2              343                1
+Level          Blocks          Records         Adjacent
+    0             343            16038               19
 
 Global: b (region BREG)
 %YDB-E-MUSIZEINVARG, MUPIP SIZE : Invalid parameter value for: HEURISTIC.LEVEL
@@ -2800,47 +2952,51 @@ $MUPIP size -heuristic="scan" -adjacency=200
 
 Global: a (region AREG)
 Level          Blocks          Records         Adjacent
-    1               6              819              320
+    2               1                6                1
+Level          Blocks          Records         Adjacent
+    1               6              819                5
 
 Global: a (region CREG)
 Level          Blocks          Records         Adjacent
-    1               1               84              404
+    1               1               84                1
 
 Global: a (region DEFAULT)
 Level          Blocks          Records         Adjacent
-    1               2              343              684
+    2               1                2                1
+Level          Blocks          Records         Adjacent
+    1               2              343                1
 
 Global: b (region BREG)
 Level          Blocks          Records         Adjacent
-    1               1                6              690
+    1               1                6                1
 
 Global: c (region AREG)
 Level          Blocks          Records         Adjacent
-    1               1               17              706
+    1               1               17                0
 
 Global: c (region CREG)
 Level          Blocks          Records         Adjacent
-    1               1              112              817
+    1               1              112                1
 
 Global: c2 (region CREG)
 Level          Blocks          Records         Adjacent
-    1               1               42              859
+    1               1               42                0
 
 Global: c2 (region DEFAULT)
 Level          Blocks          Records         Adjacent
-    1               1               59              918
+    1               1               59                0
 
 Global: c3 (region AREG)
 Level          Blocks          Records         Adjacent
-    1               1               62              979
+    1               1               62                0
 
 Global: c3 (region CREG)
 Level          Blocks          Records         Adjacent
-    1               1              120             1098
+    1               1              120                0
 
 Global: d (region DEFAULT)
 Level          Blocks          Records         Adjacent
-    1               1                6             1104
+    1               1                6                0
 $MUPIP size -heuristic="scan" -adjacency=-200
 %YDB-E-CLIERR, Unrecognized value: -200, Decimal integer expected
 $MUPIP size -heuristic="scan" -adjacency=foo

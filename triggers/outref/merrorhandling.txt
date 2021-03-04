@@ -209,7 +209,7 @@ Value get set? 10
 Done
 ###################################################################
 Testing non existent labels and routines
-$ZSTATUS=150373978,+1^etrap#8#,%YDB-E-ZLINKFILE, Error while zlinking "nosuchrtn",%YDB-E-FILENOTFND, File nosuchrtn not found
+$ZSTATUS=150373978,+1^etrap#8#,%YDB-E-ZLINKFILE, Error while zlinking "nosuchrtn",%YDB-E-FILENOTFND, File nosuchrtn.m not found,%YDB-E-FILENOTFND, File nosuchrtn.o not found
 ##SUSPEND_OUTPUT HOST_LINUX_IX86 HOST_HP-UX_IA64
 $ZSTATUS=150373194,+1^etrap#9#,%YDB-E-LABELMISSING, Label referenced but not defined: XXX
 ##SUSPEND_OUTPUT HOST_ALL
@@ -221,7 +221,7 @@ $zlevel=1 : $ztlevel=0
 $zlevel=2 : $ztlevel=1 : $reference=^CIF(1)
 $zlevel=3 : $ztlevel=2 : $reference=^CIF(2)
 $zlevel=2 : $ztlevel=1 : $reference=^CIF(2)
-$ecode=,M9,Z150373210,Z150373978,Z150379578, : $zstatus=150379578,+6^CIF#1#,%YDB-E-ERRWETRAP, Error while processing $ETRAP,-YDB-E-ZLINKFILE, Error while zlinking "TRIGBADREF",%YDB-E-FILENOTFND, File TRIGBADREF not found
+$ecode=,M9,Z150373210,Z150373978,Z150379578, : $zstatus=150379578,+6^CIF#1#,%YDB-E-ERRWETRAP, Error while processing $ETRAP,-YDB-E-ZLINKFILE, Error while zlinking "TRIGBADREF",%YDB-E-FILENOTFND, File TRIGBADREF.m not found,%YDB-E-FILENOTFND, File TRIGBADREF.o not found
 ^CIF(1)=1
 ^CIF(2)=2
 ###################################################################

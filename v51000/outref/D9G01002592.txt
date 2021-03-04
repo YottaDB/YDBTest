@@ -170,15 +170,25 @@ Error reading record number: 14
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=4294967295 -end=4294967296 all.$fmt
-%YDB-E-LOADEDSZ2, Load error: END too large.  No records loaded.
+##TEST_AWKYottaDB MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:.. ZWR
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 4294967295.  No records loaded.
+Error reading record number: 14
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=4294967296 -end=4294967295 all.$fmt
-%YDB-E-LOADBGSZ2, Load error: BEGIN too large.  No records loaded.
+%YDB-E-LOADEDBG, Load error: END smaller than BEGIN.  No records loaded.
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=4294967296 -end=4294967296 all.$fmt
-%YDB-E-LOADBGSZ2, Load error: BEGIN too large.  No records loaded.
+##TEST_AWKYottaDB MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:.. ZWR
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 4294967296.  No records loaded.
+Error reading record number: 14
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 unset verbose
 
 ######################################################################################
@@ -347,15 +357,25 @@ Error reading record number: 25
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=4294967295 -end=4294967296 all.$fmt
-%YDB-E-LOADEDSZ2, Load error: END too large.  No records loaded.
+##TEST_AWKYottaDB MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:..
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 4294967295.  No records loaded.
+Error reading record number: 25
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=4294967296 -end=4294967295 all.$fmt
-%YDB-E-LOADBGSZ2, Load error: BEGIN too large.  No records loaded.
+%YDB-E-LOADEDBG, Load error: END smaller than BEGIN.  No records loaded.
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=4294967296 -end=4294967296 all.$fmt
-%YDB-E-LOADBGSZ2, Load error: BEGIN too large.  No records loaded.
+##TEST_AWKYottaDB MUPIP EXTRACT.*
+##FILTERED##..-...-....  ..:..:..
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 4294967296.  No records loaded.
+Error reading record number: 25
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 unset verbose
 
 ######################################################################################
@@ -519,15 +539,25 @@ Error reading record number: 13
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=4294967295 -end=4294967296 all.$fmt
-%YDB-E-LOADEDSZ2, Load error: END too large.  No records loaded.
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*YottaDB MUPIP EXTRACT.*
+
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 4294967295.  No records loaded.
+Error reading record number: 13
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=4294967296 -end=4294967295 all.$fmt
-%YDB-E-LOADBGSZ2, Load error: BEGIN too large.  No records loaded.
+%YDB-E-LOADEDBG, Load error: END smaller than BEGIN.  No records loaded.
 $echoline
 -----------------------------------------------------------------
 $MUPIP load $fmtstr -begin=4294967296 -end=4294967296 all.$fmt
-%YDB-E-LOADBGSZ2, Load error: BEGIN too large.  No records loaded.
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................*YottaDB MUPIP EXTRACT.*
+
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 4294967296.  No records loaded.
+Error reading record number: 13
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 unset verbose
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
