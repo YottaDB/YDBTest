@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -16,6 +16,7 @@
 set tstpath = `pwd`
 setenv PKG_CONFIG_PATH $ydb_dist
 setenv GOPATH $tstpath/go/
+setenv GO111MODULE off		# Enables/Disable (off is disable) "module-mode" fetches on Go 1.16 (until Go 1.17)
 set go_repo="lang.yottadb.com/go/yottadb"
 mkdir go
 
