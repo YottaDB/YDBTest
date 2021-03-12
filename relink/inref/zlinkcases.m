@@ -3,7 +3,7 @@
 ; Copyright (c) 2014, 2015 Fidelity National Information	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
-; Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -182,7 +182,7 @@ zlinkcases
 	write "Case h2. With .m extension, .m is found (and .o exists) with intermediate zlink",!
 	write "Expected behavior = compile and link",!
 	write "testbasename="_iteration_testbasename,!
-	do preptest("",1)
+	do preptest("",0)
 	do genbothusesourcezlink(testbasename)
 	zlink $$getzlinktarget(testbasename_".m")
 	do verifytest(testbasename,"pass.m")
