@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2020-2021 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -2411,17 +2411,29 @@ AllCmdPostConditionalTest
 	. do verifypcrslt("READ",boolrslt,(result'=0),(result'="dummydebug"),dlrtest,boolexpr,.failcnt)
 	. ;
 	. ; TRESTART
-	. set result=0,xstr="trestart:"_boolexpr
+	. set result=0,tcommitrestart=0,xstr="trestart:"_boolexpr
 	. tstart ():serial
 	. set result=result+1
 	. if dlrtest		; sets $test to dlrtest before boolexpr is evaluated
 	. xecute:(result<2) xstr
+	. set tcommitrestart=tcommitrestart+1
 	. tcommit
-	. ; In case of boolrslt=0 or $zysqlnull trestart is not executed so result should be 1 indicating
-	. ;	the transaction was executed once.
+	. ; In case of boolrslt=0 or $zysqlnull trestart (in "xstr") should not be executed above as part of the "xecute" command
+	. ;	so "result" should be 1 indicating the transaction logic was executed once (i.e. TRESTART did not execute
+	. ;	the transaction logic more than once). Therefore one would tend to pass a simplistic "result'=1" as the 3rd
+	. ;	parameter in the "verifypcrslt" call below (indicating that if "result" is not 1 signal a failure). But note that
+	. ;	it is possible a restart still happens above at the "tcommit" command that is 2 lines after the "xecute" command
+	. ;	(due to reasons like global buffers contention etc.). In that case "result" would not be 1 but is guaranteed to be
+	. ;	greater than 1 (i.e. not equal to 0). So we cannot use a simplistic "result'=1" as the 3rd parameter call below.
+	. ;	Instead we use "tcommitrestart" variable to track the number of "tcommit" related restarts above (will be 1 if
+	. ;	there are no restarts, will be 2 if there was 1 tcommit restart etc.) and check below that "tcommitrestart" is the
+	. ;	same value as "result". Hence we pass "(0>=result)" (to fail the test if result is not at least 1) and
+	. ;	"tcommitrestart'=result" check (to fail the test if we notice at least one TRESTART related restart) below.
 	. ; In case of boolrslt=1 trestart is executed so result should be 2 indicating the transaction
-	. ;	was executed twice due to restart
-	. do verifypcrslt("TRESTART",boolrslt,(result'=1),(result'=2),dlrtest,boolexpr,.failcnt)
+	. ;	was executed twice due to restart. Note that it is possible we encounter similar issues here where tcommit
+	. ;	related restarts happen and cause "result" to be greater than 2. But we have not yet seen any such failure
+	. ;	so this part of the check is kept as is. Hence sticking with "result'=2" check for now as the 4th parameter below.
+	. do verifypcrslt("TRESTART",boolrslt,((0>=result)!(tcommitrestart'=result)),(result'=2),dlrtest,boolexpr,.failcnt)
 	. ;
 	. ; USE
 	. set x="ydb484pcuse.m" open x use x write "hello",! close x
