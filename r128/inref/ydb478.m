@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;                                                               ;
-; Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2019-2021 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.                                          ;
 ;                                                               ;
 ;       This source code contains the intellectual property     ;
@@ -21,12 +21,12 @@ ydb478	;
 	set $etrap="zshow ""*"" zhalt 1"
 	write "**********************",!
 	for signum=1:1:64 do
-	. quit:(9=signum)			; Bypass signal 9 (SIGKILL) as it is uncatchable (and kills our test)
-	. quit:(20<=signum)&(23>=signum)	; Bypass signals 20-23 (SIGTSTP, SIGTTIN, SIGTTOU, SIGURG) - cause problems
-	. quit:(13=signum)			; Bypass 13 (SIGPIPE) as it hangs up Go
-	. quit:(19=signum)			; Bypass 19 (SIGSTOP) as it is uncatchable
-	. quit:(27=signum)			; Bypass 27 (SIGPROF) as it hangs up Go
-	. quit:(32=signum)!(33=signum)		; Bypass signals 32-33 as they cause Go to hang
+	. quit:(9=signum)				; Bypass signal 9 (SIGKILL) as it is uncatchable (and kills our test)
+	. quit:(20<=signum)&(23>=signum)		; Bypass signals 20-23 (SIGTSTP, SIGTTIN, SIGTTOU, SIGURG) - cause problems
+	. quit:(13=signum)				; Bypass 13 (SIGPIPE) as it hangs up Go
+	. quit:(19=signum)				; Bypass 19 (SIGSTOP) as it is uncatchable
+	. quit:(27=signum)				; Bypass 27 (SIGPROF) as it hangs up Go
+	. quit:(32=signum)!(33=signum)!(34=signum)	; Bypass signals 32-34 (34 as of Go 1.16) as they cause Go to hang
 	. ; Find signal name for signum by using bash kill -L <signum>
 	. do pipecmd("bash -c ""kill -l "_signum_"""",.rslt)
 	. set signame=$select(1=rslt(0):"SIG"_rslt(1),1:"SIGunknown")
