@@ -1,0 +1,33 @@
+# -----------------------------------------------------------------
+# Test that Multi-line -xecute in $ztrigger() accepts trailing ">>"
+# -----------------------------------------------------------------
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Test multi-line trigger with no trailing ">>". Expect no errors.
+Added SET trigger on ^a named trig1
+1
+# Test multi-line trigger with trailing ">>". Expect no errors.
+Added SET trigger on ^b named trig2
+1
+# Test multi-line trigger with trailing ">>\n". Expect no errors.
+Added SET trigger on ^c named trig3
+1
+# Verify that 3 triggers did get loaded in the database by invoking mupip trigger -select
+;trigger name: trig1 (region DEFAULT)  cycle: 1
++^a(sub1=0:100) -name=trig1 -commands=S -xecute=<<
+ write sub1,!
+>>
+;trigger name: trig2 (region DEFAULT)  cycle: 1
++^b(sub1=0:100) -name=trig2 -commands=S -xecute=<<
+ write sub1,!
+>>
+;trigger name: trig3 (region DEFAULT)  cycle: 1
++^c(sub1=0:100) -name=trig3 -commands=S -xecute=<<
+ write sub1,!
+>>
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
