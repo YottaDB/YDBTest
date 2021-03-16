@@ -1,0 +1,4 @@
+# Compile gtm9149.c and make it a ##TEST_SHL_SUFFIX## file
+# Set up the xcall environment
+# This test is making the external call that will return a negative length string expecting to output an empty string
+# Check the syslog for an %YDB-E-ZCCONVERT error. If not found, this will time out after 5 minutes (300 seconds).

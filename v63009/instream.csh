@@ -29,6 +29,7 @@
 # gtm9115		[bdw]		Tests %HO, %OH, %DO and %OD for correctness and for performance improvement compared to pre V6.3-009 versions
 # gtm9113		[kz]		Tests that an XECUTE of a literal argument containing a FOR with a termination value for a control variable argument, GT.M processes the rest of the line
 # gtm8921		[estess]	Tests that IPCs for read-only databases are correctly run down when last process exits.
+# gtm9149		[kz]		Tests that GT.M turns a gtm_string length set to a negative length, to an empty string in an external call. 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -36,7 +37,7 @@ echo "v63009 test starts..."
 
 # List the subtests seperated by sspaces under the appropriate environment variable name
 setenv subtest_list_common	""
-setenv subtest_list_non_replic "gtm9142 gtm8203 gtm9145 gtm8901 gtm8706 gtm9155 gtm9037 gtm9144 gtm9123 gtm9115 gtm9113 gtm8921"
+setenv subtest_list_non_replic "gtm9142 gtm8203 gtm9145 gtm8901 gtm8706 gtm9155 gtm9037 gtm9144 gtm9123 gtm9115 gtm9113 gtm8921 gtm9149"
 setenv subtest_list_replic	"gtm9037replic gtm9134"
 
 if ($?test_replic == 1) then
