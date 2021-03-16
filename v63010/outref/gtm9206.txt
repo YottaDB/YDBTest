@@ -1,0 +1,604 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+######################################################################################
+                           Testing format=zwr
+######################################################################################
+$MUPIP extract -format=$fmt all.$fmt
+%YDB-I-RECORDSTAT, ^x:	  Key cnt: 10  max subsc len: 6  max rec len: 400  max node len: 410
+%YDB-I-RECORDSTAT, ^y:	  Key cnt: 1  max subsc len: 6  max rec len: 5  max node len: 15
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 11  max subsc len: 6  max rec len: 400  max node len: 410
+if ( $fmt == bin ) then
+
+set fmtstr = ""
+endif
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=4294967294 -end=4294967298 all.$fmt
+YottaDB MUPIP EXTRACT ##SOURCE_PATH##/mupip extract -format=zwr all.zwr
+##FILTERED##..-...-....  ..:..:.. ZWR
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 4294967294.  No records loaded.
+Error reading record number: 14
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=4294967296 -end=4294967300 all.$fmt
+YottaDB MUPIP EXTRACT ##SOURCE_PATH##/mupip extract -format=zwr all.zwr
+##FILTERED##..-...-....  ..:..:.. ZWR
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 4294967296.  No records loaded.
+Error reading record number: 14
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=4294967300 all.$fmt
+YottaDB MUPIP EXTRACT ##SOURCE_PATH##/mupip extract -format=zwr all.zwr
+##FILTERED##..-...-....  ..:..:.. ZWR
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 4294967300.  No records loaded.
+Error reading record number: 14
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -end=4294967300 all.$fmt
+YottaDB MUPIP EXTRACT ##SOURCE_PATH##/mupip extract -format=zwr all.zwr
+##FILTERED##..-...-....  ..:..:.. ZWR
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 11  Max Subsc Len: 6  Max Data Len: 400
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 13
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=5000000000 -end=5000000000 all.$fmt
+YottaDB MUPIP EXTRACT ##SOURCE_PATH##/mupip extract -format=zwr all.zwr
+##FILTERED##..-...-....  ..:..:.. ZWR
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 5000000000.  No records loaded.
+Error reading record number: 14
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=6000000000 -end=6000000000 all.$fmt
+YottaDB MUPIP EXTRACT ##SOURCE_PATH##/mupip extract -format=zwr all.zwr
+##FILTERED##..-...-....  ..:..:.. ZWR
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 6000000000.  No records loaded.
+Error reading record number: 14
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=7000000000 -end=7000000000 all.$fmt
+YottaDB MUPIP EXTRACT ##SOURCE_PATH##/mupip extract -format=zwr all.zwr
+##FILTERED##..-...-....  ..:..:.. ZWR
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 7000000000.  No records loaded.
+Error reading record number: 14
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=8000000000 -end=8000000000 all.$fmt
+YottaDB MUPIP EXTRACT ##SOURCE_PATH##/mupip extract -format=zwr all.zwr
+##FILTERED##..-...-....  ..:..:.. ZWR
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 8000000000.  No records loaded.
+Error reading record number: 14
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=9000000000 -end=9000000000 all.$fmt
+YottaDB MUPIP EXTRACT ##SOURCE_PATH##/mupip extract -format=zwr all.zwr
+##FILTERED##..-...-....  ..:..:.. ZWR
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 9000000000.  No records loaded.
+Error reading record number: 14
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=10000000000 -end=10000000000 all.$fmt
+YottaDB MUPIP EXTRACT ##SOURCE_PATH##/mupip extract -format=zwr all.zwr
+##FILTERED##..-...-....  ..:..:.. ZWR
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 10000000000.  No records loaded.
+Error reading record number: 14
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=50000000000 -end=50000000000 all.$fmt
+YottaDB MUPIP EXTRACT ##SOURCE_PATH##/mupip extract -format=zwr all.zwr
+##FILTERED##..-...-....  ..:..:.. ZWR
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 50000000000.  No records loaded.
+Error reading record number: 14
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=100000000000 -end=100000000000 all.$fmt
+YottaDB MUPIP EXTRACT ##SOURCE_PATH##/mupip extract -format=zwr all.zwr
+##FILTERED##..-...-....  ..:..:.. ZWR
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 100000000000.  No records loaded.
+Error reading record number: 14
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=500000000000 -end=500000000000 all.$fmt
+YottaDB MUPIP EXTRACT ##SOURCE_PATH##/mupip extract -format=zwr all.zwr
+##FILTERED##..-...-....  ..:..:.. ZWR
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 500000000000.  No records loaded.
+Error reading record number: 14
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=1000000000000 -end=1000000000000 all.$fmt
+YottaDB MUPIP EXTRACT ##SOURCE_PATH##/mupip extract -format=zwr all.zwr
+##FILTERED##..-...-....  ..:..:.. ZWR
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 1000000000000.  No records loaded.
+Error reading record number: 14
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=12500000000000000000 -end=12500000000000000000 all.$fmt
+YottaDB MUPIP EXTRACT ##SOURCE_PATH##/mupip extract -format=zwr all.zwr
+##FILTERED##..-...-....  ..:..:.. ZWR
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 12500000000000000000.  No records loaded.
+Error reading record number: 14
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=14000000000000000000 -end=14000000000000000000 all.$fmt
+YottaDB MUPIP EXTRACT ##SOURCE_PATH##/mupip extract -format=zwr all.zwr
+##FILTERED##..-...-....  ..:..:.. ZWR
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 14000000000000000000.  No records loaded.
+Error reading record number: 14
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=15500000000000000000 -end=15500000000000000000 all.$fmt
+YottaDB MUPIP EXTRACT ##SOURCE_PATH##/mupip extract -format=zwr all.zwr
+##FILTERED##..-...-....  ..:..:.. ZWR
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 15500000000000000000.  No records loaded.
+Error reading record number: 14
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=17000000000000000000 -end=17000000000000000000 all.$fmt
+YottaDB MUPIP EXTRACT ##SOURCE_PATH##/mupip extract -format=zwr all.zwr
+##FILTERED##..-...-....  ..:..:.. ZWR
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 17000000000000000000.  No records loaded.
+Error reading record number: 14
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=18446744073709551615 -end=18446744073709551615 all.$fmt
+YottaDB MUPIP EXTRACT ##SOURCE_PATH##/mupip extract -format=zwr all.zwr
+##FILTERED##..-...-....  ..:..:.. ZWR
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 18446744073709551615.  No records loaded.
+Error reading record number: 14
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=18446744073709551615 -end=18446744073709551616 all.$fmt
+Error: cannot convert 18446744073709551616 value to 64-bit unsigned decimal number.
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=18446744073709551616 -end=18446744073709551615 all.$fmt
+Error: cannot convert 18446744073709551616 value to 64-bit unsigned decimal number.
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=18446744073709551616 -end=18446744073709551616 all.$fmt
+Error: cannot convert 18446744073709551616 value to 64-bit unsigned decimal number.
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
+unset verbose
+
+######################################################################################
+                           Testing format=go
+######################################################################################
+$MUPIP extract -format=$fmt all.$fmt
+%YDB-I-RECORDSTAT, ^x:	  Key cnt: 10  max subsc len: 6  max rec len: 400  max node len: 410
+%YDB-I-RECORDSTAT, ^y:	  Key cnt: 1  max subsc len: 6  max rec len: 5  max node len: 15
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 11  max subsc len: 6  max rec len: 400  max node len: 410
+if ( $fmt == bin ) then
+
+set fmtstr = ""
+endif
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=4294967294 -end=4294967298 all.$fmt
+YottaDB MUPIP EXTRACT ##SOURCE_PATH##/mupip extract -format=go all.go
+##FILTERED##..-...-....  ..:..:..
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 4294967294.  No records loaded.
+Error reading record number: 25
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=4294967296 -end=4294967300 all.$fmt
+YottaDB MUPIP EXTRACT ##SOURCE_PATH##/mupip extract -format=go all.go
+##FILTERED##..-...-....  ..:..:..
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 4294967296.  No records loaded.
+Error reading record number: 25
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=4294967300 all.$fmt
+YottaDB MUPIP EXTRACT ##SOURCE_PATH##/mupip extract -format=go all.go
+##FILTERED##..-...-....  ..:..:..
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 4294967300.  No records loaded.
+Error reading record number: 25
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -end=4294967300 all.$fmt
+YottaDB MUPIP EXTRACT ##SOURCE_PATH##/mupip extract -format=go all.go
+##FILTERED##..-...-....  ..:..:..
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 11  Max Subsc Len: 6  Max Data Len: 400
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 24
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=5000000000 -end=5000000000 all.$fmt
+YottaDB MUPIP EXTRACT ##SOURCE_PATH##/mupip extract -format=go all.go
+##FILTERED##..-...-....  ..:..:..
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 5000000000.  No records loaded.
+Error reading record number: 25
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=6000000000 -end=6000000000 all.$fmt
+YottaDB MUPIP EXTRACT ##SOURCE_PATH##/mupip extract -format=go all.go
+##FILTERED##..-...-....  ..:..:..
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 6000000000.  No records loaded.
+Error reading record number: 25
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=7000000000 -end=7000000000 all.$fmt
+YottaDB MUPIP EXTRACT ##SOURCE_PATH##/mupip extract -format=go all.go
+##FILTERED##..-...-....  ..:..:..
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 7000000000.  No records loaded.
+Error reading record number: 25
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=8000000000 -end=8000000000 all.$fmt
+YottaDB MUPIP EXTRACT ##SOURCE_PATH##/mupip extract -format=go all.go
+##FILTERED##..-...-....  ..:..:..
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 8000000000.  No records loaded.
+Error reading record number: 25
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=9000000000 -end=9000000000 all.$fmt
+YottaDB MUPIP EXTRACT ##SOURCE_PATH##/mupip extract -format=go all.go
+##FILTERED##..-...-....  ..:..:..
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 9000000000.  No records loaded.
+Error reading record number: 25
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=10000000000 -end=10000000000 all.$fmt
+YottaDB MUPIP EXTRACT ##SOURCE_PATH##/mupip extract -format=go all.go
+##FILTERED##..-...-....  ..:..:..
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 10000000000.  No records loaded.
+Error reading record number: 25
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=50000000000 -end=50000000000 all.$fmt
+YottaDB MUPIP EXTRACT ##SOURCE_PATH##/mupip extract -format=go all.go
+##FILTERED##..-...-....  ..:..:..
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 50000000000.  No records loaded.
+Error reading record number: 25
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=100000000000 -end=100000000000 all.$fmt
+YottaDB MUPIP EXTRACT ##SOURCE_PATH##/mupip extract -format=go all.go
+##FILTERED##..-...-....  ..:..:..
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 100000000000.  No records loaded.
+Error reading record number: 25
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=500000000000 -end=500000000000 all.$fmt
+YottaDB MUPIP EXTRACT ##SOURCE_PATH##/mupip extract -format=go all.go
+##FILTERED##..-...-....  ..:..:..
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 500000000000.  No records loaded.
+Error reading record number: 25
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=1000000000000 -end=1000000000000 all.$fmt
+YottaDB MUPIP EXTRACT ##SOURCE_PATH##/mupip extract -format=go all.go
+##FILTERED##..-...-....  ..:..:..
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 1000000000000.  No records loaded.
+Error reading record number: 25
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=12500000000000000000 -end=12500000000000000000 all.$fmt
+YottaDB MUPIP EXTRACT ##SOURCE_PATH##/mupip extract -format=go all.go
+##FILTERED##..-...-....  ..:..:..
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 12500000000000000000.  No records loaded.
+Error reading record number: 25
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=14000000000000000000 -end=14000000000000000000 all.$fmt
+YottaDB MUPIP EXTRACT ##SOURCE_PATH##/mupip extract -format=go all.go
+##FILTERED##..-...-....  ..:..:..
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 14000000000000000000.  No records loaded.
+Error reading record number: 25
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=15500000000000000000 -end=15500000000000000000 all.$fmt
+YottaDB MUPIP EXTRACT ##SOURCE_PATH##/mupip extract -format=go all.go
+##FILTERED##..-...-....  ..:..:..
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 15500000000000000000.  No records loaded.
+Error reading record number: 25
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=17000000000000000000 -end=17000000000000000000 all.$fmt
+YottaDB MUPIP EXTRACT ##SOURCE_PATH##/mupip extract -format=go all.go
+##FILTERED##..-...-....  ..:..:..
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 17000000000000000000.  No records loaded.
+Error reading record number: 25
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=18446744073709551615 -end=18446744073709551615 all.$fmt
+YottaDB MUPIP EXTRACT ##SOURCE_PATH##/mupip extract -format=go all.go
+##FILTERED##..-...-....  ..:..:..
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 18446744073709551615.  No records loaded.
+Error reading record number: 25
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=18446744073709551615 -end=18446744073709551616 all.$fmt
+Error: cannot convert 18446744073709551616 value to 64-bit unsigned decimal number.
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=18446744073709551616 -end=18446744073709551615 all.$fmt
+Error: cannot convert 18446744073709551616 value to 64-bit unsigned decimal number.
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=18446744073709551616 -end=18446744073709551616 all.$fmt
+Error: cannot convert 18446744073709551616 value to 64-bit unsigned decimal number.
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
+unset verbose
+
+######################################################################################
+                           Testing format=bin
+######################################################################################
+$MUPIP extract -format=$fmt all.$fmt
+%YDB-I-RECORDSTAT, ^x:	  Key cnt: 10  max subsc len: 6  max rec len: 400  max node len: 410
+%YDB-I-RECORDSTAT, ^y:	  Key cnt: 1  max subsc len: 6  max rec len: 5  max node len: 15
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 11  max subsc len: 6  max rec len: 400  max node len: 410
+if ( $fmt == bin ) then
+set fmtstr = "-format=bin"
+else
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=4294967294 -end=4294967298 all.$fmt
+Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................YottaDB MUPIP EXTRACT           
+
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 4294967294.  No records loaded.
+Error reading record number: 13
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=4294967296 -end=4294967300 all.$fmt
+Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................YottaDB MUPIP EXTRACT           
+
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 4294967296.  No records loaded.
+Error reading record number: 13
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=4294967300 all.$fmt
+Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................YottaDB MUPIP EXTRACT           
+
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 4294967300.  No records loaded.
+Error reading record number: 13
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -end=4294967300 all.$fmt
+Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................YottaDB MUPIP EXTRACT           
+
+Beginning LOAD at record number: 2
+
+LOAD TOTAL		Key Cnt: 11  Max Subsc Len: 6  Max Data Len: 400
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 12
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=5000000000 -end=5000000000 all.$fmt
+Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................YottaDB MUPIP EXTRACT           
+
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 5000000000.  No records loaded.
+Error reading record number: 13
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=6000000000 -end=6000000000 all.$fmt
+Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................YottaDB MUPIP EXTRACT           
+
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 6000000000.  No records loaded.
+Error reading record number: 13
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=7000000000 -end=7000000000 all.$fmt
+Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................YottaDB MUPIP EXTRACT           
+
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 7000000000.  No records loaded.
+Error reading record number: 13
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=8000000000 -end=8000000000 all.$fmt
+Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................YottaDB MUPIP EXTRACT           
+
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 8000000000.  No records loaded.
+Error reading record number: 13
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=9000000000 -end=9000000000 all.$fmt
+Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................YottaDB MUPIP EXTRACT           
+
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 9000000000.  No records loaded.
+Error reading record number: 13
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=10000000000 -end=10000000000 all.$fmt
+Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................YottaDB MUPIP EXTRACT           
+
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 10000000000.  No records loaded.
+Error reading record number: 13
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=50000000000 -end=50000000000 all.$fmt
+Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................YottaDB MUPIP EXTRACT           
+
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 50000000000.  No records loaded.
+Error reading record number: 13
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=100000000000 -end=100000000000 all.$fmt
+Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................YottaDB MUPIP EXTRACT           
+
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 100000000000.  No records loaded.
+Error reading record number: 13
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=500000000000 -end=500000000000 all.$fmt
+Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................YottaDB MUPIP EXTRACT           
+
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 500000000000.  No records loaded.
+Error reading record number: 13
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=1000000000000 -end=1000000000000 all.$fmt
+Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................YottaDB MUPIP EXTRACT           
+
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 1000000000000.  No records loaded.
+Error reading record number: 13
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=12500000000000000000 -end=12500000000000000000 all.$fmt
+Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................YottaDB MUPIP EXTRACT           
+
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 12500000000000000000.  No records loaded.
+Error reading record number: 13
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=14000000000000000000 -end=14000000000000000000 all.$fmt
+Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................YottaDB MUPIP EXTRACT           
+
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 14000000000000000000.  No records loaded.
+Error reading record number: 13
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=15500000000000000000 -end=15500000000000000000 all.$fmt
+Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................YottaDB MUPIP EXTRACT           
+
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 15500000000000000000.  No records loaded.
+Error reading record number: 13
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=17000000000000000000 -end=17000000000000000000 all.$fmt
+Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................YottaDB MUPIP EXTRACT           
+
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 17000000000000000000.  No records loaded.
+Error reading record number: 13
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=18446744073709551615 -end=18446744073709551615 all.$fmt
+Label = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................YottaDB MUPIP EXTRACT           
+
+%YDB-E-LOADEOF, Load error: EOF reached prior to BEGIN record 18446744073709551615.  No records loaded.
+Error reading record number: 13
+
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=18446744073709551615 -end=18446744073709551616 all.$fmt
+Error: cannot convert 18446744073709551616 value to 64-bit unsigned decimal number.
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=18446744073709551616 -end=18446744073709551615 all.$fmt
+Error: cannot convert 18446744073709551616 value to 64-bit unsigned decimal number.
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
+$echoline
+###################################################################
+$MUPIP load $fmtstr -begin=18446744073709551616 -end=18446744073709551616 all.$fmt
+Error: cannot convert 18446744073709551616 value to 64-bit unsigned decimal number.
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
+unset verbose
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
