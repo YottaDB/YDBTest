@@ -1,21 +1,57 @@
-# -----------------------------------------------------------------
-# Test that Multi-line -xecute in $ztrigger() accepts trailing ">>"
-# -----------------------------------------------------------------
+# ------------------------------------------------------------------------------------------------------
+# Test that Multi-line -xecute in $ztrigger() accepts trailing ">>" and -piece/-delim etc. after -xecute
+# ------------------------------------------------------------------------------------------------------
 Files Created in ##TEST_PATH##:
 Using: ##SOURCE_PATH##/mumps -run GDE
 mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
 # Test multi-line trigger with no trailing ">>". Expect no errors.
+trigstr="+^a(sub1=0:100) -command=set -name=trig1 -xecute=<<"_$C(10)_" write sub1,!"_$C(10)
 Added SET trigger on ^a named trig1
 1
 # Test multi-line trigger with trailing ">>". Expect no errors.
+trigstr="+^b(sub1=0:100) -command=set -name=trig2 -xecute=<<"_$C(10)_" write sub1,!"_$C(10)_">>"
 Added SET trigger on ^b named trig2
 1
 # Test multi-line trigger with trailing ">>\n". Expect no errors.
+trigstr="+^c(sub1=0:100) -command=set -name=trig3 -xecute=<<"_$C(10)_" write sub1,!"_$C(10)_">>"_$C(10)
 Added SET trigger on ^c named trig3
 1
-# Verify that 3 triggers did get loaded in the database by invoking mupip trigger -select
+# Test valid multi-line trigger with -pieces and -delim coming after -xecute. Expect no errors.
+trigstr="+^USPresidents0(sub1=*,sub2=*) -command=set -xecute=<<"_$C(10)_" for i=1:1:$zlength($ztupdate,"","") set p=$piece($ztupdate,"","",i) do"_$C(10)_" . set q=$piece($ztoldval,$ztdelim,p)"_$C(10)_" . if $data(^d(p,q,sub1,sub2))#10 zkill ^(sub2) zkill:1>$increment(^d(-p,q),-1) ^(q)"_$C(10)_" . set q=$piece($ztvalue,$ztdelim,p) zwrite"_$C(10)_" . if '$data(^d(p,q,sub1,sub2)) set ^(sub2)="""" if $increment(^d(-p,q))"_$C(10)_">>"_$C(10)_" -pieces=1:3 -delim=""|"""
+Added SET trigger on ^USPresidents0 named USPresidents0#1
+1
+# Test multi-line trigger not terminated with a >>. Expect error due to missing >>.
+trigstr="+^USPresidents1(sub1=*,sub2=*) -command=set -xecute=<<"_$C(10)_" for i=1:1:$zlength($ztupdate,"","") set p=$piece($ztupdate,"","",i) do"_$C(10)_" . set q=$piece($ztoldval,$ztdelim,p)"_$C(10)_" . if $data(^d(p,q,sub1,sub2))#10 zkill ^(sub2) zkill:1>$increment(^d(-p,q),-1) ^(q)"_$C(10)_" . set q=$piece($ztvalue,$ztdelim,p) zwrite"_$C(10)_" . if '$data(^d(p,q,sub1,sub2)) set ^(sub2)="""" if $increment(^d(-p,q))"_$C(10)_" -pieces=1:3 -delim=""|"""
+Error : Multi-line xecute in $ztrigger ITEM must end in newline
+0
+# Test valid multi-line trigger containing invalid M code. Expect errors.
+trigstr="+^USPresidents2(sub1=*,sub2=*) -command=set -xecute=<<"_$C(10)_" for i=1:1:$zlength($ztupdate,"","") set p=$piece($ztupdate,"","",i) do"_$C(10)_" . set q=$piece($ztoldval,$ztdelim,p)"_$C(10)_" . if $data(^d(p,q,sub1,sub2))#10 zkill ^(sub2) zkill:1>$increment(^d(-p,q),-1) ^(q)"_$C(10)_" . set q=$piece($ztvalue,$ztdelim,p) zwrite"_$C(10)_" . if '$data(^d(p,q,sub1,sub2)) set ^(sub2)="""" if $increment(^d(-p,q))"_$C(10)_" . abcd"_$C(10)_">>"_$C(10)_" -pieces=1:3 -delim=""|"""
+	 . abcd
+	   ^-----
+##TEST_AWK		At column 4, line 6, source module .*trgtmp.*
+%YDB-E-INVCMD, Invalid command keyword encountered
+Error : Parsing XECUTE string: " for i=1:1:$zlength($ztupdate,"","") set p=$piece($ztupdate,"","",i) do"_$C(10)_" . set q=$piece($ztoldval,$ztdelim,p)"_$C(10)_" . if $data(^d(p,q,sub1,sub2))#10 zkill ^(sub2) zkill:1>$increment(^d(-p,q),-1) ^(q)"_$C(10)_" . set q=$piece($ztvalue,$ztdelim,p) zwrite"_$C(10)_" . if '$data(^d(p,q,sub1,sub2)) set ^(sub2)="""" if $increment(^d(-p,q))"_$C(10)_" . abcd"_$C(10)
+0
+# Test trigger with multi-line trigger suffix [\n>>\n] but no [-xecute<<\n] prefix.
+#  --> Test -xecute AFTER -name. Expect error.
+trigstr="+^c(sub1=0:100) -command=set -name=trig3"_$C(10)_">>"_$C(10)_" -xecute=""write 123"",!"
+Error: XECUTE value missing
+0
+#  --> Test -xecute BEFORE -name. Expect error.
+trigstr="+^c(sub1=0:100) -command=set -xecute=""write 123,!"" -name=trig3"_$C(10)_">>"_$C(10)_"abcd"
+Error : Newline allowed only inside multi-line xecute in $ztrigger ITEM
+0
+# Verify that appropriate triggers did get loaded in the database by invoking mupip trigger -select
+;trigger name: USPresidents0#1 (region DEFAULT)  cycle: 1
++^USPresidents0(sub1=*,sub2=*) -commands=S -delim="|" -pieces=1:3 -xecute=<<
+ for i=1:1:$zlength($ztupdate,",") set p=$piece($ztupdate,",",i) do
+ . set q=$piece($ztoldval,$ztdelim,p)
+ . if $data(^d(p,q,sub1,sub2))#10 zkill ^(sub2) zkill:1>$increment(^d(-p,q),-1) ^(q)
+ . set q=$piece($ztvalue,$ztdelim,p) zwrite
+ . if '$data(^d(p,q,sub1,sub2)) set ^(sub2)="" if $increment(^d(-p,q))
+>>
 ;trigger name: trig1 (region DEFAULT)  cycle: 1
 +^a(sub1=0:100) -name=trig1 -commands=S -xecute=<<
  write sub1,!

@@ -11,11 +11,11 @@
 #								#
 #################################################################
 
-echo '# -----------------------------------------------------------------'
-echo '# Test that Multi-line -xecute in $ztrigger() accepts trailing ">>"'
-echo '# -----------------------------------------------------------------'
+echo '# ------------------------------------------------------------------------------------------------------'
+echo '# Test that Multi-line -xecute in $ztrigger() accepts trailing ">>" and -piece/-delim etc. after -xecute'
+echo '# ------------------------------------------------------------------------------------------------------'
 $gtm_tst/com/dbcreate.csh mumps
 $ydb_dist/yottadb -run ydb700
-echo '# Verify that 3 triggers did get loaded in the database by invoking mupip trigger -select'
+echo '# Verify that appropriate triggers did get loaded in the database by invoking mupip trigger -select'
 $ydb_dist/mupip trigger -select -stdout
 $gtm_tst/com/dbcheck.csh

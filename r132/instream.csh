@@ -36,7 +36,7 @@
 # ydb673 [nars,estess] Test that LOCK with 0 timeout successfully obtains an unowned lock if 32+ M lock hash values hash to same
 #                      bucket (neighborhood full issue).
 # ydb697 [bdw]       Test that %CONVNEG^%CONVBASEUTIL produces correct two's complement results for octal numbers
-# ydb700 [nars]      Test that Multi-line -xecute in $ztrigger() accepts trailing ">>"
+# ydb700 [nars]      Test that Multi-line -xecute in $ztrigger() accepts trailing ">>" and -piece/-delim etc. after -xecute
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r132 test starts..."
