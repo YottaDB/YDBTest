@@ -1,0 +1,69 @@
+This test checks that ZCMDLINE does not include direct or run when mumps/ydb is invoked with -run or -direct. Prior to V63010, 'run' or 'direct' could incorrectly appear in ZCMDLINE if extra spaces were inserted in the mumps/ydb command between mumps/ydb, the '-' and/or run/direct.
+###################################################################
+Testing 'mumps -direct'
+
+YDB>
+ZCMDLINE = 
+
+YDB>
+###################################################################
+Testing 'mumps -dir'
+
+YDB>
+ZCMDLINE = 
+
+YDB>
+###################################################################
+Testing 'mumps  -dir'
+
+YDB>
+ZCMDLINE = 
+
+YDB>
+###################################################################
+Testing 'mumps  -direct'
+
+YDB>
+ZCMDLINE = 
+
+YDB>
+###################################################################
+Testing 'mumps - direct'
+
+YDB>
+ZCMDLINE = 
+
+YDB>
+###################################################################
+Testing 'mumps - dir'
+
+YDB>
+ZCMDLINE = 
+
+YDB>
+###################################################################
+Testing 'mumps  - direct'
+
+YDB>
+ZCMDLINE = 
+
+YDB>
+###################################################################
+Testing 'mumps - dir'
+
+YDB>
+ZCMDLINE = 
+
+YDB>
+###################################################################
+Testing 'mumps -run gtm9188'
+ZCMDLINE = 
+###################################################################
+Testing 'mumps  -run gtm9188'
+ZCMDLINE = 
+###################################################################
+Testing 'mumps - run gtm9188'
+ZCMDLINE = 
+###################################################################
+Testing 'mumps  - run gtm9188'
+ZCMDLINE = 

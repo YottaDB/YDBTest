@@ -16,6 +16,7 @@
 # List of subtests of the form "subtestname [author] description"
 #-------------------------------------------------------------------------------------
 # gtm9206               [bdw]            Test that MUPIP LOAD can correctly handle 64 bit values for -begin and -end
+# gtm9188               [bdw]            Test that $ZCMDLINE is set correctly for mumps -run and mumps -direct commands with extra spaces
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -23,7 +24,7 @@ echo "v63010 test starts..."
 
 # List the subtests seperated by sspaces under the appropriate environment variable name
 setenv subtest_list_common	""
-setenv subtest_list_non_replic "gtm9206"
+setenv subtest_list_non_replic "gtm9206 gtm9188"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
