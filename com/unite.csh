@@ -31,8 +31,11 @@ if ( $#argv == 0 ) then
    echo ""
    exit
 endif
-if ($?gtm_tst) setenv gtm_test_com_individual $gtm_tst/com/
-if !($?gtm_test_com_individual) setenv gtm_test_com_individual $gtm_test/T990/com/
+
+# Set "gtm_test_com_individual" (an env var required by this script) to the path of the unite.csh script
+# that was used in this current invocation.
+setenv gtm_test_com_individual $0:h
+
 source $gtm_test_com_individual/set_specific.csh
 set x=1
 setenv test_list ""
