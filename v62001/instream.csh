@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -76,6 +76,15 @@ endif
 # Do not run gtm4414 on HP-UX because truss/strace output is not compatible
 if ("HP-UX" == $HOSTOS) then
 	setenv subtest_exclude_list "$subtest_exclude_list gtm4414"
+endif
+
+if ("armv6l" == `uname -m`) then
+	# The gtm7843 subtest has been seen to occasionally fail only on ARMV6L with a diff like the following.
+	#	> Not expecting 2 MUTEXLCKALERTs
+	# This is suspected to be a test timing issue due to a slow system.
+	# Since all the MUTEXLCKALERT related code is portable and we have never seen a failure of this kind in
+	# other architectures, disable this subtest on ARMV6L for now.
+	setenv subtest_exclude_list "$subtest_exclude_list gtm7843"
 endif
 
 # Submit the list of subtests
