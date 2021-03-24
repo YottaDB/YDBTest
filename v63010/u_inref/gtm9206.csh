@@ -16,7 +16,7 @@
 
 # 'go' format is not supported in UTF-8 mode
 # Since the intent of the subtest is explicitly check all three formats, it is forced to run in M mode
-$switch_chset M >&! switch_chset.out
+#$switch_chset M >&! switch_chset.out
 $gtm_tst/com/dbcreate.csh mumps 1 255 480 512	# keysize=255, recsize=480, blksize=512
 cat >> gtm9206.m << xx
 	set ^y(1)=\$justify(1,5)
@@ -26,6 +26,7 @@ xx
 $ydb_dist/mumps -r gtm9206
 
 foreach fmt (zwr go bin)
+	if ("go" == $fmt && "UTF-8" == $gtm_chset) continue
 	echo ""
 	echo "######################################################################################"
 	echo "                           Testing format=$fmt"
