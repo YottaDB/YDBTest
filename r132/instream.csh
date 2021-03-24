@@ -37,6 +37,7 @@
 #                      bucket (neighborhood full issue).
 # ydb697 [bdw]       Test that %CONVNEG^%CONVBASEUTIL produces correct two's complement results for octal numbers
 # ydb700 [nars]      Test that Multi-line -xecute in $ztrigger() accepts trailing ">>" and -piece/-delim etc. after -xecute
+# ydb692 [nars]      Test that modulo operator returns purely numeric result even if dividend is a mix of number and string
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r132 test starts..."
@@ -44,7 +45,7 @@ echo "r132 test starts..."
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic "ydb627 ydb551 ydb632 ydb581 ydb630 ydb441 ydb652 ydb635 ydb664 ydb663 ydb558 ydb612 ydb591 ydb391"
-setenv subtest_list_non_replic "$subtest_list_non_replic ydb678 ydb671 ydb682 ydb673 ydb697 ydb700"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb678 ydb671 ydb682 ydb673 ydb697 ydb700 ydb692"
 setenv subtest_list_replic     "ydb657 ydb676"
 
 if ($?test_replic == 1) then
