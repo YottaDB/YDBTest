@@ -14,9 +14,6 @@
 # This tests that MUPIP LOAD supports loading records larger than 2**32 up to a maximum of 2**64 in all
 # three modes (bin, go and zwr). Portions of this test were copied from the v51000/D9G01002592 test
 
-# 'go' format is not supported in UTF-8 mode
-# Since the intent of the subtest is explicitly check all three formats, it is forced to run in M mode
-#$switch_chset M >&! switch_chset.out
 $gtm_tst/com/dbcreate.csh mumps 1 255 480 512	# keysize=255, recsize=480, blksize=512
 cat >> gtm9206.m << xx
 	set ^y(1)=\$justify(1,5)
@@ -26,7 +23,10 @@ xx
 $ydb_dist/mumps -r gtm9206
 
 foreach fmt (zwr go bin)
-	if ("go" == $fmt && "UTF-8" == $gtm_chset) continue
+	# 'go' format is not supported in UTF-8 mode so make sure the test is not running in UTF-8 mode.
+	if ($?gtm_chset) then
+		if (("go" == $fmt) && ("UTF-8" == $gtm_chset)) continue
+	endif
 	echo ""
 	echo "######################################################################################"
 	echo "                           Testing format=$fmt"
