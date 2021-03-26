@@ -4,7 +4,7 @@
 # Copyright (c) 2009-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -117,6 +117,13 @@ if ($status) then
 	echo "TEST-E-UTILITY sort expected by test system, but not found ;"
 	@ error++
 endif
+
+which eu-elflint >&! /dev/null
+if ($status) then
+	echo "TEST-E-UTILITY eu-elflint expected by test system, but not found ;"
+	@ error++
+endif
+
 # Check maximum shared memory limits
 # For now, it is done only on linux machines and the limit is set to 1GB. Increase the scope and limit when needed
 if ("Linux" == "$hostos") then
