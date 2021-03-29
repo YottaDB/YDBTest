@@ -29,7 +29,7 @@
 # gtm9115		[bdw]		Tests %HO, %OH, %DO and %OD for correctness and for performance improvement compared to pre V6.3-009 versions
 # gtm9113		[kz]		Tests that an XECUTE of a literal argument containing a FOR with a termination value for a control variable argument, GT.M processes the rest of the line
 # gtm8921		[estess]	Tests that IPCs for read-only databases are correctly run down when last process exits.
-# gtm9149		[kz]		Tests that GT.M turns a gtm_string length set to a negative length, to an empty string in an external call. 
+# gtm9149		[kz]		Tests that GT.M turns a gtm_string length set to a negative length, to an empty string in an external call.
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -47,9 +47,6 @@ else
 endif
 
 setenv subtest_exclude_list ""
-if("pro" == "$tst_image") then
-	setenv subtest_exclude_list "$subtest_exclude_list "
-endif
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
 if ("pro" == "$tst_image") then
