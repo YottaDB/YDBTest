@@ -1,5 +1,4 @@
 #!/usr/local/bin/tcsh -f
-
 #################################################################
 #								#
 # Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	#
@@ -18,6 +17,7 @@
 # gtm9206               [bdw]            Test that MUPIP LOAD can correctly handle 64 bit values for -begin and -end
 # gtm9188               [bdw]            Test that $ZCMDLINE is set correctly for mumps -run and mumps -direct commands with extra spaces
 # gtm9190		[estess]	 Test that eu-elflint approves of M generated object files
+# gtm9183		[estess]	 Test that indirect exclusive NEW after FOR (on same line) does not cause sigsegv or other error
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -25,7 +25,7 @@ echo "v63010 test starts..."
 
 # List the subtests seperated by sspaces under the appropriate environment variable name
 setenv subtest_list_common	""
-setenv subtest_list_non_replic "gtm9206 gtm9188 gtm9190"
+setenv subtest_list_non_replic "gtm9206 gtm9188 gtm9190 gtm9183"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
