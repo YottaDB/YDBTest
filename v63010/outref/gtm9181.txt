@@ -1,0 +1,34 @@
+###################################################################
+Tests taken from issues YDB#502 and YDB#546 that use boolean literals both with
+and without one or more nested SELECT functions that failed prior to GTM-9181
+but pass with V63010.
+
+In addition to testing boolean literal failures inside SELECT() functions some
+test cases for related issues (YDB#502 and YDB#546) also solved by GTM-9181 are
+included here. These tests had similar examples of boolean literals with some
+also using SELECT() which were fixed by V63010. So this test adds 3 tests from
+those issues as well.
+###################################################################
+
+***************************************************************************************
+Test 1: do Foo(""_X):0 quit
+***************************************************************************************
+Test 2: if (0'&($select((false?1A):0,(0'?1A):(false!0),$select(false:0,false:1,false:1,1:1):1)))
+***************************************************************************************
+Test 3: if (null!($select(false:(1&0),false:($select(false:false,1:false)),1:1)))
+***************************************************************************************
+Test 4: set:(((false'=0)'!'$test)&($select((true[('true)):(true'[true),('$test!('false)):($select(('true):'$test,$test:('false)))))) result=1
+***************************************************************************************
+Test 5: set:(((true'&'$test)?1"0")[($select((1<'$test):(false>=('false)),('true):(('false)?1"0"),('$test!false):($select(('false):('true),false:true,true:('true),1:('true))),(('false)]false):(false=1)))) result=1
+***************************************************************************************
+Test 6: set:(((true!'$test)'?1"1")'&($select(($test&'$test):'$test,($select(('false):0,false:true,('false):0)):('false),(0']]$test):false))) result=1
+***************************************************************************************
+Test 7: set:((('true)'=('true))'!($select(('$test'&('false)):('true),($select($test:'$test)):0,(0<$test):('true)))) result=1
+***************************************************************************************
+Test 8: set:((('$test'&$test)]]0)=($select(false:(1'!('true)),0:(0&true),$test:($select(('false):true))))) result=1
+***************************************************************************************
+Test 9: set:(((true'!('true))'!('true))>($select(('true):(('false)&false),true:($select(false:0,0:('true),1:0))))) result=1
+***************************************************************************************
+Test 10: set:('$test!($select(false:($test'?1"1"),false:(0'!false),1:($select($test:$test,1:$test,$test:$test))))) result=1
+
+All tests complete

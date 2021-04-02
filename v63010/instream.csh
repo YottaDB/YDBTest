@@ -19,6 +19,7 @@
 # gtm9190		[estess]	 Test that eu-elflint approves of M generated object files
 # gtm9183		[estess]	 Test that indirect exclusive NEW after FOR (on same line) does not cause sigsegv or other error
 # gtm9180		[bdw]		 Look for error message if block number for DSE -add or -dump command doesn't fit in a 32 bit signed integer
+# gtm9181		[estess]	 Add boolean literal tests that failed prior to V63010 with some involving $SELECT()
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -26,7 +27,7 @@ echo "v63010 test starts..."
 
 # List the subtests seperated by sspaces under the appropriate environment variable name
 setenv subtest_list_common	""
-setenv subtest_list_non_replic "gtm9206 gtm9188 gtm9190 gtm9183 gtm9180"
+setenv subtest_list_non_replic "gtm9206 gtm9188 gtm9190 gtm9183 gtm9180 gtm9181"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
