@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #                                                               #
-# Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.  #
+# Copyright (c) 2019-2021 YottaDB LLC and/or its subsidiaries.  #
 # All rights reserved.                                          #
 #                                                               #
 #       This source code contains the intellectual property     #
@@ -76,11 +76,16 @@ echo '\nTesing larger than $ZCONVERT supported value conversion using %HD'
 echo "Input: 7FFFFFFFFFFFFFFFFFFFFFFFFFFFF"
 $ydb_dist/yottadb -r ^%XCMD 'write "Output: ",$$FUNC^%HD("7FFFFFFFFFFFFFFFFFFFFFFFFFFFF")'
 
-echo '\nTesting performance of current %DH vs previous %DH'
-$ydb_dist/yottadb -r compdectohex^zconvert
+if ("HOST_LINUX_ARMVXL" != $gtm_test_os_machtype) then
+	# The performance checks are disabled on ARMV6L and ARMV7L to avoid occassional failures
+	# due to the slowness of these machines. They previously passed consistently with 15 second
+	# intervals but can occasionally fail at 5 seconds.
+	echo '\nTesting performance of current %DH vs previous %DH'
+	$ydb_dist/yottadb -r compdectohex^zconvert
 
-echo '\nTesting Performance of current %HD vs previous %HD'
-$ydb_dist/yottadb -r comphextodec^zconvert
+	echo '\nTesting Performance of current %HD vs previous %HD'
+	$ydb_dist/yottadb -r comphextodec^zconvert
+endif
 
 echo '\nTesting correctness of current %DH vs previous %DH'
 $ydb_dist/yottadb -r correctnessdectohex^zconvert
