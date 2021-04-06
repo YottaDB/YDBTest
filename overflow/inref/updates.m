@@ -1,14 +1,28 @@
 ; The below updates rely on the below
-; * The journal pool size is limited to 1 MB
-; * The db record and block sizes are 16128 and 32256 respectively
-; Calculation of the below updates :
-; jnlbuffer = 1048576 b ; single update = 8064 b ; therefore 131 updates will fill 1 MB buffer.
-; 6 globals and 131*2 (262) updates = 12 MB Also a 5 process imptp is also running in the background, which adds more updates
-updates	; large updates to fill 1 MB jnlpool quickly
-	set vms=$zv["VMS"
-	for i=1:1:262 do
-	. if vms set val=$$^longstr(8064-i)
-	. else  set val=$$^ulongstr(8064-i)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; This module is derived from FIS GT.M.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+updates	;
+	; Function that performs large updates to fill jnlpool quickly
+	; It checks if 4 times jnlpool size has been written and if so quits.
+	; Note that imptp processes are running in background too and would be
+	; writing to jnlpool concurrently. This takes that into account too
+	; since it looks at a field in the jnlpool shared memory to know when to stop.
+	set jnlpoolsize=$$^%PEEKBYNAME("jnlpool_ctl_struct.jnlpool_size")
+	set start=$$FUNC^%HD($$^%PEEKBYNAME("jnlpool_ctl_struct.write_addr")),end=start+(4*jnlpoolsize)
+	for i=1:1 do  quit:(end<$$FUNC^%HD($$^%PEEKBYNAME("jnlpool_ctl_struct.write_addr")))
+	. set val=$$^ulongstr(8064-i)
 	. set val1=$justify(val,8064)
 	. set ^aglobalvariable(i,$job)=val
 	. set ^bglobal(i,$job)=val
