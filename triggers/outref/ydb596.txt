@@ -9,41 +9,41 @@ mumps.dat
 # Invoking : $ydb_dist/yottadb -run ydb596
 # Test no error when KILL trigger (no SET trigger) specifies -DELIM or -ZDELIM
 # Add KILL trigger
-##TEST_AWK# Loading trigger : \[\+\^gbl -commands=KILL -[z]delim="|" -xecute="do trig\^ydb596" -name=trig1\]
+##TEST_AWK# Loading trigger : \[\+\^gbl -commands=KILL -(zdelim|delim)="\|" -xecute="do trig\^ydb596" -name=trig1\]
 Added Non-SET trigger on ^gbl named trig1
 # Verify $ZTDELIM reflects value of "|" inside trigger
 $ZTDELIM="|"
-##TEST_AWK# Deleting trigger : \[\+\^gbl -commands=KILL -[z]delim="|" -xecute="do trig\^ydb596" -name=trig1\]
+##TEST_AWK# Deleting trigger : \[\+\^gbl -commands=KILL -(zdelim|delim)="\|" -xecute="do trig\^ydb596" -name=trig1\]
 Deleted trigger named 'trig1' for global ^gbl (region DEFAULT)
 
 # Test error when -PIECES is specified and only KILL type trigger is specified.
-##TEST_AWK# Loading trigger : \[\+\^gbl -commands=KILL -[z]delim="|" -xecute="do trig\^ydb596" -name=trig1 -pieces=1\]
+##TEST_AWK# Loading trigger : \[\+\^gbl -commands=KILL -(zdelim|delim)="\|" -xecute="do trig\^ydb596" -name=trig1 -pieces=1\]
 Error: PIECES needs a commands=SET to also be specified
 
 # Test no error when ZKILL trigger (no SET trigger) specifies -DELIM or -ZDELIM
 # Add ZKILL trigger
-##TEST_AWK# Loading trigger : \[\+\^gbl -commands=ZKILL -zdelim="|" -xecute="do trig\^ydb596" -name=trig1\]
+##TEST_AWK# Loading trigger : \[\+\^gbl -commands=ZKILL -(zdelim|delim)="\|" -xecute="do trig\^ydb596" -name=trig1\]
 Added Non-SET trigger on ^gbl named trig1
 # Verify $ZTDELIM reflects value of "|" inside trigger
 $ZTDELIM="|"
-##TEST_AWK# Deleting trigger : \[\+\^gbl -commands=ZKILL -zdelim="|" -xecute="do trig\^ydb596" -name=trig1\]
+##TEST_AWK# Deleting trigger : \[\+\^gbl -commands=ZKILL -(zdelim|delim)="\|" -xecute="do trig\^ydb596" -name=trig1\]
 Deleted trigger named 'trig1' for global ^gbl (region DEFAULT)
 
 # Test error when -PIECES is specified and only ZKILL type trigger is specified.
-##TEST_AWK# Loading trigger : \[\+\^gbl -commands=ZKILL -zdelim="|" -xecute="do trig\^ydb596" -name=trig1 -pieces=1\]
+##TEST_AWK# Loading trigger : \[\+\^gbl -commands=ZKILL -(zdelim|delim)="\|" -xecute="do trig\^ydb596" -name=trig1 -pieces=1\]
 Error: PIECES needs a commands=SET to also be specified
 
 # Test no error when ZTRIGGER trigger (no SET trigger) specifies -DELIM or -ZDELIM
 # Add ZTRIGGER trigger
-##TEST_AWK# Loading trigger : \[\+\^gbl -commands=ZTRIGGER -delim="|" -xecute="do trig\^ydb596" -name=trig1\]
+##TEST_AWK# Loading trigger : \[\+\^gbl -commands=ZTRIGGER -(zdelim|delim)="\|" -xecute="do trig\^ydb596" -name=trig1\]
 Added Non-SET trigger on ^gbl named trig1
 # Verify $ZTDELIM reflects value of "|" inside trigger
 $ZTDELIM="|"
-##TEST_AWK# Deleting trigger : \[\+\^gbl -commands=ZTRIGGER -delim="|" -xecute="do trig\^ydb596" -name=trig1\]
+##TEST_AWK# Deleting trigger : \[\+\^gbl -commands=ZTRIGGER -(zdelim|delim)="\|" -xecute="do trig\^ydb596" -name=trig1\]
 Deleted trigger named 'trig1' for global ^gbl (region DEFAULT)
 
 # Test error when -PIECES is specified and only ZTRIGGER type trigger is specified.
-##TEST_AWK# Loading trigger : \[\+\^gbl -commands=ZTRIGGER -delim="|" -xecute="do trig\^ydb596" -name=trig1 -pieces=1\]
+##TEST_AWK# Loading trigger : \[\+\^gbl -commands=ZTRIGGER -(zdelim|delim)="\|" -xecute="do trig\^ydb596" -name=trig1 -pieces=1\]
 Error: PIECES needs a commands=SET to also be specified
 
 # Test $ZTDELIM is NULL inside SET trigger if -DELIM or -ZDELIM was not specified.

@@ -28,7 +28,7 @@ now tell it to let go
 1
 now it should have gotten the lock
 ##TEST_AWK\(at [0-9,]*\)
-##TEST_AWKThe time it took the lock command to finish:[5-9]|1[0-9]
+##TEST_AWKThe time it took the lock command to finish:([5-9]|1[0-9])
 it should be as long as the lockbcl sleeps after releasing the lock (which is 5 seconds now).
 Stopping the GT.CM Servers...
 Check the databases on the GT.CM Servers...

@@ -15,7 +15,6 @@ echo "# Create a global directory with two regions -- DEFAULT, REGX"
 $echoline
 setenv gtm_test_mupip_set_version "disable"
 setenv gtm_test_disable_randomdbtn
-unsetenv gtmdbglvl # We need this because this environment variable changes the output of some of the dse -dump commands causing test failures.
 $gtm_tst/com/dbcreate.csh mumps 2
 
 echo "# Set some global variables - to fill some blocks"
