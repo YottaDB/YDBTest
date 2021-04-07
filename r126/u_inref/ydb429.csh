@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -33,14 +33,21 @@ unsetenv gtm_test_fake_enospc # unset this because it can cause test hangs (due 
 
 cp $gtm_tst/$tst/inref/ydb429.sh .
 
-foreach i (A B C D E F G H)
+# The below touch/mkdir commands create files and directories which begin with an underscore in their names.
+# This is to test a buggy state of the ydb_env_set older-generation-journal-file-deletion-logic
+# where it used to generate DEVOPENFAIL/GTMEISDIR errors.
+# See https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/950#note_545937207 for details.
+touch _dummy1
+mkdir _dummy2
+
+foreach i (A B C D E F G H I)
 	echo "\n"
 	sh `pwd`/ydb429.sh test$i
 	if ( $status == 1 ) then
-		echo "dbcreate failed exiting"
+		echo "ydb429.sh test$i : dbcreate failed exiting"
 		exit 1
 	else if ( $status == 2 ) then
-		echo "dbcheck failed exiting"
+		echo "ydb429.sh test$i : dbcheck failed exiting"
 		exit 2
 	endif
 end

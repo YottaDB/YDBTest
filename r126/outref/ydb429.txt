@@ -62,14 +62,18 @@ PASS
 # Test 5
 # Test that ydb_env_set creates the database files at ydb_dir when it is set
 # Setting ydb_dir to nonexistent directory tmp and testing environment works
+
+# [YDB#661] Test 5a : Test that ydb_chset is set to UTF-8 by ydb_env_set by default
+$ydb_chset = UTF-8
+
 # Copying subtest basic/globals to test new environment
 
 Test of access to MUMPS globals
 d  PASS
 i  PASS
 u  PASS
-##TEST_AWK# Checking tmp/.*/o for the global object file
-##TEST_AWKtmp/.*/o/globals.o
+##TEST_AWK# Checking tmp/.*/o/utf8 for the globals object file
+##TEST_AWKtmp/.*/o/utf8/globals.o
 PASS
 
 
@@ -179,19 +183,8 @@ Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 # Confirming it is crashed
 ##TEST_AWKError occurred: 150379986,%XCMD\+5\^%XCMD,%YDB-E-REQRECOV.*
 # Attempting recovery
-##TEST_AWKError file at .*is:
-##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##SUSPEND_OUTPUT REPLIC
-##TEST_AWK%YDB-E-JNLNOBIJBACK, MUPIP JOURNAL BACKWARD.* does not have before image journaling
-%YDB-E-MUNOACTION, MUPIP unable to perform requested action
-##ALLOW_OUTPUT REPLIC
-##SUSPEND_OUTPUT NON_REPLIC
-##TEST_AWK(%YDB-E-RLBKNOBIMG|%YDB-I-MUJPOOLRNDWNSUC|%YDB-E-MUNOACTION).*
-##TEST_AWK(%YDB-E-RLBKNOBIMG|%YDB-I-MUJPOOLRNDWNSUC|%YDB-E-MUNOACTION).*
-##TEST_AWK(%YDB-E-RLBKNOBIMG|%YDB-I-MUJPOOLRNDWNSUC|%YDB-E-MUNOACTION).*
-##ALLOW_OUTPUT NON_REPLIC
-##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
-##TEST_AWK%YDBENV-F-MUPIPERR command "\$ydb_dist/mupip journal.* terminated with non-zero status \(130\)
+##TEST_AWKError file is at .*
+%YDBENV-F-NOTBEFOREIMAGEJOURNAL backward rollback/recover not possible because region "DEFAULT" does not have before-image journaling
 # Cannot do a dbcheck as non-before journaling types will have integ errors
 
 
@@ -224,19 +217,8 @@ Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 # Confirming it is crashed
 ##TEST_AWKError occurred: 150379986,%XCMD\+5\^%XCMD,%YDB-E-REQRECOV.*
 # Attempting recovery
-##TEST_AWKError file at .*is:
-##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-##SUSPEND_OUTPUT REPLIC
-##TEST_AWK%YDB-E-JNLNOBIJBACK, MUPIP JOURNAL BACKWARD.* does not have before image journaling
-%YDB-E-MUNOACTION, MUPIP unable to perform requested action
-##ALLOW_OUTPUT REPLIC
-##SUSPEND_OUTPUT NON_REPLIC
-##TEST_AWK(%YDB-E-RLBKNOBIMG|%YDB-I-MUJPOOLRNDWNSUC|%YDB-E-MUNOACTION).*
-##TEST_AWK(%YDB-E-RLBKNOBIMG|%YDB-I-MUJPOOLRNDWNSUC|%YDB-E-MUNOACTION).*
-##TEST_AWK(%YDB-E-RLBKNOBIMG|%YDB-I-MUJPOOLRNDWNSUC|%YDB-E-MUNOACTION).*
-##ALLOW_OUTPUT NON_REPLIC
-##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
-##TEST_AWK%YDBENV-F-MUPIPERR command "\$ydb_dist/mupip journal.* terminated with non-zero status \(130\)
+##TEST_AWKError file is at .*
+%YDBENV-F-NOTBEFOREIMAGEJOURNAL backward rollback/recover not possible because region "AREG" does not have before-image journaling
 # Cannot do a dbcheck as non-before journaling types will have integ errors
 
 
@@ -254,7 +236,7 @@ yottadb.dat
 # Confirming it is crashed
 ##TEST_AWKError occurred: 150374954,%XCMD\+5\^%XCMD,%YDB-E-REQRUNDOWN.*
 # Attempting recovery
-##TEST_AWKError file at .*is:
+##TEST_AWKError file is at .*
 %YDBENV-F-NOTBEFOREIMAGEJOURNAL backward rollback/recover not possible because region "DEFAULT" does not have before-image journaling
 # Cannot do a dbcheck as non-before journaling types will have integ errors
 ##ALLOW_OUTPUT REPLIC
@@ -278,7 +260,7 @@ yottadb.dat
 # Confirming it is crashed
 ##TEST_AWKError occurred: 150374954,%XCMD\+5\^%XCMD,%YDB-E-REQRUNDOWN.*
 # Attempting recovery
-##TEST_AWKError file at .*is:
+##TEST_AWKError file is at .*
 %YDBENV-F-NOTBEFOREIMAGEJOURNAL backward rollback/recover not possible because region "AREG" does not have before-image journaling
 # Cannot do a dbcheck as non-before journaling types will have integ errors
 ##ALLOW_OUTPUT REPLIC
@@ -572,3 +554,230 @@ Replication test cannot run with disabled journaling. Skipping test.
 
 
 
+
+
+# ----------------------------------------------------------------------------------
+# Test 24 : Test of YDB#661 : ydb_env_set creates 3-region database by default
+# This implements the test plan at https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/950#note_544517343.
+# ----------------------------------------------------------------------------------
+# Test 24 : Subtest A : Test that ydb_env_set creates YDBOCTO and YDBAIM regions by default
+# Verify that db & jnls exist under $ydb_dir/$ydb_rel/g for DEFAULT region
+# Verify that db & jnls exist under $ydb_dir/$ydb_rel/g for YDBOCTO region
+# Verify that db & jnls do NOT exist under $ydb_dir/$ydb_rel/g for YDBAIM region
+g/%ydbocto.dat
+g/%ydbocto.mjl
+g/yottadb.dat
+g/yottadb.gld
+g/yottadb.mjl
+# Set some globals in the DEFAULT, YDBOCTO and YDBAIM regions
+; Set ^default=1 : Global maps to DEFAULT region
+; Set ^%ydboctotmp=2 : Global maps to YDBOCTO region
+; Set ^%ydbAIMtmp=3 : Global maps to YDBAIM region
+# Verify that db file for YDBAIM region is now created but no jnl file created
+g/%ydbaim.dat
+g/%ydbocto.dat
+g/%ydbocto.mjl
+g/yottadb.dat
+g/yottadb.gld
+g/yottadb.mjl
+# source ydb_env_unset
+# source ydb_env_set
+# Confirm globals are still there
+^default=1
+^%ydboctotmp=2
+^%ydbAIMtmp=3
+# Verify gld settings of 3-region database created by ydb_env_set. GDE SHOW -COMMANDS output follows
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/r998_x86_64/g/yottadb.gld
+%GDE-I-VERIFY, Verification OK
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/r998_x86_64/g/yottadb.gld
+
+
+TEMPLATE -REGION -NOAUTODB
+TEMPLATE -REGION -COLLATION_DEFAULT=0
+TEMPLATE -REGION -EPOCHTAPER
+TEMPLATE -REGION -NOINST_FREEZE_ON_ERROR
+TEMPLATE -REGION -JOURNAL=(ALLOCATION=2048,AUTOSWITCHLIMIT=8386560,BEFORE_IMAGE,BUFFER_SIZE=2312,EXTENSION=2048)
+TEMPLATE -REGION -KEY_SIZE=255
+TEMPLATE -REGION -LOCK_CRIT_SEPARATE
+TEMPLATE -REGION -NULL_SUBSCRIPTS=ALWAYS
+TEMPLATE -REGION -NOQDBRUNDOWN
+TEMPLATE -REGION -RECORD_SIZE=4080
+TEMPLATE -REGION -STATS
+TEMPLATE -REGION -STDNULLCOLL
+!
+!
+TEMPLATE -SEGMENT -ACCESS_METHOD=BG
+TEMPLATE -SEGMENT -ALLOCATION=5000
+TEMPLATE -SEGMENT -NOASYNCIO
+TEMPLATE -SEGMENT -BLOCK_SIZE=4096
+TEMPLATE -SEGMENT -DEFER_ALLOCATE
+TEMPLATE -SEGMENT -NOENCRYPTION_FLAG
+TEMPLATE -SEGMENT -EXTENSION_COUNT=10000
+TEMPLATE -SEGMENT -GLOBAL_BUFFER_COUNT=1000
+TEMPLATE -SEGMENT -LOCK_SPACE=220
+TEMPLATE -SEGMENT -MUTEX_SLOTS=1024
+TEMPLATE -SEGMENT -RESERVED_BYTES=0
+!
+TEMPLATE -SEGMENT -ACCESS_METHOD=MM
+TEMPLATE -SEGMENT -ALLOCATION=20000
+TEMPLATE -SEGMENT -NOASYNCIO
+TEMPLATE -SEGMENT -BLOCK_SIZE=1024
+TEMPLATE -SEGMENT -DEFER
+TEMPLATE -SEGMENT -DEFER_ALLOCATE
+TEMPLATE -SEGMENT -NOENCRYPTION_FLAG
+TEMPLATE -SEGMENT -EXTENSION_COUNT=40000
+TEMPLATE -SEGMENT -GLOBAL_BUFFER_COUNT=1000
+TEMPLATE -SEGMENT -LOCK_SPACE=220
+TEMPLATE -SEGMENT -MUTEX_SLOTS=1024
+TEMPLATE -SEGMENT -RESERVED_BYTES=0
+!
+TEMPLATE -SEGMENT -ACCESS_METHOD=BG
+!
+DELETE -REGION DEFAULT
+DELETE -SEGMENT DEFAULT
+ADD -REGION DEFAULT -DYNAMIC_SEGMENT=DEFAULT -JOURNAL=(FILE_NAME="yottadb.mjl") -NULL_SUBSCRIPTS=NEVER
+ADD -REGION YDBAIM -AUTODB -DYNAMIC_SEGMENT=YDBAIM -NOJOURNAL -KEY_SIZE=992 -RECORD_SIZE=32
+ADD -REGION YDBOCTO -DYNAMIC_SEGMENT=YDBOCTO -JOURNAL=(FILE_NAME="%ydbocto.mjl")
+!
+ADD -SEGMENT DEFAULT -FILE_NAME="yottadb.dat"
+ADD -SEGMENT YDBAIM -ACCESS_METHOD=MM -FILE_NAME="%ydbaim.dat"
+ADD -SEGMENT YDBOCTO -FILE_NAME="%ydbocto.dat"
+!
+LOCKS -REGION=DEFAULT
+ADD -NAME %ydbAIM* -REGION=YDBAIM
+ADD -NAME %ydbAIm* -REGION=YDBAIM
+ADD -NAME %ydbAiM* -REGION=YDBAIM
+ADD -NAME %ydbAim* -REGION=YDBAIM
+ADD -NAME %ydbOCTO* -REGION=YDBOCTO
+ADD -NAME %ydbOCTo* -REGION=YDBOCTO
+ADD -NAME %ydbOCtO* -REGION=YDBOCTO
+ADD -NAME %ydbOCto* -REGION=YDBOCTO
+ADD -NAME %ydbOcTO* -REGION=YDBOCTO
+ADD -NAME %ydbOcTo* -REGION=YDBOCTO
+ADD -NAME %ydbOctO* -REGION=YDBOCTO
+ADD -NAME %ydbOcto* -REGION=YDBOCTO
+ADD -NAME %ydbaIM* -REGION=YDBAIM
+ADD -NAME %ydbaIm* -REGION=YDBAIM
+ADD -NAME %ydbaiM* -REGION=YDBAIM
+ADD -NAME %ydbaim* -REGION=YDBAIM
+ADD -NAME %ydboCTO* -REGION=YDBOCTO
+ADD -NAME %ydboCTo* -REGION=YDBOCTO
+ADD -NAME %ydboCtO* -REGION=YDBOCTO
+ADD -NAME %ydboCto* -REGION=YDBOCTO
+ADD -NAME %ydbocTO* -REGION=YDBOCTO
+ADD -NAME %ydbocTo* -REGION=YDBOCTO
+ADD -NAME %ydboctO* -REGION=YDBOCTO
+ADD -NAME %ydbocto* -REGION=YDBOCTO
+!
+# Test 24 : Subtest B : Test of Crash handling of 3-region default database
+# Recreate default 3-region database of ydb_env_set using dbcreate.csh (as it is easy for crash/dbcheck etc.)
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+test24B.gld
+Using: ##SOURCE_PATH##/mupip
+%ydbaim.dat
+%ydbocto.dat
+yottadb.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+test24B.gld
+Using: ##SOURCE_PATH##/mupip
+%ydbaim.dat
+%ydbocto.dat
+yottadb.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+# Start a background yottadb process that updates globals in all 3 regions DEFAULT, YDBOCTO and YDBAIM
+# Kill the yottadb process and simulate a crash by deleting shared memory segments etc. for all three regions
+##TEST_AWKSimulating kill of GTM/YDB Processes with PID [0-9]*
+##SUSPEND_OUTPUT NON_REPLIC
+Simulating crash on primary in ##TEST_PATH##
+Primary crashed!
+Simulating crash on receiver in ##REMOTE_TEST_PATH##
+Receiver crashed!
+##ALLOW_OUTPUT NON_REPLIC
+# Confirming it is crashed
+##SUSPEND_OUTPUT REPLIC
+%YDB-E-REQRECOV, Error accessing database ##TEST_PATH##/yottadb.dat.  Must be recovered on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+%YDB-I-TEXT, Error with database control shmctl
+##ALLOW_OUTPUT REPLIC
+##SUSPEND_OUTPUT NON_REPLIC
+##SUSPEND_OUTPUT NO_CUSTOM_ERRORS
+%YDB-E-REPLREQROLLBACK, Replication instance file ##TEST_PATH##/mumps.repl indicates abnormal shutdown or an incomplete ROLLBACK. Run MUPIP JOURNAL ROLLBACK first
+##TEST_AWK%YDB-I-TEXT, Error with semctl on Journal Pool SEMID \([0-9]*\)
+##ALLOW_OUTPUT NO_CUSTOM_ERRORS
+##SUSPEND_OUTPUT CUSTOM_ERRORS
+%YDB-E-REQROLLBACK, Error accessing database ##TEST_PATH##/yottadb.dat.  Run MUPIP JOURNAL -ROLLBACK -NOONLINE on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+%YDB-I-TEXT, Error with database control shmctl
+##ALLOW_OUTPUT CUSTOM_ERRORS
+##ALLOW_OUTPUT NON_REPLIC
+%SYSTEM-E-ENO22, Invalid argument
+# Complete the crash simulation by sourcing ydb_env_unset
+# Source ydb_env_set to simulate restart of system
+# Confirm no database file exists for YDBAIM in the existing $ydb_dir environment
+%ydbocto.dat
+test24B.gld
+yottadb.dat
+# Verify that globals set in DEFAULT and YDBOCTO exist, but not global in YDBAIM
+Global ^default exists
+Global ^%ydboctotmp exists
+Global ^%ydbAIMtmp does not exist
+Test 24 : Subtest C : Test of Crash handling if YDBAIM is BG with before-image journaling
+# Set BG access method and enable journaling for YDBAIM
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+test24C.gld
+Using: ##SOURCE_PATH##/mupip
+%ydbaim.dat
+%ydbocto.dat
+yottadb.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+test24C.gld
+Using: ##SOURCE_PATH##/mupip
+%ydbaim.dat
+%ydbocto.dat
+yottadb.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+# Start a background yottadb process that updates globals in all 3 regions DEFAULT, YDBOCTO and YDBAIM
+# Kill the yottadb process and simulate a crash by deleting shared memory segments etc. for all three regions
+##TEST_AWKSimulating kill of GTM/YDB Processes with PID [0-9]*
+##SUSPEND_OUTPUT NON_REPLIC
+Simulating crash on primary in ##TEST_PATH##
+Primary crashed!
+Simulating crash on receiver in ##REMOTE_TEST_PATH##
+Receiver crashed!
+##ALLOW_OUTPUT NON_REPLIC
+# Confirming it is crashed
+##SUSPEND_OUTPUT REPLIC
+%YDB-E-REQRECOV, Error accessing database ##TEST_PATH##/yottadb.dat.  Must be recovered on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+%YDB-I-TEXT, Error with database control shmctl
+##ALLOW_OUTPUT REPLIC
+##SUSPEND_OUTPUT NON_REPLIC
+##SUSPEND_OUTPUT NO_CUSTOM_ERRORS
+%YDB-E-REPLREQROLLBACK, Replication instance file ##TEST_PATH##/mumps.repl indicates abnormal shutdown or an incomplete ROLLBACK. Run MUPIP JOURNAL ROLLBACK first
+##TEST_AWK%YDB-I-TEXT, Error with semctl on Journal Pool SEMID \([0-9]*\)
+##ALLOW_OUTPUT NO_CUSTOM_ERRORS
+##SUSPEND_OUTPUT CUSTOM_ERRORS
+%YDB-E-REQROLLBACK, Error accessing database ##TEST_PATH##/yottadb.dat.  Run MUPIP JOURNAL -ROLLBACK -NOONLINE on cluster node ##TEST_HOST_SHORT####TEST_AWK[A-Za-z.]*.
+%YDB-I-TEXT, Error with database control shmctl
+##ALLOW_OUTPUT CUSTOM_ERRORS
+##ALLOW_OUTPUT NON_REPLIC
+%SYSTEM-E-ENO22, Invalid argument
+# Complete the crash simulation by sourcing ydb_env_unset
+# Source ydb_env_set to simulate restart of system
+# Confirm no database file exists for YDBAIM in the existing $ydb_dir environment
+%ydbaim.dat
+%ydbocto.dat
+test24C.gld
+yottadb.dat
+# Verify that globals set in DEFAULT, YDBOCTO and YDBAIM exist
+Global ^default exists
+Global ^%ydboctotmp exists
+Global ^%ydbAIMtmp exists

@@ -1,7 +1,7 @@
 #!/bin/sh
 #################################################################
 #								#
-# Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -190,12 +190,16 @@ testE() {
 		return 1
 	fi
 
+	echo ""
+	echo "# [YDB#661] Test 5a : Test that ydb_chset is set to UTF-8 by ydb_env_set by default"
+	echo '$ydb_chset = '$ydb_chset
+	echo ""
 	echo "# Copying subtest basic/globals to test new environment"
 	cp $gtm_tst/basic/inref/globals.m $ydb_dir/r
 
 	$ydb_dist/yottadb -run globals
-	echo "# Checking tmp/$ydb_rel/o for the global object file"
-	ls tmp/$ydb_rel/o/globals.o
+	echo "# Checking tmp/$ydb_rel/o/utf8 for the globals object file"
+	ls tmp/$ydb_rel/o/utf8/globals.o
 	if [ $? -eq 0 ] ; then
 		echo "PASS"
 	else
@@ -249,21 +253,20 @@ testF() {
 			echo "# Crashing database"
 			# we subshell and fork off the ydb process within the subshell to supress the output
 			# then fork off the subshell so that is doesn't hang the main thread
-			$( $ydb_dist/yottadb -run %XCMD 'for i=1:1 set (^a(i),^b(i))=$j(i,100) hang 0.1' & ) > crash.log 2>&1 & # start a ydb process and then leave it open
+			$( $ydb_dist/yottadb -run %XCMD 'for i=1:1 set (^a(i),^b(i))=$j(i,100) hang 0.01' & ) > crash.log 2>&1 & # start a ydb process and then leave it open
 			# if the test is replic then we need to find 2 pids
 			# one for the replic source and the other to do sets
 			if [ $test_repl = "REPLIC" ]; then numPid=2; else numPid=1; fi
 			ydbPid="" # reset ydbPid otherwise the while loop with trigger early
 			# wait for the correct number of ydb processes to start
 			while [ "$curPid" != "$numPid" ]; do
-				curPid=$(echo $ydbPid | awk '{print NF}')
+				curPid=$(echo $ydbPid | $tst_awk '{print NF}')
 				# fuser prints out the file name to stderr for some reason. It's junk so filter out
 				# on some versions of sh you need to redirect it in the subshell
 				# and in others you need to redirect after, so do both to be safe
 				ydbPid=$(fuser yottadb.dat 2> /dev/null | cut -d ' ' -f 1-) 2> /dev/null
 				sleep 0.01
 			done
-			sleep $( shuf -i 1-20 -n 1 )
 			# while loops are a subshell in sh so we need to get the pids again
 			ydbPid=$(fuser yottadb.dat 2> /dev/null | cut -d ' ' -f 1-) 2> /dev/null
 			tcsh $gtm_tst/com/gtm_crash.csh "PID_" $ydbPid # crash the pid
@@ -275,7 +278,7 @@ testF() {
 			# if replic before recovery stop the replicating server
 			if [ $test_repl = "REPLIC" ]; then $sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/RCVR_SHUT.csh \".\" < /dev/null >>& $SEC_SIDE/SHUT_${start_time}.out"; fi
 			. $ydbDistTmp/ydb_env_set > ydb_env_set.txt
-			sed -e '/^%YDBENV-F-/q' ydb_env_set.txt # the error always contains %YDBENV-F-. Rest is output of ZSHOW "*"
+			sed -e '/^%YDBENV-/q' ydb_env_set.txt # the error always contains %YDBENV-. Rest is output of ZSHOW "*"
 			# this one only needs to run when recovery is possible
 			if [ $jnl_type = "enable,on,before" ]; then
 				echo -n 'Checking the recovered database with $data(^a), $data(^b) Expected: 0|10 0|10; Actual: '
@@ -315,6 +318,8 @@ testG() {
 	echo '#       2 Region nobefore journaling'
 	echo '#       Single Region no journaling'
 	echo '#       2 Region no journaling'
+	old_gtmroutines=$gtmroutines
+	old_gtm_chset=$gtm_chset
 	testNum=12 # keep track of what number directory to move things to
 	for jnl_type in "enable,on,before" "enable,on,nobefore" "disable"; do
 		for num_regions in 1 2; do
@@ -351,6 +356,10 @@ testG() {
 
 			# cleanup
 			. $ydbDistTmp/ydb_env_unset
+			# The below reset of gtmroutines and gtm_chset (after they would have gotten unset by ydb_env_unset)
+			# is needed for dbcreate call of following iteration
+			export gtmroutines="$old_gtmroutines"
+			export gtm_chset="$old_gtm_chset"
 			$gtm_tst/com/dbcheck.csh > dbcheck$testNum.log 2>&1
 			if [ $? != "0" ]; then dbRet=$? echo "dbcheck failed with status: $dbRet" exit 2; fi
 			ls -1 > filesB.list
@@ -372,6 +381,8 @@ testH() {
 	echo '#       2 Region nobefore journaling'
 	echo '#       Single Region no journaling'
 	echo '#       2 Region no journaling'
+	old_gtmroutines=$gtmroutines
+	old_gtm_chset=$gtm_chset
 	testNum=18 # keep track of what number directory to move things to
 	for jnl_type in "enable,on,before" "enable,on,nobefore" "disable"; do
 		for num_regions in 1 2; do
@@ -414,6 +425,10 @@ testH() {
 			# cleanup
 			$ydb_dist/mupip stop $ydbPID > stop.log 2>&1 # just stop the process not crash
 			. $ydbDistTmp/ydb_env_unset
+			# The below reset of gtmroutines and gtm_chset (after they would have gotten unset by ydb_env_unset)
+			# is needed for dbcreate call of following iteration
+			export gtmroutines="$old_gtmroutines"
+			export gtm_chset="$old_gtm_chset"
 			$gtm_tst/com/dbcheck.csh > dbcheck$testNum.log 2>&1
 			if [ $? != "0" ]; then dbRet=$? echo "dbcheck failed with status: $dbRet" exit 2; fi
 			ls -1 > filesB.list
@@ -424,6 +439,173 @@ testH() {
 	done
 
 	exit 0
+}
+
+testI() {
+	# Beginning of test setup code
+	testNum=24 # keep track of what number directory to move things to
+	testCaseNum=test$testNum
+	mkdir $testCaseNum
+	ls -1 > filesA.list # make a list of all files that exist before the test starts
+	old_gtmroutines=$gtmroutines
+	old_gtm_chset=$gtm_chset
+
+	# Actual test code
+	echo "# ----------------------------------------------------------------------------------"
+	echo "# Test $testNum : Test of YDB#661 : ydb_env_set creates 3-region database by default"
+	echo "# This implements the test plan at https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/950#note_544517343."
+	echo "# ----------------------------------------------------------------------------------"
+	echo "# Test $testNum : Subtest A : Test that ydb_env_set creates YDBOCTO and YDBAIM regions by default"
+	export ydb_dir=$(pwd)
+	unset ydb_gbldir gtmgbldir
+	. $ydbDistTmp/ydb_env_set
+	cp $gtm_tst/$tst/inref/ydb429.m $ydb_dir/r	# needed for "yottadb -run ydb429" after ydb_env_set
+	cp $gtm_tst/$tst/inref/ydb429.m .	# needed for "yottadb -run ydb429" after ydb_env_unset
+	echo '# Verify that db & jnls exist under $ydb_dir/$ydb_rel/g for DEFAULT region'
+	echo '# Verify that db & jnls exist under $ydb_dir/$ydb_rel/g for YDBOCTO region'
+	echo '# Verify that db & jnls do NOT exist under $ydb_dir/$ydb_rel/g for YDBAIM region'
+	cd $ydb_dir/$ydb_rel; ls -1 g/*.gld g/*.dat g/*.mjl*; cd ..
+	echo '# Set some globals in the DEFAULT, YDBOCTO and YDBAIM regions'
+	$ydb_dist/yottadb -run setgblsallregions^ydb429
+	echo '# Verify that db file for YDBAIM region is now created but no jnl file created'
+	cd $ydb_dir/$ydb_rel; ls -1 g/*.gld g/*.dat g/*.mjl*; cd ..
+	echo '# source ydb_env_unset'
+	. $ydb_dist/ydb_env_unset
+	echo '# source ydb_env_set'
+	. $ydbDistTmp/ydb_env_set
+	echo '# Confirm globals are still there'
+	$ydb_dist/yottadb -run %XCMD 'zwrite ^default,^%ydboctotmp,^%ydbAIMtmp'
+	echo '# Verify gld settings of 3-region database created by ydb_env_set. GDE SHOW -COMMANDS output follows'
+	$ydb_dist/yottadb -run GDE show -commands | sed 's,$ydb_dir/$ydb_rel/g/,,g' > $testCaseNum.gde
+	cat $testCaseNum.gde
+
+	# Run ydb_env_unset to restore test system env vars for dbcreate
+	. $ydbDistTmp/ydb_env_unset
+
+	# End of test cleanup code
+	ls -1 > filesB.list # list of files after the test is over
+	# move only the new files to the $testCaseNum directory
+	diff --changed-group-format='%<' --unchanged-group-format='' filesB.list filesA.list | xargs mv -t $testCaseNum
+	mv $testCaseNum/r .
+
+	echo "# Test $testNum : Subtest B : Test of Crash handling of 3-region default database"
+	echo "# Recreate default 3-region database of ydb_env_set using dbcreate.csh (as it is easy for crash/dbcheck etc.)"
+	cp $testCaseNum/$testCaseNum.gde test${testNum}B.gde
+	testCaseNum=test${testNum}B
+	export test_specific_gde=$(pwd)/$testCaseNum.gde
+	export gtmroutines="$old_gtmroutines" # this is needed because when ydb_env_set fails gtmroutines is not reset properly
+	export gtm_chset="$old_gtm_chset"
+	export gtmgbldir="$testCaseNum.gld"
+
+	unset gtm_db_counter_sem_incr	# avoid semaphore counter overflow
+	export gtm_test_jnl="SETJNL"
+	export tst_jnl_str='-journal="enable,on,before"'
+	export gtm_test_mupip_set_version="disable"	# needed to avoid V4 type blocks as that can cause
+							# CHANGE_CURRENT_TN-E-MULTIPLE_TNS error due to V4 format not being
+							# applied to YDBAIM region (due to AUTODB) but later random tn chosen by
+							# test framework (anywhere up to 2**63) can be applied on YDBAIM but not
+							# on the other 2 regions because they are V4 format and max tn for those
+							# regions is a lot less (MAX_WARN_TN).
+	export gtm_test_dbcreate_initial_tn=1	# this tn is randomly set by "com/change_current_tn.csh". If it gets set to 0,
+						# the same script will return without changing the current tn in the database
+						# file headers of all regins using DSE. But this means the %ydbaim.dat file
+						# (AUTODB region) will not be created and cause reference file issues. So disable
+						# this random value by avoiding all random values and setting it to a fixed value.
+	# Need to store the value in settings.csh for the above setting to really take effect as that is what
+	# "com/change_current_tn.csh" looks at.
+	echo "setenv gtm_test_dbcreate_initial_tn $gtm_test_dbcreate_initial_tn" >> settings.csh
+	# Enable before image journaling only on DEFAULT and YDBOCTO regions but not on YDBAIM region since we want to keep that
+	# region unjournaled.
+	echo "yottadb" > jnl_on_specific_dblist.txt
+	echo "%ydbocto" >> jnl_on_specific_dblist.txt
+	if [ 1 = "$test_replic" ]; then
+		cp jnl_on_specific_dblist.txt $SEC_DIR
+	fi
+
+	# Create database files. If replication test, create replication instance file too and on remote side.
+	$gtm_tst/com/dbcreate.csh $testCaseNum
+	echo "# Start a background yottadb process that updates globals in all 3 regions DEFAULT, YDBOCTO and YDBAIM"
+	$ydb_dist/yottadb -run bkgrnd^ydb429
+	echo "# Kill the yottadb process and simulate a crash by deleting shared memory segments etc. for all three regions"
+	ydbPid=$($ydb_dist/yottadb -run %XCMD 'write ^child')
+	tcsh $gtm_tst/com/gtm_crash.csh "PID_" $ydbPid # crash the pid
+	if [ 1 = "$test_replic" ]; then
+		tcsh $gtm_tst/com/primary_crash.csh
+		$sec_shell '$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/receiver_crash.csh'
+	fi
+	echo '# Confirming it is crashed'
+	$ydb_dist/yottadb -run %XCMD 'write $data(^default)," ",$data(^default),!'
+	echo '# Complete the crash simulation by sourcing ydb_env_unset'
+	. $ydbDistTmp/ydb_env_unset
+	ps -ef --forest > psfu.out
+	echo '# Source ydb_env_set to simulate restart of system'
+	. $ydbDistTmp/ydb_env_set
+	echo '# Confirm no database file exists for YDBAIM in the existing $ydb_dir environment'
+	ls -1 *.gld *.dat
+	echo '# Verify that globals set in DEFAULT and YDBOCTO exist, but not global in YDBAIM'
+	$ydb_dist/yottadb -run verifyaftercrash^ydb429
+	. $ydb_dist/ydb_env_unset
+
+	# End of test cleanup code
+	ls -1 > filesB.list # list of files after the test is over
+	# move only the new files to the $testCaseNum directory
+	mkdir $testCaseNum
+	diff --changed-group-format='%<' --unchanged-group-format='' filesB.list filesA.list | xargs mv -t $testCaseNum
+	if [ 1 = "$test_replic" ]; then
+		# In case of a replic test, move away files from test24B so test24C (next stage) is not affected by it.
+		mv $SEC_DIR ${SEC_DIR}_$testCaseNum
+		mkdir $SEC_DIR
+		mv ${SEC_DIR}_$testCaseNum/start_time_syslog.txt $SEC_DIR	# Move this file back in case of test failures
+										# as test framework will look for it.
+	fi
+	mv $testCaseNum/r .
+
+	ls -1 > filesA.list # make a list of all files that exist before the test starts
+	echo "Test $testNum : Subtest C : Test of Crash handling if YDBAIM is BG with before-image journaling"
+	cp $testCaseNum/$testCaseNum.gde test${testNum}C.gde
+	testCaseNum=test${testNum}C
+	export test_specific_gde=$(pwd)/$testCaseNum.gde
+	export gtmroutines="$old_gtmroutines" # this is needed because when ydb_env_set fails gtmroutines is not reset properly
+	export gtm_chset="$old_gtm_chset"
+	export gtmgbldir="$testCaseNum.gld"
+	export ydb_dist=$ydbDistTmp
+	export gtm_dist=$ydb_dist
+	echo "# Set BG access method and enable journaling for YDBAIM"
+	sed -i 's/YDBAIM -AUTODB /YDBAIM /;s/-NOJOURNAL /-JOURNAL=(FILE_NAME="%ydbaim.mjl")/;s/YDBAIM -ACCESS_METHOD=MM/YDBAIM -ACCESS_METHOD=BG/;' $testCaseNum.gde
+	# Create database files. If replication test, create replication instance file too and on remote side.
+	$gtm_tst/com/dbcreate.csh $testCaseNum
+	echo "# Start a background yottadb process that updates globals in all 3 regions DEFAULT, YDBOCTO and YDBAIM"
+	$ydb_dist/yottadb -run bkgrnd^ydb429
+	echo "# Kill the yottadb process and simulate a crash by deleting shared memory segments etc. for all three regions"
+	ydbPid=$($ydb_dist/yottadb -run %XCMD 'write ^child')
+	tcsh $gtm_tst/com/gtm_crash.csh "PID_" $ydbPid # crash the pid
+	if [ 1 = "$test_replic" ]; then
+		tcsh $gtm_tst/com/primary_crash.csh
+		$sec_shell '$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/receiver_crash.csh'
+	fi
+	echo '# Confirming it is crashed'
+	$ydb_dist/yottadb -run %XCMD 'write $data(^default)," ",$data(^default),!'
+	echo '# Complete the crash simulation by sourcing ydb_env_unset'
+	. $ydbDistTmp/ydb_env_unset
+	echo '# Source ydb_env_set to simulate restart of system'
+	. $ydbDistTmp/ydb_env_set
+	echo '# Confirm no database file exists for YDBAIM in the existing $ydb_dir environment'
+	ls -1 *.gld *.dat
+	echo '# Verify that globals set in DEFAULT, YDBOCTO and YDBAIM exist'
+	$ydb_dist/yottadb -run verifyaftercrash^ydb429
+	. $ydb_dist/ydb_env_unset
+
+	# End of test cleanup code
+	ls -1 > filesB.list # list of files after the test is over
+	# move only the new files to the $testCaseNum directory
+	mkdir $testCaseNum
+	diff --changed-group-format='%<' --unchanged-group-format='' filesB.list filesA.list | xargs mv -t $testCaseNum
+	if [ 1 = "$test_replic" ]; then
+		mv $SEC_DIR ${SEC_DIR}_$testCaseNum
+		mkdir $SEC_DIR
+		mv ${SEC_DIR}_$testCaseNum/start_time_syslog.txt $SEC_DIR	# Move this file back in case of test failures
+										# as test framework will look for it.
+	fi
 }
 
 ## MAIN

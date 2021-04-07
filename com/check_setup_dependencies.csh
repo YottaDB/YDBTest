@@ -124,6 +124,12 @@ if ($status) then
 	@ error++
 endif
 
+which netstat >&! /dev/null
+if ($status) then
+	echo "TEST-E-UTILITY netstat expected by test system, but not found ;"
+	@ error++
+endif
+
 # Check maximum shared memory limits
 # For now, it is done only on linux machines and the limit is set to 1GB. Increase the scope and limit when needed
 if ("Linux" == "$hostos") then
