@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	*
+ * Copyright (c) 2019-2021 YottaDB LLC and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -454,7 +454,7 @@ int runProc(testSettings* settings, int curDepth){
 
 	} else if (action < 20 + remainingOdds * (7 / 15.0f)){ //ydb_lock*_s() case
 		ydb_buffer_t lockVar;
-		char lockBuf[8];
+		char lockBuf[13];	/* 10 bytes for max 4-byte pid + 2 bytes for "^a" + 1 byte for null terminator */
 		lockVar.buf_addr = lockBuf;
 		lockVar.len_alloc = sizeof(lockBuf);
 		status = sprintf(lockVar.buf_addr, "^a%d", getpid());
