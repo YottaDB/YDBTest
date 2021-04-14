@@ -1,0 +1,42 @@
+# This test checks that FILEPATHTOOLONG error messages show up as expected when creating a global directory or a journal file where
+# the full file path exceeds 255 characters. It also checks that the FNTRANSERROR message shows up as expected when creating a
+# database file with MUPIP CREATE where the path for the database exceeds 255 characters.
+###################################################################
+# Create a mumps.gld file in the test root directory. We will need this later for a MUPIP CREATE.
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+###################################################################
+# Switch to the subdirectory where the full path of mumps.gld/mumps.dat will be 256 characters
+###################################################################
+# Run GDE here to create a mumps.gld, expecting a FILEPATHTOOLONG error.
+150374602,GDEINIT+88^GDEINIT,%YDB-E-FILEPARSE, Error parsing file specification: GDEINITSZ,%YDB-E-FILEPATHTOOLONG, Filename including the path cannot be longer than 255 characters
+###################################################################
+# Set ydb_gbldir to the test root's mumps.gld file.
+###################################################################
+# Run MUPIP CREATE to create a mumps.dat, expecting a FNTRANSERROR error.
+%YDB-E-FNTRANSERROR, Filename including path exceeded 255 chars while trying to resolve filename DEFAULT
+%YDB-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+###################################################################
+# Returning to the test root directory and creating a database.
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+###################################################################
+# Creating a journal file with a full path of 256 characters
+##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: [a]+/mumps.mjl
+%YDB-E-FILEPATHTOOLONG, Filename including the path cannot be longer than 255 characters
+##TEST_AWK%YDB-E-JNLNOCREATE, Journal file [a]+/mumps.mjl not created
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+###################################################################
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##TEST_AWK##TEST_PATH##/[a]+/GDEDUMP.DMP
+abortzs="150374602,GDEINIT+88^GDEINIT,%YDB-E-FILEPARSE, Error parsing file specification: GDEINITSZ,%YDB-E-FILEPATHTOOLONG, Filename including the path cannot be longer than 255 characters"
+$ZSTATUS="150374602,GDEINIT+88^GDEINIT,%YDB-E-FILEPARSE, Error parsing file specification: GDEINITSZ,%YDB-E-FILEPATHTOOLONG, Filename including the path cannot be longer than 255 characters"
