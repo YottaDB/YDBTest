@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -22,8 +22,16 @@ $gtm_tst/com/dbcreate.csh mumps
 
 echo "# Case (1) : Invoking :mumps -run ydb353: with VIEW NOISOLATION turned OFF"
 $ydb_dist/mumps -run ydb353 "ISOLATION"
+# Rename the *.mjo and *.mje files before they get overwritten by the next invocation
+foreach file (child*.mj*)
+	mv $file ISOLATION_$file
+end
 
 echo "# Case (2) : Invoking :mumps -run ydb353: with VIEW NOISOLATION turned ON"
 $ydb_dist/mumps -run ydb353 "NOISOLATION"
+# Rename the *.mjo and *.mje files so we know they correspond to the NOISOLATION run
+foreach file (child*.mj*)
+	mv $file NOISOLATION_$file
+end
 
 $gtm_tst/com/dbcheck.csh
