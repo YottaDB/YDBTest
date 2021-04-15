@@ -1,0 +1,27 @@
+When a MUPIP INTRRPT (SIGUSR1) is received by YottaDB while it is in direct mode and the
+executed code fragment stored in $ZINTERRUPT gets a runtime error (such as LVUNDEF), verify
+the output contains the ERRWZINTR error and no repeated errors like it was doing before YDB#712
+
+Expect succeeded
+###################################################################
+Create readable form of output from expect
+###################################################################
+Output from expect:
+
+spawn /usr/local/bin/tcsh -f
+> stty cols 132
+> set shellprompt=SHELL
+> set prompt=$shellprompt
+SHELLsetenv term_env `tty`; echo $term_env > term_env.txt
+SHELL$ydb_dist/yottadb -dir
+
+YDB>write "Starting $ZINTERRUPT test with code fragment that gets an error (LVUNDEF)",!
+Starting $ZINTERRUPT test with code fragment that gets an error (LVUNDEF)
+
+YDB>set $zintr="write ""in interrupt"",! write c,!" if ($zsigproc($job,"sigusr1"))
+
+YDB>%YDB-E-ZINTRECURSEIO, Attempt to do IO to the active device in $ZINTERRUPT
+%YDB-E-ERRWZINTR, Error while processing $ZINTERRUPT
+
+
+YDB>halt
