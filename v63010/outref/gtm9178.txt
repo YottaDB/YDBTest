@@ -1,0 +1,31 @@
+# This test runs an expect script that runs the following $ztimeout command that produces a GTMASSERT2 failure in
+# upstream versions V6.3-006 to V6.3-009 but produces a ERRWZTIMEOUT error message from V6.3-010 onwards if run from
+# a direct mode prompt in a terminal session. This affected every $ztimeout command where the code executed after
+# the timeout (the "ztimeout vector") results in a runtime error. Due to YDB#712, this did not produce an assert
+# failure in YottaDB versions r1.26 through r1.30. Due to the fix for YDB#712, YottaDB now produces the expected
+# YDB-E-ERRWZTIMEOUT message.
+# The specific $ztimeout command run by the expect script is set $ztimeout="1:write c,!" which produces a
+# runtime error because the local variable c is not set.
+###################################################################
+Expect succeeded
+###################################################################
+Create readable form of output from expect
+###################################################################
+Output from expect:
+
+spawn /usr/local/bin/tcsh -f
+> stty cols 132
+> set shellprompt=SHELL
+> set prompt=$shellprompt
+SHELLsetenv term_env `tty`; echo $term_env > term_env.txt
+SHELL$ydb_dist/yottadb -dir
+
+YDB>set $ztimeout="1:write c,!"
+
+YDB>%YDB-E-LVUNDEF, Undefined local variable: c
+%YDB-E-ERRWZTIMEOUT, Error while processing $ZTIMEOUT
+
+YDB>
+
+YDB>halt
+SHELL

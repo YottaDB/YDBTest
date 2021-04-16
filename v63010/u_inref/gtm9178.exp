@@ -1,0 +1,25 @@
+#################################################################
+#								#
+# Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
+set timeout 60
+spawn /usr/local/bin/tcsh -f
+source $::env(gtm_tst)/com/expectinit.exp
+
+send -- "\$ydb_dist/yottadb -dir\r"
+expect "YDB>"
+send -- "set \$ztimeout=\"1:write c,!\"\r"
+expect "%YDB-E-ERRWZTIMEOUT, Error while processing \$ZTIMEOUT"
+expect "YDB>"
+send -- "\r"
+expect "YDB>"
+send -- "halt\r"
+expect "SHELL"
