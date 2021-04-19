@@ -3,7 +3,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -126,9 +126,19 @@ BEGIN {
 	#
 	option_names[++no_options] = "gtm_chset"
 	if ("UTF-8" == ENVIRON["gtm_chset"])
+	{
 		envir[no_options] = "UNICODE_MODE"
-	else
+		option_names[++no_options] = "gtm_chset_3state"
+		envir[no_options] = "CHSET_UTF8"
+	} else
+	{
 		envir[no_options] = "NONUNICODE_MODE"
+		option_names[++no_options] = "gtm_chset_3state"
+		if ("M" == ENVIRON["gtm_chset"])
+			envir[no_options] = "CHSET_M"
+		else
+			envir[no_options] = "CHSET_UNDEF"
+	}
 	#
 	option_names[++no_options] = "gtm_test_jnl_nobefore"
 	if ("1" == ENVIRON["gtm_test_jnl_nobefore"])
