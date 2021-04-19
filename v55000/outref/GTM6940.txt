@@ -7,11 +7,8 @@ YDB>set $zintr="zwr a m a=b"
 YDB>zsy "mupip intr "_$j
 ##TEST_AWKINTRPT issued to process [0-9]*
 
-YDB>%YDB-E-ERRWZINTR, Error while processing $ZINTERRUPT,-YDB-E-ZINTRECURSEIO, Attempt to do IO to the active device in $ZINTERRUPT
-		At M source location +1^GTM$DMOD
-%YDB-E-ZINTDIRECT, Attempt to enter direct mode from $ZINTERRUPT
-		At M source location +1^GTM$DMOD
+YDB>%YDB-E-ZINTRECURSEIO, Attempt to do IO to the active device in $ZINTERRUPT
+%YDB-E-ERRWZINTR, Error while processing $ZINTERRUPT
 
-YDB>
 
 YDB>h
