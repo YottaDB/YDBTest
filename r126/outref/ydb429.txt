@@ -588,9 +588,9 @@ g/yottadb.mjl
 ^%ydbAIMtmp=3
 # Verify gld settings of 3-region database created by ydb_env_set. GDE SHOW -COMMANDS output follows
 %GDE-I-LOADGD, Loading Global Directory file 
-	##TEST_PATH##/r998_x86_64/g/yottadb.gld
+	##TEST_PATH##/##TEST_AWKr.*/g/yottadb.gld
 %GDE-I-VERIFY, Verification OK
-%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/r998_x86_64/g/yottadb.gld
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/##TEST_AWKr.*/g/yottadb.gld
 
 
 TEMPLATE -REGION -NOAUTODB
@@ -714,7 +714,7 @@ Receiver crashed!
 %YDB-I-TEXT, Error with database control shmctl
 ##ALLOW_OUTPUT CUSTOM_ERRORS
 ##ALLOW_OUTPUT NON_REPLIC
-%SYSTEM-E-ENO22, Invalid argument
+##TEST_AWK%SYSTEM-E-ENO(22|43).*
 # Complete the crash simulation by sourcing ydb_env_unset
 # Source ydb_env_set to simulate restart of system
 # Confirm no database file exists for YDBAIM in the existing $ydb_dir environment
@@ -769,7 +769,7 @@ Receiver crashed!
 %YDB-I-TEXT, Error with database control shmctl
 ##ALLOW_OUTPUT CUSTOM_ERRORS
 ##ALLOW_OUTPUT NON_REPLIC
-%SYSTEM-E-ENO22, Invalid argument
+##TEST_AWK%SYSTEM-E-ENO(22|43).*
 # Complete the crash simulation by sourcing ydb_env_unset
 # Source ydb_env_set to simulate restart of system
 # Confirm no database file exists for YDBAIM in the existing $ydb_dir environment

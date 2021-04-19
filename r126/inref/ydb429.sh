@@ -257,18 +257,19 @@ testF() {
 			# if the test is replic then we need to find 2 pids
 			# one for the replic source and the other to do sets
 			if [ $test_repl = "REPLIC" ]; then numPid=2; else numPid=1; fi
-			ydbPid="" # reset ydbPid otherwise the while loop with trigger early
-			# wait for the correct number of ydb processes to start
-			while [ "$curPid" != "$numPid" ]; do
-				curPid=$(echo $ydbPid | $tst_awk '{print NF}')
+			# Wait for the correct number of ydb processes to start
+			while true; do
 				# fuser prints out the file name to stderr for some reason. It's junk so filter out
 				# on some versions of sh you need to redirect it in the subshell
 				# and in others you need to redirect after, so do both to be safe
-				ydbPid=$(fuser yottadb.dat 2> /dev/null | cut -d ' ' -f 1-) 2> /dev/null
+				fuser yottadb.dat 2> /dev/null > fuser$testNum.out
+				ydbPid=$(cut -d ' ' -f 1- fuser$testNum.out)
+				curPid=$(echo $ydbPid | $tst_awk '{print NF}')
+				if [ "$curPid" = "$numPid" ]; then
+					break
+				fi
 				sleep 0.01
 			done
-			# while loops are a subshell in sh so we need to get the pids again
-			ydbPid=$(fuser yottadb.dat 2> /dev/null | cut -d ' ' -f 1-) 2> /dev/null
 			tcsh $gtm_tst/com/gtm_crash.csh "PID_" $ydbPid # crash the pid
 			echo '# Confirming it is crashed'
 			$ydb_dist/yottadb -run %XCMD 'write $data(^a)," ",$data(^b),!'
