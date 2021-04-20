@@ -35,7 +35,7 @@ $ydb_dist/mumps -run ^gtm9149M
 
 set syslog_after = `date +"%b %e %H:%M:%S"`
 
-echo "# Check the syslog for an %YDB-E-ZCCONVERT error. If not found, this will time out after 5 minutes (300 seconds)."
+echo "# Check the syslog for an %YDB-E-ZCCONVERT error. If not found, this will time out."
 
 $gtm_tst/com/getoper.csh "$syslog_begin" "$syslog_after" syslog_xcret.txt "" "ZCCONVERT"
 

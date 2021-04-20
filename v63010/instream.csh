@@ -22,6 +22,7 @@
 # gtm9181		[estess]	 Add boolean literal tests that failed prior to V63010 with some involving $SELECT()
 # gtm9076		[bdw]		 Look for error messages for GDE, MUPIP CREATE and journal files when file path exceeds 255 characters
 # gtm9178		[bdw]		 Tests that a $ztimeout run from direct mode produces a ERRWZTIMEOUT instead of a GTMASSERT2 on executing a runtime error
+# gtm9166		[bdw]		 Test for JNLPROCSTUCK message in syslog instead of JNLFLUSH when journal file writes take too long
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -29,7 +30,7 @@ echo "v63010 test starts..."
 
 # List the subtests seperated by sspaces under the appropriate environment variable name
 setenv subtest_list_common	""
-setenv subtest_list_non_replic "gtm9206 gtm9188 gtm9190 gtm9183 gtm9180 gtm9181 gtm9076 gtm9178"
+setenv subtest_list_non_replic "gtm9206 gtm9188 gtm9190 gtm9183 gtm9180 gtm9181 gtm9076 gtm9178 gtm9166"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
@@ -42,7 +43,7 @@ setenv subtest_exclude_list ""
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
 if ("pro" == "$tst_image") then
-	setenv subtest_exclude_list "$subtest_exclude_list "
+	setenv subtest_exclude_list "$subtest_exclude_list gtm9166"
 endif
 
 if ("dbg" == "$tst_image") then

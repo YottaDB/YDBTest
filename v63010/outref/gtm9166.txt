@@ -1,0 +1,24 @@
+###################################################################
+# Creating database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+###################################################################
+# Starting journaling
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/jnl.mjl created for database file ##TEST_PATH##/mumps.dat with .*BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+###################################################################
+# Turn on WBTEST_JNLPROCSTUCK_FORCE
+###################################################################
+# Set a global variable 500 times
+###################################################################
+# Stop journaling
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
+###################################################################
+# Check the syslog for an %YDB-W-JNLPROCSTUCK error. If not found, this will time out.
+###################################################################
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

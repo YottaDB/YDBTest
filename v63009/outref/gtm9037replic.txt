@@ -50,7 +50,7 @@ Database file mumps.dat now has inst freeze on fail flag set to TRUE
 Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
 Shutting down Primary Source Server Server in ##TEST_PATH##
 ###################################################################
-# Check the syslog for an %YDB-E-JNLEXTEND error. If not found, this will time out after 5 minutes (300 seconds).
+# Check the syslog for an %YDB-E-JNLEXTEND error. If not found, this will time out.
 ==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
 ==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
 ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==

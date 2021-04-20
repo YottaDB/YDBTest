@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -56,7 +56,7 @@ echo "# Re-Enable write permissions on jnl subdirectory to avoid gzip errors"
 chmod u+w jnl
 
 $echoline
-echo "# Check the syslog for an %YDB-E-JNLEXTEND error. If not found, this will time out after 5 minutes (300 seconds)."
+echo "# Check the syslog for an %YDB-E-JNLEXTEND error. If not found, this will time out."
 
 $gtm_tst/com/getoper.csh "$syslog_begin" "$syslog_after" syslog_jnlextend.txt "" "JNLEXTEND"
 
