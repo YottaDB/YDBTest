@@ -1,0 +1,152 @@
+###################################################################
+# Creating database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+###################################################################
+# Starting journaling
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/jnl.mjl created for database file ##TEST_PATH##/mumps.dat with .*BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+###################################################################
+# Set 500 global variables
+###################################################################
+# Stop journaling
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
+###################################################################
+# Restarting journaling to make a second journal file
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/jnl2.mjl created for database file ##TEST_PATH##/mumps.dat with .*BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+###################################################################
+# Set 500 global variables
+###################################################################
+# Stop journaling
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
+###################################################################
+# Extract the first journal file before corrupting/deleting the database for comparisons
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/jnl.mjf created
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+###################################################################
+# Attempt a MUPIP JOURNAL -EXTRACT -CORRUPTDB on *. This should not work.
+%YDB-E-CLIERR, Too many parameters
+###################################################################
+# Make the database unreadable
+###################################################################
+# Extract the first journal file via a MUPIP JOURNAL -EXTRACT -CORRUPTDB
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%YDB-E-DBFILOPERR, Error doing database I/O to database file ##TEST_PATH##/mumps.dat
+%SYSTEM-E-ENO13, Permission denied
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/jnl.mjf created
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+###################################################################
+# Make the database readable and corrupt
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+###################################################################
+# Extract the first journal file via a MUPIP JOURNAL -EXTRACT -CORRUPTDB
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/jnl.mjf created
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+###################################################################
+# Delete the database file
+###################################################################
+# Extract the first journal file via a MUPIP JOURNAL -EXTRACT -CORRUPTDB
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/jnl.mjf created
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+###################################################################
+# Attempt MUPIP JOURNAL -EXTRACT -CORRUPTDB where -fences is set to NONE and ALWAYS. These should not work.
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CORRUPTDB FENCES
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CORRUPTDB FENCES
+###################################################################
+# Attempt MUPIP JOURNAL -EXTRACT -CORRUPTDB where -broken is set. This should not work.
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CORRUPTDB BROKEN
+###################################################################
+# Attempt MUPIP JOURNAL -EXTRACT -CORRUPTDB where -lost is set. This should not work.
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: CORRUPTDB BROKEN LOST
+###################################################################
+# Compare the various extract files with diff. There should be no output from these diff commands.
+# All files besides jnl_before.mjf are compared with jnl_before.mjf. There is no need to compare all possible combinations
+# because comparing all files to jnl_before (extract from the database with no errors) with diff will find any differences
+# between the various extract files.
+###################################################################
+# jnl_before.mjf vs jnl_unreadable.mjf
+###################################################################
+# jnl_before.mjf vs jnl_corrupt.mjf
+###################################################################
+# jnl_before.mjf vs jnl_deleted.mjf
+###################################################################
+# Create shared library for alternate collation # 1 (reverse collation)
+###################################################################
+# Create a new database file
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+###################################################################
+# Restart journaling with a new file
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/jnl_collation.mjl created for database file ##TEST_PATH##/mumps.dat with .*BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
+###################################################################
+# Set some global variables using alternate collation #1
+###################################################################
+# Stop journaling
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
+###################################################################
+# Unset alternate collation
+###################################################################
+# Extract the journal file via a MUPIP JOURNAL -EXTRACT -CORRUPTDB
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/jnl_collation.mjf created
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+###################################################################
+# Extract the journal file via a regular MUPIP JOURNAL -EXTRACT
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/jnl_collation.mjf created
+%YDB-E-COLLATIONUNDEF, Collation type 1 is not defined
+%YDB-I-GVIS, 		Global variable: x
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+###################################################################
+# Extract 2 comma separated journal files from different databases via a MUPIP JOURNAL -EXTRACT -CORRUPTDB
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##TEST_AWK%YDB-E-JNLTNOUTOFSEQ, End transaction \[0x[0-9A-F]*\] of journal ##TEST_PATH##/jnl.mjl different from Begin transaction \[0x[0-9A-F]*\] of next generation journal ##TEST_PATH##/jnl_collation.mjl
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+###################################################################
+# Extract 2 comma separated journal files from the same database via a MUPIP JOURNAL -EXTRACT -CORRUPTDB
+##TEST_AWK# \[0x[0-9A-F]*\] \[0x[0-9A-F]*\]
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/jnl.mjf created
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
