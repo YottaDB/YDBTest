@@ -538,7 +538,9 @@ testI() {
 	$ydb_dist/yottadb -run %XCMD 'write $data(^default)," ",$data(^default),!'
 	echo '# Complete the crash simulation by sourcing ydb_env_unset'
 	. $ydbDistTmp/ydb_env_unset
-	ps -ef --forest > psfu.out
+	# Record ps output just in case it is useful for debugging a test failure.
+	# Use .outx to avoid test failures due to "-E-" strings in the ps output from being caught by test framework at the end.
+	ps -ef --forest > psfu.outx
 	echo '# Source ydb_env_set to simulate restart of system'
 	. $ydbDistTmp/ydb_env_set
 	echo '# Confirm no database file exists for YDBAIM in the existing $ydb_dir environment'
