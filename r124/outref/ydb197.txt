@@ -62,7 +62,7 @@ gtmgbldir: mumps.gld
 ----------------------------------------------------
 # Environment variables set after sourcing ydb_env_set.
 ----------------------------------------------------
-gtm_dist=##SOURCE_PATH##
+gtm_dist=##SOURCE_REALPATH##
 gtm_etrap=Write:(0=$STACK) "Error occurred: ",$ZStatus,!
 ##TEST_AWKgtm_log=.*
 ##TEST_AWKgtm_repl_instance=##HOME_PATH##/.yottadb/r.*/g/yottadb.repl
@@ -78,7 +78,7 @@ gtmdir=##HOME_PATH##/.fis-gtm
 ##ALLOW_OUTPUT CHSET_M
 ##TEST_AWKgtmver=.*
 ydb_dir=##HOME_PATH##/.yottadb
-ydb_dist=##SOURCE_PATH##
+ydb_dist=##SOURCE_REALPATH##
 ydb_etrap=Write:(0=$STACK) "Error occurred: ",$ZStatus,!
 ##TEST_AWKydb_gbldir=##HOME_PATH##/.yottadb/r.*/g/yottadb.gld
 ##TEST_AWKydb_log=.*
