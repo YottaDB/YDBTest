@@ -24,6 +24,11 @@ fi
 
 file="$1"
 
+# Don't require deleted files to have a copyright
+if ! [ -e "$file" ]; then
+       exit 1
+fi
+
 skipextensions="txt out dat key crt cfg inp zwr"	# List of extensions that cannot have copyrights.
 if echo "$skipextensions" | grep -q -w "$(echo "$file" | awk -F . '{print $NF}')"; then
 	exit 1
