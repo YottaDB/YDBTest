@@ -1,0 +1,18 @@
+### Test some $ZATRANSFORM edge cases ###
+
+###################################################################
+# Create shared library for alternate collation # 1 (reverse collation)
+###################################################################
+# Drive ydb724 edge case test
+
+***********************************************************************************************
+Case 1: Verify whether numeric value passed as a literal or as computed value gets same transformation
+** Success - both values same: "Á"_$C(19)_"1"_$C(0)
+
+***********************************************************************************************
+Case 2: Verify collation transformation happens even when processing strings irrespective of 4th argument
+        (treat numerics as strings) being 0 or 1
+** Success - both values same: $C(255,158,157,156,155,0)
+
+***********************************************************************************************
+ydb724 test PASSED
