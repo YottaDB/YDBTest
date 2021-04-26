@@ -544,7 +544,12 @@ testI() {
 	echo '# Source ydb_env_set to simulate restart of system'
 	. $ydbDistTmp/ydb_env_set
 	echo '# Confirm no database file exists for YDBAIM in the existing $ydb_dir environment'
-	ls -1 *.gld *.dat
+	# Note: The test framework sets "LC_COLLATE" to C (see "com/set_locale.csh") but it is possible that "ydb_env_set" sets
+	# "LC_ALL" to a UTF-8 locale (if it finds that LC_CTYPE or LC_ALL is not set to a UTF-8 locale at shell startup which
+	# can vary depending on how the current server was set up). In that case, the "LC_COLLATE" setting would get overridden
+	# to the UTF-8 locale which would cause a different sort order of the "*.gld *.dat" files than what is expected in the
+	# reference file so undo the LC_ALL env var override and set LC_COLLATE to "C" (just in case) for the "ls" command below.
+	env LC_ALL="" LC_COLLATE="C" ls -1 *.gld *.dat
 	echo '# Verify that globals set in DEFAULT and YDBOCTO exist, but not global in YDBAIM'
 	$ydb_dist/yottadb -run verifyaftercrash^ydb429
 	. $ydb_dist/ydb_env_unset
@@ -593,7 +598,8 @@ testI() {
 	echo '# Source ydb_env_set to simulate restart of system'
 	. $ydbDistTmp/ydb_env_set
 	echo '# Confirm no database file exists for YDBAIM in the existing $ydb_dir environment'
-	ls -1 *.gld *.dat
+	# See comment before prior similar command (that sets LC_COLLATE=C) for why this is needed.
+	env LC_ALL="" LC_COLLATE="C" ls -1 *.gld *.dat
 	echo '# Verify that globals set in DEFAULT, YDBOCTO and YDBAIM exist'
 	$ydb_dist/yottadb -run verifyaftercrash^ydb429
 	. $ydb_dist/ydb_env_unset

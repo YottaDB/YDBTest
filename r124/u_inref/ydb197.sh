@@ -3,6 +3,8 @@
 # Copyright (c) 2018, 2019 YottaDB LLC and/or its subsidiaries. #
 # All rights reserved.                                          #
 #                                                               #
+# Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	#
+#								#
 #       This source code contains the intellectual property     #
 #       of its copyright holder(s), and is made available       #
 #       under a license.  If you do not know the terms of       #
@@ -76,4 +78,9 @@ echo "ydb_routines: $ydb_routines" ; echo "gtmroutines: $gtmroutines" ; echo "yd
 echo "----------------------------------------------------"
 echo '# Environment variables set after sourcing ydb_env_set.'
 echo "----------------------------------------------------"
-env | grep -f envsearch.txt -w | sort
+# Note: The test framework sets "LC_COLLATE" to C (see "com/set_locale.csh") but it is possible that "ydb_env_set" sets
+# "LC_ALL" to a UTF-8 locale (if it finds that LC_CTYPE or LC_ALL is not set to a UTF-8 locale at shell startup which
+# can vary depending on how the current server was set up). In that case, the "LC_COLLATE" setting would get overridden
+# to the UTF-8 locale which would cause a different sort order below than what is expected in the reference file so undo
+# the LC_ALL env var override and set LC_COLLATE to "C" (just in case) for the "sort" command below.
+env | grep -f envsearch.txt -w | env LC_ALL="" LC_COLLATE="C" sort
