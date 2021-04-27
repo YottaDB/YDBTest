@@ -7,12 +7,22 @@
 
 ***********************************************************************************************
 Case 1: Verify whether numeric value passed as a literal or as computed value gets same transformation
+##SUSPEND_OUTPUT UNICODE_MODE
 ** Success - both values same: "Á"_$C(19)_"1"_$C(0)
+##ALLOW_OUTPUT UNICODE_MODE
+##SUSPEND_OUTPUT NONUNICODE_MODE
+** Success - both values same: $ZCH(193)_$C(19)_"1"_$C(0)
+##ALLOW_OUTPUT NONUNICODE_MODE
 
 ***********************************************************************************************
 Case 2: Verify collation transformation happens even when processing strings irrespective of 4th argument
         (treat numerics as strings) being 0 or 1
+##SUSPEND_OUTPUT UNICODE_MODE
 ** Success - both values same: $C(255,158,157,156,155,0)
+##ALLOW_OUTPUT UNICODE_MODE
+##SUSPEND_OUTPUT NONUNICODE_MODE
+** Success - both values same: $ZCH(255,158,157,156,155)_$C(0)
+##ALLOW_OUTPUT NONUNICODE_MODE
 
 ***********************************************************************************************
 ydb724 test PASSED
