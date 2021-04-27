@@ -2,7 +2,7 @@
 ;								;
 ; Copyright 2007, 2013 Fidelity Information Services, Inc	;
 ;								;
-; Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -23,7 +23,6 @@ d002636	;
 	Write "Spawning interrupter job to check zshow ""D"" zinterrupt",!
 	If unix J @("intrdrv^d002636($j,unix,1):(output=""intrdrv1.mjo"":error=""intrdrv1.mje"")")
 	Else    J @("intrdrv^d002636($j,unix,1):(nodetached:startup=""startup.com"":output=""intrdrv1.mjo"":error=""intrdrv1.mje"")")
-	for i=1:1 Q:^drvactive  Hang 1
 	read "wait 15 seconds for interrupt: ",throwaway
 	for i=1:1 Q:^cnt>0  Hang 1
 	hang 5
