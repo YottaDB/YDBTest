@@ -36,11 +36,9 @@ DEFAULT
 incrdecr: List of locks after adding 3rd set and removing 1st var of second set:
 
 DEFAULT
-^lockA("SimpleThreadAPI","lock","uh-huh","oooooh","shiney!")
-##TEST_AWK                         Owned by PID= [1-9][0-9]* which is an existing process
+##TEST_AWK\^lockA\("SimpleThreadAPI","lock","uh-huh","oooooh","shiney!"\) Owned by PID= [1-9][0-9]* which is an existing process
 ##TEST_AWKlockA\(42\) Owned by PID= [1-9][0-9]* which is an existing process
-lockA("SimpleThreadAPI","lock","uh-huh","oooooh","shiney!")
-##TEST_AWK                         Owned by PID= [1-9][0-9]* which is an existing process
+##TEST_AWKlockA\("SimpleThreadAPI","lock","uh-huh","oooooh","shiney!"\) Owned by PID= [1-9][0-9]* which is an existing process
 ##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 13/(597|820); SUBSCRIPT slot bytes in use: (168|224)/(28080|28092)
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: (89|92|97|98). of 220 pages
 

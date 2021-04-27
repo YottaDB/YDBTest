@@ -42,6 +42,7 @@
 # ydb717 [nars]        Test that MUPIP SIZE -HEURISTIC="SCAN,LEVEL=1" -SUBSCRIPT gives accurate results (not a MUSIZEFAIL error)
 # ydb712 [estess]      Test that a $ZINTERRUPT that fires while in direct mode and the code fragment gets an error works correctly
 # ydb724 [estess]      Test various facets of $ZATRANSFORM() found to be incorrect without ydb724.
+# ydb721 [nars]        Test that LKE SHOW does not insert a line feed after a lock reference longer than 24 characters
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r132 test starts..."
@@ -49,7 +50,8 @@ echo "r132 test starts..."
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic "ydb627 ydb551 ydb632 ydb581 ydb630 ydb441 ydb652 ydb635 ydb664 ydb663 ydb558 ydb612 ydb591 ydb391"
-setenv subtest_list_non_replic "$subtest_list_non_replic ydb678 ydb671 ydb682 ydb673 ydb697 ydb700 ydb692 ydb505 ydb717 ydb712 ydb724"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb678 ydb671 ydb682 ydb673 ydb697 ydb700 ydb692 ydb505 ydb717 ydb712"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb724 ydb721"
 setenv subtest_list_replic     "ydb657 ydb676"
 
 if ($?test_replic == 1) then

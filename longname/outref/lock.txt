@@ -50,8 +50,7 @@ $LKE show -all
 
 DEFAULT
 ^a Owned by PID= PID1 which is an existing process
-^ab34567890123456789012345678901
-                         Owned by PID= PID1 which is an existing process
+^ab34567890123456789012345678901 Owned by PID= PID1 which is an existing process
 ^b Owned by PID= PID1 which is an existing process
 ^gbl4 Owned by PID= PID1 which is an existing process
 ^gbl45 Owned by PID= PID1 which is an existing process
@@ -73,24 +72,15 @@ DEFAULT
 ^gbl456789012345678901 Owned by PID= PID1 which is an existing process
 ^gbl4567890123456789012 Owned by PID= PID1 which is an existing process
 ^gbl45678901234567890123 Owned by PID= PID1 which is an existing process
-^gbl456789012345678901234
-                         Owned by PID= PID1 which is an existing process
-^gbl4567890123456789012345
-                         Owned by PID= PID1 which is an existing process
-^gbl45678901234567890123456
-                         Owned by PID= PID1 which is an existing process
-^gbl456789012345678901234567
-                         Owned by PID= PID1 which is an existing process
-^gbl4567890123456789012345678
-                         Owned by PID= PID1 which is an existing process
-^gbl45678901234567890123456789
-                         Owned by PID= PID1 which is an existing process
-^gbl456789012345678901234567890
-                         Owned by PID= PID1 which is an existing process
-^gbl4567890123456789012345678901
-                         Owned by PID= PID1 which is an existing process
-ab34567890123456789012345678901
-                         Owned by PID= PID1 which is an existing process
+^gbl456789012345678901234 Owned by PID= PID1 which is an existing process
+^gbl4567890123456789012345 Owned by PID= PID1 which is an existing process
+^gbl45678901234567890123456 Owned by PID= PID1 which is an existing process
+^gbl456789012345678901234567 Owned by PID= PID1 which is an existing process
+^gbl4567890123456789012345678 Owned by PID= PID1 which is an existing process
+^gbl45678901234567890123456789 Owned by PID= PID1 which is an existing process
+^gbl456789012345678901234567890 Owned by PID= PID1 which is an existing process
+^gbl4567890123456789012345678901 Owned by PID= PID1 which is an existing process
+ab34567890123456789012345678901 Owned by PID= PID1 which is an existing process
 loc4 Owned by PID= PID1 which is an existing process
 loc45 Owned by PID= PID1 which is an existing process
 loc456 Owned by PID= PID1 which is an existing process
@@ -112,20 +102,13 @@ loc456789012345678901 Owned by PID= PID1 which is an existing process
 loc4567890123456789012 Owned by PID= PID1 which is an existing process
 loc45678901234567890123 Owned by PID= PID1 which is an existing process
 loc456789012345678901234 Owned by PID= PID1 which is an existing process
-loc4567890123456789012345
-                         Owned by PID= PID1 which is an existing process
-loc45678901234567890123456
-                         Owned by PID= PID1 which is an existing process
-loc456789012345678901234567
-                         Owned by PID= PID1 which is an existing process
-loc4567890123456789012345678
-                         Owned by PID= PID1 which is an existing process
-loc45678901234567890123456789
-                         Owned by PID= PID1 which is an existing process
-loc456789012345678901234567890
-                         Owned by PID= PID1 which is an existing process
-loc4567890123456789012345678901
-                         Owned by PID= PID1 which is an existing process
+loc4567890123456789012345 Owned by PID= PID1 which is an existing process
+loc45678901234567890123456 Owned by PID= PID1 which is an existing process
+loc456789012345678901234567 Owned by PID= PID1 which is an existing process
+loc4567890123456789012345678 Owned by PID= PID1 which is an existing process
+loc45678901234567890123456789 Owned by PID= PID1 which is an existing process
+loc456789012345678901234567890 Owned by PID= PID1 which is an existing process
+loc4567890123456789012345678901 Owned by PID= PID1 which is an existing process
 ##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 60/(597|820); SUBSCRIPT slot bytes in use: (1464|1816)/(28080|28092)
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
 zshow L
@@ -199,15 +182,13 @@ $LKE show -lock=^A2345678 -region=A2345678
 $LKE show -lock=loc4567890123456789012345678901 -region=DEFAULT
 
 DEFAULT
-loc4567890123456789012345678901
-                         Owned by PID= PID1 which is an existing process
+loc4567890123456789012345678901 Owned by PID= PID1 which is an existing process
 ##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 60/(597|820); SUBSCRIPT slot bytes in use: (1464|1816)/(28080|28092)
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
 $LKE show -lock=^gbl4567890123456789012345678901 -region=DEFAULT
 
 DEFAULT
-^gbl4567890123456789012345678901
-                         Owned by PID= PID1 which is an existing process
+^gbl4567890123456789012345678901 Owned by PID= PID1 which is an existing process
 ##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 60/(597|820); SUBSCRIPT slot bytes in use: (1464|1816)/(28080|28092)
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
 #####################################################################
@@ -326,22 +307,14 @@ DEFAULT
 ^gbl456789012345678901 Owned by PID= PID1 which is an existing process
 ^gbl4567890123456789012 Owned by PID= PID1 which is an existing process
 ^gbl45678901234567890123 Owned by PID= PID1 which is an existing process
-^gbl456789012345678901234
-                         Owned by PID= PID1 which is an existing process
-^gbl4567890123456789012345
-                         Owned by PID= PID1 which is an existing process
-^gbl45678901234567890123456
-                         Owned by PID= PID1 which is an existing process
-^gbl456789012345678901234567
-                         Owned by PID= PID1 which is an existing process
-^gbl4567890123456789012345678
-                         Owned by PID= PID1 which is an existing process
-^gbl45678901234567890123456789
-                         Owned by PID= PID1 which is an existing process
-^gbl456789012345678901234567890
-                         Owned by PID= PID1 which is an existing process
-ab34567890123456789012345678901
-                         Owned by PID= PID1 which is an existing process
+^gbl456789012345678901234 Owned by PID= PID1 which is an existing process
+^gbl4567890123456789012345 Owned by PID= PID1 which is an existing process
+^gbl45678901234567890123456 Owned by PID= PID1 which is an existing process
+^gbl456789012345678901234567 Owned by PID= PID1 which is an existing process
+^gbl4567890123456789012345678 Owned by PID= PID1 which is an existing process
+^gbl45678901234567890123456789 Owned by PID= PID1 which is an existing process
+^gbl456789012345678901234567890 Owned by PID= PID1 which is an existing process
+ab34567890123456789012345678901 Owned by PID= PID1 which is an existing process
 loc4 Owned by PID= PID1 which is an existing process
 loc45 Owned by PID= PID1 which is an existing process
 loc456 Owned by PID= PID1 which is an existing process
@@ -363,18 +336,12 @@ loc456789012345678901 Owned by PID= PID1 which is an existing process
 loc4567890123456789012 Owned by PID= PID1 which is an existing process
 loc45678901234567890123 Owned by PID= PID1 which is an existing process
 loc456789012345678901234 Owned by PID= PID1 which is an existing process
-loc4567890123456789012345
-                         Owned by PID= PID1 which is an existing process
-loc45678901234567890123456
-                         Owned by PID= PID1 which is an existing process
-loc456789012345678901234567
-                         Owned by PID= PID1 which is an existing process
-loc4567890123456789012345678
-                         Owned by PID= PID1 which is an existing process
-loc45678901234567890123456789
-                         Owned by PID= PID1 which is an existing process
-loc456789012345678901234567890
-                         Owned by PID= PID1 which is an existing process
+loc4567890123456789012345 Owned by PID= PID1 which is an existing process
+loc45678901234567890123456 Owned by PID= PID1 which is an existing process
+loc456789012345678901234567 Owned by PID= PID1 which is an existing process
+loc4567890123456789012345678 Owned by PID= PID1 which is an existing process
+loc45678901234567890123456789 Owned by PID= PID1 which is an existing process
+loc456789012345678901234567890 Owned by PID= PID1 which is an existing process
 ##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 56/(597|820); SUBSCRIPT slot bytes in use: (1368|1688)/(28080|28092)
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
 zshow L
@@ -1154,30 +1121,22 @@ A234567890123456
 ^A23456789012345678901 Owned by PID= PID2 which is an existing process
 ^A234567890123456789012 Owned by PID= PID2 which is an existing process
 ^A2345678901234567890123 Owned by PID= PID2 which is an existing process
-^A23456789012345678901234
-                         Owned by PID= PID2 which is an existing process
-^A234567890123456789012345
-                         Owned by PID= PID2 which is an existing process
-^A2345678901234567890123456
-                         Owned by PID= PID2 which is an existing process
-^A23456789012345678901234567
-                         Owned by PID= PID2 which is an existing process
-^A234567890123456789012345678
-                         Owned by PID= PID2 which is an existing process
-^A2345678901234567890123456789
-                         Owned by PID= PID2 which is an existing process
+^A23456789012345678901234 Owned by PID= PID2 which is an existing process
+^A234567890123456789012345 Owned by PID= PID2 which is an existing process
+^A2345678901234567890123456 Owned by PID= PID2 which is an existing process
+^A23456789012345678901234567 Owned by PID= PID2 which is an existing process
+^A234567890123456789012345678 Owned by PID= PID2 which is an existing process
+^A2345678901234567890123456789 Owned by PID= PID2 which is an existing process
 ##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A234567890123456: processes on queue: 0/(880|1173); LOCK slots in use: 14/(597|820); SUBSCRIPT slot bytes in use: (420|504)/(28080|28092)
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
 
 A23456789012345678901234567890
-^A23456789012345678901234567890
-                         Owned by PID= PID2 which is an existing process
+^A23456789012345678901234567890 Owned by PID= PID2 which is an existing process
 ##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A23456789012345678901234567890: processes on queue: 0/(880|1173); LOCK slots in use: 1/(597|820); SUBSCRIPT slot bytes in use: (36|40)/(28080|28092)
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
 
 A234567890123456789012345678901
-^A234567890123456789012345678901
-                         Owned by PID= PID2 which is an existing process
+^A234567890123456789012345678901 Owned by PID= PID2 which is an existing process
 ##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A234567890123456789012345678901: processes on queue: 0/(880|1173); LOCK slots in use: 1/(597|820); SUBSCRIPT slot bytes in use: (40|48)/(28080|28092)
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
 ##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
@@ -1222,34 +1181,26 @@ A234567890123456
 ^A23456789012345678901 Owned by PID= PID2 which is an existing process
 ^A234567890123456789012 Owned by PID= PID2 which is an existing process
 ^A2345678901234567890123 Owned by PID= PID2 which is an existing process
-^A23456789012345678901234
-                         Owned by PID= PID2 which is an existing process
-^A234567890123456789012345
-                         Owned by PID= PID2 which is an existing process
-^A2345678901234567890123456
-                         Owned by PID= PID2 which is an existing process
-^A23456789012345678901234567
-                         Owned by PID= PID2 which is an existing process
-^A234567890123456789012345678
-                         Owned by PID= PID2 which is an existing process
-^A2345678901234567890123456789
-                         Owned by PID= PID2 which is an existing process
+^A23456789012345678901234 Owned by PID= PID2 which is an existing process
+^A234567890123456789012345 Owned by PID= PID2 which is an existing process
+^A2345678901234567890123456 Owned by PID= PID2 which is an existing process
+^A23456789012345678901234567 Owned by PID= PID2 which is an existing process
+^A234567890123456789012345678 Owned by PID= PID2 which is an existing process
+^A2345678901234567890123456789 Owned by PID= PID2 which is an existing process
 ##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A234567890123456: processes on queue: 0/(880|1173); LOCK slots in use: 14/(597|820); SUBSCRIPT slot bytes in use: (420|504)/(28080|28092)
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
 #####################################################################
 $LKE show -reg=A23456789012345678901234567890
 
 A23456789012345678901234567890
-^A23456789012345678901234567890
-                         Owned by PID= PID2 which is an existing process
+^A23456789012345678901234567890 Owned by PID= PID2 which is an existing process
 ##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A23456789012345678901234567890: processes on queue: 0/(880|1173); LOCK slots in use: 1/(597|820); SUBSCRIPT slot bytes in use: (36|40)/(28080|28092)
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
 #####################################################################
 $LKE show -reg=A234567890123456789012345678901
 
 A234567890123456789012345678901
-^A234567890123456789012345678901
-                         Owned by PID= PID2 which is an existing process
+^A234567890123456789012345678901 Owned by PID= PID2 which is an existing process
 ##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A234567890123456789012345678901: processes on queue: 0/(880|1173); LOCK slots in use: 1/(597|820); SUBSCRIPT slot bytes in use: (40|48)/(28080|28092)
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
 #####################################################################
@@ -1312,8 +1263,7 @@ A
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
 
 A23456789012345678901234567890
-^A23456789012345678901234567890
-                         Owned by PID= PID2 which is an existing process
+^A23456789012345678901234567890 Owned by PID= PID2 which is an existing process
 ##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A23456789012345678901234567890: processes on queue: 0/(880|1173); LOCK slots in use: 1/(597|820); SUBSCRIPT slot bytes in use: (36|40)/(28080|28092)
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
 ##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A234567890123456789012345678901: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)

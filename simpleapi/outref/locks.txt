@@ -20,10 +20,8 @@ DEFAULT
 locks1: List of locks after setting group 3:
 
 DEFAULT
-^lockA("simpleAPI","lock","uh-huh","oooooh","shiney!")
-##TEST_AWK                         Owned by PID= [1-9][0-9]* which is an existing process
-lockA("simpleAPI","lock","uh-huh","oooooh","shiney!")
-##TEST_AWK                         Owned by PID= [1-9][0-9]* which is an existing process
+##TEST_AWK\^lockA\("simpleAPI","lock","uh-huh","oooooh","shiney!"\) Owned by PID= [1-9][0-9]* which is an existing process
+##TEST_AWKlockA\("simpleAPI","lock","uh-huh","oooooh","shiney!"\) Owned by PID= [1-9][0-9]* which is an existing process
 ##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 12/(597|820); SUBSCRIPT slot bytes in use: (152|160|208)/(28080|28092)
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: 9[02378]. of 220 pages
 

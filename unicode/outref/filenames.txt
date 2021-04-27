@@ -1419,8 +1419,7 @@ AREG
 
 BREG
 ##TEST_AWK.b.1,"ａｂｃ". Owned by PID= [1-9][0-9]* which is an existing process
-^b("我能吞下玻璃而不伤身体")
-##TEST_AWK                         Owned by PID= [1-9][0-9]* which is an existing process
+##TEST_AWK\^b\("我能吞下玻璃而不伤身体"\) Owned by PID= [1-9][0-9]* which is an existing process
 ##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(880|1173); LOCK slots in use: 4/(597|820); SUBSCRIPT slot bytes in use: (72|104)/(28080|28092)
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
 ##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: CREG: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
@@ -1428,8 +1427,7 @@ BREG
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
 
 DEFAULT
-z("我能吞下玻璃而不伤身体")
-##TEST_AWK                         Owned by PID= [1-9][0-9]* which is an existing process
+##TEST_AWKz\("我能吞下玻璃而不伤身体"\) Owned by PID= [1-9][0-9]* which is an existing process
 ##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 2/(597|820); SUBSCRIPT slot bytes in use: (48|64)/(28080|28092)
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
 ##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DREG: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
