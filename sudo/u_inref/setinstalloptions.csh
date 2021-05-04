@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -13,6 +13,8 @@
 set linux_distrib = `awk -F= '$1 == "ID" {print $2}' /etc/os-release | sed 's/"//g'`
 set osver = `awk -F= '$1 == "VERSION_ID" {print $2}' /etc/os-release | sed 's/"//g'`
 set installoptions = ""
-if (("$linux_distrib" == "arch") || (("$linux_distrib" == "debian") && (`uname -m` == "aarch64")) || (("$linux_distrib" == "ubuntu") && ("16.04" == "$osver")) || ("centos" == "$linux_distrib")) then
+if (("$linux_distrib" == "arch")							\
+		|| (("$linux_distrib" == "debian") && (`uname -m` == "aarch64"))	\
+		|| (("$linux_distrib" == "raspbian") && (`uname -m` == "armv6l"))) then
 	set installoptions = "$installoptions --force-install"
 endif

@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh
 #################################################################
 #                                                               #
-# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.       #
+# Copyright (c) 2020-2021 YottaDB LLC and/or its subsidiaries.       #
 # All rights reserved.                                          #
 #                                                               #
 #       This source code contains the intellectual property     #
@@ -21,14 +21,20 @@ cd install
 mkdir gtmsecshrdir
 chmod -R 755 .
 
-cp $gtm_tst/$tst/u_inref/ydb358.sh  .
-# we pass these things as variables to ydb358.sh because it doesn't inherit the tcsh envirnment variables
+cp $gtm_tst/$tst/u_inref/ydb306.sh  .
+# we pass these things as variables to ydb306.sh because it doesn't inherit the tcsh environment variables
 source $gtm_tst/$tst/u_inref/setinstalloptions.csh      # sets the variable "installoptions" (e.g. "--force-install" if needed)
-sudo sh ./ydb358.sh $gtm_verno $tst_image `pwd` "$installoptions"
+sudo sh ./ydb306.sh $gtm_verno $tst_image `pwd` "$installoptions"
 
-setenv ydb_chset UTF-8
-# run a few mumps commands to test the install works and UTF-8 is being used
-cat >> ../mumpsTest.txt << xx
+# Set chset to UTF-8 to verify that UTF-8 install done in the previous step works fine.
+# "$switch_chset" requires us to be in the test output directory so cd back from "install" subdirectory for this step.
+cd ..
+$switch_chset "UTF-8"
+# Switch back to "install" subdirectory now that "$switch_chset" is done.
+cd install
+
+# run a few yottadb commands to test the install works and UTF-8 is being used
+cat >> ../yottadbTest.txt << xx
 write \$zyrel
 write \$zreldate
 set a="Hello,"
@@ -37,7 +43,7 @@ zwrite a
 write \$zchset
 h
 xx
-`pwd`/mumps -direct < ../mumpsTest.txt
+`pwd`/yottadb -direct < ../yottadbTest.txt
 
 # clean up the install directory since the files are owned by root
 cd ..
