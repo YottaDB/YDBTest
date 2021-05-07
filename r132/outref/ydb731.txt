@@ -1,0 +1,53 @@
+###################################################################
+YDB#731 : Test $VIEW("WORDEXP")
+###################################################################
+# Test unbalanced left paren issues WRDE_BADCHAR error
+write $VIEW("WORDEXP","(") : Output = [$ZSTATUS="151028026,wordexp+6^ydb731,%YDB-E-WORDEXPFAILED, wordexp() call for string [(] returned WRDE_BADCHAR error. See wordexp() man pages for details"
+]
+# Test unbalanced right paren issues WRDE_BADCHAR error
+write $VIEW("WORDEXP",")") : Output = [$ZSTATUS="151028026,wordexp+6^ydb731,%YDB-E-WORDEXPFAILED, wordexp() call for string [)] returned WRDE_BADCHAR error. See wordexp() man pages for details"
+]
+# Test unbalanced left flower brace issues WRDE_BADCHAR error
+write $VIEW("WORDEXP","{") : Output = [$ZSTATUS="151028026,wordexp+6^ydb731,%YDB-E-WORDEXPFAILED, wordexp() call for string [{] returned WRDE_BADCHAR error. See wordexp() man pages for details"
+]
+# Test unbalanced right flower brace issues WRDE_BADCHAR error
+write $VIEW("WORDEXP","}") : Output = [$ZSTATUS="151028026,wordexp+6^ydb731,%YDB-E-WORDEXPFAILED, wordexp() call for string [}] returned WRDE_BADCHAR error. See wordexp() man pages for details"
+]
+# Test unbalanced single-quote issues WRDE_SYNTAX error
+write $VIEW("WORDEXP","'") : Output = [$ZSTATUS="151028026,wordexp+6^ydb731,%YDB-E-WORDEXPFAILED, wordexp() call for string ['] returned WRDE_SYNTAX error. See wordexp() man pages for details"
+]
+# Test unbalanced double-quote issues WRDE_SYNTAX error
+write $VIEW("WORDEXP","""") : Output = [$ZSTATUS="151028026,wordexp+6^ydb731,%YDB-E-WORDEXPFAILED, wordexp() call for string [""] returned WRDE_SYNTAX error. See wordexp() man pages for details"
+]
+# Test ~ expansion works without errors
+write $VIEW("WORDEXP","~") : Output = [##HOME_PATH##]
+# Test $ expansion works without errors
+write $VIEW("WORDEXP","$ydb_dist") : Output = [##SOURCE_PATH##]
+# Test repeated calls work fine
+write $VIEW("WORDEXP","abcd") : Output = [abcd]
+write $VIEW("WORDEXP","abcd") : Output = [abcd]
+write $VIEW("WORDEXP","abcd") : Output = [abcd]
+write $VIEW("WORDEXP","abcd ~ $ydb_dist efgh") : Output = [abcd ##HOME_PATH## ##SOURCE_PATH## efgh]
+write $VIEW("WORDEXP","abcd ~ $ydb_dist efgh") : Output = [abcd ##HOME_PATH## ##SOURCE_PATH## efgh]
+write $VIEW("WORDEXP","abcd ~ $ydb_dist efgh") : Output = [abcd ##HOME_PATH## ##SOURCE_PATH## efgh]
+# Test input and output string lengths ranging from 0 to 1Mb. Verify MAXSTRLEN error as appropriate
+i = 1 : $zlength(input) = 0 : $zlength(output) = 0
+i = 2 : $zlength(input) = 0 : $zlength(output) = 0
+i = 3 : $zlength(input) = 0 : $zlength(output) = 0
+i = 4 : $zlength(input) = 10 : $zlength(output) = 26
+i = 5 : $zlength(input) = 30 : $zlength(output) = 80
+i = 6 : $zlength(input) = 60 : $zlength(output) = 161
+i = 7 : $zlength(input) = 120 : $zlength(output) = 323
+i = 8 : $zlength(input) = 250 : $zlength(output) = 674
+i = 9 : $zlength(input) = 510 : $zlength(output) = 1376
+i = 10 : $zlength(input) = 1020 : $zlength(output) = 2753
+i = 11 : $zlength(input) = 2040 : $zlength(output) = 5507
+i = 12 : $zlength(input) = 4090 : $zlength(output) = 11042
+i = 13 : $zlength(input) = 8190 : $zlength(output) = 22112
+i = 14 : $zlength(input) = 16380 : $zlength(output) = 44225
+i = 15 : $zlength(input) = 32760 : $zlength(output) = 88451
+i = 16 : $zlength(input) = 65530 : $zlength(output) = 176930
+i = 17 : $zlength(input) = 131070 : $zlength(output) = 353888
+i = 18 : $zlength(input) = 262140 : $zlength(output) = 707777
+i = 19 : $zlength(input) = 524280$ZSTATUS="150373290,ydb731+31^ydb731,%YDB-E-MAXSTRLEN, Maximum string length exceeded"
+i = 20 : $zlength(input) = 1048570$ZSTATUS="150373290,ydb731+31^ydb731,%YDB-E-MAXSTRLEN, Maximum string length exceeded"
