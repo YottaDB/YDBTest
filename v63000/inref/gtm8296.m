@@ -3,7 +3,7 @@
 ; Copyright (c) 2015-2016 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
-; Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -15,6 +15,21 @@
 gtm8296
 	; Setting $ztrap so that it doesn't rethrow the error (therefore terminate gtm8296) and proceeds to the next command
 	set $ztrap="set $ecode="""" write $zstatus,!"
+	; Verify that PEEKBYNAME accesses gd_segment fields without opening the database.
+	; There is a later check of gd_region.jnl_state that will work correctly only if the db was not open.
+	; So doing the gd_segment field accesses BEFORE the gd_region.jnl_state access will not only ensure the
+	; output is correct but also that it happens without opening the db.
+	write "# Pass gd_segment.fname : BEFORE DB open",!
+	write:"mumps.dat"=$ZPIECE($$^%PEEKBYNAME("gd_segment.fname","DEFAULT"),$ZCHAR(0),1) "PASS",!
+	write "# Pass gd_segment.blk_size : BEFORE DB open",!
+	write:4096=$$^%PEEKBYNAME("gd_segment.blk_size","DEFAULT") "PASS",!
+	; Note gd_segment.global_buffers is not applicable for MM access method which the test framework can randomly choose
+	; so we do not check that here to keep the check simple.
+	write "# Pass gd_segment.mutex_slots : BEFORE DB open",!
+	write:1024=$$^%PEEKBYNAME("gd_segment.mutex_slots","DEFAULT") "PASS",!
+	write "# Pass gd_segment.lock_space : BEFORE DB open",!
+	write:220=$$^%PEEKBYNAME("gd_segment.lock_space","DEFAULT") "PASS",!
+	;
 	; Since V63001A, $zpeek does not open the database region to access "gd_region.*" fields.
 	; But we want gd_region.jnl_state to be reported correctly and that is filled in only after db open time.
 	; So check that before db open, the field is 0 and after the db open, it is 2.
