@@ -30,13 +30,13 @@ ydb731	;
 	write "# Test ~ expansion works without errors",!
 	do wordexp("~")
 	write "# Test $ expansion works without errors",!
-	do wordexp("$ydb_dist")
+	do wordexp("$envSpcfc")
 	write "# Test repeated calls work fine",!
 	for i=1:1:3 do wordexp("abcd")
-	for i=1:1:3 do wordexp("abcd ~ $ydb_dist efgh")
+	for i=1:1:3 do wordexp("abcd ~ $envSpcfc efgh")
 	write "# Test input and output string lengths ranging from 0 to 1Mb. Verify MAXSTRLEN error as appropriate",!
 	new str,len,i,input,output
-	set str="$ydb_dist "
+	set str="$envSpcfc "
 	set len=$zlength(str)
 	for i=1:1:20 do
 	. set input="" for j=1:1:(2**i)/10 set input=input_str

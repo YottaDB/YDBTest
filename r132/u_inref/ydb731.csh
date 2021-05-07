@@ -16,5 +16,8 @@ $echoline
 echo 'YDB#731 : Test $VIEW("WORDEXP")'
 $echoline
 
+# The test reference file relies on an env var with a known fixed length. Hence the below env var set before invoking the M program.
+setenv envSpcfc "/a12/b123456/c12345678/d12"
+
 $ydb_dist/yottadb -run ydb731
 

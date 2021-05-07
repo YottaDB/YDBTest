@@ -22,14 +22,14 @@ write $VIEW("WORDEXP","""") : Output = [$ZSTATUS="151028026,wordexp+6^ydb731,%YD
 # Test ~ expansion works without errors
 write $VIEW("WORDEXP","~") : Output = [##HOME_PATH##]
 # Test $ expansion works without errors
-write $VIEW("WORDEXP","$ydb_dist") : Output = [##SOURCE_PATH##]
+write $VIEW("WORDEXP","$envSpcfc") : Output = [/a12/b123456/c12345678/d12]
 # Test repeated calls work fine
 write $VIEW("WORDEXP","abcd") : Output = [abcd]
 write $VIEW("WORDEXP","abcd") : Output = [abcd]
 write $VIEW("WORDEXP","abcd") : Output = [abcd]
-write $VIEW("WORDEXP","abcd ~ $ydb_dist efgh") : Output = [abcd ##HOME_PATH## ##SOURCE_PATH## efgh]
-write $VIEW("WORDEXP","abcd ~ $ydb_dist efgh") : Output = [abcd ##HOME_PATH## ##SOURCE_PATH## efgh]
-write $VIEW("WORDEXP","abcd ~ $ydb_dist efgh") : Output = [abcd ##HOME_PATH## ##SOURCE_PATH## efgh]
+write $VIEW("WORDEXP","abcd ~ $envSpcfc efgh") : Output = [abcd ##HOME_PATH## /a12/b123456/c12345678/d12 efgh]
+write $VIEW("WORDEXP","abcd ~ $envSpcfc efgh") : Output = [abcd ##HOME_PATH## /a12/b123456/c12345678/d12 efgh]
+write $VIEW("WORDEXP","abcd ~ $envSpcfc efgh") : Output = [abcd ##HOME_PATH## /a12/b123456/c12345678/d12 efgh]
 # Test input and output string lengths ranging from 0 to 1Mb. Verify MAXSTRLEN error as appropriate
 i = 1 : $zlength(input) = 0 : $zlength(output) = 0
 i = 2 : $zlength(input) = 0 : $zlength(output) = 0
