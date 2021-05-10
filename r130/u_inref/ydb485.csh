@@ -76,10 +76,10 @@ echo '\nTesing larger than $ZCONVERT supported value conversion using %HD'
 echo "Input: 7FFFFFFFFFFFFFFFFFFFFFFFFFFFF"
 $ydb_dist/yottadb -r ^%XCMD 'write "Output: ",$$FUNC^%HD("7FFFFFFFFFFFFFFFFFFFFFFFFFFFF")'
 
-if ("HOST_LINUX_ARMVXL" != $gtm_test_os_machtype) then
-	# The performance checks are disabled on ARMV6L and ARMV7L to avoid occassional failures
+if (("HOST_LINUX_ARMVXL" != $gtm_test_os_machtype) && ("HOST_LINUX_AARCH64" != $gtm_test_os_machtype)) then
+	# The performance checks are disabled on AARCH64, ARMV6L and ARMV7L to avoid occasional failures
 	# due to the slowness of these machines. They previously passed consistently with 15 second
-	# intervals but can occasionally fail at 5 seconds.
+	# intervals but can occasionally fail at 8 seconds.
 	echo '\nTesting performance of current %DH vs previous %DH'
 	$ydb_dist/yottadb -r compdectohex^zconvert
 
