@@ -4,7 +4,7 @@
 # Copyright (c) 2008-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -141,8 +141,14 @@ endif
 # Note use '|&' coming out of ldd because on Alpine, ldd generates extra warning messages about gtm_malloc/free not
 # being satisfied.
 if (-e $ydb_dist/plugin/libgtmtls.so) then
-	set libsslpath = `ldd $ydb_dist/plugin/libgtmtls.so |& grep libssl | awk '{print $3}'`
-	set opensslver = `strings $libsslpath | grep -w '^OpenSSL' | awk '{print $2}'`
+	# Previously we used to do "strings libssl.so" and search for OpenSSL version number.
+	# But that did not work on Ubuntu 21.04 where OpenSSL version was 1.1.1j.
+	# So we instead do "strings libcrypt.so" now which works even there.
+	# It generates more lines in some cases (RHEL7) with multiple version numbers so we reverse sort
+	# and pick the first line (returns the latest of the multiple version numbers) which was found to
+	# match the actual OpenSSL version.
+	set libcryptopath = `ldd $ydb_dist/plugin/libgtmtls.so |& grep libcrypto | awk '{print $3}'`
+	set opensslver = `strings $libcryptopath | grep -w '^OpenSSL [0-9]' | awk '{print $2}' | sort -r | head -1`
 	if ( `expr "$opensslver" \>= "1.1.1"` ) then
 		setenv ydb_test_tls13_plus 1
 	else
