@@ -23,6 +23,14 @@ send -- "set \$zintr=\"write \"\"in interrupt\"\",! write c,!\" if (\$zsigproc(\
 expect "YDB>"
 expect "%YDB-E-ZINTRECURSEIO, Attempt to do IO to the active device in \$ZINTERRUPT"
 expect "%YDB-E-ERRWZINTR, Error while processing \$ZINTERRUPT"
+# Send a \r while the process is in direct mode to ensure it redisplays the YDB> prompt so we can then proceed to halt.
+# But we need to ensure the \r is only sent when the process is back in direct mode (when the terminal echo is turned OFF)
+# and not while it is still in the ending stages of $ZINTERRUPT processing (when the terminal echo is turned ON). Not ensuring
+# this can cause test failures due to an extra new line showing up due to the ECHO ON terminal setting (\r shows up as a
+# newline right when the \r is sent because ECHO is ON and the terminal driver displays it AND another newline is displayed
+# when a later dm_read() call sees the newline in the input buffer and processes it when ECHO is turned OFF).
+# Hence the below call that waits for terminal echo to be OFF before \r gets sent.
+system $::env(gtm_tst)/com/wait_for_stty_echo_off.csh
 send -- "\r"
 expect "YDB>"
 send -- "halt\r"
