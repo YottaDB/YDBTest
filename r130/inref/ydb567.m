@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2020-2021 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -16,11 +16,14 @@ test    ;
 	quit
 
 child   ;
-	set singlecpu=$ztrnlnm("gtm_test_singlecpu")
+	; The performance part of this test is disabled for both pro and dbg on single CPU machines
+	; and for dbg on ARM as it has failed in the past due to slowness.
+	set perfdisabled=$ztrnlnm("gtm_test_singlecpu")
+	set:(("dbg"=$ztrnlnm("tst_image"))&("HOST_LINUX_ARMVXL"=$ztrnlnm("gtm_test_os_machtype"))) perfdisabled=1
 	set $zinterrupt="if $increment(intrptcnt)"
-	set:(0=singlecpu) starttime=$zut
+	set:(0=perfdisabled) starttime=$zut
 	for i=1:1:10000  set hangtime(i)=$select(i#2:0.0001,1:0.001) hang hangtime(i)
-	if 0=singlecpu do
+	if 0=perfdisabled do
 	.	set endtime=$zut
 	.	set totalhangtime=0
 	.	for i=1:1:10000 set totalhangtime=totalhangtime+hangtime(i)
