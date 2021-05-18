@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -16,7 +16,10 @@
 echo "Begin gtm7327"
 $gtm_tst/com/dbcreate.csh mumps
 source $gtm_tst/com/set_ydb_env_var_random.csh ydb_tpnotacidtime gtm_tpnotacidtime 31	# out of range (0-30) value (>30) will cause it to default to 2 (seconds)
-setenv gtm_zmaxtptime 15
+# We have seen very rare test failures on ARMV7L and ARMV6L when gtm_zmaxtptime was set to 15.
+# The time taken by the TP transaction was as high as 24 seconds in the failure cases. Hence setting
+# it to 30 below to avoid such rare false failures.
+setenv gtm_zmaxtptime 30
 set syslog_before1 = `date +"%b %e %H:%M:%S"`
 $GTM << GTM_EOF
 do ^gtm7327
