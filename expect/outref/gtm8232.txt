@@ -5,6 +5,9 @@ Using: ##SOURCE_PATH##/mupip
 mumps.dat
 # Running expect (output: expect.out)
 TEST-I-PASS
+# Verify that exit command did get echoed in the terminal after [mupip reorg] and [more] returned back to the shell
+# Count number of lines in expect.out containing the string "NEXT_COMMexit". We expect a value of 1.
+1
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
