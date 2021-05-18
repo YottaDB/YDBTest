@@ -14,11 +14,8 @@
 set timeout 2
 
 # -f prevents us from loading .cshrc
-# Prompt makes it easy to just figure out that we are on a shell
 spawn /usr/local/bin/tcsh -f
-send -- "set prompt='# '\r"
-# Expect regex checks that we are on a new line with a '# '
-expect -re {(?n)^# }
+source $::env(gtm_tst)/com/expectinit.exp
 
 # Run YottaDB Direct Mode
 send -- "\$ydb_dist/yottadb -dir\r"
@@ -28,13 +25,13 @@ expect "YDB>"
 # https://stackoverflow.com/questions/32784013/bash-expect-script-to-control-execution/32785527
 # (\x1a (17) is not 19..., but 19 doesn't work in Octal or Hex)
 send -- \x1a
-expect "# "
+expect "SHELL"
 
 # See that we are listed as backgrounded
 send -- "jobs\r"
 expect "yottadb -dir"
 # Expect regex checks that we are on a new line with a '# '
-expect -re {(?n)^# }
+expect "SHELL"
 
 # Foreground, and let's make sure we still function (assert failure is here)
 send -- "fg\r"
@@ -48,7 +45,7 @@ expect "YDB>"
 send -- "write \"abc"
 expect "c"
 send -- \x1a
-expect "# "
+expect "SHELL"
 send -- "fg\r"
 # Sleep is needed to prevent race condition.
 sleep .1
@@ -67,7 +64,7 @@ expect "z"
 send -- "\""
 expect "\""
 send -- \x1a
-expect "# "
+expect "SHELL"
 send -- "fg\r"
 # Sleep is needed to prevent race condition.
 sleep .1
@@ -82,4 +79,4 @@ expect "YDB>"
 
 # Exit YottaDB by sending CTRL-D
 send -- \x04
-expect "# "
+expect "SHELL"
