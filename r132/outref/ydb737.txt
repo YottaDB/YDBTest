@@ -1,0 +1,12 @@
+# Test Call-in APIs don't know how to handle dollar quit
+# Build ydb737 executable
+# Running ydb737...
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Testing $quit behavior without error trap
+quit1 return value : Expected = 5 : Actual = 5
+Testing $quit behavior with error trap
+quit1 return value : Expected = 150373210 : Actual = 150373210
