@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -16,12 +16,17 @@
 source $gtm_tst/com/gtm_test_setbgaccess.csh
 $gtm_tst/com/dbcreate.csh mumps 1 >>& dbcreate.out
 echo "# Start background script that does MUPIP FREEZE -ONLINE -ON -NOAUTORELEASE or -AUTORELEASE"
-# .outx needed to  prevent OFRZAUTOREL warning messages from being caught by the test framework
-($SHELL $gtm_tst/$tst/u_inref/gtm8850freeze.csh & ; echo $!>>& bg.pid) >& f.outx
+($SHELL $gtm_tst/$tst/u_inref/gtm8850freeze.csh & ; echo $!>>& bg.pid) >& f.out
 if ($status) then
 	echo "# Error returned from MUPIP Freeze command"
-	cat f.outx
+	cat f.out
 endif
+# Filter out potential OFRZAUTOREL warning messages from being caught by the test framework
+# Note that we need to redirect output to a .logx (not .log) file to avoid
+# test framework from catching a potential TEST-E-ERRORNOTSEEN message from the check_error_exist.csh script
+# in case the OFRZAUTOREL message is not seen (which is possible in some cases).
+$gtm_tst/com/check_error_exist.csh f.out "%YDB-W-OFRZAUTOREL" >& ofrzautorel.logx
+
 echo "# Start 8 background scripts that starts MUMPS processes which do two updates and terminate in a loop"
 @ num = 0
 while ($num < 8)
