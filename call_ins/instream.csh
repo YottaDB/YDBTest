@@ -3,7 +3,7 @@
 # Copyright (c) 2003-2014 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -27,8 +27,10 @@
 # test_mprof_hidden_rtn [estess]	Verify M-Profiling functions correctly when routine is hidden behind a call-in frame
 # test_ci_z_halt	[estess]	Verify [Z]HALT in a call-in returns to caller instead of actually halting
 # test_ci_goto0		[estess]	Verify ZGOTO 0 in a call-in returns to caller after algorithmic change
-# test_ci_z_halt_rc     [estess]        Verify return values when frames exited by HALT/ZHALT/ZGOTO 0/QUIT
-#                                       work correctly.
+# test_ci_z_halt_rc     [estess]        Verify return values when frames exited by HALT/ZHALT/ZGOTO 0/QUIT work correctly.
+# ydbaccess_ci          [sam]           Run ProgrammersGuide/extrout.html ydbaccess_ci example
+# ydbaccess_cip         [sam]           Run ProgrammersGuide/extrout.html ydbaccess_cip example
+# ydbreturn_ci          [sam]           Run ProgrammersGuide/extrout.html ydbreturn_ci example
 #
 # Options to record Load Path in executables. Similar options needed for OS390 platform
 setenv subtest_exclude_list ""
@@ -39,6 +41,7 @@ setenv subtest_list_non_replic "32args argcnt c_args ctomctom ctomtom gtm_args g
 setenv subtest_list_non_replic "$subtest_list_non_replic nest_err_et2 nest_err_et3 nest_err_zt nest_err_zt2 nest_err_zt3 maxstrlen gtmxc_test_types"
 setenv subtest_list_non_replic "$subtest_list_non_replic xc_test_types multi_gtm_init gtm_percent gtm_cip timers empty_table stack_leak"
 setenv subtest_list_non_replic "$subtest_list_non_replic test_rtn_replace test_mprof_hidden_rtn test_ci_z_halt test_ci_zgoto0 test_ci_z_halt_rc"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydbaccess_ci ydbaccess_cip ydbreturn_ci"
 setenv subtest_list_replic "environment"
 
 if ("TRUE" == $gtm_test_unicode_support) then

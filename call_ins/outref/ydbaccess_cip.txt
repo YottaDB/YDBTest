@@ -1,0 +1,17 @@
+# Run ProgrammersGuide/extrout.html ydbaccess_cip example
+# Build ydbaccess_cip executable
+# Running ydbaccess_cip...
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##TEST_AWKYottaDB .*
+MLG:1,MLT:0
+##TEST_AWKLOCK \^CIDemo\([0-9]*\) LEVEL=1
+Washington, DC
+England
+United States
+^Capital("United States")
+---------------------------------
+xecute2 Expected failure: [150373210,xecute+2^%ydbaccess,%YDB-E-DIVZERO, Attempt to divide by zero]

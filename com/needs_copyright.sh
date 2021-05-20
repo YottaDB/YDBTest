@@ -35,7 +35,8 @@ if echo "$skipextensions" | grep -q -w "$(echo "$file" | awk -F . '{print $NF}')
 fi
 
 # Below is a list of specific files that do not have a copyright so ignore them
-skiplist="COPYING"
+# The files below are planned to be public domain and so should not have copyright on them so that people can copy and paste.
+skiplist="COPYING call_ins/inref/_ydbaccess.m call_ins/inref/_ydbreturn.m call_ins/inref/ydbaccess.ci call_ins/inref/ydbaccess_ci.c call_ins/inref/ydbaccess_cip.c call_ins/inref/ydbreturn.ci call_ins/inref/ydbreturn_ci.c"
 for skipfile in $skiplist; do
 	if [ $file = $skipfile ]; then
 		exit 1
