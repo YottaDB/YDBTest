@@ -1,0 +1,36 @@
+# This tests that a MUPIP INTEG -SUBSCRIPT does not SIG-11 if the
+# database contains NULL subscripts and the end key is not specified.
+# Due to a bug that was only partially fixed in the upstream version
+# V6.3-010, this would produce a SIG-11 in YottaDB versions prior to
+# r1.32 and upstream versions up to at least V6.3-014.
+###################################################################
+# Creating database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+###################################################################
+# Setting some globals
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+###################################################################
+# Run a MUPIP INTEG -SUBSCRIPT with a null subscript and no end key
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+##TEST_AWKDirectory           2               2           0\.[0-9]{3}            NA
+Index               1               1           0.585             1
+Data                1               1           1.074             1
+Total               4               4              NA             2
