@@ -4,7 +4,7 @@
 # Copyright (c) 2003-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.  #
+# Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.  #
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -70,8 +70,10 @@ if (! $is_tst_dir_ssd) then
 else if (0 == $big_files_present) then
 	# $gtm_test/big_files directory is not present. So exclude this subtest as it needs files from there.
 	setenv subtest_exclude_list "$subtest_exclude_list largelibtest"
-else if ($gtm_platform_size != 64) then
-	## Disable largelibtest on non-64-bit machines
+else if ("HOST_LINUX_X86_64" != $gtm_test_os_machtype) then
+	# Disable largelibtest on non-x86_64 machines. On even the fastest in-house ARM machines, this test
+	# can run for hours just to create the shared libraries and then is going to need more than 4GB of memory
+	# which can easily swamp the system.
 	setenv subtest_exclude_list "$subtest_exclude_list largelibtest"
 endif
 
