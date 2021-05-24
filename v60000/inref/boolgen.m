@@ -3,7 +3,7 @@
 ; Copyright (c) 2012-2015 Fidelity National Information 	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
-; Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2020-2021 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -33,9 +33,9 @@
 	;
 	; Configuration parms
 	;
-	; On armv7l and armv6l platforms, generating 5000 boolean expressions runs into YDB#547
+	; On AARCH64, ARMV7L and ARMV6L, generating 5000 boolean expressions runs into memory issues.
 	; Therefore limit the # of expressions to a much smaller number (1500) there.
-	Set exprcnt=$Select(($ZVersion["armv"):1500,1:5000)	; Create this many expressions - each is executed in all 3 places
+	Set exprcnt=$Select(($ZVersion'["x86_64"):1500,1:5000)	; Create this many expressions - each is executed in all 3 places
 	Set baseoprnpct=33	; Base open paren percentage. Is reduced by multiples of paren nesting
 	Set basecprnpct=40	; Base close paren percentage. Is increased by multiples of paren nesting
 	Set nxtopandpct=35	; Next operator this percent to be AND, else is an OR operator
