@@ -3,7 +3,7 @@
  * Copyright (c) 2013, 2015 Fidelity National Information	*
  * Services, Inc. and/or its subsidiaries. All rights reserved.	*
  *								*
- * Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries. *
+ * Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries. *
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -464,7 +464,6 @@ public class TestXC {
 				"\t\tObject x = Integer.valueOf(0);\n\t\tSystem.out.println((String)x);\n",
 				"\t\tSystem.out.println(new char[]{'a', 'b'}[3]);\n",
 				"\t\tSystem.out.println(1 / 0);\n"};
-		final String[] errorTexts;
 		int numOfErrorCases = errorCodes.length;
 		TestCase[] testCases = new TestCase[numOfErrorCases];
 		String javaVersion = System.getProperty("java.version");
@@ -474,19 +473,21 @@ public class TestXC {
 		 * error message. Otherwise we use the newer error message format.
 		 */
 		int	intver = Integer.parseInt(javaVersion.split("\\.")[0]);
-		if (intver >= 11)
-		{
-			errorTexts = new String[]{
-					"java.lang.ClassCastException: class java.lang.Integer cannot be cast to class java.lang.String (java.lang.Integer and java.lang.String are in module java.base of loader 'bootstrap')",
-					"java.lang.ArrayIndexOutOfBoundsException: Index 3 out of bounds for length 2",
-					"java.lang.ArithmeticException: / by zero"};
-		} else
-		{
-			errorTexts = new String[]{
-					"java.lang.ClassCastException: java.lang.Integer cannot be cast to java.lang.String",
-					"java.lang.ArrayIndexOutOfBoundsException: 3",
-					"java.lang.ArithmeticException: / by zero"};
-		}
+		/* Additionally, on an ARMV6L system, we had Java 11.* installed but still saw the error string to
+		 * not show up as descriptive as it does on x86_64 and AARCH64 systems that have Java 11.* installed.
+		 * The current suspicion is that it is because the "java.vm.name" is different.
+		 * On x86_64 and AARCH64, it is "OpenJDK 64-Bit Server VM" whereas on ARMV6L it is "OpenJDK Zero VM".
+		 * Therefore we check that too before deciding whether to use the older or newer error message format.
+		 */
+		String javaVmName = System.getProperty("java.vm.name");
+		String[] errorTexts = new String[3];
+		errorTexts[0] = (intver >= 11)
+					? "java.lang.ClassCastException: class java.lang.Integer cannot be cast to class java.lang.String (java.lang.Integer and java.lang.String are in module java.base of loader 'bootstrap')"
+					: "java.lang.ClassCastException: java.lang.Integer cannot be cast to java.lang.String";
+		errorTexts[1] = ((intver >= 11) && !javaVmName.equals("OpenJDK Zero VM"))
+					?  "java.lang.ArrayIndexOutOfBoundsException: Index 3 out of bounds for length 2"
+					: "java.lang.ArrayIndexOutOfBoundsException: 3";
+		errorTexts[2] = "java.lang.ArithmeticException: / by zero";
 
 		for (int errorCase = 0; errorCase < numOfErrorCases; errorCase++) {
 			final int errorIndex = errorCase;
