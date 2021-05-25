@@ -4,6 +4,9 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.                                     #
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -30,6 +33,14 @@ set pslog           = "$debuglocal/$testname.pslist"
 set remoteipcslog   = "$ipcslog:t"
 set portcleanupfile = "delete_reserved_portfiles.csh"			# hardcoding should be in sync with other scripts
 set portcleanuplog  = "$debugglobal/${testname}_${sub_test}_port.txt"	# hardcoding should be in sync with other scripts
+
+# It is possible in multi-host tests that this directory (local to each host) does not exist on the remote buddy.
+# Hence create it if necessary (e.g. if this script is run on a remote buddy for the first time in the test).
+# Note that $gtm_test_debuglogs_dir is what we should ideally be using (to be consistent with "com/portno_acquire.csh")
+# but that might not be defined in a multi-host test (e.g. msreplic_G_1 test run with MH:1 random setting). Hence it is not used.
+if (! -e $debugglobal) then
+	mkdir -p $debugglobal
+endif
 
 if (! -d $subtestdir) mkdir -p $subtestdir
 cd $subtestdir

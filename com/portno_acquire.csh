@@ -4,7 +4,7 @@
 # Copyright (c) 2011-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -93,10 +93,17 @@ while ( ($nstat == 0) && ($portno < $port_upperlimit ) )
 		endif
 	endif
 end
+
+# It is possible in multi-host tests that this directory (local to each host) does not exist on the remote buddy.
+# Hence create it if necessary (e.g. if this script is run on a remote buddy for the first time in the test).
+if (! -e $gtm_test_debuglogs_dir) then
+	mkdir -p $gtm_test_debuglogs_dir
+endif
+
 if ($portno >= $port_upperlimit) then
 	echo `date` "# Will not try beyond $port_upperlimit. Exiting now."		>> $logfile
 	echo -1
-	# copy the debugging information to a central repository
+	# Copy the debugging information to a central location on the system
 	cat $logfile >>&! $gtm_test_debuglogs_dir/${testname}_${test_subtest_name}_port.txt
 	exit 1
 endif
@@ -114,7 +121,7 @@ if ($tst_org_host:r:r:r:r != $hostn) then
 	$rcp $tst_working_dir/portno_${portno}.txt "$tst_org_host:r:r:r:r":$save_working_dir/portno_${portno}.txt_$hostn
 endif
 
-# copy the debugging information to a central repository
+# copy the debugging information to a central location on the system
 cat $logfile >>&! $gtm_test_debuglogs_dir/${testname}_${test_subtest_name}_port.txt
 
 echo $portno
