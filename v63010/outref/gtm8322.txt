@@ -1,0 +1,915 @@
+# The Release note for this issue follows:
+# MUPIP SIZE recognizes the -SU[BSCRIPT]= qualifier to specify a global or a range of keys to estimate. The global key may
+# be enclosed in quotation marks ( ). Identify a range by separating two subscripts with a colon (:). The -SE[LECT]= and
+# -SU[BSCRIPT]= qualifiers are incompatible. Scan heuristic for MUPIP SIZE shows information of all levels down to the
+# target level. Previously, it showed details only for the target level. For all heuristics, the adjacency shown is of
+# current level. Previously, the adjacency shown was for the next lower level. In addition, MUPIP INTEG correctly handles
+# the case of NULL subscripts, when no end key is specified; previously, it failed with a segmentation violation (SIG-11).
+# (GTM-8322).
+###################################################################
+# This tests MUPIP SIZE -SUBSCRIPT with no heuristic, arsampe heuristic and impsample heuristic. The scan heuristic is not
+# tested because it is already covered by the r132/ydb717 test. The MUPIP INTEG SIG-11 is not tested because it is already
+# tested by r132/ydb739. That issue was not actually fixed in V6.3-010 but is was fixed in r1.32 by YDB#739.
+###################################################################
+# Creating database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+###################################################################
+# Populating the database with globals
+# Heuristic is now 
+# Testing with enclosed quotes then without. Both outputs should be identical.
+###################################################################
+# Testing MUPIP SIZE -SUBSCRIPT from ^a(42) to ^a(9000) (same global; numeric subscript to numeric subscript)
+
+Global: a (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0              33              32               0 ~   0%
+Total              34              32               0 ~   0%
+
+Global: a (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0              33              32               0 ~   0%
+Total              34              32               0 ~   0%
+###################################################################
+# Testing MUPIP SIZE -SUBSCRIPT from ^q("n") to ^q("y") (same global; string subscript to string subscript)
+
+Global: q (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0               1             197               0 ~   0%
+Total               2             197               0 ~   0%
+###################################################################
+# Testing MUPIP SIZE -SUBSCRIPT from ^f(60) to ^f("c") (same global; numeric subscript to string subscript)
+
+Global: f (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+###################################################################
+# Testing MUPIP SIZE -SUBSCRIPT from ^c(21) to ^e(5000) (different globals; numeric subscript to numeric subscript)
+
+Global: c (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+
+Global: d (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+
+Global: e (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0              18              17               0 ~   0%
+Total              19              17               0 ~   0%
+
+Global: c (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+
+Global: d (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+
+Global: e (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0              18              17               0 ~   0%
+Total              19              17               0 ~   0%
+###################################################################
+# Testing MUPIP SIZE -SUBSCRIPT from ^g("a") to ^p("c") (different globals; string subscript to string subscript)
+
+Global: g (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0               1             197               0 ~   0%
+Total               2             197               0 ~   0%
+
+Global: h (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+
+Global: i (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+
+Global: j (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+
+Global: k (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+
+Global: l (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+
+Global: m (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+
+Global: n (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+
+Global: o (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+
+Global: p (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+###################################################################
+# Testing MUPIP SIZE -SUBSCRIPT from ^r(6174) to ^x("q") (different globals; numeric subscript to string subscript)
+
+Global: r (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             177             197               0 ~   0%
+Total             178             197               0 ~   0%
+
+Global: s (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+
+Global: t (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+
+Global: u (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+
+Global: v (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+
+Global: w (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+
+Global: x (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+###################################################################
+# Testing MUPIP SIZE -SUBSCRIPT from ^k("k") to ^o(3375) (different globals; string subscript to numeric subscript)
+
+Global: k (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0               1             197               0 ~   0%
+Total               2             197               0 ~   0%
+
+Global: l (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+
+Global: m (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+
+Global: n (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+
+Global: o (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0              12              11               0 ~   0%
+Total              13              11               0 ~   0%
+###################################################################
+# Testing MUPIP SIZE -SUBSCRIPT from ^e(250) (numeric subscript to no end range specified)
+
+Global: e (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0               1               0               0 ~   0%
+Total               2               0               0 ~   0%
+
+Global: e (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0               1               0               0 ~   0%
+Total               2               0               0 ~   0%
+###################################################################
+# Testing MUPIP SIZE -SUBSCRIPT from ^l("p") (string subscript to no end range specified)
+
+Global: l (region DEFAULT)
+Number of generated samples = 1000
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0               1             197               0 ~   0%
+Total               2             197               0 ~   0%
+# Heuristic is now -heuristic=arsample,samples=100
+# Testing with enclosed quotes then without. Both outputs should be identical.
+###################################################################
+# Testing MUPIP SIZE -SUBSCRIPT from ^a(42) to ^a(9000) (same global; numeric subscript to numeric subscript)
+
+Global: a (region DEFAULT)
+
+Number of generated samples = 100
+Number of accepted samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0              33              32               0 ~   0%             N/A
+Total              34              32               0 ~   0%             N/A
+
+Global: a (region DEFAULT)
+
+Number of generated samples = 100
+Number of accepted samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0              33              32               0 ~   0%             N/A
+Total              34              32               0 ~   0%             N/A
+###################################################################
+# Testing MUPIP SIZE -SUBSCRIPT from ^q("n") to ^q("y") (same global; string subscript to string subscript)
+
+Global: q (region DEFAULT)
+
+Number of generated samples = 100
+Number of accepted samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0               1             197               0 ~   0%             N/A
+Total               2             197               0 ~   0%             N/A
+###################################################################
+# Testing MUPIP SIZE -SUBSCRIPT from ^f(60) to ^f("c") (same global; numeric subscript to string subscript)
+
+Global: f (region DEFAULT)
+
+Number of generated samples = 100
+Number of accepted samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0             198             197               0 ~   0%             N/A
+Total             199             197               0 ~   0%             N/A
+###################################################################
+# Testing MUPIP SIZE -SUBSCRIPT from ^c(21) to ^e(5000) (different globals; numeric subscript to numeric subscript)
+
+Global: c (region DEFAULT)
+
+Number of generated samples = 100
+Number of accepted samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0             198             197               0 ~   0%             N/A
+Total             199             197               0 ~   0%             N/A
+
+Global: d (region DEFAULT)
+
+Number of generated samples = 100
+Number of accepted samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0             198             197               0 ~   0%             N/A
+Total             199             197               0 ~   0%             N/A
+
+Global: e (region DEFAULT)
+
+Number of generated samples = 100
+Number of accepted samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0              18              17               0 ~   0%             N/A
+Total              19              17               0 ~   0%             N/A
+
+Global: c (region DEFAULT)
+
+Number of generated samples = 100
+Number of accepted samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0             198             197               0 ~   0%             N/A
+Total             199             197               0 ~   0%             N/A
+
+Global: d (region DEFAULT)
+
+Number of generated samples = 100
+Number of accepted samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0             198             197               0 ~   0%             N/A
+Total             199             197               0 ~   0%             N/A
+
+Global: e (region DEFAULT)
+
+Number of generated samples = 100
+Number of accepted samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0              18              17               0 ~   0%             N/A
+Total              19              17               0 ~   0%             N/A
+###################################################################
+# Testing MUPIP SIZE -SUBSCRIPT from ^g("a") to ^p("c") (different globals; string subscript to string subscript)
+
+Global: g (region DEFAULT)
+
+Number of generated samples = 100
+Number of accepted samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0               1             197               0 ~   0%             N/A
+Total               2             197               0 ~   0%             N/A
+
+Global: h (region DEFAULT)
+
+Number of generated samples = 100
+Number of accepted samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0             198             197               0 ~   0%             N/A
+Total             199             197               0 ~   0%             N/A
+
+Global: i (region DEFAULT)
+
+Number of generated samples = 100
+Number of accepted samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0             198             197               0 ~   0%             N/A
+Total             199             197               0 ~   0%             N/A
+
+Global: j (region DEFAULT)
+
+Number of generated samples = 100
+Number of accepted samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0             198             197               0 ~   0%             N/A
+Total             199             197               0 ~   0%             N/A
+
+Global: k (region DEFAULT)
+
+Number of generated samples = 100
+Number of accepted samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0             198             197               0 ~   0%             N/A
+Total             199             197               0 ~   0%             N/A
+
+Global: l (region DEFAULT)
+
+Number of generated samples = 100
+Number of accepted samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0             198             197               0 ~   0%             N/A
+Total             199             197               0 ~   0%             N/A
+
+Global: m (region DEFAULT)
+
+Number of generated samples = 100
+Number of accepted samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0             198             197               0 ~   0%             N/A
+Total             199             197               0 ~   0%             N/A
+
+Global: n (region DEFAULT)
+
+Number of generated samples = 100
+Number of accepted samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0             198             197               0 ~   0%             N/A
+Total             199             197               0 ~   0%             N/A
+
+Global: o (region DEFAULT)
+
+Number of generated samples = 100
+Number of accepted samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0             198             197               0 ~   0%             N/A
+Total             199             197               0 ~   0%             N/A
+
+Global: p (region DEFAULT)
+
+Number of generated samples = 100
+Number of accepted samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0             198             197               0 ~   0%             N/A
+Total             199             197               0 ~   0%             N/A
+###################################################################
+# Testing MUPIP SIZE -SUBSCRIPT from ^r(6174) to ^x("q") (different globals; numeric subscript to string subscript)
+
+Global: r (region DEFAULT)
+
+Number of generated samples = 100
+Number of accepted samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0             177             197               0 ~   0%             N/A
+Total             178             197               0 ~   0%             N/A
+
+Global: s (region DEFAULT)
+
+Number of generated samples = 100
+Number of accepted samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0             198             197               0 ~   0%             N/A
+Total             199             197               0 ~   0%             N/A
+
+Global: t (region DEFAULT)
+
+Number of generated samples = 100
+Number of accepted samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0             198             197               0 ~   0%             N/A
+Total             199             197               0 ~   0%             N/A
+
+Global: u (region DEFAULT)
+
+Number of generated samples = 100
+Number of accepted samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0             198             197               0 ~   0%             N/A
+Total             199             197               0 ~   0%             N/A
+
+Global: v (region DEFAULT)
+
+Number of generated samples = 100
+Number of accepted samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0             198             197               0 ~   0%             N/A
+Total             199             197               0 ~   0%             N/A
+
+Global: w (region DEFAULT)
+
+Number of generated samples = 100
+Number of accepted samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0             198             197               0 ~   0%             N/A
+Total             199             197               0 ~   0%             N/A
+
+Global: x (region DEFAULT)
+
+Number of generated samples = 100
+Number of accepted samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0             198             197               0 ~   0%             N/A
+Total             199             197               0 ~   0%             N/A
+###################################################################
+# Testing MUPIP SIZE -SUBSCRIPT from ^k("k") to ^o(3375) (different globals; string subscript to numeric subscript)
+
+Global: k (region DEFAULT)
+
+Number of generated samples = 100
+Number of accepted samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0               1             197               0 ~   0%             N/A
+Total               2             197               0 ~   0%             N/A
+
+Global: l (region DEFAULT)
+
+Number of generated samples = 100
+Number of accepted samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0             198             197               0 ~   0%             N/A
+Total             199             197               0 ~   0%             N/A
+
+Global: m (region DEFAULT)
+
+Number of generated samples = 100
+Number of accepted samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0             198             197               0 ~   0%             N/A
+Total             199             197               0 ~   0%             N/A
+
+Global: n (region DEFAULT)
+
+Number of generated samples = 100
+Number of accepted samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0             198             197               0 ~   0%             N/A
+Total             199             197               0 ~   0%             N/A
+
+Global: o (region DEFAULT)
+
+Number of generated samples = 100
+Number of accepted samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0              12              11               0 ~   0%             N/A
+Total              13              11               0 ~   0%             N/A
+###################################################################
+# Testing MUPIP SIZE -SUBSCRIPT from ^e(250) (numeric subscript to no end range specified)
+
+Global: e (region DEFAULT)
+
+Number of generated samples = 100
+Number of accepted samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0               1               0               0 ~   0%             N/A
+Total               2               0               0 ~   0%             N/A
+
+Global: e (region DEFAULT)
+
+Number of generated samples = 100
+Number of accepted samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0               1               0               0 ~   0%             N/A
+Total               2               0               0 ~   0%             N/A
+###################################################################
+# Testing MUPIP SIZE -SUBSCRIPT from ^l("p") (string subscript to no end range specified)
+
+Global: l (region DEFAULT)
+
+Number of generated samples = 100
+Number of accepted samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)      % Accepted
+    1               1               0               0 ~   0%             100
+    0               1             197               0 ~   0%             N/A
+Total               2             197               0 ~   0%             N/A
+# Heuristic is now -heuristic=impsample,samples=100
+# Testing with enclosed quotes then without. Both outputs should be identical.
+###################################################################
+# Testing MUPIP SIZE -SUBSCRIPT from ^a(42) to ^a(9000) (same global; numeric subscript to numeric subscript)
+
+Global: a (region DEFAULT)
+Number of generated samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0              33              32               0 ~   0%
+Total              34              32               0 ~   0%
+
+Global: a (region DEFAULT)
+Number of generated samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0              33              32               0 ~   0%
+Total              34              32               0 ~   0%
+###################################################################
+# Testing MUPIP SIZE -SUBSCRIPT from ^q("n") to ^q("y") (same global; string subscript to string subscript)
+
+Global: q (region DEFAULT)
+Number of generated samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0               1             197               0 ~   0%
+Total               2             197               0 ~   0%
+###################################################################
+# Testing MUPIP SIZE -SUBSCRIPT from ^f(60) to ^f("c") (same global; numeric subscript to string subscript)
+
+Global: f (region DEFAULT)
+Number of generated samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+###################################################################
+# Testing MUPIP SIZE -SUBSCRIPT from ^c(21) to ^e(5000) (different globals; numeric subscript to numeric subscript)
+
+Global: c (region DEFAULT)
+Number of generated samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+
+Global: d (region DEFAULT)
+Number of generated samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+
+Global: e (region DEFAULT)
+Number of generated samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0              18              17               0 ~   0%
+Total              19              17               0 ~   0%
+
+Global: c (region DEFAULT)
+Number of generated samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+
+Global: d (region DEFAULT)
+Number of generated samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+
+Global: e (region DEFAULT)
+Number of generated samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0              18              17               0 ~   0%
+Total              19              17               0 ~   0%
+###################################################################
+# Testing MUPIP SIZE -SUBSCRIPT from ^g("a") to ^p("c") (different globals; string subscript to string subscript)
+
+Global: g (region DEFAULT)
+Number of generated samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0               1             197               0 ~   0%
+Total               2             197               0 ~   0%
+
+Global: h (region DEFAULT)
+Number of generated samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+
+Global: i (region DEFAULT)
+Number of generated samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+
+Global: j (region DEFAULT)
+Number of generated samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+
+Global: k (region DEFAULT)
+Number of generated samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+
+Global: l (region DEFAULT)
+Number of generated samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+
+Global: m (region DEFAULT)
+Number of generated samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+
+Global: n (region DEFAULT)
+Number of generated samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+
+Global: o (region DEFAULT)
+Number of generated samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+
+Global: p (region DEFAULT)
+Number of generated samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+###################################################################
+# Testing MUPIP SIZE -SUBSCRIPT from ^r(6174) to ^x("q") (different globals; numeric subscript to string subscript)
+
+Global: r (region DEFAULT)
+Number of generated samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             177             197               0 ~   0%
+Total             178             197               0 ~   0%
+
+Global: s (region DEFAULT)
+Number of generated samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+
+Global: t (region DEFAULT)
+Number of generated samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+
+Global: u (region DEFAULT)
+Number of generated samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+
+Global: v (region DEFAULT)
+Number of generated samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+
+Global: w (region DEFAULT)
+Number of generated samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+
+Global: x (region DEFAULT)
+Number of generated samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+###################################################################
+# Testing MUPIP SIZE -SUBSCRIPT from ^k("k") to ^o(3375) (different globals; string subscript to numeric subscript)
+
+Global: k (region DEFAULT)
+Number of generated samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0               1             197               0 ~   0%
+Total               2             197               0 ~   0%
+
+Global: l (region DEFAULT)
+Number of generated samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+
+Global: m (region DEFAULT)
+Number of generated samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+
+Global: n (region DEFAULT)
+Number of generated samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0             198             197               0 ~   0%
+Total             199             197               0 ~   0%
+
+Global: o (region DEFAULT)
+Number of generated samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0              12              11               0 ~   0%
+Total              13              11               0 ~   0%
+###################################################################
+# Testing MUPIP SIZE -SUBSCRIPT from ^e(250) (numeric subscript to no end range specified)
+
+Global: e (region DEFAULT)
+Number of generated samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0               1               0               0 ~   0%
+Total               2               0               0 ~   0%
+
+Global: e (region DEFAULT)
+Number of generated samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0               1               0               0 ~   0%
+Total               2               0               0 ~   0%
+###################################################################
+# Testing MUPIP SIZE -SUBSCRIPT from ^l("p") (string subscript to no end range specified)
+
+Global: l (region DEFAULT)
+Number of generated samples = 100
+Level          Blocks        Adjacent           2 sigma(+/-)
+    1               1               0               0 ~   0%
+    0               1             197               0 ~   0%
+Total               2             197               0 ~   0%
+###################################################################
+# Testing MUPIP SIZE -SUBSCRIPT -SELECT. This should produce an error.
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SELECT SUBSCRIPT
+###################################################################
+# Create a new database with null subscripts enabled
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps2.gld
+Using: ##SOURCE_PATH##/mupip
+mumps2.dat
+###################################################################
+# Populate the new database
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+###################################################################
+# Run a MUPIP SIZE -SUBSCRIPT with null subscripts, no end key and region *
+%YDB-E-CLIERR, Option : REGION needs value
+###################################################################
+# Run a MUPIP SIZE -SUBSCRIPT with null subscripts, no end key and region default
+%YDB-E-CLIERR, Option : REGION needs value
+###################################################################
+# Run a MUPIP SIZE -SUBSCRIPT with null subscripts, no end key and region DEFAULT
+%YDB-E-CLIERR, Option : REGION needs value
