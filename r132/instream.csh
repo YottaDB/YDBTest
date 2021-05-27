@@ -47,6 +47,7 @@
 # ydb737 [sam]         Test Call-in APIs don't know how to handle $QUIT
 # ydb739 [bdw]         Test MUPIP INTEG -SUBSCRIPT with null subscripts and no end key.
 # ydb688 [sam,nars]    Test ZWRITE with pattern match no longer fails with LVUNDEF if DB has null subscripts enabled
+# ydb629 [nars]        Test Unary + works on $ZYSQLNULL returned by $ORDER(lvn)
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r132 test starts..."
@@ -55,7 +56,7 @@ echo "r132 test starts..."
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic "ydb627 ydb551 ydb632 ydb581 ydb630 ydb441 ydb652 ydb635 ydb664 ydb663 ydb558 ydb612 ydb591 ydb391"
 setenv subtest_list_non_replic "$subtest_list_non_replic ydb678 ydb671 ydb682 ydb673 ydb697 ydb700 ydb692 ydb505 ydb717 ydb712"
-setenv subtest_list_non_replic "$subtest_list_non_replic ydb724 ydb721 ydb731 ydb737 ydb739 ydb688"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb724 ydb721 ydb731 ydb737 ydb739 ydb688 ydb629"
 setenv subtest_list_replic     "ydb657 ydb676"
 
 if ($?test_replic == 1) then
