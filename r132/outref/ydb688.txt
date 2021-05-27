@@ -1,0 +1,16 @@
+# ---------------------------------------------------------------------------------------------
+# Test ZWRITE with pattern match no longer fails with LVUNDEF if DB has null subscripts enabled
+# ---------------------------------------------------------------------------------------------
+# Creating database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+YDB>
+
+YDB>
+^x(1,"a",1)=""
+
+YDB>
