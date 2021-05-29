@@ -1,0 +1,21 @@
+# Test DSE REMOVE -RECORD does not SIG-11 in case of DBCOMPTOOLRG integrity error
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Set global node ^x=1
+# Create DBCOMPTOOLRG integrity error by adding a record using DSE
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+# Delete first record in block with DBCOMPTOOLRG integrity error by doing DSE REMOVE -RECORD
+# This used to SIG-11 without the YDB#741 code fixes
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
