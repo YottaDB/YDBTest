@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -40,6 +40,7 @@
 # 					incorrectly with recursive relink.
 # relinkctlfull	[nars,sopini]		Test for memory and file descriptor leaks on RELINKCTLFULL error.
 # keeprtn 	[kishoreh] 		Test correct behavior of $gtm_autorelink_keeprtn
+# ydb695        [sam]                   Verify REQRLNKCTLRNDWN error is not issued in case relinkctl file creation was not complete
 #
 
 echo "relink test starts..."
@@ -49,6 +50,7 @@ setenv subtest_list_common     ""
 setenv subtest_list_non_replic "recursive setzroutines zrupdate barrage relinksrch basic bigrctl concur zbreak"
 setenv subtest_list_non_replic "$subtest_list_non_replic shmalloc memleak zlink rundown errors rctlupdate truncate"
 setenv subtest_list_non_replic "$subtest_list_non_replic memleak2 labelunknown relinkctlfull keeprtn"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb695"
 setenv subtest_list_replic     "trigger"
 
 if ($?test_replic == 1) then

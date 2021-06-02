@@ -1,0 +1,4 @@
+# Verify REQRLNKCTLRNDWN error is not issued in case relinkctl file creation was not complete
+# Killing a process that is supposed to create the relinkctl file in the middle of creation
+# Running a routine again to see if the relinkctl file can be salvaged
+# Previously before YDB695 fix, we would see errors here; now we shouldn't
