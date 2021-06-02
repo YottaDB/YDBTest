@@ -18,13 +18,6 @@
 
 # This script checks for the presence of dependencies the test system has.
 
-# ksh	: encrypt_db_key.ksh expects /bin/ksh
-# tcsh	: we've seen a few specific tcsh versions to cause issues
-# gawk	: GG servers have gawk versions from 3.0.4 to 3.1.6 (lets check for GNU Awk 3)
-# sed	: no specific sed version dependency. Just check for the presence
-# lsof	: no specific lsof version dependency. Just check for the presence
-# bc	: no specific bc version dependency. Just check for the presence
-# sort  : no specific sort version dependency. Just check for the presence
 
 if ($?skip_setup_dependencies) then
 	echo 0
@@ -58,8 +51,9 @@ else
 endif
 endif
 
+# ksh	: encrypt_db_key.ksh expects /bin/ksh
 ls -l /bin/ksh >&! /dev/null
-if ($status && "OS/390" != "$hostos") then
+if ($status) then
 	echo "TEST-E-UTILITY /bin/ksh not available ;"
 	@ error++
 endif
@@ -67,17 +61,6 @@ endif
 # Make sure tcsh is usable
 # The below script would internally increment $error and echo error message
 source $tst_com/check_tcsh.csh
-
-# gawk version
-set expected_gawk_name = "GNU Awk"
-set expected_min_gawk_ver = 3
-set gawk_name_and_ver = `gawk -W version | $tst_awk -F . '{print $1;exit;}'`
-set gawk_name = `echo $gawk_name_and_ver | $tst_awk '{printf("%s %s",$1,$2)}'`
-set gawk_ver = `echo $gawk_name_and_ver | $tst_awk '{print $3}'`
-if ( ( "$gawk_ver" < "$expected_min_gawk_ver" ) || ( "$gawk_name" != "$expected_gawk_name" ) ) then
-	echo "TEST-E-UTILITY expected gawk version is $expected_gawk_name and min version of $expected_min_gawk_ver but found $gawk_name_and_ver ;"
-	@ error++
-endif
 
 # /usr/bin/which (used by encryption scripts) on some platforms source ~/.cshrc
 # and would exit if there are issues in sourcing ~/.cshrc
@@ -89,46 +72,15 @@ if ( (-e /usr/bin/which) && (-e ~/.cshrc) ) then
 	endif
 endif
 
-which sed >&! /dev/null
-if ($status) then
-	echo "TEST-E-UTILITY sed expected by test system, but not found ;"
-	@ error++
-endif
-
-# lsof might be set to some arbitary path in set_specific, so check if it is set first.
-if ($?lsof) then
-	which $lsof  >&! /dev/null
-else
-	which lsof >&! /dev/null || which zlsof >&! /dev/null
-endif
-if ($status) then
-	echo "TEST-E-UTILITY lsof expected by test system, but not found ;"
-	@ error++
-endif
-
-which bc >&! /dev/null
-if ($status) then
-	echo "TEST-E-UTILITY bc expected by test system, but not found ;"
-	@ error++
-endif
-
-which sort >&! /dev/null
-if ($status) then
-	echo "TEST-E-UTILITY sort expected by test system, but not found ;"
-	@ error++
-endif
-
-which eu-elflint >&! /dev/null
-if ($status) then
-	echo "TEST-E-UTILITY eu-elflint expected by test system, but not found ;"
-	@ error++
-endif
-
-which netstat >&! /dev/null
-if ($status) then
-	echo "TEST-E-UTILITY netstat expected by test system, but not found ;"
-	@ error++
-endif
+# Check various other utilities that are needed by specific tests
+# Better to issue an error at test submit time if the utility is not found instead of much later at test execution time.
+foreach utility (gawk sed lsof bc sort eu-elflint netstat nc strace cc gdb)
+	which $utility >&! /dev/null
+	if ($status) then
+		echo "TEST-E-UTILITY $utility expected by test system, but not found ;"
+		@ error++
+	endif
+end
 
 # Check maximum shared memory limits
 # For now, it is done only on linux machines and the limit is set to 1GB. Increase the scope and limit when needed
