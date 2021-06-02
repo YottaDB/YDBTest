@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -116,7 +116,7 @@ foreach java_test ($java_files)
 		$gtm_tst/com/check_error_exist.csh test22.mje "YDB-F-FORCEDHALT"
 		\mv test22.mjex test22.job.logx
 	endif
-	diff $test_name.outx $test_name.cmp
+	diff $test_name.cmp $test_name.outx
 	echo
 end
 

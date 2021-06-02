@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -128,7 +128,7 @@ foreach m_test ( test?.m test??.m )
 		set ln = `cat test22.outx | $gtm_dist/mumps -run LOOP^%XCMD --xec='|if %l?1"-Dgtm.callouts".E write %NR,!  halt|'`
 		($head -n 3 test22.outx.bak ; $tail -n +$ln test22.outx.bak) >&! test22.outx
 	endif
-	diff $test_name.outx $test_name.cmp
+	diff $test_name.cmp $test_name.outx
 	echo
 end
 
