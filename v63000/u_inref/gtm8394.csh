@@ -116,6 +116,16 @@ while (1)
 	if (0 == $status) then
 		@ max = $mem
 		@ mem = $mem / 2
+		if (-e rollback_1_${mem}) then
+			# If a rollback file corresponding to the newly computed memory setting already exists,
+			# it means we already had a rollback run with that setting. And that must have failed as
+			# otherwise we would not have come to a later iteration with twice that memory setting.
+			# Therefore no need to redo the rollback with the new setting. We know the current memory
+			# setting results in rollback success and halving that causes failure. That is what this while
+			# loop anyways aimed to figure out. Now that we have it figured out, just break out of the loop.
+			break
+		endif
+		# We have not yet tried this newly computed memory setting. So continue to next iteration of the while loop.
 		continue
 	else if ($max != 0) then
 		break
