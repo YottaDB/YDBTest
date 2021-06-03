@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -86,6 +86,14 @@ endif
 # If the platform/host does not have prior GT.M versions, disable tests that require them
 if ($?gtm_test_nopriorgtmver) then
 	setenv subtest_exclude_list "$subtest_exclude_list ydb607"
+endif
+
+if ("armv6l" == `uname -m`) then
+	# On ARMV6L systems with Debian 11, we have seen the below subtest crash the system in mysterious ways.
+	# Running this huge M program (that has 1 million lines) seems to take up a lot more memory than available
+	# in the system and it starts using swap. But not sure what happens at that point, the system becomes
+	# unreachable even though gigabytes of swap space has been configured. So disable this on ARMV6L.
+	setenv subtest_exclude_list "$subtest_exclude_list ydb547"
 endif
 
 # Submit the list of subtests
