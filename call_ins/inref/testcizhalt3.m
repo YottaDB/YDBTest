@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -15,5 +15,5 @@
 testcizhalt3
 	new $etrap
 	set $etrap="write ""testcizhalt3: ** Error caught ** : "",$zstatus,!,""Aborting testcizhalt3"",! set $ecode="""" quit"
-	write "testcizhalt3: Entered - driving ZHALT now to return to call-in caller (expect NOTEXTRINSIC error)",!
+	write "testcizhalt3: Entered - driving ZHALT now to return to call-in caller (expect to NOT see NOTEXTRINSIC error)",!
 	zhalt 42	     ; Not expecting a return value - this will drive an error

@@ -2,9 +2,8 @@ testcizhalt1: Entered - Driving ^testcizhaltA
 testcizhaltA: Entered -- driving first call-in
 testcizhalt2: Entered - driving HALT now to return to call-in caller
 testcizhaltA: Back in testcizhaltA - driving second call-in
-testcizhalt3: Entered - driving ZHALT now to return to call-in caller (expect NOTEXTRINSIC error)
-testcizhalt3: ** Error caught ** : 150374450,testcizhalt3+4^testcizhalt3,%YDB-E-NOTEXTRINSIC, QUIT/ZHALT does not return to an extrinsic function: argument not allowed
-Aborting testcizhalt3
+testcizhalt3: Entered - driving ZHALT now to return to call-in caller (expect to NOT see NOTEXTRINSIC error)
+
 testcizhaltA: Back in testcizhaltA
 testcizhaltA: Returning
 testcizhalt1: Back in testcizhalt1 - Test complete

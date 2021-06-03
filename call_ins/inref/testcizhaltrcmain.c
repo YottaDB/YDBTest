@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	*
+ * Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -55,7 +55,7 @@ int main(void)
 	if (status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("Return code: %d\n", status);
+		printf("ydb_ci()status code: %d\n", status);
 		printf("%s\n", errbuf);
 		fflush(stdout);
 	}
@@ -66,7 +66,7 @@ int main(void)
 	status = ydb_ci("testcizhaltrcint", &retintval, useZHALT);
 	if (status)
 	{
-		printf("Return code: %d\n", status);
+		printf("ydb_ci()status code: %d\n", status);
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
 		printf("%s\n", errbuf);
 		fflush(stdout);
@@ -78,7 +78,7 @@ int main(void)
 	status = ydb_ci("testcizhaltrcint", &retintval, useZGOTO0);
 	if (status)
 	{
-		printf("Return code: %d\n", status);
+		printf("ydb_ci()status code: %d\n", status);
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
 		printf("%s\n", errbuf);
 		fflush(stdout);
@@ -90,7 +90,7 @@ int main(void)
 	status = ydb_ci("testcizhaltrcint", &retintval, useQUITretval);
 	if (status)
 	{
-		printf("Return code: %d\n", status);
+		printf("ydb_ci()status code: %d\n", status);
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
 		printf("%s\n", errbuf);
 		fflush(stdout);
@@ -101,7 +101,7 @@ int main(void)
 	status = ydb_ci("testcizhaltnoretv",1);
 	if (status)
 	{
-		printf("Return code: %d\n", status);
+		printf("ydb_ci()status code: %d\n", status);
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
 		printf("%s\n", errbuf);
 		fflush(stdout);
@@ -118,7 +118,7 @@ int main(void)
 	if (status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("Return code: %d\n", status);
+		printf("ydb_ci()status code: %d\n", status);
 		printf("%s\n", errbuf);
 		fflush(stdout);
 	}
@@ -132,7 +132,7 @@ int main(void)
 	if (status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("Return code: %d\n", status);
+		printf("ydb_ci()status code: %d\n", status);
 		printf("%s\n", errbuf);
 		fflush(stdout);
 	}
@@ -146,7 +146,7 @@ int main(void)
 	if (status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("Return code: %d\n", status);
+		printf("ydb_ci()status code: %d\n", status);
 		printf("%s\n", errbuf);
 		fflush(stdout);
 	}
@@ -160,7 +160,7 @@ int main(void)
 	if (status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("Return code: %d\n", status);
+		printf("ydb_ci()status code: %d\n", status);
 		printf("%s\n", errbuf);
 		fflush(stdout);
 	}
@@ -172,7 +172,7 @@ int main(void)
 	if (status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("Return code: %d\n", status);
+		printf("ydb_ci()status code: %d\n", status);
 		printf("%s\n", errbuf);
 		fflush(stdout);
 	}
@@ -188,7 +188,7 @@ int main(void)
 	if (status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("Return code: %d\n", status);
+		printf("ydb_ci()status code: %d\n", status);
 		printf("%s\n", errbuf);
 		fflush(stdout);
 	}
@@ -202,7 +202,7 @@ int main(void)
 	if (status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("Return code: %d\n", status);
+		printf("ydb_ci()status code: %d\n", status);
 		printf("%s\n", errbuf);
 		fflush(stdout);
 	}
@@ -217,7 +217,7 @@ int main(void)
 	if (status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("Return code: %d\n", status);
+		printf("ydb_ci()status code: %d\n", status);
 		printf("%s\n", errbuf);
 		fflush(stdout);
 	}
@@ -228,7 +228,7 @@ int main(void)
 	if (status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("Return code: %d\n", status);
+		printf("ydb_ci()status code: %d\n", status);
 		printf("%s\n", errbuf);
 		fflush(stdout);
 	}
