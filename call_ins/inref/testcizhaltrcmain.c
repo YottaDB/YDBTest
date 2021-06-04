@@ -13,6 +13,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <limits.h>
 
 #include "libyottadb.h"
 
@@ -21,6 +22,7 @@
 enum {
 	useHALT = 1,
 	useZHALT,
+	useZHALT0,
 	useZGOTO0,
 	useQUITretval
 };
@@ -42,7 +44,8 @@ int main(void)
 	if (status)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("%s\n", errbuf);
+		if ('\0' != errbuf[0])
+			printf("%s\n", errbuf);
 		fflush(stdout);
 		return 0;
 	}
@@ -56,22 +59,37 @@ int main(void)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
 		printf("ydb_ci()status code: %d\n", status);
-		printf("%s\n", errbuf);
+		if ('\0' != errbuf[0])
+			printf("%s\n", errbuf);
 		fflush(stdout);
 	}
 	printf("main: After HALT, return value is %d\n\n", retintval);
 
-	printf("main: Initializing return value to -99 for ZHALT test\n");
+	printf("main: Initializing return value to -99 for ZHALT 42 test\n");
 	retintval = -99;
 	status = ydb_ci("testcizhaltrcint", &retintval, useZHALT);
 	if (status)
 	{
 		printf("ydb_ci()status code: %d\n", status);
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("%s\n", errbuf);
+		if ('\0' != errbuf[0])
+			printf("%s\n", errbuf);
 		fflush(stdout);
 	}
-	printf("main: After ZHALT, return value is %d\n\n", retintval);
+	printf("main: After ZHALT 42, return value is %d\n\n", retintval);
+
+	printf("main: Initializing return value to -99 for ZHALT 0 test\n");
+	retintval = -99;
+	status = ydb_ci("testcizhaltrcint", &retintval, useZHALT0);
+	if (status)
+	{
+		printf("ydb_ci()status code: %d\n", status);
+		ydb_zstatus(errbuf, ERRBUF_SIZE);
+		if ('\0' != errbuf[0])
+			printf("%s\n", errbuf);
+		fflush(stdout);
+	}
+	printf("main: After ZHALT 0, return value is %d\n\n", retintval);
 
 	printf("main: Initializing return value to -99 for ZGOTO 0 test\n");
 	retintval = -99;
@@ -80,7 +98,8 @@ int main(void)
 	{
 		printf("ydb_ci()status code: %d\n", status);
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("%s\n", errbuf);
+		if ('\0' != errbuf[0])
+			printf("%s\n", errbuf);
 		fflush(stdout);
 	}
 	printf("main: After ZGOTO 0, return value is %d\n\n", retintval);
@@ -92,7 +111,8 @@ int main(void)
 	{
 		printf("ydb_ci()status code: %d\n", status);
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("%s\n", errbuf);
+		if ('\0' != errbuf[0])
+			printf("%s\n", errbuf);
 		fflush(stdout);
 	}
 	printf("main: After QUIT with no return value (but one expected), return value is %d\n\n", retintval);
@@ -103,7 +123,8 @@ int main(void)
 	{
 		printf("ydb_ci()status code: %d\n", status);
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
-		printf("%s\n", errbuf);
+		if ('\0' != errbuf[0])
+			printf("%s\n", errbuf);
 		fflush(stdout);
 	}
 	printf("main: Return from QUIT with (an unexpected integer) return value\n\n");
@@ -119,12 +140,13 @@ int main(void)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
 		printf("ydb_ci()status code: %d\n", status);
-		printf("%s\n", errbuf);
+		if ('\0' != errbuf[0])
+			printf("%s\n", errbuf);
 		fflush(stdout);
 	}
 	printf("main: After HALT, return value is %.*s\n\n", (int)retstrval.length, retstrval.address);
 
-	printf("main: Initializing return value to 'snarf' for the ZHALT test\n");
+	printf("main: Initializing return value to 'snarf' for the ZHALT 42 test\n");
 	retstrval.address = retbuf;
 	strcpy(retbuf, "snarf");
 	retstrval.length = sizeof("snarf") - 1;
@@ -133,10 +155,26 @@ int main(void)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
 		printf("ydb_ci()status code: %d\n", status);
-		printf("%s\n", errbuf);
+		if ('\0' != errbuf[0])
+			printf("%s\n", errbuf);
 		fflush(stdout);
 	}
-	printf("main: After ZHALT, return value is %.*s\n\n", (int)retstrval.length, retstrval.address);
+	printf("main: After ZHALT 42, return value is %.*s\n\n", (int)retstrval.length, retstrval.address);
+
+	printf("main: Initializing return value to 'snarf' for the ZHALT 0 test\n");
+	retstrval.address = retbuf;
+	strcpy(retbuf, "snarf");
+	retstrval.length = sizeof("snarf") - 1;
+	status = ydb_ci("testcizhaltrcstr", &retstrval, useZHALT0);
+	if (status)
+	{
+		ydb_zstatus(errbuf, ERRBUF_SIZE);
+		printf("ydb_ci()status code: %d\n", status);
+		if ('\0' != errbuf[0])
+			printf("%s\n", errbuf);
+		fflush(stdout);
+	}
+	printf("main: After ZHALT 0, return value is %.*s\n\n", (int)retstrval.length, retstrval.address);
 
 	printf("main: Initializing return value to 'snarf' for the ZGOTO 0 test\n");
 	retstrval.address = retbuf;
@@ -147,7 +185,8 @@ int main(void)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
 		printf("ydb_ci()status code: %d\n", status);
-		printf("%s\n", errbuf);
+		if ('\0' != errbuf[0])
+			printf("%s\n", errbuf);
 		fflush(stdout);
 	}
 	printf("main: After ZGOTO 0, return value is %.*s\n\n", (int)retstrval.length, retstrval.address);
@@ -161,7 +200,8 @@ int main(void)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
 		printf("ydb_ci()status code: %d\n", status);
-		printf("%s\n", errbuf);
+		if ('\0' != errbuf[0])
+			printf("%s\n", errbuf);
 		fflush(stdout);
 	}
 	printf("main: After QUIT with (an unexpected) return value, return value is %.*s\n\n",
@@ -173,7 +213,8 @@ int main(void)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
 		printf("ydb_ci()status code: %d\n", status);
-		printf("%s\n", errbuf);
+		if ('\0' != errbuf[0])
+			printf("%s\n", errbuf);
 		fflush(stdout);
 	}
 	printf("main: Return from QUIT with (an unexpected string) return value\n\n");
@@ -189,7 +230,8 @@ int main(void)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
 		printf("ydb_ci()status code: %d\n", status);
-		printf("%s\n", errbuf);
+		if ('\0' != errbuf[0])
+			printf("%s\n", errbuf);
 		fflush(stdout);
 	}
 	printf("main: Return from calling routine with an unexpected arg (integer retval flavor)\n\n");
@@ -203,7 +245,8 @@ int main(void)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
 		printf("ydb_ci()status code: %d\n", status);
-		printf("%s\n", errbuf);
+		if ('\0' != errbuf[0])
+			printf("%s\n", errbuf);
 		fflush(stdout);
 	}
 	printf("main: Return from calling routine with an unexpected arg (string retval flavor)\n\n");
@@ -218,10 +261,23 @@ int main(void)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
 		printf("ydb_ci()status code: %d\n", status);
-		printf("%s\n", errbuf);
+		if ('\0' != errbuf[0])
+			printf("%s\n", errbuf);
 		fflush(stdout);
 	}
 	printf("main: Returned from testcizhaltnoargs\n\n");
+
+	printf("main: Test that zhalt can return statuses > 255\n");
+	printf("main: Calling with status of 300\n");
+	status = ydb_ci("testzhaltnonbytenumbers", 300);
+	printf("ydb_ci()status code: %d\n", status);
+	printf("main: Calling with status of -5\n");
+	status = ydb_ci("testzhaltnonbytenumbers", -5);
+	printf("ydb_ci()status code: %d\n", status);
+	printf("main: Calling with number over max_uint\n");
+	status = ydb_ci("testzhaltnonbytenumbers", UINT_MAX + 100);
+	printf("ydb_ci()status code: %d\n", status);
+	printf("\n");
 
 	/* Test complete - Close up shop */
 	status = ydb_exit();
@@ -229,7 +285,8 @@ int main(void)
 	{
 		ydb_zstatus(errbuf, ERRBUF_SIZE);
 		printf("ydb_ci()status code: %d\n", status);
-		printf("%s\n", errbuf);
+		if ('\0' != errbuf[0])
+			printf("%s\n", errbuf);
 		fflush(stdout);
 	}
 

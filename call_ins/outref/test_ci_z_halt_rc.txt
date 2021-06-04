@@ -3,10 +3,12 @@
 main: Initializing return value to -99 for HALT test
 main: After HALT, return value is 0
 
-main: Initializing return value to -99 for ZHALT test
+main: Initializing return value to -99 for ZHALT 42 test
 gtm_ci()status code: 42
+main: After ZHALT 42, return value is -99
 
-main: After ZHALT, return value is -99
+main: Initializing return value to -99 for ZHALT 0 test
+main: After ZHALT 0, return value is 0
 
 main: Initializing return value to -99 for ZGOTO 0 test
 main: After ZGOTO 0, return value is 0
@@ -18,16 +20,18 @@ main: After QUIT with no return value (but one expected), return value is -99
 
 main: Setting up for QUIT with (an unexpected integer) return value test
 gtm_ci()status code: 150374450
-150374450,testcizhaltnoretval+1^testcizhaltrc,%YDB-E-NOTEXTRINSIC, QUIT/ZHALT does not return to an extrinsic function: argument not allowed
+150374450,testcizhaltnoretval+2^testcizhaltrc,%YDB-E-NOTEXTRINSIC, QUIT/ZHALT does not return to an extrinsic function: argument not allowed
 main: Return from QUIT with (an unexpected integer) return value
 
 main: Initializing return value to 'snarf' for the HALT test
 main: After HALT, return value is 
 
-main: Initializing return value to 'snarf' for the ZHALT test
+main: Initializing return value to 'snarf' for the ZHALT 42 test
 gtm_ci()status code: 42
-150374450,testcizhaltnoretval+1^testcizhaltrc,%YDB-E-NOTEXTRINSIC, QUIT/ZHALT does not return to an extrinsic function: argument not allowed
-main: After ZHALT, return value is snarf
+main: After ZHALT 42, return value is snarf
+
+main: Initializing return value to 'snarf' for the ZHALT 0 test
+main: After ZHALT 0, return value is 
 
 main: Initializing return value to 'snarf' for the ZGOTO 0 test
 main: After ZGOTO 0, return value is 
@@ -39,7 +43,7 @@ main: After QUIT with (an unexpected) return value, return value is snarf
 
 main: Setting up for QUIT with (an unexpected string) return value test
 gtm_ci()status code: 150374450
-150374450,testcizhaltnoretval+1^testcizhaltrc,%YDB-E-NOTEXTRINSIC, QUIT/ZHALT does not return to an extrinsic function: argument not allowed
+150374450,testcizhaltnoretval+2^testcizhaltrc,%YDB-E-NOTEXTRINSIC, QUIT/ZHALT does not return to an extrinsic function: argument not allowed
 main: Return from QUIT with (an unexpected string) return value
 
 main: Setting up for call to routine with an extra (unexpected) argument
@@ -57,15 +61,25 @@ gtm_ci()status code: 150374466
 150374466,(Call-In),%YDB-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: testcizhaltnoargs
 main: Returned from testcizhaltnoargs
 
+main: Test that zhalt can return statuses > 255
+main: Calling with status of 300
+gtm_ci()status code: 300
+main: Calling with status of -5
+gtm_ci()status code: 2147483643
+main: Calling with number over max_uint
+gtm_ci()status code: 99
+
 # Compile/build C file : ydb_ci.c
 # Run executable : ##TEST_PATH##/ydb_ci
 main: Initializing return value to -99 for HALT test
 main: After HALT, return value is 0
 
-main: Initializing return value to -99 for ZHALT test
+main: Initializing return value to -99 for ZHALT 42 test
 ydb_ci()status code: -42
+main: After ZHALT 42, return value is -99
 
-main: After ZHALT, return value is -99
+main: Initializing return value to -99 for ZHALT 0 test
+main: After ZHALT 0, return value is 0
 
 main: Initializing return value to -99 for ZGOTO 0 test
 main: After ZGOTO 0, return value is 0
@@ -77,16 +91,18 @@ main: After QUIT with no return value (but one expected), return value is -99
 
 main: Setting up for QUIT with (an unexpected integer) return value test
 ydb_ci()status code: -150374450
-150374450,testcizhaltnoretval+1^testcizhaltrc,%YDB-E-NOTEXTRINSIC, QUIT/ZHALT does not return to an extrinsic function: argument not allowed
+150374450,testcizhaltnoretval+2^testcizhaltrc,%YDB-E-NOTEXTRINSIC, QUIT/ZHALT does not return to an extrinsic function: argument not allowed
 main: Return from QUIT with (an unexpected integer) return value
 
 main: Initializing return value to 'snarf' for the HALT test
 main: After HALT, return value is 
 
-main: Initializing return value to 'snarf' for the ZHALT test
+main: Initializing return value to 'snarf' for the ZHALT 42 test
 ydb_ci()status code: -42
-150374450,testcizhaltnoretval+1^testcizhaltrc,%YDB-E-NOTEXTRINSIC, QUIT/ZHALT does not return to an extrinsic function: argument not allowed
-main: After ZHALT, return value is snarf
+main: After ZHALT 42, return value is snarf
+
+main: Initializing return value to 'snarf' for the ZHALT 0 test
+main: After ZHALT 0, return value is 
 
 main: Initializing return value to 'snarf' for the ZGOTO 0 test
 main: After ZGOTO 0, return value is 
@@ -98,7 +114,7 @@ main: After QUIT with (an unexpected) return value, return value is snarf
 
 main: Setting up for QUIT with (an unexpected string) return value test
 ydb_ci()status code: -150374450
-150374450,testcizhaltnoretval+1^testcizhaltrc,%YDB-E-NOTEXTRINSIC, QUIT/ZHALT does not return to an extrinsic function: argument not allowed
+150374450,testcizhaltnoretval+2^testcizhaltrc,%YDB-E-NOTEXTRINSIC, QUIT/ZHALT does not return to an extrinsic function: argument not allowed
 main: Return from QUIT with (an unexpected string) return value
 
 main: Setting up for call to routine with an extra (unexpected) argument
@@ -115,5 +131,13 @@ main: Initializing return value to -99 for the call with args to routine with no
 ydb_ci()status code: -150374466
 150374466,(Call-In),%YDB-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: testcizhaltnoargs
 main: Returned from testcizhaltnoargs
+
+main: Test that zhalt can return statuses > 255
+main: Calling with status of 300
+ydb_ci()status code: -300
+main: Calling with status of -5
+ydb_ci()status code: -2147483643
+main: Calling with number over max_uint
+ydb_ci()status code: -99
 
 End of test_ci_z_halt_rc subtest

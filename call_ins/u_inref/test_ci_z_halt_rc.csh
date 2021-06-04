@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -34,6 +34,7 @@ testcizhaltnoargs:        ydb_int_t    *testcizhaltnoargs^testcizhaltrc(I:ydb_in
 testcizhalt2manyargsint:  ydb_int_t    *testcizhaltrcint^testcizhaltrc(I:ydb_int_t, I:ydb_int_t)
 testcizhalt2manyargsstr:  ydb_string_t *testcizhaltrcstr^testcizhaltrc(I:ydb_int_t, I:ydb_int_t)
 testcizhaltnoretv:        void          testcizhaltnoretval^testcizhaltrc(I:ydb_int_t)
+testzhaltnonbytenumbers:  void          testzhaltnonbytenumbers^testcizhaltrc(I:ydb_int_t)
 EOF
 
 # Copy C program containing various "ydb_ci()" calls. Error return values are expected to be negative here.
