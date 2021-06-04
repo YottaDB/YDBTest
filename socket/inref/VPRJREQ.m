@@ -4,6 +4,7 @@ VPRJREQ ;SLC/KCM -- Listen for HTTP requests;2014-11-28  3:59 PM
  ; Listener Process ---------------------------------------
  ; Mods by VEN/SMH for GT.M support.
  ; Further mods by FIS/SMW for TLS and testsystem
+ ; Further mods by YottaDB
  ;
 GO ; start up REST listener with defaults
  N PORT S PORT=$G(^VPRHTTP(0,"port"),9080)
@@ -22,6 +23,7 @@ START(TCPPORT,DEBUG) ; set up listening for connections
  ; You can place breakpoints at CHILD+1 or anywhere else.
  ; CTRL-C will always work
  ;
+ do ^sstepgbl
  S ^VPRHTTP(0,"listener")="starting"
  ;
  N %WOS S %WOS=$S(+$SY=47:"GT.M",+$SY=50:"MV1",1:"CACHE") ; Get Mumps Virtual Machine
@@ -67,13 +69,13 @@ LOOP ; wait for connection, spawn process to handle it. GOTO favorite.
  ;I %WOS="GT.M" D  G LOOP:'GTMDONE,CHILD:GTMDONE
  I %WOS="GT.M" D  G LOOP
  . ;
- . ; Wait until we have a connection (inifinte wait). 
+ . ; Wait until we have a connection (inifinte wait).
  . ; Stop if the listener asked us to stop.
  . FOR  W /WAIT(10) Q:$KEY]""  Q:($E(^VPRHTTP(0,"listener"),1,4)="stop")
  . ;
  . ; We have to stop! When we quit, we go to loop, and we exit at LOOP+1
  . I $E(^VPRHTTP(0,"listener"),1,4)="stop" QUIT
- . ; 
+ . ;
  . ; At connection, job off the new child socket to be served away.
  . ; I $P($KEY,"|")="CONNECT" QUIT ; before 6.1
  . I $P($KEY,"|")="CONNECT" D  ; >=6.1
@@ -91,7 +93,7 @@ LOOP ; wait for connection, spawn process to handle it. GOTO favorite.
  . ; JOB START^VPRJREQ(TCPPORT):(IN="/dev/null":OUT="/dev/null":ERR="/dev/null"):5
  . ; SET GTMDONE=1  ; Will goto CHILD at the DO exist up above
  . ; ---- END GT.M CODE ----
- ; 
+ ;
  QUIT
  ;
 DEBUG ; Debug continuation. We don't job off the request, rather run it now.
@@ -189,7 +191,7 @@ WAIT ; wait for request on this connection
  . I HTTPLOG>2 D LOGBODY
  ;
  D LOGINFO($zsocket(%WTCP,"TLS",,"internal,all"),"zsocket")	; SMW
- ; -- build response (map path to routine & call, otherwise 404)   
+ ; -- build response (map path to routine & call, otherwise 404)
  S $ETRAP="G ETCODE^VPRJREQ"
  S HTTPERR=0
  D RESPOND^VPRJRSP
@@ -274,8 +276,8 @@ ETCODE ; error trap when calling out to routines
 ETDC ; error trap for client disconnect ; not a true M trap
  D LOGDC
  K ^TMP($J),^TMP("HTTPERR",$J)
- C $P  
- HALT ; Stop process 
+ C $P
+ HALT ; Stop process
  ;
 ETBAIL ; error trap of error traps
  U %WTCP

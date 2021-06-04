@@ -3,6 +3,9 @@
 ; Copyright (c) 2015-2016 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.                                     ;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -16,6 +19,7 @@
 	; The M Web Server is licensed "Apache License, Version 2.0"
 	; This test requires VPRJREQ.m VPRJRSP.m VPRJRUT.m _WHOME.m for ping and home functions
 mwebserver(portno,hostname)
+	do ^sstepgbl
 	set portno=$get(portno,9080)
 	set portno=$get(^VPRHTTP(0,"port"),portno)
 	set hostname=$get(hostname,"localhost")
