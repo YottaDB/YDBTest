@@ -2,7 +2,7 @@
 ;								;
 ;	Copyright 2014 Fidelity Information Services, Inc	;
 ;								;
-; Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -97,13 +97,13 @@ genmsgs
 	.	if (debug) use dbg write !
 	.	use $principal
 	.
-	.	; Currently zmessage bombs with indirection (until GTM-6114 is fixed), so the workaround is to use 21 explicit arguments
+	.	; Currently zmessage bombs with indirection (until GTM-6114 is fixed), so the workaround is to use 22 explicit arguments
 	.	; (the max number of arguments used in a message is for JNLBUFINFO), some of which might be empty. An alternative would be to use XECUTE,
 	.	; but it prints some redundant stuff.
-	.	for i=i+1:1:21 set arg(i)=""
+	.	for i=i+1:1:22 set arg(i)=""
 	.
 	.	; Actually print the message.
-	.	zmessage id:arg(1):arg(2):arg(3):arg(4):arg(5):arg(6):arg(7):arg(8):arg(9):arg(10):arg(11):arg(12):arg(13):arg(14):arg(15):arg(16):arg(17):arg(18):arg(19):arg(20):arg(21)
+	.	zmessage id:arg(1):arg(2):arg(3):arg(4):arg(5):arg(6):arg(7):arg(8):arg(9):arg(10):arg(11):arg(12):arg(13):arg(14):arg(15):arg(16):arg(17):arg(18):arg(19):arg(20):arg(21):arg(22)
 
 	use $principal
 
