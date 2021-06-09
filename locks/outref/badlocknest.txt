@@ -1,0 +1,21 @@
+# This test raises a %YDB-E-BADLOCKNEST where appropriate to verify that the error message is working correctly. This is
+# needed because there was previously no test that raised this error message.
+###################################################################
+# Creating a database. Without this step, the test produces a %YDB-E-ZGBLDIRACC because mumps.gld doesn't exist
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+###################################################################
+# Creating the M code file badlocknest.m that raises the %YDB-E-BADLOCKNEST.
+###################################################################
+# Run the M code expecting a %YDB-E-BADLOCKNEST
+%YDB-E-BADLOCKNEST, Unsupported nesting of LOCK commands
+		At M source location timeout+1^badlocknest
+
+YDB>
+###################################################################
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
