@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -27,7 +27,7 @@ commit-verify:
 # Test that imptp.rs builds with the latest commit of YDBRust
 build-imptp-rs:
   image:
-      name: yottadb/yottadb-debian:latest
+      name: yottadb/yottadb-debian:latest-master
       entrypoint: [""]
   stage: build
   script:

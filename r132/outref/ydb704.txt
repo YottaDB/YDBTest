@@ -1,0 +1,31 @@
+# Test invoking YottaDB via valgrind does not produce a %YDB-E-YDBDISTUNVERIF
+###################################################################
+# First test valgrind -q ##SOURCE_PATH##/yottadb -version
+##TEST_AWKYottaDB release:         r.*
+##TEST_AWKUpstream base version:   GT\.M V[0-9]\.[0-9]-[0-9]*
+##TEST_AWKPlatform:                Linux .*
+##TEST_AWKBuild date/time:         [0-9]*-[0-9]*-[0-9]* [0-9]*:[0-9]*
+##TEST_AWKBuild commit SHA:        .*
+###################################################################
+# Create a database and test valgrind -q $ydb_dist/mupip integ -reg "*"
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+##TEST_AWKDirectory         .*
+##TEST_AWKIndex             .*
+##TEST_AWKData              .*
+##TEST_AWKFree              .*
+##TEST_AWKTotal             .*
+###################################################################
+# Finally, test invoking a YottaDB command to write the result of 2*2 with valgrind.
+2*2 = 4
