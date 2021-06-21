@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -37,7 +37,7 @@ testdate ;
 	d do("1860","[1860-1959]",4)
 	d do("1890","[1890-1979]",4)
 	d do("2025","[2025-2124]",4)
-	d do("3025","%H cannot handle such large $H",4)
+	d do("3025","[3025-3124]",4)
 	d testh
 	q
 do(var,var2,var4)
@@ -78,7 +78,7 @@ doh(var,var3) ;
 	;zwr
 	q
 testh	;
-	w "%H cannot handle $H dates after 2/28/2100",!
+	w "%H can handle $H dates after 2/28/2100",!
 	f h=94655:1:94660 w h,": ",$$CDS^%H(h),!
-	; the last $H %H can handle is 94657 (2/28/2100)
+	; the last $H %H could handle prior to ydb744 was 94657 (2/28/2100)
 	q

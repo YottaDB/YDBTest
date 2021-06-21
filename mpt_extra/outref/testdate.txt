@@ -280,47 +280,47 @@ ZDATE_FORM:   1890 [1890-1979]                           #%D OUTPUT DIGITS: 4
 ZDATE_FORM:   2025 [2025-2124]                           #%D OUTPUT DIGITS: 4
 -----------------
 %H    input:    1/1/75 means -> $H: 85468 ->   1/1/2075
-%H    input:  10/10/20 means -> $H: 102186 ->           
-%H    input:  10/20/24 means -> $H: 103657 ->           
+%H    input:  10/10/20 means -> $H: 102186 -> 10/10/2120
+%H    input:  10/20/24 means -> $H: 103657 -> 10/20/2124
 %H    input:    1/1/25 means -> $H: 67206 ->   1/1/2025
 %H    input:    1/1/95 means -> $H: 92773 ->   1/1/2095
-%H    input:    3/3/00 means -> $H: 94660 ->           
+%H    input:    3/3/00 means -> $H: 94660 ->   3/3/2100
 %H    input:    9/9/69 means -> $H: 83528 ->   9/9/2069
 %H    input:  9/9/1969 means -> $H: 47003 ->   9/9/1969
 ----------
 %DATE input:    1/1/75 means -> $H: 85468 ->   1/1/2075
-%DATE input:  10/10/20 means -> $H: 102186 ->           
-%DATE input:  10/20/24 means -> $H: 103657 ->           
+%DATE input:  10/10/20 means -> $H: 102186 -> 10/10/2120
+%DATE input:  10/20/24 means -> $H: 103657 -> 10/20/2124
 %DATE input:    1/1/25 means -> $H: 67206 ->   1/1/2025
 %DATE input:    1/1/95 means -> $H: 92773 ->   1/1/2095
-%DATE input:    3/3/00 means -> $H: 94660 ->           
+%DATE input:    3/3/00 means -> $H: 94660 ->   3/3/2100
 %DATE input:    9/9/69 means -> $H: 83528 ->   9/9/2069
 %DATE input:  9/9/1969 means -> $H: 47003 ->   9/9/1969
 
 -----------------------------------------------------------
-ZDATE_FORM:   3025 %H cannot handle such large $H        #%D OUTPUT DIGITS: 4
+ZDATE_FORM:   3025 [3025-3124]                           #%D OUTPUT DIGITS: 4
 -----------------
-%H    input:    1/1/75 means -> $H: 450710 ->           
-%H    input:  10/10/20 means -> $H: 467428 ->           
-%H    input:  10/20/24 means -> $H: 468899 ->           
-%H    input:    1/1/25 means -> $H: 432448 ->           
-%H    input:    1/1/95 means -> $H: 458015 ->           
-%H    input:    3/3/00 means -> $H: 459902 ->           
-%H    input:    9/9/69 means -> $H: 448770 ->           
+%H    input:    1/1/75 means -> $H: 450710 ->   1/1/3075
+%H    input:  10/10/20 means -> $H: 467428 -> 10/10/3120
+%H    input:  10/20/24 means -> $H: 468899 -> 10/20/3124
+%H    input:    1/1/25 means -> $H: 432448 ->   1/1/3025
+%H    input:    1/1/95 means -> $H: 458015 ->   1/1/3095
+%H    input:    3/3/00 means -> $H: 459902 ->   3/3/3100
+%H    input:    9/9/69 means -> $H: 448770 ->   9/9/3069
 %H    input:  9/9/1969 means -> $H: 47003 ->   9/9/1969
 ----------
-%DATE input:    1/1/75 means -> $H: 450710 ->           
-%DATE input:  10/10/20 means -> $H: 467428 ->           
-%DATE input:  10/20/24 means -> $H: 468899 ->           
-%DATE input:    1/1/25 means -> $H: 432448 ->           
-%DATE input:    1/1/95 means -> $H: 458015 ->           
-%DATE input:    3/3/00 means -> $H: 459902 ->           
-%DATE input:    9/9/69 means -> $H: 448770 ->           
+%DATE input:    1/1/75 means -> $H: 450710 ->   1/1/3075
+%DATE input:  10/10/20 means -> $H: 467428 -> 10/10/3120
+%DATE input:  10/20/24 means -> $H: 468899 -> 10/20/3124
+%DATE input:    1/1/25 means -> $H: 432448 ->   1/1/3025
+%DATE input:    1/1/95 means -> $H: 458015 ->   1/1/3095
+%DATE input:    3/3/00 means -> $H: 459902 ->   3/3/3100
+%DATE input:    9/9/69 means -> $H: 448770 ->   9/9/3069
 %DATE input:  9/9/1969 means -> $H: 47003 ->   9/9/1969
-%H cannot handle $H dates after 2/28/2100
+%H can handle $H dates after 2/28/2100
 94655: 2/26/2100
 94656: 2/27/2100
 94657: 2/28/2100
-94658: 
-94659: 
-94660: 
+94658: 3/1/2100
+94659: 3/2/2100
+94660: 3/3/2100
