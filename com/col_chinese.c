@@ -2,7 +2,7 @@
 *								*
 * Copyright 2013 Fidelity Information Services, Inc		*
 *								*
-* Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	*
+* Copyright (c) 2020-2021 YottaDB LLC and/or its subsidiaries.	*
 * All rights reserved.						*
 *								*
 *	This source code contains the intellectual property	*
@@ -239,6 +239,15 @@ long gtm_ac_xback ( gtm_descriptor *src, int level, gtm_descriptor *dst, int *ds
 	iconv_close(cd);
 
 	return SUCCESS;
+}
+
+long gtm_ac_xutil (gtm32_descriptor *in, int level, gtm32_descriptor *out, int *outlen, int op, int honor_numeric)
+{
+		/* The $ZATRANSFORM options this function implements only work in M mode but this collation only
+		 * works in UTF-8 mode so just return an empty string for this. This function returns 0 as returning
+		 * -1 results in a ZATRANSCOL error. */
+		*outlen = 0;
+		return 0;
 }
 
 int gtm_ac_version ()

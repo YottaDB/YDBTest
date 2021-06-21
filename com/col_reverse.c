@@ -2,6 +2,9 @@
 *								*
 *	Copyright 2003, 2014 Fidelity Information Services, Inc	*
 *								*
+ * Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	*
+ * All rights reserved.						*
+ *								*
 *	This source code contains the intellectual property	*
 *	of its copyright holder(s), and is made available	*
 *	under a license.  If you do not know the terms of	*
@@ -16,6 +19,7 @@
  */
 
 #include <stdlib.h>
+#include <string.h>
 #include "gtm_descript.h"
 
 #define MYAPP_SUBC2LONG 12345678
@@ -105,6 +109,58 @@ long gtm_ac_xback ( gtm_descriptor *src, int level, gtm_descriptor *dst, int *ds
 	*dstlen = src->len;
 
 	return 0;
+}
+
+/* This function returns the next or previous collated character respectively for a $ZATRANSFORM command where the
+ * third argument to $ZATRANSFORM is 2 or -2. Parameters are:
+ * The parameter in - Supplies the input string, the first character of which is considered
+ * The parameter level - Currently unused and should not be examined or changed
+ * The parameter out - Supplies the one (1) character result string produced by applying the collation operation if a result was possible
+ * The parameter outlen - Supplies to the caller the length of the returned string, which will be 0 or 1.
+ * The parameter op - Specifies the collation operation returned:
+ *   0 - collation value of the given character
+ *   1 - character collating before the given character if it exists
+ *   2 - character collating after the given character if it exists
+ * The parameter honor_numeric - Boolean specifying:
+ *   TRUE  - standard GT.M collation of digits before any other character
+ *   FALSE - digits should be treated the same as all other characters
+ * The gtm_ac_xutil function returns 0 on success and -1 on failure.
+ */
+long gtm_ac_xutil (gtm32_descriptor *in, int level, gtm32_descriptor *out, int *outlen, int op, int honor_numeric)
+{
+	/* Get the input character (a gtm32_descriptor's val is a void *) */
+	unsigned char charindx;
+	charindx = *(unsigned char *)in->val;
+	switch (op)
+	{
+		/* There are 3 cases here. If it is case 0, we just send the input to the collation table unmodified to be
+		 * collated to the appropriate character. If it is case 1 (equivalent to -2 as 3rd argument), we either return
+		 * the collation of charindx - 1 or an empty string if no such collation exists. If case 2, we either return the
+		 * collation of charindx + 1 or an empty string if no such collation exists.
+		 */
+		case 0:
+			memcpy(out->val, &xform_table[charindx], 1);
+			*outlen = 1;
+			return 0;
+		case 1:
+			if (1 <= charindx)
+			{
+				memcpy(out->val, &xform_table[charindx] - 1, 1);
+				*outlen = 1;
+			} else
+				*outlen = 0;
+			return 0;
+		case 2:
+			if (254 >= charindx)
+			{
+				memcpy(out->val, &xform_table[charindx + 1], 1);
+				*outlen = 1;
+			} else
+				*outlen = 0;
+			return 0;
+		default:
+			return -1;
+	}
 }
 
 int gtm_ac_version ()

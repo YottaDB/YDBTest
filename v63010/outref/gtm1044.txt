@@ -1,0 +1,4147 @@
+### Test GTM-1044 changes to $ZATRANSFORM ###
+### These include the additions of 2 and -2 as ###
+### valid values for the optional 3rd argument ###
+### and the gtm_ac_xutil() function for use ###
+### with external collations ###
+###################################################################
+# Make sure the character set is M because the M code is supposed to throw a YDB-E-ZATRANSCOL in UTF-8 mode
+setenv gtm_chset M
+unset echo
+###################################################################
+# Create shared library for all alternate collations
+###################################################################
+# Run gtm1044 test
+***********************************************************************************************
+Case 1: Test $zatransform with 2 as the third argument
+This should return the character that collates immediately after the first character
+of the first argument or an empty string if no character does. Test this for each ASCII
+character from 0 to 255.***********************************************************************************************
+Testing character #0
+Straight: $C(1)
+Reverse: "þ"
+Polish: $C(1)
+Polish-Reverse: $C(1)
+Chinese: ""
+Complex: $C(1)
+***********************************************************************************************
+Testing character #1
+Straight: $C(2)
+Reverse: "ý"
+Polish: $C(2)
+Polish-Reverse: $C(2)
+Chinese: ""
+Complex: $C(2)
+***********************************************************************************************
+Testing character #2
+Straight: $C(3)
+Reverse: "ü"
+Polish: $C(3)
+Polish-Reverse: $C(3)
+Chinese: ""
+Complex: $C(3)
+***********************************************************************************************
+Testing character #3
+Straight: $C(4)
+Reverse: "û"
+Polish: $C(4)
+Polish-Reverse: $C(4)
+Chinese: ""
+Complex: $C(4)
+***********************************************************************************************
+Testing character #4
+Straight: $C(5)
+Reverse: "ú"
+Polish: $C(5)
+Polish-Reverse: $C(5)
+Chinese: ""
+Complex: $C(5)
+***********************************************************************************************
+Testing character #5
+Straight: $C(6)
+Reverse: "ù"
+Polish: $C(6)
+Polish-Reverse: $C(6)
+Chinese: ""
+Complex: $C(6)
+***********************************************************************************************
+Testing character #6
+Straight: $C(7)
+Reverse: "ø"
+Polish: $C(7)
+Polish-Reverse: $C(7)
+Chinese: ""
+Complex: $C(7)
+***********************************************************************************************
+Testing character #7
+Straight: $C(8)
+Reverse: "÷"
+Polish: $C(8)
+Polish-Reverse: $C(8)
+Chinese: ""
+Complex: $C(8)
+***********************************************************************************************
+Testing character #8
+Straight: $C(9)
+Reverse: "ö"
+Polish: $C(9)
+Polish-Reverse: $C(9)
+Chinese: ""
+Complex: $C(9)
+***********************************************************************************************
+Testing character #9
+Straight: $C(10)
+Reverse: "õ"
+Polish: $C(10)
+Polish-Reverse: $C(10)
+Chinese: ""
+Complex: $C(10)
+***********************************************************************************************
+Testing character #10
+Straight: $C(11)
+Reverse: "ô"
+Polish: $C(11)
+Polish-Reverse: $C(11)
+Chinese: ""
+Complex: $C(11)
+***********************************************************************************************
+Testing character #11
+Straight: $C(12)
+Reverse: "ó"
+Polish: $C(12)
+Polish-Reverse: $C(12)
+Chinese: ""
+Complex: $C(12)
+***********************************************************************************************
+Testing character #12
+Straight: $C(13)
+Reverse: "ò"
+Polish: $C(13)
+Polish-Reverse: $C(13)
+Chinese: ""
+Complex: $C(13)
+***********************************************************************************************
+Testing character #13
+Straight: $C(14)
+Reverse: "ñ"
+Polish: $C(14)
+Polish-Reverse: $C(14)
+Chinese: ""
+Complex: $C(14)
+***********************************************************************************************
+Testing character #14
+Straight: $C(15)
+Reverse: "ð"
+Polish: $C(15)
+Polish-Reverse: $C(15)
+Chinese: ""
+Complex: $C(15)
+***********************************************************************************************
+Testing character #15
+Straight: $C(16)
+Reverse: "ï"
+Polish: $C(16)
+Polish-Reverse: $C(16)
+Chinese: ""
+Complex: $C(16)
+***********************************************************************************************
+Testing character #16
+Straight: $C(17)
+Reverse: "î"
+Polish: $C(17)
+Polish-Reverse: $C(17)
+Chinese: ""
+Complex: $C(17)
+***********************************************************************************************
+Testing character #17
+Straight: $C(18)
+Reverse: "í"
+Polish: $C(18)
+Polish-Reverse: $C(18)
+Chinese: ""
+Complex: $C(18)
+***********************************************************************************************
+Testing character #18
+Straight: $C(19)
+Reverse: "ì"
+Polish: $C(19)
+Polish-Reverse: $C(19)
+Chinese: ""
+Complex: $C(19)
+***********************************************************************************************
+Testing character #19
+Straight: $C(20)
+Reverse: "ë"
+Polish: $C(20)
+Polish-Reverse: $C(20)
+Chinese: ""
+Complex: $C(20)
+***********************************************************************************************
+Testing character #20
+Straight: $C(21)
+Reverse: "ê"
+Polish: $C(21)
+Polish-Reverse: $C(21)
+Chinese: ""
+Complex: $C(21)
+***********************************************************************************************
+Testing character #21
+Straight: $C(22)
+Reverse: "é"
+Polish: $C(22)
+Polish-Reverse: $C(22)
+Chinese: ""
+Complex: $C(22)
+***********************************************************************************************
+Testing character #22
+Straight: $C(23)
+Reverse: "è"
+Polish: $C(23)
+Polish-Reverse: $C(23)
+Chinese: ""
+Complex: $C(23)
+***********************************************************************************************
+Testing character #23
+Straight: $C(24)
+Reverse: "ç"
+Polish: $C(24)
+Polish-Reverse: $C(24)
+Chinese: ""
+Complex: $C(24)
+***********************************************************************************************
+Testing character #24
+Straight: $C(25)
+Reverse: "æ"
+Polish: $C(25)
+Polish-Reverse: $C(25)
+Chinese: ""
+Complex: $C(25)
+***********************************************************************************************
+Testing character #25
+Straight: $C(26)
+Reverse: "å"
+Polish: $C(26)
+Polish-Reverse: $C(26)
+Chinese: ""
+Complex: $C(26)
+***********************************************************************************************
+Testing character #26
+Straight: $C(27)
+Reverse: "ä"
+Polish: $C(27)
+Polish-Reverse: $C(27)
+Chinese: ""
+Complex: $C(27)
+***********************************************************************************************
+Testing character #27
+Straight: $C(28)
+Reverse: "ã"
+Polish: $C(28)
+Polish-Reverse: $C(28)
+Chinese: ""
+Complex: $C(28)
+***********************************************************************************************
+Testing character #28
+Straight: $C(29)
+Reverse: "â"
+Polish: $C(29)
+Polish-Reverse: $C(29)
+Chinese: ""
+Complex: $C(29)
+***********************************************************************************************
+Testing character #29
+Straight: $C(30)
+Reverse: "á"
+Polish: $C(30)
+Polish-Reverse: $C(30)
+Chinese: ""
+Complex: $C(30)
+***********************************************************************************************
+Testing character #30
+Straight: $C(31)
+Reverse: "à"
+Polish: $C(31)
+Polish-Reverse: $C(31)
+Chinese: ""
+Complex: $C(31)
+***********************************************************************************************
+Testing character #31
+Straight: " "
+Reverse: "ß"
+Polish: " "
+Polish-Reverse: " "
+Chinese: ""
+Complex: " "
+***********************************************************************************************
+Testing character #32
+Straight: "!"
+Reverse: "Þ"
+Polish: "!"
+Polish-Reverse: "!"
+Chinese: ""
+Complex: "!"
+***********************************************************************************************
+Testing character #33
+Straight: """"
+Reverse: "Ý"
+Polish: """"
+Polish-Reverse: """"
+Chinese: ""
+Complex: """"
+***********************************************************************************************
+Testing character #34
+Straight: "#"
+Reverse: "Ü"
+Polish: "#"
+Polish-Reverse: "#"
+Chinese: ""
+Complex: "#"
+***********************************************************************************************
+Testing character #35
+Straight: "$"
+Reverse: "Û"
+Polish: "$"
+Polish-Reverse: "$"
+Chinese: ""
+Complex: "$"
+***********************************************************************************************
+Testing character #36
+Straight: "%"
+Reverse: "Ú"
+Polish: "%"
+Polish-Reverse: "%"
+Chinese: ""
+Complex: "%"
+***********************************************************************************************
+Testing character #37
+Straight: "&"
+Reverse: "Ù"
+Polish: "&"
+Polish-Reverse: "&"
+Chinese: ""
+Complex: "&"
+***********************************************************************************************
+Testing character #38
+Straight: "'"
+Reverse: "Ø"
+Polish: "'"
+Polish-Reverse: "'"
+Chinese: ""
+Complex: "'"
+***********************************************************************************************
+Testing character #39
+Straight: "("
+Reverse: "×"
+Polish: "("
+Polish-Reverse: "("
+Chinese: ""
+Complex: "("
+***********************************************************************************************
+Testing character #40
+Straight: ")"
+Reverse: "Ö"
+Polish: ")"
+Polish-Reverse: ")"
+Chinese: ""
+Complex: ")"
+***********************************************************************************************
+Testing character #41
+Straight: "*"
+Reverse: "Õ"
+Polish: "*"
+Polish-Reverse: "*"
+Chinese: ""
+Complex: "*"
+***********************************************************************************************
+Testing character #42
+Straight: "+"
+Reverse: "Ô"
+Polish: "+"
+Polish-Reverse: "+"
+Chinese: ""
+Complex: "+"
+***********************************************************************************************
+Testing character #43
+Straight: ","
+Reverse: "Ó"
+Polish: ","
+Polish-Reverse: ","
+Chinese: ""
+Complex: ","
+***********************************************************************************************
+Testing character #44
+Straight: "-"
+Reverse: "Ò"
+Polish: "-"
+Polish-Reverse: "-"
+Chinese: ""
+Complex: "-"
+***********************************************************************************************
+Testing character #45
+Straight: "."
+Reverse: "Ñ"
+Polish: "."
+Polish-Reverse: "."
+Chinese: ""
+Complex: "."
+***********************************************************************************************
+Testing character #46
+Straight: "/"
+Reverse: "Ð"
+Polish: "/"
+Polish-Reverse: "/"
+Chinese: ""
+Complex: "/"
+***********************************************************************************************
+Testing character #47
+Straight: 0
+Reverse: "Ï"
+Polish: 0
+Polish-Reverse: 0
+Chinese: ""
+Complex: 0
+***********************************************************************************************
+Testing character #48
+Straight: 1
+Reverse: "Î"
+Polish: 1
+Polish-Reverse: 1
+Chinese: ""
+Complex: 1
+***********************************************************************************************
+Testing character #49
+Straight: 2
+Reverse: "Í"
+Polish: 2
+Polish-Reverse: 2
+Chinese: ""
+Complex: 2
+***********************************************************************************************
+Testing character #50
+Straight: 3
+Reverse: "Ì"
+Polish: 3
+Polish-Reverse: 3
+Chinese: ""
+Complex: 3
+***********************************************************************************************
+Testing character #51
+Straight: 4
+Reverse: "Ë"
+Polish: 4
+Polish-Reverse: 4
+Chinese: ""
+Complex: 4
+***********************************************************************************************
+Testing character #52
+Straight: 5
+Reverse: "Ê"
+Polish: 5
+Polish-Reverse: 5
+Chinese: ""
+Complex: 5
+***********************************************************************************************
+Testing character #53
+Straight: 6
+Reverse: "É"
+Polish: 6
+Polish-Reverse: 6
+Chinese: ""
+Complex: 6
+***********************************************************************************************
+Testing character #54
+Straight: 7
+Reverse: "È"
+Polish: 7
+Polish-Reverse: 7
+Chinese: ""
+Complex: 7
+***********************************************************************************************
+Testing character #55
+Straight: 8
+Reverse: "Ç"
+Polish: 8
+Polish-Reverse: 8
+Chinese: ""
+Complex: 8
+***********************************************************************************************
+Testing character #56
+Straight: 9
+Reverse: "Æ"
+Polish: 9
+Polish-Reverse: 9
+Chinese: ""
+Complex: 9
+***********************************************************************************************
+Testing character #57
+Straight: ":"
+Reverse: "Å"
+Polish: ":"
+Polish-Reverse: ":"
+Chinese: ""
+Complex: ":"
+***********************************************************************************************
+Testing character #58
+Straight: ";"
+Reverse: "Ä"
+Polish: ";"
+Polish-Reverse: ";"
+Chinese: ""
+Complex: ";"
+***********************************************************************************************
+Testing character #59
+Straight: "<"
+Reverse: "Ã"
+Polish: "<"
+Polish-Reverse: "<"
+Chinese: ""
+Complex: "<"
+***********************************************************************************************
+Testing character #60
+Straight: "="
+Reverse: "Â"
+Polish: "="
+Polish-Reverse: "="
+Chinese: ""
+Complex: "="
+***********************************************************************************************
+Testing character #61
+Straight: ">"
+Reverse: "Á"
+Polish: ">"
+Polish-Reverse: ">"
+Chinese: ""
+Complex: ">"
+***********************************************************************************************
+Testing character #62
+Straight: "?"
+Reverse: "À"
+Polish: "?"
+Polish-Reverse: "?"
+Chinese: ""
+Complex: "?"
+***********************************************************************************************
+Testing character #63
+Straight: "@"
+Reverse: "¿"
+Polish: "@"
+Polish-Reverse: "@"
+Chinese: ""
+Complex: "@"
+***********************************************************************************************
+Testing character #64
+Straight: "A"
+Reverse: "¾"
+Polish: "F"
+Polish-Reverse: "a"
+Chinese: ""
+Complex: "A"
+***********************************************************************************************
+Testing character #65
+Straight: "B"
+Reverse: "½"
+Polish: "N"
+Polish-Reverse: "á"
+Chinese: ""
+Complex: "B"
+***********************************************************************************************
+Testing character #66
+Straight: "C"
+Reverse: "¼"
+Polish: "R"
+Polish-Reverse: "â"
+Chinese: ""
+Complex: "C"
+***********************************************************************************************
+Testing character #67
+Straight: "D"
+Reverse: "»"
+Polish: "Z"
+Polish-Reverse: "ã"
+Chinese: ""
+Complex: "D"
+***********************************************************************************************
+Testing character #68
+Straight: "E"
+Reverse: "º"
+Polish: "a"
+Polish-Reverse: "ä"
+Chinese: ""
+Complex: "E"
+***********************************************************************************************
+Testing character #69
+Straight: "F"
+Reverse: "¹"
+Polish: "h"
+Polish-Reverse: "A"
+Chinese: ""
+Complex: "F"
+***********************************************************************************************
+Testing character #70
+Straight: "G"
+Reverse: "¸"
+Polish: "j"
+Polish-Reverse: "Á"
+Chinese: ""
+Complex: "G"
+***********************************************************************************************
+Testing character #71
+Straight: "H"
+Reverse: "·"
+Polish: "l"
+Polish-Reverse: "Â"
+Chinese: ""
+Complex: "H"
+***********************************************************************************************
+Testing character #72
+Straight: "I"
+Reverse: "¶"
+Polish: "p"
+Polish-Reverse: "Ã"
+Chinese: ""
+Complex: "I"
+***********************************************************************************************
+Testing character #73
+Straight: "J"
+Reverse: "µ"
+Polish: "t"
+Polish-Reverse: "Ä"
+Chinese: ""
+Complex: "J"
+***********************************************************************************************
+Testing character #74
+Straight: "K"
+Reverse: "´"
+Polish: "v"
+Polish-Reverse: "±"
+Chinese: ""
+Complex: "K"
+***********************************************************************************************
+Testing character #75
+Straight: "L"
+Reverse: "³"
+Polish: "z"
+Polish-Reverse: "¡"
+Chinese: ""
+Complex: "L"
+***********************************************************************************************
+Testing character #76
+Straight: "M"
+Reverse: "²"
+Polish: $C(128)
+Polish-Reverse: "b"
+Chinese: ""
+Complex: "M"
+***********************************************************************************************
+Testing character #77
+Straight: "N"
+Reverse: "±"
+Polish: $C(131)
+Polish-Reverse: "B"
+Chinese: ""
+Complex: "N"
+***********************************************************************************************
+Testing character #78
+Straight: "O"
+Reverse: "°"
+Polish: $C(139)
+Polish-Reverse: "c"
+Chinese: ""
+Complex: "O"
+***********************************************************************************************
+Testing character #79
+Straight: "P"
+Reverse: "¯"
+Polish: $C(146)
+Polish-Reverse: "ç"
+Chinese: ""
+Complex: "P"
+***********************************************************************************************
+Testing character #80
+Straight: "Q"
+Reverse: "®"
+Polish: $C(148)
+Polish-Reverse: "è"
+Chinese: ""
+Complex: "Q"
+***********************************************************************************************
+Testing character #81
+Straight: "R"
+Reverse: "­"
+Polish: $C(152)
+Polish-Reverse: "C"
+Chinese: ""
+Complex: "R"
+***********************************************************************************************
+Testing character #82
+Straight: "S"
+Reverse: "¬"
+Polish: $C(158)
+Polish-Reverse: "Ç"
+Chinese: ""
+Complex: "S"
+***********************************************************************************************
+Testing character #83
+Straight: "T"
+Reverse: "«"
+Polish: "¦"
+Polish-Reverse: "È"
+Chinese: ""
+Complex: "T"
+***********************************************************************************************
+Testing character #84
+Straight: "U"
+Reverse: "ª"
+Polish: "®"
+Polish-Reverse: "æ"
+Chinese: ""
+Complex: "U"
+***********************************************************************************************
+Testing character #85
+Straight: "V"
+Reverse: "©"
+Polish: "´"
+Polish-Reverse: "Æ"
+Chinese: ""
+Complex: "V"
+***********************************************************************************************
+Testing character #86
+Straight: "W"
+Reverse: "¨"
+Polish: "¶"
+Polish-Reverse: "d"
+Chinese: ""
+Complex: "W"
+***********************************************************************************************
+Testing character #87
+Straight: "X"
+Reverse: "§"
+Polish: "¸"
+Polish-Reverse: "ï"
+Chinese: ""
+Complex: "X"
+***********************************************************************************************
+Testing character #88
+Straight: "Y"
+Reverse: "¦"
+Polish: "»"
+Polish-Reverse: "ð"
+Chinese: ""
+Complex: "Y"
+***********************************************************************************************
+Testing character #89
+Straight: "Z"
+Reverse: "¥"
+Polish: "¿"
+Polish-Reverse: "D"
+Chinese: ""
+Complex: "Z"
+***********************************************************************************************
+Testing character #90
+Straight: "["
+Reverse: "¤"
+Polish: "Å"
+Polish-Reverse: "Ï"
+Chinese: ""
+Complex: "["
+***********************************************************************************************
+Testing character #91
+Straight: "\"
+Reverse: "£"
+Polish: "Æ"
+Polish-Reverse: "Ð"
+Chinese: ""
+Complex: "\"
+***********************************************************************************************
+Testing character #92
+Straight: "]"
+Reverse: "¢"
+Polish: "Ç"
+Polish-Reverse: "e"
+Chinese: ""
+Complex: "]"
+***********************************************************************************************
+Testing character #93
+Straight: "^"
+Reverse: "¡"
+Polish: "È"
+Polish-Reverse: "é"
+Chinese: ""
+Complex: "^"
+***********************************************************************************************
+Testing character #94
+Straight: "_"
+Reverse: " "
+Polish: "É"
+Polish-Reverse: "ë"
+Chinese: ""
+Complex: "_"
+***********************************************************************************************
+Testing character #95
+Straight: "`"
+Reverse: $C(159)
+Polish: "Ê"
+Polish-Reverse: "ì"
+Chinese: ""
+Complex: "`"
+***********************************************************************************************
+Testing character #96
+Straight: "a"
+Reverse: $C(158)
+Polish: "A"
+Polish-Reverse: "E"
+Chinese: ""
+Complex: "b"
+***********************************************************************************************
+Testing character #97
+Straight: "b"
+Reverse: $C(157)
+Polish: "M"
+Polish-Reverse: "É"
+Chinese: ""
+Complex: "c"
+***********************************************************************************************
+Testing character #98
+Straight: "c"
+Reverse: $C(156)
+Polish: "O"
+Polish-Reverse: "Ë"
+Chinese: ""
+Complex: "a"
+***********************************************************************************************
+Testing character #99
+Straight: "d"
+Reverse: $C(155)
+Polish: "W"
+Polish-Reverse: "Ì"
+Chinese: ""
+Complex: "d"
+***********************************************************************************************
+Testing character #100
+Straight: "e"
+Reverse: $C(154)
+Polish: "]"
+Polish-Reverse: "ê"
+Chinese: ""
+Complex: "e"
+***********************************************************************************************
+Testing character #101
+Straight: "f"
+Reverse: $C(153)
+Polish: "g"
+Polish-Reverse: "Ê"
+Chinese: ""
+Complex: "f"
+***********************************************************************************************
+Testing character #102
+Straight: "g"
+Reverse: $C(152)
+Polish: "i"
+Polish-Reverse: "f"
+Chinese: ""
+Complex: "g"
+***********************************************************************************************
+Testing character #103
+Straight: "h"
+Reverse: $C(151)
+Polish: "k"
+Polish-Reverse: "F"
+Chinese: ""
+Complex: "h"
+***********************************************************************************************
+Testing character #104
+Straight: "i"
+Reverse: $C(150)
+Polish: "m"
+Polish-Reverse: "g"
+Chinese: ""
+Complex: "i"
+***********************************************************************************************
+Testing character #105
+Straight: "j"
+Reverse: $C(149)
+Polish: "s"
+Polish-Reverse: "G"
+Chinese: ""
+Complex: "j"
+***********************************************************************************************
+Testing character #106
+Straight: "k"
+Reverse: $C(148)
+Polish: "u"
+Polish-Reverse: "h"
+Chinese: ""
+Complex: "k"
+***********************************************************************************************
+Testing character #107
+Straight: "l"
+Reverse: $C(147)
+Polish: "w"
+Polish-Reverse: "H"
+Chinese: ""
+Complex: "l"
+***********************************************************************************************
+Testing character #108
+Straight: "m"
+Reverse: $C(146)
+Polish: $C(127)
+Polish-Reverse: "i"
+Chinese: ""
+Complex: "m"
+***********************************************************************************************
+Testing character #109
+Straight: "n"
+Reverse: $C(145)
+Polish: $C(129)
+Polish-Reverse: "í"
+Chinese: ""
+Complex: "n"
+***********************************************************************************************
+Testing character #110
+Straight: "o"
+Reverse: $C(144)
+Polish: $C(135)
+Polish-Reverse: "î"
+Chinese: ""
+Complex: "o"
+***********************************************************************************************
+Testing character #111
+Straight: "p"
+Reverse: $C(143)
+Polish: $C(145)
+Polish-Reverse: "I"
+Chinese: ""
+Complex: "p"
+***********************************************************************************************
+Testing character #112
+Straight: "q"
+Reverse: $C(142)
+Polish: $C(147)
+Polish-Reverse: "Í"
+Chinese: ""
+Complex: "q"
+***********************************************************************************************
+Testing character #113
+Straight: "r"
+Reverse: $C(141)
+Polish: $C(149)
+Polish-Reverse: "Î"
+Chinese: ""
+Complex: "r"
+***********************************************************************************************
+Testing character #114
+Straight: "s"
+Reverse: $C(140)
+Polish: $C(155)
+Polish-Reverse: "j"
+Chinese: ""
+Complex: "s"
+***********************************************************************************************
+Testing character #115
+Straight: "t"
+Reverse: $C(139)
+Polish: "£"
+Polish-Reverse: "J"
+Chinese: ""
+Complex: "t"
+***********************************************************************************************
+Testing character #116
+Straight: "u"
+Reverse: $C(138)
+Polish: "©"
+Polish-Reverse: "k"
+Chinese: ""
+Complex: "u"
+***********************************************************************************************
+Testing character #117
+Straight: "v"
+Reverse: $C(137)
+Polish: "³"
+Polish-Reverse: "K"
+Chinese: ""
+Complex: "v"
+***********************************************************************************************
+Testing character #118
+Straight: "w"
+Reverse: $C(136)
+Polish: "µ"
+Polish-Reverse: "l"
+Chinese: ""
+Complex: "w"
+***********************************************************************************************
+Testing character #119
+Straight: "x"
+Reverse: $C(135)
+Polish: "·"
+Polish-Reverse: "µ"
+Chinese: ""
+Complex: "x"
+***********************************************************************************************
+Testing character #120
+Straight: "y"
+Reverse: $C(134)
+Polish: "¹"
+Polish-Reverse: "å"
+Chinese: ""
+Complex: "y"
+***********************************************************************************************
+Testing character #121
+Straight: "z"
+Reverse: $C(133)
+Polish: "½"
+Polish-Reverse: "L"
+Chinese: ""
+Complex: "z"
+***********************************************************************************************
+Testing character #122
+Straight: "{"
+Reverse: $C(132)
+Polish: "Ë"
+Polish-Reverse: "¥"
+Chinese: ""
+Complex: "{"
+***********************************************************************************************
+Testing character #123
+Straight: "|"
+Reverse: $C(131)
+Polish: "Ì"
+Polish-Reverse: "Å"
+Chinese: ""
+Complex: "|"
+***********************************************************************************************
+Testing character #124
+Straight: "}"
+Reverse: $C(130)
+Polish: "Í"
+Polish-Reverse: "³"
+Chinese: ""
+Complex: "}"
+***********************************************************************************************
+Testing character #125
+Straight: "~"
+Reverse: $C(129)
+Polish: "Î"
+Polish-Reverse: "£"
+Chinese: ""
+Complex: "~"
+***********************************************************************************************
+Testing character #126
+Straight: $C(127)
+Reverse: $C(128)
+Polish: "Ü"
+Polish-Reverse: "m"
+Chinese: ""
+Complex: $C(127)
+***********************************************************************************************
+Testing character #127
+Straight: $C(128)
+Reverse: $C(127)
+Polish: "Ý"
+Polish-Reverse: "M"
+Chinese: ""
+Complex: $C(128)
+***********************************************************************************************
+Testing character #128
+Straight: $C(129)
+Reverse: "~"
+Polish: "Þ"
+Polish-Reverse: "n"
+Chinese: ""
+Complex: $C(129)
+***********************************************************************************************
+Testing character #129
+Straight: $C(130)
+Reverse: "}"
+Polish: "ß"
+Polish-Reverse: "ò"
+Chinese: ""
+Complex: $C(130)
+***********************************************************************************************
+Testing character #130
+Straight: $C(131)
+Reverse: "|"
+Polish: "à"
+Polish-Reverse: "N"
+Chinese: ""
+Complex: $C(131)
+***********************************************************************************************
+Testing character #131
+Straight: $C(132)
+Reverse: "{"
+Polish: "á"
+Polish-Reverse: "Ò"
+Chinese: ""
+Complex: $C(132)
+***********************************************************************************************
+Testing character #132
+Straight: $C(133)
+Reverse: "z"
+Polish: "â"
+Polish-Reverse: "ñ"
+Chinese: ""
+Complex: $C(133)
+***********************************************************************************************
+Testing character #133
+Straight: $C(134)
+Reverse: "y"
+Polish: "ã"
+Polish-Reverse: "Ñ"
+Chinese: ""
+Complex: $C(134)
+***********************************************************************************************
+Testing character #134
+Straight: $C(135)
+Reverse: "x"
+Polish: "ä"
+Polish-Reverse: "o"
+Chinese: ""
+Complex: $C(135)
+***********************************************************************************************
+Testing character #135
+Straight: $C(136)
+Reverse: "w"
+Polish: "å"
+Polish-Reverse: "ô"
+Chinese: ""
+Complex: $C(136)
+***********************************************************************************************
+Testing character #136
+Straight: $C(137)
+Reverse: "v"
+Polish: "æ"
+Polish-Reverse: "õ"
+Chinese: ""
+Complex: $C(137)
+***********************************************************************************************
+Testing character #137
+Straight: $C(138)
+Reverse: "u"
+Polish: "ç"
+Polish-Reverse: "ö"
+Chinese: ""
+Complex: $C(138)
+***********************************************************************************************
+Testing character #138
+Straight: $C(139)
+Reverse: "t"
+Polish: "è"
+Polish-Reverse: "O"
+Chinese: ""
+Complex: $C(139)
+***********************************************************************************************
+Testing character #139
+Straight: $C(140)
+Reverse: "s"
+Polish: "é"
+Polish-Reverse: "Ô"
+Chinese: ""
+Complex: $C(140)
+***********************************************************************************************
+Testing character #140
+Straight: $C(141)
+Reverse: "r"
+Polish: "ê"
+Polish-Reverse: "Õ"
+Chinese: ""
+Complex: $C(141)
+***********************************************************************************************
+Testing character #141
+Straight: $C(142)
+Reverse: "q"
+Polish: "ë"
+Polish-Reverse: "Ö"
+Chinese: ""
+Complex: $C(142)
+***********************************************************************************************
+Testing character #142
+Straight: $C(143)
+Reverse: "p"
+Polish: "ì"
+Polish-Reverse: "ó"
+Chinese: ""
+Complex: $C(143)
+***********************************************************************************************
+Testing character #143
+Straight: $C(144)
+Reverse: "o"
+Polish: "í"
+Polish-Reverse: "Ó"
+Chinese: ""
+Complex: $C(144)
+***********************************************************************************************
+Testing character #144
+Straight: $C(145)
+Reverse: "n"
+Polish: "î"
+Polish-Reverse: "p"
+Chinese: ""
+Complex: $C(145)
+***********************************************************************************************
+Testing character #145
+Straight: $C(146)
+Reverse: "m"
+Polish: "ï"
+Polish-Reverse: "P"
+Chinese: ""
+Complex: $C(146)
+***********************************************************************************************
+Testing character #146
+Straight: $C(147)
+Reverse: "l"
+Polish: "ð"
+Polish-Reverse: "q"
+Chinese: ""
+Complex: $C(147)
+***********************************************************************************************
+Testing character #147
+Straight: $C(148)
+Reverse: "k"
+Polish: "ñ"
+Polish-Reverse: "Q"
+Chinese: ""
+Complex: $C(148)
+***********************************************************************************************
+Testing character #148
+Straight: $C(149)
+Reverse: "j"
+Polish: "ò"
+Polish-Reverse: "r"
+Chinese: ""
+Complex: $C(149)
+***********************************************************************************************
+Testing character #149
+Straight: $C(150)
+Reverse: "i"
+Polish: "ó"
+Polish-Reverse: "à"
+Chinese: ""
+Complex: $C(150)
+***********************************************************************************************
+Testing character #150
+Straight: $C(151)
+Reverse: "h"
+Polish: "ô"
+Polish-Reverse: "ø"
+Chinese: ""
+Complex: $C(151)
+***********************************************************************************************
+Testing character #151
+Straight: $C(152)
+Reverse: "g"
+Polish: "õ"
+Polish-Reverse: "R"
+Chinese: ""
+Complex: $C(152)
+***********************************************************************************************
+Testing character #152
+Straight: $C(153)
+Reverse: "f"
+Polish: "ö"
+Polish-Reverse: "À"
+Chinese: ""
+Complex: $C(153)
+***********************************************************************************************
+Testing character #153
+Straight: $C(154)
+Reverse: "e"
+Polish: "÷"
+Polish-Reverse: "Ø"
+Chinese: ""
+Complex: $C(154)
+***********************************************************************************************
+Testing character #154
+Straight: $C(155)
+Reverse: "d"
+Polish: "ø"
+Polish-Reverse: "s"
+Chinese: ""
+Complex: $C(155)
+***********************************************************************************************
+Testing character #155
+Straight: $C(156)
+Reverse: "c"
+Polish: "ù"
+Polish-Reverse: "¹"
+Chinese: ""
+Complex: $C(156)
+***********************************************************************************************
+Testing character #156
+Straight: $C(157)
+Reverse: "b"
+Polish: "ú"
+Polish-Reverse: "º"
+Chinese: ""
+Complex: $C(157)
+***********************************************************************************************
+Testing character #157
+Straight: $C(158)
+Reverse: "a"
+Polish: "û"
+Polish-Reverse: "S"
+Chinese: ""
+Complex: $C(158)
+***********************************************************************************************
+Testing character #158
+Straight: $C(159)
+Reverse: "`"
+Polish: "ü"
+Polish-Reverse: "©"
+Chinese: ""
+Complex: $C(159)
+***********************************************************************************************
+Testing character #159
+Straight: " "
+Reverse: "_"
+Polish: "ý"
+Polish-Reverse: "ª"
+Chinese: ""
+Complex: " "
+***********************************************************************************************
+Testing character #160
+Straight: "¡"
+Reverse: "^"
+Polish: "L"
+Polish-Reverse: "¶"
+Chinese: ""
+Complex: "¡"
+***********************************************************************************************
+Testing character #161
+Straight: "¢"
+Reverse: "]"
+Polish: "Ï"
+Polish-Reverse: "¦"
+Chinese: ""
+Complex: "¢"
+***********************************************************************************************
+Testing character #162
+Straight: "£"
+Reverse: "\"
+Polish: "~"
+Polish-Reverse: "t"
+Chinese: ""
+Complex: "£"
+***********************************************************************************************
+Testing character #163
+Straight: "¤"
+Reverse: "["
+Polish: "Ð"
+Polish-Reverse: "»"
+Chinese: ""
+Complex: "¤"
+***********************************************************************************************
+Testing character #164
+Straight: "¥"
+Reverse: "Z"
+Polish: "{"
+Polish-Reverse: "þ"
+Chinese: ""
+Complex: "¥"
+***********************************************************************************************
+Testing character #165
+Straight: "¦"
+Reverse: "Y"
+Polish: "¢"
+Polish-Reverse: "T"
+Chinese: ""
+Complex: "¦"
+***********************************************************************************************
+Testing character #166
+Straight: "§"
+Reverse: "X"
+Polish: "Ñ"
+Polish-Reverse: "«"
+Chinese: ""
+Complex: "§"
+***********************************************************************************************
+Testing character #167
+Straight: "¨"
+Reverse: "W"
+Polish: "Ò"
+Polish-Reverse: "Þ"
+Chinese: ""
+Complex: "¨"
+***********************************************************************************************
+Testing character #168
+Straight: "©"
+Reverse: "V"
+Polish: $C(159)
+Polish-Reverse: "u"
+Chinese: ""
+Complex: "©"
+***********************************************************************************************
+Testing character #169
+Straight: "ª"
+Reverse: "U"
+Polish: " "
+Polish-Reverse: "ù"
+Chinese: ""
+Complex: "ª"
+***********************************************************************************************
+Testing character #170
+Straight: "«"
+Reverse: "T"
+Polish: "§"
+Polish-Reverse: "ú"
+Chinese: ""
+Complex: "«"
+***********************************************************************************************
+Testing character #171
+Straight: "¬"
+Reverse: "S"
+Polish: "Â"
+Polish-Reverse: "û"
+Chinese: ""
+Complex: "¬"
+***********************************************************************************************
+Testing character #172
+Straight: "­"
+Reverse: "R"
+Polish: "Ó"
+Polish-Reverse: "ü"
+Chinese: ""
+Complex: "­"
+***********************************************************************************************
+Testing character #173
+Straight: "®"
+Reverse: "Q"
+Polish: "À"
+Polish-Reverse: "U"
+Chinese: ""
+Complex: "®"
+***********************************************************************************************
+Testing character #174
+Straight: "¯"
+Reverse: "P"
+Polish: "Ä"
+Polish-Reverse: "Ù"
+Chinese: ""
+Complex: "¯"
+***********************************************************************************************
+Testing character #175
+Straight: "°"
+Reverse: "O"
+Polish: "Ô"
+Polish-Reverse: "Ú"
+Chinese: ""
+Complex: "°"
+***********************************************************************************************
+Testing character #176
+Straight: "±"
+Reverse: "N"
+Polish: "K"
+Polish-Reverse: "Û"
+Chinese: ""
+Complex: "±"
+***********************************************************************************************
+Testing character #177
+Straight: "²"
+Reverse: "M"
+Polish: "Õ"
+Polish-Reverse: "Ü"
+Chinese: ""
+Complex: "²"
+***********************************************************************************************
+Testing character #178
+Straight: "³"
+Reverse: "L"
+Polish: "}"
+Polish-Reverse: "v"
+Chinese: ""
+Complex: "³"
+***********************************************************************************************
+Testing character #179
+Straight: "´"
+Reverse: "K"
+Polish: "Ö"
+Polish-Reverse: "V"
+Chinese: ""
+Complex: "´"
+***********************************************************************************************
+Testing character #180
+Straight: "µ"
+Reverse: "J"
+Polish: "x"
+Polish-Reverse: "w"
+Chinese: ""
+Complex: "µ"
+***********************************************************************************************
+Testing character #181
+Straight: "¶"
+Reverse: "I"
+Polish: "¡"
+Polish-Reverse: "W"
+Chinese: ""
+Complex: "¶"
+***********************************************************************************************
+Testing character #182
+Straight: "·"
+Reverse: "H"
+Polish: "×"
+Polish-Reverse: "x"
+Chinese: ""
+Complex: "·"
+***********************************************************************************************
+Testing character #183
+Straight: "¸"
+Reverse: "G"
+Polish: "Ø"
+Polish-Reverse: "X"
+Chinese: ""
+Complex: "¸"
+***********************************************************************************************
+Testing character #184
+Straight: "¹"
+Reverse: "F"
+Polish: $C(156)
+Polish-Reverse: "y"
+Chinese: ""
+Complex: "¹"
+***********************************************************************************************
+Testing character #185
+Straight: "º"
+Reverse: "E"
+Polish: $C(157)
+Polish-Reverse: "ý"
+Chinese: ""
+Complex: "º"
+***********************************************************************************************
+Testing character #186
+Straight: "»"
+Reverse: "D"
+Polish: "¤"
+Polish-Reverse: "Y"
+Chinese: ""
+Complex: "»"
+***********************************************************************************************
+Testing character #187
+Straight: "¼"
+Reverse: "C"
+Polish: "Á"
+Polish-Reverse: "Ý"
+Chinese: ""
+Complex: "¼"
+***********************************************************************************************
+Testing character #188
+Straight: "½"
+Reverse: "B"
+Polish: "Ù"
+Polish-Reverse: "z"
+Chinese: ""
+Complex: "½"
+***********************************************************************************************
+Testing character #189
+Straight: "¾"
+Reverse: "A"
+Polish: "¾"
+Polish-Reverse: "¾"
+Chinese: ""
+Complex: "¾"
+***********************************************************************************************
+Testing character #190
+Straight: "¿"
+Reverse: "@"
+Polish: "Ã"
+Polish-Reverse: "Z"
+Chinese: ""
+Complex: "¿"
+***********************************************************************************************
+Testing character #191
+Straight: "À"
+Reverse: "?"
+Polish: $C(153)
+Polish-Reverse: "®"
+Chinese: ""
+Complex: "À"
+***********************************************************************************************
+Testing character #192
+Straight: "Á"
+Reverse: ">"
+Polish: "G"
+Polish-Reverse: "¼"
+Chinese: ""
+Complex: "Á"
+***********************************************************************************************
+Testing character #193
+Straight: "Â"
+Reverse: "="
+Polish: "H"
+Polish-Reverse: "¬"
+Chinese: ""
+Complex: "Â"
+***********************************************************************************************
+Testing character #194
+Straight: "Ã"
+Reverse: "<"
+Polish: "I"
+Polish-Reverse: "¿"
+Chinese: ""
+Complex: "Ã"
+***********************************************************************************************
+Testing character #195
+Straight: "Ä"
+Reverse: ";"
+Polish: "J"
+Polish-Reverse: "¯"
+Chinese: ""
+Complex: "Ä"
+***********************************************************************************************
+Testing character #196
+Straight: "Å"
+Reverse: ":"
+Polish: "|"
+Polish-Reverse: "["
+Chinese: ""
+Complex: "Å"
+***********************************************************************************************
+Testing character #197
+Straight: "Æ"
+Reverse: 9
+Polish: "V"
+Polish-Reverse: "\"
+Chinese: ""
+Complex: "Æ"
+***********************************************************************************************
+Testing character #198
+Straight: "Ç"
+Reverse: 8
+Polish: "S"
+Polish-Reverse: "]"
+Chinese: ""
+Complex: "Ç"
+***********************************************************************************************
+Testing character #199
+Straight: "È"
+Reverse: 7
+Polish: "T"
+Polish-Reverse: "^"
+Chinese: ""
+Complex: "È"
+***********************************************************************************************
+Testing character #200
+Straight: "É"
+Reverse: 6
+Polish: "b"
+Polish-Reverse: "_"
+Chinese: ""
+Complex: "É"
+***********************************************************************************************
+Testing character #201
+Straight: "Ê"
+Reverse: 5
+Polish: "f"
+Polish-Reverse: "`"
+Chinese: ""
+Complex: "Ê"
+***********************************************************************************************
+Testing character #202
+Straight: "Ë"
+Reverse: 4
+Polish: "c"
+Polish-Reverse: "{"
+Chinese: ""
+Complex: "Ë"
+***********************************************************************************************
+Testing character #203
+Straight: "Ì"
+Reverse: 3
+Polish: "d"
+Polish-Reverse: "|"
+Chinese: ""
+Complex: "Ì"
+***********************************************************************************************
+Testing character #204
+Straight: "Í"
+Reverse: 2
+Polish: "q"
+Polish-Reverse: "}"
+Chinese: ""
+Complex: "Í"
+***********************************************************************************************
+Testing character #205
+Straight: "Î"
+Reverse: 1
+Polish: "r"
+Polish-Reverse: "~"
+Chinese: ""
+Complex: "Î"
+***********************************************************************************************
+Testing character #206
+Straight: "Ï"
+Reverse: 0
+Polish: "["
+Polish-Reverse: "¢"
+Chinese: ""
+Complex: "Ï"
+***********************************************************************************************
+Testing character #207
+Straight: "Ð"
+Reverse: "/"
+Polish: "\"
+Polish-Reverse: "¤"
+Chinese: ""
+Complex: "Ð"
+***********************************************************************************************
+Testing character #208
+Straight: "Ñ"
+Reverse: "."
+Polish: $C(134)
+Polish-Reverse: "§"
+Chinese: ""
+Complex: "Ñ"
+***********************************************************************************************
+Testing character #209
+Straight: "Ò"
+Reverse: "-"
+Polish: $C(132)
+Polish-Reverse: "¨"
+Chinese: ""
+Complex: "Ò"
+***********************************************************************************************
+Testing character #210
+Straight: "Ó"
+Reverse: ","
+Polish: $C(144)
+Polish-Reverse: "­"
+Chinese: ""
+Complex: "Ó"
+***********************************************************************************************
+Testing character #211
+Straight: "Ô"
+Reverse: "+"
+Polish: $C(140)
+Polish-Reverse: "°"
+Chinese: ""
+Complex: "Ô"
+***********************************************************************************************
+Testing character #212
+Straight: "Õ"
+Reverse: "*"
+Polish: $C(141)
+Polish-Reverse: "²"
+Chinese: ""
+Complex: "Õ"
+***********************************************************************************************
+Testing character #213
+Straight: "Ö"
+Reverse: ")"
+Polish: $C(142)
+Polish-Reverse: "´"
+Chinese: ""
+Complex: "Ö"
+***********************************************************************************************
+Testing character #214
+Straight: "×"
+Reverse: "("
+Polish: "Ú"
+Polish-Reverse: "·"
+Chinese: ""
+Complex: "×"
+***********************************************************************************************
+Testing character #215
+Straight: "Ø"
+Reverse: "'"
+Polish: $C(154)
+Polish-Reverse: "¸"
+Chinese: ""
+Complex: "Ø"
+***********************************************************************************************
+Testing character #216
+Straight: "Ù"
+Reverse: "&"
+Polish: "¯"
+Polish-Reverse: "½"
+Chinese: ""
+Complex: "Ù"
+***********************************************************************************************
+Testing character #217
+Straight: "Ú"
+Reverse: "%"
+Polish: "°"
+Polish-Reverse: "×"
+Chinese: ""
+Complex: "Ú"
+***********************************************************************************************
+Testing character #218
+Straight: "Û"
+Reverse: "$"
+Polish: "±"
+Polish-Reverse: "÷"
+Chinese: ""
+Complex: "Û"
+***********************************************************************************************
+Testing character #219
+Straight: "Ü"
+Reverse: "#"
+Polish: "²"
+Polish-Reverse: $C(127)
+Chinese: ""
+Complex: "Ü"
+***********************************************************************************************
+Testing character #220
+Straight: "Ý"
+Reverse: """"
+Polish: "¼"
+Polish-Reverse: $C(128)
+Chinese: ""
+Complex: "Ý"
+***********************************************************************************************
+Testing character #221
+Straight: "Þ"
+Reverse: "!"
+Polish: "¨"
+Polish-Reverse: $C(129)
+Chinese: ""
+Complex: "Þ"
+***********************************************************************************************
+Testing character #222
+Straight: "ß"
+Reverse: " "
+Polish: "þ"
+Polish-Reverse: $C(130)
+Chinese: ""
+Complex: "ß"
+***********************************************************************************************
+Testing character #223
+Straight: "à"
+Reverse: $C(31)
+Polish: $C(150)
+Polish-Reverse: $C(131)
+Chinese: ""
+Complex: "à"
+***********************************************************************************************
+Testing character #224
+Straight: "á"
+Reverse: $C(30)
+Polish: "B"
+Polish-Reverse: $C(132)
+Chinese: ""
+Complex: "á"
+***********************************************************************************************
+Testing character #225
+Straight: "â"
+Reverse: $C(29)
+Polish: "C"
+Polish-Reverse: $C(133)
+Chinese: ""
+Complex: "â"
+***********************************************************************************************
+Testing character #226
+Straight: "ã"
+Reverse: $C(28)
+Polish: "D"
+Polish-Reverse: $C(134)
+Chinese: ""
+Complex: "ã"
+***********************************************************************************************
+Testing character #227
+Straight: "ä"
+Reverse: $C(27)
+Polish: "E"
+Polish-Reverse: $C(135)
+Chinese: ""
+Complex: "ä"
+***********************************************************************************************
+Testing character #228
+Straight: "å"
+Reverse: $C(26)
+Polish: "y"
+Polish-Reverse: $C(136)
+Chinese: ""
+Complex: "å"
+***********************************************************************************************
+Testing character #229
+Straight: "æ"
+Reverse: $C(25)
+Polish: "U"
+Polish-Reverse: $C(137)
+Chinese: ""
+Complex: "æ"
+***********************************************************************************************
+Testing character #230
+Straight: "ç"
+Reverse: $C(24)
+Polish: "P"
+Polish-Reverse: $C(138)
+Chinese: ""
+Complex: "ç"
+***********************************************************************************************
+Testing character #231
+Straight: "è"
+Reverse: $C(23)
+Polish: "Q"
+Polish-Reverse: $C(139)
+Chinese: ""
+Complex: "è"
+***********************************************************************************************
+Testing character #232
+Straight: "é"
+Reverse: $C(22)
+Polish: "^"
+Polish-Reverse: $C(140)
+Chinese: ""
+Complex: "é"
+***********************************************************************************************
+Testing character #233
+Straight: "ê"
+Reverse: $C(21)
+Polish: "e"
+Polish-Reverse: $C(141)
+Chinese: ""
+Complex: "ê"
+***********************************************************************************************
+Testing character #234
+Straight: "ë"
+Reverse: $C(20)
+Polish: "_"
+Polish-Reverse: $C(142)
+Chinese: ""
+Complex: "ë"
+***********************************************************************************************
+Testing character #235
+Straight: "ì"
+Reverse: $C(19)
+Polish: "`"
+Polish-Reverse: $C(143)
+Chinese: ""
+Complex: "ì"
+***********************************************************************************************
+Testing character #236
+Straight: "í"
+Reverse: $C(18)
+Polish: "n"
+Polish-Reverse: $C(144)
+Chinese: ""
+Complex: "í"
+***********************************************************************************************
+Testing character #237
+Straight: "î"
+Reverse: $C(17)
+Polish: "o"
+Polish-Reverse: $C(145)
+Chinese: ""
+Complex: "î"
+***********************************************************************************************
+Testing character #238
+Straight: "ï"
+Reverse: $C(16)
+Polish: "X"
+Polish-Reverse: $C(146)
+Chinese: ""
+Complex: "ï"
+***********************************************************************************************
+Testing character #239
+Straight: "ð"
+Reverse: $C(15)
+Polish: "Y"
+Polish-Reverse: $C(147)
+Chinese: ""
+Complex: "ð"
+***********************************************************************************************
+Testing character #240
+Straight: "ñ"
+Reverse: $C(14)
+Polish: $C(133)
+Polish-Reverse: $C(148)
+Chinese: ""
+Complex: "ñ"
+***********************************************************************************************
+Testing character #241
+Straight: "ò"
+Reverse: $C(13)
+Polish: $C(130)
+Polish-Reverse: $C(149)
+Chinese: ""
+Complex: "ò"
+***********************************************************************************************
+Testing character #242
+Straight: "ó"
+Reverse: $C(12)
+Polish: $C(143)
+Polish-Reverse: $C(150)
+Chinese: ""
+Complex: "ó"
+***********************************************************************************************
+Testing character #243
+Straight: "ô"
+Reverse: $C(11)
+Polish: $C(136)
+Polish-Reverse: $C(151)
+Chinese: ""
+Complex: "ô"
+***********************************************************************************************
+Testing character #244
+Straight: "õ"
+Reverse: $C(10)
+Polish: $C(137)
+Polish-Reverse: $C(152)
+Chinese: ""
+Complex: "õ"
+***********************************************************************************************
+Testing character #245
+Straight: "ö"
+Reverse: $C(9)
+Polish: $C(138)
+Polish-Reverse: $C(153)
+Chinese: ""
+Complex: "ö"
+***********************************************************************************************
+Testing character #246
+Straight: "÷"
+Reverse: $C(8)
+Polish: "Û"
+Polish-Reverse: $C(154)
+Chinese: ""
+Complex: "÷"
+***********************************************************************************************
+Testing character #247
+Straight: "ø"
+Reverse: $C(7)
+Polish: $C(151)
+Polish-Reverse: $C(155)
+Chinese: ""
+Complex: "ø"
+***********************************************************************************************
+Testing character #248
+Straight: "ù"
+Reverse: $C(6)
+Polish: "ª"
+Polish-Reverse: $C(156)
+Chinese: ""
+Complex: "ù"
+***********************************************************************************************
+Testing character #249
+Straight: "ú"
+Reverse: $C(5)
+Polish: "«"
+Polish-Reverse: $C(157)
+Chinese: ""
+Complex: "ú"
+***********************************************************************************************
+Testing character #250
+Straight: "û"
+Reverse: $C(4)
+Polish: "¬"
+Polish-Reverse: $C(158)
+Chinese: ""
+Complex: "û"
+***********************************************************************************************
+Testing character #251
+Straight: "ü"
+Reverse: $C(3)
+Polish: "­"
+Polish-Reverse: $C(159)
+Chinese: ""
+Complex: "ü"
+***********************************************************************************************
+Testing character #252
+Straight: "ý"
+Reverse: $C(2)
+Polish: "º"
+Polish-Reverse: " "
+Chinese: ""
+Complex: "ý"
+***********************************************************************************************
+Testing character #253
+Straight: "þ"
+Reverse: $C(1)
+Polish: "¥"
+Polish-Reverse: "ß"
+Chinese: ""
+Complex: "þ"
+***********************************************************************************************
+Testing character #254
+Straight: $C(255)
+Reverse: $C(0)
+Polish: $C(255)
+Polish-Reverse: $C(255)
+Chinese: ""
+Complex: $C(255)
+***********************************************************************************************
+Testing character #255
+Straight: ""
+Reverse: ""
+Polish: ""
+Polish-Reverse: ""
+Chinese: ""
+Complex: ""
+
+***********************************************************************************************
+Case 2: Test $zatransform with -2 as the third argument
+This should return the character that collates immediately before the first character
+of the first argument or an empty string if no character does. Test this for each ASCII
+character from 0 to 255.
+***********************************************************************************************
+Testing character #0
+Straight: ""
+Reverse: ""
+Polish: ""
+Polish-Reverse: ""
+Chinese: ""
+Complex: ""
+***********************************************************************************************
+Testing character #1
+Straight: $C(0)
+Reverse: $C(255)
+Polish: $C(0)
+Polish-Reverse: $C(0)
+Chinese: ""
+Complex: $C(0)
+***********************************************************************************************
+Testing character #2
+Straight: $C(1)
+Reverse: "þ"
+Polish: $C(1)
+Polish-Reverse: $C(1)
+Chinese: ""
+Complex: $C(1)
+***********************************************************************************************
+Testing character #3
+Straight: $C(2)
+Reverse: "ý"
+Polish: $C(2)
+Polish-Reverse: $C(2)
+Chinese: ""
+Complex: $C(2)
+***********************************************************************************************
+Testing character #4
+Straight: $C(3)
+Reverse: "ü"
+Polish: $C(3)
+Polish-Reverse: $C(3)
+Chinese: ""
+Complex: $C(3)
+***********************************************************************************************
+Testing character #5
+Straight: $C(4)
+Reverse: "û"
+Polish: $C(4)
+Polish-Reverse: $C(4)
+Chinese: ""
+Complex: $C(4)
+***********************************************************************************************
+Testing character #6
+Straight: $C(5)
+Reverse: "ú"
+Polish: $C(5)
+Polish-Reverse: $C(5)
+Chinese: ""
+Complex: $C(5)
+***********************************************************************************************
+Testing character #7
+Straight: $C(6)
+Reverse: "ù"
+Polish: $C(6)
+Polish-Reverse: $C(6)
+Chinese: ""
+Complex: $C(6)
+***********************************************************************************************
+Testing character #8
+Straight: $C(7)
+Reverse: "ø"
+Polish: $C(7)
+Polish-Reverse: $C(7)
+Chinese: ""
+Complex: $C(7)
+***********************************************************************************************
+Testing character #9
+Straight: $C(8)
+Reverse: "÷"
+Polish: $C(8)
+Polish-Reverse: $C(8)
+Chinese: ""
+Complex: $C(8)
+***********************************************************************************************
+Testing character #10
+Straight: $C(9)
+Reverse: "ö"
+Polish: $C(9)
+Polish-Reverse: $C(9)
+Chinese: ""
+Complex: $C(9)
+***********************************************************************************************
+Testing character #11
+Straight: $C(10)
+Reverse: "õ"
+Polish: $C(10)
+Polish-Reverse: $C(10)
+Chinese: ""
+Complex: $C(10)
+***********************************************************************************************
+Testing character #12
+Straight: $C(11)
+Reverse: "ô"
+Polish: $C(11)
+Polish-Reverse: $C(11)
+Chinese: ""
+Complex: $C(11)
+***********************************************************************************************
+Testing character #13
+Straight: $C(12)
+Reverse: "ó"
+Polish: $C(12)
+Polish-Reverse: $C(12)
+Chinese: ""
+Complex: $C(12)
+***********************************************************************************************
+Testing character #14
+Straight: $C(13)
+Reverse: "ò"
+Polish: $C(13)
+Polish-Reverse: $C(13)
+Chinese: ""
+Complex: $C(13)
+***********************************************************************************************
+Testing character #15
+Straight: $C(14)
+Reverse: "ñ"
+Polish: $C(14)
+Polish-Reverse: $C(14)
+Chinese: ""
+Complex: $C(14)
+***********************************************************************************************
+Testing character #16
+Straight: $C(15)
+Reverse: "ð"
+Polish: $C(15)
+Polish-Reverse: $C(15)
+Chinese: ""
+Complex: $C(15)
+***********************************************************************************************
+Testing character #17
+Straight: $C(16)
+Reverse: "ï"
+Polish: $C(16)
+Polish-Reverse: $C(16)
+Chinese: ""
+Complex: $C(16)
+***********************************************************************************************
+Testing character #18
+Straight: $C(17)
+Reverse: "î"
+Polish: $C(17)
+Polish-Reverse: $C(17)
+Chinese: ""
+Complex: $C(17)
+***********************************************************************************************
+Testing character #19
+Straight: $C(18)
+Reverse: "í"
+Polish: $C(18)
+Polish-Reverse: $C(18)
+Chinese: ""
+Complex: $C(18)
+***********************************************************************************************
+Testing character #20
+Straight: $C(19)
+Reverse: "ì"
+Polish: $C(19)
+Polish-Reverse: $C(19)
+Chinese: ""
+Complex: $C(19)
+***********************************************************************************************
+Testing character #21
+Straight: $C(20)
+Reverse: "ë"
+Polish: $C(20)
+Polish-Reverse: $C(20)
+Chinese: ""
+Complex: $C(20)
+***********************************************************************************************
+Testing character #22
+Straight: $C(21)
+Reverse: "ê"
+Polish: $C(21)
+Polish-Reverse: $C(21)
+Chinese: ""
+Complex: $C(21)
+***********************************************************************************************
+Testing character #23
+Straight: $C(22)
+Reverse: "é"
+Polish: $C(22)
+Polish-Reverse: $C(22)
+Chinese: ""
+Complex: $C(22)
+***********************************************************************************************
+Testing character #24
+Straight: $C(23)
+Reverse: "è"
+Polish: $C(23)
+Polish-Reverse: $C(23)
+Chinese: ""
+Complex: $C(23)
+***********************************************************************************************
+Testing character #25
+Straight: $C(24)
+Reverse: "ç"
+Polish: $C(24)
+Polish-Reverse: $C(24)
+Chinese: ""
+Complex: $C(24)
+***********************************************************************************************
+Testing character #26
+Straight: $C(25)
+Reverse: "æ"
+Polish: $C(25)
+Polish-Reverse: $C(25)
+Chinese: ""
+Complex: $C(25)
+***********************************************************************************************
+Testing character #27
+Straight: $C(26)
+Reverse: "å"
+Polish: $C(26)
+Polish-Reverse: $C(26)
+Chinese: ""
+Complex: $C(26)
+***********************************************************************************************
+Testing character #28
+Straight: $C(27)
+Reverse: "ä"
+Polish: $C(27)
+Polish-Reverse: $C(27)
+Chinese: ""
+Complex: $C(27)
+***********************************************************************************************
+Testing character #29
+Straight: $C(28)
+Reverse: "ã"
+Polish: $C(28)
+Polish-Reverse: $C(28)
+Chinese: ""
+Complex: $C(28)
+***********************************************************************************************
+Testing character #30
+Straight: $C(29)
+Reverse: "â"
+Polish: $C(29)
+Polish-Reverse: $C(29)
+Chinese: ""
+Complex: $C(29)
+***********************************************************************************************
+Testing character #31
+Straight: $C(30)
+Reverse: "á"
+Polish: $C(30)
+Polish-Reverse: $C(30)
+Chinese: ""
+Complex: $C(30)
+***********************************************************************************************
+Testing character #32
+Straight: $C(31)
+Reverse: "à"
+Polish: $C(31)
+Polish-Reverse: $C(31)
+Chinese: ""
+Complex: $C(31)
+***********************************************************************************************
+Testing character #33
+Straight: " "
+Reverse: "ß"
+Polish: " "
+Polish-Reverse: " "
+Chinese: ""
+Complex: " "
+***********************************************************************************************
+Testing character #34
+Straight: "!"
+Reverse: "Þ"
+Polish: "!"
+Polish-Reverse: "!"
+Chinese: ""
+Complex: "!"
+***********************************************************************************************
+Testing character #35
+Straight: """"
+Reverse: "Ý"
+Polish: """"
+Polish-Reverse: """"
+Chinese: ""
+Complex: """"
+***********************************************************************************************
+Testing character #36
+Straight: "#"
+Reverse: "Ü"
+Polish: "#"
+Polish-Reverse: "#"
+Chinese: ""
+Complex: "#"
+***********************************************************************************************
+Testing character #37
+Straight: "$"
+Reverse: "Û"
+Polish: "$"
+Polish-Reverse: "$"
+Chinese: ""
+Complex: "$"
+***********************************************************************************************
+Testing character #38
+Straight: "%"
+Reverse: "Ú"
+Polish: "%"
+Polish-Reverse: "%"
+Chinese: ""
+Complex: "%"
+***********************************************************************************************
+Testing character #39
+Straight: "&"
+Reverse: "Ù"
+Polish: "&"
+Polish-Reverse: "&"
+Chinese: ""
+Complex: "&"
+***********************************************************************************************
+Testing character #40
+Straight: "'"
+Reverse: "Ø"
+Polish: "'"
+Polish-Reverse: "'"
+Chinese: ""
+Complex: "'"
+***********************************************************************************************
+Testing character #41
+Straight: "("
+Reverse: "×"
+Polish: "("
+Polish-Reverse: "("
+Chinese: ""
+Complex: "("
+***********************************************************************************************
+Testing character #42
+Straight: ")"
+Reverse: "Ö"
+Polish: ")"
+Polish-Reverse: ")"
+Chinese: ""
+Complex: ")"
+***********************************************************************************************
+Testing character #43
+Straight: "*"
+Reverse: "Õ"
+Polish: "*"
+Polish-Reverse: "*"
+Chinese: ""
+Complex: "*"
+***********************************************************************************************
+Testing character #44
+Straight: "+"
+Reverse: "Ô"
+Polish: "+"
+Polish-Reverse: "+"
+Chinese: ""
+Complex: "+"
+***********************************************************************************************
+Testing character #45
+Straight: ","
+Reverse: "Ó"
+Polish: ","
+Polish-Reverse: ","
+Chinese: ""
+Complex: ","
+***********************************************************************************************
+Testing character #46
+Straight: "-"
+Reverse: "Ò"
+Polish: "-"
+Polish-Reverse: "-"
+Chinese: ""
+Complex: "-"
+***********************************************************************************************
+Testing character #47
+Straight: "."
+Reverse: "Ñ"
+Polish: "."
+Polish-Reverse: "."
+Chinese: ""
+Complex: "."
+***********************************************************************************************
+Testing character #48
+Straight: "/"
+Reverse: "Ð"
+Polish: "/"
+Polish-Reverse: "/"
+Chinese: ""
+Complex: "/"
+***********************************************************************************************
+Testing character #49
+Straight: 0
+Reverse: "Ï"
+Polish: 0
+Polish-Reverse: 0
+Chinese: ""
+Complex: 0
+***********************************************************************************************
+Testing character #50
+Straight: 1
+Reverse: "Î"
+Polish: 1
+Polish-Reverse: 1
+Chinese: ""
+Complex: 1
+***********************************************************************************************
+Testing character #51
+Straight: 2
+Reverse: "Í"
+Polish: 2
+Polish-Reverse: 2
+Chinese: ""
+Complex: 2
+***********************************************************************************************
+Testing character #52
+Straight: 3
+Reverse: "Ì"
+Polish: 3
+Polish-Reverse: 3
+Chinese: ""
+Complex: 3
+***********************************************************************************************
+Testing character #53
+Straight: 4
+Reverse: "Ë"
+Polish: 4
+Polish-Reverse: 4
+Chinese: ""
+Complex: 4
+***********************************************************************************************
+Testing character #54
+Straight: 5
+Reverse: "Ê"
+Polish: 5
+Polish-Reverse: 5
+Chinese: ""
+Complex: 5
+***********************************************************************************************
+Testing character #55
+Straight: 6
+Reverse: "É"
+Polish: 6
+Polish-Reverse: 6
+Chinese: ""
+Complex: 6
+***********************************************************************************************
+Testing character #56
+Straight: 7
+Reverse: "È"
+Polish: 7
+Polish-Reverse: 7
+Chinese: ""
+Complex: 7
+***********************************************************************************************
+Testing character #57
+Straight: 8
+Reverse: "Ç"
+Polish: 8
+Polish-Reverse: 8
+Chinese: ""
+Complex: 8
+***********************************************************************************************
+Testing character #58
+Straight: 9
+Reverse: "Æ"
+Polish: 9
+Polish-Reverse: 9
+Chinese: ""
+Complex: 9
+***********************************************************************************************
+Testing character #59
+Straight: ":"
+Reverse: "Å"
+Polish: ":"
+Polish-Reverse: ":"
+Chinese: ""
+Complex: ":"
+***********************************************************************************************
+Testing character #60
+Straight: ";"
+Reverse: "Ä"
+Polish: ";"
+Polish-Reverse: ";"
+Chinese: ""
+Complex: ";"
+***********************************************************************************************
+Testing character #61
+Straight: "<"
+Reverse: "Ã"
+Polish: "<"
+Polish-Reverse: "<"
+Chinese: ""
+Complex: "<"
+***********************************************************************************************
+Testing character #62
+Straight: "="
+Reverse: "Â"
+Polish: "="
+Polish-Reverse: "="
+Chinese: ""
+Complex: "="
+***********************************************************************************************
+Testing character #63
+Straight: ">"
+Reverse: "Á"
+Polish: ">"
+Polish-Reverse: ">"
+Chinese: ""
+Complex: ">"
+***********************************************************************************************
+Testing character #64
+Straight: "?"
+Reverse: "À"
+Polish: "?"
+Polish-Reverse: "?"
+Chinese: ""
+Complex: "?"
+***********************************************************************************************
+Testing character #65
+Straight: "@"
+Reverse: "¿"
+Polish: "@"
+Polish-Reverse: "@"
+Chinese: ""
+Complex: "@"
+***********************************************************************************************
+Testing character #66
+Straight: "A"
+Reverse: "¾"
+Polish: "F"
+Polish-Reverse: "a"
+Chinese: ""
+Complex: "A"
+***********************************************************************************************
+Testing character #67
+Straight: "B"
+Reverse: "½"
+Polish: "N"
+Polish-Reverse: "á"
+Chinese: ""
+Complex: "B"
+***********************************************************************************************
+Testing character #68
+Straight: "C"
+Reverse: "¼"
+Polish: "R"
+Polish-Reverse: "â"
+Chinese: ""
+Complex: "C"
+***********************************************************************************************
+Testing character #69
+Straight: "D"
+Reverse: "»"
+Polish: "Z"
+Polish-Reverse: "ã"
+Chinese: ""
+Complex: "D"
+***********************************************************************************************
+Testing character #70
+Straight: "E"
+Reverse: "º"
+Polish: "a"
+Polish-Reverse: "ä"
+Chinese: ""
+Complex: "E"
+***********************************************************************************************
+Testing character #71
+Straight: "F"
+Reverse: "¹"
+Polish: "h"
+Polish-Reverse: "A"
+Chinese: ""
+Complex: "F"
+***********************************************************************************************
+Testing character #72
+Straight: "G"
+Reverse: "¸"
+Polish: "j"
+Polish-Reverse: "Á"
+Chinese: ""
+Complex: "G"
+***********************************************************************************************
+Testing character #73
+Straight: "H"
+Reverse: "·"
+Polish: "l"
+Polish-Reverse: "Â"
+Chinese: ""
+Complex: "H"
+***********************************************************************************************
+Testing character #74
+Straight: "I"
+Reverse: "¶"
+Polish: "p"
+Polish-Reverse: "Ã"
+Chinese: ""
+Complex: "I"
+***********************************************************************************************
+Testing character #75
+Straight: "J"
+Reverse: "µ"
+Polish: "t"
+Polish-Reverse: "Ä"
+Chinese: ""
+Complex: "J"
+***********************************************************************************************
+Testing character #76
+Straight: "K"
+Reverse: "´"
+Polish: "v"
+Polish-Reverse: "±"
+Chinese: ""
+Complex: "K"
+***********************************************************************************************
+Testing character #77
+Straight: "L"
+Reverse: "³"
+Polish: "z"
+Polish-Reverse: "¡"
+Chinese: ""
+Complex: "L"
+***********************************************************************************************
+Testing character #78
+Straight: "M"
+Reverse: "²"
+Polish: $C(128)
+Polish-Reverse: "b"
+Chinese: ""
+Complex: "M"
+***********************************************************************************************
+Testing character #79
+Straight: "N"
+Reverse: "±"
+Polish: $C(131)
+Polish-Reverse: "B"
+Chinese: ""
+Complex: "N"
+***********************************************************************************************
+Testing character #80
+Straight: "O"
+Reverse: "°"
+Polish: $C(139)
+Polish-Reverse: "c"
+Chinese: ""
+Complex: "O"
+***********************************************************************************************
+Testing character #81
+Straight: "P"
+Reverse: "¯"
+Polish: $C(146)
+Polish-Reverse: "ç"
+Chinese: ""
+Complex: "P"
+***********************************************************************************************
+Testing character #82
+Straight: "Q"
+Reverse: "®"
+Polish: $C(148)
+Polish-Reverse: "è"
+Chinese: ""
+Complex: "Q"
+***********************************************************************************************
+Testing character #83
+Straight: "R"
+Reverse: "­"
+Polish: $C(152)
+Polish-Reverse: "C"
+Chinese: ""
+Complex: "R"
+***********************************************************************************************
+Testing character #84
+Straight: "S"
+Reverse: "¬"
+Polish: $C(158)
+Polish-Reverse: "Ç"
+Chinese: ""
+Complex: "S"
+***********************************************************************************************
+Testing character #85
+Straight: "T"
+Reverse: "«"
+Polish: "¦"
+Polish-Reverse: "È"
+Chinese: ""
+Complex: "T"
+***********************************************************************************************
+Testing character #86
+Straight: "U"
+Reverse: "ª"
+Polish: "®"
+Polish-Reverse: "æ"
+Chinese: ""
+Complex: "U"
+***********************************************************************************************
+Testing character #87
+Straight: "V"
+Reverse: "©"
+Polish: "´"
+Polish-Reverse: "Æ"
+Chinese: ""
+Complex: "V"
+***********************************************************************************************
+Testing character #88
+Straight: "W"
+Reverse: "¨"
+Polish: "¶"
+Polish-Reverse: "d"
+Chinese: ""
+Complex: "W"
+***********************************************************************************************
+Testing character #89
+Straight: "X"
+Reverse: "§"
+Polish: "¸"
+Polish-Reverse: "ï"
+Chinese: ""
+Complex: "X"
+***********************************************************************************************
+Testing character #90
+Straight: "Y"
+Reverse: "¦"
+Polish: "»"
+Polish-Reverse: "ð"
+Chinese: ""
+Complex: "Y"
+***********************************************************************************************
+Testing character #91
+Straight: "Z"
+Reverse: "¥"
+Polish: "¿"
+Polish-Reverse: "D"
+Chinese: ""
+Complex: "Z"
+***********************************************************************************************
+Testing character #92
+Straight: "["
+Reverse: "¤"
+Polish: "Å"
+Polish-Reverse: "Ï"
+Chinese: ""
+Complex: "["
+***********************************************************************************************
+Testing character #93
+Straight: "\"
+Reverse: "£"
+Polish: "Æ"
+Polish-Reverse: "Ð"
+Chinese: ""
+Complex: "\"
+***********************************************************************************************
+Testing character #94
+Straight: "]"
+Reverse: "¢"
+Polish: "Ç"
+Polish-Reverse: "e"
+Chinese: ""
+Complex: "]"
+***********************************************************************************************
+Testing character #95
+Straight: "^"
+Reverse: "¡"
+Polish: "È"
+Polish-Reverse: "é"
+Chinese: ""
+Complex: "^"
+***********************************************************************************************
+Testing character #96
+Straight: "_"
+Reverse: " "
+Polish: "É"
+Polish-Reverse: "ë"
+Chinese: ""
+Complex: "_"
+***********************************************************************************************
+Testing character #97
+Straight: "`"
+Reverse: $C(159)
+Polish: "Ê"
+Polish-Reverse: "ì"
+Chinese: ""
+Complex: "b"
+***********************************************************************************************
+Testing character #98
+Straight: "a"
+Reverse: $C(158)
+Polish: "A"
+Polish-Reverse: "E"
+Chinese: ""
+Complex: "`"
+***********************************************************************************************
+Testing character #99
+Straight: "b"
+Reverse: $C(157)
+Polish: "M"
+Polish-Reverse: "É"
+Chinese: ""
+Complex: "a"
+***********************************************************************************************
+Testing character #100
+Straight: "c"
+Reverse: $C(156)
+Polish: "O"
+Polish-Reverse: "Ë"
+Chinese: ""
+Complex: "c"
+***********************************************************************************************
+Testing character #101
+Straight: "d"
+Reverse: $C(155)
+Polish: "W"
+Polish-Reverse: "Ì"
+Chinese: ""
+Complex: "d"
+***********************************************************************************************
+Testing character #102
+Straight: "e"
+Reverse: $C(154)
+Polish: "]"
+Polish-Reverse: "ê"
+Chinese: ""
+Complex: "e"
+***********************************************************************************************
+Testing character #103
+Straight: "f"
+Reverse: $C(153)
+Polish: "g"
+Polish-Reverse: "Ê"
+Chinese: ""
+Complex: "f"
+***********************************************************************************************
+Testing character #104
+Straight: "g"
+Reverse: $C(152)
+Polish: "i"
+Polish-Reverse: "f"
+Chinese: ""
+Complex: "g"
+***********************************************************************************************
+Testing character #105
+Straight: "h"
+Reverse: $C(151)
+Polish: "k"
+Polish-Reverse: "F"
+Chinese: ""
+Complex: "h"
+***********************************************************************************************
+Testing character #106
+Straight: "i"
+Reverse: $C(150)
+Polish: "m"
+Polish-Reverse: "g"
+Chinese: ""
+Complex: "i"
+***********************************************************************************************
+Testing character #107
+Straight: "j"
+Reverse: $C(149)
+Polish: "s"
+Polish-Reverse: "G"
+Chinese: ""
+Complex: "j"
+***********************************************************************************************
+Testing character #108
+Straight: "k"
+Reverse: $C(148)
+Polish: "u"
+Polish-Reverse: "h"
+Chinese: ""
+Complex: "k"
+***********************************************************************************************
+Testing character #109
+Straight: "l"
+Reverse: $C(147)
+Polish: "w"
+Polish-Reverse: "H"
+Chinese: ""
+Complex: "l"
+***********************************************************************************************
+Testing character #110
+Straight: "m"
+Reverse: $C(146)
+Polish: $C(127)
+Polish-Reverse: "i"
+Chinese: ""
+Complex: "m"
+***********************************************************************************************
+Testing character #111
+Straight: "n"
+Reverse: $C(145)
+Polish: $C(129)
+Polish-Reverse: "í"
+Chinese: ""
+Complex: "n"
+***********************************************************************************************
+Testing character #112
+Straight: "o"
+Reverse: $C(144)
+Polish: $C(135)
+Polish-Reverse: "î"
+Chinese: ""
+Complex: "o"
+***********************************************************************************************
+Testing character #113
+Straight: "p"
+Reverse: $C(143)
+Polish: $C(145)
+Polish-Reverse: "I"
+Chinese: ""
+Complex: "p"
+***********************************************************************************************
+Testing character #114
+Straight: "q"
+Reverse: $C(142)
+Polish: $C(147)
+Polish-Reverse: "Í"
+Chinese: ""
+Complex: "q"
+***********************************************************************************************
+Testing character #115
+Straight: "r"
+Reverse: $C(141)
+Polish: $C(149)
+Polish-Reverse: "Î"
+Chinese: ""
+Complex: "r"
+***********************************************************************************************
+Testing character #116
+Straight: "s"
+Reverse: $C(140)
+Polish: $C(155)
+Polish-Reverse: "j"
+Chinese: ""
+Complex: "s"
+***********************************************************************************************
+Testing character #117
+Straight: "t"
+Reverse: $C(139)
+Polish: "£"
+Polish-Reverse: "J"
+Chinese: ""
+Complex: "t"
+***********************************************************************************************
+Testing character #118
+Straight: "u"
+Reverse: $C(138)
+Polish: "©"
+Polish-Reverse: "k"
+Chinese: ""
+Complex: "u"
+***********************************************************************************************
+Testing character #119
+Straight: "v"
+Reverse: $C(137)
+Polish: "³"
+Polish-Reverse: "K"
+Chinese: ""
+Complex: "v"
+***********************************************************************************************
+Testing character #120
+Straight: "w"
+Reverse: $C(136)
+Polish: "µ"
+Polish-Reverse: "l"
+Chinese: ""
+Complex: "w"
+***********************************************************************************************
+Testing character #121
+Straight: "x"
+Reverse: $C(135)
+Polish: "·"
+Polish-Reverse: "µ"
+Chinese: ""
+Complex: "x"
+***********************************************************************************************
+Testing character #122
+Straight: "y"
+Reverse: $C(134)
+Polish: "¹"
+Polish-Reverse: "å"
+Chinese: ""
+Complex: "y"
+***********************************************************************************************
+Testing character #123
+Straight: "z"
+Reverse: $C(133)
+Polish: "½"
+Polish-Reverse: "L"
+Chinese: ""
+Complex: "z"
+***********************************************************************************************
+Testing character #124
+Straight: "{"
+Reverse: $C(132)
+Polish: "Ë"
+Polish-Reverse: "¥"
+Chinese: ""
+Complex: "{"
+***********************************************************************************************
+Testing character #125
+Straight: "|"
+Reverse: $C(131)
+Polish: "Ì"
+Polish-Reverse: "Å"
+Chinese: ""
+Complex: "|"
+***********************************************************************************************
+Testing character #126
+Straight: "}"
+Reverse: $C(130)
+Polish: "Í"
+Polish-Reverse: "³"
+Chinese: ""
+Complex: "}"
+***********************************************************************************************
+Testing character #127
+Straight: "~"
+Reverse: $C(129)
+Polish: "Î"
+Polish-Reverse: "£"
+Chinese: ""
+Complex: "~"
+***********************************************************************************************
+Testing character #128
+Straight: $C(127)
+Reverse: $C(128)
+Polish: "Ü"
+Polish-Reverse: "m"
+Chinese: ""
+Complex: $C(127)
+***********************************************************************************************
+Testing character #129
+Straight: $C(128)
+Reverse: $C(127)
+Polish: "Ý"
+Polish-Reverse: "M"
+Chinese: ""
+Complex: $C(128)
+***********************************************************************************************
+Testing character #130
+Straight: $C(129)
+Reverse: "~"
+Polish: "Þ"
+Polish-Reverse: "n"
+Chinese: ""
+Complex: $C(129)
+***********************************************************************************************
+Testing character #131
+Straight: $C(130)
+Reverse: "}"
+Polish: "ß"
+Polish-Reverse: "ò"
+Chinese: ""
+Complex: $C(130)
+***********************************************************************************************
+Testing character #132
+Straight: $C(131)
+Reverse: "|"
+Polish: "à"
+Polish-Reverse: "N"
+Chinese: ""
+Complex: $C(131)
+***********************************************************************************************
+Testing character #133
+Straight: $C(132)
+Reverse: "{"
+Polish: "á"
+Polish-Reverse: "Ò"
+Chinese: ""
+Complex: $C(132)
+***********************************************************************************************
+Testing character #134
+Straight: $C(133)
+Reverse: "z"
+Polish: "â"
+Polish-Reverse: "ñ"
+Chinese: ""
+Complex: $C(133)
+***********************************************************************************************
+Testing character #135
+Straight: $C(134)
+Reverse: "y"
+Polish: "ã"
+Polish-Reverse: "Ñ"
+Chinese: ""
+Complex: $C(134)
+***********************************************************************************************
+Testing character #136
+Straight: $C(135)
+Reverse: "x"
+Polish: "ä"
+Polish-Reverse: "o"
+Chinese: ""
+Complex: $C(135)
+***********************************************************************************************
+Testing character #137
+Straight: $C(136)
+Reverse: "w"
+Polish: "å"
+Polish-Reverse: "ô"
+Chinese: ""
+Complex: $C(136)
+***********************************************************************************************
+Testing character #138
+Straight: $C(137)
+Reverse: "v"
+Polish: "æ"
+Polish-Reverse: "õ"
+Chinese: ""
+Complex: $C(137)
+***********************************************************************************************
+Testing character #139
+Straight: $C(138)
+Reverse: "u"
+Polish: "ç"
+Polish-Reverse: "ö"
+Chinese: ""
+Complex: $C(138)
+***********************************************************************************************
+Testing character #140
+Straight: $C(139)
+Reverse: "t"
+Polish: "è"
+Polish-Reverse: "O"
+Chinese: ""
+Complex: $C(139)
+***********************************************************************************************
+Testing character #141
+Straight: $C(140)
+Reverse: "s"
+Polish: "é"
+Polish-Reverse: "Ô"
+Chinese: ""
+Complex: $C(140)
+***********************************************************************************************
+Testing character #142
+Straight: $C(141)
+Reverse: "r"
+Polish: "ê"
+Polish-Reverse: "Õ"
+Chinese: ""
+Complex: $C(141)
+***********************************************************************************************
+Testing character #143
+Straight: $C(142)
+Reverse: "q"
+Polish: "ë"
+Polish-Reverse: "Ö"
+Chinese: ""
+Complex: $C(142)
+***********************************************************************************************
+Testing character #144
+Straight: $C(143)
+Reverse: "p"
+Polish: "ì"
+Polish-Reverse: "ó"
+Chinese: ""
+Complex: $C(143)
+***********************************************************************************************
+Testing character #145
+Straight: $C(144)
+Reverse: "o"
+Polish: "í"
+Polish-Reverse: "Ó"
+Chinese: ""
+Complex: $C(144)
+***********************************************************************************************
+Testing character #146
+Straight: $C(145)
+Reverse: "n"
+Polish: "î"
+Polish-Reverse: "p"
+Chinese: ""
+Complex: $C(145)
+***********************************************************************************************
+Testing character #147
+Straight: $C(146)
+Reverse: "m"
+Polish: "ï"
+Polish-Reverse: "P"
+Chinese: ""
+Complex: $C(146)
+***********************************************************************************************
+Testing character #148
+Straight: $C(147)
+Reverse: "l"
+Polish: "ð"
+Polish-Reverse: "q"
+Chinese: ""
+Complex: $C(147)
+***********************************************************************************************
+Testing character #149
+Straight: $C(148)
+Reverse: "k"
+Polish: "ñ"
+Polish-Reverse: "Q"
+Chinese: ""
+Complex: $C(148)
+***********************************************************************************************
+Testing character #150
+Straight: $C(149)
+Reverse: "j"
+Polish: "ò"
+Polish-Reverse: "r"
+Chinese: ""
+Complex: $C(149)
+***********************************************************************************************
+Testing character #151
+Straight: $C(150)
+Reverse: "i"
+Polish: "ó"
+Polish-Reverse: "à"
+Chinese: ""
+Complex: $C(150)
+***********************************************************************************************
+Testing character #152
+Straight: $C(151)
+Reverse: "h"
+Polish: "ô"
+Polish-Reverse: "ø"
+Chinese: ""
+Complex: $C(151)
+***********************************************************************************************
+Testing character #153
+Straight: $C(152)
+Reverse: "g"
+Polish: "õ"
+Polish-Reverse: "R"
+Chinese: ""
+Complex: $C(152)
+***********************************************************************************************
+Testing character #154
+Straight: $C(153)
+Reverse: "f"
+Polish: "ö"
+Polish-Reverse: "À"
+Chinese: ""
+Complex: $C(153)
+***********************************************************************************************
+Testing character #155
+Straight: $C(154)
+Reverse: "e"
+Polish: "÷"
+Polish-Reverse: "Ø"
+Chinese: ""
+Complex: $C(154)
+***********************************************************************************************
+Testing character #156
+Straight: $C(155)
+Reverse: "d"
+Polish: "ø"
+Polish-Reverse: "s"
+Chinese: ""
+Complex: $C(155)
+***********************************************************************************************
+Testing character #157
+Straight: $C(156)
+Reverse: "c"
+Polish: "ù"
+Polish-Reverse: "¹"
+Chinese: ""
+Complex: $C(156)
+***********************************************************************************************
+Testing character #158
+Straight: $C(157)
+Reverse: "b"
+Polish: "ú"
+Polish-Reverse: "º"
+Chinese: ""
+Complex: $C(157)
+***********************************************************************************************
+Testing character #159
+Straight: $C(158)
+Reverse: "a"
+Polish: "û"
+Polish-Reverse: "S"
+Chinese: ""
+Complex: $C(158)
+***********************************************************************************************
+Testing character #160
+Straight: $C(159)
+Reverse: "`"
+Polish: "ü"
+Polish-Reverse: "©"
+Chinese: ""
+Complex: $C(159)
+***********************************************************************************************
+Testing character #161
+Straight: " "
+Reverse: "_"
+Polish: "ý"
+Polish-Reverse: "ª"
+Chinese: ""
+Complex: " "
+***********************************************************************************************
+Testing character #162
+Straight: "¡"
+Reverse: "^"
+Polish: "L"
+Polish-Reverse: "¶"
+Chinese: ""
+Complex: "¡"
+***********************************************************************************************
+Testing character #163
+Straight: "¢"
+Reverse: "]"
+Polish: "Ï"
+Polish-Reverse: "¦"
+Chinese: ""
+Complex: "¢"
+***********************************************************************************************
+Testing character #164
+Straight: "£"
+Reverse: "\"
+Polish: "~"
+Polish-Reverse: "t"
+Chinese: ""
+Complex: "£"
+***********************************************************************************************
+Testing character #165
+Straight: "¤"
+Reverse: "["
+Polish: "Ð"
+Polish-Reverse: "»"
+Chinese: ""
+Complex: "¤"
+***********************************************************************************************
+Testing character #166
+Straight: "¥"
+Reverse: "Z"
+Polish: "{"
+Polish-Reverse: "þ"
+Chinese: ""
+Complex: "¥"
+***********************************************************************************************
+Testing character #167
+Straight: "¦"
+Reverse: "Y"
+Polish: "¢"
+Polish-Reverse: "T"
+Chinese: ""
+Complex: "¦"
+***********************************************************************************************
+Testing character #168
+Straight: "§"
+Reverse: "X"
+Polish: "Ñ"
+Polish-Reverse: "«"
+Chinese: ""
+Complex: "§"
+***********************************************************************************************
+Testing character #169
+Straight: "¨"
+Reverse: "W"
+Polish: "Ò"
+Polish-Reverse: "Þ"
+Chinese: ""
+Complex: "¨"
+***********************************************************************************************
+Testing character #170
+Straight: "©"
+Reverse: "V"
+Polish: $C(159)
+Polish-Reverse: "u"
+Chinese: ""
+Complex: "©"
+***********************************************************************************************
+Testing character #171
+Straight: "ª"
+Reverse: "U"
+Polish: " "
+Polish-Reverse: "ù"
+Chinese: ""
+Complex: "ª"
+***********************************************************************************************
+Testing character #172
+Straight: "«"
+Reverse: "T"
+Polish: "§"
+Polish-Reverse: "ú"
+Chinese: ""
+Complex: "«"
+***********************************************************************************************
+Testing character #173
+Straight: "¬"
+Reverse: "S"
+Polish: "Â"
+Polish-Reverse: "û"
+Chinese: ""
+Complex: "¬"
+***********************************************************************************************
+Testing character #174
+Straight: "­"
+Reverse: "R"
+Polish: "Ó"
+Polish-Reverse: "ü"
+Chinese: ""
+Complex: "­"
+***********************************************************************************************
+Testing character #175
+Straight: "®"
+Reverse: "Q"
+Polish: "À"
+Polish-Reverse: "U"
+Chinese: ""
+Complex: "®"
+***********************************************************************************************
+Testing character #176
+Straight: "¯"
+Reverse: "P"
+Polish: "Ä"
+Polish-Reverse: "Ù"
+Chinese: ""
+Complex: "¯"
+***********************************************************************************************
+Testing character #177
+Straight: "°"
+Reverse: "O"
+Polish: "Ô"
+Polish-Reverse: "Ú"
+Chinese: ""
+Complex: "°"
+***********************************************************************************************
+Testing character #178
+Straight: "±"
+Reverse: "N"
+Polish: "K"
+Polish-Reverse: "Û"
+Chinese: ""
+Complex: "±"
+***********************************************************************************************
+Testing character #179
+Straight: "²"
+Reverse: "M"
+Polish: "Õ"
+Polish-Reverse: "Ü"
+Chinese: ""
+Complex: "²"
+***********************************************************************************************
+Testing character #180
+Straight: "³"
+Reverse: "L"
+Polish: "}"
+Polish-Reverse: "v"
+Chinese: ""
+Complex: "³"
+***********************************************************************************************
+Testing character #181
+Straight: "´"
+Reverse: "K"
+Polish: "Ö"
+Polish-Reverse: "V"
+Chinese: ""
+Complex: "´"
+***********************************************************************************************
+Testing character #182
+Straight: "µ"
+Reverse: "J"
+Polish: "x"
+Polish-Reverse: "w"
+Chinese: ""
+Complex: "µ"
+***********************************************************************************************
+Testing character #183
+Straight: "¶"
+Reverse: "I"
+Polish: "¡"
+Polish-Reverse: "W"
+Chinese: ""
+Complex: "¶"
+***********************************************************************************************
+Testing character #184
+Straight: "·"
+Reverse: "H"
+Polish: "×"
+Polish-Reverse: "x"
+Chinese: ""
+Complex: "·"
+***********************************************************************************************
+Testing character #185
+Straight: "¸"
+Reverse: "G"
+Polish: "Ø"
+Polish-Reverse: "X"
+Chinese: ""
+Complex: "¸"
+***********************************************************************************************
+Testing character #186
+Straight: "¹"
+Reverse: "F"
+Polish: $C(156)
+Polish-Reverse: "y"
+Chinese: ""
+Complex: "¹"
+***********************************************************************************************
+Testing character #187
+Straight: "º"
+Reverse: "E"
+Polish: $C(157)
+Polish-Reverse: "ý"
+Chinese: ""
+Complex: "º"
+***********************************************************************************************
+Testing character #188
+Straight: "»"
+Reverse: "D"
+Polish: "¤"
+Polish-Reverse: "Y"
+Chinese: ""
+Complex: "»"
+***********************************************************************************************
+Testing character #189
+Straight: "¼"
+Reverse: "C"
+Polish: "Á"
+Polish-Reverse: "Ý"
+Chinese: ""
+Complex: "¼"
+***********************************************************************************************
+Testing character #190
+Straight: "½"
+Reverse: "B"
+Polish: "Ù"
+Polish-Reverse: "z"
+Chinese: ""
+Complex: "½"
+***********************************************************************************************
+Testing character #191
+Straight: "¾"
+Reverse: "A"
+Polish: "¾"
+Polish-Reverse: "¾"
+Chinese: ""
+Complex: "¾"
+***********************************************************************************************
+Testing character #192
+Straight: "¿"
+Reverse: "@"
+Polish: "Ã"
+Polish-Reverse: "Z"
+Chinese: ""
+Complex: "¿"
+***********************************************************************************************
+Testing character #193
+Straight: "À"
+Reverse: "?"
+Polish: $C(153)
+Polish-Reverse: "®"
+Chinese: ""
+Complex: "À"
+***********************************************************************************************
+Testing character #194
+Straight: "Á"
+Reverse: ">"
+Polish: "G"
+Polish-Reverse: "¼"
+Chinese: ""
+Complex: "Á"
+***********************************************************************************************
+Testing character #195
+Straight: "Â"
+Reverse: "="
+Polish: "H"
+Polish-Reverse: "¬"
+Chinese: ""
+Complex: "Â"
+***********************************************************************************************
+Testing character #196
+Straight: "Ã"
+Reverse: "<"
+Polish: "I"
+Polish-Reverse: "¿"
+Chinese: ""
+Complex: "Ã"
+***********************************************************************************************
+Testing character #197
+Straight: "Ä"
+Reverse: ";"
+Polish: "J"
+Polish-Reverse: "¯"
+Chinese: ""
+Complex: "Ä"
+***********************************************************************************************
+Testing character #198
+Straight: "Å"
+Reverse: ":"
+Polish: "|"
+Polish-Reverse: "["
+Chinese: ""
+Complex: "Å"
+***********************************************************************************************
+Testing character #199
+Straight: "Æ"
+Reverse: 9
+Polish: "V"
+Polish-Reverse: "\"
+Chinese: ""
+Complex: "Æ"
+***********************************************************************************************
+Testing character #200
+Straight: "Ç"
+Reverse: 8
+Polish: "S"
+Polish-Reverse: "]"
+Chinese: ""
+Complex: "Ç"
+***********************************************************************************************
+Testing character #201
+Straight: "È"
+Reverse: 7
+Polish: "T"
+Polish-Reverse: "^"
+Chinese: ""
+Complex: "È"
+***********************************************************************************************
+Testing character #202
+Straight: "É"
+Reverse: 6
+Polish: "b"
+Polish-Reverse: "_"
+Chinese: ""
+Complex: "É"
+***********************************************************************************************
+Testing character #203
+Straight: "Ê"
+Reverse: 5
+Polish: "f"
+Polish-Reverse: "`"
+Chinese: ""
+Complex: "Ê"
+***********************************************************************************************
+Testing character #204
+Straight: "Ë"
+Reverse: 4
+Polish: "c"
+Polish-Reverse: "{"
+Chinese: ""
+Complex: "Ë"
+***********************************************************************************************
+Testing character #205
+Straight: "Ì"
+Reverse: 3
+Polish: "d"
+Polish-Reverse: "|"
+Chinese: ""
+Complex: "Ì"
+***********************************************************************************************
+Testing character #206
+Straight: "Í"
+Reverse: 2
+Polish: "q"
+Polish-Reverse: "}"
+Chinese: ""
+Complex: "Í"
+***********************************************************************************************
+Testing character #207
+Straight: "Î"
+Reverse: 1
+Polish: "r"
+Polish-Reverse: "~"
+Chinese: ""
+Complex: "Î"
+***********************************************************************************************
+Testing character #208
+Straight: "Ï"
+Reverse: 0
+Polish: "["
+Polish-Reverse: "¢"
+Chinese: ""
+Complex: "Ï"
+***********************************************************************************************
+Testing character #209
+Straight: "Ð"
+Reverse: "/"
+Polish: "\"
+Polish-Reverse: "¤"
+Chinese: ""
+Complex: "Ð"
+***********************************************************************************************
+Testing character #210
+Straight: "Ñ"
+Reverse: "."
+Polish: $C(134)
+Polish-Reverse: "§"
+Chinese: ""
+Complex: "Ñ"
+***********************************************************************************************
+Testing character #211
+Straight: "Ò"
+Reverse: "-"
+Polish: $C(132)
+Polish-Reverse: "¨"
+Chinese: ""
+Complex: "Ò"
+***********************************************************************************************
+Testing character #212
+Straight: "Ó"
+Reverse: ","
+Polish: $C(144)
+Polish-Reverse: "­"
+Chinese: ""
+Complex: "Ó"
+***********************************************************************************************
+Testing character #213
+Straight: "Ô"
+Reverse: "+"
+Polish: $C(140)
+Polish-Reverse: "°"
+Chinese: ""
+Complex: "Ô"
+***********************************************************************************************
+Testing character #214
+Straight: "Õ"
+Reverse: "*"
+Polish: $C(141)
+Polish-Reverse: "²"
+Chinese: ""
+Complex: "Õ"
+***********************************************************************************************
+Testing character #215
+Straight: "Ö"
+Reverse: ")"
+Polish: $C(142)
+Polish-Reverse: "´"
+Chinese: ""
+Complex: "Ö"
+***********************************************************************************************
+Testing character #216
+Straight: "×"
+Reverse: "("
+Polish: "Ú"
+Polish-Reverse: "·"
+Chinese: ""
+Complex: "×"
+***********************************************************************************************
+Testing character #217
+Straight: "Ø"
+Reverse: "'"
+Polish: $C(154)
+Polish-Reverse: "¸"
+Chinese: ""
+Complex: "Ø"
+***********************************************************************************************
+Testing character #218
+Straight: "Ù"
+Reverse: "&"
+Polish: "¯"
+Polish-Reverse: "½"
+Chinese: ""
+Complex: "Ù"
+***********************************************************************************************
+Testing character #219
+Straight: "Ú"
+Reverse: "%"
+Polish: "°"
+Polish-Reverse: "×"
+Chinese: ""
+Complex: "Ú"
+***********************************************************************************************
+Testing character #220
+Straight: "Û"
+Reverse: "$"
+Polish: "±"
+Polish-Reverse: "÷"
+Chinese: ""
+Complex: "Û"
+***********************************************************************************************
+Testing character #221
+Straight: "Ü"
+Reverse: "#"
+Polish: "²"
+Polish-Reverse: $C(127)
+Chinese: ""
+Complex: "Ü"
+***********************************************************************************************
+Testing character #222
+Straight: "Ý"
+Reverse: """"
+Polish: "¼"
+Polish-Reverse: $C(128)
+Chinese: ""
+Complex: "Ý"
+***********************************************************************************************
+Testing character #223
+Straight: "Þ"
+Reverse: "!"
+Polish: "¨"
+Polish-Reverse: $C(129)
+Chinese: ""
+Complex: "Þ"
+***********************************************************************************************
+Testing character #224
+Straight: "ß"
+Reverse: " "
+Polish: "þ"
+Polish-Reverse: $C(130)
+Chinese: ""
+Complex: "ß"
+***********************************************************************************************
+Testing character #225
+Straight: "à"
+Reverse: $C(31)
+Polish: $C(150)
+Polish-Reverse: $C(131)
+Chinese: ""
+Complex: "à"
+***********************************************************************************************
+Testing character #226
+Straight: "á"
+Reverse: $C(30)
+Polish: "B"
+Polish-Reverse: $C(132)
+Chinese: ""
+Complex: "á"
+***********************************************************************************************
+Testing character #227
+Straight: "â"
+Reverse: $C(29)
+Polish: "C"
+Polish-Reverse: $C(133)
+Chinese: ""
+Complex: "â"
+***********************************************************************************************
+Testing character #228
+Straight: "ã"
+Reverse: $C(28)
+Polish: "D"
+Polish-Reverse: $C(134)
+Chinese: ""
+Complex: "ã"
+***********************************************************************************************
+Testing character #229
+Straight: "ä"
+Reverse: $C(27)
+Polish: "E"
+Polish-Reverse: $C(135)
+Chinese: ""
+Complex: "ä"
+***********************************************************************************************
+Testing character #230
+Straight: "å"
+Reverse: $C(26)
+Polish: "y"
+Polish-Reverse: $C(136)
+Chinese: ""
+Complex: "å"
+***********************************************************************************************
+Testing character #231
+Straight: "æ"
+Reverse: $C(25)
+Polish: "U"
+Polish-Reverse: $C(137)
+Chinese: ""
+Complex: "æ"
+***********************************************************************************************
+Testing character #232
+Straight: "ç"
+Reverse: $C(24)
+Polish: "P"
+Polish-Reverse: $C(138)
+Chinese: ""
+Complex: "ç"
+***********************************************************************************************
+Testing character #233
+Straight: "è"
+Reverse: $C(23)
+Polish: "Q"
+Polish-Reverse: $C(139)
+Chinese: ""
+Complex: "è"
+***********************************************************************************************
+Testing character #234
+Straight: "é"
+Reverse: $C(22)
+Polish: "^"
+Polish-Reverse: $C(140)
+Chinese: ""
+Complex: "é"
+***********************************************************************************************
+Testing character #235
+Straight: "ê"
+Reverse: $C(21)
+Polish: "e"
+Polish-Reverse: $C(141)
+Chinese: ""
+Complex: "ê"
+***********************************************************************************************
+Testing character #236
+Straight: "ë"
+Reverse: $C(20)
+Polish: "_"
+Polish-Reverse: $C(142)
+Chinese: ""
+Complex: "ë"
+***********************************************************************************************
+Testing character #237
+Straight: "ì"
+Reverse: $C(19)
+Polish: "`"
+Polish-Reverse: $C(143)
+Chinese: ""
+Complex: "ì"
+***********************************************************************************************
+Testing character #238
+Straight: "í"
+Reverse: $C(18)
+Polish: "n"
+Polish-Reverse: $C(144)
+Chinese: ""
+Complex: "í"
+***********************************************************************************************
+Testing character #239
+Straight: "î"
+Reverse: $C(17)
+Polish: "o"
+Polish-Reverse: $C(145)
+Chinese: ""
+Complex: "î"
+***********************************************************************************************
+Testing character #240
+Straight: "ï"
+Reverse: $C(16)
+Polish: "X"
+Polish-Reverse: $C(146)
+Chinese: ""
+Complex: "ï"
+***********************************************************************************************
+Testing character #241
+Straight: "ð"
+Reverse: $C(15)
+Polish: "Y"
+Polish-Reverse: $C(147)
+Chinese: ""
+Complex: "ð"
+***********************************************************************************************
+Testing character #242
+Straight: "ñ"
+Reverse: $C(14)
+Polish: $C(133)
+Polish-Reverse: $C(148)
+Chinese: ""
+Complex: "ñ"
+***********************************************************************************************
+Testing character #243
+Straight: "ò"
+Reverse: $C(13)
+Polish: $C(130)
+Polish-Reverse: $C(149)
+Chinese: ""
+Complex: "ò"
+***********************************************************************************************
+Testing character #244
+Straight: "ó"
+Reverse: $C(12)
+Polish: $C(143)
+Polish-Reverse: $C(150)
+Chinese: ""
+Complex: "ó"
+***********************************************************************************************
+Testing character #245
+Straight: "ô"
+Reverse: $C(11)
+Polish: $C(136)
+Polish-Reverse: $C(151)
+Chinese: ""
+Complex: "ô"
+***********************************************************************************************
+Testing character #246
+Straight: "õ"
+Reverse: $C(10)
+Polish: $C(137)
+Polish-Reverse: $C(152)
+Chinese: ""
+Complex: "õ"
+***********************************************************************************************
+Testing character #247
+Straight: "ö"
+Reverse: $C(9)
+Polish: $C(138)
+Polish-Reverse: $C(153)
+Chinese: ""
+Complex: "ö"
+***********************************************************************************************
+Testing character #248
+Straight: "÷"
+Reverse: $C(8)
+Polish: "Û"
+Polish-Reverse: $C(154)
+Chinese: ""
+Complex: "÷"
+***********************************************************************************************
+Testing character #249
+Straight: "ø"
+Reverse: $C(7)
+Polish: $C(151)
+Polish-Reverse: $C(155)
+Chinese: ""
+Complex: "ø"
+***********************************************************************************************
+Testing character #250
+Straight: "ù"
+Reverse: $C(6)
+Polish: "ª"
+Polish-Reverse: $C(156)
+Chinese: ""
+Complex: "ù"
+***********************************************************************************************
+Testing character #251
+Straight: "ú"
+Reverse: $C(5)
+Polish: "«"
+Polish-Reverse: $C(157)
+Chinese: ""
+Complex: "ú"
+***********************************************************************************************
+Testing character #252
+Straight: "û"
+Reverse: $C(4)
+Polish: "¬"
+Polish-Reverse: $C(158)
+Chinese: ""
+Complex: "û"
+***********************************************************************************************
+Testing character #253
+Straight: "ü"
+Reverse: $C(3)
+Polish: "­"
+Polish-Reverse: $C(159)
+Chinese: ""
+Complex: "ü"
+***********************************************************************************************
+Testing character #254
+Straight: "ý"
+Reverse: $C(2)
+Polish: "º"
+Polish-Reverse: " "
+Chinese: ""
+Complex: "ý"
+***********************************************************************************************
+Testing character #255
+Straight: "þ"
+Reverse: $C(1)
+Polish: "¥"
+Polish-Reverse: "ß"
+Chinese: ""
+Complex: "þ"
+
+***********************************************************************************************
+Case 3: Test $zatransform with 2 and -2 as the third argument
+This time, we use several strings to make sure they're handled correctly.
+These strings are abc123, bc123a and c123ab. Each string is run through a
+$zatransform command with 2 as the third argument then one with -2 as the
+third argument. Output is in the same order they're run, separated by spaces.
+Straight: "b" "`" "c" "a" "d" "b"
+Reverse: $C(157) $C(159) $C(156) $C(158) $C(155) $C(157)
+Polish: "M" "Ê" "O" "A" "W" "M"
+Polish-Reverse: "É" "ì" "Ë" "E" "Ì" "É"
+Chinese: "" "" "" "" "" ""
+Complex: "c" "b" "a" "`" "d" "a"
+
+***********************************************************************************************
+# Switch the character set to UTF-8 and run the gtm1044 test again expecting a %YDB-E-ZATRANSCOL.
+setenv gtm_chset UTF-8
+unset echo
+***********************************************************************************************
+Case 1: Test $zatransform with 2 as the third argument
+This should return the character that collates immediately after the first character
+of the first argument or an empty string if no character does. Test this for each ASCII
+character from 0 to 255.***********************************************************************************************
+Testing character #0
+%YDB-E-ZATRANSCOL, The collation requested has no implementation for the requested operation
+		At M source location gtm1044+11^gtm1044
+
+YDB>

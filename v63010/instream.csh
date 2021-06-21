@@ -25,6 +25,7 @@
 # gtm9166		[bdw]		 Test for JNLPROCSTUCK message in syslog instead of JNLFLUSH when journal file writes take too long
 # gtm8747		[bdw]		 Test that a MUPIP JOURNAL -EXTRACT can extract journal records using -CORRUPTDB even if the database no longer exists
 # gtm8322		[bdw]		 Tests that MUPIP SIZE -SUBSCRIPT works as expected
+# gtm1044		[bdw]		 Tests $ZATRANSFORM with optional 3rd arguments 2 and -2.
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -32,7 +33,7 @@ echo "v63010 test starts..."
 
 # List the subtests seperated by sspaces under the appropriate environment variable name
 setenv subtest_list_common	""
-setenv subtest_list_non_replic "gtm9206 gtm9188 gtm9190 gtm9183 gtm9180 gtm9181 gtm9076 gtm9178 gtm9166 gtm8747 gtm8322"
+setenv subtest_list_non_replic "gtm9206 gtm9188 gtm9190 gtm9183 gtm9180 gtm9181 gtm9076 gtm9178 gtm9166 gtm8747 gtm8322 gtm1044"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
