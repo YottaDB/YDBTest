@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -18,6 +18,8 @@
 
 set format="%Y.%m.%d.%H.%M.%S.%Z"
 set alltests_begin = `date +"$format"`
+# Set coredumpsize to unlimited as it is by default 0 in some systems (especially PI systems)
+limit coredumpsize unlimited
 source $gtm_tst/com/set_gtm_machtype.csh
 
 setenv test_pid_file /tmp/__${USER}_test_suite_$$.pid
