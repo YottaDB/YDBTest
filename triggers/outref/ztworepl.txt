@@ -24,6 +24,8 @@ Added Non-SET trigger on ^aztrNULL named aztrNULL#1
 Added Non-SET trigger on ^aztrSET named aztrSET#1
 Added Non-SET trigger on ^bstart named bstart#1
 Added Non-SET trigger on ^bstop named bstop#1
+Added SET and/or Non-SET trigger on ^ydb727 named ydb727#1
+###################################################################
 ###################################################################
 ###################################################################
 ###################################################################
@@ -49,6 +51,8 @@ Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_T
 Shutting down Primary Source Server Server in ##TEST_PATH##
 < ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/$tst/u_inref/jnl_extract.csh'==
 > ==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/$tst/u_inref/jnl_extract.csh'==
+< 11 "abcd"
+< 11 "abcd"
 ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/$tst/u_inref/jnl_extract.csh'==
 a.mjf
 08
@@ -287,8 +291,8 @@ a.mjf
 08
 11 "abcd"
 04 ^a1(141)
-12 ^aztrSET
 11 "ZTRIGGER"
+12 ^aztrSET
 04 ^a1(142)
 11 "efgh"
 04 ^a1(143)
@@ -326,6 +330,7 @@ a.mjf
 11 "abcd"
 04 ^a1(154)
 12 ^aztr(";$ztwo=abcd")
+11 "ZTRIGGER"
 12 ^aztrSET
 04 ^atest
 09
@@ -351,6 +356,7 @@ a.mjf
 11 "abcd"
 04 ^a1(161)
 10 ^a1(162)
+11 "abcd"
 12 ^aztr(";$ztwo=abcd")
 04 ^a1(163)
 12 ^aztr(";$ztwo=")
@@ -416,6 +422,8 @@ a.mjf
 12 ^aztr(";$ztwo=abcd")
 04 ^atest
 09
+05 ^atest="Test (200) YDB#727 : Test $ZTWORMHOLE set to ""abcd"""
+05 ^atest="Test (210) YDB#727 : Test $ZTWORMHOLE set to """""
 -------------------------------------------------------------------
 b.mjf
 08
@@ -551,31 +559,87 @@ b.mjf
 09
 -------------------------------------------------------------------
 mumps.mjf
+08
+05 ^#t("#TNAME","ydb727","#SEQNUM")="1"
+05 ^#t("#TNAME","ydb727","#TNCOUNT")="1"
+05 ^#t("#TNAME","ydb727#1")="ydb727"_$C(0)_"1"
+05 ^#t("ydb727","#COUNT")="1"
+05 ^#t("ydb727",1,"TRIGNAME")="ydb727#1#"
+05 ^#t("ydb727",1,"CMD")="S,K,ZK,ZTR"
+05 ^#t("ydb727",1,"XECUTE")=" do ydb727^ztworepl"
+05 ^#t("ydb727","#CYCLE")="1"
+09
+08
+##TEST_AWK11 "[0-9]*"
+05 ^ydb727="Test (200) YDB#727 : Test $ZTWORMHOLE set to ""abcd"""
+05 ^ydb727insidetrig="1"
+##TEST_AWK05 \^ydb727insidetrig\(1\)="[0-9]*"
+09
+08
+##TEST_AWK11 "[0-9]*"
+04 ^ydb727
+05 ^ydb727insidetrig="2"
+##TEST_AWK05 \^ydb727insidetrig\(2\)="[0-9]*"
+09
+08
+##TEST_AWK11 "[0-9]*"
+05 ^ydb727="Test (200) YDB#727 : Test $ZTWORMHOLE set to ""abcd"""
+05 ^ydb727insidetrig="3"
+##TEST_AWK05 \^ydb727insidetrig\(3\)="[0-9]*"
+09
+08
+##TEST_AWK11 "[0-9]*"
+10 ^ydb727
+05 ^ydb727insidetrig="4"
+##TEST_AWK05 \^ydb727insidetrig\(4\)="[0-9]*"
+09
+08
+##TEST_AWK11 "[0-9]*"
+12 ^ydb727
+05 ^ydb727insidetrig="5"
+##TEST_AWK05 \^ydb727insidetrig\(5\)="[0-9]*"
+09
+08
+##TEST_AWK11 "[0-9]*"
+05 ^ydb727="Test (210) YDB#727 : Test $ZTWORMHOLE set to """""
+05 ^ydb727insidetrig="6"
+##TEST_AWK05 \^ydb727insidetrig\(6\)="[0-9]*"
+09
+08
+##TEST_AWK11 "[0-9]*"
+04 ^ydb727
+05 ^ydb727insidetrig="7"
+##TEST_AWK05 \^ydb727insidetrig\(7\)="[0-9]*"
+09
+08
+##TEST_AWK11 "[0-9]*"
+05 ^ydb727="Test (210) YDB#727 : Test $ZTWORMHOLE set to """""
+05 ^ydb727insidetrig="8"
+##TEST_AWK05 \^ydb727insidetrig\(8\)="[0-9]*"
+09
+08
+##TEST_AWK11 "[0-9]*"
+10 ^ydb727
+05 ^ydb727insidetrig="9"
+##TEST_AWK05 \^ydb727insidetrig\(9\)="[0-9]*"
+09
+08
+##TEST_AWK11 "[0-9]*"
+12 ^ydb727
+05 ^ydb727insidetrig="10"
+##TEST_AWK05 \^ydb727insidetrig\(10\)="[0-9]*"
+09
 -------------------------------------------------------------------
 
 ###################################################################
 Check the detailed extract
 < ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/$tst/u_inref/jnl_extract_detailed.csh'==
 > ==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/$tst/u_inref/jnl_extract_detailed.csh'==
-< UZKILL /2/^a1(181)
-> UZKILL /6/^a1(181)
-< TSET   /2/^b2(1)="b;$ztwo=abcd"
-> TSET   /6/^b2(1)="b;$ztwo=abcd"
-< TKILL  /2/^b2(1)
-> TKILL  /6/^b2(1)
-< TSET   /2/^b2(81)="e;$ztwo=abcd"
-> TSET   /6/^b2(81)="e;$ztwo=abcd"
-< TSET   /2/^b2(1)="1"
-> TSET   /6/^b2(1)="1"
-< UKILL  /2/^b2(1)
-> UKILL  /6/^b2(1)
-< TZTRIG /2/^bstart
-< USET   /2/^b2(191)="e;$ztwo=$char(0)"
-> TZTRIG /6/^bstart
-> USET   /6/^b2(191)="e;$ztwo=$char(0)"
+< UZTWORM/"abcd"
+< UZTWORM/"abcd"
 ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/$tst/u_inref/jnl_extract_detailed.csh'==
 a.mjf
-TLGTRIG/"+^a1(:)    -commands=SET,KILL -xecute=""do ztworepltrig^ztworepl(1)"""
+TLGTRIG/"+^a1(:)    -commands=SET,KILL            -xecute=""do ztworepltrig^ztworepl(1)"""
 USET   /0/^#t("#TNAME","a1","#SEQNUM")="1"
 USET   /0/^#t("#TNAME","a1","#TNCOUNT")="1"
 USET   /0/^#t("#TNAME","a1#1")="a1"_$C(0)_"1"
@@ -585,7 +649,7 @@ USET   /0/^#t("a1",1,"GVSUBS")="*"
 USET   /0/^#t("a1",1,"CMD")="S,K"
 USET   /0/^#t("a1",1,"XECUTE")=" do ztworepltrig^ztworepl(1)"
 USET   /0/^#t("a1","#CYCLE")="1"
-ULGTRIG/"+^aztr(:)  -commands=ZTR      -xecute=""do ztworepltrig^ztworepl(1)"""
+ULGTRIG/"+^aztr(:)  -commands=ZTR                 -xecute=""do ztworepltrig^ztworepl(1)"""
 USET   /0/^#t("#TNAME","aztr","#SEQNUM")="1"
 USET   /0/^#t("#TNAME","aztr","#TNCOUNT")="1"
 USET   /0/^#t("#TNAME","aztr#1")="aztr"_$C(0)_"1"
@@ -595,7 +659,7 @@ USET   /0/^#t("aztr",1,"GVSUBS")="*"
 USET   /0/^#t("aztr",1,"CMD")="ZTR"
 USET   /0/^#t("aztr",1,"XECUTE")=" do ztworepltrig^ztworepl(1)"
 USET   /0/^#t("aztr","#CYCLE")="1"
-ULGTRIG/"+^aztrNULL -commands=ZTR      -xecute=""set $ztwormhole="""""""""""
+ULGTRIG/"+^aztrNULL -commands=ZTR                 -xecute=""set $ztwormhole="""""""""""
 USET   /0/^#t("#TNAME","aztrNULL","#SEQNUM")="1"
 USET   /0/^#t("#TNAME","aztrNULL","#TNCOUNT")="1"
 USET   /0/^#t("#TNAME","aztrNULL#1")="aztrNULL"_$C(0)_"1"
@@ -604,7 +668,7 @@ USET   /0/^#t("aztrNULL",1,"TRIGNAME")="aztrNULL#1#"
 USET   /0/^#t("aztrNULL",1,"CMD")="ZTR"
 USET   /0/^#t("aztrNULL",1,"XECUTE")=" set $ztwormhole="""""
 USET   /0/^#t("aztrNULL","#CYCLE")="1"
-ULGTRIG/"+^aztrSET  -commands=ZTR      -xecute=""set $ztwormhole=""""ZTRIGGER"""""""
+ULGTRIG/"+^aztrSET  -commands=ZTR                 -xecute=""set $ztwormhole=""""ZTRIGGER"""""""
 USET   /0/^#t("#TNAME","aztrSET","#SEQNUM")="1"
 USET   /0/^#t("#TNAME","aztrSET","#TNCOUNT")="1"
 USET   /0/^#t("#TNAME","aztrSET#1")="aztrSET"_$C(0)_"1"
@@ -624,16 +688,16 @@ UKILL  /2/^a1(11)
 KILL   /0/^atest
 ---------
 SET    /0/^atest="Test (20) null ZTWO with implicit transactions - shouldn't see ztwo"
-TSET   /6/^a1(21)="c;$ztwo="
-TZTRIG /6/^aztr(";$ztwo=")
-TKILL  /6/^a1(21)
+TSET   /2/^a1(21)="c;$ztwo="
+TZTRIG /2/^aztr(";$ztwo=")
+TKILL  /2/^a1(21)
 KILL   /0/^atest
 ---------
 TSET   /0/^atest="Test (30) null ZTWO with explicit transaction"
-USET   /6/^a1(31)="f;$ztwo="
-USET   /6/^a1(32)="g;$ztwo="
-USET   /6/^a1(33)="h;$ztwo="
-UZTRIG /6/^aztr(";$ztwo=")
+USET   /2/^a1(31)="f;$ztwo="
+USET   /2/^a1(32)="g;$ztwo="
+USET   /2/^a1(33)="h;$ztwo="
+UZTRIG /2/^aztr(";$ztwo=")
 UKILL  /0/^atest
 ---------
 TSET   /0/^atest="Test (40) ZTWO set inside explicit transaction after non-referencing update"
@@ -645,7 +709,7 @@ UZTRIG /2/^aztr(";$ztwo=abcd")
 UKILL  /0/^atest
 ---------
 TSET   /0/^atest="Test (50) ZTWO set inside explicit transaction after referencing update"
-UZTRIG /6/^aztr(";$ztwo=")
+UZTRIG /2/^aztr(";$ztwo=")
 UZTWORM/"abcd"
 USET   /2/^a1(51)="f;$ztwo=abcd"
 USET   /2/^a1(52)="g;$ztwo=abcd"
@@ -691,8 +755,8 @@ UZTWORM/"abcd"
 UZTRIG /2/^aztr(";$ztwo=abcd")
 USET   /2/^a1(101)="f;$ztwo=abcd"
 USET   /2/^a1(102)="g;$ztwo=abcd"
-USET   /6/^a1(103)="h;$ztwo="
-UZTRIG /6/^aztr(";$ztwo=")
+USET   /2/^a1(103)="h;$ztwo="
+UZTRIG /2/^aztr(";$ztwo=")
 UZTWORM/"abcd"
 UZTRIG /2/^aztr(";$ztwo=abcd")
 USET   /2/^a1(104)="h;$ztwo=abcd"
@@ -761,8 +825,8 @@ TZTWORM/"abcd"
 USET   /2/^a1(144)="5"
 TZTWORM/"abcd"
 UKILL  /2/^a1(141)
-UZTRIG /2/^aztrSET
 UZTWORM/"ZTRIGGER"
+UZTRIG /2/^aztrSET
 UKILL  /2/^a1(142)
 UZTWORM/"efgh"
 UKILL  /2/^a1(143)
@@ -784,11 +848,12 @@ TZTWORM/"abcd"
 UKILL  /2/^a1(151)
 UKILL  /2/^a1(152)
 UZTRIG /2/^aztrNULL
-UKILL  /6/^a1(153)
-UZTRIG /6/^aztr(";$ztwo=")
+UKILL  /2/^a1(153)
+UZTRIG /2/^aztr(";$ztwo=")
 UZTWORM/"abcd"
 UKILL  /2/^a1(154)
 UZTRIG /2/^aztr(";$ztwo=abcd")
+UZTWORM/"ZTRIGGER"
 UZTRIG /2/^aztrSET
 UKILL  /0/^atest
 ---------
@@ -805,9 +870,10 @@ SET    /0/^a2(4)="5"
 TZTWORM/"abcd"
 UKILL  /2/^a1(161)
 UZKILL /2/^a1(162)
+UZTWORM/"abcd"
 UZTRIG /2/^aztr(";$ztwo=abcd")
-UKILL  /6/^a1(163)
-UZTRIG /6/^aztr(";$ztwo=")
+UKILL  /2/^a1(163)
+UZTRIG /2/^aztr(";$ztwo=")
 UZTWORM/"abcd"
 UZTRIG /2/^aztr(";$ztwo=abcd")
 UKILL  /0/^atest
@@ -820,11 +886,11 @@ USET   /2/^a1(172)="3"
 TZTWORM/"abcd"
 USET   /2/^a1(173)="4"
 SET    /16/^a2(4)="5"
-TZTRIG /6/^aztr(";$ztwo=")
-UZKILL /6/^a1(171)
-UKILL  /6/^a1(172)
-UKILL  /6/^a1(173)
-UZTRIG /6/^aztr(";$ztwo=")
+TZTRIG /2/^aztr(";$ztwo=")
+UZKILL /2/^a1(171)
+UKILL  /2/^a1(172)
+UKILL  /2/^a1(173)
+UZTRIG /2/^aztr(";$ztwo=")
 UKILL  /0/^atest
 ---------
 SET    /0/^atest="Test (180)"
@@ -839,9 +905,9 @@ TSET   /0/^atest="Test (180)begin explicit updates;$ztwo=abcd"
 UZKILL /2/^a1(181)
 UZTWORM/"abcd"
 UKILL  /2/^a1(182)
-UZTRIG /6/^aztr(";$ztwo=")
+UZTRIG /2/^aztr(";$ztwo=")
 USET   /0/^atest="Test (180)inside explicit updates;$ztwo="
-UKILL  /6/^a1(183)
+UKILL  /2/^a1(183)
 USET   /0/^atest="Test (180)last explicit updates;$ztwo=abcd"
 UKILL  /0/^atest
 ---------
@@ -855,9 +921,11 @@ USET   /2/^a1(193)="h;$ztwo=abcd"
 UZTRIG /2/^aztr(";$ztwo=abcd")
 UKILL  /0/^atest
 ---------
+SET    /0/^atest="Test (200) YDB#727 : Test $ZTWORMHOLE set to ""abcd"""
+SET    /0/^atest="Test (210) YDB#727 : Test $ZTWORMHOLE set to """""
 -------------------------------------------------------------
 b.mjf
-TLGTRIG/"+^b2(:)    -commands=SET,KILL -xecute=""do ztworepltrig^ztworepl(0)"""
+TLGTRIG/"+^b2(:)    -commands=SET,KILL            -xecute=""do ztworepltrig^ztworepl(0)"""
 USET   /0/^#t("#TNAME","b2","#SEQNUM")="1"
 USET   /0/^#t("#TNAME","b2","#TNCOUNT")="1"
 USET   /0/^#t("#TNAME","b2#1")="b2"_$C(0)_"1"
@@ -867,7 +935,7 @@ USET   /0/^#t("b2",1,"GVSUBS")="*"
 USET   /0/^#t("b2",1,"CMD")="S,K"
 USET   /0/^#t("b2",1,"XECUTE")=" do ztworepltrig^ztworepl(0)"
 USET   /0/^#t("b2","#CYCLE")="1"
-ULGTRIG/"+^bstart   -commands=ZTR      -xecute=""set x=1"""
+ULGTRIG/"+^bstart   -commands=ZTR                 -xecute=""set x=1"""
 USET   /0/^#t("#TNAME","bstart","#SEQNUM")="1"
 USET   /0/^#t("#TNAME","bstart","#TNCOUNT")="1"
 USET   /0/^#t("#TNAME","bstart#1")="bstart"_$C(0)_"1"
@@ -876,7 +944,7 @@ USET   /0/^#t("bstart",1,"TRIGNAME")="bstart#1#"
 USET   /0/^#t("bstart",1,"CMD")="ZTR"
 USET   /0/^#t("bstart",1,"XECUTE")=" set x=1"
 USET   /0/^#t("bstart","#CYCLE")="1"
-ULGTRIG/"+^bstop    -commands=ZTR      -xecute=""set x=0"""
+ULGTRIG/"+^bstop    -commands=ZTR                 -xecute=""set x=0"""
 USET   /0/^#t("#TNAME","bstop","#SEQNUM")="1"
 USET   /0/^#t("#TNAME","bstop","#TNCOUNT")="1"
 USET   /0/^#t("#TNAME","bstop#1")="bstop"_$C(0)_"1"
@@ -892,20 +960,20 @@ TKILL  /2/^b2(1)
 KILL   /0/^btest
 ---------
 SET    /0/^btest="Test (20) null ZTWO with implicit transactions - shouldn't see ztwo"
-TSET   /6/^b2(1)="d;$ztwo="
-TKILL  /6/^b2(1)
+TSET   /2/^b2(1)="d;$ztwo="
+TKILL  /2/^b2(1)
 KILL   /0/^btest
 ---------
 TSET   /0/^btest="Test (30) null ZTWO with explicit transaction"
-USET   /6/^b2(1)="e;$ztwo="
+USET   /2/^b2(1)="e;$ztwo="
 UKILL  /0/^btest
 ---------
 TSET   /0/^btest="Test (40) ZTWO set inside explicit transaction after non-referencing update"
-USET   /6/^b2(41)="e;$ztwo=abcd"
+USET   /2/^b2(41)="e;$ztwo=abcd"
 UKILL  /0/^btest
 ---------
 TSET   /0/^btest="Test (50) ZTWO set inside explicit transaction after referencing update"
-USET   /6/^b2(1)="e"
+USET   /2/^b2(1)="e"
 UKILL  /0/^btest
 ---------
 TSET   /0/^btest="Test (60) ZTWO set at the start of explicit transaction"
@@ -966,6 +1034,55 @@ UKILL  /0/^btest
 ---------
 -------------------------------------------------------------
 mumps.mjf
+TLGTRIG/"+^ydb727   -commands=SET,KILL,ZKILL,ZTR  -xecute=""do ydb727^ztworepl"""
+USET   /0/^#t("#TNAME","ydb727","#SEQNUM")="1"
+USET   /0/^#t("#TNAME","ydb727","#TNCOUNT")="1"
+USET   /0/^#t("#TNAME","ydb727#1")="ydb727"_$C(0)_"1"
+USET   /0/^#t("ydb727","#COUNT")="1"
+USET   /0/^#t("ydb727",1,"TRIGNAME")="ydb727#1#"
+USET   /0/^#t("ydb727",1,"CMD")="S,K,ZK,ZTR"
+USET   /0/^#t("ydb727",1,"XECUTE")=" do ydb727^ztworepl"
+USET   /0/^#t("ydb727","#CYCLE")="1"
+##TEST_AWKTZTWORM/"[0-9]*"
+USET   /2/^ydb727="Test (200) YDB#727 : Test $ZTWORMHOLE set to ""abcd"""
+USET   /1/^ydb727insidetrig="1"
+##TEST_AWKUSET   /1/\^ydb727insidetrig\(1\)="[0-9]*"
+##TEST_AWKTZTWORM/"[0-9]*"
+UKILL  /2/^ydb727
+USET   /1/^ydb727insidetrig="2"
+##TEST_AWKUSET   /1/\^ydb727insidetrig\(2\)="[0-9]*"
+##TEST_AWKTZTWORM/"[0-9]*"
+USET   /2/^ydb727="Test (200) YDB#727 : Test $ZTWORMHOLE set to ""abcd"""
+USET   /1/^ydb727insidetrig="3"
+##TEST_AWKUSET   /1/\^ydb727insidetrig\(3\)="[0-9]*"
+##TEST_AWKTZTWORM/"[0-9]*"
+UZKILL /2/^ydb727
+USET   /1/^ydb727insidetrig="4"
+##TEST_AWKUSET   /1/\^ydb727insidetrig\(4\)="[0-9]*"
+##TEST_AWKTZTWORM/"[0-9]*"
+UZTRIG /2/^ydb727
+USET   /1/^ydb727insidetrig="5"
+##TEST_AWKUSET   /1/\^ydb727insidetrig\(5\)="[0-9]*"
+##TEST_AWKTZTWORM/"[0-9]*"
+USET   /2/^ydb727="Test (210) YDB#727 : Test $ZTWORMHOLE set to """""
+USET   /1/^ydb727insidetrig="6"
+##TEST_AWKUSET   /1/\^ydb727insidetrig\(6\)="[0-9]*"
+##TEST_AWKTZTWORM/"[0-9]*"
+UKILL  /2/^ydb727
+USET   /1/^ydb727insidetrig="7"
+##TEST_AWKUSET   /1/\^ydb727insidetrig\(7\)="[0-9]*"
+##TEST_AWKTZTWORM/"[0-9]*"
+USET   /2/^ydb727="Test (210) YDB#727 : Test $ZTWORMHOLE set to """""
+USET   /1/^ydb727insidetrig="8"
+##TEST_AWKUSET   /1/\^ydb727insidetrig\(8\)="[0-9]*"
+##TEST_AWKTZTWORM/"[0-9]*"
+UZKILL /2/^ydb727
+USET   /1/^ydb727insidetrig="9"
+##TEST_AWKUSET   /1/\^ydb727insidetrig\(9\)="[0-9]*"
+##TEST_AWKTZTWORM/"[0-9]*"
+UZTRIG /2/^ydb727
+USET   /1/^ydb727insidetrig="10"
+##TEST_AWKUSET   /1/\^ydb727insidetrig\(10\)="[0-9]*"
 -------------------------------------------------------------
 ==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
 ==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==

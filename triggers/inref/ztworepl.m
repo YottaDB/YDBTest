@@ -1,7 +1,21 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; This module is derived from FIS GT.M.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;
 	; Each test case places it's comment in GVNs so that they show up in
 	; the journal logs
 ztworepl
-	write "Testing ZTWOrmhole with replication",!	
+	write "Testing ZTWOrmhole with replication",!
 	set default="abcd"
 	set alt="efgh"
 	set same="abcd"
@@ -33,7 +47,7 @@ ztworepl
         set ^a1(rnd+1)="c"_ztwo_null
         set ^b2(1)="d"_ztwo_null	; trigger DOESN'T reference ZTWO
 	ztrigger ^aztr(ztwo_null)
-	kill ^a1(rnd+1)	
+	kill ^a1(rnd+1)
 	kill ^b2(1)			; trigger DOESN'T reference ZTWO
 	kill ^atest,^btest
 	set $ztwormhole=null
@@ -324,15 +338,25 @@ ztworepl
 	set ^b2(rnd+1)="e"_ztwo_"$char(0)"
 	set ^a1(rnd+1)="f"_"$char(0)"
 	ztrigger ^aztr(ztwo_"$char(0)")
-	set $ztwormhole=default	
+	set $ztwormhole=default
 	set ^a1(rnd+2)="g"_ztwo_default
         set ^a1(rnd+3)="h"_ztwo_default
 	ztrigger ^aztr(ztwo_default)
 	ztrigger ^bstop
 	kill ^atest,^btest
 	tcommit
+	;--------------------------------------
+	do ^echoline
+	; Test empty and non-empty string value of $ZTWORMHOLE. Hence the for loop below.
+	for ztwormval="abcd","" do
+	. set tcase="Test ("_$increment(rnd,10)_") YDB#727 : Test $ZTWORMHOLE set to "_$zwrite(ztwormval)
+	. set ^atest=tcase
+	. set $ztwormhole=ztwormval set ^ydb727=tcase
+	. set $ztwormhole=ztwormval kill ^ydb727
+	. set $ztwormhole=ztwormval set ^ydb727=tcase
+	. set $ztwormhole=ztwormval zkill ^ydb727
+	. set $ztwormhole=ztwormval ztrigger ^ydb727
 	quit
-
 
 	;-------------------------------------------------------
 	; trigger routines
@@ -340,11 +364,22 @@ ztworepltrig(touchztwo)
 	if touchztwo set x=$ztwormhole
 	quit
 
+ydb727
+	new isprimary
+	set isprimary=($ztrnlnm("PWD")=$ztrnlnm("tst_working_dir"))
+	if isprimary do
+	. ; Set $ZTWORMHOLE only on the primary side. Use it on the secondary side
+	. set $ztwormhole="dummy"	; set a dummy value for $ZTWORMHOLE first
+	. set $ztwormhole=$zut		; set real value for $ZTWORMHOLE to make sure this set prevails over previous dummy set
+	set ^ydb727insidetrig($increment(^ydb727insidetrig))=$ztwormhole
+	quit
+
 tfile
-	;+^a1(:)    -commands=SET,KILL -xecute="do ztworepltrig^ztworepl(1)"
-	;+^b2(:)    -commands=SET,KILL -xecute="do ztworepltrig^ztworepl(0)"
-	;+^aztr(:)  -commands=ZTR      -xecute="do ztworepltrig^ztworepl(1)"
-	;+^aztrNULL -commands=ZTR      -xecute="set $ztwormhole="""""
-	;+^aztrSET  -commands=ZTR      -xecute="set $ztwormhole=""ZTRIGGER"""
-	;+^bstart   -commands=ZTR      -xecute="set x=1"
-	;+^bstop    -commands=ZTR      -xecute="set x=0"
+	;+^a1(:)    -commands=SET,KILL            -xecute="do ztworepltrig^ztworepl(1)"
+	;+^b2(:)    -commands=SET,KILL            -xecute="do ztworepltrig^ztworepl(0)"
+	;+^aztr(:)  -commands=ZTR                 -xecute="do ztworepltrig^ztworepl(1)"
+	;+^aztrNULL -commands=ZTR                 -xecute="set $ztwormhole="""""
+	;+^aztrSET  -commands=ZTR                 -xecute="set $ztwormhole=""ZTRIGGER"""
+	;+^bstart   -commands=ZTR                 -xecute="set x=1"
+	;+^bstop    -commands=ZTR                 -xecute="set x=0"
+	;+^ydb727   -commands=SET,KILL,ZKILL,ZTR  -xecute="do ydb727^ztworepl"
