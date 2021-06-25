@@ -73,6 +73,10 @@ setenv subtest_exclude_list    ""
 if ("pro" != "$tst_image") then
        setenv subtest_exclude_list "$subtest_exclude_list ydb632" # ydb632 generates core and stop in dbg, continues in pro
 endif
+if ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) then
+	# filter out below subtest on 32-bit ARM since it requires valgrind which is now available on 32-bit ARM
+	setenv subtest_exclude_list "$subtest_exclude_list ydb704"
+endif
 
 
 # Submit the list of subtests

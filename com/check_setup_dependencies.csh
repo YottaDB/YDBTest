@@ -74,7 +74,12 @@ endif
 
 # Check various other utilities that are needed by specific tests
 # Better to issue an error at test submit time if the utility is not found instead of much later at test execution time.
-foreach utility (gawk sed lsof bc sort eu-elflint netstat nc strace cc gdb)
+foreach utility (gawk sed lsof bc sort eu-elflint netstat nc strace cc gdb valgrind)
+	if ( ($MACHTYPE =~ "armv*l") && ("valgrind" == $utility) ) then
+		# Skip the check for valgrind on 32-bit ARM because valgrind is not available on 32-bit ARM and
+		# thus tests that require valgrind are disabled on 32-bit ARM.
+		continue
+	endif
 	which $utility >&! /dev/null
 	if ($status) then
 		echo "TEST-E-UTILITY $utility expected by test system, but not found ;"
