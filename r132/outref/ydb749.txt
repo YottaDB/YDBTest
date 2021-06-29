@@ -1,0 +1,65 @@
+# Run dbcreate.csh
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT  NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##REMOTE_SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##REMOTE_SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT  NON_REPLIC
+# --------------------------------------------------
+# Case 1 : Run HUGE transaction with 1009155 updates
+# Expect NO errors (i.e. work fine). Used to also work fine before YDB#749 was fixed.
+# --------------------------------------------------
+# --------------------------------------------------
+# Case 2 : Run HUGE transaction with 1009156 updates
+# Expect TRANSREPLJNL1GB error. Used to work fine before YDB#749 was fixed.
+# --------------------------------------------------
+%YDB-E-TRANSREPLJNL1GB, Transaction can use at most 1GiB of replicated journal records across all journaled regions
+		At M source location ydb749+9^ydb749
+
+YDB>
+# --------------------------------------------------
+# Case 3 : Run HUGE transaction with 1500000 updates
+# Expect TRANSREPLJNL1GB error. Used to cause JNLCNTRL/REPLJNLCLOSED error before YDB#749 was fixed.
+# --------------------------------------------------
+%YDB-E-TRANSREPLJNL1GB, Transaction can use at most 1GiB of replicated journal records across all journaled regions
+		At M source location ydb749+9^ydb749
+
+YDB>
+# --------------------------------------------------
+# Case 4 : Run HUGE transaction with 2500000 updates
+# Expect TRANSREPLJNL1GB error. Used to cause JNLCNTRL/REPLJNLCLOSED error before YDB#749 was fixed.
+# --------------------------------------------------
+%YDB-E-TRANSREPLJNL1GB, Transaction can use at most 1GiB of replicated journal records across all journaled regions
+		At M source location ydb749+9^ydb749
+
+YDB>
+# --------------------------------------------------
+# Case 5 : Run HUGE transaction with 1009157 + $random(2000000) updates
+# Expect TRANSREPLJNL1GB error.
+# --------------------------------------------------
+%YDB-E-TRANSREPLJNL1GB, Transaction can use at most 1GiB of replicated journal records across all journaled regions
+		At M source location ydb749+9^ydb749
+
+YDB>
+# Run dbcheck.csh -extract to ensure db extract on primary matches secondary
+##SUSPEND_OUTPUT  NON_REPLIC
+##ALLOW_OUTPUT  REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##ALLOW_OUTPUT  NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SUSPEND_OUTPUT  NON_REPLIC
+##REMOTE_SOURCE_PATH##/mupip
+##REMOTE_SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

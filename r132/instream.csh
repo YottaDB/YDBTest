@@ -50,12 +50,13 @@
 # ydb629 [nars]        Test Unary + works on $ZYSQLNULL returned by $ORDER(lvn)
 # ydb741 [nars]        Test DSE REMOVE -RECORD does not SIG-11 in case of DBCOMPTOOLRG integrity error
 # ydb704 [bdw]         Test that invoking YottaDB via valgrind works
+# ydb749 [nars]        Test that huge transactions work fine or issue TRANSREPLJNL1GB error as appropriate
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r132 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
-setenv subtest_list_common     ""
+setenv subtest_list_common     "ydb749"
 setenv subtest_list_non_replic "ydb627 ydb551 ydb632 ydb581 ydb630 ydb441 ydb652 ydb635 ydb664 ydb663 ydb558 ydb612 ydb591 ydb391"
 setenv subtest_list_non_replic "$subtest_list_non_replic ydb678 ydb671 ydb682 ydb673 ydb697 ydb700 ydb692 ydb505 ydb717 ydb712"
 setenv subtest_list_non_replic "$subtest_list_non_replic ydb724 ydb721 ydb731 ydb737 ydb739 ydb688 ydb629"
@@ -78,6 +79,13 @@ if ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) then
 	setenv subtest_exclude_list "$subtest_exclude_list ydb704"
 endif
 
+# Disable ydb749 subtest as it is a heavyweight test and will take a lot of time on non-x86_64 (i.e. ARM).
+# The code is portable and so it is enough to test it only on x86_64.
+# Also disable this test on Debug builds as it takes a long time due to "upd_num" increasing order check in debug code in tp_tend.c
+# that can take really long time for this particular subtest due to it doing millions of sets.
+if (("HOST_LINUX_X86_64" != $gtm_test_os_machtype) || ("pro" != "$tst_image")) then
+	setenv subtest_exclude_list "$subtest_exclude_list ydb749"
+endif
 
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh
