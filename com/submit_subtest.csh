@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -329,6 +329,26 @@ foreach sub_test ($subtest_list) # Mega for - practically all this script is in 
 	endif
 	if ($diffstatus != 0) then
 		# If the subtest failed, do a diff once more to have "Broken pipe" messages caught by subtest_helperlogs.csh, if any
+		# Additionally, sometimes we see diff not show the entire diff but just one line like the following.
+		#	Binary files use_backup_and_recover.cmp and use_backup_and_recover.log differ
+		# This usually happens because of some binary character in the output (e.g. ^@).
+		# Because of just one binary character, the entire diff is lost and one has to then see the actual diff
+		# manually after removing the binary character. To avoid this manual step, we strip out binary characters
+		# (if any) using a "tr" command before redoing the diff. We find if the file has any binary data through the
+		# "file" command which returns "data" in that case.
+		foreach file ($sub_test.cmp $sub_test.log)
+			set filetype = `file -b $file`
+			if ("data" == "$filetype") then
+				# It is a binary file. Remove the binary characters before the diff.
+				# Preserve the original binary file with a .orig extension
+				mv $file $file.orig
+				# Indicate through the diff output that binary characters have been stripped out.
+				echo "# This file has binary characters stripped out. See $file.orig for original file contents" > $file
+				# The below tr command was obtained from
+				# https://alvinalexander.com/blog/post/linux-unix/how-remove-non-printable-ascii-characters-file-unix/
+				tr -cd '\11\12\15\40-\176' < $file.orig >> $file
+			endif
+		end
 		\diff $sub_test.cmp $sub_test.log  >&! $sub_test.diff
 		echo FAIL from $sub_test. Please check $sub_test/$sub_test.diff and $sub_test/errs_found.logx for errors in time sorted fashion
 		set subteststat = "FAIL"
