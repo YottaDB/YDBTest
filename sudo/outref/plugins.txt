@@ -1,0 +1,126 @@
+# This tests that ydbinstall successfully installs plugins for each
+# possible combination of plugins with and without UTF-8 support.
+setenv gtm_chset UTF-8
+unset echo
+###################################################################
+testing with options --aim
+Cloning into '.'...
+ydbinstall with options --aim was successful.
+###################################################################
+testing with options --encplugin
+ydbinstall with options --encplugin was successful.
+###################################################################
+testing with options --posix
+ydbinstall with options --posix was successful.
+###################################################################
+testing with options --zlib
+ydbinstall with options --zlib was successful.
+###################################################################
+testing with options --aim --utf8 default
+Cloning into '.'...
+##TEST_AWK-- Setting locale to .*((UTF)|(utf))-?8
+ydbinstall with options --aim --utf8 default was successful.
+###################################################################
+testing with options --encplugin --utf8 default
+ydbinstall with options --encplugin --utf8 default was successful.
+###################################################################
+testing with options --posix --utf8 default
+##TEST_AWK-- Setting locale to .*((UTF)|(utf))-?8
+ydbinstall with options --posix --utf8 default was successful.
+###################################################################
+testing with options --zlib --utf8 default
+ydbinstall with options --zlib --utf8 default was successful.
+###################################################################
+testing with options --aim --encplugin
+Cloning into '.'...
+ydbinstall with options --aim --encplugin was successful.
+###################################################################
+testing with options --aim --posix
+Cloning into '.'...
+ydbinstall with options --aim --posix was successful.
+###################################################################
+testing with options --aim --zlib
+Cloning into '.'...
+ydbinstall with options --aim --zlib was successful.
+###################################################################
+testing with options --aim --encplugin --utf8 default
+Cloning into '.'...
+##TEST_AWK-- Setting locale to .*((UTF)|(utf))-?8
+ydbinstall with options --aim --encplugin --utf8 default was successful.
+###################################################################
+testing with options --aim --posix --utf8 default
+##TEST_AWK-- Setting locale to .*((UTF)|(utf))-?8
+Cloning into '.'...
+##TEST_AWK-- Setting locale to .*((UTF)|(utf))-?8
+ydbinstall with options --aim --posix --utf8 default was successful.
+###################################################################
+testing with options --aim --zlib --utf8 default
+Cloning into '.'...
+##TEST_AWK-- Setting locale to .*((UTF)|(utf))-?8
+ydbinstall with options --aim --zlib --utf8 default was successful.
+###################################################################
+testing with options --encplugin --posix
+ydbinstall with options --encplugin --posix was successful.
+###################################################################
+testing with options --encplugin --zlib
+ydbinstall with options --encplugin --zlib was successful.
+###################################################################
+testing with options --encplugin --posix --utf8 default
+##TEST_AWK-- Setting locale to .*((UTF)|(utf))-?8
+ydbinstall with options --encplugin --posix --utf8 default was successful.
+###################################################################
+testing with options --encplugin --zlib --utf8 default
+ydbinstall with options --encplugin --zlib --utf8 default was successful.
+###################################################################
+testing with options --posix --zlib
+ydbinstall with options --posix --zlib was successful.
+###################################################################
+testing with options --posix --zlib --utf8 default
+##TEST_AWK-- Setting locale to .*((UTF)|(utf))-?8
+ydbinstall with options --posix --zlib --utf8 default was successful.
+###################################################################
+testing with options --aim --encplugin --posix
+Cloning into '.'...
+ydbinstall with options --aim --encplugin --posix was successful.
+###################################################################
+testing with options --aim --encplugin --zlib
+Cloning into '.'...
+ydbinstall with options --aim --encplugin --zlib was successful.
+###################################################################
+testing with options --aim --posix --zlib
+Cloning into '.'...
+ydbinstall with options --aim --posix --zlib was successful.
+###################################################################
+testing with options --encplugin --posix --zlib
+ydbinstall with options --encplugin --posix --zlib was successful.
+###################################################################
+testing with options --aim --encplugin --posix --utf8 default
+##TEST_AWK-- Setting locale to .*((UTF)|(utf))-?8
+Cloning into '.'...
+##TEST_AWK-- Setting locale to .*((UTF)|(utf))-?8
+ydbinstall with options --aim --encplugin --posix --utf8 default was successful.
+###################################################################
+testing with options --aim --encplugin --zlib --utf8 default
+Cloning into '.'...
+##TEST_AWK-- Setting locale to .*((UTF)|(utf))-?8
+ydbinstall with options --aim --encplugin --zlib --utf8 default was successful.
+###################################################################
+testing with options --aim --posix --zlib --utf8 default
+##TEST_AWK-- Setting locale to .*((UTF)|(utf))-?8
+Cloning into '.'...
+##TEST_AWK-- Setting locale to .*((UTF)|(utf))-?8
+ydbinstall with options --aim --posix --zlib --utf8 default was successful.
+###################################################################
+testing with options --encplugin --posix --zlib --utf8 default
+##TEST_AWK-- Setting locale to .*((UTF)|(utf))-?8
+ydbinstall with options --encplugin --posix --zlib --utf8 default was successful.
+###################################################################
+testing with options --aim --encplugin --posix --zlib
+Cloning into '.'...
+ydbinstall with options --aim --encplugin --posix --zlib was successful.
+###################################################################
+testing with options --aim --encplugin --posix --zlib --utf8 default
+##TEST_AWK-- Setting locale to .*((UTF)|(utf))-?8
+Cloning into '.'...
+##TEST_AWK-- Setting locale to .*((UTF)|(utf))-?8
+ydbinstall with options --aim --encplugin --posix --zlib --utf8 default was successful.
