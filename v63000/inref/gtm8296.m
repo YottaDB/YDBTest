@@ -35,7 +35,7 @@ gtm8296
 	; So check that before db open, the field is 0 and after the db open, it is 2.
 	write "# Pass gd_region.jnl_state : BEFORE DB open",!
 	write:0=$$^%PEEKBYNAME("gd_region.jnl_state","DEFAULT") "PASS",!
-	if $view("GVFILE","DEFAULT")	; to open DEFAULT region
+	if $data(^x)	; to open DEFAULT region (this step assumes ^x maps to DEFAULT region)
 	write "# Pass gd_region.jnl_state : AFTER  DB open",!
 	write:2=$$^%PEEKBYNAME("gd_region.jnl_state","DEFAULT") "PASS",!
 	write "# Pass gd_region.jnl_file_name",!

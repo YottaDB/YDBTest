@@ -4,6 +4,9 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.                                     #
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -15,6 +18,8 @@
 # PEEKBYNAME concurrently, we want to avoid semaphore counter overflow to affect this or the concurrent test.
 # Therefore disable counter overflow in this test by setting the increment value to default value of 1 (aka unset).
 unsetenv gtm_db_counter_sem_incr
+
+setenv gtm_test_spanreg     0       # Test assumes ^x maps to DEFAULT region, so disable spanning regions
 
 $MULTISITE_REPLIC_PREPARE 2
 
