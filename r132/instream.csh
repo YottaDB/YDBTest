@@ -51,6 +51,7 @@
 # ydb741 [nars]        Test DSE REMOVE -RECORD does not SIG-11 in case of DBCOMPTOOLRG integrity error
 # ydb704 [bdw]         Test that invoking YottaDB via valgrind works
 # ydb749 [nars]        Test that huge transactions work fine or issue TRANSREPLJNL1GB error as appropriate
+# ydb715 [nars]        Test that MUPIP JOURNAL RECOVER/ROLLBACK work fine even if an AutoDB database file does not exist
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r132 test starts..."
@@ -60,7 +61,7 @@ setenv subtest_list_common     "ydb749"
 setenv subtest_list_non_replic "ydb627 ydb551 ydb632 ydb581 ydb630 ydb441 ydb652 ydb635 ydb664 ydb663 ydb558 ydb612 ydb591 ydb391"
 setenv subtest_list_non_replic "$subtest_list_non_replic ydb678 ydb671 ydb682 ydb673 ydb697 ydb700 ydb692 ydb505 ydb717 ydb712"
 setenv subtest_list_non_replic "$subtest_list_non_replic ydb724 ydb721 ydb731 ydb737 ydb739 ydb688 ydb629"
-setenv subtest_list_non_replic "$subtest_list_non_replic ydb741 ydb704"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb741 ydb704 ydb715"
 setenv subtest_list_replic     "ydb657 ydb676"
 
 if ($?test_replic == 1) then

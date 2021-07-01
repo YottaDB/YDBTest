@@ -1,0 +1,175 @@
+# ---------------------------------------------------------------------------------------------------
+################ Testing MUPIP JOURNAL RECOVER  ######################
+# ---------------------------------------------------------------------------------------------------
+# Case 1 : 2 region GLD where AREG is AutoDB and a.dat does not exist, DEFAULT region is not AutoDB and yottadb.dat exists
+###################################################################
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/yottadb.gld
+
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/yottadb.gld
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/yottadb.dat created
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/yottadb.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+# Verify only yottadb.dat exists. Not a.dat
+yottadb.dat
+# [mupip journal -recover -backward *] should recover DEFAULT region and skip missing AREG region but not complain
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Recover successful
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+# Case 2 : 2 region GLD where AREG is AutoDB and a.dat does exist and is not journaled, DEFAULT region is same as Case 1
+###################################################################
+# Create a.dat by referencing a global in AREG
+# Verify both yottadb.dat and a.dat exist
+a.dat
+yottadb.dat
+# [mupip journal -recover -backward *] should recover DEFAULT region and skip AREG region with a NOTALLJNLEN warning
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%YDB-W-NOTALLJNLEN, Journaling disabled/off for one or more regions
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Recover successful
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+# Case 3 : 2 region GLD where AREG is AutoDB and a.dat does exist and has before image journaling on, DEFAULT region is same as Case 1
+###################################################################
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region AREG is now ON
+# Verify both yottadb.dat and a.dat exist
+a.dat
+yottadb.dat
+# [mupip journal -recover -backward *] should recover DEFAULT and AREG regions with no warning/error messages
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Recover successful
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+# Case 4 : 2 region GLD where AREG and DEFAULT are AutoDB and a.dat and yottadb.dat both do not exist
+###################################################################
+# Change DEFAULT region to AUTODB in gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/yottadb.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/yottadb.gld
+# Remove a.dat and yottadb.dat
+# [mupip journal -recover -backward *] should issue NOREGION error because none of regions have an existing db file
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%YDB-E-NOREGION, REGION not found: *
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+# Case 5 : 2 region GLD where 2 regions are AutoDB and db file for both regions do exist (but don't have journaling on)
+###################################################################
+# Verify both yottadb.dat and a.dat exist
+a.dat
+yottadb.dat
+# [mupip journal -recover -backward *] should issue NOTALLJNLEN and MUNOACTION errors because no region has journaling on
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%YDB-E-NOTALLJNLEN, Journaling disabled/off for all regions
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+# ---------------------------------------------------------------------------------------------------
+################ Testing MUPIP JOURNAL ROLLBACK ######################
+# ---------------------------------------------------------------------------------------------------
+# Case 1 : 2 region GLD where AREG is AutoDB and a.dat does not exist, DEFAULT region is not AutoDB and yottadb.dat exists
+###################################################################
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/yottadb.gld
+
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/yottadb.gld
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/yottadb.dat created
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/yottadb.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-REPLSTATE, Replication state for region DEFAULT is now ON
+# Verify only yottadb.dat exists. Not a.dat
+yottadb.dat
+# [mupip journal -rollback -backward *] should rollback DEFAULT region and skip missing AREG region but not complain
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%YDB-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 1 [0x0000000000000001]
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Rollback successful
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+# Case 2 : 2 region GLD where AREG is AutoDB and a.dat does exist and is not journaled, DEFAULT region is same as Case 1
+###################################################################
+# Create a.dat by referencing a global in AREG
+# Verify both yottadb.dat and a.dat exist
+a.dat
+yottadb.dat
+# [mupip journal -rollback -backward *] should rollback DEFAULT region and skip AREG region with a NOTALLREPLON warning
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%YDB-W-NOTALLREPLON, Replication off for one or more regions
+%YDB-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 1 [0x0000000000000001]
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Rollback successful
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+# Case 3 : 2 region GLD where AREG is AutoDB and a.dat does exist and has before image journaling on, DEFAULT region is same as Case 1
+###################################################################
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region AREG is now ON
+%YDB-I-REPLSTATE, Replication state for region AREG is now ON
+# Verify both yottadb.dat and a.dat exist
+a.dat
+yottadb.dat
+# [mupip journal -rollback -backward *] should rollback DEFAULT and AREG regions with no warning/error messages
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%YDB-I-RLBKJNSEQ, Journal seqno of the instance after rollback is 1 [0x0000000000000001]
+%YDB-S-JNLSUCCESS, Show successful
+%YDB-S-JNLSUCCESS, Verify successful
+%YDB-S-JNLSUCCESS, Rollback successful
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+# Case 4 : 2 region GLD where AREG and DEFAULT are AutoDB and a.dat and yottadb.dat both do not exist
+###################################################################
+# Change DEFAULT region to AUTODB in gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/yottadb.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/yottadb.gld
+# Remove a.dat and yottadb.dat
+# [mupip journal -rollback -backward *] should issue NOREGION error because none of regions have an existing db file
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%YDB-E-NOREGION, REGION not found: *
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+# Case 5 : 2 region GLD where 2 regions are AutoDB and db file for both regions do exist (but don't have journaling on)
+###################################################################
+# Verify both yottadb.dat and a.dat exist
+a.dat
+yottadb.dat
+# [mupip journal -rollback -backward *] should issue NOTALLREPLON and MUNOACTION errors because no region has journaling on
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+%YDB-E-NOTALLREPLON, Replication off for all regions
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
