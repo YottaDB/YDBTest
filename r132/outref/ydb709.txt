@@ -1,0 +1,22 @@
+# Test that $VIEW("GVFILE") works on database file name in the GLD SEGMENT in various cases
+#   1) Contains full path and extension other than .dat. DEFAULT region
+#   2) Contains full path and .dat extension. AREG region
+#   3) Contains full path and no .dat extension. BREG region
+#   4) Contains relative path and extension other than .dat. CREG region
+#   5) Contains relative path and .dat extension. DREG region
+#   6) Contains relative path and no .dat extension. EREG region
+#   7) Contains full path using env var that is defined. FREG region
+#   8) Contains full path using env var that is not defined. GREG region
+#   9) Contains remote host/path without @ syntax (to use GT.CM GNP server). HREG region
+#  10) Contains local  host/path using @ syntax (to use GT.CM GNP server). IREG region
+# Also test that $VIEW("GVFILE") does not need database file to exist for it to work. So skip dbcreate.csh
+$view("GVFILE","DEFAULT") = ##TEST_PATH##/yottadb.mydat
+$view("GVFILE","AREG") = ##TEST_PATH##/a.dat
+$view("GVFILE","BREG") = ##TEST_PATH##/b.dat
+$view("GVFILE","CREG") = ##TEST_PATH##/c.mydat
+$view("GVFILE","DREG") = ##TEST_PATH##/d.dat
+$view("GVFILE","EREG") = ##TEST_PATH##/e.dat
+$view("GVFILE","FREG") = ##TEST_PATH##/f.dat
+$view("GVFILE","GREG") = ##TEST_PATH##/$invalidenvvar/g.dat
+$view("GVFILE","HREG") = REMOTEHOST:h.dat
+$view("GVFILE","IREG") = @LOCALHOST:i.dat
