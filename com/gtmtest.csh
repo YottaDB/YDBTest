@@ -4,7 +4,7 @@
 # Copyright (c) 2005-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -526,7 +526,7 @@ if ($?cms_tools) then
 		echo "Pls. re-submit test picking a remote host from $gtm_server_location. Exiting..." >>&! $tmpfile
 	#	At this point when we exit we don't have even test dirs created, so let's mail the user as to what went wrong
 	#	for a quick update/reason instead of getting puzzled later.
-		if (!($?tst_dont_send_mail)) mailx -s "TEST-E-REMOTEHOST ACROSS LOCATION, $HOST:r:r:r:r did not run tests" $mailing_list < $tmpfile
+		if (!($?tst_dont_send_mail)) mailx -s "TEST-E-REMOTEHOST ACROSS LOCATION, $hostn did not run tests" $mailing_list < $tmpfile
 		cat $tmpfile;rm -f $tmpfile
 		$gtm_test_com_individual/clean_and_exit.csh
 		exit 17
@@ -610,7 +610,7 @@ if ($?cms_tools) then
 	endif
 endif
 if ($?ydb_environment_init) then
-	setenv gtm_test_server_serial_no `$tst_awk '($2 == "gtm_tstdir_'$HOST'") {print $0;}' $gtm_test/tstdirs.csh | $tst_awk -F "#" '/_'$HOST'( |)/ {print $NF}'`
+	setenv gtm_test_server_serial_no `$tst_awk '($2 == "gtm_tstdir_'$hostn'") {print $0;}' $gtm_test/tstdirs.csh | $tst_awk -F "#" '/_'$hostn'( |)/ {print $NF}'`
 endif
 if ("" == "$gtm_test_server_serial_no") setenv gtm_test_server_serial_no "00" # default, in case no serial no is found (such as linux boxes)
 setenv gtm_test_port_range $gtm_test_server_serial_no
@@ -645,7 +645,7 @@ if ($?gtm_test_buildcycle) then
 		if ((-e $build_ver_log_file) && (! -w $build_ver_log_file)) then
 			echo "TEST-W-BUILDLOG_WRITE could not write to the buildver_log ($build_ver_log_file), do not have write access"
 		else
-			echo "${HOST:r:r:r}:$tst_dir/$gtm_tst_out" >>! $build_ver_log_file
+			echo "${hostn}:$tst_dir/$gtm_tst_out" >>! $build_ver_log_file
 			if ($status) then
 				echo "TEST-E-BUILDLOG_WRITE could not write to the buildver_log ($build_ver_log_file), do not have write access"
 			endif
@@ -757,7 +757,7 @@ set time_stamp = `ls -ld $gtm_ver| $tst_awk '{if (length($7)==1) $7="0"_$7; time
 echo "TIME STAMP:       $time_stamp"		>> $confil
 echo "IMAGE:            `basename $gtm_dist`"	>> $confil
 echo "TEST SOURCE:      $gtm_tst"		>> $confil
-echo "HOST:             $HOST:r:r:r:r"		>> $confil
+echo "HOST:             $hostn"			>> $confil
 echo "HOSTOS:           $HOSTOS"		>> $confil
 echo "USER:             $USER"			>> $confil
 echo "MAIL TO:          $mailing_list"		>> $confil
