@@ -4,7 +4,7 @@
 # Copyright (c) 2003-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -30,19 +30,27 @@ setenv tst_jnl_str `echo "$tst_jnl_str" | sed 's/,align=[1-9][0-9]*//'`
 $gtm_tst/com/dbcreate.csh mumps 1 64 8092 8192 4096 2048 4096
 echo "Start time: " >>& tracktime.log
 date >>& tracktime.log
-#
-	$MUPIP set -journal="enable,on,before,auto=8388607,alloc=655477,exten=65535" -reg "*"
-#
+
+$MUPIP set -journal="enable,on,before,auto=8388607,alloc=655477,exten=65535" -reg "*"
+
 if ($?test_replic) then
 	setenv portno `$sec_shell '$sec_getenv; cat $SEC_DIR/portno'`
 	setenv start_time `cat start_time`
-#
 	$sec_shell "$sec_getenv; cd $SEC_SIDE;"'$MUPIP set -journal="enable,on,before,auto=8388607,alloc=655477,exten=65535" -reg "*"'
-#	stop the receiver server
+	# Stop the receiver server. But before that, ensure the receiver server has connected with the source and recorded the
+	# source instance information in the receiver instance file. In the case where "test_replic_suppl_type" env var is randomly
+	# chosen to be 1 by the test framework i.e. it is an A->P replication setup (where A is non-supplementary and P is a
+	# supplementary instance), P needs to record A's instance information in P's instance file at the first connection (the
+	# test framework starts the receiver for the first time with the special flag -updateresync (see "needupdateresyncarg"
+	# variable usage in "com/RCVR.csh"). Or else the receiver on P would get an INSUNKNOWN error when it is restarted later in
+	# the test (framework does not use -updateresync for restarts). Hence the wait for the history record to be processed on
+	# the receiver side before it is shut down (instance information of source is recorded by receiver BEFORE the history
+	# record is processed by the update process).
+	$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/wait_for_log.csh -log $SEC_SIDE/RCVR_${start_time}.log.updproc -message 'New History Content' -duration 120"
 	echo "Receiver shut down ..."
 	$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/RCVR_SHUT.csh ""."" < /dev/null >>& $SEC_SIDE/SHUT_${start_time}.out"
 endif
-#
+
 $MUPIP backup  "*" -nonewjnlfiles before.dat
 $GTM << gtm_eof
 	d ^jnl4G
