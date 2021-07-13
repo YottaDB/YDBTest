@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -28,7 +28,7 @@ echo "GTM Process starts in background..."
 setenv gtm_test_jobid 1
 setenv gtm_test_dbfillid 1
 $gtm_tst/com/imptp.csh >>&! imptp.out
-# Wait for 50,000 transactions to happen on primary side
+# Wait for 50,000 transactions/seqnos to happen on source side. Need to wait for 3600 seconds to account for slow ARMV6L.
 $gtm_tst/com/wait_for_transaction_seqno.csh +50000 SRC 3600
 
 if ($gtm_test_jnl_nobefore) then
@@ -40,7 +40,8 @@ if ($gtm_test_jnl_nobefore) then
 	$MUPIP backup -replinstance=bak1 "*" bak1 >& backup.out
 	set trns_bkup=`$grep "Journal Seqnos up to" backup.out | $tst_awk '{gsub("0x","") ; print $5}'`
 	set trnno=`$gtm_tst/com/radixconvert.csh h2d $trns_bkup | $tst_awk '{print $5}'`
-	$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/wait_until_rcvr_trn_processed_above.csh $trnno"
+	# Wait for 50,000+ seqnos to be processed on receiver side. Need to wait for 3600 seconds to account for slow ARMV6L.
+	$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/wait_until_rcvr_trn_processed_above.csh $trnno 3600"
 else
 	# We waited above for 50,000 transactions to happen on primary side (A). But it is possible the secondary (B) received
 	# and/or processed almost none of this. So wait until at least a few transactions (1000) are processed on the secondary
@@ -52,7 +53,8 @@ else
 	#	$ZSTATUS="2,loadinfofileifneeded+5^imptp,%SYSTEM-E-ENO2, No such file or directory"
 	# And this is because `^%imptp(fillid,"trigger")` was undefined and/or `^endloop` was undefined (both because
 	#	B had processed only 4 updates at the time it was shut down even though A had a backlog of 50000+ relative to B.
-	$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/wait_until_rcvr_trn_processed_above.csh 1000"
+	# Need to wait below for 3600 seconds to account for slow ARMV6L.
+	$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/wait_until_rcvr_trn_processed_above.csh 1000 3600"
 endif
 
 $gtm_tst/com/rfstatus.csh "BEFORE_PRI_A_CRASH:"
@@ -61,8 +63,8 @@ $gtm_tst/com/rfstatus.csh "BEFORE_PRI_A_CRASH:"
 echo "Shutting down Secondary (B)..."
 $sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/RCVR_SHUT.csh ""."" < /dev/null >>&! $SEC_SIDE/SHUT_${start_time}.out"
 
-# Wait for some source server backlog
-$gtm_tst/com/wait_for_transaction_seqno.csh +100 SRC 300
+# Wait for source server backlog to reach 100+ seqnos. Need to wait for 3600 seconds to account for slow ARMV6L.
+$gtm_tst/com/wait_for_transaction_seqno.csh +100 SRC 3600
 
 # PRIMARY SIDE (A) CRASH
 $gtm_tst/com/primary_crash.csh
