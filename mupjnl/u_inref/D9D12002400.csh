@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2010, 2014 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.                                     #
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -25,8 +28,11 @@ setenv gtm_white_box_test_case_number 41
 setenv gtm_white_box_test_case_enable 1
 $gtm_exe/mumps -run %XCMD 'for  set ^a=\$increment(i)' >&! mumps.out &
 set pid=\`echo \$!\`
-# Wait for the message that indicates that GT.M hit the white box test, where it will sleep for 600 seconds.
-$gtm_tst/com/wait_for_log.csh -log mumps.out -message "CRE_JNL_FILE: started a wait" -duration 600
+# Wait for the message that indicates that GT.M hit the white box test (in cre_jnl_file.c), where it will sleep for 600 seconds.
+# Note that to hit that point in cre_jnl_file, the test has to fill up one journal file and switch it.
+# Even though we choose the lowest possible autoswitchlimit in this test (8MiB), it has been seen to take
+# more than half an hour on the ARMV6L architecture so wait for a max of 1 hour (3600 seconds) for that step to be reached.
+$gtm_tst/com/wait_for_log.csh -log mumps.out -message "CRE_JNL_FILE: started a wait" -duration 3600
 $kill9 \$pid
 EOF
 
