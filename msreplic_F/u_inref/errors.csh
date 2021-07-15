@@ -5,7 +5,7 @@
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #################################################################
 #								#
-# Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -191,7 +191,7 @@ unsetenv gtm_white_box_test_case_enable
 unsetenv gtm_white_box_test_case_number
 
 # At this stage the replication configuration is
-# INST1 --- --- INST3 		#(INST1 has the source for INST2 running, INST2 is not running, INST3 has the reciever for INST2 running)
+# INST1 --- --- INST3 		#(INST1 has the source for INST2 running, INST2 is not running, INST3 has the receiver for INST2 running)
 #  |
 #  |--- INST4
 # The replication servers should be stopped before copying the databases and then restarted
@@ -330,16 +330,35 @@ $gtm_tst/com/knownerror.csh $msr_execute_last_out YDB-E-REPLINSTNOHIST
 $MSR CHECKHEALTH INST2 INST3 SRC
 
 $MSR RUN INST3 "$msr_err_chk RCVR_$time_msr_rcv.log REPLINSTNOHIST"
-# Before attempting a shutdown of the passive source server, make sure the receiver server is dead.
-# Not doing so could cause the shutdown to fail as it expects only the passive source server to be attached
-# to the journal pool (the receiver server would also be attached to the journal pool if it is not yet dead).
+
+# Before attempting a shutdown of the passive source server, make sure the receiver server, update process and
+# update helper writer or reader processes are dead as otherwise these processes can be attached to the
+# journal pool and/or database shared memory segments and can cause the passive source server shutdown to fail
+# as it expects itself to be the only process attached.
 $MSR RUN INST3 "cat RCVR_$time_msr_rcv.log" >> INST3_RCVR.log
-# Pull process ID from reciever log
-setenv RCVR_PID `$grep -e "Replication Receiver Server with Pid" INST3_RCVR.log | $tst_awk '{ print substr($14,2,length($14)-2)}'`
-$gtm_tst/com/wait_for_proc_to_die.csh $RCVR_PID
-if ($status) then
-	echo "TEST-E-ERROR process $RCVR_PID did not die."
-endif
+# Pull process ID of receiver server, update process and helper processes from receiver log
+# Below is the format of the lines containing all the relevant pids.
+#	$ grep started RCVR_03_38_13_84.log
+#	Fri Jul  9 03:38:16 2021 : %YDB-I-REPLINFO, GTM Replication Receiver Server with Pid [19953] started on replication instance [INSTANCE3]
+#	Fri Jul  9 03:38:16 2021 : Update Process started. PID 19954 [0x4DF2]
+#	Fri Jul  9 03:38:16 2021 : Helper writer started. PID 19955 [0x4DF3]
+# What we want is to extract "19953 19954 19955" from this.
+# The below sed expression takes care of that by doing the following.
+#   1) First delete all lines that do not contain the string "started".
+#   2) Change all "PID" occurrences to "Pid".
+#   3) Delete all lines that do not contain "Pid".
+#   4) Picking up the first word after "Pid" and removing optional "[" or "]" around it.
+# Note: Need \\!d instead of !d to avoid tcsh from doing history substitution. One would normally need \!d to escape the ! once.
+# But since we are inside a `...` sequence, we need to escape it once more hence the \\.
+# Note that if the "backslash_quote" variable was set (which is not), we would have required \\\!d instead of \\!d below.
+set pidlist = `sed '/started/\\!d;s/PID /Pid /;/Pid/\\!d;s/.* Pid //;s/ .*//;s/]//;s/\[//;' INST3_RCVR.log`
+foreach pid ($pidlist)
+	$gtm_tst/com/wait_for_proc_to_die.csh $pid 300
+	if ($status) then
+		echo "TEST-E-ERROR process/pid [$pid] did not die after waiting for 300 seconds"
+	endif
+end
+
 # Now shut down the passive source server
 $MSR RUN RCV=INST3 SRC=INST2 'set msr_dont_trace ; $MUPIP replic -source -shutdown -timeout=0 -instsecondary=__SRC_INSTNAME__  >&! passivesrc_shut_INST2INST3.out'
  #The above is done because, the receiver will be shut down but the passive server will be alive still. The next STARTRCV will complain.
