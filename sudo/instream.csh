@@ -23,8 +23,9 @@
 # ydb306		[kz]		Test that --zlib and --utf8 will run together with ydbinstall.sh
 # gtm9116		[bdw]		Test that ydbinstall.sh installs libyottadb.so with 755 permissions irrespective of what umask is set to
 # plugins		[bdw]		Test that ydbinstall.sh installs various plugin combinations without errors
+# pluginsonly		[bdw]		Test that --plugins-only installs various plugin combinations without errors
 #
-setenv subtest_list_common "sourceInstall diffDir ydb306 gtm9116 plugins"
+setenv subtest_list_common "sourceInstall diffDir ydb306 gtm9116 plugins pluginsonly"
 setenv subtest_list_non_replic ""
 setenv subtest_list_non_replic "$subtest_list_non_replic"
 setenv subtest_list_replic ""
