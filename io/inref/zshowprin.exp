@@ -1,17 +1,32 @@
+#################################################################
+#								#
+# Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+# This module is derived from FIS GT.M.
+#################################################################
 set timeout 1
 match_max 100000
-
 
 # Start up a TCSH shell first.
 spawn /usr/local/bin/tcsh
 
-# Capture and sanitze the prompt. Note that expect uses \r to send carriage
+# Capture and sanitize the prompt. Note that expect uses \r to send carriage
 # returns like a keyboard. It is a good idea to preceed SENDs with the expected
 # output when writing scripts.
 expect "*"
 send -- "set prompt=\"Shell2M>\"\r"
 
-set timeout 100
+# The timeout used to be 100 previously. But we have had at least one failure on an ARMV6L system.
+# The suspicion is that 100 seconds was not enough in a rare case hence we use a max timeout of 300 seconds below.
+set timeout 300
+
 ########
 # Execute a zshowprin.csh to do the real work
 # set columns and rows here so lines don't wrap in zshowprin.csh

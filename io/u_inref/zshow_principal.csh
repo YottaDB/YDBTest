@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -31,7 +34,11 @@ $echoline
 # create test.fifo for later use
 $gtm_exe/mumps -run %XCMD 'open "test.fifo":(fifo:newversion)'
 setenv TERM xterm
-expect -f $gtm_tst/$tst/inref/zshowprin.exp > zshow_principal.outx
+## Turn on expect debugging using "-d". The debug output would be in expect.dbg in case needed to analyze stray timing failures.
+(expect -d $gtm_tst/$tst/inref/zshowprin.exp > zshow_principal.outx) >& expect.dbg
+if ($status) then
+	echo "EXPECT-E-FAIL : expect returned non-zero exit status"
+endif
 echo 'TEST that ichset=M and ochset=M when OPEN $P:(ichset="M":ochset="M") is done with a split $P' >> zshow_principal.outx
 cat tstchset.out >> zshow_principal.outx
 # cleanup the zshow_principal.out file for the reference file
