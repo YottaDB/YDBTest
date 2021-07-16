@@ -268,6 +268,13 @@ BEGIN {
 			envir[no_options] = "CENTOS_LINUX_X86_64"
 		else if ("rhel" == ENVIRON["gtm_test_linux_distrib"])
 			envir[no_options] = "RHEL_LINUX_X86_64"
+	} else if ("aarch64" == ENVIRON["real_mach_type"])
+	{
+		option_names[++no_options] = "gtm_test_linux_distrib"
+		if ("debian" == ENVIRON["gtm_test_linux_distrib"])
+			envir[no_options] = "DEBIAN_LINUX_AARCH64"
+		else if ("ubuntu" == ENVIRON["gtm_test_linux_distrib"])
+			envir[no_options] = "UBUNTU_LINUX_AARCH64"
 	}
 	#
 	option_names[++no_options] = "gtm_test_singlecpu"
