@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -30,6 +30,11 @@ $gtm_tst/com/dbcreate.csh mumps
 
 # Active source server should hang onto server latch
 $MSR START INST1 INST2 RP
+get_msrtime
+
+# Wait for source server to grab the server latch. Need to do this BEFORE running the rollback to avoid timing issues
+# where the rollback finishes successfully before the source server grabs the LATCH.
+$gtm_tst/com/wait_for_log.csh -log SRC_$time_msr.log -duration 300 -waitcreation -message "Grabbed LATCH that is common to source server and online rollback"
 
 # Online rollback should wait on the server latch and send SIGCONTs to source server
 set syslog_before = `date +"%b %e %H:%M:%S"`
