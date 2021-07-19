@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -49,12 +49,12 @@ endif
 set opt_array      = ("\-gt"  "\-lt"  "\-gte"  "\-lte"  "\-type"  "\-rh")
 set opt_name_array = ("vergt" "verlt" "vergte" "verlte" "vertype" "remotehosts")
 source $gtm_tst/com/getargs.csh $argv
+
 # First list out all versions available in the server. Skip V3 and V9 versions
 # A production version is identified as having a GT.M version # followed by an optional YottaDB release #
-# i.e. V63001A, V63002_R110 etc.
-
-if (! $?remotehosts) set remotehosts = ""
-set localallverlist = `\ls $gtm_root/ | $grep -E '^V[4-8][0-9][0-9][0-9][0-9][A-Z]?(_R.*)?$'`
+# i.e. V63001A, V63002_R110 etc. Also note that a production YottaDB release always has an even number at the end
+# hence the "[02468]" usage below.
+set localallverlist = `\ls $gtm_root/ | $grep -E '^V[4-8][0-9][0-9][0-9][0-9][A-Z]?(_R[1-9][0-9][02468])?$'`
 set allverlist = ""
 foreach ver ($localallverlist)
 	# Even though the version directory exists, it is possible the specific image subdirectory
@@ -65,6 +65,7 @@ foreach ver ($localallverlist)
 	endif
 end
 
+if (! $?remotehosts) set remotehosts = ""
 foreach host ($remotehosts)
 	set vers = `ssh -x $host "ls $gtm_root/" | $grep -E '^V[4-8][0-9][0-9][0-9][0-9][A-Z]?$'`
 	set newlist = ""
