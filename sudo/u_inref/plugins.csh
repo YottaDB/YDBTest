@@ -21,8 +21,8 @@ setenv aim "--aim"
 setenv enc "--encplugin"
 setenv posix "--posix"
 setenv zlib "--zlib"
-setenv utf8 "--utf8 default"
-foreach plugins ("$aim" "$enc" "$posix" "$zlib" "$aim $utf8" "$enc $utf8" "$posix $utf8" "$zlib $utf8" "$aim $enc" "$aim $posix" "$aim $zlib" "$aim $enc $utf8" "$aim $posix $utf8" "$aim $zlib $utf8" "$enc $posix" "$enc $zlib" "$enc $posix $utf8" "$enc $zlib $utf8" "$posix $zlib" "$posix $zlib $utf8" "$aim $enc $posix" "$aim $enc $zlib" "$aim $posix $zlib" "$enc $posix $zlib" "$aim $enc $posix $utf8" "$aim $enc $zlib $utf8" "$aim $posix $zlib $utf8" "$enc $posix $zlib $utf8" "$aim $enc $posix $zlib" "$aim $enc $posix $zlib $utf8")
+setenv utf "--utf8 default"
+foreach plugins ("$aim" "$enc" "$posix" "$zlib" "$aim $utf" "$enc $utf" "$posix $utf" "$zlib $utf" "$aim $enc" "$aim $posix" "$aim $zlib" "$aim $enc $utf" "$aim $posix $utf" "$aim $zlib $utf" "$enc $posix" "$enc $zlib" "$enc $posix $utf" "$enc $zlib $utf" "$posix $zlib" "$posix $zlib $utf" "$aim $enc $posix" "$aim $enc $zlib" "$aim $posix $zlib" "$enc $posix $zlib" "$aim $enc $posix $utf" "$aim $enc $zlib $utf" "$aim $posix $zlib $utf" "$enc $posix $zlib $utf" "$aim $enc $posix $zlib" "$aim $enc $posix $zlib $utf")
 	# setup of the image environment
 	mkdir install # the install destination
 	cd install
