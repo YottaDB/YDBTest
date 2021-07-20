@@ -26,6 +26,7 @@ Case 4. Remove shared memory and start a GT.M process after a crash with wc_bloc
 Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
 
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/wait_for_log.csh -log ##FILTERED##RCVR_##TIMESTAMP##.log.updproc -message "New History Content" -duration 300'==
 ==Executing MULTISITE_REPLIC 'CRASH INST2'==
 Simulating crash on Instance INSTANCE2 in ##FILTERED##_REMOTE_TEST_PATH_
 Instance INSTANCE2 crashed!

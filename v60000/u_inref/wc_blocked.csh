@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -367,6 +367,11 @@ echo
 $gtm_exe/mumps -direct >& "gtm${case}a.outx" << EOF
 set ^b=1
 EOF
+
+# Before crashing the receiver side, make sure the source side instance information is committed to the receiver side instance file
+# This is necessary to avoid INSUNKNOWN errors later when the receiver is restarted (and when no errors are expected).
+get_msrtime	# sets "time_msr" variable to most recent $MSR command.
+$MSR RUN INST2 '$gtm_tst/com/wait_for_log.csh -log RCVR_'$time_msr'.log.updproc -message "New History Content" -duration 300'
 
 # crash secondary and take the backup of crashed database
 $MSR CRASH INST2
