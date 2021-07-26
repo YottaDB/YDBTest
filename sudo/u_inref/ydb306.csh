@@ -12,6 +12,10 @@
 #################################################################
 #Tests that ydbinstall will not give an error when run with --zlib and --utf8 default
 
+# Set the chset to UTF-8. We need to do this to ensure the locale is set correctly
+# and avoid %YDB-E-NONUTF8LOCALE errors when testing --zlib --utf8 default
+$switch_chset "UTF-8"
+
 # setup of the image environment
 mkdir install # the install destination
 cd install
@@ -25,13 +29,6 @@ cp $gtm_tst/$tst/u_inref/ydb306.sh  .
 # we pass these things as variables to ydb306.sh because it doesn't inherit the tcsh environment variables
 source $gtm_tst/$tst/u_inref/setinstalloptions.csh      # sets the variable "installoptions" (e.g. "--force-install" if needed)
 sudo sh ./ydb306.sh $gtm_verno $tst_image `pwd` "$installoptions"
-
-# Set chset to UTF-8 to verify that UTF-8 install done in the previous step works fine.
-# "$switch_chset" requires us to be in the test output directory so cd back from "install" subdirectory for this step.
-cd ..
-$switch_chset "UTF-8"
-# Switch back to "install" subdirectory now that "$switch_chset" is done.
-cd install
 
 # run a few yottadb commands to test the install works and UTF-8 is being used
 cat >> ../yottadbTest.txt << xx
