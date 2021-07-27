@@ -57,21 +57,15 @@ endif
 
 # Disable tests that start lots of processes on ARM boxes as response times on that platform have been seen to be non-deterministic
 # Also disable the performance test for base conversions on ARM boxes as it sometimes fails unless the run time is extremely long
+# and the "largelvarray" subtest as this has been seen to fail intermittently there with time taken going way beyond the allowed limits.
+# The "largelvarray" subtest runs on x86_64 which we consider to be good enough test coverage for now.
 if (("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) || ("HOST_LINUX_AARCH64" == $gtm_test_os_machtype)) then
-	setenv subtest_exclude_list "$subtest_exclude_list gtm8680 gtm9115"
+	setenv subtest_exclude_list "$subtest_exclude_list gtm8680 gtm9115 largelvarray"
 endif
 
 if ($gtm_test_singlecpu) then
 	# Disable certain heavyweight tests on single-cpu systems
 	setenv subtest_exclude_list "$subtest_exclude_list largelvarray"
-else
-	# Disable "largelvarray" subtest on AARCH64 systems running Ubuntu as this has been seen to fail intermittently there
-	# with time taken going way beyond the allowed limits. AARCH64 systems running Debian 11 don't seem to have such failures.
-	# Not yet sure why. Will worry about it if we start seeing failures on the Debian AARCH64 systems too.
-	source $gtm_tst/com/set_gtm_machtype.csh	# to setenv "gtm_test_linux_distrib"
-	if (("HOST_LINUX_AARCH64" == $gtm_test_os_machtype) && ("ubuntu" == $gtm_test_linux_distrib)) then
-		setenv subtest_exclude_list "$subtest_exclude_list largelvarray"
-	endif
 endif
 
 # Submit the list of subtests
