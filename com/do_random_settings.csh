@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -1117,22 +1117,26 @@ setenv tst_random_all "$tst_random_all gtm_test_jnlpool_sync"
 
 ###########################################################################
 ### Random option - 45 ### Randomly enable lock hash collisions in dbg code
+#
+# Note: This option is currently not enabled in the test framework. Details below.
+#
+# 1) YDB#297 fixed various failures/hangs in the GT.M LOCK commands. As part of a test for that
+#    commit 5859cdb0 exercised a dbg-only env var ydb_lockhash_n_bits which induced lock collisions
+#    in the E_ALL. And verified all tests ran fine without issues even with randomly induced collisions.
+# 2) But as part of YDB#673, we decided to revert YDB#297 as GT.M V6.3-009 was merged at that point in
+#    time and it had come up with a different way to address lock collisions. The different way made it
+#    almost impossible to encounter indefinite collision overflows in practice even though it left open
+#    the theoretical possibility of that like prior GT.M versions.
+# 3) This meant that YottaDB no longer addressed the theoretical possibility of lock collision overflows
+#    like it did previously with the YDB#297 fixes.
+# 4) Therefore, enabling ydb_lockhash_n_bits (induces collision overflows a lot more frequently) can cause
+#    test failures/hangs. And hence we unfortunately need to disable this env var.
+#
 # Uses randnumbers[45]
-if !($?ydb_lockhash_n_bits) then
-	set nbits = $randnumbers[45]
-	if (6 <= $nbits) then
-		unsetenv ydb_lockhash_n_bits
-		echo "# ydb_lockhash_n_bits chosen to be UNDEFINED by do_random_settings.csh"	>>&! $settingsfile
-		echo "unsetenv ydb_lockhash_n_bits"						>>&! $settingsfile
-	else
-		echo "# ydb_lockhash_n_bits set by do_random_settings.csh"			>>&! $settingsfile
-		setenv ydb_lockhash_n_bits `$gtm_dist/mumps -run chooseamong 1 3 7 15 31`
-		echo "setenv ydb_lockhash_n_bits $ydb_lockhash_n_bits"				>>&! $settingsfile
-	endif
-else
-	echo "# ydb_lockhash_n_bits was already set before coming into do_random_settings.csh"	>>&! $settingsfile
-	echo "setenv ydb_lockhash_n_bits $ydb_lockhash_n_bits"					>>&! $settingsfile
-endif
+set nbits = $randnumbers[45]
+unsetenv ydb_lockhash_n_bits
+echo "# ydb_lockhash_n_bits chosen to be UNDEFINED by do_random_settings.csh due to YDB#673's revert of YDB#297" >>&! $settingsfile
+echo "unsetenv ydb_lockhash_n_bits"						>>&! $settingsfile
 setenv tst_random_all "$tst_random_all ydb_lockhash_n_bits"
 ###########################################################################
 
