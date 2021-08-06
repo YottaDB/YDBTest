@@ -14,11 +14,18 @@ set backslash_quote
 set echo
 set verbose
 
-# Simple case
 set verno = "V999_R999"
+
+rm -rf /Distrib/YottaDB/$verno
 mkdir -p /Distrib/YottaDB/$verno
 cd /Distrib/YottaDB/$verno
-git clone --depth 1 https://gitlab.com/YottaDB/DB/YDB.git .
+
+if ( -f /YDB/CMakeLists.txt ) then
+  cp -r /YDB/. /Distrib/YottaDB/$verno
+else
+  git clone --depth 1 https://gitlab.com/YottaDB/DB/YDB.git .
+endif
+
 
 # Edit sr_linux/release_name.h to reflect V9.9-x version name in GT.M and YottaDB versions
 #
@@ -77,13 +84,14 @@ foreach file (sr_*/release_name.h)
 end
 
 mkdir -p $gtm_root/$verno
+rm -rf $gtm_root/$verno/*
 
 mkdir -p /Distrib/YottaDB/$verno/dbg
 cd /Distrib/YottaDB/$verno/dbg
 cmake -Wno-dev -D CMAKE_BUILD_TYPE=Debug -D CMAKE_INSTALL_PREFIX:PATH=$PWD ..
-make -j `getconf _NPROCESSORS_ONLN` && make install
+make -j `getconf _NPROCESSORS_ONLN` install
 pushd yottadb_r*
-./ydbinstall --installdir=/usr/library/$verno/dbg --utf8 default --keep-obj --ucaseonly-utils --prompt-for-group
+./ydbinstall --installdir=$gtm_root/$verno/dbg --utf8 default --keep-obj --ucaseonly-utils --prompt-for-group
 popd
 mkdir $gtm_root/$verno/dbg/obj
 find . -name '*.a' -exec cp {} $gtm_root/$verno/dbg/obj \;
@@ -93,9 +101,9 @@ cd /Distrib/YottaDB/$verno
 cp sr_unix/*.awk $gtm_root/$verno/tools
 cp sr_unix/*.csh $gtm_root/$verno/tools
 cp sr_linux/*.csh $gtm_root/$verno/tools
+cp $gtm_root/$verno/dbg/custom_errors_sample.txt $gtm_root/$verno/tools
 rm -f $gtm_root/$verno/tools/setactive{,1}.csh
 
-uname -m
 set machtype=`uname -m`
 foreach ext (c s msg h si)
         if (($ext == "h") || ($ext == "si")) then
@@ -118,7 +126,9 @@ end
 
 # Install gtmcrypt plugin
 setenv ydb_dist /usr/library/$verno/dbg
-cd $ydb_dist/plugin/gtmcrypt/
-tar x < source.tar
+mkdir /tmp/plugin-build && cd /tmp/plugin-build
+git clone https://gitlab.com/YottaDB/Util/YDBEncrypt.git .
 make && make install && make clean
 find $ydb_dist/plugin -type f -exec chown root:root {} +
+cd -
+rm -r /tmp/plugin-build

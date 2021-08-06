@@ -46,7 +46,8 @@ setenv gtm_test_noggsetup 1
 setenv gtm_test_serverconf_file $gtm_test/serverconf.txt
 
 setenv LC_ALL en_US.UTF-8
-setenv gtm_icu_version `pkg-config --modversion icu-io`
+setenv ydb_icu_version `pkg-config --modversion icu-io` # needed for YDBEncrypt compilation
+setenv gtm_icu_version $ydb_icu_version
 
 if ( -f $gtm_tools/gtm_env.csh ) then
 	setenv HOSTOS `uname -s`

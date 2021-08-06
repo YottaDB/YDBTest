@@ -306,21 +306,45 @@ folder. In this example, we tag our built image to be called "ydbtest".
 docker build -f docker/Dockerfile -t ydbtest .
 ```
 
-To run, you can do something like this (replacing `<local directory>` with a suitable directory):
+To run, you can do something like this (replacing `<local directory>` with a
+suitable directory. `<local directory>` is where the artifacts will be stored
+on your host when docker is finished running the test.):
 
 ```sh
 docker run --init -it -v <local directory>:/testarea1/ --rm ydbtest -t r132
 ```
 
-The arguments after "ydbtest" are regular `gtmtest.csh` arguments.
+The arguments after "ydbtest" are regular `gtmtest.csh` arguments. If you do
+not pass any arguments, you will get the output of `gtmtest.csh -h`.
 
-To debug problems, there is an alternate entrypoint `docker/enter.csh` created. Use it as follows:
+To run against a copy of YottaDB on your file system, you can do this; the
+volume (-v) argument left hand side is the full path of the YDB git repository
+whose source code would be used to build YottaDB, the right hand side of the
+colon is a fixed path that is known by the docker scripts which you must not
+change:
 
 ```sh
-docker run --init -it -v <local directory>:/testarea1/ --entrypoint=/usr/library/gtm_test/T999/docker/enter.csh --rm ydbtest -t basic
+docker run --init -it -v <full path to YottaDB>:/YDB/ -v <local directory>:/testarea1/ --rm ydbtest -t r132
 ```
 
-A private note: You may see the message: not a block device for lsblk. To go
-around that, I found that you can do -v /dev:/dev, but I don't feel comfortable
-with that making that an official recommendation. We may need to just disable
-the check inside of YDBTest for docker containers.
+To run against a copy of YDBTest on your file system, you can do this; the
+volume (-v) argument left hand side is the full path of the YDBTest git repository
+whose source code would be used to build YottaDB, the right hand side of the
+colon is a fixed path that is known by the docker scripts which you must not
+change:
+
+```sh
+docker run --init -it -v <local directory>:/testarea1/ -v <full path to YDBTest>:/YDBTest --rm ydbtest -t r132
+```
+
+You can combine the latter two options, to both pass a YottaDB source and a
+YDBTest source on your file system.
+
+To debug problems, instead of passing `gtmtest.csh` arguments, pass either
+`-shell` to go to the `gtmtest` user id in a way so that you are ready to run tests, or
+`-rootshell` to log-in as `root`.
+
+```sh
+docker run --init -it -v <local directory>:/testarea1/ --rm ydbtest -shell
+docker run --init -it -v <local directory>:/testarea1/ --rm ydbtest -rootshell
+```

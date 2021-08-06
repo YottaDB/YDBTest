@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -29,7 +29,8 @@ if ($status) then
 	echo "TEST-E-ISCURDIRSSD : Error while determining filesystem for directory $dir"
 	exit -1
 endif
-set diskname = `lsblk -no pkname $filesystem`
+# 'not a block device' error comes from running lsblk on the a file system mounted in docker.
+set diskname = `lsblk -no pkname $filesystem |& grep -v 'not a block device'`
 if ($status) then
 	echo "TEST-E-ISCURDIRSSD : Error while determining diskname for filesystem $filesystem corresponding to directory $dir"
 	exit -1

@@ -11,7 +11,10 @@
 #################################################################
 ARG OS_VSN=buster
 FROM debian:${OS_VSN}
+
 VOLUME /testarea1
+VOLUME /YDB
+VOLUME /YDBTest
 
 ARG DEBIAN_FRONTEND=noninteractive
 # psmisc for fuser
@@ -64,7 +67,7 @@ RUN ln -s /usr/bin/tcsh /usr/local/bin/tcsh && \
 COPY --chown=gtmtest:gtc . /usr/library/gtm_test/T999/
 RUN ln -s /usr/library/gtm_test/T999/docker/cshrc ~/.cshrc && \
     ln -s /usr/library/gtm_test/T999/docker/cshrc ~gtmtest/.cshrc
-RUN /usr/library/gtm_test/T999/docker/install_yottadb.csh
+RUN /usr/library/gtm_test/T999/docker/build_and_install_yottadb.csh
 RUN chown gtmtest:gtc /testarea1/
 RUN ln -s /usr/library/gtm_test/T999/docker/serverconf.txt /usr/library/gtm_test/serverconf.txt
 # https://stackoverflow.com/questions/56609182/openthread-environment-docker-rsyslogd-imklog-cannot-open-kernel-log-proc-km
