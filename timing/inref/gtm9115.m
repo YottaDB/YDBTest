@@ -63,7 +63,7 @@ compdectooct
          . set i=$$getrandnumdecexactlen(20)
          . set k=$$FUNCPREVDECTOOCT(i,16)
 	write "Performance: current ",ncnt," ","previous ",ocnt,!
-        if (ncnt<ocnt) write "FAILED as performance is less than previous implementation ","new count:",ncnt," ","previous count:",ocnt," ",!
+        if (ncnt<ocnt*.9) write "FAILED as performance is less than 90% of previous implementation ","new count:",ncnt," ","previous count:",ocnt," ",!
 	write "Completed",!
 	quit
 
