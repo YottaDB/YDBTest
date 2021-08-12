@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2006, 2014 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -22,7 +25,13 @@ set opt_name_array = ("logfile" "mess"      "duration"   "grepit" "waitcreation"
 source $gtm_tst/com/getargs.csh "$argv"
 set begdate = `date`
 if (! $?sleepinc) set sleepinc = 1	# default sleep increment for each loop
-if (! $?duration) set duration = 120	# default wait time is 120 secs.
+if (! $?duration) then
+	if ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) then
+		set duration = 300	# default wait time is 300 secs on ARMV6L.
+	else
+		set duration = 120	# default wait time is 120 secs.
+	endif
+endif
 set sleeptime = $duration
 # Unless -nowaitcreation is explicitly specified, make -waitcreation the default
 if !($?nowaitcreation) setenv waitcreation
