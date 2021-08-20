@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2014 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -12,7 +15,7 @@
 
 $gtm_tst/com/dbcreate.csh mumps 1
 
-$MUPIP set -file mumps.dat -flush_time=5:0:0 # Prevent interruptions from flush timers
+$MUPIP set -file mumps.dat -flush_time=1:0:0:0 # Prevent interruptions from flush timers
 
 echo "# Initialize some data"
 $gtm_exe/mumps -run %XCMD 'set (^x,^y)=0'
