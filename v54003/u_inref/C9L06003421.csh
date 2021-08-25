@@ -4,6 +4,9 @@
 # Copyright (c) 2011-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -13,6 +16,11 @@
 #
 # C9L06003421 : If crash occurs in case of multi-region database, only those regions which were open at
 #               the time of crash should participate in the tp_resolve_time calculations
+
+# This test will crash regions DREG and EREG and do a backward journal recovery. It will do updates and
+# write EPOCHs first in DREG then EREG. So the EPOCH in DREG will be earlier than the one in EREG and
+# thus the journal recovery turn around point (and the tpresolvetime) will be determined by the last
+# EPOCH in d.mjl after the crash and before journal recovery.
 
 @ section = 0
 set echoline = "echo ---------------------------------------------------------------------------------------"
@@ -92,17 +100,24 @@ endif
 set tprtime = `$grep Tp_resolve_time RECOVER.log | $tst_awk -F\; '{print $2;exit}' | $tst_awk -F= '{print $2}'`
 END
 
-BEGIN "EOF timestamp in c.mjf and tp_resolve time should match"
+BEGIN "EOF timestamp in d.mjf and tp_resolve time should match"
+
+# The variable set below (maxdiff) is used to measure the difference between the last update (SET) in d.mjl (EOF time stamp)
+# and the next epoch (TP Resolve time). Prior to September 2021, we allowed a difference of 5 seconds on all machines. This
+# is too long for x86_64 where 2 seconds appears to be sufficient and is too short for ARMVXL and AARCH64 where allowing
+# a difference of up to 10 seconds is necessary to avoid frequent test failures due to timing issues.
+# For more details, see https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/1251#note_687910789
+if ( ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) || ("HOST_LINUX_AARCH64" == $gtm_test_os_machtype) ) then
+	set maxdiff = 10
+else
+	set maxdiff = 2
+endif
+
 $GTM <<GTMEOF
     WRITE "EOF time stamp:  $eoftime"
     WRITE "TP Resolve time: $tprtime"
-    set eofdays=\$piece("$eoftime",",",1)
-    set eofsec=\$piece("$eoftime",",",2)
-    set tprtdays=\$piece("$tprtime",",",1)
-    set tprtsec=\$piece("$tprtime",",",2)
-    set daydiff=eofdays-tprtdays
-    set eofdiff=eofsec-tprtsec
-    if ((\$FNUMBER(daydiff,"-")>1)!(\$FNUMBER(eofdiff,"-")>5)) WRITE "Mismatch in timestamp"
+    set timediff=\$\$^difftime("$tprtime","$eoftime")
+    if (timediff>$maxdiff) WRITE "Mismatch in timestamp"
     else  WRITE "Timestamp match"
 GTMEOF
 END
