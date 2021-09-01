@@ -1,10 +1,24 @@
-locks1	; Locks regression test.  
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; This module is derived from FIS GT.M.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;
+locks1	; Locks regression test.
 		; Test locks :  storage ( i.e. invisible to the user )
 		;		basic function
 		;		timed response
 		;		multiple user interaction
 		;		multiple region interaction
-	use 0 
+	use 0
 	set cnt=120,$zt=""
 	set unix=$zv'["VMS"
 	write $zgbldir,!
@@ -194,7 +208,7 @@ TEST12  ; C9J06-003144
 	if $test write "12 PASS",!
 	lock
 	quit
-	
+
 d002014	; D9B12-002014 -- See TR/Outlook for details
 	; test nested TP with lock rollback
 	;
@@ -202,17 +216,13 @@ d002014	; D9B12-002014 -- See TR/Outlook for details
 	set x=0
 	lock ^a
 	tstart ()
+	do lockcheck	; Check locks after TSTART and/or TRESTART
 	lock +^a
 	tstart ()
 	lock +^a
 	if x=0 set x=1 trestart
 	trollback
-	zsh "L":lstat
-	if $data(lstat("L",1))=0 do error quit
-	if lstat("L",1)'="LOCK ^a LEVEL=1" do error quit
-	kill lstat("L",1)
-	kill lstat("L",0) ; remove MLG,MLT line
-	if $data(lstat)'=0 do error quit	 ; check no other lock was recorded
+	do lockcheck	; Check locks after TROLLBACK
 	;
 	lock  ; to ensure we don't hold any locks at start
 	set x=0
@@ -228,9 +238,23 @@ d002014	; D9B12-002014 -- See TR/Outlook for details
 	write "d002014 PASS",!
 	quit
 
+lockcheck	;
+	; -----------------------------------------
+	; We are coming here after a TSTART or after a TRESTART.
+	; Check that the only lock held is "^a" and has a "LEVEL=1".
+	zsh "L":lstat
+	if $data(lstat("L",1))=0 do error quit
+	if lstat("L",1)'="LOCK ^a LEVEL=1" do error quit
+	kill lstat("L",1)
+	kill lstat("L",0) ; remove MLG,MLT line
+	if $data(lstat)'=0 do error quit	 ; check no other lock was recorded
+	; -----------------------------------------
+	quit
+
 error	;
 	write "d002014 FAILED",!
 	zshow "*"
+	trollback:$tlevel
 	quit
 
 BACKOUT
@@ -267,11 +291,11 @@ LISTLOCK
 MULREGION
 	write "Multiple Regions test ",^ITEM,!
 	lock ^B:10 set x=$test
-	if x write "  failed.",! set ^Fail=^Fail+1 
+	if x write "  failed.",! set ^Fail=^Fail+1
 	lock ^C:10 set x=$test
-	if x write "  failed.",! set ^Fail=^Fail+1 
+	if x write "  failed.",! set ^Fail=^Fail+1
 	lock ^D:10 set x=$test
-	if x write "  failed.",! set ^Fail=^Fail+1 
+	if x write "  failed.",! set ^Fail=^Fail+1
 	set ^X=1
 	if '^Fail  write "  PASS",!
 	quit
@@ -293,7 +317,7 @@ TIMEGET
 	lock ^A:10 set x=$test
 	set ^X=1
 	if x do
-	.	write "  PASS",! 
+	.	write "  PASS",!
 	else  do
 	.	set ^Fail=^Fail+1
 	quit
