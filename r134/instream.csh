@@ -15,13 +15,14 @@
 # List of subtests of the form "subtestname [author] description"
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 # ydb757 [nars]        Test that SET x=$ZYHASH(x) does not issue LVUNDEF error
+# ydb775 [nars]        Test that LOCKS obtained inside TSTART/TCOMMIT are correctly released on TRESTART
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r134 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "ydb757"
+setenv subtest_list_non_replic "ydb757 ydb775"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then

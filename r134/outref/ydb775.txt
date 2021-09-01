@@ -1,0 +1,34 @@
+#################################################################################################
+###### Test that LOCKS obtained inside TSTART/TCOMMIT are correctly released on TRESTART ########
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# --------------------------------
+# Test 1 : Single process
+# --------------------------------
+# Acquire lock on ^a when $TLEVEL is 0
+# Do ZSHOW "L" to verify that the only lock we hold is on ^a LEVEL=1
+MLG:1,MLT:0
+LOCK ^a LEVEL=1
+# Start outer TP transaction : $TLEVEL = 1
+# Acquire lock on ^b when $TLEVEL is 1
+# Start inner TP transaction : $TLEVEL = 2
+# Force a TRESTART
+# Do ZSHOW "L" after TRESTART to verify that the only lock we hold is on ^a LEVEL=1
+MLG:2,MLT:0
+LOCK ^a LEVEL=1
+# Acquire lock on ^b when $TLEVEL is 1
+# Start inner TP transaction : $TLEVEL = 2
+# Do ZSHOW "L" to verify that the only locks we hold are on ^a LEVEL=1 and ^b LEVEL=1
+MLG:3,MLT:0
+LOCK ^b LEVEL=1
+LOCK ^a LEVEL=1
+# --------------------------------
+# Test 2 : Multiple processes
+# --------------------------------
+PASS : multiproc test
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
