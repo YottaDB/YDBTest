@@ -2661,7 +2661,11 @@ AllCmdPostConditionalTest
 	. ;
 	. ; TCOMMIT
 	. set level=$tlevel,result=0,xstr="tcommit:"_boolexpr
-	. tstart
+	. ; Note that the below transaction, even though single threaded has been seen to restart in rare cases
+	. ; (we know it is possible if a process steps on one of its own global buffers due to the least-recently
+	. ; used algorithm and can trigger a restart even without a concurrent database update). Hence the "()"
+	. ; to ensure the transaction is restartable. A plain "tstart" will fail with a TRESTNOT error.
+	. tstart ()	; need () to ensure transaction is restartable (a plain "tstart" will not work)
 	. if dlrtest		; sets $test to dlrtest before boolexpr is evaluated
 	. xecute xstr
 	. tcommit:((value(boolrslt)'=1)&($tlevel=(level+1))) 	; need tcommit here to reduce $tlevel
@@ -2675,7 +2679,9 @@ AllCmdPostConditionalTest
 	. ;
 	. ; TROLLBACK
 	. set result=0,xstr="trollback:"_boolexpr
-	. tstart
+	. ; The below tstart has not been seen to restart like the previous one. But it is no different than the
+	. ; previous one and hence is equally likely to encounter the same issue so add the "()" here too just in case.
+	. tstart ()
 	. if dlrtest		; sets $test to dlrtest before boolexpr is evaluated
 	. xecute xstr
 	. if $tlevel=1 do
