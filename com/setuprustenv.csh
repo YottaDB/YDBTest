@@ -41,19 +41,3 @@ endif
 setenv RUSTFLAGS "-C link-args=$ci_ldpath$ydb_dist -L$ydb_dist $tst_ld_yottadb"
 # Give a backtrace if the wrapper panics
 setenv RUST_BACKTRACE 1
-
-# The only dependencies YDBRust has are build dependencies on bindgen and pkg-config.
-# These execute basically instantaneously, so there is no need to optimize them.
-#
-# This used to be set in the Cargo.toml of YDBRust as
-# `profile.release.package."*"`.  Unfortunately, that wasn't supported before
-# Rust 1.41. In 1.34, it was just ignored, but in 1.40 it was changed to a hard
-# error because it was implemented on nightly behind a feature gate. Set an
-# environment variable instead, which degrades gracefully even if it isn't
-# supported.
-#
-# TODO: Once the minimum rust version for YDBRust is increased to 1.41, this
-# variable can be deleted and the override moved to YDBRust directly (i.e, add
-# back the `[profile.release.package."*"]` section removed in
-# https://gitlab.com/YottaDB/Lang/YDBRust/-/merge_requests/110).
-setenv CARGO_PROFILE_RELEASE_BUILD_OVERRIDE_OPT_LEVEL 0
