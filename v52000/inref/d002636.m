@@ -15,6 +15,8 @@ d002636	;
 	; Routine to test job interrupt functionality and its interaction with terminal I/O
 	; Based on v43001/inref/tzintr.m for D9G12-002636
 	;
+	; We use ^sstepgbl to help with debugging rare timing failures
+	do ^sstepgbl
 	s ^drvactive=0,^cnt=0,^done=0
 	Set unix=$ZVersion'["VMS"
 	; Check that $PRINCIPAL is TERMINAL
@@ -61,7 +63,7 @@ d002636	;
 	; and global variables (which are checked later to make sure they are in step), resets $TEST
 	; and the naked indicator and every zintr iterations causes a divide by zero exception that
 	; we handle and recover from.
-	set $zinterrupt="set b=b+1,d(b)=i_""_""_j_""_""_lasti_""_""_lastj,b(i)=$get(b(i))+1,b(j)=$get(b(j))+1"
+	set $zinterrupt="if j>0,j<=maxj,i>0,i<=maxi set b=b+1,d(b)=i_""_""_j_""_""_lasti_""_""_lastj,b(i)=$get(b(i))+1,b(j)=$get(b(j))+1"
 	set $zinterrupt=$zinterrupt_" if 1=1 set ^(0)=^b(0)+$ZINI+$T,xx=100/zintr,zintr=zintr-1,c=c+1"
 
 	; We have an external job to be our processus interruptus
@@ -70,7 +72,7 @@ d002636	;
 	Else    J @("intrdrv^d002636($j,unix,100000):(nodetached:startup=""startup.com"":output=""intrdrv.mjo"":error=""intrdrv.mje"")")
 	if 1=3		; $T to 0
 	w "."
-	for i=1:1 Q:^drvactive=1  if ^a(0)'=^a(0)  W "."  Hang 1	; $T to 0, $REFERENCE to "^a"
+	for i=1:1 quit:^cnt>0  if ^a(0)'=^a(0)  write "."  Hang 1	; $T to 0, $REFERENCE to "^a"
 	if ^a(0)'=^a(0)							; $T to 0, $REFERENCE to "^a"
 	Write !,"Beginning database transactions",!
 
@@ -160,6 +162,7 @@ intrdrv(pid,unix,times)
 	; that the file is in use by another process. Because of this, we use the $ZSIGPROC function to
 	; send the interrupt. Note that with this function you can send any signal but that the signal
 	; we are interested in (SIGUSR1) has different values on different platforms. On VMS, it is 16.
+	do ^sstepgbl
 	Set $ZTRAP="S $ZT="""" s ^drvactive=0 ZSHOW ""*"" Halt"
 	s ^drvactive=1
 	Hang 3 ; Chill while parent gets going
