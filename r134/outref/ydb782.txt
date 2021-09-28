@@ -1,0 +1,30 @@
+# Test ydb_lock_incr_s() call in child process while parent process holds the lock.
+# This used to assert fail in op_lock2.c previously.
+# Build ydb782 executable
+# Create database using dbcreate.csh
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Running ydb782 executable
+## --------------------------------------------------------
+## Test ydb_lock_incr_s() with timeout = [0 nanoseconds]
+## --------------------------------------------------------
+## Parent : Lock ^basevar using ydb_lock_incr_s() with timeout = [0 nanoseconds]
+## Parent : Verify return status from ydb_lock_incr_s() is YDB_OK
+## Parent : Create a child process using fork() call
+## Child : Lock ^basevar using ydb_lock_incr_s() with timeout = [0 nanoseconds]
+## Child : Verify return status from ydb_lock_incr_s() is YDB_LOCK_TIMEOUT
+## --------------------------------------------------------
+## Test ydb_lock_incr_s() with timeout = [1000000 nanoseconds]
+## --------------------------------------------------------
+## Parent : Lock ^basevar using ydb_lock_incr_s() with timeout = [1000000 nanoseconds]
+## Parent : Verify return status from ydb_lock_incr_s() is YDB_OK
+## Parent : Create a child process using fork() call
+## Child : Lock ^basevar using ydb_lock_incr_s() with timeout = [1000000 nanoseconds]
+## Child : Verify return status from ydb_lock_incr_s() is YDB_LOCK_TIMEOUT
+# Run dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
