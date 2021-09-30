@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -69,7 +69,11 @@
         Set tcpdev="client$"_$j,timeout=20	; 20 second timeout for heavy load conditions
         Set openarg="(connect="""_hostname_":"_portno_":TCP"""_":attach=""client"")"
         Open tcpdev:@openarg:timeout:"SOCKET"
-        Write !,"Connection to receiver established",!
+	If '$test Do
+	. Write !,"FAIL TEST - Could not connect to receiver in the allotted time",!
+	. ZSHOW "*"
+	. Halt
+        Else  Write !,"Connection to receiver established",!
 
 	Set lastelapsed=9999999
 	; Loop through each morereadtime setting recording how long it takes to run with each one.
