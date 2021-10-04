@@ -4,6 +4,9 @@
 # Copyright (c) 2014-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -28,14 +31,14 @@ setenv gtm_white_box_test_case_enable 1
 setenv gtm_white_box_test_case_number 26
 setenv gtm_white_box_test_case_count 1
 
+$gtm_tools/offset.csh node_local gtm_main.c >&! offset.out
+setenv hexoffset `$grep -w wbox_test_seq_num offset.out | sed 's/\].*//g;s/.*\[0x//g'`
+echo $hexoffset >! hexoffset.out
+
 # Start the INTEG in the background.
 # set FASTINTEG = `$gtm_exe/mumps -run chooseamong "" "-fast"`
 # echo $FASTINTEG >&! fastinteg_choice.out
 ($MUPIP integ -online -preserve -r DEFAULT >&! online_integ.out & ; echo $! >! mupip1_pid.log)	>&! background_pid.txt
-
-$gtm_tools/offset.csh node_local gtm_main.c >&! offset.out
-setenv hexoffset `$grep -w wbox_test_seq_num offset.out | sed 's/\].*//g;s/.*\[0x//g'`
-echo $hexoffset >! hexoffset.out
 
 # Wait for it to have reached a rendezvous point.
 $gtm_tst/com/waitforOLIstart.csh
