@@ -1,0 +1,39 @@
+# Running : go get -d -v -x -t lang.yottadb.com/go/yottadb
+# Building ydbgo34a
+###################################################################
+# Running ydbgo34a 20 times to test yottadb.RegisterSignalNotify() - Any errors show below
+
+###################################################################
+# Rename any core file and/or fatal error files to hide them from the framework as they aren't
+# necessarily indicative of a problem
+
+###################################################################
+# Run ydbgo34b to test to test yottadb.UnRegisterSignalNotify(). This is done by sending a simple
+# signal 3 times: (1) no handler set, (2) set a handler, (3) unset that handler.
+# Building ydbgo34b
+Run ydbgo34b
+ydbgo34b begins
+
+ydbgo34b: Sending SIGCONT to ourselves after registering notification channel - should see notification msg
+ydbgo34b: Signal SIGCONT notification received!
+
+ydbgo34b: Sending SIGCONT to ourselves again after UN-registering notification channel - should *NOT* see a notification msg
+ydbgo34b: Timeout waiting for SIGCONT notification - deregistration successful
+ydbgo34b: Complete
+
+###################################################################
+# Run ydbgo34c to test passing an unsupported signal to yottadb.RegisterSignalNotify()
+# Building ydbgo34c
+Run ydbgo34c
+##TEST_AWKRecovering from panic - The specified signal \(.*\) is not supported for signal notification by yottadb.RegisterSignalNotify\(\)
+##TEST_AWKRecovering from panic - The specified signal \(.*\) is not supported for signal notification by yottadb.RegisterSignalNotify\(\)
+##TEST_AWKRecovering from panic - The specified signal \(.*\) is not supported for signal notification by yottadb.RegisterSignalNotify\(\)
+##TEST_AWKRecovering from panic - The specified signal \(.*\) is not supported for signal notification by yottadb.RegisterSignalNotify\(\)
+##TEST_AWKRecovering from panic - The specified signal \(.*\) is not supported for signal notification by yottadb.RegisterSignalNotify\(\)
+ydbgo34c: Complete
+
+###################################################################
+# Validate DB
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

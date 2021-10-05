@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -30,12 +30,13 @@
 # tprestart		[user, estess] 	Check that restart in a transaction whether in M or in simpleAPI returns the same way
 # deadlock		[user, estess]	Test that purposely creates a deadlock situation to verify code does not let engine lock acquire
 # 			       		requests run when they shouldn't.
+# ydbgo34               [estess]        Test yottadb.RegisterSignalHandler() and yottadb.UnRegisterSignalHandler() functions.
 #
 echo "go test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     "unit_tests threeenp1B1 threeenp1B2 randomWalk randomWalkSimple threeenp1C2"
-setenv subtest_list_non_replic "wordfreq pseudoBank CallMTRetLen fatal_signal tptimeout sigsegv tprestart deadlock"
+setenv subtest_list_non_replic "wordfreq pseudoBank CallMTRetLen fatal_signal tptimeout sigsegv tprestart deadlock ydbgo34"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
@@ -45,6 +46,12 @@ else
 endif
 
 setenv subtest_exclude_list    ""
+
+# filter out test that needs to run pro-only - temp allow dbg while not allowing cores [TODO] - waiting for YDB#790 to be done
+# to reactivate this portion of the code.
+#if ("pro" != "$tst_image") then
+#       setenv subtest_exclude_list "$subtest_exclude_list ydbgo34" # ydbgo34 generates cores and stops in dbg, continues in pro
+#endif
 
 if ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) then
 	# filter out below subtest on 32-bit ARM since it could use memory >= 2Gb, a lot on a 32-bit process
