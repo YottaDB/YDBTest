@@ -1,0 +1,13 @@
+# Running : go get -d -v -x -t lang.yottadb.com/go/yottadb
+# Building ydb785
+Running ydb785
+
+Test that we get text of error from ydb_ci_t() when error occurs in M code (LVUNDEF)
+Error from CallMT(): 150373850,entry+1^ydb785,%YDB-E-LVUNDEF, Undefined local variable: y
+*** This was the expected error - SUCCESS!
+
+Test that we get text of error from ydb_cip_t() when error occurs in M code (LVUNDEF)
+Error from CallMDescT(): 150373850,entry+1^ydb785,%YDB-E-LVUNDEF, Undefined local variable: y
+*** This was the expected error - SUCCESS!
+
+Test ydb785 complete

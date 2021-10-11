@@ -18,13 +18,14 @@
 # ydb775 [nars]        Test that LOCKS obtained inside TSTART/TCOMMIT are correctly released on TRESTART
 # ydb782 [nars]        Test ydb_lock_incr_s() call in child process while parent process holds the lock
 # ydb772 [sam, ksbhaskar] Utility label $$SRCDIR^%RSEL returns space separated list of source code directories
+# ydb785 [estess]      Test that ydb_ci_t() and ydb_cip_t() get text of error message if error occurs in M code
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r134 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "ydb757 ydb775 ydb782 ydb772"
+setenv subtest_list_non_replic "ydb757 ydb775 ydb782 ydb772 ydb785"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
