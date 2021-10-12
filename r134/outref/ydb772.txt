@@ -1,0 +1,110 @@
+#################################################################################################
+###### Utility label $$SRCDIR^%RSEL returns space separated list of source code directories #####
+# --------------------------------
+# Run M test program
+# --------------------------------
+# Test SILENT^%RSEL, looking for %RSEL
+##SUSPEND_OUTPUT UNICODE_MODE
+%RSEL found in ##SOURCE_PATH##/
+##ALLOW_OUTPUT UNICODE_MODE
+##SUSPEND_OUTPUT NONUNICODE_MODE
+%RSEL found in ##SOURCE_PATH##/utf8/
+##ALLOW_OUTPUT NONUNICODE_MODE
+
+# Various tests for SRCDIR^%RSEL
+##SUSPEND_OUTPUT UNICODE_MODE
+# Test $$SRCDIR^%RSEL with objdir(srcdir##TEST_SHL_SUFFIX##) $ydb_dist/libyottadbutil##TEST_SHL_SUFFIX##
+##ALLOW_OUTPUT UNICODE_MODE
+##SUSPEND_OUTPUT NONUNICODE_MODE
+# Test $$SRCDIR^%RSEL with objdir(srcdir##TEST_SHL_SUFFIX##) $ydb_dist/utf8/libyottadbutil##TEST_SHL_SUFFIX##
+##ALLOW_OUTPUT NONUNICODE_MODE
+$$SRCDIR^%RSEL returns srcdir##TEST_SHL_SUFFIX## 
+
+##SUSPEND_OUTPUT UNICODE_MODE
+# Test $$SRCDIR^%RSEL with ##TEST_PATH##/objdir(srcdir##TEST_SHL_SUFFIX##) $ydb_dist/libyottadbutil##TEST_SHL_SUFFIX##
+##ALLOW_OUTPUT UNICODE_MODE
+##SUSPEND_OUTPUT NONUNICODE_MODE
+# Test $$SRCDIR^%RSEL with ##TEST_PATH##/objdir(srcdir##TEST_SHL_SUFFIX##) $ydb_dist/utf8/libyottadbutil##TEST_SHL_SUFFIX##
+##ALLOW_OUTPUT NONUNICODE_MODE
+$$SRCDIR^%RSEL returns srcdir##TEST_SHL_SUFFIX## 
+
+##SUSPEND_OUTPUT UNICODE_MODE
+# Test $$SRCDIR^%RSEL with objdir(srcdir1 srcdir##TEST_SHL_SUFFIX##) $ydb_dist/libyottadbutil##TEST_SHL_SUFFIX##
+##ALLOW_OUTPUT UNICODE_MODE
+##SUSPEND_OUTPUT NONUNICODE_MODE
+# Test $$SRCDIR^%RSEL with objdir(srcdir1 srcdir##TEST_SHL_SUFFIX##) $ydb_dist/utf8/libyottadbutil##TEST_SHL_SUFFIX##
+##ALLOW_OUTPUT NONUNICODE_MODE
+$$SRCDIR^%RSEL returns srcdir1 srcdir##TEST_SHL_SUFFIX## 
+
+##SUSPEND_OUTPUT UNICODE_MODE
+# Test $$SRCDIR^%RSEL with ##TEST_PATH##/objdir(srcdir1 srcdir##TEST_SHL_SUFFIX##) $ydb_dist/libyottadbutil##TEST_SHL_SUFFIX##
+##ALLOW_OUTPUT UNICODE_MODE
+##SUSPEND_OUTPUT NONUNICODE_MODE
+# Test $$SRCDIR^%RSEL with ##TEST_PATH##/objdir(srcdir1 srcdir##TEST_SHL_SUFFIX##) $ydb_dist/utf8/libyottadbutil##TEST_SHL_SUFFIX##
+##ALLOW_OUTPUT NONUNICODE_MODE
+$$SRCDIR^%RSEL returns srcdir1 srcdir##TEST_SHL_SUFFIX## 
+
+##SUSPEND_OUTPUT UNICODE_MODE
+# Test $$SRCDIR^%RSEL with objdir(srcdir1 srcdir##TEST_SHL_SUFFIX## srcdir2) $ydb_dist/libyottadbutil##TEST_SHL_SUFFIX##
+##ALLOW_OUTPUT UNICODE_MODE
+##SUSPEND_OUTPUT NONUNICODE_MODE
+# Test $$SRCDIR^%RSEL with objdir(srcdir1 srcdir##TEST_SHL_SUFFIX## srcdir2) $ydb_dist/utf8/libyottadbutil##TEST_SHL_SUFFIX##
+##ALLOW_OUTPUT NONUNICODE_MODE
+$$SRCDIR^%RSEL returns srcdir1 srcdir##TEST_SHL_SUFFIX## srcdir2 
+
+##SUSPEND_OUTPUT UNICODE_MODE
+# Test $$SRCDIR^%RSEL with ##TEST_PATH##/objdir(srcdir1 srcdir##TEST_SHL_SUFFIX## srcdir2) $ydb_dist/libyottadbutil##TEST_SHL_SUFFIX##
+##ALLOW_OUTPUT UNICODE_MODE
+##SUSPEND_OUTPUT NONUNICODE_MODE
+# Test $$SRCDIR^%RSEL with ##TEST_PATH##/objdir(srcdir1 srcdir##TEST_SHL_SUFFIX## srcdir2) $ydb_dist/utf8/libyottadbutil##TEST_SHL_SUFFIX##
+##ALLOW_OUTPUT NONUNICODE_MODE
+$$SRCDIR^%RSEL returns srcdir1 srcdir##TEST_SHL_SUFFIX## srcdir2 
+
+##SUSPEND_OUTPUT UNICODE_MODE
+# Test $$SRCDIR^%RSEL with objdir(srcdir##TEST_SHL_SUFFIX## srcdir2) $ydb_dist/libyottadbutil##TEST_SHL_SUFFIX##
+##ALLOW_OUTPUT UNICODE_MODE
+##SUSPEND_OUTPUT NONUNICODE_MODE
+# Test $$SRCDIR^%RSEL with objdir(srcdir##TEST_SHL_SUFFIX## srcdir2) $ydb_dist/utf8/libyottadbutil##TEST_SHL_SUFFIX##
+##ALLOW_OUTPUT NONUNICODE_MODE
+$$SRCDIR^%RSEL returns srcdir##TEST_SHL_SUFFIX## srcdir2 
+
+##SUSPEND_OUTPUT UNICODE_MODE
+# Test $$SRCDIR^%RSEL with ##TEST_PATH##/objdir(srcdir##TEST_SHL_SUFFIX## srcdir2) $ydb_dist/libyottadbutil##TEST_SHL_SUFFIX##
+##ALLOW_OUTPUT UNICODE_MODE
+##SUSPEND_OUTPUT NONUNICODE_MODE
+# Test $$SRCDIR^%RSEL with ##TEST_PATH##/objdir(srcdir##TEST_SHL_SUFFIX## srcdir2) $ydb_dist/utf8/libyottadbutil##TEST_SHL_SUFFIX##
+##ALLOW_OUTPUT NONUNICODE_MODE
+$$SRCDIR^%RSEL returns srcdir##TEST_SHL_SUFFIX## srcdir2 
+
+##SUSPEND_OUTPUT UNICODE_MODE
+# Test $$SRCDIR^%RSEL with o(abc##TEST_SHL_SUFFIX## r/def##TEST_SHL_SUFFIX## ghi##TEST_SHL_SUFFIX##) p q(q/r q/s) t* sodir##TEST_SHL_SUFFIX## $ydb_dist/libyottadbutil##TEST_SHL_SUFFIX##
+##ALLOW_OUTPUT UNICODE_MODE
+##SUSPEND_OUTPUT NONUNICODE_MODE
+# Test $$SRCDIR^%RSEL with o(abc##TEST_SHL_SUFFIX## r/def##TEST_SHL_SUFFIX## ghi##TEST_SHL_SUFFIX##) p q(q/r q/s) t* sodir##TEST_SHL_SUFFIX## $ydb_dist/utf8/libyottadbutil##TEST_SHL_SUFFIX##
+##ALLOW_OUTPUT NONUNICODE_MODE
+$$SRCDIR^%RSEL returns abc##TEST_SHL_SUFFIX## r/def##TEST_SHL_SUFFIX## ghi##TEST_SHL_SUFFIX## p q/r q/s t sodir##TEST_SHL_SUFFIX## 
+
+##SUSPEND_OUTPUT UNICODE_MODE
+# Test $$SRCDIR^%RSEL with ##TEST_PATH##/o(abc##TEST_SHL_SUFFIX## r/def##TEST_SHL_SUFFIX## ghi##TEST_SHL_SUFFIX##) p q(q/r q/s) t* sodir##TEST_SHL_SUFFIX## $ydb_dist/libyottadbutil##TEST_SHL_SUFFIX##
+##ALLOW_OUTPUT UNICODE_MODE
+##SUSPEND_OUTPUT NONUNICODE_MODE
+# Test $$SRCDIR^%RSEL with ##TEST_PATH##/o(abc##TEST_SHL_SUFFIX## r/def##TEST_SHL_SUFFIX## ghi##TEST_SHL_SUFFIX##) p q(q/r q/s) t* sodir##TEST_SHL_SUFFIX## $ydb_dist/utf8/libyottadbutil##TEST_SHL_SUFFIX##
+##ALLOW_OUTPUT NONUNICODE_MODE
+$$SRCDIR^%RSEL returns abc##TEST_SHL_SUFFIX## r/def##TEST_SHL_SUFFIX## ghi##TEST_SHL_SUFFIX## p q/r q/s t sodir##TEST_SHL_SUFFIX## 
+
+##SUSPEND_OUTPUT UNICODE_MODE
+# Test $$SRCDIR^%RSEL with also $ydb_dist/libyottadbutil##TEST_SHL_SUFFIX##
+##ALLOW_OUTPUT UNICODE_MODE
+##SUSPEND_OUTPUT NONUNICODE_MODE
+# Test $$SRCDIR^%RSEL with also $ydb_dist/utf8/libyottadbutil##TEST_SHL_SUFFIX##
+##ALLOW_OUTPUT NONUNICODE_MODE
+$$SRCDIR^%RSEL returns also 
+
+##SUSPEND_OUTPUT UNICODE_MODE
+# Test $$SRCDIR^%RSEL with ##TEST_PATH##/also $ydb_dist/libyottadbutil##TEST_SHL_SUFFIX##
+##ALLOW_OUTPUT UNICODE_MODE
+##SUSPEND_OUTPUT NONUNICODE_MODE
+# Test $$SRCDIR^%RSEL with ##TEST_PATH##/also $ydb_dist/utf8/libyottadbutil##TEST_SHL_SUFFIX##
+##ALLOW_OUTPUT NONUNICODE_MODE
+$$SRCDIR^%RSEL returns ##TEST_PATH##/also 
+
