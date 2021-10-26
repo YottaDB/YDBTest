@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////
 //								//
-// Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries. //
+// Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries. //
 // All rights reserved.						//
 //								//
 //	This source code contains the intellectual property	//
@@ -114,12 +114,14 @@ func main() {
 	var errstr yottadb.BufferT
 
 	defer yottadb.Exit() // Be sure to drive cleanup at process exit
-	defer errstr.Free()  // Cleanup this allocated string when it goes out-of-scope
 
 	// Allocate and set up auto-free our two keys
 	errstr.Alloc(yottadb.YDB_MAX_ERRORMSG)
 	wordsvar.Alloc(maxvarnmlen, maxwordssubs, maxwordlen)
 	indexvar.Alloc(maxvarnmlen, maxindexsubs, maxwordlen)
+	defer errstr.Free() // Cleanup these allocated strings when they go out-of-scope
+	defer wordsvar.Free()
+	defer indexvar.Free()
 	// Decide on local or global vars and initialize varname in the KeyT structures (even/odd of process id). Note
 	// the output showing which choice was made is commented out for ease in testing.
 	ourPID := os.Getpid()
@@ -167,6 +169,10 @@ func main() {
 	tmp1.Alloc(maxwordlen)
 	tmp2.Alloc(maxwordlen)
 	wordsTmp1.Alloc(maxwordlen)
+	defer value.Free() // Cleanup these allocated strings when they go out-of-scope
+	defer tmp1.Free()
+	defer tmp2.Free()
+	defer wordsTmp1.Free()
 	// Create a reader for stdin
 	readin := bufio.NewReader(os.Stdin)
 	// Loop through each line in the input file (via stdin) breaking the line into space delimited words
