@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -56,9 +56,11 @@ $gt_ld_shl_linker ${gt_ld_option_output}libydb566B${gt_ld_shl_suffix} $gt_ld_shl
 #set up the xcall environment
 setenv ydb_xc ydb566.tab
 setenv GTMXC ydb566.tab
-setenv  my_shlib_path `pwd`
-echo '$my_shlib_path'"/libydb566B${gt_ld_shl_suffix}" > $ydb_xc
+setenv my_shlib_path `pwd`
+setenv shlib_line '$my_shlib_path'"/libydb566B${gt_ld_shl_suffix}"
 cat >> $ydb_xc << xx
+// This tests that comments on the first line work
+$shlib_line // This tests that comments after the shared library location work
 // This tests that comments and blank lines work in external calls
 
 printSuccess: void print_success() // This verifies that comments work at the end of a line
