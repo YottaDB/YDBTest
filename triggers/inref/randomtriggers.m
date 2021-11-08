@@ -3,7 +3,7 @@
 ; Copyright (c) 2014-2015 Fidelity National Information 	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
-; Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2019-2021 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -257,7 +257,6 @@ gentrigload	;
 	. . . if $incr(hasht(gvn,"#TNCOUNT"))
 	. . . set killindex=$incr(hasht(gvn,"#SEQNUM")),setindex=killindex
 	. . . set hasht(gvn,"#SEQNUM")=killindex	; mirrors ^#t("#TNAME",<gvn>,"#SEQNUM")
-	. . . set hasht(gvn,"#TNCOUNT")=killindex	; mirrors ^#t("#TNAME",<gvn>,"#TNCOUNT")
 	. . . merge hasht(gvn,xecute,killindex,"options")=options
 	. . . merge hasht(gvn,xecute,killindex,"cmds")=cmds
 	. . . if setspecified set hasht(gvn,xecute,killindex,"cmds","S")=""
