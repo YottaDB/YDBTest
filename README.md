@@ -47,7 +47,7 @@ The following binaries are required to run the test system:
 - nc
 - gdb
 
-Currently tcsh is the only supported shell, make sure that tcsh is properly installed and switch to it with the following command:
+Currently tcsh is the only supported shell, make sure that tcsh is properly installed and that you can switch to it with the following command:
 
 ```sh
 tcsh
@@ -67,7 +67,7 @@ sudo mkdir /testing
 
 ## Environment variables
 
-Create a `.cshrc` file inside the home directory if there is not one already and add the following lines:
+Create or edit the `.cshrc` file inside your home directory and add the following lines:
 
 ```csh
 set autolist
@@ -95,7 +95,7 @@ Create a `.cshrc-int` file inside the home directory with the following lines.
 ```csh
 setenv mailid user@mail.com # Replace with your email here
 
-setenv verno R131
+setenv verno R133
 setenv gtm_root /usr/library	# Can be replaced with any directory
 setenv gtm_test $gtm_root/gtm_test
 setenv ydb_dist $gtm_root/$verno/pro
@@ -108,7 +108,7 @@ setenv gtm_verno $verno
 setenv gtm_ver $gtm_root/$verno
 setenv gtm_obj $gtm_exe/obj
 setenv gtm_log $gtm_ver/log
-setenv gtm_testver T131
+setenv gtm_testver T133
 setenv gtm_curpro $verno
 setenv gtm_com ""
 setenv gtm_icu_version `pkg-config --modversion icu-io`
@@ -131,74 +131,6 @@ sudo mkdir dbg pro
 
 Install the pro version in `$gtm_root/$verno/pro` and the dbg version in `$gtm_root/$verno/dbg`
 
-## Setting up the build
-
-Create and run the `build.csh` file inside the directory that YDB was cloned
-
-```csh
-#!/usr/bin/tcsh
-if (! -d $gtm_dist/obj) then
-        set sudostr = "sudo mkdir $gtm_dist/obj"
-        $sudostr
-        @ status1 = $status
-if ($status1) then
-        echo "BUILDREL_IMAGE_COMMON-E-SUDOFAIL : $sudostr failed with status = $status1. Exiting..."
-        exit -1
-        endif
-endif
-cp -pa YDB/cmake/*.a $gtm_obj/
-
-if (! -d $gtm_ver/tools) then
-        set sudostr = "sudo mkdir $gtm_ver/tools"
-        $sudostr
-        @ status1 = $status
-        if ($status1) then
-                echo "BUILDREL_IMAGE_COMMON-E-SUDOFAIL : $sudostr failed with status = $status1. Exiting..."
-                exit -1
-        endif
-endif
-set sudostr = "sudo chown $user.gtc $gtm_ver/tools"
-$sudostr
-cp -pa YDB/sr_unix/*.awk $gtm_tools/
-cp -pa YDB/sr_linux/*.csh $gtm_tools/
-rm -f $gtm_ver/tools/setactive{,1}.csh
-
-set machtype=`uname -m`
-foreach ext (c s msg h si)
-        if (($ext == "h") || ($ext == "si")) then
-                set dir = "inc"
-        else
-                set dir = "src"
-        endif
-        if (! -d $gtm_ver/$dir) then
-                set sudostr = "sudo mkdir $gtm_ver/$dir"
-                $sudostr
-                @ status1 = $status
-                if ($status1) then
-                        echo "BUILDREL_IMAGE_COMMON-E-SUDOFAIL : $sudostr failed with status = $status1. Exiting..."
-                        exit -1
-                endif
-        endif
-        set sudostr = "sudo chown $user.gtc $gtm_ver/$dir"
-        $sudostr
-        @ status1 = $status
-        if ($status1) then
-                echo "BUILDREL_IMAGE_COMMON-E-SUDOFAIL : $sudostr failed with status = $status1. Exiting..."
-                exit -1
-        endif
-        cp -pa YDB/sr_port/*.$ext $gtm_ver/$dir/
-        cp -pa YDB/sr_port_cm/*.$ext $gtm_ver/$dir/
-        cp -pa YDB/sr_unix/*.$ext $gtm_ver/$dir/
-        cp -pa YDB/sr_unix_cm/*.$ext $gtm_ver/$dir/
-        cp -pa YDB/sr_unix_gnp/*.$ext $gtm_ver/$dir/
-        if (${machtype} == "x86_64") then
-                cp -pa YDB/sr_x86_regs/*.$ext $gtm_ver/$dir/
-        endif
-        cp -pa YDB/sr_${machtype}/*.$ext $gtm_ver/$dir/
-        cp -pa YDB/sr_linux/*.$ext $gtm_ver/$dir/
-end
-```
-
 ## Getting the YDBTest repository
 
 Go into `$gtm_root` and create the `gtm_test` directory where the files for the test repository will be stored
@@ -206,7 +138,7 @@ Go into `$gtm_root` and create the `gtm_test` directory where the files for the 
 ```sh
 cd $gtm_root
 sudo mkdir gtm_test ; cd gtm_test
-sudo mkdir T131
+sudo mkdir T133
 ```
 
 Create a simple script within the `testing` directory that will sync files to the specified test version
@@ -254,12 +186,89 @@ cat testing/YDBTest/com/check_setup_dependencies.csh
 Now the test repository can be synced
 
 ```sh
-../synctest T131
+../synctest T133
+```
+
+## Setting up the build
+
+Make sure to switch to tcsh. If you recently created or edited your `.cshrc` file, make sure you start a new tcsh shell. Then run the following command to set the environment variables in your `.cshrc-int` file:
+
+```sh
+S
+```
+
+Create and run a `build.csh` file in the parent directory of your local YDB repository.
+
+```csh
+#!/usr/bin/tcsh
+if (! -d $gtm_dist/obj) then
+        set sudostr = "sudo mkdir $gtm_dist/obj"
+        $sudostr
+        @ status1 = $status
+if ($status1) then
+        echo "BUILDREL_IMAGE_COMMON-E-SUDOFAIL : $sudostr failed with status = $status1. Exiting..."
+        exit -1
+        endif
+endif
+cp -pa YDB/cmake/*.a $gtm_obj/
+
+if (! -d $gtm_ver/tools) then
+        set sudostr = "sudo mkdir $gtm_ver/tools"
+        $sudostr
+        @ status1 = $status
+        if ($status1) then
+                echo "BUILDREL_IMAGE_COMMON-E-SUDOFAIL : $sudostr failed with status = $status1. Exiting..."
+                exit -1
+        endif
+endif
+set sudostr = "sudo chown $user.gtc $gtm_ver/tools"
+$sudostr
+cp -pa YDB/sr_unix/*.awk $gtm_tools/
+cp -pa YDB/sr_linux/*.csh $gtm_tools/
+rm -f $gtm_ver/tools/setactive{,1}.csh
+
+# This may need to be `uname -i` instead depending upon your machine or you can hardcode
+# it to x86_64, aarch64, armv6l or armv7l as appropriate. This is needed to ensure that
+# the correct assembly code is used to build YottaDB.
+set machtype=`uname -m`
+foreach ext (c s msg h si)
+        if (($ext == "h") || ($ext == "si")) then
+                set dir = "inc"
+        else
+                set dir = "src"
+        endif
+        if (! -d $gtm_ver/$dir) then
+                set sudostr = "sudo mkdir $gtm_ver/$dir"
+                $sudostr
+                @ status1 = $status
+                if ($status1) then
+                        echo "BUILDREL_IMAGE_COMMON-E-SUDOFAIL : $sudostr failed with status = $status1. Exiting..."
+                        exit -1
+                endif
+        endif
+        set sudostr = "sudo chown $user.gtc $gtm_ver/$dir"
+        $sudostr
+        @ status1 = $status
+        if ($status1) then
+                echo "BUILDREL_IMAGE_COMMON-E-SUDOFAIL : $sudostr failed with status = $status1. Exiting..."
+                exit -1
+        endif
+        cp -pa YDB/sr_port/*.$ext $gtm_ver/$dir/
+        cp -pa YDB/sr_port_cm/*.$ext $gtm_ver/$dir/
+        cp -pa YDB/sr_unix/*.$ext $gtm_ver/$dir/
+        cp -pa YDB/sr_unix_cm/*.$ext $gtm_ver/$dir/
+        cp -pa YDB/sr_unix_gnp/*.$ext $gtm_ver/$dir/
+        if (${machtype} == "x86_64") then
+                cp -pa YDB/sr_x86_regs/*.$ext $gtm_ver/$dir/
+        endif
+        cp -pa YDB/sr_${machtype}/*.$ext $gtm_ver/$dir/
+        cp -pa YDB/sr_linux/*.$ext $gtm_ver/$dir/
+end
 ```
 
 ## Create output directory
 
-Before the test can be run the output needs to be stored in an output directory, create a output directory with the proper permssions
+Before the test system can be run, the output needs to be stored in an output directory. Create an output directory with the proper permissions:
 
 ```sh
 mkdir /testarea1	# The name of this directory should be the same as whatever $tst_dir is set to
@@ -280,8 +289,8 @@ Run a test by using `gtmtest`. The following arguments are needed to run the gtm
 An example of how to run the test system
 
 ```sh
-gtmtest -s T131 -t basic
-gtmtest -s T131 -t basic -replic
+gtmtest -s T133 -t basic
+gtmtest -s T133 -t basic -replic
 ```
 
 ### Other useful arguments
@@ -290,11 +299,12 @@ gtmtest -s T131 -t basic -replic
 2. `-nozip`: Leaves files unzipped in the output directory
 3. `-num_runs`: Using this qualifier followed by an integer will run the test for a specified number of times
 4. `-h`: Prints out all valid arguments and a description of what they do
-5. `-E_ALL`: Runs all tests (may take a long time to run all tests)
+5. `-E_ALL`: Runs all tests (may take a long time to run all tests). When running an E_ALL, the `-t` argument is optional
+6. `-env gtm_test_nomultihost=1`: Disables all multi-system tests. Highly recommended if you run an E_ALL without support for multi-system tests.
 
 ### Warnings
 
-Currently not all tests will run properly on the local test system. For example none of the Go tests will run without the [YDBGo] repository and multi-system tests will not work either.
+Currently not all tests will run properly on the local test system. For example none of the Go tests will run without the [YDBGo] repository and multi-system tests will not work without setting up a multi-system environment.
 
 [YDBGo]: https://gitlab.com/YottaDB/Lang/YDBGo
 
