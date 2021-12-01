@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -68,3 +68,26 @@ check_setenv_echo  gt_ld_option_output    "-o"
 setenv gtm_exe_realpath	`realpath $gtm_exe`
 setenv gtm_version_change 1	# to force gtm_env.csh to go into the codepath that initializes a lot of gt_* variables
 source $gtm_tools/gtm_env.csh
+
+# The above gtm_env.csh invocation would have defined "gt_ld_options_common" env var.
+# Now add address sanitizer related flags to it (if YottaDB build being tested was linked with it)
+# This way any "$gt_ld_options_common" usages in the tests automatically linked with libasan.
+# Not doing so would cause tests that use "gt_ld_options_common" to fail as follows.
+#	ASan runtime does not come first in initial library list; you should either link runtime to your application or manually preload it with LD_PRELOAD
+source $gtm_tst/com/is_libyottadb_asan_enabled.csh
+if ($gtm_test_libyottadb_asan_enabled) then
+	setenv gt_ld_options_common "$gt_ld_options_common -fsanitize=address"
+	# Set ASAN_OPTIONS env var with various flags
+	#	detect_leaks=0           : To disable leak sanitizer checks as we know YottaDB has memory leaks and will address them separately.
+	#	abort_on_error=1         : Abort whenever a buffer overflow etc. is detected. This stops the process at first error.
+	#	disable_coredump=0       : To generate a core file when a buffer overflow etc. is detected. Easier to debug.
+	#	unmap_shadow_on_exit=1   : Needed to unmap the huge shadow at exit. Or else core files would be huge (Tera bytes).
+	#	verify_asan_link_order=0 : A few tests fail without this flag. It is not considered critical so we turn this flag off always.
+	#
+	# See following for full list of flags
+	#	https://github.com/google/sanitizers/wiki/AddressSanitizerFlags#run-time-flags
+	#	https://github.com/google/sanitizers/wiki/SanitizerCommonFlags
+	#
+	setenv ASAN_OPTIONS "detect_leaks=0:abort_on_error=1:disable_coredump=0:unmap_shadow_on_exit=1:verify_asan_link_order=0"
+endif
+
