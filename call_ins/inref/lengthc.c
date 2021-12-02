@@ -1,10 +1,24 @@
+/****************************************************************
+ *								*
+ * Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	*
+ * All rights reserved.						*
+ *								*
+ *	This source code contains the intellectual property	*
+ *	of its copyright holder(s), and is made available	*
+ *	under a license.  If you do not know the terms of	*
+ *	the license, please stop and do not read further.	*
+ *								*
+ ****************************************************************/
+/* This module is derived from FIS GT.M.
+ ****************************************************************/
+
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 #include <locale.h>
 #include <wchar.h>
 #include "shrenv.h"
-#include "gtm_stdio.h" 
+#include "gtm_stdio.h"
 #include "gtmxc_types.h"
 
 xc_long_t lengthc(int count,gtm_char_t* mbstring,gtm_char_t* mbstring2)
@@ -17,7 +31,7 @@ xc_long_t lengthc(int count,gtm_char_t* mbstring,gtm_char_t* mbstring2)
 
 	setlocale(LC_ALL, "");
 
-	upper = (char *)malloc(strlen(mbstring) * sizeof(char));
+	upper = (char *)malloc((strlen(mbstring) + 1) * sizeof(char));	/* Need + 1 for terminating null byte filled by "gtm_ci" */
 	n1 = strlen(mbstring) * sizeof(wchar_t);
 	w1 = (wchar_t *)malloc(n1);
 	len1 = mbstowcs(w1,mbstring,n1);
@@ -31,7 +45,7 @@ xc_long_t lengthc(int count,gtm_char_t* mbstring,gtm_char_t* mbstring2)
 	wcscpy(w3,w1);
 	wcscat(w3,w2);
 	len3 = wcslen(w3);
-	
+
 	PRINTF("\nC2(lengthc.c) in C->M->C->M\n");
 	PRINTF("In C2:The length of \"%s\" is : %d\n",mbstring,len1);
 	PRINTF("In C2:The length of \"%s\" is : %d\n",mbstring2,len2);
@@ -46,6 +60,6 @@ xc_long_t lengthc(int count,gtm_char_t* mbstring,gtm_char_t* mbstring2)
 	}
 	PRINTF("In C2:Call into ucase^ucase returned the upper case of %s as :%s\n",mbstring,upper);
 	fflush(stdout);
-	
+
 	return length;
 }
