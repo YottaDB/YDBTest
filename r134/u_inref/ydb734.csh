@@ -28,3 +28,6 @@ foreach param (. .. ...)
 	$ydb_dist/yottadb ${param}abcd
 end
 
+echo '# Running : [yottadb -nameofrtn=GTM8068 $gtm_tst/$tst/inref/] : Expecting to not see an assert failure in zl_cmd_qlf.c'
+$ydb_dist/yottadb -nameofrtn=GTM8068 $gtm_tst/$tst/inref/
+
