@@ -3,7 +3,7 @@
 #								#
 # Copyright 2013 Fidelity Information Services, Inc		#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -43,34 +43,62 @@ echo "* PRESS return *ONLY* IF SPECIFIED AS <ret>				 	 *"
 $echoline
 echo ""
 
+echo "Test M READ using NOINSERT:EDITING"
 source $gtm_tst/com/set_ydb_env_var_random.csh ydb_principal_editing gtm_principal_editing "NOINSERT:EDITING"
 echo "#### Testing for gtm_principal_editing : $gtm_principal_editing ####"
 $gtm_dist/mumps -run noinsert^ttyread
+
 echo ""
+echo "Repeat M READ Test using <HOME> instead of CTRL-A"
+$gtm_dist/mumps -run noinsert^ttyread
+
+echo "Test Direct Mode READ"
 echo "Input the following:"
 echo "do btest^ttyread<ctrl-A><right><right><right>a"
 echo "The display should be 'do atest^ttyread'. Press <ret>"
 echo "You should see the following message 'This is routine ATEST'"
 $gtm_dist/mumps -direct
+echo ""
+echo "Repeat Direct Mode READ Test using <HOME> instead of CTRL-A"
+$gtm_dist/mumps -direct
+echo ""
+
+echo "Test M READ using INSERT:EDITING"
 source $gtm_tst/com/set_ydb_env_var_random.csh ydb_principal_editing gtm_principal_editing "INSERT:EDITING"
 echo "#### Testing for gtm_principal_editing : $gtm_principal_editing ####"
 $gtm_dist/mumps -run insert^ttyread
 $gtm_dist/mumps -run noecho^ttyread
+
+echo ""
+echo "Repeat last test using HOME/END instead of CTRL-A,CTRL-E"
+$gtm_dist/mumps -run insert^ttyread
+$gtm_dist/mumps -run noecho^ttyread
+
 echo ""
 echo "Input the following:"
 echo "do atest^ttyreadin<ctrl-B><crtl-B><ctrl-K>"
 echo "The display should be 'do atest^ttyread'. Press <ret>"
 echo "You should see the following message 'This is routine ATEST'"
 $gtm_dist/mumps -direct
+
+echo ""
 source $gtm_tst/com/set_ydb_env_var_random.csh ydb_principal_editing gtm_principal_editing "NOEDITING"
 echo "#### Testing for gtm_principal_editing : $gtm_principal_editing ####"
 $gtm_dist/mumps -run noedit^ttyread
+
 echo ""
 echo "Input the following:"
 echo "so<Ctrl-U>do atest^ttyra<left>e<ctrl-E>d"
 echo "The display should be 'do atest^ttyread'. Press <ret>"
 echo "You should see the following message 'This is routine ATEST'"
 $gtm_dist/mumps -direct
+
+echo ""
+echo "Repeat last test with END instead of CTRL-E"
+$gtm_dist/mumps -direct
+
+echo ""
+echo "Test M READ with INSERT:EDITING with limited columns"
 source $gtm_tst/com/set_ydb_env_var_random.csh ydb_principal_editing gtm_principal_editing "INSERT:EDITING"
 echo "Testing for multiple line read"
 echo "Input the following for the next read"
@@ -84,11 +112,15 @@ if ( $#oldttysize < 2 ) then
 endif
 stty columns 15
 $gtm_dist/mumps -run stty^ttyread
+echo ""
+echo "Repeat last test with HOME/END instead of CTRL-A/CTRL-E"
+$gtm_dist/mumps -run stty^ttyread
 stty columns $oldttysize[2]
+
+echo ""
 echo "Testing for CTRAP/TERMINATOR"
 $gtm_dist/mumps -run ctrp^ttyread
 
-echo ""
 echo ""
 echo "Testing nowrap with length=0"
 stty columns 100
@@ -110,6 +142,8 @@ echo "**************************************"
 echo ""
 echo ""
 $GDE
+# Repeat test with HOME/END instead of CTRL-A/CTRL-E
+$GDE
 
 source $gtm_tst/com/set_ydb_env_var_random.csh ydb_principal_editing gtm_principal_editing "NOINSERT:EDITING"
 echo "#### Testing for gtm_principal_editing : $gtm_principal_editing ####"
@@ -125,6 +159,8 @@ echo "**************************************"
 echo ""
 echo ""
 $GDE
+# Repeat test with HOME/END instead of CTRL-A/CTRL-E
+$GDE
 
 source $gtm_tst/com/set_ydb_env_var_random.csh ydb_principal_editing gtm_principal_editing "NOEDITING"
 echo "#### Testing for gtm_principal_editing : $gtm_principal_editing ####"
@@ -135,6 +171,8 @@ echo "None of the above EDITING Characters should work. Press <ret>"
 echo "GDE-E-ILLCHAR Should be displayed. Now input quit<ret>"
 echo "**************************************"
 $GDE
+# Repeat test with HOME/END instead of CTRL-A/CTRL-E
+# Turns out cannot repeat as ESC terminates reads. Not an issue with the new commit that adds support for HOME/END.
 
 echo "*** Now Testing [NO]ESCAPE ***"
 source $gtm_tst/com/unset_ydb_env_var.csh ydb_principal_editing gtm_principal_editing

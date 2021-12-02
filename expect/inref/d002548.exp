@@ -1,7 +1,7 @@
 #!/usr/bin/expect -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -120,15 +120,30 @@ set timeout 5
 expect -- "D9F05002548>"
 send -- "$gtm_test_ver/expect/inref/d002548.csh\r"
 
-
-
-
+#$gtm_dist/mumps -run noinsert^ttyread Using CTRL-A keys
 expect "Input for X: "
 send -- "inseft\002\002r\r"
 expect "Input for Y : "
 send -- "alv\001m\033OC\033OCern\r"
 expect "Input for Z : "
 send -- "oerstrike\001\033OC\033\[2~v\033\[2~\r"
+
+expect "PASTHRU\r
+"
+send -- "inseft\002\002r\r"
+
+expect "Input for X: "
+send -- "a"
+send -- "\033OA\r"
+send -- "works"
+
+#$gtm_dist/mumps -run noinsert^ttyread Using HOME key instead of CTRL-A
+expect "Input for X: "
+send -- "inseft\002\002r\r"
+expect "Input for Y : "
+send -- "alv\033OHm\033OC\033OCern\r"
+expect "Input for Z : "
+send -- "oerstrike\033OH\033OC\033\[2~v\033\[2~\r"
 
 expect "PASTHRU\r
 "
@@ -160,7 +175,28 @@ expect {
 	}
 }
 
+#echo "do btest^ttyread<HOME><right><right><right>a"
+expect "YDB>"
+send -- "do btest^ttyread"
+send -- "\033OH\033OC\033OC\033OCa\r"
+expect {
+	"PASS This is routine ATEST" {puts "\rEXPECT MUMPS PASS\r"}
+	"FAIL" {}
+	"INVCMD" {
+		puts "\rEXPECT MUMPS FAIL\r"
+		send -- "halt\r"
+	}
+	"YDB>"   {
+		puts "\rEXPECT MUMPS FAIL\r"
+		send -- "halt\r"
+	}
+	timeout  {
+		puts "\rEXPECT MUMPS FAIL\r"
+		send -- "halt\r"
+	}
+}
 
+# Test M READ using INSERT:EDITING
 expect "Input for X: "
 send -- "fgf\025asdfgf\r"
 
@@ -217,6 +253,62 @@ send -- "after\r"
 expect "Input for Z :"
 send -- "\033OA\r"
 
+# Repeat last test using HOME/END instead of CTRL-A,CTRL-E
+expect "Input for X: "
+send -- "fgf\025asdfgf\r"
+
+expect "Single char input Y: "
+send -- "\033OA"
+expect "Five Char input Z: "
+send -- "bcdf\033OHa\033OFe"
+
+expect "Input for X: "
+send -- "aple\033OD\033ODp\006\006s"
+expect "Input for Y : "
+send -- "qwertyu\002\002\013y\r"
+expect "Input for Z : "
+send -- "b\033OA"
+
+expect "Input for X: "
+send -- "inseft\002\002r\r"
+expect "Input for Y : "
+send -- "alv\033OHm\033OC\033OCern\r"
+expect "Input for Z : "
+send -- "oerstrike\033OH\033OC\033\[2~v\033\[2~\r"
+
+expect "Input for X: "
+send -- "testing"
+send -- "\033OH"
+send -- "\033OF"
+send -- "\006\006\006\006\006\006\r"
+
+expect "Input for Y : "
+send -- "testing\033OH\033OC\033OC\033OC\r"
+
+expect "Input for Z : "
+send -- "\033OA\r"
+
+expect -exact "Input the following: backspace<ctrl A><3 ctrl F><del><ret>\r
+"
+send -- "backspace\033OH\006\006\006\r"
+expect "Input the following: backspace<ctrl A><3 ctrl F><ctrl H><ret>\r
+"
+send -- "backspace\033OH\006\006\006\r"
+
+expect "PASTHRU\r
+"
+send -- "inseft\002\002r\r"
+
+expect "PASTHRU\r
+"
+send -- "mystr\002e\005y\r"
+
+expect "Input before<ret> :"
+send -- "before\r"
+expect "Input for Y :"
+send -- "after\r"
+expect "Input for Z :"
+send -- "\033OA\r"
 
 expect "YDB>"
 send -- "do atest^ttyreadin\002\002\013\r"
@@ -259,12 +351,36 @@ expect {
 	}
 }
 
+expect "YDB>"
+send -- "so\025do atest^ttyra\033ODe\033OFd\r"
+expect {
+	"PASS This is routine ATEST" {puts "\rEXPECT MUMPS PASS\r"}
+	"FAIL" {}
+	"INVCMD" {
+		puts "\rEXPECT MUMPS FAIL\r"
+		send -- "halt\r"
+	}
+	"YDB>"   {
+		puts "\rEXPECT MUMPS FAIL\r"
+		send -- "halt\r"
+	}
+	timeout  {
+		puts "\rEXPECT MUMPS FAIL\r"
+		send -- "halt\r"
+	}
+}
 
+
+# Test M READ with INSERT:EDITING with limited columns
 #expect "12345678901234567<ctrl-A>a<ctrl-E>b<4 lefts><del>b<ctrl-B><ins>c<ret>"
 expect -exact "***"
 send -- "12345678901234567\001a\005b\033OD\033OD\033OD\033ODb\002\033\[2~c\r"
 
+# Repeat test with HOME/END instead of CTRL-A/CTRL-E
+expect -exact "***"
+send -- "12345678901234567\033OHa\033OFb\033OD\033OD\033OD\033ODb\002\033\[2~c\r"
 
+# Testing for CTRAP/TERMINATOR
 expect "Input testing<ret> : "
 send -- "testing\r"
 expect "Input asdfgf<ctrl-A><Ctrl-F><right><Ctrl-B>\r
@@ -280,9 +396,11 @@ expect "you typed one of the EDITING Control characters ^B, ^E, ^K\r
 "
 send -- "\022"
 
+# Testing nowrap with length=0
 expect "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa:"
 send -- "nowrap\r"
 
+# GDE INSERT:EDITING
 expect "GDE>"
 send -- "show eg\002\002r\005ion\001\033OC\033OC\033OC\033OC\033OC-\r"
 expect {
@@ -292,7 +410,18 @@ expect {
 expect "GDE>"
 send -- "we\025quit\r"
 expect "GDE-I-NOACTION" {puts "\rEXPECT GDE PASS\r"}
+# Repeat Test with HOME/END instead of CTRL-A/CTRL-E
+expect "GDE>"
+send -- "show eg\002\002r\033OFion\033OH\033OC\033OC\033OC\033OC\033OC-\r"
+expect {
+	"REGION" {puts "\rEXPECT GDE PASS\r"}
+	"%GDE-E-" {puts "\rEXPECT GDE FAIL\r"}
+}
+expect "GDE>"
+send -- "we\025quit\r"
+expect "GDE-I-NOACTION" {puts "\rEXPECT GDE PASS\r"}
 
+# GDE NOINSERT:EDITING
 expect "GDE>"
 send -- "show -teg\002\033OD\033ODr\005ion\r"
 expect {
@@ -301,6 +430,16 @@ expect {
 }
 expect "GDE>"
 send -- "we\025wuit\001q\r"
+expect "GDE-I-NOACTION" {puts "\rEXPECT GDE PASS\r"}
+# Repeat test with HOME/END instead of CTRL-A/CTRL-E
+expect "GDE>"
+send -- "show -teg\002\033OD\033ODr\033OFion\r"
+expect {
+	"REGION" {puts "\rEXPECT GDE PASS\r"}
+	"%GDE-E-" {puts "\rEXPECT GDE FAIL\r"}
+}
+expect "GDE>"
+send -- "we\025wuit\033OHq\r"
 expect "GDE-I-NOACTION" {puts "\rEXPECT GDE PASS\r"}
 
 # in case of failure, we have to wait for the timeout
