@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------------------------------------------
+######## Test use cases that came up while fixing code issues identified by enabling address sanitizer ########
+---------------------------------------------------------------------------------------------------------------
+# Running : [yottadb .] : Expecting to not see an assert failure in zl_cmd_qlf.c
+# Also running various related test cases : Expecting errors but no assert failures
+## Running : [yottadb .]
+%YDB-E-FILENOTFND, File ##TEST_PATH##/.m not found
+## Running : [yottadb .abcd]
+%YDB-E-NOTMNAME, .abcd is not a valid M name
+%YDB-E-ZLNOOBJECT, No object module was produced
+## Running : [yottadb ..]
+##TEST_AWK%YDB-E-FILENOTFND, File .*\.m not found
+## Running : [yottadb ..abcd]
+%YDB-E-NOTMNAME, ..abcd is not a valid M name
+%YDB-E-ZLNOOBJECT, No object module was produced
+## Running : [yottadb ...]
+%YDB-E-NOTMNAME, ... is not a valid M name
+%YDB-E-ZLNOOBJECT, No object module was produced
+## Running : [yottadb ...abcd]
+%YDB-E-NOTMNAME, ...abcd is not a valid M name
+%YDB-E-ZLNOOBJECT, No object module was produced
