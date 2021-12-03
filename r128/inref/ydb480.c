@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	*
+ * Copyright (c) 2019-2021 YottaDB LLC and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -36,7 +36,7 @@ static ydb_buffer_t *buffer_from_string(char* string)
 	char		*buf;
 
 	ret_buffer = (ydb_buffer_t *)malloc(sizeof(ydb_buffer_t));
-	buf = (char *)malloc(strlen(string) * sizeof(char));
+	buf = (char *)malloc((strlen(string) + 1) * sizeof(char)); /* + 1 needed for null byte copy in "strcpy" below */
 	strcpy(buf, string);
 	ret_buffer->len_used = ret_buffer->len_alloc = strlen(string);
 	ret_buffer->buf_addr = buf;
