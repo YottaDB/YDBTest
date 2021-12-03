@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -14,6 +14,15 @@
 #								#
 #################################################################
 # gtm4661a 	[bahirs] 	GT.M process does not stuck if terminated with SIGTERM signal.
+
+if ($?ASAN_OPTIONS) then
+	# ASAN_OPTIONS env var is defined. In that case, "abort_on_error=1" would have most likely been set
+	# by the test framework. For reasons not clear, having that flag in this test causes a SIG-11.
+	# We suspect it is an ASAN (address sanitizer) issue and so work around it by turning that off.
+	# Note that "abort_on_error=0" only turns off producing a core file in case an issue is detected
+	# by the sanitizer. It will still report it and cause a test failure.
+	setenv ASAN_OPTIONS "${ASAN_OPTIONS}:abort_on_error=0"
+endif
 
 $gtm_tst/com/dbcreate.csh mumps 1
 setenv TERM xterm
