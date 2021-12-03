@@ -2,6 +2,9 @@
 *								*
 *	Copyright 2013, 2014 Fidelity Information Services, Inc	*
 *								*
+* Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	*
+* All rights reserved.						*
+*								*
 *	This source code contains the intellectual property	*
 *	of its copyright holder(s), and is made available	*
 *	under a license.  If you do not know the terms of	*
@@ -43,6 +46,7 @@ int main(int argc, char* argv[])
 	{
 		args[arg] = argv[arg+1] ? strdup(argv[arg+1]) : NULL;
 	}
+	args[arg] = NULL;
 
 	/* Test closing each combination of stdin, stdout, and stderr */
 	for (optnum = 0; optnum < 8; optnum++)
