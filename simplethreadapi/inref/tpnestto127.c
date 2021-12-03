@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	*
+ * Copyright (c) 2019-2021 YottaDB LLC and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -23,8 +23,10 @@
 
 int tpNest();
 
+#define	BUFF_LEN 6 /* Space needed to hold "^aNNN" (where NNN is an integer from 1 to 126) and 1 byte for NULL terminator */
+
 char errbuf[2048];
-char buf[5];
+char buf[BUFF_LEN];
 int status;
 
 ydb_tp2fnptr_t tpfn;
@@ -40,8 +42,8 @@ int main(){
 	YDB_MALLOC_BUFFER(&tLevel, 4);
 
 	ydb_buffer_t basevar, outvalue;
-	YDB_MALLOC_BUFFER(&outvalue, 5);
-	YDB_MALLOC_BUFFER(&basevar, 5);
+	YDB_MALLOC_BUFFER(&outvalue, BUFF_LEN);
+	YDB_MALLOC_BUFFER(&basevar, BUFF_LEN);
 
 	tpfn = &tpNest;
 
@@ -108,7 +110,7 @@ int tpNest(uint64_t tptoken, ydb_buffer_t* errstr){
 	ydb_buffer_t basevar;
 
 	getTLevel(tptoken, errstr);
-	YDB_MALLOC_BUFFER(&basevar, 5);
+	YDB_MALLOC_BUFFER(&basevar, BUFF_LEN);
 	sprintf(buf, "^a%s", tLevel.buf_addr); //prepend ^a to $TLEVEL to use as a global
 	YDB_COPY_STRING_TO_BUFFER(buf, &basevar, status);
 	status = ydb_set_st(tptoken, errstr, &basevar, 0, NULL, &basevar);
