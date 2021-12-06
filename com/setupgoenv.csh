@@ -113,6 +113,13 @@ cd -
 set gobuild = "go build"
 set gotest = "go test"
 
+source $gtm_tst/com/is_libyottadb_asan_enabled.csh
+if ($gtm_test_libyottadb_asan_enabled) then
+	# libyottadb.so was built with asan enabled. Do the same with the go executables.
+	set gobuild = "$gobuild -ldflags '-fsanitize=address'"
+	set gotest = "$gotest -ldflags '-fsanitize=address'"
+endif
+
 # Random Go environment settings
 # ydb_go_race_detector - determines if the go -race flag should be used
 # GOGC - The rate Go does garbage collection; a smaller value increases frequency; default is 100
@@ -121,6 +128,11 @@ if (! $?gtm_test_replay) then
 	setenv ydb_go_race_detector_on `$gtm_tst/com/genrandnumbers.csh 1 0 1`
 	if (("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) || ("HOST_LINUX_AARCH64" == $gtm_test_os_machtype)) then
 		# -race is not supported in "go" on the ARM platform. So disable the random choice there.
+		setenv ydb_go_race_detector_on 0
+	endif
+	if ($gtm_test_libyottadb_asan_enabled) then
+		echo "# Go race detector is disabled because address sanitizer is enabled in libyottadb.so" >> settings.csh
+		echo "# See https://groups.google.com/g/golang-nuts/c/OF2-5hVRouA/m/iwDx7GtGBwAJ for details." >> settings.csh
 		setenv ydb_go_race_detector_on 0
 	endif
 	echo "setenv ydb_go_race_detector_on $ydb_go_race_detector_on" >> settings.csh
