@@ -333,7 +333,11 @@ BEGIN {
 	else
 		envir[no_options] = "NODYNAMIC_LITERALS"
 	#
-	#
+	option_names[++no_options] = "gtm_test_libyottadb_asan_enabled"
+	if ("1" == ENVIRON["gtm_test_libyottadb_asan_enabled"])
+		envir[no_options] = "ASAN_ENABLED"
+	else
+		envir[no_options] = "ASAN_DISABLED"
 	#
 	split(tst_hostos_machtype_all, all_platforms, " ")
 	if ("AIX" == tst_osname)

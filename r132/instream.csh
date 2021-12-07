@@ -77,7 +77,15 @@ if ("pro" != "$tst_image") then
        setenv subtest_exclude_list "$subtest_exclude_list ydb632" # ydb632 generates core and stop in dbg, continues in pro
 endif
 if ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) then
-	# filter out below subtest on 32-bit ARM since it requires valgrind which is now available on 32-bit ARM
+	# filter out below subtest on 32-bit ARM since it requires valgrind which is not available on 32-bit ARM
+	setenv subtest_exclude_list "$subtest_exclude_list ydb704"
+endif
+
+source $gtm_tst/com/is_libyottadb_asan_enabled.csh	# defines "gtm_test_libyottadb_asan_enabled" env var
+if ($gtm_test_libyottadb_asan_enabled) then
+	# libyottadb.so was built with address sanitizer (which also includes the leak sanitizer)
+	# That does similar functionality as valgrind and therefore cannot coexist.
+	# Therefore filter out below subtest that uses valgrind.
 	setenv subtest_exclude_list "$subtest_exclude_list ydb704"
 endif
 

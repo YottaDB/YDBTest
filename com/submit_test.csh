@@ -104,6 +104,8 @@ setenv gtm_test_is_unicode_aware "FALSE" # this flag is for individual tests to 
 # Reset default coredump_filter mask to include file-backed mapped memory for tests (default is 0x33).
 echo 0x3F > /proc/self/coredump_filter
 
+source $gtm_tst/com/is_libyottadb_asan_enabled.csh	# defines "gtm_test_libyottadb_asan_enabled" env var
+
 ###########################################################################################################
 #### set various random test options. This might change the environment variables set above this point
 # submit_test.csh is called with echo and verbose set.  But, we don't want the do_random_settings.csh and set_encrypt_env.csh
