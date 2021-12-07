@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -78,7 +78,14 @@ if ($gtm_test_dbfill == "IMPTP" || $gtm_test_dbfill == "IMPZTP") then
 			endif
 		else
 			echo "# Choosing imptpflavor randomly"
-			if (true == $rust_supported) then
+			# Rust stable currently does not support ASAN. Only nightly does.
+			# https://doc.rust-lang.org/beta/unstable-book/compiler-flags/sanitizer.html lists following issues
+			#	https://github.com/rust-lang/rust/issues/39699
+			#	https://github.com/rust-lang/rust/issues/89653
+			# Wait for Rust stable to support ASAN before enabling it. Until then do not choose rust
+			# for imptp if YottaDB build has ASAN enabled.
+			source $gtm_tst/com/is_libyottadb_asan_enabled.csh
+			if ((true == $rust_supported) && ! $gtm_test_libyottadb_asan_enabled) then
 				set rand = 5
 			else
 				set rand = 4
