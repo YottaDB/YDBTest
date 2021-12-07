@@ -53,6 +53,7 @@ Region          DEFAULT
   DB is auto-created                  FALSE  DB shares gvstats             TRUE
   LOCK shares DB critical section     FALSE  Read Only                      OFF
   Recover interrupted                 FALSE
+##TEST_AWK  Max conc proc time [0-9 ]{22}  Max Concurrent processes         1
   Reorg Sleep Nanoseconds                 0
 command: change -fileheader -location=NULL -size=1 -value=1 ...
 command: change -fileheader -location=10 -size=z -value=1...
@@ -135,6 +136,7 @@ Region          DEFAULT
   DB is auto-created                  FALSE  DB shares gvstats             TRUE
   LOCK shares DB critical section     FALSE  Read Only                      OFF
   Recover interrupted                 FALSE
+##TEST_AWK  Max conc proc time [0-9 ]{22}  Max Concurrent processes         1
   Reorg Sleep Nanoseconds                 0
 Check -nocrit qualifier...
 Seize critical section for process A-----------------------------
