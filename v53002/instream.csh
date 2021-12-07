@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -65,6 +65,14 @@ endif
 # C9I06003000	Has to run with BEFORE image journaling
 if ("MM" == $acc_meth) then
 	setenv subtest_exclude_list "$subtest_exclude_list C9I06003000"
+endif
+
+source $gtm_tst/com/is_libyottadb_asan_enabled.csh	# defines "gtm_test_libyottadb_asan_enabled" env var
+if ($gtm_test_libyottadb_asan_enabled) then
+	# libyottadb.so was built with address sanitizer (which also includes the leak sanitizer)
+	# That creates shadow memory to keep track of memory leaks and allocates that at a very big address.
+	# That fails with tests that limit virtual memory. Therefore disable such subtests when ASAN is enabled.
+	setenv subtest_exclude_list "$subtest_exclude_list C9D12002471"
 endif
 
 $gtm_tst/com/submit_subtest.csh

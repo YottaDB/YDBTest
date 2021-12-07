@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -148,6 +148,15 @@ endif
 if ($?gtm_test_temporary_disable) then
        setenv subtest_exclude_list "$subtest_exclude_list gtm7926isgtmdist"
 endif
+
+source $gtm_tst/com/is_libyottadb_asan_enabled.csh	# defines "gtm_test_libyottadb_asan_enabled" env var
+if ($gtm_test_libyottadb_asan_enabled) then
+	# libyottadb.so was built with address sanitizer (which also includes the leak sanitizer)
+	# That creates shadow memory to keep track of memory leaks and allocates that at a very big address.
+	# That fails with tests that limit virtual memory. Therefore disable such subtests when ASAN is enabled.
+	setenv subtest_exclude_list "$subtest_exclude_list gtm8047"
+endif
+
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh
 

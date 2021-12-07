@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -84,6 +84,14 @@ endif
 # 	Erroneous "libgcc_s.so.1 must be installed for pthread_cancel to work" message
 # 	https://sourceware.org/bugzilla/show_bug.cgi?id=13119
 if (("hp-ux" == "$gtm_test_osname") || ("aix" == "$gtm_test_osname") || ($HOST:ar =~ {thunder,bolt,scylla,charybdis,bahirs} ) ) then
+	setenv subtest_exclude_list "$subtest_exclude_list gtm8394"
+endif
+
+source $gtm_tst/com/is_libyottadb_asan_enabled.csh	# defines "gtm_test_libyottadb_asan_enabled" env var
+if ($gtm_test_libyottadb_asan_enabled) then
+	# libyottadb.so was built with address sanitizer (which also includes the leak sanitizer)
+	# That creates shadow memory to keep track of memory leaks and allocates that at a very big address.
+	# That fails with tests that limit virtual memory. Therefore disable such subtests when ASAN is enabled.
 	setenv subtest_exclude_list "$subtest_exclude_list gtm8394"
 endif
 
