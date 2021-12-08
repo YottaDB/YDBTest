@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #                                                               #
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.       #
+# Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.       #
 # All rights reserved.                                          #
 #                                                               #
 #       This source code contains the intellectual property     #
@@ -70,3 +70,9 @@ if ($status) then
         echo "# dbcheck failed. Output of dbcheck.out follows"
         cat dbcheck.out
 endif
+
+echo "# Test NOCRENETFILE error displays full path and file name (used to truncate last character previously)"
+echo "# Change the DEFAULT segment in the database using the syntax: @<hostname>:<filepath>."
+$ydb_dist/mumps -run GDE change -segment DEFAULT -file="@$HOST":/tmp/abcd.dat >& case5.txt
+$ydb_dist/mupip create
+

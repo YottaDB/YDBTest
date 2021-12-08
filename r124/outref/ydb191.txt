@@ -35,3 +35,7 @@ YDB>
 
 YDB>
 
+# Test NOCRENETFILE error displays full path and file name (used to truncate last character previously)
+# Change the DEFAULT segment in the database using the syntax: @<hostname>:<filepath>.
+%YDB-E-NOCRENETFILE, Database file @##TEST_HOST_SHORT##:/tmp/abcd.dat not created; cannot create across network
+%YDB-E-DBNOCRE, Not all specified database files, or their associated journal files were created
