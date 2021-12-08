@@ -4,7 +4,7 @@
 # Copyright (c) 2013, 2015 Fidelity National Information	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -67,6 +67,16 @@ else if ("linux" != $gtm_test_osname) then
 	# The setitimer_fail subtest script has been reworked to reflect the POSIX timer changes (#205) which affect
 	# only linux. So this subtest will fail on non-linux platforms which continue to use non-posix timers (setitimer()).
 	setenv subtest_exclude_list	"$subtest_exclude_list setitimer_fail"
+endif
+
+source $gtm_tst/com/is_libyottadb_asan_enabled.csh	# defines "gtm_test_libyottadb_asan_enabled" env var
+if ($gtm_test_libyottadb_asan_enabled) then
+	# libyottadb.so was built with address sanitizer
+	# The below subtest (which is a white-box test) has been then seen to fail when run with -setjnl.
+	# The failure symptom is a "AddressSanitizer: stack-buffer-overflow" error.
+	# At this point it is not clear if it is a YottaDB issue. The suspicion is that it is an ASAN issue
+	# Therefore disabling this subtest in that case.
+	setenv subtest_exclude_list "$subtest_exclude_list intrpt_wcs_wtstart"
 endif
 
 # The below subtest should always run in UTF-8 mode. Disable if unicode is not supported
