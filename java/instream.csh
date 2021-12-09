@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -91,6 +91,19 @@ echo "setenv lib_preload_init $lib_preload_init"					>> $tst_general_dir/set_jav
 echo "setenv lib_preload $lib_preload"							>> $tst_general_dir/set_java_env.csh
 echo 'setenv jvm_flags "'$jvm_flags'"'							>> $tst_general_dir/set_java_env.csh
 echo "setenv bin_subdir $bin_subdir"							>> $tst_general_dir/set_java_env.csh
+
+source $gtm_tst/com/is_libyottadb_asan_enabled.csh	# defines "gtm_test_libyottadb_asan_enabled" env var
+if ($gtm_test_libyottadb_asan_enabled) then
+	# libyottadb.so was built with address sanitizer
+	# The below subtest has been seen to fail with the following symptom.
+	#	==31240==Shadow memory range interleaves with an existing memory mapping. ASan cannot proceed correctly. ABORTING.
+	#	==31240==ASan shadow was supposed to be located in the [0x00007fff7000-0x10007fff7fff] range.
+	#	==31240==This might be related to ELF_ET_DYN_BASE change in Linux 4.12.
+	#	==31240==See https://github.com/google/sanitizers/issues/856 for possible workarounds.
+	# At this point, the above issue 856 is still open.
+	# Therefore disable this subtest at least until that issue is open.
+	setenv subtest_exclude_list "$subtest_exclude_list callins"
+endif
 
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh
