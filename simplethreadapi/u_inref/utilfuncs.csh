@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2019 YottaDB LLC. and/or its subsidiaries.	#
+# Copyright (c) 2019-2021 YottaDB LLC. and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -27,12 +27,23 @@ citabcreate:	void	citabcreate^utilfuncs(I:ydb_int_t)
 citabtest:	void	citabtest^utilfuncs()
 CALLIN_EOF
 
+source $gtm_tst/com/is_libyottadb_asan_enabled.csh	# defines "gtm_test_libyottadb_asan_enabled" env var
+
 foreach file (utilfuncs*.c)
+	if (($file == "utilfuncs3_MT_STAPIFORKEXEC.c") && $gtm_test_libyottadb_asan_enabled) then
+		# libyottadb.so was built with address sanitizer
+		# utilfuncs3_MT_CALLINAFTERXIT.c tests the following.
+		#	SimpleThreadAPI call in child process after fork() returns YDB_ERR_STAPIFORKEXEC error if exec() isn't used
+		# This has been seen to hang with ASAN. Not yet clear what the cause is but the current suspicion is that
+		# it is an ASAN limitation with this fancy test case use of fork/exec/threads.
+		# Therefore we disable this particular test program in this case.
+		continue
+	endif
 	echo ""
 	echo " --> Running $file <---"
 	set exefile = $file:r
 
-	if (($file == "utilfuncs4_ydb_ci_tab_open_and_ydb_ci_tab_switch.c")) then
+	if ($file == "utilfuncs4_ydb_ci_tab_open_and_ydb_ci_tab_switch.c") then
 		setenv GTMCI callin.tab
 	endif
 

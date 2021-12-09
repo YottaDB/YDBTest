@@ -165,6 +165,7 @@ Expected Output:
  --> Invoke ydb_timer_cancel()           after ydb_exit() : There is no return value since function is void
  --> Invoke ydb_timer_start_t()          after ydb_exit() : Return value is YDB_ERR_CALLINAFTERXIT as expected
 All 8 Threads returned expected output
+##SUSPEND_OUTPUT ASAN_ENABLED
 
  --> Running utilfuncs3_MT_STAPIFORKEXEC.c <---
 ### Test that any SimpleAPI call in child process after fork() returns YDB_ERR_STAPIFORKEXEC error if exec() isn't used ###
@@ -215,6 +216,7 @@ Expected Output:
  --> Invoke ydb_timer_cancel()           in the child process after fork() : There is no return value since function is void
  --> Invoke ydb_timer_start_t()          in the child process after fork() : Return value is YDB_ERR_STAPIFORKEXEC as expected
 All 8 Threads returned expected output
+##ALLOW_OUTPUT ASAN_ENABLED
 
  --> Running utilfuncs4_ydb_ci_tab_open_and_ydb_ci_tab_switch.c <---
 ### Test Functionality of ydb_ci_tab_open_t()/ydb_ci_tab_switch_t() in the SimpleThreadAPI ###
