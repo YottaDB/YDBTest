@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -67,3 +67,10 @@ source $gtm_tst/com/set_specific.csh
 source $gtm_tst/com/getenv.csh
 # override machtype environment from primary
 source $gtm_tst/com/set_gtm_machtype.csh
+# Check if the YottaDB build has ASAN enabled on the remote side of a multi-host test.
+# If so, need to set ASAN_OPTIONS env var on the remote side to disable leak check (LSAN) as that can cause failures.
+# The below logic is similar to that in com/gtm_env_missing_csh (executed on the primary/local side for all tests).
+source $gtm_tst/com/is_libyottadb_asan_enabled.csh
+if ($gtm_test_libyottadb_asan_enabled) then
+	source $gtm_tst/com/set_asan_options_env_var.csh
+endif
