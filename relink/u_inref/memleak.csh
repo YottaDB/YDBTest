@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -15,6 +15,11 @@
 #################################################################
 
 # This is a test for memory leakage with autorelink operations.
+
+# This test uses memleak.m which relies on $zusedstor to determine how much of memory is used.
+# That ISV is 0 in case we use system malloc/free (instead of the default YottaDB memory manager).
+# And will cause a test failure in that case. So ensure we do use the YottaDB malloc/free.
+source $gtm_tst/com/set_gtmdbglvl_to_use_yottadb_malloc_free.csh
 
 # Embed source in the object files for easier estimation of the final size.
 setenv gtmcompile "-embed_source"
