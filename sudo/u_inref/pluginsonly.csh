@@ -39,11 +39,11 @@ foreach plugins ("$aim" "$enc" "$posix" "$zlib" "$aim $enc" "$aim $posix" "$aim 
 		$echoline
 		if ("no" == $utf) then
 			echo "testing with options $plugins"
-			sudo sh ./pluginsonly.sh $gtm_verno $tst_image `pwd` "$installoptions" "$plugins"
+			$sudostr sh ./pluginsonly.sh $gtm_verno $tst_image `pwd` "$installoptions" "$plugins"
 		else
 			echo "testing with options $plugins --utf8 default"
 			set installoptions = "$installoptions --utf8 default"
-			sudo sh ./pluginsonly.sh $gtm_verno $tst_image `pwd` "$installoptions" "$plugins"
+			$sudostr sh ./pluginsonly.sh $gtm_verno $tst_image `pwd` "$installoptions" "$plugins"
 		endif
 		# clean up the install directory since the files are owned by root
 		cd ..

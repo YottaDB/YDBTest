@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh
 #################################################################
 #								#
-# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -26,7 +26,7 @@ cp $gtm_tst/$tst/u_inref/gtm9116.sh ..
 
 # Pass "--force-install" to ydbinstall.sh if this is a platform that is not currently offically supported for YottaDB.
 source $gtm_tst/$tst/u_inref/setinstalloptions.csh	# sets the variable "installoptions" (e.g. "--force-install" if needed)
-sudo sh ../gtm9116.sh $gtm_verno $tst_image `pwd` "$installoptions"
+$sudostr sh ../gtm9116.sh $gtm_verno $tst_image `pwd` "$installoptions"
 
 # Verify that libyottadb.so has 755 permissions
 #ls -l | grep libyottadbutil.so

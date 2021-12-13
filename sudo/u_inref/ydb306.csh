@@ -28,7 +28,7 @@ chmod -R 755 .
 cp $gtm_tst/$tst/u_inref/ydb306.sh  .
 # we pass these things as variables to ydb306.sh because it doesn't inherit the tcsh environment variables
 source $gtm_tst/$tst/u_inref/setinstalloptions.csh      # sets the variable "installoptions" (e.g. "--force-install" if needed)
-sudo sh ./ydb306.sh $gtm_verno $tst_image `pwd` "$installoptions"
+$sudostr sh ./ydb306.sh $gtm_verno $tst_image `pwd` "$installoptions"
 
 # run a few yottadb commands to test the install works and UTF-8 is being used
 cat >> ../yottadbTest.txt << xx

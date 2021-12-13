@@ -38,7 +38,7 @@ foreach plugins ("$aim" "$enc" "$posix" "$zlib" "$aim $utf" "$enc $utf" "$posix 
 	source $gtm_tst/$tst/u_inref/setinstalloptions.csh # sets the variable "installoptions" (e.g. "--force-install" if needed)
 	$echoline
 	echo "testing with options $plugins"
-	sudo sh ./plugins.sh $gtm_verno $tst_image `pwd` "$installoptions" "$plugins"
+	$sudostr sh ./plugins.sh $gtm_verno $tst_image `pwd` "$installoptions" "$plugins"
 
 	# clean up the install directory since the files are owned by root
 	cd ..
