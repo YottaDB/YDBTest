@@ -103,5 +103,15 @@ if ($?ydb_test_exclude_sem_counter) then
 	endif
 endif
 
+source $gtm_tst/com/is_libyottadb_asan_enabled.csh	# defines "gtm_test_libyottadb_asan_enabled" env var
+if ($gtm_test_libyottadb_asan_enabled) then
+	# libyottadb.so was built with address sanitizer
+	# The below subtest spawns 34,000 processes which causes memory issues on the system (64Gb of RAM and
+	# 64Gb of swap get used 100% and not enough for the test) whereas without ASAN less than half of that RAM gets used.
+	# The cause of this is suspected to be the shadow memory that ASAN uses to track memory leaks etc.
+	# Not much can be done to avoid that overhead. Therefore disable this test if ASAN is enabled.
+	setenv subtest_exclude_list "$subtest_exclude_list sem_counter"
+endif
+
 $gtm_tst/com/submit_subtest.csh
 echo "Manually_Start tests DONE."
