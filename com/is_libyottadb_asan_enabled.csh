@@ -19,8 +19,24 @@
 
 set asanlib = `ldd $gtm_exe/libgtmshr.so | grep libasan`
 if ("" == "$asanlib") then
-	setenv gtm_test_libyottadb_asan_enabled 0
+	# With GCC, we link asan dynamically. But with CLANG, we link asan statically. This is the default and recommended
+	# (see https://stackoverflow.com/a/47022141 for detail) option. So check for statically linked asan symbols too.
+	# https://stackoverflow.com/a/47705420 suggests a grep for "asan".
+	# But that seems generic (and might give us false positives) so we search for a specific "__asan_init" symbol.
+	set asan_init_symbol = `nm -an $gtm_exe/libgtmshr.so | grep __asan_init`
+	if ("" == "$asan_init_symbol") then
+		setenv gtm_test_libyottadb_asan_enabled 0
+		setenv gtm_test_asan_compiler ""
+	else
+		setenv gtm_test_libyottadb_asan_enabled 1
+		# ASAN was found through nm. So it must be linked with CLANG.
+		# Inform caller of this through the below env var.
+		setenv gtm_test_asan_compiler "clang"
+	endif
 else
 	setenv gtm_test_libyottadb_asan_enabled 1
+	# ASAN was found through ldd. So it must be linked with GCC.
+	# Inform caller of this through the below env var.
+	setenv gtm_test_asan_compiler "gcc"
 endif
 

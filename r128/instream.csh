@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -40,6 +40,12 @@ setenv subtest_exclude_list    ""
 # filter out test that needs to run pro-only (dbg gets different results because of how gtm_fork_n_core() works)
 if ("pro" != "$tst_image") then
        setenv subtest_exclude_list "$subtest_exclude_list ydb478"
+endif
+
+source $gtm_tst/com/is_libyottadb_asan_enabled.csh
+if ($gtm_test_libyottadb_asan_enabled && ("clang" == $gtm_test_asan_compiler)) then
+	# Disable Go testing if ASAN and CLANG. See similar code in "com/gtmtest.csh" for details.
+	setenv subtest_exclude_list "$subtest_exclude_list ydb478"
 endif
 
 if ("pro" == "$tst_image") then

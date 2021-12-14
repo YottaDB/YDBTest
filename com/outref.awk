@@ -339,6 +339,10 @@ BEGIN {
 	else
 		envir[no_options] = "ASAN_DISABLED"
 	#
+	option_names[++no_options] = "gtm_test_asan_compiler"
+	if ("clang" == ENVIRON["gtm_test_asan_compiler"])
+		envir[no_options] = "ASAN_CLANG"
+	#
 	split(tst_hostos_machtype_all, all_platforms, " ")
 	if ("AIX" == tst_osname)
 	{

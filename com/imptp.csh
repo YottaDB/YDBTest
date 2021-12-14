@@ -87,8 +87,14 @@ if ($gtm_test_dbfill == "IMPTP" || $gtm_test_dbfill == "IMPZTP") then
 			source $gtm_tst/com/is_libyottadb_asan_enabled.csh
 			if ((true == $rust_supported) && ! $gtm_test_libyottadb_asan_enabled) then
 				set rand = 5
-			else
-				set rand = 4
+			else if ($gtm_test_libyottadb_asan_enabled) then
+				if ("clang" == $gtm_test_asan_compiler) then
+					# Disable Go testing if ASAN and CLANG.
+					# See similar code in "com/gtmtest.csh" for details.
+					set rand = 3
+				else
+					set rand = 4
+				endif
 			endif
 			set imptpflavor = `$gtm_exe/mumps -run rand $rand`
 			unset rand

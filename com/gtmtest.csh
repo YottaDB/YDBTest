@@ -396,6 +396,23 @@ if ( ($?exclude_servers) && !($?gtm_test_nomultihost) ) then
 
 endif
 
+############
+# Exclude "go" test if ASAN is enabled and CLANG is the compiler (not GCC).
+# --------------------------------------------------------------------------
+# In this case we get errors like the following from a "go build".
+#	/usr/bin/ld: dbg/libyottadb.so: undefined reference to `__asan_stack_free_7'
+# Interestingly, this does not happen if GCC is the compiler.
+# I suspect the issue is that "go build" is compiling the main executable without "-fsanitize=address"
+# and is linking with "libyottadb.so" which has been compiled/linked with "-fsanitize=address".
+# The solution suggested to work around this (see https://github.com/google/sanitizers/wiki/AddressSanitizerAsDso)
+# is to use LD_PRELOAD which sounds risky and so I am not going there for now.
+# Also https://go-review.googlesource.com/c/go/+/368834/2/doc/go1.18.html seems to suggest a new "-asan" option in "go build"
+# which will let it interoperate with C code compiled with the address sanitizer.
+# Therefore, we disable all "go" tests if ASAN is enabled AND YottaDB was built with CLANG.
+if ($gtm_test_libyottadb_asan_enabled && ("clang" == $gtm_test_asan_compiler)) then
+	echo "-x go" >>! $test_list
+endif
+
 #############################################
 #process request file and command line arguments, for requests and excludes
 

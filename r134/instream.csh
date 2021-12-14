@@ -37,6 +37,12 @@ endif
 
 setenv subtest_exclude_list    ""
 
+source $gtm_tst/com/is_libyottadb_asan_enabled.csh
+if ($gtm_test_libyottadb_asan_enabled && ("clang" == $gtm_test_asan_compiler)) then
+	# Disable Go testing if ASAN and CLANG. See similar code in "com/gtmtest.csh" for details.
+	setenv subtest_exclude_list "$subtest_exclude_list ydb785"
+endif
+
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh
 
