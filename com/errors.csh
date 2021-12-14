@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -63,8 +63,11 @@ if !(-z err_file_names.logx) then
 		$tst_awk 'BEGIN{filelist = ""} {filelist=$0" "filelist} END{print filelist}' err_file_names.logx | xargs ls -lrt | $tst_awk '{print $NF}' | xargs $grep -f $gtm_tst/com/errors_catch.txt /dev/null | $grep -v -f $gtm_tst/com/errors_ignore.txt >! errs_found.logx
 endif
 \rm log_and_out_files.txt
-#check if there are cores or YDB_FATAL* files
-find . -type f -a \( -name 'core*' -o -name 'gtmcore*' \) -print >&! CORE.lis
+# Check if there are core files. Exclude `python/.venv` directory as a whole as it can contain files
+# like `core.py` or `core.pyc` which are not core files but will otherwise be treated as one due to their name.
+# Not sure if `python` is an immediate subdirectory or could be one or more levels of subdirectory deep.
+# Therefore use the `-name .venv` solution instead of a `-path ./python/.venv` solution.
+find . \( -name .venv \) -prune -o -type f -a \( -name 'core*' -o -name 'gtmcore*' \) -print >&! CORE.lis
 set stat = $status
 if ($stat) then
 	echo "TEST-E-ERRORS_FIND, Could not determine if there were core files generated under directory `pwd`"

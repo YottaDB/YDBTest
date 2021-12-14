@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2014 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -11,7 +14,7 @@
 #################################################################
 
 #
-# Script that safely KILLs the target list of pids. The need for saftey is the
+# Script that safely KILLs the target list of pids. The need for safety is the
 # handling of PIDs 0, -1 and all negative numbers. For instance on Linux -1
 # will kill all processes. On SVR5 platforms 0 kills all processes within a
 # process group, -1 kills all processes and a negative value will kill all

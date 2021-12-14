@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -33,7 +33,7 @@ endif
 #
 ####################### section reporting error in script generation by the awk program #####################
 if !( `grep -v "tcsh" $action_file".csh"|wc -l` ) then
-	echo "TEST-E-NOSCRIPT awk porgram didn't generate a script for the multisite action $argv"
+	echo "TEST-E-NOSCRIPT awk program didn't generate a script for the multisite action $argv"
 	echo "Pls. check the trace and logs for a possible fallout"
 	exit 1
 endif

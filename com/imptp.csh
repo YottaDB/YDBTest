@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -62,15 +62,15 @@ if ($gtm_test_dbfill == "IMPTP" || $gtm_test_dbfill == "IMPZTP") then
 	endif
 	setenv gtm_badchar "no"
 	set rust_supported = `tcsh $gtm_tst/com/is_rust_supported.csh`
-	# Randomly choose to run M (rand=0), C simpleAPI (rand=1), C simpleThreadedAPI (rand=2), Golang (rand=3), or Rust (rand=4) version of imptp
+	# Randomly choose to run M (rand=0), C simpleAPI (rand=1), C simpleThreadedAPI (rand=2), Python (rand=3), Golang (rand=4), or Rust (rand=5) version of imptp
 	if !($?gtm_test_replay) then
 		if ($?ydb_imptp_flavor) then
-			if ((0 > $ydb_imptp_flavor) || (4 < $ydb_imptp_flavor)) then
-				echo "TEST-E-FAIL Invalid flavor of imptp specified: $ydb_imptp_flavor - allowed values, 0, 1, 2, 3, or 4"
+			if ((0 > $ydb_imptp_flavor) || (5 < $ydb_imptp_flavor)) then
+				echo "TEST-E-FAIL Invalid flavor of imptp specified: $ydb_imptp_flavor - allowed values, 0, 1, 2, 3, 4, or 5"
 				exit 1
-			else if (4 == $ydb_imptp_flavor && true != $rust_supported) then
+			else if (5 == $ydb_imptp_flavor && true != $rust_supported) then
 				echo "# Warning: rust flavor was explicitly specified, but Rust is not supported on this platform"
-				set imptpflavor = `$gtm_exe/mumps -run rand 4`
+				set imptpflavor = `$gtm_exe/mumps -run rand 5`
 				echo "Choosing flavor $imptpflavor instead"
 			else
 				echo "# Inheriting imptpflavor from env var ydb_imptp_flavor"
@@ -89,17 +89,31 @@ if ($gtm_test_dbfill == "IMPTP" || $gtm_test_dbfill == "IMPZTP") then
 			# a multi-host test run where the local host does not have asan enabled but the remote host has.
 			source $gtm_tst/com/set_asan_other_env_vars.csh	# sets a few other associated asan env vars
 			if ((true == $rust_supported) && ! $gtm_test_libyottadb_asan_enabled) then
-				set rand = 5
+				set rand = 6
 			else if ($gtm_test_libyottadb_asan_enabled) then
 				if ("clang" == $gtm_test_asan_compiler) then
-					# Disable Go testing if ASAN and CLANG.
+					# Disable Go testing if ASAN and CLANG. It is okay to disable Rust in this case as well,
+					# since ASAN and Rust do not work well together.
 					# See similar code in "com/gtmtest.csh" for details.
-					set rand = 3
-				else
 					set rand = 4
+				else
+					set rand = 5
 				endif
 			endif
 			set imptpflavor = `$gtm_exe/mumps -run rand $rand`
+			if (($gtm_test_libyottadb_asan_enabled) && (58 == `rustc --version | cut -d. -f2`)) then
+				while (3 == $imptpflavor)
+					# Disable Python testing if ASAN is enabled and Rust version is 1.58.*
+					# to prevent erroneous core files from `rustc --version`.
+					# This command is run by YDBPython's `setup.py`, during the setting of
+					# LD_PRELOAD, e.g.:
+					#	LD_PRELOAD=$(gcc -print-file-name=libasan.so) rustc --version
+					# On systems with Rust version 1.58.*, this results in a segmentation fault. So,
+					# disable Python in that case.
+					# See https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/1299#note_839072462 for more details.
+					set imptpflavor = `$gtm_exe/mumps -run rand $rand`
+				end
+			endif
 			unset rand
 		endif
 		echo "imptpflavor: $imptpflavor"
@@ -149,7 +163,20 @@ xyz
 			exit -1
 		endif
 		breaksw
-	case 3: # Run Golang wrapper (uses SimpleThreadAPI) flavor of imptp
+	case 3: # Run Python wrapper (uses simpleAPI) flavor of imptp
+		# Initialize $prompt to prevent `Undefined variable` error from activate.csh
+		setenv prompt ""
+		if (! -e python) then # Python install directory not setup, create now
+			source $gtm_tst/com/setuppyenv.csh # Do our Python setup (sets $tstpath)
+		else
+			# Activate virtual environment to provide access to local `yottadb` Python module
+			source python/.venv/bin/activate.csh
+		endif
+		ln -sf "$gtm_tst/com/imptp.py" .
+		ln -sf "$gtm_tst/com/impjob.py" .
+		set exefile = "imptp.py"
+		breaksw
+	case 4: # Run Golang wrapper (uses SimpleThreadAPI) flavor of imptp
 		if (! -e go) then # if no go environment setup yet, do it
 			source $gtm_tst/com/setupgoenv.csh # Do our golang setup (sets $tstpath)
 		endif
@@ -196,7 +223,7 @@ xyz
 		endif
 		set exefile = "imptpgo"
 		breaksw
-	case 4: # Run Rust wrapper using SimpleThreadAPI flavor of imptp
+	case 5: # Run Rust wrapper using SimpleThreadAPI flavor of imptp
 		if (true != $rust_supported) then
 			# This should never happen, it is caught above
 			echo "TEST-E-FAILED : Rust is not supported and yet was run"

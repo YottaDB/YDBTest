@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2020-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -40,7 +40,7 @@ endif
 # Set link arguments for libyottadb.so
 setenv RUSTFLAGS "-C link-args=$ci_ldpath$ydb_dist -L$ydb_dist $tst_ld_yottadb"
 
-# Uncomment the below section when ASAN is enabled for ydb_imptp_flavor = 4 choice (rust) in com/imptp.csh (currently disabled).
+# Uncomment the below section when ASAN is enabled for ydb_imptp_flavor = 5 choice (rust) in com/imptp.csh (currently disabled).
 # The flags might need to change since rust nightly has -Z. It is possible rust stable has a different flag for ASAN support.
 # ----------------------------------------------------------------
 # source $gtm_tst/com/is_libyottadb_asan_enabled.csh

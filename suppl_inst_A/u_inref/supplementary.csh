@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -45,7 +45,7 @@ unsetenv needupdatersync
 # Updates are made on non-supp (INST1) and supp (INST3) primaries
 # Choose "SLOWFILL" for imptp below since on 1-CPU systems, the regular fill INST1 imptp.csh invocation will swamp the system
 # enough that the INST3 imptp.csh invocation could error out with a "net/http: TLS handshake timeout" from go get if imptp chose
-# the go flavor (i.e. ydb_imptp_flavor = 3). We have seen such timeouts almost always on ARMV6L (which is a 1-CPU system).
+# the go flavor (i.e. ydb_imptp_flavor = 4). We have seen such timeouts almost always on ARMV6L (which is a 1-CPU system).
 $MSR RUN INST1 'setenv gtm_test_jobid 1 ; setenv gtm_test_dbfillid 1 ; setenv gtm_test_dbfill "SLOWFILL" ; $gtm_tst/com/imptp.csh' >&! imptp1.out
 $MSR RUN INST3 'setenv gtm_test_jobid 2 ; setenv gtm_test_dbfillid 2 ; setenv gtm_test_dbfill "SLOWFILL" ; $gtm_tst/com/imptp.csh' >&! imptp2.out
 sleep 15

@@ -3,6 +3,9 @@
 ; Copyright (c) 2002-2015 Fidelity National Information 	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -275,7 +278,7 @@ compiter(fid,I,loop)
 	if $GET(^irandomvariableinimptpfillprgrm(fid,subs))'=val write verifail,loop,": ^irandomvariableinimptpfillprgrm(",fid,",",$zwrite(subs),")=",$zwrite($GET(^irandomvariableinimptpfillprgrm(fid,subs)))," Expected=",$zwrite(val),! set fl=fl+1
 	if $GET(^jrandomvariableinimptpfillprogram(fid,I))'="" write verifail,loop,": ^jrandomvariableinimptpfillprogram(",fid,",",I,")=",$zwrite($GET(^jrandomvariableinimptpfillprogram(fid,I)))," Expected=null",! set fl=fl+1
 	if $GET(^jrandomvariableinimptpfillprogram(fid,I,I))'="" write verifail,loop,": ^jrandomvariableinimptpfillprogram(",fid,",",I,",",I,")=",$zwrite($GET(^jrandomvariableinimptpfillprogram(fid,I,I)))," Expected=null",! set fl=fl+1
-	if $GET(^jrandomvariableinimptpfillprogram(fid,I,I,subs))'=val write verifail,loop,": ^jrandomvariableinimptpfillprogram(",fid,",",I,",","I",",",$zwrite(subs),")=",$zwrite($GET(^jrandomvariableinimptpfillprogram(fid,I,I,subs)))," Expected=",$zwrite(val),! set fl=fl+1
+	if $GET(^jrandomvariableinimptpfillprogram(fid,I,I,subs))'=val write verifail,loop,": ^jrandomvariableinimptpfillprogram(",fid,",",I,",",I,",",$zwrite(subs),")=",$zwrite($GET(^jrandomvariableinimptpfillprogram(fid,I,I,subs)))," Expected=",$zwrite(val),! set fl=fl+1
 	; Continue tp for the second subscripts
 	for J=1:1:jobcnt do
 	. set valj=valALT_J		; Not killed
