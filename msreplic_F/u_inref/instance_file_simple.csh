@@ -3,7 +3,7 @@
 # Copyright (c) 2006-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -44,8 +44,13 @@ $gtm_tst/com/dbcreate.csh .
 
 $echoline
 echo "#- Step 1:"
+# Since the test relies on sequence numbers, we must make sure both connections are established before doing updates
 $MSR START INST1 INST2 RP
+get_msrtime
+$MSR RUN INST2 '$gtm_tst/com/wait_for_log.csh -log RCVR_'${time_msr}'.log -message "New History Content"'
 $MSR START INST1 INST3 RP
+get_msrtime
+$MSR RUN INST3 '$gtm_tst/com/wait_for_log.csh -log RCVR_'${time_msr}'.log -message "New History Content"'
 echo "#  Perform 70 transactions on INST1/A (seqnos: 1-70):"
 $MSR RUN INST1 '$gtm_tst/com/simpleinstanceupdate.csh 70'
 $MSR SYNC ALL_LINKS
