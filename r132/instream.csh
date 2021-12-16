@@ -89,6 +89,21 @@ if ($gtm_test_libyottadb_asan_enabled) then
 	setenv subtest_exclude_list "$subtest_exclude_list ydb704"
 endif
 
+if ($gtm_test_asan_compiler_clang11or12) then
+	# libyottadb.so was built with ASAN and CLANG 11 or CLANG 12
+	# In this case, the ydb632 subtest fails with the following diff
+	#
+	# --- ydb632/ydb632.diff ---
+	# 12a13,15
+	# > ==40940==WARNING: ASan is ignoring requested __asan_handle_no_return: stack top: 0x7ffedd7c3000; bottom 0x7feae521a000; size: 0x0013f85a9000 (85771063296)
+	# > False positive error reports may follow
+	# > For details see https://github.com/google/sanitizers/issues/189
+	#
+	# CLANG 13 does not fail this way so it is most likely a clang issue that has been fixed in a later version.
+	# So disable just this subtest.
+	setenv subtest_exclude_list "$subtest_exclude_list ydb632"
+endif
+
 # Disable ydb749 subtest as it is a heavyweight test and will take a lot of time on non-x86_64 (i.e. ARM).
 # The code is portable and so it is enough to test it only on x86_64.
 # Also disable this test on Debug builds as it takes a long time due to "upd_num" increasing order check in debug code in tp_tend.c

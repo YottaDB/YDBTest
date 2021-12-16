@@ -18,6 +18,7 @@
 # to libyottadb.so).
 
 set asanlib = `ldd $gtm_exe/libgtmshr.so | grep libasan`
+setenv gtm_test_asan_compiler_clang11or12 0	# See purpose of this env var below where it gets set to 1
 if ("" == "$asanlib") then
 	# With GCC, we link asan dynamically. But with CLANG, we link asan statically. This is the default and recommended
 	# (see https://stackoverflow.com/a/47022141 for detail) option. So check for statically linked asan symbols too.
@@ -32,6 +33,11 @@ if ("" == "$asanlib") then
 		# ASAN was found through nm. So it must be linked with CLANG.
 		# Inform caller of this through the below env var.
 		setenv gtm_test_asan_compiler "clang"
+		# Determine if clang 11 or 12 built libyottadb.so. This is used to disable the r132/ydb632 subtest.
+		set clangmajorver = `strings $gtm_exe/libgtmshr.so | grep 'clang version' | gawk -F. '{print $1}' | gawk '{print $NF}'`
+		if ((11 == "$clangmajorver") || (12 == "$clangmajorver")) then
+			setenv gtm_test_asan_compiler_clang11or12 1
+		endif
 	endif
 else
 	setenv gtm_test_libyottadb_asan_enabled 1

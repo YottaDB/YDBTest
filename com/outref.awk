@@ -343,6 +343,10 @@ BEGIN {
 	if ("clang" == ENVIRON["gtm_test_asan_compiler"])
 		envir[no_options] = "ASAN_CLANG"
 	#
+	option_names[++no_options] = "gtm_test_asan_compiler_clang11or12"
+	if ("1" == ENVIRON["gtm_test_asan_compiler_clang11or12"])
+		envir[no_options] = "ASAN_CLANG_11_OR_12"
+	#
 	split(tst_hostos_machtype_all, all_platforms, " ")
 	if ("AIX" == tst_osname)
 	{
