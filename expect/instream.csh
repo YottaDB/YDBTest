@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -57,9 +57,15 @@ else
 	setenv subtest_list "$subtest_list_common $subtest_list_non_replic"
 endif
 
-# thunder has syslog rate limiting issues. Until those are resolved, disable this test
-if ("thunder" == "$HOST:ar") then
-        setenv subtest_exclude_list "$subtest_exclude_list gtm4661"
+source $gtm_tst/com/is_libyottadb_asan_enabled.csh
+if ($gtm_test_libyottadb_asan_enabled) then
+	# We see cores when ASAN is used with tests that send signals (gtm4661 sends SIGTERM etc.)
+	# This happens whether YottaDB is compiled with gcc or clang.
+	# And the stack traces are inside ASAN code where a SIG-11 occurs as well.
+	# Not yet sure if it is an ASAN issue or a YottaDB issue inside the signal handler.
+	# Exclude this subtest until we can find time to investigate this further.
+	# The same test runs fine without ASAN and so is enabled in that case.
+	setenv subtest_exclude_list "$subtest_exclude_list gtm4661"
 endif
 
 # filter out white box tests that cannot run in pro

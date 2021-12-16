@@ -71,14 +71,7 @@ else
 endif
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
-setenv subtest_exclude_list	""
-if ("pro" == "$tst_image") then
-	setenv subtest_exclude_list "$subtest_exclude_list "
-else
-	# ydb534 subtest generates a SIGABRT signal which causes an assert in `generic_signal_handler.c` assert(SIGABRT != sig)`
-	# to fail hence this subtest needs to be skipped in dbg (i.e. run it only in pro).
-	setenv subtest_exclude_list "$subtest_exclude_list ydb534"
-endif
+setenv subtest_exclude_list	" "
 if ($gtm_platform_size != 64) then
 	## Disable ydb518 on non-64-bit machines
 	setenv subtest_exclude_list "$subtest_exclude_list ydb518"
@@ -94,6 +87,26 @@ if ("armv6l" == `uname -m`) then
 	# in the system and it starts using swap. But not sure what happens at that point, the system becomes
 	# unreachable even though gigabytes of swap space has been configured. So disable this on ARMV6L.
 	setenv subtest_exclude_list "$subtest_exclude_list ydb547"
+endif
+
+setenv subtest_exclude_list    ""
+
+if ("pro" == "$tst_image") then
+	source $gtm_tst/com/is_libyottadb_asan_enabled.csh
+	if ($gtm_test_libyottadb_asan_enabled) then
+		# We see cores when ASAN is used with tests that send signals (ydb534 sends SIGABRT etc.)
+		# This happens whether YottaDB is compiled with gcc or clang.
+		# And the stack traces are inside ASAN code where a SIG-11 occurs as well.
+		# There is an indication of stack smash error too in some cases.
+		# Not yet sure if it is an ASAN issue or a YottaDB issue inside the signal handler.
+		# Exclude this subtest until we can find time to investigate this further.
+		# The same test runs fine without ASAN and so is enabled in that case.
+		setenv subtest_exclude_list "$subtest_exclude_list ydb534"
+	endif
+else
+	# ydb534 subtest generates a SIGABRT signal which causes an assert in `generic_signal_handler.c` assert(SIGABRT != sig)`
+	# to fail hence this subtest needs to be skipped in dbg (i.e. run it only in pro).
+	setenv subtest_exclude_list "$subtest_exclude_list ydb534"
 endif
 
 # Submit the list of subtests
