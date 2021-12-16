@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -19,10 +19,10 @@ export ydb_routines=$(CURDIR)($(CURDIR))
 all: ydb401 ydb401_plugin.so
 
 ydb401: ydb401.c
-	gcc -Wall -o ydb401 ydb401.c -fPIC -L$(ydb_dist) -lyottadb -Wl,-rpath,$(ydb_dist) -I$(ydb_dist)
+	gcc -Wall -o ydb401 ydb401.c -fPIC -L$(ydb_dist) $(gt_ld_options_common) -lyottadb -Wl,-rpath,$(ydb_dist) -I$(ydb_dist)
 
 ydb401_plugin.so: ydb401_plugin.c
-	gcc -Wall -shared -o ydb401_plugin.so ydb401_plugin.c -fPIC -L$(ydb_dist) -lyottadb -I$(ydb_dist)
+	gcc -Wall -shared -o ydb401_plugin.so ydb401_plugin.c -fPIC -L$(ydb_dist) $(gt_ld_options_common) -lyottadb -I$(ydb_dist)
 
 run: all
 	$(CURDIR)/ydb401

@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -22,7 +22,7 @@ EOF
 # Build base C executable that in turn invokes the call-in (and a different image to in turn trigger MIXIMAGE error)
 #
 $gt_cc_compiler $gtt_cc_shl_options -I$gtm_dist $gtm_tst/$tst/u_inref/miximage.c
-$gt_ld_shl_linker ${gt_ld_option_output} miximage miximage.o $gt_ld_sysrtns $ci_ldpath$gtm_dist -L$gtm_dist $tst_ld_yottadb $gt_ld_syslibs >& link.map
+$gt_ld_shl_linker ${gt_ld_option_output} miximage $gt_ld_options_common miximage.o $gt_ld_sysrtns $ci_ldpath$gtm_dist -L$gtm_dist $tst_ld_yottadb $gt_ld_syslibs >& link.map
 if (0 != $status) then
 	cat link.map
 endif
