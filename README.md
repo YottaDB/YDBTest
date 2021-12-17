@@ -224,6 +224,7 @@ endif
 set sudostr = "sudo chown $user.gtc $gtm_ver/tools"
 $sudostr
 cp -pa YDB/sr_unix/*.awk $gtm_tools/
+cp -pa YDB/sr_unix/*.csh $gtm_tools/
 cp -pa YDB/sr_linux/*.csh $gtm_tools/
 rm -f $gtm_ver/tools/setactive{,1}.csh
 
