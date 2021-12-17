@@ -85,6 +85,9 @@ if ($gtm_test_dbfill == "IMPTP" || $gtm_test_dbfill == "IMPZTP") then
 			# Wait for Rust stable to support ASAN before enabling it. Until then do not choose rust
 			# for imptp if YottaDB build has ASAN enabled.
 			source $gtm_tst/com/is_libyottadb_asan_enabled.csh
+			# Need to run this because it is possible for "imptp.csh" to be run on a remote host in
+			# a multi-host test run where the local host does not have asan enabled but the remote host has.
+			source $gtm_tst/com/set_asan_other_env_vars.csh	# sets a few other associated asan env vars
 			if ((true == $rust_supported) && ! $gtm_test_libyottadb_asan_enabled) then
 				set rand = 5
 			else if ($gtm_test_libyottadb_asan_enabled) then

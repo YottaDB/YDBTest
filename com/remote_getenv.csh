@@ -66,15 +66,12 @@ source $gtm_tst/com/set_specific.csh
 # this will take care of gtmroutines and locale set up defintions along with other regular setups
 source $gtm_tst/com/getenv.csh
 
-# Check if the YottaDB build has ASAN enabled on the remote side of a multi-host test.
-# If so, need to set ASAN_OPTIONS env var on the remote side to disable leak check (LSAN) as that can cause failures.
-# The below logic is similar to that in com/gtm_env_missing_csh (executed on the primary/local side for all tests).
+# Check if the YottaDB build has ASAN enabled on the remote side of a multi-host test. If so, need to set
+# ASAN_OPTIONS env var (among other things) on the remote side to disable leak check (LSAN) as that can cause failures.
 # Note: Do this BEFORE the "source $gtm_tst/com/set_gtm_machtype.csh" step as that invokes YottaDB and would otherwise
 # fail (due to memory leaks identified) in case ASAN is enabled in the current build.
 source $gtm_tst/com/is_libyottadb_asan_enabled.csh
-if ($gtm_test_libyottadb_asan_enabled) then
-	source $gtm_tst/com/set_asan_options_env_var.csh
-endif
+source $gtm_tst/com/set_asan_other_env_vars.csh	# sets a few other associated asan env vars
 
 # override machtype environment from primary
 source $gtm_tst/com/set_gtm_machtype.csh
