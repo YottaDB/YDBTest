@@ -3,7 +3,7 @@
 ; Copyright (c) 2015 Fidelity National Information 		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
-; Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -29,14 +29,23 @@ relinkctlfull
 	do
 	.	do ^x
 	set (curr,prev)=$zrealstor
-	; Continue for another 2,000 iterations.
+	; ############################################################################
+	; Continue for another 2,000 iterations. And detect if memory usage increases.
+	; ############################################################################
+	; Note down $zrealstor around iteration number 500 instead of before iteration 1 (like one would normally think).
+	; This is because we have seen stp_gcol() allocate 0.3Mb somewhere between iterations 200 and 300
+	; after the YDB#786 changes to rework stpg_sort() to use a faster sort algorithm (the previous slightly
+	; slower stpg_sort() did not do this memory allocation and hence it was fine to note $zrealstor at iteration 1
+	; in prior YottaDB builds). This stp_gcol() allocation is completely unrelated to the memory usage that this
+	; tests wants to check and so allow for this by noting down the baseline memory usage a little down the for loop.
 	for i=1:1:2000 do
 	.	if (i#100=0) do
-	.	.	; If the memory usage increased from the last 100 iterations, signal an error.
+	.	.	; If the memory usage increased since we last noted it down at the 500th iteration, signal an error.
 	.	.	set curr=$zrealstor
-	.	.	write "i = ",i," : $zrealstor = ",curr,!
-	.	.	write:($zstatus'["RELINKCTLFULL") "TEST-E-FAIL, $zstatus is something other than RELINKCTLFULL: "_$zstatus,!
-	.	.	write:(curr>prev) "TEST-E-FAIL, Memory usage increased from "_prev_" to "_curr,!
+	.	.	do:i>500
+	.	.	.	write "i = ",i," : $zrealstor = ",curr,!
+	.	.	.	write:($zstatus'["RELINKCTLFULL") "TEST-E-FAIL, $zstatus is something other than RELINKCTLFULL: "_$zstatus,!
+	.	.	.	write:(curr>prev) "TEST-E-FAIL, Memory usage increased from "_prev_" to "_curr,!
 	.	.	set prev=$zrealstor
 	.	do ^x
 	quit
