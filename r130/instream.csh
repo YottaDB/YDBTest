@@ -71,7 +71,8 @@ else
 endif
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
-setenv subtest_exclude_list	" "
+setenv subtest_exclude_list	""
+
 if ($gtm_platform_size != 64) then
 	## Disable ydb518 on non-64-bit machines
 	setenv subtest_exclude_list "$subtest_exclude_list ydb518"
@@ -88,8 +89,6 @@ if ("armv6l" == `uname -m`) then
 	# unreachable even though gigabytes of swap space has been configured. So disable this on ARMV6L.
 	setenv subtest_exclude_list "$subtest_exclude_list ydb547"
 endif
-
-setenv subtest_exclude_list    ""
 
 if ("pro" == "$tst_image") then
 	source $gtm_tst/com/is_libyottadb_asan_enabled.csh
