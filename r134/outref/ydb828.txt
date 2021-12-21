@@ -1,0 +1,12 @@
+---------------------------------------------------------------------
+######## Test various code issues identified by fuzz testing ########
+---------------------------------------------------------------------
+
+# Test $CHAR(0) in vector portion of $ZTIMEOUT does not SIG-11
+%YDB-W-ZTIMEOUT, Time expired
+
+# Test LVUNDEF error is issued if $ZTIMEOUT is set to an undefined lvn
+%YDB-E-LVUNDEF, Undefined local variable: xyz
+
+# Test no memory leaks when invalid M code is specified in $ZTIMEOUT
+PASS : No memory leaks detected

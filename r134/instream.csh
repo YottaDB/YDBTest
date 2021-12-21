@@ -20,13 +20,14 @@
 # ydb772 [sam, ksbhaskar] Utility label $$SRCDIR^%RSEL returns space separated list of source code directories
 # ydb785 [estess]      Test that ydb_ci_t() and ydb_cip_t() get text of error message if error occurs in M code
 # ydb734 [nars]        Test use cases that came up while fixing code issues identified by enabling address sanitizer
+# ydb828 [nars]        Test various code issues identified by fuzz testing
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r134 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "ydb757 ydb775 ydb782 ydb772 ydb785 ydb734"
+setenv subtest_list_non_replic "ydb757 ydb775 ydb782 ydb772 ydb785 ydb734 ydb828"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
