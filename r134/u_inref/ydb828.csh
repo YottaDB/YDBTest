@@ -27,3 +27,7 @@ echo ""
 echo '# Test no memory leaks when invalid M code is specified in $ZTIMEOUT'
 $ydb_dist/yottadb -run ydb828
 
+echo ""
+echo '# Test $VIEW("YCOLLATE",coll,ver) does not SIG-11 if no collation library exists'
+$ydb_dist/yottadb -run %XCMD 'write $VIEW("YCOLLATE",1,0),!'
+
