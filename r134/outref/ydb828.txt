@@ -2,17 +2,42 @@
 ######## Test various code issues identified by fuzz testing ########
 ---------------------------------------------------------------------
 
+------------------------------------------------------------
 # Test $CHAR(0) in vector portion of $ZTIMEOUT does not SIG-11
+------------------------------------------------------------
 %YDB-W-ZTIMEOUT, Time expired
 
+------------------------------------------------------------
 # Test LVUNDEF error is issued if $ZTIMEOUT is set to an undefined lvn
+------------------------------------------------------------
 %YDB-E-LVUNDEF, Undefined local variable: xyz
 
+------------------------------------------------------------
 # Test no memory leaks when invalid M code is specified in $ZTIMEOUT
+------------------------------------------------------------
 PASS : No memory leaks detected
 
+------------------------------------------------------------
 # Test $VIEW("YCOLLATE",coll,ver) does not SIG-11 if no collation library exists
+------------------------------------------------------------
 -1
 
+------------------------------------------------------------
 # Test NUMOFLOW operands in division operations do not cause %YDB-F-SIGINTDIV fatal errors
+------------------------------------------------------------
 PASS
+
+------------------------------------------------------------
+# Test retrying OPEN after INVMNEMCSPC error does not SIG-11
+# Expect INVMNEMCSPC error followed by USRIOINIT error
+------------------------------------------------------------
+
+YDB>
+
+YDB>
+%YDB-E-INVMNEMCSPC, Unsupported mnemonicspace invalidmnemonicspace
+
+YDB>
+%YDB-E-USRIOINIT, User-defined device driver not successfully initialized
+
+YDB>
