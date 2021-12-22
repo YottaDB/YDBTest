@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -280,7 +280,7 @@ casevms	;C k;0;k
 	;S j=$F(k,k,k);1-1;k
 	;S j=$F(@k,k);0;j,k
 	;S j=$F(k,@k);0;j,k
-	;S j=$FN(k,k,k);0;k;FNUMARG
+	;S j=$FN(k,k,k);1-1;k
 	;S j=$FN(@k,k,k);0;j,k
 	;S j=$FN(k,@k,k);0;j,k
 	;S j=$FN(k,k,@k);0;j,k
