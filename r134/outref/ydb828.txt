@@ -41,3 +41,17 @@ YDB>
 %YDB-E-USRIOINIT, User-defined device driver not successfully initialized
 
 YDB>
+
+------------------------------------------------------------
+# Test $FNUMBER with a huge 3rd parameter does not cause a SIG-11 or assert failures
+------------------------------------------------------------
+PASS
+
+------------------------------------------------------------
+# Test $FNUMBER with a 3rd parameter >= 1Mb issues a MAXSTRLEN error
+------------------------------------------------------------
+# Trying length of 2**20 : Expect MAXSTRLEN error
+%YDB-E-MAXSTRLEN, Maximum string length exceeded
+# Trying length of 2**21 : Expect MAXSTRLEN error
+%YDB-E-MAXSTRLEN, Maximum string length exceeded
+# Trying length of 2**19 : Do not expect MAXSTRLEN error

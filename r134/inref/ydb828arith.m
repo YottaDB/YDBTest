@@ -33,7 +33,7 @@ ydb828arith; Test operands with NUMOFLOW errors do not cause %YDB-F-SIGINTDIV er
 	. set num2=$$gennumber
 	. set xstr="set x="_num1_oper($random(oper)+1)_num2
 	. do execute(xstr)
-	write "PASS"
+	write "PASS",!
 	quit
 
 execute(xstr)

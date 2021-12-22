@@ -56,3 +56,20 @@ open dev:(attach="")::"invalidmnemonicspace"
 open dev
 YDB_EOF
 
+echo ""
+echo "------------------------------------------------------------"
+echo '# Test $FNUMBER with a huge 3rd parameter does not cause a SIG-11 or assert failures'
+echo "------------------------------------------------------------"
+$ydb_dist/yottadb -run ydb828fnumber
+
+echo ""
+echo "------------------------------------------------------------"
+echo '# Test $FNUMBER with a 3rd parameter >= 1Mb issues a MAXSTRLEN error'
+echo "------------------------------------------------------------"
+echo "# Trying length of 2**20 : Expect MAXSTRLEN error"
+$ydb_dist/yottadb -run %XCMD 'set x=$fnumber(1,"P,",2**20)'
+echo "# Trying length of 2**21 : Expect MAXSTRLEN error"
+$ydb_dist/yottadb -run %XCMD 'set x=$fnumber(1,"P,",2**21)'
+echo "# Trying length of 2**19 : Do not expect MAXSTRLEN error"
+$ydb_dist/yottadb -run %XCMD 'set x=$fnumber(1,"P,",2**19)'
+
