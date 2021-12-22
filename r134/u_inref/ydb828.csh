@@ -25,9 +25,13 @@ $ydb_dist/yottadb -run %XCMD 'S $ZTim=xyz'
 
 echo ""
 echo '# Test no memory leaks when invalid M code is specified in $ZTIMEOUT'
-$ydb_dist/yottadb -run ydb828
+$ydb_dist/yottadb -run ydb828ztimeout
 
 echo ""
 echo '# Test $VIEW("YCOLLATE",coll,ver) does not SIG-11 if no collation library exists'
 $ydb_dist/yottadb -run %XCMD 'write $VIEW("YCOLLATE",1,0),!'
+
+echo ""
+echo '# Test NUMOFLOW operands in division operations do not cause %YDB-F-SIGINTDIV fatal errors'
+$ydb_dist/yottadb -run ydb828arith
 

@@ -10,7 +10,7 @@
 ;								;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-ydb828	; Test no memory leaks when invalid M code is specified in $ZTIMEOUT
+ydb828ztimeout	; Test no memory leaks when invalid M code is specified in $ZTIMEOUT
 	;
 	set $etrap="set $ecode="""""
 	f i=1:1:10000 set:i=1000 start=$zrealstor do
