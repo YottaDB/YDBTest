@@ -73,3 +73,9 @@ $ydb_dist/yottadb -run %XCMD 'set x=$fnumber(1,"P,",2**21)'
 echo "# Trying length of 2**19 : Do not expect MAXSTRLEN error"
 $ydb_dist/yottadb -run %XCMD 'set x=$fnumber(1,"P,",2**19)'
 
+echo ""
+echo "------------------------------------------------------------"
+echo '# Test $JUSTIFY and $FNUMBER with a huge 3rd parameter does not cause a SIG-11 or assert failures'
+echo "------------------------------------------------------------"
+$ydb_dist/yottadb -run ydb828justify
+

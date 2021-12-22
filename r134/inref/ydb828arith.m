@@ -26,8 +26,7 @@ ydb828arith; Test operands with NUMOFLOW errors do not cause %YDB-F-SIGINTDIV er
 	set oper($incr(oper))="\"
 	set oper($incr(oper))="#"
 	; Run test for at least 5 seconds and 100 iterations
-	set start=$horolog
-	for i=1:1  quit:(i#100=0)&(5<$$^difftime($horolog,start))  do
+	for i=1:1:100  do
 	. new num1,num2
 	. set num1=$$gennumber
 	. set num2=$$gennumber

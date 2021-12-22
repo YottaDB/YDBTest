@@ -55,3 +55,11 @@ PASS
 # Trying length of 2**21 : Expect MAXSTRLEN error
 %YDB-E-MAXSTRLEN, Maximum string length exceeded
 # Trying length of 2**19 : Do not expect MAXSTRLEN error
+
+------------------------------------------------------------
+# Test $JUSTIFY and $FNUMBER with a huge 3rd parameter does not cause a SIG-11 or assert failures
+------------------------------------------------------------
+# Testing $FNUMBER with random huge 3rd argument
+# Testing $JUSTIFY with random huge 3rd argument
+# Testing $JUSTIFY with random huge 2nd and 3rd arguments
+PASS
