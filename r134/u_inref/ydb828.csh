@@ -79,3 +79,31 @@ echo '# Test $JUSTIFY and $FNUMBER with a huge 3rd parameter does not cause a SI
 echo "------------------------------------------------------------"
 $ydb_dist/yottadb -run ydb828justify
 
+echo ""
+echo "------------------------------------------------------------"
+echo '# Test no stack buffer overflow in lower_to_upper() call in sr_unix/io_open_try.c'
+echo '# Tests https://gitlab.com/YottaDB/DB/YDB/-/issues/828#note_793149685'
+echo '# Expect to see a %YDB-E-INVMNEMCSPC error'
+echo "------------------------------------------------------------"
+$ydb_dist/yottadb -run %XCMD 'open "x":(readonly)::"invalidmnemonicspace"'
+
+echo ""
+echo "------------------------------------------------------------"
+echo '# Test no stack buffer overflow in lower_to_upper() call in sr_unix/op_fnzparse.c'
+echo '# Tests https://gitlab.com/YottaDB/DB/YDB/-/issues/828#note_793151980'
+echo '# Expect to see a %YDB-E-ZPARSETYPE error'
+echo "------------------------------------------------------------"
+$ydb_dist/yottadb -run %XCMD 'write $zparse("test","","/usr/work/","dust.lis","abcdefghijklmnopqrstuvwxyz")'
+
+echo ""
+echo "------------------------------------------------------------"
+echo '# Test no stack buffer overflow in lower_to_upper() call in sr_port/iosocket_open.c'
+echo '# Tests https://gitlab.com/YottaDB/DB/YDB/-/issues/828#note_793151980'
+echo '# Expect to see no errors'
+echo "------------------------------------------------------------"
+$ydb_dist/yottadb -direct << YDB_EOF
+open "socket":(exception="do fail^server":ioerror="trap")::"SOCKET"
+close "socket"
+open "socket":(exception="do fail^server":ioerror="trap")::"TOOLONGMNEMONICSPACE"
+YDB_EOF
+

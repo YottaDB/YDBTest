@@ -63,3 +63,31 @@ PASS
 # Testing $JUSTIFY with random huge 3rd argument
 # Testing $JUSTIFY with random huge 2nd and 3rd arguments
 PASS
+
+------------------------------------------------------------
+# Test no stack buffer overflow in lower_to_upper() call in sr_unix/io_open_try.c
+# Tests https://gitlab.com/YottaDB/DB/YDB/-/issues/828#note_793149685
+# Expect to see a %YDB-E-INVMNEMCSPC error
+------------------------------------------------------------
+%YDB-E-INVMNEMCSPC, Unsupported mnemonicspace invalidmnemonicspace
+
+------------------------------------------------------------
+# Test no stack buffer overflow in lower_to_upper() call in sr_unix/op_fnzparse.c
+# Tests https://gitlab.com/YottaDB/DB/YDB/-/issues/828#note_793151980
+# Expect to see a %YDB-E-ZPARSETYPE error
+------------------------------------------------------------
+%YDB-E-ZPARSETYPE, Illegal TYPE argument to $ZPARSE(): abcdefghijklmnopqrstuvwxyz
+
+------------------------------------------------------------
+# Test no stack buffer overflow in lower_to_upper() call in sr_port/iosocket_open.c
+# Tests https://gitlab.com/YottaDB/DB/YDB/-/issues/828#note_793151980
+# Expect to see no errors
+------------------------------------------------------------
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
