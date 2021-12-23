@@ -91,3 +91,11 @@ YDB>
 YDB>
 
 YDB>
+
+------------------------------------------------------------
+# Test $INCREMENT(@glvn) with boolean expression in glvn subscript does not SIG-11
+# Expect to see 2 LVUNDEF errors in the first 2 tests. And y(2)=1 in the 3rd test.
+------------------------------------------------------------
+%YDB-E-LVUNDEF, Undefined local variable: x(1)
+%YDB-E-LVUNDEF, Undefined local variable: y
+y(2)=1

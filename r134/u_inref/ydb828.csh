@@ -107,3 +107,12 @@ close "socket"
 open "socket":(exception="do fail^server":ioerror="trap")::"TOOLONGMNEMONICSPACE"
 YDB_EOF
 
+echo ""
+echo "------------------------------------------------------------"
+echo '# Test $INCREMENT(@glvn) with boolean expression in glvn subscript does not SIG-11'
+echo '# Expect to see 2 LVUNDEF errors in the first 2 tests. And y(2)=1 in the 3rd test.'
+echo "------------------------------------------------------------"
+$ydb_dist/yottadb -run %XCMD 'write $increment(@x(1&2)),!'
+$ydb_dist/yottadb -run %XCMD 'write $increment(@x(y*76&$z\333733)),!'
+$ydb_dist/yottadb -run %XCMD 'set x(1)="y(2)" set z=$increment(@x(1&2)) zwrite y'
+
