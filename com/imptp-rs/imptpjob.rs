@@ -3,7 +3,7 @@
 
 /****************************************************************
 *                                                               *
-* Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.  *
+* Copyright (c) 2019-2021 YottaDB LLC and/or its subsidiaries.  *
 * All rights reserved.                                          *
 *                                                               *
 *       This source code contains the intellectual property     *
@@ -90,7 +90,6 @@ macro_rules! zwrite {
     };
 }
 
-///
 /// We want to generate the data in a pseudo-random order,
 /// but still ensure that every number from 1 to p-1 (where p is a prime number) is present.
 ///
@@ -666,7 +665,7 @@ fn do_job(ctx: &Context, jobid: &str, jobindex: usize) -> YDBResult<()> {
                 ..
             }) => {}
             // TODO: the Go implementation has a notion of recoverable errors, we should too
-            Err(other) => panic!(other),
+            Err(other) => panic!("{}", other),
             Ok(val) => {
                 if val != b"0" {
                     break;
