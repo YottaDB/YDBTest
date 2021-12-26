@@ -99,3 +99,48 @@ YDB>
 %YDB-E-LVUNDEF, Undefined local variable: x(1)
 %YDB-E-LVUNDEF, Undefined local variable: y
 y(2)=1
+
+------------------------------------------------------------
+# Test MUMPS_INT usages in code base with HUGE numeric arguments do not SIG-11 and/or assert fail
+------------------------------------------------------------
+# First test with XECUTE of such expressions
+# Testing $EXTRACT/$ZEXTRACT with random huge 2nd and/or 3rd argument
+# Testing $ZYHASH with random huge 2nd argument
+# Testing $TEXT with random huge offset argument
+# Testing $FIND with random huge 3rd argument
+# Testing $ZBITFIND with random huge 2nd and/or 3rd argument
+# Testing $ZBITSET with random huge 2nd and/or 3rd argument
+# Testing $ZBITGET with random huge 2nd argument
+# Testing $ZBITSTR with random huge 1st and/or 2nd argument
+# Testing $ZCHAR with random huge 1st argument
+# Testing $ZSIGPROC with random huge 2nd argument
+# Testing $CHAR with random huge 1st argument
+# Testing $JUSTIFY with random huge 2nd and/or 3rd argument
+# Testing $ZGETJPI with random huge 1st argument
+# Testing $RANDOM with random huge 1st argument
+# Testing $ZMESSAGE with random huge 1st argument
+# Testing $QSUBSCRIPT with random huge 2nd argument
+# Testing $ASCII with random huge 2nd argument
+# Testing $STACK with random huge 1st argument
+# Testing $ZATRANSFORM with random huge 2nd, 3rd and/or 4th arguments
+# Testing $ZCOLLATE with random huge 2nd and/or 3rd argument
+# Testing $ZPEEK with random huge 2nd and/or 3rd argument
+# Testing $ZSEARCH with random huge 2nd argument
+# Testing $ZTRNLNM with random huge 3rd argument
+# Testing $ZWRITE with random huge 2nd argument
+# Testing $PIECE/$ZPIECE with random huge 3rd and/or 4th argument
+# Testing READ ? with random huge argument
+# Testing WRITE ? with random huge argument
+# Testing DO label+offset with random huge offfset
+# Testing ZBREAK label+offset with random huge offfset
+# Testing READ # with random huge argument
+# Testing WRITE * with random huge argument
+# Testing SET $PIECE/$ZPIECE/$EXTRACT/$ZEXTRACT with random huge 3rd and/or 4th argument
+# Testing TROLLBACK with random huge argument
+# Testing ZBREAK label::BreakpointCount with random huge BreakpointCount
+# Testing ZGOTO LEVEL with random huge LEVEL
+# Testing ZHALT LEVEL with random huge LEVEL
+# Testing ZMESSAGE with random huge 1st argument
+# Testing ZTCOMMIT with random huge 1st argument
+PASS
+# Next test with compile of such expressions

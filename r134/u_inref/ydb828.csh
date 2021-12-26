@@ -116,3 +116,15 @@ $ydb_dist/yottadb -run %XCMD 'write $increment(@x(1&2)),!'
 $ydb_dist/yottadb -run %XCMD 'write $increment(@x(y*76&$z\333733)),!'
 $ydb_dist/yottadb -run %XCMD 'set x(1)="y(2)" set z=$increment(@x(1&2)) zwrite y'
 
+echo ""
+echo "------------------------------------------------------------"
+echo '# Test MUMPS_INT usages in code base with HUGE numeric arguments do not SIG-11 and/or assert fail'
+echo "------------------------------------------------------------"
+echo '# First test with XECUTE of such expressions'
+$ydb_dist/yottadb -run ydb828mumpsint
+echo '# Next test with compile of such expressions'
+sed -i 's/^#/ ;/' mumpsint.m
+$ydb_dist/yottadb mumpsint >& mumpsintcompile.outx
+# Filter out known errors into .out file so test framework can catch any remaining errors (not expected)
+$grep -vE "%YDB-E-NUMOFLOW|%YDB-E-INVDLRCVAL" mumpsintcompile.outx > mumpsintcompile.out
+
