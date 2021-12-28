@@ -30,18 +30,20 @@ set filepath=`$ydb_dist/mumps -run path^ydb191`
 # Copy the DB file to be restored at the end of the subtest.
 cp mumps.gld back.gld
 
+set shorthost = $HOST:r:r:r
+
 echo ""
 echo "# Change the DEFAULT segment in the database using the syntax: <hostname>:<filepath>."
 echo "# This should use short-circuiting as <hostname> is the local host name and no @ syntax specified."
 echo "# And so can satisfy the database reference locally (i.e. should not need the GNP server) without any error."
-$ydb_dist/mumps -run GDE change -segment DEFAULT -file="$HOST":$filepath >& case1.txt
+$ydb_dist/mumps -run GDE change -segment DEFAULT -file="$shorthost":$filepath >& case1.txt
 $ydb_dist/mumps -run case1^ydb191
 echo ""
 
 echo "# Change the DEFAULT segment in the database using the syntax: @<hostname>:<filepath>."
 echo "# This should use the GNP server even though <hostname> is local due to the @ syntax."
 echo "# Since there is no GNP server started, we expect a database access to error out."
-$ydb_dist/mumps -run GDE change -segment DEFAULT -file="@$HOST":$filepath >& case2.txt
+$ydb_dist/mumps -run GDE change -segment DEFAULT -file="@$shorthost":$filepath >& case2.txt
 $ydb_dist/mumps -run case2^ydb191
 echo ""
 
@@ -73,6 +75,6 @@ endif
 
 echo "# Test NOCRENETFILE error displays full path and file name (used to truncate last character previously)"
 echo "# Change the DEFAULT segment in the database using the syntax: @<hostname>:<filepath>."
-$ydb_dist/mumps -run GDE change -segment DEFAULT -file="@$HOST":/tmp/abcd.dat >& case5.txt
+$ydb_dist/mumps -run GDE change -segment DEFAULT -file="@$shorthost":/tmp/abcd.dat >& case5.txt
 $ydb_dist/mupip create
 
