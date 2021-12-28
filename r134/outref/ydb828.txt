@@ -144,3 +144,116 @@ y(2)=1
 # Testing ZTCOMMIT with random huge 1st argument
 PASS
 # Next test with compile of such expressions
+
+------------------------------------------------------------
+# Test NEW:0 or BREAK:0 followed by other commands in same M line does not SIG-11
+------------------------------------------------------------
+# Try all test cases using [yottadb -run]
+------------------------------------------------------------
+# test1 : NEW:0 : Expect LVUNDEF error
+%YDB-E-LVUNDEF, Undefined local variable: i
+		At M source location test1+2^ydb828newbreak
+# test2 : NEW:0 : Expect LVUNDEF error
+%YDB-E-LVUNDEF, Undefined local variable: i
+		At M source location test2+2^ydb828newbreak
+
+YDB>
+# test3 : NEW:0 : Expect LVUNDEF error
+%YDB-E-LVUNDEF, Undefined local variable: i
+		At M source location test3+2^ydb828newbreak
+
+YDB>
+# test4 : NEW:0 : Expect LVUNDEF error
+%YDB-E-LVUNDEF, Undefined local variable: i
+		At M source location test4+2^ydb828newbreak
+
+YDB>
+# test5 : NEW:0 inside FOR loop : Expect LVUNDEF error
+%YDB-E-LVUNDEF, Undefined local variable: x
+		At M source location test5+2^ydb828newbreak
+
+YDB>
+# test6 : BREAK:0 : Expect LVUNDEF error
+%YDB-E-LVUNDEF, Undefined local variable: y
+		At M source location test6+2^ydb828newbreak
+
+YDB>
+# test7 : BREAK:0 inside FOR loop : Expect LVUNDEF error
+%YDB-E-LVUNDEF, Undefined local variable: y
+		At M source location test7+2^ydb828newbreak
+
+YDB>
+# test8 : NEW:0 : Expect 5 as output
+5
+# test9 : BREAK:0 : Expect 8 as output
+8
+# test10 : NEW:0 inside FOR loop : Expect 555 as output
+555
+# test11 : BREAK:0 inside FOR loop : Expect 888 as output
+888
+------------------------------------------------------------
+# Try all test cases using [yottadb -direct]
+------------------------------------------------------------
+
+YDB>
+# test1 : NEW:0 : Expect LVUNDEF error
+YDB>
+%YDB-E-LVUNDEF, Undefined local variable: i
+
+YDB>
+%YDB-E-LVUNDEF, Undefined local variable: i
+
+YDB>
+# test3 : NEW:0 : Expect LVUNDEF error
+YDB>
+%YDB-E-LVUNDEF, Undefined local variable: i
+
+YDB>
+# test4 : NEW:0 : Expect LVUNDEF error
+YDB>
+%YDB-E-LVUNDEF, Undefined local variable: i
+
+YDB>
+# test5 : NEW:0 inside FOR loop : Expect LVUNDEF error
+YDB>
+%YDB-E-LVUNDEF, Undefined local variable: x
+
+YDB>
+# test6 : BREAK:0 : Expect LVUNDEF error
+YDB>
+%YDB-E-LVUNDEF, Undefined local variable: y
+
+YDB>
+# test7 : BREAK:0 inside FOR loop : Expect LVUNDEF error
+YDB>
+%YDB-E-LVUNDEF, Undefined local variable: y
+
+YDB>
+# test8 : NEW:0 : Expect 5 as output
+
+YDB>
+
+YDB>
+5
+YDB>
+# test9 : BREAK:0 : Expect 8 as output
+
+YDB>
+
+YDB>
+8
+YDB>
+# test10 : NEW:0 inside FOR loop : Expect 555 as output
+
+YDB>
+
+YDB>
+555
+YDB>
+# test11 : BREAK:0 inside FOR loop : Expect 888 as output
+
+YDB>
+
+YDB>
+888
+YDB>

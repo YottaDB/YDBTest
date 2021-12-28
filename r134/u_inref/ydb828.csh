@@ -128,3 +128,21 @@ $ydb_dist/yottadb mumpsint >& mumpsintcompile.outx
 # Filter out known errors into .out file so test framework can catch any remaining errors (not expected)
 $grep -vE "%YDB-E-NUMOFLOW|%YDB-E-INVDLRCVAL" mumpsintcompile.outx > mumpsintcompile.out
 
+echo ""
+echo "------------------------------------------------------------"
+echo '# Test NEW:0 or BREAK:0 followed by other commands in same M line does not SIG-11'
+echo "------------------------------------------------------------"
+echo "# Try all test cases using [yottadb -run]"
+echo "------------------------------------------------------------"
+@ num = 1
+while ($num < 12)
+	$ydb_dist/yottadb -run test$num^ydb828newbreak
+	@ num = $num + 1
+end
+
+echo "------------------------------------------------------------"
+echo "# Try all test cases using [yottadb -direct]"
+echo "------------------------------------------------------------"
+$grep -Ew "write|set|new|break" $gtm_tst/$tst/inref/ydb828newbreak.m > ydb828newbreakdirect.m
+cat ydb828newbreakdirect.m | $ydb_dist/yottadb -direct
+
