@@ -2,6 +2,7 @@
 ==Executing MULTISITE_REPLIC 'START INST1 INST2 RP'==
 Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/wait_for_log.csh -log ##FILTERED##RCVR_##TIMESTAMP##.log -message "New History Content"'==
 ==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP replicate -source -freeze=on -nocomment'==
 ###################################################################
 Rollback with -online -resync=1
