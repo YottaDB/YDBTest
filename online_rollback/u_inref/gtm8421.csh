@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2015 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -21,7 +24,14 @@ $MSR START INST1 INST2 RP
 get_msrtime
 set ts = $time_msr
 
-# For INST2 to freeze before any updates are processed. Thus when the Receiver side is unfrozen, the Receiver
+# Before freezing the receiver side and running an online rollback on the source side, ensure the source and receiver
+# have connected. Or else the online rollback on the source side (which happens in the foreground while the
+# connection handshake happens in the background) could close the connection even before the handshake is complete.
+# And that would cause the expected auto rollback on the receiver side to later not happen at all causing a test failure
+# due to the absence of the ORLBKCMPLT message.
+$MSR RUN INST2 '$gtm_tst/com/wait_for_log.csh -log RCVR_'${ts}'.log -message "New History Content"'
+
+# Freeze INST2 before any updates are processed. Thus when the Receiver side is unfrozen, the Receiver
 # Server will attempt to perform the ONLINE ROLLBACK before it has applied any updates.
 $MSR RUN INST2 '$MUPIP replicate -source -freeze=on -nocomment'
 
