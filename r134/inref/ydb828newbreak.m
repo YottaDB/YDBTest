@@ -10,6 +10,9 @@
 ;								;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+	; This module contains entry points that are serially driven by ydb828.csh and checks for sig-11s
+	; in the various NEW or BREAK operations that used to get sig-11s in these uses prior to YDB#828
+	;
 ydb828newbreak	;	Test NEW:0 or BREAK:0 followed by other commands in same M line does not SIG-11'
 	quit
 

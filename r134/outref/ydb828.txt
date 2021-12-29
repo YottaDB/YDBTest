@@ -257,3 +257,75 @@ YDB>
 YDB>
 888
 YDB>
+
+------------------------------------------------------------
+# Test extended reference using ^[expratom1,expratom2] syntax does not cause SIG-11
+# Expect %YDB-E-ZGBLDIRACC errors below but no other errors (SIG-11, assert failures etc.)
+------------------------------------------------------------
+# test1 : Test unary NOT in gvn() use of expratom_coerce_mval() for expratom1
+%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/1.gld.  Retaining ##TEST_PATH##/mumps.gld.,%SYSTEM-E-ENO2, No such file or directory
+		At M source location test1+2^ydb828extendedreference
+
+YDB>
+# test2 : Test unary NOT in gvn() use of expratom_coerce_mval() for expratom2
+%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/0.gld.  Retaining ##TEST_PATH##/mumps.gld.,%SYSTEM-E-ENO2, No such file or directory
+		At M source location test2+2^ydb828extendedreference
+
+YDB>
+# test3 : Test unary NOT in name_glvn() use of expratom_coerce_mval() for expratom1
+^[1]x
+# test4 : Test unary NOT in name_glvn() use of expratom_coerce_mval() for expratom1
+^[0,0]x
+# test5 : Test unary NOT in lkglvn() use of expratom_coerce_mval() for expratom1
+%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/1.gld.  Retaining ##TEST_PATH##/mumps.gld.,%SYSTEM-E-ENO2, No such file or directory
+		At M source location test5+2^ydb828extendedreference
+
+YDB>
+# test6 : Test unary NOT in lkglvn() use of expratom_coerce_mval() for expratom1
+%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/0.gld.  Retaining ##TEST_PATH##/mumps.gld.,%SYSTEM-E-ENO2, No such file or directory
+		At M source location test6+2^ydb828extendedreference
+
+YDB>
+------------------------------------------------------------
+# Try all test cases using [yottadb -direct]
+------------------------------------------------------------
+
+YDB>
+# test1 : Test unary NOT in gvn() use of expratom_coerce_mval() for expratom1
+
+YDB>
+%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/1.gld.  Retaining ##TEST_PATH##/mumps.gld.
+%SYSTEM-E-ENO2, No such file or directory
+
+YDB>
+# test2 : Test unary NOT in gvn() use of expratom_coerce_mval() for expratom2
+
+YDB>
+%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/0.gld.  Retaining ##TEST_PATH##/mumps.gld.
+%SYSTEM-E-ENO2, No such file or directory
+
+YDB>
+# test3 : Test unary NOT in name_glvn() use of expratom_coerce_mval() for expratom1
+
+YDB>
+^[1]x
+YDB>
+# test4 : Test unary NOT in name_glvn() use of expratom_coerce_mval() for expratom1
+
+YDB>
+^[0,0]x
+YDB>
+# test5 : Test unary NOT in lkglvn() use of expratom_coerce_mval() for expratom1
+
+YDB>
+%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/1.gld.  Retaining ##TEST_PATH##/mumps.gld.
+%SYSTEM-E-ENO2, No such file or directory
+
+YDB>
+# test6 : Test unary NOT in lkglvn() use of expratom_coerce_mval() for expratom1
+
+YDB>
+%YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/0.gld.  Retaining ##TEST_PATH##/mumps.gld.
+%SYSTEM-E-ENO2, No such file or directory
+
+YDB>

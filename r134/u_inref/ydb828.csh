@@ -139,10 +139,25 @@ while ($num < 12)
 	$ydb_dist/yottadb -run test$num^ydb828newbreak
 	@ num = $num + 1
 end
-
 echo "------------------------------------------------------------"
 echo "# Try all test cases using [yottadb -direct]"
 echo "------------------------------------------------------------"
 $grep -Ew "write|set|new|break" $gtm_tst/$tst/inref/ydb828newbreak.m > ydb828newbreakdirect.m
 cat ydb828newbreakdirect.m | $ydb_dist/yottadb -direct
+
+echo ""
+echo "------------------------------------------------------------"
+echo '# Test extended reference using ^[expratom1,expratom2] syntax does not cause SIG-11'
+echo '# Expect %YDB-E-ZGBLDIRACC errors below but no other errors (SIG-11, assert failures etc.)'
+echo "------------------------------------------------------------"
+@ num = 1
+while ($num < 7)
+	$ydb_dist/yottadb -run test$num^ydb828extendedreference
+	@ num = $num + 1
+end
+echo "------------------------------------------------------------"
+echo "# Try all test cases using [yottadb -direct]"
+echo "------------------------------------------------------------"
+$grep -Ew "write|lock" $gtm_tst/$tst/inref/ydb828extendedreference.m > ydb828extendedreferencedirect.m
+cat ydb828extendedreferencedirect.m | $ydb_dist/yottadb -direct
 
