@@ -262,6 +262,8 @@ YDB>
 # Test extended reference using ^[expratom1,expratom2] syntax does not cause SIG-11
 # Expect %YDB-E-ZGBLDIRACC errors below but no other errors (SIG-11, assert failures etc.)
 ------------------------------------------------------------
+# Try all test cases using [yottadb -run]
+------------------------------------------------------------
 # test1 : Test unary NOT in gvn() use of expratom_coerce_mval() for expratom1
 %YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/1.gld.  Retaining ##TEST_PATH##/mumps.gld.,%SYSTEM-E-ENO2, No such file or directory
 		At M source location test1+2^ydb828extendedreference
@@ -327,5 +329,187 @@ YDB>
 YDB>
 %YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/0.gld.  Retaining ##TEST_PATH##/mumps.gld.
 %SYSTEM-E-ENO2, No such file or directory
+
+YDB>
+
+------------------------------------------------------------
+# Test that compile time literal optimization on binary arithmetic operations does not cause assert failures/SIG-11
+# Only expect graceful runtime errors (e.g. NUMOFLOW/DIVZERO/NEGFRACPWR) below
+------------------------------------------------------------
+# Try all test cases using [yottadb -run]
+------------------------------------------------------------
+# test1 : Test compile-time NUMOFLOW error in op_add() while inside FOR loop
+%YDB-E-NUMOFLOW, Numeric overflow
+		At M source location test1+2^ydb828arithlit
+
+YDB>
+# test2 : Test compile-time NUMOFLOW error in op_sub() while inside FOR loop
+%YDB-E-NUMOFLOW, Numeric overflow
+		At M source location test2+2^ydb828arithlit
+
+YDB>
+# test3 : Test compile-time NUMOFLOW error in op_mul() while inside FOR loop
+%YDB-E-NUMOFLOW, Numeric overflow
+		At M source location test3+2^ydb828arithlit
+
+YDB>
+# test4 : Test compile-time DIVZERO error in op_div() while inside FOR loop
+#         Note that this test did not SIG-11 previously but is added for completeness
+%YDB-E-DIVZERO, Attempt to divide by zero
+		At M source location test4+3^ydb828arithlit
+
+YDB>
+# test5 : Test compile-time NUMOFLOW error in op_div() while inside FOR loop
+%YDB-E-NUMOFLOW, Numeric overflow
+		At M source location test5+2^ydb828arithlit
+
+YDB>
+# test6 : Test compile-time DIVZERO error in op_idiv() while inside FOR loop
+#         Note that this test did not SIG-11 previously but is added for completeness
+%YDB-E-DIVZERO, Attempt to divide by zero
+		At M source location test6+3^ydb828arithlit
+
+YDB>
+# test7 : Test compile-time NUMOFLOW error in op_idiv() while inside FOR loop
+%YDB-E-NUMOFLOW, Numeric overflow
+		At M source location test7+2^ydb828arithlit
+
+YDB>
+# test8 : Test compile-time DIVZERO error in flt_mod() while inside FOR loop
+#         Note that this test did not SIG-11 in GT.M V7.0-001
+%YDB-E-DIVZERO, Attempt to divide by zero
+		At M source location test8+3^ydb828arithlit
+
+YDB>
+# test9 : Test compile-time NUMOFLOW error in flt_mod() -> op_div() while inside FOR loop
+%YDB-E-NUMOFLOW, Numeric overflow
+		At M source location test9+2^ydb828arithlit
+
+YDB>
+# test10 : Test compile-time DIVZERO error in op_exp() while inside FOR loop
+#         Note that this test did not SIG-11 in GT.M V7.0-001
+%YDB-E-DIVZERO, Attempt to divide by zero
+		At M source location test10+3^ydb828arithlit
+
+YDB>
+# test11 : Test compile-time NUMOFLOW error in op_exp() -> op_mul() while inside FOR loop
+%YDB-E-NUMOFLOW, Numeric overflow
+		At M source location test11+2^ydb828arithlit
+
+YDB>
+# test12 : Test compile-time NEGFRACPWR error in op_exp() while inside FOR loop
+%YDB-E-NEGFRACPWR, Invalid operation: fractional power of negative number
+		At M source location test12+2^ydb828arithlit
+
+YDB>
+------------------------------------------------------------
+# Try all test cases using [yottadb -direct]
+------------------------------------------------------------
+
+YDB>
+
+YDB>
+
+YDB>
+# test1 : Test compile-time NUMOFLOW error in op_add() while inside FOR loop
+
+YDB>
+%YDB-E-NUMOFLOW, Numeric overflow
+
+YDB>
+
+YDB>
+# test2 : Test compile-time NUMOFLOW error in op_sub() while inside FOR loop
+
+YDB>
+%YDB-E-NUMOFLOW, Numeric overflow
+
+YDB>
+
+YDB>
+# test3 : Test compile-time NUMOFLOW error in op_mul() while inside FOR loop
+
+YDB>
+%YDB-E-NUMOFLOW, Numeric overflow
+
+YDB>
+
+YDB>
+# test4 : Test compile-time DIVZERO error in op_div() while inside FOR loop
+
+YDB>
+#         Note that this test did not SIG-11 previously but is added for completeness
+
+YDB>
+%YDB-E-DIVZERO, Attempt to divide by zero
+
+YDB>
+
+YDB>
+# test5 : Test compile-time NUMOFLOW error in op_div() while inside FOR loop
+
+YDB>
+%YDB-E-NUMOFLOW, Numeric overflow
+
+YDB>
+
+YDB>
+# test6 : Test compile-time DIVZERO error in op_idiv() while inside FOR loop
+
+YDB>
+#         Note that this test did not SIG-11 previously but is added for completeness
+
+YDB>
+%YDB-E-DIVZERO, Attempt to divide by zero
+
+YDB>
+
+YDB>
+# test7 : Test compile-time NUMOFLOW error in op_idiv() while inside FOR loop
+
+YDB>
+%YDB-E-NUMOFLOW, Numeric overflow
+
+YDB>
+
+YDB>
+# test8 : Test compile-time DIVZERO error in flt_mod() while inside FOR loop
+
+YDB>
+%YDB-E-DIVZERO, Attempt to divide by zero
+
+YDB>
+
+YDB>
+# test9 : Test compile-time NUMOFLOW error in flt_mod() -> op_div() while inside FOR loop
+
+YDB>
+%YDB-E-NUMOFLOW, Numeric overflow
+
+YDB>
+
+YDB>
+# test10 : Test compile-time DIVZERO error in op_exp() while inside FOR loop
+
+YDB>
+%YDB-E-DIVZERO, Attempt to divide by zero
+
+YDB>
+
+YDB>
+# test11 : Test compile-time NUMOFLOW error in op_exp() -> op_mul() while inside FOR loop
+
+YDB>
+%YDB-E-NUMOFLOW, Numeric overflow
+
+YDB>
+
+YDB>
+# test12 : Test compile-time NEGFRACPWR error in op_exp() while inside FOR loop
+
+YDB>
+%YDB-E-NEGFRACPWR, Invalid operation: fractional power of negative number
+
+YDB>
 
 YDB>
