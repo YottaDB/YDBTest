@@ -513,3 +513,59 @@ YDB>
 YDB>
 
 YDB>
+------------------------------------------------------------
+# Try all test cases inside trigger xecute code : Use [mupip trigger -trigger]
+# Do not expect any errors
+------------------------------------------------------------
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+File ydb828arithlit.trg, Line 1: No matching triggers found for deletion
+File ydb828arithlit.trg, Line 2: Added SET trigger on ^x named x1
+File ydb828arithlit.trg, Line 3: Added SET trigger on ^x named x2
+File ydb828arithlit.trg, Line 4: Added SET trigger on ^x named x3
+File ydb828arithlit.trg, Line 5: Added SET trigger on ^x named x4
+File ydb828arithlit.trg, Line 6: Added SET trigger on ^x named x5
+File ydb828arithlit.trg, Line 7: Added SET trigger on ^x named x6
+File ydb828arithlit.trg, Line 8: Added SET trigger on ^x named x7
+File ydb828arithlit.trg, Line 9: Added SET trigger on ^x named x8
+File ydb828arithlit.trg, Line 10: Added SET trigger on ^x named x9
+File ydb828arithlit.trg, Line 11: Added SET trigger on ^x named x10
+File ydb828arithlit.trg, Line 12: Added SET trigger on ^x named x11
+File ydb828arithlit.trg, Line 13: Added SET trigger on ^x named x12
+=========================================
+12 triggers added
+0 triggers deleted
+0 triggers modified
+12 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+------------------------------------------------------------
+# Try all test cases inside trigger xecute code : Use [$ztrigger]
+# Do not expect any errors
+------------------------------------------------------------
+File ydb828arithlit.trg, Line 1: All existing triggers (count = 12) deleted
+File ydb828arithlit.trg, Line 2: Added SET trigger on ^x named x1
+File ydb828arithlit.trg, Line 3: Added SET trigger on ^x named x2
+File ydb828arithlit.trg, Line 4: Added SET trigger on ^x named x3
+File ydb828arithlit.trg, Line 5: Added SET trigger on ^x named x4
+File ydb828arithlit.trg, Line 6: Added SET trigger on ^x named x5
+File ydb828arithlit.trg, Line 7: Added SET trigger on ^x named x6
+File ydb828arithlit.trg, Line 8: Added SET trigger on ^x named x7
+File ydb828arithlit.trg, Line 9: Added SET trigger on ^x named x8
+File ydb828arithlit.trg, Line 10: Added SET trigger on ^x named x9
+File ydb828arithlit.trg, Line 11: Added SET trigger on ^x named x10
+File ydb828arithlit.trg, Line 12: Added SET trigger on ^x named x11
+File ydb828arithlit.trg, Line 13: Added SET trigger on ^x named x12
+=========================================
+12 triggers added
+12 triggers deleted
+0 triggers modified
+13 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

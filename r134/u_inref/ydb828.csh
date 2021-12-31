@@ -180,4 +180,19 @@ echo "# Try all test cases using [yottadb -direct]"
 echo "------------------------------------------------------------"
 $grep -Ewi "for|quit" $gtm_tst/$tst/inref/ydb828arithlit.m > ydb828arithlitdirect.m
 cat ydb828arithlitdirect.m | $ydb_dist/yottadb -direct
+echo "------------------------------------------------------------"
+echo "# Try all test cases inside trigger xecute code : Use [mupip trigger -trigger]"
+echo "# Do not expect any errors"
+echo "------------------------------------------------------------"
+echo "-*" > ydb828arithlit.trg
+$grep 'for  ' ydb828arithlitdirect.m | sed 's/.*set x=//;' | $tst_awk '{printf "+^x -commands=SET -name=x%s -xecute=write %s\n", NR, $0}' | sed 's/xecute=/&"/;s/$/"/;' >> ydb828arithlit.trg
+$gtm_tst/com/dbcreate.csh mumps
+$ydb_dist/mupip trigger -noprompt -triggerfile=ydb828arithlit.trg
+echo "------------------------------------------------------------"
+echo '# Try all test cases inside trigger xecute code : Use [$ztrigger]'
+echo "# Do not expect any errors"
+echo "------------------------------------------------------------"
+$ydb_dist/yottadb -run %XCMD 'if $ztrigger("file","ydb828arithlit.trg")'
+
+$gtm_tst/com/dbcheck.csh
 
