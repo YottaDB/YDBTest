@@ -17,10 +17,6 @@ Running with ydb_boolean/gtm_boolean env var set to 0
 Subtest tst01.m
 	if $select(1:1,1:10*10*(10**45),1:3)  write "Hello "
 # Compile the m file
-		if $select(1:1,1:10*10*(10**45),1:3)  write "Hello "
-		                               ^-----
-		At column 33, line 1, source module ##TEST_PATH##/tst01.m
-%YDB-E-NUMOFLOW, Numeric overflow
 
 # Run the m file using -run
 Hello 
@@ -28,10 +24,7 @@ Hello
 # Compile/Run the m file using mumps -direct
 
 YDB>
-%YDB-E-NUMOFLOW, Numeric overflow
-		if $select(1:1,1:10*10*(10**45),1:3)  write "Hello "
-		                               ^-----
-
+Hello 
 YDB>
 -----------------------------------------------
 Subtest tst02.m
@@ -225,10 +218,6 @@ Running with ydb_boolean/gtm_boolean env var set to 1
 Subtest tst01.m
 	if $select(1:1,1:10*10*(10**45),1:3)  write "Hello "
 # Compile the m file
-		if $select(1:1,1:10*10*(10**45),1:3)  write "Hello "
-		                               ^-----
-		At column 33, line 1, source module ##TEST_PATH##/tst01.m
-%YDB-E-NUMOFLOW, Numeric overflow
 
 # Run the m file using -run
 Hello 
@@ -236,10 +225,7 @@ Hello
 # Compile/Run the m file using mumps -direct
 
 YDB>
-%YDB-E-NUMOFLOW, Numeric overflow
-		if $select(1:1,1:10*10*(10**45),1:3)  write "Hello "
-		                               ^-----
-
+Hello 
 YDB>
 -----------------------------------------------
 Subtest tst02.m
