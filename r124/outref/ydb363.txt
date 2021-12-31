@@ -59,80 +59,32 @@ YDB>
 Subtest tst04.m
         write (0&(10*10*"1E46"))
 # Compile the m file
-	        write (0&(10*10*"1E46"))
-	                                ^-----
-		At column 33, line 1, source module ##TEST_PATH##/tst04.m
-%YDB-E-NUMOFLOW, Numeric overflow
-	        write (0&(10*10*"1E46"))
-	                                ^-----
-		At column 33, line 1, source module ##TEST_PATH##/tst04.m
-%YDB-E-NUMOFLOW, Numeric overflow
-	        write (0&(10*10*"1E46"))
-	                                ^-----
-		At column 33, line 1, source module ##TEST_PATH##/tst04.m
-%YDB-E-NUMOFLOW, Numeric overflow
 
 # Run the m file using mumps -run
-%YDB-E-NUMOFLOW, Numeric overflow
-		At M source location +1^tst04
-
-YDB>
+0
 
 # Compile/Run the m file using mumps -direct
 
 YDB>
-%YDB-E-NUMOFLOW, Numeric overflow
-	        write (0&(10*10*"1E46"))
-	                                ^-----
-
+0
 YDB>
 -----------------------------------------------
 Subtest tst05.m
         write (0&(10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10))
 # Compile the m file
-	        write (0&(10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10))
-	                                                                                                                                                                   ^-----
-		At column 164, line 1, source module ##TEST_PATH##/tst05.m
-%YDB-E-NUMOFLOW, Numeric overflow
-	        write (0&(10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10))
-	                                                                                                                                                                   ^-----
-		At column 164, line 1, source module ##TEST_PATH##/tst05.m
-%YDB-E-NUMOFLOW, Numeric overflow
-	        write (0&(10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10))
-	                                                                                                                                                                   ^-----
-		At column 164, line 1, source module ##TEST_PATH##/tst05.m
-%YDB-E-NUMOFLOW, Numeric overflow
 
 # Run the m file using mumps -run
-%YDB-E-NUMOFLOW, Numeric overflow
-		At M source location +1^tst05
-
-YDB>
+0
 
 # Compile/Run the m file using mumps -direct
 
 YDB>
-%YDB-E-NUMOFLOW, Numeric overflow
-	        write (0&(10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10))
-	                                                                                                                                                                   ^-----
-
+0
 YDB>
 -----------------------------------------------
 Subtest tst06.m
         write 0!("1E46"*10)
 # Compile the m file
-	        write 0!("1E46"*10)
-	                           ^-----
-		At column 28, line 1, source module ##TEST_PATH##/tst06.m
-%YDB-E-NUMOFLOW, Numeric overflow
-	        write 0!("1E46"*10)
-	                           ^-----
-		At column 28, line 1, source module ##TEST_PATH##/tst06.m
-%YDB-E-NUMOFLOW, Numeric overflow
-	        write 0!("1E46"*10)
-	                           ^-----
-		At column 28, line 1, source module ##TEST_PATH##/tst06.m
-%YDB-E-NUMOFLOW, Numeric overflow
 
 # Run the m file using mumps -run
 %YDB-E-NUMOFLOW, Numeric overflow
@@ -144,8 +96,6 @@ YDB>
 
 YDB>
 %YDB-E-NUMOFLOW, Numeric overflow
-	        write 0!("1E46"*10)
-	                           ^-----
 
 YDB>
 -----------------------------------------------
@@ -343,32 +293,14 @@ YDB>
 Subtest tst18.m
         write 5!(10*(10*"1E45ok"))
 # Compile the m file
-	        write 5!(10*(10*"1E45ok"))
-	                                  ^-----
-		At column 35, line 1, source module ##TEST_PATH##/tst18.m
-%YDB-E-NUMOFLOW, Numeric overflow
-	        write 5!(10*(10*"1E45ok"))
-	                                  ^-----
-		At column 35, line 1, source module ##TEST_PATH##/tst18.m
-%YDB-E-NUMOFLOW, Numeric overflow
-	        write 5!(10*(10*"1E45ok"))
-	                                  ^-----
-		At column 35, line 1, source module ##TEST_PATH##/tst18.m
-%YDB-E-NUMOFLOW, Numeric overflow
 
 # Run the m file using mumps -run
-%YDB-E-NUMOFLOW, Numeric overflow
-		At M source location +1^tst18
-
-YDB>
+1
 
 # Compile/Run the m file using mumps -direct
 
 YDB>
-%YDB-E-NUMOFLOW, Numeric overflow
-	        write 5!(10*(10*"1E45ok"))
-	                                  ^-----
-
+1
 YDB>
 -----------------------------------------------
 Subtest tst19.m
@@ -454,80 +386,32 @@ YDB>
 Subtest tst04.m
         write (0&(10*10*"1E46"))
 # Compile the m file
-	        write (0&(10*10*"1E46"))
-	                                ^-----
-		At column 33, line 1, source module ##TEST_PATH##/tst04.m
-%YDB-E-NUMOFLOW, Numeric overflow
-	        write (0&(10*10*"1E46"))
-	                                ^-----
-		At column 33, line 1, source module ##TEST_PATH##/tst04.m
-%YDB-E-NUMOFLOW, Numeric overflow
-	        write (0&(10*10*"1E46"))
-	                                ^-----
-		At column 33, line 1, source module ##TEST_PATH##/tst04.m
-%YDB-E-NUMOFLOW, Numeric overflow
 
 # Run the m file using mumps -run
-%YDB-E-NUMOFLOW, Numeric overflow
-		At M source location +1^tst04
-
-YDB>
+0
 
 # Compile/Run the m file using mumps -direct
 
 YDB>
-%YDB-E-NUMOFLOW, Numeric overflow
-	        write (0&(10*10*"1E46"))
-	                                ^-----
-
+0
 YDB>
 -----------------------------------------------
 Subtest tst05.m
         write (0&(10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10))
 # Compile the m file
-	        write (0&(10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10))
-	                                                                                                                                                                   ^-----
-		At column 164, line 1, source module ##TEST_PATH##/tst05.m
-%YDB-E-NUMOFLOW, Numeric overflow
-	        write (0&(10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10))
-	                                                                                                                                                                   ^-----
-		At column 164, line 1, source module ##TEST_PATH##/tst05.m
-%YDB-E-NUMOFLOW, Numeric overflow
-	        write (0&(10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10))
-	                                                                                                                                                                   ^-----
-		At column 164, line 1, source module ##TEST_PATH##/tst05.m
-%YDB-E-NUMOFLOW, Numeric overflow
 
 # Run the m file using mumps -run
-%YDB-E-NUMOFLOW, Numeric overflow
-		At M source location +1^tst05
-
-YDB>
+0
 
 # Compile/Run the m file using mumps -direct
 
 YDB>
-%YDB-E-NUMOFLOW, Numeric overflow
-	        write (0&(10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10*10))
-	                                                                                                                                                                   ^-----
-
+0
 YDB>
 -----------------------------------------------
 Subtest tst06.m
         write 0!("1E46"*10)
 # Compile the m file
-	        write 0!("1E46"*10)
-	                           ^-----
-		At column 28, line 1, source module ##TEST_PATH##/tst06.m
-%YDB-E-NUMOFLOW, Numeric overflow
-	        write 0!("1E46"*10)
-	                           ^-----
-		At column 28, line 1, source module ##TEST_PATH##/tst06.m
-%YDB-E-NUMOFLOW, Numeric overflow
-	        write 0!("1E46"*10)
-	                           ^-----
-		At column 28, line 1, source module ##TEST_PATH##/tst06.m
-%YDB-E-NUMOFLOW, Numeric overflow
 
 # Run the m file using mumps -run
 %YDB-E-NUMOFLOW, Numeric overflow
@@ -539,8 +423,6 @@ YDB>
 
 YDB>
 %YDB-E-NUMOFLOW, Numeric overflow
-	        write 0!("1E46"*10)
-	                           ^-----
 
 YDB>
 -----------------------------------------------
@@ -746,32 +628,14 @@ YDB>
 Subtest tst18.m
         write 5!(10*(10*"1E45ok"))
 # Compile the m file
-	        write 5!(10*(10*"1E45ok"))
-	                                  ^-----
-		At column 35, line 1, source module ##TEST_PATH##/tst18.m
-%YDB-E-NUMOFLOW, Numeric overflow
-	        write 5!(10*(10*"1E45ok"))
-	                                  ^-----
-		At column 35, line 1, source module ##TEST_PATH##/tst18.m
-%YDB-E-NUMOFLOW, Numeric overflow
-	        write 5!(10*(10*"1E45ok"))
-	                                  ^-----
-		At column 35, line 1, source module ##TEST_PATH##/tst18.m
-%YDB-E-NUMOFLOW, Numeric overflow
 
 # Run the m file using mumps -run
-%YDB-E-NUMOFLOW, Numeric overflow
-		At M source location +1^tst18
-
-YDB>
+1
 
 # Compile/Run the m file using mumps -direct
 
 YDB>
-%YDB-E-NUMOFLOW, Numeric overflow
-	        write 5!(10*(10*"1E45ok"))
-	                                  ^-----
-
+1
 YDB>
 -----------------------------------------------
 Subtest tst19.m
