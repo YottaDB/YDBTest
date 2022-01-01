@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2021-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -10,6 +10,8 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+
+$gtm_tst/com/dbcreate.csh mumps
 
 echo '---------------------------------------------------------------------'
 echo '######## Test various code issues identified by fuzz testing ########'
@@ -186,7 +188,6 @@ echo "# Do not expect any errors"
 echo "------------------------------------------------------------"
 echo "-*" > ydb828arithlit.trg
 $grep 'for  ' ydb828arithlitdirect.m | sed 's/.*set x=//;' | $tst_awk '{printf "+^x -commands=SET -name=x%s -xecute=write %s\n", NR, $0}' | sed 's/xecute=/&"/;s/$/"/;' >> ydb828arithlit.trg
-$gtm_tst/com/dbcreate.csh mumps
 $ydb_dist/mupip trigger -noprompt -triggerfile=ydb828arithlit.trg
 echo "------------------------------------------------------------"
 echo '# Try all test cases inside trigger xecute code : Use [$ztrigger]'
@@ -194,5 +195,57 @@ echo "# Do not expect any errors"
 echo "------------------------------------------------------------"
 $ydb_dist/yottadb -run %XCMD 'if $ztrigger("file","ydb828arithlit.trg")'
 
-$gtm_tst/com/dbcheck.csh
+echo ""
+echo "------------------------------------------------------------"
+echo '# Test that opening same device multiple times and closing it does not cause SIG-11.'
+echo '# A YottaDB build that has ASAN enabled and does not have the code fixes used to show heap-use-after-free errors.'
+echo "------------------------------------------------------------"
+echo '# Test multiple device op_close() in close_source_file()'
+echo '# Expect ZLINKFILE/FILENOTFND/EXPR/NOTPRINCIO errors and %YDB-I-BREAK but no other errors'
+set base="ydb828currdevice"
+set file="$base.m"
+cat > $file << CAT_EOF
+a
+b c
+CAT_EOF
+$ydb_dist/yottadb -direct << YDB_EOF
+set file="$file" open file use file
+set \$zroutines=""
+do ^$base
+set x=;
+break
+YDB_EOF
+echo '# Test multiple device op_close() in trigger_trgfile_tpwrap_helper() -> file_input_close()'
+echo '# Expect %YDB-I-BREAK but no other errors'
+set file=$base.trg
+cat > $file << CAT_EOF
++^x -commands=S -name=x1 -xecute="write 1"
+CAT_EOF
+$ydb_dist/yottadb -direct << YDB_EOF
+set file="$file" open file use file
+if \$ztrigger("file",file)
+break
+YDB_EOF
+echo '# Test multiple device op_close() in jobexam_dump()'
+echo '# Expect %YDB-I-BREAK but no other errors'
+set file=$base.txt
+$ydb_dist/yottadb -direct << YDB_EOF
+set file=\$zparse("$file")
+open file use file
+set x=\$zjobexam(file)
+zwrite x
+break
+YDB_EOF
+echo '# Test multiple device op_close() in close_list_file()'
+echo '# Expect %YDB-I-BREAK but no other errors'
+set file=$base.lis
+echo " b" > ${base}.m
+$ydb_dist/yottadb -direct << YDB_EOF
+set file=\$zparse("$file")
+open file use file
+set \$zcompile="-machine -lis="_file
+zcompile "${base}.m"
+break
+YDB_EOF
 
+$gtm_tst/com/dbcheck.csh

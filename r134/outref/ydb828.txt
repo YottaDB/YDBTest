@@ -1,3 +1,8 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
 ---------------------------------------------------------------------
 ######## Test various code issues identified by fuzz testing ########
 ---------------------------------------------------------------------
@@ -517,11 +522,6 @@ YDB>
 # Try all test cases inside trigger xecute code : Use [mupip trigger -trigger]
 # Do not expect any errors
 ------------------------------------------------------------
-Files Created in ##TEST_PATH##:
-Using: ##SOURCE_PATH##/mumps -run GDE
-mumps.gld
-Using: ##SOURCE_PATH##/mupip
-mumps.dat
 File ydb828arithlit.trg, Line 1: No matching triggers found for deletion
 File ydb828arithlit.trg, Line 2: Added SET trigger on ^x named x1
 File ydb828arithlit.trg, Line 3: Added SET trigger on ^x named x2
@@ -566,6 +566,86 @@ File ydb828arithlit.trg, Line 13: Added SET trigger on ^x named x12
 13 trigger file entries did update database trigger content
 0 trigger file entries did not update database trigger content
 =========================================
+
+------------------------------------------------------------
+# Test that opening same device multiple times and closing it does not cause SIG-11.
+# A YottaDB build that has ASAN enabled and does not have the code fixes used to show heap-use-after-free errors.
+------------------------------------------------------------
+# Test multiple device op_close() in close_source_file()
+# Expect ZLINKFILE/FILENOTFND/EXPR/NOTPRINCIO errors and %YDB-I-BREAK but no other errors
+
+YDB>
+
+YDB>
+
+YDB>
+	b c
+	   ^-----
+		At column 4, line 2, source module ydb828currdevice.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+		At M source location b^ydb828currdevice
+
+YDB>
+%YDB-E-EXPR, Expression expected but not found
+	set x=;
+	      ^-----
+
+YDB>
+%YDB-I-BREAK, Break instruction encountered
+		At M source location b^ydb828currdevice
+
+YDB>
+# Test multiple device op_close() in trigger_trgfile_tpwrap_helper() -> file_input_close()
+# Expect %YDB-I-BREAK but no other errors
+
+YDB>
+
+YDB>
+File ydb828currdevice.trg, Line 1: Error : SET trigger on ^x not added as another trigger named x1 already exists
+=========================================
+1 trigger file entries have errors
+0 trigger file entries have no errors
+=========================================
+
+YDB>
+%YDB-I-BREAK, Break instruction encountered
+		At M source location +1^GTM$DMOD
+
+YDB>
+# Test multiple device op_close() in jobexam_dump()
+# Expect %YDB-I-BREAK but no other errors
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+x="##TEST_PATH##/ydb828currdevice.txt"
+
+YDB>
+%YDB-I-BREAK, Break instruction encountered
+		At M source location +1^GTM$DMOD
+
+YDB>
+# Test multiple device op_close() in close_list_file()
+# Expect %YDB-I-BREAK but no other errors
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+%YDB-I-BREAK, Break instruction encountered
+		At M source location +1^GTM$DMOD
+
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
