@@ -4,7 +4,7 @@
 # Copyright (c) 2008-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -23,7 +23,12 @@
 # it is decided to run this test in only replication mode for now. So test_replic is assumed to be 1 below.
 
 ## NOTE if a new env.variable is added: ##
-# Steps to create reference file for the new env.variable, say gtm_new_env
+# There are two ways to do this depending on if the new envvar has specific responses not covered by the general
+# cases. If after running the test with no changes fails and the diff file has more than just additions to the main
+# D9I10002703 reference file, you'll need to use the second method to create a new reference file. Otherwise, just
+# adding the new lines to the reference should do the trick!
+#
+# Steps to create reference file for the new env.variable, say gtm_new_env (only if necessary):
 # 1. Run the test and let it fail. (The only diff will be a single line saying test for gtm_new_env failed)
 # 2. Check the file gtm_new_env/allerrors_gtm_new_env.logx and see if it is okay
 # 3. Copy the file to D9I10002703.log and run unite.csh
