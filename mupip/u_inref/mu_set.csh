@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -72,7 +72,7 @@ $MUPIP set -file set.dat -ext=-1
 echo "#"
 echo "# Set with a bad extension_count"
 echo "#"
-$MUPIP set -region RegA -EXT=65536
+$MUPIP set -region RegA -EXT=1048576
 echo "#"
 echo "# Set with a bad global buffers"
 echo "#"
