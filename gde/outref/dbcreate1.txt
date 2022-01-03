@@ -35,19 +35,19 @@ GDE>
  ----------------------------------------------------------------------------------------------------------------------
  <default>                                     0      256    64 NEVER     Y    N   N      N     Y     N      Y     Sep
 
- Segment          Active              Acc Typ Block      Alloc Exten Options
+ Segment          Active              Acc Typ Block      Alloc Exten    Options
  ------------------------------------------------------------------------------
- <default>          *                 BG  DYN  4096        100   100 GLOB =1024
-                                                                     LOCK = 220
-                                                                     RES  =   0
-                                                                     ENCR = OFF
-                                                                     MSLT =1024
-                                                                     DALL = YES
-                                                                     AIO  = OFF
- <default>                            MM  DYN  4096        100   100 DEFER
-                                                                     LOCK = 220
-                                                                     MSLT =1024
-                                                                     DALL = YES
+ <default>          *                 BG  DYN  4096        100   100    GLOB =1024
+                                                                        LOCK = 220
+                                                                        RES  =   0
+                                                                        ENCR = OFF
+                                                                        MSLT =1024
+                                                                        DALL = YES
+                                                                        AIO  = OFF
+ <default>                            MM  DYN  4096        100   100    DEFER
+                                                                        LOCK = 220
+                                                                        MSLT =1024
+                                                                        DALL = YES
 
          *** NAMES ***
  Global                             Region
@@ -82,50 +82,50 @@ GDE>
  EE34567890123456789012345678901 EE34567890123456789012345678901    0      256    64 NEVER     Y    N   N      N     Y     N      Y     Sep
 
                                 *** SEGMENTS ***
- Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
- -------------------------------------------------------------------------------------------
- AA345678901                     a.dat               BG  DYN  4096        100   100 GLOB=1024
-                                                                                    LOCK= 220
-                                                                                    RES =   0
-                                                                                    ENCR= OFF
-                                                                                    MSLT=1024
-                                                                                    DALL= YES
-                                                                                    AIO = OFF
- BB3456789012345678901           b.dat               BG  DYN  4096        100   100 GLOB=1024
-                                                                                    LOCK= 220
-                                                                                    RES =   0
-                                                                                    ENCR= OFF
-                                                                                    MSLT=1024
-                                                                                    DALL= YES
-                                                                                    AIO = OFF
- CC345678901234567890123456789   c.dat               BG  DYN  4096        100   100 GLOB=1024
-                                                                                    LOCK= 220
-                                                                                    RES =   0
-                                                                                    ENCR= OFF
-                                                                                    MSLT=1024
-                                                                                    DALL= YES
-                                                                                    AIO = OFF
- DD3456789012345678901234567890  d.dat               BG  DYN  4096        100   100 GLOB=1024
-                                                                                    LOCK= 220
-                                                                                    RES =   0
-                                                                                    ENCR= OFF
-                                                                                    MSLT=1024
-                                                                                    DALL= YES
-                                                                                    AIO = OFF
- DEFAULT                         mumps.dat           BG  DYN  4096        100   100 GLOB=1024
-                                                                                    LOCK= 220
-                                                                                    RES =   0
-                                                                                    ENCR= OFF
-                                                                                    MSLT=1024
-                                                                                    DALL= YES
-                                                                                    AIO = OFF
- EE34567890123456789012345678901 e.dat               BG  DYN  4096        100   100 GLOB=1024
-                                                                                    LOCK= 220
-                                                                                    RES =   0
-                                                                                    ENCR= OFF
-                                                                                    MSLT=1024
-                                                                                    DALL= YES
-                                                                                    AIO = OFF
+ Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten     Options
+ ----------------------------------------------------------------------------------------------
+ AA345678901                     a.dat               BG  DYN  4096        100   100     GLOB=1024
+                                                                                        LOCK= 220
+                                                                                        RES =   0
+                                                                                        ENCR= OFF
+                                                                                        MSLT=1024
+                                                                                        DALL= YES
+                                                                                        AIO = OFF
+ BB3456789012345678901           b.dat               BG  DYN  4096        100   100     GLOB=1024
+                                                                                        LOCK= 220
+                                                                                        RES =   0
+                                                                                        ENCR= OFF
+                                                                                        MSLT=1024
+                                                                                        DALL= YES
+                                                                                        AIO = OFF
+ CC345678901234567890123456789   c.dat               BG  DYN  4096        100   100     GLOB=1024
+                                                                                        LOCK= 220
+                                                                                        RES =   0
+                                                                                        ENCR= OFF
+                                                                                        MSLT=1024
+                                                                                        DALL= YES
+                                                                                        AIO = OFF
+ DD3456789012345678901234567890  d.dat               BG  DYN  4096        100   100     GLOB=1024
+                                                                                        LOCK= 220
+                                                                                        RES =   0
+                                                                                        ENCR= OFF
+                                                                                        MSLT=1024
+                                                                                        DALL= YES
+                                                                                        AIO = OFF
+ DEFAULT                         mumps.dat           BG  DYN  4096        100   100     GLOB=1024
+                                                                                        LOCK= 220
+                                                                                        RES =   0
+                                                                                        ENCR= OFF
+                                                                                        MSLT=1024
+                                                                                        DALL= YES
+                                                                                        AIO = OFF
+ EE34567890123456789012345678901 e.dat               BG  DYN  4096        100   100     GLOB=1024
+                                                                                        LOCK= 220
+                                                                                        RES =   0
+                                                                                        ENCR= OFF
+                                                                                        MSLT=1024
+                                                                                        DALL= YES
+                                                                                        AIO = OFF
 
                                   *** MAP ***
    -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
@@ -264,19 +264,19 @@ GDE>
  ----------------------------------------------------------------------------------------------------------------------
  <default>                                     0      256    64 NEVER     Y    N   N      N     Y     N      Y     Sep
 
- Segment          Active              Acc Typ Block      Alloc Exten Options
+ Segment          Active              Acc Typ Block      Alloc Exten    Options
  ------------------------------------------------------------------------------
- <default>          *                 BG  DYN  4096        100   100 GLOB =1024
-                                                                     LOCK = 220
-                                                                     RES  =   0
-                                                                     ENCR = OFF
-                                                                     MSLT =1024
-                                                                     DALL = YES
-                                                                     AIO  = OFF
- <default>                            MM  DYN  4096        100   100 DEFER
-                                                                     LOCK = 220
-                                                                     MSLT =1024
-                                                                     DALL = YES
+ <default>          *                 BG  DYN  4096        100   100    GLOB =1024
+                                                                        LOCK = 220
+                                                                        RES  =   0
+                                                                        ENCR = OFF
+                                                                        MSLT =1024
+                                                                        DALL = YES
+                                                                        AIO  = OFF
+ <default>                            MM  DYN  4096        100   100    DEFER
+                                                                        LOCK = 220
+                                                                        MSLT =1024
+                                                                        DALL = YES
 
          *** NAMES ***
  Global                             Region
@@ -310,43 +310,43 @@ GDE>
  DEFAULT                         DEFAULT                            0      256    64 NEVER     Y    N   N      N     Y     N      Y     Sep
 
                                 *** SEGMENTS ***
- Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
- -------------------------------------------------------------------------------------------
- AA345678901                     a.dat               BG  DYN  4096        100   100 GLOB=1024
-                                                                                    LOCK= 220
-                                                                                    RES =   0
-                                                                                    ENCR= OFF
-                                                                                    MSLT=1024
-                                                                                    DALL= YES
-                                                                                    AIO = OFF
- BB3456789012345678901           b.dat               BG  DYN  4096        100   100 GLOB=1024
-                                                                                    LOCK= 220
-                                                                                    RES =   0
-                                                                                    ENCR= OFF
-                                                                                    MSLT=1024
-                                                                                    DALL= YES
-                                                                                    AIO = OFF
- DD3456789012345678901234567890  d.dat               BG  DYN  4096        100   100 GLOB=1024
-                                                                                    LOCK= 220
-                                                                                    RES =   0
-                                                                                    ENCR= OFF
-                                                                                    MSLT=1024
-                                                                                    DALL= YES
-                                                                                    AIO = OFF
- DEFAULT                         mumps.dat           BG  DYN  4096        100   100 GLOB=1024
-                                                                                    LOCK= 220
-                                                                                    RES =   0
-                                                                                    ENCR= OFF
-                                                                                    MSLT=1024
-                                                                                    DALL= YES
-                                                                                    AIO = OFF
- TEMP                            temp.dat            BG  DYN  4096        100   100 GLOB=1024
-                                                                                    LOCK= 220
-                                                                                    RES =   0
-                                                                                    ENCR= OFF
-                                                                                    MSLT=1024
-                                                                                    DALL= YES
-                                                                                    AIO = OFF
+ Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten     Options
+ ----------------------------------------------------------------------------------------------
+ AA345678901                     a.dat               BG  DYN  4096        100   100     GLOB=1024
+                                                                                        LOCK= 220
+                                                                                        RES =   0
+                                                                                        ENCR= OFF
+                                                                                        MSLT=1024
+                                                                                        DALL= YES
+                                                                                        AIO = OFF
+ BB3456789012345678901           b.dat               BG  DYN  4096        100   100     GLOB=1024
+                                                                                        LOCK= 220
+                                                                                        RES =   0
+                                                                                        ENCR= OFF
+                                                                                        MSLT=1024
+                                                                                        DALL= YES
+                                                                                        AIO = OFF
+ DD3456789012345678901234567890  d.dat               BG  DYN  4096        100   100     GLOB=1024
+                                                                                        LOCK= 220
+                                                                                        RES =   0
+                                                                                        ENCR= OFF
+                                                                                        MSLT=1024
+                                                                                        DALL= YES
+                                                                                        AIO = OFF
+ DEFAULT                         mumps.dat           BG  DYN  4096        100   100     GLOB=1024
+                                                                                        LOCK= 220
+                                                                                        RES =   0
+                                                                                        ENCR= OFF
+                                                                                        MSLT=1024
+                                                                                        DALL= YES
+                                                                                        AIO = OFF
+ TEMP                            temp.dat            BG  DYN  4096        100   100     GLOB=1024
+                                                                                        LOCK= 220
+                                                                                        RES =   0
+                                                                                        ENCR= OFF
+                                                                                        MSLT=1024
+                                                                                        DALL= YES
+                                                                                        AIO = OFF
 
                                   *** MAP ***
    -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
@@ -459,19 +459,19 @@ GDE>
  ----------------------------------------------------------------------------------------------------------------------
  <default>                                     0      256    64 NEVER     Y    N   N      N     Y     N      Y     Sep
 
- Segment          Active              Acc Typ Block      Alloc Exten Options
+ Segment          Active              Acc Typ Block      Alloc Exten    Options
  ------------------------------------------------------------------------------
- <default>          *                 BG  DYN  4096        100   100 GLOB =1024
-                                                                     LOCK = 220
-                                                                     RES  =   0
-                                                                     ENCR = OFF
-                                                                     MSLT =1024
-                                                                     DALL = YES
-                                                                     AIO  = OFF
- <default>                            MM  DYN  4096        100   100 DEFER
-                                                                     LOCK = 220
-                                                                     MSLT =1024
-                                                                     DALL = YES
+ <default>          *                 BG  DYN  4096        100   100    GLOB =1024
+                                                                        LOCK = 220
+                                                                        RES  =   0
+                                                                        ENCR = OFF
+                                                                        MSLT =1024
+                                                                        DALL = YES
+                                                                        AIO  = OFF
+ <default>                            MM  DYN  4096        100   100    DEFER
+                                                                        LOCK = 220
+                                                                        MSLT =1024
+                                                                        DALL = YES
 
          *** NAMES ***
  Global                             Region
@@ -503,43 +503,43 @@ GDE>
  DEFAULT                         DEFAULT                            0      256    64 NEVER     Y    N   N      N     Y     N      Y     Sep
 
                                 *** SEGMENTS ***
- Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
- -------------------------------------------------------------------------------------------
- AA345678901                     a.dat               BG  DYN  4096        100   100 GLOB=1024
-                                                                                    LOCK= 220
-                                                                                    RES =   0
-                                                                                    ENCR= OFF
-                                                                                    MSLT=1024
-                                                                                    DALL= YES
-                                                                                    AIO = OFF
- BB3456789012345678901           b.dat               BG  DYN  4096        100   100 GLOB=1024
-                                                                                    LOCK= 220
-                                                                                    RES =   0
-                                                                                    ENCR= OFF
-                                                                                    MSLT=1024
-                                                                                    DALL= YES
-                                                                                    AIO = OFF
- DD3456789012345678901234567890  d.dat               BG  DYN  4096        100   100 GLOB=1024
-                                                                                    LOCK= 220
-                                                                                    RES =   0
-                                                                                    ENCR= OFF
-                                                                                    MSLT=1024
-                                                                                    DALL= YES
-                                                                                    AIO = OFF
- DEFAULT                         mumps.dat           BG  DYN  4096        100   100 GLOB=1024
-                                                                                    LOCK= 220
-                                                                                    RES =   0
-                                                                                    ENCR= OFF
-                                                                                    MSLT=1024
-                                                                                    DALL= YES
-                                                                                    AIO = OFF
- TEMP                            temp.dat            BG  DYN  4096        100   100 GLOB=1024
-                                                                                    LOCK= 220
-                                                                                    RES =   0
-                                                                                    ENCR= OFF
-                                                                                    MSLT=1024
-                                                                                    DALL= YES
-                                                                                    AIO = OFF
+ Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten     Options
+ ----------------------------------------------------------------------------------------------
+ AA345678901                     a.dat               BG  DYN  4096        100   100     GLOB=1024
+                                                                                        LOCK= 220
+                                                                                        RES =   0
+                                                                                        ENCR= OFF
+                                                                                        MSLT=1024
+                                                                                        DALL= YES
+                                                                                        AIO = OFF
+ BB3456789012345678901           b.dat               BG  DYN  4096        100   100     GLOB=1024
+                                                                                        LOCK= 220
+                                                                                        RES =   0
+                                                                                        ENCR= OFF
+                                                                                        MSLT=1024
+                                                                                        DALL= YES
+                                                                                        AIO = OFF
+ DD3456789012345678901234567890  d.dat               BG  DYN  4096        100   100     GLOB=1024
+                                                                                        LOCK= 220
+                                                                                        RES =   0
+                                                                                        ENCR= OFF
+                                                                                        MSLT=1024
+                                                                                        DALL= YES
+                                                                                        AIO = OFF
+ DEFAULT                         mumps.dat           BG  DYN  4096        100   100     GLOB=1024
+                                                                                        LOCK= 220
+                                                                                        RES =   0
+                                                                                        ENCR= OFF
+                                                                                        MSLT=1024
+                                                                                        DALL= YES
+                                                                                        AIO = OFF
+ TEMP                            temp.dat            BG  DYN  4096        100   100     GLOB=1024
+                                                                                        LOCK= 220
+                                                                                        RES =   0
+                                                                                        ENCR= OFF
+                                                                                        MSLT=1024
+                                                                                        DALL= YES
+                                                                                        AIO = OFF
 
                                   *** MAP ***
    -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
@@ -843,19 +843,19 @@ GDE>
  ----------------------------------------------------------------------------------------------------------------------
  <default>                                     0      256    64 NEVER     Y    N   N      N     Y     N      Y     Sep
 
- Segment          Active              Acc Typ Block      Alloc Exten Options
+ Segment          Active              Acc Typ Block      Alloc Exten    Options
  ------------------------------------------------------------------------------
- <default>          *                 BG  DYN  4096        100   100 GLOB =1024
-                                                                     LOCK = 220
-                                                                     RES  =   0
-                                                                     ENCR = OFF
-                                                                     MSLT =1024
-                                                                     DALL = YES
-                                                                     AIO  = OFF
- <default>                            MM  DYN  4096        100   100 DEFER
-                                                                     LOCK = 220
-                                                                     MSLT =1024
-                                                                     DALL = YES
+ <default>          *                 BG  DYN  4096        100   100    GLOB =1024
+                                                                        LOCK = 220
+                                                                        RES  =   0
+                                                                        ENCR = OFF
+                                                                        MSLT =1024
+                                                                        DALL = YES
+                                                                        AIO  = OFF
+ <default>                            MM  DYN  4096        100   100    DEFER
+                                                                        LOCK = 220
+                                                                        MSLT =1024
+                                                                        DALL = YES
 
          *** NAMES ***
  Global                             Region
@@ -887,43 +887,43 @@ GDE>
  DEFAULT                         DEFAULT                            0      256    64 NEVER     Y    N   N      N     Y     N      Y     Sep
 
                                 *** SEGMENTS ***
- Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
- -------------------------------------------------------------------------------------------
- AA345678901                     a.dat               BG  DYN  4096        100   100 GLOB=1024
-                                                                                    LOCK= 220
-                                                                                    RES =   0
-                                                                                    ENCR= OFF
-                                                                                    MSLT=1024
-                                                                                    DALL= YES
-                                                                                    AIO = OFF
- BB3456789012345678901           b.dat               BG  DYN  4096        100   100 GLOB=1024
-                                                                                    LOCK= 220
-                                                                                    RES =   0
-                                                                                    ENCR= OFF
-                                                                                    MSLT=1024
-                                                                                    DALL= YES
-                                                                                    AIO = OFF
- DD3456789012345678901234567890  d.dat               BG  DYN  4096        100   100 GLOB=1024
-                                                                                    LOCK= 220
-                                                                                    RES =   0
-                                                                                    ENCR= OFF
-                                                                                    MSLT=1024
-                                                                                    DALL= YES
-                                                                                    AIO = OFF
- DEFAULT                         mumps.dat           BG  DYN  4096        100   100 GLOB=1024
-                                                                                    LOCK= 220
-                                                                                    RES =   0
-                                                                                    ENCR= OFF
-                                                                                    MSLT=1024
-                                                                                    DALL= YES
-                                                                                    AIO = OFF
- TEMP                            temp.dat            BG  DYN  4096        100   100 GLOB=1024
-                                                                                    LOCK= 220
-                                                                                    RES =   0
-                                                                                    ENCR= OFF
-                                                                                    MSLT=1024
-                                                                                    DALL= YES
-                                                                                    AIO = OFF
+ Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten     Options
+ ----------------------------------------------------------------------------------------------
+ AA345678901                     a.dat               BG  DYN  4096        100   100     GLOB=1024
+                                                                                        LOCK= 220
+                                                                                        RES =   0
+                                                                                        ENCR= OFF
+                                                                                        MSLT=1024
+                                                                                        DALL= YES
+                                                                                        AIO = OFF
+ BB3456789012345678901           b.dat               BG  DYN  4096        100   100     GLOB=1024
+                                                                                        LOCK= 220
+                                                                                        RES =   0
+                                                                                        ENCR= OFF
+                                                                                        MSLT=1024
+                                                                                        DALL= YES
+                                                                                        AIO = OFF
+ DD3456789012345678901234567890  d.dat               BG  DYN  4096        100   100     GLOB=1024
+                                                                                        LOCK= 220
+                                                                                        RES =   0
+                                                                                        ENCR= OFF
+                                                                                        MSLT=1024
+                                                                                        DALL= YES
+                                                                                        AIO = OFF
+ DEFAULT                         mumps.dat           BG  DYN  4096        100   100     GLOB=1024
+                                                                                        LOCK= 220
+                                                                                        RES =   0
+                                                                                        ENCR= OFF
+                                                                                        MSLT=1024
+                                                                                        DALL= YES
+                                                                                        AIO = OFF
+ TEMP                            temp.dat            BG  DYN  4096        100   100     GLOB=1024
+                                                                                        LOCK= 220
+                                                                                        RES =   0
+                                                                                        ENCR= OFF
+                                                                                        MSLT=1024
+                                                                                        DALL= YES
+                                                                                        AIO = OFF
 
                                   *** MAP ***
    -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -

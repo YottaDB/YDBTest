@@ -86,28 +86,28 @@ GDE>
 GDE> 
 
                                 *** SEGMENTS ***
- Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
- -------------------------------------------------------------------------------------------
+ Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten     Options
+ ----------------------------------------------------------------------------------------------
 ##SUSPEND_OUTPUT UNICODE_MODE
  ASEG                            "a.d"_$C(13)_"at"_$C(13)_" -acc=BG"
-                                                     BG  DYN  4096        100   100 GLOB=1024
+                                                     BG  DYN  4096        100   100     GLOB=1024
 ##ALLOW_OUTPUT UNICODE_MODE
 ##SUSPEND_OUTPUT NONUNICODE_MODE
- ASEG                            a.d                 BG  DYN  4096        100   100 GLOB=1024
+ ASEG                            a.d                 BG  DYN  4096        100   100     GLOB=1024
 ##ALLOW_OUTPUT NONUNICODE_MODE
-                                                                                    LOCK= 220
-                                                                                    RES =   0
-                                                                                    ENCR= OFF
-                                                                                    MSLT=1024
-                                                                                    DALL= YES
-                                                                                    AIO = OFF
- DEFAULT                         mumps.dat           BG  DYN  4096        100   100 GLOB=1024
-                                                                                    LOCK= 220
-                                                                                    RES =   0
-                                                                                    ENCR= OFF
-                                                                                    MSLT=1024
-                                                                                    DALL= YES
-                                                                                    AIO = OFF
+                                                                                        LOCK= 220
+                                                                                        RES =   0
+                                                                                        ENCR= OFF
+                                                                                        MSLT=1024
+                                                                                        DALL= YES
+                                                                                        AIO = OFF
+ DEFAULT                         mumps.dat           BG  DYN  4096        100   100     GLOB=1024
+                                                                                        LOCK= 220
+                                                                                        RES =   0
+                                                                                        ENCR= OFF
+                                                                                        MSLT=1024
+                                                                                        DALL= YES
+                                                                                        AIO = OFF
 GDE> 
 
                                   *** MAP ***
@@ -229,29 +229,29 @@ GDE>
 
 
                                 *** SEGMENTS ***
- Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
- -------------------------------------------------------------------------------------------
- ASEG                            locksmutexa.dat     BG  DYN 65024        100   100 GLOB=1024
-                                                                                    LOCK=262144
-                                                                                    RES =63973
-                                                                                    ENCR= OFF
-                                                                                    MSLT=  64
-                                                                                    DALL= YES
-                                                                                    AIO = OFF
- BSEG                            locksmutexb.dat     MM  DYN  5120        100   100 DEFER
-                                                                                    LOCK=12345
-                                                                                    RES =4576
-                                                                                    ENCR= OFF
-                                                                                    MSLT=32768
-                                                                                    DALL= YES
+ Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten     Options
+ ----------------------------------------------------------------------------------------------
+ ASEG                            locksmutexa.dat     BG  DYN 65024        100   100     GLOB=1024
+                                                                                        LOCK=262144
+                                                                                        RES =63973
+                                                                                        ENCR= OFF
+                                                                                        MSLT=  64
+                                                                                        DALL= YES
+                                                                                        AIO = OFF
+ BSEG                            locksmutexb.dat     MM  DYN  5120        100   100     DEFER
+                                                                                        LOCK=12345
+                                                                                        RES =4576
+                                                                                        ENCR= OFF
+                                                                                        MSLT=32768
+                                                                                        DALL= YES
  DEFAULT                         locksmutexdefault.dat
-                                                     BG  DYN  4096        100   100 GLOB=1024
-                                                                                    LOCK= 220
-                                                                                    RES = 920
-                                                                                    ENCR= OFF
-                                                                                    MSLT=2048
-                                                                                    DALL= YES
-                                                                                    AIO = OFF
+                                                     BG  DYN  4096        100   100     GLOB=1024
+                                                                                        LOCK= 220
+                                                                                        RES = 920
+                                                                                        ENCR= OFF
+                                                                                        MSLT=2048
+                                                                                        DALL= YES
+                                                                                        AIO = OFF
 %GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
 %GDE-I-LOADGD, Loading Global Directory file 
 	##TEST_PATH##/mumps.gld
@@ -292,15 +292,15 @@ Region          DEFAULT
 
 
                                 *** SEGMENTS ***
- Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
- -------------------------------------------------------------------------------------------
- ABCD                            mumps.dat           BG  DYN  4096        100   100 GLOB=1024
-                                                                                    LOCK= 220
-                                                                                    RES =   0
-                                                                                    ENCR= OFF
-                                                                                    MSLT=1024
-                                                                                    DALL= YES
-                                                                                    AIO = OFF
+ Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten     Options
+ ----------------------------------------------------------------------------------------------
+ ABCD                            mumps.dat           BG  DYN  4096        100   100     GLOB=1024
+                                                                                        LOCK= 220
+                                                                                        RES =   0
+                                                                                        ENCR= OFF
+                                                                                        MSLT=1024
+                                                                                        DALL= YES
+                                                                                        AIO = OFF
 
                                 *** TEMPLATES ***
                                                                           Std      Inst
@@ -309,19 +309,19 @@ Region          DEFAULT
  ----------------------------------------------------------------------------------------------------------------------
  <default>                                     0      256    64 NEVER     Y    N   N      N     Y     N      Y     Sep
 
- Segment          Active              Acc Typ Block      Alloc Exten Options
+ Segment          Active              Acc Typ Block      Alloc Exten    Options
  ------------------------------------------------------------------------------
- <default>          *                 BG  DYN  4096        100   100 GLOB =1024
-                                                                     LOCK = 220
-                                                                     RES  =   0
-                                                                     ENCR = OFF
-                                                                     MSLT =2048
-                                                                     DALL = YES
-                                                                     AIO  = OFF
- <default>                            MM  DYN  4096        100   100 DEFER
-                                                                     LOCK = 220
-                                                                     MSLT =1024
-                                                                     DALL = YES
+ <default>          *                 BG  DYN  4096        100   100    GLOB =1024
+                                                                        LOCK = 220
+                                                                        RES  =   0
+                                                                        ENCR = OFF
+                                                                        MSLT =2048
+                                                                        DALL = YES
+                                                                        AIO  = OFF
+ <default>                            MM  DYN  4096        100   100    DEFER
+                                                                        LOCK = 220
+                                                                        MSLT =1024
+                                                                        DALL = YES
 %GDE-I-VERIFY, Verification OK
 
 %GDE-I-GDCREATE, Creating Global Directory file 
@@ -340,15 +340,15 @@ Region          DEFAULT
 
 
                                 *** SEGMENTS ***
- Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
- -------------------------------------------------------------------------------------------
- ABCD                            mumps.dat           BG  DYN  4096        100   100 GLOB=1024
-                                                                                    LOCK= 220
-                                                                                    RES =   0
-                                                                                    ENCR= OFF
-                                                                                    MSLT=1024
-                                                                                    DALL= YES
-                                                                                    AIO = OFF
+ Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten     Options
+ ----------------------------------------------------------------------------------------------
+ ABCD                            mumps.dat           BG  DYN  4096        100   100     GLOB=1024
+                                                                                        LOCK= 220
+                                                                                        RES =   0
+                                                                                        ENCR= OFF
+                                                                                        MSLT=1024
+                                                                                        DALL= YES
+                                                                                        AIO = OFF
 %GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
 # Test case to check for + or - E with no number following it
 

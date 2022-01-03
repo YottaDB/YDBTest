@@ -154,19 +154,19 @@ STEP1. test long name name-space (gde_long1.csh)
  ----------------------------------------------------------------------------------------------------------------------
  <default>                                     0      256    64 NEVER     Y    N   N      N     Y     N      Y     Sep
 
- Segment          Active              Acc Typ Block      Alloc Exten Options
+ Segment          Active              Acc Typ Block      Alloc Exten    Options
  ------------------------------------------------------------------------------
- <default>          *                 BG  DYN  4096        100   100 GLOB =1024
-                                                                     LOCK = 220
-                                                                     RES  =   0
-                                                                     ENCR = OFF
-                                                                     MSLT =1024
-                                                                     DALL = YES
-                                                                     AIO  = OFF
- <default>                            MM  DYN  4096        100   100 DEFER
-                                                                     LOCK = 220
-                                                                     MSLT =1024
-                                                                     DALL = YES
+ <default>          *                 BG  DYN  4096        100   100    GLOB =1024
+                                                                        LOCK = 220
+                                                                        RES  =   0
+                                                                        ENCR = OFF
+                                                                        MSLT =1024
+                                                                        DALL = YES
+                                                                        AIO  = OFF
+ <default>                            MM  DYN  4096        100   100    DEFER
+                                                                        LOCK = 220
+                                                                        MSLT =1024
+                                                                        DALL = YES
 %GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
 create the database and fill the database with gdefill.m
 
