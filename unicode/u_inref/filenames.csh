@@ -3,6 +3,9 @@
 # Copyright (c) 2006-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2021-2022 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.                                     #
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -515,6 +518,12 @@ $LKE show -all
 
 more lke_*.out >& filenames_lke.log
 $gtm_tst/com/check_reference_file.csh $gtm_tst/$tst/outref/filenames_lke.txt filenames_lke.log
+set stat = $status
+if ($stat) then
+    echo "-------------------------------------------------------------"
+    echo "TEST-E-FILENAMES FAIL - See diff in filenames_lke.diff"
+    echo "-------------------------------------------------------------"
+endif
 
 echo "#release the job"
 $GTM << EOF
