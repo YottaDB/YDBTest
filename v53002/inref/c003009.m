@@ -2,6 +2,9 @@
 ;								;
 ;	Copyright 2008, 2014 Fidelity Information Services, Inc	;
 ;								;
+; Copyright (c) 2021-2022 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.                                     ;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -23,7 +26,7 @@ skip	do ^GTMHELP("functions","foo")
 	zhelp "comm zhelp"
 	close file
 	open file:readonly use file
-	read x,x
+	read x,x,x,x	   ; Need the 4th record
 	close file
 	write !,$select(("ZHelp"=x)&(""=$ecode)&("set ($etrap,$ecode)="""" goto skip"=$etrap):"PASS",1:"FAIL"),"2 from ",$text(+0)
 	quit
