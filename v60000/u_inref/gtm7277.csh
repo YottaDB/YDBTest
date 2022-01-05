@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #                                                               #
-# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.       #
+# Copyright (c) 2020-2022 YottaDB LLC and/or its subsidiaries.       #
 # All rights reserved.                                          #
 #                                                               #
 #       This source code contains the intellectual property     #
@@ -55,6 +55,8 @@ foreach iter ($verlist)
 		# Running btest in $gtm_curpro
 		# version change to $gtm_curpro
 		source $gtm_tst/com/switch_gtm_version.csh $gtm_curpro pro
+		# Recreate gld in case curpro version has an incompatible gld format than current version
+		rm -f mumps.gld; $GDE exit >& gde$iter.out
 		set temp=".${gtm_dist:h:t}"
 	else
 		set temp=""
@@ -102,6 +104,8 @@ end
 if ($?gtm_curpro) then
 	# Switch back to current test version (from current production version)
 	source $gtm_tst/com/switch_gtm_version.csh $cur_ver $cur_build
+	# Recreate gld in case curpro version has an incompatible gld format than current version
+	rm -f mumps.gld; $GDE exit >& gdelast.out
 endif
 # Compare output files in detail to isolate broken expressions if any
 $gtm_dist/mumps -run boolcomp
