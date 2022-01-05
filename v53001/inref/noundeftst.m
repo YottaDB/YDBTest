@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -206,7 +206,7 @@ casevms	;C k;0;k
 	;O "foo"::k C "foo":delete;0;k
 	;O @k;0;k;EXPR
 	;R j:k;1-1;k;IOEOF
-	;R *j:k;0;j,k;IOEOF;;;; If run from a terminal with noundef, this produces 1 more variable than "expected"
+	;R *j:k;1-1;k;IOEOF;;;; If run from a terminal with noundef, this produces 1 more variable than "expected"
 	;R j#k:k;0;j,k;RDFLTOOSHORT
 	;TS k:TRANSACTIONID=k TRO:$TR  S:$TL ^noundef=k TRE:$TL;0;k
 	;TS (k) S ^noundef=k TC;0;k

@@ -3,7 +3,7 @@
 #								#
 # Copyright 2008, 2013 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -63,12 +63,13 @@ source $gtm_tst/com/set_ydb_env_var_random.csh ydb_noundef gtm_noundef TRUE
 $echoline
 echo "Do not pass the parameter GEN, so that all the test runs in indirection mode"
 $echoline
-$GTM << EOF
-do ^noundeftst
-EOF
+# Pass "y\n" to avoid NOPRINCIO error that would otherwise terminate the process abruptly in direct mode
+# See commit message for more details.
+echo "do ^noundeftst\ny\n" | $GTM
 $echoline
 echo "Pass the parameter GEN, so that the test creates a file with all the test cases and runs in direct mode"
 $echoline
-$gtm_exe/mumps -run noundeftst TRUE GEN
+# Pass "y\n" for same reasons as described in previous comment
+echo "y\n" | $gtm_exe/mumps -run noundeftst TRUE GEN
 $echoline
 $gtm_tst/com/dbcheck.csh
