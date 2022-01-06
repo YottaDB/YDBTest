@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -51,7 +51,7 @@ echo ""
 echo "# Searching Sys Log for a NOPRINCIO Error"
 # MUPIP JOURNAL -EXTRACT can sometimes produce either one or two NOPRINCIO Errors,
 # for uniformity we are just looking for the first instance
-cat syslog.txt |& $grep "MUPIP.*NOPRINCIO" |& $tst_awk '{print $6,$7,$8,$9,$10,$11,$12}' | sort -u
+cat syslog.txt |& $grep "MUPIP.*NOPRINCIO" | sed 's/.*%YDB/%YDB/;s/ -- generated.*//;'
 
 $gtm_tst/com/dbcheck.csh >>& check.out
 if ($status) then
