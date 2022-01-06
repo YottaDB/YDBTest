@@ -1,0 +1,18 @@
+# This test checks that setting zstatus to strings that would be exponential numbers and then writing it
+# results in the string being written as expected not a %YDB-E-NUMOFLOW error. In upstream versions prior to
+# V6.3-011 and YottaDB versions based on those versions, this would result in a %YDB-E-NUMOFLOW but the string
+# could still be read by doing a zshow i.
+1e46
+1e47
+1e48
+1e50
+1e150
+1e999
+1e999999
+1E46
+1E47
+1E48
+1E50
+1E150
+1E999
+1E999999
