@@ -4,7 +4,7 @@
 # Copyright (c) 2003-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -242,6 +242,7 @@ gtm8022.go
 
 do ^%GI
 gtm8022.zwr
+
 EOF
 $gtm_dist/mupip load file.zwr
 #
