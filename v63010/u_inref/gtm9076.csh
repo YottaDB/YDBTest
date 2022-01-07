@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh
 #################################################################
 #                                                               #
-# Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.       #
+# Copyright (c) 2021-2022 YottaDB LLC and/or its subsidiaries.       #
 # All rights reserved.                                          #
 #                                                               #
 #       This source code contains the intellectual property     #
@@ -39,7 +39,7 @@ mkdir $path255
 cd $path255
 
 $echoline
-echo "# Run GDE here to create a mumps.gld, expecting a FILEPATHTOOLONG error."
+echo "# Run GDE here to create a mumps.gld, expecting a FILEPARSE error (FILEPATHTOOLONG error detail will be in GDEDUMP.DMP)"
 
 $GDE exit
 

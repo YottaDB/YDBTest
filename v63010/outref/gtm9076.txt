@@ -12,8 +12,8 @@
 ###################################################################
 # Switch to the subdirectory where the full path of mumps.gld/mumps.dat will be 256 characters
 ###################################################################
-# Run GDE here to create a mumps.gld, expecting a FILEPATHTOOLONG error.
-150374602,GDEINIT+88^GDEINIT,%YDB-E-FILEPARSE, Error parsing file specification: GDEINITSZ,%YDB-E-FILEPATHTOOLONG, Filename including the path cannot be longer than 255 characters
+# Run GDE here to create a mumps.gld, expecting a FILEPARSE error (FILEPATHTOOLONG error detail will be in GDEDUMP.DMP)
+%YDB-F-FILEPARSE, Error parsing file specification: !AD
 ###################################################################
 # Set ydb_gbldir to the test root's mumps.gld file.
 ###################################################################
@@ -38,5 +38,5 @@ mumps.dat
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
 ##TEST_AWK##TEST_PATH##/[a]+/GDEDUMP.DMP
-abortzs="150374602,GDEINIT+88^GDEINIT,%YDB-E-FILEPARSE, Error parsing file specification: GDEINITSZ,%YDB-E-FILEPATHTOOLONG, Filename including the path cannot be longer than 255 characters"
-$ZSTATUS="150374602,GDEINIT+88^GDEINIT,%YDB-E-FILEPARSE, Error parsing file specification: GDEINITSZ,%YDB-E-FILEPATHTOOLONG, Filename including the path cannot be longer than 255 characters"
+abortzs="150374602,GDFIND^GDESETGD,%YDB-E-FILEPARSE, Error parsing file specification: mumps.gld,%YDB-E-FILEPATHTOOLONG, Filename including the path cannot be longer than 255 characters"
+$ZSTATUS="150374602,GDFIND^GDESETGD,%YDB-E-FILEPARSE, Error parsing file specification: mumps.gld,%YDB-E-FILEPATHTOOLONG, Filename including the path cannot be longer than 255 characters"
