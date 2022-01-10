@@ -1,0 +1,38 @@
+## Test for GTM-9036 - Test [NO]HUPENABLE device parameter along with setting ydb_hupenable environment variable to verify
+## .. that we can catch and handle SIGHUP signals.
+##
+## Part 1: Run gtm9036.m with ydb_hupenable set to the default value of FALSE (the default)
+spawn /usr/local/bin/tcsh -f
+> stty cols 132
+> set shellprompt=SHELL
+> set prompt=$shellprompt
+SHELLsetenv term_env `tty`; echo $term_env > term_env.txt
+SHELL$ydb_dist/yottadb -run gtm9036
+# Test for GTM-9036 - verify SIGHUP is trapped if enabled
+#
+# First verify we do NOT get an interrupt having NOT enabled SIGHUP when a SIGHUP is sent to us
+Success - No interrupts/errors due to SIGHUP coming in
+#
+# Now enable SIGHUP and see if we see SIGHUP when it is sent again
+#
+SHELL
+SIGHUP signal/interrupt has been caught!
+$ZSTATUS="150384594,gtm9036+35^gtm9036,%YDB-E-TERMHANGUP, Terminal has disconnected"
+Success - SIGHUP was processed in our handler
+
+# Now disable SIGHUP handling again and retry the SIGHUP signal to see if it gets caught or not
+Success - no unexpected exception occurred
+
+## Part 2: Run gtm9036.m with ydb_hupenable set to TRUE to verify if is enough to set the hupenable on the first part
+## .. of this test which assumes ydb_hupenable is FALSE. So we expect this to fail.
+spawn /usr/local/bin/tcsh -f
+> stty cols 132
+> set shellprompt=SHELL
+> set prompt=$shellprompt
+SHELLsetenv term_env `tty`; echo $term_env > term_env.txt
+SHELL$ydb_dist/yottadb -run gtm9036
+# Test for GTM-9036 - verify SIGHUP is trapped if enabled
+#
+# First verify we do NOT get an interrupt having NOT enabled SIGHUP when a SIGHUP is sent to us
+SHELL
+## Test complete

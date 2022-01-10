@@ -1,0 +1,25 @@
+#################################################################
+#								#
+# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+#
+# This is for the second invocation of gtm9036 where we expect the first part of the test to fail because
+# ydb_hupenable is TRUE so we DO get an interrupt but gtm9036 doesn't want that. We expect this to fail.
+set timeout 60
+
+spawn /usr/local/bin/tcsh -f
+source $::env(gtm_tst)/com/expectinit.exp
+
+send -- "\$ydb_dist/yottadb -run gtm9036\r"
+expect -exact "# Test for GTM-9036 - verify SIGHUP is trapped if enabled"
+expect -exact "#"
+expect -exact "# First verify we do NOT get an interrupt having NOT enabled SIGHUP when a SIGHUP is sent to us"
+expect "SHELL"
+close

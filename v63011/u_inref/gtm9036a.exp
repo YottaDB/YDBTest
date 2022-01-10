@@ -1,0 +1,27 @@
+#################################################################
+#								#
+# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+#
+set timeout 60
+
+spawn /usr/local/bin/tcsh -f
+source $::env(gtm_tst)/com/expectinit.exp
+
+send -- "\$ydb_dist/yottadb -run gtm9036\r"
+expect -exact "# Test for GTM-9036 - verify SIGHUP is trapped if enabled"
+expect -exact "#"
+expect -exact "# First verify we do NOT get an interrupt having NOT enabled SIGHUP when a SIGHUP is sent to us"
+expect -exact "Success - No interrupts/errors due to SIGHUP coming in"
+expect -exact "#"
+expect -exact "# Now enable SIGHUP and see if we see SIGHUP when it is sent again"
+expect -exact "#"
+expect "SHELL"
+close
