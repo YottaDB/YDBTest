@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2021-2022 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -83,11 +83,20 @@ ydb828mumpsint; Test various functions/commands that use MUMPS_INT (i.e. mval2i(
 	for i=1:1:maxiters set xstr="set x=$zcollate(str,1,"_num(i,2)_")" do execute(xstr)
 	for i=1:1:maxiters set xstr="set x=$zcollate(str,"_num(i,1)_",1)" do execute(xstr)
 	for i=1:1:maxiters set xstr="set x=$zcollate(str,"_num(i,1)_","_num(i,2)_")" do execute(xstr)
-	write "# Testing $ZPEEK with random huge 2nd and/or 3rd argument",!
-	for i=1:1:maxiters set xstr="set x=$zpeek(""CSAREG:DEFAULT"",1,"_num(i,2)_")" do execute(xstr)
-	for i=1:1:maxiters set xstr="set x=$zpeek(""CSAREG:DEFAULT"","_num(i,1)_",1)" do execute(xstr)
-	for i=1:1:maxiters set xstr="set x=$zpeek(""CSAREG:DEFAULT"",0,"_num(i,2)_")" do execute(xstr)
-	for i=1:1:maxiters set xstr="set x=$zpeek(""CSAREG:DEFAULT"","_num(i,1)_","_num(i,2)_")" do execute(xstr)
+	; The below test tries out $ZPEEK with random memory addresses. op_fnzpeek.c handles any errors (for example, a
+	; SIG-11 due to accessing invalid memory addresses etc.) by setting up signal handlers for the duration of the $ZPEEK.
+	; But if YottaDB is built with ASAN, the address sanitizer would detect this invalid memory access as a heap-buffer-overflow
+	; or some other error type and signal a test failure. I tried to see if it is possible to disable ASAN in certain functions
+	; based on https://clang.llvm.org/docs/AddressSanitizer.html#disabling-instrumentation-with-attribute-no-sanitize-address
+	; but could not get that to work. I still got a heap-buffer-overflow alert from ASAN even though I disabled ASAN
+	; instrumentation in the "op_fnzpeek_stpcopy()" function in "op_fnzpeek.c". Therefore decided to disable ZPEEK related
+	; random memory access tests if YottaDB has been built with ASAN. Hence the if check below.
+	do:'$ztrnlnm("gtm_test_libyottadb_asan_enabled")
+	. write "# Testing $ZPEEK with random huge 2nd and/or 3rd argument",!
+	. for i=1:1:maxiters set xstr="set x=$zpeek(""CSAREG:DEFAULT"",1,"_num(i,2)_")" do execute(xstr)
+	. for i=1:1:maxiters set xstr="set x=$zpeek(""CSAREG:DEFAULT"","_num(i,1)_",1)" do execute(xstr)
+	. for i=1:1:maxiters set xstr="set x=$zpeek(""CSAREG:DEFAULT"",0,"_num(i,2)_")" do execute(xstr)
+	. for i=1:1:maxiters set xstr="set x=$zpeek(""CSAREG:DEFAULT"","_num(i,1)_","_num(i,2)_")" do execute(xstr)
 	write "# Testing $ZSEARCH with random huge 2nd argument",!
 	for i=1:1:maxiters set xstr="set x=$zsearch(str,"_num(i,1)_")" do execute(xstr)
 	write "# Testing $ZTRNLNM with random huge 3rd argument",!

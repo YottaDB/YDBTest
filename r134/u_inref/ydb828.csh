@@ -123,6 +123,7 @@ echo "------------------------------------------------------------"
 echo '# Test MUMPS_INT usages in code base with HUGE numeric arguments do not SIG-11 and/or assert fail'
 echo "------------------------------------------------------------"
 echo '# First test with XECUTE of such expressions'
+source $gtm_tst/com/is_libyottadb_asan_enabled.csh # defines "gtm_test_libyottadb_asan_enabled" env var (needed by ydb828mumpsint.m)
 $ydb_dist/yottadb -run ydb828mumpsint
 echo '# Next test with compile of such expressions'
 sed -i 's/^#/ ;/' mumpsint.m
