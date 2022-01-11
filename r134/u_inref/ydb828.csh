@@ -249,4 +249,17 @@ zcompile "${base}.m"
 break
 YDB_EOF
 
+echo ""
+echo "------------------------------------------------------------"
+echo '# Test DO & usages with LITNONGRAPH warning does not SIG-11 and/or assert fail'
+echo "------------------------------------------------------------"
+set base = "ydb828do"
+echo ' do &t"\t"' > $base.m
+echo "# Try $base.m using [yottadb -direct]"
+rm -f $base.o	# Remove any .o file to ensure compilation happens as part of "yottadb -direct"
+cat $base.m | $ydb_dist/yottadb -direct
+echo "# Try $base.m using [yottadb -run]"
+rm -f $base.o	# Remove any .o file to ensure compilation happens as part of "yottadb -run"
+$ydb_dist/yottadb -run $base
+
 $gtm_tst/com/dbcheck.csh

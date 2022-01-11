@@ -648,6 +648,31 @@ YDB>
 		At M source location +1^GTM$DMOD
 
 YDB>
+
+------------------------------------------------------------
+# Test DO & usages with LITNONGRAPH warning does not SIG-11 and/or assert fail
+------------------------------------------------------------
+# Try ydb828do.m using [yottadb -direct]
+
+YDB>
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	 do &t"	"
+	      ^-----
+
+YDB>
+# Try ydb828do.m using [yottadb -run]
+	 do &t"	"
+	       ^-----
+		At column 8, line 1, source module ##TEST_PATH##/ydb828do.m
+%YDB-W-LITNONGRAPH, M standard requires graphics in string literals; found non-printable: $ZCHAR(9)
+	 do &t"	"
+	      ^-----
+		At column 7, line 1, source module ##TEST_PATH##/ydb828do.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+		At M source location +1^ydb828do
+
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
