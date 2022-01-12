@@ -275,4 +275,15 @@ echo "# Try $base.m using [yottadb -run]"
 rm -f $base.o	# Remove any .o file to ensure compilation happens as part of "yottadb -run"
 $ydb_dist/yottadb -run $base
 
+echo ""
+echo "------------------------------------------------------------"
+echo '# Test that OPEN /dev/full does not SIG-11'
+echo "------------------------------------------------------------"
+set base = "ydb828open"
+echo ' open "/dev/full"' > $base.m
+echo "# Try $base.m using [yottadb -direct]"
+cat $base.m | $ydb_dist/yottadb -direct
+echo "# Try $base.m using [yottadb -run]"
+$ydb_dist/yottadb -run $base
+
 $gtm_tst/com/dbcheck.csh
