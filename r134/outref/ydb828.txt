@@ -673,6 +673,27 @@ YDB>
 		At M source location +1^ydb828do
 
 YDB>
+
+------------------------------------------------------------
+# Test that PATNOTFOUND error inside FOR does not SIG-11 and/or assert fail
+------------------------------------------------------------
+# Try ydb828for.m using [yottadb -direct]
+
+YDB>
+%YDB-E-PATNOTFOUND, Current pattern table has no characters with pattern code S
+	 FOR J=0:.0005:.0?1SS",
+	                       ^-----
+
+YDB>
+
+YDB>
+
+YDB>
+# Try ydb828for.m using [yottadb -run]
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+		At M source location +1^ydb828for
+
+YDB>
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
