@@ -1,0 +1,7 @@
+setenv gtm_chset UTF-8
+unset echo
+# This tests for a bug in $translate in versions prior to V6.3-011
+# where the character length of the result was set incorrectly. This
+# could happen if VIEW "NOBADCHAR" was enabled and $translate was
+# passed a malformed UTF-8 byte sequence as the replacement string.
+1

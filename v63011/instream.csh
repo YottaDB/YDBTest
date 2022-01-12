@@ -16,13 +16,14 @@
 #-------------------------------------------------------------------------------------
 # gtm8398		[bdw]		 Tests setting a segment's extension_count to more than 65355 blocks and extending it with MUPIP EXTEND
 # gtm9215		[bdw]		 Tests that setting an ISV to a string starting with 1E or 1e and writing it does not NUMOFLOW
+# gtm9226		[bdw]		 Tests that $translate sets strings to the correct length when passed a malformed character as an argument
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "v63011 test starts..."
 
 # List the subtests seperated by sspaces under the appropriate environment variable name
 setenv subtest_list_common	""
-setenv subtest_list_non_replic "gtm8398 gtm9215"
+setenv subtest_list_non_replic "gtm8398 gtm9215 gtm9226"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
