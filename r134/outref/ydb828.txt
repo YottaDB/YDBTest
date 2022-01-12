@@ -704,6 +704,80 @@ YDB>
 
 YDB>
 # Try ydb828open.m using [yottadb -run]
+
+------------------------------------------------------------
+# Test that ZSHOW "D" on PIPE device does not SIG-11 if device parameters are specified multiple times
+------------------------------------------------------------
+# Try ydb828zshowd.m using [yottadb -direct]
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+%YDB-E-INVCMD, Invalid command keyword encountered
+	ydb828zshowd; Test that ZSHOW "D" on PIPE device does not SIG-11 if device parameters are specified multiple times
+	^-----
+
+YDB>
+
+YDB>
+0 OPEN FIFO STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+p OPEN PIPE COMMAND="pwd" STDERR="x" 
+
+YDB>
+0 OPEN FIFO STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+p OPEN PIPE COMMAND="pwd" STDERR="x" 
+
+YDB>
+0 OPEN FIFO STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+p OPEN PIPE COMMAND="pwd" STDERR="x" 
+
+YDB>
+0 OPEN FIFO STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+p OPEN PIPE COMMAND="pwd" STDERR="x" 
+
+YDB>
+
+YDB>
+# Try ydb828zshowd.m using [yottadb -run]
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+p OPEN PIPE COMMAND="pwd" STDERR="x" 
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+p OPEN PIPE COMMAND="pwd" STDERR="x" 
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+p OPEN PIPE COMMAND="pwd" STDERR="x" 
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+p OPEN PIPE COMMAND="pwd" STDERR="x" 
+
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

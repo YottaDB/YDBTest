@@ -286,4 +286,16 @@ cat $base.m | $ydb_dist/yottadb -direct
 echo "# Try $base.m using [yottadb -run]"
 $ydb_dist/yottadb -run $base
 
+echo ""
+echo "------------------------------------------------------------"
+echo '# Test that ZSHOW "D" on PIPE device does not SIG-11 if device parameters are specified multiple times'
+echo "------------------------------------------------------------"
+set base = "ydb828zshowd"
+cp $gtm_tst/$tst/inref/$base.m .
+echo "# Try $base.m using [yottadb -direct]"
+cat $base.m | $ydb_dist/yottadb -direct
+echo "# Try $base.m using [yottadb -run]"
+$ydb_dist/yottadb -run $base
+
+echo ""
 $gtm_tst/com/dbcheck.csh
