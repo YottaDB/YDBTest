@@ -677,7 +677,7 @@ YDB>
 ------------------------------------------------------------
 # Test that PATNOTFOUND error inside FOR does not SIG-11 and/or assert fail
 ------------------------------------------------------------
-# Try ydb828for.m using [yottadb -direct]
+# Try ydb828forpatnotfound.m using [yottadb -direct]
 
 YDB>
 %YDB-E-PATNOTFOUND, Current pattern table has no characters with pattern code S
@@ -689,9 +689,9 @@ YDB>
 YDB>
 
 YDB>
-# Try ydb828for.m using [yottadb -run]
+# Try ydb828forpatnotfound.m using [yottadb -run]
 %YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
-		At M source location +1^ydb828for
+		At M source location +1^ydb828forpatnotfound
 
 YDB>
 
@@ -777,6 +777,22 @@ p OPEN PIPE COMMAND="pwd" STDERR="x"
 0 OPEN RMS STREAM NOWRAP 
 0-out OPEN RMS STREAM NOWRAP 
 p OPEN PIPE COMMAND="pwd" STDERR="x" 
+
+------------------------------------------------------------
+# Test that NEW @ inside FOR with a control variable does not SIG-11
+# Expecting only a LVUNDEF error instead
+------------------------------------------------------------
+# Try ydb828fornewat.m using [yottadb -direct]
+
+YDB>
+%YDB-E-LVUNDEF, Undefined local variable: i
+
+YDB>
+# Try ydb828fornewat.m using [yottadb -run]
+%YDB-E-LVUNDEF, Undefined local variable: i
+		At M source location +1^ydb828fornewat
+
+YDB>
 
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *

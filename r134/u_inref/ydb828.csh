@@ -256,23 +256,19 @@ echo "------------------------------------------------------------"
 set base = "ydb828do"
 echo ' do &t"\t"' > $base.m
 echo "# Try $base.m using [yottadb -direct]"
-rm -f $base.o	# Remove any .o file to ensure compilation happens as part of "yottadb -direct"
 cat $base.m | $ydb_dist/yottadb -direct
 echo "# Try $base.m using [yottadb -run]"
-rm -f $base.o	# Remove any .o file to ensure compilation happens as part of "yottadb -run"
 $ydb_dist/yottadb -run $base
 
 echo ""
 echo "------------------------------------------------------------"
 echo '# Test that PATNOTFOUND error inside FOR does not SIG-11 and/or assert fail'
 echo "------------------------------------------------------------"
-set base = "ydb828for"
+set base = "ydb828forpatnotfound"
 echo ' FOR J=0:.0005:.0?1SS",\n QUIT\n' > $base.m
 echo "# Try $base.m using [yottadb -direct]"
-rm -f $base.o	# Remove any .o file to ensure compilation happens as part of "yottadb -direct"
 cat $base.m | $ydb_dist/yottadb -direct
 echo "# Try $base.m using [yottadb -run]"
-rm -f $base.o	# Remove any .o file to ensure compilation happens as part of "yottadb -run"
 $ydb_dist/yottadb -run $base
 
 echo ""
@@ -292,6 +288,18 @@ echo '# Test that ZSHOW "D" on PIPE device does not SIG-11 if device parameters 
 echo "------------------------------------------------------------"
 set base = "ydb828zshowd"
 cp $gtm_tst/$tst/inref/$base.m .
+echo "# Try $base.m using [yottadb -direct]"
+cat $base.m | $ydb_dist/yottadb -direct
+echo "# Try $base.m using [yottadb -run]"
+$ydb_dist/yottadb -run $base
+
+echo ""
+echo "------------------------------------------------------------"
+echo '# Test that NEW @ inside FOR with a control variable does not SIG-11'
+echo '# Expecting only a LVUNDEF error instead'
+echo "------------------------------------------------------------"
+set base = "ydb828fornewat"
+echo ' for i=1:1 new @"(x)"' > $base.m
 echo "# Try $base.m using [yottadb -direct]"
 cat $base.m | $ydb_dist/yottadb -direct
 echo "# Try $base.m using [yottadb -run]"
