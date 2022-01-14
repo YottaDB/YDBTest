@@ -505,12 +505,12 @@ EOF
 $LKE show -all
 echo "#lke and output files"
 $LKE << EOF
-show -all -output=lke_ｏｕｔｐｕｔ1.out
+show -all -output=lke_show_ｏｕｔｐｕｔ1.out
 clear -region=BREG -output=lke_clear_ｏｕｔｐｕｔ1.out -nointeractive
 exit
 EOF
 
-$LKE show -all -output=lke_ｏｕｔｐｕｔ2.out
+$LKE show -all -output=lke_show_ｏｕｔｐｕｔ2.out
 
 $LKE clear -all -nointeractive -output=lke_clear_ｏｕｔｐｕｔ2.out
 echo "# all locks should be gone now"
