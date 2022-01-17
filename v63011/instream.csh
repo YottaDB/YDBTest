@@ -18,13 +18,14 @@
 # gtm9215		[bdw]		 Tests that setting an ISV to a string starting with 1E or 1e and writing it does not NUMOFLOW
 # gtm9226		[bdw]		 Tests that $translate sets strings to the correct length when passed a malformed character as an argument
 # gtm9036		[estess]	 Test [NO]HUPENABLE device parameters and whether allows SIGHUP to be intercepted
+# gtm9136		[estess]	 Test [NO]FFLF device parameters and the ydb_nofflf environment var
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "v63011 test starts..."
 
 # List the subtests seperated by sspaces under the appropriate environment variable name
 setenv subtest_list_common	""
-setenv subtest_list_non_replic "gtm8398 gtm9215 gtm9226 gtm9036"
+setenv subtest_list_non_replic "gtm8398 gtm9215 gtm9226 gtm9036 gtm9136"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then

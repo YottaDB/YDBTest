@@ -1,0 +1,75 @@
+# Test to verify that the [NO]FFLF device parameters and the ydb_nofflf environment variable
+# work appropriately.
+###################################################################
+#
+# Test 1: default (unset) value of ydb_nofflf - make run and compare output file to gtm9136_fflf.txt
+
+YDB>
+
+YDB>
+PASS - output file had fflf
+###################################################################
+#
+# Test 2: setting of ydb_nofflf to TRUE - make run and compare output file to gtm9136_nofflf.txt
+
+YDB>
+
+YDB>
+PASS - output file had just ff (no lf)
+###################################################################
+#
+# Test 3: setting of ydb_nofflf to FALSE - make run and compare output file to gtm9136_fflf.txt
+
+YDB>
+
+YDB>
+PASS - output file had fflf
+###################################################################
+#
+# Test 4: Specifying the FFLF device parameter with ydb_nofflf unset - comparing against gtm9136_fflf.txt
+
+YDB>
+
+YDB>
+PASS - output file had fflf
+###################################################################
+#
+# Test 5: Specifying the FFLF device parameter with ydb_nofflf set to FALSE - comparing against gtm9136_fflf.txt
+
+YDB>
+
+YDB>
+PASS - output file had fflf
+###################################################################
+#
+# Test 6: Specifying the FFLF device parameter with ydb_nofflf set to TRUE - comparing against gtm9136_fflf.txt
+
+YDB>
+
+YDB>
+PASS - output file had fflf
+###################################################################
+#
+# Test 7: Specifying the NOFFLF device parameter with ydb_nofflf unset - comparing against gtm9136_nofflf.txt
+
+YDB>
+
+YDB>
+PASS - output file had just ff (no lf)
+###################################################################
+#
+# Test 8: Specifying the NOFFLF device parameter with ydb_nofflf set to FALSE - comparing against gtm9136_nofflf.txt
+
+YDB>
+
+YDB>
+PASS - output file had just ff (no lf)
+###################################################################
+#
+# Test 9: Specifying the NOFFLF device parameter with ydb_nofflf set to TRUE - comparing against gtm9136_nofflf.txt
+
+YDB>
+
+YDB>
+PASS - output file had just ff (no lf)
+
