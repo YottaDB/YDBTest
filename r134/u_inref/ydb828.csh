@@ -335,4 +335,16 @@ echo "# Try $base.m using [yottadb -run]"
 $ydb_dist/yottadb -run $base
 
 echo ""
+echo "------------------------------------------------------------"
+echo '# Test that parse error in device parameter specification does not GTMASSERT2'
+echo '# Trying out [use $principal:("] : Expecting a DEVPARPARSE error (not a GTMASSERT2 error)'
+echo "------------------------------------------------------------"
+set base = "ydb828devparparse"
+echo ' use $principal:("' > $base.m
+echo "# Try $base.m using [yottadb -direct]"
+cat $base.m | $ydb_dist/yottadb -direct
+echo "# Try $base.m using [yottadb -run]"
+$ydb_dist/yottadb -run $base
+
+echo ""
 $gtm_tst/com/dbcheck.csh

@@ -869,6 +869,28 @@ YDB>
 
 YDB>
 
+------------------------------------------------------------
+# Test that parse error in device parameter specification does not GTMASSERT2
+# Trying out [use $principal:("] : Expecting a DEVPARPARSE error (not a GTMASSERT2 error)
+------------------------------------------------------------
+# Try ydb828devparparse.m using [yottadb -direct]
+
+YDB>
+%YDB-E-DEVPARPARSE, Error parsing device parameter specification
+	 use $principal:("
+	                  ^-----
+
+YDB>
+# Try ydb828devparparse.m using [yottadb -run]
+	 use $principal:("
+	                  ^-----
+		At column 19, line 1, source module ##TEST_PATH##/ydb828devparparse.m
+%YDB-E-DEVPARPARSE, Error parsing device parameter specification
+%YDB-E-DEVPARPARSE, Error parsing device parameter specification
+		At M source location +1^ydb828devparparse
+
+YDB>
+
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

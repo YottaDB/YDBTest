@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2020-2021 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2020-2022 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -426,6 +426,10 @@ ydb484f	;
 	set xstr="set res=$zdata(x1)" write xstr," " xecute xstr write !
 	write:res'=$zdata(xzynull) "result different from $data(xzynull)"
 	write "USE",!
+	set incrtrapLEVEL=0	; for reasons not yet clear, having "incrtrapLEVEL=0" causes the USE portion of the test to
+				; run without causing an infinite loop later in the $STACK section. This started happening
+				; only after YDB@d8e6fc32 code changes to issue a DEVPARPARSE error (instead of DEVPARUNK)
+				; So temporarily set incrtrapLEVEL to 0 for the USE portion of the test.
 	set file="dummy.txt"
 	set xstr="use $ZYSQLNULL" write xstr," " xecute xstr write !
 	set xstr="use """"" write xstr," " xecute xstr write !
@@ -443,6 +447,7 @@ ydb484f	;
 	set xstr="use:tv=1 file:TERM=""""" write xstr," " xecute xstr write !
 	set xstr="use:tv=1 $ZYSQLNULL:TERM=""""" write xstr," " xecute xstr write !
 	set xstr="use:tv=1 """":TERM=""""" write xstr," " xecute xstr write !
+	set incrtrapLEVEL=1	; Now that the USE portion of the test is done, reset "incrtrapLEVEL" back to 1.
 	write "ZCOMPILE",!
 	set xstr="zcompile $ZYSQLNULL" write xstr," " xecute xstr write !
 	set xstr="zcompile """"" write xstr," " xecute xstr write !

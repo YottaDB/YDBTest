@@ -2587,16 +2587,16 @@ set res=$zdata(x1)
 USE
 use $ZYSQLNULL 
 use "" 
-use file:$ZYSQLNULL="\r" ZSTATUS=ydb484f+...^ydb484,%YDB-E-DEVPARUNK, Deviceparameter unknown
-use file:""="\r" ZSTATUS=ydb484f+...^ydb484,%YDB-E-DEVPARUNK, Deviceparameter unknown
+use file:$ZYSQLNULL="\r" ZSTATUS=ydb484f+...^ydb484,%YDB-E-DEVPARPARSE, Error parsing device parameter specification
+use file:""="\r" ZSTATUS=ydb484f+...^ydb484,%YDB-E-DEVPARPARSE, Error parsing device parameter specification
 use file:TERM=$ZYSQLNULL ZSTATUS=ydb484f+...^ydb484,%YDB-E-IONOTOPEN, Attempt to USE an I/O device which has not been opened
 use file:TERM="" ZSTATUS=ydb484f+...^ydb484,%YDB-E-IONOTOPEN, Attempt to USE an I/O device which has not been opened
 use $ZYSQLNULL:TERM="" 
 use "":TERM="" 
 use:tv=1 $ZYSQLNULL 
 use:tv=1 "" 
-use:tv=1 file:$ZYSQLNULL="\r" ZSTATUS=ydb484f+...^ydb484,%YDB-E-DEVPARUNK, Deviceparameter unknown
-use:tv=1 file:""="\r" ZSTATUS=ydb484f+...^ydb484,%YDB-E-DEVPARUNK, Deviceparameter unknown
+use:tv=1 file:$ZYSQLNULL="\r" ZSTATUS=ydb484f+...^ydb484,%YDB-E-DEVPARPARSE, Error parsing device parameter specification
+use:tv=1 file:""="\r" ZSTATUS=ydb484f+...^ydb484,%YDB-E-DEVPARPARSE, Error parsing device parameter specification
 use:tv=1 file:TERM=$ZYSQLNULL ZSTATUS=ydb484f+...^ydb484,%YDB-E-IONOTOPEN, Attempt to USE an I/O device which has not been opened
 use:tv=1 file:TERM="" ZSTATUS=ydb484f+...^ydb484,%YDB-E-IONOTOPEN, Attempt to USE an I/O device which has not been opened
 use:tv=1 $ZYSQLNULL:TERM="" 
@@ -5864,17 +5864,11 @@ zwrite xzynull xzynull=$ZYSQLNULL
 zwrite $ZYSQLNULL $ZYSQLNULL=$ZYSQLNULL
 OPEN
 open $ZYSQLNULL 
-open $ZYSQLNULL:$ZYSQLNULL ZSTATUS=ydb484f+...^ydb484,%YDB-E-DEVPARUNK, Deviceparameter unknown
-open $ZYSQLNULL:$ZYSQLNULL:$ZYSQLNULL ZSTATUS=ydb484f+...^ydb484,%YDB-E-DEVPARUNK, Deviceparameter unknown
-open $ZYSQLNULL:$ZYSQLNULL:1 ZSTATUS=ydb484f+...^ydb484,%YDB-E-DEVPARUNK, Deviceparameter unknown
-open $ZYSQLNULL:"READONLY" ZSTATUS=ydb484f+...^ydb484,%YDB-E-DEVPARUNK, Deviceparameter unknown
-open $ZYSQLNULL:"READONLY":$ZYSQLNULL ZSTATUS=ydb484f+...^ydb484,%YDB-E-DEVPARUNK, Deviceparameter unknown
-open $ZYSQLNULL:"READONLY":1 ZSTATUS=ydb484f+...^ydb484,%YDB-E-DEVPARUNK, Deviceparameter unknown
+open $ZYSQLNULL:$ZYSQLNULL ZSTATUS=ydb484f+...^ydb484,%YDB-E-DEVPARPARSE, Error parsing device parameter specification
+open $ZYSQLNULL:$ZYSQLNULL:$ZYSQLNULL ZSTATUS=ydb484f+...^ydb484,%YDB-E-DEVPARPARSE, Error parsing device parameter specification
 open "." ZSTATUS=ydb484f+...^ydb484,%YDB-E-DEVOPENFAIL, Error opening .,%YDB-E-GTMEISDIR, . : Is a directory
-open ".":$ZYSQLNULL ZSTATUS=ydb484f+...^ydb484,%YDB-E-DEVPARUNK, Deviceparameter unknown
-open ".":$ZYSQLNULL:$ZYSQLNULL ZSTATUS=ydb484f+...^ydb484,%YDB-E-DEVPARUNK, Deviceparameter unknown
-open ".":$ZYSQLNULL:1 ZSTATUS=ydb484f+...^ydb484,%YDB-E-DEVPARUNK, Deviceparameter unknown
-open ".":"READONLY":$ZYSQLNULL ZSTATUS=ydb484f+...^ydb484,%YDB-E-DEVPARUNK, Deviceparameter unknown
+open ".":$ZYSQLNULL ZSTATUS=ydb484f+...^ydb484,%YDB-E-DEVPARPARSE, Error parsing device parameter specification
+open ".":$ZYSQLNULL:$ZYSQLNULL ZSTATUS=ydb484f+...^ydb484,%YDB-E-DEVPARPARSE, Error parsing device parameter specification
 open $ZYSQLNULL::$ZYSQLNULL ZSTATUS=ydb484f+...^ydb484,%YDB-E-ZYSQLNULLNOTVALID, $ZYSQLNULL cannot be used as an integer, numeric, gvn subscript/value or lock subscript
 open $ZYSQLNULL::1 
 open "."::$ZYSQLNULL ZSTATUS=ydb484f+...^ydb484,%YDB-E-ZYSQLNULLNOTVALID, $ZYSQLNULL cannot be used as an integer, numeric, gvn subscript/value or lock subscript
