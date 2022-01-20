@@ -306,4 +306,21 @@ echo "# Try $base.m using [yottadb -run]"
 $ydb_dist/yottadb -run $base
 
 echo ""
+echo "------------------------------------------------------------"
+echo '# Test GTM-9371 : OC_FORCENUM in boolean expressions does not cause SIG-11/GTMASSERT2'
+echo "------------------------------------------------------------"
+echo "# Try all test cases using [yottadb -run]"
+echo "------------------------------------------------------------"
+@ num = 1
+while ($num < 5)
+	$ydb_dist/yottadb -run test$num^ydb828forcenumlit
+	@ num = $num + 1
+end
+echo "------------------------------------------------------------"
+echo "# Try all test cases using [yottadb -direct]"
+echo "------------------------------------------------------------"
+$grep -Ewi "write|for" $gtm_tst/$tst/inref/ydb828forcenumlit.m > ydb828forcenumlitdirect.m
+cat ydb828forcenumlitdirect.m | $ydb_dist/yottadb -direct
+
+echo ""
 $gtm_tst/com/dbcheck.csh

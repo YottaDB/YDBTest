@@ -13,7 +13,7 @@
 	; This module contains entry points that are serially driven by ydb828.csh and checks for expected runtime
 	; error in the various binary arithmetic operations that used to get sig-11s in these uses prior to YDB#828
 	;
-yydb828arithlit;
+ydb828arithlit;
 	quit
 
 test1	;

@@ -794,6 +794,63 @@ YDB>
 
 YDB>
 
+------------------------------------------------------------
+# Test GTM-9371 : OC_FORCENUM in boolean expressions does not cause SIG-11/GTMASSERT2
+------------------------------------------------------------
+# Try all test cases using [yottadb -run]
+------------------------------------------------------------
+		write +$ef!^x
+		        ^-----
+		At column 10, line 31, source module ##IN_TEST_PATH##/inref/ydb828forcenumlit.m
+%YDB-E-INVSVN, Invalid special variable name
+# test1 : Trying [for j=+1!@x] : Expect LVUNDEF error (not SIG-11/GTMASSERT2)
+%YDB-E-LVUNDEF, Undefined local variable: x
+		At M source location test1+2^ydb828forcenumlit
+
+YDB>
+# test2 : Trying [for j=+1!zl_@x] : Expect LVUNDEF error (not SIG-11/GTMASSERT2)
+%YDB-E-LVUNDEF, Undefined local variable: x
+		At M source location test2+2^ydb828forcenumlit
+
+YDB>
+# test3 : Trying [write +$ef!^x] : Expect INVSVN error (not SIG-11/GTMASSERT2)
+%YDB-E-INVSVN, Invalid special variable name
+		At M source location test3+2^ydb828forcenumlit
+
+YDB>
+# test4 : Trying [write +0!@(sub1)] : Expect LVUNDEF error (not SIG-11/GTMASSERT2)
+%YDB-E-LVUNDEF, Undefined local variable: sub1
+		At M source location test4+2^ydb828forcenumlit
+
+YDB>
+------------------------------------------------------------
+# Try all test cases using [yottadb -direct]
+------------------------------------------------------------
+
+YDB>
+
+YDB>
+# test1 : Trying [for j=+1!@x] : Expect LVUNDEF error (not SIG-11/GTMASSERT2)
+YDB>
+%YDB-E-LVUNDEF, Undefined local variable: x
+
+YDB>
+# test2 : Trying [for j=+1!zl_@x] : Expect LVUNDEF error (not SIG-11/GTMASSERT2)
+YDB>
+%YDB-E-LVUNDEF, Undefined local variable: x
+
+YDB>
+# test3 : Trying [write +$ef!^x] : Expect INVSVN error (not SIG-11/GTMASSERT2)
+YDB>
+%YDB-E-INVSVN, Invalid special variable name
+
+YDB>
+# test4 : Trying [write +0!@(sub1)] : Expect LVUNDEF error (not SIG-11/GTMASSERT2)
+YDB>
+%YDB-E-LVUNDEF, Undefined local variable: sub1
+
+YDB>
+
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

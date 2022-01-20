@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2021-2022 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -13,7 +13,7 @@
 	; This module contains entry points that are serially driven by ydb828.csh and checks for sig-11s
 	; in the various extended reference operations that used to get sig-11s in these uses prior to YDB#828
 	;
-yydb828extendedreference;
+ydb828extendedreference;
 	; Test extended reference using ^[expratom1,expratom2] syntax does not cause SIG-11
 	quit
 
