@@ -851,6 +851,24 @@ YDB>
 
 YDB>
 
+------------------------------------------------------------
+# Test that $query(@"a,") does not GTMASSERT2
+# Expecting only a INDEXTRACHARS error instead
+------------------------------------------------------------
+# Try ydb828dlrqueryindirect.m using [yottadb -direct]
+
+YDB>
+%YDB-E-INDEXTRACHARS, Indirection string contains extra trailing characters
+	a,
+	 ^-----
+
+YDB>
+# Try ydb828dlrqueryindirect.m using [yottadb -run]
+%YDB-E-INDEXTRACHARS, Indirection string contains extra trailing characters
+		At M source location +1^ydb828dlrqueryindirect
+
+YDB>
+
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

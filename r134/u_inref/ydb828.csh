@@ -323,4 +323,16 @@ $grep -Ewi "write|for" $gtm_tst/$tst/inref/ydb828forcenumlit.m > ydb828forcenuml
 cat ydb828forcenumlitdirect.m | $ydb_dist/yottadb -direct
 
 echo ""
+echo "------------------------------------------------------------"
+echo '# Test that $query(@"a,") does not GTMASSERT2'
+echo '# Expecting only a INDEXTRACHARS error instead'
+echo "------------------------------------------------------------"
+set base = "ydb828dlrqueryindirect"
+echo ' write $query(@"a,")' > $base.m
+echo "# Try $base.m using [yottadb -direct]"
+cat $base.m | $ydb_dist/yottadb -direct
+echo "# Try $base.m using [yottadb -run]"
+$ydb_dist/yottadb -run $base
+
+echo ""
 $gtm_tst/com/dbcheck.csh
