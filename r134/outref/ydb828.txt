@@ -809,7 +809,7 @@ YDB>
 
 YDB>
 # test2 : Trying [for j=+1!zl_@x] : Expect LVUNDEF error (not SIG-11/GTMASSERT2)
-%YDB-E-LVUNDEF, Undefined local variable: x
+##TEST_AWK%YDB-E-LVUNDEF, Undefined local variable: (x|zl)
 		At M source location test2+2^ydb828forcenumlit
 
 YDB>
@@ -837,7 +837,7 @@ YDB>
 YDB>
 # test2 : Trying [for j=+1!zl_@x] : Expect LVUNDEF error (not SIG-11/GTMASSERT2)
 YDB>
-%YDB-E-LVUNDEF, Undefined local variable: x
+##TEST_AWK%YDB-E-LVUNDEF, Undefined local variable: (x|zl)
 
 YDB>
 # test3 : Trying [write +$ef!^x] : Expect INVSVN error (not SIG-11/GTMASSERT2)
