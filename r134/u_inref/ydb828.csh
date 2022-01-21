@@ -347,4 +347,18 @@ echo "# Try $base.m using [yottadb -run]"
 $ydb_dist/yottadb -run $base
 
 echo ""
+echo "------------------------------------------------------------"
+echo '# Test that parse error in device parameter specification does not assert fail in linetail.c in Debug builds'
+echo '# Trying out [use $principal:("] : Expecting a DEVPARPARSE error'
+echo '# This used to previously (before YDB@d8e6fc32) fail as'
+echo '#     %YDB-F-ASSERT, Assert failed in sr_port/linetail.c line 40 for expression (TREF(source_error_found))'
+echo "------------------------------------------------------------"
+set base = "ydb828devparparse"
+echo ' open f:(commO"ecuse f' > $base.m
+echo "# Try $base.m using [yottadb -direct]"
+cat $base.m | $ydb_dist/yottadb -direct
+echo "# Try $base.m using [yottadb -run]"
+$ydb_dist/yottadb -run $base
+
+echo ""
 $gtm_tst/com/dbcheck.csh

@@ -891,6 +891,30 @@ YDB>
 
 YDB>
 
+------------------------------------------------------------
+# Test that parse error in device parameter specification does not assert fail in linetail.c in Debug builds
+# Trying out [use $principal:("] : Expecting a DEVPARPARSE error
+# This used to previously (before YDB@d8e6fc32) fail as
+#     %YDB-F-ASSERT, Assert failed in sr_port/linetail.c line 40 for expression (TREF(source_error_found))
+------------------------------------------------------------
+# Try ydb828devparparse.m using [yottadb -direct]
+
+YDB>
+%YDB-E-DEVPARPARSE, Error parsing device parameter specification
+	 open f:(commO"ecuse f
+	                      ^-----
+
+YDB>
+# Try ydb828devparparse.m using [yottadb -run]
+	 open f:(commO"ecuse f
+	                      ^-----
+		At column 23, line 1, source module ##TEST_PATH##/ydb828devparparse.m
+%YDB-E-DEVPARPARSE, Error parsing device parameter specification
+%YDB-E-DEVPARPARSE, Error parsing device parameter specification
+		At M source location +1^ydb828devparparse
+
+YDB>
+
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
