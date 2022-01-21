@@ -248,6 +248,8 @@ set \$zcompile="-machine -lis="_file
 zcompile "${base}.m"
 break
 YDB_EOF
+# Remove all ^x triggers loaded till now as it would otherwise disturb later sections of the test that use ^x
+$ydb_dist/yottadb -run %XCMD 'if $ztrigger("item","-*")'
 
 echo ""
 echo "------------------------------------------------------------"
@@ -359,6 +361,14 @@ echo "# Try $base.m using [yottadb -direct]"
 cat $base.m | $ydb_dist/yottadb -direct
 echo "# Try $base.m using [yottadb -run]"
 $ydb_dist/yottadb -run $base
+
+echo ""
+echo "------------------------------------------------------------"
+echo '# Test that > 31 subscripts in ZWRITE does not cause SIG-11 OR heap-buffer-overflow error (with ASAN)'
+echo '# Test instead that it issues MAXNRSUBSCRIPTS error'
+echo '# Invoking [yottadb -run ydb828zwritemaxnrsubs]'
+echo "------------------------------------------------------------"
+$ydb_dist/yottadb -run ydb828zwritemaxnrsubs
 
 echo ""
 $gtm_tst/com/dbcheck.csh

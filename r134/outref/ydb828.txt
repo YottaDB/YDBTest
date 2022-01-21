@@ -648,6 +648,7 @@ YDB>
 		At M source location +1^GTM$DMOD
 
 YDB>
+All existing triggers (count = 12) deleted
 
 ------------------------------------------------------------
 # Test DO & usages with LITNONGRAPH warning does not SIG-11 and/or assert fail
@@ -914,6 +915,13 @@ YDB>
 		At M source location +1^ydb828devparparse
 
 YDB>
+
+------------------------------------------------------------
+# Test that > 31 subscripts in ZWRITE does not cause SIG-11 OR heap-buffer-overflow error (with ASAN)
+# Test instead that it issues MAXNRSUBSCRIPTS error
+# Invoking [yottadb -run ydb828zwritemaxnrsubs]
+------------------------------------------------------------
+ydb828zwritemaxnrsubs : PASSED
 
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
