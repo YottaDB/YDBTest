@@ -371,4 +371,17 @@ echo "------------------------------------------------------------"
 $ydb_dist/yottadb -run ydb828zwritemaxnrsubs
 
 echo ""
+echo "------------------------------------------------------------"
+echo '# Test SETZDIRTOOLONG error is issued by SET $ZDIR when string is 4096 bytes long'
+echo '# This used to previously (before YDB@22aaad3d) fail with a stack-buffer-overflow ASAN error'
+echo '# Trying out [set $zdir=$justify(1," ",4096)] : Expecting a SETZDIRTOOLONG error'
+echo "------------------------------------------------------------"
+set base = "ydb828setzdirtoolong"
+echo ' set $zdir=$justify(1," ",4096)' > $base.m
+echo "# Try $base.m using [yottadb -direct]"
+cat $base.m | $ydb_dist/yottadb -direct
+echo "# Try $base.m using [yottadb -run]"
+$ydb_dist/yottadb -run $base
+
+echo ""
 $gtm_tst/com/dbcheck.csh

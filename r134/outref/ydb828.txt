@@ -923,6 +923,23 @@ YDB>
 ------------------------------------------------------------
 ydb828zwritemaxnrsubs : PASSED
 
+------------------------------------------------------------
+# Test SETZDIRTOOLONG error is issued by SET $ZDIR when string is 4096 bytes long
+# This used to previously (before YDB@22aaad3d) fail with a stack-buffer-overflow ASAN error
+# Trying out [set $zdir=$justify(1," ",4096)] : Expecting a SETZDIRTOOLONG error
+------------------------------------------------------------
+# Try ydb828setzdirtoolong.m using [yottadb -direct]
+
+YDB>
+%YDB-E-SETZDIRTOOLONG, $ZDIR value specified is 4098 bytes long which is greater than the allowed maximum of 4096 bytes
+
+YDB>
+# Try ydb828setzdirtoolong.m using [yottadb -run]
+%YDB-E-SETZDIRTOOLONG, $ZDIR value specified is 4098 bytes long which is greater than the allowed maximum of 4096 bytes
+		At M source location +1^ydb828setzdirtoolong
+
+YDB>
+
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
