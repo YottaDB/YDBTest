@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -20,8 +20,9 @@ echo "# Do this after creating reverse collation shared library so test starts a
 source $gtm_tst/com/cre_coll_sl_straight.csh 0
 
 # Randomly generated boolean expressions can get as long as even 4K so have a safe record size of 16Kb as they are
-# stored in the database (for later debugging in case the test fails).
-$gtm_tst/com/dbcreate.csh mumps -record_size=16384
+# stored in the database (for later debugging in case the test fails). Some boolean expressions can have nested $select
+# usages that can go even more than 16Kb in some cases so keep a max record size of 1Mb just to be safe.
+$gtm_tst/com/dbcreate.csh mumps -record_size=1048576
 
 # ydb484.m could create deep boolean expressions which can result in the boolexpr nesting depth going more than 4
 # (the default allowed depth in the code). Therefore set the below dbg-only env var to a higher value just for this test.

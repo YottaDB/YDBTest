@@ -2187,16 +2187,6 @@ nullhelper(operator,depth1,depth2)
 	quit
 
 selecthelper(return,depth1,depth2)
-	quit $$selecthelpertemporary(return) ; NARSTODO: Remove this line and `selecthelpertemporary` label when YDB#546 and YDB#555 gets fixed.
-	; Note: The below test code, when enabled, exposed longstanding pre-existing YDB issues YDB#546 and YDB#555.
-	;	Since those issues are still open, the below test code is currently disabled.
-	;	If/When this is re-enabled after YDB#546 and YDB#555 are fixed, it is possible this exposes more issues.
-	;	For the record, below are the assert failures (in dbg test runs) that were seen when this test code was enabled.
-	;
-	;	%YDB-F-ASSERT, Assert failed in sr_port/gvcst_search.c line 579 for expression (pTarg->clue.end)
-	;	%YDB-F-GTMASSERT2, YottaDB r1.28 Linux x86_64 - Assert failed sr_port/op_gvrectarg.c line 68 for expression (MV_IS_STRING(v))
-	;	%YDB-F-ASSERT, Assert failed in sr_port/op_gvrectarg.c line 82 for expression (GVSAVTARG_FIXED_SIZE <= len)
-	;
 	new numterms,i,choice,retexpr,retstr
 	set numterms=$random(4)
 	set:0=return retexpr=$$zero(depth2)
@@ -2213,15 +2203,6 @@ selecthelper(return,depth1,depth2)
 	set retstr=retstr_$$one(depth1)_":"_retexpr
 	set retstr=retstr_"))"
 	quit retstr
-
-selecthelpertemporary(return)
-	; $SELECT usage inside boolean expressions cause GTMASSERT2 failures that are partly fixed by GTM-9155 in GT.M V6.3-009
-	; The full fix has to wait for a future GT.M release or when YDB#546 is fixed.
-	; So until that is integrated, use this simplistic return.
-	quit:0=return "$select(false:1,1:0)"
-	quit:1=return "$select(true:1)"
-	quit:2=return "$select(false:1,1:$zysqlnull)"
-	quit
 
 zeroORnull(depth)
 	; Returns a random expression that evaluates to 0 or $zysqlnull
