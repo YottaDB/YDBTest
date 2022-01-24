@@ -1,0 +1,37 @@
+# ---------------------------------------------------------------------------------------
+# Test that Nested $SELECT() functions do not issue incorrect GTMASSERT2 or LVUNDEF error
+# ---------------------------------------------------------------------------------------
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+## test1 : Tests z.m from https://gitlab.com/YottaDB/DB/YDB/-/issues/546#description
+## Expect output of 1
+result=1
+## test2 : Tests v.m from https://gitlab.com/YottaDB/DB/YDB/-/issues/546#description
+## Expect output of 1
+result=1
+## test3 : Tests z1.m from https://gitlab.com/YottaDB/DB/YDB/-/issues/546#note_299108731
+## Expect output of 0
+result=0
+## test4 : Tests z2.m from https://gitlab.com/YottaDB/DB/YDB/-/issues/546#note_299108731
+## Expect output of 0
+result=0
+## test5 : Tests z3.m from https://gitlab.com/YottaDB/DB/YDB/-/issues/546#note_299108731
+## Expect output of 0
+result=0
+## test6 : Tests z4.m from https://gitlab.com/YottaDB/DB/YDB/-/issues/546#note_299108731
+## Expect output of 0
+result=0
+## test7 : Tests z5.m from https://gitlab.com/YottaDB/DB/YDB/-/issues/546#note_299108731
+## Expect output of 0
+result=0
+## test8 : Tests z6.m from https://gitlab.com/YottaDB/DB/YDB/-/issues/546#note_299108731
+## Expect output of 0
+result=0
+## test9 : Tests booltest.m from https://gitlab.com/YottaDB/DB/YDB/-/issues/546#note_299129926
+PASS from ydb546booltest (command postconditional test)
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

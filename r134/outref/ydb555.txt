@@ -1,0 +1,17 @@
+# ------------------------------------------------------------------------------------
+# Test that $SELECT with global references in a boolean expression does not GTMASSERT2
+# ------------------------------------------------------------------------------------
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+## Test https://gitlab.com/YottaDB/DB/YDB/-/issues/555#description
+## Expect output of 1
+1
+## Test https://gitlab.com/YottaDB/DB/YDB/-/issues/555#note_303122367
+## Expect output of 1
+1
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
