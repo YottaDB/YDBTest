@@ -25,13 +25,14 @@
 # ydb555 [nars]          Test that $SELECT with global references in a boolean expression does not GTMASSERT2
 # ydb546 [nars]          Test that Nested $SELECT() functions do not GTMASSERT2
 # ydb758 [bdw]           Test that %PEEKBYNAME("node_local.max_procs",<region>) works correctly
+# ydb557 [nars]          Test that Naked indicator is maintained correctly when $SELECT is used in boolean expression
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r134 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "ydb757 ydb775 ydb782 ydb772 ydb785 ydb734 ydb828 ydb831 ydb555 ydb546 ydb758"
+setenv subtest_list_non_replic "ydb757 ydb775 ydb782 ydb772 ydb785 ydb734 ydb828 ydb831 ydb555 ydb546 ydb758 ydb557"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then

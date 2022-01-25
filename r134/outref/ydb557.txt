@@ -1,0 +1,14 @@
+# --------------------------------------------------------------------------------------------
+# Test that Naked indicator is maintained correctly when $SELECT is used in boolean expression
+# --------------------------------------------------------------------------------------------
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Run ydb557.m (is test.m test case from https://gitlab.com/YottaDB/DB/YDB/-/issues/557#description)
+Naked reference before $SELECT : Expected = ^false : Actual = ^false
+Naked reference after  $SELECT : Expected = ^false : Actual = ^false
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
