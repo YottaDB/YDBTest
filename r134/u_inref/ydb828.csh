@@ -384,4 +384,18 @@ echo "# Try $base.m using [yottadb -run]"
 $ydb_dist/yottadb -run $base
 
 echo ""
+set str = 'write:+"1E47" "Should not see this string",!'
+echo "------------------------------------------------------------"
+echo '# Test NUMOFLOW error is issued by WRITE:+"1E47"'
+echo '# This used to previously (before YDB@108e062c) fail with a SIG-11'
+echo '# Trying out ['$str'] : Expecting a SETZDIRTOOLONG error'
+echo "------------------------------------------------------------"
+set base = "ydb828numoflow"
+echo ' '$str > $base.m
+echo "# Try $base.m using [yottadb -direct]"
+cat $base.m | $ydb_dist/yottadb -direct
+echo "# Try $base.m using [yottadb -run]"
+$ydb_dist/yottadb -run $base
+
+echo ""
 $gtm_tst/com/dbcheck.csh

@@ -940,6 +940,31 @@ YDB>
 
 YDB>
 
+------------------------------------------------------------
+# Test NUMOFLOW error is issued by WRITE:+"1E47"
+# This used to previously (before YDB@108e062c) fail with a SIG-11
+# Trying out [write:+"1E47" "Should not see this string",!] : Expecting a SETZDIRTOOLONG error
+------------------------------------------------------------
+# Try ydb828numoflow.m using [yottadb -direct]
+
+YDB>
+%YDB-E-NUMOFLOW, Numeric overflow
+
+YDB>
+# Try ydb828numoflow.m using [yottadb -run]
+	 write:+"1E47" "Should not see this string",!
+	              ^-----
+		At column 15, line 1, source module ##TEST_PATH##/ydb828numoflow.m
+%YDB-E-NUMOFLOW, Numeric overflow
+	 write:+"1E47" "Should not see this string",!
+	              ^-----
+		At column 15, line 1, source module ##TEST_PATH##/ydb828numoflow.m
+%YDB-E-NUMOFLOW, Numeric overflow
+%YDB-E-NUMOFLOW, Numeric overflow
+		At M source location +1^ydb828numoflow
+
+YDB>
+
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
