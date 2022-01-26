@@ -988,6 +988,27 @@ YDB>
 
 YDB>
 
+------------------------------------------------------------
+# Test ZWRITE works fine after LVUNDEF error in FOR command
+# This used to previously (before YDB@59a129ce) fail with a SIG-11/ASSERT
+------------------------------------------------------------
+# Try ydb828forlvundef.m using [yottadb -direct]
+
+YDB>
+
+YDB>
+%YDB-E-LVUNDEF, Undefined local variable: x("b")
+
+YDB>
+x("a")=1
+
+YDB>
+# Try ydb828forlvundef.m using [yottadb -run]
+%YDB-E-LVUNDEF, Undefined local variable: x("b")
+		At M source location +2^ydb828forlvundef
+
+YDB>
+
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

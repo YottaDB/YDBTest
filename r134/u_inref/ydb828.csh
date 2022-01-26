@@ -412,4 +412,20 @@ echo "# Try $base.m using [yottadb -run]"
 $ydb_dist/yottadb -run $base
 
 echo ""
+echo "------------------------------------------------------------"
+echo '# Test ZWRITE works fine after LVUNDEF error in FOR command'
+echo '# This used to previously (before YDB@59a129ce) fail with a SIG-11/ASSERT'
+echo "------------------------------------------------------------"
+set base = "ydb828forlvundef"
+cat > $base.m << CAT_EOF
+ set x("a")=1
+ for x(1)=x("b")
+ zwrite
+CAT_EOF
+echo "# Try $base.m using [yottadb -direct]"
+cat $base.m | $ydb_dist/yottadb -direct
+echo "# Try $base.m using [yottadb -run]"
+$ydb_dist/yottadb -run $base
+
+echo ""
 $gtm_tst/com/dbcheck.csh
