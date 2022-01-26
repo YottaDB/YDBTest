@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -178,7 +178,7 @@ getsubshelper();
 	. ;
 	else  do
 	. ; string subscript
-	. set strloglen=1+$random(5)
+	. set strloglen=1+$random(4)	; Do not go higher than 4 as that can cause YDBTest#413
 	. set strlen=$random(2**strloglen)
 	. set string="%:;=>'`{}|~#$^*()+!~/abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 	. set stringlen=$length(string)
