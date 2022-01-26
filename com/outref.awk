@@ -3,7 +3,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -346,6 +346,12 @@ BEGIN {
 	option_names[++no_options] = "gtm_test_asan_compiler_clang11or12"
 	if ("1" == ENVIRON["gtm_test_asan_compiler_clang11or12"])
 		envir[no_options] = "ASAN_CLANG_11_OR_12"
+	#
+	if (("ubuntu" == ENVIRON["gtm_test_linux_distrib"]) && ("21.10" == ENVIRON["gtm_test_linux_version"]))
+	{
+		option_names[++no_options] = "ubuntu_21.10"
+		envir[no_options] = "UBUNTU_21.10"
+	}
 	#
 	split(tst_hostos_machtype_all, all_platforms, " ")
 	if ("AIX" == tst_osname)

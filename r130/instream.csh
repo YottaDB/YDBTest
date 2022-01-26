@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2019-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -100,6 +100,13 @@ if ("pro" == "$tst_image") then
 		# Not yet sure if it is an ASAN issue or a YottaDB issue inside the signal handler.
 		# Exclude this subtest until we can find time to investigate this further.
 		# The same test runs fine without ASAN and so is enabled in that case.
+		setenv subtest_exclude_list "$subtest_exclude_list ydb534"
+	endif
+	# We have noted that Ubuntu 21.10 has an odd issue where when the code explicitly codes an 'abort()' call,
+	# the system creates a core even if the exception is handled. This causes the ydb534 test to have more
+	# cores than it can deal with so the test fails. Bypass ydb534 on Ubutnu 21.10 and hope when 22.04 comes
+	# around, this issue is fixed.
+	if (("ubuntu" == $gtm_test_linux_distrib) && ("21.10" == $gtm_test_linux_version)) then
 		setenv subtest_exclude_list "$subtest_exclude_list ydb534"
 	endif
 else
