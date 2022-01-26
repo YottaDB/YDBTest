@@ -877,7 +877,7 @@ YDB>
 # Test that parse error in device parameter specification does not GTMASSERT2
 # Trying out [use $principal:("] : Expecting a DEVPARPARSE error (not a GTMASSERT2 error)
 ------------------------------------------------------------
-# Try ydb828devparparse.m using [yottadb -direct]
+# Try ydb828devparparse1.m using [yottadb -direct]
 
 YDB>
 %YDB-E-DEVPARPARSE, Error parsing device parameter specification
@@ -885,13 +885,13 @@ YDB>
 	                  ^-----
 
 YDB>
-# Try ydb828devparparse.m using [yottadb -run]
+# Try ydb828devparparse1.m using [yottadb -run]
 	 use $principal:("
 	                  ^-----
-		At column 19, line 1, source module ##TEST_PATH##/ydb828devparparse.m
+		At column 19, line 1, source module ##TEST_PATH##/ydb828devparparse1.m
 %YDB-E-DEVPARPARSE, Error parsing device parameter specification
 %YDB-E-DEVPARPARSE, Error parsing device parameter specification
-		At M source location +1^ydb828devparparse
+		At M source location +1^ydb828devparparse1
 
 YDB>
 
@@ -901,7 +901,7 @@ YDB>
 # This used to previously (before YDB@d8e6fc32) fail as
 #     %YDB-F-ASSERT, Assert failed in sr_port/linetail.c line 40 for expression (TREF(source_error_found))
 ------------------------------------------------------------
-# Try ydb828devparparse.m using [yottadb -direct]
+# Try ydb828devparparse2.m using [yottadb -direct]
 
 YDB>
 %YDB-E-DEVPARPARSE, Error parsing device parameter specification
@@ -909,13 +909,13 @@ YDB>
 	                      ^-----
 
 YDB>
-# Try ydb828devparparse.m using [yottadb -run]
+# Try ydb828devparparse2.m using [yottadb -run]
 	 open f:(commO"ecuse f
 	                      ^-----
-		At column 23, line 1, source module ##TEST_PATH##/ydb828devparparse.m
+		At column 23, line 1, source module ##TEST_PATH##/ydb828devparparse2.m
 %YDB-E-DEVPARPARSE, Error parsing device parameter specification
 %YDB-E-DEVPARPARSE, Error parsing device parameter specification
-		At M source location +1^ydb828devparparse
+		At M source location +1^ydb828devparparse2
 
 YDB>
 
@@ -1009,6 +1009,33 @@ YDB>
 # Try ydb828forlvundef.m using [yottadb -run]
 %YDB-E-LVUNDEF, Undefined local variable: x("b")
 		At M source location +2^ydb828forlvundef
+
+YDB>
+
+------------------------------------------------------------
+# Test DEVPARPARSE error is issued even if it is followed by another parse error
+# This used to previously (before YDB@7c455a99) fail with a %YDB-F-GTMASSERT2 error
+# Trying out [U -I:R)"] : Expecting a DEVPARPARSE error
+------------------------------------------------------------
+# Try ydb828devparparse3.m using [yottadb -direct]
+
+YDB>
+%YDB-E-DEVPARPARSE, Error parsing device parameter specification
+	 U -I:R)"
+	         ^-----
+
+YDB>
+# Try ydb828devparparse3.m using [yottadb -run]
+	 U -I:R)"
+	      ^-----
+		At column 7, line 1, source module ##TEST_PATH##/ydb828devparparse3.m
+%YDB-E-DEVPARUNK, Deviceparameter unknown
+	 U -I:R)"
+	         ^-----
+		At column 10, line 1, source module ##TEST_PATH##/ydb828devparparse3.m
+%YDB-E-DEVPARPARSE, Error parsing device parameter specification
+%YDB-E-DEVPARPARSE, Error parsing device parameter specification
+		At M source location +1^ydb828devparparse3
 
 YDB>
 

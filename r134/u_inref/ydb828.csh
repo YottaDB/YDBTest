@@ -341,7 +341,7 @@ echo "------------------------------------------------------------"
 echo '# Test that parse error in device parameter specification does not GTMASSERT2'
 echo '# Trying out [use $principal:("] : Expecting a DEVPARPARSE error (not a GTMASSERT2 error)'
 echo "------------------------------------------------------------"
-set base = "ydb828devparparse"
+set base = "ydb828devparparse1"
 echo ' use $principal:("' > $base.m
 echo "# Try $base.m using [yottadb -direct]"
 cat $base.m | $ydb_dist/yottadb -direct
@@ -355,7 +355,7 @@ echo '# Trying out [use $principal:("] : Expecting a DEVPARPARSE error'
 echo '# This used to previously (before YDB@d8e6fc32) fail as'
 echo '#     %YDB-F-ASSERT, Assert failed in sr_port/linetail.c line 40 for expression (TREF(source_error_found))'
 echo "------------------------------------------------------------"
-set base = "ydb828devparparse"
+set base = "ydb828devparparse2"
 echo ' open f:(commO"ecuse f' > $base.m
 echo "# Try $base.m using [yottadb -direct]"
 cat $base.m | $ydb_dist/yottadb -direct
@@ -422,6 +422,20 @@ cat > $base.m << CAT_EOF
  for x(1)=x("b")
  zwrite
 CAT_EOF
+echo "# Try $base.m using [yottadb -direct]"
+cat $base.m | $ydb_dist/yottadb -direct
+echo "# Try $base.m using [yottadb -run]"
+$ydb_dist/yottadb -run $base
+
+echo ""
+set str = 'U -I:R)"'
+echo "------------------------------------------------------------"
+echo '# Test DEVPARPARSE error is issued even if it is followed by another parse error'
+echo '# This used to previously (before YDB@7c455a99) fail with a %YDB-F-GTMASSERT2 error'
+echo '# Trying out ['$str'] : Expecting a DEVPARPARSE error'
+echo "------------------------------------------------------------"
+set base = "ydb828devparparse3"
+echo ' '$str > $base.m
 echo "# Try $base.m using [yottadb -direct]"
 cat $base.m | $ydb_dist/yottadb -direct
 echo "# Try $base.m using [yottadb -run]"
