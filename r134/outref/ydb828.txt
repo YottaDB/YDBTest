@@ -965,6 +965,29 @@ YDB>
 
 YDB>
 
+------------------------------------------------------------
+# Test EXTGBLDEL error is issued by SET ^[$ORDER(@x,1)
+# This used to previously (before YDB@108e062c1) fail with a %YDB-F-GTMASSERT2 error
+# Trying out [set ^[$order(@x,1)] : Expecting a EXTGBLDEL error
+------------------------------------------------------------
+# Try ydb828extgbldel.m using [yottadb -direct]
+
+YDB>
+%YDB-E-EXTGBLDEL, Invalid delimiter for extended global syntax
+	 set ^[$order(@x,1)
+	                   ^-----
+
+YDB>
+# Try ydb828extgbldel.m using [yottadb -run]
+	 set ^[$order(@x,1)
+	                   ^-----
+		At column 20, line 1, source module ##TEST_PATH##/ydb828extgbldel.m
+%YDB-E-EXTGBLDEL, Invalid delimiter for extended global syntax
+%YDB-E-EXTGBLDEL, Invalid delimiter for extended global syntax
+		At M source location +1^ydb828extgbldel
+
+YDB>
+
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

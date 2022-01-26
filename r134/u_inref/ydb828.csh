@@ -398,4 +398,18 @@ echo "# Try $base.m using [yottadb -run]"
 $ydb_dist/yottadb -run $base
 
 echo ""
+set str = 'set ^[$order(@x,1)'
+echo "------------------------------------------------------------"
+echo '# Test EXTGBLDEL error is issued by SET ^[$ORDER(@x,1)'
+echo '# This used to previously (before YDB@108e062c1) fail with a %YDB-F-GTMASSERT2 error'
+echo '# Trying out ['$str'] : Expecting a EXTGBLDEL error'
+echo "------------------------------------------------------------"
+set base = "ydb828extgbldel"
+echo ' '$str > $base.m
+echo "# Try $base.m using [yottadb -direct]"
+cat $base.m | $ydb_dist/yottadb -direct
+echo "# Try $base.m using [yottadb -run]"
+$ydb_dist/yottadb -run $base
+
+echo ""
 $gtm_tst/com/dbcheck.csh
