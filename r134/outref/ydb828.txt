@@ -796,7 +796,7 @@ YDB>
 YDB>
 
 ------------------------------------------------------------
-# Test GTM-9371 : OC_FORCENUM in boolean expressions does not cause SIG-11/GTMASSERT2
+# Test GTM-9371 : OC_FORCENUM in boolean expressions does not cause SIG-11/GTMASSERT2 (used to before YDB@ba22f762)
 ------------------------------------------------------------
 # Try all test cases using [yottadb -run]
 ------------------------------------------------------------
@@ -824,6 +824,7 @@ YDB>
 		At M source location test4+2^ydb828forcenumlit
 
 YDB>
+# test5 : Trying a fancy expression involving unary + : Expect no output (not SIG-11/GTMASSERT2)
 ------------------------------------------------------------
 # Try all test cases using [yottadb -direct]
 ------------------------------------------------------------
@@ -850,6 +851,8 @@ YDB>
 YDB>
 %YDB-E-LVUNDEF, Undefined local variable: sub1
 
+YDB>
+# test5 : Trying a fancy expression involving unary + : Expect no output (not SIG-11/GTMASSERT2)
 YDB>
 
 ------------------------------------------------------------

@@ -36,3 +36,7 @@ test4	;
 	write +0!@(sub1)
 	quit
 
+test5	;
+	write "# test5 : Trying a fancy expression involving unary + : Expect no output (not SIG-11/GTMASSERT2)"
+        set j=-.9 set k=+11!1111111111'=(j+($select($extract(j)="-":"-",1:"")_".5")\1)
+
