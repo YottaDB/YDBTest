@@ -1,0 +1,34 @@
+
+------------------------------------------------------------
+# Test that $ZATRANSFORM when first argument is an undefined variable does not SIG-11
+# Only expect graceful LVUNDEF runtime error
+------------------------------------------------------------
+# Try all test cases using [yottadb -run]
+------------------------------------------------------------
+# test1 : Test [$zatransform(x,0)] when x is undefined. Should issue LVUNDEF. Not assert fail
+%YDB-E-LVUNDEF, Undefined local variable: x
+		At M source location test1+2^ydb840
+
+YDB>
+# test2 : Test [$zatransform(x,0,2)] when x is undefined. Should issue LVUNDEF. Not SIG-11
+%YDB-E-LVUNDEF, Undefined local variable: x
+		At M source location test2+2^ydb840
+
+YDB>
+------------------------------------------------------------
+# Try all test cases using [yottadb -direct]
+------------------------------------------------------------
+
+YDB>
+# test1 : Test [$zatransform(x,0)] when x is undefined. Should issue LVUNDEF. Not assert fail
+
+YDB>
+%YDB-E-LVUNDEF, Undefined local variable: x
+
+YDB>
+# test2 : Test [$zatransform(x,0,2)] when x is undefined. Should issue LVUNDEF. Not SIG-11
+
+YDB>
+%YDB-E-LVUNDEF, Undefined local variable: x
+
+YDB>
