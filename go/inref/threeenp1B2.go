@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////
 //								//
-// Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries. //
+// Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries. //
 // All rights reserved.						//
 //								//
 //	This source code contains the intellectual property	//
@@ -143,11 +143,15 @@ func main() {
 	value.Alloc(32)
 	errstr.Alloc(2048)
 	limitsGbl.Alloc(7, 2, 18) // Only 2 subs but allow full 18 digit value
+	defer value.Free()
+	defer errstr.Free()
+	defer limitsGbl.Free()
 	err = limitsGbl.Varnm.SetValStr(tptoken, &errstr, "^limits")
 	if checkErrorReturn(err) {
 		return
 	}
 	resultGbl.Alloc(7, 0, 0)
+	defer resultGbl.Free()
 	err = resultGbl.Varnm.SetValStr(tptoken, &errstr, "^result")
 	if checkErrorReturn(err) {
 		return
@@ -157,6 +161,7 @@ func main() {
 		return
 	}
 	highestGbl.Alloc(8, 0, 0)
+	defer highestGbl.Free()
 	err = highestGbl.Varnm.SetValStr(tptoken, &errstr, "^highest")
 	if checkErrorReturn(err) {
 		return
@@ -166,6 +171,7 @@ func main() {
 		return
 	}
 	updatesGbl.Alloc(8, 0, 0)
+	defer updatesGbl.Free()
 	err = updatesGbl.Varnm.SetValStr(tptoken, &errstr, "^updates")
 	if checkErrorReturn(err) {
 		return
@@ -175,6 +181,7 @@ func main() {
 		return
 	}
 	readsGbl.Alloc(6, 0, 0)
+	defer readsGbl.Free()
 	err = readsGbl.Varnm.SetValStr(tptoken, &errstr, "^reads")
 	if checkErrorReturn(err) {
 		return
@@ -184,6 +191,7 @@ func main() {
 		return
 	}
 	stepGbl.Alloc(5, 1, 18)
+	defer stepGbl.Free()
 	err = stepGbl.Varnm.SetValStr(tptoken, &errstr, "^step")
 	if checkErrorReturn(err) {
 		return
@@ -419,21 +427,28 @@ func doblk(index int64) {
 	shrstuffp.value2.Alloc(32)
 	shrstuffp.errstr.Alloc(2048)
 	shrstuffp.readsGbl.Alloc(6, 0, 0)
+	defer shrstuffp.value.Free()
+	defer shrstuffp.value2.Free()
+	defer shrstuffp.errstr.Free()
+	defer shrstuffp.readsGbl.Free()
 	err = shrstuffp.readsGbl.Varnm.SetValStr(tptoken, &shrstuffp.errstr, "^reads")
 	if checkErrorReturn(err) {
 		return
 	}
 	shrstuffp.updatesGbl.Alloc(8, 0, 0)
+	defer shrstuffp.updatesGbl.Free()
 	err = shrstuffp.updatesGbl.Varnm.SetValStr(tptoken, &shrstuffp.errstr, "^updates")
 	if checkErrorReturn(err) {
 		return
 	}
 	shrstuffp.highestGbl.Alloc(8, 0, 0)
+	defer shrstuffp.highestGbl.Free()
 	err = shrstuffp.highestGbl.Varnm.SetValStr(tptoken, &shrstuffp.errstr, "^highest")
 	if checkErrorReturn(err) {
 		return
 	}
 	shrstuffp.limitsGbl.Alloc(7, 2, 18) // Only 2 subs but allow full 18 digit value
+	defer shrstuffp.limitsGbl.Free()
 	err = shrstuffp.limitsGbl.Varnm.SetValStr(tptoken, &shrstuffp.errstr, "^limits")
 	if checkErrorReturn(err) {
 		return
@@ -444,6 +459,7 @@ func doblk(index int64) {
 		return
 	}
 	shrstuffp.stepGbl.Alloc(5, 1, 18)
+	defer shrstuffp.stepGbl.Free()
 	err = shrstuffp.stepGbl.Varnm.SetValStr(tptoken, &shrstuffp.errstr, "^step")
 	if checkErrorReturn(err) {
 		return
@@ -453,6 +469,7 @@ func doblk(index int64) {
 		return
 	}
 	shrstuffp.resultGbl.Alloc(7, 0, 0)
+	defer shrstuffp.resultGbl.Free()
 	err = shrstuffp.resultGbl.Varnm.SetValStr(tptoken, &shrstuffp.errstr, "^result")
 	if checkErrorReturn(err) {
 		return
@@ -462,6 +479,7 @@ func doblk(index int64) {
 	// becomes fully threaded in the future. Create the subscript value before creating the keys.
 	subscr := fmt.Sprintf("%d", index) // Create anti-collide subscr for this goroutine
 	shrstuffp.readsLcl.Alloc(6, 1, 18)
+	defer shrstuffp.readsLcl.Free()
 	err = shrstuffp.readsLcl.Varnm.SetValStr(tptoken, &shrstuffp.errstr, "reads")
 	if checkErrorReturn(err) {
 		return
@@ -475,6 +493,7 @@ func doblk(index int64) {
 		return
 	}
 	shrstuffp.updatesLcl.Alloc(8, 1, 18)
+	defer shrstuffp.updatesLcl.Free()
 	err = shrstuffp.updatesLcl.Varnm.SetValStr(tptoken, &shrstuffp.errstr, "updates")
 	if checkErrorReturn(err) {
 		return
@@ -488,6 +507,7 @@ func doblk(index int64) {
 		return
 	}
 	shrstuffp.highestLcl.Alloc(8, 1, 18)
+	defer shrstuffp.highestLcl.Free()
 	err = shrstuffp.highestLcl.Varnm.SetValStr(tptoken, &shrstuffp.errstr, "highest")
 	if checkErrorReturn(err) {
 		return
@@ -501,6 +521,7 @@ func doblk(index int64) {
 		return
 	}
 	shrstuffp.currpathLcl.Alloc(8, 2, 18)
+	defer shrstuffp.currpathLcl.Free()
 	err = shrstuffp.currpathLcl.Varnm.SetValStr(tptoken, &shrstuffp.errstr, "currpath")
 	if checkErrorReturn(err) {
 		return

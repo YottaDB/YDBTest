@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////
 //								//
-// Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries. //
+// Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries. //
 // All rights reserved.						//
 //								//
 //	This source code contains the intellectual property	//
@@ -133,12 +133,16 @@ func main() {
 	// Initialize
 	value.Alloc(32)
 	errstr.Alloc(2048)
+	defer value.Free()
+	defer errstr.Free()
 	limitsGbl.Alloc(7, 2, 18) // Only 2 subs but allow full 18 digit value
+	defer limitsGbl.Free()
 	err = limitsGbl.Varnm.SetValStr(tptoken, &errstr, "^limits")
 	if checkErrorReturn(err) {
 		return
 	}
 	resultGbl.Alloc(7, 0, 0)
+	defer resultGbl.Free()
 	err = resultGbl.Varnm.SetValStr(tptoken, &errstr, "^result")
 	if checkErrorReturn(err) {
 		return
@@ -148,6 +152,7 @@ func main() {
 		return
 	}
 	highestGbl.Alloc(8, 0, 0)
+	defer highestGbl.Free()
 	err = highestGbl.Varnm.SetValStr(tptoken, &errstr, "^highest")
 	if checkErrorReturn(err) {
 		return
@@ -157,6 +162,7 @@ func main() {
 		return
 	}
 	updatesGbl.Alloc(8, 0, 0)
+	defer updatesGbl.Free()
 	err = updatesGbl.Varnm.SetValStr(tptoken, &errstr, "^updates")
 	if checkErrorReturn(err) {
 		return
@@ -166,6 +172,7 @@ func main() {
 		return
 	}
 	readsGbl.Alloc(6, 0, 0)
+	defer readsGbl.Free()
 	err = readsGbl.Varnm.SetValStr(tptoken, &errstr, "^reads")
 	if checkErrorReturn(err) {
 		return
@@ -175,6 +182,7 @@ func main() {
 		return
 	}
 	stepGbl.Alloc(5, 1, 18)
+	defer stepGbl.Free()
 	err = stepGbl.Varnm.SetValStr(tptoken, &errstr, "^step")
 	if checkErrorReturn(err) {
 		return
@@ -407,23 +415,28 @@ func doblk(index int64) {
 
 	debugPrint(fmt.Sprintf("Entering doblk() (goroutine # %d) - now released", index))
 	errstr.Alloc(2048)
+	defer errstr.Free()
 	// Have to create new data access structs for this goroutine so we don't collide with others
 	readsGbl.Alloc(6, 0, 0)
+	defer readsGbl.Free()
 	err = readsGbl.Varnm.SetValStr(tptoken, &errstr, "^reads")
 	if checkErrorReturn(err) {
 		return
 	}
 	updatesGbl.Alloc(8, 0, 0)
+	defer updatesGbl.Free()
 	err = updatesGbl.Varnm.SetValStr(tptoken, &errstr, "^updates")
 	if checkErrorReturn(err) {
 		return
 	}
 	highestGbl.Alloc(8, 0, 0)
+	defer highestGbl.Free()
 	err = highestGbl.Varnm.SetValStr(tptoken, &errstr, "^highest")
 	if checkErrorReturn(err) {
 		return
 	}
 	limitsGbl.Alloc(7, 2, 18) // Only 2 subs but allow full 18 digit value
+	defer limitsGbl.Free()
 	err = limitsGbl.Varnm.SetValStr(tptoken, &errstr, "^limits")
 	if checkErrorReturn(err) {
 		return
@@ -434,6 +447,7 @@ func doblk(index int64) {
 		return
 	}
 	stepGbl.Alloc(5, 1, 18)
+	defer stepGbl.Free()
 	err = stepGbl.Varnm.SetValStr(tptoken, &errstr, "^step")
 	if checkErrorReturn(err) {
 		return
@@ -443,6 +457,7 @@ func doblk(index int64) {
 		return
 	}
 	resultGbl.Alloc(7, 0, 0)
+	defer resultGbl.Free()
 	err = resultGbl.Varnm.SetValStr(tptoken, &errstr, "^result")
 	if checkErrorReturn(err) {
 		return
@@ -452,6 +467,7 @@ func doblk(index int64) {
 	// becomes fully threaded in the future. Create the subscript value before creating the keys.
 	subscr := fmt.Sprintf("%d", index) // Create anti-collide subscr for this goroutine
 	readsLcl.Alloc(6, 1, 18)
+	defer readsLcl.Free()
 	err = readsLcl.Varnm.SetValStr(tptoken, &errstr, "reads")
 	if checkErrorReturn(err) {
 		return
@@ -465,6 +481,7 @@ func doblk(index int64) {
 		return
 	}
 	updatesLcl.Alloc(8, 1, 18)
+	defer updatesLcl.Free()
 	err = updatesLcl.Varnm.SetValStr(tptoken, &errstr, "updates")
 	if checkErrorReturn(err) {
 		return
@@ -478,6 +495,7 @@ func doblk(index int64) {
 		return
 	}
 	highestLcl.Alloc(8, 1, 18)
+	defer highestLcl.Free()
 	err = highestLcl.Varnm.SetValStr(tptoken, &errstr, "highest")
 	if checkErrorReturn(err) {
 		return
@@ -491,6 +509,7 @@ func doblk(index int64) {
 		return
 	}
 	currpathLcl.Alloc(8, 2, 18)
+	defer currpathLcl.Free()
 	err = currpathLcl.Varnm.SetValStr(tptoken, &errstr, "currpath")
 	if checkErrorReturn(err) {
 		return
@@ -504,6 +523,8 @@ func doblk(index int64) {
 	// Allocate values keys
 	value.Alloc(32)
 	value2.Alloc(32)
+	defer value.Free()
+	defer value2.Free()
 	// Initialize local reads, updates, and highest to zero.
 	err = value.SetValStr(tptoken, &errstr, "0")
 	if checkErrorReturn(err) {
