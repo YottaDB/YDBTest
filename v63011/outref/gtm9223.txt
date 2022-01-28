@@ -1,0 +1,33 @@
+----------------------------------------------------------------------------
+# Test that opening a PIPE device does not close any open TLS socket devices
+----------------------------------------------------------------------------
+# Create database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Run [yottadb -run gtm9223 $portno]
+# Job off the client side of the socket
+# Run the server side of the socket in the current process.
+# server : Open listening socket
+# server : Establish connection with client
+# server : Convert non-TLS socket to a TLS socket
+# server : Wait for child to reach the point where it has opened the pipe device
+# server : Now that pipe device has been opened in the child start reading data that child writes to TLS socket
+# server : Display Client device info read from client
+# server : Key things to observe in client info below are SOCKET[0], CONNECTED and TLS keywords
+# server : This used to not show up in GT.M V6.3-010 (before GTM-9223 was fixed in GT.M V6.3-011)
+####### Client device info ########
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+pipedevice OPEN PIPE COMMAND="yes" READ 
+socket OPEN SOCKET TOTAL=1 CURRENT=0 
+##TEST_AWK        SOCKET\[0\]=h[0-9]+ DESC=[0-9]+ CONNECTED ACTIVE  NOTRAP  REMOTE=[^@]+@[0-9]+ LOCAL=[^@]+@[0-9]+ 
+##TEST_AWK                ZDELAY  ZBFSIZE=1024 ZIBFSIZE=[1-9][0-9]* TLS 
+                DELIMITER $C(13) 
+# Wait for client pid to terminate before returning from server
+# Run dbcheck.csh at end
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
