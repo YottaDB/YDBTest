@@ -114,7 +114,7 @@ if (-X lsb_release) then
 	setenv gtm_test_linux_version `lsb_release -sr`
 else if (-f /etc/os-release) then
 	setenv gtm_test_linux_distrib `grep -w ID /etc/os-release | cut -d= -f2 | cut -d'"' -f2`
-	setenv gtm_test_linux_version `grep -w VERSION_ID /etc/os-release | tr -d \" | cut -d= -f2`
+	setenv gtm_test_linux_version `grep -w VERSION_ID /etc/os-release | tr -d '"' | cut -d= -f2`
 else
 	setenv gtm_test_linux_distrib ""
 	setenv gtm_test_linux_version ""
