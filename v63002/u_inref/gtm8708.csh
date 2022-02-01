@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -35,6 +35,13 @@ if ($status) then
 endif
 
 $MSR START INST1 INST2
+get_msrtime
+
+echo "# Wait for update process to write history record as otherwise it could disturb CAT gvstat that we later verify in gtm8708.m"
+echo "# This is because the update process (which is running concurrently in the background) could grab the critical section"
+echo "# in case this is a supplementary instance (search for grab_crit() in sr_port/updproc.c) to write an EPOCH with the"
+echo "# new stream sequence number. And that could bump the CAT gvstat value while inside gtm8708.m signaling a false failure."
+$MSR RUN INST2 '$gtm_tst/com/wait_for_log.csh -log RCVR_'${time_msr}'.log.updproc -message "New History Content"'
 
 $MSR RUN INST2 '$ydb_dist/mumps -run gtm8708'
 

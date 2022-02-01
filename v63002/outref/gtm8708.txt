@@ -7,6 +7,11 @@
 ==Executing MULTISITE_REPLIC 'START INST1 INST2'==
 Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+# Wait for update process to write history record as otherwise it could disturb CAT gvstat that we later verify in gtm8708.m
+# This is because the update process (which is running concurrently in the background) could grab the critical section
+# in case this is a supplementary instance (search for grab_crit() in sr_port/updproc.c) to write an EPOCH with the
+# new stream sequence number. And that could bump the CAT gvstat value while inside gtm8708.m signaling a false failure.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/wait_for_log.csh -log ##FILTERED##RCVR_##TIMESTAMP##.log.updproc -message "New History Content"'==
 ==Executing MULTISITE_REPLIC 'RUN INST2 $ydb_dist/mumps -run gtm8708'==
 Since one needs crit to attempt an epoch, CAT gvstat (# of crit acquired total successes) is a good test of this
 Record CAT gvstat (# of crit acquired total successes) at start
