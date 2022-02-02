@@ -27,13 +27,14 @@
 # ydb758 [bdw]           Test that %PEEKBYNAME("node_local.max_procs",<region>) works correctly
 # ydb557 [nars]          Test that Naked indicator is maintained correctly when $SELECT is used in boolean expression
 # ydb840 [nars]          Test that $ZATRANSFORM when first argument is an undefined variable does not SIG-11
+# ydb781 [sam,ksbhaskar] ^%RSEL/^%RD include routines in shared library files
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r134 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "ydb757 ydb775 ydb782 ydb772 ydb785 ydb734 ydb828 ydb831 ydb555 ydb546 ydb758 ydb557 ydb840"
+setenv subtest_list_non_replic "ydb757 ydb775 ydb782 ydb772 ydb785 ydb734 ydb828 ydb831 ydb555 ydb546 ydb758 ydb557 ydb840 ydb781"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then

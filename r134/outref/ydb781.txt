@@ -1,0 +1,277 @@
+
+------------------------------------------------------------
+# ^%RSEL/^%RD now include routines in shared library files
+# Previously they did not
+
+# Creating a bunch of routines: a,ab,b,ca,cb,t,rtn1,zz,%TU
+# %TU is there to sort in between the files in libyottadbutil.so
+# Compiling routines
+# Linking the a,ab,b routines into a shared library
+# Removing the sources and objects for a,ab,b
+# Setting gtmroutines to .(./rtns .) shlib.so ##SOURCE_PATH##/libgtmutil.so or ##SOURCE_PATH##/libyottadbutil.so
+# ^%RD (sources)
+
+YDB>
+
+Routine directory
+Routine: 
+%TU       ca        cb        rtn1      t         zz        
+Total of 6 routines.
+
+YDB>
+
+# OBJ^%RD (objects)
+
+YDB>
+
+Routine directory
+Routine: 
+%CONVBASEUTIL       %D        %DATE     %DH       %DO       %DSEWRAP  %DUMPFHEAD          
+%EXP      %FL       %FREECNT  %G        %GBLDEF   %GC       %GCE      %GD       
+%GED      %GI       %GO       %GSE      %GSEL     %H        %HD       %HEX2UTF  
+%HO       %LCASE    %LCLCOL   %MPIECE   %OD       %OH       %PATCODE  %PEEKBYNAME         
+%RANDSTR  %RCE      %RD       %RI       %RO       %RSE      %RSEL     %SQROOT   
+%T        %TI       %TO       %TRIM     %TU       %UCASE    %UTF2HEX  %XCMD     
+%YDBENV   %YDBPROCSTUCKEXEC   %YGBLSTAT %ZSHOWVTOLCL        DECOMMENT GDE       
+GDEADD    GDECHANG  GDEDELET  GDEEXIT   GDEGET    GDEHELP   GDEINIT   GDELOCKS  
+GDELOG    GDEMAP    GDEMSGIN  GDEPARSE  GDEPUT    GDEQUIT   GDERENAM  GDESCAN   
+GDESETGD  GDESHOW   GDESPAWN  GDETEMPL  GDEVERIF  GTMDEFINEDTYPESTODB GTMDefinedTypesInitDebug      
+GTMDefinedTypesInitRelease    GTMHELP   GTMHLPLD  GTMTHREADGBLASM     SCANTYPEDEFS        
+a         ab        b         ca        cb        rtn1      t         zz        
+Total of 89 routines.
+
+YDB>
+
+# OBJ^%RD (objects range a:d)
+
+YDB>
+
+Routine directory
+Routine: 
+a         ab        b         ca        cb        
+Total of 5 routines.
+
+Routine: 
+
+# OBJ^%RD (multiple selections: a*, b*, r*)
+
+YDB>
+
+Routine directory
+Routine: 
+a         ab        
+Total of 2 routines.
+
+Routine: 
+b         
+Total of 1 routine.
+
+Routine: 
+rtn1      
+Total of 1 routine.
+
+Routine: 
+
+# DO SILENT^%RSEL("*","OBJ") ZWRITE %ZR
+%ZR=89
+##SUSPEND_OUTPUT UNICODE_MODE
+%ZR("%CONVBASEUTIL")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%D")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%DATE")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%DH")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%DO")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%DSEWRAP")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%DUMPFHEAD")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%EXP")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%FL")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%FREECNT")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%G")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%GBLDEF")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%GC")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%GCE")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%GD")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%GED")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%GI")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%GO")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%GSE")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%GSEL")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%H")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%HD")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%HEX2UTF")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%HO")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%LCASE")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%LCLCOL")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%MPIECE")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%OD")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%OH")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%PATCODE")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%PEEKBYNAME")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%RANDSTR")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%RCE")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%RD")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%RI")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%RO")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%RSE")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%RSEL")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%SQROOT")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%T")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%TI")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%TO")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%TRIM")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%TU")="##TEST_PATH##/"
+%ZR("%UCASE")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%UTF2HEX")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%XCMD")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%YDBENV")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%YDBPROCSTUCKEXEC")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%YGBLSTAT")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%ZSHOWVTOLCL")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("DECOMMENT")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("GDE")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("GDEADD")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("GDECHANG")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("GDEDELET")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("GDEEXIT")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("GDEGET")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("GDEHELP")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("GDEINIT")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("GDELOCKS")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("GDELOG")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("GDEMAP")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("GDEMSGIN")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("GDEPARSE")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("GDEPUT")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("GDEQUIT")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("GDERENAM")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("GDESCAN")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("GDESETGD")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("GDESHOW")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("GDESPAWN")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("GDETEMPL")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("GDEVERIF")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("GTMDEFINEDTYPESTODB")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("GTMDefinedTypesInitDebug")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("GTMDefinedTypesInitRelease")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("GTMHELP")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("GTMHLPLD")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("GTMTHREADGBLASM")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("SCANTYPEDEFS")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+##ALLOW_OUTPUT UNICODE_MODE
+##SUSPEND_OUTPUT NONUNICODE_MODE
+%ZR("%CONVBASEUTIL")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%D")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%DATE")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%DH")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%DO")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%DSEWRAP")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%DUMPFHEAD")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%EXP")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%FL")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%FREECNT")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%G")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%GBLDEF")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%GC")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%GCE")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%GD")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%GED")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%GI")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%GO")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%GSE")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%GSEL")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%H")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%HD")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%HEX2UTF")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%HO")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%LCASE")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%LCLCOL")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%MPIECE")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%OD")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%OH")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%PATCODE")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%PEEKBYNAME")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%RANDSTR")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%RCE")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%RD")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%RI")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%RO")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%RSE")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%RSEL")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%SQROOT")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%T")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%TI")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%TO")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%TRIM")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%TU")="##TEST_PATH##/"
+%ZR("%UCASE")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%UTF2HEX")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%XCMD")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%YDBENV")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%YDBPROCSTUCKEXEC")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%YGBLSTAT")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%ZSHOWVTOLCL")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("DECOMMENT")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("GDE")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("GDEADD")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("GDECHANG")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("GDEDELET")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("GDEEXIT")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("GDEGET")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("GDEHELP")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("GDEINIT")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("GDELOCKS")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("GDELOG")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("GDEMAP")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("GDEMSGIN")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("GDEPARSE")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("GDEPUT")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("GDEQUIT")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("GDERENAM")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("GDESCAN")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("GDESETGD")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("GDESHOW")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("GDESPAWN")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("GDETEMPL")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("GDEVERIF")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("GTMDEFINEDTYPESTODB")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("GTMDefinedTypesInitDebug")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("GTMDefinedTypesInitRelease")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("GTMHELP")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("GTMHLPLD")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("GTMTHREADGBLASM")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("SCANTYPEDEFS")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+##ALLOW_OUTPUT NONUNICODE_MODE
+%ZR("a")="##TEST_PATH##/shlib##TEST_SHL_SUFFIX##"
+%ZR("ab")="##TEST_PATH##/shlib##TEST_SHL_SUFFIX##"
+%ZR("b")="##TEST_PATH##/shlib##TEST_SHL_SUFFIX##"
+%ZR("ca")="##TEST_PATH##/"
+%ZR("cb")="##TEST_PATH##/"
+%ZR("rtn1")="##TEST_PATH##/"
+%ZR("t")="##TEST_PATH##/"
+%ZR("zz")="##TEST_PATH##/"
+
+# Test that ? syntax works: GDE???
+
+YDB>
+
+Routine directory
+Routine: 
+GDEADD    GDEGET    GDELOG    GDEMAP    GDEPUT    
+Total of 5 routines.
+
+Routine: 
+
+# Test that %RSEL with VIEW "NEVERNULLSUBS" does not fail
+
+YDB>
+
+Routine directory
+Routine: 
+DECOMMENT GDE       GDEADD    GDECHANG  GDEDELET  GDEEXIT   GDEGET    GDEHELP   
+GDEINIT   GDELOCKS  GDELOG    GDEMAP    GDEMSGIN  GDEPARSE  GDEPUT    GDEQUIT   
+GDERENAM  GDESCAN   GDESETGD  GDESHOW   GDESPAWN  GDETEMPL  GDEVERIF  GTMDEFINEDTYPESTODB 
+GTMDefinedTypesInitDebug      GTMDefinedTypesInitRelease    GTMHELP   GTMHLPLD  
+GTMTHREADGBLASM     SCANTYPEDEFS        a         ab        b         ca        
+cb        rtn1      t         zz        
+Total of 38 routines.
+
+Routine: 
