@@ -1,0 +1,28 @@
+# --------------------------------------------------------------------------------------------
+# Test that DSE DUMP -ZWR (or -GLO) does not dump garbled records when max record size is small
+# --------------------------------------------------------------------------------------------
+# Create database with max-key-size=1019 and max-record-size=1
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Set ^x(sub) where sub is of length 1, 8, 9 and 1014 (max-possible-before-GVSUBOFLOW-error)
+# Try dumping the ^x nodes using DSE DUMP -ZWR
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+DSE> DSE> 
+4 ZWR records written.
+
+DSE> # Dump contents of file ZWR.txt. Verify subscripts of length 9 and 1014 do show up fine
+##TEST_AWK; DSE EXTRACT( UTF-8|)
+; ZWR
+^x("s")="1"
+^x("ssssssss")="1"
+^x("sssssssss")="1"
+^x("ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss")="1"
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
