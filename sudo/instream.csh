@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2019-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -24,8 +24,9 @@
 # gtm9116		[bdw]		Test that ydbinstall.sh installs libyottadb.so with 755 permissions irrespective of what umask is set to
 # plugins		[bdw]		Test that ydbinstall.sh installs various plugin combinations without errors
 # pluginsonly		[bdw]		Test that --plugins-only installs various plugin combinations without errors
+# ydb783 [sam]           Set $ZROUTINES to $ydb_dist/utf8/libyottadbutil.so if ydb_chset=UTF-8 and ydb_routines is not set
 #
-setenv subtest_list_common "sourceInstall diffDir ydb306 gtm9116 plugins pluginsonly"
+setenv subtest_list_common "sourceInstall diffDir ydb306 gtm9116 plugins pluginsonly ydb783"
 setenv subtest_list_non_replic ""
 setenv subtest_list_non_replic "$subtest_list_non_replic"
 setenv subtest_list_replic ""
