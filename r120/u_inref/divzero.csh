@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -35,9 +35,9 @@ foreach sign ("" "-")	# loop to go through positive and negative numbers
 			# Below cases do not test any fix specifically, but covers integer division possibilities too
 			echo "# Testing : 1\(($num*0)/$num)"
 			$gtm_exe/mumps -run %XCMD 'set x='$num' write 1\((x*0)/x)'
-			echo "# Testing : 1/(($num*0)\$num)"
+			echo "# Testing : 1/(($num*0)\\$num)"
 			$gtm_exe/mumps -run %XCMD 'set x='$num' write 1/((x*0)\x)'
-			echo "# Testing : 1\(($num*0)\$num)"
+			echo "# Testing : 1\(($num*0)\\$num)"
 			$gtm_exe/mumps -run %XCMD 'set x='$num' write 1\((x*0)\x)'
 			@ exp = $exp + 1
 		end

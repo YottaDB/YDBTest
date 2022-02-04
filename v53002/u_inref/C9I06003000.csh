@@ -4,7 +4,7 @@
 # Copyright (c) 2008-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -75,7 +75,7 @@ cat << COMMENT
 COMMENT
 
 $MUPIP journal -extract -noverify -detail -forward -fences=none a.mjl
-set record = `$grep 0x00200000 a.mjf`
+set record = `$grep 0x00200000 a.mjf | sed 's/\\/\\\\/g'`
 if ("SET" != `echo "$record" | $tst_awk '{print $4}'`) then
 	echo "TEST-E-JNLRECORD. SET record expected at 0x00200000 but found the below instead"
 	echo "$record"
