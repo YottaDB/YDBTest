@@ -1,6 +1,11 @@
 # Tests that $zroutines defaults to $ydb_dist/libyottadbutil##TEST_SHL_SUFFIX## when ydb_routines/gtmroutines is not defined
 
 YDB>
+##SUSPEND_OUTPUT UNICODE_MODE
 $ZROUTINES="##SOURCE_REALPATH##/libyottadbutil##TEST_SHL_SUFFIX##"
+##ALLOW_OUTPUT UNICODE_MODE
+##SUSPEND_OUTPUT NONUNICODE_MODE
+$ZROUTINES="##SOURCE_REALPATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+##ALLOW_OUTPUT NONUNICODE_MODE
 
 YDB>

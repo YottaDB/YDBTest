@@ -4,7 +4,12 @@ Test that ydb_dist is expanded in zroutines if ydb_routines and gtmroutines are 
  -> unsetenv ydb_routines gtmroutines
  -> $zroutines output follows
 YDB>
+##SUSPEND_OUTPUT UNICODE_MODE
 ##SOURCE_REALPATH##/libyottadbutil##TEST_SHL_SUFFIX##
+##ALLOW_OUTPUT UNICODE_MODE
+##SUSPEND_OUTPUT NONUNICODE_MODE
+##SOURCE_REALPATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##
+##ALLOW_OUTPUT NONUNICODE_MODE
 YDB>
 ------------------------------------------------------------------------------------------------------
 Test that an error is issued if environment variables don't point to a valid directory

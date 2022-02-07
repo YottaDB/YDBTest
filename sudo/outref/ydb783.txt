@@ -11,13 +11,13 @@
 setenv gtm_chset M
 unset echo
 
-# gtm_chset='M' but install does not have UTF-8 folder
+# ydb_chset/gtm_chset='M' but install does not have UTF-8 folder
 
 YDB>
 ##TEST_PATH##/YDBM/libyottadbutil.so
 YDB>
 
-# gtm_chset='M' and install has UTF-8 folder
+# ydb_chset/gtm_chset='M' and install has UTF-8 folder
 
 YDB>
 ##TEST_PATH##/YDBUTF8/libyottadbutil.so
@@ -25,20 +25,20 @@ YDB>
 setenv gtm_chset UTF-8
 unset echo
 
-# gtm_chset='UTF-8' but install does not have UTF-8 folder
+# ydb_chset/gtm_chset='UTF-8' but install does not have UTF-8 folder
 
 YDB>
 %YDB-E-UTF8NOTINSTALLED, $ydb_dist does not have utf8 folder installed. Please use M mode or re-install YottaDB with UTF-8 support
 
 YDB>
 
-# gtm_chset='UTF-8' and install has UTF-8 folder
+# ydb_chset/gtm_chset='UTF-8' and install has UTF-8 folder
 
 YDB>
 ##TEST_PATH##/YDBUTF8/utf8/libyottadbutil.so
 YDB>
 
-# gtm_chset='UTF-8' and install has UTF-8 folder, but only .o files not libyottadbutil.so
+# ydb_chset/gtm_chset='UTF-8' and install has UTF-8 folder, but only .o files not libyottadbutil.so
 
 YDB>
 ##TEST_PATH##/YDBUTF8NOSO/utf8/(##TEST_PATH##/YDBUTF8NOSO/utf8/)

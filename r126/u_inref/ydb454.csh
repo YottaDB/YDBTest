@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh
 #################################################################
 #								#
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -36,6 +36,10 @@ echo 'write $zroutines' | ./mumps -direct
 echo -n '\n$zroutines when $ydb_routines and $gtmroutines are unset, and $ydb_dist/libyottadbutil.so does not exist'
 chmod +w libyottadbutil.so
 mv libyottadbutil.so libyottadbutil.so.changed
+if ( -d ./utf8 ) then
+	chmod -R +w ./utf8
+	mv ./utf8/libyottadbutil.so utf8/libyottadbutil.so.changed
+endif
 echo 'write $zroutines' | ./mumps -direct
 
 # clean up the isntall directory since the files are owned by root
