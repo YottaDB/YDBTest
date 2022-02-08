@@ -1039,6 +1039,20 @@ YDB>
 
 YDB>
 
+------------------------------------------------------------
+# Test $ZAHANDLE of undefined lvn when VIEW NOUNDEF is enabled does not SIG-11
+# This used to previously (before YDB@c79a3dee) fail with a SIG-11
+# Trying out [view "noundef" set res=$zahandle(x(1)) zwrite res] : Expecting empty string as the value of "res"
+------------------------------------------------------------
+# Try ydb828zahandlenoundef.m using [yottadb -direct]
+
+YDB>
+res=""
+
+YDB>
+# Try ydb828zahandlenoundef.m using [yottadb -run]
+res=""
+
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

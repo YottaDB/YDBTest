@@ -442,4 +442,18 @@ echo "# Try $base.m using [yottadb -run]"
 $ydb_dist/yottadb -run $base
 
 echo ""
+set str = 'view "noundef" set res=$zahandle(x(1)) zwrite res'
+echo "------------------------------------------------------------"
+echo '# Test $ZAHANDLE of undefined lvn when VIEW NOUNDEF is enabled does not SIG-11'
+echo '# This used to previously (before YDB@c79a3dee) fail with a SIG-11'
+echo '# Trying out ['$str'] : Expecting empty string as the value of "res"'
+echo "------------------------------------------------------------"
+set base = "ydb828zahandlenoundef"
+echo ' '$str > $base.m
+echo "# Try $base.m using [yottadb -direct]"
+cat $base.m | $ydb_dist/yottadb -direct
+echo "# Try $base.m using [yottadb -run]"
+$ydb_dist/yottadb -run $base
+
+echo ""
 $gtm_tst/com/dbcheck.csh
