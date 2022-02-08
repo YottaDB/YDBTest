@@ -1,0 +1,89 @@
+# ------------------------------------------------------------------------------------------------
+# Test LKE SHOW output is not garbled for long subscripts and not truncated for lots of subscripts
+# ------------------------------------------------------------------------------------------------
+# Create database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+## ------------------------------------------------------------------------
+## test1 : Test that LKE SHOW output is not garbled if subscripts are close to 255 bytes long
+## In the below output, a255 implies a sequence of 255 consecutive characters "a" etc.
+## ------------------------------------------------------------------------
+### Run [lock x(x,"dummy") where subscript [x] is of length 249]
+### Run [lke show]. Expect no garbled output
+x("a249","dummy") Owned by PID= PID which is an existing process
+### Run [lock x(x,"dummy") where subscript [x] is of length 250]
+### Run [lke show]. Expect no garbled output
+x("a250","dummy") Owned by PID= PID which is an existing process
+### Run [lock x(x,"dummy") where subscript [x] is of length 251]
+### Run [lke show]. Expect no garbled output
+x("a251","dummy") Owned by PID= PID which is an existing process
+### Run [lock x(x,"dummy") where subscript [x] is of length 252]
+### Run [lke show]. Expect no garbled output
+x("a252","dummy") Owned by PID= PID which is an existing process
+### Run [lock x(x,"dummy") where subscript [x] is of length 253]
+### Run [lke show]. Expect no garbled output
+x("a253","dummy") Owned by PID= PID which is an existing process
+### Run [lock x(x,"dummy") where subscript [x] is of length 254]
+### Run [lke show]. Expect no garbled output
+x("a254","dummy") Owned by PID= PID which is an existing process
+### Run [lock x(x,"dummy") where subscript [x] is of length 255]
+### Run [lke show]. Expect no garbled output
+x("a255","dummy") Owned by PID= PID which is an existing process
+### Run [lock x(x,"dummy") where subscript [x] is of length 256]
+$ZSTATUS="150382618,test1+9^ydb845,%YDB-E-LOCKSUB2LONG, Following subscript is 256 bytes long which exceeds 255 byte limit.,%YDB-I-TEXT, a256"
+## ------------------------------------------------------------------------
+## test2 : Test that LKE SHOW output is not truncated for up to 30 ASCII subscripts each 255 bytes long
+## In the below output, a255 implies a sequence of 255 consecutive characters "a"
+## ------------------------------------------------------------------------
+x("a255","a255") Owned by PID= PID which is an existing process
+x("a255","a255","a255") Owned by PID= PID which is an existing process
+x("a255","a255","a255","a255") Owned by PID= PID which is an existing process
+x("a255","a255","a255","a255","a255") Owned by PID= PID which is an existing process
+x("a255","a255","a255","a255","a255","a255") Owned by PID= PID which is an existing process
+x("a255","a255","a255","a255","a255","a255","a255") Owned by PID= PID which is an existing process
+x("a255","a255","a255","a255","a255","a255","a255","a255") Owned by PID= PID which is an existing process
+x("a255","a255","a255","a255","a255","a255","a255","a255","a255") Owned by PID= PID which is an existing process
+x("a255","a255","a255","a255","a255","a255","a255","a255","a255","a255") Owned by PID= PID which is an existing process
+x("a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255") Owned by PID= PID which is an existing process
+x("a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255") Owned by PID= PID which is an existing process
+x("a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255") Owned by PID= PID which is an existing process
+x("a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255") Owned by PID= PID which is an existing process
+x("a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255") Owned by PID= PID which is an existing process
+x("a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255") Owned by PID= PID which is an existing process
+x("a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255") Owned by PID= PID which is an existing process
+x("a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255") Owned by PID= PID which is an existing process
+x("a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255") Owned by PID= PID which is an existing process
+x("a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255") Owned by PID= PID which is an existing process
+x("a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255") Owned by PID= PID which is an existing process
+x("a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255") Owned by PID= PID which is an existing process
+x("a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255") Owned by PID= PID which is an existing process
+x("a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255") Owned by PID= PID which is an existing process
+x("a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255") Owned by PID= PID which is an existing process
+x("a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255") Owned by PID= PID which is an existing process
+x("a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255") Owned by PID= PID which is an existing process
+x("a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255") Owned by PID= PID which is an existing process
+x("a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255") Owned by PID= PID which is an existing process
+x("a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255","a255") Owned by PID= PID which is an existing process
+## ----------------------------------------------------------------------------
+## test3 : Test that LKE SHOW output is not truncated for up to 30 non-ASCII subscripts each 255 bytes long
+## In the below output, X126Y is actually a sequence of 126 X followed by 1 Y where
+##       X=$c(128)_"a"_
+##       Y=$c(128)_"a"
+## Similarly, X84Y is actually a sequence of 84 X followed by 1 Y
+## ----------------------------------------------------------------------------
+##SUSPEND_OUTPUT UNICODE_MODE
+x(X126Y,X126Y,X126Y,X126Y,X126Y,X126Y,X126Y,X126Y,X126Y,X126Y,X126Y,X126Y,X126Y,X126Y,X126Y,X126Y,X126Y,X126Y,X126Y,X126Y,X126Y,X126Y)X126Y)X126Y)X126Y)X126Y)X126Y)X126Y)X126Y)X126Y) Owned by PID= PID which is an existing process
+##ALLOW_OUTPUT UNICODE_MODE
+##SUSPEND_OUTPUT NONUNICODE_MODE
+x(X84Y,X84Y,X84Y,X84Y,X84Y,X84Y,X84Y,X84Y,X84Y,X84Y,X84Y,X84Y,X84Y,X84Y,X84Y,X84Y,X84Y,X84Y,X84Y,X84Y,X84Y,X84Y,X84Y,X84Y,X84Y,X84Y,X84Y,X84Y,X84Y,X84Y) Owned by PID= PID which is an existing process
+##ALLOW_OUTPUT NONUNICODE_MODE
+## ------------------------------------------------------------------------
+## test4 : Test of %YDB-E-MAXNRSUBSCRIPTS in case LOCK command has more than 30 subscripts
+## ------------------------------------------------------------------------
+$ZSTATUS="150373282,test4+7^ydb845,%YDB-E-MAXNRSUBSCRIPTS, Maximum number of subscripts exceeded"
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

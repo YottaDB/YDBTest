@@ -29,6 +29,7 @@
 # ydb840 [nars]          Test that $ZATRANSFORM when first argument is an undefined variable does not SIG-11
 # ydb781 [sam,ksbhaskar] ^%RSEL/^%RD include routines in shared library files
 # ydb846 [nars]          Test that DSE DUMP -ZWR (or -GLO) does not dump garbled records
+# ydb845 [nars]          Test LKE SHOW output is not garbled for long subscripts and not truncated for lots of subscripts
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r134 test starts..."
@@ -36,7 +37,7 @@ echo "r134 test starts..."
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic "ydb757 ydb775 ydb782 ydb772 ydb785 ydb734 ydb828 ydb831 ydb555 ydb546 ydb758 ydb557 ydb840 ydb781"
-setenv subtest_list_non_replic "$subtest_list_non_replic ydb846"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb846 ydb845"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
