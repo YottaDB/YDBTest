@@ -4,7 +4,7 @@
 # Copyright (c) 2009-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -74,7 +74,7 @@ endif
 
 # Check various other utilities that are needed by specific tests
 # Better to issue an error at test submit time if the utility is not found instead of much later at test execution time.
-foreach utility (gawk sed lsof bc sort eu-elflint netstat nc strace cc gdb valgrind)
+foreach utility (gawk sed lsof bc sort eu-elflint netstat nc strace cc gdb valgrind expect)
 	if ( ($MACHTYPE =~ "armv*l") && ("valgrind" == $utility) ) then
 		# Skip the check for valgrind on 32-bit ARM because valgrind is not available on 32-bit ARM and
 		# thus tests that require valgrind are disabled on 32-bit ARM.
