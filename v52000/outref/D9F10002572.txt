@@ -295,9 +295,9 @@ i=0:x=ok1
 		At column 34, line 78, source module ##TEST_PATH##/test01.m
 %YDB-E-DEVPARINAP, Device parameter inappropriate to this command
 		set i=0,x="error1" close:"" "t.t":afoo  set x="ok1"
-		                                      ^-----
-		At column 40, line 80, source module ##TEST_PATH##/test01.m
-%YDB-E-DEVPARVALREQ, A value is required for this device parameter
+		                                  ^-----
+		At column 36, line 80, source module ##TEST_PATH##/test01.m
+%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
 		set i=0,x="error1" open:"" "t.t":(zzzzzz)  set x="ok1"
 		                                  ^-----
 		At column 36, line 82, source module ##TEST_PATH##/test01.m
@@ -599,9 +599,9 @@ i=0:x=ok1
 		At column 33, line 78, source module ##TEST_PATH##/test02.m
 %YDB-E-DEVPARINAP, Device parameter inappropriate to this command
 		set i=0,x="error1" close:0 "t.t":afoo  set x="ok1"
-		                                     ^-----
-		At column 39, line 80, source module ##TEST_PATH##/test02.m
-%YDB-E-DEVPARVALREQ, A value is required for this device parameter
+		                                 ^-----
+		At column 35, line 80, source module ##TEST_PATH##/test02.m
+%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
 		set i=0,x="error1" open:0 "t.t":(zzzzzz)  set x="ok1"
 		                                 ^-----
 		At column 35, line 82, source module ##TEST_PATH##/test02.m
@@ -903,9 +903,9 @@ i=0:x=ok1
 		At column 33, line 78, source module ##TEST_PATH##/test03.m
 %YDB-E-DEVPARINAP, Device parameter inappropriate to this command
 		set i=0,x="error1" close:i "t.t":afoo  set x="ok1"
-		                                     ^-----
-		At column 39, line 80, source module ##TEST_PATH##/test03.m
-%YDB-E-DEVPARVALREQ, A value is required for this device parameter
+		                                 ^-----
+		At column 35, line 80, source module ##TEST_PATH##/test03.m
+%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
 		set i=0,x="error1" open:i "t.t":(zzzzzz)  set x="ok1"
 		                                 ^-----
 		At column 35, line 82, source module ##TEST_PATH##/test03.m
@@ -1204,9 +1204,9 @@ i=0:x=ok1
 		At column 34, line 78, source module ##TEST_PATH##/test11.m
 %YDB-E-DEVPARINAP, Device parameter inappropriate to this command
 		set i=1,x="error1" close:"" "t.t":afoo  set x="ok1"
-		                                      ^-----
-		At column 40, line 80, source module ##TEST_PATH##/test11.m
-%YDB-E-DEVPARVALREQ, A value is required for this device parameter
+		                                  ^-----
+		At column 36, line 80, source module ##TEST_PATH##/test11.m
+%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
 		set i=1,x="error1" open:"" "t.t":(zzzzzz)  set x="ok1"
 		                                  ^-----
 		At column 36, line 82, source module ##TEST_PATH##/test11.m
@@ -1508,9 +1508,9 @@ i=1:x=ok1
 		At column 33, line 78, source module ##TEST_PATH##/test12.m
 %YDB-E-DEVPARINAP, Device parameter inappropriate to this command
 		set i=1,x="error1" close:0 "t.t":afoo  set x="ok1"
-		                                     ^-----
-		At column 39, line 80, source module ##TEST_PATH##/test12.m
-%YDB-E-DEVPARVALREQ, A value is required for this device parameter
+		                                 ^-----
+		At column 35, line 80, source module ##TEST_PATH##/test12.m
+%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
 		set i=1,x="error1" open:0 "t.t":(zzzzzz)  set x="ok1"
 		                                 ^-----
 		At column 35, line 82, source module ##TEST_PATH##/test12.m
@@ -1812,9 +1812,9 @@ i=1:x=ok1
 		At column 33, line 78, source module ##TEST_PATH##/test13.m
 %YDB-E-DEVPARINAP, Device parameter inappropriate to this command
 		set i=1,x="error1" close:i "t.t":afoo  set x="ok1"
-		                                     ^-----
-		At column 39, line 80, source module ##TEST_PATH##/test13.m
-%YDB-E-DEVPARVALREQ, A value is required for this device parameter
+		                                 ^-----
+		At column 35, line 80, source module ##TEST_PATH##/test13.m
+%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
 		set i=1,x="error1" open:i "t.t":(zzzzzz)  set x="ok1"
 		                                 ^-----
 		At column 35, line 82, source module ##TEST_PATH##/test13.m
@@ -1951,7 +1951,7 @@ ZSTATUS=test13+75^test13,%YDB-E-DEVPARINAP, Device parameter inappropriate to th
 i=1:x=error1
 ZSTATUS=test13+77^test13,%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
 i=1:x=error1
-ZSTATUS=test13+79^test13,%YDB-E-DEVPARVALREQ, A value is required for this device parameter
+ZSTATUS=test13+79^test13,%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
 i=1:x=error1
 ZSTATUS=test13+81^test13,%YDB-E-DEVPARUNK, Deviceparameter unknown
 i=1:x=error1
