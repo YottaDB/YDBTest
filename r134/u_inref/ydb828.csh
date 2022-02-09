@@ -456,4 +456,17 @@ echo "# Try $base.m using [yottadb -run]"
 $ydb_dist/yottadb -run $base
 
 echo ""
+set str = 'close c:aftert="ping"'
+echo "------------------------------------------------------------"
+echo '# Test CLOSE C:AFTER=... does not SIG-11 (used to before YDB@2c1bb3b7)'
+echo '# Trying out ['$str'] : Expecting no SIG-11 but a %YDB-E-DEVPARINAP error'
+echo "------------------------------------------------------------"
+set base = "ydb828closeafter"
+echo ' '$str > $base.m
+echo "# Try $base.m using [yottadb -direct]"
+cat $base.m | $ydb_dist/yottadb -direct
+echo "# Try $base.m using [yottadb -run]"
+$ydb_dist/yottadb -run $base
+
+echo ""
 $gtm_tst/com/dbcheck.csh

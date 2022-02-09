@@ -1053,6 +1053,26 @@ YDB>
 # Try ydb828zahandlenoundef.m using [yottadb -run]
 res=""
 
+------------------------------------------------------------
+# Test CLOSE C:AFTER=... does not SIG-11 (used to before YDB@2c1bb3b7)
+# Trying out [close c:aftert="ping"] : Expecting no SIG-11 but a %YDB-E-DEVPARINAP error
+------------------------------------------------------------
+# Try ydb828closeafter.m using [yottadb -direct]
+
+YDB>
+%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
+
+YDB>
+# Try ydb828closeafter.m using [yottadb -run]
+	 close c:aftert="ping"
+	         ^-----
+		At column 10, line 1, source module ##TEST_PATH##/ydb828closeafter.m
+%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
+%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
+		At M source location +1^ydb828closeafter
+
+YDB>
+
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
