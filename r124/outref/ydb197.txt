@@ -14,14 +14,14 @@ gtmgbldir: d
 ----------------------------------------------------
 # Run ydb_env_set
 # Now test to see that ydb_routines/gtmroutines are original values with some additions at the end
-##SUSPEND_OUTPUT CHSET_UTF8 CHSET_UNDEF
+##SUSPEND_OUTPUT CHSET_UTF8
 ydb_routines: a ##SOURCE_REALPATH##/plugin/o/_ydbposix##TEST_SHL_SUFFIX## ##SOURCE_REALPATH##/libyottadbutil##TEST_SHL_SUFFIX##
 gtmroutines: a ##SOURCE_REALPATH##/plugin/o/_ydbposix##TEST_SHL_SUFFIX## ##SOURCE_REALPATH##/libyottadbutil##TEST_SHL_SUFFIX##
-##ALLOW_OUTPUT CHSET_UTF8 CHSET_UNDEF
-##SUSPEND_OUTPUT CHSET_M
+##ALLOW_OUTPUT CHSET_UTF8
+##SUSPEND_OUTPUT CHSET_M CHSET_UNDEF
 ydb_routines: a ##SOURCE_REALPATH##/plugin/o/utf8/_ydbposix##TEST_SHL_SUFFIX## ##SOURCE_REALPATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##
 gtmroutines: a ##SOURCE_REALPATH##/plugin/o/utf8/_ydbposix##TEST_SHL_SUFFIX## ##SOURCE_REALPATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##
-##ALLOW_OUTPUT CHSET_M
+##ALLOW_OUTPUT CHSET_M CHSET_UNDEF
 # Also test to see that gtmgbldir is set to same value as ydb_gbldir
 ydb_gbldir: mumps.gld
 gtmgbldir: mumps.gld
@@ -29,40 +29,40 @@ gtmgbldir: mumps.gld
 # Unset ydb_routines and ydb_gbldir; Set gtmroutines and gtmgbldir
 # Run ydb_env_set
 # Test that ydb_routines is set to be same as gtmroutines and ydb_gbldir is set to be same as gtmgbldir
-##SUSPEND_OUTPUT CHSET_UTF8 CHSET_UNDEF
+##SUSPEND_OUTPUT CHSET_UTF8
 ydb_routines: b ##SOURCE_REALPATH##/plugin/o/_ydbposix##TEST_SHL_SUFFIX## ##SOURCE_REALPATH##/libyottadbutil##TEST_SHL_SUFFIX##
 gtmroutines: b ##SOURCE_REALPATH##/plugin/o/_ydbposix##TEST_SHL_SUFFIX## ##SOURCE_REALPATH##/libyottadbutil##TEST_SHL_SUFFIX##
-##ALLOW_OUTPUT CHSET_UTF8 CHSET_UNDEF
-##SUSPEND_OUTPUT CHSET_M
+##ALLOW_OUTPUT CHSET_UTF8
+##SUSPEND_OUTPUT CHSET_M CHSET_UNDEF
 ydb_routines: b ##SOURCE_REALPATH##/plugin/o/utf8/_ydbposix##TEST_SHL_SUFFIX## ##SOURCE_REALPATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##
 gtmroutines: b ##SOURCE_REALPATH##/plugin/o/utf8/_ydbposix##TEST_SHL_SUFFIX## ##SOURCE_REALPATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##
-##ALLOW_OUTPUT CHSET_M
+##ALLOW_OUTPUT CHSET_M CHSET_UNDEF
 ydb_gbldir: mumps.gld
 gtmgbldir: mumps.gld
 ----------------------------------------------------
 # Unset gtmroutines and gtmgbldir; Set ydb_routines and ydb_gbldir
 # Run ydb_env_set
 # Test that gtmroutines is set to be same as ydb_routines and gtmgbldir is set to be same as ydb_gbldir
-##SUSPEND_OUTPUT CHSET_UTF8 CHSET_UNDEF
+##SUSPEND_OUTPUT CHSET_UTF8
 ydb_routines: a ##SOURCE_REALPATH##/plugin/o/_ydbposix##TEST_SHL_SUFFIX## ##SOURCE_REALPATH##/libyottadbutil##TEST_SHL_SUFFIX##
 gtmroutines: a ##SOURCE_REALPATH##/plugin/o/_ydbposix##TEST_SHL_SUFFIX## ##SOURCE_REALPATH##/libyottadbutil##TEST_SHL_SUFFIX##
-##ALLOW_OUTPUT CHSET_UTF8 CHSET_UNDEF
-##SUSPEND_OUTPUT CHSET_M
+##ALLOW_OUTPUT CHSET_UTF8
+##SUSPEND_OUTPUT CHSET_M CHSET_UNDEF
 ydb_routines: a ##SOURCE_REALPATH##/plugin/o/utf8/_ydbposix##TEST_SHL_SUFFIX## ##SOURCE_REALPATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##
 gtmroutines: a ##SOURCE_REALPATH##/plugin/o/utf8/_ydbposix##TEST_SHL_SUFFIX## ##SOURCE_REALPATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##
-##ALLOW_OUTPUT CHSET_M
+##ALLOW_OUTPUT CHSET_M CHSET_UNDEF
 ydb_gbldir: mumps.gld
 gtmgbldir: mumps.gld
 ----------------------------------------------------
 # Now test to see if unsetting both ydb_* and gtm* and sourcing ydb_env_set sets ydb_* and gtm* to the default values
-##SUSPEND_OUTPUT CHSET_UTF8 CHSET_UNDEF
+##SUSPEND_OUTPUT CHSET_UTF8
 ##TEST_AWKydb_routines: ##HOME_PATH##/.yottadb/r.*/o.*\(##HOME_PATH##/.yottadb/r.*/r ##HOME_PATH##/.yottadb/r\) ##SOURCE_REALPATH##/plugin/o/_ydbposix.so ##SOURCE_REALPATH##/libyottadbutil.so
 ##TEST_AWKgtmroutines: ##HOME_PATH##/.yottadb/r.*/o.*\(##HOME_PATH##/.yottadb/r.*/r ##HOME_PATH##/.yottadb/r\) ##SOURCE_REALPATH##/plugin/o/_ydbposix.so ##SOURCE_REALPATH##/libyottadbutil.so
-##ALLOW_OUTPUT CHSET_UTF8 CHSET_UNDEF
-##SUSPEND_OUTPUT CHSET_M
+##ALLOW_OUTPUT CHSET_UTF8
+##SUSPEND_OUTPUT CHSET_M CHSET_UNDEF
 ##TEST_AWKydb_routines: ##HOME_PATH##/.yottadb/r.*/o/utf8.*\(##HOME_PATH##/.yottadb/r.*/r ##HOME_PATH##/.yottadb/r\) ##SOURCE_REALPATH##/plugin/o/utf8/_ydbposix.so ##SOURCE_REALPATH##/utf8/libyottadbutil.so
 ##TEST_AWKgtmroutines: ##HOME_PATH##/.yottadb/r.*/o/utf8.*\(##HOME_PATH##/.yottadb/r.*/r ##HOME_PATH##/.yottadb/r\) ##SOURCE_REALPATH##/plugin/o/utf8/_ydbposix.so ##SOURCE_REALPATH##/utf8/libyottadbutil.so
-##ALLOW_OUTPUT CHSET_M
+##ALLOW_OUTPUT CHSET_M CHSET_UNDEF
 ##TEST_AWKydb_gbldir: ##HOME_PATH##/.yottadb/r.*/g/yottadb.gld
 ##TEST_AWKgtmgbldir: ##HOME_PATH##/.yottadb/r.*/g/yottadb.gld
 ----------------------------------------------------
@@ -76,12 +76,12 @@ gtm_retention=42
 ##TEST_AWKgtm_tmp=.*
 gtmdir=##HOME_PATH##/.fis-gtm
 ##TEST_AWKgtmgbldir=##HOME_PATH##/.yottadb/r.*/g/yottadb.gld
-##SUSPEND_OUTPUT CHSET_UTF8 CHSET_UNDEF
+##SUSPEND_OUTPUT CHSET_UTF8
 ##TEST_AWKgtmroutines=##HOME_PATH##/.yottadb/r.*/o.*\(##HOME_PATH##/.yottadb/r.*/r ##HOME_PATH##/.yottadb/r\) ##SOURCE_REALPATH##/plugin/o/_ydbposix.so ##SOURCE_REALPATH##/libyottadbutil.so
-##ALLOW_OUTPUT CHSET_UTF8 CHSET_UNDEF
-##SUSPEND_OUTPUT CHSET_M
+##ALLOW_OUTPUT CHSET_UTF8
+##SUSPEND_OUTPUT CHSET_M CHSET_UNDEF
 ##TEST_AWKgtmroutines=##HOME_PATH##/.yottadb/r.*/o/utf8.*\(##HOME_PATH##/.yottadb/r.*/r ##HOME_PATH##/.yottadb/r\) ##SOURCE_REALPATH##/plugin/o/utf8/_ydbposix.so ##SOURCE_REALPATH##/utf8/libyottadbutil.so
-##ALLOW_OUTPUT CHSET_M
+##ALLOW_OUTPUT CHSET_M CHSET_UNDEF
 ##TEST_AWKgtmver=.*
 ydb_dir=##HOME_PATH##/.yottadb
 ydb_dist=##SOURCE_REALPATH##
@@ -91,12 +91,12 @@ ydb_etrap=Write:(0=$STACK) "Error occurred: ",$ZStatus,!
 ##TEST_AWKydb_rel=r.*
 ##TEST_AWKydb_repl_instance=##HOME_PATH##/.yottadb/r.*/g/yottadb.repl
 ydb_retention=42
-##SUSPEND_OUTPUT CHSET_UTF8 CHSET_UNDEF
+##SUSPEND_OUTPUT CHSET_UTF8
 ##TEST_AWKydb_routines=##HOME_PATH##/.yottadb/r.*/o.*\(##HOME_PATH##/.yottadb/r.*/r ##HOME_PATH##/.yottadb/r\) ##SOURCE_REALPATH##/plugin/o/_ydbposix.so ##SOURCE_REALPATH##/libyottadbutil.so
-##ALLOW_OUTPUT CHSET_UTF8 CHSET_UNDEF
-##SUSPEND_OUTPUT CHSET_M
+##ALLOW_OUTPUT CHSET_UTF8
+##SUSPEND_OUTPUT CHSET_M CHSET_UNDEF
 ##TEST_AWKydb_routines=##HOME_PATH##/.yottadb/r.*/o/utf8.*\(##HOME_PATH##/.yottadb/r.*/r ##HOME_PATH##/.yottadb/r\) ##SOURCE_REALPATH##/plugin/o/utf8/_ydbposix.so ##SOURCE_REALPATH##/utf8/libyottadbutil.so
-##ALLOW_OUTPUT CHSET_M
+##ALLOW_OUTPUT CHSET_M CHSET_UNDEF
 ##TEST_AWKydb_tmp=.*
 ##TEST_AWKydb_unset_[0-9]*=.*
 ##SOURCE_PATH##/mupip
