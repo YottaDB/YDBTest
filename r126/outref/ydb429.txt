@@ -63,8 +63,8 @@ PASS
 # Test that ydb_env_set creates the database files at ydb_dir when it is set
 # Setting ydb_dir to nonexistent directory tmp and testing environment works
 
-# [YDB#661] Test 5a : Test that ydb_chset is set to UTF-8 by ydb_env_set by default
-$ydb_chset = UTF-8
+# [YDB#661] Test 5a : Test that ydb_chset is set to M by ydb_env_set by default
+$ydb_chset = M
 
 # Copying subtest basic/globals to test new environment
 
@@ -72,8 +72,8 @@ Test of access to MUMPS globals
 d  PASS
 i  PASS
 u  PASS
-##TEST_AWK# Checking tmp/.*/o/utf8 for the globals object file
-##TEST_AWKtmp/.*/o/utf8/globals.o
+# Checking for the globals object file
+globals.o
 PASS
 
 

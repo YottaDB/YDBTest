@@ -1,7 +1,7 @@
 #!/bin/sh
 #################################################################
 #								#
-# Copyright (c) 2019-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -124,7 +124,7 @@ testC() {
 
 	unset gtmgbldir # unset this so that ydb_env_set uses the database in .yottadb not from the test system
 	. $ydb_dist/ydb_env_set
-	cp $gtm_tst/basic/inref/globals.m .yottadb/r
+	cp $gtm_tst/basic/inref/globals.m .
 
 	echo "# Running subtest basic/globals to test that database is properly setup"
 	$ydb_dist/yottadb -run globals
@@ -182,6 +182,9 @@ testE() {
 	export ydb_dir=$(pwd)/tmp
 	unset gtm_chset # unset this so that globals.o always ends up in the same directory
 	unset gtmgbldir # unset this so that ydb_env_set ends up in the tmp dir
+	export gtmroutines="."	# gtmroutines could contain "utf8/" in it if the test started in UTF-8 mode.
+				# In that case, "ydb_env_set" would set ydb_chset to UTF-8 which would cause
+				# non-deterministic test output so set this env var to a value that does not contain "utf8/".
 	. $ydb_dist/ydb_env_set
 
 	ls tmp > /dev/null
@@ -191,15 +194,16 @@ testE() {
 	fi
 
 	echo ""
-	echo "# [YDB#661] Test 5a : Test that ydb_chset is set to UTF-8 by ydb_env_set by default"
+	echo "# [YDB#661] Test 5a : Test that ydb_chset is set to M by ydb_env_set by default"
 	echo '$ydb_chset = '$ydb_chset
 	echo ""
 	echo "# Copying subtest basic/globals to test new environment"
-	cp $gtm_tst/basic/inref/globals.m $ydb_dir/r
+	cp $gtm_tst/basic/inref/globals.m .
+	rm -f globals.o	# remove any pre-existing object file so we test where the .o file gets created below
 
 	$ydb_dist/yottadb -run globals
-	echo "# Checking tmp/$ydb_rel/o/utf8 for the globals object file"
-	ls tmp/$ydb_rel/o/utf8/globals.o
+	echo "# Checking for the globals object file"
+	ls globals.o
 	if [ $? -eq 0 ] ; then
 		echo "PASS"
 	else
