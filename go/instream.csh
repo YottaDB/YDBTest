@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -31,12 +31,13 @@
 # deadlock		[user, estess]	Test that purposely creates a deadlock situation to verify code does not let engine lock acquire
 # 			       		requests run when they shouldn't.
 # ydbgo34               [estess]        Test yottadb.RegisterSignalHandler() and yottadb.UnRegisterSignalHandler() functions.
+# ydbgo37		[@inetstar, estess]	Verify that yottadb.Exit() takes less than 5 seconds to exit (no hang!)
 #
 echo "go test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     "unit_tests threeenp1B1 threeenp1B2 randomWalk randomWalkSimple threeenp1C2"
-setenv subtest_list_non_replic "wordfreq pseudoBank CallMTRetLen fatal_signal tptimeout sigsegv tprestart deadlock ydbgo34"
+setenv subtest_list_non_replic "wordfreq pseudoBank CallMTRetLen fatal_signal tptimeout sigsegv tprestart deadlock ydbgo34 ydbgo37"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
@@ -61,6 +62,11 @@ endif
 if ($gtm_test_singlecpu) then
 	# disable the random walk tests on single core systems due to use of cgo in YDBGo (which creates 1 thread per goroutine)
 	setenv subtest_exclude_list "$subtest_exclude_list randomWalk randomWalkSimple"
+endif
+
+if ($gtm_test_singlecpu || ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) || ("HOST_LINUX_AARCH64" == $gtm_test_os_machtype)) then
+	# disable the ydbgo37 (timing) test on ARM or single CPU systems where timings are notoriously variable
+	setenv subtest_exclude_list "$subtest_exclude_list ydbgo37"
 endif
 
 # Submit the list of subtests
