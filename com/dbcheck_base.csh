@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -199,6 +199,14 @@ else
 	set error_free = `$tst_awk '/No errors detected by integ./ {count=count+1} END {print count}' tmp.mupip`
 	set no_regions = `$gtm_tst/com/get_reg_list.csh count`
 	if ("$arg1" != "") set no_regions=1
+	if ("$error_free" < "$no_regions") then
+		# The GLD says "$no_regions" regions exist. But MUPIP INTEG only found fewer regions ("$error_free" of them).
+		# It is possible the remaining regions are AUTODB (e.g. YDBAIM created by ydb_env_set).
+		# In that case, we do not want to fall through and issue a "regions does not match error in the "else" below.
+		# Therefore, we check how many "*.dat" files actually exist in the current directory and set that to be
+		# the total number of regions so that can then be compared against the MUPIP INTEG region count output.
+		@ no_regions = `ls -1 *.dat | wc -l`
+	endif
 	if ("$error_free" == "$no_regions") then
 		#if there are "No errors .." as many as the regions, it must be ok
 		echo "No errors detected by integ."
