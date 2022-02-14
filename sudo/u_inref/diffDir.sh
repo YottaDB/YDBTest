@@ -1,6 +1,6 @@
 #!/bin/sh
 #################################################################
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #								#
@@ -15,9 +15,10 @@
 cd /tmp
 /Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --overwrite-existing $4
 
-if [ 0 != $? ]; then
-	echo "ydbinstall returned a non-zero status: $?"
-	exit $?
+status=$?
+if [ 0 != $status ]; then
+	echo "ydbinstall returned a non-zero status: $status"
+	exit $status
 fi
 
 exit 0

@@ -1,7 +1,7 @@
 #!/bin/sh
 #################################################################
 #								#
-# Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2021-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -13,10 +13,11 @@
 
 /Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --overwrite-existing --user $USER $4 $5 > install.out
 
-if [ 0 != $? ]; then
-        echo "ydbinstall returned a non-zero status: $?"
+status=$?
+if [ 0 != $status ]; then
+        echo "ydbinstall returned a non-zero status: $status"
 	cat install.out
-        exit $?
+        exit $status
 else
 	echo "ydbinstall with options $5 was successful."
 fi
