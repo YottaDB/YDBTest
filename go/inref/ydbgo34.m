@@ -31,7 +31,8 @@ ydbgo34a
 	. ;else  if line?1"%YDB-"1(1"F-FORCEDHALT",1"I-CTRLC").E		; Comment until YDB#790
 	. ;else  if line?1"main: Exiting to avoid fatal panic".E		; Comment until YDB#790
 	. else  if line?1"main: Returning back to interrupt point".E
-	. ;else  if line?1"main: Allowing potentially fatal handler to run".E	; Comment until YDB#790
+	. else  if line?1"main: Driving yottadb.Exit".E
+	. else  if line?1"main: Allowing potentially fatal handler to run".E
 	. ;else  if line?1"workerBee: Caught panic for error".E	       		; Comment until YDB#790
 	. else  do
 	. . for i=2:1:$zlength($text(sigs),";") do

@@ -2,16 +2,12 @@
 # Building ydbgo34a
 ###################################################################
 # Running ydbgo34a 20 times to test yottadb.RegisterSignalNotify() - Any errors show below
-
-###################################################################
-# Rename any core file and/or fatal error files to hide them from the framework as they aren't
-# necessarily indicative of a problem
-
+#
 ###################################################################
 # Run ydbgo34b to test to test yottadb.UnRegisterSignalNotify(). This is done by sending a simple
 # signal 3 times: (1) no handler set, (2) set a handler, (3) unset that handler.
 # Building ydbgo34b
-Run ydbgo34b
+# Run ydbgo34b
 ydbgo34b begins
 
 ydbgo34b: Sending SIGCONT to ourselves after registering notification channel - should see notification msg
@@ -24,13 +20,27 @@ ydbgo34b: Complete
 ###################################################################
 # Run ydbgo34c to test passing an unsupported signal to yottadb.RegisterSignalNotify()
 # Building ydbgo34c
-Run ydbgo34c
-##TEST_AWKRecovering from panic - The specified signal \(.*\) is not supported for signal notification by yottadb.RegisterSignalNotify\(\)
-##TEST_AWKRecovering from panic - The specified signal \(.*\) is not supported for signal notification by yottadb.RegisterSignalNotify\(\)
-##TEST_AWKRecovering from panic - The specified signal \(.*\) is not supported for signal notification by yottadb.RegisterSignalNotify\(\)
-##TEST_AWKRecovering from panic - The specified signal \(.*\) is not supported for signal notification by yottadb.RegisterSignalNotify\(\)
-##TEST_AWKRecovering from panic - The specified signal \(.*\) is not supported for signal notification by yottadb.RegisterSignalNotify\(\)
+# Run ydbgo34c - expect each of 5 errors to be doubled - once for each of RegisterSignalNotify() and UnRegisterSignalNotify()
+##TEST_AWKRecovering from panic - YDB: The specified signal \(.*\) is not supported for signal notification by yottadb.RegisterSignalNotify\(\)
+##TEST_AWKRecovering from panic - YDB: The specified signal \(.*\) is not supported for signal notification by yottadb.UnRegisterSignalNotify\(\)
+##TEST_AWKRecovering from panic - YDB: The specified signal \(.*\) is not supported for signal notification by yottadb.RegisterSignalNotify\(\)
+##TEST_AWKRecovering from panic - YDB: The specified signal \(.*\) is not supported for signal notification by yottadb.UnRegisterSignalNotify\(\)
+##TEST_AWKRecovering from panic - YDB: The specified signal \(.*\) is not supported for signal notification by yottadb.RegisterSignalNotify\(\)
+##TEST_AWKRecovering from panic - YDB: The specified signal \(.*\) is not supported for signal notification by yottadb.UnRegisterSignalNotify\(\)
+##TEST_AWKRecovering from panic - YDB: The specified signal \(.*\) is not supported for signal notification by yottadb.RegisterSignalNotify\(\)
+##TEST_AWKRecovering from panic - YDB: The specified signal \(.*\) is not supported for signal notification by yottadb.UnRegisterSignalNotify\(\)
+##TEST_AWKRecovering from panic - YDB: The specified signal \(.*\) is not supported for signal notification by yottadb.RegisterSignalNotify\(\)
+##TEST_AWKRecovering from panic - YDB: The specified signal \(.*\) is not supported for signal notification by yottadb.UnRegisterSignalNotify\(\)
 ydbgo34c: Complete
+
+###################################################################
+# Run ydbgo34d to test wait timeout for signal acknowledgement and test syslogEntry() routine is working by forcing a
+# syslog entry and waiting for it.
+# Building ydbgo34d
+# Run ydbgo34d - will run for about 10 seconds (length of internal wait)
+ydbgo34d: Complete
+# Expected syslog entry shown below
+##TEST_AWK... .. ..:..:.. .* \[YottaDB-Go-Wrapper\]\[[1-9][0-9]*\]: %YDB-E-SIGACKTIMEOUT, Signal completion acknowledgement timeout: \(wait before\)
 
 ###################################################################
 # Validate DB

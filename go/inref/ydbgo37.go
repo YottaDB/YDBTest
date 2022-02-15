@@ -9,9 +9,9 @@
 //	the license, please stop and do not read further.	//
 //								//
 //////////////////////////////////////////////////////////////////
-// Test that shutting down a YDB process does not have a 5 second timer hang in the shutdownSignalGoroutines()
-// function in init.go invoked as the YDB engine and wrapper shutdown. Note this test is dependent on a fix that
-// went in as part of YDBGo#34.
+// Test that shutting down a YDB process does not have a MaximumSigShutdownWait timer hang in the
+// shutdownSignalGoroutines() function in init.go invoked as the YDB engine and wrapper shutdown.
+// Note this test is dependent on a fix that went in as part of YDBGo#34.
 
 package main
 
@@ -37,21 +37,21 @@ func main() {
 	wgDone.Add(1) // We have this goroutine to wait for
 	go func() {   // Fire up an inline goroutine to wait for the signal then shutdown the engine while signal pending
 		select {
-		case _ = <-sigNotify:
+		case _ = <-sigNotify: // Wait for the signal notification
 		}
 		defer wgDone.Done() // This routine is done when it exits
 		var startTime = time.Now()
 		// Now tell the engine to wrap up and close down and see how long it takes
 		yottadb.Exit()
 		duration := time.Since(startTime)
-		if duration > time.Duration(5*time.Second) {
+		if duration > time.Duration(yottadb.MaximumSigShutDownWait*time.Second) {
 			fmt.Println("Test failed taking", duration, "to shutdown")
 		} else {
 			fmt.Println("Test passed taking only", duration, "to shutdown")
 		}
-		sigAck <- true
+		sigAck <- true // Send acknowledgement to notifier that we are done here
 	}()
-	syscall.Kill(syscall.Getpid(), syscall.SIGINT)
+	syscall.Kill(syscall.Getpid(), syscall.SIGINT) // Send ourselves a SIGINT
 	wgDone.Wait() // Wait for the go routine to do its thing
 	fmt.Println("ydbgo37: Complete")
 }

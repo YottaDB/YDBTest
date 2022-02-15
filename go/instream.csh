@@ -48,12 +48,6 @@ endif
 
 setenv subtest_exclude_list    ""
 
-# filter out test that needs to run pro-only - temp allow dbg while not allowing cores [TODO] - waiting for YDB#790 to be done
-# to reactivate this portion of the code.
-#if ("pro" != "$tst_image") then
-#       setenv subtest_exclude_list "$subtest_exclude_list ydbgo34" # ydbgo34 generates cores and stops in dbg, continues in pro
-#endif
-
 if ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) then
 	# filter out below subtest on 32-bit ARM since it could use memory >= 2Gb, a lot on a 32-bit process
 	setenv subtest_exclude_list "$subtest_exclude_list randomWalk randomWalkSimple"

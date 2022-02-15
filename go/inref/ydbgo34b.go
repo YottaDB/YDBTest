@@ -9,7 +9,7 @@
 //	the license, please stop and do not read further.	//
 //								//
 //////////////////////////////////////////////////////////////////
-// Test the yottadb.UnRegisterSignalNotify() function for various signals. See ydbgo34.csh for description of this test
+// Test the yottadb.UnRegisterSignalNotify() function using the SIGCONT signal. See ydbgo34.csh for description of this test
 
 package main
 
@@ -21,7 +21,7 @@ import (
 )
 
 const tptoken uint64 = yottadb.NOTTP // No TP in this test currently
-const MaximumSigWait int = 10        // Maximum wait for the SIGCONT signal notification
+const MaximumSigWait int = 5         // Maximum wait for the SIGCONT signal notification
 
 func main() {
 	var errStr yottadb.BufferT
@@ -50,7 +50,10 @@ func main() {
 		fmt.Println("ydbgo34b: Timeout waiting for SIGCONT notification - giving up")
 	}
 	// Now remove the registration
-	yottadb.UnRegisterSignalNotify(syscall.SIGCONT)
+	err = yottadb.UnRegisterSignalNotify(syscall.SIGCONT)
+	if nil != err {
+		panic(err)
+	}
 	// Flush our channel
 	for 0 < len(sigNotify) {
 		_ = <-sigNotify // flush an entry from the channel
@@ -61,7 +64,7 @@ func main() {
 	// Wait for the signal to be handled - it should do largely nothing (i.e. no user handler being driven)
 	syscall.Kill(syscall.Getpid(), syscall.SIGCONT)
 	select {
-	case <-sigNotify:
+	case _ = <-sigNotify:
 		fmt.Println("ydbgo34b: Signal SIGCONT notification received in ERROR!")
 		sigAck <- true // Let notifier know we are done
 	case <-time.After(time.Duration(MaximumSigWait) * time.Second):

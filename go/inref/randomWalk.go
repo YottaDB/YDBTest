@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////
 //								//
-// Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries. //
+// Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries. //
 // All rights reserved.						//
 //								//
 //	This source code contains the intellectual property	//
@@ -300,7 +300,7 @@ func runProc(tptoken uint64, errstr *yottadb.BufferT, settings testSettings, cur
 				panic(err)
 			} */
 	} else if action < 20+remainingOdds*(10/11.0) {
-		_, err := yottadb.MessageT(tptoken, errstr, -1)
+		_, err := yottadb.MessageT(tptoken, errstr, yottadb.YDB_ERR_KILLBYSIGUINFO)
 		if err != nil {
 			panic(err)
 		}
