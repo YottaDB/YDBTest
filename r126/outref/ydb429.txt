@@ -781,3 +781,9 @@ yottadb.dat
 Global ^default exists
 Global ^%ydboctotmp exists
 Global ^%ydbAIMtmp exists
+
+
+# Test 25
+# Test that ydb_env_set works fine if ydb_gbldir points to a non-existent gld file
+# This used to error out previously. We expect no output below.
+# See https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1125#note_843593893 for more details

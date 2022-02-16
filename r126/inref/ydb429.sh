@@ -621,6 +621,21 @@ testI() {
 	fi
 }
 
+testJ() {
+	# Beginning of test setup code
+	testNum=25 # keep track of what number directory to move things to
+	testCaseNum=test$testNum
+	mkdir $testCaseNum
+	echo "# Test $testNum"
+	echo '# Test that ydb_env_set works fine if ydb_gbldir points to a non-existent gld file'
+	echo '# This used to error out previously. We expect no output below.'
+	echo '# See https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1125#note_843593893 for more details'
+	export ydb_routines="$ydb_dist"
+	export ydb_gbldir=nonexistent.gld
+	. $ydb_dist/ydb_env_set
+	mv .yottadb $testCaseNum	# move database so it can be replaced
+	exit 0
+}
 ## MAIN
 
 # Run what every the first argument is as a function

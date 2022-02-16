@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2019-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -40,7 +40,7 @@ cp $gtm_tst/$tst/inref/ydb429.sh .
 touch _dummy1
 mkdir _dummy2
 
-foreach i (A B C D E F G H I)
+foreach i (A B C D E F G H I J)
 	echo "\n"
 	sh `pwd`/ydb429.sh test$i
 	if ( $status == 1 ) then
