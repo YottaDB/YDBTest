@@ -10,7 +10,9 @@ original input
 ZSTATUS=pipeopenfn+4^gtm8877,%YDB-E-IONOTOPEN, Attempt to USE an I/O device which has not been opened
 
 # Checking the syslog
+##TEST_AWK%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: echo 'original input' -- generated from 0x.*
 ##TEST_AWK%YDB-E-COMMFILTERERR, Error executing the command filter for gtmzsystem. RESTRICTEDOP -- generated from 0x.*
+##TEST_AWK%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: echo 'original input' -- generated from 0x.*
 ##TEST_AWK%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: echo 'original input' -- generated from 0x.*
 ##TEST_AWK%YDB-E-COMMFILTERERR, Error executing the command filter for gtmpipeopen. RESTRICTEDOP -- generated from 0x.*
 ##TEST_AWK%YDB-E-RESTRICTEDOP, Attempt to perform a restricted operation: echo 'original input' -- generated from 0x.*

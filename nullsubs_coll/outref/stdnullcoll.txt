@@ -31,10 +31,12 @@ GDE>
                                                                         MSLT =1024
                                                                         DALL = YES
                                                                         AIO  = OFF
+                                                                        FBWR =   0
  <default>                            MM  DYN  4096        100   100    DEFER
                                                                         LOCK = 220
                                                                         MSLT =1024
                                                                         DALL = YES
+                                                                        FBWR =   0
 
          *** NAMES ***
  Global                             Region
@@ -58,6 +60,7 @@ GDE>
                                                                                         MSLT=1024
                                                                                         DALL= YES
                                                                                         AIO = OFF
+                                                                                        FBWR=   0
 
                                   *** MAP ***
    -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
@@ -163,10 +166,12 @@ GDE>
                                                                         MSLT =1024
                                                                         DALL = YES
                                                                         AIO  = OFF
+                                                                        FBWR =   0
  <default>                            MM  DYN  4096        100   100    DEFER
                                                                         LOCK = 220
                                                                         MSLT =1024
                                                                         DALL = YES
+                                                                        FBWR =   0
 GDE> 
 %GDE-I-VERIFY, Verification OK
 
@@ -216,7 +221,7 @@ Region          AREG
   Async IO                              OFF  WIP queue cache blocks           0
   DB is auto-created                  FALSE  DB shares gvstats             TRUE
   LOCK shares DB critical section     FALSE  Read Only                      OFF
-  Recover interrupted                 FALSE
+  Recover interrupted                 FALSE  Full Block Write                 0
 ##TEST_AWK  Max conc proc time [0-9 ]{22}  Max Concurrent processes         1
   Reorg Sleep Nanoseconds                 0
 DSE> DSE> 
@@ -254,7 +259,7 @@ Region          AREG
   Async IO                              OFF  WIP queue cache blocks           0
   DB is auto-created                  FALSE  DB shares gvstats             TRUE
   LOCK shares DB critical section     FALSE  Read Only                      OFF
-  Recover interrupted                 FALSE
+  Recover interrupted                 FALSE  Full Block Write                 0
 ##TEST_AWK  Max conc proc time [0-9 ]{22}  Max Concurrent processes         1
   Reorg Sleep Nanoseconds                 0
 DSE> DSE  dump output 

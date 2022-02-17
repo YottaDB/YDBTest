@@ -171,9 +171,6 @@ foreach var ($envlist)
 	# Test LKE
 	$LKE show -all >&! $envvar/${envvar}_LKE.log
 	$corecheck "lke"
-	# Test DBCERTIFY
-	$gtm_exe/dbcertify scan -outfile=dbcertify_scanreport.txt DEFAULT >&! $envvar/${envvar}_DBCERTIFY.log
-	$corecheck "dbcertify"
 	# Test GTCM GNP server
 	set logfile=$envvar/${envvar}_GTCM_GNP_SERVER2.log
 	if ( "os390" == $gtm_test_osname ) then
@@ -232,7 +229,7 @@ foreach var ($envlist)
 	endif
 	if ("ENCRYPT" == "$test_encryption") then
 		if ($gtm_gpg_use_agent) then
-			# With GnuPG 2.x, DSE and DBCERTIFY can fail early with a CRYPTKEYFETCHFAILED error because of
+			# With GnuPG 2.x, DSE can fail early with a CRYPTKEYFETCHFAILED error because of
 			# errors related to obtaining password via pinentry which is an M program and is bound to fail
 			# due to the bad environment that this test intentionally creates. Filter out these errors.
 			# See <GTM_7546_CRYPTKEYFETCHFAILED_v53003_D9I10002703> for more details.
@@ -240,11 +237,6 @@ foreach var ($envlist)
 			if (! $status) then
 				$gtm_tst/com/check_error_exist.csh $envvar/${envvar}_DSE.log CRYPTKEYFETCHFAILED	\
 					>&! $envvar/${envvar}_DSE_CRYPTKEYFETCHFAILED_expected.logx
-			endif
-			$grep -q "Incorrect password" $envvar/${envvar}_DBCERTIFY.log
-			if (! $status) then
-				$gtm_tst/com/check_error_exist.csh $envvar/${envvar}_DBCERTIFY.log CRYPTKEYFETCHFAILED	\
-					>&! $envvar/${envvar}_DBCERTIFY_CRYPTKEYFETCHFAILED_expected.logx
 			endif
 		endif
 	endif

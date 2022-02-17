@@ -52,7 +52,7 @@ Region          DEFAULT
   Async IO                              OFF  WIP queue cache blocks           0
   DB is auto-created                  FALSE  DB shares gvstats             TRUE
   LOCK shares DB critical section     FALSE  Read Only                      OFF
-  Recover interrupted                 FALSE
+  Recover interrupted                 FALSE  Full Block Write                 0
 ##TEST_AWK  Max conc proc time [0-9 ]{22}  Max Concurrent processes         1
   Reorg Sleep Nanoseconds                 0
 command: change -fileheader -location=NULL -size=1 -value=1 ...
@@ -135,7 +135,7 @@ Region          DEFAULT
   Async IO                              OFF  WIP queue cache blocks           0
   DB is auto-created                  FALSE  DB shares gvstats             TRUE
   LOCK shares DB critical section     FALSE  Read Only                      OFF
-  Recover interrupted                 FALSE
+  Recover interrupted                 FALSE  Full Block Write                 0
 ##TEST_AWK  Max conc proc time [0-9 ]{22}  Max Concurrent processes         1
   Reorg Sleep Nanoseconds                 0
 Check -nocrit qualifier...
@@ -178,6 +178,10 @@ DSE> DSE>
 
 Integ of region DEFAULT
 %YDB-W-MUKILLIP, Kill in progress indicator is set for file ##TEST_PATH##/mumps.dat - this MUPIP INTEG operation is likely to result in incorrectly marked busy errors
+
+##TEST_AWKMUPIP INFO: mu_int_maps: ... ... .. ..:..:.. 20.. : Start kill-in-prog wait.
+
+##TEST_AWKMUPIP INFO: mu_int_maps: ... ... .. ..:..:.. 20.. : Done with kill-in-prog wait.
 
 Total error count from integ:		1.
 
@@ -299,7 +303,7 @@ Type           Blocks         Records          % Used      Adjacent
 ##TEST_AWKData[ 0-9.AN]*
 ##TEST_AWKFree[ 0-9.AN]*
 ##TEST_AWKTotal[ 0-9.AN]*
-  Recover interrupted                 FALSE
+  Recover interrupted                 FALSE  Full Block Write                 0
 Set -partial_recov_bypass
 Database file mumps.dat now has partial recovery flag set to  0(FALSE) 
 
@@ -327,13 +331,13 @@ Attempt a journal backward recovery
 %YDB-S-JNLSUCCESS, Verify successful
 %YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
-  Recover interrupted                 FALSE
+  Recover interrupted                 FALSE  Full Block Write                 0
 Set -interrupted_recov=FALSE
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-  Recover interrupted                 FALSE
+  Recover interrupted                 FALSE  Full Block Write                 0
 Retry backward journal recovery, after setting interrupted_recov=FALSE
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 %YDB-S-JNLSUCCESS, Show successful

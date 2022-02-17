@@ -29,16 +29,17 @@ Routine:
 %CONVBASEUTIL       %D        %DATE     %DH       %DO       %DSEWRAP  %DUMPFHEAD          
 %EXP      %FL       %FREECNT  %G        %GBLDEF   %GC       %GCE      %GD       
 %GED      %GI       %GO       %GSE      %GSEL     %H        %HD       %HEX2UTF  
-%HO       %LCASE    %LCLCOL   %MPIECE   %OD       %OH       %PATCODE  %PEEKBYNAME         
-%RANDSTR  %RCE      %RD       %RI       %RO       %RSE      %RSEL     %SQROOT   
-%T        %TI       %TO       %TRIM     %TU       %UCASE    %UTF2HEX  %XCMD     
-%YDBENV   %YDBPROCSTUCKEXEC   %YGBLSTAT %ZSHOWVTOLCL        DECOMMENT GDE       
-GDEADD    GDECHANG  GDEDELET  GDEEXIT   GDEGET    GDEHELP   GDEINIT   GDELOCKS  
-GDELOG    GDEMAP    GDEMSGIN  GDEPARSE  GDEPUT    GDEQUIT   GDERENAM  GDESCAN   
-GDESETGD  GDESHOW   GDESPAWN  GDETEMPL  GDEVERIF  GTMDEFINEDTYPESTODB GTMDefinedTypesInitDebug      
-GTMDefinedTypesInitRelease    GTMHELP   GTMHLPLD  GTMTHREADGBLASM     SCANTYPEDEFS        
-a         ab        b         ca        cb        rtn1      t         zz        
-Total of 89 routines.
+%HO       %JSWRITE  %LCASE    %LCLCOL   %MPIECE   %OD       %OH       %PATCODE  
+%PEEKBYNAME         %RANDSTR  %RCE      %RD       %RI       %RO       %RSE      
+%RSEL     %SQROOT   %T        %TI       %TO       %TRIM     %TU       %UCASE    
+%UTF2HEX  %XCMD     %YDBENV   %YDBPROCSTUCKEXEC   %YGBLSTAT %ZSHOWVTOLCL        
+DECOMMENT GDE       GDEADD    GDECHANG  GDEDELET  GDEEXIT   GDEGET    GDEHELP   
+GDEINIT   GDELOCKS  GDELOG    GDEMAP    GDEMSGIN  GDEPARSE  GDEPUT    GDEQUIT   
+GDERENAM  GDESCAN   GDESETGD  GDESHOW   GDESPAWN  GDETEMPL  GDEVERIF  GTMDEFINEDTYPESTODB 
+GTMDefinedTypesInitDebug      GTMDefinedTypesInitRelease    GTMHELP   GTMHLPLD  
+GTMTHREADGBLASM     SCANTYPEDEFS        a         ab        b         ca        
+cb        rtn1      t         zz        
+Total of 90 routines.
 
 YDB>
 
@@ -73,7 +74,7 @@ Total of 1 routine.
 Routine: 
 
 # DO SILENT^%RSEL("*","OBJ") ZWRITE %ZR
-%ZR=89
+%ZR=90
 ##SUSPEND_OUTPUT UNICODE_MODE
 %ZR("%CONVBASEUTIL")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
 %ZR("%D")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
@@ -99,6 +100,7 @@ Routine:
 %ZR("%HD")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
 %ZR("%HEX2UTF")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
 %ZR("%HO")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%JSWRITE")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
 %ZR("%LCASE")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
 %ZR("%LCLCOL")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
 %ZR("%MPIECE")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
@@ -182,6 +184,7 @@ Routine:
 %ZR("%HD")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
 %ZR("%HEX2UTF")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
 %ZR("%HO")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%JSWRITE")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
 %ZR("%LCASE")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
 %ZR("%LCLCOL")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
 %ZR("%MPIECE")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
