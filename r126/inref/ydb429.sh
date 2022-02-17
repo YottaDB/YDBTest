@@ -161,6 +161,14 @@ testD() {
 	export LV_COLLATE=C
 	export ydb_chset="UtF-8"
 	unset gtmgbldir
+	# In case $gtm_dist points to a path that is soft linked to something else, ydb_env_set will
+	# not work right when gtmroutines contains paths that contain the soft link $gtm_dist version
+	# (see https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1125#note_845334601 for more details).
+	# Therefore, replace $gtm_dist with "realpath $gtm_dist" in gtmroutines env var before calling ydb_env_set.
+	# Note that using "export gtmroutines=..." does not work in sh (issues a "export: ... bad variable name" error)
+	# whereas it works in bash. So we work around that by setting gtmroutines first and exporting in a separate line.
+	gtmroutines=$(echo "$gtmroutines" | sed 's,'$gtm_dist','$(realpath $gtm_dist)',g')
+	export gtmroutines
 	. $ydb_dist/ydb_env_set
 	echo '# Checking yottadb $zchset value'
 	zchset=$($ydb_dist/yottadb -run %XCMD 'write $zchset,!')
