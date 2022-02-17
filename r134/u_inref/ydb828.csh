@@ -469,4 +469,20 @@ echo "# Try $base.m using [yottadb -run]"
 $ydb_dist/yottadb -run $base
 
 echo ""
+echo "------------------------------------------------------------"
+echo '# Test $QUERY(lvn) works fine after ZSHOW "*":lvn'
+echo '# This used to previously (before YDB@9d6421e8) fail with a SIG-11/Assert'
+echo '# Expecting no errors in the below output'
+echo "------------------------------------------------------------"
+set base = "ydb828queryzshow"
+cat > $base.m << CAT_EOF
+ kill  zshow "VL":x write \$query(@"x(""L"",0)"),!
+ kill  zshow "*":x write \$query(x("R",1)),!
+CAT_EOF
+echo "# Try $base.m using [yottadb -direct]"
+cat $base.m | $ydb_dist/yottadb -direct
+echo "# Try $base.m using [yottadb -run]"
+$ydb_dist/yottadb -run $base
+
+echo ""
 $gtm_tst/com/dbcheck.csh

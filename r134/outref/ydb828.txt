@@ -1073,6 +1073,24 @@ YDB>
 
 YDB>
 
+------------------------------------------------------------
+# Test $QUERY(lvn) works fine after ZSHOW "*":lvn
+# This used to previously (before YDB@9d6421e8) fail with a SIG-11/Assert
+# Expecting no errors in the below output
+------------------------------------------------------------
+# Try ydb828queryzshow.m using [yottadb -direct]
+
+YDB>
+
+
+YDB>
+
+
+YDB>
+# Try ydb828queryzshow.m using [yottadb -run]
+
+
+
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
