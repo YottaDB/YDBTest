@@ -1119,6 +1119,30 @@ x(1,"V",1)="x(1)=""abcd"""
 x(1)
 
 
+------------------------------------------------------------
+# Test $INCREMENT(@glvn,boolexpr) works fine
+# This used to previously (before YDB@a3b15a64) fail with a SIG-11/Assert
+# Expecting LVUNDEF and INVSVN errors below (but not SIG-11/Assert)
+------------------------------------------------------------
+# Try ydb828incrindirectionglvn.m using [yottadb -direct]
+
+YDB>
+%YDB-E-LVUNDEF, Undefined local variable: x
+
+YDB>
+%YDB-E-INVSVN, Invalid special variable name
+
+YDB>
+# Try ydb828incrindirectionglvn.m using [yottadb -run]
+	 write $increment(@x,$z&r),!
+	                      ^-----
+		At column 23, line 2, source module ##TEST_PATH##/ydb828incrindirectionglvn.m
+%YDB-E-INVSVN, Invalid special variable name
+%YDB-E-LVUNDEF, Undefined local variable: x
+		At M source location +1^ydb828incrindirectionglvn
+
+YDB>
+
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

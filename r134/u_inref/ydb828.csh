@@ -503,4 +503,20 @@ echo "# Try $base.m using [yottadb -run]"
 $ydb_dist/yottadb -run $base
 
 echo ""
+echo "------------------------------------------------------------"
+echo '# Test $INCREMENT(@glvn,boolexpr) works fine'
+echo '# This used to previously (before YDB@a3b15a64) fail with a SIG-11/Assert'
+echo '# Expecting LVUNDEF and INVSVN errors below (but not SIG-11/Assert)'
+echo "------------------------------------------------------------"
+set base = "ydb828incrindirectionglvn"
+cat > $base.m << CAT_EOF
+ write \$increment(@x,1&2),!
+ write \$increment(@x,\$z&r),!
+CAT_EOF
+echo "# Try $base.m using [yottadb -direct]"
+cat $base.m | $ydb_dist/yottadb -direct
+echo "# Try $base.m using [yottadb -run]"
+$ydb_dist/yottadb -run $base
+
+echo ""
 $gtm_tst/com/dbcheck.csh
