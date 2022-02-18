@@ -485,4 +485,22 @@ echo "# Try $base.m using [yottadb -run]"
 $ydb_dist/yottadb -run $base
 
 echo ""
+echo "------------------------------------------------------------"
+echo '# Test $QUERY(lvn) works fine after ZSHOW "*":lvn where lvn is subscripted'
+echo '# This used to previously (before YDB@656ec6f6) fail with a SIG-11/Assert'
+echo '# Expecting no errors in the below output'
+echo "------------------------------------------------------------"
+set base = "ydb828queryzshow2"
+cat > $base.m << CAT_EOF
+ kill  zshow "Ar":x(1)
+ kill  zshow "*":x(1)
+ kill  zshow "VC":x(1) zwrite  write \$query(x),!
+ kill  set x(1)="abcd" zshow "VC":x(1) zwrite  write \$query(x),! write \$query(x(1,"V",1)),!
+CAT_EOF
+echo "# Try $base.m using [yottadb -direct]"
+cat $base.m | $ydb_dist/yottadb -direct
+echo "# Try $base.m using [yottadb -run]"
+$ydb_dist/yottadb -run $base
+
+echo ""
 $gtm_tst/com/dbcheck.csh

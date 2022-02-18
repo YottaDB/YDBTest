@@ -1091,6 +1091,34 @@ YDB>
 
 
 
+------------------------------------------------------------
+# Test $QUERY(lvn) works fine after ZSHOW "*":lvn where lvn is subscripted
+# This used to previously (before YDB@656ec6f6) fail with a SIG-11/Assert
+# Expecting no errors in the below output
+------------------------------------------------------------
+# Try ydb828queryzshow2.m using [yottadb -direct]
+
+YDB>
+
+YDB>
+
+YDB>
+
+
+YDB>
+x(1)="abcd"
+x(1,"V",1)="x(1)=""abcd"""
+x(1)
+
+
+YDB>
+# Try ydb828queryzshow2.m using [yottadb -run]
+
+x(1)="abcd"
+x(1,"V",1)="x(1)=""abcd"""
+x(1)
+
+
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
