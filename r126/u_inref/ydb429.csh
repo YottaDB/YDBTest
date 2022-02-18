@@ -40,7 +40,7 @@ cp $gtm_tst/$tst/inref/ydb429.sh .
 touch _dummy1
 mkdir _dummy2
 
-foreach i (A B C D E F G H I J)
+foreach i (A B C D E F G H I J K)
 	echo "\n"
 	sh `pwd`/ydb429.sh test$i
 	if ( $status == 1 ) then

@@ -644,6 +644,32 @@ testJ() {
 	mv .yottadb $testCaseNum	# move database so it can be replaced
 	exit 0
 }
+
+testK() {
+	# Beginning of test setup code
+	testNum=26 # keep track of what number directory to move things to
+	testCaseNum=test$testNum
+	mkdir $testCaseNum
+	echo "# Test $testNum"
+	echo '# Test that ydb_env_set will set the journal of all regions to be in the same folder'
+	echo '# as the journal file for a preexisting DEFAULT region'
+
+	# database setup
+	echo '# Creating Single Region Database with before image journaling on'
+	export acc_meth="BG"
+	export gtm_test_jnl="SETJNL"
+	export tst_jnl_str="-journal=enable,on,before"
+	$gtm_tst/com/dbcreate.csh yottadb 1
+	echo '# Journal file'
+	$ydb_dist/dse all -dump 2>&1 | grep 'Journal File: ' | awk -F': ' '{print $2}'
+	. $ydb_dist/ydb_env_set
+	echo '# Journal files'
+	$ydb_dist/dse all -dump 2>&1 | grep 'Journal File: ' | awk -F': ' '{print $2}'
+	. $ydb_dist/ydb_env_unset
+	$gtm_tst/com/dbcheck.csh
+	mv .yottadb $testCaseNum	# move database so it can be replaced
+	exit 0
+}
 ## MAIN
 
 # Run what every the first argument is as a function

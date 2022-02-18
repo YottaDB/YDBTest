@@ -787,3 +787,38 @@ Global ^%ydbAIMtmp exists
 # Test that ydb_env_set works fine if ydb_gbldir points to a non-existent gld file
 # This used to error out previously. We expect no output below.
 # See https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1125#note_843593893 for more details
+
+
+# Test 26
+# Test that ydb_env_set will set the journal of all regions to be in the same folder
+# as the journal file for a preexisting DEFAULT region
+# Creating Single Region Database with before image journaling on
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+yottadb.gld
+Using: ##SOURCE_PATH##/mupip
+yottadb.dat
+##SUSPEND_OUTPUT NON_REPLIC
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+yottadb.gld
+Using: ##SOURCE_PATH##/mupip
+yottadb.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+##ALLOW_OUTPUT NON_REPLIC
+# Journal file
+##TEST_PATH##/yottadb.mjl
+# Journal files
+##TEST_PATH##/yottadb.mjl
+##TEST_PATH##/%ydbocto.mjl
+##SUSPEND_OUTPUT NON_REPLIC
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##ALLOW_OUTPUT NON_REPLIC
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
