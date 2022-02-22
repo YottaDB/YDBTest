@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh
 #################################################################
 #								#
-# Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2021-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -17,31 +17,78 @@ echo "# possible combination of plugins with and without UTF-8 support."
 # and avoid %YDB-E-NONUTF8LOCALE errors when testing --zlib --utf8 default
 $switch_chset "UTF-8"
 
-setenv aim "--aim"
-setenv enc "--encplugin"
-setenv posix "--posix"
-setenv zlib "--zlib"
-setenv utf "--utf8 default"
-foreach plugins ("$aim" "$enc" "$posix" "$zlib" "$aim $utf" "$enc $utf" "$posix $utf" "$zlib $utf" "$aim $enc" "$aim $posix" "$aim $zlib" "$aim $enc $utf" "$aim $posix $utf" "$aim $zlib $utf" "$enc $posix" "$enc $zlib" "$enc $posix $utf" "$enc $zlib $utf" "$posix $zlib" "$posix $zlib $utf" "$aim $enc $posix" "$aim $enc $zlib" "$aim $posix $zlib" "$enc $posix $zlib" "$aim $enc $posix $utf" "$aim $enc $zlib $utf" "$aim $posix $zlib $utf" "$enc $posix $zlib $utf" "$aim $enc $posix $zlib" "$aim $enc $posix $zlib $utf")
-	# setup of the image environment
-	mkdir install # the install destination
-	cd install
-	# we have to make this folder before hand otherwise the installer will throw out errors
-	# this happens only when this script is invoked by the test system
-	# it works fine without permission issues when run as root in an interactive terminal
-	mkdir gtmsecshrdir
-	chmod -R 755 .
+foreach zlib ("no" "yes")
+	foreach posix ("no" "yes")
+		foreach enc ("no" "yes")
+			foreach aim ("no" "yes")
+				if ("no" == $aim && "no" == $enc && "no" == "$posix" && "no" == "$zlib") then
+					continue
+				endif
+				setenv plugins ""
+				if ("yes" == $aim) then
+					setenv plugins "--aim"
+				endif
+				if ("yes" == $enc) then
+					if ("yes" == $aim) then
+						setenv plugins "$plugins --encplugin"
+					else
+						setenv plugins "--encplugin"
+					endif
+				endif
+				if ("yes" == $posix) then
+					if ("yes" == $aim || "yes" == $enc) then
+						setenv plugins "$plugins --posix"
+					else
+						setenv plugins "--posix"
+					endif
+				endif
+				if ("yes" == $zlib) then
+					if ("yes" == $aim || "yes" == $enc || "yes" == $posix) then
+						setenv plugins "$plugins --zlib"
+					else
+						setenv plugins "--zlib"
+					endif
+				endif
+				foreach pluginsonly ("no" "yes")
+					foreach utf ("no" "yes")
+					# setup of the image environment
+					mkdir install # the install destination
+					cd install
+					# we have to make this folder before hand otherwise the installer will throw out errors
+					# this happens only when this script is invoked by the test system
+					# it works fine without permission issues when run as root in an interactive terminal
+					mkdir gtmsecshrdir
+					chmod -R 755 .
 
-	cp $gtm_tst/$tst/u_inref/plugins.sh  .
+					cp $gtm_tst/$tst/u_inref/plugins.sh  .
 
-	# we pass these things as variables to plugins.sh because it doesn't inherit the tcsh environment variables
-	source $gtm_tst/$tst/u_inref/setinstalloptions.csh # sets the variable "installoptions" (e.g. "--force-install" if needed)
-	$echoline
-	echo "testing with options $plugins"
-	$sudostr sh ./plugins.sh $gtm_verno $tst_image `pwd` "$installoptions" "$plugins"
-
-	# clean up the install directory since the files are owned by root
-	cd ..
-	sudo rm -rf install
+					# we pass these things as variables to plugins.sh because it doesn't inherit the tcsh
+					# environment variablesThe below sets the variable "installoptions"
+					# (e.g. "--force-install" if needed)
+					source $gtm_tst/$tst/u_inref/setinstalloptions.csh
+					$echoline
+					if ("no" == $utf) then
+						if ("no" == $pluginsonly) then
+							echo "testing with options $plugins"
+						else
+							echo "testing with options --plugins-only $plugins"
+						endif
+						$sudostr sh ./plugins.sh $gtm_verno $tst_image `pwd` "$installoptions" "$plugins" "$pluginsonly"
+					else
+						if ("no" == $pluginsonly) then
+							echo "testing with options $plugins --utf8 default"
+						else
+							echo "testing with options --plugins-only $plugins --utf8 default"
+						endif
+						set installoptions = "$installoptions --utf8 default"
+						$sudostr sh ./plugins.sh $gtm_verno $tst_image `pwd` "$installoptions" "$plugins" "$pluginsonly"
+					endif
+					# clean up the install directory since the files are owned by root
+					cd ..
+					sudo rm -rf install
+					end
+				end
+			end
+		end
+	end
 end
-

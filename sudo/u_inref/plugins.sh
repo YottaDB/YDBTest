@@ -11,13 +11,26 @@
 #								#
 #################################################################
 
-/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --overwrite-existing --user $USER $4 $5 > install.out
+if [ "yes" = $6 ] ; then
+	/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --overwrite-existing --user $USER $4 > install.out
+	/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --overwrite-existing --user $USER $4 --plugins-only $5 > plugins.out 2>&1
+else
+	/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --overwrite-existing --user $USER $4 $5 > install.out 2>&1
+fi
 
 status=$?
 if [ 0 != $status ]; then
-        echo "ydbinstall returned a non-zero status: $status"
-	cat install.out
-        exit $status
+	echo "ydbinstall returned a non-zero status: $status"
+	if [ "yes" = $6 ] ; then
+ 		cat install.out
+		cat plugins.out
+	else
+		cat install.out
+	fi
+	exit $status
+fi
+if [ "yes" = $6 ] ; then
+	echo "ydbinstall with options --plugins-only $5 was successful."
 else
 	echo "ydbinstall with options $5 was successful."
 fi

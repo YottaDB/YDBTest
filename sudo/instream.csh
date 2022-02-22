@@ -23,10 +23,9 @@
 # ydb306		[kz]		Test that --zlib and --utf8 will run together with ydbinstall.sh
 # gtm9116		[bdw]		Test that ydbinstall.sh installs libyottadb.so with 755 permissions irrespective of what umask is set to
 # plugins		[bdw]		Test that ydbinstall.sh installs various plugin combinations without errors
-# pluginsonly		[bdw]		Test that --plugins-only installs various plugin combinations without errors
-# ydb783 [sam]           Set $ZROUTINES to $ydb_dist/utf8/libyottadbutil.so if ydb_chset=UTF-8 and ydb_routines is not set
+# ydb783		[sam]		Set $ZROUTINES to $ydb_dist/utf8/libyottadbutil.so if ydb_chset=UTF-8 and ydb_routines is not set
 #
-setenv subtest_list_common "sourceInstall diffDir ydb306 gtm9116 plugins pluginsonly ydb783"
+setenv subtest_list_common "sourceInstall diffDir ydb306 gtm9116 plugins ydb783"
 setenv subtest_list_non_replic ""
 setenv subtest_list_non_replic "$subtest_list_non_replic"
 setenv subtest_list_replic ""
@@ -35,6 +34,12 @@ setenv subtest_list "$subtest_list_common $subtest_list_non_replic $subtest_list
 
 # EXCLUSIONS
 setenv subtest_exclude_list ""
+
+# The plugins test is disabled on ARMVXL due to periodic network related failures on ARMV6L. Attempting to add
+# retries to the test did not address these failures so we've disabled the test.
+if ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) then
+	setenv subtest_exclude_list "$subtest_exclude_list plugins"
+endif
 
 $gtm_tst/com/submit_subtest.csh
 echo "sudo tests DONE."
