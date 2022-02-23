@@ -1122,26 +1122,84 @@ x(1)
 ------------------------------------------------------------
 # Test $INCREMENT(@glvn,boolexpr) works fine
 # This used to previously (before YDB@a3b15a64) fail with a SIG-11/Assert
-# Expecting LVUNDEF and INVSVN errors below (but not SIG-11/Assert)
 ------------------------------------------------------------
 # Try ydb828incrindirectionglvn.m using [yottadb -direct]
+
+YDB>
+# Expecting LVUNDEF error below (but not SIG-11/Assert)
 
 YDB>
 %YDB-E-LVUNDEF, Undefined local variable: x
 
 YDB>
+# Expecting INVSVN error below (but not SIG-11/Assert)
+
+YDB>
 %YDB-E-INVSVN, Invalid special variable name
+
+YDB>
+# Expecting zwrite output to show "y=1" (no SIG-11/Assert)
+
+YDB>
 
 YDB>
 # Try ydb828incrindirectionglvn.m using [yottadb -run]
 	 write $increment(@x,$z&r),!
 	                      ^-----
-		At column 23, line 2, source module ##TEST_PATH##/ydb828incrindirectionglvn.m
+		At column 23, line 4, source module ##TEST_PATH##/ydb828incrindirectionglvn.m
 %YDB-E-INVSVN, Invalid special variable name
+# Expecting LVUNDEF error below (but not SIG-11/Assert)
 %YDB-E-LVUNDEF, Undefined local variable: x
-		At M source location +1^ydb828incrindirectionglvn
+		At M source location +2^ydb828incrindirectionglvn
 
 YDB>
+
+------------------------------------------------------------
+# Test $INCREMENT(glvn) in a boolexpr works fine
+# This used to previously (in YDB@a3b15a64) fail with a SIG-11/Assert
+------------------------------------------------------------
+# Try ydb828incrboolexpr.m using [yottadb -direct]
+
+YDB>
+
+YDB>
+# Expecting x=1,y=1,^x=1 in zwrite output below
+
+YDB>
+x=1
+y=1
+^x=1
+
+YDB>
+# Expecting x=1,y=1,^x=0 in zwrite output below
+
+YDB>
+x=1
+y=1
+^x=0
+
+YDB>
+# Expecting x=0,y=0,^x=0 in zwrite output below
+
+YDB>
+x=0
+y=0
+^x=0
+
+YDB>
+# Try ydb828incrboolexpr.m using [yottadb -run]
+# Expecting x=1,y=1,^x=1 in zwrite output below
+x=1
+y=1
+^x=1
+# Expecting x=1,y=1,^x=0 in zwrite output below
+x=1
+y=1
+^x=0
+# Expecting x=0,y=0,^x=0 in zwrite output below
+x=0
+y=0
+^x=0
 
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *

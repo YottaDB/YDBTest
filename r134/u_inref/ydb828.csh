@@ -506,17 +506,56 @@ echo ""
 echo "------------------------------------------------------------"
 echo '# Test $INCREMENT(@glvn,boolexpr) works fine'
 echo '# This used to previously (before YDB@a3b15a64) fail with a SIG-11/Assert'
-echo '# Expecting LVUNDEF and INVSVN errors below (but not SIG-11/Assert)'
 echo "------------------------------------------------------------"
 set base = "ydb828incrindirectionglvn"
 cat > $base.m << CAT_EOF
+ write "# Expecting LVUNDEF error below (but not SIG-11/Assert)",!
  write \$increment(@x,1&2),!
+ write "# Expecting INVSVN error below (but not SIG-11/Assert)",!
  write \$increment(@x,\$z&r),!
+ write "# Expecting zwrite output to show ""y=1"" (no SIG-11/Assert)",!
+ set x="y" if \$increment(@x,0&1) zwrite
 CAT_EOF
 echo "# Try $base.m using [yottadb -direct]"
 cat $base.m | $ydb_dist/yottadb -direct
 echo "# Try $base.m using [yottadb -run]"
 $ydb_dist/yottadb -run $base
+
+echo ""
+echo "------------------------------------------------------------"
+echo '# Test $INCREMENT(glvn) in a boolexpr works fine'
+echo '# This used to previously (in YDB@a3b15a64) fail with a SIG-11/Assert'
+echo "------------------------------------------------------------"
+set base = "ydb828incrboolexpr"
+if ($?gtm_side_effects) then
+	set save_gtm_side_effects = $gtm_side_effects
+endif
+if ($?gtm_boolean) then
+	set save_gtm_boolean = $gtm_boolean
+endif
+unsetenv gtm_side_effects	# override random values set by test framework as it otherwise causes different output below
+unsetenv gtm_boolean		# override random values set by test framework as it otherwise causes different output below
+cat > $base.m << CAT_EOF
+ view "nofull_boolean"	; override gtm_boolean env var setting to ensure deterministic output
+ write "# Expecting x=1,y=1,^x=1 in zwrite output below",!
+ kill  set ^x=0 set:\$Increment(x,0!1)&\$Increment(^x) y=1  zwrite  zwrite ^x
+ write "# Expecting x=1,y=1,^x=0 in zwrite output below",!
+ kill  set ^x=0 set:\$Increment(x,0!1)!\$Increment(^x) y=1  zwrite  zwrite ^x
+ write "# Expecting x=0,y=0,^x=0 in zwrite output below",!
+ kill  set ^x=0,x=-1,y=0 set:\$Increment(x,0!1)&\$Increment(^x) y=1  zwrite  zwrite ^x
+CAT_EOF
+echo "# Try $base.m using [yottadb -direct]"
+cat $base.m | $ydb_dist/yottadb -direct
+echo "# Try $base.m using [yottadb -run]"
+$ydb_dist/yottadb -run $base
+if ($?save_gtm_side_effects) then
+	setenv gtm_side_effects $save_gtm_side_effects
+	unset save_gtm_side_effects
+endif
+if ($?save_gtm_boolean) then
+	setenv gtm_boolean $save_gtm_boolean
+	unset save_gtm_boolean
+endif
 
 echo ""
 $gtm_tst/com/dbcheck.csh
