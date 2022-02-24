@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -40,7 +40,7 @@ testmprofhiddenrtn1
 	if (1'=count) do
 	. write "testmprofhiddenrtn1: FAIL - count in node ^mproftrc(""testmprofhiddenrtnA"",""testmprofhiddenrtnA"") is wrong",!
 	else  if (1000000<elap) do
-	. write "testmprofhiddenrtn1: FAIL - elaspsed time exceeds 1 second",!
+	. write "testmprofhiddenrtn1: FAIL - elapsed time exceeds 1 second",!
 	else  write "testmprofhiddenrtn1: PASS",!
 	write "testmprofhiddenrtn1: Test complete",!
 	quit
