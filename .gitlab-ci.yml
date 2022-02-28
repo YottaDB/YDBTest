@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2020-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -32,5 +32,5 @@ build-imptp-rs:
   stage: build
   script:
     - apt-get update
-    - apt-get install -yq --no-install-recommends build-essential bindgen
-    - cd com/imptp-rs; cargo check --no-default-features
+    - apt-get install -yq --no-install-recommends build-essential bindgen llvm-dev libclang-dev clang
+    - export PATH="$HOME/.cargo/bin:$PATH"; cd com/imptp-rs; cargo check --no-default-features
