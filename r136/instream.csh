@@ -14,13 +14,14 @@
 #---------------------------------------------------------------------------------------------------------------------------------------------------
 # List of subtests of the form "subtestname [author] description"
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
+# ydb854 [nars]          Test that ICUSYMNOTFOUND error using Simple API does not assert fail
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r136 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic ""
+setenv subtest_list_non_replic "ydb854"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then

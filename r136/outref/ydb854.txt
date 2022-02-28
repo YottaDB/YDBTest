@@ -1,0 +1,14 @@
+# ---------------------------------------------------------------------------------------------------------------
+# Test that ICUSYMNOTFOUND error using Simple API does not assert fail
+# This test script automates the ydb_init.sh script at https://gitlab.com/YottaDB/DB/YDB/-/issues/854#description
+# with adjustments to use YDBTest conventions for compiling/linking Simple API C programs.
+# ---------------------------------------------------------------------------------------------------------------
+# Build ydb854 executable
+setenv gtm_chset M
+unset echo
+setenv gtm_chset UTF-8
+unset echo
+# Running ydb854 executable
+# Expect to see ICUSYMNOTFOUND error (used to see an assert failure in r1.34 Debug builds)
+ydb_init() returned status = 150381514
+##TEST_AWKydb_zstatus\(\) returned : 150381514,\(Call-In\),%YDB-E-ICUSYMNOTFOUND, Symbol u_getVersion not found in the ICU libraries\. ICU needs to be built with symbol-renaming disabled or ydb_icu_version/gtm_icu_version environment variable needs to be properly specified,%YDB-I-TEXT, .*libicuio##TEST_SHL_SUFFIX##: undefined symbol: u_getVersion
