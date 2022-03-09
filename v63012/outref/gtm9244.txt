@@ -1,0 +1,113 @@
+# Create a database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+###################################################################
+# Populate the database with globals
+###################################################################
+# Call %JSWRITE on a glvn
+*******************************************************************
+# glvn set to ^x
+# do ^%JSWRITE(glvn,"#")
+# this should return JS Object Strings: All descendants of ^x starting from ^x
+Done with checks on file jswrite.out0 created from glvn ^x with params # 
+
+# do ^%JSWRITE(glvn,"*")
+# this should return JS Object Strings: All descendants of ^x
+Done with checks on file jswrite.out1 created from glvn ^x with params * 
+
+# do ^%JSWRITE(glvn,"[#]")
+# this should return Array: All descendants of ^x starting from ^x
+Done with checks on file jswrite.out2 created from glvn ^x with params [#] 
+
+# do ^%JSWRITE(glvn,"[*]")
+# this should return Array: All descendants of ^x
+Done with checks on file jswrite.out3 created from glvn ^x with params [*] 
+
+# do ^%JSWRITE(glvn,"*","noglvname")
+# this should return JS Object Strings: All descendants of ^x omitting the global ^x
+Done with checks on file jswrite.out4 created from glvn ^x with params * noglvname
+
+*******************************************************************
+# glvn set to ^x(2)
+# do ^%JSWRITE(glvn,"#")
+# this should return JS Object Strings: All descendants of ^x(2) starting from ^x(2)
+Done with checks on file jswrite.out5 created from glvn ^x(2) with params # 
+
+# do ^%JSWRITE(glvn,"*")
+# this should return JS Object Strings: All descendants of ^x(2)
+Done with checks on file jswrite.out6 created from glvn ^x(2) with params * 
+
+# do ^%JSWRITE(glvn,"[#]")
+# this should return Array: All descendants of ^x(2) starting from ^x(2)
+Done with checks on file jswrite.out7 created from glvn ^x(2) with params [#] 
+
+# do ^%JSWRITE(glvn,"[*]")
+# this should return Array: All descendants of ^x(2)
+Done with checks on file jswrite.out8 created from glvn ^x(2) with params [*] 
+
+# do ^%JSWRITE(glvn,"*","noglvname")
+# this should return JS Object Strings: All descendants of ^x(2) omitting the global ^x
+Done with checks on file jswrite.out9 created from glvn ^x(2) with params * noglvname
+
+*******************************************************************
+# glvn set to ^x(3,1)
+# do ^%JSWRITE(glvn,"#")
+# this should return JS Object Strings: All descendants of ^x(3,1) starting from ^x(3,1)
+Done with checks on file jswrite.out10 created from glvn ^x(3,1) with params # 
+
+# do ^%JSWRITE(glvn,"*")
+# this should return JS Object Strings: All descendants of ^x(3,1)
+Done with checks on file jswrite.out11 created from glvn ^x(3,1) with params * 
+
+# do ^%JSWRITE(glvn,"[#]")
+# this should return Array: All descendants of ^x(3,1) starting from ^x(3,1)
+Done with checks on file jswrite.out12 created from glvn ^x(3,1) with params [#] 
+
+# do ^%JSWRITE(glvn,"[*]")
+# this should return Array: All descendants of ^x(3,1)
+Done with checks on file jswrite.out13 created from glvn ^x(3,1) with params [*] 
+
+# do ^%JSWRITE(glvn,"*","noglvname")
+# this should return JS Object Strings: All descendants of ^x(3,1) omitting the global ^x
+Done with checks on file jswrite.out14 created from glvn ^x(3,1) with params * noglvname
+
+*******************************************************************
+# glvn set to ^x(1,5,2)
+# do ^%JSWRITE(glvn,"#")
+# this should return JS Object Strings: All descendants of ^x(1,5,2) starting from ^x(1,5,2)
+Done with checks on file jswrite.out15 created from glvn ^x(1,5,2) with params # 
+
+# do ^%JSWRITE(glvn,"*")
+# this should return JS Object Strings: All descendants of ^x(1,5,2)
+Done with checks on file jswrite.out16 created from glvn ^x(1,5,2) with params * 
+
+# do ^%JSWRITE(glvn,"[#]")
+# this should return Array: All descendants of ^x(1,5,2) starting from ^x(1,5,2)
+Done with checks on file jswrite.out17 created from glvn ^x(1,5,2) with params [#] 
+
+# do ^%JSWRITE(glvn,"[*]")
+# this should return Array: All descendants of ^x(1,5,2)
+Done with checks on file jswrite.out18 created from glvn ^x(1,5,2) with params [*] 
+
+# do ^%JSWRITE(glvn,"*","noglvname")
+# this should return JS Object Strings: All descendants of ^x(1,5,2) omitting the global ^x
+Done with checks on file jswrite.out19 created from glvn ^x(1,5,2) with params * noglvname
+
+###################################################################
+# Call STDIN^%JSWRITE using a ZWRITE as input
+Done with checks on file jswrite_zwrite.out created from glvn ^x with params zwr 
+###################################################################
+# Call incorrect ^%JSWRITE commands expecting errors
+# Running ^%JSWRITE("^x","*#") expecting error
+%JSWRITE-E-ILLEGALEXPR2. Illegal second expression--*#. Specify *, #, [*], or [#].
+# Running ^%JSWRITE("^x","#*") expecting error
+%JSWRITE-E-ILLEGALEXPR2. Illegal second expression--#*. Specify *, #, [*], or [#].
+# Running ^%JSWRITE("^doesnotexit","*") expecting no output
+###################################################################
+# Run dbcheck
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -17,13 +17,14 @@
 # gtm9269        [bdw]     Tests that the -nowarning compilation option suppresses %YDB-W-DONOBLOCK messages
 # missedrevert   [bdw]     Tests that FOR does not SIG-11 due to a missed REVERT
 # optimizexecute [bdw]     Tests that the machine listing for an xecute command is optimized
+# gtm9244        [bdw]     Tests that ^%JSWRITE outputs variable trees as JSON and returns errors when appropriate
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "v63012 test starts..."
 
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
-setenv subtest_list_non_replic "gtm9269 missedrevert optimizexecute"
+setenv subtest_list_non_replic "gtm9269 missedrevert optimizexecute gtm9244"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
