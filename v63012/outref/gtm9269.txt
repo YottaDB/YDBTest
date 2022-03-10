@@ -1,0 +1,15 @@
+# This tests that %YDB-W-DONOBLOCK is suppressed by -nowarning by trying to
+# compile an M program that contains a %YDB-W-DONOBLOCK errorl. Prior to V6.3-012,
+# this warning was not suppressed by -nowarning.
+###################################################################
+# First, unset $ydb_compile and $gtmcompile in case the test system set them automatically
+# Run the program without -nowarning to verify that the code results in a %YDB-W-DONOBLOCK
+		for i=1:1:5  do
+		               ^-----
+		At column 17, line 1, source module ##TEST_PATH##/gtm9269.m
+%YDB-W-DONOBLOCK, Argumentless DO not followed by a block
+Finished iteration 5 of loop
+###################################################################
+# Now delete the object file, enable -nowarning and run it again to make sure
+# the %YDB-W-DONOBLOCK is suppressed
+Finished iteration 5 of loop
