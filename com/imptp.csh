@@ -179,6 +179,11 @@ xyz
 	case 4: # Run Golang wrapper (uses SimpleThreadAPI) flavor of imptp
 		if (! -e go) then # if no go environment setup yet, do it
 			source $gtm_tst/com/setupgoenv.csh # Do our golang setup (sets $tstpath)
+			set status1 = $status
+			if ($status1) then
+				echo "[source $gtm_tst/com/setupgoenv.csh] failed with status [$status1]. Exiting..."
+				exit 1
+			endif
 		endif
 		if (! -e imptpgo) then # if imptpgo hasn't been built yet, get it and impjobgo built
 			cd go/src

@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -23,7 +23,7 @@ endif
 source $gtm_tst/com/setupgoenv.csh # Do our golang setup (sets $tstpath, $PKG_CONFIG_PATH, $GOPATH, $go_repo)
 set status1 = $status
 if ($status1) then
-	echo "[source $gtm_tst/$tst/u_inref/setupgoenv.csh] failed with status [$status1]. Exiting..."
+	echo "[source $gtm_tst/com/setupgoenv.csh] failed with status [$status1]. Exiting..."
 	exit 1
 endif
 

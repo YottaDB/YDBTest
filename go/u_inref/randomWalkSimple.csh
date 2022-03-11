@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -32,6 +32,11 @@ endif
 # Set up the golang environment and sets up our repo
 #
 source $gtm_tst/com/setupgoenv.csh # Do our golang setup (sets $tstpath)
+set status1 = $status
+if ($status1) then
+	echo "[source $gtm_tst/com/setupgoenv.csh] failed with status [$status1]. Exiting..."
+	exit 1
+endif
 ln -s $gtm_tst/$tst/inref/randomWalkSimple.go .
 if (0 != $status) then
     echo "TEST-E-FAILED : Unable to soft link go source file"
