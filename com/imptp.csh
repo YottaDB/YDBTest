@@ -101,16 +101,18 @@ if ($gtm_test_dbfill == "IMPTP" || $gtm_test_dbfill == "IMPZTP") then
 				endif
 			endif
 			set imptpflavor = `$gtm_exe/mumps -run rand $rand`
-			if (($gtm_test_libyottadb_asan_enabled) && (58 == `rustc --version | cut -d. -f2`)) then
+			# Disable Python testing if ASAN is enabled and Rust version is 1.58.* or 1.59.*
+			# to prevent erroneous core files from `rustc --version`.
+			# This command is run by YDBPython's `setup.py`, during the setting of
+			# LD_PRELOAD, e.g.:
+			#	LD_PRELOAD=$(gcc -print-file-name=libasan.so) rustc --version
+			# On systems with Rust version 1.58.* or 1.59.* (both versions seem only on an Arch Linux system,
+			# not on a Ubuntu/Debian/RHEL system), this has been seen to result in a segmentation fault.
+			# So, disable YDBPython random choice in that case.
+			# See https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/1299#note_839072462 for more details.
+			set rustcminorver = `rustc --version | cut -d. -f2`
+			if (($gtm_test_libyottadb_asan_enabled) && ((58 == $rustcminorver) || (59 == $rustcminorver))) then
 				while (3 == $imptpflavor)
-					# Disable Python testing if ASAN is enabled and Rust version is 1.58.*
-					# to prevent erroneous core files from `rustc --version`.
-					# This command is run by YDBPython's `setup.py`, during the setting of
-					# LD_PRELOAD, e.g.:
-					#	LD_PRELOAD=$(gcc -print-file-name=libasan.so) rustc --version
-					# On systems with Rust version 1.58.*, this results in a segmentation fault. So,
-					# disable Python in that case.
-					# See https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/1299#note_839072462 for more details.
 					set imptpflavor = `$gtm_exe/mumps -run rand $rand`
 				end
 			endif
