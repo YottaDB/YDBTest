@@ -15,7 +15,7 @@ mumps.dat
 
 # Verify core file was created and does show abort() invocation in ydb534 in the C-stack trace
 PASS: Core file expected and found
-#7  do_abort  at ##IN_TEST_PATH##/inref/ydb534.c:17
+##TEST_AWK#(7|8)  do_abort  at ##IN_TEST_PATH##/inref/ydb534.c:17
 
 # Verify YDB_FATAL_ERROR* file is created (remove it afterwards to avoid test framework from detecting it)
 PASS: YDB_FATAL_ERROR file expected and found
