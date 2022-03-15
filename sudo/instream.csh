@@ -41,5 +41,16 @@ if ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) then
 	setenv subtest_exclude_list "$subtest_exclude_list plugins"
 endif
 
+# Save a copy of the current system yottadb.pc before it gets modified by the various ydbinstall.sh invocations done in the
+# various subtests of the sudo test. This way we can restore the system copy at the end of the test and avoid the system
+# yottadb.pc pointing to a non-existent YottaDB installation somewhere under the test output directory (that gets deleted
+# at the end of the test run).
+sudo cp /usr/share/pkgconfig/yottadb.pc .
+
 $gtm_tst/com/submit_subtest.csh
+
+# Restore the copy of the current system yottadb.pc
+sudo cp yottadb.pc /usr/share/pkgconfig/yottadb.pc
+sudo rm yottadb.pc
+
 echo "sudo tests DONE."
