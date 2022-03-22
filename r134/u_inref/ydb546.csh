@@ -16,6 +16,10 @@ echo '# ------------------------------------------------------------------------
 
 $gtm_tst/com/dbcreate.csh mumps
 @ num = 1
+
+# We set $ydb_max_boolexpr_nesting_depth to 8 to avoid a rare failure where test9 can result
+# in an assert failure on a dbg build due to excessive nesting of the boolean expression
+setenv ydb_max_boolexpr_nesting_depth 8
 while ($num < 10)
 	$ydb_dist/yottadb -run test$num^ydb546
 	@ num = $num + 1
