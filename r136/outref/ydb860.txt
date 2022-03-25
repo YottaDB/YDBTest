@@ -1,0 +1,31 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+---------------------------------------------------------------------
+######## Test various code issues identified by fuzz testing ########
+---------------------------------------------------------------------
+
+------------------------------------------------------------
+# Test OPEN of a SOCKET device with a long LISTEN device parameter works fine
+# This used to previously (before YDB@98837f3e) fail with a SIG-11/Assert
+# Expecting ADDRTOOLONG error in below output
+------------------------------------------------------------
+# Try ydb860opensocketlisten.m using [yottadb -direct]
+
+YDB>
+
+YDB>
+%YDB-E-ADDRTOOLONG, Socket address xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx of length 128 is longer than the maximum permissible length 108
+
+YDB>
+# Try ydb860opensocketlisten.m using [yottadb -run]
+%YDB-E-ADDRTOOLONG, Socket address xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx of length 128 is longer than the maximum permissible length 108
+		At M source location +2^ydb860opensocketlisten
+
+YDB>
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
