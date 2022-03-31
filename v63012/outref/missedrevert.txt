@@ -1,0 +1,10 @@
+# This tests for SIG-11s caused by missed REVERTs in m_for.c.
+# While merging V6.3-012, we had an issue due to a missed REVERT
+# in sr_port/m_for.c. This test checks that a FOR works correctly
+# and does not crash with a SIG-11. See
+# https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1132#note_896366838
+# for more information.
+%YDB-E-LVUNDEF, Undefined local variable: a
+		At M source location +2^missedrevert
+
+YDB>
