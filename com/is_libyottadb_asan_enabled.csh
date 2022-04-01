@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2021-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -17,6 +17,10 @@
 # check is done on libgtmshr.so (since libgtmshr.so exists even in YottaDB builds as a soft link
 # to libyottadb.so).
 
+# Set $clangmajorver here so that tests can be disabled if they don't work on a specific CLANG version. This was moved out of
+# the below block in April 2022 because valgrind does not work correctly on clang 14 which caused the r132/ydb704 test to fail.
+# If YottaDB was built with GCC, it will be blank.
+set clangmajorver = `strings $gtm_exe/libgtmshr.so | grep 'clang version' | gawk -F. '{print $1}' | gawk '{print $NF}'`
 set asanlib = `ldd $gtm_exe/libgtmshr.so | grep libasan`
 setenv gtm_test_asan_compiler_clang11or12 0	# See purpose of this env var below where it gets set to 1
 if ("" == "$asanlib") then
@@ -34,7 +38,6 @@ if ("" == "$asanlib") then
 		# Inform caller of this through the below env var.
 		setenv gtm_test_asan_compiler "clang"
 		# Determine if clang 11 or 12 built libyottadb.so. This is used to disable the r132/ydb632 subtest.
-		set clangmajorver = `strings $gtm_exe/libgtmshr.so | grep 'clang version' | gawk -F. '{print $1}' | gawk '{print $NF}'`
 		if ((11 == "$clangmajorver") || (12 == "$clangmajorver")) then
 			setenv gtm_test_asan_compiler_clang11or12 1
 		endif

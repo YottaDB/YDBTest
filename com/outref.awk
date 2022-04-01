@@ -347,6 +347,10 @@ BEGIN {
 	if ("1" == ENVIRON["gtm_test_asan_compiler_clang11or12"])
 		envir[no_options] = "ASAN_CLANG_11_OR_12"
 	#
+	option_names[++no_options] = "clang_major_ver"
+	if ("14" == ENVIRON["clang_major_ver"])
+		envir[no_options] = "CLANG14"
+	#
 	if (("ubuntu" == ENVIRON["gtm_test_linux_distrib"]) && ("21.10" == ENVIRON["gtm_test_linux_version"]))
 	{
 		option_names[++no_options] = "ubuntu_21.10"

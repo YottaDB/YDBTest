@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2020-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -89,6 +89,13 @@ if ($gtm_test_libyottadb_asan_enabled) then
 	setenv subtest_exclude_list "$subtest_exclude_list ydb704"
 endif
 
+# Also temporarily disable ydb704 subtest on builds built with CLANG 14 as it fails with error messages
+# like the below due to valgrind not supporting CLANG 14 yet.
+# ### unhandled dwarf2 abbrev form code 0x25
+if ("14" == "$clangmajorver") then
+	setenv subtest_exclude_list "$subtest_exclude_list ydb704"
+endif
+
 if ($gtm_test_asan_compiler_clang11or12) then
 	# libyottadb.so was built with ASAN and CLANG 11 or CLANG 12
 	# In this case, the ydb632 subtest fails with the following diff
@@ -103,6 +110,8 @@ if ($gtm_test_asan_compiler_clang11or12) then
 	# So disable just this subtest.
 	setenv subtest_exclude_list "$subtest_exclude_list ydb632"
 endif
+
+
 
 # Disable ydb749 subtest as it is a heavyweight test and will take a lot of time on non-x86_64 (i.e. ARM).
 # The code is portable and so it is enough to test it only on x86_64.
