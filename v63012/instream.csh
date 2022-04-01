@@ -36,7 +36,8 @@ setenv subtest_exclude_list ""
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
 if ("pro" == "$tst_image") then
-	setenv subtest_exclude_list "$subtest_exclude_list"
+	# optimizexecute is disabled on pro because "yottadb -machine -lis=" is only implemented for dbg builds
+	setenv subtest_exclude_list "$subtest_exclude_list optimizexecute"
 endif
 
 if ("dbg" == "$tst_image") then

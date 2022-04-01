@@ -3,7 +3,15 @@
 # macro. See https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1132#note_896487238
 # for more information. This test verifies that the machine
 # listing for an xecute statement is optimized.
+##ALLOW_OUTPUT DYNAMIC_LITERALS
+##SUSPEND_OUTPUT NODYNAMIC_LITERALS
           1      PUSHL       I^#0 [0x0]                               ;OC_LINEFETCH
           3      MOVC3       @GTM$LITERAL+0x0, @B^0(r8)               ;OC_STOLITC
           6      JSB         @W^xf_restartpc(R11)                     ;OC_FORCHK1
           8      JSB         @B^xf_ret(R11)                           ;OC_RET
+##SUSPEND_OUTPUT DYNAMIC_LITERALS
+##ALLOW_OUTPUT NODYNAMIC_LITERALS
+          1      PUSHL       I^#0 [0x0]                               ;OC_LINEFETCH
+          3      MOVC3       @GTM$LITERAL+0x0, @B^0(r8)               ;OC_STOLIT
+          4      JSB         @W^xf_restartpc(R11)                     ;OC_FORCHK1
+          6      JSB         @B^xf_ret(R11)                           ;OC_RET
