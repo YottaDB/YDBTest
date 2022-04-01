@@ -1,0 +1,9 @@
+# While merging V6.3-012, we had an issue where xecutes
+# were not being optimized due to an issue with the dqnoop
+# macro. See https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1132#note_896487238
+# for more information. This test verifies that the machine
+# listing for an xecute statement is optimized.
+          1      PUSHL       I^#0 [0x0]                               ;OC_LINEFETCH
+          3      MOVC3       @GTM$LITERAL+0x0, @B^0(r8)               ;OC_STOLITC
+          6      JSB         @W^xf_restartpc(R11)                     ;OC_FORCHK1
+          8      JSB         @B^xf_ret(R11)                           ;OC_RET
