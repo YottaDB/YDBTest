@@ -184,10 +184,11 @@ endif
 echo "# Run ydbgo34d - will run for about 10 seconds (length of internal wait)"
 set syslog_before = `date +"%b %e %H:%M:%S"`
 `pwd`/ydbgo34d
+set pid = `cat pid.txt`
 # Now find out if the error made it to the syslog
 echo "# Expected syslog entry shown below"
-$gtm_tst/com/getoper.csh "$syslog_before" "" syslog1.txt "" "YDB-E-SIGACKTIMEOUT"
-$grep SIGACKTIMEOUT syslog1.txt
+$gtm_tst/com/getoper.csh "$syslog_before" "" syslog1.txt "" "$pid.*YDB-E-SIGACKTIMEOUT"
+$grep "$pid.*SIGACKTIMEOUT" syslog1.txt
 #
 # All done - Validate DB
 #

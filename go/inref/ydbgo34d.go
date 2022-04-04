@@ -17,6 +17,8 @@ package main
 import (
 	"fmt"
 	"lang.yottadb.com/go/yottadb"
+	"os"
+	"strconv"
 	"sync"
 	"syscall"
 	"time"
@@ -27,7 +29,10 @@ const tptoken uint64 = yottadb.NOTTP // No TP in this test currently
 func main() {
 	var wgDone sync.WaitGroup
 
-	sigNotify := make(chan bool, 1) // Create signal notify and signal ack channels
+	// Write out PID out to pid.txt so we can search for OUR errors only
+	os.WriteFile("pid.txt", []byte(strconv.Itoa(os.Getpid())), 0644)
+	// Create signal notify and signal ack channels
+	sigNotify := make(chan bool, 1)
 	sigAck := make(chan bool, 1)
 	yottadb.Init() // Initialize YottaDB just so the engine is alive
 	defer yottadb.Exit()
