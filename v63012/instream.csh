@@ -19,13 +19,14 @@
 # optimizexecute [bdw]     Tests that the machine listing for an xecute command is optimized
 # gtm9244        [bdw]     Tests that ^%JSWRITE outputs variable trees as JSON and returns errors when appropriate
 # gtm9260	 [see]	   Tests that MUPIP RUNDOWN cleans up any auxiliary MLock hashtable shared memory segment
+# gtm9182        [bdw]     Tests that a MUPIP BACKUP with a backup file path > 255 returns a FILENAMETOOLONG
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "v63012 test starts..."
 
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
-setenv subtest_list_non_replic "gtm9269 missedrevert optimizexecute gtm9244 gtm9260"
+setenv subtest_list_non_replic "gtm9269 missedrevert optimizexecute gtm9244 gtm9260 gtm9182"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then

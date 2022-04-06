@@ -1,0 +1,95 @@
+# Most of this test was based on the v63003/gtm4212 test which checks for
+# a FILENAMETOOLONG error for temp file paths that are >= 255 characters.
+# The gtm9182 issue was similar to this one but subtly different as the
+# bug here was that the error wasn't returned immediately if the temp
+# file's path was < 255 characters but the backup file's path was
+# > 255 characters. The gtm9182 changes only fixed this for backups
+# where a backup filename not a directory was specified. The YDB#864
+# changes address issues with backups incorrectly succeeding where a
+# directory is specified. This test covers both of these cases.
+###################################################################
+# As the length of the temp file, including the trailing / is 24 (an example
+# is DEFAULT_0000c4be_XXXXXX where the 0000c4be part is randomly generated)
+# and the length of a database called 'mumps', including '.dat' and the
+# trailing / is 10, we create a database called 'mumpsmumpsmumpsmumpsm' so that
+# it will be 26 characters long, 2 character longer than the temp file path.
+# This is 2 characters longer than the temp file path because a directory
+# path + temp file of exactly 255 characters produces an error but a backup
+# file path of exactly 255 characters works fine. An attempt to modify the
+# GTM-4212 changes to allow a path + temp file of exactly 255 resulted in
+# a %SYSTEM-E-ENO22 error when the MKSTEMP() macro attempted to create the
+# temp file. Hence the database file name must be at least 2 characters
+# longer than the temp file to produce an error that we wouldn't see with
+# just the GTM-4212 changes. We also disable journaling on this database.
+# This is necessary because the journals would sometimes fill up, producing
+# test failures due to YDB-I-JNLCREATE and YDB-I-FILERENAME messages
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumpsmumpsmumpsmumpsm.gld
+Using: ##SOURCE_PATH##/mupip
+mumpsmumpsmumpsmumpsm.dat
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumpsmumpsmumpsmumpsm.dat is now DISABLED
+###################################################################
+# Run MUPIP BACKUP with backup directory path lengths of 229, 230 and 231.
+# Since the database file length is 26 characters, the first BACKUP will
+# succeed, the second will incorrectly succeed without YDB#864 but fail
+# with a FILENAMETOOLONG on YottaDB with YDB#864 and the third will
+# fail with a FILENAMETOOLONG regardless of version.
+###################################################################
+# Backing up DEFAULT Region to path length 229
+# (backup file path length is 255 but temp file path length is 253)
+##TEST_AWKDB file ##TEST_PATH##/mumpsmumpsmumpsmumpsm.dat backed up in file ##TEST_PATH##/a*/mumpsmumpsmumpsmumpsm.dat
+##TEST_AWKTransactions up to 0x................ are backed up.
+
+
+BACKUP COMPLETED.
+
+###################################################################
+# Backing up DEFAULT Region to path length 230
+# (backup file path length is 256 but temp file path length is 254)
+##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/a*/mumpsmumpsmumpsmumpsm.dat.*
+%YDB-E-FILENAMETOOLONG, File name too long
+###################################################################
+# Backing up DEFAULT Region to path length 231
+# (backup file path length is 257 but temp file path length is 255)
+##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/a*//DEFAULT_........_XXXXXX
+%YDB-E-FILENAMETOOLONG, File name too long
+###################################################################
+# Backing up DEFAULT region to full file path of 250 characters
+# with $ydb_baktmpdir set to a shorter path. This backup will
+# incorrectly succeed without the YDB#864 changes but fail with
+# a FILENAMETOOLONG error with YDB#864.
+##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/a*/mumpsmumpsmumpsmumpsm.dat
+%YDB-E-FILENAMETOOLONG, File name too long
+###################################################################
+# Backing up DEFAULT region to relative file path of 255 characters
+# with $ydb_baktmpdir set to a shorter path. This backup will succeed
+# because none of the buffers in MUPIP BACKUP will ever overflow the
+# buffer and thus there is no need for a FILENAMETOOLONG error.
+##TEST_AWKDB file ##TEST_PATH##/mumpsmumpsmumpsmumpsm.dat backed up in file a*/mumpsmumpsmumpsmumpsm.dat
+##TEST_AWKTransactions up to 0x................ are backed up.
+
+
+BACKUP COMPLETED.
+
+###################################################################
+# Testing a 255 character backup file name with no file path.
+# This should produce a FILENAMETOOLONG error on the
+# upstream version of V6.3-012 but will not produce an
+# error on YottaDB or pre-V6.3-012 upstream versions.
+DB file ##TEST_PATH##/mumpsmumpsmumpsmumpsm.dat backed up in file abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefg
+##TEST_AWKTransactions up to 0x................ are backed up.
+
+
+BACKUP COMPLETED.
+
+###################################################################
+# Testing a 256 character backup file name with no file path.
+# This should produce a SYSTEM-E-ENO36 error on both YottaDB
+# and upstream versions.
+Error accessing backup output file or directory: abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgh
+%SYSTEM-E-ENO36, File name too long
+###################################################################
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
