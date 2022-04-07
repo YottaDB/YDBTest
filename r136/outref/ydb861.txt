@@ -1,0 +1,55 @@
+---------------------------------------------------------------------
+######## Test various $ZATRANSFORM() invocations for correctness ########
+---------------------------------------------------------------------
+
+------------------------------------------------------------
+# Test an assortment of $ZATRANSFORM() invocations some of which returned
+# wrong values and/or failed with a sig-11. We do not expect any failures
+# in these invocations and let the reference file check for expected values.
+#
+# Types of expressions tested as first parm of $zatransform():
+# 1. Literal boolean expression
+# 2. Simple variable based expression
+# 3. Literal equality expression (added per discussion here: https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/1371#note_905033866)
+# 4. Arithmetic expression
+# 5. Literal expressions for 0 and 1.
+# 6. Specify character via $zchar() expression
+# 7. Character right before numerics in ASCII string (":")
+# 8. Character right after numerics in ASCII string ("/")
+------------------------------------------------------------
+$zwrite($zatransform(0&1,0,2,0)) : 1 : (49)
+$zwrite($zatransform(0&1,0,2,1)) : 1 : (49)
+$zwrite($zatransform(0&1,0,-2,0)) : "" : (-1)
+$zwrite($zatransform(0&1,0,-2,1)) : "/" : (47)
+$zwrite($zatransform(a-b,0,2,0)) : 1 : (49)
+$zwrite($zatransform(a-b,0,2,1)) : 1 : (49)
+$zwrite($zatransform(a-b,0,-2,0)) : "" : (-1)
+$zwrite($zatransform(a-b,0,-2,1)) : "/" : (47)
+$zwrite($zatransform(1=2,0,2,0)) : 1 : (49)
+$zwrite($zatransform(1=2,0,2,1)) : 1 : (49)
+$zwrite($zatransform(1=2,0,-2,0)) : "" : (-1)
+$zwrite($zatransform(1=2,0,-2,1)) : "/" : (47)
+$zwrite($zatransform(1-1,0,2,0)) : 1 : (49)
+$zwrite($zatransform(1-1,0,2,1)) : 1 : (49)
+$zwrite($zatransform(1-1,0,-2,0)) : "" : (-1)
+$zwrite($zatransform(1-1,0,-2,1)) : "/" : (47)
+$zwrite($zatransform(0,0,2,0)) : 1 : (49)
+$zwrite($zatransform(0,0,2,1)) : 1 : (49)
+$zwrite($zatransform(0,0,-2,0)) : "" : (-1)
+$zwrite($zatransform(0,0,-2,1)) : "/" : (47)
+$zwrite($zatransform(1,0,2,0)) : 2 : (50)
+$zwrite($zatransform(1,0,2,1)) : 2 : (50)
+$zwrite($zatransform(1,0,-2,0)) : 0 : (48)
+$zwrite($zatransform(1,0,-2,1)) : 0 : (48)
+$zwrite($zatransform($zchar(248),0,2,0)) : "ù" : (249)
+$zwrite($zatransform($zchar(248),0,2,1)) : "ù" : (249)
+$zwrite($zatransform($zchar(248),0,-2,0)) : "÷" : (247)
+$zwrite($zatransform($zchar(248),0,-2,1)) : "÷" : (247)
+$zwrite($zatransform(":",0,2,0)) : ";" : (59)
+$zwrite($zatransform(":",0,2,1)) : ";" : (59)
+$zwrite($zatransform(":",0,-2,0)) : "/" : (47)
+$zwrite($zatransform(":",0,-2,1)) : 9 : (57)
+$zwrite($zatransform("/",0,2,0)) : ":" : (58)
+$zwrite($zatransform("/",0,2,1)) : 0 : (48)
+$zwrite($zatransform("/",0,-2,0)) : "." : (46)
+$zwrite($zatransform("/",0,-2,1)) : "." : (46)

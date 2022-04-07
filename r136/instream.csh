@@ -16,13 +16,14 @@
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 # ydb854 [nars]          Test that ICUSYMNOTFOUND error using Simple API does not assert fail
 # ydb860 [nars]          Test various code issues identified by fuzz testing
+# ydb861 [estess]	 Test $ZATRANSFORM() returns correct value for 2/-2 3rd parm and does not sig-11 with computed input values
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r136 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "ydb854 ydb860"
+setenv subtest_list_non_replic "ydb854 ydb860 ydb861"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
