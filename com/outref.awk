@@ -348,7 +348,7 @@ BEGIN {
 		envir[no_options] = "ASAN_CLANG_11_OR_12"
 	#
 	option_names[++no_options] = "clang_major_ver"
-	if ("14" == ENVIRON["clang_major_ver"])
+	if ("14" == ENVIRON["clangmajorver"])
 		envir[no_options] = "CLANG14"
 	#
 	if (("ubuntu" == ENVIRON["gtm_test_linux_distrib"]) && ("21.10" == ENVIRON["gtm_test_linux_version"]))

@@ -20,7 +20,7 @@
 # Set $clangmajorver here so that tests can be disabled if they don't work on a specific CLANG version. This was moved out of
 # the below block in April 2022 because valgrind does not work correctly on clang 14 which caused the r132/ydb704 test to fail.
 # If YottaDB was built with GCC, it will be blank.
-set clangmajorver = `strings $gtm_exe/libgtmshr.so | grep 'clang version' | gawk -F. '{print $1}' | gawk '{print $NF}'`
+setenv clangmajorver `strings $gtm_exe/libgtmshr.so | grep 'clang version' | gawk -F. '{print $1}' | gawk '{print $NF}' | gawk 'NR==1{print $1}'`
 set asanlib = `ldd $gtm_exe/libgtmshr.so | grep libasan`
 setenv gtm_test_asan_compiler_clang11or12 0	# See purpose of this env var below where it gets set to 1
 if ("" == "$asanlib") then
