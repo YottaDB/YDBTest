@@ -18,7 +18,6 @@ import (
 	"fmt"
 	"lang.yottadb.com/go/yottadb"
 	"os"
-	"strconv"
 	"sync"
 	"syscall"
 	"time"
@@ -30,7 +29,15 @@ func main() {
 	var wgDone sync.WaitGroup
 
 	// Write out PID out to pid.txt so we can search for OUR errors only
-	os.WriteFile("pid.txt", []byte(strconv.Itoa(os.Getpid())), 0644)
+	fd, err := os.Create("pid.txt")
+	if nil != err {
+		panic(err)
+	}
+	_, err = fd.WriteString(fmt.Sprintf("%d\n", os.Getpid()))
+	if nil != err {
+		panic(err)
+	}
+	fd.Close()
 	// Create signal notify and signal ack channels
 	sigNotify := make(chan bool, 1)
 	sigAck := make(chan bool, 1)
@@ -38,7 +45,7 @@ func main() {
 	defer yottadb.Exit()
 	yottadb.MaximumSigAckWait = 5 // Shorten our timeout just for this test so it runs faster
 	// Set up a signal notifier so we do our test while there is a pending signal
-	err := yottadb.RegisterSignalNotify(syscall.SIGILL, sigNotify, sigAck, yottadb.NotifyInsteadOfYDBSigHandler)
+	err = yottadb.RegisterSignalNotify(syscall.SIGILL, sigNotify, sigAck, yottadb.NotifyInsteadOfYDBSigHandler)
 	if nil != err {
 		panic(err)
 	}
