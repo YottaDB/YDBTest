@@ -3,6 +3,9 @@
 ; Copyright (c) 2004-2016 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -17,7 +20,7 @@ ctrlc	;
 	for i=1:1:100000 set a(i)=$j(i,100)
 	; Start the main body of the test
 	do sstep^ctrlc
-	for i=1:1:10000000  SET x=x+1
+	for i=1:1:20000000  SET x=x+1
 	quit
 sstep   ; Modified from sstep.m to just zprint the line for expect's targetting
 	set $zstep="zprint @$zpos  zstep into"
@@ -27,7 +30,7 @@ sstep   ; Modified from sstep.m to just zprint the line for expect's targetting
 validate;
 	write "Checking test status",!
 	set z=$order(y("V",""),-1)
-	if (z=100002)!($data(x)[0)!(x=10000000) set status="FAIL" zshow "*"
+	if (z=100002)!($data(x)[0)!(x=20000000) set status="FAIL" zshow "*"
 	else  set status="PASS"
 	write status
 	quit

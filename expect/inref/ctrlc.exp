@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -61,7 +61,7 @@ set timeout 300
 
 # FOR loop
 send -- "do ^ctrlc\r"
-expect "for i=1:1:10000000  SET x=x+1"
+expect "for i=1:1:20000000  SET x=x+1"
 send -- "\003"
 expect "YDB-I-CTRLC, CTRL_C encountered" {set ctrlc [expr $ctrlc + 1]}
 
