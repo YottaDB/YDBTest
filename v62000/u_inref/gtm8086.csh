@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -62,6 +62,14 @@ if ($?test_replic) then
 	# has jfh->is_not_latest_jnl set to TRUE.
 	set jnlswitchretry = `$gtm_exe/mumps -run rand 2`
 	if ($jnlswitchretry) then
+		# Before stopping the receiver server, ensure that the source and receiver have connected. Or else we could
+		# get an INSUNKNOWN error when the receiver is restarted a little later in this file (search for
+		# "$MSR STARTRCV INST1 INST2" usage below) in case the test framework chooses "test_replic_suppl_type"
+		# env var of 1 (i.e. A->P connection where P is supplementary).
+		get_msrtime	# Sets $time_msr to point to time of previous $MSR START INST1 INST2 command
+		# Note: We use msr_dont_trace below as otherwise the reference file will have an additional line from the
+		# below only when $jnlswitchretry is 1 which leads to a non-deterministic reference file.
+		$MSR RUN INST2 'set msr_dont_trace; $gtm_tst/com/wait_for_log.csh -log RCVR_'${time_msr}'.log -message "New History Content"'
 		set jnlswitchretry_time = `date +"%b %e %H: %M: %S"`
 		$MSR STOPRCV INST1 INST2 >& jnlswitchretry_1.log
 	endif
