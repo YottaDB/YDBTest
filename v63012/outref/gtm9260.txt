@@ -1,0 +1,30 @@
+# This test verifies that when an auxiliary shared memory segment for a resize M Lock hashtable
+# is created and orphaned, it gets cleaned up by MUPIP RUNDOWN. Prior to GTM-9260, that cleanup
+# did not occur.
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+###################################################################
+# Step 1 - run gtm9260 to create and orphan our M Lock hashtab shm extension
+Starting gtm9260 - trying to create an MLock hashtable expansion
+##TEST_AWKCompleted gtm9260 - segment created \(shmid=[1-9][0-9]*\) after 528 iterations - terminating via kill -9
+Killed
+###################################################################
+# Step 2 - verify the shmid created for the lock hashtab extension was properly orphaned
+Verified - the shmid created for the lock hashtab extension was properly orphaned and still exists
+###################################################################
+# Step 3 - run MUPIP RUNDOWN on the DEFAULT region
+##TEST_AWK%YDB-I-SHMREMOVED, Removed Shared Memory id [1-9][0-9]* corresponding to file ##TEST_PATH##/mumps.dat
+##TEST_AWK%YDB-I-SHMREMOVED, Removed Shared Memory id [1-9][0-9]* corresponding to file ##TEST_PATH##/mumps.dat
+##TEST_AWK%YDB-I-SEMREMOVED, Semaphore id [1-9][0-9]* removed from the system
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+###################################################################
+# Step 4 - verify the shmid created for the lock hashtab extension has been removed
+Success - created M Lock shm was removed
+###################################################################
+# Run dbcheck
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -18,13 +18,14 @@
 # missedrevert   [bdw]     Tests that FOR does not SIG-11 due to a missed REVERT
 # optimizexecute [bdw]     Tests that the machine listing for an xecute command is optimized
 # gtm9244        [bdw]     Tests that ^%JSWRITE outputs variable trees as JSON and returns errors when appropriate
+# gtm9260	 [see]	   Tests that MUPIP RUNDOWN cleans up any auxiliary MLock hashtable shared memory segment
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "v63012 test starts..."
 
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
-setenv subtest_list_non_replic "gtm9269 missedrevert optimizexecute gtm9244"
+setenv subtest_list_non_replic "gtm9269 missedrevert optimizexecute gtm9244 gtm9260"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
@@ -39,6 +40,8 @@ setenv subtest_exclude_list ""
 if ("pro" == "$tst_image") then
 	# optimizexecute is disabled on pro because "yottadb -machine -lis=" is only implemented for dbg builds
 	setenv subtest_exclude_list "$subtest_exclude_list optimizexecute"
+	# gtm9260 needs to use $ydb_lockhash_n_bits which is only available in dbg mode
+	setenv subtest_exclude_list "$subtest_exclude_list gtm9260"
 endif
 
 if ("dbg" == "$tst_image") then
