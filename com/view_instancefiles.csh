@@ -4,6 +4,9 @@
 # Copyright (c) 2006-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -42,8 +45,17 @@ endif
 if (! $?instancelist) setenv instancelist "$gtm_test_msr_all_instances"
 
 foreach instx ($instancelist)
-	#$MSR RUN $instx 'set msr_dont_trace; if (! -e $gtm_repl_instance) exit 1'
-	#if ($status) continue
+	# If this is a multi-host test and "view_instancefiles_filter" env var is defined by the calling test,
+	# then we need to ensure that env var is set even in the remote instances. This is done by updating
+	# "env_supplementary.csh" on those instances. But this script could be invoked multiple times by the
+	# calling test and we don't want to update "env_supplementary.csh" multiple times. Just once is good enough.
+	# Hence we check if "$cntsnapshot" is 1 (which indicates this is the first time the script is being called in this test).
+	if ($test_replic_mh_type && $?view_instancefiles_filter && (1 == $cntsnapshot)) then
+		# Note that we want the double-quotes surrounding the value of $view_instancefiles_filter as it is a multi-word
+		# string containing spaces (or else one would get a "setenv: Too many arguments" error). Hence the need for
+		# the weird-looking \\" below.
+		$MSR RUN $instx 'set msr_dont_trace ; echo setenv view_instancefiles_filter \\"'$view_instancefiles_filter'\\" >> env_supplementary.csh'
+	endif
 	$MSR RUN $instx 'set msr_dont_trace; $MUPIP replic -editinstance -show '$detail' $gtm_repl_instance >& '"instancefile_$cntsnapshot.outx"
 	$MSR RUN $instx 'set msr_dont_trace; ($tst_awk -f $gtm_tst/com/view_instancefiles.awk -v funcx=filter -v ignore="'$ignoreit'" '"instancefile_$cntsnapshot.outx > instancefile_$cntsnapshot.out)"
 	if ($?printit) then

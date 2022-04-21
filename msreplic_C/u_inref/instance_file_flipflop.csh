@@ -4,7 +4,7 @@
 # Copyright (c) 2006-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -16,6 +16,13 @@
 #
 # If run with journaling, this test requires BEFORE_IMAGE so set that unconditionally even if test was started with -jnl nobefore
 source $gtm_tst/com/gtm_test_setbeforeimage.csh
+
+# Indicate to "view_instancefiles.csh/view_instancefiles.awk" to filter out "Connect Sequence Number"
+# Otherwise, the reference file could have "Connect Sequence Number" values that are different in some test runs
+# due to timing issues (connection between source and receiver that happens in the background could occur when
+# the source side is at a non-deterministic Sequence Number). It is okay to filter out this number as the main purpose
+# of this test is to verify the history records in the replication instance file.
+setenv view_instancefiles_filter "Connect Sequence Number"
 
 cat << EOF
 =====================================================================

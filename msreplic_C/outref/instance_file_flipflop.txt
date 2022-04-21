@@ -154,15 +154,15 @@ Source Server Slots
 ----------------------------------------------------------
 SLT # 0 : Secondary Instance Name                INSTANCE2
 SLT # 0 : Resync Sequence Number                        61 [0x000000000000003D]
-SLT # 0 : Connect Sequence Number                        1 [0x0000000000000001]
+SLT # X : Connect Sequence Number             ##FILTERED##
 ----------------------------------------------------------
 SLT # 1 : Secondary Instance Name                INSTANCE3
 SLT # 1 : Resync Sequence Number                        51 [0x0000000000000033]
-SLT # 1 : Connect Sequence Number                        1 [0x0000000000000001]
+SLT # X : Connect Sequence Number             ##FILTERED##
 ----------------------------------------------------------
 SLT # 2 : Secondary Instance Name                INSTANCE4
 SLT # 2 : Resync Sequence Number                        56 [0x0000000000000038]
-SLT # 2 : Connect Sequence Number                        1 [0x0000000000000001]
+SLT # X : Connect Sequence Number             ##FILTERED##
 
 ----------------------------------------------------------
 History Records (histinfo structures)
@@ -232,7 +232,7 @@ Source Server Slots
 ----------------------------------------------------------
 SLT # 0 : Secondary Instance Name                INSTANCE1
 SLT # 0 : Resync Sequence Number                         1 [0x0000000000000001]
-SLT # 0 : Connect Sequence Number                        0 [0x0000000000000000]
+SLT # X : Connect Sequence Number             ##FILTERED##
 
 ----------------------------------------------------------
 History Records (histinfo structures)
@@ -302,7 +302,7 @@ Source Server Slots
 ----------------------------------------------------------
 SLT # 0 : Secondary Instance Name                INSTANCE1
 SLT # 0 : Resync Sequence Number                         1 [0x0000000000000001]
-SLT # 0 : Connect Sequence Number                        0 [0x0000000000000000]
+SLT # X : Connect Sequence Number             ##FILTERED##
 
 ----------------------------------------------------------
 History Records (histinfo structures)
@@ -372,7 +372,7 @@ Source Server Slots
 ----------------------------------------------------------
 SLT # 0 : Secondary Instance Name                INSTANCE1
 SLT # 0 : Resync Sequence Number                         1 [0x0000000000000001]
-SLT # 0 : Connect Sequence Number                        0 [0x0000000000000000]
+SLT # X : Connect Sequence Number             ##FILTERED##
 
 ----------------------------------------------------------
 History Records (histinfo structures)
@@ -530,10 +530,8 @@ Diffing instancefile_1.out and instancefile_2.out on INST2
 ##ALLOW_OUTPUT SUPPLEMENTARY_AB
 ##TEST_AWK.*
 < SLT # 0 : Resync Sequence Number                         1 [0x0000000000000001]
-< SLT # 0 : Connect Sequence Number                        0 [0x0000000000000000]
 ---
 > SLT # 0 : Resync Sequence Number                        81 [0x0000000000000051]
-> SLT # 0 : Connect Sequence Number                       61 [0x000000000000003D]
 ##TEST_AWK.*
 > ----------------------------------------------------------
 > HST #      1 : Root Primary Instance Name        INSTANCE2
@@ -607,10 +605,8 @@ Diffing instancefile_2.out and instancefile_3.out on INST1
 ##ALLOW_OUTPUT SUPPLEMENTARY_AB
 ##TEST_AWK.*
 < SLT # 0 : Resync Sequence Number                        61 [0x000000000000003D]
-< SLT # 0 : Connect Sequence Number                        1 [0x0000000000000001]
 ---
 > SLT # 0 : Resync Sequence Number                        91 [0x000000000000005B]
-> SLT # 0 : Connect Sequence Number                       81 [0x0000000000000051]
 ##TEST_AWK.*
 > ----------------------------------------------------------
 > HST #      2 : Root Primary Instance Name        INSTANCE1
@@ -771,10 +767,8 @@ Diffing instancefile_3.out and instancefile_4.out on INST2
 ##ALLOW_OUTPUT SUPPLEMENTARY_AB
 ##TEST_AWK.*
 < SLT # 0 : Resync Sequence Number                        81 [0x0000000000000051]
-< SLT # 0 : Connect Sequence Number                       61 [0x000000000000003D]
 ---
 > SLT # 0 : Resync Sequence Number                       111 [0x000000000000006F]
-> SLT # 0 : Connect Sequence Number                       91 [0x000000000000005B]
 ##TEST_AWK.*
 > ----------------------------------------------------------
 > HST #      3 : Root Primary Instance Name        INSTANCE2
@@ -874,10 +868,8 @@ Diffing instancefile_4.out and instancefile_5.out on INST1
 ##ALLOW_OUTPUT SUPPLEMENTARY_AB
 ##TEST_AWK.*
 < SLT # 0 : Resync Sequence Number                        91 [0x000000000000005B]
-< SLT # 0 : Connect Sequence Number                       81 [0x0000000000000051]
 ---
 > SLT # 0 : Resync Sequence Number                       141 [0x000000000000008D]
-> SLT # 0 : Connect Sequence Number                      131 [0x0000000000000083]
 ##TEST_AWK.*
 > ----------------------------------------------------------
 > HST #      4 : Root Primary Instance Name        INSTANCE1
@@ -1250,10 +1242,8 @@ Diffing instancefile_5.out and instancefile_6.out on INST2
 ##ALLOW_OUTPUT SUPPLEMENTARY_AB
 ##TEST_AWK.*
 < SLT # 0 : Resync Sequence Number                       111 [0x000000000000006F]
-< SLT # 0 : Connect Sequence Number                       91 [0x000000000000005B]
 ---
 > SLT # 0 : Resync Sequence Number                       181 [0x00000000000000B5]
-> SLT # 0 : Connect Sequence Number                      171 [0x00000000000000AB]
 ##TEST_AWK.*
 > ----------------------------------------------------------
 > HST #      7 : Root Primary Instance Name        INSTANCE2
@@ -1799,11 +1789,10 @@ Diffing instancefile_6.out and instancefile_7.out on INST2
 < SLT # 0 : Resync Sequence Number                       181 [0x00000000000000B5]
 ---
 > SLT # 0 : Resync Sequence Number                       191 [0x00000000000000BF]
-##TEST_AWK.*
+> SLT # X : Connect Sequence Number             ##FILTERED##
 > ----------------------------------------------------------
 > SLT # 1 : Secondary Instance Name                INSTANCE3
 > SLT # 1 : Resync Sequence Number                       201 [0x00000000000000C9]
-> SLT # 1 : Connect Sequence Number                      181 [0x00000000000000B5]
 ==========================================================
 ==========================================================
 History records for INST3 at instancefile_7.out
@@ -2017,7 +2006,7 @@ Diffing instancefile_6.out and instancefile_7.out on INST3
 > ----------------------------------------------------------
 > SLT # 1 : Secondary Instance Name                INSTANCE2
 > SLT # 1 : Resync Sequence Number                         1 [0x0000000000000001]
-> SLT # 1 : Connect Sequence Number                        0 [0x0000000000000000]
+> SLT # X : Connect Sequence Number             ##FILTERED##
 ##TEST_AWK.*
 > ----------------------------------------------------------
 > HST #      1 : Root Primary Instance Name        INSTANCE2
@@ -2838,10 +2827,8 @@ Diffing instancefile_8.out and instancefile_9.out on INST1
 ##ALLOW_OUTPUT SUPPLEMENTARY_AB
 ##TEST_AWK.*
 < SLT # 0 : Resync Sequence Number                       141 [0x000000000000008D]
-< SLT # 0 : Connect Sequence Number                      131 [0x0000000000000083]
 ---
 > SLT # 0 : Resync Sequence Number                        56 [0x0000000000000038]
-> SLT # 0 : Connect Sequence Number                       56 [0x0000000000000038]
 ##TEST_AWK.*
 < ----------------------------------------------------------
 < HST #      1 : Root Primary Instance Name        INSTANCE2
@@ -3032,16 +3019,12 @@ Diffing instancefile_8.out and instancefile_9.out on INST2
 ##ALLOW_OUTPUT SUPPLEMENTARY_AB
 ##TEST_AWK.*
 < SLT # 0 : Resync Sequence Number                       191 [0x00000000000000BF]
-< SLT # 0 : Connect Sequence Number                      171 [0x00000000000000AB]
 ---
 > SLT # 0 : Resync Sequence Number                        56 [0x0000000000000038]
-> SLT # 0 : Connect Sequence Number                       56 [0x0000000000000038]
 ##TEST_AWK.*
 < SLT # 1 : Resync Sequence Number                       201 [0x00000000000000C9]
-< SLT # 1 : Connect Sequence Number                      181 [0x00000000000000B5]
 ---
 > SLT # 1 : Resync Sequence Number                        56 [0x0000000000000038]
-> SLT # 1 : Connect Sequence Number                       56 [0x0000000000000038]
 ##TEST_AWK.*
 < ----------------------------------------------------------
 < HST #      1 : Root Primary Instance Name        INSTANCE2
@@ -3405,17 +3388,14 @@ Diffing instancefile_8.out and instancefile_9.out on INST3
 ==========================================================
 Diffing instancefile_8.out and instancefile_9.out on INST4
 ##TEST_AWK.*
-< SLT # 0 : Connect Sequence Number                        0 [0x0000000000000000]
----
-> SLT # 0 : Connect Sequence Number                      101 [0x0000000000000065]
 > ----------------------------------------------------------
 > SLT # 1 : Secondary Instance Name                INSTANCE2
 > SLT # 1 : Resync Sequence Number                         1 [0x0000000000000001]
-> SLT # 1 : Connect Sequence Number                      101 [0x0000000000000065]
+> SLT # X : Connect Sequence Number             ##FILTERED##
 > ----------------------------------------------------------
 > SLT # 2 : Secondary Instance Name                INSTANCE3
 > SLT # 2 : Resync Sequence Number                         1 [0x0000000000000001]
-> SLT # 2 : Connect Sequence Number                      101 [0x0000000000000065]
+> SLT # X : Connect Sequence Number             ##FILTERED##
 ==========================================================
   	--> INST1, INST2, INST3 should have removed transactions after 55:
 	    <seqno=  1, name=INSTANCE1, cycle=1>
@@ -3486,7 +3466,7 @@ Diffing instancefile_9.out and instancefile_10.out on INST2
 > ----------------------------------------------------------
 > SLT # 2 : Secondary Instance Name                INSTANCE4
 > SLT # 2 : Resync Sequence Number                         1 [0x0000000000000001]
-> SLT # 2 : Connect Sequence Number                        0 [0x0000000000000000]
+> SLT # X : Connect Sequence Number             ##FILTERED##
 ##TEST_AWK.*
 > ----------------------------------------------------------
 > HST #      1 : Root Primary Instance Name        INSTANCE4
@@ -3526,7 +3506,7 @@ Diffing instancefile_9.out and instancefile_10.out on INST3
 > ----------------------------------------------------------
 > SLT # 2 : Secondary Instance Name                INSTANCE4
 > SLT # 2 : Resync Sequence Number                         1 [0x0000000000000001]
-> SLT # 2 : Connect Sequence Number                        0 [0x0000000000000000]
+> SLT # X : Connect Sequence Number             ##FILTERED##
 ##TEST_AWK.*
 > ----------------------------------------------------------
 > HST #      1 : Root Primary Instance Name        INSTANCE4
