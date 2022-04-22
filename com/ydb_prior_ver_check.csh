@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -45,6 +45,7 @@ if ($?ydb_environment_init) then
 		echo "unsetenv gtmdbglvl" >>&! settings.csh
 		unsetenv gtmdbglvl
 	endif
+	set disabletls = 0
 	if ($ydb_test_tls13_plus) then
 		# This is a system having TLS V1.3 which is not supported by the TLS plugin in pre-r1.24 builds of YottaDB.
 		# If the test framework randomly chosen TLS, the source and/or receiver server running the pre-r1.24 build
@@ -55,6 +56,7 @@ if ($?ydb_environment_init) then
 		if (!($1 =~ "V*_R*")) then
 			# This is a pure GT.M build because it does not have a _Rxxx suffix (e.g. _R122)
 			set disabletls = 1
+			echo "# Overriding setting of gtm_test_tls by ydb_prior_ver_check.csh TLS V1.3 (prior_ver = $1 is pure GT.M build)" >>&! settings.csh
 		else
 			# Check if the YottaDB release i.e. xxx in Rxxx is less than 124.
 			# Note that some versions might have been named V63009_R131C etc. In that case, only take 131
@@ -62,15 +64,33 @@ if ($?ydb_environment_init) then
 			set ydbrel = `echo $1 | sed 's/.*_R//g' | cut -b 1-3`
 			if ($ydbrel < 124) then
 				set disabletls = 1
+				echo "# Overriding setting of gtm_test_tls by ydb_prior_ver_check.csh TLS V1.3 (prior_ver = $1 < R124)" >>&! settings.csh
 			else
-				set disabletls = 0
 			endif
 		endif
-		if ($disabletls) then
-			echo "# Overriding setting of gtm_test_tls by ydb_prior_ver_check.csh TLS V1.3(prior_ver = $1)" >>&! settings.csh
-			echo "setenv gtm_test_tls FALSE" >>&! settings.csh
-			setenv gtm_test_tls "FALSE"
-		endif
+	endif
+	# Check if libgtmtls.so has issues with finding libssl.so library. We noticed this in Ubuntu 22.04 systems where
+	# they decided to switch to libssl 3.0 (from version 1.1). In Ubuntu 21.10 systems we found a libssl1.1 package
+	# that provided the needed libraries for version 1.1. But in Ubuntu 22.04 LTS, they decided to do away with that
+	# package so the only solution was to recompile the older binaries with the newer libssl 3.0. Since there were
+	# other issues preventing the recompile from happening easily, we decided to disable TLS in the test in such cases.
+	# For the record, an example output from such an older build on a Ubuntu 22.04 system is the following.
+	#
+	# $ ldd $gtm_root/R134/pro/plugin/libgtmtls.so
+	#   .
+	#   .
+	#	libssl.so.1.1 => not found
+	#   .
+	#   .
+	#
+	set notfound = `ldd $gtm_root/$1/pro/plugin/libgtmtls.so |& grep libssl.so | grep "not found"`
+	if ("" != "$notfound") then
+		set disabletls = 1
+		echo "# Overriding setting of gtm_test_tls by ydb_prior_ver_check.csh (prior_ver = $1 libssl.so not found)" >>&! settings.csh
+	endif
+	if ($disabletls) then
+		echo "setenv gtm_test_tls FALSE" >>&! settings.csh
+		setenv gtm_test_tls "FALSE"
 	endif
 	# If this test chose r120 as the prior version, GDE won't work with that version unless ydb_msgprefix is set to "GTM".
 	# (see https://gitlab.com/YottaDB/DB/YDB/issues/193 for details). Therefore, set ydb_msgprefix to "GTM" in that case.
