@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -96,7 +96,11 @@ $MUPIP trigger -select tst_ver_triggerselect.trg
 echo "# switch to prior ver and try setting ^a"
 source $gtm_tst/com/switch_gtm_version.csh $prior_ver pro
 cp prior_ver_mumps.gld mumps.gld
-$gtm_exe/mumps -run %XCMD 'set ^a=1' >&! prior_ver_upgraded_trig.out
+# We have seen that using 'mumps -run %XCMD' causes a SIG-11 when using V62000 pro (built on a Ubuntu 18.04 system or so) on a
+# Ubuntu 22.04 system. Not sure why. But we work around that by using 'mumps -direct' instead which does not suffer from that issue.
+$gtm_exe/mumps -direct >&! prior_ver_upgraded_trig.out << GTM_EOF
+set ^a=1
+GTM_EOF
 # Check for GTM-E-TRIGDEFBAD (not YDB-E-TRIGDEFBAD) since the version issuing this is < r1.20 (prior random version chosen above)
 $gtm_tst/com/check_error_exist.csh prior_ver_upgraded_trig.out GTM-E-TRIGDEFBAD
 
