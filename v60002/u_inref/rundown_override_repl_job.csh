@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2013, 2014 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -41,6 +44,12 @@ echo
 $gtm_exe/mumps -direct >& "gtm${case}a.out" << EOF
 set ^a=1
 EOF
+
+# Ensure the update has been replicated across to the secondary side.
+# This is what will ensure the database file on the secondary side has also been opened
+# before we crash the secondary. Not ensuring this could cause the `MUUSERLBK` message
+# (expected later in this script) to not show up in some cases resulting in a false test failure.
+$MSR SYNC ALL_LINKS
 
 # Crash the secondary.
 if (3 == $case) then
