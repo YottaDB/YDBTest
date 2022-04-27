@@ -17,6 +17,7 @@
 # 7. Character right before numerics in ASCII string (":")
 # 8. Character right after numerics in ASCII string ("/")
 ------------------------------------------------------------
+##SUSPEND_OUTPUT UNICODE_MODE
 $zwrite($zatransform(0&1,0,2,0)) : 1 : (49)
 $zwrite($zatransform(0&1,0,2,1)) : 1 : (49)
 $zwrite($zatransform(0&1,0,-2,0)) : "" : (-1)
@@ -53,3 +54,11 @@ $zwrite($zatransform("/",0,2,0)) : ":" : (58)
 $zwrite($zatransform("/",0,2,1)) : 0 : (48)
 $zwrite($zatransform("/",0,-2,0)) : "." : (46)
 $zwrite($zatransform("/",0,-2,1)) : "." : (46)
+##ALLOW_OUTPUT UNICODE_MODE
+##SUSPEND_OUTPUT NONUNICODE_MODE
+$zwrite($zatransform(0&1,0,2,0)) : 
+%YDB-E-ZATRANSCOL, The collation requested has no implementation for the requested operation
+		At M source location ydb861+7^ydb861
+
+YDB>
+##ALLOW_OUTPUT NONUNICODE_MODE
