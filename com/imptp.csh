@@ -106,12 +106,12 @@ if ($gtm_test_dbfill == "IMPTP" || $gtm_test_dbfill == "IMPZTP") then
 			# This command is run by YDBPython's `setup.py`, during the setting of
 			# LD_PRELOAD, e.g.:
 			#	LD_PRELOAD=$(gcc -print-file-name=libasan.so) rustc --version
-			# On systems with Rust version 1.58.* or 1.59.* (both versions seem only on an Arch Linux system,
+			# On systems with Rust version 1.58.*, 1.59.* or 1.60.* (all versions only on an Arch Linux system,
 			# not on a Ubuntu/Debian/RHEL system), this has been seen to result in a segmentation fault.
 			# So, disable YDBPython random choice in that case.
 			# See https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/1299#note_839072462 for more details.
 			set rustcminorver = `rustc --version | cut -d. -f2`
-			if (($gtm_test_libyottadb_asan_enabled) && ((58 == $rustcminorver) || (59 == $rustcminorver))) then
+			if (($gtm_test_libyottadb_asan_enabled) && (58 <= $rustcminorver) && (60 >= $rustcminorver)) then
 				while (3 == $imptpflavor)
 					set imptpflavor = `$gtm_exe/mumps -run rand $rand`
 				end
