@@ -1,0 +1,35 @@
+# Test for GTM-7759 - verify that the new (V63012) LOGDENIALS statement in restrict.txt works correctly.
+#
+# This test runs a series of 3 small tests on two userids. The two userids are (1) the user this test was
+# started with and the second is a userid we create (and remove) in this test - ydbtest3. We use 'sudo su'
+# to switch users and record the log of what the test did. The test makes a copy of the YottaDB distro so
+# we can add the restrict.txt file to it. This file contains only a LOGDENIALS statement for group ydbtest3
+# so our expectation is that on runs in the ydbtest3 userid, it will see the error we are testing in the
+# syslog file while runs with the test userid will not see those errors logged. There are a lot of errors
+# which have their messages designated as automatically being logged to syslog. We only test 3 as most of
+# them are significantly difficult to invoke.
+#
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+## Testing user ydbtest3 with test ZGBLDIRACC
+##TEST_AWK... .. ..:..:.. ##TEST_HOST_SHORT##.* YDB-MUMPS\[[1-9][0-9]*\]: %YDB-I-TEXT, %YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue. -- generated from 0x[0-9A-F]*.
+
+##TEST_AWK## Testing user .* with test ZGBLDIRACC
+
+## Testing user ydbtest3 with test DBPRIVERR
+##TEST_AWK... .. ..:..:.. ##TEST_HOST_SHORT##.* YDB-MUMPS\[[1-9][0-9]*\]: %YDB-I-TEXT, %YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/mumps.dat -- generated from 0x[0-9A-F]*.
+
+##TEST_AWK## Testing user .* with test DBPRIVERR
+
+## Testing user ydbtest3 with test SETZDIR
+##TEST_AWK... .. ..:..:.. ##TEST_HOST_SHORT##.* YDB-MUMPS\[[1-9][0-9]*\]: %YDB-I-TEXT, %YDB-E-SETZDIR, Cannot change working directory to /blat -- generated from 0x[0-9A-F]*.
+
+##TEST_AWK## Testing user .* with test SETZDIR
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
