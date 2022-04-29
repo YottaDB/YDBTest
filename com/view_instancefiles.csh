@@ -47,10 +47,8 @@ if (! $?instancelist) setenv instancelist "$gtm_test_msr_all_instances"
 foreach instx ($instancelist)
 	# If this is a multi-host test and "view_instancefiles_filter" env var is defined by the calling test,
 	# then we need to ensure that env var is set even in the remote instances. This is done by updating
-	# "env_supplementary.csh" on those instances. But this script could be invoked multiple times by the
-	# calling test and we don't want to update "env_supplementary.csh" multiple times. Just once is good enough.
-	# Hence we check if "$cntsnapshot" is 1 (which indicates this is the first time the script is being called in this test).
-	if ($test_replic_mh_type && $?view_instancefiles_filter && (1 == $cntsnapshot)) then
+	# "env_supplementary.csh" on those instances to define this env var.
+	if ($test_replic_mh_type && $?view_instancefiles_filter) then
 		# Note that we want the double-quotes surrounding the value of $view_instancefiles_filter as it is a multi-word
 		# string containing spaces (or else one would get a "setenv: Too many arguments" error). Hence the need for
 		# the weird-looking \\" below.
