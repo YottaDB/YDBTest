@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -51,7 +54,21 @@ if ($?test_replic == 1) then
 	$sec_shell "$sec_getenv; cd $SEC_SIDE; $MUPIP set -journal=enable,on,before -reg '*' >&! GTM_5229_NOPREVLINK_errors_2.out"
 endif
 $gtm_tst/com/wait_for_n_jnl.csh -lognum 10 -duration 3600 -poll 5
+
+# Before crashing the source and receiver sides (next step), ensure the replication servers on the source and receiver side
+# have connected and exchanged history records. This is necessary to prevent INSNOTJOINED errors in a later reconnect.
+# Below is an explanation for why. Let us say B did not see A's history record by the time it is crashed a little later in
+# this test. It would then be restarted as a primary (after a failover) without having inherited the replication configuration
+# group information from A. It would then create a new replication configuration group information on its own. And so later
+# when A connects as a receiver to the new primary B, it would get an INSNOTJOINED error because the group information is
+# different in the instance files on both sides. Since history record information is inherited by the receiver AFTER having
+# inherited the group information, waiting for the history record to be seen in the update process log file is a sure shot
+# way of ensuring the group information of A is recorded in B's replication instance file before crashing B.
+setenv start_time `cat start_time`
+$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/wait_for_log.csh -log $SEC_SIDE/RCVR_${start_time}.log.updproc -message 'New History Content' -duration 120"
+
 # PRIMARY SIDE (A) CRASH
+
 echo "=== STEP 2 ==="
 $gtm_tst/com/srcstat.csh "BEFORE_PRI_A_CRASH1:"
 $gtm_tst/com/primary_crash.csh
