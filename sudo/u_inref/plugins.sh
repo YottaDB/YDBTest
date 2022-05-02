@@ -21,11 +21,11 @@ fi
 status=$?
 if [ 0 != $status ]; then
 	echo "ydbinstall returned a non-zero status: $status"
+	echo "# install.out contents follow"
+	cat install.out
 	if [ "yes" = $6 ] ; then
- 		cat install.out
+		echo "# plugins.out contents follow"
 		cat plugins.out
-	else
-		cat install.out
 	fi
 	exit $status
 fi
