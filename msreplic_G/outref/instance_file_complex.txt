@@ -113,11 +113,11 @@ Source Server Slots
 ----------------------------------------------------------
 SLT # 0 : Secondary Instance Name                INSTANCE2
 SLT # 0 : Resync Sequence Number                        71 [0x0000000000000047]
-SLT # 0 : Connect Sequence Number                        1 [0x0000000000000001]
+SLT # X : Connect Sequence Number             ##FILTERED##
 ----------------------------------------------------------
 SLT # 1 : Secondary Instance Name                INSTANCE3
 SLT # 1 : Resync Sequence Number                        71 [0x0000000000000047]
-SLT # 1 : Connect Sequence Number                        1 [0x0000000000000001]
+SLT # X : Connect Sequence Number             ##FILTERED##
 
 ----------------------------------------------------------
 History Records (histinfo structures)
@@ -187,7 +187,7 @@ Source Server Slots
 ----------------------------------------------------------
 SLT # 0 : Secondary Instance Name                INSTANCE1
 SLT # 0 : Resync Sequence Number                         1 [0x0000000000000001]
-SLT # 0 : Connect Sequence Number                        0 [0x0000000000000000]
+SLT # X : Connect Sequence Number             ##FILTERED##
 
 ----------------------------------------------------------
 History Records (histinfo structures)
@@ -257,7 +257,7 @@ Source Server Slots
 ----------------------------------------------------------
 SLT # 0 : Secondary Instance Name                INSTANCE1
 SLT # 0 : Resync Sequence Number                         1 [0x0000000000000001]
-SLT # 0 : Connect Sequence Number                        0 [0x0000000000000000]
+SLT # X : Connect Sequence Number             ##FILTERED##
 
 ----------------------------------------------------------
 History Records (histinfo structures)
@@ -561,10 +561,8 @@ No diff on INST2 between instancefile_6.out instancefile_7.out
 Diffing instancefile_6.out and instancefile_7.out on INST3
 ##TEST_AWK.*
 < SLT # 0 : Resync Sequence Number                         1 [0x0000000000000001]
-< SLT # 0 : Connect Sequence Number                        0 [0x0000000000000000]
 ---
 > SLT # 0 : Resync Sequence Number                       111 [0x000000000000006F]
-> SLT # 0 : Connect Sequence Number                      111 [0x000000000000006F]
 ==========================================================
   	--> The instance files should reflect the history:
 	    INST1: <seqno=  1, name=INSTANCE1, cycle=1>	state: CRASH, slots for INST2, INST3
@@ -774,7 +772,7 @@ Diffing instancefile_8.out and instancefile_9.out on INST2
 > ----------------------------------------------------------
 > SLT # 1 : Secondary Instance Name                INSTANCE3
 > SLT # 1 : Resync Sequence Number                         1 [0x0000000000000001]
-> SLT # 1 : Connect Sequence Number                        0 [0x0000000000000000]
+> SLT # X : Connect Sequence Number             ##FILTERED##
 ##TEST_AWK.*
 > ----------------------------------------------------------
 > HST #      1 : Root Primary Instance Name        INSTANCE3
@@ -897,7 +895,7 @@ Diffing instancefile_8.out and instancefile_9.out on INST3
 > ----------------------------------------------------------
 > SLT # 1 : Secondary Instance Name                INSTANCE2
 > SLT # 1 : Resync Sequence Number                       141 [0x000000000000008D]
-> SLT # 1 : Connect Sequence Number                      121 [0x0000000000000079]
+> SLT # X : Connect Sequence Number             ##FILTERED##
 ##TEST_AWK.*
 > ----------------------------------------------------------
 > HST #      2 : Root Primary Instance Name        INSTANCE3
@@ -1183,10 +1181,8 @@ Diffing instancefile_12.out and instancefile_13.out on INST1
 Diffing instancefile_12.out and instancefile_13.out on INST2
 ##TEST_AWK.*
 < SLT # 0 : Resync Sequence Number                         1 [0x0000000000000001]
-< SLT # 0 : Connect Sequence Number                        0 [0x0000000000000000]
 ---
 > SLT # 0 : Resync Sequence Number                       142 [0x000000000000008E]
-> SLT # 0 : Connect Sequence Number                      142 [0x000000000000008E]
 ==========================================================
 ==========================================================
 No diff on INST3 between instancefile_12.out instancefile_13.out
