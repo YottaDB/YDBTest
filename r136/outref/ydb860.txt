@@ -26,6 +26,36 @@ YDB>
 
 YDB>
 
+------------------------------------------------------------
+# Test ZGOTO using long entryref names works fine
+# This used to previously (before YDB@1d843ecc) fail with a SIG-11/stack-buffer-overflow
+# Expecting LABELMISSING/ZLINKFILE/FILENOTFOUND errors in below output
+------------------------------------------------------------
+# Try ydb860zgoto.m using [yottadb -direct]
+
+YDB>
+# Expecting a LABELMISSING error when using a label name longer than 31 bytes
+
+YDB>
+%YDB-E-LABELMISSING, Label referenced but not defined: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+YDB>
+# Expecting a ZLKINKFILE/FILENOTFND error when using a routine name longer than 31 bytes
+
+YDB>
+%YDB-E-ZLINKFILE, Error while zlinking "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+%YDB-E-FILENOTFND, File xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.m not found
+%YDB-E-FILENOTFND, File xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.o not found
+
+YDB>
+
+YDB>
+# Try ydb860zgoto.m using [yottadb -run]
+# Expecting a LABELMISSING error when using a label name longer than 31 bytes
+ZSTATUS=+2^ydb860zgoto,%YDB-E-LABELMISSING, Label referenced but not defined: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+# Expecting a ZLKINKFILE/FILENOTFND error when using a routine name longer than 31 bytes
+ZSTATUS=+4^ydb860zgoto,%YDB-E-ZLINKFILE, Error while zlinking "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",%YDB-E-FILENOTFND, File xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.m not found,%YDB-E-FILENOTFND, File xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.o not found
+
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
