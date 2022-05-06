@@ -9,6 +9,11 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+# anyerror is unset at the beginning and set at the end of the code.
+# This is done to counteract the effect of the -e flag added to com/submit_test.csh
+# unsetting anyerror makes sure that exit status of a backquote expansion that uses
+# grep and finds no pattern match(various usages in this file) is not propagated to $status
+unset anyerror
 
 # Sets the env var "gtm_test_libyottadb_asan_enabled" to 1 if libyottadb.so was linked with libasan.so and to 0 otherwise.
 
@@ -48,4 +53,4 @@ else
 	# Inform caller of this through the below env var.
 	setenv gtm_test_asan_compiler "gcc"
 endif
-
+set anyerror

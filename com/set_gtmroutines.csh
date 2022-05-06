@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -13,6 +13,12 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+# anyerror is unset at the beginning and set at the end of the code.
+# This is done to counteract the effect of the -e flag added to com/submit_test.csh
+# unsetting anyerror makes sure that exit status of a backquote expansion
+# that evaluates an expression ((`expr "V900" \> "$set_gtmro_verno"`) && (`expr "V62000" \>= "$set_gtmro_verno"`)) is not propagated to $status
+unset anyerror
+
 #
 # $1 - "M" or "UTF8"
 #
@@ -94,3 +100,4 @@ set exedir = "$gtm_exe${utf8}${star2}${plugrtns}"
 set gtm_routines_var = "${gtm_routines_var} ${exedir}"
 
 setenv gtmroutines "$gtm_routines_var"
+set anyerror

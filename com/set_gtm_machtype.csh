@@ -13,6 +13,11 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+# anyerror is unset at the beginning and set at the end of the code.
+# This is done to counteract the effect of the -e flag added to com/submit_test.csh
+# unsetting anyerror makes sure that exit status of a backquote expansion
+# that evaluates an expression (`expr "$opensslver" \>= "1.1.1"`) is not propagated to $status
+unset anyerror
 
 if ( $MACHTYPE == "unknown" ) then
  set MACHTYPE = `uname -m`
@@ -160,5 +165,5 @@ if (-e $ydb_dist/plugin/libgtmtls.so) then
 else
 	setenv ydb_test_tls13_plus 0
 endif
-
+set anyerror
 ##### HOST SPECIFIC FUNNIES ####

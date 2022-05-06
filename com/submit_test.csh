@@ -3,7 +3,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -16,7 +16,7 @@
 # If $tst_stdout is 0 (no -stdout), it means that the output is redirected to
 # a file. In that case, we would like the verbosity for later debugging.
 # If $tst_stdout is 2, the user specifically asked for verbosity -stdout 2
-# If $tst_stdout is 1, the user ased for limited verbosity.
+# If $tst_stdout is 1, the user asked for limited verbosity.
 if ("$tst_stdout" == "2" || "$tst_stdout" == "0") then
 	set echo
 	set verbose
@@ -873,10 +873,12 @@ if ((! $?gtm_test_dryrun) || (! $dryrun_subtest)) then
 	endif
 	if ($tst_stdout > 0) then
 	   # tst_tslog_filter may have a pipe in it, so use eval to interpret it properly.
-	   eval "$prctl_comm $tst_tcsh $instream $tst_tslog_filter |& tee $tst_general_dir/outstream.log"
+	   # -e flag added to fix issue with imptp.csh(YDBTest#431) invocations by stopping the test flow after the first point of error.
+	   eval "$prctl_comm $tst_tcsh -e $instream $tst_tslog_filter |& tee $tst_general_dir/outstream.log"
 	else
 	   # tst_tslog_filter may have a pipe in it, so use eval to interpret it properly.
-	   eval "$prctl_comm $tst_tcsh  $instream $tst_tslog_filter >& $tst_general_dir/outstream.log"
+           # -e flag added to fix issue with imptp.csh(YDBTest#431) invocations by stopping the test flow after the first point of error.
+	   eval "$prctl_comm $tst_tcsh -e $instream $tst_tslog_filter >& $tst_general_dir/outstream.log"
 	endif
 	if ($status != 0 ) then
 	   echo "Possible error!" >> $tst_general_dir/outstream.log
