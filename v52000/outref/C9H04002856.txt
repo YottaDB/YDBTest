@@ -1,15 +1,15 @@
-	 set $zy=$p(%z,"[",2)-1
+	 set $zz=$p(%z,"[",2)-1
 	      ^-----
 		At column 7, line 18, source module ##IN_TEST_PATH##/inref/c002856.m
 %YDB-E-INVSVN, Invalid special variable name
-	 for  quit:$zpriv(r1wait)   ; On Unix, this will generate a FNOTONSYS error
+	 for  quit:$zpriv(r1wait)   ; On Unix, this will generate a INVFCN error
 	            ^-----
 		At column 13, line 24, source module ##IN_TEST_PATH##/inref/c002856.m
-%YDB-E-FNOTONSYS, Function or special variable is not supported by this operating system
-	 i '$zpriv("SYSLCK")  ; On Unix, this will generate a FNOTONSYS error
+%YDB-E-INVFCN, Invalid function name
+	 i '$zpriv("SYSLCK")  ; On Unix, this will generate a INVFCN error
 	     ^-----
 		At column 6, line 31, source module ##IN_TEST_PATH##/inref/c002856.m
-%YDB-E-FNOTONSYS, Function or special variable is not supported by this operating system
+%YDB-E-INVFCN, Invalid function name
 	 q $zsqr($$var(.arr))
 	    ^-----
 		At column 5, line 38, source module ##IN_TEST_PATH##/inref/c002856.m

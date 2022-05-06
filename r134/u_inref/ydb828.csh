@@ -459,7 +459,7 @@ echo ""
 set str = 'close c:aftert="ping"'
 echo "------------------------------------------------------------"
 echo '# Test CLOSE C:AFTER=... does not SIG-11 (used to before YDB@2c1bb3b7)'
-echo '# Trying out ['$str'] : Expecting no SIG-11 but a %YDB-E-DEVPARINAP error'
+echo '# Trying out ['$str'] : Expecting no SIG-11 but a %YDB-E-DEVPARUNK error'
 echo "------------------------------------------------------------"
 set base = "ydb828closeafter"
 echo ' '$str > $base.m
@@ -512,7 +512,7 @@ cat > $base.m << CAT_EOF
  write "# Expecting LVUNDEF error below (but not SIG-11/Assert)",!
  write \$increment(@x,1&2),!
  write "# Expecting INVSVN error below (but not SIG-11/Assert)",!
- write \$increment(@x,\$z&r),!
+ write \$increment(@x,\$zz&r),!
  write "# Expecting zwrite output to show ""y=1"" (no SIG-11/Assert)",!
  set x="y" if \$increment(@x,0&1) zwrite
 CAT_EOF

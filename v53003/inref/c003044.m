@@ -3,7 +3,7 @@
 ; Copyright (c) 2008-2015 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
-; Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -29,7 +29,7 @@ test1b;
 	set ^a1=1	; open AREG of default gbldir mumps.gld
 	zshow "g":val	; use lowercase "g" intentionally to test that works too
 	; filter out all journal related categories as journaling is randomly turned on or off and also all crit categories
-	do out^zshowgfilter(.val,"DFL,DFS,JFL,JFS,JBB,JFB,JFW,JRL,JRP,JRE,JRI,JRO,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD")
+	do out^zshowgfilter(.val,"DFL,DFS,JFL,JFS,JBB,JFB,JFW,JRL,JRP,JRE,JRI,JRO,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD,WFR,BUS,BTS")
 	zwrite val
 	quit
 test1c;
@@ -39,7 +39,7 @@ test1c;
 	new val
 	zshow "G":val
 	; filter out all journal related categories as journaling is randomly turned on or off and also all crit categories
-	do out^zshowgfilter(.val,"DWT,DFL,DFS,JFL,JFS,JBB,JFB,JFW,JRL,JRP,JRE,JRI,JRO,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD")
+	do out^zshowgfilter(.val,"DWT,DFL,DFS,JFL,JFS,JBB,JFB,JFW,JRL,JRP,JRE,JRI,JRO,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD,WFR,BUS,BTS")
 	zwrite val
 	quit
 test1d;
@@ -54,7 +54,7 @@ test1d;
 	kill val
 	zshow "G":val
 	; filter out all journal related categories as journaling is randomly turned on or off and also all crit categories
-	do out^zshowgfilter(.val,"DWT,DFL,DFS,JFL,JFS,JBB,JFB,JFW,JRL,JRP,JRE,JRI,JRO,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD")
+	do out^zshowgfilter(.val,"DWT,DFL,DFS,JFL,JFS,JBB,JFB,JFW,JRL,JRP,JRE,JRI,JRO,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD,WFR,BUS,BTS")
 	zwrite val
 	quit
 test1e;
@@ -117,7 +117,7 @@ test1ex	;
 	kill val
 	zshow "G":val
 	; filter out all journal related categories as journaling is randomly turned on or off and also all crit categories
-	do out^zshowgfilter(.val,"DWT,DFL,DFS,JFL,JFS,JBB,JFB,JFW,JRL,JRP,JRE,JRI,JRO,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD")
+	do out^zshowgfilter(.val,"DWT,DFL,DFS,JFL,JFS,JBB,JFB,JFW,JRL,JRP,JRE,JRI,JRO,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD,WFR,BUS,BTS")
 	if readwrite'=readonly do out^zshowgfilter(.val,"CTN:")	; filter out CTN category as it could contain varying output
 	zwrite val
 	if readwrite f i=1:1:tpsets tstart ():serial set ^atp(i)="TP SET" tcommit 	     ; should increment SET, TTW
@@ -132,7 +132,7 @@ test1ex	;
 	kill val
 	zshow "G":val
 	; filter out all journal related categories as journaling is randomly turned on or off and also all crit categories
-	do out^zshowgfilter(.val,"DWT,DFL,DFS,JFL,JFS,JBB,JFB,JFW,JRL,JRP,JRE,JRI,JRO,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD")
+	do out^zshowgfilter(.val,"DWT,DFL,DFS,JFL,JFS,JBB,JFB,JFW,JRL,JRP,JRE,JRI,JRO,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD,WFR,BUS,BTS")
 	if readwrite'=readonly do out^zshowgfilter(.val,"CTN:")	; filter out CTN category as it could contain varying output
 	zwrite val
 	quit
@@ -192,7 +192,7 @@ test1f;
 	zwithdraw ^onceexist(i)				 	    ; should increment KIL, NTW
 	zshow "G":val
 	; filter out all journal related categories as journaling is randomly turned on or off and also all crit categories
-	do out^zshowgfilter(.val,"DWT,DFL,DFS,JFL,JFS,JBB,JFB,JFW,JRL,JRP,JRE,JRI,JRO,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD")
+	do out^zshowgfilter(.val,"DWT,DFL,DFS,JFL,JFS,JBB,JFB,JFW,JRL,JRP,JRE,JRI,JRO,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD,WFR,BUS,BTS")
 	write val("G",0),!
 	tstart ():serial set val=$get(^onceexist(i)) tcommit 	    ; should increment GET, TTR
 	tstart ():serial set val=$data(^onceexist(i)) tcommit 	    ; should increment DTA, TTR
@@ -204,7 +204,7 @@ test1f;
 	tstart ():serial zwithdraw ^onceexist(i) tcommit  	    ; should increment KIL, TTW
 	zshow "G":val
 	; filter out all journal related categories as journaling is randomly turned on or off and also all crit categories
-	do out^zshowgfilter(.val,"DWT,DFL,DFS,JFL,JFS,JBB,JFB,JFW,JRL,JRP,JRE,JRI,JRO,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD")
+	do out^zshowgfilter(.val,"DWT,DFL,DFS,JFL,JFS,JBB,JFB,JFW,JRL,JRP,JRE,JRI,JRO,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD,WFR,BUS,BTS")
 	write val("G",0),!
 	quit
 test1g;
@@ -264,7 +264,7 @@ test1h;
 	kill val
 	zshow "G":val
 	; filter out all journal related categories as journaling is randomly turned on or off and also all crit categories
-	do out^zshowgfilter(.val,"DWT,DFL,DFS,JFL,JFS,JBB,JFB,JFW,JRL,JRP,JRE,JRI,JRO,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD")
+	do out^zshowgfilter(.val,"DWT,DFL,DFS,JFL,JFS,JBB,JFB,JFW,JRL,JRP,JRE,JRI,JRO,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD,WFR,BUS,BTS")
 	do out^zshowgfilter(.val,"LKF:")	; filter out LKF category as it could contain varying output
 	zwrite val
 	quit
@@ -335,7 +335,7 @@ test1j;
 	write "  -- Test of zshow G:v --",!
 	zshow "G":v
 	; filter out all journal related categories as journaling is randomly turned on or off and also all crit categories
-	do out^zshowgfilter(.v,"DWT,DFL,DFS,JFL,JFS,JBB,JFB,JFW,JRL,JRP,JRE,JRI,JRO,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD")
+	do out^zshowgfilter(.v,"DWT,DFL,DFS,JFL,JFS,JBB,JFB,JFW,JRL,JRP,JRE,JRI,JRO,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD,WFR,BUS,BTS")
 	do out^zshowgfilter(.v,"LKF:")	; filter out LKF category as it could contain varying output
 	do out^zshowgfilter(.v,"GET,NTR,NBR")	; filter out GET, NTR and NBR categories as they could vary due to "do ^job"
 	do out^zshowgfilter(.v,"NR0:")	; filter out NR0 category as we could have restarted due to stepping on ourselves
@@ -348,7 +348,7 @@ test1j;
 	write "  -- Test of zshow *:lcl containing G output --",!
 	zshow "*":lcl
 	; filter out all journal related categories as journaling is randomly turned on or off and also all crit categories
-	do out^zshowgfilter(.lcl,"DWT,DFL,DFS,JFL,JFS,JBB,JFB,JFW,JRL,JRP,JRE,JRI,JRO,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD")
+	do out^zshowgfilter(.lcl,"DWT,DFL,DFS,JFL,JFS,JBB,JFB,JFW,JRL,JRP,JRE,JRI,JRO,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD,WFR,BUS,BTS")
 	do out^zshowgfilter(.lcl,"LKF:")	; filter out LKF category as it could contain varying output
 	do out^zshowgfilter(.lcl,"GET,NTR,NBR")	; filter out GET, NTR and NBR categories as they could vary due to "do ^job"
 	do out^zshowgfilter(.lcl,"NR0:")	; filter out NR0 category as we could have restarted due to stepping on ourselves
@@ -394,7 +394,7 @@ test1j;
 	kill temp
 	merge temp=^v
 	; filter out all journal related categories as journaling is randomly turned on or off and also all crit categories
-	do out^zshowgfilter(.temp,"DFL,DFS,JFL,JFS,JBB,JFB,JFW,JRL,JRP,JRE,JRI,JRO,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD")
+	do out^zshowgfilter(.temp,"DFL,DFS,JFL,JFS,JBB,JFB,JFW,JRL,JRP,JRE,JRI,JRO,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD,WFR,BUS,BTS")
 	zwrite temp
 	;    1j) ZSHOW "*":^gbl should be tested. Check that "G" output is also part of it.
 	write "  -- Test of zshow *:^gbl containing G output --",!
@@ -405,7 +405,7 @@ test1j;
 	; the output could vary in length for each test run. Therefore the number of GDS blocks read/written could be different.
 	; So filter out NBR and NBW.
 	; filter out all journal related categories as journaling is randomly turned on or off and also all crit categories
-	do out^zshowgfilter(.temp,"DWT,DFL,DFS,JFL,JFS,JBB,JFB,JFW,JRL,JRP,JRE,JRI,JRO,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD")
+	do out^zshowgfilter(.temp,"DWT,DFL,DFS,JFL,JFS,JBB,JFB,JFW,JRL,JRP,JRE,JRI,JRO,CAT,CFE,CFS,CFT,CQS,CQT,CYS,CYT,BTD,WFR,BUS,BTS")
 	do out^zshowgfilter(.temp,"NBR,NBW,DRD")	; filter out NBR, NBW and DRD categories as they could contain varying output
 	zwrite temp("G",*)
 	quit
@@ -556,7 +556,7 @@ viewgvstats(type);
 	.	kill var("NR3")
 	.	kill var("TC3"),var("TC4")
 	.	kill var("TR3"),var("TR4")
-	.	kill var("CFE"),var("CFS"),var("CFT"),var("CQS"),var("CQT"),var("CYS"),var("CYT"),var("BTD")
+	.	kill var("CFE"),var("CFS"),var("CFT"),var("CQS"),var("CQT"),var("CYS"),var("CYT"),var("BTD"),var("WFR"),var("BUS"),var("BTS")
 	.	kill var("ZTR")	; no ztrigger commands in this test
 	.	; if running with MM, the DWT and DRD counters will be 0 always so skip them from the nonzero check as well
 	.	if $ztrnlnm("acc_meth")="MM" kill var("DWT")
@@ -569,7 +569,7 @@ viewgvstats(type);
 	.	kill var("DFL")
 	if "READONLY"=type do
 	.	; the following indices are exempt from the check for this type
-	.	kill var("CAT"),var("CFE"),var("CFS"),var("CFT"),var("CQS"),var("CQT"),var("CYS"),var("CYT"),var("BTD")
+	.	kill var("CAT"),var("CFE"),var("CFS"),var("CFT"),var("CQS"),var("CQT"),var("CYS"),var("CYT"),var("BTD"),var("WFR"),var("BUS"),var("BTS")
 	.	kill var("SET"),var("KIL")
 	.	kill var("LKS"),var("LKF")
 	.	kill var("CTN")

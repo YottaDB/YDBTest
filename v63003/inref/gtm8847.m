@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -11,14 +11,14 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 test1
-	write:($ZCMDLNE=$ZSTRPLLIM) "$gtm_string_pool_limit=$ZSTRPLLIM"
+	write:($ZCMDLINE=$ZSTRPLLIM) "$gtm_string_pool_limit=$ZSTRPLLIM"
 	quit
 
 test2
 
 	set $etrap="set $ecode="""" do incrtrap^incrtrap"
 	do ^sstep
-	set $ZSTRPPLIM=1000000
+	set $ZSTRPLLIM=1000000
 	for  do expand
 	quit
 
@@ -28,11 +28,11 @@ expand
 
 test3
 	set $ztrap="goto incrtrap^incrtrap"
-	write "$ZSTRPPLIM=",$ZSTRPLLIM,!
+	write "$ZSTRPLLIM=",$ZSTRPLLIM,!
 	set x="abcd"
 	for  set x=x_x
-	set $ZSTRPPLIM=-1
-	write "$ZSTRPPLIM=",$ZSTRPLLIM,!
+	set $ZSTRPLLIM=-1
+	write "$ZSTRPLLIM=",$ZSTRPLLIM,!
 	set x="abcd"
 	for  set x=x_x
 	quit

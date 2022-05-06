@@ -38,15 +38,15 @@ Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 YDB>
 		write $INC(@glvn,6)	; Expected: INVFCN error because of incomplete function name
 		       ^-----
-		At column 9, line 64, source module ##IN_TEST_PATH##/inref/incrbas.m
+		At column 9, line 79, source module ##IN_TEST_PATH##/inref/incrbas.m
 %YDB-E-INVFCN, Invalid function name
-		write $ZINC(@glvn,7)	; Expected: INVFCN error because of incomplete function name
+		write $ZINK(@glvn,7)	; Expected: INVFCN error because of incomplete function name
 		       ^-----
-		At column 9, line 74, source module ##IN_TEST_PATH##/inref/incrbas.m
+		At column 9, line 89, source module ##IN_TEST_PATH##/inref/incrbas.m
 %YDB-E-INVFCN, Invalid function name
 		write $incr(@glvn,-1E-5a)	; Expected: RPARENMISSING error because of trailing "a" in -1E-5a
 		                       ^-----
-		At column 25, line 279, source module ##IN_TEST_PATH##/inref/incrbas.m
+		At column 25, line 294, source module ##IN_TEST_PATH##/inref/incrbas.m
 %YDB-E-RPARENMISSING, Right parenthesis expected
 
 Stepping STARTED
@@ -125,7 +125,7 @@ increrr2:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
 increrr2:	kill @@glvname	; start afresh
 increrr2:	quit
 increrr2:	set @glvn=0
-increrr2:	write $ZINC(@glvn,7)	; Expected: INVFCN error because of incomplete function name
+increrr2:	write $ZINK(@glvn,7)	; Expected: INVFCN error because of incomplete function name
 increrr2:	do sstop
 increrr2:	set $zstep=""
 increrr2:	set %zsaveio=$io use $p write !,"Stepping STOPPED",!  use %zsaveio
@@ -151,7 +151,7 @@ increrr2:	if gvnorlvn="gvn"  set @glvname="^"_@glvname
 increrr2:	kill @@glvname	; start afresh
 increrr2:	quit
 increrr2:	set @glvn=0
-increrr2:	write $ZINC(@glvn,7)	; Expected: INVFCN error because of incomplete function name
+increrr2:	write $ZINK(@glvn,7)	; Expected: INVFCN error because of incomplete function name
 increrr2:	do sstop
 increrr2:	set $zstep=""
 increrr2:	set %zsaveio=$io use $p write !,"Stepping STOPPED",!  use %zsaveio
@@ -301,7 +301,7 @@ incr03a:	quit
 incr03a:	set @glvn1=11
 incr03a:	set @glvn2=222
 incr03a:	set @glvn3=3333
-incr03a:	set @glvn3=$incr(@glvn2,@glvn1) 
+incr03a:	set @glvn3=$incr(@glvn2,@glvn1)
 incr03a:	zwrite @glvn1		; Expected:  11
 variablex8ace=11
 incr03a:	zwrite @glvn2		; Expected: 233
@@ -380,7 +380,7 @@ incr03a:	quit
 incr03a:	set @glvn1=11
 incr03a:	set @glvn2=222
 incr03a:	set @glvn3=3333
-incr03a:	set @glvn3=$incr(@glvn2,@glvn1) 
+incr03a:	set @glvn3=$incr(@glvn2,@glvn1)
 incr03a:	zwrite @glvn1		; Expected:  11
 ^variablex8ace=11
 incr03a:	zwrite @glvn2		; Expected: 233
@@ -1107,7 +1107,7 @@ incr04c:	quit
 incr04c:	zgoto @newprog
 incr04c:	zwrite @glvn			; Expected: -5.12345678
 xpressionform(23)=-5.12345678
-incr04c:	kill @glvn	
+incr04c:	kill @glvn
 incr04c:	quit
 incr04c:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
  ----------------------------------------------------- 
@@ -1150,7 +1150,7 @@ incr04c:	quit
 incr04c:	zgoto @newprog
 incr04c:	zwrite @glvn			; Expected: -5.12345678
 ^xpressionform(23)=-5.12345678
-incr04c:	kill @glvn	
+incr04c:	kill @glvn
 incr04c:	quit
 incr04c:	.	set stagestr=$piece(allstage,",",mainindx)  ;write newstage
 incr04d:	.	for gvnorlvn="lvn","gvn"  do
@@ -1178,7 +1178,7 @@ TOKEN=25
 incr04d:	zwrite incrlocal			; Expected: incrlocal=37,incrlocal(1,"abcd")=-29
 incrlocal=37
 incrlocal(1,"abcd")=-29
-incr04d:	kill @glvn	
+incr04d:	kill @glvn
 incr04d:	quit
 incr04d:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
  ----------------------------------------------------- 
@@ -1204,7 +1204,7 @@ incr04d:	zwrite @glvn				; Expected: TOKEN=25 (or ^TOKEN=25)
 incr04d:	zwrite incrlocal			; Expected: incrlocal=37,incrlocal(1,"abcd")=-29
 incrlocal=37
 incrlocal(1,"abcd")=-29
-incr04d:	kill @glvn	
+incr04d:	kill @glvn
 incr04d:	quit
 incr04d:	.	set stagestr=$piece(allstage,",",mainindx)  ;write newstage
 incr04e:	.	for gvnorlvn="lvn","gvn"  do
@@ -1234,7 +1234,7 @@ incr04e:	zwrite ^incrlocal			; Expected: ^incrlocal=-37,^incrlocal("abcd",1)=-29
 ^incrlocal=-37
 ^incrlocal("abcd",1)=-29
 incr04e:	kill ^incrlocal
-incr04e:	kill @glvn	
+incr04e:	kill @glvn
 incr04e:	quit
 incr04e:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
  ----------------------------------------------------- 
@@ -1262,7 +1262,7 @@ incr04e:	zwrite ^incrlocal			; Expected: ^incrlocal=-37,^incrlocal("abcd",1)=-29
 ^incrlocal=-37
 ^incrlocal("abcd",1)=-29
 incr04e:	kill ^incrlocal
-incr04e:	kill @glvn	
+incr04e:	kill @glvn
 incr04e:	quit
 incr04e:	.	set stagestr=$piece(allstage,",",mainindx)  ;write newstage
 incr04f:	.	for gvnorlvn="lvn","gvn"  do
@@ -1289,7 +1289,7 @@ incr04f:	write $incr(@glvn,$zininterrupt)	; Expected: 17 (if local) and 18 (if g
 17
 incr04f:	zwrite @glvn				; Expected: sVNvariable=17 (or ^sVNvariable=18) and nothing else
 sVNvariable=17
-incr04f:	kill @glvn	
+incr04f:	kill @glvn
 incr04f:	quit
 incr04f:	.	.	write substagestr,!,spacestr,stagestr," : ",gvnorlvn,!,substagestr
  ----------------------------------------------------- 
@@ -1314,7 +1314,7 @@ incr04f:	write $incr(@glvn,$zininterrupt)	; Expected: 17 (if local) and 18 (if g
 18
 incr04f:	zwrite @glvn				; Expected: sVNvariable=17 (or ^sVNvariable=18) and nothing else
 ^sVNvariable=18
-incr04f:	kill @glvn	
+incr04f:	kill @glvn
 incr04f:	quit
 incr04f:	.	set stagestr=$piece(allstage,",",mainindx)  ;write newstage
 incr04g:	.	for gvnorlvn="lvn","gvn"  do

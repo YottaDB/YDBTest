@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2002, 2013 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -174,7 +177,7 @@ echo journal buffer_size=: expected 32768, but actual $jnl_buffer_size
 echo "$MUPIP set -journal=[no]before,buffer_size=32769 -file mumps.dat"
 $MUPIP set -journal=$jnlimg,buffer_size=32769 -file mumps.dat
 set jnl_buffer_size = `$DSE dump -fileheader |& $grep "Journal Buffer Size" | $tst_awk '{print $4}'`
-echo journal buffer_size=: expected 32768, but actual $jnl_buffer_size
+echo journal buffer_size=: expected 32776, but actual $jnl_buffer_size
 #
 echo "============================================================"
 #

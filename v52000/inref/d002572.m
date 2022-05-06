@@ -2,7 +2,7 @@
 ;								;
 ; Copyright 2007, 2013 Fidelity Information Services, Inc	;
 ;								;
-; Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2019-2022 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -26,13 +26,13 @@ d002572	;
 	; The non-INDIRECTION cases are tested in the generated M programs.
 	;
 	; The following scenarios are tested
-	;         1) Invalid Functions (simple)             --> $ZU(x)                                    /* INVFCN error */
-	;         2) Invalid Functions with nested parens   --> $ZU(abcd,$length($piece("()))",")",2)))   /* INVFCN error */
+	;         1) Invalid Functions (simple)             --> $ZZ(x)                                    /* INVFCN error */
+	;         2) Invalid Functions with nested parens   --> $ZZ(abcd,$length($piece("()))",")",2)))   /* INVFCN error */
 	;         3) Functions that trigger FNOTONSYS error --> $ZLKID(..) on Unix and $ZCONVERT(..) on VMS /* FNOTONSYS error */
 	;         4) SET valid-isv that is not settable     --> $TEST                                     /* SVNOSET error */
-	;         5) SET invalid isv                        --> $ZU                                       /* INVSVN error */
+	;         5) SET invalid isv                        --> $ZZ                                       /* INVSVN error */
 	;         6) NEW valid-isv that is not newable      --> $QUIT                                     /* SVNONEW error */
-	;         7) NEW invalid isv                        --> $ZU                                       /* INVSVN error */
+	;         7) NEW invalid isv                        --> $ZZ                                       /* INVSVN error */
 	;         8) OPEN/USE/CLOSE invalid deviceparmeters --> Test DEVPARINAP, DEVPARUNK, DEVPARVALREQ errors.
 	;
 	; Only the SET and NEW commands were tested for postconditionals with invalid ISV or functions.
@@ -87,25 +87,25 @@ helper	;
 	;--------------------------------------------
 	; Test SET and NEW commands
 	; -------------------------------------------
-	set xstr2("set",1)="x=$zu(10)"						; test invalid function
-	set xstr2("set",2)="x=$ZU(abcd,$length($piece(""()))"","")"",2)))"	; test invalid functions with nested parens
-	set xstr2("set",3)="x=$ZU(abcd,$length($piece(""()))"","")"",2))"	; test invalid functions with bad paren nesting
+	set xstr2("set",1)="x=$zz(10)"						; test invalid function
+	set xstr2("set",2)="x=$ZZ(abcd,$length($piece(""()))"","")"",2)))"	; test invalid functions with nested parens
+	set xstr2("set",3)="x=$ZZ(abcd,$length($piece(""()))"","")"",2))"	; test invalid functions with bad paren nesting
 	set xstr2("set",4)="x="_$select(unix:"$zlkid(abcd)",1:"$zconvert(abcd)")	; test functions that are NOT valid on the current
 										;	platform (issue FNOTONSYS error)
-	set xstr2("set",5)="x=$zu"						; test invalid ISV
-	set xstr2("set",6)="x($zu,1)=i"						; test invalid ISV within a subscript
-	set xstr2("set",7)="x=$piece($zu,"","",3,4)"				; test invalid ISV within valid function
-	set xstr2("set",8)="x=$zu,y=i"						; test invalid ISV with another set
+	set xstr2("set",5)="x=$zz"						; test invalid ISV
+	set xstr2("set",6)="x($zz,1)=i"						; test invalid ISV within a subscript
+	set xstr2("set",7)="x=$piece($zz,"","",3,4)"				; test invalid ISV within valid function
+	set xstr2("set",8)="x=$zz,y=i"						; test invalid ISV with another set
 	set xstr2("set",9)="(x,$TEST)=1"					; test valid ISV that is NOT settable
-	set xstr2("set",10)="$ZY=1"						; test invalid ISV on setleft
-	set xstr2("set",11)="$ZY=x"						; test invalid ISV setleft with variable on right
-	set xstr2("set",12)="$ZY=x+1"						; test invalid ISV setleft with expr on right
-	set xstr2("set",13)="(x,$ZY)=($piece($h,"","",2)*0)+15"			; test valid setleft followed by invalid setleft
-	set xstr2("set",14)="($ZY,x)=($piece($h,"","",2)*0)+15"			; test invalid setleft followed by valid setleft
-	set xstr2("set",15)="(x,$ZY,z)=($piece($h,"","",2)*0)+15"		; test valid+invalid+valid setleft sequence
-	set xstr2("set",16)="$ZU(abcd,$length($piece(""()))"","")"",2))=x"	; test invalid function with nested paren as setleft
-	set xstr2("set",17)="$ZU(abcd,$length($piece(""()))"","")"",2))=x"	; test invalid function with badparen as setleft
-	set xstr2("new",1)="$zu"						; test NEW with invalid ISV
+	set xstr2("set",10)="$ZZ=1"						; test invalid ISV on setleft
+	set xstr2("set",11)="$ZZ=x"						; test invalid ISV setleft with variable on right
+	set xstr2("set",12)="$ZZ=x+1"						; test invalid ISV setleft with expr on right
+	set xstr2("set",13)="(x,$ZZ)=($piece($h,"","",2)*0)+15"			; test valid setleft followed by invalid setleft
+	set xstr2("set",14)="($ZZ,x)=($piece($h,"","",2)*0)+15"			; test invalid setleft followed by valid setleft
+	set xstr2("set",15)="(x,$ZZ,z)=($piece($h,"","",2)*0)+15"		; test valid+invalid+valid setleft sequence
+	set xstr2("set",16)="$ZZ(abcd,$length($piece(""()))"","")"",2))=x"	; test invalid function with nested paren as setleft
+	set xstr2("set",17)="$ZZ(abcd,$length($piece(""()))"","")"",2))=x"	; test invalid function with badparen as setleft
+	set xstr2("new",1)="$zz"						; test NEW with invalid ISV
 	set xstr2("new",2)="$QUIT"						; test NEW with ISV that is not NEWable
 	for cmdstr="set","new" do
 	.	set index=$order(xstr2(cmdstr,""))

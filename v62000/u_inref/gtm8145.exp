@@ -1,6 +1,6 @@
 #################################################################
 #                                                               #
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -25,7 +25,7 @@ expect "ZHELP>"
 send -- "\$GTM\r"
 expect "YDB>"
 # ensure default settings for $P
-send -- "use \$principal:(NOPAST:NOESCA:NOREADS:TYPE:WRAP)\r"
+send -- "use \$principal:(NOPAST:NOESCA:NOREADONLY:TYPE:WRAP)\r"
 expect "YDB>"
 #invoke GDEHELP directly with a bad global directory to make sure an error doesn't mess with the $P settings
 send -- "do ^GTMHELP(\"summary\",\"foo\")\r"

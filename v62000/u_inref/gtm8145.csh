@@ -3,7 +3,7 @@
 #								#
 # Copyright 2014 Fidelity Information Services, Inc		#
 #								#
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -21,7 +21,7 @@ echo "# Running expect (output: expect.outx)"
 if ($status) then
 	echo "EXPECT-E-FAIL : expect returned non-zero exit status. Check expect.outx and expect.dbg"
 else
-	$grep -c "OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=" foo.txt
+	$grep -c "OPEN TERMINAL NOPAST NOESCA NOREADONLY TYPE WIDTH=" foo.txt
 	$grep -n "foo.txt OPEN RMS" foo.txt
 	$tst_awk 'END{print NR}' foo.txt
 endif

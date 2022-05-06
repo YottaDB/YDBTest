@@ -18,7 +18,7 @@ SHELL$ydb_dist/yottadb -dir
 YDB>write "Starting $ZINTERRUPT test with code fragment that gets an error (LVUNDEF)",!
 Starting $ZINTERRUPT test with code fragment that gets an error (LVUNDEF)
 
-YDB>set $zintr="write ""in interrupt"",! write c,!" if ($zsigproc($job,"sigusr1"))
+YDB>set $zinterrupt="write ""in interrupt"",! write c,!" if ($zsigproc($job,"sigusr1"))
 
 YDB>%YDB-E-ZINTRECURSEIO, Attempt to do IO to the active device in $ZINTERRUPT
 %YDB-E-ERRWZINTR, Error while processing $ZINTERRUPT

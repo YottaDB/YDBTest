@@ -1055,20 +1055,20 @@ res=""
 
 ------------------------------------------------------------
 # Test CLOSE C:AFTER=... does not SIG-11 (used to before YDB@2c1bb3b7)
-# Trying out [close c:aftert="ping"] : Expecting no SIG-11 but a %YDB-E-DEVPARINAP error
+# Trying out [close c:aftert="ping"] : Expecting no SIG-11 but a %YDB-E-DEVPARUNK error
 ------------------------------------------------------------
 # Try ydb828closeafter.m using [yottadb -direct]
 
 YDB>
-%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 
 YDB>
 # Try ydb828closeafter.m using [yottadb -run]
 	 close c:aftert="ping"
 	         ^-----
 		At column 10, line 1, source module ##TEST_PATH##/ydb828closeafter.m
-%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
-%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
+%YDB-E-DEVPARUNK, Deviceparameter unknown
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		At M source location +1^ydb828closeafter
 
 YDB>
@@ -1144,7 +1144,7 @@ YDB>
 
 YDB>
 # Try ydb828incrindirectionglvn.m using [yottadb -run]
-	 write $increment(@x,$z&r),!
+	 write $increment(@x,$zz&r),!
 	                      ^-----
 		At column 23, line 4, source module ##TEST_PATH##/ydb828incrindirectionglvn.m
 %YDB-E-INVSVN, Invalid special variable name

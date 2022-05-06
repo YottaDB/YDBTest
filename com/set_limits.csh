@@ -3,7 +3,7 @@
 #								#
 #	Copyright 2012, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -40,7 +40,7 @@ set DEF_JOURNAL_ALIGN_SIZE = 4096
 # Journal buffer must hold at least one record value (2048) + record key (2) +
 # two maximum IO blocks (256) + 1
 set MIN_JOURNAL_BUFFER_SIZE = 2307
-set MAX_JOURNAL_BUFFER_SIZE = 32768
+set MAX_JOURNAL_BUFFER_SIZE = 1048576
 set DEF_JOURNAL_BUFFER_SIZE = 2312
 # Journal autoswitch needs to be greater than or equal to allocation limit
 set MIN_AUTOSWITCH_LIMIT = 16384

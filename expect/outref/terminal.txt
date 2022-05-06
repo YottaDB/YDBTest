@@ -67,27 +67,27 @@ TEST-I-OK, was expecting an error
 -------------------Test 2---------------------------------------------
 Test: terminal
 USE -> WIDTH=0
-/dev/tty OPEN TERMINAL NOPAST NOESCA NOREADS TYPE NOWRAP WIDTH=255 LENG=XX 
+/dev/tty OPEN TERMINAL NOPAST NOESCA NOREADONLY TYPE NOWRAP WIDTH=255 LENG=XX 
 zshow.outx OPEN RMS 
 -------------------Test 3---------------------------------------------
 Test: terminal
 USE -> WIDTH=2
-/dev/tty OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=2 LENG=XX 
+/dev/tty OPEN TERMINAL NOPAST NOESCA NOREADONLY TYPE WIDTH=2 LENG=XX 
 zshow.outx OPEN RMS 
 -------------------Test 4---------------------------------------------
 Test: terminal
 USE -> WIDTH=32767
-/dev/tty OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=32767 LENG=XX 
+/dev/tty OPEN TERMINAL NOPAST NOESCA NOREADONLY TYPE WIDTH=32767 LENG=XX 
 zshow.outx OPEN RMS 
 -------------------Test 5---------------------------------------------
 Test: terminal
 USE -> WIDTH=1048576
-/dev/tty OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=1048576 LENG=XX 
+/dev/tty OPEN TERMINAL NOPAST NOESCA NOREADONLY TYPE WIDTH=1048576 LENG=XX 
 zshow.outx OPEN RMS 
 -------------------Test 6---------------------------------------------
 Test: terminal
 USE -> WIDTH=1048580
-/dev/tty OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=1048580 LENG=XX 
+/dev/tty OPEN TERMINAL NOPAST NOESCA NOREADONLY TYPE WIDTH=1048580 LENG=XX 
 zshow.outx OPEN RMS 
 -------------------Test 7---------------------------------------------
 Test: terminal
@@ -104,37 +104,37 @@ TEST-I-OK, was expecting an error
 -------------------Test 8---------------------------------------------
 Test: terminal
 USE -> (LENGTH=0:WIDTH=100)
-/dev/tty OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=100 LENG=0 
+/dev/tty OPEN TERMINAL NOPAST NOESCA NOREADONLY TYPE WIDTH=100 LENG=0 
 zshow.outx OPEN RMS 
 -------------------Test 9---------------------------------------------
 Test: terminal
 USE -> (LENGTH=2:WIDTH=30)
-/dev/tty OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=30 LENG=2 
+/dev/tty OPEN TERMINAL NOPAST NOESCA NOREADONLY TYPE WIDTH=30 LENG=2 
 zshow.outx OPEN RMS 
 -------------------Test 10---------------------------------------------
 Test: terminal
 USE -> (WIDTH=30:LENGTH=255)
-/dev/tty OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=30 LENG=255 
+/dev/tty OPEN TERMINAL NOPAST NOESCA NOREADONLY TYPE WIDTH=30 LENG=255 
 zshow.outx OPEN RMS 
 -------------------Test 11---------------------------------------------
 Test: terminal
 USE -> (LENGTH=256)
-/dev/tty OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=30 LENG=256 
+/dev/tty OPEN TERMINAL NOPAST NOESCA NOREADONLY TYPE WIDTH=30 LENG=256 
 zshow.outx OPEN RMS 
 -------------------Test 12---------------------------------------------
 Test: terminal
 USE -> LENGTH=32767
-/dev/tty OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=30 LENG=32767 
+/dev/tty OPEN TERMINAL NOPAST NOESCA NOREADONLY TYPE WIDTH=30 LENG=32767 
 zshow.outx OPEN RMS 
 -------------------Test 13---------------------------------------------
 Test: terminal
 USE -> LENGTH=1048576
-/dev/tty OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=30 LENG=1048576 
+/dev/tty OPEN TERMINAL NOPAST NOESCA NOREADONLY TYPE WIDTH=30 LENG=1048576 
 zshow.outx OPEN RMS 
 -------------------Test 14---------------------------------------------
 Test: terminal
 USE -> LENGTH=1048580
-/dev/tty OPEN TERMINAL NOPAST NOESCA NOREADS TYPE WIDTH=30 LENG=1048580 
+/dev/tty OPEN TERMINAL NOPAST NOESCA NOREADONLY TYPE WIDTH=30 LENG=1048580 
 zshow.outx OPEN RMS 
 ###################################################################
 Step 6 - another terminal test (expect to see "$Y:1" and "$Y:9999")

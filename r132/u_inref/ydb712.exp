@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2021-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -19,7 +19,7 @@ send -- "\$ydb_dist/yottadb -dir\r"
 expect "YDB>"
 send -- "write \"Starting \$ZINTERRUPT test with code fragment that gets an error (LVUNDEF)\",!\r"
 expect "Starting \$ZINTERRUPT test with code fragment that gets an error (LVUNDEF)"
-send -- "set \$zintr=\"write \"\"in interrupt\"\",! write c,!\" if (\$zsigproc(\$job,\"sigusr1\"))\r"
+send -- "set \$zinterrupt=\"write \"\"in interrupt\"\",! write c,!\" if (\$zsigproc(\$job,\"sigusr1\"))\r"
 expect "YDB>"
 expect "%YDB-E-ZINTRECURSEIO, Attempt to do IO to the active device in \$ZINTERRUPT"
 expect "%YDB-E-ERRWZINTR, Error while processing \$ZINTERRUPT"

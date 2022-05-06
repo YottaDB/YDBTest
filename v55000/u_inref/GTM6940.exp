@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -19,7 +19,7 @@ spawn $gtm_dist/mumps -dir
 expect -exact "YDB>"
 send -- "f i=1:1:10 s a(i)=i*2,b(i)=i\r"
 expect -exact "YDB>"
-send -- "set \$zintr=\"zwr a m a=b\"\r"
+send -- "set \$zinterrupt=\"zwr a m a=b\"\r"
 expect "YDB>"
 send -- "zsy \"mupip intr \"_\$j\r"
 expect  "INTRPT issued to process "

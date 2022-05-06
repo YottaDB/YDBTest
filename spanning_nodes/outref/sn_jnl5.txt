@@ -7,7 +7,7 @@ Using: ##SOURCE_PATH##/mupip
 mumps.dat
 
 %YDB-W-JNLBUFFDBUPD, Journal file buffer size for database file ##TEST_PATH##/mumps.dat has been adjusted from 1153 to 2312.
-%YDB-I-TEXT, The previous value was outside the allowable range of 2307 to 32768
+%YDB-I-TEXT, The previous value was outside the allowable range of 2307 to 1048576
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
 
 Journal State OFF Journal
@@ -15,14 +15,14 @@ Journal Buffer Size 2312
 
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat with .*BEFORE_IMAGES
 %YDB-W-JNLBUFFDBUPD, Journal file buffer size for database file ##TEST_PATH##/mumps.dat has been adjusted from 1153 to 2312.
-%YDB-I-TEXT, The previous value was outside the allowable range of 2307 to 32768
+%YDB-I-TEXT, The previous value was outside the allowable range of 2307 to 1048576
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
 
 Journal State [inactive] ON
 Journal Buffer Size 2312
 
 %YDB-W-JNLBUFFDBUPD, Journal file buffer size for database file ##TEST_PATH##/mumps.dat has been adjusted from 1153 to 2312.
-%YDB-I-TEXT, The previous value was outside the allowable range of 2307 to 32768
+%YDB-I-TEXT, The previous value was outside the allowable range of 2307 to 1048576
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now OFF
 
 Journal State OFF Journal
@@ -290,7 +290,7 @@ GDE>
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 
 Journal State OFF Journal
-Journal Buffer Size 32765
+Journal Buffer Size 1048575
 
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *

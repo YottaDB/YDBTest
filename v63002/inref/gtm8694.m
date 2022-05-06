@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -54,7 +54,7 @@ zbreakchild
 
 zcmdlnefn
 	write "# TESTING ZCMDLINE",!
-	write $ZCMDLNE,!
+	write $ZCMDLINE,!
 	quit
 
 zeditfn

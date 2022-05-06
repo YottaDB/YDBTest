@@ -3,9 +3,9 @@
 %YDB-F-STPOFLOW, String pool space overflow
 # Demonstrating that when zstrpllim<=0 there is no limit on the string pool
 # (A max string error indicates that the string pool will not overflow, since the loop is infinite)
-$ZSTRPPLIM=0
+$ZSTRPLLIM=0
 ZSTATUS=test3+4^gtm8847,%YDB-E-MAXSTRLEN, Maximum string length exceeded
-$ZSTRPPLIM=-1
+$ZSTRPLLIM=-1
 ZSTATUS=test3+8^gtm8847,%YDB-E-MAXSTRLEN, Maximum string length exceeded
 # Changing the gtm_string_pool_limit environment variable
 $gtm_string_pool_limit=$ZSTRPLLIM

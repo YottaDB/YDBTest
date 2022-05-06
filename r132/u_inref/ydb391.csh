@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2021-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -20,6 +20,6 @@ echo '# Test $ZYSUFFIX produces 22 characters'
 $ydb_dist/yottadb -run ^%XCMD 'write $length($zysuffix("SELECT * FROM NAMES")),!'
 echo '# Test $ZYSU = $ZUSUFFIX'
 $ydb_dist/yottadb -run ^%XCMD 'write $zysu("SELECT * FROM NAMES"),!'
-echo '# Test $ZYSUF does not work'
-$ydb_dist/yottadb -run ^%XCMD 'write $zysuf("SELECT * FROM NAMES"),!'
+echo '# Test $ZYSUFFF does not work'
+$ydb_dist/yottadb -run ^%XCMD 'write $zysufff("SELECT * FROM NAMES"),!'
 echo '# End of $ZYSUFFIX Test'

@@ -118,75 +118,75 @@ i=0:x=ok1
 
  --> Running M program [test01.m] ----
 
-		set i=0,x="error1" set:"" x=$zu(10)  set x="ok1"
+		set i=0,x="error1" set:"" x=$zz(10)  set x="ok1"
 		                             ^-----
 		At column 31, line 4, source module ##TEST_PATH##/test01.m
 %YDB-E-INVFCN, Invalid function name
-		set i=0,x="error2" if "" set x=$zu(10)  set x="ok2"
+		set i=0,x="error2" if "" set x=$zz(10)  set x="ok2"
 		                                ^-----
 		At column 34, line 6, source module ##TEST_PATH##/test01.m
 %YDB-E-INVFCN, Invalid function name
-		set i=0,x="error1" set:"" x=$ZU(abcd,$length($piece("()))",")",2)))  set x="ok1"
+		set i=0,x="error1" set:"" x=$ZZ(abcd,$length($piece("()))",")",2)))  set x="ok1"
 		                             ^-----
 		At column 31, line 8, source module ##TEST_PATH##/test01.m
 %YDB-E-INVFCN, Invalid function name
-		set i=0,x="error2" if "" set x=$ZU(abcd,$length($piece("()))",")",2)))  set x="ok2"
+		set i=0,x="error2" if "" set x=$ZZ(abcd,$length($piece("()))",")",2)))  set x="ok2"
 		                                ^-----
 		At column 34, line 10, source module ##TEST_PATH##/test01.m
 %YDB-E-INVFCN, Invalid function name
-		set i=0,x="error1" set:"" x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok1"
+		set i=0,x="error1" set:"" x=$ZZ(abcd,$length($piece("()))",")",2))  set x="ok1"
 		                             ^-----
 		At column 31, line 12, source module ##TEST_PATH##/test01.m
 %YDB-E-INVFCN, Invalid function name
-		set i=0,x="error1" set:"" x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok1"
+		set i=0,x="error1" set:"" x=$ZZ(abcd,$length($piece("()))",")",2))  set x="ok1"
 		                                                                  ^-----
 		At column 68, line 12, source module ##TEST_PATH##/test01.m
 %YDB-E-RPARENMISSING, Right parenthesis expected
-		set i=0,x="error2" if "" set x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok2"
+		set i=0,x="error2" if "" set x=$ZZ(abcd,$length($piece("()))",")",2))  set x="ok2"
 		                                ^-----
 		At column 34, line 14, source module ##TEST_PATH##/test01.m
 %YDB-E-INVFCN, Invalid function name
-		set i=0,x="error2" if "" set x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok2"
+		set i=0,x="error2" if "" set x=$ZZ(abcd,$length($piece("()))",")",2))  set x="ok2"
 		                                                                     ^-----
 		At column 71, line 14, source module ##TEST_PATH##/test01.m
 %YDB-E-RPARENMISSING, Right parenthesis expected
 		set i=0,x="error1" set:"" x=$zlkid(abcd)  set x="ok1"
 		                             ^-----
 		At column 31, line 16, source module ##TEST_PATH##/test01.m
-%YDB-E-FNOTONSYS, Function or special variable is not supported by this operating system
+%YDB-E-INVFCN, Invalid function name
 		set i=0,x="error2" if "" set x=$zlkid(abcd)  set x="ok2"
 		                                ^-----
 		At column 34, line 18, source module ##TEST_PATH##/test01.m
-%YDB-E-FNOTONSYS, Function or special variable is not supported by this operating system
-		set i=0,x="error1" set:"" x=$zu  set x="ok1"
+%YDB-E-INVFCN, Invalid function name
+		set i=0,x="error1" set:"" x=$zz  set x="ok1"
 		                             ^-----
 		At column 31, line 20, source module ##TEST_PATH##/test01.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error2" if "" set x=$zu  set x="ok2"
+		set i=0,x="error2" if "" set x=$zz  set x="ok2"
 		                                ^-----
 		At column 34, line 22, source module ##TEST_PATH##/test01.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error1" set:"" x($zu,1)=i  set x="ok1"
+		set i=0,x="error1" set:"" x($zz,1)=i  set x="ok1"
 		                             ^-----
 		At column 31, line 24, source module ##TEST_PATH##/test01.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error2" if "" set x($zu,1)=i  set x="ok2"
+		set i=0,x="error2" if "" set x($zz,1)=i  set x="ok2"
 		                                ^-----
 		At column 34, line 26, source module ##TEST_PATH##/test01.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error1" set:"" x=$piece($zu,",",3,4)  set x="ok1"
+		set i=0,x="error1" set:"" x=$piece($zz,",",3,4)  set x="ok1"
 		                                    ^-----
 		At column 38, line 28, source module ##TEST_PATH##/test01.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error2" if "" set x=$piece($zu,",",3,4)  set x="ok2"
+		set i=0,x="error2" if "" set x=$piece($zz,",",3,4)  set x="ok2"
 		                                       ^-----
 		At column 41, line 30, source module ##TEST_PATH##/test01.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error1" set:"" x=$zu,y=i  set x="ok1"
+		set i=0,x="error1" set:"" x=$zz,y=i  set x="ok1"
 		                             ^-----
 		At column 31, line 32, source module ##TEST_PATH##/test01.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error2" if "" set x=$zu,y=i  set x="ok2"
+		set i=0,x="error2" if "" set x=$zz,y=i  set x="ok2"
 		                                ^-----
 		At column 34, line 34, source module ##TEST_PATH##/test01.m
 %YDB-E-INVSVN, Invalid special variable name
@@ -198,87 +198,87 @@ i=0:x=ok1
 		                                 ^-----
 		At column 35, line 38, source module ##TEST_PATH##/test01.m
 %YDB-E-SVNOSET, Cannot SET this special variable
-		set i=0,x="error1" set:"" $ZY=1  set x="ok1"
+		set i=0,x="error1" set:"" $ZZ=1  set x="ok1"
 		                           ^-----
 		At column 29, line 40, source module ##TEST_PATH##/test01.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error2" if "" set $ZY=1  set x="ok2"
+		set i=0,x="error2" if "" set $ZZ=1  set x="ok2"
 		                              ^-----
 		At column 32, line 42, source module ##TEST_PATH##/test01.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error1" set:"" $ZY=x  set x="ok1"
+		set i=0,x="error1" set:"" $ZZ=x  set x="ok1"
 		                           ^-----
 		At column 29, line 44, source module ##TEST_PATH##/test01.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error2" if "" set $ZY=x  set x="ok2"
+		set i=0,x="error2" if "" set $ZZ=x  set x="ok2"
 		                              ^-----
 		At column 32, line 46, source module ##TEST_PATH##/test01.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error1" set:"" $ZY=x+1  set x="ok1"
+		set i=0,x="error1" set:"" $ZZ=x+1  set x="ok1"
 		                           ^-----
 		At column 29, line 48, source module ##TEST_PATH##/test01.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error2" if "" set $ZY=x+1  set x="ok2"
+		set i=0,x="error2" if "" set $ZZ=x+1  set x="ok2"
 		                              ^-----
 		At column 32, line 50, source module ##TEST_PATH##/test01.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error1" set:"" (x,$ZY)=($piece($h,",",2)*0)+15  set x="ok1"
+		set i=0,x="error1" set:"" (x,$ZZ)=($piece($h,",",2)*0)+15  set x="ok1"
 		                              ^-----
 		At column 32, line 52, source module ##TEST_PATH##/test01.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error2" if "" set (x,$ZY)=($piece($h,",",2)*0)+15  set x="ok2"
+		set i=0,x="error2" if "" set (x,$ZZ)=($piece($h,",",2)*0)+15  set x="ok2"
 		                                 ^-----
 		At column 35, line 54, source module ##TEST_PATH##/test01.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error1" set:"" ($ZY,x)=($piece($h,",",2)*0)+15  set x="ok1"
+		set i=0,x="error1" set:"" ($ZZ,x)=($piece($h,",",2)*0)+15  set x="ok1"
 		                            ^-----
 		At column 30, line 56, source module ##TEST_PATH##/test01.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error2" if "" set ($ZY,x)=($piece($h,",",2)*0)+15  set x="ok2"
+		set i=0,x="error2" if "" set ($ZZ,x)=($piece($h,",",2)*0)+15  set x="ok2"
 		                               ^-----
 		At column 33, line 58, source module ##TEST_PATH##/test01.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error1" set:"" (x,$ZY,z)=($piece($h,",",2)*0)+15  set x="ok1"
+		set i=0,x="error1" set:"" (x,$ZZ,z)=($piece($h,",",2)*0)+15  set x="ok1"
 		                              ^-----
 		At column 32, line 60, source module ##TEST_PATH##/test01.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error2" if "" set (x,$ZY,z)=($piece($h,",",2)*0)+15  set x="ok2"
+		set i=0,x="error2" if "" set (x,$ZZ,z)=($piece($h,",",2)*0)+15  set x="ok2"
 		                                 ^-----
 		At column 35, line 62, source module ##TEST_PATH##/test01.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error1" set:"" $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
+		set i=0,x="error1" set:"" $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                           ^-----
 		At column 29, line 64, source module ##TEST_PATH##/test01.m
 %YDB-E-INVFCN, Invalid function name
-		set i=0,x="error1" set:"" $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
+		set i=0,x="error1" set:"" $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                                                                  ^-----
 		At column 68, line 64, source module ##TEST_PATH##/test01.m
 %YDB-E-RPARENMISSING, Right parenthesis expected
-		set i=0,x="error2" if "" set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
+		set i=0,x="error2" if "" set $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                              ^-----
 		At column 32, line 66, source module ##TEST_PATH##/test01.m
 %YDB-E-INVFCN, Invalid function name
-		set i=0,x="error2" if "" set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
+		set i=0,x="error2" if "" set $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                                                                     ^-----
 		At column 71, line 66, source module ##TEST_PATH##/test01.m
 %YDB-E-RPARENMISSING, Right parenthesis expected
-		set i=0,x="error1" set:"" $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
+		set i=0,x="error1" set:"" $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                           ^-----
 		At column 29, line 68, source module ##TEST_PATH##/test01.m
 %YDB-E-INVFCN, Invalid function name
-		set i=0,x="error1" set:"" $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
+		set i=0,x="error1" set:"" $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                                                                  ^-----
 		At column 68, line 68, source module ##TEST_PATH##/test01.m
 %YDB-E-RPARENMISSING, Right parenthesis expected
-		set i=0,x="error2" if "" set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
+		set i=0,x="error2" if "" set $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                              ^-----
 		At column 32, line 70, source module ##TEST_PATH##/test01.m
 %YDB-E-INVFCN, Invalid function name
-		set i=0,x="error2" if "" set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
+		set i=0,x="error2" if "" set $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                                                                     ^-----
 		At column 71, line 70, source module ##TEST_PATH##/test01.m
 %YDB-E-RPARENMISSING, Right parenthesis expected
-		set i=0,x="error1" new:"" $zu  set x="ok1"
+		set i=0,x="error1" new:"" $zz  set x="ok1"
 		                           ^-----
 		At column 29, line 72, source module ##TEST_PATH##/test01.m
 %YDB-E-INVSVN, Invalid special variable name
@@ -289,15 +289,15 @@ i=0:x=ok1
 		set i=0,x="error1" open:"" "t.t":afoo  set x="ok1"
 		                                 ^-----
 		At column 35, line 76, source module ##TEST_PATH##/test01.m
-%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=0,x="error1" use:"" "t.t":afoo  set x="ok1"
 		                                ^-----
 		At column 34, line 78, source module ##TEST_PATH##/test01.m
-%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=0,x="error1" close:"" "t.t":afoo  set x="ok1"
 		                                  ^-----
 		At column 36, line 80, source module ##TEST_PATH##/test01.m
-%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=0,x="error1" open:"" "t.t":(zzzzzz)  set x="ok1"
 		                                  ^-----
 		At column 36, line 82, source module ##TEST_PATH##/test01.m
@@ -422,75 +422,75 @@ i=0:x=ok1
 
  --> Running M program [test02.m] ----
 
-		set i=0,x="error1" set:0 x=$zu(10)  set x="ok1"
+		set i=0,x="error1" set:0 x=$zz(10)  set x="ok1"
 		                            ^-----
 		At column 30, line 4, source module ##TEST_PATH##/test02.m
 %YDB-E-INVFCN, Invalid function name
-		set i=0,x="error2" if 0 set x=$zu(10)  set x="ok2"
+		set i=0,x="error2" if 0 set x=$zz(10)  set x="ok2"
 		                               ^-----
 		At column 33, line 6, source module ##TEST_PATH##/test02.m
 %YDB-E-INVFCN, Invalid function name
-		set i=0,x="error1" set:0 x=$ZU(abcd,$length($piece("()))",")",2)))  set x="ok1"
+		set i=0,x="error1" set:0 x=$ZZ(abcd,$length($piece("()))",")",2)))  set x="ok1"
 		                            ^-----
 		At column 30, line 8, source module ##TEST_PATH##/test02.m
 %YDB-E-INVFCN, Invalid function name
-		set i=0,x="error2" if 0 set x=$ZU(abcd,$length($piece("()))",")",2)))  set x="ok2"
+		set i=0,x="error2" if 0 set x=$ZZ(abcd,$length($piece("()))",")",2)))  set x="ok2"
 		                               ^-----
 		At column 33, line 10, source module ##TEST_PATH##/test02.m
 %YDB-E-INVFCN, Invalid function name
-		set i=0,x="error1" set:0 x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok1"
+		set i=0,x="error1" set:0 x=$ZZ(abcd,$length($piece("()))",")",2))  set x="ok1"
 		                            ^-----
 		At column 30, line 12, source module ##TEST_PATH##/test02.m
 %YDB-E-INVFCN, Invalid function name
-		set i=0,x="error1" set:0 x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok1"
+		set i=0,x="error1" set:0 x=$ZZ(abcd,$length($piece("()))",")",2))  set x="ok1"
 		                                                                 ^-----
 		At column 67, line 12, source module ##TEST_PATH##/test02.m
 %YDB-E-RPARENMISSING, Right parenthesis expected
-		set i=0,x="error2" if 0 set x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok2"
+		set i=0,x="error2" if 0 set x=$ZZ(abcd,$length($piece("()))",")",2))  set x="ok2"
 		                               ^-----
 		At column 33, line 14, source module ##TEST_PATH##/test02.m
 %YDB-E-INVFCN, Invalid function name
-		set i=0,x="error2" if 0 set x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok2"
+		set i=0,x="error2" if 0 set x=$ZZ(abcd,$length($piece("()))",")",2))  set x="ok2"
 		                                                                    ^-----
 		At column 70, line 14, source module ##TEST_PATH##/test02.m
 %YDB-E-RPARENMISSING, Right parenthesis expected
 		set i=0,x="error1" set:0 x=$zlkid(abcd)  set x="ok1"
 		                            ^-----
 		At column 30, line 16, source module ##TEST_PATH##/test02.m
-%YDB-E-FNOTONSYS, Function or special variable is not supported by this operating system
+%YDB-E-INVFCN, Invalid function name
 		set i=0,x="error2" if 0 set x=$zlkid(abcd)  set x="ok2"
 		                               ^-----
 		At column 33, line 18, source module ##TEST_PATH##/test02.m
-%YDB-E-FNOTONSYS, Function or special variable is not supported by this operating system
-		set i=0,x="error1" set:0 x=$zu  set x="ok1"
+%YDB-E-INVFCN, Invalid function name
+		set i=0,x="error1" set:0 x=$zz  set x="ok1"
 		                            ^-----
 		At column 30, line 20, source module ##TEST_PATH##/test02.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error2" if 0 set x=$zu  set x="ok2"
+		set i=0,x="error2" if 0 set x=$zz  set x="ok2"
 		                               ^-----
 		At column 33, line 22, source module ##TEST_PATH##/test02.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error1" set:0 x($zu,1)=i  set x="ok1"
+		set i=0,x="error1" set:0 x($zz,1)=i  set x="ok1"
 		                            ^-----
 		At column 30, line 24, source module ##TEST_PATH##/test02.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error2" if 0 set x($zu,1)=i  set x="ok2"
+		set i=0,x="error2" if 0 set x($zz,1)=i  set x="ok2"
 		                               ^-----
 		At column 33, line 26, source module ##TEST_PATH##/test02.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error1" set:0 x=$piece($zu,",",3,4)  set x="ok1"
+		set i=0,x="error1" set:0 x=$piece($zz,",",3,4)  set x="ok1"
 		                                   ^-----
 		At column 37, line 28, source module ##TEST_PATH##/test02.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error2" if 0 set x=$piece($zu,",",3,4)  set x="ok2"
+		set i=0,x="error2" if 0 set x=$piece($zz,",",3,4)  set x="ok2"
 		                                      ^-----
 		At column 40, line 30, source module ##TEST_PATH##/test02.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error1" set:0 x=$zu,y=i  set x="ok1"
+		set i=0,x="error1" set:0 x=$zz,y=i  set x="ok1"
 		                            ^-----
 		At column 30, line 32, source module ##TEST_PATH##/test02.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error2" if 0 set x=$zu,y=i  set x="ok2"
+		set i=0,x="error2" if 0 set x=$zz,y=i  set x="ok2"
 		                               ^-----
 		At column 33, line 34, source module ##TEST_PATH##/test02.m
 %YDB-E-INVSVN, Invalid special variable name
@@ -502,87 +502,87 @@ i=0:x=ok1
 		                                ^-----
 		At column 34, line 38, source module ##TEST_PATH##/test02.m
 %YDB-E-SVNOSET, Cannot SET this special variable
-		set i=0,x="error1" set:0 $ZY=1  set x="ok1"
+		set i=0,x="error1" set:0 $ZZ=1  set x="ok1"
 		                          ^-----
 		At column 28, line 40, source module ##TEST_PATH##/test02.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error2" if 0 set $ZY=1  set x="ok2"
+		set i=0,x="error2" if 0 set $ZZ=1  set x="ok2"
 		                             ^-----
 		At column 31, line 42, source module ##TEST_PATH##/test02.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error1" set:0 $ZY=x  set x="ok1"
+		set i=0,x="error1" set:0 $ZZ=x  set x="ok1"
 		                          ^-----
 		At column 28, line 44, source module ##TEST_PATH##/test02.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error2" if 0 set $ZY=x  set x="ok2"
+		set i=0,x="error2" if 0 set $ZZ=x  set x="ok2"
 		                             ^-----
 		At column 31, line 46, source module ##TEST_PATH##/test02.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error1" set:0 $ZY=x+1  set x="ok1"
+		set i=0,x="error1" set:0 $ZZ=x+1  set x="ok1"
 		                          ^-----
 		At column 28, line 48, source module ##TEST_PATH##/test02.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error2" if 0 set $ZY=x+1  set x="ok2"
+		set i=0,x="error2" if 0 set $ZZ=x+1  set x="ok2"
 		                             ^-----
 		At column 31, line 50, source module ##TEST_PATH##/test02.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error1" set:0 (x,$ZY)=($piece($h,",",2)*0)+15  set x="ok1"
+		set i=0,x="error1" set:0 (x,$ZZ)=($piece($h,",",2)*0)+15  set x="ok1"
 		                             ^-----
 		At column 31, line 52, source module ##TEST_PATH##/test02.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error2" if 0 set (x,$ZY)=($piece($h,",",2)*0)+15  set x="ok2"
+		set i=0,x="error2" if 0 set (x,$ZZ)=($piece($h,",",2)*0)+15  set x="ok2"
 		                                ^-----
 		At column 34, line 54, source module ##TEST_PATH##/test02.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error1" set:0 ($ZY,x)=($piece($h,",",2)*0)+15  set x="ok1"
+		set i=0,x="error1" set:0 ($ZZ,x)=($piece($h,",",2)*0)+15  set x="ok1"
 		                           ^-----
 		At column 29, line 56, source module ##TEST_PATH##/test02.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error2" if 0 set ($ZY,x)=($piece($h,",",2)*0)+15  set x="ok2"
+		set i=0,x="error2" if 0 set ($ZZ,x)=($piece($h,",",2)*0)+15  set x="ok2"
 		                              ^-----
 		At column 32, line 58, source module ##TEST_PATH##/test02.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error1" set:0 (x,$ZY,z)=($piece($h,",",2)*0)+15  set x="ok1"
+		set i=0,x="error1" set:0 (x,$ZZ,z)=($piece($h,",",2)*0)+15  set x="ok1"
 		                             ^-----
 		At column 31, line 60, source module ##TEST_PATH##/test02.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error2" if 0 set (x,$ZY,z)=($piece($h,",",2)*0)+15  set x="ok2"
+		set i=0,x="error2" if 0 set (x,$ZZ,z)=($piece($h,",",2)*0)+15  set x="ok2"
 		                                ^-----
 		At column 34, line 62, source module ##TEST_PATH##/test02.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error1" set:0 $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
+		set i=0,x="error1" set:0 $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                          ^-----
 		At column 28, line 64, source module ##TEST_PATH##/test02.m
 %YDB-E-INVFCN, Invalid function name
-		set i=0,x="error1" set:0 $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
+		set i=0,x="error1" set:0 $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                                                                 ^-----
 		At column 67, line 64, source module ##TEST_PATH##/test02.m
 %YDB-E-RPARENMISSING, Right parenthesis expected
-		set i=0,x="error2" if 0 set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
+		set i=0,x="error2" if 0 set $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                             ^-----
 		At column 31, line 66, source module ##TEST_PATH##/test02.m
 %YDB-E-INVFCN, Invalid function name
-		set i=0,x="error2" if 0 set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
+		set i=0,x="error2" if 0 set $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                                                                    ^-----
 		At column 70, line 66, source module ##TEST_PATH##/test02.m
 %YDB-E-RPARENMISSING, Right parenthesis expected
-		set i=0,x="error1" set:0 $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
+		set i=0,x="error1" set:0 $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                          ^-----
 		At column 28, line 68, source module ##TEST_PATH##/test02.m
 %YDB-E-INVFCN, Invalid function name
-		set i=0,x="error1" set:0 $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
+		set i=0,x="error1" set:0 $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                                                                 ^-----
 		At column 67, line 68, source module ##TEST_PATH##/test02.m
 %YDB-E-RPARENMISSING, Right parenthesis expected
-		set i=0,x="error2" if 0 set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
+		set i=0,x="error2" if 0 set $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                             ^-----
 		At column 31, line 70, source module ##TEST_PATH##/test02.m
 %YDB-E-INVFCN, Invalid function name
-		set i=0,x="error2" if 0 set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
+		set i=0,x="error2" if 0 set $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                                                                    ^-----
 		At column 70, line 70, source module ##TEST_PATH##/test02.m
 %YDB-E-RPARENMISSING, Right parenthesis expected
-		set i=0,x="error1" new:0 $zu  set x="ok1"
+		set i=0,x="error1" new:0 $zz  set x="ok1"
 		                          ^-----
 		At column 28, line 72, source module ##TEST_PATH##/test02.m
 %YDB-E-INVSVN, Invalid special variable name
@@ -593,15 +593,15 @@ i=0:x=ok1
 		set i=0,x="error1" open:0 "t.t":afoo  set x="ok1"
 		                                ^-----
 		At column 34, line 76, source module ##TEST_PATH##/test02.m
-%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=0,x="error1" use:0 "t.t":afoo  set x="ok1"
 		                               ^-----
 		At column 33, line 78, source module ##TEST_PATH##/test02.m
-%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=0,x="error1" close:0 "t.t":afoo  set x="ok1"
 		                                 ^-----
 		At column 35, line 80, source module ##TEST_PATH##/test02.m
-%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=0,x="error1" open:0 "t.t":(zzzzzz)  set x="ok1"
 		                                 ^-----
 		At column 35, line 82, source module ##TEST_PATH##/test02.m
@@ -726,75 +726,75 @@ i=0:x=ok1
 
  --> Running M program [test03.m] ----
 
-		set i=0,x="error1" set:i x=$zu(10)  set x="ok1"
+		set i=0,x="error1" set:i x=$zz(10)  set x="ok1"
 		                            ^-----
 		At column 30, line 4, source module ##TEST_PATH##/test03.m
 %YDB-E-INVFCN, Invalid function name
-		set i=0,x="error2" if i set x=$zu(10)  set x="ok2"
+		set i=0,x="error2" if i set x=$zz(10)  set x="ok2"
 		                               ^-----
 		At column 33, line 6, source module ##TEST_PATH##/test03.m
 %YDB-E-INVFCN, Invalid function name
-		set i=0,x="error1" set:i x=$ZU(abcd,$length($piece("()))",")",2)))  set x="ok1"
+		set i=0,x="error1" set:i x=$ZZ(abcd,$length($piece("()))",")",2)))  set x="ok1"
 		                            ^-----
 		At column 30, line 8, source module ##TEST_PATH##/test03.m
 %YDB-E-INVFCN, Invalid function name
-		set i=0,x="error2" if i set x=$ZU(abcd,$length($piece("()))",")",2)))  set x="ok2"
+		set i=0,x="error2" if i set x=$ZZ(abcd,$length($piece("()))",")",2)))  set x="ok2"
 		                               ^-----
 		At column 33, line 10, source module ##TEST_PATH##/test03.m
 %YDB-E-INVFCN, Invalid function name
-		set i=0,x="error1" set:i x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok1"
+		set i=0,x="error1" set:i x=$ZZ(abcd,$length($piece("()))",")",2))  set x="ok1"
 		                            ^-----
 		At column 30, line 12, source module ##TEST_PATH##/test03.m
 %YDB-E-INVFCN, Invalid function name
-		set i=0,x="error1" set:i x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok1"
+		set i=0,x="error1" set:i x=$ZZ(abcd,$length($piece("()))",")",2))  set x="ok1"
 		                                                                 ^-----
 		At column 67, line 12, source module ##TEST_PATH##/test03.m
 %YDB-E-RPARENMISSING, Right parenthesis expected
-		set i=0,x="error2" if i set x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok2"
+		set i=0,x="error2" if i set x=$ZZ(abcd,$length($piece("()))",")",2))  set x="ok2"
 		                               ^-----
 		At column 33, line 14, source module ##TEST_PATH##/test03.m
 %YDB-E-INVFCN, Invalid function name
-		set i=0,x="error2" if i set x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok2"
+		set i=0,x="error2" if i set x=$ZZ(abcd,$length($piece("()))",")",2))  set x="ok2"
 		                                                                    ^-----
 		At column 70, line 14, source module ##TEST_PATH##/test03.m
 %YDB-E-RPARENMISSING, Right parenthesis expected
 		set i=0,x="error1" set:i x=$zlkid(abcd)  set x="ok1"
 		                            ^-----
 		At column 30, line 16, source module ##TEST_PATH##/test03.m
-%YDB-E-FNOTONSYS, Function or special variable is not supported by this operating system
+%YDB-E-INVFCN, Invalid function name
 		set i=0,x="error2" if i set x=$zlkid(abcd)  set x="ok2"
 		                               ^-----
 		At column 33, line 18, source module ##TEST_PATH##/test03.m
-%YDB-E-FNOTONSYS, Function or special variable is not supported by this operating system
-		set i=0,x="error1" set:i x=$zu  set x="ok1"
+%YDB-E-INVFCN, Invalid function name
+		set i=0,x="error1" set:i x=$zz  set x="ok1"
 		                            ^-----
 		At column 30, line 20, source module ##TEST_PATH##/test03.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error2" if i set x=$zu  set x="ok2"
+		set i=0,x="error2" if i set x=$zz  set x="ok2"
 		                               ^-----
 		At column 33, line 22, source module ##TEST_PATH##/test03.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error1" set:i x($zu,1)=i  set x="ok1"
+		set i=0,x="error1" set:i x($zz,1)=i  set x="ok1"
 		                            ^-----
 		At column 30, line 24, source module ##TEST_PATH##/test03.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error2" if i set x($zu,1)=i  set x="ok2"
+		set i=0,x="error2" if i set x($zz,1)=i  set x="ok2"
 		                               ^-----
 		At column 33, line 26, source module ##TEST_PATH##/test03.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error1" set:i x=$piece($zu,",",3,4)  set x="ok1"
+		set i=0,x="error1" set:i x=$piece($zz,",",3,4)  set x="ok1"
 		                                   ^-----
 		At column 37, line 28, source module ##TEST_PATH##/test03.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error2" if i set x=$piece($zu,",",3,4)  set x="ok2"
+		set i=0,x="error2" if i set x=$piece($zz,",",3,4)  set x="ok2"
 		                                      ^-----
 		At column 40, line 30, source module ##TEST_PATH##/test03.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error1" set:i x=$zu,y=i  set x="ok1"
+		set i=0,x="error1" set:i x=$zz,y=i  set x="ok1"
 		                            ^-----
 		At column 30, line 32, source module ##TEST_PATH##/test03.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error2" if i set x=$zu,y=i  set x="ok2"
+		set i=0,x="error2" if i set x=$zz,y=i  set x="ok2"
 		                               ^-----
 		At column 33, line 34, source module ##TEST_PATH##/test03.m
 %YDB-E-INVSVN, Invalid special variable name
@@ -806,87 +806,87 @@ i=0:x=ok1
 		                                ^-----
 		At column 34, line 38, source module ##TEST_PATH##/test03.m
 %YDB-E-SVNOSET, Cannot SET this special variable
-		set i=0,x="error1" set:i $ZY=1  set x="ok1"
+		set i=0,x="error1" set:i $ZZ=1  set x="ok1"
 		                          ^-----
 		At column 28, line 40, source module ##TEST_PATH##/test03.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error2" if i set $ZY=1  set x="ok2"
+		set i=0,x="error2" if i set $ZZ=1  set x="ok2"
 		                             ^-----
 		At column 31, line 42, source module ##TEST_PATH##/test03.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error1" set:i $ZY=x  set x="ok1"
+		set i=0,x="error1" set:i $ZZ=x  set x="ok1"
 		                          ^-----
 		At column 28, line 44, source module ##TEST_PATH##/test03.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error2" if i set $ZY=x  set x="ok2"
+		set i=0,x="error2" if i set $ZZ=x  set x="ok2"
 		                             ^-----
 		At column 31, line 46, source module ##TEST_PATH##/test03.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error1" set:i $ZY=x+1  set x="ok1"
+		set i=0,x="error1" set:i $ZZ=x+1  set x="ok1"
 		                          ^-----
 		At column 28, line 48, source module ##TEST_PATH##/test03.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error2" if i set $ZY=x+1  set x="ok2"
+		set i=0,x="error2" if i set $ZZ=x+1  set x="ok2"
 		                             ^-----
 		At column 31, line 50, source module ##TEST_PATH##/test03.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error1" set:i (x,$ZY)=($piece($h,",",2)*0)+15  set x="ok1"
+		set i=0,x="error1" set:i (x,$ZZ)=($piece($h,",",2)*0)+15  set x="ok1"
 		                             ^-----
 		At column 31, line 52, source module ##TEST_PATH##/test03.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error2" if i set (x,$ZY)=($piece($h,",",2)*0)+15  set x="ok2"
+		set i=0,x="error2" if i set (x,$ZZ)=($piece($h,",",2)*0)+15  set x="ok2"
 		                                ^-----
 		At column 34, line 54, source module ##TEST_PATH##/test03.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error1" set:i ($ZY,x)=($piece($h,",",2)*0)+15  set x="ok1"
+		set i=0,x="error1" set:i ($ZZ,x)=($piece($h,",",2)*0)+15  set x="ok1"
 		                           ^-----
 		At column 29, line 56, source module ##TEST_PATH##/test03.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error2" if i set ($ZY,x)=($piece($h,",",2)*0)+15  set x="ok2"
+		set i=0,x="error2" if i set ($ZZ,x)=($piece($h,",",2)*0)+15  set x="ok2"
 		                              ^-----
 		At column 32, line 58, source module ##TEST_PATH##/test03.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error1" set:i (x,$ZY,z)=($piece($h,",",2)*0)+15  set x="ok1"
+		set i=0,x="error1" set:i (x,$ZZ,z)=($piece($h,",",2)*0)+15  set x="ok1"
 		                             ^-----
 		At column 31, line 60, source module ##TEST_PATH##/test03.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error2" if i set (x,$ZY,z)=($piece($h,",",2)*0)+15  set x="ok2"
+		set i=0,x="error2" if i set (x,$ZZ,z)=($piece($h,",",2)*0)+15  set x="ok2"
 		                                ^-----
 		At column 34, line 62, source module ##TEST_PATH##/test03.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=0,x="error1" set:i $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
+		set i=0,x="error1" set:i $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                          ^-----
 		At column 28, line 64, source module ##TEST_PATH##/test03.m
 %YDB-E-INVFCN, Invalid function name
-		set i=0,x="error1" set:i $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
+		set i=0,x="error1" set:i $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                                                                 ^-----
 		At column 67, line 64, source module ##TEST_PATH##/test03.m
 %YDB-E-RPARENMISSING, Right parenthesis expected
-		set i=0,x="error2" if i set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
+		set i=0,x="error2" if i set $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                             ^-----
 		At column 31, line 66, source module ##TEST_PATH##/test03.m
 %YDB-E-INVFCN, Invalid function name
-		set i=0,x="error2" if i set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
+		set i=0,x="error2" if i set $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                                                                    ^-----
 		At column 70, line 66, source module ##TEST_PATH##/test03.m
 %YDB-E-RPARENMISSING, Right parenthesis expected
-		set i=0,x="error1" set:i $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
+		set i=0,x="error1" set:i $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                          ^-----
 		At column 28, line 68, source module ##TEST_PATH##/test03.m
 %YDB-E-INVFCN, Invalid function name
-		set i=0,x="error1" set:i $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
+		set i=0,x="error1" set:i $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                                                                 ^-----
 		At column 67, line 68, source module ##TEST_PATH##/test03.m
 %YDB-E-RPARENMISSING, Right parenthesis expected
-		set i=0,x="error2" if i set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
+		set i=0,x="error2" if i set $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                             ^-----
 		At column 31, line 70, source module ##TEST_PATH##/test03.m
 %YDB-E-INVFCN, Invalid function name
-		set i=0,x="error2" if i set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
+		set i=0,x="error2" if i set $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                                                                    ^-----
 		At column 70, line 70, source module ##TEST_PATH##/test03.m
 %YDB-E-RPARENMISSING, Right parenthesis expected
-		set i=0,x="error1" new:i $zu  set x="ok1"
+		set i=0,x="error1" new:i $zz  set x="ok1"
 		                          ^-----
 		At column 28, line 72, source module ##TEST_PATH##/test03.m
 %YDB-E-INVSVN, Invalid special variable name
@@ -897,15 +897,15 @@ i=0:x=ok1
 		set i=0,x="error1" open:i "t.t":afoo  set x="ok1"
 		                                ^-----
 		At column 34, line 76, source module ##TEST_PATH##/test03.m
-%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=0,x="error1" use:i "t.t":afoo  set x="ok1"
 		                               ^-----
 		At column 33, line 78, source module ##TEST_PATH##/test03.m
-%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=0,x="error1" close:i "t.t":afoo  set x="ok1"
 		                                 ^-----
 		At column 35, line 80, source module ##TEST_PATH##/test03.m
-%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=0,x="error1" open:i "t.t":(zzzzzz)  set x="ok1"
 		                                 ^-----
 		At column 35, line 82, source module ##TEST_PATH##/test03.m
@@ -1027,75 +1027,75 @@ i=0:x=ok1
 
  --> Running M program [test11.m] ----
 
-		set i=1,x="error1" set:"" x=$zu(10)  set x="ok1"
+		set i=1,x="error1" set:"" x=$zz(10)  set x="ok1"
 		                             ^-----
 		At column 31, line 4, source module ##TEST_PATH##/test11.m
 %YDB-E-INVFCN, Invalid function name
-		set i=1,x="error2" if "" set x=$zu(10)  set x="ok2"
+		set i=1,x="error2" if "" set x=$zz(10)  set x="ok2"
 		                                ^-----
 		At column 34, line 6, source module ##TEST_PATH##/test11.m
 %YDB-E-INVFCN, Invalid function name
-		set i=1,x="error1" set:"" x=$ZU(abcd,$length($piece("()))",")",2)))  set x="ok1"
+		set i=1,x="error1" set:"" x=$ZZ(abcd,$length($piece("()))",")",2)))  set x="ok1"
 		                             ^-----
 		At column 31, line 8, source module ##TEST_PATH##/test11.m
 %YDB-E-INVFCN, Invalid function name
-		set i=1,x="error2" if "" set x=$ZU(abcd,$length($piece("()))",")",2)))  set x="ok2"
+		set i=1,x="error2" if "" set x=$ZZ(abcd,$length($piece("()))",")",2)))  set x="ok2"
 		                                ^-----
 		At column 34, line 10, source module ##TEST_PATH##/test11.m
 %YDB-E-INVFCN, Invalid function name
-		set i=1,x="error1" set:"" x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok1"
+		set i=1,x="error1" set:"" x=$ZZ(abcd,$length($piece("()))",")",2))  set x="ok1"
 		                             ^-----
 		At column 31, line 12, source module ##TEST_PATH##/test11.m
 %YDB-E-INVFCN, Invalid function name
-		set i=1,x="error1" set:"" x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok1"
+		set i=1,x="error1" set:"" x=$ZZ(abcd,$length($piece("()))",")",2))  set x="ok1"
 		                                                                  ^-----
 		At column 68, line 12, source module ##TEST_PATH##/test11.m
 %YDB-E-RPARENMISSING, Right parenthesis expected
-		set i=1,x="error2" if "" set x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok2"
+		set i=1,x="error2" if "" set x=$ZZ(abcd,$length($piece("()))",")",2))  set x="ok2"
 		                                ^-----
 		At column 34, line 14, source module ##TEST_PATH##/test11.m
 %YDB-E-INVFCN, Invalid function name
-		set i=1,x="error2" if "" set x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok2"
+		set i=1,x="error2" if "" set x=$ZZ(abcd,$length($piece("()))",")",2))  set x="ok2"
 		                                                                     ^-----
 		At column 71, line 14, source module ##TEST_PATH##/test11.m
 %YDB-E-RPARENMISSING, Right parenthesis expected
 		set i=1,x="error1" set:"" x=$zlkid(abcd)  set x="ok1"
 		                             ^-----
 		At column 31, line 16, source module ##TEST_PATH##/test11.m
-%YDB-E-FNOTONSYS, Function or special variable is not supported by this operating system
+%YDB-E-INVFCN, Invalid function name
 		set i=1,x="error2" if "" set x=$zlkid(abcd)  set x="ok2"
 		                                ^-----
 		At column 34, line 18, source module ##TEST_PATH##/test11.m
-%YDB-E-FNOTONSYS, Function or special variable is not supported by this operating system
-		set i=1,x="error1" set:"" x=$zu  set x="ok1"
+%YDB-E-INVFCN, Invalid function name
+		set i=1,x="error1" set:"" x=$zz  set x="ok1"
 		                             ^-----
 		At column 31, line 20, source module ##TEST_PATH##/test11.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error2" if "" set x=$zu  set x="ok2"
+		set i=1,x="error2" if "" set x=$zz  set x="ok2"
 		                                ^-----
 		At column 34, line 22, source module ##TEST_PATH##/test11.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error1" set:"" x($zu,1)=i  set x="ok1"
+		set i=1,x="error1" set:"" x($zz,1)=i  set x="ok1"
 		                             ^-----
 		At column 31, line 24, source module ##TEST_PATH##/test11.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error2" if "" set x($zu,1)=i  set x="ok2"
+		set i=1,x="error2" if "" set x($zz,1)=i  set x="ok2"
 		                                ^-----
 		At column 34, line 26, source module ##TEST_PATH##/test11.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error1" set:"" x=$piece($zu,",",3,4)  set x="ok1"
+		set i=1,x="error1" set:"" x=$piece($zz,",",3,4)  set x="ok1"
 		                                    ^-----
 		At column 38, line 28, source module ##TEST_PATH##/test11.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error2" if "" set x=$piece($zu,",",3,4)  set x="ok2"
+		set i=1,x="error2" if "" set x=$piece($zz,",",3,4)  set x="ok2"
 		                                       ^-----
 		At column 41, line 30, source module ##TEST_PATH##/test11.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error1" set:"" x=$zu,y=i  set x="ok1"
+		set i=1,x="error1" set:"" x=$zz,y=i  set x="ok1"
 		                             ^-----
 		At column 31, line 32, source module ##TEST_PATH##/test11.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error2" if "" set x=$zu,y=i  set x="ok2"
+		set i=1,x="error2" if "" set x=$zz,y=i  set x="ok2"
 		                                ^-----
 		At column 34, line 34, source module ##TEST_PATH##/test11.m
 %YDB-E-INVSVN, Invalid special variable name
@@ -1107,87 +1107,87 @@ i=0:x=ok1
 		                                 ^-----
 		At column 35, line 38, source module ##TEST_PATH##/test11.m
 %YDB-E-SVNOSET, Cannot SET this special variable
-		set i=1,x="error1" set:"" $ZY=1  set x="ok1"
+		set i=1,x="error1" set:"" $ZZ=1  set x="ok1"
 		                           ^-----
 		At column 29, line 40, source module ##TEST_PATH##/test11.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error2" if "" set $ZY=1  set x="ok2"
+		set i=1,x="error2" if "" set $ZZ=1  set x="ok2"
 		                              ^-----
 		At column 32, line 42, source module ##TEST_PATH##/test11.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error1" set:"" $ZY=x  set x="ok1"
+		set i=1,x="error1" set:"" $ZZ=x  set x="ok1"
 		                           ^-----
 		At column 29, line 44, source module ##TEST_PATH##/test11.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error2" if "" set $ZY=x  set x="ok2"
+		set i=1,x="error2" if "" set $ZZ=x  set x="ok2"
 		                              ^-----
 		At column 32, line 46, source module ##TEST_PATH##/test11.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error1" set:"" $ZY=x+1  set x="ok1"
+		set i=1,x="error1" set:"" $ZZ=x+1  set x="ok1"
 		                           ^-----
 		At column 29, line 48, source module ##TEST_PATH##/test11.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error2" if "" set $ZY=x+1  set x="ok2"
+		set i=1,x="error2" if "" set $ZZ=x+1  set x="ok2"
 		                              ^-----
 		At column 32, line 50, source module ##TEST_PATH##/test11.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error1" set:"" (x,$ZY)=($piece($h,",",2)*0)+15  set x="ok1"
+		set i=1,x="error1" set:"" (x,$ZZ)=($piece($h,",",2)*0)+15  set x="ok1"
 		                              ^-----
 		At column 32, line 52, source module ##TEST_PATH##/test11.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error2" if "" set (x,$ZY)=($piece($h,",",2)*0)+15  set x="ok2"
+		set i=1,x="error2" if "" set (x,$ZZ)=($piece($h,",",2)*0)+15  set x="ok2"
 		                                 ^-----
 		At column 35, line 54, source module ##TEST_PATH##/test11.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error1" set:"" ($ZY,x)=($piece($h,",",2)*0)+15  set x="ok1"
+		set i=1,x="error1" set:"" ($ZZ,x)=($piece($h,",",2)*0)+15  set x="ok1"
 		                            ^-----
 		At column 30, line 56, source module ##TEST_PATH##/test11.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error2" if "" set ($ZY,x)=($piece($h,",",2)*0)+15  set x="ok2"
+		set i=1,x="error2" if "" set ($ZZ,x)=($piece($h,",",2)*0)+15  set x="ok2"
 		                               ^-----
 		At column 33, line 58, source module ##TEST_PATH##/test11.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error1" set:"" (x,$ZY,z)=($piece($h,",",2)*0)+15  set x="ok1"
+		set i=1,x="error1" set:"" (x,$ZZ,z)=($piece($h,",",2)*0)+15  set x="ok1"
 		                              ^-----
 		At column 32, line 60, source module ##TEST_PATH##/test11.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error2" if "" set (x,$ZY,z)=($piece($h,",",2)*0)+15  set x="ok2"
+		set i=1,x="error2" if "" set (x,$ZZ,z)=($piece($h,",",2)*0)+15  set x="ok2"
 		                                 ^-----
 		At column 35, line 62, source module ##TEST_PATH##/test11.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error1" set:"" $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
+		set i=1,x="error1" set:"" $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                           ^-----
 		At column 29, line 64, source module ##TEST_PATH##/test11.m
 %YDB-E-INVFCN, Invalid function name
-		set i=1,x="error1" set:"" $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
+		set i=1,x="error1" set:"" $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                                                                  ^-----
 		At column 68, line 64, source module ##TEST_PATH##/test11.m
 %YDB-E-RPARENMISSING, Right parenthesis expected
-		set i=1,x="error2" if "" set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
+		set i=1,x="error2" if "" set $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                              ^-----
 		At column 32, line 66, source module ##TEST_PATH##/test11.m
 %YDB-E-INVFCN, Invalid function name
-		set i=1,x="error2" if "" set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
+		set i=1,x="error2" if "" set $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                                                                     ^-----
 		At column 71, line 66, source module ##TEST_PATH##/test11.m
 %YDB-E-RPARENMISSING, Right parenthesis expected
-		set i=1,x="error1" set:"" $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
+		set i=1,x="error1" set:"" $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                           ^-----
 		At column 29, line 68, source module ##TEST_PATH##/test11.m
 %YDB-E-INVFCN, Invalid function name
-		set i=1,x="error1" set:"" $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
+		set i=1,x="error1" set:"" $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                                                                  ^-----
 		At column 68, line 68, source module ##TEST_PATH##/test11.m
 %YDB-E-RPARENMISSING, Right parenthesis expected
-		set i=1,x="error2" if "" set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
+		set i=1,x="error2" if "" set $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                              ^-----
 		At column 32, line 70, source module ##TEST_PATH##/test11.m
 %YDB-E-INVFCN, Invalid function name
-		set i=1,x="error2" if "" set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
+		set i=1,x="error2" if "" set $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                                                                     ^-----
 		At column 71, line 70, source module ##TEST_PATH##/test11.m
 %YDB-E-RPARENMISSING, Right parenthesis expected
-		set i=1,x="error1" new:"" $zu  set x="ok1"
+		set i=1,x="error1" new:"" $zz  set x="ok1"
 		                           ^-----
 		At column 29, line 72, source module ##TEST_PATH##/test11.m
 %YDB-E-INVSVN, Invalid special variable name
@@ -1198,15 +1198,15 @@ i=0:x=ok1
 		set i=1,x="error1" open:"" "t.t":afoo  set x="ok1"
 		                                 ^-----
 		At column 35, line 76, source module ##TEST_PATH##/test11.m
-%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=1,x="error1" use:"" "t.t":afoo  set x="ok1"
 		                                ^-----
 		At column 34, line 78, source module ##TEST_PATH##/test11.m
-%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=1,x="error1" close:"" "t.t":afoo  set x="ok1"
 		                                  ^-----
 		At column 36, line 80, source module ##TEST_PATH##/test11.m
-%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=1,x="error1" open:"" "t.t":(zzzzzz)  set x="ok1"
 		                                  ^-----
 		At column 36, line 82, source module ##TEST_PATH##/test11.m
@@ -1331,75 +1331,75 @@ i=1:x=ok1
 
  --> Running M program [test12.m] ----
 
-		set i=1,x="error1" set:0 x=$zu(10)  set x="ok1"
+		set i=1,x="error1" set:0 x=$zz(10)  set x="ok1"
 		                            ^-----
 		At column 30, line 4, source module ##TEST_PATH##/test12.m
 %YDB-E-INVFCN, Invalid function name
-		set i=1,x="error2" if 0 set x=$zu(10)  set x="ok2"
+		set i=1,x="error2" if 0 set x=$zz(10)  set x="ok2"
 		                               ^-----
 		At column 33, line 6, source module ##TEST_PATH##/test12.m
 %YDB-E-INVFCN, Invalid function name
-		set i=1,x="error1" set:0 x=$ZU(abcd,$length($piece("()))",")",2)))  set x="ok1"
+		set i=1,x="error1" set:0 x=$ZZ(abcd,$length($piece("()))",")",2)))  set x="ok1"
 		                            ^-----
 		At column 30, line 8, source module ##TEST_PATH##/test12.m
 %YDB-E-INVFCN, Invalid function name
-		set i=1,x="error2" if 0 set x=$ZU(abcd,$length($piece("()))",")",2)))  set x="ok2"
+		set i=1,x="error2" if 0 set x=$ZZ(abcd,$length($piece("()))",")",2)))  set x="ok2"
 		                               ^-----
 		At column 33, line 10, source module ##TEST_PATH##/test12.m
 %YDB-E-INVFCN, Invalid function name
-		set i=1,x="error1" set:0 x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok1"
+		set i=1,x="error1" set:0 x=$ZZ(abcd,$length($piece("()))",")",2))  set x="ok1"
 		                            ^-----
 		At column 30, line 12, source module ##TEST_PATH##/test12.m
 %YDB-E-INVFCN, Invalid function name
-		set i=1,x="error1" set:0 x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok1"
+		set i=1,x="error1" set:0 x=$ZZ(abcd,$length($piece("()))",")",2))  set x="ok1"
 		                                                                 ^-----
 		At column 67, line 12, source module ##TEST_PATH##/test12.m
 %YDB-E-RPARENMISSING, Right parenthesis expected
-		set i=1,x="error2" if 0 set x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok2"
+		set i=1,x="error2" if 0 set x=$ZZ(abcd,$length($piece("()))",")",2))  set x="ok2"
 		                               ^-----
 		At column 33, line 14, source module ##TEST_PATH##/test12.m
 %YDB-E-INVFCN, Invalid function name
-		set i=1,x="error2" if 0 set x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok2"
+		set i=1,x="error2" if 0 set x=$ZZ(abcd,$length($piece("()))",")",2))  set x="ok2"
 		                                                                    ^-----
 		At column 70, line 14, source module ##TEST_PATH##/test12.m
 %YDB-E-RPARENMISSING, Right parenthesis expected
 		set i=1,x="error1" set:0 x=$zlkid(abcd)  set x="ok1"
 		                            ^-----
 		At column 30, line 16, source module ##TEST_PATH##/test12.m
-%YDB-E-FNOTONSYS, Function or special variable is not supported by this operating system
+%YDB-E-INVFCN, Invalid function name
 		set i=1,x="error2" if 0 set x=$zlkid(abcd)  set x="ok2"
 		                               ^-----
 		At column 33, line 18, source module ##TEST_PATH##/test12.m
-%YDB-E-FNOTONSYS, Function or special variable is not supported by this operating system
-		set i=1,x="error1" set:0 x=$zu  set x="ok1"
+%YDB-E-INVFCN, Invalid function name
+		set i=1,x="error1" set:0 x=$zz  set x="ok1"
 		                            ^-----
 		At column 30, line 20, source module ##TEST_PATH##/test12.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error2" if 0 set x=$zu  set x="ok2"
+		set i=1,x="error2" if 0 set x=$zz  set x="ok2"
 		                               ^-----
 		At column 33, line 22, source module ##TEST_PATH##/test12.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error1" set:0 x($zu,1)=i  set x="ok1"
+		set i=1,x="error1" set:0 x($zz,1)=i  set x="ok1"
 		                            ^-----
 		At column 30, line 24, source module ##TEST_PATH##/test12.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error2" if 0 set x($zu,1)=i  set x="ok2"
+		set i=1,x="error2" if 0 set x($zz,1)=i  set x="ok2"
 		                               ^-----
 		At column 33, line 26, source module ##TEST_PATH##/test12.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error1" set:0 x=$piece($zu,",",3,4)  set x="ok1"
+		set i=1,x="error1" set:0 x=$piece($zz,",",3,4)  set x="ok1"
 		                                   ^-----
 		At column 37, line 28, source module ##TEST_PATH##/test12.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error2" if 0 set x=$piece($zu,",",3,4)  set x="ok2"
+		set i=1,x="error2" if 0 set x=$piece($zz,",",3,4)  set x="ok2"
 		                                      ^-----
 		At column 40, line 30, source module ##TEST_PATH##/test12.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error1" set:0 x=$zu,y=i  set x="ok1"
+		set i=1,x="error1" set:0 x=$zz,y=i  set x="ok1"
 		                            ^-----
 		At column 30, line 32, source module ##TEST_PATH##/test12.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error2" if 0 set x=$zu,y=i  set x="ok2"
+		set i=1,x="error2" if 0 set x=$zz,y=i  set x="ok2"
 		                               ^-----
 		At column 33, line 34, source module ##TEST_PATH##/test12.m
 %YDB-E-INVSVN, Invalid special variable name
@@ -1411,87 +1411,87 @@ i=1:x=ok1
 		                                ^-----
 		At column 34, line 38, source module ##TEST_PATH##/test12.m
 %YDB-E-SVNOSET, Cannot SET this special variable
-		set i=1,x="error1" set:0 $ZY=1  set x="ok1"
+		set i=1,x="error1" set:0 $ZZ=1  set x="ok1"
 		                          ^-----
 		At column 28, line 40, source module ##TEST_PATH##/test12.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error2" if 0 set $ZY=1  set x="ok2"
+		set i=1,x="error2" if 0 set $ZZ=1  set x="ok2"
 		                             ^-----
 		At column 31, line 42, source module ##TEST_PATH##/test12.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error1" set:0 $ZY=x  set x="ok1"
+		set i=1,x="error1" set:0 $ZZ=x  set x="ok1"
 		                          ^-----
 		At column 28, line 44, source module ##TEST_PATH##/test12.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error2" if 0 set $ZY=x  set x="ok2"
+		set i=1,x="error2" if 0 set $ZZ=x  set x="ok2"
 		                             ^-----
 		At column 31, line 46, source module ##TEST_PATH##/test12.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error1" set:0 $ZY=x+1  set x="ok1"
+		set i=1,x="error1" set:0 $ZZ=x+1  set x="ok1"
 		                          ^-----
 		At column 28, line 48, source module ##TEST_PATH##/test12.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error2" if 0 set $ZY=x+1  set x="ok2"
+		set i=1,x="error2" if 0 set $ZZ=x+1  set x="ok2"
 		                             ^-----
 		At column 31, line 50, source module ##TEST_PATH##/test12.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error1" set:0 (x,$ZY)=($piece($h,",",2)*0)+15  set x="ok1"
+		set i=1,x="error1" set:0 (x,$ZZ)=($piece($h,",",2)*0)+15  set x="ok1"
 		                             ^-----
 		At column 31, line 52, source module ##TEST_PATH##/test12.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error2" if 0 set (x,$ZY)=($piece($h,",",2)*0)+15  set x="ok2"
+		set i=1,x="error2" if 0 set (x,$ZZ)=($piece($h,",",2)*0)+15  set x="ok2"
 		                                ^-----
 		At column 34, line 54, source module ##TEST_PATH##/test12.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error1" set:0 ($ZY,x)=($piece($h,",",2)*0)+15  set x="ok1"
+		set i=1,x="error1" set:0 ($ZZ,x)=($piece($h,",",2)*0)+15  set x="ok1"
 		                           ^-----
 		At column 29, line 56, source module ##TEST_PATH##/test12.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error2" if 0 set ($ZY,x)=($piece($h,",",2)*0)+15  set x="ok2"
+		set i=1,x="error2" if 0 set ($ZZ,x)=($piece($h,",",2)*0)+15  set x="ok2"
 		                              ^-----
 		At column 32, line 58, source module ##TEST_PATH##/test12.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error1" set:0 (x,$ZY,z)=($piece($h,",",2)*0)+15  set x="ok1"
+		set i=1,x="error1" set:0 (x,$ZZ,z)=($piece($h,",",2)*0)+15  set x="ok1"
 		                             ^-----
 		At column 31, line 60, source module ##TEST_PATH##/test12.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error2" if 0 set (x,$ZY,z)=($piece($h,",",2)*0)+15  set x="ok2"
+		set i=1,x="error2" if 0 set (x,$ZZ,z)=($piece($h,",",2)*0)+15  set x="ok2"
 		                                ^-----
 		At column 34, line 62, source module ##TEST_PATH##/test12.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error1" set:0 $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
+		set i=1,x="error1" set:0 $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                          ^-----
 		At column 28, line 64, source module ##TEST_PATH##/test12.m
 %YDB-E-INVFCN, Invalid function name
-		set i=1,x="error1" set:0 $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
+		set i=1,x="error1" set:0 $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                                                                 ^-----
 		At column 67, line 64, source module ##TEST_PATH##/test12.m
 %YDB-E-RPARENMISSING, Right parenthesis expected
-		set i=1,x="error2" if 0 set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
+		set i=1,x="error2" if 0 set $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                             ^-----
 		At column 31, line 66, source module ##TEST_PATH##/test12.m
 %YDB-E-INVFCN, Invalid function name
-		set i=1,x="error2" if 0 set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
+		set i=1,x="error2" if 0 set $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                                                                    ^-----
 		At column 70, line 66, source module ##TEST_PATH##/test12.m
 %YDB-E-RPARENMISSING, Right parenthesis expected
-		set i=1,x="error1" set:0 $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
+		set i=1,x="error1" set:0 $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                          ^-----
 		At column 28, line 68, source module ##TEST_PATH##/test12.m
 %YDB-E-INVFCN, Invalid function name
-		set i=1,x="error1" set:0 $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
+		set i=1,x="error1" set:0 $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                                                                 ^-----
 		At column 67, line 68, source module ##TEST_PATH##/test12.m
 %YDB-E-RPARENMISSING, Right parenthesis expected
-		set i=1,x="error2" if 0 set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
+		set i=1,x="error2" if 0 set $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                             ^-----
 		At column 31, line 70, source module ##TEST_PATH##/test12.m
 %YDB-E-INVFCN, Invalid function name
-		set i=1,x="error2" if 0 set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
+		set i=1,x="error2" if 0 set $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                                                                    ^-----
 		At column 70, line 70, source module ##TEST_PATH##/test12.m
 %YDB-E-RPARENMISSING, Right parenthesis expected
-		set i=1,x="error1" new:0 $zu  set x="ok1"
+		set i=1,x="error1" new:0 $zz  set x="ok1"
 		                          ^-----
 		At column 28, line 72, source module ##TEST_PATH##/test12.m
 %YDB-E-INVSVN, Invalid special variable name
@@ -1502,15 +1502,15 @@ i=1:x=ok1
 		set i=1,x="error1" open:0 "t.t":afoo  set x="ok1"
 		                                ^-----
 		At column 34, line 76, source module ##TEST_PATH##/test12.m
-%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=1,x="error1" use:0 "t.t":afoo  set x="ok1"
 		                               ^-----
 		At column 33, line 78, source module ##TEST_PATH##/test12.m
-%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=1,x="error1" close:0 "t.t":afoo  set x="ok1"
 		                                 ^-----
 		At column 35, line 80, source module ##TEST_PATH##/test12.m
-%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=1,x="error1" open:0 "t.t":(zzzzzz)  set x="ok1"
 		                                 ^-----
 		At column 35, line 82, source module ##TEST_PATH##/test12.m
@@ -1635,75 +1635,75 @@ i=1:x=ok1
 
  --> Running M program [test13.m] ----
 
-		set i=1,x="error1" set:i x=$zu(10)  set x="ok1"
+		set i=1,x="error1" set:i x=$zz(10)  set x="ok1"
 		                            ^-----
 		At column 30, line 4, source module ##TEST_PATH##/test13.m
 %YDB-E-INVFCN, Invalid function name
-		set i=1,x="error2" if i set x=$zu(10)  set x="ok2"
+		set i=1,x="error2" if i set x=$zz(10)  set x="ok2"
 		                               ^-----
 		At column 33, line 6, source module ##TEST_PATH##/test13.m
 %YDB-E-INVFCN, Invalid function name
-		set i=1,x="error1" set:i x=$ZU(abcd,$length($piece("()))",")",2)))  set x="ok1"
+		set i=1,x="error1" set:i x=$ZZ(abcd,$length($piece("()))",")",2)))  set x="ok1"
 		                            ^-----
 		At column 30, line 8, source module ##TEST_PATH##/test13.m
 %YDB-E-INVFCN, Invalid function name
-		set i=1,x="error2" if i set x=$ZU(abcd,$length($piece("()))",")",2)))  set x="ok2"
+		set i=1,x="error2" if i set x=$ZZ(abcd,$length($piece("()))",")",2)))  set x="ok2"
 		                               ^-----
 		At column 33, line 10, source module ##TEST_PATH##/test13.m
 %YDB-E-INVFCN, Invalid function name
-		set i=1,x="error1" set:i x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok1"
+		set i=1,x="error1" set:i x=$ZZ(abcd,$length($piece("()))",")",2))  set x="ok1"
 		                            ^-----
 		At column 30, line 12, source module ##TEST_PATH##/test13.m
 %YDB-E-INVFCN, Invalid function name
-		set i=1,x="error1" set:i x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok1"
+		set i=1,x="error1" set:i x=$ZZ(abcd,$length($piece("()))",")",2))  set x="ok1"
 		                                                                 ^-----
 		At column 67, line 12, source module ##TEST_PATH##/test13.m
 %YDB-E-RPARENMISSING, Right parenthesis expected
-		set i=1,x="error2" if i set x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok2"
+		set i=1,x="error2" if i set x=$ZZ(abcd,$length($piece("()))",")",2))  set x="ok2"
 		                               ^-----
 		At column 33, line 14, source module ##TEST_PATH##/test13.m
 %YDB-E-INVFCN, Invalid function name
-		set i=1,x="error2" if i set x=$ZU(abcd,$length($piece("()))",")",2))  set x="ok2"
+		set i=1,x="error2" if i set x=$ZZ(abcd,$length($piece("()))",")",2))  set x="ok2"
 		                                                                    ^-----
 		At column 70, line 14, source module ##TEST_PATH##/test13.m
 %YDB-E-RPARENMISSING, Right parenthesis expected
 		set i=1,x="error1" set:i x=$zlkid(abcd)  set x="ok1"
 		                            ^-----
 		At column 30, line 16, source module ##TEST_PATH##/test13.m
-%YDB-E-FNOTONSYS, Function or special variable is not supported by this operating system
+%YDB-E-INVFCN, Invalid function name
 		set i=1,x="error2" if i set x=$zlkid(abcd)  set x="ok2"
 		                               ^-----
 		At column 33, line 18, source module ##TEST_PATH##/test13.m
-%YDB-E-FNOTONSYS, Function or special variable is not supported by this operating system
-		set i=1,x="error1" set:i x=$zu  set x="ok1"
+%YDB-E-INVFCN, Invalid function name
+		set i=1,x="error1" set:i x=$zz  set x="ok1"
 		                            ^-----
 		At column 30, line 20, source module ##TEST_PATH##/test13.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error2" if i set x=$zu  set x="ok2"
+		set i=1,x="error2" if i set x=$zz  set x="ok2"
 		                               ^-----
 		At column 33, line 22, source module ##TEST_PATH##/test13.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error1" set:i x($zu,1)=i  set x="ok1"
+		set i=1,x="error1" set:i x($zz,1)=i  set x="ok1"
 		                            ^-----
 		At column 30, line 24, source module ##TEST_PATH##/test13.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error2" if i set x($zu,1)=i  set x="ok2"
+		set i=1,x="error2" if i set x($zz,1)=i  set x="ok2"
 		                               ^-----
 		At column 33, line 26, source module ##TEST_PATH##/test13.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error1" set:i x=$piece($zu,",",3,4)  set x="ok1"
+		set i=1,x="error1" set:i x=$piece($zz,",",3,4)  set x="ok1"
 		                                   ^-----
 		At column 37, line 28, source module ##TEST_PATH##/test13.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error2" if i set x=$piece($zu,",",3,4)  set x="ok2"
+		set i=1,x="error2" if i set x=$piece($zz,",",3,4)  set x="ok2"
 		                                      ^-----
 		At column 40, line 30, source module ##TEST_PATH##/test13.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error1" set:i x=$zu,y=i  set x="ok1"
+		set i=1,x="error1" set:i x=$zz,y=i  set x="ok1"
 		                            ^-----
 		At column 30, line 32, source module ##TEST_PATH##/test13.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error2" if i set x=$zu,y=i  set x="ok2"
+		set i=1,x="error2" if i set x=$zz,y=i  set x="ok2"
 		                               ^-----
 		At column 33, line 34, source module ##TEST_PATH##/test13.m
 %YDB-E-INVSVN, Invalid special variable name
@@ -1715,87 +1715,87 @@ i=1:x=ok1
 		                                ^-----
 		At column 34, line 38, source module ##TEST_PATH##/test13.m
 %YDB-E-SVNOSET, Cannot SET this special variable
-		set i=1,x="error1" set:i $ZY=1  set x="ok1"
+		set i=1,x="error1" set:i $ZZ=1  set x="ok1"
 		                          ^-----
 		At column 28, line 40, source module ##TEST_PATH##/test13.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error2" if i set $ZY=1  set x="ok2"
+		set i=1,x="error2" if i set $ZZ=1  set x="ok2"
 		                             ^-----
 		At column 31, line 42, source module ##TEST_PATH##/test13.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error1" set:i $ZY=x  set x="ok1"
+		set i=1,x="error1" set:i $ZZ=x  set x="ok1"
 		                          ^-----
 		At column 28, line 44, source module ##TEST_PATH##/test13.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error2" if i set $ZY=x  set x="ok2"
+		set i=1,x="error2" if i set $ZZ=x  set x="ok2"
 		                             ^-----
 		At column 31, line 46, source module ##TEST_PATH##/test13.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error1" set:i $ZY=x+1  set x="ok1"
+		set i=1,x="error1" set:i $ZZ=x+1  set x="ok1"
 		                          ^-----
 		At column 28, line 48, source module ##TEST_PATH##/test13.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error2" if i set $ZY=x+1  set x="ok2"
+		set i=1,x="error2" if i set $ZZ=x+1  set x="ok2"
 		                             ^-----
 		At column 31, line 50, source module ##TEST_PATH##/test13.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error1" set:i (x,$ZY)=($piece($h,",",2)*0)+15  set x="ok1"
+		set i=1,x="error1" set:i (x,$ZZ)=($piece($h,",",2)*0)+15  set x="ok1"
 		                             ^-----
 		At column 31, line 52, source module ##TEST_PATH##/test13.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error2" if i set (x,$ZY)=($piece($h,",",2)*0)+15  set x="ok2"
+		set i=1,x="error2" if i set (x,$ZZ)=($piece($h,",",2)*0)+15  set x="ok2"
 		                                ^-----
 		At column 34, line 54, source module ##TEST_PATH##/test13.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error1" set:i ($ZY,x)=($piece($h,",",2)*0)+15  set x="ok1"
+		set i=1,x="error1" set:i ($ZZ,x)=($piece($h,",",2)*0)+15  set x="ok1"
 		                           ^-----
 		At column 29, line 56, source module ##TEST_PATH##/test13.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error2" if i set ($ZY,x)=($piece($h,",",2)*0)+15  set x="ok2"
+		set i=1,x="error2" if i set ($ZZ,x)=($piece($h,",",2)*0)+15  set x="ok2"
 		                              ^-----
 		At column 32, line 58, source module ##TEST_PATH##/test13.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error1" set:i (x,$ZY,z)=($piece($h,",",2)*0)+15  set x="ok1"
+		set i=1,x="error1" set:i (x,$ZZ,z)=($piece($h,",",2)*0)+15  set x="ok1"
 		                             ^-----
 		At column 31, line 60, source module ##TEST_PATH##/test13.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error2" if i set (x,$ZY,z)=($piece($h,",",2)*0)+15  set x="ok2"
+		set i=1,x="error2" if i set (x,$ZZ,z)=($piece($h,",",2)*0)+15  set x="ok2"
 		                                ^-----
 		At column 34, line 62, source module ##TEST_PATH##/test13.m
 %YDB-E-INVSVN, Invalid special variable name
-		set i=1,x="error1" set:i $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
+		set i=1,x="error1" set:i $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                          ^-----
 		At column 28, line 64, source module ##TEST_PATH##/test13.m
 %YDB-E-INVFCN, Invalid function name
-		set i=1,x="error1" set:i $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
+		set i=1,x="error1" set:i $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                                                                 ^-----
 		At column 67, line 64, source module ##TEST_PATH##/test13.m
 %YDB-E-RPARENMISSING, Right parenthesis expected
-		set i=1,x="error2" if i set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
+		set i=1,x="error2" if i set $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                             ^-----
 		At column 31, line 66, source module ##TEST_PATH##/test13.m
 %YDB-E-INVFCN, Invalid function name
-		set i=1,x="error2" if i set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
+		set i=1,x="error2" if i set $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                                                                    ^-----
 		At column 70, line 66, source module ##TEST_PATH##/test13.m
 %YDB-E-RPARENMISSING, Right parenthesis expected
-		set i=1,x="error1" set:i $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
+		set i=1,x="error1" set:i $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                          ^-----
 		At column 28, line 68, source module ##TEST_PATH##/test13.m
 %YDB-E-INVFCN, Invalid function name
-		set i=1,x="error1" set:i $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok1"
+		set i=1,x="error1" set:i $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok1"
 		                                                                 ^-----
 		At column 67, line 68, source module ##TEST_PATH##/test13.m
 %YDB-E-RPARENMISSING, Right parenthesis expected
-		set i=1,x="error2" if i set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
+		set i=1,x="error2" if i set $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                             ^-----
 		At column 31, line 70, source module ##TEST_PATH##/test13.m
 %YDB-E-INVFCN, Invalid function name
-		set i=1,x="error2" if i set $ZU(abcd,$length($piece("()))",")",2))=x  set x="ok2"
+		set i=1,x="error2" if i set $ZZ(abcd,$length($piece("()))",")",2))=x  set x="ok2"
 		                                                                    ^-----
 		At column 70, line 70, source module ##TEST_PATH##/test13.m
 %YDB-E-RPARENMISSING, Right parenthesis expected
-		set i=1,x="error1" new:i $zu  set x="ok1"
+		set i=1,x="error1" new:i $zz  set x="ok1"
 		                          ^-----
 		At column 28, line 72, source module ##TEST_PATH##/test13.m
 %YDB-E-INVSVN, Invalid special variable name
@@ -1806,15 +1806,15 @@ i=1:x=ok1
 		set i=1,x="error1" open:i "t.t":afoo  set x="ok1"
 		                                ^-----
 		At column 34, line 76, source module ##TEST_PATH##/test13.m
-%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=1,x="error1" use:i "t.t":afoo  set x="ok1"
 		                               ^-----
 		At column 33, line 78, source module ##TEST_PATH##/test13.m
-%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=1,x="error1" close:i "t.t":afoo  set x="ok1"
 		                                 ^-----
 		At column 35, line 80, source module ##TEST_PATH##/test13.m
-%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
+%YDB-E-DEVPARUNK, Deviceparameter unknown
 		set i=1,x="error1" open:i "t.t":(zzzzzz)  set x="ok1"
 		                                 ^-----
 		At column 35, line 82, source module ##TEST_PATH##/test13.m
@@ -1887,9 +1887,9 @@ ZSTATUS=test13+11^test13,%YDB-E-RPARENMISSING, Right parenthesis expected
 i=1:x=error1
 ZSTATUS=test13+13^test13,%YDB-E-RPARENMISSING, Right parenthesis expected
 i=1:x=error2
-ZSTATUS=test13+15^test13,%YDB-E-FNOTONSYS, Function or special variable is not supported by this operating system
+ZSTATUS=test13+15^test13,%YDB-E-INVFCN, Invalid function name
 i=1:x=error1
-ZSTATUS=test13+17^test13,%YDB-E-FNOTONSYS, Function or special variable is not supported by this operating system
+ZSTATUS=test13+17^test13,%YDB-E-INVFCN, Invalid function name
 i=1:x=error2
 ZSTATUS=test13+19^test13,%YDB-E-INVSVN, Invalid special variable name
 i=1:x=error1
@@ -1947,11 +1947,11 @@ ZSTATUS=test13+71^test13,%YDB-E-INVSVN, Invalid special variable name
 i=1:x=error1
 ZSTATUS=test13+73^test13,%YDB-E-SVNONEW, Cannot NEW this special variable
 i=1:x=error1
-ZSTATUS=test13+75^test13,%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
+ZSTATUS=test13+75^test13,%YDB-E-DEVPARUNK, Deviceparameter unknown
 i=1:x=error1
-ZSTATUS=test13+77^test13,%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
+ZSTATUS=test13+77^test13,%YDB-E-DEVPARUNK, Deviceparameter unknown
 i=1:x=error1
-ZSTATUS=test13+79^test13,%YDB-E-DEVPARINAP, Device parameter inappropriate to this command
+ZSTATUS=test13+79^test13,%YDB-E-DEVPARUNK, Deviceparameter unknown
 i=1:x=error1
 ZSTATUS=test13+81^test13,%YDB-E-DEVPARUNK, Deviceparameter unknown
 i=1:x=error1

@@ -1,3 +1,18 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+;								;
+; Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; This module is derived from FIS GT.M.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 incrbas ; ------------------------------------------------------------------------------------------
 	;   Master driver program to test $INCREMENT functionality.
 	; ------------------------------------------------------------------------------------------
@@ -33,7 +48,7 @@ sstop   ;
 	quit
 
 incrtrap; ------------------------------------------------------------------------------------------
-	;   Error handler. Prints current error and continues processing from the next M-line 
+	;   Error handler. Prints current error and continues processing from the next M-line
 	; ------------------------------------------------------------------------------------------
 	do sstop
 	if $tlevel trollback
@@ -66,17 +81,17 @@ increrr1; ----------------------------------------------------------------------
 	quit
 
 increrr2; ------------------------------------------------------------------------------------
-	;    Test that $ZINC is not a valid function name
+	;    Test that $ZINK is not a valid function name
 	; ------------------------------------------------------------------------------------
 	new glvn
 	do setglvn("glvn","X")
 	set @glvn=0
-	write $ZINC(@glvn,7)	; Expected: INVFCN error because of incomplete function name
+	write $ZINK(@glvn,7)	; Expected: INVFCN error because of incomplete function name
 	kill @glvn
 	quit
 
 incr01	; ------------------------------------------------------------------------------------------
-	;   Test that $I, $INCR, $ZINCR, $INCREMENT and $ZINCREMENT are synonyms of the same thing 
+	;   Test that $I, $INCR, $ZINCR, $INCREMENT and $ZINCREMENT are synonyms of the same thing
 	; ------------------------------------------------------------------------------------------
 	new glvn
 	do setglvn("glvn","x1")
@@ -118,7 +133,7 @@ incr03a	; ----------------------------------------------------------------------
 	set @glvn1=11
 	set @glvn2=222
 	set @glvn3=3333
-	set @glvn3=$incr(@glvn2,@glvn1) 
+	set @glvn3=$incr(@glvn2,@glvn1)
 	zwrite @glvn1		; Expected:  11
 	zwrite @glvn2		; Expected: 233
 	zwrite @glvn3		; Expected: 233
@@ -278,7 +293,7 @@ incr04c	; ----------------------------------------------------------------------
 	write $incr(@glvn,-5.12355678)	; Expected: -5.12345678
 	write $incr(@glvn,-1E-5a)	; Expected: RPARENMISSING error because of trailing "a" in -1E-5a
 	zwrite @glvn			; Expected: -5.12345678
-	kill @glvn	
+	kill @glvn
 	quit
 
 incr04d	; ------------------------------------------------------------------------------------
@@ -293,7 +308,7 @@ incr04d	; ----------------------------------------------------------------------
 	write $incr(@glvn,incrlocal(1,"abcd"))	; Expected: 25
 	zwrite @glvn				; Expected: TOKEN=25 (or ^TOKEN=25)
 	zwrite incrlocal			; Expected: incrlocal=37,incrlocal(1,"abcd")=-29
-	kill @glvn	
+	kill @glvn
 	quit
 
 incr04e	; ------------------------------------------------------------------------------------
@@ -310,7 +325,7 @@ incr04e	; ----------------------------------------------------------------------
 	zwrite @glvn				; Expected: TOKEN=-49 (or ^TOKEN=-49)
 	zwrite ^incrlocal			; Expected: ^incrlocal=-37,^incrlocal("abcd",1)=-29
 	kill ^incrlocal
-	kill @glvn	
+	kill @glvn
 	quit
 
 incr04f	; ------------------------------------------------------------------------------------
@@ -324,7 +339,7 @@ incr04f	; ----------------------------------------------------------------------
 	write $incr(@glvn,$zinterrupt)		; Expected: 17 (if local) and 18 (if global)
 	write $incr(@glvn,$zininterrupt)	; Expected: 17 (if local) and 18 (if global)
 	zwrite @glvn				; Expected: sVNvariable=17 (or ^sVNvariable=18) and nothing else
-	kill @glvn	
+	kill @glvn
 	quit
 
 incr04g	; ------------------------------------------------------------------------------------
@@ -381,7 +396,7 @@ incr04i	; ----------------------------------------------------------------------
 	quit
 
 incr05	; ------------------------------------------------------------------------------------
-	;    Test of various forms of indirection on "glvn" and "expr" 
+	;    Test of various forms of indirection on "glvn" and "expr"
 	; ------------------------------------------------------------------------------------
 
 incr05a	; ------------------------------------------------------------------------------------

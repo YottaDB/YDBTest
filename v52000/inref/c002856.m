@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -15,20 +15,20 @@ c002856	;	Test that incorrect usages of ISV/FCNs ALWAYS generate object code
  ; Stefan's testcase (#1)
  ; --------------------------------------------------------------------------------------------
  ;
- set $zy=$p(%z,"[",2)-1
+ set $zz=$p(%z,"[",2)-1
  ;
  ; --------------------------------------------------------------------------------------------
  ; Stefan's testcase (#2)
  ; --------------------------------------------------------------------------------------------
  ;
- for  quit:$zpriv(r1wait)   ; On Unix, this will generate a FNOTONSYS error
+ for  quit:$zpriv(r1wait)   ; On Unix, this will generate a INVFCN error
  ;. for  quit:$zascii(r1wait)  ; On VMS,  this will generate a FNOTONSYS error - [no longer generates error - leave in to preserve reference file linenumbers]
  ;
  ; --------------------------------------------------------------------------------------------
  ; VA's testcase
  ; --------------------------------------------------------------------------------------------
  ;
- i '$zpriv("SYSLCK")  ; On Unix, this will generate a FNOTONSYS error
+ i '$zpriv("SYSLCK")  ; On Unix, this will generate a INVFCN error
  ;i '$zascii("SYSLCK") ; On VMS,  this will generate a FNOTONSYS error - [no longer generates error - leave in to preserve reference file linenumbers]
  ;
  ; --------------------------------------------------------------------------------------------
