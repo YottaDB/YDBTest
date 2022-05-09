@@ -2,7 +2,7 @@
 #								#
 # Copyright 2006, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -593,7 +593,10 @@ function loop_thro_all_sync(rcvd_task)
 	}
 }
 
-function sortrcvfromlink()
+# "numswaps" is a variable internal only to the below function (i.e. variable scope is just the below function).
+# Hence have 4 spaces before it to indicate it is not a function parameter but is an internal variable.
+# See https://www.gnu.org/software/gawk/manual/html_node/Variable-Scope.html for more details.
+function sortrcvfromlink(    numswaps)
 {
 	rcvcnt=0
 	i=1
@@ -607,6 +610,7 @@ function sortrcvfromlink()
 		i++
 	}
 	# Now sort rcvfromlink array
+	numswaps=0
 	i=1
 	while (rcvfromlink[i] != "")
 	{
@@ -618,6 +622,22 @@ function sortrcvfromlink()
 			if (linki[3] == linkj[2])
 			{
 				# Current src is a rcv down the line - swap
+				# It is possible we have a configuration with a cycle (possible in case the test had
+				# some errors resulting in some link lines not being correctly deleted/updated).
+				#	ACTIVE_LINKS_RCVFROM	INST1	INST2
+				#	ACTIVE_LINKS_RCVFROM	INST2	INST3
+				#	ACTIVE_LINKS_RCVFROM	INST3	INST1
+				# For example, in the above 3-line configuration, INST1 receives from INST2,
+				# INST2 receives from INST3 and INST3 receives from INST1 which is a cycle of length 3.
+				# In that case, we have to detect the cycle and stop trying to sort an unsortable array.
+				# Hence the check below. We don't expect to have more than N*(N-1) swaps in a bubble-sort
+				# like algorithm of N elements (where N is "rcvcnt").
+				numswaps++
+				if (numswaps > (rcvcnt * (rcvcnt - 1)))
+				{	# This is an out-of-design situation. Signal error and exit right away.
+					error_reports("msr_active_links.txt ACTIVE_LINKS_RCVFROM cycle detected. Aborting...");
+					exit 1
+				}
 				tmp1=rcvfromlink[i]
 				rcvfromlink[i] = rcvfromlink[j] ; rcvfromlink[j]=tmp1
 				i=0
