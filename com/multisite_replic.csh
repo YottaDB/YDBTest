@@ -4,7 +4,7 @@
 # Copyright (c) 2006-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -286,8 +286,15 @@ else
 			if ! (-e $tmp_side/$fn) \cp $fn $tmp_side/$fn
 			if ($status) echo "MSR-E-CPFAIL cp $fn $tmp_side/$fn failed"
 		else
-			$rcp $fn "$tmp_host":$tmp_side/$fn
-			if ($status) echo "MSR-E-CPFAIL $rcp $fn "$tmp_host":$tmp_side/$fn failed"
+			# Note: $tmp_side has the full path with backslashes before each forward slash (due to the "sed" above)
+			# Using "$tmp_side" below in the $rcp (aka "scp") command has been seen to fail with a
+			# "scp: No such file or directory" error due to trying to search for the path with back slashes on the
+			# remote host. We started seeing this only on Arch Linux. Not yet sure if it is a "scp" issue or a "tcsh"
+			# issue or something else. A workaround that we found was to revert back to a version of the directory
+			# without the backslashes and use it in the $rcp command below. Hence the use of "$tmp_side2" below.
+			set tmp_side2 = `echo $tmp_side | sed 's;\\/;/;g'`
+			$rcp $fn "$tmp_host":$tmp_side2/$fn
+			if ($status) echo "MSR-E-CPFAIL $rcp $fn "$tmp_host":$tmp_side2/$fn failed"
 		endif
 		sed 's/\(.setenv remote_ver.*;;;\)cd /\1source '$tmp_side'\/'$fn';cd /' $action_file".csh" >& tmp_$action_file".csh"
 		mv tmp_$action_file".csh" $action_file".csh"
