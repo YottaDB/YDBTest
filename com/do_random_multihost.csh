@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2014 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -75,6 +78,20 @@ else if ( "$mh_rand_tests" =~ "* $tst *" ) then
 		setenv test_replic_mh_type 1
 	else if (1 >= $rand) then
 		if (! $?gtmtest_noxendian) setenv test_replic_mh_type 2
+	endif
+endif
+
+if ($test_replic_mh_type && ("rhel" == $gtm_test_linux_distrib)) then
+	grep -q 'Red Hat Enterprise Linux 7' /etc/os-release
+	if (! $status) then
+		# This is a RHEL 7 system. And we have randomly chosen the current test to run as a multi-host test.
+		# This means we have to disable TLS for this test as all other systems in-house run at a much higher
+		# OpenSSL version compared to RHEL 7 and issue the following error in the replication source server log.
+		#
+		# %YDB-E-TLSHANDSHAKE, Connection to remote side using TLS/SSL protocol failed
+		# %YDB-I-TEXT, error:141A318A:SSL routines:tls_process_ske_dhe:dh key too small
+		echo "# Setting gtm_test_tls=FALSE in do_random_multihost.csh due to RHEL 7 and test_replic_mh_type=1"	>>&! $settingsfile
+		setenv gtm_test_tls "FALSE"
 	endif
 endif
 
