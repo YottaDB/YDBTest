@@ -1,0 +1,6 @@
+# Automated test case for test.csh/helper.csh in https://gitlab.com/YottaDB/DB/YDB/-/issues/872#description
+# Create an empty M program tmp.m in current directory
+# Set gtmroutines env var to use auto-relink on current directory
+# Fire off 16 background jobs each of which start lots of short-lived YottaDB processes that in turn open/close relinkctl file
+# Wait for all background jobs to finish
+# Check for any errors (done by test framework). Should see no output below.
