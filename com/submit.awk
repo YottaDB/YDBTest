@@ -2,7 +2,7 @@
 #								#
 # Copyright 2002, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -18,6 +18,11 @@ BEGIN {
 	print "set short_host = $HOST:r:r:r:r"
 	print "if ($?test_no_background && ($tst_stdout == 0)) echo The rough results:"
 	print "if ($?test_no_background && ($tst_stdout == 0)) echo If there are other errors after the end of the test, these results might be wrong."
+	# Setting $SHELL to /usr/local/bin/tcsh because tcsh is the only supported shell for the test system and it needs to be the default/login shell
+	# or else tests that use ZSYSTEM might fail
+	# e.g., "basic" test fails, when $SHELL is not set correctly, because of the command `ZSYSTEM "echo tracing fifo2 "_$job_" >>&! dbx_c_stack_trace_fifo2.trace"`
+	# which in turn fails because the bash shell(default shell) encounters >>&! which is tcsh syntax 
+	print "setenv SHELL /usr/local/bin/tcsh"
 	gtm_tst_out = ENVIRON["gtm_tst_out"]
       }
 $1 !~ /#/ {testname = $2 "_" $1
