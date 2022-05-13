@@ -12,6 +12,7 @@ mumps.dat
 ==Executing MULTISITE_REPLIC 'START INST1 INST2'==
 Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/wait_for_log.csh -log ##FILTERED##RCVR_##TIMESTAMP##.log -message "New History Content"'==
 # Stop the source server
 ==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST2'==
 # Stop the receiver server
