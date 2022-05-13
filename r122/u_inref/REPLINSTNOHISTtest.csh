@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -24,6 +24,10 @@ endif
 echo "# Start INST1 INST2 connection" >> $outputFile
 $MSR START INST1 INST2 >>& $outputFile
 get_msrtime
+
+# See wait_for_log.csh call in r122/u_inref/ydb210_dbcreate.csh for why this is necessary.
+$MSR RUN INST2 'set msr_dont_trace; $gtm_tst/com/wait_for_log.csh -log RCVR_'${time_msr}'.log.updproc -message "New History Content"'
+
 setenv srcLog1 "SRC_$time_msr.log" #srcLog1 will hold current source log for INST1 INST2
 echo '' >> $outputFile
 

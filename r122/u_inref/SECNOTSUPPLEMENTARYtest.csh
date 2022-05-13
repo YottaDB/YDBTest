@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -63,6 +63,11 @@ setenv SRC_PID `$grep -e "Replication Source Server with Pid" $srcLog | $tst_awk
 echo '# Start the INST2 server (expecting SECSUPPLEMENTARY error in source server log)' >>& $outputFile
 $MSR STARTRCV INST1 INST2 >>& $outputFile
 get_msrtime
+
+# Note: We would normally need to have a wait_for_log.csh call here just like is done in r122/u_inref/REPLINSTNOHISTtest.csh
+# But in this case, the source server would issue a %YDB-E-SECNOTSUPPLEMENTARY error and terminate and so the receiver
+# would see the connection reset on the source server side before receiving the history record and hence we skip that check.
+
 $MSR RUN INST2 "cat RCVR_$time_msr.log" >> INST2_RCVR.log
 setenv RCVR_PID `$grep -e "Replication Source Server with Pid" INST2_RCVR.log | $tst_awk '{ print substr($14,2,length($14)-2)}'`
 echo '' >>& $outputFile
