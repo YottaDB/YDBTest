@@ -56,6 +56,32 @@ ZSTATUS=+2^ydb860zgoto,%YDB-E-LABELMISSING, Label referenced but not defined: xx
 # Expecting a ZLKINKFILE/FILENOTFND error when using a routine name longer than 31 bytes
 ZSTATUS=+4^ydb860zgoto,%YDB-E-ZLINKFILE, Error while zlinking "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",%YDB-E-FILENOTFND, File xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.m not found,%YDB-E-FILENOTFND, File xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.o not found
 
+------------------------------------------------------------
+# Test forward and reverse $QUERY in FOR loop does not SIG-11/Assert fail
+------------------------------------------------------------
+# test1 : Simple test of https://gitlab.com/YottaDB/DB/YDB/-/issues/860#note_946511877
+# This used to SIG-11/Assert failure before YDB@076f2ed6
+# We expect zwrite to show c(1)=""
+c(1)=""
+# test2 : Simple test of https://gitlab.com/YottaDB/DB/YDB/-/issues/860#note_946513617
+# This used to SIG-11/Assert failure before YDB@721f274e
+# We expect zwrite to show c(1)=""
+c(1)=""
+# test3 : And a fancy test of https://gitlab.com/YottaDB/DB/YDB/-/issues/860#note_946511877
+# This used to SIG-11/Assert failure before YDB@076f2ed6 and YDB@721f274e
+# We expect zwrite to show c(0)="c(1)", c(1)="c(2)" etc. below
+c(0)="c(1)"
+c(1)="c(2)"
+c(2)="c(3)"
+c(3)="c(4)"
+# test4 : Test of https://gitlab.com/YottaDB/DB/YDB/-/issues/860#note_947042012
+# This used to return incorrect results before YDB@383640fc
+# We expect zwrite to show c(1)="c(0)", c(2)="c(1)" etc. below
+c(1)="c(0)"
+c(2)="c(1)"
+c(3)="c(2)"
+c(4)="c(3)"
+
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

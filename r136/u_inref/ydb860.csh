@@ -54,4 +54,14 @@ echo "# Try $base.m using [yottadb -run]"
 $ydb_dist/yottadb -run %XCMD 'set $ztrap="goto incrtrap^incrtrap" do ^'$base
 
 echo ""
+echo "------------------------------------------------------------"
+echo '# Test forward and reverse $QUERY in FOR loop does not SIG-11/Assert fail'
+echo "------------------------------------------------------------"
+@ num = 1
+while ($num < 5)
+	$ydb_dist/yottadb -run test$num^ydb860query
+	@ num = $num + 1
+end
+
+echo ""
 $gtm_tst/com/dbcheck.csh
