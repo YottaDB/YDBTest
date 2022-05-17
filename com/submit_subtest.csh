@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -350,7 +350,20 @@ foreach sub_test ($subtest_list) # Mega for - practically all this script is in 
 			endif
 		end
 		\diff $sub_test.cmp $sub_test.log  >&! $sub_test.diff
-		echo FAIL from $sub_test. Please check $sub_test/$sub_test.diff and $sub_test/errs_found.logx for errors in time sorted fashion
+		echo FAIL from $sub_test.
+		# If test was run with -stdout 2 or -stdout 3 then display the contents of the .diff files of the failed subtests,
+		# and errs_found.logx (if it exists) otherwise (-stdout 1) ask the user to check the files generated
+		if ($tst_stdout == 2 || $tst_stdout == 3) then
+		    echo Following are the contents of $sub_test/$sub_test.diff
+		    \cat $tst_general_dir/$sub_test/$sub_test.diff
+		    if (-e $tst_general_dir/$sub_test/errs_found.logx) then
+			echo Following are the contents of $sub_test/errs_found.logx
+			\cat $tst_general_dir/$sub_test/errs_found.logx
+		    endif
+		    echo
+		else
+		     echo Please check $sub_test/$sub_test.diff and $sub_test/errs_found.logx for errors in time sorted fashion
+		endif
 		set subteststat = "FAIL"
 		$gtm_tst/com/check_rare_failures.csh $testname $test_subtest_name $sub_test.diff
 		echo "#####Check the errors,if any, in time sorted fashion in logfile: errs_found.logx#####" >>! $sub_test.diff

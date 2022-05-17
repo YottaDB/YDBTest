@@ -3,7 +3,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -287,14 +287,15 @@ case "-noo*":
 breaksw
 case "-stdout":
 	    ##HELP_SCREEN Output directly to stdout, config file, output file, and diff file (if it exists)
-	    ##HELP_SCREEN If an argument is not supplied, defaults to very verbose (2)
+	    ##HELP_SCREEN If an argument is not supplied, defaults to very verbose (3)
 	    ##HELP_SCREEN If an argument is supplied, it behaves as follows:
 	    ##HELP_SCREEN - 0 - don't print any extra information
 	    ##HELP_SCREEN - 1 - print each subtest result
-	    ##HELP_SCREEN - 2 - print verbose output (set echo; set verbose)
-	    setenv tst_stdout 2 # default
+	    ##HELP_SCREEN - 2 - print diff file for each failed subtest
+	    ##HELP_SCREEN - 3 - print verbose output (set echo; set verbose)
+	    setenv tst_stdout 3 # default
 	    # Is this the last argument or next argument is another flag
-	    # If so, break out, having set tst_stdout=2
+	    # If so, break out, having set tst_stdout=3
 	    if ( $argc1 > $# ) breaksw
 	    if ("$argv[$argc1]" =~ -*) breaksw
 	    # Next argument is a stdout level
