@@ -48,6 +48,15 @@ if ("dbg" == "$tst_image") then
 	setenv subtest_exclude_list "$subtest_exclude_list"
 endif
 
+# Bypass gtm9260 on ARMV6L. This is because this test is trying to create a resized M lock hashtable (which is
+# allocated in a separate segment) for MUPIP RUNDOWN to cleanup. But on the 32 bit systems like ARMV6L, the lockspace
+# is used up a different rate so the standard test, which works fine for 64 bit processes, does not get to the same
+# point with 32 bit. Rather than spending a lot of time finding the balance of parameters (lock space and hash bits),
+# we've decided that 64 bit testing is sufficient so exclude test if 32 bit (armv6l).
+if ("armv6l" == `uname -m`) then
+	setenv subtest_exclude_list "$subtest_exclude_list gtm9260"
+endif
+
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh
 
