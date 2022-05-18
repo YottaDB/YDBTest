@@ -25,7 +25,11 @@ ISOLATION : PASS : ^x is equal to (^max*^njobs)/2 as expected
 ^x(3)=5000
 ^x(4)=5000
 ^x(5)=5000
-NOISOLATION : PASS : ^x is NOT equal to (^max*^njobs)/2 as expected
+# In NOISOLATION case, if access method is BG, we expect ^x to be NOT equal to (^max*^njobs)/2.
+# In NOISOLATION case, if access method is MM, we expect ^x to be equal to (^max*^njobs)/2.
+# See https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1166#note_951687754 for more details.
+# Therefore, the checks are different based on the access method.
+NOISOLATION : PASS
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

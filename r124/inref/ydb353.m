@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -19,8 +19,13 @@ ydb353	;
 	. if ^x=((^max*^njobs)/2) write ^cmdline," : PASS : ^x is equal to (^max*^njobs)/2 as expected",!
 	. else                    write ^cmdline," : FAIL : ^x is NOT equal to (^max*^njobs)/2",!
 	else  do
-	. if ^x=((^max*^njobs)/2) write ^cmdline," : FAIL : ^x is equal to (^max*^njobs)/2",!
-	. else                    write ^cmdline," : PASS : ^x is NOT equal to (^max*^njobs)/2 as expected",!
+	. write "# In NOISOLATION case, if access method is BG, we expect ^x to be NOT equal to (^max*^njobs)/2.",!
+	. write "# In NOISOLATION case, if access method is MM, we expect ^x to be equal to (^max*^njobs)/2.",!
+	. write "# See https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1166#note_951687754 for more details.",!
+	. write "# Therefore, the checks are different based on the access method.",!
+	. set accmeth=$select(1=$$^%PEEKBYNAME("sgmnt_data.acc_meth","DEFAULT"):"BG",1:"MM")
+	. set pass=((accmeth="BG")&(^x'=((^max*^njobs)/2)))!((accmeth="MM")&(^x=((^max*^njobs)/2)))
+	. write ^cmdline," : ",$select(pass:"PASS",1:"FAIL"),!
 	quit
 
 child	;
