@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -123,7 +123,7 @@ switch ($cmd)
 		echo "Check port ${port} in /etc/services"
 		$tst_awk '/'${port}'/{printf "\t"$0;i++}END{print (i)?"":"\t--->> not present, please add <<---\n\t\\"gtmserver\t9777/tcp\t# C9H10002916\\""}' /etc/services
 		echo "Checking if port ${port} is in use"
-		netstat -an | $tst_awk '/:'${port}'/{print "\t"$0;i++}END{if(i<1){print "\t--->> port '${port}' not in use <<---"}}'
+		ss -an | $tst_awk '/:'${port}'/{print "\t"$0;i++}END{if(i<1){print "\t--->> port '${port}' not in use <<---"}}'
 		echo "Check for the [x]inetd process"
 		$ps | $tst_awk '/inetd/ && \!/awk/ {print "\t"$0;i++}END{if(i<1){print "\t--->> please start inetd <<---"}}'
 		echo -n "Check for the [x]inetd configurations: "

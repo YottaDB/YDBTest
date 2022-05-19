@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -41,9 +41,9 @@ set mupipstat = $status
 if ($mupipstat) then
 	if (! $?gtm_test_other_bg_processes) then
 		echo "Primary server shutdown command failed (status was $mupipstat)!"
-		echo "Check the file $debuginfo_file for ps/ipcs/netstat/lsof -i details"	#BYPASSOK
+		echo "Check the file $debuginfo_file for ps/ipcs/ss/lsof -i details"	#BYPASSOK
 		echo "Primary server shutdown command failed (status was $mupipstat)!"	>>&! $debuginfo_file
-		$gtm_tst/com/capture_ps_ipcs_netstat_lsof.csh				>>&! $debuginfo_file
+		$gtm_tst/com/capture_ps_ipcs_ss_lsof.csh				>>&! $debuginfo_file
 		set exit_stat = $mupipstat
 	else
 		echo "TEST-I-SRC_SHUT there are other background GTM processes, so MUPIP might have returned non-zero, ignoring error"
@@ -56,9 +56,9 @@ if ( "off" == $repl_state ) then
 	set mupipstat = $status
 	if ($mupipstat) then
 		echo  "TEST-E-SRC_SHUT Turning replication off for all regions on primary side failed (status was $mupipstat)!"
-		echo "Check the file $debuginfo_file for ps/ipcs/netstat/lsof -i details"	#BYPASSOK
+		echo "Check the file $debuginfo_file for ps/ipcs/ss/lsof -i details"	#BYPASSOK
 		echo  "Turning replication off for all regions on primary side failed (status was $mupipstat)!" >>&! $debuginfo_file
-		$gtm_tst/com/capture_ps_ipcs_netstat_lsof.csh							>>&! $debuginfo_file
+		$gtm_tst/com/capture_ps_ipcs_ss_lsof.csh							>>&! $debuginfo_file
 		set exit_stat = 1
 	endif
 endif

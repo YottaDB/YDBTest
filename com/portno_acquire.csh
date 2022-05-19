@@ -4,7 +4,7 @@
 # Copyright (c) 2011-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -68,7 +68,7 @@ while ( ($nstat == 0) && ($portno < $port_upperlimit ) )
 		# Since there will be processes from multiple machines which will use the
 		# current machine as a remote host, there can be cases where two or more processes can find the port file to be non existent.
 		# One of them will create the file, choose the port and start the receiver/source processes.
-		# The other one will see the port in use in the netstat and delete the file without checking if the current process grabbed it.
+		# The other one will see the port in use in the ss and delete the file without checking if the current process grabbed it.
 		# Thus the reservation file is deleted though the port is being used.
 		# For a future attempt to grab a port, this port can be shown as not in use incorrectly.
 		# This is possible since there is a gap between choosing a port and actually starting primary and secondary processes on it.
@@ -115,7 +115,7 @@ setenv save_working_dir $tst_working_dir
 if !(-d $tst_working_dir) then
 	setenv tst_working_dir `pwd`
 endif
-(echo "PORTNO chosen is: $portno"; date ; $netstat) >>& $tst_working_dir/netstat_portno_acquire.out
+(echo "PORTNO chosen is: $portno"; date ; $ss) >>& $tst_working_dir/ss_portno_acquire.out
 echo "$port_reservation_file" >&! $tst_working_dir/portno_${portno}.txt
 if ($tst_org_host:r:r:r:r != $hostn) then
 	$rcp $tst_working_dir/portno_${portno}.txt "$tst_org_host:r:r:r:r":$save_working_dir/portno_${portno}.txt_$hostn

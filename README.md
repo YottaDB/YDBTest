@@ -43,7 +43,7 @@ The following binaries are required to run the test system:
 - strace
 - expect
 - eu-elflint
-- netstat
+- ss
 - nc
 - gdb
 

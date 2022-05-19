@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -220,10 +220,10 @@ goto end
 timeout:
 	set psdebug = "${ps:s/ps /ps -l /}"  #BYPASSOK ps
 	set psout = "${logfile:r}_timeout_pslist.outx"
-	set nsout = "${logfile:r}_timeout_netstat.outx"
+	set nsout = "${logfile:r}_timeout_ss.outx"
 	set stackbase = "${logfile:r}_timeout"
-	$pri_shell "$pri_getenv; cd $PRI_SIDE; $psdebug >&! ${psout} ; $netstat >&! ${nsout} ; $gtm_tst/com/get_src_stack_trace.csh ${stackbase}"
-	$sec_shell "$sec_getenv; cd $SEC_SIDE; $psdebug >&! ${psout} ; $netstat >&! ${nsout} ; $gtm_tst/com/get_rcvr_stack_trace.csh ${stackbase}"
+	$pri_shell "$pri_getenv; cd $PRI_SIDE; $psdebug >&! ${psout} ; $ss >&! ${nsout} ; $gtm_tst/com/get_src_stack_trace.csh ${stackbase}"
+	$sec_shell "$sec_getenv; cd $SEC_SIDE; $psdebug >&! ${psout} ; $ss >&! ${nsout} ; $gtm_tst/com/get_rcvr_stack_trace.csh ${stackbase}"
 	exit 1
 
 end:

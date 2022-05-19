@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -23,9 +23,9 @@
 #
 
 alias exit_checkhealth_error '\\
-echo "Check the file $debuginfo_file for ps/ipcs/netstat/lsof -i details";#BYPASSOK;\\
+echo "Check the file $debuginfo_file for ps/ipcs/ss/lsof -i details";#BYPASSOK;\\
 echo "Could not check health of Active Source Server!"	>>&! $debuginfo_file;\\
-$gtm_tst/com/capture_ps_ipcs_netstat_lsof.csh		>>&! $debuginfo_file;\\
+$gtm_tst/com/capture_ps_ipcs_ss_lsof.csh		>>&! $debuginfo_file;\\
 exit 1;\\
 '
 

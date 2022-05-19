@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017,2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -89,7 +89,7 @@ while !( -e $exit_file)
 			echo $msg > $cursubtestdir.diff
 			$gtm_tst/com/write_logs.csh FAILED
 			# Capture ps/ipcs etc. at time of TEST-E-HANG report
-			$gtm_tst/com/capture_ps_ipcs_netstat_lsof.csh	>& capture_ps_ipcs_netstat_lsof_HANG.out
+			$gtm_tst/com/capture_ps_ipcs_ss_lsof.csh	>& capture_ps_ipcs_ss_lsof_HANG.out
 			# Get syslog at time of TEST-E-HANG report
 			set syslog_before = `cat start_time_syslog.txt`
 			set syslog_after = `date +"%b %e %H:%M:%S"`
@@ -108,7 +108,7 @@ while !( -e $exit_file)
 			#
 			cd $cursubtestdir
 			# Capture ps/ipcs etc. at time of TEST-E-TIMEDOUT report
-			$gtm_tst/com/capture_ps_ipcs_netstat_lsof.csh	>& capture_ps_ipcs_netstat_lsof_TIMEDOUT.out
+			$gtm_tst/com/capture_ps_ipcs_ss_lsof.csh	>& capture_ps_ipcs_ss_lsof_TIMEDOUT.out
 			# Get syslog at time of TEST-E-TIMEDOUT report
 			set syslog_before = `cat start_time_syslog.txt`
 			set syslog_after = `date +"%b %e %H:%M:%S"`

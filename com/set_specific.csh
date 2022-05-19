@@ -3,7 +3,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -18,7 +18,7 @@ if ( $?HOSTOS == "0" )          setenv HOSTOS `uname -s`        # operating syst
 unalias ps cp rm ls diff rsh ssh rcp scp awk
 setenv grep \grep
 setenv df "df -kP"
-setenv netstat "/bin/netstat -an"
+setenv ss "/bin/ss -an"
 setenv ssh "ssh -x"
 setenv rsh "$ssh"
 setenv rcp "scp -q"
@@ -80,7 +80,7 @@ case "OSF1":
    setenv truss "/usr/local/bin/truss"
    setenv ps "eval ps -ef |& cat"
    setenv psuser "eval ps -fu $USER |& cat"
-   setenv netstat "/usr/sbin/netstat -an"
+   setenv ss "/usr/sbin/ss -an"
    setenv rsh_to_vms "rsh"
    setenv rcp_to_vms "rcp"
    setenv dbx "/usr/bin/dbx"

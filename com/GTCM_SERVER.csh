@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -23,7 +26,7 @@ endif
 echo portno is $portno
 echo time is $time_stamp
 # Just to make sure it is still free
-$netstat |& $grep $portno
+$ss |& $grep $portno
 
 # To reduce calls to name resolution and in turn avoiding the possiblity of a hang
 # we disable trace option from gtcm_gnp temporarily

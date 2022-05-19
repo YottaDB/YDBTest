@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2006, 2013 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -20,7 +23,7 @@ h
 aaa
 if ($?test_gtm_gtcm_one) then
         foreach x ($tst_gtcm_server_list)
-        $rsh $x 'set chkhost=`uname -s`; if ("Linux" == $chkhost) netstat -pn ; echo "=======";echo netstat -an option; echo "======="; netstat -a' >& netstatinfo_$x
+        $rsh $x 'set chkhost=`uname -s`; if ("Linux" == $chkhost) ss -pn ; echo "=======";echo ss -an option; echo "======="; ss -a' >& ssinfo_$x
         end
 endif
 

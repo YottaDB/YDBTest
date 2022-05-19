@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -59,9 +59,9 @@ $MUPIP replic -receiv $arg -shutdown -timeout=0
 set mupipstat = $status
 if ($mupipstat) then
         echo "Receiver server shutdown on receiver side failed. Status : $mupipstat"
-	echo "Check the file $debuginfo_file for ps/ipcs/netstat/lsof -i details"	#BYPASSOK
+	echo "Check the file $debuginfo_file for ps/ipcs/ss/lsof -i details"	#BYPASSOK
         echo "Receiver server shutdown on receiver side failed!"	>>&! $debuginfo_file
-	$gtm_tst/com/capture_ps_ipcs_netstat_lsof.csh			>>&! $debuginfo_file
+	$gtm_tst/com/capture_ps_ipcs_ss_lsof.csh			>>&! $debuginfo_file
 	set exit_stat = $mupipstat
 endif
 
@@ -81,9 +81,9 @@ if !( -e no_passive_$gtm_test_cur_pri_name.out ) then
 	set mupipstat = $status
 	if ($mupipstat) then
 	        echo "Passive source server shutdown on receiver side failed. Status : $mupipstat"
-		echo "Check the file $debuginfo_file for ps/ipcs/netstat/lsof -i details"	#BYPASSOK
+		echo "Check the file $debuginfo_file for ps/ipcs/ss/lsof -i details"	#BYPASSOK
 	        echo "Passive source server shutdown on receiver side failed!"	>>&! $debuginfo_file
-		$gtm_tst/com/capture_ps_ipcs_netstat_lsof.csh			>>&! $debuginfo_file
+		$gtm_tst/com/capture_ps_ipcs_ss_lsof.csh			>>&! $debuginfo_file
 		set exit_stat = $mupipstat
 	endif
 else
@@ -96,9 +96,9 @@ if ( -e supp_${gtm_test_cur_sec_name}_dummy.out ) then
 	set mupipstat = $status
 	if ($mupipstat) then
 		echo "Supplementary server shutdown command failed (status was $mupipstat)!"
-		echo "Check the file $debuginfo_file for ps/ipcs/netstat/lsof -i details"	#BYPASSOK
+		echo "Check the file $debuginfo_file for ps/ipcs/ss/lsof -i details"	#BYPASSOK
 	        echo "supplementary source server shutdown on receiver side failed!"	>>&! $debuginfo_file
-		$gtm_tst/com/capture_ps_ipcs_netstat_lsof.csh			>>&! $debuginfo_file
+		$gtm_tst/com/capture_ps_ipcs_ss_lsof.csh			>>&! $debuginfo_file
 		set exit_stat = $mupipstat
 	endif
 	# Do not release supplementary source server port if shutdown failed
@@ -114,9 +114,9 @@ if ( "off" == $repl_state ) then
 	set mupipstat = $status
 	if ($mupipstat) then
 		echo "TEST-E-RCVR_SHUT Turning replication off on receiver side failed (status was $mupipstat)!"
-		echo "Check the file $debuginfo_file for ps/ipcs/netstat/lsof -i details"	#BYPASSOK
+		echo "Check the file $debuginfo_file for ps/ipcs/ss/lsof -i details"	#BYPASSOK
 		echo "Turning replication off on receiver side failed!"	>>&! $debuginfo_file
-		$gtm_tst/com/capture_ps_ipcs_netstat_lsof.csh		>>&! $debuginfo_file
+		$gtm_tst/com/capture_ps_ipcs_ss_lsof.csh		>>&! $debuginfo_file
 		set exit_stat = 1
 	endif
 endif

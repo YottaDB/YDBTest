@@ -1,5 +1,17 @@
 #!/usr/local/bin/tcsh -f
-# returns TRUE(0) if portno is found either in the netstat or lsof output
+#################################################################
+#								#
+# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+#
+# returns TRUE(0) if portno is found either in the ss or lsof output
 # Usage is_port_in_use.csh portno <out file>
 if ($2 != "") then
 	set logfile = $2
@@ -15,9 +27,9 @@ else
         # Linux occasionally reports "bogus", let's not trust that output
 	# grep -w is not used the grep below and in the ps grep, since grep -wE does not work on Solaris.
 	# Since a "wrong grep result" would just mean the port is incorrectly assumed as in-use (which doesn't fail a test), it is okay to live with it
-	echo "=========================================================" >>& netstat_$logfile
-	date >>& netstat_$logfile
-	$netstat |& $grep -v grep |& $grep -E "$portno|bogus" >>& netstat_$logfile
+	echo "=========================================================" >>& ss_$logfile
+	date >>& ss_$logfile
+	$ss |& $grep -v grep |& $grep -E "$portno|bogus" >>& ss_$logfile
 	set nstat = $status
 	echo "=========================================================" >>& lsof_$logfile
 	date >>& lsof_$logfile

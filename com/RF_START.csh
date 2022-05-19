@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -68,8 +68,8 @@ if ( "SRC_START_SUCCESSFUL" != "$src_start" ) then
 	echo "################################################################"
 	echo "TEST-E-ERROR_SRC, Error from SRC.csh, test cannot continue! Check $PRI_SIDE/START_${start_time}.out"
 	$pri_shell "cat $PRI_SIDE/START_${start_time}.out"
-	echo "Check capture_ps_ipcs_netstat_lsof_${start_time}.out for ps/ipcs/netstat/lsof -i/env output." # BYPASSOK ps
-	$pri_shell "cd $PRI_SIDE; ($gtm_tst/com/capture_ps_ipcs_netstat_lsof.csh; env ; set) >>& capture_ps_ipcs_netstat_lsof_${start_time}.out"
+	echo "Check capture_ps_ipcs_ss_lsof_${start_time}.out for ps/ipcs/ss/lsof -i/env output." # BYPASSOK ps
+	$pri_shell "cd $PRI_SIDE; ($gtm_tst/com/capture_ps_ipcs_ss_lsof.csh; env ; set) >>& capture_ps_ipcs_ss_lsof_${start_time}.out"
 	echo "################################################################"
 	exit 1
 endif
@@ -83,16 +83,16 @@ if ( "RCVR_START_SUCCESSFUL" != "$rcvr_start" ) then
 	echo "################################################################"
 	echo "TEST-E-ERROR_RCVR, Error from RCVR.csh, test cannot continue! Check $SEC_SIDE/START_${start_time}.out"
 	$sec_shell "cat $SEC_SIDE/START_${start_time}.out"
-	echo "Check capture_ps_ipcs_netstat_lsof_${start_time}.out for ps/ipcs/netstat/lsof -i/env output." # BYPASSOK ps
-	$sec_shell "cd $SEC_SIDE; ($gtm_tst/com/capture_ps_ipcs_netstat_lsof.csh; env ; set) >>& capture_ps_ipcs_netstat_lsof_${start_time}.out"
+	echo "Check capture_ps_ipcs_ss_lsof_${start_time}.out for ps/ipcs/ss/lsof -i/env output." # BYPASSOK ps
+	$sec_shell "cd $SEC_SIDE; ($gtm_tst/com/capture_ps_ipcs_ss_lsof.csh; env ; set) >>& capture_ps_ipcs_ss_lsof_${start_time}.out"
 	echo "################################################################"
 	exit 1
 endif
 
-$sec_shell "$sec_getenv ; date ; "'$netstat' >& netstat_remote.out_${start_time}
+$sec_shell "$sec_getenv ; date ; "'$ss' >& ss_remote.out_${start_time}
 if ($status != 0) then
-	echo "<$netstat> command failed!"
-	echo "Continuing without checking the connection using $netstat!"
+	echo "<$ss> command failed!"
+	echo "Continuing without checking the connection using $ss!"
 else
 	set fail=1
 	set wait_time = 300			# Wait for a maximum of 300 seconds
@@ -101,9 +101,9 @@ else
 	@ max_wait = $now_time + $wait_time
 	while ($now_time <= $max_wait)
 		# Checks whether connection is established using the port or, not
-		# Check both netstat and lsof output <good_connection_shutdown_by_RF_START>
+		# Check both ss and lsof output <good_connection_shutdown_by_RF_START>
 		set fn = "rfstart.out_${start_time}_$now_time"
-		set establish_status = `$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/is_port_in_use.csh $portno $fn ; grep -qE 'ESTABLISHED|Establsh' {netstat,lsof}_$fn || echo 1"` # BYPASSOK grep
+		set establish_status = `$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/is_port_in_use.csh $portno $fn ; grep -qE 'ESTABLISHED|Establsh' {ss,lsof}_$fn || echo 1"` # BYPASSOK grep
 		if ("" == "$establish_status") then
 			set fail = 0
 			break
@@ -115,9 +115,9 @@ else
 
 	if ($fail == 1) then
 		echo "==============================================="
-		echo "Failed to establish connection (using $netstat)!"
+		echo "Failed to establish connection (using $ss)!"
 		echo "Check *.out and *.log files in source/receiver!"
-		echo "and *rfstart.out_* files for netstat/lsof info"
+		echo "and *rfstart.out_* files for ss/lsof info"
 		echo "Test cannot continue!"
 		echo "==============================================="
 		echo "$gtm_tst/com/RF_SHUT.csh"
