@@ -45,12 +45,19 @@ endif
 # various subtests of the sudo test. This way we can restore the system copy at the end of the test and avoid the system
 # yottadb.pc pointing to a non-existent YottaDB installation somewhere under the test output directory (that gets deleted
 # at the end of the test run).
-sudo cp /usr/share/pkgconfig/yottadb.pc .
+if (-e /usr/share/pkgconfig/yottadb.pc) then
+	sudo cp /usr/share/pkgconfig/yottadb.pc .
+	set ydbpcexists=1
+else
+	set ydbpcexists=0
+endif
 
 $gtm_tst/com/submit_subtest.csh
 
 # Restore the copy of the current system yottadb.pc
-sudo cp yottadb.pc /usr/share/pkgconfig/yottadb.pc
-sudo rm yottadb.pc
+if (1 == $ydbpcexists) then
+	sudo cp yottadb.pc /usr/share/pkgconfig/yottadb.pc
+	sudo rm yottadb.pc
+endif
 
 echo "sudo tests DONE."
