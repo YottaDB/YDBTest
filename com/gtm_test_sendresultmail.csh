@@ -4,6 +4,9 @@
 # Copyright (c) 2014-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -49,7 +52,19 @@ cat  $tst_general_dir/diff.log						>>! ${TMP_FILE_PREFIX}_mail
 if (-e $tst_general_dir/timing.subtest) then
 	echo "--------- Subtest level diff follows ---------"		>>! ${TMP_FILE_PREFIX}_mail
 	# For each of the diffs, print the head and tail if it is more than $max_lines lines
-	foreach file (`$tst_awk '/^FAIL from / { print $6}' $tst_general_dir/outstream.log` )
+	# With the update to -stdout options (YDBTest #414) outstream.log lines were changed as well,
+	# which affected the contents of the email sent to the user.
+	# The lines written to outstream.log depend on the value of $tst_stdout.
+	# If $tst_stdout is 0 or 1, the $sub_test/$sub_test.diff entry is present in the following line
+	# `Please check $sub_test/$sub_test.diff and $sub_test/errs_found.logx for errors in time sorted fashion`
+	if (($tst_stdout == 0) || ($tst_stdout == 1)) then
+	    set failed_subtest_diffs=`$tst_awk '/^Please check / { print $3}' $tst_general_dir/outstream.log`
+	# If $tst_stdout is 2 or 3, then the $sub_test/$sub_test.diff entry is present in the following line
+	# `Following are the contents of $sub_test/$sub_test.diff`
+	else
+	    set failed_subtest_diffs=`$tst_awk '/^Following are / { print $6}' $tst_general_dir/outstream.log`
+	endif
+	foreach file ( $failed_subtest_diffs )
 		echo ""							>>! ${TMP_FILE_PREFIX}_mail
 		$grep -w $file:h $tst_general_dir/timing.subtest	>>! ${TMP_FILE_PREFIX}_mail
 		echo "--- $file ---"					>>! ${TMP_FILE_PREFIX}_mail
