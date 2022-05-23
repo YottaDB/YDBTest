@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -22,7 +22,7 @@ genisvtestcases
 	; and then writes them with the first four characters being
 	; correct and the rest of the ISV being anything that is a
 	; valid M literal
-	set file="isv.list",garbage=64
+	set file="isv.list"
 	open file:readonly use file
 	; there is an expectation that the file isv.list is written as
 	; shortname\nlongname, like $ZTWO\n$ZTWOrmhole, otherwise this won't work
@@ -33,28 +33,18 @@ genisvtestcases
 	open file:newversion use file
 	write "isv",!
 	for  set x=$order(isvlist(x)) quit:x=""  do
-	.	;write "isvlist(",x,")=",isvlist(x),!
-	.	do mangleisv(x,isvlist(x),0)
+	.	do mangleisv(x,0)
 	write $char(9),"quit",!,"notrun",!
 	set x=""
 	for  set x=$order(isvlist(x)) quit:x=""  do
-	.	do mangleisv(x,isvlist(x),1)
+	.	do mangleisv(x,1)
 	write $char(9),"quit",!
 	close file
 	quit
-mangleisv(isv,target,setwrite)
-	new trash
-	if setwrite do setisvtrap(isv,target)
-	else  do writeisvtrap(isv,target)
-	set trash=""
+mangleisv(isv,setwrite)
 	for i=5:1:$length(isv)  do
 	.	if setwrite do setisvtrap(isv,$extract(isv,1,i))
 	.	else  do writeisvtrap(isv,$extract(isv,1,i))
-	.	set trash=trash_$char($increment(garbage))
-	.	if setwrite do setisvtrap(isv,target_trash)
-	.	else  do writeisvtrap(isv,target_trash)
-	.	if garbage>121 set garbage=64
-	.	if garbage>89,garbage<96 set garbage=96
 	quit
 	;
 	; write the line to read the ISV
