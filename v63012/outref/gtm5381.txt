@@ -1,0 +1,67 @@
+# Test to verify that the -FULLBLKWRT setting works correctly in all three modes {0,1,2} both with
+# MUPIP and GDE.
+#
+# This test uses strace to capture the system calls done by a process doing a simple database
+# update and verifies the correct functioning of each of the 3 modes:
+#   0 - disabled
+#   1 - enabled - writes occur on filesystem block boundaries
+#   2 - enabled - Like (1) plus also writes full database blocks if it is the first time blk is written
+# The straces are processed to find the largest database write done in the strace file and reports
+# this value - which changes with each FULLBLKWRT setting.
+
+# Create a DB with blksize 8192
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+# Test that we can use GDE to initialize the DB to fullblkwrt=2 - other flavors will use MUPIP SET
+# to effect the change in fullblkwrt settings. Also recreate mumps.dat with new gld file
+
+# Verify if GDE SHOW output contains the correct fullblockwrite indicator
+FBWR value from 'GDE SHOW' input file (gdeshow.txt) is 2
+
+# Make a copy of this database as we need to refresh out DB between each strace invocation.
+
+# For each of the valid FULLBLKWRT settings, run strace on a yottadb invocation that (1) sets a new node
+# (^x in this case), (2) flushes the DB to see the writes done for that, then (3) increments the node it
+# just set. In FULLBLKWRT=2, this will show that the first SET wrote 2 blocks with 8K writes (new ^x index
+# block and the data block), then the next time that datablock gets updated, a 4K write is used. The other
+# two modes do not show a difference.
+
+### Starting test for -FULLBLKWRT=2 [enabled dbblock] - Expect 3 4K writes and 2 8K writes
+# Verify if DSE D -F output contains the correct full block write mode
+FBWR value from 'DSE D -F' input file (dsedf2.txt) is 2
+
+List of write sizes and their counts for strace file strace02.logx
+   Write Length   Count
+           4096       3
+           8192       2
+
+### Starting test for -FULLBLKWRT=1 [enabled filblock] - Expect 5 4K writes
+Database file ##TEST_PATH##/mumps.dat now has full blk writes: file system block writes
+# Verify if DSE D -F output contains the correct full block write mode
+FBWR value from 'DSE D -F' input file (dsedf1.txt) is 1
+
+List of write sizes and their counts for strace file strace01.logx
+   Write Length   Count
+           4096       5
+
+### Starting test for -FULLBLKWRT=0 [disabled] - Expect multiple write sizes < 200 bytes
+Database file ##TEST_PATH##/mumps.dat now has full blk writes: disabled
+# Verify if DSE D -F output contains the correct full block write mode
+FBWR value from 'DSE D -F' input file (dsedf0.txt) is 0
+
+List of write sizes and their counts for strace file strace00.logx
+   Write Length   Count
+             24       3
+##TEST_AWK             [1-9][0-9]       1
+            144       1
+
+####################################################
+# Verify DB still OK
+#
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
