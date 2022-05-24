@@ -804,7 +804,7 @@ Testing ZYERROR Label+offset...done(SUB3+1)
 ZSTATUS = 150373210,SUBROUTINE1+8^zevref1,%YDB-E-DIVZERO, Attempt to divide by zero  ZERROR = YDB-E-DIVZERO, Attempt to divide by zero
 end of SUB3
 1Testing ZYERROR Label+module...done(labelinanothermoduleforzyerror^zeleaf)
-ZSTATUS = 150372778,SUBROUTINE1+12^zevref1,%YDB-E-EXPR, Expression expected but not found  ZERROR = YDB-E-EXPR, Expression expected but not found
+ZSTATUS = 150373210,SUBROUTINE1+12^zevref1,%YDB-E-DIVZERO, Attempt to divide by zero  ZERROR = YDB-E-DIVZERO, Attempt to divide by zero
 1
 Testing ZYERROR Label+offset+module...done(labelinanothermoduleforzyerror+1^zeleaf)
 ZSTATUS = 150373850,SUBROUTINE1+16^zevref1,%YDB-E-LVUNDEF, Undefined local variable: x  ZERROR = YDB-E-LVUNDEF, Undefined local variable: x
@@ -828,7 +828,7 @@ ZSTATUS = 150373210,INDIRECTSUBROUTINE1+9^zevref3,%YDB-E-DIVZERO, Attempt to div
 end of SUB3
 1
 Testing ZYERROR @Label+@module...done(labelinanothermoduleforzyerror^zeleaf)
-ZSTATUS = 150372778,INDIRECTSUBROUTINE1+14^zevref3,%YDB-E-EXPR, Expression expected but not found  ZERROR = YDB-E-EXPR, Expression expected but not found
+ZSTATUS = 150373210,INDIRECTSUBROUTINE1+14^zevref3,%YDB-E-DIVZERO, Attempt to divide by zero  ZERROR = YDB-E-DIVZERO, Attempt to divide by zero
 1
 Testing ZYERROR @(Label+offset+module)...
 done(labelinanothermoduleforzyerror+1^zeleaf)
@@ -911,7 +911,7 @@ YDB>
 YDB>
 do TST3^zevref4
 Testing ZYERROR Label+module...done(labelinanothermoduleforzyerror^zeleaf)
-ZSTATUS = 150372778,TST3+3^zevref4,%YDB-E-EXPR, Expression expected but not found  ZERROR = YDB-E-EXPR, Expression expected but not found
+ZSTATUS = 150373210,TST3+3^zevref4,%YDB-E-DIVZERO, Attempt to divide by zero  ZERROR = YDB-E-DIVZERO, Attempt to divide by zero
 1
 YDB>
 

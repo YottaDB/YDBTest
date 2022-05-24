@@ -1,3 +1,16 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; This module is derived from FIS GT.M.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	; Valid test cases to check functionality of ZYERROR set using
 	; environment variable
 
@@ -14,7 +27,7 @@ TST2 	w "Testing ZYERROR Label+offset..."
 TST3    w "Testing ZYERROR Label+module..."
 	s $zt="do ^ztraph"
         set x=""
-	w @x ;bad line
+	w 1/x ;bad line
 	q
 TST4	w "Testing ZYERROR Label+offset+module..."
 	s $zt="do ^ztraph"
@@ -26,7 +39,7 @@ SUB2    w "done(SUB2)",!
 	do report^zeleaf
 	w "end of SUB2",! q
 
-SUB3	w "done(SUB3)",! goto SUB3+2	
+SUB3	w "done(SUB3)",! goto SUB3+2
 	w "done(SUB3+1)",!
 	do report^zeleaf
 	w "end of SUB3",! q
