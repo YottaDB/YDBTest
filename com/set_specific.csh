@@ -119,45 +119,6 @@ case "Linux":
 	   setenv dbx /usr/bin/gdb
    endif
    breaksw
-case "OS/390":
-   # ssh  tends to babble, so turn off extra output with -q
-   setenv ssh "$ssh -q"
-   setenv rsh "$ssh"
-   setenv netstat onetstat
-   # xlc wants to use the side deck file for libyottadb.dll on the link line
-   setenv tst_ld_yottadb "$gtm_exe/yottadb_symbols.x"
-   setenv gtmtest1 "GTMTST1"
-   setenv rsh_to_vms "rsh"
-   setenv rcp_to_vms "rcp"
-   setenv tst_od "od -T"
-   setenv tst_ls "ls -T"
-   setenv lsof /usr/local/bin/zlsof
-   # For grep to work on binary data on z/OS, we need to iconv to appropriate encoding before
-   # doing a grep. Also, since grep on binary might show up garbage, usage of $strings should
-   # be redirected(stdout/stderr) to appropriate output file.
-   setenv strings "iconv -f ISO8859-1 -t IBM-1047"
-   if ($?gtm_test_com_individual) then
-	   setenv convert_to_gtm_chset "$gtm_test_com_individual/convert_to_gtm_chset.csh"
-   endif
-   # mtailhead.csh generates SIGPIPE outputs so use system head/tail
-   setenv tail tail
-   setenv head head
-   # if tst_disable_dbx does not exist setup two session debugging variables
-   if !($?tst_disable_dbx) then
-	   setenv _CEE_RUNOPTS "${_CEE_RUNOPTS} test(all)"
-	   setenv _BPX_PTRACE_ATTACH "YES"
-	   setenv _CEE_DEBUG_FILENAME31 /bin/dbx31vdbg
-	   setenv _CEE_DEBUG_FILENAME64 /bin/dbx64vdbg
-   endif
-   # Note that bpxtrace -c passes the command to sh -c and output is EBCDIC
-   # so this may not work as expected.  -f format -x outputs just one line
-   # per system call though the format is different than other platforms.
-   # There may be problems doing more than one bpxtrace per user at the same time.
-   setenv truss "/bin/bpxtrace -f format -x -c"
-   # Hijacking ci_ldpath to add -L$gtm_obj for -lascii (nee -lgtmzos)
-   # -blibpath does not work, leaving it in for now
-   setenv ci_ldpath "-L$gtm_obj -blibpath"
-   breaksw
 case "CYGWIN*":
    setenv atrm "echo ""CYGWIN-E-NOAT no at on Cygwin""; exit 1"
    setenv dbx "gdb -nw"
