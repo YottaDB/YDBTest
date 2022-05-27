@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -101,6 +101,7 @@ if ($stat) then
   # eliminate DBMRKBUSY DBLOCMBINC DBMBPFLDLBM MUKILLIP (and INTEGERRS)
   # also eliminate DBBTUWRNG if you see MUKILLIP or DBMRKBUSY
   # they are YDB-W- but, eliminate them anyway
+  # eliminate DBFILERDONLY too so read_only test does not fail dbcheck
   $grep ".-[EF]-" tmp.mupip | $grep -E "MUKILLIP|KILLABANDONED|DBMRKBUSY" >! /dev/null
   if ($status) then
 	mv tmp.mupip tmp.mupip_orig
@@ -111,7 +112,7 @@ if ($stat) then
 	# this is not the case now.
 	# The best solution would be to use the same filter.awk for both unix and vms, of course.
   endif
-  setenv filtererrs "MUKILLIP|KILLABANDONED|DBMRKBUSY|DBLOCMBINC|DBMBPFLDLBM|INTEGERRS"
+  setenv filtererrs "DBFILERDONLY|MUKILLIP|KILLABANDONED|DBMRKBUSY|DBLOCMBINC|DBMBPFLDLBM|INTEGERRS"
   if ("$2" == "-noskipregerr") then
   	setenv filtererrs "$filtererrs|MUNOTALLINTEG"
   endif

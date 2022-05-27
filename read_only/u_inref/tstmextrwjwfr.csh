@@ -1,4 +1,17 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+# This module is derived from FIS GT.M.
+#################################################################
 #Tests of mupip command "EXTRACT" with journal with freeze
 echo ""
 echo "*** TSTMEXTRWJWFR.CSH ***"
@@ -18,7 +31,7 @@ echo "**** *.dat R/W *.mjl R/W ***"
 echo "mupip extract -fr -nolog glo.dir"
 $MUPIP extract -fr -nolog glo.dir | & sort -f
 mipcmanage
-$gtm_tst/com/dbcheck.csh
+$gtm_tst/com/dbcheck_filter.csh
 \rm -f glo.dir
 
 echo "**** b.dat R/W b.mjl R/O ***"
@@ -27,7 +40,7 @@ chmod 444 b.mjl
 echo "mupip extract -fr -nolog glo.dir"
 $MUPIP extract -fr -nolog glo.dir | & sort -f
 mipcmanage
-$gtm_tst/com/dbcheck.csh
+$gtm_tst/com/dbcheck_filter.csh
 \rm -f glo.dir
 
 echo "**** b.dat R/O b.mjl R/W ***"
@@ -36,7 +49,7 @@ chmod 666 b.mjl
 echo "mupip extract -fr -nolog glo.dir"
 $MUPIP extract -fr -nolog glo.dir | & sort -f
 mipcmanage
-$gtm_tst/com/dbcheck.csh
+$gtm_tst/com/dbcheck_filter.csh
 \rm -f glo.dir
 
 echo "**** b.dat R/O b.mjl R/O ***"
@@ -45,5 +58,5 @@ chmod 444 b.mjl
 echo "mupip extract -fr -nolog glo.dir"
 $MUPIP extract -fr -nolog glo.dir | & sort -f
 mipcmanage
-$gtm_tst/com/dbcheck.csh
+$gtm_tst/com/dbcheck_filter.csh
 \rm -f *.dat *.mjl glo.dir mumps.gld

@@ -8,7 +8,6 @@ mumps.dat
 
 Case 1 - MUPIP TRIGGER - Adding a trigger to a read-only database
 %YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
-%SYSTEM-E-UNKNOWN, Unknown system error 0
 %YDB-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
 
 Case 2 - MUPIP TRIGGER - Delete all triggers in a read-only database (first add a trigger to attempt to 'delete')
@@ -23,22 +22,18 @@ File ##IN_TEST_PATH##/inref/readonlyadd1.trg, Line 1: Added SET and/or Non-SET t
 File ##IN_TEST_PATH##/inref/readonlydall.trg, Line 1: This operation will delete all triggers.
 Proceed? [Y/N]: 
 %YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
-%SYSTEM-E-UNKNOWN, Unknown system error 0
 %YDB-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
 
 Case 3 - MUPIP TRIGGER - Modifying a trigger in a read-only database
 %YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
-%SYSTEM-E-UNKNOWN, Unknown system error 0
 %YDB-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
 
 Case 4 - MUPIP TRIGGER - Deleting a specific trigger in a read-only database
 %YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
-%SYSTEM-E-UNKNOWN, Unknown system error 0
 %YDB-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
 
 Case 5 - MUPIP TRIGGER - multi-region - verify can add trigger to AREG if BREG is R/O
 %YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/b.dat was opened as read-only (perms 0)
-%SYSTEM-E-UNKNOWN, Unknown system error 0
 Added SET and/or Non-SET trigger on ^A named addedtrig2
 =========================================
 1 triggers added
@@ -50,9 +45,7 @@ Added SET and/or Non-SET trigger on ^A named addedtrig2
 
 Case 6 - MUPIP TRIGGER - multi-region - verify we can modify trigger in AREG while DEFAULT region is R/O
 %YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/b.dat was opened as read-only (perms 0)
-%SYSTEM-E-UNKNOWN, Unknown system error 0
 %YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
-%SYSTEM-E-UNKNOWN, Unknown system error 0
 Modified SET and/or Non-SET trigger on ^A named addedtrig2
 =========================================
 0 triggers added
@@ -64,9 +57,7 @@ Modified SET and/or Non-SET trigger on ^A named addedtrig2
 
 Case 7 - MUPIP TRIGGER - multi-region - verify we can delete trigger in AREG with DEFAULT and BREG R/O
 %YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/b.dat was opened as read-only (perms 0)
-%SYSTEM-E-UNKNOWN, Unknown system error 0
 %YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
-%SYSTEM-E-UNKNOWN, Unknown system error 0
 Deleted SET and/or Non-SET trigger on ^A named addedtrig2
 =========================================
 0 triggers added
@@ -78,9 +69,7 @@ Deleted SET and/or Non-SET trigger on ^A named addedtrig2
 
 Case 8 - MUPIP TRIGGER - multi-region - verify we can add trigger in AREG if with DEFAULT and BREG R/O
 %YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/b.dat was opened as read-only (perms 0)
-%SYSTEM-E-UNKNOWN, Unknown system error 0
 %YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
-%SYSTEM-E-UNKNOWN, Unknown system error 0
 Added SET and/or Non-SET trigger on ^A named addedtrig2
 =========================================
 1 triggers added
@@ -94,7 +83,6 @@ Case 9 - MUPIP TRIGGER - multi-region - verify we can delete all triggers if onl
 File ##IN_TEST_PATH##/inref/readonlydall.trg, Line 1: This operation will delete all triggers.
 Proceed? [Y/N]: 
 %YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/b.dat was opened as read-only (perms 0)
-%SYSTEM-E-UNKNOWN, Unknown system error 0
 All existing triggers (count = 2) deleted
 =========================================
 0 triggers added
@@ -114,7 +102,6 @@ All existing triggers named readwrite* (count = 2) now deleted
 # Case GTM6901B - Trigger add/delete name* should not work if one of the regions that have a matching trigger is read-only
 # Install triggers in AREG, BREG and DEFAULT - with AREG read-only
 %YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/a.dat was opened as read-only (perms 0)
-%SYSTEM-E-UNKNOWN, Unknown system error 0
 %YDB-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region AREG is read-only
 # Install triggers in AREG, BREG and DEFAULT with all regions read-write
 # Select name* should work if one of the regions that have a matching trigger is read-only
@@ -417,7 +404,6 @@ YDB>
 
 Case 28-29 - ZTRIGGER command (adding 1 trigger back in)
 %YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/b.dat was opened as read-only (perms 0)
-%SYSTEM-E-UNKNOWN, Unknown system error 0
 Added SET and/or Non-SET trigger on ^C named addedtrig
 =========================================
 1 triggers added
