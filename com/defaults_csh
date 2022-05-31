@@ -3,8 +3,11 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017,2018 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
+#								#
+# Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.                                     #
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -148,7 +151,7 @@ check_number test_num_runs "1"
 # test_no_background defined: run in the foreground, undefined: run in background
 check_setenv tst_stdout 0
 # test_no_background is background vs foreground process
-# tst_stdout 1, 2, or 3 means write to stdout (various levels of verbosity)
+# tst_stdout 1 or 2 means write to stdout (various levels of verbosity)
 check_setenv test_want_concurrency "no"
 check_setenv test_load_dir
 

@@ -15,10 +15,9 @@
 #############################################################################################
 # If $tst_stdout is 0 (no -stdout), it means that the output is redirected to
 # a file. In that case, we would like the verbosity for later debugging.
-# If $tst_stdout is 3, the user specifically asked for verbosity -stdout 3
-# If $tst_stdout is 2, the user asked for diff files of failed subtests
+# If $tst_stdout is 2, the user specifically asked for verbosity -stdout 2
 # If $tst_stdout is 1, the user asked for limited verbosity.
-if ("$tst_stdout" == "3" || "$tst_stdout" == "0") then
+if ("$tst_stdout" == "2" || "$tst_stdout" == "0") then
 	set echo
 	set verbose
 else
@@ -160,7 +159,7 @@ if ( ($?test_replic) && ($?test_gtm_gtcm_one) ) then
 	endif
 	exit 1
 endif
-if ("$tst_stdout" == "3" || "$tst_stdout" == "0") then
+if ("$tst_stdout" == "2" || "$tst_stdout" == "0") then
 	set echo
 	set verbose
 endif
@@ -578,7 +577,7 @@ if (! -e $testfilesdir) mkdir -p $testfilesdir
 #Collation setup
 source $gtm_tst/com/collation_setup.csh
 ##########################
-if ("$tst_stdout" == "3" || "$tst_stdout" == "0") then
+if ("$tst_stdout" == "2" || "$tst_stdout" == "0") then
 	echo " "
 	echo '$gtmgbldir: ' $gtmgbldir
 	echo '$YDB: ' $YDB
@@ -868,7 +867,7 @@ if ((! $?gtm_test_dryrun) || (! $dryrun_subtest)) then
 	unset echo; unset verbose
 	(source $gtm_tst/com/gtm_test_watchdog.csh $tst_general_dir/tmp & ; echo $! >&! gtm_test_watchdog.pid) >&! gtm_test_watchdog.out
 	set watchdogpid = `cat gtm_test_watchdog.pid`
-	if ("$tst_stdout" == "3" || "$tst_stdout" == "0") then
+	if ("$tst_stdout" == "2" || "$tst_stdout" == "0") then
 	  set echo
 	  set verbose
 	endif
@@ -951,7 +950,7 @@ if ( "OS/390" == $HOSTOS ) then
 	unset verbose
 	cat $tst_general_dir/outstream.log_edc | sed 's/%SYSTEM-E-EN.*,//g' | sed 's/EDC[0-9][0-9][0-9][0-9][A-Z] \(.*\)\./\1/g' > $tst_general_dir/outstream.log
 	cat $tst_general_dir/outstream.cmp_edc | sed 's/%SYSTEM-E-EN.*,//g' | sed 's/EDC[0-9][0-9][0-9][0-9][A-Z] \(.*\)\./\1/g' > $tst_general_dir/outstream.cmp
-	if ("$tst_stdout" == "3" || "$tst_stdout" == "0") then
+	if ("$tst_stdout" == "2" || "$tst_stdout" == "0") then
 	  set echo
 	  set verbose
 	endif
