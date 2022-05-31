@@ -357,7 +357,7 @@ foreach sub_test ($subtest_list) # Mega for - practically all this script is in 
 		    echo Following are the contents of $sub_test/$sub_test.diff
 		    \cat $tst_general_dir/$sub_test/$sub_test.diff
 		    if (-e $tst_general_dir/$sub_test/errs_found.logx) then
-			echo And following are the contents of $sub_test/errs_found.logx
+			echo Following are the contents of $sub_test/errs_found.logx
 			\cat $tst_general_dir/$sub_test/errs_found.logx
 		    endif
 		    echo
