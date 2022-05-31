@@ -37,6 +37,20 @@ GDE_EOF
 
 $gtm_dist/mupip create
 
+# To ensure that the test output is deterministic, we perform a trial
+# backup, check if mumps.dat is backed up first and, if so, swap
+# the mumps.dat and a.dat databases to ensure that the databases are
+# backed up in the expected order (i.e. a.dat first, mumps.dat next).
+mkdir test
+$gtm_dist/mupip backup "*" test >& testbackup.out
+setenv firstbackup `head -1 testbackup.out`
+if ("$firstbackup" =~ "*mumps.dat*") then
+	mv mumps.dat mumps2.dat
+	mv a.dat mumps.dat
+	mv mumps2.dat a.dat
+endif
+rm -rf test
+
 @ cnt = 220
 
 
