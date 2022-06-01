@@ -1,0 +1,61 @@
+# Test to verify when the source server has a name resolution failure, it gives more information (specifically
+# the node name) and is more persistent about retrying the resolution until it succeeds or is stopped.
+
+# Set up half of a replicated environment. We won't really use the other side as this issue is tested when the
+# configuration is rather borked since we are attempting to connect to a bogus host.
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-REPLSTATE, Replication state for region DEFAULT is now ON
+
+# Obtain a usable port number
+
+# Now, start up a replication source server to a node that does not exist. We should continue to run until we
+# stop it and the name should show up in the messages. Also set reconnect attempt duration to 2 seconds to
+# drop the number of retries per second to avoid flooding source server log. Note while we use -CONNECTPARAMS
+# option to make the source log smaller by increasing the time periods for hard retries as well as making the
+# soft retry shorter so we test generate some of the messages that were incorrect, we do not have a good way
+# of validating them. See discussion of this at https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/1412#note_991497600
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating START of source server for secondary instance [INSTANCE2]
+
+# Wait for GETADDRINFO message to appear in src.logx
+## GETADDRINFO message seen
+
+# Verify that not only did we see the GETADDRINFO message but this came out as a 3 message bundle with the secondary
+# system name mentioned in this bundle of messages.
+%YDB-E-GETADDRINFO, Error in getting address info
+%YDB-I-TEXT, Temporary failure in name resolution
+##TEST_AWK%YDB-I-TEXT, Failure in resolving bogushost:[1-9][0-9]*
+
+# We know we have at least one GETADDRINFO message to indicate the condition has been detected. Now wait for
+# a second and third GETADDRINFO message to show the server being more resilient about this error.
+## 3 or more GETADDRINFO messages seen
+
+# Verify source server is *still* alive
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating CHECKHEALTH operation on source server pid [##PID##] for secondary instance name [INSTANCE2]
+PID ##FILTERED##[##PID##] Source server is alive in ACTIVE mode
+
+# Shutting down the source server
+
+###################################################################
+# Verify DB on our side is still OK
+#
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               1           0.488            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               1              NA             0
