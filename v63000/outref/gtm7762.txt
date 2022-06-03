@@ -190,6 +190,10 @@ Actual: foo
 		                      ^-----
 		At column 24, line 20, source module ##IN_TEST_PATH##/inref/crashtests.m
 %YDB-W-BADCHAR, $ZCHAR(193) is not a valid character in the UTF-8 encoding form
+		set f=$TRANSLATE("Hello, this is doge?"_$ZCH(194),"Htid","DdiD")
+		                                                               ^-----
+		At column 65, line 21, source module ##IN_TEST_PATH##/inref/crashtests.m
+%YDB-W-BADCHAR, $ZCHAR(194) is not a valid character in the UTF-8 encoding form
 %YDB-E-BADCHAR, $ZCHAR(191) is not a valid character in the UTF-8 encoding form
 		At M source location label+6^crashtests
 
