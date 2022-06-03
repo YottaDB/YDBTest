@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2021-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -17,6 +17,12 @@
 # This appears to be related to valgrind's -q option which is necessary to keep the reference
 # file simple.
 source $gtm_tst/com/gtm_test_disable_autorelink.csh
+
+# Set DEBUGINFOD_URLS on Arch so that valgrind will work correctly
+# See https://bbs.archlinux.org/viewtopic.php?id=276422 for more information
+if ("arch" == $gtm_test_linux_distrib) then
+	setenv DEBUGINFOD_URLS "https://debuginfod.archlinux.org"
+endif
 
 echo "# Test invoking YottaDB via valgrind does not produce a %YDB-E-YDBDISTUNVERIF"
 
