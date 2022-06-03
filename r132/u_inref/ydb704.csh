@@ -18,12 +18,6 @@
 # file simple.
 source $gtm_tst/com/gtm_test_disable_autorelink.csh
 
-# Set DEBUGINFOD_URLS on Arch so that valgrind will work correctly
-# See https://bbs.archlinux.org/viewtopic.php?id=276422 for more information
-if ("arch" == $gtm_test_linux_distrib) then
-	setenv DEBUGINFOD_URLS "https://debuginfod.archlinux.org"
-endif
-
 echo "# Test invoking YottaDB via valgrind does not produce a %YDB-E-YDBDISTUNVERIF"
 
 $echoline

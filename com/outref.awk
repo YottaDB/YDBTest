@@ -276,6 +276,16 @@ BEGIN {
 		else if ("ubuntu" == ENVIRON["gtm_test_linux_distrib"])
 			envir[no_options] = "UBUNTU_LINUX_AARCH64"
 	}
+	if ("arch" == ENVIRON["gtm_test_linux_distrib"])
+		envir[no_options] = "ARCH_LINUX"
+	else if ("debian" == ENVIRON["gtm_test_linux_distrib"])
+		envir[no_options] = "DEBIAN_LINUX"
+	else if ("ubuntu" == ENVIRON["gtm_test_linux_distrib"])
+		envir[no_options] = "UBUNTU_LINUX"
+	else if ("centos" == ENVIRON["gtm_test_linux_distrib"])
+		envir[no_options] = "CENTOS_LINUX"
+	else if ("rhel" == ENVIRON["gtm_test_linux_distrib"])
+		envir[no_options] = "RHEL_LINUX"
 	#
 	option_names[++no_options] = "gtm_test_singlecpu"
 	if (1 == ENVIRON["gtm_test_singlecpu"])

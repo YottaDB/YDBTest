@@ -96,6 +96,13 @@ if ("14" == "$clangmajorver") then
 	setenv subtest_exclude_list "$subtest_exclude_list ydb704"
 endif
 
+# Disable ydb704 subtest on Arch Linux because valgrind currently doesn't
+# work on the in-house Arch machine and setting DEBUGINFOD_URLS didn't
+# fix the failures long-term.
+if ("arch" == $gtm_test_linux_distrib) then
+	setenv subtest_exclude_list "$subtest_exclude_list ydb704"
+endif
+
 if ($gtm_test_asan_compiler_clang11or12) then
 	# libyottadb.so was built with ASAN and CLANG 11 or CLANG 12
 	# In this case, the ydb632 subtest fails with the following diff
