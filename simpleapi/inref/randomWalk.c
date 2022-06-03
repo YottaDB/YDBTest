@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2019-2021 YottaDB LLC and/or its subsidiaries.	*
+ * Copyright (c) 2019-2022 YottaDB LLC and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -434,7 +434,7 @@ int runProc(testSettings* settings, int curDepth){
 	} else if (action < 20 + remainingOdds * (6 / 15.0f)){ //ydb_incr_s() case
 		logprint("set x=$increment(", &t, ",$random(5))");
 		int incr_amount = rand() / (RAND_MAX / 5); //rand int [0, 5]
-		char incr_str[2];
+		char incr_str[3];	/* 2 digits to store the 2-digit number + 1 byte for null terminator byte */
 		char printstr[16];
 		ydb_buffer_t increment, retvalue;
 		YDB_MALLOC_BUFFER(&retvalue, 16);

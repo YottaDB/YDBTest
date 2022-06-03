@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.	*
+ * Copyright (c) 2019-2022 YottaDB LLC and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -403,7 +403,7 @@ int runProc(uint64_t tptoken, ydb_buffer_t* errstr, testSettings* settings, int 
 		YDB_FREE_BUFFER(&retvalue);
 	} else if (action < 20 + remainingOdds * (6 / 15.0f)){ //ydb_incr_st() case
 		int incr_amount = rand() / (RAND_MAX / 5); //rand int [0, 5]
-		char incr_str[2];
+		char incr_str[3];	/* 2 digits to store the 2-digit number + 1 byte for null terminator byte */
 		ydb_buffer_t increment, retvalue;
 
 		YDB_MALLOC_BUFFER(&retvalue, 16);
