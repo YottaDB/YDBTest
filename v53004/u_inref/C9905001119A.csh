@@ -1,7 +1,26 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+# This module is derived from FIS GT.M.
+#################################################################
+
 #
 # C9905-001119A Test that TP with WRITE-ONLY references to NOISOLATION globals causes negligible TP restarts
 #
+# V6.3-013 removed the NOISOLATION optimization for MM (see https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1166#note_951687754).
+# Since the lack of this NOISOLATION optimization breaks this test under MM, we temporarily force the test to use BG. Whenever
+# NOISOLATION optimization for MM is restored, we will remove the below line.
+setenv acc_meth BG
+
 $gtm_tst/com/dbcreate.csh mumps
 
 $GTM << GTM_EOF
