@@ -1,3 +1,16 @@
++;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
++;								;
++; Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	;
++; All rights reserved.						;
++;								;
++;	This source code contains the intellectual property	;
++;	of its copyright holder(s), and is made available	;
++;	under a license.  If you do not know the terms of	;
++;	the license, please stop and do not read further.	;
++;								;
++;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
++; This module is derived from FIS GT.M.
++;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ztranslate ;
 		; since we have byte by byte processing below we need to turn BADCHAR off
 		if $VIEW("BADCHAR") do
@@ -17,10 +30,10 @@ ztranslate ;
 		; also use literals for the same examine statements and check as th code path is very different for variables
 		; and literals
 		if ("UTF-8"=$ZCHSET) do
-		. do ^examine($TRANSLATE(fullwidthA,temp1,temp2),fullwidthA,"ERROR 1 from translate") ; # should not get translated
-		. do ^examine($TRANSLATE("Ａ",temp1,temp2),fullwidthA,"ERROR 1 on literal from translate") ; # should not get translated
-		. do ^examine($TRANSLATE(tamilA,temp3,temp4),tamilA,"ERROR 2 from translate") ; # should not get translated
-		. do ^examine($TRANSLATE("அ",temp3,temp4),tamilA,"ERROR 2 on literal from translate") ; # should not get translated
+		. do ^examine($TRANSLATE(fullwidthA,temp1,temp2),hiraganaA,"ERROR 1 from translate")
+		. do ^examine($TRANSLATE("Ａ",temp1,temp2),hiraganaA,"ERROR 1 on literal from translate")
+		. do ^examine($TRANSLATE(tamilA,temp3,temp4),teluguE,"ERROR 2 from translate")
+		. do ^examine($TRANSLATE("அ",temp3,temp4),teluguE,"ERROR 2 on literal from translate")
 		if ("M"=$ZCHSET) do
 		. do ^examine($TRANSLATE(fullwidthA,temp1,temp2),hiraganaA,"ERROR 3 from ztranslate")
 		. do ^examine($TRANSLATE("Ａ",temp1,temp2),hiraganaA,"ERROR 3 on literal from ztranslate")
@@ -37,8 +50,8 @@ indirection ;
 		set intemp1="temp1"
 		set intemp4="temp4"
 		if ("UTF-8"=$ZCHSET) do
-		. do ^examine($TRANSLATE(@infullwidthA,@intemp1,temp2),@infullwidthA,"ERROR 1 from indirection") ; # should not get translated
-		. do ^examine($TRANSLATE(@intamilA,temp3,@intemp4),@intamilA,"ERROR 2 from indirection") ; # should not get translated
+		. do ^examine($TRANSLATE(@infullwidthA,@intemp1,temp2),hiraganaA,"ERROR 1 from indirection")
+		. do ^examine($TRANSLATE(@intamilA,temp3,@intemp4),teluguE,"ERROR 2 from indirection")
 		if ("M"=$ZCHSET) do
 		. do ^examine($TRANSLATE(@infullwidthA,@intemp1,temp2),hiraganaA,"ERROR 3 from indirection")
 		. do ^examine($TRANSLATE(@intamilA,temp3,@intemp4),teluguE,"ERROR 4 from indirection")
