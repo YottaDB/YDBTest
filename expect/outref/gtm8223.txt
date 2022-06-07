@@ -3,7 +3,115 @@ Using: ##SOURCE_PATH##/mumps -run GDE
 mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
+spawn /usr/local/bin/tcsh -f
+> set prompt="termmumps > "
+termmumps > $gtm_dist/mumps -direct
+
+YDB>use $principal:(cenable:ctrap=$char(4):exception="write !,$zstatus")
+
+YDB>zshow "d":b
+
+YDB>do ^%GI
+
+Global Input Utility
+
+Input device: <terminal>: gtm8223a.go
+
+
+%GO
+##TEST_AWKGT.M .*
+
+OK <Yes>? ^
+
+
+YDB>do ^%GI
+
+Global Input Utility
+
+Input device: <terminal>: gtm8223a.go
+
+
+%GO
+##TEST_AWKGT.M .*
+
+OK <Yes>? 
+YDB>do ^%GI
+
+Global Input Utility
+
+Input device: <terminal>: ^
+YDB>do ^%GI
+
+Global Input Utility
+
+Input device: <terminal>: 
+YDB>do ^%GI
+
+Global Input Utility
+
+Input device: <terminal>: gtm8223a.go
+
+
+%GO
+##TEST_AWKGT.M .*
+
+OK <Yes>? 
+
+^FALSE    
+
+Restored 5 nodes in 1 global.
+YDB>do ^%GI
+
+Global Input Utility
+
+Input device: <terminal>: 
+
+
+Format <ZWR>? ^
+
+
+YDB>do ^%GI
+
+Global Input Utility
+
+Input device: <terminal>: 
+
+
+Format <ZWR>? 
+YDB>do ^%GI
+
+Global Input Utility
+
+Input device: <terminal>: 
+
+
+Format <ZWR>? g
+
+> ^x("hi")
+> sailor
+> 
+
+Restored 1 node in 1 global.
+YDB>do ^%GI
+
+Global Input Utility
+
+Input device: <terminal>: 
+
+
+Format <ZWR>? 
+
+> ^z(2.134)="pi"
+> 
+
+Restored 1 node in 1 global.
+YDB>zshow "d":a
+
+YDB>write $select($piece(a("D",1)," ",2,99)=$piece(b("D",1)," ",2,99):$char(80,65,83,83),1:$char(70,65,73,76))," from gtm8223"
 PASS from gtm8223
+YDB>halt
+termmumps > exit
+exit
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
