@@ -51,26 +51,33 @@ if ("$firstbackup" =~ "*mumps.dat*") then
 endif
 rm -rf test
 
-@ cnt = 220
+if ("dbg" == "$tst_image") then
+	@ cnt = 220
 
+	setenv gtm_white_box_test_case_enable   1
+	setenv gtm_white_box_test_case_number   203      # WBTEST_YDB_STATICPID
 
-$echoline
-echo "# Starting the -noonline MUPIP BACKUPs. For these, we"
-echo "# generate directory paths of 220 to 266 characters,"
-echo "# expecting lengths of 220 to 233 to succeed and longer"
-echo "# lengths to result in errors. Lengths of 234 or larger"
-echo "# fail due to the space needed for the temporary file which"
-echo "# would otherwise overflow a buffer in sr_port/mubfilcpy.c"
+	$echoline
+	echo "# Starting the -noonline MUPIP BACKUPs. For these, we"
+	echo "# generate directory paths of 220 to 266 characters,"
+	echo "# expecting lengths of 220 to 233 to succeed and longer"
+	echo "# lengths to result in errors. Lengths of 234 or larger"
+	echo "# fail due to the space needed for the temporary file which"
+	echo "# would otherwise overflow a buffer in sr_port/mubfilcpy.c"
 
-while ($cnt < 266)
-	set dirname = `$gtm_dist/mumps -run gen $cnt`
-	rm -rf $dirname
-	mkdir $dirname
-	echo "####### Testing backup directory length [$cnt] with -noline #########"
-	$gtm_dist/mupip backup -noonline "*" $dirname
-	rm -rf $dirname
-	@ cnt = $cnt + 1
-end
+	while ($cnt < 266)
+		set dirname = `$gtm_dist/mumps -run gen $cnt`
+		rm -rf $dirname
+		mkdir $dirname
+		echo "####### Testing backup directory length [$cnt] with -noline #########"
+		$gtm_dist/mupip backup -noonline "*" $dirname
+		rm -rf $dirname
+		@ cnt = $cnt + 1
+	end
+
+	unsetenv WBTEST_YDB_STATICPID
+	unsetenv gtm_white_box_test_case_number
+endif
 
 $echoline
 echo "# Starting the online MUPIP BACKUPs. For these, we generate"
