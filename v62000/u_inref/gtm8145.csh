@@ -14,7 +14,7 @@
 #################################################################
 setenv gtm_test_mupip_set_version "disable"	# Prevent random usage of V4 database as that causes issues with using MM
 $gtm_tst/com/dbcreate.csh mumps
-setenv TERM vt320
+setenv TERM ansi
 echo "# Running expect (output: expect.outx)"
 # Turn on expect debugging using "-d". The debug output would be in expect.dbg in case needed to analyze stray timing failures.
 (expect -d $gtm_tst/$tst/u_inref/gtm8145.exp > expect.outx) >& expect.dbg
