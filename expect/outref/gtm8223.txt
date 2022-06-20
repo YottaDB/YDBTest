@@ -20,6 +20,9 @@ Input device: <terminal>: gtm8223a.go
 
 %GO
 ##TEST_AWKGT.M .*
+##SUSPEND_OUTPUT CHSET_M CHSET_UNDEF
+Extract CHSET M doesn't match current $ZCHSET UTF-8
+##ALLOW_OUTPUT CHSET_M CHSET_UNDEF
 
 OK <Yes>? ^
 
@@ -33,6 +36,9 @@ Input device: <terminal>: gtm8223a.go
 
 %GO
 ##TEST_AWKGT.M .*
+##SUSPEND_OUTPUT CHSET_M CHSET_UNDEF
+Extract CHSET M doesn't match current $ZCHSET UTF-8
+##ALLOW_OUTPUT CHSET_M CHSET_UNDEF
 
 OK <Yes>? 
 YDB>do ^%GI
@@ -54,6 +60,9 @@ Input device: <terminal>: gtm8223a.go
 
 %GO
 ##TEST_AWKGT.M .*
+##SUSPEND_OUTPUT CHSET_M CHSET_UNDEF
+Extract CHSET M doesn't match current $ZCHSET UTF-8
+##ALLOW_OUTPUT CHSET_M CHSET_UNDEF
 
 OK <Yes>? 
 
