@@ -32,60 +32,72 @@ echo "# $MUPIP set -journal=[no]before,buffer_size=32769 -file mumps.dat"
 $MUPIP set -journal=$jnlimg,buffer_size=32769 -file mumps.dat
 set jnl_buffer_size = `$DSE dump -fileheader |& $grep "Journal Buffer Size" | $tst_awk '{print $4}'`
 echo journal buffer_size=: expected 32776 : actual $jnl_buffer_size
+$echoline
 
 echo "# $MUPIP set -journal=[no]before,buffer_size=32776 -file mumps.dat"
 $MUPIP set -journal=$jnlimg,buffer_size=32776 -file mumps.dat
 set jnl_buffer_size = `$DSE dump -fileheader |& $grep "Journal Buffer Size" | $tst_awk '{print $4}'`
 echo journal buffer_size=: expected 32776 : actual $jnl_buffer_size
+$echoline
 
 echo "# $MUPIP set -journal=[no]before,buffer_size=131103 -file mumps.dat"
 $MUPIP set -journal=$jnlimg,buffer_size=131103 -file mumps.dat
 set jnl_buffer_size = `$DSE dump -fileheader |& $grep "Journal Buffer Size" | $tst_awk '{print $4}'`
 echo journal buffer_size=: expected 131104 : actual $jnl_buffer_size
+$echoline
 
 echo "# $MUPIP set -journal=[no]before,buffer_size=131104 -file mumps.dat"
 $MUPIP set -journal=$jnlimg,buffer_size=131104 -file mumps.dat
 set jnl_buffer_size = `$DSE dump -fileheader |& $grep "Journal Buffer Size" | $tst_awk '{print $4}'`
 echo journal buffer_size=: expected 131104 : actual $jnl_buffer_size
+$echoline
 
 echo "# $MUPIP set -journal=[no]before,buffer_size=131105 -file mumps.dat"
 $MUPIP set -journal=$jnlimg,buffer_size=131105 -file mumps.dat
 set jnl_buffer_size = `$DSE dump -fileheader |& $grep "Journal Buffer Size" | $tst_awk '{print $4}'`
 echo journal buffer_size=: expected 131112 : actual $jnl_buffer_size
+$echoline
 
 echo "# $MUPIP set -journal=[no]before,buffer_size=524414 -file mumps.dat"
 $MUPIP set -journal=$jnlimg,buffer_size=524414 -file mumps.dat
 set jnl_buffer_size = `$DSE dump -fileheader |& $grep "Journal Buffer Size" | $tst_awk '{print $4}'`
 echo journal buffer_size=: expected 524416 : actual $jnl_buffer_size
+$echoline
 
 echo "# $MUPIP set -journal=[no]before,buffer_size=524416 -file mumps.dat"
 $MUPIP set -journal=$jnlimg,buffer_size=524416 -file mumps.dat
 set jnl_buffer_size = `$DSE dump -fileheader |& $grep "Journal Buffer Size" | $tst_awk '{print $4}'`
 echo journal buffer_size=: expected 524416 : actual $jnl_buffer_size
+$echoline
 
 echo "# $MUPIP set -journal=[no]before,buffer_size=968828 -file mumps.dat"
 $MUPIP set -journal=$jnlimg,buffer_size=968828 -file mumps.dat
 set jnl_buffer_size = `$DSE dump -fileheader |& $grep "Journal Buffer Size" | $tst_awk '{print $4}'`
 echo journal buffer_size=: expected 968832 : actual $jnl_buffer_size
+$echoline
 
 echo "# $MUPIP set -journal=[no]before,buffer_size=968832 -file mumps.dat"
 $MUPIP set -journal=$jnlimg,buffer_size=968832 -file mumps.dat
 set jnl_buffer_size = `$DSE dump -fileheader |& $grep "Journal Buffer Size" | $tst_awk '{print $4}'`
 echo journal buffer_size=: expected 968832 : actual $jnl_buffer_size
+$echoline
 
 echo "# $MUPIP set -journal=[no]before,buffer_size=1048575 -file mumps.dat"
 $MUPIP set -journal=$jnlimg,buffer_size=1048575 -file mumps.dat
 set jnl_buffer_size = `$DSE dump -fileheader |& $grep "Journal Buffer Size" | $tst_awk '{print $4}'`
 echo journal buffer_size=: expected 1048576 : actual $jnl_buffer_size
+$echoline
 
 echo "# $MUPIP set -journal=[no]before,buffer_size=1048576 -file mumps.dat"
 $MUPIP set -journal=$jnlimg,buffer_size=1048576 -file mumps.dat
 set jnl_buffer_size = `$DSE dump -fileheader |& $grep "Journal Buffer Size" | $tst_awk '{print $4}'`
 echo journal buffer_size=: expected 1048576 : actual $jnl_buffer_size
+$echoline
 
 echo "# $MUPIP set -journal=[no]before,buffer_size=1048577 -file mumps.dat"
 $MUPIP set -journal=$jnlimg,buffer_size=1048577 -file mumps.dat
 set jnl_buffer_size = `$DSE dump -fileheader |& $grep "Journal Buffer Size" | $tst_awk '{print $4}'`
 echo journal buffer_size=: expected 1048576 : actual $jnl_buffer_size
+$echoline
 
 $gtm_tst/com/dbcheck.csh
