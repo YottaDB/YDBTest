@@ -14,6 +14,8 @@
 #################################################################
 
 set timeout 120
+spawn /usr/local/bin/tcsh -f
+source $::env(gtm_tst)/com/expectinit.exp
 
 spawn /usr/local/bin/tcsh -f
 expect "*>"

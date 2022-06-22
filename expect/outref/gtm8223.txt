@@ -4,6 +4,11 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
 spawn /usr/local/bin/tcsh -f
+> stty cols 132
+> set shellprompt=SHELL
+> set prompt=$shellprompt
+SHELLsetenv term_env `tty`; echo $term_env > term_env.txt
+SHELLspawn /usr/local/bin/tcsh -f
 > set prompt="termmumps > "
 termmumps > $gtm_dist/mumps -direct
 
