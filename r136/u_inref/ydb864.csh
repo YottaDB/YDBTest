@@ -69,7 +69,7 @@ if ("dbg" == "$tst_image") then
 		set dirname = `$gtm_dist/mumps -run gen $cnt`
 		rm -rf $dirname
 		mkdir $dirname
-		echo "####### Testing backup directory length [$cnt] with -noline #########"
+		echo "####### Testing backup directory length [$cnt] with -noonline #########"
 		$gtm_dist/mupip backup -noonline "*" $dirname
 		rm -rf $dirname
 		@ cnt = $cnt + 1
