@@ -35,7 +35,7 @@ lsmumps
 echo "mupip journal -extract=mumps.1 -forward mumps.mjl"
 $MUPIP journal -extract=mumps.1 -forward mumps.mjl
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 
 \rm -rf mumps.1
 echo "*** Extracting journal R/O mumps.dat R/W mumps.mjl ***"
@@ -44,7 +44,7 @@ lsmumps
 echo "mupip journal -extract=mumps.1 -forward mumps.mjl"
 $MUPIP journal -extract=mumps.1 -forward mumps.mjl
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 
 \rm -rf mumps.1
 echo "*** Extracting journal R/W mumps.dat R/O mumps.mjl ***"
@@ -54,7 +54,7 @@ lsmumps
 echo "mupip journal -extract=mumps.1 -forward mumps.mjl"
 $MUPIP journal -extract=mumps.1 -forward mumps.mjl
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 
 \rm -rf mumps.1
 echo "*** Extracting journal R/O mumps.dat R/O mumps.mjl ***"
@@ -64,6 +64,6 @@ lsmumps
 echo "mupip journal -extract=mumps.1 -forward mumps.mjl"
 $MUPIP journal -extract=mumps.1 -forward mumps.mjl
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 
 \rm -f mumps.dat mumps.mjl

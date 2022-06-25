@@ -30,7 +30,7 @@ mkdir ./Back
 echo "*** *.dat R/W *.mjl R/W ***"
 $MUPIP backup -noonline "*" ./Back | & sort -f
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 \rm -f ./Back/*
 
 echo "*** b.dat R/W b.mjl R/O ***"
@@ -38,7 +38,7 @@ chmod 666 b.dat
 chmod 444 b.mjl
 $MUPIP backup -noonline "*" ./Back | & sort -f
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 \rm -f ./Back/*
 
 echo "*** b.dat R/O b.mjl R/W ***"
@@ -46,7 +46,7 @@ chmod 444 b.dat
 chmod 666 b.mjl
 $MUPIP backup -noonline "*" ./Back | & sort -f
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 \rm -f ./Back/*
 
 echo "*** b.dat R/O b.mjl R/O ***"
@@ -54,7 +54,7 @@ chmod 444 b.dat
 chmod 444 b.mjl
 $MUPIP backup -noonline "*" ./Back | & sort -f
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 \rm -rf Back
 
 \rm -f *.dat *.mjl mumps.gld

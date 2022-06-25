@@ -27,7 +27,7 @@ echo "***** mumps.dat R/W  mumps.mjl R/W *****"
 echo "mupip extend DEFAULT"
 $MUPIP extend DEFAULT
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 
 /bin/rm -f mumps.dat mumps.mjl
 \cp -f tmumps.dat mumps.dat
@@ -39,7 +39,7 @@ echo "***** mumps.dat R/W  mumps.mjl R/O *****"
 echo "mupip extend DEFAULT "
 $MUPIP extend DEFAULT
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 
 /bin/rm -f mumps.dat mumps.mjl
 \cp -f tmumps.dat mumps.dat
@@ -51,7 +51,7 @@ echo "***** mumps.dat R/O  mumps.mjl R/W *****"
 echo "mupip extend DEFAULT "
 $MUPIP extend DEFAULT
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 
 /bin/rm -f mumps.dat mumps.mjl
 \cp -f tmumps.dat mumps.dat
@@ -63,6 +63,6 @@ echo "***** mumps.dat R/O  mumps.mjl R/O *****"
 echo "mupip extend DEFAULT "
 $MUPIP extend DEFAULT
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 
 /bin/rm -f mumps.dat mumps.mjl

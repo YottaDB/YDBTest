@@ -25,8 +25,8 @@ echo "mupip backup -noonline DEFAULT back.dat"
 $MUPIP backup -noonline DEFAULT back.dat
 ipcmanage
 
-$gtm_tst/com/dbcheck_filter.csh
-$gtm_tst/com/dbcheck_filter.csh back
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh back -nodbfilerdonly
 \rm -f back.dat
 
 echo "***** changing mumps.dat to read_only *****"
@@ -35,5 +35,5 @@ lsmumps
 echo "mupip backup -noonline DEFAULT back.dat"
 $MUPIP backup -noonline DEFAULT back.dat
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 \rm -f back.dat

@@ -109,7 +109,7 @@ Transactions up to 0x000000000000001D are backed up.
 Transactions up to 0x000000000000001D are backed up.
 Transactions up to 0x0000000000000039 are backed up.
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -133,7 +133,7 @@ Transactions up to 0x000000000000001D are backed up.
 Transactions up to 0x000000000000001D are backed up.
 Transactions up to 0x0000000000000039 are backed up.
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -154,7 +154,7 @@ Transactions up to 0x000000000000001D are backed up.
 Transactions up to 0x000000000000001D are backed up.
 Transactions up to 0x0000000000000039 are backed up.
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -175,7 +175,7 @@ Transactions up to 0x000000000000001D are backed up.
 Transactions up to 0x000000000000001D are backed up.
 Transactions up to 0x0000000000000039 are backed up.
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -222,7 +222,7 @@ mipcmanage
 $MUPIP extend CREG
 Extension successful, file ##TEST_PATH##/c.dat extended by 100 blocks.  Total blocks = 200.
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -244,7 +244,7 @@ mipcmanage
 $MUPIP extend CREG
 Extension successful, file ##TEST_PATH##/c.dat extended by 100 blocks.  Total blocks = 300.
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -267,7 +267,7 @@ mipcmanage
 $MUPIP extend CREG
 Extension successful, file ##TEST_PATH##/c.dat extended by 100 blocks.  Total blocks = 400.
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -290,7 +290,7 @@ mipcmanage
 $MUPIP extend CREG
 Extension successful, file ##TEST_PATH##/c.dat extended by 100 blocks.  Total blocks = 500.
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -325,7 +325,7 @@ mupip extract -nolog glo.dir
 $MUPIP extract -nolog glo.dir | & sort -f
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 140  max subsc len: 10  max rec len: 14  max node len: 26
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -342,7 +342,7 @@ $MUPIP extract -nolog glo.dir | & sort -f
 %YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/c.dat was opened as read-only (perms 0)
 %YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 140  max subsc len: 10  max rec len: 14  max node len: 26
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -378,7 +378,7 @@ mupip extract -fr -nolog glo.dir
 $MUPIP extract -fr -nolog glo.dir | & sort -f
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 140  max subsc len: 10  max rec len: 14  max node len: 26
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -397,7 +397,7 @@ $MUPIP extract -fr -nolog glo.dir | & sort -f
 %YDB-E-DBRDONLY, Database file ##TEST_PATH##/a.dat read only
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 Cannot freeze the database
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -436,7 +436,7 @@ mupip extract -nolog glo.dir
 $MUPIP extract -nolog glo.dir | & sort -f
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 140  max subsc len: 10  max rec len: 14  max node len: 26
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -451,7 +451,7 @@ mupip extract -nolog glo.dir
 $MUPIP extract -nolog glo.dir | & sort -f
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 140  max subsc len: 10  max rec len: 14  max node len: 26
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -467,7 +467,7 @@ $MUPIP extract -nolog glo.dir | & sort -f
 %YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/b.dat was opened as read-only (perms 0)
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 140  max subsc len: 10  max rec len: 14  max node len: 26
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -483,7 +483,7 @@ $MUPIP extract -nolog glo.dir | & sort -f
 %YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/b.dat was opened as read-only (perms 0)
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 140  max subsc len: 10  max rec len: 14  max node len: 26
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -519,7 +519,7 @@ mupip extract -fr -nolog glo.dir
 $MUPIP extract -fr -nolog glo.dir | & sort -f
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 140  max subsc len: 10  max rec len: 14  max node len: 26
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -534,7 +534,7 @@ mupip extract -fr -nolog glo.dir
 $MUPIP extract -fr -nolog glo.dir | & sort -f
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 140  max subsc len: 10  max rec len: 14  max node len: 26
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -552,7 +552,7 @@ $MUPIP extract -fr -nolog glo.dir | & sort -f
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 Cannot freeze the database
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -570,7 +570,7 @@ $MUPIP extract -fr -nolog glo.dir | & sort -f
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 Cannot freeze the database
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -609,7 +609,7 @@ echo mupip freeze -off "*"
 mupip freeze -off *
 $MUPIP freeze -off "*" > & freeze_off_all.out
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -626,7 +626,7 @@ echo mupip freeze -off "*"
 mupip freeze -off *
 $MUPIP freeze -off "*" > & freeze1_off_all.out
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -653,7 +653,7 @@ Error YDB-E-DBRDONLY seen in freeze2_off_all.outx as expected:
 %YDB-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
 ----------
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -680,7 +680,7 @@ Error YDB-E-DBRDONLY seen in freeze3_off_all.outx as expected:
 %YDB-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
 ----------
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -856,7 +856,7 @@ egrep "YDB-E|No errors" integr.out12
 ##TEST_AWK(No errors detected by integ.|%YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/b.dat was opened as read-only \(perms 0\))
 mipcmanage
 chmod 666 *.dat *.mjl
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -984,7 +984,7 @@ No errors detected by integ.
 mipcmanage
 
 chmod 666 *.dat *.mjl
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -1036,7 +1036,7 @@ LOAD TOTAL		Key Cnt: 112  Max Subsc Len: 10  Max Data Len: 14
 %YDB-E-FAILEDRECCOUNT, LOAD unable to process 28 records
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 142
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -1055,7 +1055,7 @@ LOAD TOTAL		Key Cnt: 112  Max Subsc Len: 10  Max Data Len: 14
 %YDB-E-FAILEDRECCOUNT, LOAD unable to process 28 records
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 142
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -1074,7 +1074,7 @@ LOAD TOTAL		Key Cnt: 112  Max Subsc Len: 10  Max Data Len: 14
 %YDB-E-FAILEDRECCOUNT, LOAD unable to process 28 records
 %YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 142
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -1906,7 +1906,7 @@ Transactions from 0x0000000000000001 to 0x000000000000001D are backed up.
 Transactions from 0x0000000000000001 to 0x000000000000001D are backed up.
 Transactions from 0x0000000000000001 to 0x000000000000001D are backed up.
 Transactions from 0x0000000000000001 to 0x0000000000000039 are backed up.
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -1936,7 +1936,7 @@ mupip restore c.dat ./backup/c.dat
 
 RESTORE COMPLETED
 5 blocks restored
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -1966,7 +1966,7 @@ mupip restore c.dat ./backup/c.dat
 
 RESTORE COMPLETED
 5 blocks restored
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -1996,7 +1996,7 @@ mupip restore c.dat ./backup/c.dat
 
 RESTORE COMPLETED
 5 blocks restored
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -2026,7 +2026,7 @@ mupip restore c.dat ./backup/c.dat
 
 RESTORE COMPLETED
 5 blocks restored
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -2065,7 +2065,7 @@ $MUPIP rundown -reg "*" | & sort -f
 %YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/c.dat successfully rundown
 %YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -2096,7 +2096,7 @@ $MUPIP rundown -reg "*" | & sort -f
 %YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/c.dat successfully rundown
 %YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -2135,7 +2135,7 @@ $MUPIP rundown -reg "*" | & sort -f
 %YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/c.dat successfully rundown
 %YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -2174,7 +2174,7 @@ $MUPIP rundown -reg "*" | & sort -f
 %YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/c.dat successfully rundown
 %YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -2218,7 +2218,7 @@ $MUPIP set -reg "*" -journal=enable,on,before | & sort -f
 %YDB-I-JNLSTATE, Journaling state for region BREG is now ON
 %YDB-I-JNLSTATE, Journaling state for region CREG is now ON
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -2259,7 +2259,7 @@ $MUPIP set -reg "*" -journal=enable,on,before | & sort -f
 %YDB-I-JNLSTATE, Journaling state for region AREG is now ON
 %YDB-I-JNLSTATE, Journaling state for region CREG is now ON
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -2299,7 +2299,7 @@ $MUPIP set -reg "*" -journal=enable,on,before | & sort -f
 %YDB-I-JNLSTATE, Journaling state for region AREG is now ON
 %YDB-I-JNLSTATE, Journaling state for region CREG is now ON
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -2338,7 +2338,7 @@ $MUPIP set -reg "*" -journal=enable,on,before | & sort -f
 %YDB-I-JNLSTATE, Journaling state for region AREG is now ON
 %YDB-I-JNLSTATE, Journaling state for region CREG is now ON
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -2373,7 +2373,7 @@ $MUPIP journal -extract=mumps.mjf -forward mumps.mjl,a.mjl,b.mjl,c.mjl
 %YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -2390,7 +2390,7 @@ $MUPIP journal -extract=mumps.mjf -forward mumps.mjl,a.mjl,b.mjl,c.mjl
 %YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -2407,7 +2407,7 @@ $MUPIP journal -extract=mumps.mjf -forward mumps.mjl,a.mjl,b.mjl,c.mjl
 %YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -2424,7 +2424,7 @@ $MUPIP journal -extract=mumps.mjf -forward mumps.mjl,a.mjl,b.mjl,c.mjl
 %YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -2469,7 +2469,7 @@ $MUPIP journal -recover -forward mumps.mjl,a.mjl,b.mjl,c.mjl
 %YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -2486,7 +2486,7 @@ $MUPIP journal -recover -forward mumps.mjl,a.mjl,b.mjl,c.mjl
 %YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -2502,7 +2502,7 @@ $MUPIP journal -recover -forward mumps.mjl,a.mjl,b.mjl,c.mjl
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -2518,7 +2518,7 @@ $MUPIP journal -recover -forward mumps.mjl,a.mjl,b.mjl,c.mjl
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -2556,7 +2556,7 @@ $MUPIP journal -recover -backward mumps.mjl,a.mjl,b.mjl,c.mjl
 %YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -2570,7 +2570,7 @@ $MUPIP journal -recover -backward mumps.mjl,a.mjl,b.mjl,c.mjl
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -2583,7 +2583,7 @@ $MUPIP journal -recover -backward mumps.mjl,a.mjl,b.mjl,c.mjl
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -2597,7 +2597,7 @@ $MUPIP journal -recover -backward mumps.mjl,a.mjl,b.mjl,c.mjl
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -2632,7 +2632,7 @@ chmod.csh rwrw
 **** R/W b.dat R/W b.mjl ****
 $MUPIP journal -show=all -forward mumps.mjl,a.mjl,b.mjl,c.mjl > & jlsh1.out
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -2641,7 +2641,7 @@ chmod.csh rwro
 **** R/W b.dat R/O b.mjl ****
 $MUPIP journal -show=all -forward mumps.mjl,a.mjl,b.mjl,c.mjl > & jlsh2.out
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -2650,7 +2650,7 @@ chmod.csh rorw
 **** R/O b.dat R/W b.mjl ****
 $MUPIP journal -show=all -forward mumps.mjl,a.mjl,b.mjl,c.mjl > & jlsh3.out
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -2659,7 +2659,7 @@ chmod.csh roro
 **** R/O b.dat R/O b.mjl ****
 $MUPIP journal -show=all -forward mumps.mjl,a.mjl,b.mjl,c.mjl > & jlsh4.out
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -2708,7 +2708,7 @@ $MUPIP journal -verify -forward mumps.mjl,a.mjl,b.mjl,c.mjl
 %YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -2722,7 +2722,7 @@ $MUPIP journal -verify -forward mumps.mjl,a.mjl,b.mjl,c.mjl
 %YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -2736,7 +2736,7 @@ $MUPIP journal -verify -forward mumps.mjl,a.mjl,b.mjl,c.mjl
 %YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
@@ -2750,7 +2750,7 @@ $MUPIP journal -verify -forward mumps.mjl,a.mjl,b.mjl,c.mjl
 %YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

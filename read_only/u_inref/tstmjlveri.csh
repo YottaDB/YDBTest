@@ -30,21 +30,21 @@ chmod 666 *.dat *.mjl
 chmod.csh rwrw
 $MUPIP journal -verify -forward mumps.mjl,a.mjl,b.mjl,c.mjl
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 
 chmod.csh rwro
 $MUPIP journal -verify -forward mumps.mjl,a.mjl,b.mjl,c.mjl
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 
 chmod.csh rorw
 $MUPIP journal -verify -forward mumps.mjl,a.mjl,b.mjl,c.mjl
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 
 chmod.csh roro
 $MUPIP journal -verify -forward mumps.mjl,a.mjl,b.mjl,c.mjl
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 
 \rm -f *.dat *.mjl mumps.gld

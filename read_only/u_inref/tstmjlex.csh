@@ -28,25 +28,25 @@ bbb
 chmod.csh rwrw
 $MUPIP journal -extract=mumps.mjf -forward mumps.mjl,a.mjl,b.mjl,c.mjl
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 \rm -f *.mjf
 
 chmod.csh rwro
 $MUPIP journal -extract=mumps.mjf -forward mumps.mjl,a.mjl,b.mjl,c.mjl
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 \rm -f *.mjf
 
 chmod.csh rorw
 $MUPIP journal -extract=mumps.mjf -forward mumps.mjl,a.mjl,b.mjl,c.mjl
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 \rm -f *.mjf
 
 chmod.csh roro
 $MUPIP journal -extract=mumps.mjf -forward mumps.mjl,a.mjl,b.mjl,c.mjl
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 \rm -f *.mjf
 
 \rm -f *.dat *.mjl mumps.gld

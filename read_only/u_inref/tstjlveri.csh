@@ -32,7 +32,7 @@ echo "*** Verifying on R/W mumps.dat R/W mumps.mjl ***"
 echo "mupip journal -verify -forward mumps.mjl"
 $MUPIP journal -verify -forward mumps.mjl
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 
 echo "*** Verifying on R/W mumps.dat R/O mumps.mjl ***"
 chmod 666 mumps.dat
@@ -41,7 +41,7 @@ lsmumps
 echo "mupip journal -verify -forward mumps.mjl"
 $MUPIP journal -verify -forward mumps.mjl
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 
 echo "*** Verifying on R/O mumps.dat R/W mumps.mjl ***"
 chmod 444 mumps.dat
@@ -50,7 +50,7 @@ lsmumps
 echo "mupip journal -verify -forward mumps.mjl"
 $MUPIP journal -verify -forward mumps.mjl
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 
 echo "*** Verifying on R/O mumps.dat R/O mumps.mjl ***"
 chmod 444 mumps.dat
@@ -59,6 +59,6 @@ lsmumps
 echo "mupip journal -verify -forward mumps.mjl"
 $MUPIP journal -verify -forward mumps.mjl
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 
 \rm -f mumps.dat mumps.mjl

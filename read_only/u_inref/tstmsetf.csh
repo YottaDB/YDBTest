@@ -31,7 +31,7 @@ $MUPIP set -file a.dat -journal=enable,on,before
 $MUPIP set -file b.dat -journal=enable,on,before
 $MUPIP set -file c.dat -journal=enable,on,before
 $MUPIP set -file mumps.dat -journal=enable,on,before
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 \rm -f *.dat *.mjl
 
 
@@ -47,7 +47,7 @@ $MUPIP set -file a.dat -journal=enable,on,before
 $MUPIP set -file b.dat -journal=enable,on,before
 $MUPIP set -file c.dat -journal=enable,on,before
 $MUPIP set -file mumps.dat -journal=enable,on,before
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 \rm -f *.dat *.mjl
 
 
@@ -62,7 +62,7 @@ $MUPIP set -file a.dat -journal=enable,on,before
 $MUPIP set -file b.dat -journal=enable,on,before
 $MUPIP set -file c.dat -journal=enable,on,before
 $MUPIP set -file mumps.dat -journal=enable,on,before
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 \rm -f *.dat *.mjl
 
 $gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
@@ -76,5 +76,5 @@ $MUPIP set -file a.dat -journal=enable,on,before
 $MUPIP set -file b.dat -journal=enable,on,before
 $MUPIP set -file c.dat -journal=enable,on,before
 $MUPIP set -file mumps.dat -journal=enable,on,before
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 \rm -f *.dat *.mjl

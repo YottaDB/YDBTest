@@ -33,28 +33,28 @@ $MUPIP create >& /dev/null
 chmod.csh rwrw
 $MUPIP journal -recover -forward mumps.mjl,a.mjl,b.mjl,c.mjl
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 
 \rm -f *.dat
 $MUPIP create >& /dev/null
 chmod.csh rwro
 $MUPIP journal -recover -forward mumps.mjl,a.mjl,b.mjl,c.mjl
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 
 \rm -f *.dat
 $MUPIP create >& /dev/null
 chmod.csh rorw
 $MUPIP journal -recover -forward mumps.mjl,a.mjl,b.mjl,c.mjl
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 
 \rm -f *.dat
 $MUPIP create >& /dev/null
 chmod.csh roro
 $MUPIP journal -recover -forward mumps.mjl,a.mjl,b.mjl,c.mjl
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 
 \rm -f *.dat *.mjl mumps.gld
 
@@ -70,18 +70,18 @@ chmod 666 *.dat *.mjl
 chmod.csh rwrw
 $MUPIP journal -recover -backward mumps.mjl,a.mjl,b.mjl,c.mjl
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 chmod.csh rwro
 $MUPIP journal -recover -backward mumps.mjl,a.mjl,b.mjl,c.mjl
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 chmod.csh rorw
 $MUPIP journal -recover -backward mumps.mjl,a.mjl,b.mjl,c.mjl
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 chmod.csh roro
 $MUPIP journal -recover -backward mumps.mjl,a.mjl,b.mjl,c.mjl
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 
 \rm -f *.dat *.mjl mumps.gld

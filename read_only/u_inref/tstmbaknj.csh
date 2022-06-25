@@ -17,7 +17,7 @@
 echo ""
 echo "*** TSTMBAKNJ ***"
 echo ""
-alias dbcheck '$gtm_tst/com/dbcheck_filter.csh; $gtm_tst/com/backup_dbjnl.csh back "*.gld" cp nozip; cd back; $gtm_tst/com/dbcheck_filter.csh ; cd - '
+alias dbcheck '$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly; $gtm_tst/com/backup_dbjnl.csh back "*.gld" cp nozip; cd back; $gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly ; cd - '
 set verbose
 
 $gtm_tst/com/dbcreate.csh mumps $1
@@ -47,7 +47,7 @@ chmod 444 b.dat
 $MUPIP backup -noonline "*" ./back | & sort -f
 mipcmanage
 unset verbose
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 # b.dat will not be backedup in the back directory
 # so a simple dbcheck_filter.csh or mupip integ will not work.Hence the foreach loop and checking of status
 set integ_stat = 0

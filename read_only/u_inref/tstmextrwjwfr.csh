@@ -31,7 +31,7 @@ echo "**** *.dat R/W *.mjl R/W ***"
 echo "mupip extract -fr -nolog glo.dir"
 $MUPIP extract -fr -nolog glo.dir | & sort -f
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 \rm -f glo.dir
 
 echo "**** b.dat R/W b.mjl R/O ***"
@@ -40,7 +40,7 @@ chmod 444 b.mjl
 echo "mupip extract -fr -nolog glo.dir"
 $MUPIP extract -fr -nolog glo.dir | & sort -f
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 \rm -f glo.dir
 
 echo "**** b.dat R/O b.mjl R/W ***"
@@ -49,7 +49,7 @@ chmod 666 b.mjl
 echo "mupip extract -fr -nolog glo.dir"
 $MUPIP extract -fr -nolog glo.dir | & sort -f
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 \rm -f glo.dir
 
 echo "**** b.dat R/O b.mjl R/O ***"
@@ -58,5 +58,5 @@ chmod 444 b.mjl
 echo "mupip extract -fr -nolog glo.dir"
 $MUPIP extract -fr -nolog glo.dir | & sort -f
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 \rm -f *.dat *.mjl glo.dir mumps.gld

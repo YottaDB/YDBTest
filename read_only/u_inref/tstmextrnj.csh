@@ -29,14 +29,14 @@ chmod 666 *.dat
 echo "mupip extract -nolog glo.dir"
 $MUPIP extract -nolog glo.dir | & sort -f
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 \rm -f glo.dir
 
 echo "***** changing *.dat to read_only *****"
 chmod 444 *.dat
 echo "mupip extract -nolog glo.dir"
 $MUPIP extract -nolog glo.dir | & sort -f
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 mipcmanage
 
 \rm -f *.dat glo.dir mumps.gld

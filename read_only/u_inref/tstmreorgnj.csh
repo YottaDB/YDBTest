@@ -25,12 +25,12 @@ $GTM<<aaa
 d in1^sfill("set",3,3)
 aaa
 echo " ------- Before reorg --------"
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 # the next dbcheck is not preceded by a dbcreate so disable dbcheck from regenerating the .sprgde file using -nosprgde
 echo "$MUPIP reorg"
 $MUPIP reorg
 echo " ------- After reorg --------"
-$gtm_tst/com/dbcheck_filter.csh -nosprgde
+$gtm_tst/com/dbcheck_filter.csh -nosprgde -nodbfilerdonly
 mipcmanage
 #
 #
@@ -41,7 +41,7 @@ $GTM<<eee
 d in1^sfill("set",3,3)
 eee
 echo "----- Before reorg -----"
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 # the next dbcheck is not preceded by a dbcreate so disable dbcheck from regenerating the .sprgde file using -nosprgde
 echo "****** Changing database to read_only ******"
 chmod 444 mumps.dat
@@ -49,6 +49,6 @@ lsmumps
 echo "$MUPIP reorg"
 $MUPIP reorg
 echo " ----- After reorg on read_only database -----"
-$gtm_tst/com/dbcheck_filter.csh -nosprgde
+$gtm_tst/com/dbcheck_filter.csh -nosprgde -nodbfilerdonly
 mipcmanage
 \rm -f *.dat

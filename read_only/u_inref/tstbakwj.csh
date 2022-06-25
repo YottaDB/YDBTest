@@ -13,7 +13,7 @@
 # This module is derived from FIS GT.M.
 #################################################################
 #Tests of mupip command "BACK" on a read_only database file
-alias dbcheck '$gtm_tst/com/dbcheck_filter.csh ;$gtm_tst/com/dbcheck_filter.csh back ; \rm -f back.dat '
+alias dbcheck '$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly ;$gtm_tst/com/dbcheck_filter.csh back -nodbfilerdonly ; \rm -f back.dat '
 echo ""
 echo "*** TSTBAKWJ.CSH ***"
 echo ""

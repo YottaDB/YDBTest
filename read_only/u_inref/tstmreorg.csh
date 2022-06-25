@@ -22,13 +22,13 @@ $GTM<<aaa
 d in1^sfill("set",3,4)
 aaa
 echo "------- Before reorg -------"
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 chmod 666 *.dat *.mjl
 echo "R/W mumps.dat R/W mumps.mjl"
 echo "$MUPIP reorg"
 $MUPIP reorg
 echo "------- Test last reorg -------"
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 mipcmanage
 #
 #
@@ -39,14 +39,14 @@ $GTM<<aaa
 d in1^sfill("set",3,4)
 aaa
 echo "------- Before reorg -------"
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 chmod 666 *.dat *.mjl
 chmod 444 mumps.dat
 echo "R/O mumps.dat R/W mumps.mjl"
 echo "$MUPIP reorg"
 $MUPIP reorg
 echo "------- Test last reorg -------"
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 mipcmanage
 #
 #
@@ -57,14 +57,14 @@ $GTM<<aaa
 d in1^sfill("set",3,4)
 aaa
 echo "------- Before reorg -------"
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 chmod 666 *.dat *.mjl
 chmod 444 mumps.mjl
 echo "R/W mumps.dat R/O mumps.mjl"
 echo "$MUPIP reorg"
 $MUPIP reorg
 echo "------- Test last reorg -------"
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 mipcmanage
 #
 #
@@ -75,7 +75,7 @@ $GTM<<aaa
 d in1^sfill("set",3,4)
 aaa
 echo "------- Before reorg -------"
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 chmod 666 *.dat *.mjl
 chmod 444 mumps.dat
 chmod 444 mumps.mjl
@@ -83,6 +83,6 @@ echo "R/O mumps.dat R/O mumps.mjl"
 echo "$MUPIP reorg"
 $MUPIP reorg
 echo "------- Test last reorg -------"
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 mipcmanage
 \rm -f *.dat *.mjl

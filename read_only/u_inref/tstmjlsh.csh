@@ -30,22 +30,22 @@ chmod 666 *.dat *.mjl
 chmod.csh rwrw
 $MUPIP journal -show=all -forward mumps.mjl,a.mjl,b.mjl,c.mjl >& jlsh1.out
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 
 chmod.csh rwro
 $MUPIP journal -show=all -forward mumps.mjl,a.mjl,b.mjl,c.mjl >& jlsh2.out
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 
 chmod.csh rorw
 $MUPIP journal -show=all -forward mumps.mjl,a.mjl,b.mjl,c.mjl >& jlsh3.out
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 
 chmod.csh roro
 $MUPIP journal -show=all -forward mumps.mjl,a.mjl,b.mjl,c.mjl >& jlsh4.out
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 
 $grep successful jlsh*.out
 \rm -f jlsh*.out *.dat *.mjl mumps.gld

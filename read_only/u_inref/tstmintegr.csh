@@ -96,5 +96,5 @@ $MUPIP integ -reg "*" >& integr.out12
 egrep "YDB-E|No errors" integr.out12
 mipcmanage
 chmod 666 *.dat *.mjl
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
 \rm -f *.dat *.mjl mumps.gld
