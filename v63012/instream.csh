@@ -22,13 +22,14 @@
 # gtm9182        [bdw]     Tests that a MUPIP BACKUP with a backup file path > 255 returns a FILENAMETOOLONG
 # gtm5381	 [see]	   Tests that -FULLBLKWRT DB attribute works as anticipated for all three settings {0,1,2}
 # gtm9157	 [see]	   Tests that source server is more persistent and gives more details when name resolution fails
+# gtm9238	 [see]	   Tests that $ZSTRPLLIM is properly handled regarding STPCRIT/STPOFLOW errors and mimimum values
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "v63012 test starts..."
 
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
-setenv subtest_list_non_replic	"gtm9269 missedrevert optimizexecute gtm9244 gtm9260 gtm9182 gtm5381"
+setenv subtest_list_non_replic	"gtm9269 missedrevert optimizexecute gtm9244 gtm9260 gtm9182 gtm5381 gtm9238"
 setenv subtest_list_replic	"gtm9157"
 
 if ($?test_replic == 1) then

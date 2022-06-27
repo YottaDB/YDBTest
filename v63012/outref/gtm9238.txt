@@ -1,0 +1,31 @@
+# GTM-9238 - Test that when ZSTRPLLIM is set, only a single STPCRIT message comes out prior to getting an STPOFLOW error.
+
+# Drive gtm9238 M code
+Running loop consuming stringpool expecting first an STPCRIT error (which causes a table
+to be printed containing stringpool stats from $view("spsize") and then an STPOFLOW error
+which will stop the test because it is a fatal error (cannot be caught). Note if run on a
+version without GTM-9238, the loop below won't get a STPOFLOW but instead get an indefinite
+number of STPCRIT errorsand end only due to the maximum of 20 loops we allow.
+
+##TEST_AWK\$ZSTRPLLIM=[1-9][0-9]*
+
+##TEST_AWKStringpool before the loop \(\$view\("spsize"\)\): [1-9][0-9]*,[1-9][0-9]*,0
+
+Iteration   SPSize       SPUsed      SPResv
+---------   ------       ------      ------
+##TEST_AWK1.*
+%YDB-F-STPOFLOW, String pool space overflow
+
+# If this test ran "correctly", it left both a core file and a fatal-error file behind which
+# will fail this test even though they may be expected. Verify that the fatal-error file contains
+# an STPOFLOW error in it so we know if the process got a fatal error for the correct reason or
+# not. If we find the STPOFLOW error, then the single core file that this error created would be
+# for this error and can be renamed along with the fatal error file to gtm9238_corefile and
+# gtm9238_fatal_error_file.txt respectively so they do not cause test failures.
+$ZSTATUS="150384284,chewStringPool+4^gtm9238,%YDB-F-STPOFLOW, String pool space overflow"
+
+# Verify that setting $ZSTRPLLIM below the minimum sets the value to the minimum ($ydb_string_pool_limit
+# is set to 40K, then to 30K). So both of these should display as 150K.
+$ZSTRPLLIM=150000
+$ZSTRPLLIM=150000
+# Return code 0
