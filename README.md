@@ -302,6 +302,11 @@ gtmtest -s T133 -t basic -replic
 4. `-h`: Prints out all valid arguments and a description of what they do
 5. `-E_ALL`: Runs all tests (may take a long time to run all tests). When running an E_ALL, the `-t` argument is optional
 6. `-env gtm_test_nomultihost=1`: Disables all multi-system tests. Highly recommended if you run an E_ALL without support for multi-system tests.
+7. `-stdout`: Prints the output directly to stdout.
+    1. `-stdout 0`: doesn't print any extra information
+    2. `-stdout 1`: prints each subtest result
+    3. `-stdout 2`: prints diff file for each failed subtest
+    4. `-stdout 3`: prints verbose output; default
 
 ### Warnings
 
