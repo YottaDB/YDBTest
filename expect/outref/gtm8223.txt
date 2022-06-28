@@ -8,8 +8,7 @@ spawn /usr/local/bin/tcsh -f
 > set shellprompt=SHELL
 > set prompt=$shellprompt
 SHELLsetenv term_env `tty`; echo $term_env > term_env.txt
-SHELLspawn /usr/local/bin/tcsh -f
-> set prompt="termmumps > "
+SHELLset prompt="termmumps > "
 termmumps > $gtm_dist/mumps -direct
 
 YDB>use $principal:(cenable:ctrap=$char(4):exception="write !,$zstatus")
