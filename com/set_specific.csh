@@ -108,6 +108,10 @@ case "Linux":
    else
 	setenv ps "ps -efww"		# Double "w" to mean infinite width in ps output display
    endif
+   # ss is in /usr/sbin on RHEL-like systems
+   if ("rhel" == "$distrib") then
+	setenv ss "/usr/sbin/ss -an"
+   endif
    setenv psuser "ps -fwwu $USER"
    setenv rsh_to_vms "rsh"
    setenv rcp_to_vms "rcp"
