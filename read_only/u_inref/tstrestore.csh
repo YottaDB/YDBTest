@@ -31,7 +31,7 @@ d in0^dbfill("set")
 EOF
 
 $MUPIP backup -noonline -i DEFAULT bak.dat
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 \rm -f mumps.dat
 $MUPIP create
 
@@ -40,7 +40,7 @@ lsmumps
 echo "mupip restore mumps.dat bak.dat"
 $MUPIP restore mumps.dat bak.dat
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 
 echo "***** mumps.dat R/W mumps.mjl R/O *****"
 \cp -f tmumps.dat mumps.dat
@@ -51,7 +51,7 @@ lsmumps
 echo "mupip restore mumps.dat bak.dat"
 $MUPIP restore mumps.dat bak.dat
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 
 echo "***** mumps.dat R/O mumps.mjl R/W *****"
 \cp -f  tmumps.dat mumps.dat
@@ -62,7 +62,7 @@ lsmumps
 echo "mupip restore mumps.dat bak.dat"
 $MUPIP restore mumps.dat bak.dat
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 
 echo "***** mumps.dat R/O mumps.mjl R/O *****"
 \cp -f tmumps.dat mumps.dat
@@ -73,6 +73,6 @@ lsmumps
 echo "mupip restore mumps.dat bak.dat"
 $MUPIP restore mumps.dat bak.dat
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 
 \rm -f mumps.dat mumps.mjl bak.dat

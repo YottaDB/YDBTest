@@ -36,7 +36,7 @@ $MUPIP extend BREG
 mipcmanage
 $MUPIP extend CREG
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 
 echo "***** b.dat R/W  b.mjl R/O *****"
 chmod 666 b.dat
@@ -49,7 +49,7 @@ $MUPIP extend BREG
 mipcmanage
 $MUPIP extend CREG
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 
 echo "***** b.dat R/O  b.mjl R/W *****"
 chmod 444 b.dat
@@ -62,7 +62,7 @@ $MUPIP extend BREG
 mipcmanage
 $MUPIP extend CREG
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 
 echo "***** b.dat R/O  b.mjl R/O *****"
 chmod 444 b.dat
@@ -75,6 +75,6 @@ $MUPIP extend BREG
 mipcmanage
 $MUPIP extend CREG
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 
 \rm -f *.dat *.mjl mumps.gld

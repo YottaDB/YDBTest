@@ -71,7 +71,7 @@ endif
 echo $MUPIP
 
 if (-e tmp.mupip) cp tmp.mupip tmp.mupip_`date +%y_%m_%d_%H_%M_%S`
-if (("$1" != "") && ("$1" != "-nodbfilerdonly") && ("FALSE" == "$online_noonline_specified")) then
+if (("$1" != "") && ("FALSE" == "$online_noonline_specified")) then
 	source $gtm_tst/com/leftover_ipc_cleanup_if_needed.csh $0 $1.dat # do rundown if needed before requiring standalone access
 	echo "$MUPIP integ $1.dat"
 	$MUPIP integ $1.dat >& tmp.mupip
@@ -112,10 +112,7 @@ if ($stat) then
 	# this is not the case now.
 	# The best solution would be to use the same filter.awk for both unix and vms, of course.
   endif
-  setenv filtererrs "MUKILLIP|KILLABANDONED|DBMRKBUSY|DBLOCMBINC|DBMBPFLDLBM|INTEGERRS"
-  if ("$1" == "nodbfilerdonly") then
-	setenv filtererrs "$filtererrs|DBFILERDONLY"
-  endif
+  setenv filtererrs "DBFILERDONLY|MUKILLIP|KILLABANDONED|DBMRKBUSY|DBLOCMBINC|DBMBPFLDLBM|INTEGERRS"
   if ("$2" == "-noskipregerr") then
   	setenv filtererrs "$filtererrs|MUNOTALLINTEG"
   endif

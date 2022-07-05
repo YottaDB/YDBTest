@@ -31,7 +31,7 @@ EOF
 echo "mupip extract -fr -nolog glo.dir"
 $MUPIP extract -fr -nolog glo.dir
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 
 /bin/rm -f glo.dir
 chmod 666 mumps.dat
@@ -41,7 +41,7 @@ echo "**** mumps.dat R/W mumps.mjl R/O ***"
 echo "mupip extract -fr -nolog glo.dir"
 $MUPIP extract -fr -nolog glo.dir
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 
 /bin/rm -f glo.dir
 chmod 444 mumps.dat
@@ -51,7 +51,7 @@ echo "**** mumps.dat R/O mumps.mjl R/W ***"
 echo "mupip extract -fr -nolog glo.dir"
 $MUPIP extract -fr -nolog glo.dir
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 
 /bin/rm -f glo.dir
 chmod 444 mumps.dat
@@ -61,6 +61,6 @@ echo "**** mumps.dat R/O mumps.mjl R/O ***"
 echo "mupip extract -fr -nolog glo.dir"
 $MUPIP extract -fr -nolog glo.dir
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 
 /bin/rm -f mumps.dat mumps.mjl glo.dir

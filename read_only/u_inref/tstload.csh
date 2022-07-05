@@ -36,7 +36,7 @@ $MUPIP load -begin=3 -end=5 load.go1
 echo "mupip load load.go1"
 $MUPIP load load.go1
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 
 echo "*****  mumps.dat R/W mumps.mjl R/O *****"
 chmod 666 mumps.dat
@@ -45,7 +45,7 @@ lsmumps
 echo "mupip load load.go2"
 $MUPIP load load.go2
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 
 echo "*****  mumps.dat R/O mumps.mjl R/W *****"
 chmod 444 mumps.dat
@@ -54,7 +54,7 @@ lsmumps
 echo "mupip load load.go3"
 $MUPIP load load.go3
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 
 echo "*****  mumps.dat R/O mumps.mjl R/O *****"
 chmod 444 mumps.dat
@@ -63,6 +63,6 @@ lsmumps
 echo "mupip load load.go2"
 $MUPIP load load.go2
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 
 \rm -f mumps.dat mumps.mjl

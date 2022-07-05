@@ -31,7 +31,7 @@ echo "$MUPIP set -file mumps.dat -journal=enable,on,before"
 $MUPIP set -file mumps.dat -journal=enable,on,before
 lsmumps
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 \rm -f mumps.dat* mumps.mjl*
 
 echo "*** Reinitializing....  and creating a normal (r+w) database ***"
@@ -44,7 +44,7 @@ lsmumps
 echo "$MUPIP set -file mumps.dat -journal=enable,on,before"
 $MUPIP set -file mumps.dat -journal=enable,on,before
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 \rm -f mumps.dat* mumps.mjl*
 
 echo "*** Reinitializing....  and creating a normal (r+w) database ***"
@@ -57,7 +57,7 @@ lsmumps
 echo "$MUPIP set -file mumps.dat -journal=enable,on,before"
 $MUPIP set -file mumps.dat -journal=enable,on,before
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 \rm -f mumps.dat* mumps.mjl*
 
 echo "*** Reinitializing....  and creating a normal (r+w) database ***"
@@ -70,5 +70,5 @@ lsmumps
 echo "$MUPIP set -file mumps.dat -journal=enable,on,before"
 $MUPIP set -file mumps.dat -journal=enable,on,before
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 \rm -f mumps.dat* mumps.mjl*

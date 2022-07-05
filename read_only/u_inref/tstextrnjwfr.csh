@@ -31,7 +31,7 @@ aaa
 echo "mupip extract -fr -nolog glo.dir"
 $MUPIP extract -fr -nolog glo.dir
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 
 echo "***** changing mumps.dat to read_only *****"
 chmod 444 mumps.dat
@@ -40,6 +40,6 @@ lsmumps
 echo "mupip extract -fr -nolog glo.dir"
 $MUPIP extract -fr -nolog glo.dir
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 
 /bin/rm -f mumps.dat glo.dir

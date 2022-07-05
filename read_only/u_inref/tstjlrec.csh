@@ -33,7 +33,7 @@ $MUPIP create
 echo "mupip journal -recover -forward mumps.mjl"
 $MUPIP journal -recover -forward mumps.mjl
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 
 echo "*** Recovering on R/W mumps.dat R/O mumps.mjl ***"
 \rm mumps.dat
@@ -44,7 +44,7 @@ lsmumps
 echo "mupip journal -recover -forward mumps.mjl"
 $MUPIP journal -recover  -forward mumps.mjl
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 
 echo "*** Recovering on R/O mumps.dat R/W mumps.mjl ***"
 chmod 444 mumps.dat
@@ -53,7 +53,7 @@ lsmumps
 echo "mupip journal -recover -forward mumps.mjl"
 $MUPIP journal -recover  -forward mumps.mjl
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 
 echo "*** Recovering on R/O mumps.dat R/O mumps.mjl ***"
 chmod 444 mumps.mjl
@@ -62,6 +62,6 @@ lsmumps
 echo "mupip journal -recover -forward mumps.mjl"
 $MUPIP journal -recover  -forward mumps.mjl
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 
 \rm -f mumps.dat mumps.mjl

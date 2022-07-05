@@ -29,31 +29,31 @@ chmod 666 *.dat *.mjl
 
 mkdir ./backup
 $MUPIP backup -noonline -i "*" ./backup | & sort -f
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 
 \rm -f *.dat
 $MUPIP create
 chmod.csh rwrw
 res mumps.dat a.dat b.dat c.dat
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 
 \rm -f *.dat
 $MUPIP create
 chmod.csh rwro
 res mumps.dat a.dat b.dat c.dat
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 
 \rm -f *.dat
 $MUPIP create
 chmod.csh rorw
 res mumps.dat a.dat b.dat c.dat
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 
 \rm -f *.dat
 $MUPIP create
 chmod.csh roro
 res mumps.dat a.dat b.dat c.dat
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 
 \rm -f *.dat *.mjl mumps.gld
 \rm -fr backup

@@ -72,5 +72,5 @@ egrep "YDB-E|No errors" integtn.out6
 mipcmanage
 
 chmod 666 *.dat *.mjl
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 \rm -f *.dat *.mjl mumps.gld

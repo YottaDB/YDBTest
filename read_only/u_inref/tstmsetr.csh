@@ -29,7 +29,7 @@ h
 bbb
 chmod.csh rwrw
 $MUPIP set -reg "*" -journal=enable,on,before | & sort -f
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 \rm -f *.gld *.dat *.mjl*
 
 
@@ -42,7 +42,7 @@ h
 bbb
 chmod.csh rwro
 $MUPIP set -reg "*" -journal=enable,on,before | & sort -f
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 \rm -f *.gld *.dat *.mjl*
 
 
@@ -54,7 +54,7 @@ h
 bbb
 chmod.csh rorw
 $MUPIP set -reg "*" -journal=enable,on,before | & sort -f
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 \rm -f *.gld *.dat *.mjl*
 
 $gtm_tst/$tst/u_inref/create_multi_jnl_db.csh $1
@@ -65,5 +65,5 @@ h
 bbb
 chmod.csh roro
 $MUPIP set -reg "*" -journal=enable,on,before | & sort -f
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 \rm -f *.gld *.dat *.mjl*

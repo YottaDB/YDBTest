@@ -33,16 +33,16 @@ mipcmanage
 chmod.csh rwro
 $MUPIP load load.go
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 
 chmod.csh rorw
 $MUPIP load load.go
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 
 chmod.csh roro
 $MUPIP load load.go
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 
 \rm -f *.dat *.mjl mumps.gld

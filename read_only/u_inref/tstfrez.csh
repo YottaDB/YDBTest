@@ -31,7 +31,7 @@ ipcmanage
 echo "mupip freeze -off DEFAULT"
 $MUPIP freeze -off DEFAULT >& freeze_off_DEFAULT.out
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 
 /bin/rm -f mumps.dat mumps.mjl
 echo "***** mumps.dat R/W  mumps.mjl R/O *****"
@@ -46,7 +46,7 @@ ipcmanage
 echo "mupip freeze -off DEFAULT"
 $MUPIP freeze -off DEFAULT >& freeze1_off_DEFAULT.out
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 
 /bin/rm -f mumps.dat mumps.mjl
 echo "***** mumps.dat R/O  mumps.mjl R/W *****"
@@ -61,7 +61,7 @@ ipcmanage
 echo "mupip freeze -off DEFAULT"
 $MUPIP freeze -off DEFAULT
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 
 /bin/rm -f mumps.dat mumps.mjl
 echo "***** mumps.dat R/O  mumps.mjl R/O *****"
@@ -76,6 +76,6 @@ ipcmanage
 echo "mupip freeze -off DEFAULT"
 $MUPIP freeze -off DEFAULT
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh -nodbfilerdonly
+$gtm_tst/com/dbcheck_filter.csh
 
 /bin/rm -f mumps.dat mumps.mjl
