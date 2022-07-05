@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -33,7 +33,7 @@ mipcmanage
 echo mupip freeze -off "*"
 $MUPIP freeze -off "*" >& freeze_off_all.out
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck.csh
 
 echo "***** b.dat R/W  b.mjl R/O *****"
 chmod 666 b.dat
@@ -44,7 +44,7 @@ mipcmanage
 echo mupip freeze -off "*"
 $MUPIP freeze -off "*" >& freeze1_off_all.out
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck.csh
 
 echo "***** b.dat R/O  b.mjl R/W *****"
 chmod 444 b.dat
@@ -57,7 +57,7 @@ echo mupip freeze -off "*"
 $MUPIP freeze -off "*" >& freeze2_off_all.outx
 $gtm_tst/com/check_error_exist.csh freeze2_off_all.outx "YDB-E-DBRDONLY"
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck.csh
 
 echo "***** b.dat R/O  b.mjl R/O *****"
 chmod 444 b.dat
@@ -70,6 +70,6 @@ echo mupip freeze -off "*"
 $MUPIP freeze -off "*" >& freeze3_off_all.outx
 $gtm_tst/com/check_error_exist.csh freeze3_off_all.outx "YDB-E-DBRDONLY"
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck.csh
 
 \rm -f *.dat *.mjl mumps.gld

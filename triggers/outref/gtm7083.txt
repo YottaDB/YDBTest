@@ -37,6 +37,7 @@ $gtm_exe/mumps -run %XCMD 'write ^notrigger'
 unset verbose
 # Try trigger -upgrade on a read-only database. Expect it to fail
 ##TEST_AWK%YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps\.dat was opened as read-only \(perms 0\)
+%SYSTEM-E-UNKNOWN, Unknown system error 0
 %YDB-E-TRIGMODREGNOTRW, Trigger(s) cannot be added/changed/deleted/upgraded because region DEFAULT is read-only
 # trigger -upgrade on a read-write database should work
 Triggers in region DEFAULT have been upgraded

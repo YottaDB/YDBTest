@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -72,5 +72,5 @@ egrep "YDB-E|No errors" integtn.out6
 mipcmanage
 
 chmod 666 *.dat *.mjl
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck.csh
 \rm -f *.dat *.mjl mumps.gld

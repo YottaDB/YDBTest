@@ -10,7 +10,7 @@ Suspended (signal) is present in the file gtm4661c.expected
 # Verify that proc2 finds proc1 no longer owns jnl qio lock
 jnl qio lock owner pid = 0 
 ##TEST_AWK.*%YDB-I-SUSPENDING, Process Received Signal 19. Suspending processing on user request or attempt to do terminal I/O while running in the background -- .*
-##TEST_AWK.*%YDB-E-DBFILERDONLY, The database file ##SOURCE_REALPATH##/gtmhelp.dat was opened as read-only \(perms 0\) -- .*
+##TEST_AWK.*%YDB-E-DBFILERDONLY, The database file ##SOURCE_REALPATH##/gtmhelp.dat was opened as read-only \(perms 0\), %SYSTEM-E-UNKNOWN, Unknown system error 0 -- .*
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

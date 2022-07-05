@@ -1,17 +1,4 @@
 #! /usr/local/bin/tcsh -f
-#################################################################
-#								#
-# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
-# All rights reserved.						#
-#								#
-#	This source code contains the intellectual property	#
-#	of its copyright holder(s), and is made available	#
-#	under a license.  If you do not know the terms of	#
-#	the license, please stop and do not read further.	#
-#								#
-#################################################################
-# This module is derived from FIS GT.M.
-#################################################################
 #Tests of mupip command "EXTRACT" with no journal with freeze
 echo ""
 echo "*** TSTEXTRNJ.CSH ***"
@@ -31,7 +18,7 @@ aaa
 echo "mupip extract -fr -nolog glo.dir"
 $MUPIP extract -fr -nolog glo.dir
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck.csh
 
 echo "***** changing mumps.dat to read_only *****"
 chmod 444 mumps.dat
@@ -40,6 +27,6 @@ lsmumps
 echo "mupip extract -fr -nolog glo.dir"
 $MUPIP extract -fr -nolog glo.dir
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck.csh
 
 /bin/rm -f mumps.dat glo.dir

@@ -4,9 +4,6 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
-# All rights reserved.						#
-#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -17,7 +14,7 @@
 echo ""
 echo "*** TSTMBAKNJ ***"
 echo ""
-alias dbcheck '$gtm_tst/com/dbcheck_filter.csh; $gtm_tst/com/backup_dbjnl.csh back "*.gld" cp nozip; cd back; $gtm_tst/com/dbcheck_filter.csh ; cd - '
+alias dbcheck '$gtm_tst/com/dbcheck.csh; $gtm_tst/com/backup_dbjnl.csh back "*.gld" cp nozip; cd back; $gtm_tst/com/dbcheck.csh ; cd - '
 set verbose
 
 $gtm_tst/com/dbcreate.csh mumps $1
@@ -47,9 +44,9 @@ chmod 444 b.dat
 $MUPIP backup -noonline "*" ./back | & sort -f
 mipcmanage
 unset verbose
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck.csh
 # b.dat will not be backedup in the back directory
-# so a simple dbcheck_filter.csh or mupip integ will not work.Hence the foreach loop and checking of status
+# so a simple dbcheck.csh or mupip integ will not work.Hence the foreach loop and checking of status
 set integ_stat = 0
 cd back
 foreach file (`ls *.dat`)

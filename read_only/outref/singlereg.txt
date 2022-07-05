@@ -42,6 +42,7 @@ No errors detected by integ.
 -r--r--r-- mumps.dat
 mupip backup -noonline DEFAULT back.dat
 %YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
+%SYSTEM-E-UNKNOWN, Unknown system error 0
 %YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 OK.
@@ -89,7 +90,6 @@ No errors detected by integ.
 *** mumps.dat R/O mumps.mjl R/W ***
 -r--r--r-- mumps.dat
 -rw-rw-rw- mumps.mjl
-%YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
 %YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 OK.
@@ -97,7 +97,6 @@ OK.
 *** mumps.dat R/O mumps.mjl R/O ***
 -r--r--r-- mumps.dat
 -r--r--r-- mumps.mjl
-%YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
 %YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 OK.
@@ -130,7 +129,6 @@ No errors detected by integ.
 -rw-rw-rw- mumps.mjl
 ***** mumps.dat R/O  mumps.mjl R/W *****
 mupip extend DEFAULT 
-%YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
 %YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 OK.
@@ -142,7 +140,6 @@ No errors detected by integ.
 -r--r--r-- mumps.mjl
 ***** mumps.dat R/O  mumps.mjl R/O *****
 mupip extend DEFAULT 
-%YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
 %YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 OK.
@@ -171,7 +168,6 @@ No errors detected by integ.
 ***** changing mumps.dat to read_only *****
 -r--r--r-- mumps.dat
 mupip extract -nolog glo.dir
-%YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 3  max subsc len: 3  max rec len: 1  max node len: 8
 OK.
 
@@ -199,7 +195,6 @@ No errors detected by integ.
 ***** changing mumps.dat to read_only *****
 -r--r--r-- mumps.dat
 mupip extract -fr -nolog glo.dir
-%YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
 Cannot freeze the database
 %YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
@@ -241,7 +236,6 @@ No errors detected by integ.
 -rw-rw-rw- mumps.mjl
 **** mumps.dat R/O mumps.mjl R/W ***
 mupip extract -nolog glo.dir
-%YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1026  max subsc len: 37  max rec len: 30  max node len: 70
 OK.
 
@@ -252,7 +246,6 @@ No errors detected by integ.
 -r--r--r-- mumps.mjl
 **** mumps.dat R/O mumps.mjl R/O ***
 mupip extract -nolog glo.dir
-%YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1026  max subsc len: 37  max rec len: 30  max node len: 70
 OK.
 
@@ -292,7 +285,6 @@ No errors detected by integ.
 -rw-rw-rw- mumps.mjl
 **** mumps.dat R/O mumps.mjl R/W ***
 mupip extract -fr -nolog glo.dir
-%YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
 Cannot freeze the database
 %YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
@@ -305,7 +297,6 @@ No errors detected by integ.
 -r--r--r-- mumps.mjl
 **** mumps.dat R/O mumps.mjl R/O ***
 mupip extract -fr -nolog glo.dir
-%YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
 Cannot freeze the database
 %YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
@@ -345,14 +336,12 @@ No errors detected by integ.
 -r--r--r-- mumps.dat
 -rw-rw-rw- mumps.mjl
 mupip freeze -on DEFAULT
-%YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
 %YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
 %YDB-E-FREEZEERR, Error while trying to freeze region DEFAULT
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 OK.
 
 mupip freeze -off DEFAULT
-%YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
 %YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
 %YDB-E-FREEZEERR, Error while trying to unfreeze region DEFAULT
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
@@ -365,14 +354,12 @@ No errors detected by integ.
 -r--r--r-- mumps.dat
 -r--r--r-- mumps.mjl
 mupip freeze -on DEFAULT
-%YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
 %YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
 %YDB-E-FREEZEERR, Error while trying to freeze region DEFAULT
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 OK.
 
 mupip freeze -off DEFAULT
-%YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
 %YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
 %YDB-E-FREEZEERR, Error while trying to unfreeze region DEFAULT
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
@@ -609,7 +596,6 @@ mupip integ -region DEFAULT
 
 
 Integ of region DEFAULT
-%YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
 
 No errors detected by integ.
 
@@ -712,7 +698,6 @@ mupip integ -region DEFAULT
 
 
 Integ of region DEFAULT
-%YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
 
 No errors detected by integ.
 
@@ -744,7 +729,6 @@ mupip integ -region DEFAULT
 
 
 Integ of region DEFAULT
-%YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
 
 No errors detected by integ.
 
@@ -959,7 +943,6 @@ mupip load load.go3
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
 
-%YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
 %YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/mumps.dat
 %YDB-E-RECLOAD, Error loading record number: 3 to 4
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
@@ -978,7 +961,6 @@ mupip load load.go2
 ##FILTERED##..-...-....  ..:..:.. ZWR
 Beginning LOAD at record number: 3
 
-%YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
 %YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/mumps.dat
 %YDB-E-RECLOAD, Error loading record number: 3 to 4
 LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
@@ -1087,7 +1069,6 @@ Total             400            2366              NA            25
 -rw-rw-r-- mumps.mjl
 ##SOURCE_PATH##/mupip reorg -select=b*
 Fill Factor:: Index blocks 100%: Data blocks 100%
-%YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
    
 Global: bcd (region DEFAULT)
 %YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
@@ -1105,7 +1086,6 @@ Global: bfill (region DEFAULT)
 
 
 Integ of region DEFAULT
-%YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
 
 No errors detected by integ.
 
@@ -1219,7 +1199,6 @@ R/O mumps.dat R/W mumps.mjl
 -rw-rw-rw- mumps.mjl
 ##SOURCE_PATH##/mupip reorg -select=b*
 Fill Factor:: Index blocks 100%: Data blocks 100%
-%YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
    
 Global: bcd (region DEFAULT)
 %YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
@@ -1237,7 +1216,6 @@ Global: bfill (region DEFAULT)
 
 
 Integ of region DEFAULT
-%YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
 
 No errors detected by integ.
 
@@ -1326,7 +1304,6 @@ R/O mumps.dat R/O mumps.mjl
 -r--r--r-- mumps.mjl
 ##SOURCE_PATH##/mupip reorg -select=b*
 Fill Factor:: Index blocks 100%: Data blocks 100%
-%YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
    
 Global: bcd (region DEFAULT)
 %YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
@@ -1344,7 +1321,6 @@ Global: bfill (region DEFAULT)
 
 
 Integ of region DEFAULT
-%YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
 
 No errors detected by integ.
 
@@ -1519,7 +1495,6 @@ No errors detected by integ.
 -r--r--r-- mumps.dat
 -rw-rw-rw- mumps.mjl
 ##SOURCE_PATH##/mupip set -file mumps.dat -journal=enable,on,before
-%YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
 %YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/mumps.dat
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 OK.
@@ -1532,7 +1507,6 @@ No errors detected by integ.
 -r--r--r-- mumps.dat
 -r--r--r-- mumps.mjl
 ##SOURCE_PATH##/mupip set -file mumps.dat -journal=enable,on,before
-%YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
 %YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/mumps.dat
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 OK.
@@ -1576,7 +1550,6 @@ No errors detected by integ.
 -r--r--r-- mumps.dat
 -rw-rw-rw- mumps.mjl
 ##SOURCE_PATH##/mupip set -region DEFAULT -journal=enable,on,before
-%YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
 %YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/mumps.dat
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 OK.
@@ -1589,7 +1562,6 @@ No errors detected by integ.
 -r--r--r-- mumps.dat
 -r--r--r-- mumps.mjl
 ##SOURCE_PATH##/mupip set -region DEFAULT -journal=enable,on,before
-%YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
 %YDB-E-DBPRIVERR, No privilege for attempted update operation for file: ##TEST_PATH##/mumps.dat
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 OK.
@@ -1721,7 +1693,6 @@ No errors detected by integ.
 -rw-rw-rw- mumps.mjl
 mupip journal -recover -forward mumps.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
 %YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
@@ -1735,7 +1706,6 @@ No errors detected by integ.
 -r--r--r-- mumps.mjl
 mupip journal -recover -forward mumps.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
-%YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
 %YDB-E-DBRDONLY, Database file ##TEST_PATH##/mumps.dat read only
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..

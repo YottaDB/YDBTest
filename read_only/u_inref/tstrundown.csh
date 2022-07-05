@@ -1,7 +1,7 @@
 #! /usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -29,7 +29,7 @@ echo "**** R/W mumps.dat R/W mumps.mjl ****"
 echo "mupip rundown -f mumps.dat"
 $MUPIP rundown -f mumps.dat
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck.csh
 
 echo "**** R/W mumps.dat R/O mumps.mjl ****"
 chmod 444 mumps.mjl
@@ -37,7 +37,7 @@ lsmumps
 echo "mupip rundown -f mumps.dat"
 $MUPIP rundown -f mumps.dat
 ipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck.csh
 
 echo "**** R/O mumps.dat R/W mumps.mjl ****"
 chmod 444 mumps.dat
@@ -48,7 +48,7 @@ $MUPIP rundown -f mumps.dat	# rundown cannot clean ipcs since mumps.dat is read-
 chmod +w mumps.dat		# give write permissions and retry rundown
 $MUPIP rundown -f mumps.dat
 ipcmanage			# now check ipc status
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck.csh
 
 echo "**** R/O mumps.dat R/O mumps.mjl ****"
 chmod 444 mumps.dat
@@ -59,6 +59,6 @@ $MUPIP rundown -f mumps.dat	# rundown cannot clean ipcs since mumps.dat is read-
 chmod +w mumps.dat		# give write permissions and retry rundown
 $MUPIP rundown -f mumps.dat
 ipcmanage			# now check ipc status
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck.csh
 
 \rm -f mumps.dat mumps.mjl

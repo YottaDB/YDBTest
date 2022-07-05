@@ -1,17 +1,4 @@
 #!/usr/local/bin/tcsh -f
-#################################################################
-#								#
-# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
-# All rights reserved.						#
-#								#
-#	This source code contains the intellectual property	#
-#	of its copyright holder(s), and is made available	#
-#	under a license.  If you do not know the terms of	#
-#	the license, please stop and do not read further.	#
-#								#
-#################################################################
-# This module is derived from FIS GT.M.
-#################################################################
 echo ""
 echo "*** TSTMJLSH.CSH ***"
 echo ""
@@ -30,22 +17,22 @@ chmod 666 *.dat *.mjl
 chmod.csh rwrw
 $MUPIP journal -show=all -forward mumps.mjl,a.mjl,b.mjl,c.mjl >& jlsh1.out
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck.csh
 
 chmod.csh rwro
 $MUPIP journal -show=all -forward mumps.mjl,a.mjl,b.mjl,c.mjl >& jlsh2.out
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck.csh
 
 chmod.csh rorw
 $MUPIP journal -show=all -forward mumps.mjl,a.mjl,b.mjl,c.mjl >& jlsh3.out
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck.csh
 
 chmod.csh roro
 $MUPIP journal -show=all -forward mumps.mjl,a.mjl,b.mjl,c.mjl >& jlsh4.out
 mipcmanage
-$gtm_tst/com/dbcheck_filter.csh
+$gtm_tst/com/dbcheck.csh
 
 $grep successful jlsh*.out
 \rm -f jlsh*.out *.dat *.mjl mumps.gld
