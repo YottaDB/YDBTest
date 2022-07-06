@@ -52,8 +52,6 @@ echo "***** changing b.dat to read_only *****"
 ***** changing b.dat to read_only *****
 chmod 444 b.dat
 $MUPIP backup -noonline "*" ./back | & sort -f
-%SYSTEM-E-UNKNOWN, Unknown system error 0
-%YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/b.dat was opened as read-only (perms 0)
 %YDB-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 DB file ##TEST_PATH##/a.dat backed up in file ./back/a.dat
