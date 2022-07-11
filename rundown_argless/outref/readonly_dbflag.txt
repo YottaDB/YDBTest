@@ -267,13 +267,3 @@ YDB>
 %SYSTEM-E-ENO11, Resource temporarily unavailable
 
 # Test for multiple processes accessing a READ_ONLY database with ftok semaphore counter overflow
-##TEST_PATH##/mupip.err_##TEST_AWK[0-9_]+
-%YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
-##TEST_PATH##/mupip.err_##TEST_AWK[0-9_]+
-%YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
-##TEST_PATH##/mupip.err_##TEST_AWK[0-9_]+
-%YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
-##TEST_PATH##/mupip.err_##TEST_AWK[0-9_]+
-%YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
-##TEST_PATH##/mupip.err_##TEST_AWK[0-9_]+
-%YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/mumps.dat was opened as read-only (perms 0)
