@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -22,16 +22,20 @@ setenv JAVA_HOME `$tst_awk '$1 == "'$HOST:ar'" {print $10}' $gtm_test_serverconf
 if ("NA" == $JAVA_HOME) then
 	# Check if /usr/lib/jvm/* directory can be found such that it contains libjava.so. If so use that.
 	# There might be multiple versions. In that case, choose the last one (hopefully the latest in terms of version)
-	set jvmdir = "/usr/lib/jvm"
-	setenv JAVA_HOME ""	# set to default value to be overridden below
-	if (-e $jvmdir) then
-		cd $jvmdir
-		set javasohome = `find . -name libjava.so |& grep libjava.so | tail -1`
-		cd -
-		if ("$javasohome " != "") then
-			setenv JAVA_HOME $jvmdir/`echo $javasohome | sed 's,^./,,g;s,/.*,,g'`
+	foreach jvmdir (/usr/lib/jvm /usr/lib64/jvm)
+		if (! -e $jvmdir) then
+			continue
 		endif
-	endif
+		setenv JAVA_HOME ""	# set to default value to be overridden below
+		if (-e $jvmdir) then
+			cd $jvmdir
+			set javasohome = `find . -name libjava.so |& grep libjava.so | tail -1`
+			cd -
+			if ("$javasohome " != "") then
+				setenv JAVA_HOME $jvmdir/`echo $javasohome | sed 's,^./,,g;s,/.*,,g'`
+			endif
+		endif
+	end
 endif
 if ("" == $JAVA_HOME) then
 	echo "TEST-E-FAIL : Java is not available on this platform, or the installation path is missing in $gtm_test_serverconf_file"
