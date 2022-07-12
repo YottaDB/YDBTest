@@ -18,7 +18,7 @@ if ( $?HOSTOS == "0" )          setenv HOSTOS `uname -s`        # operating syst
 unalias ps cp rm ls diff rsh ssh rcp scp awk
 setenv grep \grep
 setenv df "df -kP"
-setenv ss "/bin/ss -an"
+setenv ss "ss -an"
 setenv ssh "ssh -x"
 setenv rsh "$ssh"
 setenv rcp "scp -q"
@@ -80,7 +80,6 @@ case "OSF1":
    setenv truss "/usr/local/bin/truss"
    setenv ps "eval ps -ef |& cat"
    setenv psuser "eval ps -fu $USER |& cat"
-   setenv ss "/usr/sbin/ss -an"
    setenv rsh_to_vms "rsh"
    setenv rcp_to_vms "rcp"
    setenv dbx "/usr/bin/dbx"
@@ -107,10 +106,6 @@ case "Linux":
 	setenv ps "ps -ef"
    else
 	setenv ps "ps -efww"		# Double "w" to mean infinite width in ps output display
-   endif
-   # ss is in /usr/sbin on RHEL-like systems
-   if ("rhel" == "$distrib") then
-	setenv ss "/usr/sbin/ss -an"
    endif
    setenv psuser "ps -fwwu $USER"
    setenv rsh_to_vms "rsh"
