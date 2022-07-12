@@ -103,7 +103,8 @@ else
 		# Checks whether connection is established using the port or, not
 		# Check both ss and lsof output <good_connection_shutdown_by_RF_START>
 		set fn = "rfstart.out_${start_time}_$now_time"
-		set establish_status = `$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/is_port_in_use.csh $portno $fn ; grep -qE 'ESTABLISHED|Establsh' {ss,lsof}_$fn || echo 1"` # BYPASSOK grep
+		# ss uses "ESTAB" to indicate established state, grep has been updated to look for it
+		set establish_status = `$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/is_port_in_use.csh $portno $fn ; grep -qE 'ESTABLISHED|Establsh|ESTAB' {ss,lsof}_$fn || echo 1"` # BYPASSOK grep
 		if ("" == "$establish_status") then
 			set fail = 0
 			break
