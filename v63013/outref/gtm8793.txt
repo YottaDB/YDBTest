@@ -1,0 +1,42 @@
+# Test for GTM-8793 - Verify that when the script defined by ydb_procstuckexec env var fails is driven, if we
+# get back a non-zero return code, this then drives a (new for V63013) EXITSTATUS error message. So we use DSE
+# to grab crit, then try an update (which hangs on crit) until 30 seconds later when the MUTEXLCKALERT warning
+# is triggered which also drives the procstuckexec script defined by ydb_procstucexec. In our case, the script
+# won't exist triggering the error we need to get the EXITSTATUS error. Note the EXITSTATUS error is associated
+# with other messages as well (STUCKACT and MUTEXLCKALERT) so we verify we get those too so while the main
+# reason for this test is to see EXITSTATUS, we look for all three of the errors (STUCKACT, EXITSTATUS, and
+# MUTEXLCKALERT).
+
+# Create database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+# Drive gtm8793 test routine
+# Test GTM-8793 - Verify that if the script defined by ydb_procstuckexec fails, we get an EXITSTATUS error in syslog
+#
+# Spawning DSE process and seizing the critial section
+
+# Spawning YDB process to attempt update, get stuck waiting for crit, and eventually get a
+# MUTEXLCKALERT warning.
+
+# Wait for MUTEXLCKALERT error to occur which should then drive the ydb_procstuckexec defined script
+# (that does not exist) which should cause an immediate EXITSTATUS error in the syslog. Since we can't wait
+# specifically for the error, wait up to 90 seconds (30 second timeout plus 60 seconds for slow/loaded systems)
+# extracting the syslog every 5 seconds so we can stop relatively quickly after the error occurs on faster systems.
+SUCCESS - Found the 3 required messages (including EXITSTATUS) in gtm8793_syslog_extract.txt:
+##TEST_AWK%YDB-I-STUCKACT, Process stuck script invoked: FAILURE : noexistPSE.sh MUTEXLCKALERT [1-9][0-9]* [1-9][0-9]* [1-9]
+##TEST_AWK%YDB-E-EXITSTATUS, Unexpected process exit \(PROCSTUCK\), exit status 1 -- called from module .*/gtm_c_stack_trace.c at line 140
+##TEST_AWK%YDB-W-MUTEXLCKALERT, Mutual Exclusion subsystem ALERT - lock attempt threshold crossed for region ##TEST_PATH##/mumps.dat.  Process [1-9][0-9]* is in crit cycle [1-9].
+
+# Done with sub-processes now, tell DSE to quit, should allow termination of ydbPipe as well.
+
+# Wait for DSE and M sub-processes to finish
+# Done
+
+# Verify database we (lightly) used
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
