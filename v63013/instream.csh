@@ -15,13 +15,14 @@
 # List of subtests of the form "subtestname [author] description"
 #-------------------------------------------------------------------------------------
 # gtm9147        [bdw]     Tests that MUPIP SET -JOURNAL -BUFFSIZE accepts values up to 1Mi blocks
+# gtm9287        [jv]      Fix syntax error message line number reporting for large M files
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "v63013 test starts..."
 
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
-setenv subtest_list_non_replic "gtm9147"
+setenv subtest_list_non_replic "gtm9147 gtm9287"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then

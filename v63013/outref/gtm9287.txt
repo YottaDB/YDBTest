@@ -1,0 +1,16 @@
+# This test checks that the correct line numbers are reported
+# for syntax errors in M files longer than 64K-1 lines.
+# Prior to V6.3-013 the error messages with line numbers in
+# excess of that size were reported incorrectly, as modulo 64Ki.
+
+# Compiling the routine
+	 xyoffend
+	 ^-----
+		At column 2, line 65536, source module ##TEST_PATH##/ydb451largemfile.m
+%YDB-E-INVCMD, Invalid command keyword encountered
+
+# Running the routine
+%YDB-E-INVCMD, Invalid command keyword encountered
+		At M source location +65536^ydb451largemfile
+
+YDB>
