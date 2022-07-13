@@ -20,13 +20,14 @@
 # ydb869 [nars]   Test boolean expressions involving huge numeric literals issue NUMOFLOW error (and not SIG-11)
 # ydb872 [nars]   Test GTMASSERT2 fatal error no longer occurs when lots of short-lived processes open/close relinkctl files
 # ydb864 [bdw]    Test online and -noonline MUPIP BACKUPs with path lengths from 220 to 265
+# ydb888 [sam]    Test $ZGLD is a valid synonym for $ZGBLDIR
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r136 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "ydb854 ydb860 ydb861 ydb869 ydb872 ydb864"
+setenv subtest_list_non_replic "ydb854 ydb860 ydb861 ydb869 ydb872 ydb864 ydb888"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
