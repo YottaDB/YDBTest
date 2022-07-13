@@ -80,6 +80,10 @@ endif
 # If the platform/host does not have prior GT.M versions, disable tests that require them
 if ($?gtm_test_nopriorgtmver) then
 	setenv subtest_exclude_list "$subtest_exclude_list ydb607"
+else if ("suse" == $gtm_test_linux_distrib) then
+	# Disable "ydb607" subtest on SUSE Linux as we don't have the needed
+	# old versions on that distribution (due to no libtinfo.so.5 package)
+	setenv subtest_exclude_list "$subtest_exclude_list ydb607"
 endif
 
 if ("armv6l" == `uname -m`) then

@@ -4,7 +4,7 @@
 # Copyright (c) 2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -53,6 +53,12 @@ setenv subtest_exclude_list	""
 # If the platform/host does not have prior GT.M versions, disable tests that require them
 if ($?gtm_test_nopriorgtmver) then
 	setenv subtest_exclude_list "$subtest_exclude_list objlvlchk dllversion"
+endif
+
+# Disable objlvlchk subtest on SUSE Linux as we don't have the needed old versions
+# on that distribution (due to no libtinfo.so.5 package)
+if ("suse" == $gtm_test_linux_distrib) then
+	setenv subtest_exclude_list "$subtest_exclude_list objlvlchk"
 endif
 
 # Submit the list of subtests

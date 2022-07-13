@@ -4,7 +4,7 @@
 # Copyright (c) 2008-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -62,6 +62,10 @@ endif
 # filter out subtests that cannot pass with MM
 # C9I06002996	MM can't down dynamic downgrade
 if ("MM" == $acc_meth) then
+	setenv subtest_exclude_list "$subtest_exclude_list C9I06002996"
+else if ("suse" == $gtm_test_linux_distrib) then
+	# Disable "C9I06002996" subtest on SUSE Linux as we don't have the needed
+	# old versions on that distribution (due to no libtinfo.so.5 package)
 	setenv subtest_exclude_list "$subtest_exclude_list C9I06002996"
 endif
 # If the platform/host does not have prior GT.M versions, disable tests that require them
