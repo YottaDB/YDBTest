@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -16,7 +16,7 @@ set timeout 120
 spawn $env(SHELL)
 send -- "set prompt=\"READT>\"\r"
 expect "READT>"
-send -- "gtm\r"
+send -- "\$ydb_dist/yottadb -direct\r"
 expect "YDB>"
 send -- "set \$etrap=\"use \$principal:width=132 zshow \"\"v\"\"\"\r"
 expect "YDB>"
