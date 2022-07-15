@@ -82,6 +82,91 @@ c(2)="c(1)"
 c(3)="c(2)"
 c(4)="c(3)"
 
+------------------------------------------------------------
+# Test ZTIMEOUT when $ETRAP has M code with a syntax error in direct mode works fine
+# This used to previously (before YDB@7f378d5b) fail with a SIG-11
+# Expecting LABELMISSING/ZLINKFILE/FILENOTFOUND errors in below output
+------------------------------------------------------------
+# Try ydb860ztimeoutetrap1.m using [yottadb -direct]
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+# Try ydb860ztimeoutetrap1.m using [yottadb -run]
+etrap="goto CLIERR^%XCMD"
+etrap="goto CLIERR^%XCMD"
+%YDB-W-ZTIMEOUT, Time expired
+# Try ydb860ztimeoutetrap2.m using [yottadb -direct]
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+	write $zsta~us
+	           ^-----
+
+YDB>
+
+YDB>
+# Try ydb860ztimeoutetrap2.m using [yottadb -run]
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

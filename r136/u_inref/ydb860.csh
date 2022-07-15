@@ -64,4 +64,23 @@ while ($num < 5)
 end
 
 echo ""
+echo "------------------------------------------------------------"
+echo '# Test ZTIMEOUT when $ETRAP has M code with a syntax error in direct mode works fine'
+echo '# This used to previously (before YDB@7f378d5b) fail with a SIG-11'
+echo '# Expecting LABELMISSING/ZLINKFILE/FILENOTFOUND errors in below output'
+echo "------------------------------------------------------------"
+foreach file ($gtm_tst/$tst/inref/ydb860ztimeoutetrap*.m)
+	cp $file .
+	set base = $file:t:r
+	# Test direct mode
+	echo "# Try $base.m using [yottadb -direct]"
+	cat $base.m | $ydb_dist/yottadb -direct
+	# Note : Even though the original issue was found only when running direct mode, we test "yottadb -run"
+	# too just in case this encounters a regression in the future.
+	echo "# Try $base.m using [yottadb -run]"
+	# Need to use %XCMD to set $ztrap to "incrtrap" so we continue execution of full M program inspite of errors.
+	$ydb_dist/yottadb -run %XCMD 'set $ztrap="goto incrtrap^incrtrap" do ^'$base
+end
+
+echo ""
 $gtm_tst/com/dbcheck.csh
