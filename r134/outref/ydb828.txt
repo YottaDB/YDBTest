@@ -970,7 +970,7 @@ YDB>
 
 ------------------------------------------------------------
 # Test EXTGBLDEL error is issued by SET ^[$ORDER(@x,1)
-# This used to previously (before YDB@108e062c1) fail with a %YDB-F-GTMASSERT2 error
+# This used to previously (before YDB@4b499095) fail with a %YDB-F-GTMASSERT2 error
 # Trying out [set ^[$order(@x,1)] : Expecting a EXTGBLDEL error
 ------------------------------------------------------------
 # Try ydb828extgbldel.m using [yottadb -direct]
@@ -988,6 +988,55 @@ YDB>
 %YDB-E-EXTGBLDEL, Invalid delimiter for extended global syntax
 %YDB-E-EXTGBLDEL, Invalid delimiter for extended global syntax
 		At M source location +1^ydb828extgbldel
+
+YDB>
+
+------------------------------------------------------------
+# Test EXPR error is issued for incomplete extended reference usages
+# This used to previously (before YDB@4b499095) fail with a %YDB-F-GTMASSERT2 error
+------------------------------------------------------------
+# Try ydb828extgblincmpl.m using [yottadb -direct]
+
+YDB>
+%YDB-E-EXPR, Expression expected but not found
+	 lock [$get(x,
+	              ^-----
+
+YDB>
+%YDB-E-EXPR, Expression expected but not found
+	 lock [$order(x,
+	                ^-----
+
+YDB>
+%YDB-E-EXPR, Expression expected but not found
+	 lock [$query(x,
+	                ^-----
+
+YDB>
+%YDB-E-EXPR, Expression expected but not found
+	 set ^[1,$get(x,
+	                ^-----
+
+YDB>
+# Try ydb828extgblincmpl.m using [yottadb -run]
+	 lock [$get(x,
+	              ^-----
+		At column 15, line 1, source module ##TEST_PATH##/ydb828extgblincmpl.m
+%YDB-E-EXPR, Expression expected but not found
+	 lock [$order(x,
+	                ^-----
+		At column 17, line 2, source module ##TEST_PATH##/ydb828extgblincmpl.m
+%YDB-E-EXPR, Expression expected but not found
+	 lock [$query(x,
+	                ^-----
+		At column 17, line 3, source module ##TEST_PATH##/ydb828extgblincmpl.m
+%YDB-E-EXPR, Expression expected but not found
+	 set ^[1,$get(x,
+	                ^-----
+		At column 17, line 4, source module ##TEST_PATH##/ydb828extgblincmpl.m
+%YDB-E-EXPR, Expression expected but not found
+%YDB-E-EXPR, Expression expected but not found
+		At M source location +1^ydb828extgblincmpl
 
 YDB>
 
