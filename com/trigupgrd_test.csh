@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -41,9 +41,9 @@ if ("${less_than_ver}" == "") then
 	echo "TRIGUPGRD_TEST-E-FAIL : Could not determine less than version"
 	@ exit_status++
 endif
-if (($less_than_ver == "V62002") && ("dbg" == "$tst_image")) then
+if ($less_than_ver == "V62002") then
 	# We are about to default the search for prior version in the interval [V60000,V62002).
-	# No dbg builds for such versions exist in a non-gg setup. So skip this entire script in that case.
+	# No pro and dbg builds for such versions exist in a non-gg setup. So skip this entire script in that case.
 	exit 0
 endif
 $gtm_tst/com/random_ver.csh -gte V60000 -lt $less_than_ver > prior_ver.txt
