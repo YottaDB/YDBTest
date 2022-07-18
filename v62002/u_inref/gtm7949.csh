@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -15,7 +15,7 @@
 #################################################################
 # Verify $ZHOROLOG and $ZUT display the correct time
 
-set prior_ver = `$gtm_tst/com/random_ver.csh -gte V62001 -lte V62001`
+set prior_ver = `$gtm_tst/com/random_ver.csh -type any`
 if ("$prior_ver" =~ "*-E-*") then
 	echo "No such prior version : $prior_ver"
 	exit -1
