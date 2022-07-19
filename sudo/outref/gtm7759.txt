@@ -15,6 +15,10 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
 
+# Create ydbtest3 group and userids
+##TEST_AWK(The ydbtest3 group has been created|The ydbtest3 group already exists)
+##TEST_AWK(The ydbtest3 userid has been created|The ydbtest3 userid already exists)
+
 ## Testing user ydbtest3 with test ZGBLDIRACC
 ##TEST_AWK... .. ..:..:.. ##TEST_HOST_SHORT##.* YDB-MUMPS\[[1-9][0-9]*\]: %YDB-I-TEXT, %YDB-E-ZGBLDIRACC, Cannot access global directory ##TEST_PATH##/mumps.gld.  Cannot continue. -- generated from 0x[0-9A-F]*.
 
@@ -30,6 +34,9 @@ mumps.dat
 
 ##TEST_AWK## Testing user .* with test SETZDIR
 
+# Cleanup and remove ydbtest3 userid/group
+
+# Validate lightly used DB
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

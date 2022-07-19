@@ -38,19 +38,42 @@ sudo cp restrict.txt ydb_temp_dist/
 sudo chown root:root ydb_temp_dist/restrict.txt
 sudo chmod 444 ydb_temp_dist/restrict.txt # Process must not have write access to trigger restrictions
 sudo chmod 555 ydb_temp_dist              # No updates
-# Need a new userid/groupid for this test - create it dynamically - Note spool output to file as some distros
-# give some static about creating mailboxes we don't care about.
-sudo groupadd ydbtest3 >& groupadd.log
+# Need a new userid/groupid for this test - create it dynamically - Note spool output for the commands used here
+# to a file as some distros give varying responses to these userid and group add/delete commands.
+#
+# First, check if it the userid and/or group exist already in which case bypass the create.
+echo
+echo '# Create ydbtest3 group and userids'
+$grep -q ydbtest3 /etc/group              # Quietly see if the group exists
 set savestatus = $status
-if (0 != $savestatus) then
-    echo "TEST-F-GROUPADDFAIL The groupadd command for ydbtest3 failed with rc $savestatus"
-    exit 1
+if (0 == $savestatus) then
+    echo 'The ydbtest3 group already exists'
+else if (1 == $savestatus) then           # Does not exist, create it now
+    sudo groupadd ydbtest3 >& groupadd.log
+    set savestatus = $status
+    if (0 != $savestatus) then
+	echo "TEST-F-GROUPADDFAIL The groupadd command for ydbtest3 failed with rc $savestatus"
+	exit 1
+    endif
+    echo 'The ydbtest3 group has been created'
+else
+    echo "Unknown error from $grep: $savestatus"
 endif
-sudo useradd --gid ydbtest3 --no-log-init --no-create-home -d `pwd` ydbtest3 >& useradd.log
+# Now do similar for the userid
+$grep -q ydbtest3 /etc/passwd
 set savestatus = $status
-if (0 != $savestatus) then
-    echo "TEST-F-USERADDFAIL The useradd command for ydbtest3 failed with rc $savestatus"
-    exit 1
+if (0 == $savestatus) then
+    echo 'The ydbtest3 userid already exists'
+else if (1 == $savestatus) then           # Does not exist, create it now
+    sudo useradd --gid ydbtest3 --no-log-init --no-create-home -d `pwd` ydbtest3 >& useradd.log
+    set savestatus = $status
+    if (0 != $savestatus) then
+	echo "TEST-F-USERADDFAIL The useradd command for ydbtest3 failed with rc $savestatus"
+	exit 1
+    endif
+    echo 'The ydbtest3 userid has been created'
+else
+    echo "Unknown error from $grep: $savestatus"
 endif
 # Loop through the errors we want to process
 set errorlist = "ZGBLDIRACC DBPRIVERR SETZDIR"
@@ -74,12 +97,26 @@ foreach error ($errorlist)
     end
 end
 echo
+echo '# Cleanup and remove ydbtest3 userid/group'
 sudo chmod -R 775 ydb_temp_dist  # prepare copy of dist directory so it can be cleaned
 sudo chown -R $USER ydb_temp_dist
 sudo chmod 664 mumps.dat # In case an earlier permission revert got bypassed due to error
 # Note - we use userdel here to remove both the userid and the group. This functionality is the default in all distros
 # we have checked. If the /etc/login.defs file has a USERGROUPS_ENAB statement set to 'yes', then userdel will delete
-# the group by the same name so long as the group has no more members.
-sudo userdel ydbtest3    # Remove userid added earlier (also removes group of same name)
+# the group by the same name so long as the group has no more members.  Again, spool the output to a file for both
+# the userid and group removals as the output differs amongst distros.
+sudo userdel ydbtest3 >& userdel.log  # Remove userid added earlier (also usually removes group of same name)
+set savestatus = $status
+if (0 != $savestatus) echo "## The userdel command for ydbtest3 failed with rc $savestatus"
+# On a system without USERGROUPS_ENAB turned on, the ydbtest3 group will be left out. Check for that and do a groupdel
+# command on it if so.
+$grep -q ydbtest3 /etc/group              # Quietly see if the group exists
+if (0 == $status) then                    # Group exists - try to remove it
+    sudo groupdel ydbtest3 >& groupdel.log
+    set savestatus = $status
+    if (0 != $savestatus) echo "## The groupdel command for ydbtest3 failed with rc $savestatus"
+endif
+echo
+echo '# Validate lightly used DB'
 $gtm_tst/com/dbcheck.csh
 exit 0
