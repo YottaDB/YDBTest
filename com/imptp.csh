@@ -175,6 +175,12 @@ xyz
 			# Activate virtual environment to provide access to local `yottadb` Python module
 			source python/.venv/bin/activate.csh
 		endif
+		# Using YDBPython with ASAN requires 2 env vars to be set.
+		# ASAN_OPTIONS and LD_PRELOAD. See YottaDB/Lang/YDBPython@479e80a2 for details.
+		# YDBTest test framework already sets ASAN_OPTIONS. So only need to set LD_PRELOAD.
+		if ($gtm_test_libyottadb_asan_enabled) then
+			setenv LD_PRELOAD `gcc -print-file-name=libasan.so`
+		endif
 		ln -sf "$gtm_tst/com/imptp.py" .
 		ln -sf "$gtm_tst/com/impjob.py" .
 		set exefile = "imptp.py"
