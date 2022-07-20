@@ -230,6 +230,10 @@ if ($?gtm_test_nopriorgtmver) then
 else if ("dbg" == "$tst_image") then
        # We do not have dbg builds of versions [V54002,V62000] needed by the gtm7083 subtest so disable it.
        setenv subtest_exclude_list "$subtest_exclude_list gtm7083"
+else if ("suse" == $gtm_test_linux_distrib) then
+	# Disable gtm7083 subtest on SUSE Linux as we don't have the needed old versions
+	# on that distribution (due to no libncurses.so.5 package)
+	setenv subtest_exclude_list "$subtest_exclude_list gtm7083"
 endif
 
 # For the gtm7083a subtest, look at two things (env var and dbg builds) to decide whether to disable it or not.
