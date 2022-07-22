@@ -119,6 +119,12 @@ if (-X lsb_release) then
 	setenv gtm_test_linux_version `lsb_release -sr`
 else if (-f /etc/os-release) then
 	setenv gtm_test_linux_distrib `grep -w ID /etc/os-release | cut -d= -f2 | cut -d'"' -f2`
+	if ($gtm_test_linux_distrib == "opensuse-tumbleweed") then
+		# For now, treat OpenSUSE Tumbleweed the same way as we would SUSE Linux Enterprise Desktop (SLED)
+		# which identifies itself as "suse". This helps us automatically overload existing code
+		# (e.g. define SUSE_LINUX and SUSE_LINUX_X86_64 tags for use in reference files etc.)
+		setenv gtm_test_linux_distrib "suse"
+	endif
 	setenv gtm_test_linux_version `grep -w VERSION_ID /etc/os-release | tr -d '"' | cut -d= -f2`
 else
 	setenv gtm_test_linux_distrib ""
