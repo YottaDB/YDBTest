@@ -27,12 +27,16 @@
 # gtm7759	 	[see]		Test that expected log message do and don't show up depending on restrict.txt setting
 # ydb1187		[jv]		Test that --nopkg-config will not create or modify yottadb.pc with ydbinstall/ydbinstall.sh
 #
-setenv subtest_list_common "sourceInstall diffDir ydb306 gtm9116 plugins ydb783 ydb1187"
-setenv subtest_list_non_replic "gtm7759"
+setenv subtest_list_common "sourceInstall diffDir ydb306 gtm9116 plugins ydb783"
+setenv subtest_list_non_replic "gtm7759 ydb1187"
 setenv subtest_list_non_replic "$subtest_list_non_replic"
 setenv subtest_list_replic ""
 
-setenv subtest_list "$subtest_list_common $subtest_list_non_replic $subtest_list_replic"
+if ($?test_replic == 1) then
+	setenv subtest_list "$subtest_list_common $subtest_list_replic"
+else
+	setenv subtest_list "$subtest_list_common $subtest_list_non_replic"
+endif
 
 # EXCLUSIONS
 setenv subtest_exclude_list ""
