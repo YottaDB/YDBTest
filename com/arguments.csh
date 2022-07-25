@@ -61,6 +61,7 @@ case "-extended":
 case "-L_ALL":
 case "-E_ALL":
 case "-M_ALL":
+case "-S_ALL":
 case "-T_ALL":
 	    ##HELP_SCREEN RUN THE L/E suites completely ($bucket)
 	    setenv bucket "$tmp_arg"
