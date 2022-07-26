@@ -1,0 +1,19 @@
+# Test for GTM-9295 - Various $[Z]TRANSLATE() fixes
+setenv gtm_chset UTF-8
+unset echo
+
+# Drive gtm9295 sub-issue A test routine
+# partA^gtm9295: Test for incorrect results of $translate when it appears more than once in a line and the first
+# invocation evaluated is within an arithmetic or boolean expression.
+
+SUCCESS - all cases tested passed
+
+# Drive gtm9295 sub-issue B test routine
+# partB^gtm9295: Cause a smaller string to grow into too large a string (> 1MB) and expect a MAXSTRLEN error.
+
+SUCCESS - Received the expected MAXSTRLEN error
+
+# Drive gtm9295 sub-issue C test routine
+# partC^gtm9295: Do translation with an embedded badchar while doing translation in UTF8 mode with NOBADCHAR on.
+
+SUCCESS - translation done correctly
