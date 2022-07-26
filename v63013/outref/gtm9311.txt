@@ -1,0 +1,25 @@
+# Test for GTM-9311 - Test that the variables x and d are preserved across a call to %YGBLSTAT. Start
+# with no values in either var, drive ^%YGBLSTAT, then check $data() values for both and if either is
+# non-zero, we have a failure.
+
+# Create database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+# Drive gtm9311 test routine
+Process id / $JOB [default all processes]: 
+Statistics [default all ZSHOW "G" statistics]: 
+Global directory [default ##TEST_PATH##/mumps.gld]: 
+Region list (comma separated) [default all regions]: 
+
+
+SUCCESS - variables were protected across call
+
+
+# Verify database we (very lightly) used
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
