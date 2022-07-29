@@ -316,6 +316,10 @@ BEGIN {
 	if (1 == ENVIRON["ydb_test_exclude_V5_tests"])
 		envir[no_options] = "EXCLUDE_V5_TESTS"
 	#
+	option_names[++no_options] = "ydb_test_exclude_ydb749"
+	if (1 == ENVIRON["ydb_test_exclude_ydb749"])
+		envir[no_options] = "EXCLUDE_YDB749"
+	#
 	option_names[++no_options] = "is_tst_dir_ssd"
 	if (1 == ENVIRON["is_tst_dir_ssd"])
 		envir[no_options] = "TST_DIR_SSD"
