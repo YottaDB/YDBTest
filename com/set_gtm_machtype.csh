@@ -112,12 +112,9 @@ endif
 # Set endianness
 setenv gtm_endian `echo -n A | od -h | awk '{if ($2 == "0041") {print "LITTLE_ENDIAN"} else if ($2 == "4100") {print "BIG_ENDIAN"} else {print "ENDIAN_UNDETERMINED"}; exit}'` #BYPASSOK awk
 # Set the linux distribution name if the current server is a linux server
-# gtm_test_linux_distrib will be set to one of ubuntu, redhatenterpriseserver, debian, centos, fedora, suselinux, arch or alpine
-# on a linux server. It will be set to "" on other servers
-if (-X lsb_release) then
-	setenv gtm_test_linux_distrib `lsb_release -is | sed 's/ //g' | tr '[A-Z]' '[a-z]'`
-	setenv gtm_test_linux_version `lsb_release -sr`
-else if (-f /etc/os-release) then
+# gtm_test_linux_distrib will be set to one of ubuntu, rhel, debian, centos, fedora, suse, arch or alpine on a linux server.
+# It will be set to "" on other servers
+if (-f /etc/os-release) then
 	setenv gtm_test_linux_distrib `grep -w ID /etc/os-release | cut -d= -f2 | cut -d'"' -f2`
 	if (($gtm_test_linux_distrib == "opensuse-tumbleweed") || ($gtm_test_linux_distrib == "opensuse-leap")) then
 		# For now, treat OpenSUSE Tumbleweed and OpenSUSE Leap the same way as we would SUSE Linux Enterprise Desktop (SLED)
