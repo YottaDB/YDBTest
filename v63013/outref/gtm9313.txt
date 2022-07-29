@@ -1,0 +1,20 @@
+# Test for GTM-9313 - Test that $ORDER() with a subscripted variable and a subscript is a boolean
+# expression that references a global variable and has a literal second argument returns the correct
+# value. Prior to V63013, this test returns invalid results causing the test to fail fairly quickly
+
+# Create database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+# Drive gtm9313 test routine
+
+Test completed
+
+
+# Verify database we (very lightly) used
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
