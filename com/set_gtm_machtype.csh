@@ -116,10 +116,17 @@ setenv gtm_endian `echo -n A | od -h | awk '{if ($2 == "0041") {print "LITTLE_EN
 # It will be set to "" on other servers
 if (-f /etc/os-release) then
 	setenv gtm_test_linux_distrib `grep -w ID /etc/os-release | cut -d= -f2 | cut -d'"' -f2`
-	if (($gtm_test_linux_distrib == "opensuse-tumbleweed") || ($gtm_test_linux_distrib == "opensuse-leap")) then
-		# For now, treat OpenSUSE Tumbleweed and OpenSUSE Leap the same way as we would SUSE Linux Enterprise Desktop (SLED)
-		# which identifies itself as "suse". This helps us automatically overload existing code
-		# (e.g. define SUSE_LINUX and SUSE_LINUX_X86_64 tags for use in reference files etc.)
+	# For now, treat all of the following as "suse".
+	#	OpenSUSE Tumbleweed
+	#	OpenSUSE Leap
+	#	SUSE Linux Enterprise Desktop
+	#	SUSE Linux Enterprise Server
+	# This helps us automatically overload existing code
+	# (e.g. define SUSE_LINUX and SUSE_LINUX_X86_64 tags for use in reference files etc.)
+	if (($gtm_test_linux_distrib == "opensuse-tumbleweed")		\
+			|| ($gtm_test_linux_distrib == "opensuse-leap")	\
+			|| (($gtm_test_linux_distrib == "sled")		\
+			|| ($gtm_test_linux_distrib == "sles"))) then
 		setenv gtm_test_linux_distrib "suse"
 	endif
 	setenv gtm_test_linux_version `grep -w VERSION_ID /etc/os-release | tr -d '"' | cut -d= -f2`
