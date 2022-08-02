@@ -228,6 +228,7 @@ int main() {
 
   /* Xecute a string */
   fprintf(stdout, "---------------------------------\n");
+  xecute_error[0] = '\0';	/* See similar code in "call_ins/inref/ydbaccess_ci.c" for why this is necessary */
   status = ydb_cip(&xecute_cip, "write $zyrelease,! zshow \"l\"", &xecute_error );
   if (status != YDB_OK) {
 	  ydb_zstatus(zstatus, YDB_MAX_ERRORMSG);

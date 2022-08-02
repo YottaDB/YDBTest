@@ -180,6 +180,14 @@ int main() {
 
   /* Xecute a string */
   fprintf(stdout, "---------------------------------\n");
+  /* "xecute_error" is a string that gets mapped to the M variable "err" inside the call-in.
+   * The M code sets "err" only in case of an error. Likewise, "ydb_ci()" does not touch "xecute_error" in case
+   * the "err" variable was untouched. And so, if there was no error inside the call-in (which is what we expect
+   * in this "xecute1" case), once the call-in returns, "xecute_error" would point to uninitialized memory
+   * (it is a stack buffer) and so the "strlen(xecute_error)" check done later below could incorrectly fail and
+   * cause a false test failure. To avoid that, initialize "xecute_error" to the empty string at the start.
+   */
+  xecute_error[0] = '\0';
   status = ydb_ci("xecute", "write $zyrelease,! zshow \"l\"", &xecute_error );
   if (status != YDB_OK) {
 	  ydb_zstatus(zstatus, YDB_MAX_ERRORMSG);
@@ -191,6 +199,9 @@ int main() {
   }
 
   /* force an error in Xecute*/
+  /* Note: No need to initialize "xecute_error[0]" like is done in the "xecute1" case above as in the below case
+   * we force an error and so we expect "xecute_error" to be initialized inside the "ydb_ci()" call.
+   */
   status = ydb_ci("xecute", "write 1/0", &xecute_error );
   if (status != YDB_OK) {
 	  ydb_zstatus(zstatus, YDB_MAX_ERRORMSG);
