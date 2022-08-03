@@ -1,6 +1,6 @@
 #!/bin/sh
 #################################################################
-# Copyright (c) 2020-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #								#

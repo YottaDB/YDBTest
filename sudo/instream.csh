@@ -25,10 +25,10 @@
 # plugins		[bdw]		Test that ydbinstall.sh installs various plugin combinations without errors
 # ydb783		[sam]		Set $ZROUTINES to $ydb_dist/utf8/libyottadbutil.so if ydb_chset=UTF-8 and ydb_routines is not set
 # gtm7759	 	[see]		Test that expected log message do and don't show up depending on restrict.txt setting
-# ydb1187		[jv]		Test that --nopkg-config will not create or modify yottadb.pc with ydbinstall/ydbinstall.sh
+# ydb894		[jv]		Test that --nopkg-config will not create or modify yottadb.pc with ydbinstall/ydbinstall.sh
 #
 setenv subtest_list_common "sourceInstall diffDir ydb306 gtm9116 plugins ydb783"
-setenv subtest_list_non_replic "gtm7759 ydb1187"
+setenv subtest_list_non_replic "gtm7759 ydb894"
 setenv subtest_list_non_replic "$subtest_list_non_replic"
 setenv subtest_list_replic ""
 
