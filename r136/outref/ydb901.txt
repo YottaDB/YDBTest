@@ -1,9 +1,16 @@
-# SIG-11 when compiling with -NOLINE_ENTRY if M code contains a BREAK
+# SIG-11 when compiling with -NOLINE_ENTRY if M code contains a BREAK or NEW
 # This test runs multiple samples that previously crashed if compiled with -noline_entry
 # When it runs now, no output is expected, which is what we want
-# No label, first line code
-# First line label no code, second line code
-# First line label followed by M code
-# First line comment, M code eventually follows after comments
-# First line empty, code follows
-# Use one local variable BEFORE the BREAK followed by a local variable reference in the next line
+# BREAK No label, first line code
+# BREAK First line label no code, second line code
+# BREAK First line label followed by M code
+# BREAK First line comment, M code eventually follows after comments
+# BREAK First line empty, code follows
+# BREAK Use one local variable BEFORE the BREAK followed by a local variable reference in the next line
+###################################################################
+# NEW No label, first line code
+# NEW First line label no code, second line code
+# NEW First line label followed by M code
+# NEW First line comment, M code eventually follows after comments
+# NEW First line empty, code follows
+# NEW Use one local variable BEFORE the BREAK followed by a local variable reference in the next line
