@@ -20,15 +20,40 @@ source $gtm_tst/com/gtm_test_disable_autorelink.csh
 
 echo "# Test invoking YottaDB via valgrind does not produce a %YDB-E-YDBDISTUNVERIF"
 
+# valgrind on the following systems has been seen to give an extra warning when the test runs with huge pages randomly enabled.
+#	SUSE Enterprise Linux Desktop (version "valgrind-3.18.1")
+#	OpenSUSE Tumbleweed (version "valgrind-3.19.0")
+# The warning shows up as follows
+#	==63815== WARNING: valgrind ignores shmget(shmflg) SHM_HUGETLB
+# Interestingly, some systems with the above distribution and valgrind version do not issue the warning.
+# In any case, we filter this out to avoid false test failures.
+set filter="WARNING: valgrind ignores shmget(shmflg) SHM_HUGETLB"
+
 $echoline
 echo "# First test valgrind -q $ydb_dist/yottadb -version"
-valgrind -q $ydb_dist/yottadb -version
+valgrind -q $ydb_dist/yottadb -version >& valgrind1.out
+if ($status) then
+	echo "valgrind invocation failed : See valgrind1.out for details"
+	exit 1
+endif
+grep -v "$filter" valgrind1.out
 
 $echoline
 echo '# Create a database and test valgrind -q $ydb_dist/mupip integ -reg "*"'
 $gtm_tst/com/dbcreate.csh mumps
-valgrind -q $ydb_dist/mupip integ -reg "*"
+valgrind -q $ydb_dist/mupip integ -reg "*" >& valgrind2.out
+if ($status) then
+	echo "valgrind invocation failed : See valgrind2.out for details"
+	exit 1
+endif
+grep -v "$filter" valgrind2.out
 
 $echoline
 echo "# Finally, test invoking a YottaDB command to write the result of 2*2 with valgrind."
-valgrind -q $ydb_dist/yottadb -run ^%XCMD 'write "2*2 = ",2*2,!'
+valgrind -q $ydb_dist/yottadb -run ^%XCMD 'write "2*2 = ",2*2,!' >& valgrind3.out
+if ($status) then
+	echo "valgrind invocation failed : See valgrind3.out for details"
+	exit 1
+endif
+grep -v "$filter" valgrind3.out
+
