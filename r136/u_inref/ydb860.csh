@@ -83,4 +83,24 @@ foreach file ($gtm_tst/$tst/inref/ydb860ztimeoutetrap*.m)
 end
 
 echo ""
+echo "------------------------------------------------------------"
+echo '# Test ZLINK of a M program that has already been opened in read-write mode issues DEVICEREADONLY error'
+echo '# This used to previously (before YDB@3896dddb) fail with a SIG-11'
+echo '# Expecting DEVICEREADONLY error in below output'
+echo "------------------------------------------------------------"
+set base = "ydb860devicereadonly"
+cat > $base.m << CAT_EOF
+ set fn="generated.m"
+ open fn:new
+ use fn
+ write " z"
+ set \$zroutines=""
+ zlink "generated.m"
+CAT_EOF
+echo "# Try $base.m using [yottadb -direct]"
+cat $base.m | $ydb_dist/yottadb -direct
+echo "# Try $base.m using [yottadb -run]"
+$ydb_dist/yottadb -run $base
+
+echo ""
 $gtm_tst/com/dbcheck.csh

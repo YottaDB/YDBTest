@@ -167,6 +167,33 @@ YDB>
 # Try ydb860ztimeoutetrap2.m using [yottadb -run]
 %YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
 
+------------------------------------------------------------
+# Test ZLINK of a M program that has already been opened in read-write mode issues DEVICEREADONLY error
+# This used to previously (before YDB@3896dddb) fail with a SIG-11
+# Expecting DEVICEREADONLY error in below output
+------------------------------------------------------------
+# Try ydb860devicereadonly.m using [yottadb -direct]
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+	 zlink "generated.m"
+	                    ^-----
+		At column 21, line 1, source module generated.m
+%YDB-E-DEVICEREADONLY, Cannot write to read-only device
+
+YDB>
+# Try ydb860devicereadonly.m using [yottadb -run]
+%YDB-E-DEVICEREADONLY, Cannot write to read-only device
+
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
