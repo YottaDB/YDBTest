@@ -27,6 +27,7 @@
 # gtm9230		[see]	 Test that NOISOLATION with non-TP transactions optimize updates like with TP transactions
 # gtm9277		[see]	 Test that side effect mode works properly when last arg of boolean expr has a side effect and evals to an int
 # gtm9278		[see]	 Test additional error info for read-only database errors
+# gtm7987	 	[see]	 Test that replication servers retry connections with TLS errors
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "v63013 test starts..."
@@ -35,7 +36,7 @@ echo "v63013 test starts..."
 setenv subtest_list_common	""
 setenv subtest_list_non_replic "gtm9147 gtm9287 gtm8793 gtm9311 gtm9295 gtm9293 gtm9313 gtm8772ANDgtm8784 gtm8838 gtm9252 gtm9230 gtm9277"
 setenv subtest_list_non_replic "$subtest_list_non_replic gtm9278"
-setenv subtest_list_replic	""
+setenv subtest_list_replic     "gtm7987"
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
@@ -47,7 +48,7 @@ setenv subtest_exclude_list ""
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
 if ("pro" == "$tst_image") then
-	setenv subtest_exclude_list "$subtest_exclude_list"
+	setenv subtest_exclude_list "$subtest_exclude_list gtm7987"	# Avoid pro build as test depends on white-box testing
 endif
 
 if ("dbg" == "$tst_image") then

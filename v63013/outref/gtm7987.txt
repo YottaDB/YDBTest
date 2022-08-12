@@ -1,0 +1,41 @@
+--------------------------------------------------------------------------------------------------
+# Test that replication servers restart after TLS connection issues (issues via white-box test)
+--------------------------------------------------------------------------------------------------
+
+# Create databases and start replication with TLS enabled
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+
+# Wait for the initial connection to be established
+
+# Add some records forcing a reconnection when the test case counter is met
+
+YDB>
+
+YDB>
+# Shutdown replication servers
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+# Validate that the receiver server dropped connection and restarted - messages follow:
+WBTEST_REPL_TLS_RECONN induced
+Connection reset. Status = 104 ; Connection reset by peer
+##TEST_AWKConnection established, using TCP send buffer size .*
+
+Success
