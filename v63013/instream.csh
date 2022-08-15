@@ -14,20 +14,21 @@
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 # List of subtests of the form "subtestname [author] description"
 #-------------------------------------------------------------------------------------
-# gtm9147        [bdw]     Tests that MUPIP SET -JOURNAL -BUFFSIZE accepts values up to 1Mi blocks
-# gtm9287        [jv]      Fix syntax error message line number reporting for large M files
-# gtm8793	 [see]	   Test new EXITSTATUS error given when procstuckexec script returns non-zero return code
-# gtm9311	 [see]	   Test that calling ^%YGBLSTAT does not pollute the x and d local variables
-# gtm9295	 [see]	   Test multiple fixes to $ZTRANSLATE()/$TRANSLATE()
-# gtm9293        [jv]      Test that an empty string result from argument indirection is accepted
-# gtm9313	 [see]	   Test that $ORDER() issued with subscripted var with boolean expr using gvname gives correct answer
+# gtm9147		[bdw]    Tests that MUPIP SET -JOURNAL -BUFFSIZE accepts values up to 1Mi blocks
+# gtm9287        	[jv]     Fix syntax error message line number reporting for large M files
+# gtm8793	 	[see]	 Test new EXITSTATUS error given when procstuckexec script returns non-zero return code
+# gtm9311	 	[see]	 Test that calling ^%YGBLSTAT does not pollute the x and d local variables
+# gtm9295	 	[see]	 Test multiple fixes to $ZTRANSLATE()/$TRANSLATE()
+# gtm9293        	[jv]     Test that an empty string result from argument indirection is accepted
+# gtm9313	 	[see]	 Test that $ORDER() issued with subscripted var with boolean expr using gvname gives correct answer
+# gtm8772ANDgtm8784	[see]	 Combined test for gtm8872 and gtm8784 to test what update requests do when freeze -online in effect
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "v63013 test starts..."
 
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
-setenv subtest_list_non_replic "gtm9147 gtm9287 gtm8793 gtm9311 gtm9295 gtm9293 gtm9313"
+setenv subtest_list_non_replic "gtm9147 gtm9287 gtm8793 gtm9311 gtm9295 gtm9293 gtm9313 gtm8772ANDgtm8784"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then

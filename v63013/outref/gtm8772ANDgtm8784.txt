@@ -1,0 +1,459 @@
+# Test for for various database updates via commands while a FREEZE -ONLINE is in effect. This test
+# covers the (similar) issues in both gtm8772 and gtm8784. This is also a test for GTM-9308 as this
+# test does not run correctly without it.
+
+## Create database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+
+## Drive the gtm8772ANDgtm8784 routine to try different commands when MUPIP CANNOT get standalone mode and is FROZEN
+
+# Try MUPIP SET commands while NOT able to get standalone lock(s) - a process has DB open
+# Spawn a process to do a single SET into the DB to prevent standalone commands from functioning correctly
+
+YDB>
+
+# Freeze the database
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+Region DEFAULT is now FROZEN
+All requested regions frozen
+
+# MUPIP SET commands with FREEZE -ONLINE (standalone not available):
+
+# Try $MUPIP SET -REGION DEFAULT -ACCESS_METHOD=BG
+##TEST_PATH##/mumps.dat -> File already open by another process (2).
+Resource temporarily unavailable
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -ASYNCIO
+##TEST_PATH##/mumps.dat -> File already open by another process (2).
+Resource temporarily unavailable
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -DEFER_ALLOCATE
+%YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -NOEPOCHTAPER
+%YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -EXTENSION=42
+%YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -FLUSH_TIME=42
+%YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -GLOBAL_BUFFERS=4242
+##TEST_PATH##/mumps.dat -> File already open by another process (2).
+Resource temporarily unavailable
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -HARD_SPIN_COUNT=42
+%YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -INST_FREEZE_ON_ERROR
+%YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -KEY_SIZE=142
+##TEST_PATH##/mumps.dat -> File already open by another process (2).
+Resource temporarily unavailable
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -LOCK_SPACE=420
+##TEST_PATH##/mumps.dat -> File already open by another process (2).
+Resource temporarily unavailable
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -MUTEX_SLOTS=4242
+##TEST_PATH##/mumps.dat -> File already open by another process (2).
+Resource temporarily unavailable
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -NULL_SUBSCRIPTS=NEVER
+##TEST_PATH##/mumps.dat -> File already open by another process (2).
+Resource temporarily unavailable
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -NOLCK_SHARES_DB_CRIT
+##TEST_PATH##/mumps.dat -> File already open by another process (2).
+Resource temporarily unavailable
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -QDBRUNDOWN
+##TEST_PATH##/mumps.dat -> File already open by another process (2).
+Resource temporarily unavailable
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -PARTIAL_RECOV_BYPASS
+##TEST_PATH##/mumps.dat -> File already open by another process (2).
+Resource temporarily unavailable
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -RECORD_SIZE=4242
+##TEST_PATH##/mumps.dat -> File already open by another process (2).
+Resource temporarily unavailable
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -REORG_SLEEP_NSEC=424242
+%YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -RESERVED_BYTES=42
+##TEST_PATH##/mumps.dat -> File already open by another process (2).
+Resource temporarily unavailable
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -SLEEP_SPIN_COUNT=84
+%YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -NOSTATS
+##TEST_PATH##/mumps.dat -> File already open by another process (2).
+Resource temporarily unavailable
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -NOSTDNULLCOL
+##TEST_PATH##/mumps.dat -> File already open by another process (2).
+Resource temporarily unavailable
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -TRIGGER_FLUSH=2424
+%YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -VERSION=V6
+%YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -WAIT_DISK=42
+##TEST_PATH##/mumps.dat -> File already open by another process (2).
+Resource temporarily unavailable
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -WRITES_PER_FLUSH=42
+%YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Releasing the freeze
+Region DEFAULT is now UNFROZEN
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+All requested regions unfrozen
+
+# Shutting down process keeping database open
+
+YDB>
+
+# MUPIPSETTests complete - database is UNFROZEN!
+
+
+## Drive the gtm8772ANDgtm8784 routine to try different commands when MUPIP CAN get standalone mode and is FROZEN
+
+# MUPIP SET commands when standalone is available (except for the freeze)
+
+# Freeze the database
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+Region DEFAULT is now FROZEN
+All requested regions frozen
+
+# MUPIP SET commands with FREEZE -ONLINE (standalone available):
+
+# Try $MUPIP SET -REGION DEFAULT -ACCESS_METHOD=BG
+%YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -ASYNCIO
+%YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -DEFER_ALLOCATE
+%YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -NOEPOCHTAPER
+%YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -EXTENSION=42
+%YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -FLUSH_TIME=42
+%YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -GLOBAL_BUFFERS=4242
+%YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -HARD_SPIN_COUNT=42
+%YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -INST_FREEZE_ON_ERROR
+%YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -KEY_SIZE=142
+%YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -LOCK_SPACE=420
+%YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -MUTEX_SLOTS=4242
+%YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -NULL_SUBSCRIPTS=NEVER
+%YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -NOLCK_SHARES_DB_CRIT
+%YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -QDBRUNDOWN
+%YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -PARTIAL_RECOV_BYPASS
+%YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -RECORD_SIZE=4242
+%YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -REORG_SLEEP_NSEC=424242
+%YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -RESERVED_BYTES=42
+%YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -SLEEP_SPIN_COUNT=84
+%YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -NOSTATS
+%YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -NOSTDNULLCOL
+%YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -TRIGGER_FLUSH=2424
+%YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -VERSION=V6
+%YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -WAIT_DISK=42
+%YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Try $MUPIP SET -REGION DEFAULT -WRITES_PER_FLUSH=42
+%YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
+%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
+
+# Releasing the freeze
+Region DEFAULT is now UNFROZEN
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+All requested regions unfrozen
+
+# MUPIPSETTests complete - note database is UNFROZEN!
+
+
+## Drive the gtm8772ANDgtm8784 routine to try different commands when MUPIP CAN get standalone mode and is UNFROZEN
+
+# MUPIP SET commands when standalone is available and NOT frozen
+
+# MUPIP SET commands (standalone available and NO FREEZE):
+
+# Try $MUPIP SET -REGION DEFAULT -ACCESS_METHOD=BG
+Database file ##TEST_PATH##/mumps.dat now has BG access method
+
+# Try $MUPIP SET -REGION DEFAULT -ASYNCIO
+Database file ##TEST_PATH##/mumps.dat now has asyncio enabled
+
+# Try $MUPIP SET -REGION DEFAULT -DEFER_ALLOCATE
+Database file ##TEST_PATH##/mumps.dat now has defer allocation flag set to  TRUE
+
+# Try $MUPIP SET -REGION DEFAULT -NOEPOCHTAPER
+Database file ##TEST_PATH##/mumps.dat now has epoch taper flag set to FALSE
+
+# Try $MUPIP SET -REGION DEFAULT -EXTENSION=42
+Database file ##TEST_PATH##/mumps.dat now has extension count 42
+
+# Try $MUPIP SET -REGION DEFAULT -FLUSH_TIME=42
+
+# Try $MUPIP SET -REGION DEFAULT -GLOBAL_BUFFERS=4242
+Database file ##TEST_PATH##/mumps.dat now has 4242 global buffers
+
+# Try $MUPIP SET -REGION DEFAULT -HARD_SPIN_COUNT=42
+Database file ##TEST_PATH##/mumps.dat now has hard spin count 42
+
+# Try $MUPIP SET -REGION DEFAULT -INST_FREEZE_ON_ERROR
+Database file ##TEST_PATH##/mumps.dat now has inst freeze on fail flag set to TRUE
+
+# Try $MUPIP SET -REGION DEFAULT -KEY_SIZE=142
+Database file ##TEST_PATH##/mumps.dat now has maximum key size 142
+
+# Try $MUPIP SET -REGION DEFAULT -LOCK_SPACE=420
+Database file ##TEST_PATH##/mumps.dat now has lock space 420 pages
+
+# Try $MUPIP SET -REGION DEFAULT -MUTEX_SLOTS=4242
+Database file ##TEST_PATH##/mumps.dat now has 4242 mutex queue slots
+
+# Try $MUPIP SET -REGION DEFAULT -NULL_SUBSCRIPTS=NEVER
+Database file ##TEST_PATH##/mumps.dat now has null subscripts set to NEVER   
+
+# Try $MUPIP SET -REGION DEFAULT -NOLCK_SHARES_DB_CRIT
+Database file ##TEST_PATH##/mumps.dat now has LOCK sharing crit with DB FALSE
+
+# Try $MUPIP SET -REGION DEFAULT -QDBRUNDOWN
+Database file ##TEST_PATH##/mumps.dat now has quick database rundown flag set to  TRUE
+
+# Try $MUPIP SET -REGION DEFAULT -PARTIAL_RECOV_BYPASS
+Database file ##TEST_PATH##/mumps.dat now has partial recovery flag set to  0(FALSE) 
+
+# Try $MUPIP SET -REGION DEFAULT -RECORD_SIZE=4242
+Database file ##TEST_PATH##/mumps.dat now has maximum record size 4242
+
+# Try $MUPIP SET -REGION DEFAULT -REORG_SLEEP_NSEC=424242
+Database file ##TEST_PATH##/mumps.dat now has reorg sleep nanoseconds 424242
+
+# Try $MUPIP SET -REGION DEFAULT -RESERVED_BYTES=42
+Database file ##TEST_PATH##/mumps.dat now has 42 reserved bytes
+
+# Try $MUPIP SET -REGION DEFAULT -SLEEP_SPIN_COUNT=84
+Database file ##TEST_PATH##/mumps.dat now has sleep spin count 84
+
+# Try $MUPIP SET -REGION DEFAULT -NOSTATS
+Database file ##TEST_PATH##/mumps.dat now has sharing of gvstats set to FALSE
+
+# Try $MUPIP SET -REGION DEFAULT -NOSTDNULLCOL
+Database file ##TEST_PATH##/mumps.dat is now using GT.M null collation      
+
+# Try $MUPIP SET -REGION DEFAULT -TRIGGER_FLUSH=2424
+Database file ##TEST_PATH##/mumps.dat now has trigger_flush_limit 2424
+
+# Try $MUPIP SET -REGION DEFAULT -VERSION=V6
+Database file ##TEST_PATH##/mumps.dat now has desired DB format V6
+
+# Try $MUPIP SET -REGION DEFAULT -WAIT_DISK=42
+Database file ##TEST_PATH##/mumps.dat now has wait disk set to 42 seconds
+
+# Try $MUPIP SET -REGION DEFAULT -WRITES_PER_FLUSH=42
+Database file ##TEST_PATH##/mumps.dat now has writes per flush 42
+
+# MUPIPSETTests complete
+
+
+## Drive the gtm8772ANDgtm8784 routine to try a MUPIP RUNDOWN command and is FROZEN
+
+# MUPIP RUNDOWN command(s) when standalone is available (except for the freeze)
+
+# Freeze the database
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+Region DEFAULT is now FROZEN
+All requested regions frozen
+
+# MUPIP RUNDOWN command(s) with FREEZE -ONLINE (standalone available):
+
+# Try $MUPIP RUNDOWN -REGION DEFAULT
+%YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
+%YDB-W-MUNOTALLSEC, WARNING: not all global sections accessed were successfully rundown
+
+# Releasing the freeze
+Region DEFAULT is now UNFROZEN
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+All requested regions unfrozen
+
+# MUPIPRUNDOWNTests complete - note database is UNFROZEN!
+
+
+## Drive the gtm8772ANDgtm8784 routine to try a MUPIP BACKUP command and is FROZEN
+
+# Try MUPIP BACKUP command(s) when standalone is available (except for the freeze)
+
+# Freeze the database
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+Region DEFAULT is now FROZEN
+All requested regions frozen
+
+# MUPIP BACKUP command(s) with FREEZE -ONLINE (standalone available):
+
+# Try $MUPIP BACKUP -NEWJNLFILES DEFAULT backup
+%YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+
+# Releasing the freeze
+Region DEFAULT is now UNFROZEN
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+All requested regions unfrozen
+
+# MUPIPBACKUPTests complete - note database is UNFROZEN!
+
+
+## Check that certain MUPIP SET commands flush only the file header by checking straces of the runs while UNFROZEN
+
+# Try MUPIP SET command when standalone is available verifying only fileheader is flushed
+
+# MUPIP SET commands - Verify fileheader only is flushed (not frozen):
+
+# Try strace -o strace_EPOCHTAPER.trclist $MUPIP SET -REGION DEFAULT -EPOCHTAPER
+Database file ##TEST_PATH##/mumps.dat now has epoch taper flag set to  TRUE
+validatestrace - line validated: pwrite64(3, "GDSDYNUNX03\0\0\20\0\0\0\340\3\0\0\2\0\0\1\2\0\0\1\0\0\0"..., 8192, 0) = 8192
+validatestrace - line validated: pwrite64(3, "GDSDYNUNX03\0\0\20\0\0\0\340\3\0\0\2\0\0\1\2\0\0\1\0\0\0"..., 8192, 0) = 8192
+validatestrace - line validated: pwrite64(3, "GDSDYNUNX03\0\0\20\0\0\0\340\3\0\0\2\0\0\1\2\0\0\1\0\0\0"..., 8192, 0) = 8192
+validatestrace - line validated: pwrite64(3, "GDSDYNUNX03\0\0\20\0\0\0\340\3\0\0\2\0\0\1\2\0\0\1\0\0\0"..., 8192, 0) = 8192
+
+# Try strace -o strace_FLUSH_TIME.trclist $MUPIP SET -REGION DEFAULT -FLUSH_TIME=24
+validatestrace - line validated: pwrite64(3, "GDSDYNUNX03\0\0\20\0\0\0\340\3\0\0\2\0\0\1\2\0\0\1\0\0\0"..., 8192, 0) = 8192
+validatestrace - line validated: pwrite64(3, "GDSDYNUNX03\0\0\20\0\0\0\340\3\0\0\2\0\0\1\2\0\0\1\0\0\0"..., 8192, 0) = 8192
+validatestrace - line validated: pwrite64(3, "GDSDYNUNX03\0\0\20\0\0\0\340\3\0\0\2\0\0\1\2\0\0\1\0\0\0"..., 8192, 0) = 8192
+validatestrace - line validated: pwrite64(3, "GDSDYNUNX03\0\0\20\0\0\0\340\3\0\0\2\0\0\1\2\0\0\1\0\0\0"..., 8192, 0) = 8192
+
+# Try strace -o strace_HARD_SPIN_COUNT.trclist $MUPIP SET -REGION DEFAULT -HARD_SPIN_COUNT=24
+Database file ##TEST_PATH##/mumps.dat now has hard spin count 24
+validatestrace - line validated: pwrite64(3, "GDSDYNUNX03\0\0\20\0\0\0\340\3\0\0\2\0\0\1\2\0\0\1\0\0\0"..., 8192, 0) = 8192
+validatestrace - line validated: pwrite64(3, "GDSDYNUNX03\0\0\20\0\0\0\340\3\0\0\2\0\0\1\2\0\0\1\0\0\0"..., 8192, 0) = 8192
+validatestrace - line validated: pwrite64(3, "GDSDYNUNX03\0\0\20\0\0\0\340\3\0\0\2\0\0\1\2\0\0\1\0\0\0"..., 8192, 0) = 8192
+validatestrace - line validated: pwrite64(3, "GDSDYNUNX03\0\0\20\0\0\0\340\3\0\0\2\0\0\1\2\0\0\1\0\0\0"..., 8192, 0) = 8192
+
+# Try strace -o strace_NOINST_FREEZE_ONERROR.trclist $MUPIP SET -REGION DEFAULT -NOINST_FREEZE_ON_ERROR
+Database file ##TEST_PATH##/mumps.dat now has inst freeze on fail flag set to FALSE
+validatestrace - line validated: pwrite64(3, "GDSDYNUNX03\0\0\20\0\0\0\340\3\0\0\2\0\0\1\2\0\0\1\0\0\0"..., 8192, 0) = 8192
+validatestrace - line validated: pwrite64(3, "GDSDYNUNX03\0\0\20\0\0\0\340\3\0\0\2\0\0\1\2\0\0\1\0\0\0"..., 8192, 0) = 8192
+validatestrace - line validated: pwrite64(3, "GDSDYNUNX03\0\0\20\0\0\0\340\3\0\0\2\0\0\1\2\0\0\1\0\0\0"..., 8192, 0) = 8192
+validatestrace - line validated: pwrite64(3, "GDSDYNUNX03\0\0\20\0\0\0\340\3\0\0\2\0\0\1\2\0\0\1\0\0\0"..., 8192, 0) = 8192
+
+# Try strace -o strace_SLEEP_SPIN_COUNT.trclist $MUPIP SET -REGION DEFAULT -SLEEP_SPIN_COUNT=84
+Database file ##TEST_PATH##/mumps.dat now has sleep spin count 84
+validatestrace - line validated: pwrite64(3, "GDSDYNUNX03\0\0\20\0\0\0\340\3\0\0\2\0\0\1\2\0\0\1\0\0\0"..., 8192, 0) = 8192
+validatestrace - line validated: pwrite64(3, "GDSDYNUNX03\0\0\20\0\0\0\340\3\0\0\2\0\0\1\2\0\0\1\0\0\0"..., 8192, 0) = 8192
+validatestrace - line validated: pwrite64(3, "GDSDYNUNX03\0\0\20\0\0\0\340\3\0\0\2\0\0\1\2\0\0\1\0\0\0"..., 8192, 0) = 8192
+validatestrace - line validated: pwrite64(3, "GDSDYNUNX03\0\0\20\0\0\0\340\3\0\0\2\0\0\1\2\0\0\1\0\0\0"..., 8192, 0) = 8192
+
+# MUPIPSETFHFLUSHTests complete
+
+
+## Validate DB
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
