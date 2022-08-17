@@ -1,0 +1,22 @@
+# Tests the ydbinstall/ydbinstall.sh --from-source command line option.
+
+# Building YottaDB
+Building branch master from repo https://gitlab.com/YottaDB/DB/YDB.git
+
+# YottaDB installed
+##TEST_AWKYottaDB version r.* installed successfully at ##TEST_PATH##/install
+##TEST_AWK(Skipping YottaDB pkg-config file install for r.* as newer version r.* exists|YottaDB pkg-config file installed successfully) at /usr/share/pkgconfig/yottadb.pc
+
+YDB>
+##TEST_AWKYottaDB r.* Linux .*
+YDB>
+##TEST_AWK[0-9]{8} [0-9]{2}:[0-9]{2} [0-9a-f]{40}
+YDB>
+
+YDB>
+
+YDB>
+a="Hello,"
+a(1)="World!"
+
+YDB>
