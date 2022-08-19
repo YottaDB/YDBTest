@@ -22,13 +22,14 @@
 # gtm9293        	[jv]     Test that an empty string result from argument indirection is accepted
 # gtm9313	 	[see]	 Test that $ORDER() issued with subscripted var with boolean expr using gvname gives correct answer
 # gtm8772ANDgtm8784	[see]	 Combined test for gtm8872 and gtm8784 to test what update requests do when freeze -online in effect
+# gtm8838	 	[see]	 Test that WFR, BUS and BTS statistics are being reported for $VIEW, MUPIP DUMPFHEAD, ^%PEEKBYNAME, and ^%YGBLSTAT
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "v63013 test starts..."
 
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
-setenv subtest_list_non_replic "gtm9147 gtm9287 gtm8793 gtm9311 gtm9295 gtm9293 gtm9313 gtm8772ANDgtm8784"
+setenv subtest_list_non_replic "gtm9147 gtm9287 gtm8793 gtm9311 gtm9295 gtm9293 gtm9313 gtm8772ANDgtm8784 gtm8838"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
@@ -41,7 +42,7 @@ setenv subtest_exclude_list ""
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
 if ("pro" == "$tst_image") then
-
+	setenv subtest_exclude_list "$subtest_exclude_list"
 endif
 
 if ("dbg" == "$tst_image") then

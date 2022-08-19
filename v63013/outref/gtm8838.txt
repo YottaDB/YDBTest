@@ -1,0 +1,52 @@
+# Test for GTM-8838 - Test WFR, BUS and BTS statistics and their field name counterparts are accessible
+# via $VIEW, MUPIP DUMPFHEAD, ^%PEEKBYNAME, and ^%YGBLSTAT (ZSHOW is already covered elsewhere in the
+# test system).
+
+# Create database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+# Make it a not empty database
+
+# Verify $VIEW("GVSTAT","DEFAULT") displays the new stats (only print tail to avoid stat differences in reference file)
+New $VIEW("GVSTAT") Statistics: WFR:0,BUS:0,BTS:0
+
+# Capture the output of MUPIP DUMPFHEAD -reg DEFAULT in the file mupip_dumpfhead_output.txt
+
+# Verify the old names for these stats are no longer shown in MUPIP DUMPFHEAD outpu (should display nothing)
+
+# Verify the new names for these stats are available in MUPIP DUMPFHEAD output (expect the 3 statistic values)
+record("sgmnt_data.gvstats_rec.n_bt_scarce")="0x0000000000000000"
+record("sgmnt_data.gvstats_rec.n_buffer_scarce")="0x0000000000000000"
+record("sgmnt_data.gvstats_rec.n_wait_for_read")="0x0000000000000000"
+
+# Verify the old names for these stats are no longer shown with ^%PEEKBYNAME() (expect errors for unknown fields)
+t_qread_ripsleep_cnt_cnt: %YDB-E-PBNINVALID, sgmnt_data does not have a field named t_qread_ripsleep_cnt_cntr
+t_qread_ripsleep_cnt_cnt: %YDB-E-PBNINVALID, sgmnt_data does not have a field named db_csh_get_too_man_loops_cntr
+t_qread_ripsleep_cnt_cnt: %YDB-E-PBNINVALID, sgmnt_data does not have a field named bt_put_flush_dirty_cntr
+
+# Verify the new names for these stats are available with ^%PEEKBYNAME() (expect the 3 statistic values)
+n_wait_for_read: 0x0000000000000000
+n_buffer_scarce: 0x0000000000000000
+n_bt_scarce: 0x0000000000000000
+
+# Verify the statistics show up in ^%YGBLSTAT (only print tail to avoid stat differences in reference file)
+# Doing a few SETs to generate some statistics for ^%YGBLSTAT
+New ^%YGBLSTAT Statistics: WFR:0,BUS:0,BTS:0
+
+##SUSPEND_OUTPUT PRO
+# Turn global stat sharing off of on this DB to make changing the stats easier (prevents other processes from
+# changing our stats once we set them). Test will fail without NOSTATS being set.
+Database file ##TEST_PATH##/mumps.dat now has sharing of gvstats set to FALSE
+
+# Set each of the gvstats statistics to a given value then verify that value via both ^%PEEKBYNAME and MUPIP DUMPFHEAD
+The gvstats record fields were validated
+
+##ALLOW_OUTPUT PRO
+# Verify database we (lightly) used
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
