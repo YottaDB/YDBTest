@@ -1,0 +1,35 @@
+# Test that VIEW "NOISOLATION" optimization affects non-TP transactions like it does TP transactions.
+# In the below test, ^x(n) is incremented by each of the 5 processes (for 5000 times each). All of the
+# counters live in the same data block. We expect that ISOLATION runs will have type 13 restarts while
+# NOISOLATION runs will have type 14 restarts (restart type t_blkmod_t_end3 vs t_blkmod_t_end4).
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+# Case (1) : Invoking :mumps -run gtm9230^gtm9230: with VIEW NOISOLATION turned OFF
+
+Starting ISOLATION run
+
+##TEST_AWKISOLATION non-TP restart counters: .*
+
+
+# Case (2) : Invoking :mumps -run gtm9230^gtm9230: with VIEW NOISOLATION turned ON
+
+Starting NOISOLATION run
+
+##TEST_AWKNOISOLATION non-TP restart counters: .*
+
+
+# Verify the restart types from the ISOLATION and NOISOLATION runs:
+# ISOLATION validation (non-TP):
+File syslog_ISOLATION.txt validated as having only type 13 restarts
+
+# NOISOLATION validation (non-TP):
+File syslog_NOISOLATION.txt validated as having only type 14 restarts
+
+# Validate our database
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
