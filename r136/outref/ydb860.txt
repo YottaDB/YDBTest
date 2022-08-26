@@ -194,6 +194,144 @@ YDB>
 # Try ydb860devicereadonly.m using [yottadb -run]
 %YDB-E-DEVICEREADONLY, Cannot write to read-only device
 
+------------------------------------------------------------
+# Test boolean expressions inside extended reference using the [] syntax
+# This used to previously (before YDB@7b3f8ffe) fail with a SIG-11
+# Expecting various syntax errors in below output but no SIG-11
+------------------------------------------------------------
+# Try ydb860boolexprextref.m using [yottadb -direct]
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+%YDB-E-GVUNDEF, Global variable undefined: ^a
+
+YDB>
+%YDB-E-EXTGBLDEL, Invalid delimiter for extended global syntax
+		lock +[($get(^a(3))!$get(^|"mumps.gld"|a(3)))
+		                                             ^-----
+
+YDB>
+%YDB-E-RPARENMISSING, Right parenthesis expected
+		lock ^[(($Test&($ZAHandle(@iTRUE)]$ZAHandle(@iTRUE@(1)))!$Test)&^TRUE&($$RetNot(((((@iFALSE@($$Always1)[(1'>$Order(^TRUE(1),-1)))[$$RetNot($$Always0))>$$Always0)'>1))'[(0']]$$Always1))
+		                                                                                                                                                                                        ^-----
+
+YDB>
+%YDB-E-EXTGBLDEL, Invalid delimiter for extended global syntax
+		lock +[($Test!(1'=($Test'=^TRUE))!$Test!$$RetNot($Order(@^iTRUE@(2),-1)))
+		                                                                         ^-----
+
+YDB>
+%YDB-E-EXTGBLDEL, Invalid delimiter for extended global syntax
+		lock +[(^TRUE!$Test!$$RetNot($Order(@^iTRUE@(2),-1)))
+		                                                     ^-----
+
+YDB>
+%YDB-E-LKNAMEXPECTED, An identifier is expected after a ^ in this context
+		lock +[(^TRUE!$$RetNot($Order(@^iTRUE@(2))))]
+		                                             ^-----
+
+YDB>
+%YDB-E-LKNAMEXPECTED, An identifier is expected after a ^ in this context
+		lock +[(^TRUE!$$x($Order(^iTRUE(2))))]
+		                                      ^-----
+
+YDB>
+%YDB-E-RPARENMISSING, Right parenthesis expected
+		lock ^[(+aZYISSQLNULL(second)!^y(+c),+^z(d)
+		                                    ^-----
+
+YDB>
+%YDB-E-LKNAMEXPECTED, An identifier is expected after a ^ in this context
+		lock +[(^x!$Order(^y(1)))]
+		                          ^-----
+
+YDB>
+%YDB-E-RHMISSING, Right-hand side of expression expected
+		set ^[(0!^x(1)]
+		               ^-----
+
+YDB>
+
+YDB>
+
+YDB>
+# Try ydb860boolexprextref.m using [yottadb -run]
+		lock +[($get(^a(3))!$get(^|"mumps.gld"|a(3)))
+		                                             ^-----
+		At column 47, line 17, source module ##IN_TEST_PATH##/inref/ydb860boolexprextref.m
+%YDB-E-EXTGBLDEL, Invalid delimiter for extended global syntax
+		lock ^[(($Test&($ZAHandle(@iTRUE)]$ZAHandle(@iTRUE@(1)))!$Test)&^TRUE&($$RetNot(((((@iFALSE@($$Always1)[(1'>$Order(^TRUE(1),-1)))[$$RetNot($$Always0))>$$Always0)'>1))'[(0']]$$Always1))
+		                                                                                                                                                                                        ^-----
+		At column 186, line 18, source module ##IN_TEST_PATH##/inref/ydb860boolexprextref.m
+%YDB-E-RPARENMISSING, Right parenthesis expected
+		lock +[($Test!(1'=($Test'=^TRUE))!$Test!$$RetNot($Order(@^iTRUE@(2),-1)))
+		                                                                         ^-----
+		At column 75, line 19, source module ##IN_TEST_PATH##/inref/ydb860boolexprextref.m
+%YDB-E-EXTGBLDEL, Invalid delimiter for extended global syntax
+		lock +[(^TRUE!$Test!$$RetNot($Order(@^iTRUE@(2),-1)))
+		                                                     ^-----
+		At column 55, line 20, source module ##IN_TEST_PATH##/inref/ydb860boolexprextref.m
+%YDB-E-EXTGBLDEL, Invalid delimiter for extended global syntax
+		lock +[(^TRUE!$$RetNot($Order(@^iTRUE@(2))))]
+		                                             ^-----
+		At column 47, line 21, source module ##IN_TEST_PATH##/inref/ydb860boolexprextref.m
+%YDB-E-LKNAMEXPECTED, An identifier is expected after a ^ in this context
+		lock +[(^TRUE!$$x($Order(^iTRUE(2))))]
+		                                      ^-----
+		At column 40, line 22, source module ##IN_TEST_PATH##/inref/ydb860boolexprextref.m
+%YDB-E-LKNAMEXPECTED, An identifier is expected after a ^ in this context
+		lock ^[(+aZYISSQLNULL(second)!^y(+c),+^z(d)
+		                                    ^-----
+		At column 38, line 23, source module ##IN_TEST_PATH##/inref/ydb860boolexprextref.m
+%YDB-E-RPARENMISSING, Right parenthesis expected
+		lock +[(^x!$Order(^y(1)))]
+		                          ^-----
+		At column 28, line 24, source module ##IN_TEST_PATH##/inref/ydb860boolexprextref.m
+%YDB-E-LKNAMEXPECTED, An identifier is expected after a ^ in this context
+		set ^[(0!^x(1)]
+		               ^-----
+		At column 17, line 25, source module ##IN_TEST_PATH##/inref/ydb860boolexprextref.m
+%YDB-E-RHMISSING, Right-hand side of expression expected
+ZSTATUS=+16^ydb860boolexprextref,%YDB-E-GVUNDEF, Global variable undefined: ^a
+ZSTATUS=+17^ydb860boolexprextref,%YDB-E-EXTGBLDEL, Invalid delimiter for extended global syntax
+ZSTATUS=+18^ydb860boolexprextref,%YDB-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=+19^ydb860boolexprextref,%YDB-E-EXTGBLDEL, Invalid delimiter for extended global syntax
+ZSTATUS=+20^ydb860boolexprextref,%YDB-E-EXTGBLDEL, Invalid delimiter for extended global syntax
+ZSTATUS=+21^ydb860boolexprextref,%YDB-E-LKNAMEXPECTED, An identifier is expected after a ^ in this context
+ZSTATUS=+22^ydb860boolexprextref,%YDB-E-LKNAMEXPECTED, An identifier is expected after a ^ in this context
+ZSTATUS=+23^ydb860boolexprextref,%YDB-E-RPARENMISSING, Right parenthesis expected
+ZSTATUS=+24^ydb860boolexprextref,%YDB-E-LKNAMEXPECTED, An identifier is expected after a ^ in this context
+ZSTATUS=+25^ydb860boolexprextref,%YDB-E-RHMISSING, Right-hand side of expression expected
+
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

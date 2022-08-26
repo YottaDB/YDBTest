@@ -63,7 +63,7 @@ foreach iter ($verlist)
 	endif
 	# First run is normal shortcutting - no boolean
 	if ($iter == 0) echo "Compiling btest.m with gtm_boolean=0"
-	setenv gtm_boolean 1
+	setenv gtm_boolean 0
 	if ($?gtmdbglvlsave) unsetenv gtmdbglvl
 	$gtm_dist/mumps btest.m
 	if ($status != 0) then
