@@ -1,0 +1,77 @@
+## Test for GTM-9277 - test crafted boolean expressions that have side-effect implications in their last
+##  term. These boolean expressions are fed to intrinsic function calls where the value received by the C
+## routine is an integer instead of the underlying mval.
+
+## Setup collation used in the test (via com/cre_coll_sl.csh)
+
+## Create database with collation enabled as it is used in several expressions. Also add a few records.
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+YDB>
+
+YDB>
+
+## Drive gtm9277 test routine
+
+# Testing expression: $ascii("abc",(1&@iTRUE))
+
+# Testing expression: $char((TRUE&$$Always1))
+
+# Testing expression: $find("abcd","b",(FALSE!$increment(zz)))
+
+# Testing expression: $fnumber(42,"P",(TRUE&@iTRUE))
+
+# Testing expression: ($justify($job,(FALSE!$$Always0)))
+
+# Testing expression: ($piece("abcd","c",(0!$increment(y))))
+
+# Testing expression: ($qsubscript("a(1,2,3)",($$Always1!$$Always0)))
+
+# Testing expression: ($random(($$Always1!@iFALSE)))
+
+# Testing expression: ($stack((@iTRUE&$increment(y))))
+
+# Testing expression: ($zatransform("abc",(1&$$Always1)))
+
+# Testing expression: ($zbitfind($char(0)_"101",(@iFALSE!$increment(zz))))
+
+# Testing expression: ($zbitfind($char(0)_"101",0,(@iTRUE&$$Always1)))
+
+# Testing expression: ($zbitget($char(0)_"101",(1!@iFALSE)))
+
+# Testing expression: ($zbitset($char(0)_"101",(TRUE&@iTRUE),0))
+
+# Testing expression: ($zbitset($char(0)_"101",3,(@iTRUE!$increment(zz))))
+
+# Testing expression: ($zbitstr(($$Always0!$$Always1)))
+
+# Testing expression: ($zbitstr(6,($$Always0!@iTRUE)))
+
+# Testing expression: ($zextract("abcd",(1!$$Always0)))
+
+# Testing expression: ($zextract("abcd",1,(0!$increment(zz))))
+
+# Testing expression: ($zgetjpi((@iTRUE!$$Always0),"stime"))
+
+# Testing expression: ($zpeek("CSAREG:DEFAULT",(0!$increment(zz)),10))
+
+# Testing expression: ($zpeek("FHREG:DEFAULT",0,(1!@iTRUE)))
+
+# Testing expression: ($zpiece("abcd","b",1,(1!@iFALSE)))
+
+# Testing expression: ($zsigproc((TRUE!@iFALSE),0))
+
+# Testing expression: ($zsubstr("abcd",(0!$$Always1)))
+
+# Testing expression: ($zsubstr("abcd",1,(1&$increment(zz))))
+
+# Completed gtm9277 successfully!
+
+## Verify database we (very lightly) used
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

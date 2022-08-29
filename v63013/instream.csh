@@ -25,13 +25,14 @@
 # gtm8838	 	[see]	 Test that WFR, BUS and BTS statistics are being reported for $VIEW, MUPIP DUMPFHEAD, ^%PEEKBYNAME, and ^%YGBLSTAT
 # gtm9252		[see,nars] Test that when 2 processes open a read-only file, they don't cause a SYSCALL error in syslog
 # gtm9230		[see]	 Test that NOISOLATION with non-TP transactions optimize updates like with TP transactions
+# gtm9277		[see]	 Test that side effect mode works properly when last arg of boolean expr has a side effect and evals to an int
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "v63013 test starts..."
 
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
-setenv subtest_list_non_replic "gtm9147 gtm9287 gtm8793 gtm9311 gtm9295 gtm9293 gtm9313 gtm8772ANDgtm8784 gtm8838 gtm9252 gtm9230"
+setenv subtest_list_non_replic "gtm9147 gtm9287 gtm8793 gtm9311 gtm9295 gtm9293 gtm9313 gtm8772ANDgtm8784 gtm8838 gtm9252 gtm9230 gtm9277"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
