@@ -47,6 +47,13 @@ setenv subtest_exclude_list ""
 # retries to the test did not address these failures so we've disabled the test.
 if ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) then
 	setenv subtest_exclude_list "$subtest_exclude_list plugins"
+else if (("rhel" == $gtm_test_linux_distrib) && ("7.9" == $gtm_test_linux_version)) then
+	# https://gitlab.com/YottaDB/Tools/YDBCMake/-/merge_requests/21 made the following change.
+	#	Always set locale to C.UTF-8. It's available in all modern Linux distros.
+	# But C.UTF-8 is not available on RHEL 7. And the "plugins" subtest uses ydbinstall to install
+	# the "encplugin", "aim" and "posix" plugins, all of which use the YDBCMake framework and so will
+	# not work on RHEL 7. Therefore disable this subtest on RHEL 7.
+	setenv subtest_exclude_list "$subtest_exclude_list plugins"
 endif
 
 # Save a copy of the current system yottadb.pc before it gets modified by the various ydbinstall.sh invocations done in the
