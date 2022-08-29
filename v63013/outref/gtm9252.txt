@@ -1,0 +1,20 @@
+# Test for GTM-9252 - Verify clean rundown from two processes with same R/O DB open
+
+# Create database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+# Drive gtm9252 test routine
+# Starting two subprocesses
+# Releasing subprocesses
+# Waiting for subprocess shutdown
+
+# Extract syslog file for gtm9252 run looking for SYSCALL error (if we find one, test fails)
+
+# Verify database we (very lightly) used
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
