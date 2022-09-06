@@ -109,7 +109,7 @@ setenv gtm_ver $gtm_root/$verno
 setenv gtm_obj $gtm_exe/obj
 setenv gtm_log $gtm_ver/log
 setenv gtm_testver T133
-setenv gtm_curpro $verno
+setenv gtm_curpro /usr/local/lib/yottadb/r134	# This needs to be set to a current release version of YottaDB
 setenv gtm_com ""
 setenv gtm_icu_version `pkg-config --modversion icu-io`
 setenv tst_dir /testarea1	# Can be replaced with any directory
