@@ -74,7 +74,7 @@ validateRestartMessages(fn,type)
 	. . set glbl=$zpiece(x,";",1)
 	. . if ("^x("'=$zextract(glbl,1,3)) do logBypass(.line) quit	; Bypass if this restart is not for global '^x'
 	. . use $p
-	. . write "Unexpected message type. Expected ",type," but found ",rectype," in line ",recidx," in file ", fn,!
+	. . write "Unexpected message type. Expected ",type," but found ",rectype," in line ",recidx," in file ",fn,!
 	. . zwrite line
 	. . zhalt 1
 	close fn
