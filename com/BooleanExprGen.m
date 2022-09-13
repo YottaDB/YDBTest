@@ -15,12 +15,21 @@
 ;
 ; Generate and return a boolean expression to be used in other tests.
 ;
-; This routine is a variation of v60000/inref/boolgen.m that was used to test GTM-7277.
+; This routine was originally taken from v60000/inref/boolgen.m that was used to test GTM-7277. It has been
+; made somewhat more general purpose to create boolean expressions that can either be used immediately or can
+; be written to a generated routine. The entry points are:
+;
+;   - Init():            Initializes the boolean expression generator.
+;   - BooleanExprGen():  Returns a boolean expression in that it always evaluates to 0 or 1.
+;   - CreateRoutine(fn): Creates 'fn'.m and writes several prologue initializations with it. It opens the output file
+;     			 and leaves its name in the variable 'ofile'.
+;   - GenEndOfFile():    Finishes generation of the output file by adding a QUIT statement and then defining several
+;     			 extrinsics that can be used by the generator.
 ;
 ; The expressions are randomly generated from a defined set of boolean-ish terms (See ttypes() array below).
 ;
 ; Note this routine can generate $ZQGBLMOD() functions. Since the output must be repeatable, this test should
-; NOT run under replication which could make this function less predictable and predictable is what we need.
+; NOT run under replication which could make this function less predictable and predictable is what is needed.
 ;
 	write "FAILURE - This main entry should not be used. Need to directly call what ever routine is needed",!
 	zhalt 1
@@ -223,7 +232,6 @@ Init
 	;
 	; Configuration parms
 	;
-	set exprcnt=$select(($zversion'["x86_64"):1500,1:5000)	; Create this many expressions - each is executed in all 3 places
 	set baseoprnpct=33	; Base open paren percentage. Is reduced by multiples of paren nesting
 	set basecprnpct=40	; Base close paren percentage. Is increased by multiples of paren nesting
 	set nxtopandpct=35	; Next operator this percent to be AND, else is an OR operator
@@ -346,7 +354,7 @@ CreateRoutine(fn)
 ;
 ; Generate end of file and additional routines
 ;
-GenEndOfFile
+GenEndOfFile(callback)
 	use ofile
 	write TAB,"quit",!
 	;
@@ -360,6 +368,7 @@ GenEndOfFile
 	write TAB,"quit x",!
 	write "RetNot(x)",!
 	write TAB,"quit '(x)",!
+	do:(""'=$get(callback)) @callback
 	;
 	; All done!
 	;
@@ -398,7 +407,5 @@ Error
 	set $etrap=""
 	use $p
 	write $zstatus,!!
-	break					; Allow debugging but not ZCONTINUE..
 	zshow "*"
-	write !,"ZContinue not happening..",!
 	zhalt 1

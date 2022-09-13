@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #                                                               #
-# Copyright (c) 2020-2022 YottaDB LLC and/or its subsidiaries.       #
+# Copyright (c) 2020-2022 YottaDB LLC and/or its subsidiaries.  #
 # All rights reserved.                                          #
 #                                                               #
 #       This source code contains the intellectual property     #
@@ -29,9 +29,10 @@ source $gtm_tst/com/unset_ydb_env_var.csh ydb_boolean gtm_boolean
 source $gtm_tst/com/unset_ydb_env_var.csh ydb_side_effects gtm_side_effects
 
 # Generator always runs no-bool
-$gtm_dist/mumps -run boolgen
-if ($status == 1) then
-    echo "Run of boolgen.m failed"
+$gtm_dist/mumps -run gtm7277
+set savestatus=$status
+if (0 != $savestatus) then
+    echo "Run of boolgen.m failed - rc $savestatus"
     exit 1
 endif
 
