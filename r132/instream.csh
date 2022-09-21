@@ -103,9 +103,10 @@ if ("arch" == $gtm_test_linux_distrib) then
 	setenv subtest_exclude_list "$subtest_exclude_list ydb704"
 endif
 
-if ($gtm_test_asan_compiler_clang11or12) then
-	# libyottadb.so was built with ASAN and CLANG 11 or CLANG 12
-	# In this case, the ydb632 subtest fails with the following diff
+if ($gtm_test_libyottadb_asan_enabled && ("clang" == $gtm_test_asan_compiler)) then
+	# libyottadb.so was built with ASAN and CLANG.
+	#
+	# With ASAN and CLANG 11 or CLANG 12 on Ubuntu, we have seen the ydb632 subtest fail with the following diff
 	#
 	# --- ydb632/ydb632.diff ---
 	# 12a13,15
@@ -113,8 +114,19 @@ if ($gtm_test_asan_compiler_clang11or12) then
 	# > False positive error reports may follow
 	# > For details see https://github.com/google/sanitizers/issues/189
 	#
-	# CLANG 13 does not fail this way so it is most likely a clang issue that has been fixed in a later version.
-	# So disable just this subtest.
+	# With ASAN and CLANG 13 on Ubuntu, we did not see such a failure.
+	# But With ASAN and CLANG 13 on SUSE, we see failures like the following.
+	#
+	#   ASAN:DEADLYSIGNAL
+	#   =================================================================
+	#   ==44982==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x000000400c2a bp 0x7ffcf041d590 sp 0x7ffcf041d530 T0)
+	#   ==44982==The signal is caused by a READ memory access.
+	#   ==44982==Hint: address points to the zero page.
+	#
+	# With ASAN and GCC though we have not seen any of the above issues.
+	#
+	# Given that this subtest does intentionally trigger a SIG-11, I think it is not worth it trying it to
+	# make it work with CLANG and ASAN. So we disable it in that case.
 	setenv subtest_exclude_list "$subtest_exclude_list ydb632"
 endif
 
