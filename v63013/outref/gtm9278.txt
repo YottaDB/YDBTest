@@ -1,0 +1,67 @@
+# Test for GTM-9278
+
+# Create database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+##SUSPEND_OUTPUT PRO
+
+# Setup WBTEST_YDB_MAXSECSHRRETRY white box test
+
+# Changing our database to read-only (priv 0444) and running lke on the DB. Since it is R/O, it will
+# attempt to engage gtmsecshr which will fail and drive the error code we want to test.
+
+# Now try to invoke LKE. The messages that follow should include a message that the DB header flush
+# failed followed by a GTMSECSHRTMPPATH message.
+##TEST_AWK%YDB-E-GTMSECSHRSRVF, Client - [1-9][0-9]* : Attempt to service request failed \(retry = 4\)
+%YDB-I-TEXT, Unable to communicate with gtmsecshr
+%YDB-I-TEXT, Database Header flush failed
+%YDB-I-GTMSECSHRTMPPATH, gtmsecshr path is /tmp
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/mumps.dat
+%YDB-I-TEXT, gtmsecshr failed to update database file header
+%YDB-E-DBNOREGION, None of the database regions accessible
+
+# Removing R/O state from DB and unset white box case envvars
+##ALLOW_OUTPUT PRO
+
+# Change the global directory to point to a directory (dirnotdat.dat) in the test and create the
+# directory. Then run LKE on it.
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/dirnotdat.dat was opened as read-only (perms 0)
+%SYSTEM-E-ENO21, Is a directory
+%YDB-E-DBFILOPERR, Error doing database I/O to database file ##TEST_PATH##/dirnotdat.dat
+%SYSTEM-E-ENO21, Is a directory
+%YDB-E-DBNOREGION, None of the database regions accessible
+
+# Run YDB#927 exerciser 6 times. Failures marked by the presence of core files. Each instance of the
+# exerciser runs a simplistic routine 100 times so with 6 instances, there is lots of interference
+# between the processes. With the database name being set to a directory name, this causes errors on
+# every attempted DB open and this test makes sure everything is cleaned up correctly without errors.
+
+# Run a filter on the YDB#927 output logs to remove the expected errors. The framework will verify that
+# no unexpected errors occurred. The filter creates .log version of the input .logx file sans the expected
+# DBFILOPERR/ENO21 error combination errors.
+
+# Set DB back to how it was so it can be integd
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+
+# Verify database we (very lightly) used
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
