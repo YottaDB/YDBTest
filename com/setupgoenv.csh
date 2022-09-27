@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2019-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -115,9 +115,16 @@ set gotest = "go test"
 
 source $gtm_tst/com/is_libyottadb_asan_enabled.csh
 if ($gtm_test_libyottadb_asan_enabled) then
-	# libyottadb.so was built with asan enabled. Do the same with the go executables.
-	set gobuild = "$gobuild -ldflags '-fsanitize=address'"
-	set gotest = "$gotest -ldflags '-fsanitize=address'"
+	# libyottadb.so was built with asan enabled. Do the same with the go executables. Check if we are using Go 1.19 or later,
+	# which uses the new -asan flag or 1.18.x or earlier which uses '-fsanitize=address'.
+	set gover = `go version | $ydb_dist/yottadb -run ^%XCMD 'read ver write +$zpiece(ver,"go",3),!'`
+	if (`expr $gover "<=" "1.18"`) then
+	    set asanflags = "'-fsanitize=address'"
+	else
+	    set asanflags = "-asan"
+	endif
+	set gobuild = "$gobuild -ldflags $asanflags"
+	set gotest = "$gotest -ldflags $asanflags"
 endif
 
 # Random Go environment settings
