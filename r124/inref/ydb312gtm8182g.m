@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -59,5 +59,5 @@ numProc
 ftok
 	WRITE "     "
 
-	ZSYSTEM "set repl_ftok_semid = `$gtm_dist/ftok -id=44 $gtm_repl_instance | awk '{print $5}'` ; $gtm_dist/semstat2 `$gtm_tst/com/ipcs -s | $grep -w $repl_ftok_semid | awk '{print $2}'` | $grep 'sem 1' | sed 's/sem 1/JNLPOOL ftok : '$gtm_repl_instance' /g' "
+	ZSYSTEM "set repl_ftok_semid = `$gtm_dist/ftok -id=44 $gtm_repl_instance | awk '{print $5}'` ; $gtm_dist/semstat2 `$gtm_tst/com/ipcs -s | $grep -w $repl_ftok_semid | awk '{print $2}'` | $grep 'sem  1' | sed 's/sem  1/JNLPOOL ftok : '$gtm_repl_instance' /g' "
 
