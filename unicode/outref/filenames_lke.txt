@@ -23,23 +23,23 @@ lke_show_ｏｕｔｐｕｔ1.out
 
 AREG
 ##TEST_AWK\^a\("ａｂｃ"\) Owned by PID= [0-9]* which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(880|1173); LOCK slots in use: 2/(597|820); SUBSCRIPT slot bytes in use: (24|40)/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(880|1173); LOCK slots in use: 2/(597|820); SUBSCRIPT slot bytes in use: (24|40)/(28072|28084)
 %YDB-I-LOCKSPACEUSE, Estimated free lock space: 99% of 220 pages
 
 BREG
 ##TEST_AWK\^b\(1,"ａｂｃ"\) Owned by PID= [0-9]* which is an existing process
 ##TEST_AWK\^b\("我能吞下玻璃而不伤身体"\) Owned by PID= [0-9]* which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(880|1173); LOCK slots in use: 4/(597|820); SUBSCRIPT slot bytes in use: (72|104)/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(880|1173); LOCK slots in use: 4/(597|820); SUBSCRIPT slot bytes in use: (72|104)/(28072|28084)
 %YDB-I-LOCKSPACEUSE, Estimated free lock space: 99% of 220 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: CREG: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: CREG: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28072|28084)
 %YDB-I-NOLOCKMATCH, No matching locks were found in CREG
 %YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 220 pages
 
 DEFAULT
 ##TEST_AWKz\("我能吞下玻璃而不伤身体"\) Owned by PID= [0-9]* which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 2/(597|820); SUBSCRIPT slot bytes in use: (48|64)/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 2/(597|820); SUBSCRIPT slot bytes in use: (48|64)/(28072|28084)
 %YDB-I-LOCKSPACEUSE, Estimated free lock space: 99% of 220 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DREG: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DREG: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28072|28084)
 %YDB-I-NOLOCKMATCH, No matching locks were found in DREG
 %YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 220 pages
 ::::::::::::::
@@ -48,19 +48,19 @@ lke_show_ｏｕｔｐｕｔ2.out
 
 AREG
 ##TEST_AWK\^a\("ａｂｃ"\) Owned by PID= [0-9]* which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(880|1173); LOCK slots in use: 2/(597|820); SUBSCRIPT slot bytes in use: (24|40)/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: AREG: processes on queue: 0/(880|1173); LOCK slots in use: 2/(597|820); SUBSCRIPT slot bytes in use: (24|40)/(28072|28084)
 %YDB-I-LOCKSPACEUSE, Estimated free lock space: 99% of 220 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28072|28084)
 %YDB-I-NOLOCKMATCH, No matching locks were found in BREG
 %YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 220 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: CREG: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: CREG: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28072|28084)
 %YDB-I-NOLOCKMATCH, No matching locks were found in CREG
 %YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 220 pages
 
 DEFAULT
 ##TEST_AWKz\("我能吞下玻璃而不伤身体"\) Owned by PID= [0-9]* which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 2/(597|820); SUBSCRIPT slot bytes in use: (48|64)/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 2/(597|820); SUBSCRIPT slot bytes in use: (48|64)/(28072|28084)
 %YDB-I-LOCKSPACEUSE, Estimated free lock space: 99% of 220 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DREG: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DREG: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28072|28084)
 %YDB-I-NOLOCKMATCH, No matching locks were found in DREG
 %YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 220 pages

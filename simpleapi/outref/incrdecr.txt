@@ -9,7 +9,7 @@ incrdecr: List of locks after setting the 1st set of vars:
 DEFAULT
 ##TEST_AWK\^lockA Owned by PID= [1-9][0-9]* which is an existing process
 ##TEST_AWKlockA Owned by PID= [1-9][0-9]* which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 2/(597|820); SUBSCRIPT slot bytes in use: (24|32)/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 2/(597|820); SUBSCRIPT slot bytes in use: (24|32)/(28072|28084)
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: 9[89]. of 220 pages
 
 
@@ -20,7 +20,7 @@ DEFAULT
 ##TEST_AWK\^lockA\(42\) Owned by PID= [1-9][0-9]* which is an existing process
 ##TEST_AWKlockA Owned by PID= [1-9][0-9]* which is an existing process
 ##TEST_AWKlockA\(42\) Owned by PID= [1-9][0-9]* which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 4/(597|820); SUBSCRIPT slot bytes in use: (40|64)/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 4/(597|820); SUBSCRIPT slot bytes in use: (40|64)/(28072|28084)
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: 9[679]. of 220 pages
 
 
@@ -29,7 +29,7 @@ incrdecr: List of locks after removing the 1st set:
 DEFAULT
 ##TEST_AWK\^lockA\(42\) Owned by PID= [1-9][0-9]* which is an existing process
 ##TEST_AWKlockA\(42\) Owned by PID= [1-9][0-9]* which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 4/(597|820); SUBSCRIPT slot bytes in use: (40|64)/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 4/(597|820); SUBSCRIPT slot bytes in use: (40|64)/(28072|28084)
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: 9[679]. of 220 pages
 
 
@@ -39,13 +39,13 @@ DEFAULT
 ##TEST_AWK\^lockA\("simpleAPI","lock","uh-huh","oooooh","shiney!"\) Owned by PID= [1-9][0-9]* which is an existing process
 ##TEST_AWKlockA\(42\) Owned by PID= [1-9][0-9]* which is an existing process
 ##TEST_AWKlockA\("simpleAPI","lock","uh-huh","oooooh","shiney!"\) Owned by PID= [1-9][0-9]* which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 13/(597|820); SUBSCRIPT slot bytes in use: (160|168|224)/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 13/(597|820); SUBSCRIPT slot bytes in use: (160|168|224)/(28072|28084)
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: (89|92|97|98). of 220 pages
 
 
 incrdecr: List of locks after zero argument call to ydb_lock_s() which should release all locks:
 
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28072|28084)
 %YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
 %YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 220 pages
 

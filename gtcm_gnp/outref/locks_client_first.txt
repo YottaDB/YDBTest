@@ -33,9 +33,9 @@ LKE SHOW -ALL on remote_host_2
 
 BREG
 ##TEST_AWK.b Owned by PID= [0-9]* which is an existing process : CLNTNODE = ##TEST_NODE##.* : CLNTPID = [0-9]*
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(880|1173); LOCK slots in use: 1/(597|820); SUBSCRIPT slot bytes in use: (8|16)/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(880|1173); LOCK slots in use: 1/(597|820); SUBSCRIPT slot bytes in use: (8|16)/(28072|28084)
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28072|28084)
 %YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
 

@@ -32,7 +32,7 @@ YDB>
 YDB>
 #Launch second process
 #Launch third and bypasser process:  lke show
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28072|28084)
 %YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
 %YDB-I-LOCKSPACEUSE, Estimated free lock space: 100% of 220 pages
 ##TEST_AWK.*YDB-LKE\[.*%YDB-I-RESRCWAIT, Waiting briefly for the FTOK semaphore for region DEFAULT \(##TEST_PATH##/mumps.dat\) was held by PID [0-9]* \(Sem. ID: [0-9]*\).*

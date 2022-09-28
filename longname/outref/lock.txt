@@ -10,16 +10,16 @@ a8.dat
 mumps.dat
 test long variable names for lock command
 test long region names
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28072|28084)
 %YDB-I-NOLOCKMATCH, No matching locks were found in A
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A234567890123456: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A234567890123456: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28072|28084)
 %YDB-I-NOLOCKMATCH, No matching locks were found in A234567890123456
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A23456789012345678901234567890: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A23456789012345678901234567890: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28072|28084)
 %YDB-I-NOLOCKMATCH, No matching locks were found in A23456789012345678901234567890
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A234567890123456789012345678901: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A234567890123456789012345678901: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28072|28084)
 %YDB-I-NOLOCKMATCH, No matching locks were found in A234567890123456789012345678901
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
 
@@ -32,19 +32,19 @@ Try to lock loc4567890123456789012345678901wowthisisonelongvariablehere and ^gbl
 Show all the locks
 #####################################################################
 $LKE show -all
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28072|28084)
 %YDB-I-NOLOCKMATCH, No matching locks were found in A
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A2345678: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A2345678: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28072|28084)
 %YDB-I-NOLOCKMATCH, No matching locks were found in A2345678
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A234567890123456: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A234567890123456: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28072|28084)
 %YDB-I-NOLOCKMATCH, No matching locks were found in A234567890123456
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A23456789012345678901234567890: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A23456789012345678901234567890: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28072|28084)
 %YDB-I-NOLOCKMATCH, No matching locks were found in A23456789012345678901234567890
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A234567890123456789012345678901: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A234567890123456789012345678901: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28072|28084)
 %YDB-I-NOLOCKMATCH, No matching locks were found in A234567890123456789012345678901
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
 
@@ -109,7 +109,7 @@ loc4567890123456789012345678 Owned by PID= PID1 which is an existing process
 loc45678901234567890123456789 Owned by PID= PID1 which is an existing process
 loc456789012345678901234567890 Owned by PID= PID1 which is an existing process
 loc4567890123456789012345678901 Owned by PID= PID1 which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 60/(597|820); SUBSCRIPT slot bytes in use: (1464|1816)/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 60/(597|820); SUBSCRIPT slot bytes in use: (1464|1816)/(28072|28084)
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
 zshow L
 MLG:31,MLT:0
@@ -176,20 +176,20 @@ LOCK ^a LEVEL=1
 #####################################################################
 Show locks ^A2345678 loc4567890123456789012345678901 and ^gbl4567890123456789012345678901
 $LKE show -lock=^A2345678 -region=A2345678
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A2345678: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A2345678: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28072|28084)
 %YDB-I-NOLOCKMATCH, No matching locks were found in A2345678
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
 $LKE show -lock=loc4567890123456789012345678901 -region=DEFAULT
 
 DEFAULT
 loc4567890123456789012345678901 Owned by PID= PID1 which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 60/(597|820); SUBSCRIPT slot bytes in use: (1464|1816)/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 60/(597|820); SUBSCRIPT slot bytes in use: (1464|1816)/(28072|28084)
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
 $LKE show -lock=^gbl4567890123456789012345678901 -region=DEFAULT
 
 DEFAULT
 ^gbl4567890123456789012345678901 Owned by PID= PID1 which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 60/(597|820); SUBSCRIPT slot bytes in use: (1464|1816)/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 60/(597|820); SUBSCRIPT slot bytes in use: (1464|1816)/(28072|28084)
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
 #####################################################################
 ZSHOW L
@@ -342,7 +342,7 @@ loc456789012345678901234567 Owned by PID= PID1 which is an existing process
 loc4567890123456789012345678 Owned by PID= PID1 which is an existing process
 loc45678901234567890123456789 Owned by PID= PID1 which is an existing process
 loc456789012345678901234567890 Owned by PID= PID1 which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 56/(597|820); SUBSCRIPT slot bytes in use: (1368|1688)/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 56/(597|820); SUBSCRIPT slot bytes in use: (1368|1688)/(28072|28084)
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
 zshow L
 ^gbl4567890123456789012345678901("L",0)="MLG:31,MLT:0"
@@ -1073,7 +1073,7 @@ Lock removed : loc45678901234567890123456789
 Lock removed : loc456789012345678901234567890
 #####################################################################
 $LKE show -all -region=DEFAULT
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28072|28084)
 %YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
 zshow L
@@ -1097,7 +1097,7 @@ A
 ^A2345 Owned by PID= PID2 which is an existing process
 ^A23456 Owned by PID= PID2 which is an existing process
 ^A234567 Owned by PID= PID2 which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A: processes on queue: 0/(880|1173); LOCK slots in use: 7/(597|820); SUBSCRIPT slot bytes in use: (80|120)/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A: processes on queue: 0/(880|1173); LOCK slots in use: 7/(597|820); SUBSCRIPT slot bytes in use: (80|120)/(28072|28084)
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
 
 A2345678
@@ -1109,7 +1109,7 @@ A2345678
 ^A234567890123 Owned by PID= PID2 which is an existing process
 ^A2345678901234 Owned by PID= PID2 which is an existing process
 ^A23456789012345 Owned by PID= PID2 which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A2345678: processes on queue: 0/(880|1173); LOCK slots in use: 8/(597|820); SUBSCRIPT slot bytes in use: (152|200)/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A2345678: processes on queue: 0/(880|1173); LOCK slots in use: 8/(597|820); SUBSCRIPT slot bytes in use: (152|200)/(28072|28084)
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
 
 A234567890123456
@@ -1127,19 +1127,19 @@ A234567890123456
 ^A23456789012345678901234567 Owned by PID= PID2 which is an existing process
 ^A234567890123456789012345678 Owned by PID= PID2 which is an existing process
 ^A2345678901234567890123456789 Owned by PID= PID2 which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A234567890123456: processes on queue: 0/(880|1173); LOCK slots in use: 14/(597|820); SUBSCRIPT slot bytes in use: (420|504)/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A234567890123456: processes on queue: 0/(880|1173); LOCK slots in use: 14/(597|820); SUBSCRIPT slot bytes in use: (420|504)/(28072|28084)
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
 
 A23456789012345678901234567890
 ^A23456789012345678901234567890 Owned by PID= PID2 which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A23456789012345678901234567890: processes on queue: 0/(880|1173); LOCK slots in use: 1/(597|820); SUBSCRIPT slot bytes in use: (36|40)/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A23456789012345678901234567890: processes on queue: 0/(880|1173); LOCK slots in use: 1/(597|820); SUBSCRIPT slot bytes in use: (36|40)/(28072|28084)
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
 
 A234567890123456789012345678901
 ^A234567890123456789012345678901 Owned by PID= PID2 which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A234567890123456789012345678901: processes on queue: 0/(880|1173); LOCK slots in use: 1/(597|820); SUBSCRIPT slot bytes in use: (40|48)/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A234567890123456789012345678901: processes on queue: 0/(880|1173); LOCK slots in use: 1/(597|820); SUBSCRIPT slot bytes in use: (40|48)/(28072|28084)
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28072|28084)
 %YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
 #####################################################################
@@ -1153,7 +1153,7 @@ A
 ^A2345 Owned by PID= PID2 which is an existing process
 ^A23456 Owned by PID= PID2 which is an existing process
 ^A234567 Owned by PID= PID2 which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A: processes on queue: 0/(880|1173); LOCK slots in use: 7/(597|820); SUBSCRIPT slot bytes in use: (80|120)/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A: processes on queue: 0/(880|1173); LOCK slots in use: 7/(597|820); SUBSCRIPT slot bytes in use: (80|120)/(28072|28084)
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
 #####################################################################
 $LKE show -reg=A2345678
@@ -1167,7 +1167,7 @@ A2345678
 ^A234567890123 Owned by PID= PID2 which is an existing process
 ^A2345678901234 Owned by PID= PID2 which is an existing process
 ^A23456789012345 Owned by PID= PID2 which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A2345678: processes on queue: 0/(880|1173); LOCK slots in use: 8/(597|820); SUBSCRIPT slot bytes in use: (152|200)/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A2345678: processes on queue: 0/(880|1173); LOCK slots in use: 8/(597|820); SUBSCRIPT slot bytes in use: (152|200)/(28072|28084)
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
 #####################################################################
 $LKE show -reg=A234567890123456
@@ -1187,21 +1187,21 @@ A234567890123456
 ^A23456789012345678901234567 Owned by PID= PID2 which is an existing process
 ^A234567890123456789012345678 Owned by PID= PID2 which is an existing process
 ^A2345678901234567890123456789 Owned by PID= PID2 which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A234567890123456: processes on queue: 0/(880|1173); LOCK slots in use: 14/(597|820); SUBSCRIPT slot bytes in use: (420|504)/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A234567890123456: processes on queue: 0/(880|1173); LOCK slots in use: 14/(597|820); SUBSCRIPT slot bytes in use: (420|504)/(28072|28084)
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
 #####################################################################
 $LKE show -reg=A23456789012345678901234567890
 
 A23456789012345678901234567890
 ^A23456789012345678901234567890 Owned by PID= PID2 which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A23456789012345678901234567890: processes on queue: 0/(880|1173); LOCK slots in use: 1/(597|820); SUBSCRIPT slot bytes in use: (36|40)/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A23456789012345678901234567890: processes on queue: 0/(880|1173); LOCK slots in use: 1/(597|820); SUBSCRIPT slot bytes in use: (36|40)/(28072|28084)
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
 #####################################################################
 $LKE show -reg=A234567890123456789012345678901
 
 A234567890123456789012345678901
 ^A234567890123456789012345678901 Owned by PID= PID2 which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A234567890123456789012345678901: processes on queue: 0/(880|1173); LOCK slots in use: 1/(597|820); SUBSCRIPT slot bytes in use: (40|48)/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A234567890123456789012345678901: processes on queue: 0/(880|1173); LOCK slots in use: 1/(597|820); SUBSCRIPT slot bytes in use: (40|48)/(28072|28084)
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
 #####################################################################
 LKE clear some of the locks...
@@ -1253,23 +1253,23 @@ A
 ^A2345 Owned by PID= PID2 which is an existing process
 ^A23456 Owned by PID= PID2 which is an existing process
 ^A234567 Owned by PID= PID2 which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A: processes on queue: 0/(880|1173); LOCK slots in use: 7/(597|820); SUBSCRIPT slot bytes in use: (80|120)/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A: processes on queue: 0/(880|1173); LOCK slots in use: 7/(597|820); SUBSCRIPT slot bytes in use: (80|120)/(28072|28084)
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A2345678: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A2345678: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28072|28084)
 %YDB-I-NOLOCKMATCH, No matching locks were found in A2345678
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A234567890123456: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A234567890123456: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28072|28084)
 %YDB-I-NOLOCKMATCH, No matching locks were found in A234567890123456
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
 
 A23456789012345678901234567890
 ^A23456789012345678901234567890 Owned by PID= PID2 which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A23456789012345678901234567890: processes on queue: 0/(880|1173); LOCK slots in use: 1/(597|820); SUBSCRIPT slot bytes in use: (36|40)/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A23456789012345678901234567890: processes on queue: 0/(880|1173); LOCK slots in use: 1/(597|820); SUBSCRIPT slot bytes in use: (36|40)/(28072|28084)
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A234567890123456789012345678901: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A234567890123456789012345678901: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28072|28084)
 %YDB-I-NOLOCKMATCH, No matching locks were found in A234567890123456789012345678901
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28072|28084)
 %YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
 #####################################################################
@@ -1294,22 +1294,22 @@ Lock removed : ^A23456789012345678901234567890
 %YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
 #####################################################################
 $LKE show -all
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28072|28084)
 %YDB-I-NOLOCKMATCH, No matching locks were found in A
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A2345678: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A2345678: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28072|28084)
 %YDB-I-NOLOCKMATCH, No matching locks were found in A2345678
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A234567890123456: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A234567890123456: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28072|28084)
 %YDB-I-NOLOCKMATCH, No matching locks were found in A234567890123456
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A23456789012345678901234567890: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A23456789012345678901234567890: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28072|28084)
 %YDB-I-NOLOCKMATCH, No matching locks were found in A23456789012345678901234567890
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A234567890123456789012345678901: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: A234567890123456789012345678901: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28072|28084)
 %YDB-I-NOLOCKMATCH, No matching locks were found in A234567890123456789012345678901
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 0/(597|820); SUBSCRIPT slot bytes in use: 0/(28072|28084)
 %YDB-I-NOLOCKMATCH, No matching locks were found in DEFAULT
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
 

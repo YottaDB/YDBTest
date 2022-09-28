@@ -103,14 +103,14 @@ Lock status from remote host 2:
 
 BREG
 ##TEST_AWK.b Owned by PID= <PID> which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(880|1173); LOCK slots in use: 1/(597|820); SUBSCRIPT slot bytes in use: (8|16)/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: BREG: processes on queue: 0/(880|1173); LOCK slots in use: 1/(597|820); SUBSCRIPT slot bytes in use: (8|16)/(28072|28084)
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
 
 DEFAULT
 ##TEST_AWK.d Owned by PID= <PID> which is an existing process
 ##TEST_AWKa Owned by PID= <PID> which is an existing process
 ##TEST_AWKb Owned by PID= <PID> which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 3/(597|820); SUBSCRIPT slot bytes in use: (24|48)/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 3/(597|820); SUBSCRIPT slot bytes in use: (24|48)/(28072|28084)
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
 Server 2 is holding some locks locally...
 (in testit) First some Set's and Write's to see everything is all right:
@@ -185,14 +185,14 @@ Lock status from remote host 1:
 
 CREG
 ##TEST_AWK.c Owned by PID= <PID> which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: CREG: processes on queue: 0/(880|1173); LOCK slots in use: 1/(597|820); SUBSCRIPT slot bytes in use: (8|16)/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: CREG: processes on queue: 0/(880|1173); LOCK slots in use: 1/(597|820); SUBSCRIPT slot bytes in use: (8|16)/(28072|28084)
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
 
 DEFAULT
 ##TEST_AWK.d Owned by PID= <PID> which is an existing process
 ##TEST_AWKa Owned by PID= <PID> which is an existing process
 ##TEST_AWKb Owned by PID= <PID> which is an existing process
-##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 3/(597|820); SUBSCRIPT slot bytes in use: (24|48)/(28080|28092)
+##TEST_AWK%YDB-I-LOCKSPACEINFO, Region: DEFAULT: processes on queue: 0/(880|1173); LOCK slots in use: 3/(597|820); SUBSCRIPT slot bytes in use: (24|48)/(28072|28084)
 ##TEST_AWK.YDB-I-LOCKSPACEUSE, Estimated free lock space: [0-9]*. of 220 pages
 Both Server 1 and 2 are holding some locks locally...
 (in testit) First some Set's and Write's to see everything is all right:
