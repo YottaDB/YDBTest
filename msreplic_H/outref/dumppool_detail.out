@@ -10,8 +10,8 @@ Offset     Size
 0x........ 0x0008 CTL Start Journal Seqno                                  1 [0x0000000000000001]
 0x........ 0x0008 CTL Journal Seqno                            ##JNLSEQNO1##
 0x........ 0x0008 CTL Last histinfo Seqno                                  1 [0x0000000000000001]
-0x........ 0x0004 CTL Journal Data Base Offset                  ##JNLDBOFF## [0x........]
-0x........ 0x0004 CTL Journal Pool Size (in bytes)            ##JNLPOOLSIZ## [0x........]
+0x........ 0x0008 CTL Journal Data Base Offset                  ##JNLDBOFF## [0x........]
+0x........ 0x0008 CTL Journal Pool Size (in bytes)            ##JNLPOOLSIZ## [0x........]
 0x........ 0x0008 CTL Reserved Write Offset                      ##OFFSET1##
 0x........ 0x0008 CTL Absolute Write Offset                      ##OFFSET1##
 0x........ 0x0004 CTL Updates Disabled                                 FALSE
@@ -178,7 +178,7 @@ Offset     Size
 0x........ 0x0004 SRC # 0 : Remote is Supplementary Instance  ##TRUE/FALSE##
 0x........ 0x0004 SRC # 0 : Currently Reading from          ##POOL_OR_FILE##
 0x........ 0x0004 SRC # 0 : Journal File Only              ##TRUE_OR_FALSE##
-0x........ 0x0004 SRC # 0 : Relative Read Offset                 ##OFFSET1##
+0x........ 0x0008 SRC # 0 : Relative Read Offset                 ##OFFSET1##
 0x........ 0x0008 SRC # 0 : Absolute Read Offset                 ##OFFSET1##
 0x........ 0x0008 SRC # 0 : Resync Sequence Number             ##JNLSEQNO1##
 0x........ 0x0008 SRC # 0 : Connect Sequence Number            ##JNLSEQNO2##
@@ -200,7 +200,7 @@ Offset     Size
 0x........ 0x0004 SRC # 0 : Connect Parms Hard Tries Count                 5 [0x00000005]
 0x........ 0x0004 SRC # 0 : Connect Parms Hard Tries Period              500 [0x000001F4]
 0x........ 0x0004 SRC # 0 : Connect Parms Soft Tries Period                5 [0x00000005]
-0x........ 0x0004 SRC # 0 : Connect Parms Alert Period                    30 [0x0000001E]
+0x........ 0x0004 SRC # 0 : Connect Parms Alert Period                     0 [0x00000000]
 0x........ 0x0004 SRC # 0 : Connect Parms Heartbeat Period                15 [0x0000000F]
 0x........ 0x0004 SRC # 0 : Connect Parms Heartbeat Max Wait              60 [0x0000003C]
 0x........ 0x0004 SRC # 0 : Shutdown State                                 0 [0x00000000]
@@ -227,7 +227,7 @@ Offset     Size
 0x........ 0x0004 SRC # 1 : Remote is Supplementary Instance  ##TRUE/FALSE##
 0x........ 0x0004 SRC # 1 : Currently Reading from          ##POOL_OR_FILE##
 0x........ 0x0004 SRC # 1 : Journal File Only              ##TRUE_OR_FALSE##
-0x........ 0x0004 SRC # 1 : Relative Read Offset                 ##OFFSET1##
+0x........ 0x0008 SRC # 1 : Relative Read Offset                 ##OFFSET1##
 0x........ 0x0008 SRC # 1 : Absolute Read Offset                 ##OFFSET1##
 0x........ 0x0008 SRC # 1 : Resync Sequence Number             ##JNLSEQNO1##
 0x........ 0x0008 SRC # 1 : Connect Sequence Number            ##JNLSEQNO2##
@@ -249,7 +249,7 @@ Offset     Size
 0x........ 0x0004 SRC # 1 : Connect Parms Hard Tries Count                 5 [0x00000005]
 0x........ 0x0004 SRC # 1 : Connect Parms Hard Tries Period              500 [0x000001F4]
 0x........ 0x0004 SRC # 1 : Connect Parms Soft Tries Period                5 [0x00000005]
-0x........ 0x0004 SRC # 1 : Connect Parms Alert Period                    30 [0x0000001E]
+0x........ 0x0004 SRC # 1 : Connect Parms Alert Period                     0 [0x00000000]
 0x........ 0x0004 SRC # 1 : Connect Parms Heartbeat Period                15 [0x0000000F]
 0x........ 0x0004 SRC # 1 : Connect Parms Heartbeat Max Wait              60 [0x0000003C]
 0x........ 0x0004 SRC # 1 : Shutdown State                                 0 [0x00000000]
@@ -276,7 +276,7 @@ Offset     Size
 0x........ 0x0004 SRC # 2 : Remote is Supplementary Instance  ##TRUE/FALSE##
 0x........ 0x0004 SRC # 2 : Currently Reading from          ##POOL_OR_FILE##
 0x........ 0x0004 SRC # 2 : Journal File Only              ##TRUE_OR_FALSE##
-0x........ 0x0004 SRC # 2 : Relative Read Offset                 ##OFFSET1##
+0x........ 0x0008 SRC # 2 : Relative Read Offset                 ##OFFSET1##
 0x........ 0x0008 SRC # 2 : Absolute Read Offset                 ##OFFSET1##
 0x........ 0x0008 SRC # 2 : Resync Sequence Number             ##JNLSEQNO2##
 0x........ 0x0008 SRC # 2 : Connect Sequence Number                        1 [0x0000000000000001]
@@ -298,7 +298,7 @@ Offset     Size
 0x........ 0x0004 SRC # 2 : Connect Parms Hard Tries Count                 5 [0x00000005]
 0x........ 0x0004 SRC # 2 : Connect Parms Hard Tries Period              500 [0x000001F4]
 0x........ 0x0004 SRC # 2 : Connect Parms Soft Tries Period                5 [0x00000005]
-0x........ 0x0004 SRC # 2 : Connect Parms Alert Period                    30 [0x0000001E]
+0x........ 0x0004 SRC # 2 : Connect Parms Alert Period                     0 [0x00000000]
 0x........ 0x0004 SRC # 2 : Connect Parms Heartbeat Period                15 [0x0000000F]
 0x........ 0x0004 SRC # 2 : Connect Parms Heartbeat Max Wait              60 [0x0000003C]
 0x........ 0x0004 SRC # 2 : Shutdown State                                 2 [0x00000002]
@@ -325,7 +325,7 @@ Offset     Size
 0x........ 0x0004 SRC # 3 : Remote is Supplementary Instance  ##TRUE/FALSE##
 0x........ 0x0004 SRC # 3 : Currently Reading from          ##POOL_OR_FILE##
 0x........ 0x0004 SRC # 3 : Journal File Only              ##TRUE_OR_FALSE##
-0x........ 0x0004 SRC # 3 : Relative Read Offset                 ##OFFSET1##
+0x........ 0x0008 SRC # 3 : Relative Read Offset                 ##OFFSET1##
 0x........ 0x0008 SRC # 3 : Absolute Read Offset                 ##OFFSET1##
 0x........ 0x0008 SRC # 3 : Resync Sequence Number             ##JNLSEQNO2##
 0x........ 0x0008 SRC # 3 : Connect Sequence Number                        1 [0x0000000000000001]
@@ -347,7 +347,7 @@ Offset     Size
 0x........ 0x0004 SRC # 3 : Connect Parms Hard Tries Count                 5 [0x00000005]
 0x........ 0x0004 SRC # 3 : Connect Parms Hard Tries Period              500 [0x000001F4]
 0x........ 0x0004 SRC # 3 : Connect Parms Soft Tries Period                5 [0x00000005]
-0x........ 0x0004 SRC # 3 : Connect Parms Alert Period                    30 [0x0000001E]
+0x........ 0x0004 SRC # 3 : Connect Parms Alert Period                     0 [0x00000000]
 0x........ 0x0004 SRC # 3 : Connect Parms Heartbeat Period                15 [0x0000000F]
 0x........ 0x0004 SRC # 3 : Connect Parms Heartbeat Max Wait              60 [0x0000003C]
 0x........ 0x0004 SRC # 3 : Shutdown State                                 0 [0x00000000]
@@ -374,7 +374,7 @@ Offset     Size
 0x........ 0x0004 SRC # 4 : Remote is Supplementary Instance  ##TRUE/FALSE##
 0x........ 0x0004 SRC # 4 : Currently Reading from          ##POOL_OR_FILE##
 0x........ 0x0004 SRC # 4 : Journal File Only              ##TRUE_OR_FALSE##
-0x........ 0x0004 SRC # 4 : Relative Read Offset                 ##OFFSET1##
+0x........ 0x0008 SRC # 4 : Relative Read Offset                 ##OFFSET1##
 0x........ 0x0008 SRC # 4 : Absolute Read Offset                 ##OFFSET1##
 0x........ 0x0008 SRC # 4 : Resync Sequence Number             ##JNLSEQNO1##
 0x........ 0x0008 SRC # 4 : Connect Sequence Number                        1 [0x0000000000000001]
@@ -396,7 +396,7 @@ Offset     Size
 0x........ 0x0004 SRC # 4 : Connect Parms Hard Tries Count                 5 [0x00000005]
 0x........ 0x0004 SRC # 4 : Connect Parms Hard Tries Period              500 [0x000001F4]
 0x........ 0x0004 SRC # 4 : Connect Parms Soft Tries Period                5 [0x00000005]
-0x........ 0x0004 SRC # 4 : Connect Parms Alert Period                    30 [0x0000001E]
+0x........ 0x0004 SRC # 4 : Connect Parms Alert Period                     0 [0x00000000]
 0x........ 0x0004 SRC # 4 : Connect Parms Heartbeat Period                15 [0x0000000F]
 0x........ 0x0004 SRC # 4 : Connect Parms Heartbeat Max Wait              60 [0x0000003C]
 0x........ 0x0004 SRC # 4 : Shutdown State                                 0 [0x00000000]
@@ -423,7 +423,7 @@ Offset     Size
 0x........ 0x0004 SRC # 5 : Remote is Supplementary Instance  ##TRUE/FALSE##
 0x........ 0x0004 SRC # 5 : Currently Reading from          ##POOL_OR_FILE##
 0x........ 0x0004 SRC # 5 : Journal File Only              ##TRUE_OR_FALSE##
-0x........ 0x0004 SRC # 5 : Relative Read Offset                 ##OFFSET1##
+0x........ 0x0008 SRC # 5 : Relative Read Offset                 ##OFFSET1##
 0x........ 0x0008 SRC # 5 : Absolute Read Offset                 ##OFFSET1##
 0x........ 0x0008 SRC # 5 : Resync Sequence Number             ##JNLSEQNO1##
 0x........ 0x0008 SRC # 5 : Connect Sequence Number                        1 [0x0000000000000001]
@@ -445,7 +445,7 @@ Offset     Size
 0x........ 0x0004 SRC # 5 : Connect Parms Hard Tries Count                 5 [0x00000005]
 0x........ 0x0004 SRC # 5 : Connect Parms Hard Tries Period              500 [0x000001F4]
 0x........ 0x0004 SRC # 5 : Connect Parms Soft Tries Period                5 [0x00000005]
-0x........ 0x0004 SRC # 5 : Connect Parms Alert Period                    30 [0x0000001E]
+0x........ 0x0004 SRC # 5 : Connect Parms Alert Period                     0 [0x00000000]
 0x........ 0x0004 SRC # 5 : Connect Parms Heartbeat Period                15 [0x0000000F]
 0x........ 0x0004 SRC # 5 : Connect Parms Heartbeat Max Wait              60 [0x0000003C]
 0x........ 0x0004 SRC # 5 : Shutdown State                                 0 [0x00000000]
@@ -472,7 +472,7 @@ Offset     Size
 0x........ 0x0004 SRC # 6 : Remote is Supplementary Instance  ##TRUE/FALSE##
 0x........ 0x0004 SRC # 6 : Currently Reading from          ##POOL_OR_FILE##
 0x........ 0x0004 SRC # 6 : Journal File Only              ##TRUE_OR_FALSE##
-0x........ 0x0004 SRC # 6 : Relative Read Offset                 ##OFFSET1##
+0x........ 0x0008 SRC # 6 : Relative Read Offset                 ##OFFSET1##
 0x........ 0x0008 SRC # 6 : Absolute Read Offset                 ##OFFSET1##
 0x........ 0x0008 SRC # 6 : Resync Sequence Number             ##JNLSEQNO1##
 0x........ 0x0008 SRC # 6 : Connect Sequence Number                        1 [0x0000000000000001]
@@ -494,7 +494,7 @@ Offset     Size
 0x........ 0x0004 SRC # 6 : Connect Parms Hard Tries Count                 5 [0x00000005]
 0x........ 0x0004 SRC # 6 : Connect Parms Hard Tries Period              500 [0x000001F4]
 0x........ 0x0004 SRC # 6 : Connect Parms Soft Tries Period                5 [0x00000005]
-0x........ 0x0004 SRC # 6 : Connect Parms Alert Period                    30 [0x0000001E]
+0x........ 0x0004 SRC # 6 : Connect Parms Alert Period                     0 [0x00000000]
 0x........ 0x0004 SRC # 6 : Connect Parms Heartbeat Period                15 [0x0000000F]
 0x........ 0x0004 SRC # 6 : Connect Parms Heartbeat Max Wait              60 [0x0000003C]
 0x........ 0x0004 SRC # 6 : Shutdown State                                 0 [0x00000000]
@@ -521,7 +521,7 @@ Offset     Size
 0x........ 0x0004 SRC # 7 : Remote is Supplementary Instance  ##TRUE/FALSE##
 0x........ 0x0004 SRC # 7 : Currently Reading from          ##POOL_OR_FILE##
 0x........ 0x0004 SRC # 7 : Journal File Only              ##TRUE_OR_FALSE##
-0x........ 0x0004 SRC # 7 : Relative Read Offset                 ##OFFSET1##
+0x........ 0x0008 SRC # 7 : Relative Read Offset                 ##OFFSET1##
 0x........ 0x0008 SRC # 7 : Absolute Read Offset                 ##OFFSET1##
 0x........ 0x0008 SRC # 7 : Resync Sequence Number             ##JNLSEQNO1##
 0x........ 0x0008 SRC # 7 : Connect Sequence Number                        1 [0x0000000000000001]
@@ -543,7 +543,7 @@ Offset     Size
 0x........ 0x0004 SRC # 7 : Connect Parms Hard Tries Count                 5 [0x00000005]
 0x........ 0x0004 SRC # 7 : Connect Parms Hard Tries Period              500 [0x000001F4]
 0x........ 0x0004 SRC # 7 : Connect Parms Soft Tries Period                5 [0x00000005]
-0x........ 0x0004 SRC # 7 : Connect Parms Alert Period                    30 [0x0000001E]
+0x........ 0x0004 SRC # 7 : Connect Parms Alert Period                     0 [0x00000000]
 0x........ 0x0004 SRC # 7 : Connect Parms Heartbeat Period                15 [0x0000000F]
 0x........ 0x0004 SRC # 7 : Connect Parms Heartbeat Max Wait              60 [0x0000003C]
 0x........ 0x0004 SRC # 7 : Shutdown State                                 0 [0x00000000]
@@ -570,7 +570,7 @@ Offset     Size
 0x........ 0x0004 SRC # 8 : Remote is Supplementary Instance  ##TRUE/FALSE##
 0x........ 0x0004 SRC # 8 : Currently Reading from          ##POOL_OR_FILE##
 0x........ 0x0004 SRC # 8 : Journal File Only              ##TRUE_OR_FALSE##
-0x........ 0x0004 SRC # 8 : Relative Read Offset                 ##OFFSET1##
+0x........ 0x0008 SRC # 8 : Relative Read Offset                 ##OFFSET1##
 0x........ 0x0008 SRC # 8 : Absolute Read Offset                 ##OFFSET1##
 0x........ 0x0008 SRC # 8 : Resync Sequence Number             ##JNLSEQNO1##
 0x........ 0x0008 SRC # 8 : Connect Sequence Number                        1 [0x0000000000000001]
@@ -592,7 +592,7 @@ Offset     Size
 0x........ 0x0004 SRC # 8 : Connect Parms Hard Tries Count                 5 [0x00000005]
 0x........ 0x0004 SRC # 8 : Connect Parms Hard Tries Period              500 [0x000001F4]
 0x........ 0x0004 SRC # 8 : Connect Parms Soft Tries Period                5 [0x00000005]
-0x........ 0x0004 SRC # 8 : Connect Parms Alert Period                    30 [0x0000001E]
+0x........ 0x0004 SRC # 8 : Connect Parms Alert Period                     0 [0x00000000]
 0x........ 0x0004 SRC # 8 : Connect Parms Heartbeat Period                15 [0x0000000F]
 0x........ 0x0004 SRC # 8 : Connect Parms Heartbeat Max Wait              60 [0x0000003C]
 0x........ 0x0004 SRC # 8 : Shutdown State                                 0 [0x00000000]
@@ -619,7 +619,7 @@ Offset     Size
 0x........ 0x0004 SRC # 9 : Remote is Supplementary Instance  ##TRUE/FALSE##
 0x........ 0x0004 SRC # 9 : Currently Reading from          ##POOL_OR_FILE##
 0x........ 0x0004 SRC # 9 : Journal File Only              ##TRUE_OR_FALSE##
-0x........ 0x0004 SRC # 9 : Relative Read Offset                 ##OFFSET1##
+0x........ 0x0008 SRC # 9 : Relative Read Offset                 ##OFFSET1##
 0x........ 0x0008 SRC # 9 : Absolute Read Offset                 ##OFFSET1##
 0x........ 0x0008 SRC # 9 : Resync Sequence Number             ##JNLSEQNO1##
 0x........ 0x0008 SRC # 9 : Connect Sequence Number                        1 [0x0000000000000001]
@@ -641,7 +641,7 @@ Offset     Size
 0x........ 0x0004 SRC # 9 : Connect Parms Hard Tries Count                 5 [0x00000005]
 0x........ 0x0004 SRC # 9 : Connect Parms Hard Tries Period              500 [0x000001F4]
 0x........ 0x0004 SRC # 9 : Connect Parms Soft Tries Period                5 [0x00000005]
-0x........ 0x0004 SRC # 9 : Connect Parms Alert Period                    30 [0x0000001E]
+0x........ 0x0004 SRC # 9 : Connect Parms Alert Period                     0 [0x00000000]
 0x........ 0x0004 SRC # 9 : Connect Parms Heartbeat Period                15 [0x0000000F]
 0x........ 0x0004 SRC # 9 : Connect Parms Heartbeat Max Wait              60 [0x0000003C]
 0x........ 0x0004 SRC # 9 : Shutdown State                                 0 [0x00000000]
@@ -668,7 +668,7 @@ Offset     Size
 0x........ 0x0004 SRC #10 : Remote is Supplementary Instance  ##TRUE/FALSE##
 0x........ 0x0004 SRC #10 : Currently Reading from          ##POOL_OR_FILE##
 0x........ 0x0004 SRC #10 : Journal File Only              ##TRUE_OR_FALSE##
-0x........ 0x0004 SRC #10 : Relative Read Offset                 ##OFFSET1##
+0x........ 0x0008 SRC #10 : Relative Read Offset                 ##OFFSET1##
 0x........ 0x0008 SRC #10 : Absolute Read Offset                 ##OFFSET1##
 0x........ 0x0008 SRC #10 : Resync Sequence Number             ##JNLSEQNO1##
 0x........ 0x0008 SRC #10 : Connect Sequence Number                        1 [0x0000000000000001]
@@ -690,7 +690,7 @@ Offset     Size
 0x........ 0x0004 SRC #10 : Connect Parms Hard Tries Count                 5 [0x00000005]
 0x........ 0x0004 SRC #10 : Connect Parms Hard Tries Period              500 [0x000001F4]
 0x........ 0x0004 SRC #10 : Connect Parms Soft Tries Period                5 [0x00000005]
-0x........ 0x0004 SRC #10 : Connect Parms Alert Period                    30 [0x0000001E]
+0x........ 0x0004 SRC #10 : Connect Parms Alert Period                     0 [0x00000000]
 0x........ 0x0004 SRC #10 : Connect Parms Heartbeat Period                15 [0x0000000F]
 0x........ 0x0004 SRC #10 : Connect Parms Heartbeat Max Wait              60 [0x0000003C]
 0x........ 0x0004 SRC #10 : Shutdown State                                 0 [0x00000000]
@@ -717,7 +717,7 @@ Offset     Size
 0x........ 0x0004 SRC #11 : Remote is Supplementary Instance  ##TRUE/FALSE##
 0x........ 0x0004 SRC #11 : Currently Reading from          ##POOL_OR_FILE##
 0x........ 0x0004 SRC #11 : Journal File Only              ##TRUE_OR_FALSE##
-0x........ 0x0004 SRC #11 : Relative Read Offset                 ##OFFSET1##
+0x........ 0x0008 SRC #11 : Relative Read Offset                 ##OFFSET1##
 0x........ 0x0008 SRC #11 : Absolute Read Offset                 ##OFFSET1##
 0x........ 0x0008 SRC #11 : Resync Sequence Number             ##JNLSEQNO1##
 0x........ 0x0008 SRC #11 : Connect Sequence Number                        1 [0x0000000000000001]
@@ -739,7 +739,7 @@ Offset     Size
 0x........ 0x0004 SRC #11 : Connect Parms Hard Tries Count                 5 [0x00000005]
 0x........ 0x0004 SRC #11 : Connect Parms Hard Tries Period              500 [0x000001F4]
 0x........ 0x0004 SRC #11 : Connect Parms Soft Tries Period                5 [0x00000005]
-0x........ 0x0004 SRC #11 : Connect Parms Alert Period                    30 [0x0000001E]
+0x........ 0x0004 SRC #11 : Connect Parms Alert Period                     0 [0x00000000]
 0x........ 0x0004 SRC #11 : Connect Parms Heartbeat Period                15 [0x0000000F]
 0x........ 0x0004 SRC #11 : Connect Parms Heartbeat Max Wait              60 [0x0000003C]
 0x........ 0x0004 SRC #11 : Shutdown State                                 0 [0x00000000]
@@ -766,7 +766,7 @@ Offset     Size
 0x........ 0x0004 SRC #12 : Remote is Supplementary Instance  ##TRUE/FALSE##
 0x........ 0x0004 SRC #12 : Currently Reading from          ##POOL_OR_FILE##
 0x........ 0x0004 SRC #12 : Journal File Only              ##TRUE_OR_FALSE##
-0x........ 0x0004 SRC #12 : Relative Read Offset                 ##OFFSET1##
+0x........ 0x0008 SRC #12 : Relative Read Offset                 ##OFFSET1##
 0x........ 0x0008 SRC #12 : Absolute Read Offset                 ##OFFSET1##
 0x........ 0x0008 SRC #12 : Resync Sequence Number             ##JNLSEQNO1##
 0x........ 0x0008 SRC #12 : Connect Sequence Number                        1 [0x0000000000000001]
@@ -788,7 +788,7 @@ Offset     Size
 0x........ 0x0004 SRC #12 : Connect Parms Hard Tries Count                 5 [0x00000005]
 0x........ 0x0004 SRC #12 : Connect Parms Hard Tries Period              500 [0x000001F4]
 0x........ 0x0004 SRC #12 : Connect Parms Soft Tries Period                5 [0x00000005]
-0x........ 0x0004 SRC #12 : Connect Parms Alert Period                    30 [0x0000001E]
+0x........ 0x0004 SRC #12 : Connect Parms Alert Period                     0 [0x00000000]
 0x........ 0x0004 SRC #12 : Connect Parms Heartbeat Period                15 [0x0000000F]
 0x........ 0x0004 SRC #12 : Connect Parms Heartbeat Max Wait              60 [0x0000003C]
 0x........ 0x0004 SRC #12 : Shutdown State                                 0 [0x00000000]
@@ -815,7 +815,7 @@ Offset     Size
 0x........ 0x0004 SRC #13 : Remote is Supplementary Instance  ##TRUE/FALSE##
 0x........ 0x0004 SRC #13 : Currently Reading from          ##POOL_OR_FILE##
 0x........ 0x0004 SRC #13 : Journal File Only              ##TRUE_OR_FALSE##
-0x........ 0x0004 SRC #13 : Relative Read Offset                 ##OFFSET1##
+0x........ 0x0008 SRC #13 : Relative Read Offset                 ##OFFSET1##
 0x........ 0x0008 SRC #13 : Absolute Read Offset                 ##OFFSET1##
 0x........ 0x0008 SRC #13 : Resync Sequence Number             ##JNLSEQNO1##
 0x........ 0x0008 SRC #13 : Connect Sequence Number                        1 [0x0000000000000001]
@@ -837,7 +837,7 @@ Offset     Size
 0x........ 0x0004 SRC #13 : Connect Parms Hard Tries Count                 5 [0x00000005]
 0x........ 0x0004 SRC #13 : Connect Parms Hard Tries Period              500 [0x000001F4]
 0x........ 0x0004 SRC #13 : Connect Parms Soft Tries Period                5 [0x00000005]
-0x........ 0x0004 SRC #13 : Connect Parms Alert Period                    30 [0x0000001E]
+0x........ 0x0004 SRC #13 : Connect Parms Alert Period                     0 [0x00000000]
 0x........ 0x0004 SRC #13 : Connect Parms Heartbeat Period                15 [0x0000000F]
 0x........ 0x0004 SRC #13 : Connect Parms Heartbeat Max Wait              60 [0x0000003C]
 0x........ 0x0004 SRC #13 : Shutdown State                                 0 [0x00000000]
@@ -864,7 +864,7 @@ Offset     Size
 0x........ 0x0004 SRC #14 : Remote is Supplementary Instance  ##TRUE/FALSE##
 0x........ 0x0004 SRC #14 : Currently Reading from          ##POOL_OR_FILE##
 0x........ 0x0004 SRC #14 : Journal File Only              ##TRUE_OR_FALSE##
-0x........ 0x0004 SRC #14 : Relative Read Offset                 ##OFFSET1##
+0x........ 0x0008 SRC #14 : Relative Read Offset                 ##OFFSET1##
 0x........ 0x0008 SRC #14 : Absolute Read Offset                 ##OFFSET1##
 0x........ 0x0008 SRC #14 : Resync Sequence Number             ##JNLSEQNO1##
 0x........ 0x0008 SRC #14 : Connect Sequence Number                        1 [0x0000000000000001]
@@ -886,7 +886,7 @@ Offset     Size
 0x........ 0x0004 SRC #14 : Connect Parms Hard Tries Count                 5 [0x00000005]
 0x........ 0x0004 SRC #14 : Connect Parms Hard Tries Period              500 [0x000001F4]
 0x........ 0x0004 SRC #14 : Connect Parms Soft Tries Period                5 [0x00000005]
-0x........ 0x0004 SRC #14 : Connect Parms Alert Period                    30 [0x0000001E]
+0x........ 0x0004 SRC #14 : Connect Parms Alert Period                     0 [0x00000000]
 0x........ 0x0004 SRC #14 : Connect Parms Heartbeat Period                15 [0x0000000F]
 0x........ 0x0004 SRC #14 : Connect Parms Heartbeat Max Wait              60 [0x0000003C]
 0x........ 0x0004 SRC #14 : Shutdown State                                 0 [0x00000000]
@@ -913,7 +913,7 @@ Offset     Size
 0x........ 0x0004 SRC #15 : Remote is Supplementary Instance  ##TRUE/FALSE##
 0x........ 0x0004 SRC #15 : Currently Reading from          ##POOL_OR_FILE##
 0x........ 0x0004 SRC #15 : Journal File Only              ##TRUE_OR_FALSE##
-0x........ 0x0004 SRC #15 : Relative Read Offset                 ##OFFSET1##
+0x........ 0x0008 SRC #15 : Relative Read Offset                 ##OFFSET1##
 0x........ 0x0008 SRC #15 : Absolute Read Offset                 ##OFFSET1##
 0x........ 0x0008 SRC #15 : Resync Sequence Number             ##JNLSEQNO1##
 0x........ 0x0008 SRC #15 : Connect Sequence Number                        1 [0x0000000000000001]
@@ -935,7 +935,7 @@ Offset     Size
 0x........ 0x0004 SRC #15 : Connect Parms Hard Tries Count                 5 [0x00000005]
 0x........ 0x0004 SRC #15 : Connect Parms Hard Tries Period              500 [0x000001F4]
 0x........ 0x0004 SRC #15 : Connect Parms Soft Tries Period                5 [0x00000005]
-0x........ 0x0004 SRC #15 : Connect Parms Alert Period                    30 [0x0000001E]
+0x........ 0x0004 SRC #15 : Connect Parms Alert Period                     0 [0x00000000]
 0x........ 0x0004 SRC #15 : Connect Parms Heartbeat Period                15 [0x0000000F]
 0x........ 0x0004 SRC #15 : Connect Parms Heartbeat Max Wait              60 [0x0000003C]
 0x........ 0x0004 SRC #15 : Shutdown State                                 0 [0x00000000]
