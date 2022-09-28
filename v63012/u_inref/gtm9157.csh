@@ -37,7 +37,7 @@ echo '# soft retry shorter so we test generate some of the messages that were in
 echo '# of validating them. See discussion of this at https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/1412#note_991497600'
 # Note - source log is a logx filetype to keep the framework from scanning the file which has an indeterminite number
 # of GETADDRINFO messages in it. It depends on how fast the source server is shutdown as to how many of them appear.
-$MUPIP replic -source -start -secondary=bogushost:${portno} -log=src.logx -buff=256 -instsecondary=INSTANCE2 -connectparams=5,1000,2,1,15,60
+$MUPIP replic -source -start -secondary=bogushost:${portno} -log=src.logx -buff=256 -instsecondary=INSTANCE2 -connectparams=5,1000,2,2,15,60
 if (0 != $status) then
     echo
     $echoline
