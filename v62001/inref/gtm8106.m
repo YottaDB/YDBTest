@@ -3,6 +3,9 @@
 ; Copyright (c) 2014-2015 Fidelity National Information 	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -25,44 +28,43 @@ gtm8106	;Verify VIEW "GVSRESET"; also VIEW accepts lower-case regions and * as a
 	use dev
 	for i=1:1:30 read resp:1 quit:'$test				; clear initial DSE output
 	use $principal
-	write:$get(debug) !,"initial dump of locations",!		;locations at the begining, middle and end of target area
-	for name="encryption_hash","gvstats_rec","intrpt_recov_resync_strm_seqno" do
+	write !,"# Initial dump of locations",!		;locations at the begining, middle and end of target area
+	; gvstats_rec in the file header ("sgmnt_data" structure in YDB/sr_port/gdsfhead.h) is preceded by
+	; "read_only" and followed by "filler_8k". So use these 2 fields to do the below test.
+	for name="read_only","filler_8k" do
 	. set item=gtmtypfldindx("sgmnt_data",name)
 	. set offset=gtmtypes("sgmnt_data",item,"off"),length=gtmtypes("sgmnt_data",item,"len")
 	. set mname=$$mname(name)
-	. set @mname=offset+$select("intrpt_recov_resync_strm_seqno"=name:0,1:length)
-	. quit:'$get(debug)
+	. set @mname=offset+$select("filler_8k"=name:0,1:length)
 	. set dummy=$$dsedecloc(@mname-4,dev),dummy=$$dsedecloc(@mname,dev)
 	kill gtmtypes,gtmstructs,gtmunions,gtmtypfldindx			; to avoid overwhelming ZWRITE output
-	write:$get(debug) !,"marking boundaries and interior locations",!
-	for name="encryption_hash","gvstats_rec","intrpt_recov_resync_strm_seqno" do
+	write !,"# Marking boundaries and interior locations",!
+	for name="read_only","filler_8k" do
 	. set mname=$$mname(name)
 	. set vals(@mname-4)=$$dsedecloc(@mname-4,dev,"DEAD"),vals(@mname)=$$dsedecloc(@mname,dev,"DEAD")
-	write:$get(debug) !,"showing marked locations",!
-	if $get(debug) for name="encryption_hash","gvstats_rec","intrpt_recov_resync_strm_seqno" do
+	write !,"# Showing marked locations",!
+	for name="read_only","filler_8k" do
 	. set mname=$$mname(name)
 	. set dummy=$$dsedecloc(@mname-4,dev),dummy=$$dsedecloc(@mname,dev)
-	write:$get(debug) !,"clearing stats",!
+	write !,"# Clearing stats using DSE CHANGE -FILEHEADER -GVSTATSRESET",!
 	use dev
 	write "change -fileheader -gvstatsreset",!			; the command we're actually testing
 	set y=""
 	for i=1:1:30 read x:1 set y=y_x quit:"DSE> "=y!'$test		; use scratch variable so resp shows up on error reports
 	use $principal
-	zwrite:$get(debug) vals
-	write:$get(debug) !,"showing result of the clearing",!
-	set outcome=""
-	for name="encryption_hash","gvstats_rec","intrpt_recov_resync_strm_seqno" do
+	write !,"# Showing result of the clearing."
+	write !,"# Markers should remain just before & just after target area."
+	write !,"# Expect 2nd and 3rd lines to have New Value of 0.",!
+	for name="read_only","filler_8k" do
 	. set mname=$$mname(name)
-	. set outcome=outcome_$$dsedecloc(@mname-4,dev)_$$dsedecloc(@mname,dev)
-	write:$get(debug) outcome,!					; markers should remain just before & just after target area
-	if "0000DEAD0000DEAD0000000000000000000000000000DEAD"'=outcome,$increment(cnt) xecute act
-	write:$get(debug) !,"fixing boundary locations",!		; fix the locations outside the target area we cleared
-	set mname=$$mname("encryption_hash")
+	. set dummy=$$dsedecloc(@mname-4,dev),dummy=$$dsedecloc(@mname,dev)
+	write !,"# Fixing boundary locations",!		; fix the locations outside the target area we cleared
+	set mname=$$mname("read_only")
 	set dummy=$$dsedecloc(@mname-4,dev,vals(@mname-4))
-	set mname=$$mname("intrpt_recov_resync_strm_seqno")
+	set mname=$$mname("filler_8k")
 	set dummy=$$dsedecloc(@mname,dev,vals(@mname))
-	write:$get(debug) !,"showing final state",!
-	if $get(debug) for name="encryption_hash","gvstats_rec","intrpt_recov_resync_strm_seqno" do
+	write !,"# Showing final state",!
+	for name="read_only","filler_8k" do
 	. set mname=$$mname(name)
 	. set dummy=$$dsedecloc(@mname-4,dev),dummy=$$dsedecloc(@mname,dev)
 	close dev
@@ -89,7 +91,7 @@ dsedecloc(arg,dev,value)						; execute change -fileheader -declocaton=arg[ -val
 	use dev
 	write "change -fileheader -declocation="_arg,!
 	for i=1:1:30 read x:1 set resp=resp_x if resp["Size = ","]"=$extract(resp,$length(resp)) do  quit
-	. use:$get(debug) $principal write resp,!				; convert response from DSE
+	. use $principal write resp,!				; convert response from DSE
 	. set old=$$FUNC^%DH($piece($piece(resp," = ",2)," "))
 	use dev
 	for i=1:1:30 read x:1 set y=y_x quit:"DSE> "=y!'$test		; use scratch variable so resp shows up on error reports
@@ -108,8 +110,13 @@ err	if $estack write:'$stack !,"error handling failed",!,$zstatus zgoto @($zleve
 	;
 mname(mname)							; turn C field name into an M style name
 	set mname="_"_mname,i=2
-	for  set $extract(mname,i-1,i)=$char($ascii(mname,i)-32),i=$find(mname,"_") quit:'i
+	for  set $extract(mname,i-1,i)=$$uppercase($extract(mname,i)),i=$find(mname,"_") quit:'i
 	quit mname
+
+uppercase(char)
+	quit:$ascii(char)<97 char
+	quit $char($ascii(char)-32)
+
 readonly
 	new (act)
 	if '$data(act) new act set act="use $principal write !,$zpos,! zprint @$zpos zshow ""v"""
