@@ -4,6 +4,9 @@
 # Copyright (c) 2011-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -44,7 +47,7 @@ GTM_EOF
 END
 
 #Get shmid for crashed databse, rename mumps.dat to old_mumps.dat and do argumentless MUPIP RUNDOWN
-set old_shmid = `$gtm_exe/mupip ftok mumps.dat | $tst_awk '/mumps/ {print $6}'`
+set old_shmid = `$gtm_exe/mupip ftok mumps.dat |& $tst_awk '/mumps/ {print $6}'`
 mv mumps.dat old_mumps.dat
 $MUPIP rundown >&! rundown.txt
 

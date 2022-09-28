@@ -4,7 +4,7 @@
 # Copyright (c) 2011-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -25,8 +25,8 @@ $GTM << GTM_EOF
 GTM_EOF
 
 #Get the shared memory ID and semaphore ID from database file
-set semid = `$gtm_exe/mupip ftok mumps.dat | $tst_awk '/mumps/ {print $3}'`
-set shmid = `$gtm_exe/mupip ftok mumps.dat | $tst_awk '/mumps/ {print $6}'`
+set semid = `$gtm_exe/mupip ftok mumps.dat |& $tst_awk '/mumps/ {print $3}'`
+set shmid = `$gtm_exe/mupip ftok mumps.dat |& $tst_awk '/mumps/ {print $6}'`
 
 $MUPIP rundown -region "*" >&! rundown.txt
 #Check if the removal of semaphore is logged in the operator log.

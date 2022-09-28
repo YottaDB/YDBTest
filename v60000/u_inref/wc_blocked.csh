@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -165,7 +165,7 @@ endif
 unsetenv gtm_white_box_test_case_enable
 
 # get the shared memory id
-set shmid = `$MUPIP ftok mumps.dat | $grep "mumps.dat" | $tst_awk '{print $6}'`
+set shmid = `$MUPIP ftok mumps.dat |& $grep "mumps.dat" | $tst_awk '{print $6}'`
 
 # delete shared memory
 $gtm_tst/com/ipcrm -m $shmid
@@ -277,7 +277,7 @@ endif
 unsetenv gtm_white_box_test_case_enable
 
 # get the shared memory id
-set shmid = `$MUPIP ftok mumps.dat | $grep "mumps.dat" | $tst_awk '{print $6}'`
+set shmid = `$MUPIP ftok mumps.dat |& $grep "mumps.dat" | $tst_awk '{print $6}'`
 
 # delete shared memory
 $gtm_tst/com/ipcrm -m $shmid

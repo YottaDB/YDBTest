@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -104,7 +104,7 @@ foreach wbnum (55 56 57 58 59)
 	unsetenv gtm_white_box_test_case_enable
 	echo "Deleting shared memory"
 	#Get the shared memory id
-	set shmid = `$MUPIP ftok a.dat | $grep 'a\.dat' | $tst_awk '{print $6}'`
+	set shmid = `$MUPIP ftok a.dat |& $grep 'a\.dat' | $tst_awk '{print $6}'`
 	#Delete shared memory
 	$gtm_tst/com/ipcrm -m $shmid
 

@@ -4,6 +4,9 @@
 # Copyright (c) 2010-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -50,7 +53,7 @@ $echoline
 $kill9 $mumps_pid
 
 # Get the shared memory id
-set shmid = `$gtm_exe/mupip ftok mumps.dat | $grep mumps | $tst_awk '{print $6}'`
+set shmid = `$gtm_exe/mupip ftok mumps.dat |& $grep mumps | $tst_awk '{print $6}'`
 
 # Cleanup the shared memory identifier
 echo

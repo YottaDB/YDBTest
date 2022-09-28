@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2013, 2014 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -27,9 +30,9 @@ echo '/mumps.dat/{print $6}' > shmid.awk #BYPASSOK
 $GTM << EOF
 set ^x=1
 write "Saving access semaphore id to semid.txt",!
-zsystem "\$gtm_exe/mupip ftok mumps.dat | \$tst_awk -f semid.awk  | tee semid.txt"
+zsystem "\$gtm_exe/mupip ftok mumps.dat |& \$tst_awk -f semid.awk  | tee semid.txt"
 write "Saving shared memory id to shmid.txt",!
-zsystem "\$gtm_exe/mupip ftok mumps.dat | \$tst_awk -f shmid.awk | tee shmid.txt"
+zsystem "\$gtm_exe/mupip ftok mumps.dat |& \$tst_awk -f shmid.awk | tee shmid.txt"
 write "Crashing database "
 zsystem "$kill9 "_\$j
 EOF

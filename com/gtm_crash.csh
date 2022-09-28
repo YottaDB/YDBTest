@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -46,7 +46,7 @@ setenv ftok_key "$db_ftok_key"
 if ($1 == "NO_SHM_REM") then
 	set dbipc_private = ""
 	foreach file (*.dat)
-		set ipc = `$MUPIP ftok $file | $tst_awk '/dat/{printf("-s %s",$3);}'`
+		set ipc = `$MUPIP ftok $file |& $tst_awk '/dat/{printf("-s %s",$3);}'`
 		set dbipc_private = "$dbipc_private $ipc"
 	end
 else

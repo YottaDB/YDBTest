@@ -4,7 +4,7 @@
 # Copyright (c) 2011-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -62,8 +62,8 @@ GTM_EOF
 END
 
 BEGIN "get the shmid for mumps.dat and old_mumps.dat and verfiy its validity"
-@ old_shmid = `$gtm_exe/mupip ftok old_mumps.dat | $tst_awk '/mumps/ {print $6}'`
-@ new_shmid = `$gtm_exe/mupip ftok mumps.dat | $tst_awk '/mumps/ {print $6}'`
+@ old_shmid = `$gtm_exe/mupip ftok old_mumps.dat |& $tst_awk '/mumps/ {print $6}'`
+@ new_shmid = `$gtm_exe/mupip ftok mumps.dat |& $tst_awk '/mumps/ {print $6}'`
 
 if ( $old_shmid <= 0) then
 	echo "Error: shmid of shared memory attached to old_mumps.dat is invalid"

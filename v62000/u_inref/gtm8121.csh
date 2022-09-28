@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -60,7 +60,7 @@ GTM_EOF
 	# So redirect output of kill to a file in case it finds the pid non-existent.
 	source killbkgrnd.csh	 >& killbkgrnd.out
 
-	set semid = `$gtm_exe/mupip ftok mumps.dat | $tst_awk '/mumps/ {print $3}'`
+	set semid = `$gtm_exe/mupip ftok mumps.dat |& $tst_awk '/mumps/ {print $3}'`
 	echo "Remove database semaphore to induce REQRUNDOWN situation"
 	$gtm_tst/com/ipcrm -s $semid
 
@@ -122,7 +122,7 @@ GTM_EOF
 	# So redirect output of kill to a file in case it finds the pid non-existent.
 	source killbkgrnd.csh	 >& killbkgrnd.out
 
-	set semid = `$gtm_exe/mupip ftok mumps.dat | $tst_awk '/mumps/ {print $3}'`
+	set semid = `$gtm_exe/mupip ftok mumps.dat |& $tst_awk '/mumps/ {print $3}'`
 	echo "Remove database semaphore to induce REQRECOV situation"
 	$gtm_tst/com/ipcrm -s $semid
 
@@ -198,7 +198,7 @@ GTM_EOF
 	echo "Kill source server"
 	$gtm_tst/com/primary_crash.csh "NO_IPCRM"
 
-	set semid = `$gtm_exe/mupip ftok mumps.dat | $tst_awk '/mumps/ {print $3}'`
+	set semid = `$gtm_exe/mupip ftok mumps.dat |& $tst_awk '/mumps/ {print $3}'`
 	echo "Remove database semaphore to induce REQROLLBACK situation"
 	$gtm_tst/com/ipcrm -s $semid
 
@@ -277,7 +277,7 @@ GTM_EOF
 	echo "Kill source server"
 	$gtm_tst/com/primary_crash.csh "NO_IPCRM"
 
-	set semid = `$gtm_exe/mupip ftok mumps.dat | $tst_awk '/mumps/ {print $3}'`
+	set semid = `$gtm_exe/mupip ftok mumps.dat |& $tst_awk '/mumps/ {print $3}'`
 	echo "Remove database semaphore to induce REQROLLBACK situation"
 	$gtm_tst/com/ipcrm -s $semid
 

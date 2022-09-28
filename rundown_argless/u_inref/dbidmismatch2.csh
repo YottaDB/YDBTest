@@ -4,6 +4,9 @@
 # Copyright (c) 2011-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -38,7 +41,7 @@ GTM_EOF
 END
 
 #Get the shmid for crashed database
-set shmid = `$gtm_exe/mupip ftok mumps.dat | $tst_awk '/mumps/ {print $6}'`
+set shmid = `$gtm_exe/mupip ftok mumps.dat |& $tst_awk '/mumps/ {print $6}'`
 
 BEGIN "Switch to backup.dat and access database. It should issue DBIDMISMATCH error"
 # switch to backup.gld
