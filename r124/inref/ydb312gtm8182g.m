@@ -52,7 +52,7 @@ getPaths
 numProc
 	WRITE "     Number of processes attached to journal pool of mumps.repl: "
 
-	ZSYSTEM "$ydb_dist/mupip ftok -jnlpool mumps.repl |& $grep mumps.repl | $tst_awk '{print $6}' >& shm1.out ; $gtm_tst/com/ipcs -a | $grep -w `cat ./shm1.out` | $tst_awk '{print $NF}'"
+	ZSYSTEM "$ydb_dist/mupip ftok -jnlpool mumps.repl |& $grep jnlpool | $tst_awk '{print $6}' >& shm1.out ; $gtm_tst/com/ipcs -a | $grep -w `cat ./shm1.out` | $tst_awk '{print $NF}'"
 
 	quit
 

@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -14,11 +14,11 @@
 cd $path_INST1
 
 # Get Shared Memory ID of the INST1 JNLPOOL
-$ydb_dist/mupip ftok -jnlpool mumps.repl |& $grep mumps.repl | $tst_awk '{print $6}' >& shm1.out
+$ydb_dist/mupip ftok -jnlpool mumps.repl |& $grep "jnlpool" | $tst_awk '{print $6}' >& shm1.out
 
 # Get Shared Memory ID of the INST3 JNLPOOL
 cd $path_INST3
-$ydb_dist/mupip ftok -jnlpool mumps.repl |& $grep mumps.repl | $tst_awk '{print $6}' >& $path_INST1/shm2.out
+$ydb_dist/mupip ftok -jnlpool mumps.repl |& $grep "jnlpool" | $tst_awk '{print $6}' >& $path_INST1/shm2.out
 cd $path_INST1
 
 # Use the JNLPOOL Shared MEMORY IDs to get the # of processes attached ot each JNLPOOL

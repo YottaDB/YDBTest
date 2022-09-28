@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -57,9 +57,9 @@ $gtm_exe/mumps -run startone^updates
 $gtm_exe/mumps -run waitforglobal
 
 echo "# Get the jnlpool shmid of mumps.repl"
-$MUPIP ftok -jnl mumps.repl >&! mupip_ftok_mumps_repl.out
-set old_shmid = `$tst_awk '/mumps.repl/ {print $6}' mupip_ftok_mumps_repl.out`
-set old_semid = `$tst_awk '/mumps.repl/ {print $3}' mupip_ftok_mumps_repl.out`
+$MUPIP ftok -jnlpool mumps.repl >&! mupip_ftok_mumps_repl.out
+set old_shmid = `$tst_awk '/jnlpool/ {print $6}' mupip_ftok_mumps_repl.out`
+set old_semid = `$tst_awk '/jnlpool/ {print $3}' mupip_ftok_mumps_repl.out`
 $gtm_exe/ftok -id=44 mumps.repl >&! ftok_mumps_repl.out
 set key = `$tst_awk '{print $5}' ftok_mumps_repl.out`
 # Now note down ipcs -s and ipcs -m at this point

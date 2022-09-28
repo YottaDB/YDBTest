@@ -52,10 +52,10 @@ echo "--------------------------------------------------------------------------
 echo "# Test that the commands work fine when ydb_repl_instance/gtm_repl_instance are undefined"
 
 echo "# MUPIP FTOK -JNLPOOL"
-$MSR RUN INST2 'unsetenv gtm_repl_instance; unsetenv ydb_repl_instance; $MUPIP ftok -JNLPOOL mumps.repl' |& grep "mumps.repl  ::" >> jnlpool.txt
+$MSR RUN INST2 'unsetenv gtm_repl_instance; unsetenv ydb_repl_instance; $MUPIP ftok -jnlpool mumps.repl' |& grep "jnlpool ::" >> jnlpool.txt
 
 echo "# MUPIP FTOK -RECVPOOL"
-$MSR RUN INST2 'unsetenv gtm_repl_instance; unsetenv ydb_repl_instance; $MUPIP ftok -RECVPOOL mumps.repl' |& grep "mumps.repl  ::" > recvpool.txt
+$MSR RUN INST2 'unsetenv gtm_repl_instance; unsetenv ydb_repl_instance; $MUPIP ftok -recvpool mumps.repl' |& grep "recvpool ::" > recvpool.txt
 
 echo '# $$^%PEEKBYNAME("repl_inst_hdr.jnlpool_semid") and $$^%PEEKBYNAME("repl_inst_hdr.jnlpool_shmid")'
 $MSR RUN INST2 '$ydb_dist/mumps -run jnlpool^ydb313' | grep "," > jnlpeek.txt
@@ -76,10 +76,10 @@ echo "--------------------------------------------------------------------------
 echo "# Test that the commands work fine when ydb_repl_instance/gtm_repl_instance are set to non .repl files"
 
 echo "# MUPIP FTOK -JNLPOOL"
-$MSR RUN INST2 'setenv gtm_repl_instance droids.txt; setenv ydb_repl_instance droids.txt; $MUPIP ftok -JNLPOOL mumps.repl' |& grep "mumps.repl  ::" > jnlpool1.txt
+$MSR RUN INST2 'setenv gtm_repl_instance droids.txt; setenv ydb_repl_instance droids.txt; $MUPIP ftok -jnlpool mumps.repl' |& grep "jnlpool ::" > jnlpool1.txt
 
 echo "# MUPIP FTOK -RECVPOOL"
-$MSR RUN INST2 'setenv gtm_repl_instance droids.txt; setenv ydb_repl_instance droids.txt; $MUPIP ftok -RECVPOOL mumps.repl' |& grep "mumps.repl  ::" > recvpool1.txt
+$MSR RUN INST2 'setenv gtm_repl_instance droids.txt; setenv ydb_repl_instance droids.txt; $MUPIP ftok -recvpool mumps.repl' |& grep "recvpool ::" > recvpool1.txt
 
 echo '# $$^%PEEKBYNAME("repl_inst_hdr.jnlpool_semid") and $$^%PEEKBYNAME("repl_inst_hdr.jnlpool_shmid")'
 $MSR RUN INST2 '$ydb_dist/mumps -run jnlpool^ydb313' | grep "," > jnlpeek1.txt
@@ -96,10 +96,10 @@ echo "--------------------------------------------------------------------------
 echo "# Test that the commands work fine when ydb_repl_instance/gtm_repl_instance are set to some other .repl files"
 
 echo "# MUPIP FTOK -JNLPOOL"
-$MSR RUN INST2 'setenv gtm_repl_instance droids.repl; setenv ydb_repl_instance droids.repl; $MUPIP ftok -JNLPOOL mumps.repl' |& grep "mumps.repl  ::" > jnlpool2.txt
+$MSR RUN INST2 'setenv gtm_repl_instance droids.repl; setenv ydb_repl_instance droids.repl; $MUPIP ftok -jnlpool mumps.repl' |& grep "jnlpool ::" > jnlpool2.txt
 
 echo "# MUPIP FTOK -RECVPOOL"
-$MSR RUN INST2 'setenv gtm_repl_instance droids.repl; setenv ydb_repl_instance droids.repl; $MUPIP ftok -RECVPOOL mumps.repl' |& grep "mumps.repl  ::" > recvpool2.txt
+$MSR RUN INST2 'setenv gtm_repl_instance droids.repl; setenv ydb_repl_instance droids.repl; $MUPIP ftok -recvpool mumps.repl' |& grep "recvpool ::" > recvpool2.txt
 
 echo '# $$^%PEEKBYNAME("repl_inst_hdr.jnlpool_semid") and $$^%PEEKBYNAME("repl_inst_hdr.jnlpool_shmid")'
 $MSR RUN INST2 '$ydb_dist/mumps -run jnlpool^ydb313' | grep "," > jnlpeek2.txt

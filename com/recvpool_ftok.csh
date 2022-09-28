@@ -14,5 +14,5 @@
 #								#
 #################################################################
 
-set ipc = `$MUPIP ftok -recvpool $gtm_repl_instance |& grep repl | $tst_awk '{printf("-s %s -m %s",$3,$6);}'`
+set ipc = `$MUPIP ftok -recvpool $gtm_repl_instance |& grep "recvpool" | $tst_awk '{printf("-s %s -m %s",$3,$6);}'`
 echo $ipc
