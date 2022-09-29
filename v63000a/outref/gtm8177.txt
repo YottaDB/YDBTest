@@ -3,17 +3,19 @@
 ==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/wait_for_log.csh -log ##FILTERED##RCVR_##TIMESTAMP##.log.updproc -message MUINSTFROZEN'==
 # Kill all processes accessing the database file
 ==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP ftok mumps.dat'==
-                File  ::             Semaphore Id  ::         Shared Memory Id  ::                FileId
----------------------------------------------------------------------------------------------------------------
-##TEST_AWK  *mumps.dat  *::  *[1-9][0-9]*  *\[0x[0-9a-f]*\]  *::  *[1-9][0-9]*  *\[0x[0-9a-f]*\]  *::  *0x[0-9a-f]*
+                File ::            Semaphore Id ::        Shared Memory Id ::                FTOK Key ::                             FileId
+-------------------------------------------------------------------------------------------------------------------------------------------
+##TEST_AWK  *mumps.dat ::  *[1-9][0-9]* \[0x[0-9a-f]*\] ::  *[1-9][0-9]* \[0x[0-9a-f]*\] ::  *[1-9][0-9]* \[0x[0-9a-f]*\] :: 0x[0-9a-f]*
 ==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP ftok -jnlpool mumps.repl'==
-                File  ::             Semaphore Id  ::         Shared Memory Id  ::                FileId
----------------------------------------------------------------------------------------------------------------
-##TEST_AWK  *mumps.repl  *::  *[1-9][0-9]*  *\[0x[0-9a-f]*\]  *::  *[1-9][0-9]*  *\[0x[0-9a-f]*\]  *::  *0x[0-9a-f]*
+                File ::            Semaphore Id ::        Shared Memory Id ::                FTOK Key ::                             FileId
+-------------------------------------------------------------------------------------------------------------------------------------------
+##TEST_AWK          mumps.repl ::         -1 \[0xffffffff\] ::         -1 \[0xffffffff\] ::  *[1-9][0-9]* \[0x[0-9a-f]*\] :: 0x[0-9a-f]*
+##TEST_AWK             jnlpool ::  *[1-9][0-9]* \[0x[0-9a-f]*\] ::  *[1-9][0-9]* \[0x[0-9a-f]*\]
 ==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP ftok -recvpool mumps.repl'==
-                File  ::             Semaphore Id  ::         Shared Memory Id  ::                FileId
----------------------------------------------------------------------------------------------------------------
-##TEST_AWK  *mumps.repl  *::  *[1-9][0-9]*  *\[0x[0-9a-f]*\]  *::  *[1-9][0-9]*  *\[0x[0-9a-f]*\]  *::  *0x[0-9a-f]*
+                File ::            Semaphore Id ::        Shared Memory Id ::                FTOK Key ::                             FileId
+-------------------------------------------------------------------------------------------------------------------------------------------
+##TEST_AWK          mumps.repl ::         -1 \[0xffffffff\] ::         -1 \[0xffffffff\] ::  *[1-9][0-9]* \[0x[0-9a-f]*\] :: 0x[0-9a-f]*
+##TEST_AWK            recvpool ::  *[1-9][0-9]* \[0x[0-9a-f]*\] ::  *[1-9][0-9]* \[0x[0-9a-f]*\]
 # Check Freeze, expect frozen
 ==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP replic -source -freeze'==
 Instance Freeze: ON
