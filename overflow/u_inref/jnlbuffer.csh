@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -99,7 +102,7 @@ $gtm_exe/mumps -run updates
 
 echo "# Ensure the source server reads from journal files after jnlbuffer overflow"
 echo "# If the message about reading from journal files doesnt appear in the SRC log, then the test should/will fail"
-$gtm_tst/com/wait_for_log.csh -log SRC_${src_log_time}.log -message "Source server now reading from the journal FILES" -duration 60
+$gtm_tst/com/wait_for_log.csh -log SRC_${src_log_time}.log -message "Source server now reading from journal files" -duration 60
 
 echo "# Stop GTM process in primary..."
 $gtm_tst/com/endtp.csh
