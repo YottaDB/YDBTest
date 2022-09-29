@@ -4,7 +4,7 @@
 # Copyright (c) 2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -59,10 +59,6 @@ endif
 
 if ($?ydb_environment_init) then
        # We are in a YDB environment (i.e. non-GG setup)
-       if ("dbg" == "$tst_image") then
-               # Disable gtm8177 subtest until V63002 is available as it can assert fail in V63000A (has been fixed post-V63001A)
-               setenv subtest_exclude_list "$subtest_exclude_list gtm8177"
-       endif
 	# Disable the gtm8539 subtest on single-cpu systems or slower ARM systems
 	# It has been seen to fail occasionally on these boxes. The test takes anywhere from 30 minutes to 1 hour to run
 	# on these boxes. It does 5 million updates with a 5 minute epoch interval and expects less than 10 DFS gvstat counter.
