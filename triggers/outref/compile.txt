@@ -138,13 +138,61 @@ Testing compilation failures in sub routines
 ##SUSPEND_OUTPUT HOST_OSF1_ALPHA HOST_OS390_S390 HOST_LINUX_IX86
 ###################################################################
 Checking what happens when GTM_DEFAULT_TMP / P_tmpdir don't exist
+##TEST_AWKTrigger load for compile_pass.trg FAILED see  ./compile_pass.trg.trigout_[0-9]*
+##TEST_AWK%YDB-E-FILENOTFND, File /tmp/trg.*compile[0-9]*/deny/trgtmp.* not found
+%YDB-I-TEXT, No such file or directory
+##TEST_AWK%YDB-E-FILENOTFND, File /tmp/trg.*compile[0-9]*/deny/trgtmp.* not found
+%YDB-I-TEXT, No such file or directory
+Error : Parsing XECUTE string: " xecute ""write $ZTCOde,!"" ztrigger ^a"
+Error : Parsing XECUTE string: " set b=""$ztco"" xecute ""write @b,!"""
+=========================================
+2 trigger file entries have errors
+0 trigger file entries have no errors
+=========================================
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 
 Checking what happens with bad permissions on GTM_DEFAULT_TMP / P_tmpdir
 No perms at all
+##TEST_AWKTrigger load for compile_pass.trg FAILED see  ./compile_pass.trg.trigout_[0-9]*
+##TEST_AWK%YDB-E-FILENOTFND, File /tmp/trg.*compile[0-9]*/deny/trgtmp.* not found
+%YDB-I-TEXT, Permission denied
+##TEST_AWK%YDB-E-FILENOTFND, File /tmp/trg.*compile[0-9]*/deny/trgtmp.* not found
+%YDB-I-TEXT, Permission denied
+Error : Parsing XECUTE string: " xecute ""write $ZTCOde,!"" ztrigger ^a"
+Error : Parsing XECUTE string: " set b=""$ztco"" xecute ""write @b,!"""
+=========================================
+2 trigger file entries have errors
+0 trigger file entries have no errors
+=========================================
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 
 No write perms
+##TEST_AWKTrigger load for compile_pass.trg FAILED see  ./compile_pass.trg.trigout_[0-9]*
+##TEST_AWK%YDB-E-FILENOTFND, File /tmp/trg.*compile[0-9]*/deny/trgtmp.* not found
+%YDB-I-TEXT, Permission denied
+##TEST_AWK%YDB-E-FILENOTFND, File /tmp/trg.*compile[0-9]*/deny/trgtmp.* not found
+%YDB-I-TEXT, Permission denied
+Error : Parsing XECUTE string: " xecute ""write $ZTCOde,!"" ztrigger ^a"
+Error : Parsing XECUTE string: " set b=""$ztco"" xecute ""write @b,!"""
+=========================================
+2 trigger file entries have errors
+0 trigger file entries have no errors
+=========================================
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 
 Checking what happens when GTM_DEFAULT_TMP / P_tmpdir is a file
+##TEST_AWKTrigger load for compile_pass.trg FAILED see  ./compile_pass.trg.trigout_[0-9]*
+##TEST_AWK%YDB-E-FILENOTFND, File /tmp/trg.*compile[0-9]*/deny/trgtmp.* not found
+%YDB-I-TEXT, Not a directory
+##TEST_AWK%YDB-E-FILENOTFND, File /tmp/trg.*compile[0-9]*/deny/trgtmp.* not found
+%YDB-I-TEXT, Not a directory
+Error : Parsing XECUTE string: " xecute ""write $ZTCOde,!"" ztrigger ^a"
+Error : Parsing XECUTE string: " set b=""$ztco"" xecute ""write @b,!"""
+=========================================
+2 trigger file entries have errors
+0 trigger file entries have no errors
+=========================================
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##ALLOW_OUTPUT HOST_ALL
 ###################################################################
 ##SUSPEND_OUTPUT NON_REPLIC
