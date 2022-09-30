@@ -567,6 +567,9 @@ viewgvstats(type);
 	.	kill var("JEX"),var("DEX")
 	.	; we cannot guarantee a db flush (i.e. wcs_flu) to have happened in the time that it takes a given test to run
 	.	kill var("DFL")
+	.	; toggle statistics will always be 0 so skip the nonzero check on these
+	.	do togglestats
+	.	;
 	if "READONLY"=type do
 	.	; the following indices are exempt from the check for this type
 	.	kill var("CAT"),var("CFE"),var("CFS"),var("CFT"),var("CQS"),var("CQT"),var("CYS"),var("CYT"),var("BTD"),var("WFR"),var("BUS"),var("BTS")
@@ -587,6 +590,8 @@ viewgvstats(type);
 	.	kill var("JEX"),var("DEX")
 	.	; DRD won't be incremented in MM mode so skip if in MM mode
 	.	if $ztrnlnm("acc_meth")="MM" kill var("DRD")
+	.	; toggle statistics will always be 0 so skip the nonzero check on these
+	.	do togglestats
 	set fail=0
 	set subs="" for  set subs=$order(var(subs))  quit:subs=""  do
 	.	if "ZERO"=type if var(subs)'=0  set fail=fail+1
@@ -594,4 +599,11 @@ viewgvstats(type);
 	.	if "READONLY"=type if var(subs)=0  set fail=fail+1
 	if fail=0 write "$view(""GVSTATS"",*) : type=",type," : PASS",!
 	if fail'=0 write "$view(""GVSTATS"",*) : type=",type," : FAIL",! zshow "V"
+	quit
+
+togglestats
+	; The following "toggle statistics" will always be 0 so skip the nonzero check on these.
+	; Below is pasted from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V6.3-014_Release_Notes.html#GTM-8863
+	;     ... toggle statistics designated DEXA, GLB, JNL, MLK, PRC, TRX, ZAD, JOPA, AFRA, BREA, MLBA & TRGA
+	for stat="DEXA","GLB","JNL","MLK","PRC","TRX","ZAD","JOPA","AFRA","BREA","MLBA","TRGA" kill var(stat)
 	quit
