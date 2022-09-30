@@ -19,10 +19,7 @@ src1.log:
 1 soft connection attempt failed : Connection refused
 2 soft connection attempt failed : Connection refused
 4 soft connection attempt failed : Connection refused
-8 soft connection attempt failed : Connection refused
-16 soft connection attempt failed : Connection refused
-32 soft connection attempt failed : Connection refused
-%YDB-W-REPLWARN, GTM Replication Source Server : Could not connect to secondary in 160 seconds, 
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 3[23] seconds
 ============Test1 ends==========
  
 # Test 2: Set the soft tries period=1, alert time = 2
@@ -30,35 +27,92 @@ src1.log:
 src2.log:
 1 soft connection attempt failed : Connection refused
 2 soft connection attempt failed : Connection refused
-%YDB-W-REPLWARN, GTM Replication Source Server : Could not connect to secondary in 2 seconds, 
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for [45] seconds
 4 soft connection attempt failed : Connection refused
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for [67] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for [89] seconds
 8 soft connection attempt failed : Connection refused
-%YDB-W-REPLWARN, GTM Replication Source Server : Could not connect to secondary in 8 seconds, 
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 1[01] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 1[23] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 1[45] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 1[67] seconds
 16 soft connection attempt failed : Connection refused
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 1[89] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 2[01] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 2[23] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 2[45] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 2[67] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 2[89] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 3[01] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 3[23] seconds
 32 soft connection attempt failed : Connection refused
-%YDB-W-REPLWARN, GTM Replication Source Server : Could not connect to secondary in 32 seconds, 
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 3[45] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 3[67] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 3[89] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 4[01] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 4[23] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 4[45] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 4[67] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 4[89] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 5[01] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 5[23] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 5[45] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 5[67] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 5[89] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 6[01] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 6[23] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 6[45] seconds
 64 soft connection attempt failed : Connection refused
 ============Test2 ends==========
  
 # Test 3: keep the soft tries period=1, alert time = 2, start the receiver, then shut down the receiver 
 ###################################################################
 src3.log:
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 6[67] seconds
 1 soft connection attempt failed : Connection refused
 2 soft connection attempt failed : Connection refused
-%YDB-W-REPLWARN, GTM Replication Source Server : Could not connect to secondary in 2 seconds, 
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for [45] seconds
 4 soft connection attempt failed : Connection refused
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for [67] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for [89] seconds
 8 soft connection attempt failed : Connection refused
-%YDB-W-REPLWARN, GTM Replication Source Server : Could not connect to secondary in 8 seconds, 
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 1[01] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 1[23] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 1[45] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 1[67] seconds
 16 soft connection attempt failed : Connection refused
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 1[89] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 2[01] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 2[23] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 2[45] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 2[67] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 2[89] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 3[01] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 3[23] seconds
 32 soft connection attempt failed : Connection refused
-%YDB-W-REPLWARN, GTM Replication Source Server : Could not connect to secondary in 32 seconds, 
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 3[45] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 3[67] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 3[89] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 4[01] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 4[23] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 4[45] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 4[67] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 4[89] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 5[01] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 5[23] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 5[45] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 5[67] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 5[89] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 6[01] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 6[23] seconds
+##TEST_AWK%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 6[45] seconds
 64 soft connection attempt failed : Connection refused
 ============Test3 ends==========
  
 # Test 4: Set the soft tries period larger than maximum logging period (150), soft_tries_period = 155  alert_period=310 
 ###################################################################
 src4.log:
+Soft tries period cannot be more than half of the maximum shutdown wait time of 120 seconds. Reducing soft tries period to 60 seconds 
 1 soft connection attempt failed : Connection refused
 2 soft connection attempt failed : Connection refused
-%YDB-W-REPLWARN, GTM Replication Source Server : Could not connect to secondary in 310 seconds, 
 ============Test4 ends==========

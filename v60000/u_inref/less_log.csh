@@ -3,7 +3,7 @@
 #								#
 # Copyright 2012, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -47,12 +47,15 @@ $sec_shell "cd $SEC_SIDE; $MUPIP replic -receiv -shut -time=0" >>& init_off.outx
 echo " "
 echo "# Test 1: Using default settings for connection: soft_tries_period=5, alert_period=30"
 $echoline
+# Note: Need to specify "-conn=" below because default alert period is 0 from YottaDB r1.36 (GT.M V6.3-014) onwards
+#       whereas it used to be 30 by default before YottaDB r1.36.
 ## Turn on the INST1-source server to start logging soft tries attempts on src1.log
-$pri_shell "cd $PRI_SIDE; $MUPIP replic -source -start -secondary="$HOST":"$portno" -log=src1.log -buffsize=1 $gtm_test_instsecondary" >&inst1_activity.outx
+## -conn= 5 (hard tries times), 500 (hard tries period, ms), 5 (soft tries period), 30 (alert period), 15 (heartbeat period), 60 (max heartbeat wait)
+$pri_shell "cd $PRI_SIDE; $MUPIP replic -source -start -secondary="$HOST":"$portno" -log=src1.log -buffsize=1 $gtm_test_instsecondary -conn=5,500,5,30,15,60" >&inst1_activity.outx
 # Let source server run up to 175 seconds, during which the logging period will increase such that logs are printed at 5, 10, 20, 40, 80, and then 160 seconds.
 # The value of 175 was chosen to (safely) exceed the following: 5 + 10 + 20 + 40 + 80 + hard tries time (5 * 0.5) = 157.5 seconds.
-$gtm_tst/com/wait_for_log.csh -log src1.log -message "Could not connect to secondary in 160 seconds" -duration 175
-echo "src1.log:"; $grep -E 'soft connection attempt failed|YDB-W-REPLWARN' src1.log|cut -c 28-
+$gtm_tst/com/wait_for_log.csh -log src1.log -message "%YDB-W-REPLALERT, Source Server could not connect to replicating instance \[INSTANCE2\] for 3[0-9] seconds" -duration 175
+echo "src1.log:"; $grep -E 'soft connection attempt failed|YDB-W-REPLALERT' src1.log | cut -c 28-
 echo "============Test1 ends=========="
 
 ##Test 2 is to test that the logging period can exponentially increase until exceeding the threshold after changing the connection parameters when the receiver is not started
@@ -73,7 +76,7 @@ $MUPIP replic -source -start -log=src2.log -secondary="$HOST":"$portno" -buff=$t
 # Let source server run up to 85 seconds, during which the logging period will increase, such that logs are printed at 1, 2, 4, 8, 16, 32, and then 64 seconds.
 ## The value of 85 was chosen to (safely) exceed the following: 1 + 2 + 4 + 8 + 16 + 32 + hard tries time (5 * 0.5) = 65.5 seconds.
 $gtm_tst/com/wait_for_log.csh -log src2.log -message "64 soft connection attempt" -duration 85
-echo "src2.log:"; $grep -E 'soft connection attempt failed|YDB-W-REPLWARN' src2.log |cut -c 28-
+echo "src2.log:"; $grep -E 'soft connection attempt failed|YDB-W-REPLALERT' src2.log |cut -c 28-
 echo "============Test2 ends=========="
 
 ##Test 3 is to test that the logging period can exponentially increase until exceeding the threshold when the receiver is down
@@ -92,11 +95,12 @@ $sec_shell "cd $SEC_SIDE; $MUPIP replic -receiv -shut -time=0" >>&inst2_activity
 
 ## Similar to test 2, Let source server run for 85 seconds, during which the logging period always exponentially increases
 $gtm_tst/com/wait_for_log.csh -log src3.log -message "64 soft connection attempt failed" -duration 85
-echo "src3.log:"; $grep -E 'soft connection attempt failed|YDB-W-REPLWARN' src3.log|cut -c 28-
+echo "src3.log:"; $grep -E 'soft connection attempt failed|YDB-W-REPLALERT' src3.log|cut -c 28-
 echo "============Test3 ends=========="
 
 ## Test 4 is to test that logging period will no longer increase when it exceeds the threshold
 ## It is also to test that the servers can run normally with very large soft tries period (larger than maximum logging period)
+## TODO: This stage of the test needs rework (YDBTest#472 tracks that).
 echo " "
 echo "# Test 4: Set the soft tries period larger than maximum logging period (150), soft_tries_period = 155  alert_period=310 "
 $echoline
@@ -120,8 +124,9 @@ $sec_shell "cd $SEC_SIDE; $MUPIP replic -receiv -start -listen="$portno" -log=rc
 ## Let receiver run up to another 175 seconds to make sure the source server can now connect to it.
 $gtm_tst/com/wait_for_log.csh -log src4.log -message "Connection information" -duration 175
 
-
-echo "src4.log:"; $grep -E 'soft connection attempt failed|YDB-W-REPLWARN' src4.log|cut -c 28-
+## We expect to see a message that soft tries period cannot be too large and that it is automatically reduced to half of
+## the maximum shutdown wait time of 120 seconds i.e. 60 seconds. Hence the "Reducing soft tries period" search term use below.
+echo "src4.log:"; $grep -E 'soft connection attempt failed|YDB-W-REPLALERT|Reducing soft tries period' src4.log|cut -c 28-
 ## In src4.log, there will be no "3 soft connection attempt failed", which would mean that the source server connects to the receiver after more than 310 seconds.
 ## In the src4.log, the alert message  "Could not connect to secondary in 310 seconds" indicates that two logs take 155+155 seconds, i.e. the logging period does not increase.
 echo "============Test4 ends=========="
