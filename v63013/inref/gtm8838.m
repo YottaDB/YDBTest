@@ -109,6 +109,16 @@ VerifyGVSTATS
 	. set peekValue=$$^%PEEKBYNAME("sgmnt_data.gvstats_rec."_fldName,"DEFAULT")
 	. set:("0x"=$zextract(peekValue,1,2)) peekValue=$$FUNC^%HD(peekValue)
 	. ;
+	. ; There are certain stats in "sr_port/tab_gvstats_rec.h" which are collections of other stats (aggregates).
+	. ; See "TAB_GVSTATS_REC" lines surrounded by a WS_STATS_BEGIN and WS_STATS_END in that file. These stats
+	. ; don't make sense in the file header but are kept there to avoid a "bad user experience" (see comment in that
+	. ; same header file). All such stats would hold a value of 0 in the file header even though we set them to a
+	. ; non-zero value in the "node_local" structure in another process. Therefore in such cases, reset the expected
+	. ; value to be 0. Fortunately, all those stats start with the name "f_" (e.g. "f_dbext_wait", "f_bg_wait" etc.).
+	. ; Note that these are referred to as "toggle statistics" in the GT.M V6.3-014 release notes
+	. ; (see http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V6.3-014_Release_Notes.html#GTM-8863).
+	. set:("f_"=$extract(fldName,1,2)) lclTypes(idx,"off")=0
+	. ;
 	. ; Validate value
 	. set peekExpectedValue=lclTypes(idx,"off")
 	. if peekValue'=peekExpectedValue do
