@@ -4,6 +4,9 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -44,7 +47,7 @@ while (-f $GPG_AGENT_RESET_LOG)
 	@ i++
 end
 
-$psuser | $grep -E "gpg\-agent .*\-\-homedir $gnupg_home .*\-\-daemon" > $GPG_AGENT_RESET_LOG
+$psuser | $grep -E "gpg-agent .*--homedir $gnupg_home .*--daemon" > $GPG_AGENT_RESET_LOG
 @ ps_count = `$tst_awk 'END {print NR}' $GPG_AGENT_RESET_LOG`
 
 if (1 < $ps_count) then
