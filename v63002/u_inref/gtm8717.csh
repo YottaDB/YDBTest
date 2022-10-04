@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -24,7 +24,7 @@ echo ""
 while ($num < 1000)
         $ydb_dist/mumps -run select^gtm8717 > temp$num.m
         $ydb_dist/mumps -run temp$num >& errorcheck$num.outx
-	if ("" != `$grep "\-F\-" errorcheck$num.outx`) then
+	if ("" != `$grep "\-F-" errorcheck$num.outx`) then
 		cat errorcheck$num.outx
 		@ fail = $fail + 1
 	endif

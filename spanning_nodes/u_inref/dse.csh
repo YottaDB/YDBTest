@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -24,10 +24,10 @@ EOF
 
 echo "#SPAN1 tag exists for global ^ngbl?"
 set blockno=`$gtm_exe/dse find -key="^nsgbl" | & $tst_awk '{if ($1=="Key") {print $5}}' | tr -d "\."`
-$gtm_exe/dse dump -block=$blockno | & $grep -c "\#SPAN1"
+$gtm_exe/dse dump -block=$blockno | & $grep -c "#SPAN1"
 echo "#SPAN1 tag exists for global ^ngbl(1)?"
 set blockno=`$gtm_exe/dse find -key="^nsgbl(1)" | & $tst_awk '{if ($1=="Key") {print $5}}' | tr -d "\."`
-$gtm_exe/dse dump -block=$blockno | & $grep -c "\#SPAN1"
+$gtm_exe/dse dump -block=$blockno | & $grep -c "#SPAN1"
 echo '#SPAN1 tag exists for global ^ngbl("erdeniz")?'
 set blockno=`$gtm_exe/dse find -key='^nsgbl("""erdeniz""")' | & $tst_awk '{if ($1=="Key") {print $5}}' | tr -d "\."`
-$gtm_exe/dse dump -block=$blockno | & $grep -c "\#SPAN1"
+$gtm_exe/dse dump -block=$blockno | & $grep -c "#SPAN1"

@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -74,9 +74,9 @@ foreach image_type ( "MUMPS" "MUPIP" "DSE" "LKE" "DBCERTIFY" "GTCM" "GTCM_GNP" )
 	echo "$image_type : syslog_after=$syslog_after" >>&! syslog_time.outx
 	echo "--------------------------------------------------------------" >>&! syslog_time.outx
 	if ($?test_replic == 1) then
-		setenv msg "YDB\-${image_type}\-INSTANCE1"
+		setenv msg "YDB-${image_type}-INSTANCE1"
 	else
-		setenv msg "YDB\-${image_type}"
+		setenv msg "YDB-${image_type}"
 	endif
 	$gtm_tst/com/getoper.csh "$syslog_before" "" ${image_type}_syslog.logx  "" $msg
 	if ( $status ) then

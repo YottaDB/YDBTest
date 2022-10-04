@@ -274,7 +274,7 @@ if (0 == `$grep -c "The command to get executed is RUN" $action_file".csh"`) the
 	endif
 else
 	# the action involved is RUN and now check for multiple hosts
-	if ( 0 == `$grep -c "^$tst_tcsh \-c" $action_file".csh"` ) then
+	if ( 0 == `$grep -c "^$tst_tcsh -c" $action_file".csh"` ) then
 		set fn=env_suppl_$action_file"_run.csh"
 		echo "#\!/usr/local/bin/tcsh -f" >&! $fn
 		echo "setenv gtm_test_replic_timestamp $gtm_test_replic_timestamp" >>&! $fn
@@ -299,7 +299,7 @@ else
 		sed 's/\(.setenv remote_ver.*;;;\)cd /\1source '$tmp_side'\/'$fn';cd /' $action_file".csh" >& tmp_$action_file".csh"
 		mv tmp_$action_file".csh" $action_file".csh"
 		# to avoid SSH hangs let's insert iput re-direction /dev/null to the RUN command
-		if !( `$grep "'setenv remote_ver " $action_file".csh"|$grep "< \/dev\/null"|wc -l` ) then
+		if !( `$grep "'setenv remote_ver " $action_file".csh"|$grep "< /dev/null"|wc -l` ) then
 			set quote="'"
 			sed 's/\(.setenv remote_ver.*\)'$quote'/\1 < \/dev\/null'$quote'/' $action_file".csh" >& tmp_$action_file".csh"
 			mv tmp_$action_file".csh" $action_file".csh"

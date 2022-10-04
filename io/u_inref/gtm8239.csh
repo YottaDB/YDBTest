@@ -4,7 +4,7 @@
 # Copyright (c) 2015 Fidelity National Information 		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -205,8 +205,8 @@ send -- "exit\r"
 expect eof
 eof
 
-echo '$grep -E "(YDB\-|FAIL)" case7.expect.outx | $grep -v "%YDB\-F\-KILLBYSIGUINFO"'
-$grep -E "(YDB\-|FAIL)" case7.expect.outx | $grep -v "%YDB\-F\-KILLBYSIGUINFO"
+echo '$grep -E "(YDB-|FAIL)" case7.expect.outx | $grep -v "%YDB-F-KILLBYSIGUINFO"'
+$grep -E "(YDB-|FAIL)" case7.expect.outx | $grep -v "%YDB-F-KILLBYSIGUINFO"
 echo
 
 # Ensure that a WRITE interrupted with a deadly signal does not cause
@@ -214,8 +214,8 @@ echo
 echo "Case 8."
 $gtm_dist/mumps -run case8^gtm8239 >&! case8.outx
 
-echo '$grep -E "(YDB\-|FAIL)" case8.outx | $grep -v "%YDB\-F\-KILLBYSIGUINFO"'
-$grep -E "(YDB\-|FAIL)" case8.outx | $grep -v "%YDB\-F\-KILLBYSIGUINFO"
+echo '$grep -E "(YDB-|FAIL)" case8.outx | $grep -v "%YDB-F-KILLBYSIGUINFO"'
+$grep -E "(YDB-|FAIL)" case8.outx | $grep -v "%YDB-F-KILLBYSIGUINFO"
 echo
 
 # Ensure that a WRITE interrupted with a deadly signal does not cause
@@ -223,8 +223,8 @@ echo
 echo "Case 9."
 $gtm_dist/mumps -run case9^gtm8239 |& cat >&! case9.outx
 
-echo '$grep -E "(YDB\-|FAIL)" case9.outx | $grep -v "%YDB\-F\-KILLBYSIGUINFO"'
-$grep -E "(YDB\-|FAIL)" case9.outx | $grep -v "%YDB\-F\-KILLBYSIGUINFO"
+echo '$grep -E "(YDB-|FAIL)" case9.outx | $grep -v "%YDB-F-KILLBYSIGUINFO"'
+$grep -E "(YDB-|FAIL)" case9.outx | $grep -v "%YDB-F-KILLBYSIGUINFO"
 echo
 
 # Ensure that when a READ is interrupted, and the interrupt handler produces
@@ -243,8 +243,8 @@ send -- "exit\r"
 expect eof
 eof
 
-echo '$grep -E "(YDB\-|FAIL)" case10.expect.outx | $grep -vE "%YDB\-E\-(ERRWZINTR|ZINTDIRECT)"'
-$grep -E "(YDB\-|FAIL)" case10.expect.outx | $grep -vE "%YDB\-E\-(ERRWZINTR|ZINTDIRECT)"
+echo '$grep -E "(YDB-|FAIL)" case10.expect.outx | $grep -vE "%YDB-E-(ERRWZINTR|ZINTDIRECT)"'
+$grep -E "(YDB-|FAIL)" case10.expect.outx | $grep -vE "%YDB-E-(ERRWZINTR|ZINTDIRECT)"
 echo
 
 # Ensure that when a READ is interrupted, and the interrupt handler produces
@@ -252,8 +252,8 @@ echo
 echo "Case 11."
 $gtm_dist/mumps -run case11^gtm8239 < /dev/null >&! case11.outx
 
-echo '$grep -E "(YDB\-|FAIL)" case11.outx | $grep -vE "%YDB\-E\-(ERRWZINTR|ZINTDIRECT)"'
-$grep -E "(YDB\-|FAIL)" case11.outx | $grep -vE "%YDB\-E\-(ERRWZINTR|ZINTDIRECT)"
+echo '$grep -E "(YDB-|FAIL)" case11.outx | $grep -vE "%YDB-E-(ERRWZINTR|ZINTDIRECT)"'
+$grep -E "(YDB-|FAIL)" case11.outx | $grep -vE "%YDB-E-(ERRWZINTR|ZINTDIRECT)"
 echo
 
 # Ensure that when a READ is interrupted, and the interrupt handler produces
@@ -262,8 +262,8 @@ echo "Case 12."
 touch alive
 $gtm_dist/mumps -run emptyPipe^gtm8239 |& $gtm_dist/mumps -run case12^gtm8239 >&! case12.outx
 
-echo '$grep -E "(YDB\-|FAIL)" case12.outx | $grep -vE "%YDB\-E\-(ERRWZINTR|ZINTDIRECT)"'
-$grep -E "(YDB\-|FAIL)" case12.outx | $grep -vE "%YDB\-E\-(ERRWZINTR|ZINTDIRECT)"
+echo '$grep -E "(YDB-|FAIL)" case12.outx | $grep -vE "%YDB-E-(ERRWZINTR|ZINTDIRECT)"'
+$grep -E "(YDB-|FAIL)" case12.outx | $grep -vE "%YDB-E-(ERRWZINTR|ZINTDIRECT)"
 echo
 
 # Ensure that long concatenated messages from utilities are not subject to wrapping
@@ -284,8 +284,8 @@ send -- "exit\r"
 expect eof
 eof
 
-echo '$grep "\-E\-" case13.expect.outx'
-$grep "\-E\-" case13.expect.outx
+echo '$grep "\-E-" case13.expect.outx'
+$grep "\-E-" case13.expect.outx
 echo
 
 # Ensure that interrupting a READ with a SIGTERM does not cause issues when
@@ -302,8 +302,8 @@ send -- "exit\r"
 expect eof
 eof
 
-echo '$grep -E "(YDB\-|FAIL)" case14.expect.outx | $grep -v "%YDB\-F\-FORCEDHALT"'
-$grep -E "(YDB\-|FAIL)" case14.expect.outx | $grep -v "%YDB\-F\-FORCEDHALT"
+echo '$grep -E "(YDB-|FAIL)" case14.expect.outx | $grep -v "%YDB-F-FORCEDHALT"'
+$grep -E "(YDB-|FAIL)" case14.expect.outx | $grep -v "%YDB-F-FORCEDHALT"
 echo
 
 # Ensure that interrupting a READ with a SIGTERM does not cause issues when
@@ -312,8 +312,8 @@ echo "Case 15."
 touch alive
 ($gtm_dist/mumps -run case15^gtm8239 < /dev/null) >&! case15.outx
 
-echo '$grep -E "(YDB\-|FAIL)" case15.outx | $grep -v "%YDB\-F\-FORCEDHALT"'
-$grep -E "(YDB\-|FAIL)" case15.outx | $grep -v "%YDB\-F\-FORCEDHALT"
+echo '$grep -E "(YDB-|FAIL)" case15.outx | $grep -v "%YDB-F-FORCEDHALT"'
+$grep -E "(YDB-|FAIL)" case15.outx | $grep -v "%YDB-F-FORCEDHALT"
 echo
 
 # Ensure that interrupting a READ with a SIGTERM does not cause issues when
@@ -321,8 +321,8 @@ echo
 echo "Case 16."
 $gtm_dist/mumps -run emptyPipe^gtm8239 |& $gtm_dist/mumps -run case16^gtm8239 >&! case16.outx
 
-echo '$grep -E "(YDB\-|FAIL)" case16.outx | $grep -v "%YDB\-F\-FORCEDHALT"'
-$grep -E "(YDB\-|FAIL)" case16.outx | $grep -v "%YDB\-F\-FORCEDHALT"
+echo '$grep -E "(YDB-|FAIL)" case16.outx | $grep -v "%YDB-F-FORCEDHALT"'
+$grep -E "(YDB-|FAIL)" case16.outx | $grep -v "%YDB-F-FORCEDHALT"
 echo
 
 # Ensure that when a READ is interrupted, and the interrupt handler is attempting
@@ -341,8 +341,8 @@ send -- "exit\r"
 expect eof
 eof
 
-echo '$grep -E "(YDB\-|FAIL)" case17.expect.outx | $grep -vE "%YDB\-E\-(ERRWZINTR|ZINTDIRECT)"'
-$grep -E "(YDB\-|FAIL)" case17.expect.outx | $grep -vE "%YDB\-E\-(ERRWZINTR|ZINTDIRECT)"
+echo '$grep -E "(YDB-|FAIL)" case17.expect.outx | $grep -vE "%YDB-E-(ERRWZINTR|ZINTDIRECT)"'
+$grep -E "(YDB-|FAIL)" case17.expect.outx | $grep -vE "%YDB-E-(ERRWZINTR|ZINTDIRECT)"
 echo
 
 # Ensure that when a READ is interrupted, and the interrupt handler is attempting
@@ -350,8 +350,8 @@ echo
 echo "Case 18."
 ($gtm_dist/mumps -run case18^gtm8239 < /dev/null) >&! case18.outx
 
-echo '$grep -E "(YDB\-|FAIL)" case18.outx | $grep -vE "%YDB\-E\-(ERRWZINTR|ZINTDIRECT)"'
-$grep -E "(YDB\-|FAIL)" case18.outx | $grep -vE "%YDB\-E\-(ERRWZINTR|ZINTDIRECT)"
+echo '$grep -E "(YDB-|FAIL)" case18.outx | $grep -vE "%YDB-E-(ERRWZINTR|ZINTDIRECT)"'
+$grep -E "(YDB-|FAIL)" case18.outx | $grep -vE "%YDB-E-(ERRWZINTR|ZINTDIRECT)"
 echo
 
 
@@ -361,8 +361,8 @@ echo "Case 19."
 touch alive
 $gtm_dist/mumps -run emptyPipe^gtm8239 |& $gtm_dist/mumps -run case19^gtm8239 >&! case19.outx
 
-echo '$grep -E "(YDB\-|FAIL)" case19.outx | $grep -vE "%YDB\-E\-(ERRWZINTR|ZINTDIRECT)"'
-$grep -E "(YDB\-|FAIL)" case19.outx | $grep -vE "%YDB\-E\-(ERRWZINTR|ZINTDIRECT)"
+echo '$grep -E "(YDB-|FAIL)" case19.outx | $grep -vE "%YDB-E-(ERRWZINTR|ZINTDIRECT)"'
+$grep -E "(YDB-|FAIL)" case19.outx | $grep -vE "%YDB-E-(ERRWZINTR|ZINTDIRECT)"
 echo
 
 $gtm_tst/com/dbcheck.csh

@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2013 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -70,7 +73,7 @@ endif
 while ((0 != $cnt) && ($i < 60))
 	@ i = $i + 5
 	$psuser >&! mupip_ps_list$i.outx
-	@ cnt = `$grep "mupip journal \-extract \-forward mumps.mjl" mupip_ps_list$i.outx | wc -l`
+	@ cnt = `$grep "mupip journal -extract -forward mumps.mjl" mupip_ps_list$i.outx | wc -l`
 	sleep 5
 end
 if (0 != $cnt) then

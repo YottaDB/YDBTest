@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -36,7 +36,7 @@ echo "Driving generated test routine gtm7896a"
 $echoline
 # Filter this out so that badchar warnings are excluded
 $gtm_dist/mumps -run gtm7896a >& tmp.txt
-cat tmp.txt | $grep -v "%YDB-W-BADCHAR," | $grep -v "\t" | $grep -v "\^--"
+cat tmp.txt | $grep -v "%YDB-W-BADCHAR," | $grep -v "t" | $grep -v "\^--"
 echo ""
 echo ""
 #
