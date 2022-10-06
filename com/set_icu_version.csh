@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -11,10 +11,12 @@
 #								#
 #################################################################
 
-# pkg-config --version can return values like 50.1.2, 55.1, 57.1, 59.1
-# In these cases, we want ydb_icu_version to be set to 5.0, 5.5, 5.7, 5.9 respectively.
-set icuver = `pkg-config --modversion icu-io | cut -d. -f1`
-setenv ydb_icu_version `expr $icuver / 10`.`expr $icuver % 10`
+# We had code here that used to set ydb_icu_version as follows.
+#      setenv ydb_icu_version `pkg-config --modversion icu-io`
+# This used to set the env var to a value like 65.1
+# But this does not work on SLED 15 as libicuio.so points to a file called libicuio.so.suse65.1.
+# Need to set ydb_icu_version to 65.1.suse in that case. The below sed command takes care of that.
+setenv ydb_icu_version `readlink /usr/lib*/libicuio.so /usr/lib*/*/libicuio.so | sed 's/libicuio.so.\([a-z]*\)\([0-9\.]*\)/\2.\1/;s/\.$//;'`
 
 # set gtm_icu_version too in case we run pre-r1.22 versions (they don't understand ydb_icu_version)
 setenv gtm_icu_version $ydb_icu_version
