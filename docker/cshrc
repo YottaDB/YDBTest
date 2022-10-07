@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2021-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -46,7 +46,8 @@ setenv gtm_test_noggsetup 1
 setenv gtm_test_serverconf_file $gtm_test/serverconf.txt
 
 setenv LC_ALL en_US.UTF-8
-setenv ydb_icu_version `pkg-config --modversion icu-io` # needed for YDBEncrypt compilation
+# Below is needed for YDBEncrypt compilation
+setenv ydb_icu_version `ldconfig -p | grep -m1 -F libicuio.so. | cut -d" " -f1 | sed 's/.*libicuio.so.\([a-z]*\)\([0-9\.]*\)/\2.\1/;s/\.$//;'`
 setenv gtm_icu_version $ydb_icu_version
 
 if ( -f $gtm_tools/gtm_env.csh ) then

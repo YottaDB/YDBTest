@@ -115,6 +115,9 @@ if ($status) exit $status
 source $gtm_tst/com/is_libyottadb_asan_enabled.csh
 source $gtm_tst/com/set_asan_other_env_vars.csh	# sets a few other associated asan env vars
 
+# Set gtm_icu_version/ydb_icu_version env vars at startup
+source $gtm_tst/com/set_icu_version.csh
+
 source $gtm_tst/com/set_ldlibpath.csh
 # Various checks and exits :
 if ( $USER =~ {library,,root} ) then

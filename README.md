@@ -111,7 +111,7 @@ setenv gtm_log $gtm_ver/log
 setenv gtm_testver T133
 setenv gtm_curpro /usr/local/lib/yottadb/r134	# This needs to be set to a current release version of YottaDB
 setenv gtm_com ""
-setenv gtm_icu_version `pkg-config --modversion icu-io`
+setenv gtm_icu_version `ldconfig -p | grep -m1 -F libicuio.so. | cut -d" " -f1 | sed 's/.*libicuio.so.\([a-z]*\)\([0-9\.]*\)/\2.\1/;s/\.$//;'`
 setenv tst_dir /testarea1	# Can be replaced with any directory
 
 alias gtmtest $gtm_test/$gtm_testver/com/gtmtest.csh -report on -noencrypt -env eall_noinverse=1 $*

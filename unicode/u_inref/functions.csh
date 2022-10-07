@@ -4,7 +4,7 @@
 # Copyright (c) 2006-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -76,7 +76,7 @@ cp $gtm_tst/$tst/outref/longstrUTF-8.out longstrUTF-8.cmp
 # The "zconvert" iteration of the foreach loop below produces different output in UTF-8 mode for ICU versions >= 64.2 and < 64.2.
 # The 64.2 output is the correct one where for title-case output only the first letter in a word has upper-case and all the rest
 # are in lower-case. So use the incorrect version only if the current box has ICU version < 64.2. Or else use the default version.
-if (1 == `echo "if ($gtm_icu_version < 6.4) 1" | bc`) then
+if (1 == `echo "if ($gtm_tst_icu_numeric_version < 64) 1" | bc`) then
 	cp $gtm_tst/$tst/outref/longstrUTF-8_pre_ICU_64.out longstrUTF-8.cmp
 endif
 #

@@ -4,7 +4,7 @@
 # Copyright (c) 2015 Fidelity National Information 		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -28,7 +28,6 @@ endif
 
 # Use the OS default ICU version. Some servers are configured to use 3.6 out of /usr/local
 # and that does not work because screen unsetenvs LD_LIBRARY_PATH and LIBPATH
-$gtm_tst/com/set_icu_version.csh
 unsetenv LD_LIBRARY_PATH
 
 $echoline

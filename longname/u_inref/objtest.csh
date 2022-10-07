@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -19,7 +19,7 @@ cp $gtm_tst/$tst/inref/objformt.x objformt.m
 #
 # Disable unicode if ICU >= 4.4 is detected, since support for it started with V54002 and this test require an older version.
 if (($?gtm_chset) && ($?gtm_icu_version)) then
-	if (("UTF-8" == $gtm_chset) && (1 == `echo "if ($gtm_icu_version >= 4.4) 1" | bc`)) then
+	if (("UTF-8" == $gtm_chset) && (1 == `echo "if ($gtm_tst_icu_numeric_version >= 44) 1" | bc`)) then
 		set save_chset = $gtm_chset
 		$switch_chset "M" >&! switch_chset1.out
 	endif

@@ -4,7 +4,7 @@
 # Copyright (c) 2011-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -129,12 +129,6 @@ if ( ! -e ./sr_port) then
 	# If sr_port does not exist, then we don't have the sources, exit
 	ls -ltr
 	exit 1
-endif
-
-if ( $?gtm_icu_version ) then
-	set icuver=$gtm_icu_version
-else
-	which pkg-config && set icuver=`pkg-config --modversion icu-io`
 endif
 
 # Prefer GNU make if it is not the default make

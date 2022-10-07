@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2013 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -14,7 +17,7 @@
 # 1 exit status indicates that the test can stay in UTF-8 mode
 
 if ($?gtm_icu_version) then
-	if (`expr $gtm_icu_version ">=" 4.4`) then
+	if (`expr $gtm_tst_icu_numeric_version ">=" 44`) then
 		exit 0
 	endif
 else
