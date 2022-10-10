@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2019-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -24,8 +24,10 @@ if (("$linux_distrib" == "arch")							\
 	set installoptions = "$installoptions --force-install"
 endif
 
-set sudostr = "sudo"
-source $gtm_tst/com/is_libyottadb_asan_enabled.csh
+# Need to preserve ydb_icu_version env var across the sudo call. Or else yottadb invocations inside the sudo won't work correctly
+# on SLED 15 systems (see YDBTest@154981e3 and/or YDB@38cd9956 for more details).
+set sudostr = "sudo --preserve-env=ydb_icu_version"
+source $gtm_tst/com/is_libyottadb_asan_enabled.csh	# Check if YottaDB is built with ASAN.
 if ($gtm_test_libyottadb_asan_enabled) then
 	# Disable memory leak detection inside sudo as the leak sanitizer (LSAN) currently detects leaks in a PRO build
 	# and causes a build failure. We will address memory leaks at a later time (YDB#816) as they are not as critical as buffer
