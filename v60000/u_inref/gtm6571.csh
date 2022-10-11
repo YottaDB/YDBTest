@@ -3,7 +3,7 @@
 #								#
 # Copyright 2012, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -22,11 +22,12 @@ set time_before = `date +"%b %e %H:%M:%S"`
 $gtm_dist/mumps -run gtm6571
 set time_after = `date +"%b %e %H:%M:%S"`
 $gtm_tst/com/getoper.csh "$time_before" "$time_after" syslog.txt "" "MUTEXLCKALERT"
-set count_of_msgs = `$grep $PWD syslog.txt | $grep MUTEXLCKALERT | $grep -v STUCKACT | wc -l`
+set count_of_msgs = `$grep $PWD syslog.txt | $grep MUTEXLCKALERT | $grep -vE "STUCKACT|%YDBPROCSTUCKEXEC" | wc -l`
 if (3 != $count_of_msgs) then
 	echo "TEST-E-FAIL, MUTEXLCKALERT message appeared $count_of_msgs times in syslog (expecting 3 times)."
 endif
-$grep foo TRACE_MUTEXLCKALERT*	# make sure things ran to avoid a false positive
+$grep foo %YDBPROCSTUCKEXEC*_MUTEXLCKALERT*	# make sure things ran to avoid a false positive
+cat *.mje*	# make sure there is nothing logged to any .mje files
 set stat1 = $status
 $gtm_tst/com/dbcheck.csh
 echo "End gtm6571"

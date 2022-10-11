@@ -4,7 +4,7 @@
 # Copyright (c) 2010-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -42,11 +42,14 @@ $gtm_tst/com/wait_for_log.csh -log dse_dump.out -message "This message is a part
 $MUPIP set -replication=on -reg "*" >& replic_on.logx
 
 echo "# Test if the output file exists"
-ls TRACE_SEMOP_INFO* >&! is_SEMOP_INFO_exist.out
-if ($status) echo "Was expecting SEMOP_INFO* file created by gtm_procstuckexed mechanism, but not found"
+ls %YDBPROCSTUCKEXEC*_SEMOP_INFO*.out >&! is_SEMOP_INFO_exist.out
+if ($status) echo "Was expecting %YDBPROCSTUCKEXEC_*SEMOP_INFO*.out file created by gtm_procstuckexec mechanism, but not found"
 set syslog_after1 = `date +"%b %e %H:%M:%S"`
 echo "# Time after the run: GTM_TEST_DEBUGINFO $syslog_after1"
 echo "# Check the operator log for the message YDB-I-STUCKACT"
 $gtm_tst/com/getoper.csh "$syslog_before1" "" syslog1.txt "" "STUCKACT"
 $grep -E "${dse_pid}.*YDB-I-STUCKACT.*SEMOP_INFO" syslog1.txt | sed 's/.*\(YDB-I-STUCKACT\)/\1/; s/\(.*stack_trace.csh\).*/\1/'
 $gtm_tst/com/wait_for_proc_to_die.csh $dse_pid
+# Kill any backgrounded DSE processes (from %YDBPROCSTUCKEXEC) to avoid later TEST-E-LSOF errors from test framework
+$gtm_tst/com/kill_ydbprocstuckexec_dse_processes.csh
+

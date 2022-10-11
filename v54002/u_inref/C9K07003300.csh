@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -35,7 +35,7 @@ echo "Starting MUPIP SET  command now"
 $MUPIP set -extension_count=400 -file mumps.dat
 $gtm_tst/com/wait_for_log.csh -log  do_dse.done
 echo "# Test if the output file exists"
-ls TRACE_SEMOP_INFO* | $tst_awk '{sub(/SEMOP_INFO_.*/,"SEMOP_INFO_##FILTERED##");print $0;exit}'
+ls %YDBPROCSTUCKEXEC*_SEMOP_INFO* | sed 's/_[0-9]\{8\}_[0-9]\{6\}_\(SEMOP_INFO\)_[0-9_]*\(.*\)/_YYYYMMDD_HHMMSS_\1*\2/;'
 set syslog_after1 = `date +"%b %e %H:%M:%S"`
 echo "# Time after processes got over : GTM_TEST_DEBUGINFO $syslog_after1"
 # Check if the error/messages are logged in operator log
@@ -43,4 +43,6 @@ echo "# Check the operator log for the messages YDB-I-STUCKACT"
  $gtm_tst/com/getoper.csh "$syslog_before1" "" syslog1a.txt "" STUCKACT
  $grep "YDB-I-STUCKACT" syslog1a.txt | $grep SEMOP_INFO | $grep $dsepid | sed 's/.*\(YDB-I-STUCKACT\)/\1/; s/\(.*stack_trace.csh\).*/\1/'
 echo ""
+# Kill any backgrounded DSE processes (from %YDBPROCSTUCKEXEC) to avoid later TEST-E-LSOF errors from test framework
+$gtm_tst/com/kill_ydbprocstuckexec_dse_processes.csh
 $gtm_tst/com/dbcheck.csh

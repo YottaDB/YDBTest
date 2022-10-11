@@ -3,7 +3,7 @@
 #								#
 # Copyright 2013 Fidelity Information Services, Inc		#
 #								#
-# Copyright (c) 2020-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -23,88 +23,8 @@ set type = $1
 set waiter = $2
 set blocker = $3
 set count = $4
-set monitor = "COUNTER_${type}_${blocker}_${count}.out"
-echo $waiter >>& $monitor
-set log = "TRACE_${type}_${waiter}_${blocker}.outx"
-set mail_needed = 0
-if ($type =~ {SEMWT2LONG,ERR_SHUTDOWN,MUTEXLCKALERT}) then
-	set mail_needed = 1
-endif
 
-# We have seen files created by this script in home directory. Exit if this is not test directory.
-# Add debug information to analyze the issue
-set short_host = $HOST:r:r:r
-set curdir = $PWD
-if ($curdir !~ "*$gtm_tst_out*") then
-	echo "check $log for debug information" | mailx -s "$short_host :: gtmprocstuck_get_stack_trace.csh not in test dir"  $mailing_list
-	setenv >>&! $log
-	$ps    >>&! $log
-	echo "Exiting since pwd is $curdir"	>>&! $log
-	exit 1
-endif
+setenv ydb_log `pwd`
+$ydb_dist/yottadb -run %YDBPROCSTUCKEXEC $type $waiter $blocker $count
+exit $status
 
-set curtime = `date +%H:%M:%S`
-set border =  "###############################################################################"
-echo $border 							>>&! $log
-echo "BLOCKING PID = $blocker"					>>&! $log
-echo "WAITING PID = $waiter"					>>&! $log
-echo "Time before calling dbx: "`date`				>>&! $log
-if ( "" != $count ) echo "Count is: "$count			>>&! $log
-echo $border							>>&! $log
-set psfile = psinfo_$waiter.txt
-set image = `$gtm_tst/com/determine_exe_name.csh $blocker $psfile`
-if ($image == "") echo "TEST-I-UNDETERMINED_EXE, Could not determine the executable for $blocker" 	>>&! $log
-# There have been instances where dbx gets hung infinitely. So push the invocation in the background
-# if get_dbx_c_stack_trace script is running beyond 600 seconds, kill it and the hung dbx and retry
-set retry = 2
-while ($retry > 0)
-	set pidfilename = get_dbx_${type}_${waiter}_${blocker}_${retry}_$$.pid
-	($gtm_tst/com/get_dbx_c_stack_trace.csh $blocker $image & ; echo $! > $pidfilename)		>>&! $log
-	set dbx_parent_pid = `cat $pidfilename`
-	if (""  == "$dbx_parent_pid") then
-		# This is to make the test fail, allowing us to debug and figure out why the pid is null
-		# Once that is figured out, this block can be removed
-		echo "TEST-E-NULLPID Unable to get pid of get_dbx_c_stack_trace.csh"	>>&! ${pidfilename}.null.out
-	endif
-	echo "pid of get_dbx_c_stack_trace.csh : $dbx_parent_pid"					>>&! $log
-	$gtm_tst/com/wait_for_proc_to_die.csh "$dbx_parent_pid" 600 . nolog				>>&! $log
-	if ($status) then
-		echo "get_dbx_c_stack_trace.csh with pid $dbx_parent_pid is still running"		>>&! $log
-		set dbx_pid = `$ps |& $tst_awk '{ if ($3 == "'$dbx_parent_pid'") {print $2 ; exit}}'`
-		echo "kill $dbx_pid $dbx_parent_pid and retry get_dbx_c_stack_trace"			>>&! $log
-		$kill9 $dbx_pid $dbx_parent_pid
-		@ retry = $retry - 1
-		set dbx_status = 1
-	else
-		set retry = 0
-		set dbx_status = 0
-	endif
-end
-$gtm_tst/com/check_PC_INVAL_err.csh $blocker $log
-echo $border							>>&! $log
-echo "Now the time is: "`date`" dbx exit status: "$dbx_status	>>&! $log
-set cnt = `cat $monitor | wc -l`
-# head/tail is an environment variable that usually points to mtailhead.csh which in turn invokes '$ydb_dist/yottadb'
-# to implement head/tail. But we have seen rare occasions when using `yottadb` ends up with an `INVOBJFILE` error
-# when locating `_XCMD.o` due to CHSET mismatch between `ydb_routines/gtmroutines` env var and `ydb_chset/gtm_chset`.
-# This causes a test failure due to an error in the `gtmprocstuck_get_stack_trace.csh` script even though there was
-# no actual test failure (this script is invoked only in case of situations like `MUTEXLCKALERT` and should capture
-# debug information in case there is a primary failure). It is not straightforward to determine the exact place where
-# the mismatch occurs and since this script is invoked only in rare occasions, we use the system head/tail in this
-# case instead of the usual yottadb head/tail versions that are used in the rest of the test system.
-setenv head head
-setenv tail tail
-# Send mail once in 10 times and send only 5 mails
-if ( !($cnt % 10 ) && ($cnt <= 50) )  then
-		($tail -n 100 $log) | mailx -s "$short_host : Time: $curtime; $type - No progress Check at $curdir" $mailing_list
-endif
-if ( ($mail_needed) && ($?gtm_procstuck_mail) ) then
-	if ($type == "ERR_SHUTDOWN") then
-		($tail -n 100 $log) | mailx -s "$short_host : Time: $curtime; Source server $blocker taking too long to shutdown. Check at $curdir" $mailing_list
-	else if (($type == "SEMWT2LONG_FTOK") || ($type == "SEMWT2LONG_ACCSEM")) then
-		($tail -n 100 $log) | mailx -s "$short_host : Time: $curtime; $type - $blocker holding the semaphore. Check at $curdir" $mailing_list
-	else if ($type == "MUTEXLCKALERT") then
-		($tail -n 100 $log) | mailx -s "$short_host : Time: $curtime; $type - $blocker holding crit. Check at $curdir" $mailing_list
-	endif
-endif
-exit $dbx_status

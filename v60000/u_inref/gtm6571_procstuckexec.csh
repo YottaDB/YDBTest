@@ -3,7 +3,7 @@
 #								#
 # Copyright 2012, 2013 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -16,7 +16,7 @@
 	set trace = "invoke_trace.$2"
 	echo $gtm_tst/com/gtmprocstuck_get_stack_trace.csh $1 $2 $3 $4	>>&! $trace
 	$gtm_tst/com/gtmprocstuck_get_stack_trace.csh $1 $2 $3 $4
-	$grep tach TRACE_$1_$2_$3.outx | $grep $3		>>&! $trace
+	$grep tach %YDBPROCSTUCKEXEC*_$1_$2_$3*.out | $grep $3		>>&! $trace
 	set stat1 = $status
 	echo "gtmprocstuck_get_stack_trace.csh $1 $2 $3 $4 : Exit status is $stat1"	>>&! $trace
 	set file = mutexlckalert_?

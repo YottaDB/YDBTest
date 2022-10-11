@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh
 #################################################################
 #                                                               #
-# Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.       #
+# Copyright (c) 2021-2022 YottaDB LLC and/or its subsidiaries.       #
 # All rights reserved.                                          #
 #                                                               #
 #       This source code contains the intellectual property     #
@@ -31,6 +31,13 @@ setenv gtm_white_box_test_case_number   156      # WBTEST_JNLPROCSTUCK_FORCE
 $echoline
 echo "# Set a global variable 500 times"
 $gtm_exe/yottadb -run %XCMD 'for i=1:1:500 set ^a=i'
+
+# The next step ("Stop journaling") requires standalone access to the database.
+# It is possible the %YDBPROCSTUCKEXEC invocation in line 33 above (due to the JNLPROCSTUCK error)
+# created a background "dse" process that is still accessing the database file. If so, kill it before
+# the next step as otherwise it would get a "File already open by another process" error.
+# See https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1224#note_1141982726 for more details.
+$gtm_tst/com/kill_ydbprocstuckexec_dse_processes.csh
 
 $echoline
 echo "# Stop journaling"
