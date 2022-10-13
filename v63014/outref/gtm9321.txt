@@ -1,0 +1,25 @@
+# This test checks that $ORDER(<indirection>,<literal>) maintains the correct $REFERENCE value
+
+# Create database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+# Drive gtm9321 test routine
+
+# Creating global variable
+
+# Testing $ORDER(<indirection>,<literal>)
+
+# $REFERENCE(old) | Previous subscript | $REFERENCE(current)
+^dd               |                    | ^house("Cedric Diggory")
+^dd               | Cedric Diggory     | ^house("Cho Chang")
+^dd               | Cho Chang          | ^house("Draco Malfoy")
+^dd               | Draco Malfoy       | ^house("Harry Potter")
+
+# Verify database
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
