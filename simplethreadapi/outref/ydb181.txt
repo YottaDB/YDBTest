@@ -1,0 +1,28 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+--------------------------------------------------------------------------------------------------------------
+# Test PARAMINVALID and INVVARNAME errors from an invalid varname parameter in various Simple Thread API calls
+--------------------------------------------------------------------------------------------------------------
+# Test control characters get displayed using $ZWRITE notation in INVVARNAME error
+151027762,(SimpleThreadAPI),%YDB-E-INVVARNAME, Invalid local/global/ISV variable name "ab"_$C(3)_"d" supplied to API call
+
+# Test PARAMINVALID error is issued if varname ydb_buffer_t.len_alloc is less than ydb_buffer_t.len_used
+# Also test that PARAMINVALID error correctly identified ydb_get_st() as the caller function
+151027770,(SimpleThreadAPI),%YDB-E-PARAMINVALID, Invalid varname parameter specified in ydb_get_st() call
+
+# Test PARAMINVALID error is issued if varname ydb_buffer_t.buf_addr is NULL and ydb_buffer_t.len_used is not 0
+# Also test that PARAMINVALID error correctly identified ydb_get_st() as the caller function
+151027770,(SimpleThreadAPI),%YDB-E-PARAMINVALID, Invalid varname parameter specified in ydb_get_st() call
+
+# Test INVVARNAME error is issued if ydb_buffer_t.len_used is 0
+151027762,(SimpleThreadAPI),%YDB-E-INVVARNAME, Invalid local/global/ISV variable name "" supplied to API call
+
+# Test ydb_lock_st() with multiple lock names one of which is invalid identifies the invalid name
+151027762,(SimpleThreadAPI),%YDB-E-INVVARNAME, Invalid local/global/ISV variable name "1lockB" supplied to API call
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -75,6 +75,7 @@
 # ciVoidReturnStack   [mmr]         Test of ydb_ci() when taking a string as a parameter, and returning void, properly processes the string parameter
 # ydb550              [bdw]         Test of nested ydb_tp_s() where the inner transaction rolls back but the outer transaction commits
 # ydb560              [nars]        Test that ydb_eintr_handler() helps terminate SimpleAPI application if a SIGINT/SIGTERM is received
+# ydb181              [nars]        Test INVVARNAME and PARAMINVALID errors using Simple API
 #-------------------------------------------------------------------------------------
 
 echo "simpleapi test starts..."
@@ -92,8 +93,9 @@ setenv subtest_list_non_replic "$subtest_list_non_replic callintcommit callintro
 setenv subtest_list_non_replic "$subtest_list_non_replic gvsuboflow"
 setenv subtest_list_non_replic "$subtest_list_non_replic gvnlvndata gvnlvnincr gvnlvndelete isvdelete str2zwr utils_file"
 setenv subtest_list_non_replic "$subtest_list_non_replic simpleapinotallowed utilfuncs externalcall exitFromTp initFromTp"
-setenv subtest_list_non_replic "$subtest_list_non_replic tpnestto127 isMainMT initMT exitMT pseudoBank randomWalk ciVoidReturn"
-setenv subtest_list_non_replic "$subtest_list_non_replic ciVoidReturnStack ydb550 ydb560"
+setenv subtest_list_non_replic "$subtest_list_non_replic tpnestto127 isMainMT initMT exitMT pseudoBank ciVoidReturn"
+setenv subtest_list_non_replic "$subtest_list_non_replic ciVoidReturnStack ydb550 ydb560 ydb181"
+setenv subtest_list_non_replic "$subtest_list_non_replic randomWalk" # Keep this subtest as the last as it takes a long time to run
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
