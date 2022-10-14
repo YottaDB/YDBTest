@@ -34,9 +34,9 @@ ydb_data_s() returned 11
 
 # Test of INVVARNAME error
 # Attemping ydb_data_s() of bad basevar (% in middle of name): ^B%dbasevarInvChar
-ydb_data_s() [82]: 151027762,(SimpleAPI),%YDB-E-INVVARNAME, Invalid local/global/ISV variable name supplied to API call
+ydb_data_s() [82]: 151027762,(SimpleAPI),%YDB-E-INVVARNAME, Invalid local/global/ISV variable name "^B%dbasevarInvChar" supplied to API call
 # Attemping ydb_data_s() of bad basevar (first letter in name is digit): ^1namestartswithdigit
-ydb_data_s() [90]: 151027762,(SimpleAPI),%YDB-E-INVVARNAME, Invalid local/global/ISV variable name supplied to API call
+ydb_data_s() [90]: 151027762,(SimpleAPI),%YDB-E-INVVARNAME, Invalid local/global/ISV variable name "^1namestartswithdigit" supplied to API call
 
 # Test of VARNAME2LONG error
 # Attemping ydb_data_s() of bad basevar (> 31 characters): ^Verylongbasevarthatexceedsmaxlength
@@ -97,9 +97,9 @@ ydb_data_s() returned 11
 
 # Test of INVVARNAME error
 # Attemping ydb_data_s() of bad basevar (% in middle of name): B%dbasevarInvChar
-ydb_data_s() [82]: 151027762,(SimpleAPI),%YDB-E-INVVARNAME, Invalid local/global/ISV variable name supplied to API call
+ydb_data_s() [82]: 151027762,(SimpleAPI),%YDB-E-INVVARNAME, Invalid local/global/ISV variable name "B%dbasevarInvChar" supplied to API call
 # Attemping ydb_data_s() of bad basevar (first letter in name is digit): 1namestartswithdigit
-ydb_data_s() [90]: 151027762,(SimpleAPI),%YDB-E-INVVARNAME, Invalid local/global/ISV variable name supplied to API call
+ydb_data_s() [90]: 151027762,(SimpleAPI),%YDB-E-INVVARNAME, Invalid local/global/ISV variable name "1namestartswithdigit" supplied to API call
 
 # Test of VARNAME2LONG error
 # Attemping ydb_data_s() of bad basevar (> 31 characters): Verylongbasevarthatexceedsmaxlength

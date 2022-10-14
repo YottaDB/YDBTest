@@ -264,9 +264,9 @@
 
 # Test of INVVARNAME error
 # Attemping ydb_delete_st() of bad basevar (% in middle of name): ^B%dbasevarInvChar
-ydb_delete_st() [79]: 151027762,(SimpleThreadAPI),%YDB-E-INVVARNAME, Invalid local/global/ISV variable name supplied to API call
+ydb_delete_st() [79]: 151027762,(SimpleThreadAPI),%YDB-E-INVVARNAME, Invalid local/global/ISV variable name "^B%dbasevarInvChar" supplied to API call
 # Attemping ydb_delete_st() of bad basevar (first letter in name is digit): ^1namestartswithdigit
-ydb_delete_st() [87]: 151027762,(SimpleThreadAPI),%YDB-E-INVVARNAME, Invalid local/global/ISV variable name supplied to API call
+ydb_delete_st() [87]: 151027762,(SimpleThreadAPI),%YDB-E-INVVARNAME, Invalid local/global/ISV variable name "^1namestartswithdigit" supplied to API call
 
 # Test of VARNAME2LONG error
 # Attemping ydb_delete_st() of bad basevar (> 31 characters): ^Verylongbasevarthatexceedsmaxlength
@@ -571,9 +571,9 @@ zwrarg=""
 
 # Test of INVVARNAME error
 # Attemping ydb_delete_st() of bad basevar (% in middle of name): B%dbasevarInvChar
-ydb_delete_st() [79]: 151027762,(SimpleThreadAPI),%YDB-E-INVVARNAME, Invalid local/global/ISV variable name supplied to API call
+ydb_delete_st() [79]: 151027762,(SimpleThreadAPI),%YDB-E-INVVARNAME, Invalid local/global/ISV variable name "B%dbasevarInvChar" supplied to API call
 # Attemping ydb_delete_st() of bad basevar (first letter in name is digit): 1namestartswithdigit
-ydb_delete_st() [87]: 151027762,(SimpleThreadAPI),%YDB-E-INVVARNAME, Invalid local/global/ISV variable name supplied to API call
+ydb_delete_st() [87]: 151027762,(SimpleThreadAPI),%YDB-E-INVVARNAME, Invalid local/global/ISV variable name "1namestartswithdigit" supplied to API call
 
 # Test of VARNAME2LONG error
 # Attemping ydb_delete_st() of bad basevar (> 31 characters): Verylongbasevarthatexceedsmaxlength

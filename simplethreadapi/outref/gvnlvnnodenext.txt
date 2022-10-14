@@ -146,9 +146,9 @@ ydb_node_next_st() returned YDB_ERR_NODEEND
 
 # Test of INVVARNAME error
 # Attempting ydb_node_next_st() of bad basevar (% in middle of name): ^B%dbasevarInvChar
-ydb_node_next_st() [94]: 151027762,(SimpleThreadAPI),%YDB-E-INVVARNAME, Invalid local/global/ISV variable name supplied to API call
+ydb_node_next_st() [94]: 151027762,(SimpleThreadAPI),%YDB-E-INVVARNAME, Invalid local/global/ISV variable name "^B%dbasevarInvChar" supplied to API call
 # Attempting ydb_node_next_st() of bad basevar (first letter in name is digit): ^1namestartswithdigit
-ydb_node_next_st() [102]: 151027762,(SimpleThreadAPI),%YDB-E-INVVARNAME, Invalid local/global/ISV variable name supplied to API call
+ydb_node_next_st() [102]: 151027762,(SimpleThreadAPI),%YDB-E-INVVARNAME, Invalid local/global/ISV variable name "^1namestartswithdigit" supplied to API call
 
 # Test of VARNAME2LONG error
 # Attempting ydb_node_next_st() of bad basevar (> 31 characters): ^Verylongbasevarthatexceedsmaxlength
@@ -330,9 +330,9 @@ ydb_node_next_st() returned YDB_ERR_NODEEND
 
 # Test of INVVARNAME error
 # Attempting ydb_node_next_st() of bad basevar (% in middle of name): B%dbasevarInvChar
-ydb_node_next_st() [94]: 151027762,(SimpleThreadAPI),%YDB-E-INVVARNAME, Invalid local/global/ISV variable name supplied to API call
+ydb_node_next_st() [94]: 151027762,(SimpleThreadAPI),%YDB-E-INVVARNAME, Invalid local/global/ISV variable name "B%dbasevarInvChar" supplied to API call
 # Attempting ydb_node_next_st() of bad basevar (first letter in name is digit): 1namestartswithdigit
-ydb_node_next_st() [102]: 151027762,(SimpleThreadAPI),%YDB-E-INVVARNAME, Invalid local/global/ISV variable name supplied to API call
+ydb_node_next_st() [102]: 151027762,(SimpleThreadAPI),%YDB-E-INVVARNAME, Invalid local/global/ISV variable name "1namestartswithdigit" supplied to API call
 
 # Test of VARNAME2LONG error
 # Attempting ydb_node_next_st() of bad basevar (> 31 characters): Verylongbasevarthatexceedsmaxlength
