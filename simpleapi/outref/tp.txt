@@ -322,6 +322,16 @@ Do ZWRITE of lvns
 x1(1)=1
 x1(1,2,3,4,5)=3
 
+----------------------------------------------------------
+### Also test that global variable name in preserve list issues GVNUNSUPPORTED error###
+----------------------------------------------------------
+Returned error : 151028074,(SimpleAPI),%YDB-E-GVNUNSUPPORTED, Global variable name ^x3 not supported in ydb_tp_s() call
+
+----------------------------------------------------------
+### Also test that intrinsic special variable in preserve list issues ISVUNSUPPORTED error###
+----------------------------------------------------------
+Returned error : 151028066,(SimpleAPI),%YDB-E-ISVUNSUPPORTED, ISV variable name $trestart not supported in ydb_tp_s() call
+
  --> Running tp4_TPTOODEEP.c <---
  ### Test TPTOODEEP error ###
 Entering ydb_tp_s() : Level = 0

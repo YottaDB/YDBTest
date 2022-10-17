@@ -150,6 +150,8 @@ Attempting set with subscr32[3].buf_addr=NULL and subscr32[3].len_used=0 : Expec
 ^baselv("","x","x","x","x")="A question"
 ^baselv("x","x","x","","x")="A question"
 ^baselv("x","x","x","x","x")="A question"
+# Test of ISVSUBSCRIPTED error
+ydb_set_s() [244]: 151028082,(SimpleAPI),%YDB-E-ISVSUBSCRIPTED, ISV variable name $ztrap specified with a non-zero subscript count of 1
 
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *

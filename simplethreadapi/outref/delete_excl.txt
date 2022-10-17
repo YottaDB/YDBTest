@@ -33,9 +33,9 @@ zwrarg=""
  --> Dump the local variables
 zwrarg=""
 
- --> Check that ydb_delete_excl_st() issues INVVARNAME error if global variable name is input
-Returned error : 151027762,(SimpleThreadAPI),%YDB-E-INVVARNAME, Invalid local/global/ISV variable name "^xyz" supplied to API call
+ --> Check that ydb_delete_excl_st() issues GVNUNSUPPORTED error if global variable name is input
+Returned error : 151028074,(SimpleThreadAPI),%YDB-E-GVNUNSUPPORTED, Global variable name ^xyz not supported in ydb_delete_excl_st() call
 
- --> Check that ydb_delete_excl_st() issues INVVARNAME error if intrinsic special variable is input
-Returned error : 151027762,(SimpleThreadAPI),%YDB-E-INVVARNAME, Invalid local/global/ISV variable name "$trestart" supplied to API call
+ --> Check that ydb_delete_excl_st() issues ISVUNSUPPORTED error if intrinsic special variable is input
+Returned error : 151028066,(SimpleThreadAPI),%YDB-E-ISVUNSUPPORTED, ISV variable name $trestart not supported in ydb_delete_excl_st() call
 

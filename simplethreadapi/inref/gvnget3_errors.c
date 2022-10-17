@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries. *
+ * Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries. *
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -290,6 +290,16 @@ int main()
 		printf("gvnZWRITE error [%d] : %s\n", __LINE__, errbuf);
 		fflush(stdout);
 		return YDB_OK;
+	}
+	printf("# Test of ISVSUBSCRIPTED error\n"); fflush(stdout);
+	ydb_buffer_t	isvvar;
+	YDB_LITERAL_TO_BUFFER("$trestart", &isvvar);
+	status = ydb_get_st(YDB_NOTTP, NULL, &isvvar, 1, NULL, &ret_value);
+	if (YDB_OK != status)
+	{
+		ydb_zstatus(errbuf, ERRBUF_SIZE);
+		printf("ydb_get_st() [%d]: %s\n", __LINE__, errbuf);
+		fflush(stdout);
 	}
 	return YDB_OK;
 }

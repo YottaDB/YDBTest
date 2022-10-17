@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries. *
+ * Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries. *
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -20,8 +20,9 @@
 
 #define BASEVAR 	"^tp3"
 #define VALUE1		"TP with comma-separated list of variable names to be preserved"
+#define ERRBUF_SIZE	1024
 
-ydb_buffer_t	basevar, value1, x0var, x1var, x2var, starvar;
+ydb_buffer_t	basevar, value1, x0var, x1var, x2var, gblvar, isvvar, starvar;
 ydb_buffer_t	varnames[YDB_MAX_NAMES + 1];
 
 int	gvnset();
@@ -34,6 +35,7 @@ int main()
 {
 	int		status, i;
 	ydb_string_t	zwrarg;
+	char		errbuf[ERRBUF_SIZE];
 	char		sprintfbuff[1024], *spfbufptr;
 	int		seed;
 
@@ -49,6 +51,8 @@ int main()
 	YDB_LITERAL_TO_BUFFER("x0", &x0var);
 	YDB_LITERAL_TO_BUFFER("x1", &x1var);
 	YDB_LITERAL_TO_BUFFER("x2", &x2var);
+	YDB_LITERAL_TO_BUFFER("^x3", &gblvar);
+	YDB_LITERAL_TO_BUFFER("$trestart", &isvvar);
 	YDB_LITERAL_TO_BUFFER("*", &starvar);
 
 	/* Set "x0" to a value */
@@ -103,6 +107,24 @@ int main()
 	i = 1;
 	status = ydb_tp_st(YDB_NOTTP, NULL, &gvnset3, &i, NULL, 1, &starvar);
 	YDB_ASSERT(YDB_OK == status);
+
+	printf("\n----------------------------------------------------------\n");
+	printf("### Also test that global variable name in preserve list issues GVNUNSUPPORTED error###\n");
+	printf("----------------------------------------------------------\n");
+	i = 1;
+	status = ydb_tp_st(YDB_NOTTP, NULL, &gvnset3, &i, NULL, 1, &gblvar);
+	YDB_ASSERT(YDB_ERR_GVNUNSUPPORTED == status)
+	ydb_zstatus(errbuf, ERRBUF_SIZE);
+	printf("Returned error : %s\n", errbuf);
+
+	printf("\n----------------------------------------------------------\n");
+	printf("### Also test that intrinsic special variable in preserve list issues ISVUNSUPPORTED error###\n");
+	printf("----------------------------------------------------------\n");
+	i = 1;
+	status = ydb_tp_st(YDB_NOTTP, NULL, &gvnset3, &i, NULL, 1, &isvvar);
+	YDB_ASSERT(YDB_ERR_ISVUNSUPPORTED == status)
+	ydb_zstatus(errbuf, ERRBUF_SIZE);
+	printf("Returned error : %s\n", errbuf);
 
 	return status;
 }

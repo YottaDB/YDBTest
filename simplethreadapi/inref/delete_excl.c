@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries. *
+ * Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries. *
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -67,16 +67,16 @@ int main()
 	status = ydb_ci_t(YDB_NOTTP, NULL, "driveZWRITE", &zwrarg);
 	YDB_ASSERT(YDB_OK == status);
 
-	printf("\n --> Check that ydb_delete_excl_st() issues INVVARNAME error if global variable name is input\n"); fflush(stdout);
+	printf("\n --> Check that ydb_delete_excl_st() issues GVNUNSUPPORTED error if global variable name is input\n"); fflush(stdout);
 	status = ydb_delete_excl_st(YDB_NOTTP, NULL, 4, &varnames[2]);
-	YDB_ASSERT(YDB_ERR_INVVARNAME == status)
+	YDB_ASSERT(YDB_ERR_GVNUNSUPPORTED == status)
 	ydb_zstatus(errbuf, ERRBUF_SIZE);
 	printf("Returned error : %s\n", errbuf);
 	fflush(stdout);
 
-	printf("\n --> Check that ydb_delete_excl_st() issues INVVARNAME error if intrinsic special variable is input\n"); fflush(stdout);
+	printf("\n --> Check that ydb_delete_excl_st() issues ISVUNSUPPORTED error if intrinsic special variable is input\n"); fflush(stdout);
 	status = ydb_delete_excl_st(YDB_NOTTP, NULL, 2, &varnames[4]);
-	YDB_ASSERT(YDB_ERR_INVVARNAME == status)
+	YDB_ASSERT(YDB_ERR_ISVUNSUPPORTED == status)
 	ydb_zstatus(errbuf, ERRBUF_SIZE);
 	printf("Returned error : %s\n", errbuf);
 	fflush(stdout);
