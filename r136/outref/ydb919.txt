@@ -1,0 +1,21 @@
+## -------------------------------------
+## Test %ZMVALID M utility routine
+## -------------------------------------
+# Test %ZMVALID on valid single-line M code. Expecting an empty line of output.
+x=""
+# Test %ZMVALID on valid multi-line M code. Expecting an empty line of output.
+x=""
+# Test %ZMVALID on invalid single-line M code. Expecting compile error output.
+	 writ 0
+	 ^-----
+##TEST_AWK		At column 2, line 1, source module /tmp/ydbZMVALIDpid[0-9]*count1.m
+%YDB-E-INVCMD, Invalid command keyword encountered
+
+# Test %ZMVALID on invalid multi-line M code. Expecting compile error output.
+	 write 2abc
+	        ^-----
+##TEST_AWK		At column 9, line 2, source module /tmp/ydbZMVALIDpid[0-9]*count1.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+
+# Test %ZMVALID works even if pwd does not have write access (i.e. .o file is not created as part of compilation)
+x=""
