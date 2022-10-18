@@ -1,0 +1,20 @@
+# Tests that ydbinstall/ydbinstall.sh terminates after processing command line
+# if not run as root, unless --dry-run is specified
+
+# Testing ydbinstall/ydbinstall.sh as root with --dry-run option
+Terminating without making any changes as --dry-run specified
+
+# Testing ydbinstall/ydbinstall.sh as root
+##TEST_AWKYottaDB version r.* installed successfully at ##TEST_PATH##/install
+##TEST_AWK(Skipping YottaDB pkg-config file install for r.* as newer version r.* exists|YottaDB pkg-config file installed successfully) at /usr/share/pkgconfig/yottadb.pc
+
+##TEST_AWK(Non root user already exists.|Non root user does not exist. Creating user.)
+
+# Testing ydbinstall/ydbinstall.sh as non root user with --dry-run option
+Non-root installations not currently supported
+Continuing because --dry-run selected
+Terminating without making any changes as --dry-run specified
+
+# Testing ydbinstall/ydbinstall.sh as non root user
+Non-root installations not currently supported
+YottaDB installation aborted due to above error. Run ydbinstall --help for detailed option list

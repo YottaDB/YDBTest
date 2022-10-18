@@ -28,9 +28,10 @@
 # ydb894		[jv]		Test that --nopkg-config will not create or modify yottadb.pc with ydbinstall/ydbinstall.sh
 # ydb880		[jv]		Test ydbinstall/ydbinstall.sh --linkexec, --linkenv, --copyexec, and --copyenv options
 # ydb910		[jv]		Test that --from-source builds and installs YottaDB without any errors with ydbinstall/ydbinstall.sh
+# ydb924		[jv]		Test that ydbinstall/ydbinstall.sh terminates if not run as root, unless --dry-run is specified
 #
 setenv subtest_list_common "sourceInstall diffDir ydb306 gtm9116 plugins ydb783"
-setenv subtest_list_non_replic "gtm7759 ydb894 ydb880 ydb910"
+setenv subtest_list_non_replic "gtm7759 ydb894 ydb880 ydb910 ydb924"
 setenv subtest_list_non_replic "$subtest_list_non_replic"
 setenv subtest_list_replic ""
 
