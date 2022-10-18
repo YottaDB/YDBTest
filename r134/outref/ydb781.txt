@@ -32,13 +32,13 @@ Routine:
 %HO       %JSWRITE  %LCASE    %LCLCOL   %MPIECE   %OD       %OH       %PATCODE  
 %PEEKBYNAME         %RANDSTR  %RCE      %RD       %RI       %RO       %RSE      
 %RSEL     %SQROOT   %T        %TI       %TO       %TRIM     %TU       %UCASE    
-%UTF2HEX  %XCMD     %YDBENV   %YDBPROCSTUCKEXEC   %YGBLSTAT %ZSHOWVTOLCL        
+%UTF2HEX  %XCMD     %YDBENV   %YDBPROCSTUCKEXEC   %YGBLSTAT %ZMVALID  %ZSHOWVTOLCL        
 DECOMMENT GDE       GDEADD    GDECHANG  GDEDELET  GDEEXIT   GDEGET    GDEHELP   
 GDEINIT   GDELOCKS  GDELOG    GDEMAP    GDEMSGIN  GDEPARSE  GDEPUT    GDEQUIT   
 GDERENAM  GDESCAN   GDESETGD  GDESHOW   GDESPAWN  GDETEMPL  GDEVERIF  GTMDEFINEDTYPESTODB 
 GTMDefinedTypesInit GTMHELP   GTMHLPLD  GTMTHREADGBLASM     SCANTYPEDEFS        
 a         ab        b         ca        cb        rtn1      t         zz        
-Total of 89 routines.
+Total of 90 routines.
 
 YDB>
 
@@ -73,7 +73,7 @@ Total of 1 routine.
 Routine: 
 
 # DO SILENT^%RSEL("*","OBJ") ZWRITE %ZR
-%ZR=89
+%ZR=90
 ##SUSPEND_OUTPUT UNICODE_MODE
 %ZR("%CONVBASEUTIL")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
 %ZR("%D")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
@@ -126,6 +126,7 @@ Routine:
 %ZR("%YDBENV")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
 %ZR("%YDBPROCSTUCKEXEC")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
 %ZR("%YGBLSTAT")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%ZMVALID")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
 %ZR("%ZSHOWVTOLCL")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
 %ZR("DECOMMENT")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
 %ZR("GDE")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
@@ -209,6 +210,7 @@ Routine:
 %ZR("%YDBENV")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
 %ZR("%YDBPROCSTUCKEXEC")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
 %ZR("%YGBLSTAT")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%ZMVALID")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
 %ZR("%ZSHOWVTOLCL")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
 %ZR("DECOMMENT")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
 %ZR("GDE")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
