@@ -23,13 +23,14 @@
 # ydb888 [sam]    Test $ZGLD is a valid synonym for $ZGBLDIR
 # ydb901 [nars,sam] SIG-11 when compiling with -NOLINE_ENTRY if M code contains a BREAK
 # ydb919 [nars]   Test %ZMVALID M utility routine
+# ydb940 [nars]   Test $PRINCIPAL output device flush, if it is a terminal, happens on call-out from M to C
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r136 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "ydb854 ydb860 ydb861 ydb869 ydb872 ydb864 ydb888 ydb901 ydb919"
+setenv subtest_list_non_replic "ydb854 ydb860 ydb861 ydb869 ydb872 ydb864 ydb888 ydb901 ydb919 ydb940"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then

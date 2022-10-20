@@ -1,0 +1,20 @@
+# Test $PRINCIPAL output device flush, if it is a terminal, happens on call-out from M to C
+# Compile ydb940.c and make it a ##TEST_SHL_SUFFIX## file
+# Set up the external call environment/files
+# Use expect to create a terminal
+# And call M inside the terminal
+# The M program does a write (Part1) to the terminal followed by the C external call which does a write (Part2)
+# to the terminal as well. The M program then does one final write (Part3) to the terminal. We expect the parts
+# to show up in that order. Without the YDB#940 code fixes, (Part2) used to show up before (Part1).
+spawn /usr/local/bin/tcsh -f
+> stty cols 132
+> set shellprompt=SHELL
+> set prompt=$shellprompt
+SHELLsetenv term_env `tty`; echo $term_env > term_env.txt
+SHELL$ydb_dist/yottadb -direct
+
+YDB>write "Part1 " do &Part2printf write "Part3",!
+Part1 Part2 Part3
+
+YDB>halt
+SHELL
