@@ -1,0 +1,15 @@
+# Test $VIEW("JOBPID") returns 0 if no VIEW "JOBPID" was done
+0
+# Test $VIEW("JOBPID") returns 0 if VIEW "JOBPID":0 was done
+0
+# Test $VIEW("JOBPID") returns 1 if VIEW "JOBPID":1 was done
+1
+# Test $VIEW("JOBPID") returns 1 if VIEW "JOBPID":-1 was done
+1
+# Test $VIEW("JOBPID") returns 1 if VIEW "JOBPID":-2 was done
+1
+# Test $VIEW("jObPiD") returns 1 if VIEW "JOBPID":1 was done
+1
+# Test $VIEW("jobpid") tracks VIEW "jobpid" setting. Expecting to see 0 and 1 output below in that order.
+0
+1
