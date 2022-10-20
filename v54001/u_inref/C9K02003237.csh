@@ -52,4 +52,8 @@ $grep -E "${dse_pid}.*YDB-I-STUCKACT.*SEMOP_INFO" syslog1.txt | sed 's/.*\(YDB-I
 $gtm_tst/com/wait_for_proc_to_die.csh $dse_pid
 # Kill any backgrounded DSE processes (from %YDBPROCSTUCKEXEC) to avoid later TEST-E-LSOF errors from test framework
 $gtm_tst/com/kill_ydbprocstuckexec_dse_processes.csh
+# The below step ensures we don't leave any ipcs after the kill -9 of the dse processes in the previous step
+# Or else the test would fail due to the test framework detecting leftover ipcs (CHECK-W-SEM and CHECK-W-SHM messages)
+# Ideally, using dbcheck.csh would take care of this but this test did not use dbcreate.csh and so we cannot use dbcheck.csh.
+$ydb_dist/mupip rundown -reg "*" >& rundown.out
 

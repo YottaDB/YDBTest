@@ -48,3 +48,10 @@ foreach file ($filereal)
 	end
 end
 
+# Note: We kill -9 dse processes accessing the database file. This can cause leftover ipcs if there is no other
+# process accessing the database. The caller must ensure they do some database operation before they exit the test
+# or else we would have a test failure with CHECK-W-SEM and/or CHECK-W-SHM symptoms. Most callers would do a dbcheck.csh
+# call after this script and that would access the database and clean up the ipcs. Therefore, we don't do that step here
+# but leave it to the caller. The "v54001/u_inref/C9K02003237.csh" caller does not do a dbcheck.csh and so that has an
+# explicit "mupip rundown" step after the call to the current script.
+
