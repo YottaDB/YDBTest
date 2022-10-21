@@ -1,0 +1,40 @@
+# Test $ZGETJPI(PID,CPUTIM) treats PID of 0 as PID of $JOB
+PASS
+# Test $ZGETJPI(PID,CSTIME) treats PID of 0 as PID of $JOB
+PASS
+# Test $ZGETJPI(PID,CUTIME) treats PID of 0 as PID of $JOB
+PASS
+# Test $ZGETJPI(PID,STIME) treats PID of 0 as PID of $JOB
+PASS
+# Test $ZGETJPI(PID,UTIME) treats PID of 0 as PID of $JOB
+PASS
+# Test $ZGETJPI(PID,CPUTIM) returns -1 in case of a non-existent PID
+PASS
+# Test $ZGETJPI(PID,CSTIME) returns -1 in case of a non-existent PID
+PASS
+# Test $ZGETJPI(PID,CUTIME) returns -1 in case of a non-existent PID
+PASS
+# Test $ZGETJPI(PID,STIME) returns -1 in case of a non-existent PID
+PASS
+# Test $ZGETJPI(PID,UTIME) returns -1 in case of a non-existent PID
+PASS
+# Test $ZGETJPI(1,CPUTIM) matches what exists in /proc/1/stat for <init> process (i.e. PID=1)
+PASS
+# Test $ZGETJPI(1,CSTIME) matches what exists in /proc/1/stat for <init> process (i.e. PID=1)
+PASS
+# Test $ZGETJPI(1,CUTIME) matches what exists in /proc/1/stat for <init> process (i.e. PID=1)
+PASS
+# Test $ZGETJPI(1,STIME) matches what exists in /proc/1/stat for <init> process (i.e. PID=1)
+PASS
+# Test $ZGETJPI(1,UTIME) matches what exists in /proc/1/stat for <init> process (i.e. PID=1)
+PASS
+# Test $ZGETJPI(PID,CPUTIM) does not SIG-11 or assert fail or error for arbitrary list of PIDs found to exist in the system
+PASS
+# Test $ZGETJPI(PID,CSTIME) does not SIG-11 or assert fail or error for arbitrary list of PIDs found to exist in the system
+PASS
+# Test $ZGETJPI(PID,CUTIME) does not SIG-11 or assert fail or error for arbitrary list of PIDs found to exist in the system
+PASS
+# Test $ZGETJPI(PID,STIME) does not SIG-11 or assert fail or error for arbitrary list of PIDs found to exist in the system
+PASS
+# Test $ZGETJPI(PID,UTIME) does not SIG-11 or assert fail or error for arbitrary list of PIDs found to exist in the system
+PASS

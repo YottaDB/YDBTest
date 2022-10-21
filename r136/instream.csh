@@ -25,13 +25,14 @@
 # ydb919 [nars]   Test %ZMVALID M utility routine
 # ydb940 [nars]   Test $PRINCIPAL output device flush, if it is a terminal, happens on call-out from M to C
 # ydb877 [nars]   Test $VIEW("JOBPID")
+# ydb908 [nars]   Test $ZGETJPI(PID,"CPUTIM") (and CSTIME,CUTIME,STIME,UTIME) works for any PID, not just the current process
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r136 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "ydb854 ydb860 ydb861 ydb869 ydb872 ydb864 ydb888 ydb901 ydb919 ydb940 ydb877"
+setenv subtest_list_non_replic "ydb854 ydb860 ydb861 ydb869 ydb872 ydb864 ydb888 ydb901 ydb919 ydb940 ydb877 ydb908"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
