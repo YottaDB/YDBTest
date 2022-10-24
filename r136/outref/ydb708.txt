@@ -1,0 +1,44 @@
+# Test that PIPE OPEN COMMAND device parameter 128KiB long does not error if not a string literal
+Length of COMMAND device parameter for PIPE OPEN command = 131069
+PASS from ydb708
+# Test that PIPE OPEN COMMAND device parameter can be 255 bytes long if a string literal
+test2="1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890"
+# Test that PIPE OPEN COMMAND device parameter cannot be 256 bytes long or higher if a string literal
+## Trying string literal length = 256 bytes. Expect DEVPARTOOBIG error. No SIG-11, assert failure etc.
+$ZSTATUS="150372634,test3xecute+2^ydb708,%YDB-E-DEVPARTOOBIG, String deviceparameter exceeds 255 character limit"
+## Trying string literal length = 512 bytes. Expect DEVPARTOOBIG error. No SIG-11, assert failure etc.
+$ZSTATUS="150372634,test3xecute+2^ydb708,%YDB-E-DEVPARTOOBIG, String deviceparameter exceeds 255 character limit"
+## Trying string literal length = 1024 bytes. Expect DEVPARTOOBIG error. No SIG-11, assert failure etc.
+$ZSTATUS="150372634,test3xecute+2^ydb708,%YDB-E-DEVPARTOOBIG, String deviceparameter exceeds 255 character limit"
+## Trying string literal length = 2048 bytes. Expect DEVPARTOOBIG error. No SIG-11, assert failure etc.
+$ZSTATUS="150372634,test3xecute+2^ydb708,%YDB-E-DEVPARTOOBIG, String deviceparameter exceeds 255 character limit"
+## Trying string literal length = 4096 bytes. Expect DEVPARTOOBIG error. No SIG-11, assert failure etc.
+$ZSTATUS="150372634,test3xecute+2^ydb708,%YDB-E-DEVPARTOOBIG, String deviceparameter exceeds 255 character limit"
+## Trying string literal length = 8192 bytes. Expect DEVPARTOOBIG error. No SIG-11, assert failure etc.
+$ZSTATUS="150372634,test3xecute+2^ydb708,%YDB-E-DEVPARTOOBIG, String deviceparameter exceeds 255 character limit"
+## Trying string literal length = 16384 bytes. Expect DEVPARTOOBIG error. No SIG-11, assert failure etc.
+$ZSTATUS="150372634,test3xecute+2^ydb708,%YDB-E-DEVPARTOOBIG, String deviceparameter exceeds 255 character limit"
+## Trying string literal length = 32768 bytes. Expect DEVPARTOOBIG error. No SIG-11, assert failure etc.
+$ZSTATUS="150373026,test3xecute+2^ydb708,%YDB-E-INDRMAXLEN, Maximum length 32766 of an indirection argument was exceeded"
+## Trying string literal length = 65536 bytes. Expect DEVPARTOOBIG error. No SIG-11, assert failure etc.
+$ZSTATUS="150373026,test3xecute+2^ydb708,%YDB-E-INDRMAXLEN, Maximum length 32766 of an indirection argument was exceeded"
+# Test that PIPE OPEN COMMAND device parameter > 128KiB and < 1MiB long does not error if not a string literal
+## Testing COMMAND device parameter non-literal string length = 2 bytes. Expect no error, SIG-11 or assert failure
+## Testing COMMAND device parameter non-literal string length = 4 bytes. Expect no error, SIG-11 or assert failure
+## Testing COMMAND device parameter non-literal string length = 8 bytes. Expect no error, SIG-11 or assert failure
+## Testing COMMAND device parameter non-literal string length = 16 bytes. Expect no error, SIG-11 or assert failure
+## Testing COMMAND device parameter non-literal string length = 32 bytes. Expect no error, SIG-11 or assert failure
+## Testing COMMAND device parameter non-literal string length = 64 bytes. Expect no error, SIG-11 or assert failure
+## Testing COMMAND device parameter non-literal string length = 128 bytes. Expect no error, SIG-11 or assert failure
+## Testing COMMAND device parameter non-literal string length = 256 bytes. Expect no error, SIG-11 or assert failure
+## Testing COMMAND device parameter non-literal string length = 512 bytes. Expect no error, SIG-11 or assert failure
+## Testing COMMAND device parameter non-literal string length = 1024 bytes. Expect no error, SIG-11 or assert failure
+## Testing COMMAND device parameter non-literal string length = 2048 bytes. Expect no error, SIG-11 or assert failure
+## Testing COMMAND device parameter non-literal string length = 4096 bytes. Expect no error, SIG-11 or assert failure
+## Testing COMMAND device parameter non-literal string length = 8192 bytes. Expect no error, SIG-11 or assert failure
+## Testing COMMAND device parameter non-literal string length = 16384 bytes. Expect no error, SIG-11 or assert failure
+## Testing COMMAND device parameter non-literal string length = 32768 bytes. Expect no error, SIG-11 or assert failure
+## Testing COMMAND device parameter non-literal string length = 65536 bytes. Expect no error, SIG-11 or assert failure
+## Testing COMMAND device parameter non-literal string length = 131072 bytes. Expect no error, SIG-11 or assert failure
+## Testing COMMAND device parameter non-literal string length = 262144 bytes. Expect no error, SIG-11 or assert failure
+## Testing COMMAND device parameter non-literal string length = 524288 bytes. Expect no error, SIG-11 or assert failure

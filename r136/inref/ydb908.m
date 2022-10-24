@@ -13,7 +13,7 @@
 ;
 ; Helper M program used by r136/u_inref/ydb908.csh
 ;
-ydb308	;
+ydb908	;
 	do init
 	do test1
 	do test2
