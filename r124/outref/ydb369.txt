@@ -97,7 +97,7 @@ ydb369+3^ydb369     :	quit
 Stepping STARTED
 ydb369+2^ydb369     :	do @$ZCMDLINE
 case10+1^ydb369     :	VIEW "SETENV":"x=y":"case10":"extra"
-##TEST_AWK%YDB-E-SETENVFAIL, VIEW "SETENV":"x=y" failed in setenv\(\) system call,%YDB-E-SYSCALL, Error received from system call setenv\(\) -- called from module .*/op_view.c at line .*,%SYSTEM-E-ENO22, Invalid argument
+##TEST_AWK%YDB-E-SETENVFAIL, VIEW "SETENV":"x=y" failed in setenv\(\) system call,%YDB-E-SYSCALL, Error received from system call setenv\(\) -- called from module .*/ydb_setenv.c at line .*,%SYSTEM-E-ENO22, Invalid argument
 		At M source location case10+1^ydb369
 
 YDB>
