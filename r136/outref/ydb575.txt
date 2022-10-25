@@ -1,0 +1,11 @@
+# Test that CRYPTINIT error while opening an encrypted database does not leave ipcs (ftok semaphore)
+# Create encrypted database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Unset gtm_passwd env var and do a database reference. Expect CRYPTINIT error below
+%YDB-E-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable ydb_passwd/gtm_passwd not set
+# Verify ftok semaphore is not left around.
+# If it was, test framework would catch it and we would see a CHECK-W-SEM message below.

@@ -28,6 +28,7 @@
 # ydb908 [nars]   Test $ZGETJPI(PID,"CPUTIM") (and CSTIME,CUTIME,STIME,UTIME) works for any PID, not just the current process
 # ydb708 [nars]   Test COMMAND device parameter for PIPE devices allows values longer than 255 bytes
 # ydb943 [nars]   Test that YDBEncrypt scripts get installed with execute permissions in $ydb_dist/plugin/ydbcrypt
+# ydb575 [nars]   Test that CRYPTINIT error while opening an encrypted database does not leave ipcs (ftok semaphore)
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r136 test starts..."
@@ -35,7 +36,7 @@ echo "r136 test starts..."
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic "ydb854 ydb860 ydb861 ydb869 ydb872 ydb864 ydb888 ydb901 ydb919 ydb940 ydb877 ydb908 ydb708"
-setenv subtest_list_non_replic "$subtest_list_non_replic ydb943"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb943 ydb575"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
