@@ -120,18 +120,10 @@ if (0 != $status) then
 endif
 
 # Ensure that a user-specific directory for gpg files exists and is usable.
-if ($?test_encryption) then
-	if ("NON_ENCRYPT" == $test_encryption) then
-		set check_bypass = 1
-	endif
-endif
-if (! $?check_bypass) then
-	source $tst_com/create_user_gnupghome.csh
-	if (0 != $status) then
-		echo "TEST-E-GNUPGHOMEDIR failed to create a GNUPGHOME directory."
-		echo "Ensure that test_encryption is set to NON_ENCRYPT on each box where you want this check bypassed ;"
-		@ error++
-	endif
+source $tst_com/create_user_gnupghome.csh
+if (0 != $status) then
+	echo "TEST-E-GNUPGHOMEDIR failed to create a GNUPGHOME directory."
+	@ error++
 endif
 
 # Check that $ggdata and its subdirectories are write-accessible
