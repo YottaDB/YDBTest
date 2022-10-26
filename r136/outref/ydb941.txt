@@ -1,0 +1,35 @@
+# Run dbcreate.csh (creates mumps.gld)
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Take a copy of mumps.gld into copy.gld
+# Test that ydb_cur_gbldir env var is not set when SET $ZGBLDIR is not done
+gtmgbldir=mumps.gld
+ydb_gbldir=mumps.gld
+# Test ydb_cur_gbldir env var when SET $ZGBLDIR="" is done
+gtmgbldir=mumps.gld
+ydb_gbldir=mumps.gld
+ydb_cur_gbldir=##TEST_PATH##/mumps.gld
+# Test ydb_cur_gbldir env var when SET $ZGBLDIR="mumps.gld" is done
+gtmgbldir=mumps.gld
+ydb_gbldir=mumps.gld
+ydb_cur_gbldir=mumps.gld
+# Test ydb_cur_gbldir env var when SET $ZGBLDIR="##TEST_PATH##/mumps.gld" is done
+# Note: When SET $ZGBLDIR is done to full path of ydb_gbldir/gtmgbldir, then ydb_cur_gbldir env var is
+# not set. This is because it is exactly the same full path value as ydb_gbldir/gtmgbldir.
+gtmgbldir=mumps.gld
+ydb_gbldir=mumps.gld
+# Test ydb_cur_gbldir env var when SET $ZGBLDIR="copy.gld" is done
+gtmgbldir=mumps.gld
+ydb_gbldir=mumps.gld
+ydb_cur_gbldir=copy.gld
+# Test ydb_cur_gbldir env var when SET $ZGBLDIR="##TEST_PATH##/copy.gld" is done
+gtmgbldir=mumps.gld
+ydb_gbldir=mumps.gld
+ydb_cur_gbldir=##TEST_PATH##/copy.gld
+# Run dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
