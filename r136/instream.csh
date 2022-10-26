@@ -47,6 +47,16 @@ endif
 
 setenv subtest_exclude_list    ""
 
+if (("rhel" == $gtm_test_linux_distrib) && ("7.9" == $gtm_test_linux_version)) then
+	# ydb575 subtest creates an encrypted database. And that causes the following 2 lines to infinitely repeat
+	# on the terminal only on a RHEL 7 system.
+	#	Enter the user ID.  End with an empty line: No such user ID.
+	#	Current recipients:
+	# This does not happen on other distributions. Since RHEL 7 is no longer a supported distribution for YottaDB,
+	# we exclude this test there.
+	setenv subtest_exclude_list "$subtest_exclude_list ydb575"
+endif
+
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh
 
