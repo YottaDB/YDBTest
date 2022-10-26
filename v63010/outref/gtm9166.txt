@@ -12,12 +12,18 @@ mumps.dat
 ###################################################################
 # Turn on WBTEST_JNLPROCSTUCK_FORCE
 ###################################################################
+# Test YDB#941 too : Copy mumps.gld to copy.gld and do a SET $ZGBLDIR=copy.gld inside M.
+#                    This way we can later check that the DSE program invoked by %YDBPROCSTUCKEXEC uses copy.gld
+#                    (the current global directory in the process) and not mumps.gld (ydb_gbldir/gtmgbldir env var)
 # Set a global variable 500 times
 ###################################################################
 # Stop journaling
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
 ###################################################################
 # Check the syslog for an %YDB-W-JNLPROCSTUCK error. If not found, this will time out.
+# Test of YDB#941 : Verify %YDBPROCSTUCKEXEC used copy.gld as its global directory file and not mumps.gld
+#                   We expect below output say copy.gld (and not mumps.gld)
+Database file headers for regions from global directory ##TEST_PATH##/copy.gld
 ###################################################################
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
