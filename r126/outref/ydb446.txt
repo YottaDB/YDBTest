@@ -5,9 +5,9 @@ ydb_ci() on a properly allocated buffer should return no error
 PASS: ydb_ci() returned YDB_OK
 PASS: ydb_ci() returned the correct string
 
-ydb_ci() on a improperly (too small) buffer; should return INVSTRLEN
-PASS: ydb_ci() returned INVSTRLEN
-PASS: ydb_ci() returned the correct error message
+ydb_ci() on a improperly (too small) buffer; should return TRUNCATED buffer
+PASS: ydb_ci() returned YDB_OK
+PASS: ydb_ci() returned the correct string
 
 
 ydb_cip() tests
@@ -15,9 +15,9 @@ ydb_cip() on a properly allocated buffer should return no error
 PASS: ydb_cip() returned YDB_OK
 PASS: ydb_cip() returned the correct string
 
-ydb_cip() on a improperly (too small) buffer; should return INVSTRLEN
-PASS: ydb_cip() returned INVSTRLEN
-PASS: ydb_ci() returned the correct error message
+ydb_cip() on a improperly (too small) buffer; should return TRUNCATED buffer
+PASS: ydb_cip() returned YDB_OK
+PASS: ydb_cip() returned the correct string
 
 
 ydb_ci_t() tests
@@ -25,9 +25,9 @@ ydb_ci_t() on a properly allocated buffer should return no error
 PASS: ydb_ci_t() returned YDB_OK
 PASS: ydb_ci_t() returned the correct string
 
-ydb_ci_t() on a improperly (too small) buffer; should return INVSTRLEN
-PASS: ydb_ci_t() returned INVSTRLEN
-PASS: ydb_ci_t() returned the correct error message
+ydb_ci_t() on a improperly (too small) buffer; should return TRUNCATED buffer
+PASS: ydb_ci_t() returned YDB_OK
+PASS: ydb_ci_t() returned the correct string
 
 
 ydb_cip_t() tests
@@ -35,6 +35,6 @@ ydb_cip_t() on a properly allocated buffer should return no error
 PASS: ydb_cip_t() returned YDB_OK
 PASS: ydb_cip_t() returned the correct string
 
-ydb_cip_t() on a improperly (too small) buffer; should return INVSTRLEN
-PASS: ydb_cip_t() returned INVSTRLEN
-PASS: ydb_cip_t() returned the correct error message
+ydb_cip_t() on a improperly (too small) buffer; should return TRUNCATED buffer
+PASS: ydb_cip_t() returned YDB_OK
+PASS: ydb_cip_t() returned the correct string
