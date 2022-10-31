@@ -31,7 +31,7 @@
 # ydb575 [nars]   Test that CRYPTINIT error while opening an encrypted database does not leave ipcs (ftok semaphore)
 # ydb941 [nars]   Test that SET $ZGBLDIR sets ydb_cur_gbldir env var to new $ZGBLDIR
 # ydb944 [nars]   Test that no %YDB-E-TPFAIL error (eeee) when cnl->tp_hint is almost 2GiB
-# ydb565 [nars]   Test that ydb_buffer_t can be used to pass string values in call-ins
+# ydb565 [nars]   Test that ydb_buffer_t can be used to pass string values in call-ins and call-outs
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r136 test starts..."

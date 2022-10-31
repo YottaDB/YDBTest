@@ -101,3 +101,98 @@ Failure of ydb_ci_tab_open with error: 150379658,(SimpleAPI),%YDB-E-CIUNTYPE, Un
 							^-----
 %YDB-I-EXTSRCLOC, 		At column 32, line 1, source module err8.ci
 Failure of ydb_ci_tab_open with error: 150379658,(SimpleAPI),%YDB-E-CIUNTYPE, Unknown parameter type encountered
+
+#######################################################################
+# Test that ydb_buffer_t can be used to pass string values in call-outs
+#######################################################################
+# Test that if O parameter of type ydb_buffer_t * using the default external call package,
+# if no preallocation specified, a default-package ZCNOPREALLOUTPAR error is issued
+$ZSTATUS="150381162,preallocO+1^ydb565,%YDB-E-ZCNOPREALLOUTPAR, Parameter 1 in external call <DEFAULT>.preallocO is an output only parameter requiring pre-allocation"
+# Test that if O parameter of type ydb_buffer_t * using a custom external call package,
+# if no preallocation specified, a custom-package ZCNOPREALLOUTPAR error is issued
+$ZSTATUS="150381162,preallocCustomO+1^ydb565,%YDB-E-ZCNOPREALLOUTPAR, Parameter 1 in external call package1.preallocO is an output only parameter requiring pre-allocation"
+# Test that if IO parameter of type ydb_buffer_t * has no preallocation specified, no ZCNOPREALLOUTPAR error is issued
+io="a"
+# Test that if RETURN value of type ydb_buffer_t * is NULL, M string returned is the empty string
+ret=""
+# Test that if O parameter of type ydb_buffer_t * has NULL value, M string returned is the empty string
+o=""
+# Test that if IO parameter of type ydb_buffer_t * has NULL value, M string returned is the empty string
+io=""
+# Test that if O parameter of type ydb_buffer_t * has NULL value is not passed by reference, M string returned is NOT the empty string
+o="abcd"
+# Test that if IO parameter of type ydb_buffer_t * has NULL value is not passed by reference, M string returned is NOT the empty string
+io="abcde"
+# Test that for O ydb_buffer_t * parameter, if output length is greater than 1MiB, a MAXSTRLEN error is issued
+$ZSTATUS="150373290,maxstrlenO+1^ydb565,%YDB-E-MAXSTRLEN, Maximum string length exceeded"
+# Test that for IO ydb_buffer_t * parameter, if output length is greater than 1MiB, a MAXSTRLEN error is issued
+$ZSTATUS="150373290,maxstrlenIO+1^ydb565,%YDB-E-MAXSTRLEN, Maximum string length exceeded"
+# Test that for RETURN ydb_buffer_t * parameter, if return length is greater than 1MiB, a MAXSTRLEN error is issued
+$ZSTATUS="150373290,maxstrlenRET+1^ydb565,%YDB-E-MAXSTRLEN, Maximum string length exceeded"
+# Test that if RETURN type ydb_buffer_t * has buf_addr NULL after call-out, M string returned is the empty string
+ret=""
+# Test that if O parameter of type ydb_buffer_t * has buf_addr NULL after call-out, M string returned is the empty string
+o=""
+# Test that if IO parameter of type ydb_buffer_t * has buf_addr NULL after call-out, M string returned is the empty string
+io=""
+# Test that if RETURN type ydb_buffer_t * has len_used 0 after call-out, M string returned is the empty string
+ret=""
+# Test that if O parameter of type ydb_buffer_t * has len_used 0 after call-out, M string returned is the empty string
+o=""
+# Test that if IO parameter of type ydb_buffer_t * has len_used 0 after call-out, M string returned is the empty string
+io=""
+# Test that for O ydb_buffer_t * parameter, if return length is greater than pre-alloc length, a EXCEEDSPREALLOC error is issued.
+$ZSTATUS="150384402,exceedsPrealloc+1^ydb565,%YDB-E-EXCEEDSPREALLOC, Preallocated size 10 for M external call label test13 exceeded by string of length 11"
+# Test one complete case where ydb_buffer_t * is used in I, IO, O and Return parameters
+i="ab"
+io="gh"
+o="abcd"
+ret="ab_gh_abcd"
+# Test that [ydb_buffer_t **] is not accepted as return type in call-in
+%YDB-I-EXTSRCLIN, 	err1:	ydb_buffer_t **xc_err1()
+
+					  ^-----
+%YDB-I-EXTSRCLOC, 		At column 18, line 2, source module err1.tab
+%YDB-E-ZCRTNTYP, Unknown return type
+# Test that [ydb_buffer_t] is not accepted as return type in call-in
+%YDB-I-EXTSRCLIN, 	err2:	ydb_buffer_t xc_err2()
+
+					  ^-----
+%YDB-I-EXTSRCLOC, 		At column 18, line 2, source module err2.tab
+%YDB-E-ZCRTNTYP, Unknown return type
+# Test that [ydb_buffer_t **] is not accepted as O parameter type in call-in
+%YDB-I-EXTSRCLIN, 	err3:	void xc_err3(O:ydb_buffer_t **)
+
+						      ^-----
+%YDB-I-EXTSRCLOC, 		At column 30, line 2, source module err3.tab
+%YDB-E-ZCUNTYPE, Unknown type encountered
+# Test that [ydb_buffer_t] is not accepted as O parameter type in call-in
+%YDB-I-EXTSRCLIN, 	err4:	void xc_err4(O:ydb_buffer_t )
+
+						      ^-----
+%YDB-I-EXTSRCLOC, 		At column 30, line 2, source module err4.tab
+%YDB-E-ZCUNTYPE, Unknown type encountered
+# Test that [ydb_buffer_t **] is not accepted as I parameter type in call-in
+%YDB-I-EXTSRCLIN, 	err5:	void xc_err5(I:ydb_buffer_t **)
+
+						      ^-----
+%YDB-I-EXTSRCLOC, 		At column 30, line 2, source module err5.tab
+%YDB-E-ZCUNTYPE, Unknown type encountered
+# Test that [ydb_buffer_t] is not accepted as I parameter type in call-in
+%YDB-I-EXTSRCLIN, 	err6:	void xc_err6(I:ydb_buffer_t)
+
+						     ^-----
+%YDB-I-EXTSRCLOC, 		At column 29, line 2, source module err6.tab
+%YDB-E-ZCUNTYPE, Unknown type encountered
+# Test that [ydb_buffer_t **] is not accepted as IO parameter type in call-in
+%YDB-I-EXTSRCLIN, 	err7:	void xc_err7(IO:ydb_buffer_t **)
+
+						      ^-----
+%YDB-I-EXTSRCLOC, 		At column 30, line 2, source module err7.tab
+%YDB-E-ZCUNTYPE, Unknown type encountered
+# Test that [ydb_buffer_t] is not accepted as IO parameter type in call-in
+%YDB-I-EXTSRCLIN, 	err8:	void xc_err8(IO:ydb_buffer_t)
+
+						     ^-----
+%YDB-I-EXTSRCLOC, 		At column 29, line 2, source module err8.tab
+%YDB-E-ZCUNTYPE, Unknown type encountered
