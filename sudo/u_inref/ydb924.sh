@@ -35,11 +35,11 @@ if id ydbtest_non_root >/dev/null 2>&1; then
         echo "Non root user already exists."
 else
     echo "Non root user does not exist. Creating user."
-    sudo useradd --no-log-init --no-create-home -d `pwd` ydbtest_non_root > useradd.log 2>&1
+    useradd --no-log-init --no-create-home -d `pwd` ydbtest_non_root > useradd.log 2>&1
 fi
 echo ""
 echo "# Testing ydbinstall/ydbinstall.sh as non root user with --dry-run option"
-sudo su - ydbtest_non_root > nru_dr.log 2>&1 <<EOF
+sudo --preserve-env=ASAN_OPTIONS su ydbtest_non_root > nru_dr.log 2>&1 <<EOF
 /Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --overwrite-existing --utf8 default --dry-run $4
 
 status=$?
@@ -53,7 +53,7 @@ head -3 nru_dr.log
 
 echo ""
 echo "# Testing ydbinstall/ydbinstall.sh as non root user"
-sudo su - ydbtest_non_root > nru.log 2>&1 <<EOF
+sudo --preserve-env=ASAN_OPTIONS su ydbtest_non_root > nru.log 2>&1 <<EOF
 /Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --overwrite-existing --utf8 default $4
 
 status=$?
@@ -65,4 +65,4 @@ exit
 EOF
 head -2 nru.log
 
-sudo userdel ydbtest_non_root > userdel.log 2>&1
+userdel ydbtest_non_root > userdel.log 2>&1
