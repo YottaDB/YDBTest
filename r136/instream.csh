@@ -31,6 +31,7 @@
 # ydb575 [nars]   Test that CRYPTINIT error while opening an encrypted database does not leave ipcs (ftok semaphore)
 # ydb941 [nars]   Test that SET $ZGBLDIR sets ydb_cur_gbldir env var to new $ZGBLDIR
 # ydb944 [nars]   Test that no %YDB-E-TPFAIL error (eeee) when cnl->tp_hint is almost 2GiB
+# ydb565 [nars]   Test that ydb_buffer_t can be used to pass string values in call-ins
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r136 test starts..."
@@ -38,7 +39,7 @@ echo "r136 test starts..."
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic "ydb854 ydb860 ydb861 ydb869 ydb872 ydb864 ydb888 ydb901 ydb919 ydb940 ydb877 ydb908 ydb708"
-setenv subtest_list_non_replic "$subtest_list_non_replic ydb943 ydb575 ydb941 ydb944"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb943 ydb575 ydb941 ydb944 ydb565"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then

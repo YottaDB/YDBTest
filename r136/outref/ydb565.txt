@@ -1,0 +1,103 @@
+######################################################################
+# Test that ydb_buffer_t can be used to pass string values in call-ins
+######################################################################
+# Test that I ydb_buffer_t parameter with len_used more than 1MiB issues a MAXSTRLEN error
+PASS: ydb_ci() returned YDB_ERR_MAXSTRLEN
+150373290,(Call-In),%YDB-E-MAXSTRLEN, Maximum string length exceeded
+# Test that I ydb_buffer_t parameter with len_used more than len_alloc issues a PARAMINVALID error
+PASS: ydb_ci() returned YDB_ERR_PARAMINVALID
+151027770,(Call-In),%YDB-E-PARAMINVALID, Invalid ydb_buffer_t (parameter 0) parameter specified in ydb_ci()/ydb_cip()/ydb_ci_t()/ydb_cip_t() call
+# Test that I ydb_buffer_t parameter with len_used more than 0 but buf_addr == NULL issues a PARAMINVALID error
+PASS: ydb_ci() returned YDB_ERR_PARAMINVALID
+151027770,(Call-In),%YDB-E-PARAMINVALID, Invalid ydb_buffer_t (parameter 0) parameter specified in ydb_ci()/ydb_cip()/ydb_ci_t()/ydb_cip_t() call
+# Test that IO ydb_buffer_t parameter with len_used more than 1MiB issues a MAXSTRLEN error
+PASS: ydb_ci() returned YDB_ERR_MAXSTRLEN
+150373290,(Call-In),%YDB-E-MAXSTRLEN, Maximum string length exceeded
+# Test that IO ydb_buffer_t parameter with len_used more than len_alloc issues a PARAMINVALID error
+PASS: ydb_ci() returned YDB_ERR_PARAMINVALID
+151027770,(Call-In),%YDB-E-PARAMINVALID, Invalid ydb_buffer_t (parameter 2) parameter specified in ydb_ci()/ydb_cip()/ydb_ci_t()/ydb_cip_t() call
+# Test that IO ydb_buffer_t parameter with len_used more than 0 but buf_addr == NULL issues a PARAMINVALID error
+PASS: ydb_ci() returned YDB_ERR_PARAMINVALID
+151027770,(Call-In),%YDB-E-PARAMINVALID, Invalid ydb_buffer_t (parameter 2) parameter specified in ydb_ci()/ydb_cip()/ydb_ci_t()/ydb_cip_t() call
+# Test that IO ydb_buffer_t parameter with output value more than len_alloc issues a INVSTRLEN error
+PASS: ydb_ci() returned YDB_ERR_INVSTRLEN
+150375522,(Call-In),%YDB-E-INVSTRLEN, Invalid string length 1024: max 512
+# Test that O ydb_buffer_t parameter with len_used more than 1MiB does NOT issue a MAXSTRLEN error
+PASS: ydb_ci() returned YDB_OK
+# Test that O ydb_buffer_t parameter with len_used more than len_alloc does NOT issue a PARAMINVALID error
+PASS: ydb_ci() returned YDB_OK
+# Test that O ydb_buffer_t parameter with len_used more than 0 but buf_addr == NULL does NOT issue a PARAMINVALID error
+PASS: ydb_ci() returned YDB_OK
+# Test that O ydb_buffer_t parameter with output len_used more than 0 but buf_addr == NULL does issue a PARAMINVALID error
+PASS: ydb_ci() returned YDB_ERR_PARAMINVALID
+151027770,(Call-In),%YDB-E-PARAMINVALID, Invalid ydb_buffer_t (parameter 2) parameter specified in ydb_ci()/ydb_cip()/ydb_ci_t()/ydb_cip_t() call
+# Test that O ydb_buffer_t parameter with output value more than len_alloc issues a INVSTRLEN error
+PASS: ydb_ci() returned YDB_ERR_INVSTRLEN
+150375522,(Call-In),%YDB-E-INVSTRLEN, Invalid string length 512: max 256
+# Test that RETURN ydb_buffer_t parameter with len_used more than 1MiB does NOT issue a MAXSTRLEN error
+PASS: ydb_ci() returned YDB_OK
+# Test that RETURN ydb_buffer_t parameter with len_used more than len_alloc does NOT issue a PARAMINVALID error
+PASS: ydb_ci() returned YDB_OK
+# Test that RETURN ydb_buffer_t parameter with len_used more than 0 but buf_addr == NULL does NOT issue a PARAMINVALID error
+PASS: ydb_ci() returned YDB_OK
+# Test that RETURN ydb_buffer_t parameter with return len_used more than 0 but buf_addr == NULL does issue a PARAMINVALID error
+PASS: ydb_ci() returned YDB_ERR_PARAMINVALID
+151027770,(Call-In),%YDB-E-PARAMINVALID, Invalid ydb_buffer_t (parameter 0) parameter specified in ydb_ci()/ydb_cip()/ydb_ci_t()/ydb_cip_t() call
+# Test that RETURN ydb_buffer_t parameter with return value more than len_alloc issues a INVSTRLEN error
+PASS: ydb_ci() returned YDB_ERR_INVSTRLEN
+150375522,(Call-In),%YDB-E-INVSTRLEN, Invalid string length 896: max 512
+# Test one valid ydb_ci call with ydb_buffer_t * parameters of I, IO, O and return value
+PASS: ydb_ci() returned YDB_OK
+# Listing below the contents of ibuf, obuf, iobuf, retbuf to be included in reference file
+ibuf = abc
+iobuf = defghdefgh
+obuf = abcabc
+retbuf = abcabcabcdefghdefgh
+# Test that [ydb_buffer_t **] is not accepted as return type in call-in
+%YDB-I-EXTSRCLIN, 	err: ydb_buffer_t **err^retBuff()
+
+					 ^-----
+%YDB-I-EXTSRCLOC, 		At column 17, line 1, source module err1.ci
+Failure of ydb_ci_tab_open with error: 150379618,(SimpleAPI),%YDB-E-CIRTNTYP, Invalid return type
+# Test that [ydb_buffer_t] is not accepted as return type in call-in
+%YDB-I-EXTSRCLIN, 	err: ydb_buffer_t err^retBuff()
+
+					 ^-----
+%YDB-I-EXTSRCLOC, 		At column 17, line 1, source module err2.ci
+Failure of ydb_ci_tab_open with error: 150379618,(SimpleAPI),%YDB-E-CIRTNTYP, Invalid return type
+# Test that [ydb_buffer_t **] is not accepted as O parameter type in call-in
+%YDB-I-EXTSRCLIN, 	err: void err^retBuff(O:ydb_buffer_t **)
+
+							 ^-----
+%YDB-I-EXTSRCLOC, 		At column 33, line 1, source module err3.ci
+Failure of ydb_ci_tab_open with error: 150379658,(SimpleAPI),%YDB-E-CIUNTYPE, Unknown parameter type encountered
+# Test that [ydb_buffer_t] is not accepted as O parameter type in call-in
+%YDB-I-EXTSRCLIN, 	err: void err^retBuff(O:ydb_buffer_t)
+
+							^-----
+%YDB-I-EXTSRCLOC, 		At column 32, line 1, source module err4.ci
+Failure of ydb_ci_tab_open with error: 150379658,(SimpleAPI),%YDB-E-CIUNTYPE, Unknown parameter type encountered
+# Test that [ydb_buffer_t **] is not accepted as I parameter type in call-in
+%YDB-I-EXTSRCLIN, 	err: void err^retBuff(I:ydb_buffer_t **)
+
+							 ^-----
+%YDB-I-EXTSRCLOC, 		At column 33, line 1, source module err5.ci
+Failure of ydb_ci_tab_open with error: 150379658,(SimpleAPI),%YDB-E-CIUNTYPE, Unknown parameter type encountered
+# Test that [ydb_buffer_t] is not accepted as I parameter type in call-in
+%YDB-I-EXTSRCLIN, 	err: void err^retBuff(I:ydb_buffer_t)
+
+							^-----
+%YDB-I-EXTSRCLOC, 		At column 32, line 1, source module err6.ci
+Failure of ydb_ci_tab_open with error: 150379658,(SimpleAPI),%YDB-E-CIUNTYPE, Unknown parameter type encountered
+# Test that [ydb_buffer_t **] is not accepted as IO parameter type in call-in
+%YDB-I-EXTSRCLIN, 	err: void err^retBuff(IO:ydb_buffer_t **)
+
+							 ^-----
+%YDB-I-EXTSRCLOC, 		At column 33, line 1, source module err7.ci
+Failure of ydb_ci_tab_open with error: 150379658,(SimpleAPI),%YDB-E-CIUNTYPE, Unknown parameter type encountered
+# Test that [ydb_buffer_t] is not accepted as IO parameter type in call-in
+%YDB-I-EXTSRCLIN, 	err: void err^retBuff(IO:ydb_buffer_t)
+
+							^-----
+%YDB-I-EXTSRCLOC, 		At column 32, line 1, source module err8.ci
+Failure of ydb_ci_tab_open with error: 150379658,(SimpleAPI),%YDB-E-CIUNTYPE, Unknown parameter type encountered
