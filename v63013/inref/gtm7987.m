@@ -21,12 +21,13 @@
 ; These 4 messages must preceed any "REPL INFO" or "Received" message.
 ; Note - there is a WBTEST_REPL_TLS_RECONN that occurs as the servers are being shutdown but verifying #4 message above
 ; proves this is not THAT case.
+;
 verify
+	set debug=0		; Set to 1 to enable line by line debugging of receiver server log
 	set inputfn=$zcmdline
 	set $etrap="use $p write $zstatus,!,! zshow ""*"" zhalt 1"
-	set wboxtest="WBTEST_REPL_TLS_RECONN"
 	open inputfn:readonly
-	write $$findmsg(wboxtest,0),!			; Locate line and write to reference file (sans timestamp information)
+	write $$findmsg("WBTEST_REPL_TLS_RECONN",0),!		; Locate line and write to reference file (sans timestamp information)
 	;
 	; At this point, we've found the triggering white box test line. Now find lines 2-4 but with less than 4 reads
 	;
@@ -45,13 +46,21 @@ findmsg(msg,maxreads)
 	set saveio=$io
 	use inputfn
 	set found=0
+	;
+	; Parse each line stripping the timestamp off of it first. Here is an example line from the receiver server:
+	;
+	;   Tue Nov  1 11:03:46 2022 : WBTEST_REPL_TLS_RECONN induced
+	;
+	; So our parse is on the ' : ' that separates the timestamp from the actual line of log output.
+	;
 	for i=1:1 read line quit:$zeof  do  quit:found
-	. set sline=$zpiece(line," ",7,999)			; Strip off the timestamp type information
+	. set sline=$zpiece(line," : ",2,99)			; Strip off the timestamp type information
 	. set:(msg=$zextract(sline,1,$length(msg))) found=1	; Looking for our trigger (white box test notification)
-	. ;use $p
-	. ;zwrite msg,line,sline,found
-	. ;write !
-	. ;use inputfn
+	. do:debug
+	. . use $p
+	. . zwrite msg,line,sline,found
+	. . write !
+	. . use inputfn
 	if $zeof do
 	. use $p
 	. write "Premature end-of-file encountered looking for our trigger text (",msg,") - terminating",!
