@@ -156,7 +156,7 @@ DSE>
 DSE> Error:  offset must be specified.
 DSE> Error:  data must be specified.
 DSE> DSE> # Test that MUPIP JOURNAL EXTRACT shows the DSE commands as AIMG records
-##SUSPEND_OUTPUT NONREPLIC
+##SUSPEND_OUTPUT NON_REPLIC
 AIMG overwrite -data="as" -off=10
 AIMG restore -bl=0 -ver=1
 AIMG overwrite -block=3 -data="datahave" -off=45

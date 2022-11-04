@@ -3,7 +3,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -21,12 +21,12 @@ option=toupper(option)
 if (option ~ /^BG$/)			{oput="BG";		var="acc_meth"			}
 else if (option ~ /^MM$/)		{oput="MM";		var="acc_meth"			}
 else if (option ~ /^REPLIC$/)		{oput="REPLIC";		var="test_repl"			}
-else if (option ~ /^NO.*REP/)		{oput="NON_REPLIC";	var="test_repl"			}
+else if (option ~ /^NON_REPLIC/)	{oput="NON_REPLIC";	var="test_repl"			}
 else if (option ~ /^MULTISITE/)		{oput="MULTISITE";	var="test_repl"			}
 else if (option ~ /^MULTI_SITE/)	{oput="MULTISITE";	var="test_repl"			}
-else if (option ~ /^SUPPL.*_AB/)	{oput="SUPPLEMENTARY_AB"; var="test_replic_suppl_type"	} # Neither servers are Supplementary
-else if (option ~ /^SUPPL.*_AP/)	{oput="SUPPLEMENTARY_AP"; var="test_replic_suppl_type"	} # Receiver server is Supplementary
-else if (option ~ /^SUPPL.*_PQ/)	{oput="SUPPLEMENTARY_PQ"; var="test_replic_suppl_type"	} # Both servers are Supplementary
+else if (option ~ /^SUPPLEMENTARY_AB/)	{oput="SUPPLEMENTARY_AB"; var="test_replic_suppl_type"	} # Neither servers are Supplementary
+else if (option ~ /^SUPPLEMENTARY_AP/)	{oput="SUPPLEMENTARY_AP"; var="test_replic_suppl_type"	} # Receiver server is Supplementary
+else if (option ~ /^SUPPLEMENTARY_PQ/)	{oput="SUPPLEMENTARY_PQ"; var="test_replic_suppl_type"	} # Both servers are Supplementary
 else if (option ~ /^2WL$/)		{oput="2WL";		var="gtm_server_location"	}
 else if (option ~ /^ATL$/)		{oput="ATL";		var="gtm_server_location"	}
 else if (option ~ /^NONGGSERVER/)	{oput="NONGGSERVER";	var="gtm_server_location"	}
@@ -35,7 +35,7 @@ else if (option ~ /^LITTLE_ENDIAN/)	{oput="LITTLE_ENDIAN";	var="gtm_endian"	}
 else if (option ~ /^UNICODE_MODE/)	{oput="UNICODE_MODE";	var="gtm_chset"	}
 else if (option ~ /^NONUNICODE_MODE/)	{oput="NONUNICODE_MODE";var="gtm_chset"	}
 else if (option ~ /^REORG$/)		{oput="REORG";		var="test_reorg"		}
-else if (option ~ /^NO.*REO/)		{oput="NON_REORG";	var="test_reorg"		}
+else if (option ~ /^NON_REO/)		{oput="NON_REORG";	var="test_reorg"		}
 #test_region is not used anymore, it is kept here only for backward compatibility of reference files
 else if (option ~ /^SIN/)		{oput="SINGLE_REG";	var="test_region"		}
 else if (option ~ /^MULTI_R/)		{oput="MULTI_REG";	var="test_region"		}
@@ -46,14 +46,14 @@ else if (option ~ /^TP$/)		{oput="TP";		var="gtm_test_tp"		}
 else if (option ~ /^NON?.?TP$/) 	{oput="NON_TP";		var="gtm_test_tp"		}
 else if (option ~ /^[A-Z]$/)		{oput=option;		var="LFE"			}
 else if (option ~ /^UNNICE$/)		{oput="UNNICE";		var="test_nice"			}
-else if (option ~ /^NON?.?NI/)		{oput="UNNICE";		var="test_nice"			}
+else if (option ~ /^NON_NICE$/)		{oput="UNNICE";		var="test_nice"			}
 else if (option ~ /^NICE$/)		{oput="NICE";		var="test_nice"			}
 else if (option ~ /^COLLATION$/)	{oput="COLLATION";	var="test_collation"		}
-else if (option ~ /^NO.*CO/)		{oput="NON_COLLATION";	var="test_collation"		}
+else if (option ~ /^NON_COLL/)		{oput="NON_COLLATION";	var="test_collation"		}
 else if (option ~ /^SETJNL/)		{oput="SETJNL";		var="gtm_test_jnl"		}
 else if (option == /^JNL/)		{oput="SETJNL";		var="gtm_test_jnl"		}
-else if (option ~ /^NO.*JNL/)		{oput="NON_SETJNL";	var="gtm_test_jnl"		}
-else if (option ~ /^NO.*NOLINE/)	{oput="NON_NOLINE";	var="gtm_test_nolineentry"	}
+else if (option ~ /^NON_SETJNL/)	{oput="NON_SETJNL";	var="gtm_test_jnl"		}
+else if (option ~ /^NON_NOLINE/)	{oput="NON_NOLINE";	var="gtm_test_nolineentry"	}
 else if (option ~ /^NOLINE/)		{oput="NOLINE";		var="gtm_test_nolineentry"	}
 else if (option ~ /^DBG$/)		{oput="DBG";		var="tst_image"			}
 else if (option ~ /^PRO$/)		{oput="PRO";		var="tst_image"			}

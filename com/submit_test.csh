@@ -107,6 +107,11 @@ echo 0x3F > /proc/self/coredump_filter
 
 source $gtm_tst/com/is_libyottadb_asan_enabled.csh	# defines "gtm_test_libyottadb_asan_enabled" env var
 
+##
+# Determine if the memory footprint for this machine supports 64GiB journal and receiver pools. This awk invocation will
+# take care of determining if this test can run restricted 64GiB journal/receiver pool tests or not.
+setenv ydb_allow64GB_jnlpool `free -g | $tst_awk -f $gtm_tst/com/jnlpool_64GB_OK.awk`
+
 ###########################################################################################################
 #### set various random test options. This might change the environment variables set above this point
 # submit_test.csh is called with echo and verbose set.  But, we don't want the do_random_settings.csh and set_encrypt_env.csh

@@ -11,18 +11,19 @@
 #								#
 #################################################################
 #
-#----------------------------------------------------------------------------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------------------------------------------
 # List of subtests of the form "subtestname [author] description"
 #-------------------------------------------------------------------------------------
-# gtm9321        [jv]      Test that $ORDER(<indirection>,<literal>) maintains correct $REFERENCE
-#----------------------------------------------------------------------------------------------------------------------------------------------------------------
+# gtm9321	[jv]	Test that $ORDER(<indirection>,<literal>) maintains correct $REFERENCE
+# gtm7628	[see]	Verify source/receiver servers can handle a 64GB jnlpool
+#----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v63014 test starts..."
 
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
 setenv subtest_list_non_replic "gtm9321"
-setenv subtest_list_replic	""
+setenv subtest_list_replic     "gtm7628"
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
@@ -39,6 +40,10 @@ endif
 
 if ("dbg" == "$tst_image") then
 	setenv subtest_exclude_list "$subtest_exclude_list"
+endif
+
+if ("0" == "$ydb_allow64GB_jnlpool") then
+	setenv subtest_exclude_list "$subtest_exclude_list gtm7628"
 endif
 
 # Submit the list of subtests

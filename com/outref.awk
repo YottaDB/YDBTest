@@ -365,6 +365,10 @@ BEGIN {
 	if ("14" == ENVIRON["clangmajorver"])
 		envir[no_options] = "CLANG14"
 	#
+	options_names[++no_options] = "ydb_allow64GB_jnlpool"
+	if ("0" == ENVIRON["ydb_allow64GB_jnlpool"])
+		envir[no_options] = "JNLPOOL64GB_DISALLOW"
+	#
 	if (("ubuntu" == ENVIRON["gtm_test_linux_distrib"]) && ("21.10" == ENVIRON["gtm_test_linux_version"]))
 	{
 		option_names[++no_options] = "ubuntu_21.10"
