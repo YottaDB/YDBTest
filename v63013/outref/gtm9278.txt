@@ -36,11 +36,15 @@ mumps.dat
 
 %GDE-I-GDUPDATE, Updating Global Directory file 
 	##TEST_PATH##/mumps.gld
-%YDB-E-DBFILERDONLY, The database file ##TEST_PATH##/dirnotdat.dat was opened as read-only (perms 0)
-%SYSTEM-E-ENO21, Is a directory
-%YDB-E-DBFILOPERR, Error doing database I/O to database file ##TEST_PATH##/dirnotdat.dat
+%YDB-E-DBFILERR, Error with database file ##TEST_PATH##/dirnotdat.dat
 %SYSTEM-E-ENO21, Is a directory
 %YDB-E-DBNOREGION, None of the database regions accessible
+# Now try to invoke MUPIP integ -file (i.e. a command that requires standalone access to the database).
+%YDB-E-DBOPNERR, Error opening database file dirnotdat.dat
+%SYSTEM-E-ENO21, Is a directory
+%YDB-I-MUSTANDALONE, Could not get exclusive access to dirnotdat.dat
+%YDB-E-INTEGERRS, Database integrity errors
+
 
 # Run YDB#927 exerciser 6 times. Failures marked by the presence of core files. Each instance of the
 # exerciser runs a simplistic routine 100 times so with 6 instances, there is lots of interference

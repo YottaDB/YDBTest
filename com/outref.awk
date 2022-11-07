@@ -351,6 +351,12 @@ BEGIN {
 	else
 		envir[no_options] = "NODYNAMIC_LITERALS"
 	#
+	option_names[++no_options] = "gtm_test_asyncio"
+	if ("1" == ENVIRON["gtm_test_asyncio"])
+		envir[no_options] = "ASYNCIO"
+	else
+		envir[no_options] = "NOASYNCIO"
+	#
 	option_names[++no_options] = "gtm_test_libyottadb_asan_enabled"
 	if ("1" == ENVIRON["gtm_test_libyottadb_asan_enabled"])
 		envir[no_options] = "ASAN_ENABLED"

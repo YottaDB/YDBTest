@@ -3,7 +3,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -12,7 +12,7 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
-BEGIN { split("file_name n_regions key_size record_size block_size allocation global_buffer_count extension_count reserved_bytes collation_default null_subscripts access_method acc_meth_env journal test_collation test_stdnull_collation test_gtcm qdbrundown freeze defer_allocate epoch_taper lock_space", argmnts, " ")
+BEGIN { split("file_name n_regions key_size record_size block_size allocation global_buffer_count extension_count reserved_bytes collation_default null_subscripts access_method acc_meth_env journal test_collation test_stdnull_collation test_gtcm qdbrundown freeze defer_allocate epoch_taper lock_space asyncio", argmnts, " ")
 	# name_override is an argument disguised from the user, used to take the $gtmgbldir definition from the shell if it exists
 	# -different_gld is useful on replication tests with multi-region databases:
 	#  	instead of a*, b*, c*, d* going to different regions, on the remote directories, they go in pairs: a* and b* to areg, c* and d* to creg, e* and f* to ereg, ...
@@ -25,6 +25,7 @@ BEGIN { split("file_name n_regions key_size record_size block_size allocation gl
 	if (1 == ENVIRON["gtm_test_freeze_on_error"]) value["freeze"]="-inst_freeze_on_error"
 	if (0 == ENVIRON["gtm_test_defer_allocate"]) value["defer_allocate"]="-nodefer_allocate"
 	if (0 == ENVIRON["gtm_test_epoch_taper"]) value["epoch_taper"]="-noepochtaper"
+	if (1 == ENVIRON["gtm_test_asyncio"]) value["asyncio"]="-asyncio"
 	value["jnl_prefix"] = "***unspec***"
 	value["jnl_suffix"] = "***unspec***"
 	value["move"]=1
@@ -72,6 +73,8 @@ BEGIN { split("file_name n_regions key_size record_size block_size allocation gl
 	    else if ($i ~/^-nodefer_allocate/) value["defer_allocate"]="-nodefer_allocate"
 	    else if ($i ~/^-epoch_taper/) value["epoch_taper"]="-epochtaper"
 	    else if ($i ~/^-noepoch_taper/) value["epoch_taper"]="-noepochtaper"
+	    else if ($i ~/^-asyncio/) value["asyncio"]="-asyncio"
+	    else if ($i ~/^-noasyncio/) value["asyncio"]="-noasyncio"
 	    else if ($i ~/^-lock_space/) value["lock_space"]=tmp
 	    else  { value[argmnts[i]]=$i;
 		  }
@@ -303,13 +306,23 @@ function print_block(segname,regname){
 	  if (value["qdbrundown"])
 		print "change -region " regname " " value["qdbrundown"]
 	  # DEFER_ALLOCATE option is available from V62002
-	  if ((6 < major_ver) || (2002 <= gensub(/^.*V[0-9]([0-9]+).*/,"\\1","g",ENVIRON["gtm_dist"])))
+	  if ((6 < major_ver) || ((6 == major_ver) && (2002 <= gensub(/^.*V[0-9]([0-9]+).*/,"\\1","g",ENVIRON["gtm_dist"]))))
 	  {
 	      if (value["defer_allocate"])
 		  print "change -segment " segname " " value["defer_allocate"]
 	      if (value["epoch_taper"])
 		  print "change -region " regname " " value["epoch_taper"]
 	  }
+      }
+      # ASYNCIO option is only available from V63001 onwards
+      if ((6 < major_ver) || ((6 == major_ver) && (3001 <= gensub(/^.*V[0-9]([0-9]+).*/,"\\1","g",ENVIRON["gtm_dist"]))))
+      {
+          # Even though -asyncio was inherited from the gtm_test_asyncio env var after checking the access method env var is BG
+          # at the time of do_random_settings.csh, it is possible a test (e.g. mm/basic subtest) overrides it by setting the
+          # "acc_meth" env var to "MM" before invoking dbcreate.csh. In that case, we need to disable asyncio. Hence the check
+          # for value["access_method"] below.
+          if (("-asyncio" == value["asyncio"]) && ("MM" != value["access_method"]) && (0 == (value["block_size"] % 4096)))
+              print "change -segment " segname " " value["asyncio"]
       }
       if  ("NULL" == value["null_subscripts"]) # this NULL has nothing to do with "NULL"_subscripts, it is dbcreate_multi.awk's "NULL"
 		value["null_subscripts"]="ALWAYS"

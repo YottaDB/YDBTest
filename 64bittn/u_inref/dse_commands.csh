@@ -6,6 +6,9 @@
 # Copyright (c) 2018, 2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
+# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -15,6 +18,9 @@
 
 # disable random 4-byte collation header in DT leaf block since this test output is sensitive to DT leaf block layout
 setenv gtm_dirtree_collhdr_always 1
+
+# This test does "$MUPIP reorg -downgrade" operations which do not work with ASYNCIO. Therefore turn ASYNCIO off.
+setenv gtm_test_asyncio 0
 
 echo "====================   DSE DUMP -BLOCK   ===================="
 echo ""

@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -37,7 +37,7 @@ echo "########## Begin do_random_settings.csh random settings ###########"	>>&! 
 # 	governed by the current time in second level granularity.
 # If any new randomness is added, check if speed test also needs to be changed to take it into consideration
 # arguments below are count-of-numbers-needed lower-bound upper-bound
-set randnumbers = `$gtm_tst/com/genrandnumbers.csh 45 1 10`
+set randnumbers = `$gtm_tst/com/genrandnumbers.csh 46 1 10`
 
 # Caution : No. of random choices below and the no. of random numbers generated above might not necessarily be the same.
 # 	    Increase the count by the number of new random numbers the newly introduced code needs.
@@ -1138,6 +1138,33 @@ unsetenv ydb_lockhash_n_bits
 echo "# ydb_lockhash_n_bits chosen to be UNDEFINED by do_random_settings.csh due to YDB#673's revert of YDB#297" >>&! $settingsfile
 echo "unsetenv ydb_lockhash_n_bits"						>>&! $settingsfile
 setenv tst_random_all "$tst_random_all ydb_lockhash_n_bits"
+###########################################################################
+
+###########################################################################
+### Random option - 46 ### Randomly enable gtm_test_asyncio 30% of the time
+#
+# Do this if gtm_test_asyncio is not already passed to gtmtest.csh
+if !($?gtm_test_asyncio) then
+	if (6 >= $randnumbers[46]) then
+		setenv gtm_test_asyncio 0
+	else
+		setenv gtm_test_asyncio 1
+	endif
+	echo "# gtm_test_asyncio set by do_random_settings.csh"					>>&! $settingsfile
+else
+	echo "# gtm_test_asyncio was already set before coming into do_random_settings.csh"	>>&! $settingsfile
+endif
+if ("MM" == "$acc_meth") then
+	echo "# gtm_test_asyncio is forced to 0 since acc_meth is MM"	>>&! $settingsfile
+	setenv gtm_test_asyncio 0
+else if ($gtm_test_asyncio) then
+	echo "# ASYNCIO and V4 format don't go together. So, disable creating V4 formats"	>>&! $settingsfile
+	setenv gtm_test_mupip_set_version "disable"
+	echo "setenv gtm_test_mupip_set_version $gtm_test_mupip_set_version"			>>&! $settingsfile
+endif
+echo "setenv gtm_test_asyncio $gtm_test_asyncio"						>>&! $settingsfile
+
+setenv tst_random_all "$tst_random_all gtm_test_asyncio"
 ###########################################################################
 
 # For any change to tst_random_all, a corresponding change is required in log_report.awk, to show in final report

@@ -45,4 +45,14 @@ echo "# Check the operator log for the messages YDB-I-STUCKACT"
 echo ""
 # Kill any backgrounded DSE processes (from %YDBPROCSTUCKEXEC) to avoid later TEST-E-LSOF errors from test framework
 $gtm_tst/com/kill_ydbprocstuckexec_dse_processes.csh
+
+# Note that it is possible in some timing scenario that the DSE process jobbed off by the %YDBPROCSTUCKEXEC invocation set
+# "cnl->wbox_test_seq_num" to 1 (in "sr_unix/dse_main.c") and then got killed by the "kill_ydbprocstuckexec_dse_processes.csh"
+# invocation above leaving database shared memory still holding that value. The "mupip integ" call in the "dbcheck.csh"
+# invocation below would then see "cnl->wbox_test_seq_num" set to 1 and set it to 2 and then wait for it to become 3
+# (in "sr_unix/gvcst_init_sysops.c"). That code is controlled by an if check of whether the WBTEST_SEMTOOLONG_STACK_TRACE
+# white-box test case is enabled. Therefore, disable this white-box case to avoid a rare test hang. Interestingly, we started
+# seeing this hang only after enabling ASYNCIO (YDBTest#365) but this was a pre-existing issue waiting to happen.
+unsetenv gtm_white_box_test_case_enable
+
 $gtm_tst/com/dbcheck.csh

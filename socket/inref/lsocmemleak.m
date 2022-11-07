@@ -2,6 +2,9 @@
 ;								;
 ;	Copyright 2013, 2014 Fidelity Information Services, Inc	;
 ;								;
+; Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -20,6 +23,12 @@ lsocketmemleak
 	i '$d(^config("path")) w !,"Usage: ^config(""path"") needs to be set to the path to be used!",! q
 	i '$d(^config("repcnt")) s ^config("repcnt")=100	; default number of times to repeat socket open
 	i '$d(^config("skpcnt")) s ^config("skpcnt")=5	; default number of times to skip before loop start so $ZUSEDSTOR stabilizes
+	; We do a few global updates in the previous lines. Flush those updates right away in case ASYNCIO is turned ON
+	; as otherwise the flush might happen a little later (when the flush timer kicks in, usually in 1 second) at which
+	; point we might be in the middle of a section of the test which expects no memory leaks and fail the leak test because
+	; the flush did a malloc (see "gtm_malloc(SIZEOF(struct gd_info))" in "sr_unix/aio_shim.c") when ASYNCIO is turned ON.
+	; If ASYNCIO is OFF, the database flush logic does not do any mallocs so we do not do the flush right away in that case.
+	view:$ztrnlnm("gtm_test_asyncio") "flush"
 	; ------------------------
 	; Initialize some variables
 	; ------------------------
@@ -92,7 +101,7 @@ socmaxnd
 	. . ;Empty line where incrtrap returns
 	. f sock=1:1:sock-1 c tcpdev:(NODEST:socket="listen"_sock)
 	. c tcpdev:(NODEST)
-	i startused<endused s cnt=repcnt-skpcnt,leak=endused-startused w "  FAILED: Memory leak: In "_cnt_" iterations, leaked "_leak_" bytes",!
+	i startused<endused s cnt=repcnt-skpcnt,leak=endused-startused w "  FAILED: Memory leak: In "_cnt_" iterations, leaked "_leak_" bytes",! zwrite startused,endused
 	e  w "  PASSED",!
 	; ------------------------
 	; Check for leak -- ERR_SOCKMAX, delimiter
@@ -107,7 +116,7 @@ socmaxd
 	. . ;Empty line where incrtrap returns
 	. f sock=1:1:sock-1 c tcpdev:(NODEST:socket="listen"_sock)
 	. c tcpdev
-	i startused<endused s cnt=repcnt-skpcnt,leak=endused-startused w "  FAILED: Memory leak: In "_cnt_" iterations, leaked "_leak_" bytes",!
+	i startused<endused s cnt=repcnt-skpcnt,leak=endused-startused w "  FAILED: Memory leak: In "_cnt_" iterations, leaked "_leak_" bytes",! zwrite startused,endused
 	e  w "  PASSED",!
 	; ------------------------
 	; Check for leak -- Connect fails, no delimiter

@@ -1,9 +1,31 @@
 #!/usr/local/bin/tcsh -f
-set run_reorg_upgrd_dwngrd
+#################################################################
+#								#
+# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+# Portions Copyright (c) Fidelity National			#
+# Information Services, Inc. and/or its subsidiaries.		#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
 if ( "ENCRYPT" == $test_encryption ) then
         echo "TEST-I-ENCRYPT, Online upgrade-downgrade cannot be run since MUPIP SET version=V4 not supported with encryption"
 	exit
 endif
+
+if ( 1 == "$gtm_test_asyncio") then
+        echo "TEST-I-ASYNCIO, Online upgrade-downgrade cannot be run since MUPIP SET version=V4 not supported with ASYNCIO"
+	exit
+endif
+
+set run_reorg_upgrd_dwngrd
+
 if (! $?gtm_test_disable_randomdbtn) then
 	#cannot downgrade if the TN is too large, so makes no sense to try to upgrade, either
 	# Check the gtm_test_dbcreate_initial_tn value in settings.csh

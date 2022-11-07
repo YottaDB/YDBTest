@@ -14,13 +14,11 @@
 	zhalt 1
 ;
 ; This routine is a filter for GTM-9278 - specifically we need to read in the output logs from the
-; ydb927 part of the test. These log files (type .logx) are full of DBFILOPERR messages that have
+; ydb927 part of the test. These log files (type .logx) are full of DBFILERR messages that have
 ; ENO21 secondary messages. Here is an example message from one of the .logx files this test creates
 ; (all on one line):
 ;
-;   150375378,+2^ydb927,%YDB-E-DBFILOPERR, Error doing database I/O to database file
-;     /extra/testarea1/xxxxxx/tst_V994_R135_dbg_29_221014_115259/v63013_0/gtm9278/dirnotdat.dat,
-;     %SYSTEM-E-ENO21, Is a directory
+;   150372546,+2^ydb927,%YDB-E-DBFILERR, Error with database file .*/v63013_0/gtm9278/dirnotdat.dat, %SYSTEM-E-ENO21, Is a directory
 ;
 ; The purpose of this routine is to rewrite these log files to a .log flavor sans these messages.
 ; The intent is that with these expected messages removed from the .log files, we can let the test
@@ -47,11 +45,11 @@ filter
 	open inputfn:readonly
 	open outputfn:new
 	;
-	; Copy input lines to the output file if they do not contain both DBFILOPERR and ENO21
+	; Copy input lines to the output file if they do not contain both DBFILERR and ENO21
 	;
 	for  use inputfn read line quit:$zeof  do
 	. use outputfn
-	. write:('((line["DBFILOPERR")&(line["ENO21"))) line,! ; Verify both msgs present as noted above
+	. write:('((line["DBFILERR")&(line["ENO21"))) line,! ; Verify both msgs present as noted above
 	close inputfn
 	close outputfn
 	quit

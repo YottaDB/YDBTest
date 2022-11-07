@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -16,14 +16,11 @@ echo ""
 echo "# Create ASYNCIO=ON database"
 setenv gtm_test_mupip_set_version "disable"     # ASYNCIO and V4 format don't go together. So, disable creating V4 formats
 setenv acc_meth BG				# ASYNCIO and MM is not supported
-$gtm_tst/com/dbcreate.csh mumps >>& dbcreate_log.txt
+$gtm_tst/com/dbcreate.csh mumps -asyncio >>& dbcreate_log.txt
 if ($status) then
 	echo "DB Create Failed, Output Below"
 	cat dbcreate_log.txt
 endif
-# Currently dbcreate.csh does not have a way to enable ASYNCIO. So do that manually after the dbcreate.
-$ydb_dist/mupip set -asyncio -reg "*"
-echo ""
 
 echo "# Verify flush timer is 1 second (ydb358.c relies on this when it waits for 2 seconds)"
 $ydb_dist/dse dump -file |& grep "Flush timer"

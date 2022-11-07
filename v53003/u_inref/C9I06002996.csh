@@ -4,7 +4,7 @@
 # Copyright (c) 2013, 2015 Fidelity National Information	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -147,30 +147,35 @@ else
 	echo "Minor db version is the same"
 endif
 echo $linestr
-echo "# Set desired_db_format to V4"
-$MUPIP set -ver="V4" -reg "*"
-$DSE dump -file |& $grep -i "Desired DB Format"
-echo "# Test that endiancvt does not proceed if desired_db_format is V4"
-$MUPIP endiancvt mumps.dat
-echo "# Test that endiancvt does not proceed even if desired_db_format is V4 and OVERRIDE is specified"
-$MUPIP endiancvt -override mumps.dat
-$DSE dump -file |& $grep -i "Desired DB Format"
-echo "# Set desired_db_format back to V6 before proceeding to next test"
-$MUPIP set -ver="V6" -reg "*"
-echo ""
+# If ASYNCIO is ON, setting desired_db_format to V4 or doing a reorg -downgrade are not allowed (one would get a
+# ASYNCIONOV4 error). Therefore skip this portion of the test if ASYNCIO is ON.
+if (0 == $gtm_test_asyncio) then
+	echo "# Set desired_db_format to V4"
+	$MUPIP set -ver="V4" -reg "*"
+	$DSE dump -file |& $grep -i "Desired DB Format"
+	echo "# Test that endiancvt does not proceed if desired_db_format is V4"
+	$MUPIP endiancvt mumps.dat
+	echo "# Test that endiancvt does not proceed even if desired_db_format is V4 and OVERRIDE is specified"
+	$MUPIP endiancvt -override mumps.dat
+	$DSE dump -file |& $grep -i "Desired DB Format"
+	echo "# Set desired_db_format back to V6 before proceeding to next test"
+	$MUPIP set -ver="V6" -reg "*"
+	echo ""
 
-echo $linestr
-echo "# Set fully_upgraded to FALSE"
-$MUPIP reorg -downgrade -reg "*"
-$MUPIP set -ver="V6" -reg "*"
-$DSE dump -file -all |& $grep "Fully Upgraded"
-echo "# Test that endiancvt does not proceed if fully_upgraded is FALSE"
-$MUPIP endiancvt mumps.dat
-echo "# Test that endiancvt does not proceed even if fully_upgraded is FALSE and OVERRIDE is specified"
-$MUPIP endiancvt -override mumps.dat
-$DSE dump -file -all |& $grep "Fully Upgraded"
-echo "# Set fully_upgraded back to TRUE before proceeding to next test"
-$MUPIP reorg -upgrade -reg "*"
-$DSE dump -file -all |& $grep "Fully Upgraded"
-echo ""
+	echo $linestr
+	echo "# Set fully_upgraded to FALSE"
+	$MUPIP reorg -downgrade -reg "*"
+	$MUPIP set -ver="V6" -reg "*"
+	$DSE dump -file -all |& $grep "Fully Upgraded"
+	echo "# Test that endiancvt does not proceed if fully_upgraded is FALSE"
+	$MUPIP endiancvt mumps.dat
+	echo "# Test that endiancvt does not proceed even if fully_upgraded is FALSE and OVERRIDE is specified"
+	$MUPIP endiancvt -override mumps.dat
+	$DSE dump -file -all |& $grep "Fully Upgraded"
+	echo "# Set fully_upgraded back to TRUE before proceeding to next test"
+	$MUPIP reorg -upgrade -reg "*"
+	$DSE dump -file -all |& $grep "Fully Upgraded"
+	echo ""
+endif
+
 $gtm_tst/com/dbcheck.csh

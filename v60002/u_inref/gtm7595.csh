@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2013 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -22,13 +25,16 @@ if (("MM" == $acc_meth) || ("NON_ENCRYPT" == $test_encryption)) then
 else
 	set qual="-encrypt"
 endif
+# It is possible the test framework randomly chose ASYNCIO. But a few segments are modified below to use
+# a block size of 1KiB and 2KiB which are not a multiple of the file system block size of 4KiB.
+# Therefore use -noasyncio (to disable ASYNCIO) for those segments to avoid DBBLKSIZEALIGN errors.
 $GDE << EOF
 	change -segment DEFAULT -noencrypt
-	change -segment ASEG -noencrypt -block_size=1024
-	change -segment BSEG -noencrypt -block_size=2048
+	change -segment ASEG -noencrypt -block_size=1024 -noasyncio
+	change -segment BSEG -noencrypt -block_size=2048 -noasyncio
 	change -segment CSEG -noencrypt -block_size=4096
-	change -segment DSEG $qual -block_size=1024
-	change -segment ESEG $qual -block_size=2048
+	change -segment DSEG $qual -block_size=1024 -noasyncio
+	change -segment ESEG $qual -block_size=2048 -noasyncio
 	change -segment FSEG $qual -block_size=4096
 	change -region AREG -record_size=800
 	change -region BREG -record_size=1600

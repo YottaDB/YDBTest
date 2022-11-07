@@ -81,6 +81,11 @@ Database file ##TEST_PATH##/dir6/mumps.dat now has BG access method
 # Test Case 7: Test that MUPIP SET -ACCESS_METHOD=MM -JOURNAL=ENABLE,ON -reg "*" creates journal with NOBEFORE_IMAGE journaling for database with BG access method
 # Create database with BG access method
 $ydb_dist/mupip set -ACCESS_METHOD=MM -JOURNAL="enable,on" -reg "*"
+##SUSPEND_OUTPUT NOASYNCIO
+##SUSPEND_OUTPUT MM
+%YDB-E-ASYNCIONOMM, Database file ##TEST_PATH##/dir7/mumps.dat has ASYNCIO enabled; cannot enable MM
+##ALLOW_OUTPUT MM
+##ALLOW_OUTPUT NOASYNCIO
 Database file ##TEST_PATH##/dir7/mumps.dat now has MM access method
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/dir7/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
@@ -98,6 +103,11 @@ Database file ##TEST_PATH##/dir8/mumps.dat now has BG access method
 # Test Case 9: Test that MUPIP SET -ACCESS_METHOD=MM -REPLICATION=ON -reg "*" creates journal with NOBEFORE_IMAGE journaling with BG access method
 # Create database with BG access method
 $ydb_dist/mupip set -ACCESS_METHOD=MM -REPLICATION=ON -reg "*"
+##SUSPEND_OUTPUT NOASYNCIO
+##SUSPEND_OUTPUT MM
+%YDB-E-ASYNCIONOMM, Database file ##TEST_PATH##/dir9/mumps.dat has ASYNCIO enabled; cannot enable MM
+##ALLOW_OUTPUT MM
+##ALLOW_OUTPUT NOASYNCIO
 Database file ##TEST_PATH##/dir9/mumps.dat now has MM access method
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/dir9/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
@@ -116,6 +126,11 @@ $ydb_dist/mupip set -reg "*" -JOURNAL="enable,on"
 # Test Case 10: Test that MUPIP SET -ACCESS_METHOD=MM and MUPIP SET -JOURNAL=ENABLE,ON create journal with NOBEFORE_IMAGE journaling for database with BG access method
 # Create database with BG access method
 $ydb_dist/mupip set -FILE "mumps.dat" -ACCESS_METHOD=MM
+##SUSPEND_OUTPUT NOASYNCIO
+##SUSPEND_OUTPUT MM
+%YDB-E-ASYNCIONOMM, Database file mumps.dat has ASYNCIO enabled; cannot enable MM
+##ALLOW_OUTPUT MM
+##ALLOW_OUTPUT NOASYNCIO
 Database file mumps.dat now has MM access method
 $ydb_dist/mupip set -reg "*" -JOURNAL="enable,on"
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/dir11/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
@@ -135,6 +150,11 @@ $ydb_dist/mupip set -reg "*" -REPLICATION=ON
 # Test Case 13: Test that MUPIP SET -ACCESS_METHOD=MM and MUPIP SET -REPLICATION=ON create journal with NOBEFORE_IMAGE journaling with BG access method
 # Create database with BG access method
 $ydb_dist/mupip set -FILE "mumps.dat" -ACCESS_METHOD=MM
+##SUSPEND_OUTPUT NOASYNCIO
+##SUSPEND_OUTPUT MM
+%YDB-E-ASYNCIONOMM, Database file mumps.dat has ASYNCIO enabled; cannot enable MM
+##ALLOW_OUTPUT MM
+##ALLOW_OUTPUT NOASYNCIO
 Database file mumps.dat now has MM access method
 $ydb_dist/mupip set -reg "*" -REPLICATION=ON
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/dir13/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
@@ -151,6 +171,11 @@ $ydb_dist/mupip set -journal="enable,on" -reg "*"
 $ydb_dist/mupip set -journal=off -reg "*"
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now OFF
 $ydb_dist/mupip set -acc=MM -reg "*"
+##SUSPEND_OUTPUT NOASYNCIO
+##SUSPEND_OUTPUT MM
+%YDB-E-ASYNCIONOMM, Database file ##TEST_PATH##/dir14/mumps.dat has ASYNCIO enabled; cannot enable MM
+##ALLOW_OUTPUT MM
+##ALLOW_OUTPUT NOASYNCIO
 Database file ##TEST_PATH##/dir14/mumps.dat now has MM access method
 $ydb_dist/mupip set -acc=BG -reg "*"
 Database file ##TEST_PATH##/dir14/mumps.dat now has BG access method

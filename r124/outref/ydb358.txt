@@ -1,8 +1,6 @@
 # Test that ASYNCIO writes in SimpleAPI/SimpleThreadAPI parent and child work fine (no DBIOERR error)
 
 # Create ASYNCIO=ON database
-Database file ##TEST_PATH##/mumps.dat now has asyncio enabled
-
 # Verify flush timer is 1 second (ydb358.c relies on this when it waits for 2 seconds)
   Cache freeze id                0x00000000  Flush timer            00:00:01:00
 

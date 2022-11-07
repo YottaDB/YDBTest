@@ -11,6 +11,12 @@
 #								#
 #################################################################
 
+# This test does a "strace" and expects to see "pwrite64()" calls to the database blocks in the strace output.
+# When ASYNCIO is ON, we will instead see "io_submit()" calls, not "pwrite64()" calls. ASYNCIO anyways needs the
+# database block size to be a multiple of the underlying file system block size. So testing for FULLBLKWRT setting
+# setting of 0 (full block writes disabled) does not make sense there anyways. Therefore, disabling ASYNCIO for this test.
+setenv gtm_test_asyncio 0
+
 echo '# Test to verify that the -FULLBLKWRT setting works correctly in all three modes {0,1,2} both with'
 echo '# MUPIP and GDE.'
 echo '#'

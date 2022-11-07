@@ -3,7 +3,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -143,6 +143,7 @@ BEGIN {
 		if ( "gtm_test_passcurlvn" == rname ) printf "PLV:%-1s ",rval[i]
 		if ( "gtm_test_defer_allocate" == rname ) printf "DA:%-1s ",rval[i]
 		if ( "gtm_test_epoch_taper" == rname ) printf "ET:%-1s ",rval[i]
+		if ( "gtm_test_asyncio" == rname ) printf "AIO:%-1s ",rval[i]
 		if ( "gtm_test_updhelpers" == rname ) printf "UH:%-3s ",rval[i]
 		if ( "gtm_test_forward_rollback" == rname ) printf "FR:%-1s ",rval[i]
 		if ( "gtm_mupjnl_parallel" == rname ) printf "MP:%-1s ",rval[i]

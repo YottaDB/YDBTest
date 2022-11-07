@@ -43,6 +43,9 @@ echo '# directory. Then run LKE on it.'
 $gtm_dist/yottadb -run GDE change -segment DEFAULT -file=dirnotdat.dat
 mkdir dirnotdat.dat
 $gtm_dist/lke show all
+echo '# Now try to invoke MUPIP integ -file (i.e. a command that requires standalone access to the database).'
+$gtm_dist/mupip integ -file dirnotdat.dat
+echo
 #
 # The original version of this test was getting left-over ftok semaphores causing failures most of the time
 # but not ALL the time. To fix this, YDB#927 was created and fixed and became a prereq for this test. The

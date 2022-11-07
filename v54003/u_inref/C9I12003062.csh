@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2013 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -19,6 +22,7 @@
 setenv gtm_test_mupip_set_version "disable"	 # mupip set -acc=MM doesn't work with V4 databases. So, disable creating V4 formats
 setenv tst_jnl_str "-journal=enable,on,nobefore" # mupip set -acc=MM doesn't work with BEFORE_IMAGE journaling. So, force NOBEFORE
 setenv test_encryption "NON_ENCRYPT"		 # mupip set -acc=MM doesn't work with ENCRYPTION. So, disable encryption
+setenv gtm_test_asyncio 0			 # MM does not work with ASYNCIO. So, disable ASYNCIO.
 
 $echoline
 echo "Case 1 ==> Global directory has BG, but database has MM"

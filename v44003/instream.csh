@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2003, 2014 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -24,8 +27,8 @@
 #             * This was originally written by sade, later added by Mohammad
 # ------------------------------------------------------------------------------
 #
-# The first subtest to be included in subtest_list_replic below will necessitate 
-#	a) a change to suite.txt to enable the test to be run with replication 
+# The first subtest to be included in subtest_list_replic below will necessitate
+#	a) a change to suite.txt to enable the test to be run with replication
 #	b) a change to outref.txt to handle replication as well as non-replication test runs using ##TEST_AWK macros
 #
 echo "V44003 test starts..."
@@ -40,10 +43,10 @@ else
 	setenv subtest_list "$subtest_list_common $subtest_list_non_replic"
 endif
 setenv subtest_exclude_list ""
-# filter out subtests that cannot pass with MM or ENCRYPTION
-# D9C09002221 Uses V4 DB which doesn't work with MM
+# filter out subtests that cannot pass with MM or ASYNCIO or ENCRYPTION
+# D9C09002221 Uses V4 DB which doesn't work with MM or ASYNCIO
 # D9C09002221 does MUPIP set -version=V4 which is not supported by encryption binaries
-if (("MM" == $acc_meth) || ("ENCRYPT" == $test_encryption)) then
+if (("MM" == $acc_meth) || (1 == $gtm_test_asyncio) || ("ENCRYPT" == $test_encryption)) then
 	setenv subtest_exclude_list "$subtest_exclude_list D9C09002221"
 endif
 $gtm_tst/com/submit_subtest.csh
