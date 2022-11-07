@@ -3,7 +3,7 @@
 #								#
 # Copyright 2005, 2013 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -13,6 +13,8 @@
 #								#
 #################################################################
 # TEST to checkmupip integ features
+
+setenv gtm_test_asyncio 0	# Disable asyncio temporarily. Remove this line once YDB#947 is fixed.
 
 # disable random 4-byte collation header in DT leaf block since this test output is sensitive to DT leaf block layout
 setenv gtm_dirtree_collhdr_always 1
