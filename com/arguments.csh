@@ -123,12 +123,12 @@ case "-s":
 	    setenv tst_src $argv[$argc1]
 	    set skip
 breaksw
-case "-noreo*":
-case "-NOREO*":
-case "-no[n|_]reo*":
-case "NO[N|_]REO*":
-case "-non_reo*":
-case "NON_REO*":
+case "-noreorg":
+case "-NOREORG":
+case "-no[n|_]reorg":
+case "NO[N|_]REORG":
+case "-non_reorg":
+case "NON_REORG":
 	    ##HELP_SCREEN Test will be run with MUPIP REORG off ($test_reorg)
 	    setenv test_reorg NON_REORG
 breaksw
