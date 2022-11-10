@@ -15,14 +15,15 @@
 # List of subtests of the form "subtestname [author] description"
 #-------------------------------------------------------------------------------------
 # gtm9321	[jv]	Test that $ORDER(<indirection>,<literal>) maintains correct $REFERENCE
-# gtm7628	[see]	Verify source/receiver servers can handle a 64GB jnlpool
+# gtm7628	[see]	Verify source/receiver servers can handle a 64GB jnlpool/recvpool
+# gtm9328	[see]	Verify cannot nest $ZINTERRUPT
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v63014 test starts..."
 
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
-setenv subtest_list_non_replic "gtm9321"
+setenv subtest_list_non_replic "gtm9321 gtm9328"
 setenv subtest_list_replic     "gtm7628"
 
 if ($?test_replic == 1) then

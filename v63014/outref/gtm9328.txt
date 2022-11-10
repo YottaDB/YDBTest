@@ -1,0 +1,25 @@
+# Test for GTM-9328 - Verify that $ZINTERRUPT cannot be invoked in a nested fashion (discussion can be found
+# here: https://gitlab.com/YottaDB/DB/YDBTest/-/issues/482#note_1169440807)
+
+# Create database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+# Start up main routine in the background
+##TEST_AWK\[1\] [1-9][0-9]*
+
+# Start invoking routines to pelt our main routine with $ZINTERRUPT signals to drive its
+# $ZINTERRUPT handler. If these succeed without assert failure (which will be caught by
+# the test framework if any), we can consider the test a success.
+
+# Shutdown the main routine if it hasn't already shut itself down and wait for it to die
+gtm9328 complete
+[1]  + Done                          ##SOURCE_PATH##/mumps -run gtm9328^gtm9328
+
+# Verify database
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
