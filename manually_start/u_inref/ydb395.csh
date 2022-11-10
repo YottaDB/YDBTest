@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2019-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -11,9 +11,6 @@
 #								#
 #################################################################
 #
-
-setenv gtm_test_asyncio 0	# Disable asyncio temporarily. Remove this line once YDB#945 is fixed.
-
 # ydb_env_set only works in sh, which is why this csh redirects to ydb395.sh
 #
 # First we need to initialize a global database

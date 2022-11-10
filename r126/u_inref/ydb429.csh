@@ -11,8 +11,9 @@
 #								#
 #################################################################
 #
-
-setenv gtm_test_asyncio 0	# Disable asyncio temporarily. Remove this line once YDB#945 is fixed.
+#
+#
+#
 
 echo '# Test of all ydb_env_set/unset functions'
 echo '# Environment variables are set correctly'
