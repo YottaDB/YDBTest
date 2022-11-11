@@ -1,0 +1,10 @@
+# Test that OPEN of /dev/null correctly reads device parameters (no garbage-reads/overflows)
+# Verify ZSHOW D output does not incorrectly list EXCEPTION parameter as having been specified for /dev/null
+# Also check that a READ command does not issue an incorrect %YDB-E-CMD error
+
+YDB>
+/dev/null OPEN 
+0 OPEN RMS STREAM NOWRAP 
+0-out OPEN RMS STREAM NOWRAP 
+
+YDB>
