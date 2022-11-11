@@ -1,0 +1,43 @@
+# Test 1 : Create .gld file with db file name = [/dev/null]
+# Now invoke ydb_env_set. Expect a %YDBENV-F-NOTADBFILE error
+# Invoke ydb_env_set
+##TEST_AWKError file is at /tmp/ydb_env_.*/err
+%YDBENV-F-NOTADBFILE /dev/null is not a database file
+$ZSTATUS="150379506,DBEnsure+8^%YDBENV,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)"
+# Expect non-zero exit status due to above error
+Exit status = 241
+
+# Test 2 : Create .gld file with db file name pointing to a non-existent file [notexist.dat]
+# Now invoke ydb_env_set. We expect no errors (ydb_env_set should have created notexist.dat).
+# Invoke ydb_env_set
+# Expect non-zero exit status due to above error
+Exit status = 0
+# Verify notexist.dat got created by a [ls -1 notexist.dat]
+notexist.dat
+
+# Test 3 : Create .gld file with db file name pointing to an existing file [exist.dat]
+# Create database file [exist.dat]
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/exist.dat created
+# Remove write permissions on current directory
+# Now invoke ydb_env_set
+# We expect ydb_env_set to encounter error while creating YDBOCTO and/or YDBAIM regions
+# We see that it issues appropriate error message and returns with non-zero exit status
+# Invoke ydb_env_set
+##TEST_AWKError file is at /tmp/ydb_env_.*/err
+##TEST_AWK%YDBENV-F-MUPIPCREATEERR MUPIP CREATE failed, stderr at /tmp/ydb_env_.*/MUPIP_YDBOCTO.err
+$ZSTATUS="150379506,CreateOCTO+31^%YDBENV,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)"
+# Expect non-zero exit status due to above error
+Exit status = 242
+# Currently ydb_env_set does not point us to the first error in this use-case. But it points us
+# to the directory containing the information. So get that real error out.
+##TEST_AWK/tmp/ydb_env_.*/GDE_YDBAIM.err:%GDE-I-WRITEERROR, Cannot exit because of write failure.  Reason for failure: 150379354,GDEPUT\+63\^GDEPUT,%YDB-E-DEVOPENFAIL, Error opening ##TEST_PATH##/test3.gldinprogress,%SYSTEM-E-ENO13, Permission denied
+##TEST_AWK/tmp/ydb_env_.*/GDE_YDBAIM.err:%GDE-I-WRITEERROR, Cannot exit because of write failure.  Reason for failure: 150379354,GDEPUT\+63\^GDEPUT,%YDB-E-DEVOPENFAIL, Error opening ##TEST_PATH##/test3.gldinprogress,%SYSTEM-E-ENO13, Permission denied
+##TEST_AWK/tmp/ydb_env_.*/GDE_YDBOCTO.err:%GDE-I-WRITEERROR, Cannot exit because of write failure.  Reason for failure: 150379354,GDEPUT\+63\^GDEPUT,%YDB-E-DEVOPENFAIL, Error opening ##TEST_PATH##/test3.gldinprogress,%SYSTEM-E-ENO13, Permission denied
+##TEST_AWK/tmp/ydb_env_.*/GDE_YDBOCTO.err:%GDE-I-WRITEERROR, Cannot exit because of write failure.  Reason for failure: 150379354,GDEPUT\+63\^GDEPUT,%YDB-E-DEVOPENFAIL, Error opening ##TEST_PATH##/test3.gldinprogress,%SYSTEM-E-ENO13, Permission denied
+##TEST_AWK/tmp/ydb_env_.*/MUPIP_YDBOCTO.err:%YDB-E-NOREGION, REGION not found: YDBOCTO
+##TEST_AWK/tmp/ydb_env_.*/MUPIP_YDBOCTO.err:%YDB-E-MUPCLIERR, Action not taken due to CLI errors
+##TEST_AWK/tmp/ydb_env_.*/err:\$ZSTATUS="150379506,CreateOCTO\+31\^%YDBENV,%YDB-E-SETECODE, Non-empty value assigned to \$ECODE \(user-defined error trap\)"
+# Restore write permissions on current directory
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
