@@ -635,9 +635,8 @@ testJ() {
 	testCaseNum=test$testNum
 	mkdir $testCaseNum
 	echo "# Test $testNum"
-	echo '# Test that ydb_env_set works fine if ydb_gbldir points to a non-existent gld file'
-	echo '# This used to error out previously. We expect no output below.'
-	echo '# See https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1125#note_843593893 for more details'
+	echo '# Test that ydb_env_set issues an error if ydb_gbldir points to a non-existent gld file'
+	echo '# See https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1243#note_1169532091 for more details'
 	export ydb_routines="$ydb_dist"
 	export ydb_gbldir=nonexistent.gld
 	. $ydb_dist/ydb_env_set

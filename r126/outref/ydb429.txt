@@ -786,9 +786,10 @@ Global ^%ydbAIMtmp exists
 
 
 # Test 25
-# Test that ydb_env_set works fine if ydb_gbldir points to a non-existent gld file
-# This used to error out previously. We expect no output below.
-# See https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1125#note_843593893 for more details
+# Test that ydb_env_set issues an error if ydb_gbldir points to a non-existent gld file
+# See https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1243#note_1169532091 for more details
+##TEST_AWKError file is at /tmp/ydb_env_.*/err
+$ZSTATUS="150379506,GLDEnsure+4^%YDBENV,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)"
 
 
 # Test 26
