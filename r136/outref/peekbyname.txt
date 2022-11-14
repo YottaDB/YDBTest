@@ -1,0 +1,61 @@
+# Create databases and start replication
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+# Wait for the initial connection to be established
+# Check PEEKBYNAME for all fields listed by LIST^%PEEKBYNAME on source side.
+# Check there are only a few known errors (maintained in the subtest reference file).
+# The expected errors are supposed to go away when YDB#952 is fixed
+# And having a reference file ensures no new errors get added inadvertently
+# Generate and run srcpeek.m which has all PEEKBYNAME commands for the source side
+# Check PEEKBYNAME for all fields listed by LIST^%PEEKBYNAME on receiver side
+# Check there are only a few known errors (maintained in the subtest reference file).
+# Generate and run rcvrpeek.m which has all PEEKBYNAME commands for the receiver side
+# Check errors on source side PEEKBYNAME calls
+set x=$$^%PEEKBYNAME("gtmsource_local_struct.secondary_inet_addr",0)
+%YDB-E-PBNUNSUPTYPE, $ZPEEK() does not support type union
+--
+set x=$$^%PEEKBYNAME("node_local.unique_id.uid","DEFAULT")
+%YDB-E-PBNUNSUPTYPE, $ZPEEK() does not support type unix_file_id
+# Check errors on receiver side PEEKBYNAME calls
+set x=$$^%PEEKBYNAME("gtmsource_local_struct.secondary_inet_addr",0)
+%YDB-E-PBNUNSUPTYPE, $ZPEEK() does not support type union
+--
+set x=$$^%PEEKBYNAME("node_local.unique_id.uid","DEFAULT")
+%YDB-E-PBNUNSUPTYPE, $ZPEEK() does not support type unix_file_id
+--
+set x=$$^%PEEKBYNAME("recvpool_ctl_struct.last_rcvd_histinfo.lms_group")
+%YDB-E-PBNUNSUPTYPE, $ZPEEK() does not support type repl_inst_uuid
+--
+set x=$$^%PEEKBYNAME("recvpool_ctl_struct.last_rcvd_strm_histinfo[0].lms_group")
+%YDB-E-PBNUNSUPTYPE, $ZPEEK() does not support type repl_inst_uuid
+--
+set x=$$^%PEEKBYNAME("recvpool_ctl_struct.last_valid_histinfo.lms_group")
+%YDB-E-PBNUNSUPTYPE, $ZPEEK() does not support type repl_inst_uuid
+--
+set x=$$^%PEEKBYNAME("recvpool_ctl_struct.last_valid_strm_histinfo[0].lms_group")
+%YDB-E-PBNUNSUPTYPE, $ZPEEK() does not support type repl_inst_uuid
+--
+set x=$$^%PEEKBYNAME("recvpool_ctl_struct.write_updated")
+%YDB-E-PBNUNSUPTYPE, $ZPEEK() does not support type pthread_cond_t
+--
+set x=$$^%PEEKBYNAME("recvpool_ctl_struct.write_updated_ctl")
+%YDB-E-PBNUNSUPTYPE, $ZPEEK() does not support type pthread_mutex_t
+# Shutdown replication servers
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
