@@ -789,6 +789,7 @@ Global ^%ydbAIMtmp exists
 # Test that ydb_env_set issues an error if ydb_gbldir points to a non-existent gld file
 # See https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1243#note_1169532091 for more details
 ##TEST_AWKError file is at /tmp/ydb_env_.*/err
+%YDBENV-F-NOTAPATH Path nonexistent.gld does not exist
 $ZSTATUS="150379506,GLDEnsure+4^%YDBENV,%YDB-E-SETECODE, Non-empty value assigned to $ECODE (user-defined error trap)"
 
 
