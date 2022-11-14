@@ -1,0 +1,15 @@
+# Verify misspelt ISVs are not interpreted as valid ISVs
+# Testing invalid ISVs $ZDEBUG and $ZSTASSS
+# Expecting %YDB-E-INVSVN for both
+	 set $zdebug=1
+	      ^-----
+		At column 7, line 13, source module ##IN_TEST_PATH##/inref/ydb839.m
+%YDB-E-INVSVN, Invalid special variable name
+	 write $zstasss
+	        ^-----
+		At column 9, line 14, source module ##IN_TEST_PATH##/inref/ydb839.m
+%YDB-E-INVSVN, Invalid special variable name
+%YDB-E-INVSVN, Invalid special variable name
+		At M source location ydb839+1^ydb839
+
+YDB>
