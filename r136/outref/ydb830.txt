@@ -1,0 +1,22 @@
+# Test that undefined lvn in SET lvn=$FNUMBER stays undefined if $FNUMBER errors out (FNARGINC error).
+# Expect LVUNDEF for x in zwrite output below. Without YDB#830 fixes, it used to show up as 0.
+
+YDB>
+%YDB-E-FNARGINC, Format specifiers to $FNUMBER are incompatible: "PT"
+
+YDB>
+%YDB-E-LVUNDEF, Undefined local variable: x
+
+YDB>
+# Test that defined lvn in SET lvn=$FNUMBER stays unmodified if $FNUMBER errors out (FNARGINC error).
+# Expect x=20.45 in zwrite output below. Without YDB#830 fixes, it used to show up as 0.
+
+YDB>
+
+YDB>
+%YDB-E-FNARGINC, Format specifiers to $FNUMBER are incompatible: "PT"
+
+YDB>
+x=20.45
+
+YDB>

@@ -34,6 +34,7 @@
 # ydb565 [nars]   Test that ydb_buffer_t can be used to pass string values in call-ins and call-outs
 # ydb951 [nars]   Test that OPEN of /dev/null correctly reads device parameters (no garbage-reads/overflows)
 # ydb716 [nars]   Test that MUPIP CREATE -REGION= creates database file even for AUTODB regions
+# ydb830 [nars]   Test that lvn in SET lvn=$FNUMBER stays unmodified if $FNUMBER errors out
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r136 test starts..."
@@ -41,7 +42,7 @@ echo "r136 test starts..."
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic "ydb854 ydb860 ydb861 ydb869 ydb872 ydb864 ydb888 ydb901 ydb919 ydb940 ydb877 ydb908 ydb708"
-setenv subtest_list_non_replic "$subtest_list_non_replic ydb943 ydb575 ydb941 ydb944 ydb565 ydb951 ydb716"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb943 ydb575 ydb941 ydb944 ydb565 ydb951 ydb716 ydb830"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
