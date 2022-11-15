@@ -1,0 +1,11 @@
+# Regression test for parsing incompletly specified Z* ISV, functions and commands
+# This test specifies various commands that are part of other M implementations 
+#  but are not implemented by YottaDB. Its only function is to act as a canary to tell
+#  us if the expression parser changes.
+
+# A compilation is done; and there is not supposed to be any output below.
+# The previous output was:
+# -- %YDB-E-INVSVN, Invalid special variable name
+# -- %YDB-E-FNOTONSYS, Function or special variable is not supported by this operating system
+# -- %YDB-E-INVFCN, Invalid function name
+# -- %YDB-E-INVCMD, Invalid command keyword encountered
