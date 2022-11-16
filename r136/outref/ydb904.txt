@@ -1,0 +1,94 @@
+# $ZY should not be considered a valid abbreviation
+# This test also checks that no invalid $ZY abbreviations are accepted, but $Z abbreviations are accepted.
+
+YDB>
+**Testing ISVs**
+
+
+YDB>
+$ZY shouldn't work.
+YDB>
+%YDB-E-INVSVN, Invalid special variable name
+
+YDB>
+$ZYRE and $ZYRELEASE should work: 
+
+YDB>
+##TEST_AWKYottaDB .* Linux .*
+
+YDB>
+##TEST_AWKYottaDB .* Linux .*
+
+YDB>
+$ZYR, $ZYREL, $ZYRELE, $ZYRELEAS should give INVSVN errors: 
+
+YDB>
+%YDB-E-INVSVN, Invalid special variable name
+
+YDB>
+%YDB-E-INVSVN, Invalid special variable name
+
+YDB>
+%YDB-E-INVSVN, Invalid special variable name
+
+YDB>
+%YDB-E-INVSVN, Invalid special variable name
+
+YDB>
+$ZYER, $ZYERR and $ZYERROR should work: 
+
+YDB>
+
+
+YDB>
+
+
+YDB>
+
+
+YDB>
+$Z should work: 
+
+YDB>
+0
+
+YDB>
+
+YDB>
+
+**Testing $Z functions**
+
+
+YDB>
+$ZYH() shouldn't work but $ZYHASH() does
+
+YDB>
+%YDB-E-INVFCN, Invalid function name
+
+YDB>
+0xa91a6a91c8d3afa118ae643d7c08c007
+
+YDB>
+$ZYIS shouldn't work by $ZYISSQLNULL() does
+
+YDB>
+%YDB-E-INVFCN, Invalid function name
+
+YDB>
+0
+
+YDB>
+$ZYSU and $ZYSUFFIX should both work
+
+YDB>
+HRIarXoG3HGfiXtNLLRsJA
+
+YDB>
+HRIarXoG3HGfiXtNLLRsJA
+
+YDB>
+$Z() should work
+
+YDB>
+48
+YDB>
