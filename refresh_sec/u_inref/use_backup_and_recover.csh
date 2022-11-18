@@ -4,6 +4,9 @@
 # Copyright (c) 2006-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -43,6 +46,15 @@ $sec_shell '$sec_getenv; cd $SEC_SIDE;ls *.mjl* >&! sec_jnl_after_bkup.txt'
 # The above list of mjl files are not required to be copied over. This list includes mumps.mjl and a.mjl. These are not required.
 echo "# Continuing with updates on primary" >>&! imptp.out
 setenv gtm_test_jobid 2
+
+# When ASYNCIO is ON, we have seen that in rare cases (particularly when the system is loaded), the forward recovery (done
+# by this test a little later) takes a lot of time to finish and by that time the backlog due to the below call to "imptp.csh"
+# builds up a lot resulting in the test eventually taking a long time to run. So we slow down the rate of updates of this
+# second "imptp.csh" call (in this test) by using SLOWFILL only when ASYNCIO is ON.
+if (0 != $gtm_test_asyncio) then
+	setenv gtm_test_dbfill SLOWFILL
+endif
+
 $gtm_tst/com/imptp.csh >>&! imptp.out
 
 foreach i (3 4 5)

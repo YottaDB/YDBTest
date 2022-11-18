@@ -33,7 +33,12 @@ No errors detected by integ.
 Checking database on ##TEST_PATH##
 
 YDB>
+##SUSPEND_OUTPUT ASYNCIO
 do checkdb
 checkdb PASSED.
+##ALLOW_OUTPUT ASYNCIO
+##SUSPEND_OUTPUT NOASYNCIO
+Verify Pass
+##ALLOW_OUTPUT NOASYNCIO
 
 YDB>
