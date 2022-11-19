@@ -30,7 +30,7 @@ $sudostr sh ./ydb894.sh $gtm_verno $tst_image `pwd` "$installoptions"
 
 # run a few yottadb commands to test the install works
 cat >> ../yottadbTest.txt << xx
-write \$zyrel
+write \$zyrelease
 write \$zreldate
 set a="Hello,"
 set a(1)="World!"

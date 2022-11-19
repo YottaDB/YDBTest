@@ -39,7 +39,7 @@ $sudostr sh ./ydb880.sh $gtm_verno $tst_image $curr_dir/install/dir1 $curr_dir/i
 
 # run a few yottadb commands to test the install works
 cat >> ../yottadbTest.txt << xx
-write \$zyrel
+write \$zyrelease
 write \$zreldate
 set a="Hello,"
 set a(1)="World!"

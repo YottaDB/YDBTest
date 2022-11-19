@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -18,8 +18,8 @@ echo '. $ydb_dist/ydb_env_set'
 
 echo ""
 echo '# Get the permissions of /tmp/yottdb/$ydb_ver, which was created when ydb_env_set was called'
-# Get the version of YDB from $ZYREL in mumps
-ver_num=`$ydb_dist/mumps -run ^%XCMD 'write $ZYREL' | cut -d" " -f2`
+# Get the version of YDB from $ZYRELEASE in mumps
+ver_num=`$ydb_dist/mumps -run ^%XCMD 'write $ZYRELEASE' | cut -d" " -f2`
 
 $gtm_tst/com/lsminusl.csh -L /tmp/yottadb/ | grep "$ver_num" | cut -d" " -f1
 

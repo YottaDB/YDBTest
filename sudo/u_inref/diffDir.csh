@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh
 #################################################################
 #								#
-# Copyright (c) 2019-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -29,7 +29,7 @@ $sudostr sh ./diffDir.sh $gtm_verno $tst_image `pwd` "$installoptions"
 
 # run a few mumps commands to test the install works
 cat >> ../mumpsTest.txt << xx
-write \$zyrel
+write \$zyrelease
 write \$zreldate
 set a="Hello,"
 set a(1)="World!"

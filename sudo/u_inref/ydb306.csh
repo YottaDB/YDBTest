@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh
 #################################################################
 #                                                               #
-# Copyright (c) 2020-2021 YottaDB LLC and/or its subsidiaries.       #
+# Copyright (c) 2020-2022 YottaDB LLC and/or its subsidiaries.       #
 # All rights reserved.                                          #
 #                                                               #
 #       This source code contains the intellectual property     #
@@ -32,7 +32,7 @@ $sudostr sh ./ydb306.sh $gtm_verno $tst_image `pwd` "$installoptions"
 
 # run a few yottadb commands to test the install works and UTF-8 is being used
 cat >> ../yottadbTest.txt << xx
-write \$zyrel
+write \$zyrelease
 write \$zreldate
 set a="Hello,"
 set a(1)="World!"
