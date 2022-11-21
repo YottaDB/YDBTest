@@ -49,6 +49,7 @@
 # ydb934     [nars]     Test that error in $ZTIMEOUT vector does NOT cause infinite loop in direct mode
 # ydb922     [sam]      Test %YDBJNLF
 # gtm8863a   [estess]	Test YottaDB specific fields in db file header were relocated correctly
+# ydb935     [sam]      Test that multi-threaded application that ensures single-threading of calls to unthreaded Simple API calls runs correctly
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r136 test starts..."
@@ -58,7 +59,7 @@ setenv subtest_list_common     ""
 setenv subtest_list_non_replic "ydb854 ydb860 ydb861 ydb869 ydb872 ydb864 ydb888 ydb901 ydb919 ydb940 ydb877 ydb908 ydb708"
 setenv subtest_list_non_replic "$subtest_list_non_replic ydb943 ydb575 ydb941 ydb944 ydb565 ydb951 ydb716 ydb830 ydb945 ydb839"
 setenv subtest_list_non_replic "$subtest_list_non_replic ydb925 ydb904 ydb954 ydb956 ydb961 ydb459 ydb729 ydb949 ydb934 ydb922"
-setenv subtest_list_non_replic "$subtest_list_non_replic gtm8863a"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm8863a ydb935"
 setenv subtest_list_replic     "peekbyname"
 
 if ($?test_replic == 1) then
@@ -77,6 +78,13 @@ if (("rhel" == $gtm_test_linux_distrib) && ("7.9" == $gtm_test_linux_version)) t
 	# This does not happen on other distributions. Since RHEL 7 is no longer a supported distribution for YottaDB,
 	# we exclude this test there.
 	setenv subtest_exclude_list "$subtest_exclude_list ydb575"
+endif
+
+source $gtm_tst/com/is_libyottadb_asan_enabled.csh
+if ($gtm_test_libyottadb_asan_enabled && ("clang" == $gtm_test_asan_compiler)) then
+	# Disable ydb935 test if ASAN is enabled and CLANG. This is only a problem with CLANG/ASAN on YDBPython not GCC/ASAN.
+	# Error that is shown: Your application is linked against incompatible ASan runtimes.
+	setenv subtest_exclude_list "$subtest_exclude_list ydb935"
 endif
 
 # Submit the list of subtests

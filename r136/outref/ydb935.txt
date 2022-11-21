@@ -1,0 +1,29 @@
+# Cloning and Installing YDBPython
+# Verify that YDBPython linked against the correct version of YottaDB
+##TEST_AWK	libyottadb##TEST_SHL_SUFFIX## => ##SOURCE_PATH##/libyottadb##TEST_SHL_SUFFIX## \(0x.*\)
+# Creating db file
+Files Created in ##TEST_PATH##/YDBPython:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+mumps.dat
+# Running thread test...
+# Running flask test...
+# Starting Flask...
+# Getting data/saving data via Flask API
+[{"age":"","id":"","name":"","sex":""}]
+{ "name":"Sam","status":"added"}
+# Extracting data to verify that data got saved
+##TEST_AWKYottaDB MUPIP EXTRACT ##SOURCE_REALPATH##/mupip extract -stdout -select=\^PATIENTS.*
+##FILTERED##..-...-....  ..:..:.. ZWR
+^PATIENTS(1,"age")="30"
+^PATIENTS(1,"name")="Sam"
+^PATIENTS(1,"sex")="M"
+%YDB-I-RECORDSTAT, ^PATIENTS:	  Key cnt: 3  max subsc len: 19  max rec len: 3  max node len: 24
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 3  max subsc len: 19  max rec len: 3  max node len: 24
+# Killing 3 region data (^a, ^b, ^c)
+# Setting & Getting random globals
+# $data of ^a,^b,^c is 10 10 10
+# Killing off Flask process
