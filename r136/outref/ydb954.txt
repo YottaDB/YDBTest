@@ -1,0 +1,12 @@
+# Test that stat() errors in $ZROUTINES due to OBJECT directory permission issues print file name
+## Set $zroutines = [/etc/ssl/private(/tmp)]. And then run [do ^dummy].
+## Expecting [/etc/ssl/private/dummy.o] to show up in the %YDB-E-SYSCALL message below
+##TEST_AWK%YDB-E-SYSCALL, Error received from system call stat\(\) on file /etc/ssl/private/dummy.o -- called from module .*/sr_unix/zro_search.c at line 131
+%SYSTEM-E-ENO13, Permission denied
+
+# Test that stat() errors in $ZROUTINES due to SOURCE directory permission issues print file name
+## Set $zroutines = [.(./subdir)]. Create [./subdir/dummy.m].
+## Remove execute permissions from [./subdir]. And then run [do ^dummy].
+## Expecting [./subdir/dummy.m] to show up in the %YDB-E-SYSCALL message below
+##TEST_AWK%YDB-E-SYSCALL, Error received from system call stat\(\) on file ##TEST_PATH##/subdir/dummy.m -- called from module .*/sr_unix/zro_search.c at line 172
+%SYSTEM-E-ENO13, Permission denied
