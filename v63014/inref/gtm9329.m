@@ -59,12 +59,18 @@ subissue2
 	;
 	set $etrap="do goterr^gtm9329 quit"
 	set $ztimeout="5:do ztimcode"
-	set savtimeout=$ztimeout
-	write "$ZTIMEOUT before attempting to set an invalid code vector: ",$ztimeout,!
+	set timeoutBefore=$ztimeout
+	write "$ZTIMEOUT before attempting to set an invalid code vector: ",timeoutBefore,!
 	do						; Create stack level for $etrap to unwind
 	. set $ztimeout="1:THIS-IS-BAD-CODE"
-	write "$ZTIMEOUT after attempting to set an invalid code vector: ",$ztimeout,!
-	write !,"Subissue2: ",$select(savtimeout=$ztimeout:"succeeded",1:"failed - $ZTIMEOUT invalidly changed given invalid code vector"),!
+	set timeoutAfter=$ztimeout
+	write "$ZTIMEOUT after attempting to set an invalid code vector: ",timeoutAfter,!
+	set ztimeout1=$zpiece(timeoutBefore,":",2,99)  	; Get code vector of unknown number of pieces
+	set ztimeout2=$zpiece(timeoutAfter,":",2,99)
+	set timeleft=$zpiece(timeoutAfter,":",1)
+	set succeeded=((ztimeout1=ztimeout2)&(0<timeleft)&(5>=timeleft)) ; succeeded = correct code vector and time range
+	write:succeeded !,"Subissue2: succeeded",!
+	write:'succeeded !,"Subissue2: failed - $ZTIMEOUT invalidly changed given invalid code vector",!
 	quit
 
 ;

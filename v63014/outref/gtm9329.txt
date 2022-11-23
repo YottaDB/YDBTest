@@ -25,8 +25,8 @@ Subissue1: completed
 ##ALLOW_OUTPUT PRO
 
 # Drive subissue2^gtm9329 test routine for 2nd subissue
-$ZTIMEOUT before attempting to set an invalid code vector: 4.999:do ztimcode
+##TEST_AWK\$ZTIMEOUT before attempting to set an invalid code vector: .*:do ztimcode
 Got expected error from attempted compile of bad $ZTIMEOUT code
-$ZTIMEOUT after attempting to set an invalid code vector: 4.999:do ztimcode
+##TEST_AWK\$ZTIMEOUT after attempting to set an invalid code vector: .*:do ztimcode
 
 Subissue2: succeeded
