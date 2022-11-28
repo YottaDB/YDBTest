@@ -11,9 +11,9 @@
 #################################################################
 
 echo '# Test that stat() errors in $ZROUTINES due to OBJECT directory permission issues print file name'
-echo '## Set $zroutines = [/etc/ssl/private(/tmp)]. And then run [do ^dummy].'
-echo '## Expecting [/etc/ssl/private/dummy.o] to show up in the %YDB-E-SYSCALL message below'
-$ydb_dist/yottadb -run %XCMD 'set $zroutines="/etc/ssl/private(/tmp)" do ^dummy'
+echo '## Set $zroutines = [/root(/tmp)]. And then run [do ^dummy].'
+echo '## Expecting [/root/dummy.o] to show up in the %YDB-E-SYSCALL message below'
+$ydb_dist/yottadb -run %XCMD 'set $zroutines="/root(/tmp)" do ^dummy'
 
 echo ''
 echo '# Test that stat() errors in $ZROUTINES due to SOURCE directory permission issues print file name'
