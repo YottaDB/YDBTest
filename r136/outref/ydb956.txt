@@ -1,0 +1,30 @@
+----------------------------------------------------------------------------
+# Test 1 : Test that VIEW "GBLDIRLOAD" reloads gld in current process
+----------------------------------------------------------------------------
+## Create 1-region gld file (1reg.gld) using dbcreate.csh
+## Create 2-region gld file (2reg.gld) using dbcreate.csh
+## Restore 1-region gld file as mumps.gld
+## Keep the 2-region database files (mumps.dat and a.dat) created by dbcreate.csh above as is
+; List all regions in current gld. Expect only 1 region (DEFAULT) to show up
+  DEFAULT
+; Run ZSYSTEM to do [cp 2reg.gld mumps.gld]
+; Run VIEW GBLDIRLOAD:$zgbldir to reload the 2-region mumps.gld
+; List all regions again in current gld. Expect 2 regions (DEFAULT and AREG) to show up
+  AREG
+  DEFAULT
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+----------------------------------------------------------------------------------------
+# Test 2 : Test that VIEW "GBLDIRLOAD":GLD with an empty GLD works like SET $ZGBLDIR=""
+----------------------------------------------------------------------------------------
+; Switch to 1reg.gld as $ZGBLDIR temporarily; Run VIEW "GBLDIRLOAD":""
+; Run ZWRITE $ZGBLDIR. Expect mumps.gld (default gbldir due to gtmgbldir env var) to show up
+  $ZGBLDIR="##TEST_PATH##/mumps.gld"
+-----------------------------------------------------------------------------------------------------------------
+# Test 3 : Test that VIEW "GBLDIRLOAD":GLD with an invalid GLD issues GDINVALID error and $ZGBLDIR is unaffected
+-----------------------------------------------------------------------------------------------------------------
+; Verify with $ZSTATUS that a GDINVALID error was issued
+  $ZSTATUS="150374514,test3+4^ydb956,%YDB-E-GDINVALID, Unrecognized Global Directory file format: ##TEST_PATH##/mumps.dat, expected label: GTCGBDUNX115, found: GDSDYNUNX03."
+; Value of $ZGBLDIR from inside error trap. Expecting it to be unaffected [i.e. mumps.gld]
+  $ZGBLDIR="##TEST_PATH##/mumps.gld"
