@@ -29,7 +29,7 @@ YDB>
 #########################################################################################
 Testing ydb_env_translate using a ydb_env_xlate function
 
-##TEST_AWKydb_env_translate = ##TEST_PATH##/libxlate.(s.|dll)
+ydb_env_translate = ##TEST_PATH##/libxlate##TEST_SHL_SUFFIX##
 0
 mumps.gld : THIS IS MUMPS
 a.gld     : THIS IS A
@@ -88,11 +88,18 @@ YDB>
 #########################################################################################
 Testing ydb_gbldir_translate functionality that translates ZGBLDIR into a global directory
 
-##TEST_AWKydb_gbldir_translate = ##TEST_PATH##/libxlategld.(s.|dll)
+ydb_gbldir_translate = ##TEST_PATH##/libxlategld##TEST_SHL_SUFFIX##
 0
 mumps.gld : THIS IS MUMPS
 a.gld     : THIS IS A
 b.gld     : THIS IS B
+; Test SET $ZGBLDIR="T" switches to mumps.gld but $ZGBLDIR still shows up as "T"
+; We verify mumps.gld is current gld by checking value of ^GBL which should say THIS IS MUMPS in that case
+  ^GBL="THIS IS MUMPS"
+  $ZGBLDIR="T"
+; Test that $VIEW(GBLDIRXLATE) works.
+; Run [$VIEW("GBLDIRXLATE","T")] and verify it returns the expected [mumps].
+  ##TEST_PATH##/mumps
 #####################################################################################
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ a.dat
