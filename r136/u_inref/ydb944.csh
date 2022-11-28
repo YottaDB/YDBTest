@@ -29,7 +29,7 @@ quit
 GDB_EOF
 
 # Only extract lines that we care about from the gdb output as it can contain linux-distribution-specific output
-$grep -E '0x7ffffffe|^# ' gdb.out
+$grep -Ew '0x7ffffffe|^#' gdb.out
 
 echo "# Run dbcheck.csh"
 $gtm_tst/com/dbcheck.csh
