@@ -1,0 +1,67 @@
+# GTM-9331 - Fixes issue when timer pops during an external call and that external call has its own signal
+#            handling so the SIGALRM that pops to drive the timer handler gets handled by a different
+#            handler so (in this tests case) the $ZTIMEOUT never pops. This test actually tests this code
+#	           two ways:
+#              1. With the external call defined WITH the SIGSAFE keyword indicating it does no signal handling
+#	                (which it actually does do).
+#	             2. With the external call NOT defined with the SIGSAFE keyword.
+#
+#            Additionally, this test also run a test developed while developing the first test that demonstrates
+#            that the SIGSAFE attribute in the external call table works appropriately.
+
+# Building call-in library and external call table
+# (note there are two external calls that call the same routine but one has SIGSAFE declared and the other does not
+
+# Create database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+###################################################################
+
+# Drive gtm9331a test routine (tests issue with $ZTIMEOUT)
+# GTM-9331 - Verify that an external call driven while a timer is set and if that external call
+#            messes with signal handling causing the timer expire to occur and be ignored since
+#            it was not handled with the GTM/YottaDB timer handler.
+#
+#            This test uses $ZTIMEOUT as an easily settable timer that while it is running, we
+#            can go off and do other things. Such things are more difficult with things like
+#            the HANG command where we don't get control again until the HANG is complete.
+
+# First test using external call sigwait1() which has SIGSAFE defined on the external call (expect lost timer wakeup)
+signalWait: Handler reset - starting sleep for max 10 seconds
+ignoreSig: Signal popped - in handler
+signalWait: Sleep complete - sig caught flag: 1
+The external call saw the timer pop
+The $ZTIMEOUT was not recognized or driven - lost timer wakeup
+
+# Second test using external call sigwait2() which does NOT have SIGSAFE defined on the external call
+signalWait: Handler reset - starting sleep for max 10 seconds
+ignoreSig: Signal popped - in handler
+signalWait: Sleep complete - sig caught flag: 1
+*** $ZTIMEOUT popped (in $ZTIMEOUT routine)
+The external call saw the timer pop
+The $ZTIMEOUT fired correctly!!
+###################################################################
+
+# Drive gtm9331b test routine (uses HANG to test SIGSAFE flag)
+# GTM-9331 - This routine is not really a test of GTM9331 but is a test that was created while
+#            trying to test GTM9331. It is largely a test of the SIGSAFE keyword in the external
+#            call table. In this test, what we do first is drive the external call that does NOT
+#            have the SIGSAFE keyword first as it should notice the handler was changed and fix
+#            it but the second call drives the SIGSAFE keyword so doing that does not check that
+#            the SIGALRM handler has been changed so the subsequent HANG actually stays HUNG
+#            until the process gets shot.
+
+# First test using external call sigdisable2() which does NOT have SIGSAFE defined on the external call (expect success)
+##TEST_AWKHang time was 5[0-9]{6}us \(5 seconds\)
+
+# Second test using external call sigdisable1() which has SIGSAFE defined on the external call (expect HANG command to hang until killed on GT.M, pass on YottaDB)
+##TEST_AWKHang time was 5[0-9]{6}us \(5 seconds\)
+###################################################################
+
+# Verify database
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
