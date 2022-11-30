@@ -4,7 +4,7 @@
 # Copyright (c) 2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -25,6 +25,7 @@
 # gtm7706            [karthikk]  Test that argument-less rundown removes orphaned shared memory and semaphores.
 # gtm7938            [base]      Verify that mu_rndwn_replpool_ch is not called outside of the mu_rndwn_replpool function
 # ipcsnoreset        [base]      Verify that shared memory and semaphore fields in the file header are not reset without being removed
+# ydb266             [nars]      Verify argumentless mupip rundown records semid/shmid of orphaned jnlpool/recvpool in syslog
 #
 # #################################################################################################
 # The following subtests have been moved from other tests to the "rundown_argless" test because they
@@ -43,7 +44,7 @@ echo "rundown_argless test starts..."
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic "orphanshm dbidmismatch2 mupip_rundown_ipcs readonly_dbflag mprndwnnoarg gtm8616"
 setenv subtest_list_replic     "gtm7010 gtm7485 gtm7706 gtm7938 ipcsnoreset mu_rundown_no_ipcrm1"
-setenv subtest_list_replic     "$subtest_list_replic multiple_jnlpools src_failstop_rs"
+setenv subtest_list_replic     "$subtest_list_replic multiple_jnlpools src_failstop_rs ydb266"
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
