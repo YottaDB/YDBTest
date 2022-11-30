@@ -14,9 +14,24 @@
 #								#
 #################################################################
 
-unsetenv gtmgbldir
-unsetenv ydb_gbldir	# since test system currently uses gtmgbldir and we don't want ydb_gbldir defined in parent
-			# environment to override test system definitions of the current global directory.
+# The test system currently sets/uses/modifies GT.M env vars (e.g. "gtmgbldir"). Not YottaDB env vars (e.g. "ydb_gbldir").
+# This means if the parent environment contains YottaDB env vars, it would override with the test system definition of the
+# GT.M env vars. Therefore, unset the YottaDB env vars that mostly matter. While at that, also unset the corresponding GT.M
+# env var in case it was set in the parent environment (since test will anyways set it later).
+unsetenv ydb_boolean      gtm_boolean
+unsetenv ydb_chset        gtm_chset
+unsetenv ydb_ci           GTMCI
+unsetenv ydb_etrap        gtm_etrap
+unsetenv ydb_gbldir       gtmgbldir
+unsetenv ydb_routines     gtmroutines
+unsetenv ydb_side_effects gtm_side_effects
+unsetenv ydb_xc_ydbposix  GTMXC_ydbposix
+# Below env var could be set by "ydb_env_set" and could affect the test system so unset this too at the start of the test.
+# (see https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/1536#note_1193117974 for background)
+unsetenv LD_LIBRARY_PATH
+# Note that we do not do a blanket "unsetenv" of all "ydb_*" and "gtm*" env vars. This is because there are a few that
+# we still need set (e.g. "gtm_dist", "gtm_test_*", "gtm_tst_*") from the parent environment as the test framework will use that.
+# See https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/1536#note_1193225854 for more details.
 
 # Enable core dumping if unaligned access is detected on Tru64
 set chkhost=`uname -s`
