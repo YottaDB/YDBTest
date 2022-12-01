@@ -1,0 +1,4 @@
+# Test $ZTIMEOUT reset does not cause ASAN heap-use-after-free error
+# This test used to fail with the above error if YottaDB was built with ASAN and did not have the YDB#961 code fixes
+# To ensure this test does its job with ASAN, ensure we use the system malloc/free and not the yottadb malloc/free
+Number of times gottimeout label was invoked : Expected = 10000 : Actual = 10000

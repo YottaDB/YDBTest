@@ -42,6 +42,7 @@
 # ydb904     [sam]      Test that abbreviations starting with $ZY are not considered valid (with some exceptions)
 # ydb954     [nars]     Test %YDB-E-SYSCALL message from stat() (while processing $ZROUTINES) identifies file name
 # ydb956     [nars]     Test VIEW "GBLDIRLOAD"
+# ydb961     [nars]     Test $ZTIMEOUT reset does not cause ASAN heap-use-after-free error
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r136 test starts..."
@@ -50,7 +51,7 @@ echo "r136 test starts..."
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic "ydb854 ydb860 ydb861 ydb869 ydb872 ydb864 ydb888 ydb901 ydb919 ydb940 ydb877 ydb908 ydb708"
 setenv subtest_list_non_replic "$subtest_list_non_replic ydb943 ydb575 ydb941 ydb944 ydb565 ydb951 ydb716 ydb830 ydb945 ydb839"
-setenv subtest_list_non_replic "$subtest_list_non_replic ydb925 ydb904 ydb954 ydb956"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb925 ydb904 ydb954 ydb956 ydb961"
 setenv subtest_list_replic     "peekbyname"
 
 if ($?test_replic == 1) then
