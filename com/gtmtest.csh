@@ -73,6 +73,11 @@ endif
 
 ######
 # first read the defaults, so that anything unset will have a default value
+if ($?gtm_dist == 0) then
+   echo 'TEST-E-GTMDIST_UNDEFINED : gtm_dist env var is not defined. Cannot start any tests.'
+   exit 40
+endif
+
 source $gtm_test_com_individual/defaults.csh $gtm_test_com_individual/defaults_common_csh
 if ($status) exit $status
 umask 002
