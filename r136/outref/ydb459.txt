@@ -1,0 +1,17 @@
+# ------------------------------------------------------------------------------------
+# Test MUPIP RUNDOWN reports REPLINSTACC error if replication instance file is missing
+# ------------------------------------------------------------------------------------
+# Create database using dbcreate.csh
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Set gtm_repl_instance env var to [missing.repl], a non-existent file
+# Run [mupip rundown -reg "*"]. Expect REPLINSTACC error.
+%YDB-E-REPLINSTACC, Error accessing replication instance file ##TEST_PATH##/missing.repl
+%SYSTEM-E-ENO2, No such file or directory
+# Verify database using dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
