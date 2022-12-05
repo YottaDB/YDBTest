@@ -25,6 +25,6 @@ No errors detected by integ.
 # Test 3 : Test that VIEW "GBLDIRLOAD":GLD with an invalid GLD issues GDINVALID error and $ZGBLDIR is unaffected
 -----------------------------------------------------------------------------------------------------------------
 ; Verify with $ZSTATUS that a GDINVALID error was issued
-  $ZSTATUS="150374514,test3+4^ydb956,%YDB-E-GDINVALID, Unrecognized Global Directory file format: ##TEST_PATH##/mumps.dat, expected label: GTCGBDUNX115, found: GDSDYNUNX03."
+##TEST_AWK  \$ZSTATUS="150374514,test3\+4\^ydb956,%YDB-E-GDINVALID, Unrecognized Global Directory file format: ##TEST_PATH##/mumps.dat, expected label: GTCGBDUNX..., found: GDSDYNUNX..\."
 ; Value of $ZGBLDIR from inside error trap. Expecting it to be unaffected [i.e. mumps.gld]
   $ZGBLDIR="##TEST_PATH##/mumps.gld"
