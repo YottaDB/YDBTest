@@ -26,14 +26,22 @@ init	;
 	quit
 
 test1	;
-	new expected,actual
+	new expected,actual,i
 	set keyword="" for  set keyword=$order(keyword(keyword)) quit:keyword=""  do
 	. write "# Test $ZGETJPI(PID,",keyword,") treats PID of 0 as PID of $JOB",!
-	. set expected=$zgetjpi($job,keyword)
-	. set actual=$zgetjpi(0,keyword)
-	. if expected'=actual do
-	. . write "test1 : TEST-E-FAIL : $ZGETJPI($JOB,",keyword,")=",expected," : $ZGETJPI(0,",keyword,")=",actual,!
-	. else  write "PASS",!
+	. ; In the below code, we check that $ZGETJPI($JOB) is the same as $ZGETJPI(0).
+	. ; But since those 2 $ZGETJPI calls are separate operations, it is possible that the
+	. ; current process' CPU time usage increases by 1 resulting in the two values being different.
+	. ; To account for this possibility, we do this check 10 times and if we see the 2 values identical
+	. ; at least once we consider this test to pass. Otherwise we signal a failure.
+	. set pass=0
+	. for i=1:1:10 do  quit:pass
+	. . set expected(keyword,i)=$zgetjpi($job,keyword)
+	. . set actual(keyword,i)=$zgetjpi(0,keyword)
+	. . if expected(keyword,i)=actual(keyword,i) write "PASS",! set pass=1
+	. if 'pass do
+	. . write "test1 : TEST-E-FAIL : $ZGETJPI($JOB,",keyword,")'=$ZGETJPI(0,",keyword,") in 10 tries.",!
+	. . zwrite expected,actual
 	quit
 
 test2	;
