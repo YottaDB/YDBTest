@@ -32,13 +32,14 @@ Routine:
 %HO       %JSWRITE  %LCASE    %LCLCOL   %MPIECE   %OD       %OH       %PATCODE  
 %PEEKBYNAME         %RANDSTR  %RCE      %RD       %RI       %RO       %RSE      
 %RSEL     %SQROOT   %T        %TI       %TO       %TRIM     %TU       %UCASE    
-%UTF2HEX  %XCMD     %YDBENV   %YDBPROCSTUCKEXEC   %YGBLSTAT %ZMVALID  %ZSHOWVTOLCL        
-DECOMMENT GDE       GDEADD    GDECHANG  GDEDELET  GDEEXIT   GDEGET    GDEHELP   
-GDEINIT   GDELOCKS  GDELOG    GDEMAP    GDEMSGIN  GDEPARSE  GDEPUT    GDEQUIT   
-GDERENAM  GDESCAN   GDESETGD  GDESHOW   GDESPAWN  GDETEMPL  GDEVERIF  GTMDEFINEDTYPESTODB 
-GTMDefinedTypesInit GTMHELP   GTMHLPLD  GTMTHREADGBLASM     SCANTYPEDEFS        
-a         ab        b         ca        cb        rtn1      t         zz        
-Total of 90 routines.
+%UTF2HEX  %XCMD     %YDBENV   %YDBJNLF  %YDBPROCSTUCKEXEC   %YGBLSTAT %ZMVALID  
+%ZSHOWVTOLCL        DECOMMENT GDE       GDEADD    GDECHANG  GDEDELET  GDEEXIT   
+GDEGET    GDEHELP   GDEINIT   GDELOCKS  GDELOG    GDEMAP    GDEMSGIN  GDEPARSE  
+GDEPUT    GDEQUIT   GDERENAM  GDESCAN   GDESETGD  GDESHOW   GDESPAWN  GDETEMPL  
+GDEVERIF  GTMDEFINEDTYPESTODB GTMDefinedTypesInit GTMHELP   GTMHLPLD  GTMTHREADGBLASM     
+SCANTYPEDEFS        a         ab        b         ca        cb        rtn1      
+t         zz        
+Total of 91 routines.
 
 YDB>
 
@@ -73,7 +74,7 @@ Total of 1 routine.
 Routine: 
 
 # DO SILENT^%RSEL("*","OBJ") ZWRITE %ZR
-%ZR=90
+%ZR=91
 ##SUSPEND_OUTPUT UNICODE_MODE
 %ZR("%CONVBASEUTIL")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
 %ZR("%D")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
@@ -124,6 +125,7 @@ Routine:
 %ZR("%UTF2HEX")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
 %ZR("%XCMD")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
 %ZR("%YDBENV")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
+%ZR("%YDBJNLF")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
 %ZR("%YDBPROCSTUCKEXEC")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
 %ZR("%YGBLSTAT")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
 %ZR("%ZMVALID")="##SOURCE_PATH##/libgtmutil##TEST_SHL_SUFFIX##"
@@ -208,6 +210,7 @@ Routine:
 %ZR("%UTF2HEX")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
 %ZR("%XCMD")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
 %ZR("%YDBENV")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+%ZR("%YDBJNLF")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
 %ZR("%YDBPROCSTUCKEXEC")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
 %ZR("%YGBLSTAT")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
 %ZR("%ZMVALID")="##SOURCE_PATH##/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
