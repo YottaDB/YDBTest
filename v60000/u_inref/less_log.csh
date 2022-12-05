@@ -114,7 +114,6 @@ echo "============Test3 ends=========="
 
 ## Test 4 is to test that logging period will no longer increase when it exceeds the threshold
 ## It is also to test that the servers can run normally with very large soft tries period (larger than maximum logging period)
-## TODO: This stage of the test needs rework (YDBTest#472 tracks that).
 echo
 echo "# Test 4: Set the soft tries period larger than maximum logging period (150), soft_tries_period = 155  alert_period=310"
 $echoline
@@ -133,23 +132,28 @@ $MUPIP replic -source -start -log=src4.log -secondary="$HOST":"$portno" -log=src
 ## Wait up to 175 seconds before starting the receiver server, during which time the source server should have two soft tries. The value of 175 was chosen to (safely)
 ## exceed the following: hard tries time (2 * 0.5) + 155 + hard tries time (2 * 0.5) = 157 seconds.
 $gtm_tst/com/wait_for_log.csh -log src4.log -message "2 soft connection attempt failed" -duration 175
+
+## Now we can start the secondary receiver.
 $sec_shell "cd $SEC_SIDE; $MUPIP replic -receiv -start -listen="$portno" -log=rcv4.log -buf=$tst_buffsize" >>&inst2_activity.outx
 
 ## Let receiver run up to another 175 seconds to make sure the source server can now connect to it.
 $gtm_tst/com/wait_for_log.csh -log src4.log -message "Connection information" -duration 175
 
-## We expect to see a message that soft tries period cannot be too large and that it is automatically reduced to half of
-## the maximum shutdown wait time of 120 seconds i.e. 60 seconds. Hence the "Reducing soft tries period" search term use below.
-echo "src4.log:"; $grep -E 'soft connection attempt failed|YDB-W-REPLALERT' src4.log|cut -c 28-
-## In src4.log, there will be no "3 soft connection attempt failed", which would mean that the source server connects to the receiver after more than 310 seconds.
-## In the src4.log, the alert message  "Could not connect to secondary in 310 seconds" indicates that two logs take 155+155 seconds, i.e. the logging period does not increase.
+echo "src4.log:"
+## Note the first REPLALERT in this subtest does not pop for at least 310 seconds (soft interval is 155 so two soft intervals
+## is 310 seconds). Generally 311 is the expected value as there's also a hard spin that takes a second thus giving us the
+## expected value of 11. Because of this, set our "last message" base value to 310 we values up to 320 are acceptable.
+$gtm_dist/mumps -r filterSRClog^lesslog src4.log 310
+## In src4.log, there will be no "3 soft connection attempt failed", which would mean that the source server connects to the
+## receiver after more than 310 seconds. In the src4.log, the alert message  "Could not connect to secondary in 311 seconds"
+## indicates that two logs take 155+155+1 seconds, i.e. the logging period does not increase.
 echo "============Test4 ends=========="
 
 ## Turn off INST1-source
 $MUPIP replicate -source -checkhealth >&! health5.outx
 set pidsrc=`$tst_awk  '($1 == "PID") && ($2 ~ /[0-9]*/) { print $2 }' health5.outx`
 set msg_not_expected = `$grep -E '3 soft connection attempt failed' src4.log`
-if ($msg_not_expected != "") then
+if ("$msg_not_expected" != "") then
 	echo "# `date` TEST-E-ERROR The source server has not connected to the receiver server"
 	echo "# The test will exit now leaving around the replication servers"
 	exit 1
