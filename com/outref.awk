@@ -368,8 +368,8 @@ BEGIN {
 		envir[no_options] = "ASAN_CLANG"
 	#
 	option_names[++no_options] = "clang_major_ver"
-	if ("14" == ENVIRON["clangmajorver"])
-		envir[no_options] = "CLANG14"
+	if (("14" == ENVIRON["clangmajorver"]) || ("15" == ENVIRON["clangmajorver"]))
+		envir[no_options] = "CLANG14_OR_15"
 	#
 	options_names[++no_options] = "ydb_allow64GB_jnlpool"
 	if ("0" == ENVIRON["ydb_allow64GB_jnlpool"])

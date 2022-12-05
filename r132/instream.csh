@@ -89,10 +89,10 @@ if ($gtm_test_libyottadb_asan_enabled) then
 	setenv subtest_exclude_list "$subtest_exclude_list ydb704"
 endif
 
-# Also temporarily disable ydb704 subtest on builds built with CLANG 14 as it fails with error messages
-# like the below due to valgrind not supporting CLANG 14 yet.
-# ### unhandled dwarf2 abbrev form code 0x25
-if ("14" == "$clangmajorver") then
+# Temporarily disable ydb704 subtest on builds built with CLANG 14 or CLANG 15 as it fails with error messages
+# like the below due to valgrind not yet supporting CLANG 14 or 15.
+#	### unhandled dwarf2 abbrev form code 0x25
+if (("14" == "$clangmajorver") || ("15" == "$clangmajorver")) then
 	setenv subtest_exclude_list "$subtest_exclude_list ydb704"
 endif
 
