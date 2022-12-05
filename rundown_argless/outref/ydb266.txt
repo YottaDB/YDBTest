@@ -25,4 +25,16 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
 # Number of SHMREMOVED and SEMREMOVED messages in mupip rundown output = 10
 # Verify SHMREMOVED and SEMREMOVED messages in mupip rundown output MATCH that in the syslog
 PASS
-# Filter out potential %YDB-W-MUNOTALLSEC message from rundown.log
+# Filter out known possible %YDB-W- and %YDB-E- messages from argumentless mupip rundown output
+# In the argumentless mupip rundown output, it is possible to see any of the following.
+# a) %YDB-W-MUNOTALLSEC if non-YottaDB ipcs owned by user ids other than the current userid (that is running this test)
+#    exist on the system.
+# b) %YDB-E-VERMISMATCH messages if YottaDB ipcs created by a different YottaDB release than the one running this test
+#    exist on the system.
+# c) %YDB-E-MUJPOOLRNDWNFL messages if YottaDB journal pool ipcs left over from tests run by user ids other than the
+#    current user id exist on the system.
+# d) %YDB-E-MURPOOLRNDWNFL messages if YottaDB receive pool ipcs left over from tests run by user ids other than the
+#    current user id exist on the system.
+# e) %YDB-E-MUFILRNDWNFL2 messages if YottaDB database ipcs created by a different YottaDB release than the one running
+#    this test exist on the system
+# So filter all of the above out to avoid non-deterministic reference file.

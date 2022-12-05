@@ -59,17 +59,25 @@ else
 	echo "PASS"
 endif
 
-echo "# Filter out potential %YDB-W-MUNOTALLSEC and/or %YDB-E-VERMISMATCH messages from rundown.log"
-# It is possible to see %YDB-W-MUNOTALLSEC if non-YottaDB ipcs owned by user ids other than the current userid
-# (that is running this test), exist on the system.
-#
-# In a similar fashion, it is possible to see %YDB-E-VERMISMATCH messages if YottaDB ipcs created by a different
-# YottaDB release than the one running this test is encountered in the system.
-#
-# So filter those out to avoid non-deterministic reference file.
-#
+echo "# Filter out known possible %YDB-W- and %YDB-E- messages from argumentless mupip rundown output"
+echo "# In the argumentless mupip rundown output, it is possible to see any of the following."
+echo "# a) %YDB-W-MUNOTALLSEC if non-YottaDB ipcs owned by user ids other than the current userid (that is running this test)"
+echo "#    exist on the system."
+echo "# b) %YDB-E-VERMISMATCH messages if YottaDB ipcs created by a different YottaDB release than the one running this test"
+echo "#    exist on the system."
+echo "# c) %YDB-E-MUJPOOLRNDWNFL messages if YottaDB journal pool ipcs left over from tests run by user ids other than the"
+echo "#    current user id exist on the system."
+echo "# d) %YDB-E-MURPOOLRNDWNFL messages if YottaDB receive pool ipcs left over from tests run by user ids other than the"
+echo "#    current user id exist on the system."
+echo "# e) %YDB-E-MUFILRNDWNFL2 messages if YottaDB database ipcs created by a different YottaDB release than the one running"
+echo "#    this test exist on the system"
+echo "# So filter all of the above out to avoid non-deterministic reference file."
+
 # Since the errors should not be caught by the error catching test framework, redirect the output to .logx (not .log)
 # as otherwise we will see TEST-E-ERRORNOTSEEN messages.
 $gtm_tst/com/check_error_exist.csh rundown.log "%YDB-W-MUNOTALLSEC" >& rundown1.logx
 $gtm_tst/com/check_error_exist.csh rundown.log "%YDB-E-VERMISMATCH" >& rundown2.logx
+$gtm_tst/com/check_error_exist.csh rundown.log "%YDB-E-MUJPOOLRNDWNFL" >& rundown3.logx
+$gtm_tst/com/check_error_exist.csh rundown.log "%YDB-E-MURPOOLRNDWNFL" >& rundown4.logx
+$gtm_tst/com/check_error_exist.csh rundown.log "%YDB-E-MUFILRNDWNFL2" >& rundown5.logx
 
