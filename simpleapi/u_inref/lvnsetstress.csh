@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -43,6 +43,13 @@ endif
 mv $exefile.o $exefile.c.o	# move it away for the M program (of the same name) to be compiled and a .o created
 				# or else an INVOBJFILE error would be issued (due to unexpected format)
 
+# Set M-stack size to maximum possible value (10,000 KiB). This is needed as we have seen the "mumps -run genlvnsetstress"
+# command fail rarely with a %YDB-E-STACKCRIT error at startup because the generated M file "genlvnsetstress.m" has approximately
+# 32,558 lines each (possible on systems with RAM/memory of 64GiB) of which sets a different M variable name resulting in a
+# variable-table length requirement (in the M-stack frame at process startup) of approximately 32K * 8 bytes = 256KiB that is
+# close to the default M stack size of 272Kib. Setting the M stack size to 10,000 KiB is bumping it 40 times and so that should
+# keep us completely away from the STACKCRIT error zone.
+setenv gtm_mstack_size "10000"
 $gtm_dist/mumps -run genlvnsetstress >& $exefile.cmp
 
 diff $exefile.cmp $exefile.log >& $exefile.diff
