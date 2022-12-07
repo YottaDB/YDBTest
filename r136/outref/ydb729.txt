@@ -1,0 +1,128 @@
+######################################################################################################
+# Test that ACTLSTTOOLONG and FMLLSTMISSING errors print SRCLOC message with line/column number detail
+######################################################################################################
+
+# Test [yottadb ydb729.m] i.e. compile time. Expect ACTLSTTOOLONG/FMLLSTMISSING errors with SRCLOC messages
+
+%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: func1
+%YDB-I-SRCLOC, 		At column 21, line 21, source module ##TEST_PATH##/ydb729.m
+%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: func1
+%YDB-I-SRCLOC, 		At column 22, line 22, source module ##TEST_PATH##/ydb729.m
+%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: func1
+%YDB-I-SRCLOC, 		At column 23, line 23, source module ##TEST_PATH##/ydb729.m
+%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: func2
+%YDB-I-SRCLOC, 		At column 26, line 26, source module ##TEST_PATH##/ydb729.m
+%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: func2
+%YDB-I-SRCLOC, 		At column 28, line 27, source module ##TEST_PATH##/ydb729.m
+%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: func3
+%YDB-I-SRCLOC, 		At column 33, line 31, source module ##TEST_PATH##/ydb729.m
+%YDB-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: lab1
+%YDB-I-SRCLOC, 		At column 17, line 33, source module ##TEST_PATH##/ydb729.m
+%YDB-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: lab1
+%YDB-I-SRCLOC, 		At column 17, line 34, source module ##TEST_PATH##/ydb729.m
+%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: lab2
+%YDB-I-SRCLOC, 		At column 17, line 36, source module ##TEST_PATH##/ydb729.m
+%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: lab2
+%YDB-I-SRCLOC, 		At column 17, line 37, source module ##TEST_PATH##/ydb729.m
+%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: func1
+%YDB-I-SRCLOC, 		At column 23, line 39, source module ##TEST_PATH##/ydb729.m
+%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: func1
+%YDB-I-SRCLOC, 		At column 24, line 40, source module ##TEST_PATH##/ydb729.m
+%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: func1
+%YDB-I-SRCLOC, 		At column 25, line 41, source module ##TEST_PATH##/ydb729.m
+%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: func2
+%YDB-I-SRCLOC, 		At column 28, line 44, source module ##TEST_PATH##/ydb729.m
+%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: func2
+%YDB-I-SRCLOC, 		At column 30, line 45, source module ##TEST_PATH##/ydb729.m
+%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: func3
+%YDB-I-SRCLOC, 		At column 35, line 49, source module ##TEST_PATH##/ydb729.m
+%YDB-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: lab1
+%YDB-I-SRCLOC, 		At column 18, line 50, source module ##TEST_PATH##/ydb729.m
+%YDB-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: lab1
+%YDB-I-SRCLOC, 		At column 19, line 51, source module ##TEST_PATH##/ydb729.m
+%YDB-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: lab1
+%YDB-I-SRCLOC, 		At column 19, line 52, source module ##TEST_PATH##/ydb729.m
+%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: lab2
+%YDB-I-SRCLOC, 		At column 19, line 54, source module ##TEST_PATH##/ydb729.m
+%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: lab2
+%YDB-I-SRCLOC, 		At column 19, line 55, source module ##TEST_PATH##/ydb729.m
+
+# Test [zlink ydb729.m] i.e. compile during runtime. Expect ACTLSTTOOLONG/FMLLSTMISSING errors with SRCLOC messages
+
+
+YDB>
+%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: func1
+%YDB-I-SRCLOC, 		At column 21, line 21, source module ##IN_TEST_PATH##/inref/ydb729.m
+%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: func1
+%YDB-I-SRCLOC, 		At column 22, line 22, source module ##IN_TEST_PATH##/inref/ydb729.m
+%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: func1
+%YDB-I-SRCLOC, 		At column 23, line 23, source module ##IN_TEST_PATH##/inref/ydb729.m
+%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: func2
+%YDB-I-SRCLOC, 		At column 26, line 26, source module ##IN_TEST_PATH##/inref/ydb729.m
+%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: func2
+%YDB-I-SRCLOC, 		At column 28, line 27, source module ##IN_TEST_PATH##/inref/ydb729.m
+%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: func3
+%YDB-I-SRCLOC, 		At column 33, line 31, source module ##IN_TEST_PATH##/inref/ydb729.m
+%YDB-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: lab1
+%YDB-I-SRCLOC, 		At column 17, line 33, source module ##IN_TEST_PATH##/inref/ydb729.m
+%YDB-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: lab1
+%YDB-I-SRCLOC, 		At column 17, line 34, source module ##IN_TEST_PATH##/inref/ydb729.m
+%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: lab2
+%YDB-I-SRCLOC, 		At column 17, line 36, source module ##IN_TEST_PATH##/inref/ydb729.m
+%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: lab2
+%YDB-I-SRCLOC, 		At column 17, line 37, source module ##IN_TEST_PATH##/inref/ydb729.m
+%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: func1
+%YDB-I-SRCLOC, 		At column 23, line 39, source module ##IN_TEST_PATH##/inref/ydb729.m
+%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: func1
+%YDB-I-SRCLOC, 		At column 24, line 40, source module ##IN_TEST_PATH##/inref/ydb729.m
+%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: func1
+%YDB-I-SRCLOC, 		At column 25, line 41, source module ##IN_TEST_PATH##/inref/ydb729.m
+%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: func2
+%YDB-I-SRCLOC, 		At column 28, line 44, source module ##IN_TEST_PATH##/inref/ydb729.m
+%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: func2
+%YDB-I-SRCLOC, 		At column 30, line 45, source module ##IN_TEST_PATH##/inref/ydb729.m
+%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: func3
+%YDB-I-SRCLOC, 		At column 35, line 49, source module ##IN_TEST_PATH##/inref/ydb729.m
+%YDB-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: lab1
+%YDB-I-SRCLOC, 		At column 18, line 50, source module ##IN_TEST_PATH##/inref/ydb729.m
+%YDB-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: lab1
+%YDB-I-SRCLOC, 		At column 19, line 51, source module ##IN_TEST_PATH##/inref/ydb729.m
+%YDB-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: lab1
+%YDB-I-SRCLOC, 		At column 19, line 52, source module ##IN_TEST_PATH##/inref/ydb729.m
+%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: lab2
+%YDB-I-SRCLOC, 		At column 19, line 54, source module ##IN_TEST_PATH##/inref/ydb729.m
+%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: lab2
+%YDB-I-SRCLOC, 		At column 19, line 55, source module ##IN_TEST_PATH##/inref/ydb729.m
+
+YDB>
+
+# Test [do ^ydb729] i.e. no compile, only runtime. Expect ACTLSTTOOLONG/FMLLSTMISSING errors with NO SRCLOC messages
+
+ZSTATUS=ydb729+3^ydb729,%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: 
+ZSTATUS=ydb729+4^ydb729,%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: 
+ZSTATUS=ydb729+5^ydb729,%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: 
+ZSTATUS=ydb729+8^ydb729,%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: 
+ZSTATUS=ydb729+9^ydb729,%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: 
+ZSTATUS=ydb729+13^ydb729,%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: 
+ZSTATUS=ydb729+15^ydb729,%YDB-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+ZSTATUS=ydb729+16^ydb729,%YDB-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+ZSTATUS=ydb729+18^ydb729,%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: 
+ZSTATUS=ydb729+19^ydb729,%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: 
+ZSTATUS=ydb729+20^ydb729,%YDB-E-QUITARGREQD, Quit from an extrinsic must have an argument
+ZSTATUS=ydb729+21^ydb729,%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: 
+ZSTATUS=ydb729+22^ydb729,%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: 
+ZSTATUS=ydb729+23^ydb729,%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: 
+ZSTATUS=ydb729+24^ydb729,%YDB-E-QUITARGREQD, Quit from an extrinsic must have an argument
+ZSTATUS=ydb729+25^ydb729,%YDB-E-QUITARGREQD, Quit from an extrinsic must have an argument
+ZSTATUS=ydb729+26^ydb729,%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: 
+ZSTATUS=ydb729+27^ydb729,%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: 
+ZSTATUS=ydb729+28^ydb729,%YDB-E-QUITARGREQD, Quit from an extrinsic must have an argument
+ZSTATUS=ydb729+29^ydb729,%YDB-E-QUITARGREQD, Quit from an extrinsic must have an argument
+ZSTATUS=ydb729+30^ydb729,%YDB-E-QUITARGREQD, Quit from an extrinsic must have an argument
+ZSTATUS=ydb729+31^ydb729,%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: 
+ZSTATUS=ydb729+32^ydb729,%YDB-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+ZSTATUS=ydb729+33^ydb729,%YDB-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+ZSTATUS=ydb729+34^ydb729,%YDB-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: 
+ZSTATUS=ydb729+35^ydb729,%YDB-E-QUITARGREQD, Quit from an extrinsic must have an argument
+ZSTATUS=ydb729+36^ydb729,%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: 
+ZSTATUS=ydb729+37^ydb729,%YDB-E-ACTLSTTOOLONG, More actual parameters than formal parameters: 
