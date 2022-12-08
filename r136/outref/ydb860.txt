@@ -332,6 +332,124 @@ ZSTATUS=+23^ydb860boolexprextref,%YDB-E-RPARENMISSING, Right parenthesis expecte
 ZSTATUS=+24^ydb860boolexprextref,%YDB-E-LKNAMEXPECTED, An identifier is expected after a ^ in this context
 ZSTATUS=+25^ydb860boolexprextref,%YDB-E-RHMISSING, Right-hand side of expression expected
 
+------------------------------------------------------------
+# Test QUIT after TSTART in direct mode issues TPQUIT error
+# This used to previously (before YDB@7c48ba9c) fail with a GTMASSERT2/SIG-11/heap-use-after-free error
+------------------------------------------------------------
+# Try ydb860tpquit1.m using [yottadb -direct]
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+%YDB-E-INVCMD, Invalid command keyword encountered
+	test1	;
+	^-----
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+%YDB-E-TPQUIT, Cannot QUIT out of a routine with an active transaction
+		At M source location +1^GTM$DMOD
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+# Try ydb860tpquit1.m using [yottadb -run]
+ZSTATUS=test1+4^ydb860tpquit1,%YDB-E-TPQUIT, Cannot QUIT out of a routine with an active transaction
+ZSTATUS=test1+7^ydb860tpquit1,%YDB-E-TRESTMAX, TRESTART not allowed in a final TP retry more than once
+# Try ydb860tpquit2.m using [yottadb -direct]
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+%YDB-E-INVCMD, Invalid command keyword encountered
+	test2	;
+	^-----
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+%YDB-E-TPQUIT, Cannot QUIT out of a routine with an active transaction
+		At M source location +1^GTM$DMOD
+
+YDB>
+
+YDB>
+# Try ydb860tpquit2.m using [yottadb -run]
+ZSTATUS=test2+6^ydb860tpquit2,%YDB-E-TPQUIT, Cannot QUIT out of a routine with an active transaction
+
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

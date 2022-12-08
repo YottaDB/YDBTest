@@ -117,4 +117,19 @@ echo "# Try $base.m using [yottadb -run]"
 $ydb_dist/yottadb -run %XCMD 'set $ztrap="goto incrtrap^incrtrap" do ^'$base
 
 echo ""
+echo "------------------------------------------------------------"
+echo '# Test QUIT after TSTART in direct mode issues TPQUIT error'
+echo '# This used to previously (before YDB@7c48ba9c) fail with a GTMASSERT2/SIG-11/heap-use-after-free error'
+echo "------------------------------------------------------------"
+foreach testnum (1 2)
+	set base = "ydb860tpquit${testnum}"
+	cp $gtm_tst/$tst/inref/$base.m .
+	echo "# Try $base.m using [yottadb -direct]"
+	cat $base.m | $ydb_dist/yottadb -direct
+	echo "# Try $base.m using [yottadb -run]"
+	# Need to use %XCMD to set $ztrap to "incrtrap" so we continue execution of full M program inspite of errors.
+	$ydb_dist/yottadb -run %XCMD 'set $ztrap="goto incrtrap^incrtrap" do ^'$base
+end
+
+echo ""
 $gtm_tst/com/dbcheck.csh
