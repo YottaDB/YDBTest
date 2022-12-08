@@ -450,6 +450,21 @@ YDB>
 # Try ydb860tpquit2.m using [yottadb -run]
 ZSTATUS=test2+6^ydb860tpquit2,%YDB-E-TPQUIT, Cannot QUIT out of a routine with an active transaction
 
+------------------------------------------------------------
+# Test ZALLOCATE (^x,^y):1 hangs if lock of ^x is held by another process. And returns $TEST value of 0 due to timeout.
+# This used to previously (before YDB@3d35722e) fail with a GTMASSERT fatal error
+------------------------------------------------------------
+# Try ydb860zallocate.m using [yottadb -direct]
+
+YDB>
+
+YDB>
+In child process : $test=0
+
+YDB>
+# Try ydb860zallocate.m using [yottadb -run]
+In child process : $test=0
+
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

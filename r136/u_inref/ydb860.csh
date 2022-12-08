@@ -132,4 +132,19 @@ foreach testnum (1 2)
 end
 
 echo ""
+echo "------------------------------------------------------------"
+echo '# Test ZALLOCATE (^x,^y):1 hangs if lock of ^x is held by another process. And returns $TEST value of 0 due to timeout.'
+echo '# This used to previously (before YDB@3d35722e) fail with a GTMASSERT fatal error'
+echo "------------------------------------------------------------"
+set base = "ydb860zallocate"
+cat > $base.m << CAT_EOF
+ zallocate ^x
+ zsystem "\$ydb_dist/yottadb -run %XCMD 'zallocate (^x,^y):1 write ""In child process : \$test="",\$test,!'"
+CAT_EOF
+echo "# Try $base.m using [yottadb -direct]"
+cat $base.m | $ydb_dist/yottadb -direct
+echo "# Try $base.m using [yottadb -run]"
+$ydb_dist/yottadb -run $base
+
+echo ""
 $gtm_tst/com/dbcheck.csh
