@@ -208,3 +208,4 @@ start	;
 	; %YDB-E-INVDLRCVAL, Invalid $CHAR() value
 	; %YDB-E-BADCHAR, $ZCHAR(192) is not a valid character in the UTF-8 encoding form
 	; %YDB-E-ZATRANSCOL, The collation requested has no implementation for the requested operation
+	; %YDB-E-ZBRKCNTNEGATIVE, Count [-2], of transits through a ZBREAK breakpoint before activating it, cannot be negative
