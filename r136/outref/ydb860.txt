@@ -465,6 +465,127 @@ YDB>
 # Try ydb860zallocate.m using [yottadb -run]
 In child process : $test=0
 
+------------------------------------------------------------
+# Test zbreak using negative breakpoint count
+# This used to previously (before YDB@bc947837) fail with a GTMASSERT2 error
+# Expecting a ZBRKCNTNEGATIVE/INVZBREAK/SPOREOL error in below output but no GTMASSERT2 error
+------------------------------------------------------------
+# Try ydb860zbrkcntnegative.m using [yottadb -direct]
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+%YDB-E-ZBRKCNTNEGATIVE, Count [-10], of transits through a ZBREAK breakpoint before activating it, cannot be negative
+
+YDB>
+%YDB-E-ZBRKCNTNEGATIVE, Count [-1], of transits through a ZBREAK breakpoint before activating it, cannot be negative
+
+YDB>
+%YDB-E-ZBRKCNTNEGATIVE, Count [-2], of transits through a ZBREAK breakpoint before activating it, cannot be negative
+
+YDB>
+%YDB-E-ZBRKCNTNEGATIVE, Count [-3], of transits through a ZBREAK breakpoint before activating it, cannot be negative
+
+YDB>
+
+YDB>
+
+YDB>
+%YDB-E-INVZBREAK, Cannot set ZBREAK in direct mode routine (GTM$DMOD)
+
+YDB>
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+		zbreak -x::-1	; Ensure we get a parse error when ZBREAK - (i.e. cancel breakpoint) and a negative count (-1) is specified
+		         ^-----
+
+YDB>
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+		zbreak -x::-2	; Ensure we get a parse error when ZBREAK - (i.e. cancel breakpoint) and a negative count (-2) is specified
+		         ^-----
+
+YDB>
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+		zbreak -x::-3	; Ensure we get a parse error when ZBREAK - (i.e. cancel breakpoint) and a negative count (-3) is specified
+		         ^-----
+
+YDB>
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+		zbreak -x::0	; Ensure we get a parse error when ZBREAK - (i.e. cancel breakpoint) and a zero count () is specified
+		         ^-----
+
+YDB>
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+		zbreak -x::2	; Ensure we get a parse error when ZBREAK - (i.e. cancel breakpoint) and a positive count (1) is specified
+		         ^-----
+
+YDB>
+
+YDB>
+
+YDB>
+# Try ydb860zbrkcntnegative.m using [yottadb -run]
+		zbreak -x::-1	; Ensure we get a parse error when ZBREAK - (i.e. cancel breakpoint) and a negative count (-1) is specified
+		         ^-----
+		At column 11, line 25, source module ##IN_TEST_PATH##/inref/ydb860zbrkcntnegative.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+		zbreak -x::-2	; Ensure we get a parse error when ZBREAK - (i.e. cancel breakpoint) and a negative count (-2) is specified
+		         ^-----
+		At column 11, line 26, source module ##IN_TEST_PATH##/inref/ydb860zbrkcntnegative.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+		zbreak -x::-3	; Ensure we get a parse error when ZBREAK - (i.e. cancel breakpoint) and a negative count (-3) is specified
+		         ^-----
+		At column 11, line 27, source module ##IN_TEST_PATH##/inref/ydb860zbrkcntnegative.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+		zbreak -x::0	; Ensure we get a parse error when ZBREAK - (i.e. cancel breakpoint) and a zero count () is specified
+		         ^-----
+		At column 11, line 28, source module ##IN_TEST_PATH##/inref/ydb860zbrkcntnegative.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+		zbreak -x::2	; Ensure we get a parse error when ZBREAK - (i.e. cancel breakpoint) and a positive count (1) is specified
+		         ^-----
+		At column 11, line 29, source module ##IN_TEST_PATH##/inref/ydb860zbrkcntnegative.m
+%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+ZSTATUS=+18^ydb860zbrkcntnegative,%YDB-E-ZBRKCNTNEGATIVE, Count [-10], of transits through a ZBREAK breakpoint before activating it, cannot be negative
+ZSTATUS=+19^ydb860zbrkcntnegative,%YDB-E-ZBRKCNTNEGATIVE, Count [-1], of transits through a ZBREAK breakpoint before activating it, cannot be negative
+ZSTATUS=+20^ydb860zbrkcntnegative,%YDB-E-ZBRKCNTNEGATIVE, Count [-2], of transits through a ZBREAK breakpoint before activating it, cannot be negative
+ZSTATUS=+21^ydb860zbrkcntnegative,%YDB-E-ZBRKCNTNEGATIVE, Count [-3], of transits through a ZBREAK breakpoint before activating it, cannot be negative
+ZSTATUS=+25^ydb860zbrkcntnegative,%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+ZSTATUS=+26^ydb860zbrkcntnegative,%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+ZSTATUS=+27^ydb860zbrkcntnegative,%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+ZSTATUS=+28^ydb860zbrkcntnegative,%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+ZSTATUS=+29^ydb860zbrkcntnegative,%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
+
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

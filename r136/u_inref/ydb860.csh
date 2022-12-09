@@ -147,4 +147,18 @@ echo "# Try $base.m using [yottadb -run]"
 $ydb_dist/yottadb -run $base
 
 echo ""
+echo "------------------------------------------------------------"
+echo '# Test zbreak using negative breakpoint count'
+echo '# This used to previously (before YDB@bc947837) fail with a GTMASSERT2 error'
+echo '# Expecting a ZBRKCNTNEGATIVE/INVZBREAK/SPOREOL error in below output but no GTMASSERT2 error'
+echo "------------------------------------------------------------"
+set base = "ydb860zbrkcntnegative"
+cp $gtm_tst/$tst/inref/$base.m .
+echo "# Try $base.m using [yottadb -direct]"
+cat $base.m | $ydb_dist/yottadb -direct
+echo "# Try $base.m using [yottadb -run]"
+# Need to use %XCMD to set $ztrap to "incrtrap" so we continue execution of full M program inspite of errors.
+$ydb_dist/yottadb -run %XCMD 'set $ztrap="goto incrtrap^incrtrap" do ^'$base
+
+echo ""
 $gtm_tst/com/dbcheck.csh
