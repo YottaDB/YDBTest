@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -31,11 +31,11 @@ if ($status) then
 endif
 
 echo ""
-echo "# Invoke the executable [./$filename] which should invoke abort() function and create a core file"
+echo "# Invoke the executable [./$filename] which should invoke do_abort() function and create a core file"
 `pwd`/$filename
 
 echo ""
-echo "# Verify core file was created and does show abort() invocation in $filename in the C-stack trace"
+echo "# Verify core file was created and does show do_abort() invocation in $filename.c in the C-stack trace"
 ls -1 core* >& /dev/null
 if (0 != $status) then
 	echo "FAIL : Core file expected but not found"

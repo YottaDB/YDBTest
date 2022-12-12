@@ -10,12 +10,12 @@ mumps.dat
 
 # Compile and link C file [r130/inref/ydb534.c] into executable [./ydb534]
 
-# Invoke the executable [./ydb534] which should invoke abort() function and create a core file
+# Invoke the executable [./ydb534] which should invoke do_abort() function and create a core file
 ##TEST_AWK%YDB-F-KILLBYSIGSINFO1, YottaDB process .* has been killed by a signal 6 at address .*
 
-# Verify core file was created and does show abort() invocation in ydb534 in the C-stack trace
+# Verify core file was created and does show do_abort() invocation in ydb534.c in the C-stack trace
 PASS: Core file expected and found
-##TEST_AWK#(7 |8 |11|12) do_abort  at ##IN_TEST_PATH##/inref/ydb534.c:17
+##TEST_AWK#.* do_abort  at ##IN_TEST_PATH##/inref/ydb534.c:17
 
 # Verify YDB_FATAL_ERROR* file is created (remove it afterwards to avoid test framework from detecting it)
 PASS: YDB_FATAL_ERROR file expected and found
