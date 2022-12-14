@@ -161,4 +161,18 @@ echo "# Try $base.m using [yottadb -run]"
 $ydb_dist/yottadb -run %XCMD 'set $ztrap="goto incrtrap^incrtrap" do ^'$base
 
 echo ""
+echo "------------------------------------------------------------"
+echo '# Test boolean expression with a string that has NUMOFLOW error when coerced to a numeric'
+echo '# This used to previously (before YDB@97e16a78) fail with an Assert failure in bx_boollit.c in a Debug build'
+echo '# Expecting a NUMOFLOW error in below output but no Assert failure'
+echo "------------------------------------------------------------"
+set base = "ydb860numoflow"
+cp $gtm_tst/$tst/inref/$base.m .
+echo "# Try $base.m using [yottadb -direct]"
+cat $base.m | $ydb_dist/yottadb -direct
+echo "# Try $base.m using [yottadb -run]"
+# Need to use %XCMD to set $ztrap to "incrtrap" so we continue execution of full M program inspite of errors.
+$ydb_dist/yottadb -run %XCMD 'set $ztrap="goto incrtrap^incrtrap" do ^'$base
+
+echo ""
 $gtm_tst/com/dbcheck.csh

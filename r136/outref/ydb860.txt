@@ -586,6 +586,96 @@ ZSTATUS=+27^ydb860zbrkcntnegative,%YDB-E-SPOREOL, Either a space or an end-of-li
 ZSTATUS=+28^ydb860zbrkcntnegative,%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
 ZSTATUS=+29^ydb860zbrkcntnegative,%YDB-E-SPOREOL, Either a space or an end-of-line was expected but not found
 
+------------------------------------------------------------
+# Test boolean expression with a string that has NUMOFLOW error when coerced to a numeric
+# This used to previously (before YDB@97e16a78) fail with an Assert failure in bx_boollit.c in a Debug build
+# Expecting a NUMOFLOW error in below output but no Assert failure
+------------------------------------------------------------
+# Try ydb860numoflow.m using [yottadb -direct]
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+%YDB-E-NUMOFLOW, Numeric overflow
+
+YDB>
+%YDB-E-NUMOFLOW, Numeric overflow
+
+YDB>
+%YDB-E-NUMOFLOW, Numeric overflow
+
+YDB>
+%YDB-E-NUMOFLOW, Numeric overflow
+
+YDB>
+
+YDB>
+
+YDB>
+# Try ydb860numoflow.m using [yottadb -run]
+	 write (0!((-(+(-("1E47"))))))
+	                              ^-----
+		At column 31, line 17, source module ##IN_TEST_PATH##/inref/ydb860numoflow.m
+%YDB-E-NUMOFLOW, Numeric overflow
+	 write (0!((-(+(-("1E47"))))))&(0!((-(+(-("1E47"))))))
+	                                                      ^-----
+		At column 55, line 18, source module ##IN_TEST_PATH##/inref/ydb860numoflow.m
+%YDB-E-NUMOFLOW, Numeric overflow
+	 write (0!((-(+(-("1E47"))))))&(0!((-(+(-("1E47"))))))
+	                                                      ^-----
+		At column 55, line 18, source module ##IN_TEST_PATH##/inref/ydb860numoflow.m
+%YDB-E-NUMOFLOW, Numeric overflow
+	 write (0!((-(+(-("1E47"))))))!(0!((-(+(-("1E47"))))))
+	                                                      ^-----
+		At column 55, line 19, source module ##IN_TEST_PATH##/inref/ydb860numoflow.m
+%YDB-E-NUMOFLOW, Numeric overflow
+	 write (0!((-(+(-("1E47"))))))!(0!((-(+(-("1E47"))))))
+	                                                      ^-----
+		At column 55, line 19, source module ##IN_TEST_PATH##/inref/ydb860numoflow.m
+%YDB-E-NUMOFLOW, Numeric overflow
+	 write (0!((-(+(-("1E47"))))))!'(0!((-(+(-("1E47"))))))
+	                                                       ^-----
+		At column 56, line 20, source module ##IN_TEST_PATH##/inref/ydb860numoflow.m
+%YDB-E-NUMOFLOW, Numeric overflow
+	 write (0!((-(+(-("1E47"))))))!'(0!((-(+(-("1E47"))))))
+	                                                       ^-----
+		At column 56, line 20, source module ##IN_TEST_PATH##/inref/ydb860numoflow.m
+%YDB-E-NUMOFLOW, Numeric overflow
+ZSTATUS=+17^ydb860numoflow,%YDB-E-NUMOFLOW, Numeric overflow
+ZSTATUS=+18^ydb860numoflow,%YDB-E-NUMOFLOW, Numeric overflow
+ZSTATUS=+19^ydb860numoflow,%YDB-E-NUMOFLOW, Numeric overflow
+ZSTATUS=+20^ydb860numoflow,%YDB-E-NUMOFLOW, Numeric overflow
+
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
