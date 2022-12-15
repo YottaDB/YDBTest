@@ -1,0 +1,20 @@
+########################################################################################################
+# Test that MUPIP DUMPFHEAD gives user friendly error messages in case input file is not a database file
+########################################################################################################
+# Create global directory file mumps.gld
+
+# Run [mupip dumpfhead mumps.gld]
+# This is to test YDB!1291 and YDB!1292
+# Expect to see a %DUMPFHEAD-F-NOTADBFILE and %YDB-E-MUNOFINISH errors
+%DUMPFHEAD-F-NOTADBFILE mumps.gld is not a database file
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+# Also verify exit status is non-zero due to the above error
+Exit status = 10
+
+# Run [mupip dumpfhead mumps.gld >& dumpfhead.out]
+# This is to test YDB!1293 (i.e. redirecting stdout/stderr to file works too)
+# Expect to see a %DUMPFHEAD-F-NOTADBFILE and %YDB-E-MUNOFINISH errors
+%DUMPFHEAD-F-NOTADBFILE mumps.gld is not a database file
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+# Also verify exit status is non-zero due to the above error
+Exit status = 10
