@@ -1,0 +1,33 @@
+########################################################################################################
+# Test that error in $ZTIMEOUT vector does NOT cause infinite loop in direct mode.
+# The below test case has a LVUNDEF error inside the $ZTIMEOUT M code.
+# Before YDB@44ccc849, this test case used to assert fail in Debug builds and produce infinite LVUNDEF messages.
+########################################################################################################
+
+# Try test in direct mode [yottadb -direct]
+# We expect to see 2 sets of a LVUNDEF message followed by a ERRWZTIMEOUT message.
+
+YDB>
+
+YDB>
+
+YDB>
+%YDB-E-LVUNDEF, Undefined local variable: c
+%YDB-E-ERRWZTIMEOUT, Error while processing $ZTIMEOUT
+
+YDB>
+%YDB-E-LVUNDEF, Undefined local variable: c
+%YDB-E-ERRWZTIMEOUT, Error while processing $ZTIMEOUT
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+# Try test in [yottadb -run] mode
+# We expect to see 2 LVUNDEF messages (no ERRWZTIMEOUT message).
+ZSTATUS=ydb934+3^ydb934,%YDB-E-LVUNDEF, Undefined local variable: c
+ZSTATUS=ydb934+7^ydb934,%YDB-E-LVUNDEF, Undefined local variable: c
