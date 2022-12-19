@@ -57,6 +57,11 @@ else if (("rhel" == $gtm_test_linux_distrib) && ("7.9" == $gtm_test_linux_versio
 	setenv subtest_exclude_list "$subtest_exclude_list plugins"
 endif
 
+if ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) then
+	# filter out below subtest on 32-bit ARM since it requires building YottaDB from source which will take a long time
+	setenv subtest_exclude_list "$subtest_exclude_list ydb910"
+endif
+
 # Save a copy of the current system yottadb.pc before it gets modified by the various ydbinstall.sh invocations done in the
 # various subtests of the sudo test. This way we can restore the system copy at the end of the test and avoid the system
 # yottadb.pc pointing to a non-existent YottaDB installation somewhere under the test output directory (that gets deleted
