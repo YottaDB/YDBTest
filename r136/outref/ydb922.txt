@@ -1,0 +1,474 @@
+Creating unjournaled database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+Turning on journaling for the first time
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+
+Setting data into ^x
+
+Switch journal files
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+
+Setting data into ^y
+
+Run main extract test
+# Ingesting journal data
+# Printing %YDBJNLF database file name
+##TEST_PATH##/%ydbjnlf.dat
+# Printing ; pieces 1-3 from ^%ydbJNLF global
+# These are journal file name, journal file format, and database file name
+##TEST_PATH##/mumps.mjl;YDBJNL44;##TEST_PATH##/mumps.dat
+# Printing records in ^%ydbJNLFTYPE1
+SET: ^y\^y(1)\"         1"
+SET: ^y\^y(2)\"         2"
+SET: ^y\^y(3)\"         3"
+SET: ^y\^y(4)\"         4"
+SET: ^y\^y(5)\"         5"
+SET: ^y\^y(6)\"         6"
+SET: ^y\^y(7)\"         7"
+SET: ^y\^y(8)\"         8"
+SET: ^y\^y(9)\"         9"
+SET: ^y\^y(10)\"        10"
+SET: ^y\^y(11)\"        11"
+SET: ^y\^y(12)\"        12"
+SET: ^y\^y(13)\"        13"
+SET: ^y\^y(14)\"        14"
+SET: ^y\^y(15)\"        15"
+SET: ^y\^y(16)\"        16"
+SET: ^y\^y(17)\"        17"
+SET: ^y\^y(18)\"        18"
+SET: ^y\^y(19)\"        19"
+SET: ^y\^y(20)\"        20"
+KILL: ^y\^y(1)
+KILL: ^y\^y(3)
+KILL: ^y\^y(5)
+KILL: ^y\^y(7)
+KILL: ^y\^y(9)
+KILL: ^y\^y(11)
+KILL: ^y\^y(13)
+KILL: ^y\^y(15)
+KILL: ^y\^y(17)
+KILL: ^y\^y(19)
+# Global ^%ydbJNLFACTIVE does not exist, as nobody has the current journal file open
+$data of ^%ydbJNLFACTIVE: 0
+# Global ^%ydbJNLFCOMPLETE showing previous processes having the global file open
+Count of processes which accessed the database should be 2: 2
+##TEST_AWK# Previous journal file is ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
+# Ingesting previous journal file
+# Printing ; pieces 1-3 from ^%ydbJNLF global
+# These are journal file name, journal file format, and database file name
+##TEST_AWK##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]);YDBJNL44;##TEST_PATH##/mumps.dat
+# Printing records in ^%ydbJNLFTYPE1
+SET: ^x\^x(1)\"         1"
+SET: ^x\^x(2)\"         2"
+SET: ^x\^x(3)\"         3"
+SET: ^x\^x(4)\"         4"
+SET: ^x\^x(5)\"         5"
+SET: ^x\^x(6)\"         6"
+SET: ^x\^x(7)\"         7"
+SET: ^x\^x(8)\"         8"
+SET: ^x\^x(9)\"         9"
+SET: ^x\^x(10)\"        10"
+SET: ^x\^x(11)\"        11"
+SET: ^x\^x(12)\"        12"
+SET: ^x\^x(13)\"        13"
+SET: ^x\^x(14)\"        14"
+SET: ^x\^x(15)\"        15"
+SET: ^x\^x(16)\"        16"
+SET: ^x\^x(17)\"        17"
+SET: ^x\^x(18)\"        18"
+SET: ^x\^x(19)\"        19"
+SET: ^x\^x(20)\"        20"
+KILL: ^x\^x(1)
+KILL: ^x\^x(3)
+KILL: ^x\^x(5)
+KILL: ^x\^x(7)
+KILL: ^x\^x(9)
+KILL: ^x\^x(11)
+KILL: ^x\^x(13)
+KILL: ^x\^x(15)
+KILL: ^x\^x(17)
+KILL: ^x\^x(19)
+
+# Run Octo DDL Tool and print out DDL
+DROP TABLE IF EXISTS YDBJNLF KEEPDATA;
+CREATE TABLE YDBJNLF -- Metadata for ingested journal files
+(label VARCHAR,
+ jnlfilename VARCHAR, -- Journal file name
+ jnlfilelabel VARCHAR, -- Journal file label
+ dbfilename VARCHAR, -- Database file name
+ prevjnlfilename VARCHAR, --  Prev journal file name
+ nextjnlfilename VARCHAR, --  Next journal file name
+ beforeimagejnl VARCHAR, --  Before-image journal
+ jnlfilehdrsize INTEGER, --  Journal file header size
+ virtfilesize INTEGER, --  Virtual file size
+ jnlfilecksumseed INTEGER, --  Journal file checksum seed
+ crash BOOLEAN, --  Crash
+ recovintrptd BOOLEAN, --  Recover interrupted
+ jnlfileenc BOOLEAN, --  Journal file encrypted
+ jnlfilereencon BOOLEAN, --  Journal file (re)encryption in progress
+ jnlfilehash VARCHAR, --  Journal file hash
+ jnlfilehash2 VARCHAR, --  Journal file hash2
+ jnlfilenulliv BOOLEAN, --  Journal file uses null IV
+ jnlfilehashcutoff INTEGER, --  Journal file encryption hash cutoff
+ jnlfilehash2starttn INTEGER, --  Journal file hash2 start TN
+ blkstoupgradeadj INTEGER, --  Blocks to Upgrade Adjustment
+ endofdata INTEGER, --  End of Data
+ prevrecovendofdata INTEGER, --  Prev Recovery End of Data
+ endianfmt VARCHAR, --  Endian Format
+ creattime VARCHAR, --  Journal Creation Time
+ lastupdtime VARCHAR, --  Time of last update
+ begintrans INTEGER, --  Begin Transaction
+ endtrans INTEGER, --  End Transaction
+ alignsize INTEGER, --  Align size
+ epochint INTEGER, --  Epoch Interval
+ replstate VARCHAR, --  Replication State
+ jnlfileswitchlimit INTEGER, --  Jnlfile SwitchLimit
+ jnlfilealloc INTEGER, --  Jnlfile Allocation
+ jnlfileext INTEGER, --  Jnlfile Extension
+ maxjnlreclen INTEGER, --  Maximum Journal Record Length
+ turnaroundoffset INTEGER, --  Turn Around Point Offset
+ lasteofwrt BOOLEAN, --  Last EOF Written
+ wasprevjnlfile BOOLEAN, --  Was a Previous Generation Journal File
+ turnaroundpointtime INTEGER, --  Turn Around Point Time
+ startregseqnum INTEGER, --  Start Region Sequence Number
+ endregseqnum INTEGER, --  End Region Sequence Number
+ -- Columns for the processes that (a) created the journal file and (b) first opened it
+ crprocpid INTEGER,
+ crprocnode VARCHAR,
+ crprocuser VARCHAR,
+ crprocterm INTEGER,
+ crprocjpvdate INTEGER,
+ crprocjpvtime INTEGER,
+ openprocpid INTEGER,
+ openprocnode VARCHAR,
+ openprocuser VARCHAR,
+ openprocterm INTEGER,
+ openprocjpvdate INTEGER,
+ openprocjpvtime INTEGER,
+ PRIMARY KEY (label))
+Delim ";"
+Global "^%ydbJNLF";
+DROP TABLE IF EXISTS YDBJNLFACTIVE KEEPDATA;
+CREATE TABLE YDBJNLFACTIVE
+(label VARCHAR,
+ seqno INTEGER,
+ pid INTEGER,
+ nnam VARCHAR,
+ unam VARCHAR,
+ term INTEGER,
+ horologdate INTEGER,
+ horologtime INTEGER,
+ PRIMARY KEY (label, seqno))
+Delim ";"
+Global "^%ydbJNLFACTIVE";
+DROP TABLE IF EXISTS YDBJNLFCOMPLETE KEEPDATA;
+CREATE TABLE YDBJNLFCOMPLETE
+(label VARCHAR,
+ seqno INTEGER,
+ pid INTEGER,
+ nnam VARCHAR,
+ unam VARCHAR,
+ term INTEGER,
+ horologdate INTEGER,
+ horologtime INTEGER,
+ PRIMARY KEY (label, seqno))
+Delim ";"
+Global "^%ydbJNLFCOMPLETE";
+DROP TABLE IF EXISTS YDBJNLFOPCOUNT KEEPDATA;
+CREATE TABLE YDBJNLFOPCOUNT -- Opcode count
+(label VARCHAR,
+ opcode VARCHAR,
+ occurs INTEGER,
+ PRIMARY KEY (label, opcode))
+GLOBAL "^%ydbJNLFOPCOUNT";
+DROP TABLE IF EXISTS YDBJNLFRECTYPE KEEPDATA;
+CREATE TABLE YDBJNLFRECTYPE -- Table for record types
+(label VARCHAR,
+ rectype VARCHAR,
+ tbl VARCHAR,
+ PRIMARY KEY (label, rectype))
+GLOBAL "^%ydbJNLFRECTBL";
+DROP TABLE IF EXISTS YDBJNLFTYPE1 KEEPDATA;
+CREATE TABLE YDBJNLFTYPE1 -- FKILL,FSET,FZKILL,GKILL,GSET,GZKILL,KILL,SET,TKILL,TSET,TZKILL,TZTRIG,UKILL,USET,UZKILL,UZTRIG,ZKILL,ZTRIG
+(label VARCHAR,
+ offset INTEGER,
+ recsize INTEGER,
+ op VARCHAR,
+ horologdate INTEGER,
+ horologtime INTEGER,
+ tnum INTEGER,
+ chksum INTEGER,
+ pid INTEGER,
+ clntpid INTEGER,
+ token_seq INTEGER,
+ strm_num INTEGER,
+ strm_seq INTEGER,
+ updnum INTEGER,
+ nodeflags INTEGER,
+ gvname VARCHAR,
+ gvref VARCHAR,
+ nodeval VARCHAR,
+ PRIMARY KEY (label, offset, recsize))
+Delim "\"
+Global "^%ydbJNLFTYPE1";
+DROP TABLE IF EXISTS YDBJNLFTYPE10 KEEPDATA;
+CREATE TABLE YDBJNLFTYPE10 -- PINI
+(label VARCHAR,
+ offset INTEGER,
+ recsize INTEGER,
+ op VARCHAR,
+ horologdate INTEGER,
+ horologtime INTEGER,
+ tnum INTEGER,
+ chksum INTEGER,
+ pid INTEGER,
+ nnam VARCHAR,
+ unam VARCHAR,
+ term INTEGER,
+ clntpid INTEGER,
+ clntnnam INTEGER,
+ clntunam VARCHAR,
+ clntterm INTEGER,
+ PRIMARY KEY (label, offset, recsize))
+Delim "\"
+Global "^%ydbJNLFTYPE10";
+DROP TABLE IF EXISTS YDBJNLFTYPE11 KEEPDATA;
+CREATE TABLE YDBJNLFTYPE11 -- TCOM
+(label VARCHAR,
+ offset INTEGER,
+ recsize INTEGER,
+ op VARCHAR,
+ horologdate INTEGER,
+ horologtime INTEGER,
+ tnum INTEGER,
+ chksum INTEGER,
+ pid INTEGER,
+ clntpid INTEGER,
+ token_seq INTEGER,
+ strm_num INTEGER,
+ strm_seq INTEGER,
+ partners INTEGER,
+ tid VARCHAR,
+ PRIMARY KEY (label, offset, recsize))
+Delim "\"
+Global "^%ydbJNLFTYPE11";
+DROP TABLE IF EXISTS YDBJNLFTYPE12 KEEPDATA;
+CREATE TABLE YDBJNLFTYPE12 -- TSTART
+(label VARCHAR,
+ offset INTEGER,
+ recsize INTEGER,
+ op VARCHAR,
+ horologdate INTEGER,
+ horologtime INTEGER,
+ tnum INTEGER,
+ chksum INTEGER,
+ pid INTEGER,
+ clntpid INTEGER,
+ token_seq INTEGER,
+ strm_num INTEGER,
+ strm_seq INTEGER,
+ PRIMARY KEY (label, offset, recsize))
+Delim "\"
+Global "^%ydbJNLFTYPE12";
+DROP TABLE IF EXISTS YDBJNLFTYPE13 KEEPDATA;
+CREATE TABLE YDBJNLFTYPE13 -- ZTCOM
+(label VARCHAR,
+ offset INTEGER,
+ recsize INTEGER,
+ horologdate INTEGER,
+ horologtime INTEGER,
+ tnum INTEGER,
+ chksum INTEGER,
+ pid INTEGER,
+ clntpid INTEGER,
+ token INTEGER,
+ partners INTEGER,
+ PRIMARY KEY (label, offset, recsize))
+Delim "\"
+Global "^%ydbJNLFTYPE13";
+DROP TABLE IF EXISTS YDBJNLFTYPE14 KEEPDATA;
+CREATE TABLE YDBJNLFTYPE14 -- ZTSTART
+(label VARCHAR,
+ offset INTEGER,
+ recsize INTEGER,
+ horologdate INTEGER,
+ horologtime INTEGER,
+ tnum INTEGER,
+ chksum INTEGER,
+ pid INTEGER,
+ clntpid INTEGER,
+ token INTEGER,
+ PRIMARY KEY (label, offset, recsize))
+Delim "\"
+Global "^%ydbJNLFTYPE14";
+DROP TABLE IF EXISTS YDBJNLFTYPE2 KEEPDATA;
+CREATE TABLE YDBJNLFTYPE2 -- TZTWORM,UZTWORM,ZTWORM
+(label VARCHAR,
+ offset INTEGER,
+ recsize INTEGER,
+ op VARCHAR,
+ horologdate INTEGER,
+ horologtime INTEGER,
+ tnum INTEGER,
+ chksum INTEGER,
+ pid INTEGER,
+ clntpid INTEGER,
+ token_seq INTEGER,
+ strm_num INTEGER,
+ strm_seq INTEGER,
+ updnum INTEGER,
+ ztwormhole VARCHAR,
+ PRIMARY KEY (label, offset, recsize))
+Delim "\"
+Global "^%ydbJNLFTYPE2";
+DROP TABLE IF EXISTS YDBJNLFTYPE3 KEEPDATA;
+CREATE TABLE YDBJNLFTYPE3 -- TLGTRIG,ULGTRIG
+(label VARCHAR,
+ offset INTEGER,
+ recsize INTEGER,
+ op VARCHAR,
+ horologdate INTEGER,
+ horologtime INTEGER,
+ tnum INTEGER,
+ chksum INTEGER,
+ pid INTEGER,
+ clntpid INTEGER,
+ token_seq INTEGER,
+ strm_num INTEGER,
+ strm_seq INTEGER,
+ updnum INTEGER,
+ trigdefinition VARCHAR,
+ PRIMARY KEY (label, offset, recsize))
+Delim "\"
+Global "^%ydbJNLFTYPE3";
+DROP TABLE IF EXISTS YDBJNLFTYPE4 KEEPDATA;
+CREATE TABLE YDBJNLFTYPE4 -- ALIGN,PFIN
+(label VARCHAR,
+ offset INTEGER,
+ recsize INTEGER,
+ op VARCHAR,
+ horologdate INTEGER,
+ horologtime INTEGER,
+ tnum INTEGER,
+ chksum INTEGER,
+ pid INTEGER,
+ clntpid INTEGER,
+ PRIMARY KEY (label, offset, recsize))
+Delim "\"
+Global "^%ydbJNLFTYPE4";
+DROP TABLE IF EXISTS YDBJNLFTYPE5 KEEPDATA;
+CREATE TABLE YDBJNLFTYPE5 -- AIMG,PBLK
+(label VARCHAR,
+ offset INTEGER,
+ recsize INTEGER,
+ op VARCHAR,
+ horologdate INTEGER,
+ horologtime INTEGER,
+ tnum INTEGER,
+ chksum INTEGER,
+ pid INTEGER,
+ clntpid INTEGER,
+ blknum INTEGER,
+ bsiz INTEGER,
+ blkhdrtn INTEGER,
+ ondskbver INTEGER,
+ dsecmdline VARCHAR,
+ PRIMARY KEY (label, offset, recsize))
+Delim "\"
+Global "^%ydbJNLFTYPE5";
+DROP TABLE IF EXISTS YDBJNLFTYPE6 KEEPDATA;
+CREATE TABLE YDBJNLFTYPE6 -- EOF
+(label VARCHAR,
+ offset INTEGER,
+ recsize INTEGER,
+ op VARCHAR,
+ horologdate INTEGER,
+ horologtime INTEGER,
+ tnum INTEGER,
+ chksum INTEGER,
+ pid INTEGER,
+ clntpid INTEGER,
+ jsnum INTEGER,
+ PRIMARY KEY (label, offset, recsize))
+Delim "\"
+Global "^%ydbJNLFTYPE6";
+DROP TABLE IF EXISTS YDBJNLFTYPE7 KEEPDATA;
+CREATE TABLE YDBJNLFTYPE7 -- EPOCH
+(label VARCHAR,
+ offset INTEGER,
+ recsize INTEGER,
+ op VARCHAR,
+ horologdate INTEGER,
+ horologtime INTEGER,
+ tnum INTEGER,
+ chksum INTEGER,
+ pid INTEGER,
+ clntpid INTEGER,
+ jsnum INTEGER,
+ blks_to_upgrd INTEGER,
+ free_blocks INTEGER,
+ total_blks INTEGER,
+ fully_upgraded INTEGER,
+ strmseq VARCHAR,
+ PRIMARY KEY (label, offset, recsize))
+Delim "\"
+Global "^%ydbJNLFTYPE7";
+DROP TABLE IF EXISTS YDBJNLFTYPE8 KEEPDATA;
+CREATE TABLE YDBJNLFTYPE8 -- INCTN
+(label VARCHAR,
+ offset INTEGER,
+ recsize INTEGER,
+ op VARCHAR,
+ horologdate INTEGER,
+ horologtime INTEGER,
+ tnum INTEGER,
+ chksum INTEGER,
+ pid INTEGER,
+ clntpid INTEGER,
+ opcode INTEGER,
+ incdetail INTEGER,
+ PRIMARY KEY (label, offset, recsize))
+Delim "\"
+Global "^%ydbJNLFTYPE8";
+DROP TABLE IF EXISTS YDBJNLFTYPE9 KEEPDATA;
+CREATE TABLE YDBJNLFTYPE9 -- NULL
+(label VARCHAR,
+ offset INTEGER,
+ recsize INTEGER,
+ op VARCHAR,
+ horologdate INTEGER,
+ horologtime INTEGER,
+ tnum INTEGER,
+ chksum INTEGER,
+ pid INTEGER,
+ clntpid INTEGER,
+ jsnum INTEGER,
+ strm_num INTEGER,
+ strm_seq INTEGER,
+ salvaged INTEGER,
+ PRIMARY KEY (label, offset, recsize))
+Delim "\"
+Global "^%ydbJNLFTYPE9";
+
+# Make sure that the Octo DDL Tool does not crash on invalid pipes (YDB#967)
+foo: Command not found.
+
+# Test purge entry points
+$DATA before purging: 11
+$DATA after purging: 0
+
+# Test error trap by ingesting an invalid file
+%YDBJNLF-F-FILENOTEXIST Journal file foo.boo.txt not found
+
+Database check...
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
