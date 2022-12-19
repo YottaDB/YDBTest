@@ -1,0 +1,43 @@
+# Test to verify 3 fields in DSE file header dump are same in r1.34 and r1.36 (or later version) to
+# make sure the fields are being upgraded (moved inside the header) properly by autoupgrade.
+
+# Un-setting $gtm_db_counter_sem_incr - reasoning is this envvar has random values chosen and when
+# those values meet or exceed 16384, this causes a rundown situation such that the IPCs for the open
+# DB are orphaned and left in place. If we then switch versions, YottaDB thinks the DB is open with
+# a different version and reports the VERMISMATCH error. Not leaving IPCs orphaned is what we need
+# so unsetenv gtm_db_counter_sem_incr
+
+# Setting runversion to YottaDB r1.34
+
+# Create database
+
+# Set max_procs.time to the current time and bump max_procs.cnt by getting two processes accessing DB
+
+# Set the "Reorg Sleep Nanoseconds" field to 42244224
+Database file mumps.dat now has reorg sleep nanoseconds 42244224
+
+# Get fileheader dump from this r1.34 DB
+
+##TEST_AWK# Now switch back to our main test version \(V.*\) - need to run GDE EXIT to reformat the gld
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDUPDATE, Updating Global Directory file 
+	##TEST_PATH##/mumps.gld
+
+##TEST_AWK# Grab file header dump using V.*
+
+# Compare the two fileheader dumps noting any discrepancies in the 3 values we are looking at
+##TEST_AWKField Description: Max conc proc time         Value: [1-9][0-9]*
+Field Description: Max Concurrent processes   Value: 2
+Field Description: Reorg Sleep Nanoseconds    Value: 42244224
+
+SUCCESS: All values were upgraded correctly
+
+# Verify database
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
