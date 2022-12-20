@@ -19,13 +19,14 @@
 # gtm9328	[see]	Verify cannot nest $ZINTERRUPT
 # gtm9329	[see]	Verify $ZTIMEOUT fixes made for this issue
 # gtm9331	[see]	Verify $ZTIMEOUT does wake up appropriately when external call steals the wakeup signal
+# gtm8863b	[see]	Verify toggle stats operate correctly
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v63014 test starts..."
 
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
-setenv subtest_list_non_replic "gtm9321 gtm9328 gtm9329 gtm9331"
+setenv subtest_list_non_replic "gtm9321 gtm9328 gtm9329 gtm9331 gtm8863b"
 setenv subtest_list_replic     "gtm7628"
 
 if ($?test_replic == 1) then
