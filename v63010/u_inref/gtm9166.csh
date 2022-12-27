@@ -1,18 +1,20 @@
 #!/usr/local/bin/tcsh
 #################################################################
-#                                                               #
-# Copyright (c) 2021-2022 YottaDB LLC and/or its subsidiaries.       #
-# All rights reserved.                                          #
-#                                                               #
-#       This source code contains the intellectual property     #
-#       of its copyright holder(s), and is made available       #
-#       under a license.  If you do not know the terms of       #
-#       the license, please stop and do not read further.       #
-#                                                               #
+#								#
+# Copyright (c) 2021-2022 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
 #################################################################
 #This test only runs on dbg because the white box tests don't work on pro
 
 set syslog_begin = `date +"%b %e %H:%M:%S"`
+
+source $gtm_tst/com/enable_procstuckexec.csh # This test needs ydb_procstuckexec (test framework would have disabled it on armv6l)
 
 $echoline
 echo "# Creating database"
