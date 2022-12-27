@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -35,7 +35,7 @@ setenv testfail "TEST-F-FAIL: wait expired"
 # Execute MUMPS via the gtm_dist symlink using the JOB command to execute %XCMD
 # doing a process listing while both parent and child are alive.
 env gtm_dist=$uniquepath $uniquepath/mumps -run %XCMD \
-	'job ^%XCMD:(output="_XCMD.mjx":cmdline="zsystem ""$ps""") for i=1:1:120 quit:$zsigproc($zjob,0)  write:i=120 $ztrnlnm("testfail"),! hang 0.25'
+	'job ^%XCMD:(output="_XCMD.mjx":cmdline="zsystem ""$ps""") for i=1:1:1200 quit:$zsigproc($zjob,0)  write:i=1200 $ztrnlnm("testfail"),! hang 0.25'
 
 # Dump the paths
 grep 'zsystem .*"$ps"' _XCMD.mjx | $tst_awk '{sub(/^.* \//,"/");sub(pwd,"/tmp/MASKED",$1);print $0}' pwd=${uniquepath}
