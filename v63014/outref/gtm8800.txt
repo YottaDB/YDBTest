@@ -1,0 +1,308 @@
+# gtm8800 - verify MUIP FTOK and MUPIP SEMAPHORE operate correctly with new parms (-ID, -ONLY, and -[NO]HEADER)
+
+# Setup MSR and run dbcreate
+
+# Start source and receiver services
+==Executing MULTISITE_REPLIC 'START INST1 INST2'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+==Executing MULTISITE_REPLIC 'START INST1 INST3'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance3
+
+# On the primary, do 10 updates just to have done *something*
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST3'==
+
+# Obtain semaphore & shared memory ids of the databases, journal pools, and receiver pools in INST1, INST2, and INST3
+
+# Drive validation routine on each of our 3 instances
+# Instance 1:
+##TEST_AWK==Executing MULTISITE_REPLIC 'RUN INST1 \$gtm_dist/mumps -run validate\^gtm8800 .*
+
+Success!
+
+# Instance 2:
+##TEST_AWK==Executing MULTISITE_REPLIC 'RUN INST2 \$gtm_dist/mumps -run validate\^gtm8800 .*
+
+Success!
+
+# Instance 3:
+##TEST_AWK==Executing MULTISITE_REPLIC 'RUN INST3 \$gtm_dist/mumps -run validate\^gtm8800 .*
+
+Success!
+
+
+###################################################################
+
+# Attempt various MUPIP FTOK commands to verify output form
+
+# (1) Run MUPIP FTOK $gtm_test_msr_DBDIR1/mumps.dat $gtm_test_msr_DBDIR2/mumps.dat $gtm_test_msr_DBDIR3/mumps.dat
+                File ::            Semaphore Id ::        Shared Memory Id ::                FTOK Key ::                             FileId
+-------------------------------------------------------------------------------------------------------------------------------------------
+##TEST_AWK##TEST_PATH##/mumps.dat :: .*
+##TEST_AWK##REMOTE_TEST_PATH##/instance2/mumps.dat :: .*
+##TEST_AWK##REMOTE_TEST_PATH##/instance3/mumps.dat :: .*
+
+# (2) Run MUPIP FTOK notmumps.dat (nonexistent file - should return -1 FTOK and default to -ONLY behavior)
+notmumps.dat is not a database file
+This and any subsequent files are treated as -only
+        notmumps.dat  ::          -1  [ 0xffffffff ]
+
+# (3) Run MUPIP FTOK -only notmumps.dat (nonexistent file - should return -1 FTOK)
+        notmumps.dat  ::          -1  [ 0xffffffff ]
+
+# (4) Run MUPIP FTOK -noheader $gtm_test_msr_DBDIR1/mumps.dat $gtm_test_msr_DBDIR2/mumps.dat $gtm_test_msr_DBDIR3/mumps.dat
+##TEST_AWK##TEST_PATH##/mumps.dat :: .*
+##TEST_AWK##REMOTE_TEST_PATH##/instance2/mumps.dat :: .*
+##TEST_AWK##REMOTE_TEST_PATH##/instance3/mumps.dat :: .*
+
+# (5) Run MUPIP FTOK -only $gtm_test_msr_DBDIR1/mumps.dat $gtm_test_msr_DBDIR2/mumps.dat $gtm_test_msr_DBDIR3/mumps.dat
+##TEST_AWK##TEST_PATH##/mumps.dat  :: .*
+##TEST_AWK##REMOTE_TEST_PATH##/instance2/mumps.dat  :: .*
+##TEST_AWK##REMOTE_TEST_PATH##/instance3/mumps.dat  :: .*
+
+# (6) Run MUPIP FTOK -noheader -only $gtm_test_msr_DBDIR1/mumps.dat $gtm_test_msr_DBDIR2/mumps.dat $gtm_test_msr_DBDIR3/mumps.dat
+##TEST_AWK##TEST_PATH##/mumps.dat  :: .*
+##TEST_AWK##REMOTE_TEST_PATH##/instance2/mumps.dat  :: .*
+##TEST_AWK##REMOTE_TEST_PATH##/instance3/mumps.dat  :: .*
+
+# (7) Run MUPIP FTOK -jnlpool
+                File ::            Semaphore Id ::        Shared Memory Id ::                FTOK Key ::                             FileId
+-------------------------------------------------------------------------------------------------------------------------------------------
+##TEST_AWK##TEST_PATH##/mumps.repl :: .*
+##TEST_AWK             jnlpool :: .*
+
+# (8) Run MUPIP FTOK -jnlpool $gtm_test_msr_DBDIR1/mumps.repl $gtm_test_msr_DBDIR2/mumps.repl $gtm_test_msr_DBDIR3/mumps.repl
+                File ::            Semaphore Id ::        Shared Memory Id ::                FTOK Key ::                             FileId
+-------------------------------------------------------------------------------------------------------------------------------------------
+##TEST_AWK##TEST_PATH##/mumps.repl :: .*
+##TEST_AWK             jnlpool :: .*
+##TEST_AWK##REMOTE_TEST_PATH##/instance2/mumps.repl :: .*
+##TEST_AWK             jnlpool :: .*
+##TEST_AWK##REMOTE_TEST_PATH##/instance3/mumps.repl :: .*
+##TEST_AWK             jnlpool :: .*
+
+# (9) Run MUPIP FTOK -jnlpool -noheader $gtm_test_msr_DBDIR1/mumps.repl $gtm_test_msr_DBDIR2/mumps.repl $gtm_test_msr_DBDIR3/mumps.repl
+##TEST_AWK##TEST_PATH##/mumps.repl :: .*
+##TEST_AWK             jnlpool :: .*
+##TEST_AWK##REMOTE_TEST_PATH##/instance2/mumps.repl :: .*
+##TEST_AWK             jnlpool :: .*
+##TEST_AWK##REMOTE_TEST_PATH##/instance3/mumps.repl :: .*
+##TEST_AWK             jnlpool :: .*
+
+# (10) Run MUPIP FTOK -jnlpool -only $gtm_test_msr_DBDIR1/mumps.repl $gtm_test_msr_DBDIR2/mumps.repl $gtm_test_msr_DBDIR3/mumps.repl
+                File ::            Semaphore Id ::        Shared Memory Id ::                FTOK Key ::                             FileId
+-------------------------------------------------------------------------------------------------------------------------------------------
+##TEST_AWK##TEST_PATH##/mumps.repl :: .*
+##TEST_AWK             jnlpool :: .*
+##TEST_AWK##REMOTE_TEST_PATH##/instance2/mumps.repl :: .*
+##TEST_AWK             jnlpool :: .*
+##TEST_AWK##REMOTE_TEST_PATH##/instance3/mumps.repl :: .*
+##TEST_AWK             jnlpool :: .*
+
+# (11) Run MUPIP FTOK -jnlpool -noheader -only $gtm_test_msr_DBDIR1/mumps.repl $gtm_test_msr_DBDIR2/mumps.repl $gtm_test_msr_DBDIR3/mumps.repl
+##TEST_AWK##TEST_PATH##/mumps.repl :: .*
+##TEST_AWK             jnlpool :: .*
+##TEST_AWK##REMOTE_TEST_PATH##/instance2/mumps.repl :: .*
+##TEST_AWK             jnlpool :: .*
+##TEST_AWK##REMOTE_TEST_PATH##/instance3/mumps.repl :: .*
+##TEST_AWK             jnlpool :: .*
+
+# (12) Run MUPIP FTOK -recvpool $gtm_test_msr_DBDIR1/mumps.repl $gtm_test_msr_DBDIR2/mumps.repl $gtm_test_msr_DBDIR3/mumps.repl
+                File ::            Semaphore Id ::        Shared Memory Id ::                FTOK Key ::                             FileId
+-------------------------------------------------------------------------------------------------------------------------------------------
+##TEST_AWK##TEST_PATH##/mumps.repl :: .*
+##TEST_AWK            recvpool :: .*
+##TEST_AWK##REMOTE_TEST_PATH##/instance2/mumps.repl :: .*
+##TEST_AWK            recvpool :: .*
+##TEST_AWK##REMOTE_TEST_PATH##/instance3/mumps.repl :: .*
+##TEST_AWK            recvpool :: .*
+
+# (13) Run MUPIP FTOK -recvpool -noheader $gtm_test_msr_DBDIR1/mumps.repl $gtm_test_msr_DBDIR2/mumps.repl $gtm_test_msr_DBDIR3/mumps.repl
+##TEST_AWK##TEST_PATH##/mumps.repl :: .*
+##TEST_AWK            recvpool :: .*
+##TEST_AWK##REMOTE_TEST_PATH##/instance2/mumps.repl :: .*
+##TEST_AWK            recvpool :: .*
+##TEST_AWK##REMOTE_TEST_PATH##/instance3/mumps.repl :: .*
+##TEST_AWK            recvpool :: .*
+
+# (14) Run MUPIP FTOK -recvpool -only $gtm_test_msr_DBDIR1/mumps.repl $gtm_test_msr_DBDIR2/mumps.repl $gtm_test_msr_DBDIR3/mumps.repl
+                File ::            Semaphore Id ::        Shared Memory Id ::                FTOK Key ::                             FileId
+-------------------------------------------------------------------------------------------------------------------------------------------
+##TEST_AWK##TEST_PATH##/mumps.repl :: .*
+##TEST_AWK            recvpool :: .*
+##TEST_AWK##REMOTE_TEST_PATH##/instance2/mumps.repl :: .*
+##TEST_AWK            recvpool :: .*
+##TEST_AWK##REMOTE_TEST_PATH##/instance3/mumps.repl :: .*
+##TEST_AWK            recvpool :: .*
+
+# (15) Run MUPIP FTOK -recvpool -noheader -only $gtm_test_msr_DBDIR1/mumps.repl $gtm_test_msr_DBDIR2/mumps.repl $gtm_test_msr_DBDIR3/mumps.repl
+##TEST_AWK##TEST_PATH##/mumps.repl :: .*
+##TEST_AWK            recvpool :: .*
+##TEST_AWK##REMOTE_TEST_PATH##/instance2/mumps.repl :: .*
+##TEST_AWK            recvpool :: .*
+##TEST_AWK##REMOTE_TEST_PATH##/instance3/mumps.repl :: .*
+##TEST_AWK            recvpool :: .*
+
+# (16) Run MUPIP FTOK -jnlpool -recvpool $gtm_test_msr_DBDIR1/mumps.repl $gtm_test_msr_DBDIR2/mumps.repl $gtm_test_msr_DBDIR3/mumps.repl
+                File ::            Semaphore Id ::        Shared Memory Id ::                FTOK Key ::                             FileId
+-------------------------------------------------------------------------------------------------------------------------------------------
+##TEST_AWK##TEST_PATH##/mumps.repl :: .*
+##TEST_AWK             jnlpool :: .*
+##TEST_AWK            recvpool :: .*
+##TEST_AWK##REMOTE_TEST_PATH##/instance2/mumps.repl :: .*
+##TEST_AWK             jnlpool :: .*
+##TEST_AWK            recvpool :: .*
+##TEST_AWK##REMOTE_TEST_PATH##/instance3/mumps.repl :: .*
+##TEST_AWK             jnlpool :: .*
+##TEST_AWK            recvpool :: .*
+
+# (17) Run MUPIP FTOK -jnlpool -recvpool -noheader $gtm_test_msr_DBDIR1/mumps.repl $gtm_test_msr_DBDIR2/mumps.repl $gtm_test_msr_DBDIR3/mumps.repl
+##TEST_AWK##TEST_PATH##/mumps.repl :: .*
+##TEST_AWK             jnlpool :: .*
+##TEST_AWK            recvpool :: .*
+##TEST_AWK##REMOTE_TEST_PATH##/instance2/mumps.repl :: .*
+##TEST_AWK             jnlpool :: .*
+##TEST_AWK            recvpool :: .*
+##TEST_AWK##REMOTE_TEST_PATH##/instance3/mumps.repl :: .*
+##TEST_AWK             jnlpool :: .*
+##TEST_AWK            recvpool :: .*
+
+# (18) Run MUPIP FTOK -jnlpool -recvpool -only $gtm_test_msr_DBDIR1/mumps.repl $gtm_test_msr_DBDIR2/mumps.repl $gtm_test_msr_DBDIR3/mumps.repl
+                File ::            Semaphore Id ::        Shared Memory Id ::                FTOK Key ::                             FileId
+-------------------------------------------------------------------------------------------------------------------------------------------
+##TEST_AWK##TEST_PATH##/mumps.repl :: .*
+##TEST_AWK             jnlpool :: .*
+##TEST_AWK            recvpool :: .*
+##TEST_AWK##REMOTE_TEST_PATH##/instance2/mumps.repl :: .*
+##TEST_AWK             jnlpool :: .*
+##TEST_AWK            recvpool :: .*
+##TEST_AWK##REMOTE_TEST_PATH##/instance3/mumps.repl :: .*
+##TEST_AWK             jnlpool :: .*
+##TEST_AWK            recvpool :: .*
+
+# (19) Run MUPIP FTOK -jnlpool -recvpool -noheader -only $gtm_test_msr_DBDIR1/mumps.repl $gtm_test_msr_DBDIR2/mumps.repl $gtm_test_msr_DBDIR3/mumps.repl
+##TEST_AWK##TEST_PATH##/mumps.repl :: .*
+##TEST_AWK             jnlpool :: .*
+##TEST_AWK            recvpool :: .*
+##TEST_AWK##REMOTE_TEST_PATH##/instance2/mumps.repl :: .*
+##TEST_AWK             jnlpool :: .*
+##TEST_AWK            recvpool :: .*
+##TEST_AWK##REMOTE_TEST_PATH##/instance3/mumps.repl :: .*
+##TEST_AWK             jnlpool :: .*
+##TEST_AWK            recvpool :: .*
+
+# (20) Run MUPIP FTOK -only -id=44 mumps.repl
+##TEST_AWK          mumps.repl  ::  [ 0-9]{10}  \[ 0x[0-9a-f]{8} \]
+
+# (21) Run MUPIP FTOK -id=43 mumps.dat
+                File ::            Semaphore Id ::        Shared Memory Id ::                FTOK Key ::                             FileId
+-------------------------------------------------------------------------------------------------------------------------------------------
+##TEST_AWK           mumps.dat :: .*
+
+# (22) Run MUPIP FTOK -only -id=44 $gtm_test_msr_DBDIR1/mumps.repl $gtm_test_msr_DBDIR2/mumps.repl $gtm_test_msr_DBDIR3/mumps.repl
+##TEST_AWK##TEST_PATH##/mumps.repl  :: .*
+##TEST_AWK##REMOTE_TEST_PATH##/instance2/mumps.repl  :: .*
+##TEST_AWK##REMOTE_TEST_PATH##/instance3/mumps.repl  :: .*
+
+# These next two tests are for verifying the output and alignment of MUPIP FTOK
+
+# (23) Run MUPIP FTOK mumps.dat
+                File ::            Semaphore Id ::        Shared Memory Id ::                FTOK Key ::                             FileId
+-------------------------------------------------------------------------------------------------------------------------------------------
+##TEST_AWK           mumps.dat :: [ 0-9]{10} \[0x[0-9a-f]{8}\] :: [ 0-9]{10} \[0x[0-9a-f]{8}\] :: [ 0-9]{10} \[0x[0-9a-f]{8}\] :: 0x[0-9a-f]{32}
+
+# (24) Run MUPIP FTOK -jnlpool -recvpool $gtm_test_msr_DBDIR2/mumps.repl
+                File ::            Semaphore Id ::        Shared Memory Id ::                FTOK Key ::                             FileId
+-------------------------------------------------------------------------------------------------------------------------------------------
+##TEST_AWK##REMOTE_TEST_PATH##/instance2/mumps.repl ::         -1 \[0xffffffff\] ::         -1 \[0xffffffff\] :: [ 0-9]{10} \[0x[0-9a-f]{8}\] :: 0x[0-9a-f]{32}
+##TEST_AWK             jnlpool :: [ 0-9]{10} \[0x[0-9a-f]{8}\] :: [ 0-9]{10} \[0x[0-9a-f]{8}\]
+##TEST_AWK            recvpool :: [ 0-9]{10} \[0x[0-9a-f]{8}\] :: [ 0-9]{10} \[0x[0-9a-f]{8}\]
+
+###################################################################
+
+# Compare the output of MUPIP FTOK mumps.dat vs MUPIP FTOK -id=43 mumps.dat to verify they are the same
+
+*** No difference detected!
+
+###################################################################
+
+# Now for some MUPIP SEMAPHORE commands - the semaphores here are all of the semaphores used in this test - i.e. the semids for
+# 3 journal pools, 2 receive pools (INST1 has no receive pool), and 3 databases. This verifies their existence.
+
+# (25) Run MUPIP SEMAPHORE $ftokjnlpoolsemidINST1 $ftokjnlpoolsemidINST2 $ftokjnlpoolsemidINST3 - Verify 3 jnlpool semids exist (no error)
+##TEST_AWKsemid [1-9][0-9]* :: semkey \(0x0\): 5 semaphores in the set
+##TEST_AWKsemid [1-9][0-9]* :: semkey \(0x0\): 5 semaphores in the set
+##TEST_AWKsemid [1-9][0-9]* :: semkey \(0x0\): 5 semaphores in the set
+##TEST_AWKsem  0: \(semval= .*, semncnt=       0, semzcnt=       0, sempid= .*\)
+##TEST_AWKsem  1: \(semval= .*, semncnt=       0, semzcnt=       0, sempid= .*\)
+##TEST_AWKsem  2: \(semval= .*, semncnt=       0, semzcnt=       0, sempid= .*\)
+##TEST_AWKsem  3: \(semval= .*, semncnt=       0, semzcnt=       0, sempid= .*\)
+##TEST_AWKsem  4: \(semval=      43, semncnt=       0, semzcnt=       0, sempid= .*\)
+##TEST_AWKsem  0: \(semval= .*, semncnt=       0, semzcnt=       0, sempid= .*\)
+##TEST_AWKsem  1: \(semval= .*, semncnt=       0, semzcnt=       0, sempid= .*\)
+##TEST_AWKsem  2: \(semval= .*, semncnt=       0, semzcnt=       0, sempid= .*\)
+##TEST_AWKsem  3: \(semval= .*, semncnt=       0, semzcnt=       0, sempid= .*\)
+##TEST_AWKsem  4: \(semval=      43, semncnt=       0, semzcnt=       0, sempid= .*\)
+##TEST_AWKsem  0: \(semval= .*, semncnt=       0, semzcnt=       0, sempid= .*\)
+##TEST_AWKsem  1: \(semval= .*, semncnt=       0, semzcnt=       0, sempid= .*\)
+##TEST_AWKsem  2: \(semval= .*, semncnt=       0, semzcnt=       0, sempid= .*\)
+##TEST_AWKsem  3: \(semval= .*, semncnt=       0, semzcnt=       0, sempid= .*\)
+##TEST_AWKsem  4: \(semval=      43, semncnt=       0, semzcnt=       0, sempid= .*\)
+
+# (26) Run MUPIP SEMAPHORE $ftokrecvpoolsemidINST2 $ftokrecvpoolsemidINST3 - Verify 2 recvpool semids exist (no error) & verify formatting
+##TEST_AWKsemid [1-9][0-9]* :: semkey \(0x0\): 5 semaphores in the set
+##TEST_AWKsemid [1-9][0-9]* :: semkey \(0x0\): 5 semaphores in the set
+##TEST_AWKsem  0: \(semval=[ 0-9]{8}, semncnt=       0, semzcnt=       0, sempid=[ 0-9]{8}\)
+##TEST_AWKsem  1: \(semval=[ 0-9]{8}, semncnt=       0, semzcnt=       0, sempid=[ 0-9]{8}\)
+##TEST_AWKsem  2: \(semval=[ 0-9]{8}, semncnt=       0, semzcnt=       0, sempid=[ 0-9]{8}\)
+##TEST_AWKsem  3: \(semval=[ 0-9]{8}, semncnt=       0, semzcnt=       0, sempid=[ 0-9]{8}\)
+##TEST_AWKsem  4: \(semval=      43, semncnt=       0, semzcnt=       0, sempid=[ 0-9]{8}\)
+##TEST_AWKsem  0: \(semval=[ 0-9]{8}, semncnt=       0, semzcnt=       0, sempid=[ 0-9]{8}\)
+##TEST_AWKsem  1: \(semval=[ 0-9]{8}, semncnt=       0, semzcnt=       0, sempid=[ 0-9]{8}\)
+##TEST_AWKsem  2: \(semval=[ 0-9]{8}, semncnt=       0, semzcnt=       0, sempid=[ 0-9]{8}\)
+##TEST_AWKsem  3: \(semval=[ 0-9]{8}, semncnt=       0, semzcnt=       0, sempid=[ 0-9]{8}\)
+##TEST_AWKsem  4: \(semval=      43, semncnt=       0, semzcnt=       0, sempid=[ 0-9]{8}\)
+
+# (27) Run MUPIP SEMAPHORE $dbsemidINST1 $dbsemidINST2 $dbsemidINST3 - Verify 3 DB semids exist (no error)
+##TEST_AWKsemid [1-9][0-9]* :: semkey \(0x0\): 3 semaphores in the set
+##TEST_AWKsemid [1-9][0-9]* :: semkey \(0x0\): 3 semaphores in the set
+##TEST_AWKsemid [1-9][0-9]* :: semkey \(0x0\): 3 semaphores in the set
+##TEST_AWKsem  0: \(semval= .*, semncnt=       0, semzcnt=       0, sempid= .*\)
+##TEST_AWKsem  1: \(semval= .*, semncnt=       0, semzcnt=       0, sempid= .*\)
+##TEST_AWKsem  2: \(semval=      43, semncnt=       0, semzcnt=       0, sempid= .*\)
+##TEST_AWKsem  0: \(semval= .*, semncnt=       0, semzcnt=       0, sempid= .*\)
+##TEST_AWKsem  1: \(semval= .*, semncnt=       0, semzcnt=       0, sempid= .*\)
+##TEST_AWKsem  2: \(semval=      43, semncnt=       0, semzcnt=       0, sempid= .*\)
+##TEST_AWKsem  0: \(semval= .*, semncnt=       0, semzcnt=       0, sempid= .*\)
+##TEST_AWKsem  1: \(semval= .*, semncnt=       0, semzcnt=       0, sempid= .*\)
+##TEST_AWKsem  2: \(semval=      43, semncnt=       0, semzcnt=       0, sempid= .*\)
+
+# To also get a semaphore id that has a non-zero key, discover the ftok semaphore for mumps.dat
+
+# (28) Run MUPIP SEMAPHORE $ftokdbsemidINST1 - looking for non-zero key value
+##TEST_AWKsemid [1-9][0-9]* :: semkey \(0x2b[0-9a-f]{6}\): 3 semaphores in the set
+##TEST_AWKsem  0: \(semval= .*, semncnt=       0, semzcnt=       0, sempid= .*\)
+##TEST_AWKsem  1: \(semval= .*, semncnt=       0, semzcnt=       0, sempid= .*\)
+##TEST_AWKsem  2: \(semval=      43, semncnt=       0, semzcnt=       0, sempid= .*\)
+
+###################################################################
+
+# Run dbcheck.csh -extract to ensure db extract on primary matches secondary
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
+==Executing MULTISITE_REPLIC 'EXTRACT ALL'==
+DATABASE EXTRACT PASSED
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
