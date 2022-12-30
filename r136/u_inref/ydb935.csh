@@ -49,9 +49,9 @@ echo "# Starting Flask..."
 # Port=0 randomizes the start-up port for flask
 (python3 -m flask run --host=127.0.0.1 --port=0 >& flask_output.txt & ; echo $! >&! flask.pid) >&! flask.out
 set flaskpid = `cat flask.pid`
-# Flask outputs this line: * Running on http://192.168.192.207:54003/ (Press CTRL+C to quit)
-# https://stackoverflow.com/questions/25959870/how-to-wait-till-a-particular-line-appears-in-a-file
-tail -f flask_output.txt | sed '/Press CTRL+C to quit/ q' > /dev/null
+# Flask outputs this line: * Running on http://xx.xx.xx.xx:54003/ (Press CTRL+C to quit)
+# Wait till it shows up
+(tail -f flask_output.txt & ) | $gtm_dist/yottadb -r %XCMD 'for  read x quit:x["Press CTRL+C to quit"  hang .01'
 set flaskport = `grep "Running on http" flask_output.txt | cut -d: -f3 | cut -d/ -f1`
 
 echo "# Getting data/saving data via Flask API"
