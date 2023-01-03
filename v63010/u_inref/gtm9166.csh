@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh
 #################################################################
 #								#
-# Copyright (c) 2021-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2021-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -37,6 +37,10 @@ echo '#                    (the current global directory in the process) and not
 cp $gtmgbldir copy.gld
 echo "# Set a global variable 500 times"
 $gtm_exe/yottadb -run %XCMD 'set $zgbldir="copy.gld" for i=1:1:500 set ^a=i'
+
+echo "# Turn off WBTEST_JNLPROCSTUCK_FORCE now that the yottadb invocation (which needed this env var) is done."
+echo "# Not turning off could cause a later [mupip set -journal=disable] step to hang in rare cases."
+unsetenv gtm_white_box_test_case_enable
 
 # The next step ("Stop journaling") requires standalone access to the database.
 # It is possible the %YDBPROCSTUCKEXEC invocation in line 37 above (due to the JNLPROCSTUCK error)

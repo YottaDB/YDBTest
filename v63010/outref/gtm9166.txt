@@ -16,6 +16,8 @@ mumps.dat
 #                    This way we can later check that the DSE program invoked by %YDBPROCSTUCKEXEC uses copy.gld
 #                    (the current global directory in the process) and not mumps.gld (ydb_gbldir/gtmgbldir env var)
 # Set a global variable 500 times
+# Turn off WBTEST_JNLPROCSTUCK_FORCE now that the yottadb invocation (which needed this env var) is done.
+# Not turning off could cause a later [mupip set -journal=disable] step to hang in rare cases.
 ###################################################################
 # Stop journaling
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now DISABLED
