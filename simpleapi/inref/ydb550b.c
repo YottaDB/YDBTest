@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	*
+ * Copyright (c) 2020-2023 YottaDB LLC and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -240,7 +240,7 @@ void check_updates(struct transargs *args)
 
 void timer_done(intptr_t timer_id, unsigned int handler_data_len, char *handler_data)
 {
-	if (0 == timer_id)
+	if (0 == *(int *)timer_id)
 		is_done = 1;
 	else
 		check_for_restart = 1;
