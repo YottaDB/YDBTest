@@ -1,0 +1,42 @@
+# This test checks that trigger compilation responds to location
+# specified by the gtm_tmp environment variable.
+
+# Creating a temporary directory to be used as gtm_tmp
+
+# Creating the database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+# Creating the first trigger definition file
+
+# Add new trigger. This trigger will be successfully added
+File trigger9338_1.trg, Line 1: Added SET trigger on ^Acct named ValidateAccount1
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+
+# Remove write permissions to gtm_tmp directory
+
+# Creating the second trigger definition file
+
+# Add new trigger. This trigger will be unsuccessful
+##TEST_AWK%YDB-E-FILENOTFND, File ##TEST_PATH##/gtm9338_tmp/trgtmp.* not found
+%YDB-I-TEXT, Permission denied
+Error : Parsing XECUTE string: " Write ""Hello Mars!"""
+=========================================
+1 trigger file entries have errors
+0 trigger file entries have no errors
+=========================================
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
+
+# Verify database
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

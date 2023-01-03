@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -50,6 +50,7 @@
 # ydb922     [sam]      Test %YDBJNLF
 # gtm8863a   [estess]	Test YottaDB specific fields in db file header were relocated correctly
 # ydb935     [sam]      Test that multi-threaded application that ensures single-threading of calls to unthreaded Simple API calls runs correctly
+# gtm9338    [jv]       Test that trigger compilation responds to the location specified by the $gtm_tmp env var
 #----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r136 test starts..."
@@ -59,7 +60,7 @@ setenv subtest_list_common     ""
 setenv subtest_list_non_replic "ydb854 ydb860 ydb861 ydb869 ydb872 ydb864 ydb888 ydb901 ydb919 ydb940 ydb877 ydb908 ydb708"
 setenv subtest_list_non_replic "$subtest_list_non_replic ydb943 ydb575 ydb941 ydb944 ydb565 ydb951 ydb716 ydb830 ydb945 ydb839"
 setenv subtest_list_non_replic "$subtest_list_non_replic ydb925 ydb904 ydb954 ydb956 ydb961 ydb459 ydb729 ydb949 ydb934 ydb922"
-setenv subtest_list_non_replic "$subtest_list_non_replic gtm8863a ydb935"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm8863a ydb935 gtm9338"
 setenv subtest_list_replic     "peekbyname"
 
 if ($?test_replic == 1) then
