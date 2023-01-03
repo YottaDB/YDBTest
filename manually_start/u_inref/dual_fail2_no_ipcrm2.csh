@@ -4,7 +4,7 @@
 # Copyright (c) 2007-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -49,12 +49,6 @@ sleep $test_sleep_sec
 $gtm_tst/com/srcstat.csh "BEFORE_PRI_A_CRASH"
 $gtm_tst/com/primary_crash.csh "NO_IPCRM"
 sleep 5
-
-# This test does kill -9 followed by a MUPIP RUNDOWN/ROLLBACK. A kill -9 could hit the running GT.M process while it
-# is in the middle of executing wcs_wtstart. This could potentially leave some dirty buffers hanging in the shared
-# memory. So, set the white box test case to avoid asserts in wcs_flu.c
-setenv gtm_white_box_test_case_enable 1
-setenv gtm_white_box_test_case_number 29
 
 # FAIL OVER #
 echo "Doing Fail over."

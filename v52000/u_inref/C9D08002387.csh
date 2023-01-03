@@ -4,7 +4,7 @@
 # Copyright (c) 2006-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -43,7 +43,8 @@ echo $newline
 $gtm_tst/com/dbcreate.csh mumps
 \rm -f rand.o	# rand.o created by older version might have incompatible object format for newer version in case it is
 		# accessed later in this script so be safe and delete it
-setenv gtm_test_crash 1	# signal job.m to write script to kill the jobbed off child
+source $gtm_tst/com/set_crash_test.csh	# sets YDBTest and YDB-white-box env vars to indicate this is a crash test
+					# Also signals job.m to write script to kill the jobbed off child
 $GTM << GTM_EOF
 	do oldverstart^c002387
 GTM_EOF

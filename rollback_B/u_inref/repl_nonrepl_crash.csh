@@ -4,6 +4,9 @@
 # Copyright (c) 2003-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -29,7 +32,7 @@ setenv test_sleep_sec 90
 setenv test_sleep_sec_short 10
 setenv test_debug 1
 setenv gtm_test_repl_norepl 1
-setenv gtm_test_crash 1
+source $gtm_tst/com/set_crash_test.csh	# sets YDBTest and YDB-white-box env vars to indicate this is a crash test
 setenv gtm_test_tp 1
 # this test has explicit mupip creates, so let's not do anything that will have to be repeated at every mupip create
 setenv gtm_test_mupip_set_version "disable"

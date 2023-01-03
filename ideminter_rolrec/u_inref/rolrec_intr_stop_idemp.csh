@@ -4,7 +4,7 @@
 # Copyright (c) 2003-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -34,7 +34,8 @@ setenv gtm_test_onlinerollback "FALSE"  # Default to -noonline rollback
 setenv rollbackmethod ""
 unsetenv test_replic
 if ("CRASH" == "$crash_stop_idemp") then
-	# This whitebox test case serves two purpose.
+	source $gtm_tst/com/set_crash_test.csh # sets YDBTest and YDB-white-box env vars to indicate this is a crash test
+	# Setting the whitebox test case env vars above serves two purposes.
 	#
 	# 1. This test does kill -9 followed by a MUPIP JOURNAL -RECOVER. A kill -9 could hit the running GT.M process while it		#BYPASSOK("kill")
 	# is in the middle of executing wcs_wtstart. This could potentially leave some dirty buffers hanging in the shared
@@ -43,8 +44,6 @@ if ("CRASH" == "$crash_stop_idemp") then
 	# 2. Since we do interrupted recovery and rollback, it is possible, in some rare cases for TP resolve time to be adjusted by
 	# a significant amount. This will cause asserts in mur_back_process.c to fail. To avoid that, set the following whitebox
 	# test case.
-	setenv gtm_white_box_test_case_enable 1
-	setenv gtm_white_box_test_case_number 29
 endif
 if ($?gtm_white_box_test_case_number) then
 	echo "# $crash_stop_idemp forces the following whitebox test case"				>> settings.csh
@@ -418,8 +417,8 @@ $gtm_tst/com/abs_time.csh time4 |& sed 's/: /:GTM_TEST_DEBUGINFO/'
 #
 # We have random since_time/sequence number for recover/rollback. This take database to an arbitrary point.
 # That is, a particular iteration of imptp/impztp may not be complete. checkdb needs to handle that.
-# So, we do setenv gtm_test_crash 1 before checkdb.
-setenv gtm_test_crash 1
+# So, we do set the YDBTest env var to indicate this is a crash test before the checkdb.csh call.
+source $gtm_tst/com/set_crash_test.csh # sets YDBTest and YDB-white-box env vars to indicate this is a crash test
 $gtm_tst/com/checkdb.csh
 #
 $gtm_tst/com/abs_time.csh time5 |& sed 's/: /:GTM_TEST_DEBUGINFO/'

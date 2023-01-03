@@ -4,7 +4,7 @@
 # Copyright (c) 2004-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -35,7 +35,7 @@ setenv test_debug 1
 setenv gtm_test_tp 6
 setenv gtm_test_jobcnt 6
 setenv gtm_test_dbfill "IMPTP"
-setenv gtm_test_crash 1
+source $gtm_tst/com/set_crash_test.csh	# sets YDBTest and YDB-white-box env vars to indicate this is a crash test
 $gtm_tst/com/dbcreate.csh mumps 8 125-325 900-1150 512,1024,4096 4096 4096 4096
 
 echo "# Multi-Process GTM Process starts in background... : GTM_TEST_DEBUGINFO : `date`"

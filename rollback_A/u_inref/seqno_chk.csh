@@ -4,7 +4,7 @@
 # Copyright (c) 2003-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -20,7 +20,7 @@ setenv tst_buffsize 1048576
 setenv gtm_test_spanreg 0	# The test assumes that updates go to each of the 9 regions sequentially in order
 				# Rest of the test's verification process depends on that assumption
 $gtm_tst/com/dbcreate.csh mumps 9 125 1000
-setenv gtm_test_crash 1
+source $gtm_tst/com/set_crash_test.csh	# sets YDBTest and YDB-white-box env vars to indicate this is a crash test
 setenv portno `$sec_shell '$sec_getenv; cat $SEC_DIR/portno'`
 setenv start_time `cat start_time`
 setenv test_sleep_sec 60

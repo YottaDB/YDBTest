@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -20,7 +20,7 @@
 if ("1" == "$test_replic_suppl_type") then
 	source $gtm_tst/com/rand_suppl_type.csh 0 2
 endif
-setenv gtm_test_crash 1
+source $gtm_tst/com/set_crash_test.csh # sets YDBTest and YDB-white-box env vars to indicate this is a crash test
 $gtm_tst/com/dbcreate.csh mumps 3 125 1000 4096 2000 4096 2000
 setenv portno `$sec_shell '$sec_getenv; cat $SEC_DIR/portno'`
 setenv start_time `cat start_time`

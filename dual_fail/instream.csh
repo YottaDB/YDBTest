@@ -3,7 +3,7 @@
 #								#
 #	Copyright 2002, 2014 Fidelity Information Services, Inc	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -34,7 +34,7 @@ setenv tst_jnl_str "$tst_jnl_str,epoch=300"
 ##END_DISABLE##
 echo "DUAL_FAIL test Starts..."
 setenv gtm_test_dbfill "IMPTP"
-setenv gtm_test_crash 1
+source $gtm_tst/com/set_crash_test.csh # sets YDBTest and YDB-white-box env vars to indicate this is a crash test
 if ($LFE == "E") then
 	setenv test_sleep_sec 45
 	setenv test_sleep_sec_short 10

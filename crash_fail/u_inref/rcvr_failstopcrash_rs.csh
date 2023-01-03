@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -27,7 +27,7 @@ if !($?gtm_test_replay) then
 	setenv stopfailcrash_todo $crash_case
 endif
 if ( 3 == "$stopfailcrash_todo" ) then
-	setenv gtm_test_crash 1
+	source $gtm_tst/com/set_crash_test.csh # sets YDBTest and YDB-white-box env vars to indicate this is a crash test
 	# If nobefore-image journaling is in use, we can only use forward rollback (no backward rollback possible).
 	# If before-image journaling is in use, we can use either. If backward rollback is chosen, a hidden forward rollback
 	#	is also attempted as part of mupip_rollback.csh. If forward_only is chosen randomly, only a forward rollback

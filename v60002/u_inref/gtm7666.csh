@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2013 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -15,7 +18,7 @@ unsetenv gtm_test_fake_enospc
 
 setenv gtm_test_jobcnt 10
 setenv gtm_test_jobid 1
-setenv gtm_test_crash 1
+source $gtm_tst/com/set_crash_test.csh	# sets YDBTest and YDB-white-box env vars to indicate this is a crash test
 setenv gtm_test_dbfill "IMPTP"
 setenv acc_meth BG # before image journaling does not work with MM
 $gtm_tst/com/dbcreate.csh mumps 4 125 1000 4096 2000 4096 2000 >& dbcreate.out

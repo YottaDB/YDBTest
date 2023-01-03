@@ -3,7 +3,7 @@
 #								#
 # Copyright 2002, 2013 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -14,7 +14,7 @@
 #################################################################
 unsetenv test_replic
 setenv test_reorg "NON_REORG"
-setenv gtm_test_crash 1
+source $gtm_tst/com/set_crash_test.csh	# sets YDBTest and YDB-white-box env vars to indicate this is a crash test
 setenv test_debug 1
 # Cannot use triggers while turning journaling on and off
 setenv gtm_test_trigger 0

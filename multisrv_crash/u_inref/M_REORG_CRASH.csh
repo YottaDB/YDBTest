@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -33,11 +33,6 @@ setenv tst_buffsize 1048576
 # if multiple job compliles a module at the same time, sometimes they fail. So pre-compile M code.
 $gtm_exe/mumps $gtm_tst/com/npfill.m
 $sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_exe/mumps $gtm_tst/com/npfill.m"
-
-# This test does kill -9 of a GT.M process. Set the below white box env vars to indicate this is a crash test.
-# Otherwise the test might fail asserts (e.g. in wcs_recover.c, if it finds cr->in_tend non-zero etc.)
-setenv gtm_white_box_test_case_enable 1
-setenv gtm_white_box_test_case_number 29
 
 $gtm_tst/com/dbcreate.csh mumps 9 125 1000 1024 500 8192
 
@@ -108,12 +103,6 @@ if (1 == "$crash_failed" ) then
 	exit 1
 endif
 
-# This test does kill -9 of a GT.M process followed by a ROLLBACK. A kill -9 could hit the running GT.M process while
-# it is in the middle of executing wcs_wtstart. This could potentially leave some dirty buffers hanging in the shared memory. So,
-# set the white box test case to avoid asserts in wcs_flu.c
-setenv gtm_white_box_test_case_enable 1
-setenv gtm_white_box_test_case_number 29
-
 echo "=== STEP 3 ==="
 # FAIL OVER #
 echo "DOING FAIL OVER..."
@@ -152,9 +141,6 @@ endif
 echo "mupip_rollback.csh -fetchresync=portno -losttrans=fetch.glo *"
 $gtm_tst/com/mupip_rollback.csh -fetchresync=$portno -losttrans=fetch.glo "*" >>&! rollback2.log
 $grep "successful" rollback2.log
-
-unsetenv gtm_white_box_test_case_enable
-unsetenv gtm_white_box_test_case_number
 
 ##########################################################
 source $gtm_tst/com/bakrestore_test_replic.csh

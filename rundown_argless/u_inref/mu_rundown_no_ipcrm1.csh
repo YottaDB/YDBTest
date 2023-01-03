@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -21,7 +21,7 @@
 # argumentless rundown version stays in rundown_argless test, rundown -reg "*" version stays in mupip test.
 # A change made to one test should immediately be duplicated to the other.
 ## !!! NOTE !!! ##
-setenv gtm_test_crash 1
+source $gtm_tst/com/set_crash_test.csh	# sets YDBTest and YDB-white-box env vars to indicate this is a crash test
 
 # Below is needed since this test does a "NO_IPCRM" and we do not want DBDANGER messages from freezing the instance
 source $gtm_tst/com/adjust_custom_errors_for_no_ipcrm_test.csh
@@ -40,12 +40,6 @@ $sec_shell "$sec_getenv; $gtm_tst/com/receiver_crash.csh ""NO_IPCRM"""
 # PRIMARY SIDE (A) CRASH
 $gtm_tst/com/srcstat.csh "BEFORE_PRI_A_CRASH"
 $gtm_tst/com/primary_crash.csh "NO_IPCRM"
-
-# This test does kill -9 followed by a MUPIP RUNDOWN. A kill -9 could hit the running GT.M process while it
-# is in the middle of executing wcs_wtstart. This could potentially leave some dirty buffers hanging in the shared
-# memory. So, set the white box test case to avoid asserts in wcs_flu.c
-setenv gtm_white_box_test_case_enable 1
-setenv gtm_white_box_test_case_number 29
 
 # If encryption is turned on, rundown needs to know the secondary database's encryption key. So, add that to the existing configuration file.
 if ("ENCRYPT" == $test_encryption) then

@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -22,19 +25,13 @@ setenv gtm_test_mupip_set_version "disable"
 $gtm_tst/com/dbcreate.csh mumps 8 125 1000
 
 setenv gtm_test_jobcnt 10
-setenv gtm_test_crash 1
+source $gtm_tst/com/set_crash_test.csh	# sets YDBTest and YDB-white-box env vars to indicate this is a crash test
 
 echo "# GTM Process starts in background..."
 $gtm_tst/com/imptp.csh >>&! imptp.out
 
 # Waiting 2000 updates to happen.
 $gtm_exe/mumps -run %XCMD 'for  quit:2000<=$get(^cntloop(0),0)  hang 0.5'
-
-# This test does kill -9 followed by a MUPIP RUNDOWN. A kill -9 could hit the running GT.M process while it
-# is in the middle of executing wcs_wtstart. This could potentially leave some dirty buffers hanging in the shared
-# memory. So, set the white box test case to avoid asserts in wcs_flu.c
-setenv gtm_white_box_test_case_enable 1
-setenv gtm_white_box_test_case_number 29
 
 # PRIMARY SIDE (A) CRASH
 $gtm_tst/com/primary_crash.csh

@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2013, 2014 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -23,7 +26,7 @@ setenv test_debug 1
 setenv tst_jnl_str "$tst_jnl_str,epoch=300"
 ##END_DISABLE##
 setenv gtm_test_dbfill "IMPTP"
-setenv gtm_test_crash 1
+source $gtm_tst/com/set_crash_test.csh # sets YDBTest and YDB-white-box env vars to indicate this is a crash test
 if ($LFE == "E") then
 	# To work around C9E02-002514 we need to have test_sleep_sec more than 60 seconds.
 	# Once C9E02-002514 is fixed go back to 30 second or 60 seconds

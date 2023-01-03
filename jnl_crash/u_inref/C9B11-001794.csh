@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2002, 2014 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -15,11 +18,6 @@ echo "They should succeed when <kill -9 pid> and <ipcrm -s sem> is done (no <ipc
 set gtm_process = 2
 set iteration = 2
 
-# This test does kill -9 followed by a MUPIP JOURNAL -RECOVER. A kill -9 could hit the running GT.M process while it
-# is in the middle of executing wcs_wtstart. This could potentially leave some dirty buffers hanging in the shared
-# memory. So, set the white box test case to avoid asserts in wcs_flu.c
-setenv gtm_white_box_test_case_enable 1
-setenv gtm_white_box_test_case_number 29
 $gtm_tst/com/dbcreate.csh mumps 3 125 1000 4096 2048 4096 2000
 echo "$MUPIP set -journal=enable,on,buff=2312,before -reg *" >>& jnl_on.log
 $MUPIP set -journal=enable,on,buff=2312,before -reg "*" >>& jnl_on.log

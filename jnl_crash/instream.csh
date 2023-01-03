@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -19,7 +19,7 @@
 ### "C9A07-001552-Rework-journali..." fixes are in CMS
 ###################################
 #
-setenv gtm_test_crash 1
+source $gtm_tst/com/set_crash_test.csh # sets YDBTest and YDB-white-box env vars to indicate this is a crash test
 if($?test_replic) then
 	echo "jnl_crash test runs as Non-Replication only!"
 	exit

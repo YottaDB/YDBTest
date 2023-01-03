@@ -4,7 +4,7 @@
 # Copyright (c) 2007, 2015 Fidelity National Information	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -28,7 +28,7 @@ setenv test_debug 1
 setenv tst_jnl_str "$tst_jnl_str,epoch=300"
 ##END_DISABLE##
 setenv gtm_test_dbfill "IMPTP"
-setenv gtm_test_crash 1
+source $gtm_tst/com/set_crash_test.csh # sets YDBTest and YDB-white-box env vars to indicate this is a crash test
 # use a tst_buffsize of 8MB for all dual fail tests, per C9D06-002314
 setenv tst_buffsize 8388608
 # subtests in this test does a failover. A->P won't work in this case.

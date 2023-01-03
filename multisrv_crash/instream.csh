@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -32,7 +35,7 @@ if ("ENCRYPT" == "$test_encryption") then
 	source $gtm_tst/com/set_encryption_lib_and_algo.csh	>>&! settings.csh
 endif
 #
-setenv gtm_test_crash 1
+source $gtm_tst/com/set_crash_test.csh	# sets YDBTest and YDB-white-box env vars to indicate this is a crash test
 setenv subtest_list "M_REORG_CRASH C9A07_001552"
 # Now start test
 $gtm_tst/com/submit_subtest.csh

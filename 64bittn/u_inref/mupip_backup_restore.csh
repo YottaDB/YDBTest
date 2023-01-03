@@ -4,7 +4,7 @@
 # Copyright (c) 2005-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -24,7 +24,7 @@ echo "########### mixed data format block section ############"
 echo "#			Section 1		       #"
 $gtm_tst/com/dbcreate.csh mumps 1 255 1000 -allocation=2048 -extension_count=2048
 setenv gtm_test_jobid 0
-setenv gtm_test_crash 1
+source $gtm_tst/com/set_crash_test.csh # sets YDBTest and YDB-white-box env vars to indicate this is a crash test
 setenv gtm_test_jobcnt 12
 setenv gtm_test_crash_nprocs 8    # signal job.m to kill 8 jobs out of the 10	(BYPASSOK kill)
 setenv gtm_test_crash_maxdelay 10 # kill those 8 jobs one by one with a maxdelay of 10 seconds
