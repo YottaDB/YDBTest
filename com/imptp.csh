@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -111,11 +111,29 @@ if ($gtm_test_dbfill == "IMPTP" || $gtm_test_dbfill == "IMPZTP") then
 			# segmentation fault. So, disable YDBPython random choice on Arch Linux.
 			# See https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/1299#note_839072462 and
 			# https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/1385#note_972287548 for more details.
-			set rustcminorver = `rustc --version | cut -d. -f2`
 			if (($gtm_test_libyottadb_asan_enabled) && ("arch" == $gtm_test_linux_distrib)) then
 				while (3 == $imptpflavor)
+					echo "# Disabling ydb_imptp_flavor=3 (YDBPython) due to ASAN + Arch Linux" >> settings.csh
 					set imptpflavor = `$gtm_exe/mumps -run rand $rand`
 				end
+			endif
+			# Disable Python testing if YottaDB is built with ASAN and CLANG.
+			# In that case, setting the LD_PRELOAD env var (which the YDBPython wrapper sets whenever it
+			# finds YottaDB is built with ASAN, be it CLANG or GCC) results in the following error
+			#	Your application is linked against incompatible ASan runtimes
+			# This happens when invoking $ydb_dist/yottadb from within the YDBPython wrapper (which can happen
+			# for example if the %YDBPROCSTUCKEXEC mechanism is invoked by the test framework in case the
+			# YDBPython wrapper notices a MUTEXLCKALERT situation). Such occurrences would result in a core
+			# file which would fail the test.
+			# Note that if YottaDB is built with ASAN and GCC, then we don't have a similar issue. This is because
+			# gcc links the asan runtime library dynamically whereas clang links it statically (-static-libasan).
+			if ($gtm_test_libyottadb_asan_enabled) then
+				if ("clang" == $gtm_test_asan_compiler) then
+					while (3 == $imptpflavor)
+						echo "# Disabling ydb_imptp_flavor=3 (YDBPython) due to CLANG + ASAN" >> settings.csh
+						set imptpflavor = `$gtm_exe/mumps -run rand $rand`
+					end
+				endif
 			endif
 			unset rand
 		endif
