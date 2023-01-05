@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2019-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -18,7 +18,12 @@ echo "# Run for a specified duration calling random features of the YottaDB Go E
 if ($?test_replic) then
 	# Need to use MSR framework whenever -gld_has_db_fullpath is in use (non-MSR replication does not work currently)
 	$MULTISITE_REPLIC_PREPARE 2	# Create two instances INST1 (primary side) and INST2 (secondary side)
+	# We have seen REPLTRANS2BIG errors on the receiver server side in rare cases due to a transaction whose size was 60.3Mb.
+	# This cannot be accommodated in the default receive pool which is 32Mb. Therefore, bump the receive pool buffer
+	# size (and the journal pool buffer size too since it is controlled by the same test system env var) to 128Mb.
+	setenv tst_buffsize 134217728 # i.e. 128*1024*1024
 endif
+
 # We have seen occasional TRANS2BIG errors with global buffers as high as 16Kb so current setting is at 32Kb
 $gtm_tst/com/dbcreate.csh mumps -global_buffer=32768 -gld_has_db_fullpath >>& dbcreate.out
 if ($status) then
