@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -31,10 +31,13 @@ find .venv -name '*.so' -exec ldd {} \; | grep libyottadb.so
 echo "# Creating db file"
 $gtm_tst/com/dbcreate.csh mumps 3
 
+
 if ($gtm_test_libyottadb_asan_enabled) then
 	# Set ASAN variables
-	setenv LD_PRELOAD `gcc -print-file-name=libasan.so`
+	set ydb935ld_preload=`gcc -print-file-name=libasan.so`
 	source $gtm_tst/com/set_asan_options_env_var.csh
+else
+	set ydb935ld_preload=""
 endif
 
 echo "# Running thread test..."
@@ -47,7 +50,7 @@ setenv FLASK_APP "index"
 
 echo "# Starting Flask..."
 # Port=0 randomizes the start-up port for flask
-(python3 -m flask run --host=127.0.0.1 --port=0 >& flask_output.txt & ; echo $! >&! flask.pid) >&! flask.out
+(env LD_PRELOAD=$ydb935ld_preload python3 -m flask run --host=127.0.0.1 --port=0 >& flask_output.txt & ; echo $! >&! flask.pid) >&! flask.out
 set flaskpid = `cat flask.pid`
 # Flask outputs this line: * Running on http://xx.xx.xx.xx:54003/ (Press CTRL+C to quit)
 # Wait till it shows up
