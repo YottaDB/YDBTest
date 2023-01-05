@@ -3,7 +3,7 @@
 #								#
 #	Copyright 2013 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -66,11 +66,10 @@ if (! $status) then
 	mv intrptxtime.mjex intrptxtime-child.outx
 endif
 
-# Under heavy load we might accumulate a backlog of MUPIP processes, so
-# wait for up to a minute for them to terminate.
+# Under heavy load we might accumulate a backlog of MUPIP processes, so wait for up to 5 minutes for them to terminate.
 @ i = 0
 @ cnt = -1
-while ((0 != $cnt) && ($i < 60))
+while ((0 != $cnt) && ($i < 300))
 	@ i = $i + 5
 	$psuser >&! mupip_ps_list$i.outx
 	@ cnt = `$grep "mupip journal -extract -forward mumps.mjl" mupip_ps_list$i.outx | wc -l`
