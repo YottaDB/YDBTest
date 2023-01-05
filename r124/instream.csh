@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -152,6 +152,12 @@ if ("armv6l" == `uname -m`) then
 	# i.e. the CPT values always are a multiple of 1000 or in rare cases end in 999 but never any other value between 1 and 998.
 	# So disable this subtest on the ARMV6L.
 	setenv subtest_exclude_list "$subtest_exclude_list ydb333"
+endif
+
+source $gtm_tst/com/is_libyottadb_asan_enabled.csh
+if ($gtm_test_libyottadb_asan_enabled) then
+	# Disable ydb358 subtest if YottaDB is built ASAN.
+	setenv subtest_exclude_list "$subtest_exclude_list ydb358"
 endif
 
 # Submit the list of subtests
