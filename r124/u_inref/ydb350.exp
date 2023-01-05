@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -27,7 +27,7 @@ puts "--------------------------------------------------------------------------
 send -- "strace -o trace1.outx \$ydb_dist/mumps -run writecmd^ydb350\r"
 expect -exact "SHELL"
 puts "\n# Expecting 1 line below : 1 tcsetattr call in op_use (init_gtm -> gtm_startup -> cenable -> op_use) and 0 calls due to WRITE"
-send -- "grep ioctl trace1.outx | grep TCSETS\r"
+send -- "grep ioctl trace1.outx | grep TCSETS | sed 's/{.*}//g'\r"
 expect -exact "SHELL"
 
 puts "\n-------------------------------------------------------------------------------------------------------"
@@ -39,7 +39,7 @@ system $::env(gtm_tst)/com/wait_for_stty_echo_off.csh
 send -- "1\r"
 expect -exact "SHELL"
 puts "\n# Expecting 3 lines below : 1 tcsetattr call in op_use and 2 tcsetattr calls in iott_readfl (one to set -echo and one to set echo)"
-send -- "grep ioctl trace2.outx | grep TCSETS\r"
+send -- "grep ioctl trace2.outx | grep TCSETS | sed 's/{.*}//g'\r"
 expect -exact "SHELL"
 
 puts "\n-------------------------------------------------------------------------------------------------------"
@@ -51,7 +51,7 @@ system $::env(gtm_tst)/com/wait_for_stty_echo_off.csh
 send -- "1"
 expect -exact "SHELL"
 puts "\n# Expecting 3 lines below : 1 tcsetattr call in op_use and 2 tcsetattr calls in iott_rdone (one to set -echo and one to set echo)"
-send -- "grep ioctl trace3.outx | grep TCSETS\r"
+send -- "grep ioctl trace3.outx | grep TCSETS | sed 's/{.*}//g'\r"
 expect -exact "SHELL"
 
 puts "\n--------------------------------------------------------------------------"
@@ -66,6 +66,6 @@ send -- "halt\r"
 expect -exact "SHELL"
 
 puts "\n# Expecting 5 lines below : 1 tcsetattr call in op_use and 2 tcsetattr calls in dm_read for 2 M lines of input (do &sttydisp LINE and halt LINE)"
-send -- "grep ioctl trace4.outx | grep TCSETS\r"
+send -- "grep ioctl trace4.outx | grep TCSETS | sed 's/{.*}//g'\r"
 expect -exact "SHELL"
 
