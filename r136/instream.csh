@@ -88,6 +88,11 @@ if ($gtm_test_libyottadb_asan_enabled && ("clang" == $gtm_test_asan_compiler)) t
 	setenv subtest_exclude_list "$subtest_exclude_list ydb935"
 endif
 
+if ("suse" == "$gtm_test_linux_distrib") then
+	# Disable gtm8863a on SUSE_LINUX as we require YottaDB r1.34 which is not available on SUSE Linux flavors
+	setenv subtest_exclude_list "$subtest_exclude_list gtm8863a"
+endif
+
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh
 
