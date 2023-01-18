@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh
 #################################################################
 #                                                               #
-# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.       #
+# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.       #
 # All rights reserved.                                          #
 #                                                               #
 #       This source code contains the intellectual property     #
@@ -39,7 +39,9 @@ h
 xx
 `pwd`/yottadb -direct < ../yottadbTest.txt
 
-# clean up the install directory since the files are owned by root
 cd ..
-sudo rm -rf install
+# Change permissions on the install directory since the files are owned by root
+# Or else the test framework will encounter problems while trying to remove these in case of a passed test run
+set grpname = `id -gn $USER`
+sudo chown -R ${USER}:${grpname} install
 
