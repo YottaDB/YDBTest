@@ -1,0 +1,46 @@
+# Fix various bugs in %YDBJNLF
+# 1. Allow extract if db file is not available (previously failed with %YDB-W-DBCOLLREQ)
+# 2. Long records are ingested correctly (previously failed with an LVUNDEF error)
+# 3. Transaction records are ingested correctly (previously failed with %YDBJNLF-F-BADRECTYPE)
+
+# Creating unjournaled database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+# Adding ability to add long data
+Database file ##TEST_PATH##/mumps.dat now has maximum record size 1000000
+Database file ##TEST_PATH##/mumps.dat now has 65536 global buffers
+
+# Turning on journaling
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/myjournal.mjl created for region DEFAULT with NOBEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+
+# Set long globals (999999 bytes) in a transaction + triggers
+Added SET trigger on ^x named x#1
+Added Non-SET trigger on ^x named x#2
+
+# Delete database file
+removed 'mumps.dat'
+
+# Create a brand new database unrelated to first database
+# (Still not journaled)
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+foo.gld
+Using: ##SOURCE_PATH##/mupip
+foo.dat
+
+# Ingest journal file
+# (expect no errors)
+# Analyze journal data
+Events by global
+   Event  Global  Count
+   TKILL  ^x      1
+   UKILL  ^x      1
+   UKILL  ^y      2
+   USET   ^#t     28
+   USET   ^x      3
+   USET   ^y      3
