@@ -34,7 +34,7 @@ $gtm_exe/mumps -run setx^ydb980
 
 echo ""
 echo "# Delete database file"
-rm -v mumps.dat
+rm mumps.dat
 
 echo ""
 echo "# Create a brand new database unrelated to first database"
