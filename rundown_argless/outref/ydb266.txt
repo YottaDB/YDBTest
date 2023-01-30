@@ -37,4 +37,7 @@ PASS
 #    current user id exist on the system.
 # e) %YDB-E-MUFILRNDWNFL2 messages if YottaDB database ipcs created by a different YottaDB release than the one running
 #    this test exist on the system
+# f) %SYSTEM-E-ENO13, Permission denied messages if YottaDB database ipcs created by a different user id than the one
+#    running this test exist on the system. A stat() of the database file name stored in database shared memory pointed
+#    to by the databse shmid would return a permission denied error in that case.
 # So filter all of the above out to avoid non-deterministic reference file.

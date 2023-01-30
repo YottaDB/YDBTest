@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -71,6 +71,9 @@ echo "# d) %YDB-E-MURPOOLRNDWNFL messages if YottaDB receive pool ipcs left over
 echo "#    current user id exist on the system."
 echo "# e) %YDB-E-MUFILRNDWNFL2 messages if YottaDB database ipcs created by a different YottaDB release than the one running"
 echo "#    this test exist on the system"
+echo "# f) %SYSTEM-E-ENO13, Permission denied messages if YottaDB database ipcs created by a different user id than the one"
+echo "#    running this test exist on the system. A stat() of the database file name stored in database shared memory pointed"
+echo "#    to by the databse shmid would return a permission denied error in that case."
 echo "# So filter all of the above out to avoid non-deterministic reference file."
 
 # Since the errors should not be caught by the error catching test framework, redirect the output to .logx (not .log)
@@ -80,4 +83,5 @@ $gtm_tst/com/check_error_exist.csh rundown.log "%YDB-E-VERMISMATCH" >& rundown2.
 $gtm_tst/com/check_error_exist.csh rundown.log "%YDB-E-MUJPOOLRNDWNFL" >& rundown3.logx
 $gtm_tst/com/check_error_exist.csh rundown.log "%YDB-E-MURPOOLRNDWNFL" >& rundown4.logx
 $gtm_tst/com/check_error_exist.csh rundown.log "%YDB-E-MUFILRNDWNFL2" >& rundown5.logx
+$gtm_tst/com/check_error_exist.csh rundown.log "%SYSTEM-E-ENO13" >& rundown6.logx
 
