@@ -1,0 +1,23 @@
+##################################################################################
+# Test GTM-9102 : MUPIP FREEZE -ONLINE is consistent across regions except for AIO
+##################################################################################
+# Disable AIO in the test as GTM-9102 does not work with it
+# Force BG as access method as ONLINE FREEZE does not work on MM regions
+# Create 2-region database where ^a updates go to a.dat and ^b updates go to b.dat
+# Start updates in background that set ^a=i and ^b=i+1 in a loop
+# Run MUPIP FREEZE -ONLINE -ON "*"
+# Capture online freeze output in a deterministic order
+# First capture list of regions that got frozen in a sorted order (to keep it determninistic)
+AREG : Region AREG is now FROZEN
+DEFAULT : Region DEFAULT is now FROZEN
+# Copy over the a.dat and b.dat files over to a [bak] directory (effectively taking a snapshot after online freeze)
+# Unfreeze the regions now that the snapshot has been taken
+# Stop background updates
+# Run [mupip rundown] first on the snapshot as the backup .dat files still have references to live db shmid
+# Verify that multi-region online freeze snapshot has ^a and ^b differing by at most 1
+# Before GTM-9102 fixes, the difference would be a lot more than 1 (e.g. 55)
+VERIFY-S-PASS : Verification passed. Difference between ^a and ^b is = [1] as expected
+# Run dbcheck.csh
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
