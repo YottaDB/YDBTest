@@ -206,15 +206,17 @@ echo ""
 
 # Stop the world and check that all is well before moving on.
 
-setenv gtm_test_jobid 1
-setenv gtm_test_dbfillid 1
-$gtm_tst/com/endtp.csh >&! endtp_${gtm_test_jobid}.out
-$gtm_tst/com/checkdb.csh
+foreach jobid (1 2)
+	setenv gtm_test_jobid $jobid
+	setenv gtm_test_dbfillid $jobid
+	$gtm_tst/com/endtp.csh >&! endtp_${gtm_test_jobid}.out
+end
 
-setenv gtm_test_jobid 2
-setenv gtm_test_dbfillid 2
-$gtm_tst/com/endtp.csh >&! endtp_${gtm_test_jobid}.out
-$gtm_tst/com/checkdb.csh
+foreach jobid (1 2)
+	setenv gtm_test_jobid $jobid
+	setenv gtm_test_dbfillid $jobid
+	$gtm_tst/com/checkdb.csh
+end
 
 echo ""
 echo "# Start New Workers"
