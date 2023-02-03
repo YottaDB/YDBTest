@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -20,7 +20,7 @@
 peekbyname	;
 	set side=$zcmdline
 	; The below control blocks require a region argument so provide that using the "secondparam" lvn.
-	for controlblock="gd_region","gd_segment","jnl_buffer","jnl_private_control","node_local","sgmnt_addrs","sgmnt_data" do
+	for controlblock="gd_region","gd_segment","jnl_buffer","jnl_private_control","node_local","sgmnt_addrs","sgmnt_data","unix_db_info" do
 	.	set secondparam(controlblock)=",""DEFAULT"""
 	; The below control blocks require an index argument so provide that using the "secondparam" lvn.
 	for controlblock="gtmsource_local_struct","gtmsrc_lcl" do
