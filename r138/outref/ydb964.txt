@@ -1,0 +1,164 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+#####################################################################
+######## Test various code issues identified by fuzz testing ########
+#####################################################################
+
+------------------------------------------------------------
+# Test of https://gitlab.com/YottaDB/DB/YDB/-/issues/964#note_1267088419
+# Test that multiple $ZTRIGGER calls after a LVUNDEF error run fine
+# Prior to YDB@4db8241a, this test failed with an assert
+# Expecting only 2 LVUNDEF errors in below output in each invocation
+------------------------------------------------------------
+# Try ydb964ztriggerlvundef.m using [yottadb -direct]
+
+YDB>
+%YDB-E-LVUNDEF, Undefined local variable: undef
+
+YDB>
+%YDB-E-LVUNDEF, Undefined local variable: undef
+
+YDB>
+
+YDB>
+# Try ydb964ztriggerlvundef.m using [yottadb -run]
+ZSTATUS=+1^ydb964ztriggerlvundef,%YDB-E-LVUNDEF, Undefined local variable: undef
+ZSTATUS=+2^ydb964ztriggerlvundef,%YDB-E-LVUNDEF, Undefined local variable: undef
+
+------------------------------------------------------------
+# Test of https://gitlab.com/YottaDB/DB/YDB/-/issues/964#note_1267095573
+# Test that empty -xecute string in multi-line trigger in $ZTRIGGER call issues an error
+# Prior to YDB@294a0114, this test failed with a SIG-11
+# Expecting only [Multi-line xecute in $ztrigger ITEM must end in newline] error in below output
+------------------------------------------------------------
+# Try ydb964ZtriggerEmptyMultiLine.m using [yottadb -direct]
+
+YDB>
+Error : Multi-line xecute in $ztrigger ITEM must end in newline
+0
+YDB>
+
+YDB>
+# Try ydb964ZtriggerEmptyMultiLine.m using [yottadb -run]
+Error : Multi-line xecute in $ztrigger ITEM must end in newline
+0
+
+------------------------------------------------------------
+# Test of https://gitlab.com/YottaDB/DB/YDB/-/issues/964#note_1267101642
+# Test that empty -xecute string in multi-line trigger in $ZTRIGGER call that ends in newline issues an error
+# Prior to YDB@01ec2684, this test failed with a SIG-11
+# Expecting only [Empty XECUTE string is invalid] error in below output
+------------------------------------------------------------
+# Try ydb964ZtriggerEmptyMultiLine2.m using [yottadb -direct]
+
+YDB>
+Empty XECUTE string is invalid
+Error : Parsing XECUTE string: ""
+0
+YDB>
+
+YDB>
+# Try ydb964ZtriggerEmptyMultiLine2.m using [yottadb -run]
+Empty XECUTE string is invalid
+Error : Parsing XECUTE string: ""
+0
+
+------------------------------------------------------------
+# Test of https://gitlab.com/YottaDB/DB/YDB/-/issues/964#note_1267098363
+# Test that incomplete -xecute string in $ZTRIGGER call issues an error
+# Prior to YDB@a4d4a335, this test failed with a SIG-11
+# Expecting only [Missing global name] error in below output
+------------------------------------------------------------
+# Try ydb964ZtriggerIncompleteXecute.m using [yottadb -direct]
+
+YDB>
+Error : Missing global name:
+""
+
+YDB>
+
+YDB>
+# Try ydb964ZtriggerIncompleteXecute.m using [yottadb -run]
+Error : Missing global name:
+""
+
+------------------------------------------------------------
+# Test of https://gitlab.com/YottaDB/DB/YDB/-/issues/964#note_1267141916
+# Test that comma in global name list of $ZTRIGGER("SELECT") call issues an error
+# Prior to YDB@e9594387, this test failed with a SIG-11
+# Expecting only [Invalid global variable name in SELECT list] error in below output
+------------------------------------------------------------
+# Try ydb964ZtriggerSelectComma.m using [yottadb -direct]
+
+YDB>
+Invalid global variable name in SELECT list: ","
+0
+YDB>
+
+YDB>
+# Try ydb964ZtriggerSelectComma.m using [yottadb -run]
+Invalid global variable name in SELECT list: ","
+0
+
+------------------------------------------------------------
+# Test of https://gitlab.com/YottaDB/DB/YDB/-/issues/964#note_1267198021
+# Test that missing ")" at end of global subscript in $ZTRIGGER call issues an error
+# Prior to YDB@b1b8e74b, this test failed with an ASAN heap-buffer-overflow error
+# Expecting only [Missing ")" after global subscript] error in below output
+------------------------------------------------------------
+# Try ydb964ZtriggerMissingRParen.m using [yottadb -direct]
+
+YDB>
+Added SET trigger on ^a named a#1
+
+YDB>
+Missing ")" after global subscript
+"^a(1"
+
+YDB>
+
+YDB>
+# Try ydb964ZtriggerMissingRParen.m using [yottadb -run]
+SET trigger on ^a already present in trigger named a#1 - no action taken
+Missing ")" after global subscript
+"^a(1"
+
+------------------------------------------------------------
+# Test of https://gitlab.com/YottaDB/DB/YDB/-/issues/964#note_1267160042
+# Test that using naked indicator after $ZTRIGGER in ZWRITE and $NAME issues a GVNAKED error
+# Prior to YDB@5a3f150a, this test failed with a SIG-11 in ZWRITE and garbage output in $NAME
+# Expecting only GVNAKED error in below output
+------------------------------------------------------------
+# Try ydb964ZtriggerGVNaked.m using [yottadb -direct]
+
+YDB>
+All existing triggers (count = 1) deleted
+
+YDB>
+Added SET trigger on ^x named x#1
+
+YDB>
+%YDB-E-GVNAKED, Illegal naked global reference
+
+YDB>
+%YDB-E-GVNAKED, Illegal naked global reference
+
+YDB>
+%YDB-E-GVNAKED, Illegal naked global reference
+
+YDB>
+
+YDB>
+# Try ydb964ZtriggerGVNaked.m using [yottadb -run]
+All existing triggers (count = 1) deleted
+Added SET trigger on ^x named x#1
+ZSTATUS=+3^ydb964ZtriggerGVNaked,%YDB-E-GVNAKED, Illegal naked global reference
+ZSTATUS=+4^ydb964ZtriggerGVNaked,%YDB-E-GVNAKED, Illegal naked global reference
+ZSTATUS=+5^ydb964ZtriggerGVNaked,%YDB-E-GVNAKED, Illegal naked global reference
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
