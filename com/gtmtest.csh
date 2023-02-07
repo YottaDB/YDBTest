@@ -4,7 +4,7 @@
 # Copyright (c) 2005-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -134,6 +134,14 @@ if ($status) exit $status
 # The below "sourc" invocation would update "gt_ld_options_common" with "-fsanitize=address" if needed.
 source $gtm_tst/com/is_libyottadb_asan_enabled.csh
 source $gtm_tst/com/set_asan_other_env_vars.csh	# sets a few other associated asan env vars
+
+# Set env var that indicates whether YottaDB was built with GCC or CLANG
+set clangver = `strings $gtm_exe/libgtmshr.so |& grep 'clang version' | head -1`
+if ("" != "$clangver") then
+	setenv gtm_test_yottadb_compiler "CLANG"
+else
+	setenv gtm_test_yottadb_compiler "GCC"
+endif
 
 # Set gtm_icu_version/ydb_icu_version env vars at startup
 source $gtm_tst/com/set_icu_version.csh

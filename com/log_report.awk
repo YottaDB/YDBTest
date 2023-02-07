@@ -17,6 +17,7 @@ BEGIN {
 }
 {
 	if ("" != $1) printf "%-11s: %-20s ",$1,$2;
+	printf "CC:%-5s ", ENVIRON["gtm_test_yottadb_compiler"]
 	printf "ASAN:%-1s ", ENVIRON["gtm_test_libyottadb_asan_enabled"]
 	for (i=1 ; i<=count ; i++)
 	{
