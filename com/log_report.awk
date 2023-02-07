@@ -3,7 +3,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -17,6 +17,7 @@ BEGIN {
 }
 {
 	if ("" != $1) printf "%-11s: %-20s ",$1,$2;
+	printf "ASAN:%-1s ", ENVIRON["gtm_test_libyottadb_asan_enabled"]
 	for (i=1 ; i<=count ; i++)
 	{
 		rname = option_names[i]
