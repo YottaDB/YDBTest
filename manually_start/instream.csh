@@ -4,7 +4,7 @@
 # Copyright (c) 2003-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.  #
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.  #
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -82,11 +82,16 @@ if ($?gtm_platform_no_V4) then
 	setenv subtest_exclude_list "$subtest_exclude_list 4g_dbcertify"
 endif
 
+source $gtm_tst/com/is_libyottadb_asan_enabled.csh	# defines "gtm_test_libyottadb_asan_enabled" env var
 # Disable heavyweight subtests on ARM platform as it takes a long time to run.
 # Also disable these subtests on 1-CPU boxes as it would take a long time to run.
 # The test mostly exercises portable code so it is okay if only multi-CPU x86_64 boxes runs these tests.
 if ($gtm_test_singlecpu || ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype)) then
 	setenv subtest_exclude_list "$subtest_exclude_list alsmemleak maxtrignames"
+else if ($gtm_test_libyottadb_asan_enabled && ("pro" != "$tst_image")) then
+	# We have seen ASAN and DBG builds cause the "alsmemleak" subtest to run for many hours on slower x86_64 systems
+	# triggering a HANG/TIMEDOUT email alert and false failures. So disable this subtest in that case.
+	setenv subtest_exclude_list "$subtest_exclude_list alsmemleak"
 endif
 if ($gtm_test_singlecpu) then
 	if ($?test_replic == 1) then
@@ -103,7 +108,6 @@ if ($?ydb_test_exclude_sem_counter) then
 	endif
 endif
 
-source $gtm_tst/com/is_libyottadb_asan_enabled.csh	# defines "gtm_test_libyottadb_asan_enabled" env var
 if ($gtm_test_libyottadb_asan_enabled) then
 	# libyottadb.so was built with address sanitizer
 	# The below subtest spawns 34,000 processes which causes memory issues on the system (64Gb of RAM and
