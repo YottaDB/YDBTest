@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -50,6 +50,32 @@ foreach pattern ("*.out" "*.log" "*.err*" "*.log.updproc" "*.mje*" "*.mjo*" "*.D
 	\rm file_list.tmp
 end
 
+# Check if the subtest was a crash test. If so, it is possible %YDBPROCSTUCKEXEC*dse.out files contain various errors
+# like %YDB-E-REQROLLBACK etc. because the database was crashed by the time the DSE process invoked by %YDBPROCSTUCKEXEC
+# (which could be invoked at an arbitrary point in the test in case of a loaded system etc.). Lots of errors are possible
+# in this case so we don't filter out a list of those errors. Instead we exclude %YDBPROCSTUCKEXEC*dse.out files from
+# the list of files that go through the errors_helper.csh script in case of a crash test. The test to determine whether
+# it is a crash test or not is a crude one and is to check for the existence of the file "gtm_test_crash*.csh". This has been
+# found to exist in all the crash tests that so far have caused errors in %YDBPROCSTUCKEXEC*dse.out files. If a new test
+# shows up at a later point in time that is a crash test but does not create this file, then we will need to come up with
+# a better scheme to detect a crash test.
+#
+# Note that one better scheme would be to check the "gtm_test_crash" env var which is set by all crash tests/subtests using
+# the script "com/set_crash_test.csh" but this env var is set inside the <subtest>.csh script and so the setting is lost when
+# we come to this framework script after the <subtest>.csh script is finished. That is why we had to opt for a crude check here.
+set filepat="gtm_test_crash_jobs*.csh"
+set nonomatch
+set filereal=$filepat
+unset nonomatch
+if ("$filereal" != "$filepat") then
+	# Files of the form "gtm_test_crash_jobs*.csh" exist.
+	# Implies this is a crash test. Exclude "%YDBPROCSTUCKEXEC*dse.out" files from file list.
+	if (! -z log_and_out_files.txt) then
+		mv log_and_out_files.txt log_and_out_files.txt.orig
+		$grep -v '%YDBPROCSTUCKEXEC.*dse.out' log_and_out_files.txt.orig > log_and_out_files.txt
+	endif
+endif
+
 if !(-z log_and_out_files.txt) then
 	# We have seen that if the file log_and_out_files.txt contains multi-byte characters, tcsh has a bug in that
 	# using backslash-quote to cat the above file and loop through each of the file names gives a file-not-found error
@@ -59,10 +85,11 @@ if !(-z log_and_out_files.txt) then
 	$tst_awk '{printf "(set log_out_file=%s; source $gtm_tst/com/errors_helper.csh)\n", $0;}' log_and_out_files.txt >! log_and_out_files.csh
 	source log_and_out_files.csh
 endif
+
 if !(-z err_file_names.logx) then
 		$tst_awk 'BEGIN{filelist = ""} {filelist=$0" "filelist} END{print filelist}' err_file_names.logx | xargs ls -lrt | $tst_awk '{print $NF}' | xargs $grep -f $gtm_tst/com/errors_catch.txt /dev/null | $grep -v -f $gtm_tst/com/errors_ignore.txt >! errs_found.logx
 endif
-\rm log_and_out_files.txt
+
 # Check if there are core files. Exclude `python/.venv` directory as a whole as it can contain files
 # like `core.py` or `core.pyc` which are not core files but will otherwise be treated as one due to their name.
 # Not sure if `python` is an immediate subdirectory or could be one or more levels of subdirectory deep.
