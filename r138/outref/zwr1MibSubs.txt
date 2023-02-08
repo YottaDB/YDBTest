@@ -1,0 +1,38 @@
+# Test that ZWRITE of lvn with 1MiB subscript works fine
+# Before YDB@5e955190, this used to assert fail in sr_port/lvzwr_out.c
+# Run [yottadb -run zwr1MibSubs]. This would create a file [zwr.txt] with the ZWRITE output
+# The file [zwr.txt] would have 33 lines, the first 32 lines being 32767 bytes long and the last line being 42 bytes long
+# Extract first 42 columns of ALL lines to confirm ZWRITE command worked fine
+x(1,"                                     
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                    2")=""
