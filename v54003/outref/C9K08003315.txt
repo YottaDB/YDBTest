@@ -36,20 +36,20 @@ YDB>
 YDB>
 spawn ##SOURCE_PATH##/mupip journal -recover -forward mumps.mjl,copy.mjl -nochecktn
 # Wait until the recover prompts for input, and to be sure that the prompt won't be reprinted upon EINTR
-%YDB-I-MUJNLSTAT, Initial processing started at ##TEST_AWK... ... .. ..:..:.. 20..
-%YDB-I-MUJNLSTAT, Backward processing started at ##TEST_AWK... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##TEST_AWK.*%YDB-I-TEXT, Transaction number continuity check failed: \[0x[0-9A-F]*\] vs \[0x[0-9A-F]*\]
-##TEST_AWK.*%YDB-E-JNLBADRECFMT, Journal File Record Format Error encountered for file ##TEST_PATH##/copy.mjl at disk address 0x##TEST_AWK.*
+##TEST_AWK.*%YDB-E-JNLBADRECFMT, Journal File Record Format Error encountered for file ##TEST_PATH##/copy.mjl at disk address 0x.*
 Proceed? [Y/N]: 
 # Check that CTRL-D is considered as a NO
 Recovery terminated by operator
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-%YDB-I-MUJNLSTAT, End processing at ##TEST_AWK... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 spawn ##SOURCE_PATH##/mupip journal -recover -forward mumps.mjl,copy.mjl -nochecktn
-%YDB-I-MUJNLSTAT, Initial processing started at ##TEST_AWK... ... .. ..:..:.. 20..
-%YDB-I-MUJNLSTAT, Backward processing started at ##TEST_AWK... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##TEST_AWK.*%YDB-I-TEXT, Transaction number continuity check failed: \[0x[0-9A-F]*\] vs \[0x[0-9A-F]*\]
-##TEST_AWK.*%YDB-E-JNLBADRECFMT, Journal File Record Format Error encountered for file ##TEST_PATH##/copy.mjl at disk address 0x##TEST_AWK.*
+##TEST_AWK.*%YDB-E-JNLBADRECFMT, Journal File Record Format Error encountered for file ##TEST_PATH##/copy.mjl at disk address 0x.*
 Proceed? [Y/N]: 
 # Check that pressing ENTER gets the prompt reprinted
 
@@ -57,7 +57,7 @@ Please enter Y or N:
 N
 Recovery terminated by operator
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-%YDB-I-MUJNLSTAT, End processing at ##TEST_AWK... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

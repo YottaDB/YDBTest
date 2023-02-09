@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -45,7 +48,12 @@ set ^b=1
 EOF
 	cp back.dat mumps.dat
 	setenv TERM xterm
-	expect -f $gtm_tst/$tst/u_inref/C9K08003315.exp $gtm_dist
+	(expect -d -f $gtm_tst/$tst/u_inref/C9K08003315.exp $gtm_dist > expect.outx) >& expect.dbg
+	if ($status) then
+		echo "EXPECT-E-FAIL : expect returned non-zero exit status"
+	endif
+	perl $gtm_tst/com/expectsanitize.pl expect.outx > expect_sanitized.outx
+	cat expect_sanitized.outx
 else
 	echo "No expect in PATH, please install"
 endif
