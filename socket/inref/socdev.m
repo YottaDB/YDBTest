@@ -3,7 +3,7 @@
 ; Copyright (c) 2004-2015 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
-; Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -29,8 +29,8 @@
 	for i=1:1:^dataasalongvariablename45678901("total")  lock +^dataasalongvariablename45678901(i)
 	set unix=$ZVERSION'["VMS"
 	if unix  do
-	. job client:(out="clientb.out":err="clientb.err")
-	. job server:(out="serverb.out":err="serverb.err")
+	. job client:(out="clientb.out":err="clientb.err") set pid($incr(pid))=$zjob
+	. job server:(out="serverb.out":err="serverb.err") set pid($incr(pid))=$zjob
 	if 'unix  do
 	. job server^socdev:(detached:startup="startup.com":output="serverb.out":error="serverv.err")
 	. job client^socdev:(detached:startup="startup.com":output="clientb.out":error="clientv.err")
@@ -41,6 +41,8 @@
 	. lock +^dataasalongvariablename45678901(i)
 	. write " finished "
 	. d conclude
+	; wait for backgrounded process to terminate before returning to caller script
+	for i=1:1:pid do ^waitforproctodie(pid(i),300)
 	quit
 waitforstart(i)
 	set maxwait=300 ; wait for 5 minutes max
