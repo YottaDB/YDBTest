@@ -1,0 +1,134 @@
+# GTM-9285 - Test multiple changes to how -CONNECTPARAMS affects starting of source server
+
+# Test the following issues:
+#   1. REPLALERT logging is by default disabled due to default 0 value of the 4th field of the -connect parameter.
+#   2. Hard tries loop is bypassed when value is set to 0.
+#   3. Adjusts the soft-tries-period to be half of the computed shutdown wait (120 seconds for one region).
+#   4. Source server log includes unit of measure for hard & soft wait log messages.
+#   5. MUPIP reports a BADCONNECTPARAM if the specification is incorrect or the user specifies a value that may
+#      lead to an out-of-design situation. This test also exercises the code that one no longer needs to specify
+#      all 6 values but one does need to specify all values up through the one that one is intending to change.
+
+# Create database - start replication
+
+###################################################################
+#
+# Test #1: Show default alert setting - start up source with no receiver server which would produce REPLALERT
+#          messages but the default value 0 at startup will not show REPLALERT messages in the log.
+
+# Waiting for mention of what the alert setting is
+
+# Shutting down INST1 source server
+
+# Show any REPLALERT messages or mentions of REPLALERT in the source server log (should be one message also
+# mentioning "Soft tries" and a REPLALERT value of 0)
+Soft tries period = 5 seconds, REPLALERT message period = 0 seconds
+
+###################################################################
+#
+# Test #2: Show that specifying 0 for a hard-tries count bypasses the hard spin loop.
+
+# Waiting for Soft tries message indicating hard tries loop is either done or bypassed
+
+# Shutting down INST1 source server
+
+# Show any source log message mentioning hard tries or hard connection - should be just one showing the parameters:
+Connect hard tries count = 0, Connect hard tries period = 500 milliseconds
+
+###################################################################
+#
+# Test #3: Adjusts the soft-tries-period to be half of the computed shutdown wait (120 seconds for one region). Start the
+#          source server with a soft tries period of 300 (5 mins) and verify the auto-adjust.
+
+# Wait for message to see what the soft tries got reduced to
+
+# Shutting down INST1 source server
+
+# Show any source log message mentioning soft tries period - looking for message resetting the soft-tries-period
+# to half the maximum shutdown wait.
+Soft tries period cannot be more than half of the maximum shutdown wait time of 120 seconds. Reducing soft tries period to 60 seconds 
+Soft tries period = 60 seconds, REPLALERT message period = 0 seconds
+
+###################################################################
+#
+# Test #4: Source server log includes unit of measure for hard & soft wait log messages
+
+# Scan earlier source  server log (from Test #1) for hard & soft log messages
+Connect hard tries count = 5, Connect hard tries period = 500 milliseconds
+Soft tries period = 5 seconds, REPLALERT message period = 0 seconds
+
+###################################################################
+#
+# Test #5: MUPIP reports a BADCONNECTPARAM if the specification is incorrect or the user specifies a value that may
+#          lead to an out-of-design situation. This test also exercises the code that one no longer needs to specify
+#          all 6 values but one does need to specify all values up through the one that one is intending to change.
+
+# The following commands all have an invalid -connect parameter string with one or more of the parameters inside
+# being either outright invalid (non-numerics) or values that lead to out-of-design situations.
+
+# $MUPIP REPLIC -source -start -secondary=xxx -log=src5.log, buffsize=1 -CONN=0,0 $instsecondary : Expect BADCONNECTPARAM error
+%YDB-E-BADCONNECTPARAM, Error parsing or invalid wait time for hard connection attempts
+%YDB-I-TEXT, Specify the wait time in milliseconds
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
+
+# $MUPIP REPLIC -source -start -secondary=xxx -log=src5.log, buffsize=1 -CONN=5,500,60,30 $instsecondary : Expect BADCONNECTPARAM error
+%YDB-E-BADCONNECTPARAM, Error parsing or invalid alert period for REPLALERT messages
+%YDB-I-TEXT, Alert period cannot be less than soft connection attempts period
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
+
+# $MUPIP REPLIC -source -start -secondary=xxx -log=src5.log, buffsize=1 -CONN=5,500,10,60,100,60 $instsecondary : Expect BADCONNECTPARAM error
+%YDB-E-BADCONNECTPARAM, Error parsing or invalid maximum heartbeat wait period
+%YDB-I-TEXT, Maximum heartbeat wait period cannot be less than heartbeat interval
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
+
+# $MUPIP REPLIC -source -start -secondary=xxx -log=src5.log, buffsize=1 -CONN=5,500,10,60,60,100,42 $instsecondary : Expect BADCONNECTPARAM error
+%YDB-E-BADPARAMCOUNT, -CONNECTPARAMS accepts one to six parameter values
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
+
+# The following are all tests that specify each of the 6 parameters as a non-numerica value as they all get different errors.
+
+# $MUPIP REPLIC -source -start -secondary=xxx -log=src5.log, buffsize=1 -CONN=z $instsecondary : Expect BADCONNECTPARAM error
+%YDB-E-BADCONNECTPARAM, Error parsing or invalid number of hard connection attempts
+%YDB-I-TEXT, Specify either the number of hard connection attempts or 0 to disable hard connection attempts
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
+
+# $MUPIP REPLIC -source -start -secondary=xxx -log=src5.log, buffsize=1 -CONN=5,z $instsecondary : Expect BADCONNECTPARAM error
+%YDB-E-BADCONNECTPARAM, Error parsing or invalid wait time for hard connection attempts
+%YDB-I-TEXT, Specify the wait time in milliseconds
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
+
+# $MUPIP REPLIC -source -start -secondary=xxx -log=src5.log, buffsize=1 -CONN=5,500,z $instsecondary : Expect BADCONNECTPARAM error
+%YDB-E-BADCONNECTPARAM, Error parsing or invalid wait time for soft connection attempts
+%YDB-I-TEXT, Specify the wait time in seconds
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
+
+# $MUPIP REPLIC -source -start -secondary=xxx -log=src5.log, buffsize=1 -CONN=5,500,10,z $instsecondary : Expect BADCONNECTPARAM error
+%YDB-E-BADCONNECTPARAM, Error parsing or invalid alert period for REPLALERT messages
+%YDB-I-TEXT, Specify the approximate alert period (in seconds) for REPLALERT messages or 0 to disable REPLALERT messages
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
+
+# $MUPIP REPLIC -source -start -secondary=xxx -log=src5.log, buffsize=1 -CONN=5,500,10,60,z $instsecondary : Expect BADCONNECTPARAM error
+%YDB-E-BADCONNECTPARAM, Error parsing or invalid heartbeat interval
+%YDB-I-TEXT, Specify the interval (in seconds) between heartbeats to the Receiver Server
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
+
+# $MUPIP REPLIC -source -start -secondary=xxx -log=src5.log, buffsize=1 -CONN=5,500,10,60,100,z $instsecondary : Expect BADCONNECTPARAM error
+%YDB-E-BADCONNECTPARAM, Error parsing or invalid maximum heartbeat wait period
+%YDB-I-TEXT, Specify the maximum period (in seconds) for which the Source Server should wait to receive a heartbeat response from the Receiver Server
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
+
+###################################################################
+#
+# Test #6: Verify that if hard-try-count is 5, that there are 5 hard-try loops and no more
+#
+# Note - Test#1 created a log file that we can use for this so show all of the "hard connection attempt" messages.
+# Expect 5 hard connection attempts:
+1 hard connection attempt failed : Connection refused
+2 hard connection attempt failed : Connection refused
+3 hard connection attempt failed : Connection refused
+4 hard connection attempt failed : Connection refused
+5 hard connection attempt failed : Connection refused
+
+###################################################################
+
+# Integ databases (output at dbcheck.log)

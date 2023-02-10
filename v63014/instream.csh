@@ -13,7 +13,7 @@
 #
 #----------------------------------------------------------------------------------------------------------------------------------
 # List of subtests of the form "subtestname [author] description"
-#-------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------------------------------------------
 # gtm9321	[jv]		Test that $ORDER(<indirection>,<literal>) maintains correct $REFERENCE
 # gtm7628	[estess]	Verify source/receiver servers can handle a 64GB jnlpool/recvpool
 # gtm9328	[estess]	Verify cannot nest $ZINTERRUPT
@@ -22,6 +22,7 @@
 # gtm8863b	[estess]	Verify toggle stats operate correctly
 # gtm9102	[nars]		Verify MUPIP FREEZE is consistent across regions
 # gtm8800	[estess]	Verify MUPIP FTOK and MUPIP SEMAPHORE work with new options (-ID, -ONLY, and -NOHEADER)
+# gtm9285	[estess]	Verify source server -CONNECTPARAMS functionality additions
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v63014 test starts..."
@@ -29,7 +30,7 @@ echo "v63014 test starts..."
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
 setenv subtest_list_non_replic "gtm9321 gtm9328 gtm9329 gtm9331 gtm8863b gtm9102"
-setenv subtest_list_replic     "gtm7628 gtm8800"
+setenv subtest_list_replic     "gtm7628 gtm8800 gtm9285"
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
