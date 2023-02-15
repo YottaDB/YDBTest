@@ -1,0 +1,35 @@
+# Running v63014/gtm9332 - Test rollover of lock wakeups counter using white-box test case. Prior to
+# V63014, this condition could leave a process thinking that it got a lock when it did not. So we grab
+# a lock and release it 3 times each time verifying with a call to LKE that we actually got the lock.
+
+# Create database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+# Enable white box test used in this test (WBTEST_LCKWAKEOVRFLO == 171)
+
+# Drive gtm9332 test routine
+#
+# Drive 2 worker processes - we expect these to succeed on V63014 and later and
+# to fail on earlier versions. Each worker process tries to acquire a timed lock and releases
+# it in a 3-iteration loop. In each iteration it expects to get the lock so we verify that
+# $TEST is set to 1 and that LKE SHOW shows that we are the owner of the lock. The LKE SHOW
+# verification part would fail without the GTM-9332 fixes.
+
+# grep for pass/fail messages from generated log files (*.mjo)
+##TEST_AWKgtm9332_1.mjo:Worker #1 \(pid [0-9]*\) started - waiting
+gtm9332_1.mjo:PASS
+gtm9332_1.mjo:PASS
+gtm9332_1.mjo:PASS
+##TEST_AWKgtm9332_2.mjo:Worker #2 \(pid [0-9]*\) started - waiting
+gtm9332_2.mjo:PASS
+gtm9332_2.mjo:PASS
+gtm9332_2.mjo:PASS
+
+# Verify database
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

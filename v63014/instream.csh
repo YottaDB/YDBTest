@@ -23,13 +23,14 @@
 # gtm9102	[nars]		Verify MUPIP FREEZE is consistent across regions
 # gtm8800	[estess]	Verify MUPIP FTOK and MUPIP SEMAPHORE work with new options (-ID, -ONLY, and -NOHEADER)
 # gtm9285	[estess]	Verify source server -CONNECTPARAMS functionality additions
+# gtm9332	[estess]	Verify rare-odd lock issue with locks apparently succeeding when they actually failed.
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v63014 test starts..."
 
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
-setenv subtest_list_non_replic "gtm9321 gtm9328 gtm9329 gtm9331 gtm8863b gtm9102"
+setenv subtest_list_non_replic "gtm9321 gtm9328 gtm9329 gtm9331 gtm8863b gtm9102 gtm9332"
 setenv subtest_list_replic     "gtm7628 gtm8800 gtm9285"
 
 if ($?test_replic == 1) then
