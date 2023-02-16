@@ -53,38 +53,13 @@ if (! $?gtm_test_instsecondary ) then
 endif
 
 # Setup the -TLSID argument if SSL/TLS is enabled.
-#
-setenv tlsparm ""
-setenv tls_reneg_parm ""
-set ver = $gtm_exe:h:t
-if (("TRUE" == $gtm_test_tls) && (`expr $ver ">" "V60003"`)) then
-	if (`eval echo '$?gtmtls_passwd_'${gtm_test_cur_pri_name}`) then
-		if ("$HOST:r:r:r:r" != "$tst_org_host:r:r:r:r" || "$remote_ver" != "$tst_ver") then
-			# Reset the password, since
-			# (a) The test is a multi-host test and we need to set the password on the remote machine based
-			#     on the remote side's password parameters (inode of the mumps executable).
-			# (b) The source and receiver are run with different versions both of which support TLS (like
-			#     v61000 vs v990).
-			set passwd = `echo ydbrocks | $gtm_exe/plugin/gtmcrypt/maskpass | cut -f3 -d ' '`
-			setenv gtmtls_passwd_${gtm_test_cur_pri_name} $passwd
-		endif
-		set passwd = `eval echo '$gtmtls_passwd_'${gtm_test_cur_pri_name}`
-		echo "Using SSL/TLS obfuscated password: $passwd"
-		setenv tlsparm "-tlsid=$gtm_test_cur_pri_name"
-		if ($?gtm_test_plaintext_fallback) then
-			setenv tlsparm "$tlsparm -plaintext"
-		endif
-		if ($?gtm_test_tls_renegotiate) then
-			setenv tls_reneg_parm "-renegotiate_interval=$gtm_test_tls_renegotiate"
-		endif
-	endif
-endif
+source $gtm_tst/com/set_var_tlsparm.csh $gtm_test_cur_pri_name	# sets "tlsparm" and "tls_reneg_parm" variables
 
-#
 if (! $?gtm_test_rp_pp ) then
 	setenv gtm_test_rp_pp ""
 endif
 
+set ver = $gtm_exe:h:t
 if (`expr "$ver" "<=" "V62000"`) then
 	# Prior vers get no arg, regardless
 	set fileonlyarg=""
@@ -232,12 +207,16 @@ if ($?gtm_test_jnlpool_buffsize) then
 else
 	set jnlpoolsize = $tst_buffsize
 endif
+
+source $gtm_tst/com/set_var_trigupdatestr.csh	# sets "trigupdatestr" variable to contain "" or "-trigupdate"
+
 # Prepare the source server startup command. Set an environment variable as we want this to be accessible from within "sh" below.
-setenv srcstartcmd "$MUPIP replic -source -start -secondary="$tst_now_secondary:q":"$portno" ${cmplvlstr} -buffsize=$jnlpoolsize $gtm_test_instsecondary $gtm_test_rp_pp $filter_arg -log=$SRC_LOG_FILE $updokarg $tlsparm $tls_reneg_parm $fileonlyarg"
+setenv srcstartcmd "$MUPIP replic -source -start -secondary="$tst_now_secondary:q":"$portno" ${cmplvlstr} -buffsize=$jnlpoolsize $gtm_test_instsecondary $gtm_test_rp_pp $filter_arg -log=$SRC_LOG_FILE $updokarg $tlsparm $tls_reneg_parm $fileonlyarg $trigupdatestr"
 # Note that "echo $srcstartcmd" will issue an "echo: No match" error in tcsh as it is possible "$srcstartcmd" contains
 # strings of the form "-secondary=[::1]:36023". Therefore, we use the below trick to print the value of it using "env".
 # That is the equivalent of an "echo $srcstartcmd" but avoids the "echo: No match" error.
 env | grep ^srcstartcmd | sed 's/^srcstartcmd=//;'
+
 if (! $?src_srvr_stdin_is_terminal) then
 	# Start the source server
 	# It is possible for usages like "-secondary=[::ffff:127.0.0.1]:36008" to be there in $srcstartcmd

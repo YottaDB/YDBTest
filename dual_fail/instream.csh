@@ -13,7 +13,10 @@
 #								#
 #################################################################
 #
-# subtests in this test does a failover. A->P won't work in this case.
+
+source $gtm_tst/com/gtm_test_trigupdate_disabled.csh   # subtests in this test do a failover and so disable -trigupdate
+
+# subtests in this test do a failover. A->P won't work in this case.
 if ("1" == "$test_replic_suppl_type") then
 	source $gtm_tst/com/rand_suppl_type.csh 0 2
 endif

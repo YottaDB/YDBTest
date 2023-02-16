@@ -150,6 +150,7 @@ BEGIN {
 		if ( "gtm_test_forward_rollback" == rname ) printf "FR:%-1s ",rval[i]
 		if ( "gtm_mupjnl_parallel" == rname ) printf "MP:%-1s ",rval[i]
 		if ( "ydb_lockhash_n_bits" == rname ) printf "LH:%-1s ",rval[i]
+		if ( "gtm_test_trigupdate" == rname ) printf "TRGUPD:%-1s ",rval[i]
 	}
 	print "",$3
 }

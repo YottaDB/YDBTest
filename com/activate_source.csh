@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2006, 2014 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -56,8 +59,11 @@ if ($status) then
 		if ($status) break
 	end
 endif
-echo "$MUPIP replic -source $arg1 -activate $gtm_test_instsecondary -secondary=$tst_now_secondary":"$portno -log=SRC_activated_${time_stamp}.log" >&! ACTIVATE_${time_stamp}.out
-$MUPIP replic -source $arg1 -activate $gtm_test_instsecondary -secondary="$tst_now_secondary":"$portno" -log=SRC_activated_${time_stamp}.log >>&! ACTIVATE_${time_stamp}.out
+
+source $gtm_tst/com/set_var_trigupdatestr.csh	# sets "trigupdatestr" variable to contain "" or "-trigupdate"
+
+echo "$MUPIP replic -source $arg1 -activate $gtm_test_instsecondary -secondary=$tst_now_secondary":"$portno -log=SRC_activated_${time_stamp}.log $trigupdatestr" >&! ACTIVATE_${time_stamp}.out
+$MUPIP replic -source $arg1 -activate $gtm_test_instsecondary -secondary="$tst_now_secondary":"$portno" -log=SRC_activated_${time_stamp}.log $trigupdatestr >>&! ACTIVATE_${time_stamp}.out
 if ( $status ) then
 	set msg = "Instance cannot be activated"
 	if ("" != "$arg1") set msg = "$msg as $arg1"

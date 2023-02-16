@@ -436,6 +436,34 @@ u replicate -source -freeze -propagateprimary
 u replicate -source -freeze -updok
 u replicate -source -freeze -updnotok
 !
+! 	SECONDARY is a mandatory qualifier with TRIGUPDATE
+u replicate -source -start -passive -log=src.log -trigupdate
+u replicate -source -activate -trigupdate
+u replicate -source -deactivate -trigupdate
+u replicate -source -shutdown -trigupdate
+u replicate -source -checkhealth -trigupdate
+u replicate -source -statslog="dummylog" -trigupdate
+u replicate -source -showbacklog -trigupdate
+u replicate -source -changelog -trigupdate
+u replicate -source -stopsourcefilter -trigupdate
+u replicate -source -losttncomplete -trigupdate
+u replicate -source -needrestart -trigupdate
+u replicate -source -jnlpool -trigupdate
+u replicate -source -freeze -trigupdate
+!
+!	ZEROBACKLOG is supported only with SHUTDOWN qualifier
+u replicate -source -zerobacklog -start
+u replicate -source -zerobacklog -activate
+u replicate -source -zerobacklog -deactivate
+u replicate -source -zerobacklog -checkhealth
+u replicate -source -zerobacklog -statslog="dummy"
+u replicate -source -zerobacklog -showbacklog
+u replicate -source -zerobacklog -changelog
+u replicate -source -zerobacklog -stopsourcefilter
+u replicate -source -zerobacklog -losttncomplete
+u replicate -source -zerobacklog -needrestart
+u replicate -source -zerobacklog -jnlpool
+!
 !  MUPIP REPLICATE -SOURCE (Receiver server)
 !	DISALLOW ANY2(start, shutdown, activate, deactivate, checkhealth, statslog, showbacklog, changelog, stopsourcefilter,losttncomplete,needrestart,jnlpool)
 !

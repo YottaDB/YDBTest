@@ -16,6 +16,9 @@
 #
 # TEST : PRIMARY SERVER CRASH, BACKLOG AND FAILOVER (6.17 and 6.18)
 #
+
+source $gtm_tst/com/gtm_test_trigupdate_disabled.csh   # This test does a failover and so disable -trigupdate
+
 # This subtest does a failover. A->P won't work in this case.
 if ("1" == "$test_replic_suppl_type") then
 	source $gtm_tst/com/rand_suppl_type.csh 0 2

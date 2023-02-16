@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -37,7 +37,7 @@ endif
 
 echo ""
 echo "# Test Case 1: Test that previously disallowed commands are now allowed"
-echo "# These are commands that were removed from disallow/inref/mupip_cmd_disallow.txt as part of https://gitlab.com/YottaDB/DB/YDBTest/merge_requests/548of https://gitlab.com/YottaDB/DB/YDBTest/merge_requests/548"
+echo "# These are commands that were removed from disallow/inref/mupip_cmd_disallow.txt as part of https://gitlab.com/YottaDB/DB/YDBTest/merge_requests/548"
 echo ""
 echo '$ydb_dist/mupip set -reg DEFAULT -journal="on"'
 $ydb_dist/mupip set -reg DEFAULT -journal="on"

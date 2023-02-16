@@ -1,0 +1,228 @@
+#########################################################################################
+Test that -trigupdate replicates updates inside trigger logic but not trigger definitions
+#########################################################################################
+
+# Set up a 2 instance MSR environment to be used for various test stages below
+# Randomly choose an older version receiver server (e.g. r1.36 etc.) to verify that
+# those continue to work with the current version source server using -trigupdate.
+# This tests that the replication filter functions (jnl_v44TOv44() and jnl_v44TOv22()
+# in the case of r1.38) correctly handle -trigupdate processing on the source server side.
+# Set [gtm_test_trigupdate] env var to 1 so [-trigupdate] is used in source server startup for various tests below
+
+-------------------------------------------------------------------------------
+# Test 1 : Test that timestamp usages inside trigger logic get replicated as is with -trigupdate
+-------------------------------------------------------------------------------
+# Create databases and start up replication from INST1 -> INST2
+==Executing MULTISITE_REPLIC 'START INST1 INST2 RP'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+# Invoke [mumps -run test1^ydb722]
+# Install SET/ZTRIGGER trigger for ^x1(i) to SET ^x2(i) to $H and HANG for 1 second inside trigger
+Added SET and/or Non-SET trigger on ^x1 named x1#1
+# Run [SET ^x1(1)=1]# Run [ZTRIGGER ^x1(2)]
+# Invoke [$MSR SYNC INST1 INST2]
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+# Verify ^x1 (updated outside trigger) and ^x2 (updated inside trigger) have same values on source and receiver side
+# Before YDB#722, the ^x2 value used to be 1 second higher on the receiver side as it was computed as the $H inside
+# a trigger whereas after YDB#722 with -trigupdate, the ^x2 value gets replicated across as is on the receiver side.
+# Run [zwrite ^x1,^x2] on INST1 and redirect output to INST1.zwr
+# Run [zwrite ^x1,^x2] on INST2 and redirect output to INST2.zwr
+# Running [diff INST1.zwr INST2.zwr]. Expect NO differences.
+# Verify a lot of things by looking at the journal file on source (INST1) and receiver (INST2) side
+# 1) On INST1, we expect to see a TLGTRIG record. But on INST2, we do not. This is because LGTRIG journal records
+#    are not replicated with -trigupdate. We expect to see a NULL record on INST2 instead.
+# 2) On INST1, we expect to see a TSET ^x1(1)=1 record with nodeflags=2 (JS_HAS_TRIGGER_MASK) indicating ^x1 had a
+#    trigger defined but on INST2 we expect to see this record with nodeflags=0 indicating ^x1 does not have any
+#    trigger defined there.
+# 3) On INST1, we expect to see a USET ^x2(1) record with nodeflags=1 (JS_NOT_REPLICATED_MASK) to indicate this update
+#    that happened inside a trigger invocation should not be replicated. But on INST2 we expect to see this with
+#    nodeflags=0 indicating ^x2(1) was updated outside of a trigger and does not have any trigger definitions.
+# 4) On INST1, we expect to see a TZTRIG ^x1(2) record with nodeflags=2 (JS_HAS_TRIGGER_MASK) indicating ^x1 had a
+#    trigger defined and a ZTRIGGER command was invoked but on INST2 we expect to NOT see this record since ZTRIG
+#    journal records are not replicated with -trigupdate.
+# 5) On INST1, we expect to see a USET ^x2(2) record with nodeflags=1 (JS_NOT_REPLICATED_MASK) to indicate this update
+#    that happened inside a trigger invocation should not be replicated. But on INST2 we expect to see this as a
+#    TSET ^x2(2) (because this is the first update in this transaction since the ZTRIGGER command did not get replicated)
+#    with nodeflags=0 indicating ^x2(2) was updated outside of a trigger and does not have any trigger definitions.
+#    On INST1, this record would have an updnum value of 2 since this happened AFTER the ZTRIGGER command whereas on
+#    INST2, this record would have an updnum value of 1 since the ZTRIGGER journal record did not get replicated at all.
+# The salvaged field of NULL record and seqno field of all records is also displayed as these are useful to capture
+# in the reference file.
+# Below is key journal record info in mumps.mjl on instance INST1
+TLGTRIG  seqno=1 updnum=1              value="+^x1(index=:) -command=set,ztrigger -xecute=""set ^x2(index)=$H  hang 1"""
+TCOM     seqno=1
+TSET     seqno=2 updnum=1 nodeflags=2  value=^x1(1)="1"
+USET     seqno=2 updnum=2 nodeflags=1  value=^x2(1)="$H"
+TCOM     seqno=2
+TZTRIG   seqno=3 updnum=1 nodeflags=2  value=^x1(2)
+USET     seqno=3 updnum=2 nodeflags=1  value=^x2(2)="$H"
+TCOM     seqno=3
+# Below is key journal record info in mumps.mjl on instance INST2
+NULL     seqno=1          salvaged=0
+TSET     seqno=2 updnum=1 nodeflags=0  value=^x1(1)="1"
+USET     seqno=2 updnum=2 nodeflags=0  value=^x2(1)="$H"
+TCOM     seqno=2
+TSET     seqno=3 updnum=1 nodeflags=0  value=^x2(2)="$H"
+TCOM     seqno=3
+# Shut down replication servers by invoking [dbcheck.csh]
+-------------------------------------------------------------------------------
+# Test 2 : Test multiple source server startup without and with -trigupdate
+-------------------------------------------------------------------------------
+# Run [unsetenv gtm_test_trigupdate] so [-trigupdate] is NOT used in first source server startup
+# Create databases and start up replication from INST1 -> INST2
+# Start source server without -trigupdate
+==Executing MULTISITE_REPLIC 'START INST1 INST2 RP'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+# Invoke [mumps -run test2a^ydb722]. This will install triggers
+# Install SET trigger for ^x1(i) to do a $INCR(^x2(i))Added SET trigger on ^x1 named x1#1
+# Wait for trigger definitions to be replicated across to receiver side
+# Invoke [$MSR SYNC INST1 INST2]
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+# - Restart source server with -trigupdate
+==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST2'==
+# Run [setenv gtm_test_trigupdate 1] so [-trigupdate] is used in second source server startup
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
+# Run updates on source side that invoke triggers
+# Invoke [mumps -run test2b^ydb722]
+# Run [SET ^x1(1)=1]
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+# Verify that the trigger updates on the source side do get replicated across
+# Also verify that the originating update invoked triggers on the receiver side (using trigger definitions
+#   that were replicated by the previous source server started without -trigupdate) resulting in
+#   duplicate updates inside the trigger
+# Do both the above verification steps by looking at the journal file on the source and receiver side
+# On the source side, SET ^x2(1) should be seen only ONCE whereas on the receiver side it should be seen TWICE
+# Additionally verify nodeflags for each SET record in journal file
+#   On source side, we expect
+#     1) TSET ^x1(1)=1 to have nodeflags=2 (JS_HAS_TRIGGER_MASK) to indicate ^x1 had a trigger defined
+#     2) USET ^x2(1)=1 to have nodeflags=1 (JS_NOT_REPLICATED_MASK) to indicate this update should not be replicated
+#        since this happened inside a trigger
+#   On receiver side, we expect
+#     1) TSET ^x1(1)=1 to have nodeflags=2 (JS_HAS_TRIGGER_MASK) to indicate ^x1 had a trigger defined
+#        If the receiver side is older than r1.32 (which fixed YDB#727), it is possible to have nodeflags=6 to
+#        indicate JS_HAS_TRIGGER_MASK=2 and JS_NULL_ZTWORM_MASK=4 bits defined. So allow for this possibility too
+#        in the reference file
+#     2) USET ^x2(1)=1 to have nodeflags=1 (JS_NOT_REPLICATED_MASK) to indicate this update that happened inside the
+#        trigger invocation on the receiver side should not be replicated
+#     3) USET ^x2(1)=1 to have nodeflags=16 (JS_IS_DUPLICATE) to indicate this update that happened outside the
+#        trigger invocation on the receiver side (due to this record being replicated across by the -trigupdate source
+#        server) was a duplicate set whose value coincided with the value set by the update to ^x2(1) as part of the
+#        trigger invocation on the receiver side
+# Below is list of SET journal records in mumps.mjl on instance INST1
+TSET     seqno=2 updnum=1 nodeflags=2  value=^x1(1)="1"
+USET     seqno=2 updnum=2 nodeflags=1  value=^x2(1)="1"
+# Below is list of SET journal records in mumps.mjl on instance INST2
+##TEST_AWKTSET     seqno=2 updnum=1 nodeflags=[26]  value=\^x1\(1\)="1"
+USET     seqno=2 updnum=2 nodeflags=1  value=^x2(1)="1"
+USET     seqno=2 updnum=3 nodeflags=16 value=^x2(1)="1"
+# Shut down replication servers by invoking [dbcheck.csh]
+-------------------------------------------------------------------------------
+# Test 3 : Test that -trigupdate can be specified as part of [mupip replic -source -activate] too
+-------------------------------------------------------------------------------
+# Create databases and start up passive replication from INST1 -> INST2
+==Executing MULTISITE_REPLIC 'START INST1 INST2 RP'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST2'==
+# Invoke [mumps -run test3^ydb722] to do some updates
+# Install SET/ZTRIGGER trigger for ^x1(i) to SET ^x2(i)
+Added SET and/or Non-SET trigger on ^x1 named x1#1
+# Run [SET ^x1(1)=1]# Run [ZTRIGGER ^x1(2)]
+# Invoke [$MSR ACTIVATE INST1 INST2 RP]. This will run [mupip replic -source -activate -trigupdate].
+==Executing MULTISITE_REPLIC 'ACTIVATE INST1 INST2 RP'==
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating ACTIVATE operation on source server pid [##PID##] for secondary instance [INSTANCE2]
+==Executing MULTISITE_REPLIC 'REFRESHLINK INST1 INST2'==
+# Invoke [$MSR SYNC INST1 INST2]
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+# Verify key aspects of journal records on both INST1 and INST2
+# We expect all of the output below to be exactly the same as in [Test 1]
+# with the one exception being the node value of SET records would be 1 (in Test 3) instead of $H (in Test 1)
+# Below is key journal record info in mumps.mjl on instance INST1
+TLGTRIG  seqno=1 updnum=1              value="+^x1(index=:) -command=set,ztrigger -xecute=""if $incr(^x2(index))"""
+TCOM     seqno=1
+TSET     seqno=2 updnum=1 nodeflags=2  value=^x1(1)="1"
+USET     seqno=2 updnum=2 nodeflags=1  value=^x2(1)="1"
+TCOM     seqno=2
+TZTRIG   seqno=3 updnum=1 nodeflags=2  value=^x1(2)
+USET     seqno=3 updnum=2 nodeflags=1  value=^x2(2)="1"
+TCOM     seqno=3
+# Below is key journal record info in mumps.mjl on instance INST2
+NULL     seqno=1          salvaged=0
+TSET     seqno=2 updnum=1 nodeflags=0  value=^x1(1)="1"
+USET     seqno=2 updnum=2 nodeflags=0  value=^x2(1)="1"
+TCOM     seqno=2
+TSET     seqno=3 updnum=1 nodeflags=0  value=^x2(2)="1"
+TCOM     seqno=3
+# Shut down replication servers by invoking [dbcheck.csh]
+-------------------------------------------------------------------------------
+# Test 4 : Test ZTRIGGER command, $ZTRIGGER function and $ZTWORMHOLE records are not replicated with -trigupdate
+-------------------------------------------------------------------------------
+# Create databases and start up replication from INST1 -> INST2
+==Executing MULTISITE_REPLIC 'START INST1 INST2 RP'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+# Invoke [mumps -run test4^ydb722]
+# Test following scenarios
+# a) If the TP transaction has only ONE $ZTRIGGER/ZTRIGGER and NO database updates happened inside the trigger,
+#    then a NULL record should be replicated.
+# b) If the TP transaction has only ONE $ZTRIGGER/ZTRIGGER and at least ONE database update happened inside the trigger,
+#    then that database update should be replicated across (USET should be converted to TSET etc.) and no NULL record
+#    should be replicated.
+# c) If the TP transaction has more than ONE of the above and NO database updates happened inside the trigger,
+#    then a NULL record should be replicated.
+# d) If the TP transaction has more than ONE of the above and at least ONE database update happened inside the trigger,
+#    then that database update should be replicated across (USET should be converted to TSET etc.) and no NULL record
+#    should be replicated.
+Added SET and/or Non-SET trigger on ^x1 named x1#1
+Added Non-SET trigger on ^x1 named x1#2
+Added SET trigger on ^x3 named x3#1
+Added SET trigger on ^x4 named x4#1
+Added SET trigger on ^x5 named x5#1
+Added SET trigger on ^x6 named x6#1
+# Invoke [$MSR SYNC INST1 INST2]
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
+# Verify key aspects of journal records on both INST1 and INST2
+# Below is key journal record info in mumps.mjl on instance INST1
+TLGTRIG  seqno=1 updnum=1              value="+^x1(index=:) -command=set,kill -xecute=""set $ztwormhole=index,^x2(index)=1"""
+TCOM     seqno=1
+TLGTRIG  seqno=2 updnum=1              value="+^x1(index=:) -command=ztrigger -xecute=""set $ztwormhole=index,x2(index)=1"""
+TCOM     seqno=2
+TZTWORM  seqno=3 updnum=1              value="1"
+USET     seqno=3 updnum=1 nodeflags=2  value=^x1(1)="1"
+USET     seqno=3 updnum=2 nodeflags=1  value=^x2(1)="1"
+TCOM     seqno=3
+TZTWORM  seqno=4 updnum=1              value="1"
+UZTRIG   seqno=4 updnum=1 nodeflags=2  value=^x1(1)
+TCOM     seqno=4
+TLGTRIG  seqno=5 updnum=1              value="+^x3(index=:) -command=set -xecute=""set $ztwormhole=index,x3(index)=1"""
+UZTRIG   seqno=5 updnum=16 nodeflags=2  value=^x3(1)
+ULGTRIG  seqno=5 updnum=17              value="+^x4(index=:) -command=set -xecute=""set $ztwormhole=index,x3(index)=1"""
+UZTRIG   seqno=5 updnum=32 nodeflags=2  value=^x4(1)
+TCOM     seqno=5
+TLGTRIG  seqno=6 updnum=1              value="+^x5(index=:) -command=set -xecute=""set $ztwormhole=index,x5(index)=1"""
+UZTRIG   seqno=6 updnum=16 nodeflags=2  value=^x5(1)
+ULGTRIG  seqno=6 updnum=17              value="+^x6(index=:) -command=set -xecute=""set $ztwormhole=index,x6(index)=1"""
+UZTRIG   seqno=6 updnum=32 nodeflags=2  value=^x6(1)
+UZTWORM  seqno=6 updnum=33              value="1"
+UKILL    seqno=6 updnum=33 nodeflags=2  value=^x1(1)
+USET     seqno=6 updnum=34 nodeflags=17 value=^x2(1)="1"
+UZTWORM  seqno=6 updnum=35              value="2"
+USET     seqno=6 updnum=35 nodeflags=2  value=^x1(2)="2"
+USET     seqno=6 updnum=36 nodeflags=1  value=^x2(2)="1"
+UZTRIG   seqno=6 updnum=37 nodeflags=2  value=^x1(2)
+TCOM     seqno=6
+# Below is key journal record info in mumps.mjl on instance INST2
+NULL     seqno=1          salvaged=0
+NULL     seqno=2          salvaged=0
+TSET     seqno=3 updnum=1 nodeflags=0  value=^x1(1)="1"
+USET     seqno=3 updnum=2 nodeflags=0  value=^x2(1)="1"
+TCOM     seqno=3
+NULL     seqno=4          salvaged=0
+NULL     seqno=5          salvaged=0
+TKILL    seqno=6 updnum=1 nodeflags=0  value=^x1(1)
+USET     seqno=6 updnum=2 nodeflags=16 value=^x2(1)="1"
+USET     seqno=6 updnum=3 nodeflags=0  value=^x1(2)="2"
+USET     seqno=6 updnum=4 nodeflags=0  value=^x2(2)="1"
+TCOM     seqno=6
+# Shut down replication servers by invoking [dbcheck.csh]

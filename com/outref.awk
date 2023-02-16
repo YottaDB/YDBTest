@@ -3,7 +3,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -213,6 +213,12 @@ BEGIN {
 		envir[no_options] = "TRIGGER"
 	else
 		envir[no_options] = "NOTRIGGER"
+	#
+	option_names[++no_options] = "gtm_test_trigupdate"
+	if (1 == ENVIRON["gtm_test_trigupdate"])
+		envir[no_options] = "TRIGUPDATE"
+	else
+		envir[no_options] = "NOTRIGUPDATE"
 	#
 	option_names[++no_options] = "gtm_test_tls"
 	if ("TRUE" == ENVIRON["gtm_test_tls"])

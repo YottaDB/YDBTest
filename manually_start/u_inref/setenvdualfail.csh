@@ -31,7 +31,10 @@ setenv gtm_test_dbfill "IMPTP"
 source $gtm_tst/com/set_crash_test.csh # sets YDBTest and YDB-white-box env vars to indicate this is a crash test
 # use a tst_buffsize of 8MB for all dual fail tests, per C9D06-002314
 setenv tst_buffsize 8388608
-# subtests in this test does a failover. A->P won't work in this case.
+
+source $gtm_tst/com/gtm_test_trigupdate_disabled.csh   # this test does a failover and so disable -trigupdate
+
+# this test does a failover. A->P won't work in this case.
 if ("1" == "$test_replic_suppl_type") then
 	source $gtm_tst/com/rand_suppl_type.csh 0 2
 endif

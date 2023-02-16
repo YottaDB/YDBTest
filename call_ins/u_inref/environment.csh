@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -61,7 +61,8 @@ source $gtm_tst/com/dbcheck.csh
 echo
 setenv start_time `cat start_time`
 set dlr = '$'
-echo "Looking for message from update process trigger giving value for ${dlr}VIEW(""ENVIRONMENT""):"
+echo "# Looking for message from update process trigger giving value for ${dlr}VIEW(""ENVIRONMENT""):"
+echo "# Note: Will not see these if -trigupdate is enabled randomly by the test framework"
 $grep VIEW $SEC_SIDE/RCVR_${start_time}.log.updproc | grep "ENVIRONMENT"
 #
 echo "End of environment subtest"

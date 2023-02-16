@@ -21,7 +21,10 @@ echo "Multiple server crash test starts ..."
 source $gtm_tst/com/gtm_test_setbgaccess.csh
 # If run with journaling, this test requires BEFORE_IMAGE so set that unconditionally even if test was started with -jnl nobefore
 source $gtm_tst/com/gtm_test_setbeforeimage.csh
-# Both the subtests in this test does a failover. A->P won't work in this case.
+
+source $gtm_tst/com/gtm_test_trigupdate_disabled.csh   # all subtests in this test do a failover and so disable -trigupdate
+
+# Both the subtests in this test do a failover. A->P won't work in this case.
 if ("1" == "$test_replic_suppl_type") then
 	source $gtm_tst/com/rand_suppl_type.csh 0 2
 endif

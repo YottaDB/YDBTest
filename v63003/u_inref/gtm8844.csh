@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -10,10 +10,13 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+
+source $gtm_tst/com/gtm_test_trigupdate_disabled.csh	# This test assumes trigger definitions get replicated across
+							# and so disable "-trigupdate" random option.
+
 # Lack permissions to write to the $ydb_dist directory, so we are creating a temp directory
 # and copying all files from $ydb_dist to temp, changing the ydb_dist environment variable
 # and putting restrict.txt in temp
-
 source $gtm_tst/com/copy_ydb_dist_dir.csh ydb_temp_dist
 cat > $ydb_dist/restrict.txt << EOF
 ZHALT

@@ -3,7 +3,7 @@
 #								#
 # Copyright 2012, 2013 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -20,6 +20,8 @@
 # i) A->B, Q->P, A->P
 # i) A->B, P->Q, A->P
 #
+
+source $gtm_tst/com/gtm_test_trigupdate_disabled.csh   # this test does a switchover and so disable -trigupdate
 
 source $gtm_tst/com/gtm_test_setbeforeimage.csh
 $MULTISITE_REPLIC_PREPARE 2 2

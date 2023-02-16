@@ -4,7 +4,7 @@
 # Copyright (c) 2006-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -13,6 +13,8 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+
+source $gtm_tst/com/gtm_test_trigupdate_disabled.csh # This test refreshes secondary from a primary backup and so disable -trigupdate
 
 $gtm_tst/com/dbcreate.csh mumps 2 255 1000 -allocation=2048 -extension_count=2048
 setenv portno `$sec_shell 'cat $SEC_DIR/portno'`

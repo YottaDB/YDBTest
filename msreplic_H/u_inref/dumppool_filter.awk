@@ -3,7 +3,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -111,5 +111,9 @@ BEGIN {
 	gsub(/HDR 64-bit Format                                    FALSE/,"HDR 64-bit Format                                    .....");
 	# QDBRUNDOWN is randomly true or false
 	gsub(/HDR Quick database rundown is active                 ...../,"HDR Quick database rundown is active                 .....");
+	if (ENVIRON["gtm_test_trigupdate"] == 1)
+		gsub(/Trigger updates replicated \(-trigupdate\)    TRUE/,"Trigger updates replicated (-trigupdate)  ##TorF");
+	else
+		gsub(/Trigger updates replicated \(-trigupdate\)   FALSE/,"Trigger updates replicated (-trigupdate)  ##TorF");
 	print;
 }

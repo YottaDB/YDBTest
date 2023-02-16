@@ -1,4 +1,18 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+# Portions Copyright (c) Fidelity National			#
+# Information Services, Inc. and/or its subsidiaries.		#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
 
 # 9) Test that MULTIPLE history records with the SAME start_seqno but different stream_seqno (and histinfo_num value)
 #    are handled properly. For example, take the following scenario
@@ -22,6 +36,9 @@
 #    records to Q without errors and only then transmit all the updates. Check the instance file
 #    on Q to see those 3 history records got sent in the same order as they are seen in P and have
 #    the same start_seqno info as on P.
+
+source $gtm_tst/com/gtm_test_trigupdate_disabled.csh	# this test A->P with imptp.csh invoked on both sides and so disable
+							# -trigupdate as it can cause NULSUBSC errors in P's update process.
 
 $MULTISITE_REPLIC_PREPARE 1 2
 $gtm_tst/com/dbcreate.csh mumps 5 125-425 900-1050 512,768,1024 4096 1024 4096

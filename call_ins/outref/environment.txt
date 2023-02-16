@@ -48,7 +48,10 @@ No errors detected by integ.
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
 
-Looking for message from update process trigger giving value for $VIEW(ENVIRONMENT):
+# Looking for message from update process trigger giving value for $VIEW(ENVIRONMENT):
+# Note: Will not see these if -trigupdate is enabled randomly by the test framework
+##SUSPEND_OUTPUT TRIGUPDATE
 $VIEW("ENVIRONMENT")=MUPIP,TRIGGER
 $VIEW("ENVIRONMENT")=MUPIP,TRIGGER
+##ALLOW_OUTPUT TRIGUPDATE
 End of environment subtest

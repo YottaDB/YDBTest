@@ -60,31 +60,10 @@ endif
 if (! $?gtm_test_instsecondary ) then
 	setenv gtm_test_instsecondary "-instsecondary=$gtm_test_cur_pri_name"
 endif
-setenv tlsparm ""
-setenv tls_reneg_parm ""
-set ver = $gtm_exe:h:t
-if (("TRUE" == $gtm_test_tls) && (`expr $ver ">" "V60003"`)) then
-	if (`eval echo '$?gtmtls_passwd_'${gtm_test_cur_sec_name}`) then
-		if ("$HOST:r:r:r:r" != "$tst_org_host:r:r:r:r" || "$remote_ver" != "$tst_ver") then
-			# Reset the password, since
-			# (a) The test is a multi-host test and we need to set the password on the remote machine based
-			#     on the remote side's password parameters (inode of the mumps executable).
-			# (b) The source and receiver are run with different versions both of which support TLS (like
-			#     v61000 vs v990).
-			set passwd = `echo ydbrocks | $gtm_exe/plugin/gtmcrypt/maskpass | cut -f3 -d ' '`
-			setenv gtmtls_passwd_${gtm_test_cur_sec_name} $passwd
-		endif
-		set passwd = `eval echo '$gtmtls_passwd_'${gtm_test_cur_pri_name}`
-		echo "Using SSL/TLS obfuscated password: $passwd"
-		setenv tlsparm "-tlsid=$gtm_test_cur_sec_name"
-		if ($?gtm_test_plaintext_fallback) then
-			setenv tlsparm "$tlsparm -plaintext"
-		endif
-		if ($?gtm_test_tls_renegotiate) then
-			setenv tls_reneg_parm "-renegotiate_interval=$gtm_test_tls_renegotiate"
-		endif
-	endif
-endif
+
+# Setup the -TLSID argument if SSL/TLS is enabled.
+source $gtm_tst/com/set_var_tlsparm.csh $gtm_test_cur_sec_name	# sets "tlsparm" and "tls_reneg_parm" variables
+
 set helper_parm=""
 if ($?gtm_test_updhelpers) then
 	if (0 != "$gtm_test_updhelpers") then

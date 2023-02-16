@@ -25,9 +25,11 @@ Dumping globals on secondary side
 ^a(2)=2
 ^a(3)=3
 ##TEST_AWK---> .zgbldir = .*/instance4/mumps.gld
+##SUSPEND_OUTPUT TRIGUPDATE
 ^a(1)=1
 ^a(2)=2
 ^a(3)=3
 ^b(1)=1
 ^b(2)=2
 ^b(3)=3
+##ALLOW_OUTPUT TRIGUPDATE

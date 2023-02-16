@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -16,6 +16,8 @@
 #
 # Test -fetchresync rollback between A and P(non-supplementary and supplementary respectively)
 #
+
+source $gtm_tst/com/gtm_test_trigupdate_disabled.csh   # this test does a switchover and so disable -trigupdate
 
 source $gtm_tst/com/gtm_test_setbeforeimage.csh
 $MULTISITE_REPLIC_PREPARE 2 2

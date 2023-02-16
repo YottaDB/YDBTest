@@ -3,7 +3,7 @@
 #								#
 # Copyright 2012, 2013 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -16,6 +16,8 @@
 # Test that replication between P->Q is robust when there are multiple switchover bwtween A and B resulting in multiple
 # history records in the instance file on P
 #
+
+source $gtm_tst/com/gtm_test_trigupdate_disabled.csh   # this test does a switchover and so disable -trigupdate
 
 $MULTISITE_REPLIC_PREPARE 2 2
 

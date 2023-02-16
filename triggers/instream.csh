@@ -4,7 +4,7 @@
 # Copyright (c) 2010-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -189,6 +189,9 @@ setenv subtest_list_replic     "$subtest_list_replic trigreplstack gtm7509 gtm82
 setenv unicode_testlist		"testxecuteunicode testpiecesunicode trigcolunicode "
 setenv unicode_testlist		"$unicode_testlist trigbadchar"
 if ($?test_replic == 1) then
+	# The subtests in the "trigger" test play with trigger definitions and when run with -replic, this can cause
+	# db extract differences on the source/receiver side when run with -trigupdate so disable that.
+	source $gtm_tst/com/gtm_test_trigupdate_disabled.csh
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
 else
 	setenv subtest_list "$subtest_list_common $subtest_list_non_replic"

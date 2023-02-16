@@ -4,7 +4,7 @@
 # Copyright (c) 2005-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -19,6 +19,8 @@
 # If run with journaling, this test requires BEFORE_IMAGE so set that unconditionally even if test was started with -jnl nobefore
 setenv test_no_ipv6_ver 1
 source $gtm_tst/com/gtm_test_setbeforeimage.csh
+
+source $gtm_tst/com/gtm_test_trigupdate_disabled.csh	# This test does a switchover and so disable -trigupdate
 
 #
 setenv gtm_test_tptype "ONLINE"

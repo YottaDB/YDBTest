@@ -38,7 +38,10 @@ else
 	setenv test_short_sleep_sec 10
 	setenv gtm_test_jobcnt 2
 endif
-# Both the subtests in this test does fail over. So A->P is not possible
+
+source $gtm_tst/com/gtm_test_trigupdate_disabled.csh   # subtests in this test do a failover and so disable -trigupdate
+
+# subtests in this test do a failover. So A->P is not possible
 if ("1" == "$test_replic_suppl_type") then
 	source $gtm_tst/com/rand_suppl_type.csh 0 2
 endif

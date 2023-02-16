@@ -645,6 +645,58 @@ YDB>
 --------- Testing : ##SOURCE_PATH##/mupip  replicate -source -freeze -updnotok ------------
 %YDB-E-CLIERR, Unrecognized option : UPDNOTOK
 !
+! 	SECONDARY is a mandatory qualifier with TRIGUPDATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -start -passive -log=src.log -trigupdate ------------
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: TRIGUPDATE SECONDARY
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -activate -trigupdate ------------
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: ACTIVATE SECONDARY
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -deactivate -trigupdate ------------
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: TRIGUPDATE SECONDARY
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -shutdown -trigupdate ------------
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: TRIGUPDATE SECONDARY
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -checkhealth -trigupdate ------------
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: TRIGUPDATE SECONDARY
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -statslog="dummylog" -trigupdate ------------
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: TRIGUPDATE SECONDARY
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -showbacklog -trigupdate ------------
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: TRIGUPDATE SECONDARY
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -changelog -trigupdate ------------
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: TRIGUPDATE SECONDARY
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -stopsourcefilter -trigupdate ------------
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: TRIGUPDATE SECONDARY
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -losttncomplete -trigupdate ------------
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: TRIGUPDATE SECONDARY
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -needrestart -trigupdate ------------
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: TRIGUPDATE SECONDARY
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -jnlpool -trigupdate ------------
+%YDB-E-CLIERR, Unrecognized option : TRIGUPDATE
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -freeze -trigupdate ------------
+%YDB-E-CLIERR, Unrecognized option : TRIGUPDATE
+!
+!	ZEROBACKLOG is supported only with SHUTDOWN qualifier
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -zerobacklog -start ------------
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SHUTDOWN ZEROBACKLOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -zerobacklog -activate ------------
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SHUTDOWN ZEROBACKLOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -zerobacklog -deactivate ------------
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SHUTDOWN ZEROBACKLOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -zerobacklog -checkhealth ------------
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SHUTDOWN ZEROBACKLOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -zerobacklog -statslog="dummy" ------------
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SHUTDOWN ZEROBACKLOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -zerobacklog -showbacklog ------------
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SHUTDOWN ZEROBACKLOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -zerobacklog -changelog ------------
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SHUTDOWN ZEROBACKLOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -zerobacklog -stopsourcefilter ------------
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SHUTDOWN ZEROBACKLOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -zerobacklog -losttncomplete ------------
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SHUTDOWN ZEROBACKLOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -zerobacklog -needrestart ------------
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SHUTDOWN ZEROBACKLOG
+--------- Testing : ##SOURCE_PATH##/mupip  replicate -source -zerobacklog -jnlpool ------------
+%YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: SHUTDOWN ZEROBACKLOG
+!
 !  MUPIP REPLICATE -SOURCE (Receiver server)
 !	DISALLOW ANY2(start, shutdown, activate, deactivate, checkhealth, statslog, showbacklog, changelog, stopsourcefilter,losttncomplete,needrestart,jnlpool)
 !

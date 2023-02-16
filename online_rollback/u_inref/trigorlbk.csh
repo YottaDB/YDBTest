@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -19,7 +19,6 @@ setenv gtm_test_online_rollback_no_max_seqno 1
 
 # for imptp
 setenv gtm_test_trigger 1
-setenv test_specific_trig_file $gtm_tst/com/imptp.trg
 setenv gtm_badchar "no"
 
 $MULTISITE_REPLIC_PREPARE 2
@@ -30,6 +29,14 @@ echo "Start source server and receiver server with journaling enabled"
 $MSR START INST1 INST2 RP
 get_msrtime
 set ts = $time_msr
+
+# Test has specified -trigger (by "setenv gtm_test_trigger 1" above) and we are going to use imptp.m inside trigorlbk.m.
+# Therefore, load triggers in the database on the source side (they will get replicated across to the receiver side
+# and so no need to load them in the database on the receiver side). A "setenv test_specific_trig_file $gtm_tst/com/imptp.trg"
+# before the "dbcreate.csh" call would cause the trigger to be loaded in the database on both sides which would cause problems
+# (%YDB-E-NULSUBSC errors in update process log) if -trigupdate is randomly chosen ("gtm_test_trigupdate" env var). Hence the
+# trigger load only on the source side.
+$MUPIP trigger -triggerfile=$gtm_tst/com/imptp.trg -noprompt >& imptp.trig.out
 
 $echoline
 $gtm_exe/mumps -run trigorlbk		>&! trigorlbk.out
