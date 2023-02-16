@@ -4,6 +4,9 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -49,12 +52,11 @@ endif
 set eotf_always = ""
 set eotf_random = " overflow mem_stress reorg "
 
-set dorand = `date | $tst_awk '{srand() ; print (int(rand() * 100) + 1 )}'`
-
 if ( "$eotf_always" =~ "* $tst *" ) then
 	setenv gtm_test_eotf_keys $keycount
 else if ( "$eotf_random" =~ "* $tst *" ) then
-	if ( 50 < $dorand ) then
+	set rand = $1   # $1 is a random number in the closed interval [1,100]
+	if ( 50 < $rand ) then
 		setenv gtm_test_do_eotf 1
 		setenv gtm_test_eotf_keys $keycount
 	endif

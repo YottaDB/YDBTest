@@ -1,4 +1,22 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+# Portions Copyright (c) Fidelity National			#
+# Information Services, Inc. and/or its subsidiaries.		#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
+# $1 - random number in range [1,100] (if called from either com/do_random_settings.csh or com/set_locale.csh)
+# $2 - "norecurse" (if called from com/set_locale.csh)
+
 # unless otherwise requested, set gtm_chset to UTF-8 or M, randomly:
 # $gtm_chset:
 #  50% "UTF-8",
@@ -22,7 +40,8 @@ else if ($?gtm_test_nounicode) then
 	set rand = 1	# not random, since -nounicode was specified
 else
 	# pick randomly [0,3]
-	set rand = `date | $tst_awk '{srand() ; print (int(rand() * 4))}'`
+	# $1 is a random number in the closed interval [1,100]
+	set rand = `expr $1 % 4`
 	#50-50 UTF-8 or M
 	#if M: 50-50 defined or undefined
 	# at this point the script has decided how to handle gtm_chset
@@ -32,7 +51,7 @@ if (1 == "$rand") setenv gtm_chset "M"
 if (1 < "$rand") setenv gtm_chset "UTF-8"
 
 if ($?gtm_chset) then
-	if (("UTF-8" == "$gtm_chset") && ("norecurse" != "$1")) source $gtm_tst/com/set_locale.csh norecurse
+	if (("UTF-8" == "$gtm_chset") && ("norecurse" != "$2")) source $gtm_tst/com/set_locale.csh norecurse
 	# (sub)tests still have to source this for dspmbyte
 endif
 
@@ -43,7 +62,8 @@ else if ($?gtm_test_nounicode) then
 	set rand = 0	#not random, since -nounicode was specified
 else
 	# pick randomly [0,1]
-	set rand = `date | $tst_awk '{srand() ; print (int(rand() * 2))}'`
+	# $1 is a random number in the closed interval [1,100]
+	set rand = `expr $1 % 2`
 endif
 if (0 == "$rand") setenv gtm_test_dbdata "M"
 if (1 == "$rand") setenv gtm_test_dbdata "UTF-8"

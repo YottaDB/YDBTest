@@ -3,7 +3,7 @@
 # Copyright (c) 2006-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -23,7 +23,10 @@ if (! $?gtm_chset) exit
 if ("M" == "$gtm_chset") exit
 
 #in case the test overrides
-if ((! $?gtm_test_dbdata) && ("norecurse" != "$1")) source $gtm_tst/com/gtm_test_setunicode.csh norecurse
+if ((! $?gtm_test_dbdata) && ("norecurse" != "$1")) then
+	set randnumber = `$gtm_tst/com/genrandnumbers.csh 1 1 100`
+	source $gtm_tst/com/gtm_test_setunicode.csh $randnumber norecurse
+endif
 
 setenv LANG C
 unsetenv LC_ALL
