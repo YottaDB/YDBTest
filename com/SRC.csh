@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -232,9 +232,12 @@ if ($?gtm_test_jnlpool_buffsize) then
 else
 	set jnlpoolsize = $tst_buffsize
 endif
-echo $MUPIP replic -source -start -secondary="$tst_now_secondary:q":"$portno" ${cmplvlstr} -buffsize=$jnlpoolsize $gtm_test_instsecondary $gtm_test_rp_pp $filter_arg -log=$SRC_LOG_FILE $updokarg $tlsparm $tls_reneg_parm $fileonlyarg
 # Prepare the source server startup command. Set an environment variable as we want this to be accessible from within "sh" below.
 setenv srcstartcmd "$MUPIP replic -source -start -secondary="$tst_now_secondary:q":"$portno" ${cmplvlstr} -buffsize=$jnlpoolsize $gtm_test_instsecondary $gtm_test_rp_pp $filter_arg -log=$SRC_LOG_FILE $updokarg $tlsparm $tls_reneg_parm $fileonlyarg"
+# Note that "echo $srcstartcmd" will issue an "echo: No match" error in tcsh as it is possible "$srcstartcmd" contains
+# strings of the form "-secondary=[::1]:36023". Therefore, we use the below trick to print the value of it using "env".
+# That is the equivalent of an "echo $srcstartcmd" but avoids the "echo: No match" error.
+env | grep ^srcstartcmd | sed 's/^srcstartcmd=//;'
 if (! $?src_srvr_stdin_is_terminal) then
 	# Start the source server
 	# It is possible for usages like "-secondary=[::ffff:127.0.0.1]:36008" to be there in $srcstartcmd
