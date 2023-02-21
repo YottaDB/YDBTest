@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -74,7 +74,7 @@ while (1)
 		set ret = $status
 	endif
 
-	$grep -vE "YDB-E-MUTRUNCNOV4|YDB-E-MUTRUNCNOTBG" $tmpoutput
+	$grep -vE "YDB-E-MUTRUNCNOV4|YDB-E-MUTRUNCNOTBG|GTM-E-MUTRUNCNOV4|GTM-E-MUTRUNCNOTBG" $tmpoutput
 	echo "# `date` : ===== End of round $cnt of mupip size/reorg ====="
 	if ($ret) then
 		if ($ret != 130) then
