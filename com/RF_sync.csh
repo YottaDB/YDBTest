@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -32,7 +32,7 @@ if ( ("MULTISITE" == $test_replic) && !($?inside_multisite_replic) ) then
 endif
 set format="%Y %m %d %H %M %S %Z"
 set dispformat = "%H:%M:%S"
-set logfile = "rf_sync_`date +%H%M%S`.out"
+set logfile = "rf_sync_`date +%H%M%S`_$$.out"
 echo "Started at `date +$dispformat`" >>&! $logfile
 if ($?gtm_tst_rfsync_check_frequency) then
 	@ change_check_frequency = $gtm_tst_rfsync_check_frequency

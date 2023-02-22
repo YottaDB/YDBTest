@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -176,7 +176,7 @@ if ( "decide" == $repl_state ) then
 	# since if an active source server (PP) is already running, we need not start a passive here.
 	# we redirect it to .outx because we just need the output and in some case we get NOJNLPOOL which is expected
 	# and that gets nagged at the end of the test output
-	set receiver_chkhealth_file=RCVR_src_checkhealth_${time_stamp}_`date +%H%M%S`.outx
+	set receiver_chkhealth_file=RCVR_src_checkhealth_${time_stamp}_`date +%H%M%S`_$$.outx
 	$MUPIP replic -source -checkhealth >&! $receiver_chkhealth_file
 	set health_stat = $status
 	if (! (-z $receiver_chkhealth_file)) then
@@ -223,7 +223,7 @@ if ("true" == $passive_flag) then
 	echo "In directory:`pwd`"
 	$MUPIP replic -source -start $gtm_test_instsecondary -propagateprimary -buffsize=$jnlpoolsize -passive -log=$PASSIVE_LOG_FILE $tlsparm $tls_reneg_parm
 	set start_status = $status
-	set receiver_chkhealth_file=RCVR_src_checkhealth_${time_stamp}_`date +%H%M%S`.outx
+	set receiver_chkhealth_file=RCVR_src_checkhealth_${time_stamp}_`date +%H%M%S`_$$.outx
 	$MUPIP replicate -source -checkhealth $gtm_test_instsecondary | & tee $receiver_chkhealth_file
 	if (("" != `$grep "server is alive" $receiver_chkhealth_file`) && (0 == $start_status)) then
 		echo "Passive Source Server have started"
@@ -248,7 +248,7 @@ if ("true" == "$dummy_source") then
 	setenv gtm_test_instsecondary "-instsecondary=supp_${gtm_test_cur_sec_name}"
 	setenv SRC_LOG_FILE_SUPP "$SEC_SIDE/SUPP_SRC_${time_stamp}.log"
 	$MUPIP replic -source -start -secondary="$tst_now_secondary":"$portno_supp" -buffsize=$jnlpoolsize $gtm_test_instsecondary $tlsparm -log=$SRC_LOG_FILE_SUPP
-	set receiver_chkhealth_file=RCVR_src_checkhealth_${time_stamp}_`date +%H%M%S`.outx
+	set receiver_chkhealth_file=RCVR_src_checkhealth_${time_stamp}_`date +%H%M%S`_$$.outx
 	$MUPIP replicate -source -checkhealth $gtm_test_instsecondary | & tee $receiver_chkhealth_file
 	if ("" != `$grep "server is alive"  $receiver_chkhealth_file`) then
 		echo "Supplementary instance source server has started" | tee -a supp_${gtm_test_cur_sec_name}_dummy.out
@@ -285,7 +285,7 @@ $MUPIP replic -receiv -start -listenport=$portno -buffsize=$tst_buffsize $other_
 set start_status = $status
 
 if (! $?gtm_test_repl_skiprcvrchkhlth) then
-	set receiver_chkhealth_file=RCVR_rcvr_checkhealth_${time_stamp}_`date +%H%M%S`.outx
+	set receiver_chkhealth_file=RCVR_rcvr_checkhealth_${time_stamp}_`date +%H%M%S`_$$.outx
 	$MUPIP replicate -receiv -checkhealth | & tee $receiver_chkhealth_file
 	if (("" != `$grep "server is alive" $receiver_chkhealth_file`) && (0 == $start_status)) then
 		echo "Receiver Server have started"

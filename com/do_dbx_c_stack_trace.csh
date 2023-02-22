@@ -1,4 +1,18 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+# Portions Copyright (c) Fidelity National			#
+# Information Services, Inc. and/or its subsidiaries.		#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
 
 # Waits till the pid is available (with a timeout).
 # As soon as the pid is available,calls get_dbx_c_stack_trace.csh to get a C-stack trace of the process
@@ -39,7 +53,7 @@ endif
 if ($#args >= 4 ) then
 	set sleep_interval = $args[4]
 endif
-set log = "stack_trace_${pid}_`date +%H%M%S`.out"
+set log = "stack_trace_${pid}_`date +%H%M%S`_$$.out"
 touch "$donefile"
 $gtm_tst/com/is_proc_alive.csh $pid
 set is_proc_alive = $status

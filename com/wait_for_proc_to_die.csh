@@ -4,6 +4,9 @@
 # Copyright (c) 2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -41,8 +44,8 @@ else
 	endif
 endif
 
-set logfile = wait_for_proc_to_die_`date +%H%M%S`.log		# for debugging info
-set info_file = psinfo_`date +%H%M%S`.txt
+set logfile = wait_for_proc_to_die_`date +%H%M%S`_$$.log		# for debugging info
+set info_file = psinfo_`date +%H%M%S`_$$.txt
 if ($3 != "") then
 	set logfile = $3/$logfile
 	set info_file = $3/$info_file

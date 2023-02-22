@@ -4,6 +4,9 @@
 # Copyright (c) 2010-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -52,7 +55,7 @@ ls -lart $fulltime $GNUPGHOME >&! ls_gtmtest_GNUPGHOME_afterIMPORT
 # subsequent encryption commands fail. See <decryption_fails_C9K05003270_gpg_late_key_creation> for more details.
 @ cntr = 1
 while ($cntr < 10)
-	set lk_outfile = list_keys_`date +%H%M%S`.out
+	set lk_outfile = list_keys_`date +%H%M%S`_$$.out
 	$gpg --homedir=$GNUPGHOME --list-keys >&! $lk_outfile
 	$grep "$gtmtest1@fnis.com" $lk_outfile >>&! grep_on_listkeys.out
 	if (0 == $status) break

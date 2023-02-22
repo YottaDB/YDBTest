@@ -3,6 +3,9 @@
 # Copyright (c) 2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -45,7 +48,7 @@ endif
 # Do mupip set -encryptable if gtm_test_set_encryptable is 1
 if ($?gtm_test_set_encryptable) then
 	if ($gtm_test_set_encryptable) then
-		set outfile = mse_`date +%y%m%d_%H%M%S`.out
+		set outfile = mse_`date +%y%m%d_%H%M%S`_$$.out
 		alias command '$MUPIP set -encryptable -region "*"'
 		alias command			>>&! $outfile
 		command				>>&! $outfile
