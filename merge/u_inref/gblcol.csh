@@ -1,9 +1,23 @@
 #! /usr/local/bin/tcsh -f
-setenv test_reorg "NON_REORG"  
+#################################################################
+#								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+# Portions Copyright (c) Fidelity National			#
+# Information Services, Inc. and/or its subsidiaries.		#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
+setenv test_reorg "NON_REORG"
 source $gtm_tst/$tst/u_inref/cre_coll_sl_com.csh
 
-# create a db and fill in some local variables to test local collation
-
+# Create a db and fill in some local variables to test local collation
 source $gtm_tst/com/dbcreate.csh mumps 2 125 500 -col=1
 $GTM << \aaa
 d ^gblcol
@@ -19,7 +33,7 @@ if $status then
 	goto stoptest
 else
         echo "Local collation test PASSED"
-endif         
+endif
 echo "Compare reverse ZWR output"
 $GTM << GTM_EOF
 s output="rev1.out"
@@ -38,13 +52,13 @@ else
 endif
 #
 echo "Compare ZWR output"
-diff col2.out $gtm_tst/$tst/outref/polgblcol.txt > /dev/null 
+diff col2.out $gtm_tst/$tst/outref/polgblcol.txt > /dev/null
 if $status then
         echo "Local collation test FAILED after first set of MERGE "
 	goto stoptest
 else
         echo "Local collation test PASSED"
-endif         
+endif
 echo "Compare reverse ZWR output"
 $GTM << GTM_EOF
 s output="rev2.out"
@@ -63,13 +77,13 @@ else
 endif
 #
 echo "Compare ZWR output"
-diff col3.out $gtm_tst/$tst/outref/polgblcol.txt > /dev/null 
+diff col3.out $gtm_tst/$tst/outref/polgblcol.txt > /dev/null
 if $status then
         echo "Local collation test FAILED after second set of MERGE "
 	goto stoptest
 else
         echo "Local collation test PASSED"
-endif         
+endif
 echo "Compare reverse ZWR output"
 $GTM << GTM_EOF
 s output="rev3.out"
@@ -88,13 +102,13 @@ else
 endif
 #
 echo "Compare ZSHOW ZWR output"
-diff zshowgbl.out $gtm_tst/$tst/outref/zshowgbl.txt > /dev/null 
+diff zshowgbl.out $gtm_tst/$tst/outref/zshowgbl.txt > /dev/null
 if $status then
         echo "Local collation test FAILED in zshow or zwrite"
 	goto stoptest
 else
         echo "Local collation test PASSED"
-endif         
+endif
 echo "Compare reverse ZSHOW ZWR output"
 $GTM << GTM_EOF
 s output="revzshowgbl.out"

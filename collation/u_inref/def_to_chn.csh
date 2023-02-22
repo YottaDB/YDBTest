@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2006, 2013 Fidelity Information Services, Inc	#
+# Copyright 2006, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -38,7 +41,7 @@
 #	    exactly as we expect.
 #
 $switch_chset "UTF-8"
-source $gtm_tst/com/cre_coll_sl.csh chinese 1
+source $gtm_tst/com/cre_coll_sl.csh com/col_chinese.c 1
 
 # ========= debug section ===========
 echo "DEBUG INFORMATION"

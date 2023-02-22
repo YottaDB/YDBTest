@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -20,7 +20,7 @@ echo '## routine is an integer instead of the underlying mval.'
 #
 echo
 echo '## Setup collation used in the test (via com/cre_coll_sl.csh)'
-source $gtm_tst/com/cre_coll_sl.csh polish 1
+source $gtm_tst/com/cre_coll_sl.csh com/col_polish.c 1
 echo
 echo '## Create database with collation enabled as it is used in several expressions. Also add a few records.'
 $gtm_tst/com/dbcreate.csh mumps -col=1

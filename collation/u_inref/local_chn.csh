@@ -1,4 +1,18 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+# Portions Copyright (c) Fidelity National			#
+# Information Services, Inc. and/or its subsidiaries.		#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
 #
 # Test Plan
 #	This is a new subtest for testing Chinese collation in local variables. It
@@ -9,9 +23,9 @@
 #	3. Do zwr of the local variables A, B and morefill
 #	4. Compare the log to a pre-generated reference file by calling
 #	   check_local_chnm.csh
-#	
+#
 $switch_chset "UTF-8"
-source $gtm_tst/com/cre_coll_sl.csh chinese 1
+source $gtm_tst/com/cre_coll_sl.csh com/col_chinese.c 1
 
 # ========= debug section ===========
 echo " ====== DEBUG INFORMATION START ======"

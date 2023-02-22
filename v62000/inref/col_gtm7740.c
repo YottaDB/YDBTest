@@ -1,6 +1,9 @@
 /****************************************************************
 *								*
-*	Copyright 2014 Fidelity Information Services, Inc	*
+* Copyright 2014 Fidelity Information Services, Inc		*
+*								*
+* Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	*
+* All rights reserved.						*
 *								*
 *	This source code contains the intellectual property	*
 *	of its copyright holder(s), and is made available	*
@@ -9,8 +12,11 @@
 *								*
 ****************************************************************/
 /*
- * col_reverse.c	Alternative collation sequence library.
+ * col_gtm7740.c	Alternative collation sequence library.
  * 			This library simulates the buffer overflow while perfomring inverse collation transformation.
+ *
+ * This is a special routine for v62000/gtm7740. This routine is similar to com/col_reverse.c but has additional
+ * functionality to catch the buffer overflow condition this test gets.
  */
 #include "gtm_descript.h"
 #include <sys/types.h>

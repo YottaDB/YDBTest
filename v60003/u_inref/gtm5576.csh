@@ -3,7 +3,7 @@
 #								#
 # Copyright 2013, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -19,7 +19,7 @@ $gtm_tst/com/dbcreate.csh mumps 1
 $DSE change -file -def=1
 
 # Create reverse collation shared library and set current GT.M collation to it.
-$gtm_tst/com/cre_coll_sl.csh reverse 1
+$gtm_tst/com/cre_coll_sl.csh com/col_reverse.c 1
 
 if ("HOST_HP-UX_PA_RISC" == "$gtm_test_os_machtype") then
 	setenv ext "sl"

@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2014 Fidelity Information Services, Inc	#
+# Copyright 2014 Fidelity Information Services, Inc		#
+#								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -10,8 +13,8 @@
 #								#
 #################################################################
 
-source $gtm_tst/com/cre_coll_sl.csh reverse 1
-source $gtm_tst/com/cre_coll_sl.csh straight 2
+source $gtm_tst/com/cre_coll_sl.csh com/col_reverse.c 1
+source $gtm_tst/com/cre_coll_sl.csh com/col_straight.c 2
 
 setenv gtm_test_col_return_version 3
 setenv gtm_collate_1 $PWD/libreverse.so

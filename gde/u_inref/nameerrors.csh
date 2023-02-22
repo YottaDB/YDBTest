@@ -3,7 +3,7 @@
 #								#
 # Copyright 2013, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018, 2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -16,7 +16,7 @@
 # The below collation numbers are used in the gde commands below
 source $gtm_tst/com/cre_coll_sl_straight.csh 1
 source $gtm_tst/com/cre_coll_sl_reverse.csh 99
-source $gtm_tst/com/cre_coll_sl.csh polish 9
+source $gtm_tst/com/cre_coll_sl.csh com/col_polish.c 9
 
 @ case = 1
 # First generate the required gde command list

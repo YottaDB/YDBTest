@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2002, 2013 Fidelity Information Services, Inc	#
+# Copyright 2002, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -10,12 +13,14 @@
 #								#
 #################################################################
 #
-# settings for polish collation
-
-source $gtm_tst/$tst/u_inref/cre_coll_sl.csh
+# settings for polish collation - Since com/cre_coll_sl.cshalways sets $gtm_local_collate and we
+# want the local collation set to '1', do the polish_rev first, and then the polish library so we
+# end up with gtm_local_collate set appropriately.
+#
+source $gtm_tst/com/cre_coll_sl.csh com/col_polish_rev.c 2
+source $gtm_tst/com/cre_coll_sl.csh com/col_polish.c 1
 
 # create a db with polish collation, and fill it
-
 setenv gtm_test_sprgde_id "ID1"	# to differentiate multiple dbcreates done in the same subtest
 $gtm_tst/com/dbcreate.csh "mumps" 2 125 500 -col=1
 $GTM << GTM_EOF
@@ -37,7 +42,6 @@ endif
 $grep -v '(region' mupip_extract_bin.out
 
 # create a db with def collation and load it from the previous extract
-
 setenv gtm_test_sprgde_id "ID2"	# to differentiate multiple dbcreates done in the same subtest
 $gtm_tst/com/dbcreate.csh "mumps" 2 125 500 -col=2
 echo "$MUPIP load -format=bin extr.bin"

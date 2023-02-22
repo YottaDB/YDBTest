@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2002, 2013 Fidelity Information Services, Inc	#
+# Copyright 2002, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -11,11 +14,9 @@
 #################################################################
 #
 # settings for polish collation
-
-source $gtm_tst/$tst/u_inref/cre_coll_sl.csh
+source $gtm_tst/com/cre_coll_sl.csh com/col_polish.c 1
 
 # create a db with polish collation, and fill it
-
 setenv gtm_test_sprgde_id "ID1"	# to differentiate multiple dbcreates done in the same subtest
 $gtm_tst/com/dbcreate.csh mumps 2 125 500 -col=1
 $GTM << GTM_EOF

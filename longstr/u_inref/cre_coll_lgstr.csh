@@ -1,8 +1,11 @@
 #!/usr/local/bin/tcsh
 #################################################################
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
+#								#
+# Portions Copyright (c) Fidelity National			#
+# Information Services, Inc. and/or its subsidiaries.		#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -11,18 +14,23 @@
 #								#
 #################################################################
 # Note that this is based on cre_coll_sl_reverse.csh under $gtmtst/com
-#create collation shared libraries for a "reverse" sequence ([1-255] -> [255-1])
-# two arguments, $1-> sequence, 2-> c module
-setenv cur_dir `pwd`
-cp $gtm_tst/$tst/inref/"$2".c $cur_dir
-$gt_cc_compiler $gtt_cc_shl_options -I$gtm_inc $cur_dir/"$2".c
-$gt_ld_shl_linker ${gt_ld_option_output}$cur_dir/lib"$2"${gt_ld_shl_suffix} $gt_ld_shl_options $cur_dir/"$2".o -lc
-unsetenv ydb_collate_$1
-unsetenv gtm_collate_$1
-source $gtm_tst/com/set_ydb_env_var_random.csh ydb_local_collate gtm_local_collate $1
-if ($?ydb_local_collate) then
-	set col_n = "ydb_collate_$1"
+# Create collation shared libraries for a "reverse" sequence ([1-255] -> [255-1])
+# Two arguments, $1-> module path, 2-> sequence
+
+# Local collation env var could be set to a broken .so file by a prior call to cre_coll_lgstr.csh.
+# So unsetenv this to avoid errors in the "mumps -run %XCMD" call inside cre_coll_sl.csh.
+# The previous call could have randomly set ydb_local_collate or gtm_local_collate. Not sure which one.
+# So unsetenv both.
+unsetenv ydb_local_collate gtm_local_collate
+
+source $gtm_tst/com/cre_coll_sl.csh $1 $2
+set save_gtm_collate = `setenv | grep "^gtm_collate_$2" | awk '{split($1,toks,"="); print toks[2]}'`
+unsetenv ydb_collate_$2
+unsetenv gtm_collate_$2
+source $gtm_tst/com/set_ydb_env_var_random.csh ydb_local_collate gtm_local_collate $2 # Randomly pick one to set
+if ($?ydb_local_collate) then # Then set the same version of xxx_collate_$2.
+	set col_n = "ydb_collate_$2"
 else
-	set col_n = "gtm_collate_$1"
+	set col_n = "gtm_collate_$2"
 endif
-setenv $col_n "$cur_dir/lib"$2"${gt_ld_shl_suffix}"
+setenv $col_n $save_gtm_collate
