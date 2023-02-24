@@ -3,7 +3,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -1029,21 +1029,6 @@ set st_passed = `$grep -c "PASS from" $tst_general_dir/outstream.log`
 set st_failed = `$grep -c "FAIL from" $tst_general_dir/outstream.log`
 set st_disabled = `$grep -wc "$testname" $gtm_test_local_debugdir/excluded_subtests.list`
 echo "$testname	$st_passed	$st_failed	$st_disabled" >> $gtm_test_local_debugdir/test_subtest.info
-
-
-######################TIMING LOG####################################
-if ($?testtiming_log) then
-	set ST = ""
-	if ($?gtm_test_st_list) set ST = "ST"
-	set timing_info = "$tim $testname $short_host $tst_ver $tst_image $LFE | $timinglog_info | $log_line_stat @$gtm_tst_out $ST V1"
-	echo "$timing_info" >>! $timing_info_file
-	if (-e $tst_general_dir/timing.subtest) then
-		sed 's/^/  : /;s/$/ '"@$gtm_tst_out\/$testname"'/' $tst_general_dir/timing.subtest >>&! $timing_info_file
-		set subtest_timing_dir = $tst_dir/$gtm_tst_out/debugfiles/
-		if (! -e $subtest_timing_dir) mkdir -p $subtest_timing_dir
-		cp $tst_general_dir/timing.subtest $subtest_timing_dir/$testname.timing.subtest
-	endif
-endif
 
 ############# Routine to display failed subtest diff files ############
 if ($tst_stdout == 2 || $tst_stdout == 3) then
