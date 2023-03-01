@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -12,8 +12,9 @@
 #################################################################
 # TEST %YDBJNLF
 echo "Creating unjournaled database"
-setenv gtm_test_jnl "NON_SETJNL"	# Disable random journaling
-$gtm_tst/com/dbcreate.csh mumps         # Create one region database
+echo "# Create it with maximum keysize and recordsize as INGEST^%YDBJNLF would require it"
+setenv gtm_test_jnl "NON_SETJNL"				# Disable random journaling
+$gtm_tst/com/dbcreate.csh mumps -rec=1048576 -key=1019		# Create one region database
 
 echo ""
 echo "Turning on journaling for the first time"

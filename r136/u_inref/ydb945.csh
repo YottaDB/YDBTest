@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -64,13 +64,13 @@ chmod -w .
 
 # Now run the sh script to invoke "ydb_env_set"
 echo "# Now invoke ydb_env_set"
-echo "# We expect ydb_env_set to encounter error while creating YDBOCTO and/or YDBAIM regions"
-echo "# We see that it issues appropriate error message and returns with non-zero exit status"
+echo "# We expect ydb_env_set to encounter error while creating YDBAIM region (done before creating YDBOCTO region)"
+echo "# We see that it issues appropriate error message for YDBAIM region and returns with non-zero exit status"
 sh $gtm_tst/$tst/u_inref/ydb945.sh >& ydb945.outx
 cat ydb945.outx
 echo "# Currently ydb_env_set does not point us to the first error in this use-case. But it points us"
 echo "# to the directory containing the information. So get that real error out".
-set dir = `grep %YDBENV-F-MUPIPCREATEERR ydb945.outx | $tst_awk '{print $NF}' | sed 's,/MUPIP_YDBOCTO.err,,g'`
+set dir = `grep %YDBENV-F-MUPIPCREATEERR ydb945.outx | $tst_awk '{print $NF}' | sed 's,/MUPIP_YDBAIM.err,,g'`
 grep -E 'YDB-E|YDB-F' $dir/*
 
 echo "# Restore write permissions on current directory"

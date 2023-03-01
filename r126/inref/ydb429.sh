@@ -1,7 +1,7 @@
 #!/bin/sh
 #################################################################
 #								#
-# Copyright (c) 2019-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -476,12 +476,10 @@ testI() {
 	cp $gtm_tst/$tst/inref/ydb429.m .	# needed for "yottadb -run ydb429" after ydb_env_unset
 	echo '# Verify that db & jnls exist under $ydb_dir/$ydb_rel/g for DEFAULT region'
 	echo '# Verify that db & jnls exist under $ydb_dir/$ydb_rel/g for YDBOCTO region'
-	echo '# Verify that db & jnls do NOT exist under $ydb_dir/$ydb_rel/g for YDBAIM region'
+	echo '# Verify that db & jnls exist under $ydb_dir/$ydb_rel/g for YDBAIM region'
 	cd $ydb_dir/$ydb_rel; ls -1 g/*.gld g/*.dat g/*.mjl*; cd ..
 	echo '# Set some globals in the DEFAULT, YDBOCTO and YDBAIM regions'
 	$ydb_dist/yottadb -run setgblsallregions^ydb429
-	echo '# Verify that db file for YDBAIM region is now created but no jnl file created'
-	cd $ydb_dir/$ydb_rel; ls -1 g/*.gld g/*.dat g/*.mjl*; cd ..
 	echo '# source ydb_env_unset'
 	. $ydb_dist/ydb_env_unset
 	echo '# source ydb_env_set'
@@ -513,24 +511,14 @@ testI() {
 	unset gtm_db_counter_sem_incr	# avoid semaphore counter overflow
 	export gtm_test_jnl="SETJNL"
 	export tst_jnl_str='-journal="enable,on,before"'
-	export gtm_test_mupip_set_version="disable"	# needed to avoid V4 type blocks as that can cause
-							# CHANGE_CURRENT_TN-E-MULTIPLE_TNS error due to V4 format not being
-							# applied to YDBAIM region (due to AUTODB) but later random tn chosen by
-							# test framework (anywhere up to 2**63) can be applied on YDBAIM but not
-							# on the other 2 regions because they are V4 format and max tn for those
-							# regions is a lot less (MAX_WARN_TN).
-	export gtm_test_dbcreate_initial_tn=1	# this tn is randomly set by "com/change_current_tn.csh". If it gets set to 0,
-						# the same script will return without changing the current tn in the database
-						# file headers of all regins using DSE. But this means the %ydbaim.dat file
-						# (AUTODB region) will not be created and cause reference file issues. So disable
-						# this random value by avoiding all random values and setting it to a fixed value.
 	# Need to store the value in settings.csh for the above setting to really take effect as that is what
 	# "com/change_current_tn.csh" looks at.
 	echo "setenv gtm_test_dbcreate_initial_tn $gtm_test_dbcreate_initial_tn" >> settings.csh
-	# Enable before image journaling only on DEFAULT and YDBOCTO regions but not on YDBAIM region since we want to keep that
-	# region unjournaled.
+	# Enable before image journaling only on DEFAULT, YDBOCTO and YDBAIM regions but not on YDBJNLF region
+	# since that is MM access method and won't work if before-image journaling is chosen.
 	echo "yottadb" > jnl_on_specific_dblist.txt
 	echo "%ydbocto" >> jnl_on_specific_dblist.txt
+	echo "%ydbaim" >> jnl_on_specific_dblist.txt
 	if [ 1 = "$test_replic" ]; then
 		cp jnl_on_specific_dblist.txt $SEC_DIR
 	fi
@@ -555,62 +543,19 @@ testI() {
 	ps -ef --forest > psfu.outx
 	echo '# Source ydb_env_set to simulate restart of system'
 	. $ydbDistTmp/ydb_env_set
-	echo '# Confirm no database file exists for YDBAIM in the existing $ydb_dir environment'
+	echo '# Confirm database file exists for YDBAIM in the existing $ydb_dir environment since it is journaled AND not an AUTODB region.'
+	echo '# Confirm database file exists for YDBJNLF in the existing $ydb_dir environment if this test was run without -replic.'
+	echo '# - In that case, this test did not open the YDBJNLF region and so that region did not have any REQRUNDOWN'
+	echo '#   error (since the YDBJNLF region is not journaled) that needed to be fixed.'
+	echo '# Confirm database file does NOT exist for YDBJNLF in the existing $ydb_dir environment if this test was run with -replic.'
+	echo '# - In that case, the source server would have opened the YDBJNLF region (it opens all regions) and so that region would'
+	echo '#   have a REQRECOVER error after the crash that needed to be fixed. And ydb_env_set would DELETE that database file since'
+	echo '#   it has the AUTODB flag set and is not journaled.'
 	# Note: The test framework sets "LC_COLLATE" to C (see "com/set_locale.csh") but it is possible that "ydb_env_set" sets
 	# "LC_ALL" to a UTF-8 locale (if it finds that LC_CTYPE or LC_ALL is not set to a UTF-8 locale at shell startup which
 	# can vary depending on how the current server was set up). In that case, the "LC_COLLATE" setting would get overridden
 	# to the UTF-8 locale which would cause a different sort order of the "*.gld *.dat" files than what is expected in the
 	# reference file so undo the LC_ALL env var override and set LC_COLLATE to "C" (just in case) for the "ls" command below.
-	env LC_ALL="" LC_COLLATE="C" ls -1 *.gld *.dat
-	echo '# Verify that globals set in DEFAULT and YDBOCTO exist, but not global in YDBAIM'
-	$ydb_dist/yottadb -run verifyaftercrash^ydb429
-	. $ydb_dist/ydb_env_unset
-
-	# End of test cleanup code
-	ls -1 > filesB.list # list of files after the test is over
-	# move only the new files to the $testCaseNum directory
-	mkdir $testCaseNum
-	diff --changed-group-format='%<' --unchanged-group-format='' filesB.list filesA.list | xargs mv -t $testCaseNum
-	if [ 1 = "$test_replic" ]; then
-		# In case of a replic test, move away files from test24B so test24C (next stage) is not affected by it.
-		mv $SEC_DIR ${SEC_DIR}_$testCaseNum
-		mkdir $SEC_DIR
-		mv ${SEC_DIR}_$testCaseNum/start_time_syslog.txt $SEC_DIR	# Move this file back in case of test failures
-										# as test framework will look for it.
-	fi
-	mv $testCaseNum/r .
-
-	ls -1 > filesA.list # make a list of all files that exist before the test starts
-	echo "Test $testNum : Subtest C : Test of Crash handling if YDBAIM is BG with before-image journaling"
-	cp $testCaseNum/$testCaseNum.gde test${testNum}C.gde
-	testCaseNum=test${testNum}C
-	export test_specific_gde=$(pwd)/$testCaseNum.gde
-	export gtmroutines="$old_gtmroutines" # this is needed because when ydb_env_set fails gtmroutines is not reset properly
-	export gtm_chset="$old_gtm_chset"
-	export gtmgbldir="$testCaseNum.gld"
-	export ydb_dist=$ydbDistTmp
-	export gtm_dist=$ydb_dist
-	echo "# Set BG access method and enable journaling for YDBAIM"
-	sed -i 's/YDBAIM -AUTODB /YDBAIM /;s/-NOJOURNAL /-JOURNAL=(FILE_NAME="%ydbaim.mjl")/;s/YDBAIM -ACCESS_METHOD=MM/YDBAIM -ACCESS_METHOD=BG/;' $testCaseNum.gde
-	# Create database files. If replication test, create replication instance file too and on remote side.
-	$gtm_tst/com/dbcreate.csh $testCaseNum
-	echo "# Start a background yottadb process that updates globals in all 3 regions DEFAULT, YDBOCTO and YDBAIM"
-	$ydb_dist/yottadb -run bkgrnd^ydb429
-	echo "# Kill the yottadb process and simulate a crash by deleting shared memory segments etc. for all three regions"
-	ydbPid=$($ydb_dist/yottadb -run %XCMD 'write ^child')
-	tcsh $gtm_tst/com/gtm_crash.csh "PID_" $ydbPid # crash the pid
-	if [ 1 = "$test_replic" ]; then
-		tcsh $gtm_tst/com/primary_crash.csh
-		$sec_shell '$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/receiver_crash.csh'
-	fi
-	echo '# Confirming it is crashed'
-	$ydb_dist/yottadb -run %XCMD 'write $data(^default)," ",$data(^default),!'
-	echo '# Complete the crash simulation by sourcing ydb_env_unset'
-	. $ydbDistTmp/ydb_env_unset
-	echo '# Source ydb_env_set to simulate restart of system'
-	. $ydbDistTmp/ydb_env_set
-	echo '# Confirm no database file exists for YDBAIM in the existing $ydb_dir environment'
-	# See comment before prior similar command (that sets LC_COLLATE=C) for why this is needed.
 	env LC_ALL="" LC_COLLATE="C" ls -1 *.gld *.dat
 	echo '# Verify that globals set in DEFAULT, YDBOCTO and YDBAIM exist'
 	$ydb_dist/yottadb -run verifyaftercrash^ydb429
@@ -622,6 +567,7 @@ testI() {
 	mkdir $testCaseNum
 	diff --changed-group-format='%<' --unchanged-group-format='' filesB.list filesA.list | xargs mv -t $testCaseNum
 	if [ 1 = "$test_replic" ]; then
+		# In case of a replic test, move away files from test24B so next stage (if any in the future) is not affected by it.
 		mv $SEC_DIR ${SEC_DIR}_$testCaseNum
 		mkdir $SEC_DIR
 		mv ${SEC_DIR}_$testCaseNum/start_time_syslog.txt $SEC_DIR	# Move this file back in case of test failures

@@ -38,8 +38,9 @@ rm mumps.dat
 
 echo ""
 echo "# Create a brand new database unrelated to first database"
+echo "# Create it with maximum keysize and recordsize as INGEST^%YDBJNLF would require it"
 echo "# (Still not journaled)"
-$gtm_tst/com/dbcreate.csh foo
+$gtm_tst/com/dbcreate.csh foo -rec=1048576 -key=1019
 setenv ydb_gbldir "foo.gld"
 
 echo ""

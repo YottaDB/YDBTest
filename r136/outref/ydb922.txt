@@ -1,4 +1,5 @@
 Creating unjournaled database
+# Create it with maximum keysize and recordsize as INGEST^%YDBJNLF would require it
 Files Created in ##TEST_PATH##:
 Using: ##SOURCE_PATH##/mumps -run GDE
 mumps.gld
@@ -20,11 +21,11 @@ Setting data into ^y
 
 Run main extract test
 # Ingesting journal data
-# Printing %YDBJNLF database file name
-##TEST_PATH##/%ydbjnlf.dat
+# Printing %YDBJNLF database file name (in DEFAULT region)
+##TEST_PATH##/mumps.dat
 # Printing ; pieces 1-3 from ^%ydbJNLF global
 # These are journal file name, journal file format, and database file name
-##TEST_PATH##/mumps.mjl;YDBJNL44;##TEST_PATH##/mumps.dat
+##TEST_PATH##/mumps.mjl;44;##TEST_PATH##/mumps.dat
 # Printing records in ^%ydbJNLFTYPE1
 SET: ^y\^y(1)\"         1"
 SET: ^y\^y(2)\"         2"
@@ -64,7 +65,7 @@ Count of processes which accessed the database should be 2: 2
 # Ingesting previous journal file
 # Printing ; pieces 1-3 from ^%ydbJNLF global
 # These are journal file name, journal file format, and database file name
-##TEST_AWK##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]);YDBJNL44;##TEST_PATH##/mumps.dat
+##TEST_AWK##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9]);44;##TEST_PATH##/mumps.dat
 # Printing records in ^%ydbJNLFTYPE1
 SET: ^x\^x(1)\"         1"
 SET: ^x\^x(2)\"         2"
@@ -191,10 +192,10 @@ CREATE TABLE YDBJNLFOPCOUNT -- Opcode count
 GLOBAL "^%ydbJNLFOPCOUNT";
 DROP TABLE IF EXISTS YDBJNLFRECTYPE KEEPDATA;
 CREATE TABLE YDBJNLFRECTYPE -- Table for record types
-(label VARCHAR,
+(format INTEGER,
  rectype VARCHAR,
- tbl VARCHAR,
- PRIMARY KEY (label, rectype))
+ tbltype VARCHAR, -- table name is YDBJNLF followed by tbltype
+ PRIMARY KEY (format, rectype))
 GLOBAL "^%ydbJNLFRECTBL";
 DROP TABLE IF EXISTS YDBJNLFTYPE1 KEEPDATA;
 CREATE TABLE YDBJNLFTYPE1 -- FKILL,FSET,FZKILL,GKILL,GSET,GZKILL,KILL,SET,TKILL,TSET,TZKILL,TZTRIG,UKILL,USET,UZKILL,UZTRIG,ZKILL,ZTRIG

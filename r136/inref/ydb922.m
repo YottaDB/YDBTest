@@ -1,6 +1,6 @@
 ;#################################################################
 ;#								#
-;# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+;# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	#
 ;# All rights reserved.						#
 ;#								#
 ;#	This source code contains the intellectual property	#
@@ -22,8 +22,8 @@ sety ;
 maintest ;
  write "# Ingesting journal data",!
  do INGEST^%YDBJNLF("mumps.mjl","One")
- write "# Printing %YDBJNLF database file name",!
- write $zpiece($$^%PEEKBYNAME("gd_segment.fname","YDBJNLF"),$zchar(0)),!
+ write "# Printing %YDBJNLF database file name (in DEFAULT region)",!
+ write $zpiece($$^%PEEKBYNAME("gd_segment.fname","DEFAULT"),$zchar(0)),!
  write "# Printing ; pieces 1-3 from ^%ydbJNLF global",!
  write "# These are journal file name, journal file format, and database file name",!
  write $zpiece(^%ydbJNLF("One"),";",1,3),!
