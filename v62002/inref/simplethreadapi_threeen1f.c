@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries. *
+ * Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries. *
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -157,7 +157,7 @@ int main(int argc, char *argv[])
 		YDB_ASSERT(k <= MAXTHREADS);
 
 		ptr = strtok(NULL, " ");
-		blk = atoi(ptr);	/* blk - size of blocks of integers is optional fourth piece */
+		blk = (NULL != ptr) ? atoi(ptr) : 0;	/* blk - size of blocks of integers is optional fourth piece */
 		tmp = (j - i + k) / k;	/* default / maximum block size */
 		if (blk && (blk <= tmp))	/* print block size, optionally corrected */
 			printf(" %d", blk);
