@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #                                                               #
-# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.       #
+# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #                                                               #
 #       This source code contains the intellectual property     #
@@ -17,14 +17,11 @@ echo '#	           two ways:'
 echo '#              1. With the external call defined WITH the SIGSAFE keyword indicating it does no signal handling'
 echo '#	                (which it actually does do).'
 echo '#	             2. With the external call NOT defined with the SIGSAFE keyword.'
-echo '#'
-echo '#            Additionally, this test also run a test developed while developing the first test that demonstrates'
-echo '#            that the SIGSAFE attribute in the external call table works appropriately.'
 echo
 echo '# Building call-in library and external call table'
-$gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $gtm_tst/$tst/inref/{gtm9331a.c,gtm9331b.c}
-$gt_ld_shl_linker ${gt_ld_option_output}libgtm9331${gt_ld_shl_suffix} $gt_ld_shl_options gtm9331a.o gtm9331b.o $gt_ld_syslibs
-rm gtm9331a.o gtm9331b.o # Avoid interference with M routine compilations
+$gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $gtm_tst/$tst/inref/gtm9331.c
+$gt_ld_shl_linker ${gt_ld_option_output}libgtm9331${gt_ld_shl_suffix} $gt_ld_shl_options gtm9331.o $gt_ld_syslibs
+rm gtm9331.o # Avoid interference with M routine compilations
 #
 setenv	GTMXC	gtm9331.tab
 echo "`pwd`/libgtm9331${gt_ld_shl_suffix}" > $GTMXC   # Push out path to external call shared library
@@ -32,20 +29,14 @@ echo '# (note there are two external calls that call the same routine but one ha
 cat >> $GTMXC << xx
 sigwait1:	gtm_long_t	signalWait(I:gtm_uint_t):SIGSAFE
 sigwait2:	gtm_long_t	signalWait(I:gtm_uint_t)
-sigdisable1:	gtm_long_t	signalDisable():SIGSAFE
-sigdisable2:	gtm_long_t	signalDisable()
 xx
 echo
 echo '# Create database'
 $gtm_tst/com/dbcreate.csh mumps
 $echoline
 echo
-echo '# Drive gtm9331a test routine (tests issue with $ZTIMEOUT)'
-$gtm_dist/mumps -run gtm9331a
-$echoline
-echo
-echo '# Drive gtm9331b test routine (uses HANG to test SIGSAFE flag)'
-$gtm_dist/mumps -run gtm9331b
+echo '# Drive gtm9331 test routine (tests issue with $ZTIMEOUT)'
+$gtm_dist/mumps -run gtm9331
 $echoline
 echo
 echo '# Verify database'

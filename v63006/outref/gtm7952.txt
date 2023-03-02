@@ -1,0 +1,93 @@
+# gtm7952 test:
+#
+# gtm7952.csh drives a test for the SIGSAFE attribute for entries in the external call table.
+# During the development for the GTM-9331 test (which also uses this support), we noted that
+# this testing was missing since it was implemented in V6.3-006. The testing is discussed in
+# this post: https://gitlab.com/YottaDB/DB/YDBTest/-/issues/492#note_1218063954
+
+# Building call-in library and external call table
+# (note there are two external calls that call the same routine but one has SIGSAFE declared and the other does not
+
+# Create database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+###################################################################
+
+# Drive gtm7952 test routine to test use of SIGSAFE when defining external calls
+# gtm7952: This test is a test of the SIGSAFE keyword in the external call table. In this test,
+# what we do first is drive the external call that does NOT have the SIGSAFE keyword first as it
+# should notice the handler was changed and fix it but the second call drives the SIGSAFE keyword
+# so doing that does not check that the SIGALRM handler has been changed so the subsequent HANG
+# actually stays HUNG until the process gets shot.
+#
+# Note - the description above only applies to GT.M builds. While the GT.M build uses the internal
+# timer facility, a YottaDB build uses a different timing mechanism so never sees the HANG that
+# GT.M versions see. So to see the hang, the test needs to run on a GT.M build.
+
+# First test using external call sigdisable2() which does NOT have SIGSAFE defined on the external call (expect success)
+##TEST_AWKHang time was 5[0-9]{6}us \(5 seconds\)
+
+# Second test using external call sigdisable1() which has SIGSAFE defined on the external call (expect HANG command to hang until killed on GT.M, and to pass on YottaDB)
+##TEST_AWKHang time was 5[0-9]{6}us \(5 seconds\)
+
+# Checking syslog for expected TIMERHANDLER warning given during drive of non-SIGSAFE routine
+##TEST_AWK... .. ..:..:.. ##TEST_HOST_SHORT##.* (YDB|GTM)-MUMPS\[[1-9][0-9]*\]: %YDB-W-TIMERHANDLER, Incorrect SIGALRM handler \(0x0000000000000001\) found by check_for_timer_pops -- generated from .*
+
+###################################################################
+
+#
+# Here is the documentation for the traces found in the following listings. First, here is what we expect to
+# find in gtm7952_strace_1.txt which is the run WITHOUT specifying SIGSAFE - meaning it will verify that the
+# SIGALRM signal handler is still set as expected and if not, will reset it.
+#
+# 1. rt_sigaction(SIGALRM, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+# 2. rt_sigaction(SIGALRM, {sa_handler=SIG_IGN,.*
+# 3. rt_sigaction(SIGALRM, {sa_handler=.*
+# 4. rt_sigaction(SIGALRM, {sa_handler=SIG_IGN,.*
+# 5. rt_sigaction(SIGALRM, NULL, {sa_handler=SIG_IGN,.*
+# 6. rt_sigaction(SIGALRM, {sa_handler=.*
+#
+# In the above system call trace extract:
+# - Line 1 & 2 are done by sig_init() when (a) saving all signals and then (b) setting all signals to SIG_IGN.
+# - Line 3 is when the signal is activated by the first timer call.
+# - Line 4 is when the signal is reset by gtm7952.c in the external call setting the signal back to ignore.
+# - Line 5 is done in check_timer_pops when it is examining the handler to see if it was modified.
+# - Line 6 is also done in check_timer_pops when it decides the signal handler needs to be reset.
+#
+# Now the calls used when SIGSAFE is specified:
+#
+# 1. rt_sigaction(SIGALRM, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+# 2. rt_sigaction(SIGALRM, {sa_handler=SIG_IGN,.*
+# 3. rt_sigaction(SIGALRM, {sa_handler=.*
+# 4. rt_sigaction(SIGALRM, {sa_handler=SIG_IGN,.*
+#
+# In the above SIGSAFE designated system call trace extract:
+# - Lines 1-4 are all identical to the above calls but this version does no examination of the handler.
+# - In this manner, we can prove that the SIGSAFE designation does what it says it does.
+#
+# Additionally, the check above for a TIMERHANDLER error in the syslog shows we were in the non-SIGSAFE
+# situation and the handler was changed and then was fixed.
+#
+
+# Search the strace files created while calling signalDisable() with and without the SIGSAFE definition. First,
+# search the the file created by calling the C routine via sigdisable1 such that SIGSAFE is NOT in effect:
+rt_sigaction(SIGALRM, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+##TEST_AWKrt_sigaction\(SIGALRM, \{sa_handler=SIG_IGN, sa_mask=\[\], sa_flags=SA_RESTORER, sa_restorer=.*
+##TEST_AWKrt_sigaction\(SIGALRM, \{sa_handler=.*
+##TEST_AWKrt_sigaction\(SIGALRM, \{sa_handler=SIG_IGN, sa_mask=\[\], sa_flags=SA_RESTORER, sa_restorer=.*
+##TEST_AWKrt_sigaction\(SIGALRM, NULL, \{sa_handler=SIG_IGN, sa_mask=\[\], sa_flags=SA_RESTORER, sa_restorer=.*
+##TEST_AWKrt_sigaction\(SIGALRM, \{sa_handler=.*
+
+# Now the SIGACTION calls used when SIGSAFE is specified:
+rt_sigaction(SIGALRM, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+##TEST_AWKrt_sigaction\(SIGALRM, \{sa_handler=SIG_IGN, sa_mask=\[\], sa_flags=SA_RESTORER, sa_restorer=.*
+##TEST_AWKrt_sigaction\(SIGALRM, \{sa_handler=.*
+##TEST_AWKrt_sigaction\(SIGALRM, \{sa_handler=SIG_IGN, sa_mask=\[\], sa_flags=SA_RESTORER, sa_restorer=.*
+
+# Verify database
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

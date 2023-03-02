@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -19,13 +19,14 @@
 # gtm8947	[mmr]		Test of $translate() compile time optimization when it's second and third arguments are literals
 # gtm7433	[mmr]		Test that $order(,-1) and $zprevious() do not print out the trigger global variable (^#t)
 # gtm9005	[mmr]		Test that mupip load returns a non-zero error code when there are record errors in the load file
+# gtm7952	[estess]	Verify SIGSAFE exteral call table attribute works as documented
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "v63006 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "gtm9011 gtm8017 gtm8947 gtm7433 gtm9005"
+setenv subtest_list_non_replic "gtm9011 gtm8017 gtm8947 gtm7433 gtm9005 gtm7952"
 setenv subtest_list_replic     ""
 
 
