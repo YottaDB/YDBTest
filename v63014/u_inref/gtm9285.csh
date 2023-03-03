@@ -89,7 +89,8 @@ echo '# Shutting down INST1 source server'
 $gtm_tst/com/SRC_SHUT.csh >& SRC_SHUTDOWN_test3.log
 echo
 echo '# Show any source log message mentioning soft tries period - looking for message resetting the soft-tries-period'
-echo '# to half the maximum shutdown wait.'
+echo '# to half the maximum shutdown wait. Note that ARM process equipped systems have a much larger maximum shutdown'
+echo '# wait (240 seconds) than the x86 systems do (120 seconds):'
 $grep 'Soft tries period' src3.log | cut -c 28-
 
 echo

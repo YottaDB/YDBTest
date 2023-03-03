@@ -45,9 +45,16 @@ Connect hard tries count = 0, Connect hard tries period = 500 milliseconds
 # Shutting down INST1 source server
 
 # Show any source log message mentioning soft tries period - looking for message resetting the soft-tries-period
-# to half the maximum shutdown wait.
+# to half the maximum shutdown wait. Note that ARM process equipped systems have a much larger maximum shutdown
+# wait (240 seconds) than the x86 systems do (120 seconds):
+##SUSPEND_OUTPUT HOST_LINUX_ARMVXL HOST_LINUX_AARCH64
 Soft tries period cannot be more than half of the maximum shutdown wait time of 120 seconds. Reducing soft tries period to 60 seconds 
 Soft tries period = 60 seconds, REPLALERT message period = 0 seconds
+##ALLOW_OUTPUT HOST_LINUX_ARMVXL HOST_LINUX_AARCH64
+##SUSPEND_OUTPUT HOST_LINUX_X86_64
+Soft tries period cannot be more than half of the maximum shutdown wait time of 240 seconds. Reducing soft tries period to 120 seconds 
+Soft tries period = 120 seconds, REPLALERT message period = 0 seconds
+##ALLOW_OUTPUT HOST_LINUX_X86_64
 
 ###################################################################
 #
