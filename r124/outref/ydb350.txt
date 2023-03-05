@@ -21,7 +21,7 @@ isig icanon iexten echo echoe echok -echonl -noflsh -xcase -tostop -echoprt
 SHELL
 # Expecting 1 line below : 1 tcsetattr call in op_use (init_gtm -> gtm_startup -> cenable -> op_use) and 0 calls due to WRITE
 grep ioctl trace1.outx | grep TCSETS | sed 's/{.*}//g'
-ioctl(0, SNDCTL_TMR_START or TCSETS, ) = 0
+ioctl(0, TCSETS, ) = 0
 SHELL
 -------------------------------------------------------------------------------------------------------
 # Test that terminal still has ECHO characteristics after READ command
@@ -35,9 +35,9 @@ isig icanon iexten echo echoe echok -echonl -noflsh -xcase -tostop -echoprt
 SHELL
 # Expecting 3 lines below : 1 tcsetattr call in op_use and 2 tcsetattr calls in iott_readfl (one to set -echo and one to set echo)
 grep ioctl trace2.outx | grep TCSETS | sed 's/{.*}//g'
-ioctl(0, SNDCTL_TMR_START or TCSETS, ) = 0
-ioctl(0, SNDCTL_TMR_START or TCSETS, ) = 0
-ioctl(0, SNDCTL_TMR_START or TCSETS, ) = 0
+ioctl(0, TCSETS, ) = 0
+ioctl(0, TCSETS, ) = 0
+ioctl(0, TCSETS, ) = 0
 SHELL
 -------------------------------------------------------------------------------------------------------
 # Test that terminal still has ECHO characteristics after READ * command
@@ -51,9 +51,9 @@ isig icanon iexten echo echoe echok -echonl -noflsh -xcase -tostop -echoprt
 SHELL
 # Expecting 3 lines below : 1 tcsetattr call in op_use and 2 tcsetattr calls in iott_rdone (one to set -echo and one to set echo)
 grep ioctl trace3.outx | grep TCSETS | sed 's/{.*}//g'
-ioctl(0, SNDCTL_TMR_START or TCSETS, ) = 0
-ioctl(0, SNDCTL_TMR_START or TCSETS, ) = 0
-ioctl(0, SNDCTL_TMR_START or TCSETS, ) = 0
+ioctl(0, TCSETS, ) = 0
+ioctl(0, TCSETS, ) = 0
+ioctl(0, TCSETS, ) = 0
 SHELL
 --------------------------------------------------------------------------
 # Test that terminal still has ECHO characteristics after DIRECT-MODE reads
@@ -67,9 +67,9 @@ YDB>halt
 SHELL
 # Expecting 5 lines below : 1 tcsetattr call in op_use and 2 tcsetattr calls in dm_read for 2 M lines of input (do &sttydisp LINE and halt LINE)
 grep ioctl trace4.outx | grep TCSETS | sed 's/{.*}//g'
-ioctl(0, SNDCTL_TMR_START or TCSETS, ) = 0
-ioctl(0, SNDCTL_TMR_START or TCSETS, ) = 0
-ioctl(0, SNDCTL_TMR_START or TCSETS, ) = 0
-ioctl(0, SNDCTL_TMR_START or TCSETS, ) = 0
-ioctl(0, SNDCTL_TMR_START or TCSETS, ) = 0
+ioctl(0, TCSETS, ) = 0
+ioctl(0, TCSETS, ) = 0
+ioctl(0, TCSETS, ) = 0
+ioctl(0, TCSETS, ) = 0
+ioctl(0, TCSETS, ) = 0
 SHELL
