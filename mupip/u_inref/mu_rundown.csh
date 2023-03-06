@@ -1,7 +1,10 @@
 #! /usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2002, 2014 Fidelity Information Services, Inc	#
+# Copyright 2002, 2014 Fidelity Information Services, Inc	#
+#                                                               #
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -160,15 +163,15 @@ if ($wait_time == 10) then
 	echo "Check mu_rundown.debug"
 	$ps | $grep `$head -n 1 rjob.mjo` >>&! mu_rundown.debug
 	$gtm_tst/com/ipcs -a >>&! mu_rundown.debug
-    foreach file (*.dat)
-	set semkey=`$gtm_exe/ftok $file | $sed -n 's/.*\[ \(.*\) \].*/\1/p'`
-	set semid=`$gtm_tst/com/ipcs -a | $grep $semkey | $tst_awk '{print $2}'`
-	echo "semid: $semid; semkey: $semkey"
-	echo $file
-	echo -------------------------------
-	$gtm_exe/semstat2 $semid
-	echo -------------------------------
-end
+	foreach file (*.dat)
+	    set semkey=`$MUPIP ftok $file |& $grep $file | awk '{print substr($10, 2, 10);}'`
+	    set semid=`$gtm_tst/com/ipcs -a | $grep $semkey | $tst_awk '{print $2}'`
+	    echo "semid: $semid; semkey: $semkey"
+	    echo $file
+	    echo -------------------------------
+	    $MUPIP semaphore $semid
+	    echo -------------------------------
+	end
 endif
 
 cat rjob.mje

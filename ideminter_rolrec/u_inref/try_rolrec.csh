@@ -4,6 +4,9 @@
 # Copyright (c) 2003-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -201,16 +204,16 @@ if (("CRASH" == $crash_stop) || ("STOP" == $crash_stop)) then
 				fuser -k *.dat >> $KILL_LOG
 			endif
 		endif
-		set db_ftok_key = `$gtm_exe/ftok -id=43 *.dat| $grep "dat" | $tst_awk '{printf("%s ",$5);}'`
+		set db_ftok_key = `$MUPIP ftok -id=43 *.dat |& $grep "dat" | $tst_awk '{printf("%s ", substr($10,2,10));}'`
 		setenv ftok_key "$db_ftok_key"
 		set dbipc_private = `$gtm_tst/com/db_ftok.csh`
 		set ipc_private = "$dbipc_private"
 		if ("ROLLBACK" == $rol_or_rec) then
 			echo "-------------" >> $KILL_LOG
 			echo "$MUPIP ftok -jnlpool $gtm_repl_instance" >> $KILL_LOG
-			$MUPIP ftok -jnlpool $gtm_repl_instance >> $KILL_LOG
+			$MUPIP ftok -jnlpool $gtm_repl_instance >>& $KILL_LOG
 			echo "$MUPIP ftok -recv $gtm_repl_instance" >> $KILL_LOG
-			$MUPIP ftok -recv $gtm_repl_instance >> $KILL_LOG
+			$MUPIP ftok -recv $gtm_repl_instance >>& $KILL_LOG
 			set jnlipc_private = `$gtm_tst/com/jnlpool_ftok.csh`
 			set rcvipc_private = `$gtm_tst/com/recvpool_ftok.csh`
 			set ipc_private = "$dbipc_private $jnlipc_private $rcvipc_private"

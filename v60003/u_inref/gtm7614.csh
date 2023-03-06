@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -24,8 +27,8 @@ if ("ENCRYPT" == $test_encryption) then
 	cat ${gtmcrypt_config}.all >>&! $gtmcrypt_config
 endif
 
-set bftok = `$gtm_exe/ftok b.dat | $tst_awk '{print $3}' | tee bftok.txt`
-set cftok = `$gtm_exe/ftok c.dat | $tst_awk '{print $3}' | tee cftok.txt`
+set bftok = `$MUPIP ftok b.dat |& grep 'b.dat' | $tst_awk '{print $9}' | tee bftok.txt`
+set cftok = `$MUPIP ftok c.dat |& grep 'c.dat' | $tst_awk '{print $9}' | tee cftok.txt`
 
 # Change file names so that file with the larger ftok id comes first. This test assumes ftok list is in alphabetical order
 if ($bftok < $cftok) then

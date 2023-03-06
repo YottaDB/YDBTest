@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh
 #################################################################
 #								#
-#	Copyright 2003, 2013 Fidelity Information Services, Inc	#
+# Copyright 2003, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -41,7 +44,7 @@ while ($num < 64)
 		echo "TEST-E-unexpected upgrade error"
 		$ps >>& pslist.outx
 		$gtm_tst/com/ipcs -a >>& ipcslist.outx
-		$gtm_exe/ftok $filename
+		$MUPIP ftok $filename
 		echo "Note: This failures might be related to the TR C9G06-002797."
 		echo "Please check the resolution note <C9G06_002797_ftokcollision>"
 	endif

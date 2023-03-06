@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -52,12 +52,12 @@ getPaths
 numProc
 	WRITE "     Number of processes attached to journal pool of mumps.repl: "
 
-	ZSYSTEM "$ydb_dist/mupip ftok -jnlpool mumps.repl |& $grep jnlpool | $tst_awk '{print $6}' >& shm1.out ; $gtm_tst/com/ipcs -a | $grep -w `cat ./shm1.out` | $tst_awk '{print $NF}'"
+	ZSYSTEM "$gtm_dist/mupip ftok -jnlpool mumps.repl |& $grep jnlpool | $tst_awk '{print $6}' >& shm1.out ; $gtm_tst/com/ipcs -a | $grep -w `cat ./shm1.out` | $tst_awk '{print $NF}'"
 
 	quit
 
 ftok
 	WRITE "     "
 
-	ZSYSTEM "set repl_ftok_semid = `$gtm_dist/ftok -id=44 $gtm_repl_instance | awk '{print $5}'` ; $gtm_dist/semstat2 `$gtm_tst/com/ipcs -s | $grep -w $repl_ftok_semid | awk '{print $2}'` | $grep 'sem  1' | sed 's/sem  1/JNLPOOL ftok : '$gtm_repl_instance' /g' "
+	ZSYSTEM "set repl_ftok_semid = `$MUPIP ftok -id=44 -only $gtm_repl_instance |& awk '{print $5;}'` ; $MUPIP semaphore `$gtm_tst/com/ipcs -s | $grep -w $repl_ftok_semid |& awk '{print $2}'` |& $grep 'sem  1' | sed 's/sem  1/JNLPOOL ftok : '$gtm_repl_instance' /g' "
 

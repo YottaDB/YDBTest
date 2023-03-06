@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh
 #################################################################
 #                                                               #
-# Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.       #
+# Copyright (c) 2021-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #                                                               #
 #       This source code contains the intellectual property     #
@@ -29,7 +29,7 @@ echo "# Briefly open database for a moment with DSE to see if it leaves any IPCs
 $DSE d -f >& dse_header_output.txt
 echo "# See if any IPCs were left over - If any IPCs show up here, the test fails as there should be none"
 # Use ftok to get the id of the semaphore that may have been left around
-set leftoveripcid = `$ydb_dist/ftok mumps.dat | awk '{print $5}'`
+set leftoveripcid = `$MUPIP ftok mumps.dat |& grep "mumps.dat" | awk '{print substr($10, 2, 10);}'`
 # See if an IPC for our database was left over
 $gtm_tst/com/ipcs -s >& ipcs_sem.txt
 set output = `$tst_awk '$3 == "'$leftoveripcid'" {print $0};' ipcs_sem.txt`

@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2020-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -43,13 +43,13 @@ foreach key ($ftok_key)
 		echo "It is possible that due to ftok collision, another process removed this semaphore." >>& $KILL_LOG
 		continue
 	endif
-	echo "##semstat info: " >>& $KILL_LOG
-	$gtm_exe/semstat2 $sem_id >>& $KILL_LOG
-	# It is possible that semstat2 done below might issue an error indicating that the semaphore does not exist.
+	echo "##semaphore info: " >>& $KILL_LOG
+	$MUPIP semaphore $sem_id >>& $KILL_LOG
+	# It is possible that MUPIP SEMAPHORE done below might issue an error indicating that the semaphore does not exist.
 	# This is possible if some other process concurrently removes the FTOK semaphore (see scenario above).
 	# This is not an error condition and we do not want the test to fail. So make sure any error messages from the
-	# semstat2 will not go to stdout. Hence the |& (instead of a simple |) in the pipe below.
-	set tsemval = `$gtm_exe/semstat2 $sem_id |& $grep "sem  1" | $tst_awk '{print($3);}' | sed 's/(semval=//' | sed 's/,//'`
+	# MUPIP SEMAPHORE command will not go to stdout. Hence the |& (instead of a simple |) in the pipe below.
+	set tsemval = `$MUPIP semaphore $sem_id |& $grep "sem  1" | $tst_awk '{print($4);}' | sed 's/,//'`
 	if ($tsemval == 0) then
 		echo "TEST-I-$gtm_tst/com/ipcrm -S $key"  >>& $KILL_LOG
 		$gtm_tst/com/ipcrm -S $key	>>& $KILL_LOG

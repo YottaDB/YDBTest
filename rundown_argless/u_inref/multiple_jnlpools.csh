@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -60,8 +60,7 @@ echo "# Get the jnlpool shmid of mumps.repl"
 $MUPIP ftok -jnlpool mumps.repl >&! mupip_ftok_mumps_repl.out
 set old_shmid = `$tst_awk '/jnlpool/ {print $6}' mupip_ftok_mumps_repl.out`
 set old_semid = `$tst_awk '/jnlpool/ {print $3}' mupip_ftok_mumps_repl.out`
-$gtm_exe/ftok -id=44 mumps.repl >&! ftok_mumps_repl.out
-set key = `$tst_awk '{print $5}' ftok_mumps_repl.out`
+set key = `grep mumps.repl mupip_ftok_mumps_repl.out | $tst_awk '{print substr($10, 2, 10);}'`
 # Now note down ipcs -s and ipcs -m at this point
 $gtm_tst/com/ipcs -s |& $grep $USER >&! ipcs_s_b4kill.out
 $gtm_tst/com/ipcs -m |& $grep $USER >&! ipcs_m_b4kill.out

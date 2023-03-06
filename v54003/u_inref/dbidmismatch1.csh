@@ -4,6 +4,9 @@
 # Copyright (c) 2011-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -43,7 +46,7 @@ GTM_EOF
 END
 
 BEGIN "get the ftok semid for mumps.dat. Then switch to backup.dat and access database. It should issue DBIDMISMATCH error"
-set ftok_key = `$gtm_exe/ftok mumps.dat | $grep mumps | $tst_awk '{print $5}'`
+set ftok_key = `$MUPIP ftok mumps.dat |& $grep mumps | $tst_awk '{print substr($10, 2, 10);}'`
 set ftok_id = `$gtm_tst/com/ipcs -a | $grep $ftok_key | $tst_awk '{print $2}'`
 
 # switch to backup.gld

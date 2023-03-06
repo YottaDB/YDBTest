@@ -1,19 +1,35 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+# Portions Copyright (c) Fidelity National			#
+# Information Services, Inc. and/or its subsidiaries.		#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
 foreach value (mumps a b c d e f g h i)
-	set x = `$gtm_exe/ftok $value.dat | $tst_awk '{print $5 }'`
-  	if ($x[1] != "0xffffffff") then
-		foreach y ($x)
-          		$gtm_tst/com/ipcs | grep $y >& /dev/null
-	  		if ($status == 0) then
-	    			echo "IPCS TEST FAILED. Shared Memory or, Semaphore, were left!"
-				echo $gtm_tst/com/ipcrm -M $y
-	    			$gtm_tst/com/ipcrm -M $y >& /dev/null
-				echo $gtm_tst/com/ipcrm -S $y
-	    			$gtm_tst/com/ipcrm -S $y >& /dev/null
-	    			echo "Read-only test cleaned them to continue the test..."
-	    			echo ""
-	  		endif
-		end
+	set x = `$MUPIP ftok $value.dat |& grep "$value.dat" | $tst_awk '{print substr($10, 2, 10);}'`
+  	if (("$x" != "0xffffffff") && ("$x" != "")) then
+	    $gtm_tst/com/ipcs | grep $x >& /dev/null
+	    if ($status == 0) then
+		echo "IPCS TEST FAILED. Shared Memory or, Semaphore, were left!"
+		echo
+		echo "$gtm_tst/com/ipcrm -M $x"
+		$gtm_tst/com/ipcrm -M $x >& /dev/null
+		echo
+		echo "$gtm_tst/com/ipcrm -S $x"
+	    	$gtm_tst/com/ipcrm -S $x >& /dev/null
+	    	echo "Read-only test cleaned them to continue the test..."
+	    	echo
+		echo
+	    endif
 	endif
 end
 

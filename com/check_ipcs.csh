@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -63,7 +63,7 @@ foreach dir ($dirs)
 		foreach dbfile ($dbfiles)
 			# $3 - Semaphore array ; $6 - Shared memory
 			set ipc = `$MUPIP ftok $dbfile |& $tst_awk '$1 == "'$dbfile'" {printf ("%s %s ",$3,$6)}'`
-			set ftokipc = `$gtm_exe/ftok -id=43 $dbfile |& $tst_awk '$1 == "'$dbfile'" {printf "%s ",$5}'` # Semaphore array
+			set ftokipc = `$MUPIP ftok -id=43 $dbfile |& $tst_awk '$1 == "'$dbfile'" {printf "%s ", substr($10, 2, 10)}'` # Semaphore array
 			# There are multiple reasons why the above dbfile wouldn't return proper ipcs, like say they were not proper gtm db file etc.
 			# In such cases, just mark ipcs as -1, to avoid subscript out of range errors below
 			if ($#ipc != 2 ) then
@@ -84,7 +84,7 @@ foreach dir ($dirs)
 			setenv gtm_repl_instance $replfile
 			set jnlpoolipc = `$MUPIP ftok -jnlpool $gtm_repl_instance   |& $tst_awk '$1 == "jnlpool" {printf "%s %s ",$3,$6}'`
 			set rcvpoolipc = `$MUPIP ftok -recvpool $gtm_repl_instance  |& $tst_awk '$1 == "recvpool" {printf "%s %s ",$3,$6}'`
-			set repl_ftokipc = `$gtm_exe/ftok -id=44 $gtm_repl_instance |& $tst_awk '$1 == "'$gtm_repl_instance'" {printf "%s ",$5}'`
+			set repl_ftokipc = `$MUPIP ftok -id=44 $gtm_repl_instance |& $tst_awk '$1 == "'$gtm_repl_instance'" {printf "%s ", substr($10, 2, 10)}'`
 			if ($#rcvpoolipc != 2 ) then
 				set rcvpoolipc = ( -1 -1 )
 			endif

@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh
 #################################################################
 #								#
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -91,7 +91,7 @@ foreach type ($types)
 		echo 'FAIL'
 	endif
 	# clear the shared memory
-	setenv ftok_key `$gtm_exe/ftok -id=43 *.dat| $tst_awk '/dat/{print $5}'`
+	setenv ftok_key `$MUPIP ftok -id=43 *.dat |& grep ".dat" | $tst_awk '/dat/{print substr($10, 2, 10);}'`
 	set dbipc_private = `$gtm_tst/com/db_ftok.csh`
 	$gtm_tst/com/ipcrm $dbipc_private
 	$gtm_tst/com/rem_ftok_sem.csh $ftok_key

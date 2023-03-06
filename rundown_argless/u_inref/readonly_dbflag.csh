@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -70,7 +70,8 @@ YDB_EOF
 	echo ""
 	echo "# Test that ftok semaphore is not left around after halt from a READ_ONLY database"
 	cp ${permission}_bak/* .
-	set ftok_value = `$ydb_dist/ftok mumps.dat | $grep mumps.dat | $tst_awk '{print $5}'`
+	set ftok_value = `$MUPIP ftok mumps.dat |& $grep mumps.dat | $tst_awk '{print substr($10, 2, 10);}'`
+	echo "Validate our ftok_value by printing it here and check it with the reference file - mumps.dat ftok: $ftok_value"
 	set before = `$gtm_tst/com/ipcs -a | $grep $ftok_value`
 	$GTM << YDB_EOF
 	write "Open the READ_ONLY database mumps.dat. Expect no errors during open",!  set x=\$get(^x)

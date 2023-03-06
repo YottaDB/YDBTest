@@ -35,6 +35,7 @@ YDB>
 YDB>
 
 # Test that ftok semaphore is not left around after halt from a READ_ONLY database
+##TEST_AWKValidate our ftok_value by printing it here and check it with the reference file - mumps.dat ftok: 0x[0-9a-fA-F]{8}
 
 YDB>
 Open the READ_ONLY database mumps.dat. Expect no errors during open
@@ -168,6 +169,7 @@ YDB>
 YDB>
 
 # Test that ftok semaphore is not left around after halt from a READ_ONLY database
+##TEST_AWKValidate our ftok_value by printing it here and check it with the reference file - mumps.dat ftok: 0x[0-9a-fA-F]{8}
 
 YDB>
 Open the READ_ONLY database mumps.dat. Expect no errors during open

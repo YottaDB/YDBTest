@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2003, 2014 Fidelity Information Services, Inc	#
+# Copyright 2003, 2014 Fidelity Information Services, Inc	#
+#                                                               #
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -17,7 +20,7 @@ cp $gtm_tst/$tst/inref/c1780.m .
 $gtm_exe/mumps -run c1780
 #ipcrm -m
 #ipcrm -s
-set db_ftok_key = `$gtm_exe/ftok -id=43 *.dat| egrep "dat" | $tst_awk '{printf("%s ",$5);}'`
+set db_ftok_key = `$MUPIP ftok -id=43 *.dat |& egrep "dat" | $tst_awk '{printf("%s ",substr($10, 2, 10));}'`
 setenv ftok_key "$db_ftok_key"
 set dbipc_private = `$gtm_tst/com/db_ftok.csh`
 $gtm_tst/com/ipcrm $dbipc_private

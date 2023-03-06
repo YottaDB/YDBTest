@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -76,8 +76,8 @@ if ( "MULTISITE" == $test_replic ) then
 endif
 
 # IPCS
-set db_ftok_key = `$gtm_exe/ftok -id=43 *.dat| egrep "dat" | $tst_awk '{printf("%s ",$5);}'`
-set repl_ftok_key = `$gtm_exe/ftok -id=44 $gtm_repl_instance | egrep "$gtm_repl_instance" | $tst_awk '{printf("%s ",$5);}'`
+set db_ftok_key = `$MUPIP ftok -id=43 *.dat |& egrep "dat" | $tst_awk '{printf("%s ", substr($10, 2, 10))}'`
+set repl_ftok_key = `$MUPIP ftok -id=44 $gtm_repl_instance |& egrep "$gtm_repl_instance" | $tst_awk '{printf("%s ", substr($10, 2, 10))}'`
 setenv ftok_key "$db_ftok_key $repl_ftok_key"
 set dbipc_private = `$gtm_tst/com/db_ftok.csh`
 set jnlipc_private = `$gtm_tst/com/jnlpool_ftok.csh`

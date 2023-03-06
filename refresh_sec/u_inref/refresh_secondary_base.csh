@@ -4,6 +4,9 @@
 # Copyright (c) 2006-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -26,14 +29,14 @@ $gtm_tst/com/dbcreate.csh mumps .
 setenv portno `$sec_shell '$sec_getenv; cat $SEC_DIR/portno'`
 
 # save so debug info in case MUSTANDALONE error occurs
-$gtm_exe/ftok mumps.dat >&! gtm_ftok_info.out
+$gtm_exe/mupip ftok mumps.dat >&! gtm_ftok_info.out
 $gtm_tst/com/ipcs -sa >&! ipcs_sa.out
-set gtm_semkey=`cat gtm_ftok_info.out|$grep "mumps.dat"|$tst_awk '{print $5}'`
+set gtm_semkey=`cat gtm_ftok_info.out|$grep "mumps.dat"|$tst_awk '{print substr($10, 2, 10);}'`
 echo $gtm_semkey >&! gtm_semkey.out
 set gtm_semid=`cat ipcs_sa.out | $grep $gtm_semkey | sed 's/s/s /'| $tst_awk '{printf("%s ",$2);}'`
 echo $gtm_semid >& gtm_semid.out
 if ( "" != "$gtm_semid" ) then
-	$gtm_exe/semstat2 $gtm_semid >&! gtm_semstat2_inst.out
+	$gtm_exe/mupip semaphore $gtm_semid >&! mupip_semaphore_inst.out
 endif
 $ps >& ps.outx
 

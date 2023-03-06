@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -41,7 +41,7 @@ $psuser | $grep -E "mupip|mumps|simpleapi|yottadb" >>& $KILL_LOG
 set pidcheck = "${pids:as/ /|/}"
 
 # IPCS
-set db_ftok_key = `$gtm_exe/ftok -id=43 *.dat| $tst_awk '/dat/{print $5}'`
+set db_ftok_key = `$MUPIP ftok -id=43 *.dat |& $tst_awk '/dat/{print substr($10, 2, 10);}'`
 setenv ftok_key "$db_ftok_key"
 if ($1 == "NO_SHM_REM") then
 	set dbipc_private = ""

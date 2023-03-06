@@ -11,44 +11,13 @@ This is what is done in UNIX:
 Primary crash (may be in different order):
     kill -9 active source  server process
     kill -9 all GTM processes
-    ipc= $gtm_exe/ftok *.dat   :                Then ipcrm -s  $ipc and ipcrm  -m $ipc
-    ipc=$gtm_exe/ftok *.gld  :                  Then ipcrm -s  $ipc and ipcrm  -m $ipc
+    ipc=$gtm_dist/mupip ftok *.dat  :				Then ipcrm -s  $ipc and ipcrm  -m $ipc
+    ipc=$gtm_dist/mupip ftok *.gld  :            		Then ipcrm -s  $ipc and ipcrm  -m $ipc
 
 Secondary crash (may be in different order):
     kill -9 passive source server process
     kill -9 receiver server process
     kill -9 update process
-    ipc= $gtm_exe/ftok *.dat   :                Then ipcrm -s  $ipc and ipcrm  -m $ipc
-    ipc=$gtm_exe/ftok *.gld  :                  Then ipcrm -s  $ipc and ipcrm  -m $ipc
-    ipc=$gtm_exe/ftok /id=44  *.gld  :       Then ipcrm -s  $ipc and ipcrm  -m $ipc
-
-For VMS I have a tool from Mahesh, called gsrem.exe. <gsname global_sec_name> removes global_sec_name (does not check for permission etc. so it is a bit risky. But we will replace the tool later). Current ipcrm.exe built by Xianguan cannot remove global sections for replic servers.
-
-Mahesh and I assumed that stop /id will remove all locks automatically even crashandburn.exe is used. Roger is it correct assumption?
-
-
-VMS 
-==================
-Before startting M processes (which are all detached) define  gtmsecshr crashandburn.exe
-$ ipcrm = $ gtm$dist:ipcrm.exe
-$ gsrem = $ utilsdir:gsrem.exe
-
-Primary crash (may be in different order):
-    $ stop /id= active source  server process
-    $ stop /id= all GTM processes
-    $ gs = mupip ftok  *.dat /prefix = GT$S   :  Then $ gsrem 'gs'    (same as   $ ipcrm ipcrm /reg *)
-    $ gs = mupip ftok  *.gld /prefix = GT$P   :  Then $ gsrem 'gs'
-
-Secondary crash (may be in different order):
-    $ stop/id = passive source server process
-    $ stop /id= receiver server process
-    $ stop /id= update process
-    $ gs = mupip ftok  *.dat /prefix = GT$S   :  Then $ gsrem 'gs'    (same as   $ ipcrm ipcrm /reg *)
-    $ gs = mupip ftok  *.gld /prefix = GT$P   :  Then $ gsrem 'gs'
-    $ gs = mupip ftok  *.gld /prefix = GT$R   :  Then $ gsrem 'gs'
-
-
-
-Thanks.
-
-Mir Layek Ali
+    ipc=$gtm_dist/mupip ftok *.dat   :				Then ipcrm -s  $ipc and ipcrm  -m $ipc
+    ipc=$gtm_dist/mupip ftok *.gld   :                 	    	Then ipcrm -s  $ipc and ipcrm  -m $ipc
+    ipc=$gtm_dist/mupip ftok -jnlpool -receivpool *.gld  :      Then ipcrm -s  $ipc and ipcrm  -m $ipc
