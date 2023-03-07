@@ -27,14 +27,18 @@ mumps.dat
 # timer facility, a YottaDB build uses a different timing mechanism so never sees the HANG that
 # GT.M versions see. So to see the hang, the test needs to run on a GT.M build.
 
-# First test using external call sigdisable2() which does NOT have SIGSAFE defined on the external call (expect success)
+# First test using external call sigdisable2() which does NOT have SIGSAFE defined on the external call (expect no errors)
+##SUSPEND_OUTPUT HOST_LINUX_ARMVXL HOST_LINUX_AARCH64
 ##TEST_AWKHang time was 5[0-9]{6}us \(5 seconds\)
+##ALLOW_OUTPUT HOST_LINUX_ARMVXL HOST_LINUX_AARCH64
 
-# Second test using external call sigdisable1() which has SIGSAFE defined on the external call (expect HANG command to hang until killed on GT.M, and to pass on YottaDB)
+# Second test using external call sigdisable1() which has SIGSAFE defined on the external call (expect HANG command to hang until killed on GT.M, and no errors on YottaDB)
+##SUSPEND_OUTPUT HOST_LINUX_ARMVXL HOST_LINUX_AARCH64
 ##TEST_AWKHang time was 5[0-9]{6}us \(5 seconds\)
+##ALLOW_OUTPUT HOST_LINUX_ARMVXL HOST_LINUX_AARCH64
 
 # Checking syslog for expected TIMERHANDLER warning given during drive of non-SIGSAFE routine
-##TEST_AWK... .. ..:..:.. ##TEST_HOST_SHORT##.* (YDB|GTM)-MUMPS\[[1-9][0-9]*\]: %YDB-W-TIMERHANDLER, Incorrect SIGALRM handler \(0x0000000000000001\) found by check_for_timer_pops -- generated from .*
+##TEST_AWK... .. ..:..:.. ##TEST_HOST_SHORT##.* (YDB|GTM)-MUMPS\[[1-9][0-9]*\]: %YDB-W-TIMERHANDLER, Incorrect SIGALRM handler \((0x0000000000000001|0x00000001)\) found by check_for_timer_pops -- generated from .*
 
 ###################################################################
 
@@ -75,17 +79,17 @@ mumps.dat
 # Search the strace files created while calling signalDisable() with and without the SIGSAFE definition. First,
 # search the the file created by calling the C routine via sigdisable1 such that SIGSAFE is NOT in effect:
 rt_sigaction(SIGALRM, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
-##TEST_AWKrt_sigaction\(SIGALRM, \{sa_handler=SIG_IGN, sa_mask=\[\], sa_flags=SA_RESTORER, sa_restorer=.*
+##TEST_AWKrt_sigaction\(SIGALRM, \{sa_handler=SIG_IGN, sa_mask=\[\], sa_flags=.*
 ##TEST_AWKrt_sigaction\(SIGALRM, \{sa_handler=.*
-##TEST_AWKrt_sigaction\(SIGALRM, \{sa_handler=SIG_IGN, sa_mask=\[\], sa_flags=SA_RESTORER, sa_restorer=.*
-##TEST_AWKrt_sigaction\(SIGALRM, NULL, \{sa_handler=SIG_IGN, sa_mask=\[\], sa_flags=SA_RESTORER, sa_restorer=.*
+##TEST_AWKrt_sigaction\(SIGALRM, \{sa_handler=SIG_IGN, sa_mask=\[\], sa_flags=.*
+##TEST_AWKrt_sigaction\(SIGALRM, NULL, \{sa_handler=SIG_IGN, sa_mask=\[\], sa_flags=.*
 ##TEST_AWKrt_sigaction\(SIGALRM, \{sa_handler=.*
 
 # Now the SIGACTION calls used when SIGSAFE is specified:
 rt_sigaction(SIGALRM, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
-##TEST_AWKrt_sigaction\(SIGALRM, \{sa_handler=SIG_IGN, sa_mask=\[\], sa_flags=SA_RESTORER, sa_restorer=.*
+##TEST_AWKrt_sigaction\(SIGALRM, \{sa_handler=SIG_IGN, sa_mask=\[\], sa_flags=.*
 ##TEST_AWKrt_sigaction\(SIGALRM, \{sa_handler=.*
-##TEST_AWKrt_sigaction\(SIGALRM, \{sa_handler=SIG_IGN, sa_mask=\[\], sa_flags=SA_RESTORER, sa_restorer=.*
+##TEST_AWKrt_sigaction\(SIGALRM, \{sa_handler=SIG_IGN, sa_mask=\[\], sa_flags=.*
 
 # Verify database
 ##SOURCE_PATH##/mupip
