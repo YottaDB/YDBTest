@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -74,6 +74,12 @@ echo "Restarting Secondary (B)..."
 # receiver server startup in case the receiver side is ahead of the source side in terms of seqno. Therefore use -autorollback
 # in the receiver server startup so an automatic rollback is done in case the receiver is ahead of the source.
 $sec_shell "$sec_getenv; cd $SEC_SIDE; setenv gtm_test_autorollback TRUE; $gtm_tst/com/RCVR.csh "." $portno $start_time < /dev/null "">>&!"" $SEC_SIDE/START_${start_time}.out"
+# Since it is possible in rare cases that the receiver server does an online rollback at startup (see prior comment for details)
+# we need to wait for that to be done before proceeding with the "rfstatus.csh" call as otherwise we would see "%YDB-W-DBFLCORRP"
+# messages in the "dse_df.log" file on the receiver side (which would cause the test framework to signal a test failure).
+# Hence we wait for the history record to be seen in the update process log. That is a sure shot indication that the receiver
+# server is done any needed online rollback at startup.
+$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/wait_for_log.csh -log $SEC_SIDE/RCVR_${start_time}.log.updproc -message 'New History Content' -duration 120"
 $gtm_tst/com/rfstatus.csh "BOTH_UP:"
 $gtm_tst/com/wait_for_transaction_seqno.csh +$test_tn_count_short SRC $test_sleep_sec_short "" noerror
 echo "Now GTM process will end."
