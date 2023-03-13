@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh
 #################################################################
 #                                                               #
-# Copyright (c) 2020-2022 YottaDB LLC and/or its subsidiaries.       #
+# Copyright (c) 2020-2023 YottaDB LLC and/or its subsidiaries.       #
 # All rights reserved.                                          #
 #                                                               #
 #       This source code contains the intellectual property     #
@@ -10,10 +10,10 @@
 #       the license, please stop and do not read further.       #
 #                                                               #
 #################################################################
-#Tests that ydbinstall will not give an error when run with --zlib and --utf8 default
+#Tests that ydbinstall will not give an error when run with --zlib and --utf8
 
 # Set the chset to UTF-8. We need to do this to ensure the locale is set correctly
-# and avoid %YDB-E-NONUTF8LOCALE errors when testing --zlib --utf8 default
+# and avoid %YDB-E-NONUTF8LOCALE errors when testing --zlib --utf8
 $switch_chset "UTF-8"
 
 # setup of the image environment

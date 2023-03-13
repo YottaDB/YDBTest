@@ -1,6 +1,6 @@
 #!/bin/sh
 #################################################################
-# Copyright (c) 2020-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #								#
@@ -11,7 +11,7 @@
 #								#
 #################################################################
 
-/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --zlib --overwrite-existing --utf8 default --user $USER $4
+/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --zlib --overwrite-existing --utf8 --user $USER $4
 
 status=$?
 if [ 0 != $status ]; then

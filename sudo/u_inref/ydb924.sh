@@ -1,6 +1,6 @@
 #!/bin/sh
 #################################################################
-# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.       #
+# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.       #
 # All rights reserved.                                          #
 #                                                               #
 #                                                               #
@@ -12,7 +12,7 @@
 #################################################################
 
 echo "# Testing ydbinstall/ydbinstall.sh as root with --dry-run option"
-/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --overwrite-existing --utf8 default --dry-run $4
+/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --overwrite-existing --utf8 --dry-run $4
 
 status=$?
 if [ 0 != $status ]; then
@@ -22,7 +22,7 @@ fi
 
 echo ""
 echo "# Testing ydbinstall/ydbinstall.sh as root"
-/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --overwrite-existing --utf8 default $4
+/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --overwrite-existing --utf8 $4
 
 status=$?
 if [ 0 != $status ]; then
@@ -40,7 +40,7 @@ fi
 echo ""
 echo "# Testing ydbinstall/ydbinstall.sh as non root user with --dry-run option"
 sudo --preserve-env=ASAN_OPTIONS su ydbtest_non_root > nru_dr.log 2>&1 <<EOF
-/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --overwrite-existing --utf8 default --dry-run $4
+/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --overwrite-existing --utf8 --dry-run $4
 
 status=$?
 if [ 0 != $status ]; then
@@ -54,7 +54,7 @@ head -3 nru_dr.log
 echo ""
 echo "# Testing ydbinstall/ydbinstall.sh as non root user"
 sudo --preserve-env=ASAN_OPTIONS su ydbtest_non_root > nru.log 2>&1 <<EOF
-/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --overwrite-existing --utf8 default $4
+/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --overwrite-existing --utf8 $4
 
 status=$?
 if [ 0 != $status ]; then

@@ -1,6 +1,6 @@
 #!/bin/sh
 #################################################################
-# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #								#
@@ -27,7 +27,7 @@ echo ""
 echo ""
 
 echo "# Installing YottaDB in install/dir1 without --linkexec and --linkenv options"
-/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --utf8 default --user $USER $7 --nopkg-config --overwrite-existing
+/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --utf8 --user $USER $7 --nopkg-config --overwrite-existing
 echo ""
 
 cd /usr/local/bin
@@ -57,7 +57,7 @@ echo ""
 echo ""
 
 echo "# Installing YottaDB in install/dir2 without --linkexec and --linkenv options"
-/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $4 --utf8 default --user $USER $7 --nopkg-config --overwrite-existing
+/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $4 --utf8 --user $USER $7 --nopkg-config --overwrite-existing
 echo ""
 
 cd /usr/local/bin
@@ -91,7 +91,7 @@ echo ""
 echo ""
 
 echo "# Installing YottaDB in install/dir1 with --linkexec option"
-/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --linkexec --utf8 default --user $USER $7 --nopkg-config --overwrite-existing
+/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --linkexec --utf8 --user $USER $7 --nopkg-config --overwrite-existing
 echo ""
 
 cd /usr/local/bin
@@ -105,7 +105,7 @@ echo ""
 echo ""
 
 echo "# Installing YottaDB in install/dir2 with --linkexec option"
-/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $4 --linkexec --utf8 default --user $USER $7 --nopkg-config --overwrite-existing
+/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $4 --linkexec --utf8 --user $USER $7 --nopkg-config --overwrite-existing
 echo ""
 
 current_ydb=`readlink ydb`
@@ -118,7 +118,7 @@ echo ""
 echo ""
 
 echo "# Installing YottaDB in install/dir1 with --nolinkexec option"
-/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --nolinkexec --utf8 default --user $USER $7 --nopkg-config --overwrite-existing
+/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --nolinkexec --utf8 --user $USER $7 --nopkg-config --overwrite-existing
 echo ""
 
 current_ydb=`readlink ydb`
@@ -139,7 +139,7 @@ echo ""
 echo ""
 
 echo "# Installing YottaDB in install/dir2 with --linkenv option"
-/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $4 --linkenv --utf8 default --user $USER $7 --nopkg-config --overwrite-existing
+/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $4 --linkenv --utf8 --user $USER $7 --nopkg-config --overwrite-existing
 echo ""
 
 current_ydb_env_set=`readlink ydb_env_set`
@@ -154,7 +154,7 @@ echo ""
 echo ""
 
 echo "# Installing YottaDB in install/dir1 with --linkenv option"
-/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --linkenv --utf8 default --user $USER $7 --nopkg-config --overwrite-existing
+/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --linkenv --utf8 --user $USER $7 --nopkg-config --overwrite-existing
 echo ""
 
 current_ydb_env_set=`readlink ydb_env_set`
@@ -169,7 +169,7 @@ echo ""
 echo ""
 
 echo "# Installing YottaDB in install/dir2 with --nolinkenv option"
-/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $4 --nolinkenv --utf8 default --user $USER $7 --nopkg-config --overwrite-existing
+/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $4 --nolinkenv --utf8 --user $USER $7 --nopkg-config --overwrite-existing
 echo ""
 
 current_ydb_env_set=`readlink ydb_env_set`
@@ -186,7 +186,7 @@ echo ""
 #############################################################################
 
 echo "# Installing YottaDB in install/dir1 with --linkexec tmpbin/"
-/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --linkexec $5 --utf8 default --user $USER $7 --nopkg-config --overwrite-existing
+/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --linkexec $5 --utf8 --user $USER $7 --nopkg-config --overwrite-existing
 echo ""
 
 cd $5
@@ -200,7 +200,7 @@ echo ""
 echo ""
 
 echo "# Installing YottaDB in install/dir2 with --linkexec tmpbin/"
-/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $4 --linkexec $5 --utf8 default --user $USER $7 --nopkg-config --overwrite-existing
+/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $4 --linkexec $5 --utf8 --user $USER $7 --nopkg-config --overwrite-existing
 echo ""
 
 cd $5
@@ -214,7 +214,7 @@ echo ""
 echo ""
 
 echo "# Installing YottaDB in install/dir1 with --linkenv tmpetc/"
-/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --linkenv $6 --utf8 default --user $USER $7 --nopkg-config --overwrite-existing
+/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --linkenv $6 --utf8 --user $USER $7 --nopkg-config --overwrite-existing
 echo ""
 
 cd $6
@@ -230,7 +230,7 @@ echo ""
 echo ""
 
 echo "# Installing YottaDB in install/dir2 with --linkenv tmpetc/"
-/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $4 --linkenv $6 --utf8 default --user $USER $7 --nopkg-config --overwrite-existing
+/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $4 --linkenv $6 --utf8 --user $USER $7 --nopkg-config --overwrite-existing
 echo ""
 
 cd $6
@@ -248,7 +248,7 @@ echo ""
 ############################################################
 
 echo "# Installing YottaDB in install/dir1 with --copyexec option"
-/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --copyexec --utf8 default --user $USER $7 --nopkg-config --overwrite-existing
+/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --copyexec --utf8 --user $USER $7 --nopkg-config --overwrite-existing
 echo ""
 
 cd /usr/local/bin
@@ -258,7 +258,7 @@ echo ""
 echo ""
 
 echo "# Installing YottaDB in install/dir2 with --copyenv option"
-/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $4 --copyenv --utf8 default --user $USER $7 --nopkg-config --overwrite-existing
+/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $4 --copyenv --utf8 --user $USER $7 --nopkg-config --overwrite-existing
 echo ""
 
 cd /usr/local/etc
@@ -269,7 +269,7 @@ echo ""
 echo ""
 
 echo "# Installing YottaDB in install/dir1 with --copyexec tmpbin/"
-/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --copyexec $5 --utf8 default --user $USER $7 --nopkg-config --overwrite-existing
+/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --copyexec $5 --utf8 --user $USER $7 --nopkg-config --overwrite-existing
 echo ""
 
 cd $5
@@ -279,7 +279,7 @@ echo ""
 echo ""
 
 echo "# Installing YottaDB in install/dir2 with --copyenv tmpetc/"
-/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $4 --copyenv $6 --utf8 default --user $USER $7 --nopkg-config --overwrite-existing
+/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $4 --copyenv $6 --utf8 --user $USER $7 --nopkg-config --overwrite-existing
 echo ""
 
 cd $6

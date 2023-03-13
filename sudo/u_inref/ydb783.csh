@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -17,8 +17,8 @@ echo '# Set $ZROUTINES to $ydb_dist/utf8/libyottadbutil.so if ydb_chset=UTF-8 an
 source $gtm_tst/$tst/u_inref/setinstalloptions.csh	# sets the variable "installoptions" (e.g. "--force-install" if needed)
 echo "# Creating 3 YDB installations, M, UTF-8, UTF-8 with no sharedlibs"
 $sudostr /Distrib/YottaDB/$gtm_verno/$tst_image/yottadb_r*/ydbinstall --installdir $PWD/YDBM $installoptions
-$sudostr /Distrib/YottaDB/$gtm_verno/$tst_image/yottadb_r*/ydbinstall --utf8 default --installdir $PWD/YDBUTF8 $installoptions
-$sudostr /Distrib/YottaDB/$gtm_verno/$tst_image/yottadb_r*/ydbinstall --utf8 default --keep-obj --installdir $PWD/YDBUTF8NOSO $installoptions
+$sudostr /Distrib/YottaDB/$gtm_verno/$tst_image/yottadb_r*/ydbinstall --utf8 --installdir $PWD/YDBUTF8 $installoptions
+$sudostr /Distrib/YottaDB/$gtm_verno/$tst_image/yottadb_r*/ydbinstall --utf8 --keep-obj --installdir $PWD/YDBUTF8NOSO $installoptions
 # YottaDB has these by default now; remove them to test the corner case that they don't exist
 $sudostr rm $PWD/YDBUTF8NOSO/libyottadbutil.so $PWD/YDBUTF8NOSO/utf8/libyottadbutil.so
 

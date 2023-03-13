@@ -1,6 +1,6 @@
 #!/bin/sh
 #################################################################
-# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #								#
@@ -14,13 +14,13 @@
 FILE=/usr/share/pkgconfig/yottadb.pc
 EXISTS=false
 # If yottadb.pc already exists change value of EXISTS flag and
-# get its current timestamp 
+# get its current timestamp
 if test -f "$FILE"; then
     EXISTS=true
     OLD_TIMESTAMP=`stat -c %y $FILE`
 fi
 
-/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --nopkg-config --overwrite-existing --utf8 default --user $USER $4
+/Distrib/YottaDB/$1/$2/yottadb_r*/ydbinstall --installdir $3 --nopkg-config --overwrite-existing --utf8 --user $USER $4
 
 status=$?
 if [ 0 != $status ]; then

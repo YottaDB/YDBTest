@@ -1,7 +1,7 @@
 #!/bin/tcsh
 #################################################################
 #								#
-# Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2021-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -91,7 +91,7 @@ cd /Distrib/YottaDB/$verno/dbg
 cmake -Wno-dev -D CMAKE_BUILD_TYPE=Debug -D CMAKE_INSTALL_PREFIX:PATH=$PWD ..
 make -j `getconf _NPROCESSORS_ONLN` install
 pushd yottadb_r*
-./ydbinstall --installdir=$gtm_root/$verno/dbg --utf8 default --keep-obj --ucaseonly-utils --prompt-for-group
+./ydbinstall --installdir=$gtm_root/$verno/dbg --utf8 --keep-obj --ucaseonly-utils --prompt-for-group
 popd
 mkdir $gtm_root/$verno/dbg/obj
 find . -name '*.a' -exec cp {} $gtm_root/$verno/dbg/obj \;

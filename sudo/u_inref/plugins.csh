@@ -15,11 +15,11 @@ echo "# random set of plugs-in (--octo --gui --aim --encplugin --posix --zlib),"
 echo "# and randomly picking --plugins-only and --utf8."
 
 # Set the chset to UTF-8. We need to do this to ensure the locale is set correctly
-# and avoid %YDB-E-NONUTF8LOCALE errors when testing --zlib --utf8 default
+# and avoid %YDB-E-NONUTF8LOCALE errors when testing --zlib --utf8
 $switch_chset "UTF-8"
 
 # Possible options being used in the test
-set arr = ( "--octo" "--gui" "--aim" "--encplugin" "--posix" "--zlib" "--plugins-only" "--utf8 default" )
+set arr = ( "--octo" "--gui" "--aim" "--encplugin" "--posix" "--zlib" "--plugins-only" "--utf8" )
 
 # 8 runs
 set run_count = 1
