@@ -163,6 +163,9 @@ endif
 # Set env var is_tst_dir_ssd to 1 if disk containing $tst_dir is a SSD. And to 0 otherwise.
 setenv is_tst_dir_ssd `$gtm_test_com_individual/is_curdir_ssd.csh $tst_dir`
 
+# Set env var to is_tst_dir_cmp_fs to 1 if disk containing $tst_dir is a compressed filesystem. And to 0 otherwise.
+setenv is_tst_dir_cmp_fs `$gtm_test_com_individual/is_curdir_compressed_fs.csh $tst_dir`
+
 if (`echo $tst_dir | $tst_awk -F/ '$2 ~/gtc/ || $2 ~/usr/ || $3 ~/gtc/ {print "1"}'`) then
 	echo "TEST-E-DIR1 Will not submit the test in $tst_dir."
 	echo "Please specify a non-/gtc/ non-/usr/ directory to run the tests."

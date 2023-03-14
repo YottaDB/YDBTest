@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -63,8 +63,9 @@ endif
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
 setenv subtest_exclude_list	""
-# posix_fallocate() is not supported on HP-UX and Solaris
-if (("HOST_SUNOS_SPARC" == $gtm_test_os_machtype) || ("HOST_HP-UX_IA64" == "$gtm_test_os_machtype")) then
+
+# gtm5894 relies on allocated disk space (using "du") which will not be accurate on compressed file systems. So skip it there.
+if (1 == $is_tst_dir_cmp_fs) then
 	setenv subtest_exclude_list "$subtest_exclude_list gtm5894"
 endif
 # Remove rtnxfertst, gtm8290 and gtm8240 subtests from Linux-32bit and HPUX-IA64 as they involve auto-relink or recursive-relink

@@ -387,6 +387,12 @@ BEGIN {
 		envir[no_options] = "UBUNTU_21.10"
 	}
 	#
+	option_names[++no_options] = "is_tst_dir_cmp_fs"
+	if ("1" == ENVIRON["is_tst_dir_cmp_fs"])
+		envir[no_options] = "TST_DIR_COMPRESSED"
+	else
+		envir[no_options] = "TST_DIR_NOT_COMPRESSED"
+	#
 	split(tst_hostos_machtype_all, all_platforms, " ")
 	if ("AIX" == tst_osname)
 	{
