@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	*
+ * Copyright (c) 2020-2023 YottaDB LLC and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -16,6 +16,9 @@
 #include <unistd.h>
 #include <errno.h>
 #include "libyottadb.h"
+
+#include <sys/stat.h>	/* needed for "open" */
+#include <fcntl.h>	/* needed for "open" */
 
 #define USER_SPECIFIC_STATUS_CODE	100
 
@@ -45,6 +48,8 @@ int main()
 	ydb_buffer_t		varname;
 	pid_t			is_parent;
 	struct transargs	args;
+	int			fd;
+	char			*fname;
 
 	cb = &callback1;
 	is_parent = fork();
@@ -54,12 +59,20 @@ int main()
 	{
 		varname.buf_addr = "^UPD1";
 		args.pid = 1;
+		fname = "proc1.out";
 	}
 	else
 	{
 		varname.buf_addr = "^UPD2";
 		args.pid = 2;
+		fname = "proc2.out";
 	}
+	/* Redirect stdout to process-specific files "proc1.out" or "proc2.out"
+	 * Needed as otherwise output of both processes will go to same file and get interleaved
+	 * whereas reference file expects them in a certain order.
+	 */
+	fd = open(fname, O_RDWR | O_CREAT, 0664);
+	dup2(fd, 1);
 	args.varname = &varname;
 	printed_through = 0;
 	args.printed_through = &printed_through;

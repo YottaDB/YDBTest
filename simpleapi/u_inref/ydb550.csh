@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -32,6 +32,13 @@ foreach file ("ydb550" "ydb550b" "ydb550c")
 
 	# Run driver C
 	`pwd`/$file
+	if ("ydb550" == "$file") then
+		# The reference file has Process P2 output first and Process P1 output next.
+		# Hence the use of pid=2 first in the foreach loop below.
+		foreach pid (2 1)
+			cat proc$pid.out
+		end
+	endif
 end
 
 $gtm_tst/com/dbcheck.csh
