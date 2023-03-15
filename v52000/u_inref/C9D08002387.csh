@@ -40,11 +40,13 @@ echo "# Switch to prior version"
 source $gtm_tst/com/switch_gtm_version.csh $prior_ver $tst_image
 echo "# Start a background job that accesses the db and randomly choose to kill it"
 echo $newline
+source $gtm_tst/com/set_crash_test.csh	# sets YDBTest and YDB-white-box env vars to indicate this is a crash test
+					# Also signals job.m to write script to kill the jobbed off child
+		# Note this needs to be done before the dbcreate.csh call in case of a -replic test so receiver side also
+		# inherits this env var. But this is not a -replic test. Nevertheless, we do it before for consistency sake.
 $gtm_tst/com/dbcreate.csh mumps
 \rm -f rand.o	# rand.o created by older version might have incompatible object format for newer version in case it is
 		# accessed later in this script so be safe and delete it
-source $gtm_tst/com/set_crash_test.csh	# sets YDBTest and YDB-white-box env vars to indicate this is a crash test
-					# Also signals job.m to write script to kill the jobbed off child
 $GTM << GTM_EOF
 	do oldverstart^c002387
 GTM_EOF

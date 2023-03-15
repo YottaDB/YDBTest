@@ -20,11 +20,13 @@
 # "-online" then SSV4NOALLOW will be issued. So, we better turn off online integ for the dbchecks done as
 # a part of this test.
 setenv gtm_test_online_integ ""
+source $gtm_tst/com/set_crash_test.csh # sets YDBTest and YDB-white-box env vars to indicate this is a crash test
+		# Note this needs to be done before the dbcreate.csh call in case of a -replic test so receiver side also
+		# inherits this env var. But this is not a -replic test. Nevertheless, we do it before for consistency sake.
 echo "########### mixed data format block section ############"
 echo "#			Section 1		       #"
 $gtm_tst/com/dbcreate.csh mumps 1 255 1000 -allocation=2048 -extension_count=2048
 setenv gtm_test_jobid 0
-source $gtm_tst/com/set_crash_test.csh # sets YDBTest and YDB-white-box env vars to indicate this is a crash test
 setenv gtm_test_jobcnt 12
 setenv gtm_test_crash_nprocs 8    # signal job.m to kill 8 jobs out of the 10	(BYPASSOK kill)
 setenv gtm_test_crash_maxdelay 10 # kill those 8 jobs one by one with a maxdelay of 10 seconds

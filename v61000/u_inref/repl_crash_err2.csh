@@ -22,10 +22,12 @@ setenv tst_jnl_str "-journal=enable,on,before"
 # Online rollback does not process V4 format
 setenv gtm_test_mupip_set_version "disable"
 
+source $gtm_tst/com/set_crash_test.csh	# sets YDBTest and YDB-white-box env vars to indicate this is a crash test
+		# Note this needs to be done before the dbcreate.csh call so receiver side also inherits this env var.
+
 $gtm_tst/com/dbcreate.csh mumps 8 125 1000
 
 setenv gtm_test_jobcnt 10
-source $gtm_tst/com/set_crash_test.csh	# sets YDBTest and YDB-white-box env vars to indicate this is a crash test
 
 echo "# GTM Process starts in background..."
 $gtm_tst/com/imptp.csh >>&! imptp.out

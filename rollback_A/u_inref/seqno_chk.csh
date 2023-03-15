@@ -19,8 +19,9 @@
 setenv tst_buffsize 1048576
 setenv gtm_test_spanreg 0	# The test assumes that updates go to each of the 9 regions sequentially in order
 				# Rest of the test's verification process depends on that assumption
-$gtm_tst/com/dbcreate.csh mumps 9 125 1000
 source $gtm_tst/com/set_crash_test.csh	# sets YDBTest and YDB-white-box env vars to indicate this is a crash test
+		# Note this needs to be done before the dbcreate.csh call so receiver side also inherits this env var.
+$gtm_tst/com/dbcreate.csh mumps 9 125 1000
 setenv portno `$sec_shell '$sec_getenv; cat $SEC_DIR/portno'`
 setenv start_time `cat start_time`
 setenv test_sleep_sec 60

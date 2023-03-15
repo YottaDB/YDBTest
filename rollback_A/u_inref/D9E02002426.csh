@@ -14,8 +14,9 @@
 #								#
 #################################################################
 setenv gtm_test_mupip_set_version "disable"     # -autorollback (online rollback) cannot work with V4 database format
-$gtm_tst/com/dbcreate.csh mumps 5 125 1000
 source $gtm_tst/com/set_crash_test.csh	# sets YDBTest and YDB-white-box env vars to indicate this is a crash test
+		# Note this needs to be done before the dbcreate.csh call so receiver side also inherits this env var.
+$gtm_tst/com/dbcreate.csh mumps 5 125 1000
 setenv test_debug 1
 setenv portno `$sec_shell '$sec_getenv; cat $SEC_DIR/portno'`
 setenv start_time `cat start_time`

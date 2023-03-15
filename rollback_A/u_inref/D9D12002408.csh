@@ -19,8 +19,9 @@
 if ("pro" == "$tst_image" && "HOST_LINUX_IX86" == "$gtm_test_os_machtype") then
 	setenv tst_jnl_str "$tst_jnl_str,epoch_interval=100"
 endif
-$gtm_tst/com/dbcreate.csh mumps 9 125 1000
 source $gtm_tst/com/set_crash_test.csh	# sets YDBTest and YDB-white-box env vars to indicate this is a crash test
+		# Note this needs to be done before the dbcreate.csh call so receiver side also inherits this env var.
+$gtm_tst/com/dbcreate.csh mumps 9 125 1000
 setenv portno `$sec_shell '$sec_getenv; cat $SEC_DIR/portno'`
 setenv start_time `cat start_time`
 setenv test_sleep_sec 90
