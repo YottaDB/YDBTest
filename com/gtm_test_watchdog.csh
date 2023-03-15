@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -32,7 +32,7 @@ if (! $?gtm_test_hang_alert_sec) then
 		set gtm_test_hang_alert_sec = 9000 # A subtest running for 2.5 hours on x86_64 boxes is suspected to be hung
 	endif
 endif
-set mailinterval = 1800 # Send mail to the user ever 30 minutes
+set mailinterval = 1800 # Send TIMEDOUT mail to the user 30 minutes AFTER TEST-E-HANG email
 # Kill submit_test.csh after waiting $killtime, to let the other tests continue
 @ killtime = $gtm_test_hang_alert_sec + $mailinterval
 
@@ -85,9 +85,16 @@ while !( -e $exit_file)
 			#
 			set msg = "${watch_dir:h:t}/$cursubtestdir has been running for $runtime seconds. Check if it is hung"
 			cd $cursubtestdir
+			echo $msg > hangalert_email.txt
 			# create a diff file so scripts that search for *.diff files find this failure
 			echo $msg > $cursubtestdir.diff
+			# "test_time" env var is needed by the following "write_logs.csh" invocation.
+			setenv test_time  `echo $timestart.$timenow | $tst_awk -F \. -f $gtm_tst/com/diff_time.awk -v full=1`
 			$gtm_tst/com/write_logs.csh FAILED
+			# The above "write_logs.csh" invocation would have updated "report.txt".
+			echo "" >> hangalert_email.txt
+			echo "Random options chosen :" >> hangalert_email.txt
+			$grep -w $testname $tst_dir/$gtm_tst_out/report.txt >> hangalert_email.txt
 			# Capture ps/ipcs etc. at time of TEST-E-HANG report
 			$gtm_tst/com/capture_ps_ipcs_ss_lsof.csh	>& capture_ps_ipcs_ss_lsof_HANG.out
 			# Get syslog at time of TEST-E-HANG report
@@ -96,11 +103,11 @@ while !( -e $exit_file)
 			$gtm_tst/com/getoper.csh "$syslog_before" "$syslog_after" syslog_${cursubtestdir}_HANG.txt
 			# Copy settings.csh to debuglogs
 			if (-e settings.csh) cp settings.csh $gtm_test_debuglogs_dir/${testname}_${cursubtestdir}_HANG_settings.csh
-			cd -
 			# Send TEST-E-HANG email
-			echo $msg | mailx -s "TEST-E-HANG $shorthost : ${watch_dir:h}/$cursubtestdir" $mailing_list
-			echo "TEST-E-HANG : $msg" >> $cursubtestdir/hangalert.out
+			mailx -s "TEST-E-HANG $shorthost : ${watch_dir:h}/$cursubtestdir" $mailing_list < hangalert_email.txt
 			set mailsent = 1
+			echo "TEST-E-HANG : $msg" >> hangalert.out
+			cd -
 		endif
 		if ( $runtime >= $killtime) then
 			# The test has been running for longer than $gtm_test_hang_alert_sec + extra-time.
