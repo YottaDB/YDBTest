@@ -3,6 +3,9 @@
 ; Copyright (c) 2012-2015 Fidelity National Information 	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -65,33 +68,27 @@ dseget(datinfo)
 	; In case of an error, use the by file mechanism
 	set $ETRAP="use $p zshow ""*"" set $ecode="""" zgoto "_$zlevel_":byfile^datinfo"
 	set myetrap=$ETRAP
-	set %DSEWRAP("debug")=1
-	if version>62002 do  quit
-byzpeek	.	set reg=$view("GVNEXT","")  ; Use information from the first available region
+	do:(version>62002)  quit	; Use ^%PEEKBYNAME() if it is available (V63000 and later)
+	.	set reg=$view("GVNEXT","")  ; Use information from the first available region
 	.	set datinfo("block_size")=$$^%PEEKBYNAME("sgmnt_data.blk_size",reg)
 	.	set datinfo("max_record_size")=$$^%PEEKBYNAME("sgmnt_data.max_rec_size",reg)
 	.	set datinfo("max_key_size")=$$^%PEEKBYNAME("sgmnt_data.max_key_size",reg)
-	if version>60000 do
-byrtn	.	do dump^%DSEWRAP("*",.dseoutput)
-	.	if myetrap'=$ETRAP write "TEST-W-WARN : ETRAP changed to",$ETRAP,! set $ETRAP=myetrap
-	.	set reg=$order(dseoutput(""))		; some tests change collation
-	.	set datinfo("block_size")=dseoutput(reg,"Block size (in bytes)")
-	.	set datinfo("max_record_size")=dseoutput(reg,"Maximum record size")
-	.	set datinfo("max_key_size")=dseoutput(reg,"Maximum key size")
-	if version'>60000 do
-byfile	.	set file="dsedump.txt"
-	.	set dsecmd="$DSE dump -fileheader >&! "_file
-	.	zsystem dsecmd
-	.	open file:readonly
-	.	use file
-	.	for line=1:1  quit:$zeof  read line(line) do
-	.	. if $length($text(^%MPIECE))>0 do  ; We don't have MPIECE implementation in the older versions so use flexpiece instead
-	.	.	. if line(line)?.e1" "1"Block size (in bytes)".e set datinfo("block_size")=$piece($$^%MPIECE(line(line),"  ","|"),"|",4)
-	.	. 	. if line(line)?." "1"Maximum record size".e set datinfo("max_record_size")=$piece($$^%MPIECE(line(line),"  ","|"),"|",2)
-	.	. 	. if line(line)?." "1"Maximum key size".e set datinfo("max_key_size")=$piece($$^%MPIECE(line(line),"  ","|"),"|",2)
-	.	. else  do
-	.	.	. if line(line)?.e1" "1"Block size (in bytes)".e set datinfo("block_size")=$piece($$^v53003flexpiece(line(line),"  ","|"),"|",4)
-	.	. 	. if line(line)?." "1"Maximum record size".e set datinfo("max_record_size")=$piece($$^v53003flexpiece(line(line),"  ","|"),"|",2)
-	.	. 	. if line(line)?." "1"Maximum key size".e set datinfo("max_key_size")=$piece($$^v53003flexpiece(line(line),"  ","|"),"|",2)
-	.	close file
+	;
+	; Else, we are stuck pulling it out of DSE itself
+	;
+	set file="dsedump.txt"
+	set dsecmd="$DSE dump -fileheader >&! "_file
+	zsystem dsecmd
+	open file:readonly
+	use file
+	for line=1:1  quit:$zeof  read line(line) do
+	. if $length($text(^%MPIECE))>0 do  ; We don't have MPIECE implementation in the older versions so use flexpiece instead
+	.	. if line(line)?.e1" "1"Block size (in bytes)".e set datinfo("block_size")=$piece($$^%MPIECE(line(line),"  ","|"),"|",4)
+	. 	. if line(line)?." "1"Maximum record size".e set datinfo("max_record_size")=$piece($$^%MPIECE(line(line),"  ","|"),"|",2)
+	. 	. if line(line)?." "1"Maximum key size".e set datinfo("max_key_size")=$piece($$^%MPIECE(line(line),"  ","|"),"|",2)
+	. else  do
+	.	. if line(line)?.e1" "1"Block size (in bytes)".e set datinfo("block_size")=$piece($$^v53003flexpiece(line(line),"  ","|"),"|",4)
+	. 	. if line(line)?." "1"Maximum record size".e set datinfo("max_record_size")=$piece($$^v53003flexpiece(line(line),"  ","|"),"|",2)
+	. 	. if line(line)?." "1"Maximum key size".e set datinfo("max_key_size")=$piece($$^v53003flexpiece(line(line),"  ","|"),"|",2)
+	close file
 	quit

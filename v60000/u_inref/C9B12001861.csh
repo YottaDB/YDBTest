@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -64,7 +67,7 @@ EOF
 	$MUPIP rundown -reg "*"
 	@ i += 1
 	#Let's check if DSE changes are applied and LKE sees the same changes
-	$gtm_exe/mumps -run %XCMD 'do ^searchdump("Maximum record size")'
+	$gtm_exe/mumps -run %XCMD 'write $$^%PEEKBYNAME("sgmnt_data.max_rec_size","DEFAULT"),!'
 end
 
 $gtm_tst/com/dbcheck.csh

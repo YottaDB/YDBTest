@@ -3,7 +3,7 @@
 ; Copyright (c) 2015-2016 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
-; Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -19,15 +19,71 @@ musetchk(file)
 	set $ecode="",$etrap="zgoto "_$zlevel_":error^"_$text(+0)
 	open file:(newversion:exception="goto badfile")
 	use file:rewind
-	new d,label,reg
-	do dump^%DSEWRAP("*",.d,"fileheader","all")
-	set keep=$piece($text(keep),";",2,99)_$piece($text(keep+1),";",2,99),(label,reg)=""
-	for  set reg=$order(d(reg)) quit:""=reg  do
-	. for  set label=$order(d(reg,label)) quit:""=label  zwrite:keep[label d(reg,label)
+	new fldval,label,reg
+	set keep=$zpiece($text(keep),";",2,99)_$zpiece($text(keep+1),";",2,99),(label,reg)=""
+	set where=$zpiece($text(where),";",2,99)_$zpiece($text(where+1),";",2,99),(label,reg)=""
+	set fldfmt=$zpiece($text(fldfmt),";",2,99)_$zpiece($text(fldfmt+1),";",2,99),(label,reg)=""
+	set reg=""
+	for  set reg=$view("GVNEXT",reg) quit:""=reg  do
+	. for pieceidx=1:1  set label=$zpiece(where,";",pieceidx) quit:label=""  do
+	. . set fldval=$$^%PEEKBYNAME("sgmnt_data."_label,reg)
+	. . set fldfmter=$zpiece(fldfmt,";",pieceidx)
+	. . set:fldfmter'="0" @("fldfmted=$$"_fldfmter_"(fldval)")
+	. . set:fldfmter=0 fldfmted=fldval
+	. . set flddesc=$zpiece(keep,";",pieceidx)
+	. . set d(reg,flddesc)=fldfmted
+	. . zwrite d(reg,flddesc)
 	close file
 	quit
+
+	;
+	; Following are the field descriptions. The old $$^%DSEWRAP() script used to use these names as the indexes so in order
+	; to not have to redesign the whole test, we still use these names as indexes when we create the array. Note the index
+	; is the same amongst the keep/where/fldfmt arrays.
+	;
 keep	;Access method;Defer allocation;Extension Count;Global Buffers;Lock space;Maximum key size;Maximum record size;
 	;Mutex Queue Slots;Mutex Sleep Spin Count;Quick database rundown is active;Reserved Bytes;Spin sleep time mask
+
+	;
+	; Following are the field names in sgmnt_data we need to fetch for each region - indexed same as keep().
+	;
+where	;acc_meth;defer_allocate;extension_size;n_bts;lock_space_size;max_key_size;max_rec_size;
+	;mutex_spin_parms.mutex_que_entry_space_size;mutex_spin_parms.mutex_sleep_spin_count;mumps_can_bypass;reserved_bytes;mutex_spin_parms.mutex_spin_sleep_mask
+
+	;
+	; Following is a list of routines to call to format the values fetched by PEEKBYNAME or 0 if value is formatted
+	; correctly already.
+	;
+fldfmt	;fmtaccmeth;fmtboolean;0;0;fmtlockspace;0;0;
+	;0;0;fmtboolean;0;fmthex
+
+;
+; Routine fmtaccmeth to turn raw fetched value into BG or MM
+;
+fmtaccmeth(fmt)
+	quit $select("1"=fmt:"BG","2"=fmt:"MM")		; Anything unexpected causes a select error
+
+;
+; Routine fmtboolean to turn raw boolean value into "TRUE" or "FALSE"
+;
+fmtboolean(bool)
+	quit $select("0"=bool:"FALSE",1:"TRUE")
+
+;
+; Routine fmtlockspace to turn lock space bytes into 512 blocks but as a hex value
+;
+fmtlockspace(bytes)
+	quit $$fmthex(bytes/512)
+
+;
+; Routine fmthex to turn fetched decimal values into hex values
+;
+fmthex(dec)
+	quit "0x"_$$FUNC^%DH(dec,8)
+
+;
+; Error routines
+;
 badfile	close file
 	write !,"Error with ",file,!,$zstatus
 	quit
@@ -39,6 +95,10 @@ error	set fname=$io
 	for zl=$stack(-1):1:0 for info="PLACE","MCODE","ECODE" write !,$stack(zl,info)
 	set $ecode=""
 	quit
+
+;
+; Check values saved before and after test
+;
 dochk(before,after)
 	new goodcnt,badcnt,file,i,j,label,reg,x
 	new etrap

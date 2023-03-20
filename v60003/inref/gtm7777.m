@@ -3,6 +3,9 @@
 ; Copyright (c) 2014-2015 Fidelity National Information 	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -52,11 +55,24 @@ expout2	; *yes*, intervening update between DBFLUSH and EPOCH
 ; Print expected output, based on journal state
 ;
 expout(intervene)
-	new s,accmeth,jnlstate
-	do dump^%DSEWRAP("DEFAULT",.s,"","all")
-	set accmeth=s("DEFAULT","Access method")
-	if "DISABLED"=s("DEFAULT","Journal State") set jnlstate="nojnl"
-	else  if "TRUE"=s("DEFAULT","Journal Before imaging") set jnlstate="jnlbefore"
+	new accmeth,jnlstatus,jnlstate
+	;
+	; Set possible journal states
+	;
+	set jnlstatus("notallowed")=0
+	set jnlstatus("close")=1
+	set jnlstatus("open")=2
+	;
+	; Set possible access methods
+	;
+	set accmeth(1)="BG"
+	set accmeth(2)="MM"
+	;
+	set accmeth=$$^%PEEKBYNAME("sgmnt_data.acc_meth","DEFAULT")
+	set accmeth=accmeth(accmeth)
+	set jnlstatus=$$^%PEEKBYNAME("sgmnt_data.jnl_state","DEFAULT")
+	if jnlstatus("notallowed")=jnlstatus set jnlstate="nojnl"
+	else  if $$^%PEEKBYNAME("sgmnt_data.jnl_before_image","DEFAULT") set jnlstate="jnlbefore"
 	else  set jnlstate="jnlnobefore"
 	do print(accmeth_jnlstate_intervene)
 	quit
