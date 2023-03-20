@@ -4,7 +4,7 @@
 # Copyright (c) 2008-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -136,8 +136,11 @@ else
 endif
 
 # Determine whether this is a single-cpu system or not. This will be used later to disable certain heavyweight tests.
+# Note that even though the name of the env var has "singlecpu" in it, we set it to 1 even if the system has 2 CPUs.
+# We have seen that 1-CPU or 2-CPU systems are not able to run certain heayvweight tests. Hence these are included
+# in the same category. Only systems with 4-CPUs or not are considered capable of running heavyweight tests.
 @ numcpus = `grep -c ^processor /proc/cpuinfo`
-if ($numcpus == 1) then
+if ($numcpus < 4) then
 	setenv gtm_test_singlecpu 1
 else
 	setenv gtm_test_singlecpu 0
