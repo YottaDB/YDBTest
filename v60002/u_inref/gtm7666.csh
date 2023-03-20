@@ -26,6 +26,7 @@ $MUPIP set -journal='enable,on,before' -reg "*" >& set_jnl.out
 
 echo "Launching $gtm_test_jobcnt jobs."
 $gtm_tst/com/imptp.csh >& imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 echo "Waiting 2000 updates to happen."
 $gtm_exe/mumps -run %XCMD 'for  quit:2000<=$get(^cntloop(0),0)  hang 0.5'
 echo "Updates are done. Crashing processes."

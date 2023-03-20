@@ -4,6 +4,9 @@
 # Copyright (c) 2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -20,6 +23,7 @@ $gtm_tst/com/dbcreate.csh mumps 1
 setenv gtm_test_dbfill "SLOWFILL"
 setenv gtm_test_jobcnt 1
 $gtm_tst/com/imptp.csh >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 
 echo "-----------------------------------------------------------------------------------------------"
 echo "Issue mupip rundown while doing GTM updates without gtm_passwd and expect to error out"

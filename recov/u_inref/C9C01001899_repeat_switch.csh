@@ -22,6 +22,7 @@ $gtm_tst/com/dbcreate.csh mumps 8 125 1000 1024 4096 1024 4096
 $MUPIP set -journal=enable,off,before -reg "*" |& sort -f
 echo "Multi-Process GTM Process starts in background..."
 $gtm_tst/com/imptp.csh "4" >&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 sleep 30
 @ cnt = 0
 while ($cnt < 20)

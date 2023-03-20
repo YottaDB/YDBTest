@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -32,6 +35,7 @@ endif
 echo "GTM Process starts in background..."
 setenv gtm_test_dbfill "FIXTP"	# TP size is constant in the fill program
 $gtm_tst/com/imptp.csh >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 # Instead of just sleeping, wait for the number of transactions to appear in the source log, and use
 # the sleep time as a wait limit.
 # This number is the multiplier for the number of transactions to expect in a second, which is set to be

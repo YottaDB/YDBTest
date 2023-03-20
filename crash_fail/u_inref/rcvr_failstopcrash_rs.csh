@@ -64,6 +64,7 @@ setenv portno `$sec_shell '$sec_getenv; cat $SEC_DIR/portno'`
 setenv start_time `cat start_time`
 echo "# GTM Processes starts..."
 $gtm_tst/com/imptp.csh >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 $gtm_tst/com/wait_for_transaction_seqno.csh +$test_tn_count SRC $test_sleep_sec "" noerror
 
 echo "# Crash/Stop/Fail receiver..."

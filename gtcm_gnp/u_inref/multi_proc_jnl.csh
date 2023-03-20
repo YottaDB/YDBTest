@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2002, 2013 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -35,18 +38,19 @@ setenv gtm_test_jobcnt 5
 setenv gtm_test_dbfillid 0
 setenv gtm_test_jobid 1
 $gtm_tst/com/imptp.csh >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 #
 setenv gtm_test_jobcnt 4
 setenv gtm_test_dbfillid 1
 setenv gtm_test_jobid 2
 $source_dir/send_env.csh	# To reflect the changes in gtm_test_jobcnt, gtm_test_dbfillid and gtm_test_jobid
-$rsh $tst_remote_host_1  "source $gtm_tst/com/remote_getenv.csh $SEC_DIR_GTCM_1 ; cd $SEC_DIR_GTCM_1; $gtm_tst/com/imptp.csh >>&! imptp.out"
+$rsh $tst_remote_host_1  "source $gtm_tst/com/remote_getenv.csh $SEC_DIR_GTCM_1 ; cd $SEC_DIR_GTCM_1; $gtm_tst/com/imptp.csh >>&! imptp.out; source $gtm_tst/com/imptp_check_error.csh $SEC_DIR_GTCM_1/imptp.out"; if ($status) exit 1
 #
 setenv gtm_test_jobcnt 3
 setenv gtm_test_dbfillid 2
 setenv gtm_test_jobid 3
 $source_dir/send_env.csh	# To reflect the changes in gtm_test_jobcnt, gtm_test_dbfillid and gtm_test_jobid
-$rsh $tst_remote_host_2  "source $gtm_tst/com/remote_getenv.csh $SEC_DIR_GTCM_2 ; cd $SEC_DIR_GTCM_2; $gtm_tst/com/imptp.csh >>&! imptp.out"
+$rsh $tst_remote_host_2  "source $gtm_tst/com/remote_getenv.csh $SEC_DIR_GTCM_2 ; cd $SEC_DIR_GTCM_2; $gtm_tst/com/imptp.csh >>&! imptp.out; source $gtm_tst/com/imptp_check_error.csh $SEC_DIR_GTCM_2/imptp.out"; if ($status) exit 1
 #
 echo "# independant dbfill program has started in local client, and two remote gtcm servers"
 #

@@ -3,7 +3,7 @@
 #								#
 # Copyright 2013, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -48,6 +48,7 @@ $echoline
 # the journal file, use SLOWFILL. See <C9J04003116_NOPREVLINK_JNLOPNERR_gtmsource_readfile_assert> for more details.
 setenv gtm_test_dbfill "SLOWFILL"
 $gtm_tst/com/imptp.csh >&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 
 echo
 echo

@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2006, 2014 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -36,6 +39,7 @@ setenv tst_buffsize 33000000
 setenv test_tn_count 3000
 setenv test_sleep_sec 30
 $gtm_tst/com/imptp.csh $gtm_process >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 
 $echoline
 echo "# Create a backlog, and a couple of history records:"
@@ -47,6 +51,7 @@ $MSR STOPSRC INST1 INST2
 $MSR STARTSRC INST1 INST2
 echo "# Start the updates"
 $gtm_tst/com/imptp.csh $gtm_process >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 $gtm_tst/com/wait_for_transaction_seqno.csh +$test_tn_count SRC $test_sleep_sec "" noerror
 echo "# Stop the updates"
 $gtm_tst/com/endtp.csh >>&! imptp.out
@@ -54,6 +59,7 @@ $MSR STOPSRC INST1 INST2
 $MSR STARTSRC INST1 INST2
 echo "# Start the updates"
 $gtm_tst/com/imptp.csh $gtm_process >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 $gtm_tst/com/wait_for_transaction_seqno.csh +$test_tn_count SRC $test_sleep_sec "" noerror
 echo "# Stop the updates"
 $gtm_tst/com/endtp.csh >>&! imptp.out
@@ -61,6 +67,7 @@ $MSR STOPSRC INST1 INST2
 $MSR STARTSRC INST1 INST2
 echo "# Start the updates"
 $gtm_tst/com/imptp.csh $gtm_process >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 $gtm_tst/com/wait_for_transaction_seqno.csh +$test_tn_count SRC $test_sleep_sec "" noerror
 echo "# Stop the updates"
 $gtm_tst/com/endtp.csh >>&! imptp.out
@@ -68,6 +75,7 @@ $MSR STOPSRC INST1 INST2
 $MSR STARTSRC INST1 INST2
 echo "# Start the updates"
 $gtm_tst/com/imptp.csh $gtm_process >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 $gtm_tst/com/wait_for_transaction_seqno.csh +$test_tn_count SRC $test_sleep_sec "" noerror
 echo "# Stop the updates"
 $gtm_tst/com/endtp.csh >>&! imptp.out
@@ -75,6 +83,7 @@ $MSR STOPSRC INST1 INST2
 $MSR STARTSRC INST1 INST2
 echo "# Start the updates"
 $gtm_tst/com/imptp.csh $gtm_process >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 $gtm_tst/com/wait_for_transaction_seqno.csh +$test_tn_count SRC $test_sleep_sec "" noerror
 echo "# Stop the updates"
 $gtm_tst/com/endtp.csh >>&! imptp.out
@@ -96,6 +105,7 @@ echo "#Start the receivers:"
 $MSR STARTRCV INST1 INST2
 echo "# Start the updates"
 $gtm_tst/com/imptp.csh $gtm_process >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 # give INST2 some time to partially catch-up
 $gtm_tst/com/wait_for_transaction_seqno.csh +$test_tn_count SRC $test_sleep_sec "INSTANCE2" noerror
 $MSR STARTRCV INST1 INST3

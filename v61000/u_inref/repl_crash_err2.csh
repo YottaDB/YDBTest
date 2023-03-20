@@ -31,6 +31,7 @@ setenv gtm_test_jobcnt 10
 
 echo "# GTM Process starts in background..."
 $gtm_tst/com/imptp.csh >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 
 # Waiting 2000 updates to happen.
 $gtm_exe/mumps -run %XCMD 'for  quit:2000<=$get(^cntloop(0),0)  hang 0.5'

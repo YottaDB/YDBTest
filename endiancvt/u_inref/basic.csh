@@ -4,7 +4,7 @@
 # Copyright (c) 2006-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -90,6 +90,7 @@ EOF
 EOF
 
 	$gtm_tst/com/imptp.csh >>&! imptp_2.out
+	source $gtm_tst/com/imptp_check_error.csh imptp_2.out; if ($status) exit 1
 	$MUPIP endiancvt mumps.dat < yes.txt >>&! endiancvt_try3.out
 	$gtm_tst/com/check_error_exist.csh endiancvt_try3.out MUSTANDALONE MUNOACTION
 	$gtm_tst/com/endtp.csh >>&! imptp_2.out

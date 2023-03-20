@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -59,6 +59,7 @@ $MUPIP set -file -version=V6 mumps.dat
 setenv gtm_test_jobid 2
 setenv gtm_test_dbfillid 2
 $gtm_tst/com/imptp.csh >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 
 # wait for at least another 100 updates
 $gtm_exe/mumps -run waituntilseqno "jnl" $lastseqno 100 >>&! last_seqno.csh

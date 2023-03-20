@@ -3,7 +3,7 @@
 #								#
 # Copyright 2011, 2013 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -31,6 +31,7 @@ echo "Step 2 ===> Start some updates in the background..."
 $echoline
 setenv gtm_test_dbfill "SLOWFILL"	# SLOWFILL is chosen because we just want to spice up things a bit and not stress test replication
 $gtm_tst/com/imptp.csh >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 
 echo
 $echoline

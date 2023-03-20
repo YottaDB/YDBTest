@@ -4,6 +4,9 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -32,6 +35,7 @@ $MSR START INST2 INST3 PP
 @ round=1
 echo "# Round ${round}"
 $gtm_tst/com/imptp.csh 1 >&! imptp${round}.out
+source $gtm_tst/com/imptp_check_error.csh imptp${round}.out; if ($status) exit 1
 $MSR RUN RCV=INST2 SRC=INST1 '$gtm_tst/com/wait_for_transaction_seqno.csh +100 SRC 120 "" noerror'
 $MSR RUN RCV=INST2 SRC=INST1 '$MUPIP  replicate -receive -start -helpers' >& helpers_start${round}.out
 $MSR RUN RCV=INST2 SRC=INST1 '$gtm_tst/com/wait_for_transaction_seqno.csh +100 SRC 120 "" noerror'
@@ -44,6 +48,7 @@ $MSR SYNC ALL_LINKS
 @ round=2
 echo "# Round ${round}"
 $gtm_tst/com/imptp.csh 1 >&! imptp${round}.out
+source $gtm_tst/com/imptp_check_error.csh imptp${round}.out; if ($status) exit 1
 $MSR RUN RCV=INST2 SRC=INST1 '$gtm_tst/com/wait_for_transaction_seqno.csh +100 SRC 120 "" noerror'
 $MSR RUN RCV=INST2 SRC=INST1 '$MUPIP  replicate -receive -start -helpers' >& helpers_start${round}.out
 $MSR RUN RCV=INST2 SRC=INST1 '$gtm_tst/com/wait_for_transaction_seqno.csh +100 SRC 120 "" noerror'
@@ -56,6 +61,7 @@ $MSR SYNC ALL_LINKS
 @ round=3
 echo "# Round ${round}"
 $gtm_tst/com/imptp.csh 1 >&! imptp${round}.out
+source $gtm_tst/com/imptp_check_error.csh imptp${round}.out; if ($status) exit 1
 $MSR RUN RCV=INST2 SRC=INST1 '$gtm_tst/com/wait_for_transaction_seqno.csh +100 SRC 120 "" noerror'
 $MSR RUN RCV=INST2 SRC=INST1 '$MUPIP  replicate -receive -start -helpers' >& helpers_start${round}.out
 $MSR RUN RCV=INST2 SRC=INST1 '$gtm_tst/com/wait_for_transaction_seqno.csh +100 SRC 120 "" noerror'

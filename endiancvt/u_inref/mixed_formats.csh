@@ -3,7 +3,7 @@
 #								#
 # Copyright 2006, 2013 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -32,6 +32,7 @@ mkdir check_endian ; cp mumps.gld check_endian
 $sec_shell "$sec_getenv ; cd $SEC_SIDE ; mkdir check_endian ; cp mumps.gld check_endian"
 
 $gtm_tst/com/imptp.csh >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 sleep 30
 $gtm_tst/com/endtp.csh >>&! imptp.out
 

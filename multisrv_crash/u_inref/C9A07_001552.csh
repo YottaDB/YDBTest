@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -35,6 +35,7 @@ echo "=== STEP 1 ==="
 echo "GTM Process starts in background..."
 setenv gtm_test_jobid 1
 $gtm_tst/com/imptp.csh >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 echo "On Primary:"
 $MUPIP set -journal=enable,on,before,epoch=900,extension=0,auto=16384,alloc=16384 -reg AREG
 $MUPIP set -journal=enable,on,before,epoch=30,extension=1,auto=16384 -reg EREG
@@ -98,6 +99,7 @@ setenv start_time `date +%H_%M_%S`
 $gtm_tst/com/SRC.csh "on" $portno $start_time >&! START_${start_time}.out
 setenv gtm_test_jobid 2
 $gtm_tst/com/imptp.csh >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 $gtm_tst/com/wait_for_n_jnl.csh -lognum 13 -duration 3600 -poll 5
 $MUPIP set -journal=enable,on,before,epoch=90,alloc=2048,extension=1950,auto=17648 -reg AREG
 $MUPIP set -journal=enable,on,before,epoch=900,alloc=16384,extension=0,auto=16384 -reg BREG
@@ -133,6 +135,7 @@ setenv start_time `date +%H_%M_%S`
 $gtm_tst/com/SRC.csh "on" $portno $start_time >&! START_${start_time}.out
 setenv gtm_test_jobid 3
 $gtm_tst/com/imptp.csh >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 $MUPIP set -journal=enable,on,before,epoch=900,alloc=16384,extension=0,auto=16384 -reg AREG
 $gtm_tst/com/wait_for_n_jnl.csh -lognum 16 -duration 3600 -poll 5
 $MUPIP set -journal=enable,on,before,epoch=900,alloc=2048,extension=1950,auto=17648 -reg BREG
@@ -196,6 +199,7 @@ $gtm_tst/com/rfstatus.csh "AFTER_FAILOVER_DONE:"
 
 echo "Multi-process Multi-region GTM restarts on primary (B)..."
 $pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/imptp.csh  < /dev/null "">>&!"" imptp.out"
+source $gtm_tst/com/imptp_check_error.csh $PRI_SIDE/imptp.out; if ($status) exit 1
 sleep $test_sleep_sec_short
 
 echo "=== STEP 8 ==="

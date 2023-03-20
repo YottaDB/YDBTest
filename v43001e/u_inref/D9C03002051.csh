@@ -4,7 +4,7 @@
 # Copyright (c) 2003-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -29,6 +29,7 @@ echo "Multi-processes start in the background"
 setenv gtm_test_dbfill "IMPTP"
 setenv gtm_test_jobcnt 2
 $gtm_tst/com/imptp.csh >&! imptp1.out
+source $gtm_tst/com/imptp_check_error.csh imptp1.out; if ($status) exit 1
 echo "Now try to change -extension_count, which will also succeed"
 echo "MUPIP set -extension_count=400 -file mumps.dat"
 $MUPIP set -extension_count=400 -file mumps.dat

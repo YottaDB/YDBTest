@@ -31,6 +31,7 @@ echo "GTM Process starts in background..."
 setenv gtm_test_jobid 1
 setenv gtm_test_dbfillid 1
 $gtm_tst/com/imptp.csh >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 # Wait for 50,000 transactions/seqnos to happen on source side. Need to wait for 3600 seconds to account for slow ARMV6L.
 $gtm_tst/com/wait_for_transaction_seqno.csh +50000 SRC 3600
 
@@ -142,6 +143,7 @@ $gtm_tst/com/rfstatus.csh "AFTER_PRI_SEC_RESTART:"
 
 echo "Multi-process Multi-region GTM restarts on primary (B)..."
 $pri_shell "$pri_getenv; cd $PRI_SIDE; setenv gtm_test_jobid 2 ; setenv gtm_test_dbfillid 2 ; $gtm_tst/com/imptp.csh "5" < /dev/null "">>&!"" imptp.out"
+source $gtm_tst/com/imptp_check_error.csh $PRI_SIDE/imptp.out; if ($status) exit 1
 sleep $test_sleep_sec_short
 
 echo "Now GTM process ends"

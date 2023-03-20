@@ -181,6 +181,7 @@ echo "setenv test_noisolation TPNOISO" >> settings.csh
 setenv gtm_test_dbfill "IMPTP"
 echo "Start GT.M updates..."
 $gtm_tst/com/imptp.csh >&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 # ONLINE_ROLLBACK is not compatible with V4 block format. Disable the upgrade/downgrade
 if ("TRUE" != "$gtm_test_onlinerollback") then
 	echo "GTM_TEST_DEBUGINFO Start MUPIP upgrade/downgrade/set version=V4/set version=V5..."

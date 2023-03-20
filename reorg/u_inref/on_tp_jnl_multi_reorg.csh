@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -22,6 +25,7 @@ endif
 $gtm_tst/com/dbcreate.csh mumps 8 125 1000 4096 4096 4096 4096
 echo "Multi-Process GTM Process starts in background..."
 $gtm_tst/com/imptp.csh "3" >&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 #
 # Randomly choose to do 500K to 1m global sets (multiples of 100k for simplicity)
 if !($?gtm_test_replay) then

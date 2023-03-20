@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -27,6 +27,7 @@ echo "# Start IMPTP"
 setenv gtm_db_counter_sem_incr 16000
 set syslog_start = `date +"%b %e %H:%M:%S"`
 $gtm_tst/com/imptp.csh 5 >& imptp1.out
+source $gtm_tst/com/imptp_check_error.csh imptp1.out; if ($status) exit 1
 unsetenv gtm_db_counter_sem_incr
 
 $gtm_tst/com/getoper.csh "$syslog_start" "" syslog1.txt "" NOMORESEMCNT 2
@@ -117,6 +118,7 @@ echo "# Start IMPTP"
 setenv gtm_db_counter_sem_incr 16000
 set syslog_start = `date +"%b %e %H:%M:%S"`
 $gtm_tst/com/imptp.csh 5 >& imptp2.out
+source $gtm_tst/com/imptp_check_error.csh imptp2.out; if ($status) exit 1
 unsetenv gtm_db_counter_sem_incr
 
 $gtm_tst/com/getoper.csh "$syslog_start" "" syslog2.txt "" NOMORESEMCNT 2

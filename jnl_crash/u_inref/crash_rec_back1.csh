@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2002, 2014 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -30,6 +33,7 @@ while ($count < $iteration)
 	echo "GTM Process starts in background..."
 	setenv gtm_test_jobid $count
 	$gtm_tst/com/imptp.csh >>&! imptp.out
+	source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 	if ($count == 1) sleep 120
 	sleep 30
 	$gtm_tst/$tst/u_inref/pini_pfini.csh >>& pini_pfini.out

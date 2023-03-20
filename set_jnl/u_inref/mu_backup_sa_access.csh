@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -25,6 +28,7 @@ setenv gtm_test_dbfill "SLOWFILL"
 setenv gtm_test_jobcnt 2
 setenv gtm_test_jobid 1
 $gtm_tst/com/imptp.csh >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 sleep 10		# To allow some data to be set for all regions
 #
 @ bno = $bno + 1; \mkdir back{$bno}
@@ -82,6 +86,7 @@ $MUPIP set $tst_jnl_str -reg BREG
 echo "GTM Process starts in background..."
 setenv gtm_test_jobid 2
 $gtm_tst/com/imptp.csh >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 sleep 10		# To allow some data to be set for all regions
 #
 @ bno = $bno + 1; \mkdir back{$bno}

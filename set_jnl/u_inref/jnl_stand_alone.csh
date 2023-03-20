@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -26,6 +26,7 @@ setenv gtm_test_dbfill "SLOWFILL"
 setenv gtm_test_jobcnt 2
 setenv gtm_test_jobid 1
 $gtm_tst/com/imptp.csh >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 sleep 10		# To allow some data to be set for all regions
 echo "Try 0 to 1: $MUPIP set -journal=enable,off,nobefore -reg *"
 set output = "set_jnl_0_to_1.out"
@@ -93,6 +94,7 @@ $MUPIP set -journal=enable,off,before -reg "*" |& sort -f
 echo "GTM Process starts in background..."
 setenv gtm_test_jobid 2
 $gtm_tst/com/imptp.csh >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 sleep 10		# To allow some data to be set for all regions
 echo "Try to swtich from 1 to 0"
 set output = "set_jnl_1_to_0.out"
@@ -164,6 +166,7 @@ $MUPIP set -journal=enable,before,epoch=30 -reg "*" |& sort -f
 echo "GTM Process starts in background..."
 setenv gtm_test_jobid 3
 $gtm_tst/com/imptp.csh >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 sleep 10		# To allow some data to be set for all regions.
 echo "# Expect all the below buffer_size change commands to error out with 'File is in use/File already open'"
 set output = "set_jnl_buff_areg.out"

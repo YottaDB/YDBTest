@@ -1,7 +1,7 @@
 #! /usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -30,6 +30,7 @@ echo "GTM Processes will start now"
 setenv gtm_test_jobcnt 4
 setenv gtm_test_dbfill "IMPTP"
 $gtm_tst/com/imptp.csh >&! multi_tp.out
+source $gtm_tst/com/imptp_check_error.csh multi_tp.out; if ($status) exit 1
 sleep 60
 echo "GTM Processes will end"
 $gtm_tst/com/endtp.csh >>&! endtp.out

@@ -21,6 +21,7 @@ setenv gtm_test_tp "TP"
 setenv gtm_process  5
 setenv tst_buffsize 33000000
 $gtm_tst/com/imptp.csh $gtm_process >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 sleep 50
 echo "# Stop the updates"
 $gtm_tst/com/endtp.csh >>&! imptp.out

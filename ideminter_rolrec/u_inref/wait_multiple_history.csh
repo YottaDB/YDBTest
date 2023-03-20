@@ -4,6 +4,9 @@
 # Copyright (c) 2006-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -64,6 +67,7 @@ else
 		$gtm_tst/com/passive_start_upd_enable.csh	>& START_${timestamp}_$count.out
 		echo "The time is:" `date`
 		$gtm_tst/com/imptp.csh				>&! imptp_$count.out
+		source $gtm_tst/com/imptp_check_error.csh imptp_$count.out; if ($status) exit 1
 		echo "The time is:" `date`
 		# sleep a random duration, but at least 1 second:
 		@ randsleep = `$gtm_exe/mumps -run rand $itera ` + $iteramin

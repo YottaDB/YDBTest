@@ -84,6 +84,7 @@ echo ""
 setenv gtm_test_jobid 1
 setenv gtm_test_dbfillid 1
 $gtm_tst/com/imptp.csh 4 >&! imptp_${gtm_test_jobid}.out
+source $gtm_tst/com/imptp_check_error.csh imptp_${gtm_test_jobid}.out; if ($status) exit 1
 
 @ max_sleep = 300		# 30 was insufficient on a slower box
 setjnlpooltnvar start_tno
@@ -147,6 +148,10 @@ setenv gtm_test_dbfillid 2
 #
 # Run background process under /bin/sh to avoid job control output
 /bin/sh -c "$gtm_tst/com/imptp.csh 4 > imptp_${gtm_test_jobid}.out 2>&1 &"
+# We don't have a imptp_check_error.csh call here as the imptp.csh invocation in the previous line happens
+# in the background and we are not guaranteed that imptp_${gtm_test_jobid}.out will even exist at this point.
+# Hence the below call is commented out.
+#    source $gtm_tst/com/imptp_check_error.csh imptp_${gtm_test_jobid}.out; if ($status) exit 1
 
 # make sure we can go another 10 seconds without getting any more transactions due to the freeze
 
@@ -228,6 +233,7 @@ echo ""
 setenv gtm_test_jobid 3
 setenv gtm_test_dbfillid 3
 $gtm_tst/com/imptp.csh 4 >&! imptp_${gtm_test_jobid}.out
+source $gtm_tst/com/imptp_check_error.csh imptp_${gtm_test_jobid}.out; if ($status) exit 1
 
 echo ""
 echo "# Freeze for Source Restart"
@@ -315,6 +321,7 @@ setenv gtm_test_jobid 4
 setenv gtm_test_dbfillid 4
 source $gtm_tst/com/set_crash_test.csh	# sets YDBTest and YDB-white-box env vars to indicate this is a crash test
 $gtm_tst/com/imptp.csh 4 >&! imptp_${gtm_test_jobid}.out
+source $gtm_tst/com/imptp_check_error.csh imptp_${gtm_test_jobid}.out; if ($status) exit 1
 
 # Wait for some progress before proceeding.
 

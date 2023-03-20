@@ -4,6 +4,9 @@
 # Copyright (c) 2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -66,6 +69,7 @@ set start_time=$time_msr
 
 echo "# Start updates"
 $gtm_tst/com/imptp.csh													>& imptp.log
+source $gtm_tst/com/imptp_check_error.csh imptp.log; if ($status) exit 1
 # Tell STOPSRC below that we still have processes running
 setenv gtm_test_other_bg_processes 1
 # We want to run out of space while the receiver is running, and most of the time we do,

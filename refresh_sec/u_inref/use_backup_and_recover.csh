@@ -26,6 +26,7 @@ endif
 echo "# Starting Background Updates..."
 setenv gtm_test_jobid 1
 $gtm_tst/com/imptp.csh >&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 sleep 10
 
 $MUPIP set $tst_jnl_str -reg "*" >>& mup_set1.log
@@ -58,6 +59,7 @@ if (0 != $gtm_test_asyncio) then
 endif
 
 $gtm_tst/com/imptp.csh >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 
 foreach i (3 4 5)
 	sleep 5

@@ -34,6 +34,7 @@ setenv gtm_test_dbfill "IMPTP"    # DEFAULT set in test/com_u/submit_test.csh
 # GTM Process starts in background
 echo "# Starting GTM processes..."
 $gtm_tst/com/imptp.csh >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 # start another script in the background which alternates between V4 & V6 in seeting the database version
 echo "# Staring another bkground process that alternates between database versions"
 ($gtm_exe/mumps -run ^bkgrndset < /dev/null >>& bkgrndset.out&) >&! bg1.log

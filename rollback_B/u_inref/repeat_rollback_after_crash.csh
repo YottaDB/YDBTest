@@ -41,6 +41,7 @@ $gtm_tst/com/dbcreate.csh mumps 8 125-325 900-1150 512,1024,4096 4096 4096 4096
 echo "# Multi-Process GTM Process starts in background... : GTM_TEST_DEBUGINFO : `date`"
 setenv gtm_test_jobid 1
 $gtm_tst/com/imptp.csh >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 sleep 120
 setenv tst_seqno `$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/cur_jnlseqno.csh 1 < /dev/null"`
 $gtm_tst/com/endtp.csh >>&! endtp.out
@@ -57,6 +58,7 @@ aaa
 echo "# Multi-Process GTM Process starts in background... : GTM_TEST_DEBUGINFO : `date`"
 setenv gtm_test_jobid 2
 $gtm_tst/com/imptp.csh >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 #
 echo "# First Switch ... : GTM_TEST_DEBUGINFO : `date`"
 $gtm_tst/com/rand_jnl_on.csh ; $sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/rand_jnl_on.csh"

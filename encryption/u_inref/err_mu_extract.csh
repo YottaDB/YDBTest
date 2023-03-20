@@ -4,7 +4,7 @@
 # Copyright (c) 2009-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -53,6 +53,7 @@ echo "--------------------------------------------------------------------------
 setenv gtm_test_dbfill "SLOWFILL"
 setenv gtm_test_jobcnt 1
 $gtm_tst/com/imptp.csh >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 sleep 5
 source $gtm_tst/com/unset_ydb_env_var.csh ydb_passwd gtm_passwd
 echo "##################################"

@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -30,6 +30,7 @@ setenv gtm_test_dbfill "SLOWFILL"
 setenv gtm_test_jobcnt 2
 setenv gtm_test_jobid 1
 $gtm_tst/com/imptp.csh >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 sleep 10		# To allow some data to be set for all regions
 echo "Try 1 to 0 : $MUPIP set -replic=off -reg *"
 set output = "set_replic_off.out"
@@ -114,6 +115,7 @@ echo "Transition of replication state 0 to 1 needs standalone access"
 echo "GTM Process starts in background..."
 setenv gtm_test_jobid 2
 $gtm_tst/com/imptp.csh >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 sleep 10		# To allow some data to be set for all regions
 set output = "set_replic_on.out"
 $MUPIP set -replic=on -reg "*" >&! ${output}x

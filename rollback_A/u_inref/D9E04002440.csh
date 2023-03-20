@@ -42,6 +42,7 @@ setenv gtm_test_maxdim 15
 setenv gtm_test_parms "1,7"
 setenv gtm_test_dbfill "IMPRTP"
 $gtm_tst/com/imptp.csh >&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 
 # Sleep a random amount (10-30 seconds) and then make sure some activity has happened on the receiver side before
 # we crash it (sometimes takes slow PI systems more than the simple 30 second wait that used to be here).
@@ -89,6 +90,7 @@ $gtm_tst/com/rfstatus.csh "BOTH_UP:"
 
 echo "Multi-process Multi-region GTM restarts on primary (B)..."
 $pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/imptp.csh < /dev/null "">>&!"" imptp.out"
+source $gtm_tst/com/imptp_check_error.csh $PRI_SIDE/imptp.out; if ($status) exit 1
 sleep 10
 echo "Now GTM process ends"
 $pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/endtp.csh < /dev/null "">>&!"" endtp.out"

@@ -1,4 +1,18 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+# Portions Copyright (c) Fidelity National			#
+# Information Services, Inc. and/or its subsidiaries.		#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
 #
 # TEST : S9908-001327 Update process died on receiving TRETRY signal
 #
@@ -16,6 +30,7 @@ echo "GTM Process starts in background..."
 setenv gtm_test_jobcnt 5
 setenv gtm_test_dbfill "IMPTP"
 $gtm_tst/com/imptp.csh >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 sleep $test_sleep_sec_short
 #
 $sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/$tst/u_inref/var_tp_rest.csh >>&! var_tp_rest.out"

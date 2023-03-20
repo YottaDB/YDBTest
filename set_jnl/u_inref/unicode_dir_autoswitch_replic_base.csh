@@ -4,7 +4,7 @@
 # Copyright (c) 2007-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -59,6 +59,7 @@ $sec_shell "$sec_getenv ; cd $SEC_SIDE/$unidir; $MUPIP set $tst_jnl_str,epoch=30
 $sec_shell "$sec_getenv ; cd $SEC_SIDE/$unidir; $MUPIP set $tst_jnl_str,epoch=900,auto=17388,alloc=5100 -reg DREG"
 echo "Starting GTM processes..."
 $gtm_tst/com/imptp.csh >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 sleep 20
 $MUPIP set $tst_jnl_str,epoch=10,extension=1,auto=16384,alloc=4096 -reg AREG
 $sec_shell "$sec_getenv; cd $SEC_SIDE; cd $unidir; $MUPIP set $tst_jnl_str,$jnlstr1 -reg BREG"

@@ -4,7 +4,7 @@
 # Copyright (c) 2009-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -22,6 +22,7 @@ echo "# Multiple updater processes start in the background"
 setenv gtm_test_dbfill "IMPTP"
 setenv gtm_test_jobcnt 4
 $gtm_tst/com/imptp.csh >&! imptp1.out
+source $gtm_tst/com/imptp_check_error.csh imptp1.out; if ($status) exit 1
 sleep 30 # make sure online integ has something to do
 
 $echoline

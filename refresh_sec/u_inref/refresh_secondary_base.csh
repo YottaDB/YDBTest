@@ -43,6 +43,7 @@ $ps >& ps.outx
 ###########################################################################################################
 echo "Starting GTM processes..."
 $gtm_tst/com/imptp.csh   >&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 sleep  15 # to ensure it runs for a while
 ###########################################################################################################
 #					Secondary side							  #

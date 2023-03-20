@@ -35,6 +35,7 @@ setenv start_time `cat start_time`
 echo "GTM Process starts in background..."
 setenv gtm_test_jobid 1
 $gtm_tst/com/imptp.csh >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 $gtm_tst/com/wait_for_transaction_seqno.csh +$test_tn_count SRC $test_sleep_sec "" noerror
 
 # RECEIVER SIDE (B) CRASH
@@ -66,6 +67,7 @@ $sec_shell "$sec_getenv; cd $SEC_SIDE;"'$gtm_tst/com/mupip_rollback.csh -losttra
 echo "Restart gtm..."
 setenv gtm_test_jobid 2
 $gtm_tst/com/imptp.csh >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 $gtm_tst/com/wait_for_transaction_seqno.csh +$test_tn_count SRC $test_sleep_sec "" noerror
 echo "Restarting Secondary (B)..."
 # Note that even though A ran more transactions after B was crashed (before crashing A), it is possible B gets rolled back

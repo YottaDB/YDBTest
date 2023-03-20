@@ -4,6 +4,9 @@
 # Copyright (c) 2012-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -50,6 +53,7 @@ echo "set rolllist = '$rolllist'"		>> settings.csh
 setenv gtm_test_dbfill "IMPTP"
 setenv gtm_test_jobcnt 2
 $gtm_tst/com/imptp.csh >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 
 # wait for at least 100 updates or 100 seconds, whichever comes first
 set lastseqno=0

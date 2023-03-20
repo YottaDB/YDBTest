@@ -1,4 +1,19 @@
-#!/usr/local/bin/tcsh
+#!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+# Portions Copyright (c) Fidelity National			#
+# Information Services, Inc. and/or its subsidiaries.		#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
 #wait for the secondary to let us know it's ready
 $gtm_tst/com/wait_for_log.csh -log go.txt -duration 240 -waitcreation
 
@@ -12,7 +27,8 @@ while (! -e end_imptp_loop.txt)
 	$MSR STARTSRC INST1 INST2
 	$MSR STARTSRC INST1 INST3
 	$gtm_tst/com/imptp.csh $gtm_process >>&! imptp$cntx.out
-	$GTM << \EOF 
+	source $gtm_tst/com/imptp_check_error.csh imptp$cntx.out; if ($status) exit 1
+	$GTM << \EOF
 write $H,!
 hang $RANDOM(5)+5
 write $H,!

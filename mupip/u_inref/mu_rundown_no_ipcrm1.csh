@@ -30,6 +30,7 @@ $gtm_tst/com/dbcreate.csh mumps 8 125 1000
 
 echo "GTM Process starts in background..."
 $gtm_tst/com/imptp.csh 5 >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 
 $sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/wait_until_rcvr_trn_processed_above.csh +30"
 

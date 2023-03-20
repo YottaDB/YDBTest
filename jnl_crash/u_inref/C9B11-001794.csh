@@ -28,6 +28,7 @@ while ($count < $iteration)
 	echo "GTM Process starts in background..."
 	setenv gtm_test_jobid $count
 	$gtm_tst/com/imptp.csh $gtm_process  >>&! imptp.out
+	source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 	sleep 20
 	echo "Kill -9 <pid> : ipcrm -s <sem_id>"
 	echo "Shared Memory is existing"

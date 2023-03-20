@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2012, 2014 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -26,6 +29,7 @@ set ts = $time_msr
 setenv gtm_test_dbfill "IMPTP"
 setenv gtm_test_jobcnt 3
 $gtm_tst/com/imptp.csh >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 
 $echoline
 echo "Jobbing off the tight loop reader"

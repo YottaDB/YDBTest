@@ -3,7 +3,7 @@
 #								#
 #	Copyright 2002, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -35,6 +35,7 @@ setenv start_time `cat start_time`
 # GTM Process starts in background
 $gtm_exe/mumps $gtm_tst/com/genstr.m
 $gtm_tst/com/imptp.csh "4" >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 sleep $test_sleep_sec
 setenv gtm_repl_instsecondary $gtm_test_cur_sec_name
 set verbose
@@ -101,6 +102,7 @@ $gtm_tst/com/rfstatus.csh "BOTH_UP:"
 echo "Switch ends at: `date +%H:%M:%S`" >>&! time.log
 echo "Starting GTM on new primary side..."
 $pri_shell "$pri_getenv; cd $PRI_SIDE; "'$gtm_exe/mumps $gtm_tst/com/genstr.m'"; $gtm_tst/com/imptp.csh "4" < /dev/null "">>&!"" imptp.out"
+source $gtm_tst/com/imptp_check_error.csh $PRI_SIDE/imptp.out; if ($status) exit 1
 sleep $test_sleep_sec
 setenv ctime `date +%H_%M_%S`
 set verbose

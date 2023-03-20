@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2013 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -43,6 +46,7 @@ dd if=/dev/zero of=$jnldir/JUNK bs=4096 count=512 >& dd.out
 set syslog_before1 = `date +"%b %e %H:%M:%S"`
 
 $gtm_tst/com/imptp.csh 12 >&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 
 $gtm_tst/com/getoper.csh "$syslog_before1" "" syslog1.txt "" "JNLCLOSED"
 

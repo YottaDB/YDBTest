@@ -23,10 +23,14 @@
 # But GT.CM does not support TP for now, we will not use any TP transactions for it at all.
 # We assume when GT.CM is chosen it will not be a crash test.
 #
-
 # Set gtm_test_trigger based on whether triggers are supported on the platform in which imptp.csh is executed. This is
 # needed for cases where a multihost test invokes imptp.csh remotely on a machine that does not support triggers. In
 # such cases, MUPIP TRIGGER command and other $ztrigger statements will error out.
+
+# Note that any code path below that exits with a non-zero status should also print a "-E-" message (e.g. "TEST-E-FAILED")
+# as this is relied upon by the caller script which would call com/imptp_check_error.csh immediately after the imptp.csh call.
+# That script can only check for errors by the presence of the "-E-" messages.
+
 if (-e $gtm_tools/check_trigger_support.csh) then
 	if ("FALSE" == `$gtm_tools/check_trigger_support.csh`) then
 		setenv gtm_test_trigger "0"
@@ -66,7 +70,7 @@ if ($gtm_test_dbfill == "IMPTP" || $gtm_test_dbfill == "IMPZTP") then
 	if !($?gtm_test_replay) then
 		if ($?ydb_imptp_flavor) then
 			if ((0 > $ydb_imptp_flavor) || (5 < $ydb_imptp_flavor)) then
-				echo "TEST-E-FAIL Invalid flavor of imptp specified: $ydb_imptp_flavor - allowed values, 0, 1, 2, 3, 4, or 5"
+				echo "TEST-E-FAILED : Invalid flavor of imptp specified: $ydb_imptp_flavor - allowed values, 0, 1, 2, 3, 4, or 5"
 				exit 1
 			else if (5 == $ydb_imptp_flavor && true != $rust_supported) then
 				echo "# Warning: rust flavor was explicitly specified, but Rust is not supported on this platform"
@@ -208,7 +212,7 @@ xyz
 			source $gtm_tst/com/setupgoenv.csh # Do our golang setup (sets $tstpath)
 			set status1 = $status
 			if ($status1) then
-				echo "[source $gtm_tst/com/setupgoenv.csh] failed with status [$status1]. Exiting..."
+				echo "TEST-E-FAILED : [source $gtm_tst/com/setupgoenv.csh] failed with status [$status1]"
 				exit 1
 			endif
 		endif

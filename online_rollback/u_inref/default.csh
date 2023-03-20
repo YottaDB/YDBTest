@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -35,6 +35,7 @@ set ts = $time_msr
 setenv gtm_test_dbfill "IMPTP"
 setenv gtm_test_jobcnt 5
 $gtm_tst/com/imptp.csh >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 
 # wait for at least 800 updates or 2 minutes
 $gtm_exe/mumps -run waituntilseqno "jnl" 0 800 120 >>&! last_seqno.csh

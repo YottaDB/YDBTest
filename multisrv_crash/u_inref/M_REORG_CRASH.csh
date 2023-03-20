@@ -49,6 +49,7 @@ $pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/$tst/u_inref/dbset.csh"
 #
 echo "Multiple M Processes starts in the background..."
 $gtm_tst/com/imptp.csh >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 sleep $test_sleep_sec_long
 $gtm_tst/com/srcstat.csh "BEFORE_PRI_A_CRASH1:"
 $sec_shell "$sec_getenv; $gtm_tst/com/rcvrstat.csh "BEFORE_SEC_B_CRASH1:" < /dev/null"
@@ -131,6 +132,7 @@ setenv start_time `date +%H_%M_%S`
 $pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/SRC.csh "on" $portno $start_time < /dev/null "">>&!"" START_${start_time}.out"
 echo "Multi-process Multi-region GTM restarts on primary (B)..."
 $pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/imptp.csh  < /dev/null "">>&!"" imptp.out"
+source $gtm_tst/com/imptp_check_error.csh $PRI_SIDE/imptp.out; if ($status) exit 1
 $pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/bkgrnd_reorg.csh >>& reorg.out"
 #
 # SECONDARY SIDE (A) UP

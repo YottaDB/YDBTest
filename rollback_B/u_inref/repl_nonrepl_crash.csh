@@ -48,6 +48,7 @@ $sec_shell "$sec_getenv; cd $SEC_SIDE; cp h.dat h.dat_orig"
 echo "GTM Process starts in background..."
 setenv gtm_test_jobid 1
 $gtm_tst/com/imptp.csh >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 sleep $test_sleep_sec
 
 # RECEIVER SIDE (B) CRASH
@@ -83,6 +84,7 @@ $gtm_tst/com/srcstat.csh "AFTER_PRI_A_RESTART"
 echo "Restart gtm..."
 setenv gtm_test_jobid 2
 $gtm_tst/com/imptp.csh >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 
 echo "Restarting Secondary (B)..."
 $sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/RCVR.csh "." $portno $start_time < /dev/null "">>&!"" $SEC_SIDE/START_${start_time}.out"

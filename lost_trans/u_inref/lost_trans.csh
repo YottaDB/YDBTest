@@ -59,6 +59,7 @@ endif
 echo "Generate first batch of updates"
 setenv gtm_test_jobid 1
 $gtm_tst/com/imptp.csh $gtm_process >&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 echo "While updates are happening, sleep GTM_TEST_DEBUGINFO $test_sleep_sec seconds"
 sleep $test_sleep_sec
 $gtm_tst/com/endtp.csh >>&! imptp.out
@@ -75,6 +76,7 @@ $sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/RCVR_SHUT.csh ""."" < /dev/n
 echo "Generate second batch of updates"
 setenv gtm_test_jobid 2
 $gtm_tst/com/imptp.csh $gtm_process >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 echo "While updates are happening, sleep GTM_TEST_DEBUGINFO $test_sleep_sec seconds"
 sleep $test_sleep_sec
 $gtm_tst/com/endtp.csh >>&! imptp.out

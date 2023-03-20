@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -32,6 +32,7 @@ $gtm_tst/com/dbcreate.csh mumps 4 125 1000 -allocation=2048 -extension_count=204
 $gtm_tst/com/backup_dbjnl.csh save "*.dat" cp nozip
 
 $gtm_tst/com/imptp.csh >&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 sleep 5 # There are no framework scripts to wait for n updates in a non-replicated environment
 $gtm_tst/com/endtp.csh >&! endtp.out
 

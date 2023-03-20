@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -74,6 +74,7 @@ set src_log_time = $start_time
 setenv gtm_test_spannode 0
 echo "# GTM Process starts in background..."
 $gtm_tst/com/imptp.csh $gtm_process >&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 sleep 5
 $gtm_tst/com/rfstatus.csh "BEFORE_RECEIVER_SHUT"
 echo "# Force receiver to shut down..."

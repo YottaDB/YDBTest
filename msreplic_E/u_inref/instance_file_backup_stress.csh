@@ -4,7 +4,7 @@
 # Copyright (c) 2006-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -42,6 +42,7 @@ setenv gtm_test_tp "TP"
 setenv gtm_process  30
 setenv tst_buffsize 33000000
 $gtm_tst/com/imptp.csh $gtm_process >>&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 set echo; sleep 30; unset echo
 $gtm_tst/com/endtp.csh >>&! imptp.out
 $MSR SYNC INST1 INST2

@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -35,6 +35,7 @@ setenv gtm_white_box_test_case_count 0
 
 echo "# Launching $gtm_test_jobcnt jobs."
 $gtm_tst/com/imptp.csh >& imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 # Make sure each process made at least 1 update
 $GTM <<EOF
     for i=1:1:300 quit:(\$get(^lasti(0,1))>0)&(\$get(^lasti(0,2))>0)  hang 1

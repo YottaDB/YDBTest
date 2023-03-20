@@ -24,6 +24,7 @@ echo "$MUPIP set -journal=enable,off,before -reg *"
 $MUPIP set -journal=enable,off,before -reg "*" |& sort -f
 echo "Multi-Process GTM Process starts in background..."
 $gtm_tst/com/imptp.csh "5" >&! imptp.out
+source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
 sleep 120
 \mkdir ./backup
 echo "$MUPIP backup * -newj ./backup"
