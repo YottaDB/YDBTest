@@ -3,7 +3,7 @@
 #								#
 # Copyright 2013 Fidelity Information Services, Inc		#
 #								#
-# Copyright (c) 2020-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -25,6 +25,13 @@ set blocker = $3
 set count = $4
 
 setenv ydb_log `pwd`
+
+# In case we are being called from the YDBPython wrapper while running with a YottaDB built with ASAN, LD_PRELOAD env var
+# would be set. But in that case, we have seen invoking various utilities like curl/gdb cause the process to hang in a
+# futex() system call. See https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/1575#note_1229459519 for details.
+# Therefore, unset the LD_PRELOAD env var before invloking %YDBPROCSTUCKEXEC (which uses "gdb").
+unsetenv LD_PRELOAD
+
 $ydb_dist/yottadb -run %YDBPROCSTUCKEXEC $type $waiter $blocker $count
 exit $status
 
