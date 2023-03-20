@@ -120,7 +120,10 @@ endif
 if (0 == $rollback_rand) then
 	# Start rcvr with -autorollback
 	$sec_shell "$sec_getenv; cd $SEC_SIDE;  setenv gtm_test_autorollback TRUE ; $gtm_tst/com/RCVR.csh "." $portno $start_time >&! RCVR_${start_time}.out"
-	$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/wait_for_log.csh -log $RCVR_LOG_FILE -message YDB-I-ORLBKCMPLT -duration 180; if (! -e a.lost) mv *.lost a.lost"	# Rename lost transaction file (which could be a.lost or b.lost or c.lost etc.) to fixed name a.lost
+	# With AIO turned on, we have seen the Before image applying phase of the online rollback take as much as 3 minutes
+	# even on a fast system and the test failed because the max timeout was set to 3 minutes (180 seconds) below.
+	# Therefore we now set the max timeout, using the `-duration` option, to 10 minutes (600 seconds).
+	$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/wait_for_log.csh -log $RCVR_LOG_FILE -message YDB-I-ORLBKCMPLT -duration 600; if (! -e a.lost) mv *.lost a.lost"	# Rename lost transaction file (which could be a.lost or b.lost or c.lost etc.) to fixed name a.lost
 else
 	# Do rollback -fetchresync
 	$gtm_tst/com/mupip_rollback.csh -fetchresync=$portno -losttrans=$SEC_SIDE/a.lost "*"  >&! rollback.log
