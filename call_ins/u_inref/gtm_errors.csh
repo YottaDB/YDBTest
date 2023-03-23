@@ -1,11 +1,35 @@
+#!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+# Portions Copyright (c) Fidelity National			#
+# Information Services, Inc. and/or its subsidiaries.		#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
 # Test call in table parsing errors
 # gtm_errors.csh
-# 
+#
 echo "--------------------------------------------------------------------------------"
 echo "TEST: Referenced label not specified in call-in table: "
 source $gtm_tst/$tst/u_inref/cinoentry.csh
-ccnoent 
-unsetenv GTMCI
+echo "# Test that CINOENTRY message shows relative path if GTMCI/ydb_ci env var is set to relative path"
+# Note that GTMCI is already set to relative path by the previous call to "source cinoentry.csh"
+ccnoent
+echo "# Test that CINOENTRY message shows absolute path if GTMCI/ydb_ci env var is set to absolute path"
+setenv GTMCI `pwd`/$GTMCI
+ccnoent
+echo "# Test that setting GTMCI/ydb_ci env var to the empty string issues a CITABOPN error"
+setenv GTMCI ""
+ccnoent
+unsetenv GTMCI	# unset GTMCI env var before moving on to next stage of test
 echo "--------------------------------------------------------------------------------"
 echo "TEST: Invalid direction for passed parameters: "
 source $gtm_tst/$tst/u_inref/cidirctv.csh

@@ -8,7 +8,12 @@ mumps.dat
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
- 150379666,(Call-In),%YDB-E-CINOENTRY, No entry specified for getcode in the call-in table
+# Test that CINOENTRY message shows relative path if GTMCI/ydb_ci env var is set to relative path
+ 150379666,(Call-In),%YDB-E-CINOENTRY, No entry specified for getcode in the call-in table noent.tab
+# Test that CINOENTRY message shows absolute path if GTMCI/ydb_ci env var is set to absolute path
+ 150379666,(Call-In),%YDB-E-CINOENTRY, No entry specified for getcode in the call-in table ##TEST_PATH##/noent.tab
+# Test that setting GTMCI/ydb_ci env var to the empty string issues a CITABOPN error
+ 150379602,\(Call-In\),%YDB-E-CITABOPN, Unable to open call-in table: ,%YDB-E-SYSCALL, Error received from system call fopen -- called from module ##TEST_AWK.*/exttab_parse.c at line [0-9]*,%SYSTEM-E-ENO2, No such file or directory
 --------------------------------------------------------------------------------
 TEST: Invalid direction for passed parameters: 
 %YDB-I-EXTSRCLIN, 	getc: gtm_char_t* ccode^getrec2(gtm_long_t)

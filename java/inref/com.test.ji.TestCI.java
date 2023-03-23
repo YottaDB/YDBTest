@@ -3,7 +3,7 @@
  * Copyright (c) 2013-2015 Fidelity National Information 	*
  * Services, Inc. and/or its subsidiaries. All rights reserved.	*
  *								*
- * Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries. *
+ * Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries. *
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -960,7 +960,7 @@ public class TestCI {
 				"\t\t\tabc += \"a\";\n" +
 				"\t\t\tGTMCI.doVoidJob(abc);\n" };
 		final String[] javaResponses = new String[]{
-			"150379666,(Call-In),%YDB-E-CINOENTRY, No entry specified for abc123 in the call-in table\n",
+			"150379666,(Call-In),%YDB-E-CINOENTRY, No entry specified for abc123 in the call-in table " + System.getenv("PWD") + "/Test11.ci" + "\n",
 			"GTM-E-JNI, Entryref exceeds 2048 characters.\n" };
 
 		int numOfCases = javaCodes.length;
