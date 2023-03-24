@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -18,8 +18,12 @@ set tstpath = `pwd`
 set pypath = $tstpath/python
 setenv PKG_CONFIG_PATH $ydb_dist
 
-# Enable once imptp changes are merged in master
 git clone https://gitlab.com/YottaDB/Lang/YDBPython.git $pypath
+@ status1 = $status
+if ($status1) then
+	echo "SETUPPYENV-E-FAILED : [git clone https://gitlab.com/YottaDB/Lang/YDBPython.git $pypath] failed with status = [$status1]"
+	exit $status1
+endif
 cd $pypath
 # Create Python virtual environment:
 python3 -m venv .venv
@@ -28,3 +32,4 @@ source .venv/bin/activate.csh
 # Install into venv: `python setup.py install`
 python setup.py install
 cd ..
+exit 0

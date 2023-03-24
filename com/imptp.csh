@@ -193,6 +193,11 @@ xyz
 		setenv prompt ""
 		if (! -e python) then # Python install directory not setup, create now
 			source $gtm_tst/com/setuppyenv.csh # Do our Python setup (sets $tstpath)
+			set status1 = $status
+			if ($status1) then
+				echo "TEST-E-FAILED : [source $gtm_tst/com/setuppyenv.csh] failed with status [$status1]"
+				exit 1
+			endif
 		else
 			# Activate virtual environment to provide access to local `yottadb` Python module
 			source python/.venv/bin/activate.csh
