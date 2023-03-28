@@ -199,7 +199,7 @@ $gtm_tst/com/rfstatus.csh "AFTER_FAILOVER_DONE:"
 
 echo "Multi-process Multi-region GTM restarts on primary (B)..."
 $pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/imptp.csh  < /dev/null "">>&!"" imptp.out"
-source $gtm_tst/com/imptp_check_error.csh $PRI_SIDE/imptp.out; if ($status) exit 1
+$pri_shell "$pri_getenv; source $gtm_tst/com/imptp_check_error.csh $PRI_SIDE/imptp.out"; if ($status) exit 1
 sleep $test_sleep_sec_short
 
 echo "=== STEP 8 ==="

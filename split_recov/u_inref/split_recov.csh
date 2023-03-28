@@ -94,7 +94,7 @@ echo "Applying the lost transactions..."
 $pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/applylt.csh "fetch.glo" 1 < /dev/null "">>&!"" imptp.out"
 echo "Apply some more transactions..."
 $pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/imptp.csh "5" < /dev/null "">>&!"" imptp.out"
-source $gtm_tst/com/imptp_check_error.csh $PRI_SIDE/imptp.out; if ($status) exit 1
+$pri_shell "$pri_getenv; source $gtm_tst/com/imptp_check_error.csh $PRI_SIDE/imptp.out"; if ($status) exit 1
 $gtm_tst/com/wait_for_transaction_seqno.csh +1000 SRC $test_sleep_sec "" noerror
 $pri_shell "$pri_getenv; cd $PRI_SIDE; $gtm_tst/com/endtp.csh  < /dev/null "">>&!"" imptp.out"
 

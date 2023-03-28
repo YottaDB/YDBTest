@@ -62,7 +62,7 @@ $pri_shell "$pri_getenv; $gtm_tst/com/srcstat.csh ""AFTER_PRI_B_UP1:"" < /dev/nu
 # restart gtm
 echo "Multi-process Multi-region GTM starts on primary (B)..."
 $pri_shell "$pri_getenv; cd $PRI_SIDE; setenv gtm_test_jobid 1; $gtm_tst/com/imptp.csh < /dev/null "">>&!"" imptp.out"
-source $gtm_tst/com/imptp_check_error.csh $PRI_SIDE/imptp.out; if ($status) exit 1
+$pri_shell "$pri_getenv; source $gtm_tst/com/imptp_check_error.csh $PRI_SIDE/imptp.out"; if ($status) exit 1
 sleep $test_sleep_sec
 
 
@@ -93,7 +93,7 @@ $gtm_tst/com/rfstatus.csh "BOTH_UP:"
 
 echo "Multi-process Multi-region GTM restarts on primary (B)..."
 $pri_shell "$pri_getenv; cd $PRI_SIDE; setenv gtm_test_jobid 2; $gtm_tst/com/imptp.csh < /dev/null "">>&!"" imptp.out"
-source $gtm_tst/com/imptp_check_error.csh $PRI_SIDE/imptp.out; if ($status) exit 1
+$pri_shell "$pri_getenv; source $gtm_tst/com/imptp_check_error.csh $PRI_SIDE/imptp.out"; if ($status) exit 1
 sleep $test_sleep_sec
 
 echo "Now GTM process ends"

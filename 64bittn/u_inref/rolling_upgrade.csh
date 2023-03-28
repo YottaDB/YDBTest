@@ -178,7 +178,7 @@ echo "Restarting (B) as primary..."
 $pri_shell '$pri_getenv; cd $PRI_SIDE;$sv_curver; $gtm_tst/com/SRC.csh "." $portno $start_time3 < /dev/null >& $PRI_SIDE/SRC_${start_time3}.out'
 echo "Start some updates in side B (new Primary)"
 $pri_shell '$pri_getenv; cd $PRI_SIDE;$sv_curver; $gtm_tst/com/imptp.csh >& $PRI_SIDE/imptp.out'
-source $gtm_tst/com/imptp_check_error.csh $PRI_SIDE/imptp.out; if ($status) exit 1
+$pri_shell "$pri_getenv; source $gtm_tst/com/imptp_check_error.csh $PRI_SIDE/imptp.out"; if ($status) exit 1
 sleep 5
 cd $SEC_SIDE
 echo "Do rollback in side A"
