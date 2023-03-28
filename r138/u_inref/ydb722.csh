@@ -29,6 +29,7 @@ if ($choose_olderver_rcvr) then
 	set rand_ver=`$gtm_tst/com/random_ver.csh -gte V62000 -lt $tst_ver`
 	echo $rand_ver > priorver.txt
 	source $gtm_tst/com/ydb_prior_ver_check.csh $rand_ver
+	source $gtm_tst/com/disable_settings_msr_priorver.csh # Disable settings that do not work with MSR and prior versions
 	# Alter the msr_instance_config file to update the receiver side version with the older version
 	sed -i '/INST2.*VERSION:/s/'"$tst_ver"'/'"$rand_ver"'/' msr_instance_config.txt
 	sed -i '/INST2.*IMAGE:/s/'"$tst_image"'/pro/' msr_instance_config.txt
