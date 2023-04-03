@@ -59,12 +59,12 @@ setenv subtest_exclude_list ""
 if ($?gtm_test_nopriorgtmver) then
 	setenv subtest_exclude_list "$subtest_exclude_list objtest mupip_load_V4"
 else if ("suse" == $gtm_test_linux_distrib) then
-	# Disable "objtest" subtest on SUSE Linux until r1.38 is released as the only prior release at this
+	# Disable "objtest" subtest on SUSE Linux until r1.40 is released as the only prior release at this
 	# point on the SUSE systems is r1.36 which has the same object format as the current master branch of YDB.
-	# Once r1.38 is released and "gtm_curpro" is changed, the "longname" test will fail on SUSE boxes and
+	# Once r1.40 is released and "gtm_curpro" is changed, the "longname" test will fail on SUSE boxes and
 	# will require the below "if" block to be removed.
 	if ($?gtm_curpro) then
-		if ($gtm_curpro == "V63014_R136") then
+		if ($gtm_curpro == "V63014_R138") then
 			setenv subtest_exclude_list "$subtest_exclude_list objtest"
 		endif
 	endif
