@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -25,6 +25,12 @@ set shorthost = $HOST:ar
 
 if ($shorthost =~ {pfloyd}) then
 	setenv gtm_test_do_eotf 0
+endif
+
+if ((1 == "$gtm_test_asyncio") && (! $is_tst_dir_ssd)) then
+	# We have seen that on a system where the disk is not a SSD (i.e. it is a slower spinning disk)
+	# this test takes 3+ hours to run when ASYNCIO is ON. Therefore, we turn ASYNCIO to OFF on such systems.
+	setenv gtm_test_asyncio 0
 endif
 
 $gtm_exe/mumps $gtm_tst/com/pfill.m
