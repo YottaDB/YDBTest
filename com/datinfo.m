@@ -68,7 +68,7 @@ dseget(datinfo)
 	; In case of an error, use the by file mechanism
 	set $ETRAP="use $p zshow ""*"" set $ecode="""" zgoto "_$zlevel_":byfile^datinfo"
 	set myetrap=$ETRAP
-	do:(version>62002)  quit	; Use ^%PEEKBYNAME() if it is available (V63000 and later)
+	if version>62002 do  quit	; Use ^%PEEKBYNAME() if it is available (V63000 and later)
 	.	set reg=$view("GVNEXT","")  ; Use information from the first available region
 	.	set datinfo("block_size")=$$^%PEEKBYNAME("sgmnt_data.blk_size",reg)
 	.	set datinfo("max_record_size")=$$^%PEEKBYNAME("sgmnt_data.max_rec_size",reg)
