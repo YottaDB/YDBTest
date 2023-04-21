@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -87,19 +87,8 @@ $MUPIP set -journal="enable,on,before,epoch=90,auto=2097152" -reg "*" >& jnl.log
 set mon_pid = `cat mon_pid.log`
 
 # If server has more than 4 CPUs, then consider it fast and have a higher limit. Else a lower limit.
-# But if ASYNCIO is turned ON, then keep the lower limit in case the system has a spinny drive (i.e. is a HDD, not a SSD).
-# This is because with ASYNCIO and journaling ON, we have seen this test take 3 hours or even more to run on the system
-# when multiple similar heavyweight tests are running.
 @ numcpus = `grep -c ^processor /proc/cpuinfo`
-if ((1 == "$gtm_test_asyncio") && (! $is_tst_dir_ssd)) then
-	set heavyload = 0
-else if (4 < $numcpus) then
-	set heavyload = 1
-else
-	set heavyload = 0
-endif
-
-if ($heavyload) then
+if (4 < $numcpus) then
 	set upperbound=3000000
 	set expected=559
 else

@@ -1147,7 +1147,7 @@ setenv tst_random_all "$tst_random_all ydb_lockhash_n_bits"
 #
 # Do this if gtm_test_asyncio is not already passed to gtmtest.csh
 if !($?gtm_test_asyncio) then
-	if (60 >= $randnumbers[46]) then
+	if ((! $is_tst_dir_ssd) || (60 >= $randnumbers[46])) then
 		setenv gtm_test_asyncio 0
 	else
 		setenv gtm_test_asyncio 1
@@ -1155,6 +1155,13 @@ if !($?gtm_test_asyncio) then
 	echo "# gtm_test_asyncio set by do_random_settings.csh"					>>&! $settingsfile
 else
 	echo "# gtm_test_asyncio was already set before coming into do_random_settings.csh"	>>&! $settingsfile
+endif
+# If current system is running tests on a spinning disk (i.e. not a SSD), then do not enable ASYNCIO
+# as we have seen various tests take a LONG time to run and trigger a HANG alert email even on the
+# faster x86_64 systems.
+if ((! $is_tst_dir_ssd) && (1 == $gtm_test_asyncio)) then
+	echo '# gtm_test_asyncio is forced to 0 since [$is_tst_dir_ssd = 0]'			>>&! $settingsfile
+	setenv gtm_test_asyncio 0
 endif
 if ("MM" == "$acc_meth") then
 	echo "# gtm_test_asyncio is forced to 0 since acc_meth is MM"				>>&! $settingsfile
