@@ -116,6 +116,19 @@ if ($gtm_test_dbfill == "IMPTP" || $gtm_test_dbfill == "IMPZTP") then
 					set imptpflavor = `$gtm_exe/mumps -run rand $rand`
 				end
 			endif
+			# Disable YDBPython testing if python3 version is 3.11.2
+			# We have seen one of the following symptoms when building imptp.py in that case.
+			#	SystemError: unknown opcode
+			#	SIG-11 in _PyEval_EvalFrameDefault()
+			# This has been seen only on a Ubuntu 23.04 system and the current suspicion is that it is a
+			# python3 regression that will be fixed in a later version.
+			set python3ver = `python3 --version | cut -d" " -f2`
+			if ("3.11.2" == $python3ver) then
+				while (3 == $imptpflavor)
+					echo "# Disabling ydb_imptp_flavor=3 (YDBPython) due to python3 3.11.2" >> settings.csh
+					set imptpflavor = `$gtm_exe/mumps -run rand $rand`
+				end
+			endif
 			# Disable Python testing if ASAN is enabled and Rust version is 1.58.* or 1.59.*
 			# to prevent erroneous core files from `rustc --version`.
 			# This command is run by YDBPython's `setup.py`, during the setting of
