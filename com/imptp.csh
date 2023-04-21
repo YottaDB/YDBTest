@@ -105,6 +105,17 @@ if ($gtm_test_dbfill == "IMPTP" || $gtm_test_dbfill == "IMPZTP") then
 				endif
 			endif
 			set imptpflavor = `$gtm_exe/mumps -run rand $rand`
+			# Disable YDBRust testing if Rust version is 1.68.*
+			# We have seen the following error when building imptp.rs in that case.
+			#	error[E0432]: unresolved imports `crate::craw::YDB_DEL_TREE`, `crate::craw::YDB_DEL_NODE`
+			# The current suspicion is that it is a rust/cargo regression and will be fixed in a later version.
+			set rustcminorver = `rustc --version | cut -d. -f2`
+			if (68 == $rustcminorver) then
+				while (5 == $imptpflavor)
+					echo "# Disabling ydb_imptp_flavor=5 (YDBRUst) due to rust/cargo 1.68" >> settings.csh
+					set imptpflavor = `$gtm_exe/mumps -run rand $rand`
+				end
+			endif
 			# Disable Python testing if ASAN is enabled and Rust version is 1.58.* or 1.59.*
 			# to prevent erroneous core files from `rustc --version`.
 			# This command is run by YDBPython's `setup.py`, during the setting of
