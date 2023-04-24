@@ -26,6 +26,9 @@ h.dat
 mumps.dat
 Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+# Run SLOWFILL type of updates as we only need some background updates going on, not necessarily fast background updates
+# Wait until receiver side has processed at least a few (= 30 in this case) transactions.
+# Now check that rollback/recover issue errors while updates are actively happening in the source and receiver side.
 $gtm_tst/com/mupip_rollback.csh -backward -resync=1 -losttrans=lost1.glo *
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##TEST_AWKReplpool semaphore \(id = [0-9]*\) for replication instance ##TEST_PATH##/mumps.repl is in use by another process.
@@ -59,7 +62,6 @@ No errors detected by integ.
 Checking database on ##TEST_PATH##
 
 YDB>
-do checkdb
-checkdb PASSED.
+Verify Pass
 
 YDB>

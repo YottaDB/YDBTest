@@ -22,13 +22,17 @@ set gtm_process = 2
 #
 $gtm_tst/com/dbcreate.csh mumps 9 255 1000 -allocation=2048 -extension_count=2048
 setenv start_time `cat start_time`
-setenv test_sleep_sec 60
+
 # GTM Process starts
+echo "# Run SLOWFILL type of updates as we only need some background updates going on, not necessarily fast background updates"
+setenv gtm_test_dbfill "SLOWFILL"
 $gtm_tst/com/imptp.csh $gtm_process >&! imptp.out
 source $gtm_tst/com/imptp_check_error.csh imptp.out; if ($status) exit 1
-sleep $test_sleep_sec
-$pri_shell "cd $PRI_SIDE; $gtm_tst/com/backup_dbjnl.csh bak1 '*.dat *.mjl*' cp nozip"
-$sec_shell "cd $SEC_SIDE; $gtm_tst/com/backup_dbjnl.csh bak2 '*.dat *.mjl*' cp nozip"
+
+echo "# Wait until receiver side has processed at least a few (= 30 in this case) transactions."
+$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/wait_until_rcvr_trn_processed_above.csh +30"
+
+echo "# Now check that rollback/recover issue errors while updates are actively happening in the source and receiver side."
 # Below backward rollback invocation is expected to fail. Therefore pass "-backward" explicitly to mupip_rollback.csh
 # (and avoid implicit "-forward" rollback invocation that would otherwise happen by default.
 echo '$gtm_tst/com/mupip_rollback.csh -backward -resync=1 -losttrans=lost1.glo *'
