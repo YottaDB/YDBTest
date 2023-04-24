@@ -83,9 +83,9 @@ dseget(datinfo)
 	use file
 	for line=1:1  quit:$zeof  read line(line) do
 	. if $length($text(^%MPIECE))>0 do  ; We don't have MPIECE implementation in the older versions so use flexpiece instead
-	.	. if line(line)?.e1" "1"Block size (in bytes)".e set datinfo("block_size")=$piece($$^%MPIECE(line(line),"  ","|"),"|",4)
-	. 	. if line(line)?." "1"Maximum record size".e set datinfo("max_record_size")=$piece($$^%MPIECE(line(line),"  ","|"),"|",2)
-	. 	. if line(line)?." "1"Maximum key size".e set datinfo("max_key_size")=$piece($$^%MPIECE(line(line),"  ","|"),"|",2)
+	.	. if line(line)?.e1" "1"Block size (in bytes)".e set datinfo("block_size")=$$^%MPIECE($piece($$^%MPIECE(line(line),"  ","|"),"|",4))
+	. 	. if line(line)?." "1"Maximum record size".e set datinfo("max_record_size")=$$^%MPIECE($piece($$^%MPIECE(line(line),"  ","|"),"|",2))
+	. 	. if line(line)?." "1"Maximum key size".e set datinfo("max_key_size")=$$^%MPIECE($piece($$^%MPIECE(line(line),"  ","|"),"|",2))
 	. else  do
 	.	. if line(line)?.e1" "1"Block size (in bytes)".e set datinfo("block_size")=$piece($$^v53003flexpiece(line(line),"  ","|"),"|",4)
 	. 	. if line(line)?." "1"Maximum record size".e set datinfo("max_record_size")=$piece($$^v53003flexpiece(line(line),"  ","|"),"|",2)
