@@ -3,7 +3,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -105,7 +105,7 @@ case "Linux":
    if ("alpine" == "$distrib") then
 	setenv ps "ps -ef"
    else
-	setenv ps "ps -efww"		# Double "w" to mean infinite width in ps output display
+	setenv ps "ps -efww --forest"		# Double "w" to mean infinite width in ps output display
    endif
    setenv psuser "ps -fwwu $USER"
    setenv rsh_to_vms "rsh"
