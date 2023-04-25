@@ -67,6 +67,11 @@ setenv subtest_exclude_list	""
 # gtm5894 relies on allocated disk space (using "du") which will not be accurate on compressed file systems. So skip it there.
 if (1 == $is_tst_dir_cmp_fs) then
 	setenv subtest_exclude_list "$subtest_exclude_list gtm5894"
+else if ("zfs" == $tst_dir_fstype) then
+	# On ZFS, "du" on a newly created file does not return the allocated size immediately after a "mupip create". It could
+	# take a few seconds before it returns the fully allocated size (these are called "pending changes" in ZFS). That can
+	# cause the "gtm5894" subtest to fail as it does "du" on the file a lot of times. Therefore disable this subtest if ZFS.
+	setenv subtest_exclude_list "$subtest_exclude_list gtm5894"
 endif
 # Remove rtnxfertst, gtm8290 and gtm8240 subtests from Linux-32bit and HPUX-IA64 as they involve auto-relink or recursive-relink
 if ((HOST_LINUX_IX86 == "$gtm_test_os_machtype") || (HOST_HP-UX_IA64 == "$gtm_test_os_machtype")) then

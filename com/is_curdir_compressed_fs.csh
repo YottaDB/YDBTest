@@ -27,20 +27,17 @@ if ("$dir" == "") then
 	set dir = "."
 endif
 
-set mountpoint = `df $dir | tail -1 | $tst_awk '{print $NF}'`
+set filesystype = `source $gtm_tst/com/get_filesystem_type.csh $dir`
 if ($status) then
-	echo "TEST-E-ISCURDIRCMPFS : Error while determining filesystem for directory $dir"
 	exit -1
 endif
-
-set filesystype = `grep $mountpoint /etc/mtab | sed 's/rw.*//g' | $tst_awk '{print $NF}'`
 
 # For ext4 and xfs, compression does not seem to be supported at this point.
 # For f2fs, compression is supported but filesystem space is consumed at the same rate as if compression was disabled.
 # Therefore, the compression check is currently done only for ZFS filesystems.
 set is_compressed = 0
 if ("$filesystype" == "zfs") then
-	set compressed = `zfs get compression $mountpoint | tail -1 | $tst_awk '{print $3}'`
+	set compressed = `zfs get compression $dir | tail -1 | $tst_awk '{print $3}'`
 	if ("$compressed" != "off") then
 		set is_compressed = 1
 	endif

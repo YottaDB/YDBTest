@@ -393,6 +393,12 @@ BEGIN {
 	else
 		envir[no_options] = "TST_DIR_NOT_COMPRESSED"
 	#
+	option_names[++no_options] = "tst_dir_fstype"
+	if ("zfs" == ENVIRON["tst_dir_fstype"])
+		envir[no_options] = "TST_DIR_ZFS"
+	else
+		envir[no_options] = "TST_DIR_NOT_ZFS"
+	#
 	split(tst_hostos_machtype_all, all_platforms, " ")
 	if ("AIX" == tst_osname)
 	{
