@@ -19,6 +19,7 @@
 # gtm9340		[estess]	Verify new VIEWREGLIST error is emitted when region lists specified to $VIEW() region arg
 # gtm9368		[estess]	Verify a MUPIP REPLIC -SOURCE -SHUTDOWN cmd can be interrupted by ^C (terminates the wait)
 # gtm9358andgtm9361	[estess]	Verify a MUPIP REPLI -SOURCE -SHUTDOWN -ZEROBACKLOG cleans up IPCs (runs as non-replic)
+# gtm6952		[estess]	Test that decimal value parms can be input as hex values now.
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v70000 test starts..."
@@ -26,7 +27,7 @@ echo "v70000 test starts..."
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
 setenv subtest_list_non_replic "gtm9370 gtm9340 gtm9358andgtm9361"
-setenv subtest_list_replic     "gtm9302 gtm9368"
+setenv subtest_list_replic     "gtm9302 gtm9368 gtm6952"
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
@@ -45,12 +46,19 @@ if ("dbg" == "$tst_image") then
 	setenv subtest_exclude_list "$subtest_exclude_list"
 endif
 
-#
-# gtm9368 has very tight timing checks that don't do well on slower ARM systems where the system can go out to lunch for up to
-# a minute or more when doing dirty (UNIX) cache buffer flushing.
-#
 if (("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) || ("HOST_LINUX_AARCH64" == $gtm_test_os_machtype)) then
+	#
+	# gtm9368 has very tight timing checks that don't do well on slower ARM systems where the system can go out to lunch for up to
+	# a minute or more when doing dirty (UNIX) cache buffer flushing.
+	#
 	setenv subtest_exclude_list "$subtest_exclude_list gtm9368" # Bypass gtm9368 on all but X8664 systems
+endif
+if ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) then
+	#
+	# gtm6952 allocates 3 buffers slightly larger than 4GB (only lightly used) but since 32bit platforms cannot allocate
+	# such a buffer, they cannot run this test so exclude them.
+	#
+	setenv subtest_exclude_list "$subtest_exclude_list gtm6952"
 endif
 
 # Submit the list of subtests

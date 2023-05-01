@@ -1,0 +1,119 @@
+###################################################################
+
+# gtm6952 - verify we can use decimal or hex (new) values in various parameters
+#
+# The places where the new routine cli_is_hex_explicit() was called were identified and a list
+# of commands and the parameters that use this new routine were identified and are called below
+# to test this support.
+
+# Setup MSR and run dbcreate
+
+
+### Test #1 - Start source and receiver services but start with large buffer size - specified in hex for the
+#             source server and in decimal for the receiver server. This is testing calls to cli_get_int64()
+#             that uses cli_is_hex_explicit().
+#
+# Begin by starting both links - Source server buffer size will be 0x100001000 while the receiver server buffer
+# size will be the equivalent decimal value (4294971392).
+
+Primary startup command (buffsize should be 0x100001000):
+     -buffsize=0x100001000
+
+Secondary startup command (buffsize should be 4294971392):
+     -buffsize=4294971392
+
+###################################################################
+
+### Test #2 - Test call to cli_get_uint64() that it accepts both decimal and hex values for -decvalue option of DSE
+
+# -- Show current max_rec_size in fileheader
+  Maximum record size                           256  Starting VBN                          8193
+
+# -- Run DSE change -fileheader -decvalue=0xfd -decloc=48 to change the record size via -decloc/-decvalue
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+Location 48 [0x00000030] : Old Value = 256 [0x00000100] : New Value = 253 [0x000000FD] : Size = 4 [0x04]
+
+# -- Show new max_rec_size in fileheader
+  Maximum record size                           253  Starting VBN                          8193
+
+###################################################################
+
+### Test #3 - Test call to cli_get_int() that it accepts both decimal and hex values for -writes_per_flush option of DSE
+
+# -- Show current writes_per_flush in fileheader
+  No. of writes/flush                      7
+
+# -- Run DSE change -fileheader -writes_per_flush=0xa
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+# -- Show new writes_per_flush in fileheader
+  No. of writes/flush                     10
+
+###################################################################
+
+### Test #4 - Test call from mupip_size() for the -HEURISTIC.LEVEL parameter in MUPIP SIZE. This test
+#		    is testing another use of cli_is_hex_explicit() which if affirmative, drives STRTOL() with
+#		    a base 16 arg instead of a base 10 arg. It is a unique use and one worth testing to make
+#		    sure the hex value is accepted. Verify same output regardless of how value is specified.
+#		    Note this works because of the 25K records loaded into the DB such that a level 2 DB index
+#		    was created.
+
+# -- Add some records to the database
+
+# -- First run MUPIP size -heuristic="scan,level=0x2" (hex parm) and save output
+
+# -- Now run MUPIP size -heuristic="scan,level=2" (dec parm) and save output
+
+# -- Compare outputs
+** Output files are the same - PASS
+
+###################################################################
+
+The following MUPIP JOURNAL tests are not meant to accomplish anything important or even useful. They are intended
+only to force the syntax to be checked so we know the fields being tested with hexadecimal values (that used to be
+decimal-only values) are accepted. All of these tests are testing uses of cli_is_hex_explicit() in mur_get_options.c
+and testing the ability of these options to accept hexadecimal values when preceded by "0x". So if the command
+succeeds without a parsing error - the test passes.
+
+###################################################################
+
+### Test #5 - Test -ID parameter from MUPIP JOURNAL
+
+# -- Run MUPIP journal -extract -id="0x3f29,0x8fffffff" -forward "*"
+ ** PASS
+
+###################################################################
+
+### Test #6 - Test -SEQNO parameter from MUPIP JOURNAL
+
+# -- Run MUPIP journal -show -seqno="0xffffffffffffffff" -forward "*"
+ ** PASS
+
+###################################################################
+
+### Test #7 - Test -LOOKBACK_LIMIT.OPERATIONS parameter from MUPIP JOURNAL -SHOW
+
+# -- Run MUPIP journal -show -lookback_limit="operations=0x300" -backward "*"
+ ** PASS
+
+###################################################################
+
+# Run dbcheck.csh -extract to ensure db extract on primary matches secondary
+==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
+==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
+==Executing MULTISITE_REPLIC 'EXTRACT ALL'==
+DATABASE EXTRACT PASSED
+==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/dbcheck_base.csh '==
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
