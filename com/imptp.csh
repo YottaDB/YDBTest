@@ -105,14 +105,20 @@ if ($gtm_test_dbfill == "IMPTP" || $gtm_test_dbfill == "IMPZTP") then
 				endif
 			endif
 			set imptpflavor = `$gtm_exe/mumps -run rand $rand`
-			# Disable YDBRust testing if Rust version is 1.68.*
+			# Disable YDBRust testing if the cargo/rustc version is 1.68.*
 			# We have seen the following error when building imptp.rs in that case.
 			#	error[E0432]: unresolved imports `crate::craw::YDB_DEL_TREE`, `crate::craw::YDB_DEL_NODE`
 			# The current suspicion is that it is a rust/cargo regression and will be fixed in a later version.
+			#
+			# Additionally, we have seen that even cargo/rustc version 1.69.* fails with the same errors as above but
+			# only on a openSUSE Tumbleweed system. openSUSE Leap or SUSE Linux Enterprise Desktop systems
+			# which have the exact same cargo/rustc version do not have this issue. Not sure why.
+			# Therefore we disable YDBRust random choice for imptp.csh on a Tumbleweed system.
 			set rustcminorver = `rustc --version | cut -d. -f2`
-			if (68 == $rustcminorver) then
+			set distrib = `grep -w ID /etc/os-release | cut -d= -f2 | cut -d'"' -f2`
+			if ((68 == $rustcminorver) || ($distrib == "opensuse-tumbleweed")) then
 				while (5 == $imptpflavor)
-					echo "# Disabling ydb_imptp_flavor=5 (YDBRUst) due to rust/cargo 1.68" >> settings.csh
+					echo "# Disabling ydb_imptp_flavor=5 (YDBRust) due to rust/cargo 1.68 or openSUSE Tumbleweed" >> settings.csh
 					set imptpflavor = `$gtm_exe/mumps -run rand $rand`
 				end
 			endif
