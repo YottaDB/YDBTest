@@ -3,7 +3,7 @@
 ; Copyright (c) 2012-2015 Fidelity National Information 	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
-; Copyright (c) 2020-2022 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2020-2023 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -19,7 +19,9 @@
 ; made somewhat more general purpose to create boolean expressions that can either be used immediately or can
 ; be written to a generated routine. The entry points are:
 ;
-;   - Init():            Initializes the boolean expression generator.
+;   - Init(<flags>):     Initializes the boolean expression generator with optional flags.
+;       - DIV0:  	 Generates one of 4 divide-by-zero type sub-expr that is guaranteed to be part of every
+;                	 generated expression.
 ;   - BooleanExprGen():  Returns a boolean expression in that it always evaluates to 0 or 1.
 ;   - CreateRoutine(fn): Creates 'fn'.m and writes several prologue initializations with it. It opens the output file
 ;     			 and leaves its name in the variable 'ofile'.
@@ -44,6 +46,7 @@
 ;
 BooleanExprGen()
 	new trm,expr,lasttk,lastoprn,minterms,prnnest,newlvl
+	set div0termdone=FALSE
 	set minterms=$random(numterms)+3
 	set lastoprn(0)=0
 	set lasttk(0)=""
@@ -81,6 +84,7 @@ BooleanExprGen()
 NextTerm()
 	new ttype,term
 	set ttype=$random(ttypecnt)
+	if div0&('div0termdone)&(curtrm>(minterms-1)) set ttype=div0indx	; Override random and use div0 so every expr has one
 	if ("constant"=ttypes(ttype)) do  quit term		; Term is the constant 0 or 1
 	. set term=$random(2)
 	if ("$test"=ttypes(ttype)) set term="$test" quit term	; Term is $test
@@ -111,6 +115,11 @@ NextTerm()
 	. set term="("_$$NextTerm_relop($random(relopcnt))_$$NextTerm_")"
 	if ("function"=ttypes(ttype)) do  quit term		; Term is a function or simple expression using functions
 	. set term=$$GenFuncTerm     				; Separate routine to take care of that
+	if ("div0"=ttypes(ttype)) do  quit term			; Term is one of divide by 0, modulo of 0, 0 raised to neg exp
+	. new arg
+	. set arg=$random(div0cnt)
+	. set term=div0term(arg)
+	. set div0termdone=TRUE
 	;
 	; We should never end up here as all defined terms do a QUIT
 	;
@@ -225,10 +234,38 @@ CloseParenLevel()
 
 ;
 ; Initialize all the parts/pieces we need to generate a boolean expression. Note there is no guarantee what these expressions
-; resolve to - except that they are boolean expressions.
+; resolve to - except that they are boolean expressions. Flags are a space delimited string of options. Currently, the only
+; option paid attention to is "DIV0" which means to generate expressions that contain one of the 4 divide-by-zero terms to the
+; generated expression. Each expression is guaranteed to have such a term.
 ;
-Init
-	set $etrap="do Error^"_$Text(+0)
+Init(flags)
+	set $etrap="do Error^"_$Text(+0)	; Default $etrap set
+	;
+	; Define vars used in the actual boolean expressions
+	;
+	; We count on $ZAHandle(TRUE)]$ZAHandle(FALSE) evaluate to a fixed value (say 0) across all versions
+	; hence we first allocate two dummy local vars and find out whose address is higher and assign that to
+	; alias variables TRUE and FALSE based on their value (since $ZAHandle of an alias variable is same as
+	; that of the base variable.
+	;
+	set dummyfalse=0,dummytrue=1
+	if $zahandle(dummyfalse)]$zahandle(dummytrue) do
+	. set *TRUE=dummyfalse,*FALSE=dummytrue
+	else  set *TRUE=dummytrue,*FALSE=dummyfalse
+	set TRUE=1,FALSE=0,iTRUE="TRUE",TRUE(-1)=1,TRUE(0)=1,TRUE(1)=1,TRUE(2)=1
+	set ^iTRUE="^TRUE",^TRUE=1,^TRUE(-1)=1,^TRUE(0)=1,^TRUE(1)=1,^TRUE(2)=1
+	set iFALSE="FALSE",FALSE(-1)=0,FALSE(0)=0,FALSE(1)=0,FALSE(2)=0
+	set ^iFALSE="^FALSE",^FALSE=0,^FALSE(-1)=0,^FALSE(0)=0,^FALSE(1)=0,^FALSE(2)=0
+	set bogus="unknwn",^bogus="^unknwn",^dummy=0
+	set incrvar=0,indincrvar="incrvar",zl=$zlevel
+	set nextt=$random(2)			; Preload for $TEST with either 0 or 1 generated randomly
+	set lasttstnaked=1		  	; Pretend we had to set naked last time to force initialization first time thru
+	;
+	; Process any flags specified setting local var
+	;
+	set:($data(flags)=0) flags=""		; Init if no flags specified
+	set div0=FALSE	   			; Default no DIV0 (divide by zero tests)
+	set:(flags["DIV0") div0=TRUE		; Turn div0 on if flag is specified
 	;
 	; Configuration parms
 	;
@@ -251,6 +288,10 @@ Init
 	set ttypes(4)="relexpr"			; Generate a relational expression of terms
 	set ttypes(5)="function"		; Generates function usages or an expression with tfuncs() function in it
 	set ttypecnt=$order(ttypes(""),-1)+1	; Highest + 1 since 0 origin
+	if div0 do
+	. set ttypes(ttypecnt)="div0"		; If DIV0 flag specified, add this form to possible term types
+	. set div0indx=ttypecnt			; Record index of 'div0' type
+	. set ttypecnt=ttypecnt+1		; Bump count
 	;
 	; Types of functions generated. For all of these, the argument is either fixed or indirect. If a boolean
 	; return from the function is not possible, gets turned into an expression possibly subtracting two types so the
@@ -293,32 +334,21 @@ Init
 	set tkterm=3				; One of the term types above
 	set tkop=4				; Operator (& or !)
 	;
-	; Define vars used in the actual boolean expressions
+	; Types of DIV0 terms - randomize the dividend
 	;
-	; We count on $ZAHandle(TRUE)]$ZAHandle(FALSE) evaluate to a fixed value (say 0) across all versions
-	; hence we first allocate two dummy local vars and find out whose address is higher and assign that to
-	; alias variables TRUE and FALSE based on their value (since $ZAHandle of an alias variable is same as
-	; that of the base variable.
-	;
-	set dummyfalse=0,dummytrue=1
-	if $zahandle(dummyfalse)]$zahandle(dummytrue) do
-	. set *TRUE=dummyfalse,*FALSE=dummytrue
-	else  set *TRUE=dummytrue,*FALSE=dummyfalse
-	set TRUE=1,FALSE=0,iTRUE="TRUE",TRUE(-1)=1,TRUE(0)=1,TRUE(1)=1,TRUE(2)=1
-	set ^iTRUE="^TRUE",^TRUE=1,^TRUE(-1)=1,^TRUE(0)=1,^TRUE(1)=1,^TRUE(2)=1
-	set iFALSE="FALSE",FALSE(-1)=0,FALSE(0)=0,FALSE(1)=0,FALSE(2)=0
-	set ^iFALSE="^FALSE",^FALSE=0,^FALSE(-1)=0,^FALSE(0)=0,^FALSE(1)=0,^FALSE(2)=0
-	set bogus="unknwn",^bogus="^unknwn",^dummy=0
-	set incrvar=0,indincrvar="incrvar",zl=$zlevel
-	set nextt=$random(2)			; Preload for $TEST with either 0 or 1 generated randomly
-	set lasttstnaked=1		  	; Pretend we had to set naked last time to force initialization first time thru
+	set div0term(0)="("_($random(999999999)+1)_"/0)"	; Divide by 0
+	set div0term(1)="("_($random(999999999)+1)_"\0)"	; Integer divide by 0
+	set div0term(2)="("_($random(999999999)+1)_"#0)"	; Modulo 0
+	set div0term(3)="(0**-1)"		; 0 raised to negative exponent
+	set div0cnt=$order(div0term(""),-1)+1	; count of div0 terms
 	quit
 
 ;
 ; Routine to create and initialize the executable to be written out (if any)
 ;
-CreateRoutine(fn)
+CreateRoutine(fn,creator)
 	set fn=$get(fn,"btest.m")
+	set creator=$get(creator,$text(+0))
 	;
 	; Open output file and start generating..
 	;
@@ -326,7 +356,7 @@ CreateRoutine(fn)
 	Open ofile:new
 	use ofile
 	write ";",!
-	write "; Generated test program - header created by ",$text(0),!
+	write "; Generated test program - header created by ",creator,!
 	write ";",!
 	write "; First - some initialization of values used in the generated expressions.",!
 	write ";",!

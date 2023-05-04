@@ -1,0 +1,77 @@
+# GTM-9370 - This test generates expressions with each one containing one of the four divide-by-zero
+#            terms. Those terms are:
+#              1. x/0
+#              2. x<backslash>0  (backslash character gets translated incorrectly in output)
+#              3. x#0
+#              4. 0**-1
+#
+# The purpose of this test is to verify that the compiler does not deal with literal evaluations that
+# result in a divide-by-zero and rather pushes them into the runtime. To test that, we write each expr
+# to a separate file, then compile each of them (expecting NO error), then we run each of them and
+# expect an error - except we do not always get errors since some short-circuiting of boolean exprs
+# still occurs even with gtm_boolean and/or gtm_side_effects so while we expect errors when we run the
+# compiled expression, we do not require it. So long as ONE of the expressions failed as expected when
+# the expressions are executed, we consider the run a PASS. This is because EVERY expression is expected
+# to fail when it runs as it has a divide-by-zero term in it. But because of the nature of random
+# expression generation, it is possible that div0 term gets put in some place where normal conditional
+# expression short-cutting happens so it is possible that the expression evaluation never hits the
+# div0 term. In that case, the expression would not fail. We allow this but require at least ONE of the
+# expressions to fail at runtime.
+#
+# Failures using V63014 looked like the following also often accompanied by an assert failure in DBG or
+# a floating exception with a PRO build:
+#
+# Running gtm9370expr9.m
+#			set x=(($$Always0&0!(0**-1))&^TRUE&(204226393#0))
+#    		                                                 ^-----
+#			At column 51, line 31, source module /<dirpath>/v70000_0/gtm9370/gtm9370expr9.m
+#	%GTM-E-DIVZERO, Attempt to divide by zero
+# Routine gtm9370expr9.m failed to compile
+#
+
+# Create database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+# Drive gtm9370 test routine
+# -- Generating 10 expressions and a routine for each
+
+Running gtm9370expr1.m
+PASS
+
+Running gtm9370expr2.m
+PASS
+
+Running gtm9370expr3.m
+PASS
+
+Running gtm9370expr4.m
+PASS
+
+Running gtm9370expr5.m
+PASS
+
+Running gtm9370expr6.m
+PASS
+
+Running gtm9370expr7.m
+PASS
+
+Running gtm9370expr8.m
+PASS
+
+Running gtm9370expr9.m
+PASS
+
+Running gtm9370expr10.m
+PASS
+
+PASS from gtm9370
+
+# Verify database
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
