@@ -40,7 +40,7 @@ gtm9370
 	. write TAB,"; If we come back here instead of to the error handler, then we must have hit some short circuit",!
 	. write TAB,"; issue - just ignore that and pretend it pseudo-passed but we'll make sure they aren't ALL like this!",!
 	. write TAB,";",!
-	. write TAB,"write ""PASS"",!",!
+	. write TAB,"write ""  PASS"",!",!
 	. write TAB,"halt",!
 	. write !
 	. write ";",!
@@ -48,7 +48,7 @@ gtm9370
 	. write ";",!
 	. write "gtm9370VerifyDIVZERO",!
 	. write TAB,"if $zstatus[""-E-DIVZERO"" do",?40,"; If this error is a DIVZERO, this is easy",!
-	. write TAB,". write ""PASS"",!",!
+	. write TAB,". write ""  PASS"",!",!
 	. write TAB,". zhalt 1",!
 	. write TAB,";",!
 	. write TAB,"; Else report the error in full",!
@@ -62,12 +62,14 @@ gtm9370
 	set (compfailcnt,runfailcnt)=0				; Count failures of each type
 	for i=1:1:maxExprCnt do
 	. write !
-	. write "Running gtm9370expr",i,".m",!
+	. write "Compiling gtm9370expr",i,".m",!
 	. zsystem "$gtm_dist/mumps gtm9370expr"_i_".m"
 	. if $zsystem'=0 do
 	. . write "Routine gtm9370expr",i,".m failed to compile",!
 	. . if $increment(compfailcnt)
 	. else  do
+	. . write "  PASS",!
+	. . write "Running gtm9370expr",i,".o",!
 	. . zsystem "$gtm_dist/mumps -run gtm9370expr"_i	; We expect this run to fail
 	. . if $zsystem=0 if $increment(runfailcnt)		; Increment runfailcnt if the execution succeeded
 	;
