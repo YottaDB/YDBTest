@@ -1,0 +1,153 @@
+###################################################################
+#
+# This test contains the tests for two issues - gtm9358 and gtm9361 (YDBTest#511/512). The two issues have
+# very similar setup with some portions of the test actually overlapping so they are taken care of together.
+#
+# (1) gtm9358 - Verify MUPIP REPLIC -SOURCE -ZEROBACKLOG -SHUTDOWN cleans up jnlpool IPC semaphores
+#               A) Find jnlpool up/down semaphore
+#               B) Verify jnlpool semaphore exists
+#               C) Shutdown replic source server with parms -ZEROBACKLOG and -TIMEOUT=10
+#               D) Verify the "Initiating ZEROBACKLOG shutdown operation" message is in the log
+#               E) Verify the jnlpool up/down semaphore is cleaned up
+# (2) gtm9361 - Verify new messages (REPL0BACKLOG, REPLBACKLOG), default timeout, and max timeout changes
+#               A) In [1C] (shutdown zerobacklog), also verify that log contains REPL0BACKLOG message
+#               B) Restart the source server shutdown in 1C above
+#               C) Stop the receiver server to setup to create an intentional backlog
+#               D) Do some updates
+#               E) Shutdown source server with parms -ZEROBACKLOG and -TIMEOUT=10
+#               F) Verify that the REPLBACKLOG message exists
+#               G) Restart source server and receiver server
+#               H) Shutdown the source server with parm -TIMEOUT=3601 (expect failure)
+#               I) Verify got INVSHUTDOWN in the shutdown (source server not shutdown)
+#               J) Shutdown the source server with parms -ZEROBACKLOG and -TIMEOUT=3600
+#               K) Restart the source server that was shutdown (with no specified CONNECTPARAMS)
+#               L) Test the default shutdown of the source server with ZEROBACKLOG so it shuts down
+#                  quickly but it should record the default shutdown is 120 seconds in its log file
+#               M) Verify from the shutdown log we have a 120 second shutdown timer
+#               N) Verify success of shutdown
+#
+# All steps below are common to both tests unless otherwise indicated with [<test#><subtest#>] in output.
+# Note all servers are started with -CONNECTPARAMS options that specify a heartbeat time of 2 seconds so
+# the TIMEOUT values are generally multiples of that value. A warning message (SHUT2QUICK) is raised if
+# the TIMEOUT is smaller than the (default) heartbeat of 15 seconds. The reason for using -CONNECTPARAMS
+# is discussed in a note here: https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/1651#note_1462125236
+#
+# Note all values for the CONNECTPARAMS value string must be specified up to the value you want to change.
+# The values after the one changed do not need to be specified. You CANNOT default params by simply not
+# specifying them (ie. -CONNECTPARAMS=,,,,2). Attempting to do so silently fails.
+#
+
+# Obtain port number to use
+
+# Build primary and secondary replicated databases
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-REPLSTATE, Replication state for region DEFAULT is now ON
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/secondary/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/secondary/mumps.gld
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/secondary/mumps.dat created
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/secondary/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+%YDB-I-REPLSTATE, Replication state for region DEFAULT is now ON
+
+# Setup environment file for secondary side
+
+# Start up the passive source server and receiver server. Note when we start either of active or passive source
+# server, we do so with a -connectparams option to change the heartbeat from its default of 15 seconds to 2 seconds.
+# The reason for this is the checks for the ZEROBACKLOG shutdown option are done at each heartbeat so rather than
+# have a long timeout (20-30 seconds), we can still have a fairly short timeout making the test run faster.
+
+# Start up the active source server
+
+# Wait for replication initialization to complete waiting for messages on both sides
+
+# Generate a small amount of updates that must propagate to get things going
+
+# Obtain backlog stats for each server - verify both are 0 as we want the previous
+# updates to be in a stable state.
+
+###################################################################
+
+# [1A] Find the up/down semaphore (the one with the non-zero key) for the journal pool in the primary
+# directory. This semaphore is the one left over when the source server is shutdown on a pre-V70000
+# version. We need to change the ftoks fetched to have a 0x2c prefix instead of 0x2b prefix (which
+# is for databases) to match the semkey used for the the jnlpool up/down semaphore.
+
+# [1B] Verify semaphore exists
+## [1B] PASS - jnlpool main semaphore was found and exists
+
+# [1C] Shutdown the source server with a 10 second timeout and the -ZEROBACKLOG option. This should expire in about 2 seconds
+# as that is what the heartbeat was set to above.
+
+# [1D] Verify that the new expected messages are in the source log file (the "Initiating ZEROBACKLOG shutdown operation" msg).
+Initiating ZEROBACKLOG shutdown operation. Waiting for up to 10 second(s) for backlog to clear
+** [1D] PASS - Found "Initiating ZEROBACKLOG shutdown operation" message in log
+
+# [1E] Verify that the up/down jnlpool semaphore has been removed.
+** [1E] PASS - jnlpool primary semaphore was cleaned up
+
+# [2A] Verify that the shutdown log file contains a REPL0BACKLOG message.
+%YDB-S-REPL0BACKLOG, Total backlog for the specified replicating instance(s) is 0
+** [2A] PASS - Found REPL0BACKLOG message in log
+
+###################################################################
+
+# [2B] Restart the source server
+
+# [2C] Stop receiver server so we create an intentional backlog
+
+# [2D] Do some updates to create actual backlog
+
+# [2E] Shutdown source server with parms -ZEROBACKLOG and -TIMEOUT=10 - expecting REPLBACKLOG error
+
+# [2F] Verify that the REPLBACKLOG message exists in the shutdown log (by its appearance in reference file)
+Initiating ZEROBACKLOG shutdown operation. Waiting for up to 10 second(s) for backlog to clear
+%YDB-W-REPLNORESP, No sequence number confirmation from the replicating instance [INSTANCE2] after waiting for [10] second(s)
+%YDB-E-REPLBACKLOG, Timeout occurred while there was a backlog
+##TEST_AWKInitiating SHUTDOWN operation on source server pid \[[0-9]*\] for secondary instance \[INSTANCE2\]
+##TEST_AWKWaiting for upto \[[0-9]*\] seconds for the source server to shutdown
+Journal pool shared memory removed
+Journal pool semaphore removed
+
+# [2G] Restart source and receiver server
+
+# Wait for replication initialization to complete waiting for messages on both sides
+
+# [2H] Shutdown the source server with parm -TIMEOUT=3601 (expect INVSHUTDOWN failure)
+%YDB-E-INVSHUTDOWN, Shutdown timeout should be from 0 to 3600 seconds
+** [2I] PASS - Found INVSHUTDOWN message in replic_src_shutdown_3.log
+
+# [2J] Shutdown source server with parms -ZEROBACKLOG, -TIMEOUT=3600 (expect it to shutdown in 2 seconds or so)
+Initiating ZEROBACKLOG shutdown operation. Waiting for up to 3600 second(s) for backlog to clear
+%YDB-S-REPL0BACKLOG, Total backlog for the specified replicating instance(s) is 0
+
+# [2K] Restart source server
+
+# [2L] Shutdown the primary source server with the -ZEROBACKLOG option so we do not wait the full 2 mins
+
+# [2M] Verify there was a default 120 second timeout
+Initiating ZEROBACKLOG shutdown operation. Waiting for up to 120 second(s) for backlog to clear
+
+###################################################################
+
+# [2N] Shutdown primary side source server if it is still up
+  ** [2N] PASS - Source server is not alive so is not shut down
+
+# Shutdown secondary side of replication (source server is already down)
+
+# Verify DBs
+
+###################################################################
+
+# Release our acquired port

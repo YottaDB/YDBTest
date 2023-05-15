@@ -14,17 +14,18 @@
 #----------------------------------------------------------------------------------------------------------------------------------
 # List of subtests of the form "subtestname [author] description"
 #----------------------------------------------------------------------------------------------------------------------------------
-# gtm9302	[estess]	Acknowledged sequence number in -SOURCE -SHOWBACKLOG and available with ^%PEEKBYNAME
-# gtm9370	[estess]	Add gtm9370 to test divide-by-zero of literals is pushed to the runtime to deal with
-# gtm9340	[estess]	Verify new VIEWREGLIST error is emitted when region lists specified to $VIEW() region arg
-# gtm9368	[estess]	Verify a MUPIP REPLIC -SOURCE -SHUTDOWN cmd can be interrupted by ^C (terminates the wait)
+# gtm9302		[estess]	Acknowledged sequence number in -SOURCE -SHOWBACKLOG and available with ^%PEEKBYNAME
+# gtm9370		[estess]	Add gtm9370 to test divide-by-zero of literals is pushed to the runtime to deal with
+# gtm9340		[estess]	Verify new VIEWREGLIST error is emitted when region lists specified to $VIEW() region arg
+# gtm9368		[estess]	Verify a MUPIP REPLIC -SOURCE -SHUTDOWN cmd can be interrupted by ^C (terminates the wait)
+# gtm9358andgtm9361	[estess]	Verify a MUPIP REPLI -SOURCE -SHUTDOWN -ZEROBACKLOG cleans up IPCs (runs as non-replic)
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v70000 test starts..."
 
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
-setenv subtest_list_non_replic "gtm9370 gtm9340"
+setenv subtest_list_non_replic "gtm9370 gtm9340 gtm9358andgtm9361"
 setenv subtest_list_replic     "gtm9302 gtm9368"
 
 if ($?test_replic == 1) then

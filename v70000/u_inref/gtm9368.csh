@@ -46,7 +46,7 @@ foreach shutoptidx ( 1 2 )
     echo "shutpidorig${shutoptidx}: $shutpid" >> gtm9368_dbg.txt
     set shutpid = $shutpid[2]  # Extract actual PID from reply of form '[1] <pid> <pid>'
     echo "shutpid${shutoptidx}:     $shutpid" >> gtm9368_dbg.txt
-    ps -ef | grep $shutpid >> gtm9368_dbg.txt
+    ps -ef | $grep -w $shutpid >> gtm9368_dbg.txt
     echo
     echo '# Now send the ^C to the MUPIP REPLIC -SOURCE -SHUTDOWN command while the shutdown is pending - But sleep'
     echo '# for 5 seconds first so shutdown command starts sleeping'

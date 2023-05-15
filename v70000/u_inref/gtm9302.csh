@@ -36,7 +36,7 @@ sleep 16 # Sleep one sec extra
 echo
 echo '# Drive MUPIP REPLICATE -SOURCE -SHOWBACKLOG'
 $MUPIP repl -source -showbacklog >& mupip_show_backlog.log
-grep 'sequence number acknowledged by the secondary instance' mupip_show_backlog.log
+$grep 'sequence number acknowledged by the secondary instance' mupip_show_backlog.log
 set ackseqno1 = `$tst_awk '/sequence number acknowledged by the secondary instance/ {print $1}' mupip_show_backlog.log`
 echo
 echo '# Show last acknowleged sequence number via ^%PEEKBYNAME() - Note that the values displayed here are the value'
