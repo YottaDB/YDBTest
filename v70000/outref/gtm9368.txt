@@ -1,0 +1,69 @@
+# gtm9368 - Verify we can interrupt/stop a MUPIP REPLIC -SOURCE -SHUTDOWN command during its wait period with ^C
+
+# Run dbcreate.csh
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+
+# Start some constant DB activity creating, updating, and removing lots of nodes so replication has more of a chance
+# of having a non-zero backlog
+
+# We want to send a ^C to the source server while it is shutting down - figure out which process that is
+
+###### Iteration #1 using options -timeout=95
+
+# Start the shutdown for the SRC server - have it wait for a significant bit so we have a good interruption window
+
+# Now send the ^C to the MUPIP REPLIC -SOURCE -SHUTDOWN command while the shutdown is pending - But sleep
+# for 5 seconds first so shutdown command starts sleeping
+
+# Start waiting for the MUPIP REPLIC -SOURCE -SHUTDOWN process to die
+
+# Copy the shutdown log into the reference file - Note this file is a logx instead of log to keep the test
+# framework from making an error out of the MUNOFINISH error which is expected
+##TEST_AWK... ... .. ..:..:.. .... : Waiting for 95 second\(s\) before forcing shutdown
+%YDB-I-CTRLC, CTRL_C encountered
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+
+# See if we managed to cancel the shutdown with our ^C in a timely manner
+##TEST_AWKPASS - Elapsed wait of [0-9]* second\(s\) - \^C seems to have been recognized by the MUPIP REPLIC -SOURCE -SHUTDOWN command
+
+###### Iteration #2 using options -timeout=95 -zerobacklog
+
+# Start the shutdown for the SRC server - have it wait for a significant bit so we have a good interruption window
+
+# Now send the ^C to the MUPIP REPLIC -SOURCE -SHUTDOWN command while the shutdown is pending - But sleep
+# for 5 seconds first so shutdown command starts sleeping
+
+# Start waiting for the MUPIP REPLIC -SOURCE -SHUTDOWN process to die
+
+# Copy the shutdown log into the reference file - Note this file is a logx instead of log to keep the test
+# framework from making an error out of the MUNOFINISH error which is expected
+##TEST_AWK... ... .. ..:..:.. .... : Initiating ZEROBACKLOG shutdown operation. Waiting for up to 95 second\(s\) for backlog to clear
+%YDB-I-CTRLC, CTRL_C encountered
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+
+# See if we managed to cancel the shutdown with our ^C in a timely manner
+##TEST_AWKPASS - Elapsed wait of [0-9]* second\(s\) - \^C seems to have been recognized by the MUPIP REPLIC -SOURCE -SHUTDOWN command
+
+# Shutdown imptp background processes
+
+# Validate DBs and verify they are the same
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+DATABASE EXTRACT PASSED
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

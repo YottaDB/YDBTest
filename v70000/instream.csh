@@ -17,6 +17,7 @@
 # gtm9302	[estess]	Acknowledged sequence number in -SOURCE -SHOWBACKLOG and available with ^%PEEKBYNAME
 # gtm9370	[estess]	Add gtm9370 to test divide-by-zero of literals is pushed to the runtime to deal with
 # gtm9340	[estess]	Verify new VIEWREGLIST error is emitted when region lists specified to $VIEW() region arg
+# gtm9368	[estess]	Verify a MUPIP REPLIC -SOURCE -SHUTDOWN cmd can be interrupted by ^C (terminates the wait)
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v70000 test starts..."
@@ -24,7 +25,7 @@ echo "v70000 test starts..."
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
 setenv subtest_list_non_replic "gtm9370 gtm9340"
-setenv subtest_list_replic     "gtm9302"
+setenv subtest_list_replic     "gtm9302 gtm9368"
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
@@ -41,6 +42,14 @@ endif
 
 if ("dbg" == "$tst_image") then
 	setenv subtest_exclude_list "$subtest_exclude_list"
+endif
+
+#
+# gtm9368 has very tight timing checks that don't do well on slower ARM systems where the system can go out to lunch for up to
+# a minute or more when doing dirty (UNIX) cache buffer flushing.
+#
+if (("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) || ("HOST_LINUX_AARCH64" == $gtm_test_os_machtype)) then
+	setenv subtest_exclude_list "$subtest_exclude_list gtm9368" # Bypass gtm9368 on all but X8664 systems
 endif
 
 # Submit the list of subtests
