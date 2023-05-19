@@ -12,26 +12,26 @@ Journal state switching from 0 to 1 or 0 to 2 needs Standalone access
 GTM Process starts in background...
 Try 0 to 1: ##SOURCE_PATH##/mupip set -journal=enable,off,nobefore -reg *
 Journal States:(expected DISABLED):
-  Journal State                    DISABLED
-  Journal State                    DISABLED
-  Journal State                    DISABLED
-  Journal State                    DISABLED
+  Journal State                            DISABLED
+  Journal State                            DISABLED
+  Journal State                            DISABLED
+  Journal State                            DISABLED
 Try 0 to 2: ##SOURCE_PATH##/mupip set -journal=enable,on,nobefore -reg *
 Journal States:(expected DISABLED):
-  Journal State                    DISABLED
-  Journal State                    DISABLED
-  Journal State                    DISABLED
-  Journal State                    DISABLED
+  Journal State                            DISABLED
+  Journal State                            DISABLED
+  Journal State                            DISABLED
+  Journal State                            DISABLED
 Try 0 to 0: ##SOURCE_PATH##/mupip set -journal=disable -reg *
 %YDB-I-JNLSTATE, Journaling state for region AREG is now DISABLED
 %YDB-I-JNLSTATE, Journaling state for region BREG is now DISABLED
 %YDB-I-JNLSTATE, Journaling state for region CREG is now DISABLED
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now DISABLED
 Journal States:(expected DISABLED):
-  Journal State                    DISABLED
-  Journal State                    DISABLED
-  Journal State                    DISABLED
-  Journal State                    DISABLED
+  Journal State                            DISABLED
+  Journal State                            DISABLED
+  Journal State                            DISABLED
+  Journal State                            DISABLED
 Attempt setting qdbrundown flag (requires standalone access)
 Stop the background processes
 ##SOURCE_PATH##/mupip
@@ -52,20 +52,20 @@ Try 0 to 0: ##SOURCE_PATH##/mupip set -journal=disable -reg *
 %YDB-I-JNLSTATE, Journaling state for region CREG is now DISABLED
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now DISABLED
 Journal States:(expected DISABLED):
-  Journal State                    DISABLED
-  Journal State                    DISABLED
-  Journal State                    DISABLED
-  Journal State                    DISABLED
+  Journal State                            DISABLED
+  Journal State                            DISABLED
+  Journal State                            DISABLED
+  Journal State                            DISABLED
 Try 0 to 1: ##SOURCE_PATH##/mupip set -journal=enable,off,nobefore -reg *
 %YDB-I-JNLSTATE, Journaling state for region AREG is now OFF
 %YDB-I-JNLSTATE, Journaling state for region BREG is now OFF
 %YDB-I-JNLSTATE, Journaling state for region CREG is now OFF
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now OFF
 Journal States:(expected OFF):
-  Journal State                         OFF  Journal Before imaging       FALSE
-  Journal State                         OFF  Journal Before imaging       FALSE
-  Journal State                         OFF  Journal Before imaging       FALSE
-  Journal State                         OFF  Journal Before imaging       FALSE
+  Journal State                                 OFF  Journal Before imaging               FALSE
+  Journal State                                 OFF  Journal Before imaging               FALSE
+  Journal State                                 OFF  Journal Before imaging               FALSE
+  Journal State                                 OFF  Journal Before imaging               FALSE
 Change state to 0:
 %YDB-I-JNLSTATE, Journaling state for region AREG is now DISABLED
 %YDB-I-JNLSTATE, Journaling state for region BREG is now DISABLED
@@ -81,10 +81,10 @@ Try 0 to 2: ##SOURCE_PATH##/mupip set -journal=enable,on,nobefore -reg *
 %YDB-I-JNLSTATE, Journaling state for region CREG is now ON
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 Journal States:(expected ON):
-  Journal State               [inactive] ON  Journal Before imaging       FALSE
-  Journal State               [inactive] ON  Journal Before imaging       FALSE
-  Journal State               [inactive] ON  Journal Before imaging       FALSE
-  Journal State               [inactive] ON  Journal Before imaging       FALSE
+  Journal State                       [inactive] ON  Journal Before imaging               FALSE
+  Journal State                       [inactive] ON  Journal Before imaging               FALSE
+  Journal State                       [inactive] ON  Journal Before imaging               FALSE
+  Journal State                       [inactive] ON  Journal Before imaging               FALSE
 Case 39
 Journal state switching from 1 or 2 to 0 needs standalone access
 Change state to 1:
@@ -95,20 +95,20 @@ Change state to 1:
 GTM Process starts in background...
 Try to swtich from 1 to 0
 Journal States:(expected OFF):
-  Journal State                         OFF  Journal Before imaging        TRUE
-  Journal State                         OFF  Journal Before imaging        TRUE
-  Journal State                         OFF  Journal Before imaging        TRUE
-  Journal State                         OFF  Journal Before imaging        TRUE
+  Journal State                                 OFF  Journal Before imaging                TRUE
+  Journal State                                 OFF  Journal Before imaging                TRUE
+  Journal State                                 OFF  Journal Before imaging                TRUE
+  Journal State                                 OFF  Journal Before imaging                TRUE
 Journal state switch from 1 to 1
 %YDB-I-JNLSTATE, Journaling state for region AREG is now OFF
 %YDB-I-JNLSTATE, Journaling state for region BREG is now OFF
 %YDB-I-JNLSTATE, Journaling state for region CREG is now OFF
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now OFF
 Journal States:(expected OFF):
-  Journal State                         OFF  Journal Before imaging        TRUE
-  Journal State                         OFF  Journal Before imaging        TRUE
-  Journal State                         OFF  Journal Before imaging        TRUE
-  Journal State                         OFF  Journal Before imaging        TRUE
+  Journal State                                 OFF  Journal Before imaging                TRUE
+  Journal State                                 OFF  Journal Before imaging                TRUE
+  Journal State                                 OFF  Journal Before imaging                TRUE
+  Journal State                                 OFF  Journal Before imaging                TRUE
 Journal state switch from 1 to 2
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
@@ -123,10 +123,10 @@ Journal state switch from 1 to 2
 %YDB-I-JNLSTATE, Journaling state for region CREG is now ON
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 Journal States:(expected ON):
-  Journal State                          ON  Journal Before imaging        TRUE
-  Journal State                          ON  Journal Before imaging        TRUE
-  Journal State                          ON  Journal Before imaging        TRUE
-  Journal State                          ON  Journal Before imaging        TRUE
+  Journal State                                  ON  Journal Before imaging                TRUE
+  Journal State                                  ON  Journal Before imaging                TRUE
+  Journal State                                  ON  Journal Before imaging                TRUE
+  Journal State                                  ON  Journal Before imaging                TRUE
 Journal state switch from 2 to 2
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
@@ -141,20 +141,20 @@ Journal state switch from 2 to 2
 %YDB-I-JNLSTATE, Journaling state for region CREG is now ON
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 Journal States:(expected ON):
-  Journal State                          ON  Journal Before imaging        TRUE
-  Journal State                          ON  Journal Before imaging        TRUE
-  Journal State                          ON  Journal Before imaging        TRUE
-  Journal State                          ON  Journal Before imaging        TRUE
+  Journal State                                  ON  Journal Before imaging                TRUE
+  Journal State                                  ON  Journal Before imaging                TRUE
+  Journal State                                  ON  Journal Before imaging                TRUE
+  Journal State                                  ON  Journal Before imaging                TRUE
 Journal state switch from 2 to 1
 %YDB-I-JNLSTATE, Journaling state for region AREG is now OFF
 %YDB-I-JNLSTATE, Journaling state for region BREG is now OFF
 %YDB-I-JNLSTATE, Journaling state for region CREG is now OFF
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now OFF
 Journal States:(expected OFF):
-  Journal State                         OFF  Journal Before imaging        TRUE
-  Journal State                         OFF  Journal Before imaging        TRUE
-  Journal State                         OFF  Journal Before imaging        TRUE
-  Journal State                         OFF  Journal Before imaging        TRUE
+  Journal State                                 OFF  Journal Before imaging                TRUE
+  Journal State                                 OFF  Journal Before imaging                TRUE
+  Journal State                                 OFF  Journal Before imaging                TRUE
+  Journal State                                 OFF  Journal Before imaging                TRUE
 Journal state switch from 1 to 2
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
@@ -169,16 +169,16 @@ Journal state switch from 1 to 2
 %YDB-I-JNLSTATE, Journaling state for region CREG is now ON
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 Journal States:(expected ON):
-  Journal State                          ON  Journal Before imaging        TRUE
-  Journal State                          ON  Journal Before imaging        TRUE
-  Journal State                          ON  Journal Before imaging        TRUE
-  Journal State                          ON  Journal Before imaging        TRUE
+  Journal State                                  ON  Journal Before imaging                TRUE
+  Journal State                                  ON  Journal Before imaging                TRUE
+  Journal State                                  ON  Journal Before imaging                TRUE
+  Journal State                                  ON  Journal Before imaging                TRUE
 Journal state switch from 2 to 0
 Journal States:(expected ON):
-  Journal State                          ON  Journal Before imaging        TRUE
-  Journal State                          ON  Journal Before imaging        TRUE
-  Journal State                          ON  Journal Before imaging        TRUE
-  Journal State                          ON  Journal Before imaging        TRUE
+  Journal State                                  ON  Journal Before imaging                TRUE
+  Journal State                                  ON  Journal Before imaging                TRUE
+  Journal State                                  ON  Journal Before imaging                TRUE
+  Journal State                                  ON  Journal Before imaging                TRUE
 Stop the background process
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
@@ -217,10 +217,10 @@ Switch journal state to 2
 GTM Process starts in background...
 # Expect all the below buffer_size change commands to error out with 'File is in use/File already open'
 Journal Buffer Size:(expected 2308)
-  Journal Buffer Size                  2312  Journal Alignsize             4096
-  Journal Buffer Size                  2312  Journal Alignsize             4096
-  Journal Buffer Size                  2312  Journal Alignsize             4096
-  Journal Buffer Size                  2312  Journal Alignsize             4096
+  Journal Buffer Size                          2312  Journal Alignsize                     4096
+  Journal Buffer Size                          2312  Journal Alignsize                     4096
+  Journal Buffer Size                          2312  Journal Alignsize                     4096
+  Journal Buffer Size                          2312  Journal Alignsize                     4096
 Some qualifiers do not need standalone access
 With nobefore option
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
@@ -247,29 +247,29 @@ With nobefore option
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps_standalone_nobefore.mjl is renamed to ##TEST_PATH##/mumps_standalone_nobefore.mjl_##TIMESTAMP##
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps_standalone_nobefore.mjl created for database file ##TEST_PATH##/mumps.dat with NOBEFORE_IMAGES
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumps.dat is now ON
-  Journal State                          ON  Journal Before imaging        TRUE
-  Journal Allocation                   2048  Journal Extension             2048
-  Journal Buffer Size                  2312  Journal Alignsize             4096
-  Journal AutoSwitchLimit           8386560  Journal Epoch Interval          30
-  Journal Yield Limit                     8  Journal Sync IO              FALSE
+  Journal State                                  ON  Journal Before imaging                TRUE
+  Journal Allocation                           2048  Journal Extension                     2048
+  Journal Buffer Size                          2312  Journal Alignsize                     4096
+  Journal AutoSwitchLimit                   8386560  Journal Epoch Interval                  30
+  Journal Yield Limit                             8  Journal Sync IO                      FALSE
   Journal File: ##TEST_PATH##/a.mjl
-  Journal State                          ON  Journal Before imaging        TRUE
-  Journal Allocation                   2048  Journal Extension             2048
-  Journal Buffer Size                  2312  Journal Alignsize             4096
-  Journal AutoSwitchLimit           8386560  Journal Epoch Interval          30
-  Journal Yield Limit                     8  Journal Sync IO              FALSE
+  Journal State                                  ON  Journal Before imaging                TRUE
+  Journal Allocation                           2048  Journal Extension                     2048
+  Journal Buffer Size                          2312  Journal Alignsize                     4096
+  Journal AutoSwitchLimit                   8386560  Journal Epoch Interval                  30
+  Journal Yield Limit                             8  Journal Sync IO                      FALSE
   Journal File: ##TEST_PATH##/b.mjl
-  Journal State                          ON  Journal Before imaging        TRUE
-  Journal Allocation                   2048  Journal Extension             2048
-  Journal Buffer Size                  2312  Journal Alignsize             4096
-  Journal AutoSwitchLimit           8386560  Journal Epoch Interval          30
-  Journal Yield Limit                     8  Journal Sync IO              FALSE
+  Journal State                                  ON  Journal Before imaging                TRUE
+  Journal Allocation                           2048  Journal Extension                     2048
+  Journal Buffer Size                          2312  Journal Alignsize                     4096
+  Journal AutoSwitchLimit                   8386560  Journal Epoch Interval                  30
+  Journal Yield Limit                             8  Journal Sync IO                      FALSE
   Journal File: ##TEST_PATH##/c.mjl
-  Journal State                          ON  Journal Before imaging       FALSE
-  Journal Allocation                   2048  Journal Extension              300
-  Journal Buffer Size                  2312  Journal Alignsize             4096
-  Journal AutoSwitchLimit           2096948  Journal Epoch Interval           1
-  Journal Yield Limit                   900  Journal Sync IO              FALSE
+  Journal State                                  ON  Journal Before imaging               FALSE
+  Journal Allocation                           2048  Journal Extension                      300
+  Journal Buffer Size                          2312  Journal Alignsize                     4096
+  Journal AutoSwitchLimit                   2096948  Journal Epoch Interval                   1
+  Journal Yield Limit                           900  Journal Sync IO                      FALSE
   Journal File: ##TEST_PATH##/mumps_standalone_nobefore.mjl
 With before option
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
@@ -353,29 +353,29 @@ With before option
 %YDB-I-JNLSTATE, Journaling state for region BREG is now ON
 %YDB-I-JNLSTATE, Journaling state for region CREG is now ON
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
-  Journal State                          ON  Journal Before imaging        TRUE
-  Journal Allocation                   4000  Journal Extension              200
-  Journal Buffer Size                  2312  Journal Alignsize             4096
-  Journal AutoSwitchLimit           8386400  Journal Epoch Interval           1
-  Journal Yield Limit                  1000  Journal Sync IO              FALSE
+  Journal State                                  ON  Journal Before imaging                TRUE
+  Journal Allocation                           4000  Journal Extension                      200
+  Journal Buffer Size                          2312  Journal Alignsize                     4096
+  Journal AutoSwitchLimit                   8386400  Journal Epoch Interval                   1
+  Journal Yield Limit                          1000  Journal Sync IO                      FALSE
   Journal File: ##TEST_PATH##/a_standalone_before.mjl
-  Journal State                          ON  Journal Before imaging        TRUE
-  Journal Allocation                   4000  Journal Extension              200
-  Journal Buffer Size                  2312  Journal Alignsize             4096
-  Journal AutoSwitchLimit           8386400  Journal Epoch Interval           1
-  Journal Yield Limit                  1000  Journal Sync IO              FALSE
+  Journal State                                  ON  Journal Before imaging                TRUE
+  Journal Allocation                           4000  Journal Extension                      200
+  Journal Buffer Size                          2312  Journal Alignsize                     4096
+  Journal AutoSwitchLimit                   8386400  Journal Epoch Interval                   1
+  Journal Yield Limit                          1000  Journal Sync IO                      FALSE
   Journal File: ##TEST_PATH##/b.mjl
-  Journal State                          ON  Journal Before imaging        TRUE
-  Journal Allocation                   4000  Journal Extension              200
-  Journal Buffer Size                  2312  Journal Alignsize             4096
-  Journal AutoSwitchLimit           8386400  Journal Epoch Interval           1
-  Journal Yield Limit                  1000  Journal Sync IO              FALSE
+  Journal State                                  ON  Journal Before imaging                TRUE
+  Journal Allocation                           4000  Journal Extension                      200
+  Journal Buffer Size                          2312  Journal Alignsize                     4096
+  Journal AutoSwitchLimit                   8386400  Journal Epoch Interval                   1
+  Journal Yield Limit                          1000  Journal Sync IO                      FALSE
   Journal File: ##TEST_PATH##/c.mjl
-  Journal State                          ON  Journal Before imaging        TRUE
-  Journal Allocation                   4000  Journal Extension              200
-  Journal Buffer Size                  2312  Journal Alignsize             4096
-  Journal AutoSwitchLimit           2096800  Journal Epoch Interval           1
-  Journal Yield Limit                  1000  Journal Sync IO              FALSE
+  Journal State                                  ON  Journal Before imaging                TRUE
+  Journal Allocation                           4000  Journal Extension                      200
+  Journal Buffer Size                          2312  Journal Alignsize                     4096
+  Journal AutoSwitchLimit                   2096800  Journal Epoch Interval                   1
+  Journal Yield Limit                          1000  Journal Sync IO                      FALSE
   Journal File: ##TEST_PATH##/mumps_standalone_nobefore.mjl
 Stop the background process
 ##SOURCE_PATH##/mupip
@@ -402,10 +402,10 @@ Now change journal buffer size
 %YDB-I-JNLSTATE, Journaling state for region CREG is now ON
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 Journal Buffer Size:(expected 2308)
-  Journal Buffer Size                  2308  Journal Alignsize             4096
-  Journal Buffer Size                  2308  Journal Alignsize             4096
-  Journal Buffer Size                  2308  Journal Alignsize             4096
-  Journal Buffer Size                  2308  Journal Alignsize             4096
+  Journal Buffer Size                          2308  Journal Alignsize                     4096
+  Journal Buffer Size                          2308  Journal Alignsize                     4096
+  Journal Buffer Size                          2308  Journal Alignsize                     4096
+  Journal Buffer Size                          2308  Journal Alignsize                     4096
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

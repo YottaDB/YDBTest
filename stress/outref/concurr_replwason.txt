@@ -49,11 +49,11 @@ YDB>
 =>Flush journal buffer contents to journal file on disk so we have at least some sizable worth of updates in the file
 =>Check that AREG has replication state WAS_ON
   Journal File: ##TEST_PATH##/ajnl/a.mjl
-##TEST_AWK  Replication State            .WAS_ON. OFF  Region Seqno    0x[0-9A-F]*
+##TEST_AWK  Replication State                    .WAS_ON. OFF  Region Seqno            0x[0-9A-F]*
   Journal File: ##TEST_PATH##/bjnl/b.mjl
-##TEST_AWK  Replication State                      ON  Region Seqno    0x[0-9A-F]*
+##TEST_AWK  Replication State                              ON  Region Seqno            0x[0-9A-F]*
   Journal File: ##TEST_PATH##/cjnl/c.mjl
-##TEST_AWK  Replication State                      ON  Region Seqno    0x[0-9A-F]*
+##TEST_AWK  Replication State                              ON  Region Seqno            0x[0-9A-F]*
 =>Check for absence of REPLJNLCLOSED error in any *.mjo* has been deferred to the test framework at the end of the test
 =>Check that checkhealth now indicates REPLJNLCLOSED error
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST2 set msr_dont_chk_stat ; $MUPIP replic -source -checkhealth -instsecondary=__RCV_INSTNAME__'==
@@ -80,11 +80,11 @@ Error REPLBRKNTRANS seen in ##FILTERED##SRC_##TIMESTAMP##.log as expected:
 =>Turning replication back ON those regions that lost them
 =>Check that AREG has replication state ON (not WAS_ON)
   Journal File: ##TEST_PATH##/ajnl/a.mjl
-##TEST_AWK  Replication State                      ON  Region Seqno    0x[0-9A-F]*
+##TEST_AWK  Replication State                              ON  Region Seqno            0x[0-9A-F]*
   Journal File: ##TEST_PATH##/bjnl/b.mjl
-##TEST_AWK  Replication State                      ON  Region Seqno    0x[0-9A-F]*
+##TEST_AWK  Replication State                              ON  Region Seqno            0x[0-9A-F]*
   Journal File: ##TEST_PATH##/cjnl/c.mjl
-##TEST_AWK  Replication State                      ON  Region Seqno    0x[0-9A-F]*
+##TEST_AWK  Replication State                              ON  Region Seqno            0x[0-9A-F]*
 =>Wait for the FIRST INST1->INST3 source server to die before starting the SECOND source server
 =>Now start ANOTHER INST1->INST3 source server. This one will issue a REPLBRKNTRANS error (not NOPREVLINK)
 ==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST3'==

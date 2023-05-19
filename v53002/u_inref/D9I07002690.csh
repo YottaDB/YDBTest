@@ -65,7 +65,7 @@ set dselog1 = ${dselogprefix}_1.out
 $DSE dump -file -all >&! $dselog1
 # ------------------------------------------------------------------------------
 echo "# Verify that journaling is currently turned ON"
-$grep "Journal State " $dselog1 | sed 's/\(Journal Before imaging\)\(.*\)/\1 GTM_TEST_DEBUGINFO \2/'
+$grep "Journal State " $dselog1 | sed 's/\(Journal Before imaging        \)\(.*\)/\1 GTM_TEST_DEBUGINFO \2/'
 
 # ------------------------------------------------------------------------------
 echo "# Determine current values of dskaddr and freeaddr in journal buffer"
@@ -121,7 +121,7 @@ if (0 == $wait_time) then
 	exit
 endif
 
-$grep "Journal State " $dselog5 | sed 's/\(Journal Before imaging\)\(.*\)/\1 GTM_TEST_DEBUGINFO \2/'
+$grep "Journal State " $dselog5 | sed 's/\(Journal Before imaging        \)\(.*\)/\1 GTM_TEST_DEBUGINFO \2/'
 echo "# Allow some updates to happen while journaling is turned OFF"
 sleep 5
 
@@ -136,7 +136,7 @@ sleep 5
 echo "# Verify that journaling is currently turned ON"
 set dselog6 = ${dselogprefix}_6.out
 $DSE dump -file -all >&! $dselog6
-$grep "Journal State " $dselog6 | sed 's/\(Journal Before imaging\)\(.*\)/\1 GTM_TEST_DEBUGINFO \2/'
+$grep "Journal State " $dselog6 | sed 's/\(Journal Before imaging        \)\(.*\)/\1 GTM_TEST_DEBUGINFO \2/'
 
 # ------------------------------------------------------------------------------
 echo "# Stop GT.M updates"

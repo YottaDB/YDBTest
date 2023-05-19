@@ -62,9 +62,9 @@ mupip journal -recover -forward mumps.mjl
 %YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 Journal state  OFF (expected)
-  Journal State                         OFF  Journal Before imaging        TRUE
+  Journal State                                 OFF  Journal Before imaging                TRUE
 Current Transaction: 0x065 (expected)
-  Current transaction    0x0000000000000065  No. of writes/flush              7
+  Current transaction            0x0000000000000065  No. of writes/flush                      7
 Verify recover.mjl is untouched
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
@@ -155,7 +155,7 @@ mupip journal -recover -forward mumps.mjl
 %YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 Journal State  OFF (expected)
-  Journal State                         OFF  Journal Before imaging       FALSE
+  Journal State                                 OFF  Journal Before imaging               FALSE
 --------------------------------------------------------------
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 mupip set -journal=enable,on,nobefore -file mumps.dat
@@ -177,9 +177,9 @@ mupip journal -recover -forward mumps.mjl
 %YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 Journal State  OFF (expected)
-  Journal State                         OFF  Journal Before imaging        TRUE
+  Journal State                                 OFF  Journal Before imaging                TRUE
 Current transaction:  x097  (expected)
-  Current transaction    0x0000000000000097  No. of writes/flush              7
+  Current transaction            0x0000000000000097  No. of writes/flush                      7
 --------------------------------------------------------------
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 mupip set -journal=enable,on,nobefore -file mumps.dat
@@ -200,9 +200,9 @@ mupip journal -recover -forward mumps.mjl
 %YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 Journal State : DISABLED (expected)
-  Journal State                    DISABLED
+  Journal State                            DISABLED
 Current transaction: 0x065 (expected)
-  Current transaction    0x0000000000000065  No. of writes/flush              7
+  Current transaction            0x0000000000000065  No. of writes/flush                      7
 --------------------------------------------------------------
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 mupip set -journal=enable,before -reg "*"
@@ -230,9 +230,9 @@ mupip journal -recover -forward mumps.mjl
 %YDB-S-JNLSUCCESS, Recover successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 Journal State  OFF (expected)
-  Journal State                         OFF  Journal Before imaging       FALSE
+  Journal State                                 OFF  Journal Before imaging               FALSE
 Current transaction: 0x065 (expected)
-  Current transaction    0x0000000000000065  No. of writes/flush              7
+  Current transaction            0x0000000000000065  No. of writes/flush                      7
 --------------------------------------------------------------
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *

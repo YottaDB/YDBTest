@@ -11,9 +11,9 @@ mumps.dat
 # We expect 11 as the max because there are 10 child processes + the parent process
 ##TEST_AWK11,[0-9]+
 # Run a DSE DUMP -FILEHEADER to verify that the maximum processes and timestamp show up
-##TEST_AWK  Max conc proc time [0-9 ]{22}  Max Concurrent processes        11
+##TEST_AWK  Max conc proc time         [0-9 ]{22}  Max Concurrent processes                11
 # Verify that resetting the maximum number of processes via DSE CHANGE -FILEHEADER -RESET_MAX_PROCS works
-##TEST_AWK  Max conc proc time [0-9 ]{22}  Max Concurrent processes         0
+##TEST_AWK  Max conc proc time         [0-9 ]{22}  Max Concurrent processes                 0
 # Verify that the time was modified to a later timestamp by the DSE CHANGE -FILEHEADER -RESET_MAX_PROCS
 Time was modified correctly by DSE CHANGE -FILEHEADER -RESET_MAX_PROCS
 # Run dbcheck.csh

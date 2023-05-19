@@ -1,15 +1,15 @@
 # Setting Hard Spin Count to 0 using MUPIP SET -HARD_SPIN_COUNT
 Database file ##TEST_PATH##/mumps.dat now has hard spin count 0
 # Verifying Hard Spin Count shows up in DSE Dump
-  Mutex Hard Spin Count                   0  Mutex Sleep Spin Count         128
+  Mutex Hard Spin Count                           0  Mutex Sleep Spin Count                 128
 # Setting Hard Spin Count to 2**31-1 using MUPIP SET -HARD_SPIN_COUNT
 Database file ##TEST_PATH##/mumps.dat now has hard spin count 2147483647
 # Verifying Hard Spin Count shows up in DSE Dump
-  Mutex Hard Spin Count          2147483647  Mutex Sleep Spin Count         128
+  Mutex Hard Spin Count                  2147483647  Mutex Sleep Spin Count                 128
 # Setting Hard Spin Count to a random value using MUPIP SET -HARD_SPIN_COUNT
 ##TEST_AWKDatabase file ##TEST_PATH##/mumps.dat now has hard spin count [0-9]*
 # Verifying Hard Spin Count shows up in DSE Dump
-##TEST_AWK  Mutex Hard Spin Count          [ 0-9]*  Mutex Sleep Spin Count         128
+##TEST_AWK  Mutex Hard Spin Count                  [ 0-9]*  Mutex Sleep Spin Count                 128
 # Attempting to set Hard Spin Count to 2**31 using MUPIP SET -HARD_SPIN_COUNT
 Error: cannot convert 2147483648 value to decimal number.
 %YDB-E-SETQUALPROB, Error getting HARD_SPIN_COUNT qualifier value
@@ -17,15 +17,15 @@ Error: cannot convert 2147483648 value to decimal number.
 # Setting Spin Sleep Mask to 0 using MUPIP SET -SPIN_SLEEP_MASK
 Database file ##TEST_PATH##/mumps.dat now has spin sleep mask 0
 # Verifying Spin Sleep Mask shows up in DSE Dump
-  Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
+  Defer allocation                     ##FILTERED##  Spin sleep time mask          ##FILTERED##
 # Setting Spin Sleep Mask to 0x3fffffff using MUPIP SET -SPIN_SLEEP_MASK
 Database file ##TEST_PATH##/mumps.dat now has spin sleep mask 1073741823
 # Verifying Spin Sleep Mask shows up in DSE Dump
-  Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
+  Defer allocation                     ##FILTERED##  Spin sleep time mask          ##FILTERED##
 # Setting Spin Sleep Mask to a random hex using MUPIP SET -SPIN_SLEEP_MASK
 ##TEST_AWKDatabase file ##TEST_PATH##/mumps.dat now has spin sleep mask [0-9]*
 # Verifying Spin Sleep Mask shows up in DSE Dump
-  Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
+  Defer allocation                     ##FILTERED##  Spin sleep time mask          ##FILTERED##
 # Attempting to set Spin Sleep Mask to 0x40000000 using MUPIP SET -SPIN_SLEEP_MASK
 %YDB-W-MUPIPSET2BIG, 1073741824 too large, maximum SPIN_SLEEP_MASK allowed is 1073741823
 %YDB-E-WCERRNOTCHG, Not all specified database files were changed

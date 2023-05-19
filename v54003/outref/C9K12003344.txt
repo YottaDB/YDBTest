@@ -36,7 +36,7 @@ STEP 7 ==> More updates to ^b which will touch the remanant TREE from KILL ^b an
 ###################################################################
 ### At this point, we have NO V4 BUSY blocks, but some V4 REUSABLE blocks and database is NOT Fully Upgraded ###
 ###################################################################
-  Master Bitmap Size                    496  Blocks to Upgrade       0x00000000
+  Master Bitmap Size                           8176  Blocks to Upgrade       0x0000000000000000
   Database is Fully Upgraded                : FALSE
 
 ###################################################################
@@ -44,7 +44,7 @@ STEP 8 ==> UPGRADE will touch all the REUSABLE blocks (remanant of KILL ^B) and 
 ###################################################################
 
 Region DEFAULT : MUPIP REORG UPGRADE started
-Region DEFAULT : Desired DB Format remains at V6 after MUPIP REORG UPGRADE
+Region DEFAULT : Desired DB Format         remains at V6 after MUPIP REORG UPGRADE
 Region DEFAULT : Started processing from block number [0x00000000]
 Region DEFAULT : Stopped processing at block number [0x00000065]
 Region DEFAULT : Statistics : Blocks Read From Disk (Bitmap)     : 0x00000001
@@ -79,7 +79,7 @@ STEP 10 ==> RECOVER the database with a SINCE time set to the LAST PBLK record s
 ###################################################################
 ### At this point, cs_data->fully_upgraded should be FALSE ###
 ###################################################################
-  Master Bitmap Size                    496  Blocks to Upgrade       0x00000000
+  Master Bitmap Size                           8176  Blocks to Upgrade       0x0000000000000000
   Database is Fully Upgraded                : FALSE
 
 ###################################################################

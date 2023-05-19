@@ -354,24 +354,24 @@ BEGIN {
 		substatus = gsub(strexpr, strrepl);
 		if (substatus) $0="##FILTERED##"$0;
 	}
-	strexpr = "Endian Format                [ ]*[BL][I][GT][TLE]*"
-	strrepl = "Endian Format      ##FILTERED####ENDIAN##"
+	strexpr = "Endian Format                        [ ]*[BL][I][GT][TLE]*"
+	strrepl = "Endian Format              ##FILTERED####ENDIAN##"
 	gsub(strexpr, strrepl);
 	# Database file encrypted                       TRUE  Inst Freeze on Error         FALSE"
-	strexp = "^  Database file encrypted             ( TRUE|FALSE)  Inst Freeze on Error         ( TRUE|FALSE)$"
-	strrep = "  Database file encrypted      ##FILTERED##  Inst Freeze on Error         ##FILTERED##"
+	strexp = "^  Database file encrypted                     ( TRUE|FALSE)  Inst Freeze on Error                 ( TRUE|FALSE)$"
+	strrep = "  Database file encrypted              ##FILTERED##  Inst Freeze on Error                 ##FILTERED##"
 	gsub(strexp,strrep)
 	# spanning node flag
-	strexp	="^  Spanning Node Absent                ( TRUE|FALSE)  Maximum Key Size Assured     ( TRUE|FALSE)"
-	strrep	="  Spanning Node Absent         ##FILTERED##  Maximum Key Size Assured  ##FILTERED##"
+	strexp	="^  Spanning Node Absent                        ( TRUE|FALSE)  Maximum Key Size Assured             ( TRUE|FALSE)"
+	strrep	="  Spanning Node Absent                 ##FILTERED##  Maximum Key Size Assured          ##FILTERED##"
 	gsub(strexp,strrep)
 	# defer allocation
-	strexp	="^  Defer allocation                    ( TRUE|FALSE)"
-	strrep	="  Defer allocation             ##FILTERED##"
+	strexp	="^  Defer allocation                            ( TRUE|FALSE)"
+	strrep	="  Defer allocation                     ##FILTERED##"
 	gsub(strexp,strrep)
 	# sleep spin mask
-	strexp	="  Spin sleep time mask    0x[0-9A-F]*"
-	strrep	="  Spin sleep time mask  ##FILTERED##"
+	strexp	="  Spin sleep time mask            0x[0-9A-F]*"
+	strrep	="  Spin sleep time mask          ##FILTERED##"
 	gsub(strexp,strrep)
 	#
 	########################################################

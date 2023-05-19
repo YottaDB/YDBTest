@@ -103,13 +103,13 @@ All requested regions unfrozen
 ##TEST_AWK\[2\] [0-9]*
 ##TEST_AWK\[3\] [0-9]*
 # inhibit_kills flag should be set to 3 by mupip freeze, backup and integ
-  Mutex Queue Slots                    1024  KILLs in progress                1
-  Actual kills in progress                1  Abandoned Kills                  0
-  Process(es) inhibiting KILLs            3  DB is a StatsDB              FALSE
+  Mutex Queue Slots                            1024  KILLs in progress                        1
+  Actual kills in progress                        1  Abandoned Kills                          0
+  Process(es) inhibiting KILLs                    3  DB is a StatsDB                      FALSE
 # inhibit_kills flag should get cleared after MUPIP backup, freeze and integ are successful.
-  Mutex Queue Slots                    1024  KILLs in progress                0
-  Actual kills in progress                0  Abandoned Kills                  0
-  Process(es) inhibiting KILLs            0  DB is a StatsDB              FALSE
+  Mutex Queue Slots                            1024  KILLs in progress                        0
+  Actual kills in progress                        0  Abandoned Kills                          0
+  Process(es) inhibiting KILLs                    0  DB is a StatsDB                      FALSE
 # End testing inhibit_kills counter
 # Start testing abandoned_kills counter
 # Set abandoned_kills flag

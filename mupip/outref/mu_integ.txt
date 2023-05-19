@@ -147,76 +147,76 @@ DSE>
 File            ##TEST_PATH##/a.dat
 Region          AREG
 ##TEST_AWKDate/Time       [0-9][0-9]-[A-Z][A-Z][A-Z]-[0-9][0-9][0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] ..H = [5-9][0-9][0-9][0-9][0-9],[0-9]+.
-##TEST_AWK  Access method                          (BG|MM)  Global Buffers                 256
-  Reserved Bytes                          0  Block size (in bytes)         1024
-  Maximum record size                   256  Starting VBN                   513
-  Maximum key size                      128  Total blocks            0x00000065
+##TEST_AWK  Access method                                  (BG|MM)  Global Buffers                         256
+  Reserved Bytes                                  0  Block size (in bytes)                 1024
+  Maximum record size                           256  Starting VBN                          8193
+  Maximum key size                              128  Total blocks            0x0000000000000065
 ##SUSPEND_OUTPUT SPANNING_REGIONS
-  Null subscripts                     NEVER  Free blocks             0x00000058
-  Standard Null Collation              TRUE  Free space              0x00000000
+  Null subscripts                             NEVER  Free blocks             0x0000000000000058
+  Standard Null Collation                      TRUE  Free space                      0x00000000
 ##ALLOW_OUTPUT SPANNING_REGIONS
 ##SUSPEND_OUTPUT NONSPANNING_REGIONS
 ##SUSPEND_OUTPUT COLLATION
-  Null subscripts                     NEVER  Free blocks             0x0000005F
+  Null subscripts                             NEVER  Free blocks             0x000000000000005F
 ##ALLOW_OUTPUT COLLATION
 ##SUSPEND_OUTPUT NON_COLLATION
-  Null subscripts                     NEVER  Free blocks             0x0000005E
+  Null subscripts                             NEVER  Free blocks             0x000000000000005E
 ##ALLOW_OUTPUT NON_COLLATION
-  Standard Null Collation              TRUE  Free space              0x00000000
+  Standard Null Collation                      TRUE  Free space                      0x00000000
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
-  Last Record Backup     0x0000000000000001  Extension Count                100
-  Last Database Backup   0x0000000000000001  Number of local maps             1
-  Last Bytestream Backup 0x0000000000000001  Lock space              0x000000DC
-  In critical section            0x00000000  Timers pending                   0
+  Last Record Backup             0x0000000000000001  Extension Count                        100
+  Last Database Backup           0x0000000000000001  Number of local maps                     1
+  Last Bytestream Backup         0x0000000000000001  Lock space                      0x000000DC
+  In critical section                    0x00000000  Timers pending                           0
 ##SUSPEND_OUTPUT MM
-  Cache freeze id                0x00000000  Flush timer            00:00:01:00
+  Cache freeze id                        0x00000000  Flush timer                    00:00:01:00
 ##ALLOW_OUTPUT MM
 ##SUSPEND_OUTPUT BG
-##TEST_AWK  Cache freeze id                0x00000000  Flush timer            00:00:(30|10|01):00
+##TEST_AWK  Cache freeze id                        0x00000000  Flush timer                    00:00:(30|10|01):00
 ##ALLOW_OUTPUT BG
-  Freeze match                   0x00000000  Flush trigger                  240
-  Freeze online                       FALSE  Freeze online autorelease    FALSE
-  Current transaction    0x0000000000000002  No. of writes/flush              7
-  Maximum TN             0xFFFFFFFF83FFFFFF  Certified for Upgrade to        V6
-  Maximum TN Warn        0xFFFFFFFD93FFFFFF  Desired DB Format               V6
-  Master Bitmap Size                    496  Blocks to Upgrade       0x00000000
-  Create in progress                  FALSE  Modified cache blocks            0
-  Reference count                         1  Wait Disk                        0
+  Freeze match                           0x00000000  Flush trigger                          240
+  Freeze online                               FALSE  Freeze online autorelease            FALSE
+  Current transaction            0x0000000000000002  No. of writes/flush                      7
+  Maximum TN                     0xFFFFFFF803FFFFFF  Certified for Upgrade to                V7
+  Maximum TN Warn                0xFFFFFFD813FFFFFF  Desired DB Format                       V7
+  Master Bitmap Size                           8176  Blocks to Upgrade       0x0000000000000000
+  Create in progress                          FALSE  Modified cache blocks                    0
+  Reference count                                 1  Wait Disk                                0
 ##SUSPEND_OUTPUT  REPLIC
-  Journal State                    DISABLED
+  Journal State                            DISABLED
 ##SUSPEND_OUTPUT  NON_REPLIC
 ##ALLOW_OUTPUT  REPLIC
-##TEST_AWK  Journal State               .inactive. ON  Journal Before imaging       .*
-  Journal Allocation                   2048  Journal Extension             2048
-##TEST_AWK  Journal Buffer Size                  2312  Journal Alignsize  *[1-9][0-9]*
+##TEST_AWK  Journal State                       .inactive. ON  Journal Before imaging               .*
+  Journal Allocation                           2048  Journal Extension                     2048
+##TEST_AWK  Journal Buffer Size                          2312  Journal Alignsize          *[1-9][0-9]*
 ##TEST_AWK.*
-  Journal Yield Limit                     8  Journal Sync IO              FALSE
+  Journal Yield Limit                             8  Journal Sync IO                      FALSE
   Journal File: ##TEST_PATH##/a.mjl
 ##ALLOW_OUTPUT  NON_REPLIC
-  Mutex Hard Spin Count                 128  Mutex Sleep Spin Count         128
-  Mutex Queue Slots                    1024  KILLs in progress                0
+  Mutex Hard Spin Count                         128  Mutex Sleep Spin Count                 128
+  Mutex Queue Slots                            1024  KILLs in progress                        0
 ##SUSPEND_OUTPUT  REPLIC
-  Replication State                     OFF  Region Seqno    0x0000000000000001
+  Replication State                             OFF  Region Seqno            0x0000000000000001
 ##SUSPEND_OUTPUT  NON_REPLIC
 ##ALLOW_OUTPUT  REPLIC
-##TEST_AWK  Replication State                      ON  Region Seqno    0x00000000000000C[68]
+##TEST_AWK  Replication State                              ON  Region Seqno            0x00000000000000C[68]
 ##ALLOW_OUTPUT  NON_REPLIC
-  Zqgblmod Seqno         0x0000000000000000  Zqgblmod Trans  0x0000000000000000
-  Endian Format      ##FILTERED####ENDIAN##  Commit Wait Spin Count          16
-  Database file encrypted      ##FILTERED##  Inst Freeze on Error         ##FILTERED##
-  Spanning Node Absent         ##FILTERED##  Maximum Key Size Assured  ##FILTERED##
-  Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
-  Async IO                              OFF  WIP queue cache blocks           0
-  DB is auto-created                  FALSE  DB shares gvstats             TRUE
-  LOCK shares DB critical section     FALSE  Read Only                      OFF
-  Recover interrupted                 FALSE  Full Block Write                 0
+  Zqgblmod Seqno                 0x0000000000000000  Zqgblmod Trans          0x0000000000000000
+  Endian Format              ##FILTERED####ENDIAN##  Commit Wait Spin Count                  16
+  Database file encrypted              ##FILTERED##  Inst Freeze on Error                 ##FILTERED##
+  Spanning Node Absent                 ##FILTERED##  Maximum Key Size Assured          ##FILTERED##
+  Defer allocation                     ##FILTERED##  Spin sleep time mask          ##FILTERED##
+  Async IO                                      OFF  WIP queue cache blocks                   0
+  DB is auto-created                          FALSE  DB shares gvstats                     TRUE
+  LOCK shares DB critical section             FALSE  Read Only                              OFF
+  Recover interrupted                         FALSE  Full Block Write                         0
 ##SUSPEND_OUTPUT  REPLIC
-##TEST_AWK  Max conc proc time [0-9 ]{22}  Max Concurrent processes         1
+##TEST_AWK  Max conc proc time         [0-9 ]{22}  Max Concurrent processes                 1
 ##ALLOW_OUTPUT  REPLIC
 ##SUSPEND_OUTPUT  NON_REPLIC
-##TEST_AWK  Max conc proc time [0-9 ]{22}  Max Concurrent processes         2
+##TEST_AWK  Max conc proc time         [0-9 ]{22}  Max Concurrent processes                 2
 ##ALLOW_OUTPUT  NON_REPLIC
-  Reorg Sleep Nanoseconds                 0
+  Reorg Sleep Nanoseconds                         0
 DSE> $MUPIP integ integ.dat
 
 No errors detected by integ.
@@ -451,53 +451,53 @@ DSE>
 File            ##TEST_PATH##/mumps.dat
 Region          DEFAULT
 ##TEST_AWKDate/Time       [0-9][0-9]-[A-Z][A-Z][A-Z]-[0-9][0-9][0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] ..H = [5-9][0-9][0-9][0-9][0-9],[0-9]+.
-##TEST_AWK  Access method                          (BG|MM)  Global Buffers                1024
-  Reserved Bytes                          0  Block size (in bytes)         4096
-  Maximum record size                   256  Starting VBN                   513
-  Maximum key size                       64  Total blocks            0x00000065
-  Null subscripts                     NEVER  Free blocks             0x0000005E
-  Standard Null Collation              TRUE  Free space              0x00000000
-  Last Record Backup     0x0000000000000001  Extension Count                100
-  Last Database Backup   0x0000000000000001  Number of local maps             1
-  Last Bytestream Backup 0x0000000000000001  Lock space              0x000000DC
-  In critical section            0x00000000  Timers pending                   0
+##TEST_AWK  Access method                                  (BG|MM)  Global Buffers                        1024
+  Reserved Bytes                                  0  Block size (in bytes)                 4096
+  Maximum record size                           256  Starting VBN                          8193
+  Maximum key size                               64  Total blocks            0x0000000000000065
+  Null subscripts                             NEVER  Free blocks             0x000000000000005E
+  Standard Null Collation                      TRUE  Free space                      0x00000000
+  Last Record Backup             0x0000000000000001  Extension Count                        100
+  Last Database Backup           0x0000000000000001  Number of local maps                     1
+  Last Bytestream Backup         0x0000000000000001  Lock space                      0x000000DC
+  In critical section                    0x00000000  Timers pending                           0
 ##SUSPEND_OUTPUT MM
-  Cache freeze id                0x00000000  Flush timer            00:00:01:00
+  Cache freeze id                        0x00000000  Flush timer                    00:00:01:00
 ##ALLOW_OUTPUT MM
 ##SUSPEND_OUTPUT BG
-##TEST_AWK  Cache freeze id                0x00000000  Flush timer            00:00:(30|10|01):00
+##TEST_AWK  Cache freeze id                        0x00000000  Flush timer                    00:00:(30|10|01):00
 ##ALLOW_OUTPUT BG
-  Freeze match                   0x00000000  Flush trigger                  960
-  Freeze online                       FALSE  Freeze online autorelease    FALSE
-  Current transaction    0x00000000000003E9  No. of writes/flush              7
-  Maximum TN             0xFFFFFFFF83FFFFFF  Certified for Upgrade to        V6
-  Maximum TN Warn        0xFFFFFFFD93FFFFFF  Desired DB Format               V6
-  Master Bitmap Size                    496  Blocks to Upgrade       0x00000000
+  Freeze match                           0x00000000  Flush trigger                          960
+  Freeze online                               FALSE  Freeze online autorelease            FALSE
+  Current transaction            0x00000000000003E9  No. of writes/flush                      7
+  Maximum TN                     0xFFFFFFF803FFFFFF  Certified for Upgrade to                V7
+  Maximum TN Warn                0xFFFFFFD813FFFFFF  Desired DB Format                       V7
+  Master Bitmap Size                           8176  Blocks to Upgrade       0x0000000000000000
 ##SUSPEND_OUTPUT  NON_COLLATION F
-  Default Collation                       1  Collation Version                0
+  Default Collation                               1  Collation Version                        0
 ##ALLOW_OUTPUT  NON_COLLATION F
-  Create in progress                  FALSE  Modified cache blocks            0
-  Reference count                         1  Wait Disk                        0
-  Journal State                    DISABLED
-  Mutex Hard Spin Count                 128  Mutex Sleep Spin Count         128
-  Mutex Queue Slots                    1024  KILLs in progress                0
-  Replication State                     OFF  Region Seqno    0x0000000000000001
-  Zqgblmod Seqno         0x0000000000000000  Zqgblmod Trans  0x0000000000000000
-  Endian Format      ##FILTERED####ENDIAN##  Commit Wait Spin Count          16
-  Database file encrypted      ##FILTERED##  Inst Freeze on Error         ##FILTERED##
-  Spanning Node Absent         ##FILTERED##  Maximum Key Size Assured  ##FILTERED##
-  Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
+  Create in progress                          FALSE  Modified cache blocks                    0
+  Reference count                                 1  Wait Disk                                0
+  Journal State                            DISABLED
+  Mutex Hard Spin Count                         128  Mutex Sleep Spin Count                 128
+  Mutex Queue Slots                            1024  KILLs in progress                        0
+  Replication State                             OFF  Region Seqno            0x0000000000000001
+  Zqgblmod Seqno                 0x0000000000000000  Zqgblmod Trans          0x0000000000000000
+  Endian Format              ##FILTERED####ENDIAN##  Commit Wait Spin Count                  16
+  Database file encrypted              ##FILTERED##  Inst Freeze on Error                 ##FILTERED##
+  Spanning Node Absent                 ##FILTERED##  Maximum Key Size Assured          ##FILTERED##
+  Defer allocation                     ##FILTERED##  Spin sleep time mask          ##FILTERED##
 ##SUSPEND_OUTPUT ASYNCIO
-  Async IO                              OFF  WIP queue cache blocks           0
+  Async IO                                      OFF  WIP queue cache blocks                   0
 ##ALLOW_OUTPUT ASYNCIO
 ##SUSPEND_OUTPUT NOASYNCIO
-  Async IO                               ON  WIP queue cache blocks           0
+  Async IO                                       ON  WIP queue cache blocks                   0
 ##ALLOW_OUTPUT NOASYNCIO
-  DB is auto-created                  FALSE  DB shares gvstats             TRUE
-  LOCK shares DB critical section     FALSE  Read Only                      OFF
-  Recover interrupted                 FALSE  Full Block Write                 0
-##TEST_AWK  Max conc proc time [0-9 ]{22}  Max Concurrent processes         1
-  Reorg Sleep Nanoseconds                 0
+  DB is auto-created                          FALSE  DB shares gvstats                     TRUE
+  LOCK shares DB critical section             FALSE  Read Only                              OFF
+  Recover interrupted                         FALSE  Full Block Write                         0
+##TEST_AWK  Max conc proc time         [0-9 ]{22}  Max Concurrent processes                 1
+  Reorg Sleep Nanoseconds                         0
 DSE> Test is valid, if a(1000) is in block 3
 Test is valid, if block 3 has transaction number 3e8
 Test is valid, if file header has curr_tn = 3e9
@@ -509,53 +509,53 @@ DSE> DSE>
 File            ##TEST_PATH##/mumps.dat
 Region          DEFAULT
 ##TEST_AWKDate/Time       [0-9][0-9]-[A-Z][A-Z][A-Z]-[0-9][0-9][0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] ..H = [5-9][0-9][0-9][0-9][0-9],[0-9]+.
-##TEST_AWK  Access method                          (BG|MM)  Global Buffers                1024
-  Reserved Bytes                          0  Block size (in bytes)         4096
-  Maximum record size                   256  Starting VBN                   513
-  Maximum key size                       64  Total blocks            0x00000065
-  Null subscripts                     NEVER  Free blocks             0x0000005E
-  Standard Null Collation              TRUE  Free space              0x00000000
-  Last Record Backup     0x0000000000000001  Extension Count                100
-  Last Database Backup   0x0000000000000001  Number of local maps             1
-  Last Bytestream Backup 0x0000000000000001  Lock space              0x000000DC
-  In critical section            0x00000000  Timers pending                   0
+##TEST_AWK  Access method                                  (BG|MM)  Global Buffers                        1024
+  Reserved Bytes                                  0  Block size (in bytes)                 4096
+  Maximum record size                           256  Starting VBN                          8193
+  Maximum key size                               64  Total blocks            0x0000000000000065
+  Null subscripts                             NEVER  Free blocks             0x000000000000005E
+  Standard Null Collation                      TRUE  Free space                      0x00000000
+  Last Record Backup             0x0000000000000001  Extension Count                        100
+  Last Database Backup           0x0000000000000001  Number of local maps                     1
+  Last Bytestream Backup         0x0000000000000001  Lock space                      0x000000DC
+  In critical section                    0x00000000  Timers pending                           0
 ##SUSPEND_OUTPUT MM
-  Cache freeze id                0x00000000  Flush timer            00:00:01:00
+  Cache freeze id                        0x00000000  Flush timer                    00:00:01:00
 ##ALLOW_OUTPUT MM
 ##SUSPEND_OUTPUT BG
-##TEST_AWK  Cache freeze id                0x00000000  Flush timer            00:00:(30|10|01):00
+##TEST_AWK  Cache freeze id                        0x00000000  Flush timer                    00:00:(30|10|01):00
 ##ALLOW_OUTPUT BG
-  Freeze match                   0x00000000  Flush trigger                  960
-  Freeze online                       FALSE  Freeze online autorelease    FALSE
-  Current transaction    0x00000000000003E8  No. of writes/flush              7
-  Maximum TN             0xFFFFFFFF83FFFFFF  Certified for Upgrade to        V6
-  Maximum TN Warn        0xFFFFFFFD93FFFFFF  Desired DB Format               V6
-  Master Bitmap Size                    496  Blocks to Upgrade       0x00000000
+  Freeze match                           0x00000000  Flush trigger                          960
+  Freeze online                               FALSE  Freeze online autorelease            FALSE
+  Current transaction            0x00000000000003E8  No. of writes/flush                      7
+  Maximum TN                     0xFFFFFFF803FFFFFF  Certified for Upgrade to                V7
+  Maximum TN Warn                0xFFFFFFD813FFFFFF  Desired DB Format                       V7
+  Master Bitmap Size                           8176  Blocks to Upgrade       0x0000000000000000
 ##SUSPEND_OUTPUT  NON_COLLATION F
-  Default Collation                       1  Collation Version                0
+  Default Collation                               1  Collation Version                        0
 ##ALLOW_OUTPUT  NON_COLLATION F
-  Create in progress                  FALSE  Modified cache blocks            0
-  Reference count                         1  Wait Disk                        0
-  Journal State                    DISABLED
-  Mutex Hard Spin Count                 128  Mutex Sleep Spin Count         128
-  Mutex Queue Slots                    1024  KILLs in progress                0
-  Replication State                     OFF  Region Seqno    0x0000000000000001
-  Zqgblmod Seqno         0x0000000000000000  Zqgblmod Trans  0x0000000000000000
-  Endian Format      ##FILTERED####ENDIAN##  Commit Wait Spin Count          16
-  Database file encrypted      ##FILTERED##  Inst Freeze on Error         ##FILTERED##
-  Spanning Node Absent         ##FILTERED##  Maximum Key Size Assured  ##FILTERED##
-  Defer allocation             ##FILTERED##  Spin sleep time mask  ##FILTERED##
+  Create in progress                          FALSE  Modified cache blocks                    0
+  Reference count                                 1  Wait Disk                                0
+  Journal State                            DISABLED
+  Mutex Hard Spin Count                         128  Mutex Sleep Spin Count                 128
+  Mutex Queue Slots                            1024  KILLs in progress                        0
+  Replication State                             OFF  Region Seqno            0x0000000000000001
+  Zqgblmod Seqno                 0x0000000000000000  Zqgblmod Trans          0x0000000000000000
+  Endian Format              ##FILTERED####ENDIAN##  Commit Wait Spin Count                  16
+  Database file encrypted              ##FILTERED##  Inst Freeze on Error                 ##FILTERED##
+  Spanning Node Absent                 ##FILTERED##  Maximum Key Size Assured          ##FILTERED##
+  Defer allocation                     ##FILTERED##  Spin sleep time mask          ##FILTERED##
 ##SUSPEND_OUTPUT ASYNCIO
-  Async IO                              OFF  WIP queue cache blocks           0
+  Async IO                                      OFF  WIP queue cache blocks                   0
 ##ALLOW_OUTPUT ASYNCIO
 ##SUSPEND_OUTPUT NOASYNCIO
-  Async IO                               ON  WIP queue cache blocks           0
+  Async IO                                       ON  WIP queue cache blocks                   0
 ##ALLOW_OUTPUT NOASYNCIO
-  DB is auto-created                  FALSE  DB shares gvstats             TRUE
-  LOCK shares DB critical section     FALSE  Read Only                      OFF
-  Recover interrupted                 FALSE  Full Block Write                 0
-##TEST_AWK  Max conc proc time [0-9 ]{22}  Max Concurrent processes         1
-  Reorg Sleep Nanoseconds                 0
+  DB is auto-created                          FALSE  DB shares gvstats                     TRUE
+  LOCK shares DB critical section             FALSE  Read Only                              OFF
+  Recover interrupted                         FALSE  Full Block Write                         0
+##TEST_AWK  Max conc proc time         [0-9 ]{22}  Max Concurrent processes                 1
+  Reorg Sleep Nanoseconds                         0
 DSE> 
 Block:Offset Level
 %YDB-I-DBTNTOOLG,         Nature: #Transient
@@ -577,7 +577,7 @@ Total             100            1005              NA             4
 %YDB-E-DBTNLTCTN, Transaction numbers greater than or equal to the current transaction were found
 
 Largest transaction number found in database was 3E8
-Current transaction number is                    3E8
+Current transaction         number is                    3E8
 %YDB-E-INTEGERRS, Database integrity errors
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
@@ -607,7 +607,7 @@ Total             100            1005              NA             4
 %YDB-E-DBTNLTCTN, Transaction numbers greater than or equal to the current transaction were found
 
 Largest transaction number found in database was 3E8
-Current transaction number is                    3E8
+Current transaction         number is                    3E8
 %YDB-E-INTEGERRS, Database integrity errors
 Test PASSED
 Files Created in ##TEST_PATH##:

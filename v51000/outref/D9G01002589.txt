@@ -355,7 +355,7 @@ $MUPIP create
 $gtm_tst/com/get_dse_df.csh
 $grep -E "Region          |Lock space" dse_df.log
 Region          DEFAULT
-  Last Bytestream Backup 0x0000000000000001  Lock space              0x00008000
+  Last Bytestream Backup         0x0000000000000001  Lock space                      0x00008000
 mv dse_df.log dse_df1.log
 
 unset verbose
@@ -378,7 +378,7 @@ Database file ##TEST_PATH##/mumps.dat now has lock space 32768 pages
 $gtm_tst/com/get_dse_df.csh
 $grep -E "Region          |Lock space" dse_df.log
 Region          DEFAULT
-  Last Bytestream Backup 0x0000000000000001  Lock space              0x00008000
+  Last Bytestream Backup         0x0000000000000001  Lock space                      0x00008000
 mv dse_df.log dse_df2.log
 
 $MUPIP set -reg DEFAULT -lock=262144
@@ -398,7 +398,7 @@ Database file ##TEST_PATH##/mumps.dat now has lock space 16383 pages
 $gtm_tst/com/get_dse_df.csh
 $grep -E "Region          |Lock space" dse_df.log
 Region          DEFAULT
-  Last Bytestream Backup 0x0000000000000001  Lock space              0x00003FFF
+  Last Bytestream Backup         0x0000000000000001  Lock space                      0x00003FFF
 mv dse_df.log dse_df3.log
 
 $gtm_tst/com/dbcheck.csh

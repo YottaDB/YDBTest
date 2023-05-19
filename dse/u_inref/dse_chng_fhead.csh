@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -97,8 +97,8 @@ echo "dse change -file -sleep=0 -spin=FFFFFF"
 $DSE change -file -sleep=0 -spin=0xFFFFFF
 echo "dse dump -file"
 $DSE dump -file >& dse_dump_0.out
-$gtm_tst/com/grepfile.csh 'Spin sleep time mask    0x00FFFFFF' dse_dump_0.out 1
-$gtm_tst/com/grepfile.csh 'Mutex Sleep Spin Count           0' dse_dump_0.out 1
+$gtm_tst/com/grepfile.csh 'Spin sleep time mask            0x00FFFFFF' dse_dump_0.out 1
+$gtm_tst/com/grepfile.csh 'Mutex Sleep Spin Count                   0' dse_dump_0.out 1
 
 echo "dse dump -file -all"
 $DSE dump -file -all >& dse_dump_1.out

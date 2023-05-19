@@ -18,7 +18,7 @@ YDB>
 
 YDB>
 # Verify that journaling is currently turned ON
-  Journal State                          ON  Journal Before imaging ##FILTERED##GTM_TEST_DEBUGINFO.*
+  Journal State                                  ON  Journal Before imaging         ##FILTERED##GTM_TEST_DEBUGINFO.*
 # Determine current values of dskaddr and freeaddr in journal buffer
 # Determine offset of jnl_buffer in shared memory
 # Determine offset of dskaddr in journal buffer
@@ -32,13 +32,13 @@ Region	DEFAULT
 
 Region DEFAULT is now UNFROZEN
 # Verify that journaling does get turned OFF by GT.M as part of its updates (wait for a maximum of 2 minutes)
-  Journal State                         OFF  Journal Before imaging ##FILTERED##GTM_TEST_DEBUGINFO.*
+  Journal State                                 OFF  Journal Before imaging         ##FILTERED##GTM_TEST_DEBUGINFO.*
 # Allow some updates to happen while journaling is turned OFF
 # Switch to new journal file
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 # Allow some updates to happen while journaling is turned BACK ON
 # Verify that journaling is currently turned ON
-  Journal State                          ON  Journal Before imaging ##FILTERED##GTM_TEST_DEBUGINFO.*
+  Journal State                                  ON  Journal Before imaging         ##FILTERED##GTM_TEST_DEBUGINFO.*
 # Stop GT.M updates
 # Check integrity of database and cleanup
 ##SOURCE_PATH##/mupip

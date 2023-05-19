@@ -24,10 +24,10 @@ Replication state transition 1 to 0 needs standalone access
 GTM Process starts in background...
 Try 1 to 0 : ##SOURCE_PATH##/mupip set -replic=off -reg *
 Journal States:(expected ON) : Replication States (expected ON):
-  Journal State                          ON  Journal Before imaging        TRUE
-  Journal State                          ON  Journal Before imaging        TRUE
-  Journal State                          ON  Journal Before imaging        TRUE
-  Journal State                          ON  Journal Before imaging        TRUE
+  Journal State                                  ON  Journal Before imaging                TRUE
+  Journal State                                  ON  Journal Before imaging                TRUE
+  Journal State                                  ON  Journal Before imaging                TRUE
+  Journal State                                  ON  Journal Before imaging                TRUE
 ON
 ON
 ON
@@ -35,10 +35,10 @@ ON
 Try Journal State 2 to 2 and replication 1 to 0:
 ##SOURCE_PATH##/mupip set -replic=off -journal=enable,on,before -reg *
 Journal States:(expected ON) : Replication States (expected ON):
-  Journal State                          ON  Journal Before imaging        TRUE
-  Journal State                          ON  Journal Before imaging        TRUE
-  Journal State                          ON  Journal Before imaging        TRUE
-  Journal State                          ON  Journal Before imaging        TRUE
+  Journal State                                  ON  Journal Before imaging                TRUE
+  Journal State                                  ON  Journal Before imaging                TRUE
+  Journal State                                  ON  Journal Before imaging                TRUE
+  Journal State                                  ON  Journal Before imaging                TRUE
 ON
 ON
 ON
@@ -50,10 +50,10 @@ Try Journal State 2 to 1:
 %YDB-W-REPLJNLCNFLCT, Journaling cannot be turned OFF/DISABLED on database file ##TEST_PATH##/c.dat as the replication state is ON and must also be turned OFF/DISABLED in the same command
 %YDB-W-REPLJNLCNFLCT, Journaling cannot be turned OFF/DISABLED on database file ##TEST_PATH##/mumps.dat as the replication state is ON and must also be turned OFF/DISABLED in the same command
 Journal States:(expected ON) : Replication States (expected ON):
-  Journal State                          ON  Journal Before imaging        TRUE
-  Journal State                          ON  Journal Before imaging        TRUE
-  Journal State                          ON  Journal Before imaging        TRUE
-  Journal State                          ON  Journal Before imaging        TRUE
+  Journal State                                  ON  Journal Before imaging                TRUE
+  Journal State                                  ON  Journal Before imaging                TRUE
+  Journal State                                  ON  Journal Before imaging                TRUE
+  Journal State                                  ON  Journal Before imaging                TRUE
 ON
 ON
 ON
@@ -65,10 +65,10 @@ Try Journal DISABLED:
 %YDB-W-REPLJNLCNFLCT, Journaling cannot be turned OFF/DISABLED on database file ##TEST_PATH##/c.dat as the replication state is ON and must also be turned OFF/DISABLED in the same command
 %YDB-W-REPLJNLCNFLCT, Journaling cannot be turned OFF/DISABLED on database file ##TEST_PATH##/mumps.dat as the replication state is ON and must also be turned OFF/DISABLED in the same command
 Journal States:(expected ON) : Replication States (expected ON):
-  Journal State                          ON  Journal Before imaging        TRUE
-  Journal State                          ON  Journal Before imaging        TRUE
-  Journal State                          ON  Journal Before imaging        TRUE
-  Journal State                          ON  Journal Before imaging        TRUE
+  Journal State                                  ON  Journal Before imaging                TRUE
+  Journal State                                  ON  Journal Before imaging                TRUE
+  Journal State                                  ON  Journal Before imaging                TRUE
+  Journal State                                  ON  Journal Before imaging                TRUE
 ON
 ON
 ON
@@ -103,10 +103,10 @@ $gtm_tst/com/mupip_rollback.csh -resync=1 -lost=alllost.glo *
 %YDB-S-JNLSUCCESS, Rollback successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 Journal States:(expected ON) : Replication States (expected ON):
-  Journal State               [inactive] ON  Journal Before imaging        TRUE
-  Journal State               [inactive] ON  Journal Before imaging        TRUE
-  Journal State               [inactive] ON  Journal Before imaging        TRUE
-  Journal State               [inactive] ON  Journal Before imaging        TRUE
+  Journal State                       [inactive] ON  Journal Before imaging                TRUE
+  Journal State                       [inactive] ON  Journal Before imaging                TRUE
+  Journal State                       [inactive] ON  Journal Before imaging                TRUE
+  Journal State                       [inactive] ON  Journal Before imaging                TRUE
 ON
 ON
 ON
@@ -129,10 +129,10 @@ Now switch replication state 1 to 0
 %YDB-I-REPLSTATE, Replication state for region CREG is now OFF
 %YDB-I-REPLSTATE, Replication state for region DEFAULT is now OFF
 Journal States:(expected ON) : Replication States (expected OFF):
-  Journal State               [inactive] ON  Journal Before imaging        TRUE
-  Journal State               [inactive] ON  Journal Before imaging        TRUE
-  Journal State               [inactive] ON  Journal Before imaging        TRUE
-  Journal State               [inactive] ON  Journal Before imaging        TRUE
+  Journal State                       [inactive] ON  Journal Before imaging                TRUE
+  Journal State                       [inactive] ON  Journal Before imaging                TRUE
+  Journal State                       [inactive] ON  Journal Before imaging                TRUE
+  Journal State                       [inactive] ON  Journal Before imaging                TRUE
 OFF
 OFF
 OFF
@@ -143,19 +143,19 @@ Test Case 40
 Transition of replication state 0 to 1 needs standalone access
 GTM Process starts in background...
 Journal States:(expected ON) : Replication States (expected OFF):
-  Journal State                          ON  Journal Before imaging        TRUE
-  Journal State                          ON  Journal Before imaging        TRUE
-  Journal State                          ON  Journal Before imaging        TRUE
-  Journal State                          ON  Journal Before imaging        TRUE
+  Journal State                                  ON  Journal Before imaging                TRUE
+  Journal State                                  ON  Journal Before imaging                TRUE
+  Journal State                                  ON  Journal Before imaging                TRUE
+  Journal State                                  ON  Journal Before imaging                TRUE
 OFF
 OFF
 OFF
 OFF
 Journal States:(expected ON) : Replication States (expected OFF):
-  Journal State                          ON  Journal Before imaging        TRUE
-  Journal State                          ON  Journal Before imaging        TRUE
-  Journal State                          ON  Journal Before imaging        TRUE
-  Journal State                          ON  Journal Before imaging        TRUE
+  Journal State                                  ON  Journal Before imaging                TRUE
+  Journal State                                  ON  Journal Before imaging                TRUE
+  Journal State                                  ON  Journal Before imaging                TRUE
+  Journal State                                  ON  Journal Before imaging                TRUE
 OFF
 OFF
 OFF
@@ -193,10 +193,10 @@ Now switch replication state 0 to 1
 %YDB-I-REPLSTATE, Replication state for region CREG is now ON
 %YDB-I-REPLSTATE, Replication state for region DEFAULT is now ON
 Journal States:(expected ON) : Replication States (expected ON):
-  Journal State               [inactive] ON  Journal Before imaging        TRUE
-  Journal State               [inactive] ON  Journal Before imaging        TRUE
-  Journal State               [inactive] ON  Journal Before imaging        TRUE
-  Journal State               [inactive] ON  Journal Before imaging        TRUE
+  Journal State                       [inactive] ON  Journal Before imaging                TRUE
+  Journal State                       [inactive] ON  Journal Before imaging                TRUE
+  Journal State                       [inactive] ON  Journal Before imaging                TRUE
+  Journal State                       [inactive] ON  Journal Before imaging                TRUE
 ON
 ON
 ON

@@ -1,17 +1,17 @@
 # Null subscript set to never
 Database file ##TEST_PATH##/mumps.dat now has null subscripts set to NEVER   
-  Null subscripts                     NEVER  Free blocks             0x00000062
+  Null subscripts                             NEVER  Free blocks             0x0000000000000062
 # Null subscript set to existing
 Database file ##TEST_PATH##/mumps.dat now has null subscripts set to EXISTING
-  Null subscripts                  EXISTING  Free blocks             0x00000062
+  Null subscripts                          EXISTING  Free blocks             0x0000000000000062
 # Null subscript set to always
 Database file ##TEST_PATH##/mumps.dat now has null subscripts set to ALWAYS  
-  Null subscripts                    ALWAYS  Free blocks             0x00000062
+  Null subscripts                            ALWAYS  Free blocks             0x0000000000000062
 # Null subscript set to an option not listed (expecting an error)
 %YDB-E-CLIERR, Unrecognized option : SOMETIMES
 # Null collation set to M
 Database file ##TEST_PATH##/mumps.dat is now using M standard null collation
-  Standard Null Collation              TRUE  Free space              0x00000000
+  Standard Null Collation                      TRUE  Free space                      0x00000000
 # Null collation set to GT.M
 Database file ##TEST_PATH##/mumps.dat is now using GT.M null collation      
-  Standard Null Collation             FALSE  Free space              0x00000000
+  Standard Null Collation                     FALSE  Free space                      0x00000000

@@ -82,7 +82,7 @@ Database file name      ##TEST_PATH##/mumps.dat
  Blocks to Upgrade Adjustment                    0 [0x00000000]
  End of Data                             ##FILTERED##
  Prev Recovery End of Data                       0 [0x00000000]
- Endian Format      ##FILTERED####ENDIAN##
+ Endian Format              ##FILTERED####ENDIAN##
  Journal Creation Time         ..../../.. ..:..:..
  Time of last update           ..../../.. ..:..:..
  Begin Transaction                               1 [0x0000000000000001]
@@ -165,7 +165,7 @@ PASSED
 -----------------------------------------------------------
 With backward option; all should fail
 Copy backup database
-  Journal State               [inactive] ON  Journal Before imaging       FALSE
+  Journal State                       [inactive] ON  Journal Before imaging               FALSE
 mupip journal -recover -backward mumps.mjl
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 %YDB-E-JNLNOBIJBACK, MUPIP JOURNAL BACKWARD cannot continue as journal file ##TEST_PATH##/mumps.mjl does not have before image journaling
@@ -223,7 +223,7 @@ Database file name      ##TEST_PATH##/mumps.dat
  Blocks to Upgrade Adjustment                    0 [0x00000000]
  End of Data                             ##FILTERED##
  Prev Recovery End of Data                       0 [0x00000000]
- Endian Format      ##FILTERED####ENDIAN##
+ Endian Format              ##FILTERED####ENDIAN##
  Journal Creation Time         ..../../.. ..:..:..
  Time of last update           ..../../.. ..:..:..
  Begin Transaction                               1 [0x0000000000000001]

@@ -14,25 +14,25 @@ Region DEFAULT is now FROZEN
 All requested regions frozen
 # Test that endiancvt is not affected by csd->freeze
 # Test that csd->freeze gets reset to 0 in endian-converted db
-  Cache freeze id                0x00000000  Flush timer            00:00:01:00
-  Freeze match                   0x00000000  Flush trigger                  960
-  Freeze online                       FALSE  Freeze online autorelease    FALSE
-  Database file encrypted      ##FILTERED##  Inst Freeze on Error         ##FILTERED##
+  Cache freeze id                        0x00000000  Flush timer                    00:00:01:00
+  Freeze match                           0x00000000  Flush trigger                          960
+  Freeze online                               FALSE  Freeze online autorelease            FALSE
+  Database file encrypted              ##FILTERED##  Inst Freeze on Error                 ##FILTERED##
 # Turn OFF freeze before proceeding to next test
 Region DEFAULT is now UNFROZEN
 All requested regions unfrozen
 
 ----------------------------------------------------------------------
 # Set kill_in_prog to non-zero value
-  Mutex Queue Slots                    1024  KILLs in progress               10
+  Mutex Queue Slots                            1024  KILLs in progress                       10
 # Test that endiancvt does not proceed if kill_in_prog is non-zero
 %YDB-E-NOENDIANCVT, Unable to convert the endian format of file mumps.dat due to kills in progress
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 # Test that endiancvt proceeds even if kill_in_prog is non-zero as long as OVERRIDE is specified
 # Test that endiancvt preserves the kill_in_prog value as part of the conversion
-  Mutex Queue Slots                    1024  KILLs in progress               10
+  Mutex Queue Slots                            1024  KILLs in progress                       10
 # Set kill_in_prog back to 0 before proceeding to next test
-  Mutex Queue Slots                    1024  KILLs in progress                0
+  Mutex Queue Slots                            1024  KILLs in progress                        0
 
 ----------------------------------------------------------------------
 # Test that endiancvt does not proceed if rc_srv_cnt is non-zero
@@ -82,7 +82,7 @@ Minor db version is the same
 ##SUSPEND_OUTPUT ASYNCIO
 # Set desired_db_format to V4
 Database file ##TEST_PATH##/mumps.dat now has desired DB format V4
-  Maximum TN Warn        0x00000000D7FFFFFF  Desired DB Format               V4
+  Maximum TN Warn                0x00000000D7FFFFFF  Desired DB Format                       V4
 # Test that endiancvt does not proceed if desired_db_format is V4
 %GTM-E-NOENDIANCVT, Unable to convert the endian format of file mumps.dat due to database format is not the current version
 %GTM-E-NOENDIANCVT, Unable to convert the endian format of file mumps.dat due to some blocks are not upgraded to the current version
@@ -91,7 +91,7 @@ Database file ##TEST_PATH##/mumps.dat now has desired DB format V4
 %GTM-E-NOENDIANCVT, Unable to convert the endian format of file mumps.dat due to database format is not the current version
 %GTM-E-NOENDIANCVT, Unable to convert the endian format of file mumps.dat due to some blocks are not upgraded to the current version
 %GTM-E-MUNOACTION, MUPIP unable to perform requested action
-  Maximum TN Warn        0x00000000D7FFFFFF  Desired DB Format               V4
+  Maximum TN Warn                0x00000000D7FFFFFF  Desired DB Format                       V4
 # Set desired_db_format back to V6 before proceeding to next test
 Database file ##TEST_PATH##/mumps.dat now has desired DB format V6
 
@@ -99,7 +99,7 @@ Database file ##TEST_PATH##/mumps.dat now has desired DB format V6
 # Set fully_upgraded to FALSE
 
 Region DEFAULT : MUPIP REORG DOWNGRADE started
-Region DEFAULT : Desired DB Format set to V4 by MUPIP REORG DOWNGRADE
+Region DEFAULT : Desired DB Format         set to V4 by MUPIP REORG DOWNGRADE
 Region DEFAULT : Started processing from block number [0x00000000]
 Region DEFAULT : Stopped processing at block number [0x00000065]
 Region DEFAULT : Statistics : Blocks Read From Disk (Bitmap)     : 0x00000001
@@ -126,7 +126,7 @@ Database file ##TEST_PATH##/mumps.dat now has desired DB format V6
 # Set fully_upgraded back to TRUE before proceeding to next test
 
 Region DEFAULT : MUPIP REORG UPGRADE started
-Region DEFAULT : Desired DB Format remains at V6 after MUPIP REORG UPGRADE
+Region DEFAULT : Desired DB Format         remains at V6 after MUPIP REORG UPGRADE
 Region DEFAULT : Started processing from block number [0x00000000]
 Region DEFAULT : Stopped processing at block number [0x00000065]
 Region DEFAULT : Statistics : Blocks Read From Disk (Bitmap)     : 0x00000001

@@ -153,8 +153,8 @@ Region	AREG
 
 DSE> %YDB-I-BLKSIZ512, Block size 0 rounds to 512
 DSE> --------------------- Test 12 ---------------------
-  Reserved Bytes                          0  Block size (in bytes)          512
-  Create in progress                  FALSE  Modified cache blocks            0
+  Reserved Bytes                                  0  Block size (in bytes)                  512
+  Create in progress                          FALSE  Modified cache blocks                    0
 --------------------- Test 13 ---------------------
 
 File  	##TEST_PATH##/a.dat
@@ -162,7 +162,7 @@ Region	AREG
 
 DSE> %YDB-I-BLKSIZ512, Block size 1023 rounds to 1024
 DSE> --------------------- Test 14 ---------------------
-  Reserved Bytes                          0  Block size (in bytes)         1024
+  Reserved Bytes                                  0  Block size (in bytes)                 1024
 --------------------- Test 15 ---------------------
 
 File  	##TEST_PATH##/a.dat
@@ -223,14 +223,14 @@ Region	AREG
 
 DSE> %YDB-I-TIMRBADVAL, Bad value specified.  Timer not changed.
 DSE> DSE> --------------------- Test 23 ---------------------
-  Cache freeze id                0x00000000  Flush timer            00:00:00:02
+  Cache freeze id                        0x00000000  Flush timer                    00:00:00:02
 --------------------- Test 24 ---------------------
 
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
 DSE> DSE> --------------------- Test 25 ---------------------
-  Cache freeze id                0x00000000  Flush timer            00:00:01:00
+  Cache freeze id                        0x00000000  Flush timer                    00:00:01:00
 --------------------- Test 26 ---------------------
 
 File  	##TEST_PATH##/a.dat
@@ -238,14 +238,14 @@ Region	AREG
 
 DSE> %YDB-I-TIMRBADVAL, Bad value specified.  Timer not changed.
 DSE> --------------------- Test 27 ---------------------
-  Cache freeze id                0x00000000  Flush timer            00:00:01:00
+  Cache freeze id                        0x00000000  Flush timer                    00:00:01:00
 --------------------- Test 28 ---------------------
 
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
 DSE> DSE> --------------------- Test 29 ---------------------
-  Cache freeze id                0x00000000  Flush timer            01:00:00:00
+  Cache freeze id                        0x00000000  Flush timer                    01:00:00:00
 --------------------- Test 30 ---------------------
 
 File  	##TEST_PATH##/a.dat
@@ -253,7 +253,7 @@ Region	AREG
 
 DSE> %YDB-I-TIMRBADVAL, Bad value specified.  Timer not changed.
 DSE> --------------------- Test 31 ---------------------
-  Cache freeze id                0x00000000  Flush timer            01:00:00:00
+  Cache freeze id                        0x00000000  Flush timer                    01:00:00:00
 --------------------- Test 32 ---------------------
 --------------------- Test 33 ---------------------
 
@@ -262,22 +262,22 @@ Region	AREG
 
 DSE> %YDB-I-TIMRBADVAL, Bad value specified.  Timer not changed.
 DSE> --------------------- Test 34 ---------------------
-  Cache freeze id                0x00000000  Flush timer            01:00:00:00
-  Cache freeze id                0x00000000  Flush timer            01:00:00:00
+  Cache freeze id                        0x00000000  Flush timer                    01:00:00:00
+  Cache freeze id                        0x00000000  Flush timer                    01:00:00:00
 --------------------- Test 35 ---------------------
 
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
 DSE> DSE> DSE> --------------------- Test 36 ---------------------
-  Freeze match                   0x00000000  Flush trigger                 2048
+  Freeze match                           0x00000000  Flush trigger                         2048
 --------------------- Test 37 ---------------------
 
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
 DSE> DSE> DSE> --------------------- Test 38 ---------------------
-  Freeze match                   0x00000000  Flush trigger                 1024
+  Freeze match                           0x00000000  Flush trigger                         1024
 --------------------- Test 39 ---------------------
 # Test that MUPIP JOURNAL EXTRACT shows the DSE commands as AIMG records
 ##SUSPEND_OUTPUT NON_REPLIC

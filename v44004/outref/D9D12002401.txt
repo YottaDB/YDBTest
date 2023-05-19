@@ -30,22 +30,22 @@ mumps.dat
 %YDB-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/a.dat
 %YDB-W-MUNOFINISH, MUPIP unable to finish all requested actions
 Region          AREG
-  Journal State                    DISABLED
+  Journal State                            DISABLED
 Region          BREG
-  Journal State               [inactive] ON  Journal Before imaging##FILTERED##
-  Journal Yield Limit                     8  Journal Sync IO              FALSE
+  Journal State                       [inactive] ON  Journal Before imaging##FILTERED##
+  Journal Yield Limit                             8  Journal Sync IO                      FALSE
 Region          CREG
-  Journal State               [inactive] ON  Journal Before imaging##FILTERED##
-  Journal Yield Limit                     8  Journal Sync IO              FALSE
+  Journal State                       [inactive] ON  Journal Before imaging##FILTERED##
+  Journal Yield Limit                             8  Journal Sync IO                      FALSE
 Region          DEFAULT
-  Journal State               [inactive] ON  Journal Before imaging##FILTERED##
-  Journal Yield Limit                     8  Journal Sync IO               TRUE
+  Journal State                       [inactive] ON  Journal Before imaging##FILTERED##
+  Journal Yield Limit                             8  Journal Sync IO                       TRUE
 Region          DREG
-  Journal State               [inactive] ON  Journal Before imaging##FILTERED##
-  Journal Yield Limit                     8  Journal Sync IO              FALSE
+  Journal State                       [inactive] ON  Journal Before imaging##FILTERED##
+  Journal Yield Limit                             8  Journal Sync IO                      FALSE
 Region          EREG
-  Journal State               [inactive] ON  Journal Before imaging##FILTERED##
-  Journal Yield Limit                     8  Journal Sync IO               TRUE
+  Journal State                       [inactive] ON  Journal Before imaging##FILTERED##
+  Journal Yield Limit                             8  Journal Sync IO                       TRUE
 
 ---------- Enable journaling with ,nosync_io -----------
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
@@ -60,22 +60,22 @@ Region          EREG
 %YDB-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/a.dat
 %YDB-W-MUNOFINISH, MUPIP unable to finish all requested actions
 Region          AREG
-  Journal State                    DISABLED
+  Journal State                            DISABLED
 Region          BREG
-  Journal State               [inactive] ON  Journal Before imaging##FILTERED##
-  Journal Yield Limit                     8  Journal Sync IO              FALSE
+  Journal State                       [inactive] ON  Journal Before imaging##FILTERED##
+  Journal Yield Limit                             8  Journal Sync IO                      FALSE
 Region          CREG
-  Journal State               [inactive] ON  Journal Before imaging##FILTERED##
-  Journal Yield Limit                     8  Journal Sync IO              FALSE
+  Journal State                       [inactive] ON  Journal Before imaging##FILTERED##
+  Journal Yield Limit                             8  Journal Sync IO                      FALSE
 Region          DEFAULT
-  Journal State               [inactive] ON  Journal Before imaging##FILTERED##
-  Journal Yield Limit                     8  Journal Sync IO              FALSE
+  Journal State                       [inactive] ON  Journal Before imaging##FILTERED##
+  Journal Yield Limit                             8  Journal Sync IO                      FALSE
 Region          DREG
-  Journal State               [inactive] ON  Journal Before imaging##FILTERED##
-  Journal Yield Limit                     8  Journal Sync IO              FALSE
+  Journal State                       [inactive] ON  Journal Before imaging##FILTERED##
+  Journal Yield Limit                             8  Journal Sync IO                      FALSE
 Region          EREG
-  Journal State               [inactive] ON  Journal Before imaging##FILTERED##
-  Journal Yield Limit                     8  Journal Sync IO              FALSE
+  Journal State                       [inactive] ON  Journal Before imaging##FILTERED##
+  Journal Yield Limit                             8  Journal Sync IO                      FALSE
 
 ---------- Enable journaling with ,sync_io -----------
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
@@ -90,22 +90,22 @@ Region          EREG
 %YDB-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/a.dat
 %YDB-W-MUNOFINISH, MUPIP unable to finish all requested actions
 Region          AREG
-  Journal State                    DISABLED
+  Journal State                            DISABLED
 Region          BREG
-  Journal State               [inactive] ON  Journal Before imaging##FILTERED##
-  Journal Yield Limit                     8  Journal Sync IO               TRUE
+  Journal State                       [inactive] ON  Journal Before imaging##FILTERED##
+  Journal Yield Limit                             8  Journal Sync IO                       TRUE
 Region          CREG
-  Journal State               [inactive] ON  Journal Before imaging##FILTERED##
-  Journal Yield Limit                     8  Journal Sync IO               TRUE
+  Journal State                       [inactive] ON  Journal Before imaging##FILTERED##
+  Journal Yield Limit                             8  Journal Sync IO                       TRUE
 Region          DEFAULT
-  Journal State               [inactive] ON  Journal Before imaging##FILTERED##
-  Journal Yield Limit                     8  Journal Sync IO               TRUE
+  Journal State                       [inactive] ON  Journal Before imaging##FILTERED##
+  Journal Yield Limit                             8  Journal Sync IO                       TRUE
 Region          DREG
-  Journal State               [inactive] ON  Journal Before imaging##FILTERED##
-  Journal Yield Limit                     8  Journal Sync IO               TRUE
+  Journal State                       [inactive] ON  Journal Before imaging##FILTERED##
+  Journal Yield Limit                             8  Journal Sync IO                       TRUE
 Region          EREG
-  Journal State               [inactive] ON  Journal Before imaging##FILTERED##
-  Journal Yield Limit                     8  Journal Sync IO               TRUE
+  Journal State                       [inactive] ON  Journal Before imaging##FILTERED##
+  Journal Yield Limit                             8  Journal Sync IO                       TRUE
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

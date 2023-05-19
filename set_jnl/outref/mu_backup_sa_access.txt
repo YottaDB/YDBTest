@@ -16,8 +16,8 @@ BACKUP COMPLETED.
 DB file ##TEST_PATH##/a.dat backed up in file ./back1/a.dat
 DB file ##TEST_PATH##/mumps.dat backed up in file ./back1/mumps.dat
 Journal States:(expected DISABLED):
-  Journal State                    DISABLED
-  Journal State                    DISABLED
+  Journal State                            DISABLED
+  Journal State                            DISABLED
 ##SOURCE_PATH##/mupip backup *  -nonewjnl ./back{2} : Will succeed
 
 
@@ -26,8 +26,8 @@ BACKUP COMPLETED.
 DB file ##TEST_PATH##/a.dat backed up in file ./back2/a.dat
 DB file ##TEST_PATH##/mumps.dat backed up in file ./back2/mumps.dat
 Journal States:(expected DISABLED):
-  Journal State                    DISABLED
-  Journal State                    DISABLED
+  Journal State                            DISABLED
+  Journal State                            DISABLED
 ##SOURCE_PATH##/mupip backup *  -newjnl=noprevlink ./back{3} : Will warn
 
 
@@ -38,8 +38,8 @@ BACKUP COMPLETED.
 DB file ##TEST_PATH##/a.dat backed up in file ./back3/a.dat
 DB file ##TEST_PATH##/mumps.dat backed up in file ./back3/mumps.dat
 Journal States:(expected DISABLED):
-  Journal State                    DISABLED
-  Journal State                    DISABLED
+  Journal State                            DISABLED
+  Journal State                            DISABLED
 ##SOURCE_PATH##/mupip backup *  -newjnl=prevlink ./back{4} : Will warn
 
 
@@ -50,8 +50,8 @@ BACKUP COMPLETED.
 DB file ##TEST_PATH##/a.dat backed up in file ./back4/a.dat
 DB file ##TEST_PATH##/mumps.dat backed up in file ./back4/mumps.dat
 Journal States:(expected DISABLED):
-  Journal State                    DISABLED
-  Journal State                    DISABLED
+  Journal State                            DISABLED
+  Journal State                            DISABLED
 Stop the background processes
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
@@ -96,11 +96,11 @@ DB file ##TEST_PATH##/c.dat backed up in file ./back5/c.dat
 DB file ##TEST_PATH##/d.dat backed up in file ./back5/d.dat
 DB file ##TEST_PATH##/mumps.dat backed up in file ./back5/mumps.dat
 Journal States:
-##TEST_AWK  Journal State                          ON  Journal Before imaging       ( TRUE|FALSE)
-##TEST_AWK  Journal State                          ON  Journal Before imaging       ( TRUE|FALSE)
-  Journal State                    DISABLED
-  Journal State                    DISABLED
-  Journal State                    DISABLED
+##TEST_AWK  Journal State                                  ON  Journal Before imaging               ( TRUE|FALSE)
+##TEST_AWK  Journal State                                  ON  Journal Before imaging               ( TRUE|FALSE)
+  Journal State                            DISABLED
+  Journal State                            DISABLED
+  Journal State                            DISABLED
 ##SOURCE_PATH##/mupip backup *  -nonewjnl ./back{6}
 
 
@@ -112,11 +112,11 @@ DB file ##TEST_PATH##/c.dat backed up in file ./back6/c.dat
 DB file ##TEST_PATH##/d.dat backed up in file ./back6/d.dat
 DB file ##TEST_PATH##/mumps.dat backed up in file ./back6/mumps.dat
 Journal States:
-##TEST_AWK  Journal State                          ON  Journal Before imaging       ( TRUE|FALSE)
-##TEST_AWK  Journal State                          ON  Journal Before imaging       ( TRUE|FALSE)
-  Journal State                    DISABLED
-  Journal State                    DISABLED
-  Journal State                    DISABLED
+##TEST_AWK  Journal State                                  ON  Journal Before imaging               ( TRUE|FALSE)
+##TEST_AWK  Journal State                                  ON  Journal Before imaging               ( TRUE|FALSE)
+  Journal State                            DISABLED
+  Journal State                            DISABLED
+  Journal State                            DISABLED
 ##SOURCE_PATH##/mupip backup *  -newjnl=noprevlink ./back{7}
 
 
@@ -137,11 +137,11 @@ DB file ##TEST_PATH##/c.dat backed up in file ./back7/c.dat
 DB file ##TEST_PATH##/d.dat backed up in file ./back7/d.dat
 DB file ##TEST_PATH##/mumps.dat backed up in file ./back7/mumps.dat
 Journal States:
-##TEST_AWK  Journal State                          ON  Journal Before imaging       ( TRUE|FALSE)
-##TEST_AWK  Journal State                          ON  Journal Before imaging       ( TRUE|FALSE)
-  Journal State                    DISABLED
-  Journal State                    DISABLED
-  Journal State                    DISABLED
+##TEST_AWK  Journal State                                  ON  Journal Before imaging               ( TRUE|FALSE)
+##TEST_AWK  Journal State                                  ON  Journal Before imaging               ( TRUE|FALSE)
+  Journal State                            DISABLED
+  Journal State                            DISABLED
+  Journal State                            DISABLED
 ##SOURCE_PATH##/mupip backup *  -newjnl=prevlink ./back{8}
 
 
@@ -160,11 +160,11 @@ DB file ##TEST_PATH##/c.dat backed up in file ./back8/c.dat
 DB file ##TEST_PATH##/d.dat backed up in file ./back8/d.dat
 DB file ##TEST_PATH##/mumps.dat backed up in file ./back8/mumps.dat
 Journal States:
-##TEST_AWK  Journal State                          ON  Journal Before imaging       ( TRUE|FALSE)
-##TEST_AWK  Journal State                          ON  Journal Before imaging       ( TRUE|FALSE)
-  Journal State                    DISABLED
-  Journal State                    DISABLED
-  Journal State                    DISABLED
+##TEST_AWK  Journal State                                  ON  Journal Before imaging               ( TRUE|FALSE)
+##TEST_AWK  Journal State                                  ON  Journal Before imaging               ( TRUE|FALSE)
+  Journal State                            DISABLED
+  Journal State                            DISABLED
+  Journal State                            DISABLED
 Stop the background processes
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
