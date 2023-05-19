@@ -3,7 +3,7 @@
 # Copyright (c) 2005-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -297,7 +297,7 @@ BEGIN {
 	if ($0 ~ /PID        NODE             USER         TERM JPV_TIME/) jnl_flag1line++
 	###
 	# Journal file label
-	strexp = "Journal file label      YDBJNL44"
+	strexp = "Journal file label      YDBJNL45"
 	strrep = "Journal file label      ##FILTERED##"
 	gsub(strexp,strrep)
 	# Journal Creation Time         2009/03/12 08:24:17
