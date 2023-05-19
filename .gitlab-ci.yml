@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2020-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -33,4 +33,4 @@ build-imptp-rs:
   script:
     - apt-get update
     - apt-get install -yq --no-install-recommends build-essential bindgen
-    - cd com/imptp-rs; cargo check --no-default-features
+    - cd com/imptp-rs; . $HOME/.cargo/env; cargo check --no-default-features
