@@ -34,7 +34,7 @@ DSE>
     Path--blk:off
 	4
 
-DSE> %YDB-E-BLKINVALID, 00000232 is not a valid block as database file ##TEST_PATH##/a.dat has 00000065 total blocks
+DSE> %YDB-E-BLKINVALID, 0x0000000000000232 is not a valid block as database file ##TEST_PATH##/a.dat has 0x0000000000000065 total blocks
 DSE> DSE> 
 File  	##TEST_PATH##/a.dat
 Region	AREG
@@ -45,7 +45,7 @@ Next free block is 2B.
 DSE> 
 Next free block is 2B.
 
-DSE> %YDB-E-BLKINVALID, 00000232 is not a valid block as database file ##TEST_PATH##/a.dat has 00000065 total blocks
+DSE> %YDB-E-BLKINVALID, 0x0000000000000232 is not a valid block as database file ##TEST_PATH##/a.dat has 0x0000000000000065 total blocks
 DSE> DSE> 
 File  	##TEST_PATH##/a.dat
 Region	AREG
@@ -57,7 +57,7 @@ Key found in block  27.
 	1:10,	2:10,
     Global tree path
     Path--blk:off
-	4:1C0,	27:70,
+	4:24C,	27:70,
 DSE> 
 Key not found, would be in block  27.
     Directory path
@@ -65,7 +65,7 @@ Key not found, would be in block  27.
 	1:10,	2:10,
     Global tree path
     Path--blk:off
-	4:1C0,	27:11B,
+	4:24C,	27:11B,
 DSE> DSE> 
 File  	##TEST_PATH##/a.dat
 Region	AREG
@@ -107,23 +107,23 @@ File  	##TEST_PATH##/a.dat
 Region	AREG
 
 DSE> DSE> 
-	Left sibling	Current block	Right sibling
-	none		0x00000003	0x00000005
+	Left sibling		Current block		Right sibling
+	none			0x0000000000000003	0x0000000000000005
 
 DSE> 
-	Left sibling	Current block	Right sibling
-	0x00000026	0x00000027	none
+	Left sibling		Current block		Right sibling
+	0x0000000000000026	0x0000000000000027	none
 
 DSE> 
-	Left sibling	Current block	Right sibling
-	0x00000025	0x00000026	0x00000027
+	Left sibling		Current block		Right sibling
+	0x0000000000000025	0x0000000000000026	0x0000000000000027
 
 DSE> DSE> 
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
 DSE> DSE> %YDB-E-CANTBITMAP, Can't perform this operation on a bit map (block at a 200 hexadecimal boundary)
-DSE> %YDB-E-BLKINVALID, 00000230 is not a valid block as database file ##TEST_PATH##/a.dat has 00000065 total blocks
+DSE> %YDB-E-BLKINVALID, 0x0000000000000230 is not a valid block as database file ##TEST_PATH##/a.dat has 0x0000000000000065 total blocks
 DSE> DSE> 
 File  	##TEST_PATH##/a.dat
 Region	AREG
@@ -136,7 +136,7 @@ DSE>
 Key found in block  3.
     Directory path
     Path--blk:off
-	1:10,	2:22,
+	1:10,	2:26,
     Global tree path
     Path--blk:off
 	4:10,	3:5A,
@@ -152,7 +152,7 @@ DSE>
 Key found in block  3.
     Directory path
     Path--blk:off
-	1:10,	2:22,
+	1:10,	2:26,
     Global tree path
     Path--blk:off
 	4:10,	3:4D,

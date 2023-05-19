@@ -10,8 +10,8 @@ Region	DEFAULT
 DSE> Hex:  7FFFFFFF   Dec:  2147483647
 DSE> Hex:  80000000   Dec:  2147483648
 DSE> Hex:  FFFFFFFF   Dec:  4294967295
-DSE> Error: cannot convert 18446744073709551616 value to 64-bit unsigned decimal number.
-DSE> Error: cannot convert 18446744073709551617 value to 64-bit unsigned decimal number.
+DSE> %YDB-E-UNUM64ERR, Error: cannot convert 18446744073709551616 value to 64 bit unsigned decimal or hexadecimal number
+DSE> %YDB-E-UNUM64ERR, Error: cannot convert 18446744073709551617 value to 64 bit unsigned decimal or hexadecimal number
 DSE> Hex:  31   Dec:  49
 DSE> Hex:  FFFFFFFFFFFFFFFF   Dec:  18446744073709551615
 DSE> Hex:  FFFFFFFFFFFFFFF6   Dec:  18446744073709551606
@@ -20,7 +20,7 @@ DSE> Hex:  FFFFFFFFFB3B4C00   Dec:  18446744073629551616
 DSE> DSE> Hex:  7FFFFFFF   Dec:  2147483647
 DSE> Hex:  80000000   Dec:  2147483648
 DSE> Hex:  FFFFFFFF   Dec:  4294967295
-DSE> Error: cannot convert 10000000000000000 value to hex number.
+DSE> %YDB-E-HEX64ERR, Error: cannot convert 10000000000000000 value to 64 bit hexadecimal number
 DSE> Hex:  FFFFFFFFFFFFFFFF   Dec:  18446744073709551615
 DSE> Hex:  FFFFFFFF80000001   Dec:  18446744071562067969
 DSE> Hex:  FFFFFFFF80000000   Dec:  18446744071562067968

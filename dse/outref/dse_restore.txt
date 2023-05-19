@@ -62,16 +62,16 @@ DSE>
 Restoring block 2 from version 1 of block 3
 
 DSE> 
-Block 3   Size 61   Level 0   TN 7 V6
+Block 3   Size 61   Level 0   TN 7 V7
 
 DSE> 
-Block 2   Size 61   Level 0   TN 7 V6
+Block 2   Size 61   Level 0   TN 7 V7
 
 DSE> 
 Restoring block 2 from version 1
 
 DSE> 
-Block 2   Size 1F   Level 0   TN 1 V6
+Block 2   Size 23   Level 0   TN 1 V7
 
 DSE> DSE> 
 File  	##TEST_PATH##/a.dat
@@ -90,7 +90,7 @@ DSE> DSE>
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-DSE> %YDB-E-BLKINVALID, 00000232 is not a valid block as database file ##TEST_PATH##/mumps.dat has 00000065 total blocks
+DSE> %YDB-E-BLKINVALID, 0x0000000000000232 is not a valid block as database file ##TEST_PATH##/mumps.dat has 0x0000000000000065 total blocks
 DSE> DSE> 
 File  	##TEST_PATH##/a.dat
 Region	AREG
@@ -117,7 +117,7 @@ Restoring block 0 from version 1 of block 3
 
 DSE> 
 Checking integrity of block 0:
-%YDB-I-DBLVLINC, BLK=0x00000000 :              LVL=0x00, Local bitmap block level incorrect
+%YDB-I-DBLVLINC, BLK=0x0000000000000000 :              LVL=0x00, Local bitmap block level incorrect
 
 DSE> 
 Restoring block 0 from version 1
@@ -143,7 +143,7 @@ DSE>
 Restoring block 3 from version 1 of block 2 in region AREG
 
 DSE> 
-##TEST_AWKBlock 3   Size 25   Level 0   TN 1 V[0-9][0-9]*
+##TEST_AWKBlock 3   Size 29   Level 0   TN 1 V[0-9][0-9]*
 
 DSE> 
 Restoring block 3 from version 1
@@ -172,7 +172,7 @@ Saving version 1 of block 64
 DSE> DSE> 
 Restoring block 4 from version 1 of block 64
 
-%YDB-E-AIMGBLKFAIL, After image build for block 00000004 in region ##TEST_PATH##/a.dat failed in DSE or MUPIP
+%YDB-E-AIMGBLKFAIL, After image build for block 0x0000000000000004 in region ##TEST_PATH##/a.dat failed in DSE or MUPIP
 DSE> 
 Removing version 1 of block 64
 DSE> DSE> 

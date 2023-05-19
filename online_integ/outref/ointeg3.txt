@@ -17,16 +17,16 @@ Integ of region DEFAULT
 
 Block:Offset Level
 %YDB-W-DBLOCMBINC,         Nature: #Benign
-       0:0     FF  Local bit map incorrect
+               0:0     FF  Local bit map incorrect
 %YDB-E-DBMRKFREE,         Nature: #DANGER***
-       3:0     FF  Block incorrectly marked free
+               3:0     FF  Block incorrectly marked free
 
 Total error count from integ:		2.
 
 Type           Blocks         Records          % Used      Adjacent
 
-Directory           2               2           0.671            NA
-Index               1               1           0.585             1
+Directory           2               2           0.769            NA
+Index               1               1           0.683             1
 Data                1               1           0.585             1
 Free               96              NA              NA            NA
 Total             100               4              NA             2
@@ -45,22 +45,22 @@ Integ of region DEFAULT
 
 Block:Offset Level
 %YDB-E-DBINVGBL,         Nature: #Data
-       3:10     0  Invalid mixing of global names
-                   Directory Path:  1:10, 2:10
-                   Path:  4:10, 3:10
+               3:10     0  Invalid mixing of global names
+                           Directory Path:  1:10, 2:10
+                           Path:  4:10, 3:10
 Keys from ^a to the end are suspect.
 %YDB-E-DBBDBALLOC,         Nature: #Data
-       3:0      0  Block doubly allocated
-                   Directory Path:  1:10, 2:1F
-                   Path:  5:10, 3:0
+               3:0      0  Block doubly allocated
+                           Directory Path:  1:10, 2:23
+                           Path:  5:10, 3:0
 Keys from ^z to the end are suspect.
 
 Total error count from integ:		2.
 
 Type           Blocks         Records          % Used      Adjacent
 
-Directory           2               3           0.854            NA
-Index               2               2           0.585             2
+Directory           2               3           1.000            NA
+Index               2               2           0.683             2
 Data                1               1           0.585             1
 Free               95              NA              NA            NA
 Total             100               6              NA             3

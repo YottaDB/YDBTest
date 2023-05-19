@@ -97,10 +97,10 @@ YDB>
 MUPIP backup of database file ##TEST_PATH##/backup.dat to ##TEST_PATH##/backup-dir/backup.bak3
 DB file ##TEST_PATH##/backup.dat incrementally backed up in file ##TEST_PATH##/backup-dir/backup.bak3
 ##SUSPEND_OUTPUT COLLATION
-232 blocks saved.
+233 blocks saved.
 ##ALLOW_OUTPUT COLLATION
 ##SUSPEND_OUTPUT NON_COLLATION
-226 blocks saved.
+227 blocks saved.
 ##ALLOW_OUTPUT NON_COLLATION
 ##SUSPEND_OUTPUT MM_FILE_NO_EXT
 Transactions from 0x0000000000000C02 to 0x0000000000002C03 are backed up.
@@ -115,10 +115,10 @@ BACKUP COMPLETED.
 MUPIP backup of database file ##TEST_PATH##/backup.dat to ##TEST_PATH##/backup-dir/backup.bak33
 DB file ##TEST_PATH##/backup.dat incrementally backed up in file ##TEST_PATH##/backup-dir/backup.bak33
 ##SUSPEND_OUTPUT COLLATION
-233 blocks saved.
+234 blocks saved.
 ##ALLOW_OUTPUT COLLATION
 ##SUSPEND_OUTPUT NON_COLLATION
-227 blocks saved.
+228 blocks saved.
 ##ALLOW_OUTPUT NON_COLLATION
 ##SUSPEND_OUTPUT MM_FILE_NO_EXT
 Transactions from 0x0000000000000402 to 0x0000000000002C03 are backed up.
@@ -133,10 +133,10 @@ BACKUP COMPLETED.
 MUPIP backup of database file ##TEST_PATH##/backup.dat to ##TEST_PATH##/backup-dir/backup.bak333
 DB file ##TEST_PATH##/backup.dat incrementally backed up in file ##TEST_PATH##/backup-dir/backup.bak333
 ##SUSPEND_OUTPUT COLLATION
-525 blocks saved.
+528 blocks saved.
 ##ALLOW_OUTPUT COLLATION
 ##SUSPEND_OUTPUT NON_COLLATION
-519 blocks saved.
+522 blocks saved.
 ##ALLOW_OUTPUT NON_COLLATION
 ##SUSPEND_OUTPUT MM_FILE_NO_EXT
 Transactions from 0x0000000000000001 to 0x0000000000002C03 are backed up.
@@ -221,25 +221,6 @@ RESTORE COMPLETED
 
 RESTORE COMPLETED
 ##SUSPEND_OUTPUT COLLATION
-232 blocks restored
-##ALLOW_OUTPUT COLLATION
-##SUSPEND_OUTPUT NON_COLLATION
-226 blocks restored
-##ALLOW_OUTPUT NON_COLLATION
-##SOURCE_PATH##/mupip
-##SOURCE_PATH##/mupip integ backup.dat
-No errors detected by integ.
-
-YDB>
-Do fill3^myfill("ver")
-
-YDB>
-PASS from fill3^myfill("ver")
-
-YDB>
-
-RESTORE COMPLETED
-##SUSPEND_OUTPUT COLLATION
 233 blocks restored
 ##ALLOW_OUTPUT COLLATION
 ##SUSPEND_OUTPUT NON_COLLATION
@@ -256,14 +237,33 @@ YDB>
 PASS from fill3^myfill("ver")
 
 YDB>
+
+RESTORE COMPLETED
+##SUSPEND_OUTPUT COLLATION
+234 blocks restored
+##ALLOW_OUTPUT COLLATION
+##SUSPEND_OUTPUT NON_COLLATION
+228 blocks restored
+##ALLOW_OUTPUT NON_COLLATION
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ backup.dat
+No errors detected by integ.
+
+YDB>
+Do fill3^myfill("ver")
+
+YDB>
+PASS from fill3^myfill("ver")
+
+YDB>
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/backup.dat created
 
 RESTORE COMPLETED
 ##SUSPEND_OUTPUT COLLATION
-525 blocks restored
+528 blocks restored
 ##ALLOW_OUTPUT COLLATION
 ##SUSPEND_OUTPUT NON_COLLATION
-519 blocks restored
+522 blocks restored
 ##ALLOW_OUTPUT NON_COLLATION
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *

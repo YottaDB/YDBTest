@@ -59,7 +59,7 @@ File  	##TEST_PATH##/a.dat
 Region	AREG
 
 DSE> DSE> DSE> 
-Rec:1  Blk 4  Off 10  Size 14  Cmpc 0  Ptr 50  Key ^aglobal(27)
+Rec:1  Blk 4  Off 10  Size 18  Cmpc 0  Ptr 50  Key ^aglobal(27)
 
 DSE> DSE> Error: block pointer must be specified for this index block record.
 DSE> Error: last record in blk is A
@@ -82,7 +82,7 @@ DSE> DSE>
 	1
 
 DSE> DSE> DSE> 
-Rec:1  Blk 1  Off 10  Size 14  Cmpc 0  Ptr 50  Key ^aglobal(33)
+Rec:1  Blk 1  Off 10  Size 18  Cmpc 0  Ptr 50  Key ^aglobal(33)
 
 DSE> DSE> DSE> 
 File  	##TEST_PATH##/a.dat
@@ -140,11 +140,11 @@ File  	##TEST_PATH##/a.dat
 Region	AREG
 
 DSE> DSE> 
-Block 0  Size 90  Level -1  TN 476 V6   Master Status: Free Space
+Block 0  Size 90  Level -1  TN 476 V7   Master Status: Free Space
 
 DSE> %YDB-E-CANTBITMAP, Can't perform this operation on a bit map (block at a 200 hexadecimal boundary)
 DSE> 
-Block 0  Size 90  Level -1  TN 476 V6   Master Status: Free Space
+Block 0  Size 90  Level -1  TN 476 V7   Master Status: Free Space
 
 ##SUSPEND_OUTPUT  REPLIC
 DSE> DSE> ##SOURCE_PATH##/mupip

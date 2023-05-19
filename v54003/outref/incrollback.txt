@@ -18,10 +18,10 @@ BEGIN 2 :-) Test that incremental rollback creates enough room for future global
 
 Testing nested read/write
 ERROR HANDLER STARTS
-150376146,incrb+12^incrollback,%YDB-E-TRANS2BIG, Transaction exceeded available buffer space for region DEFAULT
-^x(64793)
-transaction failed to read with block #64793
-$tlevel=3
+150376146,incrb+9^incrollback,%YDB-E-TRANS2BIG, Transaction exceeded available buffer space for region DEFAULT
+^x(64525)
+transaction failed to read with block #64525
+$tlevel=2
 ERROR HANDLER ENDS
 64792 blocks successfully read
 ERROR HANDLER STARTS

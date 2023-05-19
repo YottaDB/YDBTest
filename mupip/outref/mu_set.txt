@@ -24,7 +24,7 @@ set2.dat
 #
 # Set with a bad extension_count
 #
-%YDB-E-CLIERR, Unrecognized value: -1, Decimal integer expected
+%YDB-E-CLIERR, Unrecognized value: -1, A non-negative decimal or hexadecimal integer required
 #
 # Set with a bad extension_count
 #
@@ -78,7 +78,7 @@ set2.dat
 #
 # Set with a bad record size
 #
-%YDB-E-CLIERR, Unrecognized value: -1, Decimal integer expected
+%YDB-E-CLIERR, Unrecognized value: -1, A non-negative decimal or hexadecimal integer required
 #
 # Set with a bad record size
 #
@@ -87,7 +87,7 @@ set2.dat
 #
 # Set with a bad sleep spin limit
 #
-%YDB-E-CLIERR, Unrecognized value: -1, Decimal integer expected
+%YDB-E-CLIERR, Unrecognized value: -1, A non-negative decimal or hexadecimal integer required
 #
 # Set with a bad sleep spin limit
 #
@@ -97,7 +97,7 @@ set2.dat
 # Set with a bad spin sleep count
 #
 ##SUSPEND_OUTPUT HOST_LINUX_ARMVXL
-Error: cannot convert -1 value to hex number.
+%YDB-E-HEXERR, Error: cannot convert -1 value to hexadecimal number
 %YDB-E-SETQUALPROB, Error getting SPIN_SLEEP_MASK qualifier value
 ##ALLOW_OUTPUT HOST_LINUX_ARMVXL
 ##SUSPEND_OUTPUT HOST_LINUX_X86_64 HOST_LINUX_AARCH64
@@ -107,7 +107,7 @@ Error: cannot convert -1 value to hex number.
 #
 # Set with a bad spin sleep count
 #
-Error: cannot convert 1000000001 value to hex number.
+%YDB-E-HEXERR, Error: cannot convert 1000000001 value to hexadecimal number
 %YDB-E-SETQUALPROB, Error getting SPIN_SLEEP_MASK qualifier value
 %YDB-E-WCERRNOTCHG, Not all specified database files were changed
 #
@@ -117,14 +117,14 @@ Error: cannot convert 1000000001 value to hex number.
 #
 # Set with a bad wait disk
 #
-%YDB-E-CLIERR, Unrecognized value: -1, Decimal integer expected
+%YDB-E-CLIERR, Unrecognized value: -1, A non-negative decimal or hexadecimal integer required
 #
 # Sets with a things that won't fly because of current state
 #
-%YDB-W-MUPIPSET2BIG, 1019 too large, maximum KEY_SIZE allowed is 992
+%YDB-W-MUPIPSET2BIG, 1019 too large, maximum KEY_SIZE allowed is 984
 %YDB-I-TEXT, for current block size and reserved bytes
 %YDB-W-WCWRNNOTCHG, Not all specified database files were changed
-%YDB-W-MUPIPSET2BIG, 1000 too large, maximum RESERVED_BYTES allowed is 928
+%YDB-W-MUPIPSET2BIG, 1000 too large, maximum RESERVED_BYTES allowed is 920
 %YDB-W-WCWRNNOTCHG, Not all specified database files were changed
 60 smaller than current maximum record size 256
 %YDB-W-WCWRNNOTCHG, Not all specified database files were changed

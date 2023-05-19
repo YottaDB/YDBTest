@@ -9,13 +9,13 @@ Integ of region DEFAULT
 
 Block:Offset Level
 %YDB-E-DBKEYMN,         Nature: #DANGER***
-       1:10     1  Key too short
-                   Directory Path:  1:10
+               1:10     1  Key too short
+                           Directory Path:  1:10
 Keys from ^ to the end are suspect.
 %YDB-W-DBLOCMBINC,         Nature: #Benign
-       0:0     FF  Local bit map incorrect
+               0:0     FF  Local bit map incorrect
 %YDB-W-DBMRKBUSY,         Nature: #Benign
-       2:0     FF  Block incorrectly marked busy
+               2:0     FF  Block incorrectly marked busy
 
 Total error count from integ:		3.
 
@@ -33,7 +33,7 @@ Region	DEFAULT
 
 
 Checking integrity of block 1:
-%YDB-I-DBKEYMN, BLK=0x00000001 : OFF=0x10   : LVL=0x01, Key too short
+%YDB-I-DBKEYMN, BLK=0x0000000000000001 : OFF=0x10   : LVL=0x01, Key too short
 
 # -------------------------------------------------------------------------------------------------------
 # Changing level to trigger a DBROOTBURN Error
@@ -43,11 +43,11 @@ Integ of region DEFAULT
 
 Block:Offset Level
 %YDB-E-DBRLEVLTONE,         Nature: #DANGER***
-       1:0      0  Root level less than one
+               1:0      0  Root level less than one
 %YDB-W-DBLOCMBINC,         Nature: #Benign
-       0:0     FF  Local bit map incorrect
+               0:0     FF  Local bit map incorrect
 %YDB-W-DBMRKBUSY,         Nature: #Benign
-       2:0     FF  Block incorrectly marked busy
+               2:0     FF  Block incorrectly marked busy
 
 Total error count from integ:		3.
 
@@ -65,7 +65,7 @@ Region	DEFAULT
 
 
 Checking integrity of block 1:
-%YDB-I-DBROOTBURN, BLK=0x00000001 :              LVL=0x00, Root block has data level
+%YDB-I-DBROOTBURN, BLK=0x0000000000000001 :              LVL=0x00, Root block has data level
 
 # -------------------------------------------------------------------------------------------------------
 # Writing a global variable with a null subscript and then changing null_subscripts to false to trigger a NULLSUBSC Error
@@ -83,17 +83,17 @@ Integ of region DEFAULT
 
 Block:Offset Level
 %YDB-E-NULSUBSC,         Nature: #Data
-       3:10     0  Null subscripts are not allowed for database file: ##TEST_PATH##/mumps.dat
-                   Directory Path:  1:10, 2:10
-                   Path:  4:10, 3:10
+               3:10     0  Null subscripts are not allowed for database file: ##TEST_PATH##/mumps.dat
+                           Directory Path:  1:10, 2:10
+                           Path:  4:10, 3:10
 Keys from ^X to the end are suspect.
 
 Total error count from integ:		1.
 
 Type           Blocks         Records          % Used      Adjacent
 
-Directory           2               2           0.671            NA
-Index               1               1           0.585             1
+Directory           2               2           0.769            NA
+Index               1               1           0.683             1
 Data                1               1           0.634             1
 Free               96              NA              NA            NA
 Total             100               4              NA             2
@@ -104,7 +104,7 @@ Region	DEFAULT
 
 
 Checking integrity of block 3:
-%YDB-I-NULSUBSC, BLK=0x00000003 : OFF=0x10   : LVL=0x00, Null subscripts are not allowed for database file: ##TEST_PATH##/mumps.dat
+%YDB-I-NULSUBSC, BLK=0x0000000000000003 : OFF=0x10   : LVL=0x00, Null subscripts are not allowed for database file: ##TEST_PATH##/mumps.dat
 
   No errors detected.
 

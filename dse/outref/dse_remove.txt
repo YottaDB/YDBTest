@@ -58,7 +58,7 @@ Key found in block  27.
 	1:10,	2:10,
     Global tree path
     Path--blk:off
-	4:1C0,	27:9B,
+	4:24C,	27:9B,
 DSE> DSE> 
 Key not found, would be in block  27.
     Directory path
@@ -66,7 +66,7 @@ Key not found, would be in block  27.
 	1:10,	2:10,
     Global tree path
     Path--blk:off
-	4:1C0,	27:9B,
+	4:24C,	27:9B,
 DSE> DSE> DSE> 
 File  	##TEST_PATH##/a.dat
 Region	AREG
@@ -83,7 +83,7 @@ DSE> DSE>
 	1:10,	2:10,
     Global tree path
     Path--blk:off
-	4:1C0,	27
+	4:24C,	27
 
 DSE> Error: offset less than blk header
 DSE> Error: offset greater than blk size of 256
@@ -113,10 +113,10 @@ Region	AREG
 DSE> DSE> 
 Saving version 1 of block 4
 DSE> 
-Rec:2  Blk 4  Off 25  Size C  Cmpc 9  Ptr 5  Key ^aglobal(63.0)
+Rec:2  Blk 4  Off 29  Size 10  Cmpc 9  Ptr 5  Key ^aglobal(63.0)
 
 DSE> DSE> 
-Rec:2  Blk 4  Off 25  Size C  Cmpc 9  Ptr 5  Key ^aglobal(63.0)
+Rec:2  Blk 4  Off 29  Size 10  Cmpc 9  Ptr 5  Key ^aglobal(63.0)
 
 DSE> DSE> 
 Restoring block 4 from version 1
@@ -130,7 +130,7 @@ Saving version 1 of block 4
 DSE> Warning:  removed a star record from the end of this block.
 DSE> 
 Checking integrity of block 4:
-%YDB-I-DBSTARSIZ, BLK=0x00000004 : OFF=0x1B3  : LVL=0x01, Star record has wrong size
+%YDB-I-DBSTARSIZ, BLK=0x0000000000000004 : OFF=0x23B  : LVL=0x01, Star record has wrong size
 
 DSE> 
 Restoring block 4 from version 1
@@ -148,13 +148,13 @@ Saving version 3 of block 1
 DSE> 
 Removing version 1 of block 1
 DSE> 
-##TEST_AWKBlock 1   Size 18   Level 1   TN 0 V[0-9][0-9]*
+##TEST_AWKBlock 1   Size 1C   Level 1   TN 0 V[0-9][0-9]*
 
 DSE> 
 Restoring block 1 from version 2
 
 DSE> 
-##TEST_AWKBlock 1   Size 18   Level 1   TN 0 V[0-9][0-9]*
+##TEST_AWKBlock 1   Size 1C   Level 1   TN 0 V[0-9][0-9]*
 
 DSE> 
 Removing version 2 of block 1

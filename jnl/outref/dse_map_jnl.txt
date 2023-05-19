@@ -24,37 +24,37 @@ Integ of region DEFAULT
 
 Block:Offset Level
 %YDB-W-DBLOCMBINC,         Nature: #Benign
-       0:0     FF  Local bit map incorrect
+               0:0     FF  Local bit map incorrect
 %YDB-E-DBMRKFREE,         Nature: #DANGER***
-      20:0     FF  Block incorrectly marked free
+              20:0     FF  Block incorrectly marked free
 %YDB-E-DBMRKFREE,         Nature: #DANGER***
-      22:0     FF  Block incorrectly marked free
+              22:0     FF  Block incorrectly marked free
 %YDB-W-DBMBPFRDLBM,         Nature: #Benign
-       0:0     FF  Master bit map shows this map has space, agreeing with disk local map
+               0:0     FF  Master bit map shows this map has space, agreeing with disk local map
 %YDB-W-DBLOCMBINC,         Nature: #Benign
-     200:0     FF  Local bit map incorrect
+             200:0     FF  Local bit map incorrect
 %YDB-E-DBMRKFREE,         Nature: #DANGER***
-     210:0     FF  Block incorrectly marked free
+             210:0     FF  Block incorrectly marked free
 %YDB-E-DBMRKFREE,         Nature: #DANGER***
-     212:0     FF  Block incorrectly marked free
+             212:0     FF  Block incorrectly marked free
 %YDB-W-DBMBPFRDLBM,         Nature: #Benign
-     200:0     FF  Master bit map shows this map has space, agreeing with disk local map
+             200:0     FF  Master bit map shows this map has space, agreeing with disk local map
 %YDB-W-DBLOCMBINC,         Nature: #Benign
-     400:0     FF  Local bit map incorrect
+             400:0     FF  Local bit map incorrect
 %YDB-E-DBMRKFREE,         Nature: #DANGER***
-     410:0     FF  Block incorrectly marked free
+             410:0     FF  Block incorrectly marked free
 %YDB-E-DBMRKFREE,         Nature: #DANGER***
-     411:0     FF  Block incorrectly marked free
+             411:0     FF  Block incorrectly marked free
 
 Total error count from integ:		11.
 
 Type           Blocks         Records          % Used      Adjacent
 
-Directory           2               2           1.790            NA
-Index              11            1210          81.989             1
+Directory           2               2           2.050            NA
+Index              14            1213          87.406             1
 Data             1200            1200          54.356          1200
-Free               87              NA              NA            NA
-Total            1300            2412              NA          1201
+Free               84              NA              NA            NA
+Total            1300            2415              NA          1201
 %YDB-E-INTEGERRS, Database integrity errors
 
 ##SOURCE_PATH##/mupip journal -recov -backward mumps.mjl -NOAPPLY_AFTER_IMAGE -since=time1
@@ -76,11 +76,11 @@ No errors detected by integ.
 
 Type           Blocks         Records          % Used      Adjacent
 
-Directory           2               2           1.790            NA
-Index              11            1210          81.989             1
+Directory           2               2           2.050            NA
+Index              14            1213          87.406             1
 Data             1200            1200          54.356          1200
-Free               87              NA              NA            NA
-Total            1300            2412              NA          1201
+Free               84              NA              NA            NA
+Total            1300            2415              NA          1201
 ##SOURCE_PATH##/mupip journal -recov -backward mumps.mjl -since=time1
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
@@ -98,37 +98,37 @@ Integ of region DEFAULT
 
 Block:Offset Level
 %YDB-W-DBLOCMBINC,         Nature: #Benign
-       0:0     FF  Local bit map incorrect
+               0:0     FF  Local bit map incorrect
 %YDB-E-DBMRKFREE,         Nature: #DANGER***
-      20:0     FF  Block incorrectly marked free
+              20:0     FF  Block incorrectly marked free
 %YDB-E-DBMRKFREE,         Nature: #DANGER***
-      22:0     FF  Block incorrectly marked free
+              22:0     FF  Block incorrectly marked free
 %YDB-W-DBMBPFLINT,         Nature: #Benign
-       0:0     FF  Master bit map shows this map full, agreeing with MUPIP INTEG
+               0:0     FF  Master bit map shows this map full, agreeing with MUPIP INTEG
 %YDB-W-DBLOCMBINC,         Nature: #Benign
-     200:0     FF  Local bit map incorrect
+             200:0     FF  Local bit map incorrect
 %YDB-E-DBMRKFREE,         Nature: #DANGER***
-     210:0     FF  Block incorrectly marked free
+             210:0     FF  Block incorrectly marked free
 %YDB-E-DBMRKFREE,         Nature: #DANGER***
-     212:0     FF  Block incorrectly marked free
+             212:0     FF  Block incorrectly marked free
 %YDB-W-DBMBPFLINT,         Nature: #Benign
-     200:0     FF  Master bit map shows this map full, agreeing with MUPIP INTEG
+             200:0     FF  Master bit map shows this map full, agreeing with MUPIP INTEG
 %YDB-W-DBLOCMBINC,         Nature: #Benign
-     400:0     FF  Local bit map incorrect
+             400:0     FF  Local bit map incorrect
 %YDB-E-DBMRKFREE,         Nature: #DANGER***
-     410:0     FF  Block incorrectly marked free
+             410:0     FF  Block incorrectly marked free
 %YDB-E-DBMRKFREE,         Nature: #DANGER***
-     411:0     FF  Block incorrectly marked free
+             411:0     FF  Block incorrectly marked free
 
 Total error count from integ:		11.
 
 Type           Blocks         Records          % Used      Adjacent
 
-Directory           2               2           1.790            NA
-Index              11            1210          81.989             1
+Directory           2               2           2.050            NA
+Index              14            1213          87.406             1
 Data             1200            1200          54.356          1200
-Free               87              NA              NA            NA
-Total            1300            2412              NA          1201
+Free               84              NA              NA            NA
+Total            1300            2415              NA          1201
 %YDB-E-INTEGERRS, Database integrity errors
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 Forward recovery does not apply AIMG by default
@@ -148,11 +148,11 @@ No errors detected by integ.
 
 Type           Blocks         Records          % Used      Adjacent
 
-Directory           2               2           1.790            NA
-Index              11            1210          81.989             1
+Directory           2               2           2.050            NA
+Index              14            1213          87.406             1
 Data             1200            1200          54.356          1200
-Free               87              NA              NA            NA
-Total            1300            2412              NA          1201
+Free               84              NA              NA            NA
+Total            1300            2415              NA          1201
 ##########
 Second Part
 ##########
@@ -179,37 +179,37 @@ Integ of region DEFAULT
 
 Block:Offset Level
 %YDB-W-DBLOCMBINC,         Nature: #Benign
-       0:0     FF  Local bit map incorrect
+               0:0     FF  Local bit map incorrect
 %YDB-E-DBMRKFREE,         Nature: #DANGER***
-      20:0     FF  Block incorrectly marked free
+              20:0     FF  Block incorrectly marked free
 %YDB-E-DBMRKFREE,         Nature: #DANGER***
-      22:0     FF  Block incorrectly marked free
+              22:0     FF  Block incorrectly marked free
 %YDB-W-DBMBPFRDLBM,         Nature: #Benign
-       0:0     FF  Master bit map shows this map has space, agreeing with disk local map
+               0:0     FF  Master bit map shows this map has space, agreeing with disk local map
 %YDB-W-DBLOCMBINC,         Nature: #Benign
-     200:0     FF  Local bit map incorrect
+             200:0     FF  Local bit map incorrect
 %YDB-E-DBMRKFREE,         Nature: #DANGER***
-     210:0     FF  Block incorrectly marked free
+             210:0     FF  Block incorrectly marked free
 %YDB-E-DBMRKFREE,         Nature: #DANGER***
-     212:0     FF  Block incorrectly marked free
+             212:0     FF  Block incorrectly marked free
 %YDB-W-DBMBPFRDLBM,         Nature: #Benign
-     200:0     FF  Master bit map shows this map has space, agreeing with disk local map
+             200:0     FF  Master bit map shows this map has space, agreeing with disk local map
 %YDB-W-DBLOCMBINC,         Nature: #Benign
-     400:0     FF  Local bit map incorrect
+             400:0     FF  Local bit map incorrect
 %YDB-E-DBMRKFREE,         Nature: #DANGER***
-     410:0     FF  Block incorrectly marked free
+             410:0     FF  Block incorrectly marked free
 %YDB-E-DBMRKFREE,         Nature: #DANGER***
-     411:0     FF  Block incorrectly marked free
+             411:0     FF  Block incorrectly marked free
 
 Total error count from integ:		11.
 
 Type           Blocks         Records          % Used      Adjacent
 
-Directory           2               2           1.790            NA
-Index              11            1210          81.989             1
+Directory           2               2           2.050            NA
+Index              14            1213          87.406             1
 Data             1200            1200          54.356          1200
-Free               87              NA              NA            NA
-Total            1300            2412              NA          1201
+Free               84              NA              NA            NA
+Total            1300            2415              NA          1201
 %YDB-E-INTEGERRS, Database integrity errors
 
 File  	##TEST_PATH##/mumps.dat
@@ -226,11 +226,11 @@ No errors detected by integ.
 
 Type           Blocks         Records          % Used      Adjacent
 
-Directory           2               2           1.790            NA
-Index              11            1210          81.989             1
+Directory           2               2           2.050            NA
+Index              14            1213          87.406             1
 Data             1200            1200          54.356          1200
-Free               87              NA              NA            NA
-Total            1300            2412              NA          1201
+Free               84              NA              NA            NA
+Total            1300            2415              NA          1201
 
 YDB>
 Application Level Check
@@ -260,11 +260,11 @@ No errors detected by integ.
 
 Type           Blocks         Records          % Used      Adjacent
 
-Directory           2               2           1.790            NA
-Index              11            1210          81.989             1
+Directory           2               2           2.050            NA
+Index              14            1213          87.406             1
 Data             1200            1200          54.356          1200
-Free               87              NA              NA            NA
-Total            1300            2412              NA          1201
+Free               84              NA              NA            NA
+Total            1300            2415              NA          1201
 %YDB-I-RECORDSTAT, ^a:	  Key cnt: 1200  max subsc len: 16  max rec len: 800  max node len: 820
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1200  max subsc len: 16  max rec len: 800  max node len: 820
 No Integ Error Expected
@@ -276,11 +276,11 @@ No errors detected by integ.
 
 Type           Blocks         Records          % Used      Adjacent
 
-Directory           2               2           1.790            NA
-Index              11            1210          81.989             1
+Directory           2               2           2.050            NA
+Index              14            1213          87.406             1
 Data             1200            1200          54.356          1200
-Free               87              NA              NA            NA
-Total            1300            2412              NA          1201
+Free               84              NA              NA            NA
+Total            1300            2415              NA          1201
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 ##SOURCE_PATH##/mupip journal -recov -forward mumps.mjl -APPLY_AFTER_IMAGE
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
@@ -298,11 +298,11 @@ No errors detected by integ.
 
 Type           Blocks         Records          % Used      Adjacent
 
-Directory           2               2           1.790            NA
-Index              11            1210          81.989             1
+Directory           2               2           2.050            NA
+Index              14            1213          87.406             1
 Data             1200            1200          54.356          1200
-Free               87              NA              NA            NA
-Total            1300            2412              NA          1201
+Free               84              NA              NA            NA
+Total            1300            2415              NA          1201
 %YDB-I-RECORDSTAT, ^a:	  Key cnt: 1200  max subsc len: 16  max rec len: 800  max node len: 820
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1200  max subsc len: 16  max rec len: 800  max node len: 820
 ##SOURCE_PATH##/mupip

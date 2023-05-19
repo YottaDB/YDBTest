@@ -51,10 +51,10 @@ File  	##TEST_PATH##/a.dat
 Region	AREG
 
 DSE> DSE> DSE> 
-Block 27   Size 272   Level 1   TN 4D6 V6
+Block 27   Size 272   Level 1   TN 4D6 V7
 
 DSE> DSE> DSE> 
-Block 27   Size 272   Level 0   TN 4D7 V6
+Block 27   Size 272   Level 0   TN 4D7 V7
 
 DSE> DSE> --------------------- Test 5 ---------------------
 
@@ -62,7 +62,7 @@ File  	##TEST_PATH##/a.dat
 Region	AREG
 
 DSE> DSE> DSE> 
-Block 27   Size 272   Level 0   TN 1000 V6
+Block 27   Size 272   Level 0   TN 1000 V7
 
 DSE> DSE> DSE> DSE> 
 Rec:4  Blk 27  Off 9B  Size 2B  Cmpc 0  Key ^%(44064)
@@ -113,11 +113,11 @@ Region	AREG
 
 DSE> DSE> Error: invalid bsiz.
 DSE> DSE> DSE> 
-Block 27   Size 10   Level 0   TN 4E4 V6
+Block 27   Size 10   Level 0   TN 4E4 V7
 
 DSE> DSE> Error: invalid bsiz.
 DSE> DSE> DSE> 
-Block 27   Size 272   Level 0   TN 4E5 V6
+Block 27   Size 272   Level 0   TN 4E5 V7
 
 DSE> DSE> --------------------- Test 9 ---------------------
 
@@ -208,8 +208,8 @@ DSE> DSE> DSE> --------------------- Test 21 ---------------------
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-DSE> DSE> DSE> %YDB-E-BLKINVALID, 00000027 is not a valid block as database file ##TEST_PATH##/a.dat has 00000010 total blocks
-DSE> %YDB-E-BLKINVALID, 00000011 is not a valid block as database file ##TEST_PATH##/a.dat has 00000010 total blocks
+DSE> DSE> DSE> %YDB-E-BLKINVALID, 0x0000000000000027 is not a valid block as database file ##TEST_PATH##/a.dat has 0x0000000000000010 total blocks
+DSE> %YDB-E-BLKINVALID, 0x0000000000000011 is not a valid block as database file ##TEST_PATH##/a.dat has 0x0000000000000010 total blocks
 DSE> DSE> DSE> 
 Rec:E  Blk 27  Off 247  Size 2B  Cmpc A  Key ^aglobal(1234,44424)
 

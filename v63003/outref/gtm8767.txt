@@ -11,7 +11,7 @@ Database file ##TEST_PATH##/mumps.dat now has hard spin count 2147483647
 # Verifying Hard Spin Count shows up in DSE Dump
 ##TEST_AWK  Mutex Hard Spin Count                  [ 0-9]*  Mutex Sleep Spin Count                 128
 # Attempting to set Hard Spin Count to 2**31 using MUPIP SET -HARD_SPIN_COUNT
-Error: cannot convert 2147483648 value to decimal number.
+%YDB-E-NUMERR, Error: cannot convert 2147483648 value to decimal or hexadecimal number
 %YDB-E-SETQUALPROB, Error getting HARD_SPIN_COUNT qualifier value
 %YDB-E-WCERRNOTCHG, Not all specified database files were changed
 # Setting Spin Sleep Mask to 0 using MUPIP SET -SPIN_SLEEP_MASK

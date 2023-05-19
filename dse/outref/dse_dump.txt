@@ -24,14 +24,14 @@ File  	##TEST_PATH##/a.dat
 Region	AREG
 
 DSE> DSE> 
-Block 1   Size 18   Level 1   TN 0 V6
+Block 1   Size 1C   Level 1   TN 0 V7
 
 DSE> DSE> 
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
 DSE> DSE> 
-Block 0  Size 90  Level -1  TN 476 V6   Master Status: Free Space
+Block 0  Size 90  Level -1  TN 476 V7   Master Status: Free Space
 
                        	Low order                         High order
 Block                0:	|  XXXXXXXX  XXXXX...  ........  ........  |
@@ -53,16 +53,16 @@ Block              1E0:	|  ........  ........  ........  ........  |
 
 'X' == BUSY  '.' == FREE  ':' == REUSABLE  '?' == CORRUPT
 
-DSE> %YDB-E-BLKINVALID, 00000097 is not a valid block as database file ##TEST_PATH##/a.dat has 00000065 total blocks
+DSE> %YDB-E-BLKINVALID, 0x0000000000000097 is not a valid block as database file ##TEST_PATH##/a.dat has 0x0000000000000065 total blocks
 DSE> 
-Block 45   Size 0   Level 0   TN 0 V6
+Block 45   Size 0   Level 0   TN 0 V7
 
 DSE> DSE> 
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
 DSE> DSE> 
-Block 0  Size 90  Level -1  TN 476 V6   Master Status: Free Space
+Block 0  Size 90  Level -1  TN 476 V7   Master Status: Free Space
 
                        	Low order                         High order
 Block                0:	|  XXXXXXXX  XXXXX...  ........  ........  |
@@ -89,7 +89,7 @@ File  	##TEST_PATH##/a.dat
 Region	AREG
 
 DSE> DSE> 
-Block 0  Size 90  Level -1  TN 476 V6   Master Status: Free Space
+Block 0  Size 90  Level -1  TN 476 V7   Master Status: Free Space
 
 DSE> 
                        	Low order                         High order
@@ -125,7 +125,7 @@ File  	##TEST_PATH##/a.dat
 Region	AREG
 
 DSE> DSE> 
-Block 4   Size 83   Level 1   TN 476 V6
+Block 4   Size A7   Level 1   TN 476 V7
 
 DSE> DSE> 
 File  	##TEST_PATH##/a.dat
@@ -149,9 +149,9 @@ File  	##TEST_PATH##/a.dat
 Region	AREG
 
 DSE> DSE> 
-Block 1   Size 18   Level 1   TN 0 V6
+Block 1   Size 1C   Level 1   TN 0 V7
 
-Block 2   Size 25   Level 0   TN 1 V6
+Block 2   Size 29   Level 0   TN 1 V7
 
 DSE> DSE> 
 File  	##TEST_PATH##/a.dat
@@ -180,9 +180,9 @@ Region	AREG
 
 DSE> DSE> Error: offset less than blk header
 DSE> 
-Rec:1  Blk 1  Off 10  Size 8  Cmpc 0  Ptr 2  Key *
+Rec:1  Blk 1  Off 10  Size C  Cmpc 0  Ptr 2  Key *
 
-DSE> DSE> Error: offset greater than blk size of 18
+DSE> DSE> Error: offset greater than blk size of 1C
 DSE> 
 Rec:1  Blk 3  Off 10  Size 13  Cmpc 0  Key ^aglobal(1,36)
 
@@ -214,7 +214,7 @@ File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
 DSE> 
-Block 5   Size 1D   Level 0   TN 8 V6
+Block 5   Size 1D   Level 0   TN 8 V7
 
 Rec:1  Blk 5  Off 10  Size D  Cmpc 0  Key ^NULLGBL
 ##TEST_AWK      10 : \|  D  0  0 .. 4E 55 4C 4C 47 42 4C  0  0                     \|

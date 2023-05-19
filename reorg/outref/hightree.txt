@@ -14,14 +14,14 @@ GTMPOOLLIMIT used for mupip reorg : ##FILTERED##
    
 Global: a (region DEFAULT)
 %YDB-E-MAXBTLEVEL, Global ^a in region DEFAULT reached maximum level
-Blocks processed    : 1072 
-Blocks coalesced    : 3 
-Blocks split        : 532 
-##TEST_AWKBlocks swapped      : (1067|1068) 
-Blocks freed        : 3 
-Blocks reused       : 815 
+Blocks processed    : 1493 
+Blocks coalesced    : 2 
+Blocks split        : 738 
+Blocks swapped      : 1490 
+Blocks freed        : 2 
+Blocks reused       : 1028 
 Levels Increased    : 4 
-Blocks extended     : 801 
+Blocks extended     : 1002 
 %YDB-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
 
 
@@ -31,11 +31,11 @@ No errors detected by integ.
 
 Type           Blocks         Records          % Used      Adjacent
 
-##TEST_AWKDirectory           2               2           2....            NA
-Index             354            3346          34.178           157
-Data             2993           10000          72.868          2430
-Free               51              NA              NA            NA
-Total            3400           13348              NA          2587
+##TEST_AWKDirectory           2               2           [2|3]....            NA
+Index             403            3571          41.111           106
+Data             3169           10000          68.929          2393
+Free               26              NA              NA            NA
+Total            3600           13573              NA          2499
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
