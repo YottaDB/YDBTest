@@ -65,13 +65,13 @@ check converting string to hex for location...
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-DSE> %YDB-E-CLIERR, Unrecognized value: \, HEX number expected
-DSE> %YDB-E-CLIERR, Unrecognized value: z, Decimal integer expected
-DSE> %YDB-E-CLIERR, Unrecognized value: Z, HEX number expected
+DSE> %YDB-E-CLIERR, Unrecognized value: \, A non-negative hexadecimal integer required
+DSE> %YDB-E-CLIERR, Unrecognized value: z, A non-negative decimal or hexadecimal integer required
+DSE> %YDB-E-CLIERR, Unrecognized value: Z, A non-negative hexadecimal integer required
 DSE> %YDB-E-SIZENOTVALID8, Size (in bytes) must be either 1, 2, 4, or 8
 DSE> Location 5632 [0x00001600] : Old Value = 0 [0x00] : New Value = 0 [0x00] : Size = 1 [0x01]
-DSE> Error: cannot convert 50000000000000000000000 value to hex number.
-DSE> Error: cannot convert fffffffffffffffffffffff value to hex number.
+DSE> %YDB-E-HEXERR, Error: cannot convert 50000000000000000000000 value to hexadecimal number
+DSE> %YDB-E-HEXERR, Error: cannot convert fffffffffffffffffffffff value to hexadecimal number
 DSE> command: change -fileheader -location=1000 -value=11111111 size=1
 command: change -fileheader -location=1002 -value=22222222 size=2
 command: change -fileheader -location=1000 -value=22222222 size=4
@@ -242,13 +242,13 @@ dse change -file -fully_upgraded=TRUE it should give an error
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%YDB-E-CLIERR, Unrecognized value: TRUE, Decimal integer expected
+%YDB-E-CLIERR, Unrecognized value: TRUE, A non-negative decimal or hexadecimal integer required
 dse change -file fully_upgraded=-7
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-%YDB-E-CLIERR, Unrecognized value: -7, Decimal integer expected
+%YDB-E-CLIERR, Unrecognized value: -7, A non-negative decimal or hexadecimal integer required
 dse change -file fully_upgraded=7
 
 File  	##TEST_PATH##/mumps.dat
@@ -262,7 +262,7 @@ dse change -file fully_upgraded=32313214343
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-Error: cannot convert 32313214343 value to decimal number.
+%YDB-E-NUMERR, Error: cannot convert 32313214343 value to decimal or hexadecimal number
 testing interrupted_recov flag
 set tp transactions
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
