@@ -50,7 +50,7 @@ PASS
 150383770,error+7^%PEEKBYNAME,%YDB-E-PBNINVALID, repl_inst_hdr does not have a field named inst_info.foo
 
 # Pass gtmsrc_lcl.secondary_instname with a region name. Expect error.
-150383034,%PEEKBYNAME+70^%PEEKBYNAME,%YDB-E-BADZPEEKARG, Missing, invalid or surplus mnemonic argument (array index) parameter for $ZPEEK()
+150383034,%PEEKBYNAME+71^%PEEKBYNAME,%YDB-E-BADZPEEKARG, Missing, invalid or surplus mnemonic argument (array index) parameter for $ZPEEK()
 
 # Pass gtmsrc_lcl.secondary_instname without an index. Expect error.
 150383746,error+7^%PEEKBYNAME,%YDB-E-PBNPARMREQ, A first parameter value gtmsrc_lcl requires a second parameter specified containing an index value
@@ -59,10 +59,10 @@ PASS
 150383754,error+7^%PEEKBYNAME,%YDB-E-PBNNOPARM, First parameter repl_inst_hdr does not support a second parameter
 
 # Pass gd_region.jnl_state with an index. Expect error.
-150383034,%PEEKBYNAME+70^%PEEKBYNAME,%YDB-E-BADZPEEKARG, Missing, invalid or surplus mnemonic argument (region name) parameter for $ZPEEK()
+150383034,%PEEKBYNAME+71^%PEEKBYNAME,%YDB-E-BADZPEEKARG, Missing, invalid or surplus mnemonic argument (region name) parameter for $ZPEEK()
 
 # Pass gtmsrc_lcl.secondary_instname with a base address. Expect error.
-150383042,%PEEKBYNAME+70^%PEEKBYNAME,%YDB-E-BADZPEEKRANGE, Access exception raised in memory range given to $ZPEEK()
+150383042,%PEEKBYNAME+71^%PEEKBYNAME,%YDB-E-BADZPEEKRANGE, Access exception raised in memory range given to $ZPEEK()
 
 # Pass without a first argument
 150383778,error+7^%PEEKBYNAME,%YDB-E-PBNNOFIELD, %ZPEEKBYNAME() requires a field.item as its first parameter
