@@ -28,7 +28,7 @@ mumps.dat
 # extracting the syslog every 5 seconds so we can stop relatively quickly after the error occurs on faster systems.
 SUCCESS - Found the 3 required messages (including EXITSTATUS) in gtm8793_syslog_extract.txt:
 ##TEST_AWK%YDB-I-STUCKACT, Process stuck script invoked: FAILURE : noexistPSE.sh MUTEXLCKALERT [1-9][0-9]* [1-9][0-9]* [1-9]
-##TEST_AWK%YDB-E-EXITSTATUS, Unexpected process exit \(PROCSTUCK\), exit status 1 -- called from module .*/gtm_c_stack_trace.c at line 140
+##TEST_AWK%YDB-E-EXITSTATUS, Unexpected process exit \(PROCSTUCK\), exit status 1 -- called from module .*/gtm_c_stack_trace.c at line 143
 ##TEST_AWK%YDB-W-MUTEXLCKALERT, Mutual Exclusion subsystem ALERT - lock attempt threshold crossed for region ##TEST_PATH##/mumps.dat.  Process [1-9][0-9]* is in crit cycle [1-9].
 
 # Done with sub-processes now, tell DSE to quit, should allow termination of ydbPipe as well.
