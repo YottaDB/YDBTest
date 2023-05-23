@@ -141,10 +141,12 @@ PID ##FILTERED##[##PID##] Source server is alive in ACTIVE mode
 0 : backlog number of transactions written to journal pool and yet to be sent by the source server
 20 : sequence number of last transaction written to journal pool
 20 : sequence number of last transaction sent by source server
+##TEST_AWK[0-9]* : sequence number acknowledged by the secondary instance \[INSTANCE2\]
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE3]
 0 : backlog number of transactions written to journal pool and yet to be sent by the source server
 20 : sequence number of last transaction written to journal pool
 20 : sequence number of last transaction sent by source server
+##TEST_AWK[0-9]* : sequence number acknowledged by the secondary instance \[INSTANCE3\]
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST2 set msr_dont_chk_stat;$MUPIP replic -source -needrestart $instsecvar'==
 %YDB-E-REPLINSTSECUNDF, Secondary replication instance name not defined
 %YDB-E-MUPCLIERR, Action not taken due to CLI errors
@@ -200,6 +202,7 @@ PID ##FILTERED##[##PID##] Source server is alive in ACTIVE mode
 0 : backlog number of transactions written to journal pool and yet to be sent by the source server
 20 : sequence number of last transaction written to journal pool
 20 : sequence number of last transaction sent by source server
+##TEST_AWK[0-9]* : sequence number acknowledged by the secondary instance \[INSTANCE2\]
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST2 ;$MUPIP replic -source -needrestart $instsecvar'==
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating NEEDRESTART operation on source server pid [##PID##] for secondary instance [INSTANCE2]
 Secondary Instance [INSTANCE2] DOES NOT NEED to be restarted
@@ -254,6 +257,7 @@ PID ##FILTERED##[##PID##] Source server is alive in ACTIVE mode
 0 : backlog number of transactions written to journal pool and yet to be sent by the source server
 21 : sequence number of last transaction written to journal pool
 21 : sequence number of last transaction sent by source server
+##TEST_AWK[0-9]* : sequence number acknowledged by the secondary instance \[INSTANCE2\]
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST1 RCV=INST2 ;$MUPIP replic -source -needrestart $instsecvar'==
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating NEEDRESTART operation on source server pid [##PID##] for secondary instance [INSTANCE2]
 Secondary Instance [INSTANCE2] DOES NOT NEED to be restarted

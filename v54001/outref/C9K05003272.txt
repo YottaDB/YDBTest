@@ -43,6 +43,7 @@ PID ##FILTERED##[##PID##] Source server is alive in ACTIVE mode
 0 : backlog number of transactions written to journal pool and yet to be sent by the source server
 15 : sequence number of last transaction written to journal pool
 15 : sequence number of last transaction sent by source server
+##TEST_AWK[0-9]* : sequence number acknowledged by the secondary instance \[INSTANCE2\]
 0
 
 # Test CHECKHEALTH behavior if VALID instance name is specified & source server is dead
@@ -60,6 +61,7 @@ PID 0 Source server is NOT alive
 5 : backlog number of transactions written to journal pool and yet to be sent by the source server
 15 : sequence number of last transaction written to journal pool
 10 : sequence number of last transaction sent by source server
+##TEST_AWK[0-9]* : sequence number acknowledged by the secondary instance \[INSTANCE3\]
 %YDB-W-SRCSRVNOTEXIST, Source server for secondary instance INSTANCE3 is not alive
 0
 
@@ -93,6 +95,7 @@ PID ##FILTERED##[##PID##] Source server is alive in ACTIVE mode
 0 : backlog number of transactions written to journal pool and yet to be sent by the source server
 15 : sequence number of last transaction written to journal pool
 15 : sequence number of last transaction sent by source server
+##TEST_AWK[0-9]* : sequence number acknowledged by the secondary instance \[INSTANCE2\]
 0
 ==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST3'==
 ==Executing MULTISITE_REPLIC 'SYNC INST1 INST3'==
