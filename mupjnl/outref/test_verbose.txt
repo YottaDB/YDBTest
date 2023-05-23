@@ -103,7 +103,7 @@ YDB>
 %YDB-I-MUINFOUINT4,     Record Offset : 65744 [0x000100D0]
 ##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_forward:Reached EOF before tp_resolve_time at .*
 ##TEST_AWK%YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
-##TEST_AWK%YDB-I-MUINFOUINT4,     Record Offset : (75024|76472) \[0x00012(510|AB8)\]
+%YDB-I-MUINFOUINT4,     Record Offset : 75056 [0x00012530]
 ##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_forward:at the end at .*
 ##TEST_AWK%YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
 ##TEST_AWK%YDB-I-MUINFOUINT4,     Record Offset : [0-9]* .0x[0-9a-fA-F]*.
@@ -157,7 +157,7 @@ unset echo
 %YDB-W-DBCOLLREQ, JOURNAL EXTRACT proceeding without collation information for globals in database. Missing Database file ##TEST_PATH##/mumps.dat
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##TEST_AWK.*%YDB-I-MUINFOSTR, Processing started for journal file : ##TEST_PATH##/mumps.mjl
-##TEST_AWK.*%YDB-I-MUINFOUINT4,     First Epoch Record Offset : 75048 .0x00012528.
+%YDB-I-MUINFOUINT4,     First Epoch Record Offset : 75064 [0x00012538]
 ##TEST_AWK.*%YDB-I-MUINFOUINT4,     First Epoch Record timestamp : [0-9]* .0x[0-9a-fA-F]*.
 ##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_back_processing:at the end at .*
 ##TEST_AWK.*%YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
@@ -177,10 +177,10 @@ unset echo
 %YDB-I-FILECREATE, Journal extract file forward.mjf created
 ##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_forward:Reached EOF before tp_resolve_time at .*
 %YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
-%YDB-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
+%YDB-I-MUINFOUINT4,     Record Offset : 75296 [0x00012620]
 ##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_forward:at the end at .*
 %YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
-%YDB-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
+%YDB-I-MUINFOUINT4,     Record Offset : 75296 [0x00012620]
 %YDB-S-JNLSUCCESS, Extract successful
 %YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
@@ -190,7 +190,7 @@ unset echo
 %YDB-W-DBCOLLREQ, JOURNAL EXTRACT proceeding without collation information for globals in database. Missing Database file ##TEST_PATH##/mumps.dat
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##TEST_AWK.*%YDB-I-MUINFOSTR, Processing started for journal file : ##TEST_PATH##/mumps.mjl
-##TEST_AWK.*%YDB-I-MUINFOUINT4,     First Epoch Record Offset : 75048 .0x00012528.
+%YDB-I-MUINFOUINT4,     First Epoch Record Offset : 75064 [0x00012538]
 ##TEST_AWK.*%YDB-I-MUINFOUINT4,     First Epoch Record timestamp : [0-9]* .0x[0-9a-fA-F]*.
 ##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_back_processing:save_turn_around_point at .*
 ##TEST_AWK.*%YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
@@ -220,10 +220,10 @@ unset echo
 %YDB-I-FILECREATE, Journal extract file backward.mjf created
 ##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_forward:Reached EOF before tp_resolve_time at .*
 %YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
-%YDB-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
+%YDB-I-MUINFOUINT4,     Record Offset : 75296 [0x00012620]
 ##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_forward:at the end at .*
 %YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
-%YDB-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
+%YDB-I-MUINFOUINT4,     Record Offset : 75296 [0x00012620]
 %YDB-S-JNLSUCCESS, Extract successful
 %YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
@@ -334,7 +334,7 @@ Record type    Count
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##TEST_AWK.*%YDB-I-MUINFOSTR, Processing started for journal file : ##TEST_PATH##/mumps.mjl
-##TEST_AWK.*%YDB-I-MUINFOUINT4,     First Epoch Record Offset : 75048 .0x00012528.
+%YDB-I-MUINFOUINT4,     First Epoch Record Offset : 75064 [0x00012538]
 ##TEST_AWK.*%YDB-I-MUINFOUINT4,     First Epoch Record timestamp : [0-9]* .0x[0-9a-fA-F]*.
 ##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_back_processing:at the end at .*
 ##TEST_AWK.*%YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
@@ -353,10 +353,10 @@ Record type    Count
 %YDB-I-MUINFOUINT4,     Record Offset : 65536 [0x00010000]
 ##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_forward:Reached EOF before tp_resolve_time at .*
 %YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
-%YDB-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
+%YDB-I-MUINFOUINT4,     Record Offset : 75296 [0x00012620]
 ##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_forward:at the end at .*
 %YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
-%YDB-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
+%YDB-I-MUINFOUINT4,     Record Offset : 75296 [0x00012620]
 %YDB-S-JNLSUCCESS, Show successful
 %YDB-S-JNLSUCCESS, Verify successful
 %YDB-S-JNLSUCCESS, Recover successful
@@ -407,7 +407,7 @@ unset echo
 %YDB-W-DBCOLLREQ, JOURNAL EXTRACT proceeding without collation information for globals in database. Missing Database file ##TEST_PATH##/mumps.dat
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##TEST_AWK.*%YDB-I-MUINFOSTR, Processing started for journal file : ##TEST_PATH##/mumps.mjl
-##TEST_AWK.*%YDB-I-MUINFOUINT4,     First Epoch Record Offset : 75048 .0x00012528.
+%YDB-I-MUINFOUINT4,     First Epoch Record Offset : 75064 [0x00012538]
 ##TEST_AWK.*%YDB-I-MUINFOUINT4,     First Epoch Record timestamp : [0-9]* .0x[0-9a-fA-F]*.
 ##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_back_processing:at the end at .*
 ##TEST_AWK.*%YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
@@ -427,10 +427,10 @@ unset echo
 %YDB-I-FILECREATE, Journal extract file forward2.mjf created
 ##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_forward:Reached EOF before tp_resolve_time at .*
 %YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
-%YDB-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
+%YDB-I-MUINFOUINT4,     Record Offset : 75296 [0x00012620]
 ##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_forward:at the end at .*
 %YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
-%YDB-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
+%YDB-I-MUINFOUINT4,     Record Offset : 75296 [0x00012620]
 %YDB-S-JNLSUCCESS, Extract successful
 %YDB-S-JNLSUCCESS, Verify successful
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
@@ -439,7 +439,7 @@ unset echo
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##TEST_AWK.*%YDB-I-MUINFOSTR, Processing started for journal file : ##TEST_PATH##/mumps.mjl
-##TEST_AWK.*%YDB-I-MUINFOUINT4,     First Epoch Record Offset : 75048 .0x00012528.
+%YDB-I-MUINFOUINT4,     First Epoch Record Offset : 75064 [0x00012538]
 ##TEST_AWK.*%YDB-I-MUINFOUINT4,     First Epoch Record timestamp : [0-9]* .0x[0-9a-fA-F]*.
 ##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_back_processing:at the end at .*
 ##TEST_AWK.*%YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
@@ -458,10 +458,10 @@ unset echo
 %YDB-I-MUINFOUINT4,     Record Offset : 65536 [0x00010000]
 ##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_forward:Reached EOF before tp_resolve_time at .*
 %YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
-%YDB-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
+%YDB-I-MUINFOUINT4,     Record Offset : 75296 [0x00012620]
 ##TEST_AWK.*%YDB-I-MUINFOSTR, Module : mur_forward:at the end at .*
 %YDB-I-MUINFOSTR,     Journal file : ##TEST_PATH##/mumps.mjl
-%YDB-I-MUINFOUINT4,     Record Offset : 75264 [0x00012600]
+%YDB-I-MUINFOUINT4,     Record Offset : 75296 [0x00012620]
 
 -------------------------------------------------------------------------------
 SHOW output for journal file ##TEST_PATH##/mumps.mjl
