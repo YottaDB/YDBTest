@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -16,9 +16,9 @@
 ###################################
 #
 # List of all subtests:
-# jnlmsg basic jnl_filename jnl_state_switch mupip_backup replic_qualifier 
+# jnlmsg basic jnl_filename jnl_state_switch mupip_backup replic_qualifier
 # qualifiers_with_arg
-# jnl_stand_alone 
+# jnl_stand_alone
 # repl_stand_alone (replic only)
 # mu_backup_sa_access mupip_backup_0_1 C9C01_001899_repeat_switch
 # C9C01_001899_repeat_switch subtest is removed from set_jnl test
@@ -38,8 +38,7 @@ if (0 != $?test_replic) then
 	setenv subtest_list "$subtest_list autoswitch1 autoswitch2 autoswitchbigtp autoswitchtp autoswitchrules"
 	if ($HOSTOS != "AIX") then
 		if ( "TRUE" == $gtm_test_unicode_support ) then
-			setenv unicode_testlist "unicode_dir_autoswitch_replic"
-			setenv subtest_list "$subtest_list $unicode_testlist"
+			setenv subtest_list "$subtest_list unicode_dir_autoswitch_replic"
 		endif
 	endif
 else
@@ -55,8 +54,7 @@ else
 		setenv subtest_list "$subtest_list autoswitch2 autoswitchbigtp autoswitchtp autoswitchrules autoswitch_chng_auto"
 		if ($HOSTOS != "AIX") then
 			if ( "TRUE" == $gtm_test_unicode_support ) then
-				setenv unicode_testlist "unicode_mupip_backup"
-				setenv subtest_list "$subtest_list $unicode_testlist"
+				setenv subtest_list "$subtest_list unicode_mupip_backup"
 			endif
 		endif
 	endif

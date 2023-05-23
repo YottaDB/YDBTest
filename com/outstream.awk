@@ -354,8 +354,13 @@ BEGIN {
 		substatus = gsub(strexpr, strrepl);
 		if (substatus) $0="##FILTERED##"$0;
 	}
-	strexpr = "Endian Format                        [ ]*[BL][I][GT][TLE]*"
-	strrepl = "Endian Format              ##FILTERED####ENDIAN##"
+	# Endian Format for MUPIP REPLIC -EDIT -SHOW output
+	strexpr = "HDR Endian Format                                   (   BIG|LITTLE)"
+	strrepl = "HDR Endian Format                   ##FILTERED####ENDIAN##"
+	gsub(strexpr, strrepl);
+	# Endian Format for both DSE DUMP -FILE output and MUPIP JOURNAL -SHOW=HEADER output
+	strexpr = " Endian Format                              (   BIG|LITTLE)"
+	strrepl = " Endian Format              ##FILTERED####ENDIAN##"
 	gsub(strexpr, strrepl);
 	# Database file encrypted                       TRUE  Inst Freeze on Error         FALSE"
 	strexp = "^  Database file encrypted                     ( TRUE|FALSE)  Inst Freeze on Error                 ( TRUE|FALSE)$"
