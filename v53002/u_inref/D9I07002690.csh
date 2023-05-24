@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -106,7 +106,7 @@ set dselog5 = ${dselogprefix}_5.out
 set wait_time = 120
 while ($wait_time)
 	$DSE dump -file -all >&! $dselog5
-	$grep "Journal State                         OFF" $dselog5 >&! /dev/null
+	$grep "Journal State  * OFF" $dselog5 >&! /dev/null
 	if !($status) then
 		break
 	else
