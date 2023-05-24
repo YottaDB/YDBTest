@@ -1,4 +1,18 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+# Portions Copyright (c) Fidelity National			#
+# Information Services, Inc. and/or its subsidiaries.		#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
 
 $gtm_tst/com/dbcreate.csh mumps
 
@@ -8,7 +22,7 @@ cat copy >> mumps.dat
 # integ should fail with DBMISALIGN
 $MUPIP integ mumps.dat
 # fix the issue by extending the database
-$MUPIP extend -block=358 DEFAULT
+$MUPIP extend -block=1124 DEFAULT
 # integ should pass
 $MUPIP integ mumps.dat
 
@@ -17,7 +31,7 @@ $DSE change -file -total=111
 # integ should fail with DBTOTBLK
 $MUPIP integ mumps.dat
 # fix the issue
-$DSE change -file -total=1CB
+$DSE change -file -total=4CB
 # integ should pass
 $MUPIP integ mumps.dat
 

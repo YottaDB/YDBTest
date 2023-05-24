@@ -6,30 +6,30 @@ mumps.dat
 
 Block:Offset Level
 %YDB-W-DBFGTBC,         Nature: #Transient
-       0:0      0  File size larger than block count would indicate
-%YDB-E-DBTOTBLK, File header indicates total blocks is 0x00000065 but file size indicates total blocks would be 0x0000010B
+               0:0      0  File size larger than block count would indicate
+%YDB-E-DBTOTBLK, File header indicates total blocks is 0x0000000000000065 but file size indicates total blocks would be 0x00000000000004CB
 
 Total error count from integ:		1.
 
 Type           Blocks         Records          % Used      Adjacent
 
-Directory           2               1           0.488            NA
+Directory           2               1           0.537            NA
 Index               0               0           0.000             0
 Data                0               0           0.000             0
 Free               98              NA              NA            NA
 Total             100               1              NA             0
 %YDB-E-INTEGERRS, Database integrity errors
-Extension successful, file ##TEST_PATH##/mumps.dat extended by 358 blocks.  Total blocks = 458.
+Extension successful, file ##TEST_PATH##/mumps.dat extended by 1124 blocks.  Total blocks = 1224.
 
 No errors detected by integ.
 
 Type           Blocks         Records          % Used      Adjacent
 
-Directory           2               1           0.488            NA
+Directory           2               1           0.537            NA
 Index               0               0           0.000             0
 Data                0               0           0.000             0
-Free              456              NA              NA            NA
-Total             458               1              NA             0
+Free             1222              NA              NA            NA
+Total            1224               1              NA             0
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
@@ -37,14 +37,14 @@ Region	DEFAULT
 
 Block:Offset Level
 %YDB-W-DBFGTBC,         Nature: #Transient
-       0:0      0  File size larger than block count would indicate
-%YDB-E-DBTOTBLK, File header indicates total blocks is 0x00000111 but file size indicates total blocks would be 0x000001CB
+               0:0      0  File size larger than block count would indicate
+%YDB-E-DBTOTBLK, File header indicates total blocks is 0x0000000000000111 but file size indicates total blocks would be 0x00000000000004CB
 
 Total error count from integ:		1.
 
 Type           Blocks         Records          % Used      Adjacent
 
-Directory           2               1           0.488            NA
+Directory           2               1           0.537            NA
 Index               0               0           0.000             0
 Data                0               0           0.000             0
 Free              270              NA              NA            NA
@@ -59,11 +59,11 @@ No errors detected by integ.
 
 Type           Blocks         Records          % Used      Adjacent
 
-Directory           2               1           0.488            NA
+Directory           2               1           0.537            NA
 Index               0               0           0.000             0
 Data                0               0           0.000             0
-Free              456              NA              NA            NA
-Total             458               1              NA             0
+Free             1222              NA              NA            NA
+Total            1224               1              NA             0
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
