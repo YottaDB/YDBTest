@@ -4,7 +4,7 @@
 # Copyright (c) 2008-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -152,12 +152,17 @@ foreach var ($envlist)
 	set logx = $envvar/${envvar}_MUPIP_RUNDOWN_filter3.logx
 	$gtm_tst/com/check_error_exist.csh $logfile "YDB-E-MUJPOOLRNDWNFL" >& $logx
 	$corecheck "mupip_rundown"
-	# Test MUPIP UPGRADE
-	echo "yes" | $MUPIP upgrade  "*" >&! $envvar/${envvar}_MUPIP_UPGRADE.log
-	$corecheck "mupip_upgrade"
+	# -----------------------------------------------------------------------------------------------------
+	# Comment below section until MUPIP UPGRADE and MUPIP DOWNGRADE are supported with V7 format database file
+	# [UPGRADE_DOWNGRADE_UNSUPPORTED]
+	# -----------------------------------------------------------------------------------------------------
+	# # Test MUPIP UPGRADE
+	# echo "yes" | $MUPIP upgrade  "*" >&! $envvar/${envvar}_MUPIP_UPGRADE.log
+	# $corecheck "mupip_upgrade"
 	# Test MUPIP DOWNGRADE
-	echo "yes" | $MUPIP downgrade "*" >&! $envvar/${envvar}_MUPIP_DOWNGRADE.log
-	$corecheck "mupip_downgrade"
+	# echo "yes" | $MUPIP downgrade "*" >&! $envvar/${envvar}_MUPIP_DOWNGRADE.log
+	# $corecheck "mupip_downgrade"
+	# -----------------------------------------------------------------------------------------------------
 	# Test MUPIP EXTRACT
 	$MUPIP extract muext_${envvar}.ext  >&! $envvar/${envvar}_MUPIP_EXTRACT.log
 	$corecheck "mupip_extract"

@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -129,6 +132,11 @@ endif
 setenv subtest_exclude_list ""
 # filter out some subtests for some servers
 set hostn = $HOST:r:r:r
+
+# The below subtest uses DSE CHANGE -FILE -BLKS_TO_UPGRADE= and MUPIP SET -VERSION= both of which are not supported
+# in GT.M V7.0-000 (YottaDB r2.00). Therefore disable it for now.
+setenv subtest_exclude_list "$subtest_exclude_list mupip_integ"	# [UPGRADE_DOWNGRADE_UNSUPPORTED]
+
 #
 $gtm_tst/com/submit_subtest.csh
 unsetenv v4ver

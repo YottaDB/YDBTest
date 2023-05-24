@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -200,9 +200,12 @@ MUPIPSETTests		; Test all of the MUPIP SET options we can
 ; $MUPIP SET -REGION DEFAULT -NOSTATS
 ; $MUPIP SET -REGION DEFAULT -NOSTDNULLCOL
 ; $MUPIP SET -REGION DEFAULT -TRIGGER_FLUSH=2424
-; $MUPIP SET -REGION DEFAULT -VERSION=V6
 ; $MUPIP SET -REGION DEFAULT -WAIT_DISK=42
 ; $MUPIP SET -REGION DEFAULT -WRITES_PER_FLUSH=42
+
+; The following line needs to be in the previous section but is currently not included because MUPIP SET -VERSION is
+; not supported currently. [UPGRADE_DOWNGRADE_UNSUPPORTED]
+; $MUPIP SET -REGION DEFAULT -VERSION=V7
 
 ; Must have a blank line above this line to terminate the set of MUPIP SET tests
 

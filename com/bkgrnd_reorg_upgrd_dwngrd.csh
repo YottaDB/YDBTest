@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 # Portions Copyright (c) Fidelity National			#
@@ -13,6 +13,11 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+
+# The below script is currently short-circuited as V7.0-000 does not support MUPIP REORG -UPGRADE or -DOWNGRADE.
+# This short-circuit can be removed once MUPIP SET -VERSION=, MUPIP REORG -UPGRADE etc. are supported (in V7.1-000).
+# Note: There is a similar comment in com/mupip_set_version.csh.
+exit	# [UPGRADE_DOWNGRADE_UNSUPPORTED]
 
 if ( "ENCRYPT" == $test_encryption ) then
         echo "TEST-I-ENCRYPT, Online upgrade-downgrade cannot be run since MUPIP SET version=V4 not supported with encryption"

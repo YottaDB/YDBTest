@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -39,9 +39,15 @@ if ($?test_replic == 1) then
 else
 	setenv subtest_list "$subtest_list_common $subtest_list_non_replic"
 endif
+
+setenv subtest_exclude_list ""
 # filter out subtests that cannot pass with MM
 if ("MM" == $acc_meth) then
 	setenv subtest_exclude_list "C9D12002473"
 endif
+
+# The below subtest uses MUPIP UPGRADE which is not supported in GT.M V7.0-000 (YottaDB r2.00). Therefore disable it for now.
+setenv subtest_exclude_list "$subtest_exclude_list D9D10002377"	# [UPGRADE_DOWNGRADE_UNSUPPORTED]
+
 $gtm_tst/com/submit_subtest.csh
 echo "V44003a test DONE."

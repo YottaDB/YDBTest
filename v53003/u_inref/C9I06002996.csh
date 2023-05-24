@@ -4,7 +4,7 @@
 # Copyright (c) 2013, 2015 Fidelity National Information	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -149,7 +149,9 @@ endif
 echo $linestr
 # If ASYNCIO is ON, setting desired_db_format to V4 or doing a reorg -downgrade are not allowed (one would get a
 # ASYNCIONOV4 error). Therefore skip this portion of the test if ASYNCIO is ON.
-if (0 == $gtm_test_asyncio) then
+# Additionally, MUPIP SET -VERSION and MUPIP REORG -DOWNGRADE is currently not supported in V7. So skip this portion
+# unconditionally until that support is re-enabled. Hence the "&& 0" usage below. [UPGRADE_DOWNGRADE_UNSUPPORTED]
+if ((0 == $gtm_test_asyncio) && 0 ) then
 	echo "# Set desired_db_format to V4"
 	$MUPIP set -ver="V4" -reg "*"
 	$DSE dump -file |& $grep -i "Desired DB Format"

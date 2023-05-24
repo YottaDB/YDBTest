@@ -4,6 +4,9 @@
 # Copyright (c) 2012-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -68,6 +71,9 @@ setenv subtest_exclude_list	""
 if ("HOST_HP-UX_PA_RISC" == "$gtm_test_os_machtype") then
         setenv subtest_exclude_list     "$subtest_exclude_list trigorlbk triginstallorlbk"
 endif
+
+# The below subtest uses MUPIP SET -VERSION which is not supported in GT.M V7.0-000 (YottaDB r2.00). Therefore disable it for now.
+setenv subtest_exclude_list "$subtest_exclude_list dbformat"	# [UPGRADE_DOWNGRADE_UNSUPPORTED]
 
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh

@@ -399,6 +399,17 @@ BEGIN {
 	else
 		envir[no_options] = "TST_DIR_NOT_ZFS"
 	#
+	# For now set the [UPGRADE_DOWNGRADE_UNSUPPORTED] tag all the time as MUPIP UPGRADE/MUPIP DOWNGRADE functionality
+	# is not supported in V7 format database and likely will not be supported (by GT.M) in the future either.
+	# Use this tag to also note the fact that MUPIP REORG UPGRADE/MUPIP REORG DOWNGRADE functionality is not supported
+	# currently. This tag is noted in test scripts where UPGRADE or DOWNGRADE related functionality currently disabled.
+	# Using this tag convention makes it easy to identify all such places in the future (for example, how many subtests
+	# are disabled due to this tag). Note that MUPIP REORG UPGRADE/DOWNGRADE functionality is available in GT.M V7.1-000
+	# but MUPIP UPGRADE/DOWNGRADE functionality is not. So when GT.M V7.1-000 is merged, a few places that use this tag
+	# can be uncommented/re-enabled as long as they only do MUPIP REORG UPGRADE/DOWNGRADE stuff.
+	option_names[++no_options] = "upgrade_downgrade_unsupported"
+	envir[no_options] = "UPGRADE_DOWNGRADE_UNSUPPORTED"
+	#
 	split(tst_hostos_machtype_all, all_platforms, " ")
 	if ("AIX" == tst_osname)
 	{

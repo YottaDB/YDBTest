@@ -4,7 +4,7 @@
 # Copyright (c) 2011-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -168,6 +168,10 @@ if ($?gtm_test_temporary_disable) then
 	# V63001A_R100/T63001A or V63002_R100/T63002. So disabling this until then.
 	setenv subtest_exclude_list "$subtest_exclude_list D9L04002809"
 endif
+
+
+# The below subtest uses MUPIP SET -VERSION which is not supported in GT.M V7.0-000 (YottaDB r2.00). Therefore disable it for now.
+setenv subtest_exclude_list "$subtest_exclude_list C9K12003344"	# [UPGRADE_DOWNGRADE_UNSUPPORTED]
 
 if ("ENCRYPT" == $test_encryption) then
 	# This test does not ship databases across hosts, but it renames databases

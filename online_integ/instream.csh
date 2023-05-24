@@ -4,7 +4,7 @@
 # Copyright (c) 2009-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -60,13 +60,16 @@ if ("dbg" == "$tst_image") then
 	echo $hexoffset >! hexoffset.out
 endif
 
-# filter out ointeg2 since it requires a V4 database (which does not support MM or encryption or ASYNCIO)
-# ointeg9 and 4GBOLI tests use 4G VistA database that is created without encryption and so does
-# not make sense to run these tests with encryption. Moreover, there are asserts in db_init
-# which get triggered if the global directory indicates encryption is OFF but database indicates
-# encryption is ON
-if (("MM" == "$acc_meth") || ("ENCRYPT" == "$test_encryption") || (1 == "$gtm_test_asyncio")) then
+# Filter out ointeg2 since it requires a V4 database (which does not support MM or encryption or ASYNCIO)
+#   ointeg9 and 4GBOLI tests use 4G VistA database that is created without encryption and so does
+#   not make sense to run these tests with encryption. Moreover, there are asserts in db_init
+#   which get triggered if the global directory indicates encryption is OFF but database indicates
+#   encryption is ON.
+if (("MM" == "$acc_meth") || ("ENCRYPT" == "$test_encryption") || (1 == "$gtm_test_asyncio") || 1) then
 	setenv subtest_exclude_list "$subtest_exclude_list ointeg2"
+else
+	# The below subtest uses MUPIP SET -VERSION which is not supported in GT.M V7.0-000 (YottaDB r2.00). Therefore disable it for now.
+	setenv subtest_exclude_list "$subtest_exclude_list ointeg2"	# [UPGRADE_DOWNGRADE_UNSUPPORTED]
 endif
 
 if ("ENCRYPT" == "$test_encryption") then

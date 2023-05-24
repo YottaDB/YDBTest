@@ -130,10 +130,6 @@ Resource temporarily unavailable
 %YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
 %YDB-W-WCWRNNOTCHG, Not all specified database files were changed
 
-# Try $MUPIP SET -REGION DEFAULT -VERSION=V6
-%YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
-%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
-
 # Try $MUPIP SET -REGION DEFAULT -WAIT_DISK=42
 ##TEST_PATH##/mumps.dat -> File already open by another process (2).
 Resource temporarily unavailable
@@ -258,10 +254,6 @@ All requested regions frozen
 %YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
 %YDB-W-WCWRNNOTCHG, Not all specified database files were changed
 
-# Try $MUPIP SET -REGION DEFAULT -VERSION=V6
-%YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
-%YDB-W-WCWRNNOTCHG, Not all specified database files were changed
-
 # Try $MUPIP SET -REGION DEFAULT -WAIT_DISK=42
 %YDB-W-OFRZACTIVE, Region ##TEST_PATH##/mumps.dat has an Online Freeze
 %YDB-W-WCWRNNOTCHG, Not all specified database files were changed
@@ -352,9 +344,6 @@ Database file ##TEST_PATH##/mumps.dat is now using GT.M null collation
 # Try $MUPIP SET -REGION DEFAULT -TRIGGER_FLUSH=2424
 Database file ##TEST_PATH##/mumps.dat now has trigger_flush_limit 2424
 
-# Try $MUPIP SET -REGION DEFAULT -VERSION=V6
-Database file ##TEST_PATH##/mumps.dat now has desired DB format V6
-
 # Try $MUPIP SET -REGION DEFAULT -WAIT_DISK=42
 Database file ##TEST_PATH##/mumps.dat now has wait disk set to 42 seconds
 
@@ -418,37 +407,37 @@ All requested regions unfrozen
 
 # Try strace -o strace_EPOCHTAPER.trclist $MUPIP SET -REGION DEFAULT -EPOCHTAPER
 Database file ##TEST_PATH##/mumps.dat now has epoch taper flag set to  TRUE
-validatestrace - line validated: pwrite64(3, "GDSDYNUNX03\0\0\20\0\0\0\340\3\0\0\2\0\0\1\2\0\0\1\0\0\0"..., 8192, 0) = 8192
-validatestrace - line validated: pwrite64(3, "GDSDYNUNX03\0\0\20\0\0\0\340\3\0\0\2\0\0\1\2\0\0\1\0\0\0"..., 8192, 0) = 8192
-validatestrace - line validated: pwrite64(3, "GDSDYNUNX03\0\0\20\0\0\0\340\3\0\0\2\0\0\1\2\0\0\1\0\0\0"..., 8192, 0) = 8192
-validatestrace - line validated: pwrite64(3, "GDSDYNUNX03\0\0\20\0\0\0\340\3\0\0\2\0\0\1\2\0\0\1\0\0\0"..., 8192, 0) = 8192
+validatestrace - line validated: pwrite64(3, "GDSDYNUNX04\0\0\20\0\0\0\0\0\0\0\2\0\0\0\0\0\0\1\0\0\0"..., 8192, 0) = 8192
+validatestrace - line validated: pwrite64(3, "GDSDYNUNX04\0\0\20\0\0\0\0\0\0\0\2\0\0\0\0\0\0\1\0\0\0"..., 8192, 0) = 8192
+validatestrace - line validated: pwrite64(3, "GDSDYNUNX04\0\0\20\0\0\0\0\0\0\0\2\0\0\0\0\0\0\1\0\0\0"..., 8192, 0) = 8192
+validatestrace - line validated: pwrite64(3, "GDSDYNUNX04\0\0\20\0\0\0\0\0\0\0\2\0\0\0\0\0\0\1\0\0\0"..., 8192, 0) = 8192
 
 # Try strace -o strace_FLUSH_TIME.trclist $MUPIP SET -REGION DEFAULT -FLUSH_TIME=24
-validatestrace - line validated: pwrite64(3, "GDSDYNUNX03\0\0\20\0\0\0\340\3\0\0\2\0\0\1\2\0\0\1\0\0\0"..., 8192, 0) = 8192
-validatestrace - line validated: pwrite64(3, "GDSDYNUNX03\0\0\20\0\0\0\340\3\0\0\2\0\0\1\2\0\0\1\0\0\0"..., 8192, 0) = 8192
-validatestrace - line validated: pwrite64(3, "GDSDYNUNX03\0\0\20\0\0\0\340\3\0\0\2\0\0\1\2\0\0\1\0\0\0"..., 8192, 0) = 8192
-validatestrace - line validated: pwrite64(3, "GDSDYNUNX03\0\0\20\0\0\0\340\3\0\0\2\0\0\1\2\0\0\1\0\0\0"..., 8192, 0) = 8192
+validatestrace - line validated: pwrite64(3, "GDSDYNUNX04\0\0\20\0\0\0\0\0\0\0\2\0\0\0\0\0\0\1\0\0\0"..., 8192, 0) = 8192
+validatestrace - line validated: pwrite64(3, "GDSDYNUNX04\0\0\20\0\0\0\0\0\0\0\2\0\0\0\0\0\0\1\0\0\0"..., 8192, 0) = 8192
+validatestrace - line validated: pwrite64(3, "GDSDYNUNX04\0\0\20\0\0\0\0\0\0\0\2\0\0\0\0\0\0\1\0\0\0"..., 8192, 0) = 8192
+validatestrace - line validated: pwrite64(3, "GDSDYNUNX04\0\0\20\0\0\0\0\0\0\0\2\0\0\0\0\0\0\1\0\0\0"..., 8192, 0) = 8192
 
 # Try strace -o strace_HARD_SPIN_COUNT.trclist $MUPIP SET -REGION DEFAULT -HARD_SPIN_COUNT=24
 Database file ##TEST_PATH##/mumps.dat now has hard spin count 24
-validatestrace - line validated: pwrite64(3, "GDSDYNUNX03\0\0\20\0\0\0\340\3\0\0\2\0\0\1\2\0\0\1\0\0\0"..., 8192, 0) = 8192
-validatestrace - line validated: pwrite64(3, "GDSDYNUNX03\0\0\20\0\0\0\340\3\0\0\2\0\0\1\2\0\0\1\0\0\0"..., 8192, 0) = 8192
-validatestrace - line validated: pwrite64(3, "GDSDYNUNX03\0\0\20\0\0\0\340\3\0\0\2\0\0\1\2\0\0\1\0\0\0"..., 8192, 0) = 8192
-validatestrace - line validated: pwrite64(3, "GDSDYNUNX03\0\0\20\0\0\0\340\3\0\0\2\0\0\1\2\0\0\1\0\0\0"..., 8192, 0) = 8192
+validatestrace - line validated: pwrite64(3, "GDSDYNUNX04\0\0\20\0\0\0\0\0\0\0\2\0\0\0\0\0\0\1\0\0\0"..., 8192, 0) = 8192
+validatestrace - line validated: pwrite64(3, "GDSDYNUNX04\0\0\20\0\0\0\0\0\0\0\2\0\0\0\0\0\0\1\0\0\0"..., 8192, 0) = 8192
+validatestrace - line validated: pwrite64(3, "GDSDYNUNX04\0\0\20\0\0\0\0\0\0\0\2\0\0\0\0\0\0\1\0\0\0"..., 8192, 0) = 8192
+validatestrace - line validated: pwrite64(3, "GDSDYNUNX04\0\0\20\0\0\0\0\0\0\0\2\0\0\0\0\0\0\1\0\0\0"..., 8192, 0) = 8192
 
 # Try strace -o strace_NOINST_FREEZE_ONERROR.trclist $MUPIP SET -REGION DEFAULT -NOINST_FREEZE_ON_ERROR
 Database file ##TEST_PATH##/mumps.dat now has inst freeze on fail flag set to FALSE
-validatestrace - line validated: pwrite64(3, "GDSDYNUNX03\0\0\20\0\0\0\340\3\0\0\2\0\0\1\2\0\0\1\0\0\0"..., 8192, 0) = 8192
-validatestrace - line validated: pwrite64(3, "GDSDYNUNX03\0\0\20\0\0\0\340\3\0\0\2\0\0\1\2\0\0\1\0\0\0"..., 8192, 0) = 8192
-validatestrace - line validated: pwrite64(3, "GDSDYNUNX03\0\0\20\0\0\0\340\3\0\0\2\0\0\1\2\0\0\1\0\0\0"..., 8192, 0) = 8192
-validatestrace - line validated: pwrite64(3, "GDSDYNUNX03\0\0\20\0\0\0\340\3\0\0\2\0\0\1\2\0\0\1\0\0\0"..., 8192, 0) = 8192
+validatestrace - line validated: pwrite64(3, "GDSDYNUNX04\0\0\20\0\0\0\0\0\0\0\2\0\0\0\0\0\0\1\0\0\0"..., 8192, 0) = 8192
+validatestrace - line validated: pwrite64(3, "GDSDYNUNX04\0\0\20\0\0\0\0\0\0\0\2\0\0\0\0\0\0\1\0\0\0"..., 8192, 0) = 8192
+validatestrace - line validated: pwrite64(3, "GDSDYNUNX04\0\0\20\0\0\0\0\0\0\0\2\0\0\0\0\0\0\1\0\0\0"..., 8192, 0) = 8192
+validatestrace - line validated: pwrite64(3, "GDSDYNUNX04\0\0\20\0\0\0\0\0\0\0\2\0\0\0\0\0\0\1\0\0\0"..., 8192, 0) = 8192
 
 # Try strace -o strace_SLEEP_SPIN_COUNT.trclist $MUPIP SET -REGION DEFAULT -SLEEP_SPIN_COUNT=84
 Database file ##TEST_PATH##/mumps.dat now has sleep spin count 84
-validatestrace - line validated: pwrite64(3, "GDSDYNUNX03\0\0\20\0\0\0\340\3\0\0\2\0\0\1\2\0\0\1\0\0\0"..., 8192, 0) = 8192
-validatestrace - line validated: pwrite64(3, "GDSDYNUNX03\0\0\20\0\0\0\340\3\0\0\2\0\0\1\2\0\0\1\0\0\0"..., 8192, 0) = 8192
-validatestrace - line validated: pwrite64(3, "GDSDYNUNX03\0\0\20\0\0\0\340\3\0\0\2\0\0\1\2\0\0\1\0\0\0"..., 8192, 0) = 8192
-validatestrace - line validated: pwrite64(3, "GDSDYNUNX03\0\0\20\0\0\0\340\3\0\0\2\0\0\1\2\0\0\1\0\0\0"..., 8192, 0) = 8192
+validatestrace - line validated: pwrite64(3, "GDSDYNUNX04\0\0\20\0\0\0\0\0\0\0\2\0\0\0\0\0\0\1\0\0\0"..., 8192, 0) = 8192
+validatestrace - line validated: pwrite64(3, "GDSDYNUNX04\0\0\20\0\0\0\0\0\0\0\2\0\0\0\0\0\0\1\0\0\0"..., 8192, 0) = 8192
+validatestrace - line validated: pwrite64(3, "GDSDYNUNX04\0\0\20\0\0\0\0\0\0\0\2\0\0\0\0\0\0\1\0\0\0"..., 8192, 0) = 8192
+validatestrace - line validated: pwrite64(3, "GDSDYNUNX04\0\0\20\0\0\0\0\0\0\0\2\0\0\0\0\0\0\1\0\0\0"..., 8192, 0) = 8192
 
 # MUPIPSETFHFLUSHTests complete
 

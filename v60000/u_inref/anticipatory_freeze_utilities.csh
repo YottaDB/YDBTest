@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -156,27 +156,32 @@ wait_for_log "MUINSTUNFROZEN" reorg.out
 check_error_exist reorg.out "MUINSTFROZEN" "MUINSTUNFROZEN"
 wait_for_proc_to_die `cat reorg.pid`
 
-echo ""
-echo "# MUPIP REORG -DOWNGRADE"
-update_and_suicide
-setfreeze MUPIP_DOWNGRADE
-($MUPIP reorg -downgrade -reg "*" >&! downgrade.out & ; echo $! >! downgrade.pid) >>&! bkgrnd_pids.list
-wait_for_log "MUINSTFROZEN" downgrade.out
-unfreeze
-wait_for_log "MUINSTUNFROZEN" downgrade.out
-check_error_exist downgrade.out "MUINSTFROZEN" "MUINSTUNFROZEN"
-wait_for_proc_to_die `cat downgrade.pid`
-
-echo ""
-echo "# MUPIP REORG -UPGRADE"
-update_and_suicide
-setfreeze MUPIP_UPGRADE
-($MUPIP reorg -upgrade -reg "*" >&! upgrade.out & ; echo $! >! upgrade.pid) >>&! bkgrnd_pids.list
-wait_for_log "MUINSTFROZEN" upgrade.out
-unfreeze
-wait_for_log "MUINSTUNFROZEN" upgrade.out
-check_error_exist upgrade.out "MUINSTFROZEN" "MUINSTUNFROZEN"
-wait_for_proc_to_die `cat upgrade.pid`
+# -----------------------------------------------------------------------------------------------------
+# Comment below sections until MUPIP REORG UPGRADE and MUPIP REORG DOWNGRADE are supported with V7 format database file
+# [UPGRADE_DOWNGRADE_UNSUPPORTED]
+# -----------------------------------------------------------------------------------------------------
+# echo ""
+# echo "# MUPIP REORG -DOWNGRADE"
+# update_and_suicide
+# setfreeze MUPIP_DOWNGRADE
+# ($MUPIP reorg -downgrade -reg "*" >&! downgrade.out & ; echo $! >! downgrade.pid) >>&! bkgrnd_pids.list
+# wait_for_log "MUINSTFROZEN" downgrade.out
+# unfreeze
+# wait_for_log "MUINSTUNFROZEN" downgrade.out
+# check_error_exist downgrade.out "MUINSTFROZEN" "MUINSTUNFROZEN"
+# wait_for_proc_to_die `cat downgrade.pid`
+#
+# echo ""
+# echo "# MUPIP REORG -UPGRADE"
+# update_and_suicide
+# setfreeze MUPIP_UPGRADE
+# ($MUPIP reorg -upgrade -reg "*" >&! upgrade.out & ; echo $! >! upgrade.pid) >>&! bkgrnd_pids.list
+# wait_for_log "MUINSTFROZEN" upgrade.out
+# unfreeze
+# wait_for_log "MUINSTUNFROZEN" upgrade.out
+# check_error_exist upgrade.out "MUINSTFROZEN" "MUINSTUNFROZEN"
+# wait_for_proc_to_die `cat upgrade.pid`
+# -----------------------------------------------------------------------------------------------------
 
 echo ""
 echo "# MUPIP JOURNAL -ONLINE -ROLLBACK"

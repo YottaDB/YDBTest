@@ -3,7 +3,7 @@
 #								#
 #	Copyright 2003, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -48,6 +48,10 @@ setenv subtest_exclude_list ""
 # D9C09002221 does MUPIP set -version=V4 which is not supported by encryption binaries
 if (("MM" == $acc_meth) || (1 == $gtm_test_asyncio) || ("ENCRYPT" == $test_encryption)) then
 	setenv subtest_exclude_list "$subtest_exclude_list D9C09002221"
+else
+	# The below subtest uses MUPIP SET -VERSION which is not supported in GT.M V7.0-000 (YottaDB r2.00). Therefore disable it for now.
+	setenv subtest_exclude_list "$subtest_exclude_list D9C09002221"	# [UPGRADE_DOWNGRADE_UNSUPPORTED]
 endif
+
 $gtm_tst/com/submit_subtest.csh
 echo "V44003 test DONE."

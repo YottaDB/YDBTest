@@ -79,7 +79,7 @@ mumps.dat
 Find the offset of minor_dbver in file header
 Minor db version is the same
 ----------------------------------------------------------------------
-##SUSPEND_OUTPUT ASYNCIO
+##SUSPEND_OUTPUT ASYNCIO UPGRADE_DOWNGRADE_UNSUPPORTED
 # Set desired_db_format to V4
 Database file ##TEST_PATH##/mumps.dat now has desired DB format V4
   Maximum TN Warn                0x00000000D7FFFFFF  Desired DB Format                       V4
@@ -143,7 +143,7 @@ Region DEFAULT : MUPIP REORG UPGRADE finished
   Database is Fully Upgraded                :  TRUE
   Database WAS ONCE Fully Upgraded from V4  :  TRUE
 
-##ALLOW_OUTPUT ASYNCIO
+##ALLOW_OUTPUT ASYNCIO UPGRADE_DOWNGRADE_UNSUPPORTED
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

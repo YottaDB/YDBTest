@@ -4,12 +4,24 @@
 # Copyright (c) 2005-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+
+# The below script is currently short-circuited as V7.0-000 does not support V6/V5 block format in db file on disk.
+# This short-circuit can be removed once MUPIP SET -VERSION=, MUPIP REORG -UPGRADE etc. are supported (in V7.1-000).
+# Note: There is a similar comment in com/bkgrnd_reorg_upgrd_dwngrd.csh.
+echo "# gtm_test_db_format=NO_CHANGE set in mupip_set_version.csh until V6/V5 block format is supported"	>>! settings.csh
+setenv gtm_test_db_format "NO_CHANGE"
+echo "setenv gtm_test_db_format $gtm_test_db_format" 								>>! settings.csh
+exit	# [UPGRADE_DOWNGRADE_UNSUPPORTED]
+
 # unless otherwise requested, set block version to V4 or V6, randomly [50-50]
 # So possibilities are:
 # $gtm_test_mupip_set_version 	- undefined means random [50-50]
