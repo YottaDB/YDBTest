@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -30,7 +30,7 @@ endif
 # Now for each function corresponding to a base-image and that is exported in libyottadb.so, try invoking that function
 # from the same C process that also opened libyottadb.so (through the above call-in invocation). We expect a MIXIMAGE
 # error for each of those invocations. Do it in a loop.
-foreach func (dbcertify_main dse_main ftok_main mupip_main lke_main gtcm_play_main gtcm_server_main gtcm_shmclean_main gtcm_gnp_server_main)
+foreach func (dse_main mupip_main lke_main gtcm_play_main gtcm_server_main gtcm_shmclean_main gtcm_gnp_server_main)
 	echo "  --> Expecting MIXIMAGE error for $func"
 	./miximage $func
 	echo ""

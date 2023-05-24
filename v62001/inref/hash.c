@@ -2,7 +2,7 @@
  *								*
  * Copyright 2014 Fidelity Information Services, Inc		*
  *								*
- * Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.	*
+ * Copyright (c) 2019-2023 YottaDB LLC and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -46,8 +46,8 @@ int main(int argc, char *argv[])
 
 	GTM_THREADGBL_INIT;
 
-	/* In case we end up in util_out_send_oper(), pretend to be dbcertify. */
-	image_type = DBCERTIFY_IMAGE;
+	/* In case we end up in util_out_send_oper(), pretend to be lke. */
+	image_type = LKE_IMAGE;
 
 	urfd = OPEN("/dev/urandom", O_RDONLY);
 	if (-1 == urfd)

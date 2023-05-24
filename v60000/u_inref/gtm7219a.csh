@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -19,7 +19,6 @@
 #	GTM
 #	DSE
 #	LKE
-#	DBCERTIFY
 #	GTCM
 #	GTCM_GNP
 # Also verify that if replication is on, instance name is part of facility for operator log messaegs.
@@ -29,7 +28,7 @@ setenv gtm_test_mupip_set_version "disable"
 #create database with one region
 $gtm_tst/com/dbcreate.csh mumps -block_size=1024
 
-foreach image_type ( "MUMPS" "MUPIP" "DSE" "LKE" "DBCERTIFY" "GTCM" "GTCM_GNP" )
+foreach image_type ( "MUMPS" "MUPIP" "DSE" "LKE" "GTCM" "GTCM_GNP" )
 	set syslog_before = `date +"%b %e %H:%M:%S"`
 	echo "$image_type : syslog_before=$syslog_before" >>&! syslog_time.outx
 	switch (  $image_type )
@@ -48,10 +47,6 @@ foreach image_type ( "MUMPS" "MUPIP" "DSE" "LKE" "DBCERTIFY" "GTCM" "GTCM_GNP" )
 		case "LKE":
 			# When LKE image is initialized, message is sent to operator log as a part of white-box testing.
 			$LKE exit
-			breaksw
-		case "DBCERTIFY":
-			# When DBCERTIFY image is initialized, message is sent to operator log as a part of white-box testing.
-			$gtm_exe/dbcertify scan -outfile=dbcertify_scanreport.scan DEFAULT
 			breaksw
 		case "GTCM":
 			source $gtm_tst/com/portno_acquire.csh >>& portno.out
