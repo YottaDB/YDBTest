@@ -6,10 +6,57 @@
 # Dump contents of block=2 using DSE DUMP to verify 4-byte collation header in Directory Tree Leaf record
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
-Block 2   Size 1F   Level 0   TN 7 V6
-Rec:1  Blk 2  Off 10  Size F  Cmpc 0  Ptr 4  Key ^x
-      10 : |  F  0  0  0 78  0  0  4  0  0  0  1  0  1  0               |
-           |  .  .  .  .  x  .  .  .  .  .  .  .  .  .  .               |
+Block 2   Size 23   Level 0   TN 7 V7
+Rec:1  Blk 2  Off 10  Size 13  Cmpc 0  Ptr 4  Key ^x
+      10 : | 13  0  0  0 78  0  0  4  0  0  0  0  0  0  0  1  0  1  0   |
+           |  .  .  .  .  x  .  .  .  .  .  .  .  .  .  .  .  .  .  .   |
+#--------------------------------------------------
+# Create DBRBNTOOLRG error using DSE OVERWRITE.
+# Run MUPIP INTEG and expect an error but no assert failures/SIG-11
+# This tests mu_int_plen variable maintenance in sr_port/mupip_integ.c in case of ERR_DBRBNTOOLRG
+#--------------------------------------------------
+
+
+Integ of region DEFAULT
+
+Block:Offset Level
+%YDB-E-DBBADPNTR,         Nature: #DANGER***
+               2:10     0  Bad pointer value in directory
+                           Directory Path:  1:10, 2:10
+Keys from ^x to the end are suspect.
+%YDB-E-DBRBNTOOLRG,         Nature: #DANGER***
+       100000004:10     1  Root block number greater than last block number in file
+%YDB-W-DBLOCMBINC,         Nature: #Benign
+               0:0     FF  Local bit map incorrect
+%YDB-W-DBMRKBUSY,         Nature: #Benign
+               3:0     FF  Block incorrectly marked busy
+%YDB-W-DBMRKBUSY,         Nature: #Benign
+               4:0     FF  Block incorrectly marked busy
+
+Total error count from integ:		5.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           0.769            NA
+Index               0               0           0.000             0
+Data                0               0           0.000             0
+Free               98              NA              NA            NA
+Total             100               2              NA             0
+%YDB-E-INTEGERRS, Database integrity errors
+# Undo DSE OVERWRITE and verify database integs clean
+
+
+Integ of region DEFAULT
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           0.769            NA
+Index               1               1           0.683             1
+Data                1               1           0.659             1
+Free               96              NA              NA            NA
+Total             100               4              NA             2
 
 #--------------------------------------------------
 # Test 1st byte of 4-byte collation header = 0
@@ -23,20 +70,20 @@ Region	DEFAULT
 # Use DSE DUMP to dump block 2 contents of global name ^x. Should see no INVSPECREC error
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
-Block 2   Size 1F   Level 0   TN 9 V6
-Rec:1  Blk 2  Off 10  Size F  Cmpc 0  Ptr 4  Key ^x
-      10 : |  F  0  0  0 78  0  0  4  0  0  0  0  0  1  0               |
-           |  .  .  .  .  x  .  .  .  .  .  .  .  .  .  .               |
+Block 2   Size 23   Level 0   TN B V7
+Rec:1  Blk 2  Off 10  Size 13  Cmpc 0  Ptr 4  Key ^x
+      10 : | 13  0  0  0 78  0  0  4  0  0  0  0  0  0  0  0  0  1  0   |
+           |  .  .  .  .  x  .  .  .  .  .  .  .  .  .  .  .  .  .  .   |
 # Use MUPIP INTEG to check integrity of database. Should see INVSPECREC error if 1st byte of collation header is not 1
 Block:Offset Level
 %YDB-E-INVSPECREC, 
-       2:10     0  Invalid global modifier record
-                   Directory Path:  1:10, 2:10
+               2:10     0  Invalid global modifier record
+                           Directory Path:  1:10, 2:10
 Keys from ^x to the end are suspect.
 Total error count from integ:		1.
 Type           Blocks         Records          % Used      Adjacent
-Directory           2               2           0.671            NA
-Index               1               1           0.585             1
+Directory           2               2           0.769            NA
+Index               1               1           0.683             1
 Data                1               1           0.659             1
 Free               96              NA              NA            NA
 Total             100               4              NA             2
@@ -54,15 +101,15 @@ Region	DEFAULT
 # Use DSE DUMP to dump block 2 contents of global name ^x. Should see no INVSPECREC error
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
-Block 2   Size 1F   Level 0   TN A V6
-Rec:1  Blk 2  Off 10  Size F  Cmpc 0  Ptr 4  Key ^x
-      10 : |  F  0  0  0 78  0  0  4  0  0  0  1  0  1  0               |
-           |  .  .  .  .  x  .  .  .  .  .  .  .  .  .  .               |
+Block 2   Size 23   Level 0   TN C V7
+Rec:1  Blk 2  Off 10  Size 13  Cmpc 0  Ptr 4  Key ^x
+      10 : | 13  0  0  0 78  0  0  4  0  0  0  0  0  0  0  1  0  1  0   |
+           |  .  .  .  .  x  .  .  .  .  .  .  .  .  .  .  .  .  .  .   |
 # Use MUPIP INTEG to check integrity of database. Should see INVSPECREC error if 1st byte of collation header is not 1
 No errors detected by integ.
 Type           Blocks         Records          % Used      Adjacent
-Directory           2               2           0.671            NA
-Index               1               1           0.585             1
+Directory           2               2           0.769            NA
+Index               1               1           0.683             1
 Data                1               1           0.659             1
 Free               96              NA              NA            NA
 Total             100               4              NA             2
@@ -79,20 +126,20 @@ Region	DEFAULT
 # Use DSE DUMP to dump block 2 contents of global name ^x. Should see no INVSPECREC error
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
-Block 2   Size 1F   Level 0   TN B V6
-Rec:1  Blk 2  Off 10  Size F  Cmpc 0  Ptr 4  Key ^x
-      10 : |  F  0  0  0 78  0  0  4  0  0  0  2  0  1  0               |
-           |  .  .  .  .  x  .  .  .  .  .  .  .  .  .  .               |
+Block 2   Size 23   Level 0   TN D V7
+Rec:1  Blk 2  Off 10  Size 13  Cmpc 0  Ptr 4  Key ^x
+      10 : | 13  0  0  0 78  0  0  4  0  0  0  0  0  0  0  2  0  1  0   |
+           |  .  .  .  .  x  .  .  .  .  .  .  .  .  .  .  .  .  .  .   |
 # Use MUPIP INTEG to check integrity of database. Should see INVSPECREC error if 1st byte of collation header is not 1
 Block:Offset Level
 %YDB-E-INVSPECREC, 
-       2:10     0  Invalid global modifier record
-                   Directory Path:  1:10, 2:10
+               2:10     0  Invalid global modifier record
+                           Directory Path:  1:10, 2:10
 Keys from ^x to the end are suspect.
 Total error count from integ:		1.
 Type           Blocks         Records          % Used      Adjacent
-Directory           2               2           0.671            NA
-Index               1               1           0.585             1
+Directory           2               2           0.769            NA
+Index               1               1           0.683             1
 Data                1               1           0.659             1
 Free               96              NA              NA            NA
 Total             100               4              NA             2
@@ -110,20 +157,20 @@ Region	DEFAULT
 # Use DSE DUMP to dump block 2 contents of global name ^x. Should see no INVSPECREC error
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
-Block 2   Size 1F   Level 0   TN C V6
-Rec:1  Blk 2  Off 10  Size F  Cmpc 0  Ptr 4  Key ^x
-      10 : |  F  0  0  0 78  0  0  4  0  0  0 12 37  1  0               |
-           |  .  .  .  .  x  .  .  .  .  .  .  .  7  .  .               |
+Block 2   Size 23   Level 0   TN E V7
+Rec:1  Blk 2  Off 10  Size 13  Cmpc 0  Ptr 4  Key ^x
+      10 : | 13  0  0  0 78  0  0  4  0  0  0  0  0  0  0 12 37  1  0   |
+           |  .  .  .  .  x  .  .  .  .  .  .  .  .  .  .  .  7  .  .   |
 # Use MUPIP INTEG to check integrity of database. Should see INVSPECREC error if 1st byte of collation header is not 1
 Block:Offset Level
 %YDB-E-INVSPECREC, 
-       2:10     0  Invalid global modifier record
-                   Directory Path:  1:10, 2:10
+               2:10     0  Invalid global modifier record
+                           Directory Path:  1:10, 2:10
 Keys from ^x to the end are suspect.
 Total error count from integ:		1.
 Type           Blocks         Records          % Used      Adjacent
-Directory           2               2           0.671            NA
-Index               1               1           0.585             1
+Directory           2               2           0.769            NA
+Index               1               1           0.683             1
 Data                1               1           0.659             1
 Free               96              NA              NA            NA
 Total             100               4              NA             2
@@ -141,20 +188,20 @@ Region	DEFAULT
 # Use DSE DUMP to dump block 2 contents of global name ^x. Should see no INVSPECREC error
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
-Block 2   Size 1F   Level 0   TN D V6
-Rec:1  Blk 2  Off 10  Size F  Cmpc 0  Ptr 4  Key ^x
-      10 : |  F  0  0  0 78  0  0  4  0  0  0 12 38  1  0               |
-           |  .  .  .  .  x  .  .  .  .  .  .  .  8  .  .               |
+Block 2   Size 23   Level 0   TN F V7
+Rec:1  Blk 2  Off 10  Size 13  Cmpc 0  Ptr 4  Key ^x
+      10 : | 13  0  0  0 78  0  0  4  0  0  0  0  0  0  0 12 38  1  0   |
+           |  .  .  .  .  x  .  .  .  .  .  .  .  .  .  .  .  8  .  .   |
 # Use MUPIP INTEG to check integrity of database. Should see INVSPECREC error if 1st byte of collation header is not 1
 Block:Offset Level
 %YDB-E-INVSPECREC, 
-       2:10     0  Invalid global modifier record
-                   Directory Path:  1:10, 2:10
+               2:10     0  Invalid global modifier record
+                           Directory Path:  1:10, 2:10
 Keys from ^x to the end are suspect.
 Total error count from integ:		1.
 Type           Blocks         Records          % Used      Adjacent
-Directory           2               2           0.671            NA
-Index               1               1           0.585             1
+Directory           2               2           0.769            NA
+Index               1               1           0.683             1
 Data                1               1           0.659             1
 Free               96              NA              NA            NA
 Total             100               4              NA             2
@@ -172,20 +219,20 @@ Region	DEFAULT
 # Use DSE DUMP to dump block 2 contents of global name ^x. Should see no INVSPECREC error
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
-Block 2   Size 1F   Level 0   TN E V6
-Rec:1  Blk 2  Off 10  Size F  Cmpc 0  Ptr 4  Key ^x
-      10 : |  F  0  0  0 78  0  0  4  0  0  0 25 35  1  0               |
-           |  .  .  .  .  x  .  .  .  .  .  .  %  5  .  .               |
+Block 2   Size 23   Level 0   TN 10 V7
+Rec:1  Blk 2  Off 10  Size 13  Cmpc 0  Ptr 4  Key ^x
+      10 : | 13  0  0  0 78  0  0  4  0  0  0  0  0  0  0 25 35  1  0   |
+           |  .  .  .  .  x  .  .  .  .  .  .  .  .  .  .  %  5  .  .   |
 # Use MUPIP INTEG to check integrity of database. Should see INVSPECREC error if 1st byte of collation header is not 1
 Block:Offset Level
 %YDB-E-INVSPECREC, 
-       2:10     0  Invalid global modifier record
-                   Directory Path:  1:10, 2:10
+               2:10     0  Invalid global modifier record
+                           Directory Path:  1:10, 2:10
 Keys from ^x to the end are suspect.
 Total error count from integ:		1.
 Type           Blocks         Records          % Used      Adjacent
-Directory           2               2           0.671            NA
-Index               1               1           0.585             1
+Directory           2               2           0.769            NA
+Index               1               1           0.683             1
 Data                1               1           0.659             1
 Free               96              NA              NA            NA
 Total             100               4              NA             2
