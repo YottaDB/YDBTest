@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2005, 2013 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -63,7 +66,7 @@ foreach accmethod (BG MM)
 	set v4 = "FFFFFFFEE00"		# M32 * 0X1000 - 512
 	set v5 = "FFFFFFFEFE00"		# M32 * 0X10000 - 512
 	set v6 = "FFFFFFFEFFE00"	# M32 * 0X100000 - 512
-	set v7 = "FFFFFFEEFFFFFE10"	# M32 * 0XFFFFFFF0 - 512
+	set v7 = "FFFFFFD000000000"	# A value close to but < MAX_WARN_TN
 	set v8 = "FFFFFFFFDFFFFDFF"	# MAX_TN_NEW -512
 
 	foreach new_tn ($v1 $v2 $v3 $v4 $v5 $v6 $v7 $v8 )
