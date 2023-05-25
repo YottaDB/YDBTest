@@ -1,4 +1,18 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+# Portions Copyright (c) Fidelity National			#
+# Information Services, Inc. and/or its subsidiaries.		#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
 #
 # C9905-001114 check DSE find -sibling
 #
@@ -517,6 +531,8 @@ find -sib -block=000001FD
 find -sib -block=000001FE
 find -sib -block=000001FF
 find -sib -block=00000201
+find -sib -block=00000202
+find -sib -block=00000203
 DSE_EOF
 $gtm_exe/mumps -run C9905001114
-$gtm_tst/com/dbcheck.csh 
+$gtm_tst/com/dbcheck.csh

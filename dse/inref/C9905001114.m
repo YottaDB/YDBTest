@@ -2,6 +2,9 @@
 ;								;
 ;	Copyright 2011, 2014 Fidelity Information Services, Inc	;
 ;								;
+; Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -11,7 +14,7 @@
 C9905001114	; check DSE sibling report
 	;
 	new (act)
-	if '$data(act) new act set act="set io=$io use $p write !,$zstatus,!,$zpos,! zshow  use io"
+	if '$data(act) new act set act="set io=$io use $p write !,$zstatus,!,$zpos,! zshow ""*"" use io"
 	new $etrap
 	set $ecode="",$zstatus="",$etrap="goto err"
 	set zl=$zlevel
@@ -21,7 +24,7 @@ C9905001114	; check DSE sibling report
 	open file:readonly
 	use file:(rewind:exception="goto eof:$zeof,err")
 	for  read y if y["Left" read x if $length(x) set x=$piece(x,$char(13)) do
-	. set left=$piece(x,$char(9),2),block=$piece(x,$char(9),"none"=left+3),right=$piece(x,$char(9),"none"=left+4)
+	. set left=$piece(x,$char(9),2),block=$piece(x,$char(9),("none"=left)*2+3),right=$piece(x,$char(9),("none"=left)*2+4)
 	. if $increment(blkcnt) set array(block,"l")=left,array(block,"r")=right
 eof	set $ecode=""
 	close file
