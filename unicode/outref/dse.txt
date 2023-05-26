@@ -58,7 +58,7 @@ DSE> DSE>
 4 ZWR records written.
 
 DSE> 
-1 ZWR records written.
+3 ZWR records written.
 
 DSE> Closing output file:  ｄｕｍｐ1.out
 DSE> # Contents of ｄｕｍｐ1.out i.e dump of blocks 22 and 6 in zwr format
@@ -68,7 +68,9 @@ DSE> # Contents of ｄｕｍｐ1.out i.e dump of blocks 22 and 6 in zwr format
 ^samplegbl("色")="Kanji"
 ^samplegbl($C(57344))=$C(57344)_", U+E000 - private use section"
 ^samplegbl($C(57344,57345,57345,57346,57353))=$C(57344,57345,57345,57346,57353)
-^samplegbl("Β","Α","Ε","Ζ","Μ","Ν","Ο","Τ","Υ","Χ","Β","Α","Ε")="this is actually in Greek, should look like B,A,E,Z,M,N,O,T,Y,X,B,A,E"
+^samplegbl("在青铜器专家的修复下")="在青铜器专家的修复下，这把断成六块，分离了12 年的青铜古剑终于合六为一，"
+^samplegbl("恢复了本来面目")="恢复了本来面目，剑上12阴刻镶嵌篆书金字铭文也完整出现在人们面前。从铭文得知，此剑是春秋末吴国君主阖闾在位时期所造，"
+^samplegbl("我")="我"
 ###################################################################
 #- DSE OPEN and OCHSET
 Error expected for the below DSE dump
@@ -131,7 +133,7 @@ File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
 DSE> DSE> 
-Rec:3  Blk 2E  Off 6B  Size D  Cmpc 17  Key ^testgbl("four byte char2")
+Rec:3  Blk 30  Off 6B  Size D  Cmpc 17  Key ^testgbl("four byte char2")
 ##TEST_AWK     ... : . .. .. .. .. 32  0  0 61 61 76 84 80 61                     .
 ##TEST_AWK           .  .  .  .  .  .  .  .  a  a  v  .  .  a                     .
 
@@ -163,11 +165,11 @@ No errors detected by integ.
 
 Type           Blocks         Records          % Used      Adjacent
 
-Directory           2               6          13.378            NA
-Index               5              40          22.851             1
+Directory           2               6          15.722            NA
+Index               7              42          23.158             2
 Data               40             264          63.754            23
-Free               53              NA              NA            NA
-Total             100             310              NA            24
+Free               51              NA              NA            NA
+Total             100             312              NA            25
 ###################################################################
 #- DSE ADD
 
@@ -182,11 +184,11 @@ No errors detected by integ.
 
 Type           Blocks         Records          % Used      Adjacent
 
-Directory           2               6          13.378            NA
-Index               5              40          22.851             1
+Directory           2               6          15.722            NA
+Index               7              42          23.158             2
 Data               40             266          64.248            23
-Free               53              NA              NA            NA
-Total             100             312              NA            24
+Free               51              NA              NA            NA
+Total             100             314              NA            25
 TEST-I-PASS, DSE add key passed
 
 YDB>
@@ -211,11 +213,11 @@ No errors detected by integ.
 
 Type           Blocks         Records          % Used      Adjacent
 
-Directory           2               6          13.378            NA
-Index               5              40          22.851             1
+Directory           2               6          15.722            NA
+Index               7              42          23.158             2
 Data               40             267          64.350            23
-Free               53              NA              NA            NA
-Total             100             313              NA            24
+Free               51              NA              NA            NA
+Total             100             315              NA            25
 ###################################################################
 #- DSE FIND
 
@@ -223,37 +225,37 @@ File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
 DSE> 
-Key found in block  2E.
+Key found in block  30.
     Directory path
     Path--blk:off
-	1:10,	2:5C,
+	1:10,	2:6C,
     Global tree path
     Path--blk:off
-	2F:10,	2E:114,
+	31:10,	30:114,
 DSE> 
-Key found in block  2E.
+Key found in block  30.
     Directory path
     Path--blk:off
-	1:10,	2:5C,
+	1:10,	2:6C,
     Global tree path
     Path--blk:off
-	2F:10,	2E:142,
+	31:10,	30:142,
 DSE> 
-Key found in block  2E.
+Key found in block  30.
     Directory path
     Path--blk:off
-	1:10,	2:5C,
+	1:10,	2:6C,
     Global tree path
     Path--blk:off
-	2F:10,	2E:177,
+	31:10,	30:177,
 DSE> 
-Key found in block  2E.
+Key found in block  30.
     Directory path
     Path--blk:off
-	1:10,	2:5C,
+	1:10,	2:6C,
     Global tree path
     Path--blk:off
-	2F:10,	2E:1A7,
+	31:10,	30:1A7,
 DSE> 
 ###################################################################
 #- DSE RANGE
@@ -263,39 +265,39 @@ Region	DEFAULT
 
 DSE> 
 Blocks in the specified key range:
-Block:  0000000A Level:  0
+Block:  0x000000000000000A Level:  0
 Found 1 blocks
 DSE> None found.
 DSE> 
 Blocks in the specified key range:
-Block:  00000003 Level:  0
-Block:  00000005 Level:  0
-Block:  00000006 Level:  0
-Block:  00000007 Level:  0
-Block:  00000008 Level:  0
-Block:  00000009 Level:  0
-Block:  0000000A Level:  0
-Block:  0000000C Level:  0
-Block:  0000000D Level:  0
-Block:  0000000E Level:  0
-Block:  0000000F Level:  0
-Block:  00000010 Level:  0
-Block:  00000012 Level:  0
-Block:  00000014 Level:  0
-Block:  00000015 Level:  0
-Block:  00000016 Level:  0
-Block:  0000001C Level:  0
-Block:  0000001D Level:  0
-Block:  0000001E Level:  0
-Block:  0000001F Level:  0
-Block:  00000022 Level:  0
-Block:  00000023 Level:  0
-Block:  0000002D Level:  0
-Block:  0000002E Level:  0
+Block:  0x0000000000000003 Level:  0
+Block:  0x0000000000000005 Level:  0
+Block:  0x0000000000000006 Level:  0
+Block:  0x0000000000000007 Level:  0
+Block:  0x0000000000000008 Level:  0
+Block:  0x0000000000000009 Level:  0
+Block:  0x000000000000000A Level:  0
+Block:  0x000000000000000C Level:  0
+Block:  0x000000000000000D Level:  0
+Block:  0x000000000000000E Level:  0
+Block:  0x000000000000000F Level:  0
+Block:  0x0000000000000010 Level:  0
+Block:  0x0000000000000012 Level:  0
+Block:  0x0000000000000014 Level:  0
+Block:  0x0000000000000015 Level:  0
+Block:  0x0000000000000016 Level:  0
+Block:  0x000000000000001C Level:  0
+Block:  0x000000000000001D Level:  0
+Block:  0x000000000000001E Level:  0
+Block:  0x000000000000001F Level:  0
+Block:  0x0000000000000024 Level:  0
+Block:  0x0000000000000025 Level:  0
+Block:  0x000000000000002F Level:  0
+Block:  0x0000000000000030 Level:  0
 Found 24 blocks
 DSE> 
 Blocks in the specified key range:
-Block:  0000001C Level:  0
+Block:  0x000000000000001C Level:  0
 Found 1 blocks
 DSE> None found.
 DSE> None found.

@@ -2,9 +2,9 @@
 Region	DEFAULT
 
 DSE> DSE> 
-Block 2E   Size 1EA   Level 0   TN ## V#
+Block 30   Size 1EA   Level 0   TN ## V#
 
-Rec:1  Blk 2E  Off 10  Size 3F  Cmpc 0  Key ^testgbl(1)
+Rec:1  Blk 30  Off 10  Size 3F  Cmpc 0  Key ^testgbl(1)
      ... : | .. .. .. .. 74 65 73 74 67 62 6C  0 BF 11  0  0 30 61 62 33|
            |  .  .  . ..  t  e  s  t  g  b  l  .  .  .  .  .  0  a  b  3|
       24 : | 34 35 36 37 38 39 20 2D 2D 20 EF BC 90 EF BC 81 EF BD 82 EF|
@@ -14,17 +14,17 @@ Rec:1  Blk 2E  Off 10  Size 3F  Cmpc 0  Key ^testgbl(1)
       4C : | EF BC 99                                                   |
            |       ９                                                   |
 
-Rec:2  Blk 2E  Off 4F  Size 1C  Cmpc 8  Key ^testgbl("four byte char1")
+Rec:2  Blk 30  Off 4F  Size 1C  Cmpc 8  Key ^testgbl("four byte char1")
      ... : | .. .. .. .. FF 66 6F 75 72 20 62 79 74 65 20 63 68 61 72 31|
            |  .  .  . ..  .  f  o  u  r     b  y  t  e     c  h  a  r  1|
       63 : |  0  0 61 C5 9E C5 9E 61                                    |
            |  .  .  a     Ş     Ş  a                                    |
 
-Rec:3  Blk 2E  Off 6B  Size D  Cmpc 17  Key ^testgbl("four byte char2")
+Rec:3  Blk 30  Off 6B  Size D  Cmpc 17  Key ^testgbl("four byte char2")
      ... : | .. .. .. .. 32  0  0 61 61 76 84 80 61                     |
            |  .  .  . ..  2  .  .  a  a  v  .  .  a                     |
 
-Rec:4  Blk 2E  Off 78  Size 3D  Cmpc 9  Key ^testgbl("three byte chars")
+Rec:4  Blk 30  Off 78  Size 3D  Cmpc 9  Key ^testgbl("three byte chars")
      ... : | .. .. .. .. 74 68 72 65 65 20 62 79 74 65 20 63 68 61 72 73|
            |  .  .  . ..  t  h  r  e  e     b  y  t  e     c  h  a  r  s|
       8C : |  0  0 EF BC A1 20 EF BC A2 EF BC A5 EF BC A1 EF BC B5 EF BC|
@@ -34,13 +34,13 @@ Rec:4  Blk 2E  Off 78  Size 3D  Cmpc 9  Key ^testgbl("three byte chars")
       B4 : | B9                                                         |
            | Ｙ                                                         |
 
-Rec:5  Blk 2E  Off B5  Size 1C  Cmpc A  Key ^testgbl("two byte chars")
+Rec:5  Blk 30  Off B5  Size 1C  Cmpc A  Key ^testgbl("two byte chars")
      ... : | .. .. .. .. 77 6F 20 62 79 74 65 20 63 68 61 72 73  0  0 C5|
            |  .  .  . ..  w  o     b  y  t  e     c  h  a  r  s  .  .   |
       C9 : | 9E 41 41 C4 B0 4C C4 B0                                    |
            |  Ş  A  A     İ  L     İ                                    |
 
-Rec:6  Blk 2E  Off D1  Size 43  Cmpc 9  Key ^testgbl("０１２３４５_１")
+Rec:6  Blk 30  Off D1  Size 43  Cmpc 9  Key ^testgbl("０１２３４５_１")
      ... : | .. .. .. .. EF BC 90 EF BC 91 EF BC 92 EF BC 93 EF BC 94 EF|
            |  .  .  . ..       ０       １       ２       ３       ４   |
       E5 : | BC 95 5F EF BC 91  0  0 64 61 74 61 61 20 2D 2D 20 EF BC 90|
@@ -50,7 +50,7 @@ Rec:6  Blk 2E  Off D1  Size 43  Cmpc 9  Key ^testgbl("０１２３４５_１")
      10D : | 97 EF BC 98 EF BC 99                                       |
            | ７       ８       ９                                       |
 
-Rec:7  Blk 2E  Off 114  Size 2E  Cmpc 1E  Key ^testgbl("０１２３４５_３")
+Rec:7  Blk 30  Off 114  Size 2E  Cmpc 1E  Key ^testgbl("０１２３４５_３")
      ... : | .. .. .. .. 93  0  0 EF BD 81 20 EF BD 8E EF BD 85 EF BD 97|
            |  .  .  . ..  .  .  .       ａ          ｎ       ｅ       ｗ|
      128 : | 20 EF BD 84 EF BD 81 EF BD 94 EF BD 81 20 EF BD 96 EF BD 81|
@@ -58,7 +58,7 @@ Rec:7  Blk 2E  Off 114  Size 2E  Cmpc 1E  Key ^testgbl("０１２３４５_３")
      13C : | EF BD 8C EF BC 99                                          |
            |       ｌ       ９                                          |
 
-Rec:8  Blk 2E  Off 142  Size 35  Cmpc 1E  Key ^testgbl("０１２３４５_４","....")
+Rec:8  Blk 30  Off 142  Size 35  Cmpc 1E  Key ^testgbl("０１２３４５_４","....")
      ... : | .. .. .. .. 94  0 FF FB  C C8 C6  0  0 64 61 74 61 5F 34 34|
            |  .  .  . ..  .  .  .  .  .  .  .  .  .  d  a  t  a  _  4  4|
      156 : | 34 3A 20 EF BD 84 EF BD 81 EF BD 94 EF BD 81 EF BC BF EF BC|
@@ -66,7 +66,7 @@ Rec:8  Blk 2E  Off 142  Size 35  Cmpc 1E  Key ^testgbl("０１２３４５_４",
      16A : | 94 EF BC 94 EF BC 94 EF EF EF EF BC 94                     |
            | ４       ４       ４  .  .  .       ４                     |
 
-Rec:9  Blk 2E  Off 177  Size 30  Cmpc 1F  Key ^testgbl("０１２３４５_４４４","４４４","ａａ")
+Rec:9  Blk 30  Off 177  Size 30  Cmpc 1F  Key ^testgbl("０１２３４５_４４４","４４４","ａａ")
      ... : | .. .. .. .. EF BC 94 EF BC 94  0 FF EF BC 94 EF BC 94 EF BC|
            |  .  .  . ..       ４       ４  .  .       ４       ４      |
      18B : | 94  0 FF EF BD 81 EF BD 81  0  0 61 61 61 20 20 2D 2D 20 EF|
@@ -74,13 +74,13 @@ Rec:9  Blk 2E  Off 177  Size 30  Cmpc 1F  Key ^testgbl("０１２３４５_４�
      19F : | BD 81 EF BD 81 EF BD 81                                    |
            |    ａ       ａ       ａ                                    |
 
-Rec:A  Blk 2E  Off 1A7  Size 15  Cmpc 28  Key ^testgbl("０１２３４５_４４４","ａｂｃ")
+Rec:A  Blk 30  Off 1A7  Size 15  Cmpc 28  Key ^testgbl("０１２３４５_４４４","ａｂｃ")
      ... : | .. .. .. .. BD 81 EF BD 82 EF BD 83  0  0 31 32 33 34 35 36|
            |  .  .  . ..  .  .       ｂ       ｃ  .  .  1  2  3  4  5  6|
      1BB : | 37                                                         |
            |  7                                                         |
 
-Rec:B  Blk 2E  Off 1BC  Size 2E  Cmpc 1E  Key ^testgbl("０１２３４５_５")
+Rec:B  Blk 30  Off 1BC  Size 2E  Cmpc 1E  Key ^testgbl("０１２３４５_５")
      ... : | .. .. .. .. 95  0  0 64 61 74 61 63 20 2D 2D 20 EF BC 90 EF|
            |  .  .  . ..  .  .  .  d  a  t  a  c     -  -          ０   |
      1D0 : | BC 91 EF BC 92 EF BC 93 EF BC 94 EF BD 8A EF BC 96 EF BC 97|

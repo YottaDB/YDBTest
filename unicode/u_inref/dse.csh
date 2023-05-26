@@ -4,7 +4,7 @@
 # Copyright (c) 2006-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -160,8 +160,8 @@ $echoline
 echo "#- DSE OPEN"
 $DSE << dse_eof
 open -file=ｄｕｍｐ1.out
-dump -block=22 -zwr
-dump -block=6 -zwr
+dump -block=24 -zwr
+dump -block=8 -zwr
 close
 quit
 dse_eof
@@ -179,8 +179,8 @@ echo "Error expected for the below DSE dump"
 $DSE << dse_eof
 dump -block=0 -zwr
 open -file=ｄｕｍｐ3.out
-dump -block=29 -zwr
-dump -block=25 -zwr
+dump -block=2B -zwr
+dump -block=27 -zwr
 close
 dump -block=0 -glo
 dse_eof
@@ -209,15 +209,15 @@ eof
 # In the global set ^testgbl("1"), change the second byte of the character "ａ" (efbd81 in utf8) to bc to make the character a "！"
 echo 'changing single byte on globals ^testgbl("０１２３４５_１") , ^testgbl(1)'
 $DSE << eof
-overwrite -block=2E -data="\92" -offset=FB
-overwrite -block=2E -data="\bc" -offset=32
+overwrite -block=30 -data="\92" -offset=FB
+overwrite -block=30 -data="\bc" -offset=32
 eof
 
 echo ""
 # In the global ^testgbl("０１２３４５_５"), change the 2nd & 3rd bytes of the last "５" (efbc95 in utf8) to bd8a to turn it into a "ｊ" (efbd8a in utf8)
 echo 'changing two bytes on global ^testgbl("０１２３４５_５")'
 $DSE << eof
-overwrite -block=2E -data="\bd\8a" -offset=162
+overwrite -block=30 -data="\bd\8a" -offset=162
 eof
 #
 # In the global ^testgbl("two byte chars")="ŞİŞLİ", change the first "İ", to "AA", to make it "ŞAAŞLİ" Change the second "Ş" to a "İ" to make it "ŞAAİLİ"
@@ -227,10 +227,10 @@ eof
 echo ""
 echo 'changing a complete multi byte character ^testgbl("two byte chars")'
 $DSE << eof
-overwrite -block=2E -data="AA" -offset=CA
-overwrite -block=2E -data="İ" -offset=CC
-overwrite -block=2E -data="Ｆu" -offset=A4
-overwrite -block=2E -data="ŞŞ" -offset=66
+overwrite -block=30 -data="AA" -offset=CA
+overwrite -block=30 -data="İ" -offset=CC
+overwrite -block=30 -data="Ｆu" -offset=A4
+overwrite -block=30 -data="ŞŞ" -offset=66
 eof
 #
 echo ""
@@ -239,15 +239,15 @@ echo ""
 #
 echo "changing four byte character to something invalid"
 $DSE << eof
-overwrite -block=2E -data="av" -offset=73
-dump -block=2E -record=3
+overwrite -block=30 -data="av" -offset=73
+dump -block=30 -record=3
 eof
 #
 echo ""
 echo 'changing the whole data completely for ^testgbl("０１２３４５_３")'
 # A space in the data="" gives %YDB-E-CLIERR, Too many parameters. So use \20 instead
 $DSE << eof
-overwrite -block=2E -data="ａ\20ｎｅｗ\20ｄａｔａ\20\ef\bd\96ａｌ" -offset=11B
+overwrite -block=30 -data="ａ\20ｎｅｗ\20ｄａｔａ\20\ef\bd\96ａｌ" -offset=11B
 eof
 #
 echo ""
@@ -265,15 +265,15 @@ $echoline
 echo "#- DSE ADD"
 
 $DSE << eof
-add -block=2E -record=8 -key="^testgbl(""０１２３４５_４"",\$ZCHAR(251,12,200,198))" -data="data_444: ｄａｔａ＿４\ef\bc\94\ef\bc\94\ef\ef\ef\ef\bc\94"
-add -bl=2E -rec=9 -key="^testgbl(""０１２３４５_４４４"",\$ZCHAR(239,188,148,239,188,148,239,188,148),\$CHAR(65345,65345))" -data="aaa  -- ａａａ"
+add -block=30 -record=8 -key="^testgbl(""０１２３４５_４"",\$ZCHAR(251,12,200,198))" -data="data_444: ｄａｔａ＿４\ef\bc\94\ef\bc\94\ef\ef\ef\ef\bc\94"
+add -bl=30 -rec=9 -key="^testgbl(""０１２３４５_４４４"",\$ZCHAR(239,188,148,239,188,148,239,188,148),\$CHAR(65345,65345))" -data="aaa  -- ａａａ"
 eof
 #
 $MUPIP integ -reg "*"
 set key='^testgbl(""０１２３４５_４４４"",""ａｂｃ"")'
 $DSE << eof >&! dse_add_key.outx
-add -block=2E -key="$key" -data="1234567" -record=A
-dump -block=2E
+add -block=30 -key="$key" -data="1234567" -record=A
+dump -block=30
 eof
 $tst_awk -f $gtm_tst/com/dse_filter_header.awk dse_add_key.outx >&! dse_add_key.out
 diff dse_add_key.out $gtm_tst/$tst/outref/dse_add_key_${endian}.txt
