@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2013, 2014 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -55,8 +58,8 @@ $echoline
 echo "Reset current TN value in each region"
 $echoline
 echo ""
-$gtm_tst/com/dse_command.csh -region AREG BREG CREG DEFAULT -do 'change -f -current_tn=0xFFFFFFFD93FFFF41'
-$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/dse_command.csh -region AREG BREG CREG DEFAULT -do 'change -f -current_tn=0xFFFFFFFD93FFFF41'"
+$gtm_tst/com/dse_command.csh -region AREG BREG CREG DEFAULT -do 'change -f -current_tn=0xFFFFFFD813FFFF41'
+$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/dse_command.csh -region AREG BREG CREG DEFAULT -do 'change -f -current_tn=0xFFFFFFD813FFFF41'"
 #
 # Now just do a few updates so things churn slightly
 #
