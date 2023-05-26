@@ -3,6 +3,9 @@
 ; Copyright (c) 2016 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -18,7 +21,7 @@ init	;
 	; Create huge DEFAULT and AREG database file sizes to ensure remap of DEFAULT goes to a new address that
 	; does not intersect with old mapping (and hence causes a SIG-11 if GTM-8523 is not fixed)
 	set ^apid("init")=$j
-	for i=1:1:987 set ^xdummy(i)=$j(i,900)	; Note 987 is chosen so DEFAULT gets FULL with 0 Free Blocks. Changes to
+	for i=1:1:979 set ^xdummy(i)=$j(i,900)	; Note 979 is chosen so DEFAULT gets FULL with 0 Free Blocks. Changes to
 						; this # will cause parent script to fail verify^gtm8523 and abort the test.
 	for i=1:1:1000 set ^adummy(i)=$j(i,900)
 	;
