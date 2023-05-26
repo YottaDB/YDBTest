@@ -32,7 +32,7 @@ FBWR value from 'GDE SHOW' input file (gdeshow.txt) is 2
 
 ### Starting test for -FULLBLKWRT=2 [enabled dbblock] - Expect 3 4K writes and 2 8K writes
 # Verify if DSE D -F output contains the correct full block write mode
-FBWR value from 'DSE D -F' input file (dsedf2.txt) is 2
+FBWR value from 'DSE D -F' input file (dsedf2.txt) is         2
 
 List of write sizes and their counts for strace file strace02.logx
    Write Length   Count
@@ -42,7 +42,7 @@ List of write sizes and their counts for strace file strace02.logx
 ### Starting test for -FULLBLKWRT=1 [enabled filblock] - Expect 5 4K writes
 Database file ##TEST_PATH##/mumps.dat now has full blk writes: file system block writes
 # Verify if DSE D -F output contains the correct full block write mode
-FBWR value from 'DSE D -F' input file (dsedf1.txt) is 1
+FBWR value from 'DSE D -F' input file (dsedf1.txt) is         1
 
 List of write sizes and their counts for strace file strace01.logx
    Write Length   Count
@@ -51,12 +51,13 @@ List of write sizes and their counts for strace file strace01.logx
 ### Starting test for -FULLBLKWRT=0 [disabled] - Expect multiple write sizes < 200 bytes
 Database file ##TEST_PATH##/mumps.dat now has full blk writes: disabled
 # Verify if DSE D -F output contains the correct full block write mode
-FBWR value from 'DSE D -F' input file (dsedf0.txt) is 0
+FBWR value from 'DSE D -F' input file (dsedf0.txt) is         0
 
 List of write sizes and their counts for strace file strace00.logx
    Write Length   Count
-             24       3
-##TEST_AWK             [1-9][0-9]       1
+             24       2
+             28       1
+##TEST_AWK             (32|36)       1
             144       1
 
 ####################################################
