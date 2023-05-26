@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2021-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -47,10 +47,6 @@ setenv subtest_exclude_list ""
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
 if ("pro" == "$tst_image") then
 	setenv subtest_exclude_list "$subtest_exclude_list gtm9166"
-endif
-
-if ("dbg" == "$tst_image") then
-	setenv subtest_exclude_list "$subtest_exclude_list gtm9180"
 endif
 
 # Submit the list of subtests

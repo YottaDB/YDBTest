@@ -16,7 +16,7 @@ running DSE command: add -block=2147483648 -data="Too large for V6" -key="^y(1)"
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-%YDB-E-BLKINVALID, 47483648 is not a valid block as database file ##TEST_PATH##/a.dat has 00000065 total blocks
+%YDB-E-BLKINVALID, 0x0000002147483648 is not a valid block as database file ##TEST_PATH##/a.dat has 0x0000000000000065 total blocks
 
 ###################################################################
 running DSE command: add -block=2200000000 -data="Too large for V6" -key="^y(2)" -data="def"
@@ -24,7 +24,7 @@ running DSE command: add -block=2200000000 -data="Too large for V6" -key="^y(2)"
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-%YDB-E-CANTBITMAP, Can't perform this operation on a bit map (block at a 200 hexadecimal boundary)
+%YDB-E-BLKINVALID, 0x0000002200000000 is not a valid block as database file ##TEST_PATH##/a.dat has 0x0000000000000065 total blocks
 
 ###################################################################
 running DSE command: add -block=2500000000 -data="Too large for V6" -key="^y(3)" -data="ghi"
@@ -32,7 +32,7 @@ running DSE command: add -block=2500000000 -data="Too large for V6" -key="^y(3)"
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-%YDB-E-CANTBITMAP, Can't perform this operation on a bit map (block at a 200 hexadecimal boundary)
+%YDB-E-BLKINVALID, 0x0000002500000000 is not a valid block as database file ##TEST_PATH##/a.dat has 0x0000000000000065 total blocks
 
 ###################################################################
 running DSE command: add -block=5000000000 -data="Too large for V6" -key="^y(4)" -data="jkl"
@@ -40,7 +40,7 @@ running DSE command: add -block=5000000000 -data="Too large for V6" -key="^y(4)"
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-%YDB-E-CANTBITMAP, Can't perform this operation on a bit map (block at a 200 hexadecimal boundary)
+%YDB-E-BLKINVALID, 0x0000005000000000 is not a valid block as database file ##TEST_PATH##/a.dat has 0x0000000000000065 total blocks
 
 ###################################################################
 running DSE command: add -block=50000000000 -data="Too large for V6" -key="^y(5)" -data="mno"
@@ -48,7 +48,7 @@ running DSE command: add -block=50000000000 -data="Too large for V6" -key="^y(5)
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-%YDB-E-CANTBITMAP, Can't perform this operation on a bit map (block at a 200 hexadecimal boundary)
+%YDB-E-BLKINVALID, 0x0000050000000000 is not a valid block as database file ##TEST_PATH##/a.dat has 0x0000000000000065 total blocks
 
 ###################################################################
 running DSE command: add -block=500000000000 -data="Too large for V6" -key="^y(6)" -data="pqr"
@@ -56,7 +56,7 @@ running DSE command: add -block=500000000000 -data="Too large for V6" -key="^y(6
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-%YDB-E-CANTBITMAP, Can't perform this operation on a bit map (block at a 200 hexadecimal boundary)
+%YDB-E-BLKINVALID, 0x0000500000000000 is not a valid block as database file ##TEST_PATH##/a.dat has 0x0000000000000065 total blocks
 
 ###################################################################
 running DSE command: add -block=5000000000000 -data="Too large for V6" -key="^y(7)" -data="stu"
@@ -64,7 +64,7 @@ running DSE command: add -block=5000000000000 -data="Too large for V6" -key="^y(
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-%YDB-E-CANTBITMAP, Can't perform this operation on a bit map (block at a 200 hexadecimal boundary)
+%YDB-E-BLKINVALID, 0x0005000000000000 is not a valid block as database file ##TEST_PATH##/a.dat has 0x0000000000000065 total blocks
 
 ###################################################################
 running DSE command: add -block=50000000000000 -data="Too large for V6" -key="^y(8)" -data="vwx"
@@ -72,7 +72,7 @@ running DSE command: add -block=50000000000000 -data="Too large for V6" -key="^y
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-%YDB-E-CANTBITMAP, Can't perform this operation on a bit map (block at a 200 hexadecimal boundary)
+%YDB-E-BLKINVALID, 0x0050000000000000 is not a valid block as database file ##TEST_PATH##/a.dat has 0x0000000000000065 total blocks
 
 ###################################################################
 running DSE command: add -block=500000000000000 -data="Too large for V6" -key="^y(9)" -data="yza"
@@ -80,7 +80,7 @@ running DSE command: add -block=500000000000000 -data="Too large for V6" -key="^
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-%YDB-E-CANTBITMAP, Can't perform this operation on a bit map (block at a 200 hexadecimal boundary)
+%YDB-E-BLKINVALID, 0x0500000000000000 is not a valid block as database file ##TEST_PATH##/a.dat has 0x0000000000000065 total blocks
 
 ###################################################################
 running DSE command: add -block=5000000000000000 -data="Too large for V6" -key="^y(10)" -data="bcd"
@@ -88,7 +88,7 @@ running DSE command: add -block=5000000000000000 -data="Too large for V6" -key="
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-%YDB-E-CANTBITMAP, Can't perform this operation on a bit map (block at a 200 hexadecimal boundary)
+%YDB-E-BLKINVALID, 0x5000000000000000 is not a valid block as database file ##TEST_PATH##/a.dat has 0x0000000000000065 total blocks
 
 ###################################################################
 running DSE command: add -block=50000000000000000 -data="Too large for V6" -key="^y(11)" -data="efg"
@@ -96,7 +96,7 @@ running DSE command: add -block=50000000000000000 -data="Too large for V6" -key=
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-Error: cannot convert 50000000000000000 value to hex number.
+%YDB-E-HEX64ERR, Error: cannot convert 50000000000000000 value to 64 bit hexadecimal number
 Error: block pointer must be specified for this index block record.
 
 ###################################################################
@@ -105,7 +105,7 @@ running DSE command: add -block=500000000000000000 -data="Too large for V6" -key
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-Error: cannot convert 500000000000000000 value to hex number.
+%YDB-E-HEX64ERR, Error: cannot convert 500000000000000000 value to 64 bit hexadecimal number
 Error: block pointer must be specified for this index block record.
 
 ###################################################################
@@ -114,7 +114,7 @@ running DSE command: add -block=5000000000000000000 -data="Too large for V6" -ke
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-Error: cannot convert 5000000000000000000 value to hex number.
+%YDB-E-HEX64ERR, Error: cannot convert 5000000000000000000 value to 64 bit hexadecimal number
 Error: block pointer must be specified for this index block record.
 
 ###################################################################
@@ -123,7 +123,7 @@ running DSE command: add -block=9223372036854775807 -data="Too large for V6" -ke
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-Error: cannot convert 9223372036854775807 value to hex number.
+%YDB-E-HEX64ERR, Error: cannot convert 9223372036854775807 value to 64 bit hexadecimal number
 Error: block pointer must be specified for this index block record.
 
 ###################################################################
@@ -132,7 +132,7 @@ running DSE command: add -block=9223372036854775808 -data="Too large for V6" -ke
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-Error: cannot convert 9223372036854775808 value to hex number.
+%YDB-E-HEX64ERR, Error: cannot convert 9223372036854775808 value to 64 bit hexadecimal number
 Error: block pointer must be specified for this index block record.
 
 ###################################################################
@@ -141,7 +141,7 @@ running DSE command: dump -block=2147483648
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-%YDB-E-BLKINVALID, 47483648 is not a valid block as database file ##TEST_PATH##/a.dat has 00000065 total blocks
+%YDB-E-BLKINVALID, 0x0000002147483648 is not a valid block as database file ##TEST_PATH##/a.dat has 0x0000000000000065 total blocks
 
 ###################################################################
 running DSE command: dump -block=2200000000
@@ -149,29 +149,7 @@ running DSE command: dump -block=2200000000
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-
-Block 0  Size 90  Level -1  TN 0 V6   Master Status: Free Space
-
-                       	Low order                         High order
-Block                0:	|  XXX.....  ........  ........  ........  |
-Block               20:	|  ........  ........  ........  ........  |
-Block               40:	|  ........  ........  ........  ........  |
-Block               60:	|  ........  ........  ........  ........  |
-Block               80:	|  ........  ........  ........  ........  |
-Block               A0:	|  ........  ........  ........  ........  |
-Block               C0:	|  ........  ........  ........  ........  |
-Block               E0:	|  ........  ........  ........  ........  |
-Block              100:	|  ........  ........  ........  ........  |
-Block              120:	|  ........  ........  ........  ........  |
-Block              140:	|  ........  ........  ........  ........  |
-Block              160:	|  ........  ........  ........  ........  |
-Block              180:	|  ........  ........  ........  ........  |
-Block              1A0:	|  ........  ........  ........  ........  |
-Block              1C0:	|  ........  ........  ........  ........  |
-Block              1E0:	|  ........  ........  ........  ........  |
-
-'X' == BUSY  '.' == FREE  ':' == REUSABLE  '?' == CORRUPT
-
+%YDB-E-BLKINVALID, 0x0000002200000000 is not a valid block as database file ##TEST_PATH##/a.dat has 0x0000000000000065 total blocks
 
 ###################################################################
 running DSE command: dump -block=2500000000
@@ -179,29 +157,7 @@ running DSE command: dump -block=2500000000
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-
-Block 0  Size 90  Level -1  TN 0 V6   Master Status: Free Space
-
-                       	Low order                         High order
-Block                0:	|  XXX.....  ........  ........  ........  |
-Block               20:	|  ........  ........  ........  ........  |
-Block               40:	|  ........  ........  ........  ........  |
-Block               60:	|  ........  ........  ........  ........  |
-Block               80:	|  ........  ........  ........  ........  |
-Block               A0:	|  ........  ........  ........  ........  |
-Block               C0:	|  ........  ........  ........  ........  |
-Block               E0:	|  ........  ........  ........  ........  |
-Block              100:	|  ........  ........  ........  ........  |
-Block              120:	|  ........  ........  ........  ........  |
-Block              140:	|  ........  ........  ........  ........  |
-Block              160:	|  ........  ........  ........  ........  |
-Block              180:	|  ........  ........  ........  ........  |
-Block              1A0:	|  ........  ........  ........  ........  |
-Block              1C0:	|  ........  ........  ........  ........  |
-Block              1E0:	|  ........  ........  ........  ........  |
-
-'X' == BUSY  '.' == FREE  ':' == REUSABLE  '?' == CORRUPT
-
+%YDB-E-BLKINVALID, 0x0000002500000000 is not a valid block as database file ##TEST_PATH##/a.dat has 0x0000000000000065 total blocks
 
 ###################################################################
 running DSE command: dump -block=5000000000
@@ -209,29 +165,7 @@ running DSE command: dump -block=5000000000
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-
-Block 0  Size 90  Level -1  TN 0 V6   Master Status: Free Space
-
-                       	Low order                         High order
-Block                0:	|  XXX.....  ........  ........  ........  |
-Block               20:	|  ........  ........  ........  ........  |
-Block               40:	|  ........  ........  ........  ........  |
-Block               60:	|  ........  ........  ........  ........  |
-Block               80:	|  ........  ........  ........  ........  |
-Block               A0:	|  ........  ........  ........  ........  |
-Block               C0:	|  ........  ........  ........  ........  |
-Block               E0:	|  ........  ........  ........  ........  |
-Block              100:	|  ........  ........  ........  ........  |
-Block              120:	|  ........  ........  ........  ........  |
-Block              140:	|  ........  ........  ........  ........  |
-Block              160:	|  ........  ........  ........  ........  |
-Block              180:	|  ........  ........  ........  ........  |
-Block              1A0:	|  ........  ........  ........  ........  |
-Block              1C0:	|  ........  ........  ........  ........  |
-Block              1E0:	|  ........  ........  ........  ........  |
-
-'X' == BUSY  '.' == FREE  ':' == REUSABLE  '?' == CORRUPT
-
+%YDB-E-BLKINVALID, 0x0000005000000000 is not a valid block as database file ##TEST_PATH##/a.dat has 0x0000000000000065 total blocks
 
 ###################################################################
 running DSE command: dump -block=50000000000
@@ -239,29 +173,7 @@ running DSE command: dump -block=50000000000
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-
-Block 0  Size 90  Level -1  TN 0 V6   Master Status: Free Space
-
-                       	Low order                         High order
-Block                0:	|  XXX.....  ........  ........  ........  |
-Block               20:	|  ........  ........  ........  ........  |
-Block               40:	|  ........  ........  ........  ........  |
-Block               60:	|  ........  ........  ........  ........  |
-Block               80:	|  ........  ........  ........  ........  |
-Block               A0:	|  ........  ........  ........  ........  |
-Block               C0:	|  ........  ........  ........  ........  |
-Block               E0:	|  ........  ........  ........  ........  |
-Block              100:	|  ........  ........  ........  ........  |
-Block              120:	|  ........  ........  ........  ........  |
-Block              140:	|  ........  ........  ........  ........  |
-Block              160:	|  ........  ........  ........  ........  |
-Block              180:	|  ........  ........  ........  ........  |
-Block              1A0:	|  ........  ........  ........  ........  |
-Block              1C0:	|  ........  ........  ........  ........  |
-Block              1E0:	|  ........  ........  ........  ........  |
-
-'X' == BUSY  '.' == FREE  ':' == REUSABLE  '?' == CORRUPT
-
+%YDB-E-BLKINVALID, 0x0000050000000000 is not a valid block as database file ##TEST_PATH##/a.dat has 0x0000000000000065 total blocks
 
 ###################################################################
 running DSE command: dump -block=500000000000
@@ -269,29 +181,7 @@ running DSE command: dump -block=500000000000
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-
-Block 0  Size 90  Level -1  TN 0 V6   Master Status: Free Space
-
-                       	Low order                         High order
-Block                0:	|  XXX.....  ........  ........  ........  |
-Block               20:	|  ........  ........  ........  ........  |
-Block               40:	|  ........  ........  ........  ........  |
-Block               60:	|  ........  ........  ........  ........  |
-Block               80:	|  ........  ........  ........  ........  |
-Block               A0:	|  ........  ........  ........  ........  |
-Block               C0:	|  ........  ........  ........  ........  |
-Block               E0:	|  ........  ........  ........  ........  |
-Block              100:	|  ........  ........  ........  ........  |
-Block              120:	|  ........  ........  ........  ........  |
-Block              140:	|  ........  ........  ........  ........  |
-Block              160:	|  ........  ........  ........  ........  |
-Block              180:	|  ........  ........  ........  ........  |
-Block              1A0:	|  ........  ........  ........  ........  |
-Block              1C0:	|  ........  ........  ........  ........  |
-Block              1E0:	|  ........  ........  ........  ........  |
-
-'X' == BUSY  '.' == FREE  ':' == REUSABLE  '?' == CORRUPT
-
+%YDB-E-BLKINVALID, 0x0000500000000000 is not a valid block as database file ##TEST_PATH##/a.dat has 0x0000000000000065 total blocks
 
 ###################################################################
 running DSE command: dump -block=5000000000000
@@ -299,29 +189,7 @@ running DSE command: dump -block=5000000000000
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-
-Block 0  Size 90  Level -1  TN 0 V6   Master Status: Free Space
-
-                       	Low order                         High order
-Block                0:	|  XXX.....  ........  ........  ........  |
-Block               20:	|  ........  ........  ........  ........  |
-Block               40:	|  ........  ........  ........  ........  |
-Block               60:	|  ........  ........  ........  ........  |
-Block               80:	|  ........  ........  ........  ........  |
-Block               A0:	|  ........  ........  ........  ........  |
-Block               C0:	|  ........  ........  ........  ........  |
-Block               E0:	|  ........  ........  ........  ........  |
-Block              100:	|  ........  ........  ........  ........  |
-Block              120:	|  ........  ........  ........  ........  |
-Block              140:	|  ........  ........  ........  ........  |
-Block              160:	|  ........  ........  ........  ........  |
-Block              180:	|  ........  ........  ........  ........  |
-Block              1A0:	|  ........  ........  ........  ........  |
-Block              1C0:	|  ........  ........  ........  ........  |
-Block              1E0:	|  ........  ........  ........  ........  |
-
-'X' == BUSY  '.' == FREE  ':' == REUSABLE  '?' == CORRUPT
-
+%YDB-E-BLKINVALID, 0x0005000000000000 is not a valid block as database file ##TEST_PATH##/a.dat has 0x0000000000000065 total blocks
 
 ###################################################################
 running DSE command: dump -block=50000000000000
@@ -329,29 +197,7 @@ running DSE command: dump -block=50000000000000
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-
-Block 0  Size 90  Level -1  TN 0 V6   Master Status: Free Space
-
-                       	Low order                         High order
-Block                0:	|  XXX.....  ........  ........  ........  |
-Block               20:	|  ........  ........  ........  ........  |
-Block               40:	|  ........  ........  ........  ........  |
-Block               60:	|  ........  ........  ........  ........  |
-Block               80:	|  ........  ........  ........  ........  |
-Block               A0:	|  ........  ........  ........  ........  |
-Block               C0:	|  ........  ........  ........  ........  |
-Block               E0:	|  ........  ........  ........  ........  |
-Block              100:	|  ........  ........  ........  ........  |
-Block              120:	|  ........  ........  ........  ........  |
-Block              140:	|  ........  ........  ........  ........  |
-Block              160:	|  ........  ........  ........  ........  |
-Block              180:	|  ........  ........  ........  ........  |
-Block              1A0:	|  ........  ........  ........  ........  |
-Block              1C0:	|  ........  ........  ........  ........  |
-Block              1E0:	|  ........  ........  ........  ........  |
-
-'X' == BUSY  '.' == FREE  ':' == REUSABLE  '?' == CORRUPT
-
+%YDB-E-BLKINVALID, 0x0050000000000000 is not a valid block as database file ##TEST_PATH##/a.dat has 0x0000000000000065 total blocks
 
 ###################################################################
 running DSE command: dump -block=500000000000000
@@ -359,29 +205,7 @@ running DSE command: dump -block=500000000000000
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-
-Block 0  Size 90  Level -1  TN 0 V6   Master Status: Free Space
-
-                       	Low order                         High order
-Block                0:	|  XXX.....  ........  ........  ........  |
-Block               20:	|  ........  ........  ........  ........  |
-Block               40:	|  ........  ........  ........  ........  |
-Block               60:	|  ........  ........  ........  ........  |
-Block               80:	|  ........  ........  ........  ........  |
-Block               A0:	|  ........  ........  ........  ........  |
-Block               C0:	|  ........  ........  ........  ........  |
-Block               E0:	|  ........  ........  ........  ........  |
-Block              100:	|  ........  ........  ........  ........  |
-Block              120:	|  ........  ........  ........  ........  |
-Block              140:	|  ........  ........  ........  ........  |
-Block              160:	|  ........  ........  ........  ........  |
-Block              180:	|  ........  ........  ........  ........  |
-Block              1A0:	|  ........  ........  ........  ........  |
-Block              1C0:	|  ........  ........  ........  ........  |
-Block              1E0:	|  ........  ........  ........  ........  |
-
-'X' == BUSY  '.' == FREE  ':' == REUSABLE  '?' == CORRUPT
-
+%YDB-E-BLKINVALID, 0x0500000000000000 is not a valid block as database file ##TEST_PATH##/a.dat has 0x0000000000000065 total blocks
 
 ###################################################################
 running DSE command: dump -block=5000000000000000
@@ -389,29 +213,7 @@ running DSE command: dump -block=5000000000000000
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-
-Block 0  Size 90  Level -1  TN 0 V6   Master Status: Free Space
-
-                       	Low order                         High order
-Block                0:	|  XXX.....  ........  ........  ........  |
-Block               20:	|  ........  ........  ........  ........  |
-Block               40:	|  ........  ........  ........  ........  |
-Block               60:	|  ........  ........  ........  ........  |
-Block               80:	|  ........  ........  ........  ........  |
-Block               A0:	|  ........  ........  ........  ........  |
-Block               C0:	|  ........  ........  ........  ........  |
-Block               E0:	|  ........  ........  ........  ........  |
-Block              100:	|  ........  ........  ........  ........  |
-Block              120:	|  ........  ........  ........  ........  |
-Block              140:	|  ........  ........  ........  ........  |
-Block              160:	|  ........  ........  ........  ........  |
-Block              180:	|  ........  ........  ........  ........  |
-Block              1A0:	|  ........  ........  ........  ........  |
-Block              1C0:	|  ........  ........  ........  ........  |
-Block              1E0:	|  ........  ........  ........  ........  |
-
-'X' == BUSY  '.' == FREE  ':' == REUSABLE  '?' == CORRUPT
-
+%YDB-E-BLKINVALID, 0x5000000000000000 is not a valid block as database file ##TEST_PATH##/a.dat has 0x0000000000000065 total blocks
 
 ###################################################################
 running DSE command: dump -block=50000000000000000
@@ -419,13 +221,13 @@ running DSE command: dump -block=50000000000000000
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-Error: cannot convert 50000000000000000 value to hex number.
+%YDB-E-HEX64ERR, Error: cannot convert 50000000000000000 value to 64 bit hexadecimal number
 
-Block 1   Size 18   Level 1   TN 0 V6
+Block 1   Size 1C   Level 1   TN 0 V7
 
-Rec:1  Blk 1  Off 10  Size 8  Cmpc 0  Ptr 2  Key *
-##TEST_AWK      10 : \|  8  0  0 ..  2  0  0  0                                    \|
-##TEST_AWK           \|  \.  \.  \.  .  \.  \.  \.  \.                                    \|
+Rec:1  Blk 1  Off 10  Size C  Cmpc 0  Ptr 2  Key *
+##TEST_AWK      10 : \|  C  0  0 ..  2  0  0  0  0  0  0  0                        \|
+##TEST_AWK           \|  \.  \.  \.  .  \.  \.  \.  \.  \.  \.  \.  \.                        \|
 
 
 ###################################################################
@@ -434,13 +236,13 @@ running DSE command: dump -block=500000000000000000
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-Error: cannot convert 500000000000000000 value to hex number.
+%YDB-E-HEX64ERR, Error: cannot convert 500000000000000000 value to 64 bit hexadecimal number
 
-Block 1   Size 18   Level 1   TN 0 V6
+Block 1   Size 1C   Level 1   TN 0 V7
 
-Rec:1  Blk 1  Off 10  Size 8  Cmpc 0  Ptr 2  Key *
-##TEST_AWK      10 : \|  8  0  0 ..  2  0  0  0                                    \|
-##TEST_AWK           \|  \.  \.  \.  .  \.  \.  \.  \.                                    \|
+Rec:1  Blk 1  Off 10  Size C  Cmpc 0  Ptr 2  Key *
+##TEST_AWK      10 : \|  C  0  0 ..  2  0  0  0  0  0  0  0                        \|
+##TEST_AWK           \|  \.  \.  \.  .  \.  \.  \.  \.  \.  \.  \.  \.                        \|
 
 
 ###################################################################
@@ -449,13 +251,13 @@ running DSE command: dump -block=5000000000000000000
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-Error: cannot convert 5000000000000000000 value to hex number.
+%YDB-E-HEX64ERR, Error: cannot convert 5000000000000000000 value to 64 bit hexadecimal number
 
-Block 1   Size 18   Level 1   TN 0 V6
+Block 1   Size 1C   Level 1   TN 0 V7
 
-Rec:1  Blk 1  Off 10  Size 8  Cmpc 0  Ptr 2  Key *
-##TEST_AWK      10 : \|  8  0  0 ..  2  0  0  0                                    \|
-##TEST_AWK           \|  \.  \.  \.  .  \.  \.  \.  \.                                    \|
+Rec:1  Blk 1  Off 10  Size C  Cmpc 0  Ptr 2  Key *
+##TEST_AWK      10 : \|  C  0  0 ..  2  0  0  0  0  0  0  0                        \|
+##TEST_AWK           \|  \.  \.  \.  .  \.  \.  \.  \.  \.  \.  \.  \.                        \|
 
 
 ###################################################################
@@ -464,13 +266,13 @@ running DSE command: dump -block=9223372036854775807
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-Error: cannot convert 9223372036854775807 value to hex number.
+%YDB-E-HEX64ERR, Error: cannot convert 9223372036854775807 value to 64 bit hexadecimal number
 
-Block 1   Size 18   Level 1   TN 0 V6
+Block 1   Size 1C   Level 1   TN 0 V7
 
-Rec:1  Blk 1  Off 10  Size 8  Cmpc 0  Ptr 2  Key *
-##TEST_AWK      10 : \|  8  0  0 ..  2  0  0  0                                    \|
-##TEST_AWK           \|  \.  \.  \.  .  \.  \.  \.  \.                                    \|
+Rec:1  Blk 1  Off 10  Size C  Cmpc 0  Ptr 2  Key *
+##TEST_AWK      10 : \|  C  0  0 ..  2  0  0  0  0  0  0  0                        \|
+##TEST_AWK           \|  \.  \.  \.  .  \.  \.  \.  \.  \.  \.  \.  \.                        \|
 
 
 ###################################################################
@@ -479,13 +281,13 @@ running DSE command: dump -block=9223372036854775808
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-Error: cannot convert 9223372036854775808 value to hex number.
+%YDB-E-HEX64ERR, Error: cannot convert 9223372036854775808 value to 64 bit hexadecimal number
 
-Block 1   Size 18   Level 1   TN 0 V6
+Block 1   Size 1C   Level 1   TN 0 V7
 
-Rec:1  Blk 1  Off 10  Size 8  Cmpc 0  Ptr 2  Key *
-##TEST_AWK      10 : \|  8  0  0 ..  2  0  0  0                                    \|
-##TEST_AWK           \|  \.  \.  \.  .  \.  \.  \.  \.                                    \|
+Rec:1  Blk 1  Off 10  Size C  Cmpc 0  Ptr 2  Key *
+##TEST_AWK      10 : \|  C  0  0 ..  2  0  0  0  0  0  0  0                        \|
+##TEST_AWK           \|  \.  \.  \.  .  \.  \.  \.  \.  \.  \.  \.  \.                        \|
 
 
 ###################################################################
@@ -494,13 +296,13 @@ running DSE command: dump -block=9223372036854775806
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-Error: cannot convert 9223372036854775806 value to hex number.
+%YDB-E-HEX64ERR, Error: cannot convert 9223372036854775806 value to 64 bit hexadecimal number
 
-Block 1   Size 18   Level 1   TN 0 V6
+Block 1   Size 1C   Level 1   TN 0 V7
 
-Rec:1  Blk 1  Off 10  Size 8  Cmpc 0  Ptr 2  Key *
-##TEST_AWK      10 : \|  8  0  0 ..  2  0  0  0                                    \|
-##TEST_AWK           \|  \.  \.  \.  .  \.  \.  \.  \.                                    \|
+Rec:1  Blk 1  Off 10  Size C  Cmpc 0  Ptr 2  Key *
+##TEST_AWK      10 : \|  C  0  0 ..  2  0  0  0  0  0  0  0                        \|
+##TEST_AWK           \|  \.  \.  \.  .  \.  \.  \.  \.  \.  \.  \.  \.                        \|
 
 
 ###################################################################
