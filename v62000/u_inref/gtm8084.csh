@@ -3,7 +3,7 @@
 #								#
 #	Copyright 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -36,30 +36,30 @@ DSE_EOF
 echo ""
 
 # The expected output from above is
-# AREG:       4:10,   5:10,
-# BREG:       4:1F,   B6:39B, AD:149,
-# DEFAULT:    4:2A4,  322:2A3,        CB:1C9, 35:EE,  F:3AD,  3:10,
+# AREG:       4:10,   3:10,
+# BREG:       4:33,   C8:268, AD:149,
+# DEFAULT:    4:2B0,  322:2AF,        CB:1D1, 35:F2,  F:3CD,  3:10,
 
 $echoline
 echo "# Test MUPIP INTEG -BLOCK= for block in GVT at each level in AREG"
 echo "# Get regular MUPIP INTEG output for AREG"
 $MUPIP integ -reg AREG
 
-echo "$MUPIP integ -block=5 -reg AREG"
-$MUPIP integ -block=5 -reg AREG
+echo "$MUPIP integ -block=3 -reg AREG"
+$MUPIP integ -block=3 -reg AREG
 echo "$MUPIP integ -block=4 -reg AREG"
 $MUPIP integ -block=4 -reg AREG
 
-echo "# Induce DBINVGBL error at BLOCK=5 in AREG"
+echo "# Induce DBINVGBL error at BLOCK=3 in AREG"
 $DSE << DSE_EOF
 	find -reg=AREG
-	overwrite -block=5 -offset=14 -data="b"
+	overwrite -block=3 -offset=14 -data="b"
 DSE_EOF
 echo ""
 
-echo "$MUPIP integ -block=5 -reg AREG : Should NOT give a DBINVGBL error since 5 is the only block that is integed"
-$MUPIP integ -block=5 -reg AREG
-echo "$MUPIP integ -block=4 -reg AREG : Should give a DBINVGBL error since 4 and 5 have different global names in same tree"
+echo "$MUPIP integ -block=3 -reg AREG : Should NOT give a DBINVGBL error since 3 is the only block that is integed"
+$MUPIP integ -block=3 -reg AREG
+echo "$MUPIP integ -block=4 -reg AREG : Should give a DBINVGBL error since 4 and 3 have different global names in same tree"
 $MUPIP integ -block=4 -reg AREG
 
 $echoline
@@ -69,21 +69,21 @@ $MUPIP integ -reg BREG
 
 echo "$MUPIP integ -block=AD -reg BREG"
 $MUPIP integ -block=AD -reg BREG
-echo "$MUPIP integ -block=B6 -reg BREG"
-$MUPIP integ -block=B6 -reg BREG
+echo "$MUPIP integ -block=C8 -reg BREG"
+$MUPIP integ -block=C8 -reg BREG
 echo "$MUPIP integ -block=4 -reg BREG"
 $MUPIP integ -block=4 -reg BREG
-echo "# Induce DBINVGBL error at BLOCK=B6 in BREG"
+echo "# Induce DBINVGBL error at BLOCK=C8 in BREG"
 $DSE << DSE_EOF
 	find -reg=BREG
-	overwrite -block=B6 -offset=14 -data="c"
+	overwrite -block=C8 -offset=14 -data="c"
 DSE_EOF
 echo ""
 
 echo "$MUPIP integ -block=AD -reg BREG"
 $MUPIP integ -block=AD -reg BREG
-echo "$MUPIP integ -block=B6 -reg BREG"
-$MUPIP integ -block=B6 -reg BREG
+echo "$MUPIP integ -block=C8 -reg BREG"
+$MUPIP integ -block=C8 -reg BREG
 echo "$MUPIP integ -block=4 -reg BREG"
 $MUPIP integ -block=4 -reg BREG
 
@@ -132,14 +132,14 @@ echo ""
 
 $echoline
 echo "# Test MUPIP INTEG -BLOCK= for block in GVT in ALL regions. sort needed for deterministic region order"
-echo '$MUPIP integ -block=5 -reg "*" |& sort'
+echo '$MUPIP integ -block=3 -reg "*" |& sort'
 # Redirect integ output to file to facilitate debugging test failures.
 # Use .logx (not .log) to avoid test framework from looking at the DBINVGBL errors in these files.
-$MUPIP integ -block=5 -reg "*" >& integ_5.logx
-sort integ_5.logx
+$MUPIP integ -block=3 -reg "*" >& integ_3.logx
+sort integ_3.logx
 echo '$MUPIP integ -block=B6 -reg "*" |& sort'
-$MUPIP integ -block=B6 -reg "*" >& integ_b6.logx
-sort integ_b6.logx
+$MUPIP integ -block=C8 -reg "*" >& integ_c8.logx
+sort integ_c8.logx
 
 $echoline
 echo "# Test MUPIP INTEG -BLOCK= for block in DT at each level in ALL regions. sort needed for deterministic region order"
@@ -151,17 +151,17 @@ $MUPIP integ -block=1 -reg "*" >& integ_1.logx
 sort integ_1.logx
 
 echo ""
-echo "# Fix DBINVGBL error at BLOCK=5 in AREG"
+echo "# Fix DBINVGBL error at BLOCK=3 in AREG"
 $DSE << DSE_EOF
 	find -reg=AREG
-	overwrite -block=5 -offset=14 -data="a"
+	overwrite -block=3 -offset=14 -data="a"
 DSE_EOF
 echo ""
 
-echo "# Fix DBINVGBL error at BLOCK=B6 in BREG"
+echo "# Fix DBINVGBL error at BLOCK=C8 in BREG"
 $DSE << DSE_EOF
 	find -reg=BREG
-	overwrite -block=B6 -offset=14 -data="b"
+	overwrite -block=C8 -offset=14 -data="b"
 DSE_EOF
 echo ""
 
