@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #                                                               #
-# Copyright (c) 2020-2022 YottaDB LLC and/or its subsidiaries.  #
+# Copyright (c) 2020-2023 YottaDB LLC and/or its subsidiaries.  #
 # All rights reserved.                                          #
 #                                                               #
 #       This source code contains the intellectual property     #
@@ -58,6 +58,9 @@ foreach iter ($verlist)
 		source $gtm_tst/com/switch_gtm_version.csh $gtm_curpro pro
 		# Recreate gld in case curpro version has an incompatible gld format than current version
 		rm -f mumps.gld; $GDE exit >& gde$iter.out
+		# Recreate dat in case curpro version has an incompatible dat format than current version
+		# This incompatibility happened when curpro was r1.38 and current/test version was r2.00
+		rm -rf mumps.dat; $MUPIP create >& mupip$iter.out
 		set temp=".${gtm_dist:h:t}"
 	else
 		set temp=""
