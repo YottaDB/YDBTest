@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2009, 2013 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -45,7 +48,7 @@ $echoline
 echo "# Now that the snapshot is started, create a bunch of DBTNTOOLG errors."
 $echoline
 # Save the current TN so we can restore it later.
-$DSE dump -file |& $grep 'Current transaction' | cut -c 26-44 > curr_tn.out
+$DSE dump -file |& $grep 'Current transaction' | cut -c 34-52 > curr_tn.out
 $DSE change -file -curr=1 >&! dse_change_file.out
 
 $echoline
