@@ -18,15 +18,42 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
 # Update 2 globals in to primary
 ==Executing MULTISITE_REPLIC 'SHOWBACKLOG INST1 INST2 SRC'==
 Source backlog saved in ##TEST_PATH##/##FILTERED##backlog_##TIMESTAMP##.out
-# Shutdown source server using timeout or zerobacklog
+# Shutdown source server using -ZEROBACKLOG -timeout=10 (less than heartbeat period of 15) while receiver server is DOWN
+==Executing MULTISITE_REPLIC 'RUN SRC=INST1 $MUPIP replicate -source -shutdown -timeout=10 -zerobacklog >>& shutdown1.outx'==
 ==Executing MULTISITE_REPLIC 'REFRESHLINK INST1 INST2'==
-##FILTERED##... ... .. ..:..:.. 20.. : Shutting down with a backlog due to timeout
+# Expect REPLNORESP/SHUT2QUICK/REPLBACKLOG messages in shutdown output the first time (shutdown1.outx)
+# This is expected because the receiver server is down and there is a non-zero backlog
+Initiating ZEROBACKLOG shutdown operation. Waiting for up to 10 second(s) for backlog to clear
+%YDB-W-REPLNORESP, No sequence number confirmation from the replicating instance [INSTANCE2] after waiting for [10] second(s)
+%YDB-W-SHUT2QUICK, Shutdown timeout [10] shorter than the heartbeat period [15]; cannot confirm the backlog at the replicating instance [INSTANCE2]
+%YDB-E-REPLBACKLOG, Timeout occurred while there was a backlog
+##TEST_AWKInitiating SHUTDOWN operation on source server pid \[[0-9]*\] for secondary instance \[INSTANCE2\]
+##SUSPEND_OUTPUT HOST_LINUX_ARMVXL HOST_LINUX_AARCH64
+Waiting for upto [120] seconds for the source server to shutdown
+##ALLOW_OUTPUT HOST_LINUX_ARMVXL HOST_LINUX_AARCH64
+##SUSPEND_OUTPUT HOST_LINUX_X86_64
+Waiting for upto [240] seconds for the source server to shutdown
+##ALLOW_OUTPUT HOST_LINUX_X86_64
+Journal pool shared memory removed
+Journal pool semaphore removed
 ==Executing MULTISITE_REPLIC 'START INST1 INST2'==
 Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
 ==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
-# Shutdown source server using timeout or zerobacklog
-##FILTERED##... ... .. ..:..:.. 20.. : Shutting down with zero backlog
+# Shutdown source server using -ZEROBACKLOG -timeout=180 (more than heartbeat period of 15) while receiver server is UP
+# Expect no error messages in shutdown output the second time (shutdown2.out)
+==Executing MULTISITE_REPLIC 'RUN SRC=INST1 $MUPIP replicate -source -shutdown -timeout=180 -zerobacklog'==
+Initiating ZEROBACKLOG shutdown operation. Waiting for up to 180 second(s) for backlog to clear
+%YDB-S-REPL0BACKLOG, Total backlog for the specified replicating instance(s) is 0
+##TEST_AWKInitiating SHUTDOWN operation on source server pid \[[0-9]*\] for secondary instance \[INSTANCE2\]
+##SUSPEND_OUTPUT HOST_LINUX_ARMVXL HOST_LINUX_AARCH64
+Waiting for upto [120] seconds for the source server to shutdown
+##ALLOW_OUTPUT HOST_LINUX_ARMVXL HOST_LINUX_AARCH64
+##SUSPEND_OUTPUT HOST_LINUX_X86_64
+Waiting for upto [240] seconds for the source server to shutdown
+##ALLOW_OUTPUT HOST_LINUX_X86_64
+Journal pool shared memory removed
+Journal pool semaphore removed
 ==Executing MULTISITE_REPLIC 'REFRESHLINK INST1 INST2'==
 ==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
 ==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
