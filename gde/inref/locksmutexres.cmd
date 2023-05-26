@@ -1,6 +1,6 @@
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !								!
-! Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	!
+! Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	!
 ! All rights reserved.						!
 !								!
 !	This source code contains the intellectual property	!
@@ -29,7 +29,7 @@ change ~segment BSEG ~mutex=32769
 change ~segment BSEG ~mutex=32768
 change ~segment DEFAULT ~reserved_bytes=921	! Assuming default blocksize 1024  & keysize 64, the max reserved_bytes = 1024-64-40=920
 change ~segment DEFAULT ~reserved_bytes=920
-change ~segment ASEG ~reserved_b=63974		! max reserved_bytes = 65024-1019-32 = 63973
-change ~segment ASEG ~reserved_b=63973
-change ~segment BSEG ~res=4577			! max reserved_bytes = 5120-512-32 = 4576
-change ~segment BSEG ~res=4576
+change ~segment ASEG ~reserved_b=63966		! max reserved_bytes = 65024-1019-40 = 63965
+change ~segment ASEG ~reserved_b=63965
+change ~segment BSEG ~res=4569			! max reserved_bytes = 5120-512-40 = 4568
+change ~segment BSEG ~res=4568

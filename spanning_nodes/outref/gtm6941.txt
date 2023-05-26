@@ -1,7 +1,7 @@
 # Test 1: Test for max-record-size change. The maximum record size can reach 1048576, but not more
 ###################################################################
 %GDE-I-GDUSEDEFS, Using defaults for Global Directory 
-##TEST_AWK.*
+	##TEST_PATH##/rsize.gld
 
 GDE> 
 GDE> 
@@ -13,24 +13,24 @@ GDE>
 %GDE-I-VERIFY, Verification OK
 
 %GDE-I-GDCREATE, Creating Global Directory file 
-##TEST_AWK.*
+	##TEST_PATH##/rsize.gld
 ============Test1 ends==========
  
 # Test 2: Test for key-size change
 # The key size should be smaller than:
 # block_size-reserved_bytes-block_header(16)-record_header(4)-min_value_size(4)-bstar_record(8)-hidden_subscript(8)
-# In this test, block_size= 512, reserved_bytes=6, so key size should be smaller than 512-6-32=474
+# In this test, block_size= 512, reserved_bytes=6, so key size should be smaller than 512-6-40=466
 ###################################################################
 %GDE-I-LOADGD, Loading Global Directory file 
-##TEST_AWK.*
+	##TEST_PATH##/rsize.gld
 %GDE-I-VERIFY, Verification OK
 
 
 GDE> 
 GDE> 
 GDE> 
-%GDE-I-KEYSIZIS, Key size is 475
-%GDE-I-KEYFORBLK, But block size 512 and reserved bytes 6 limit key size to 474
+%GDE-I-KEYSIZIS, Key size is 467
+%GDE-I-KEYFORBLK, But block size 512 and reserved bytes 6 limit key size to 466
 %GDE-I-REGIS, in region DEFAULT
 
 %GDE-E-OBJNOTCHG, Not changing region DEFAULT
@@ -40,21 +40,21 @@ GDE>
 %GDE-I-VERIFY, Verification OK
 
 %GDE-I-GDUPDATE, Updating Global Directory file 
-##TEST_AWK.*
+	##TEST_PATH##/rsize.gld
 ============Test2 ends==========
  
 # Test 3: Test for reserved-bytes change
-# Now key size is 474, we increase the reserved bytes to 8, verification failure expected
+# Now key size is 466, we increase the reserved bytes to 8, verification failure expected
 # Next we decrease the reserved bytes to 4, verification pass expected.
 ###################################################################
 %GDE-I-LOADGD, Loading Global Directory file 
-##TEST_AWK.*
+	##TEST_PATH##/rsize.gld
 %GDE-I-VERIFY, Verification OK
 
 
 GDE> 
-%GDE-I-KEYSIZIS, Key size is 474
-%GDE-I-KEYFORBLK, But block size 512 and reserved bytes 8 limit key size to 472
+%GDE-I-KEYSIZIS, Key size is 466
+%GDE-I-KEYFORBLK, But block size 512 and reserved bytes 8 limit key size to 464
 %GDE-I-REGIS, in region DEFAULT
 
 %GDE-E-OBJNOTCHG, Not changing segment DEFAULT
@@ -64,7 +64,7 @@ GDE>
 %GDE-I-VERIFY, Verification OK
 
 %GDE-I-GDUPDATE, Updating Global Directory file 
-##TEST_AWK.*
+	##TEST_PATH##/rsize.gld
 ============Test3 ends==========
  
 # Test 4: Test for maximum key size
@@ -72,7 +72,7 @@ GDE>
 # so the maximum key can be min(65024-16-4-4-8-8=64988,1023)=1023
 ###################################################################
 %GDE-I-LOADGD, Loading Global Directory file 
-##TEST_AWK.*
+	##TEST_PATH##/rsize.gld
 %GDE-I-VERIFY, Verification OK
 
 
@@ -88,7 +88,7 @@ GDE>
 %GDE-I-VERIFY, Verification OK
 
 %GDE-I-GDUPDATE, Updating Global Directory file 
-##TEST_AWK.*
+	##TEST_PATH##/rsize.gld
 ============Test4 ends==========
  
 # Test 5: Test for block-size change
@@ -96,7 +96,7 @@ GDE>
 #  Next change the block size to 512, the verification failure expected
 ###################################################################
 %GDE-I-LOADGD, Loading Global Directory file 
-##TEST_AWK.*
+	##TEST_PATH##/rsize.gld
 %GDE-I-VERIFY, Verification OK
 
 
@@ -107,15 +107,15 @@ GDE>
 %GDE-I-VERIFY, Verification OK
 
 %GDE-I-GDUPDATE, Updating Global Directory file 
-##TEST_AWK.*
+	##TEST_PATH##/rsize.gld
 %GDE-I-LOADGD, Loading Global Directory file 
-##TEST_AWK.*
+	##TEST_PATH##/rsize.gld
 %GDE-I-VERIFY, Verification OK
 
 
 GDE> 
 %GDE-I-KEYSIZIS, Key size is 467
-%GDE-I-KEYFORBLK, But block size 512 and reserved bytes 14 limit key size to 466
+%GDE-I-KEYFORBLK, But block size 512 and reserved bytes 14 limit key size to 458
 %GDE-I-REGIS, in region DEFAULT
 
 %GDE-E-OBJNOTCHG, Not changing segment DEFAULT
@@ -125,7 +125,7 @@ GDE>
 %GDE-I-VERIFY, Verification OK
 
 %GDE-I-GDUPDATE, Updating Global Directory file 
-##TEST_AWK.*
+	##TEST_PATH##/rsize.gld
 ============Test5 ends==========
  
 # Test 6: Test for minimum record size, minimum key size
@@ -133,7 +133,7 @@ GDE>
 # Change the key size to 1, only the min key verfication failure appears
 ###################################################################
 %GDE-I-LOADGD, Loading Global Directory file 
-##TEST_AWK.*
+	##TEST_PATH##/rsize.gld
 %GDE-I-VERIFY, Verification OK
 
 
@@ -150,13 +150,13 @@ GDE>
 %GDE-I-VERIFY, Verification OK
 
 %GDE-I-GDUPDATE, Updating Global Directory file 
-##TEST_AWK.*
+	##TEST_PATH##/rsize.gld
 ============Test6 ends==========
 
 # Test 7: Test for gde show output for large record size (more than 6 bits)
 ###################################################################
 %GDE-I-LOADGD, Loading Global Directory file 
-##TEST_AWK.*
+	##TEST_PATH##/rsize.gld
 %GDE-I-VERIFY, Verification OK
 
 
@@ -266,5 +266,5 @@ GDE>
 %GDE-I-VERIFY, Verification OK
 
 %GDE-I-GDUPDATE, Updating Global Directory file 
-##TEST_AWK.*
+	##TEST_PATH##/rsize.gld
 ============Test7 ends==========

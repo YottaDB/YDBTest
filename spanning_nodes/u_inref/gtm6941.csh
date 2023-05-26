@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -35,14 +35,14 @@ cat << EOF
 # Test 2: Test for key-size change
 # The key size should be smaller than:
 # block_size-reserved_bytes-block_header(16)-record_header(4)-min_value_size(4)-bstar_record(8)-hidden_subscript(8)
-# In this test, block_size= 512, reserved_bytes=6, so key size should be smaller than 512-6-32=474
+# In this test, block_size= 512, reserved_bytes=6, so key size should be smaller than 512-6-40=466
 EOF
 $echoline
 $GDE << GDE_EXIT
 	change -s default -bl=512
    	change -s default -r=6
-	change -r default -k=475
-	change -r default -k=474
+	change -r default -k=467
+	change -r default -k=466
 	exit
 GDE_EXIT
 echo "============Test2 ends=========="
@@ -50,7 +50,7 @@ echo "============Test2 ends=========="
 echo " "
 cat << EOF
 # Test 3: Test for reserved-bytes change
-# Now key size is 474, we increase the reserved bytes to 8, verification failure expected
+# Now key size is 466, we increase the reserved bytes to 8, verification failure expected
 # Next we decrease the reserved bytes to 4, verification pass expected.
 EOF
 $echoline

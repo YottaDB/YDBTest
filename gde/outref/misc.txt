@@ -204,7 +204,7 @@ GDE>
 GDE> 
 GDE> 
 %GDE-I-KEYSIZIS, Key size is 1019
-%GDE-I-KEYFORBLK, But block size 65024 and reserved bytes 63974 limit key size to 1018
+%GDE-I-KEYFORBLK, But block size 65024 and reserved bytes 63966 limit key size to 1018
 %GDE-I-REGIS, in region AREG
 
 %GDE-E-OBJNOTCHG, Not changing segment ASEG
@@ -212,7 +212,7 @@ GDE>
 GDE> 
 GDE> 
 %GDE-I-KEYSIZIS, Key size is 512
-%GDE-I-KEYFORBLK, But block size 5120 and reserved bytes 4577 limit key size to 511
+%GDE-I-KEYFORBLK, But block size 5120 and reserved bytes 4569 limit key size to 511
 %GDE-I-REGIS, in region BREG
 
 %GDE-E-OBJNOTCHG, Not changing segment BSEG
@@ -235,7 +235,7 @@ GDE>
  ----------------------------------------------------------------------------------------------
  ASEG                            locksmutexa.dat     BG  DYN 65024        100   100     GLOB=1024
                                                                                         LOCK=262144
-                                                                                        RES =63973
+                                                                                        RES =63965
                                                                                         ENCR= OFF
                                                                                         MSLT=  64
                                                                                         DALL= YES
@@ -243,7 +243,7 @@ GDE>
                                                                                         FBWR=   0
  BSEG                            locksmutexb.dat     MM  DYN  5120        100   100     DEFER
                                                                                         LOCK=12345
-                                                                                        RES =4576
+                                                                                        RES =4568
                                                                                         ENCR= OFF
                                                                                         MSLT=32768
                                                                                         DALL= YES
@@ -271,9 +271,9 @@ TEMPLATE -SEGMENT -RESERVED_BYTES=920
 TEMPLATE -SEGMENT -ACCESS_METHOD=MM
 TEMPLATE -SEGMENT -LOCK_SPACE=12345
 TEMPLATE -SEGMENT -MUTEX_SLOTS=32768
-TEMPLATE -SEGMENT -RESERVED_BYTES=4576
+TEMPLATE -SEGMENT -RESERVED_BYTES=4568
 TEMPLATE -SEGMENT -ACCESS_METHOD=BG
-ADD -SEGMENT ASEG -BLOCK_SIZE=65024 -FILE_NAME="locksmutexa.dat" -LOCK_SPACE=262144 -MUTEX_SLOTS=64 -RESERVED_BYTES=63973
+ADD -SEGMENT ASEG -BLOCK_SIZE=65024 -FILE_NAME="locksmutexa.dat" -LOCK_SPACE=262144 -MUTEX_SLOTS=64 -RESERVED_BYTES=63965
 ADD -SEGMENT BSEG -ACCESS_METHOD=MM -FILE_NAME="locksmutexb.dat"
 # DSE dump should reflect the modified values of lockspace, mutex slots and reserved bytes
 %YDB-W-MUNOSTRMBKUP, Database ##TEST_PATH##/locksmutexa.dat has a block size larger than 32256 and thus cannot use stream (incremental) backup
@@ -282,10 +282,10 @@ ADD -SEGMENT BSEG -ACCESS_METHOD=MM -FILE_NAME="locksmutexb.dat"
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/locksmutexdefault.dat created
 Region	AREG
 Region          AREG
-  Reserved Bytes                              63973  Block size (in bytes)                65024
+  Reserved Bytes                              63965  Block size (in bytes)                65024
   Mutex Queue Slots                              64  KILLs in progress                        0
 Region          BREG
-  Reserved Bytes                               4576  Block size (in bytes)                 5120
+  Reserved Bytes                               4568  Block size (in bytes)                 5120
   Mutex Queue Slots                           32768  KILLs in progress                        0
 Region          DEFAULT
   Reserved Bytes                                920  Block size (in bytes)                 4096
