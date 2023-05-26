@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -44,8 +44,8 @@ verifyDumps
 	for i=1:1:3 set fieldNum(fieldDesc(i))=i	; Create cross reference indexed by description
 	set oldfile=$zpiece($zcmdline," ",1)
 	set curfile=$zpiece($zcmdline," ",2)
-	do readAndParseFile(oldfile,.oldFields)
-	do readAndParseFile(curfile,.curFields)
+	do readAndParseFile(oldfile,.oldFields,0)
+	do readAndParseFile(curfile,.curFields,1)
 	;
 	; The oldfields and curfields arrays should hold the values of our 3 fields - compare them
 	;
@@ -64,7 +64,7 @@ verifyDumps
 ;
 ; Routine to read a DSE fileheader dump file locating the fields we want and placing them into the given array
 ;
-readAndParseFile(fn,fields)
+readAndParseFile(fn,fields,isr2)
 	open fn:readonly
 	set saveio=$io
 	use fn
@@ -80,10 +80,16 @@ readAndParseFile(fn,fields)
 	. quit:'found
 	. ;
 	. ; This line has one or more of the fields we are interested in - separate record into the two possible
-	. ; areas that could contain values (part 1 is columns 03-43 and part 2 is columns 46-79).
+	. ; areas that could contain values.
+	. ; In r1.34, Part 1 is columns 03-43 and part 2 is columns 46-79
+	. ; In r2.00, Part 1 is columns 03-51 and part 2 is columns 54-95
 	. ;
-	. set part1=$zextract(rec,3,43)
-	. set part2=$zextract(rec,46,79)
+	. if isr2 do
+	. . set part1=$zextract(rec,3,51)
+	. . set part2=$zextract(rec,54,95)
+	. else  do
+	. . set part1=$zextract(rec,3,43)
+	. . set part2=$zextract(rec,46,79)
 	. ;
 	. ; Parse each part into a description and value and if one of them is ours, keep it, else ignore it
 	. ;

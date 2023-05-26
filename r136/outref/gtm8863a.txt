@@ -31,9 +31,9 @@ Database file mumps.dat now has reorg sleep nanoseconds 42244224
 ##TEST_AWK# Grab file header dump using V.*
 
 # Compare the two fileheader dumps noting any discrepancies in the 3 values we are looking at
-##TEST_AWKField Description: Max conc proc time                 Value: [1-9][0-9]*
-Field Description: Max Concurrent processes           Value: 2
-Field Description: Reorg Sleep Nanoseconds            Value: 42244224
+##TEST_AWKField Description: Max conc proc time         Value: [1-9][0-9]*
+Field Description: Max Concurrent processes   Value: 2
+Field Description: Reorg Sleep Nanoseconds    Value: 42244224
 
 SUCCESS: All values were upgraded correctly
 
