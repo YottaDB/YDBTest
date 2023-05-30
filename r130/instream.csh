@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2019-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -52,6 +52,7 @@
 # ydb568 [nars]      Test that Interrupted MUPIP EXTRACT STDOUT to a pipe does not leave terminal in unfriendly state
 # ydb587 [sp]        Ensures that dollar_test is set based on environment variable ydb_dollartest
 # ydb560 [nars]      Test that MUPIP STOP (SIG-15) and SIG-4 terminate an M program running an indefinite FOR loop
+# ydb388 [nars]      Test 8-byte csd->flush_time is correctly auto upgraded and endian converted
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r130 test starts..."
@@ -61,7 +62,7 @@ setenv subtest_list_common     ""
 setenv subtest_list_non_replic "ydb470 ydb482 ydb174 ydb390 ydb476 ydb511 ydb513 ydb485 ydb518 ydb520 ydb503 ydb515 ydb519 ydb545"
 setenv subtest_list_non_replic "${subtest_list_non_replic} ydb553 ydb547 ydb493 ydb549 ydb562 ydb554 ydb484 ydb534 ydb567 ydb576"
 setenv subtest_list_non_replic "${subtest_list_non_replic} ydb578 ydb492 ydb566 ydb569 ydb589 ydb592 ydb594 ydb494 ydb595 ydb525"
-setenv subtest_list_non_replic "${subtest_list_non_replic} ydb607 ydb568 ydb587 ydb560"
+setenv subtest_list_non_replic "${subtest_list_non_replic} ydb607 ydb568 ydb587 ydb560 ydb388"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then

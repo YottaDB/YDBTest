@@ -1,0 +1,15 @@
+# Test that csd->flush_time is correctly auto upgraded and endian converted
+## Test DB auto upgrade issue described at https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/696#note_1411319099
+## Test MUPIP ENDIANCVT issue described at https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/696#note_1411333276
+# Choose a random prior (including current version) GT.M or YottaDB version
+# Randomly chosen prior version is : ##FILTERED##GTM_TEST_DEBUGINFO.*
+# Switch to prior version
+# Creating database using prior V5 version
+# Verify DSE DUMP -FILE with prior version shows flush timer is 1 second
+  Cache freeze id                0x00000000  Flush timer            00:00:01:00
+# Run MUPIP ENDIANCVT to convert LITTLE endian db (mumps.dat) to BIG endian db (mumps_bigendian.dat)
+# Switch to current version
+# Run MUPIP ENDIANCVT to convert BIG endian db (mumps_bigendian.dat) back to LITTLE endian db (mumps_v7.dat)
+# Create v7.gld to point to mumps_v7.dat
+# Verify DSE DUMP -FILE with current version still shows flush timer is 1 second
+  Cache freeze id                        0x00000000  Flush timer                    00:00:01:00
