@@ -91,9 +91,10 @@ source $gtm_tst/com/is_libyottadb_asan_enabled.csh	# defines "gtm_test_libyottad
 # The test mostly exercises portable code so it is okay if only multi-CPU x86_64 boxes runs these tests.
 if ($gtm_test_singlecpu || ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype)) then
 	setenv subtest_exclude_list "$subtest_exclude_list alsmemleak maxtrignames"
-else if ($gtm_test_libyottadb_asan_enabled && ("pro" != "$tst_image")) then
-	# We have seen ASAN and DBG builds cause the "alsmemleak" subtest to run for many hours on slower x86_64 systems
-	# triggering a HANG/TIMEDOUT email alert and false failures. So disable this subtest in that case.
+else if ($gtm_test_libyottadb_asan_enabled) then
+	# We have seen ASAN (in both PRO and DBG builds) cause the "alsmemleak" subtest to run for many hours
+	# on even the faster x86_64 systems triggering a HANG/TIMEDOUT email alert and false failures.
+	# So disable this subtest in that case.
 	setenv subtest_exclude_list "$subtest_exclude_list alsmemleak"
 endif
 if ($gtm_test_singlecpu) then
