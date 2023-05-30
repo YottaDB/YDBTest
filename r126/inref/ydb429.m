@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;                                                               ;
-; Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.       ;
+; Copyright (c) 2021-2023 YottaDB LLC and/or its subsidiaries.       ;
 ; All rights reserved.                                          ;
 ;                                                               ;
 ;       This source code contains the intellectual property     ;
@@ -23,13 +23,15 @@ setgblsallregions	;
 bkgrnd	;
 	set jmaxwait=0	; to background
 	do ^job("child^ydb429",1,"""""")
-	for  quit:$data(^child)  hang 0.001
-	hang 1	; hang for a few updates to finish
+	; Wait for child^ydb429 to have finished at least one iteration of the for loop as that is what
+	; verifyaftercrash^ydb429 (invoked after the crash/rollback) relies on. Hence the check for ^%ydbAIMtmp
+	; as it is the last global updated in the "for" loop in child^ydb429.
+	for  quit:$data(^%ydbAIMtmp(2))  hang 0.001
 	quit
 
 child	;
 	set ^child=$job
-	for i=1:1 set (^default(i),^%ydboctotmp(i),^%ydbAIMtmp(i))=i hang 0.01
+	for i=1:1 set (^default(i),^%ydboctotmp(i),^%ydbAIMtmp(i))=i view "jnlwait" hang 0.01
 	quit
 
 verifyaftercrash;
