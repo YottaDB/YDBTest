@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -25,11 +25,11 @@ $MUPIP integ -reg "*" >&! integ1.out
 $gtm_exe/mumps -run %XCMD 'for i=1:1:$order(^x(""),-1) kill ^x(i)'
 $MUPIP integ -reg "*" >&! integ2.out
 $MUPIP reorg -truncate >&! truncate.out
-# The magic number 1993 below is determined only by experimentations.
-# With above data base configuration, only with and above 1993 updates,
+# The magic number 1985 below is determined only by experimentations.
+# With above data base configuration, only with and above 1985 updates,
 # reorg -truncate can free any blocks. Until then it should issue
 # YDB-I-MUTRUNCNOSPACE error. verify that below.
-if ($updcnt < 1993) then
+if ($updcnt < 1985) then
 	set string="MUTRUNCNOSPACE"
 else
 	set string="Truncated region"
