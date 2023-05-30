@@ -61,6 +61,9 @@ setenv subtest_exclude_list "$subtest_exclude_list ossmake"
 # On HDD, a simple MUPIP INTEG on the 20TB database takes hours to finish that the TEST-E-HANG alert kicks in.
 if (! $is_tst_dir_ssd) then
 	setenv subtest_exclude_list "$subtest_exclude_list gds_max_blk"
+else
+	# Disable gds_max_blk subtest (see https://gitlab.com/YottaDB/DB/YDBTest/-/issues/501#note_1410862780 for details)
+	setenv subtest_exclude_list "$subtest_exclude_list gds_max_blk"
 endif
 
 # Disable largelibtest subtest on hosts that do not have an SSD.
