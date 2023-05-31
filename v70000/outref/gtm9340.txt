@@ -1,0 +1,43 @@
+# This test verifies that VIEW/$VIEW() region name is truncated appropriately and gets a VIEWREGLIST error if multiple $VIEW() regions
+
+# Create 2 databases with one having a max size name (31 char currently)
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+dbname7890123456789012345678901.dat
+mumps.dat
+
+# Drive ^gtm9340
+#
+# Set POOLLIMIT to 0 so we have a predictable starting point (using 31 byte region name here)
+Executing: VIEW "POOLLIMIT":"REGNAME890123456789012345678901,DEFAULT":0
+Show current values of region POOLLIMIT:
+POOLLIMIT on REGNAME890123456789012345678901: 0
+POOLLIMIT on DEFAULT:                         0
+#
+# Specify an extra character on the region name (32nd character) - should truncate and work correctly.
+# For reference, the actual region name is REGNAME890123456789012345678901 (no '2' on the end).
+# Also specify two region names as that is supposed to work. Expect no errors
+# Executing: VIEW "POOLLIMIT":"REGNAME8901234567890123456789012,DEFAULT":512
+
+# Now try a $VIEW function with the same input - expect VIEWREGLIST error
+# Executing: WRITE $VIEW("POOLLIMIT","REGNAME8901234567890123456789012,DEFAULT")
+Got expected error (VIEWREGLIST) - 150373360,expecterr+4^gtm9340,%YDB-W-VIEWREGLIST, $VIEW() only handles the first region subparameter
+
+# Display the POOLLIMIT value AFTER the VIEW POOLLIMIT cmd for each of our regions - expect success (both return 512 values - no error)
+# Executing: WRITE $VIEW("POOLLIMIT","REGNAME8901234567890123456789012")
+512
+# Executing: WRITE $VIEW("POOLLIMIT","DEFAULT")
+512
+
+# Attempt both VIEW command and $VIEW function referencing a too-long name of a non-existent region (expect NOREGION error)
+# Executing: VIEW "POOLLIMIT:regname8901234567890123456789012"
+Got expected error (NOREGION) - 150374850,expecterr+4^gtm9340,%YDB-E-NOREGION, REGION not found: "REG4567890123456789012345678901"
+# Executing: WRITE $VIEW("POOLLIMIT","REG45678901234567890123456789012")
+Got expected error (NOREGION) - 150374850,expecterr+4^gtm9340,%YDB-E-NOREGION, REGION not found: "REG4567890123456789012345678901"
+
+# Validate DBs
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

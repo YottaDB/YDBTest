@@ -1,0 +1,17 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!								!
+! Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	!
+! All rights reserved.						!
+!								!
+!	This source code contains the intellectual property	!
+!	of its copyright holder(s), and is made available	!
+!	under a license.  If you do not know the terms of	!
+!	the license, please stop and do not read further.	!
+!								!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+change -segment DEFAULT -file_name=mumps.dat
+add -name a* -region=regname890123456789012345678901
+add -name A* -region=regname890123456789012345678901
+add -region regname890123456789012345678901 -dyn=segname890123456789012345678901
+add -segment segname890123456789012345678901 -file_name=dbname7890123456789012345678901.dat

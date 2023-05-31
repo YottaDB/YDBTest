@@ -16,13 +16,14 @@
 #----------------------------------------------------------------------------------------------------------------------------------
 # gtm9302	[estess]	Acknowledged sequence number in -SOURCE -SHOWBACKLOG and available with ^%PEEKBYNAME
 # gtm9370	[estess]	Add gtm9370 to test divide-by-zero of literals is pushed to the runtime to deal with
+# gtm9340	[estess]	Verify new VIEWREGLIST error is emitted when region lists specified to $VIEW() region arg
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v70000 test starts..."
 
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
-setenv subtest_list_non_replic "gtm9370"
+setenv subtest_list_non_replic "gtm9370 gtm9340"
 setenv subtest_list_replic     "gtm9302"
 
 if ($?test_replic == 1) then
