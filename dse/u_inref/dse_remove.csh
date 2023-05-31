@@ -3,7 +3,7 @@
 #								#
 #	Copyright 2002, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -149,6 +149,13 @@ $DSE << DSE_EOF
 save -bl=1
 find -region=default
 remove -bl=1
+DSE_EOF
+
+# Remove a HUGE block number greater than 4GiB. Make sure the full 8-byte block number is displayed.
+# Previously, only the least significant 4-byte block number used to be displayed in the error message.
+$DSE << DSE_EOF
+remove -bl=abcdef0123456789
+remove -bl=abcdef012345678a -version=2
 DSE_EOF
 
 # Verify if the above operations have done any damage to the database

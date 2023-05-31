@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2002, 2014 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -152,6 +155,21 @@ restore -bl=4 -from=64
 remove -bl=64
 change -fileheader -total_blks=65
 restore -bl=4
+DSE_EOF
+
+# Restore a HUGE block number greater than 4GiB. Make sure the full 8-byte block number is displayed.
+# Previously, only the least significant 4-byte block number used to be displayed in the error message.
+# Also test that BLKINVALID error is displayed if restore target block number is greater than total block count
+# but no such error is displayed in case the source target block number (-from) is greater than total block count.
+# Finally restore the total blocks to get a proper integ.
+$DSE << DSE_EOF
+restore -bl=abcdef0123456789
+change -fileheader -total_blks=abcdef012345679
+restore -bl=abcdef012345678
+restore -bl=abcdef012345678 -version=2
+change -fileheader -total_blks=65
+restore -bl=64 -from=abcdef012345678
+restore -bl=64 -from=abcdef012345678 -version=3
 DSE_EOF
 
 # Verify if the above operations have done any damage to the database

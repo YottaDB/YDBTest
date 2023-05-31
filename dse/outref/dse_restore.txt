@@ -36,7 +36,7 @@ DSE>
 Restoring block 3 from version 1
 
 DSE> Error:  save version number must be specified.
-DSE> Error: Version 3 of block 00000003 not found in set of saved blocks
+DSE> Error: Version 3 of block 0x0000000000000003 not found in set of saved blocks
 DSE> DSE> 
 File  	##TEST_PATH##/a.dat
 Region	AREG
@@ -45,7 +45,7 @@ DSE> DSE>
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-DSE> Error: Version 1 of block 00000000 not found in set of saved blocks
+DSE> Error: Version 1 of block 0x0000000000000000 not found in set of saved blocks
 DSE> DSE> 
 File  	##TEST_PATH##/a.dat
 Region	AREG
@@ -81,7 +81,7 @@ DSE> DSE>
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-DSE> Error: Version 1 of block 00000004 not found in set of saved blocks
+DSE> Error: Version 1 of block 0x0000000000000004 not found in set of saved blocks
 DSE> DSE> 
 File  	##TEST_PATH##/a.dat
 Region	AREG
@@ -99,7 +99,7 @@ DSE> DSE>
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-DSE> Error: Version 4 of block 00000003 not found in set of saved blocks
+DSE> Error: Version 4 of block 0x0000000000000003 not found in set of saved blocks
 DSE> DSE> 
 File  	##TEST_PATH##/a.dat
 Region	AREG
@@ -143,13 +143,13 @@ DSE>
 Restoring block 3 from version 1 of block 2 in region AREG
 
 DSE> 
-##TEST_AWKBlock 3   Size 29   Level 0   TN 1 V[0-9][0-9]*
+Block 3   Size 29   Level 0   TN 1 V7
 
 DSE> 
 Restoring block 3 from version 1
 
 DSE> 
-##TEST_AWKBlock 3   Size 61   Level 0   TN 7 V[0-9][0-9]*
+Block 3   Size 61   Level 0   TN 7 V7
 
 DSE> %YDB-E-NOREGION, REGION not found: FREELUNCH
 DSE> 
@@ -178,6 +178,15 @@ Removing version 1 of block 64
 DSE> DSE> 
 Restoring block 4 from version 1
 
+DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> %YDB-E-BLKINVALID, 0xABCDEF0123456789 is not a valid block as database file ##TEST_PATH##/a.dat has 0x0000000000000065 total blocks
+DSE> DSE> Error: Block 0x0ABCDEF012345678 not found in set of saved blocks
+DSE> Error: Version 2 of block 0x0ABCDEF012345678 not found in set of saved blocks
+DSE> DSE> Error: Block 0x0ABCDEF012345678 not found in set of saved blocks
+DSE> Error: Version 3 of block 0x0ABCDEF012345678 not found in set of saved blocks
 ##SUSPEND_OUTPUT  REPLIC
 DSE> ##SOURCE_PATH##/mupip
 ##SUSPEND_OUTPUT  NON_REPLIC

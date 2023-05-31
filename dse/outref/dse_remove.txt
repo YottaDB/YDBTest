@@ -23,8 +23,8 @@ TEST DSE -REMOVE COMMAND
 File  	##TEST_PATH##/a.dat
 Region	AREG
 
-DSE> DSE> Error: Block 00000004 not found in set of saved blocks
-DSE> Error: Version 2 of block 00000004 not found in set of saved blocks
+DSE> DSE> Error: Block 0x0000000000000004 not found in set of saved blocks
+DSE> Error: Version 2 of block 0x0000000000000004 not found in set of saved blocks
 DSE> 
 Saving version 1 of block 4
 DSE> 
@@ -148,13 +148,13 @@ Saving version 3 of block 1
 DSE> 
 Removing version 1 of block 1
 DSE> 
-##TEST_AWKBlock 1   Size 1C   Level 1   TN 0 V[0-9][0-9]*
+Block 1   Size 1C   Level 1   TN 0 V7
 
 DSE> 
 Restoring block 1 from version 2
 
 DSE> 
-##TEST_AWKBlock 1   Size 1C   Level 1   TN 0 V[0-9][0-9]*
+Block 1   Size 1C   Level 1   TN 0 V7
 
 DSE> 
 Removing version 2 of block 1
@@ -170,7 +170,13 @@ DSE>
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
-DSE> Error: Block 00000001 not found in set of saved blocks
+DSE> Error: Block 0x0000000000000001 not found in set of saved blocks
+DSE> 
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> Error: Block 0xABCDEF0123456789 not found in set of saved blocks
+DSE> Error: Version 2 of block 0xABCDEF012345678A not found in set of saved blocks
 ##SUSPEND_OUTPUT  NON_REPLIC
 DSE> Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 Shutting down Primary Source Server Server in ##TEST_PATH##
