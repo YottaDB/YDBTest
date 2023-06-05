@@ -1,0 +1,42 @@
+
+# Test (gtm9302) that the acknowledged sequence number shows up in -SOURCE -SHOWBACKLOG output
+# and that the value is available via ^%PEEKBYNAME().
+
+# Create database - Start replication
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+
+# Do a small amount of work to push 10,001 transactions through
+
+# Need to wait heartbeat seconds (default 15) to see the acknowledged sequence number value
+
+# Drive MUPIP REPLICATE -SOURCE -SHOWBACKLOG
+10001 : sequence number acknowledged by the secondary instance [INSTANCE2]
+
+# Show last acknowleged sequence number via ^%PEEKBYNAME() - Note that the values displayed here are the value
+# returned by ^%PEEKBYNAME("gtmsource_local_struct.heartbeat_jnl_seqno",0)) but minus 1 if the value is > 0
+# because that is what sr_unix/gtmsource_showbacklog.c does.
+10001
+
+# Compare the sequence numbers obtained from the two source
+PASS - the two sequence numbers are the same
+
+# Verify database
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
