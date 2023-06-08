@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2019-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -24,14 +24,15 @@
 # gtm9116		[bdw]		Test that ydbinstall.sh installs libyottadb.so with 755 permissions irrespective of what umask is set to
 # plugins		[bdw]		Test that ydbinstall.sh installs various plugin combinations without errors
 # ydb783		[sam]		Set $ZROUTINES to $ydb_dist/utf8/libyottadbutil.so if ydb_chset=UTF-8 and ydb_routines is not set
-# gtm7759	 	[see]		Test that expected log message do and don't show up depending on restrict.txt setting
+# gtm7759	 	[estess]	Test that expected log message do and don't show up depending on restrict.txt setting
 # ydb894		[jv]		Test that --nopkg-config will not create or modify yottadb.pc with ydbinstall/ydbinstall.sh
 # ydb880		[jv]		Test ydbinstall/ydbinstall.sh --linkexec, --linkenv, --copyexec, and --copyenv options
 # ydb910		[jv]		Test that --from-source builds and installs YottaDB without any errors with ydbinstall/ydbinstall.sh
 # ydb924		[jv]		Test that ydbinstall/ydbinstall.sh terminates if not run as root, unless --dry-run is specified
+# gtm8517		[estess]	Test that install permissions and checksum files are created by install and are non-zero
 #
 setenv subtest_list_common "sourceInstall diffDir ydb306 gtm9116 plugins ydb783"
-setenv subtest_list_non_replic "gtm7759 ydb894 ydb880 ydb910 ydb924"
+setenv subtest_list_non_replic "gtm7759 ydb894 ydb880 ydb910 ydb924 gtm8517"
 setenv subtest_list_non_replic "$subtest_list_non_replic"
 setenv subtest_list_replic ""
 

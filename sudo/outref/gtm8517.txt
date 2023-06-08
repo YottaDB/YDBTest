@@ -1,0 +1,14 @@
+
+# GTM-8517: Tests that ydbinstall creates install_{permissions,sha256_checksum}.log files that are non-zero size
+
+# Setup for install of YottaDB
+
+# Installation of current version to verify creates permission and checksum logs of all files in distro
+##TEST_AWKYottaDB version r.* installed successfully at ##TEST_PATH##/install
+
+# Verify the log files were created
+install_permissions.log
+install_sha256_checksum.log
+PASS - Both installation log files are non-zero
+
+# Remove installed version (cleanup)
