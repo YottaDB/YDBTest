@@ -19,7 +19,7 @@ echo "# and randomly picking --plugins-only and --utf8."
 $switch_chset "UTF-8"
 
 # Possible options being used in the test
-set arr = ( "--octo" "--gui" "--aim" "--encplugin" "--posix" "--zlib" "--plugins-only" "--utf8" )
+set arr = ( "--octo" "--gui" "--aim" "--encplugin" "--posix" "--zlib" "--plugins-only" "--utf8" "--sodium" "--allplugins" )
 
 # 8 runs
 set run_count = 1
