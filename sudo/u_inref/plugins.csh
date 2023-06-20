@@ -11,7 +11,7 @@
 #								#
 #################################################################
 echo "# This tests that ydbinstall successfully installs plugins for a "
-echo "# random set of plugs-in (--octo --gui --aim --encplugin --posix --zlib),"
+echo "# random set of plugs-in (--octo --gui --aim --encplugin --posix --zlib --sodium --allplugins),"
 echo "# and randomly picking --plugins-only and --utf8."
 
 # Set the chset to UTF-8. We need to do this to ensure the locale is set correctly
