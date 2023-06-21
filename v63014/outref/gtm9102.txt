@@ -1,7 +1,6 @@
 ##################################################################################
 # Test GTM-9102 : MUPIP FREEZE -ONLINE is consistent across regions except for AIO
 ##################################################################################
-# Disable AIO in the test as GTM-9102 does not work with it
 # Force BG as access method as ONLINE FREEZE does not work on MM regions
 # Create 2-region database where ^a updates go to a.dat and ^b updates go to b.dat
 # Start updates in background that set ^a=i and ^b=i+1 in a loop

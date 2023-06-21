@@ -15,9 +15,6 @@ echo "##########################################################################
 echo "# Test GTM-9102 : MUPIP FREEZE -ONLINE is consistent across regions except for AIO"
 echo "##################################################################################"
 
-echo "# Disable AIO in the test as GTM-9102 does not work with it"
-setenv gtm_test_asyncio 0
-
 echo "# Force BG as access method as ONLINE FREEZE does not work on MM regions"
 setenv acc_meth BG
 
