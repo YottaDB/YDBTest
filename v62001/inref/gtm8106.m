@@ -3,7 +3,7 @@
 ; Copyright (c) 2014-2015 Fidelity National Information 	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
-; Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -26,7 +26,9 @@ gtm8106	;Verify VIEW "GVSRESET"; also VIEW accepts lower-case regions and * as a
 	set dev="dse"				; activate DSE through a PIPE device
 	open dev:(command="dse":exception="goto badopen")::"PIPE"
 	use dev
-	for i=1:1:30 read resp:1 quit:'$test				; clear initial DSE output
+	; Clear initial DSE output
+	for i=1:1:4 read resp	; the first 4 lines of dse output would say the File/Region name and have 2 empty lines around it
+	read resp#5		; resp would be "DSE> " at this point.
 	use $principal
 	write !,"# Initial dump of locations",!		;locations at the begining, middle and end of target area
 	; gvstats_rec in the file header ("sgmnt_data" structure in YDB/sr_port/gdsfhead.h) is preceded by
