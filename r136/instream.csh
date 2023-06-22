@@ -82,9 +82,14 @@ if (("rhel" == $gtm_test_linux_distrib) && ("7.9" == $gtm_test_linux_version)) t
 endif
 
 source $gtm_tst/com/is_libyottadb_asan_enabled.csh
-if ($gtm_test_libyottadb_asan_enabled && ("clang" == $gtm_test_asan_compiler)) then
-	# Disable ydb935 test if ASAN is enabled and CLANG. This is only a problem with CLANG/ASAN on YDBPython not GCC/ASAN.
-	# Error that is shown: Your application is linked against incompatible ASan runtimes.
+# Disable the ydb935 subtest if ASAN is enabled.
+# a) If YottaDB is built with ASAN and CLANG, one sees the below error.
+#      Your application is linked against incompatible ASan runtimes.
+# b) If YottaDB is built with ASAN and GCC, it works in most cases, but in case "rustc" is installed using rustup.sh
+#    in user-specific home directories (~/.cargo, ~/.rustup etc.) and not system-wide, we have seen "rustc --version"
+#    fail with a "Segmentation fault" error (and a core file) due to YDBPython setting LD_PRELOAD to the
+#    gcc libasan.so in that case.
+if ($gtm_test_libyottadb_asan_enabled) then
 	setenv subtest_exclude_list "$subtest_exclude_list ydb935"
 endif
 
