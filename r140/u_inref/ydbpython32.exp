@@ -1,0 +1,47 @@
+#################################################################
+#								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+set timeout 5
+
+spawn /usr/local/bin/tcsh -f
+source $::env(gtm_tst)/com/expectinit.exp
+set flask $spawn_id
+
+# Activate Python virtual environment
+send -i flask "set prompt=\"\"; source .venv/bin/activate.csh\r"
+expect -i flask "set prompt"
+expect -i flask "venv"
+
+# FLASK_APP
+send -i flask "setenv FLASK_APP \"index\"\r"
+expect -i flask "setenv FLASK_APP"
+expect -i flask "venv"
+
+# Run server, extract port
+send -i flask "python3 -m flask run --host=127.0.0.1 --port=0\r"
+expect -i flask "python3 -m flask"
+expect -i flask -re {Running on http://127\.0\.0\.1:(\d+)/}
+set flaskport $expect_out(1,string)
+expect -i flask "CTRL"
+
+# Run curl
+spawn /usr/local/bin/tcsh -f
+source $::env(gtm_tst)/com/expectinit.exp
+set curl $spawn_id
+send -i curl "curl -sS -H \"Content-Type: application/json\" -X GET localhost:$flaskport/users\r"
+expect -i curl SHELL
+send -i curl "exit"
+
+# CTRL-C
+send -i flask \x03
+expect -i flask YDB-I-CTRLC
+expect -i flask venv
+send -i flask "exit"

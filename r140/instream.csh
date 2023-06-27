@@ -16,13 +16,14 @@
 #---------------------------------------------------------------------------------------------------------------------------------------------------
 # ydb996      [nars]    Test that LISTENING TCP sockets can be passed
 # ydb998      [sam]     TSTART should not open the default global directory
+# ydbpython32 [sam]	CTRL-C on Flask Application terminates properly
 #---------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r140 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "ydb996 ydb998"
+setenv subtest_list_non_replic "ydb996 ydb998 ydbpython32"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then

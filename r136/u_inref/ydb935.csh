@@ -31,15 +31,6 @@ find .venv -name '*.so' -exec ldd {} \; | grep libyottadb.so
 echo "# Creating db file"
 $gtm_tst/com/dbcreate.csh mumps 3
 
-
-if ($gtm_test_libyottadb_asan_enabled) then
-	# Set ASAN variables
-	set ydb935ld_preload=`gcc -print-file-name=libasan.so`
-	source $gtm_tst/com/set_asan_options_env_var.csh
-else
-	set ydb935ld_preload=""
-endif
-
 echo "# Running thread test..."
 cp $gtm_tst/$tst/inref/ydb935-2.py thread.py
 python3 thread.py
@@ -50,7 +41,7 @@ setenv FLASK_APP "index"
 
 echo "# Starting Flask..."
 # Port=0 randomizes the start-up port for flask
-(env LD_PRELOAD=$ydb935ld_preload python3 -m flask run --host=127.0.0.1 --port=0 >& flask_output.txt & ; echo $! >&! flask.pid) >&! flask.out
+(python3 -m flask run --host=127.0.0.1 --port=0 >& flask_output.txt & ; echo $! >&! flask.pid) >&! flask.out
 set flaskpid = `cat flask.pid`
 # Flask outputs this line: * Running on http://xx.xx.xx.xx:54003/ (Press CTRL+C to quit)
 # Wait till it shows up
@@ -74,5 +65,5 @@ $gtm_dist/yottadb -r %XCMD "do ^ydb935($flaskport)"
 $gtm_dist/yottadb -r %XCMD 'write "# $data of ^a,^b,^c is ",$data(^a)," ",$data(^b)," ",$data(^c),!'
 
 echo "# Killing off Flask process"
-kill -9 $flaskpid
+kill $flaskpid
 $gtm_tst/com/wait_for_proc_to_die.csh $flaskpid
