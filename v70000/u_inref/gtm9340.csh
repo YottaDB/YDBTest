@@ -13,7 +13,7 @@
 #
 echo '# This test verifies that VIEW/$VIEW() region name is truncated appropriately and gets a VIEWREGLIST error if multiple $VIEW() regions'
 echo
-echo '# Create 2 databases with one having a max size name (31 char currently)'
+echo '# Create 2 regions with one having a max size name (31 char currently)'
 setenv test_specific_gde $gtm_tst/$tst/u_inref/gtm9340.gde
 $gtm_tst/com/dbcreate.csh mumps 1
 echo
