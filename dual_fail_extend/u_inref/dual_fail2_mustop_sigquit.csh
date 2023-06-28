@@ -63,16 +63,18 @@ $gtm_tst/com/srcstat.csh "BEFORE_PRI_A_CRASH"
 $gtm_tst/com/primary_crash.csh "$mustop_sigquit"
 sleep 5
 
+# Note that the FORCEDHALT/KILLBYSIG messages would not be seen in all cases (see v60000/u_inref/gtm4525b.csh, search for
+# a comment block mentioning "FORCEDHALT" for more details). Therefore filter them out to avoid test framework from catching them.
+# Do it on both primary and receiver side files.
 foreach file (SRC_${start_time}.log impjob_imptp0.mje1 impjob_imptp0.mje2 impjob_imptp0.mje3)
 	$gtm_tst/com/check_error_exist.csh $file $expected_error >>&! check_errors.outx
-	if ($status) then
-		echo "The expected error $expected_error not seen in log $file"
-	endif
 	# Errors are caught even if the file is renamed to impjob_imptp0.mje1x. So zip it
-	$tst_gzip ${file}x
+	if ( -e ${file}x ) then
+		$tst_gzip ${file}x
+	endif
 end
 foreach file (RCVR_${start_time}.log passive_${start_time}.log)
-	$sec_shell "$sec_getenv; cd $SEC_SIDE ; $gtm_tst/com/check_error_exist.csh $file $expected_error >>&! check_errors.outx ;"' if ($status) echo '$expected_error' not seen in '$file
+	$sec_shell "$sec_getenv; cd $SEC_SIDE ; $gtm_tst/com/check_error_exist.csh $file $expected_error >>&! check_errors.outx ; if ( -e ${file}x ) $tst_gzip ${file}x"
 end
 # FAIL OVER #
 echo "Doing Fail over."

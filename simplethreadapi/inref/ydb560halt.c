@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	*
+ * Copyright (c) 2020-2023 YottaDB LLC and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -12,11 +12,21 @@
 
 #include <time.h>
 #include <errno.h>
+#include <signal.h>
 
 #include "libyottadb.h"
 
 int main()
 {
+	/* Set SIGTERM signal handler to SIG_IGN so YottaDB will not invoke any non-YottaDB signal/exit handler
+	 * (due to YDB@ae2721d8).
+	 */
+	struct sigaction	act;
+	sigemptyset(&act.sa_mask);
+	act.sa_flags = 0;
+	act.sa_handler = SIG_IGN;
+	sigaction(SIGTERM, &act, NULL);
+
 	struct timespec slptime, remtime;
 	int		ret;
 

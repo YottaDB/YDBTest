@@ -399,13 +399,24 @@ echo ""
 
 source ./gtm_test_crash_jobs_${gtm_test_jobid}.csh
 
+# A MUPIP STOP (aka SIGTERM/SIG-15) will result in a %YDB-F-FORCEDHALT message in case "ydb_imptp_flavor" env var is 0 (M)
+# or 4 (YDBGo) but will not in case it is 1 (SimpleAPI), 2 (SimpleThreadAPI), 3 (YDBPython) or 5 (YDBRust). This is because
+# of YottaDB/Lang/YDBPython#32 related changes in YDB. Since it is not easy to capture this in the reference file, we just
+# filter out any FORCEDHALT messages from the log file that way the test framework does not see it later. But before that
+# wait for all stopped processes to terminate and then look at the .mje file. Note that there are other tests that capture
+# the FORCEDHALT message in the reference file (those tests are M-only tests and don't use the Simple API) and so it is
+# considered okay to not test that part in this test.
+foreach pid ( `$tst_awk '{print $NF}' gtm_test_crash_jobs_${gtm_test_jobid}.csh`)
+	$gtm_tst/com/wait_for_proc_to_die.csh $pid 300 >&! wait_for_proc_to_die_$pid.out
+end
+
 foreach MJE ( impjob_imptp${gtm_test_jobid}.mje? )
-	# Make sure the message shows up before we strip it. Saw this race lost on thermo.
-	$gtm_tst/com/wait_for_log.csh -message FORCEDHALT -log $MJE
-	# Strip FORCEDHALT messages
-	$gtm_tst/com/check_error_exist.csh $MJE FORCEDHALT
-	# Rename *.mje?x to *.xmje? to avoid the errors from errors.csh
-	mv ${MJE}x ${MJE:s/.mje/.xmje/}
+	# Strip FORCEDHALT message if present
+	$gtm_tst/com/check_error_exist.csh $MJE "FORCEDHALT" >>& FORCEDHALT.logx
+	# Errors are caught even if the file is renamed to impjob_imptp0.mje1x. So zip it.
+	if ( -e ${MJE}x ) then
+		$tst_gzip ${MJE}x
+	endif
 end
 
 # Verify that we are still frozen
