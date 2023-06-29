@@ -34,6 +34,13 @@ endif
 
 setenv subtest_exclude_list    ""
 
+# Python/Flask does not work well with ASAN. Disable ydbpython32.
+# (We get the correct error: __asan::ReportDeadlySignal, but we don't want to see that)
+source $gtm_tst/com/is_libyottadb_asan_enabled.csh
+if ($gtm_test_libyottadb_asan_enabled) then
+	setenv subtest_exclude_list "$subtest_exclude_list ydbpython32"
+endif
+
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh
 

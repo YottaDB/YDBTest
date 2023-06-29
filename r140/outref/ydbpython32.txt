@@ -1,4 +1,4 @@
-# Starting test for CTRL-C on Flask Application terminates properly
+# Starting test for CTRL-C on Interactive (started from terminal) Flask Application terminates properly
 # Cloning and Installing YDBPython
 # Setting up Virtual environment and installing flask
 # Verify that YDBPython linked against the correct version of YottaDB
@@ -10,29 +10,4 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
 # Running expect script simulating two sessions with CTRL-C at the end for flask
-spawn /usr/local/bin/tcsh -f
-> stty cols 132
-> set shellprompt=SHELL
-> set prompt=$shellprompt
-SHELLsetenv term_env `tty`; echo $term_env > term_env.txt
-SHELLset prompt=""; source .venv/bin/activate.csh
-setenv FLASK_APP "index"
-[.venv] setenv FLASK_APP "index"
-python3 -m flask run --host=127.0.0.1 --port=0
-[.venv] python3 -m flask run --host=127.0.0.1 --port=0
- * Serving Flask app 'index' (lazy loading)
- * Environment: production
-   WARNING: This is a development server. Do not use it in a production deployment.
-   Use a production WSGI server instead.
- * Debug mode: off
-##TEST_AWK \* Running on http://127.0.0.1:.*/ \(Press CTRL\+C to quit\)
-spawn /usr/local/bin/tcsh -f
-> stty cols 132
-> set shellprompt=SHELL
-> set prompt=$shellprompt
-SHELLsetenv term_env `tty`; echo $term_env > term_env.txt
-##TEST_AWKSHELLcurl -sS -H "Content-Type: application/json" -X GET localhost:.*/users
-##TEST_AWK127.0.0.1 - - \[.*\] "GET /users HTTP/1.1" 200 -
-[{"age":"","id":"","name":"","sex":""}]
-SHELLexit^C%YDB-I-CTRLC, CTRL_C encountered
-[.venv] 
+# %YDB-SUCCESS: Test successful

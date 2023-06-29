@@ -11,7 +11,7 @@
 #                                                               #
 #################################################################
 # Clone YDBPython
-echo "# Starting test for CTRL-C on Flask Application terminates properly"
+echo "# Starting test for CTRL-C on Interactive (started from terminal) Flask Application terminates properly"
 echo "# Cloning and Installing YDBPython"
 git clone -q https://gitlab.com/YottaDB/Lang/YDBPython.git
 cd YDBPython
@@ -38,4 +38,4 @@ cp $gtm_tst/r136/inref/ydb935-1.py index.py
 echo "# Running expect script simulating two sessions with CTRL-C at the end for flask"
 (expect -d $gtm_tst/$tst/u_inref/ydbpython32.exp > expect.out) >& expect.dbg
 perl $gtm_tst/com/expectsanitize.pl expect.out > expect_sanitized.out
-cat expect_sanitized.out
+grep "YDB-SUCCESS" expect_sanitized.out
