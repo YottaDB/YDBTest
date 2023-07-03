@@ -1,4 +1,5 @@
 # Test that reverse $order/$query functions work correctly when $increment/VIEW "NOISOLATION" is in use
+# Disable ASYNCIO in test as it can cause rare test hangs and is not the primary purpose of this test
 # No GDB output will be printed if the test passes
 # If it fails the bad lines will end up in the log file
 # The full gdb output is in the gdb*.out files

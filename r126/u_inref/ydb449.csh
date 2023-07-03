@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -16,6 +16,10 @@
 #
 
 echo '# Test that reverse $order/$query functions work correctly when $increment/VIEW "NOISOLATION" is in use'
+
+echo "# Disable ASYNCIO in test as it can cause rare test hangs and is not the primary purpose of this test"
+setenv gtm_test_asyncio 0
+
 echo '# No GDB output will be printed if the test passes'
 echo '# If it fails the bad lines will end up in the log file'
 echo '# The full gdb output is in the gdb*.out files'
