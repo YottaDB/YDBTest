@@ -30,10 +30,11 @@
 # ydb910		[jv]		Test that --from-source builds and installs YottaDB without any errors with ydbinstall/ydbinstall.sh
 # ydb924		[jv]		Test that ydbinstall/ydbinstall.sh terminates if not run as root, unless --dry-run is specified
 # gtm8517		[estess]	Test that install permissions and checksum files are created by install and are non-zero
-#
+# olderversion		[sam]		Test to see if ydbinstall can successfully install older versions
+
 setenv subtest_list_common "sourceInstall diffDir ydb306 gtm9116 plugins ydb783"
 setenv subtest_list_non_replic "gtm7759 ydb894 ydb880 ydb910 ydb924 gtm8517"
-setenv subtest_list_non_replic "$subtest_list_non_replic"
+setenv subtest_list_non_replic "$subtest_list_non_replic olderversion"
 setenv subtest_list_replic ""
 
 if ($?test_replic == 1) then
