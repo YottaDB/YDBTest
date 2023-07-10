@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -33,6 +36,16 @@ endif
 
 if ("nozip" == "$4") then
 	set dontzip=1
+endif
+
+# This script can be called from the secondary side of a multi-host replication test. In that case, the below env var
+# would not be inherited and so we cannot directly access the env var like we do in various other places. Hence the check
+# first for whether the env var is defined.
+if ($?ydb_test_4g_db_blks) then
+	if (0 != $ydb_test_4g_db_blks) then
+		# gzip takes forever with huge/sparse db files. So disable gzip at all costs if huge db files are possible.
+		set dontzip = 1
+	endif
 endif
 
 if (! $?dontzip && ("$todo" =~ "*cp*")) then

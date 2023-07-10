@@ -14,6 +14,10 @@
 #								#
 #################################################################
 
+# This test uses specific to block numbers and so will fail if used with the debug-only HOLE scheme to test > 4g db blocks.
+# Therefore disable that scheme.
+setenv ydb_test_4g_db_blks 0
+
 $gtm_tst/com/dbcreate.csh mumps
 
 # create a database with a broken alignement

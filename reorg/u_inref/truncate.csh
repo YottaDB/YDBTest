@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -13,6 +13,13 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+
+# This test has an already complicated reference file (separate sections for SPANNING_REGIONS and NONSPANNING_REGIONS).
+# And each section has different output from MUPIP REORG -TRUNCATE in case the > 4g db block scheme is enabled
+# (due to the big HOLE). It is not considered worth maintaining an even more complicated reference file just for this
+# scheme. Besides MUPIP REORG -TRUNCATE output for > 4g db blocks is already maintained in other simpler reference files
+# (e.g. v62002/outref/gtm8187.txt) so disable this 4g block scheme in this test.
+setenv ydb_test_4g_db_blks 0
 
 # disable random 4-byte collation header in DT leaf block since this test output is sensitive to DT leaf block layout
 setenv gtm_dirtree_collhdr_always 1

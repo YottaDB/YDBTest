@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -13,6 +13,14 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+
+# Since the reference file for this test has "SUSPEND_OUTPUT 4G_ABOVE_DB_BLKS" usage, it needs to fixate
+# the value of the "ydb_test_4g_db_blks" env var in case it is randomly set by the test framework to a non-zero value.
+if (0 != $ydb_test_4g_db_blks) then
+	echo "# Setting ydb_test_4g_db_blks env var to a fixed value as reference file has 4G_ABOVE_DB_BLKS usages" >> settings.csh
+	setenv ydb_test_4g_db_blks 8388608
+endif
+
 setenv test_reorg "NON_REORG"
 $gtm_tst/com/dbcreate.csh mumps 1 255 1000 -block_size=1024
 $GTM << EOF

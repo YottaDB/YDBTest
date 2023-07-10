@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2021-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2021-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -10,6 +10,13 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+
+# Since the reference file for this test has "SUSPEND_OUTPUT 4G_ABOVE_DB_BLKS" usage, it needs to fixate
+# the value of the "ydb_test_4g_db_blks" env var in case it is randomly set by the test framework to a non-zero value.
+if (0 != $ydb_test_4g_db_blks) then
+	echo "# Setting ydb_test_4g_db_blks env var to a fixed value as reference file has 4G_ABOVE_DB_BLKS usages" >> settings.csh
+	setenv ydb_test_4g_db_blks 8388608
+endif
 
 echo "# This tests that GDE and MUPIP EXTEND work with an extension_count larger than 65355"
 echo "# Prior to V6.3-011, the limit for the extension_count was 65535 blocks. In V6.3-011,"

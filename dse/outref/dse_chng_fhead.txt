@@ -16,11 +16,22 @@ Region          DEFAULT
 ##TEST_AWK  Access method                                  (MM|BG)  Global Buffers                        1024
   Reserved Bytes                                  0  Block size (in bytes)                 1024
   Maximum record size                           256  Starting VBN                          8193
+##SUSPEND_OUTPUT 4G_ABOVE_DB_BLKS
   Maximum key size                               64  Total blocks            0x0000000000000BBE
   Null subscripts                             NEVER  Free blocks             0x0000000000000BB6
+##ALLOW_OUTPUT 4G_ABOVE_DB_BLKS
+##SUSPEND_OUTPUT 4G_BELOW_DB_BLKS
+  Maximum key size                               64  Total blocks            0x00000001000009BE
+  Null subscripts                             NEVER  Free blocks             0x00000000FF8009B7
+##ALLOW_OUTPUT 4G_BELOW_DB_BLKS
   Standard Null Collation                      TRUE  Free space                      0x00000000
   Last Record Backup             0x0000000000000001  Extension Count                        100
+##SUSPEND_OUTPUT 4G_ABOVE_DB_BLKS
   Last Database Backup           0x0000000000000001  Number of local maps                     6
+##ALLOW_OUTPUT 4G_ABOVE_DB_BLKS
+##SUSPEND_OUTPUT 4G_BELOW_DB_BLKS
+  Last Database Backup           0x0000000000000001  Number of local maps               8388613
+##ALLOW_OUTPUT 4G_BELOW_DB_BLKS
   Last Bytestream Backup         0x0000000000000001  Lock space                      0x000000DC
   In critical section                    0x00000000  Timers pending                           0
 ##SUSPEND_OUTPUT MM
@@ -99,11 +110,22 @@ Region          DEFAULT
 ##TEST_AWK  Access method                                  (MM|BG)  Global Buffers                        1024
   Reserved Bytes                                  0  Block size (in bytes)                 1024
   Maximum record size                           256  Starting VBN                          8193
+##SUSPEND_OUTPUT 4G_ABOVE_DB_BLKS
   Maximum key size                               64  Total blocks            0x0000000000000BBE
   Null subscripts                             NEVER  Free blocks             0x0000000000000BB6
+##ALLOW_OUTPUT 4G_ABOVE_DB_BLKS
+##SUSPEND_OUTPUT 4G_BELOW_DB_BLKS
+  Maximum key size                               64  Total blocks            0x00000001000009BE
+  Null subscripts                             NEVER  Free blocks             0x00000000FF8009B7
+##ALLOW_OUTPUT 4G_BELOW_DB_BLKS
   Standard Null Collation                      TRUE  Free space                      0x00000000
   Last Record Backup             0x0000000000000001  Extension Count                        100
+##SUSPEND_OUTPUT 4G_ABOVE_DB_BLKS
   Last Database Backup           0x0000000000000001  Number of local maps                     6
+##ALLOW_OUTPUT 4G_ABOVE_DB_BLKS
+##SUSPEND_OUTPUT 4G_BELOW_DB_BLKS
+  Last Database Backup           0x0000000000000001  Number of local maps               8388613
+##ALLOW_OUTPUT 4G_BELOW_DB_BLKS
   Last Bytestream Backup         0x0000000000000001  Lock space                      0x000000DC
   In critical section                    0x00000000  Timers pending                           0
 ##SUSPEND_OUTPUT MM

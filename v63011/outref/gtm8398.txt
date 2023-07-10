@@ -15,7 +15,12 @@
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 ###################################################################
 # Now we execute a MUPIP EXTEND DEFAULT to extend the database by the segment's extension_count of 1048575 blocks
+##SUSPEND_OUTPUT 4G_ABOVE_DB_BLKS
 Extension successful, file ##TEST_PATH##/mumps.dat extended by 1048575 blocks.  Total blocks = 1048675.
+##ALLOW_OUTPUT 4G_ABOVE_DB_BLKS
+##SUSPEND_OUTPUT 4G_BELOW_DB_BLKS
+Extension successful, file ##TEST_PATH##/mumps.dat extended by 4287626752 blocks.  Total blocks = 4287626852.
+##ALLOW_OUTPUT 4G_BELOW_DB_BLKS
 ###################################################################
 # Attempt to change the extension count to 1048576. This should fail with an error as this value is over the limit.
 %GDE-I-LOADGD, Loading Global Directory file 

@@ -29,7 +29,12 @@ h
 #
 %YDB-E-NOREGION, REGION not found: FREELUNCH
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
+##SUSPEND_OUTPUT 4G_ABOVE_DB_BLKS
 Extension successful, file ##TEST_PATH##/extend.dat extended by 400 blocks.  Total blocks = ##TEST_AWK[1-2][0-9]00.
+##ALLOW_OUTPUT 4G_ABOVE_DB_BLKS
+##SUSPEND_OUTPUT 4G_BELOW_DB_BLKS
+Extension successful, file ##TEST_PATH##/extend.dat extended by 400 blocks.  Total blocks = 42865##TEST_AWK[7-8][0-9][0-9]77.
+##ALLOW_OUTPUT 4G_BELOW_DB_BLKS
 
 YDB>
 
@@ -45,7 +50,12 @@ set PASS
 
 YDB>
 h
+##SUSPEND_OUTPUT 4G_ABOVE_DB_BLKS
 Extension successful, file ##TEST_PATH##/extend.dat extended by 100 blocks.  Total blocks = ##TEST_AWK[1-2][0-9]00.
+##ALLOW_OUTPUT 4G_ABOVE_DB_BLKS
+##SUSPEND_OUTPUT 4G_BELOW_DB_BLKS
+Extension successful, file ##TEST_PATH##/extend.dat extended by 100 blocks.  Total blocks = 42865##TEST_AWK[7-8][0-9][0-9]77.
+##ALLOW_OUTPUT 4G_BELOW_DB_BLKS
 
 YDB>
 

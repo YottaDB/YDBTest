@@ -8,7 +8,12 @@ mumps.dat
 # Extend the database to a considerable size so that unnecessary file extensions won't happen. This helps in calculating
 # how many updates need to be done.
 ###################################################################
+##SUSPEND_OUTPUT 4G_ABOVE_DB_BLKS
 Extension successful, file ##TEST_PATH##/mumps.dat extended by 12000 blocks.  Total blocks = 12100.
+##ALLOW_OUTPUT 4G_ABOVE_DB_BLKS
+##SUSPEND_OUTPUT 4G_BELOW_DB_BLKS
+Extension successful, file ##TEST_PATH##/mumps.dat extended by 4286590177 blocks.  Total blocks = 4286590277.
+##ALLOW_OUTPUT 4G_BELOW_DB_BLKS
 
 ###################################################################
 # Find out the size of one update

@@ -33,9 +33,24 @@ Type           Blocks         Records          % Used      Adjacent
 
 ##TEST_AWKDirectory           2               2           [2|3]....            NA
 Index             403            3571          41.111           106
+##SUSPEND_OUTPUT 4G_ABOVE_DB_BLKS
 Data             3169           10000          68.929          2393
+##ALLOW_OUTPUT 4G_ABOVE_DB_BLKS
+##SUSPEND_OUTPUT 4G_BELOW_DB_BLKS
+Data             3169           10000          68.929          2392
+##ALLOW_OUTPUT 4G_BELOW_DB_BLKS
+##SUSPEND_OUTPUT 4G_ABOVE_DB_BLKS
 Free               26              NA              NA            NA
+##ALLOW_OUTPUT 4G_ABOVE_DB_BLKS
+##SUSPEND_OUTPUT 4G_BELOW_DB_BLKS
+Free       4286578203              NA              NA            NA
+##ALLOW_OUTPUT 4G_BELOW_DB_BLKS
+##SUSPEND_OUTPUT 4G_ABOVE_DB_BLKS
 Total            3600           13573              NA          2499
+##ALLOW_OUTPUT 4G_ABOVE_DB_BLKS
+##SUSPEND_OUTPUT 4G_BELOW_DB_BLKS
+Total      4286581777           13573              NA          2498
+##ALLOW_OUTPUT 4G_BELOW_DB_BLKS
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

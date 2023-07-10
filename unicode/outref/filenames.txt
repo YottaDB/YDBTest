@@ -1282,7 +1282,12 @@ Extension successful, file ##TEST_PATH##/ＲＥＧＣ.dat extended by 300 blocks
 #DREG
 Extension successful, file ##TEST_PATH##/D我能吞下玻璃而不伤身体.dat extended by 400 blocks.  Total blocks = 500.
 #DEFAULT
+##SUSPEND_OUTPUT 4G_ABOVE_DB_BLKS
 Extension successful, file ##TEST_PATH##/ＲＥＧＤＥＦＡＵＬＴ.dat extended by 500 blocks.  Total blocks = 600.
+##ALLOW_OUTPUT 4G_ABOVE_DB_BLKS
+##SUSPEND_OUTPUT 4G_BELOW_DB_BLKS
+Extension successful, file ##TEST_PATH##/ＲＥＧＤＥＦＡＵＬＴ.dat extended by 4286578677 blocks.  Total blocks = 4286578777.
+##ALLOW_OUTPUT 4G_BELOW_DB_BLKS
 # verify the new Global Buffers and Total blocks
 # Compare global buffers before and after the mupip set done above
 1,5c1,5
@@ -1309,7 +1314,12 @@ Extension successful, file ##TEST_PATH##/ＲＥＧＤＥＦＡＵＬＴ.dat exte
 >   Maximum key size                               64  Total blocks            0x000000000000012D
 >   Maximum key size                               64  Total blocks            0x0000000000000191
 >   Maximum key size                               64  Total blocks            0x00000000000001F5
+##SUSPEND_OUTPUT 4G_ABOVE_DB_BLKS
 >   Maximum key size                               64  Total blocks            0x000000000000025A
+##ALLOW_OUTPUT 4G_ABOVE_DB_BLKS
+##SUSPEND_OUTPUT 4G_BELOW_DB_BLKS
+>   Maximum key size                               64  Total blocks            0x000000010000005A
+##ALLOW_OUTPUT 4G_BELOW_DB_BLKS
 ###################################################################
 #- Test that DSE DUMP -fileheader and DSE DUMP -fileheader -all shows the filenames correctly (database and journal).
 File  	##TEST_PATH##/安办在.好

@@ -9,9 +9,24 @@ Added SET trigger on ^a named a#1
 Added SET trigger on ^b named b#1
 Global: #t (region AREG)
 Global: #t (region BREG)
+##SUSPEND_OUTPUT 4G_ABOVE_DB_BLKS
 Truncated region: AREG. Reduced total blocks from [1403] to [512]. Reduced free blocks from [1394] to [505].
+##ALLOW_OUTPUT 4G_ABOVE_DB_BLKS
+##SUSPEND_OUTPUT 4G_BELOW_DB_BLKS
+Truncated region: AREG. Reduced total blocks from [4294968187] to [512]. Reduced free blocks from [4286579571] to [505].
+##ALLOW_OUTPUT 4G_BELOW_DB_BLKS
+##SUSPEND_OUTPUT 4G_ABOVE_DB_BLKS
 Truncated region: BREG. Reduced total blocks from [1403] to [512]. Reduced free blocks from [1394] to [505].
+##ALLOW_OUTPUT 4G_ABOVE_DB_BLKS
+##SUSPEND_OUTPUT 4G_BELOW_DB_BLKS
+Truncated region: BREG. Reduced total blocks from [4294968187] to [512]. Reduced free blocks from [4286579571] to [505].
+##ALLOW_OUTPUT 4G_BELOW_DB_BLKS
+##SUSPEND_OUTPUT 4G_ABOVE_DB_BLKS
 Truncated region: DEFAULT. Reduced total blocks from [1403] to [512]. Reduced free blocks from [1396] to [507].
+##ALLOW_OUTPUT 4G_ABOVE_DB_BLKS
+##SUSPEND_OUTPUT 4G_BELOW_DB_BLKS
+Truncated region: DEFAULT. Reduced total blocks from [4294968187] to [512]. Reduced free blocks from [4286579573] to [507].
+##ALLOW_OUTPUT 4G_BELOW_DB_BLKS
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

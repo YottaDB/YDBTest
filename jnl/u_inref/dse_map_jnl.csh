@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2002, 2013 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -12,6 +15,16 @@
 
 # disable random 4-byte collation header in DT leaf block since this test output is sensitive to DT leaf block layout
 setenv gtm_dirtree_collhdr_always 1
+
+# This test does a bunch of SETs and creates AIMG records (using DSE MAPS -FREE) and replays them all using
+# MUPIP JOURNAL RECOVER -BACKWARD -SINCE. Since backward journal recovery by default applies AIMG records and
+# since the total blocks counter is very different between when YottaDB did the SETs vs when backward journal recovery
+# does the same updates when ydb_test_4g_db_blks is enabled (due to the giant HOLE), the block numbers allocated for the
+# updates end up being very different in the two cases. This means that applying an AIMG record (which captures the physical
+# block contents based on the first block layout) in the journal backward recovery case could result in additional integrity
+# errors (which show up as "Incorrectly marked free" and "Incorrectly marked busy" integrity errors in different bitmap blocks).
+# Therefore the greater than 4Gi db blocks scheme is disabled in this test.
+setenv ydb_test_4g_db_blks 0
 
 ##################################
 echo "##########"
@@ -27,7 +40,7 @@ $GTM << EOF
 f i=1:1:1200 s ^a(i,"STR"_i)=\$j(i,800)
 h
 EOF
-$DSE << EOF
+cat > dse_maps_cmds.txt << CAT_EOF
 maps -block=20 -free
 maps -block=22 -free
 maps -block=210 -free
@@ -37,7 +50,9 @@ maps -block=212 -free
 maps -block=410 -free
 maps -block=411 -free
 quit
-EOF
+CAT_EOF
+
+$DSE < dse_maps_cmds.txt
 \mkdir ./bak1; \cp -f *.dat *.mjl* ./bak1
 echo ""
 echo "Integ for corrupted bitmap"
@@ -73,17 +88,7 @@ $GTM << EOF
 f i=1:1:1200 s ^a(i,"STR"_i)=\$j(i,800)
 h
 EOF
-$DSE << EOF
-maps -block=20 -free
-maps -block=22 -free
-maps -block=210 -free
-maps -block=211 -free
-maps -block=211 -busy
-maps -block=212 -free
-maps -block=410 -free
-maps -block=411 -free
-quit
-EOF
+$DSE < dse_maps_cmds.txt
 echo ""
 echo "Integ for corrupted bitmap"
 $MUPIP integ -r "*"

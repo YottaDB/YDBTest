@@ -3,7 +3,7 @@
 #								#
 #	Copyright 2012, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -16,6 +16,12 @@
 # Test MUPIP Size by creating a database with several globals and passing
 # different sets of parameters (valid or invalid) to MUPIP SIZE
 # The randomness is taken care of by passing a specific seed to the generator
+
+# This test has an already complicated reference file (separate sections for SPANNING_REGIONS and NONSPANNING_REGIONS).
+# And each section has different output from MUPIP INTEG and MUPIP SIZE in case the > 4g db block scheme is enabled
+# (due to the big HOLE). It is not considered worth maintaining an even more complicated reference file just for this scheme
+# so disable it in this test.
+setenv ydb_test_4g_db_blks 0
 
 # disable random 4-byte collation header in DT leaf block since this test output is sensitive to DT leaf block layout
 setenv gtm_dirtree_collhdr_always 1

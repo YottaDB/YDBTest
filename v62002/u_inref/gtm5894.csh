@@ -4,6 +4,9 @@
 # Copyright (c) 2015 Fidelity National Information 		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -12,6 +15,10 @@
 #################################################################
 
 setenv gtm_test_defer_allocate 0
+
+setenv ydb_test_4g_db_blks 0	# Disable debug-only huge db scheme as this test disables defer allocation and expects
+				# all blocks to be allocated in the file system but the huge db scheme will not allocate
+				# blocks in the huge HOLE (from bitmap block 512 onwards)
 
 # rec_size = 512; blk_size = 512; alloc = 25; extension = 500
 $gtm_tst/com/dbcreate.csh mumps 1 . 512 512 25 . 500

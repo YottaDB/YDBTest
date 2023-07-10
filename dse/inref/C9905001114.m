@@ -46,3 +46,17 @@ err	for lev=$stack:-1:0 quit:$stack(lev,"PLACE")[("^"_$text(+0))
 	zgoto @next
 	write !,"oops",!,$zstatus
 	zhalt 4	; in case of error within err
+	quit
+
+gendsefindsib	;
+	new i
+	if '+$ztrnlnm("ydb_test_4g_db_blks") do
+	. for i=1:1:511   write "find -sib -block=",$$FUNC^%DH(i),!
+	. for i=513:1:515 write "find -sib -block=",$$FUNC^%DH(i),!
+	else  do
+	. new lastbml
+	. set lastbml=4294967296
+	. for i=1:1:425                write "find -sib -block=",$$FUNC^%DH(i),!
+	. for i=lastbml+1:1:lastbml+89 write "find -sib -block=",$$FUNC^%DH(i),!
+	quit
+

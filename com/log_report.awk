@@ -151,6 +151,7 @@ BEGIN {
 		if ( "gtm_mupjnl_parallel" == rname ) printf "MP:%-1s ",rval[i]
 		if ( "ydb_lockhash_n_bits" == rname ) printf "LH:%-1s ",rval[i]
 		if ( "gtm_test_trigupdate" == rname ) printf "TRGUPD:%-1s ",rval[i]
+		if ( "ydb_test_4g_db_blks" == rname ) printf "HUGEDB:%-1s ",((rval[i] == 0) ? 0 : 1)
 	}
 	print "",$3
 }

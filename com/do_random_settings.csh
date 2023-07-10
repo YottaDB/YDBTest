@@ -37,7 +37,7 @@ echo "########## Begin do_random_settings.csh random settings ###########"	>>&! 
 # 	governed by the current time in second level granularity.
 # If any new randomness is added, check if speed test also needs to be changed to take it into consideration
 # arguments below are count-of-numbers-needed lower-bound upper-bound
-set randnumbers = `$gtm_tst/com/genrandnumbers.csh 47 1 100`
+set randnumbers = `$gtm_tst/com/genrandnumbers.csh 48 1 100`
 
 # Caution : No. of random choices below and the no. of random numbers generated above might not necessarily be the same.
 # 	    Increase the count by the number of new random numbers the newly introduced code needs.
@@ -1198,6 +1198,58 @@ endif
 setenv tst_random_all "$tst_random_all gtm_test_trigupdate"
 ###########################################################################
 
+###########################################################################
+### Random option - 48 ### Randomly set ydb_test_4g_db_blks env var 50% of the time
+#
+if ("pro" == $tst_image) then
+	# The ydb_test_4g_db_blks env var is honored only in Debug builds so disable it in case of PRO/Release builds.
+	setenv ydb_test_4g_db_blks 0
+	echo "# ydb_test_4g_db_blks is set to $ydb_test_4g_db_blks (since tst_image is $tst_image) by do_random_settings.csh"	>>&! $settingsfile
+else if ("MM" == "$acc_meth") then
+	# MM has issues with mmap() of huge database files. One sees ENOMEM (%SYSTEM-E-ENO12, Cannot allocate memory)
+	# error from mmap() in gvcst_init_sysops.c (db init time) so disable "ydb_test_4g_db_blks" scheme if MM is enabled.
+	setenv ydb_test_4g_db_blks 0
+	echo "# ydb_test_4g_db_blks is set to $ydb_test_4g_db_blks (since acc_meth is $acc_meth) by do_random_settings.csh"	>>&! $settingsfile
+else if (0 != $test_replic_mh_type) then
+	# In multi-host tests we don't know if the remote system disk has the ability to create huge db files therefore
+	# disable ydb_test_4g_db_blks scheme (as it creates huge db by skipping a lot of bitmap blocks at db creation time).
+	setenv ydb_test_4g_db_blks 0
+	echo "# ydb_test_4g_db_blks is set to $ydb_test_4g_db_blks (since test_replic_mh_type is $test_replic_mh_type) by do_random_settings.csh"	>>&! $settingsfile
+else if ("GT.CM" == $test_gtm_gtcm) then
+	# In GT.CM tests we don't know if the remote system disk has the ability to create huge db files therefore
+	# disable ydb_test_4g_db_blks scheme (as it creates huge db by skipping a lot of bitmap blocks at db creation time).
+	setenv ydb_test_4g_db_blks 0
+	echo "# ydb_test_4g_db_blks is set to $ydb_test_4g_db_blks (since test_gtm_gtcm is $test_gtm_gtcm) by do_random_settings.csh"	>>&! $settingsfile
+else if !($?ydb_test_4g_db_blks) then
+	if (50 >= $randnumbers[48]) then
+		setenv ydb_test_4g_db_blks 0
+	else
+		# Randomly set the env var to a value that will enable testing anywhere from 4G db blocks to 15G db blocks.
+		# A value slightly less than 16G (17,179,869,184 in V7.0-000) db blocks is the absolute limit so do not go
+		# near there. The env var value corresponds to the number of bitmap blocks so we need to divide the db blocks
+		# value randomly chosen by 512. We also want to test any edge cases just before the 4G boundary so we subtract
+		# 2 bitmap blocks from the random value before setting the env var.
+		#
+		# Note that there are a few tests that have reference files with different output in case
+		# this env var is set. Such tests will override/hardcode this env var to 8388608 to avoid having to have
+		# different reference files for different values of this env var.
+		#
+		setenv ydb_test_4g_db_blks `date | $tst_awk '{srand(); printf "%d\n",((3*(2**30)+int(rand()*(12*(2**30))))/512-2);}'`
+	endif
+	echo "# ydb_test_4g_db_blks set by do_random_settings.csh"				>>&! $settingsfile
+else
+	echo "# ydb_test_4g_db_blks was already set before coming into do_random_settings.csh"	>>&! $settingsfile
+endif
+echo "setenv ydb_test_4g_db_blks $ydb_test_4g_db_blks"						>>&! $settingsfile
+if (0 != $ydb_test_4g_db_blks) then
+	# When huge db files are created, we do not want "gzip" to be done by test system (e.g. in case of a test failure)
+	# as that can result in bigger files than the original files (gzip does not handle sparse files well).
+	# Therefore set the env var that is enabled as if this test was submitted using "gtmtest.csh -nozip".
+	setenv test_dont_zip
+endif
+
+setenv tst_random_all "$tst_random_all ydb_test_4g_db_blks"
+###########################################################################
 # For any change to tst_random_all, a corresponding change is required in log_report.awk, to show in final report
 echo "########### End do_random_settings.csh random settings ############"			>>&! $settingsfile
 echo "setenv tst_random_all '$tst_random_all'"							>>&! $settingsfile

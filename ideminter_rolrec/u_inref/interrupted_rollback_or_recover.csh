@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -27,7 +30,8 @@ mkdir round1
 $gtm_tst/com/errors.csh round1_error.log >&! round1_error.logx
 if (-e showbacklog.log) mv showbacklog.log round1
 $gtm_tst/com/backup_dbjnl.csh round1 '*.dat *.gld *.mjl*  *.log* *.txt time* *.csh *.repl* *.out'
-$tst_gunzip round1/time1_abs*
+$tst_gunzip -q round1/time1_abs*	# if "ydb_test_4g_db_blks" is non-zero, then "backup_dbjnl.csh" would not have zipped,
+					# so we would get a "unknown suffix -- ignored" warning from gunzip. Avoid that using "-q".
 mv bak_* round1
 cp -p MUPIP_${interrupted_rolrec}.log MUPIP_${interrupted_rolrec}_1.log
 echo "### One more time ###"

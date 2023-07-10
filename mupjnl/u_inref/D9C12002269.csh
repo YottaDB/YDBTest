@@ -4,6 +4,9 @@
 # Copyright (c) 2003-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -11,6 +14,11 @@
 #								#
 #################################################################
 #
+# This test sets the allocation value in the second stage of db creation to the size of the database file in bytes from the
+# first stage. With the > 4g db blocks scheme in place, the byte size of the db will be too large resulting in a
+# %GDE-I-VALTOOBIG error. Therefore disable this scheme.
+setenv ydb_test_4g_db_blks 0
+
 $gtm_tst/com/dbcreate.csh -block_size=1024 -allocation=2048 -global_buffer_count=64 -ext=100 -record_size=4000
 #
 $MUPIP set -journal="enable,on,before,auto=16384,alloc=2048,exten=1024" -reg "*"

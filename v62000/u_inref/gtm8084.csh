@@ -15,7 +15,8 @@
 
 # disable random 4-byte collation header in DT leaf block since this test output is sensitive to DT leaf block layout
 setenv gtm_dirtree_collhdr_always 1
-
+setenv ydb_test_4g_db_blks 0	# Disable debug-only huge db scheme as this test is sensitive to DT/GVT block layout
+				# and the huge HOLE in bitmap block 512 onwards disturbs the assumptions in this test.
 setenv gtm_test_spanreg 0   # because this test output is sensitive to block layout and random .sprgde can change that
 
 # Disable this env var as the test output is sensitive to block layout and the allocation clue can change it

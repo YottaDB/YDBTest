@@ -4,12 +4,22 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+
+# Since the reference file for this test has "SUSPEND_OUTPUT 4G_ABOVE_DB_BLKS" usage, it needs to fixate
+# the value of the "ydb_test_4g_db_blks" env var in case it is randomly set by the test framework to a non-zero value.
+if (0 != $ydb_test_4g_db_blks) then
+	echo "# Setting ydb_test_4g_db_blks env var to a fixed value as reference file has 4G_ABOVE_DB_BLKS usages" >> settings.csh
+	setenv ydb_test_4g_db_blks 8388608
+endif
 
 source $gtm_tst/com/gtm_test_setbgaccess.csh	# TRUNCATE requires BG access method
 setenv gtm_test_mupip_set_version "disable"	# TRUNCATE requires no V4 format blocks

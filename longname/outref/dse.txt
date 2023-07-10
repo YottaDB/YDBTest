@@ -89,8 +89,14 @@ Type           Blocks         Records          % Used      Adjacent
 Directory          11            1435          61.299            NA
 Index            1425            1425           0.683             4
 Data             1425            2855           1.204             4
+##SUSPEND_OUTPUT 4G_ABOVE_DB_BLKS
 Free               39              NA              NA            NA
 Total            2900            5715              NA             8
+##ALLOW_OUTPUT 4G_ABOVE_DB_BLKS
+##SUSPEND_OUTPUT 4G_BELOW_DB_BLKS
+Free       4286578216              NA              NA            NA
+Total      4286581077            5715              NA             8
+##ALLOW_OUTPUT 4G_BELOW_DB_BLKS
 End DSE ADD
 DSE FIND
 key	^Ed34567890123456789012345678901
@@ -144,6 +150,7 @@ File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
 
+##SUSPEND_OUTPUT 4G_ABOVE_DB_BLKS
 Key found in block  ABF.
     Directory path
     Path--blk:off
@@ -520,6 +527,381 @@ GREPFILE-E-ERROR, 21BC  is not present in the file range_ZZ4.out
 GREPFILE-E-ERROR, 21BC  is not present in the file range_ZZ4.out
 GREPFILE-E-ERROR, 21BE  is present in the file range_ZZ4.out
 GREPFILE-E-ERROR, 21BE  is present in the file range_ZZ4.out
+##ALLOW_OUTPUT 4G_ABOVE_DB_BLKS
+##SUSPEND_OUTPUT 4G_BELOW_DB_BLKS
+Key found in block  1000008BF.
+    Directory path
+    Path--blk:off
+	1:E0,	10000085B:1CC,
+    Global tree path
+    Path--blk:off
+	1000008C0:10,	1000008BF:10,
+$DSE find -key="$key1"
+##SOURCE_PATH##/dse find -key=^Ed34567890123456789012345678901(1)
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Key found in block  1000008BF.
+    Directory path
+    Path--blk:off
+	1:E0,	10000085B:1CC,
+    Global tree path
+    Path--blk:off
+	1000008C0:10,	1000008BF:36,
+$DSE find -key="$key5"
+##SOURCE_PATH##/dse find -key=^Ed34567890123456789012345678901b
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Key found in block  1000008BF.
+    Directory path
+    Path--blk:off
+	1:E0,	10000085B:1CC,
+    Global tree path
+    Path--blk:off
+	1000008C0:10,	1000008BF:10,
+$DSE find -key="$key6"
+##SOURCE_PATH##/dse find -key=^Ed34567890123456789012345678901b(1)
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Key found in block  1000008BF.
+    Directory path
+    Path--blk:off
+	1:E0,	10000085B:1CC,
+    Global tree path
+    Path--blk:off
+	1000008C0:10,	1000008BF:36,
+echo "Expected: Key not found, would be in block ..."
+echo Expected: Key not found, would be in block ...
+Expected: Key not found, would be in block ...
+$DSE find -key="$key2"
+##SOURCE_PATH##/dse find -key=^Ed34567890123456789012345678901(1,2)
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Key not found, would be in block  1000008BF.
+    Directory path
+    Path--blk:off
+	1:E0,	10000085B:1CC,
+    Global tree path
+    Path--blk:off
+	1000008C0:10,	1000008BF:36,
+$DSE find -key="$key4"
+##SOURCE_PATH##/dse find -key=^Ed34567890123456789012345678901(2)
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Key not found, would be in block  1000008BF.
+    Directory path
+    Path--blk:off
+	1:E0,	10000085B:1CC,
+    Global tree path
+    Path--blk:off
+	1000008C0:10,	1000008BF:36,
+$DSE find -key="$key7"
+##SOURCE_PATH##/dse find -key=^Ed34567890123456789012345678901b(1,2)
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Key not found, would be in block  1000008BF.
+    Directory path
+    Path--blk:off
+	1:E0,	10000085B:1CC,
+    Global tree path
+    Path--blk:off
+	1000008C0:10,	1000008BF:36,
+
+
+$DSE find -region=abcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd
+##SOURCE_PATH##/dse find -region=abcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+%YDB-E-CLISTRTOOLONG, REGION specified is 100 bytes long which is greater than the allowed maximum of 31 bytes
+$DSE find -key="^AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+##SOURCE_PATH##/dse find -key=^AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Key not found, no root present.
+
+
+unset echo
+unset echo
+unset verbose
+End DSE FIND
+DSE DUMP
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Block 3   Size 23   Level 0   TN 3 V7
+
+Rec:1  Blk 3  Off 10  Size A  Cmpc 0  Key ^Aa3
+##TEST_AWK      10 : .  .  .  0 .* 41 61 33  0  0 31                              .
+##TEST_AWK           .  .  .  .  .  A  a  3  .  .  1                              .
+
+Rec:2  Blk 3  Off 1A  Size 9  Cmpc 4  Key ^Aa3(1)
+##TEST_AWK      1A : .  .  .  4.* BF 11  0  0 33                                 .
+##TEST_AWK           .  .  .  .  .*  .  .  .  .  3                                 .
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Block 17   Size 28   Level 0   TN 17 V7
+
+Rec:1  Blk 17  Off 10  Size F  Cmpc 0  Key ^Aa345678
+##TEST_AWK      10 : .  .  .  0 .* 41 61 33 34 35 36 37 38  0  0 31               .
+##TEST_AWK           .  .  .  . .*  A  a  3  4  5  6  7  8  .  .  1               .
+
+Rec:2  Blk 17  Off 1F  Size 9  Cmpc 9  Key ^Aa345678(1)
+##TEST_AWK      1F : .  .  .  9.* BF 11  0  0 33                                 .
+##TEST_AWK           .  .  .  .  .*  .  .  .  .  3                                 .
+
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Block 214   Size 0   Level 0   TN 0 V7
+
+End DSE DUMP
+
+YDB>
+do set^lotsvar
+LOTSVAR-I-END_SET
+
+YDB>
+do ver^lotsvar
+LOTSVAR-I-OK
+LOTSVAR-I-END_VER
+
+YDB>
+Start DSE RANGE
+
+YDB>
+
+YDB>
+
+YDB>
+echo nonexistent range
+nonexistent range
+##SOURCE_PATH##/dse range -lower=^abcdefgh -upper=^abcdefghi
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+None found.
+echo existing ranges
+existing ranges
+##SOURCE_PATH##/dse range -lower=^Ee34567890123456789012345678901 -upper=^Ee345678a
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Blocks in the specified key range:
+Block:  0x00000001000008D7 Level:  0
+Block:  0x00000001000008DB Level:  0
+Block:  0x00000001000008DF Level:  0
+Block:  0x00000001000008E3 Level:  0
+Block:  0x00000001000008E7 Level:  0
+Block:  0x00000001000008EB Level:  0
+Block:  0x00000001000008EF Level:  0
+Block:  0x00000001000008F3 Level:  0
+Block:  0x00000001000008F7 Level:  0
+Block:  0x00000001000008FB Level:  0
+Block:  0x00000001000008FF Level:  0
+Block:  0x0000000100000903 Level:  0
+Block:  0x0000000100000907 Level:  0
+Block:  0x000000010000090B Level:  0
+Block:  0x000000010000090F Level:  0
+Block:  0x0000000100000913 Level:  0
+Block:  0x0000000100000917 Level:  0
+Block:  0x000000010000091B Level:  0
+Block:  0x000000010000091F Level:  0
+Block:  0x0000000100000923 Level:  0
+Block:  0x0000000100000927 Level:  0
+Block:  0x000000010000092B Level:  0
+Block:  0x000000010000092F Level:  0
+Block:  0x0000000100000931 Level:  0
+Found 24 blocks
+##SOURCE_PATH##/dse range -lower=^Ee345678 -upper=^Ee34567890123456789012345678901
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Blocks in the specified key range:
+Block:  0x00000001000008D5 Level:  0
+Block:  0x00000001000008D9 Level:  0
+Block:  0x00000001000008DD Level:  0
+Block:  0x00000001000008E1 Level:  0
+Block:  0x00000001000008E5 Level:  0
+Block:  0x00000001000008E9 Level:  0
+Block:  0x00000001000008ED Level:  0
+Block:  0x00000001000008F1 Level:  0
+Block:  0x00000001000008F5 Level:  0
+Block:  0x00000001000008F9 Level:  0
+Block:  0x00000001000008FD Level:  0
+Block:  0x0000000100000901 Level:  0
+Block:  0x0000000100000905 Level:  0
+Block:  0x0000000100000909 Level:  0
+Block:  0x000000010000090D Level:  0
+Block:  0x0000000100000911 Level:  0
+Block:  0x0000000100000915 Level:  0
+Block:  0x0000000100000919 Level:  0
+Block:  0x000000010000091D Level:  0
+Block:  0x0000000100000921 Level:  0
+Block:  0x0000000100000925 Level:  0
+Block:  0x0000000100000929 Level:  0
+Block:  0x000000010000092D Level:  0
+Block:  0x0000000100000931 Level:  0
+Found 24 blocks
+##SOURCE_PATH##/dse range -lower=^%w3A7EbIfMjQnUrYv2z6D -upper=^A91TLDvnf7ZRJBtld5XPHzrjb3VNF
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Blocks in the specified key range:
+Block:  0x0000000100000ACC Level:  0
+Block:  0x0000000100000ACE Level:  0
+Block:  0x0000000100000AF3 Level:  0
+Block:  0x00000001000010C6 Level:  0
+Block:  0x000000010000111E Level:  0
+Block:  0x0000000100001977 Level:  0
+Block:  0x0000000100001979 Level:  0
+Block:  0x00000001000019A3 Level:  0
+Block:  0x0000000100001EAB Level:  0
+Block:  0x0000000100001EAD Level:  0
+Found 10 blocks
+set lower1 = "^AkRoVsZw3A7EbIfMjQnUrYv2z6D(1,""AkRoVsZw3A7EbIfMjQnUrYv2z6D"",2,1298)"
+set upper1 = "^AkmoqsuwyACEGIKMOQSUWY02468(1,""AkmoqsuwyACEGIKMOQSUWY02468"",2,337)"
+set lower2 = "^AjTt3DdNnXx7HhRr1B(1,""AjTt3DdNnXx7HhRr1B"",2)"
+##SOURCE_PATH##/dse range -lower="^AkRoVsZw3A7EbIfMjQnUrYv2z6D(1,""AkRoVsZw3A7EbIfMjQnUrYv2z6D"",2,1298)" -upper="^AkmoqsuwyACEGIKMOQSUWY02468(1,""AkmoqsuwyACEGIKMOQSUWY02468"",2,337)"
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Blocks in the specified key range:
+Block:  0x0000000100000D08 Level:  0
+Block:  0x0000000100000D49 Level:  0
+Block:  0x0000000100000D4B Level:  0
+Block:  0x00000001000018F5 Level:  0
+Found 4 blocks
+##SOURCE_PATH##/dse range -lower="^AjTt3DdNnXx7HhRr1B(1,""AjTt3DdNnXx7HhRr1B"",2)" -upper="^AkmoqsuwyACEGIKMOQSUWY02468(1,""AkmoqsuwyACEGIKMOQSUWY02468"",2,337)"
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Blocks in the specified key range:
+Block:  0x0000000100000D08 Level:  0
+Block:  0x0000000100000D49 Level:  0
+Block:  0x0000000100000D4B Level:  0
+Block:  0x00000001000018F3 Level:  0
+Block:  0x00000001000018F5 Level:  0
+Block:  0x0000000100001E73 Level:  0
+Found 6 blocks
+##SOURCE_PATH##/dse range -lower=^ZZTESTGLOBALFORRANGECOMMAND8901 -upper=^ZZTESTGLOBALFORRANGECOMMAND8901(100)
+##SOURCE_PATH##/dse range -lower=^ZZTESTGLOBALFORRANGECOMMAND8901(51) -upper=^ZZTESTGLOBALFORRANGECOMMAND8901(88)
+##SOURCE_PATH##/dse range -lower=^ZZTESTGLOBALFORRANGECOMMAND8901(52) -upper=^ZZTESTGLOBALFORRANGECOMMAND8901(87)
+##SOURCE_PATH##/dse range -lower=^ZZTESTGLOBALFORRANGECOMMAND8901(53) -upper=^ZZTESTGLOBALFORRANGECOMMAND8901(86)
+cat range_ZZ1.out
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Blocks in the specified key range:
+Block:  0x0000000100001FBC Level:  0
+Block:  0x0000000100001FBD Level:  1
+Block:  0x0000000100001FBE Level:  0
+Found 3 blocks
+cat range_ZZ2.out
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Blocks in the specified key range:
+Block:  0x0000000100001FBD Level:  1
+Block:  0x0000000100001FBE Level:  0
+Found 2 blocks
+cat range_ZZ3.out
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Blocks in the specified key range:
+Block:  0x0000000100001FBD Level:  1
+Block:  0x0000000100001FBE Level:  0
+Found 2 blocks
+cat range_ZZ4.out
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Blocks in the specified key range:
+Block:  0x0000000100001FBD Level:  1
+Block:  0x0000000100001FBE Level:  0
+Found 2 blocks
+unset echo
+blockZZ	100001FBC
+blockZZ100	100001FBE
+blockZZ3	100001FBC
+blockZZ34	100001FBC
+blockZZ35	100001FBC
+blockZZ51	100001FBC
+blockZZ52	100001FBC
+blockZZ66	100001FBC
+blockZZ77	100001FBC
+blockZZ87	100001FBE
+Although a range specified might span certain blocks, because of the
+definition of range ("all blocks whose first key falls within the range"), some blocks will
+not be listed in the output of DSE RANGE.
+All should be in ^ZZTESTGLOBALFORRANGECOMMAND8901 - ^ZZTESTGLOBALFORRANGECOMMAND8901(100) range
+100001FBC  is not present in the file range_ZZ2.out
+100001FBC  is not present in the file range_ZZ2.out
+GREPFILE-E-ERROR, 100001FBC  is not present in the file range_ZZ2.out
+100001FBE  is present in the file range_ZZ2.out
+GREPFILE-E-ERROR, 100001FBE  is present in the file range_ZZ2.out
+100001FBC  is not present in the file range_ZZ3.out
+100001FBC  is not present in the file range_ZZ3.out
+GREPFILE-E-ERROR, 100001FBC  is not present in the file range_ZZ3.out
+100001FBE  is present in the file range_ZZ3.out
+GREPFILE-E-ERROR, 100001FBE  is present in the file range_ZZ3.out
+100001FBC  is not present in the file range_ZZ4.out
+100001FBC  is not present in the file range_ZZ4.out
+100001FBC  is not present in the file range_ZZ4.out
+GREPFILE-E-ERROR, 100001FBC  is not present in the file range_ZZ4.out
+GREPFILE-E-ERROR, 100001FBC  is not present in the file range_ZZ4.out
+GREPFILE-E-ERROR, 100001FBE  is present in the file range_ZZ4.out
+GREPFILE-E-ERROR, 100001FBE  is present in the file range_ZZ4.out
+##ALLOW_OUTPUT 4G_BELOW_DB_BLKS
 %GDE-I-GDUSEDEFS, Using defaults for Global Directory 
 	##TEST_PATH##/mumps.gld
 

@@ -77,6 +77,12 @@ foreach var ($envlist)
 		# skip just this env var.
 		continue
 	endif
+	if ("ydb_test_4g_db_blks" == $envvar) then
+		# This env var is a Debug-only env var that helps with testing huge db files (> 4G block numbers).
+		# Setting this to a huge string causes other issues (core files from mupip reorg etc.) none of which
+		# is a real code issue. So skip this env var.
+		continue
+	endif
 	# We do not want different output for $gtm_autorelink_keeprtn on platforms that support it and on those that do not.
 	if (("gtm_autorelink_keeprtn" == $envvar) && (! $?gtm_test_autorelink_support)) then
 		continue

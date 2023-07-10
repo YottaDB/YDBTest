@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2010, 2013 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -11,6 +14,9 @@
 #################################################################
 
 echo "Testing D9E02002419"
+
+setenv ydb_test_4g_db_blks 0	# Disable debug-only huge db scheme as this white-box test is sensitive to block layout
+				# and the huge HOLE in bitmap block 512 onwards disturbs the assumptions in this test.
 
 # Get a random white box test for interrupted file extension, between 35 and 40, which are the values
 # for WBTEST_FILE_EXTEND_INTERRUPT_xxx.

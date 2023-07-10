@@ -4,6 +4,9 @@
 # Copyright (c) 2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -17,6 +20,7 @@ echo "# This test requires MM (it tries to exercise concurrent-db-file-extension
 echo "# So force MM and therefore disable encryption as well (since that does not run with MM)."
 setenv acc_meth MM
 setenv test_encryption NON_ENCRYPT
+setenv ydb_test_4g_db_blks 0		# Disable this debug-only huge db scheme too as it does not work with MM
 source $gtm_tst/com/mm_nobefore.csh	# Force NOBEFORE image journaling with MM
 setenv gtm_test_spanreg 0		# The test expects a certain # of updates to fill the db allocation of DEFAULT
 

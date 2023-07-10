@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -12,6 +12,9 @@
 #################################################################
 # This module is derived from FIS GT.M.
 #################################################################
+
+setenv ydb_test_4g_db_blks 0	# Disable debug-only huge db scheme as this test is sensitive to block layout
+				# and the huge HOLE in bitmap block 512 onwards disturbs the assumptions in this test.
 
 echo "# Begin gtm7412 - check operator log for warnings when database extension=0"
 # Get a random allocation value, between 512 and 10240 (inclusive of both end points)

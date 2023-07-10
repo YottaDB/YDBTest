@@ -20,6 +20,7 @@ if ! ( -e settings.log ) then
 	$convert_to_gtm_chset settings.log
 endif
 setenv gtm_test_spanreg 0  # The test sets a specific TN, does updates and expects a specific TN at the end
+setenv ydb_test_4g_db_blks 0 # Disable debug-only huge db scheme as this test uses the incompatible MM access method
 
 # if the transaction is not updating the database and the db has no jouraling either,
 # we will then consider a dupsetnoop update as NO update at all but instead treat it as a read-only TP transaction.

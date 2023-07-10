@@ -1605,7 +1605,12 @@ Database file name      ##TEST_PATH##/mumps.dat
  Journal Creation Time         ..../../.. ..:..:..
  Time of last update           ..../../.. ..:..:..
  Begin Transaction                               1 [0x0000000000000001]
+##SUSPEND_OUTPUT 4G_ABOVE_DB_BLKS
  End Transaction                              6168 [0x0000000000001818]
+##ALLOW_OUTPUT 4G_ABOVE_DB_BLKS
+##SUSPEND_OUTPUT 4G_BELOW_DB_BLKS
+ End Transaction                              6170 [0x000000000000181A]
+##ALLOW_OUTPUT 4G_BELOW_DB_BLKS
 ##TEST_AWK Align size  *[1-9][0-9]* \[0x[0-9A-F]*\] bytes
  Epoch Interval                       ##FILTERED##
  Replication State                          CLOSED
@@ -1672,7 +1677,12 @@ Record type    Count
    GZKIL          0
    TZKIL          0
    UZKIL          0
+##SUSPEND_OUTPUT 4G_ABOVE_DB_BLKS
    INCTN       2715
+##ALLOW_OUTPUT 4G_ABOVE_DB_BLKS
+##SUSPEND_OUTPUT 4G_BELOW_DB_BLKS
+   INCTN       2717
+##ALLOW_OUTPUT 4G_BELOW_DB_BLKS
    AIMG           0
    TZTWO          0
    UZTWO          0

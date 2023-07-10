@@ -14,6 +14,13 @@
 #								#
 #################################################################
 
+# Since the reference file for this test has "SUSPEND_OUTPUT 4G_ABOVE_DB_BLKS" usage, it needs to fixate
+# the value of the "ydb_test_4g_db_blks" env var in case it is randomly set by the test framework to a non-zero value.
+if (0 != $ydb_test_4g_db_blks) then
+	echo "# Setting ydb_test_4g_db_blks env var to a fixed value as reference file has 4G_ABOVE_DB_BLKS usages" >> settings.csh
+	setenv ydb_test_4g_db_blks 8388608
+endif
+
 # the output of this test relies on dse dump -file output, therefore let's not change the block version:
 setenv gtm_test_mupip_set_version "disable"
 setenv gtm_test_disable_randomdbtn

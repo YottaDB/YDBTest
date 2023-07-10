@@ -122,6 +122,7 @@ if !($?test_norandomsettings) then
 	source $gtm_tst/com/do_random_settings.csh
 else
 	echo "do_random_settings not being called"  >>&! $tst_general_dir/settings.csh
+	setenv ydb_test_4g_db_blks 0	# Define this env var so we don't need to use "$?ydb_test_4g_db_blks" in all later usages
 endif
 
 # Now set some environment variables based on the random settings done above
@@ -278,6 +279,30 @@ if ($?test_replic) then
 			$gtm_tst/com/gtm_test_sendresultmail.csh "FAILED"
 		endif
 		exit 61
+	endif
+endif
+
+# Now that tst_dir and tst_remote_dir have been set to appropriate values, check if it is okay to enable "ydb_test_4g_db_blks"
+# if it was enabled as part of a prior do_random_settings.csh call.
+if (0 != $ydb_test_4g_db_blks) then
+	# If this is a non-replic test OR replic test, check if $tst_dir is a xfs or zfs file system.
+	# If so it is okay to enable. If not, disable.
+	set fstype = `source $gtm_tst/com/get_filesystem_type.csh $tst_dir`
+	if (("xfs" != "$fstype") && ("zfs" != "$fstype")) then
+		echo "# ydb_test_4g_db_blks is set to 0 (since test is non-replic and fstype of $tst_dir is [$fstype], which is not xfs or zfs)" >>! $tst_general_dir/settings.csh
+		setenv ydb_test_4g_db_blks 0
+		echo "setenv ydb_test_4g_db_blks $ydb_test_4g_db_blks"		>>&! $tst_general_dir/settings.csh
+	endif
+	if ((0 != $ydb_test_4g_db_blks) && ($?test_replic)) then
+		# If this is a replic test, check if $tst_remote_dir is a xfs or zfs file system.
+		# If so it is okay to enable as these file systems support huge file sizes that are needed by the scheme.
+		#If not, disable the scheme.
+		set fstype = `source $gtm_tst/com/get_filesystem_type.csh $tst_remote_dir`
+		if (("xfs" != "$fstype") && ("zfs" != "$fstype")) then
+			echo "# ydb_test_4g_db_blks is set to 0 (since test is replic and fstype of $tst_remote_dir is [$fstype], which is not xfs or zfs)" >>! $tst_general_dir/settings.csh
+			setenv ydb_test_4g_db_blks 0
+			echo "setenv ydb_test_4g_db_blks $ydb_test_4g_db_blks"		>>&! $tst_general_dir/settings.csh
+		endif
 	endif
 endif
 

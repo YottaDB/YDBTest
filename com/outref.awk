@@ -405,6 +405,12 @@ BEGIN {
 	else
 		envir[no_options] = "GCC_BUILD"
 	#
+	option_names[++no_options] = "ydb_test_4g_db_blks"
+	if (0 != ENVIRON["ydb_test_4g_db_blks"])
+		envir[no_options] = "4G_ABOVE_DB_BLKS"
+	else
+		envir[no_options] = "4G_BELOW_DB_BLKS"
+	#
 	# For now set the [UPGRADE_DOWNGRADE_UNSUPPORTED] tag all the time as MUPIP UPGRADE/MUPIP DOWNGRADE functionality
 	# is not supported in V7 format database and likely will not be supported (by GT.M) in the future either.
 	# Use this tag to also note the fact that MUPIP REORG UPGRADE/MUPIP REORG DOWNGRADE functionality is not supported
