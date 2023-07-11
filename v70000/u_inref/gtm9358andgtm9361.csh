@@ -185,10 +185,11 @@ endif
 echo
 echo '# [1C] Shutdown the source server with a 10 second timeout and the -ZEROBACKLOG option. This should expire in about 2 seconds'
 echo '# as that is what the heartbeat was set to above.'
-$MUPIP REPLIC -source -shutdown -zerobacklog -timeout=10 |& cut -d ' ' -f 8- >& replic_src_shutdown.log
+$MUPIP REPLIC -source -shutdown -zerobacklog -timeout=10 >& replic_src_shutdown.log
+cat replic_src_shutdown.log | cut -c 28- >& replic_src_shutdown_nts.log
 echo
 echo '# [1D] Verify that the new expected messages are in the source log file (the "Initiating ZEROBACKLOG shutdown operation" msg).'
-$grep 'Initiating ZEROBACKLOG shutdown operation' replic_src_shutdown.log
+$grep 'Initiating ZEROBACKLOG shutdown operation' replic_src_shutdown_nts.log
 if (0 != $status) then
     echo '** [1D] FAIL - "Initiating ZEROBACKLOG shutdown operation" message was not found in replic_src_shutdown.log'
 else
@@ -205,7 +206,7 @@ else
 endif
 echo
 echo '# [2A] Verify that the shutdown log file contains a REPL0BACKLOG message.'
-$grep '\-S-REPL0BACKLOG' replic_src_shutdown.log
+$grep '\-S-REPL0BACKLOG' replic_src_shutdown_nts.log
 if (0 != $status) then
     echo '** [2A] FAIL - REPL0BACKLOG message was not found in replic_src_shutdown.log'
     set fail = 1
@@ -307,13 +308,14 @@ else
 endif
 echo
 echo '# [2J] Shutdown source server with parms -ZEROBACKLOG, -TIMEOUT=3600 (expect it to shutdown in 2 seconds or so)'
-$MUPIP REPLIC -source -shutdown -zerobacklog -timeout=3600 |& cut -d ' ' -f 8- >& replic_src_shutdown_4.log
+$MUPIP REPLIC -source -shutdown -zerobacklog -timeout=3600 >& replic_src_shutdown_4.log
+cat replic_src_shutdown_4.log | cut -c 28- >& replic_src_shutdown_4_nts.log
 if (0 != $status) then
     echo '** [2J] FAIL - shutdown of source server failed'
 endif
 # Pull the two lines out of the shutdown log that show (a) that the 3600 second timeout was accepted and that the
 # backlog really was 0.
-$grep -E "(ZEROBACKLOG|REPL0BACKLOG)" replic_src_shutdown_4.log
+$grep -E "(ZEROBACKLOG|REPL0BACKLOG)" replic_src_shutdown_4_nts.log
 echo
 echo '# [2K] Restart source server'
 $MUPIP replic -source -start -secondary="$HOST":"$portno" -log=SRC_START_5.log -buff=1048576 -instsecondary=INSTANCE2 >& replic_src_startup_5.log
@@ -329,9 +331,10 @@ set srcpid = `$gtm_tst/com/get_pid.csh src INSTANCE2`
 echo
 echo '# [2L] Shutdown the primary source server with the -ZEROBACKLOG option so we do not wait the full 2 mins'
 $MUPIP replic -source -zerobacklog -shutdown >& replic_src_shutdown_5.log
+cat replic_src_shutdown_5.log | cut -c 28- >& replic_src_shutdown_5_nts.log
 echo
 echo '# [2M] Verify there was a default 120 second timeout'
-$grep ZEROBACKLOG replic_src_shutdown_5.log |& cut -d ' ' -f 8-
+$grep ZEROBACKLOG replic_src_shutdown_5_nts.log
 #
 # Test complete - shutting down the replicated environment we built.
 #
