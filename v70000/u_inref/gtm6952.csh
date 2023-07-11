@@ -50,10 +50,10 @@ get_msrtime
 set repl_start_time = "$time_msr"
 echo
 echo "Primary startup command (buffsize should be 0x100001000):"
-echo "     "`$grep "replic -source -start" SRC_${repl_start_time}.log | cut -d ' ' -f13`
+echo "     "`$grep "replic -source -start" SRC_${repl_start_time}.log | $tst_awk '{print $12}'`
 echo
 echo "Secondary startup command (buffsize should be 4294971392):"
-echo "     "`$grep "replic -receiv -start" $SEC_DIR/RCVR_${repl_start_time}.log | cut -d ' ' -f13`
+echo "     "`$grep "replic -receiv -start" $SEC_DIR/RCVR_${repl_start_time}.log | $tst_awk '{print $12}'`
 echo
 $echoline
 echo
