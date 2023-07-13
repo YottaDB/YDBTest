@@ -1,0 +1,36 @@
+# Test the -IMAGE option of the (debug-only) DSE BLOCK command. This option allows one to format
+# and print, as if it were a current database block, an encoded PBLK from the journal file.
+
+# Create database
+
+# Update a node twice in succession
+
+# Extract the journal information for block 3 using MUPIP JOURNAL -EXTRACT -DETAIL -BLOCK
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-I-FILECREATE, Journal extract file ##TEST_PATH##/mumps.mjf created
+%YDB-S-JNLSUCCESS, Extract successful
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+# Extract PBLK we want to print from the journal file to file x.bin
+
+# Display the extracted block using DSE DUMP -BL=3 -IMAGE=x.bin
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+
+Dumping contents of x.bin
+##TEST_AWKBlock 3   Size 18   Level 0   TN [0-9,A-F]* V[6,7]
+
+Rec:1  Blk 3  Off 10  Size 8  Cmpc 0  Key ^x
+##TEST_AWK      10 : |  8  0  0  [0,DE] 78  0  0 31                                    |
+           |  .  .  .  .  x  .  .  1                                    |
+
+
+# Verify database
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

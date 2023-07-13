@@ -20,13 +20,14 @@
 # gtm9368		[estess]	Verify a MUPIP REPLIC -SOURCE -SHUTDOWN cmd can be interrupted by ^C (terminates the wait)
 # gtm9358andgtm9361	[estess]	Verify a MUPIP REPLI -SOURCE -SHUTDOWN -ZEROBACKLOG cleans up IPCs (runs as non-replic)
 # gtm6952		[estess]	Test that decimal value parms can be input as hex values now.
+# ydbtest530		[nars,estess]	Test the DSE DUMP -IMAGE option (debug-only so no gtm-id)
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v70000 test starts..."
 
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
-setenv subtest_list_non_replic "gtm9370 gtm9340 gtm9358andgtm9361"
+setenv subtest_list_non_replic "gtm9370 gtm9340 gtm9358andgtm9361 ydbtest530"
 setenv subtest_list_replic     "gtm9302 gtm9368 gtm6952"
 
 if ($?test_replic == 1) then
