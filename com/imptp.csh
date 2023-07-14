@@ -122,16 +122,18 @@ if ($gtm_test_dbfill == "IMPTP" || $gtm_test_dbfill == "IMPZTP") then
 					set imptpflavor = `$gtm_exe/mumps -run rand $rand`
 				end
 			endif
-			# Disable YDBPython testing if python3 version is 3.11.2
+			# Disable YDBPython testing if python3 version is 3.11.*
 			# We have seen one of the following symptoms when building imptp.py in that case.
 			#	SystemError: unknown opcode
 			#	SIG-11 in _PyEval_EvalFrameDefault()
 			# This has been seen only on a Ubuntu 23.04 system and the current suspicion is that it is a
-			# python3 regression that will be fixed in a later version.
-			set python3ver = `python3 --version | cut -d" " -f2`
-			if ("3.11.2" == $python3ver) then
+			# python3 regression that will be fixed in a later version. The python version then was 3.11.2
+			# Later we saw a similar failure in a OpenSUSE Tumbleweed system where the python3 version was
+			# 3.11.4 so we disable YDBPython testing if python version is 3.11.*.
+			set python3ver = `python3 --version | cut -d" " -f2 | cut -d. -f1,2`
+			if ("3.11" == $python3ver) then
 				while (3 == $imptpflavor)
-					echo "# Disabling ydb_imptp_flavor=3 (YDBPython) due to python3 3.11.2" >> settings.csh
+					echo "# Disabling ydb_imptp_flavor=3 (YDBPython) due to python3 3.11.*" >> settings.csh
 					set imptpflavor = `$gtm_exe/mumps -run rand $rand`
 				end
 			endif
