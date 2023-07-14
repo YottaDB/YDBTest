@@ -4,7 +4,7 @@
 # Copyright (c) 2010-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -14,6 +14,15 @@
 #								#
 #################################################################
 #
+
+# This script replaces the original test failure diff with what is called an "mrep signature".
+# For example, any test failure that has the "GTMSECSHRSRVF" word in the .diff file would be replaced by the below
+# script with a note saying it is likely a "<v53003_D9I10002703_blocks_access_to_gtmsecshr>" type of failure.
+# The .diff file would then ask us to look at the mrep resolution files for more information on this type of failure.
+# At YottaDB, we don't have access to these mrep resolution files. And so, the mrep signature replacement does not
+# make a lot of sense. Therefore, this entire script is disabled by doing an exit immediately on script entry.
+exit
+
 ################ check_rare_failures.csh ################
 #
 if ($# != 3) then
