@@ -399,6 +399,12 @@ BEGIN {
 	else
 		envir[no_options] = "TST_DIR_NOT_ZFS"
 	#
+	option_names[++no_options] = "gtm_test_yottadb_compiler"
+	if ("CLANG" == ENVIRON["gtm_test_yottadb_compiler"])
+		envir[no_options] = "CLANG_BUILD"
+	else
+		envir[no_options] = "GCC_BUILD"
+	#
 	# For now set the [UPGRADE_DOWNGRADE_UNSUPPORTED] tag all the time as MUPIP UPGRADE/MUPIP DOWNGRADE functionality
 	# is not supported in V7 format database and likely will not be supported (by GT.M) in the future either.
 	# Use this tag to also note the fact that MUPIP REORG UPGRADE/MUPIP REORG DOWNGRADE functionality is not supported
