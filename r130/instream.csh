@@ -107,13 +107,6 @@ if ("pro" == "$tst_image") then
 		# The same test runs fine without ASAN and so is enabled in that case.
 		setenv subtest_exclude_list "$subtest_exclude_list ydb534"
 	endif
-	# We have noted that Ubuntu 21.10 has an odd issue where when the code explicitly codes an 'abort()' call,
-	# the system creates a core even if the exception is handled. This causes the ydb534 test to have more
-	# cores than it can deal with so the test fails. Bypass ydb534 on Ubutnu 21.10 and hope when 22.04 comes
-	# around, this issue is fixed.
-	if (("ubuntu" == $gtm_test_linux_distrib) && ("21.10" == $gtm_test_linux_version)) then
-		setenv subtest_exclude_list "$subtest_exclude_list ydb534"
-	endif
 else
 	# ydb534 subtest generates a SIGABRT signal which causes an assert in `generic_signal_handler.c` assert(SIGABRT != sig)`
 	# to fail hence this subtest needs to be skipped in dbg (i.e. run it only in pro).

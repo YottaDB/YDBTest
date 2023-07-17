@@ -279,6 +279,9 @@ BEGIN {
 				envir[no_options] = "RHEL_7.9"
 		else if ("suse" == ENVIRON["gtm_test_linux_distrib"])
 			envir[no_options] = "SUSE_LINUX_X86_64"
+			option_names[++no_options] = "OS_ARCH_SUBTYPE"
+			if ("opensuse-tumbleweed" == ENVIRON["gtm_test_linux_suse_distro"])
+				envir[no_options] = "SUSE_TUMBLEWEED"
 	} else if ("aarch64" == ENVIRON["real_mach_type"])
 	{
 		option_names[++no_options] = "OS_ARCH"
@@ -381,10 +384,10 @@ BEGIN {
 	if ("0" == ENVIRON["ydb_allow64GB_jnlpool"])
 		envir[no_options] = "JNLPOOL64GB_DISALLOW"
 	#
-	if (("ubuntu" == ENVIRON["gtm_test_linux_distrib"]) && ("21.10" == ENVIRON["gtm_test_linux_version"]))
+	if (("ubuntu" == ENVIRON["gtm_test_linux_distrib"]) && ("20.04" == ENVIRON["gtm_test_linux_version"]))
 	{
-		option_names[++no_options] = "ubuntu_21.10"
-		envir[no_options] = "UBUNTU_21.10"
+		option_names[++no_options] = "ubuntu_20.04"
+		envir[no_options] = "UBUNTU_20.04"
 	}
 	#
 	option_names[++no_options] = "is_tst_dir_cmp_fs"

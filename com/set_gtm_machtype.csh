@@ -127,6 +127,7 @@ if (-f /etc/os-release) then
 			|| ($gtm_test_linux_distrib == "opensuse-leap")	\
 			|| (($gtm_test_linux_distrib == "sled")		\
 			|| ($gtm_test_linux_distrib == "sles"))) then
+		setenv gtm_test_linux_suse_distro $gtm_test_linux_distrib
 		setenv gtm_test_linux_distrib "suse"
 	endif
 	setenv gtm_test_linux_version `grep -w VERSION_ID /etc/os-release | tr -d '"' | cut -d= -f2`

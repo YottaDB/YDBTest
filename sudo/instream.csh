@@ -56,7 +56,18 @@ else if (("rhel" == $gtm_test_linux_distrib) && ("7.9" == $gtm_test_linux_versio
 	# But C.UTF-8 is not available on RHEL 7. And the "plugins" subtest uses ydbinstall to install
 	# the "encplugin", "aim" and "posix" plugins, all of which use the YDBCMake framework and so will
 	# not work on RHEL 7. Therefore disable this subtest on RHEL 7.
+	#
+	# olderversion disabled since no binaries for RHEL 7 (it's not supported) since r1.36
 	setenv subtest_exclude_list "$subtest_exclude_list plugins"
+	setenv subtest_exclude_list "$subtest_exclude_list olderversion"
+else if (("ubuntu" == $gtm_test_linux_distrib) && ("20.04" == $gtm_test_linux_version)) then
+        # olderversion disabled since no binaries for Ubuntu 20.04 (not all versions supported)
+	setenv subtest_exclude_list "$subtest_exclude_list olderversion"
+else if ("suse" == $gtm_test_linux_distrib) then
+        # olderversion disabled since no binaries for Opensuse Tumbleweed (not supported)
+        if ("opensuse-tumbleweed" == $gtm_test_linux_suse_distro) then
+		setenv subtest_exclude_list "$subtest_exclude_list olderversion"
+	endif
 endif
 
 if ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) then
