@@ -3,7 +3,7 @@
 ; Copyright (c) 2004-2016 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
-; Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -503,3 +503,20 @@ ERROR	ZSHOW "*"
 	. tcommit:$TLEVEL
 	if $TLEVEL TROLLBACK
 	quit
+
+imptpflavor	;
+	; $zcmdline contains a list of imptp flavors that are disabled.
+	; This function randomly picks a imptp flavor excluding the choices in the disabled list.
+	; Randomly pick from the following choices for flavors of imptp
+	;	M (rand=0),
+	;	C simpleAPI (rand=1),
+	;	C simpleThreadedAPI (rand=2),
+	;	Python (rand=3),
+	;	Golang (rand=4),
+	;	Rust (rand=5)
+	new disable
+	for i=1:1  set arg=$piece($zcmdline," ",i)  quit:arg=""  set disable(arg)=""
+	for  set rand=$random(6) quit:'$data(disable(rand))
+	write rand,!
+	quit
+

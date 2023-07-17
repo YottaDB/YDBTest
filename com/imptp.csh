@@ -67,15 +67,15 @@ if ($gtm_test_dbfill == "IMPTP" || $gtm_test_dbfill == "IMPZTP") then
 	setenv gtm_badchar "no"
 	set rust_supported = `tcsh $gtm_tst/com/is_rust_supported.csh`
 	# Randomly choose to run M (rand=0), C simpleAPI (rand=1), C simpleThreadedAPI (rand=2), Python (rand=3), Golang (rand=4), or Rust (rand=5) version of imptp
+	# Note that if a new choice gets added above, "imptpflavor" entryref in "com/imptp.m" needs to be correspondingly updated.
 	if !($?gtm_test_replay) then
 		if ($?ydb_imptp_flavor) then
 			if ((0 > $ydb_imptp_flavor) || (5 < $ydb_imptp_flavor)) then
 				echo "TEST-E-FAILED : Invalid flavor of imptp specified: $ydb_imptp_flavor - allowed values, 0, 1, 2, 3, 4, or 5"
 				exit 1
 			else if (5 == $ydb_imptp_flavor && true != $rust_supported) then
-				echo "# Warning: rust flavor was explicitly specified, but Rust is not supported on this platform"
-				set imptpflavor = `$gtm_exe/mumps -run rand 5`
-				echo "Choosing flavor $imptpflavor instead"
+				echo "# TEST-E-FAILED : rust flavor was explicitly specified, but Rust is not supported on this platform"
+				exit 1
 			else
 				echo "# Inheriting imptpflavor from env var ydb_imptp_flavor"
 				set imptpflavor = $ydb_imptp_flavor # Override and force a given flavor
@@ -92,19 +92,19 @@ if ($gtm_test_dbfill == "IMPTP" || $gtm_test_dbfill == "IMPZTP") then
 			# Need to run this because it is possible for "imptp.csh" to be run on a remote host in
 			# a multi-host test run where the local host does not have asan enabled but the remote host has.
 			source $gtm_tst/com/set_asan_other_env_vars.csh	# sets a few other associated asan env vars
-			if ((true == $rust_supported) && ! $gtm_test_libyottadb_asan_enabled) then
-				set rand = 6
+			set disable_imptp_flavor_list = ""	# list of flavors to be disabled (duplicates allowed)
+			if (true != $rust_supported) then
+				echo "# Disabling ydb_imptp_flavor=5 (YDBRust) as com/is_rust_supported.csh returned false"
+				set disable_imptp_flavor_list = "$disable_imptp_flavor_list 5"
 			else if ($gtm_test_libyottadb_asan_enabled) then
 				if ("clang" == $gtm_test_asan_compiler) then
 					# Disable Go testing if ASAN and CLANG. It is okay to disable Rust in this case as well,
 					# since ASAN and Rust do not work well together.
 					# See similar code in "com/gtmtest.csh" for details.
-					set rand = 4
-				else
-					set rand = 5
+					echo "# Disabling ydb_imptp_flavor=4 (YDBGo) and ydb_imptp_flavor=5 (YDBRust) due to ASAN + CLANG"
+					set disable_imptp_flavor_list = "$disable_imptp_flavor_list 4 5"
 				endif
 			endif
-			set imptpflavor = `$gtm_exe/mumps -run rand $rand`
 			# Disable YDBRust testing if the cargo/rustc version is 1.68.*
 			# We have seen the following error when building imptp.rs in that case.
 			#	error[E0432]: unresolved imports `crate::craw::YDB_DEL_TREE`, `crate::craw::YDB_DEL_NODE`
@@ -117,10 +117,8 @@ if ($gtm_test_dbfill == "IMPTP" || $gtm_test_dbfill == "IMPZTP") then
 			set rustcminorver = `rustc --version | cut -d. -f2`
 			set distrib = `grep -w ID /etc/os-release | cut -d= -f2 | cut -d'"' -f2`
 			if ((68 == $rustcminorver) || ($distrib == "opensuse-tumbleweed")) then
-				while (5 == $imptpflavor)
-					echo "# Disabling ydb_imptp_flavor=5 (YDBRust) due to rust/cargo 1.68 or openSUSE Tumbleweed" >> settings.csh
-					set imptpflavor = `$gtm_exe/mumps -run rand $rand`
-				end
+				echo "# Disabling ydb_imptp_flavor=5 (YDBRust) due to rust/cargo 1.68 or openSUSE Tumbleweed"
+				set disable_imptp_flavor_list = "$disable_imptp_flavor_list 5"
 			endif
 			# Disable YDBPython testing if python3 version is 3.11.*
 			# We have seen one of the following symptoms when building imptp.py in that case.
@@ -132,10 +130,8 @@ if ($gtm_test_dbfill == "IMPTP" || $gtm_test_dbfill == "IMPZTP") then
 			# 3.11.4 so we disable YDBPython testing if python version is 3.11.*.
 			set python3ver = `python3 --version | cut -d" " -f2 | cut -d. -f1,2`
 			if ("3.11" == $python3ver) then
-				while (3 == $imptpflavor)
-					echo "# Disabling ydb_imptp_flavor=3 (YDBPython) due to python3 3.11.*" >> settings.csh
-					set imptpflavor = `$gtm_exe/mumps -run rand $rand`
-				end
+				echo "# Disabling ydb_imptp_flavor=3 (YDBPython) due to python3 3.11.*"
+				set disable_imptp_flavor_list = "$disable_imptp_flavor_list 3"
 			endif
 			# Disable Python testing if ASAN is enabled and Rust version is 1.58.* or 1.59.*
 			# to prevent erroneous core files from `rustc --version`.
@@ -148,10 +144,8 @@ if ($gtm_test_dbfill == "IMPTP" || $gtm_test_dbfill == "IMPZTP") then
 			# See https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/1299#note_839072462 and
 			# https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/1385#note_972287548 for more details.
 			if (($gtm_test_libyottadb_asan_enabled) && ("arch" == $gtm_test_linux_distrib)) then
-				while (3 == $imptpflavor)
-					echo "# Disabling ydb_imptp_flavor=3 (YDBPython) due to ASAN + Arch Linux" >> settings.csh
-					set imptpflavor = `$gtm_exe/mumps -run rand $rand`
-				end
+				echo "# Disabling ydb_imptp_flavor=3 (YDBPython) due to ASAN + Arch Linux"
+				set disable_imptp_flavor_list = "$disable_imptp_flavor_list 3"
 			endif
 			# Disable Python testing if YottaDB is built with ASAN and CLANG.
 			# In that case, setting the LD_PRELOAD env var (which the YDBPython wrapper sets whenever it
@@ -165,12 +159,11 @@ if ($gtm_test_dbfill == "IMPTP" || $gtm_test_dbfill == "IMPZTP") then
 			# gcc links the asan runtime library dynamically whereas clang links it statically (-static-libasan).
 			if ($gtm_test_libyottadb_asan_enabled) then
 				if ("clang" == $gtm_test_asan_compiler) then
-					while (3 == $imptpflavor)
-						echo "# Disabling ydb_imptp_flavor=3 (YDBPython) due to CLANG + ASAN" >> settings.csh
-						set imptpflavor = `$gtm_exe/mumps -run rand $rand`
-					end
+					echo "# Disabling ydb_imptp_flavor=3 (YDBPython) due to CLANG + ASAN"
+					set disable_imptp_flavor_list = "$disable_imptp_flavor_list 3"
 				endif
 			endif
+			set imptpflavor = `$gtm_exe/mumps -run imptpflavor^imptp $disable_imptp_flavor_list`
 			unset rand
 		endif
 		echo "imptpflavor: $imptpflavor"
