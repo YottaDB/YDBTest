@@ -19,6 +19,15 @@ echo "PID  ""$$"
 echo "PID  ""$$" >& mu_reorg_parent.pid
 \touch ./REORG.TXT_$$
 
+# If ASAN is enabled, we have seen one MUPIP SIZE command take hours to finish with 100,000 samples on some systems.
+# A lot of the time is spent doing ASAN memory initialization (e.g. valBlk[MAX_RECS_PER_BLK] in "mu_size_rand_traverse.c")
+# Therefore, reduce the number of samples significantly in that case.
+if ($gtm_test_libyottadb_asan_enabled) then
+	set samples = "1000"
+else
+	set samples = "100000"
+endif
+
 @ cnt = 1
 while (1)
 	date
@@ -50,7 +59,7 @@ while (1)
 	echo "# `date` : ===== Begin round $cnt of mupip size/reorg ($tmpoutput) ====="
 	echo "# `date` : cnt = $cnt ; ff = $ff ; inff = $inff"			>&!  $tmpoutput
 	if ($cnt % 5 == 2) then
-		foreach heuristic ("arsample,samples=100000" "impsample,samples=100000" "scan,level=1")
+		foreach heuristic ("arsample,samples=$samples" "impsample,samples=$samples" "scan,level=1")
 			echo "# `date` : $try_nice $MUPIP size -heuristic=\"$heuristic\""	>>& $tmpoutput
 			$try_nice $MUPIP size -heuristic="$heuristic"				>>& $tmpoutput
 			set ret = $status
