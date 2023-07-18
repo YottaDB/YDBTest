@@ -1220,6 +1220,12 @@ else if ("GT.CM" == $test_gtm_gtcm) then
 	# disable ydb_test_4g_db_blks scheme (as it creates huge db by skipping a lot of bitmap blocks at db creation time).
 	setenv ydb_test_4g_db_blks 0
 	echo "# ydb_test_4g_db_blks is set to $ydb_test_4g_db_blks (since test_gtm_gtcm is $test_gtm_gtcm) by do_random_settings.csh"	>>&! $settingsfile
+else if ($gtm_test_hugepages) then
+	# We have seen some tests fail due to oom-killer kicking in when huge pages are enabled and ydb_test_4g_db_blks is
+	# non-zero. This is most likely due to lack of enough huge pages on the failing system. To avoid such issues,
+	# we disable the ydb_test_4g_db_blks scheme if huge pages is enabled.
+	setenv ydb_test_4g_db_blks 0
+	echo "# ydb_test_4g_db_blks is set to $ydb_test_4g_db_blks (since gtm_test_hugepages is $gtm_test_hugepages) by do_random_settings.csh"	>>&! $settingsfile
 else if !($?ydb_test_4g_db_blks) then
 	if (50 >= $randnumbers[48]) then
 		setenv ydb_test_4g_db_blks 0
