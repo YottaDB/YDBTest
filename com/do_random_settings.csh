@@ -1226,6 +1226,21 @@ else if ($gtm_test_hugepages) then
 	# we disable the ydb_test_4g_db_blks scheme if huge pages is enabled.
 	setenv ydb_test_4g_db_blks 0
 	echo "# ydb_test_4g_db_blks is set to $ydb_test_4g_db_blks (since gtm_test_hugepages is $gtm_test_hugepages) by do_random_settings.csh"	>>&! $settingsfile
+else if (("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) || ("HOST_LINUX_AARCH64" == $gtm_test_os_machtype)) then
+	# On AARCH64, we have seen failures
+	# 1) In the r126/ydb429 subtests with the following symptom.
+	#	%YDB-E-DBFILERR, Error with database file r126_0_1/ydb429/%ydbjnlf.dat
+	#	%YDB-E-SYSCALL, Error received from system call mmap() -- called from module sr_unix/gvcst_init_sysops.c at line 1399
+	# 2) In the r124/ydb114 subtest with the following symptom.
+	#	%YDB-E-DBFILERR, Error with database file /tmp/2b892eb0.a.dat.gst
+	#	%YDB-E-SYSCALL, Error received from system call mmap() -- called from module sr_unix/gvcst_init_sysops.c at line 1399
+	#	%SYSTEM-E-ENO12, Cannot allocate memory
+	# The above failure is due to using MM databases inside PEEKBYNAME or ydb_env_set calls when the ydb_test_4g_db_blks env var is set
+	# to a high value causing a huge mmap(). Not clear why these failures show up only there whereas they don't on x86_64.
+	# So we just disable the 4g block scheme on AARCH64. And given memory is even more of an issue on ARMV6L compared to AARCH64, we
+	# disable this scheme there too.
+	setenv ydb_test_4g_db_blks 0
+	echo "# ydb_test_4g_db_blks is set to $ydb_test_4g_db_blks (since gtm_test_os_machtype is $gtm_test_os_machtype) by do_random_settings.csh"	>>&! $settingsfile
 else if !($?ydb_test_4g_db_blks) then
 	if (50 >= $randnumbers[48]) then
 		setenv ydb_test_4g_db_blks 0
