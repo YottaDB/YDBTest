@@ -97,12 +97,13 @@ if ($gtm_test_dbfill == "IMPTP" || $gtm_test_dbfill == "IMPZTP") then
 				echo "# Disabling ydb_imptp_flavor=5 (YDBRust) as com/is_rust_supported.csh returned false"
 				set disable_imptp_flavor_list = "$disable_imptp_flavor_list 5"
 			else if ($gtm_test_libyottadb_asan_enabled) then
+				# Disable Rust testing since ASAN and Rust do not work well together.
+				echo "# Disabling ydb_imptp_flavor=5 (YDBRust) due to ASAN"
+				set disable_imptp_flavor_list = "$disable_imptp_flavor_list 5"
 				if ("clang" == $gtm_test_asan_compiler) then
-					# Disable Go testing if ASAN and CLANG. It is okay to disable Rust in this case as well,
-					# since ASAN and Rust do not work well together.
-					# See similar code in "com/gtmtest.csh" for details.
-					echo "# Disabling ydb_imptp_flavor=4 (YDBGo) and ydb_imptp_flavor=5 (YDBRust) due to ASAN + CLANG"
-					set disable_imptp_flavor_list = "$disable_imptp_flavor_list 4 5"
+					# Disable Go testing if ASAN and CLANG. See similar code in "com/gtmtest.csh" for details.
+					echo "# Disabling ydb_imptp_flavor=4 (YDBGo) due to ASAN + CLANG"
+					set disable_imptp_flavor_list = "$disable_imptp_flavor_list 4"
 				endif
 			endif
 			# Disable YDBRust testing if the cargo/rustc version is 1.68.*
