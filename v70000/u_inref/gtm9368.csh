@@ -18,6 +18,14 @@ if (! $?test_replic) then
 	exit 1
 endif
 #
+# This test does a MUPIP REPLIC -SOURCE -SHUTDOWN -ZEROBACKLOG -TIMEOUT with the expectation that the timeout
+# will expire BEFORE the zero backlog event happens. With fake enospc and associated instance freeze on error
+# setting, it is possible the instance freezes (preventing any more updates from the background imptp processes)
+# and the backlog could become zero before the shutdown command starts thus disturbing the expectation of this test.
+#
+setenv gtm_test_freeze_on_error 0	# No freezing database
+setenv gtm_test_fake_enospc 0		# No random ENOSPC errors to cause freezes
+#
 echo '# gtm9368 - Verify we can interrupt/stop a MUPIP REPLIC -SOURCE -SHUTDOWN command during its wait period with ^C'
 echo
 echo '# Run dbcreate.csh'       # Should configure and start up replication
@@ -51,7 +59,17 @@ foreach shutoptidx ( 1 2 )
     echo '# Now send the ^C to the MUPIP REPLIC -SOURCE -SHUTDOWN command while the shutdown is pending - But sleep'
     echo '# for 5 seconds first so shutdown command starts sleeping'
     sleep 5 # Wait for mupip command to get going
-    kill -INT $shutpid
+    #
+    # Need to use /usr/bin/kill and not the shell built-in kill as the latter terminates the script abruptly in
+    # case $shutpid does not exist at this point (possible in rare cases). We want the test to terminate gracefully
+    # (by shutting down the imptp processes) in this case.
+    #
+    /usr/bin/kill -INT $shutpid
+    set savestatus = $status
+    if ($savestatus != 0) then
+	echo "# FAIL - Error sending ^c to the shutdown process ($shutpid) - terminating test"
+	break
+    endif
     echo
     echo '# Start waiting for the MUPIP REPLIC -SOURCE -SHUTDOWN process to die'
     set wait_start = `$gtm_dist/mumps -run ^%XCMD 'write $H'`
