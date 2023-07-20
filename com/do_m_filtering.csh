@@ -4,7 +4,7 @@
 # Copyright (c) 2010-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -67,6 +67,8 @@ unsetenv LC_ALL
 
 # Unset to help with speed
 source $gtm_tst/com/unset_ydb_env_var.csh ydb_dbglvl gtmdbglvl
+
+unsetenv ydb_app_ensures_isolation # in case it is set on test replay (else ZGBLDIRACC errors on non-existent gld file are possible)
 
 cat $argv[2-] | $gtm_exe/mumps -run %XCMD $1
 exit $status
