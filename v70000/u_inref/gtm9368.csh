@@ -60,11 +60,11 @@ foreach shutoptidx ( 1 2 )
     echo '# for 5 seconds first so shutdown command starts sleeping'
     sleep 5 # Wait for mupip command to get going
     #
-    # Need to use /usr/bin/kill and not the shell built-in kill as the latter terminates the script abruptly in
-    # case $shutpid does not exist at this point (possible in rare cases). We want the test to terminate gracefully
-    # (by shutting down the imptp processes) in this case.
+    # Need to put the kill command in its own shell because if it is a built-in shell command that terminates the shell
+    # if it fails (in case $shutpid does not exist at this point - possible in rare cases). We want the test to terminate
+    # gracefully (by shutting down the imptp processes) in this case.
     #
-    /usr/bin/kill -INT $shutpid
+    (kill -INT $shutpid)
     set savestatus = $status
     if ($savestatus != 0) then
 	echo "# FAIL - Error sending ^c to the shutdown process ($shutpid) - terminating test"
