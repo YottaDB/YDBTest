@@ -203,9 +203,15 @@ echo "##########################################################################
 echo "#wait until the backlog is cleared."
 echo "###########"
 echo "GTM_TEST_DEBUGINFO: "`date`
-set timeout = $test_sleep_time
-@ timeout = $timeout + 30
-$gtm_tst/com/wait_until_src_backlog_below.csh 0
+# When ASYNCIO is enabled, when there are filesystem differences between the source and receiver sides of replication
+# (particularly f2fs -> xfs OR f2fs -> ext4), we have seen the below call take 35 minutes to finish which is more than
+# the default timeout of 1,800 seconds (30 minutes). Therefore pass a 1 hour timeout to the below call.
+if (0 != $gtm_test_asyncio) then
+	set timeout = 3600
+else
+	set timeout = ""	# Not asyncio, use the default timeout in the script so pass "" as the timeout
+endif
+$gtm_tst/com/wait_until_src_backlog_below.csh 0 $timeout
 if ($status != 0) then
 	echo "#TEST-E-TIMEOUT, it took too long to clear the backlog."
 endif
