@@ -40,7 +40,8 @@ setenv subtest_exclude_list ""
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
 if ("pro" == "$tst_image") then
-	setenv subtest_exclude_list "$subtest_exclude_list"
+	# The BLOCK parameter of MUPIP JOURNAL -EXTRACT and the IMAGE parameter of DSE are only availble in a DEBUG build
+	setenv subtest_exclude_list "$subtest_exclude_list ydbtest530"
 endif
 
 if ("dbg" == "$tst_image") then
