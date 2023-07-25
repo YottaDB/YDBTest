@@ -80,7 +80,7 @@ endif
 # yottadb.pc pointing to a non-existent YottaDB installation somewhere under the test output directory (that gets deleted
 # at the end of the test run).
 if (-e /usr/share/pkgconfig/yottadb.pc) then
-	sudo cp /usr/share/pkgconfig/yottadb.pc .
+	sudo cp -p /usr/share/pkgconfig/yottadb.pc .
 	set ydbpcexists=1
 else
 	set ydbpcexists=0
@@ -90,7 +90,7 @@ $gtm_tst/com/submit_subtest.csh
 
 # Restore the copy of the current system yottadb.pc
 if (1 == $ydbpcexists) then
-	sudo cp yottadb.pc /usr/share/pkgconfig/yottadb.pc
+	sudo cp -p yottadb.pc /usr/share/pkgconfig/yottadb.pc
 	sudo rm yottadb.pc
 endif
 
