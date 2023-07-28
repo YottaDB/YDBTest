@@ -1,0 +1,51 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+#####################################################################
+######## Test various code issues identified by fuzz testing ########
+#####################################################################
+
+------------------------------------------------------------
+# Test of https://gitlab.com/YottaDB/DB/YDB/-/issues/994#note_1385299862
+# Test GVSUBOFLOW error
+# Prior to YDB@cb4697bf, this test failed with an assert/SIG-11
+# Expecting only GVSUBOFLOW errors in below output in each invocation
+------------------------------------------------------------
+# Try ydb994gvsuboflow.m using [yottadb -run]
+150372986,gvsuboflow+1^ydb994gvsuboflow,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceed
+150372986,gvsuboflow+1^ydb994gvsuboflow,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceed
+150372986,gvsuboflow+1^ydb994gvsuboflow,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceed
+150372986,gvsuboflow+1^ydb994gvsuboflow,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceed
+150372986,gvsuboflow+1^ydb994gvsuboflow,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceed
+150372986,gvsuboflow+1^ydb994gvsuboflow,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceed
+150372986,gvsuboflow+1^ydb994gvsuboflow,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceed
+150372986,gvsuboflow+1^ydb994gvsuboflow,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceed
+150372986,gvsuboflow+1^ydb994gvsuboflow,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceed
+150372986,gvsuboflow+1^ydb994gvsuboflow,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceed
+150372986,gvsuboflow+1^ydb994gvsuboflow,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceed
+150372986,gvsuboflow+1^ydb994gvsuboflow,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceed
+150372986,gvsuboflow+1^ydb994gvsuboflow,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceed
+150372986,gvsuboflow+1^ydb994gvsuboflow,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceed
+150372986,gvsuboflow+1^ydb994gvsuboflow,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceed
+150372986,gvsuboflow+1^ydb994gvsuboflow,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceed
+150372986,gvsuboflow+1^ydb994gvsuboflow,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceed
+150372986,gvsuboflow+1^ydb994gvsuboflow,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceed
+150372986,gvsuboflow+1^ydb994gvsuboflow,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceed
+150372986,gvsuboflow+1^ydb994gvsuboflow,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceed
+150372986,gvsuboflow+1^ydb994gvsuboflow,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceed
+150372986,gvsuboflow+1^ydb994gvsuboflow,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceed
+150372986,gvsuboflow+1^ydb994gvsuboflow,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceed
+150372986,gvsuboflow+1^ydb994gvsuboflow,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceed
+150372986,gvsuboflow+1^ydb994gvsuboflow,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceed
+150372986,gvsuboflow+1^ydb994gvsuboflow,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceed
+150372986,gvsuboflow+1^ydb994gvsuboflow,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceed
+150372986,gvsuboflow+1^ydb994gvsuboflow,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceed
+150372986,gvsuboflow+1^ydb994gvsuboflow,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceed
+150372986,gvsuboflow+1^ydb994gvsuboflow,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceed
+150372986,gvsuboflow+1^ydb994gvsuboflow,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceed
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
