@@ -610,9 +610,6 @@ if ($status == 0 ) setenv test_gtm_gtcm_one
 #################################################################
 #for debugging
 if ($?test_debug_print_only) then
-	if ("`alias version`" != "") then
-		version $tst_ver $tst_image
-	endif
 	# for debugging
 	cat $submit_tests
 	echo "No of Tests submitted :: "`wc -l $submit_tests | $tst_awk '{print $1}'`
