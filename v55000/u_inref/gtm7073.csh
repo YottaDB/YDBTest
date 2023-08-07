@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -74,7 +74,7 @@ if ($? != 0) then
     echo "Error: Free lock space is outside of expected range. Check show1.txtx."
 endif
 $gtm_tst/com/getoper.csh "$syslog_before1" "" syslog1.txt "" "YDB-E-LOCKSPACEFULL|YDB-I-LOCKSPACEINFO"
-$grep -q "YDB-E-LOCKSPACEFULL" syslog1.txt
+$grep -q "YDB-E-LOCKSPACEFULL.*`pwd`" syslog1.txt
 if ($? == 0) then
     echo "TEST-I-PASS YDB-E-LOCKSPACEFULL found in operator log as expected."
 else
@@ -139,7 +139,7 @@ if (`$grep "PID= [0-9]*" show2.txtx | cut -d\  -f 2- | sort | uniq | grep -c "PI
     echo "Error: Locks should be held by 2 processes. Check show2.txt"
 endif
 $gtm_tst/com/getoper.csh "$syslog_before1" "" syslog2.txt ""
-$grep "YDB-E-LOCKSPACEFULL" syslog2.txt
+$grep "YDB-E-LOCKSPACEFULL.*`pwd`" syslog2.txt
 if ($? == 0) then
     echo "TEST-E-FAIL YDB-E-LOCKSPACEFULL found in operator log. Check syslog2.txt."
 else
@@ -213,7 +213,7 @@ $gtm_exe/mumps -run waitlocks^gtm7073
 set syslog_after1 = `date +"%b %e %H:%M:%S"`
 echo $syslog_before1 $syslog_after1 > time_window4.txt
 $gtm_tst/com/getoper.csh "$syslog_before1" "" syslog4.txt ""
-$grep "YDB-E-LOCKSPACEFULL" syslog4.txt
+$grep "YDB-E-LOCKSPACEFULL.*`pwd`" syslog4.txt
 if ($? == 0) then
     echo "TEST-E-FAIL YDB-E-LOCKSPACEFULL found in operator log. Check syslog4.txt."
 else
@@ -231,7 +231,7 @@ $gtm_exe/mumps -run %XCMD 'set ^die=0,^grabbed=0'
 ($gtm_exe/mumps -run %XCMD 'do lockandwait^gtm7073(1000)' >&! procstat5.txt &)
 $gtm_exe/mumps -run waitlocks^gtm7073
 $gtm_exe/mumps -run %XCMD 'lock +(a,b) zsy "$LKE show"' >& show7.txt
-$grep -q LOCKSPACEFULL show7.txt
+$grep -q "LOCKSPACEFULL.*`pwd`" show7.txt
 if ($? == 0) then
     echo "LOCKSPACEFULL message found in LKE SHOW output as expected."
 else
