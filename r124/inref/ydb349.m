@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;                                                               ;
-; Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.       ;
+; Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.       ;
 ; All rights reserved.                                          ;
 ;                                                               ;
 ;       This source code contains the intellectual property     ;
@@ -19,5 +19,5 @@ genfillfactor()	;
 	quit
 
 genreservedbytes	;
-	write $random(4000+1)	; return a reserved_bytes number ranging from 0 to 4000 (maximum reserved bytes for 4kb block size)
+	write $random(3992+1)	; return a reserved_bytes number ranging from 0 to 3992 (maximum reserved bytes for 4kb block size)
 	quit

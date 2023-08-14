@@ -2,7 +2,7 @@
 
 # Create database file with 4Kb block_size and record_size
 # Set a single node in database that can randomly occupy upto one GDS block of space
-# Set reserved_bytes on database to a random value from 0 to 4000 (maximum reserved bytes for 4Kb block_size)
+# Set reserved_bytes on database to a random value from 0 to 3992 (maximum reserved bytes for 4Kb block_size)
 # Run MUPIP REORG with a random fill factor ranging from 0% to 100%
 # Before #349 code fixes, this would fail with cores and/or produce DBINVGBL integrity errors
 # Do dbcheck.csh
