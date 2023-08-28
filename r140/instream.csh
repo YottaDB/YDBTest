@@ -18,13 +18,14 @@
 # ydb998      [sam]     TSTART should not open the default global directory
 # ydbpython32 [sam]	CTRL-C on Flask Application terminates properly
 # ydb994      [nars]    Test various code issues identified by fuzz testing
+# ydb1024     [nars]    Fix OPEN of a socket type file name to not assert fail in io_open_try.c
 #---------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r140 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "ydb996 ydb998 ydbpython32 ydb994"
+setenv subtest_list_non_replic "ydb996 ydb998 ydbpython32 ydb994 ydb1024"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then

@@ -1,0 +1,9 @@
+# Test of YDB#1024. See https://gitlab.com/YottaDB/DB/YDB/-/issues/1024#description for test M program details.
+# The below test used to assert fail in io_open_try.c without the code fixes to YDB#1024.
+cmdop(1)="This is the child writing Line 1 out of 3 lines through SOCKET device"
+cmdop(2)="This is the child writing Line 2 out of 3 lines through SOCKET device"
+cmdop(3)="# Test OPEN using a socket type file name [/proc/PID/fd/1] does not assert fail (issues DEVOPENFAIL error)"
+##TEST_AWKcmdop\(4\)="ZSTATUS=child\+10\^ydb1024,%YDB-E-DEVOPENFAIL, Error opening /proc/[0-9]*/fd/1,%SYSTEM-E-ENO6, No such device or address"
+cmdop(5)="# Also test that OPEN using the special socket type file name [&] does not assert fail and communicates better"
+cmdop(6)="This is the child writing Line 3 out of 3 lines through [&] device"
+cmdop(7)=""
