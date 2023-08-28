@@ -27,7 +27,7 @@ setenv gtm_test_jobcnt 1
 # Journaling is enabled below. To avoid reference file issues, disable randomly enabling journaling by dbcreate
 setenv gtm_test_jnl NON_SETJNL
 
-$gtm_tst/com/dbcreate.csh mumps 1 255 1000 1024 500 128 500
+$gtm_tst/com/dbcreate.csh mumps -n_regions=1 -key=255 -rec=1000 -block=1024 -alloc=500 -global_buffer=4096 -extension=500
 
 $MUPIP set $tst_jnl_str -reg "*" >&! jnl_on.out
 
