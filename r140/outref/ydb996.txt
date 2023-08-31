@@ -1,5 +1,5 @@
 # -----------------------
-# Test M program to demonstrate passing a LISTENing TCP socket to a child through a LOCAL socket
+# Test passing a LISTENing TCP socket to a child through a LOCAL socket works
 # -----------------------
 # Open LISTENING TCP socket and give it a name [handle1]
 # Move LISTENING TCP socket [handle1] to socketpool device
@@ -18,3 +18,14 @@ cmdop(4)="This is the child writing Line 4 out of 5 lines"
 cmdop(5)="This is the child writing Line 5 out of 5 lines"
 cmdop(6)=""
 # Wait for child pid to terminate before returning from parent
+# -----------------------
+# Test passing a LISTENing TCP socket to a child through JOB command STDIN issues SOCKNAMERR error
+# Before YDB@99c64bd4, this used to cause a SIG-11 in the child process created by the JOB command
+# -----------------------
+%YDB-E-JOBFAIL, JOB command failure,%YDB-I-TEXT, Job error in fork
+		At M source location +59^ydb996
+%YDB-W-NOTPRINCIO, Output currently directed to device socket
+
+YDB>
+##TEST_PATH##/child2.mje
+%YDB-E-GETSOCKNAMERR, Getting the socket name failed from getsockname(): (errno==107) Transport endpoint is not connected

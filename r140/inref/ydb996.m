@@ -13,7 +13,7 @@
 ; Helper M program used by r140/u_inref/ydb996.csh
 
 	write "# -----------------------",!
-	write "# Test M program to demonstrate passing a LISTENing TCP socket to a child through a LOCAL socket",!
+	write "# Test passing a LISTENing TCP socket to a child through a LOCAL socket works",!
 	write "# -----------------------",!
 	set portno=$ztrnlnm("portno")
 	set s="socket"
@@ -45,7 +45,19 @@
 	zwrite cmdop					; display data written by child in parent
 	write "# Wait for child pid to terminate before returning from parent",!
 	do ^waitforproctodie(childpid)
-	quit
+	;
+	write "# -----------------------",!
+	write "# Test passing a LISTENing TCP socket to a child through JOB command STDIN issues SOCKNAMERR error",!
+	write "# Before YDB@99c64bd4, this used to cause a SIG-11 in the child process created by the JOB command",!
+	write "# -----------------------",!
+        set s="socket"
+        ; open a listening socket
+        open s:(listen=portno_":TCP":attach="handle1"):15:"socket"
+        ; move listening socket to "socketpool" device
+        use s:(detach="handle1")
+        ; job a child and make it inherit the listening socket as its stdin/stdout
+        job child2:(INPUT="SOCKET:handle1":OUTPUT="SOCKET:handle1":ERROR="child2.mje")
+        quit
 
 child	;
 	set s="socket"					; create a SOCKET device in child
@@ -58,5 +70,8 @@ child	;
 	use s:(delimiter=$c(10))			; set delimiters explicitly since they are not inherited in passed sockets
 	; Write to this socket some data that will be read (and displayed) by the parent
 	for i=1:1:5  write "This is the child writing Line ",i," out of 5 lines",!
+	quit
+
+child2	;
 	quit
 
