@@ -10,19 +10,19 @@ YDB>
 do ^zbbasic start
 Simple zbreak test starts
 Set break points
-After break points set: Show the break points and stack:zbbasic+14^zbbasicexec
-zbbasic+13^zbbasicexec
-zbbasic+12^zbbasicexec
-zbbasic+11^zbbasicexec
-zbbasic+10^zbbasicexec
-zbbasic+9^zbbasicexec
-zbbasic+8^zbbasicexec
-zbbasic+7^zbbasicexec
-zbbasic+6^zbbasicexec
-zbbasic+5^zbbasicexec
-zbbasic+4^zbbasicexec
-zbbasic+3^zbbasicexec
-zbbasic+2^zbbasicexec
+After break points set: Show the break points and stack:zbbasic+14^zbbasicexec>set zbbasic(14)=$get(zbbasic(14))+1
+zbbasic+13^zbbasicexec>set zbbasic(13)=$get(zbbasic(13))+1
+zbbasic+12^zbbasicexec>set zbbasic(12)=$get(zbbasic(12))+1
+zbbasic+11^zbbasicexec>set zbbasic(11)=$get(zbbasic(11))+1
+zbbasic+10^zbbasicexec>set zbbasic(10)=$get(zbbasic(10))+1
+zbbasic+9^zbbasicexec>set zbbasic(9)=$get(zbbasic(9))+1
+zbbasic+8^zbbasicexec>set zbbasic(8)=$get(zbbasic(8))+1
+zbbasic+7^zbbasicexec>set zbbasic(7)=$get(zbbasic(7))+1
+zbbasic+6^zbbasicexec>set zbbasic(6)=$get(zbbasic(6))+1
+zbbasic+5^zbbasicexec>set zbbasic(5)=$get(zbbasic(5))+1
+zbbasic+4^zbbasicexec>set zbbasic(4)=$get(zbbasic(4))+1
+zbbasic+3^zbbasicexec>set zbbasic(3)=$get(zbbasic(3))+1
+zbbasic+2^zbbasicexec>set zbbasic(2)=$get(zbbasic(2))+1
 basic+11^zbbasic
 zbbasic+5^zbdrive
 ##TEST_AWK.*
@@ -31,19 +31,19 @@ Verify xecute
 Test zbreak actions
 do zbbasic^zbbasicexec
 zbbasic+1^zbbasicexec$zlevel=4
-After zbreak actions: Show the break points and stack:zbbasic+14^zbbasicexec
-zbbasic+13^zbbasicexec
-zbbasic+12^zbbasicexec
-zbbasic+11^zbbasicexec
-zbbasic+10^zbbasicexec
-zbbasic+9^zbbasicexec
-zbbasic+8^zbbasicexec
-zbbasic+7^zbbasicexec
-zbbasic+6^zbbasicexec
-zbbasic+5^zbbasicexec
-zbbasic+4^zbbasicexec
-zbbasic+3^zbbasicexec
-zbbasic+2^zbbasicexec
+After zbreak actions: Show the break points and stack:zbbasic+14^zbbasicexec>set zbbasic(14)=$get(zbbasic(14))+1
+zbbasic+13^zbbasicexec>set zbbasic(13)=$get(zbbasic(13))+1
+zbbasic+12^zbbasicexec>set zbbasic(12)=$get(zbbasic(12))+1
+zbbasic+11^zbbasicexec>set zbbasic(11)=$get(zbbasic(11))+1
+zbbasic+10^zbbasicexec>set zbbasic(10)=$get(zbbasic(10))+1
+zbbasic+9^zbbasicexec>set zbbasic(9)=$get(zbbasic(9))+1
+zbbasic+8^zbbasicexec>set zbbasic(8)=$get(zbbasic(8))+1
+zbbasic+7^zbbasicexec>set zbbasic(7)=$get(zbbasic(7))+1
+zbbasic+6^zbbasicexec>set zbbasic(6)=$get(zbbasic(6))+1
+zbbasic+5^zbbasicexec>set zbbasic(5)=$get(zbbasic(5))+1
+zbbasic+4^zbbasicexec>set zbbasic(4)=$get(zbbasic(4))+1
+zbbasic+3^zbbasicexec>set zbbasic(3)=$get(zbbasic(3))+1
+zbbasic+2^zbbasicexec>set zbbasic(2)=$get(zbbasic(2))+1
 basic+25^zbbasic
 zbbasic+5^zbdrive
 ##TEST_AWK.*
@@ -55,19 +55,19 @@ Verify xecute cmd
 Test zbreak actions again
 do zbbasic^zbbasicexec
 zbbasic+1^zbbasicexec$zlevel=4
-After second zbreak actions: Show the break points and stack:zbbasic+14^zbbasicexec
-zbbasic+13^zbbasicexec
-zbbasic+12^zbbasicexec
-zbbasic+11^zbbasicexec
-zbbasic+10^zbbasicexec
-zbbasic+9^zbbasicexec
-zbbasic+8^zbbasicexec
-zbbasic+7^zbbasicexec
-zbbasic+6^zbbasicexec
-zbbasic+5^zbbasicexec
-zbbasic+4^zbbasicexec
-zbbasic+3^zbbasicexec
-zbbasic+2^zbbasicexec
+After second zbreak actions: Show the break points and stack:zbbasic+14^zbbasicexec>set zbbasic(14)=$get(zbbasic(14))+1
+zbbasic+13^zbbasicexec>set zbbasic(13)=$get(zbbasic(13))+1
+zbbasic+12^zbbasicexec>set zbbasic(12)=$get(zbbasic(12))+1
+zbbasic+11^zbbasicexec>set zbbasic(11)=$get(zbbasic(11))+1
+zbbasic+10^zbbasicexec>set zbbasic(10)=$get(zbbasic(10))+1
+zbbasic+9^zbbasicexec>set zbbasic(9)=$get(zbbasic(9))+1
+zbbasic+8^zbbasicexec>set zbbasic(8)=$get(zbbasic(8))+1
+zbbasic+7^zbbasicexec>set zbbasic(7)=$get(zbbasic(7))+1
+zbbasic+6^zbbasicexec>set zbbasic(6)=$get(zbbasic(6))+1
+zbbasic+5^zbbasicexec>set zbbasic(5)=$get(zbbasic(5))+1
+zbbasic+4^zbbasicexec>set zbbasic(4)=$get(zbbasic(4))+1
+zbbasic+3^zbbasicexec>set zbbasic(3)=$get(zbbasic(3))+1
+zbbasic+2^zbbasicexec>set zbbasic(2)=$get(zbbasic(2))+1
 basic+49^zbbasic
 zbbasic+5^zbdrive
 ##TEST_AWK.*
@@ -76,8 +76,8 @@ do verify^zbbasicexec
 Simple zbreak test ends
 do ^zbbasic done
 ZT=set $ZT="" goto myerr^zbmain
-After forcerr caused error : Show the break points and stack:forcerr+5^zbmain
-forcerr+4^zbmain
+After forcerr caused error : Show the break points and stack:forcerr+5^zbmain>set zberr(1)=zbjunk(1)+1
+forcerr+4^zbmain>set zberr(0)=zbjunk(0)+1
 myerr+1^zbmain
 errtest+8^zbdrive
 ##TEST_AWK.*
@@ -86,52 +86,52 @@ zwrite zberr
 zberr(4)=0
 zberr(5)=0
 zhsow "B"
-forcerr+5^zbmain
-forcerr+4^zbmain
+forcerr+5^zbmain>set zberr(1)=zbjunk(1)+1
+forcerr+4^zbmain>set zberr(0)=zbjunk(0)+1
 Exiting myerr
-After break points set in initlab: Show the break points and stack:forcerr+5^zbmain
-forcerr+4^zbmain
-zbmain+43^zbmain
-zbmain+42^zbmain
-zbmain+41^zbmain
-zbmain+40^zbmain
-zbmain+39^zbmain
-zbmain+38^zbmain
-zbmain+37^zbmain
-zbmain+36^zbmain
-zbmain+35^zbmain
-zbmain+34^zbmain
-zbmain+33^zbmain
-zbmain+32^zbmain
-zbmain+31^zbmain
-zbmain+30^zbmain
-zbmain+29^zbmain
-zbmain+28^zbmain
-zbmain+27^zbmain
-zbmain+26^zbmain
-zbmain+25^zbmain
-zbmain+24^zbmain
-zbmain+23^zbmain
-zbmain+22^zbmain
-zbmain+21^zbmain
-zbmain+20^zbmain
-zbmain+18^zbmain
-zbmain+17^zbmain
-zbmain+16^zbmain
-zbmain+15^zbmain
-zbmain+14^zbmain
-zbmain+13^zbmain
-zbmain+12^zbmain
-zbmain+11^zbmain
-zbmain+10^zbmain
-zbmain+9^zbmain
-zbmain+8^zbmain
-zbmain+7^zbmain
-zbmain+6^zbmain
-zbmain+5^zbmain
-zbmain+4^zbmain
-zbmain+3^zbmain
-zbmain+2^zbmain
+After break points set in initlab: Show the break points and stack:forcerr+5^zbmain>set zberr(1)=zbjunk(1)+1
+forcerr+4^zbmain>set zberr(0)=zbjunk(0)+1
+zbmain+43^zbmain>set zbcnt(43)=zbcnt(43)+1
+zbmain+42^zbmain>set zbcnt(42)=zbcnt(42)+1
+zbmain+41^zbmain>set zbcnt(41)=zbcnt(41)+1
+zbmain+40^zbmain>set zbcnt(40)=zbcnt(40)+1
+zbmain+39^zbmain>set zbcnt(39)=zbcnt(39)+1
+zbmain+38^zbmain>set zbcnt(38)=zbcnt(38)+1
+zbmain+37^zbmain>set zbcnt(37)=zbcnt(37)+1
+zbmain+36^zbmain>set zbcnt(36)=zbcnt(36)+1
+zbmain+35^zbmain>set zbcnt(35)=zbcnt(35)+1
+zbmain+34^zbmain>set zbcnt(34)=zbcnt(34)+1
+zbmain+33^zbmain>set zbcnt(33)=zbcnt(33)+1
+zbmain+32^zbmain>set zbcnt(32)=zbcnt(32)+1
+zbmain+31^zbmain>set zbcnt(31)=zbcnt(31)+1
+zbmain+30^zbmain>set zbcnt(30)=zbcnt(30)+1
+zbmain+29^zbmain>set zbcnt(29)=zbcnt(29)+1
+zbmain+28^zbmain>set zbcnt(28)=zbcnt(28)+1
+zbmain+27^zbmain>set zbcnt(27)=zbcnt(27)+1
+zbmain+26^zbmain>set zbcnt(26)=zbcnt(26)+1
+zbmain+25^zbmain>set zbcnt(25)=zbcnt(25)+1
+zbmain+24^zbmain>set zbcnt(24)=zbcnt(24)+1
+zbmain+23^zbmain>set zbcnt(23)=zbcnt(23)+1
+zbmain+22^zbmain>set zbcnt(22)=zbcnt(22)+1
+zbmain+21^zbmain>set zbcnt(21)=zbcnt(21)+1
+zbmain+20^zbmain>set zbcnt(20)=zbcnt(20)+1
+zbmain+18^zbmain>set zbcnt(19)=zbcnt(19)+1
+zbmain+17^zbmain>set zbcnt(17)=zbcnt(17)+1
+zbmain+16^zbmain>set zbcnt(16)=zbcnt(16)+1
+zbmain+15^zbmain>set zbcnt(15)=zbcnt(15)+1
+zbmain+14^zbmain>set zbcnt(14)=zbcnt(14)+1
+zbmain+13^zbmain>set zbcnt(13)=zbcnt(13)+1
+zbmain+12^zbmain>set zbcnt(12)=zbcnt(12)+1
+zbmain+11^zbmain>set zbcnt(11)=zbcnt(11)+1
+zbmain+10^zbmain>set zbcnt(10)=zbcnt(10)+1
+zbmain+9^zbmain>set zbcnt(9)=zbcnt(9)+1
+zbmain+8^zbmain>set zbcnt(8)=zbcnt(8)+1
+zbmain+7^zbmain>set zbcnt(7)=zbcnt(7)+1
+zbmain+6^zbmain>set zbcnt(6)=zbcnt(6)+1
+zbmain+5^zbmain>set zbcnt(5)=zbcnt(5)+1
+zbmain+4^zbmain>set zbcnt(4)=zbcnt(4)+1
+zbmain+3^zbmain>set zbcnt(3)=zbcnt(3)+1
+zbmain+2^zbmain>set zbcnt(2)=zbcnt(2)+1
 initlab+10^zbdrive
 ##TEST_AWK.*
 Test zbreak actions with set
@@ -139,49 +139,49 @@ do ^zbmain
 basic+1^zbmain$zlevel=3
 LOTSVAR-I-END_SET
 set PASS
-After break points set in lab0: Show the break points and stack:forcerr+5^zbmain
-forcerr+4^zbmain
-zbmain+43^zbmain
-zbmain+42^zbmain
-zbmain+41^zbmain
-zbmain+40^zbmain
-zbmain+39^zbmain
-zbmain+38^zbmain
-zbmain+37^zbmain
-zbmain+36^zbmain
-zbmain+35^zbmain
-zbmain+34^zbmain
-zbmain+33^zbmain
-zbmain+32^zbmain
-zbmain+31^zbmain
-zbmain+30^zbmain
-zbmain+29^zbmain
-zbmain+28^zbmain
-zbmain+27^zbmain
-zbmain+26^zbmain
-zbmain+25^zbmain
-zbmain+24^zbmain
-zbmain+23^zbmain
-zbmain+22^zbmain
-zbmain+21^zbmain
-zbmain+20^zbmain
-zbmain+18^zbmain
-zbmain+17^zbmain
-zbmain+16^zbmain
-zbmain+15^zbmain
-zbmain+14^zbmain
-zbmain+13^zbmain
-zbmain+12^zbmain
-zbmain+11^zbmain
-zbmain+10^zbmain
-zbmain+9^zbmain
-zbmain+8^zbmain
-zbmain+7^zbmain
-zbmain+6^zbmain
-zbmain+5^zbmain
-zbmain+4^zbmain
-zbmain+3^zbmain
-zbmain+2^zbmain
+After break points set in lab0: Show the break points and stack:forcerr+5^zbmain>set zberr(1)=zbjunk(1)+1
+forcerr+4^zbmain>set zberr(0)=zbjunk(0)+1
+zbmain+43^zbmain>do lab1^zblab1 zcontinue
+zbmain+42^zbmain>do lab1^zblab1 zcontinue
+zbmain+41^zbmain>do lab1^zblab1 zcontinue
+zbmain+40^zbmain>do lab1^zblab1 zcontinue
+zbmain+39^zbmain>do lab1^zblab1 zcontinue
+zbmain+38^zbmain>do lab1^zblab1 zcontinue
+zbmain+37^zbmain>do lab1^zblab1 zcontinue
+zbmain+36^zbmain>do lab1^zblab1 zcontinue
+zbmain+35^zbmain>do lab1^zblab1 zcontinue
+zbmain+34^zbmain>do lab1^zblab1 zcontinue
+zbmain+33^zbmain>do lab1^zblab1 zcontinue
+zbmain+32^zbmain>do lab1^zblab1 zcontinue
+zbmain+31^zbmain>do lab1^zblab1 zcontinue
+zbmain+30^zbmain>do lab1^zblab1 zcontinue
+zbmain+29^zbmain>do lab1^zblab1 zcontinue
+zbmain+28^zbmain>do lab1^zblab1 zcontinue
+zbmain+27^zbmain>do lab1^zblab1 zcontinue
+zbmain+26^zbmain>do lab1^zblab1 zcontinue
+zbmain+25^zbmain>do lab1^zblab1 zcontinue
+zbmain+24^zbmain>do lab1^zblab1 zcontinue
+zbmain+23^zbmain>do lab1^zblab1 zcontinue
+zbmain+22^zbmain>do lab1^zblab1 zcontinue
+zbmain+21^zbmain>do lab1^zblab1 zcontinue
+zbmain+20^zbmain>do lab1^zblab1 zcontinue
+zbmain+18^zbmain>do lab1^zblab1 zcontinue
+zbmain+17^zbmain>do lab1^zblab1 zcontinue
+zbmain+16^zbmain>do lab1^zblab1 zcontinue
+zbmain+15^zbmain>do lab1^zblab1 zcontinue
+zbmain+14^zbmain>do lab1^zblab1 zcontinue
+zbmain+13^zbmain>do lab1^zblab1 zcontinue
+zbmain+12^zbmain>do lab1^zblab1 zcontinue
+zbmain+11^zbmain>do lab1^zblab1 zcontinue
+zbmain+10^zbmain>do lab1^zblab1 zcontinue
+zbmain+9^zbmain>do lab1^zblab1 zcontinue
+zbmain+8^zbmain>do lab1^zblab1 zcontinue
+zbmain+7^zbmain>do lab1^zblab1 zcontinue
+zbmain+6^zbmain>do lab1^zblab1 zcontinue
+zbmain+5^zbmain>do lab1^zblab1 zcontinue
+zbmain+4^zbmain>do lab1^zblab1 zcontinue
+zbmain+3^zbmain>do lab1^zblab1 zcontinue
+zbmain+2^zbmain>do lab1^zblab1 zcontinue
 lab0+3^zbdrive
 ##TEST_AWK.*
 Test zbreak actions with action do lab1^zblab1

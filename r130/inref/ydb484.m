@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2020-2022 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2020-2023 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -2475,7 +2475,7 @@ AllCmdPostConditionalTest
 	. zkill result("B",1)
 	. ; In case of boolrslt=0 or $zysqlnull zbreak is not executed so result is 0 as no breakpoints are set
 	. ; In case of boolrslt=1 zbreak is executed so result is indicative of the location of breakpoint
-	. do verifypcrslt("ZBREAK",boolrslt,(result'=0),(result'="dummydebug^ydb484"),dlrtest,boolexpr,.failcnt)
+	. do verifypcrslt("ZBREAK",boolrslt,(result'=0),(result'="dummydebug^ydb484>B"),dlrtest,boolexpr,.failcnt)
 	. ;
 	. ; ZCOMPILE
 	. set x="ydb484compilepass.m"

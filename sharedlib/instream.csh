@@ -6,6 +6,9 @@
 # Copyright (c) 2017,2018 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -35,7 +38,6 @@
 setenv gtm_test_mupip_set_version "disable"
 setenv gtm_test_disable_randomdbtn
 setenv subtest_list "zro_search incr_link excall objfile_test gtm6330 gtm7905"
-setenv unicode_testlist "uniexcall shared_lib_unicode_zb incr_link_unicode gtm_chset_recompile"
 
 if ( "HOST_LINUX_IA64" == $gtm_test_os_machtype || "HOST_LINUX_X86_64" == $gtm_test_os_machtype || "HOST_LINUX_S390X" == $gtm_test_os_machtype) then
     setenv gt_ld_m_shl_options "-shared"
@@ -49,7 +51,7 @@ if ($LFE == "E") then
 endif
 ## test unicode condition ##
 if ("TRUE" == $gtm_test_unicode_support) then
-	setenv subtest_list "$subtest_list $unicode_testlist"
+	setenv subtest_list "$subtest_list uniexcall shared_lib_unicode_zb incr_link_unicode gtm_chset_recompile"
 endif
 
 $gtm_tst/com/submit_subtest.csh

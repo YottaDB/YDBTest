@@ -3,7 +3,7 @@
 ; Copyright (c) 2014, 2015 Fidelity National Information	;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
-; Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -163,7 +163,7 @@ generateTestCase(index,lines)
 	set linkSourceChanged=((LINKEDFROMTYPE=STARRED)!(LINKNEWFROMTYPE=STARRED))&(LINKEDFROMTYPE'=LINKNEWFROMTYPE)
 
 	write "After installation:",!
-	write:(ZBREAKINSTALLED) "rtn+2^rtn",!
+	write:(ZBREAKINSTALLED) "rtn+2^rtn>write ""driving ZBREAK"",!",!
 	write "This is rtn",!
 	write:(ZBREAKINSTALLED) "driving ZBREAK",!
 
@@ -204,7 +204,7 @@ generateTestCase(index,lines)
 	.	; But because a ZLINK is supposed to remove ZBREAKs, we either should have not relinked the routine, updated it to a
 	.	; different version (thus preserving the original version's ZBREAKs), or we are now linking from a different source
 	.	; (ensures that we are not bypassing the link).
-	.	write:((ZBREAKINSTALLED)&((UPDATERTN)!('RELINKRTN)!(linkSourceChanged))) "rtn+2^rtn",!
+	.	write:((ZBREAKINSTALLED)&((UPDATERTN)!('RELINKRTN)!(linkSourceChanged))) "rtn+2^rtn>write ""driving ZBREAK"",!",!
 
 	; Now we are considering the case when we either falled into the callback label in the base frame upon returing from the first
 	; external routine call or never called the external routine at all, simply continuing into the code below.
@@ -231,7 +231,7 @@ generateTestCase(index,lines)
 	.	; But because a ZLINK is supposed to remove ZBREAKs, we should have relinked the routine neither explicitly nor
 	.	; implicitly. (The latter is guaranteed by updatedRoutine being FALSE, since all alternative conditions for
 	.	; implicitly linking the routine at this stage are violated by the presence of the ZBREAK and no explicit ZLINK.)
-	.	write:((ZBREAKINSTALLED)&('RELINKRTN)&('updatedRoutine)) "rtn+2^rtn",!
+	.	write:((ZBREAKINSTALLED)&('RELINKRTN)&('updatedRoutine)) "rtn+2^rtn>write ""driving ZBREAK"",!",!
 
 	close file
 

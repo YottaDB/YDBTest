@@ -1285,8 +1285,8 @@ ZSHOW B:
 
 YDB>
 
-^main
-fact^factor
+^main>B
+fact^factor>B
 YDB>
 Do ^main
 %YDB-I-BREAKZBA, Break instruction encountered during ZBREAK action
@@ -1301,8 +1301,8 @@ YDB>
 
 YDB>
 
-^main
-fact^factor
+^main>B
+fact^factor>B
 YDB>
 ZB -*
 
@@ -1370,9 +1370,9 @@ ZSHOW B:
 
 YDB>
 
-^main
-average+3^avg
-cubeit^cube
+^main>W !,mainstr
+average+3^avg>W !,avgstr2
+cubeit^cube>I I=3 W !,strg1,I
 YDB>
 
 YDB>
@@ -1419,8 +1419,8 @@ ZSHOW B:
 
 YDB>
 
-^main
-average^avg
+^main>W !,mainstr
+average^avg>W !,avgstr1
 YDB>
 ZB average^avg
 
@@ -1435,14 +1435,15 @@ ZSHOW B:
 
 YDB>
 
-^main
-average^avg
+^main>W !,mainstr
+average^avg>W !,avgstr1
+average^avg>ZB average^avg
 YDB>
 ZL main
 
 YDB>
 ZSHOW B
-average^avg
+average^avg>ZB average^avg
 
 YDB>
 ZB fact^factor
@@ -1503,11 +1504,12 @@ ZSHOW B:
 
 YDB>
 
-^main
-average+1^avg
-average+2^avg
-average^avg
-fact^factor
+^main>W !,mainstr
+average+1^avg>B
+average+2^avg>B
+average^avg>W !,avgstr1
+average^avg>ZB average^avg
+fact^factor>B
 YDB>
 ZB average+6^avg
 %YDB-E-NOPLACE, Line specified in a ZBREAK cannot be found
@@ -1523,11 +1525,12 @@ ZSHOW B:
 
 YDB>
 
-^main
-average+1^avg
-average+2^avg
-average^avg
-fact^factor
+^main>W !,mainstr
+average+1^avg>B
+average+2^avg>B
+average^avg>W !,avgstr1
+average^avg>ZB average^avg
+fact^factor>B
 YDB>
 ZB -*
 
@@ -1649,9 +1652,9 @@ ZSHOW B:
 
 YDB>
 
-^base
-^main
-cubeit^cube
+^base>B
+^main>B
+cubeit^cube>B
 YDB>
 ZB -cubeit^cube
 

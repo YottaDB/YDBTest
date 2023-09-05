@@ -3,7 +3,7 @@
 ; Copyright (c) 2015 Fidelity National Information 		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
-; Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -43,7 +43,7 @@ verifyzbreak
 	if $data(x) for i=1:1  set subs=$get(x("B",i))  quit:subs=""  if $incr(cmp1(subs))
 	if $data(zbreakarray) for i=1:1:cntr do
 	. set label=$order(zbreakarray(i,"")),offset=$order(zbreakarray(i,label,""))
-	. if $incr(cmp2(label_$select(offset:"+"_offset,1:"")_"^gtm8290x"))
+	. if $incr(cmp2(label_$select(offset:"+"_offset,1:"")_"^gtm8290x>zcontinue"))
 	if ($data(cmp1)'=$data(cmp2)) do halt
 	set subs="" for  set subs=$order(cmp1(subs),1)  quit:subs=""  do
 	. if $get(cmp2(subs))'=$get(cmp1(subs))  do halt
