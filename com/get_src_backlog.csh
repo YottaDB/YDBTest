@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2014 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -27,5 +30,5 @@ endif
 
 set logfile = "get_src_backlog_`date +%H%M%S`_$$.out"
 $MUPIP replicate -source $gtm_test_instsecondary -showbacklog >& $logfile
-set backlog = `$tst_awk '/backlog number of transactions/ {if ($1 ~ /^[0-9]+$/) print $1}' $logfile`
+set backlog = `$gtm_tst/com/compute_src_backlog_from_showbacklog_file.csh $logfile`
 echo $backlog

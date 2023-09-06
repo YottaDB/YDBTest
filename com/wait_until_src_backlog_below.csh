@@ -3,7 +3,7 @@
 #								#
 # Copyright 2004, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -78,8 +78,9 @@ while ($nowtime < $timeout)
 	echo "Current Time is : `date`"						>>&! ${logfile:r}_trace.out
 	echo "---------------------------------------------------------------"	>>&! ${logfile:r}_trace.out
 	$MUPIP replic -source $gtm_test_instsecondary -showbacklog >& $sblogfile
-	set backlog = `$tst_awk '/backlog number of transactions/ {print $1}' $sblogfile`
-	if ("" == "$backlog") then
+	set backlog = `$gtm_tst/com/compute_src_backlog_from_showbacklog_file.csh $sblogfile`
+	if ($status) then
+		echo $backlog >>&! $logfile
 		echo "SRCBACKLOG-E-FAILED -showbacklog failed. Check $sblogfile" >>&! $logfile
 		cat $sblogfile							>>&! $logfile
 		exit 1
