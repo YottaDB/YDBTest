@@ -210,6 +210,7 @@ Region          AREG
   DB is auto-created                          FALSE  DB shares gvstats                     TRUE
   LOCK shares DB critical section             FALSE  Read Only                              OFF
   Recover interrupted                         FALSE  Full Block Write                         0
+  StatsDB Allocation                           2050
 ##SUSPEND_OUTPUT  REPLIC
 ##TEST_AWK  Max conc proc time         [0-9 ]{22}  Max Concurrent processes                 1
 ##ALLOW_OUTPUT  REPLIC
@@ -496,6 +497,7 @@ Region          DEFAULT
   DB is auto-created                          FALSE  DB shares gvstats                     TRUE
   LOCK shares DB critical section             FALSE  Read Only                              OFF
   Recover interrupted                         FALSE  Full Block Write                         0
+  StatsDB Allocation                           2050
 ##TEST_AWK  Max conc proc time         [0-9 ]{22}  Max Concurrent processes                 1
   Reorg Sleep Nanoseconds                         0
 DSE> Test is valid, if a(1000) is in block 3
@@ -554,6 +556,7 @@ Region          DEFAULT
   DB is auto-created                          FALSE  DB shares gvstats                     TRUE
   LOCK shares DB critical section             FALSE  Read Only                              OFF
   Recover interrupted                         FALSE  Full Block Write                         0
+  StatsDB Allocation                           2050
 ##TEST_AWK  Max conc proc time         [0-9 ]{22}  Max Concurrent processes                 1
   Reorg Sleep Nanoseconds                         0
 DSE> 
