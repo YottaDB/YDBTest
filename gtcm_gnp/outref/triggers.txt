@@ -60,9 +60,9 @@ File local.trg, Line 1: Added SET trigger on ^a named a#1
 1
 1
 -^b(acn=:) -commands=SET -name=btrig -xecute="Set ^b(acn,acn+1)=$ztval" :
-STAT=loadbyitem+4^gtcmtriggers,%YDB-E-REMOTEDBNOTRIG, Trigger operations on global b not supported as it maps to database region BREG that points to a remote file
+STAT=loadbyitem+4^gtcmtriggers,%YDB-E-REMOTEDBNOTRIG, Trigger operations are not supported on global ^b as it maps to database region BREG that points to a remote file
 -^x(acn=:) -commands=SET -xecute="Set ^x(acn,acn+1)=$ztval" :
-STAT=loadbyitem+4^gtcmtriggers,%YDB-E-REMOTEDBNOTRIG, Trigger operations on global x not supported as it maps to database region DEFAULT that points to a remote file
+STAT=loadbyitem+4^gtcmtriggers,%YDB-E-REMOTEDBNOTRIG, Trigger operations are not supported on global ^x as it maps to database region DEFAULT that points to a remote file
 -btrig :
 Trigger named btrig does not exist
 1
@@ -73,11 +73,11 @@ No matching triggers of the form b* found for deletion
 No matching triggers of the form x* found for deletion
 1
 +^b(acn=:) -commands=SET -name=btrig -xecute="Set ^b(acn,acn+1)=$ztval" :
-STAT=loadbyitem+4^gtcmtriggers,%YDB-E-REMOTEDBNOTRIG, Trigger operations on global b not supported as it maps to database region BREG that points to a remote file
+STAT=loadbyitem+4^gtcmtriggers,%YDB-E-REMOTEDBNOTRIG, Trigger operations are not supported on global ^b as it maps to database region BREG that points to a remote file
 +^x(acn=:) -commands=SET -xecute="Set ^x(acn,acn+1)=$ztval" :
-STAT=loadbyitem+4^gtcmtriggers,%YDB-E-REMOTEDBNOTRIG, Trigger operations on global x not supported as it maps to database region DEFAULT that points to a remote file
-STAT=triggers+13^gtcmtriggers,%YDB-E-REMOTEDBNOTRIG, Trigger operations on global b not supported as it maps to database region BREG that points to a remote file
-STAT=triggers+14^gtcmtriggers,%YDB-E-REMOTEDBNOTRIG, Trigger operations on global b not supported as it maps to database region BREG that points to a remote file
+STAT=loadbyitem+4^gtcmtriggers,%YDB-E-REMOTEDBNOTRIG, Trigger operations are not supported on global ^x as it maps to database region DEFAULT that points to a remote file
+STAT=triggers+13^gtcmtriggers,%YDB-E-REMOTEDBNOTRIG, Trigger operations are not supported on global ^b as it maps to database region BREG that points to a remote file
+STAT=triggers+14^gtcmtriggers,%YDB-E-REMOTEDBNOTRIG, Trigger operations are not supported on global ^b as it maps to database region BREG that points to a remote file
 
 
 ###################################################################
