@@ -13,15 +13,15 @@ GTM Process starts in background...
 %YDB-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/a.dat
 %YDB-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/mumps.dat
 BACKUP COMPLETED.
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ./back1/a.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ./back1/mumps.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back1/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/back1/mumps.dat
 Journal States:(expected DISABLED):
   Journal State                            DISABLED
   Journal State                            DISABLED
 ##SOURCE_PATH##/mupip backup *  -nonewjnl ./back{2} : Will succeed
 
-%YDB-I-BACKUPSUCCESS, Backup completed successfully%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ./back2/a.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ./back2/mumps.dat
+%YDB-I-BACKUPSUCCESS, Backup completed successfully%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back2/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/back2/mumps.dat
 Journal States:(expected DISABLED):
   Journal State                            DISABLED
   Journal State                            DISABLED
@@ -32,8 +32,8 @@ Journal States:(expected DISABLED):
 %YDB-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/a.dat
 %YDB-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/mumps.dat
 BACKUP COMPLETED.
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ./back3/a.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ./back3/mumps.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back3/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/back3/mumps.dat
 Journal States:(expected DISABLED):
   Journal State                            DISABLED
   Journal State                            DISABLED
@@ -44,8 +44,8 @@ Journal States:(expected DISABLED):
 %YDB-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/a.dat
 %YDB-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/mumps.dat
 BACKUP COMPLETED.
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ./back4/a.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ./back4/mumps.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back4/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/back4/mumps.dat
 Journal States:(expected DISABLED):
   Journal State                            DISABLED
   Journal State                            DISABLED
@@ -87,11 +87,11 @@ GTM Process starts in background...
 %YDB-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/d.dat
 %YDB-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/mumps.dat
 BACKUP COMPLETED.
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ./back5/a.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ./back5/b.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ./back5/c.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/d.dat backed up in file ./back5/d.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ./back5/mumps.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back5/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/back5/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/back5/c.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/d.dat backed up in file ##TEST_PATH##/back5/d.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/back5/mumps.dat
 Journal States:
 ##TEST_AWK  Journal State                                  ON  Journal Before imaging               ( TRUE|FALSE)
 ##TEST_AWK  Journal State                                  ON  Journal Before imaging               ( TRUE|FALSE)
@@ -100,11 +100,11 @@ Journal States:
   Journal State                            DISABLED
 ##SOURCE_PATH##/mupip backup *  -nonewjnl ./back{6}
 
-%YDB-I-BACKUPSUCCESS, Backup completed successfully%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ./back6/a.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ./back6/b.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ./back6/c.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/d.dat backed up in file ./back6/d.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ./back6/mumps.dat
+%YDB-I-BACKUPSUCCESS, Backup completed successfully%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back6/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/back6/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/back6/c.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/d.dat backed up in file ##TEST_PATH##/back6/d.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/back6/mumps.dat
 Journal States:
 ##TEST_AWK  Journal State                                  ON  Journal Before imaging               ( TRUE|FALSE)
 ##TEST_AWK  Journal State                                  ON  Journal Before imaging               ( TRUE|FALSE)
@@ -125,11 +125,11 @@ Journal States:
 %YDB-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/d.dat
 %YDB-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/mumps.dat
 BACKUP COMPLETED.
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ./back7/a.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ./back7/b.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ./back7/c.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/d.dat backed up in file ./back7/d.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ./back7/mumps.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back7/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/back7/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/back7/c.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/d.dat backed up in file ##TEST_PATH##/back7/d.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/back7/mumps.dat
 Journal States:
 ##TEST_AWK  Journal State                                  ON  Journal Before imaging               ( TRUE|FALSE)
 ##TEST_AWK  Journal State                                  ON  Journal Before imaging               ( TRUE|FALSE)
@@ -148,11 +148,11 @@ Journal States:
 %YDB-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/d.dat
 %YDB-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/mumps.dat
 BACKUP COMPLETED.
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ./back8/a.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ./back8/b.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ./back8/c.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/d.dat backed up in file ./back8/d.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ./back8/mumps.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back8/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/back8/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/back8/c.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/d.dat backed up in file ##TEST_PATH##/back8/d.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/back8/mumps.dat
 Journal States:
 ##TEST_AWK  Journal State                                  ON  Journal Before imaging               ( TRUE|FALSE)
 ##TEST_AWK  Journal State                                  ON  Journal Before imaging               ( TRUE|FALSE)

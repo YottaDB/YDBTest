@@ -18,8 +18,8 @@ backup_jnl_link: Backup without switching journals:
 
 ##SOURCE_PATH##/mupip backup * -nonewjnlfiles ./bak1
 
-%YDB-I-BACKUPSUCCESS, Backup completed successfully%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ./bak1/a.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ./bak1/mumps.dat
+%YDB-I-BACKUPSUCCESS, Backup completed successfully%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/bak1/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/bak1/mumps.dat
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000065 are backed up
 a.mjl
@@ -34,8 +34,8 @@ backup_jnl_link: Backup with switching journals. New ones are linked to previous
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
 BACKUP COMPLETED.
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ./bak2/a.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ./bak2/mumps.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/bak2/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/bak2/mumps.dat
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000065 are backed up
 ##TEST_AWK Prev journal file name ##TEST_PATH##/mumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
@@ -52,8 +52,8 @@ backup_jnl_link: Backup with switching journals. Cut previous journal links:
 %YDB-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/a.mjl created for database file ##TEST_PATH##/a.dat
 %YDB-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat
 BACKUP COMPLETED.
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ./bak3/a.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ./bak3/mumps.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/bak3/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/bak3/mumps.dat
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000065 are backed up
  Prev journal file name 
@@ -63,12 +63,12 @@ backup_jnl_link: Backup with journal=off for destinition database
 
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
 %YDB-I-JNLSTATE, Journaling state for database file ./bak4/a.dat is now OFF
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ./bak4/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/bak4/a.dat
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000065 are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
 %YDB-I-JNLSTATE, Journaling state for database file ./bak4/mumps.dat is now OFF
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ./bak4/mumps.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/bak4/mumps.dat
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 
@@ -82,11 +82,11 @@ YDB>
 backup_jnl_link: Backup with journal=disable -nonewjnlfiles for destinition database
 
 %YDB-I-JNLSTATE, Journaling state for database file ./bak5/a.dat is now DISABLED
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ./bak5/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/bak5/a.dat
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000065 are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 %YDB-I-JNLSTATE, Journaling state for database file ./bak5/mumps.dat is now DISABLED
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ./bak5/mumps.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/bak5/mumps.dat
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 
@@ -108,13 +108,13 @@ backup_jnl_link: Backup with journal=noprev,disable for destinition database
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
 %YDB-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/a.mjl created for database file ##TEST_PATH##/a.dat
 %YDB-I-JNLSTATE, Journaling state for database file ./bak6/a.dat is now DISABLED
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ./bak6/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/bak6/a.dat
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000066 are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
 %YDB-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat
 %YDB-I-JNLSTATE, Journaling state for database file ./bak6/mumps.dat is now DISABLED
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ./bak6/mumps.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/bak6/mumps.dat
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000002 are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
  Prev journal file name 

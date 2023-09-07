@@ -27,10 +27,10 @@ unset verbose
 mkdir ./back
 $MUPIP backup -noonline "*" ./back | & sort -f
 
-%YDB-I-BACKUPSUCCESS, Backup completed successfully%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ./back/a.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ./back/b.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ./back/c.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ./back/mumps.dat
+%YDB-I-BACKUPSUCCESS, Backup completed successfully%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/back/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/back/c.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/back/mumps.dat
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x000000000000001D are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x000000000000001D are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x000000000000001D are backed up
@@ -51,9 +51,9 @@ chmod 444 b.dat
 $MUPIP backup -noonline "*" ./back | & sort -f
 %YDB-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ./back/a.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ./back/c.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ./back/mumps.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/back/c.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/back/mumps.dat
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x000000000000001D are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x000000000000001D are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000039 are backed up
@@ -93,10 +93,10 @@ echo "*** *.dat R/W *.mjl R/W ***"
 *** *.dat R/W *.mjl R/W ***
 $MUPIP backup -noonline "*" ./Back | & sort -f
 
-%YDB-I-BACKUPSUCCESS, Backup completed successfully%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ./Back/a.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ./Back/b.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ./Back/c.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ./Back/mumps.dat
+%YDB-I-BACKUPSUCCESS, Backup completed successfully%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/Back/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/Back/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/Back/c.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/Back/mumps.dat
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x000000000000001D are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x000000000000001D are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x000000000000001D are backed up
@@ -114,10 +114,10 @@ chmod 666 b.dat
 chmod 444 b.mjl
 $MUPIP backup -noonline "*" ./Back | & sort -f
 
-%YDB-I-BACKUPSUCCESS, Backup completed successfully%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ./Back/a.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ./Back/b.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ./Back/c.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ./Back/mumps.dat
+%YDB-I-BACKUPSUCCESS, Backup completed successfully%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/Back/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/Back/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/Back/c.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/Back/mumps.dat
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x000000000000001D are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x000000000000001D are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x000000000000001D are backed up
@@ -136,9 +136,9 @@ chmod 666 b.mjl
 $MUPIP backup -noonline "*" ./Back | & sort -f
 %YDB-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ./Back/a.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ./Back/c.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ./Back/mumps.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/Back/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/Back/c.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/Back/mumps.dat
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x000000000000001D are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x000000000000001D are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000039 are backed up
@@ -156,9 +156,9 @@ chmod 444 b.mjl
 $MUPIP backup -noonline "*" ./Back | & sort -f
 %YDB-E-DBRDONLY, Database file ##TEST_PATH##/b.dat read only
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ./Back/a.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ./Back/c.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ./Back/mumps.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/Back/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/Back/c.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/Back/mumps.dat
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x000000000000001D are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x000000000000001D are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000039 are backed up
@@ -1857,10 +1857,10 @@ $MUPIP backup -noonline -i "*" ./backup | & sort -f
 5 blocks saved.
 7 blocks saved.
 BACKUP COMPLETED.
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ./backup/a.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ./backup/b.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ./backup/c.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ./backup/mumps.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/backup/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/backup/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/backup/c.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/backup/mumps.dat
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x000000000000001D are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x000000000000001D are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x000000000000001D are backed up

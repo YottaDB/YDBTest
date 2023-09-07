@@ -63,7 +63,7 @@ mumpsmumpsmumpsmumpsm.dat
 # with $ydb_baktmpdir set to a shorter path. This backup will succeed
 # because none of the buffers in MUPIP BACKUP will ever overflow the
 # buffer and thus there is no need for a FILENAMETOOLONG error.
-##TEST_AWK%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumpsmumpsmumpsmumpsm.dat backed up in file a*/mumpsmumpsmumpsmumpsm.dat
+##TEST_AWK%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumpsmumpsmumpsmumpsm.dat backed up in file ##TEST_PATH##/a*/mumpsmumpsmumpsmumpsm.dat
 ##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 ###################################################################
@@ -71,7 +71,7 @@ mumpsmumpsmumpsmumpsm.dat
 # This should produce a FILENAMETOOLONG error on the
 # upstream version of V6.3-012 but will not produce an
 # error on YottaDB or pre-V6.3-012 upstream versions.
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumpsmumpsmumpsmumpsm.dat backed up in file abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefg
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumpsmumpsmumpsmumpsm.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefg
 ##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 ###################################################################
