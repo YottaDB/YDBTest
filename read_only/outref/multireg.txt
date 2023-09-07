@@ -26,11 +26,11 @@ chmod 666 *.dat
 unset verbose
 mkdir ./back
 $MUPIP backup -noonline "*" ./back | & sort -f
-
-%YDB-I-BACKUPSUCCESS, Backup completed successfully%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back/a.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/back/b.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/back/c.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/back/mumps.dat
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x000000000000001D are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x000000000000001D are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x000000000000001D are backed up
@@ -92,11 +92,11 @@ mkdir ./Back
 echo "*** *.dat R/W *.mjl R/W ***"
 *** *.dat R/W *.mjl R/W ***
 $MUPIP backup -noonline "*" ./Back | & sort -f
-
-%YDB-I-BACKUPSUCCESS, Backup completed successfully%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/Back/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/Back/a.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/Back/b.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/Back/c.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/Back/mumps.dat
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x000000000000001D are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x000000000000001D are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x000000000000001D are backed up
@@ -113,11 +113,11 @@ echo "*** b.dat R/W b.mjl R/O ***"
 chmod 666 b.dat
 chmod 444 b.mjl
 $MUPIP backup -noonline "*" ./Back | & sort -f
-
-%YDB-I-BACKUPSUCCESS, Backup completed successfully%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/Back/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/Back/a.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/Back/b.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/Back/c.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/Back/mumps.dat
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x000000000000001D are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x000000000000001D are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x000000000000001D are backed up

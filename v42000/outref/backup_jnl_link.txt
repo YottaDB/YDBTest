@@ -17,9 +17,9 @@ YDB>
 backup_jnl_link: Backup without switching journals:
 
 ##SOURCE_PATH##/mupip backup * -nonewjnlfiles ./bak1
-
-%YDB-I-BACKUPSUCCESS, Backup completed successfully%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/bak1/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/bak1/a.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/bak1/mumps.dat
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000065 are backed up
 a.mjl
@@ -28,9 +28,6 @@ mumps.mjl
 backup_jnl_link: Backup with switching journals. New ones are linked to previous ones. Default action.
 
 ##SOURCE_PATH##/mupip backup * ./bak2
-
-
-
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
 BACKUP COMPLETED.

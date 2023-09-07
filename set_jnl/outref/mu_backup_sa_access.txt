@@ -19,9 +19,9 @@ Journal States:(expected DISABLED):
   Journal State                            DISABLED
   Journal State                            DISABLED
 ##SOURCE_PATH##/mupip backup *  -nonewjnl ./back{2} : Will succeed
-
-%YDB-I-BACKUPSUCCESS, Backup completed successfully%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back2/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back2/a.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/back2/mumps.dat
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
 Journal States:(expected DISABLED):
   Journal State                            DISABLED
   Journal State                            DISABLED
@@ -99,12 +99,12 @@ Journal States:
   Journal State                            DISABLED
   Journal State                            DISABLED
 ##SOURCE_PATH##/mupip backup *  -nonewjnl ./back{6}
-
-%YDB-I-BACKUPSUCCESS, Backup completed successfully%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back6/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back6/a.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/back6/b.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/back6/c.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/d.dat backed up in file ##TEST_PATH##/back6/d.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/back6/mumps.dat
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
 Journal States:
 ##TEST_AWK  Journal State                                  ON  Journal Before imaging               ( TRUE|FALSE)
 ##TEST_AWK  Journal State                                  ON  Journal Before imaging               ( TRUE|FALSE)
