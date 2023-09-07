@@ -66,9 +66,7 @@ mumpsmumpsmumpsmumpsm.dat
 # buffer and thus there is no need for a FILENAMETOOLONG error.
 ##TEST_AWK%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumpsmumpsmumpsmumpsm.dat backed up in file a*/mumpsmumpsmumpsmumpsm.dat
 ##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up.
-
-
-BACKUP COMPLETED.
+%YDB-I-BACKUPSUCCESS, Backup completed successfully.
 
 ###################################################################
 # Testing a 255 character backup file name with no file path.
@@ -77,9 +75,7 @@ BACKUP COMPLETED.
 # error on YottaDB or pre-V6.3-012 upstream versions.
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumpsmumpsmumpsmumpsm.dat backed up in file abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefg
 ##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up.
-
-
-BACKUP COMPLETED.
+%YDB-I-BACKUPSUCCESS, Backup completed successfully.
 
 ###################################################################
 # Testing a 256 character backup file name with no file path.
