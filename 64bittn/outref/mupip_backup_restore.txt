@@ -11,9 +11,7 @@ mumps.dat
 # Take a full backup
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file backup_orig.dat
 Transactions up to ##FILTERED##GTM_TEST_DEBUGINFO.*
-
-
-BACKUP COMPLETED.
+%YDB-I-BACKUPSUCCESS, Backup completed successfully.
 
 # Take an incremental backup since last full backup
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat incrementally backed up in file backup.inc1

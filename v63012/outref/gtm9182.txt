@@ -40,9 +40,7 @@ mumpsmumpsmumpsmumpsm.dat
 # (backup file path length is 255 but temp file path length is 253)
 ##TEST_AWK%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumpsmumpsmumpsmumpsm.dat backed up in file ##TEST_PATH##/a*/mumpsmumpsmumpsmumpsm.dat
 ##TEST_AWKTransactions up to 0x................ are backed up.
-
-
-BACKUP COMPLETED.
+%YDB-I-BACKUPSUCCESS, Backup completed successfully.
 
 ###################################################################
 # Backing up DEFAULT Region to path length 230

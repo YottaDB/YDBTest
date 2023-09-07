@@ -41,9 +41,7 @@ Do BYTESTREAM BACKUP
 ##TEST_AWK%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat incrementally backed up in file .*.dat
 ##TEST_AWK[1-9][0-9]* blocks saved.
 ##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000[0-9A-F]* are backed up.
-
-
-BACKUP COMPLETED.
+%YDB-I-BACKUPSUCCESS, Backup completed successfully.
 
 
 ###################################################################

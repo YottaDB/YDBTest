@@ -27,9 +27,7 @@ unset verbose
 mkdir ./back
 $MUPIP backup -noonline "*" ./back | & sort -f
 
-
-
-BACKUP COMPLETED.
+%YDB-I-BACKUPSUCCESS, Backup completed successfully.
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ./back/a.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ./back/b.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ./back/c.dat

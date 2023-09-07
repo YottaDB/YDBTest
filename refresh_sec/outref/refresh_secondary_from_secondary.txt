@@ -37,9 +37,7 @@ Replication Instance file ##REMOTE_TEST_PATH##/instance2/mumps.repl backed up in
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##REMOTE_TEST_PATH##/instance2/mumps.mjl created for region DEFAULT with .*BEFORE_IMAGES
 %YDB-I-BACKUPDBFILE, DB file ##REMOTE_TEST_PATH##/instance2/mumps.dat backed up in file bak1/mumps.dat
 ##TEST_AWKTransactions up to 0x[0-9A-Z]* are backed up.
-
-
-BACKUP COMPLETED.
+%YDB-I-BACKUPSUCCESS, Backup completed successfully.
 
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST2 RCV=INST3 cp bak1/* __RCV_DIR__/'==
 ##SUSPEND_OUTPUT  NON_ENCRYPT
