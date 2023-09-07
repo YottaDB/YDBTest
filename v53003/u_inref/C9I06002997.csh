@@ -3,7 +3,7 @@
 #								#
 # Copyright 2008, 2013 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -181,7 +181,7 @@ DSE_EOF
 $grep -E "KILLs in progress|Actual kills in progress|inhibiting KILLs" dse_dump1.out
 
 #We sleep to ensure that the processes running in background get enough time to proceed after we had set KIP=0
-$gtm_tst/com/wait_for_log.csh -log mupip_bkgrnd_backup.out -waitcreation -duration 60 -message "BACKUP COMPLETED"
+$gtm_tst/com/wait_for_log.csh -log mupip_bkgrnd_backup.out -waitcreation -duration 60 -message "%YDB-I-BACKUPSUCCESS"
 $gtm_tst/com/wait_for_log.csh -log mupip_bkgrnd_integ.out -waitcreation -duration 60 -message "No errors detected by integ"
 $gtm_tst/com/wait_for_log.csh -log mupip_bkgrnd_freeze.out -waitcreation -duration 60 -message "All requested regions frozen"
 echo "# inhibit_kills flag should get cleared after MUPIP backup, freeze and integ are successful."
@@ -211,7 +211,7 @@ chmod 777 $bkp_dir
 echo "# MUPIP BACKUP ALL regions. Region2 is expected to have warning but will not affect backup."
 $MUPIP backup -online '*' $bkp_dir  >& backup3_${dbname2}.outx
 $grep "YDB-W-KILLABANDONED" backup3_${dbname2}.outx | $tst_awk -v "region=$db2" '{gsub(region,"##DBNAME2##") ; print }'
-$grep "BACKUP COMPLETED" backup3_${dbname2}.outx
+$grep "%YDB-I-BACKUPSUCCESS" backup3_${dbname2}.outx
 
 echo "# MUPIP FREEZE ALL regions. Region2 is expected to have warning but will be frozen."
 $MUPIP freeze -on '*' >& freeze3_${dbname2}.outx

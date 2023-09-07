@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -54,7 +54,7 @@ if ($status) then
 	cat backup_log.txt
 endif
 
-grep -e "BACKUP COMPLETED" backup_log.txt
+grep -e "%YDB-I-BACKUPSUCCESS" backup_log.txt
 
 
 echo '# Shut down the DB '

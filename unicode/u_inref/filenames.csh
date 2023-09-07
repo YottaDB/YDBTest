@@ -308,7 +308,7 @@ mkdir backupｂａｃｋｕｐ我
 $MUPIP backup "*" backupｂａｃｋｕｐ我 >&! mupip_backup.out
 $grep "%YDB-I-BACKUPTN, Transactions from" mupip_backup.out | sort
 echo ""
-$grep "BACKUP COMPLETED" mupip_backup.out
+$grep "%YDB-I-BACKUPSUCCESS" mupip_backup.out
 
 echo "#Contents of the backup directory:"
 # this ugly coding is because the ordering of ls with unicode is not consistant across machines and across different runs in a same machine

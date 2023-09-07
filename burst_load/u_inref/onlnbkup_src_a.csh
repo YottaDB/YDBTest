@@ -53,7 +53,7 @@ echo "Clearing backlog started at: `date +%H:%M:%S`" >>&! $tst_general_dir/$time
 $gtm_tst/com/rfstatus.csh "Before_RF_sync_starts:"
 $gtm_tst/com/RF_sync.csh
 echo "Clearing backlog stoped at: `date +%H:%M:%S`" >>&! $tst_general_dir/$timefile
-$gtm_tst/com/wait_for_log.csh -log online_back_out.out  -message "BACKUP COMPLETED." -duration 300 -waitcreation
+$gtm_tst/com/wait_for_log.csh -log online_back_out.out  -message "%YDB-I-BACKUPSUCCESS." -duration 300 -waitcreation
 $gtm_tst/com/dbcheck.csh -extract
 cat showbacklog.log >>&! $tst_general_dir/$timefile
 ls -l *.dat *.mjl  >>&! $tst_general_dir/$timefile

@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -20,7 +20,7 @@ source $gtm_tst/$tst/u_inref/createdb_start_updates.csh 1
 # Use -dbg qualifier to backup to get more information about start and end time of backup in case of test failures
 $MUPIP backup -online "*" ./online1 -dbg >&! online1.out
 date >>& online1.out
-$grep "BACKUP COMPLETED" online1.out
+$grep "%YDB-I-BACKUPSUCCESS" online1.out
 if ($status) then
         echo "PASS! BACKUP did fail as expected"
         # sometimes MUPIP backup errors out before it starts itself

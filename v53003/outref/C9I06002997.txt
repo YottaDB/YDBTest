@@ -115,7 +115,7 @@ All requested regions unfrozen
 # Set abandoned_kills flag
 # MUPIP BACKUP ALL regions. Region2 is expected to have warning but will not affect backup.
 %YDB-W-KILLABANDONED, Abandoned kills counter is greater than zero for file ##TEST_PATH##/##DBNAME2##, backup database could have incorrectly marked busy integrity errors
-BACKUP COMPLETED.
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
 # MUPIP FREEZE ALL regions. Region2 is expected to have warning but will be frozen.
 WARNING: The region ##REGION2## to be frozen contains abandoned kills
 All requested regions frozen

@@ -117,7 +117,7 @@ $MUPIP reorg -encrypt=$new_key -region "*" >&! mupip_reorg_encrypt.out
 @ pid = `cat pid.out`
 $gtm_tst/com/wait_for_proc_to_die.csh $pid 60
 
-$grep -q "BACKUP COMPLETED" mupip_backup.out
+$grep -q "%YDB-I-BACKUPSUCCESS" mupip_backup.out
 if ($status) then
 	echo "TEST-E-FAIL, MUPIP BACKUP failed. See mupip_backup.out for details"
 	exit 1
@@ -188,7 +188,7 @@ if ("pro" != "$tst_image") then
 	@ pid = `cat pid.out`
 	$gtm_tst/com/wait_for_proc_to_die.csh $pid 60
 
-	$grep -q "BACKUP COMPLETED" mupip_backup.out
+	$grep -q "%YDB-I-BACKUPSUCCESS" mupip_backup.out
 	if ($status) then
 		echo "TEST-E-FAIL, MUPIP BACKUP failed. See mupip_backup.out for details"
 		exit 1

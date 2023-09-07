@@ -50,7 +50,7 @@ $gtm_tst/$tst/u_inref/online_bak_bkgrnd.csh $test_bakdir $tst_general_dir/$timef
 $gtm_tst/com/rfstatus.csh "Before_RF_sync_starts:"
 $gtm_tst/com/RF_sync.csh
 echo "Clearing backlog stoped at: `date +%H:%M:%S`" >>&! $tst_general_dir/$timefile
-$gtm_tst/com/wait_for_log.csh -log online_back_out.out  -message "BACKUP COMPLETED." -duration 300 -waitcreation
+$gtm_tst/com/wait_for_log.csh -log online_back_out.out  -message "%YDB-I-BACKUPSUCCESS." -duration 300 -waitcreation
 #
 $gtm_tst/com/dbcheck.csh -extract
 #

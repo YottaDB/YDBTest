@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -50,7 +50,7 @@ do ^mrverify
 halt
 EOF
 cat *.mje*
-$grep "BACKUP COMPLETED" online4b.log
+$grep "%YDB-I-BACKUPSUCCESS" online4b.log
 #
 #
 

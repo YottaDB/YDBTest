@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2009, 2014 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -39,7 +42,7 @@ while ($maxtime > $timer)
 		endif
 	endif
 	echo "$dse_bkup" > dse_bkup.out
-	$grep -q "BACKUP COMPLETED" online1.out
+	$grep -q "%YDB-I-BACKUPSUCCESS" online1.out
 	if (! $status) then
 		echo "TEST-E-ERROR backup completed before stop could be attempted."
 		exit 1
@@ -57,7 +60,7 @@ $MUPIP stop $backup_started
 if ($status) set exit_status = 1
 echo "$dse_bkup" > dse_bkup.out
 $gtm_tst/com/wait_for_proc_to_die.csh $backup_started
-$grep -q "BACKUP COMPLETED" online1.out
+$grep -q "%YDB-I-BACKUPSUCCESS" online1.out
 if (! $status) then
 	echo "TEST-E-ERROR backup completed before stop could be attempted."
 	exit 1
