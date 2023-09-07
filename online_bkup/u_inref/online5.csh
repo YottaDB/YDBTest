@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2002, 2013 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -65,7 +68,7 @@ if ($status != 0) then
 	echo ERROR from restore from pipe.
 	exit 97
 else
-	$grep -E "restored|COMPLETED" online5_restore.out
+	$grep -E "restored|RESTORESUCCESS" online5_restore.out
 endif
 $GTM << pipeverify2
 d fill3^myfill("ver")
