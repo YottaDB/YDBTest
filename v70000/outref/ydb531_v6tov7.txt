@@ -1,0 +1,206 @@
+
+# This test does an upgrade of V6 DBs to V7 DBs via two methods:
+#   1. MUPIP EXTRACT/LOAD
+#   2. Using the MERGE command
+
+#
+# Force use of a V6 mode to create the DBs. This also means turning off ydb_test_4g_db_blks as the two
+# are incompatible together as V6 cannot create DBs with holes in them.
+
+# Create 5 DBs for imptp to fill
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+mumps.dat
+
+# Switch back to the V6 version that created the DBs to create initial content for the DBs
+
+# Start imptp to fill DBs - let run for 5 seconds then stop imptp
+
+# Stop imptp and run checkdb.csh
+Checking database on ##TEST_PATH##
+
+##TEST_AWK(YDB|GTM)>
+do checkdb
+checkdb PASSED.
+
+##TEST_AWK(YDB|GTM)>
+
+# Create a readable extract of the databases as they exist now (V6 mode). Also create a binary extract for
+# use with the extract/load type upgrade.
+
+# Switching back to test/V7 version
+
+# Drive initialization of the upgrade engine
+
+
+**********************************************************************************************
+
+# Start upgrade initialization (UpgradeInit^DBUpgradeMethods)
+# Note - we may bypass some steps (like step #1) that are trigger specific if this run does not have triggers
+##SUSPEND_OUTPUT NOTRIGGER
+
+# Step 1: Dump V6 triggers to file V6TriggerDefs.txt
+##ALLOW_OUTPUT NOTRIGGER
+
+# Run steps 2 through 5 on each of our V7 subdirectories (V7XtrLoadDBs and V7MergedDBs):
+
+
+***********************************************************************
+
+# Upgrade databases in the main directory from V6 to V7 DBs by the MUPIP EXTRACT/LOAD method:
+
+# Step 2: Create subdir for DBs (V7XtrLoadDBs):
+
+# Step 3: Copy global directory to subdirectory V7XtrLoadDBs
+
+# Step 4: Force database references in the V7 GLD to be full path
+
+# Step 5: Create the V7 DBs
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/V7XtrLoadDBs/a.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/V7XtrLoadDBs/b.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/V7XtrLoadDBs/c.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/V7XtrLoadDBs/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/V7XtrLoadDBs/d.dat created
+
+
+***********************************************************************
+
+# Upgrade databases in the main directory from V6 to V7 DBs by the MERGE method:
+
+# Step 2: Create subdir for DBs (V7MergedDBs):
+
+# Step 3: Copy global directory to subdirectory V7MergedDBs
+
+# Step 4: Force database references in the V7 GLD to be full path
+
+# Step 5: Create the V7 DBs
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/V7MergedDBs/a.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/V7MergedDBs/b.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/V7MergedDBs/c.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/V7MergedDBs/mumps.dat created
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/V7MergedDBs/d.dat created
+
+***********************************************************************
+
+# Step 6: Convert (main dir) V6 DB global directory to have full paths
+
+
+**********************************************************************************************
+
+###################################################################
+***** Upgrade Method #1 - MUPIP EXTRACT/LOAD
+###################################################################
+
+# Drive script that performs upgrade by MUPIP EXTRACT/LOAD
+
+# Upgrade databases in the main directory from V6 to V7 DBs by the MUPIP EXTRACT/LOAD method:
+
+# Load the V6 extract created during initialization
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ...................................(|UTF-8 )(YottaDB|GT.M) MUPIP EXTRACT *
+
+Beginning LOAD at record number: 2
+
+##TEST_AWKLOAD TOTAL		Key Cnt: [1-9][0-9]*  Max Subsc Len: [1-9][0-9]*  Max Data Len: [1-9][0-9]*
+##TEST_AWK%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: [1-9][0-9]*
+##SUSPEND_OUTPUT NOTRIGGER
+
+# Load triggers into database now that all data is loaded
+
+# Create trigger extract from the V7 DB for comparison cases later
+##ALLOW_OUTPUT NOTRIGGER
+
+# Create an extract of this upgraded DB
+
+# Start imptp to validate upgrade by MUPIP EXTRACT/LOAD V7 DBs - let run for 5 seconds then stop imptp
+
+# Stop imptp and run checkdb.csh
+Checking database on ##TEST_PATH##/V7XtrLoadDBs
+
+YDB>
+do checkdb
+checkdb PASSED.
+
+YDB>
+
+
+###################################################################
+***** Upgrade Method #2 - Use MERGE command to migrate globals from V6 to V7 database
+###################################################################
+#
+# Second update method is via using one or more MERGE commands to migrate existing globals from the V6 DB
+# to the V7 DB.
+#
+# The global directory is copied from the main directory to a created directory V7MergedDBs.
+# Since the database names in the global directory created by dbcreate.csh are just the DB names without any
+# path information, then when we MERGE one global to the same global, since the DB name is the same in both
+# global directories, the data is copied onto itself instead of copying between the two databases. So with
+# our merge running (locally) in the V6 DB, we need the global directory for the V7 DB to have full path
+# information so YottaDB knows to copy the data to a DIFFERENT database.
+#
+# To determine the databases and global names that need to be merged, we run first run GDE SHOW -SEGMENT
+# to get a list of the databases in this global directory. Then for each database in the global directory,
+# we run GDE CHANGE -SEG xxxx -FILE=yyyy to change the database name for segment/region xxxx to the database
+# name (including full path).
+#
+# Once the DB access is setup, we $ORDER through the globals of the V6 database and do a MERGE for each
+# one to migrate it to the V7 database.
+#
+
+# Drive script that performs upgrade by MERGE (output file UpgradeByMerge_output.txt)
+
+# Upgrade databases in the main directory from V6 to V7 DBs by the MERGE method:
+##SUSPEND_OUTPUT NOTRIGGER
+
+# Load triggers into database now that all data is loaded
+
+# Create trigger extract from the V7 DB for comparison cases later
+##ALLOW_OUTPUT NOTRIGGER
+
+# Create an extract of this upgraded DB
+
+# Start imptp to validate upgrade by MERGE V7 DBs - let run for 5 seconds then stop imptp
+
+# Stop imptp and run checkdb.csh
+Checking database on ##TEST_PATH##/V7MergedDBs
+
+YDB>
+do checkdb
+checkdb PASSED.
+
+YDB>
+
+###################################################################
+# Verify the database extract from the V6 DBs is the same as the extracts from the two upgraded V7 DBs.
+# Note comparisons are done starting with record 3 to avoid differences in header.
+###################################################################
+
+##SUSPEND_OUTPUT NOTRIGGER
+** DB extracts match
+##ALLOW_OUTPUT NOTRIGGER
+##SUSPEND_OUTPUT TRIGGER
+** DB extracts match - PASS
+##ALLOW_OUTPUT TRIGGER
+##SUSPEND_OUTPUT NOTRIGGER
+
+###################################################################
+# Verify the trigger extract from the V6 DB is the same as the extracts from the two upgraded V7 DBs.
+# Note the extracts need to be "normalized" first by removing the "cycle: n[nn..]" values in the comments
+# of the trigger extracts. When extracts are being freshly loaded into a DB, the cycle values will
+# change.
+###################################################################
+
+** Trigger extracts match
+
+*** DB and Trigger extracts match - PASS ***
+##ALLOW_OUTPUT NOTRIGGER
+
+# Verify DBs
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
