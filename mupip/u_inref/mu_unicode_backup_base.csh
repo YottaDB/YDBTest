@@ -1,4 +1,19 @@
-#! /usr/local/bin/tcsh -f
+#!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+# Portions Copyright (c) Fidelity National			#
+# Information Services, Inc. and/or its subsidiaries.		#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
 echo MUPIP BACKUP
 setenv gtmgbldir "ＡＢＣＤ.gld"
 if (("MM" == $acc_meth) && (0 == $gtm_platform_mmfile_ext)) then
@@ -39,20 +54,20 @@ if ( $status > 0 ) then
     exit 2
 endif
 #
-$GTM << eeee 
+$GTM << eeee
 w "Do in1^udbfill(""kill"")",!
 d in1^udbfill("kill")
 w "Do in2^udbfill(""set"")",!
 d in2^udbfill("set")
 h
 eeee
-$MUPIP backup -incremental -i -s=i "*" $bkup_dir3/backup.bak3
+$MUPIP backup -incremental -i -since=i "*" $bkup_dir3/backup.bak3
 if ( $status > 0 ) then
     echo ERROR with incremental since incremental backup.
     exit 3
 endif
 #
-$MUPIP backup -i -s=r DEFAULT -noonline  $bkup_dir3/backup.bak33
+$MUPIP backup -i -since=r DEFAULT -noonline  $bkup_dir3/backup.bak33
 if ( $status > 0 ) then
     echo ERROR with incremental since record backup.
     exit 4
@@ -63,14 +78,14 @@ if ( $status > 0 ) then
     echo ERROR with incremental from transaction backup.
     exit 5
 endif
-$gtm_tst/com/dbcheck.csh 
+$gtm_tst/com/dbcheck.csh
 #
 #
 ###########
 # restore #
 ###########
 \cp -f $bkup_dir1/* .  # Restore from comprehensive bakup
-$GTM << eeee 
+$GTM << eeee
 w "Do in0^udbfill(""ver"")",!
 d in0^udbfill("ver")
 h
@@ -82,7 +97,7 @@ if ( $status > 0 ) then
     echo $MUPIP restore ＡＢＣＤ.dat $bkup_dir2/backup.bak2 failed
     exit 8
 endif
-$GTM << eeee 
+$GTM << eeee
 w "Do in1^udbfill(""ver"")",!
 d in1^udbfill("ver")
 h
@@ -93,7 +108,7 @@ if ( $status > 0 ) then
     echo $MUPIP restore ＡＢＣＤ.dat $bkup_dir3/backup.bak3 failed
     exit 8
 endif
-$GTM << eeee 
+$GTM << eeee
 w "Do in2^udbfill(""ver"")",!
 d in2^udbfill("ver")
 h
@@ -107,7 +122,7 @@ if ( $status > 0 ) then
     echo $MUPIP restore ＡＢＣＤ.dat $bkup_dir3/backup.bak33
     exit 8
 endif
-$GTM << eeee 
+$GTM << eeee
 w "Do in2^udbfill(""ver"")",!
 d in2^udbfill("ver")
 h
@@ -121,7 +136,7 @@ if ( $status > 0 ) then
     echo $MUPIP restore ＡＢＣＤ.dat $bkup_dir3/backup.bak333 failed
     exit 8
 endif
-$GTM << eeee 
+$GTM << eeee
 w "Do in2^udbfill(""ver"")",!
 d in2^udbfill("ver")
 h

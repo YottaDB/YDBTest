@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -137,14 +140,14 @@ eeee
 source $gtm_tst/$tst/u_inref/check_core_file.csh ba $corecnt
 #
 #
-$MUPIP backup -i -s=i DEFAULT -noonline $bkp_dir/backup.bak3
+$MUPIP backup -i -since=i DEFAULT -noonline $bkp_dir/backup.bak3
 if ( $status > 0 ) then
     echo "BACKUP-E-FAILED : incremental since incremental backup."
     exit 3
 endif
 #
 #
-$MUPIP backup -i -s=r DEFAULT -noonline  $bkp_dir/backup.bak33
+$MUPIP backup -i -since=r DEFAULT -noonline  $bkp_dir/backup.bak33
 if ( $status > 0 ) then
     echo "BACKUP-E-FAILED : incremental since record backup."
     exit 4
@@ -331,7 +334,7 @@ source $gtm_tst/$tst/u_inref/check_core_file.csh ba $corecnt
 ####################
 #
 #
-$MUPIP backup -i -s=i DEFAULT -noonline ./backup.dat
+$MUPIP backup -i -since=i DEFAULT -noonline ./backup.dat
 if ($status == 0) then
     echo ERROR from backup to oneself.
     exit 13
