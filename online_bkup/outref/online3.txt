@@ -28,9 +28,15 @@ YDB>
 YDB>
 
 YDB>
-
-
-
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/online3a.inc
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/online3b.inc
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/online3.dat backed up in file ##TEST_PATH##/online3d.inc
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
+##SUSPEND_OUTPUT SPANNING_REGIONS
+%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000066 are backed up
+%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000066 are backed up
+%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000066 are backed up
+##ALLOW_OUTPUT SPANNING_REGIONS
 ##SUSPEND_OUTPUT  NON_REPLIC
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
@@ -39,20 +45,11 @@ YDB>
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with .*BEFORE_IMAGES
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/online3.mjl created for region DEFAULT with .*BEFORE_IMAGES
 ##ALLOW_OUTPUT  NON_REPLIC
-##SUSPEND_OUTPUT SPANNING_REGIONS
-7 blocks saved.
-7 blocks saved.
-7 blocks saved.
-##ALLOW_OUTPUT SPANNING_REGIONS
-BACKUP COMPLETED.
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/online3a.inc
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/online3b.inc
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/online3.dat backed up in file ##TEST_PATH##/online3d.inc
 ##ALLOW_OUTPUT  NON_REPLIC
 ##SUSPEND_OUTPUT SPANNING_REGIONS
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000066 are backed up
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000066 are backed up
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000066 are backed up
+7 blocks saved.
+7 blocks saved.
+7 blocks saved.
 ##ALLOW_OUTPUT SPANNING_REGIONS
 ##SUSPEND_OUTPUT  NON_REPLIC
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##

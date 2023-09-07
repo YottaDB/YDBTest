@@ -83,7 +83,6 @@ $MUPIP backup "*" ./back1
 %SYSTEM-E-ENO2, No such file or directory
 %YDB-E-NOREGION, REGION not found: DEFAULT
 %YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
-
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 $MUPIP integ -r "*"
 %YDB-I-REGFILENOTFOUND, Database file ./dir1/mumps.dat corresponding to region DEFAULT cannot be found
@@ -279,30 +278,23 @@ $MUPIP integ a''d/mumps.dat
 
 set nonomatch
 $MUPIP backup "*" -nonewj .a..?..b.c/backup.dat
-
-%YDB-E-DIRACCESS, Do not have full access to directory for temporary files: .a..?..b.c/
+%YDB-E-DIRACCESS, Do not have full access to directory for temporary files: ##TEST_PATH##/.a..?..b.c/
 %SYSTEM-E-ENO2, No such file or directory
 %YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
-
 unset nonomatch
 unset verbose
 setenv ydb_baktmpdir ./bo$goue_name
 $MUPIP backup "*" -nonewj ./back3
-
 %YDB-E-DIRACCESS, Do not have full access to directory for temporary files: ./bo$goue_name
 %SYSTEM-E-ENO2, No such file or directory
 %YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
-
 unset verbose
 setenv ydb_baktmpdir ./back3/mumps$$
 $MUPIP backup "*" -nonewj ./back3 > & mupip_backup_nonewj_1.outx
 sort -f mupip_backup_nonewj_1.outx
-
-
-
 %SYSTEM-E-ENO2, No such file or directory
-%YDB-E-DIRACCESS, Do not have full access to directory for temporary files: ./back3/mumps$$
 %YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
+%YDB-E-DIRACCESS, Do not have full access to directory for temporary files: ./back3/mumps$$
 echo "#"
 #
 echo "Test Case 5: MUPIP JOURNAL"

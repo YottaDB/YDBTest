@@ -19,27 +19,24 @@ mumps.dat
 
 ---------- With -newjnlfiles=prevlink -----------
 ##SOURCE_PATH##/mupip backup -newjnlfiles=prevlink * backupdir |& sort -f
-
-
-
-##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
-##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/d.mjl is renamed to ##TEST_PATH##/d.mjl_##TIMESTAMP##
-##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/e.mjl is renamed to ##TEST_PATH##/e.mjl_##TIMESTAMP##
-##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-%YDB-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/a.dat
-%YDB-I-BACKUPSUCCESS, Backup completed successfully
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/backupdir/a.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/backupdir/b.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/backupdir/c.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/d.dat backed up in file ##TEST_PATH##/backupdir/d.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/e.dat backed up in file ##TEST_PATH##/backupdir/e.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/backupdir/mumps.dat
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/d.mjl is renamed to ##TEST_PATH##/d.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/e.mjl is renamed to ##TEST_PATH##/e.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/a.dat
 Region          AREG
   Journal State                            DISABLED
 Region          BREG
@@ -60,27 +57,24 @@ Region          EREG
 
 ---------- With -newjnlfiles=prevlink,nosync_io -----------
 ##SOURCE_PATH##/mupip backup -newjnlfiles=prevlink,nosync_io * backupdir |& sort -f
-
-
-
-##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
-##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/d.mjl is renamed to ##TEST_PATH##/d.mjl_##TIMESTAMP##
-##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/e.mjl is renamed to ##TEST_PATH##/e.mjl_##TIMESTAMP##
-##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-%YDB-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/a.dat
-%YDB-I-BACKUPSUCCESS, Backup completed successfully
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/backupdir/a.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/backupdir/b.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/backupdir/c.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/d.dat backed up in file ##TEST_PATH##/backupdir/d.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/e.dat backed up in file ##TEST_PATH##/backupdir/e.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/backupdir/mumps.dat
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/d.mjl is renamed to ##TEST_PATH##/d.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/e.mjl is renamed to ##TEST_PATH##/e.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/a.dat
 Region          AREG
   Journal State                            DISABLED
 Region          BREG
@@ -101,27 +95,24 @@ Region          EREG
 
 ---------- With -newjnlfiles=prevlink,sync_io -----------
 ##SOURCE_PATH##/mupip backup -newjnlfiles=prevlink,sync_io * backupdir |& sort -f
-
-
-
-##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
-##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/d.mjl is renamed to ##TEST_PATH##/d.mjl_##TIMESTAMP##
-##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/e.mjl is renamed to ##TEST_PATH##/e.mjl_##TIMESTAMP##
-##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
-%YDB-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/a.dat
-%YDB-I-BACKUPSUCCESS, Backup completed successfully
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/backupdir/a.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/backupdir/b.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/backupdir/c.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/d.dat backed up in file ##TEST_PATH##/backupdir/d.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/e.dat backed up in file ##TEST_PATH##/backupdir/e.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/backupdir/mumps.dat
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/c.mjl is renamed to ##TEST_PATH##/c.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/d.mjl is renamed to ##TEST_PATH##/d.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/e.mjl is renamed to ##TEST_PATH##/e.mjl_##TIMESTAMP##
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+%YDB-W-JNLDISABLE, Specified journal option(s) cannot take effect as journaling is DISABLED on database file ##TEST_PATH##/a.dat
 Region          AREG
   Journal State                            DISABLED
 Region          BREG
