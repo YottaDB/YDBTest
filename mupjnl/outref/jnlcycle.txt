@@ -15,7 +15,7 @@ rm -f mumps.mjl
 MUPIP backup DEFAULT back.dat
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file back.dat
-Transactions up to 0x000000000000000B are backed up.
+%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x000000000000000B are backed up.
 %YDB-I-BACKUPSUCCESS, Backup completed successfully.
 
 MUPIP journal -show=head -for mumps.mjl

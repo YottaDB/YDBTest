@@ -198,8 +198,8 @@ sort -f mupip_backup_nonewj.out
 %YDB-I-BACKUPSUCCESS, Backup completed successfully.
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/dir1/mumps.dat backed up in file ./back2/mumps.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/dir2/a.dat backed up in file ./back2/a.dat
-Transactions up to 0x000000000000000B are backed up.
-Transactions up to 0x0000000000000015 are backed up.
+%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x000000000000000B are backed up.
+%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000015 are backed up.
 $MUPIP integ -r "*" > & mupip_integ_r.out
 sort -f mupip_integ_r.out
 

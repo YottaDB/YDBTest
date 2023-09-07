@@ -42,10 +42,10 @@ YDB>
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/backup.dat backed up in file ##TEST_PATH##/backup-dir/backup.dat
 ##SUSPEND_OUTPUT MM_FILE_NO_EXT
-Transactions up to 0x0000000000000402 are backed up.
+%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000402 are backed up.
 ##ALLOW_OUTPUT MM_FILE_NO_EXT
 ##SUSPEND_OUTPUT MM_FILE_EXT
-Transactions up to 0x0000000000000400 are backed up.
+%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000400 are backed up.
 ##ALLOW_OUTPUT MM_FILE_EXT
 %YDB-I-BACKUPSUCCESS, Backup completed successfully.
 
@@ -297,9 +297,9 @@ BACKUP COMPLETED.
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/backup-dir/b.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/backup.dat backed up in file ##TEST_PATH##/backup-dir/backup.dat
 ##SUSPEND_OUTPUT SPANNING_REGIONS
-Transactions up to 0x0000000000000065 are backed up.
-Transactions up to 0x0000000000000065 are backed up.
-Transactions up to 0x0000000000000065 are backed up.
+%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000065 are backed up.
+%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000065 are backed up.
+%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000065 are backed up.
 ##ALLOW_OUTPUT SPANNING_REGIONS
 # Total number of transactions backed up:  303
 ##SUSPEND_OUTPUT  NON_REPLIC

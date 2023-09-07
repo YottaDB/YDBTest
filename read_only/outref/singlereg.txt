@@ -25,7 +25,7 @@ YDB>
 -rw-rw-rw- mumps.dat
 mupip backup -noonline DEFAULT back.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file back.dat
-Transactions up to 0x0000000000000001 are backed up.
+%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up.
 %YDB-I-BACKUPSUCCESS, Backup completed successfully.
 
 OK.
@@ -53,7 +53,7 @@ No errors detected by integ.
 -rw-rw-rw- mumps.mjl
 *** mumps.dat R/W mumps.mjl R/W ***
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file back.dat
-Transactions up to 0x0000000000000402 are backed up.
+%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000402 are backed up.
 
 
 BACKUP COMPLETED.
@@ -70,7 +70,7 @@ No errors detected by integ.
 -rw-rw-rw- mumps.dat
 -r--r--r-- mumps.mjl
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file back.dat
-Transactions up to 0x0000000000000402 are backed up.
+%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000402 are backed up.
 
 
 BACKUP COMPLETED.

@@ -10,7 +10,7 @@ mumps.dat
 # Start yet another bkground process which is created by job.m
 # Take a full backup
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file backup_orig.dat
-Transactions up to ##FILTERED##GTM_TEST_DEBUGINFO.*
+%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to ##FILTERED##GTM_TEST_DEBUGINFO.*
 %YDB-I-BACKUPSUCCESS, Backup completed successfully.
 
 # Take an incremental backup since last full backup
@@ -95,7 +95,7 @@ PASS,got expected error
 # Create a V4 database
 # Take a full backup using v4 executables
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file backupv4.dat
-Transactions up to 0x00000001 are backed up.
+%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x00000001 are backed up.
 
 
 BACKUP COMPLETED.
@@ -132,7 +132,7 @@ mumps.dat
 Database file mumps.dat now has desired DB format V4
 # Take full backup
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file backup_compat.dat
-Transactions up to 0x0000000000000002 are backed up.
+%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000002 are backed up.
 
 
 BACKUP COMPLETED.
@@ -159,7 +159,7 @@ Region	DEFAULT
 
 # Take a full back here
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file backupv5.dat
-Transactions up to 0x8000000000000000 are backed up.
+%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x8000000000000000 are backed up.
 
 
 BACKUP COMPLETED.

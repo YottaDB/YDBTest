@@ -46,7 +46,7 @@ sleep $rand_wait
 # At this point the databse has a mix of V4 & V6 format blocks
 echo "# Take a full backup"
 $MUPIP backup -database DEFAULT backup_orig.dat >>&! backup_orig.outx
-$grep -vE "shmpool lock|YDB-W-KILLABANDONED" backup_orig.outx | sed 's/Transactions up to/Transactions up to GTM_TEST_DEBUGINFO/'
+$grep -vE "shmpool lock|YDB-W-KILLABANDONED" backup_orig.outx | sed 's/Transactions up to/%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to GTM_TEST_DEBUGINFO/'
 sleep $rand_wait
 echo "# Take an incremental backup since last full backup"
 $MUPIP backup -incremental -since=DATABASE DEFAULT backup.inc1 >>&! backup_inc1.outx

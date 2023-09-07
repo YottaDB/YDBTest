@@ -27,7 +27,7 @@ mupip backup -bytestream DEFAULT ./back1
 mupip backup -comprehensive DEFAULT ./back2
 %YDB-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable ydb_passwd/gtm_passwd not set
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ./back2/mumps.dat
-##TEST_AWKTransactions up to 0x[0-9A-F]* are backed up.
+##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x[0-9A-F]* are backed up.
 
 
 BACKUP COMPLETED.
@@ -49,7 +49,7 @@ BACKUP COMPLETED.
 mupip backup -comprehensive DEFAULT ./back4
 ##TEST_AWK%YDB-W-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. .*
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ./back4/mumps.dat
-##TEST_AWKTransactions up to 0x[0-9A-F]* are backed up.
+##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x[0-9A-F]* are backed up.
 
 
 BACKUP COMPLETED.

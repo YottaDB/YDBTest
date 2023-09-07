@@ -20,10 +20,10 @@ YDB>
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/ＡＢＣＤ.mjl created for region DEFAULT with (NO|)BEFORE_IMAGES
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/ＡＢＣＤ.dat backed up in file ##TEST_PATH##/ＡＤＩＲ/ＡＢＣＤ.dat
 ##SUSPEND_OUTPUT MM_FILE_NO_EXT
-Transactions up to 0x000000000000040C are backed up.
+%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x000000000000040C are backed up.
 ##ALLOW_OUTPUT   MM_FILE_NO_EXT
 ##SUSPEND_OUTPUT MM_FILE_EXT
-Transactions up to 0x0000000000000400 are backed up.
+%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000400 are backed up.
 ##ALLOW_OUTPUT   MM_FILE_EXT
 %YDB-I-BACKUPSUCCESS, Backup completed successfully.
 
