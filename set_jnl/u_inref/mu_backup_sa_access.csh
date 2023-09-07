@@ -34,28 +34,28 @@ sleep 10		# To allow some data to be set for all regions
 @ bno = $bno + 1; \mkdir back{$bno}
 echo "$MUPIP backup * -newjnl ./back{$bno} : Will warn"
 $MUPIP backup "*" -newjnl ./back{$bno} >& back{$bno}.txt
-$grep -vE "Transactions up to|shmpool lock preventing backup buffer flush"  back{$bno}.txt |& sort -f
+$grep -vE "%YDB-I-BACKUPTN, Transactions from|shmpool lock preventing backup buffer flush"  back{$bno}.txt |& sort -f
 echo "Journal States:(expected DISABLED):"
 $gtm_tst/$tst/u_inref/check_jnl_state.csh "Journal State "
 #
 @ bno = $bno + 1; \mkdir back{$bno}
 echo "$MUPIP backup *  -nonewjnl ./back{$bno} : Will succeed"
 $MUPIP backup "*" -nonewjnl ./back{$bno} >& back{$bno}.txt
-$grep -vE "Transactions up to|shmpool lock preventing backup buffer flush"  back{$bno}.txt |& sort -f
+$grep -vE "%YDB-I-BACKUPTN, Transactions from|shmpool lock preventing backup buffer flush"  back{$bno}.txt |& sort -f
 echo "Journal States:(expected DISABLED):"
 $gtm_tst/$tst/u_inref/check_jnl_state.csh "Journal State "
 #
 @ bno = $bno + 1; \mkdir back{$bno}
 echo "$MUPIP backup *  -newjnl=noprevlink ./back{$bno} : Will warn"
 $MUPIP backup "*" -newjnl=noprevlink ./back{$bno} >& back{$bno}.txt
-$grep -vE "Transactions up to|shmpool lock preventing backup buffer flush"  back{$bno}.txt |& sort -f
+$grep -vE "%YDB-I-BACKUPTN, Transactions from|shmpool lock preventing backup buffer flush"  back{$bno}.txt |& sort -f
 echo "Journal States:(expected DISABLED):"
 $gtm_tst/$tst/u_inref/check_jnl_state.csh "Journal State "
 #
 @ bno = $bno + 1; \mkdir back{$bno}
 echo "$MUPIP backup *  -newjnl=prevlink ./back{$bno} : Will warn"
 $MUPIP backup "*" -newjnl=prevlink ./back{$bno} >& back{$bno}.txt
-$grep -vE "Transactions up to|shmpool lock preventing backup buffer flush"  back{$bno}.txt |& sort -f
+$grep -vE "%YDB-I-BACKUPTN, Transactions from|shmpool lock preventing backup buffer flush"  back{$bno}.txt |& sort -f
 echo "Journal States:(expected DISABLED):"
 $gtm_tst/$tst/u_inref/check_jnl_state.csh "Journal State "
 #
@@ -92,7 +92,7 @@ sleep 10		# To allow some data to be set for all regions
 @ bno = $bno + 1; \mkdir back{$bno}
 echo "$MUPIP backup * -newjnl ./back{$bno}"
 $MUPIP backup "*" -newjnl ./back{$bno} >& back{$bno}.txt
-$grep -vE "Transactions up to|shmpool lock preventing backup buffer flush"  back{$bno}.txt |& sort -f
+$grep -vE "%YDB-I-BACKUPTN, Transactions from|shmpool lock preventing backup buffer flush"  back{$bno}.txt |& sort -f
 echo "Journal States:"
 $gtm_tst/$tst/u_inref/wait_for_update.csh
 $gtm_tst/$tst/u_inref/check_jnl_state.csh "Journal State "
@@ -105,7 +105,7 @@ endif
 @ bno = $bno + 1; \mkdir back{$bno}
 echo "$MUPIP backup *  -nonewjnl ./back{$bno}"
 $MUPIP backup "*" -nonewjnl ./back{$bno} >& back{$bno}.txt
-$grep -vE "Transactions up to|shmpool lock preventing backup buffer flush"  back{$bno}.txt |& sort -f
+$grep -vE "%YDB-I-BACKUPTN, Transactions from|shmpool lock preventing backup buffer flush"  back{$bno}.txt |& sort -f
 if ($status) then
 	echo Above command failed
 	exit
@@ -117,7 +117,7 @@ $gtm_tst/$tst/u_inref/check_jnl_state.csh "Journal State "
 @ bno = $bno + 1; \mkdir back{$bno}
 echo "$MUPIP backup *  -newjnl=noprevlink ./back{$bno}"
 $MUPIP backup "*" -newjnl=noprevlink ./back{$bno} >& back{$bno}.txt
-$grep -vE "Transactions up to|shmpool lock preventing backup buffer flush"  back{$bno}.txt |& sort -f
+$grep -vE "%YDB-I-BACKUPTN, Transactions from|shmpool lock preventing backup buffer flush"  back{$bno}.txt |& sort -f
 echo "Journal States:"
 $gtm_tst/$tst/u_inref/wait_for_update.csh
 $gtm_tst/$tst/u_inref/check_jnl_state.csh "Journal State "
@@ -130,7 +130,7 @@ endif
 @ bno = $bno + 1; \mkdir back{$bno}
 echo "$MUPIP backup *  -newjnl=prevlink ./back{$bno}"
 $MUPIP backup "*" -newjnl=prevlink ./back{$bno} >& back{$bno}.txt
-$grep -vE "Transactions up to|shmpool lock preventing backup buffer flush"  back{$bno}.txt |& sort -f
+$grep -vE "%YDB-I-BACKUPTN, Transactions from|shmpool lock preventing backup buffer flush"  back{$bno}.txt |& sort -f
 echo "Journal States:"
 $gtm_tst/$tst/u_inref/wait_for_update.csh
 $gtm_tst/$tst/u_inref/check_jnl_state.csh "Journal State "

@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2006, 2013 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -19,11 +22,11 @@ $MSR START INST1 INST2
 $MSR START INST1 INST3
 
 if ((1 == $gtm_test_spanreg) || (3 == $gtm_test_spanreg)) then
-	set filterit = 'Transactions up to'
+	set filterit = '%YDB-I-BACKUPTN, Transactions from'
 else
 	set filterit = 'NOTHINGTOFILTEROUT'
 endif
-alias trcount '$tst_awk '"'"'/Transactions up to/ {tot=tot+strtonum($4)} END{ print "# Total number of transactions backed up: ",tot}'"'"' '
+alias trcount '$tst_awk '"'"'/%YDB-I-BACKUPTN, Transactions from/ {tot=tot+strtonum($6)} END{ print "# Total number of transactions backed up: ",tot}'"'"' '
 $echoline
 echo "#- Some bakground updates on INST1:"
 $MSR RUN INST1 '$gtm_tst/com/simplebgupdate.csh 111 > bg_pid.out'

@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2002, 2013 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -35,11 +38,11 @@ bkup
 # that mumps.dat does not need to extend (and hence one transaction # fewer there).
 # Hence the check for 4521 or 4522 total tn#.
 if ((1 == $gtm_test_spanreg) || (3 == $gtm_test_spanreg)) then
-	set filterit = 'Transactions up to'
+	set filterit = '%YDB-I-BACKUPTN, Transactions from'
 else
 	set filterit = 'NOTHINGTOFILTEROUT'
 endif
-alias trcount '$tst_awk '"'"'/Transactions up to/ {tot=tot+strtonum($4)} END{if ( (tot != 4521) && (tot != 4522) ) {print "TEST-E-TNCOUNT Total # of transactions backed up were expected to be 4521 or 4522, but it was ",tot}}'"'"' '
+alias trcount '$tst_awk '"'"'/%YDB-I-BACKUPTN, Transactions from/ {tot=tot+strtonum($6)} END{if ( (tot != 4521) && (tot != 4522) ) {print "TEST-E-TNCOUNT Total # of transactions backed up were expected to be 4521 or 4522, but it was ",tot}}'"'"' '
 #
 echo "============================================================="
 #

@@ -306,7 +306,7 @@ echo "#- mupip backup to a directory with a name with unicode characters"
 mkdir backupｂａｃｋｕｐ我
 
 $MUPIP backup "*" backupｂａｃｋｕｐ我 >&! mupip_backup.out
-$grep "Transactions up to" mupip_backup.out | sort
+$grep "%YDB-I-BACKUPTN, Transactions from" mupip_backup.out | sort
 echo ""
 $grep "BACKUP COMPLETED" mupip_backup.out
 

@@ -41,11 +41,11 @@ setenv gtm_test_mupip_set_version "disable"
 setenv gtm_test_disable_randomdbtn
 #
 if ((1 == $gtm_test_spanreg) || (3 == $gtm_test_spanreg)) then
-	set filterit = 'Transactions up to'
+	set filterit = '%YDB-I-BACKUPTN, Transactions from'
 else
 	set filterit = 'NOTHINGTOFILTEROUT'
 endif
-alias trcount '$tst_awk '"'"'/Transactions up to/ {tot=tot+strtonum($4)} END{ print "# Total number of transactions backed up: ",tot}'"'"' '
+alias trcount '$tst_awk '"'"'/%YDB-I-BACKUPTN, Transactions from/ {tot=tot+strtonum($6)} END{ print "# Total number of transactions backed up: ",tot}'"'"' '
 #
 
 setenv gtm_test_sprgde_id "ID3"	# to differentiate multiple dbcreates done in the same subtest

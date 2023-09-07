@@ -3,7 +3,7 @@
 #								#
 # Copyright 2002, 2013 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -31,7 +31,7 @@ if ((1 == $gtm_test_spanreg) || (3 == $gtm_test_spanreg)) then
 else
 	set grepit = 'BACKUP|backed up'
 endif
-alias trcount '$tst_awk '"'"'/Transactions up to/ {tot=tot+strtonum($4)} END{ print "Total number of transactions backed up: ",tot}'"'"' $1'
+alias trcount '$tst_awk '"'"'/%YDB-I-BACKUPTN, Transactions from/ {tot=tot+strtonum($6)} END{ print "Total number of transactions backed up: ",tot}'"'"' $1'
 #
 #
 # ================================== Basic Backup ================================== #

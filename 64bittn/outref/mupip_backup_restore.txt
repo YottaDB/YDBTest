@@ -10,7 +10,7 @@ mumps.dat
 # Start yet another bkground process which is created by job.m
 # Take a full backup
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file backup_orig.dat
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to ##FILTERED##GTM_TEST_DEBUGINFO.*
+%YDB-I-BACKUPTN, Transactions from ##FILTERED##GTM_TEST_DEBUGINFO.*
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 # Take an incremental backup since last full backup
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file backup.inc1
