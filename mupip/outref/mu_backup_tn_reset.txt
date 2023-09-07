@@ -36,7 +36,7 @@ WARNING: Transaction number reset complete on all active blocks. Please do a DAT
 # Try incremental backup after tn_reset, it should take backup
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat incrementally backed up in file inc1.dat
 7 blocks saved.
-Transactions from 0x0000000000000001 to 0x0000000000000002 are backed up.
+%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000002 are backed up.
 
 
 BACKUP COMPLETED.
@@ -71,7 +71,7 @@ YDB>
 # Try incremental backup after one more update, it should work
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat incrementally backed up in file inc3.dat
 5 blocks saved.
-Transactions from 0x0000000000000002 to 0x0000000000000003 are backed up.
+%YDB-I-BACKUPTN, Transactions from 0x0000000000000002 to 0x0000000000000003 are backed up.
 
 
 BACKUP COMPLETED.
