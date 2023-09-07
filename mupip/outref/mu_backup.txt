@@ -276,10 +276,10 @@ YDB>
 PASS from fill5^myfill("right")
 
 YDB>
-
-%YDB-I-BACKUPSUCCESS, Backup completed successfully%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/backup-dir/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/backup-dir/a.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/backup-dir/b.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/backup.dat backed up in file ##TEST_PATH##/backup-dir/backup.dat
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000065 are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000065 are backed up
@@ -304,9 +304,8 @@ PASS from fill5^myfill("ver")
 
 YDB>
 %YDB-E-MUSELFBKUP, Database file ##TEST_PATH##/backup.dat can not be backed upon itself
-%YDB-E-FILEEXISTS, File ./backup.dat already exists
+%YDB-E-FILEEXISTS, File ##TEST_PATH##/backup.dat already exists
 %YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
-
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
