@@ -47,8 +47,7 @@ YDB>
 ##SUSPEND_OUTPUT MM_FILE_EXT
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000400 are backed up
 ##ALLOW_OUTPUT MM_FILE_EXT
-%YDB-I-BACKUPSUCCESS, Backup completed successfully.
-
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
 
 YDB>
 Do fill2^myfill("set")
@@ -80,8 +79,7 @@ YDB>
 ##SUSPEND_OUTPUT MM_FILE_EXT
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000400 to 0x0000000000000BFF are backed up
 ##ALLOW_OUTPUT MM_FILE_EXT
-%YDB-I-BACKUPSUCCESS, Backup completed successfully.
-
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
 
 YDB>
 Do fill3^myfill("set")
@@ -102,8 +100,7 @@ YDB>
 ##SUSPEND_OUTPUT MM_FILE_EXT
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000BFF to 0x0000000000002BFE are backed up
 ##ALLOW_OUTPUT MM_FILE_EXT
-%YDB-I-BACKUPSUCCESS, Backup completed successfully.
-
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/backup.dat incrementally backed up in file ##TEST_PATH##/backup-dir/backup.bak33
 ##SUSPEND_OUTPUT COLLATION
 234 blocks saved.
@@ -117,8 +114,7 @@ YDB>
 ##SUSPEND_OUTPUT MM_FILE_EXT
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000400 to 0x0000000000002BFE are backed up
 ##ALLOW_OUTPUT MM_FILE_EXT
-%YDB-I-BACKUPSUCCESS, Backup completed successfully.
-
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/backup.dat incrementally backed up in file ##TEST_PATH##/backup-dir/backup.bak333
 ##SUSPEND_OUTPUT COLLATION
 528 blocks saved.
@@ -132,8 +128,7 @@ YDB>
 ##SUSPEND_OUTPUT MM_FILE_EXT
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000002BFE are backed up
 ##ALLOW_OUTPUT MM_FILE_EXT
-%YDB-I-BACKUPSUCCESS, Backup completed successfully.
-
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
 ##SUSPEND_OUTPUT  NON_REPLIC
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 Shutting down Primary Source Server Server in ##TEST_PATH##
@@ -282,8 +277,7 @@ PASS from fill5^myfill("right")
 
 YDB>
 
-%YDB-I-BACKUPSUCCESS, Backup completed successfully.
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/backup-dir/a.dat
+%YDB-I-BACKUPSUCCESS, Backup completed successfully%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/backup-dir/a.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/backup-dir/b.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/backup.dat backed up in file ##TEST_PATH##/backup-dir/backup.dat
 ##SUSPEND_OUTPUT SPANNING_REGIONS

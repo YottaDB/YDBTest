@@ -27,8 +27,7 @@ unset verbose
 mkdir ./back
 $MUPIP backup -noonline "*" ./back | & sort -f
 
-%YDB-I-BACKUPSUCCESS, Backup completed successfully.
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ./back/a.dat
+%YDB-I-BACKUPSUCCESS, Backup completed successfully%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ./back/a.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ./back/b.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ./back/c.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ./back/mumps.dat
@@ -94,8 +93,7 @@ echo "*** *.dat R/W *.mjl R/W ***"
 *** *.dat R/W *.mjl R/W ***
 $MUPIP backup -noonline "*" ./Back | & sort -f
 
-%YDB-I-BACKUPSUCCESS, Backup completed successfully.
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ./Back/a.dat
+%YDB-I-BACKUPSUCCESS, Backup completed successfully%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ./Back/a.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ./Back/b.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ./Back/c.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ./Back/mumps.dat
@@ -116,8 +114,7 @@ chmod 666 b.dat
 chmod 444 b.mjl
 $MUPIP backup -noonline "*" ./Back | & sort -f
 
-%YDB-I-BACKUPSUCCESS, Backup completed successfully.
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ./Back/a.dat
+%YDB-I-BACKUPSUCCESS, Backup completed successfully%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ./Back/a.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ./Back/b.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ./Back/c.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ./Back/mumps.dat

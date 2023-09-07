@@ -37,14 +37,12 @@ WARNING: Transaction number reset complete on all active blocks. Please do a DAT
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat incrementally backed up in file inc1.dat
 7 blocks saved.
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000002 are backed up
-%YDB-I-BACKUPSUCCESS, Backup completed successfully.
-
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
 # Try incremental backup after immediate backup, it should fail
 
 TRANSACTION number is greater than or equal to current transaction,
 no blocks backed up from database ##TEST_PATH##/mumps.dat
-%YDB-I-BACKUPSUCCESS, Backup completed successfully.
-
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
 # Integrity check
 
 No errors detected by integ.
@@ -68,8 +66,7 @@ YDB>
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat incrementally backed up in file inc3.dat
 5 blocks saved.
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000002 to 0x0000000000000003 are backed up
-%YDB-I-BACKUPSUCCESS, Backup completed successfully.
-
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
 # Restore from inc1.dat and inc2.dat
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 %YDB-I-RESTORESUCCESS, Restore completed successfully

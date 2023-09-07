@@ -41,8 +41,7 @@ MUPIP INFO:   Temp file name: /tmp//DEFAULT_YYYY_ZZZZZZ
 
 TRANSACTION number is greater than or equal to current transaction,
 no blocks backed up from database ##TEST_PATH##/mumps.dat
-%YDB-I-BACKUPSUCCESS, Backup completed successfully.
-
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
 ===================================================================
 try a bad gtm_baktmpdir:
 
@@ -75,8 +74,7 @@ $MUPIP backup -nonew -o "*" ./bak -dbg | & sort -f
 
 
 
-%YDB-I-BACKUPSUCCESS, Backup completed successfully.
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ./bak/a.dat
+%YDB-I-BACKUPSUCCESS, Backup completed successfully%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ./bak/a.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ./bak/b.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ./bak/mumps.dat
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
@@ -142,8 +140,7 @@ $MUPIP backup -nonew -o "*" ./bak -dbg | & sort -f
 
 
 
-%YDB-I-BACKUPSUCCESS, Backup completed successfully.
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ./bak/a.dat
+%YDB-I-BACKUPSUCCESS, Backup completed successfully%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ./bak/a.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ./bak/b.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ./bak/mumps.dat
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
@@ -306,8 +303,7 @@ And on the secondary side:
 
 
 
-%YDB-I-BACKUPSUCCESS, Backup completed successfully.
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ./bak/a.dat
+%YDB-I-BACKUPSUCCESS, Backup completed successfully%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ./bak/a.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ./bak/b.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ./bak/mumps.dat
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
@@ -359,8 +355,7 @@ gtm_baktmpdir: ##REMOTE_TEST_PATH##/bak/baktmp
 
 
 
-%YDB-I-BACKUPSUCCESS, Backup completed successfully.
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ./bak/a.dat
+%YDB-I-BACKUPSUCCESS, Backup completed successfully%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ./bak/a.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ./bak/b.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ./bak/mumps.dat
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*

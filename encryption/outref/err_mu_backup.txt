@@ -21,15 +21,13 @@ mupip backup -bytestream DEFAULT ./back1
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat incrementally backed up in file ./back1/mumps.dat
 297 blocks saved.
 ##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x[0-9A-F]* to 0x[0-9A-F]* are backed up
-%YDB-I-BACKUPSUCCESS, Backup completed successfully.
-
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
 #####################################################
 mupip backup -comprehensive DEFAULT ./back2
 %YDB-W-CRYPTINIT, Could not initialize encryption library while opening encrypted file ##TEST_PATH##/mumps.dat. Environment variable ydb_passwd/gtm_passwd not set
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ./back2/mumps.dat
 ##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x[0-9A-F]* are backed up
-%YDB-I-BACKUPSUCCESS, Backup completed successfully.
-
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
 -------------------------------------------------------------------------------
 Backup with bad gtm_passwd and expect to work
 -------------------------------------------------------------------------------
@@ -39,15 +37,13 @@ mupip backup -bytestream DEFAULT ./back3
 
 TRANSACTION number is greater than or equal to current transaction,
 no blocks backed up from database ##TEST_PATH##/mumps.dat
-%YDB-I-BACKUPSUCCESS, Backup completed successfully.
-
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
 #####################################################
 mupip backup -comprehensive DEFAULT ./back4
 ##TEST_AWK%YDB-W-CRYPTKEYFETCHFAILED, Could not retrieve encryption key corresponding to file ##TEST_PATH##/mumps.dat. .*
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ./back4/mumps.dat
 ##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x[0-9A-F]* are backed up
-%YDB-I-BACKUPSUCCESS, Backup completed successfully.
-
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 -------------------------------------------------------------------------------
 Backup while parallel GTM updates without gtm_passwd and expect to error out
