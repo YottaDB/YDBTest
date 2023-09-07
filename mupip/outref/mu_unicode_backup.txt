@@ -18,7 +18,7 @@ set PASS
 YDB>
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/ＡＢＣＤ.mjl is renamed to ##TEST_PATH##/ＡＢＣＤ.mjl_##TIMESTAMP##
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/ＡＢＣＤ.mjl created for region DEFAULT with (NO|)BEFORE_IMAGES
-DB file ##TEST_PATH##/ＡＢＣＤ.dat backed up in file ##TEST_PATH##/ＡＤＩＲ/ＡＢＣＤ.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/ＡＢＣＤ.dat backed up in file ##TEST_PATH##/ＡＤＩＲ/ＡＢＣＤ.dat
 ##SUSPEND_OUTPUT MM_FILE_NO_EXT
 Transactions up to 0x000000000000040C are backed up.
 ##ALLOW_OUTPUT   MM_FILE_NO_EXT
@@ -45,7 +45,7 @@ set PASS
 YDB>
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/ＡＢＣＤ.mjl is renamed to ##TEST_PATH##/ＡＢＣＤ.mjl_##TIMESTAMP##
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/ＡＢＣＤ.mjl created for region DEFAULT with (NO|)BEFORE_IMAGES
-DB file ##TEST_PATH##/ＡＢＣＤ.dat incrementally backed up in file ##TEST_PATH##/αβγδε/backup.bak2
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/ＡＢＣＤ.dat incrementally backed up in file ##TEST_PATH##/αβγδε/backup.bak2
 ##SUSPEND_OUTPUT  NON_COLLATION
 1345 blocks saved.
 ##ALLOW_OUTPUT  NON_COLLATION
@@ -78,7 +78,7 @@ set PASS
 YDB>
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/ＡＢＣＤ.mjl is renamed to ##TEST_PATH##/ＡＢＣＤ.mjl_##TIMESTAMP##
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/ＡＢＣＤ.mjl created for region DEFAULT with (NO|)BEFORE_IMAGES
-DB file ##TEST_PATH##/ＡＢＣＤ.dat incrementally backed up in file ##TEST_PATH##/我能吞下玻璃而不伤身体/backup.bak3
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/ＡＢＣＤ.dat incrementally backed up in file ##TEST_PATH##/我能吞下玻璃而不伤身体/backup.bak3
 ##SUSPEND_OUTPUT  NON_COLLATION
 ##SUSPEND_OUTPUT 4G_ABOVE_DB_BLKS
 5150 blocks saved.
@@ -111,7 +111,7 @@ Transactions from 0x0000000000001A85 to 0x0000000000086318 are backed up.
 
 BACKUP COMPLETED.
 
-DB file ##TEST_PATH##/ＡＢＣＤ.dat incrementally backed up in file ##TEST_PATH##/我能吞下玻璃而不伤身体/backup.bak33
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/ＡＢＣＤ.dat incrementally backed up in file ##TEST_PATH##/我能吞下玻璃而不伤身体/backup.bak33
 ##SUSPEND_OUTPUT  NON_COLLATION
 5864 blocks saved.
 ##SUSPEND_OUTPUT MM_FILE_NO_EXT
@@ -134,7 +134,7 @@ Transactions from 0x0000000000000001 to 0x0000000000086318 are backed up.
 
 BACKUP COMPLETED.
 
-DB file ##TEST_PATH##/ＡＢＣＤ.dat incrementally backed up in file ##TEST_PATH##/我能吞下玻璃而不伤身体/backup.bak333
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/ＡＢＣＤ.dat incrementally backed up in file ##TEST_PATH##/我能吞下玻璃而不伤身体/backup.bak333
 ##SUSPEND_OUTPUT  NON_COLLATION
 5864 blocks saved.
 ##SUSPEND_OUTPUT MM_FILE_NO_EXT

@@ -24,7 +24,7 @@ YDB>
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
 -rw-rw-rw- mumps.dat
 mupip backup -noonline DEFAULT back.dat
-DB file ##TEST_PATH##/mumps.dat backed up in file back.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file back.dat
 Transactions up to 0x0000000000000001 are backed up.
 
 
@@ -54,7 +54,7 @@ No errors detected by integ.
 -rw-rw-rw- mumps.dat
 -rw-rw-rw- mumps.mjl
 *** mumps.dat R/W mumps.mjl R/W ***
-DB file ##TEST_PATH##/mumps.dat backed up in file back.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file back.dat
 Transactions up to 0x0000000000000402 are backed up.
 
 
@@ -71,7 +71,7 @@ No errors detected by integ.
 *** mumps.dat R/W mumps.mjl R/O ***
 -rw-rw-rw- mumps.dat
 -r--r--r-- mumps.mjl
-DB file ##TEST_PATH##/mumps.dat backed up in file back.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file back.dat
 Transactions up to 0x0000000000000402 are backed up.
 
 
@@ -1343,7 +1343,7 @@ YDB>
 set PASS
 
 YDB>
-DB file ##TEST_PATH##/mumps.dat incrementally backed up in file bak.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat incrementally backed up in file bak.dat
 1461 blocks saved.
 Transactions from 0x0000000000000001 to 0x000000000000080D are backed up.
 

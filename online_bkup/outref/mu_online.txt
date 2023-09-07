@@ -21,7 +21,7 @@ YDB>
 PASS from fill1^myfill("set")
 
 YDB>
-DB file ##TEST_PATH##/online/tmp/online.dat backed up in file ##TEST_PATH##/online/tmp/online//online.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/online/tmp/online.dat backed up in file ##TEST_PATH##/online/tmp/online//online.dat
 
 
 BACKUP COMPLETED.
@@ -34,7 +34,7 @@ YDB>
 PASS from fill2^myfill("set")
 
 YDB>
-DB file ##TEST_PATH##/online/tmp/online.dat incrementally backed up in file ##TEST_PATH##/online/tmp/online/backup.bak2
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/online/tmp/online.dat incrementally backed up in file ##TEST_PATH##/online/tmp/online/backup.bak2
 42 blocks saved.
 
 
@@ -47,19 +47,19 @@ YDB>
 PASS from fill3^myfill("set")
 
 YDB>
-DB file ##TEST_PATH##/online/tmp/online.dat incrementally backed up in file ##TEST_PATH##/online/tmp/online/backup.bak3
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/online/tmp/online.dat incrementally backed up in file ##TEST_PATH##/online/tmp/online/backup.bak3
 227 blocks saved.
 
 
 BACKUP COMPLETED.
 
-DB file ##TEST_PATH##/online/tmp/online.dat incrementally backed up in file ##TEST_PATH##/online/tmp/online/backup.bak33
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/online/tmp/online.dat incrementally backed up in file ##TEST_PATH##/online/tmp/online/backup.bak33
 228 blocks saved.
 
 
 BACKUP COMPLETED.
 
-DB file ##TEST_PATH##/online/tmp/online.dat incrementally backed up in file ##TEST_PATH##/online/tmp/online/backup.bak333
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/online/tmp/online.dat incrementally backed up in file ##TEST_PATH##/online/tmp/online/backup.bak333
 328 blocks saved.
 
 
@@ -164,9 +164,9 @@ YDB>
 
 
 BACKUP COMPLETED.
-DB file ##TEST_PATH##/online/tmp/online.dat backed up in file ##TEST_PATH##/online/tmp/online//online.dat
-DB file ##TEST_PATH##/online/tmp/online1.dat backed up in file ##TEST_PATH##/online/tmp/online//online1.dat
-DB file ##TEST_PATH##/online/tmp/online2.dat backed up in file ##TEST_PATH##/online/tmp/online//online2.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/online/tmp/online.dat backed up in file ##TEST_PATH##/online/tmp/online//online.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/online/tmp/online1.dat backed up in file ##TEST_PATH##/online/tmp/online//online1.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/online/tmp/online2.dat backed up in file ##TEST_PATH##/online/tmp/online//online2.dat
 ##SOURCE_PATH##/mupip
 No errors detected by integ.
 ##SOURCE_PATH##/mupip
@@ -186,9 +186,9 @@ YDB>
 YDB>
 
 YDB>
-DB file ##TEST_PATH##/online/tmp/online.dat backed up in file mapc.bak
-DB file ##TEST_PATH##/online/tmp/online1.dat backed up in file mapa.bak
-DB file ##TEST_PATH##/online/tmp/online2.dat backed up in file mapb.bak
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/online/tmp/online.dat backed up in file mapc.bak
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/online/tmp/online1.dat backed up in file mapa.bak
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/online/tmp/online2.dat backed up in file mapb.bak
 
 
 BACKUP COMPLETED.

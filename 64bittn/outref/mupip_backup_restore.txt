@@ -9,14 +9,14 @@ mumps.dat
 # Staring another bkground process that alternates between database versions
 # Start yet another bkground process which is created by job.m
 # Take a full backup
-DB file ##TEST_PATH##/mumps.dat backed up in file backup_orig.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file backup_orig.dat
 Transactions up to ##FILTERED##GTM_TEST_DEBUGINFO.*
 
 
 BACKUP COMPLETED.
 
 # Take an incremental backup since last full backup
-DB file ##TEST_PATH##/mumps.dat incrementally backed up in file backup.inc1
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat incrementally backed up in file backup.inc1
 XXX blocks saved.
 Transactions from ##FILTERED##GTM_TEST_DEBUGINFO.*
 
@@ -30,7 +30,7 @@ YDB>
 YDB>
 # Stopping GT.M processes...
 # Take an incremental backup since last incremental backup
-DB file ##TEST_PATH##/mumps.dat incrementally backed up in file backup.inc2
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat incrementally backed up in file backup.inc2
 XXX blocks saved.
 Transactions from ##FILTERED##GTM_TEST_DEBUGINFO.*
 
@@ -96,7 +96,7 @@ PASS,got expected error
 #			Section 3		        	   #
 # Create a V4 database
 # Take a full backup using v4 executables
-DB file ##TEST_PATH##/mumps.dat backed up in file backupv4.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file backupv4.dat
 Transactions up to 0x00000001 are backed up.
 
 
@@ -107,7 +107,7 @@ YDB>
 
 YDB>
 # Take an incremental backup using v4 executables
-DB file ##TEST_PATH##/mumps.dat incrementally backed up in file backupv4.inc1
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat incrementally backed up in file backupv4.inc1
 15 blocks saved.
 Transactions from 0x00000001 to 0x00000065 are backed up.
 
@@ -133,7 +133,7 @@ Using: ##SOURCE_PATH##/mupip
 mumps.dat
 Database file mumps.dat now has desired DB format V4
 # Take full backup
-DB file ##TEST_PATH##/mumps.dat backed up in file backup_compat.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file backup_compat.dat
 Transactions up to 0x0000000000000002 are backed up.
 
 
@@ -160,7 +160,7 @@ File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
 
 # Take a full back here
-DB file ##TEST_PATH##/mumps.dat backed up in file backupv5.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file backupv5.dat
 Transactions up to 0x8000000000000000 are backed up.
 
 
@@ -174,7 +174,7 @@ YDB>
 %YDB-I-RECORDSTAT, ^x:	  Key cnt: 100  max subsc len: 6  max rec len: 100  max node len: 110
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 100  max subsc len: 6  max rec len: 100  max node len: 110
 # Take an incremental backup upto tn=2**63
-DB file ##TEST_PATH##/mumps.dat incrementally backed up in file backupv5.inc1
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat incrementally backed up in file backupv5.inc1
 15 blocks saved.
 Transactions from 0x8000000000000000 to 0x8000000000000064 are backed up.
 

@@ -30,9 +30,9 @@ NEWJNLFILES option
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with NOBEFORE_IMAGES
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
 BACKUP COMPLETED.
-DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back1/a.dat
-DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/back1/b.dat
-DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/back1/mumps.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back1/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/back1/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/back1/mumps.dat
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 Transactions up to 0x00000000000001F7 are backed up.
 Transactions up to 0x00000000000001F7 are backed up.
@@ -48,9 +48,9 @@ Transactions up to 0x0000000000000DBB are backed up.
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with NOBEFORE_IMAGES
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
 BACKUP COMPLETED.
-DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back2/a.dat
-DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/back2/b.dat
-DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/back2/mumps.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back2/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/back2/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/back2/mumps.dat
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 Transactions up to 0x00000000000001F7 are backed up.
 Transactions up to 0x00000000000001F7 are backed up.
@@ -66,9 +66,9 @@ Transactions up to 0x0000000000000DBB are backed up.
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with NOBEFORE_IMAGES
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
 BACKUP COMPLETED.
-DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back3/a.dat
-DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/back3/b.dat
-DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/back3/mumps.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back3/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/back3/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/back3/mumps.dat
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 Transactions up to 0x00000000000001F7 are backed up.
 Transactions up to 0x00000000000001F7 are backed up.
@@ -87,9 +87,9 @@ Transactions up to 0x0000000000000DBB are backed up.
 %YDB-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/b.mjl created for database file ##TEST_PATH##/b.dat
 %YDB-I-PREVJNLLINKCUT, Previous journal file name link set to NULL in new journal file ##TEST_PATH##/mumps.mjl created for database file ##TEST_PATH##/mumps.dat
 BACKUP COMPLETED.
-DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back4/a.dat
-DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/back4/b.dat
-DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/back4/mumps.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back4/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/back4/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/back4/mumps.dat
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 Transactions up to 0x00000000000001F7 are backed up.
 Transactions up to 0x00000000000001F7 are backed up.
@@ -170,9 +170,9 @@ NO_NEWJNLFILES
 
 
 BACKUP COMPLETED.
-DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back5/a.dat
-DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/back5/b.dat
-DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/back5/mumps.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back5/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/back5/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/back5/mumps.dat
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 Transactions up to 0x00000000000001F7 are backed up.
 Transactions up to 0x00000000000001F7 are backed up.
@@ -196,9 +196,9 @@ BKUPDBJNL qualifier
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/back8/b.dat is now DISABLED
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/back8/mumps.dat is now DISABLED
 BACKUP COMPLETED.
-DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back8/a.dat
-DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/back8/b.dat
-DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/back8/mumps.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back8/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/back8/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/back8/mumps.dat
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 Transactions up to 0x00000000000001F7 are backed up.
 Transactions up to 0x00000000000001F7 are backed up.
@@ -217,9 +217,9 @@ Transactions up to 0x0000000000000DBB are backed up.
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/back9/b.dat is now OFF
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/back9/mumps.dat is now OFF
 BACKUP COMPLETED.
-DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back9/a.dat
-DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/back9/b.dat
-DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/back9/mumps.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back9/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/back9/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/back9/mumps.dat
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 Transactions up to 0x00000000000001F7 are backed up.
 Transactions up to 0x00000000000001F7 are backed up.
@@ -234,9 +234,9 @@ Transactions up to 0x0000000000000DBB are backed up.
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/back12/b.dat is now DISABLED
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/back12/mumps.dat is now DISABLED
 BACKUP COMPLETED.
-DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back12/a.dat
-DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/back12/b.dat
-DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/back12/mumps.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back12/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/back12/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/back12/mumps.dat
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 Transactions up to 0x00000000000001F7 are backed up.
 Transactions up to 0x00000000000001F7 are backed up.
@@ -249,9 +249,9 @@ Transactions up to 0x0000000000000DBB are backed up.
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/back13/b.dat is now OFF
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/back13/mumps.dat is now OFF
 BACKUP COMPLETED.
-DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back13/a.dat
-DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/back13/b.dat
-DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/back13/mumps.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/back13/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/back13/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/back13/mumps.dat
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 Transactions up to 0x00000000000001F7 are backed up.
 Transactions up to 0x00000000000001F7 are backed up.

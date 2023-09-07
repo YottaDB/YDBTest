@@ -101,9 +101,9 @@ unset echo
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with .*BEFORE_IMAGES
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with .*BEFORE_IMAGES
 BACKUP COMPLETED.
-DB file ##TEST_PATH##/a.dat backed up in file bakdir1on/a.dat
-DB file ##TEST_PATH##/b.dat backed up in file bakdir1on/b.dat
-DB file ##TEST_PATH##/mumps.dat backed up in file bakdir1on/mumps.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file bakdir1on/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file bakdir1on/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file bakdir1on/mumps.dat
 Journal Seqnos up to 0x0000000000000070 are backed up.
 Replication Instance file ##TEST_PATH##/mumps.repl backed up in file bakdir1on/mumps.repl
 ##SUSPEND_OUTPUT SPANNING_REGIONS
@@ -162,9 +162,9 @@ unset echo
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with .*BEFORE_IMAGES
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with .*BEFORE_IMAGES
 BACKUP COMPLETED.
-DB file ##TEST_PATH##/a.dat backed up in file bakdirdb/a.dat
-DB file ##TEST_PATH##/b.dat backed up in file bakdirdb/b.dat
-DB file ##TEST_PATH##/mumps.dat backed up in file bakdirdb/mumps.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file bakdirdb/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file bakdirdb/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file bakdirdb/mumps.dat
 Journal Seqnos up to 0x0000000000000070 are backed up.
 Replication Instance file ##TEST_PATH##/mumps.repl backed up in file bakdirrepl/mumps.repl
 ##SUSPEND_OUTPUT SPANNING_REGIONS
@@ -242,9 +242,9 @@ NEWJNLFILES cannot be specified without specifying a backup region
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_AWK.*/instance2/mumps.mjl created for region DEFAULT with .*BEFORE_IMAGES
 ==Executing MULTISITE_REPLIC 'RUN INST2 mkdir bakdir2; $MUPIP backup -replinstance=bakdir2 "*" bakdir2 >& backup24.tmp; cat backup24.tmp'==
 BACKUP COMPLETED.
-DB file ##TEST_AWK.*/instance2/a.dat backed up in file bakdir2/a.dat
-DB file ##TEST_AWK.*/instance2/b.dat backed up in file bakdir2/b.dat
-DB file ##TEST_AWK.*/instance2/mumps.dat backed up in file bakdir2/mumps.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_AWK.*/instance2/a.dat backed up in file bakdir2/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_AWK.*/instance2/b.dat backed up in file bakdir2/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_AWK.*/instance2/mumps.dat backed up in file bakdir2/mumps.dat
 Journal Seqnos up to 0x0000000000000070 are backed up.
 Replication Instance file ##TEST_AWK.*/instance2/mumps.repl backed up in file bakdir2/mumps.repl
 ##SUSPEND_OUTPUT SPANNING_REGIONS
@@ -352,9 +352,9 @@ unset echo
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with .*BEFORE_IMAGES
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with .*BEFORE_IMAGES
 BACKUP COMPLETED.
-DB file ##TEST_PATH##/a.dat backed up in file bakdir1off/a.dat
-DB file ##TEST_PATH##/b.dat backed up in file bakdir1off/b.dat
-DB file ##TEST_PATH##/mumps.dat backed up in file bakdir1off/mumps.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file bakdir1off/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file bakdir1off/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file bakdir1off/mumps.dat
 Journal Seqnos up to 0x00000000000000DF are backed up.
 Replication Instance file ##TEST_PATH##/mumps.repl backed up in file bakdir1off/mumps.repl
 ##SUSPEND_OUTPUT SPANNING_REGIONS

@@ -40,7 +40,7 @@ YDB>
 #
 %YDB-E-NOREGION, REGION not found: FREELUNCH
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-DB file ##TEST_PATH##/backup.dat backed up in file ##TEST_PATH##/backup-dir/backup.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/backup.dat backed up in file ##TEST_PATH##/backup-dir/backup.dat
 ##SUSPEND_OUTPUT MM_FILE_NO_EXT
 Transactions up to 0x0000000000000402 are backed up.
 ##ALLOW_OUTPUT MM_FILE_NO_EXT
@@ -59,7 +59,7 @@ YDB>
 PASS from fill2^myfill("set")
 
 YDB>
-DB file ##TEST_PATH##/backup.dat incrementally backed up in file ##TEST_PATH##/backup-dir/backup.bak2
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/backup.dat incrementally backed up in file ##TEST_PATH##/backup-dir/backup.bak2
 ##SUSPEND_OUTPUT COLLATION
 ##SUSPEND_OUTPUT MM_FILE_NO_EXT
 44 blocks saved.
@@ -93,7 +93,7 @@ YDB>
 PASS from fill3^myfill("set")
 
 YDB>
-DB file ##TEST_PATH##/backup.dat incrementally backed up in file ##TEST_PATH##/backup-dir/backup.bak3
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/backup.dat incrementally backed up in file ##TEST_PATH##/backup-dir/backup.bak3
 ##SUSPEND_OUTPUT COLLATION
 233 blocks saved.
 ##ALLOW_OUTPUT COLLATION
@@ -110,7 +110,7 @@ Transactions from 0x0000000000000BFF to 0x0000000000002BFE are backed up.
 
 BACKUP COMPLETED.
 
-DB file ##TEST_PATH##/backup.dat incrementally backed up in file ##TEST_PATH##/backup-dir/backup.bak33
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/backup.dat incrementally backed up in file ##TEST_PATH##/backup-dir/backup.bak33
 ##SUSPEND_OUTPUT COLLATION
 234 blocks saved.
 ##ALLOW_OUTPUT COLLATION
@@ -127,7 +127,7 @@ Transactions from 0x0000000000000400 to 0x0000000000002BFE are backed up.
 
 BACKUP COMPLETED.
 
-DB file ##TEST_PATH##/backup.dat incrementally backed up in file ##TEST_PATH##/backup-dir/backup.bak333
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/backup.dat incrementally backed up in file ##TEST_PATH##/backup-dir/backup.bak333
 ##SUSPEND_OUTPUT COLLATION
 528 blocks saved.
 ##ALLOW_OUTPUT COLLATION
@@ -295,9 +295,9 @@ YDB>
 
 
 BACKUP COMPLETED.
-DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/backup-dir/a.dat
-DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/backup-dir/b.dat
-DB file ##TEST_PATH##/backup.dat backed up in file ##TEST_PATH##/backup-dir/backup.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/backup-dir/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/backup-dir/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/backup.dat backed up in file ##TEST_PATH##/backup-dir/backup.dat
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 Transactions up to 0x0000000000000065 are backed up.
 Transactions up to 0x0000000000000065 are backed up.

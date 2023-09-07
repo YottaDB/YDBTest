@@ -22,7 +22,7 @@ YDB>
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/online5.mjl is renamed to ##TEST_PATH##/online5.mjl_##TIMESTAMP##
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/online5.mjl created for region DEFAULT with .*BEFORE_IMAGES
 ##ALLOW_OUTPUT  NON_REPLIC
-##TEST_AWKDB file ##TEST_PATH##/online5.dat incrementally backed up in file  .*gzip -c > online5pipe.inc.gz
+##TEST_AWK%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/online5.dat incrementally backed up in file  .*gzip -c > online5pipe.inc.gz
 ##SUSPEND_OUTPUT COLLATION
 190 blocks saved.
 ##SUSPEND_OUTPUT MM_FILE_NO_EXT

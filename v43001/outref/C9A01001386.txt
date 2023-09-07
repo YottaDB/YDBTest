@@ -16,7 +16,7 @@ PASS from fill1^myfill("set")
 
 YDB>
 BACKUP COMPLETED.
-DB file ##TEST_PATH##/online.dat backed up in file ##TEST_PATH##/online1/online.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/online.dat backed up in file ##TEST_PATH##/online1/online.dat
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 Transactions up to 0x0000000000000388 are backed up.
 ##ALLOW_OUTPUT SPANNING_REGIONS
@@ -34,10 +34,10 @@ This should error:
 MUPIP cannot start backup with above errors
 This should REPLACE:
 BACKUP COMPLETED.
-DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/online1/a.dat
-DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/online1/b.dat
-DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/online1/c.dat
-DB file ##TEST_PATH##/online.dat backed up in file ##TEST_PATH##/online1/online.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/online1/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/online1/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/online1/c.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/online.dat backed up in file ##TEST_PATH##/online1/online.dat
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 Transactions up to 0x0000000000000029 are backed up.
 Transactions up to 0x000000000000002A are backed up.
@@ -48,10 +48,10 @@ Total number of transactions backed up:  1029
 Clean up
 Backup again:
 BACKUP COMPLETED.
-DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/online1/a.dat
-DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/online1/b.dat
-DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/online1/c.dat
-DB file ##TEST_PATH##/online.dat backed up in file ##TEST_PATH##/online1/online.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/online1/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/online1/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/online1/c.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/online.dat backed up in file ##TEST_PATH##/online1/online.dat
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 Transactions up to 0x0000000000000029 are backed up.
 Transactions up to 0x000000000000002A are backed up.
@@ -70,10 +70,10 @@ This should error:
 MUPIP cannot start backup with above errors
 This should REPLACE:
 BACKUP COMPLETED.
-DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/online1/a.dat
-DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/online1/b.dat
-DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/online1/c.dat
-DB file ##TEST_PATH##/online.dat backed up in file ##TEST_PATH##/online1/online.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/online1/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/online1/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/online1/c.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/online.dat backed up in file ##TEST_PATH##/online1/online.dat
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 Transactions up to 0x0000000000000029 are backed up.
 Transactions up to 0x000000000000002A are backed up.
@@ -86,13 +86,13 @@ Total number of transactions backed up:  1029
 No errors detected by integ.
 Target does not exist and replace qualifier NOT specified
 BACKUP COMPLETED.
-DB file ##TEST_PATH##/online.dat backed up in file ##TEST_PATH##/online1/online.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/online.dat backed up in file ##TEST_PATH##/online1/online.dat
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 Transactions up to 0x0000000000000388 are backed up.
 ##ALLOW_OUTPUT SPANNING_REGIONS
 Target does not exist and replace qualifier specified. Ignore bkp_dir_2
 BACKUP COMPLETED.
-DB file ##TEST_PATH##/online.dat backed up in file ##TEST_PATH##/online1/online.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/online.dat backed up in file ##TEST_PATH##/online1/online.dat
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 Transactions up to 0x0000000000000388 are backed up.
 ##ALLOW_OUTPUT SPANNING_REGIONS
@@ -104,14 +104,14 @@ Target exists and replace qualifier NOT specified
 MUPIP cannot start backup with above errors
 Target exists and replace qualifier specified
 BACKUP COMPLETED.
-DB file ##TEST_PATH##/online.dat backed up in file ##TEST_PATH##/online1/online.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/online.dat backed up in file ##TEST_PATH##/online1/online.dat
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 Transactions up to 0x0000000000000388 are backed up.
 ##ALLOW_OUTPUT SPANNING_REGIONS
 Target does not exist and individual files specified. No replace qualifier
 BACKUP COMPLETED.
-DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/online1/a.dat
-DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/online1/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/online1/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/online1/b.dat
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 Transactions up to 0x0000000000000029 are backed up.
 Transactions up to 0x000000000000002A are backed up.
@@ -125,18 +125,18 @@ Target exists and individual files specified. No replace qualifier
 MUPIP cannot start backup with above errors
 Target exists and individual files specified. replace qualifier specified
 BACKUP COMPLETED.
-DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/online1/a.dat
-DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/online1/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/online1/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/online1/b.dat
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 Transactions up to 0x0000000000000029 are backed up.
 Transactions up to 0x000000000000002A are backed up.
 ##ALLOW_OUTPUT SPANNING_REGIONS
 Target does not exist, region is * and replace qualifier NOT specified
 BACKUP COMPLETED.
-DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/online1/a.dat
-DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/online1/b.dat
-DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/online1/c.dat
-DB file ##TEST_PATH##/online.dat backed up in file ##TEST_PATH##/online1/online.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/online1/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/online1/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/online1/c.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/online.dat backed up in file ##TEST_PATH##/online1/online.dat
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 Transactions up to 0x0000000000000029 are backed up.
 Transactions up to 0x000000000000002A are backed up.
@@ -154,10 +154,10 @@ Target exists, region is * and replace qualifier NOT specified
 MUPIP cannot start backup with above errors
 Target exists, region is * and replace qualifier specified
 BACKUP COMPLETED.
-DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/online1/a.dat
-DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/online1/b.dat
-DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/online1/c.dat
-DB file ##TEST_PATH##/online.dat backed up in file ##TEST_PATH##/online1/online.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/online1/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/online1/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/online1/c.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/online.dat backed up in file ##TEST_PATH##/online1/online.dat
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 Transactions up to 0x0000000000000029 are backed up.
 Transactions up to 0x000000000000002A are backed up.
@@ -167,9 +167,9 @@ Transactions up to 0x0000000000000388 are backed up.
 Total number of transactions backed up:  1029
 Target does not exist and is a combination of files/directories
 BACKUP COMPLETED.
-DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/online1/a.dat
-DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/online1/b.dat
-DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/online1/c.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/online1/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/online1/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/online1/c.dat
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 Transactions up to 0x0000000000000029 are backed up.
 Transactions up to 0x000000000000002A are backed up.
@@ -185,9 +185,9 @@ Target exists and is a combination of files/directories
 MUPIP cannot start backup with above errors
 Target exists and is a combination of files/directories and replace qualifier specified
 BACKUP COMPLETED.
-DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/online1/a.dat
-DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/online1/b.dat
-DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/online1/c.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/online1/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/online1/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/online1/c.dat
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 Transactions up to 0x0000000000000029 are backed up.
 Transactions up to 0x000000000000002A are backed up.

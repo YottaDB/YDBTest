@@ -38,7 +38,7 @@ mumpsmumpsmumpsmumpsm.dat
 ###################################################################
 # Backing up DEFAULT Region to path length 229
 # (backup file path length is 255 but temp file path length is 253)
-##TEST_AWKDB file ##TEST_PATH##/mumpsmumpsmumpsmumpsm.dat backed up in file ##TEST_PATH##/a*/mumpsmumpsmumpsmumpsm.dat
+##TEST_AWK%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumpsmumpsmumpsmumpsm.dat backed up in file ##TEST_PATH##/a*/mumpsmumpsmumpsmumpsm.dat
 ##TEST_AWKTransactions up to 0x................ are backed up.
 
 
@@ -66,7 +66,7 @@ BACKUP COMPLETED.
 # with $ydb_baktmpdir set to a shorter path. This backup will succeed
 # because none of the buffers in MUPIP BACKUP will ever overflow the
 # buffer and thus there is no need for a FILENAMETOOLONG error.
-##TEST_AWKDB file ##TEST_PATH##/mumpsmumpsmumpsmumpsm.dat backed up in file a*/mumpsmumpsmumpsmumpsm.dat
+##TEST_AWK%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumpsmumpsmumpsmumpsm.dat backed up in file a*/mumpsmumpsmumpsmumpsm.dat
 ##TEST_AWKTransactions up to 0x................ are backed up.
 
 
@@ -77,7 +77,7 @@ BACKUP COMPLETED.
 # This should produce a FILENAMETOOLONG error on the
 # upstream version of V6.3-012 but will not produce an
 # error on YottaDB or pre-V6.3-012 upstream versions.
-DB file ##TEST_PATH##/mumpsmumpsmumpsmumpsm.dat backed up in file abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefg
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumpsmumpsmumpsmumpsm.dat backed up in file abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefg
 ##TEST_AWKTransactions up to 0x................ are backed up.
 
 

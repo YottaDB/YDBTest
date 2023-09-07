@@ -80,9 +80,9 @@ $MUPIP backup -nonew -o "*" ./bak -dbg | & sort -f
 
 
 BACKUP COMPLETED.
-DB file ##TEST_PATH##/a.dat backed up in file ./bak/a.dat
-DB file ##TEST_PATH##/b.dat backed up in file ./bak/b.dat
-DB file ##TEST_PATH##/mumps.dat backed up in file ./bak/mumps.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ./bak/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ./bak/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ./bak/mumps.dat
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
@@ -119,8 +119,8 @@ $MUPIP backup -nonew -o "*" ./bak -dbg -i | & sort -f
 X blocks saved.
 X blocks saved.
 BACKUP COMPLETED.
-DB file ##TEST_PATH##/a.dat incrementally backed up in file ./bak/a.dat
-DB file ##TEST_PATH##/b.dat incrementally backed up in file ./bak/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat incrementally backed up in file ./bak/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat incrementally backed up in file ./bak/b.dat
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
 MUPIP INFO:   Temp file name: ##TEST_PATH##/bak/bak//AREG_YYYY_ZZZZZZ
@@ -149,9 +149,9 @@ $MUPIP backup -nonew -o "*" ./bak -dbg | & sort -f
 
 
 BACKUP COMPLETED.
-DB file ##TEST_PATH##/a.dat backed up in file ./bak/a.dat
-DB file ##TEST_PATH##/b.dat backed up in file ./bak/b.dat
-DB file ##TEST_PATH##/mumps.dat backed up in file ./bak/mumps.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ./bak/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ./bak/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ./bak/mumps.dat
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
@@ -189,8 +189,8 @@ $MUPIP backup -nonew -o "*" ./bak -dbg -i | & sort -f
 X blocks saved.
 X blocks saved.
 BACKUP COMPLETED.
-DB file ##TEST_PATH##/a.dat incrementally backed up in file ./bak/a.dat
-DB file ##TEST_PATH##/b.dat incrementally backed up in file ./bak/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat incrementally backed up in file ./bak/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat incrementally backed up in file ./bak/b.dat
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
 MUPIP INFO:   Temp file name: ##TEST_PATH##/bak/baktmp/AREG_YYYY_ZZZZZZ
@@ -315,9 +315,9 @@ And on the secondary side:
 
 
 BACKUP COMPLETED.
-DB file ##TEST_PATH##/a.dat backed up in file ./bak/a.dat
-DB file ##TEST_PATH##/b.dat backed up in file ./bak/b.dat
-DB file ##TEST_PATH##/mumps.dat backed up in file ./bak/mumps.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ./bak/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ./bak/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ./bak/mumps.dat
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
@@ -346,8 +346,8 @@ Transactions up to XXXX are backed up.
 X blocks saved.
 X blocks saved.
 BACKUP COMPLETED.
-DB file ##TEST_PATH##/a.dat incrementally backed up in file ./bak/a.dat
-DB file ##TEST_PATH##/b.dat incrementally backed up in file ./bak/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat incrementally backed up in file ./bak/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat incrementally backed up in file ./bak/b.dat
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
 MUPIP INFO:   Temp file name: ##REMOTE_TEST_PATH##/bak/bak//AREG_YYYY_ZZZZZZ
@@ -370,9 +370,9 @@ gtm_baktmpdir: ##REMOTE_TEST_PATH##/bak/baktmp
 
 
 BACKUP COMPLETED.
-DB file ##TEST_PATH##/a.dat backed up in file ./bak/a.dat
-DB file ##TEST_PATH##/b.dat backed up in file ./bak/b.dat
-DB file ##TEST_PATH##/mumps.dat backed up in file ./bak/mumps.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ./bak/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ./bak/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ./bak/mumps.dat
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
@@ -401,8 +401,8 @@ Transactions up to XXXX are backed up.
 X blocks saved.
 X blocks saved.
 BACKUP COMPLETED.
-DB file ##TEST_PATH##/a.dat incrementally backed up in file ./bak/a.dat
-DB file ##TEST_PATH##/b.dat incrementally backed up in file ./bak/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat incrementally backed up in file ./bak/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat incrementally backed up in file ./bak/b.dat
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
 MUPIP INFO:   Temp file name: ##REMOTE_TEST_PATH##/bak/baktmp/AREG_YYYY_ZZZZZZ
