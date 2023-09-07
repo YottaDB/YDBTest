@@ -22,14 +22,12 @@ Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 Non-incremental backup is not supported to pipes and tcp:
 $MUPIP backup -nonew -o DEFAULT '"| gzip -c > mumpsbak.dat.gz"'
 %YDB-E-NOTRNDMACC, Only random access files are supported as backup files for non-incremental backup
-
-MUPIP cannot start backup with above errors
+%YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 $MUPIP backup -nonew -o -nettimeout=120 DEFAULT "tcp://`hostname`:6200"
 %YDB-E-NOTRNDMACC, Only random access files are supported as backup files for non-incremental backup
-
-MUPIP cannot start backup with above errors
+%YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 unset verbose
@@ -47,8 +45,7 @@ try a bad gtm_baktmpdir:
 
 Do not have full access to directory for temporary files: junkdir
 %SYSTEM-E-ENO2, No such file or directory
-
-MUPIP cannot start backup with above errors
+%YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 
 ===================================================================
 Try a relative pathname for mupip (mumps and mupip called from different directories):
@@ -205,8 +202,7 @@ $MUPIP backup -nonew -o "AREG" ./bak -dbg
 
 Do not have full access to directory for temporary files: ##TEST_PATH##/bak/baktmp
 %SYSTEM-E-ENO13, Permission denied
-
-MUPIP cannot start backup with above errors
+%YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 
 $MUPIP integ -reg -noonline "*" >> & integ.log
 ls ./bak/*
@@ -221,8 +217,7 @@ $MUPIP backup -nonew -o "AREG" ./bak -dbg -i
 
 Do not have full access to directory for temporary files: ##TEST_PATH##/bak/baktmp
 %SYSTEM-E-ENO13, Permission denied
-
-MUPIP cannot start backup with above errors
+%YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 
 $MUPIP integ -reg -noonline "*" >> & integ.log
 chmod 755 $gtm_baktmpdir
@@ -274,8 +269,7 @@ $MUPIP backup -nonew -o "AREG" ./bak -dbg
 
 Do not have full access to directory for temporary files: ##REMOTE_TEST_PATH##/bak/baktmp
 %SYSTEM-E-ENO13, Permission denied
-
-MUPIP cannot start backup with above errors
+%YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 
 $MUPIP integ -reg -noonline "*" >> & integ.log
 ls ./bak/*
@@ -290,8 +284,7 @@ $MUPIP backup -nonew -o "AREG" ./bak -dbg -i
 
 Do not have full access to directory for temporary files: ##REMOTE_TEST_PATH##/bak/baktmp
 %SYSTEM-E-ENO13, Permission denied
-
-MUPIP cannot start backup with above errors
+%YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 
 $MUPIP integ -reg -noonline "*" >> & integ.log
 chmod 755 $gtm_baktmpdir

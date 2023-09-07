@@ -305,8 +305,7 @@ PASS from fill5^myfill("ver")
 YDB>
 %YDB-E-MUSELFBKUP, Database file ##TEST_PATH##/backup.dat can not be backed upon itself
 %YDB-E-FILEEXISTS, File ./backup.dat already exists
-
-MUPIP cannot start backup with above errors
+%YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##SOURCE_PATH##/mupip

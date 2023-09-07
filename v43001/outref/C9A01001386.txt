@@ -22,8 +22,7 @@ BACKUP COMPLETED.
 ##ALLOW_OUTPUT SPANNING_REGIONS
 This should error:
 %YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/online.dat already exists
-
-MUPIP cannot start backup with above errors
+%YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 This should error:
@@ -31,7 +30,7 @@ This should error:
 
 %YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/online.dat already exists
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-MUPIP cannot start backup with above errors
+%YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 This should REPLACE:
 BACKUP COMPLETED.
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/online1/a.dat
@@ -67,7 +66,7 @@ This should error:
 %YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/c.dat already exists
 %YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/online.dat already exists
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-MUPIP cannot start backup with above errors
+%YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 This should REPLACE:
 BACKUP COMPLETED.
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/online1/a.dat
@@ -101,7 +100,7 @@ Target exists and replace qualifier NOT specified
 
 %YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/online.dat already exists
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-MUPIP cannot start backup with above errors
+%YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 Target exists and replace qualifier specified
 BACKUP COMPLETED.
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/online.dat backed up in file ##TEST_PATH##/online1/online.dat
@@ -122,7 +121,7 @@ Target exists and individual files specified. No replace qualifier
 %YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/a.dat already exists
 %YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/b.dat already exists
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-MUPIP cannot start backup with above errors
+%YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 Target exists and individual files specified. replace qualifier specified
 BACKUP COMPLETED.
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/online1/a.dat
@@ -151,7 +150,7 @@ Target exists, region is * and replace qualifier NOT specified
 %YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/c.dat already exists
 %YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/online.dat already exists
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-MUPIP cannot start backup with above errors
+%YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 Target exists, region is * and replace qualifier specified
 BACKUP COMPLETED.
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/online1/a.dat
@@ -182,7 +181,7 @@ Target exists and is a combination of files/directories
 %YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/b.dat already exists
 %YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/c.dat already exists
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-MUPIP cannot start backup with above errors
+%YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 Target exists and is a combination of files/directories and replace qualifier specified
 BACKUP COMPLETED.
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/online1/a.dat
@@ -203,7 +202,7 @@ Target exists and duplicates in target list
 Cannot backup database regions AREG and BREG to the same destination file ##TEST_PATH##/online1/a.dat
 Cannot backup database regions AREG and CREG to the same destination file ##TEST_PATH##/online1/a.dat
 Cannot backup database regions BREG and CREG to the same destination file ##TEST_PATH##/online1/a.dat
-MUPIP cannot start backup with above errors
+%YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 Target does not exist and duplicates in target list
 
 
@@ -211,7 +210,7 @@ Target does not exist and duplicates in target list
 Cannot backup database regions AREG and BREG to the same destination file ##TEST_PATH##/online1/a.dat
 Cannot backup database regions AREG and CREG to the same destination file ##TEST_PATH##/online1/a.dat
 Cannot backup database regions BREG and CREG to the same destination file ##TEST_PATH##/online1/a.dat
-MUPIP cannot start backup with above errors
+%YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 Target does not exist and duplicates in target list and replace qualifier specified
 
 
@@ -219,7 +218,7 @@ Target does not exist and duplicates in target list and replace qualifier specif
 Cannot backup database regions AREG and BREG to the same destination file ##TEST_PATH##/online1/a.dat
 Cannot backup database regions AREG and CREG to the same destination file ##TEST_PATH##/online1/a.dat
 Cannot backup database regions BREG and CREG to the same destination file ##TEST_PATH##/online1/a.dat
-MUPIP cannot start backup with above errors
+%YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 Target does not exist but path contains a very long directory name
 
 
@@ -227,7 +226,7 @@ Target does not exist but path contains a very long directory name
 Cannot backup database regions AREG and BREG to the same destination file ##TEST_PATH##/extremely_very_very_long_directory_name_for_testing/another_medium_sized_directory_name/online1/a.dat
 Cannot backup database regions AREG and CREG to the same destination file ##TEST_PATH##/extremely_very_very_long_directory_name_for_testing/another_medium_sized_directory_name/online1/a.dat
 Cannot backup database regions BREG and CREG to the same destination file ##TEST_PATH##/extremely_very_very_long_directory_name_for_testing/another_medium_sized_directory_name/online1/a.dat
-MUPIP cannot start backup with above errors
+%YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
