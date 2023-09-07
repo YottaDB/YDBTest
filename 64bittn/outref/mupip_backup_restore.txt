@@ -63,8 +63,7 @@ checkdb PASSED.
 
 YDB>
 ##SOURCE_PATH##/mupip restore mumps.dat backup.inc1
-
-RESTORE COMPLETED
+%YDB-I-RESTORESUCCESS, Restore completed successfully
 XXX blocks restored
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
@@ -77,8 +76,7 @@ checkdb PASSED.
 
 YDB>
 ##SOURCE_PATH##/mupip restore mumps.dat backup.inc2
-
-RESTORE COMPLETED
+%YDB-I-RESTORESUCCESS, Restore completed successfully
 XXX blocks restored
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
@@ -187,8 +185,7 @@ Transactions from 0x8000000000000000 to 0x8000000000000064 are backed up.
 
 BACKUP COMPLETED.
 
-
-RESTORE COMPLETED
+%YDB-I-RESTORESUCCESS, Restore completed successfully
 15 blocks restored
 # mupip extract again to verify the values existing in the database
 %YDB-I-RECORDSTAT, ^x:	  Key cnt: 100  max subsc len: 6  max rec len: 100  max node len: 110

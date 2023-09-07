@@ -1893,20 +1893,16 @@ chmod.csh rwrw
 **** R/W b.dat R/W b.mjl ****
 res mumps.dat a.dat b.dat c.dat
 mupip restore mumps.dat ./backup/mumps.dat
-
-RESTORE COMPLETED
+%YDB-I-RESTORESUCCESS, Restore completed successfully
 7 blocks restored
 mupip restore a.dat ./backup/a.dat
-
-RESTORE COMPLETED
+%YDB-I-RESTORESUCCESS, Restore completed successfully
 5 blocks restored
 mupip restore b.dat ./backup/b.dat
-
-RESTORE COMPLETED
+%YDB-I-RESTORESUCCESS, Restore completed successfully
 5 blocks restored
 mupip restore c.dat ./backup/c.dat
-
-RESTORE COMPLETED
+%YDB-I-RESTORESUCCESS, Restore completed successfully
 5 blocks restored
 $gtm_tst/com/dbcheck.csh
 ##SOURCE_PATH##/mupip
@@ -1923,20 +1919,16 @@ chmod.csh rwro
 **** R/W b.dat R/O b.mjl ****
 res mumps.dat a.dat b.dat c.dat
 mupip restore mumps.dat ./backup/mumps.dat
-
-RESTORE COMPLETED
+%YDB-I-RESTORESUCCESS, Restore completed successfully
 7 blocks restored
 mupip restore a.dat ./backup/a.dat
-
-RESTORE COMPLETED
+%YDB-I-RESTORESUCCESS, Restore completed successfully
 5 blocks restored
 mupip restore b.dat ./backup/b.dat
-
-RESTORE COMPLETED
+%YDB-I-RESTORESUCCESS, Restore completed successfully
 5 blocks restored
 mupip restore c.dat ./backup/c.dat
-
-RESTORE COMPLETED
+%YDB-I-RESTORESUCCESS, Restore completed successfully
 5 blocks restored
 $gtm_tst/com/dbcheck.csh
 ##SOURCE_PATH##/mupip
@@ -1953,20 +1945,17 @@ chmod.csh rorw
 **** R/O b.dat R/W b.mjl ****
 res mumps.dat a.dat b.dat c.dat
 mupip restore mumps.dat ./backup/mumps.dat
-
-RESTORE COMPLETED
+%YDB-I-RESTORESUCCESS, Restore completed successfully
 7 blocks restored
 mupip restore a.dat ./backup/a.dat
-
-RESTORE COMPLETED
+%YDB-I-RESTORESUCCESS, Restore completed successfully
 5 blocks restored
 mupip restore b.dat ./backup/b.dat
 Error accessing output file b.dat. Aborting restore.
 open : Permission denied
 %SYSTEM-E-ENO13, Permission denied
 mupip restore c.dat ./backup/c.dat
-
-RESTORE COMPLETED
+%YDB-I-RESTORESUCCESS, Restore completed successfully
 5 blocks restored
 $gtm_tst/com/dbcheck.csh
 ##SOURCE_PATH##/mupip
@@ -1983,20 +1972,17 @@ chmod.csh roro
 **** R/O b.dat R/O b.mjl ****
 res mumps.dat a.dat b.dat c.dat
 mupip restore mumps.dat ./backup/mumps.dat
-
-RESTORE COMPLETED
+%YDB-I-RESTORESUCCESS, Restore completed successfully
 7 blocks restored
 mupip restore a.dat ./backup/a.dat
-
-RESTORE COMPLETED
+%YDB-I-RESTORESUCCESS, Restore completed successfully
 5 blocks restored
 mupip restore b.dat ./backup/b.dat
 Error accessing output file b.dat. Aborting restore.
 open : Permission denied
 %SYSTEM-E-ENO13, Permission denied
 mupip restore c.dat ./backup/c.dat
-
-RESTORE COMPLETED
+%YDB-I-RESTORESUCCESS, Restore completed successfully
 5 blocks restored
 $gtm_tst/com/dbcheck.csh
 ##SOURCE_PATH##/mupip

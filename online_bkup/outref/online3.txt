@@ -72,8 +72,7 @@ No errors detected by integ.
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/a.dat created
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/b.dat created
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/online3.dat created
-
-RESTORE COMPLETED
+%YDB-I-RESTORESUCCESS, Restore completed successfully
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 7 blocks restored
 ##ALLOW_OUTPUT SPANNING_REGIONS
@@ -82,8 +81,7 @@ YDB>
 ^d="This should be in region DEFAULT"
 
 YDB>
-
-RESTORE COMPLETED
+%YDB-I-RESTORESUCCESS, Restore completed successfully
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 7 blocks restored
 ##ALLOW_OUTPUT SPANNING_REGIONS
@@ -92,8 +90,7 @@ YDB>
 ^a="This should be in region AREG"
 
 YDB>
-
-RESTORE COMPLETED
+%YDB-I-RESTORESUCCESS, Restore completed successfully
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 7 blocks restored
 ##ALLOW_OUTPUT SPANNING_REGIONS

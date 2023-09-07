@@ -172,8 +172,7 @@ YDB>
 ver PASS
 
 YDB>
-
-RESTORE COMPLETED
+%YDB-I-RESTORESUCCESS, Restore completed successfully
 ##TEST_AWK13(45|50) blocks restored
 
 YDB>
@@ -183,8 +182,7 @@ YDB>
 ver PASS
 
 YDB>
-
-RESTORE COMPLETED
+%YDB-I-RESTORESUCCESS, Restore completed successfully
 ##SUSPEND_OUTPUT  NON_COLLATION
 ##SUSPEND_OUTPUT 4G_ABOVE_DB_BLKS
 5150 blocks restored
@@ -213,8 +211,7 @@ YDB>
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/ＡＢＣＤ.dat created
-
-RESTORE COMPLETED
+%YDB-I-RESTORESUCCESS, Restore completed successfully
 ##SUSPEND_OUTPUT  NON_COLLATION
 5864 blocks restored
 ##SUSPEND_OUTPUT  COLLATION
@@ -233,8 +230,7 @@ YDB>
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
 %YDB-I-DBFILECREATED, Database file ##TEST_PATH##/ＡＢＣＤ.dat created
-
-RESTORE COMPLETED
+%YDB-I-RESTORESUCCESS, Restore completed successfully
 ##SUSPEND_OUTPUT  NON_COLLATION
 5864 blocks restored
 ##SUSPEND_OUTPUT  COLLATION

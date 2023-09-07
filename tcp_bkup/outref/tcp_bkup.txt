@@ -20,8 +20,7 @@ Backup begins at primary...
 ##TEST_AWK\$MUPIP backup -online -incremental -transaction=1 -nettimeout=420 DEFAULT "tcp://##TEST_REMOTE_HOST_SHORT##:[0-9]+"
 Restore begins at secondary...
 ##TEST_AWK\$MUPIP restore -nettimeout=420 mumps.dat "tcp://##TEST_HOST_SHORT##[2]?:[0-9]+"
-
-RESTORE COMPLETED
+%YDB-I-RESTORESUCCESS, Restore completed successfully
 ##TEST_AWK[0-9]+ blocks restored
 DATABASE EXTRACT PASSED
 ##SOURCE_PATH##/mupip

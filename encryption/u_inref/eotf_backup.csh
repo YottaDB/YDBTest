@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -151,7 +151,7 @@ setenv gtmcrypt_config ${gtmcrypt_config}.orig
 # Restore the backup file taken previously.
 $MUPIP restore mumps.dat mumps.dat.bak >&! mupip_restore.out
 
-$grep -q "RESTORE COMPLETED" mupip_restore.out
+$grep -q "RESTORESUCCESS" mupip_restore.out
 if ($status) then
 	echo "TEST-E-FAIL, MUPIP RESTORE failed. See mupip_restore.out for details"
 	exit 1
@@ -232,7 +232,7 @@ if ("pro" != "$tst_image") then
 	# Now that all keys are present, make sure that the restoration can proceed.
 	$MUPIP restore mumps.dat mumps.dat.bak >&! mupip_restore2.out
 
-	$grep -q "RESTORE COMPLETED" mupip_restore2.out
+	$grep -q "RESTORESUCCESS" mupip_restore2.out
 	if ($status) then
 		echo "TEST-E-FAIL, MUPIP RESTORE failed. See mupip_restore2.out for details"
 		exit 1
