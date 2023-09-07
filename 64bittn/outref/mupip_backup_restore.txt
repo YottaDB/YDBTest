@@ -16,7 +16,6 @@ Transactions up to ##FILTERED##GTM_TEST_DEBUGINFO.*
 BACKUP COMPLETED.
 
 # Take an incremental backup since last full backup
-MUPIP backup of database file ##TEST_PATH##/mumps.dat to backup.inc1
 DB file ##TEST_PATH##/mumps.dat incrementally backed up in file backup.inc1
 XXX blocks saved.
 Transactions from ##FILTERED##GTM_TEST_DEBUGINFO.*
@@ -31,7 +30,6 @@ YDB>
 YDB>
 # Stopping GT.M processes...
 # Take an incremental backup since last incremental backup
-MUPIP backup of database file ##TEST_PATH##/mumps.dat to backup.inc2
 DB file ##TEST_PATH##/mumps.dat incrementally backed up in file backup.inc2
 XXX blocks saved.
 Transactions from ##FILTERED##GTM_TEST_DEBUGINFO.*
@@ -109,7 +107,6 @@ YDB>
 
 YDB>
 # Take an incremental backup using v4 executables
-MUPIP backup of database file ##TEST_PATH##/mumps.dat to backupv4.inc1
 DB file ##TEST_PATH##/mumps.dat incrementally backed up in file backupv4.inc1
 15 blocks saved.
 Transactions from 0x00000001 to 0x00000065 are backed up.
@@ -177,7 +174,6 @@ YDB>
 %YDB-I-RECORDSTAT, ^x:	  Key cnt: 100  max subsc len: 6  max rec len: 100  max node len: 110
 %YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 100  max subsc len: 6  max rec len: 100  max node len: 110
 # Take an incremental backup upto tn=2**63
-MUPIP backup of database file ##TEST_PATH##/mumps.dat to backupv5.inc1
 DB file ##TEST_PATH##/mumps.dat incrementally backed up in file backupv5.inc1
 15 blocks saved.
 Transactions from 0x8000000000000000 to 0x8000000000000064 are backed up.

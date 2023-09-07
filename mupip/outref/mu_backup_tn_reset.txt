@@ -34,7 +34,6 @@ WARNING: Transaction number reset complete on all active blocks. Please do a DAT
   Last Bytestream Backup         0x0000000000000001  Lock space                      0x000000DC
   Current transaction            0x0000000000000002  No. of writes/flush                      7
 # Try incremental backup after tn_reset, it should take backup
-MUPIP backup of database file ##TEST_PATH##/mumps.dat to inc1.dat
 DB file ##TEST_PATH##/mumps.dat incrementally backed up in file inc1.dat
 7 blocks saved.
 Transactions from 0x0000000000000001 to 0x0000000000000002 are backed up.
@@ -70,7 +69,6 @@ YDB>
   Last Bytestream Backup         0x0000000000000002  Lock space                      0x000000DC
   Current transaction            0x0000000000000003  No. of writes/flush                      7
 # Try incremental backup after one more update, it should work
-MUPIP backup of database file ##TEST_PATH##/mumps.dat to inc3.dat
 DB file ##TEST_PATH##/mumps.dat incrementally backed up in file inc3.dat
 5 blocks saved.
 Transactions from 0x0000000000000002 to 0x0000000000000003 are backed up.
