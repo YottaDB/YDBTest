@@ -65,7 +65,7 @@
 # db1tb			[estess]	Test some utilities for issues when DB size > 1TB
 # gtm6957		[rog]		Check $ZTRNLNM() keyword handling
 # maxregseqno 		[bahirs] 	Test that if -updateresync is specified and if the secondary max-reg-seqno is GREATER
-#                                       than primary max-reg-seqno, REPL_ROLLBACK_FIRST error is issued
+#                                       than primary max-reg-seqno, REPLAHEAD error is issued
 # indrindrdo            [estess]        GTM-7008 - Test indirect DO inside XECUTE string for correct functioning
 # gtm6994		[duzang]	Test 64-bit call-out and call-in
 # C9L06003421       	[Bahirs]    	Test that in tp_resolve_time calculations only those regions will participate which were open

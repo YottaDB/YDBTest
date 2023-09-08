@@ -71,10 +71,10 @@ BEGIN 7 :-) Restart source and receiver servers
 END 7
 ---------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------
-BEGIN 8 :-) Look for REPL_ROLLBACK_FIRST message in receiver log
+BEGIN 8 :-) Look for REPLAHEAD message in receiver log
 
-==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/wait_for_log.csh -log RCVR_restart.log -message "Received REPL_ROLLBACK_FIRST message" -duration 120 -waitcreation -grep'==
-##FILTERED##... ... .. ..:..:.. 20.. : Received REPL_ROLLBACK_FIRST message. Secondary is out of sync with the primary. Secondary at 11 [0xb], Primary at 1 [0x1]. Do ROLLBACK FIRST
+==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/wait_for_log.csh -log RCVR_restart.log -message "REPLAHEAD" -duration 120 -waitcreation -grep'==
+##FILTERED##... ... .. ..:..:.. 20.. : %YDB-E-REPLAHEAD, Replicating instance is ahead of the originating instance.
 
 END 8
 ---------------------------------------------------------------------------------------

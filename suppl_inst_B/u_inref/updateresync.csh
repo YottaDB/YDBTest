@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -64,7 +64,7 @@ $MSR RUN INST3 "set msr_dont_trace ; source $gtm_tst/com/leftover_ipc_cleanup_if
 $MSR STARTSRC INST3 INST4
 setenv gtm_test_repl_skiprcvrchkhlth 1 ; $MSR STARTRCV INST3 INST4 >&! STARTRCV_INST3_INST4.outx ; unsetenv gtm_test_repl_skiprcvrchkhlth
 get_msrtime
-$MSR RUN INST4 '$gtm_tst/com/wait_for_log.csh -log 'RCVR_$time_msr.log' -message "Received REPL_ROLLBACK_FIRST message" -duration 120 -waitcreation'
+$MSR RUN INST4 '$gtm_tst/com/wait_for_log.csh -log 'RCVR_$time_msr.log' -message "REPLAHEAD" -duration 120 -waitcreation'
 $MSR RUN INST4 'set msr_dont_trace ; $gtm_tst/com/wait_until_srvr_exit.csh rcvr'
 # the receiver will be shut down but the passive server will be alive. Manually stop it
 $MSR RUN RCV=INST4 SRC=INST3 '$MUPIP replic -source -shutdown -timeout=0 -instsecondary=__SRC_INSTNAME__  >&! passivesrc_shut_INST3INST4.out'

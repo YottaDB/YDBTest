@@ -66,8 +66,8 @@ Shutting down Primary Source Server Server in ##TEST_PATH##
 ==Executing MULTISITE_REPLIC 'RUN INST4 mv mumps.repl mumps.repl_bak'==
 ==Executing MULTISITE_REPLIC 'STARTSRC INST3 INST4 RP'==
 ==Executing MULTISITE_REPLIC 'STARTRCV INST3 INST4'==
-==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/wait_for_log.csh -log ##FILTERED##SRC_##TIMESTAMP##.log -message "do MUPIP JOURNAL ROLLBACK FETCHRESYNC" -duration 120 -waitcreation'==
-==Executing MULTISITE_REPLIC 'RUN INST4 $gtm_tst/com/wait_for_log.csh -log ##FILTERED##RCVR_##TIMESTAMP##.log -message "Received REPL_ROLLBACK_FIRST message" -duration 120 -waitcreation'==
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/wait_for_log.csh -log ##FILTERED##SRC_##TIMESTAMP##.log -message "REPLAHEAD" -duration 120 -waitcreation'==
+==Executing MULTISITE_REPLIC 'RUN INST4 $gtm_tst/com/wait_for_log.csh -log ##FILTERED##RCVR_##TIMESTAMP##.log -message "REPLAHEAD" -duration 120 -waitcreation'==
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST4 SRC=INST3 $MUPIP replic -source -shutdown -timeout=0 -instsecondary=__SRC_INSTNAME__  >&! passivesrc_shut_INST3INST4.out'==
 ==Executing MULTISITE_REPLIC 'REFRESHLINK INST3 INST4'==
 ==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==

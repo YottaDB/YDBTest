@@ -4,7 +4,7 @@
 # Copyright (c) 2011-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -14,7 +14,7 @@
 #								#
 #################################################################
 # Test that if -updateresync is specified and the receiver max-reg-seqno is GREATER than source max-reg-seqno,
-# REPL_ROLLBACK_FIRST error is issued.
+# REPLAHEAD error is issued.
 
 @ section = 0
 set echoline = "echo ---------------------------------------------------------------------------------------"
@@ -83,8 +83,8 @@ $MSR RUN INST1 '$MUPIP set -replication=on $tst_jnl_str -REG "*" >>& jnl.log'
 $MSR RUN SRC=INST1 RCV=INST2 "$MUPIP replic -source -start -secondary=__RCV_HOST__:__RCV_PORTNO__ -log=source.log -buf=$tst_buffsize -instsecondary=__RCV_INSTNAME__ $updok" >>&! restart_source.out
 END
 
-BEGIN "Look for REPL_ROLLBACK_FIRST message in receiver log"
-$MSR RUN INST2 '$gtm_tst/com/wait_for_log.csh -log RCVR_restart.log -message "Received REPL_ROLLBACK_FIRST message" -duration 120 -waitcreation -grep'
+BEGIN "Look for REPLAHEAD message in receiver log"
+$MSR RUN INST2 '$gtm_tst/com/wait_for_log.csh -log RCVR_restart.log -message "REPLAHEAD" -duration 120 -waitcreation -grep'
 $MSR RUN INST2 'set msr_dont_trace ; $gtm_tst/com/wait_until_srvr_exit.csh rcvr'
 END
 

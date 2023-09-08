@@ -113,7 +113,7 @@ $gtm_tst/com/backup_dbjnl.csh bak1 "*.dat *.mjl* *.repl *.gld" cp
 if (0 == $rcvr_rand) then
 	# Start rcvr normally and expect it to fail.
 	$sec_shell "$sec_getenv; cd $SEC_SIDE ; $gtm_tst/com/RCVR.csh "." $portno $start_time >&! RCVR_${start_time}.out"
-	$sec_shell '$sec_getenv; cd $SEC_SIDE ; $gtm_tst/com/wait_for_log.csh -log $RCVR_LOG_FILE -message "Received REPL_ROLLBACK_FIRST"'
+	$sec_shell '$sec_getenv; cd $SEC_SIDE ; $gtm_tst/com/wait_for_log.csh -log $RCVR_LOG_FILE -message "REPLAHEAD"'
 	$sec_shell '$sec_getenv; cd $SEC_SIDE ; $gtm_tst/com/wait_until_srvr_exit.csh rcvr'
 	### Manually shutdown the passive source server
 	$sec_shell "$sec_getenv; cd $SEC_SIDE; $MUPIP replic -source -shutdown -timeout=0" >&! passive_src_shut.out

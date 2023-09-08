@@ -4,7 +4,7 @@
 # Copyright (c) 2006-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -278,7 +278,7 @@ echo "#- Step 9:"
 echo "#  INST1, INST2, and INST3 will have to rollback all the way to 56, and their histories should shrink."
 $MSR STARTSRC INST4 INST2
 $MSR STARTSRC INST4 INST3
-# We expect the receiver server to exit as in this case the secondary will be ahead of primary and give REPL_ROLLBACK_FIRST.
+# We expect the receiver server to exit as in this case the secondary will be ahead of primary and give REPLAHEAD.
 # The $MSR STARTRCV done below will actually invoke a framework script RCVR.csh which in turn starts the receiver server
 # and then does a checkhealth to ensure it is up and running. It is possible in rare cases that the receiver server
 # exits (thereby cleaning up the receive pool) even before the checkhealth is attempted in RCVR.csh. In this case,
@@ -287,9 +287,9 @@ $MSR STARTSRC INST4 INST3
 setenv gtm_test_repl_skiprcvrchkhlth 1
 $MSR STARTRCV INST4 INST1
 unsetenv gtm_test_repl_skiprcvrchkhlth
-echo "#  	--> The receiver server will issue the error: Received REPL_ROLLBACK_FIRST message. Secondary ahead of primary."
+echo "#  	--> The receiver server will issue the error: %YDB-E-REPLAHEAD, Replicating instance is ahead of the originating instance"
 get_msrtime	# sets $time_msr
-$gtm_tst/com/wait_for_log.csh -log RCVR_$time_msr.log -message "Received REPL_ROLLBACK_FIRST message" -duration 100 -grep	# wait upto 100 seconds
+$gtm_tst/com/wait_for_log.csh -log RCVR_$time_msr.log -message "REPLAHEAD" -duration 100 -grep	# wait upto 100 seconds
 $MSR RUN INST1 'set msr_dont_trace ; $gtm_tst/com/wait_until_srvr_exit.csh rcvr'
 $MSR RUN RCV=INST1 SRC=INST4 '$MUPIP replic -source -instsecondary=__SRC_INSTNAME__ -shutdown -timeout=0 > SHUT_passivesource.log' # shutdown the passive source server
 $MSR REFRESHLINK INST4 INST1

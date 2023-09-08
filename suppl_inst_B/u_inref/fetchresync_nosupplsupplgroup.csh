@@ -141,10 +141,10 @@ $MSR STARTSRC INST3 INST4 RP
 $MSR STARTSRC INST1 INST3 RP
 
 # Try restarting receiver side of A->P. It should NOT replicate fine.
-# But before that rename receiver log so later search for REPL_ROLLBACK_FIRST looks at just the new receiver startup and
+# But before that rename receiver log so later search for REPLAHEAD looks at just the new receiver startup and
 # not prior startup logs.
 $MSR RUN RCV=INST3 SRC=INST1 "$MUPIP replic -receiv -start -listen=__RCV_PORTNO__ -log=receiver_restart.log -buf=$tst_buffsize"
-$MSR RUN RCV=INST3 SRC=INST1 '$gtm_tst/com/wait_for_log.csh -log receiver_restart.log -message "Received REPL_ROLLBACK_FIRST message" -duration 120 -waitcreation'
+$MSR RUN RCV=INST3 SRC=INST1 '$gtm_tst/com/wait_for_log.csh -log receiver_restart.log -message "REPLAHEAD" -duration 120 -waitcreation'
 $MSR RUN INST3 'set msr_dont_trace ; $gtm_tst/com/wait_until_srvr_exit.csh rcvr'
 
 $MSR STOPSRC INST3 INST4 RP
@@ -169,12 +169,12 @@ $MSR STARTSRC INST2 INST3 RP
 $MSR STARTSRC INST2 INST1 RP
 
 # Try restarting receiver side of A->P. It should NOT replicate fine.
-# But before that rename receiver log so later search for REPL_ROLLBACK_FIRST looks at just the new receiver startup and
+# But before that rename receiver log so later search for REPLAHEAD looks at just the new receiver startup and
 # not prior startup logs.
 $MSR RUN RCV=INST3 SRC=INST2 "$MUPIP replic -receiv -start -listen=__RCV_PORTNO__ -log=receiver_restart1.log -buf=$tst_buffsize"
-$MSR RUN RCV=INST3 SRC=INST2 '$gtm_tst/com/wait_for_log.csh -log receiver_restart1.log -message "Received REPL_ROLLBACK_FIRST message" -duration 120 -waitcreation >&! recv_restart1.log ; cat recv_restart1.log ' >&! recv_restart_log1.outx
-$gtm_tst/com/check_error_exist.csh $msr_execute_last_out REPL_ROLLBACK_FIRST
-$gtm_tst/com/check_error_exist.csh recv_restart_log1.outx REPL_ROLLBACK_FIRST
+$MSR RUN RCV=INST3 SRC=INST2 '$gtm_tst/com/wait_for_log.csh -log receiver_restart1.log -message "REPLAHEAD" -duration 120 -waitcreation >&! recv_restart1.log ; cat recv_restart1.log ' >&! recv_restart_log1.outx
+$gtm_tst/com/check_error_exist.csh $msr_execute_last_out REPLAHEAD
+$gtm_tst/com/check_error_exist.csh recv_restart_log1.outx REPLAHEAD
 $MSR RUN INST3 'set msr_dont_trace ; $gtm_tst/com/wait_until_srvr_exit.csh rcvr'
 
 # Do few rollback to bring all the sources and receivers in sync. So that dbcheck at the end of test will pass.

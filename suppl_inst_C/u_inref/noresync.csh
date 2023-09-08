@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -59,12 +59,12 @@ echo "# Now bring up B(INST2) as primary and connect P (INST3) to it"
 $MSR STOP INST1 INST3
 $MSR STOPSRC INST1 INST2
 $MSR STARTSRC INST2 INST3 RP
-echo "# The receiver should error out and exit with REPL_ROLLBACK_FIRST"
+echo "# The receiver should error out and exit with REPLAHEAD"
 setenv gtm_test_repl_skiprcvrchkhlth 1
 $MSR STARTRCV INST2 INST3
 unsetenv gtm_test_repl_skiprcvrchkhlth
 get_msrtime
-$MSR RUN INST3 '$gtm_tst/com/wait_for_log.csh -log 'RCVR_${time_msr}.log' -message "Received REPL_ROLLBACK_FIRST"'
+$MSR RUN INST3 '$gtm_tst/com/wait_for_log.csh -log 'RCVR_${time_msr}.log' -message "REPLAHEAD"'
 $MSR RUN INST3 'set msr_dont_trace ; $gtm_tst/com/wait_until_srvr_exit.csh rcvr'
 echo "# Now start the receiver with -noresync. The Source shouldnt have exited and the connection should happen"
 $MSR STARTRCV INST2 INST3 noresync

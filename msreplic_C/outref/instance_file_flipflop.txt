@@ -2347,8 +2347,8 @@ Diffing instancefile_7.out and instancefile_8.out on INST4
 ==Executing MULTISITE_REPLIC 'STARTSRC INST4 INST2'==
 ==Executing MULTISITE_REPLIC 'STARTSRC INST4 INST3'==
 ==Executing MULTISITE_REPLIC 'STARTRCV INST4 INST1'==
-#  	--> The receiver server will issue the error: Received REPL_ROLLBACK_FIRST message. Secondary ahead of primary.
-##FILTERED##... ... .. ..:..:.. 20.. : Received REPL_ROLLBACK_FIRST message. Secondary is out of sync with the primary. Secondary at 191 [0xbf], Primary at 101 [0x65]. Do ROLLBACK FIRST
+#  	--> The receiver server will issue the error: %YDB-E-REPLAHEAD, Replicating instance is ahead of the originating instance
+##FILTERED##... ... .. ..:..:.. 20.. : %YDB-E-REPLAHEAD, Replicating instance is ahead of the originating instance.
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST1 SRC=INST4 $MUPIP replic -source -instsecondary=__SRC_INSTNAME__ -shutdown -timeout=0 > SHUT_passivesource.log'==
 ==Executing MULTISITE_REPLIC 'REFRESHLINK INST4 INST1'==
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST1 SRC=INST4 $gtm_tst/com/mupip_rollback.csh -verbose -fetchresync=__RCV_PORTNO__ -losttrans=fetch14.glo "*" >& rollback14.log'==

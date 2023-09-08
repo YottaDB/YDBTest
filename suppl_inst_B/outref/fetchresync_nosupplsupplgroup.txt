@@ -109,7 +109,7 @@ Shutting down Primary Source Server Server in ##FILTERED##_REMOTE_TEST_PATH_/ins
 ==Executing MULTISITE_REPLIC 'STARTSRC INST3 INST4 RP'==
 ==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST3 RP'==
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST3 SRC=INST1 ##SOURCE_PATH##/mupip replic -receiv -start -listen=__RCV_PORTNO__ -log=receiver_restart.log -buf=33554432'==
-==Executing MULTISITE_REPLIC 'RUN RCV=INST3 SRC=INST1 $gtm_tst/com/wait_for_log.csh -log receiver_restart.log -message "Received REPL_ROLLBACK_FIRST message" -duration 120 -waitcreation'==
+==Executing MULTISITE_REPLIC 'RUN RCV=INST3 SRC=INST1 $gtm_tst/com/wait_for_log.csh -log receiver_restart.log -message "REPLAHEAD" -duration 120 -waitcreation'==
 ==Executing MULTISITE_REPLIC 'STOPSRC INST3 INST4 RP'==
 ==Executing MULTISITE_REPLIC 'STARTSRC INST3 INST4 RP'==
 ==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST3'==
@@ -126,14 +126,14 @@ Shutting down Primary Source Server Server in ##TEST_PATH##
 ==Executing MULTISITE_REPLIC 'STARTSRC INST2 INST1 RP'==
 ==Executing MULTISITE_REPLIC 'RUN RCV=INST3 SRC=INST2 ##SOURCE_PATH##/mupip replic -receiv -start -listen=__RCV_PORTNO__ -log=receiver_restart1.log -buf=33554432'==
 ----------
-Error REPL_ROLLBACK_FIRST seen in msr_execute_##FILTERED##NO.out as expected:
-echo 'The command to get executed is RUN RCV=INST3 SRC=INST2 $gtm_tst/com/wait_for_log.csh -log receiver_restart1.log -message "Received REPL_ROLLBACK_FIRST message" -duration 120 -waitcreation >&! recv_restart1.log ; cat recv_restart1.log '
-echo The command to get executed is RUN RCV=INST3 SRC=INST2 $gtm_tst/com/wait_for_log.csh -log receiver_restart1.log -message "Received REPL_ROLLBACK_FIRST message" -duration 120 -waitcreation >&! recv_restart1.log ; cat recv_restart1.log 
-The command to get executed is RUN RCV=INST3 SRC=INST2 $gtm_tst/com/wait_for_log.csh -log receiver_restart1.log -message "Received REPL_ROLLBACK_FIRST message" -duration 120 -waitcreation >&! recv_restart1.log ; cat recv_restart1.log 
+Error REPLAHEAD seen in msr_execute_##FILTERED##NO.out as expected:
+echo 'The command to get executed is RUN RCV=INST3 SRC=INST2 $gtm_tst/com/wait_for_log.csh -log receiver_restart1.log -message "REPLAHEAD" -duration 120 -waitcreation >&! recv_restart1.log ; cat recv_restart1.log '
+echo The command to get executed is RUN RCV=INST3 SRC=INST2 $gtm_tst/com/wait_for_log.csh -log receiver_restart1.log -message "REPLAHEAD" -duration 120 -waitcreation >&! recv_restart1.log ; cat recv_restart1.log 
+The command to get executed is RUN RCV=INST3 SRC=INST2 $gtm_tst/com/wait_for_log.csh -log receiver_restart1.log -message "REPLAHEAD" -duration 120 -waitcreation >&! recv_restart1.log ; cat recv_restart1.log 
 ----------
 ----------
-Error REPL_ROLLBACK_FIRST seen in recv_restart_log1.outx as expected:
-==Executing MULTISITE_REPLIC 'RUN RCV=INST3 SRC=INST2 $gtm_tst/com/wait_for_log.csh -log receiver_restart1.log -message "Received REPL_ROLLBACK_FIRST message" -duration 120 -waitcreation >&! recv_restart1.log ; cat recv_restart1.log '==
+Error REPLAHEAD seen in recv_restart_log1.outx as expected:
+==Executing MULTISITE_REPLIC 'RUN RCV=INST3 SRC=INST2 $gtm_tst/com/wait_for_log.csh -log receiver_restart1.log -message "REPLAHEAD" -duration 120 -waitcreation >&! recv_restart1.log ; cat recv_restart1.log '==
 ----------
 ==Executing MULTISITE_REPLIC 'STOPSRC INST3 INST4 RP'==
 ==Executing MULTISITE_REPLIC 'STARTSRC INST3 INST4 RP'==

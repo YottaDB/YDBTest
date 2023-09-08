@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -131,8 +134,8 @@ unsetenv gtm_test_repl_skiprcvrchkhlth
 unsetenv needupdatersync
 get_msrtime
 set rcvr_time_msr="$time_msr"
-$MSR RUN INST3 '$gtm_tst/com/wait_for_log.csh -log 'SRC_$src_time_msr.log' -message "do MUPIP JOURNAL ROLLBACK FETCHRESYNC" -duration 120 -waitcreation'
-$MSR RUN INST4 '$gtm_tst/com/wait_for_log.csh -log 'RCVR_$rcvr_time_msr.log' -message "Received REPL_ROLLBACK_FIRST message" -duration 120 -waitcreation'
+$MSR RUN INST3 '$gtm_tst/com/wait_for_log.csh -log 'SRC_$src_time_msr.log' -message "REPLAHEAD" -duration 120 -waitcreation'
+$MSR RUN INST4 '$gtm_tst/com/wait_for_log.csh -log 'RCVR_$rcvr_time_msr.log' -message "REPLAHEAD" -duration 120 -waitcreation'
 $MSR RUN INST4 'set msr_dont_trace ; $gtm_tst/com/wait_until_srvr_exit.csh rcvr'
 $MSR RUN RCV=INST4 SRC=INST3 '$MUPIP replic -source -shutdown -timeout=0 -instsecondary=__SRC_INSTNAME__  >&! passivesrc_shut_INST3INST4.out'
 $MSR REFRESHLINK INST3 INST4

@@ -118,10 +118,6 @@ BEGIN {
 	strexpr = "Initiating DEACTIVATE operation on source server pid .[0-9][0-9]*."
 	strrepl = "Initiating DEACTIVATE operation on source server pid [##PID##]"
 	gsub(replicationtimeexpr strexpr, replicationtimerepl strrepl)
-	#Tue Dec 20 17:08:39 2005 : Received REPL_ROLLBACK_FIRST message. Secondary is out of sync with the primary. Secondary at \
-	#	191 [0xbf], Primary at 101 [0x65]. Do ROLLBACK FIRST
-	str = "Received REPL_ROLLBACK_FIRST message. Secondary is out of sync"
-	gsub(replicationtimeexpr str, replicationtimerepl str)
 	#Thu Jan  5 16:25:36 2006 : Not deleting jnlpool ipcs. 2 processes still attached to jnlpool
 	str = "Not deleting jnlpool ipcs."
 	gsub(replicationtimeexpr str, replicationtimerepl str)

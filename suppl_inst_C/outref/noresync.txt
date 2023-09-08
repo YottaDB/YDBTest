@@ -88,9 +88,9 @@ Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_T
 Shutting down Primary Source Server Server in ##TEST_PATH##
 ==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST2'==
 ==Executing MULTISITE_REPLIC 'STARTSRC INST2 INST3 RP'==
-# The receiver should error out and exit with REPL_ROLLBACK_FIRST
+# The receiver should error out and exit with REPLAHEAD
 ==Executing MULTISITE_REPLIC 'STARTRCV INST2 INST3'==
-==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/wait_for_log.csh -log ##FILTERED##RCVR_##TIMESTAMP##.log -message "Received REPL_ROLLBACK_FIRST"'==
+==Executing MULTISITE_REPLIC 'RUN INST3 $gtm_tst/com/wait_for_log.csh -log ##FILTERED##RCVR_##TIMESTAMP##.log -message "REPLAHEAD"'==
 # Now start the receiver with -noresync. The Source shouldnt have exited and the connection should happen
 ==Executing MULTISITE_REPLIC 'STARTRCV INST2 INST3 noresync'==
 ==Executing MULTISITE_REPLIC 'RUN INST3 ##TEST_COM_PATH##/wait_for_log.csh -log ##FILTERED##RCVR_##TIMESTAMP##.log.updproc -message 'New History Content''==
