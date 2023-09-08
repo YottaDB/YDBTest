@@ -32,9 +32,8 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
 ==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
 #- While the source servers are running on INST1, test:
 ##SOURCE_PATH##/mupip backup -replinstance=bak1on.repl
-Replication Instance file ##TEST_PATH##/mumps.repl backed up in file bak1on.repl
-Journal Seqnos up to 0x0000000000000070 are backed up.
-
+%YDB-I-BACKUPREPL, Replication Instance file ##TEST_PATH##/mumps.repl backed up in file ##TEST_PATH##/bak1on.repl
+%YDB-I-BACKUPSEQNO, Journal Seqnos up to 0x0000000000000070 are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 unset echo
 #        --> Does create a backup of the repl instance file
@@ -50,10 +49,9 @@ Error MUNOACTION seen in backup1on1.out as expected:
 ----------
 ----------
 Error FILEEXISTS seen in backup1on1.out as expected:
-%YDB-E-FILEEXISTS, File bak1on.repl already exists
+%YDB-E-FILEEXISTS, File ##TEST_PATH##/bak1on.repl already exists
 ----------
 %YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
-
 ###################################################################
 ##SOURCE_PATH##/mupip backup -replinstance=bakx.repl -incremental
 unset echo
@@ -86,27 +84,23 @@ mkdir bakdir1on
 ##SOURCE_PATH##/mupip backup -replinstance=bakdir1on * bakdir1on
 unset echo
 #        --> Creates a backup of the replinstance file as well as all regions in the directory bakdir1on
-
-
-
-
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/bakdir1on/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/bakdir1on/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/bakdir1on/mumps.dat
+%YDB-I-BACKUPREPL, Replication Instance file ##TEST_PATH##/mumps.repl backed up in file ##TEST_PATH##/bakdir1on/mumps.repl
+%YDB-I-BACKUPSEQNO, Journal Seqnos up to 0x0000000000000070 are backed up
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
+##SUSPEND_OUTPUT SPANNING_REGIONS
+%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
+%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
+%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000070 are backed up
+##ALLOW_OUTPUT SPANNING_REGIONS
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with .*BEFORE_IMAGES
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with .*BEFORE_IMAGES
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with .*BEFORE_IMAGES
-%YDB-I-BACKUPSUCCESS, Backup completed successfully
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/bakdir1on/a.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/bakdir1on/b.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/bakdir1on/mumps.dat
-Journal Seqnos up to 0x0000000000000070 are backed up.
-Replication Instance file ##TEST_PATH##/mumps.repl backed up in file bakdir1on/mumps.repl
-##SUSPEND_OUTPUT SPANNING_REGIONS
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000070 are backed up
-##ALLOW_OUTPUT SPANNING_REGIONS
 # Total number of transactions backed up:  114
 ls bakdir1on
 a.dat
@@ -124,10 +118,9 @@ Error MUNOACTION seen in backup1on6.out as expected:
 ----------
 ----------
 Error FILEEXISTS seen in backup1on6.out as expected:
-%YDB-E-FILEEXISTS, File bakdir1on/mumps.repl already exists
+%YDB-E-FILEEXISTS, File ##TEST_PATH##/bakdir1on/mumps.repl already exists
 ----------
 %YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
-
 ###################################################################
 ##SOURCE_PATH##/mupip backup -replinstance=bakdirf * bakdirf
 unset echo
@@ -137,36 +130,30 @@ unset echo
 Error MUNOACTION seen in backup1on7.out as expected:
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ----------
-
-
-Cannot backup replication instance file and database region AREG to the same destination file bakdirf
 %YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
+Cannot backup replication instance file and database region AREG to the same destination file ##TEST_PATH##/bakdirf
 ###################################################################
 mkdir bakdirrepl bakdirdb
 ##SOURCE_PATH##/mupip backup -replinstance=bakdirrepl * bakdirdb
 unset echo
 #	--> The replication instance file should be backed up into bakdirrepl directory, and databases into bakdirdb.
-
-
-
-
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/bakdirdb/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/bakdirdb/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/bakdirdb/mumps.dat
+%YDB-I-BACKUPREPL, Replication Instance file ##TEST_PATH##/mumps.repl backed up in file ##TEST_PATH##/bakdirrepl/mumps.repl
+%YDB-I-BACKUPSEQNO, Journal Seqnos up to 0x0000000000000070 are backed up
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
+##SUSPEND_OUTPUT SPANNING_REGIONS
+%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
+%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
+%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000070 are backed up
+##ALLOW_OUTPUT SPANNING_REGIONS
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with .*BEFORE_IMAGES
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with .*BEFORE_IMAGES
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with .*BEFORE_IMAGES
-%YDB-I-BACKUPSUCCESS, Backup completed successfully
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/bakdirdb/a.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/bakdirdb/b.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/bakdirdb/mumps.dat
-Journal Seqnos up to 0x0000000000000070 are backed up.
-Replication Instance file ##TEST_PATH##/mumps.repl backed up in file bakdirrepl/mumps.repl
-##SUSPEND_OUTPUT SPANNING_REGIONS
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000070 are backed up
-##ALLOW_OUTPUT SPANNING_REGIONS
 # Total number of transactions backed up:  114
 bakdirrepl:
 mumps.repl
@@ -177,9 +164,8 @@ mumps.dat
 ###################################################################
 #- Do some of the backup commands on INST2, same results expected.
 ==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP backup -replinstance=bak2.repl >& bak2.tmp; cat bak2.tmp'==
-Replication Instance file ##TEST_AWK.*/instance2/mumps.repl backed up in file bak2.repl
-Journal Seqnos up to 0x0000000000000070 are backed up.
-
+%YDB-I-BACKUPREPL, Replication Instance file ##TEST_AWK.*/instance2/mumps.repl backed up in file .*/bak2.repl
+%YDB-I-BACKUPSEQNO, Journal Seqnos up to 0x0000000000000070 are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 #        --> Does create a backup of the repl instance file
 ==Executing MULTISITE_REPLIC 'RUN INST2 ls bak2.repl mumps.repl'==
@@ -222,10 +208,17 @@ Error MUPCLIERR seen in backup23.out as expected:
 NEWJNLFILES cannot be specified without specifying a backup region
 #        --> Issues a MUPCLIERR error, no bakx.repl generated
 ###################################################################
-
-
-
-
+%YDB-I-BACKUPDBFILE, DB file ##TEST_AWK.*/instance2/a.dat backed up in file .*/bakdir2/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_AWK.*/instance2/b.dat backed up in file .*/bakdir2/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_AWK.*/instance2/mumps.dat backed up in file .*/bakdir2/mumps.dat
+%YDB-I-BACKUPREPL, Replication Instance file ##TEST_AWK.*/instance2/mumps.repl backed up in file .*/bakdir2/mumps.repl
+%YDB-I-BACKUPSEQNO, Journal Seqnos up to 0x0000000000000070 are backed up
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
+##SUSPEND_OUTPUT SPANNING_REGIONS
+%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
+%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
+%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000070 are backed up
+##ALLOW_OUTPUT SPANNING_REGIONS
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_AWK.*/instance2/a.mjl is renamed to ##TEST_AWK.*/instance2/a.mjl_##TIMESTAMP##
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_AWK.*/instance2/b.mjl is renamed to ##TEST_AWK.*/instance2/b.mjl_##TIMESTAMP##
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_AWK.*/instance2/mumps.mjl is renamed to ##TEST_AWK.*/instance2/mumps.mjl_##TIMESTAMP##
@@ -233,17 +226,6 @@ NEWJNLFILES cannot be specified without specifying a backup region
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_AWK.*/instance2/b.mjl created for region BREG with .*BEFORE_IMAGES
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_AWK.*/instance2/mumps.mjl created for region DEFAULT with .*BEFORE_IMAGES
 ==Executing MULTISITE_REPLIC 'RUN INST2 mkdir bakdir2; $MUPIP backup -replinstance=bakdir2 "*" bakdir2 >& backup24.tmp; cat backup24.tmp'==
-%YDB-I-BACKUPSUCCESS, Backup completed successfully
-%YDB-I-BACKUPDBFILE, DB file ##TEST_AWK.*/instance2/a.dat backed up in file ##TEST_PATH##/bakdir2/a.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_AWK.*/instance2/b.dat backed up in file ##TEST_PATH##/bakdir2/b.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_AWK.*/instance2/mumps.dat backed up in file ##TEST_PATH##/bakdir2/mumps.dat
-Journal Seqnos up to 0x0000000000000070 are backed up.
-Replication Instance file ##TEST_AWK.*/instance2/mumps.repl backed up in file bakdir2/mumps.repl
-##SUSPEND_OUTPUT SPANNING_REGIONS
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000070 are backed up
-##ALLOW_OUTPUT SPANNING_REGIONS
 # Total number of transactions backed up:  114
 #        --> Creates a backup of the replinstance file as well as all regions in the directory bakdir1
 ==Executing MULTISITE_REPLIC 'RUN INST2 ls bakdir2'==
@@ -275,9 +257,8 @@ Shutting down Primary Source Server Server in ##TEST_PATH##
 ###################################################################
 #- Do some of the backup commands on INST1, same results expected
 ##SOURCE_PATH##/mupip backup -replinstance=bak1b.repl
-Replication Instance file ##TEST_PATH##/mumps.repl backed up in file bak1b.repl
-Journal Seqnos up to 0x00000000000000DF are backed up.
-
+%YDB-I-BACKUPREPL, Replication Instance file ##TEST_PATH##/mumps.repl backed up in file ##TEST_PATH##/bak1b.repl
+%YDB-I-BACKUPSEQNO, Journal Seqnos up to 0x00000000000000DF are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 unset echo
 #        --> Does create a backup of the repl instance file
@@ -293,10 +274,9 @@ Error MUNOACTION seen in backup1off1.out as expected:
 ----------
 ----------
 Error FILEEXISTS seen in backup1off1.out as expected:
-%YDB-E-FILEEXISTS, File bak1b.repl already exists
+%YDB-E-FILEEXISTS, File ##TEST_PATH##/bak1b.repl already exists
 ----------
 %YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
-
 ###################################################################
 ##SOURCE_PATH##/mupip backup -replinstance=bakx.repl -incremental
 unset echo
@@ -329,27 +309,23 @@ mkdir bakdir1off
 ##SOURCE_PATH##/mupip backup -replinstance=bakdir1off * bakdir1off
 unset echo
 #        --> Creates a backup of the replinstance file as well as all regions in the directory bakdir1off
-
-
-
-
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/bakdir1off/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/bakdir1off/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/bakdir1off/mumps.dat
+%YDB-I-BACKUPREPL, Replication Instance file ##TEST_PATH##/mumps.repl backed up in file ##TEST_PATH##/bakdir1off/mumps.repl
+%YDB-I-BACKUPSEQNO, Journal Seqnos up to 0x00000000000000DF are backed up
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
+##SUSPEND_OUTPUT SPANNING_REGIONS
+%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
+%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
+%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x00000000000000DF are backed up
+##ALLOW_OUTPUT SPANNING_REGIONS
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/a.mjl is renamed to ##TEST_PATH##/a.mjl_##TIMESTAMP##
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/b.mjl is renamed to ##TEST_PATH##/b.mjl_##TIMESTAMP##
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/a.mjl created for region AREG with .*BEFORE_IMAGES
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/b.mjl created for region BREG with .*BEFORE_IMAGES
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with .*BEFORE_IMAGES
-%YDB-I-BACKUPSUCCESS, Backup completed successfully
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/bakdir1off/a.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/bakdir1off/b.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/bakdir1off/mumps.dat
-Journal Seqnos up to 0x00000000000000DF are backed up.
-Replication Instance file ##TEST_PATH##/mumps.repl backed up in file bakdir1off/mumps.repl
-##SUSPEND_OUTPUT SPANNING_REGIONS
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x00000000000000DF are backed up
-##ALLOW_OUTPUT SPANNING_REGIONS
 # Total number of transactions backed up:  225
 ls bakdir1off
 a.dat

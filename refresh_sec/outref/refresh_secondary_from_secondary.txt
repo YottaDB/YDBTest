@@ -30,12 +30,11 @@ Starting GTM processes...
 ==Executing MULTISITE_REPLIC 'STOPRCV INST1 INST3 ON '' buffer_flush'==
 Create backlog...
 ==Executing MULTISITE_REPLIC 'RUN INST2 mkdir bak1;$MUPIP backup -replinstance=bak1 "*" bak1 >&! inst2_bkup.out;$grep -v "shmpool lock" inst2_bkup.out; mv bak1/mumps.repl bak1/sec_mumps.repl'==
-Replication Instance file ##REMOTE_TEST_PATH##/instance2/mumps.repl backed up in file bak1/mumps.repl
-##TEST_AWK.*Journal Seqnos up to 0x[0-9A-F]* are backed up.
-
+%YDB-I-BACKUPREPL, Replication Instance file ##REMOTE_TEST_PATH##/instance2/mumps.repl backed up in file ##REMOTE_TEST_PATH##/instance2/bak1/mumps.repl
+##TEST_AWK%YDB-I-BACKUPSEQNO, Journal Seqnos up to 0x[0-9A-F]* are backed up
 ##FILTERED##%YDB-I-FILERENAME, File ##REMOTE_TEST_PATH##/instance2/mumps.mjl is renamed to ##REMOTE_TEST_PATH##/instance2/mumps.mjl_##TIMESTAMP##
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##REMOTE_TEST_PATH##/instance2/mumps.mjl created for region DEFAULT with .*BEFORE_IMAGES
-%YDB-I-BACKUPDBFILE, DB file ##REMOTE_TEST_PATH##/instance2/mumps.dat backed up in file ##TEST_PATH##/bak1/mumps.dat
+%YDB-I-BACKUPDBFILE, DB file ##REMOTE_TEST_PATH##/instance2/mumps.dat backed up in file ##REMOTE_TEST_PATH##/instance2/bak1/mumps.dat
 ##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x[0-9A-Z]* are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 ==Executing MULTISITE_REPLIC 'RUN SRC=INST2 RCV=INST3 cp bak1/* __RCV_DIR__/'==

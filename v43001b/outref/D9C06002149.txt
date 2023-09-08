@@ -21,12 +21,11 @@ Shut down receiver (B)...
 YDB>
 
 YDB>
-Replication Instance file ##TEST_PATH##/mumps.repl backed up in file bak1/mumps.repl
-##TEST_AWKJournal Seqnos up to 0x[0-9A-F]* are backed up.
-
+%YDB-I-BACKUPREPL, Replication Instance file ##TEST_PATH##/mumps.repl backed up in file ##TEST_PATH##/bak1/mumps.repl
+##TEST_AWK%YDB-I-BACKUPSEQNO, Journal Seqnos up to 0x[0-9A-F]* are backed up
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with .*BEFORE_IMAGES
-%YDB-I-JNLSTATE, Journaling state for database file bak1/mumps.dat is now DISABLED
+%YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/bak1/mumps.dat is now DISABLED
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/bak1/mumps.dat
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x00000000000000C9 are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully

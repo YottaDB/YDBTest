@@ -120,9 +120,8 @@ YDB>
 ##SUSPEND_OUTPUT JNL_BEFORE
 #-- Take backup on INST1 at seqno 51.
 ==Executing MULTISITE_REPLIC 'RUN INST1 mkdir bak1; ##SOURCE_PATH##/mupip backup -replinstance=bak1 "*" bak1'==
-Replication Instance file ##TEST_PATH##/mumps.repl backed up in file bak1/mumps.repl
-Journal Seqnos up to 0x0000000000000033 are backed up.
-
+%YDB-I-BACKUPREPL, Replication Instance file ##TEST_PATH##/mumps.repl backed up in file ##TEST_PATH##/bak1/mumps.repl
+%YDB-I-BACKUPSEQNO, Journal Seqnos up to 0x0000000000000033 are backed up
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/bak1/mumps.dat
@@ -536,12 +535,11 @@ examining ^examine($ZQGBLMOD(^GBLA(30),vcorr(30))) -> ^examine(0,0)
 ##SUSPEND_OUTPUT JNL_BEFORE
 #-- Take backup on INST2 at seqno 71.
 ==Executing MULTISITE_REPLIC 'RUN INST2 mkdir bak1; ##SOURCE_PATH##/mupip backup -replinstance=bak1 "*" bak1 >& bak1mkdir.tmp; cat bak1mkdir.tmp'==
-##TEST_AWKReplication Instance file .*/instance2/mumps.repl backed up in file bak1/mumps.repl
-Journal Seqnos up to 0x0000000000000047 are backed up.
-
+##TEST_AWK%YDB-I-BACKUPREPL, Replication Instance file .*/instance2/mumps.repl backed up in file .*/bak1/mumps.repl
+%YDB-I-BACKUPSEQNO, Journal Seqnos up to 0x0000000000000047 are backed up
 ##TEST_AWK##FILTERED##%YDB-I-FILERENAME, File .*/instance2/mumps.mjl is renamed to .*/instance2/mumps.mjl_##TIMESTAMP##
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file .*/instance2/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
-##TEST_AWK%YDB-I-BACKUPDBFILE, DB file .*/instance2/mumps.dat backed up in file ##TEST_PATH##/bak1/mumps.dat
+##TEST_AWK%YDB-I-BACKUPDBFILE, DB file .*/instance2/mumps.dat backed up in file .*/bak1/mumps.dat
 ##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to .* are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 ##ALLOW_OUTPUT JNL_BEFORE

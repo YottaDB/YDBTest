@@ -29,9 +29,8 @@ YDB>
 10,1
 ==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
 ==Executing MULTISITE_REPLIC 'RUN INST1 mkdir bak1 ; $MUPIP backup -replinstance=bak1 "*" bak1 ; $MUPIP replic -editinstance bak1/mumps.repl -change -offset=0x00000058 -size=1 -value=0x32'==
-Replication Instance file ##TEST_PATH##/mumps.repl backed up in file bak1/mumps.repl
-Journal Seqnos up to 0x000000000000000B are backed up.
-
+%YDB-I-BACKUPREPL, Replication Instance file ##TEST_PATH##/mumps.repl backed up in file ##TEST_PATH##/bak1/mumps.repl
+%YDB-I-BACKUPSEQNO, Journal Seqnos up to 0x000000000000000B are backed up
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
 %YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with ##TEST_AWK(BEFORE|NOBEFORE)_IMAGES
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/bak1/mumps.dat
