@@ -41,7 +41,7 @@ ls bak1on.repl mumps.repl
 $echoline
 set echo; $MUPIP backup -replinstance=bak1on.repl >& backup1on1.out; unset echo
 echo "#        --> We expect a MUNOACTION error since file bak1on.repl exists already"
-$gtm_tst/com/check_error_exist.csh backup1on1.out MUNOACTION FILEEXISTS
+$gtm_tst/com/check_error_exist.csh backup1on1.out MUNOACTION FILEEXISTS BACKUPFAIL
 cat backup1on1.out
 
 $echoline
@@ -72,7 +72,7 @@ set echo; ls bakdir1on; unset echo
 $echoline
 set echo; $MUPIP backup -replinstance=bakdir1on >& backup1on6.out; unset echo
 echo "#        --> We expect a MUNOACTION error since bakdir1on exists, since there is a mumps.repl in it already"
-$gtm_tst/com/check_error_exist.csh backup1on6.out MUNOACTION FILEEXISTS
+$gtm_tst/com/check_error_exist.csh backup1on6.out MUNOACTION FILEEXISTS BACKUPFAIL
 cat backup1on6.out
 
 $echoline
@@ -81,7 +81,7 @@ cat << EOF
 	--> Should error out after the replication instance file backup (at the first region's backup) that the file
 	    exists.
 EOF
-$gtm_tst/com/check_error_exist.csh backup1on7.out MUNOACTION
+$gtm_tst/com/check_error_exist.csh backup1on7.out MUNOACTION BACKUPFAIL
 sort backup1on7.out
 
 $echoline
@@ -156,7 +156,7 @@ ls bak1b.repl mumps.repl
 $echoline
 set echo; $MUPIP backup -replinstance=bak1b.repl >& backup1off1.out; unset echo
 echo "#        --> We expect a MUNOACTION error since file bak1b.repl exists already"
-$gtm_tst/com/check_error_exist.csh backup1off1.out MUNOACTION FILEEXISTS
+$gtm_tst/com/check_error_exist.csh backup1off1.out MUNOACTION FILEEXISTS BACKUPFAIL
 cat backup1off1.out
 
 $echoline

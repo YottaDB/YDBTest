@@ -51,7 +51,10 @@ Error MUNOACTION seen in backup1on1.out as expected:
 Error FILEEXISTS seen in backup1on1.out as expected:
 %YDB-E-FILEEXISTS, File ##TEST_PATH##/bak1on.repl already exists
 ----------
+----------
+Error BACKUPFAIL seen in backup1on1.out as expected:
 %YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
+----------
 ###################################################################
 ##SOURCE_PATH##/mupip backup -replinstance=bakx.repl -incremental
 unset echo
@@ -120,7 +123,10 @@ Error MUNOACTION seen in backup1on6.out as expected:
 Error FILEEXISTS seen in backup1on6.out as expected:
 %YDB-E-FILEEXISTS, File ##TEST_PATH##/bakdir1on/mumps.repl already exists
 ----------
+----------
+Error BACKUPFAIL seen in backup1on6.out as expected:
 %YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
+----------
 ###################################################################
 ##SOURCE_PATH##/mupip backup -replinstance=bakdirf * bakdirf
 unset echo
@@ -130,7 +136,10 @@ unset echo
 Error MUNOACTION seen in backup1on7.out as expected:
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ----------
+----------
+Error BACKUPFAIL seen in backup1on7.out as expected:
 %YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
+----------
 Cannot backup replication instance file and database region AREG to the same destination file ##TEST_PATH##/bakdirf
 ###################################################################
 mkdir bakdirrepl bakdirdb
@@ -276,7 +285,10 @@ Error MUNOACTION seen in backup1off1.out as expected:
 Error FILEEXISTS seen in backup1off1.out as expected:
 %YDB-E-FILEEXISTS, File ##TEST_PATH##/bak1b.repl already exists
 ----------
+----------
+Error BACKUPFAIL seen in backup1off1.out as expected:
 %YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
+----------
 ###################################################################
 ##SOURCE_PATH##/mupip backup -replinstance=bakx.repl -incremental
 unset echo
