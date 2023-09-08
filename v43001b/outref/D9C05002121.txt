@@ -262,14 +262,13 @@ And on the secondary side:
 
 
 
-
-
-
-
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/bak/a.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/bak/b.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/bak/mumps.dat
+%YDB-I-BACKUPDBFILE, DB file ##REMOTE_TEST_PATH##/a.dat backed up in file ##REMOTE_TEST_PATH##/bak/bak/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##REMOTE_TEST_PATH##/b.dat backed up in file ##REMOTE_TEST_PATH##/bak/bak/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##REMOTE_TEST_PATH##/mumps.dat backed up in file ##REMOTE_TEST_PATH##/bak/bak/mumps.dat
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
+%YDB-I-BACKUPTN, Transactions from XXXX to YYYY are backed up
+%YDB-I-BACKUPTN, Transactions from XXXX to YYYY are backed up
+%YDB-I-BACKUPTN, Transactions from XXXX to YYYY are backed up
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
@@ -279,9 +278,6 @@ MUPIP INFO:   Temp file name: ##REMOTE_TEST_PATH##/bak/bak//DEFAULT_YYYY_ZZZZZZ
 ##TEST_AWKMUPIP INFO:   unalias -a; .*/mv .*/bak/AREG_XXXX__N.tmp/a.dat .*/bak/a.dat
 ##TEST_AWKMUPIP INFO:   unalias -a; .*/mv .*/bak/BREG_XXXX__N.tmp/b.dat .*/bak/b.dat
 ##TEST_AWKMUPIP INFO:   unalias -a; .*/mv .*/bak/DEFAULT_XXXX__N.tmp/mumps.dat .*/bak/mumps.dat
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to XXXX are backed up
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to XXXX are backed up
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to XXXX are backed up
 ./bak/a.dat
 ./bak/b.dat
 ./bak/mumps.dat
@@ -289,37 +285,33 @@ MUPIP INFO:   Temp file name: ##REMOTE_TEST_PATH##/bak/bak//DEFAULT_YYYY_ZZZZZZ
 
 
 
-
-
-
-X blocks saved.
-X blocks saved.
+%YDB-I-BACKUPDBFILE, DB file ##REMOTE_TEST_PATH##/a.dat backed up in file ##REMOTE_TEST_PATH##/bak/bak/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##REMOTE_TEST_PATH##/b.dat backed up in file ##REMOTE_TEST_PATH##/bak/bak/b.dat
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/bak/a.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/bak/b.dat
+%YDB-I-BACKUPTN, Transactions from XXXX to YYYY are backed up
+%YDB-I-BACKUPTN, Transactions from XXXX to YYYY are backed up
+X blocks saved.
+X blocks saved.
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
 MUPIP INFO:   Temp file name: ##REMOTE_TEST_PATH##/bak/bak//AREG_YYYY_ZZZZZZ
 MUPIP INFO:   Temp file name: ##REMOTE_TEST_PATH##/bak/bak//BREG_YYYY_ZZZZZZ
 MUPIP INFO:   Temp file name: ##REMOTE_TEST_PATH##/bak/bak//DEFAULT_YYYY_ZZZZZZ
-no blocks backed up from database ##TEST_PATH##/mumps.dat
+no blocks backed up from database ##REMOTE_TEST_PATH##/mumps.dat
 TRANSACTION number is greater than or equal to current transaction,
-%YDB-I-BACKUPTN, Transactions from XXXX to YYYY are backed up
-%YDB-I-BACKUPTN, Transactions from XXXX to YYYY are backed up
 ./bak/a.dat
 ./bak/b.dat
 gtm_baktmpdir: ##REMOTE_TEST_PATH##/bak/baktmp
 
 
 
-
-
-
-
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/bak/a.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/bak/b.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/bak/mumps.dat
+%YDB-I-BACKUPDBFILE, DB file ##REMOTE_TEST_PATH##/a.dat backed up in file ##REMOTE_TEST_PATH##/bak/bak/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##REMOTE_TEST_PATH##/b.dat backed up in file ##REMOTE_TEST_PATH##/bak/bak/b.dat
+%YDB-I-BACKUPDBFILE, DB file ##REMOTE_TEST_PATH##/mumps.dat backed up in file ##REMOTE_TEST_PATH##/bak/bak/mumps.dat
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
+%YDB-I-BACKUPTN, Transactions from XXXX to YYYY are backed up
+%YDB-I-BACKUPTN, Transactions from XXXX to YYYY are backed up
+%YDB-I-BACKUPTN, Transactions from XXXX to YYYY are backed up
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
@@ -329,9 +321,6 @@ MUPIP INFO:   Temp file name: ##REMOTE_TEST_PATH##/bak/baktmp/DEFAULT_YYYY_ZZZZZ
 ##TEST_AWKMUPIP INFO:   unalias -a; .*/mv .*/bak/AREG_XXXX__N.tmp/a.dat .*/bak/a.dat
 ##TEST_AWKMUPIP INFO:   unalias -a; .*/mv .*/bak/BREG_XXXX__N.tmp/b.dat .*/bak/b.dat
 ##TEST_AWKMUPIP INFO:   unalias -a; .*/mv .*/bak/DEFAULT_XXXX__N.tmp/mumps.dat .*/bak/mumps.dat
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to XXXX are backed up
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to XXXX are backed up
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to XXXX are backed up
 ./bak/a.dat
 ./bak/b.dat
 ./bak/mumps.dat
@@ -339,23 +328,20 @@ MUPIP INFO:   Temp file name: ##REMOTE_TEST_PATH##/bak/baktmp/DEFAULT_YYYY_ZZZZZ
 
 
 
-
-
-
-X blocks saved.
-X blocks saved.
+%YDB-I-BACKUPDBFILE, DB file ##REMOTE_TEST_PATH##/a.dat backed up in file ##REMOTE_TEST_PATH##/bak/bak/a.dat
+%YDB-I-BACKUPDBFILE, DB file ##REMOTE_TEST_PATH##/b.dat backed up in file ##REMOTE_TEST_PATH##/bak/bak/b.dat
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/bak/a.dat
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/bak/b.dat
+%YDB-I-BACKUPTN, Transactions from XXXX to YYYY are backed up
+%YDB-I-BACKUPTN, Transactions from XXXX to YYYY are backed up
+X blocks saved.
+X blocks saved.
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
 ##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
 MUPIP INFO:   Temp file name: ##REMOTE_TEST_PATH##/bak/baktmp/AREG_YYYY_ZZZZZZ
 MUPIP INFO:   Temp file name: ##REMOTE_TEST_PATH##/bak/baktmp/BREG_YYYY_ZZZZZZ
 MUPIP INFO:   Temp file name: ##REMOTE_TEST_PATH##/bak/baktmp/DEFAULT_YYYY_ZZZZZZ
-no blocks backed up from database ##TEST_PATH##/mumps.dat
+no blocks backed up from database ##REMOTE_TEST_PATH##/mumps.dat
 TRANSACTION number is greater than or equal to current transaction,
-%YDB-I-BACKUPTN, Transactions from XXXX to YYYY are backed up
-%YDB-I-BACKUPTN, Transactions from XXXX to YYYY are backed up
 ./bak/a.dat
 ./bak/b.dat
 ===================================================================
@@ -398,10 +384,10 @@ No errors detected by integ.
 %SYSTEM-E-ENO13, Permission denied
 %YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 ##SUSPEND_OUTPUT NON_REPLIC
-%YDB-E-DIRACCESS, Do not have full access to directory for temporary files: ##TEST_PATH##/bak/baktmp
+%YDB-E-DIRACCESS, Do not have full access to directory for temporary files: ##REMOTE_TEST_PATH##/bak/baktmp
 %SYSTEM-E-ENO13, Permission denied
 %YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
-%YDB-E-DIRACCESS, Do not have full access to directory for temporary files: ##TEST_PATH##/bak/baktmp
+%YDB-E-DIRACCESS, Do not have full access to directory for temporary files: ##REMOTE_TEST_PATH##/bak/baktmp
 %SYSTEM-E-ENO13, Permission denied
 %YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 ##ALLOW_OUTPUT NON_REPLIC

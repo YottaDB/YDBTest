@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2002, 2014 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -38,7 +41,13 @@ if ($status != 0) then
 	exit -1
 endif
 if ($?test_replic) then
-	$sec_shell "$sec_getenv; cd $SEC_SIDE/bak; $gtm_tst/$tst/u_inref/D9C05002121b.csh > ../D9C05002121b.out"
+	# Note: Need to setenv gtmgbldir below to point to secondary side as otherwise we would get an EXDEV error
+	# from "copy_file_range()" (invoked by "mupip backup" which is run a lot inside D9C05002121b.csh). It would
+	# translate to the below user-visible error.
+	#	%YDB-I-TEXT, Error occurred during the copy phase of MUPIP BACKUP
+	#	%YDB-I-TEXT, Error code: 18, Invalid cross-device link
+	#	%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+	$sec_shell "$sec_getenv; cd $SEC_SIDE/bak; setenv gtmgbldir $SEC_SIDE/mumps.gld; $gtm_tst/$tst/u_inref/D9C05002121b.csh > ../D9C05002121b.out"
 	echo "And on the secondary side:"
 	$sec_shell "$sec_getenv; cd $SEC_SIDE; cat D9C05002121b.out"
 endif
