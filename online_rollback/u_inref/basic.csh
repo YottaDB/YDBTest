@@ -59,7 +59,7 @@ echo "Validate Source log for Online Rollback"
 $echoline
 echo "Validate Receiver log for Online Rollback"
 $MSR RUN INST2 'set msr_dont_trace;$gtm_tst/com/wait_for_log.csh -log 'RCVR_$time_msr.log' -message "ONLINE FETCHRESYNC ROLLBACK completed" -duration 300 -waitcreation'
-$MSR RUN INST2 'set msr_dont_trace;$grep -v MUKILLIP RCVR_'$time_msr'.log' |& $tst_awk '/REPL_ROLLBACK_FIRST/{s++}{if(s>2){print $0}}/ONLINE FETCHRESYNC ROLLBACK/{if(s++>3){exit(0)}} ' >&! rcv_orlbk.outx
+$MSR RUN INST2 'set msr_dont_trace;$grep -v MUKILLIP RCVR_'$time_msr'.log' |& $tst_awk '/REPLAHEAD/{s++}{if(s>0){print $0}}/ONLINE FETCHRESYNC ROLLBACK completed/{exit(0)}' >&! rcv_orlbk.outx
 source roll_seqno.csh
 $tst_awk -f $gtm_tst/$tst/inref/checkoutput.awk rollseqno=$roll_seqno jnlseqno=$curr_jnl_seqno resyncseqnolist=$curr_resync_seqnos rcv_orlbk.outx
 
