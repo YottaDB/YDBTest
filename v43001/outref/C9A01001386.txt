@@ -15,28 +15,25 @@ YDB>
 PASS from fill1^myfill("set")
 
 YDB>
-%YDB-I-BACKUPSUCCESS, Backup completed successfully
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/online.dat backed up in file ##TEST_PATH##/online1/online.dat
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000388 are backed up
 ##ALLOW_OUTPUT SPANNING_REGIONS
 This should error:
 %YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/online.dat already exists
 %YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
-
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 This should error:
-
-
+%YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 %YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/online.dat already exists
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-%YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 This should REPLACE:
-%YDB-I-BACKUPSUCCESS, Backup completed successfully
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/online1/a.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/online1/b.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/online1/c.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/online.dat backed up in file ##TEST_PATH##/online1/online.dat
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000029 are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x000000000000002A are backed up
@@ -46,11 +43,11 @@ This should REPLACE:
 Total number of transactions backed up:  1029
 Clean up
 Backup again:
-%YDB-I-BACKUPSUCCESS, Backup completed successfully
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/online1/a.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/online1/b.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/online1/c.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/online.dat backed up in file ##TEST_PATH##/online1/online.dat
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000029 are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x000000000000002A are backed up
@@ -59,20 +56,18 @@ Backup again:
 ##ALLOW_OUTPUT SPANNING_REGIONS
 Total number of transactions backed up:  1029
 This should error:
-
-
+%YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 %YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/a.dat already exists
 %YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/b.dat already exists
 %YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/c.dat already exists
 %YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/online.dat already exists
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-%YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 This should REPLACE:
-%YDB-I-BACKUPSUCCESS, Backup completed successfully
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/online1/a.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/online1/b.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/online1/c.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/online.dat backed up in file ##TEST_PATH##/online1/online.dat
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000029 are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x000000000000002A are backed up
@@ -84,58 +79,54 @@ Total number of transactions backed up:  1029
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
 Target does not exist and replace qualifier NOT specified
-%YDB-I-BACKUPSUCCESS, Backup completed successfully
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/online.dat backed up in file ##TEST_PATH##/online1/online.dat
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000388 are backed up
 ##ALLOW_OUTPUT SPANNING_REGIONS
 Target does not exist and replace qualifier specified. Ignore bkp_dir_2
-%YDB-I-BACKUPSUCCESS, Backup completed successfully
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/online.dat backed up in file ##TEST_PATH##/online1/online.dat
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000388 are backed up
 ##ALLOW_OUTPUT SPANNING_REGIONS
 Target exists and replace qualifier NOT specified
-
-
+%YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 %YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/online.dat already exists
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-%YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 Target exists and replace qualifier specified
-%YDB-I-BACKUPSUCCESS, Backup completed successfully
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/online.dat backed up in file ##TEST_PATH##/online1/online.dat
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000388 are backed up
 ##ALLOW_OUTPUT SPANNING_REGIONS
 Target does not exist and individual files specified. No replace qualifier
-%YDB-I-BACKUPSUCCESS, Backup completed successfully
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/online1/a.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/online1/b.dat
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000029 are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x000000000000002A are backed up
 ##ALLOW_OUTPUT SPANNING_REGIONS
 Target exists and individual files specified. No replace qualifier
-
-
+%YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 %YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/a.dat already exists
 %YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/b.dat already exists
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-%YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 Target exists and individual files specified. replace qualifier specified
-%YDB-I-BACKUPSUCCESS, Backup completed successfully
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/online1/a.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/online1/b.dat
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000029 are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x000000000000002A are backed up
 ##ALLOW_OUTPUT SPANNING_REGIONS
 Target does not exist, region is * and replace qualifier NOT specified
-%YDB-I-BACKUPSUCCESS, Backup completed successfully
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/online1/a.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/online1/b.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/online1/c.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/online.dat backed up in file ##TEST_PATH##/online1/online.dat
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000029 are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x000000000000002A are backed up
@@ -143,20 +134,18 @@ Target does not exist, region is * and replace qualifier NOT specified
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000388 are backed up
 ##ALLOW_OUTPUT SPANNING_REGIONS
 Target exists, region is * and replace qualifier NOT specified
-
-
+%YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 %YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/a.dat already exists
 %YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/b.dat already exists
 %YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/c.dat already exists
 %YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/online.dat already exists
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-%YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 Target exists, region is * and replace qualifier specified
-%YDB-I-BACKUPSUCCESS, Backup completed successfully
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/online1/a.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/online1/b.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/online1/c.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/online.dat backed up in file ##TEST_PATH##/online1/online.dat
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000029 are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x000000000000002A are backed up
@@ -165,36 +154,33 @@ Target exists, region is * and replace qualifier specified
 ##ALLOW_OUTPUT SPANNING_REGIONS
 Total number of transactions backed up:  1029
 Target does not exist and is a combination of files/directories
-%YDB-I-BACKUPSUCCESS, Backup completed successfully
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/online1/a.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/online1/b.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/online1/c.dat
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000029 are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x000000000000002A are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x000000000000002A are backed up
 ##ALLOW_OUTPUT SPANNING_REGIONS
 Target exists and is a combination of files/directories
-
-
+%YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 %YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/a.dat already exists
 %YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/b.dat already exists
 %YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/c.dat already exists
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-%YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 Target exists and is a combination of files/directories and replace qualifier specified
-%YDB-I-BACKUPSUCCESS, Backup completed successfully
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/online1/a.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/online1/b.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/online1/c.dat
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
 ##SUSPEND_OUTPUT SPANNING_REGIONS
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000029 are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x000000000000002A are backed up
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x000000000000002A are backed up
 ##ALLOW_OUTPUT SPANNING_REGIONS
 Target exists and duplicates in target list
-
-
+%YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 %YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/a.dat already exists
 %YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/a.dat already exists
 %YDB-E-FILEEXISTS, File ##TEST_PATH##/online1/a.dat already exists
@@ -202,31 +188,24 @@ Target exists and duplicates in target list
 Cannot backup database regions AREG and BREG to the same destination file ##TEST_PATH##/online1/a.dat
 Cannot backup database regions AREG and CREG to the same destination file ##TEST_PATH##/online1/a.dat
 Cannot backup database regions BREG and CREG to the same destination file ##TEST_PATH##/online1/a.dat
-%YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 Target does not exist and duplicates in target list
-
-
+%YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 Cannot backup database regions AREG and BREG to the same destination file ##TEST_PATH##/online1/a.dat
 Cannot backup database regions AREG and CREG to the same destination file ##TEST_PATH##/online1/a.dat
 Cannot backup database regions BREG and CREG to the same destination file ##TEST_PATH##/online1/a.dat
-%YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 Target does not exist and duplicates in target list and replace qualifier specified
-
-
+%YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 Cannot backup database regions AREG and BREG to the same destination file ##TEST_PATH##/online1/a.dat
 Cannot backup database regions AREG and CREG to the same destination file ##TEST_PATH##/online1/a.dat
 Cannot backup database regions BREG and CREG to the same destination file ##TEST_PATH##/online1/a.dat
-%YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 Target does not exist but path contains a very long directory name
-
-
+%YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 Cannot backup database regions AREG and BREG to the same destination file ##TEST_PATH##/extremely_very_very_long_directory_name_for_testing/another_medium_sized_directory_name/online1/a.dat
 Cannot backup database regions AREG and CREG to the same destination file ##TEST_PATH##/extremely_very_very_long_directory_name_for_testing/another_medium_sized_directory_name/online1/a.dat
 Cannot backup database regions BREG and CREG to the same destination file ##TEST_PATH##/extremely_very_very_long_directory_name_for_testing/another_medium_sized_directory_name/online1/a.dat
-%YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
