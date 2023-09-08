@@ -280,7 +280,7 @@ $MUPIP integ a''d/mumps.dat
 set nonomatch
 $MUPIP backup "*" -nonewj .a..?..b.c/backup.dat
 
-Do not have full access to directory for temporary files: .a..?..b.c/
+%YDB-E-DIRACCESS, Do not have full access to directory for temporary files: .a..?..b.c/
 %SYSTEM-E-ENO2, No such file or directory
 %YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 
@@ -289,7 +289,7 @@ unset verbose
 setenv ydb_baktmpdir ./bo$goue_name
 $MUPIP backup "*" -nonewj ./back3
 
-Do not have full access to directory for temporary files: ./bo$goue_name
+%YDB-E-DIRACCESS, Do not have full access to directory for temporary files: ./bo$goue_name
 %SYSTEM-E-ENO2, No such file or directory
 %YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 
@@ -301,7 +301,7 @@ sort -f mupip_backup_nonewj_1.outx
 
 
 %SYSTEM-E-ENO2, No such file or directory
-Do not have full access to directory for temporary files: ./back3/mumps$$
+%YDB-E-DIRACCESS, Do not have full access to directory for temporary files: ./back3/mumps$$
 %YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
 echo "#"
 #
