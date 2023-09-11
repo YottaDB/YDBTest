@@ -29,7 +29,7 @@ setenv gtm_test_fake_enospc 0		# No random ENOSPC errors to cause freezes
 echo '# gtm9368 - Verify we can interrupt/stop a MUPIP REPLIC -SOURCE -SHUTDOWN command during its wait period with ^C'
 echo
 echo '# Run dbcreate.csh'       # Should configure and start up replication
-$gtm_tst/com/dbcreate.csh mumps 1 255 1000 1024 500 128 500
+$gtm_tst/com/dbcreate.csh mumps -n_regions=1 -key=255 -rec=1000 -block=1024 -alloc=500 -global_buffer=4096 -extension=500
 echo
 echo '# Start some constant DB activity creating, updating, and removing lots of nodes so replication has more of a chance'
 echo '# of having a non-zero backlog'
