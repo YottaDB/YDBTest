@@ -1,22 +1,24 @@
-##TEST_PATH##/a
-# Backing up DEFAULT Region to path length 228 (length of temp file is 24, so total path is 252)
-##TEST_AWK%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##[a /]*mumps.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
+# Backing up DEFAULT Region to path length 222 (length of temp dir is 20, file name is mumps.dat, so total path is 253)
+##TEST_AWK%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/a*/mumps.dat
+%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
-# Backing up DEFAULT Region to path length 229 (length of temp file is 24, so total path is 253)
-##TEST_AWK%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##[a /]*mumps.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
+# Backing up DEFAULT Region to path length 223 (length of temp dir is 20, file name is mumps.dat, so total path is 254)
+##TEST_AWK%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/a*/mumps.dat
+%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
-# Backing up DEFAULT Region to path length 230 (length of temp file is 24, so total path is 254)
-##TEST_AWK%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##[a /]*mumps.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
+# Backing up DEFAULT Region to path length 224 (length of temp dir is 20, file name is mumps.dat, so total path is 255)
+##TEST_AWK%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/a*/mumps.dat
+%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
-# Backing up DEFAULT Region to path length 231 (length of temp file is 24, so total path is 255)
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##[a /]*DEFAULT_........_XXXXXX
+# Backing up DEFAULT Region to path length 225 (length of temp dir is 20, file name is mumps.dat, so total path is 256)
+##TEST_AWK%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/a*/mumps.dat
+%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
+# Backing up DEFAULT Region to path length 226 (length of temp dir is 20, file name is mumps.dat, so total path is 257)
+##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/a*/DEFAULT_99999_0.tmp/mumps.dat
 %YDB-E-FILENAMETOOLONG, File name too long
-# Backing up DEFAULT Region to path length 232 (length of temp file is 24, so total path is 256)
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##[a /]*DEFAULT_........_XXXXXX
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+# Backing up DEFAULT Region to path length 227 (length of temp dir is 20, file name is mumps.dat, so total path is 258)
+##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/a*/DEFAULT_99999_0.tmp/mumps.dat
 %YDB-E-FILENAMETOOLONG, File name too long
-# Backing up DEFAULT Region to path length 233 (length of temp file is 24, so total path is 257)
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##[a /]*DEFAULT_........_XXXXXX
-%YDB-E-FILENAMETOOLONG, File name too long
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions

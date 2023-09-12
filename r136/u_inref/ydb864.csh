@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -19,7 +19,9 @@ echo "# paths of 255 or less to work but for paths of more than 255"
 echo "# to result in errors."
 
 cat > gen.m << CAT_EOF
- for i=1:1:+\$zcmdline write \$extract("habcdefg",1+(i#8))
+ write \$zdirectory,"/"
+ set max=+\$zcmdline-\$zlength(\$zdirectory)-1
+ for i=1:1:max write \$extract("habcdefg",1+(i#8))
 CAT_EOF
 
 $echoline
@@ -60,8 +62,8 @@ if ("dbg" == "$tst_image") then
 	$echoline
 	echo "# Starting the -noonline MUPIP BACKUPs. For these, we"
 	echo "# generate directory paths of 220 to 266 characters,"
-	echo "# expecting lengths of 220 to 233 to succeed and longer"
-	echo "# lengths to result in errors. Lengths of 234 or larger"
+	echo "# expecting lengths of 220 to 226 to succeed and longer"
+	echo "# lengths to result in errors. Lengths of 227 or larger"
 	echo "# fail due to the space needed for the temporary file which"
 	echo "# would otherwise overflow a buffer in sr_port/mubfilcpy.c"
 
@@ -70,13 +72,14 @@ if ("dbg" == "$tst_image") then
 		rm -rf $dirname
 		mkdir $dirname
 		echo "####### Testing backup directory length [$cnt] with -noonline #########"
-		$gtm_dist/mupip backup -noonline "*" $dirname
+		# Remove messages from mupip backup output that are non-deterministic using the "grep -vE" below
+		$gtm_dist/mupip backup -noonline "*" $dirname |& grep -vE "BACKUPDBFILE|BACKUPTN|FILEPARSE"
 		rm -rf $dirname
 		@ cnt = $cnt + 1
 	end
 
-	unsetenv WBTEST_YDB_STATICPID
 	unsetenv gtm_white_box_test_case_number
+	unsetenv gtm_white_box_test_case_enable
 endif
 
 $echoline
@@ -94,18 +97,18 @@ echo "# impossible to predict where the FILENAMETOOLONG errors should"
 echo "# first show up. So we subtract the length of the test dir from"
 echo "# the directory length to ensure predictable results in this"
 echo "# section of the test. We expect a path, including the test"
-echo "# of 230 or more characters to produce a FILENAMETOOLONG error"
+echo "# of 227 or more characters to produce a FILENAMETOOLONG error"
 @ cnt = 220
 set testdir=`pwd`
 set testdirlength=`echo $testdir | awk '{print length($0)}'`
 
 while ($cnt < 266)
-	@ len=($cnt - $testdirlength)
-	set dirname = `$gtm_dist/mumps -run gen $len`
+	set dirname = `$gtm_dist/mumps -run gen $cnt`
 	rm -rf $dirname
 	mkdir $dirname
 	echo "####### Testing backup directory length [$cnt] (online backup) #########"
-	$gtm_dist/mupip backup "*" $dirname
+	# Remove messages from mupip backup output that are non-deterministic using the "grep -vE" below
+	$gtm_dist/mupip backup "*" $dirname |& grep -vE "BACKUPDBFILE|BACKUPTN|FILEPARSE"
 	rm -rf $dirname
 	@ cnt = $cnt + 1
 end
@@ -134,7 +137,8 @@ GTM_EOF
                         set sincequal = "-since=$since"
                 endif
                 echo "############ Testing $sincequal"
-                $gtm_dist/mupip backup -noonline "*" -bytestream $sincequal $dirname
+		# Remove messages from mupip backup output that are non-deterministic using the "grep -vE" below
+		$gtm_dist/mupip backup -noonline "*" -bytestream $sincequal $dirname |& grep -vE "BACKUPDBFILE|BACKUPTN|blocks saved"
         end
         rm -rf $dirname
         @ cnt = $cnt + 1

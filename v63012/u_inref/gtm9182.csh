@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -20,7 +20,6 @@ echo "# > 255 characters. The gtm9182 changes only fixed this for backups"
 echo "# where a backup filename not a directory was specified. The YDB#864"
 echo "# changes address issues with backups incorrectly succeeding where a"
 echo "# directory is specified. This test covers both of these cases."
-
 
 cat >> gtm9182.m << xx
 	write \$ZDIRECTORY
@@ -52,23 +51,27 @@ $gtm_tst/com/dbcreate.csh mumpsmumpsmumpsmumpsm 1
 setenv ydb_gbldir mumpsmumpsmumpsmumpsm.gld
 $MUPIP set -file -nojournal mumpsmumpsmumpsmumpsm.dat
 
-$echoline
-echo "# Run MUPIP BACKUP with backup directory path lengths of 229, 230 and 231."
-echo "# Since the database file length is 26 characters, the first BACKUP will"
-echo "# succeed, the second will incorrectly succeed without YDB#864 but fail"
-echo "# with a FILENAMETOOLONG on YottaDB with YDB#864 and the third will"
-echo "# fail with a FILENAMETOOLONG regardless of version."
-foreach i (229 230 231)
-	$ydb_dist/mumps -run gtm9182 $i >>& a$i.out
-	set dir = `cat a$i.out`
-	mkdir -p $dir
-	set j = `expr $i + 24`
-	set k = `expr $i + 26`
+if ("dbg" == "$tst_image") then
+	setenv gtm_white_box_test_case_enable   1
+	setenv gtm_white_box_test_case_number   203	# WBTEST_YDB_STATICPID so FILEPARSE error due to temporary file name length
+							# (which includes pid) occurs at deterministic target backup directory
+							# path length.
+
 	$echoline
-	echo "# Backing up DEFAULT Region to path length $i"
-	echo "# (backup file path length is $k but temp file path length is $j)"
-	$MUPIP BACKUP "DEFAULT" $dir >& bck$i.outx; $grep -Ev 'FILERENAME|JNLCREATE' bck$i.outx
-end
+	echo "# Run MUPIP BACKUP with backup directory path lengths of 209, 210 and 211."
+	echo "# We expect the first one to succeed and the other 2 to fail with FILENAMETOOLONG error."
+	foreach i (209 210 211)
+		$ydb_dist/mumps -run gtm9182 $i >>& a$i.out
+		set dir = `cat a$i.out`
+		mkdir -p $dir
+		$echoline
+		echo "# Backing up DEFAULT Region to path length $i"
+		$MUPIP BACKUP "DEFAULT" $dir >& bck$i.outx; $grep -Ev 'FILERENAME|JNLCREATE' bck$i.outx
+	end
+
+	unsetenv gtm_white_box_test_case_number
+	unsetenv gtm_white_box_test_case_enable
+endif
 
 $echoline
 echo "# Backing up DEFAULT region to full file path of 250 characters"
@@ -83,10 +86,8 @@ setenv ydb_baktmpdir `pwd`/backup
 $MUPIP BACKUP "DEFAULT" $dir >& bck_tmpdir.outx; $grep -Ev 'FILERENAME|JNLCREATE' bck_tmpdir.outx
 
 $echoline
-echo "# Backing up DEFAULT region to relative file path of 255 characters"
-echo '# with $ydb_baktmpdir set to a shorter path. This backup will succeed'
-echo "# because none of the buffers in MUPIP BACKUP will ever overflow the"
-echo "# buffer and thus there is no need for a FILENAMETOOLONG error."
+echo "# Backing up DEFAULT region to relative file path of 255 characters."
+echo "# This should produce a FILENAMETOOLONG error since the absolute file path is more than 255 characters long."
 $ydb_dist/mumps -run nozdir^gtm9182 255 >>& a255.out
 set dir = `cat a255.out`
 mkdir -p $dir
@@ -95,9 +96,7 @@ unsetenv ydb_baktmpdir
 
 $echoline
 echo "# Testing a 255 character backup file name with no file path."
-echo "# This should produce a FILENAMETOOLONG error on the"
-echo "# upstream version of V6.3-012 but will not produce an"
-echo "# error on YottaDB or pre-V6.3-012 upstream versions."
+echo "# This should produce a FILENAMETOOLONG error since the absolute file path is more than 255 characters long."
 $ydb_dist/mumps -run longfilename^gtm9182 255 >> longfilename255.out
 set file = `cat longfilename255.out`
 $MUPIP BACKUP DEFAULT $file

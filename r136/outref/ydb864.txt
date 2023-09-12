@@ -25,226 +25,122 @@ GDE>
 ###################################################################
 # Starting the -noonline MUPIP BACKUPs. For these, we
 # generate directory paths of 220 to 266 characters,
-# expecting lengths of 220 to 233 to succeed and longer
-# lengths to result in errors. Lengths of 234 or larger
+# expecting lengths of 220 to 226 to succeed and longer
+# lengths to result in errors. Lengths of 227 or larger
 # fail due to the space needed for the temporary file which
 # would otherwise overflow a buffer in sr_port/mubfilcpy.c
 ####### Testing backup directory length [220] with -noonline #########
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcd/a.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcd/mumps.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 ####### Testing backup directory length [221] with -noonline #########
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcde/a.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcde/mumps.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 ####### Testing backup directory length [222] with -noonline #########
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdef/a.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdef/mumps.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 ####### Testing backup directory length [223] with -noonline #########
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefg/a.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefg/mumps.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 ####### Testing backup directory length [224] with -noonline #########
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgh/a.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgh/mumps.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 ####### Testing backup directory length [225] with -noonline #########
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgha/a.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgha/mumps.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 ####### Testing backup directory length [226] with -noonline #########
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghab/a.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghab/mumps.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 ####### Testing backup directory length [227] with -noonline #########
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabc/a.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabc/mumps.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
-%YDB-I-BACKUPSUCCESS, Backup completed successfully
+%YDB-E-FILENAMETOOLONG, File name too long
+Files backed up before above error are OK.
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ####### Testing backup directory length [228] with -noonline #########
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcd/a.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcd/mumps.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
-%YDB-I-BACKUPSUCCESS, Backup completed successfully
+%YDB-E-FILENAMETOOLONG, File name too long
+Files backed up before above error are OK.
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ####### Testing backup directory length [229] with -noonline #########
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcde/a.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcde/mumps.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
-%YDB-I-BACKUPSUCCESS, Backup completed successfully
+%YDB-E-FILENAMETOOLONG, File name too long
+Files backed up before above error are OK.
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ####### Testing backup directory length [230] with -noonline #########
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdef/a.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdef/mumps.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
-%YDB-I-BACKUPSUCCESS, Backup completed successfully
+%YDB-E-FILENAMETOOLONG, File name too long
+Files backed up before above error are OK.
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ####### Testing backup directory length [231] with -noonline #########
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefg/a.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefg/mumps.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
-%YDB-I-BACKUPSUCCESS, Backup completed successfully
+%YDB-E-FILENAMETOOLONG, File name too long
+Files backed up before above error are OK.
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ####### Testing backup directory length [232] with -noonline #########
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgh/a.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgh/mumps.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
-%YDB-I-BACKUPSUCCESS, Backup completed successfully
+%YDB-E-FILENAMETOOLONG, File name too long
+Files backed up before above error are OK.
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ####### Testing backup directory length [233] with -noonline #########
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgha/a.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgha/mumps.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
-%YDB-I-BACKUPSUCCESS, Backup completed successfully
+%YDB-E-FILENAMETOOLONG, File name too long
+Files backed up before above error are OK.
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ####### Testing backup directory length [234] with -noonline #########
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghab/a.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghab/DEFAULT.*
 %YDB-E-FILENAMETOOLONG, File name too long
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ####### Testing backup directory length [235] with -noonline #########
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabc/a.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabc/DEFAULT.*
 %YDB-E-FILENAMETOOLONG, File name too long
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ####### Testing backup directory length [236] with -noonline #########
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcd/a.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcd/DEFAULT.*
 %YDB-E-FILENAMETOOLONG, File name too long
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ####### Testing backup directory length [237] with -noonline #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcde/AREG.*
 %YDB-E-FILENAMETOOLONG, File name too long
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ####### Testing backup directory length [238] with -noonline #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdef/AREG.*
 %YDB-E-FILENAMETOOLONG, File name too long
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ####### Testing backup directory length [239] with -noonline #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefg/AREG.*
 %YDB-E-FILENAMETOOLONG, File name too long
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ####### Testing backup directory length [240] with -noonline #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgh/AREG.*
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [241] with -noonline #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgha/AREG.*
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [242] with -noonline #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghab/AREG.*
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [243] with -noonline #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabc/AREG.*
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [244] with -noonline #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcd/AREG.*
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [245] with -noonline #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcde/AREG.*
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [246] with -noonline #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdef/mumps.dat
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [247] with -noonline #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefg/mumps.dat
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [248] with -noonline #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgh/mumps.dat
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [249] with -noonline #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgha/mumps.dat
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [250] with -noonline #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghab/a.dat
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [251] with -noonline #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabc/a.dat
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [252] with -noonline #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcd/a.dat
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [253] with -noonline #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcde/a.dat
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [254] with -noonline #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdef/a.dat
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [255] with -noonline #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefg/a.dat
 %YDB-E-FILENAMETOOLONG, File name too long
-##TEST_AWKrm: cannot remove ('|‘)abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgh('|’): File name too long
-##TEST_AWKmkdir: cannot create directory ('|‘)abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgh('|’): File name too long
 ####### Testing backup directory length [256] with -noonline #########
-Error accessing backup output file or directory: abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgh
-%SYSTEM-E-ENO36, File name too long
-##TEST_AWKrm: cannot remove ('|‘)abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgh('|’): File name too long
-##TEST_AWKrm: cannot remove ('|‘)abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgha('|’): File name too long
-##TEST_AWKmkdir: cannot create directory ('|‘)abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgha('|’): File name too long
+%YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [257] with -noonline #########
-Error accessing backup output file or directory: abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgha
-%SYSTEM-E-ENO36, File name too long
-##TEST_AWKrm: cannot remove ('|‘)abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgha('|’): File name too long
-##TEST_AWKrm: cannot remove ('|‘)abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghab('|’): File name too long
-##TEST_AWKmkdir: cannot create directory ('|‘)abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghab('|’): File name too long
+%YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [258] with -noonline #########
-Error accessing backup output file or directory: abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghab
-%SYSTEM-E-ENO36, File name too long
-##TEST_AWKrm: cannot remove ('|‘)abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghab('|’): File name too long
-##TEST_AWKrm: cannot remove ('|‘)abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabc('|’): File name too long
-##TEST_AWKmkdir: cannot create directory ('|‘)abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabc('|’): File name too long
+%YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [259] with -noonline #########
-Error accessing backup output file or directory: abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabc
-%SYSTEM-E-ENO36, File name too long
-##TEST_AWKrm: cannot remove ('|‘)abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabc('|’): File name too long
-##TEST_AWKrm: cannot remove ('|‘)abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcd('|’): File name too long
-##TEST_AWKmkdir: cannot create directory ('|‘)abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcd('|’): File name too long
+%YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [260] with -noonline #########
-Error accessing backup output file or directory: abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcd
-%SYSTEM-E-ENO36, File name too long
-##TEST_AWKrm: cannot remove ('|‘)abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcd('|’): File name too long
-##TEST_AWKrm: cannot remove ('|‘)abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcde('|’): File name too long
-##TEST_AWKmkdir: cannot create directory ('|‘)abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcde('|’): File name too long
+%YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [261] with -noonline #########
-Error accessing backup output file or directory: abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcde
-%SYSTEM-E-ENO36, File name too long
-##TEST_AWKrm: cannot remove ('|‘)abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcde('|’): File name too long
-##TEST_AWKrm: cannot remove ('|‘)abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdef('|’): File name too long
-##TEST_AWKmkdir: cannot create directory ('|‘)abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdef('|’): File name too long
+%YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [262] with -noonline #########
-Error accessing backup output file or directory: abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdef
-%SYSTEM-E-ENO36, File name too long
-##TEST_AWKrm: cannot remove ('|‘)abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdef('|’): File name too long
-##TEST_AWKrm: cannot remove ('|‘)abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefg('|’): File name too long
-##TEST_AWKmkdir: cannot create directory ('|‘)abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefg('|’): File name too long
+%YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [263] with -noonline #########
-Error accessing backup output file or directory: abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefg
-%SYSTEM-E-ENO36, File name too long
-##TEST_AWKrm: cannot remove ('|‘)abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefg('|’): File name too long
-##TEST_AWKrm: cannot remove ('|‘)abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgh('|’): File name too long
-##TEST_AWKmkdir: cannot create directory ('|‘)abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgh('|’): File name too long
+%YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [264] with -noonline #########
-Error accessing backup output file or directory: abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgh
-%SYSTEM-E-ENO36, File name too long
-##TEST_AWKrm: cannot remove ('|‘)abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgh('|’): File name too long
-##TEST_AWKrm: cannot remove ('|‘)abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgha('|’): File name too long
-##TEST_AWKmkdir: cannot create directory ('|‘)abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgha('|’): File name too long
+%YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [265] with -noonline #########
-Error accessing backup output file or directory: abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgha
-%SYSTEM-E-ENO36, File name too long
-##TEST_AWKrm: cannot remove ('|‘)abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgha('|’): File name too long
+%YDB-E-FILENAMETOOLONG, File name too long
 ##ALLOW_OUTPUT pro
 ###################################################################
 # Starting the online MUPIP BACKUPs. For these, we generate
@@ -261,174 +157,108 @@ Error accessing backup output file or directory: abcdefghabcdefghabcdefghabcdefg
 # first show up. So we subtract the length of the test dir from
 # the directory length to ensure predictable results in this
 # section of the test. We expect a path, including the test
-# of 230 or more characters to produce a FILENAMETOOLONG error
+# of 227 or more characters to produce a FILENAMETOOLONG error
 ####### Testing backup directory length [220] (online backup) #########
-##TEST_AWK%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/[abcdefgh]*/a.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
-##TEST_AWK%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/[abcdefgh]*/mumps.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 ####### Testing backup directory length [221] (online backup) #########
-##TEST_AWK%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/[abcdefgh]*/a.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
-##TEST_AWK%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/[abcdefgh]*/mumps.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 ####### Testing backup directory length [222] (online backup) #########
-##TEST_AWK%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/[abcdefgh]*/a.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
-##TEST_AWK%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/[abcdefgh]*/mumps.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 ####### Testing backup directory length [223] (online backup) #########
-##TEST_AWK%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/[abcdefgh]*/a.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
-##TEST_AWK%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/[abcdefgh]*/mumps.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 ####### Testing backup directory length [224] (online backup) #########
-##TEST_AWK%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/[abcdefgh]*/a.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
-##TEST_AWK%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/[abcdefgh]*/mumps.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 ####### Testing backup directory length [225] (online backup) #########
-##TEST_AWK%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/[abcdefgh]*/a.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
-##TEST_AWK%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/[abcdefgh]*/mumps.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 ####### Testing backup directory length [226] (online backup) #########
-##TEST_AWK%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/[abcdefgh]*/a.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
-##TEST_AWK%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/[abcdefgh]*/mumps.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 ####### Testing backup directory length [227] (online backup) #########
-##TEST_AWK%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/[abcdefgh]*/a.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
-##TEST_AWK%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/[abcdefgh]*/mumps.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
-%YDB-I-BACKUPSUCCESS, Backup completed successfully
+%YDB-E-FILENAMETOOLONG, File name too long
+Files backed up before above error are OK.
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ####### Testing backup directory length [228] (online backup) #########
-##TEST_AWK%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/[abcdefgh]*/a.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
-##TEST_AWK%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/[abcdefgh]*/mumps.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
-%YDB-I-BACKUPSUCCESS, Backup completed successfully
+%YDB-E-FILENAMETOOLONG, File name too long
+Files backed up before above error are OK.
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ####### Testing backup directory length [229] (online backup) #########
-##TEST_AWK%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/[abcdefgh]*/a.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
-##TEST_AWK%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/[abcdefgh]*/mumps.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
-%YDB-I-BACKUPSUCCESS, Backup completed successfully
+%YDB-E-FILENAMETOOLONG, File name too long
+Files backed up before above error are OK.
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ####### Testing backup directory length [230] (online backup) #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/[abcdefgh]*//DEFAULT_........_XXXXXX
 %YDB-E-FILENAMETOOLONG, File name too long
+Files backed up before above error are OK.
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ####### Testing backup directory length [231] (online backup) #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/[abcdefgh]*//DEFAULT_........_XXXXXX
 %YDB-E-FILENAMETOOLONG, File name too long
+Files backed up before above error are OK.
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ####### Testing backup directory length [232] (online backup) #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/[abcdefgh]*//DEFAULT_........_XXXXXX
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [233] (online backup) #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/[abcdefgh]*//AREG_........_XXXXXX
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [234] (online backup) #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/[abcdefgh]*//AREG_........_XXXXXX
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [235] (online backup) #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/[abcdefgh]*//AREG_........_XXXXXX
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [236] (online backup) #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/[abcdefgh]*//AREG_........_XXXXXX
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [237] (online backup) #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/[abcdefgh]*//AREG_........_XXXXXX
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [238] (online backup) #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/[abcdefgh]*//AREG_........_XXXXXX
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [239] (online backup) #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/[abcdefgh]*//AREG_........_XXXXXX
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [240] (online backup) #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/[abcdefgh]*//AREG_........_XXXXXX
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [241] (online backup) #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/[abcdefgh]*//AREG_........_XXXXXX
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [242] (online backup) #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/[abcdefgh]*//AREG_........_XXXXXX
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [243] (online backup) #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/[abcdefgh]*//AREG_........_XXXXXX
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [244] (online backup) #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/[abcdefgh]*//AREG_........_XXXXXX
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [245] (online backup) #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/[abcdefgh]*//AREG_........_XXXXXX
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [246] (online backup) #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/[abcdefgh]*//AREG_........_XXXXXX
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [247] (online backup) #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/[abcdefgh]*//AREG_........_XXXXXX
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [248] (online backup) #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/[abcdefgh]*//AREG_........_XXXXXX
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [249] (online backup) #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/[abcdefgh]*//AREG_........_XXXXXX
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [250] (online backup) #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/[abcdefgh]*//AREG_........_XXXXXX
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [251] (online backup) #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/[abcdefgh]*//AREG_........_XXXXXX
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [252] (online backup) #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/[abcdefgh]*//AREG_........_XXXXXX
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [253] (online backup) #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/[abcdefgh]*//AREG_........_XXXXXX
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [254] (online backup) #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/[abcdefgh]*/
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [255] (online backup) #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/[abcdefgh]*/
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [256] (online backup) #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/[abcdefgh]*/
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [257] (online backup) #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/[abcdefgh]*/
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [258] (online backup) #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/[abcdefgh]*/
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [259] (online backup) #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/[abcdefgh]*/
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [260] (online backup) #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/[abcdefgh]*/
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [261] (online backup) #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/[abcdefgh]*/
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [262] (online backup) #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/[abcdefgh]*/
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [263] (online backup) #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/[abcdefgh]*/
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [264] (online backup) #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/[abcdefgh]*/
 %YDB-E-FILENAMETOOLONG, File name too long
 ####### Testing backup directory length [265] (online backup) #########
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/[abcdefgh]*/
 %YDB-E-FILENAMETOOLONG, File name too long
 ###################################################################
 # Starting backups with path lengths from 230 to 235 testing
@@ -442,36 +272,12 @@ YDB>
 YDB>
 ####### Testing backup directory length [230] with noonline, bytestream and since= #########
 ############ Testing -since=incremental
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdef/a.dat
-5 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000002 are backed up
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdef/mumps.dat
-5 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000002 are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 ############ Testing -since=database
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdef/a.dat
-5 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000002 are backed up
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdef/mumps.dat
-5 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000002 are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 ############ Testing -since=record
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdef/a.dat
-5 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000002 are backed up
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdef/mumps.dat
-5 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000002 are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 ############ Testing 
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdef/a.dat
-5 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000002 are backed up
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdef/mumps.dat
-5 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000002 are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 
 YDB>
@@ -479,36 +285,12 @@ YDB>
 YDB>
 ####### Testing backup directory length [231] with noonline, bytestream and since= #########
 ############ Testing -since=incremental
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefg/a.dat
-3 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000002 to 0x0000000000000003 are backed up
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefg/mumps.dat
-3 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000002 to 0x0000000000000003 are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 ############ Testing -since=database
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefg/a.dat
-5 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000003 are backed up
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefg/mumps.dat
-5 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000003 are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 ############ Testing -since=record
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefg/a.dat
-5 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000003 are backed up
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefg/mumps.dat
-5 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000003 are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 ############ Testing 
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefg/a.dat
-5 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000003 are backed up
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefg/mumps.dat
-5 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000003 are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 
 YDB>
@@ -516,36 +298,12 @@ YDB>
 YDB>
 ####### Testing backup directory length [232] with noonline, bytestream and since= #########
 ############ Testing -since=incremental
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgh/a.dat
-3 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000003 to 0x0000000000000004 are backed up
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgh/mumps.dat
-3 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000003 to 0x0000000000000004 are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 ############ Testing -since=database
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgh/a.dat
-5 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000004 are backed up
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgh/mumps.dat
-5 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000004 are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 ############ Testing -since=record
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgh/a.dat
-5 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000004 are backed up
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgh/mumps.dat
-5 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000004 are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 ############ Testing 
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgh/a.dat
-5 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000004 are backed up
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgh/mumps.dat
-5 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000004 are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 
 YDB>
@@ -553,36 +311,12 @@ YDB>
 YDB>
 ####### Testing backup directory length [233] with noonline, bytestream and since= #########
 ############ Testing -since=incremental
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgha/a.dat
-3 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000004 to 0x0000000000000005 are backed up
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgha/mumps.dat
-3 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000004 to 0x0000000000000005 are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 ############ Testing -since=database
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgha/a.dat
-5 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000005 are backed up
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgha/mumps.dat
-5 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000005 are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 ############ Testing -since=record
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgha/a.dat
-5 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000005 are backed up
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgha/mumps.dat
-5 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000005 are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 ############ Testing 
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgha/a.dat
-5 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000005 are backed up
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgha/mumps.dat
-5 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000005 are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 
 YDB>
@@ -590,36 +324,12 @@ YDB>
 YDB>
 ####### Testing backup directory length [234] with noonline, bytestream and since= #########
 ############ Testing -since=incremental
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghab/a.dat
-3 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000005 to 0x0000000000000006 are backed up
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghab/mumps.dat
-3 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000005 to 0x0000000000000006 are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 ############ Testing -since=database
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghab/a.dat
-5 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000006 are backed up
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghab/mumps.dat
-5 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000006 are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 ############ Testing -since=record
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghab/a.dat
-5 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000006 are backed up
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghab/mumps.dat
-5 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000006 are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 ############ Testing 
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghab/a.dat
-5 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000006 are backed up
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghab/mumps.dat
-5 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000006 are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 
 YDB>
@@ -627,36 +337,12 @@ YDB>
 YDB>
 ####### Testing backup directory length [235] with noonline, bytestream and since= #########
 ############ Testing -since=incremental
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabc/a.dat
-3 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000006 to 0x0000000000000007 are backed up
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabc/mumps.dat
-3 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000006 to 0x0000000000000007 are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 ############ Testing -since=database
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabc/a.dat
-5 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000007 are backed up
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabc/mumps.dat
-5 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000007 are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 ############ Testing -since=record
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabc/a.dat
-5 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000007 are backed up
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabc/mumps.dat
-5 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000007 are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 ############ Testing 
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabc/a.dat
-5 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000007 are backed up
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabc/mumps.dat
-5 blocks saved.
-%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000007 are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 ###################################################################
 ##SOURCE_PATH##/mupip

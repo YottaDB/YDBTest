@@ -29,28 +29,26 @@ mumpsmumpsmumpsmumpsm.gld
 Using: ##SOURCE_PATH##/mupip
 mumpsmumpsmumpsmumpsm.dat
 %YDB-I-JNLSTATE, Journaling state for database file ##TEST_PATH##/mumpsmumpsmumpsmumpsm.dat is now DISABLED
+##SUSPEND_OUTPUT PRO
 ###################################################################
-# Run MUPIP BACKUP with backup directory path lengths of 229, 230 and 231.
-# Since the database file length is 26 characters, the first BACKUP will
-# succeed, the second will incorrectly succeed without YDB#864 but fail
-# with a FILENAMETOOLONG on YottaDB with YDB#864 and the third will
-# fail with a FILENAMETOOLONG regardless of version.
+# Run MUPIP BACKUP with backup directory path lengths of 209, 210 and 211.
+# We expect the first one to succeed and the other 2 to fail with FILENAMETOOLONG error.
 ###################################################################
-# Backing up DEFAULT Region to path length 229
-# (backup file path length is 255 but temp file path length is 253)
+# Backing up DEFAULT Region to path length 209
 ##TEST_AWK%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumpsmumpsmumpsmumpsm.dat backed up in file ##TEST_PATH##/a*/mumpsmumpsmumpsmumpsm.dat
 ##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
 ###################################################################
-# Backing up DEFAULT Region to path length 230
-# (backup file path length is 256 but temp file path length is 254)
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/a*/mumpsmumpsmumpsmumpsm.dat.*
+# Backing up DEFAULT Region to path length 210
+##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/a*/DEFAULT_99999_0.tmp/mumpsmumpsmumpsmumpsm.dat
 %YDB-E-FILENAMETOOLONG, File name too long
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ###################################################################
-# Backing up DEFAULT Region to path length 231
-# (backup file path length is 257 but temp file path length is 255)
-##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/a*//DEFAULT_........_XXXXXX
+# Backing up DEFAULT Region to path length 211
+##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/a*/DEFAULT_99999_0.tmp/mumpsmumpsmumpsmumpsm.dat
 %YDB-E-FILENAMETOOLONG, File name too long
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+##ALLOW_OUTPUT PRO
 ###################################################################
 # Backing up DEFAULT region to full file path of 250 characters
 # with $ydb_baktmpdir set to a shorter path. This backup will
@@ -59,21 +57,15 @@ mumpsmumpsmumpsmumpsm.dat
 ##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/a*/mumpsmumpsmumpsmumpsm.dat
 %YDB-E-FILENAMETOOLONG, File name too long
 ###################################################################
-# Backing up DEFAULT region to relative file path of 255 characters
-# with $ydb_baktmpdir set to a shorter path. This backup will succeed
-# because none of the buffers in MUPIP BACKUP will ever overflow the
-# buffer and thus there is no need for a FILENAMETOOLONG error.
-##TEST_AWK%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumpsmumpsmumpsmumpsm.dat backed up in file ##TEST_PATH##/a*/mumpsmumpsmumpsmumpsm.dat
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
-%YDB-I-BACKUPSUCCESS, Backup completed successfully
+# Backing up DEFAULT region to relative file path of 255 characters.
+# This should produce a FILENAMETOOLONG error since the absolute file path is more than 255 characters long.
+##TEST_AWK%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/a*/mumpsmumpsmumpsmumpsm.dat
+%YDB-E-FILENAMETOOLONG, File name too long
 ###################################################################
 # Testing a 255 character backup file name with no file path.
-# This should produce a FILENAMETOOLONG error on the
-# upstream version of V6.3-012 but will not produce an
-# error on YottaDB or pre-V6.3-012 upstream versions.
-%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumpsmumpsmumpsmumpsm.dat backed up in file ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefg
-##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x................ are backed up
-%YDB-I-BACKUPSUCCESS, Backup completed successfully
+# This should produce a FILENAMETOOLONG error since the absolute file path is more than 255 characters long.
+%YDB-E-FILEPARSE, Error parsing file specification: ##TEST_PATH##/abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefg
+%YDB-E-FILENAMETOOLONG, File name too long
 ###################################################################
 # Testing a 256 character backup file name with no file path.
 # This should produce a SYSTEM-E-ENO36 error on both YottaDB
