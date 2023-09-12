@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -11,9 +11,9 @@
 #								#
 #################################################################
 #
-foreach share_opt ("STAT" "NOSTAT")
+foreach share_opt ("STATS" "NOSTATS")
 
-	if ($share_opt == "STAT") then
+	if ($share_opt == "STATS") then
 		echo "# Testing where database has STATISTICS sharing enabled"
 	else
 		echo "# Testing where database has STATISTICS sharing disabled"

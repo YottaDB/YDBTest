@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -21,7 +21,7 @@ if ($status) then
 endif
 
 echo "# Setting Stat Sharing ON"
-$MUPIP Set -STAT -REGION DEFAULT
+$MUPIP Set -STATS -REGION DEFAULT
 $DSE dump -file |& $grep gvstats |& $tst_awk '{print $5,$6,$7,$8}'
 $ydb_dist/mumps -run gtm8790
 

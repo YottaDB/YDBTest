@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -30,7 +30,7 @@ endif
 
 echo ''
 echo '# Disable sharing for BREG'
-$MUPIP set -NOSTAT  -reg "BREG" #>>& dbcreate_log.txt
+$MUPIP set -NOSTATS -reg "BREG" #>>& dbcreate_log.txt
 
 echo '# Run testA of gtm8874.m to test basic VIEW functionality and disabled regions'
 $ydb_dist/mumps -run testA^gtm8874
@@ -59,7 +59,7 @@ endif
 
 echo ''
 echo '# Disable sharing for BREG'
-$MUPIP set -NOSTAT  -reg "BREG" #>>& dbcreate_log.txt
+$MUPIP set -NOSTATS -reg "BREG" #>>& dbcreate_log.txt
 
 echo '# Run testB1 of gtm8874.m to V[IEW] "STATSHARE" and run $VIEW for each region with gtm_statshare="TRUE"'
 $ydb_dist/mumps -run testB^gtm8874
