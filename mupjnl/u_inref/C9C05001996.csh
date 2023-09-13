@@ -1,5 +1,19 @@
 #!/usr/local/bin/tcsh -f
-#
+#################################################################
+#								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+# Portions Copyright (c) Fidelity National			#
+# Information Services, Inc. and/or its subsidiaries.		#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
 $gtm_tst/com/dbcreate.csh mumps 1
 #
 if ($?test_replic == 0) then
@@ -11,7 +25,7 @@ set format="%d-%b-%Y %H:%M:%S"
 set time1=`date +"$format"`
 $GTM << gtm_eof
   f i=1:1:6000 s ^adata(i)="adata"_\$j(i,200)
-  h 
+  h
 gtm_eof
 #
 #
@@ -44,7 +58,7 @@ endif
 
 $DSE dump -f >>& dump.out
 set autolimit=`$grep " AutoSwitchLimit" dump.out | $tst_awk '{print $3}'`
-set allocation=`$grep " Allocation" dump.out | $tst_awk '{print $3}'`
+set allocation=`$grep "Journal Allocation" dump.out | $tst_awk '{print $3}'`
 set extension=`$grep "Journal Extension" dump.out |$tst_awk '{print $6}'`
 # autolimit = allocation + extension*3
 if($autolimit != 31744 || $extension != 2048 || $allocation != 7168) then
