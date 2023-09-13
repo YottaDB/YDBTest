@@ -67,9 +67,8 @@ echo "###########"
 echo "GTM_TEST_DEBUGINFO: "`date`
 $gtm_dist/mumps -run d002386
 echo "GTM_TEST_DEBUGINFO: "`date`
-# get the sequence number of last transaction written to journal pool
 $MUPIP replic -source -showbacklog >& check_srcbacklog.out
-set cur_backlog = `$tst_awk '/backlog number/ {print $1}' check_srcbacklog.out`
+set cur_backlog = `$gtm_tst/com/compute_src_backlog_from_showbacklog_file.csh check_srcbacklog.out`
 if ( $cur_backlog > 0) then
 	@ lim_backlog = $cur_backlog - 1
 	# check if the source server has send some data to the receiver
@@ -140,9 +139,8 @@ echo "#Stop the background GTM process"
 $gtm_tst/com/endtp.csh
 echo "GTM_TEST_DEBUGINFO: "`date`
 
-# get the sequence number of last transaction written to journal pool
 $MUPIP replic -source -showbacklog >& check_srcbacklog2.out
-set cur_backlog = `$tst_awk '/backlog number/ {print $1}' check_srcbacklog2.out`
+set cur_backlog = `$gtm_tst/com/compute_src_backlog_from_showbacklog_file.csh check_srcbacklog2.out`
 @ lim_backlog = $cur_backlog - 1
 
 # start receiver server to clear the backlog

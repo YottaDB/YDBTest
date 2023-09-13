@@ -48,8 +48,8 @@ YDB>
 YDB>
 
 Checking mumps environment
-$grep last transaction written to journal pool mumps_showbacklog.log
-1 : sequence number of last transaction written to journal pool
+$grep "Last transaction sequence number posted" mumps_showbacklog.log
+%YDB-I-LASTTRANS, Last transaction sequence number posted         : 1
 $grep repl mumpsrepl.mjf
 1\\^repl="2"
 ##SOURCE_PATH##/mupip
@@ -57,8 +57,8 @@ $grep repl mumpsrepl.mjf
 No errors detected by integ.
 
 Checking other environment
-$grep last transaction written to journal pool other_showbacklog.log
-2 : sequence number of last transaction written to journal pool
+$grep "Last transaction sequence number posted" other_showbacklog.log
+%YDB-I-LASTTRANS, Last transaction sequence number posted         : 2
 $grep repl otherrepl.mjf
 1\\^repl="9992"
 2\\^repl

@@ -216,7 +216,7 @@ $gtm_tst/$tst/u_inref/wait_multiple_history.csh $halftime $test_rol_or_rec >& sl
 if (ROLLBACK == $test_rol_or_rec) then
 	#ROLLBACK
 	$MUPIP replicate -source -showbacklog >>& showbacklog.log
-	setenv max_seqno `$tst_awk '/sequence number of last transaction written to journal pool/{print $1}' showbacklog.log`
+	setenv max_seqno `$gtm_tst/com/compute_src_seqno_from_showbacklog_file.csh showbacklog.log`
 	echo $max_seqno >! max_seqno.txt
 endif
 

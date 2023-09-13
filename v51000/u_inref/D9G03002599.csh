@@ -4,7 +4,7 @@
 # Copyright (c) 2006-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -107,8 +107,8 @@ foreach value (mumps other)
 	echo "Checking $value environment"
 	source $gtm_tst/com/set_ydb_env_var_random.csh ydb_repl_instance gtm_repl_instance ${value}.repl
 	$MUPIP replic -source -showbacklog >& ${value}_showbacklog.log
-	echo '$grep last transaction written to journal pool'" ${value}_showbacklog.log"
-	$grep "last transaction written to journal pool" ${value}_showbacklog.log
+	echo '$grep "Last transaction sequence number posted"'" ${value}_showbacklog.log"
+	$grep "Last transaction sequence number posted" ${value}_showbacklog.log
 	$MUPIP replic -source -shut -time=0 >& ${value}_shut.log
 
 	# Print the journal seqno and the <key,value> in the journal files. This should match the seqno from the showbacklog.

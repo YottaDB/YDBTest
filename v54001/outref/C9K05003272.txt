@@ -40,10 +40,10 @@ PID ##FILTERED##[##PID##] Source server is alive in ACTIVE mode
 # Test SHOWBACKLOG behavior if VALID instance name is specified & source server is alive
 ==Executing MULTISITE_REPLIC 'RUN INST1 $MUPIP replic -source -showbacklog -instsecondary=INSTANCE2; echo $status'==
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE2]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-15 : sequence number of last transaction written to journal pool
-15 : sequence number of last transaction sent by source server
-##TEST_AWK[0-9]* : sequence number acknowledged by the secondary instance \[INSTANCE2\]
+%YDB-I-LASTTRANS, Last transaction sequence number posted         : 15
+%YDB-I-LASTTRANS, Last transaction sequence number sent           : 15
+##TEST_AWK%YDB-I-LASTTRANS, Last transaction sequence number acknowledged   : .*
+##TEST_AWK%YDB-I-SRCBACKLOGSTATUS, Instance INSTANCE2 (has not acknowledged|is behind by) .* transaction\(s\)
 0
 
 # Test CHECKHEALTH behavior if VALID instance name is specified & source server is dead
@@ -58,10 +58,10 @@ PID 0 Source server is NOT alive
 # We expect a SRCSRVNOTEXIST warning message in this case
 ==Executing MULTISITE_REPLIC 'RUN INST1 $MUPIP replicate -source -showbacklog -instsecondary=INSTANCE3; echo $status'==
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE3]
-5 : backlog number of transactions written to journal pool and yet to be sent by the source server
-15 : sequence number of last transaction written to journal pool
-10 : sequence number of last transaction sent by source server
-##TEST_AWK[0-9]* : sequence number acknowledged by the secondary instance \[INSTANCE3\]
+%YDB-I-LASTTRANS, Last transaction sequence number posted         : 15
+%YDB-I-LASTTRANS, Last transaction sequence number sent           : 10
+##TEST_AWK%YDB-I-LASTTRANS, Last transaction sequence number acknowledged   : .*
+##TEST_AWK%YDB-I-SRCBACKLOGSTATUS, Instance INSTANCE3 (has not acknowledged|is behind by) .* transaction\(s\)
 %YDB-W-SRCSRVNOTEXIST, Source server for secondary instance INSTANCE3 is not alive
 0
 
@@ -92,10 +92,10 @@ PID ##FILTERED##[##PID##] Source server is alive in ACTIVE mode
 # It should operate only on INST2 and not on INST3 (source server is dead)
 ==Executing MULTISITE_REPLIC 'RUN INST1 $MUPIP replic -source -showbacklog; echo $status'==
 ##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE2]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-15 : sequence number of last transaction written to journal pool
-15 : sequence number of last transaction sent by source server
-##TEST_AWK[0-9]* : sequence number acknowledged by the secondary instance \[INSTANCE2\]
+%YDB-I-LASTTRANS, Last transaction sequence number posted         : 15
+%YDB-I-LASTTRANS, Last transaction sequence number sent           : 15
+##TEST_AWK%YDB-I-LASTTRANS, Last transaction sequence number acknowledged   : .*
+##TEST_AWK%YDB-I-SRCBACKLOGSTATUS, Instance INSTANCE2 (has not acknowledged|is behind by) .* transaction\(s\)
 0
 ==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST3'==
 ==Executing MULTISITE_REPLIC 'SYNC INST1 INST3'==

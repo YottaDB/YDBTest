@@ -24,7 +24,7 @@
 ###################################################################################################################################
 
 alias dumpbacklog '$MUPIP replicate -source -showbacklog >& backlog_$backlog_ver.out'
-alias getjnlpooltn 'dumpbacklog ; $tst_awk '"'"'/last transaction written/ {print $1}'"'"' < backlog_${backlog_ver}.out'
+alias getjnlpooltn 'dumpbacklog ; $gtm_tst/com/compute_src_seqno_from_showbacklog_file.csh backlog_${backlog_ver}.out'
 alias setjnlpooltnvar '@ backlog_ver++ ; @ \!:1 = `getjnlpooltn`'
 
 ###################################################################################################################################

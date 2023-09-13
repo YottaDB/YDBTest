@@ -1,4 +1,19 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+# Portions Copyright (c) Fidelity National			#
+# Information Services, Inc. and/or its subsidiaries.		#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
 #########################################################################################################
 # checks the backlog for a particular replication link
 # The script is here is very simple right now
@@ -12,7 +27,7 @@ endif
 @ exit_status = 0
 if ( "SRC" == "$1" ) then
 	set otherargs = "$2"
-	set sblog=`$pri_shell "$pri_getenv; cd $PRI_SIDE;"'$MUPIP replicate -source -showbacklog -instsecondary='$gtm_test_cur_sec_name' '$otherargs' >&! backlog'_${chk_timestamp}'.out;$grep "backlog number" backlog'_${chk_timestamp}'.out'|$tst_awk '{print $1}'`
+	set sblog=`$pri_shell "$pri_getenv; cd $PRI_SIDE;"'$MUPIP replicate -source -showbacklog -instsecondary='$gtm_test_cur_sec_name' '$otherargs' >&! backlog'_${chk_timestamp}'.out; '$gtm_tst'/com/compute_src_backlog_from_showbacklog_file.csh backlog'_${chk_timestamp}'.out'`
 	echo "Source backlog saved in $PRI_SIDE/backlog_${chk_timestamp}.out"
 	if (0 != $sblog) then
 		if ( "" == $sblog ) then

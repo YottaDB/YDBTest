@@ -21,7 +21,7 @@ Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 # Need to wait heartbeat seconds (default 15) to see the acknowledged sequence number value
 
 # Drive MUPIP REPLICATE -SOURCE -SHOWBACKLOG
-10001 : sequence number acknowledged by the secondary instance [INSTANCE2]
+%YDB-I-LASTTRANS, Last transaction sequence number acknowledged   : 10001
 
 # Show last acknowleged sequence number via ^%PEEKBYNAME() - Note that the values displayed here are the value
 # returned by ^%PEEKBYNAME("gtmsource_local_struct.heartbeat_jnl_seqno",0)) but minus 1 if the value is > 0

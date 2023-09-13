@@ -101,61 +101,33 @@ YDB>
 ==Executing MULTISITE_REPLIC 'RUN INST1 set msr_dont_chk_stat; $MUPIP replicate -source -showbacklog -instsecondary=INSTANCE2 >&! showbacklog_INST2.out'==
 ==Executing MULTISITE_REPLIC 'RUN INST1 set msr_dont_chk_stat; $MUPIP replicate -source -showbacklog -instsecondary=INSTANCE3 >&! showbacklog_INST3.out'==
 ==Executing MULTISITE_REPLIC 'RUN INST1 set msr_dont_chk_stat; $MUPIP replicate -source -showbacklog -instsecondary=INSTANCE4 >&! showbacklog_INST4.out'==
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE4]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##TEST_AWK[0-9]* : sequence number acknowledged by the secondary instance \[INSTANCE4\]
+Backlog between INSTANCE1 and INSTANCE4 is 0
 ==Executing MULTISITE_REPLIC 'RUN INST1 set msr_dont_chk_stat; $MUPIP replicate -source -showbacklog -instsecondary=INSTANCE5 >&! showbacklog_INST5.out'==
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE5]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##TEST_AWK[0-9]* : sequence number acknowledged by the secondary instance \[INSTANCE5\]
+Backlog between INSTANCE1 and INSTANCE5 is 0
 ==Executing MULTISITE_REPLIC 'RUN INST1 set msr_dont_chk_stat; $MUPIP replicate -source -showbacklog -instsecondary=INSTANCE6 >&! showbacklog_INST6.out'==
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE6]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##TEST_AWK[0-9]* : sequence number acknowledged by the secondary instance \[INSTANCE6\]
+Backlog between INSTANCE1 and INSTANCE6 is 0
 ==Executing MULTISITE_REPLIC 'RUN INST1 set msr_dont_chk_stat; $MUPIP replicate -source -showbacklog -instsecondary=INSTANCE7 >&! showbacklog_INST7.out'==
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE7]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##TEST_AWK[0-9]* : sequence number acknowledged by the secondary instance \[INSTANCE7\]
+Backlog between INSTANCE1 and INSTANCE7 is 0
 ==Executing MULTISITE_REPLIC 'RUN INST1 set msr_dont_chk_stat; $MUPIP replicate -source -showbacklog -instsecondary=INSTANCE8 >&! showbacklog_INST8.out'==
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE8]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##TEST_AWK[0-9]* : sequence number acknowledged by the secondary instance \[INSTANCE8\]
+Backlog between INSTANCE1 and INSTANCE8 is 0
 ==Executing MULTISITE_REPLIC 'RUN INST1 set msr_dont_chk_stat; $MUPIP replicate -source -showbacklog -instsecondary=INSTANCE9 >&! showbacklog_INST9.out'==
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE9]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##TEST_AWK[0-9]* : sequence number acknowledged by the secondary instance \[INSTANCE9\]
+Backlog between INSTANCE1 and INSTANCE9 is 0
 ==Executing MULTISITE_REPLIC 'RUN INST1 set msr_dont_chk_stat; $MUPIP replicate -source -showbacklog -instsecondary=INSTANCE10 >&! showbacklog_INST10.out'==
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE10]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##TEST_AWK[0-9]* : sequence number acknowledged by the secondary instance \[INSTANCE10\]
+Backlog between INSTANCE1 and INSTANCE10 is 0
 ==Executing MULTISITE_REPLIC 'RUN INST1 set msr_dont_chk_stat; $MUPIP replicate -source -showbacklog -instsecondary=INSTANCE11 >&! showbacklog_INST11.out'==
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE11]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##TEST_AWK[0-9]* : sequence number acknowledged by the secondary instance \[INSTANCE11\]
+Backlog between INSTANCE1 and INSTANCE11 is 0
 ==Executing MULTISITE_REPLIC 'RUN INST1 set msr_dont_chk_stat; $MUPIP replicate -source -showbacklog -instsecondary=INSTANCE12 >&! showbacklog_INST12.out'==
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE12]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##TEST_AWK[0-9]* : sequence number acknowledged by the secondary instance \[INSTANCE12\]
+Backlog between INSTANCE1 and INSTANCE12 is 0
 ==Executing MULTISITE_REPLIC 'RUN INST1 set msr_dont_chk_stat; $MUPIP replicate -source -showbacklog -instsecondary=INSTANCE13 >&! showbacklog_INST13.out'==
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE13]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##TEST_AWK[0-9]* : sequence number acknowledged by the secondary instance \[INSTANCE13\]
+Backlog between INSTANCE1 and INSTANCE13 is 0
 ==Executing MULTISITE_REPLIC 'RUN INST1 set msr_dont_chk_stat; $MUPIP replicate -source -showbacklog -instsecondary=INSTANCE14 >&! showbacklog_INST14.out'==
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE14]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##TEST_AWK[0-9]* : sequence number acknowledged by the secondary instance \[INSTANCE14\]
+Backlog between INSTANCE1 and INSTANCE14 is 0
 ==Executing MULTISITE_REPLIC 'RUN INST1 set msr_dont_chk_stat; $MUPIP replicate -source -showbacklog -instsecondary=INSTANCE15 >&! showbacklog_INST15.out'==
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE15]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##TEST_AWK[0-9]* : sequence number acknowledged by the secondary instance \[INSTANCE15\]
+Backlog between INSTANCE1 and INSTANCE15 is 0
 ==Executing MULTISITE_REPLIC 'RUN INST1 set msr_dont_chk_stat; $MUPIP replicate -source -showbacklog -instsecondary=INSTANCE16 >&! showbacklog_INST16.out'==
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE16]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##TEST_AWK[0-9]* : sequence number acknowledged by the secondary instance \[INSTANCE16\]
+Backlog between INSTANCE1 and INSTANCE16 is 0
 ==Executing MULTISITE_REPLIC 'RUN INST1 set msr_dont_chk_stat; $MUPIP replicate -source -showbacklog -instsecondary=INSTANCE17 >&! showbacklog_INST17.out'==
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE17]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##TEST_AWK[0-9]* : sequence number acknowledged by the secondary instance \[INSTANCE17\]
+Backlog between INSTANCE1 and INSTANCE17 is 0
 ----------
 Error SRCSRVNOTEXIST seen in showbacklog_INST2.out as expected:
 %YDB-W-SRCSRVNOTEXIST, Source server for secondary instance INSTANCE2 is not alive
@@ -164,35 +136,20 @@ Error SRCSRVNOTEXIST seen in showbacklog_INST2.out as expected:
 Error SRCSRVNOTEXIST seen in showbacklog_INST3.out as expected:
 %YDB-W-SRCSRVNOTEXIST, Source server for secondary instance INSTANCE3 is not alive
 ----------
-==Executing MULTISITE_REPLIC 'RUN INST1 $MUPIP replicate -source -showbacklog'==
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE4]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE5]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE6]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE7]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE8]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE9]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE10]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE11]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE12]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE13]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE14]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE15]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE16]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE17]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
+##TEST_AWK%YDB-I-SRCBACKLOGSTATUS, Instance INSTANCE4 is behind by [0-9]* transaction\(s\)
+##TEST_AWK%YDB-I-SRCBACKLOGSTATUS, Instance INSTANCE5 is behind by [0-9]* transaction\(s\)
+##TEST_AWK%YDB-I-SRCBACKLOGSTATUS, Instance INSTANCE6 is behind by [0-9]* transaction\(s\)
+##TEST_AWK%YDB-I-SRCBACKLOGSTATUS, Instance INSTANCE7 is behind by [0-9]* transaction\(s\)
+##TEST_AWK%YDB-I-SRCBACKLOGSTATUS, Instance INSTANCE8 is behind by [0-9]* transaction\(s\)
+##TEST_AWK%YDB-I-SRCBACKLOGSTATUS, Instance INSTANCE9 is behind by [0-9]* transaction\(s\)
+##TEST_AWK%YDB-I-SRCBACKLOGSTATUS, Instance INSTANCE10 is behind by [0-9]* transaction\(s\)
+##TEST_AWK%YDB-I-SRCBACKLOGSTATUS, Instance INSTANCE11 is behind by [0-9]* transaction\(s\)
+##TEST_AWK%YDB-I-SRCBACKLOGSTATUS, Instance INSTANCE12 is behind by [0-9]* transaction\(s\)
+##TEST_AWK%YDB-I-SRCBACKLOGSTATUS, Instance INSTANCE13 is behind by [0-9]* transaction\(s\)
+##TEST_AWK%YDB-I-SRCBACKLOGSTATUS, Instance INSTANCE14 is behind by [0-9]* transaction\(s\)
+##TEST_AWK%YDB-I-SRCBACKLOGSTATUS, Instance INSTANCE15 is behind by [0-9]* transaction\(s\)
+##TEST_AWK%YDB-I-SRCBACKLOGSTATUS, Instance INSTANCE16 is behind by [0-9]* transaction\(s\)
+##TEST_AWK%YDB-I-SRCBACKLOGSTATUS, Instance INSTANCE17 is behind by [0-9]* transaction\(s\)
 ==Executing MULTISITE_REPLIC 'START INST1 INST19 RP'==
 Starting Primary Source Server in ##TEST_PATH##
 Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance19
@@ -233,70 +190,39 @@ RFSYNC-I-PASSIVEMODE. Source server not replicating at this point in time.Cannot
 
 executing mupip replic -source -showbacklog to see the backlog information
 
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE19]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE20]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE5]
-10 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE6]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE7]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE8]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE9]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE10]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE11]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE12]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE13]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE14]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE15]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE16]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE17]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
+##TEST_AWK%YDB-I-SRCBACKLOGSTATUS, Instance INSTANCE19 is behind by [0-9]* transaction\(s\)
+##TEST_AWK%YDB-I-SRCBACKLOGSTATUS, Instance INSTANCE20 is behind by [0-9]* transaction\(s\)
+##TEST_AWK%YDB-I-SRCBACKLOGSTATUS, Instance INSTANCE5 is behind by [0-9]* transaction\(s)
+##TEST_AWK%YDB-I-SRCBACKLOGSTATUS, Instance INSTANCE6 is behind by [0-9]* transaction\(s\)
+##TEST_AWK%YDB-I-SRCBACKLOGSTATUS, Instance INSTANCE7 is behind by [0-9]* transaction\(s\)
+##TEST_AWK%YDB-I-SRCBACKLOGSTATUS, Instance INSTANCE8 is behind by [0-9]* transaction\(s\)
+##TEST_AWK%YDB-I-SRCBACKLOGSTATUS, Instance INSTANCE9 is behind by [0-9]* transaction\(s\)
+##TEST_AWK%YDB-I-SRCBACKLOGSTATUS, Instance INSTANCE10 is behind by [0-9]* transaction\(s\)
+##TEST_AWK%YDB-I-SRCBACKLOGSTATUS, Instance INSTANCE11 is behind by [0-9]* transaction\(s\)
+##TEST_AWK%YDB-I-SRCBACKLOGSTATUS, Instance INSTANCE12 is behind by [0-9]* transaction\(s\)
+##TEST_AWK%YDB-I-SRCBACKLOGSTATUS, Instance INSTANCE13 is behind by [0-9]* transaction\(s\)
+##TEST_AWK%YDB-I-SRCBACKLOGSTATUS, Instance INSTANCE14 is behind by [0-9]* transaction\(s\)
+##TEST_AWK%YDB-I-SRCBACKLOGSTATUS, Instance INSTANCE15 is behind by [0-9]* transaction\(s\)
+##TEST_AWK%YDB-I-SRCBACKLOGSTATUS, Instance INSTANCE16 is behind by [0-9]* transaction\(s\)
+##TEST_AWK%YDB-I-SRCBACKLOGSTATUS, Instance INSTANCE17 is behind by [0-9]* transaction\(s\)
 
 Doing the same in a loop for all instances 2 to 20 (skip 18) with -instsecondary option
 
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE5]
-10 : backlog number of transactions written to journal pool and yet to be sent by the source server
-WARNING - Source Server is in passive mode, transactions are not being replicated
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE6]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE7]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE8]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE9]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE10]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE11]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE12]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE13]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE14]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE15]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE16]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE17]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE19]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
-##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE20]
-0 : backlog number of transactions written to journal pool and yet to be sent by the source server
+Backlog between INSTANCE1 and INSTANCE5 is 10
+Backlog between INSTANCE1 and INSTANCE6 is 0
+Backlog between INSTANCE1 and INSTANCE7 is 0
+Backlog between INSTANCE1 and INSTANCE8 is 0
+Backlog between INSTANCE1 and INSTANCE9 is 0
+Backlog between INSTANCE1 and INSTANCE10 is 0
+Backlog between INSTANCE1 and INSTANCE11 is 0
+Backlog between INSTANCE1 and INSTANCE12 is 0
+Backlog between INSTANCE1 and INSTANCE13 is 0
+Backlog between INSTANCE1 and INSTANCE14 is 0
+Backlog between INSTANCE1 and INSTANCE15 is 0
+Backlog between INSTANCE1 and INSTANCE16 is 0
+Backlog between INSTANCE1 and INSTANCE17 is 0
+Backlog between INSTANCE1 and INSTANCE19 is 0
+Backlog between INSTANCE1 and INSTANCE20 is 0
 ----------
 Error REPLINSTSECNONE seen in showbacklog_instsecondary_INSTANCE2.out as expected:
 %YDB-E-REPLINSTSECNONE, No information found for secondary instance INSTANCE2 in instance file ##TEST_PATH##/mumps.repl

@@ -110,7 +110,7 @@ while ($nowtime <= $timeout)
 	# Showbacklog of primary
 	set prev_pribacklog = "$pribacklog"
 	set pribacklog = `$gtm_tst/com/compute_src_backlog_from_showbacklog_file.csh $filepath/$logfile_src`
-	set srcsno  = `$tst_awk '/Last transaction sequence number posted/ {print $NF}' $filepath/$logfile_src | tail -1`
+	set srcsno  = `$gtm_tst/com/compute_src_seqno_from_showbacklog_file.csh $filepath/$logfile_src`
 	if ($status) then
 		echo $backlog 									>>&! $logfile
 		echo "RFSYNC-E-SRCBACKLOG unable to get source backlog from $logfile_src"	>>&! $logfile

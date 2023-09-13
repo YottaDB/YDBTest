@@ -4,7 +4,7 @@
 # Copyright (c) 2006-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -112,7 +112,8 @@ $MSR SYNC ALL_LINKS
 foreach i (2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17)
 	$MSR RUN INST1 'set msr_dont_chk_stat; $MUPIP replicate -source -showbacklog -instsecondary=INSTANCE'$i' >&! showbacklog_INST'$i'.out'
 	if (3 < $i) then
-		$grep -v "sequence number of last transaction" showbacklog_INST$i.out
+		set backlog = `$gtm_tst/com/compute_src_backlog_from_showbacklog_file.csh showbacklog_INST$i.out`
+		echo "Backlog between INSTANCE1 and INSTANCE$i is $backlog"
 		# we expect errors in INSTANCE2 and 3
 	endif
 end
@@ -120,7 +121,7 @@ $msr_err_chk showbacklog_INST2.out SRCSRVNOTEXIST
 $msr_err_chk showbacklog_INST3.out SRCSRVNOTEXIST
 
 $MSR RUN INST1 '$MUPIP replicate -source -showbacklog' >&! showbacklog_all_1.out
-$grep -i backlog showbacklog_all_1.out
+$grep SRCBACKLOGSTATUS showbacklog_all_1.out
 
 ## - Connect INST19 and INST20 to INST1
 ##   START INST1 INST19 PP
@@ -178,14 +179,15 @@ echo ""
 echo "executing mupip replic -source -showbacklog to see the backlog information"
 echo ""
 $MUPIP replicate -source -showbacklog >&! showbacklog_all_2.out
-$grep -i backlog showbacklog_all_2.out
+$grep SRCBACKLOGSTATUS showbacklog_all_2.out
 echo ""
 echo "Doing the same in a loop for all instances 2 to 20 (skip 18) with -instsecondary option"
 echo ""
 foreach i (2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 19 20)
 	$MUPIP replicate -source -showbacklog -instsecondary=INSTANCE$i >&! showbacklog_instsecondary_INSTANCE$i.out
 	if (4 < $i) then
-		$grep -v 'sequence number' showbacklog_instsecondary_INSTANCE$i.out
+		set backlog = `$gtm_tst/com/compute_src_backlog_from_showbacklog_file.csh showbacklog_instsecondary_INSTANCE$i.out`
+		echo "Backlog between INSTANCE1 and INSTANCE$i is $backlog"
 		# We expect errors in INSTANCE2,3 and 4.
 	endif
 end

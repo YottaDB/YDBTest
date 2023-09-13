@@ -36,8 +36,8 @@ sleep 16 # Sleep one sec extra
 echo
 echo '# Drive MUPIP REPLICATE -SOURCE -SHOWBACKLOG'
 $MUPIP repl -source -showbacklog >& mupip_show_backlog.log
-$grep 'sequence number acknowledged by the secondary instance' mupip_show_backlog.log
-set ackseqno1 = `$tst_awk '/sequence number acknowledged by the secondary instance/ {print $1}' mupip_show_backlog.log`
+$grep 'Last transaction sequence number acknowledged' mupip_show_backlog.log
+set ackseqno1 = `$tst_awk '/Last transaction sequence number acknowledged/ {print $NF}' mupip_show_backlog.log`
 echo
 echo '# Show last acknowleged sequence number via ^%PEEKBYNAME() - Note that the values displayed here are the value'
 echo '# returned by ^%PEEKBYNAME("gtmsource_local_struct.heartbeat_jnl_seqno",0)) but minus 1 if the value is > 0'

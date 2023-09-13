@@ -88,8 +88,7 @@ $gtm_tst/com/wait_for_transaction_seqno.csh +$test_tn_count SRC $test_sleep_sec 
 echo "# Stop the updates"
 $gtm_tst/com/endtp.csh >>&! imptp.out
 unsetenv gtm_test_other_bg_processes
-set togrep = "sequence number of last transaction written to journal pool"
-set cur_seqno = `$tst_awk '/'"$togrep"'/ {print $1}' wait_for_transaction_seqno.backlog`
+set cur_seqno = `$gtm_tst/com/compute_src_seqno_from_showbacklog_file.csh wait_for_transaction_seqno.backlog`
 $echoline
 echo "#Start the source server to INST3:"
 $MSR STARTSRC INST1 INST3
