@@ -2,6 +2,9 @@
 ;								;
 ;	Copyright 2008, 2014 Fidelity Information Services, Inc	;
 ;								;
+; Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -31,9 +34,9 @@ out(zshvar,str)
 	. set outstr=zshvar("G",subs)
 	. quit:""=outstr		; if empty input string don't filter as ZSHOW "G" produces empty lines for GT.CM regions
 	. for i=1:1:$length(str,",") do						; otherwise strip the values from the gcodes in str
-	.. set gcode=$$FUNC^%UCASE($extract($piece(str,",",i),1,3))_":"
+	.. set gcode=$$FUNC^%UCASE($piece(str,",",i))_":"
 	.. set piece1=$piece(outstr,gcode)
-	.. if outstr=piece1 write:$zversion'["VMS" !,$extract(gcode,1,3)," is invalid" quit	;skip VMS write: not all implemented
+	.. if outstr=piece1 write gcode," is invalid" quit
 	.. set piece2=$piece($piece(outstr,gcode,2),",",2,99999)
 	.. set outstr=piece1_gcode_"XX"_$select(""=piece2:"",1:",")_piece2	; Do not append comma when filtering last gvstat
 	quit
@@ -54,7 +57,7 @@ in(zshvar,str)
 	for  set subs=$order(zshvar("G",subs))  quit:""=subs  do  set zshvar("G",subs)=outstr
 	. set instr=zshvar("G",subs),outstr=""
 	. for i=1:1:$length(str,",") do
-	.. set gcode=$$FUNC^%UCASE($extract($piece(str,",",i),1,3))_":",p=$find(instr,gcode)
-	.. if 'p write:$zversion'["VMS" !,$extract(gcode,1,3)," is invalid" quit	;skip write on VMS as it doesn't have all
+	.. set gcode=$$FUNC^%UCASE($piece(str,",",i))_":",p=$find(instr,gcode)
+	.. if 'p write:$zversion'["VMS" !,gcode," is invalid" quit  ;skip write on VMS as it doesn't have all
 	.. set outstr=outstr_$select(1=i:"",1:",")_gcode_$piece($extract(instr,p,9999),",")
 	quit
