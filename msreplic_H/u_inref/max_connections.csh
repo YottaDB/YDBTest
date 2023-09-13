@@ -47,8 +47,6 @@ $MULTISITE_REPLIC_PREPARE 20
 # SSL/TLS support in the framework allows only for INSTANCE1 - INSTANCE16. INSTANCE17 is higher than that. So, set the below env.
 # variable to allow to fallback to plaintext without issuing an error whenever possible.
 setenv gtm_test_plaintext_fallback
-# To avoid trivial diff regarding SSL renegotiations showing up in the log files, disable SSL renegotiation.
-setenv gtm_test_tls_renegotiate 0
 $gtm_tst/com/dbcreate.csh mumps $global_buffers >&! msr_dbcreate.out
 foreach i (2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17)
 	$MSR START INST1 INST$i RP
