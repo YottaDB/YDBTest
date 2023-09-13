@@ -12,7 +12,7 @@ mumps.dat
 # Make it a not empty database
 
 # Verify $VIEW("GVSTAT","DEFAULT") displays the new stats (only print tail to avoid stat differences in reference file)
-New $VIEW("GVSTAT") Statistics: WFR:0,BUS:0,BTS:0,DEXA:0,GLB:0,JNL:0,MLK:0,PRC:0,TRX:0,ZAD:0,JOPA:0,AFRA:0,BREA:0,MLBA:0,TRGA:0
+New $VIEW("GVSTAT") Statistics: WFR:0,BUS:0,BTS:0
 
 # Capture the output of MUPIP DUMPFHEAD -reg DEFAULT in the file mupip_dumpfhead_output.txt
 
@@ -35,7 +35,7 @@ n_bt_scarce: 0x0000000000000000
 
 # Verify the statistics show up in ^%YGBLSTAT (only print tail to avoid stat differences in reference file)
 # Doing a few SETs to generate some statistics for ^%YGBLSTAT
-New ^%YGBLSTAT Statistics: WFR:0,BUS:0,BTS:0,DEXA:0,GLB:0,JNL:0,MLK:0,PRC:0,TRX:0,ZAD:0,JOPA:0,AFRA:0,BREA:0,MLBA:0,TRGA:0
+New ^%YGBLSTAT Statistics: WFR:0,BUS:0,BTS:0
 
 ##SUSPEND_OUTPUT PRO
 # Turn global stat sharing off of on this DB to make changing the stats easier (prevents other processes from

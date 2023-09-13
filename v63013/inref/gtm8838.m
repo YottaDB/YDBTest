@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -45,10 +45,12 @@ VerifyYGBLSTAT
 ;
 ; Find new stats starting with WFR in given line
 FindNewStats(statline,origin)
-	new srchstr
-	set srchstr=",WFR:"
-	set idx=$find(statline,srchstr)-$zlength(srchstr)+1	; +1 to get past starting comma
-	write "New ",origin," Statistics: ",$zextract(stats,idx,99999) ; Print rest of the string
+	new startstr,endstr
+	set startstr=",WFR:"
+	set startidx=$find(statline,startstr)-$zlength(startstr)+1	; +1 to get past starting comma
+	set endstr=",DEXA:"	; this is the stat AFTER BTS which is where we want to stop
+	set endidx=$find(statline,endstr)-$zlength(endstr)-1
+	write "New ",origin," Statistics: ",$zextract(stats,startidx,endidx)
 	quit
 
 ;
