@@ -3,7 +3,7 @@
 ; Copyright (c) 2004-2016 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
-; Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -28,6 +28,9 @@ sstep   ; Modified from sstep.m to just zprint the line for expect's targetting
 	write !,"Stepping STARTED",!
 	quit
 validate;
+	do sstop	; Before executing anything, stop single-stepping (started in an earlier "do ^ctrlc" call)
+			; This is needed so we don't print the "FAIL" string in the M code below as that would be
+			; misinterpreted by "ctrlc.exp" as a test failure.
 	write "Checking test status",!
 	set z=$order(y("V",""),-1)
 	if (z=100002)!($data(x)[0)!(x=20000000) set status="FAIL" zshow "*"
@@ -77,3 +80,8 @@ stoplockjob
 	set ^stop=1
 	do ^waitforproctodie(^lockjob,600)
 	quit
+sstop   ;
+	set $zstep=""
+	set %zsaveio=$io use $p write !,"Stepping STOPPED",!  use %zsaveio
+	quit
+
