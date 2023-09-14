@@ -14,12 +14,10 @@
 # Setup our ztimeout (expect tracing from white box case).
 
 $ZTIMEOUT set - now cause it to unset with whitebox case WBTEST_ZTIM_EDGE setup
-Ztimeout expired, setting xfer handlers
-ztimeout_set: Set the xfer entries for ztimeout
-Sleep over
-ztimeout_clear_timer: Resetting the xfer entries for ztimeout
-ztimcode: Entering via $ztimeout
-ztimcode: Leaving..
+# ztimeout expired, white box case setting xfer handlers
+# ztimeout_set: set the xfer entries for ztimeout
+# white box sleep over
+# ztimeout_clear_timer - resetting the xfer entries for ztimeout
 
 Subissue1: completed
 ##ALLOW_OUTPUT PRO
@@ -27,6 +25,6 @@ Subissue1: completed
 # Drive subissue2^gtm9329 test routine for 2nd subissue
 ##TEST_AWK\$ZTIMEOUT before attempting to set an invalid code vector: .*:do ztimcode
 Got expected error from attempted compile of bad $ZTIMEOUT code
-##TEST_AWK\$ZTIMEOUT after attempting to set an invalid code vector: .*:do ztimcode
+##TEST_AWK\$ZTIMEOUT after attempting to set an invalid code vector: .*
 
 Subissue2: succeeded

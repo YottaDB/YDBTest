@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -10,16 +10,14 @@
 ;								;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
-; Routine to cover the first subissue of this test: The original problem was that there is was small window during
+; Routine to cover the first subissue of this test: The original problem was that there was a small window during
 ; the execution of a SET $ZTIMEOUT where the current $ZTIMEOUT is being disabled by setting it to a -1 but while
 ; that is running, the timer pops to drive that $ZTIMEOUT. On versions prior to r1.36/V63014, this could cause the
 ; pop of the $ZTIMEOUT to occur over and over again in a loop. V63014 fixed this issue and added a white box test
 ; to allow the simulation of the timer pop while the disable command was running and verify it dealt with the issue
-; correctly.
-;
+; correctly. In V63014 and V70000, the `ztimcode` label would be invoked. But in V70001, the label is not invoked.
+; So we check the V70001 behavior in the reference file.
 subissue1
-	set sigwait=3					; Wait in seconds for an expected signal to be delivered
-	set timeoutfired=0
 	;
 	; Now, on to the testing
 	;
@@ -41,11 +39,7 @@ subissue1
 ; Routine that needs to exist because of the call to it from the $ZTIMEOUT but is otherwise not used.
 ;
 ztimcode
-	write "ztimcode: Entering via $ztimeout",!
-	;
-	; Nothing really to do here.
-	;
-	write "ztimcode: Leaving..",!
+	write "ztimcode: Entering via $ztimeout. We don't expect to ever get here.",!
 	quit
 
 ;
@@ -53,9 +47,14 @@ ztimcode
 ; had invalid code in it, the SET of it would generate an error but afterwards, the code vector would be blank. It did
 ; not retain the original valid value. This subtest verifies the old value is retained.
 ;
+; Note that the above description was true until GT.M V7.0-000. Once GT.M V7.0-001 was merged, we started seeing a change
+; in behavior and the code vector indeed was indeed reset to the empty string. Not sure why this was done as there is no
+; release note. See https://gitlab.com/YottaDB/DB/YDBTest/-/issues/483#note_1559508275 for more details.
+; Therefore, the below test is revised to check for a blank vector.
+;
 subissue2
 	;
-	; Try to set the ztimeout to an invalid code vector - handle the error, then verify the old value still there
+	; Try to set the ztimeout to an invalid code vector - handle the error, then verify the value is empty
 	;
 	set $etrap="do goterr^gtm9329 quit"
 	set $ztimeout="5:do ztimcode"
@@ -68,7 +67,7 @@ subissue2
 	set ztimeout1=$zpiece(timeoutBefore,":",2,99)  	; Get code vector of unknown number of pieces
 	set ztimeout2=$zpiece(timeoutAfter,":",2,99)
 	set timeleft=$zpiece(timeoutAfter,":",1)
-	set succeeded=((ztimeout1=ztimeout2)&(0<timeleft)&(5>=timeleft)) ; succeeded = correct code vector and time range
+	set succeeded=(("do ztimcode"=ztimeout1)&(""=ztimeout2)&(0<timeleft)&(5>=timeleft)) ; succeeded = correct code vector and time range
 	write:succeeded !,"Subissue2: succeeded",!
 	write:'succeeded !,"Subissue2: failed - $ZTIMEOUT invalidly changed given invalid code vector",!
 	quit
@@ -78,7 +77,7 @@ subissue2
 ;
 goterr
 	set emsg=$zstatus
-	if +emsg'=150373050 do	; If not the INVCMD error we were expecting, error out appropriately
+	if +emsg'=150373050 do	 ; If not the INVCMD error we were expecting, error out appropriately
 	. write "Unexpected error: ",emsg,!!
 	. zshow "*"
 	. zhalt 1
