@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2021-2023 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -211,9 +211,7 @@ errortrap
 	Set errornum=$ZStatus+0
 	Write $Select(ts:$ZDate($Horolog,"24:60:SS"),1:"")_" errortrap: error tripped: ",$ZStatus,!
 	If (errornum=150379506) Do @callback Quit	     ; SETECODE error
-	; Handling the TPTIMEOUT error would clear any active $ZSTEP actions too (current YottaDB misfeature) as they both are
-	; considered as "outofband" events. Work around by redeclaring $ZSTEP (hence the reinvocation of "do ^ssteplcl" below).
-	If (errornum=150377322) Set hadintr=1,$ECode="" do ^ssteplcl Quit  ; TPTIMEOUT error
+	If (errornum=150377322) Set hadintr=1,$ECode="" Quit  ; TPTIMEOUT error
 	ZShow "*"
 	Halt
 
