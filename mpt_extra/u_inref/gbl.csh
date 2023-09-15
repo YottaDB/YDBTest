@@ -4,7 +4,7 @@
 # Copyright (c) 2003-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -324,4 +324,20 @@ zwrite
 halt
 EOF
 #
+echo "#####################"$cnt"###################"
+# [#427] %GO outputs large global nodes in single lines
+@ cnt = $cnt + 1
+$GTM << 'EOF'
+kill ^x
+set ^x=""
+for i=0:1:255 set ^x=^x_"a"
+set $zpiece(^x,^x,1025)="" write "Length of ^x: ",$zlength(^x),!
+do ^%GO
+x
+
+LABEL
+ZWR
+long_nodes.zwr
+'EOF'
+$gtm_dist/mupip load long_nodes.zwr
 $gtm_tst/com/dbcheck.csh

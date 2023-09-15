@@ -553,7 +553,7 @@ Input device: <terminal>:
 
 
 ##TEST_AWKLABEL.*
-##TEST_AWKGT.M .* ZWR
+##TEST_AWKYottaDB .* ZWR
 
 OK <Yes>? 
 
@@ -816,11 +816,11 @@ OK <Yes>?
 Restored 1 node in 1 global.
 YDB>
 ##TEST_AWKLABEL.*
-##TEST_AWKGT.M .* ZWR
+##TEST_AWKYottaDB .* ZWR
 Beginning LOAD at record number: 3
 
 LOAD TOTAL		Key Cnt: 11  Max Subsc Len: 7  Max Data Len: 9
-%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 15
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 13
 #####################12###################
 
 YDB>
@@ -1087,6 +1087,46 @@ YDB>
 %ZG("^qqzzzzzzzzzzzzzzzzzzzzzzzzzzzzz")=""
 
 YDB>
+#####################16###################
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+Length of ^x: 262144
+
+YDB>
+
+Global Output Utility
+
+Global ^
+^x        
+Current total of 1 global.
+
+Global ^
+
+Header Label: 
+
+Output Format: GO or ZWR: 
+
+Output device: <terminal>: 
+
+
+^x        
+
+Total of 1 node in 1 global.
+
+
+YDB>
+##TEST_AWKLABEL.*
+##TEST_AWKYottaDB .* ZWR
+Beginning LOAD at record number: 3
+
+LOAD TOTAL		Key Cnt: 1  Max Subsc Len: 3  Max Data Len: 262144
+%YDB-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 3
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
