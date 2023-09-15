@@ -7,7 +7,7 @@ spawn /usr/local/bin/tcsh -f
 > set shellprompt=SHELL
 > set prompt=$shellprompt
 SHELLsetenv term_env `tty`; echo $term_env > term_env.txt
-SHELL$ydb_dist/yottadb -run gtm9036
+SHELL$ydb_dist/mumps -run gtm9036
 # Test for GTM-9036 - verify SIGHUP is trapped if enabled
 #
 # First verify we do NOT get an interrupt having NOT enabled SIGHUP when a SIGHUP is sent to us
@@ -30,7 +30,7 @@ spawn /usr/local/bin/tcsh -f
 > set shellprompt=SHELL
 > set prompt=$shellprompt
 SHELLsetenv term_env `tty`; echo $term_env > term_env.txt
-SHELL$ydb_dist/yottadb -run gtm9036
+SHELL$ydb_dist/mumps -run gtm9036
 # Test for GTM-9036 - verify SIGHUP is trapped if enabled
 #
 # First verify we do NOT get an interrupt having NOT enabled SIGHUP when a SIGHUP is sent to us
