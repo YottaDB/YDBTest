@@ -1,3 +1,18 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+; Portions Copyright (c) Fidelity National			;
+; Information Services, Inc. and/or its subsidiaries.		;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 rename; Test the deviceparameter RENAME
         set file="rename.txt"
         set filed="renamed.txt"
@@ -8,14 +23,7 @@ rename; Test the deviceparameter RENAME
         write "BLAH",!
         set s2=$ZSEARCH(file)
         set sd2=$ZSEARCH(filed)
-	; on unix first try to rename file to itself to force the exception.  The exception then changes tfile to filed which
-        ; will succeed.
-	; on OpenVMS there are rename and file permission issues described in GTM-7036 so the exception is 
-	; not forced there currently.
-	if $ZVERSION'["VMS" do
-	. set tfile=file
-	. close file:(RENAME=tfile:EXCEPTION="use $p write ""expect this message in attempt to rename to self then a PASS"",! set tfile=filed use file")
-	else  close file:(RENAME=filed)
+	close file:(RENAME=filed)
         use $PRINCIPAL
         set s3=$ZSEARCH(file)
         set sd3=$ZSEARCH(filed)
