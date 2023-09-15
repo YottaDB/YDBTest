@@ -1,16 +1,31 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+; Portions Copyright (c) Fidelity National			;
+; Information Services, Inc. and/or its subsidiaries.		;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 -*
 ; kill1 and some set.m
 +^a2345678	-command=S      -xecute="set x=$c(94)_$ztvalue set @x=$ztva,$ztva=x "
-+^a2345678	-command=K,ZK   -xecute="set x=$ztol k @x"
++^a2345678	-command=K,ZK   -xecute="set x=$ztol k:""""'=x @x"
 +^a2345678(1)	-command=S	-xecute="set x=$c(94)_$ztvalue set @x=$ztva,$ztva=x "
-+^a2345678(1)	-command=K	-xecute="set x=$ztol k @x"
-+^a2345678(1)	-command=ZK	-xecute="set x=$ztol zk @x"
++^a2345678(1)	-command=K	-xecute="set x=$ztol k:""""'=x @x"
++^a2345678(1)	-command=ZK	-xecute="set x=$ztol zk:""""'=x @x"
 +^a2345678(1,2)	-command=S	-xecute="set x=$c(94)_$ztvalue set @x=$ztva,$ztva=x "
-+^a2345678(1,2)	-command=K	-xecute="set x=$ztol k @x"
-+^a2345678(1,2)	-command=ZK	-xecute="set x=$ztol zk @x"
++^a2345678(1,2)	-command=K	-xecute="set x=$ztol k:""""'=x @x"
++^a2345678(1,2)	-command=ZK	-xecute="set x=$ztol zk:""""'=x @x"
 +^a2345678(1,2,3) -command=S	-xecute="set x=$c(94)_$ztvalue set @x=$ztva,$ztva=x "
-+^a2345678(1,2,3) -command=K	-xecute="set x=$ztol k @x"
-+^a2345678(1,2,3) -command=ZK	-xecute="set x=$ztol zk @x"
++^a2345678(1,2,3) -command=K	-xecute="set x=$ztol k:""""'=x @x"
++^a2345678(1,2,3) -command=ZK	-xecute="set x=$ztol zk:""""'=x @x"
 
 +^a234567890123456789012345678901	-command=S,K -xecute="set x=1"
 +^a234567890123456789012345678901(1)	-command=K   -xecute="set x=1"

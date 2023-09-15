@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -154,7 +154,7 @@ casevms	;C k;0;k
 	;C @k;0;k;EXPR
 	;D dummy+k^noundeftst;0;k
 	;D dummy1^noundeftst(k);0;k
-	;D @k;0;k
+	;D @k;0;k;LABELEXPECTED
 	;D ^@k;0;k;ZLINKFILE
 	;F j=k:1:2;1-1;k
 	;F j=1:1:k;1-1;k
@@ -195,7 +195,7 @@ casevms	;C k;0;k
 	;K (act,k,nound);0;k
 	;N  K @k;0;k;;;;;;
 	;L j(k):k L;0;j,k
-	;L @k;0;k
+	;L @k;0;k;LKNAMEXPECTED
 	;M j=k;0;j,k
 	;M @k;0;k
 	;N k;0;k
@@ -247,7 +247,7 @@ casevms	;C k;0;k
 	;ZA @k;0;k;LKNAMEXPECTED
 	;ZCOM k;0;k;FNF
 	;ZCOM @k;0;k
-	;ZD j(k),@k;0;j,k
+	;ZD j(k),@k;0;j,k;LKNAMEXPECTED
 	;ZG k:ick+k;0;k;LABELMISSING
 	;ZG @k;0;k;skip
 	;ZG @k:ick;0;k

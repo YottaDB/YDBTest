@@ -1,6 +1,6 @@
 ;#################################################################
 ;#                                                               #
-;# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.       #
+;# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.       #
 ;# All rights reserved.                                          #
 ;#                                                               #
 ;#       This source code contains the intellectual property     #
@@ -19,12 +19,12 @@ write
 
 do
 	write !,"# Testing that DO accepts empty string from argument indirection",!
-	write "# No output is expected",!
+	write "# LABELEXPECTED error is expected",!
 	set y=""
 	do @y
 	quit
 
-xecute	
+xecute
 	write !,"# Testing that XECUTE accepts empty string from argument indirection",!
 	write "# No output is expected",!
 	set y=""
@@ -33,7 +33,7 @@ xecute
 
 kill
 	write !,"# Testing that KILL accepts empty string from argument indirection",!
-	write "# No output is expected",!
+	write "# VAREXPECTED error is expected",!
 	set y=""
 	kill @y
 	quit

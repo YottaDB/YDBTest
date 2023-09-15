@@ -13,7 +13,15 @@
 # No output is expected
 
 # Testing that KILL accepts empty string from argument indirection
-# No output is expected
+# VAREXPECTED error is expected
+%YDB-E-VAREXPECTED, Variable expected in this context
+		At M source location kill+4^gtm9293
+
+YDB>
 
 # Testing that DO accepts empty string from argument indirection
-# No output is expected
+# LABELEXPECTED error is expected
+%YDB-E-LABELEXPECTED, Label expected in this context
+		At M source location do+4^gtm9293
+
+YDB>
