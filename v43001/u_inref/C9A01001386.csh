@@ -27,7 +27,7 @@ chmod 777 $bkp_dir $bkp_dir_2 $long_dir
 setenv gtm_test_mupip_set_version "disable"
 setenv gtm_test_disable_randomdbtn
 if ((1 == $gtm_test_spanreg) || (3 == $gtm_test_spanreg)) then
-	set grepit = 'BACKUP|DB file'
+	set grepit = 'BACKUPSUCCESS|DB file'
 else
 	set grepit = 'BACKUP|backed up'
 endif
