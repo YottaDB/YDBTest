@@ -2,7 +2,7 @@
 ;								;
 ; Copyright 2007, 2013 Fidelity Information Services, Inc	;
 ;								;
-; Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -15,8 +15,11 @@ d002636	;
 	; Routine to test job interrupt functionality and its interaction with terminal I/O
 	; Based on v43001/inref/tzintr.m for D9G12-002636
 	;
-	; We use ^sstepgbl to help with debugging rare timing failures
-	do ^sstepgbl
+	; We use ^ssteplcl to help with debugging rare timing failures. We cannot use ^sstepgbl here because the naked
+	; indicator is used below (to test that $zinterrupt preserves it) and ^sstepgbl would interfere with that.
+	; Therefore use ^ssteplcl for the entire portion of the test and at the end of the test, merge the contents of
+	; the local varibale into a global variable for persistence/analysis/debugging in case of a test failure.
+	do ^ssteplcl
 	s ^drvactive=0,^cnt=0,^done=0
 	Set unix=$ZVersion'["VMS"
 	; Check that $PRINCIPAL is TERMINAL
@@ -79,7 +82,7 @@ d002636	;
 	;
 	;   This loop (and the interrupts that occur during it) do(es) the following checks:
 	;   1) That the j loop does not get restarted in the handling of a ztrap within a $zint string
-	;   2) That the naked indicator is preserved by $zinterrupt
+	;   2) That the naked indicator is preserved by $zinterrupt (this is the reason why we cannot use ^sstepgbl above)
 	;   3) That the $T value is preserved by $zinterrupt
 	;   4) That $ZINI is always 0 while not in interrupt
 	;   5) That $ZINI is always 1 while in interrupt
@@ -151,6 +154,9 @@ d002636	;
 	Else  Do
 	. Write "Test Failed",!
 	. ZSHOW "*"
+	; The "do ^ssteplcl" call above would have initiated recording M line activity in the local variable "%ssteplcl".
+	; Move that over to a global variable so we have it persist as debug information in case of a failure.
+	merge ^%sstepgbl=%ssteplcl
 	Q
 
 intrdrv(pid,unix,times)
