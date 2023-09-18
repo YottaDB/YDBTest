@@ -21,7 +21,7 @@
 # a major release.                                                   #
 ######################################################################
 #
-# gds_max_blk	[s7kr] Testing GDS max number of blocks to 224M and for older V5 version, test for 128M blocks.
+# gds_max_blk	[s7kr] Testing GDS max number of blocks for V6 mode blocks (992M blocks) and V7 mode blocks (~16GB blocks)
 # ossmake	[shaha] Test the makefile builds regularly so that we know when they break
 # maxtrignames	[shaha] Test that adds 999,999 triggers with auto generated names
 # gtm8416	[partridger] Verify 1 second HANG between global SETs ensures that each journal record falls in a different second
@@ -60,9 +60,6 @@ setenv subtest_exclude_list "$subtest_exclude_list ossmake"
 # Disable gds_max_blk subtest on hosts that do not have an SSD.
 # On HDD, a simple MUPIP INTEG on the 20TB database takes hours to finish that the TEST-E-HANG alert kicks in.
 if (! $is_tst_dir_ssd) then
-	setenv subtest_exclude_list "$subtest_exclude_list gds_max_blk"
-else
-	# Disable gds_max_blk subtest (see https://gitlab.com/YottaDB/DB/YDBTest/-/issues/501#note_1410862780 for details)
 	setenv subtest_exclude_list "$subtest_exclude_list gds_max_blk"
 endif
 
