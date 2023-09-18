@@ -37,7 +37,7 @@ if ($status) then
 	$ydb_dist/mumps -run %XCMD 'do pause^pauseimptp'
 	exit
 endif
-$grep BACKUP back.out
+$grep BACKUPSUCCESS back.out
 sleep 30
 $gtm_tst/com/gtm_crash.csh
 #
