@@ -73,7 +73,40 @@ if ("dbg" == "$tst_image") then
 		mkdir $dirname
 		echo "####### Testing backup directory length [$cnt] with -noonline #########"
 		# Remove messages from mupip backup output that are non-deterministic using the "grep -vE" below
-		$gtm_dist/mupip backup -noonline "*" $dirname |& grep -vE "BACKUPDBFILE|BACKUPTN|FILEPARSE"
+		$gtm_dist/mupip backup -noonline "*" $dirname >& backup1_$cnt.logx
+		grep -vE "BACKUPDBFILE|BACKUPTN|FILEPARSE" backup1_$cnt.logx
+		rm -rf $dirname
+		@ cnt = $cnt + 1
+	end
+
+	$echoline
+	echo "# Starting the online MUPIP BACKUPs. For these, we generate"
+	echo "# directory paths of 220 to 266 characters including the"
+	echo "# length of the test directory. The test directory is included"
+	echo "# in the length for these backups because online backups use the"
+	echo "# full directory path for the temporary file. This means that a"
+	echo "# backup directory length of even 220 would always generate an"
+	echo "# error if run from the test directory. Setting the minimum of"
+	echo "# the range to a lower number wouldn't work because the length of"
+	echo "# the test directory can vary based on factors such as the build"
+	echo "# name and which user is running the test which would make it"
+	echo "# impossible to predict where the FILENAMETOOLONG errors should"
+	echo "# first show up. So we subtract the length of the test dir from"
+	echo "# the directory length to ensure predictable results in this"
+	echo "# section of the test. We expect a path, including the test"
+	echo "# of 227 or more characters to produce a FILENAMETOOLONG error"
+	@ cnt = 220
+	set testdir=`pwd`
+	set testdirlength=`echo $testdir | awk '{print length($0)}'`
+
+	while ($cnt < 266)
+		set dirname = `$gtm_dist/mumps -run gen $cnt`
+		rm -rf $dirname
+		mkdir $dirname
+		echo "####### Testing backup directory length [$cnt] (online backup) #########"
+		# Remove messages from mupip backup output that are non-deterministic using the "grep -vE" below
+		$gtm_dist/mupip backup "*" $dirname >& backup2_$cnt.logx
+		grep -vE "BACKUPDBFILE|BACKUPTN|FILEPARSE" backup2_$cnt.logx
 		rm -rf $dirname
 		@ cnt = $cnt + 1
 	end
@@ -81,37 +114,6 @@ if ("dbg" == "$tst_image") then
 	unsetenv gtm_white_box_test_case_number
 	unsetenv gtm_white_box_test_case_enable
 endif
-
-$echoline
-echo "# Starting the online MUPIP BACKUPs. For these, we generate"
-echo "# directory paths of 220 to 266 characters including the"
-echo "# length of the test directory. The test directory is included"
-echo "# in the length for these backups because online backups use the"
-echo "# full directory path for the temporary file. This means that a"
-echo "# backup directory length of even 220 would always generate an"
-echo "# error if run from the test directory. Setting the minimum of"
-echo "# the range to a lower number wouldn't work because the length of"
-echo "# the test directory can vary based on factors such as the build"
-echo "# name and which user is running the test which would make it"
-echo "# impossible to predict where the FILENAMETOOLONG errors should"
-echo "# first show up. So we subtract the length of the test dir from"
-echo "# the directory length to ensure predictable results in this"
-echo "# section of the test. We expect a path, including the test"
-echo "# of 227 or more characters to produce a FILENAMETOOLONG error"
-@ cnt = 220
-set testdir=`pwd`
-set testdirlength=`echo $testdir | awk '{print length($0)}'`
-
-while ($cnt < 266)
-	set dirname = `$gtm_dist/mumps -run gen $cnt`
-	rm -rf $dirname
-	mkdir $dirname
-	echo "####### Testing backup directory length [$cnt] (online backup) #########"
-	# Remove messages from mupip backup output that are non-deterministic using the "grep -vE" below
-	$gtm_dist/mupip backup "*" $dirname |& grep -vE "BACKUPDBFILE|BACKUPTN|FILEPARSE"
-	rm -rf $dirname
-	@ cnt = $cnt + 1
-end
 
 @ cnt = 230
 
@@ -138,7 +140,8 @@ GTM_EOF
                 endif
                 echo "############ Testing $sincequal"
 		# Remove messages from mupip backup output that are non-deterministic using the "grep -vE" below
-		$gtm_dist/mupip backup -noonline "*" -bytestream $sincequal $dirname |& grep -vE "BACKUPDBFILE|BACKUPTN|blocks saved"
+		$gtm_dist/mupip backup -noonline "*" -bytestream $sincequal $dirname >& backup3_$cnt.logx
+		grep -vE "BACKUPDBFILE|BACKUPTN|blocks saved" backup3_$cnt.logx
         end
         rm -rf $dirname
         @ cnt = $cnt + 1
