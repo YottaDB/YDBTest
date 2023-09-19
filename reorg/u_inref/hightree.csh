@@ -24,7 +24,7 @@ endif
 setenv test_reorg "NON_REORG"
 $gtm_tst/com/dbcreate.csh mumps 1 255 1000 -block_size=1024
 $GTM << EOF
-f i=1:1:10000 s ^a(i,\$j(i,150),i,i*2)=\$j(i,50)
+f i=1:1:50000 s ^a(i,\$j(i,150),i,i*2)=\$j(i,50)
 h
 EOF
 setenv gtm_white_box_test_case_enable 1

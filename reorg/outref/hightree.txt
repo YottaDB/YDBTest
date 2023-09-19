@@ -14,14 +14,14 @@ GTMPOOLLIMIT used for mupip reorg : ##FILTERED##
    
 Global: a (region DEFAULT)
 %YDB-E-MAXBTLEVEL, Global ^a in region DEFAULT reached maximum level
-Blocks processed    : 1493 
-Blocks coalesced    : 2 
-Blocks split        : 738 
-Blocks swapped      : 1490 
-Blocks freed        : 2 
-Blocks reused       : 1028 
-Levels Increased    : 4 
-Blocks extended     : 1002 
+Blocks processed    : 22647 
+Blocks coalesced    : 62 
+Blocks split        : 11194 
+Blocks swapped      : 22583 
+Blocks freed        : 62 
+Blocks reused       : 16298 
+Levels Increased    : 7 
+Blocks extended     : 16231 
 %YDB-W-REORGINC, Reorg was incomplete.  Not all globals were reorged.
 
 
@@ -31,25 +31,19 @@ No errors detected by integ.
 
 Type           Blocks         Records          % Used      Adjacent
 
+##SUSPEND_OUTPUT 4G_ABOVE_DB_BLKS
 ##TEST_AWKDirectory           2               2           [2|3]....            NA
-Index             403            3571          41.111           106
-##SUSPEND_OUTPUT 4G_ABOVE_DB_BLKS
-Data             3169           10000          68.929          2393
+Index            6277           28943          34.070          1056
+Data            22667           50000          49.081         20348
+Free               54              NA              NA            NA
+Total           29000           78945              NA         21404
 ##ALLOW_OUTPUT 4G_ABOVE_DB_BLKS
 ##SUSPEND_OUTPUT 4G_BELOW_DB_BLKS
-Data             3169           10000          68.929          2392
-##ALLOW_OUTPUT 4G_BELOW_DB_BLKS
-##SUSPEND_OUTPUT 4G_ABOVE_DB_BLKS
-Free               26              NA              NA            NA
-##ALLOW_OUTPUT 4G_ABOVE_DB_BLKS
-##SUSPEND_OUTPUT 4G_BELOW_DB_BLKS
-Free       4286578203              NA              NA            NA
-##ALLOW_OUTPUT 4G_BELOW_DB_BLKS
-##SUSPEND_OUTPUT 4G_ABOVE_DB_BLKS
-Total            3600           13573              NA          2499
-##ALLOW_OUTPUT 4G_ABOVE_DB_BLKS
-##SUSPEND_OUTPUT 4G_BELOW_DB_BLKS
-Total      4286581777           13573              NA          2498
+##TEST_AWKDirectory           2               2           [2|3]....            NA
+Index            6277           28943          34.070          1056
+Data            22667           50000          49.081         20347
+Free       4286578231              NA              NA            NA
+Total      4286607177           78945              NA         21403
 ##ALLOW_OUTPUT 4G_BELOW_DB_BLKS
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
