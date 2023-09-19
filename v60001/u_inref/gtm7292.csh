@@ -89,10 +89,10 @@ echo "Testing -heuristic qualifier on Scan method"
 set verbose
 $MUPIP size -heuristic="scan,level"
 $MUPIP size -heuristic="scan,level=4"
-$MUPIP size -heuristic="scan,level=8"
+$MUPIP size -heuristic="scan,level=12"	# == MAX_BT_DEPTH + 1
 $MUPIP size -heuristic="scan,level=-19"
 $MUPIP size -heuristic="scan,level=-1s9"
-$MUPIP size -heuristic="scan,level=-9"
+$MUPIP size -heuristic="scan,level=-13"	# == -MAX_BT_DEPTH - 2
 $MUPIP size -heuristic="scan"
 $MUPIP size -heuristic="scan,level=1"
 $MUPIP size -heuristic="scan,level=2"
