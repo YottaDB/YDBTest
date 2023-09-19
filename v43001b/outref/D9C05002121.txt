@@ -57,12 +57,16 @@ Give it some time...
 
 
 
+
+
+
 if ( ! -d bak ) mkdir bak
 if ( ! -d baktmp ) mkdir baktmp
-$MUPIP backup -nonew -o "*" ./bak -dbg | & sort -f
 
 
 
+$MUPIP backup -nonew -o "*" ./bak -dbg > & backup1.logx
+$grep -vE '^$|cp --sparse=always' backup1.logx | sort -f
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/bak/bak/a.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/bak/bak/b.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/bak/bak/mumps.dat
@@ -89,11 +93,8 @@ $gtm_exe/mumps -run wait
 if ( $status ) then
 ls -l core*
 ls: No match.
-$MUPIP backup -nonew -o "*" ./bak -dbg -i | & sort -f
-
-
-
-
+$MUPIP backup -nonew -o "*" ./bak -dbg -i > & backup2.logx
+$grep -vE '^$|cp --sparse=always' backup2.logx | sort -f
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/bak/bak/a.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/bak/bak/b.dat
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
@@ -116,10 +117,8 @@ rm ./bak/*
 setenv gtm_baktmpdir `pwd`/baktmp
 echo "gtm_baktmpdir: $gtm_baktmpdir"
 gtm_baktmpdir: ##TEST_PATH##/bak/baktmp
-$MUPIP backup -nonew -o "*" ./bak -dbg | & sort -f
-
-
-
+$MUPIP backup -nonew -o "*" ./bak -dbg > & backup3.logx
+$grep -vE '^$|cp --sparse=always' backup3.logx | sort -f
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/bak/bak/a.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/bak/bak/b.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/bak/bak/mumps.dat
@@ -147,11 +146,8 @@ if ( $status ) then
 ls -l core*
 ls: No match.
 
-$MUPIP backup -nonew -o "*" ./bak -dbg -i | & sort -f
-
-
-
-
+$MUPIP backup -nonew -o "*" ./bak -dbg -i > & backup4.logx
+$grep -vE '^$|cp --sparse=always' backup4.logx | sort -f
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/bak/bak/a.dat
 %YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/bak/bak/b.dat
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
@@ -207,9 +203,16 @@ chmod 755 $gtm_baktmpdir
 
 
 
+
+
+
 if ( ! -d bak ) mkdir bak
 if ( ! -d baktmp ) mkdir baktmp
-$MUPIP backup -nonew -o "*" ./bak -dbg | & sort -f
+
+
+
+$MUPIP backup -nonew -o "*" ./bak -dbg > & backup1.logx
+$grep -vE '^$|cp --sparse=always' backup1.logx | sort -f
 $MUPIP integ -reg -noonline "*" >> & integ.log
 ls ./bak/*
 rm ./bak/*
@@ -217,13 +220,15 @@ $gtm_exe/mumps -run wait
 if ( $status ) then
 ls -l core*
 ls: No match.
-$MUPIP backup -nonew -o "*" ./bak -dbg -i | & sort -f
+$MUPIP backup -nonew -o "*" ./bak -dbg -i > & backup2.logx
+$grep -vE '^$|cp --sparse=always' backup2.logx | sort -f
 $MUPIP integ -reg -noonline "*" >> & integ.log
 ls ./bak/*
 rm ./bak/*
 setenv gtm_baktmpdir `pwd`/baktmp
 echo "gtm_baktmpdir: $gtm_baktmpdir"
-$MUPIP backup -nonew -o "*" ./bak -dbg | & sort -f
+$MUPIP backup -nonew -o "*" ./bak -dbg > & backup3.logx
+$grep -vE '^$|cp --sparse=always' backup3.logx | sort -f
 $MUPIP integ -reg -noonline "*" >> & integ.log
 ls ./bak/*
 rm ./bak/*
@@ -232,7 +237,8 @@ if ( $status ) then
 ls -l core*
 ls: No match.
 
-$MUPIP backup -nonew -o "*" ./bak -dbg -i | & sort -f
+$MUPIP backup -nonew -o "*" ./bak -dbg -i > & backup4.logx
+$grep -vE '^$|cp --sparse=always' backup4.logx | sort -f
 $MUPIP integ -reg -noonline "*" >> & integ.log
 ls ./bak/*
 rm ./bak/*
@@ -259,9 +265,6 @@ $MUPIP backup -nonew -o "AREG" ./bak -dbg -i
 $MUPIP integ -reg -noonline "*" >> & integ.log
 chmod 755 $gtm_baktmpdir
 And on the secondary side:
-
-
-
 %YDB-I-BACKUPDBFILE, DB file ##REMOTE_TEST_PATH##/a.dat backed up in file ##REMOTE_TEST_PATH##/bak/bak/a.dat
 %YDB-I-BACKUPDBFILE, DB file ##REMOTE_TEST_PATH##/b.dat backed up in file ##REMOTE_TEST_PATH##/bak/bak/b.dat
 %YDB-I-BACKUPDBFILE, DB file ##REMOTE_TEST_PATH##/mumps.dat backed up in file ##REMOTE_TEST_PATH##/bak/bak/mumps.dat
@@ -281,10 +284,6 @@ MUPIP INFO:   Temp file name: ##REMOTE_TEST_PATH##/bak/bak//DEFAULT_YYYY_ZZZZZZ
 ./bak/a.dat
 ./bak/b.dat
 ./bak/mumps.dat
-
-
-
-
 %YDB-I-BACKUPDBFILE, DB file ##REMOTE_TEST_PATH##/a.dat backed up in file ##REMOTE_TEST_PATH##/bak/bak/a.dat
 %YDB-I-BACKUPDBFILE, DB file ##REMOTE_TEST_PATH##/b.dat backed up in file ##REMOTE_TEST_PATH##/bak/bak/b.dat
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
@@ -302,9 +301,6 @@ TRANSACTION number is greater than or equal to current transaction,
 ./bak/a.dat
 ./bak/b.dat
 gtm_baktmpdir: ##REMOTE_TEST_PATH##/bak/baktmp
-
-
-
 %YDB-I-BACKUPDBFILE, DB file ##REMOTE_TEST_PATH##/a.dat backed up in file ##REMOTE_TEST_PATH##/bak/bak/a.dat
 %YDB-I-BACKUPDBFILE, DB file ##REMOTE_TEST_PATH##/b.dat backed up in file ##REMOTE_TEST_PATH##/bak/bak/b.dat
 %YDB-I-BACKUPDBFILE, DB file ##REMOTE_TEST_PATH##/mumps.dat backed up in file ##REMOTE_TEST_PATH##/bak/bak/mumps.dat
@@ -324,10 +320,6 @@ MUPIP INFO:   Temp file name: ##REMOTE_TEST_PATH##/bak/baktmp/DEFAULT_YYYY_ZZZZZ
 ./bak/a.dat
 ./bak/b.dat
 ./bak/mumps.dat
-
-
-
-
 %YDB-I-BACKUPDBFILE, DB file ##REMOTE_TEST_PATH##/a.dat backed up in file ##REMOTE_TEST_PATH##/bak/bak/a.dat
 %YDB-I-BACKUPDBFILE, DB file ##REMOTE_TEST_PATH##/b.dat backed up in file ##REMOTE_TEST_PATH##/bak/bak/b.dat
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
