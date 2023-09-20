@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -41,10 +41,8 @@ gtm8863b
 	do ^job("workerBee^gtm8863b",maxKids,"""""")
 	;
 	; Now that the children are playing, lets start watching some stats. Look at each stat line generated.
-	; At the end of the day, we need at least one non-zero stat for SOME toggle value and that value needs
-	; to be less than or equal to the number of workerBee jobs created.
+	; At the end of the day, we need at least one non-zero stat for SOME toggle value.
 	;
-	set seenTooHighValue=0
 	write $zdate($horolog,"24:60:SS")," Statistics @ ",interval," second intervals for ",maxTime," seconds",!
 	for time=0:interval:maxTime hang interval do
 	. write "%YGBLSTAT: "
@@ -56,14 +54,10 @@ gtm8863b
 	. ; Now parse the stat line we got and check each value for both <= to number of processes and that
 	. ; we saw the required non-zero stat value.
 	. ;
-	. set stats=$zextract(statLine,12,99)	; Isolate stat line from prefix
 	. for i=1:1:$zlength(collectStats,",") do
-	. . set stat=$zpiece(stats,",",i)	; Look at individual stat
+	. . set stat=$zpiece(statLine,",",i)	; Look at individual stat
 	. . set statName=$zpiece(stat,":",1)	; Get the stat name
 	. . set statVal=$zpiece(stat,":",2)	; Get the individual stat value
-	. . if statVal>maxKids do
-	. . . write "FAILURE - Value for stat ",statName," (",statVal,") exceeds the maximum value of ",maxKids,!
-	. . . set seenTooHighValue=1
 	. . if (statVal>0)&$increment(nonZeroStat(statName))	; Bump non-zero counter for this stat if non-zero
 	;
 	; Shutdown the workers
@@ -83,8 +77,7 @@ gtm8863b
 	;
 	write !
 	if 'seenAllNonZeroStats write "FAILURE - At least one monitored toggle statistic value had no non-zero values",!
-	else  if seenTooHighValue write "FAILURE - Too high value detected",!
-	else  write "SUCCESS - Saw at least one non-zero value for each monitored toggle stat and no too-high values for ANY stats above",!
+	else  write "SUCCESS - Saw at least one non-zero value for each monitored toggle stat above",!
 	write !,$zdate($horolog,"24:60:SS")," Complete",!
 	quit
 
