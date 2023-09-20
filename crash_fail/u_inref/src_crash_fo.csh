@@ -42,7 +42,7 @@ if ($gtm_test_jnl_nobefore) then
 	# This is because, after a failover, if this backed-up database is used as secondary, it should not be ahead of primary
 	mkdir bak1
 	$MUPIP backup -replinstance=bak1 "*" bak1 >& backup.out
-	set trns_bkup=`$grep "Journal Seqnos up to" backup.out | $tst_awk '{gsub("0x","") ; print $5}'`
+	set trns_bkup=`$grep "Journal Seqnos up to" backup.out | $tst_awk '{gsub("0x","") ; print $6}'`
 	set trnno=`$gtm_tst/com/radixconvert.csh h2d $trns_bkup | $tst_awk '{print $5}'`
 	# Wait for 50,000+ seqnos to be processed on receiver side. Need to wait for 3600 seconds to account for slow ARMV6L.
 	$sec_shell "$sec_getenv; cd $SEC_SIDE; $gtm_tst/com/wait_until_rcvr_trn_processed_above.csh $trnno 3600"
