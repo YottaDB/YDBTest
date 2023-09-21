@@ -36,7 +36,7 @@ out(zshvar,str)
 	. for i=1:1:$length(str,",") do						; otherwise strip the values from the gcodes in str
 	.. set gcode=$$FUNC^%UCASE($piece(str,",",i))_":"
 	.. set piece1=$piece(outstr,gcode)
-	.. if outstr=piece1 write gcode," is invalid" quit
+	.. if outstr=piece1 write gcode," is invalid" zshow "v" quit
 	.. set piece2=$piece($piece(outstr,gcode,2),",",2,99999)
 	.. set outstr=piece1_gcode_"XX"_$select(""=piece2:"",1:",")_piece2	; Do not append comma when filtering last gvstat
 	quit
@@ -58,6 +58,6 @@ in(zshvar,str)
 	. set instr=zshvar("G",subs),outstr=""
 	. for i=1:1:$length(str,",") do
 	.. set gcode=$$FUNC^%UCASE($piece(str,",",i))_":",p=$find(instr,gcode)
-	.. if 'p write:$zversion'["VMS" !,gcode," is invalid" quit  ;skip write on VMS as it doesn't have all
+	.. if 'p write:$zversion'["VMS" !,gcode," is invalid" zshow "v" quit  ;skip write on VMS as it doesn't have all
 	.. set outstr=outstr_$select(1=i:"",1:",")_gcode_$piece($extract(instr,p,9999),",")
 	quit
