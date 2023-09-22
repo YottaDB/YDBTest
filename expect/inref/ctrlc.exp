@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -57,11 +57,19 @@ send -- "\$gtm_exe/mumps -direct\r"
 # are waiting for the GTM prompt before going forward
 expect "
 YDB>"
-set timeout 300
+set timeout 10
 
 # FOR loop
 send -- "do ^ctrlc\r"
 expect "for i=1:1:20000000  SET x=x+1"
+send -- "\003"
+expect "YDB-I-CTRLC, CTRL_C encountered" {set ctrlc [expr $ctrlc + 1]}
+
+# Test that FOR loop with global updates is also interruptible
+# This tests a regression in GT.M V7.0-001.
+# See https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1383#note_1570284046 for more details.
+send -- "do gbl^ctrlc\r"
+expect "for i=1:1:20000000  SET ^x=i"
 send -- "\003"
 expect "YDB-I-CTRLC, CTRL_C encountered" {set ctrlc [expr $ctrlc + 1]}
 
@@ -116,7 +124,7 @@ send "exit\r"
 
 # Use expect to count the matched CTRLC message rather than trying to grep them from the log file
 puts ""
-puts "Verification $status. $ctrlc CTRLC messages were seen (PASS == 5)"
+puts "Verification $status. $ctrlc CTRLC messages were seen (PASS == 6)"
 puts ""
 
 # Expect should wait until TCSH exits

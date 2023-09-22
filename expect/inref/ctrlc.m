@@ -22,6 +22,10 @@ ctrlc	;
 	do sstep^ctrlc
 	for i=1:1:20000000  SET x=x+1
 	quit
+gbl	;
+	for i=1:1:20000000  SET ^x=i
+	zwrite i
+	quit
 sstep   ; Modified from sstep.m to just zprint the line for expect's targetting
 	set $zstep="zprint @$zpos  zstep into"
 	zbreak sstep+3^ctrlc:"zstep i"
