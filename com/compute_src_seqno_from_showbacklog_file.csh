@@ -34,7 +34,7 @@ endif
 # The output is post-V70001 format.
 set posted = `$tst_awk '/Last transaction sequence number posted/ {print $NF}' $logfile | tail -1`
 if ("" == $posted) then
-	echo "COMPUTE_SRC_BACKLOG-E-FAIL1 : No [posted] sequence number found in $logfile"
+	echo "COMPUTE_SRC_SEQNO-E-FAIL1 : No [posted] sequence number found in $logfile"
 	exit -1
 endif
 

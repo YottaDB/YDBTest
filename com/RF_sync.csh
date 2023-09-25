@@ -110,10 +110,16 @@ while ($nowtime <= $timeout)
 	# Showbacklog of primary
 	set prev_pribacklog = "$pribacklog"
 	set pribacklog = `$gtm_tst/com/compute_src_backlog_from_showbacklog_file.csh $filepath/$logfile_src`
-	set srcsno  = `$gtm_tst/com/compute_src_seqno_from_showbacklog_file.csh $filepath/$logfile_src`
 	if ($status) then
 		echo $backlog 									>>&! $logfile
 		echo "RFSYNC-E-SRCBACKLOG unable to get source backlog from $logfile_src"	>>&! $logfile
+		cat $filepath/$logfile_src							>>&! $logfile
+		exit 1
+	endif
+	set srcsno  = `$gtm_tst/com/compute_src_seqno_from_showbacklog_file.csh $filepath/$logfile_src`
+	if ($status) then
+		echo $backlog 									>>&! $logfile
+		echo "RFSYNC-E-SRCSEQNO unable to get source seqno from $logfile_src"		>>&! $logfile
 		cat $filepath/$logfile_src							>>&! $logfile
 		exit 1
 	endif

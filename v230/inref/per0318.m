@@ -19,11 +19,11 @@ per0318	;per0318 - Handle K @"" and N @""
 	s a=1
 	; litnew
 	n @""
-	i '$d(a) s ^c=^c+1 w !,"variable not newed"
+	i '$d(a) s ^c=^c+1 w !,"variable was newed but not expected to be"
 	;
 	i '$d(a) s ^c=^c+1 w !,"variable missing on return from new"
 	k @""
-	i '$d(a) s ^c=^c+1 w !,"variable not killed"
+	i '$d(a) s ^c=^c+1 w !,"variable was killed but not expected to be"
 	s x="",a=1
 	; varnew
 	n @x
