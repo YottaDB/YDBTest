@@ -16,11 +16,15 @@
 
 set trigupdatestr = ""
 set ver = $gtm_exe:h:t
-if (`expr "$ver" ">" "V63014_R136"`) then
-	# For YottaDB versions greater than r1.36, -trigupdate is supported. So add it if the env var is randomly set.
-	if ($?gtm_test_trigupdate) then
-		if ($gtm_test_trigupdate) then
-			set trigupdatestr = "-trigupdate"
+# Pure GT.M builds don't support the "-trigupdate" option. Take that into account.
+if ($ver =~ V*_R*) then
+	# $ver is a YottaDB build (pure GT.M builds are of the form V* with not _R* that follow)
+	if (`expr "$ver" ">" "V63014_R136"`) then
+		# For YottaDB versions greater than r1.36, -trigupdate is supported. So add it if the env var is randomly set.
+		if ($?gtm_test_trigupdate) then
+			if ($gtm_test_trigupdate) then
+				set trigupdatestr = "-trigupdate"
+			endif
 		endif
 	endif
 endif
