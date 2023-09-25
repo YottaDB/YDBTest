@@ -1,0 +1,22 @@
+
+# GTM9213 - Release note:
+#
+# GT.M accepts SET $SYSTEM=expr, where expr appends to the initial value up to the length
+# permitted for an initial value; an empty string removes any current added value. Initial
+# values are determined by the $gtm_sysid environment variable always preceded by "47,".
+# Previously, an attempt to SET $SYSTEM produced an SVNOSET error. (GTM-9213)
+
+# Drive ^gtm9213
+
+# Initial value of $SYSTEM: $SYSTEM="47,gtm_sysid"
+
+# Set ',a multi-word extended value' as the trailing portion of $SYSTEM
+  ** Got expected value: 47,gtm_sysid,a multi-word extended value
+
+# Set ',a different shorter value' as the tailing portion of $SYSTEM
+  ** Got expected value: 47,gtm_sysid,a different shorter value
+
+# Set empty string as the trailing portion of $SYSTEM
+  ** Got expected value: 47,gtm_sysid
+
+PASS gtm9213
