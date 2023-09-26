@@ -1,8 +1,11 @@
 #!/usr/bin/expect -f
 #################################################################
 #								#
-# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
+#								#
+# Portions Copyright (c) Fidelity National Information 		#
+# Services, Inc. and/or its subsidiaries.			#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -68,7 +71,7 @@ set gtm_test_ver	[lindex $argv 2]
 # BEGIN
 # setup must match
 set timeout -1
-spawn $env(SHELL)
+spawn $env(SHELL) -f
 match_max 100000
 expect "*"
 send -- "set prompt=\"D9F05002548>\"\r"
@@ -157,7 +160,9 @@ send -- "works"
 #echo "do btest^ttyread<ctrl-A><right><right><right>a"
 expect "YDB>"
 send -- "do btest^ttyread"
+expect "do btest^ttyread"
 send -- "\001\033OC\033OC\033OCa\r"
+expect "atest"
 expect {
 	"PASS This is routine ATEST" {puts "\rEXPECT MUMPS PASS\r"}
 	"FAIL" {}
@@ -178,7 +183,9 @@ expect {
 #echo "do btest^ttyread<HOME><right><right><right>a"
 expect "YDB>"
 send -- "do btest^ttyread"
+expect "do btest^ttyread"
 send -- "\033OH\033OC\033OC\033OCa\r"
+expect "atest"
 expect {
 	"PASS This is routine ATEST" {puts "\rEXPECT MUMPS PASS\r"}
 	"FAIL" {}

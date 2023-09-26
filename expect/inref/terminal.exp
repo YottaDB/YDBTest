@@ -1,8 +1,11 @@
 #!/usr/bin/expect -f
 #################################################################
 #                                                               #
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
+#								#
+# Portions Copyright (c) Fidelity National Information 		#
+# Services, Inc. and/or its subsidiaries.			#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -17,7 +20,7 @@ set timeout -1
 match_max 100000
 
 # Start up a TCSH shell first. You could spawn $env(SHELL) if you like
-spawn /usr/local/bin/tcsh
+spawn /usr/local/bin/tcsh -f
 
 # Enable logging
 log_user 0

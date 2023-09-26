@@ -1,7 +1,10 @@
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
+#								#
+# Portions Copyright (c) Fidelity National Information 		#
+# Services, Inc. and/or its subsidiaries.			#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -14,7 +17,7 @@
 #
 set gtm_dist [lrange $argv 0 0]
 set timeout 10
-spawn $env(SHELL)
+spawn $env(SHELL) -f
 # convince HP-UX to accept ctrl-c
 send -- "stty intr ^c\r"
 expect "stty intr ^c"
@@ -23,7 +26,7 @@ expect -exact "set prompt=\"CTRLC>\"\r\r
 CTRLC>"
 send -- "source \$gtm_tst/com/set_ydb_env_var_random.csh ydb_nocenable gtm_nocenable 1\r"
 expect "CTRLC>"
-send -- "gtm\r"
+send -- "\$gtm_dist/mumps -dir\r"
 expect "YDB>"
 # send ctrl-c
 send -- "\003"
@@ -34,7 +37,7 @@ send -- "h\r"
 expect "CTRLC>"
 send -- "source \$gtm_tst/com/unset_ydb_env_var.csh ydb_nocenable gtm_nocenable\r"
 expect "CTRLC>"
-send -- "gtm\r"
+send -- "\$gtm_dist/mumps -dir\r"
 expect "YDB>"
 # send ctrl-c
 send -- "\003"
