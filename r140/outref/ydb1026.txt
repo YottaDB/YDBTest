@@ -1,0 +1,7 @@
+# Test that ZWRITE to file output device with STREAM + NOWRAP does not split/break lines
+# This is an automated test of https://gitlab.com/YottaDB/DB/YDB/-/issues/1026#note_1560258223
+# Local variable [x] has value set to a long string with length [262144]
+# Doing [ZWRITE x] to file ydb1026_f.out
+# Running [wc -l ydb1026_f.out]. Expect 1 in the first column (i.e. 1 line of output)
+# Before YDB@532b556a, it used to be 23 (much higher than 1)
+1 ydb1026_f.out
