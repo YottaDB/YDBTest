@@ -5,6 +5,8 @@ Test if zhow v:a and zwr work after the error
 YDB>
 
 YDB>
+
+YDB>
 %YDB-E-MAXSTRLEN, Maximum string length exceeded
 		At M source location longstr+5^longstr
 
@@ -119,6 +121,8 @@ YDB>
 Test for various string related functions with long string
 
 YDB>
+
+YDB>
 Create five strings of length: 32k,65k,130k,196k,and 1MB
 Now set local array with large local variable
 ================== $order() ==============================
@@ -159,13 +163,14 @@ YDB>
 
 YDB>
 YDB>
+YDB>
 32768 65500 131072 1048575 1048576 1048576
 YDB>
 YDB>
 YDB>
 ##SUSPEND_OUTPUT HOST_OS390_S390
-0 OPEN RMS STREAM NOWRAP 
-0-out OPEN RMS STREAM NOWRAP 
+0 OPEN RMS STREAM 
+0-out OPEN RMS STREAM 
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_OS390_S390
 0 OPEN RMS FILETAG=UNTAGGED TEXT 
@@ -406,7 +411,7 @@ $TEST=1
 $TLEVEL=0
 $TRESTART=0
 $X=0
-$Y=51
+$Y=53
 $ZA=0
 ##TEST_AWK.ZALLOCSTOR=[0-9]*
 $ZAUDIT=0
@@ -467,8 +472,8 @@ $ZYERROR=""
 $ZYINTRSIG=""
 ##TEST_AWK.ZYRELEASE=.*
 $ZYSQLNULL=$ZYSQLNULL
-0 OPEN RMS STREAM NOWRAP 
-0-out OPEN RMS STREAM NOWRAP 
+0 OPEN RMS STREAM 
+0-out OPEN RMS STREAM 
 ##SUSPEND_OUTPUT HOST_ALL
 ##ALLOW_OUTPUT HOST_OS390_S390
 0 OPEN RMS FILETAG=UNTAGGED TEXT 
