@@ -25,7 +25,15 @@ YDB>"xyz"
 Suspended (signal)
 SHELLfg
 ##SOURCE_PATH##/yottadb -dir
+##SUSPEND_OUTPUT YDB_READLINE
      w"xyz"     r"xyz"     i"xyz"     t"xyz"     e"xyz"      "xyz"
+##ALLOW_OUTPUT YDB_READLINE
+##SUSPEND_OUTPUT NON_YDB_READLINE
+##SUSPEND_OUTPUT YDB_READLINE6_OR_LESS
+write "xyz"
+##ALLOW_OUTPUT YDB_READLINE6_OR_LESS
+w"xyz"r"xyz"i"xyz"t"xyz"e"xyz" "xyz"
+##ALLOW_OUTPUT NON_YDB_READLINE
 xyz
 YDB>
 SHELL

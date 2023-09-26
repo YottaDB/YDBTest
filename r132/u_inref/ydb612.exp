@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2020-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -69,9 +69,11 @@ send -- "fg\r"
 # Sleep is needed to prevent race condition.
 sleep .1
 expect "fg"
+# Wait till echo is turned off, otherwise we will see ^A (which we don't want)
+system $::env(gtm_tst)/com/wait_for_stty_echo_off.csh
 # CTRL-A
 send -- \x01
-# YottaDB implments CTRL-A to go the beginning of the line using backspaces (\x08)
+# CTRL-A to go the beginning of the line uses backspaces (\x08/^H)
 expect \x08
 send -- "write \r"
 expect "xyz"

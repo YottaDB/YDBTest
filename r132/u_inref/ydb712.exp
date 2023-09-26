@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2021-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2021-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -19,8 +19,8 @@ send -- "\$ydb_dist/yottadb -dir\r"
 expect "YDB>"
 send -- "write \"Starting \$ZINTERRUPT test with code fragment that gets an error (LVUNDEF)\",!\r"
 expect "Starting \$ZINTERRUPT test with code fragment that gets an error (LVUNDEF)"
-send -- "set \$zinterrupt=\"write \"\"in interrupt\"\",! write c,!\" if (\$zsigproc(\$job,\"sigusr1\"))\r"
 expect "YDB>"
+send -- "set \$zinterrupt=\"write \"\"in interrupt\"\",! write c,!\" if (\$zsigproc(\$job,\"sigusr1\"))\r"
 expect "%YDB-E-ZINTRECURSEIO, Attempt to do IO to the active device in \$ZINTERRUPT"
 expect "%YDB-E-ERRWZINTR, Error while processing \$ZINTERRUPT"
 # Send a \r while the process is in direct mode to ensure it redisplays the YDB> prompt so we can then proceed to halt.
@@ -33,5 +33,10 @@ expect "%YDB-E-ERRWZINTR, Error while processing \$ZINTERRUPT"
 system $::env(gtm_tst)/com/wait_for_stty_echo_off.csh
 send -- "\r"
 expect "YDB>"
+# We repeat this call here for the same reason when ydb_readline is enabled. If we don't do that, "halt" shows up twice, once
+# for the screen echo, and once after YDB>. I am not 100% sure of the reason, but I think it has to do with one of these two
+# facts: in dm_read, "YDB>" is issued BEFORE the interrupt is processed (the read comes after), AND in readline we change screen
+# characteristics after an interrupt is processed but before displaying the prompt.
+system $::env(gtm_tst)/com/wait_for_stty_echo_off.csh
 send -- "halt\r"
 expect "SHELL"

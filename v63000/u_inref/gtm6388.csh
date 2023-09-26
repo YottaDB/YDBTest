@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -60,23 +60,12 @@ foreach fmt (${extract_format_list})
 	$truss -o extract.${fmt}.trace $gtm_dist/mupip extract -format=${fmt} \
 		extract.${fmt} >>& traced.${fmt}.log
 	printf "%4s:" ${fmt}
-	# We find out the fd from the open system call (4 in the example below)
-	#	11:08:43 open("extract.ZWR", O_RDWR|O_CREAT|O_NOCTTY, 0664) = 4 <0.000017>
-	# And then check for number of occurrences of the write system call using fd=4 (example output below)
-	#	11:08:43 write(4, "GT.M MUPIP EXTRACT\n05-DEC-2017  "..., 465) = 465 <0.000006>
-	#
-	# The below awk expression achieves this. It filters out the 4 from the open command first and stores it in fd.
-	# This is done by using a field separator of = and filtering out the " 4 <0.000017>" first.
-	# And then removing the leading space and then the trailing timestamp (using the sub() commands).
-	# On Arch Linux, the open() system call shows up as openat() in the strace output.
-	# Hence the use of "open.*extract" below (to allow for open or openat).
-	#
-	$tst_awk -F"=" '/open.*extract/{fd = $2; sub(/^ /,"",fd); sub(" .*","",fd); fdmatch="write[^a-zA-Z0-9]"fd} $0 ~ fdmatch {if(length(fdmatch))total++} END{print total}' extract.${fmt}.trace
+	$tst_awk -f $gtm_tst/$tst/inref/count_lines.awk extract.${fmt}.trace
 end
 
 $truss -o jnl.trace $MUPIP journal -extract -noverify -detail -forward -fences=none mumps.mjl	>>& jnl_extract.log
 printf " JNL:"
-$tst_awk -F"=" '/open.*mumps.mjf/{fd = $2; sub(/^ /,"",fd); sub(" .*","",fd); fdmatch="write[^a-zA-Z0-9]"fd} $0 ~ fdmatch {if(length(fdmatch))total++} END{print total}' jnl.trace
+$tst_awk -f $gtm_tst/$tst/inref/count_lines.awk jnl.trace
 
 if ($?gtm_test_gtm6388_perf) then
 	# This is the performance section of the test

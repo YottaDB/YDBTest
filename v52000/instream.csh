@@ -4,7 +4,7 @@
 # Copyright (c) 2006, 2015 Fidelity National Information	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -69,6 +69,15 @@ endif
 # Disable certain timing-sensitive tests on slower single-cpu systems
 if ($gtm_test_singlecpu) then
 	setenv subtest_exclude_list "$subtest_exclude_list D9G12002636"
+endif
+
+# Readline version
+# Readline v7 prints an extra line when re-invoked after interrupt. v8 does not.
+# Disable test D9G12002636 which has interrupts with version 7 or less
+if ($?gtm_tst_readline_version) then
+	if ($gtm_tst_readline_version < 8) then
+		setenv subtest_exclude_list "$subtest_exclude_list D9G12002636"
+	endif
 endif
 
 $gtm_tst/com/submit_subtest.csh

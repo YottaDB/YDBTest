@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2020-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -139,6 +139,17 @@ if (("HOST_LINUX_X86_64" != $gtm_test_os_machtype) || ("pro" != "$tst_image")) t
 else if ($?ydb_test_exclude_ydb749) then
 	if ($ydb_test_exclude_ydb749) then
 		setenv subtest_exclude_list "$subtest_exclude_list ydb749"
+	endif
+endif
+
+# Readline version
+# This bug shows up in Readline v7, and has since been fixed
+# https://lists.gnu.org/archive/html/bug-readline/2017-03/msg00010.html
+# Valgrind shows the bug in test ydb704
+# If $gtm_tst_readline_version is less than 8, then exclude this test
+if ($?gtm_tst_readline_version) then
+	if ($gtm_tst_readline_version < 8) then
+		setenv subtest_exclude_list "$subtest_exclude_list ydb704"
 	endif
 endif
 

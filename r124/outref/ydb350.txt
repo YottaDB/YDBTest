@@ -61,12 +61,20 @@ SHELL
 strace -o trace4.outx $ydb_dist/mumps -direct
 
 YDB>use $principal do &sttydisp
+##SUSPEND_OUTPUT YDB_READLINE
 isig icanon iexten echo echoe echok -echonl -noflsh -xcase -tostop -echoprt
+##ALLOW_OUTPUT YDB_READLINE
+##SUSPEND_OUTPUT NON_YDB_READLINE
+##SUSPEND_OUTPUT YDB_READLINE6_OR_LESS
+isig icanon iexten echo echoe echok -echonl -noflsh -xcase -tostop -echoprt echoctl echoke -flusho -extproc
+##ALLOW_OUTPUT YDB_READLINE6_OR_LESS
+isig icanon iexten echo echoe echok -echonl -noflsh -xcase -tostop -echoprt echoctl echoke
+##ALLOW_OUTPUT NON_YDB_READLINE
 
 YDB>halt
 SHELL
 # Expecting 5 lines below : 1 tcsetattr call in op_use and 2 tcsetattr calls in dm_read for 2 M lines of input (do &sttydisp LINE and halt LINE)
-grep ioctl trace4.outx | grep TCSETS | sed 's/{.*}//g;s/SNDCTL_TMR_START or TCSETS/TCSETS/;'
+grep ioctl trace4.outx | grep TCSETS | sed 's/{.*}//g;s/SNDCTL_TMR_START or TCSETS/TCSETS/;s/SNDCTL_TMR_STOP or TCSETSW/TCSETSW /;s/TCSETSW/TCSETS/;'
 ioctl(0, TCSETS, ) = 0
 ioctl(0, TCSETS, ) = 0
 ioctl(0, TCSETS, ) = 0

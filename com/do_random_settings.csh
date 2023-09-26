@@ -37,7 +37,7 @@ echo "########## Begin do_random_settings.csh random settings ###########"	>>&! 
 # 	governed by the current time in second level granularity.
 # If any new randomness is added, check if speed test also needs to be changed to take it into consideration
 # arguments below are count-of-numbers-needed lower-bound upper-bound
-set randnumbers = `$gtm_tst/com/genrandnumbers.csh 49 1 100`
+set randnumbers = `$gtm_tst/com/genrandnumbers.csh 50 1 100`
 
 # Caution : No. of random choices below and the no. of random numbers generated above might not necessarily be the same.
 # 	    Increase the count by the number of new random numbers the newly introduced code needs.
@@ -1313,6 +1313,38 @@ endif
 echo "setenv gtm_test_use_V6_DBs $gtm_test_use_V6_DBs"						>>&! $settingsfile
 
 setenv tst_random_all "$tst_random_all gtm_test_use_V6_DBs"
+###########################################################################
+
+###########################################################################
+### Random option - 50 ### Randomly enable ydb_readline 50% of the time
+if !($?ydb_readline) then
+	if (50 >= $randnumbers[50]) then
+		setenv ydb_readline 1
+	else
+		setenv ydb_readline 0
+	endif
+	echo "# ydb_readline set by do_random_settings.csh"					>>&! $settingsfile
+else
+	echo "# ydb_readline was already set before coming into do_random_settings.csh"		>>&! $settingsfile
+endif
+if ($ydb_readline) then
+	# Make sure we don't use a user's INPUTRC, which may change the test output/behavior (e.g. vi mode, custom prompt, etc.)
+	setenv INPUTRC /dev/null
+	# Used to disable some tests
+	setenv gtm_tst_readline_version `/sbin/ldconfig -p | grep -m1 -F libreadline.so. | cut -d" " -f1 | sed 's/.*libreadline.so.\([a-z]*\)\([0-9\.]*\)/\2.\1/;s/\.$//;'`
+else
+	unsetenv INPUTRC
+	unsetenv gtm_tst_readline_version
+endif
+echo "setenv ydb_readline $ydb_readline"							>>&! $settingsfile
+if ($?INPUTRC) then
+	echo "setenv INPUTRC $INPUTRC"								>>&! $settingsfile
+endif
+if ($?gtm_tst_readline_version) then
+	echo "setenv gtm_tst_readline_version $gtm_tst_readline_version"			>>&! $settingsfile
+endif
+
+setenv tst_random_all "$tst_random_all ydb_readline"
 ###########################################################################
 
 # For any change to tst_random_all, a corresponding change is required in log_report.awk, to show in final report

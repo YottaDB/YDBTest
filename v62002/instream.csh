@@ -105,6 +105,16 @@ if ($gtm_test_singlecpu) then
 	setenv subtest_exclude_list "$subtest_exclude_list gtm6638"
 endif
 
+if ($?ydb_readline) then
+	# Right now, the readline implementation does not support stopping wrapping
+	# Disable this test until we switch to use the Readline callback interface, which will
+	# allow us to arbitrarily wrap whenever we want
+	# This is tracked at https://gitlab.com/YottaDB/DB/YDB/-/issues/1039
+	if ( "0" != $ydb_readline ) then
+		setenv subtest_exclude_list "$subtest_exclude_list gtm3912"
+	endif
+endif
+
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh
 

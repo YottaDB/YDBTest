@@ -157,6 +157,7 @@ BEGIN {
 			if (0 != rval[i]) printf "V6DB:%s ",ENVIRON["gtm_test_v6_dbcreate_rand_ver"];
 			else printf "V6DB: "
 		}
+		if ( "ydb_readline" == rname ) printf "RL:%-1s ",rval[i]
 	}
 	print "",$3
 }

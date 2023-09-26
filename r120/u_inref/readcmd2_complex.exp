@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -64,10 +64,10 @@ for {set i 0} {$i < $nreadswithinput} {incr i 1} {
 		}
 	}
 	if {$choice == 2} {
-		expect -exact "${keypad_local}\r\n${keypad_xmit}"
+		expect -exact "\r\n${keypad_xmit}"
 		send -- "$readinput\r"
 	} elseif {$choice == 1} {
-		expect -exact "${keypad_local}\r\n${keypad_xmit}"
+		expect -exact "\r\n${keypad_xmit}"
 		send -- "$readinput"
 	} else {
 		expect -exact "\r\n"
@@ -87,7 +87,7 @@ for {set j 0} {$j < $ncursorupordowncnt} {incr j 1} {
 	set readhistindexfirsttime 1
 	set oldstr ""
 	send -- "read x($i)\r"
-	expect -exact "${keypad_local}\r\n${keypad_xmit}"
+	expect -exact "\r\n${keypad_xmit}"
 	set upordown($j) [expr 1 + {int(rand()*${maxindex}*2)}]
 	puts "\n# Use Up/Down arrow $upordown($j) times"
 	for {set k 0} {$k < $upordown($j)} {incr k 1} {
@@ -113,7 +113,7 @@ for {set j 0} {$j < $ncursorupordowncnt} {incr j 1} {
 		set oldstr ${newstr}
 	}
 	send -- "\r"
-	expect -exact "${keypad_local}\r\n\rYDB>${keypad_xmit}"
+	expect -exact "YDB>"
 	# Increment ^failcnt if test failed
 	send -- "if x($i)'=\"${newstr}\" write \"Expected x($i)=$newstr but actual=\",x($i),! if \$incr(^failcnt)\r"
 	expect -exact "YDB>"

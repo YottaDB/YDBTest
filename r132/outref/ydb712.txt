@@ -20,9 +20,16 @@ Starting $ZINTERRUPT test with code fragment that gets an error (LVUNDEF)
 
 YDB>set $zinterrupt="write ""in interrupt"",! write c,!" if ($zsigproc($job,"sigusr1"))
 
+##SUSPEND_OUTPUT YDB_READLINE
 YDB>%YDB-E-ZINTRECURSEIO, Attempt to do IO to the active device in $ZINTERRUPT
 %YDB-E-ERRWZINTR, Error while processing $ZINTERRUPT
 
+##ALLOW_OUTPUT YDB_READLINE
+##SUSPEND_OUTPUT NON_YDB_READLINE
+%YDB-E-ZINTRECURSEIO, Attempt to do IO to the active device in $ZINTERRUPT
+%YDB-E-ERRWZINTR, Error while processing $ZINTERRUPT
+YDB>
+##ALLOW_OUTPUT NON_YDB_READLINE
 
 YDB>halt
 SHELL

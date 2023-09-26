@@ -416,6 +416,17 @@ BEGIN {
 		envir[no_options] = "4G_ABOVE_DB_BLKS"
 	else
 		envir[no_options] = "4G_BELOW_DB_BLKS"
+	option_names[++no_options] = "ydb_readline"
+	if (0 != ENVIRON["ydb_readline"]) {
+		envir[no_options] = "YDB_READLINE"
+		option_names[++no_options] = "gtm_tst_readline_version"
+		if (ENVIRON["gtm_tst_readline_version"] < 8)
+			envir[no_options] = "YDB_READLINE7_OR_LESS"
+		if (ENVIRON["gtm_tst_readline_version"] < 7)
+			envir[no_options] = "YDB_READLINE6_OR_LESS"
+	}
+	else
+		envir[no_options] = "NON_YDB_READLINE"
 	#
 	# For now set the [UPGRADE_DOWNGRADE_UNSUPPORTED] tag all the time as MUPIP UPGRADE/MUPIP DOWNGRADE functionality
 	# is not supported in V7 format database and likely will not be supported (by GT.M) in the future either.

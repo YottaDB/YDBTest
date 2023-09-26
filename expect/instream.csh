@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -75,6 +75,16 @@ endif
 
 if ($?gtm_test_temporary_disable) then
 	setenv subtest_exclude_list "$subtest_exclude_list terminal5"
+endif
+
+if ($?ydb_readline) then
+	# Right now, the readline implementation does not support stopping reads at terminators
+	# Disable this test until we switch to use the Readline callback interface, which will
+	# allow us to read character by character and handle terminators
+	# This is tracked at https://gitlab.com/YottaDB/DB/YDB/-/issues/1039
+	if ( "0" != $ydb_readline ) then
+		setenv subtest_exclude_list "$subtest_exclude_list gtm7994"
+	endif
 endif
 
 # Use sed filters to remove subtests that are to be disabled on a particular host or OS

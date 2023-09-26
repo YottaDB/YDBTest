@@ -12,6 +12,7 @@ SHELL$ydb_dist/yottadb -direct
 
 YDB>set $zint="w 1/0" if $zsigproc($j,"SIGUSR1")
 
+##SUSPEND_OUTPUT YDB_READLINE
 YDB>%YDB-E-DIVZERO, Attempt to divide by zero
 %YDB-E-ERRWZINTR, Error while processing $ZINTERRUPT
 xxx
@@ -19,5 +20,15 @@ xxx
 	xxx
 	^-----
 
+##ALLOW_OUTPUT YDB_READLINE
+##SUSPEND_OUTPUT NON_YDB_READLINE
+%YDB-E-DIVZERO, Attempt to divide by zero
+%YDB-E-ERRWZINTR, Error while processing $ZINTERRUPT
+YDB>xxx
+%YDB-E-INVCMD, Invalid command keyword encountered
+	xxx
+	^-----
+
+##ALLOW_OUTPUT NON_YDB_READLINE
 YDB>halt
 SHELL
