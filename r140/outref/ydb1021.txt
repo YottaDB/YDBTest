@@ -1,0 +1,21 @@
+# Test that MUPIP SET JOURNAL is able to switch older format journal files (without a FILEEXISTS error)
+# Switch to version V63014_R138 (YottaDB r1.38)
+# Create journal file using YottaDB r1.38 (guaranteed to be an older format journal file)
+Files Created in ##TEST_PATH##:
+##TEST_AWKUsing: .*/mumps -run GDE
+mumps.gld
+##TEST_AWKUsing: .*/mupip
+mumps.dat
+# Verify mumps.mjl exists
+mumps.mjl
+# Switch to current test version
+# Run [mupip set -journal] using current test version
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with (|NO)BEFORE_IMAGES
+%YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
+# Verify journal file switch happened and that there are 2 journal files mumps.mjl*
+mumps.mjl
+##TEST_AWKmumps.mjl_[0-9]*(_[0-9][0-9]*|[0-9])
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -16,17 +16,18 @@
 #---------------------------------------------------------------------------------------------------------------------------------------------------
 # ydb996      [nars]    Test that LISTENING TCP sockets can be passed
 # ydb998      [sam]     TSTART should not open the default global directory
-# ydbpython32 [sam]	CTRL-C on Flask Application terminates properly
+# ydbpython32 [sam]     CTRL-C on Flask Application terminates properly
 # ydb994      [nars]    Test various code issues identified by fuzz testing
 # ydb1024     [nars]    Fix OPEN of a socket type file name to not assert fail in io_open_try.c
 # ydb1026     [nars]    Test that ZWRITE to file output device with STREAM + NOWRAP does not split/break lines
+# ydb1021     [nars]    Test that MUPIP SET JOURNAL is able to switch older format journal files (without a FILEEXISTS error)
 #---------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r140 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "ydb996 ydb998 ydbpython32 ydb994 ydb1024 ydb1026"
+setenv subtest_list_non_replic "ydb996 ydb998 ydbpython32 ydb994 ydb1024 ydb1026 ydb1021"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
