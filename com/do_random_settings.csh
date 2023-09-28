@@ -37,7 +37,7 @@ echo "########## Begin do_random_settings.csh random settings ###########"	>>&! 
 # 	governed by the current time in second level granularity.
 # If any new randomness is added, check if speed test also needs to be changed to take it into consideration
 # arguments below are count-of-numbers-needed lower-bound upper-bound
-set randnumbers = `$gtm_tst/com/genrandnumbers.csh 48 1 100`
+set randnumbers = `$gtm_tst/com/genrandnumbers.csh 49 1 100`
 
 # Caution : No. of random choices below and the no. of random numbers generated above might not necessarily be the same.
 # 	    Increase the count by the number of new random numbers the newly introduced code needs.
@@ -1271,6 +1271,50 @@ endif
 
 setenv tst_random_all "$tst_random_all ydb_test_4g_db_blks"
 ###########################################################################
+
+###########################################################################
+### Random option - 49 ### Randomly enable V6, format databases requiring random V6 version to create the DBs
+#
+# Decide on our random V6 version to select (if not already specified). This version will be used for DB
+# creations. Note even if V6 DB mode is disabled now at this point, there are tests that explicitly
+# enable it so we definitely need to set $gtm_test_v6_dbcreate_rand_ver to a usable version - even if
+# we never use the chosen version as it may be overriden (on or off) in the test itself which we cannot
+# know at this point.
+if (! $?gtm_test_v6_dbcreate_rand_ver) then
+	setenv gtm_test_v6_dbcreate_rand_ver `$gtm_tst/com/random_ver.csh -gte V63003 -lt V70000`
+endif
+echo '# Random V6 version used to create V6 mode databases (when enabled)'			>>&! $settingsfile
+echo "setenv gtm_test_v6_dbcreate_rand_ver $gtm_test_v6_dbcreate_rand_ver"			>>&! $settingsfile
+#
+# If ydb_test_4g_db_blks has been selected, this we must use the current version of the database (V7 or later)
+if (0 != $ydb_test_4g_db_blks) then
+	echo '# gtm_test_use_V6_DBs being set to disable due to ydb_test_4g_db_blks has non-zero setting' >>&! $settingsfile
+	setenv gtm_test_use_V6_DBs 0
+else
+	#
+	# If we haven't already disabled setting the disk version, choose one or the other with 50% frequency
+	if (! $?gtm_test_use_V6_DBs) then
+		if (50 >= $randnumbers[49]) then
+			source $gtm_tst/com/enable_gtm_test_use_V6_DBs.csh  # Enable V6 DBs
+		else
+			setenv gtm_test_use_V6_DBs 0
+		endif
+		echo "# gtm_test_use_V6_DBs set by do_random_settings.csh"				>>&! $settingsfile
+	else
+		echo "# gtm_test_use_V6_DBs was already set before coming into do_random_settings.csh"	>>&! $settingsfile
+		#
+		# $gtm_test_use_V6_DBs is already set coming in here. If it was set to '1' then we need to drive our
+		# script to do the full enable which includes driving com/ydb_prior_ver_check.csh.
+		if (1 == $gtm_test_use_V6_DBs) then
+			source $gtm_tst/com/enable_gtm_test_use_V6_DBs.csh  # Enable V6 DBs
+		endif
+	endif
+endif
+echo "setenv gtm_test_use_V6_DBs $gtm_test_use_V6_DBs"						>>&! $settingsfile
+
+setenv tst_random_all "$tst_random_all gtm_test_use_V6_DBs"
+###########################################################################
+
 # For any change to tst_random_all, a corresponding change is required in log_report.awk, to show in final report
 echo "########### End do_random_settings.csh random settings ############"			>>&! $settingsfile
 echo "setenv tst_random_all '$tst_random_all'"							>>&! $settingsfile

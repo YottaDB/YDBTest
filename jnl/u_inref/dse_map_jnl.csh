@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2002, 2013 Fidelity Information Services, Inc	#
+# Copyright 2002, 2013 Fidelity Information Services, Inc	#
 #								#
 # Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
@@ -25,13 +25,13 @@ setenv gtm_dirtree_collhdr_always 1
 # errors (which show up as "Incorrectly marked free" and "Incorrectly marked busy" integrity errors in different bitmap blocks).
 # Therefore the greater than 4Gi db blocks scheme is disabled in this test.
 setenv ydb_test_4g_db_blks 0
-
+setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode due to differences in MUPIP INTEG output
 ##################################
 echo "##########"
 echo "First Part"
 echo "##########"
 unsetenv test_replic
-source $gtm_tst/com/dbcreate.csh mumps 1 255 1010 1536
+$gtm_tst/com/dbcreate.csh mumps 1 255 1010 1536
 $MUPIP set -journal=enable,on,before -reg "*"
 set format="%d-%b-%Y %H:%M:%S"
 set time1=`date +"$format"`

@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2021-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -10,7 +10,10 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
-
+#
+# Disallow use of V6 mode DBs using a random V6 version as it changes the output from MUPIP INTEG and MUPIP SIZE
+setenv gtm_test_use_V6_DBs 0
+#
 echo '# ----------------------------------------------------------------------------------------------'
 echo '# Test that MUPIP SIZE -HEURISTIC="SCAN,LEVEL=1" gives accurate results (not a MUSIZEFAIL error)'
 echo '# ----------------------------------------------------------------------------------------------'

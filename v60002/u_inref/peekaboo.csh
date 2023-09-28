@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2013, 2014 Fidelity Information Services, Inc	#
+# Copyright 2013, 2014 Fidelity Information Services, Inc	#
 #								#
 # Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
@@ -25,6 +25,7 @@ if ((1 == $gtm_test_spanreg) || (3 == $gtm_test_spanreg)) then
 endif
 setenv gtm_test_spanreg		0	# We have already pointed a spanning gld to test_specific_gde
 setenv gtm_test_jnlfileonly	0	# We mangle the journal, so avoid forcing the source to read it.
+setenv gtm_test_use_V6_DBs 0		# Disable V6 DB mode due to differences in reported DB version (GDSDYNUNX03/04)
 unsetenv gtm_test_jnlpool_sync		# ditto
 
 if (0 == $?test_replic) then

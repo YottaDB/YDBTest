@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2012, 2014 Fidelity Information Services, Inc	#
+# Copyright 2012, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -18,7 +21,9 @@
 # errors			[Kishore]	Test all error scenarios
 # rp_pp				[Balaji]	Test erroronous uses of -rootprimary and -propagateprimary
 # dummy_passive_source_server	[Balaji]	Test that if the instance name of the secondary-to-be is unknown, using a dummy passive source server works
-
+if (0 != $test_replic_mh_type) then
+	setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode due to difficulties with remote systems having same V6 version to create DBs
+endif
 echo "Part F of multisite_replic tests starts..."
 
 

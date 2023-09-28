@@ -23,6 +23,7 @@ setenv test_encryption NON_ENCRYPT
 setenv ydb_test_4g_db_blks 0		# Disable this debug-only huge db scheme too as it does not work with MM
 source $gtm_tst/com/mm_nobefore.csh	# Force NOBEFORE image journaling with MM
 setenv gtm_test_spanreg 0		# The test expects a certain # of updates to fill the db allocation of DEFAULT
+setenv gtm_test_use_V6_DBs 0 		# Use current DB version only - use of V6 DB will fail test (see commit 42ea8cf5 for details)
 
 echo "# Since we need specific allocations/extension values for multiple regions, use a custom gde file."
 setenv test_specific_gde $gtm_tst/$tst/u_inref/gtm8523.gde

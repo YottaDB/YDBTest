@@ -106,7 +106,7 @@ DSE> DSE>
 YDB>
 
 --------- (b3) Test RSVDBYTE2HIGH error at the index level -------------------
-%YDB-E-RSVDBYTE2HIGH, Record size (264) is greater than the maximum allowed for region DEFAULT with Block size (1024) and Reserved bytes (768),%YDB-I-GVIS, 		Global variable: ^x("                                                                                                                                                                                                                                     2")
+##TEST_AWK%YDB-E-RSVDBYTE2HIGH, Record size \((260|264)\) is greater than the maximum allowed for region DEFAULT with Block size \(1024\) and Reserved bytes \(768\),%YDB-I-GVIS, 		Global variable: \^x\("                                                                                                                                                                                                                                     2")
 		At M source location data4+8^d002587
 
 YDB>

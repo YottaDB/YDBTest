@@ -1,11 +1,27 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+# Portions Copyright (c) Fidelity National Information		#
+# Services, Inc. and/or its subsidiaries.			#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
 #
 # S9H12-002672 MUPIP BACKUP should release ALL CRIT before sleep-waiting for kill-in-progress
 #
 echo "ENTERING D9H12002672"
+# Don't allow V6 mode databases to be selected as it causes reference file differences in MUPIP INTEG output.
+setenv gtm_test_use_V6_DBs 0
 #
 # Create database with 3 regions
-$gtm_tst/com/dbcreate.csh . 3 
+$gtm_tst/com/dbcreate.csh . 3
 
 #multi-region commands works on ftok order. Do a mupip backup to get database and region name variables defined in ftok order
 source $gtm_tst/$tst/u_inref/db_reg_var.csh

@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -23,6 +23,9 @@
 #setenv tst_working_dir `pwd`
 #rm *.o
 #rm *.so
+
+# Bypass using V6 mode DBs as it causes LKE LOCKSPACEINFO/LOCKSPACEUSE messages to have different values
+setenv gtm_test_use_V6_DBs 0
 
 source $gtm_tst/com/unset_ydb_env_var.csh ydb_env_translate gtm_env_translate
 setenv compile  "$gt_cc_compiler $gtt_cc_shl_options $gt_cc_option_debug -I$gtm_dist -I$gtm_tst/com"

@@ -4,7 +4,7 @@
 # Copyright (c) 2008-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -23,6 +23,8 @@
 # The dse restore command below will print an additional line about renaming jnl file, if journaling is enabled
 # so, let's not randomly enable journaling in dbcreate.csh
 setenv gtm_test_jnl NON_SETJNL
+# Disable V6 mode DBs to reduce minor differences in DSE output
+setenv gtm_test_use_V6_DBs 0
 
 # disable random 4-byte collation header in DT leaf block since this test output is sensitive to DT leaf block layout
 setenv gtm_dirtree_collhdr_always 1

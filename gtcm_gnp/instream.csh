@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh
 #################################################################
 #								#
-#	Copyright 2002, 2014 Fidelity Information Services, Inc	#
+# Copyright 2002, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -17,6 +20,7 @@
 echo "Testing GT.CM..."
 
 setenv tst_gtcm_trace 1
+setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode due to difficulties with remote systems having same V6 version to create DBs
 # crash_client subtest is removed, since killclwithlock tests the same functionality
 setenv subtest_list "basic locks_gtcm locks_client_first locks_two_clients crash_server "
 setenv subtest_list "$subtest_list multi_proc_jnl namelevel killsvrwithlock killclwithlock triggers"

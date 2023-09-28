@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -19,7 +19,51 @@
 # if acc_meth has a value of "MM" then the database is given an access_method of mm
 #
 #####
-#####
+#
+# We are potentially (if doing V6 databases) about to reset the version we use to create the
+# databases (reverting to our test version at the end). The issue is that when the DBs are created
+# with various versions, this presents problems with the reference file and masking those random versions
+# so we are going to save the values of what would be $GDE and $MUPIP here - before the version is changed
+# and then use these versions as objects of the 'Using: ' lines echoed to the output. This makes the version
+# predictable (but wrong). But if we do change the version, the version we're using will be recorded in
+# the v6debug file if it becomes needful to know.
+#
+set CURR_GDE = "$gtm_dist/mumps -run GDE"
+set CURR_MUPIP = "$gtm_dist/mupip"
+#
+# See if we've requested a V6 format database.
+#
+set v6switch_done = 0
+echo >> v6debug.txt # Spacing between potentially multiple calls to dbcreate.csh.
+echo "gtm_dist: $gtm_dist" >> v6debug.txt
+echo "tst_ver:  $tst_ver" >> v6debug.txt
+if ($?gtm_test_use_V6_DBs) then
+	echo "gtm_test_use_V6_DBs: $gtm_test_use_V6_DBs" >> v6debug.txt
+	if (1 == $gtm_test_use_V6_DBs) then
+		# We are requesting a V6 format database - must switch to a previously determined (in do_random_settings.csh)
+		# V6 version.
+		if ($?gtm_chset) then
+			echo "gtm_chset (before): $gtm_chset" >> v6debug.txt
+		else
+			echo "gtm_chset (before): <undefined>" >> v6debug.txt
+		endif
+		source $gtm_tst/com/switch_gtm_version.csh $gtm_test_v6_dbcreate_rand_ver $tst_image >> v6debug.txt
+		if ("V63003A_R120" == "$gtm_test_v6_dbcreate_rand_ver") then
+			# This version requires a msgprefix of GTM for GDE to work at all
+			echo "dbcreate_base (top): gtm_test_v6_dbcreate_rand_ver: $gtm_test_v6_dbcreate_rand_ver" >> v6debug.txt
+			setenv ydb_msgprefix "GTM"
+		endif
+		if ($?gtm_chset) then
+			echo "gtm_chset (after): $gtm_chset" >> v6debug.txt
+		else
+			echo "gtm_chset (after): <undefined>" >> v6debug.txt
+		endif
+		echo `$gtm_dist/mumps -run ^%XCMD 'zwrite $zchset'` >>& v6debug.txt
+		set v6switch_done = 1
+	endif
+endif
+echo "gtm_dist: $gtm_dist" >> v6debug.txt
+
 #check the existence of the necessary environment variables and initialize them to a standard value if they do not exist
 #first determine where the source is (instead of using gtm_tst
 #if gtm_tst is defined, i.e. inside test_suite, use gtm_tst
@@ -30,8 +74,10 @@ else
 	setenv gtm_tst $gtm_test/T990
 endif
 
+
 if (!($?gtm_exe) && !($?gtm_dist)) then
 	echo 'Please define $gtm_exe (or $gtm_dist)'
+	if ($v6switch_done) source $gtm_tst/com/dbcreate_reset_version.csh # Restore original version, reset ydb_msgprefix
 	exit 1
 endif
 
@@ -74,6 +120,7 @@ if ( $#argv == 0 ) then
 	echo " in increasing or decreasing order (in which case the ordering might need to be changed from what dbcreate uses))"
 	echo " 2. having to use user-specified gde commands with GT.CM tests for some reason (such as the above)"
 	echo "Don't forget to also call dbcheck.csh/dbcheck_filter.csh at the end of the test."
+	if ($v6switch_done) source source $gtm_tst/com/dbcreate_reset_version.csh # Restore original version, reset ydb_msgprefix
 	exit 1
 endif
 
@@ -148,6 +195,7 @@ endif
 if ($?test_specific_gde) then
 	if ("GT.CM" == $test_gtm_gtcm) then
 		echo "TEST-E-GTCMvsGDE \$test_specific_gde option is not supported for GT.CM testing"
+		if ($v6switch_done) source source $gtm_tst/com/dbcreate_reset_version.csh # Restore original version, reset ydb_msgprefix
 		exit 1
 	endif
 	# none of the test using $test_specific_gde use a random version
@@ -167,6 +215,7 @@ if ($?test_specific_gde) then
 		\mv -f tmp.tmp.tmp tmp.com
 	else
 		echo "TEST-E-TEST_SPECIFIC_GDE File $test_specific_gde not found"
+		if ($v6switch_done) source $gtm_tst/com/dbcreate_reset_version.csh # Restore original version, reset ydb_msgprefix
 		exit 1
 	endif
 endif
@@ -207,6 +256,7 @@ _GDEEOF_
 	\$gtm_tst/com/gdeshowdiff.csh oldgde.log newgde.log
 	if ( \$status ) then
 	    echo "show -command failed to create identical global directory. Exiting ..."
+	    if ($v6switch_done) source $gtm_tst/com/dbcreate_reset_version.csh # Restore original version, reset ydb_msgprefix
 	    exit 1
 	else
 	    echo "show -command successful"
@@ -218,6 +268,7 @@ CAT_EOF
 	source tmp_gdeshowcmd.com >>&! dbcreate_gdeshowcmd.out
 	if ($status) then
 		echo "TEST-E-DBCREATE. using output of gde show -commands failed to produce identical gld. Check dbcreate_gdeshowcmd.out for details"
+		if ($v6switch_done) source $gtm_tst/com/dbcreate_reset_version.csh # Restore original version, reset ydb_msgprefix
 		exit 1
 	endif
 endif
@@ -234,7 +285,7 @@ if ("-GTCM_LOCAL" == "$1") then
 	$grep "areg" tmp.com >&! /dev/null 	#check if there is a region AREG
 	if ($status) then
 		echo "Files Created in `pwd`:"
-		echo "Using: $GDE"
+		echo "Using: $CURR_GDE"
 		\ls $dbname.gld
 		exit
 	endif
@@ -250,6 +301,33 @@ else
 	$MUPIP create  >>&! dbcreate.out
 	set stat = $status
 endif
+if ($stat) then
+	echo "TEST-E-DBCREATE_MUPIP ERROR from $MUPIP create"
+	cat dbcreate.out
+	if ($v6switch_done) source $gtm_tst/com/dbcreate_reset_version.csh # Restore original version, reset ydb_msgprefix
+	exit 1
+endif
+
+# If we switched to V6 to create the DBs, we need to revert back to whatever version we are running
+# with. In addition, in order to be able to use the V6 gld files, we need to open them with V7 GDE
+# and exit to cause the gld to be rewritten in V7's upgraded format.
+#
+if ($v6switch_done) then
+	echo "Switch version back" >> v6debug.txt
+	source $gtm_tst/com/dbcreate_reset_version.csh # Restore original version, reset ydb_msgprefix
+	#
+	# Open the global dir we created and close it to upgrade it to V7 format
+	#
+	echo "gtm_dist:  $gtm_dist" >> v6debug.txt
+	if ($?gtm_chset) then
+		echo "gtm_chset: $gtm_chset" >> v6debug.txt
+	else
+		echo "gtm_chset: <undefined>" >> v6debug.txt
+	endif
+	echo `$gtm_dist/mumps -run ^%XCMD 'zwrite $zchset'` >>& v6debug.txt
+	$gtm_dist/mumps -run GDE EXIT >>& upgrade_v6_gld_to_v7.log
+endif
+
 # If $?gtm_custom_errors is defined at this point, then MUPIP SET -VERSION done below will try to open $gtm_repl_instance (as part
 # of jnlpool_init) to setup the journal pool. But, the file pointed to by $gtm_repl_instance doesn't exist at this point because
 # MUPIP REPLIC -INSTANCE_CREATE is not yet done. So, temporarily undefine $gtm_custom_errors to avoid FTOKERR/ENO2 errors.
@@ -277,9 +355,9 @@ if (($gtm_test_trigger) && ($?test_specific_trig_file)) then
 	@ stat = $stat + $status
 endif
 if ($stat) then
-echo "TEST-E-DBCREATE_MUPIP ERROR from $MUPIP create"
-cat dbcreate.out
-exit 1
+	echo "TEST-E-DBCREATE_MUPIP ERROR from $MUPIP create"
+	cat dbcreate.out
+	exit 1
 endif
 $grep -f $gtm_tst/com/errors_catch.txt dbcreate.out >& /dev/null
 if (! $status) then
@@ -288,8 +366,6 @@ if (! $status) then
 	$grep -f $gtm_tst/com/errors_catch.txt dbcreate.out
 	echo "---------------------------------------------------------------"
 endif
-#-------- temporary change till GDE works for GLOBAL_BUFFERS for MM      --- nars - 98/02/25_09:05am
-#-------- temporary change ends --------------------------------------------------------------------
 
 #chmod  +w $dbname.* >& /dev/null
 foreach value (a b c d e f g h i)
@@ -302,15 +378,16 @@ foreach value (a b c d e f g h i)
 end
 
 echo "Files Created in `pwd`:"
-echo "Using: $GDE"
+echo "Using: $CURR_GDE"
 \ls $dbname.gld
-echo "Using: $MUPIP"
+echo "Using: $CURR_MUPIP"
 if (("GT.CM" != $test_gtm_gtcm) && !($?gtm_test_silence_dbcreate)) then
 	\ls -1 *.dat
 else if (("GT.CM" != $test_gtm_gtcm) && ($?gtm_test_silence_dbcreate)) then
 	printf "GTM_TEST_DEBUGINFO: "
 	\ls *.dat
 endif
+#
 
 #############################################################################
 # collation testing:

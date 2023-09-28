@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -23,7 +23,7 @@ unsetenv gtm_db_counter_sem_incr	# When this value is randomly set to 16384, thi
 					# file-header flushes) leaving just one pwrite64() call instead of the 4 calls
 					# we expect to get. So unset this envvar so we get consistent results.
 setenv gtm_test_mupip_set_version "disable"     # ASYNCIO and V4 format don't go together. So, disable creating V4 formats
-
+setenv gtm_test_use_V6_DBs 0	  	# Disable V6 DB mode due to DB version showing up in output causing failures with prior DB formats
 echo '## Create database'
 $gtm_tst/com/dbcreate.csh mumps
 echo

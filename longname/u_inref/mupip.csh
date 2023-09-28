@@ -23,6 +23,7 @@ endif
 
 # the output of this test relies on transaction numbers, so let's not do anything that might change the TN
 setenv gtm_test_mupip_set_version "disable"
+setenv gtm_test_use_V6_DBs 0	  		# Disable V6 DB mode due to differences in MUPIP INTEG and various DSE command outputs
 setenv gtm_test_disable_randomdbtn
 setenv gtm_test_spanreg 0	# The test has mostly single key globals and has a lot of integ output.
 # 'go' format is not supported in UTF-8 mode

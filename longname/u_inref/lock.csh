@@ -4,13 +4,18 @@
 # Copyright (c) 2004-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
-
+#
+# Disable use V6 mode DBs using a random V6 version to create the DBs due to extreme reference file perturbation in LKE output
+setenv gtm_test_use_V6_DBs 0
 # use gde_long4 instead of dbcreate.csh since we do not want too many regions
 
 setenv test_specific_gde $gtm_tst/$tst/inref/gdelong4.gde

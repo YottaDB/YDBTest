@@ -3,7 +3,7 @@
 #								#
 # Copyright 2002, 2013 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -34,6 +34,7 @@ endif
 setenv test_reorg NON_REORG
 # the output of this test relies on transaction numbers, so let's not do anything that might change the TN
 setenv gtm_test_mupip_set_version "disable"
+setenv gtm_test_use_V6_DBs 0	  	# Disable V6 DB mode due to minor DB version difference between extract DB and restore-to DB causes failure
 setenv gtm_test_disable_randomdbtn
 
 # Create keys for online6.dat and online66.dat before the MUPIP RESTORE operation starts.

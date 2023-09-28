@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -21,6 +21,7 @@ echo "Begin jnl_set test..."
 # the output of this test relies on dse dump -file output, therefore let's not change the block version:
 setenv gtm_test_mupip_set_version "disable"
 setenv gtm_test_disable_randomdbtn
+setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode due to differences in DSE output
 source $gtm_tst/com/dbcreate.csh mumps 1
 
 $MUPIP set -reg $tst_jnl_str "*" >&! jnl_on.log

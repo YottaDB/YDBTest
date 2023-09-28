@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2002, 2014 Fidelity Information Services, Inc	#
+# Copyright 2002, 2014 Fidelity Information Services, Inc	#
 #                                                               #
 # Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
@@ -13,7 +13,9 @@
 #								#
 #################################################################
 #
-
+if (0 != $test_replic_mh_type) then
+	setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode due to difficulties with remote systems having same V6 version to create DBs
+endif
 source $gtm_tst/com/gtm_test_trigupdate_disabled.csh   # subtests in this test do a failover and so disable -trigupdate
 
 # subtests in this test do a failover. A->P won't work in this case.

@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2012, 2013 Fidelity Information Services, Inc	#
+# Copyright 2012, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -18,6 +21,8 @@ if ((1 == $gtm_test_spanreg) || (3 == $gtm_test_spanreg)) then
 	setenv test_specific_gde $gtm_tst/$tst/inref/restrict_region_col${colno}.gde
 endif
 setenv gtm_test_spanreg 0	# We have already pointed a spanning gld to test_specific_gde
+# Disable use of V6 DB mode using random V6 versions to create the DBs as that changes MUPIP REORG output
+setenv gtm_test_use_V6_DBs 0
 
 $gtm_tst/com/dbcreate.csh mumps 4
 

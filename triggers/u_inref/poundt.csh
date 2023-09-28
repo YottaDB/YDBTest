@@ -4,7 +4,7 @@
 # Copyright (c) 2010-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -13,6 +13,12 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+
+# Disable use of V6 DB mode using random V6 versions to create DBs as this test is checking minor
+# database versions of the original versus backed-up/restored database. If this setting was 1, it
+# could create the DB with one minor version, then the back-up/restore would be done by a V7 version
+# that causes the failures.
+setenv gtm_test_use_V6_DBs 0
 
 # This test verifies that ^#t is inaccessible from within the GT.M runtime as well as database
 # extracts.  The corollary is that ^#t in extracts will not be loaded by MUPIP

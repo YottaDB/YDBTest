@@ -4,6 +4,9 @@
 # Copyright (c) 2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -16,6 +19,9 @@
 #-------------------------------------------------------------------------------------
 
 echo "tcp_bkup test starts..."
+if (0 != $test_replic_mh_type) then
+	setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode due to difficulties with remote systems having same V6 version to create DBs
+endif
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""

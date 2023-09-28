@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -13,6 +13,10 @@
 # This module is derived from FIS GT.M.
 #################################################################
 
+# Disable use of V6 DB mode by using a random V6 version to create the DBs to prevent warning coming out of
+# MUPIP CREATE that causes problems for this test (GTM-W-MUNOSTRMBKUP).
+# See https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/1682#note_1515770845 for more information.
+setenv gtm_test_use_V6_DBs 0
 
 # Get the limit for the max record size and max key size
 source $gtm_tst/com/set_random_limits.csh

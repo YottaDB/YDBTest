@@ -1,7 +1,10 @@
 #! /usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2010, 2013 Fidelity Information Services, Inc	#
+# Copyright 2010, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -9,6 +12,7 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode due to differences in MUPIP INTEG output
 #
 #########################################
 # D9J02002719.csh  test for mupip integ #

@@ -2,7 +2,7 @@ Verify that autoswitch occurs as expected when non-spanning globals are used.
 
 ----------
 Error MUNOSTRMBKUP seen in dbcreate.out as expected:
-%YDB-W-MUNOSTRMBKUP, Database ##TEST_PATH##/mumps.dat has a block size larger than 32256 and thus cannot use stream (incremental) backup
+##TEST_AWK%(GTM|YDB)-W-MUNOSTRMBKUP, Database ##TEST_PATH##/mumps.dat has a block size larger than 32256 and thus cannot use stream \(incremental\) backup
 ----------
 
 ##SOURCE_PATH##/mupip

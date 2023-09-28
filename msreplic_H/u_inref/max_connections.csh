@@ -38,6 +38,7 @@ EOF
 # use 1MB receivepool and jnlpool (the minimum value) and cut down the number of global buffers to 64. This is to reduce
 # the chances of the test taking a long time to run (we have seen it take 15 hours on an armv6l box) due to a memory crunch.
 setenv gtm_test_msr_smallenvironment
+setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode due to tracked differences in standard null collation default setting
 set global_buffers = ""
 if ($gtm_test_singlecpu) then
 	setenv tst_buffsize  1048576

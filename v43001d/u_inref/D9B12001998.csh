@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2002, 2013 Fidelity Information Services, Inc	#
+# Copyright 2002, 2013 Fidelity Information Services, Inc	#
 #								#
 # Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
@@ -12,7 +12,7 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
-
+setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode due to differences in MUPIP INTEG output
 # Since the reference file for this test has "SUSPEND_OUTPUT 4G_ABOVE_DB_BLKS" usage, it needs to fixate
 # the value of the "ydb_test_4g_db_blks" env var in case it is randomly set by the test framework to a non-zero value.
 if (0 != $ydb_test_4g_db_blks) then

@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2012, 2014 Fidelity Information Services, Inc	#
+# Copyright 2012, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -18,7 +21,10 @@
 # primary_to_tertiary_transition [Kishore]	Test the transitions of primary to be a tertiary
 # crash_passive_source		[Nergis]	Test that a passive source server to a tertiary can be restarted (after a crash) as an active propagateprimary
 # start_order			[Balaji]	Test different starting orders of source server and receiver server on an instance
-
+#
+if (0 != $test_replic_mh_type) then
+	setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode due to difficulties with remote systems having same V6 version to create DBs
+endif
 echo "Part G of multisite_replic tests starts..."
 
 

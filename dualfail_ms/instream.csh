@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2006, 2014 Fidelity Information Services, Inc	#
+# Copyright 2006, 2014 Fidelity Information Services, Inc	#
 #								#
 # Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
@@ -13,6 +13,9 @@
 #								#
 #################################################################
 #
+if (0 != $test_replic_mh_type) then
+	setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode due to difficulties with remote systems having same V6 version to create DBs
+endif
 setenv tst_jnl_str `echo "$tst_jnl_str" | sed 's/,align=[1-9][0-9]*//'`
 echo "DUAL_FAIL_MULTISITE test Starts..."
 setenv gtm_test_dbfill "IMPTP"

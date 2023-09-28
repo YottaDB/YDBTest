@@ -14,8 +14,10 @@
 #								#
 #################################################################
 
-# disable random 4-byte collation header in DT leaf block since this test output is sensitive to DT leaf block layout
+# Disable random 4-byte collation header in DT leaf block since this test output is sensitive to DT leaf block layout
 setenv gtm_dirtree_collhdr_always 1
+# Disable use of V6 DB mode using random V6 versions to create DBs as this causes differences in DSE output
+setenv gtm_test_use_V6_DBs 0
 #=====================================================================
 # This subtest will be called from instream when the test is not submitted with replication (and also when the test is
 # submitted with -unicode, in which case it can be the only subtest). i.e. even if the test was not submitted with

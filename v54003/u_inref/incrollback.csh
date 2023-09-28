@@ -4,6 +4,9 @@
 # Copyright (c) 2011-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -12,6 +15,10 @@
 #################################################################
 #
 # incrollback:  test that if transaction is too big, incremental rollback makes enough room for future global references
+
+# This test needs to run only the current version to keep the block number in the "transaction failed to read with block"
+# line in the reference file.
+setenv gtm_test_use_V6_DBs 0
 
 @ section = 0
 set echoline = "echo ---------------------------------------------------------------------------------------"

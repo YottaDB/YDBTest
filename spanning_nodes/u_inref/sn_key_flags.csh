@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -13,6 +13,10 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+
+# Disable use of V6 DB mode by using a random V6 version to create the DBs to prevent warning coming out of
+# MUPIP CREATE that causes problems for this test (GTM-W-MUNOSTRMBKUP).
+setenv gtm_test_use_V6_DBs 0
 
 source $gtm_tst/com/set_random_limits.csh
 

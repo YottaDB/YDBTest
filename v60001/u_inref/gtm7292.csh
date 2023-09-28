@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2012, 2014 Fidelity Information Services, Inc	#
+# Copyright 2012, 2014 Fidelity Information Services, Inc	#
 #								#
 # Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
@@ -22,6 +22,8 @@
 # (due to the big HOLE). It is not considered worth maintaining an even more complicated reference file just for this scheme
 # so disable it in this test.
 setenv ydb_test_4g_db_blks 0
+# Disable V6 DB mode as it causes differences in the output of MUPIP INTEG and DSE DUMP
+setenv gtm_test_use_V6_DBs 0
 
 # disable random 4-byte collation header in DT leaf block since this test output is sensitive to DT leaf block layout
 setenv gtm_dirtree_collhdr_always 1

@@ -4,7 +4,7 @@
 # Copyright (c) 2006-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -13,6 +13,10 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+#
+# Disable use of V6 mode DBs using random V6 versions to create DBs as this causes MUNOSTRMBKUP warning that is
+# searched for by the test (not just a reference file issue).
+setenv gtm_test_use_V6_DBs 0
 #
 # Test for limits on string length, source line length, db keysize, db record size.
 # because of larger block size we will end up with a YDB-W-MUNOSTRMBKUP warning and hence a subsequent dbcreate error

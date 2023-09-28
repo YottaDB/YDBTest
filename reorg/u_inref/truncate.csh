@@ -36,6 +36,7 @@ setenv gtm_test_spanreg 0 	# The calculated number of sets below doesn't work wi
 #
 setenv test_reorg NON_REORG
 setenv gtm_test_mupip_set_version "V5"
+setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode due to differences in MUPIP REORG -TRUNCATE output
 $gtm_tst/com/dbcreate.csh mumps 3 -block_size=1024	# The truncate tests below are sensitive to block layout
 $GDE << EOF
 add -name c* -region=breg

@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2002, 2013 Fidelity Information Services, Inc	#
+# Copyright 2002, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -12,11 +15,12 @@
 unsetenv test_replic
 setenv gtm_test_mupip_set_version "disable"
 setenv gtm_test_disable_randomdbtn
+setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode due to differences in MUPIP INTEG and DSE output
 
 # disable random 4-byte collation header in DT leaf block since this test output is sensitive to DT leaf block layout
 setenv gtm_dirtree_collhdr_always 1
 
-source $gtm_tst/com/dbcreate.csh mumps 1 255 1010 1536
+$gtm_tst/com/dbcreate.csh mumps 1 255 1010 1536
 $MUPIP set -journal=enable,on,before,epoch=30 -reg "*"
 set format="%d-%b-%Y %H:%M:%S"
 set time1=`date +"$format"`

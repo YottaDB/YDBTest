@@ -14,6 +14,8 @@
 echo "# Test that csd->flush_time is correctly auto upgraded and endian converted"
 echo "## Test DB auto upgrade issue described at https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/696#note_1411319099"
 echo "## Test MUPIP ENDIANCVT issue described at https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/696#note_1411333276"
+# Since this test is already choosing a prior version to create the DBs, don't interfere
+setenv gtm_test_use_V6_DBs 0
 
 echo "# Choose a random prior (including current version) GT.M or YottaDB version"
 set prior_ver = `$gtm_tst/com/random_ver.csh -type any`

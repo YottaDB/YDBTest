@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh
 #################################################################
 #                                                               #
-# Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.       #
+# Copyright (c) 2021-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #                                                               #
 #       This source code contains the intellectual property     #
@@ -10,7 +10,7 @@
 #       the license, please stop and do not read further.       #
 #                                                               #
 #################################################################
-
+setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode due to differences in DSE command outputs
 echo "# Create a global directory with two regions -- DEFAULT, REGX"
 $echoline
 setenv gtm_test_mupip_set_version "disable"

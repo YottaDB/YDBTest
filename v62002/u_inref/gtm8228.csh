@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -17,6 +17,8 @@
 # GTM-8228 [nars] Test that releasing M-locks at process exit does not require crit
 
 setenv gtm_test_spanreg     0		# Test requires traditional global mappings, so disable spanning regions
+# Disable V6 DB mode to prevent differences in LKE LOCKSPACEINFO/LOCKSPACEUSE messages.
+setenv gtm_test_use_V6_DBs 0
 echo "# Create TWO database files a.dat and mumps.dat"
 $gtm_tst/com/dbcreate.csh mumps 2	# creates a.dat and mumps.dat
 $gtm_exe/mumps -run gtm8228

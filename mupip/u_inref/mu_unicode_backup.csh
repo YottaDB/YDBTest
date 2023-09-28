@@ -1,7 +1,7 @@
 #! /usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2006, 2013 Fidelity Information Services, Inc	#
+# Copyright 2006, 2013 Fidelity Information Services, Inc	#
 #								#
 # Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
@@ -19,6 +19,7 @@ if (0 != $ydb_test_4g_db_blks) then
 	echo "# Setting ydb_test_4g_db_blks env var to a fixed value as reference file has 4G_ABOVE_DB_BLKS usages" >> settings.csh
 	setenv ydb_test_4g_db_blks 8388608
 endif
+setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode due to differences in various MUPIP and DSE command outputs, also minor DB ver difference
 
 $switch_chset UTF-8
 

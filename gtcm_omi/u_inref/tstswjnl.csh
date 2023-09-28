@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -15,12 +15,17 @@
 #################################################################
 setenv gtmgbldir "mumps.gld"
 
-$gtm_tst/$tst/u_inref/gtcm_start.csh >& gtcm_start.log
+# Disable using V6 format DBs with a randomly chosen V6 version - The dbcreate script tries to run some additional
+# M routines that intermittently fail. Not considered worth the effort to get this test working with V6 created DBs
+setenv gtm_test_use_V6_DBs 0
+
 $gtm_tst/com/dbcreate.csh mumps 3
 
 $gtm_exe/mupip set -file -journal=on,nobe,enable mumps.dat
 $gtm_exe/mupip set -file -journal=on,nobe,enable a.dat
 $gtm_exe/mupip set -file -journal=on,nobe,enable b.dat
+
+$gtm_tst/$tst/u_inref/gtcm_start.csh >& gtcm_start.log
 
 alias jnlext '$gtm_exe/mupip journal -extract=\!:1 -forward \!:2 |& $grep -v "Backward processing"'
 

@@ -3,7 +3,7 @@
 #								#
 # Copyright 2013 Fidelity Information Services, Inc		#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -14,6 +14,7 @@
 #################################################################
 # Test online fast integrity check during the reorg operations, which can set the cs->mode as gds_t_busy2free
 setenv gtm_test_mupip_set_version "V5"
+setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode due to differences in MUPIP REORG output
 # The white-box setting is to delay the integ process to 30 seconds
 setenv gtm_white_box_test_case_enable 1
 setenv gtm_white_box_test_case_number 26

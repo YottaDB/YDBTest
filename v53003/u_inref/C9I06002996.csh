@@ -19,6 +19,7 @@ setenv gtm_test_disable_randomdbtn
 
 # Disable mupip-set-version to V4 as that will disturb Fully Upgraded flag and in turn affect the static reference file
 setenv gtm_test_mupip_set_version "disable"
+setenv gtm_test_use_V6_DBs 0  # Disable V6 mode DBs as this test already switches versions for its second dbcreate invocation
 
 $gtm_tst/com/is_icu_new_naming_scheme.csh
 if (0 == $status) $switch_chset M >&! disable_utf8.txt

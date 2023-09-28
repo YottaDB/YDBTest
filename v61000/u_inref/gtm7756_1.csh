@@ -16,6 +16,9 @@
 setenv gtm_test_jnl NON_SETJNL
 setenv test_encryption NON_ENCRYPT	# Since -acc_meth=MM is passed to dbcreate
 unsetenv acc_meth
+#
+# Disable V6 mode DBs as the 'magic number' calculated below is sensitive to the version creating the DB
+setenv gtm_test_use_V6_DBs 0
 # We need database extension to be 1 and access_method to be MM.
 $gtm_tst/com/dbcreate.csh mumps 1 -extension=1 -acc_meth=MM -block_size=1024
 $gtm_exe/mumps -run %XCMD 'do update^gtm7756'

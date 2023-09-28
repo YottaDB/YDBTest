@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2021-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -11,7 +11,7 @@
 #								#
 #################################################################
 #
-
+setenv gtm_test_use_V6_DBs 0 # Prevent random V6 version from creating DB with different lock space size defaults
 $echoline
 echo "YDB#721 : Test that LKE SHOW does not insert a line feed after a lock reference longer than 24 chars"
 $echoline

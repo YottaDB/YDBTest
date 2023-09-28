@@ -1,9 +1,9 @@
 #! /usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2002, 2014 Fidelity Information Services, Inc	#
+# Copyright 2002, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -13,6 +13,8 @@
 #								#
 #################################################################
 
+# Disable using V6 DB mode due to differences in the block #s and offsets in output of DSE FIND
+setenv gtm_test_use_V6_DBs 0
 # disable random 4-byte collation header in DT leaf block since this test output is sensitive to DT leaf block layout
 setenv gtm_dirtree_collhdr_always 1
 

@@ -1,7 +1,10 @@
 #! /usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2002, 2013 Fidelity Information Services, Inc	#
+# Copyright 2002, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -15,6 +18,7 @@ echo ENTERING ONLINE3  basic multiregion and wildcard mapping
 setenv gtmgbldir online3.gld
 # the output of this test relies on transaction numbers, so let's not do anything that might change the TN
 setenv gtm_test_mupip_set_version "disable"
+setenv gtm_test_use_V6_DBs 0	  	# Disable V6 DB mode due to differences in MUPIP BACKUP/RESTORE outputs
 setenv gtm_test_disable_randomdbtn
 $gtm_tst/com/dbcreate.csh online3 3
 set core_found = 0

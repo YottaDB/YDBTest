@@ -3,7 +3,7 @@
 #								#
 # Copyright 2004, 2013 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -17,6 +17,7 @@
 # create multiple databases.
 # the output of this test relies on dse dump -file output, therefore let's not change the block version:
 setenv gtm_test_mupip_set_version "disable"
+setenv gtm_test_use_V6_DBs 0	  	# Disable V6 DB mode due to differences in DSE DUMP -FILEHEADER output
 # because this test enables stdnullcoll in one region and not in the other and there are only two regions, we cannot
 # enable random spanning regions testing in this easily.  So disable it.
 setenv gtm_test_spanreg 0

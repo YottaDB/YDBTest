@@ -14,6 +14,7 @@ echo "# Test that MUPIP INTEG, DSE DUMP and MUMPS do not infinite loop in case o
 echo ""
 
 setenv gtm_test_mupip_set_version "disable"     # Or else DSE DUMP would show V4 or V6 making reference file non-deterministic
+setenv gtm_test_use_V6_DBs 0	  		# Disable V6 DB mode due to differences in MUPIP INTEG and various DSE command outputs
 setenv gtm_test_disable_randomdbtn		# Or else DSE DUMP would show different transaction numbers in different test runs
 
 # Replace uninitialized 4th byte of record header with 0 to avoid false test failures

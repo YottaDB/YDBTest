@@ -4,6 +4,9 @@
 # Copyright (c) 2011-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -11,6 +14,11 @@
 #								#
 #################################################################
 # Test integ/recover functional with db > 1TB (GTM-6958)
+
+# Disable V6 mode DB use to avoid failures in dbcreate when an earlier V6 release is used that has an older
+# global directory format. The version switching done in dbcreate when using V6 mode DBs gets confused and fails.
+# See https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/1682#note_1521848354 for more information.
+setenv gtm_test_use_V6_DBs 0
 # This test is allocating 1 TB disk space so do not preallocate it otherwise it will fail due to lack of space
 setenv gtm_test_defer_allocate 1
 #

@@ -18,6 +18,7 @@
 # first stage. With the > 4g db blocks scheme in place, the byte size of the db will be too large resulting in a
 # %GDE-I-VALTOOBIG error. Therefore disable this scheme.
 setenv ydb_test_4g_db_blks 0
+setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode due to differences in MUPIP REORG output
 
 $gtm_tst/com/dbcreate.csh -block_size=1024 -allocation=2048 -global_buffer_count=64 -ext=100 -record_size=4000
 #

@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -14,6 +14,8 @@
 #								#
 #################################################################
 #
+# Disable use of V6 DB mode using random V6 versions creating DBs as that changes the output of MUPIP INTEG and MUPIP REORG output
+setenv gtm_test_use_V6_DBs 0
 setenv test_reorg "NON_REORG"
 echo "Create some star-record-only blocks:"
 $gtm_tst/com/dbcreate.csh mumps 1 255 1001 -block_size=1024

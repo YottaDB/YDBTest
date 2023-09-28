@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -9,7 +9,11 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
-
+#
+# Do not use V6 DB mode as encryption fails when enabled by older V6 releases. See
+# https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/1682#note_1521848301 for more information.
+setenv gtm_test_use_V6_DBs 0
+#
 echo "# Test that CRYPTINIT error while opening an encrypted database does not leave ipcs (ftok semaphore)"
 
 # Turn on Encryption

@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -20,6 +20,7 @@ unsetenv gtm_db_counter_sem_incr	# avoid semaphore counter overflow. This is nee
 					# honors counter semaphore overflow (whereas prior_version always uses pro which does not).
 					# We do not want current/newer version to overflow the counter semaphore on a
 					# leftover shared memory created by an older version.
+setenv gtm_test_use_V6_DBs 0		# Disable V6 DB mode using random V6 version to create DBs as this test already changes versions
 
 # This test switches DIST directories. Do not rely on the default encryption
 # key setup as it depends on $gtm_dist, which will be different between

@@ -23,6 +23,7 @@ endif
 
 setenv test_reorg NON_REORG
 setenv gtm_test_mupip_set_version "V5"
+setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode due to differences in MUPIP REORG -TRUNCATE output
 setenv gtm_test_spanreg 0 	# The calculated number of sets below doesn't work (reorg -truncate) with spanningregions
 #Go with dbg image since we are using a whitebox test
 $gtm_tst/com/dbcreate.csh mumps 3 -block_size=1024	# The truncate tests below are sensitive to block layout

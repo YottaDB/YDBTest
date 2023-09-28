@@ -4,7 +4,7 @@
 # Copyright (c) 2012, 2015 Fidelity National Information	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -25,6 +25,10 @@
 # updateresync			[parentel,kishore] <Test -updateresync qualifier usage error.>
 # upgrade_inst			[bahirs] <Test the upgrade of P(non-supplementary instace) from B(supplementary instance)>
 #-------------------------------------------------------------------------------------
+#
+if (0 != $test_replic_mh_type) then
+	setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode due to difficulties with remote systems having same V6 version to create DBs
+endif
 
 echo "Part B of supplementary instances test starts..."
 

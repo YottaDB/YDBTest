@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2012, 2014 Fidelity Information Services, Inc	#
+# Copyright 2012, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -17,7 +20,9 @@
 # instance_file_backup_simple	[Nergis]	Functionality test for backup of instance files
 # lost_trans			[Nergis]	Test $ZQGBLMOD and -needrestart and -losttncomplete, and applying lost transactions
 # basic_multi_level		[Kishore]	A simplictic multisite test with multiple levels
-
+if (0 != $test_replic_mh_type) then
+	setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode due to difficulties with remote systems having same V6 version to create DBs
+endif
 echo "Part D of multisite_replic tests starts..."
 
 

@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2004, 2013 Fidelity Information Services, Inc	#
+# Copyright 2004, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -15,6 +18,7 @@
 ###########################################################################
 # the output of this test relies on dse dump -file output, therefore let's not change the block version:
 setenv gtm_test_mupip_set_version "disable"
+setenv gtm_test_use_V6_DBs 0	  		# Disable V6 DB mode due to differences in DSE DUMP -F and default std null collation setting
 # Note down gtm_test_spanreg value at test entry. Use it only in subtests that have stdnullcoll in ALL regions.
 # For the remaining tests, use a value of 0 instead.
 set spanreg = $gtm_test_spanreg

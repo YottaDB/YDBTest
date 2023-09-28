@@ -152,6 +152,11 @@ BEGIN {
 		if ( "ydb_lockhash_n_bits" == rname ) printf "LH:%-1s ",rval[i]
 		if ( "gtm_test_trigupdate" == rname ) printf "TRGUPD:%-1s ",rval[i]
 		if ( "ydb_test_4g_db_blks" == rname ) printf "HUGEDB:%-1s ",((rval[i] == 0) ? 0 : 1)
+		if ( "gtm_test_use_V6_DBs" == rname )
+		{	# If V6DB mode, print random version used - else null string
+			if (0 != rval[i]) printf "V6DB:%s ",ENVIRON["gtm_test_v6_dbcreate_rand_ver"];
+			else printf "V6DB: "
+		}
 	}
 	print "",$3
 }

@@ -1,11 +1,11 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2012, 2014 Fidelity Information Services, Inc	#
-#								#
+# Copyright 2012, 2014 Fidelity Information Services, Inc	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -26,6 +26,10 @@
 # nogroupmix			[parentel] <Test that two non-supplementary group can not talk to each other.>
 # epochcheck			[kishoreh] Test that 16 strm_seqnos are dumped in EPOCH record as part of detailed journal extract
 # instance_recreate		[bahirs] <Test basic recreation of instance file on Q, Q will get the knowledge about A through P>
+#
+if (0 != $test_replic_mh_type) then
+	setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode due to difficulties with remote systems having same V6 version to create DBs
+endif
 
 echo "Part A of supplementary instances test starts..."
 

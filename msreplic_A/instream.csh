@@ -4,7 +4,7 @@
 # Copyright (c) 2006-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -29,7 +29,9 @@
 # log_error			[zouc] 		Test what happens when the log file or stdout/stderr are not available
 #
 echo "Part A of multisite_replic tests starts..."
-
+if (0 != $test_replic_mh_type) then
+	setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode due to difficulties with remote systems having same V6 version to create DBs
+endif
 setenv tst_jnl_str `echo "$tst_jnl_str" | sed 's/,align=[1-9][0-9]*//'`
 if (1 == $test_replic_suppl_type) then
 	# A->P type won't work for most of the subtests, for valid reasons of their own. Choose only between A->B and P->Q

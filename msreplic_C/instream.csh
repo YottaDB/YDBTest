@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2012, 2014 Fidelity Information Services, Inc	#
+# Copyright 2012, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -17,7 +20,9 @@
 # instance_file_flipflop	[Nergis]	Complex example on instance file histories
 # update_helpers		[Nergis]	Test that runs for a while and has update process helpers on the receiver side and external filters
 # basic_multi_secondaries	[Balaji]	A simplictic multisite test with multiple secondaries at the same level
-
+if (0 != $test_replic_mh_type) then
+	setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode due to difficulties with remote systems having same V6 version to create DBs
+endif
 echo "Part C of multisite_replic tests starts..."
 
 

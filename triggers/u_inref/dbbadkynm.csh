@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh
 #################################################################
 #								#
-#	Copyright 2010, 2013 Fidelity Information Services, Inc	#
+# Copyright 2010, 2013 Fidelity Information Services, Inc	#
+#                                                               #
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -12,6 +15,9 @@
 
 # disable random 4-byte collation header in DT leaf block since this test output is sensitive to DT leaf block layout
 setenv gtm_dirtree_collhdr_always 1
+# Disable use of V6 DB mode using random V6 versions to create DBs as this causes reference file issues
+# with MUPIP INTEG and DSE DUMP/OVERWRITE output.
+setenv gtm_test_use_V6_DBs 0
 
 # dbbadkynm.csh - test to show that a global of the form ^#xxx, ^#txx, ^%x%x, and ^#a
 # will give a DBBADKYNM integrity error.

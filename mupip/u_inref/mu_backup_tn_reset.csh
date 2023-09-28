@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2009, 2013 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -10,6 +13,7 @@
 #								#
 #################################################################
 setenv gtm_test_mupip_set_version "disable"
+setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode due to differences in various MUPIP and DSE command outputs, also minor DB ver difference
 setenv gtm_test_disable_randomdbtn
 
 # disable random 4-byte collation header in DT leaf block since this test output is sensitive to DT leaf block layout

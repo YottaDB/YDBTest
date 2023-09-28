@@ -1,7 +1,7 @@
 #! /usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -11,6 +11,7 @@
 #								#
 #################################################################
 #
+setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode due to differences in MUPIP INTEG output
 setenv gtmgbldir integneg.gld
 $gtm_tst/com/dbcreate.csh integneg 1 128 256 1024 100 256
 set subs1="αβγδε"
@@ -42,7 +43,7 @@ $MUPIP integ -reg "*" -subscript=\"^a\(\"\"$subs12\"\"\)\":\"^a\(\"\"$subs12\"\"
 $MUPIP integ -reg "*" -subscript=\"^a\(\"\"$subs34\"\"\)\"
 $MUPIP integ -reg "*" -subscript=\"^a\(\"\"$subs1\"\"\):^a\(\"\"$subs2\"\"\)\"
 $MUPIP integ -reg "*" -subscript=\"^a\(\"\"$subs1\"\"\):^a\(\"\"$subs4\*\"\"\)\"
-$MUPIP integ -reg "*" 
+$MUPIP integ -reg "*"
 unset verbose
 # Please make sure below does corrupt the subscrip collation
 $DSE << EOF

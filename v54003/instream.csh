@@ -52,8 +52,6 @@
 # dsejnlrectype		[bahirs]	Verify that asterisk is not printed in dse dump -file -all output
 # dbinit_honor_userwait [Karthik] 	New test case for db init enhancement to allow for waits during semop(). Previously, the
 #					waits were fixed and were not present for access control semaphore
-# incrollback		[bahirs]	Verify that increment rollback creates enough room for additional global references.
-# dsejnlrectype		[bahirs]	Verify that asterisk is not printed in dse dump -file -all output
 # C9I12003062 		[Karthik] 	Test that out-of-sync values for access method between global directory and database
 #                                       is properly handled by GT.M in gvcst_init/db_init
 # C9J03003101		[parentel]	Test that source server issue an error if it can't find seqno in journal files

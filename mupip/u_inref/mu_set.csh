@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -13,6 +13,7 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode due to differences in MUPIP command output, lock space size difference
 #
 ##################################
 # mu_set.csh  test for mupip set #

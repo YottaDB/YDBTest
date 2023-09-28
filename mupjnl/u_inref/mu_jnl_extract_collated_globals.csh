@@ -3,6 +3,9 @@
 # Copyright (c) 2003-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -10,6 +13,7 @@
 #								#
 #################################################################
 #
+setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode due to differences in MUPIP JOURNAL -EXTRACT output
 # If run with journaling, this test requires BEFORE_IMAGE so set that unconditionally even if test was started with -jnl nobefore
 source $gtm_tst/com/gtm_test_setbeforeimage.csh
 unset backslash_quote

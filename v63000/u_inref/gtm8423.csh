@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -15,6 +15,9 @@
 #################################################################
 
 # This test case was copied wholesale from test/triggers/u_inref/trig2notrig.csh
+
+# Disable V6 DB mode as this causes confusion with the version switching done in this script
+setenv gtm_test_use_V6_DBs 0
 
 # Disabled settings that do not work with MSR and prior versions
 source $gtm_tst/com/disable_settings_msr_priorver.csh

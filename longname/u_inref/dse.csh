@@ -26,6 +26,7 @@ setenv gtm_dirtree_collhdr_always 1
 
 # this test has explicit mupip creates, so let's not do anything that will have to be repeated at every mupip create
 setenv gtm_test_mupip_set_version "disable"
+setenv gtm_test_use_V6_DBs 0	  		# Disable V6 DB mode due to differences in MUPIP INTEG and various DSE command outputs
 setenv gtm_test_disable_randomdbtn
 $gtm_tst/com/dbcreate.csh . -key=200
 echo "Use basfill for dse add and dse find"

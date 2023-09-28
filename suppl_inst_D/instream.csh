@@ -3,7 +3,7 @@
 #								#
 # Copyright 2012, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -24,6 +24,10 @@
 # updateresync_pp		[kishoreh] Test of -updateresync on a supplementary propagating primary instance.
 # upgrade_inst1			[bahirs] <Test the upgrade of P(non-supplementary instace) from B(supplementary instance)
 # pqqp				[kishoreh] Test switching of INST1 -> INST3 -> INST4 to INST1 -> INST4 -> INST3
+#
+if (0 != $test_replic_mh_type) then
+	setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode due to difficulties with remote systems having same V6 version to create DBs
+endif
 
 echo "Part D of supplementary instances test starts..."
 

@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -15,6 +15,8 @@
 #
 unsetenv ydb_lockhash_n_bits	# This env var will affect the hash values of the carefully chosen subscripts in this test
 				# resulting in fewer collisions on the same hash value than the test expects so disable it
+# Do not allow random use of V6 format DBs as this causes issues with LKE output (differing values)
+setenv gtm_test_use_V6_DBs 0
 $gtm_tst/com/dbcreate.csh mumps 1 >>& dbcreate.out
 # Simulates 2 errors in prior versions, either inappropriately seizes ownership of a lock or test hangs
 # Randomly chooses an option (1 will cause the test to hang, 0 will cause locks to be inappropriately seized)

@@ -18,6 +18,7 @@
 
 # disable random 4-byte collation header in DT leaf block since this test output is sensitive to DT leaf block layout
 setenv gtm_dirtree_collhdr_always 1
+setenv gtm_test_use_V6_DBs 0	  		# Disable V6 DB mode due to MUPIP INTEG and various DSE command outputs
 
 # This test does "$MUPIP reorg -downgrade" operations which do not work with ASYNCIO. Therefore turn ASYNCIO off.
 setenv gtm_test_asyncio 0

@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2002, 2013 Fidelity Information Services, Inc	#
+# Copyright 2002, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -9,6 +12,7 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode due to differences in LKE LOCKSPACEINFO/LOCKSPACEUSE messages
 cp $gtm_tst/$tst/inref/lke2.gde .
 setenv test_specific_gde $PWD/lke2.gde
 

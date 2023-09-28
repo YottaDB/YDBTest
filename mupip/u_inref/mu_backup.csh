@@ -13,6 +13,7 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode due to differences in MUPIP BACKUP/RESTORE output and differences in minor DB version
 #
 ##################################################
 ###  mu_backup.csh                             ###

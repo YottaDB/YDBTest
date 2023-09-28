@@ -11,6 +11,10 @@
 #                                                               #
 #################################################################
 
+# Need to disable random V6 versions to create V6 DBs as this test is already switching versions and switching
+# in dbcreate makes this fail.
+setenv gtm_test_use_V6_DBs 0
+
 echo "#########################################################################################"
 echo "Test that -trigupdate replicates updates inside trigger logic but not trigger definitions"
 echo "#########################################################################################"

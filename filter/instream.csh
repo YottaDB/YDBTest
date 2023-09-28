@@ -3,7 +3,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -17,7 +17,8 @@
 #
 # Note: If a new test is added to the list of tests submitted, please update the file $warn_tools/multiple_tests.list
 #
-
+# Note, this instream.csh script is already switching versions so do not add to that complexity by using V6 verison to create the DBs
+setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode due to difficulties with remote systems having same V6 version to create DBs
 # This test can only run with BG access method, so let's make sure that's what we have
 source $gtm_tst/com/gtm_test_setbgaccess.csh
 # pick a random version and run both combinations vs. the version being tested

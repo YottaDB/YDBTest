@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2019-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -11,8 +11,9 @@
 #								#
 #################################################################
 #
-#
-#
+# Prevent use of V6 DB mode by utilizing a random V6 version to create DBs as we are creating a template
+# with -LOCK_CRIT_SEPARATE which older versions of GDE do not know about.
+setenv gtm_test_use_V6_DBs 0
 #
 
 echo '# Test of all ydb_env_set/unset functions'

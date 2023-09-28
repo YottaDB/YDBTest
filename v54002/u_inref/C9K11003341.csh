@@ -17,6 +17,8 @@
 # This test uses specific to block numbers and so will fail if used with the debug-only HOLE scheme to test > 4g db blocks.
 # Therefore disable that scheme.
 setenv ydb_test_4g_db_blks 0
+# Disable V6 DB mode to prevent reference file differences with MUPIP and DSE command outputs
+setenv gtm_test_use_V6_DBs 0
 
 $gtm_tst/com/dbcreate.csh mumps
 

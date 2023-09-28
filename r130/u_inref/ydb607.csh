@@ -1,8 +1,8 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #                                                               #
-# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.       #
-# All rights reserved.                                          #
+# Copyright (c) 2020-2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.	  					#
 #                                                               #
 #       This source code contains the intellectual property     #
 #       of its copyright holder(s), and is made available       #
@@ -16,6 +16,10 @@ echo "# It would be set to 0 instead of the current flush_trigger value. This te
 echo "# the flush_triger_top field is correctly auto-upgraded (i.e. does not require MUPIP -SET TRIGGER_FLUSH to fix)"
 
 echo "# Creating a database in version R1.22, R1.24 or a GT.M version between V63003 and V63007"
+#
+# Test is already using a previous version to create DBs so don't interfere by trying to choose a V6 version to
+# create the DB with.
+setenv gtm_test_use_V6_DBs 0
 
 set rand_ver=`$gtm_tst/com/random_ver.csh -gte V63003 -lt V63007`
 source $gtm_tst/com/ydb_prior_ver_check.csh $rand_ver

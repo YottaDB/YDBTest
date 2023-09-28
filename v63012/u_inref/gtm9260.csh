@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -14,6 +14,9 @@
 echo "# This test verifies that when an auxiliary shared memory segment for a resize M Lock hashtable"
 echo "# is created and orphaned, it gets cleaned up by MUPIP RUNDOWN. Prior to GTM-9260, that cleanup"
 echo "# did not occur".
+
+setenv gtm_test_use_V6_DBs 0 # Disable V6 DB mode to prevent creation with early V6 versions which have
+			     # a smaller default for lock space and we run out.
 
 # The sequence in this test is the following:
 # 1. Run gtm9260.m. This will force the creation of a resized M Lock hashtable, writes the shmid of the

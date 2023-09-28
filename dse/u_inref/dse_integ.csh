@@ -1,7 +1,7 @@
 #! /usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -11,11 +11,13 @@
 #								#
 #################################################################
 
-#Test dse -integ command
+# Disable using V6 DB mode due to differences in block #s and offsets in output of DSE FIND
+setenv gtm_test_use_V6_DBs 0
 
+# Test dse -integ command
 echo "TEST DSE - INTEG COMMAND"
 
-#create a global directory with two regions -- DEFAULT, REGX
+# Create a global directory with two regions -- DEFAULT, REGX
 
 $gtm_tst/com/dbcreate.csh mumps 2 -block_size=1024
 

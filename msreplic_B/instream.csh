@@ -1,7 +1,10 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2012, 2014 Fidelity Information Services, Inc	#
+# Copyright 2012, 2014 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -17,7 +20,9 @@
 # instance_file_rollback	[Nergis]	To test rollback will rollback the contents of the instance file if they had not made it to the database
 # editinstance			[Kishore]	Test the details of -editinstance qualifier (what is not tested in the instance_create subtest already)
 # deadlock_check		[Nergis]	Design tests -- Deadlock Check Test
-
+if (0 != $test_replic_mh_type) then
+	setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode due to difficulties with remote systems having same V6 version to create DBs
+endif
 echo "Part B of multisite_replic tests starts..."
 
 

@@ -1,16 +1,17 @@
 #! /usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
+#								#
+# Portions Copyright (c) Fidelity National			#
+# Information Services, Inc. and/or its subsidiaries.		#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
 #	the license, please stop and do not read further.	#
 #								#
-#################################################################
-# This module is derived from FIS GT.M.
 #################################################################
 
 # Test dse -overwrite command
@@ -19,6 +20,7 @@ echo "TEST DSE - OVERWRITE COMMAND "
 #create a global directory with two regions -- DEFAULT, REGX
 setenv gtm_test_mupip_set_version "disable"
 setenv gtm_test_disable_randomdbtn
+setenv gtm_test_use_V6_DBs 0   # Disable V6 DB mode as it causes changes in output of DSE commands (block #s/versions, offsets, etc)
 $gtm_tst/com/dbcreate.csh mumps 2
 
 # Set some global variables - to fill some blocks

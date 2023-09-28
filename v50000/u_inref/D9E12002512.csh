@@ -1,8 +1,23 @@
 #!/usr/local/bin/tcsh
+#################################################################
+#								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+# Portions Copyright (c) Fidelity National			#
+# Information Services, Inc. and/or its subsidiaries.		#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
 #
 # D9E12-002512 DSE ADD -STAR gets SIGADRALN error
 #
 setenv gtm_test_mupip_set_version "disable"
+setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode due to differences in MUPIP INTEG and DSE DUMP output
 setenv gtm_test_disable_randomdbtn
 $gtm_tst/com/dbcreate.csh mumps 1 -block=512 -rec=480
 $GTM << EOF
@@ -43,6 +58,6 @@ DSE_EOF
 $grep -v '|' dse_addstr.log
 if ($HOSTOS == "OSF1") then
 	echo ""
-endif	
+endif
 echo "End of test"
 $gtm_tst/com/dbcheck.csh

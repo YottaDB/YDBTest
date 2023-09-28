@@ -20,6 +20,7 @@ if (0 != $ydb_test_4g_db_blks) then
 	echo "# Setting ydb_test_4g_db_blks env var to a fixed value as reference file has 4G_ABOVE_DB_BLKS usages" >> settings.csh
 	setenv ydb_test_4g_db_blks 8388608
 endif
+setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode due to differences in MUPIP REORG -TRUNCATE output
 
 source $gtm_tst/com/gtm_test_setbgaccess.csh	# TRUNCATE requires BG access method
 setenv gtm_test_mupip_set_version "disable"	# TRUNCATE requires no V4 format blocks

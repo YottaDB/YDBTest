@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -17,6 +17,9 @@
 if !( ($?test_replic) || ("GT.CM" == $test_gtm_gtcm) ) then
 	echo "Run this test with -replic or -GTCM"
 	exit 1
+endif
+if ((0 != $test_replic_mh_type) || ("GT.CM" == $test_gtm_gtcm)) then
+	setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode due to difficulties with remote systems having same V6 version to create DBs
 endif
 setenv tst_jnl_str `echo "$tst_jnl_str" | sed 's/,align=[1-9][0-9]*//'`
 echo "MEM_STRESS test starts..."

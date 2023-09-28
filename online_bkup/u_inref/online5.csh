@@ -1,7 +1,10 @@
 #! /usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2002, 2013 Fidelity Information Services, Inc	#
+# Copyright 2002, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 # Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
@@ -19,6 +22,7 @@ echo ENTERING ONLINE5
 #
 setenv gtmgbldir online5.gld
 setenv gtm_test_mupip_set_version "disable"
+setenv gtm_test_use_V6_DBs 0	  	# Disable V6 DB mode due to differences in MUPIP BACKUP/RESTORE outputs
 setenv gtm_test_disable_randomdbtn
 if (("MM" == $acc_meth) && (0 == $gtm_platform_mmfile_ext)) then
 	$gtm_tst/com/dbcreate.csh online5 1 125 700 1536 200 256

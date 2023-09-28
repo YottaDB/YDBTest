@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -10,6 +10,9 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+# Disable using V6 DB mode by using random V6 versions to create DBs due to this causing reference file
+# issues with LOCKSPACE messages out of LKE.
+setenv gtm_test_use_V6_DBs 0
 #
 # Test of ydb_lock_st() function in the SimpleThreadAPI
 #

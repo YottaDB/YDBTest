@@ -13,7 +13,10 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
-
+#
+# Disable use of V6 DB mode using random V6 versions to create DBs as this test already switches versions
+setenv gtm_test_use_V6_DBs 0
+#
 # trigger select OR load or ZPRINT, ZBREAK or $TEXT on an upgraded db (without a trigger upgrade) should throw "NEEDTRIGUPGRD"
 # DSE and LKE does not require a trigger access and should work fine
 # trigger -upgrade on a read-only db should error out

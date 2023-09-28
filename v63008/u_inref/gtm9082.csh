@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #                                                               #
-# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.       #
+# Copyright (c) 2020-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #                                                               #
 #       This source code contains the intellectual property     #
@@ -14,6 +14,8 @@
 echo "# In V6.3-007, auto-upgrading the database file headers would not set the"
 echo "# flush_trigger_top field properly and would be set to 0 instead of the current flush_trigger value. This test verifies that"
 echo "# the flush_triger_top field is correctly auto-upgraded (i.e. does not require MUPIP -SET TRIGGER_FLUSH to fix)"
+
+setenv gtm_test_use_V6_DBs 0 # Disable V6 mode DBs as this test already switches versions creating V6 DBs
 
 echo "# Creating a database to a version prior to V63003 (r130/ydb607 subtest tests the case where version is between V63003 and V63007)"
 

@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -17,6 +17,8 @@
 #	     reorg_sleep_nsec.
 setenv gtm_db_counter_sem_incr ''  # Don't potentially leave orphaned IPCs if 16384 is picked as this
                                    # causes problems when switching versions.
+setenv gtm_test_use_V6_DBs 0	   # Prevent version switch in dbcreate.csh that confuses
+       				   # .. version switching that follows
 echo '# Test to verify 3 fields in DSE file header dump are same in r1.34 and r1.36 (or later version) to'
 echo '# make sure the fields are being upgraded (moved inside the header) properly by autoupgrade.'
 echo

@@ -1,9 +1,9 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2002, 2014 Fidelity Information Services, Inc	#
+# Copyright 2002, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -16,6 +16,7 @@
 #create a global directory with two regions -- DEFAULT, REGX
 setenv gtm_test_mupip_set_version "disable"
 setenv gtm_test_disable_randomdbtn
+setenv gtm_test_use_V6_DBs 0   # Disable V6 DB mode as it causes changes in output of DSE commands (block #s, offsets, etc)
 $gtm_tst/com/dbcreate.csh mumps 2 -block_size=1024
 
 # Set some global variables - to fill some blocks

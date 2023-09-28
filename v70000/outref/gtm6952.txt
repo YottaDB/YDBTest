@@ -27,7 +27,7 @@ Secondary startup command (buffsize should be 4294971392):
 ### Test #2 - Test call to cli_get_uint64() that it accepts both decimal and hex values for -decvalue option of DSE
 
 # -- Show current max_rec_size in fileheader
-  Maximum record size                           256  Starting VBN                          8193
+##TEST_AWK  Maximum record size                           256  Starting VBN                          ( 513|8193)
 
 # -- Run DSE change -fileheader -decvalue=0xfd -decloc=48 to change the record size via -decloc/-decvalue
 
@@ -37,7 +37,7 @@ Region	DEFAULT
 Location 48 [0x00000030] : Old Value = 256 [0x00000100] : New Value = 253 [0x000000FD] : Size = 4 [0x04]
 
 # -- Show new max_rec_size in fileheader
-  Maximum record size                           253  Starting VBN                          8193
+##TEST_AWK  Maximum record size                           253  Starting VBN                          ( 513|8193)
 
 ###################################################################
 

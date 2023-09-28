@@ -1,7 +1,10 @@
 #! /usr/local/bin/tcsh -f
 #################################################################
 #								#
-#	Copyright 2002, 2013 Fidelity Information Services, Inc	#
+# Copyright 2002, 2013 Fidelity Information Services, Inc	#
+#								#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 # Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
@@ -23,6 +26,7 @@ setenv gtm_dirtree_collhdr_always 1
 setenv gtmgbldir online1.gld
 # the output of this test relies on transaction numbers, so let's not do anything that might change the TN
 setenv gtm_test_mupip_set_version "disable"
+setenv gtm_test_use_V6_DBs 0	  	# Disable V6 DB mode due to differences in MUPIP BACKUP/RESTORE outputs
 setenv gtm_test_disable_randomdbtn
 setenv bkp_dir "`pwd`/online1"
 mkdir $bkp_dir

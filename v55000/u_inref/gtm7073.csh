@@ -14,6 +14,9 @@
 #								#
 #################################################################
 
+# Disable V6 DB mode due to lots of LKE LOCKSPACEINFO/LOCKSPACEUSE messages with varying values
+setenv gtm_test_use_V6_DBs 0
+
 echo "Begin gtm7073"
 $gtm_tst/com/dbcreate.csh mumps 4
 

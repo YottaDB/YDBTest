@@ -20,10 +20,10 @@ if (0 != $ydb_test_4g_db_blks) then
 	echo "# Setting ydb_test_4g_db_blks env var to a fixed value as reference file has 4G_ABOVE_DB_BLKS usages" >> settings.csh
 	setenv ydb_test_4g_db_blks 8388608
 endif
-
 # the output of this test relies on dse dump -file output, therefore let's not change the block version:
 setenv gtm_test_mupip_set_version "disable"
 setenv gtm_test_disable_randomdbtn
+setenv gtm_test_use_V6_DBs 0   # Disable V6 DB mode as it causes changes in output of DSE commands (block #s/versions, offsets, etc)
 #define allocation to be 3000 to avoid extensions during the test and hence sporadic DBFGTBC integrity errors on crash.
 $gtm_tst/com/dbcreate.csh . -alloc=3000 -block_size=1024
 cp mumps.dat mumps.bak

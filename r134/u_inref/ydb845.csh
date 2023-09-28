@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -9,6 +9,8 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+#
+setenv gtm_test_use_V6_DBs 0 # Prevent random V6 version from creating DB with different lock space size defaults
 #
 echo '# ------------------------------------------------------------------------------------------------'
 echo '# Test LKE SHOW output is not garbled for long subscripts and not truncated for lots of subscripts'

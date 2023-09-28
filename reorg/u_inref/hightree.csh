@@ -20,6 +20,8 @@ if (0 != $ydb_test_4g_db_blks) then
 	echo "# Setting ydb_test_4g_db_blks env var to a fixed value as reference file has 4G_ABOVE_DB_BLKS usages" >> settings.csh
 	setenv ydb_test_4g_db_blks 8388608
 endif
+# Disable use of V6 DB mode using random V6 versions creating DBs as that changes the output of MUPIP INTEG and MUPIP REORG output
+setenv gtm_test_use_V6_DBs 0
 
 setenv test_reorg "NON_REORG"
 $gtm_tst/com/dbcreate.csh mumps 1 255 1000 -block_size=1024

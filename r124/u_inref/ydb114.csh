@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018-2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -10,6 +10,9 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+#
+# Do not randomly change version to create older V6 format DBs as that confuses the version changes below.
+setenv gtm_test_use_V6_DBs 0
 #
 echo "-------------------------------------------------------------------------------------------------------------"
 echo "# Test that a new version does not change whatever STDNULLCOLL settings are set in a global db set in a previous version."

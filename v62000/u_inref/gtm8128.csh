@@ -1,9 +1,11 @@
 #!/usr/local/bin/tcsh -f
-
 #################################################################
 #								#
 # Copyright (c) 2014-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
+#								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -11,9 +13,10 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
-
+#
 # default to V5 database
 setenv gtm_test_mupip_set_version "disable"
+setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode due to differences in MUPIP INTEG output
 
 $gtm_tst/com/dbcreate.csh mumps 1
 
