@@ -1,0 +1,23 @@
+# Test an incorrect assert that used to exist in mdb_condition_handler() related to jobinterrupt
+# This tests https://gitlab.com/YottaDB/DB/YDB/-/issues/1029#note_1591890702
+# Before YDB@1ed8a20d, this test used to previously fail an assert in mdb_condition_handler.c for expression
+#   (\!dollar_zininterrupt || ((int)ERR_ZINTRECURSEIO == SIGNAL) || ((int)ERR_STACKCRIT == SIGNAL))
+# This test requires direct mode to fail hence the use of the [expect] utility below
+spawn /usr/local/bin/tcsh -f
+> stty cols 132
+> set shellprompt=SHELL
+> set prompt=$shellprompt
+SHELLsetenv term_env `tty`; echo $term_env > term_env.txt
+SHELL$ydb_dist/yottadb -direct
+
+YDB>set $zint="w 1/0" if $zsigproc($j,"SIGUSR1")
+
+YDB>%YDB-E-DIVZERO, Attempt to divide by zero
+%YDB-E-ERRWZINTR, Error while processing $ZINTERRUPT
+xxx
+%YDB-E-INVCMD, Invalid command keyword encountered
+	xxx
+	^-----
+
+YDB>halt
+SHELL

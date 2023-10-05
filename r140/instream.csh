@@ -21,13 +21,14 @@
 # ydb1024     [nars]    Fix OPEN of a socket type file name to not assert fail in io_open_try.c
 # ydb1026     [nars]    Test that ZWRITE to file output device with STREAM + NOWRAP does not split/break lines
 # ydb1021     [nars]    Test that MUPIP SET JOURNAL is able to switch older format journal files (without a FILEEXISTS error)
+# ydb1029     [nars]    Test an incorrect assert that used to exist in mdb_condition_handler() related to jobinterrupt
 #---------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r140 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "ydb996 ydb998 ydbpython32 ydb994 ydb1024 ydb1026 ydb1021"
+setenv subtest_list_non_replic "ydb996 ydb998 ydbpython32 ydb994 ydb1024 ydb1026 ydb1021 ydb1029"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then
