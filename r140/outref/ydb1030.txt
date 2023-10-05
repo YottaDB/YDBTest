@@ -1,0 +1,18 @@
+# Create database file
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Turn on replication in the database file
+# Start passive source server
+# Perform a few updates
+# Run [mupip replic -source -showbacklog]. Expect to see no WARNING message
+##FILTERED##... ... .. ..:..:.. 20.. : Initiating SHOWBACKLOG operation on source server pid [##PID##] for secondary instance [INSTANCE2]
+%YDB-I-LASTTRANS, Last transaction sequence number posted         : 100
+%YDB-I-LASTTRANS, Last transaction sequence number sent           : 0
+%YDB-I-LASTTRANS, Last transaction sequence number acknowledged   : 0
+%YDB-I-SRCBACKLOGSTATUS, Instance INSTANCE2 is not receiving transactions as source server is in passive mode
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

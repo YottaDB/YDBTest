@@ -57,7 +57,7 @@ endif
 
 # first check if the source server is in active mode and transactions are getting replicated
 set check_act_log = "${logfile:r}_check_src_active.out"
-set src_act = `$pri_shell "$pri_getenv; cd $PRI_SIDE;"'$MUPIP replicate -source '$gtm_test_instsecondary' -showbacklog >& '$check_act_log' ; $grep -c "Source Server is in passive mode" '$check_act_log''`
+set src_act = `$pri_shell "$pri_getenv; cd $PRI_SIDE;"'$MUPIP replicate -source '$gtm_test_instsecondary' -showbacklog >& '$check_act_log' ; $grep -c "source server is in passive mode" '$check_act_log''`
 if ($src_act) then
 	echo "RFSYNC-I-PASSIVEMODE. Source server not replicating at this point in time.Cannot Sync this link."
 	echo "Source server to $gtm_test_instsecondary is running in PASSIVE mode. Cannot sync this link. Check $PRI_SIDE/$check_act_log"	>>&! $logfile

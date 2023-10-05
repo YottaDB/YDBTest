@@ -166,7 +166,7 @@ cat << EOF
 ## 	--> This should report:
 ## 	    - 0 for the active instances (INST6 through INST20),
 ## 	    - REPLINSTSECNONE error for INST2 and INST3 (since their slots would be reused)
-## 	    - "WARNING - Source Server is in passive mode, transactions are not being replicated" -- for the other deactivated and stopped instances (INST4, INST5)
+## 	    - "Instance XXX is not receiving transactions as source server is in passive mode" -- for the other deactivated and stopped instances (INST4, INST5)
 EOF
 
 $MSR RUN INST1 "$gtm_tst/com/simpleinstanceupdate.csh 10"
