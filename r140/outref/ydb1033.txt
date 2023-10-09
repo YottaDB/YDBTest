@@ -1,0 +1,40 @@
+# Test of YDB#1033 - Verifies $ZCMDLINE is can be both SET and NEWed
+## Start of test YDB-1033 - test that $ZCMDLINE is both SET-able and NEW-able
+
+Current value of $ZCMDLINE is the expected NULL value - $ZLEVEL=1
+
+# Resetting $ZCMDLINE to indicate it is set at $ZLEVEL=1 in this routine
+$ZCMDLINE="$ZCMDLINE setting at the main level ($ZLEVEL=1)"
+
+# New level, NEW'd $ZCMDLINE and reset $ZCMDLINE to 'Let them eat icecream!', $ZLEVEL=2
+$ZCMDLINE="Let them eat icecream!"
+
+# Level popped - Should have restored $ZCMDLINE to starting value - $ZLEVEL=1
+$ZCMDLINE="$ZCMDLINE setting at the main level ($ZLEVEL=1)"
+
+# Use indirect in NEW statement and check value (should be NULL string), $ZLEVEL=2
+$ZCMDLINE=""
+
+# Now reset $ZCMDLINE (as an indirect) to something while at ZLEVEL=2, and ZWRITE it
+$ZCMDLINE="Now at $ZLEVEL=2"
+
+# Now pop the level we are in and verify it goes back to $ZLEVEL=1 value
+$ZCMDLINE="$ZCMDLINE setting at the main level ($ZLEVEL=1)"
+
+# Do much the same thing but do it in an XECUTEd expression: 'NEW @x ZWRITE @x' - expect NULL value
+$ZCMDLINE=""
+
+# And popping back to the mainline should give our ZLEVEL 1 message
+$ZCMDLINE="$ZCMDLINE setting at the main level ($ZLEVEL=1)"
+
+# Do a series of sets of $ZCMDLINE after chewing up some string pool space - make sure that the $ZCMDLINE
+# value is being correctly garbage collected. If not, the output lines below will be somewhat garbled instead
+# of being pairs of '[abcdN]' tokens where N goes in pairs from 1 to 4.
+$zcmdline BEFORE set at iteration=1 = [$ZCMDLINE setting at the main level ($ZLEVEL=1)]
+$zcmdline AFTER  set at iteration=1 = [abcd1]
+$zcmdline BEFORE set at iteration=2 = [abcd1]
+$zcmdline AFTER  set at iteration=2 = [abcd2]
+$zcmdline BEFORE set at iteration=3 = [abcd2]
+$zcmdline AFTER  set at iteration=3 = [abcd3]
+$zcmdline BEFORE set at iteration=4 = [abcd3]
+$zcmdline AFTER  set at iteration=4 = [abcd4]
