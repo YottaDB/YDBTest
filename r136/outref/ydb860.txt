@@ -123,7 +123,9 @@ YDB>
 
 YDB>
 # Try ydb860ztimeoutetrap1.m using [yottadb -run]
+%cli="set $ztrap=""goto incrtrap^incrtrap"" do ^ydb860ztimeoutetrap1"
 etrap="goto CLIERR^%XCMD"
+%cli="set $ztrap=""goto incrtrap^incrtrap"" do ^ydb860ztimeoutetrap1"
 etrap="goto CLIERR^%XCMD"
 %YDB-W-ZTIMEOUT, Time expired
 # Try ydb860ztimeoutetrap2.m using [yottadb -direct]
