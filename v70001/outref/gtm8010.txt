@@ -1,0 +1,81 @@
+# gtm8010 release note:
+# OPEN "/dev/null" with deviceparameters works appropriately. The only deviceparameters
+# GT.M actually attempts to implement for /dev/null are [NO]WRAP and EXCEPTION= and, at
+# least in theory, the device should never give an exception. Previously, such an OPEN
+# handled deviceparameters inappropriately, which could cause unintended WRAP behavior
+# or an attempt to instantiate an exception handler constructed out of garbage, which,
+# in turn, could cause a segmentation violation (SIG-11). The workaround was to specify
+# no deviceparmeters on an OPEN of /dev/null. In addition, GT.M appropriately handles
+# EXCEPTION= values settings whose lengths are between 128 and 255 bytes long. Previously,
+# GT.M mishandled such settings potentially resulting in a segmentation violation (SIG-11).
+# The second issue has not been reported by a customer, but was observed in development.
+# (GTM-8010)
+#
+# Since the first part of this issue ([NO]WRAP, EXCEPTION= SIG11s) was addressed in YottaDB
+# by YDB commit YDB@5a7d473c and tested by a4a3bbab, we only implement the "In addition," part
+# of the above release note.
+#
+# Test explanation:
+#
+#   - Starts with an exception string that increments the variable errcnt if the exception
+#     string is driven.
+#   - Start a loop that does 26 iterations.
+#   - Each iteration adds a "SET x=nn" command to exception string where nn is the iteration
+#     number.
+#   - Each iteration prints out the iterations and the exception string length. The actual
+#     string is written to gtm8010_exception_string.txt so the longer length strings do not
+#     pollute the reference file.
+#   - Then each iteration opens the null device using the exception string. We also do a USE
+#     of the device and a short write before closing the device. If this all occurs without
+#     error, the iteration passes. If an error occurs, we try to catch it so the subsequent
+#     iterations continue. Of course if a SIG-11 occurs, it is all over but this test does
+#     not seem to evoke that type of failure on older releases.
+#
+# More on why no SIG-11:
+#   The fix made for the SIG-11 was identified. It came from the fact that the single byte
+#   length field was loaded into an integer without cast so value came in as a signed char.
+#   This means that for lengths from 128 to 255, the length field of the exception string
+#   was seen to be negative. There are several potential places a negative value can get
+#   into trouble. In the upstream case, it seems to have usually produced a SIG-11. But
+#   this particular test has seen both assert failures (running r1.38 debug) and more
+#   commonly, we get this STACKCRIT failure on V70000 (and r1.38 pro) and earlier releases
+#   that stems from an INDRMAXLEN error trying to compile the exception string and it
+#   re-invoking handlers and looping until it gets STACKCRIT.
+#
+#   So the bottom line is that this test is having the same problem as the original issue,
+#   but it is manifesting itself in multiple and different ways than the original issue
+#   only reporting it ended in a SIG-11 if it ended badly.
+#
+
+# Driving gtm8010
+Testing iteration 1 with exception length 32
+Testing iteration 2 with exception length 40
+Testing iteration 3 with exception length 48
+Testing iteration 4 with exception length 56
+Testing iteration 5 with exception length 64
+Testing iteration 6 with exception length 72
+Testing iteration 7 with exception length 80
+Testing iteration 8 with exception length 88
+Testing iteration 9 with exception length 96
+Testing iteration 10 with exception length 105
+Testing iteration 11 with exception length 114
+Testing iteration 12 with exception length 123
+Testing iteration 13 with exception length 132
+Testing iteration 14 with exception length 141
+Testing iteration 15 with exception length 150
+Testing iteration 16 with exception length 159
+Testing iteration 17 with exception length 168
+Testing iteration 18 with exception length 177
+Testing iteration 19 with exception length 186
+Testing iteration 20 with exception length 195
+Testing iteration 21 with exception length 204
+Testing iteration 22 with exception length 213
+Testing iteration 23 with exception length 222
+Testing iteration 24 with exception length 231
+Testing iteration 25 with exception length 240
+Testing iteration 26 with exception length 249
+Testing iteration 27 with exception length 255
+
+Pass GTM8010 with no errors
+
+# gtm8010 complete
