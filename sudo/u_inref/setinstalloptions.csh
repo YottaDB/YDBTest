@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2019-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -33,4 +33,13 @@ if ($gtm_test_libyottadb_asan_enabled) then
 	# and causes a build failure. We will address memory leaks at a later time (YDB#816) as they are not as critical as buffer
 	# overflows etc. ASAN_OPTIONS env var already has the needed flags for this. So just preserve this env across the sudo.
 	set sudostr = "$sudostr --preserve-env=ASAN_OPTIONS"
+	# If libyottadb.so has been built with CLANG + ASAN, we started seeing link time errors like the following when building
+	# the YDBOcto plugin on a system with "clang version 17.0.1".
+	#	undefined reference to `__sanitizer_internal_memcpy'
+	# To avoid such errors, we set the compiler for the plugins to be "clang" instead of the default "gcc".
+	if ("clang" == $gtm_test_asan_compiler) then
+		setenv CC "clang"
+	endif
+	# And we make sure this env var gets preserved across the sudo in the below line
+	set sudostr = "$sudostr --preserve-env=CC"
 endif
