@@ -29,4 +29,18 @@ echo "# Try $base.m using [yottadb -run]"
 $ydb_dist/yottadb -run $base
 
 echo ""
+echo "------------------------------------------------------------"
+echo '# Test of https://gitlab.com/YottaDB/DB/YDB/-/issues/994#note_1607739778'
+echo '# Prior to merging GT.M V7.0-001, this test failed with a GTMASSERT in cache_cleanup.c'
+echo '# Expecting only %YDB-E-INVCMD and %YDB-W-ZTIMEOUT errors in below output'
+echo "------------------------------------------------------------"
+set base = "ydb994zhelpgtmassert"
+cp $gtm_tst/$tst/inref/$base.m .
+echo "# Try $base.m using [yottadb -direct]"
+cat $base.m | $ydb_dist/yottadb -direct
+echo "# Try $base.m using [yottadb -run]"
+# Need to use %XCMD to set $ztrap to "incrtrap" so we continue execution of full M program inspite of errors.
+$ydb_dist/yottadb -run %XCMD 'set $ztrap="goto incrtrap^incrtrap" do ^'$base
+
+echo ""
 $gtm_tst/com/dbcheck.csh

@@ -46,6 +46,71 @@ mumps.dat
 150372986,gvsuboflow+1^ydb994gvsuboflow,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceed
 150372986,gvsuboflow+1^ydb994gvsuboflow,%YDB-E-GVSUBOFLOW, Maximum combined length of subscripts exceed
 
+------------------------------------------------------------
+# Test of https://gitlab.com/YottaDB/DB/YDB/-/issues/994#note_1607739778
+# Prior to merging GT.M V7.0-001, this test failed with a GTMASSERT in cache_cleanup.c
+# Expecting only %YDB-E-INVCMD and %YDB-W-ZTIMEOUT errors in below output
+------------------------------------------------------------
+# Try ydb994zhelpgtmassert.m using [yottadb -direct]
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+%YDB-E-INVCMD, Invalid command keyword encountered
+	ydb994objfilerr	;
+	^-----
+
+YDB>
+
+YDB>
+
+YDB>
+%YDB-E-INVCMD, Invalid command keyword encountered
+	Wr
+	^-----
+
+YDB>
+
+YDB>
+%YDB-W-ZTIMEOUT, Time expired
+
+YDB>
+
+YDB>
+
+YDB>
+# Try ydb994zhelpgtmassert.m using [yottadb -run]
+ZSTATUS=ydb994objfilerr+3^ydb994zhelpgtmassert,%YDB-W-ZTIMEOUT, Time expired
+ZSTATUS=ydb994objfilerr+5^ydb994zhelpgtmassert,%YDB-W-ZTIMEOUT, Time expired
+
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
