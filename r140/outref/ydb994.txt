@@ -111,6 +111,125 @@ YDB>
 ZSTATUS=ydb994objfilerr+3^ydb994zhelpgtmassert,%YDB-W-ZTIMEOUT, Time expired
 ZSTATUS=ydb994objfilerr+5^ydb994zhelpgtmassert,%YDB-W-ZTIMEOUT, Time expired
 
+------------------------------------------------------------
+# Test of https://gitlab.com/YottaDB/DB/YDB/-/issues/994#note_1609142435
+# Prior to r1.36, this test failed with an assert in trans_code_cleanup.c
+# Expecting only %YDB-E-FILENOTFND and %YDB-W-ZLINKFILE errors in below output
+------------------------------------------------------------
+# Try ydb994transcodecleanup.m using [yottadb -direct]
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+%YDB-E-INVCMD, Invalid command keyword encountered
+	ydb994transcodecleanup
+	^-----
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+%YDB-E-ZLINKFILE, Error while zlinking "foo"
+%YDB-E-FILENOTFND, File foo.m not found
+%YDB-E-FILENOTFND, File foo.o not found
+%YDB-E-ERRWZINTR, Error while processing $ZINTERRUPT
+
+YDB>
+
+YDB>
+
+YDB>
+# Try ydb994transcodecleanup.m using [yottadb -run]
+ZSTATUS=ydb994transcodecleanup+4^ydb994transcodecleanup,%YDB-E-ERRWZINTR, Error while processing $ZINTERRUPT,-YDB-E-ZLINKFILE, Error while zlinking "foo",%YDB-E-FILENOTFND, File foo.m not found,%YDB-E-FILENOTFND, File foo.o not found
+
+------------------------------------------------------------
+# Test of https://gitlab.com/YottaDB/DB/YDB/-/issues/994#note_1609147517
+# At some prior point in time, this test failed with an assert in trans_code_cleanup.c
+# Expecting only %YDB-E-INVCMD error (only in [yottadb -direct] invocation) in below output
+------------------------------------------------------------
+# Try ydb994transcodecleanup2.m using [yottadb -direct]
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+%YDB-E-INVCMD, Invalid command keyword encountered
+	ydb994transcodecleanup2
+	^-----
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+# Try ydb994transcodecleanup2.m using [yottadb -run]
+
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.

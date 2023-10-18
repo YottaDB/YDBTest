@@ -43,4 +43,34 @@ echo "# Try $base.m using [yottadb -run]"
 $ydb_dist/yottadb -run %XCMD 'set $ztrap="goto incrtrap^incrtrap" do ^'$base
 
 echo ""
+echo "------------------------------------------------------------"
+echo '# Test of https://gitlab.com/YottaDB/DB/YDB/-/issues/994#note_1609142435'
+echo '# Prior to r1.36, this test failed with an assert in trans_code_cleanup.c'
+echo '# Expecting only %YDB-E-FILENOTFND and %YDB-W-ZLINKFILE errors in below output'
+echo "------------------------------------------------------------"
+set base = "ydb994transcodecleanup"
+cp $gtm_tst/$tst/inref/$base.m .
+echo "# Try $base.m using [yottadb -direct]"
+rm -f foo.m foo.o
+cat $base.m | $ydb_dist/yottadb -direct
+echo "# Try $base.m using [yottadb -run]"
+# Need to use %XCMD to set $ztrap to "incrtrap" so we continue execution of full M program inspite of errors.
+rm -f foo.m foo.o
+$ydb_dist/yottadb -run %XCMD 'set $ztrap="goto incrtrap^incrtrap" do ^'$base
+
+echo ""
+echo "------------------------------------------------------------"
+echo '# Test of https://gitlab.com/YottaDB/DB/YDB/-/issues/994#note_1609147517'
+echo '# At some prior point in time, this test failed with an assert in trans_code_cleanup.c'
+echo '# Expecting only %YDB-E-INVCMD error (only in [yottadb -direct] invocation) in below output'
+echo "------------------------------------------------------------"
+set base = "ydb994transcodecleanup2"
+cp $gtm_tst/$tst/inref/$base.m .
+echo "# Try $base.m using [yottadb -direct]"
+cat $base.m | $ydb_dist/yottadb -direct
+echo "# Try $base.m using [yottadb -run]"
+# Need to use %XCMD to set $ztrap to "incrtrap" so we continue execution of full M program inspite of errors.
+$ydb_dist/yottadb -run %XCMD 'set $ztrap="goto incrtrap^incrtrap" do ^'$base
+
+echo ""
 $gtm_tst/com/dbcheck.csh
