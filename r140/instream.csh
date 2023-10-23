@@ -24,13 +24,14 @@
 # ydb1029     [nars]    Test an incorrect assert that used to exist in mdb_condition_handler() related to jobinterrupt
 # ydb1030     [nars]    Test SRCBACKLOGSTATUS message in case of a passive source server has no misleading WARNING
 # ydb1033     [estess]	Test $ZCMDLINE can be both NEW'd and SET
+# ydb1037     [nars]    Test that %YDB-E-STACKCRIT secondary error does not happen with ZTRAP in direct mode
 #---------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r140 test starts..."
 
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
-setenv subtest_list_non_replic "ydb996 ydb998 ydbpython32 ydb994 ydb1024 ydb1026 ydb1021 ydb1029 ydb1030 ydb1033"
+setenv subtest_list_non_replic "ydb996 ydb998 ydbpython32 ydb994 ydb1024 ydb1026 ydb1021 ydb1029 ydb1030 ydb1033 ydb1037"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then

@@ -1,0 +1,14 @@
+--------------------------------------------------------------------------------------
+# Test that %YDB-E-STACKCRIT secondary error does not happen with ZTRAP in direct mode
+--------------------------------------------------------------------------------------
+# We run a few thousand iterations and make sure the M stack usage has not changed across those iterations.
+# Previously, the M stack usage would increase across iterations and eventually result in a %YDB-E-STACKCRIT error.
+
+# Running [do ^ydb1037] using [mumps -direct]. Expecting PASS message below
+
+YDB>
+PASS : Executed 10,000 iterations without STACKCRIT error
+
+# Running [do ^ydb1037] using [mumps -run]. Expecting PASS message below
+PASS : Executed 10,000 iterations without STACKCRIT error
+[mumps -run] exited with status = [0]
