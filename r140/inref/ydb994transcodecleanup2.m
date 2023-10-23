@@ -14,6 +14,7 @@
 ; Helper M program used by r140/u_inref/ydb994.csh
 
 ydb994transcodecleanup2
+ view "TRACE":0:"^TRACE"	; to avoid %YDB-I-TRACINGON message in next line in case test framework enabled it randomly
  view "TRACE":1:"^TRACE"
  set $zinterrupt="do foo"
  set $ZTE=1
