@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2021-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -11,15 +11,6 @@
 #################################################################
 
 if ($gtm_test_libyottadb_asan_enabled) then
-	if (! $?gtm_test_asan_env_vars_set_done) then
-		setenv gtm_test_asan_env_vars_set_done 0
-	endif
-	if ($gtm_test_asan_env_vars_set_done) then
-		# Below env vars were already set by a previous invocation of this script in the same process.
-		# So skip setting it again. This is particularly useful with "gt_ld_options_common" as we do not
-		# want to add "-fsanitize=address" multiple times. Just exit.
-		exit
-	endif
 	if ($?gt_ld_options_common) then
 		# gt_ld_options_common env var is defined. Add -fsanitize=address to it.
 		# Add address sanitizer related flags to the former (if YottaDB build being tested was linked with it).
@@ -42,6 +33,5 @@ if ($gtm_test_libyottadb_asan_enabled) then
 	if ($enable_system_malloc_free) then
 		source $gtm_tst/com/set_gtmdbglvl_to_use_system_malloc_free.csh
 	endif
-	setenv gtm_test_asan_env_vars_set_done 1
 endif
 

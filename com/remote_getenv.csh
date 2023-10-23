@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -70,17 +70,7 @@ source $gtm_tst/com/getenv.csh
 # ASAN_OPTIONS env var (among other things) on the remote side to disable leak check (LSAN) as that can cause failures.
 # Note: Do this BEFORE the "source $gtm_tst/com/set_gtm_machtype.csh" step as that invokes YottaDB and would otherwise
 # fail (due to memory leaks identified) in case ASAN is enabled in the current build.
-source $gtm_tst/com/is_libyottadb_asan_enabled.csh
-# Note: We would normally invoke the following more general script but it relies on an env var "gtm_test_asan_env_vars_set_done"
-# that would have been inherited on the remote side (this side) from the local side. Since YottaDB builds on the local and remote
-# side could have been independently built with or without ASAN, the env var on the local side does not make sense in the remote
-# side. Therefore we skip invoking this script.
-#	set source $gtm_tst/com/set_asan_other_env_vars.csh	# sets a few other associated asan env vars
-# And instead invoke exactly what we need (which is the "ASAN_OPTIONS" env var being set based on the newly computed value of
-# "$gtm_test_libyottadb_asan_enabled" env var) from inside that generic script. Those commands are pasted below.
-if ($gtm_test_libyottadb_asan_enabled) then
-	source $gtm_tst/com/set_asan_options_env_var.csh
-endif
+source $gtm_tst/com/set_ydb_build_env_vars.csh
 
 # override machtype environment from primary
 source $gtm_tst/com/set_gtm_machtype.csh
