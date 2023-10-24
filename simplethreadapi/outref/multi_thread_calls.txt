@@ -1,0 +1,17 @@
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# --------------------
+# Test of YDB@a455fff6
+# --------------------
+# Compile multi_thread_calls.c (that does multi-threaded calls into ydb_tp_st() at same time) into binary multi_thread_calls
+# Run multi_thread_calls in background in a repeat loop 100 times
+# Run 16 such sets of background loops to load the system
+# Previously this used to cause a SIG-11.
+# We expect no output below as if there was a SIG-11, the test framework would have found core files and failed the test
+# Wait for backgrounded processes to finish
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

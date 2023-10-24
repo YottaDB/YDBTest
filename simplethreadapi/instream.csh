@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2019-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -77,7 +77,8 @@
 # errstrTest            [mmr]         New simplethreadapi/errstrTest subtest to test errstr parameter of SimpleThreadAPI
 # ydb550                [bdw]         Test of nested ydb_tp_st() where the inner transaction rolls back but the outer transaction commits
 # ydb560                [nars]        Test that ydb_eintr_handler() helps terminate SimpleThreadAPI application if a SIGINT/SIGTERM is received
-# ydb181                [nars]        Test INVVARNAME and PARAMINVALID errors using Simple API
+# ydb181                [nars]        Test INVVARNAME and PARAMINVALID errors using SimpleThreadAPI
+# multi_thread_calls	[nars]        Test SimpleThreadAPI calls from multiple threads at same time
 # -------------------------------------------------------------------------------------
 
 echo "simplethreadapi test starts..."
@@ -97,6 +98,7 @@ setenv subtest_list_non_replic "$subtest_list_non_replic gvnlvndata gvnlvnincr g
 setenv subtest_list_non_replic "$subtest_list_non_replic threadedapinotallowed utilfuncs invtptrans externalcall exitFromTp"
 setenv subtest_list_non_replic "$subtest_list_non_replic initFromTp tpnestto127 isMainMT initMT exitMT pseudoBank"
 setenv subtest_list_non_replic "$subtest_list_non_replic ciVoidReturn ciVoidReturnStack errstrTest ydb550 ydb560 ydb181"
+setenv subtest_list_non_replic "$subtest_list_non_replic multi_thread_calls"
 setenv subtest_list_non_replic "$subtest_list_non_replic randomWalk" # Keep this subtest as the last as it takes a long time to run
 setenv subtest_list_replic     ""
 
@@ -111,7 +113,7 @@ setenv subtest_exclude_list	""
 
 # Disable certain heavyweight tests on single-cpu systems
 if ($gtm_test_singlecpu) then
-	setenv subtest_exclude_list "$subtest_exclude_list lvnsetstress stresstest lvnget gvnget"
+	setenv subtest_exclude_list "$subtest_exclude_list lvnsetstress stresstest lvnget gvnget multi_thread_calls"
 endif
 
 source $gtm_tst/com/is_libyottadb_asan_enabled.csh	# defines "gtm_test_libyottadb_asan_enabled" env var
