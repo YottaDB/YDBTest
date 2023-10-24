@@ -21,7 +21,7 @@ setenv gtm_white_box_test_case_number 24
 setenv gtmdbglvl 0x00100000
 # With defer allocate, the space needed for the database file in the filesystem is 40Gb
 # Without defer allocate the space needed would be 512 times this i.e. 20TB which is definitely not available. So force defer allocate
-setenv save_gtm_test_defer_allocate $gtm_test_defer_allocate
+setenv save_test_defer_allocate $gtm_test_defer_allocate
 setenv gtm_test_defer_allocate 1
 # Disable random 4-byte collation header in DT leaf block since this test output is sensitive to DT leaf block layout
 setenv gtm_dirtree_collhdr_always 1
@@ -51,6 +51,7 @@ if ( "HOST_LINUX_X86_64" != $gtm_test_os_machtype) then
 endif
 # Test case 1 is about testing for LOWSPC messages with V6 format databases. See Test Case #2 below for why we cannot do
 # this for V7 format DBs. For this test case, flag that we need a V6 DB.
+setenv save_test_4g_db_blks $ydb_test_4g_db_blks   # Save this value it indicates whether we can run TEST CASE 2 or not
 source $gtm_tst/com/enable_gtm_test_use_V6_DBs.csh # Force V6 DB mode
 setenv ydb_test_4g_db_blks 0  	   	      	   # This must be off if gtm_test_use_V6_DBs is on
 
@@ -195,11 +196,17 @@ echo
 echo
 echo '# Validate database'
 $gtm_tst/com/dbcheck.csh >& dbcheck.out
+setenv ydb_test_4g_db_blks $save_test_4g_db_blks # Restore to original value
 #
 # Since this portion of the test uses $ydb_test_4g_db_blks, this part of the test requires a debug build so
-# bypass if this is not a debug build.
+# bypass if the initial value (value at start of test) of $ydb_test_4g_db_blks is non-zero, we are guaranteed
+# that this is also a debug build as this envvar won't be non-zero in other than a debug build. Also note that
+# if $ydb_test_4g_db_blks is non-zero, the filesystem we are using has also been validated as being able to
+# support this test. We only get about 50% coverage here because after going through all of those checks,
+# com/do_random_settings.csh still only sets $ydb_test_4g_db_blks to a non-zero value 50% of the time but
+# per @nars1 (10/2023), this is sufficient.
 #
-if ("dbg" == "$tst_image") then
+if (0 != $ydb_test_4g_db_blks) then
 	#
 	# Rename original V6 database so we can create a new V7 database for the next test
 	#
@@ -215,7 +222,7 @@ if ("dbg" == "$tst_image") then
 	echo "# that takes up almost no room. But when this facility is active, LOWSPC and DBFILEXT messages are not"
 	echo "# generated."
 	echo "#"
-	setenv gtm_test_defer_allocate $save_gtm_test_defer_allocate # Restore to what it was as it is not used in this test
+	setenv gtm_test_defer_allocate $save_test_defer_allocate # Restore to what it was as it is not used in this test
 	setenv gtm_test_use_V6_DBs 0   		# This test case requires V7 data blocks
 	setenv ydb_test_4g_db_blks 0x1feffff	# This is the last local bit map in a maximum size DB
 	echo

@@ -110,6 +110,7 @@ DSE>
 
 # Validate database
 ##SUSPEND_OUTPUT PRO
+##SUSPEND_OUTPUT 4G_BELOW_DB_BLKS
 
 ################ TEST CASE 2 ################
 #
@@ -175,4 +176,5 @@ DSE> %YDB-E-BLKINVALID, 0x00000003FE000000 is not a valid block as database file
 DSE> 
 
 # Validate database
+##ALLOW_OUTPUT 4G_BELOW_DB_BLKS
 ##ALLOW_OUTPUT PRO
