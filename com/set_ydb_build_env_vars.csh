@@ -37,6 +37,11 @@ if ("" != "$clangver") then
 else
 	setenv gtm_test_yottadb_compiler "GCC"
 	# [source $gtm_tools/gtm_env.csh] would have already set gt_cc_compiler and gt_ld_linker to gcc
-	# No changes needed in that case.
+	# No changes needed in that case. But in case of multi-host tests, we would come in here with the
+	# gt_ld_linker setting from the remote host and so we want to explicitly set the env var here to
+	# override that. Note that "gt_cc_compiler" would already be set to "cc" which is "gcc" and so all
+	# we need to do is to set gt_ld_linker to that to ensure it gets reset to the correct value in the
+	# case where the local host has YottaDB built with gcc whereas the remote host has it built with clang.
+	setenv gt_ld_linker "$gt_cc_compiler"
 endif
 
