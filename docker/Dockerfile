@@ -1,6 +1,6 @@
 #################################################################
 #                                                               #
-# Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.       #
+# Copyright (c) 2021-2023 YottaDB LLC and/or its subsidiaries.       #
 # All rights reserved.                                          #
 #                                                               #
 # This source code contains the intellectual property           #
@@ -9,7 +9,7 @@
 # the license, please stop and do not read further.             #
 #                                                               #
 #################################################################
-ARG OS_VSN=buster
+ARG OS_VSN=bookworm
 FROM debian:${OS_VSN}
 
 VOLUME /testarea1
@@ -52,9 +52,12 @@ RUN apt-get update && \
                     expect \
                     elfutils \
                     net-tools \
-                    netcat \
+                    netcat-traditional \
                     gdb \
                     valgrind \
+                    python3 \
+                    iproute2 \
+                    openjdk-17-jdk \
                     && \
                     apt-get clean
 
@@ -68,6 +71,7 @@ COPY --chown=gtmtest:gtc . /usr/library/gtm_test/T999/
 RUN ln -s /usr/library/gtm_test/T999/docker/cshrc ~/.cshrc && \
     ln -s /usr/library/gtm_test/T999/docker/cshrc ~gtmtest/.cshrc
 RUN /usr/library/gtm_test/T999/docker/build_and_install_yottadb.csh
+RUN /usr/library/gtm_test/T999/docker/setup_gpg.csh
 RUN chown gtmtest:gtc /testarea1/
 RUN ln -s /usr/library/gtm_test/T999/docker/serverconf.txt /usr/library/gtm_test/serverconf.txt
 # https://stackoverflow.com/questions/56609182/openthread-environment-docker-rsyslogd-imklog-cannot-open-kernel-log-proc-km
