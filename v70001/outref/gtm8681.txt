@@ -1,0 +1,88 @@
+
+# GTM8681 - Release note:
+#
+# MUPIP BACKUP -RECORD provides a timestamp marking the start of backup when a backup
+# a backup completes with no errors. The timestamp provides a backup date which is
+# meaningful to operators without regard to when a particular transaction might have
+# occurred. MUPIP DUMPFHEAD characterizes the timestamp as "sgmnt_data.last_start_backup",
+# while DSE DUMP -FILEHEADER, labels it as "Last Record Backup Start". If a database has
+# never been backed up with MUPIP BACKUP -RECORD, the utilities display "Never" for the
+# field. Previously the -RECORD option stored only a starting transaction number. (GTM-8681)
+#
+# Create database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+# Show that DSE DUMP -FILEHEADER -ALL shows the last backup time as "Never" if no backup
+# has been done (selecting output record with "Last Record Backup Start" in it):
+  Last Record Backup Start                    Never
+
+# Show that MUPIP DUMPFHEAD dumps "sgmnt_data.last_start_backup" as Never
+record("sgmnt_data.last_start_backup")="Never"
+
+# Drive gtm8681,!
+# Verify the recorded backup time is 0
+  Verified
+
+# Create backup directory
+  Directory created
+
+# Executing command: $gtm_dist/MUPIP BACKUP -record -online "*" ./backup
+##SUSPEND_OUTPUT JNL_OFF
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##SUSPEND_OUTPUT JNL_BEFORE
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with NOBEFORE_IMAGES
+##ALLOW_OUTPUT JNL_BEFORE
+##SUSPEND_OUTPUT JNL_NOBEFORE
+%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with BEFORE_IMAGES
+##ALLOW_OUTPUT JNL_NOBEFORE
+##ALLOW_OUTPUT JNL_OFF
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/backup/mumps.dat
+##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x[0-9a-fA-F]{16} are backed up
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
+  Backup command succeeded
+
+# Verify that DSE DUMP -FILEHEADER -ALL shows the last backup time as other than "Never"
+##TEST_AWK  Last Record Backup Start ... ... .. ..:..:.. ....
+
+# Verify that MUPIP DUMPFHEAD dumps "sgmnt_data.last_start_backup" as other than "Never"
+##TEST_AWKrecord\("sgmnt_data.last_start_backup"\)="... ... .. ..:..:.. ...."
+
+# Verify the binary value extracted through $$^%PEEKBYNAME is the same (when converted) as the date returned
+# by MUPIP DUMPFHEAD and that both are non-zero/non-"Never".
+##TEST_AWK  Results from date command: ... ... .. ..:..:.. ....
+  Verified
+
+# Verify recorded backup time was within our runtime
+  Recorded backup time verified
+
+# Show that DSE DUMP -FILEHEADER -ALL shows the last backup time is NOT "Never" since backup
+# has been done (selecting output record with "Last Record Backup Start" in it):
+##TEST_AWK  Last Record Backup Start ... ... .. ..:..:.. ....
+##SUSPEND_OUTPUT PRO
+
+###################################################################
+#
+# Part 2 of test - starting over with new DB after saving old DB
+%YDB-I-DBFILECREATED, Database file ##TEST_PATH##/mumps.dat created
+
+# Run a backup with white box test WBTEST_BACKUP_FORCE_MV_RV which creates an error in the
+# backup when trying to finally move backup file from temp file to backup target. We expect
+# this command to fail.
+Simulated mv returns an error.
+##TEST_AWKsystem : (Invalid argument|No such file or directory)
+##TEST_AWKError executing command : unalias -a; (/usr|)/bin/mv ##TEST_PATH##/DEFAULT_[0-9]*_0.tmp/mumps.dat ##TEST_PATH##/mumps_backup.dat
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+
+# Now that the backup failed, verify that MUPIP DUMPFHEAD value for "sgmnt_data.last_start_backup",
+# is still "Never".
+record("sgmnt_data.last_start_backup")="Never"
+##ALLOW_OUTPUT PRO
+
+# Validate DB
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

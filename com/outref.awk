@@ -146,6 +146,12 @@ BEGIN {
 	else
 		envir[no_options] = "JNL_BEFORE"
 	#
+	option_names[++no_options] = "gtm_test_jnl"
+	if ("SETJNL" == ENVIRON["gtm_test_jnl"])
+		envir[no_options] = "JNL_ON"
+	else
+		envir[no_options] = "JNL_OFF"
+	#
 
 	option_names[++no_options] = "gtm_platform_size"
         if ("64" == ENVIRON["gtm_platform_size"])

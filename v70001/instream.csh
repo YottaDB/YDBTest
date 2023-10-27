@@ -16,14 +16,15 @@
 #----------------------------------------------------------------------------------------------------------------------------------
 # gtm9213	[estess]	Verify a process can SET the trailing portion of $SYSTEM
 # gtm8010	[estess]	Test that 128-255 byte EXCEPTION parm on OPEN of /dev/null operates correctly
-# gtm9452     [sam,hoyt] CLOSE deviceparameter REPLACE overwrites an existing file, which RENAME does not
+# gtm9452	[sam,hoyt]	CLOSE deviceparameter REPLACE overwrites an existing file, which RENAME does not
+# gtm8681	[estess]	Verify MUPIP BACKUP -RECORD stores the time of its start when it completes successfully
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v70001 test starts..."
 
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
-setenv subtest_list_non_replic	"gtm9213 gtm8010 gtm9452"
+setenv subtest_list_non_replic	"gtm9213 gtm8010 gtm9452 gtm8681"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
