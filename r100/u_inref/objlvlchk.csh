@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -19,7 +19,7 @@
 #   3. [** Future expansion once a version of YDB is available with an incremented object version **] An
 #      object created by a previous version of YDB is recompiled appropriately with the new YDB version.
 #
-set prior_ver = `$gtm_tst/com/random_ver.csh -lt V63007 >& rand_ver.txt; cat rand_ver.txt`
+set prior_ver = `$gtm_tst/com/random_ver.csh -lt V70000 >& rand_ver.txt; cat rand_ver.txt`
 source $gtm_tst/com/ydb_prior_ver_check.csh $prior_ver
 source $gtm_tst/com/switch_gtm_version.csh $prior_ver pro
 #echo "Selected GT.M version [$prior_ver] to do initial compile"
