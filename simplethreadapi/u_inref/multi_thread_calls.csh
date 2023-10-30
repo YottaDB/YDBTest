@@ -31,12 +31,15 @@ while ($cnt > 0)
 	@ cnt = $cnt - 1
 end
 
+# Note down ps -ef --forest output before and after wait steps below (for help with analysis of test failures)
+ps -ef --forest >& psforest_start.out
 echo "# Wait for backgrounded processes to finish"
 @ cnt = 16
 while ($cnt > 0)
 	set bgpid = `cat bg_$cnt.pid`
-	$gtm_tst/com/wait_for_proc_to_die.csh $bgpid
+	$gtm_tst/com/wait_for_proc_to_die.csh $bgpid 300
 	@ cnt = $cnt - 1
 end
+ps -ef --forest >& psforest_end.out
 
 $gtm_tst/com/dbcheck.csh
