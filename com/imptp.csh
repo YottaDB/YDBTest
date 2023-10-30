@@ -102,15 +102,6 @@ if ($gtm_test_dbfill == "IMPTP" || $gtm_test_dbfill == "IMPZTP") then
 					set disable_imptp_flavor_list = "$disable_imptp_flavor_list 4"
 				endif
 			endif
-			# Disable YDBRust testing if the cargo/rustc version is greater than 1.68.*
-			# We have seen the following error when building imptp.rs in that case.
-			#	error[E0432]: unresolved imports `crate::craw::YDB_DEL_TREE`, `crate::craw::YDB_DEL_NODE`
-			# Disable YDBRust random choice for imptp.csh until a solution is found.
-			set rustcminorver = `rustc --version | cut -d. -f2`
-			if (67 < $rustcminorver) then
-				echo "# Disabling ydb_imptp_flavor=5 (YDBRust) due to rust/cargo 1.68 or higher"
-				set disable_imptp_flavor_list = "$disable_imptp_flavor_list 5"
-			endif
 			# Disable YDBPython testing if python3 version is 3.11.*
 			# We have seen one of the following symptoms when building imptp.py in that case.
 			#	SystemError: unknown opcode
