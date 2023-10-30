@@ -91,6 +91,11 @@ echo $linestr
 if ($?gtm_test_nopriorgtmver) then
 	exit
 endif
+if ("suse" == $gtm_test_linux_distrib) then
+	# Disable "C9I06002996" subtest on SUSE Linux as we don't have the needed
+	# old versions on that distribution (due to no libtinfo.so.5 package)
+	exit
+endif
 
 echo "# Test that endiancvt does not proceed if minor-dbver is not same as current version"
 echo "# We know that any version <= V63007_R128 has a minor db-ver different from the current or any future version"

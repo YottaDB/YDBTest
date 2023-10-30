@@ -49,7 +49,7 @@ All requested regions unfrozen
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
 ----------------------------------------------------------------------
-##SUSPEND_OUTPUT PLATFORM_NO_PRIORGTM
+##SUSPEND_OUTPUT PLATFORM_NO_PRIORGTM SUSE_LINUX
 # Test that endiancvt does not proceed if minor-dbver is not same as current version
 # We know that any version <= V63007_R128 has a minor db-ver different from the current or any future version
 # So create database using that older version and try to endiancvt it using the current version
@@ -147,4 +147,4 @@ Region DEFAULT : MUPIP REORG UPGRADE finished
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *
 No errors detected by integ.
-##ALLOW_OUTPUT PLATFORM_NO_PRIORGTM
+##ALLOW_OUTPUT PLATFORM_NO_PRIORGTM SUSE_LINUX
