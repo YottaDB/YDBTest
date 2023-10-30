@@ -98,10 +98,10 @@ if ("suse" == $gtm_test_linux_distrib) then
 endif
 
 echo "# Test that endiancvt does not proceed if minor-dbver is not same as current version"
-echo "# We know that any version <= V63007_R128 has a minor db-ver different from the current or any future version"
+echo "# We know that any version < V63014_R136 has a minor db-ver different from the current or any future version"
 echo "# So create database using that older version and try to endiancvt it using the current version"
 echo "# Randomly choose a prior version to create the database first."
-set prior_ver = `$gtm_tst/com/random_ver.csh -gte V50000 -lte V63007_R128`
+set prior_ver = `$gtm_tst/com/random_ver.csh -lt V63014_R136`
 if ("$prior_ver" =~ "*-E-*") then
 	echo "No prior versions available: $prior_ver"
 	exit -1
