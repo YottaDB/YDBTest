@@ -264,26 +264,29 @@ BEGIN {
 	if ("x86_64" == ENVIRON["real_mach_type"])
 	{
 		option_names[++no_options] = "OS_ARCH"
-		if ("arch" == ENVIRON["gtm_test_linux_distrib"])
+		if ("arch" == ENVIRON["gtm_test_linux_distrib"]) {
 			envir[no_options] = "ARCH_LINUX_X86_64"
-		else if ("debian" == ENVIRON["gtm_test_linux_distrib"])
+		} else if ("debian" == ENVIRON["gtm_test_linux_distrib"]) {
 			envir[no_options] = "DEBIAN_LINUX_X86_64"
-		else if ("ubuntu" == ENVIRON["gtm_test_linux_distrib"])
+		} else if ("ubuntu" == ENVIRON["gtm_test_linux_distrib"]) {
 			envir[no_options] = "UBUNTU_LINUX_X86_64"
-		else if ("centos" == ENVIRON["gtm_test_linux_distrib"])
+			option_names[++no_options] = "OS_ARCH_VER"
+			if ("23.10" <= ENVIRON["gtm_test_linux_version"])
+				envir[no_options] = "UBUNTU_23.10_PLUS"
+		} else if ("centos" == ENVIRON["gtm_test_linux_distrib"]) {
 			envir[no_options] = "CENTOS_LINUX_X86_64"
-		else if ("rhel" == ENVIRON["gtm_test_linux_distrib"])
+		} else if ("rhel" == ENVIRON["gtm_test_linux_distrib"]) {
 			envir[no_options] = "RHEL_LINUX_X86_64"
 			option_names[++no_options] = "OS_ARCH_VER"
 			if ("7.9" == ENVIRON["gtm_test_linux_version"])
 				envir[no_options] = "RHEL_7.9"
-		else if ("suse" == ENVIRON["gtm_test_linux_distrib"])
+		} else if ("suse" == ENVIRON["gtm_test_linux_distrib"]) {
 			envir[no_options] = "SUSE_LINUX_X86_64"
 			option_names[++no_options] = "OS_ARCH_SUBTYPE"
 			if ("opensuse-tumbleweed" == ENVIRON["gtm_test_linux_suse_distro"])
 				envir[no_options] = "SUSE_TUMBLEWEED"
-	} else if ("aarch64" == ENVIRON["real_mach_type"])
-	{
+		}
+	} else if ("aarch64" == ENVIRON["real_mach_type"]) {
 		option_names[++no_options] = "OS_ARCH"
 		if ("debian" == ENVIRON["gtm_test_linux_distrib"])
 			envir[no_options] = "DEBIAN_LINUX_AARCH64"
