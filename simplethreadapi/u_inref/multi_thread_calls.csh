@@ -32,7 +32,9 @@ while ($cnt > 0)
 end
 
 # Note down ps -ef --forest output before and after wait steps below (for help with analysis of test failures)
-ps -ef --forest >& psforest_start.out
+# Use .outx (not .out) as it is possible to have processes with -E- in their command line and that would otherwise
+# cause the test framework to flag this subtest as a test failure in rare cases.
+ps -ef --forest >& psforest_start.outx
 echo "# Wait for backgrounded processes to finish"
 @ cnt = 16
 while ($cnt > 0)
@@ -40,6 +42,6 @@ while ($cnt > 0)
 	$gtm_tst/com/wait_for_proc_to_die.csh $bgpid 300
 	@ cnt = $cnt - 1
 end
-ps -ef --forest >& psforest_end.out
+ps -ef --forest >& psforest_end.outx
 
 $gtm_tst/com/dbcheck.csh
