@@ -4,6 +4,9 @@
 # Copyright (c) 2014-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -14,6 +17,11 @@
 # test to verify that an instance freeze seldom produces MUTEXLCKALERT messages. Within 70 seconds, we should see no MUTEXLCKALERT
 # because of the instance freeze protection.  There is a possiblity of seeing at most 1 MUTEXLCKALERT due to a small window. Without
 # the instance freeze protection MUTEXLCKALERTs are issued every 32 seconds, so it should be issued twice in 70 seconds.
+
+# Disable debug-only huge db scheme as that has been found to randomly/rarely slow this test down dramatically
+# (it has been known to take 19 hours to finish once when it normally finishes in a minute or so). The suspicion is
+# some XFS file system issue with handling 100s of processes updating tera-byte sized database file (even if it has a big hole).
+setenv ydb_test_4g_db_blks 0
 
 $gtm_tst/com/dbcreate.csh mumps 1 200 900 1024 100 328 200
 unsetenv gtm_test_freeze_on_error	# this test does its own thing with freeze and doesn't need to deal with interactions
