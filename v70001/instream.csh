@@ -18,13 +18,14 @@
 # gtm8010	[estess]	Test that 128-255 byte EXCEPTION parm on OPEN of /dev/null operates correctly
 # gtm9452	[sam,hoyt]	CLOSE deviceparameter REPLACE overwrites an existing file, which RENAME does not
 # gtm8681	[estess]	Verify MUPIP BACKUP -RECORD stores the time of its start when it completes successfully
+# gtm4814	[estess]	Verify M-profiling (VIEW "TRACE") restored after ZSTEP
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v70001 test starts..."
 
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
-setenv subtest_list_non_replic	"gtm9213 gtm8010 gtm9452 gtm8681"
+setenv subtest_list_non_replic	"gtm9213 gtm8010 gtm9452 gtm8681 gtm4814"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then

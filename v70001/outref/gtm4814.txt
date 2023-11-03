@@ -1,0 +1,109 @@
+# GTM-4814 Verify M-profiling (VIEW "TRACE") restored after ZSTEP
+#
+# Release note:
+#
+# GT.M restores TRACE operation (M-Profiling) after ZSTEP operations. However, issuing a
+# VIEW "[NO]TRACE" may interfere with ZSTEP operations. Note that using ZSTEP materially
+# impacts M-Profiling times, so using these two facilities together may be problematic.
+# Previously, ZSTEP usage usually turned off M-Profiling. (GTM-4814)
+#
+
+# Create database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+# Drive ^gtm4814 to generate trace with embedded ZSTEP commands
+
+# Turning on trace to ^trace global
+
+# Executing a few statements so the trace does something
+
+# Breaking to invoke ZSTEP commands
+%YDB-I-BREAK, Break instruction encountered
+		At M source location gtm4814+10^gtm4814
+
+YDB>
+%YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
+		At M source location gtm4814+11^gtm4814
+
+YDB>
+%YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
+		At M source location gtm4814+12^gtm4814
+
+YDB>
+%YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
+		At M source location gtm4814+13^gtm4814
+
+YDB>
+
+# Resumed execution, should see more lines traced in the trace dump below (starting with line 14):
+
+# Turn off tracing
+
+# Dump the trace records to verify the trace was restored after the zstep commands. Expecting
+# to see statements executed to pick back up at line 14 and continue through line 19:
+^trace("*CHILDREN")="0:0:0"
+##TEST_AWK\^trace\("\*RUN")=.*
+##TEST_AWK\^trace\("gtm4814","gtm4814"\)=.*
+##TEST_AWK\^trace\("gtm4814","gtm4814",3\)=.*
+##TEST_AWK\^trace\("gtm4814","gtm4814",7\)=.*
+##TEST_AWK\^trace\("gtm4814","gtm4814",8\)=.*
+##TEST_AWK\^trace\("gtm4814","gtm4814",9\)=.*
+##TEST_AWK\^trace\("gtm4814","gtm4814",10\)=.*
+##TEST_AWK\^trace\("gtm4814","gtm4814",14\)=.*
+##TEST_AWK\^trace\("gtm4814","gtm4814",15\)=.*
+##TEST_AWK\^trace\("gtm4814","gtm4814",16\)=.*
+##TEST_AWK\^trace\("gtm4814","gtm4814",17\)=.*
+##TEST_AWK\^trace\("gtm4814","gtm4814",18\)=.*
+##TEST_AWK\^trace\("gtm4814","gtm4814",19\)=.*
+
+
+# This next test turns things around. It starts with a break and some direct mode ZSTEP commands, then
+# enables tracing while continuing to ZSTEP and see if it interfers with the ZSTEPs. Do this again
+# when we stop tracing to see if that inteferes with orderly ZSTEPs. What we expect to see is interference
+# from the trace being started that prevents subsequent ZSTEPs from working. We proceed as if a ZCONTINUE
+# had been done.
+%YDB-I-BREAK, Break instruction encountered
+		At M source location gtm4814B+1^gtm4814
+
+YDB>
+%YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
+		At M source location gtm4814B+2^gtm4814
+
+YDB>
+%YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
+		At M source location gtm4814B+3^gtm4814
+
+YDB>
+%YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
+		At M source location gtm4814B+4^gtm4814
+
+YDB>
+
+# Turning on trace by ZSTEPing the VIEW command to enable it. Note, no ZSTEPs after this line
+# are recognized. The test proceeds as if a ZCONTINUE command was entered.
+%YDB-I-BREAKZST, Break instruction encountered during ZSTEP action
+		At M source location gtm4814B+5^gtm4814
+
+YDB>
+
+# Turn off tracing by ZSTEPing the VIEW command to disable it
+
+# Dump the trace records expecting to see the trace pick up at gtm4814B+6 and end at gtm4814B+10 but we
+# note that there were no more ZSTEPs done once tracing was enabled and that ZSTEPs did not resume after
+# tracing was turned off at gtm4814B+10.
+^trace2("*CHILDREN")="0:0:0"
+##TEST_AWK\^trace2\("\*RUN")=.*
+##TEST_AWK\^trace2\("gtm4814","gtm4814B",6\)=.*
+##TEST_AWK\^trace2\("gtm4814","gtm4814B",7\)=.*
+##TEST_AWK\^trace2\("gtm4814","gtm4814B",8\)=.*
+##TEST_AWK\^trace2\("gtm4814","gtm4814B",9\)=.*
+##TEST_AWK\^trace2\("gtm4814","gtm4814B",10\)=.*
+
+# Validate DB
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
