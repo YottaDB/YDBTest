@@ -433,7 +433,7 @@ test1k  ;
 	do ^job("test1khelper^c003044",5,"""""")
 	for i=1:1  quit:^stop=1  set ^x=$get(^x)+1  if i#1000=0 do
 	.	zshow "G":val
-	.	if $piece($piece(val("G",0),"NR2",2),",",1)'=0  set ^stop=1
+	.	if $piece($piece(val("G",0),"NR2:",2),",",1)'=0  set ^stop=1
 	do wait^job	; wait for children to terminate
 	; since the # of database operations needed to get NR2 non-zero is not deterministic, we dont want to
 	; print the entire zshow "G" output but instead check that the NR0, NR1 and NR2 counters are non-zero.
@@ -474,7 +474,7 @@ test1l	;
 	do ^job("test1lhelper^c003044",4,"""""")
 	for i=1:1  quit:^stop=1  tstart ():serial set ^x=$get(^x)+1,^y=$get(^y)+1,^z=$get(^z)+1 tcommit  if i#100=0 do
 	.	zshow "G":val
-	.	if ($piece($piece(val("G",0),"TC2",2),",",1)'=0)&($piece($piece(val("G",0),"TR2",2),",",1)'=0)  set ^stop=1
+	.	if ($piece($piece(val("G",0),"TC2:",2),",",1)'=0)&($piece($piece(val("G",0),"TR2:",2),",",1)'=0)  set ^stop=1
 	do wait^job	; wait for children to terminate
 	; since the # of database operations needed to get TC2 non-zero is not deterministic, we dont want to
 	; print the entire zshow "G" output but instead check that the TC0-2 and TR0-2 counters are non-zero.
