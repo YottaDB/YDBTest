@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -262,5 +262,5 @@ $ydb_dist/mumps -run $fn^gtm8694>&output.txt
 rm $ydb_dist/restrict.txt
 $gtm_tst/com/getoper.csh "$t" "" getoper.txt "" "RESTRICTSYNTAX"
 echo "# CHECKING THE SYSLOG"
-$grep %YDB-E-RESTRICTSYNTAX getoper.txt |& sed  's/.*%YDB-E-RESTRICTSYNTAX/%YDB-E-RESTRICTSYNTAX/'
+$grep "%YDB-E-RESTRICTSYNTAX.*`pwd`" getoper.txt |& sed  's/.*%YDB-E-RESTRICTSYNTAX/%YDB-E-RESTRICTSYNTAX/'
 $gtm_tst/com/dbcheck.csh >>& dbcheck.out
