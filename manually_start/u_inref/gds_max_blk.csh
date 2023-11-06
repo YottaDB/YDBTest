@@ -213,15 +213,15 @@ if (0 != $ydb_test_4g_db_blks) then
 	mv mumps.dat mumps_test1.dat
 	mv mumps.gld mumps_test1.gld
 	echo
-	echo "################ TEST CASE 2 ################"
-	echo "#"
-	echo "# Recreate DB to max sized V7 DB to check that attempting to extend past the max size gives an error. Note"
-	echo "# we are unable to do LOWSPC checking with a full sized V7 DB as it is 17 times larger than a max V6 DB."
-	echo "# This is because we use $ydb_test_4g_db_blks to create a 'hole' in the database that contains nothing so"
-	echo "# we can create the start of the DB, the hole and then a few blocks on the end in a giant sparse database"
-	echo "# that takes up almost no room. But when this facility is active, LOWSPC and DBFILEXT messages are not"
-	echo "# generated."
-	echo "#"
+	echo '################ TEST CASE 2 ################'
+	echo '#'
+	echo '# Recreate DB to max sized V7 DB to check that attempting to extend past the max size gives an error. Note'
+	echo '# we are unable to do LOWSPC checking with a full sized V7 DB as it is 17 times larger than a max V6 DB.'
+	echo '# This is because we use $ydb_test_4g_db_blks to create a "hole" in the database that contains nothing so'
+	echo '# we can create the start of the DB, the hole and then a few blocks on the end in a giant sparse database'
+	echo '# that takes up almost no room. But when this facility is active, LOWSPC and DBFILEXT messages are not'
+	echo '# generated.'
+	echo '#'
 	setenv gtm_test_defer_allocate $save_test_defer_allocate # Restore to what it was as it is not used in this test
 	setenv gtm_test_use_V6_DBs 0   		# This test case requires V7 data blocks
 	setenv ydb_test_4g_db_blks 0x1feffff	# This is the last local bit map in a maximum size DB
@@ -233,7 +233,7 @@ if (0 != $ydb_test_4g_db_blks) then
 	echo '# else part of the large DB hole (this is a very large but very sparse DB):'
 	$MUPIP extend DEFAULT -blocks=922
 	echo
-	echo "# Do some updates to fill the first local bit map and then the bit map created above the DB 'hole'"
+	echo '# Do some updates to fill the first local bit map and then the bit map created above the DB hole'
 	$gtm_exe/mumps -run %XCMD 'for i=1:1:1963 set ^a($justify(i,20))=$justify(i,200)'
 	echo
 	echo '# Try one more extension (expecting the extension to fail for no space left):'
