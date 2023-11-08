@@ -10,9 +10,6 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
-mkdir /usr/library/com
-chown gtmtest:gtc /usr/library/com
-chmod 775 /usr/library/com
 setenv GNUPGHOME /usr/library/com/gnupg
 setenv gtm_pubkey $GNUPGHOME/gtm@fnis.com_pubkey.txt
 setenv gtm_dist /usr/library/V999_R999/dbg

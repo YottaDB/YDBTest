@@ -33,7 +33,7 @@ echo "# Try MUPIP TRIGGER command. This used to assert fail"
 echo '+^ax(1,2,2) -commands=K -xecute="set x=1"' | $ydb_dist/mupip trigger -stdin
 
 echo "# Try MUPIP INTEG -STATS command. This used to SIG-11"
-$ydb_dist/mumps -run %XCMD 'view "statshare" zsystem "mupip integ -reg DEFAULT -stats"'
+$ydb_dist/mumps -run %XCMD 'view "statshare" zsystem "$ydb_dist/mupip integ -reg DEFAULT -stats"'
 
 $gtm_tst/com/dbcheck.csh
 

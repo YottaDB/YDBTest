@@ -1,7 +1,7 @@
 #!/bin/tcsh
 #################################################################
 #								#
-# Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2021-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -35,15 +35,6 @@ endif
 # Make sure /testarea1 is writeable, as it can be redirected from the host
 chmod 777 /testarea1
 
-# Compile YottaDB if passed in as a volume
-if ( -f /YDB/CMakeLists.txt ) then
-  /usr/library/gtm_test/T999/docker/build_and_install_yottadb.csh
-  if ( $status ) then
-    echo "Compilation error"
-    exit 99
-  endif
-endif
-
 # User passed in the Test system as a volume
 if ( -f /YDBTest/com/gtmtest.csh ) then
   echo "Copying passed in test system"
@@ -53,19 +44,22 @@ if ( -f /YDBTest/com/gtmtest.csh ) then
   chown -R gtmtest:gtc /usr/library/gtm_test/T999
 endif
 
+setenv ydb_test_inside_docker 1
+set pass_env = "-w CI_PIPELINE_ID -w CI_COMMIT_BRANCH -w ydb_test_inside_docker"
+
 if ( $#argv == 0 ) then
-  exec su -l gtmtest -c "/usr/library/gtm_test/T999/com/gtmtest.csh -h"
+  exec su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -h"
 endif
 
 # Debugging entry points for testing problems with the system
 if ( "$argv[1]" == "-rootshell") then
-  exec su -
+  exec su - $pass_env
 endif
 
 if ( "$argv[1]" == "-shell") then
-  echo "Try running /usr/library/gtm_test/T999/com/gtmtest.csh -nomail -noencrypt -fg -env gtm_ipv4_only=1 -stdout 1 -t r132"
-  exec su -l gtmtest
+  echo "Try running /usr/library/gtm_test/T999/com/gtmtest.csh -nomail -noencrypt -fg -env gtm_ipv4_only=1 -stdout 2 -t r134"
+  exec su -l gtmtest $pass_env
 endif
 
 # Run the tests as the test user
-exec su -l gtmtest -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -noencrypt -fg -env gtm_ipv4_only=1 -stdout 1 $argv"
+exec su -l gtmtest $pass_env -c "/usr/library/gtm_test/T999/com/gtmtest.csh -nomail -noencrypt -fg -env gtm_ipv4_only=1 -stdout 2 $argv"

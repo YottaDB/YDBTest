@@ -467,6 +467,12 @@ BEGIN {
 	else
 		envir[no_options] = "NO_COPYFILERANGE_AVAIL"
 	#
+	option_names[++no_options] = "ydb_test_inside_docker"
+	if (1 == ENVIRON["ydb_test_inside_docker"])
+		envir[no_options] = "INSIDE_DOCKER"
+	else
+		envir[no_options] = "OUTSIDE_DOCKER"
+	#
 	# For now set the [UPGRADE_DOWNGRADE_UNSUPPORTED] tag all the time as MUPIP UPGRADE/MUPIP DOWNGRADE functionality
 	# is not supported in V7 format database and likely will not be supported (by GT.M) in the future either.
 	# Use this tag to also note the fact that MUPIP REORG UPGRADE/MUPIP REORG DOWNGRADE functionality is not supported

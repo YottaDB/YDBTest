@@ -12,6 +12,7 @@
 
 stages:
   - build
+  - docker
 
 commit-verify:
   image: ubuntu:22.04
@@ -34,3 +35,15 @@ build-imptp-rs:
     - apt-get update
     - apt-get install -yq --no-install-recommends build-essential bindgen
     - cd com/imptp-rs; . $HOME/.cargo/env; cargo check --no-default-features
+
+# Build test system on docker
+docker-ydbtest-image:
+  image: docker:latest
+  stage: docker
+  services:
+    - docker:dind
+  script:
+    - docker image build -f docker/Dockerfile --progress=plain -t registry.gitlab.com/yottadb/db/ydbtest .
+    - docker push registry.gitlab.com/yottadb/db/ydbtest
+  only:
+    - master@YottaDB/DB/YDB

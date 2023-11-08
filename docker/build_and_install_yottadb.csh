@@ -15,17 +15,9 @@ set echo
 set verbose
 
 set verno = "V999_R999"
-
-rm -rf /Distrib/YottaDB/$verno
-mkdir -p /Distrib/YottaDB/$verno
+set gtm_root = "/usr/library"
+set gtm_ver = "$gtm_root/$verno"
 cd /Distrib/YottaDB/$verno
-
-if ( -f /YDB/CMakeLists.txt ) then
-  cp -r /YDB/. /Distrib/YottaDB/$verno
-else
-  git clone --depth 1 https://gitlab.com/YottaDB/DB/YDB.git .
-endif
-
 
 # Edit sr_linux/release_name.h to reflect V9.9-x version name in GT.M and YottaDB versions
 #
@@ -128,6 +120,7 @@ end
 setenv ydb_dist /usr/library/$verno/dbg
 mkdir /tmp/plugin-build && cd /tmp/plugin-build
 git clone https://gitlab.com/YottaDB/Util/YDBEncrypt.git .
+setenv ydb_icu_version `pkg-config --modversion icu-io`
 make && make install && make clean
 find $ydb_dist/plugin -type f -exec chown root:root {} +
 cd -

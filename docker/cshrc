@@ -18,45 +18,48 @@ set history=10000
 set lineedit
 set matchbeep=nomatch
 set savehist
-setenv LC_ALL_C
 unset autologout
 unset glob
-set HOST=$HOST:r
-setenv HOST $HOST:r
 
-setenv verno V999_R999
-setenv gtm_root /usr/library
-setenv gtm_test $gtm_root/gtm_test
-setenv gtm_dist $gtm_root/$verno/dbg # change later
-setenv gtm_exe $gtm_dist
-setenv gtmroutines ". $gtm_dist"
-setenv gtm_tools $gtm_root/$verno/tools
-setenv gtm_inc $gtm_root/$verno/inc
-setenv gtm_source $gtm_root/$verno/src
-setenv gtm_verno $verno
-setenv gtm_ver $gtm_root/$verno
-setenv gtm_obj $gtm_exe/obj
-setenv gtm_log $gtm_ver/log
-setenv gtm_testver T999
-setenv gtm_curpro $verno
-setenv tst_dir /testarea1
-setenv gtm_com ""
+# Only set environment on initial log-in. If test system does a system() call, this code will not be run again
+# We use $gtmroutines as a sentinel for this.
+if (! $?gtmroutines) then
+	setenv LC_ALL_C
+	setenv HOST $HOST:r
+	setenv verno V999_R999
+	setenv gtm_root /usr/library
+	setenv gtm_test $gtm_root/gtm_test
+	setenv gtm_dist $gtm_root/$verno/dbg # change later
+	setenv gtm_exe $gtm_dist
+	setenv gtmroutines ". $gtm_dist"
+	setenv gtm_tools $gtm_root/$verno/tools
+	setenv gtm_inc $gtm_root/$verno/inc
+	setenv gtm_source $gtm_root/$verno/src
+	setenv gtm_verno $verno
+	setenv gtm_ver $gtm_root/$verno
+	setenv gtm_obj $gtm_exe/obj
+	setenv gtm_log $gtm_ver/log
+	setenv gtm_testver T999
+	setenv gtm_curpro $verno
+	setenv tst_dir /testarea1
+	setenv gtm_com ""
 
-setenv gtm_test_noggsetup 1
-setenv gtm_test_use_V6_DBs 0
-setenv gtm_test_v6_dbcreate_rand_ver $verno
-setenv gtm_test_serverconf_file $gtm_test/serverconf.txt
+	setenv gtm_test_noggsetup 1
+	setenv gtm_test_use_V6_DBs 0
+	setenv gtm_test_v6_dbcreate_rand_ver $verno
+	setenv gtm_test_serverconf_file $gtm_test/serverconf.txt
 
-setenv PATH ${PATH}:/sbin/
+	setenv PATH ${PATH}:/sbin/
 
-setenv LC_ALL en_US.UTF-8
-# Below is needed for YDBEncrypt compilation
-setenv ydb_icu_version `ldconfig -p | grep -m1 -F libicuio.so. | cut -d" " -f1 | sed 's/.*libicuio.so.\([a-z]*\)\([0-9\.]*\)/\2.\1/;s/\.$//;'`
-setenv gtm_icu_version $ydb_icu_version
+	setenv LC_ALL en_US.UTF-8
+	# Below is needed for YDBEncrypt compilation
+	setenv ydb_icu_version `ldconfig -p | grep -m1 -F libicuio.so. | cut -d" " -f1 | sed 's/.*libicuio.so.\([a-z]*\)\([0-9\.]*\)/\2.\1/;s/\.$//;'`
+	setenv gtm_icu_version $ydb_icu_version
 
-if ( -f $gtm_tools/gtm_env.csh ) then
-	setenv HOSTOS `uname -s`
-	source $gtm_tools/gtm_env.csh
+	if ( -f $gtm_tools/gtm_env.csh ) then
+		setenv HOSTOS `uname -s`
+		source $gtm_tools/gtm_env.csh
+	endif
 endif
 
 bindkey "^R" i-search-back

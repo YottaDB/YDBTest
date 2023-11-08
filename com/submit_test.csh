@@ -1118,7 +1118,12 @@ if ( $stat == 0 ) then
 			$sec_shell "SEC_SHELL_GTCM SEC_GETENV_GTCM ; rm -rf SEC_DIR_GTCM"
 		endif
 	else
-		\chmod -R g+w $tst_working_dir $test_jnldir $test_bakdir
+		foreach dir ($tst_working_dir $test_jnldir $test_bakdir)
+			if (! -d $test_bakdir) then
+				continue
+			endif
+			\chmod -R g+w $dir
+		end
 		if ($?test_replic) then
 			$sec_shell "\chmod -R g+w $SEC_DIR $test_remote_jnldir $test_remote_bakdir"
 		else if ("GT.CM" == $test_gtm_gtcm) then

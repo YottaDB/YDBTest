@@ -28,6 +28,12 @@ echo "# those continue to work with the current version source server using -tri
 echo "# This tests that the replication filter functions (jnl_v44TOv44() and jnl_v44TOv22()"
 echo "# in the case of r1.38) correctly handle -trigupdate processing on the source server side."
 set choose_olderver_rcvr = `shuf -i 0-1 -n 1`
+if ($?ydb_test_inside_docker) then
+	# Inside the docker container, we don't have prior versions so disable random choice of older version in that case.
+	if ( "0" != $ydb_test_inside_docker ) then
+		set choose_olderver_rcvr = 0
+	endif
+endif
 if ($choose_olderver_rcvr) then
 	# We are going to choose an older version receiver server.
 	set rand_ver=`$gtm_tst/com/random_ver.csh -gte V62000 -lt $tst_ver`

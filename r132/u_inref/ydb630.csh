@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -50,10 +50,14 @@ ydb630 $log_info
 echo '# Testing $zsyslog("<date> <$PWD> ZSYSLOGR). Expecting a return value of 1'
 $ydb_dist/mumps -r ^%XCMD 'write $zsyslog("'$date_signature $PWD $message'")'
 $gtm_tst/com/getoper.csh "$syslog_start1" "" syslog1.txt "" $message
-# Take the fifth argument which is the proces-name[pid] and break it across and get the first half.
+# Get the process-name[pid] section from the log and extract the process name from it.
+# 1. Delete ]: and everything after
+# 2. Get the last argument
+# 3. Delete [: and everything after
 echo ""
 echo "# Verifying executable names in syslog messages"
-$grep "${date_signature} $PWD Wine" syslog1.txt  | awk '{print $5}' | awk -F "[" '{print $1}'
-$grep "${date_signature} $PWD Beer!" syslog1.txt  | awk '{print $5}' | awk -F "[" '{print $1}'
-$grep "${date_signature} $PWD Vodka" syslog1.txt  | awk '{print $5}' | awk -F "[" '{print $1}'
+
+$grep "${date_signature} $PWD Wine" syslog1.txt   | sed 's/\]:.*//' | awk '{print $NF}' | sed 's/\[.*//'
+$grep "${date_signature} $PWD Beer!" syslog1.txt  | sed 's/\]:.*//' | awk '{print $NF}' | sed 's/\[.*//'
+$grep "${date_signature} $PWD Vodka" syslog1.txt  | sed 's/\]:.*//' | awk '{print $NF}' | sed 's/\[.*//'
 echo "# End of ZSYSLOG Test"

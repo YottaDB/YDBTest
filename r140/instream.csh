@@ -55,6 +55,14 @@ if ($gtm_test_libyottadb_asan_enabled) then
 	setenv subtest_exclude_list "$subtest_exclude_list ydbpython32"
 endif
 
+if ($?ydb_test_inside_docker) then
+	# Test ydb1021 relies on a hardcoded prior version, which is not available in the docker system
+	# Disable it if we are running inside docker
+	if ( "0" != $ydb_test_inside_docker ) then
+		setenv subtest_exclude_list "$subtest_exclude_list ydb1021"
+	endif
+endif
+
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh
 

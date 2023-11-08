@@ -9,11 +9,21 @@
 # the license, please stop and do not read further.             #
 #                                                               #
 #################################################################
+# Instructions
+# - docker build -f docker/Dockerfile -t ydbtest .
+# - docker run --init -it -v <local directory>:/testarea1/ --rm ydbtest -t r132
+#
+# Other options:
+# Pass a YDBTest Volume to use
+# - docker run --init -it -v <local directory>:/testarea1/ -v <full path to YDBTest>:/YDBTest --rm ydbtest -t r132
+# Run a shell as the gtmtest user
+# - docker run --init -it -v <local directory>:/testarea1/ --rm ydbtest -shell
+# Run a shell as root
+# - docker run --init -it -v <local directory>:/testarea1/ --rm ydbtest -rootshell
 ARG OS_VSN=bookworm
 FROM debian:${OS_VSN}
 
 VOLUME /testarea1
-VOLUME /YDB
 VOLUME /YDBTest
 
 ARG DEBIAN_FRONTEND=noninteractive
@@ -57,8 +67,15 @@ RUN apt-get update && \
                     gdb \
                     valgrind \
                     python3 \
+                    python3-venv \
+                    python3-dev \
+                    python3-setuptools \
+                    libffi-dev \
+                    curl \
                     iproute2 \
                     openjdk-17-jdk \
+                    golang \
+                    libreadline-dev \
                     && \
                     apt-get clean
 
@@ -71,9 +88,10 @@ RUN ln -s /usr/bin/tcsh /usr/local/bin/tcsh && \
 COPY --chown=gtmtest:gtc . /usr/library/gtm_test/T999/
 RUN ln -s /usr/library/gtm_test/T999/docker/cshrc ~/.cshrc && \
     ln -s /usr/library/gtm_test/T999/docker/cshrc ~gtmtest/.cshrc
+RUN ln -s /usr/library/gtm_test/T999/docker/serverconf.txt /usr/library/gtm_test/serverconf.txt
+RUN git clone https://gitlab.com/YottaDB/DB/YDB.git /Distrib/YottaDB/V999_R999
 RUN /usr/library/gtm_test/T999/docker/build_and_install_yottadb.csh
 RUN /usr/library/gtm_test/T999/docker/setup_gpg.csh
-RUN ln -s /usr/library/gtm_test/T999/docker/serverconf.txt /usr/library/gtm_test/serverconf.txt
 # https://stackoverflow.com/questions/56609182/openthread-environment-docker-rsyslogd-imklog-cannot-open-kernel-log-proc-km
 RUN sed -i '/imklog/s/^/#/' /etc/rsyslog.conf
 WORKDIR /home/gtmtest
