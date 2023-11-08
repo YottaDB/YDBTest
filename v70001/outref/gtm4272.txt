@@ -1,0 +1,100 @@
+# GTM-4272 - Verify MUPIP BACKUP displays information in standard GT.M messages format
+#
+# Release note:
+#
+# MUPIP BACKUP and RESTORE display information in standard GT.M messages format. The messages
+# display the full path when they include a file context. Please refer to the Error and Other
+# Messages section of these release notes for details on the standard messages. Previously, certain
+# MUPIP BACKUP and RESTORE messages did not follow the standard GT.M message format and/or did
+# not display the full path when there was a file context. (GTM-4272)
+#
+# Note that the existing tests in the test system tested several of errors mentioned in the errors
+# section of the release notes. Those are not tested here. The remaining errors that are tested
+# here are the following:
+#
+#   1. BKUPFILEPERM - Backup file permissions on existing file do not permit replacement
+#   2. BKUPPROGRESS - Progress messages printed during backup - note debug-only
+#   3. BKUPRETRY - Run a broken backup that attempts to retry after an error
+#   4. CMDERR - Attempt to backup repl instance file to nonexistent file/directory
+#
+
+# Create database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+
+# Put a little something in the database so we have something to backup
+
+YDB>
+
+YDB>
+
+###################################################################
+
+# Test #1 - BKUPFILEPERM - backup file exists and permissions do not allow existing file replacement
+#   Command used: $MUPIP backup -replace DEFAULT mumps_backup.dat
+
+#   Create the backup directory and change its permissions
+
+#   Attempt to backup DB into created file using command above - expect BKUPFILEPERM error
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with (NO|)BEFORE_IMAGES
+%YDB-E-BKUPFILEPERM, Backup file ##TEST_PATH##/mumps_backup.dat does not have write permission
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+##SUSPEND_OUTPUT NO_COPYFILERANGE_AVAIL
+
+###################################################################
+
+# Test # 2 - BKUPPROGRESS - run a backup that prints progress messages (grep from output file)
+#   Command used: $MUPIP backup -showprogress DEFAULT mumps_backup.dat
+##TEST_AWK%YDB-I-BKUPPROGRESS, Transfer : [0-9]* / [0-9]* (M|G)iB \(( |)[0-9]*%\) ; Speed : [0-9]* MiB/sec ; Transactions : 0 ; Estimated time left : [0-9]* second(s|)
+##ALLOW_OUTPUT NO_COPYFILERANGE_AVAIL
+##SUSPEND_OUTPUT PRO
+
+###################################################################
+
+# Test #3 - BKUPRETRY - Attempt backup with whitebox test WBTEST_BACKUP_FORCE_MV_RV enabled to cause an error and generate a retry
+#   Command used: $MUPIP backup -retry=2 DEFAULT mumps_backup.dat
+##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
+##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with (NO|)BEFORE_IMAGES
+Simulated mv returns an error.
+##TEST_AWKsystem : (Invalid argument|No such file or directory)
+##TEST_AWKError executing command : unalias -a; (/usr|)/bin/mv ##TEST_PATH##/DEFAULT_[0-9]*_0.tmp/mumps.dat ##TEST_PATH##/mumps_backup.dat
+%YDB-I-BKUPRETRY, Retrying MUPIP BACKUP for region: DEFAULT (database file: ##TEST_PATH##/mumps.dat). Attempt: #2 of 2
+Simulated mv returns an error.
+##TEST_AWKsystem : (Invalid argument|No such file or directory)
+##TEST_AWKError executing command : unalias -a; (/usr|)/bin/mv ##TEST_PATH##/DEFAULT_[0-9]*_0.tmp/mumps.dat ##TEST_PATH##/mumps_backup.dat
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+##ALLOW_OUTPUT PRO
+##SUSPEND_OUTPUT RHEL_7.9
+
+###################################################################
+
+# Test #4 - CMDERR - Backup the replinstance file to a file under a non-existent directory to generate CMDERR
+#   Command used: $MUPIP backup -replinstance=/tmp/nonexist42/efgh.repl
+##TEST_AWK(/usr|)/bin/cp: cannot create regular file ./tmp/nonexist42/efgh.repl.: No such file or directory
+##TEST_AWK%YDB-E-CMDERR, Error running command : unalias -a; (/usr|)/bin/cp ##TEST_PATH##/mumps.repl /tmp/nonexist42/efgh.repl
+Error backing up replication instance file ##TEST_PATH##/mumps.repl. Moving on to other backups.
+%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+##ALLOW_OUTPUT RHEL_7.9
+
+###################################################################
+
+# Validate DB
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

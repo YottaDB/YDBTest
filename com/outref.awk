@@ -299,6 +299,11 @@ BEGIN {
 		else if ("ubuntu" == ENVIRON["gtm_test_linux_distrib"])
 			envir[no_options] = "UBUNTU_LINUX_AARCH64"
 	}
+	option_names[++no_options] = "SUSE_SLED"
+	if ("sled" == ENVIRON["gtm_test_linux_suse_distro"])
+		envir[no_options] = "SUSE_SLED"
+	else
+		envir[no_options] = "NON_SUSE_SLED"
 	option_names[++no_options] = "OS"
 	if ("arch" == ENVIRON["gtm_test_linux_distrib"])
 		envir[no_options] = "ARCH_LINUX"
@@ -312,6 +317,11 @@ BEGIN {
 		envir[no_options] = "RHEL_LINUX"
 	else if ("suse" == ENVIRON["gtm_test_linux_distrib"])
 		envir[no_options] = "SUSE_LINUX"
+	#
+	if ("suse" != ENVIRON["gtm_test_linux_distrib"]) {
+		options_names[++no_options] = "NOT-SUSE"
+		envir[no_options] = "NON_SUSE_LINUX"	# Used to help identify non-SUSE-SLED type systems
+	}
 	#
 	option_names[++no_options] = "gtm_test_singlecpu"
 	if (1 == ENVIRON["gtm_test_singlecpu"])
@@ -437,6 +447,12 @@ BEGIN {
 			envir[no_options] = "YDB_READLINE8_OR_MORE"
 	} else
 		envir[no_options] = "NON_YDB_READLINE"
+	#
+	option_names[++no_options] = "ydb_test_copy_file_range_avail"
+	if (1 == ENVIRON["ydb_test_copy_file_range_avail"])
+		envir[no_options] = "COPYFILERANGE_AVAIL"
+	else
+		envir[no_options] = "NO_COPYFILERANGE_AVAIL"
 	#
 	# For now set the [UPGRADE_DOWNGRADE_UNSUPPORTED] tag all the time as MUPIP UPGRADE/MUPIP DOWNGRADE functionality
 	# is not supported in V7 format database and likely will not be supported (by GT.M) in the future either.

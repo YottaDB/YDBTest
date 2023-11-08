@@ -19,6 +19,7 @@
 # gtm9452	[sam,hoyt]	CLOSE deviceparameter REPLACE overwrites an existing file, which RENAME does not
 # gtm8681	[estess]	Verify MUPIP BACKUP -RECORD stores the time of its start when it completes successfully
 # gtm4814	[estess]	Verify M-profiling (VIEW "TRACE") restored after ZSTEP
+# gtm4272       [estess]	Verify that MUPIP BACKUP displays information in standard GT.M messages format
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v70001 test starts..."
@@ -26,7 +27,7 @@ echo "v70001 test starts..."
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
 setenv subtest_list_non_replic	"gtm9213 gtm8010 gtm9452 gtm8681 gtm4814"
-setenv subtest_list_replic	""
+setenv subtest_list_replic	"gtm4272"
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"

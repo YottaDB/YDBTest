@@ -158,6 +158,21 @@ endif
 # We cannot use mach_type since that has already been modified to say ARMVXL for ARMV7L or ARMV6L
 setenv real_mach_type `uname -m`
 
+# Determine if kernel and glibc versions support the use of copy_file_range() library routine. We are looking
+# for a kernel version >= 5.3 and a glibc version > 2.27.
+set kversion = `uname -r | cut -d "." -s -f "1,2"`	# Looks like '6.2.0-36-generic'
+echo "5.3\n${kversion}" | sort -CV			# Verify kernel version sorts at or after 5.3 (return=0 when sorted)
+if (0 == $status) then					# If release values already sorted, returns 0, then fetch glibc version
+    set gversion = `ldd --version | head -n1 | cut -d ')' -f2 | cut -d ' ' -f2`	# 1st line looks like 'ldd (Ubuntu GLIBC 2.35-0ubuntu3.4) 2.35'
+    if (1 == `echo "(2.27 < $gversion)" | bc`) then
+      	setenv ydb_test_copy_file_range_avail 1
+    else
+	setenv ydb_test_copy_file_range_avail 0
+    endif
+else
+    setenv ydb_test_copy_file_range_avail 0
+endif
+
 # Determine if big_files directory is available. Used later to decide whether a few subtests can be enabled or not.
 if (-e $gtm_test/big_files) then
 	setenv big_files_present 1
