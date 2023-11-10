@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -41,15 +41,11 @@ setenv subtest_list_replic "D9I05002682 C9I06003000"
 setenv subtest_list_non_replic "C9I02002956 C9D12002471 C9I02002963 D9I03002674 C9E08002617 D9I03002676 C9C11002181"
 setenv subtest_list_non_replic "$subtest_list_non_replic C9F06002736 C9I07003006 D9I07002688 D9I07002689 D9I07002692 D9I07002690"
 setenv subtest_list_non_replic "$subtest_list_non_replic C9I07003009"
-setenv subtest_list_non_replic_FE ""
 #
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
 else
 	setenv subtest_list "$subtest_list_common $subtest_list_non_replic"
-	if ("L" != $LFE) then
-		setenv subtest_list "$subtest_list $subtest_list_non_replic_FE"
-	endif
 endif
 setenv subtest_exclude_list ""
 # filter out a specific subtest for some servers:

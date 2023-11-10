@@ -87,10 +87,8 @@ setenv subtest_list_non_replic "$subtest_list_non_replic dbidmismatch1 shmsemrem
 setenv subtest_list_non_replic "$subtest_list_non_replic C9K12003344 C9H04002840 etrapinfinalretry D9L06002816 transbig1 transbig2"
 setenv subtest_list_non_replic "$subtest_list_non_replic incrollback dsejnlrectype dbinit_honor_userwait C9I12003062 D9I08002697"
 setenv subtest_list_non_replic "$subtest_list_non_replic deferred_mupip_stop C9I05002991 C9K11003340 gtm6957 indrindrdo gtm6994 C9L06003421"
-setenv subtest_list_non_replic "$subtest_list_non_replic gtm6811"
-setenv subtest_list_replic     "D9L04002809 C9J03003101 maxregseqno resync"
-setenv subtest_list_non_replic_FE "C9L05003412 db1tb"
-setenv subtest_list_replic_FE  "D9I12002716"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm6811 C9L05003412 db1tb"
+setenv subtest_list_replic     "D9L04002809 C9J03003101 maxregseqno resync D9I12002716"
 
 # only HP-UX_IA64 and OSF1 uses caller_id stub so run this test only for these platform
 if (("HOST_HP-UX_IA64" == "$gtm_test_os_machtype") || ("HOST_HP-UX_PA_RISC" == "$gtm_test_os_machtype")) then
@@ -99,14 +97,8 @@ endif
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
-	if ("L" != $LFE) then
-		setenv subtest_list "$subtest_list $subtest_list_replic_FE"
-	endif
 else
 	setenv subtest_list "$subtest_list_common $subtest_list_non_replic"
-	if ("L" != $LFE) then
-		setenv subtest_list "$subtest_list $subtest_list_non_replic_FE"
-	endif
 endif
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS

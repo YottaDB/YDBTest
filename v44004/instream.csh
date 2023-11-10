@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -35,18 +35,14 @@
 #	b) a change to outref.txt to handle replication as well as non-replication test runs using ##TEST_AWK macros
 #
 echo "V44004 test starts..."
-setenv subtest_list_common ""
-setenv subtest_list_replic "D9D10002386 C9D12002472_1"
-setenv subtest_list_non_replic "D9D11002390 D9D06002344 D9D12002401 D9D08002352 D9E03002436 C9D01002206"
-setenv subtest_list_non_replic_FE "C9D12002472_1 C9D12002472_2"
+setenv subtest_list_common "C9D12002472_1"
+setenv subtest_list_replic "D9D10002386"
+setenv subtest_list_non_replic "D9D11002390 D9D06002344 D9D12002401 D9D08002352 D9E03002436 C9D01002206 C9D12002472_2"
 #
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
 else
 	setenv subtest_list "$subtest_list_common $subtest_list_non_replic"
-	if ("L" != $LFE) then
-		setenv subtest_list "$subtest_list $subtest_list_non_replic_FE"
-	endif
 endif
 setenv subtest_exclude_list ""
 # filter out subtests that cannot pass with MM

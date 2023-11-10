@@ -1,4 +1,18 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+# Portions Copyright (c) Fidelity National			#
+# Information Services, Inc. and/or its subsidiaries.		#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
 #
 # ------------------------------------------------------------------------------
 # for bugs fixed in V53001
@@ -14,15 +28,11 @@ echo "V53001 test starts..."
 setenv subtest_list_common ""
 setenv subtest_list_replic ""
 setenv subtest_list_non_replic "C9H11002926 C9B03001664"
-setenv subtest_list_non_replic_FE " "
 #
 if ($?test_replic == 1) then
         setenv subtest_list "$subtest_list_common $subtest_list_replic"
 else
         setenv subtest_list "$subtest_list_common $subtest_list_non_replic"
-        if ("L" != $LFE) then
-                setenv subtest_list "$subtest_list $subtest_list_non_replic_FE"
-        endif
 endif
 $gtm_tst/com/submit_subtest.csh
 echo "V53001 test DONE."

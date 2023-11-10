@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -231,8 +231,48 @@ foreach sub_test ($subtest_list) # Mega for - practically all this script is in 
 		$gtm_tst/com/chkPWDnoHome.csh
 		if($status) exit 6
 		setenv tst_tslog_file $sub_test.log_ts
-		# tst_tslog_filter may have a pipe in it, so use eval to interpret it properly.
-		eval "$tst_tcsh $sub_test_csh $tst_tslog_filter >>&! $sub_test.log"
+		set skip_subtest = 0
+		if ($?subtest_list_common && $?subtest_list_non_replic && $?subtest_list_replic) then
+			# This test defined the above 3 env vars in its instream.csh.
+			# That lets us do some simplistic checks.
+			# If "sub_test" is in "subtest_list_replic" and not in "subtest_list_common"
+			# (i.e. it is a replic-only subtest), check if "-replic" was not specified. If so, issue error.
+			# If "sub_test" is in "subtest_list_non_replic" and not in "subtest_list_common"
+			# (i.e. it is a non-replic-only subtest), check if "-replic" was specified. If so, issue error.
+			set is_replic_only = 0
+			set is_non_replic_only = 0
+			foreach subtst ($subtest_list_non_replic)
+				if ($subtst == $sub_test) then
+					set is_non_replic_only = 1
+				endif
+			end
+			foreach subtst ($subtest_list_replic)
+				if ($subtst == $sub_test) then
+					set is_replic_only = 1
+				endif
+			end
+			foreach subtst ($subtest_list_common)
+				if ($subtst == $sub_test) then
+					set is_replic_only = 0
+					set is_non_replic_only = 0
+				endif
+			end
+			if ($?test_replic) then
+				if ($is_non_replic_only) then
+					echo "TEST-E-APPLIC: Subtest [$sub_test] must be run without [-replic]." >>&! $sub_test.log
+					set skip_subtest = 1
+				endif
+			else
+				if ($is_replic_only) then
+					echo "TEST-E-APPLIC: Subtest [$sub_test] must be run with [-replic]." >>&! $sub_test.log
+					set skip_subtest = 1
+				endif
+			endif
+		endif
+		if (! $skip_subtest) then
+			# tst_tslog_filter may have a pipe in it, so use eval to interpret it properly.
+			eval "$tst_tcsh $sub_test_csh $tst_tslog_filter >>&! $sub_test.log"
+		endif
 	else
 		echo PASS from $sub_test
 		end

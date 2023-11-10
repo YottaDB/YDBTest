@@ -177,9 +177,7 @@ setenv subtest_list_non_replic "$subtest_list_non_replic maxparse_default maxpar
 setenv subtest_list_non_replic "$subtest_list_non_replic ztrigio chainVnest trigmprof nodztrigintrig trigzsyxplode"
 setenv subtest_list_non_replic "$subtest_list_non_replic zbspfortrig trigzsource trigxcalls trigreadonly nullsub"
 setenv subtest_list_non_replic "$subtest_list_non_replic gtm6901 gtm6901a gtm7678 gtm7877 gtm7877a gtm7083 zprint"
-setenv subtest_list_non_replic "$subtest_list_non_replic gtm8273 gtm8389 gtm8399 gtm8342 poundt ydb500 ydb596"
-
-setenv subtest_list_non_replic_FE "trigthrash"
+setenv subtest_list_non_replic "$subtest_list_non_replic gtm8273 gtm8389 gtm8399 gtm8342 poundt ydb500 ydb596 trigthrash"
 
 # Replic tests
 setenv subtest_list_replic     "replictrigger ztworm_restart_rlbk ztworepl trigreplstate trigdefnosync"
@@ -195,9 +193,6 @@ if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
 else
 	setenv subtest_list "$subtest_list_common $subtest_list_non_replic"
-	if ("L" != $LFE) then
-		setenv subtest_list "$subtest_list $subtest_list_non_replic_FE"
-	endif
 endif
 
 # Exclude tests that we know will fail due to randomization changes

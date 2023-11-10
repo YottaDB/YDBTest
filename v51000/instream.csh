@@ -1,8 +1,11 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
+#								#
+# Portions Copyright (c) Fidelity National			#
+# Information Services, Inc. and/or its subsidiaries.		#
 #								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -34,8 +37,8 @@
 #
 # ------------------------------------------------------------------------------
 #
-# The first subtest to be included in subtest_list_replic below will necessitate 
-#	a) a change to suite.txt to enable the test to be run with replication 
+# The first subtest to be included in subtest_list_replic below will necessitate
+#	a) a change to suite.txt to enable the test to be run with replication
 #	b) a change to outref.txt to handle replication as well as non-replication test runs using ##TEST_AWK macros
 #
 echo "V51000 test starts..."
@@ -43,15 +46,11 @@ setenv subtest_list_common " "
 setenv subtest_list_replic " "
 setenv subtest_list_non_replic "C9E12002698 D9F11002577 D9G01002587 D9F11002578 D9G01002589 D9G01002590 D9G03002599 D9F07002561 "
 setenv subtest_list_non_replic "$subtest_list_non_replic D9G01002592 mu_bkup_change_permission mu_bkup_stop D9E08002477"
-setenv subtest_list_non_replic_FE " "
 #
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
 else
 	setenv subtest_list "$subtest_list_common $subtest_list_non_replic"
-	if ("L" != $LFE) then
-		setenv subtest_list "$subtest_list $subtest_list_non_replic_FE"
-	endif
 endif
 if ($?gtm_test_temporary_disable) then
 	setenv subtest_exclude_list "mu_bkup_stop"
