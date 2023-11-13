@@ -36,8 +36,8 @@
 #
 echo "V44004 test starts..."
 setenv subtest_list_common "C9D12002472_1"
-setenv subtest_list_replic "D9D10002386"
 setenv subtest_list_non_replic "D9D11002390 D9D06002344 D9D12002401 D9D08002352 D9E03002436 C9D01002206 C9D12002472_2"
+setenv subtest_list_replic "D9D10002386"
 #
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
