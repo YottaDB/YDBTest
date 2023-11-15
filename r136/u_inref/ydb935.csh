@@ -44,7 +44,9 @@ echo "# Starting Flask..."
 (python3 -m flask run --host=127.0.0.1 --port=0 >& flask_output.txt & ; echo $! >&! flask.pid) >&! flask.out
 set flaskpid = `cat flask.pid`
 # Flask outputs this line: * Running on http://xx.xx.xx.xx:54003/ (Press CTRL+C to quit)
-# Wait till it shows up
+# Wait till it shows up in flask_output.txt. But before that, wait for the file to be created as it is
+# possible the file creation (which happens in the background) has not yet happened when we reach here.
+$gtm_dist/yottadb -run waitforfilecreate flask_output.txt
 (tail -f flask_output.txt & ) | $gtm_dist/yottadb -r %XCMD 'for  read x quit:x["Press CTRL+C to quit"  hang .01'
 set flaskport = `grep "Running on http" flask_output.txt | cut -d: -f3 | cut -d/ -f1`
 
