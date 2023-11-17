@@ -14,7 +14,10 @@
 #								#
 #################################################################
 # Test that if -updateresync is specified and the receiver max-reg-seqno is GREATER than source max-reg-seqno,
-# REPLAHEAD error is issued.
+# REPLAHEAD error is issued. Note this test is enhanced to show the actual REPLAHEAD message and its 2 associated
+# ERR_TEXT messages that contain less confusing information than the previous REPL_ROLLBACK_FIRST message did.
+# The test enhancement (tests GTM-5148) is at the end when we extract the REPLAHEAD message (and friends) from
+# the receiver log file.
 
 @ section = 0
 set echoline = "echo ---------------------------------------------------------------------------------------"
@@ -86,6 +89,14 @@ END
 BEGIN "Look for REPLAHEAD message in receiver log"
 $MSR RUN INST2 '$gtm_tst/com/wait_for_log.csh -log RCVR_restart.log -message "REPLAHEAD" -duration 120 -waitcreation -grep'
 $MSR RUN INST2 'set msr_dont_trace ; $gtm_tst/com/wait_until_srvr_exit.csh rcvr'
+END
+
+BEGIN "This step is added to test GTM-5418 by pulling the REPLAHEAD message and the next two lines into the reference file."
+echo '# These steps test the following part of the release note in GTM-5418:'
+echo '#'
+echo '#     The message includes the backlog count, and information on whether the Receiver Server requires a manual rollback.'
+echo '#'
+$MSR RUN INST2 '$grep -A 2 REPLAHEAD RCVR_restart.log'
 END
 
 $MSR RUN INST1 "$MUPIP replic -source -shut -time=0 >>& source_shut2.out"

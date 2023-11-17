@@ -78,6 +78,20 @@ BEGIN 8 :-) Look for REPLAHEAD message in receiver log
 
 END 8
 ---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+BEGIN 9 :-) This step is added to test GTM-5418 by pulling the REPLAHEAD message and the next two lines into the reference file.
+
+# These steps test the following part of the release note in GTM-5418:
+#
+#     The message includes the backlog count, and information on whether the Receiver Server requires a manual rollback.
+#
+==Executing MULTISITE_REPLIC 'RUN INST2 $grep -A 2 REPLAHEAD RCVR_restart.log'==
+##FILTERED##... ... .. ..:..:.. 20.. : %YDB-E-REPLAHEAD, Replicating instance is ahead of the originating instance.
+##TEST_AWK... ... .. ..:..:.. .... : %YDB-I-TEXT, Replicating instance : 11 Originating instance : 1. 
+##TEST_AWK... ... .. ..:..:.. .... : %YDB-I-TEXT,  The receiver server was not started with -AUTOROLLBACK. Perform MUPIP JOURNAL -ROLLBACK on the replicating instance to match the originating instance. Check the Source Server log to determine the last in-sync sequence number.
+
+END 9
+---------------------------------------------------------------------------------------
 ==Executing MULTISITE_REPLIC 'RUN INST1 ##SOURCE_PATH##/mupip replic -source -shut -time=0 >>& source_shut2.out'==
 ==Executing MULTISITE_REPLIC 'RUN INST2 ##SOURCE_PATH##/mupip replic -source -shut -time=0 >>& rcvr_shut2.out'==
 ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==
