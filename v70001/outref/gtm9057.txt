@@ -1,0 +1,73 @@
+# Release note:
+#
+#   MUPIP JOURNAL -EXTRACT accepts a named pipe (FIFO) as its output device. A process
+#   needs to open one end of the FIFO (in read mode) and the device can then be passed
+#   as an extract output device. Previously, such extracts could not be written into a
+#   FIFO.(GTM-9057)
+#
+
+# Create database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+# Do a few updates to create some journal records
+
+YDB>
+
+YDB>
+
+# Startup a reader process that opens a pipe named "fifo.input" that is waiting for
+# input.
+
+# Wait until "fifo.input" exists so we know it is ready to receive
+
+# FIFO reader is waiting - feed it with the extract from our journal file
+##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
+##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
+%YDB-S-JNLSUCCESS, Extract successful
+%YDB-S-JNLSUCCESS, Verify successful
+##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
+
+# Extract complete, now notify the reader it is done too
+
+# Wait for reader shutdown after it gets termination notice above
+
+# Reader log
+  Total of 26 lines read through fifo
+
+# Extract data read by reader:
+##TEST_AWKYDBJEX08( UTF-8|)
+01\##FILTERED##\##FILTERED##\##FILTERED##\##FILTERED##\##FILTERED##\\0\\\
+02\##FILTERED##\##FILTERED##\##FILTERED##\0
+01\##FILTERED##\##FILTERED##\##FILTERED##\##FILTERED##\##FILTERED##\\0\\\
+05\##FILTERED##\##FILTERED##\##FILTERED##\0\0\0\0\0\0\^value("  1")="    1"
+05\##FILTERED##\##FILTERED##\##FILTERED##\0\0\0\0\0\0\^value("  2")="    2"
+05\##FILTERED##\##FILTERED##\##FILTERED##\0\0\0\0\0\0\^value("  3")="    3"
+05\##FILTERED##\##FILTERED##\##FILTERED##\0\0\0\0\0\0\^value("  4")="    4"
+05\##FILTERED##\##FILTERED##\##FILTERED##\0\0\0\0\0\0\^value("  5")="    5"
+05\##FILTERED##\##FILTERED##\##FILTERED##\0\0\0\0\0\0\^value("  6")="    6"
+05\##FILTERED##\##FILTERED##\##FILTERED##\0\0\0\0\0\0\^value("  7")="    7"
+05\##FILTERED##\##FILTERED##\##FILTERED##\0\0\0\0\0\0\^value("  8")="    8"
+05\##FILTERED##\##FILTERED##\##FILTERED##\0\0\0\0\0\0\^value("  9")="    9"
+05\##FILTERED##\##FILTERED##\##FILTERED##\0\0\0\0\0\0\^value(" 10")="   10"
+05\##FILTERED##\##FILTERED##\##FILTERED##\0\0\0\0\0\0\^value(" 11")="   11"
+05\##FILTERED##\##FILTERED##\##FILTERED##\0\0\0\0\0\0\^value(" 12")="   12"
+05\##FILTERED##\##FILTERED##\##FILTERED##\0\0\0\0\0\0\^value(" 13")="   13"
+05\##FILTERED##\##FILTERED##\##FILTERED##\0\0\0\0\0\0\^value(" 14")="   14"
+05\##FILTERED##\##FILTERED##\##FILTERED##\0\0\0\0\0\0\^value(" 15")="   15"
+05\##FILTERED##\##FILTERED##\##FILTERED##\0\0\0\0\0\0\^value(" 16")="   16"
+05\##FILTERED##\##FILTERED##\##FILTERED##\0\0\0\0\0\0\^value(" 17")="   17"
+05\##FILTERED##\##FILTERED##\##FILTERED##\0\0\0\0\0\0\^value(" 18")="   18"
+05\##FILTERED##\##FILTERED##\##FILTERED##\0\0\0\0\0\0\^value(" 19")="   19"
+05\##FILTERED##\##FILTERED##\##FILTERED##\0\0\0\0\0\0\^value(" 20")="   20"
+02\##FILTERED##\##FILTERED##\##FILTERED##\0
+03\##FILTERED##\##FILTERED##\##FILTERED##\0\0
+
+# Validate DB
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
