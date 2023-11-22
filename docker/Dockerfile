@@ -35,6 +35,7 @@ RUN apt-get update && \
                     libicu-dev \
                     libncurses-dev \
                     libssl-dev \
+                    libreadline-dev \
                     zlib1g-dev \
                     tcsh \
                     lsof \
@@ -72,7 +73,6 @@ RUN ln -s /usr/library/gtm_test/T999/docker/cshrc ~/.cshrc && \
     ln -s /usr/library/gtm_test/T999/docker/cshrc ~gtmtest/.cshrc
 RUN /usr/library/gtm_test/T999/docker/build_and_install_yottadb.csh
 RUN /usr/library/gtm_test/T999/docker/setup_gpg.csh
-RUN chown gtmtest:gtc /testarea1/
 RUN ln -s /usr/library/gtm_test/T999/docker/serverconf.txt /usr/library/gtm_test/serverconf.txt
 # https://stackoverflow.com/questions/56609182/openthread-environment-docker-rsyslogd-imklog-cannot-open-kernel-log-proc-km
 RUN sed -i '/imklog/s/^/#/' /etc/rsyslog.conf
