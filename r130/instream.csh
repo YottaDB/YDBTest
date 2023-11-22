@@ -87,11 +87,18 @@ else if (("suse" == $gtm_test_linux_distrib) || $gtm_test_ubuntu_2310_plus) then
 	# old versions on that distribution (due to no libtinfo.so.5 package)
 	setenv subtest_exclude_list "$subtest_exclude_list ydb607"
 endif
-if ("armv6l" == `uname -m`) then
+if (("armv6l" == `uname -m`) || ("aarch64" == `uname -m`)) then
 	# On ARMV6L systems with Debian 11, we have seen the below subtest crash the system in mysterious ways.
 	# Running this huge M program (that has 1 million lines) seems to take up a lot more memory than available
 	# in the system and it starts using swap. But not sure what happens at that point, the system becomes
 	# unreachable even though gigabytes of swap space has been configured. So disable this on ARMV6L.
+	#
+	# On AARCH64 systems, we have seen the ydb547 subtest fail with a SIG-11 occasionally.
+	# Both failures so far have been when huge pages were enabled. And we saw the following messages in the syslog
+	#	"kernel: yottadb: page allocation failure"
+	# Therefore we want to disable this subtest when huge pages is enabled.
+	# But even when huge pages is disabled, this test takes hours to run and it is not considered worth the
+	# effort to test this heavyweight test on AARCH64. Hence we disable this irrespective of huge pages setting.
 	setenv subtest_exclude_list "$subtest_exclude_list ydb547"
 endif
 
