@@ -1,0 +1,407 @@
+# Test YottaDB Direct Mode "RECALL" command
+spawn yottadb -direct
+
+YDB>w 1
+1
+YDB>w 2
+2
+YDB>w 3
+3
+YDB>w 4
+4
+YDB>w 5
+5
+YDB>
+<YDB exited>
+spawn yottadb -direct
+
+YDB>
+<YDB exited>
+spawn yottadb -direct
+
+YDB>recall
+ 1 w 3
+ 2 w 4
+ 3 w 5
+YDB>
+<YDB exited>
+spawn yottadb -direct
+
+YDB>write "Output some text"
+Output some text
+YDB>write "And some more"
+And some more
+YDB>w -1
+-1
+YDB>;These lines are comments
+
+YDB>;Just to test that RECALL isn't confused
+
+YDB>rec wr
+write "And some more"
+And some more
+YDB>RECALL write "O
+write "Output some text"
+Output some text
+YDB>REC ;
+;Just to test that RECALL isn't confused
+
+YDB>recall -2
+!?-2: event not found
+YDB>recall 999999999
+!999999999: event not found
+YDB>recall asdfjkl
+!?asdfjkl: event not found
+YDB>
+<YDB exited>
+spawn yottadb -direct
+
+YDB>recall
+
+
+YDB>w 1
+1
+YDB>w 2
+2
+YDB>w 3
+3
+YDB>w 4
+4
+YDB>w 5
+5
+YDB>w 6
+6
+YDB>w 7
+7
+YDB>w 8
+8
+YDB>w 9
+9
+YDB>w 10
+10
+YDB>w 11
+11
+YDB>w 12
+12
+YDB>w 13
+13
+YDB>w 14
+14
+YDB>w 15
+15
+YDB>w 16
+16
+YDB>w 17
+17
+YDB>w 18
+18
+YDB>w 19
+19
+YDB>w 20
+20
+YDB>w 21
+21
+YDB>w 22
+22
+YDB>w 23
+23
+YDB>w 24
+24
+YDB>w 25
+25
+YDB>w 26
+26
+YDB>w 27
+27
+YDB>w 28
+28
+YDB>w 29
+29
+YDB>w 30
+30
+YDB>w 31
+31
+YDB>w 32
+32
+YDB>w 33
+33
+YDB>w 34
+34
+YDB>w 35
+35
+YDB>w 36
+36
+YDB>w 37
+37
+YDB>w 38
+38
+YDB>w 39
+39
+YDB>w 40
+40
+YDB>w 41
+41
+YDB>w 42
+42
+YDB>w 43
+43
+YDB>w 44
+44
+YDB>w 45
+45
+YDB>w 46
+46
+YDB>w 47
+47
+YDB>w 48
+48
+YDB>w 49
+49
+YDB>w 50
+50
+YDB>w 51
+51
+YDB>w 52
+52
+YDB>w 53
+53
+YDB>w 54
+54
+YDB>w 55
+55
+YDB>w 56
+56
+YDB>w 57
+57
+YDB>w 58
+58
+YDB>w 59
+59
+YDB>w 60
+60
+YDB>w 61
+61
+YDB>w 62
+62
+YDB>w 63
+63
+YDB>w 64
+64
+YDB>w 65
+65
+YDB>w 66
+66
+YDB>w 67
+67
+YDB>w 68
+68
+YDB>w 69
+69
+YDB>w 70
+70
+YDB>w 71
+71
+YDB>w 72
+72
+YDB>w 73
+73
+YDB>w 74
+74
+YDB>w 75
+75
+YDB>w 76
+76
+YDB>w 77
+77
+YDB>w 78
+78
+YDB>w 79
+79
+YDB>w 80
+80
+YDB>w 81
+81
+YDB>w 82
+82
+YDB>w 83
+83
+YDB>w 84
+84
+YDB>w 85
+85
+YDB>w 86
+86
+YDB>w 87
+87
+YDB>w 88
+88
+YDB>w 89
+89
+YDB>w 90
+90
+YDB>w 91
+91
+YDB>w 92
+92
+YDB>w 93
+93
+YDB>w 94
+94
+YDB>w 95
+95
+YDB>w 96
+96
+YDB>w 97
+97
+YDB>w 98
+98
+YDB>w 99
+99
+YDB>recall 1
+
+YDB>w 1
+1
+YDB>recall
+
+ 1 w 2
+ 2 w 3
+ 3 w 4
+ 4 w 5
+ 5 w 6
+ 6 w 7
+ 7 w 8
+ 8 w 9
+ 9 w 10
+10 w 11
+11 w 12
+12 w 13
+13 w 14
+14 w 15
+15 w 16
+16 w 17
+17 w 18
+18 w 19
+19 w 20
+20 w 21
+21 w 22
+22 w 23
+23 w 24
+24 w 25
+25 w 26
+26 w 27
+27 w 28
+28 w 29
+29 w 30
+30 w 31
+31 w 32
+32 w 33
+33 w 34
+34 w 35
+35 w 36
+36 w 37
+37 w 38
+38 w 39
+39 w 40
+40 w 41
+41 w 42
+42 w 43
+43 w 44
+44 w 45
+45 w 46
+46 w 47
+47 w 48
+48 w 49
+49 w 50
+50 w 51
+51 w 52
+52 w 53
+53 w 54
+54 w 55
+55 w 56
+56 w 57
+57 w 58
+58 w 59
+59 w 60
+60 w 61
+61 w 62
+62 w 63
+63 w 64
+64 w 65
+65 w 66
+66 w 67
+67 w 68
+68 w 69
+69 w 70
+70 w 71
+71 w 72
+72 w 73
+73 w 74
+74 w 75
+75 w 76
+76 w 77
+77 w 78
+78 w 79
+79 w 80
+80 w 81
+81 w 82
+82 w 83
+83 w 84
+84 w 85
+85 w 86
+86 w 87
+87 w 88
+88 w 89
+89 w 90
+90 w 91
+91 w 92
+92 w 93
+93 w 94
+94 w 95
+95 w 96
+96 w 97
+97 w 98
+98 w 99
+99 w 1
+
+YDB>recall 1
+
+YDB>w 2
+2
+YDB>write "Output some text"
+Output some text
+YDB>write "And some more"
+And some more
+YDB>w -1
+-1
+YDB>;These lines are comments
+
+YDB>;Just to test that RECALL isn't confused
+
+YDB>rec wr
+
+YDB>write "And some more"
+And some more
+YDB>RECALL write "O
+
+YDB>write "Output some text"
+Output some text
+YDB>REC ;
+
+YDB>;Just to test that RECALL isn't confused
+
+YDB>recall -2
+
+Recall Error : No matching string
+
+YDB>recall 100
+
+Recall Error : Number exceeds limit
+
+YDB>recall asdfjkl
+
+Recall Error : No matching string
+
+YDB>
+<YDB exited>
+
+Test completed successfully

@@ -1,0 +1,179 @@
+#!/usr/bin/env expect
+#################################################################
+#								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+set timeout 2
+
+proc write_file {filename text} {
+    set file [open $filename "w"]
+    puts -nonewline $file "$text"
+    close $file
+}
+
+proc create_history {lines} {
+    # This function creates a known recall history so that our output is as expected
+    #puts "Generating $lines recall lines like this: s x=<n>"
+    for {set i 1} {$i <= $lines} {incr i 1} {
+        send "w $i\r"
+        expect "YDB>"
+    }
+}
+
+proc spawn_ydb {} {
+    global spawn_id
+    puts "spawn yottadb -direct"
+    spawn -noecho $::env(ydb_dist)/yottadb -direct
+    # This makes timeouts provide info on exact line number and buffer state"
+    expect_after timeout {
+        puts "\nExpect timeout doing: [dict get [info frame -1]]"
+        puts "  with buffer='''$expect_out(buffer)'''"
+        exit -1
+    }
+    expect "YDB>"
+}
+
+proc close_ydb {} {
+    send "\x04";  # Send EOF
+    expect eof { puts "<YDB exited>" }
+}
+
+proc press_enter {} {
+    # 'Press' enter if necessary to execute a RECALLed command if necessary
+    # YDB already does auto-execute if ydb_readline=true because with readline lib < v8 it was not easy to pre-fill a buffer
+    # and we currently still need to support readline v7.
+    # See https://lists.gnu.org/archive/html/bug-readline/2023-07/msg00005.html
+    if {$::env(ydb_readline) != "true"} {  # test whether it's 'true': (we never set it to '1', so no need to test)
+        send "\r"
+    }
+}
+
+proc test_string_recall {} {
+    # Test RECALL "str" command
+    send "write \"Output some text\"\r"
+    expect "YDB>"
+    send "write \"And some more\"\r"
+    expect "YDB>"
+    send "w -1\r"
+    expect "YDB>"
+    send ";These lines are comments\r"
+    expect "YDB>"
+    send ";Just to test that RECALL isn't confused\r"
+    expect "YDB>"
+
+    send "rec wr\r";  # Test short version of the command
+    expect "And some more"
+    press_enter
+    expect "YDB>"
+
+    send "RECALL write \"O\r"
+    expect "write \"Output some text\""
+    press_enter
+    expect "Output some text"
+    expect "YDB>"
+
+    send "REC ;\r"
+    expect ";Just to test that RECALL isn't confused"
+    press_enter
+    expect "YDB>"
+
+    #Remove this test until the YDB crash is fixed
+    #send "recall 0\r"
+    #press_enter
+    #expect -re "\n\\W*YDB\>";  # Empty recall list: has only non-alphanumeric chars (incl. some ctrl-[ sequences) before YDB prompt
+}
+
+
+# Setup common env
+set ::env(ydb_prompt) "YDB>";  # Ensure the expected prompt
+set ::env(HOME) [exec pwd]
+set ::env(INPUTRC) ydb401.inputrc
+
+
+### TEST1: ydb_readline=true
+
+set ::env(ydb_readline) true
+
+write_file ydb401.inputrc "set history-size 5";  # Limits test size to reasonable; but truncates `gtmtest` user's history file
+spawn_ydb
+create_history 5;  # Only way to guarantee contents of recall history is to fill it up with our own, then exit
+close_ydb
+
+write_file ydb401.inputrc "set history-size 3";  # Limits test size to reasonable; but truncates `gtmtest` user's history file
+spawn_ydb
+
+close_ydb;  # Extra close and re-spawn normalises the history list counts
+spawn_ydb
+
+send "recall\r"
+expect "1 w 3*2 w 4*3 w 5*YDB>"
+close_ydb
+
+write_file ydb401.inputrc "set history-size 6";  # Back to a larger history to allow full test of string recall
+spawn_ydb
+test_string_recall
+
+# Check responses that vary if ydb_readline differs
+send "recall -2\r"
+expect "!?-2: event not found"
+expect "YDB>"
+
+send "recall 999999999\r"
+expect "!999999999: event not found"
+expect "YDB>"
+
+send "recall asdfjkl\r"
+expect "!\?asdfjkl: event not found"
+expect "YDB>"
+
+close_ydb
+
+
+### TEST2: ydb_readline=false
+
+set ::env(ydb_readline) false
+spawn_ydb
+
+send "recall\r"
+expect -re "\n\\W*YDB\>";  # Empty recall list: returns only non-alphanumeric chars (incl. some ctrl-[ sequences) before YDB prompt
+create_history 99
+send "recall 1\r"
+expect "YDB>w 1"
+send "\r"
+expect "1*YDB>"
+
+send "recall\r"
+expect "YDB>"
+send "recall 1\r"
+expect "YDB>w 2"
+send "\r"
+expect "2*YDB>"
+test_string_recall
+
+# Check responses that vary if ydb_readline differs
+send "recall -2\r"
+expect "Recall Error : No matching string"
+expect "YDB>"
+
+send "recall 100\r"
+expect "Recall Error : Number exceeds limit"
+expect "YDB>"
+
+send "recall asdfjkl\r"
+expect "Recall Error : No matching string"
+expect "YDB>"
+
+close_ydb
+
+# Cleanup
+file delete ydb401.inputrc
+file delete .ydb_YottaDB_history
+puts ""
+puts "Test completed successfully"

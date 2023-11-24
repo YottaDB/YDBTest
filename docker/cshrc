@@ -58,3 +58,7 @@ if ( -f $gtm_tools/gtm_env.csh ) then
 	setenv HOSTOS `uname -s`
 	source $gtm_tools/gtm_env.csh
 endif
+
+bindkey "^R" i-search-back
+bindkey "\e[1;5D" backward-word  # ctrl-left
+bindkey "\e[1;5C" forward-word   # ctrl-right
