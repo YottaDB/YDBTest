@@ -161,15 +161,20 @@ setenv real_mach_type `uname -m`
 # Determine if kernel and glibc versions support the use of copy_file_range() library routine. We are looking
 # for a kernel version >= 5.3 and a glibc version > 2.27.
 set kversion = `uname -r | cut -d "." -s -f "1,2"`	# Looks like '6.2.0-36-generic'
-echo "5.3\n${kversion}" | sort -CV			# Verify kernel version sorts at or after 5.3 (return=0 when sorted)
-if (0 == $status) then					# If release values already sorted, returns 0, then fetch glibc version
+set base="5.3"
+set min = `echo "$base\n${kversion}" | sort -V | head -1`
+if ("$min" == "$base") then
+    # Kernel version is >= 5.3
     set gversion = `ldd --version | head -n1 | cut -d ')' -f2 | cut -d ' ' -f2`	# 1st line looks like 'ldd (Ubuntu GLIBC 2.35-0ubuntu3.4) 2.35'
     if (1 == `echo "(2.27 < $gversion)" | bc`) then
+        # glibc version is > 2.27
       	setenv ydb_test_copy_file_range_avail 1
     else
+	# glibc version is <=  2.27
 	setenv ydb_test_copy_file_range_avail 0
     endif
 else
+    # Kernel version is < 5.3
     setenv ydb_test_copy_file_range_avail 0
 endif
 
