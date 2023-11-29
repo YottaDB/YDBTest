@@ -1,0 +1,22 @@
+# ----------------------------------------------------------------------
+# Test that DSE INTEG -BLOCK=3 does not assert fail in an empty database
+# ----------------------------------------------------------------------
+# Create an empty database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Run [dse integ -block=3]. Expect a DBBSIZMN error (no assert failure)
+
+File  	##TEST_PATH##/mumps.dat
+Region	DEFAULT
+
+
+Checking integrity of block 3:
+%YDB-I-DBBSIZMN, BLK=0x0000000000000003 :              LVL=0x00, Block too small
+
+# Do integ check on database
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
