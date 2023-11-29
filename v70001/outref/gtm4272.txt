@@ -50,14 +50,14 @@ YDB>
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with (NO|)BEFORE_IMAGES
 %YDB-E-BKUPFILEPERM, Backup file ##TEST_PATH##/mumps_backup.dat does not have write permission
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
-##SUSPEND_OUTPUT NO_COPYFILERANGE_AVAIL
+##SUSPEND_OUTPUT NO_COPYFILERANGE_AVAIL ARMVXL AARCH64
 
 ###################################################################
 
 # Test # 2 - BKUPPROGRESS - run a backup that prints progress messages (grep from output file)
 #   Command used: $MUPIP backup -showprogress DEFAULT mumps_backup.dat
 ##TEST_AWK%YDB-I-BKUPPROGRESS, Transfer : [0-9]* / [0-9]* (M|G)iB \(( |)[0-9]*%\) ; Speed : [0-9]* MiB/sec ; Transactions : 0 ; Estimated time left : [0-9]* second(s|)
-##ALLOW_OUTPUT NO_COPYFILERANGE_AVAIL
+##ALLOW_OUTPUT NO_COPYFILERANGE_AVAIL ARMVXL AARCH64
 ##SUSPEND_OUTPUT PRO
 
 ###################################################################

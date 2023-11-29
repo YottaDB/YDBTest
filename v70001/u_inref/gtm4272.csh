@@ -56,9 +56,10 @@ $MUPIP backup -replace DEFAULT mumps_backup.dat
 chmod +w mumps_backup.dat
 rm mumps_backup.dat
 #
-# Test # 2
+# Test # 2 - This subtest is bypassed when copy_file_range() is not available or we are running on an ARM system which
+#	     does not seem to generate BKUPPROGRESS messages.
 #
-if (1 == $ydb_test_copy_file_range_avail) then
+if ((1 == $ydb_test_copy_file_range_avail) && ("armvxl" != "$gtm_test_machtype") && ("aarch64" != "$gtm_test_machtype")) then
     echo
     $echoline
     echo
