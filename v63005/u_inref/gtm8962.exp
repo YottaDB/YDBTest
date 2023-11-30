@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -37,6 +37,12 @@ expect "YDB>"
 send -- "write:(\$ZPOUT=\$PRINCIPAL) \"\$ZPOUT = \$PRINCIPAL\"\r"
 expect "YDB>"
 send -- "ZSHOW \"I\"\r"
+# Note that we cannot wait for "YDB>" right away since $ZPROMPT= (which is one of the ISVs in the ZSHOW "I" output)
+# would contain "YDB>" as the value and so it is possible we treat partial ZSHOW "I" output incorrectly as seeing
+# the YDB> prompt (i.e. the end of ZSHOW "I" output). Therefore, wait for an ISV in the ZSHOW "I" output that is after
+# $ZPROMPT (we pick $ZYSQLNULL below) to show up and then wait for "YDB>" to show up thereby really signaling the end
+# of the ZSHOW "I" output.
+expect "\$ZYSQLNULL="
 expect "YDB>"
 send "halt\r"
 expect ">"
