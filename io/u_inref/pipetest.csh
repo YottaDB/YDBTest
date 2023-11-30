@@ -4,7 +4,7 @@
 # Copyright (c) 2008-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -95,7 +95,7 @@ echo "**************************** alternate ****************************"
 $echoline
 # turn on journaling for alternate to test child closing of database and journaling files
 source $gtm_tst/com/leftover_ipc_cleanup_if_needed.csh $0 # do rundown if needed before requiring standalone access
-$gtm_dist/mupip set -region -journal=enable,on,nobefore "*"
+$gtm_dist/mupip set -journal=enable,on,nobefore -region "*"
 $gtm_dist/mumps -run alternate
 # turn off journaling
 $gtm_dist/mupip set -file -nojournal mumps.dat

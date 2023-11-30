@@ -385,39 +385,10 @@ Free               94              NA              NA            NA
 Total             100             136              NA             4
 ##ALLOW_OUTPUT NON_COLLATION
 ##ALLOW_OUTPUT NONSPANNING_REGIONS
+# The below command used to previously be equivalent to ##SOURCE_PATH##/mupip integ -reg DEFAULT but not after YDB#851
+# We now expect a MUNODBNAME error because -region was not specified
 echo DEFAULT | $MUPIP integ -online
-File or Region: 
-
-
-Integ of region DEFAULT
-
-No errors detected by integ.
-
-Type           Blocks         Records          % Used      Adjacent
-
-##SUSPEND_OUTPUT SPANNING_REGIONS
-Directory           2               1           2.148            NA
-Index               0               0           0.000             0
-Data                0               0           0.000             0
-Free               98              NA              NA            NA
-Total             100               1              NA             0
-##ALLOW_OUTPUT SPANNING_REGIONS
-##SUSPEND_OUTPUT NONSPANNING_REGIONS
-##SUSPEND_OUTPUT COLLATION
-Directory           2               2           3.955            NA
-Index               1               1           2.734             1
-Data                1              28          51.464             1
-Free               96              NA              NA            NA
-Total             100              31              NA             2
-##ALLOW_OUTPUT COLLATION
-##SUSPEND_OUTPUT NON_COLLATION
-Directory           2               2           3.955            NA
-Index               1               1           2.734             1
-Data                1              44          74.902             1
-Free               96              NA              NA            NA
-Total             100              47              NA             2
-##ALLOW_OUTPUT NON_COLLATION
-##ALLOW_OUTPUT NONSPANNING_REGIONS
+%YDB-E-MUNODBNAME, A database name or the region qualifier must be specified
 
 YDB>
 PASS from fill7^myfill("ver")

@@ -172,7 +172,7 @@ if (! $?test_replic) then
 	$gtm_exe/mumps -run %XCMD 'for i=1:1:5 set (^b(i),^c(i),^d(i))=i'
 
 	echo "# 1. Run the following to unit test the addition of new -REGION qualifier in mupip_cmd.c"
-	echo "# 1a. mupip extract mext1a.zwr -region (prompt for region(s))"
+	echo "# 1a. mupip extract mext1a.zwr -region (used to previously issue prompt for region(s) but issues an error after YDB#851)"
 	echo "AREG" |& $MUPIP extract mext1a.zwr -region
 	echo "# 1b. mupip extract mext1b.zwr -region=AREG (accept a value for region qualifier)"
 	$MUPIP extract mext1b.zwr -region=AREG
@@ -180,7 +180,7 @@ if (! $?test_replic) then
 	$MUPIP extract mext1c.zwr -region=AREG,CREG
 	echo "# 1d. mupip extract mext1d.zwr -region=NOREG (Show error, region not found)"
 	$MUPIP extract mext1d.zwr -region=NOREG
-	echo "# 1e. mupip extract mext1e.zwr -region BREG (Show error, Too many parameters)"
+	echo '# 1e. mupip extract mext1e.zwr -region BREG (should work, used to previously issue "Too many parameters" error)'
 	$MUPIP extract mext1e.zwr -region BREG
 
 	echo "# 2. Run the following to test the extracted file"

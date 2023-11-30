@@ -19,7 +19,7 @@ if (! -d baktmp) mkdir baktmp
 # Filter these out in order to have a deterministic reference file hence the "$grep" usages below.
 $MUPIP backup -nonew -o "*" ./bak -dbg >& backup1.logx
 $grep -vE '^$|cp --sparse=always' backup1.logx | sort -f
-$MUPIP integ -reg -noonline "*" >>& integ.log
+$MUPIP integ -noonline -reg "*" >>& integ.log
 ls ./bak/*
 rm ./bak/*
 $gtm_exe/mumps -run wait
@@ -29,14 +29,14 @@ endif
 ls -l core*
 $MUPIP backup -nonew -o "*" ./bak -dbg -i >& backup2.logx
 $grep -vE '^$|cp --sparse=always' backup2.logx | sort -f
-$MUPIP integ -reg -noonline "*" >>& integ.log
+$MUPIP integ -noonline -reg "*" >>& integ.log
 ls ./bak/*
 rm ./bak/*
 setenv gtm_baktmpdir `pwd`/baktmp
 echo "gtm_baktmpdir: $gtm_baktmpdir"
 $MUPIP backup -nonew -o "*" ./bak -dbg >& backup3.logx
 $grep -vE '^$|cp --sparse=always' backup3.logx | sort -f
-$MUPIP integ -reg -noonline "*" >>& integ.log
+$MUPIP integ -noonline -reg "*" >>& integ.log
 ls ./bak/*
 rm ./bak/*
 $gtm_exe/mumps -run wait
@@ -47,14 +47,14 @@ ls -l core*
 #sleep 30 # give some time for further updates to the database.
 $MUPIP backup -nonew -o "*" ./bak -dbg -i >& backup4.logx
 $grep -vE '^$|cp --sparse=always' backup4.logx | sort -f
-$MUPIP integ -reg -noonline "*" >>& integ.log
+$MUPIP integ -noonline -reg "*" >>& integ.log
 ls ./bak/*
 rm ./bak/*
 echo "==================================================================="
 chmod 000 $gtm_baktmpdir
 echo "No read permissions for $gtm_baktmpdir."
 $MUPIP backup -nonew -o "AREG" ./bak -dbg
-$MUPIP integ -reg -noonline "*" >>& integ.log
+$MUPIP integ -noonline -reg "*" >>& integ.log
 ls ./bak/*
 rm ./bak/*
 $gtm_exe/mumps -run wait
@@ -63,5 +63,5 @@ if ($status) then
 endif
 ls -l core*
 $MUPIP backup -nonew -o "AREG" ./bak -dbg -i
-$MUPIP integ -reg -noonline "*" >>& integ.log
+$MUPIP integ -noonline -reg "*" >>& integ.log
 chmod 755 $gtm_baktmpdir

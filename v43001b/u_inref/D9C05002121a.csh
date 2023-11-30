@@ -20,7 +20,7 @@ echo "==================================================================="
 echo "try a bad gtm_baktmpdir:"
 setenv gtm_baktmpdir junkdir
 $MUPIP backup -nonew -o "*" ./bak -dbg
-$MUPIP integ -reg -noonline "*" >>& integ.log
+$MUPIP integ -noonline -reg "*" >>& integ.log
 unsetenv gtm_baktmpdir
 echo "==================================================================="
 echo "Try a relative pathname for mupip (mumps and mupip called from different directories):"

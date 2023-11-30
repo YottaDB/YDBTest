@@ -214,11 +214,12 @@ if ($status > 0) then
     echo ERROR from $MUPIP integ map maxkeysize transaction default to file a.
     exit 9
 endif
-#
-echo 'echo DEFAULT | $MUPIP integ -online'	# equivalent to $MUPIP integ -reg DEFAULT
+echo "# The below command used to previously be equivalent to $MUPIP integ -reg DEFAULT but not after YDB#851"
+echo "# We now expect a MUNODBNAME error because -region was not specified"
+echo 'echo DEFAULT | $MUPIP integ -online'
 echo DEFAULT | $MUPIP integ -online
-if ($status > 0) then
-	echo 'Error from - echo DEFAULT | $MUPIP integ -online'
+if ($status == 0) then
+	echo 'Exit status was 0. Expecting a non-zero exit status'
 	exit 9
 endif
 #

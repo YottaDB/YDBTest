@@ -24,7 +24,7 @@ setenv gtm_test_disable_randomdbtn
 setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode due to differences in DSE output
 source $gtm_tst/com/dbcreate.csh mumps 1
 
-$MUPIP set -reg $tst_jnl_str "*" >&! jnl_on.log
+$MUPIP set $tst_jnl_str -reg "*" >&! jnl_on.log
 $grep "YDB-I-JNLSTATE" jnl_on.log
 chmod 444 mumps.mjl
 $DSE d -f

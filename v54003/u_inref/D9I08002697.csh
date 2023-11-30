@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -120,7 +120,7 @@ setenv test_specific_gde custom.gde
 $gtm_tst/com/dbcreate.csh mumps 1
 unsetenv test_specific_gde
 
-$MUPIP set -region -journal="enable,$b4nob4image" DEFAULT
+$MUPIP set -journal="enable,$b4nob4image" -region DEFAULT
 
 $gtm_tst/com/dbcheck.csh
 
@@ -146,7 +146,7 @@ setenv tst_jnl_str "-journal=enable,$b4nob4image"
 
 $gtm_tst/com/dbcreate.csh mumps 1
 
-$MUPIP set -region -journal=enable,$b4nob4image,alloc=2048,ext=${JNL_EXT_MAX_PLUS_ONE} "*"
+$MUPIP set -journal=enable,$b4nob4image,alloc=2048,ext=${JNL_EXT_MAX_PLUS_ONE} -region "*"
 
 echo ""
 

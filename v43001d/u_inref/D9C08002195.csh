@@ -1,7 +1,7 @@
 #! /usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -22,4 +22,4 @@ if ("ENCRYPT" == "$test_encryption" ) then
 	$gtm_tst/com/create_key_file.csh >& create_key_file_dbload.out
 endif
 $MUPIP create |& sort -f
-$MUPIP set -region -access=bg DEFAULT,TEMP |& sort -f
+$MUPIP set -access=bg -region DEFAULT,TEMP |& sort -f

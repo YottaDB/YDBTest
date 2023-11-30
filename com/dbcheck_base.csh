@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -132,7 +132,7 @@ else
 	endif
 	setenv dbname $arg1
 	echo "$MUPIP integ -REG *"
-	$MUPIP integ -REG $online_noonline "*" >& tmp.mupip
+	$MUPIP integ $online_noonline -REG "*" >& tmp.mupip
 	# If gtm_test_trig_upgrade env var is defined, the parent test uses triggers and wants to additionally
 	# test on-the-fly trigger upgrade (of ^#t global from #LABEL 2 to #LABEL 3).
 	if ($?gtm_test_trig_upgrade) then

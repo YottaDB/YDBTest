@@ -120,7 +120,7 @@ YDB>
 !
 !	DISALLOW(FILE AND REGION)
 !
---------- Testing : ##SOURCE_PATH##/mupip  integ dummy_file -file -region ------------
+--------- Testing : ##SOURCE_PATH##/mupip  integ -file dummy_file -region dummy_region ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILE REGION
 !
 !	DISALLOW(TN_RESET AND (FAST OR BLOCK OR SUBSCRIPT OR REGION))
@@ -131,7 +131,7 @@ YDB>
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: TN_RESET FAST BLOCK
 --------- Testing : ##SOURCE_PATH##/mupip  integ dummy_file -tn_reset -subs="abcd" ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: TN_RESET FAST BLOCK SUBSCRIPT
---------- Testing : ##SOURCE_PATH##/mupip  integ dummy_file -tn_reset -region ------------
+--------- Testing : ##SOURCE_PATH##/mupip  integ -tn_reset -region dummy_region ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: TN_RESET FAST BLOCK SUBSCRIPT REGION
 !
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -179,7 +179,7 @@ YDB>
 !  MUPIP RUNDOWN
 !	DISALLOW(FILE AND REGION)
 !
---------- Testing : ##SOURCE_PATH##/mupip  rundown -file -region ------------
+--------- Testing : ##SOURCE_PATH##/mupip  rundown -file -region dummy_region ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILE REGION
 !
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -191,13 +191,13 @@ YDB>
 !
 !	DISALLOW ANY2(file, region, jnlfile)
 !
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -file -region ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -region dummy_region -file ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILE REGION JNLFILE
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -file -jnlfile ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -file dummy_file -jnlfile ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILE REGION JNLFILE
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -region -jnlfile ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -region dummy_region -jnlfile ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILE REGION JNLFILE
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -region -jnlfile -file ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -region dummy_region -jnlfile -file ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: FILE REGION JNLFILE
 !
 !	DISALLOW(NOT(file OR region OR jnlfile))
@@ -239,7 +239,7 @@ YDB>
 !
 !
 ! In order to better test the following MUPIP SET DISALLOWs, we need to specify a dummy -reg as otherwise the previous
-!	DISALLOW(NOT(file OR region OR jnlfile)) will take effect below too. Hence you will see "p set dummy_region -reg" below.
+!	DISALLOW(NOT(file OR region OR jnlfile)) will take effect below too. Hence you will see "p set -reg dummy_region" below.
 !
 !       DISALLOW -VERSION AND -ACCESS_METHOD
 !       DISALLOW -VERSION AND -GLOBAL_BUFFERS
@@ -270,13 +270,13 @@ YDB>
 !
 !	DISALLOW(journal.on AND journal.off)
 !
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="off,on" ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -journal="off,on" ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: ON OFF
 !
 !	! --- disallow /NOJOURNAL=DISABLE ---
 !	DISALLOW(journal.disable AND NEG journal)
 !
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -nojournal="disable" ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -nojournal="disable" ------------
 %YDB-E-CLIERR, Assignment is not allowed for this option : JOURNAL
 !
 !	! --- disallow any other journal options for both /NOJOURNAL and DISABLE (Unix CLI disallows assignment for /NOJOURNAL) ---
@@ -284,106 +284,106 @@ YDB>
 !		OR journal.filename OR journal.allocation OR journal.extension OR journal.buffer_size OR journal.alignsize
 !		OR journal.epoch_interval OR journal.autoswitchlimit OR NEG journal.before_images))
 !
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="disable,on" ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -journal="disable,on" ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="disable,off" ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -journal="disable,off" ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="disable,enable" ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -journal="disable,enable" ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="disable,before_images" ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -journal="disable,before_images" ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="disable,filename=dummy.mjl" ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -journal="disable,filename=dummy.mjl" ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES BEFORE_IMAGES FILENAME
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="disable,allocation=10" ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -journal="disable,allocation=10" ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES BEFORE_IMAGES FILENAME ALLOCATION
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="disable,extension=20" ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -journal="disable,extension=20" ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES BEFORE_IMAGES FILENAME ALLOCATION EXTENSION
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="disable,buffer_size=40" ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -journal="disable,buffer_size=40" ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES BEFORE_IMAGES FILENAME ALLOCATION EXTENSION BUFFER_SIZE
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="disable,alignsize=80" ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -journal="disable,alignsize=80" ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES BEFORE_IMAGES FILENAME ALLOCATION EXTENSION BUFFER_SIZE ALIGNSIZE
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="disable,epoch_interval=100" ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -journal="disable,epoch_interval=100" ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES BEFORE_IMAGES FILENAME ALLOCATION EXTENSION BUFFER_SIZE ALIGNSIZE EPOCH_INTERVAL
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="disable,autoswitchlimit=2048" ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -journal="disable,autoswitchlimit=2048" ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES BEFORE_IMAGES FILENAME ALLOCATION EXTENSION BUFFER_SIZE ALIGNSIZE EPOCH_INTERVAL AUTOSWITCHLIMIT
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -journal="disable,nobefore_images" ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -journal="disable,nobefore_images" ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: DISABLE ON OFF ENABLE BEFORE_IMAGES BEFORE_IMAGES
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -nojournal="on" ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -nojournal="on" ------------
 %YDB-E-CLIERR, Assignment is not allowed for this option : JOURNAL
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -nojournal="off" ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -nojournal="off" ------------
 %YDB-E-CLIERR, Assignment is not allowed for this option : JOURNAL
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -nojournal="enable" ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -nojournal="enable" ------------
 %YDB-E-CLIERR, Assignment is not allowed for this option : JOURNAL
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -nojournal="before_images" ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -nojournal="before_images" ------------
 %YDB-E-CLIERR, Assignment is not allowed for this option : JOURNAL
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -nojournal="filename=dummy.mjl" ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -nojournal="filename=dummy.mjl" ------------
 %YDB-E-CLIERR, Assignment is not allowed for this option : JOURNAL
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -nojournal="allocation=10" ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -nojournal="allocation=10" ------------
 %YDB-E-CLIERR, Assignment is not allowed for this option : JOURNAL
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -nojournal="extension=20" ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -nojournal="extension=20" ------------
 %YDB-E-CLIERR, Assignment is not allowed for this option : JOURNAL
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -nojournal="buffer_size=40" ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -nojournal="buffer_size=40" ------------
 %YDB-E-CLIERR, Assignment is not allowed for this option : JOURNAL
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -nojournal="alignsize=80" ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -nojournal="alignsize=80" ------------
 %YDB-E-CLIERR, Assignment is not allowed for this option : JOURNAL
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -nojournal="epoch_interval=100" ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -nojournal="epoch_interval=100" ------------
 %YDB-E-CLIERR, Assignment is not allowed for this option : JOURNAL
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -nojournal="autoswitchlimit=2048" ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -nojournal="autoswitchlimit=2048" ------------
 %YDB-E-CLIERR, Assignment is not allowed for this option : JOURNAL
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -nojournal="nobefore_images" ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -nojournal="nobefore_images" ------------
 %YDB-E-CLIERR, Assignment is not allowed for this option : JOURNAL
 !
 !	DISALLOW(replication.on AND replication.off)
 !
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -replication="off,on" ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -replication="off,on" ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: ON OFF
 !
 !	DISALLOW(replication.on AND (journal.off OR journal.disable OR NEG journal OR NEG journal.before_images))
 !
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -replication="on" -journal="off" ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -replication="on" -journal="off" ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: ON OFF
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -replication="on" -journal="disable" ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -replication="on" -journal="disable" ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: ON OFF DISABLE
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -replication="on" -nojournal ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -replication="on" -nojournal ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: ON OFF DISABLE JOURNAL
 !
 !	DISALLOW(prevjnlfile AND NOT(jnlfile))
 !
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -prevjnlfile="abcd.mjl"  ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -prevjnlfile="abcd.mjl" ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: PREVJNLFILE JNLFILE
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -prevjnlfile="abcd.mjl" -journal="enable,off" ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -prevjnlfile="abcd.mjl" -journal="enable,off" ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: PREVJNLFILE JNLFILE
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -prevjnlfile="abcd.mjl" -access="BG" ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -prevjnlfile="abcd.mjl" -access="BG" ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: PREVJNLFILE JNLFILE
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -prevjnlfile="abcd.mjl" -defer_time=40 ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -prevjnlfile="abcd.mjl" -defer_time=40 ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: PREVJNLFILE JNLFILE
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -prevjnlfile="abcd.mjl" -extension=30 ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -prevjnlfile="abcd.mjl" -extension=30 ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: PREVJNLFILE JNLFILE
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -prevjnlfile="abcd.mjl" -flush_time ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -prevjnlfile="abcd.mjl" -flush_time ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: PREVJNLFILE JNLFILE
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -prevjnlfile="abcd.mjl" -global_buffers=2048 ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -prevjnlfile="abcd.mjl" -global_buffers=2048 ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: PREVJNLFILE JNLFILE
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -prevjnlfile="abcd.mjl" -lock_space=2048 ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -prevjnlfile="abcd.mjl" -lock_space=2048 ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: PREVJNLFILE JNLFILE
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -prevjnlfile="abcd.mjl" -reserved_bytes=2048 ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -prevjnlfile="abcd.mjl" -reserved_bytes=2048 ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: PREVJNLFILE JNLFILE
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -prevjnlfile="abcd.mjl" -replication="on" ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -prevjnlfile="abcd.mjl" -replication="on" ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: PREVJNLFILE JNLFILE
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -prevjnlfile="abcd.mjl" -bypass ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -prevjnlfile="abcd.mjl" -bypass ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: PREVJNLFILE JNLFILE
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -prevjnlfile="abcd.mjl" -partial_recov_bypass ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -prevjnlfile="abcd.mjl" -partial_recov_bypass ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: PREVJNLFILE JNLFILE
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -prevjnlfile="abcd.mjl" -dbfilename="abcd.dat" ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -prevjnlfile="abcd.mjl" -dbfilename="abcd.dat" ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: PREVJNLFILE JNLFILE
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -prevjnlfile="abcd.mjl" -prevjnlfile="abcd.mjl" ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -prevjnlfile="abcd.mjl" -prevjnlfile="abcd.mjl" ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: PREVJNLFILE JNLFILE
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -prevjnlfile="abcd.mjl" -repl_state="off" ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -prevjnlfile="abcd.mjl" -repl_state="off" ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: PREVJNLFILE JNLFILE
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -prevjnlfile="abcd.mjl" -standalonenot ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -prevjnlfile="abcd.mjl" -standalonenot ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: PREVJNLFILE JNLFILE
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -prevjnlfile="abcd.mjl" -wait_disk=10 ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -prevjnlfile="abcd.mjl" -wait_disk=10 ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: PREVJNLFILE JNLFILE
---------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -reg -prevjnlfile="abcd.mjl" ------------
+--------- Testing : ##SOURCE_PATH##/mupip  set -reg dummy_region -prevjnlfile="abcd.mjl" ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: PREVJNLFILE JNLFILE
 --------- Testing : ##SOURCE_PATH##/mupip  set dummy_region -file -prevjnlfile="abcd.mjl" ------------
 %YDB-E-CLIERR, Missing or illegal combination of command elements - check documentation: PREVJNLFILE JNLFILE

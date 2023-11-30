@@ -1,4 +1,19 @@
-#!/usr/local/bin/tcsh
+#!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+# Portions Copyright (c) Fidelity National			#
+# Information Services, Inc. and/or its subsidiaries.		#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
 # C9J09003198.csh - test gtm_permission() changes to support invalid user/groups
 # Create the database manually instead of using dbcreate
 $gtm_exe/mumps -run GDE >& gde1.log << GDE_EOF
@@ -14,7 +29,7 @@ echo
 echo "** test bogus owner 55555"
 echo "** journal file will be world rw since 55555 is not a member of gtc group"
 echo
-$gtm_exe/mupip set -region -journal=enable,on,nobefore "*" >& journal1.log
+$gtm_exe/mupip set -journal=enable,on,nobefore -region "*" >& journal1.log
 ls -al mumps.* > mumps1.log
 ls -al mumps.dat | $tst_awk '{printf "%s  %s   %s %10s\n",$1,$3,$4,$NF}'
 ls -al mumps.mjl | $tst_awk '{printf "%s  $USER   %s %10s\n",$1,$4,$NF}'
@@ -44,7 +59,7 @@ echo
 echo "** test bogus group 55555"
 echo "** journal file will be world rw since installation is not group restricted"
 echo
-$gtm_exe/mupip set -region -journal=enable,on,nobefore "*">& journal2.log
+$gtm_exe/mupip set -journal=enable,on,nobefore -region "*">& journal2.log
 ls -al mumps.* > mumps2.log
 ls -al mumps.dat | $tst_awk '{printf "%s  $USER  %s %10s\n",$1,$4,$NF}'
 ls -al mumps.mjl | $tst_awk '{printf "%s  $USER  %s %12s\n",$1,$4,$NF}'

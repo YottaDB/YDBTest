@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2002, 2013 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -17,7 +20,7 @@ source $gtm_tst/com/dbcreate.csh light_jnl 9
 setenv gtmgbldir "light_jnl.gld"
 #
 $MUPIP set -file -nojournal light_jnl.dat
-$MUPIP set -region -journal=enable,on,before "*" > & $tst_working_dir/p2
+$MUPIP set -journal=enable,on,before -region "*" > & $tst_working_dir/p2
 sort -f $tst_working_dir/p2
 #
 $GTM << EOF
@@ -51,7 +54,7 @@ source $gtm_tst/com/dbcreate.csh light_jnl 3
 setenv gtmgbldir "light_jnl.gld"
 #
 $MUPIP set -file -nojournal light_jnl.dat
-$MUPIP set -region -journal=enable,on,nobefore "BREG"
+$MUPIP set -journal=enable,on,nobefore -region "BREG"
 #
 $GTM << EOF
 s ^in4=0
@@ -64,7 +67,7 @@ w "h",!  h
 l
 EOF
 #
-$MUPIP set -region -journal=on,nobefore "BREG" > & $tst_working_dir/p3
+$MUPIP set -journal=on,nobefore -region "BREG" > & $tst_working_dir/p3
 $GTM << EOF
 l ^test2
 h 5
@@ -122,7 +125,7 @@ source $gtm_tst/com/dbcreate.csh light_jnl 3
 setenv gtmgbldir "light_jnl.gld"
 #
 $MUPIP set -file -nojournal light_jnl.dat
-$MUPIP set -region -journal=enable,on,nobefore "AREG"
+$MUPIP set -journal=enable,on,nobefore -region "AREG"
 #
 $GTM << EOF
 s ^in4=0
@@ -135,7 +138,7 @@ w "h",!  h
 l
 EOF
 #
-$MUPIP set -region -journal=on,nobefore "AREG" > & $tst_working_dir/p3
+$MUPIP set -journal=on,nobefore -region "AREG" > & $tst_working_dir/p3
 $GTM << EOF
 l ^test2
 h 5

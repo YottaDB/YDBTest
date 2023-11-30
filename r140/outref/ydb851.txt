@@ -1,0 +1,166 @@
+# ----------------------------------------------------------------------
+# Test that MUPIP commands accept either space or "=" after "-region
+# Below commands are picked from the list at https://gitlab.com/YottaDB/DB/YDB/-/issues/851#note_1674367308
+# ----------------------------------------------------------------------
+# Create a database with regions AREG, BREG, CREG and DEFAULT
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+mumps.dat
+# Initialize all regions with some data
+#####################################################################
+# Test that all MUPIP commands work fine with single region (DEFAULT)
+#####################################################################
+# Testing [mupip dumpfhead -region DEFAULT]
+Fileheader dump of region DEFAULT
+# Testing [mupip dumpfhead -region=DEFAULT]
+Fileheader dump of region DEFAULT
+# Testing [mupip create -region DEFAULT]
+%YDB-E-DBOPNERR, Error opening database file ##TEST_PATH##/mumps.dat
+%SYSTEM-E-ENO17, File exists
+%YDB-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+# Testing [mupip create -region=DEFAULT]
+%YDB-E-DBOPNERR, Error opening database file ##TEST_PATH##/mumps.dat
+%SYSTEM-E-ENO17, File exists
+%YDB-F-DBNOCRE, Not all specified database files, or their associated journal files were created
+# Testing [mupip extract -region DEFAULT extract1_space.ext]
+%YDB-I-RECORDSTAT, ^d:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8
+# Testing [mupip extract -region=DEFAULT extract1_equal.ext]
+%YDB-I-RECORDSTAT, ^d:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8
+# Testing [mupip integ -region DEFAULT]
+Integ of region DEFAULT
+# Testing [mupip integ -region=DEFAULT]
+Integ of region DEFAULT
+# Testing [mupip reorg -region DEFAULT]
+Global: d (region DEFAULT)
+# Testing [mupip reorg -region=DEFAULT]
+Global: d (region DEFAULT)
+# Testing [mupip size -region DEFAULT]
+Global: d (region DEFAULT)
+# Testing [mupip size -region=DEFAULT]
+Global: d (region DEFAULT)
+# Testing [mupip rundown -region DEFAULT]
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+# Testing [mupip rundown -r DEFAULT]
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+# Testing [mupip rundown -region=DEFAULT]
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+# Testing [mupip rundown -r=DEFAULT]
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+# Testing [mupip set -region DEFAULT -acc=BG]
+Database file ##TEST_PATH##/mumps.dat now has BG access method
+# Testing [mupip set -region=DEFAULT -acc=BG]
+Database file ##TEST_PATH##/mumps.dat now has BG access method
+# Testing [mupip upgrade -region DEFAULT]
+%YDB-E-GTMCURUNSUPP, The requested operation is unsupported in this version of YottaDB
+# Testing [mupip upgrade -region=DEFAULT]
+%YDB-E-GTMCURUNSUPP, The requested operation is unsupported in this version of YottaDB
+#####################################################################
+# Test that all MUPIP commands work fine with multiple regions (CREG,AREG)
+#####################################################################
+# Testing [mupip dumpfhead -region CREG,AREG]
+Fileheader dump of region AREG
+Fileheader dump of region CREG
+# Testing [mupip dumpfhead -region=CREG,AREG]
+Fileheader dump of region AREG
+Fileheader dump of region CREG
+# Testing [mupip create -region CREG,AREG]
+# MUPIP CREATE is an exception in case multiple regions are specified
+# It treats the comma-separated list of region names as 1 region name
+# It issues an error so we expect an error below
+%YDB-E-NOREGION, REGION not found: CREG,AREG
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
+# Testing [mupip create -region=CREG,AREG]
+# MUPIP CREATE is an exception in case multiple regions are specified
+# It treats the comma-separated list of region names as 1 region name
+# It issues an error so we expect an error below
+%YDB-E-NOREGION, REGION not found: CREG,AREG
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
+# Testing [mupip extract -region CREG,AREG extract2_space.ext]
+%YDB-I-RECORDSTAT, ^a:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8
+%YDB-I-RECORDSTAT, ^c:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 3  max rec len: 1  max node len: 8
+# Testing [mupip extract -region=CREG,AREG extract2_equal.ext]
+%YDB-I-RECORDSTAT, ^a:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8
+%YDB-I-RECORDSTAT, ^c:	  Key cnt: 1  max subsc len: 3  max rec len: 1  max node len: 8
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 2  max subsc len: 3  max rec len: 1  max node len: 8
+# Testing [mupip integ -region CREG,AREG]
+Integ of region AREG
+Integ of region CREG
+# Testing [mupip integ -region=CREG,AREG]
+Integ of region AREG
+Integ of region CREG
+# Testing [mupip reorg -region CREG,AREG]
+Global: a (region AREG)
+Global: c (region CREG)
+# Testing [mupip reorg -region=CREG,AREG]
+Global: a (region AREG)
+Global: c (region CREG)
+# Testing [mupip size -region CREG,AREG]
+Global: a (region AREG)
+Global: c (region CREG)
+# Testing [mupip size -region=CREG,AREG]
+Global: a (region AREG)
+Global: c (region CREG)
+# Testing [mupip rundown -region CREG,AREG]
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/a.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/c.dat successfully rundown
+# Testing [mupip rundown -r CREG,AREG]
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/a.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/c.dat successfully rundown
+# Testing [mupip rundown -region=CREG,AREG]
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/a.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/c.dat successfully rundown
+# Testing [mupip rundown -r=CREG,AREG]
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/a.dat successfully rundown
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/c.dat successfully rundown
+# Testing [mupip set -region CREG,AREG -acc=BG]
+Database file ##TEST_PATH##/a.dat now has BG access method
+Database file ##TEST_PATH##/c.dat now has BG access method
+# Testing [mupip set -region=CREG,AREG -acc=BG]
+Database file ##TEST_PATH##/a.dat now has BG access method
+Database file ##TEST_PATH##/c.dat now has BG access method
+# Testing [mupip upgrade -region CREG,AREG]
+%YDB-E-GTMCURUNSUPP, The requested operation is unsupported in this version of YottaDB
+# Testing [mupip upgrade -region=CREG,AREG]
+%YDB-E-GTMCURUNSUPP, The requested operation is unsupported in this version of YottaDB
+
+# ----------------------------------------------------------------------
+# Miscellaneous tests of use cases noted in YDB#851 on gitlab
+# ----------------------------------------------------------------------
+# Test of https://gitlab.com/YottaDB/DB/YDB/-/issues/851#note_1674367308
+# Expect a %YDB-E-CLIERR error if -region and region name is separated by another qualifier
+mupip integ -region -online DEFAULT
+%YDB-E-CLIERR, Value expected to follow option REGION but another option was found
+# Test of https://gitlab.com/YottaDB/DB/YDB/-/issues/851#note_1675982258
+# Expect a %YDB-E-CLIERR error if -region is specified but region name is not
+mupip integ -region
+%YDB-E-CLIERR, Option : REGION needs value
+echo DEFAULT | mupip integ -region
+%YDB-E-CLIERR, Option : REGION needs value
+# Test of https://gitlab.com/YottaDB/DB/YDB/-/issues/851#note_1675986337
+# Expect a %YDB-E-CLIERR error if arbitrary name is specified before -region
+# This used to treat that arbitrary parameter as the region name previously
+mupip integ ABCD -region
+%YDB-E-CLIERR, Option : REGION needs value
+# Test that parameer specified AFTER -region is treated as region name and not the one BEFORE -region
+# In below example, we expect EFGH to be the region name and not ABCD
+# This used to treat that arbitrary parameter as the region name previously
+mupip integ ABCD -region EFGH
+%YDB-E-NOREGION, REGION not found: EFGH
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
+# Test of value expected but not found error for -REGION qualifier when -REGION= is not immediately followed by value
+mupip integ ABCD -region=
+%YDB-E-CLIERR, Unrecognized option : REGION, value expected but not found
+mupip integ ABCD -region= EFGH
+%YDB-E-CLIERR, Unrecognized option : REGION, value expected but not found
+# Do integ check at end of test
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

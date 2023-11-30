@@ -1320,11 +1320,8 @@ mumps.dat
 # set ^a(1-15)=i
 # set ^b(1-5)=i, set ^c(1-5)=i and set ^d(1-5)=i
 # 1. Run the following to unit test the addition of new -REGION qualifier in mupip_cmd.c
-# 1a. mupip extract mext1a.zwr -region (prompt for region(s))
-Region(s): 
-%YDB-I-RECORDSTAT, ^a (region AREG):	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
-%YDB-I-RECORDSTAT, ^a:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
-%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+# 1a. mupip extract mext1a.zwr -region (used to previously issue prompt for region(s) but issues an error after YDB#851)
+%YDB-E-CLIERR, Option : REGION needs value
 # 1b. mupip extract mext1b.zwr -region=AREG (accept a value for region qualifier)
 %YDB-I-RECORDSTAT, ^a (region AREG):	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
 %YDB-I-RECORDSTAT, ^a:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
@@ -1337,8 +1334,11 @@ Region(s):
 # 1d. mupip extract mext1d.zwr -region=NOREG (Show error, region not found)
 %YDB-E-NOREGION, REGION not found: NOREG
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
-# 1e. mupip extract mext1e.zwr -region BREG (Show error, Too many parameters)
-%YDB-E-CLIERR, Too many parameters
+# 1e. mupip extract mext1e.zwr -region BREG (should work, used to previously issue "Too many parameters" error)
+%YDB-I-RECORDSTAT, ^a (region BREG):	  Key cnt: 5  max subsc len: 6  max rec len: 2  max node len: 11
+%YDB-I-RECORDSTAT, ^a:	  Key cnt: 5  max subsc len: 6  max rec len: 2  max node len: 11
+%YDB-I-RECORDSTAT, ^b:	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11
+%YDB-I-RECORDSTAT, TOTAL:	  Key cnt: 10  max subsc len: 6  max rec len: 2  max node len: 11
 # 2. Run the following to test the extracted file
 # 2a. mupip extract mext2a.zwr (file have all the globals extracted)
 %YDB-I-RECORDSTAT, ^a (region AREG):	  Key cnt: 5  max subsc len: 6  max rec len: 1  max node len: 11

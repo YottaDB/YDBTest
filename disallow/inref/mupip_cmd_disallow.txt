@@ -84,14 +84,14 @@ p integ dummy_file -brief -full
 !
 !	DISALLOW(FILE AND REGION)
 !
-p integ dummy_file -file -region
+p integ -file dummy_file -region dummy_region
 !
 !	DISALLOW(TN_RESET AND (FAST OR BLOCK OR SUBSCRIPT OR REGION))
 !
 p integ dummy_file -tn_reset -fast
 p integ dummy_file -tn_reset -block=10
 p integ dummy_file -tn_reset -subs="abcd"
-p integ dummy_file -tn_reset -region
+p integ -tn_reset -region dummy_region
 !
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !
@@ -139,7 +139,7 @@ v intrpt
 !  MUPIP RUNDOWN
 !	DISALLOW(FILE AND REGION)
 !
-p rundown -file -region
+p rundown -file -region dummy_region
 !
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !
@@ -150,10 +150,10 @@ p rundown -file -region
 !
 !	DISALLOW ANY2(file, region, jnlfile)
 !
-p set dummy_region -file -region
-p set dummy_region -file -jnlfile
-p set dummy_region -region -jnlfile
-p set dummy_region -region -jnlfile -file
+p set -region dummy_region -file
+p set -file dummy_file -jnlfile
+p set -region dummy_region -jnlfile
+p set -region dummy_region -jnlfile -file
 !
 !	DISALLOW(NOT(file OR region OR jnlfile))
 !
@@ -177,7 +177,7 @@ p set dummy_region -wait_disk=10
 !
 !
 ! In order to better test the following MUPIP SET DISALLOWs, we need to specify a dummy -reg as otherwise the previous
-!	DISALLOW(NOT(file OR region OR jnlfile)) will take effect below too. Hence you will see "p set dummy_region -reg" below.
+!	DISALLOW(NOT(file OR region OR jnlfile)) will take effect below too. Hence you will see "p set -reg dummy_region" below.
 !
 !       DISALLOW -VERSION AND -ACCESS_METHOD
 !       DISALLOW -VERSION AND -GLOBAL_BUFFERS
@@ -200,74 +200,74 @@ p set -reg dummy_region -version=V4 -partial_recov_bypass
 !
 !	DISALLOW(journal.on AND journal.off)
 !
-p set dummy_region -reg -journal="off,on"
+p set -reg dummy_region -journal="off,on"
 !
 !	! --- disallow /NOJOURNAL=DISABLE ---
 !	DISALLOW(journal.disable AND NEG journal)
 !
-p set dummy_region -reg -nojournal="disable"
+p set -reg dummy_region -nojournal="disable"
 !
 !	! --- disallow any other journal options for both /NOJOURNAL and DISABLE (Unix CLI disallows assignment for /NOJOURNAL) ---
 !	DISALLOW((journal.disable OR NEG journal) AND (journal.on OR journal.off OR journal.enable OR journal.before_images
 !		OR journal.filename OR journal.allocation OR journal.extension OR journal.buffer_size OR journal.alignsize
 !		OR journal.epoch_interval OR journal.autoswitchlimit OR NEG journal.before_images))
 !
-p set dummy_region -reg -journal="disable,on"
-p set dummy_region -reg -journal="disable,off"
-p set dummy_region -reg -journal="disable,enable"
-p set dummy_region -reg -journal="disable,before_images"
-p set dummy_region -reg -journal="disable,filename=dummy.mjl"
-p set dummy_region -reg -journal="disable,allocation=10"
-p set dummy_region -reg -journal="disable,extension=20"
-p set dummy_region -reg -journal="disable,buffer_size=40"
-p set dummy_region -reg -journal="disable,alignsize=80"
-p set dummy_region -reg -journal="disable,epoch_interval=100"
-p set dummy_region -reg -journal="disable,autoswitchlimit=2048"
-p set dummy_region -reg -journal="disable,nobefore_images"
-p set dummy_region -reg -nojournal="on"
-p set dummy_region -reg -nojournal="off"
-p set dummy_region -reg -nojournal="enable"
-p set dummy_region -reg -nojournal="before_images"
-p set dummy_region -reg -nojournal="filename=dummy.mjl"
-p set dummy_region -reg -nojournal="allocation=10"
-p set dummy_region -reg -nojournal="extension=20"
-p set dummy_region -reg -nojournal="buffer_size=40"
-p set dummy_region -reg -nojournal="alignsize=80"
-p set dummy_region -reg -nojournal="epoch_interval=100"
-p set dummy_region -reg -nojournal="autoswitchlimit=2048"
-p set dummy_region -reg -nojournal="nobefore_images"
+p set -reg dummy_region -journal="disable,on"
+p set -reg dummy_region -journal="disable,off"
+p set -reg dummy_region -journal="disable,enable"
+p set -reg dummy_region -journal="disable,before_images"
+p set -reg dummy_region -journal="disable,filename=dummy.mjl"
+p set -reg dummy_region -journal="disable,allocation=10"
+p set -reg dummy_region -journal="disable,extension=20"
+p set -reg dummy_region -journal="disable,buffer_size=40"
+p set -reg dummy_region -journal="disable,alignsize=80"
+p set -reg dummy_region -journal="disable,epoch_interval=100"
+p set -reg dummy_region -journal="disable,autoswitchlimit=2048"
+p set -reg dummy_region -journal="disable,nobefore_images"
+p set -reg dummy_region -nojournal="on"
+p set -reg dummy_region -nojournal="off"
+p set -reg dummy_region -nojournal="enable"
+p set -reg dummy_region -nojournal="before_images"
+p set -reg dummy_region -nojournal="filename=dummy.mjl"
+p set -reg dummy_region -nojournal="allocation=10"
+p set -reg dummy_region -nojournal="extension=20"
+p set -reg dummy_region -nojournal="buffer_size=40"
+p set -reg dummy_region -nojournal="alignsize=80"
+p set -reg dummy_region -nojournal="epoch_interval=100"
+p set -reg dummy_region -nojournal="autoswitchlimit=2048"
+p set -reg dummy_region -nojournal="nobefore_images"
 !
 !	DISALLOW(replication.on AND replication.off)
 !
-p set dummy_region -reg -replication="off,on"
+p set -reg dummy_region -replication="off,on"
 !
 !	DISALLOW(replication.on AND (journal.off OR journal.disable OR NEG journal OR NEG journal.before_images))
 !
-p set dummy_region -reg -replication="on" -journal="off"
-p set dummy_region -reg -replication="on" -journal="disable"
-p set dummy_region -reg -replication="on" -nojournal
-v set dummy_region -reg -replication="on" -journal="nobefore_images"
+p set -reg dummy_region -replication="on" -journal="off"
+p set -reg dummy_region -replication="on" -journal="disable"
+p set -reg dummy_region -replication="on" -nojournal
+v set -reg dummy_region -replication="on" -journal="nobefore_images"
 !
 !	DISALLOW(prevjnlfile AND NOT(jnlfile))
 !
-p set dummy_region -reg -prevjnlfile="abcd.mjl" 
-p set dummy_region -reg -prevjnlfile="abcd.mjl" -journal="enable,off"
-p set dummy_region -reg -prevjnlfile="abcd.mjl" -access="BG"
-p set dummy_region -reg -prevjnlfile="abcd.mjl" -defer_time=40
-p set dummy_region -reg -prevjnlfile="abcd.mjl" -extension=30
-p set dummy_region -reg -prevjnlfile="abcd.mjl" -flush_time
-p set dummy_region -reg -prevjnlfile="abcd.mjl" -global_buffers=2048
-p set dummy_region -reg -prevjnlfile="abcd.mjl" -lock_space=2048
-p set dummy_region -reg -prevjnlfile="abcd.mjl" -reserved_bytes=2048
-p set dummy_region -reg -prevjnlfile="abcd.mjl" -replication="on"
-p set dummy_region -reg -prevjnlfile="abcd.mjl" -bypass
-p set dummy_region -reg -prevjnlfile="abcd.mjl" -partial_recov_bypass
-p set dummy_region -reg -prevjnlfile="abcd.mjl" -dbfilename="abcd.dat"
-p set dummy_region -reg -prevjnlfile="abcd.mjl" -prevjnlfile="abcd.mjl"
-p set dummy_region -reg -prevjnlfile="abcd.mjl" -repl_state="off"
-p set dummy_region -reg -prevjnlfile="abcd.mjl" -standalonenot
-p set dummy_region -reg -prevjnlfile="abcd.mjl" -wait_disk=10
-p set dummy_region -reg -prevjnlfile="abcd.mjl"
+p set -reg dummy_region -prevjnlfile="abcd.mjl"
+p set -reg dummy_region -prevjnlfile="abcd.mjl" -journal="enable,off"
+p set -reg dummy_region -prevjnlfile="abcd.mjl" -access="BG"
+p set -reg dummy_region -prevjnlfile="abcd.mjl" -defer_time=40
+p set -reg dummy_region -prevjnlfile="abcd.mjl" -extension=30
+p set -reg dummy_region -prevjnlfile="abcd.mjl" -flush_time
+p set -reg dummy_region -prevjnlfile="abcd.mjl" -global_buffers=2048
+p set -reg dummy_region -prevjnlfile="abcd.mjl" -lock_space=2048
+p set -reg dummy_region -prevjnlfile="abcd.mjl" -reserved_bytes=2048
+p set -reg dummy_region -prevjnlfile="abcd.mjl" -replication="on"
+p set -reg dummy_region -prevjnlfile="abcd.mjl" -bypass
+p set -reg dummy_region -prevjnlfile="abcd.mjl" -partial_recov_bypass
+p set -reg dummy_region -prevjnlfile="abcd.mjl" -dbfilename="abcd.dat"
+p set -reg dummy_region -prevjnlfile="abcd.mjl" -prevjnlfile="abcd.mjl"
+p set -reg dummy_region -prevjnlfile="abcd.mjl" -repl_state="off"
+p set -reg dummy_region -prevjnlfile="abcd.mjl" -standalonenot
+p set -reg dummy_region -prevjnlfile="abcd.mjl" -wait_disk=10
+p set -reg dummy_region -prevjnlfile="abcd.mjl"
 p set dummy_region -file -prevjnlfile="abcd.mjl"
 !
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

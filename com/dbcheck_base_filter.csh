@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -78,7 +78,7 @@ if (("$1" != "") && ("FALSE" == "$online_noonline_specified")) then
 else
 	source $gtm_tst/com/leftover_ipc_cleanup_if_needed.csh $0 # do rundown if needed before requiring standalone access
 	echo "$MUPIP integ -REG *"
-	$MUPIP integ -REG $online_noonline "*" >& tmp.mupip
+	$MUPIP integ $online_noonline -REG "*" >& tmp.mupip
 endif
 if (("$2" == "-noskipregerr")) then
 	mv tmp.mupip tmp.mupip.skipreg

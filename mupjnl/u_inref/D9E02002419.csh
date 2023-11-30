@@ -73,7 +73,7 @@ cp -p mumps.mjl mumps.dat mumps.gld crashed
 # Do an INTEG now and save the exit status for later use. Name the output file with outx extension
 # as we expect errors as a result of the interrupted extension
 # Use -noonline so that we don't see asserts due to ONLINE INTEG checking for total blocks integrity
-$MUPIP integ -reg -noonline DEFAULT >&! integ1.outx
+$MUPIP integ -noonline -reg DEFAULT >&! integ1.outx
 set integ_stat = $status
 
 # We can now disable white box testing.
@@ -88,7 +88,7 @@ endif
 # Do an INTEG now to ensure the above non-invasive journal command did NOT fix the error. Name the output file
 # with outx extension as we expect errors as a result of the interrupted extension
 # Use -noonline so that we don't see asserts due to ONLINE INTEG checking for total blocks integrity
-$MUPIP integ -reg -noonline DEFAULT >&! integ2.outx
+$MUPIP integ -noonline -reg DEFAULT >&! integ2.outx
 set stat = $status
 if ($integ_stat != $stat) then
 	echo "INTEG status before ($integ_stat) and after ($stat) the non-invasive command $mupjnl_ro[$mupjnl_ro_cmd] is not same."

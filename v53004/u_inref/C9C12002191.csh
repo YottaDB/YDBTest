@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -158,7 +158,7 @@ echo '** process uid $tst_user is a member of database group $tst_group'
 echo '** database group $tst_group is unchanged.  and 666 with default database permission of 666'
 echo
 
-$MUPIP set -region -journal=enable,on,nobefore "*" >>&! set_jnl_${tstno}.out
+$MUPIP set -journal=enable,on,nobefore -region "*" >>&! set_jnl_${tstno}.out
 $gtm_dist/mumps -dir >& gtm_${tstno}.out <<here
 set ^a=1
 zsystem "$gtm_tst/com/ipcs -c > ipcs_full_${tstno}.out"
@@ -238,7 +238,7 @@ echo
 rm -f mumps.dat mumps.gld
 cp bak_mumps.gld mumps.gld ; cp bak_mumps.dat mumps.dat ; chmod 666 mumps.dat
 chmod 644 mumps.dat
-$MUPIP set -region -journal=enable,on,nobefore "*" >& set_jnl_${tstno}.out
+$MUPIP set -journal=enable,on,nobefore -region "*" >& set_jnl_${tstno}.out
 $gtm_dist/mumps -dir >& gtm_${tstno}.out <<here
 set ^a=1
 zsystem "$gtm_tst/com/ipcs -c > ipcs_full_${tstno}.out"
@@ -297,7 +297,7 @@ rm -f mumps.dat mumps.gld
 cp bak_mumps.gld mumps.gld ; cp bak_mumps.dat mumps.dat
 $gtm_com/IGS mumps.dat CHOWN $tst_user $tst_group1
 chmod 644 mumps.dat
-$MUPIP set -region -journal=enable,on,nobefore "*" >& set_jnl_${tstno}.out
+$MUPIP set -journal=enable,on,nobefore -region "*" >& set_jnl_${tstno}.out
 $gtm_dist/mumps -dir >& gtm_${tstno}.out <<here
 set ^a=1
 zsystem "$gtm_tst/com/ipcs -c > ipcs_full_${tstno}.out"
@@ -358,7 +358,7 @@ rm -f mumps.dat mumps.gld
 cp bak_mumps.gld mumps.gld ; cp bak_mumps.dat mumps.dat
 chown ${tst_user}:$tst_group3 mumps.dat
 chmod 664 mumps.dat
-$MUPIP set -region -journal=enable,on,nobefore "*" >& set_jnl_${tstno}.out
+$MUPIP set -journal=enable,on,nobefore -region "*" >& set_jnl_${tstno}.out
 $gtm_dist/mumps -dir >& gtm_${tstno}.out <<here
 set ^a=1
 zsystem "$gtm_tst/com/ipcs -c > ipcs_full_${tstno}.out"
@@ -421,7 +421,7 @@ cp bak_mumps.gld mumps.gld ; cp bak_mumps.dat mumps.dat
 $gtm_com/IGS mumps.dat CHOWN $tst_user $tst_group1
 chmod 664 mumps.dat
 chown ${tst_user}:$tst_group3 $gtm_dist/libyottadb.$libext
-$MUPIP set -region -journal=enable,on,nobefore "*" >& set_jnl_${tstno}.out
+$MUPIP set -journal=enable,on,nobefore -region "*" >& set_jnl_${tstno}.out
 $gtm_dist/mumps -dir >& gtm_${tstno}.out <<here
 set ^a=1
 zsystem "$gtm_tst/com/ipcs -c > ipcs_full_${tstno}.out"

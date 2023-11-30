@@ -83,7 +83,7 @@ MUPIP INFO:   Temp file name: ##TEST_PATH##/bak/bak//DEFAULT_YYYY_ZZZZZZ
 ##TEST_AWKMUPIP INFO:   unalias -a; .*/mv .*/bak/AREG_YYYY_ZZZZZZa.dat .*/bak/a.dat
 ##TEST_AWKMUPIP INFO:   unalias -a; .*/mv .*/bak/BREG_YYYY_ZZZZZZb.dat .*/bak/b.dat
 ##TEST_AWKMUPIP INFO:   unalias -a; .*/mv .*/bak/DEFAULT_YYYY_ZZZZZZmumps.dat .*/bak/mumps.dat
-$MUPIP integ -reg -noonline "*" >> & integ.log
+$MUPIP integ -noonline -reg "*" >> & integ.log
 ls ./bak/*
 ./bak/a.dat
 ./bak/b.dat
@@ -109,7 +109,7 @@ MUPIP INFO:   Temp file name: ##TEST_PATH##/bak/bak//BREG_YYYY_ZZZZZZ
 MUPIP INFO:   Temp file name: ##TEST_PATH##/bak/bak//DEFAULT_YYYY_ZZZZZZ
 no blocks backed up from database ##TEST_PATH##/mumps.dat
 TRANSACTION number is greater than or equal to current transaction,
-$MUPIP integ -reg -noonline "*" >> & integ.log
+$MUPIP integ -noonline -reg "*" >> & integ.log
 ls ./bak/*
 ./bak/a.dat
 ./bak/b.dat
@@ -135,7 +135,7 @@ MUPIP INFO:   Temp file name: ##TEST_PATH##/bak/baktmp/DEFAULT_YYYY_ZZZZZZ
 ##TEST_AWKMUPIP INFO:   unalias -a; .*/mv .*/bak/AREG_YYYY_ZZZZZZa.dat .*/bak/a.dat
 ##TEST_AWKMUPIP INFO:   unalias -a; .*/mv .*/bak/BREG_YYYY_ZZZZZZb.dat .*/bak/b.dat
 ##TEST_AWKMUPIP INFO:   unalias -a; .*/mv .*/bak/DEFAULT_YYYY_ZZZZZZmumps.dat .*/bak/mumps.dat
-$MUPIP integ -reg -noonline "*" >> & integ.log
+$MUPIP integ -noonline -reg "*" >> & integ.log
 ls ./bak/*
 ./bak/a.dat
 ./bak/b.dat
@@ -162,7 +162,7 @@ MUPIP INFO:   Temp file name: ##TEST_PATH##/bak/baktmp/BREG_YYYY_ZZZZZZ
 MUPIP INFO:   Temp file name: ##TEST_PATH##/bak/baktmp/DEFAULT_YYYY_ZZZZZZ
 no blocks backed up from database ##TEST_PATH##/mumps.dat
 TRANSACTION number is greater than or equal to current transaction,
-$MUPIP integ -reg -noonline "*" >> & integ.log
+$MUPIP integ -noonline -reg "*" >> & integ.log
 ls ./bak/*
 ./bak/a.dat
 ./bak/b.dat
@@ -176,7 +176,7 @@ $MUPIP backup -nonew -o "AREG" ./bak -dbg
 %YDB-E-DIRACCESS, Do not have full access to directory for temporary files: ##TEST_PATH##/bak/baktmp
 %SYSTEM-E-ENO13, Permission denied
 %YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
-$MUPIP integ -reg -noonline "*" >> & integ.log
+$MUPIP integ -noonline -reg "*" >> & integ.log
 ls ./bak/*
 ls: No match.
 rm ./bak/*
@@ -189,7 +189,7 @@ $MUPIP backup -nonew -o "AREG" ./bak -dbg -i
 %YDB-E-DIRACCESS, Do not have full access to directory for temporary files: ##TEST_PATH##/bak/baktmp
 %SYSTEM-E-ENO13, Permission denied
 %YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
-$MUPIP integ -reg -noonline "*" >> & integ.log
+$MUPIP integ -noonline -reg "*" >> & integ.log
 chmod 755 $gtm_baktmpdir
 ##SUSPEND_OUTPUT NON_REPLIC
 
@@ -213,7 +213,7 @@ if ( ! -d baktmp ) mkdir baktmp
 
 $MUPIP backup -nonew -o "*" ./bak -dbg > & backup1.logx
 $grep -vE '^$|cp --sparse=always' backup1.logx | sort -f
-$MUPIP integ -reg -noonline "*" >> & integ.log
+$MUPIP integ -noonline -reg "*" >> & integ.log
 ls ./bak/*
 rm ./bak/*
 $gtm_exe/mumps -run wait
@@ -222,14 +222,14 @@ ls -l core*
 ls: No match.
 $MUPIP backup -nonew -o "*" ./bak -dbg -i > & backup2.logx
 $grep -vE '^$|cp --sparse=always' backup2.logx | sort -f
-$MUPIP integ -reg -noonline "*" >> & integ.log
+$MUPIP integ -noonline -reg "*" >> & integ.log
 ls ./bak/*
 rm ./bak/*
 setenv gtm_baktmpdir `pwd`/baktmp
 echo "gtm_baktmpdir: $gtm_baktmpdir"
 $MUPIP backup -nonew -o "*" ./bak -dbg > & backup3.logx
 $grep -vE '^$|cp --sparse=always' backup3.logx | sort -f
-$MUPIP integ -reg -noonline "*" >> & integ.log
+$MUPIP integ -noonline -reg "*" >> & integ.log
 ls ./bak/*
 rm ./bak/*
 $gtm_exe/mumps -run wait
@@ -239,7 +239,7 @@ ls: No match.
 
 $MUPIP backup -nonew -o "*" ./bak -dbg -i > & backup4.logx
 $grep -vE '^$|cp --sparse=always' backup4.logx | sort -f
-$MUPIP integ -reg -noonline "*" >> & integ.log
+$MUPIP integ -noonline -reg "*" >> & integ.log
 ls ./bak/*
 rm ./bak/*
 echo "==================================================================="
@@ -249,7 +249,7 @@ $MUPIP backup -nonew -o "AREG" ./bak -dbg
 %YDB-E-DIRACCESS, Do not have full access to directory for temporary files: ##REMOTE_TEST_PATH##/bak/baktmp
 %SYSTEM-E-ENO13, Permission denied
 %YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
-$MUPIP integ -reg -noonline "*" >> & integ.log
+$MUPIP integ -noonline -reg "*" >> & integ.log
 ls ./bak/*
 ls: No match.
 rm ./bak/*
@@ -262,7 +262,7 @@ $MUPIP backup -nonew -o "AREG" ./bak -dbg -i
 %YDB-E-DIRACCESS, Do not have full access to directory for temporary files: ##REMOTE_TEST_PATH##/bak/baktmp
 %SYSTEM-E-ENO13, Permission denied
 %YDB-E-BACKUPFAIL, MUPIP cannot start backup with the above errors
-$MUPIP integ -reg -noonline "*" >> & integ.log
+$MUPIP integ -noonline -reg "*" >> & integ.log
 chmod 755 $gtm_baktmpdir
 And on the secondary side:
 %YDB-I-BACKUPDBFILE, DB file ##REMOTE_TEST_PATH##/a.dat backed up in file ##REMOTE_TEST_PATH##/bak/bak/a.dat

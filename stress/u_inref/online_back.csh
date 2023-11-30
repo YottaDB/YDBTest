@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -83,7 +86,7 @@ if (1 == $backup_succeeded) then
 	# out with FTOKERR if $gtm_custom_errors is set (causing it to open jnlpool). Since the backup databases are not tied to any
 	# replication instance, unsetenv gtm_repl_instance.
 	unsetenv gtm_repl_instance
-	$MUPIP integ -reg -noonline "*"
+	$MUPIP integ -noonline -reg "*"
 	setenv gtm_repl_instance mumps.repl
 	if ($status) then
 		$gtm_tst/com/ipcs -a
