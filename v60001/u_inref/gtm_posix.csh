@@ -4,7 +4,7 @@
 # Copyright (c) 2012, 2015 Fidelity National Information	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -40,4 +40,5 @@ echo "Executing posixtest and expect PASS for all"
 echo ""
 
 # The test for the posix plugin is part of the plugin itself so invoke it directly using the %ydbposixtest name
+cp $ydb_dist/plugin/posix/libmath.ref . # Ref file for Math functions in Posix
 $gtm_exe/mumps -r %ydbposixtest
