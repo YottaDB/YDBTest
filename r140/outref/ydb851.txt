@@ -155,6 +155,17 @@ mupip integ ABCD -region
 mupip integ ABCD -region EFGH
 %YDB-E-NOREGION, REGION not found: EFGH
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
+# Test of https://gitlab.com/YottaDB/DB/YDB/-/issues/851#note_1678160066
+# Expect double-quotes in region name to not be removed as part of parsing
+mupip set -stats -reg "A B"C
+%YDB-E-NOREGION, REGION not found: "A
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
+mupip set -stats -reg "ABC"
+%YDB-E-NOREGION, REGION not found: "ABC"
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
+mupip set -stats -reg "AB"C
+%YDB-E-NOREGION, REGION not found: "AB"C
+%YDB-E-MUNOACTION, MUPIP unable to perform requested action
 # Test of value expected but not found error for -REGION qualifier when -REGION= is not immediately followed by value
 mupip integ ABCD -region=
 %YDB-E-CLIERR, Unrecognized option : REGION, value expected but not found

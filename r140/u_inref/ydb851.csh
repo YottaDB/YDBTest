@@ -105,6 +105,16 @@ echo "# This used to treat that arbitrary parameter as the region name previousl
 echo "mupip integ ABCD -region EFGH"
 $MUPIP integ ABCD -region EFGH
 
+echo "# Test of https://gitlab.com/YottaDB/DB/YDB/-/issues/851#note_1678160066"
+echo "# Expect double-quotes in region name to not be removed as part of parsing"
+echo 'mupip set -stats -reg "A B"C'
+$MUPIP set -stats -reg \"A B\"C
+echo 'mupip set -stats -reg "ABC"'
+$MUPIP set -stats -reg \"ABC\"
+echo 'mupip set -stats -reg "AB"C'
+$MUPIP set -stats -reg \"AB\"C
+
+
 echo "# Test of value expected but not found error for -REGION qualifier when -REGION= is not immediately followed by value"
 echo "mupip integ ABCD -region="
 $MUPIP integ ABCD -region=
