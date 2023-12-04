@@ -95,7 +95,7 @@ YDB_EOF
 	if ($permission == "READ-ONLY") then
 		chmod a+w mumps.dat	# Restore write permissions as we are going to change file header settings
 		set noglob	# do not try to expand the * in $regorfile
-		set regorfile = '-reg "*"'
+		set regorfile = '-reg *'
 	else
 		set regorfile = "-file mumps.dat"
 	endif
@@ -133,7 +133,7 @@ YDB_EOF
 	# Use multiple iterations of this for loop to exercise -reg and -file codepaths of MUPIP SET
 	if ($permission == "READ-ONLY") then
 		chmod a+w mumps.dat	# Restore write permissions as we are going to change file header settings
-		set noglob		# continue noglob for "*" in $regorfile
+		set noglob		# continue noglob for * in $regorfile
 	endif
 	echo "  --> Try setting BG on a database that has READ_ONLY already set. This should error out."
 	$MUPIP set -nostats -read_only $regorfile
@@ -167,7 +167,7 @@ YDB_EOF
 	if ($permission == "READ-ONLY") then
 		chmod a+w mumps.dat	# Restore write permissions as we are going to change file header settings
 		set regorfile = "-reg '*'"	# Modify regorfile (use single-quote instead of double-quote) so zsystem can work fine
-		set noglob		# continue noglob for "*" in $regorfile
+		set noglob		# continue noglob for * in $regorfile
 	endif
 	echo "  --> Test of READONLYLKFAIL error from MUPIP SET"
 	$GTM << YDB_EOF
