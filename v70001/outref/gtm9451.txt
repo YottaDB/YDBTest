@@ -1,0 +1,28 @@
+#----------------------------------------------------------------------------------
+# GTM-9451 - Verify LOCKSPACEFULL in final retry issues TPNOTACID and releases crit
+#----------------------------------------------------------------------------------
+# Release note pasted from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-001_Release_Notes.html#GTM-9451
+#
+# GT.M issues a TPNOTACID message and releases all database critical sections it owns during any LOCK operation
+# in the final retry that could result in an indefinite hang, e.g. LOCKSPACE full. Previously, LOCK operations
+# with a timeout less than $gtm_tpnotacidtime (or the default of 2 seconds), would not generate such an action.
+# As a result, a process could hang in the final transaction processing retry. (GTM-9451)
+#----------------------------------------------------------------------------------
+# Create database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Execute [mumps -run gtm9451] which will create lots of TP transactions with restarts and LOCKSPACEFULL scenario
+# The fact that this command eventually returns automatically implies verification that the database critical section was
+# released in the final retry as part of the LOCK command (or else the LOCK command would hang and not exit the process).
+# Note: This step, when run with GT.M V7.0-000, would produce assert failures and SIG-11s thus proving this test works.
+# Verify LOCKSPACEFULL message was seen in syslog
+##TEST_AWK.* %YDB-E-LOCKSPACEFULL, No more room for LOCK slots on database file ##TEST_PATH##/mumps.dat .*
+# Verify at least one TPNOTACID message was seen in syslog by child pids
+##TEST_AWK.* %YDB-I-TPNOTACID, LOCKGCINTP at child\+9\^gtm9451 violates ACID properties of a TRANSACTION and could exceed 2 seconds; \$TRESTART = 3 and indefinite RESTARTs may occur .*
+# Validate DB
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
