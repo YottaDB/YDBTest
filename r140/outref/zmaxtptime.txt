@@ -1,0 +1,16 @@
+# ---------------------------------------------------------------------------------------------------------------
+# Test that TSTART after set of $ZMAXTPTIME to random negative value does not assert fail (test of YDB@dcba3d9b).
+# Also test that SET $ZMAXTPTIME to a random negative value sets it to a value of 0 (test of YDB@745fa769).
+# ---------------------------------------------------------------------------------------------------------------
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Expect to see $ZMAXTPTIME=0 (and not a negative value) below
+$ZMAXTPTIME=0
+# Also test that negative values of gtm_zmaxtptime/ydb_maxtptime env var is treated as 0 (test of pre-existing behavior)
+$ZMAXTPTIME=0
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ mumps.dat
+No errors detected by integ.
