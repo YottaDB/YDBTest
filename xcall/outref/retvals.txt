@@ -1,0 +1,161 @@
+### Test all valid return types
+
+### Test standard C types in .xc file
+ret_void() is returning: 
+  received: nothing
+ret_int() is returning: 2147483647
+  received: 2147483647
+ret_uint() is returning: 4294967295U
+  received: 4294967295
+ret_long() is returning: 2147483647
+  received: 2147483647
+ret_ulong() is returning: 4294967295U
+  received: 4294967295
+ret_char_tptr() is returning: "TestString"
+  received: TestString
+ret_char_tptrptr() is returning pointer to: "TestString"
+  received: TestString
+ret_string_tptr() is returning pointer to ydb_string_t containing: "TestString"
+  received: TestString
+ret_int_ptr() is returning: 2147483647
+  received: 2147483647
+ret_uint_ptr() is returning: 4294967295U
+  received: 4294967295
+ret_long_ptr() is returning: 2147483647
+  received: 2147483647
+ret_ulong_ptr() is returning: 4294967295U
+  received: 4294967295
+ret_float_ptr() is returning: 1234.567
+  received: 1234.57
+ret_double_ptr() is returning: 1.79769313486232E+46
+  received: 17976931348623200000000000000000000000000000000
+
+### Test ydb_* types
+ret_status_zero() is returning: 0
+  received: 0
+ret_status_negative() is returning: -1
+  correctly received error: ,Z150376818,
+ret_status_positive() is returning: 1
+  correctly received error: ,Z150376818,
+ret_int() is returning: 2147483647
+  received: 2147483647
+ret_uint() is returning: 4294967295U
+  received: 4294967295
+ret_long() is returning: 2147483647
+  received: 2147483647
+ret_ulong() is returning: 4294967295U
+  received: 4294967295
+##SUSPEND_OUTPUT MACHTYPE_ARMV6L
+ret_int64() is returning: -9223372036854775807LL
+  received: -9223372036854775807
+ret_uint64() is returning: 18446744073709551615ULL
+  received: 18446744073709551615
+##ALLOW_OUTPUT MACHTYPE_ARMV6L
+ret_int_ptr() is returning: 2147483647
+  received: 2147483647
+ret_uint_ptr() is returning: 4294967295U
+  received: 4294967295
+ret_long_ptr() is returning: 2147483647
+  received: 2147483647
+ret_ulong_ptr() is returning: 4294967295U
+  received: 4294967295
+ret_int64_ptr() is returning: -9223372036854775807LL
+  received: -9223372036854775807
+ret_uint64_ptr() is returning: 18446744073709551615ULL
+  received: 18446744073709551615
+ret_float_ptr() is returning: 1234.567
+  received: 1234.57
+ret_double_ptr() is returning: 1.79769313486232E+46
+  received: 17976931348623200000000000000000000000000000000
+ret_char_tptr() is returning: "TestString"
+  received: TestString
+ret_char_tptrptr() is returning pointer to: "TestString"
+  received: TestString
+ret_string_tptr() is returning pointer to ydb_string_t containing: "TestString"
+  received: TestString
+ret_buffer_tptr() is returning pointer to ydb_buffer_t containing: "TestString"
+  received: TestString
+
+### Re-test using equivalent gtm_* types
+ret_status_zero() is returning: 0
+  received: 0
+ret_status_negative() is returning: -1
+  correctly received error: ,Z150376818,
+ret_status_positive() is returning: 1
+  correctly received error: ,Z150376818,
+ret_int() is returning: 2147483647
+  received: 2147483647
+ret_uint() is returning: 4294967295U
+  received: 4294967295
+ret_long() is returning: 2147483647
+  received: 2147483647
+ret_ulong() is returning: 4294967295U
+  received: 4294967295
+ret_int_ptr() is returning: 2147483647
+  received: 2147483647
+ret_uint_ptr() is returning: 4294967295U
+  received: 4294967295
+ret_long_ptr() is returning: 2147483647
+  received: 2147483647
+ret_ulong_ptr() is returning: 4294967295U
+  received: 4294967295
+ret_float_ptr() is returning: 1234.567
+  received: 1234.57
+ret_double_ptr() is returning: 1.79769313486232E+46
+  received: 17976931348623200000000000000000000000000000000
+ret_char_tptr() is returning: "TestString"
+  received: TestString
+ret_char_tptrptr() is returning pointer to: "TestString"
+  received: TestString
+ret_string_tptr() is returning pointer to ydb_string_t containing: "TestString"
+  received: TestString
+
+### Now test that invalid types are disallowed by ydb
+Check string type is unknown to external call table parser:
+ Unknown return type
+
+Check buffer type is unknown to external call table parser:
+ Unknown return type
+
+Check unsigned type is unknown to external call table parser:
+ Unknown return type
+
+Check unsigned* type is unknown to external call table parser:
+ Unknown return type
+
+Check char type is unknown to external call table parser:
+ Unknown return type
+
+Check float type is unknown to external call table parser:
+ Unknown return type
+
+Check double type is unknown to external call table parser:
+ Unknown return type
+
+Check ydb_char_t type is unknown to external call table parser:
+ Unknown return type
+
+Check ydb_float_t type is unknown to external call table parser:
+ Unknown return type
+
+Check ydb_double_t type is unknown to external call table parser:
+ Unknown return type
+
+Check gtm_char_t type is unknown to external call table parser:
+ Unknown return type
+
+Check gtm_float_t type is unknown to external call table parser:
+ Unknown return type
+
+Check gtm_double_t type is unknown to external call table parser:
+ Unknown return type
+
+Check gtm_buffer_t* type is unknown to external call table parser:
+ Unknown return type
+
+Check ydb_pointertofunc_t type is unknown to external call table parser:
+ Unknown return type
+
+Check ydb_pointertofunc_t* type is unknown to external call table parser:
+ Unknown return type
+

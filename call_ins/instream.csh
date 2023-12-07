@@ -3,7 +3,7 @@
 # Copyright (c) 2003-2014 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -41,7 +41,7 @@ setenv subtest_list_non_replic "32args argcnt c_args ctomctom ctomtom gtm_args g
 setenv subtest_list_non_replic "$subtest_list_non_replic nest_err_et2 nest_err_et3 nest_err_zt nest_err_zt2 nest_err_zt3 maxstrlen gtmxc_test_types"
 setenv subtest_list_non_replic "$subtest_list_non_replic xc_test_types multi_gtm_init gtm_percent gtm_cip timers empty_table stack_leak"
 setenv subtest_list_non_replic "$subtest_list_non_replic test_rtn_replace test_mprof_hidden_rtn test_ci_z_halt test_ci_zgoto0 test_ci_z_halt_rc"
-setenv subtest_list_non_replic "$subtest_list_non_replic ydbaccess_ci ydbaccess_cip ydbreturn_ci"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydbaccess_ci ydbaccess_cip ydbreturn_ci ydbxc_test_types"
 setenv subtest_list_replic "environment"
 
 if ("TRUE" == $gtm_test_unicode_support) then
