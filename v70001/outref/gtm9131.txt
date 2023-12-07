@@ -1,0 +1,72 @@
+# ********************************************************************************************
+# GTM-9131 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-001_Release_Notes.html#GTM-9131)
+# 
+# LOGTPRESTART appropriately identifies restarts associated with extensions of a statsdb database;
+# Previously, it inappropriately identified these as caused by a BITMAP conflict. GT.M doubles the
+# block count with each statsdb size increase; Previously, GT.M used a fixed extension size of 2050
+# blocks. GT.M saves the database block count after each extension and uses it as the initial size for
+# any subsequent recreation of the statsdb database during the life of the associated database file;
+# Previously, GT.M always created a statsdb database with 2050 blocks, which is still the initial size
+# for such a database file when the corresponding database is first created. (GTM-9131)
+#--------------------------------------------------------------------------------------------
+# Verify TPRESTART messages properly identifies global name in case of statsdb extension restarts
+#--------------------------------------------------------------------------------------------
+# Create multi-region database (needed for TP restart in the statsdb)
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+mumps.dat
+# Set 128 blocks as the allocation for the STATSDB to get statsdb file extension sooner
+# 128 blocks would cause extension if 128 processes start up at the same time
+# Default value of 2050 blocks would need 2050 processes which would make this test not runnable on most systems
+# Sort the output as the reigon names will show up in ftok order otherwise (non-deterministic)
+Database file ##TEST_PATH##/a.dat now has 128 statsdb allocation
+Database file ##TEST_PATH##/mumps.dat now has 128 statsdb allocation
+# Execute [mumps -run gtm9131] which will create a TPRESTART message due to a statsdb database file extension restart
+# Verify TPRESTART message was seen in syslog with a proper global name (i.e. containing ^%YGS)
+# Before r2.00, the global name (glbl: field in this message) used to be a misleading ^*BITMAP.
+# Note: The .dat.gst file name could be non-deterministic (based on ftok order of mumps.dat or a.dat).
+# Note: Also sometimes we get 2 TPRESTART messages. One from mumps.dat.gst and one from a.dat.gst.
+# Note: Not sure what the cause is but is not considered important so we take just the first message.
+##TEST_AWK.*%YDB-I-TPRESTART, Database .*.dat.gst; code: 0x5; blk: 0x0000000000000003 in glbl: \^%YGS; pvtmods: 0, blkmods: 0, blklvl: 0, type: 0, readset: 2, writeset: 0, local_tn: 0x0000000000000001, zpos: gtm9131\+11\^gtm9131 .*
+# Validate DB
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+#------------------------------------------------------------------
+# Verify STATSDB allocation doubles each time and a few other tests
+#------------------------------------------------------------------
+# Create single-region database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Verify initial statsdb database size is close to 2050 blocks (by default) by examining total blocks count
+STATSDB total block count for region [default] = 2055
+# Set statdb allocation to 128 blocks (minimum value supported) to start with
+Database file ##TEST_PATH##/mumps.dat now has 128 statsdb allocation
+# Start process in background to have DEFAULT region open for the duration of the test
+# Verify initial statsdb allocation size is indeed close to 128 by examining total blocks count in statsdb
+STATSDB total block count for region [default] = 129
+# Start 128 more processes in background to kick in first statsdb extension
+# Verify new statsdb file size is indeed close to 2*128 by examining total blocks count in statsdb
+STATSDB total block count for region [default] = 258
+# Start 256 more processes in background to kick in second statsdb extension
+# Verify new statsdb file size is indeed close to 2*2*128 by examining total blocks count in statsdb
+STATSDB total block count for region [default] = 517
+# Stop ALL background processes
+# Verify initial recreated statsdb file size is saved database block count from most recent previous statsdb extension
+# We expect to see total block count close to 2*2*128 (most recent statsdb file size above)
+# The total block count varies between 517 and 518. Not sure exactly why.
+# But it is not considered important enough so we allow both values below.
+##TEST_AWKSTATSDB total block count for region \[default\] = 51[78]
+# Validate DB
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

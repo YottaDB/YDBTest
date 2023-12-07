@@ -22,13 +22,14 @@
 # gtm4272       [estess]	Verify that MUPIP BACKUP displays information in standard GT.M messages format
 # gtm9057	[estess]	Verify MUPIP JOURNAL -EXTRACT output can be sent to a FIFO device
 # gtm9451	[nars]		Verify LOCKSPACEFULL in final retry issues TPNOTACID and releases crit
+# gtm9131	[nars]		Verify TPRESTART messages properly identifies statsdb extension related restarts
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v70001 test starts..."
 
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
-setenv subtest_list_non_replic	"gtm9213 gtm8010 gtm9452 gtm8681 gtm4814 gtm9057 gtm9451"
+setenv subtest_list_non_replic	"gtm9213 gtm8010 gtm9452 gtm8681 gtm4814 gtm9057 gtm9451 gtm9131"
 setenv subtest_list_replic	"gtm4272"
 
 if ($?test_replic == 1) then
@@ -46,6 +47,11 @@ endif
 
 if ("dbg" == "$tst_image") then
 	setenv subtest_exclude_list "$subtest_exclude_list"
+endif
+
+# Disable gtm9131 subtest on ARM as it is a heavyweight test (spawns off 512 processes)
+if (("armv6l" == `uname -m`) || ("aarch64" == `uname -m`)) then
+	setenv subtest_exclude_list "$subtest_exclude_list gtm9131"
 endif
 
 # Submit the list of subtests
