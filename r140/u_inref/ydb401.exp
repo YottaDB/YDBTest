@@ -97,7 +97,7 @@ set ::env(HOME) [exec pwd]
 set ::env(INPUTRC) ydb401.inputrc
 
 
-### TEST1: ydb_readline=true
+puts "### TEST1: ydb_readline=true"
 
 set ::env(ydb_readline) true
 
@@ -136,7 +136,8 @@ expect "YDB>"
 close_ydb
 
 
-### TEST2: ydb_readline=false
+
+puts "### TEST2: ydb_readline=false"
 
 set ::env(ydb_readline) false
 spawn_ydb
@@ -173,7 +174,5 @@ expect "YDB>"
 close_ydb
 
 # Cleanup
-file delete ydb401.inputrc
-file delete .ydb_YottaDB_history
 puts ""
 puts "Test completed successfully"

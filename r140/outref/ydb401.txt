@@ -1,4 +1,5 @@
 # Test YottaDB Direct Mode "RECALL" command
+### TEST1: ydb_readline=true
 spawn yottadb -direct
 
 YDB>w 1
@@ -54,6 +55,7 @@ YDB>recall asdfjkl
 !?asdfjkl: event not found
 YDB>
 <YDB exited>
+### TEST2: ydb_readline=false
 spawn yottadb -direct
 
 YDB>recall
