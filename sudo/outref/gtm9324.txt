@@ -1,0 +1,120 @@
+# Release note:
+#
+# GT.M restores ZSTEP operations after an asynchronous event such as MUPIP INTRPT or $ZTIMEOUT;
+# previously asynchronous events implicitly removed any pending ZSTEP operations. In addition,
+# a restriction configured for ZBREAK also applies to ZSTEP; previously it did not. If you prefer
+# we separate these restrictions, please let FIS know. (GTM-9324)
+
+# The first part of this test is to verify the ZSTEP operation is restored after a MUPIP INTERRUPT
+# or a $ZTIMEOUT. We use the ^sstep facility which uses $ZSTEP to trace the execution of a routine
+# printing each line that runs. We have two test routines (testA and testB) that will test both
+# $ZINTERRUPT and $ZTIMEOUT respectively and whether or not ZSTEP tracing resumes after the interrupt
+# returns.
+#
+# The second part of this test will verify that ZBREAK and ZSTEP obey the same restrictions.
+
+# Create database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+###################################################################
+
+# Part 1 - Verify ZSTEP operation is restored and MUPIP INTERRUPT or $ZTIMEOUT
+
+# testA: Launch M process to be interrupted while ZSTEPing
+##TEST_AWK\[[0-9]*\] [0-9]*
+
+Stepping STARTED
+testA+2^gtm9324     :	set $zinterrupt="do handleint"
+testA+3^gtm9324     :	set ^loopend=0
+testA+4^gtm9324     :	for loopcnt1=1:1 set ^loopcnt1=loopcnt1 quit:^loopend  hang .1
+
+# Interrupt process and wait for it to die
+##TEST_AWKINTRPT issued to process [0-9]*
+handleint+1^gtm9324 :	set ^loopend=1
+handleint+2^gtm9324 :	write "Interrupt routine entered - setting loop terminator",!
+Interrupt routine entered - setting loop terminator
+handleint+3^gtm9324 :	set $zinterrupt=""			; Shut off further interrupts of either sort
+handleint+4^gtm9324 :	set $ztimeout=-1
+handleint+5^gtm9324 :	quit
+testA+8^gtm9324     :	set x=42
+testA+9^gtm9324     :	set y=43
+testA+10^gtm9324    :	set z=x+y
+testA+11^gtm9324    :	quit
+
+# testB: Run similar test that uses $ZTIMEOUT instead of $ZINTERRUPT to cause an interrupted ZSTEP
+##TEST_AWK\[[0-9]*\] [0-9]*
+
+Stepping STARTED
+testB+5^gtm9324     :	set $ztimeout="1:do handleint"		; Assuming we can get into this loop in 1 second
+testB+6^gtm9324     :	set ^loopend=0
+testB+7^gtm9324     :	for loopcnt2=1:1 set ^loopcnt2=loopcnt2 quit:^loopend  hang .1
+
+# Wait for process to die
+handleint+1^gtm9324 :	set ^loopend=1
+handleint+2^gtm9324 :	write "Interrupt routine entered - setting loop terminator",!
+Interrupt routine entered - setting loop terminator
+handleint+3^gtm9324 :	set $zinterrupt=""			; Shut off further interrupts of either sort
+handleint+4^gtm9324 :	set $ztimeout=-1
+handleint+5^gtm9324 :	quit
+testB+11^gtm9324    :	set x=42
+testB+12^gtm9324    :	set y=43
+testB+13^gtm9324    :	set z=x+y
+testB+14^gtm9324    :	quit
+
+###################################################################
+
+# Part 2 - Verify ZSTEP and ZBREAK obey the same restrictions
+
+# This part of the test runs in a copy of the current runtime version of YottaDB. This is because
+# we need to add a restrict file to the distribution. First make a copy of the current test version.
+
+# Now create a restrict.txt file and install it in $gtm_dist. This should prevent us from running
+# any ZSTEP or ZBREAK commands. Note randomly choose ZSTEP or ZBREAK to restrict so cover both.
+
+# Create ydbtest3 group and userid
+The ydbtest3 group has been created
+The ydbtest3 userid has been created
+
+# Verify that a ZSTEP command works correctly when ZBREAK is restrited
+%GTM-I-BREAK, Break instruction encountered
+		At M source location verifyzstep+1^gtm9324
+
+YDB>
+%GTM-I-BREAKZST, Break instruction encountered during ZSTEP action
+		At M source location verifyzstep+2^gtm9324
+
+YDB>
+%GTM-I-BREAKZST, Break instruction encountered during ZSTEP action
+		At M source location verifyzstep+3^gtm9324
+
+YDB>
+
+Reached end of verifyzstep routine
+%GTM-I-BREAKZST, Break instruction encountered during ZSTEP action
+		At M source location verifyzstep+4^gtm9324
+
+YDB>
+
+# Verify that a ZBREAK command fails with RESTRICTEDOP error
+##TEST_AWK%GTM-E-RESTRICTEDOP, Attempt to perform a restricted operation: ZBREAK
+
+# Verify that when BREAK is restricted (instead of ZBREAK) that doing a ZSTEP INTO command works
+# properly and does not assert fail in a debug build.
+
+Stepping STARTED
+zstepoutof+4^gtm9324          :	quit
+helper+2^gtm9324              :	set x2=$$y
+verifyzstepoutof+2^gtm9324    :	quit
+
+# Cleanup and remove ydbtest3 userid/group
+
+###################################################################
+
+# Validate DB
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

@@ -31,10 +31,11 @@
 # ydb924		[jv]		Test that ydbinstall/ydbinstall.sh terminates if not run as root, unless --dry-run is specified
 # gtm8517		[estess]	Test that install permissions and checksum files are created by install and are non-zero
 # olderversion		[sam]		Test to see if ydbinstall can successfully install older versions
+# gtm9324		[estess]	Test ZSTEP restored/continues after $ZINTERRUPT or $ZTIMEOUT, also restrict.txt treats ZBREAK like ZSTEP
 
 setenv subtest_list_common "sourceInstall diffDir ydb306 gtm9116 plugins ydb783"
 setenv subtest_list_non_replic "gtm7759 ydb894 ydb880 ydb910 ydb924 gtm8517"
-setenv subtest_list_non_replic "$subtest_list_non_replic olderversion"
+setenv subtest_list_non_replic "$subtest_list_non_replic olderversion gtm9324"
 setenv subtest_list_replic ""
 
 if ($?test_replic == 1) then
@@ -71,8 +72,9 @@ else if ("suse" == $gtm_test_linux_distrib) then
 endif
 
 if ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) then
-	# filter out below subtest on 32-bit ARM since it requires building YottaDB from source which will take a long time
-	setenv subtest_exclude_list "$subtest_exclude_list ydb910"
+	# filter out ydb910 subtest on 32-bit ARM since it requires building YottaDB from source which will take a long time.
+	# filter out gtm9324 on 32-bit ARM due to https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/1773#note_1696945962
+	setenv subtest_exclude_list "$subtest_exclude_list ydb910 gtm9324"
 endif
 
 # Save a copy of the current system yottadb.pc before it gets modified by the various ydbinstall.sh invocations done in the
