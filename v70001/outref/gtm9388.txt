@@ -1,0 +1,25 @@
+# Release note:
+#
+# ZSHOW "B" output consists of an entryref followed by any associated code with a
+# right angle-bracket delimiter after the entryref. Previously the outbut only
+# contained the entryref. (GTM-9388)
+#
+# The only part of this issue not yet tested is if no associated code is provided
+# (either arg ommitted or arg specified as null). The first form is the most
+# common form of ZBREAK (having an implied "B" command as a default), the second
+# form has no legitimate purpose we can ascertain (the command intercept is done
+# but no code runs so its just an expensive NO-OP), we test it in case it has some
+# unforeseen purpose in the future.
+
+# Drive gtm9388.m
+
+# Execute a ZBREAK at zbreaknop with a non-existant code argument to see what happens:
+# Command run: ZBREAK zbreaknop followed by ZSHOW "B"
+zbreaknop^gtm9388>B
+
+# Execute a ZBREAK at zbreaknop with a null-string code argument to see what happens:
+# Command run: ZBREAK zbreaknop:"" followed by ZSHOW "B"
+zbreaknop^gtm9388>
+
+# Drive zbreaknop entry point to verify this does not break
+Entry point reached with no problem
