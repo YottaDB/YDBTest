@@ -1,7 +1,26 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+# Portions Copyright (c) Fidelity National			#
+# Information Services, Inc. and/or its subsidiaries.		#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
 #
 # C9G04-002783 MUPIP BACKUP and MUPIP INTEG -REG should prevent M-kills from starting
 #
+
+# Turn off statshare related env var as it affects test output and is not considered worth the trouble to maintain
+# the reference file with SUSPEND/ALLOW macros for STATSHARE and NON_STATSHARE
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_statshare gtm_statshare
+
 # The WHITE BOX test used in this section of test will leave the database inconsistent.
 echo "# ENTERING C9G04002783"
 $gtm_tst/com/dbcreate.csh .
@@ -44,8 +63,8 @@ echo "# SCENARIO #2"
 #Set global variables
 #KILLs will be waiting in phase 2 of KILL, when the white box testing is enabled.Start them in background.
 #Wait for job.txt to be created by KILL
-#Mupip stop the process in job.txt(i.e KILLs waiting in phase 2). When the KILL command is mupip stop'ped in phase 2, 
-# the signal handlers will invoke secshr_db_clnup, which will decrement KIP and increment abandoned_kills. 
+#Mupip stop the process in job.txt(i.e KILLs waiting in phase 2). When the KILL command is mupip stop'ped in phase 2,
+# the signal handlers will invoke secshr_db_clnup, which will decrement KIP and increment abandoned_kills.
 # If the test fails KIP will be incremented while abandoned_kills will remain zero.
 #Check if abandoned_kills is set in DSE dump
 
@@ -60,7 +79,7 @@ do mnset^c002783
 GTM_EOF
 
 echo "# Since the KILLs will be waiting when white box testing is enabled.Start them in background"
-$gtm_tst/$tst/u_inref/callmnkill.csh  >& callmnkill.log 
+$gtm_tst/$tst/u_inref/callmnkill.csh  >& callmnkill.log
 
 echo "# Wait for kill process to create job.txt with its process id. Mupip wait will stop this process"
 $gtm_tst/com/wait_for_log.csh -log job.txt -waitcreation -duration 120

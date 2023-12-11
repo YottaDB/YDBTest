@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2003, 2014 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -10,6 +13,10 @@
 #								#
 #################################################################
 #
+
+# Turn off statshare related env var as it affects test output and is not considered worth the trouble to maintain
+# the reference file with SUSPEND/ALLOW macros for STATSHARE and NON_STATSHARE
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_statshare gtm_statshare
 
 # This test does kill -9 of a GT.M process followed by a MUPIP RUNDOWN. A kill -9 could hit the running GT.M process while it
 # is in the middle of executing wcs_wtstart. This could potentially leave some dirty buffers hanging in the shared memory. So,

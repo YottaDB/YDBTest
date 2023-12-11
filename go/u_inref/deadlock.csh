@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2020-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -9,6 +9,11 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+
+# Turn off statshare related env var as it affects test output and is not considered worth the trouble to maintain
+# the reference file with SUSPEND/ALLOW macros for STATSHARE and NON_STATSHARE
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_statshare gtm_statshare
+
 #
 echo "# Test to purposely create a deadlock by creating a TP transaction and then inside it doing a GET type call"
 echo "# but using yottadb.NOTTP as the tptoken instead of the tptoken created for us and passed into the callback"

@@ -37,7 +37,7 @@ echo "########## Begin do_random_settings.csh random settings ###########"	>>&! 
 # 	governed by the current time in second level granularity.
 # If any new randomness is added, check if speed test also needs to be changed to take it into consideration
 # arguments below are count-of-numbers-needed lower-bound upper-bound
-set randnumbers = `$gtm_tst/com/genrandnumbers.csh 50 1 100`
+set randnumbers = `$gtm_tst/com/genrandnumbers.csh 51 1 100`
 
 # Caution : No. of random choices below and the no. of random numbers generated above might not necessarily be the same.
 # 	    Increase the count by the number of new random numbers the newly introduced code needs.
@@ -1345,6 +1345,23 @@ if ($?gtm_tst_readline_version) then
 endif
 
 setenv tst_random_all "$tst_random_all ydb_readline"
+###########################################################################
+
+###########################################################################
+### Random option - 51 ### Randomly enable gtm_statshare 50% of the time
+if !($?gtm_statshare) then
+	if (50 >= $randnumbers[51]) then
+		setenv gtm_statshare 1
+	else
+		setenv gtm_statshare 0
+	endif
+	echo "# gtm_statshare set by do_random_settings.csh"					>>&! $settingsfile
+else
+	echo "# gtm_statshare was already set before coming into do_random_settings.csh"	>>&! $settingsfile
+endif
+echo "setenv gtm_statshare $gtm_statshare"							>>&! $settingsfile
+
+setenv tst_random_all "$tst_random_all gtm_statshare"
 ###########################################################################
 
 # For any change to tst_random_all, a corresponding change is required in log_report.awk, to show in final report

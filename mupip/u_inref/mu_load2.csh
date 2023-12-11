@@ -3,12 +3,21 @@
 #								#
 #	Copyright 2002, 2015 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+
+# Turn off statshare related env var as it causes an assert failure "sr_unix/gds_rundown.c line 880 for expression (0 == rc)"
+# and is most definitely due to removing the .dat files (but not removing the corresponding .dat.gst statsdb file)
+# while the source server is still running.
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_statshare gtm_statshare
+
 #
 #########################################
 ### mu_load.csh  test for mupip load  ###

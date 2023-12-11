@@ -11,6 +11,11 @@
 #								#
 #################################################################
 #
+
+# Turn off statshare related env var as it affects test output and is not considered worth the trouble to maintain
+# the reference file with SUSPEND/ALLOW macros for STATSHARE and NON_STATSHARE
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_statshare gtm_statshare
+
 set imptp_runtime = 5  # Since this test does not run on ARM, this is long enough to generate some data on x86 boxes
 #
 # If $gtm_db_counter_sem_incr is randomly set at 8192 or more, this can leave orphaned shared memory. Normally, this

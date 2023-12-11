@@ -4,7 +4,7 @@
 # Copyright (c) 2003, 2015 Fidelity National Information	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -17,6 +17,11 @@
 # Test the dse -cache command
 # GT.M should be running concurrently on 8 databases
 #
+
+# Turn off statshare related env var as it affects test output and is not considered worth the trouble to maintain
+# the reference file with SUSPEND/ALLOW macros for STATSHARE and NON_STATSHARE
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_statshare gtm_statshare
+
 $gtm_tst/com/dbcreate.csh mumps 8 -rec=8000
 #to test multiple global directories, copy the gld file
 foreach no (0 1 2 3 4 5 6 7)

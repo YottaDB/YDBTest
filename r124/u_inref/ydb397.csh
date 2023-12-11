@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -11,7 +11,13 @@
 #								#
 #################################################################
 #
-echo "# Test that a ZGBLDIRACC error is issued when accessing the SimpleAPI while ydb_app_ensures_isolation is set to a non-null value but a global directory does not exist"
+
+# Turn off statshare related env var as it affects test output and is not considered worth the trouble to maintain
+# the reference file with SUSPEND/ALLOW macros for STATSHARE and NON_STATSHARE
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_statshare gtm_statshare
+
+echo "# Test that a ZGBLDIRACC error is NOT issued when accessing the SimpleAPI while ydb_app_ensures_isolation is set"
+echo "# to a non-null value but a global directory does not exist"
 echo ""
 echo "# Set ydb_app_ensures_isolation to a non-null value"
 setenv ydb_app_ensures_isolation "test"

@@ -432,6 +432,13 @@ BEGIN {
 		envir[no_options] = "4G_ABOVE_DB_BLKS"
 	else
 		envir[no_options] = "4G_BELOW_DB_BLKS"
+	#
+	option_names[++no_options] = "gtm_statshare"
+	if (0 != ENVIRON["gtm_statshare"])
+		envir[no_options] = "STATSHARE"
+	else
+		envir[no_options] = "NON_STATSHARE"
+	#
 	option_names[++no_options] = "ydb_readline"
 	if (0 != ENVIRON["ydb_readline"]) {
 		envir[no_options] = "YDB_READLINE"

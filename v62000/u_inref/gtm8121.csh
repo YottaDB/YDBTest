@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -17,6 +17,10 @@
 # Test that MUPIP RUNDOWN does not issue DBFLCORRP error
 # Also test DSE CHANGE -FILE -CORRUPT_FILE works without NOCRIT
 #
+
+# Turn off statshare related env var as it affects test output and is not considered worth the trouble to maintain
+# the reference file with SUSPEND/ALLOW macros for STATSHARE and NON_STATSHARE
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_statshare gtm_statshare
 
 # Non-replication set of tests
 echo "-----------------------------------------------------------------------------------------"

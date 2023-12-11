@@ -72,7 +72,12 @@ END 5
 BEGIN 6 :-) do mupip rundown on mumps.dat to remove leftover ipcs
 
 mupip rundown -reg "*"
-##TEST_AWK.YDB-I-MUFILRNDWNSUC, File .*mumps.dat successfully rundown
+##SUSPEND_OUTPUT NON_STATSHARE
+##TEST_AWK%YDB-I-SHMREMOVED, Removed Shared Memory id [0-9][0-9]* corresponding to file /tmp/.*.mumps.dat.gst
+##TEST_AWK%YDB-I-SEMREMOVED, Semaphore id [0-9][0-9]* removed from the system
+##TEST_AWK%YDB-I-MUFILRNDWNSUC, File /tmp/.*.mumps.dat.gst successfully rundown
+##ALLOW_OUTPUT NON_STATSHARE
+%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
 
 END 6
 ---------------------------------------------------------------------------------------

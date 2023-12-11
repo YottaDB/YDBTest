@@ -14,6 +14,10 @@
 #								#
 #################################################################
 
+# Turn off statshare related env var as it affects test output and is not considered worth the trouble to maintain
+# the reference file with SUSPEND/ALLOW macros for STATSHARE and NON_STATSHARE
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_statshare gtm_statshare
+
 # Verfiy counter semaphore limit do not prevent more than 32K processes from starting
 
 setenv gtm_test_qdbrundown 1

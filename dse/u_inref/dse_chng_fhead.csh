@@ -14,6 +14,10 @@
 #								#
 #################################################################
 
+# Turn off statshare related env var as it affects test output and is not considered worth the trouble to maintain
+# the reference file with SUSPEND/ALLOW macros for STATSHARE and NON_STATSHARE
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_statshare gtm_statshare
+
 # Since the reference file for this test has "SUSPEND_OUTPUT 4G_ABOVE_DB_BLKS" usage, it needs to fixate
 # the value of the "ydb_test_4g_db_blks" env var in case it is randomly set by the test framework to a non-zero value.
 if (0 != $ydb_test_4g_db_blks) then

@@ -4,6 +4,9 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -12,6 +15,10 @@
 #################################################################
 # This test demonstrates that MUMPS can bypass semaphores in rundown if the number of processes are greater than two times
 # the number of processors.
+
+# Turn off statshare related env var as it affects test output and is not considered worth the trouble to maintain
+# the reference file with SUSPEND/ALLOW macros for STATSHARE and NON_STATSHARE
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_statshare gtm_statshare
 
 # With 16K counter semaphore bump per process, the 32K counter overflow happens with just 2 processes
 # and prevents exercising white-box code which this test relies upon so disable counter overflow

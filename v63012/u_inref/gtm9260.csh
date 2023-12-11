@@ -11,6 +11,10 @@
 #								#
 #################################################################
 
+# Turn off statshare related env var as it affects test output and is not considered worth the trouble to maintain
+# the reference file with SUSPEND/ALLOW macros for STATSHARE and NON_STATSHARE
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_statshare gtm_statshare
+
 echo "# This test verifies that when an auxiliary shared memory segment for a resize M Lock hashtable"
 echo "# is created and orphaned, it gets cleaned up by MUPIP RUNDOWN. Prior to GTM-9260, that cleanup"
 echo "# did not occur".

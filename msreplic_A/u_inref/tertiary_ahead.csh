@@ -13,6 +13,11 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+
+# Turn off statshare related env var as it affects test output and is not considered worth the trouble to maintain
+# the reference file with SUSPEND/ALLOW macros for STATSHARE and NON_STATSHARE
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_statshare gtm_statshare
+
 #
 # If run with journaling, this test requires BEFORE_IMAGE so set that unconditionally even if test was started with -jnl nobefore
 source $gtm_tst/com/gtm_test_setbeforeimage.csh

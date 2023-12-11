@@ -87,6 +87,16 @@ Region	AREG
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
+##SUSPEND_OUTPUT NON_REPLIC
+##SUSPEND_OUTPUT NON_STATSHARE
+
+##TEST_AWKFile  	/tmp/.*.a.dat.gst
+Region	areg
+
+##TEST_AWKFile  	/tmp/.*.mumps.dat.gst
+Region	default
+##ALLOW_OUTPUT NON_STATSHARE
+##ALLOW_OUTPUT NON_REPLIC
 DSE> List of global directory:	
 
 
@@ -95,6 +105,16 @@ Region	AREG
 
 File  	##TEST_PATH##/mumps.dat
 Region	DEFAULT
+##SUSPEND_OUTPUT NON_REPLIC
+##SUSPEND_OUTPUT NON_STATSHARE
+
+##TEST_AWKFile  	/tmp/.*.a.dat.gst
+Region	areg
+
+##TEST_AWKFile  	/tmp/.*.mumps.dat.gst
+Region	default
+##ALLOW_OUTPUT NON_STATSHARE
+##ALLOW_OUTPUT NON_REPLIC
 DSE> Error:  already in region: AREG
 DSE> Error:  already in region: AREG
 DSE> 

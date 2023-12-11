@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -10,6 +10,10 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+
+# Turn off statshare related env var as it affects test output and is not considered worth the trouble to maintain
+# the reference file with SUSPEND/ALLOW macros for STATSHARE and NON_STATSHARE
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_statshare gtm_statshare
 
 echo '# Test for GTM-9311 - Test that the variables x and d are preserved across a call to %YGBLSTAT. Start'
 echo '# with no values in either var, drive ^%YGBLSTAT, then check $data() values for both and if either is'

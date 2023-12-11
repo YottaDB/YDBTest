@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2002, 2014 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -12,6 +15,11 @@
 #
 # -- Test that MUPIP INTEG immediately after a crashed shutdown works fine without switching journals.
 # -- We do this in a loop of 5 times to ensure this test only takes around 1 minute to run and not longer.
+
+# Turn off statshare related env var as it affects test output and is not considered worth the trouble to maintain
+# the reference file with SUSPEND/ALLOW macros for STATSHARE and NON_STATSHARE
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_statshare gtm_statshare
+
 #
 @ num = 0
 setenv gtmgbldir mumps.gld

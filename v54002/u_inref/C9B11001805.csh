@@ -1,4 +1,24 @@
 #!/usr/local/bin/tcsh -f
+#################################################################
+#								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+# Portions Copyright (c) Fidelity National			#
+# Information Services, Inc. and/or its subsidiaries.		#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
+# Turn off statshare related env var as it causes an assert failure "sr_unix/gds_rundown.c line 880 for expression (0 == rc)"
+# and is most definitely due to removing the .dat files (but not removing the corresponding .dat.gst statsdb file)
+# while the source server is still running.
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_statshare gtm_statshare
+
 setenv gtm_test_jnl "SETJNL"
 
 echo "Test 1. Two MUMPS processes with the same uid."

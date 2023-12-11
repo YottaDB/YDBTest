@@ -3,7 +3,7 @@
 #								#
 # Copyright 2013 Fidelity Information Services, Inc		#
 #								#
-# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -12,6 +12,11 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+
+# Turn off statshare related env var as it affects test output and is not considered worth the trouble to maintain
+# the reference file with SUSPEND/ALLOW macros for STATSHARE and NON_STATSHARE
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_statshare gtm_statshare
+
 
 # Automation Plan :
 # Run updates with a)before image journaling and b)nobefore image journaling for 1) 5 seconds and 2) 60 seconds.

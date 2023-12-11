@@ -14,6 +14,10 @@
 #								#
 #################################################################
 
+# Turn off statshare related env var as it affects test output and is not considered worth the trouble to maintain
+# the reference file with SUSPEND/ALLOW macros for STATSHARE and NON_STATSHARE
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_statshare gtm_statshare
+
 # Specific errors are already triggered in this test. We don't want ENOSPC error to interfere with
 # the particular error we expect to happen.
 unsetenv gtm_test_freeze_on_error

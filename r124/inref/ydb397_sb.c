@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries. *
+ * Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries. *
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -25,7 +25,7 @@ int main(void)
 	ydb_buffer_t	basevar, value, ret_value;
 	char		errbuf[ERRBUF_SIZE], basevarbuff[64], valuebuff[64], retvaluebuff[64];
 
-	printf("\n# Testing SimpleAPI function ydb_get_s() to ensure ZGBLDIRACC error occurs\n");
+	printf("\n# Testing SimpleAPI function ydb_get_s() to ensure ZGBLDIRACC error does NOT occur\n");
 	YDB_LITERAL_TO_BUFFER(BASEVAR, &basevar);
 	YDB_LITERAL_TO_BUFFER(VALUE, &value);
 

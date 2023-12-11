@@ -13,6 +13,10 @@
 #								#
 #################################################################
 
+# Turn off statshare related env var as it affects test output and is not considered worth the trouble to maintain
+# the reference file with SUSPEND/ALLOW macros for STATSHARE and NON_STATSHARE
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_statshare gtm_statshare
+
 # track record c9b02-001647
 # This test verifies that the file header is being periodically flushed to disk
 

@@ -25,6 +25,12 @@ Region          CREG
   Cache freeze id                        0x00000000  Flush timer                    00:00:04:00
 Region          DEFAULT
   Cache freeze id                        0x00000000  Flush timer                    00:00:01:00
+##SUSPEND_OUTPUT NON_STATSHARE
+Region          breg
+  Cache freeze id                        0x00000000  Flush timer                    00:00:01:00
+Region          default
+  Cache freeze id                        0x00000000  Flush timer                    00:00:01:00
+##ALLOW_OUTPUT NON_STATSHARE
 
 $MUPIP set -flush=00:07:00 -reg "*"
 unset verbose
@@ -36,6 +42,12 @@ Region          CREG
   Cache freeze id                        0x00000000  Flush timer                    00:00:07:00
 Region          DEFAULT
   Cache freeze id                        0x00000000  Flush timer                    00:00:07:00
+##SUSPEND_OUTPUT NON_STATSHARE
+Region          breg
+  Cache freeze id                        0x00000000  Flush timer                    00:00:01:00
+Region          default
+  Cache freeze id                        0x00000000  Flush timer                    00:00:01:00
+##ALLOW_OUTPUT NON_STATSHARE
 
 YDB>
 

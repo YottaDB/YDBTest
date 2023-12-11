@@ -4,6 +4,11 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
 TEST-I-PASSED: REQRUNDOWN error found as expected.
+##SUSPEND_OUTPUT NON_STATSHARE
+##TEST_AWK%YDB-I-SHMREMOVED, Removed Shared Memory id [0-9][0-9]* corresponding to file /tmp/.*.mumps.dat.gst
+##TEST_AWK%YDB-I-SEMREMOVED, Semaphore id [0-9][0-9]* removed from the system
+##TEST_AWK%YDB-I-MUFILRNDWNSUC, File /tmp/.*.mumps.dat.gst successfully rundown
+##ALLOW_OUTPUT NON_STATSHARE
 ##TEST_AWK%YDB-I-SEMREMOVED, Semaphore id [0-9][0-9]* removed from the system
 %YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
 

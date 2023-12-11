@@ -158,6 +158,7 @@ BEGIN {
 			else printf "V6DB: "
 		}
 		if ( "ydb_readline" == rname ) printf "RL:%-1s ",rval[i]
+		if ( "gtm_statshare" == rname ) printf "STATS:%-1s ",rval[i]
 	}
 	print "",$3
 }
