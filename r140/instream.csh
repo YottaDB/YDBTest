@@ -29,6 +29,7 @@
 # ydb851      [nars]    Test that MUPIP commands accept either space or "=" after "-region"
 # zmaxtptime  [nars]    Test that negative values of $ZMAXTPTIME are treated as 0 just like ydb_maxtptime
 # ydb401      [berwyn]  Test YottaDB Direct Mode "RECALL" command
+# ydb1047     [nars]    Test that MUPIP INTEG -STATS does not SIG-11 and MUPIP TRIGGER does not assert fail if ydb_statshare=1
 #---------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r140 test starts..."
@@ -36,7 +37,7 @@ echo "r140 test starts..."
 # List the subtests separated by spaces under the appropriate environment variable name
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic "ydb996 ydb998 ydbpython32 ydb994 ydb1024 ydb1026 ydb1021 ydb1029 ydb1030 ydb1033 ydb1037 ydb892"
-setenv subtest_list_non_replic "$subtest_list_non_replic ydb851 zmaxtptime ydb401"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb851 zmaxtptime ydb401 ydb1047"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then

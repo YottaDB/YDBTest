@@ -1,0 +1,37 @@
+# Test that MUPIP INTEG -STATS does not SIG-11 and MUPIP TRIGGER does not assert fail if ydb_statshare=1
+# Test of YDB#1047. See https://gitlab.com/YottaDB/DB/YDB/-/issues/1047#description for test details.
+# Before the YDB#1047 code fixes, the below test used to assert fail in MUPIP TRIGGER and SIG-11 in MUPIP INTEG -STATS
+# Create database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Set ydb_app_ensures_isolation env var to non-empty value
+# Set ydb_statshare env var to 1
+# Try MUPIP TRIGGER command. This used to assert fail
+STDIN, Line 1: Added Non-SET trigger on ^ax named ax#1
+=========================================
+1 triggers added
+0 triggers deleted
+0 triggers modified
+1 trigger file entries did update database trigger content
+0 trigger file entries did not update database trigger content
+=========================================
+# Try MUPIP INTEG -STATS command. This used to SIG-11
+
+
+Integ of region default
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+Directory           2               2           3.222            NA
+Index               1               1           2.734             1
+Data                1               1          61.718             1
+Free             2046              NA              NA            NA
+Total            2050               4              NA             2
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
