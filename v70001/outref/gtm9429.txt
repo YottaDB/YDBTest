@@ -1,0 +1,44 @@
+# GTM-9429 - Verify features such as $QLENGTH() and $QSUBSCRIPT() do tighter checking for canonic references
+
+# Release note:
+#
+# $QLENGTH() and $QSUBSCRIPT() report errors when a literal portion of the namevalue argument contains
+# a leading decimal point (.) or minus-sign (-) not followed by one or more numeric digits, or text
+# matching the appearance of a $[Z]CHAR() function. Previously these cases were not appropriately
+# detected. (GTM-9429)
+
+# Drive gtm9429 to drive all the non-UTF8 cases (always done)
+
+# Test case 1: $qlength("a(.)")
+$ZSTATUS="150379530,gtm9429+15^gtm9429,%GTM-E-NOCANONICNAME, Value is not a canonic name (""a(.)"")"
+
+# Test case 2: $qlength("a(-.)")
+$ZSTATUS="150379530,gtm9429+15^gtm9429,%GTM-E-NOCANONICNAME, Value is not a canonic name (""a(-.)"")"
+
+# Test case 3: $qlength("a(1,-)")
+$ZSTATUS="150379530,gtm9429+15^gtm9429,%GTM-E-NOCANONICNAME, Value is not a canonic name (""a(1,-)"")"
+
+# Test case 4: $qlength("a($zchar(,1))")
+$ZSTATUS="150379530,gtm9429+15^gtm9429,%GTM-E-NOCANONICNAME, Value is not a canonic name (""a($zchar(,1))"")"
+
+# Test case 5: $qsubscript("a(.)",1)
+$ZSTATUS="150379530,gtm9429+15^gtm9429,%GTM-E-NOCANONICNAME, Value is not a canonic name (""a(.)"")"
+
+# Test case 6: $qsubscript("a(-.)",1)
+$ZSTATUS="150379530,gtm9429+15^gtm9429,%GTM-E-NOCANONICNAME, Value is not a canonic name (""a(-.)"")"
+
+# Test case 7: $qsubscript("a(1,-)",1)
+$ZSTATUS="150379530,gtm9429+15^gtm9429,%GTM-E-NOCANONICNAME, Value is not a canonic name (""a(1,-)"")"
+
+# Test case 8: $qsubscript("a($zch(,1))",1)
+$ZSTATUS="150379530,gtm9429+15^gtm9429,%GTM-E-NOCANONICNAME, Value is not a canonic name (""a($zch(,1))"")"
+##SUSPEND_OUTPUT NONUNICODE_MODE
+
+# Drive gtm9429 to drive all the UTF-8 cases
+
+# Test case 1: $qlength("a($char(,6032))")
+$ZSTATUS="150379530,gtm9429+15^gtm9429,%GTM-E-NOCANONICNAME, Value is not a canonic name (""a($char(,6032))"")"
+
+# Test case 2: $qsubscript("a($c(,6032))",1)	; Note this test was mentioned at https://gitlab.com/YottaDB/DB/YDBTest/-/issues/560#note_1607761611
+$ZSTATUS="150379530,gtm9429+15^gtm9429,%GTM-E-NOCANONICNAME, Value is not a canonic name (""a($c(,6032))"")"
+##ALLOW_OUTPUT NONUNICODE_MODE
