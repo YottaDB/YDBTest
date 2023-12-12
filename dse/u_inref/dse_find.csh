@@ -150,8 +150,17 @@ DSE_EOF
 echo grep \"Key found in block find.log\"	# BYPASSOK
 $grep "Key found in block" find.log
 
+echo
+echo "# Test of YDB@198872d1 (test invalid command in DSE does not cause ASAN global-buffer-overflow error in Debug build)"
+$DSE << DSE_EOF
+invalidcmd
+DSE_EOF
+
+echo
+
 # Verify if the above operations have done any damage to the database
 $gtm_tst/com/dbcheck.csh
+
 # these last two tests mess with the global directory, don't actually touch the database, and so come after the dbcheck
 # force the region to use another (noexistant) node so DSE rejects the region as accessed by GT.CM
 $GDE change -segment DEFAULT -file=foo:/testarea1/mups.database

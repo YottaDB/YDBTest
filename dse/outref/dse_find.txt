@@ -173,6 +173,14 @@ Key found in block  5.
 Key found in block  5.
 Key found in block  5.
 Key found in block  5.
+
+# Test of YDB@198872d1 (test invalid command in DSE does not cause ASAN global-buffer-overflow error in Debug build)
+
+File  	##TEST_PATH##/a.dat
+Region	AREG
+
+DSE> %YDB-E-CLIERR, Unrecognized command: INVALIDCMD
+DSE> 
 ##SUSPEND_OUTPUT  NON_REPLIC
 Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
 Shutting down Primary Source Server Server in ##TEST_PATH##
