@@ -22,6 +22,7 @@ startupd;
 	set jmaxwait=0
 	set ^stop=0
 	do ^job("update^gtm9102",1,"""""")
+	for  quit:$data(^b)  hang 0.001 ; Wait for at least one update to have happened inside "update^gtm9102" before returning
 	quit
 
 update	;
