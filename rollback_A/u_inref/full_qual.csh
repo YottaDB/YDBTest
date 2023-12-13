@@ -4,6 +4,9 @@
 # Copyright (c) 2003-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -13,6 +16,12 @@
 #
 # TEST CASE #65: test -FULL qualifier (03/24/2003)
 #
+
+# Turn off statshare related env var as it affects test flow (since the test does "cp" and "rm" assuming only base db exists
+# whereas it needs to be modified to also handle statsdb related files and shm/sem which is not trivial) and is not considered
+# worth the effort to support.
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_statshare gtm_statshare
+
 $gtm_tst/com/dbcreate.csh mumps
 setenv portno `$sec_shell "$sec_getenv; cat $SEC_SIDE/portno"`
 setenv start_time `cat start_time`
