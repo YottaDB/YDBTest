@@ -28,6 +28,7 @@ unsetenv ydb_side_effects gtm_side_effects
 unsetenv ydb_xc_ydbposix  GTMXC_ydbposix
 unsetenv ydb_readline
 unsetenv ydb_statshare    gtm_statshare
+unsetenv ydb_statsdir     gtm_statsdir	# this is defined to $tst_working_dir later in submit_subtest.csh
 # Below env var could be set by "ydb_env_set" and could affect the test system so unset this too at the start of the test.
 # (see https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/1536#note_1193117974 for background)
 unsetenv LD_LIBRARY_PATH

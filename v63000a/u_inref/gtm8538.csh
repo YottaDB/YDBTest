@@ -4,12 +4,19 @@
 # Copyright (c) 2001-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+
+# Turn off statshare related env var as it affects test output and is not considered worth the trouble to maintain
+# the reference file with SUSPEND/ALLOW macros for STATSHARE and NON_STATSHARE
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_statshare gtm_statshare
 
 # GTM-8538 MUTEXFRCDTERM messages when 32K processes attach to a read-only replication instance file
 

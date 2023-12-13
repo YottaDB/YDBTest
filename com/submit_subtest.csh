@@ -89,6 +89,25 @@ foreach sub_test ($subtest_list) # Mega for - practically all this script is in 
 	setenv tst_working_dir "$tst_working_dir:h/$sub_test"
 	setenv test_jnldir     "$test_jnldir:h/$sub_test"
 	setenv test_bakdir     "$test_bakdir:h:h/$sub_test/bak"
+	# If the subtest runs with "gtmstatshare=1", it would create statsdb files named like "2bd56a24.mumps.dat.gst".
+	# These files would get created in "/tmp" by default. But since the 3rd to the 8th character in the file name ("d56a24"
+	# in the above example) is derived from a ftok/hash of the directory path where the base db (mumps.dat in this case)
+	# resides, it is possible in case of multiple concurrently running tests that two different subtests running under
+	# different paths could end up with the same ftok/hash (we have seen this happen in a D_ALL with 4 tests running
+	# concurrently on the system). This means ftok/hash conflicts could cause two base db files in 2 different subtests
+	# to both end up with the same statsdb in /tmp resulting in hard-to-analyze test failures.
+	# a) An example failure was that the go/deadlock subtest failed occasionally in a D_ALL when a "mupip rundown" was done
+	#    at the end of the subtest due to extra output running down the statsdb files even though "gtm_statshare" env var is
+	#    unset at the start of the subtest. This is because of ftok/hash conflict causing some leftover statsdb files in /tmp
+	#    to be incorrectly considered as the statsdb file of the go/deadlock subtest base db by the "mupip rundown" process.
+	# b) Another example failure was that the triggers/pound subtest got the following error which showed up only very rarely.
+	#    > TEST-E-DBCREATE, errors seen in the log file dbcreate.out:
+	#    > %YDB-E-STATSDBINUSE, Statistics database /tmp/2b0c50b1.b.dat.gst is in use with database
+	#        .../triggers_0_4/gtm6901/b.dat so cannot also be used with database .../triggers_0_4/poundt/b.dat
+	#    Notice that the base db file name of two subtests (gtm6901 and poundt) end up pointing to the same statsdb file.
+	# To avoid such scenarios, we ensure that any statsdb files created by each subtest are inside a subtest specific
+	# directory. Hence the setenv of "gtm_statsdir" below.
+	setenv gtm_statsdir	$tst_working_dir
 	if ($?test_replic) then
 		setenv PRI_DIR  "$PRI_DIR:h/$sub_test"
 		setenv PRI_SIDE "$PRI_SIDE:h/$sub_test"
