@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -149,12 +149,27 @@ endif
 setenv needupdatersync 1
 $MSR STARTSRC INST1 INST2
 get_msrtime
+set src_time_msr = "$time_msr"
 unsetenv needupdatersync
 echo "# Start the receiver with -updateresync and expect the source server to throw REPLINSTNOHIST and the receiver should exit"
 setenv gtm_test_repl_skiprcvrchkhlth 1 ; $MSR STARTRCV INST1 INST2 "updateresync=srcinstback.repl $resume_initialize">&! startrcv_inst1inst2_2.out ; unsetenv gtm_test_repl_skiprcvrchkhlth
-$MSR RUN INST1 '$gtm_tst/com/wait_for_log.csh -log 'SRC_$time_msr.log' -message REPLINSTNOHIST'
-$MSR RUN INST1 '$msr_err_chk 'SRC_$time_msr.log' E-REPLINSTNOHIST'
+get_msrtime
+set rcvr_time_msr = "$time_msr"
+$MSR RUN INST1 '$gtm_tst/com/wait_for_log.csh -log 'SRC_$src_time_msr.log' -message REPLINSTNOHIST'
+$MSR RUN INST1 '$msr_err_chk 'SRC_$src_time_msr.log' E-REPLINSTNOHIST'
 $gtm_tst/com/knownerror.csh $msr_execute_last_out YDB-E-REPLINSTNOHIST
+
+# ------------------------------------------------------------------------------
+# Wait for receiver server (and update process) to really die BEFORE proceeding to shutdown the passive source server
+# Not doing so would cause the passive source server shutdown to fail due to processees still attached to the jnlpool.
+
+# Pull receiver server pid from log file
+$MSR RUN INST2 "cat RCVR_$rcvr_time_msr.log" >> INST2_RCVR.log
+set pidrcvr = `$grep -e "Replication Receiver Server with Pid" INST2_RCVR.log | $tst_awk '{ print substr($14,2,length($14)-2)}'`
+# Wait for receiver server pid to terminate
+$gtm_tst/com/wait_for_proc_to_die.csh $pidrcvr 300
+# ------------------------------------------------------------------------------
+
 echo "# The receiver would have exited with the above error. Manually shutdown the passive server"
 $MSR RUN RCV=INST2 SRC=INST1 '$MUPIP replic -source -shutdown -timeout=0 >&! passivesrc_shut.out'
 if (1 == $test_replic_suppl_type) then
