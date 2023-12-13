@@ -1349,7 +1349,23 @@ setenv tst_random_all "$tst_random_all ydb_readline"
 
 ###########################################################################
 ### Random option - 51 ### Randomly enable gtm_statshare 50% of the time
-if !($?gtm_statshare) then
+if (0 != $ydb_test_4g_db_blks) then
+	# When ydb_test_4g_db_blks is non-zero, stats db file sizes end up being HUGE (in tera bytes) with a big hole.
+	# While base dbs are okay with holes, stats db files are NOT okay with holes in them as they are MM type and
+	# the hugedb scheme does not work with MM files. So do not enable statshare in that case.
+	setenv gtm_statshare 0
+	echo "# gtm_statshare is set to $gtm_statshare (since ydb_test_4g_db_blks is non-zero) by do_random_settings.csh"	>>&! $settingsfile
+else if (0 != $test_replic_mh_type) then
+	# In multi-host tests statsdb file creation has issues because we set "$gtm_statsdir" to $tst_working_dir of the
+	# local host (later in com/submit_subtest.csh) and that full path might not exist on the remote host.
+	# Therefore disable gtm_statshare in that case.
+	setenv gtm_statshare 0
+	echo "# gtm_statshare is set to $gtm_statshare (since test_replic_mh_type is $test_replic_mh_type) by do_random_settings.csh"	>>&! $settingsfile
+else if ("GT.CM" == $test_gtm_gtcm) then
+	# This is also a multi-host test so disable gtm_statshare for the same reasons as the previous "else if" block.
+	setenv gtm_statshare 0
+	echo "# gtm_statshare is set to $gtm_statshare (since test_gtm_gtcm is $test_gtm_gtcm) by do_random_settings.csh"	>>&! $settingsfile
+else if !($?gtm_statshare) then
 	if (50 >= $randnumbers[51]) then
 		setenv gtm_statshare 1
 	else
