@@ -11,6 +11,8 @@
 #								#
 #################################################################
 
+setenv ydb_test_4g_db_blks 0	# Disable this random hugedb env var as it makes statsdb file integ output non-deterministic
+
 echo "# Test that MUPIP INTEG -STATS does not SIG-11 and MUPIP TRIGGER does not assert fail if ydb_statshare=1"
 echo "# Test of YDB#1047. See https://gitlab.com/YottaDB/DB/YDB/-/issues/1047#description for test details."
 echo "# Before the YDB#1047 code fixes, the below test used to assert fail in MUPIP TRIGGER and SIG-11 in MUPIP INTEG -STATS"
