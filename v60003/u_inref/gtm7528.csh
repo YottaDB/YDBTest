@@ -14,6 +14,10 @@
 #								#
 #################################################################
 
+# Turn off statshare related env var as it affects test output due to this being a white-box test case and is not considered
+# worth the effort to test this with statshare as well.
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_statshare gtm_statshare
+
 setenv test_encryption "NON_ENCRYPT" # There is a FTOK semaphore release/grab during encryption which
 				     # messes up the whitebox test case
 # With 16K counter semaphore bump per process, the 32K counter overflow happens with two mumps processes
