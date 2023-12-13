@@ -128,7 +128,7 @@ BEGIN {
 		{
 			if ( "TRUE" == rval[i]) { tls="1-"ENVIRON["gtm_test_tls_renegotiate"]
 			} else { tls=0 }
-			printf "TLS:%-3s ",tls
+			printf "TLS:%-4s ",tls
 		}
 		if ( "gtm_test_embed_source" == rname )
 		{
@@ -154,8 +154,11 @@ BEGIN {
 		if ( "ydb_test_4g_db_blks" == rname ) printf "HUGEDB:%-1s ",((rval[i] == 0) ? 0 : 1)
 		if ( "gtm_test_use_V6_DBs" == rname )
 		{	# If V6DB mode, print random version used - else null string
-			if (0 != rval[i]) printf "V6DB:%s ",ENVIRON["gtm_test_v6_dbcreate_rand_ver"];
-			else printf "V6DB: "
+			if (0 != rval[i])
+				rval[i] = ENVIRON["gtm_test_v6_dbcreate_rand_ver"]
+			else
+				rval[i] = ""
+			printf "V6DB:%-11s ", rval[i]
 		}
 		if ( "ydb_readline" == rname ) printf "RL:%-1s ",rval[i]
 		if ( "gtm_statshare" == rname ) printf "STATS:%-1s ",rval[i]
