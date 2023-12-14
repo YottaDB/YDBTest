@@ -29,6 +29,7 @@ $GTM << EOF
 f i=1:1:50000 s ^a(i,\$j(i,150),i,i*2)=\$j(i,50)
 h
 EOF
+
 setenv gtm_white_box_test_case_enable 1
 setenv gtm_white_box_test_case_number 63  # WBTEST_REORG_DEBUG
 setenv gtm_white_box_test_case_count 1
@@ -36,4 +37,51 @@ $MUPIP reorg -fill=0 >& reorg.outx
 sed 's/\(GTMPOOLLIMIT used for mupip reorg :\) '$gtm_poollimit_value'/\1 ##FILTERED##/' reorg.outx
 unsetenv gtm_white_box_test_case_enable
 $MUPIP integ -r "*"
+
+echo "# Verify that the maximum tree height/depth is 11 (new MAX_BT_DEPTH in GT.M V7.0-001 as part of GTM-9434)"
+echo "# Previously, this was only 7. The above part of the test (thanks to the [mupip reorg -fill=0] already created"
+echo "# a MAX_BT_DEPTH height global. So all we need to do now is to verify there are blocks from Level 10 to Level 0."
+echo "# Run [dse find -key] to verify that the Global tree path includes blocks from Level 10 to Level 0"
+echo "# Also run [dse dump -block] of each of those 11 blocks to confirm the levels go from 10 to 0"
+cat > dse.cmd << CAT_EOF
+find -key="^a"
+dump -block=4 -header
+CAT_EOF
+
+# The actual block numbers change based on HUGEDB is set or not. Hence the if/else below.
+if (0 != $ydb_test_4g_db_blks) then
+	cat >> dse.cmd << CAT_EOF
+dump -block=100006ABD -header
+dump -block=100005F57 -header
+dump -block=10000592D -header
+dump -block=1000033A0 -header
+dump -block=100006DC6 -header
+dump -block=100006D5E -header
+dump -block=100005EB3 -header
+CAT_EOF
+
+else
+	cat >> dse.cmd << CAT_EOF
+dump -block=6CBD -header
+dump -block=6157 -header
+dump -block=5B2D -header
+dump -block=35A0 -header
+dump -block=6FC6 -header
+dump -block=6F5E -header
+dump -block=60B3 -header
+CAT_EOF
+endif
+
+cat >> dse.cmd << CAT_EOF
+dump -block=7 -header
+dump -block=8 -header
+dump -block=6 -header
+CAT_EOF
+
+$DSE >& dse.out < dse.cmd
+
+# Filter out the TN part in the output as it can be random (since "gtm_test_disable_randomdbtn" env var is not set in this test).
+sed 's/TN [0-9A-F]*/TN xxx/;' dse.out
+echo ""
+
 $gtm_tst/com/dbcheck.csh
