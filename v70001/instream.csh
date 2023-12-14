@@ -24,13 +24,14 @@
 # gtm9451	[nars]		Verify LOCKSPACEFULL in final retry issues TPNOTACID and releases crit
 # gtm9131	[nars]		Verify TPRESTART messages properly identifies statsdb extension related restarts
 # gtm9388	[estess]	Verify ZSHOW "B" when ZBREAK used with no or null action argument displays correctly
+# gtm9443	[nars]		Verify MUPIP SET JOURNAL more cautious with journal file chain
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v70001 test starts..."
 
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
-setenv subtest_list_non_replic	"gtm9213 gtm8010 gtm9452 gtm8681 gtm4814 gtm9057 gtm9451 gtm9131 gtm9388"
+setenv subtest_list_non_replic	"gtm9213 gtm8010 gtm9452 gtm8681 gtm4814 gtm9057 gtm9451 gtm9131 gtm9388 gtm9443"
 setenv subtest_list_replic	"gtm4272"
 
 if ($?test_replic == 1) then

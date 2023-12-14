@@ -1,0 +1,168 @@
+# ********************************************************************************************
+# GTM-9443 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-001_Release_Notes.html#GTM-9443)
+# 
+# When MUPIP SET -JOURNAL encounters a temporary journal file that is an artifact of the renaming
+# process GT.M uses to create a chain of journal files, it only deletes it after concluding that has
+# been abandoned by seeing that it persists for an interval longer than the renaming process should
+# take. Previously when MUPIP encountered a temporary journal file, it assumed the file was an abandoned
+# artifact and immediately deleted it potentially inappropriately breaking the chain. (GTM-9443)
+# 
+# Create database with journaling turned on
+
+# ############################## Test 1 #############################
+# Preserve original journal file [mumps.mjl]
+# Create temporary journal file name used in journal file renaming process [mumps.mjl_%YGTM]
+# ########################################################################
+# Run [mupip set -journal] command and verify it does checks on [mumps.mjl_%YGTM] multiple times
+# to confirm it is indeed abandoned BEFORE going ahead with deleting that file.
+# Use [strace] and check for system calls that use [mumps.mjl_%YGTM] OR [nanosleep].
+# We expect to see 30 of the stat(mumps.mjl_%YGTM) and nanosleep() calls below.
+# Before GTM-9443, these 30 stat() and nanosleep() calls would not show up.
+# This also verifies that [mumps.mjl_%YGTM] file gets deleted/created/renamed in that order by [mupip set -journal]
+# ########################################################################
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+unlink()
+stat()
+open()
+rename()
+
+# ############################## Test 2 #############################
+# Delete original journal file [mumps.mjl]
+# Create temporary journal file name used in journal file renaming process [mumps.mjl_%YGTM]
+# ########################################################################
+# Run [mupip set -journal] command and verify it does checks on [mumps.mjl_%YGTM] multiple times
+# to confirm it is indeed abandoned BEFORE going ahead with deleting that file.
+# Use [strace] and check for system calls that use [mumps.mjl_%YGTM] OR [nanosleep].
+# We expect to see 30 of the stat(mumps.mjl_%YGTM) and nanosleep() calls below.
+# Before GTM-9443, these 30 stat() and nanosleep() calls would not show up.
+# This also verifies that [mumps.mjl_%YGTM] file gets deleted/created/renamed in that order by [mupip set -journal]
+# ########################################################################
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+clock_nanosleep()
+stat()
+rename()
+stat()
+open()
+rename()
+# Do dbcheck on database
