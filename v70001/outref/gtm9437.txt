@@ -1,0 +1,107 @@
+# ********************************************************************************************
+# GTM-9437 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-001_Release_Notes.html#GTM-9437)
+# 
+# Making a socket current in a SOCKET device with "USE dev:SOCKET=handle" is now significantly faster
+# when no other device parameters are specified.Previously, the operation was slowed down by preparations
+# needed by other device parameters. In addition, USE ATTACH and USE DETACH issue an error if additional
+# device parameters are specified. Previously, they silently ignored the extra device parameters. (GTM-9437)
+# 
+###########################################################################################
+# Test 1 : USE dev:SOCKET=handle is now significantly faster when no other device parameters are specified.
+
+# This was verified manually and is not easily automatable.
+# See https://gitlab.com/YottaDB/DB/YDBTest/-/issues/563#note_1696954117 for more details..
+
+###########################################################################################
+# Test 2 : Verify USE ATTACH and USE DETACH issue error if additional device parameters are specified
+
+# Create database
+# Job child which will have a connecting LOCAL socket, parent will have a listening LOCAL socket
+# Test all device parameters that can be specified in a USE command for a SOCKET device.
+# This list was obtained by looking at all [switch/case] code paths in [YDB/sr_port/iosocket_use.c]
+# Although the release note indicates an error is issued for ANY additional device parameter, it was
+# observed that a few device parameters do not issue an error. Those are also tested below even though they
+# don't show any error. Note that [exception] device parameter is tested last as testing it in the beginning
+# causes issues with test flow due to error handling going to the exception device parameter instead of $ztrap.
+--> Testing [use s:(detach="handle1":filter="chars")]
+--> Testing [use s:(attach="handle1":filter="chars")]
+--> Testing [use s:(detach="handle1":nofilter)]
+--> Testing [use s:(attach="handle1":nofilter)]
+--> Testing [use s:(detach="handle1":delimiter=$c(13))]
+ZSTATUS=gtm9437+21^gtm9437,%YDB-E-ANCOMPTINC, Deviceparameter DETACH is not compatible with any other deviceparameters in the USE command
+--> Testing [use s:(attach="handle1":delimiter=$c(13))]
+ZSTATUS=gtm9437+21^gtm9437,%YDB-E-ANCOMPTINC, Deviceparameter ATTACH is not compatible with any other deviceparameters in the USE command
+--> Testing [use s:(detach="handle1":nodelimiter)]
+ZSTATUS=gtm9437+21^gtm9437,%YDB-E-ANCOMPTINC, Deviceparameter DETACH is not compatible with any other deviceparameters in the USE command
+--> Testing [use s:(attach="handle1":nodelimiter)]
+ZSTATUS=gtm9437+21^gtm9437,%YDB-E-ANCOMPTINC, Deviceparameter ATTACH is not compatible with any other deviceparameters in the USE command
+--> Testing [use s:(detach="handle1":zdelay)]
+ZSTATUS=gtm9437+21^gtm9437,%YDB-E-ANCOMPTINC, Deviceparameter DETACH is not compatible with any other deviceparameters in the USE command
+--> Testing [use s:(attach="handle1":zdelay)]
+ZSTATUS=gtm9437+21^gtm9437,%YDB-E-ANCOMPTINC, Deviceparameter ATTACH is not compatible with any other deviceparameters in the USE command
+--> Testing [use s:(detach="handle1":znodelay)]
+ZSTATUS=gtm9437+21^gtm9437,%YDB-E-ANCOMPTINC, Deviceparameter DETACH is not compatible with any other deviceparameters in the USE command
+--> Testing [use s:(attach="handle1":znodelay)]
+ZSTATUS=gtm9437+21^gtm9437,%YDB-E-ANCOMPTINC, Deviceparameter ATTACH is not compatible with any other deviceparameters in the USE command
+--> Testing [use s:(detach="handle1":zbfsize=4096)]
+ZSTATUS=gtm9437+21^gtm9437,%YDB-E-ANCOMPTINC, Deviceparameter DETACH is not compatible with any other deviceparameters in the USE command
+--> Testing [use s:(attach="handle1":zbfsize=4096)]
+ZSTATUS=gtm9437+21^gtm9437,%YDB-E-ANCOMPTINC, Deviceparameter ATTACH is not compatible with any other deviceparameters in the USE command
+--> Testing [use s:(detach="handle1":zibfsize=1024)]
+ZSTATUS=gtm9437+21^gtm9437,%YDB-E-ANCOMPTINC, Deviceparameter DETACH is not compatible with any other deviceparameters in the USE command
+--> Testing [use s:(attach="handle1":zibfsize=1024)]
+ZSTATUS=gtm9437+21^gtm9437,%YDB-E-ANCOMPTINC, Deviceparameter ATTACH is not compatible with any other deviceparameters in the USE command
+--> Testing [use s:(detach="handle1":ioerror="TRAP")]
+ZSTATUS=gtm9437+21^gtm9437,%YDB-E-ANCOMPTINC, Deviceparameter DETACH is not compatible with any other deviceparameters in the USE command
+--> Testing [use s:(attach="handle1":ioerror="TRAP")]
+ZSTATUS=gtm9437+21^gtm9437,%YDB-E-ANCOMPTINC, Deviceparameter ATTACH is not compatible with any other deviceparameters in the USE command
+--> Testing [use s:(detach="handle1":zlisten="a")]
+ZSTATUS=gtm9437+21^gtm9437,%YDB-E-ANCOMPTINC, Deviceparameter DETACH is not compatible with any other deviceparameters in the USE command
+--> Testing [use s:(attach="handle1":zlisten="a")]
+ZSTATUS=gtm9437+21^gtm9437,%YDB-E-ANCOMPTINC, Deviceparameter ATTACH is not compatible with any other deviceparameters in the USE command
+--> Testing [use s:(detach="handle1":socket="hand")]
+ZSTATUS=gtm9437+21^gtm9437,%YDB-E-ACOMPTBINC, Deviceparameter SOCKET is compatible with only DELIMITER in the command USE
+--> Testing [use s:(attach="handle1":socket="hand")]
+ZSTATUS=gtm9437+21^gtm9437,%YDB-E-ACOMPTBINC, Deviceparameter SOCKET is compatible with only DELIMITER in the command USE
+--> Testing [use s:(detach="handle1":ichset="M")]
+ZSTATUS=gtm9437+21^gtm9437,%YDB-E-ANCOMPTINC, Deviceparameter DETACH is not compatible with any other deviceparameters in the USE command
+--> Testing [use s:(attach="handle1":ichset="M")]
+ZSTATUS=gtm9437+21^gtm9437,%YDB-E-ANCOMPTINC, Deviceparameter ATTACH is not compatible with any other deviceparameters in the USE command
+--> Testing [use s:(detach="handle1":ochset="M")]
+ZSTATUS=gtm9437+21^gtm9437,%YDB-E-ANCOMPTINC, Deviceparameter DETACH is not compatible with any other deviceparameters in the USE command
+--> Testing [use s:(attach="handle1":ochset="M")]
+ZSTATUS=gtm9437+21^gtm9437,%YDB-E-ANCOMPTINC, Deviceparameter ATTACH is not compatible with any other deviceparameters in the USE command
+--> Testing [use s:(detach="handle1":chset="M")]
+ZSTATUS=gtm9437+21^gtm9437,%YDB-E-ANCOMPTINC, Deviceparameter DETACH is not compatible with any other deviceparameters in the USE command
+--> Testing [use s:(attach="handle1":chset="M")]
+ZSTATUS=gtm9437+21^gtm9437,%YDB-E-ANCOMPTINC, Deviceparameter ATTACH is not compatible with any other deviceparameters in the USE command
+--> Testing [use s:(detach="handle1":zff=$c(13))]
+ZSTATUS=gtm9437+21^gtm9437,%YDB-E-ANCOMPTINC, Deviceparameter DETACH is not compatible with any other deviceparameters in the USE command
+--> Testing [use s:(attach="handle1":zff=$c(13))]
+ZSTATUS=gtm9437+21^gtm9437,%YDB-E-ANCOMPTINC, Deviceparameter ATTACH is not compatible with any other deviceparameters in the USE command
+--> Testing [use s:(detach="handle1":znoff)]
+ZSTATUS=gtm9437+21^gtm9437,%YDB-E-ANCOMPTINC, Deviceparameter DETACH is not compatible with any other deviceparameters in the USE command
+--> Testing [use s:(attach="handle1":znoff)]
+ZSTATUS=gtm9437+21^gtm9437,%YDB-E-ANCOMPTINC, Deviceparameter ATTACH is not compatible with any other deviceparameters in the USE command
+--> Testing [use s:(detach="handle1":length=40)]
+--> Testing [use s:(attach="handle1":length=40)]
+--> Testing [use s:(detach="handle1":width=132)]
+--> Testing [use s:(attach="handle1":width=132)]
+--> Testing [use s:(detach="handle1":wrap)]
+--> Testing [use s:(attach="handle1":wrap)]
+--> Testing [use s:(detach="handle1":nowrap)]
+--> Testing [use s:(attach="handle1":nowrap)]
+--> Testing [use s:(detach="handle1":morereadtime=10)]
+ZSTATUS=gtm9437+21^gtm9437,%YDB-E-ANCOMPTINC, Deviceparameter DETACH is not compatible with any other deviceparameters in the USE command
+--> Testing [use s:(attach="handle1":morereadtime=10)]
+ZSTATUS=gtm9437+21^gtm9437,%YDB-E-ANCOMPTINC, Deviceparameter ATTACH is not compatible with any other deviceparameters in the USE command
+--> Testing [use s:(detach="handle1":flush)]
+ZSTATUS=gtm9437+21^gtm9437,%YDB-E-ANCOMPTINC, Deviceparameter DETACH is not compatible with any other deviceparameters in the USE command
+--> Testing [use s:(attach="handle1":flush)]
+ZSTATUS=gtm9437+21^gtm9437,%YDB-E-ANCOMPTINC, Deviceparameter ATTACH is not compatible with any other deviceparameters in the USE command
+--> Testing [use s:(detach="handle1":exception="write 1")]
+--> Testing [use s:(attach="handle1":exception="write 1")]
+# Do dbcheck on database
