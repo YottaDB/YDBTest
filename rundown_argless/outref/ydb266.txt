@@ -22,7 +22,12 @@ Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_P
 # Start time for monitoring syslog
 # Run argumentless mupip rundown. Use -override to avoid MUUSERLBK errors. Redirect output to [rundown.log].
 # Capture all syslog messages from the start time into file [syslog.txt].
+##SUSPEND_OUTPUT NON_STATSHARE
+# Number of SHMREMOVED and SEMREMOVED messages in mupip rundown output = 12
+##ALLOW_OUTPUT NON_STATSHARE
+##SUSPEND_OUTPUT STATSHARE
 # Number of SHMREMOVED and SEMREMOVED messages in mupip rundown output = 10
+##ALLOW_OUTPUT STATSHARE
 # Verify SHMREMOVED and SEMREMOVED messages in mupip rundown output MATCH that in the syslog
 PASS
 # Filter out known possible %YDB-W- and %YDB-E- messages from argumentless mupip rundown output
