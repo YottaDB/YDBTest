@@ -60,6 +60,9 @@ END 5
 BEGIN 6 :-) Verify that old_mumps.dat(now mumps.dat) can be accessed after doing mupip rundown
 
 ##TEST_AWKmupip rundown .*
+##SUSPEND_OUTPUT NON_STATSHARE
+##TEST_AWK%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/.*.mumps.dat.gst successfully rundown
+##ALLOW_OUTPUT NON_STATSHARE
 ##TEST_AWK.YDB-I-MUFILRNDWNSUC, File .*mumps.dat successfully rundown
 
 YDB>
