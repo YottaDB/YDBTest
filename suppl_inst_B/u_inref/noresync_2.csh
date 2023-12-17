@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -17,6 +17,11 @@
 # Test -noresync rollback between A and P (non-supplementary and supplementary respectively)
 #	where where A seqno < P seqno and history matches
 #
+
+# Turn off statshare related env var as it affects test output (inside a backward rollback command with
+# extra SHMREMOVED/SEMREMOVED messages and affects a diff of the backward rollback output with the forward
+# rollback output. It is not considered worth the trouble to fix the test for STATSHARE and NON_STATSHARE.
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_statshare gtm_statshare
 
 source $gtm_tst/com/gtm_test_setbeforeimage.csh
 $MULTISITE_REPLIC_PREPARE 2 2
