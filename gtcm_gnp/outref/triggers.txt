@@ -117,6 +117,19 @@ YDB>
 ^x(1)="Remote update 2"
 
 YDB>
+
+###################################################################
+# Test of [GTM-9432] : ZTRIGGER command with GT.CM region errors out with REMOTEDBNOTRIG (not a SIG-11)
+
+# Release note says (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-001_Release_Notes.html#GTM-9432)
+    A ZTRIGGER command involving a remote GT.CM database errors out with GTM-E-REMOTEDBNOTRIG.
+    Previously, it resulted in a segmentation violation (SIG-11). (GTM-9432)
+
+# Execute ZTRIGGER command on global [^b] which maps to BREG a remote/GT.CM region
+# We expect a REMOTEDBNOTRIG error. Not a SIG-11 (which used to happen before GT.M V7.0-001 got merged).
+%YDB-E-REMOTEDBNOTRIG, Trigger operations are not supported on global ^b as it maps to database region BREG that points to a remote file
+###################################################################
+
 Stopping the GT.CM Servers...
 Check the databases on the GT.CM Servers...
 ##GT.CM####SOURCE_PATH##/mupip

@@ -3,7 +3,7 @@
 #								#
 # Copyright 2010, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -74,5 +74,19 @@ zwrite ^a
 zwrite ^b
 zwrite ^x
 GTM_EOF
+
+echo
+$echoline
+echo "# Test of [GTM-9432] : ZTRIGGER command with GT.CM region errors out with REMOTEDBNOTRIG (not a SIG-11)"
+echo
+echo "# Release note says (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-001_Release_Notes.html#GTM-9432)"
+echo "    A ZTRIGGER command involving a remote GT.CM database errors out with GTM-E-REMOTEDBNOTRIG."
+echo "    Previously, it resulted in a segmentation violation (SIG-11). (GTM-9432)"
+echo
+echo "# Execute ZTRIGGER command on global [^b] which maps to BREG a remote/GT.CM region"
+echo "# We expect a REMOTEDBNOTRIG error. Not a SIG-11 (which used to happen before GT.M V7.0-001 got merged)."
+$gtm_dist/mumps -run %XCMD 'ztrigger ^b'
+$echoline
+echo
 
 $gtm_tst/com/dbcheck.csh
