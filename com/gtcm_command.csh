@@ -2,7 +2,7 @@
 #								#
 # Copyright 2002, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -93,7 +93,16 @@ foreach gtcm_server ($tst_gtcm_server_list)
 		if (-e gtcm_portno_$x.txt) mv gtcm_portno_$x.txt  gtcm_portno_$x.txt_$datefmt
 		echo $portno_gtcm >>& gtcm_portno_$x.txt
 		set rmthost = ${tst_remote_host_gtcm:ar}
-		source $gtm_tst/com/set_ydb_env_var_random.csh ydb_cm_${rmthost} GTCM_${rmthost} "[${tst_remote_host_gtcm}]:${portno_gtcm}"
+		# ###########################################################################################
+		# Test [YDBTest#559] [GTM-9425] $GTCM_<node-name> accepts "host-name:port-number"
+		# This is done by randomly setting GTCM_nodename env var to hostname:port or [hostname]:port
+		set rand = `$gtm_tst/com/genrandnumbers.csh 1 0 1`	# choose 1 random number between 0 and 1 (both included)
+		set hostname = "${tst_remote_host_gtcm}"
+		if ($rand == 1) then
+			set hostname = "[$hostname]"
+		endif
+		# ###########################################################################################
+		source $gtm_tst/com/set_ydb_env_var_random.csh ydb_cm_${rmthost} GTCM_${rmthost} "${hostname}:${portno_gtcm}"
 		set argv_new = `echo "$argv_new" | sed "s,PORTNO_GTCM,$portno_gtcm,g"  `
 	endif
 	# , is used instead of / since there are /'s in the environment variables (but not commas, I hope`)
