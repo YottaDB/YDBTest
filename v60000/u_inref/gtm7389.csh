@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -15,7 +15,7 @@
 #################################################################
 
 setenv check_all "DFL :|DFS :|JFL :|JFS :|JBB :|JFB :|JFW :|JRL :|JRP :|JRE :|JRO :|JRI :|JEX :|DEX :"
-alias stats 	'$DSE dump -file -gvstats | & $grep -E "$check_all"'
+alias stats 	'$DSE dump -file -gvstats |& tee -a dse.\!:1 | $grep -E "$check_all" >& \!:1'
 alias mask 	"sed 's/0x................/0x##MASKED##/'"
 alias resetstat '$DSE change -file -gvstatsreset >>& reset_stats.out ; if ($status) echo "gvststsreset FAILED"'
 
@@ -38,8 +38,8 @@ cat << EOF
 # test : when a dse dump is done (i.e db flushed), DFL is incremented
 EOF
 
-stats >&! noupdate1.out
-stats >&! noupdate2.out
+stats noupdate1.out
+stats noupdate2.out
 $GTM << GTM_EOF
 	do ^setenv("noupdate1.out","a")
 	do ^setenv("noupdate2.out","b")
@@ -56,7 +56,8 @@ else
 endif
 
 echo "# Expect only DFL to be shown below"
-stats | mask
+stats mask.out
+mask mask.out
 
 cat << EOF
 # test : For just one update, most of the stats should be deterministic. Do a diff with existing output
@@ -90,13 +91,13 @@ cat >> jnl_nobefore.stat << jnlstat_EOF
 jnlstat_EOF
 
 $gtm_exe/mumps -run %XCMD 's ^a=1'
-stats >&! 1update.out
+stats 1update.out
 $tst_awk ' {if ($0 ~ /DFL : |JBB :|JFB :/) {sub("0x.*","0x##MASKED##")} ; if ($0 ~ /JFW :/) {sub("000[3-9]","000.")} ; print}' 1update.out >&! 1update_filtered.out
 diff 1update_filtered.out jnl_{$b4nob4}.stat
 
 # second set of updates
 $gtm_exe/mumps -run %XCMD 'for i=1:1:25000 set ^a(1)=$j(1,200)'
-stats >&! 2update.out
+stats 2update.out
 
 $GTM << GTM_EOF
 	do ^setenv("1update.out",1)
@@ -168,7 +169,7 @@ endif
 
 # do sufficient updates to force exactly 1 database extension
 $gtm_exe/mumps -run %XCMD 'for i=1:1:500 s ^a(i)=$j(1,200)'
-stats >&! 3update.out
+stats 3update.out
 $GTM << GTM_EOF
 	do ^setenv("3update.out",3)
 GTM_EOF
@@ -187,7 +188,7 @@ endif
 
 # do sufficient updates to force more database and journal extensions
 $gtm_exe/mumps -run %XCMD 'for i=1:1:50000 s ^b(i)=$j("DEX",200)'
-stats >&! 4update.out
+stats 4update.out
 $GTM << GTM_EOF
 	do ^setenv("4update.out",4)
 GTM_EOF
@@ -209,7 +210,7 @@ endif
 # so later zshow "G" in the for loop does not call gtm_malloc which defers dbsync timer
 # and in turn delays JRI appearance enough to cause false test failures <gtm7389_jri_gtm_malloc>
 $gtm_exe/mumps -run %XCMD 'zshow "G":a set ^jri=1 hang 6 for i=7:1:10 zshow "G":a set jri=$piece($piece(a("G",0),"JRI:",2),",",1) quit:jri  hang 1'
-stats >&! 5update.out
+stats 5update.out
 $GTM << GTM_EOF
 	do ^setenv("5update.out",5)
 GTM_EOF
