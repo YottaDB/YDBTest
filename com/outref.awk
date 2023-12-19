@@ -421,6 +421,12 @@ BEGIN {
 	else
 		envir[no_options] = "TST_DIR_NOT_ZFS"
 	#
+	option_names[++no_options] = "tst_dir_fstype_same_as_tmp"
+	if (ENVIRON["tmp_dir_fstype"] == ENVIRON["tst_dir_fstype"])
+		envir[no_options] = "TST_DIR_FSTYPE_SAME_AS_TMP"
+	else
+		envir[no_options] = "TST_DIR_FSTYPE_NOT_SAME_AS_TMP"
+	#
 	option_names[++no_options] = "gtm_test_yottadb_compiler"
 	if ("CLANG" == ENVIRON["gtm_test_yottadb_compiler"])
 		envir[no_options] = "CLANG_BUILD"

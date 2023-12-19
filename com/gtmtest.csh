@@ -159,6 +159,7 @@ setenv is_tst_dir_ssd `$gtm_test_com_individual/is_curdir_ssd.csh $tst_dir`
 
 # Set env var tst_dir_fstype based on the filesystem of $tst_dir.
 setenv tst_dir_fstype `$gtm_test_com_individual/get_filesystem_type.csh $tst_dir`
+setenv tmp_dir_fstype `$gtm_test_com_individual/get_filesystem_type.csh /tmp`
 
 # Set env var to is_tst_dir_cmp_fs to 1 if disk containing $tst_dir is a compressed filesystem. And to 0 otherwise.
 setenv is_tst_dir_cmp_fs `$gtm_test_com_individual/is_curdir_compressed_fs.csh $tst_dir`

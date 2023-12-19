@@ -28,6 +28,6 @@ if ($status) then
 	exit -1
 endif
 
-set filesystype = `grep $mountpoint /etc/mtab | sed 's/rw.*//g' | $tst_awk '{print $NF}'`
+set filesystype = `grep " $mountpoint " /etc/mtab | sed 's/rw.*//g' | $tst_awk '{print $NF}'`
 echo $filesystype
 
