@@ -10,7 +10,7 @@ setenv gtm_chset UTF-8
 unset echo
 ----------
 Error DLLCHSETM seen in out1utf8.out as expected:
-%YDB-E-DLLCHSETM, Routine utfpattern in library ##TEST_PATH##/m_to_utf8/shlib##TEST_SHL_SUFFIX## was compiled with CHSET=M which is different from $ZCHSET. Recompile with CHSET=UTF-8 and re-link.
+%YDB-E-DLLCHSETM, Routine utfpattern in library ##TEST_PATH##/m_to_utf8/shlib##TEST_SHL_SUFFIX## was compiled with CHSET=M which is different from $ZCHSET
 ----------
 ###################################################################
 UTF-8 to M
@@ -21,6 +21,6 @@ setenv gtm_chset M
 unset echo
 ----------
 Error DLLCHSETUTF8 seen in out2m.out as expected:
-%YDB-E-DLLCHSETUTF8, Routine utfpattern in library ##TEST_PATH##/utf8_to_m/shlib##TEST_SHL_SUFFIX## was compiled with CHSET=UTF-8 which is different from $ZCHSET. Recompile with CHSET=M and re-link.
+%YDB-E-DLLCHSETUTF8, Routine utfpattern in library ##TEST_PATH##/utf8_to_m/shlib##TEST_SHL_SUFFIX## was compiled with CHSET=UTF-8 which is different from $ZCHSET
 ----------
 ###################################################################
