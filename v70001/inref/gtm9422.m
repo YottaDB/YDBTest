@@ -33,11 +33,12 @@ gtm9422
 	; which we verify had at least one non-zero stat during the run. These are the "monitored" stats.
 	;
 	; Note - The following stats are those that this test is capable of getting non-zero values out of
-	;	 over the 15 second run time of the test. The following stats did not reliably have a non-zero
+	;	 over the 20 second run time of the test. The following stats did not reliably have a non-zero
 	;	 value: "PRC,ZAD"
 	;
 	set statIncrementeds="DEXA,GLB,JNL,MLK,TRX,JOPA,AFRA,BREA,MLBA,TRGA"	; Stats to be "monitored"
-	write !,"Monitored stats for test: ",statIncrementeds,!!
+	write !,"# Unmonitored stats: PRC,ZAD (to be added in a future commit)",!
+	write !,"# Monitored stats for test: ",statIncrementeds,!!
 	;
 	; Initialize "previous" stat values for each of the stats we see with the current value
 	;
@@ -111,10 +112,7 @@ workerBee
 	. tstart ():(serial:transaction="BATCH")	; Use batch transactions for better throughput to see non-zero stats
 	. for j=1:1:25 set ^a(tr,$job,j)=$justify(j,10)
 	. tcommit
-	. view "FLUSH"				; Push JOPA stats
-	. ;do:((tr\10)=0)			; Drive mupip freeze on/off for ZAD, AFRA stats
-	. ;. zsystem "$gtm_dist/mupip freeze -online -noautorelease -on DEFAULT >>& freezelog.log"_$job	; Append $job to end of fn to eliminate
-	. ;. zsystem "$gtm_dist/mupip freeze -off DEFAULT>>& freezelog.log"_$job	   			; .. collisions between procs
+	. view "FLUSH"				; Cause JOPA stats to increment
 	write $zdate($horolog,"24:60:SS")," Worker/laborer #",jobindex," shutting down",!!
 	zshow "G"
 	quit
