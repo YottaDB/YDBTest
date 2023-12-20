@@ -1,0 +1,56 @@
+# Release note:
+#
+# MUPIP DUMPFHEAD -FLUSH -REGION performs a database file header flush for the
+# specified region(s) before displaying the database file header fields. If the
+# database file header flush fails, MUPIP DUMPFHEAD -FLUSH produces the BUFFLUFAILED
+# warning. The qualifier makes the command considerably more heavy weight, and, in
+# most cases, does not provide material benefit, but there may be cases where it
+# addresses a need. Previously, MUPIP DUMPFHEAD provided no option to flush the
+# database file header fields. (GTM-9423)
+
+# Create database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+# Drive main routine gtm9423
+
+# Part 1:
+# Verify that MUPIP DUMPFHEAD -FLUSH does the flush before it writes DUMPFHEAD info
+
+# Run strace cmd: strace -o strace.outx $gtm_dist/mupip dumpfhead -reg DEFAULT -flush >& dumpfhead.out
+
+# Run grep on the strace.outx file to find (in the order they occur):
+#  1. open() or openat() calls on mumps.dat
+#  2. pwrite64 calls (only done to DB) - show all of them
+#  3. write(1..) calls to write out DUMPFHEAD info
+
+##TEST_AWKopen(at|)\((AT_FDCWD, |)"##TEST_PATH##/mumps.dat", .*\) = 3
+##TEST_AWKpwrite64\(3, "GDSDYNUNX.*..., 8192, 0\) = 8192
+##TEST_AWKpwrite64\(3, "GDSDYNUNX.*..., 8192, 0\) = 8192
+##TEST_AWKwrite\(1, "Fileheader dump of region DEFAUL"..., 33\) = 33
+##TEST_AWKwrite\(1, "\\n", 1\)                       = 1
+##TEST_AWKwrite\(1, "Dumping fileheader of .*\) = .*
+##TEST_AWKwrite\(1, "\\n", 1\)                       = 1
+##TEST_AWKpwrite64\(3, "GDSDYNUNX.*..., 8192, 0\) = 8192
+##TEST_AWKpwrite64\(3, "GDSDYNUNX.*"..., 8192, 0\) = 8192
+
+
+# Part 2:
+
+# Verify that the BUFFLUFAILED warning is raised when -FLUSH detects an IO error
+
+# Use DSE CRIT -SEIZE to grab crit in the region to hopefully force a flush error
+
+# Run MUPIP DUMPFHEAD -REG DEFAULT -FLUSH expecting a BUFFLUFAILED warning
+
+# Verify got a BUFFLUFAILED message:
+
+%YDB-W-BUFFLUFAILED, Error flushing buffers from MUPIP DUMPFHEAD -FLUSH while grabbing critical section for database file ##TEST_PATH##/mumps.dat
+
+# Validate DB
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
