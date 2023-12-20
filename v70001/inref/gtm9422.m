@@ -13,32 +13,44 @@
 ;
 ; Script to do some database filling by multiple processes and show statistic changes
 ;
-gtm8863b
+gtm9422
 	view "STATSHARE"	; Enable global stat sharing
 	set $etrap="set ^shutdown=1 write $zstatus,!!! zshow ""*"""
 	set maxKids=12		; Max worker bee children
-	set maxTime=15		; Max time (in seconds) for test
-	set interval=3		; Monitor interval
+	set maxTime=20		; Max time (in seconds) for test
+	set interval=4		; Monitor interval
 	set ^shutdown=0		; Initialize
 	kill ^a
 	set ^a(1)=1
-	set collectStats="AFRA,BREA,DEXA,GLB,JNL,JOPA,MLBA,MLK,PRC,TRGA,TRX,ZAD"	; Toggle stats to collect
+	;
+	; The following is the set of stats that were added in V63014 as "toggle stats" but in V70001, they
+	; became regular counter stats.
+	;
+	set collectStats="DEXA,GLB,JNL,MLK,PRC,TRX,ZAD,JOPA,AFRA,BREA,MLBA,TRGA"
+	set collectStatsCnt=$zlength(collectStats,",")
 	;
 	; The following set of stats are those that we typically see being non-zero. This set of stats are those
 	; which we verify had at least one non-zero stat during the run. These are the "monitored" stats.
 	;
-	; Note - Initially we were also monitoring TRX and TRGA, which also often appear as non-zero values, but
-	;        we were not able to depend on this as doing so caused failures about 6% of the time when one or
-	;	 both of these values were zero in each line of the test so they were removed from monitor list.
+	; Note - The following stats are those that this test is capable of getting non-zero values out of
+	;	 over the 15 second run time of the test. The following stats did not reliably have a non-zero
+	;	 value: "PRC,ZAD"
 	;
-	set nonZeroStats="MLK,MLBA"		; Stats to be "monitored"
-	write !,"Monitored stats for test: ",nonZeroStats,!!
+	set statIncrementeds="DEXA,GLB,JNL,MLK,TRX,JOPA,AFRA,BREA,MLBA,TRGA"	; Stats to be "monitored"
+	write !,"Monitored stats for test: ",statIncrementeds,!!
+	;
+	; Initialize "previous" stat values for each of the stats we see with the current value
+	;
+	for i=1:1:collectStatsCnt do
+	. set stat=$zpiece(collectStats,",",i)
+	. set statName=$zpiece(stat,":",1)
+	. set statPrevVal(statName)=$zpiece(stat,":",2)
 	;
 	; First order of business is to spawn some worker bees
 	;
 	write $zdate($horolog,"24:60:SS")," Starting ",maxKids," workers",!
 	set jmaxwait=0		; Want to return immediately from ^job() so we can run checks while the jobs run
-	do ^job("workerBee^gtm8863b",maxKids,"""""")
+	do ^job("workerBee^gtm9422",maxKids,"""""")
 	;
 	; Now that the children are playing, lets start watching some stats. Look at each stat line generated.
 	; At the end of the day, we need at least one non-zero stat for SOME toggle value.
@@ -58,7 +70,9 @@ gtm8863b
 	. . set stat=$zpiece(statLine,",",i)	; Look at individual stat
 	. . set statName=$zpiece(stat,":",1)	; Get the stat name
 	. . set statVal=$zpiece(stat,":",2)	; Get the individual stat value
-	. . if (statVal>0)&$increment(nonZeroStat(statName))	; Bump non-zero counter for this stat if non-zero
+	. . if (statVal>statPrevVal(statName)) do
+	. . . if $increment(statIncremented(statName))	; Bump non-zero counter for this stat if non-zero
+	. . . set statPrevVal(statName)=statVal
 	;
 	; Shutdown the workers
 	;
@@ -68,16 +82,16 @@ gtm8863b
 	;
 	; Print final failure/success message (see if all our monitored stats had a non-zero event)
 	;
-	set seenAllNonZeroStats=1
-	for i=1:1:$zlength(nonZeroStats,",") do	; Check all stats so we mention any that were always zero
-	. set stat=$zpiece(nonZeroStats,",",i)
-	. if 0=$get(nonZeroStat(stat),0) do
-	. . set seenAllNonZeroStats=0
+	set seenIncrementedStats=1
+	for i=1:1:$zlength(statIncrementeds,",") do	; Check all stats so we mention any that were always zero
+	. set stat=$zpiece(statIncrementeds,",",i)
+	. if 0=$get(statIncremented(stat),0) do
+	. . set seenIncrementedStats=0
 	. . write "FAILURE - Monitored stat '",stat,"' was zero in all records",!
 	;
 	write !
-	if 'seenAllNonZeroStats write "FAILURE - At least one monitored toggle statistic value had no non-zero values",!
-	else  write "SUCCESS - Saw at least one non-zero value for each monitored toggle stat above",!
+	if 'seenIncrementedStats write "FAILURE - At least one monitored count statistic value had no incremented value",!
+	else  write "SUCCESS - Saw at least one increment for each monitored counter stat above",!
 	write !,$zdate($horolog,"24:60:SS")," Complete",!
 	quit
 
@@ -97,6 +111,10 @@ workerBee
 	. tstart ():(serial:transaction="BATCH")	; Use batch transactions for better throughput to see non-zero stats
 	. for j=1:1:25 set ^a(tr,$job,j)=$justify(j,10)
 	. tcommit
+	. view "FLUSH"				; Push JOPA stats
+	. ;do:((tr\10)=0)			; Drive mupip freeze on/off for ZAD, AFRA stats
+	. ;. zsystem "$gtm_dist/mupip freeze -online -noautorelease -on DEFAULT >>& freezelog.log"_$job	; Append $job to end of fn to eliminate
+	. ;. zsystem "$gtm_dist/mupip freeze -off DEFAULT>>& freezelog.log"_$job	   			; .. collisions between procs
 	write $zdate($horolog,"24:60:SS")," Worker/laborer #",jobindex," shutting down",!!
 	zshow "G"
 	quit

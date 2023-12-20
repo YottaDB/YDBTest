@@ -1,11 +1,11 @@
-# gtm8863b - This is a test of the so called "toggle type statistics".
+# gtm9422 - Show that former toggle statistics are now counters
 #
-# These are statistics that only ever have a value of 0 or 1 indicating a situation in-progress.
-# When looking at the global statistics, the values seen are the sum of the toggle events. This
-# test's validation is done by returning all the toggle statistics every 3 seconds for a 15
-# second duration and looking at each line verifying two things:
-#  1. Each toggle value does not exceed the number of worker-processes running.
-#  2. For each of the monitored toggle switches, a non-zero value is shown at least once.
+# The following statistics (ZSHOW "G") are changed from being toggle switches (value 1 while the
+# condition is active otherwise contain 0) to counters that are incremented whenever the condition
+# occurs: DEXA, GLB, JNL, MLK, PRC, TRX, ZAD, JOPA, AFRA, BREA, MLBA, TRGA
+#
+# This test launches 12 worker bee processes to cause at least some of these stats to accumulate.
+# We verify that the counts are always increasing instead of going up and down with toggle stats.
 
 # Create database
 Files Created in ##TEST_PATH##:
@@ -17,12 +17,12 @@ mumps.dat
 # Enable stat sharing
 Database file ##TEST_PATH##/mumps.dat now has sharing of gvstats set to  TRUE
 
-# Drive gtm8863b test routine
+# Drive gtm9422 test routine
 
-Monitored stats for test: MLK,MLBA
+Monitored stats for test: DEXA,GLB,JNL,MLK,TRX,JOPA,AFRA,BREA,MLBA,TRGA
 
 ##TEST_AWK..:..:.. Starting 12 workers
-##TEST_AWK..:..:.. Statistics @ 3 second intervals for 15 seconds
+##TEST_AWK..:..:.. Statistics @ 4 second intervals for 20 seconds
 ##TEST_AWK%YGBLSTAT: DEXA:[0-9]*,GLB:[0-9]*,JNL:[0-9]*,MLK:[0-9]*,PRC:[0-9]*,TRX:[0-9]*,ZAD:[0-9]*,JOPA:[0-9]*,AFRA:[0-9]*,BREA:[0-9]*,MLBA:[0-9]*,TRGA:[0-9]*  \(.* milliseconds\)
 ##TEST_AWK%YGBLSTAT: DEXA:[0-9]*,GLB:[0-9]*,JNL:[0-9]*,MLK:[0-9]*,PRC:[0-9]*,TRX:[0-9]*,ZAD:[0-9]*,JOPA:[0-9]*,AFRA:[0-9]*,BREA:[0-9]*,MLBA:[0-9]*,TRGA:[0-9]*  \(.* milliseconds\)
 ##TEST_AWK%YGBLSTAT: DEXA:[0-9]*,GLB:[0-9]*,JNL:[0-9]*,MLK:[0-9]*,PRC:[0-9]*,TRX:[0-9]*,ZAD:[0-9]*,JOPA:[0-9]*,AFRA:[0-9]*,BREA:[0-9]*,MLBA:[0-9]*,TRGA:[0-9]*  \(.* milliseconds\)
@@ -31,7 +31,7 @@ Monitored stats for test: MLK,MLBA
 ##TEST_AWK%YGBLSTAT: DEXA:[0-9]*,GLB:[0-9]*,JNL:[0-9]*,MLK:[0-9]*,PRC:[0-9]*,TRX:[0-9]*,ZAD:[0-9]*,JOPA:[0-9]*,AFRA:[0-9]*,BREA:[0-9]*,MLBA:[0-9]*,TRGA:[0-9]*  \(.* milliseconds\)
 ##TEST_AWK..:..:.. Shutting down now
 
-SUCCESS - Saw at least one non-zero value for each monitored toggle stat above
+SUCCESS - Saw at least one increment for each monitored counter stat above
 
 ##TEST_AWK..:..:.. Complete
 

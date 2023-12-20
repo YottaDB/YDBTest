@@ -28,6 +28,7 @@
 # gtm9429	[estess]	Verify features such as $QLENGTH() and $QSUBSCRIPT() do tighter checking for canonic references
 # gtm9437	[nars]		Verify USE ATTACH and USE DETACH issue error if additional device parameters are specified
 # gtm9424	[nars]		Verify various MUPIP BACKUP enhancements/changes in V7.0-001
+# gtm9422	[estess]	Verify toggle stats converted to counters
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v70001 test starts..."
@@ -35,7 +36,7 @@ echo "v70001 test starts..."
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
 setenv subtest_list_non_replic	"gtm9213 gtm8010 gtm9452 gtm8681 gtm4814 gtm9057 gtm9451 gtm9131 gtm9388 gtm9443 gtm9429"
-setenv subtest_list_non_replic	"$subtest_list_non_replic gtm9437 gtm9424"
+setenv subtest_list_non_replic	"$subtest_list_non_replic gtm9437 gtm9424 gtm9422"
 setenv subtest_list_replic	"gtm4272"
 
 if ($?test_replic == 1) then
@@ -59,6 +60,14 @@ endif
 if (("armv6l" == `uname -m`) || ("aarch64" == `uname -m`)) then
 	setenv subtest_exclude_list "$subtest_exclude_list gtm9131"
 endif
+
+# Disable gtm9422 subtest on ARM as it produces inconsistent results (failing nearly every run)
+# due to test timing and multiple processes and stats gathering where some stats stay zero
+# for the test duration (15 seconds).
+if ("armv6l" == `uname -m`) then
+	setenv subtest_exclude_list "$subtest_exclude_list gtm9422"
+endif
+
 
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh
