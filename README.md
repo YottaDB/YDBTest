@@ -314,12 +314,21 @@ Currently not all tests will run properly on the local test system. For example 
 
 [YDBGo]: https://gitlab.com/YottaDB/Lang/YDBGo
 
-## Docker Set-up
-To build, you need to build from YDBTest root folder, not the docker
-folder. In this example, we tag our built image to be called "ydbtest".
+## Using the Test System with Docker
+The file `docker/Dockerfile` is used to build the test system and YDB for each
+commit. Normally, you don't need to use it to build the test system, but can
+simply pull `registry.gitlab.com/yottadb/db/ydbtest`:
 
 ```sh
-docker build -f docker/Dockerfile -t ydbtest .
+docker pull registry.gitlab.com/yottadb/db/ydbtest
+```
+
+To build, you need to build from YDBTest root folder, not the docker
+folder. In this example, we tag our built image to be called "registry.gitlab.com/yottadb/db/ydbtest"
+(but any name would work).
+
+```sh
+docker build -f docker/Dockerfile -t registry.gitlab.com/yottadb/db/ydbtest .
 ```
 
 This will build the test system with the latest master of YottaDB.
@@ -329,7 +338,7 @@ suitable directory. `<local directory>` is where the artifacts will be stored
 on your host when docker is finished running the test):
 
 ```sh
-docker run --init -it -v <local directory>:/testarea1/ --rm ydbtest -t r132
+docker run --init -it -v <local directory>:/testarea1/ --rm registry.gitlab.com/yottadb/db/ydbtest -t r140
 ```
 
 The arguments after "ydbtest" are regular `gtmtest.csh` arguments. If you do
@@ -337,22 +346,28 @@ not pass any arguments, you will get the output of `gtmtest.csh -h`.
 
 To run against a copy of YDBTest on your file system, you can do this; the
 volume (-v) argument left hand side is the full path of the YDBTest git
-repository whose source code would be used to build YottaDB, the right hand
-side of the colon is a fixed path that is known by the docker scripts which you
-must not change:
+repository, the right hand side of the colon is a fixed path that is known by
+the docker scripts which you must not change:
 
 ```sh
-docker run --init -it -v <local directory>:/testarea1/ -v <full path to YDBTest>:/YDBTest --rm ydbtest -t r132
+docker run --init -it -v <local directory>:/testarea1/ -v <full path to YDBTest>:/YDBTest --rm registry.gitlab.com/yottadb/db/ydbtest -t r140
 ```
 
 To debug problems, instead of passing `gtmtest.csh` arguments, pass either
 `-shell` to go to the `gtmtest` user id in a way so that you are ready to run tests, or
-`-rootshell` to log-in as `root`.
+`-rootshell` to log-in as `root`. If you log-in using `-shell`, you will be given instructions
+on how to a run a test. You can do that and start debugging from there.
 
 ```sh
-docker run --init -it -v <local directory>:/testarea1/ --rm ydbtest -shell
-docker run --init -it -v <local directory>:/testarea1/ --rm ydbtest -rootshell
+docker run --init -it -v <local directory>:/testarea1/ --rm registry.gitlab.com/yottadb/db/ydbtest -shell
+docker run --init -it -v <local directory>:/testarea1/ --rm registry.gitlab.com/yottadb/db/ydbtest -rootshell
 ```
 
-To build this image with a custom version of YottaDB, see the instructions in
-`Dockerfile-test` in the YDB repository.
+To build this image with a custom version of YottaDB, clone
+`https://gitlab.com/YottaDB/DB/YDB.git`, and then run the following:
+
+```sh
+cd YDB
+docker build -f Dockerfile-test -t ydbtest2 .
+docker run --init -it -v <local directory>:/testarea1/ --rm ydbtest2 -t r140
+```
