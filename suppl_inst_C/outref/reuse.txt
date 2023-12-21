@@ -42,6 +42,11 @@ Error INITORRESUME seen in ##FILTERED##START_##TIMESTAMP##.out as expected:
 HST #      0 : Stream #                                  0 [0x00000000]
 HST #      1 : Stream #                                  1 [0x00000001]
 HST #      2 : Stream #                                  1 [0x00000001]
+# Restart source server. Test that the receiver server continues to operate fine across the connection reset.
+# Before r2.00 (when GTM-94146 fixes in GT.M V7.0-001 got merged), the receiver server would terminate with a
+# %YDB-E-REUSEINSTNAME in this connection reset situation. We don't expect to see any such errors now.
+==Executing MULTISITE_REPLIC 'STOPSRC INST1 INST3 RP'==
+==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST3 RP'==
 ==Executing MULTISITE_REPLIC 'SYNC ALL_LINKS'==
 ==Executing MULTISITE_REPLIC 'STOP ALL_LINKS OFF'==
 ==Executing MULTISITE_REPLIC 'RUN INST1 $gtm_tst/com/dbcheck_base.csh '==

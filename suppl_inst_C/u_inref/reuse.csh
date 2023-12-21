@@ -4,7 +4,7 @@
 #	Copyright 2012, 2013 Fidelity Information Services, Inc	#
 #								#
 #                                                               #
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
@@ -40,6 +40,12 @@ $MSR RUN INST3 '$gtm_tst/com/wait_for_log.csh -log RCVR_'$time_msr'.log.updproc 
 $MSR RUN INST3 '$MUPIP replic -edit -show mumps.repl' >&! INST3_show_repl.out
 echo "# Check the Stream number in history records of INSTANCE 3"
 $grep -E '^HST.*Stream #' INST3_show_repl.out
+
+echo "# Restart source server. Test that the receiver server continues to operate fine across the connection reset."
+echo "# Before r2.00 (when GTM-94146 fixes in GT.M V7.0-001 got merged), the receiver server would terminate with a"
+echo "# %YDB-E-REUSEINSTNAME in this connection reset situation. We don't expect to see any such errors now."
+$MSR STOPSRC INST1 INST3 RP
+$MSR STARTSRC INST1 INST3 RP
 
 # INST1 does not have updates of INST2, so -extract cannot be used
 $gtm_tst/com/dbcheck.csh
