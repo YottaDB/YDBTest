@@ -44,6 +44,7 @@ docker-ydbtest-image:
     - docker:dind
   script:
     - docker image build -f docker/Dockerfile --progress=plain -t registry.gitlab.com/yottadb/db/ydbtest .
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker push registry.gitlab.com/yottadb/db/ydbtest
   only:
     - master@YottaDB/DB/YDBTest
