@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -30,6 +30,7 @@
 # gtm9424	[nars]		Verify various MUPIP BACKUP enhancements/changes in V7.0-001
 # gtm9422	[estess]	Verify toggle stats converted to counters
 # gtm9423	[estess]	Verify MUPIP DUMPFHEAD recognizes the -FLUSH qualifier
+# gtm9410	[nars]		Verify %SYSTEM-E-ENO2 from concurrent GDE invocations AND GLD creation does not sleep unnecessarily
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v70001 test starts..."
@@ -37,7 +38,7 @@ echo "v70001 test starts..."
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
 setenv subtest_list_non_replic	"gtm9213 gtm8010 gtm9452 gtm8681 gtm4814 gtm9057 gtm9451 gtm9131 gtm9388 gtm9443 gtm9429"
-setenv subtest_list_non_replic	"$subtest_list_non_replic gtm9437 gtm9424 gtm9422 gtm9423"
+setenv subtest_list_non_replic	"$subtest_list_non_replic gtm9437 gtm9424 gtm9422 gtm9423 gtm9410"
 setenv subtest_list_replic	"gtm4272"
 
 if ($?test_replic == 1) then

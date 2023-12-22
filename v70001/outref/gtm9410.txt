@@ -1,0 +1,78 @@
+# ********************************************************************************************
+# GTM-9424 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-001_Release_Notes.html#GTM-9410)
+# 
+# 1) GDE attempts to avoid inappropriately creating a global directory by retrying its opening of an existing
+#    file a number of times; other components that read a global directory use the same technique to ensure a
+#    missing global directory is not a transient condition. These additional attempts take a fraction of a
+#    second, but one may perceive the additional time.
+# 
+# 2) Writing a revised global directory has a short gap between the removal of the prior file and the replacement
+#    by the new/revised file, during which another process might find the global directory missing; previously
+#    this was unlikely but has been encountered. (GTM-9410)
+# 
+# ##########################################################################################
+# Test 1 : Test 1st paragraph of release note
+# ##########################################################################################
+# Note that paragraph (1) in GT.M release note caused .gld file creation to slow down noticeably (always took 0.5 seconds)
+# and so YottaDB made a fix (in commit YDB@b12abc1f) to address the slow creation in the most common case.
+# Therefore we are testing this modified YDB behavior below and not paragraph (1) of the GT.M change/release-note.
+
+# -----------------------------------------------------------------------------------------------------------------------------
+# Test 1a) Test that creating a new mumps.gld does not sleep unnecessarily when neither mumps.gldinprogress nor mumps.gld exist
+# -----------------------------------------------------------------------------------------------------------------------------
+# Run [strace -o trace1a.outx GDE exit] after ensuring mumps.gldinprogress and mumps.gld both don't exist
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+# Run [grep clock_nanosleep trace1a.outx]
+# Expect to see NO output below
+
+# ---------------------------------------------------------------------------------------------------------------------------
+# Test 1b) Test that creating a new mumps.gld sleeps 0.5 seconds when mumps.gldinprogress exists but mumps.gld does not exist
+# ---------------------------------------------------------------------------------------------------------------------------
+# Run [strace -o trace1b.outx -T GDE exit] after ensuring mumps.gldinprogress exists but mumps.gld does not
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	##TEST_PATH##/mumps.gld
+# Run [grep clock_nanosleep trace1b.outx] and count the time taken in each call (last field in strace -T output) and sum it
+# Expect to see a number around 0.5.
+# Hence the %.1f usage below to avoid lower order decimal values as they can be non-deterministic.
+# Expect to see 0.5 output below. But allow up to 0.9 seconds due to system load issues.
+# On slow ARMV6L, allow up to 9.9 seconds.
+##SUSPEND_OUTPUT HOST_LINUX_ARMVXL
+##TEST_AWK0\.[5-9]
+##ALLOW_OUTPUT HOST_LINUX_ARMVXL
+##SUSPEND_OUTPUT HOST_LINUX_AARCH64 HOST_LINUX_X86_64
+##TEST_AWK[0-9]\.[0-9]
+##ALLOW_OUTPUT HOST_LINUX_AARCH64 HOST_LINUX_X86_64
+
+# ----------------------------------------------------------------------------------------------------------------------
+# Test 1c) Test that creating a new mumps.gld does not sleep when mumps.gld exists and mumps.gldinprogress exists or not
+# ----------------------------------------------------------------------------------------------------------------------
+# Randomly (50% chance) decide to create mumps.gldinprogress
+# Run [strace -o trace1c.outx GDE exit] after ensuring mumps.gld exists
+%GDE-I-LOADGD, Loading Global Directory file 
+	##TEST_PATH##/mumps.gld
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-NOACTION, Not updating Global Directory ##TEST_PATH##/mumps.gld
+# Run [grep clock_nanosleep trace1c.outx]
+# Expect to see NO output below
+
+# ##########################################################################################
+# Test 2 : Test 2nd paragraph of release note
+# ##########################################################################################
+# Start 4 parallel sessions where GDE is executed to modify the gld file ([change -segment] in this case)
+# Wait for the parallel invocations to finish
+# Check that some invocations of GDE encountered a %SYSTEM-E-ENO2 or %YDB-F-IONOTOPEN error due to missing gld file.
+# This verifies that this scenario is possible even now and in prior versions.
+PASS : Found at least one %SYSTEM-E-ENO2 or %YDB-F-IONOTOPEN error in bg_*.outx files
