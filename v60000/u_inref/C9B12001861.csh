@@ -23,6 +23,10 @@
 # and affects the calculations of this very sensitive test. So disable counter overflows.
 unsetenv gtm_db_counter_sem_incr
 
+# Turn off statshare related env var as it causes test hang due to this being a white-box test case
+# and is not considered worth the effort to fix the test and/or code to test this with statshare as well.
+source $gtm_tst/com/unset_ydb_env_var.csh ydb_statshare gtm_statshare
+
 $gtm_tst/com/dbcreate.csh mumps 1 -block_size=4096
 
 @ i = 1
