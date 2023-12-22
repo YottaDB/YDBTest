@@ -4,12 +4,26 @@
 # Copyright (c) 2003-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
+
+if ($?gtm_db_counter_sem_incr) then
+	if (16384 == $gtm_db_counter_sem_incr) then
+		# Turn off statshare related env var (in case it is turned on) as it causes additional %YDB-I-SHMREMOVED message
+		# only in this case. Interestingly, not all tests which have SEMINCR:16384 and STATS:1 fail. But all test failures
+		# have SEMINCR:16384 and STATS:1. It is still not clear what other test framework setting causes the failure but
+		# is not considered worth the effort to further understand this so we just disable statshare in this case.
+		source $gtm_tst/com/unset_ydb_env_var.csh ydb_statshare gtm_statshare
+	endif
+endif
+
 echo "Test case: 04 - bij_withdata"
 $gtm_tst/com/dbcreate.csh mumps 1
 $MUPIP set -journal=enable,before -reg "*"
