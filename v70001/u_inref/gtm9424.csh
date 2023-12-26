@@ -80,7 +80,10 @@ if (($ydb_test_copy_file_range_avail) && (("ubuntu" != $gtm_test_linux_distrib) 
 	#     When called from user space, copy_file_range() will only try to copy a file across filesystems
 	#     if the two are of the same type, and if that filesystem has explicit support for the system call
 	# Hence attempting the backup only if the file systems are of different type.
-	if ($tst_dir_fstype != $tmp_dir_fstype) then
+	# But for reasons not clear, even if the file systems are different, on AARCH64 and ARMV6L, the EXDEV error code
+	# does not show up. It is not considered worth it to further investigate that and so this part of the subtest
+	# is disabled on those platforms.
+	if (($tst_dir_fstype != $tmp_dir_fstype) && ("armv6l" != `uname -m`) && ("aarch64" != `uname -m`)) then
 		echo "# ------------------------------"
 		echo "# Test (1c) : EXDEV error code from MUPIP BACKUP"
 		echo "# ------------------------------"

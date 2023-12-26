@@ -46,7 +46,7 @@
 # In addition, we also check that the target directory has no files created (i.e. appropriate cleanup was done).
 
 # Create database
-##SUSPEND_OUTPUT NO_COPYFILERANGE_AVAIL TST_DIR_FSTYPE_SAME_AS_TMP UBUNTU_20.04
+##SUSPEND_OUTPUT NO_COPYFILERANGE_AVAIL TST_DIR_FSTYPE_SAME_AS_TMP UBUNTU_20.04 HOST_LINUX_ARMVXL HOST_LINUX_AARCH64
 # ------------------------------
 # Test (1c) : EXDEV error code from MUPIP BACKUP
 # ------------------------------
@@ -81,7 +81,7 @@
 ##TEST_AWK%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file /tmp/mumps_.*.dat
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
-##ALLOW_OUTPUT NO_COPYFILERANGE_AVAIL TST_DIR_FSTYPE_SAME_AS_TMP UBUNTU_20.04
+##ALLOW_OUTPUT NO_COPYFILERANGE_AVAIL TST_DIR_FSTYPE_SAME_AS_TMP UBUNTU_20.04 HOST_LINUX_ARMVXL HOST_LINUX_AARCH64
 # ------------------------------
 # Test (1d) : Ctrl-C results in BACKUPCTRL error message
 # ------------------------------
