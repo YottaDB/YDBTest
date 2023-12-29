@@ -1,7 +1,7 @@
 #!/usr/bin/env expect
 #################################################################
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -113,7 +113,7 @@ close_ydb;  # Extra close and re-spawn normalises the history list counts
 spawn_ydb
 
 send "recall\r"
-expect "1 w 3*2 w 4*3 w 5*YDB>"
+expect "2 w 3*3 w 4*4 w 5*YDB>"
 close_ydb
 
 write_file ydb401.inputrc "set history-size 6";  # Back to a larger history to allow full test of string recall
