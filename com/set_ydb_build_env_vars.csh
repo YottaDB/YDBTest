@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh
 #################################################################
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -27,7 +27,11 @@ if ("" != "$clangver") then
 	# linking with SimpleAPI or SimpleThreadAPI wrapper) have been seen to have issues linking because
 	# the .c files in the test system were compiled with gcc whereas libyottadb.so was compiled with clang.
 	# Therefore use clang as the linker for the test system in this case.
-	setenv gt_ld_linker "clang"
+	#
+	# That said, we have seen that LD_LIBRARY_PATH env var, when set, affects the link on some systems
+	# (noticed first on a RHEL 9 system). Therefore we unset this env var only for the link command.
+	# See https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/1815 for more details.
+	setenv gt_ld_linker 'env LD_LIBRARY_PATH="" clang'
 	# Note that we don't set clang to be the compiler in this case because gcc compiler flags and clang
 	# compiler flags differ and "gt_cc_options_common" and "gt_cc_shl_options" env vars would be already
 	# set to use gcc compiler flags. Hence the below is commented out.
