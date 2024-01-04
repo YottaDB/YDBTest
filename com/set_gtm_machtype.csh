@@ -4,7 +4,7 @@
 # Copyright (c) 2008-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -115,6 +115,7 @@ setenv gtm_endian `echo -n A | od -h | awk '{if ($2 == "0041") {print "LITTLE_EN
 # gtm_test_linux_distrib will be set to one of ubuntu, rhel, debian, centos, fedora, suse, arch or alpine on a linux server.
 # It will be set to "" on other servers
 setenv gtm_test_ubuntu_2310_plus 0
+setenv gtm_test_rhel9_plus 0
 if (-f /etc/os-release) then
 	setenv gtm_test_linux_distrib `grep -w ID /etc/os-release | cut -d= -f2 | cut -d'"' -f2`
 	# For now, treat all of the following as "suse".
@@ -136,6 +137,11 @@ if (-f /etc/os-release) then
 		set linuxver = `echo $gtm_test_linux_version | sed 's/\.//;'`
 		if (2310 <= $linuxver) then
 			setenv gtm_test_ubuntu_2310_plus 1
+		endif
+	else if ("rhel" == $gtm_test_linux_distrib) then
+		set majorver = `echo $gtm_test_linux_version | sed 's/\..*//;'`
+		if (9 <= $majorver) then
+			setenv gtm_test_rhel9_plus 1
 		endif
 	endif
 else

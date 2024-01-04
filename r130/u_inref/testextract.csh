@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #                                                               #
-# Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.  #
+# Copyright (c) 2019-2024 YottaDB LLC and/or its subsidiaries.  #
 # All rights reserved.                                          #
 #                                                               #
 #       This source code contains the intellectual property     #
@@ -104,6 +104,7 @@ $switch_chset "M"
 set last_ver = `$gtm_tst/com/random_ver.csh -type any`
 echo "$last_ver" > priorver.txt
 echo "\n# Switching to older version\n"
+source $gtm_tst/com/ydb_prior_ver_check.csh $last_ver
 source $gtm_tst/com/switch_gtm_version.csh $last_ver pro
 $GDE_SAFE exit
 foreach format("zwr" "go")

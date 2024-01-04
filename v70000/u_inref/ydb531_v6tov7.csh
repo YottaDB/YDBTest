@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -37,6 +37,11 @@ echo '# are incompatible together as V6 cannot create DBs with holes in them.'
 setenv gtm_test_use_V6_DBs 1
 setenv ydb_test_4g_db_blks 0
 echo
+
+# Before running dbcreate.csh, make sure we run all compatability checks of current env vars against old version we are
+# going to soon switch too after the "dbcreate.csh" call.
+source $gtm_tst/com/ydb_prior_ver_check.csh $gtm_test_v6_dbcreate_rand_ver
+
 echo '# Create 5 DBs for imptp to fill'
 $gtm_tst/com/dbcreate.csh mumps 5 -key=255 -rec=1500 -blk=4096 -glo=4096 -null_subscripts=always
 echo

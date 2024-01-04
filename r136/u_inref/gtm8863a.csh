@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -31,6 +31,7 @@ unsetenv gtm_db_counter_sem_incr
 echo
 echo '# Setting runversion to YottaDB r1.34'
 set prev_ver = "V63011_R134"
+source $gtm_tst/com/ydb_prior_ver_check.csh $prev_ver
 source $gtm_tst/com/switch_gtm_version.csh $prev_ver $tst_image
 echo
 echo '# Create database'

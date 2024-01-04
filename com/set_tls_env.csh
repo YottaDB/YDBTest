@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -32,4 +32,13 @@ if ("TRUE" == $gtm_test_tls) then
 	# Set password for socket use
 	setenv gtmtls_passwd_client $passwd
 	setenv gtmtls_passwd_server $passwd
+	if ((0 != $gtm_test_rhel9_plus) && (0 != $gtm_test_use_V6_DBs)) then
+		# It is a RHEL 9 or higher system and "$gtm_test_tls" is TRUE. In that case, disable choosing V6 builds
+		# for dbcreate.csh as they would encounter the following error since libgcrypt.so.11 needed by the older
+		# build maskpass is not available.
+		#	pro/plugin/gtmcrypt/maskpass: error while loading shared libraries:
+		#	libgcrypt.so.11: cannot open shared object file: No such file or directory
+		echo '# gtm_test_use_V6_DBs being set to disable, in set_tls_env.csh, due to gtm_test_rhel9_plus TRUE' >>&! settings.csh
+		setenv gtm_test_use_V6_DBs 0
+	endif
 endif
