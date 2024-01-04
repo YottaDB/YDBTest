@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.                                          #
 #								#
 #	This source code contains the intellectual property	#
@@ -44,6 +44,14 @@ $GTM << GTM_EOF
 	do ^setenv("noupdate1.out","a")
 	do ^setenv("noupdate2.out","b")
 GTM_EOF
+
+# In case the test framework chooses [-env gtm_test_dbcreate_initial_tn=0 -env gtm_statshare=1], the DFL gvstat would
+# not show up in the [dse dump -file -gvstats] output at all. This is because "dbcreate_base.csh" does not invoke
+# "create_reg_list.csh" in that case and so db shm does not get opened/closed (which would cause DFL updates).
+# Therefore treat that situation as if the counter is 0 by initializing it to 0. If a value shows up later,
+# "noupdate1.out_env.csh" would not be an empty file and would overwrite this value. If it is an empty file, this
+# 0 initial value would prevail.
+set DFL_a=0
 
 source noupdate1.out_env.csh
 source noupdate2.out_env.csh
