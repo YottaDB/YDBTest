@@ -4,7 +4,7 @@
 # Copyright (c) 2015 Fidelity National Information 		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -44,7 +44,7 @@ echo "gtm_tmp is bogus - expect INVTMPDIR from mumps (1)"
 source $gtm_tst/com/set_ydb_env_var_random.csh ydb_tmp gtm_tmp "bogus"
 $gtm_dist/mumps -run gtm8317util
 $gtm_tst/com/getoper.csh "$syslog_start" "" test_syslog1.txt	# now that mumps returned, get all syslog messages until this point
-$grep INVTMPDIR test_syslog1.txt | $grep -c `cat runningMpid.txt`
+$grep INVTMPDIR test_syslog1.txt | $grep -wc `cat runningMpid.txt`
 
 #
 # Bypass this gtmsecshr check on AIX. On AIX the gtmsecshr wrapper currently removes most envvars before driving
@@ -81,7 +81,7 @@ if ((HOST_LINUX_IX86 != "$gtm_test_os_machtype") && (HOST_HP-UX_IA64 != "$gtm_te
     setenv gtm_linktmpdir "bogus"
     $gtm_dist/mumps -run gtm8317util
     $gtm_tst/com/getoper.csh "$syslog_start" "" test_syslog3.txt
-    grep -E "INVTMPDIR|INVLINKTMPDIR" test_syslog3.txt | $grep -c `cat runningMpid.txt`
+    grep -E "INVTMPDIR|INVLINKTMPDIR" test_syslog3.txt | $grep -wc `cat runningMpid.txt`
 
     echo
     $echoline
@@ -92,7 +92,7 @@ if ((HOST_LINUX_IX86 != "$gtm_test_os_machtype") && (HOST_HP-UX_IA64 != "$gtm_te
     source $gtm_tst/com/unset_ydb_env_var.csh ydb_tmp gtm_tmp
     $gtm_dist/mumps -run gtm8317util
     $gtm_tst/com/getoper.csh "$syslog_start" "" test_syslog4.txt
-    $grep INVLINKTMPDIR test_syslog4.txt | $grep -c `cat runningMpid.txt`
+    $grep INVLINKTMPDIR test_syslog4.txt | $grep -wc `cat runningMpid.txt`
 
     echo
     $echoline
