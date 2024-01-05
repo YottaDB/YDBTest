@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -14,3 +14,8 @@
 echo '# Test of YDB#1033 - Verifies $ZCMDLINE is can be both SET and NEWed'
 
 $ydb_dist/yottadb -run ydb1033
+
+echo "# Run [mupip -]. This should issue a %YDB-E-CLIERR error."
+echo '# After YDB@5666d3a6, this used to SIG-11 and was fixed by YDB\!1458 (YDB@c995a2c6).'
+$ydb_dist/mupip -
+

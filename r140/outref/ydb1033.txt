@@ -38,3 +38,6 @@ $zcmdline BEFORE set at iteration=3 = [abcd2]
 $zcmdline AFTER  set at iteration=3 = [abcd3]
 $zcmdline BEFORE set at iteration=4 = [abcd3]
 $zcmdline AFTER  set at iteration=4 = [abcd4]
+# Run [mupip -]. This should issue a %YDB-E-CLIERR error.
+# After YDB@5666d3a6, this used to SIG-11 and was fixed by YDB!1458 (YDB@c995a2c6).
+%YDB-E-CLIERR, Unrecognized command: -
