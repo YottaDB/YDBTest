@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #                                                               #
-# Copyright (c) 2020-2023 YottaDB LLC and/or its subsidiaries.  #
+# Copyright (c) 2020-2024 YottaDB LLC and/or its subsidiaries.  #
 # All rights reserved.                                          #
 #                                                               #
 #       This source code contains the intellectual property     #
@@ -54,7 +54,9 @@ endif
 foreach iter ($verlist)
 	if ($iter == 1) then
 		# Running btest in $gtm_curpro
-		# version change to $gtm_curpro
+		# version change to $gtm_curpro. But before that run ydb_prior_ver_check.csh to make sure any incompatible
+		# settings are fixed (e.g. TLS won't work with $gtm_curpro = "r1.38" on RHEL 9).
+		source $gtm_tst/com/ydb_prior_ver_check.csh $gtm_curpro
 		source $gtm_tst/com/switch_gtm_version.csh $gtm_curpro pro
 		# Recreate gld in case curpro version has an incompatible gld format than current version
 		rm -f mumps.gld; $GDE exit >& gde$iter.out
