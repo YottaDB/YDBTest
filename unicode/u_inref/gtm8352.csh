@@ -4,7 +4,7 @@
 # Copyright (c) 2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -69,6 +69,7 @@ source $gtm_tst/com/set_ydb_env_var_random.csh ydb_utfcgr_string_groups gtm_utfc
 #
 echo
 echo "***** Starting random string/testcase generator"
+source $gtm_tst/com/ydb_prior_ver_check.csh $gtm_curpro
 source $gtm_tst/com/switch_gtm_version.csh $gtm_curpro $tst_image
 $gtm_dist/mumps -run utfcacheGenrand 5000   # generate 5000 test cases (15000 subtest cases)
 #
