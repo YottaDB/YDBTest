@@ -3,7 +3,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -286,6 +286,8 @@ BEGIN {
 			option_names[++no_options] = "OS_ARCH_VER"
 			if ("7.9" == ENVIRON["gtm_test_linux_version"])
 				envir[no_options] = "RHEL_7.9"
+			else if ("9.3" == ENVIRON["gtm_test_linux_version"])
+				envir[no_options] = "RHEL_9.3"
 		} else if ("suse" == ENVIRON["gtm_test_linux_distrib"]) {
 			envir[no_options] = "SUSE_LINUX_X86_64"
 			option_names[++no_options] = "OS_ARCH_SUBTYPE"

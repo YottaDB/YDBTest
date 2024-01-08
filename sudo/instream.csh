@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2019-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -51,16 +51,22 @@ setenv subtest_exclude_list ""
 # retries to the test did not address these failures so we've disabled the test.
 if ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) then
 	setenv subtest_exclude_list "$subtest_exclude_list plugins"
-else if (("rhel" == $gtm_test_linux_distrib) && ("7.9" == $gtm_test_linux_version)) then
-	# https://gitlab.com/YottaDB/Tools/YDBCMake/-/merge_requests/21 made the following change.
-	#	Always set locale to C.UTF-8. It's available in all modern Linux distros.
-	# But C.UTF-8 is not available on RHEL 7. And the "plugins" subtest uses ydbinstall to install
-	# the "encplugin", "aim" and "posix" plugins, all of which use the YDBCMake framework and so will
-	# not work on RHEL 7. Therefore disable this subtest on RHEL 7.
-	#
-	# olderversion disabled since no binaries for RHEL 7 (it's not supported) since r1.36
-	setenv subtest_exclude_list "$subtest_exclude_list plugins"
-	setenv subtest_exclude_list "$subtest_exclude_list olderversion"
+else if ("rhel" == $gtm_test_linux_distrib) then
+	if ("7.9" == $gtm_test_linux_version) then
+		# https://gitlab.com/YottaDB/Tools/YDBCMake/-/merge_requests/21 made the following change.
+		#	Always set locale to C.UTF-8. It's available in all modern Linux distros.
+		# But C.UTF-8 is not available on RHEL 7. And the "plugins" subtest uses ydbinstall to install
+		# the "encplugin", "aim" and "posix" plugins, all of which use the YDBCMake framework and so will
+		# not work on RHEL 7. Therefore disable this subtest on RHEL 7.
+		#
+		setenv subtest_exclude_list "$subtest_exclude_list plugins"
+		# olderversion disabled since no binaries for RHEL 7 (it's not supported) since r1.36
+		setenv subtest_exclude_list "$subtest_exclude_list olderversion"
+	else if ("9.3" == $gtm_test_linux_version) then
+		# RHEL 9 binaries are not available for r1.38 so disable the "olderversion" subtest there.
+		# This subtest will be re-enabled for RHEL 9 once r2.00 gets released on RHEL 9.
+		setenv subtest_exclude_list "$subtest_exclude_list olderversion"
+	endif
 else if (("ubuntu" == $gtm_test_linux_distrib) && ("20.04" == $gtm_test_linux_version)) then
         # olderversion disabled since no binaries for Ubuntu 20.04 (not all versions supported)
 	setenv subtest_exclude_list "$subtest_exclude_list olderversion"
