@@ -4,7 +4,7 @@
 # Copyright (c) 2005-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -52,6 +52,7 @@ else
 	set syslog_file=$4
 endif
 
+set message_check = 0
 if (-X journalctl) then
 	set datefmt = "%Y-%m-%d %H:%M:%S"
 	set has_journalctl
@@ -60,18 +61,6 @@ if (-X journalctl) then
 	set time_before = `date -d "$1" +"$datefmt"`
 	if ("$2" == "") then
 		set time_after = ""
-		if (! $?message) then
-			# When ending time ($2) is specified as "", doing a "journalctl -a" is not sometimes enough to get all
-			# syslog messages till the current point in time. It is possible for messages to be in transit so
-			# we generate a random syslog message and wait for that to show up (which implies all in-transit
-			# messages would automatically show up too). Note that we want to do this only if the user has not
-			# already specified a non-null $5. If they did, then we should be searching for that string instead
-			# and not this random string. Hence the check for "! $?message" above.
-			set message = `$ydb_dist/mumps -run ^%XCMD 'write $$^%RANDSTR(32)'`
-			# Generate the random string message to syslog.
-			set a = '$ZSYSLOG("'$message'")'
-			$ydb_dist/mumps -run ^%XCMD "set y=$a"
-		endif
 	else
 		# Advance by a second because journalctl does not include the messages encountered at --until timestamp
 		# On top of a second advance one more because we have seen one second delay between syslog message's timstamp and systemd journal wallclock timestamp
@@ -98,6 +87,18 @@ else
 	else
 		set time_after = ""
 	endif
+endif
+if (("" == "$time_after") && (! $?message)) then
+	# When ending time ($2) is specified as "", doing a "journalctl -a" is not sometimes enough to get all
+	# syslog messages till the current point in time. It is possible for messages to be in transit so
+	# we generate a random syslog message and wait for that to show up (which implies all in-transit
+	# messages would automatically show up too). Note that we want to do this only if the user has not
+	# already specified a non-null $5. If they did, then we should be searching for that string instead
+	# and not this random string. Hence the check for "! $?message" above.
+	set message = `$ydb_dist/mumps -run ^%XCMD 'write $$^%RANDSTR(32)'`
+	# Generate the random string message to syslog.
+	set a = '$ZSYSLOG("'$message'")'
+	$ydb_dist/mumps -run ^%XCMD "set y=$a"
 endif
 
 if ($?message) then
