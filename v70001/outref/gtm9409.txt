@@ -1,0 +1,16 @@
+# ********************************************************************************************
+# GTM-9409 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-001_Release_Notes.html#GTM-9409)
+# 
+# GT.M appropriately reports the underlying cause of a JOBFAIL error due to an issue setting up a socketpair
+# to transfer context to the new JOB process. Previously, it did not supply this information. (GTM-9409)
+# 
+# Enable WBTEST_JOBFAIL_FILE_LIM (174) white-box testing
+# Run [JOB] command. Expect to see JOBFAIL error with error detail of [Job error in socketpair] AND [%SYSTEM-E-ENO24]
+%YDB-E-JOBFAIL, JOB command failure,%YDB-I-TEXT, Job error in socketpair,%SYSTEM-E-ENO24, Too many open files
+		At M source location gtm9409+1^gtm9409
+
+YDB>
+# Disable WBTEST_JOBFAIL_FILE_LIM (174) white-box testing

@@ -31,6 +31,7 @@
 # gtm9422	[estess]	Verify toggle stats converted to counters
 # gtm9423	[estess]	Verify MUPIP DUMPFHEAD recognizes the -FLUSH qualifier
 # gtm9410	[nars]		Verify %SYSTEM-E-ENO2 from concurrent GDE invocations AND GLD creation does not sleep unnecessarily
+# gtm9409	[nars]		Verify JOBFAIL error due to socketpair setup issues reports the underlying cause
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v70001 test starts..."
@@ -38,7 +39,7 @@ echo "v70001 test starts..."
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
 setenv subtest_list_non_replic	"gtm9213 gtm8010 gtm9452 gtm8681 gtm4814 gtm9057 gtm9451 gtm9131 gtm9388 gtm9443 gtm9429"
-setenv subtest_list_non_replic	"$subtest_list_non_replic gtm9437 gtm9424 gtm9422 gtm9423 gtm9410"
+setenv subtest_list_non_replic	"$subtest_list_non_replic gtm9437 gtm9424 gtm9422 gtm9423 gtm9410 gtm9409"
 setenv subtest_list_replic	"gtm4272"
 
 if ($?test_replic == 1) then
@@ -49,9 +50,9 @@ endif
 
 setenv subtest_exclude_list ""
 
-# Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
+# filter out white box tests that cannot run in pro
 if ("pro" == "$tst_image") then
-	setenv subtest_exclude_list "$subtest_exclude_list"
+	setenv subtest_exclude_list "$subtest_exclude_list gtm9409"
 endif
 
 if ("dbg" == "$tst_image") then
