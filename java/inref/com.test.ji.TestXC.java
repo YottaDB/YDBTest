@@ -1142,7 +1142,7 @@ public class TestXC {
 	public static void getTest15() throws Exception {
 		final String[] types = new String[] {
 			"gtm_int_t", "gtm_int_t *", "gtm_uint_t", "gtm_uint_t *", "gtm_long_t", "gtm_long_t *",
-			"gtm_ulong_t", "gtm_ulong_t *", "gtm_float_t", "gtm_float_t *", "gtm_double_t", "gtm_double_t *",
+			"gtm_ulong_t", "gtm_ulong_t *", "gtm_float_t *", "gtm_double_t *",
 			"gtm_char_t *", "gtm_string_t *" };
 		int types_length = types.length;
 
@@ -1202,7 +1202,7 @@ public class TestXC {
 		 	"gtm_status_t", "gtm_status_t *", "gtm_jint_t *", "gtm_jlong_t *", "gtm_jfloat_t *", "gtm_jdouble_t *",
 		 	"gtm_jboolean_t *", "gtm_jstring_t *", "gtm_jbyte_array_t *", "gtm_jbig_decimal_t *" };
 		final boolean[] unimplemented = new boolean[] {
-			false, true, false, true, true, true, false, false, false, false, false, false, false, false, false
+			false, true, false, false, false, false, false, false, false, false, false, false, false, false, false
 		};
 		// do one because if the call table parsing fails for the first label, it will keep failing at the same spot
 		// for the subsequent cases

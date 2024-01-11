@@ -95,9 +95,11 @@ echo "Detail results in ydbxc_test_types.invalid\n"
 # List of types to test to make sure they are invalid when passed as parameters
 set types = "char string buffer" # strings must be pointer types
 # ydb_char_t** and ydb_status_t are not documented as valid for call-ins, so explicitly test that they are not accepted
-set types = "$types ydb_char_tPP ydb_status_t ydb_status_tP"
-# it does not makes sense to return ydb_pointertofunc_t(*)
+set types = "$types ydb_char_tPP charPP ydb_status_t ydb_status_tP"
+# ydb_pointertofunc_t(*) only applies to call-outs, not call-ins
 set types = "$types ydb_pointertofunc_t ydb_pointertofunc_tP"
+# call-ins do not support java types
+set types = "$types ydb_jboolean ydb_jint ydb_jlong ydb_jfloat ydb_jdouble ydb_jstring ydb_jbyte_array ydb_jbig_decimal"
 
 # Loop through types, testing that each is invalid as a parameter
 echo >! ydbxc_test_types.invalid  # Clear test result artifact
@@ -135,9 +137,6 @@ end
 # non-pointer types can't be returned with the call_in mechanism
 set types = "$types int uint long ulong float double"
 set types = "$types ydb_int_t ydb_uint_t ydb_long_t ydb_ulong_t ydb_float_t ydb_double_t ydb_char_t ydb_string_t ydb_buffer_t"
-set types = "$types ydb_jboolean ydb_jint ydb_jlong ydb_jfloat ydb_jdouble ydb_jstring ydb_jbyte_array ydb_jbig_decimal"
-# it does not makes sense to return ydb_pointertofunc_t
-set types = "$types ydb_pointertofunc_t ydb_status_t"
 
 # Loop through types, testing that each is invalid as a retval
 echo >! ydbxc_test_types.invalid  # Clear test result artifact

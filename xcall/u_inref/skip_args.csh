@@ -3,7 +3,7 @@
 #								#
 # Copyright 2013 Fidelity Information Services, Inc		#
 #								#
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -21,10 +21,10 @@ $gt_ld_shl_linker ${gt_ld_option_output}libskipargs${gt_ld_shl_suffix} $gt_ld_sh
 setenv GTMXC skip_args.tab
 echo "`pwd`/libskipargs${gt_ld_shl_suffix}" > $GTMXC
 cat >> $GTMXC << xx
-testInt:	void testInt(I:gtm_int_t,IO:gtm_int_t,I:gtm_int_t)
-testLong:	void testLong(I:gtm_int_t,O:gtm_long_t)
+testInt:	void testInt(I:gtm_int_t,I:gtm_int_t,I:gtm_int_t)
+testLong:	void testLong(I:gtm_int_t,I:gtm_long_t)
 testIntStar:	void testIntStar(I:gtm_double_t *,IO:gtm_int_t *)
-testLongStar:	void testLongStar(I:gtm_int_t,O:gtm_int_t,O:gtm_long_t *)
+testLongStar:	void testLongStar(I:gtm_int_t,I:gtm_int_t,O:gtm_long_t *)
 testFloatStar:	void testFloatStar(I:gtm_int_t,I:gtm_char_t *,I:gtm_float_t *,O:gtm_float_t *,IO:gtm_float_t *)
 testDoubleStar:	void testDoubleStar(I:gtm_int_t,IO:gtm_double_t *)
 testCharStar:	void testCharStar(I:gtm_int_t,IO:gtm_char_t **,I:gtm_int_t,IO:gtm_char_t *)

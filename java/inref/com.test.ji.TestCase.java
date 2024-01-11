@@ -2,7 +2,7 @@
 *								*
 * Copyright 2013 Fidelity Information Services, Inc		*
 *								*
-* Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	*
+* Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	*
 * All rights reserved.						*
 *								*
 *	This source code contains the intellectual property	*
@@ -272,7 +272,8 @@ public abstract class TestCase {
 			for (int i = 0; i < numOfArgs; i++) {
 				if (i != 0)
 					builder.append(",");
-				if (args[i].direction == GTMType.INPUT_ONLY)
+				// special handling below of JAVA_BIG_DECIMAL which can only be an input type
+				if (args[i].direction == GTMType.INPUT_ONLY || args[i].type == GTMType.JAVA_BIG_DECIMAL)
 					builder.append("I");
 				else if (args[i].direction == GTMType.OUTPUT_ONLY)
 					builder.append("O");

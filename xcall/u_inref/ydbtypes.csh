@@ -41,9 +41,7 @@ echo
 echo
 echo "### Now test that invalid input (I) types are disallowed by ydb"
 set types = "buffer bufferP unsigned unsignedP"
-#The following types fail the test so are commented out.
-# IMHO these should be added back in and the code changed to reject them, because they don't work.
-#set types = "$types ydb_float_t ydb_double_t float double"
+set types = "$types ydb_status_t ydb_float_t ydb_double_t float double"
 foreach type ($types)
   setenv ydb_xc_ydbtypes ydb_type-$type.xc
   echo "`pwd`/ydbtypes${gt_ld_shl_suffix}" >! $ydb_xc_ydbtypes
@@ -59,12 +57,9 @@ end
 echo
 echo "### Now test that invalid output (O) types are disallowed by ydb"
 #Add the types that do not work for O and IO direction
-#The following types fail the test so are commented out.
-# IMHO these should be added back in and the code changed to reject them,
-# because they don't work as outputs as expected.
-#set types = "$types     int       uint       long       ulong       int64       uint64"
-#set types = "$types ydb_int_t ydb_uint_t ydb_long_t ydb_ulong_t ydb_int64_t ydb_uint64_t"
-#set types = "$types ydb_pointertofunc_t ydb_pointertofunc_tP"
+set types = "$types     int       uint       long       ulong       int64       uint64"
+set types = "$types ydb_int_t ydb_uint_t ydb_long_t ydb_ulong_t ydb_int64_t ydb_uint64_t"
+set types = "$types ydb_pointertofunc_t ydb_pointertofunc_tP"
 foreach type ($types)
   setenv ydb_xc_ydbtypes ydb_type-$type.xc
   echo "`pwd`/ydbtypes${gt_ld_shl_suffix}" >! $ydb_xc_ydbtypes

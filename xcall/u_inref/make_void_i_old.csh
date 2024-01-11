@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -20,7 +20,7 @@
 #	Associates (SCA).
 #
 $gt_cc_compiler $gtt_cc_shl_options -I$gtm_tst/com -I$gtm_dist $gtm_tst/$tst/inref/gtmxc_void_i.c
-$gt_ld_shl_linker ${gt_ld_option_output}lib_void_i_o${gt_ld_shl_suffix} $gt_ld_shl_options gtmxc_void_i.o $gt_ld_syslibs 
+$gt_ld_shl_linker ${gt_ld_option_output}lib_void_i_o${gt_ld_shl_suffix} $gt_ld_shl_options gtmxc_void_i.o $gt_ld_syslibs
 
 setenv	GTMXC	gtmxc_void_i.tab
 echo "`pwd`/lib_void_i_o${gt_ld_shl_suffix}" > $GTMXC
@@ -35,8 +35,8 @@ indoublep:	void	xc_indoublep(I:xc_double_t *)
 incharp:	void	xc_incharp(I:xc_char_t *)
 incharpp:	void	xc_incharpp(I:xc_char_t **)
 instringp:	void	xc_instringp(I:xc_string_t *)
-inint:	        void	xc_inint(IO:xc_int_t)
+inint:	        void	xc_inint(I:xc_int_t)
 inintp:	        void	xc_inintp(IO:xc_int_t *)
-inuint: 	void	xc_inuint(IO:xc_uint_t)
+inuint: 	void	xc_inuint(I:xc_uint_t)
 inuintp:	void	xc_inuintp(IO:xc_uint_t *)
 xx
