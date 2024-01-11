@@ -32,10 +32,11 @@
 # gtm8517		[estess]	Test that install permissions and checksum files are created by install and are non-zero
 # olderversion		[sam]		Test to see if ydbinstall can successfully install older versions
 # gtm9324		[estess]	Test ZSTEP restored/continues after $ZINTERRUPT or $ZTIMEOUT, also restrict.txt treats ZBREAK like ZSTEP
+# gtm9408		[nars]		Test that HANG command does not hang indefinitely if system date is reset back in time
 
 setenv subtest_list_common "sourceInstall diffDir ydb306 gtm9116 plugins ydb783"
 setenv subtest_list_non_replic "gtm7759 ydb894 ydb880 ydb910 ydb924 gtm8517"
-setenv subtest_list_non_replic "$subtest_list_non_replic olderversion gtm9324"
+setenv subtest_list_non_replic "$subtest_list_non_replic olderversion gtm9324 gtm9408"
 setenv subtest_list_replic ""
 
 if ($?test_replic == 1) then
@@ -81,6 +82,16 @@ if ("HOST_LINUX_ARMVXL" == $gtm_test_os_machtype) then
 	# filter out ydb910 subtest on 32-bit ARM since it requires building YottaDB from source which will take a long time.
 	# filter out gtm9324 on 32-bit ARM due to https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/1773#note_1696945962
 	setenv subtest_exclude_list "$subtest_exclude_list ydb910 gtm9324"
+endif
+
+# Disable gtm9408 subtest on
+# 1) AARCH64/ARMV6L as it is very sensitive to test runtime (measures elapsed time of HANG command)
+#    and is likely to fail on those slow systems.
+# 2) RHEL/CentOS/SUSE as timesyncd does not seem to reset the system clock automatically (after the test resets the
+#    system date back in time. Not clear why and is not considered worth it considering Debian and Ubuntu run the test fine.
+if (("HOST_LINUX_X86_64" != $gtm_test_os_machtype)			\
+		|| (("ubuntu" != $gtm_test_linux_distrib) && ("debian" != $gtm_test_linux_distrib))) then
+	setenv subtest_exclude_list "$subtest_exclude_list gtm9408"
 endif
 
 # Save a copy of the current system yottadb.pc before it gets modified by the various ydbinstall.sh invocations done in the

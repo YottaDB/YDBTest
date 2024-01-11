@@ -1,0 +1,46 @@
+# ********************************************************************************************
+# GTM-9409 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-001_Release_Notes.html#GTM-9408)
+# 
+# The HANG command avoids a race condition where a non-zero duration could occasionally hang
+# indefinitely. The change makes things, including $HOLOROG and $ZUT, that rely on the system clock more
+# sensitive to changes which adjust that resource. The workaround for this was to wake the affected
+# process with a SIGALRM, and change any HANG that exhibited the symptom to use a timed READ of some
+# non-responding device in place of the HANG. (GTM-9408)
+# 
+# -----------------------------------------------"
+# Test scenario is running a HANG 3 and concurrently resetting the system date back in time by 100 seconds
+# and sending the hanging process a signal (mupip intrpt sends SIGUSR1).
+# 
+# This used to cause the process to incorrectly conclude that it needed to hang for 103 more seconds when
+# the original hang gets interrupted by the SIGUSR1 signal.
+# 
+# With the GTM-9408 fixes, we expect the HANG 3 to hang only for 3 seconds even if the system time is reset
+# back by 100 seconds.
+# 
+# Since resetting the system date requires root access, this subtest is included in the "sudo" test.
+# -----------------------------------------------"
+# 
+# Create database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Run [mumps -run gtm9408]
+# JOB off child process that does the [HANG 3]
+# Wait for child process to reach the [HANG 3] point
+# Now that we know the child process is in the middle of [HANG 3], reset system date back by 100 seconds
+# and send it a [mupip intrpt] to exercise the faulty code path fixed by GTM-9408.
+# Wait for child process to terminate
+# Print the elapsed time during the [HANG 3] in the child process
+# We expect a value of 3 in the ^difftime global below
+# In case of system load, it is possible the elapsed time is more than 3 seconds so we allow
+# anywhere from 3 to 5 seconds to show up as the value of ^difftime global below.
+##TEST_AWK\^difftime=[345]
+# Validate DB
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
