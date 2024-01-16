@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -21,6 +21,17 @@ setenv gtm_test_use_V6_DBs 0
 
 # Disabled settings that do not work with MSR and prior versions
 source $gtm_tst/com/disable_settings_msr_priorver.csh
+
+# In case com/do_random_settings.csh had set "ydb_ipv4_only" env var, make sure "gtm_ipv4_only" env var is also set
+# as we use an older version source server below and it is possible that is a pure GT.M build which does not have any
+# clue about "ydb_ipv4_only" whereas the current version receiver server will and so there will be a disconnect in that
+# the source server will try to use IPv6 address whereas the receiver server will try to use IPv4 address for the same
+# host name resulting in no connection happening. Fix that by setting "gtm_ipv4_only" env var to the same value.
+if ($?ydb_ipv4_only) then
+	setenv gtm_ipv4_only $ydb_ipv4_only
+	echo "# gtm_ipv4_only set to match ydb_ipv4_only in gtm8423.csh"	>>&! settings.csh
+	echo "setenv gtm_ipv4_only $gtm_ipv4_only"				>>&! settings.csh
+endif
 
 # Prepare local and remote directories
 $MULTISITE_REPLIC_PREPARE 2
