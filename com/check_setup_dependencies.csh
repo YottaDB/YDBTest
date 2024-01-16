@@ -4,7 +4,7 @@
 # Copyright (c) 2009-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -120,10 +120,18 @@ if (0 != $status) then
 endif
 
 # Ensure that a user-specific directory for gpg files exists and is usable.
-source $tst_com/create_user_gnupghome.csh
-if (0 != $status) then
-	echo "TEST-E-GNUPGHOMEDIR failed to create a GNUPGHOME directory."
-	@ error++
+if ($?test_encryption) then
+	if ("NON_ENCRYPT" == $test_encryption) then
+		set check_bypass = 1
+	endif
+endif
+if (! $?check_bypass) then
+	source $tst_com/create_user_gnupghome.csh
+	if (0 != $status) then
+		echo "TEST-E-GNUPGHOMEDIR failed to create a GNUPGHOME directory."
+		echo "Ensure that test_encryption is set to NON_ENCRYPT on each box where you want this check bypassed ;"
+		@ error++
+	endif
 endif
 
 # Check that $ggdata and its subdirectories are write-accessible

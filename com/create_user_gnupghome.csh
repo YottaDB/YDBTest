@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -20,7 +20,7 @@ set log_file = /tmp/__${USER}_create_gnupghome.log
 set gnupghome_source = /usr/library/com/gnupg
 
 if (! -d $gnupghome_source) then
-	echo 'Missing '$gnupghome_source' directory. As library run $cms_tools/doall.csh -server "'${HOST:r:r:r}'" -run "$cms_tools/build_gnupghome.csh -force" -doallmail <user ID> from any box.'
+	echo 'Missing '$gnupghome_source' directory. create_user_gnupghome.csh cannot proceed without that.'
 	exit 1
 endif
 
