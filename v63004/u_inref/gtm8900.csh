@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -32,8 +32,8 @@ echo ""
 
 echo "# Testing MUPIP SET -[NO]ENCRYPT in a properly set up environment"
 echo "# --------------------------------------------------------------------------------------------------------------------"
-#setenv gtm_passwd "69747320612073656372657420746f206576657279626f6479a" # Garbage string in hexidecimal format (hex is required for this env var)
-setenv gtm_passwd "69747320612073656372657420746f206576657279626f647921" # Garbage string in hexidecimal format (hex is required for this env var)
+#setenv gtm_passwd "69747320612073656372657420746f206576657279626f6479a" # Garbage string in hexadecimal format (hex is required for this env var)
+setenv gtm_passwd "69747320612073656372657420746f206576657279626f647921" # Garbage string in hexadecimal format (hex is required for this env var)
 
 
 
@@ -57,7 +57,7 @@ echo ""
 echo "# \$MUPIP set -NOENCRYPTABLE -REGION 'DEFAULT'"
 $MUPIP set -NOENCRYPTABLE -REGION "DEFAULT"
 
-setenv gtm_passwd "4a616b652052657a616320372f31312f32303138" # Garbage string in hexidecimal format (hex is required for this env var)
+setenv gtm_passwd "4a616b652052657a616320372f31312f32303138" # Garbage string in hexadecimal format (hex is required for this env var)
 
 echo ""
 echo ""
@@ -103,7 +103,7 @@ else
 endif
 
 if ($set_gtm_passwd) then
-	setenv gtm_passwd "726f736574796c65726d61727468616a6f6e6573646f6e6e616e6f62656c544152444953" # Garbage string in hexidecimal format (hex is required for this env var)
+	setenv gtm_passwd "726f736574796c65726d61727468616a6f6e6573646f6e6e616e6f62656c544152444953" # Garbage string in hexadecimal format (hex is required for this env var)
 	echo "#		gtm_passwd set to garbage value"
 else
 	unsetenv gtm_passwd
