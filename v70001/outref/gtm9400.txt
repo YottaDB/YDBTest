@@ -1,0 +1,25 @@
+# ********************************************************************************************
+# GTM-9400 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-001_Release_Notes.html#GTM-9400)
+# 
+# MUPIP REORG defers MUPIP STOP recognition while performing bit map adjustments after an action that frees
+# a block, which prevents such events from possibly causing KILLABANDONED and associated errors. Previously
+# REORG did not use such a deferral. The workaround was to stop the REORG with a CTRL-C. (GTM-9400)
+# 
+# Create database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Load 100,000 nodes into database to make sure later [mupip reorg] has some work to do while we try to [mupip stop] it
+# Try [mupip reorg] with fillfactor of 50, 10, 90 in a loop for 10 iterations and try to [mupip stop] the reorg each time
+# At each stage, after the reorg is done, run a [mupip integ] to see if there is any integ error. We expect none.
+# Before YDB@57006c9f, we used to see KILLABANDONED integrity errors in the [mupip integ] output.
+PASS : [mupip integ] reported no errors (including KILLABANDONED)
+# Validate DB
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
