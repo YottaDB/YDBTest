@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -24,21 +24,19 @@ $gtm_exe/mumps -run %XCMD 'set ^ready=0'
 mkdir backup_fg
 (source $gtm_tst/$tst/u_inref/concbkup_bg.csh & ; echo $! >&! concbkup_bg.pid) >&! concbkup_bg.out
 setenv gtm_white_box_test_case_enable 1
-setenv gtm_white_box_test_case_number 83
+setenv gtm_white_box_test_case_number 83	# WBTEST_CONCBKUP_RUNNING
 @ max_conc_bkups = 1000
 while ( $count <= $max_conc_bkups )
 	rm backup_fg/* >&! delete_fg.out
 	$MUPIP backup "*" backup_fg/ >&! backup_fg_$count.out
 	$grep -q "BKUPRUNNING" backup_fg_$count.out
 	if ( 0 == $status ) then
-		$gtm_exe/mumps -run %XCMD 'set ^ready=1'
+		touch STOP
 		set errlog = "backup_fg_$count.out"
 		break
-	else
-		@ ready = `$gtm_exe/mumps -run %XCMD 'w ^ready'`
-		if ( 1 == $ready) then
-			break
-		endif
+	else if (-e STOP) then
+		break
+	endif
 	if ( 1000 == $count ) then
 		break
 	endif
