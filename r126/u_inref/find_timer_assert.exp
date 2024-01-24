@@ -1,7 +1,7 @@
 #!/usr/bin/expect -f
 #################################################################
 #								#
-# Copyright (c) 2019-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -18,19 +18,32 @@ set timeout 300
 spawn /usr/local/bin/tcsh -f
 source $::env(gtm_tst)/com/expectinit.exp
 
+proc send_ctrlc {} {
+	# When ydb_readline env var is set to 1, we have noticed that when a Ctrl-C is sent, the terminal echo could be still off
+	# (because the code is still in the control of libreadline)and so the "^C" does not get displayed. Additionally a few
+	# newlines also get displayed depending on where in the libreadline code we are when the SIGINT is received. Therefore,
+	# to avoid this and wait for the OPEN command to start # executing, sleep for a small bit (1 second) before moving on to
+	# the next step (which is to send the Ctrl-C).
+	if {$::env(ydb_readline) == 1} {
+		sleep 1
+	}
+	# Send Ctrl-C
+	send \x03
+}
+
 send -- "\$ydb_dist/mumps -direct\r"
 expect -exact "YDB>"
 
 # open pipe with a 60 second timeout and send it a Ctrl-C
 send -- "OPEN \"unicodefifoM.pipe\":(FIFO:WRITE:RECORDSIZE=-1:CHSET=\"M\"):60\r"
 expect -exact "\r"
-send \x03
+send_ctrlc
 expect -exact "%YDB-I-CTRLC, CTRL_C encountered"
 expect -exact "YDB>"
 send -- "OPEN \"unicodefifoM.pipe\":(FIFO:WRITE:RECORDSIZE=-1:CHSET=\"M\"):60\r"
 expect -exact "\r"
 # send another Ctrl-C so the expect script can continue
-send \x03
+send_ctrlc
 expect -exact "%YDB-I-CTRLC, CTRL_C encountered"
 expect -exact "YDB>"
 send -- "halt\r"
