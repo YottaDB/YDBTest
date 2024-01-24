@@ -4,7 +4,7 @@
 # Copyright (c) 2005-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -23,6 +23,14 @@ source $gtm_tst/com/gtm_test_setbeforeimage.csh
 setenv ydb_test_4g_db_blks 0	# Need to disable this huge-db scheme as it won't work on existing V6 databases
 				# that get upgraded on-the-fly (by v6_db_auto_upgrade etc.) inside the test.
 source $gtm_tst/com/gtm_test_trigupdate_disabled.csh	# This test does a switchover and so disable -trigupdate
+
+# This test uses older version (potentially GT.M build) source server and newer version (YottaDB build) receiver server.
+# Therefore need "ydb_ipv4_only" and "gtm_ipv4_only" to be in sync. See comment in v63000/u_inref/gtm8423.csh for more details.
+if ($?ydb_ipv4_only) then
+	setenv gtm_ipv4_only $ydb_ipv4_only
+	echo "# gtm_ipv4_only set to match ydb_ipv4_only in gtm8423.csh"	>>&! settings.csh
+	echo "setenv gtm_ipv4_only $gtm_ipv4_only"				>>&! settings.csh
+endif
 
 #
 setenv gtm_test_tptype "ONLINE"
