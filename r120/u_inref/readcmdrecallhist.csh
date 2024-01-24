@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -51,7 +51,9 @@ foreach file (readcmd1_simple.exp readcmd2_complex.exp)
 			echo "# Also test that additions to history don't happen if it is a duplicate of most recently added line"
 			echo "# Also test that additions to history don't happen if it is an empty line"
 			echo "# Also test using UTF-8 characters (which are multi-byte as well as have multi-column display width)"
-			echo "# Also test that MUPIP INTRPT in the middle of READs is handled even if partial input has been read"
+			if (0 == $ydb_readline) then
+				echo "# Also test that MUPIP INTRPT in the middle of READs is handled even if partial input has been read"
+			endif
 			echo "-----------------------------------------------------------------------"
 
 			# Cannot display full contents of complex test as it is random output

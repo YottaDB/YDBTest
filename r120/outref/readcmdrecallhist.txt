@@ -44,7 +44,9 @@ halt
 # Also test that additions to history don't happen if it is a duplicate of most recently added line
 # Also test that additions to history don't happen if it is an empty line
 # Also test using UTF-8 characters (which are multi-byte as well as have multi-column display width)
+##SUSPEND_OUTPUT YDB_READLINE
 # Also test that MUPIP INTRPT in the middle of READs is handled even if partial input has been read
+##ALLOW_OUTPUT YDB_READLINE
 -----------------------------------------------------------------------
 
 YDB>
