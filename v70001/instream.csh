@@ -34,6 +34,7 @@
 # gtm9409	[nars]		Verify JOBFAIL error due to socketpair setup issues reports the underlying cause
 # gtm9400	[nars]		Verify that MUPIP STOP on MUPIP REORG does not result in KILLABANDONED integ error
 # gtm9392	[nars]		Verify that NOISOLATION is correctly maintained even if gld/db have differing max-key-size
+# gtm9382	[nars]		Verify that GTMSECSHRPERM error is not issued if gtm_dist is a symbolic link and read-only db
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v70001 test starts..."
@@ -42,6 +43,7 @@ echo "v70001 test starts..."
 setenv subtest_list_common	""
 setenv subtest_list_non_replic	"gtm9213 gtm8010 gtm9452 gtm8681 gtm4814 gtm9057 gtm9451 gtm9131 gtm9388 gtm9443 gtm9429"
 setenv subtest_list_non_replic	"$subtest_list_non_replic gtm9437 gtm9424 gtm9422 gtm9423 gtm9410 gtm9409 gtm9400 gtm9392"
+setenv subtest_list_non_replic	"$subtest_list_non_replic gtm9382"
 setenv subtest_list_replic	"gtm4272"
 
 if ($?test_replic == 1) then

@@ -1,0 +1,33 @@
+# ********************************************************************************************
+# GTM-9382 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-001_Release_Notes.html#GTM-9382)
+# 
+# GT.M appropriately handles symbolic links and relative paths in the ##SOURCE_PATH## path. In V7.0-000,
+# GT.M issued a GTMSECSHRPERM or SYSCALL error when the first process attempting access to a previously
+# quiescent database file had read-only permissions to the file. Other actions that require gtmsecshr
+# (e.g., when dealing with processes or resources created or owned by a different user, such as waking
+# or checking for the existence, and removing or instantiating a resource, such as semaphores, shared
+# memory or socket files) could result in such error messages as well. The workaround was to avoid
+# symbolic links and relative paths for V7.0-000 (GTM-9382)
+# 
+# Create database mumps.dat
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Set read-only permission on mumps.dat
+# Set soft link from [./gtmdist] in current directory to [$gtm_dist] and reset [gtm_dist] env var to point to [./gtmdist]
+# Access database using [$gtm_dist/mumps] now that $gtm_dist is a soft link to the real $gtm_dist.
+# We do not expect any error. With GT.M V7.0-000, we would see a %GTM-E-GTMSECSHRPERM error at this point.
+# Note that with GT.M V7.0-001 and later versions, we do not see the %GTM-E-GTMSECSHRPERM error but do see a
+# [gtmsecshr not named gtmsecshr] error. None of the YottaDB builds though issue this error (which is good).
+# So while this test does not pass with GT.M V7.0-001, it does show a difference in behavior between V7.0-000
+# and V7.0-001 and is therefore considered a good test.
+# Set read-write permission back on mumps.dat
+# Validate DB
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
