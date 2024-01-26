@@ -35,6 +35,7 @@
 # gtm9400	[nars]		Verify that MUPIP STOP on MUPIP REORG does not result in KILLABANDONED integ error
 # gtm9392	[nars]		Verify that NOISOLATION is correctly maintained even if gld/db have differing max-key-size
 # gtm9382	[nars]		Verify that GTMSECSHRPERM error is not issued if gtm_dist is a symbolic link and read-only db
+# gtm9373	[nars]		Verify SRCBACKLOGSTATUS and LASTTRANS messages in MUPIP REPLICATE -SOURCE -SHOWBACKLOG
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v70001 test starts..."
@@ -44,7 +45,7 @@ setenv subtest_list_common	""
 setenv subtest_list_non_replic	"gtm9213 gtm8010 gtm9452 gtm8681 gtm4814 gtm9057 gtm9451 gtm9131 gtm9388 gtm9443 gtm9429"
 setenv subtest_list_non_replic	"$subtest_list_non_replic gtm9437 gtm9424 gtm9422 gtm9423 gtm9410 gtm9409 gtm9400 gtm9392"
 setenv subtest_list_non_replic	"$subtest_list_non_replic gtm9382"
-setenv subtest_list_replic	"gtm4272"
+setenv subtest_list_replic	"gtm4272 gtm9373"
 
 if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
@@ -63,9 +64,11 @@ if ("dbg" == "$tst_image") then
 	setenv subtest_exclude_list "$subtest_exclude_list"
 endif
 
-# Disable gtm9131 subtest on ARM as it is a heavyweight test (spawns off 512 processes)
 if (("armv6l" == `uname -m`) || ("aarch64" == `uname -m`)) then
+	# Disable gtm9131 subtest on ARM as it is a heavyweight test (spawns off 512 processes)
 	setenv subtest_exclude_list "$subtest_exclude_list gtm9131"
+	# Disable gtm9373 subtest on ARM as it is a timing-sensitive test
+	setenv subtest_exclude_list "$subtest_exclude_list gtm9373"
 endif
 
 # Disable gtm9422 subtest on ARM as it produces inconsistent results (failing nearly every run)
