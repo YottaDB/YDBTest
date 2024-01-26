@@ -18,7 +18,7 @@ GTM-9382 - Test the following release note
 
 Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-001_Release_Notes.html#GTM-9382)
 
-GT.M appropriately handles symbolic links and relative paths in the $gtm_dist path. In V7.0-000,
+GT.M appropriately handles symbolic links and relative paths in the \$gtm_dist path. In V7.0-000,
 GT.M issued a GTMSECSHRPERM or SYSCALL error when the first process attempting access to a previously
 quiescent database file had read-only permissions to the file. Other actions that require gtmsecshr
 (e.g., when dealing with processes or resources created or owned by a different user, such as waking
