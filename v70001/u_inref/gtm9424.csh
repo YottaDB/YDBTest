@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -126,7 +126,7 @@ echo "# Also filter out %YDB-I-FILERENAME and %YDB-I-JNLCREATE lines as the jour
 echo "# on where in the mupip backup process flow the Ctrl-C interrupts."
 echo "# Additionally, the %YDB-I-BACKUPCTRL could show up sometimes without being in a new line depending on when the"
 echo "# Ctrl-C happens. Therefore ensure it always starts at a new line using a [sed] command below."
-sed 's/\^C//;s/%YDB-I-BACKUPCTRL/\n&/;' expect_sanitized.outx | $grep YDB | grep -vE "FILERENAME|JNLCREATE"
+sed 's/\^C//;s/%YDB-I-BACKUPCTRL/\n&/;' expect_sanitized.outx | $grep "^%YDB" | grep -vE "FILERENAME|JNLCREATE"
 echo
 echo "# Check that [bak1] directory has NO files in it (i.e. appropriate cleanup happened in [mupip backup] command)."
 echo "# Running [ls -l bak1]. Expecting no output."
