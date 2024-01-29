@@ -4,7 +4,7 @@
 # Copyright (c) 2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -20,6 +20,7 @@
 # $2 - optional max. wait time (by default it is 60 seconds), -1 implies infinite wait
 # $3 - logfile path
 # $4 - optionally - Do not log anything
+# $5 - treat zombie/defunct process as dead
 #
 # Returns 0 if process is dead
 # Returns 1 if process is still alive after max.wait time
@@ -57,9 +58,11 @@ endif
 set pid = "$1"
 set onesleep = 1
 
+set treat_defunct_as_dead = "$5"
+
 @ iters = 1
 while ($iters <= $sleepiters)
-	$gtm_tst/com/is_proc_alive.csh $pid	# sets $status to 0 if process is alive, 1 if process is dead
+	$gtm_tst/com/is_proc_alive.csh $pid "" "$treat_defunct_as_dead"	# sets $status to 0 if process is alive, 1 if process is dead
 	if ($status == 0) then
 		sleep $onesleep	# process is still alive, sleep some more time
 	else

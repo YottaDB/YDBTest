@@ -4,7 +4,7 @@
 # Copyright (c) 2003-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -15,7 +15,8 @@
 #################################################################
 #
 # $1 - process-id
-# $2 - filename to log details [Optional - defalts to isprocalive.out]
+# $2 - filename to log details [Optional - defaults to isprocalive.out]
+# $3 - treat zombie/defunct process as dead
 #
 # Exits with normal status   (i.e. 0) if process $1 is alive
 # Exits with abnormal status (i.e. 1) if process $1 is not alive
@@ -31,6 +32,8 @@ if ("" != "$2") then
 else
 	set logfile = isprocalive.out
 endif
+
+set treat_defunct_as_dead = "$3"
 
 # If it is not used by a test, do not log the output. Logging the output is only for debugging purpose.
 # Non-test usages might create the output file at odd places like /usr/library or if created in $HOME will create unison issues
@@ -71,18 +74,12 @@ else
 	set stat = $status
 endif
 
-if ( (0 == $stat) && ("hp-ux" == "$gtm_test_osname") ) then
-	# If the process is alive and if the os is hp-ux or aix,
-	# ignore <defunct> processes and treat them as dead since they are dead as far as the test system is concerned
-	# The only reason they are alive is for the init process to do a waitpid() which is an OS thing, nothing related to GT.M.
-	# check <defunct_process_with_ppid_of_1_in_ps_listing>
-	# check <defunct_process_causes_WAITPROCALIVE_E_WAITTOOLONG/v5> for why this should not be done on AIX
-	set iszombie = `ps -lp $pidtowait | $tst_awk '{if ($2=="Z") print $2}'`	# BYPASSOK ps
-	if ("Z" == "$iszombie") then
-		exit 1
-	else
-		exit 0
-	endif
-else
+if (0 != $stat) then
 	exit $stat
+endif
+
+if ("treat_defunct_as_dead" == "$treat_defunct_as_dead") then
+	$gtm_tst/com/is_defunct_pid.csh $pidtowait
+	set pid_is_defunct = $status
+	exit $pid_is_defunct
 endif

@@ -2,6 +2,7 @@
 # Freeze replication instance
 ==Executing MULTISITE_REPLIC 'RUN INST2 $gtm_tst/com/wait_for_log.csh -log ##FILTERED##RCVR_##TIMESTAMP##.log.updproc -message MUINSTFROZEN'==
 # Kill all processes accessing the database file
+# Wait for all killed processes to terminate
 ==Executing MULTISITE_REPLIC 'RUN INST2 $MUPIP ftok mumps.dat'==
                 File ::            Semaphore Id ::        Shared Memory Id ::                FTOK Key ::                             FileId
 -------------------------------------------------------------------------------------------------------------------------------------------

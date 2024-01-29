@@ -4,6 +4,9 @@
 # Copyright (c) 2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -33,8 +36,12 @@ $gtm_exe/mumps -run %XCMD 'set ^a=1'
 $MSR RUN INST2 '$gtm_tst/com/wait_for_log.csh -log RCVR_'${time_msr}'.log.updproc -message MUINSTFROZEN'
 
 echo "# Kill all processes accessing the database file"
-$MSR RUN INST2 '$kill -TERM `fuser mumps.dat`'										>& term.log
-sleep 5
+$MSR RUN INST2 'set pidlist = `fuser mumps.dat`; echo $pidlist; $kill -TERM $pidlist >& term.log' >& pidlist.txt
+echo "# Wait for all killed processes to terminate"
+foreach pid (`tail -1 pidlist.txt`)
+	$gtm_tst/com/wait_for_proc_to_die.csh $pid "" "" "" "treat_defunct_as_dead"
+end
+
 $MSR RUN INST2 '$MUPIP ftok mumps.dat'
 $MSR RUN INST2 '$MUPIP ftok -jnlpool mumps.repl'
 $MSR RUN INST2 '$MUPIP ftok -recvpool mumps.repl'
