@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -18,6 +18,7 @@
 # the JDK installation, libjava.so, and libjvm.so. The purpose is to provide an easy way for YottaDB tests
 # (by sourcing this script) to set up environment for Java call-ins and call-outs.
 
+set curdir = $PWD
 setenv JAVA_HOME `$tst_awk '$1 == "'$HOST:ar'" {print $10}' $gtm_test_serverconf_file`
 if ("NA" == $JAVA_HOME) then
 	# Check if /usr/lib/jvm/* directory can be found such that it contains libjava.so. If so use that.
@@ -39,6 +40,7 @@ if ("NA" == $JAVA_HOME) then
 endif
 if ("" == $JAVA_HOME) then
 	echo "TEST-E-FAIL : Java is not available on this platform, or the installation path is missing in $gtm_test_serverconf_file"
+	cd $curdir
 	exit 1
 endif
 
@@ -60,6 +62,8 @@ if ("Linux" == $HOSTOS) then
 	endif
 	cd -
 else
+	cd $curdir
 	exit 1
 endif
 
+cd $curdir

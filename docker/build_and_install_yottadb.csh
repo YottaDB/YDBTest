@@ -1,7 +1,7 @@
 #!/bin/tcsh
 #################################################################
 #								#
-# Copyright (c) 2021-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2021-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -125,3 +125,20 @@ make && make install && make clean
 find $ydb_dist/plugin -type f -exec chown root:root {} +
 cd -
 rm -r /tmp/plugin-build
+
+# Install GTMJI plugin
+wget https://sourceforge.net/projects/fis-gtm/files/Plugins/GTMJI/1.0.4/ji_plugin_1.0.4.tar.gz
+tar xzf ji_plugin_1.0.4.tar.gz
+cd ji_plugin_1.0.4
+# The make step below needs JAVA_HOME and JAVA_SO_HOME env vars set appropriately so set that up first using "set_java_paths.csh"
+# But before that set up "tst_awk" and "HOSTOS" env var so "set_java_paths.csh" can work without errors.  Also modify a sed
+# expression in set_java_paths.csh to work with the docker build (where the hostname is HOST so replace $HOST:ar with HOST).
+setenv tst_awk gawk	# needed for "set_java_paths.csh"
+cp /usr/library/gtm_test/T999/com/set_java_paths.csh .
+sed -i 's/\'$HOST:ar\'/HOST/;' set_java_paths.csh
+setenv HOSTOS `uname -s`
+source set_java_paths.csh
+make install && make clean
+cd ..
+rm ji_plugin_1.0.4.tar.gz
+

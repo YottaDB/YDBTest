@@ -1,6 +1,6 @@
 #################################################################
 #                                                               #
-# Copyright (c) 2021-2023 YottaDB LLC and/or its subsidiaries.       #
+# Copyright (c) 2021-2024 YottaDB LLC and/or its subsidiaries.       #
 # All rights reserved.                                          #
 #                                                               #
 # This source code contains the intellectual property           #
@@ -47,7 +47,6 @@ RUN apt-get update && \
                     libssl-dev \
                     libreadline-dev \
                     zlib1g-dev \
-                    tcsh \
                     lsof \
                     bc \
                     unzip \
@@ -75,7 +74,6 @@ RUN apt-get update && \
                     iproute2 \
                     openjdk-17-jdk \
                     golang \
-                    libreadline-dev \
                     && \
                     apt-get clean
 
