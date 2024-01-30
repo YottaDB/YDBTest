@@ -4,7 +4,7 @@
 # Copyright (c) 2005-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -140,6 +140,7 @@ source $gtm_tst/com/set_ydb_build_env_vars.csh
 # Set gtm_icu_version/ydb_icu_version env vars at startup
 source $gtm_tst/com/set_icu_version.csh
 
+source $gtm_tst/com/set_gtm_machtype.csh # do this before as it defines gtm_test_os_machtype env var (needed by set_ldlibpath.csh)
 source $gtm_tst/com/set_ldlibpath.csh
 # Various checks and exits :
 if ( $USER =~ {library,,root} ) then
@@ -279,8 +280,6 @@ if ($?gtm_test_noggsetup) then
 	setenv gtm_test_noIGS 1
 	setenv gtm_test_temporary_disable 1	# env var to temporarily disable a few tests to get clean E_ALL in non-GG setup
 endif
-# get machine endian type
-source $gtm_tst/com/set_gtm_machtype.csh
 set hostn = $HOST:r:r:r
 if ($?cms_tools) then
 	setenv gtm_server_location `$cms_tools/determine_server_location.csh`
