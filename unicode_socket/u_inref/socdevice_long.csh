@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2013 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -52,7 +55,6 @@ d ^socdev("UTF-16")
 h
 GTM_EOF
 #
-sleep 10
 $gtm_tst/com/dbcheck.csh -extract mumps
 $gtm_tst/com/portno_release.csh
 echo LEAVING SOCKET SOCDEVICE_LONG

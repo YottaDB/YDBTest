@@ -1,3 +1,18 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;								;
+; Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
+; Portions Copyright (c) Fidelity National			;
+; Information Services, Inc. and/or its subsidiaries.		;
+;								;
+;	This source code contains the intellectual property	;
+;	of its copyright holder(s), and is made available	;
+;	under a license.  If you do not know the terms of	;
+;	the license, please stop and do not read further.	;
+;								;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 socdev(encoding)
 	;;; socdev.m
 	;   test basic functionality of the socket device with combination
@@ -17,8 +32,8 @@ socdev(encoding)
 	for i=1:1:^data("total")  lock +^data(i)
 	set cjob="job client("""_encoding_"""):(output="""_"clientb-"_encoding_".mjo"_""":error="""_"clientb-"_encoding_".mje"_""")"
 	set sjob="job server("""_encoding_"""):(output="""_"serverb-"_encoding_".mjo"_""":error="""_"serverb-"_encoding_".mje"_""")"
-	xecute cjob
-	xecute sjob
+	xecute cjob set pid($incr(pid))=$zjob
+	xecute sjob set pid($incr(pid))=$zjob
 	for i=1:1:^data("total")  do
 	. write !,i," starting ..."
 	. lock -^data(i)
@@ -26,6 +41,8 @@ socdev(encoding)
 	. l +^data(i)
 	. write " finished "
 	. d conclude
+	; wait for backgrounded process to terminate before returning to caller script
+	for i=1:1:pid do ^waitforproctodie(pid(i),300)
 	quit
 waitforstart(i)
 	set maxwait=300 ; wait for 5 minutes max
