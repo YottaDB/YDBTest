@@ -21,7 +21,7 @@ mumps.dat
 # Verify LOCKSPACEFULL message was seen in syslog
 ##TEST_AWK.* %YDB-E-LOCKSPACEFULL, No more room for LOCK slots on database file ##TEST_PATH##/mumps.dat .*
 # Verify at least one TPNOTACID message was seen in syslog by child pids
-##TEST_AWK.* %YDB-I-TPNOTACID, LOCKGCINTP at child\+9\^gtm9451 violates ACID properties of a TRANSACTION and could exceed 2 seconds; \$TRESTART = 3 and indefinite RESTARTs may occur .*
+##TEST_AWK.* %YDB-I-TPNOTACID, LOCKGCINTP at child\+13\^gtm9451 violates ACID properties of a TRANSACTION and could exceed 2 seconds; \$TRESTART = 3 and indefinite RESTARTs may occur .*
 # Validate DB
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *

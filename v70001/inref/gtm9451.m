@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;								;
-; Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -23,8 +23,9 @@ gtm9451	;
 	set njobs=8	; need more jobs to induce TP restarts and go to final retry
 	do ^job("child^gtm9451",njobs,"""""")
 	;
-	; Let the children run for a while
-	hang 15
+	; Let the children run for a while. Keep waiting until one LOCK timeout happened (which implies LOCKSPACEFULL event)
+	; when ^stop would get automatically set to 1. In case that never happens, time out after 60 seconds to signal failure.
+	for i=1:1:60000 quit:^stop=1  hang 0.001
 	;
 	; Signal child pids to stop
 	set ^stop=1
@@ -41,15 +42,22 @@ gtm9451	;
 	quit
 
 child	;
-	do ^sstep	; Print each M line as it gets executed (to help debug test failures/hangs)
-	set locktimeout=1
-	set $zmaxtptime=0	; i.e. NO timeout. This is to ensure TP timeout is more than lock timeout of 1 second.
+	do ^sstepzh	; Print each M line as it gets executed with $zh information (to help debug test failures/hangs)
+	set locktimeout=0.001
+	set $zmaxtptime=0	; i.e. NO timeout. This is to ensure TP timeout is more than lock timeout of 0.001 second.
 	for i=1:1  quit:^stop=1  do
 	. tstart ():serial
+	. write "$zh = ",$zh," : i = ",i," :  $trestart = ",$trestart,!
 	. ; Until we reach the final retry, do lots of sets that would create restarts
-	. if $trestart<3 for j=1:1:100  set ^x(j)=$justify($job,$random(200)+1)
+	. ; Hang between each set to greatly increase the probability of restarts amongst concurrent processes.
+	. if $trestart<3 for j=1:1:100  set ^x(j)=$justify($job,$random(200)+1)  hang 0.001
 	. ; Once we reach the final retry, do lots of LOCK commands that would cause a LOCKSPACEFULL situation
-	. else  for j=1:1:1000 quit:^stop=1  zwrite j lock +^a($j,$$^%RANDSTR(10,,"AN")):locktimeout
+	. else  for j=1:1:1000 quit:^stop=1  do
+	. . zwrite j
+	. . lock +^a($j,$$^%RANDSTR(10,,"AN")):locktimeout
+	. . ; If a lock timeout happens, it means a LOCKSPACEFULL event occurred and so we expect LOCKGCINTP message
+	. . ; to have been issued (which is what the test wants to see) so signal all processes to stop at this point.
+	. . set:'$test ^stop=1
 	. tcommit
 	. ; Release all locks obtained inside tstart/tcommit above.
 	. lock
