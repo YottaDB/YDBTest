@@ -3,7 +3,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -111,6 +111,11 @@ BEGIN {
 	gsub(/HDR 64-bit Format                                    FALSE/,"HDR 64-bit Format                                    .....");
 	# QDBRUNDOWN is randomly true or false
 	gsub(/HDR Quick database rundown is active                 ...../,"HDR Quick database rundown is active                 .....");
+	# If TLS is true, then the number of renegotiations has been seen to go as high as 7 or so in rare cases so allow
+	# for a range from 0 to 9 and treat all of that as effectively 0. If TLS is false, we expect only a value of 0
+	# which is what the reference file contains so no gsub() call needed in that case.
+	if ("TRUE" == ENVIRON["gtm_test_tls"])
+		gsub(/Number of TLS\/SSL renegotiations               [0-9] \[0x0000000[0-9]\]/,"Number of TLS/SSL renegotiations               0 [0x00000000]");
 	if (ENVIRON["gtm_test_trigupdate"] == 1)
 		gsub(/Trigger updates replicated \(-trigupdate\)    TRUE/,"Trigger updates replicated (-trigupdate)  ##TorF");
 	else
