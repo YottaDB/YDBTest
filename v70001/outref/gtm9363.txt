@@ -1,0 +1,104 @@
+# ********************************************************************************************
+# GTM-9363 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-001_Release_Notes.html#GTM-9363)
+# 
+#   The Source Server performs its polling activities in a more CPU-efficient manner. Also, the Source Server
+#   schedules a TLS renegotiation after an appropriate multiple of heartbeat events. This prevents a TLS
+#   renegotiation from interfering/overlapping with the normal replication message interchange mechanism
+#   and eliminates the need of a separate timer event for running periodic TLS renegotiation. Previously,
+#   the Source Server used a separate timer for TLS renegotiation which could cause a race condition. MUPIP
+#   produces the MUPCLIERR error when the specified heartbeat interval (the fifth parameter of -CONNECTPARAMS)
+#   is larger than the TLS renegotiate interval. Previously, it did not report this condition as an
+#   error. The default value of the heartbeat max period (the sixth parameter) of -CONNECTPARAMS is 300
+#   seconds. Previously, the value was 60 seconds. The Receiver Server logs an REPLCOMM information message
+#   when the connection breaks during a message exchange. Previously, the Receiver Server reported this
+#   event in its log file but not as an REPLCOMM informational message.. (GTM-9363)
+# 
+# ********************************************************************************************
+# See the following discussion threads for a few portions of the release note that are not going to be tested.
+#   1) https://gitlab.com/YottaDB/DB/YDBTest/-/issues/544#note_1751617213
+#   2) https://gitlab.com/YottaDB/DB/YDBTest/-/issues/544#note_1762707387
+# ********************************************************************************************
+# 
+# Setup SSL/TLS if not already set as this test relies on it.
+
+# ---------------------------------------------------------------------------------------
+# test1 : Test that renegotiate interval is set to a multiple of the heartbeat interval
+# ---------------------------------------------------------------------------------------
+# Choose renegotiate interval randomly as 1 minute OR 2 minutes
+# Set [gtm_test_tls_renegotiate] env var to that value as that is what gets used by dbcreate.csh
+# Choose heartbeat interval randomly between 20 seconds and 60 seconds
+# Choosing minimum as 20 seconds to avoid test failures due to very small heartbeat intervals
+#   as a loaded system might not do a renegotiation at the calculated time.
+# Choosing maximum as 60 seconds to ensure heartbeat interval stays below renegotiate interval
+#   which has a minimum value of 1 minute.
+
+# This test verifies that renegotiation happens exactly at the calculated time.
+# This is bound to cause failures on the slower AARCH64/ARMV6L systems so this subtest is disabled there.
+
+# Run [dbcreate.csh] to create database and start replication servers on source and receiver side
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Files Created in ##REMOTE_TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+# Calculate the actual renegotiation interval (in terms of a multiple of heartbeat intervals)
+# See the rules described at https://gitlab.com/YottaDB/DB/YDBTest/-/issues/544#note_1761057527
+# for details on the below calculation.
+# Run [mupip replic -source -jnlpool -show] to verify actual renegotiation interval matches expected.
+PASS : [Input Renegotiate Interval] matches expected value
+PASS : [Actual Renegotiate Interval] matches expected value
+
+# ---------------------------------------------------------------------------------------
+# test2 : Test that [Next Renegotiate Time] is accurate
+# ---------------------------------------------------------------------------------------
+# Wait for source and receiver to connect. That will ensure TLS renegotiation happened as part of initial handshake.
+# Get [Next Renegotiate Time] from [mupip replic -source -jnlpool -show] output in jnlpool_show2.out.
+# Wait and verify actual renegotiation happens at that time.
+# Look at the timestamp of the [Sending REPL_RENEG_ACK_ME message] line in the source server log.
+# Check if the timestamp matches the [Next Renegotiate Time] timestamp noted above.
+PASS : Actual renegotiation happened exactly when [Next Renegotiate Time] indicated
+
+# ---------------------------------------------------------------------------------------
+# test3 : Test that [Prev Renegotiate Time] is accurate
+# ---------------------------------------------------------------------------------------
+# Verify [Prev Renegotiate Time] becomes old value of [Next Renegotiate Time]
+# Get [mupip replic -source -jnlpool -show] output again in jnlpool_show3.out
+PASS : [Prev Renegotiate Time] after renegotiation matches [Next Renegotiate Time] before renegotiation
+
+# Run [dbcheck.csh] to integ database and shut replication servers on source and receiver side
+Shutting down Passive Source Server and Receiver Server in ##REMOTE_TEST_PATH##
+Shutting down Primary Source Server Server in ##TEST_PATH##
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+# ---------------------------------------------------------------------------------------------------
+# test4 : Test that MUPCLIERR error is seen if heartbeat interval is larger than renegotiate_interval
+# ---------------------------------------------------------------------------------------------------
+# Set heartbeat interval to a random value guaranteed to be larger than the renegotiate_interval
+# Try restarting source server using the same command as generated in the previous stage of this test
+# But modify just the heartbeat interval to be the new larger value.
+# Expect a MUPCLIERR error
+##TEST_AWKRENEGOTIATE_INTERVAL \[[12]\] \(in minutes\) cannot be less than HEARTBEAT_PERIOD \[[1-9][0-9]*\]
+%YDB-E-MUPCLIERR, Action not taken due to CLI errors
+
+# -------------------------------------------------------------------------------------------------------
+# test5 : Test that Default value of heartbeat max period (6th parameter in CONNECTPARAMS) is 300 seconds
+# -------------------------------------------------------------------------------------------------------
+# Search for [Connect Parms Heartbeat Max Wait] in jnlpool_show2.out (from a previous stage of the test)
+# That stage did not specify an explicit value so the default should have been used
+# We expect the default to be 300 below
+SRC # 0 : Connect Parms Heartbeat Max Wait             300 [0x0000012C]
