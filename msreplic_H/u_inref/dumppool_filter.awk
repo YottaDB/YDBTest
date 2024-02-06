@@ -52,6 +52,8 @@ BEGIN {
 	# If it shows up as a timestamp, the previous "gsub" would have converted that time to ..../../.. syntax.
 	# So need to only take care of the 0 possibility below.
 	gsub(/: Next Renegotiate Time                          0/, ": Next Renegotiate Time        ..../../.. ..:..:..");
+	# Do the same thing with Prev Renegotiate Time
+	gsub(/: Prev Renegotiate Time                          0/, ": Prev Renegotiate Time        ..../../.. ..:..:..");
 	# The following are run specific fields
 	gsub(/CTL YottaDB Version         *YottaDB r[a-zA-Z0-9_\-\. ]*/, "CTL YottaDB Version                         ##YDBVERSION##");
 	gsub(/CTL Instance file name      *[a-zA-Z0-9_\.\/]*/,      "CTL Instance file name                        ##INSTFILE##");
@@ -88,7 +90,8 @@ BEGIN {
 	gsub(/: Remote is Supplementary Instance            TRUE/, ": Remote is Supplementary Instance  ##TRUE/FALSE##");
 	gsub(/: Currently Reading from                      (POOL|FILE)/, ": Currently Reading from          ##POOL_OR_FILE##");
 	gsub(/: Journal File Only                          ( TRUE|FALSE)/, ": Journal File Only              ##TRUE_OR_FALSE##");
-	gsub(/: Renegotiate Interval \(in seconds\)           [0-9 ]* \[0x0000[0-9A-F]*\]/, ": Renegotiate Interval (in seconds)              0 [0x00000000]");
+        gsub(/: Input Renegotiate Interval in seconds       [0-9 ]* \[0x0000[0-9A-F]*\]/, ": Input Renegotiate Interval in seconds          0 [0x00000000]");
+        gsub(/: Actual Renegotiate Interval in seconds     [0-9 ]* \[0x0000[0-9A-F]*\]/, ": Actual Renegotiate Interval in seconds         0 [0x00000000]");
 	# The following are machine specific fields
 	gsub(/Secondary HOSTNAME           *[a-zA-Z0-9\.:]*/, "Secondary HOSTNAME                  ##HOSTNAME##")
 	gsub(/Secondary INET Address  *[0-9a-fA-F:\.]*/, "Secondary INET Address              ##INETADDR##")
