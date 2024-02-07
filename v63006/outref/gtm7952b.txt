@@ -1,0 +1,23 @@
+# GT.M protects buffers used for external calls and produces an EXTCALLBOUNDS error if the external call attempts to exceed the space requested by the call table definition
+# Previously GT.M did not provide this protection and used a less efficient strategy for managing the space
+# Additionally, when an external call exceeds its specified preallocation (gtm_string_t * or gtm_char_t * output), GT.M produces an EXCEEDSPREALLOC error
+# Previously GT.M did not immediately detect this condition, which could cause subsequent hard to diagnose failures.
+# GT.M supports call-specific options in external call tables by appending a colon to the end of the line followed by zero or more space separated, case-insensitive keywords
+# The SIGSAFE keyword attests that the specific call does not create its own signal handlers, which allows GT.M to avoid burdensome signal handler coordination for the external call
+# Previously, and by default, GT.M saves and restores signal setups for external calls.
+
+# Testing EXCEEDSPREALLOC error from gtm_string_t* by setting length > allocated
+%YDB-E-EXCEEDSPREALLOC, Preallocated size 1 for M external call label callOutStr exceeded by string of length 5
+# Testing EXTCALLBOUNDS error from gtm_string_t* by writing out of buffer range
+# this produces an expected core file
+%YDB-F-EXTCALLBOUNDS, Wrote outside bounds of external call buffer. M label: callOutStr2
+# Testing EXCEEDSPREALLOC error from gtm_char_t** by writing out of buffer range
+%YDB-F-EXTCALLBOUNDS, Wrote outside bounds of external call buffer. M label: callOutChar
+# Testing EXTCALLBOUNDS error from gtm_char_t** by writing out of buffer range
+# this produces an expected core file
+%YDB-F-EXTCALLBOUNDS, Wrote outside bounds of external call buffer. M label: callOutChar2
+################################################################
+There are YDB_FATAL files
+##TEST_AWK./YDB_FATAL_ERROR.ZSHOW_DMP.*.txt
+##TEST_AWK./YDB_FATAL_ERROR.ZSHOW_DMP.*.txt
+##TEST_AWK./YDB_FATAL_ERROR.ZSHOW_DMP.*.txt
