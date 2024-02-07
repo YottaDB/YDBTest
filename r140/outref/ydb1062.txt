@@ -1,0 +1,57 @@
+##############################################################################
+# Test that MUPIP TRIGGER -STDIN reports correct line numbers
+##############################################################################
+
+# -------------------------------------------------------------------
+# test1 : Test that MUPIP TRIGGER -STDIN reports correct line numbers when input is not readily available
+# -------------------------------------------------------------------
+# Create database
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+# Trying the test case from https://gitlab.com/YottaDB/DB/YDB/-/issues/1062#note_1763076890
+# Expect [Line 1] to be reported below
+# Before the YDB#1062 fixes, one would see [Line 23845] or an arbitrary line number
+STDIN, Line 1: No matching triggers found for deletion
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+1 trigger file entries did not update database trigger content
+=========================================
+
+# -------------------------------------------------------------------
+# test2 : Test that MUPIP TRIGGER -STDIN reports correct line numbers when input has empty lines
+# -------------------------------------------------------------------
+# Specify non-empty lines in Line 1 and Line 3. And an empty line in Line 2
+# Expect [Line 1] and [Line 3] to be displayed but not [Line 2]
+# Before the YDB#1062 fixes too, the behavior would be the same and correct
+# But during an interim version of the YDB#1062 fix that counted empty lines too,
+# this test incorrectly displayed [Line 1] and [Line 2] and hence keeping this test.
+STDIN, Line 1: No matching triggers found for deletion
+STDIN, Line 3: No matching triggers found for deletion
+=========================================
+0 triggers added
+0 triggers deleted
+0 triggers modified
+0 trigger file entries did update database trigger content
+2 trigger file entries did not update database trigger content
+=========================================
+
+# -------------------------------------------------------------------
+# test3 : Test that MUPIP TRIGGER -STDIN does not use up CPU while waiting for data to be read from stdin
+# -------------------------------------------------------------------
+# This tests the need for a sleep while waiting for data to be read from stdin.
+# See https://gitlab.com/YottaDB/DB/YDB/-/merge_requests/1478#note_1765010891 for more details.
+# Run [ (sleep 3; echo "-*") | $gtm_dist/mupip trigger -stdin ]
+# Expect the CPU usage percent for the above command to be less than 10% (PASS would be printed below in this case)
+# When the sleep was not added in the code, this used to be close to 99% (indicating a spin-loop situation).
+# Expect to see [PASS] below.
+CPU usage less than 10% : PASS
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
