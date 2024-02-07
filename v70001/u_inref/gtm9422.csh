@@ -1,14 +1,14 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
-#                                                               #
-# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.       #
-# All rights reserved.                                          #
-#                                                               #
-#       This source code contains the intellectual property     #
-#       of its copyright holder(s), and is made available       #
-#       under a license.  If you do not know the terms of       #
-#       the license, please stop and do not read further.       #
-#                                                               #
+#								#
+# Copyright (c) 2022-2024 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
 #################################################################
 #
 echo '# gtm9422 - Show that former toggle statistics are now counters'
@@ -26,7 +26,9 @@ setenv tst_jnl_str -journal=enable,on,nobefore
 
 echo
 echo '# Create database'
-$gtm_tst/com/dbcreate.csh mumps
+# Keep small values of allocation/extension as that greatly increases the chances of DEXA and AFRA statistic being non-zero,
+# something the test expects. We have seen occasional failures where DEXA/AFRA were 0 with default allocation/extension.
+$gtm_tst/com/dbcreate.csh mumps -allocation=50 -extension_count=5
 echo
 echo '# Enable stat sharing'
 $MUPIP set -stats -region "*"
