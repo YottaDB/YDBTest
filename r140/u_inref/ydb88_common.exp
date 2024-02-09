@@ -10,7 +10,6 @@
 #								#
 #################################################################
 global spawn_id
-set timeout 1
 set ::env(HOME) "$::env(PWD)/ydb88_home"
 # Now that HOME env var has been reset (in previous line), make sure INPUTRC env var is also unset (it is set to /dev/null
 # by com/do_random_settings.csh whenever the test framework randomly sets ydb_readline env var to 1) as that would cause
@@ -44,7 +43,6 @@ proc ignore_ydb_answer {} {
 proc halt_ydb {} {
     send "HALT\r"
     expect eof
-    sleep 0.2
     puts "\n"
     comment "...yottadb halted"
 }

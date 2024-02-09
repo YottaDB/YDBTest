@@ -11,5 +11,5 @@
 #								#
 #################################################################
 
-(ydb88_exec_test.csh $0 >! expect.outx) >&! expect.dbg
-cat expect.outx
+(ydb88_exec_test.csh $0 >! expect.out) >&! expect.dbg
+cat expect.out

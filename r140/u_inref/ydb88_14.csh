@@ -11,9 +11,9 @@
 #								#
 #################################################################
 
-($gtm_tst/com/dbcreate.csh mumps 1 >! dbcreate.outx)
+$gtm_tst/com/dbcreate.csh mumps 1 >& dbcreate.out
 
-(ydb88_exec_test.csh $0 grep '^\#\|result\|CTRL_C' >! expect.outx) >&! expect.dbg
-cat expect.outx
+(ydb88_exec_test.csh $0 grep '^\#\|result\|CTRL_C' >! expect.out) >&! expect.dbg
+cat expect.out
 
-($gtm_tst/com/dbcheck.csh >! dbcheck.outx)
+$gtm_tst/com/dbcheck.csh >& dbcheck.out

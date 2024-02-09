@@ -1,8 +1,9 @@
      1	#### Handle ^C (SIGINT) received from outside, report CTRL_C ####
      2	# spawning yottadb...
      3	# get the process id of yottadb
-     4	# send ^C (SIGINT) to yottadb, using captured PID
-     5	HALT ;%YDB-I-CTRLC, CTRL_C encountered
-     6	# enter a command - if ^C had effect, it will run properly
-     7	WRITE "The result is ",6*6,!
-     8	The result is 36
+     4	# Start entering a 'HALT ;' command, but don't press enter.
+     5	# And then, in a parallel terminal send ^C (SIGINT) to yottadb, using captured PID.
+     6	HALT ;%YDB-I-CTRLC, CTRL_C encountered
+     7	# enter a command - if ^C had effect, it will run properly
+     8	WRITE "The result is ",6*6,!
+     9	The result is 36

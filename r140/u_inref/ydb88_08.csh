@@ -11,10 +11,10 @@
 #								#
 #################################################################
 
-($gtm_tst/com/dbcreate.csh mumps 1 >! dbcreate.outx)
+$gtm_tst/com/dbcreate.csh mumps 1 >& dbcreate.out
 
 # display lines starting with '#' or READLINE or ASSERT error
-(ydb88_exec_test.csh $0 grep '^\#\|READLINE\|ASSERT' >! expect.outx) >&! expect.dbg
-cat expect.outx
+(ydb88_exec_test.csh $0 grep '^\#\|READLINE\|ASSERT' >! expect.out) >&! expect.dbg
+cat expect.out
 
-($gtm_tst/com/dbcheck.csh >! dbcheck.outx)
+$gtm_tst/com/dbcheck.csh >& dbcheck.out

@@ -24,6 +24,7 @@ spawn_ydb
 
     comment "calling yottadb as external program..."
     send "ZSYSTEM \"$::env(ydb_dist)/yottadb -direct\"\r"
+    ignore_ydb_answer
 
         comment "generate history for inner session"
         send "W 1,!\r"

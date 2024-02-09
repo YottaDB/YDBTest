@@ -14,3 +14,27 @@
     14	# send a command longer than 32k
     15	%YDB-W-READLINELONGLINE, Entered line is greater than 32Kb long and will be truncated
     16	# ...MUPIP exited
+##TEST_PATH##/expect.out
+     5	%YDB-W-READLINELONGLINE, Entered line is greater than 32Kb long and will be truncated
+    10	%YDB-W-READLINELONGLINE, Entered line is greater than 32Kb long and will be truncated
+    15	%YDB-W-READLINELONGLINE, Entered line is greater than 32Kb long and will be truncated
+##TEST_PATH##/expect_exec.out
+%YDB-E-CLIERR, Unrecognized command: BAD_COMMAND
+%YDB-W-READLINELONGLINE, Entered line is greater than 32Kb long and will be truncated
+%YDB-E-CLIERR, Unrecognized command: BAD_COMMAND
+%YDB-E-CLIERR, Unrecognized command: BAD_COMMAND
+%YDB-W-READLINELONGLINE, Entered line is greater than 32Kb long and will be truncated
+%YDB-E-CLIERR, Unrecognized command: BAD_COMMAND
+%YDB-E-CLIERR, Unrecognized command: BAD_COMMAND
+%YDB-W-READLINELONGLINE, Entered line is greater than 32Kb long and will be truncated
+%YDB-E-CLIERR, Unrecognized command: BAD_COMMAND
+##TEST_PATH##/expect_sanitized.out
+%YDB-E-CLIERR, Unrecognized command: BAD_COMMAND
+%YDB-W-READLINELONGLINE, Entered line is greater than 32Kb long and will be truncated
+%YDB-E-CLIERR, Unrecognized command: BAD_COMMAND
+%YDB-E-CLIERR, Unrecognized command: BAD_COMMAND
+%YDB-W-READLINELONGLINE, Entered line is greater than 32Kb long and will be truncated
+%YDB-E-CLIERR, Unrecognized command: BAD_COMMAND
+%YDB-E-CLIERR, Unrecognized command: BAD_COMMAND
+%YDB-W-READLINELONGLINE, Entered line is greater than 32Kb long and will be truncated
+%YDB-E-CLIERR, Unrecognized command: BAD_COMMAND

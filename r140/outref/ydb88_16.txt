@@ -8,3 +8,7 @@
      8	hang 99
      9	# stty should show 'echo', not '-echo'
     10	isig icanon iexten echo echoe echok -echonl -noflsh -xcase -tostop -echoprt
+##TEST_PATH##/expect_exec.out
+%YDB-W-ZTIMEOUT, Time expired
+##TEST_PATH##/expect_sanitized.out
+%YDB-W-ZTIMEOUT, Time expired

@@ -40,6 +40,15 @@ setenv TERM ascii
 set basename = $1:r:t
 
 # run expect script
+(expect -d $gtm_tst/$tst/u_inref/$basename.exp > expect_exec.out) >& expect.dbg
+if ($status) then
+	echo "EXPECT-E-FAIL : [expect -d $gtm_tst/$tst/u_inref/$basename.exp] returned non-zero exit status : [$status]"
+	echo "See expect_exec.out and expect.dbg"
+	exit -1
+endif
+
+perl $gtm_tst/com/expectsanitize.pl expect_exec.out > expect_sanitized.out
+
 # - change "ZSYSTEM yottadb" to pathless (sed)
 # - remove empty lines (sed)
 # - preserve full output (tee)
@@ -47,15 +56,11 @@ set basename = $1:r:t
 # - gently cut filename from ZSYSTEM (sed)
 # - drastically cut rest of line with filenames (sed)
 # - add line numbers (cat -n)
-(\
-    expect -d $gtm_tst/$tst/u_inref/$basename.exp \
-    | perl $gtm_tst/com/expectsanitize.pl \
-    | sed -e 's/^\s*//' -e '/^$/d' \
+sed -e 's/^\s*//' -e '/^$/d' expect_sanitized.out \
     | tee expect.full \
     | grep "$PATTERN" \
     | sed '/ZSYSTEM.*yottadb /s/.*/ZSYSTEM \"yottadb -direct\"/g' \
     | sed -E 's/(\ \/).*($)/ \2/' \
-    | cat -n \
-    ) \
+    | cat -n
 
 chmod a+w $PWD/ydb88_home/readonly
