@@ -1,0 +1,29 @@
+#!/usr/bin/env expect
+#################################################################
+#								#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+source [file join [file dirname [info script]] ydb88_common.exp]
+
+subtest "History truncation upon save"
+
+comment "set history size to 5"
+set_history_size 5
+
+    spawn_ydb
+    comment "generate 10 history items"
+    for {set i 0} {$i <= 10} {incr i} {
+        send "W $i,!\r"
+        ignore_ydb_answer
+    }
+    halt_ydb
+
+comment "keep last 5 history items: 7..HALT"
+print_history_lines

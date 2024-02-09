@@ -1,0 +1,34 @@
+#!/usr/bin/env expect
+#################################################################
+#								#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+source [file join [file dirname [info script]] ydb88_common.exp]
+
+subtest "Tab in emacs and in vi mode actually issues tab"
+
+comment "For better visibility and avoid conversion, tabs and multiple spaces are replaced with tokens"
+comment "In entry lines (WRITE...) either tab or spaces may appear, they have a common token"
+
+spawn_ydb
+
+    comment "set editing mode to emacs"
+    set_editing_mode "emacs"
+    comment "enter a command contains tab"
+    send "WRITE \"tabs with e\tmacs\",!\r"
+    ignore_ydb_answer
+
+    comment "set editing mode to visual"
+    set_editing_mode "vi"
+    comment "enter a command contains tab"
+    send "WRITE \"tabs with vi\tsual\",!\r"
+    ignore_ydb_answer
+
+halt_ydb

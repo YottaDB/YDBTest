@@ -1,0 +1,124 @@
+#################################################################
+#								#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+global spawn_id
+set timeout 1
+set ::env(HOME) "$::env(PWD)/ydb88_home"
+# Now that HOME env var has been reset (in previous line), make sure INPUTRC env var is also unset (it is set to /dev/null
+# by com/do_random_settings.csh whenever the test framework randomly sets ydb_readline env var to 1) as that would cause
+# readline to look at $HOME/.inputrc (which is what we want).
+if {[info exists ::env(INPUTRC)]} {
+	unset ::env(INPUTRC)
+}
+set ::env(ydb_readline) true
+
+proc subtest {name} {
+    puts "#### $name ####\n"
+}
+
+proc comment {text} {
+    puts "# $text\n"
+}
+
+proc spawn_ydb {} {
+    global spawn_id
+
+    comment "spawning yottadb..."
+    spawn -noecho $::env(ydb_dist)/yottadb -direct
+    ignore_ydb_answer
+}
+
+proc ignore_ydb_answer {} {
+    expect "YDB>"
+    puts "\n"
+}
+
+proc halt_ydb {} {
+    send "HALT\r"
+    expect eof
+    sleep 0.2
+    puts "\n"
+    comment "...yottadb halted"
+}
+
+proc create_inputrc {content} {
+    _set_inputrc $content
+}
+
+proc set_editing_mode {mode} {
+    _set_inputrc "set editing-mode $mode"
+}
+
+proc set_history_size {size} {
+    _set_inputrc "set history-size $size"
+}
+
+proc _set_inputrc {content} {
+    set fnam "$::env(HOME)/.inputrc"
+    set file [open $fnam w+]
+    puts $file $content
+    close $file
+}
+
+proc count_history_lines {} {
+    _count_history_file "home/ydb" "$::env(PWD)/ydb88_home/.ydb_YottaDB_history"
+    _count_history_file "home1/ydb" "$::env(PWD)/ydb88_home/home1/.ydb_YottaDB_history"
+    _count_history_file "home2/ydb" "$::env(PWD)/ydb88_home/home2/.ydb_YottaDB_history"
+    _count_history_file "home_p43s/ydb" "$::env(PWD)/ydb88_home/home_pneumonoultramicroscopicsilicovolcanoconiosis/.ydb_YottaDB_history"
+    _count_history_file "home dirname with spaces/ydb" "$::env(PWD)/ydb88_home/home dirname with spaces/.ydb_YottaDB_history"
+}
+
+proc _count_history_file {id filename} {
+    set lines [exec cat "$filename" | wc -l]
+    if {$lines > 0} {
+        comment "history lines: $id - $lines"
+    }
+}
+
+proc print_history_lines {} {
+    _print_history_file "home/ydb" "$::env(PWD)/ydb88_home/.ydb_YottaDB_history"
+    _print_history_file "home1/ydb" "$::env(PWD)/ydb88_home/home1/.ydb_YottaDB_history"
+    _print_history_file "home2/ydb" "$::env(PWD)/ydb88_home/home2/.ydb_YottaDB_history"
+    _print_history_file "home_p43s/ydb" "$::env(PWD)/ydb88_home/home_pneumonoultramicroscopicsilicovolcanoconiosis/.ydb_YottaDB_history"
+    _print_history_file "home dirname with spaces/ydb" "$::env(PWD)/ydb88_home/home dirname with spaces/.ydb_YottaDB_history"
+}
+
+proc _print_history_file {id filename} {
+    set lines [exec cat "$filename"]
+    set len [llength [split $lines {}]]
+    if {$len > 0} {
+
+        comment "history file: $id"
+
+        set f [open $filename r]
+        while {[gets $f line] >= 0} {
+            comment "  $line"
+        }
+        close $f
+    }
+}
+
+proc setup_database {} {
+
+    set ::env(ydb_dir) "$::env(HOME)/db"
+    set ::env(ydb_gbldir) "$::env(HOME)/db"
+
+    puts "setup database ydb_dir: $::env(ydb_dir)"
+    puts "setup database ydb_gbldir: $::env(ydb_gbldir)"
+
+    puts "# spawning GDE...\n"
+        spawn -noecho yottadb -run GDE
+        expect "GDE> "
+        send "change -segment DEFAULT -file=$::env(ydb_dir)/ydb.dat\r"
+        send "exit\r"
+        expect eof
+    puts "# ...GDE exited\n"
+}

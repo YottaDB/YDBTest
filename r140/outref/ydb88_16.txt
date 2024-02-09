@@ -1,0 +1,10 @@
+     1	#### Process terminated by $ZTIMEOUT requires stty sane to regain sanity ####
+     2	# spawning yottadb...
+     3	# set trap for timeout
+     4	set $etrap="halt"
+     5	# set up timeout
+     6	set $ztimeout=0.1
+     7	# will be interrupted -> HALT
+     8	hang 99
+     9	# stty should show 'echo', not '-echo'
+    10	isig icanon iexten echo echoe echok -echonl -noflsh -xcase -tostop -echoprt

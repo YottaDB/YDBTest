@@ -1,0 +1,54 @@
+#!/usr/bin/env expect
+#################################################################
+#								#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+source [file join [file dirname [info script]] ydb88_common.exp]
+
+subtest "Max entries: no limit (-5), 2, 0"
+
+comment "set home dir to 'home'"
+set ::env(HOME) "$::env(PWD)/ydb88_home"
+comment "set history to unlimited (-5)"
+set_history_size -5
+    spawn_ydb
+    comment "create 5000 history items (exceed default 1000)"
+    for {set i 0} {$i < 5000} {incr i} {
+        send "W $i,!\r"
+        ignore_ydb_answer
+    }
+    halt_ydb
+
+comment "set home dir to 'home1'"
+set ::env(HOME) "$::env(PWD)/ydb88_home/home1"
+comment "set history to 2"
+set_history_size 2
+    spawn_ydb
+    comment "create 100 history items (exceed 2)"
+    for {set i 0} {$i < 100} {incr i} {
+        send "W $i,!\r"
+        ignore_ydb_answer
+    }
+    halt_ydb
+
+comment "set home dir to 'home2'"
+set ::env(HOME) "$::env(PWD)/ydb88_home/home2"
+comment "set history to 0"
+set_history_size 0
+    spawn_ydb
+    comment "create 100 history items (exceed 0)"
+    for {set i 0} {$i < 100} {incr i} {
+        send "W $i,!\r"
+        ignore_ydb_answer
+    }
+    halt_ydb
+
+comment "show history sizes: home=1000, home1=2, home2=0 (not shown)"
+count_history_lines

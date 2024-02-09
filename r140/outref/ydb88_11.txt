@@ -1,0 +1,14 @@
+     1	#### Current session behavior with truncation (sliding numbers for rec/recall) ####
+     2	# set history size to 5
+     3	# spawning yottadb...
+     4	# generate 2 lines of history: 1, 2 - they will be truncated
+     5	# generate 5 lines of history: 3..7 - they will be kept
+     6	# try to go back 7 - but limited to 5
+     7	# ...yottadb halted
+     8	# history should be 5 items: 5, 6, 7, 3 (recalled), HALT
+     9	# history file: home/ydb
+    10	#   W 5,!
+    11	#   W 6,!
+    12	#   W 7,!
+    13	#   W 3,!
+    14	#   HALT

@@ -31,6 +31,24 @@
 # ydb401      [berwyn]  Test YottaDB Direct Mode "RECALL" command
 # ydb1047     [nars]    Test that MUPIP INTEG -STATS does not SIG-11 and MUPIP TRIGGER does not assert fail if ydb_statshare=1
 # ydb1062     [nars]    Test that MUPIP TRIGGER -STDIN reports correct line numbers
+# ydb88_01    [ern0]    Readline Support: Single session history
+# ydb88_02    [ern0]    Readline Support: History saved by one session and loaded by another
+# ydb88_03    [ern0]    Readline Support: Concurrent sessions combine histories
+# ydb88_04    [ern0]    Readline Support: $HOME: override history location
+# ydb88_05    [ern0]    Readline Support: $HOME: long directory name
+# ydb88_06    [ern0]    Readline Support: $HOME: directory name with spaces
+# ydb88_07    [ern0]    Readline Support: $HOME: fail on unwritable location
+# ydb88_08    [ern0]    Readline Support: $HOME: LKE/DSE/MUPIP ERR_READLINELONGLINE test
+# ydb88_09    [ern0]    Readline Support: Max entries: no limit (-5), 2, 0
+# ydb88_10    [ern0]    Readline Support: History truncation upon save
+# ydb88_11    [ern0]    Readline Support: Current session behavior with truncation (sliding numbers for rec/recall)
+# ydb88_12    [ern0]    Readline Support: Duplicate sequential commands are not stored
+# ydb88_13    [ern0]    Readline Support: Pressing ^C should cancel the command started typing
+# ydb88_14    [ern0]    Readline Support: Handle ^C (SIGINT) received from outside
+# ydb88_15    [ern0]    Readline Support: Tab in emacs and in vi mode actually issues tab
+# ydb88_16    [ern0]    Readline Support: Process terminated by $ZTIMEOUT requires stty sane to regain sanity"
+# ydb88_17    [ern0]    Readline Support: Validate that the history file does not grow beyond 1000 entries
+# ydb88_18    [ern0]    Readline Support: Validate that the application name for $if blocks in INPUTRC is "YottaDB"
 #---------------------------------------------------------------------------------------------------------------------------------------------------
 
 echo "r140 test starts..."
@@ -39,6 +57,9 @@ echo "r140 test starts..."
 setenv subtest_list_common     ""
 setenv subtest_list_non_replic "ydb996 ydb998 ydbpython32 ydb994 ydb1024 ydb1026 ydb1021 ydb1029 ydb1030 ydb1033 ydb1037 ydb892"
 setenv subtest_list_non_replic "$subtest_list_non_replic ydb851 zmaxtptime ydb401 ydb1047 ydb1062"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb88_01 ydb88_02 ydb88_03 ydb88_04 ydb88_05 ydb88_06"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb88_07 ydb88_08 ydb88_09 ydb88_10 ydb88_11 ydb88_12"
+setenv subtest_list_non_replic "$subtest_list_non_replic ydb88_13 ydb88_14 ydb88_15 ydb88_16 ydb88_17 ydb88_18"
 setenv subtest_list_replic     ""
 
 if ($?test_replic == 1) then

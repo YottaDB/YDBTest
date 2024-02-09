@@ -1,0 +1,41 @@
+#!/usr/bin/env expect
+#################################################################
+#								#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+source [file join [file dirname [info script]] ydb88_common.exp]
+set killer [file join [file dirname [info script]] ydb88_14_kill.csh]
+
+subtest "Handle ^C (SIGINT) received from outside, report CTRL_C"
+
+spawn_ydb
+set ydb_id $spawn_id
+comment "get the process id of yottadb"
+send -i $ydb_id "SET ^PID=\$JOB\r"
+expect -i $ydb_id "YDB>"
+comment "start entering a 'HALT ;' command, but don't press enter"
+send -i $ydb_id "HALT ;"             ;# don't press enter, wait for ^C
+
+comment "send ^C (SIGINT) to yottadb, using captured PID"
+spawn -noecho tcsh -e $killer
+set kill_id $spawn_id
+expect -i $kill_id eof
+
+sleep 0.1
+expect -i $ydb_id -re ".*CTRL_C.*"                    ;# except error message
+puts "\n"
+sleep 0.1
+expect -i $ydb_id "YDB>"
+comment "enter a command - if ^C had effect, it will run properly"
+sleep 0.1
+send -i $ydb_id "WRITE \"The result is \",6*6,!\r"    ;# will execute properly only if
+expect -i $ydb_id "The result is 36\r\n"              ;# previous "HALT " line is cancelled by ^C
+send -i $ydb_id "HALT\r"
+expect -i $ydb_id eof
