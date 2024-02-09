@@ -11,6 +11,5 @@
 #								#
 #################################################################
 
-set noext = `basename $0 | sed 's/\.[^.]*$//'`
-(ydb88_exec_test.csh $noext >! expect.outx) >&! expect.dbg
+(ydb88_exec_test.csh $0 >! expect.outx) >&! expect.dbg
 cat expect.outx

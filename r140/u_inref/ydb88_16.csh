@@ -11,6 +11,5 @@
 #								#
 #################################################################
 
-set noext = `basename $0 | sed 's/\.[^.]*$//'`
-(ydb88_exec_test.csh $noext grep '^\#\|sanity\|isig\|set\|hang' >! expect.out) >&! expect.dbg
+(ydb88_exec_test.csh $0 grep '^\#\|sanity\|isig\|set\|hang' >! expect.out) >&! expect.dbg
 cat expect.out

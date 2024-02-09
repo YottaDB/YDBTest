@@ -10,8 +10,8 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
-source [file join [file dirname [info script]] ydb88_common.exp]
-set killer [file join [file dirname [info script]] ydb88_14_kill.csh]
+source $::env(gtm_tst)/r140/u_inref/ydb88_common.exp
+set killer $::env(gtm_tst)/r140/u_inref/ydb88_14_kill.csh
 
 subtest "Handle ^C (SIGINT) received from outside, report CTRL_C"
 

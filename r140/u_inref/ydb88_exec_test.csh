@@ -37,6 +37,8 @@ endif
 # avoid breaking long lines
 setenv TERM ascii
 
+set basename = $1:r:t
+
 # run expect script
 # - change "ZSYSTEM yottadb" to pathless (sed)
 # - remove empty lines (sed)
@@ -46,7 +48,7 @@ setenv TERM ascii
 # - drastically cut rest of line with filenames (sed)
 # - add line numbers (cat -n)
 (\
-    expect -d $gtm_tst/$tst/u_inref/$1.exp \
+    expect -d $gtm_tst/$tst/u_inref/$basename.exp \
     | perl $gtm_tst/com/expectsanitize.pl \
     | sed -e 's/^\s*//' -e '/^$/d' \
     | tee expect.full \

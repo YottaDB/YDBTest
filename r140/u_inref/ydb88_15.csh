@@ -11,8 +11,7 @@
 #								#
 #################################################################
 
-set noext = `basename $0 | sed 's/\.[^.]*$//'`
-(ydb88_exec_test.csh $noext grep '^\#\|tabs' >! expect.out) >&! expect.dbg
+(ydb88_exec_test.csh $0 grep '^\#\|tabs' >! expect.out) >&! expect.dbg
 sed -i 's/\(WRITE.*with\)\(.*\)\(macs.*\)/\1\ e[SPACES_OR_TAB\]\3/g' expect.out
 sed -i 's/\(WRITE.*with\)\(.*\)\(sual.*\)/\1\ vi[SPACES_OR_TAB\]\3/g' expect.out
 sed -i 's/\t/\[TAB\]/g' expect.out

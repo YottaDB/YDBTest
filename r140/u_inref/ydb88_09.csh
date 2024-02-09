@@ -10,7 +10,6 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
-set noext = `basename $0 | sed 's/\.[^.]*$//'`
 
-(ydb88_exec_test.csh $noext >! expect.out) >&! expect.dbg
+(ydb88_exec_test.csh $0 >! expect.out) >&! expect.dbg
 cat expect.out

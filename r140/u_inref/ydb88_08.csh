@@ -13,9 +13,8 @@
 
 ($gtm_tst/com/dbcreate.csh mumps 1 >! dbcreate.outx)
 
-set noext = `basename $0 | sed 's/\.[^.]*$//'`
 # display lines starting with '#' or READLINE or ASSERT error
-(ydb88_exec_test.csh $noext grep '^\#\|READLINE\|ASSERT' >! expect.outx) >&! expect.dbg
+(ydb88_exec_test.csh $0 grep '^\#\|READLINE\|ASSERT' >! expect.outx) >&! expect.dbg
 cat expect.outx
 
 ($gtm_tst/com/dbcheck.csh >! dbcheck.outx)
