@@ -80,6 +80,7 @@ RUN apt-get update && \
                     flex \
                     libsodium-dev \
                     lsb-release \
+                    rsync \
                     && \
                     apt-get clean
 

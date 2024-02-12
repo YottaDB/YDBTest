@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2020-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -35,6 +35,22 @@ build-imptp-rs:
     - apt-get update
     - apt-get install -yq --no-install-recommends build-essential bindgen
     - cd com/imptp-rs; . $HOME/.cargo/env; cargo check --no-default-features
+
+# Run changed tests on every push
+run-tests:
+  image:
+       name: registry.gitlab.com/yottadb/db/ydbtest
+       entrypoint: [""]
+  stage: build
+  artifacts:
+    paths:
+      - testarea/
+    expire_in: 1 month
+    when: always
+  script:
+    # TODO: Remove next line after this commit is merged, as it will be part of the Dockerfile, but not initially.
+    - apt-get update && apt-get install -y rsync
+    - docker/pipeline-test.csh
 
 # Build test system on docker
 docker-ydbtest-image:
