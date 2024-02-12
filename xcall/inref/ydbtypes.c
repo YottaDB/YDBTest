@@ -75,13 +75,13 @@ void outputs_tester(int _nargs,
 	PRINT("%s,", cp);
 	PRINT("%.*s,", (int)sp->length, sp->address);
 	PRINT("%.*s,", (int)bp->len_used, bp->buf_addr);
-	PRINT("%s\n", *cpp);
+	PRINT("%.*s\n", 8, *cpp);	/* Limit to 8 bytes as end border mark (ENMARKER) is not null terminated */
 
 	set_return_numbers(ip, uip, lp, ulp, i64p, ui64p, fp, dp);
 	strcpy(cp, STRING1);
 	sp->length = strlen(STRING2); strncpy(sp->address,  STRING2, sp->length);
 	bp->len_used = strlen(STRING3); strncpy(bp->buf_addr, STRING3, bp->len_used);
-	strcpy(*cpp, STRING4);
+	*cpp = STRING4;
 
 	PRINT("  Return: %i,%u,%li,%lu,%" PRIi64 ",%" PRIu64 ",%.2f,%.14e,%s,%.*s,%.*s,%s\n",
 		*ip, *uip, *lp, *ulp, *i64p, *ui64p, *fp, *dp, cp, (int)sp->length, sp->address, (int)bp->len_used, bp->buf_addr, *cpp);
