@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -1254,6 +1254,8 @@ else if !($?ydb_test_4g_db_blks) then
 		# Note that there are a few tests that have reference files with different output in case
 		# this env var is set. Such tests will override/hardcode this env var to 8388608 to avoid having to have
 		# different reference files for different values of this env var.
+		#
+		# The random value chosen below would fall in range [ 6291454 <= ydb_test_4g_db_blks < 31457278 ]
 		#
 		setenv ydb_test_4g_db_blks `date | $tst_awk '{srand(); printf "%d\n",((3*(2**30)+int(rand()*(12*(2**30))))/512-2);}'`
 	endif
