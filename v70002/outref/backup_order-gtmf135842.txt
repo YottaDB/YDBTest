@@ -1,0 +1,100 @@
+# ********************************************************************************************
+# GTM-F135842 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-002_Release_Notes.html#GTM-DE197637997)
+# 
+# When MUPIP BACKUP arguments specify a list, the utility processes regions in the listed order, or, for names expanded by wildcard
+# ("*"), alphabetically. Previously, MUPIP BACKUP ignored any user-specified order of regions, and processed regions in FTOK order,
+# which tends to change with changes in operational conditions within the underlying file system.(GTM-F135842)
+
+# Creating a 5 region database DEFAULT, AREG, BREG, CREG, DREG
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+mumps.dat
+
+# Run MUPIP FTOK to verify order of the databases
+
+# Create backup path (bak)
+
+# Run MUPIP Backup of database files in a specific orders
+# Expect BREG,AREG,CREG,DEFAULT,DREG
+%GTM-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/bak/b.dat
+##TEST_AWK%GTM-I-BACKUPTN, Transactions from 0x0000000000000001 to .* are backed up
+%GTM-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/bak/a.dat
+##TEST_AWK%GTM-I-BACKUPTN, Transactions from 0x0000000000000001 to .* are backed up
+%GTM-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/bak/c.dat
+##TEST_AWK%GTM-I-BACKUPTN, Transactions from 0x0000000000000001 to .* are backed up
+%GTM-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/bak/mumps.dat
+##TEST_AWK%GTM-I-BACKUPTN, Transactions from 0x0000000000000001 to .* are backed up
+%GTM-I-BACKUPDBFILE, DB file ##TEST_PATH##/d.dat backed up in file ##TEST_PATH##/bak/d.dat
+##TEST_AWK%GTM-I-BACKUPTN, Transactions from 0x0000000000000001 to .* are backed up
+%GTM-I-BACKUPSUCCESS, Backup completed successfully
+
+# Create backup path (bak2)
+
+# Run MUPIP Backup of database files in a specific orders with 2 regions are explicitly specified.
+# Expect BREG,AREG
+%GTM-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/bak2/b.dat
+##TEST_AWK%GTM-I-BACKUPTN, Transactions from 0x0000000000000001 to .* are backed up
+%GTM-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/bak2/a.dat
+##TEST_AWK%GTM-I-BACKUPTN, Transactions from 0x0000000000000001 to .* are backed up
+%GTM-I-BACKUPSUCCESS, Backup completed successfully
+
+# Create backup path (bak3)
+
+# Run MUPIP Backup of database files in a specific orders with 3 regions are explicitly specified.
+# Expect CREG,AREG,BREG
+%GTM-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/bak3/c.dat
+##TEST_AWK%GTM-I-BACKUPTN, Transactions from 0x0000000000000001 to .* are backed up
+%GTM-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/bak3/a.dat
+##TEST_AWK%GTM-I-BACKUPTN, Transactions from 0x0000000000000001 to .* are backed up
+%GTM-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/bak3/b.dat
+##TEST_AWK%GTM-I-BACKUPTN, Transactions from 0x0000000000000001 to .* are backed up
+%GTM-I-BACKUPSUCCESS, Backup completed successfully
+
+# Create backup path (bak4)
+
+# Run MUPIP Backup of database files in a wildcard ("*REG")
+# Expect AREG,BREG,CREG,DREG
+%GTM-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/bak4/a.dat
+##TEST_AWK%GTM-I-BACKUPTN, Transactions from 0x0000000000000001 to .* are backed up
+%GTM-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/bak4/b.dat
+##TEST_AWK%GTM-I-BACKUPTN, Transactions from 0x0000000000000001 to .* are backed up
+%GTM-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/bak4/c.dat
+##TEST_AWK%GTM-I-BACKUPTN, Transactions from 0x0000000000000001 to .* are backed up
+%GTM-I-BACKUPDBFILE, DB file ##TEST_PATH##/d.dat backed up in file ##TEST_PATH##/bak4/d.dat
+##TEST_AWK%GTM-I-BACKUPTN, Transactions from 0x0000000000000001 to .* are backed up
+%GTM-I-BACKUPSUCCESS, Backup completed successfully
+
+# Create backup path (bak5)
+
+# Run MUPIP Backup of database files in a wildcard ("D*")
+# Expect DEFAULT,DREG
+%GTM-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/bak5/mumps.dat
+##TEST_AWK%GTM-I-BACKUPTN, Transactions from 0x0000000000000001 to .* are backed up
+%GTM-I-BACKUPDBFILE, DB file ##TEST_PATH##/d.dat backed up in file ##TEST_PATH##/bak5/d.dat
+##TEST_AWK%GTM-I-BACKUPTN, Transactions from 0x0000000000000001 to .* are backed up
+%GTM-I-BACKUPSUCCESS, Backup completed successfully
+
+# Create backup path (bak6)
+
+# Run MUPIP Backup of database files in a wildcard ("*")
+# Expect AREG,BREG,CREG,DEFAULT,DREG
+%GTM-I-BACKUPDBFILE, DB file ##TEST_PATH##/a.dat backed up in file ##TEST_PATH##/bak6/a.dat
+##TEST_AWK%GTM-I-BACKUPTN, Transactions from 0x0000000000000001 to .* are backed up
+%GTM-I-BACKUPDBFILE, DB file ##TEST_PATH##/b.dat backed up in file ##TEST_PATH##/bak6/b.dat
+##TEST_AWK%GTM-I-BACKUPTN, Transactions from 0x0000000000000001 to .* are backed up
+%GTM-I-BACKUPDBFILE, DB file ##TEST_PATH##/c.dat backed up in file ##TEST_PATH##/bak6/c.dat
+##TEST_AWK%GTM-I-BACKUPTN, Transactions from 0x0000000000000001 to .* are backed up
+%GTM-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/bak6/mumps.dat
+##TEST_AWK%GTM-I-BACKUPTN, Transactions from 0x0000000000000001 to .* are backed up
+%GTM-I-BACKUPDBFILE, DB file ##TEST_PATH##/d.dat backed up in file ##TEST_PATH##/bak6/d.dat
+##TEST_AWK%GTM-I-BACKUPTN, Transactions from 0x0000000000000001 to .* are backed up
+%GTM-I-BACKUPSUCCESS, Backup completed successfully

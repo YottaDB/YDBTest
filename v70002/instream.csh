@@ -14,13 +14,14 @@
 #----------------------------------------------------------------------------------------------------------------------------------
 # List of subtests of the form "subtestname [author] description"
 #----------------------------------------------------------------------------------------------------------------------------------
+# backup_order-gtmf135842	[pooh]		MUPIP BACKUP supports user specified order
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v70002 test starts..."
 
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
-setenv subtest_list_non_replic	""
+setenv subtest_list_non_replic	"backup_order-gtmf135842"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
