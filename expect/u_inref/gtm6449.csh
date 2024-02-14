@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2014 Fidelity Information Services, Inc	#
 #								#
+#	Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+#	All rights reserved.					#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -26,8 +29,7 @@ endif
 mkdir -p $tmpdir
 
 echo "# Running expect (output: expect.out)"
-expect $gtm_tst/$tst/inref/gtm6449.exp > expect.out
-
+(expect -d $gtm_tst/$tst/inref/gtm6449.exp > expect.out) >& expect.dbg
 if ($status) then
     echo "TEST-E-FAIL Expect error check expect.out"
 else
