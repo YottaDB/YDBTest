@@ -1,0 +1,79 @@
+# ********************************************************************************************
+# GTM-DE201381 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-002_Release_Notes.html#GTM-DE197637458)
+# 
+# MUPIP LOAD -FORMAT=BINARY checks the record length against the data for a record; starting with V6.0-000, GT.M defines record
+# length as the data in a node, but the utility in question still inappropriately included the key in its length check.
+# (GTM-DE201381)
+
+# Create a database file with key size of 8 and record size of 3.
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+# Store ^a("abc")=123 into database
+
+
+GTM>
+
+GTM>
+^a("abc")=123
+
+GTM>
+
+# Extract database file with format=bin
+%GTM-I-RECORDSTAT, ^a:	  Key cnt: 1  max subsc len: 8  max rec len: 3  max node len: 15
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 8  max rec len: 3  max node len: 15
+
+# MUPIP LOAD -FORMAT=BINARY should succeed. Previous versions crash with CORRUPTNODE error.
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................* MUPIP EXTRACT *
+
+Beginning LOAD at record number: 2
+
+LOAD TOTAL		Key Cnt: 1  Max Subsc Len: 8  Max Data Len: 3
+%GTM-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 2
+
+# Validate database integrity
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+# Since the dbcreate.csh below will rename exising db and gld, move it away temporarily
+
+# Create temporary database file with record size = 4.
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps2.gld
+Using: ##SOURCE_PATH##/mupip
+mumps2.dat
+
+# Store ^a("def")=1234 into temporary database
+
+GTM>
+
+GTM>
+
+# Extract database file with format=bin
+%GTM-I-RECORDSTAT, ^a:	  Key cnt: 1  max subsc len: 8  max rec len: 4  max node len: 16
+%GTM-I-RECORDSTAT, TOTAL:	  Key cnt: 1  max subsc len: 8  max rec len: 4  max node len: 16
+
+# Move mumps.* in backup path back to current working path
+
+# Change GLD to set database file to mumps.gld instead of mumps2.gld
+
+# Verfiy that current database file have record size = 3.
+3
+
+# MUPIP LOAD -FORMAT=BINARY should fail with error REC2BIG.
+##TEST_AWKLabel = ##FILTERED##GDS BINARY EXTRACT LEVEL ....................................* MUPIP EXTRACT *
+
+Beginning LOAD at record number: 2
+
+%GTM-E-CORRUPTNODE, Corrupt input in Record #2, Key #1; resuming with next global node
+%GTM-E-REC2BIG, Record size (4) is greater than maximum (3) for region: DEFAULT
+LOAD TOTAL		Key Cnt: 0  Max Subsc Len: 0  Max Data Len: 0
+%GTM-I-LOADRECCNT, Last EXTRACT record processed by LOAD: 2
