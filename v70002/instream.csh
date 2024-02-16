@@ -16,13 +16,14 @@
 #----------------------------------------------------------------------------------------------------------------------------------
 # backup_order-gtmf135842	[pooh]		MUPIP BACKUP supports user specified order
 # load_binary-gtmde201381	[pooh]		MUPIP LOAD -FORMAT=BINARY uses only data length in checking for maximum length
+# zchar_length-gtmde201378	[pooh]		Prevent $[Z]CHAR() representions from generating results longer than the maximum string length
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v70002 test starts..."
 
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
-setenv subtest_list_non_replic	"backup_order-gtmf135842 load_binary-gtmde20138"
+setenv subtest_list_non_replic	"backup_order-gtmf135842 load_binary-gtmde20138 zchar_length-gtmde201378"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
