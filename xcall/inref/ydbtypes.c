@@ -75,7 +75,11 @@ void outputs_tester(int _nargs,
 	PRINT("%s,", cp);
 	PRINT("%.*s,", (int)sp->length, sp->address);
 	PRINT("%.*s,", (int)bp->len_used, bp->buf_addr);
-	PRINT("%.*s\n", 8, *cpp);	/* Limit to 8 bytes as end border mark (ENMARKER) is not null terminated */
+	/* Limit the below to 8 bytes as "*cpp" would point to the end border mark ("ENMARKER") on 64-bit systems and is
+	 * not null terminated. "*cpp" would be "" on 32-bit systems due to some alignment/padding existing there causing
+	 * the string to point to zero-initialized space before the end border mark. In that case, the 8 limit does not hurt.
+	 */
+	PRINT("%.*s\n", 8, *cpp);
 
 	set_return_numbers(ip, uip, lp, ulp, i64p, ui64p, fp, dp);
 	strcpy(cp, STRING1);
