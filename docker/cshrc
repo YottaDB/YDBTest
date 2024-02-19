@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2021-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2021-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -31,6 +31,7 @@ if (! $?gtmroutines) then
 	setenv gtm_test $gtm_root/gtm_test
 	setenv gtm_dist $gtm_root/$verno/dbg # change later
 	setenv gtm_exe $gtm_dist
+	setenv ydb_environment_init
 	setenv gtmroutines ". $gtm_dist"
 	setenv gtm_tools $gtm_root/$verno/tools
 	setenv gtm_inc $gtm_root/$verno/inc

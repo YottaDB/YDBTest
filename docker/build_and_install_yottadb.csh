@@ -116,6 +116,9 @@ foreach ext (c s msg h si)
         cp -pa sr_linux/*.$ext $gtm_ver/$dir/
 end
 
+# TODO: All the plugin installs are re-installed in the YottaDB pipeline.
+# The pipeline can be potentially a tiny bit faster if we can avoid that.
+
 # Install gtmcrypt plugin
 setenv ydb_dist /usr/library/$verno/dbg
 mkdir /tmp/plugin-build && cd /tmp/plugin-build
@@ -134,7 +137,7 @@ cd ji_plugin_1.0.4
 # But before that set up "tst_awk" and "HOSTOS" env var so "set_java_paths.csh" can work without errors.  Also modify a sed
 # expression in set_java_paths.csh to work with the docker build (where the hostname is HOST so replace $HOST:ar with HOST).
 setenv tst_awk gawk	# needed for "set_java_paths.csh"
-cp /usr/library/gtm_test/T999/com/set_java_paths.csh .
+cp /usr/library/gtm_test/set_java_paths.csh .
 sed -i 's/\'$HOST:ar\'/HOST/;' set_java_paths.csh
 setenv HOSTOS `uname -s`
 source set_java_paths.csh
@@ -142,3 +145,11 @@ make install && make clean
 cd ..
 rm ji_plugin_1.0.4.tar.gz
 
+# Install Posix Plugin
+mkdir -p /tmp/plugin-build/posix
+mkdir -p /tmp/plugin-build/posix-build
+git clone https://gitlab.com/YottaDB/Util/YDBPosix.git /tmp/plugin-build/posix
+cd /tmp/plugin-build/posix-build
+cmake /tmp/plugin-build/posix && make && make install 
+cd -
+rm -r /tmp/plugin-build

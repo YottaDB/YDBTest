@@ -1,7 +1,7 @@
 #!/bin/tcsh
 #################################################################
 #								#
-# Copyright (c) 2021-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2021-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -24,6 +24,9 @@ end
 ## Correct the host; as it differs each time we start docker
 sed -i "s/HOST/$HOST/" /usr/library/gtm_test/serverconf.txt
 sed -i 's|LOG|/var/log/syslog|' /usr/library/gtm_test/serverconf.txt
+
+# Set HOST on tstdirs.csh file
+sed -i "s/HOST/$HOST/" /usr/library/gtm_test/tstdirs.csh
 
 # Make sure /testarea1 is writeable, as it can be redirected from the host
 chmod 777 /testarea1

@@ -83,12 +83,15 @@ RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
 RUN ln -s /usr/bin/tcsh /usr/local/bin/tcsh && \
     groupadd gtc && \
     useradd gtmtest -G gtc,adm -m -s /usr/local/bin/tcsh
+COPY com/set_java_paths.csh /usr/library/gtm_test/set_java_paths.csh
+COPY docker/build_and_install_yottadb.csh /usr/library/gtm_test/build_and_install_yottadb.csh
+RUN git clone https://gitlab.com/YottaDB/DB/YDB.git /Distrib/YottaDB/V999_R999
+RUN /usr/library/gtm_test/build_and_install_yottadb.csh
 COPY --chown=gtmtest:gtc . /usr/library/gtm_test/T999/
 RUN ln -s /usr/library/gtm_test/T999/docker/cshrc ~/.cshrc && \
     ln -s /usr/library/gtm_test/T999/docker/cshrc ~gtmtest/.cshrc
 RUN ln -s /usr/library/gtm_test/T999/docker/serverconf.txt /usr/library/gtm_test/serverconf.txt
-RUN git clone https://gitlab.com/YottaDB/DB/YDB.git /Distrib/YottaDB/V999_R999
-RUN /usr/library/gtm_test/T999/docker/build_and_install_yottadb.csh
+RUN ln -s /usr/library/gtm_test/T999/docker/tstdirs.csh /usr/library/gtm_test/tstdirs.csh
 RUN /usr/library/gtm_test/T999/docker/setup_gpg.csh
 # https://stackoverflow.com/questions/56609182/openthread-environment-docker-rsyslogd-imklog-cannot-open-kernel-log-proc-km
 RUN sed -i '/imklog/s/^/#/' /etc/rsyslog.conf
