@@ -1,0 +1,11 @@
+---- server ----
+     1	server-listen
+     2	server-send: welcome, client
+     3	result: READWRITE
+---- client ----
+     1	client-connect
+     2	client-send: 3
+     3	client-recv: welcome, client
+     4	client-send: three
+     5	client-send: three again
+     6	hang

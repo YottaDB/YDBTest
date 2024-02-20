@@ -1,0 +1,12 @@
+---- server ----
+     1	server-listen
+     2	server-send: welcome, client
+     3	server: non-blocking test, method: flood, don't set non-blocking, don't check (op=6)
+     4	result: READ
+---- client ----
+     1	client-connect
+     2	client-send: 2
+     3	client-recv: welcome, client
+     4	client-send: one
+     5	client-send: one more
+     6	hang

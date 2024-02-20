@@ -1,0 +1,12 @@
+---- server ----
+     1	server-listen-trap-haltOnTrap
+     2	server-recv-start
+     3	server-recv-connect
+     4	server-recv-data: foo?
+     5	server-send: bar!
+     6	server: non-blocking "READWRITE" query: READWRITE
+---- client ----
+     1	client-connect
+     2	client-send: foo?
+     3	client: non-blocking "READWRITE" query: READWRITE
+     4	client-send: zeex
