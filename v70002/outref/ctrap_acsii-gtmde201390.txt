@@ -1,0 +1,73 @@
+# ********************************************************************************************
+# GTM-F201390 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-002_Release_Notes.html#GTM-DE197637470)
+# 
+# CTRAP characters other than CTRL-x, where x corresponds to the non-graphic characters represented by $CHAR(n) with n 0 to 31
+# inclusive, have no effect, and do not show up in ZSHOW "D" output. On the keyboard those characters correspond to <CTRL-@> to
+# <CTRL-_> with the bulk of the range being <CTRL-A> to <CTRL-Z>. Note that CTRAP=$CHAR(3) has a different semantic than the other
+# CTRAP characters, in that, when enabled and $PRINCIPAL is a terminal device type, <CTRL-C> can interrupt at any time, including
+# when $PRINCIPAL'=$IO. GT.M only recognizes the other CTRAP characters when they appear in input to a READ command. Previously,
+# characters outside the range with codes 0-31 showed up in ZSHOW "D" output with a modulo 32 $CHAR() representation and caused
+# corresponding CTRAP recognition. (GTM-DE201390)
+# 
+
+# Test #1 : ZSHOW "D" test
+# Running expect (output: expect_sanitized.outx)
+spawn /usr/local/bin/tcsh -f
+> stty cols 132
+> set shellprompt=SHELL
+> set prompt=$shellprompt
+SHELLsetenv term_env `tty`; echo $term_env > term_env.txt
+SHELL
+# Start mumps -direct
+$gtm_dist/mumps -dir
+
+GTM>; Test #1 : Using ZSHOW "D" to show CTRAP
+
+GTM>; Set CTRAP to the randomize value between $C(0) to $C(31)
+
+GTM>set x=$random(32) use $principal:(ctrap=$char(x))
+
+GTM>; CTRAP will display in ZSHOW "D" as a CTRA so we need to check CTRA for CTRAP
+
+GTM>; Check for CTRA for the randomize value between $C(0) to $C(31) using ZSHOW "D"
+
+GTM>; This command have 2 parts. First part is Random number for $CHAR
+
+GTM>; the second part for telling us if that number exist in ZSHOW "D" output (Number will exist if CTRA field exist)
+
+GTM>; If the number exist, this field will be 1 otherwise it will be 0
+
+GTM>zshow "d":y write x," ",y("D",1)[("("_x_")")
+##TEST_AWK.* 1
+GTM>; Set CTRAP to the randomize value between $C(32) to $C(128)
+
+GTM>set x=33+$r(129-33) use $principal:(ctrap=$char(x))
+
+GTM>; CTRAP will display in ZSHOW "D" as a CTRA so we need to check CTRA for CTRAP
+
+GTM>; Check for CTRA for the randomize value between $C(32) to $C(128) using ZSHOW "D" : Expect no CTRA in this line in V7.0-002
+
+GTM>zshow "d":y write x," ",y("D",1)[("("_x_")")
+##TEST_AWK.* 0
+GTM>; Test #2 : Check CTRAP recognition
+
+GTM>; Set CTRAP to $C(1) (CTRL+A)
+
+GTM>use $principal:ctrap=$char(1)
+
+GTM>read x
+%GTM-E-CTRAP, Character trap $C(1) encountered
+
+GTM>
+
+GTM>; Set CTRAP to $C(33) (!) : CTRAP shouldn't be recognized after GT.M V7.0-002
+
+GTM>use $principal:ctrap=$char(33)
+
+GTM>read x
+
+GTM>halt
+SHELL

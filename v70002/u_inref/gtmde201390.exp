@@ -1,0 +1,76 @@
+#################################################################
+#								#
+# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+#
+spawn /usr/local/bin/tcsh -f
+source $::env(gtm_tst)/com/expectinit.exp
+
+puts "\n# Start mumps -direct"
+send -- "\$gtm_dist/mumps -dir\r"
+expect "GTM>"
+send "; Test #1 : Using ZSHOW \"D\" to show CTRAP\r"
+expect "GTM>"
+send "; Set CTRAP to the randomize value between \$C(0) to \$C(31)\r"
+expect "GTM>"
+send -- "set x=\$random(32) use \$principal:(ctrap=\$char(x))\r"
+expect "GTM>"
+send "; CTRAP will display in ZSHOW \"D\" as a CTRA so we need to check CTRA for CTRAP\r"
+expect "GTM>"
+send "; Check for CTRA for the randomize value between \$C(0) to \$C(31) using ZSHOW \"D\"\r"
+expect "GTM>"
+send "; This command have 2 parts. First part is Random number for \$CHAR\r"
+expect "GTM>"
+send "; the second part for telling us if that number exist in ZSHOW \"D\" output (Number will exist if CTRA field exist)\r"
+expect "GTM>"
+send "; If the number exist, this field will be 1 otherwise it will be 0\r"
+expect "GTM>"
+send -- "zshow \"d\":y write x,\" \",y(\"D\",1)\[(\"(\"_x_\")\")\r"
+expect "GTM>"
+send "; Set CTRAP to the randomize value between \$C(32) to \$C(128)\r"
+expect "GTM>"
+send -- "set x=33+\$r(129-33) use \$principal:(ctrap=\$char(x))\r"
+expect "GTM>"
+send "; CTRAP will display in ZSHOW \"D\" as a CTRA so we need to check CTRA for CTRAP\r"
+expect "GTM>"
+send "; Check for CTRA for the randomize value between \$C(32) to \$C(128) using ZSHOW \"D\" : Expect no CTRA in this line in V7.0-002\r"
+expect "GTM>"
+send -- "zshow \"d\":y write x,\" \",y(\"D\",1)\[(\"(\"_x_\")\")\r"
+expect "GTM>"
+# Test 2: CTRAP While using read
+# Test for $C(1) (CTRL+A)
+send "; Test #2 : Check CTRAP recognition\r"
+expect "GTM>"
+send "; Set CTRAP to \$C(1) (CTRL+A)\r"
+expect "GTM>"
+send -- "use \$principal:ctrap=\$char(1)\r"
+expect "GTM>"
+send -- "read x\r"
+expect "\r"
+system $::env(gtm_tst)/com/wait_for_stty_echo_off.csh
+send -- "\001\r"
+expect "%GTM-E-CTRAP, Character trap"
+system $::env(gtm_tst)/com/wait_for_stty_echo_off.csh
+expect "GTM>"
+send "; Set CTRAP to \$C(33) (!) : CTRAP shouldn't be recognized after GT.M V7.0-002\r"
+expect "GTM>"
+system $::env(gtm_tst)/com/wait_for_stty_echo_off.csh
+send -- "use \$principal:ctrap=\$char(33)\r"
+system $::env(gtm_tst)/com/wait_for_stty_echo_off.csh
+expect "GTM>"
+send -- "read x\r"
+expect "\r"
+system $::env(gtm_tst)/com/wait_for_stty_echo_off.csh
+send -- "\001\r"
+system $::env(gtm_tst)/com/wait_for_stty_echo_off.csh
+expect "GTM>"
+send -- "halt\r"
+expect -exact "SHELL"
+send -- "exit\r"
