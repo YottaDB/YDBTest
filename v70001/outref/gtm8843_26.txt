@@ -1,0 +1,18 @@
+# This test starts a server-client pair, they connect,
+# they switch to TLS mode, then the server suddenly
+# turns on non-blocking mode, which should fail
+---- server ----
+     1	# server: waiting for client
+     2	# server entered checkpoint 1 - client connected
+     3	# server left checkpoint 1 - client connected
+     4	# set mode to TLS
+     5	# set mode to non-blocking (should fail)
+     6	%YDB-E-SOCKBLOCKERR, WRITE /BLOCK error: TLS enabled before non blocking
+     7	# server entered checkpoint 2 - test finished
+     8	# server left checkpoint 2 - test finished
+---- client ----
+     1	# client: connecting to server
+     2	# client entered checkpoint 1 - connected to server
+     3	# client left checkpoint 1 - connected to server
+     4	# client entered checkpoint 2 - wait for finishing server-side test
+     5	# client left checkpoint 2 - wait for finishing server-side test

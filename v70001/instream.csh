@@ -76,6 +76,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic gtm8843_01 gtm8843_02 g
 setenv subtest_list_non_replic	"$subtest_list_non_replic gtm8843_07 gtm8843_08 gtm8843_09 gtm8843_10 gtm8843_11 gtm8843_12"
 setenv subtest_list_non_replic	"$subtest_list_non_replic gtm8843_13 gtm8843_14 gtm8843_15 gtm8843_16 gtm8843_17 gtm8843_18"
 setenv subtest_list_non_replic	"$subtest_list_non_replic gtm8843_19 gtm8843_20 gtm8843_21 gtm8843_22 gtm8843_23 gtm8843_24 gtm8843_25"
+setenv subtest_list_non_replic	"$subtest_list_non_replic gtm8843_26 gtm8843_27 gtm8843_28 gtm8843_29"
 setenv subtest_list_replic	"gtm4272 gtm9373 gtm9363"
 
 if ($?test_replic == 1) then

@@ -1,0 +1,21 @@
+# This test starts a server-client pair, they connect,
+# the server turns on non-blocking mode, then both sides
+# switch to TLS mode, which shouldn't fail on server side
+---- server ----
+     1	# server: waiting for client
+     2	# server entered checkpoint 1 - client connected
+     3	# server left checkpoint 1 - client connected
+     4	# set mode to non-blocking
+     5	# set mode to TLS, no fail
+     6	# Check that the TLS is enabled in the socket
+     7	Number of lines with word "TLS" found in ZSHOW "D" output: 1
+     8	# server entered checkpoint 2 - test finished
+     9	# server left checkpoint 2 - test finished
+---- client ----
+     1	# client: connecting to server
+     2	# client entered checkpoint 1 - connected to server
+     3	# client left checkpoint 1 - connected to server
+     4	# Check that the TLS is enabled in the socket
+     5	Number of lines with word "TLS" found in ZSHOW "D" output: 1
+     6	# client entered checkpoint 2 - wait for finishing server-side test
+     7	# client left checkpoint 2 - wait for finishing server-side test
