@@ -1,0 +1,61 @@
+#!/usr/bin/env expect
+#################################################################
+#								#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+source $::env(gtm_tst)/r200/u_inref/ydb88_common.exp
+
+subtest "Concurrent sessions combine histories"
+
+spawn_ydb
+
+    comment "generate history for outer session"
+    send "W 2,!\r"
+    ignore_ydb_answer
+    send "W 22,!\r"
+    ignore_ydb_answer
+
+    comment "calling yottadb as external program..."
+    send "ZSYSTEM \"$::env(ydb_dist)/yottadb -direct\"\r"
+    ignore_ydb_answer
+
+        comment "generate history for inner session"
+        send "W 1,!\r"
+        ignore_ydb_answer
+        send "W 11,!\r"
+        ignore_ydb_answer
+        send "W 111,!\r"
+        ignore_ydb_answer
+
+    halt_ydb
+
+    comment "...back to previous yottadb"
+    send "\r"
+    expect "YDB>"
+
+    comment "generate another line of history for outer session"
+    send "W 222,!\r"
+    ignore_ydb_answer
+
+halt_ydb
+
+#### The inner ydb closes history first, then
+#### the outer, so the result should be like:
+# W 1
+# W 11
+# W 111
+# HALT
+# W 2
+# W 22
+# ZSYSTEM...
+# W 222
+# HALT
+
+print_history_lines

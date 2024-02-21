@@ -338,7 +338,7 @@ suitable directory. `<local directory>` is where the artifacts will be stored
 on your host when docker is finished running the test):
 
 ```sh
-docker run --init -it -v <local directory>:/testarea1/ --rm registry.gitlab.com/yottadb/db/ydbtest -t r140
+docker run --init -it -v <local directory>:/testarea1/ --rm registry.gitlab.com/yottadb/db/ydbtest -t r200
 ```
 
 The arguments after "ydbtest" are regular `gtmtest.csh` arguments. If you do
@@ -350,7 +350,7 @@ repository, the right hand side of the colon is a fixed path that is known by
 the docker scripts which you must not change:
 
 ```sh
-docker run --init -it -v <local directory>:/testarea1/ -v <full path to YDBTest>:/YDBTest --rm registry.gitlab.com/yottadb/db/ydbtest -t r140
+docker run --init -it -v <local directory>:/testarea1/ -v <full path to YDBTest>:/YDBTest --rm registry.gitlab.com/yottadb/db/ydbtest -t r200
 ```
 
 To debug problems, instead of passing `gtmtest.csh` arguments, pass either
@@ -369,5 +369,5 @@ To build this image with a custom version of YottaDB, clone
 ```sh
 cd YDB
 docker build -f Dockerfile-test -t ydbtest2 .
-docker run --init -it -v <local directory>:/testarea1/ --rm ydbtest2 -t r140
+docker run --init -it -v <local directory>:/testarea1/ --rm ydbtest2 -t r200
 ```

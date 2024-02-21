@@ -1,0 +1,26 @@
+#################################################################
+#								#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+#
+set timeout 60
+
+spawn /usr/local/bin/tcsh -f
+source $::env(gtm_tst)/com/expectinit.exp
+
+send -- "\$ydb_dist/yottadb -direct\r"
+expect -exact "YDB>"
+send -- "set \$zint=\"w 1/0\" if \$zsigproc(\$j,\"SIGUSR1\")\r"
+expect -exact "YDB>"
+send -- "xxx\r"
+expect -exact "YDB>"
+send -- "halt\r"
+expect -exact "SHELL"
+

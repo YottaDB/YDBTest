@@ -1,0 +1,75 @@
+#!/usr/bin/env expect
+#################################################################
+#								#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+source $::env(gtm_tst)/r200/u_inref/ydb88_common.exp
+
+subtest "\$HOME: LKE/DSE/MUPIP ERR_READLINELONGLINE test"
+
+set command_under_32k [string repeat x [expr 32767 + 256 - 17]]
+set command_too_long [string repeat x [expr 32767 + 256]]
+
+comment "spawning LKE..."
+    spawn -noecho $::env(gtm_dist)/lke
+    expect "LKE>"
+    puts "\n"
+    comment "send a command shorter than 32k"
+    send "bad_command $command_under_32k\r"
+    expect "xxx"
+    expect "%YDB-E-CLIERR"
+    expect "LKE>"
+    puts "\n"
+    comment "send a command longer than 32k"
+    send "bad_command $command_too_long\r"
+    expect "xxx"
+    expect "%YDB-W-READLINELONGLINE"
+    expect "LKE>"
+    puts "\n"
+    send "exit\r"
+comment "...LKE exited"
+
+comment "spawning DSE..."
+    spawn -noecho $::env(gtm_dist)/dse
+    expect "DSE>"
+    puts "\n"
+    comment "send a command shorter than 32k"
+    send "bad_command $command_under_32k\r"
+    expect "xxx"
+    expect "%YDB-E-CLIERR"
+    expect "DSE>"
+    puts "\n"
+    comment "send a command longer than 32k"
+    send "bad_command $command_too_long\r"
+    expect "xxx"
+    expect "%YDB-W-READLINELONGLINE"
+    expect "DSE>"
+    puts "\n"
+    send "exit\r"
+comment "...DSE exited"
+
+comment "spawning MUPIP..."
+    spawn -noecho $::env(gtm_dist)/mupip
+    expect "MUPIP>"
+    puts "\n"
+    comment "send a command shorter than 32k"
+    send "bad_command $command_under_32k\r"
+    expect "xxx"
+    expect "%YDB-E-CLIERR"
+    expect "MUPIP>"
+    puts "\n"
+    comment "send a command longer than 32k"
+    send "bad_command $command_too_long\r"
+    expect "xxx"
+    expect "%YDB-W-READLINELONGLINE"
+    expect "MUPIP>"
+    puts "\n"
+    send "exit\r"
+comment "...MUPIP exited"
