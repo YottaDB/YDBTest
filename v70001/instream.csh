@@ -49,8 +49,8 @@
 # gtm8843_10	[ern0]     Verify non-blocking mode, server-side WRITE /WAIT("WRITE") reports non-blocking write possible
 # gtm8843_11	[ern0]     Verify non-blocking mode, client-side WRITE /WAIT("READWRITE") reports non-blocking write possible
 # gtm8843_12	[ern0]     Verify non-blocking mode, server-side WRITE /WAIT("READWRITE") reports non-blocking write possible
-# gtm8843_13	[ern0]     Verify non-blocking mode on client-side with non-default value of env var $gtm_non_blocked_write_retries
-# gtm8843_14	[ern0]     Verify non-blocking mode on server-side with non-default value of env var $gtm_non_blocked_write_retries
+# gtm8843_13	[ern0]     Verify non-blocking mode retry count on client side, no environment variables set
+# gtm8843_14	[ern0]     Verify non-blocking mode retry count on server side, no environment variables set
 # gtm8843_15	[ern0]     Verify non-blocking mode can be set once, second attempt reports error, both client and server side
 # gtm8843_16	[ern0]     Verify non-blocking mode WRITE /WAIT("READ") reports non-blocking read possible
 # gtm8843_17	[ern0]     Verify non-blocking mode WRITE /WAIT("READWRITE") reports non-blocking read possible
@@ -58,6 +58,11 @@
 # gtm8843_19	[ern0]     Verify behaviour of optional third argument to WRITE /WAIT, check for READ
 # gtm8843_20	[ern0]     Verify behaviour of optional third argument to WRITE /WAIT, check for WRITE
 # gtm8843_21	[ern0]     Verify behaviour of optional third argument to WRITE /WAIT, check for READWRITE
+# gtm8843_22	[ern0]     Verify non-blocking mode retry count on client side, with gtm_non_blocked_write_retries env var is set
+# gtm8843_23	[ern0]     Verify non-blocking mode retry count on client side, with ydb_non_blocked_write_retries env var is set
+# gtm8843_24	[ern0]     Verify non-blocking mode retry count on server side, with gtm_non_blocked_write_retries env var is set
+# gtm8843_25	[ern0]     Verify non-blocking mode retry count on server side, with ydb_non_blocked_write_retries env var is set
+
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v70001 test starts..."
@@ -70,7 +75,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic gtm9382"
 setenv subtest_list_non_replic	"$subtest_list_non_replic gtm8843_01 gtm8843_02 gtm8843_03 gtm8843_04 gtm8843_05 gtm8843_06"
 setenv subtest_list_non_replic	"$subtest_list_non_replic gtm8843_07 gtm8843_08 gtm8843_09 gtm8843_10 gtm8843_11 gtm8843_12"
 setenv subtest_list_non_replic	"$subtest_list_non_replic gtm8843_13 gtm8843_14 gtm8843_15 gtm8843_16 gtm8843_17 gtm8843_18"
-setenv subtest_list_non_replic	"$subtest_list_non_replic gtm8843_19 gtm8843_20 gtm8843_21"
+setenv subtest_list_non_replic	"$subtest_list_non_replic gtm8843_19 gtm8843_20 gtm8843_21 gtm8843_22 gtm8843_23 gtm8843_24 gtm8843_25"
 setenv subtest_list_replic	"gtm4272 gtm9373 gtm9363"
 
 if ($?test_replic == 1) then

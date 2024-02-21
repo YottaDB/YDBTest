@@ -15,12 +15,12 @@ source $gtm_tst/com/portno_acquire.csh >& portno.out
 $gtm_tst/com/dbcreate.csh mumps >& dbcreate.log
 $gtm_dist/mumps -run procCleanupPrepare^gtm8843 $portno >& kill1.out
 
-echo "# gtm_non_blocked_write_retries: 10 (not set, default)"
+echo "# gtm_non_blocked_write_retries: not set"
 unsetenv gtm_non_blocked_write_retries
-echo "# ydb_non_blocked_write_retries: 10 (not set, default)"
-unsetenv ydb_non_blocked_write_retries
-($gtm_dist/mumps -run srv13^gtm8843 $portno >& server.out &)
-strace --trace=sendto $gtm_dist/mumps -run cli13^gtm8843 $portno >& strace.out
+echo "# ydb_non_blocked_write_retries: 14"
+setenv ydb_non_blocked_write_retries 14
+($gtm_dist/mumps -run srv23^gtm8843 $portno >& server.out &)
+strace --trace=sendto $gtm_dist/mumps -run cli23^gtm8843 $portno >& strace.out
 echo -n "result: "
 cat strace.out | grep EAGAIN | wc -l
 

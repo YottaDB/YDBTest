@@ -296,8 +296,8 @@ cli12 ;
     quit
 
 ;----------------------------------------------------------------------[13]----
-; gtm8843_13 - Verify non-blocking mode on client-side with non-default
-;              value of env var $gtm_non_blocked_write_retries
+; gtm8843_13 - Verify non-blocking mode retry count on client side,
+;              no environment variables set
 
 srv13 ;
     do procCleanupRegister
@@ -312,8 +312,8 @@ cli13 ;
     quit
 
 ;----------------------------------------------------------------------[14]----
-; gtm8843_14 - Verify non-blocking mode on server-side with non-default
-;              value of env var $gtm_non_blocked_write_retries
+; gtm8843_13 - Verify non-blocking mode retry count on server side,
+;              no environment variables set
 
 srv14 ;
     do procCleanupRegister
@@ -510,6 +510,42 @@ fc18 ;
     lock -(^clientfinished(port))
     hang 9999
     quit
+
+;-------------------------------------------------------------------[22]----
+; gtm8843_22 - Verify non-blocking mode retry count on client side,
+;              with `gtm_non_blocked_write_retries` env var is set
+
+srv22 ;
+    do srv13 quit
+cli22 ;
+    do cli13 quit
+
+;-------------------------------------------------------------------[23]----
+; gtm8843_23 - Verify non-blocking mode retry count on client side,
+;              with `ydb_non_blocked_write_retries` env var is set
+
+srv23 ;
+    do srv13 quit
+cli23 ;
+    do cli13 quit
+
+;-------------------------------------------------------------------[24]----
+; gtm8843_24 - Verify non-blocking mode retry count on server side,
+;              with `gtm_non_blocked_write_retries` env var is set
+
+srv24 ;
+    do srv13 quit
+cli24 ;
+    do cli13 quit
+
+;-------------------------------------------------------------------[25]----
+; gtm8843_25 - Verify non-blocking mode retry count on server side,
+;              with `ydb_non_blocked_write_retries` env var is set
+
+srv25 ;
+    do srv13 quit
+cli25 ;
+    do cli13 quit
 
 ;##############################################################################
 ; srvRwTest - Verify non-blocking mode WRITE /WAIT(parm) server side
