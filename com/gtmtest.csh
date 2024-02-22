@@ -133,6 +133,8 @@ $grep -v "rm " $gtm_test/$tst_src/com/defaults_csh >! ${TMP_FILE_PREFIX}_default
 source $gtm_test_com_individual/defaults.csh ${TMP_FILE_PREFIX}_defaults_csh
 if ($status) exit $status
 
+setenv lsof "$gtm_tst/com/lsof"	# Define "lsof" variable to point to centralized framework script
+
 # The above "source" invocation would have defined "gt_ld_options_common" and "gtm_tst" env vars.
 # The below "source" invocation would update "gt_ld_options_common" with "-fsanitize=address" if needed.
 source $gtm_tst/com/set_ydb_build_env_vars.csh

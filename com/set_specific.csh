@@ -3,7 +3,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -144,8 +144,7 @@ endif
 if !(-e $lsof) setenv lsof  /usr/sbin/lsof
 if !(-e $lsof) setenv lsof  /usr/bin/lsof
 if !(-e $lsof) then
-	echo "TEST-E-LSOF, cannot find lsof. Tests relying on \$lsof will fail"
-	setenv lsof echo
+	echo "TEST-E-LSOF, cannot find lsof. Test framework will fail"
 endif
 
 setenv tst_gzip /usr/local/bin/gzip

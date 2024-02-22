@@ -1,0 +1,30 @@
+#!/usr/local/bin/tcsh -f
+#################################################################
+#                                                               #
+# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+
+# Invoke the system "lsof" utility from a centralized script in the test framework.
+# This lets us add options that will speed up lsof on some systems (YDBTest#721).
+
+# For now, exclude all "chrome" processes from lsof as they have been seen to slow lsof output dramatically
+# in some cases (without chrome took 1.35 seconds vs with chrome took 18 seconds). It is possible other browsers
+# like chrome also have a similar issue and need to be excluded in similar fashion. Add such cases below as needed.
+
+# Additionally, only look for processes belonging to the current user as it was seen to also speed up the
+# lsof noticeably (without -u took 1.35 seconds vs with -u took 0.40 seconds).
+
+# Need the "-a" after the "-u $USER" to ensure any condition that user specified in "$*" is ANDed with the condition
+# and not ORed (which is the default). For example if "$lsof mumps.dat" was the caller invocation, then translating
+# this to "lsof -u $USER mumps.dat" will list all open files by the current user OR all files opened for mumps.dat.
+# Adding the "-a" in between will ensure it translates to "lsof -u $USER -a mumps.dat" which would mean we will only
+# list all open files by the current user AND that relate to the file mumps.dat.
+
+lsof -c '^chrome' -u $USER -a $*
