@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -43,6 +43,7 @@ endif
 cd $tst_general_dir
 
 while !( -e $exit_file)
+	sleep 0.1
 	set cursubtestdir = `$tst_awk '/SUB_TEST:/ {subtest=$NF} END {print subtest}' $tst_general_dir/config.log`
 	if ("" == $cursubtestdir) then
 		set cursubtestdir = "tmp"
@@ -53,7 +54,6 @@ while !( -e $exit_file)
 
 	# There might be a window where the previous subtest completed (and got removed) but the next subtest's entry is not made in config.log yet
 	if (! -d $cursubtestdir) then
-		sleep 1
 		continue
 	endif
 	# Job 1 : Watch for too many cores.
@@ -140,8 +140,6 @@ while !( -e $exit_file)
 			touch $exit_file
 		endif
 	endif
-
-	sleep 5
 end
 
 # This is reached when exit_file is found. Remove it
