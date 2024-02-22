@@ -3,7 +3,7 @@
 #								#
 #	Copyright 2012, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -32,7 +32,7 @@ case "picktest":
 		# Just in case two different servers executed the line to check for the test in controlfile at the same time,
 		# Both of them would see it as unpicked and both would pick it up.
 		# Lets check the control file once more to see if this server is the first host to pick, if not skip it
-		set ppid = `grep $testname $controlfile | head -1 | $tst_awk '{print $7;}'`
+		set ppid = `grep -w $testname $controlfile | head -1 | $tst_awk '{print $7;}'`
 		if ($ppid == $$) then
 			echo $short_host
 		else
