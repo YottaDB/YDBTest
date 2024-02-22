@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2019-2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -117,5 +117,6 @@ $gtm_dist/lke clnup
 $gtm_dist/lke show
 set ydbPID = `cat mumpsE.pid`
 $gtm_dist/mupip stop $ydbPID # stop YDB M process in a long HANG command
+$gtm_tst/com/wait_for_proc_to_die.csh $ydbPID
 
 $gtm_tst/com/dbcheck.csh
