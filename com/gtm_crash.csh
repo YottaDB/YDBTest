@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -29,6 +29,7 @@ if ($1 == "PID_") then
 	echo $pids
 else
 	set pids=`$tst_awk '$1 ~ /PID/ {print $2}' *${gtm_test_jobid}.mjo*`
+	# "pids" contains the list of imptp processes that were jobbed off.
 endif
 setenv kill_time `date +%H_%M_%S`
 setenv KILL_LOG pkill_${kill_time}.logx
@@ -68,6 +69,12 @@ $gtm_tst/com/ipcrm $dbipc_private >>& $KILL_LOG
 $gtm_tst/com/rem_ftok_sem.csh $ftok_key # arguments $ftok_key
 # Collecting the IDs of relinkctl shared memory segments from the RCTLDUMP is prohibitive, so clean directly.
 $MUPIP rundown -relinkctl >>& $KILL_LOG
+
+# Now that any ipcs that were recorded in the db file header have been cleaned, check semaphores of MM gtmhelp.dat files
+# that were potentially open (these are not recorded in any db file header and have to be examined using "ipcs -s") and
+# clean them up as otherwise they would be orphaned and accumulate in the system.
+$gtm_tst/com/imptp_crash_helpdb_semclean.csh $KILL_LOG "$pids"
+
 #################################
 #
 # Automatic unfreeze does not take place in two cases: 1) The passive source server is killed after setting fake ENOSPC flag.
