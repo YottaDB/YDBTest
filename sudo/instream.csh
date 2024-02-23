@@ -63,10 +63,6 @@ else if ("rhel" == $gtm_test_linux_distrib) then
 		setenv subtest_exclude_list "$subtest_exclude_list plugins"
 		# olderversion disabled since no binaries for RHEL 7 (it's not supported) since r1.36
 		setenv subtest_exclude_list "$subtest_exclude_list olderversion"
-	else if ("9.3" == $gtm_test_linux_version) then
-		# RHEL 9 binaries are not available for r1.38 so disable the "olderversion" subtest there.
-		# This subtest will be re-enabled for RHEL 9 once r2.00 gets released on RHEL 9.
-		setenv subtest_exclude_list "$subtest_exclude_list olderversion"
 	endif
 else if (("ubuntu" == $gtm_test_linux_distrib) && ("20.04" == $gtm_test_linux_version)) then
         # olderversion disabled since no binaries for Ubuntu 20.04 (not all versions supported)

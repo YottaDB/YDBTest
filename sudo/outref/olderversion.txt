@@ -1,12 +1,14 @@
 # Test to see if ydbinstall can successfully install older versions (to catch issue fixed in YDB!1360, YDB@aed0e780)
 # Copy ydbinstall to this directory (don't want it thinking it is installing the working version)
-# Run ydbinstall to install the current version, r1.38, r1.36
+# Run ydbinstall to install the current version, r2.00, r1.38
 ##TEST_AWKYottaDB version r.* installed successfully at ##TEST_PATH##/current
 ##TEST_AWK(Skipping YottaDB pkg-config file install for r.* as newer version r.* exists|YottaDB pkg-config file installed successfully) at /usr/share/pkgconfig/yottadb.pc
+##TEST_AWKYottaDB version r.* installed successfully at ##TEST_PATH##/r2.00
+##TEST_AWK(Skipping YottaDB pkg-config file install for r.* as newer version r.* exists|YottaDB pkg-config file installed successfully) at /usr/share/pkgconfig/yottadb.pc
+##SUSPEND_OUTPUT RHEL_9.3
 ##TEST_AWKYottaDB version r.* installed successfully at ##TEST_PATH##/r1.38
 ##TEST_AWK(Skipping YottaDB pkg-config file install for r.* as newer version r.* exists|YottaDB pkg-config file installed successfully) at /usr/share/pkgconfig/yottadb.pc
-##TEST_AWKYottaDB version r.* installed successfully at ##TEST_PATH##/r1.36
-##TEST_AWK(Skipping YottaDB pkg-config file install for r.* as newer version r.* exists|YottaDB pkg-config file installed successfully) at /usr/share/pkgconfig/yottadb.pc
+##ALLOW_OUTPUT RHEL_9.3
 
 # Testing M Mode
 setenv gtm_chset M
@@ -15,14 +17,16 @@ unset echo
 $ZROUTINES="##TEST_PATH##/current/libyottadbutil##TEST_SHL_SUFFIX##"
 $ZCHSET="M"
 ##TEST_AWK\$ZYRELEASE="YottaDB r.* Linux .*"
+# r2.00
+$ZROUTINES="##TEST_PATH##/r2.00/libyottadbutil##TEST_SHL_SUFFIX##"
+$ZCHSET="M"
+##TEST_AWK\$ZYRELEASE="YottaDB r.* Linux .*"
+##SUSPEND_OUTPUT RHEL_9.3
 # r1.38
 $ZROUTINES="##TEST_PATH##/r1.38/libyottadbutil##TEST_SHL_SUFFIX##"
 $ZCHSET="M"
 ##TEST_AWK\$ZYRELEASE="YottaDB r.* Linux .*"
-# r1.36
-$ZROUTINES="##TEST_PATH##/r1.36/libyottadbutil##TEST_SHL_SUFFIX##"
-$ZCHSET="M"
-##TEST_AWK\$ZYRELEASE="YottaDB r.* Linux .*"
+##ALLOW_OUTPUT RHEL_9.3
 
 # Testing UTF-8 Mode
 setenv gtm_chset UTF-8
@@ -31,11 +35,13 @@ unset echo
 $ZROUTINES="##TEST_PATH##/current/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
 $ZCHSET="UTF-8"
 ##TEST_AWK\$ZYRELEASE="YottaDB r.* Linux .*"
+# r2.00
+$ZROUTINES="##TEST_PATH##/r2.00/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
+$ZCHSET="UTF-8"
+##TEST_AWK\$ZYRELEASE="YottaDB r.* Linux .*"
+##SUSPEND_OUTPUT RHEL_9.3
 # r1.38
 $ZROUTINES="##TEST_PATH##/r1.38/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
 $ZCHSET="UTF-8"
 ##TEST_AWK\$ZYRELEASE="YottaDB r.* Linux .*"
-# r1.36
-$ZROUTINES="##TEST_PATH##/r1.36/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
-$ZCHSET="UTF-8"
-##TEST_AWK\$ZYRELEASE="YottaDB r.* Linux .*"
+##ALLOW_OUTPUT RHEL_9.3

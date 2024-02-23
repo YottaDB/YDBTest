@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -16,9 +16,13 @@ echo '# Test to see if ydbinstall can successfully install older versions (to ca
 source $gtm_tst/$tst/u_inref/setinstalloptions.csh	# sets the variable "installoptions" (e.g. "--force-install" if needed)
 echo "# Copy ydbinstall to this directory (don't want it thinking it is installing the working version)"
 cp /Distrib/YottaDB/$gtm_verno/$tst_image/yottadb_r*/ydbinstall .
-echo "# Run ydbinstall to install the current version, r1.38, r1.36"
+echo "# Run ydbinstall to install the current version, r2.00, r1.38"
 $sudostr ./ydbinstall --utf8 --installdir $PWD/current $installoptions
-foreach version ("r1.38" "r1.36")
+foreach version ("r2.00" "r1.38")
+	if (("r1.38" == $version) && $gtm_test_rhel9_plus) then
+		# RHEL 9 does not have a r1.38 tarball so skip this step there
+		continue
+	endif
 	$sudostr ./ydbinstall --utf8 --installdir $PWD/$version $installoptions $version
 end
 
@@ -31,7 +35,11 @@ foreach mode ("M" "UTF-8")
 	unsetenv gtm_dist
 	unsetenv ydb_dist
 
-	foreach dir ("current" "r1.38" "r1.36")
+	foreach dir ("current" "r2.00" "r1.38")
+		if (("r1.38" == $dir) && $gtm_test_rhel9_plus) then
+			# RHEL 9 does not have a r1.38 tarball so skip this step there
+			continue
+		endif
 		echo "# $dir"
 		setenv ydb_dist $PWD/$dir
 		$ydb_dist/yottadb -run %XCMD 'zwrite $zroutines,$zchset,$zyrelease'
@@ -39,6 +47,10 @@ foreach mode ("M" "UTF-8")
 end
 
 # clean up the install directory since the files are owned by root and can't be gzipped by the test system
-foreach dir ("current" "r1.38" "r1.36")
+foreach dir ("current" "r2.00" "r1.38")
+	if (("r1.38" == $dir) && $gtm_test_rhel9_plus) then
+		# RHEL 9 does not have a r1.38 tarball so skip this step there
+		continue
+	endif
 	$sudostr rm -rf $PWD/$dir
 end
