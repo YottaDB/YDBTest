@@ -16,6 +16,7 @@
 ; mode should fail, server side
 
 srv26 ;
+	do bgProcStarted
 	do server
 	use $principal
 	write "# set mode to TLS",!
@@ -37,6 +38,7 @@ cli26 ;
 	do client
 	use s	write /tls("client",,"client")
 	do checkpoint("client",2,"wait for finishing server-side test")
+	do waitForBgProc
 	quit
 
 ;----------------------------------------------------------------------[27]----
@@ -44,6 +46,7 @@ cli26 ;
 ; mode should fail, client side
 
 srv27 ;
+	do bgProcStarted
 	do server
 	use $principal
 	write "# set mode to TLS",!
@@ -56,15 +59,17 @@ cli27 ;
 	use s	write /tls("client",,"client")
 	use $principal
 	write "# set mode to non-blocking (should fail)",!
-	set $ztrap="goto s27e"
+	set $ztrap="goto c27e"
 	use s	write /block("off")
 	do checkpoint("server",2,"test failed")
+	do waitForBgProc
 	quit
-s27e ;
+c27e ;
 	set error=$piece($zstatus,",",3,4)
 	use $principal
 	write error,!
 	do checkpoint("client",2,"test finished")
+	do waitForBgProc
 	quit
 
 ;----------------------------------------------------------------------[28]----
@@ -72,6 +77,7 @@ s27e ;
 ; TLS mode should not fail, server side
 
 srv28 ;
+	do bgProcStarted
 	do server
 	use $principal
 	write "# set mode to non-blocking",!
@@ -88,6 +94,7 @@ cli28 ;
 	use s	write /tls("client",,"client")
 	do printZshowTls
 	do checkpoint("client",2,"wait for finishing server-side test")
+	do waitForBgProc
 	quit
 
 ;----------------------------------------------------------------------[29]----
@@ -95,6 +102,7 @@ cli28 ;
 ; TLS mode should not fail, client side
 
 srv29 ;
+	do bgProcStarted
 	do server
 	use $principal
 	write "# set mode to TLS",!
@@ -113,6 +121,7 @@ cli29 ;
 	do printZshowTls
 	use s	write /tls("client",,"client")
 	do checkpoint("client",2,"test finished")
+	do waitForBgProc
 	quit
 
 ;##############################################################################
@@ -169,6 +178,21 @@ printZshowTls ; report if TLS info found in `ZSHOW "D"` output
 	. if line[" TLS " set found=1+found
 	write "# Check that the TLS is enabled in the socket",!
 	write "Number of lines with word ""TLS"" found in ZSHOW ""D"" output: ",found,!
+	quit
+
+;##############################################################################
+
+bgProcStarted ; acquire the lock indicates that background process is running
+	do setPort^gtm8843
+	lock +(^bgprocrun(port))
+	quit
+
+;----------------------------------------------------------------------[29]----
+
+waitForBgProc ; wait for the lock indicates background process is running
+	do setPort^gtm8843
+	lock +(^bgprocrun(port))
+	lock -(^bgprocrun(port))
 	quit
 
 ;##############################################################################
