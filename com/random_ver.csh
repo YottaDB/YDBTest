@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -148,7 +148,7 @@ if ($?vertype) then
 	case "V6":
 		set minimum = "V60000"
 		set isgt    = ">="
-		set maximum = "$tst_ver"
+		set maximum = "V70000"
 		set islt    = "<"
 	breaksw
 	case "ms":

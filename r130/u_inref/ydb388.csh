@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -18,7 +18,7 @@ echo "## Test MUPIP ENDIANCVT issue described at https://gitlab.com/YottaDB/DB/Y
 setenv gtm_test_use_V6_DBs 0
 
 echo "# Choose a random prior (including current version) GT.M or YottaDB version"
-set prior_ver = `$gtm_tst/com/random_ver.csh -type any`
+set prior_ver = `$gtm_tst/com/random_ver.csh -type V6`
 if ("$prior_ver" =~ "*-E-*") then
         echo "No prior versions available: $prior_ver"
         exit -1
@@ -30,7 +30,7 @@ echo "# Randomly chosen prior version is : GTM_TEST_DEBUGINFO [$prior_ver]"
 echo "# Switch to prior version"
 source $gtm_tst/com/switch_gtm_version.csh $prior_ver "pro"
 
-echo "# Creating database using prior V5 version"
+echo "# Creating database using prior V6 version"
 \rm -f *.o >& rm1.out	# remove .o files (for .m files) created by current version (in case the format is different)
 $gtm_tst/com/dbcreate.csh mumps >&! dbcreate_priorver.out
 
