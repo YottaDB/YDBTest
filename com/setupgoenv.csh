@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2019-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -17,9 +17,14 @@ set tstpath = `pwd`
 setenv PKG_CONFIG_PATH $ydb_dist
 setenv GOPATH $tstpath/go/
 setenv GOPROXY https://proxy.golang.org/cached-only
-setenv GO111MODULE off		# Enables/Disable (off is disable) "module-mode" fetches on Go 1.16 (until Go 1.17)
+setenv GO111MODULE on	# Need this for "go get" to work. Starting "go 1.22", go get fails to work if GO111MODULE=off
 set go_repo="lang.yottadb.com/go/yottadb"
 mkdir go
+
+# Now that "go get" is only supported inside of a module, create a go.mod file first.
+# This step was not needed until "go 1.21" as long as "GO111MODULE" env var was set to "off".
+# But starting "go 1.22", that did not work (see YDBTest#387 for more details).
+go mod init gitlab.com/YottaDB/Lang/YDBGo >& go_mod.out
 
 # Retrieve yottadb package from the repository using "go get".
 set cmdtorunprefix = "go get"
@@ -60,6 +65,16 @@ if ($status1) then
 	end
 	exit 1
 endif
+
+# go/pkg directory contains subdirectories with read-only permissions after a "go get" so give read-write permissions
+# as later the test framework would try to gzip the files in case of a test failure and that would require creating a
+# new file and fail with a "Permission denied" error.
+chmod -R +w go/pkg
+
+# go get with GO111MODULE=on no longer downloads the git repository. But later parts of this script and the caller test
+# rely on that directory existing. So download the git repo using "git clone".
+mkdir -p go/src/lang.yottadb.com/go/yottadb/
+git clone https://gitlab.com/YottaDB/Lang/YDBGo go/src/lang.yottadb.com/go/yottadb >& gitclone.log
 
 cd go/src/$go_repo
 if ($?ydb_test_go_repo_dir) then
@@ -112,20 +127,17 @@ cd -
 # When using a pure Go application, one can do 'go run xxx.go' and it will do that. This does not work when cgo is involved -
 # which is 100% of our Go applications currently since they all test the Go wrapper.
 set gobuild = "go build"
+setenv GO111MODULE off	# Keep this off as we rely on this for "go build" commands to work with GOPATH programs in YDBTest
+			# like com/imptpgo.go and com/impjobgo.go. Note that starting go 1.22, "go get" runs as if
+			# GO111MODULE=on irrespective of the env var setting but we handle that separately later.
 set gotest = "go test"
 
 source $gtm_tst/com/is_libyottadb_asan_enabled.csh
 if ($gtm_test_libyottadb_asan_enabled) then
-	# libyottadb.so was built with asan enabled. Do the same with the go executables. Check if we are using Go 1.19 or later,
-	# which uses the new -asan flag or 1.18.x or earlier which uses '-fsanitize=address'.
-	set gover = `go version | $ydb_dist/yottadb -run ^%XCMD 'read ver write +$zpiece(ver,"go",3),!'`
-	if (`expr $gover "<=" "1.18"`) then
-	    set asanflags = "'-fsanitize=address'"
-	else
-	    set asanflags = "-asan"
-	endif
-	set gobuild = "$gobuild -ldflags $asanflags"
-	set gotest = "$gotest -ldflags $asanflags"
+	# libyottadb.so was built with asan enabled. Do the same with the go executables.
+	set asanflags = "-asan"
+	set gobuild = "$gobuild $asanflags"
+	set gotest = "$gotest $asanflags"
 endif
 
 # Random Go environment settings

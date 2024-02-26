@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #                                                               #
-# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.  #
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.  #
 # All rights reserved.                                          #
 #                                                               #
 #       This source code contains the intellectual property     #
@@ -64,6 +64,16 @@ if ($?test_replic) then
 endif
 
 pushd $GOPATH/src/$go_repo/ > /dev/null
+setenv GO111MODULE on	# See comments in com/setupgoenv.csh for why this is needed
+go get -t >& go_get_unit_tests.out	# this fills in missing go.sum entries for depending packages (e.g. stretchr/testify/assert)
+# Note: The below line is commented as it causes GOPATH related issues due to bringing in external packages.
+# This differs from "com/setupgoenv.csh" in that regard (there we need the below line uncommented).
+#	setenv GO111MODULE off
+# The actual error is the following (for the record)
+#	buffer_t_array_test.go:18:2: cannot find package "github.com/stretchr/testify/assert" in any of:
+#		/snap/go/10506/src/github.com/stretchr/testify/assert (from $GOROOT)
+#		/.*/go_0/unit_tests/go/src/github.com/stretchr/testify/assert (from $GOPATH)
+
 $gotest -c -o unit_tests_exe $go_repo >& go_test.log
 if (0 != $status) then
 	echo "TEST-E-FAILED : [$gotest -c -o unit_tests_exe $go_repo] failed. go_test.log output follows."
