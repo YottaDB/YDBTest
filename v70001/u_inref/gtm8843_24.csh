@@ -20,10 +20,10 @@ setenv gtm_non_blocked_write_retries 25
 echo "# ydb_non_blocked_write_retries: not set"
 unsetenv ydb_non_blocked_write_retries
 ($gtm_dist/mumps -run cli14^gtm8843 $portno >& client.out &)
-strace $gtm_dist/mumps -run srv14^gtm8843 $portno >& strace.out
+strace -o trace.outx $gtm_dist/mumps -run srv14^gtm8843 $portno
 echo -n "result: "
 # Count "send" and "sendto" system calls with EAGAIN result
-cat strace.out | grep "^send.*EAGAIN" | wc -l
+grep "^send.*EAGAIN" trace.outx | wc -l
 
 $gtm_dist/mumps -run procCleanupPerform^gtm8843 $portno >& kill2.out
 $gtm_tst/com/dbcheck.csh >& dbcheck.log
