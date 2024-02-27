@@ -1,0 +1,20 @@
+# ********************************************************************************************
+# GTM-DE201305 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-002_Release_Notes.html#GTM-DE197637290)
+# 
+# When the Database segment to file mapping uses an environment variable, and the environment variable is not defined, MUPIP BACKUP
+# uses the environment variable name itself in constructing the file name, as does MUPIP CREATE. Previously MUPIP CREATE created
+# database with undefined environment variable name as the database name, but MUPIP BACKUP failed to backup that existing database.
+# (GTM-DE201305)
+# 
+# Create GLD File with default segment file change to $TEST.dat
+
+# Create database file
+%GTM-I-DBFILECREATED, Database file ##TEST_PATH##/$TEST.dat created
+
+# Do MUPIP backup (This fails in YottaDB r2.00 with a TEST: Undefined variable error but succeeds in YottaDB r2.02)
+%GTM-I-BACKUPDBFILE, DB file ##TEST_PATH##/$TEST.dat backed up in file ##TEST_PATH##/bak/$TEST.dat
+##TEST_AWK%GTM-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x.* are backed up
+%GTM-I-BACKUPSUCCESS, Backup completed successfully
