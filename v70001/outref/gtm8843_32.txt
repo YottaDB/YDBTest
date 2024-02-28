@@ -1,0 +1,16 @@
+# This test starts a server-client pair, they connect, then the client
+# triggers the error: missing argument for switching to blocking mode
+---- server ----
+     1	# server: waiting for client
+     2	# server entered checkpoint 1 - client connected
+     3	# server left checkpoint 1 - client connected
+     4	# server entered checkpoint 2
+     5	# server left checkpoint 2
+---- client ----
+     1	# client: connecting to server
+     2	# client entered checkpoint 1 - connected to server
+     3	# client left checkpoint 1 - connected to server
+     4	command: write /block
+     5	%YDB-E-SOCKBLOCKERR, WRITE /BLOCK error: at least one option must be provided
+     6	# client entered checkpoint 2
+     7	# client left checkpoint 2

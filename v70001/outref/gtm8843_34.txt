@@ -1,0 +1,36 @@
+# These similar cases trigger errors for WRITE /BLOCK(x)
+# commands, where x is "COUNT", "CLEAR" and "SENT". There are
+# pairs, one of them produce error, the other one does not.
+---- server ----
+     1	# server: waiting for client
+     2	# server entered checkpoint 1 - client connected
+     3	# server left checkpoint 1 - client connected
+     4	# server entered checkpoint 2
+     5	# server left checkpoint 2
+---- client ----
+     1	# client: connecting to server
+     2	# client entered checkpoint 1 - connected to server
+     3	# client left checkpoint 1 - connected to server
+     4	# COUNT without local var ref should produce error
+     5	executing command: write /block("count")
+     6	error caught, test passed: %YDB-E-SOCKBLOCKERR, WRITE /BLOCK error: COUNT requires local variable passed by reference
+     7	# COUNT with local var ref shouldn't produce error
+     8	executing command: write /block("count",.a)
+     9	no error, test passed
+    10	value of a=0
+    11	# CLEAR with argument should produce error
+    12	executing command: write /block("clear",b)
+    13	error caught, test passed: %YDB-E-SOCKBLOCKERR, WRITE /BLOCK error: CLEAR does not take an argument
+    14	value of b=<undef>
+    15	# CLEAR without argument shouldn't produce error
+    16	executing command: write /block("clear")
+    17	no error, test passed
+    18	# SENT without local var ref should produce error
+    19	executing command: write /block("sent")
+    20	error caught, test passed: %YDB-E-SOCKBLOCKERR, WRITE /BLOCK error: SENT requires local variable passed by reference
+    21	# SENT with local var ref shouldn't produce error
+    22	executing command: write /block("sent",.c)
+    23	no error, test passed
+    24	value of c=0
+    25	# client entered checkpoint 2
+    26	# client left checkpoint 2

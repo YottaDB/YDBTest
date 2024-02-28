@@ -1,0 +1,15 @@
+# Trigger invalid second arg error of WRITE /WAIT
+---- server ----
+     1	# server: waiting for client
+     2	# server entered checkpoint 1 - client connected
+     3	# server left checkpoint 1 - client connected
+     4	# server entered checkpoint 2
+     5	# server left checkpoint 2
+---- client ----
+     1	# client: connecting to server
+     2	# client entered checkpoint 1 - connected to server
+     3	# client left checkpoint 1 - connected to server
+     4	command: write /wait(0,"flatearth")
+     5	error caught, test passed: %YDB-E-SOCKWAITARG, Second argument to WRITE /WAIT value is not valid
+     6	# client entered checkpoint 2
+     7	# client left checkpoint 2

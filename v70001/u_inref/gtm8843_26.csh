@@ -19,8 +19,8 @@ source $gtm_tst/com/portno_acquire.csh >& portno.out
 $gtm_tst/com/dbcreate.csh mumps >& dbcreate.log
 $gtm_dist/mumps -run procCleanupPrepare^gtm8843 $portno >& kill1.out
 
-($gtm_dist/mumps -run srv26^gtm8843tls $portno >& server.out &)
-$gtm_dist/mumps -run cli26^gtm8843tls $portno >& client.out
+($gtm_dist/mumps -run srv26^gtm8843 $portno >& server.out &)
+$gtm_dist/mumps -run cli26^gtm8843 $portno >& client.out
 
 echo "# This test starts a server-client pair, they connect,"
 echo "# they switch to TLS mode, then the server suddenly"
@@ -34,5 +34,5 @@ $gtm_dist/mumps -run procCleanupPerform^gtm8843 $portno >& kill2.out
 $gtm_tst/com/dbcheck.csh >& dbcheck.log
 $gtm_tst/com/portno_release.csh
 
-sed -i '/\(testarea\|SOCKBLOCKERR\)/d' server.out
-sed -i '/\(testarea\|SOCKBLOCKERR\)/d' client.out
+sed -i '/\(SOCKBLOCKERR\)/d' server.out
+sed -i '/\(SOCKBLOCKERR\)/d' client.out

@@ -27,7 +27,7 @@ $gtm_dist/mumps -run procCleanupPerform^gtm8843 $portno >& kill2.out
 $gtm_tst/com/dbcheck.csh >& dbcheck.log
 $gtm_tst/com/portno_release.csh
 
-sed -i '/\(testarea\|FORCEDHALT\)/d' server.out
-sed -i '/\(testarea\|FORCEDHALT\)/d' client.out
-sed -i '/\(testarea\|SOCKWRITE\)/d' server.out
-sed -i '/\(testarea\|SOCKWRITE\)/d' client.out
+sed -i '/\(FORCEDHALT\)/d' server.out
+sed -i '/\(FORCEDHALT\)/d' client.out
+sed -i '/\(SOCKWRITE\)/d' server.out
+sed -i '/\(SOCKWRITE\)/d' client.out

@@ -13,20 +13,8 @@
 
 source $gtm_tst/com/portno_acquire.csh >& portno.out
 
-$gtm_tst/com/dbcreate.csh mumps >& dbcreate.log
-$gtm_dist/mumps -run procCleanupPrepare^gtm8843 $portno >& kill1.out
+echo "# Socket is not connected, error should reported on WRITE /BLOCK"
+$gtm_dist/mumps -run test33^gtm8843 $portno
 
-($gtm_dist/mumps -run cli19^gtm8843 $portno >& client.out &)
-$gtm_dist/mumps -run srv19^gtm8843 $portno >& server.out
-
-echo ---- server ----
-cat -n server.out
-echo ---- client ----
-cat -n client.out
-
-$gtm_dist/mumps -run procCleanupPerform^gtm8843 $portno >& kill2.out
-$gtm_tst/com/dbcheck.csh >& dbcheck.log
 $gtm_tst/com/portno_release.csh
 
-sed -i '/\(FORCEDHALT\)/d' server.out
-sed -i '/\(FORCEDHALT\)/d' client.out

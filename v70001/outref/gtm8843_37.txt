@@ -1,0 +1,20 @@
+# Build a TCP connection, the server hangs on a READ instruction.
+# The client sends an interrupt to the server, which, performs a
+# I/O operation in interrupt handler routine. This leads to the
+# desired error.
+---- server ----
+     1	# server: waiting for client
+     2	# server entered checkpoint 1 - client connected
+     3	# server left checkpoint 1 - client connected
+     4	# server entered checkpoint 2
+     5	# server left checkpoint 2
+     6	# waiting to be interupted
+     7	# attempt to use socket in interrupt handler
+     8	error caught: %YDB-E-ZINTRECURSEIO, Attempt to do IO to the active device in $ZINTERRUPT
+---- client ----
+     1	# client: connecting to server
+     2	# client entered checkpoint 1 - connected to server
+     3	# client left checkpoint 1 - connected to server
+     4	# client entered checkpoint 2
+     5	# client left checkpoint 2
+     6	# send interrupt to server

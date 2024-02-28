@@ -22,10 +22,11 @@ unsetenv ydb_non_blocked_write_retries
 ($gtm_dist/mumps -run srv22^gtm8843 $portno >& server.out &)
 strace -o trace.outx $gtm_dist/mumps -run cli22^gtm8843 $portno
 echo -n "result: "
+# Count "send" and "sendto" system calls with EAGAIN result
 grep "^send.*EAGAIN" trace.outx | wc -l
 
 $gtm_dist/mumps -run procCleanupPerform^gtm8843 $portno >& kill2.out
 $gtm_tst/com/dbcheck.csh >& dbcheck.log
 $gtm_tst/com/portno_release.csh
 
-sed -i '/\(testarea\|FORCEDHALT\)/d' server.out
+sed -i '/\(FORCEDHALT\)/d' server.out

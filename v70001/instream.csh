@@ -62,6 +62,20 @@
 # gtm8843_23	[ern0]     Verify non-blocking mode retry count on client side, with ydb_non_blocked_write_retries env var is set
 # gtm8843_24	[ern0]     Verify non-blocking mode retry count on server side, with gtm_non_blocked_write_retries env var is set
 # gtm8843_25	[ern0]     Verify non-blocking mode retry count on server side, with ydb_non_blocked_write_retries env var is set
+# gtm8843_26	[ern0]     Verify that a socket in TLS mode can't switch to non-blocking mode, server side
+# gtm8843_27	[ern0]     Verify that a socket in TLS mode can't switch to non-blocking mode, client side
+# gtm8843_28	[ern0]     Verify that a server-side socket in non-blocking mode could turn on TLS mode
+# gtm8843_29	[ern0]     Verify that a client-side socket in non-blocking mode could turn on TLS mode
+# gtm8843_30	[ern0]     Verify error: extra argument for switching to blocking mode
+# gtm8843_31	[ern0]     Verify error: wrong argument for switching to blocking mode
+# gtm8843_32	[ern0]     Verify error: missing argument for switching to blocking mode
+# gtm8843_33	[ern0]     Verify that when a socket is not connected, error should reported on WRITE /BLOCK"
+# gtm8843_34	[ern0]     Verify behaviour of WRITE /BLOCK("COUNT"/"CLEAR"/"SENT"), with correct and wrong invocation
+# gtm8843_35	[ern0]     Verify behaviour of triggering invalid second arg error of WRITE /WAIT
+# gtm8843_36	[ern0]     Raise a NOSOCKETINDEV error
+# gtm8843_37	[ern0]     Perform I/O operation in interrupt handler routine, for ZINTRECURSEIO error
+# gtm8843_38	[ern0]     Raise a SOCKNOTFND error
+
 
 #----------------------------------------------------------------------------------------------------------------------------------
 
@@ -76,7 +90,8 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic gtm8843_01 gtm8843_02 g
 setenv subtest_list_non_replic	"$subtest_list_non_replic gtm8843_07 gtm8843_08 gtm8843_09 gtm8843_10 gtm8843_11 gtm8843_12"
 setenv subtest_list_non_replic	"$subtest_list_non_replic gtm8843_13 gtm8843_14 gtm8843_15 gtm8843_16 gtm8843_17 gtm8843_18"
 setenv subtest_list_non_replic	"$subtest_list_non_replic gtm8843_19 gtm8843_20 gtm8843_21 gtm8843_22 gtm8843_23 gtm8843_24 gtm8843_25"
-setenv subtest_list_non_replic	"$subtest_list_non_replic gtm8843_26 gtm8843_27 gtm8843_28 gtm8843_29"
+setenv subtest_list_non_replic	"$subtest_list_non_replic gtm8843_26 gtm8843_27 gtm8843_28 gtm8843_29 gtm8843_30 gtm8843_31"
+setenv subtest_list_non_replic	"$subtest_list_non_replic gtm8843_32 gtm8843_33 gtm8843_34 gtm8843_35 gtm8843_36 gtm8843_37 gtm8843_38"
 setenv subtest_list_replic	"gtm4272 gtm9373 gtm9363"
 
 if ($?test_replic == 1) then
