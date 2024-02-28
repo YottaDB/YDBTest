@@ -28,10 +28,13 @@ set pids = "$2"
 # error from the semget() system call as part of a database file open.
 
 # It is possible some caller tests invoke "mupip journal -rollback -online" after this script. In that case,
-# we should only remove the gtmhelp.dat semids and not mumps.dat semids (or else we would get a %YDB-E-REQROLLBACK
+# we should only remove the gtmhelp.dat semids and not mumps.dat/mumps.dat.gst semids (or else we would get a %YDB-E-REQROLLBACK
 # error (with "%SYSTEM-E-ENO22, Invalid argument" additional error). Therefore, filter out the semids that are
 # tracked in the db file header from the list of semids that get removed below.
-set dbfilenames = `$gtm_dist/mumps -run getDbFilenames`
+
+# Note: We would use "mumps -run getDbFilenames" normally but in this case we want to get the STATSDB file names
+# too if they exist. And only DSE can give us those regions. So we use that instead.
+set dbfilenames = `$DSE find -region="*" |& $grep File | sort -u | $tst_awk '{print $2}'`
 set dbsemids = ""
 foreach file ($dbfilenames)
 	# It is possible there are some AUTODB regions that don't exist. In that case, skip processing them
@@ -41,9 +44,18 @@ foreach file ($dbfilenames)
 	set dbsemid = `$MUPIP dumpfhead $file | $grep semid | sed 's/.*=//;'`
 	if ("$dbsemid" != "") then
 		set dbsemids = "$dbsemids $dbsemid"
-		echo "# imptpcrash_helpdb_semclean.csh : $file : dbsemid = $dbsemid" >>& $logfile
+		echo "# imptp_crash_helpdb_semclean.csh : $file : dbsemid = $dbsemid" >>& $logfile
 	endif
 end
+# In a similar fashion, also filter out jnlpool/recvpool semids from being removed as they are tracked in
+# the replication instance file.
+if ($?gtm_repl_instance) then
+	if (-e $gtm_repl_instance) then
+		set semids = `mupip replic -edit -show $gtm_repl_instance | & grep 'Sem Id' | awk '{print $6}' | grep -v INVALID`
+		echo "# imptp_crash_helpdb_semclean.csh : $gtm_repl_instance : replsemid = $semids" >>& $logfile
+		set dbsemids = "$dbsemids $semids"
+	endif
+endif
 
 set zero_key_sems = `$gtm_tst/com/ipcs -s | $grep $USER | $tst_awk '$3 == "0x00000000" {print $2;}'`
 foreach semid ($zero_key_sems)
@@ -69,7 +81,7 @@ foreach semid ($zero_key_sems)
 		set sempid = `$MUPIP semaphore $semid |& $grep 'sem  1:' | awk '{print $10}' | sed 's/)//;'`
 		foreach pid ($2)
 			if ($pid == $sempid) then
-				echo "# Cleaning up orphaned MM private gtmhelp.dat semid [$semid] for pid $pid" >>& $logfile
+				echo "# imptp_crash_helpdb_semclean.csh : Cleaning up orphaned MM private gtmhelp.dat semid [$semid] for pid $pid" >>& $logfile
 				$gtm_tst/com/ipcrm -s $semid >>& $logfile
 			endif
 		end

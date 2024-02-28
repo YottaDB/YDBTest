@@ -11,6 +11,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ; Prints the list of database file pathnames for all regions in the current global directory
+; Note: Does NOT include STATSDB regions.
 
 getDbFilenames	;
 	set reg=""
