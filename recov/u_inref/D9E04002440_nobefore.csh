@@ -4,7 +4,7 @@
 # Copyright (c) 2005-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -33,6 +33,7 @@ $MUPIP backup "*" ./bak1 >>& backup.out
 sleep 80
 #
 $gtm_tst/com/gtm_crash.csh
+$gtm_tst/com/imptp_handle_crash_asserts_cores.csh
 #
 $gtm_tst/com/corrupt_jnlrec.csh mumps b c >>& corrupt_jnlrec.out
 #

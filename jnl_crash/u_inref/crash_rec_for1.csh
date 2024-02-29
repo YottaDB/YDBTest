@@ -3,7 +3,7 @@
 #								#
 #	Copyright 2002, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -36,6 +36,7 @@ while ($count < $iteration)
 	$gtm_tst/com/get_dse_df.csh "BEFORE_CRASH" "" "-all"
 	echo "Crash ..."
 	$gtm_tst/com/gtm_crash.csh
+	$gtm_tst/com/imptp_handle_crash_asserts_cores.csh
 	$gtm_tst/com/backup_dbjnl.csh save_${count} "*.dat *.mj*"
 	\rm -f *.dat
 	$MUPIP create |& sort -f
