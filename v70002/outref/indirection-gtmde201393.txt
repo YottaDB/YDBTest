@@ -1,0 +1,25 @@
+########################################################################################
+# Test that M indirection @x@(1) works correctly when x contains a comment or is empty
+########################################################################################
+#
+# test1: that M ignores a terminating comment in name indirection by checking whether the
+# comment terminates its own string alone or the whole indirection line (as previously).
+# This is tested by passing subscripts that will not get invoked in older versions.
+# Expect a 1, not a 0
+
+YDB>
+
+YDB>
+1
+YDB>
+
+# test2: that M produces VAREXPECTED error rather than INDEXTRACHARS (as previously)
+# when an empty indirection variable is supplied.
+
+YDB>
+
+YDB>
+%GTM-E-VAREXPECTED, Variable expected in this context
+
+YDB>
+
