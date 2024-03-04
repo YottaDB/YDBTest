@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -10,11 +10,19 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
-#
+
 $echoline
 echo "Test various issues identified with the READ_ONLY db characteristic (new feature in GT.M V6.3-003)"
 $echoline
-#
+
+# If "gtm_db_counter_sem_incr" env var is set to a high value, then the calls to "leftover_ipc_cleanup_if_needed.csh" below
+# would generate a %YDB-E-DBRDONLY error. But they won't show up in the reference file since the call to "backup_dbjnl.csh"
+# which is done immediately afterwards does a "gzip" of the "leftover_ipc_cleanup_if_needed.out" file thereby removing this
+# from being a candidate for looking at by com/errors.csh at the end of the subtest (it only look at "*.out", not "*.out.gz").
+# But if "ydb_test_4g_db_blks" env var is non-zero, then "backup_dbjnl.csh" does not gzip any files and so
+# "leftover_ipc_cleanup_if_needed.out" would say as is resulting in it being looked at by com/errors.csh and the %YDB-E-DBRDONLY
+# error in it being identified at the end of the test and resulting in a test failure. Therefore disable the 4g blk scheme.
+setenv ydb_test_4g_db_blks 0
 
 setenv gtm_test_db_format "NO_CHANGE"	# do not switch db format as that will cause incompatibilities with MM
 					# which this test sets the access method to in the early stages.
