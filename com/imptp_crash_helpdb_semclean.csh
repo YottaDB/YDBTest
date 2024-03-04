@@ -27,6 +27,18 @@ set pids = "$2"
 # count of the system will keep growing as more such tests run resulting in an eventual "No space left on device"
 # error from the semget() system call as part of a database file open.
 
+# If no files of the form impjob*.mjo* exist, then this test does not use imptp.csh.
+# And therefore, it is safer to return right away as cleaning up ipcs can cause problems in some cases.
+# For example, the v62000/gtm8121 subtest that expects a REQROLLBACK error will no longer see it if we proceed.
+set filepat="impjob*.*mjo*"
+set nonomatch
+set filereal=$filepat
+unset nonomatch
+if ("$filereal" == "$filepat") then
+	# Files of the form *.done do not exist. This is not an imptp test. Just return.
+	exit
+endif
+
 # It is possible some caller tests invoke "mupip journal -rollback -online" after this script. In that case,
 # we should only remove the gtmhelp.dat semids and not mumps.dat/mumps.dat.gst semids (or else we would get a %YDB-E-REQROLLBACK
 # error (with "%SYSTEM-E-ENO22, Invalid argument" additional error). Therefore, filter out the semids that are
