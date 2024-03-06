@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -14,6 +14,15 @@
 #								#
 #################################################################
 #
+
+# With a 8K or 16K counter semaphore bump, the 32K counter overflow happens with just 4 processes whereas with
+# a 4K value, we need 8 processes. Since this is a replication test, the 5 imptp children processes along with
+# the parent imptp and the source server together are 7 processes which exceed the 32K counter limit for 8K or 16K
+# but not for 4K. And once the counter is exceeded, $DSE invocation (see commit message of 4e0414c5 for details)
+# will no longer remove the db shared memory which means the `%YDB-I-SHMREMOVED` messages for the 8 database files
+# will show up for the 8K or 16K case whereas the reference file does not expect it for any case. To simplify things
+# just disable the counter semaphore bump for this test.
+unsetenv gtm_db_counter_sem_incr
 
 # Turn off statshare related env var as it affects test output and is not considered worth the trouble to maintain
 # the reference file with SUSPEND/ALLOW macros for STATSHARE and NON_STATSHARE
