@@ -1,0 +1,106 @@
+# ********************************************************************************************
+# GTM-F134692 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-003_Release_Notes.html#GTM-F134692)
+# 
+# When MUPIP INTEG and MUPIP DUMPFHEAD arguments specify a region list, MUPIP processes regions in the listed order, or, for names
+# expanded by wildcard ("*"), alphabetically. Previously, MUPIP DUMPFHEAD and MUPIP INTEG ignored any user-specified order
+# of regions, and processed regions in FTOK order, which tends to change with changes in operational conditions within
+# the underlying file system. (GTM-F134692)
+# 
+
+Test #1 : Test MUPIP INTEG
+
+# Creating a 5 region database DEFAULT, AREG, BREG, CREG, DREG
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+a.dat
+b.dat
+c.dat
+d.dat
+mumps.dat
+
+# Run MUPIP FTOK to verify order of the databases
+
+# Run MUPIP Integ of database files in a specific order
+# Expect BREG,AREG,CREG,DEFAULT,DREG
+Integ of region BREG
+Integ of region AREG
+Integ of region CREG
+Integ of region DEFAULT
+Integ of region DREG
+
+# Run MUPIP Integ of database files in a specific order where 2 regions are explicitly specified.
+# Expect BREG,AREG
+Integ of region BREG
+Integ of region AREG
+
+# Run MUPIP Integ of database files in a specific order where 3 regions are explicitly specified.
+# Expect CREG,AREG,BREG
+Integ of region CREG
+Integ of region AREG
+Integ of region BREG
+
+# Run MUPIP Integ of database files in a wildcard ("*REG")
+# Expect AREG,BREG,CREG,DREG
+Integ of region AREG
+Integ of region BREG
+Integ of region CREG
+Integ of region DREG
+
+# Run MUPIP Integ of database files in a wildcard ("D*")
+# Expect DEFAULT,DREG
+Integ of region DEFAULT
+Integ of region DREG
+
+# Run MUPIP Integ of database files in a wildcard ("*")
+# Expect AREG,BREG,CREG,DEFAULT,DREG
+Integ of region AREG
+Integ of region BREG
+Integ of region CREG
+Integ of region DEFAULT
+Integ of region DREG
+
+Test #2 : Test MUPIP DUMPFHEAD
+
+# Run MUPIP Dumpfhead of database files in a specific order
+# Expect BREG,AREG,CREG,DEFAULT,DREG
+Fileheader dump of region BREG
+Fileheader dump of region AREG
+Fileheader dump of region CREG
+Fileheader dump of region DEFAULT
+Fileheader dump of region DREG
+
+# Run MUPIP Dumpfhead of database files in a specific order where 2 regions are explicitly specified.
+# Expect BREG,AREG
+Fileheader dump of region BREG
+Fileheader dump of region AREG
+
+# Run MUPIP Dumpfhead of database files in a specific order where 3 regions are explicitly specified.
+# Expect CREG,AREG,BREG
+Fileheader dump of region CREG
+Fileheader dump of region AREG
+Fileheader dump of region BREG
+
+# Run MUPIP Dumpfhead of database files in a wildcard ("*REG")
+# Expect AREG,BREG,CREG,DREG
+Fileheader dump of region AREG
+Fileheader dump of region BREG
+Fileheader dump of region CREG
+Fileheader dump of region DREG
+
+# Run MUPIP Dumpfhead of database files in a wildcard ("D*")
+# Expect DEFAULT,DREG
+Fileheader dump of region DEFAULT
+Fileheader dump of region DREG
+
+# Run MUPIP Dumpfhead of database files in a wildcard ("*")
+# Expect AREG,BREG,CREG,DEFAULT,DREG
+Fileheader dump of region AREG
+Fileheader dump of region BREG
+Fileheader dump of region CREG
+Fileheader dump of region DEFAULT
+Fileheader dump of region DREG

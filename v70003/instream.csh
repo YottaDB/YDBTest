@@ -15,13 +15,14 @@
 # List of subtests of the form "subtestname [author] description"
 #----------------------------------------------------------------------------------------------------------------------------------
 # view_device-gtmf157495	[berwyn] Test that new function $VIEW("DEVICE",<device>) retuns the specified device status
+# integ_dumpfh_order-gtmf134692	[pooh]	MUPIP INTEG and MUPIP DUMPFHEAD support the user-specified region order
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v70003 test starts..."
 
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
-setenv subtest_list_non_replic	"view_device-gtmf157495"
+setenv subtest_list_non_replic	"view_device-gtmf157495 integ_dumpfh_order-gtmf134692"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
