@@ -22,7 +22,8 @@ set curdir = $PWD
 setenv JAVA_HOME `$tst_awk '$1 == "'$HOST:ar'" {print $10}' $gtm_test_serverconf_file`
 if ("NA" == $JAVA_HOME) then
 	# Check if /usr/lib/jvm/* directory can be found such that it contains libjava.so. If so use that.
-	# There might be multiple versions. In that case, choose the last one (hopefully the latest in terms of version)
+	# There might be multiple versions. In that case, choose the last one in a sort (to get the latest)
+	# Note: sort requires -V to sort by numerical value rather (i.e. so that 10 sorts as bigger than 9)
 	foreach jvmdir (/usr/lib/jvm /usr/lib64/jvm)
 		if (! -e $jvmdir) then
 			continue
@@ -30,7 +31,7 @@ if ("NA" == $JAVA_HOME) then
 		setenv JAVA_HOME ""	# set to default value to be overridden below
 		if (-e $jvmdir) then
 			cd $jvmdir
-			set javasohome = `find . -name libjava.so |& grep libjava.so | tail -1`
+			set javasohome = `find . -name libjava.so |& grep libjava.so | sort -V | tail -1`
 			cd -
 			if ("$javasohome " != "") then
 				setenv JAVA_HOME $jvmdir/`echo $javasohome | sed 's,^./,,g;s,/.*,,g'`
@@ -46,14 +47,14 @@ endif
 
 if ("Linux" == $HOSTOS) then
 	cd $JAVA_HOME
-	set javasohome = `find . -name libjava.so |& grep libjava.so | tail -1`
+	set javasohome = `find . -name libjava.so |& grep libjava.so | sort -V | tail -1`
 	if ($javasohome == "") then
 		setenv JAVA_SO_HOME ""
 		echo "TEST-E-FAIL : Could not set JAVA_SO_HOME to a non-null file path"
 	else
 		setenv JAVA_SO_HOME $JAVA_HOME/${javasohome:h}
 	endif
-	set jvmsohome = `find . -name libjvm.so |& grep libjvm.so | tail -1`
+	set jvmsohome = `find . -name libjvm.so |& grep libjvm.so | sort -V | tail -1`
 	if ($jvmsohome == "") then
 		setenv JVM_SO_HOME ""
 		echo "TEST-E-FAIL : Could not set JVM_SO_HOME to a non-null file path"
