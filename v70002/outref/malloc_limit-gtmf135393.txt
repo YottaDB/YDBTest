@@ -1,0 +1,7 @@
+# Filling memory to limit until warning trap occurs
+#  Successfully trapped malloc-limit infringement with $ECODE=",Z150383096,"
+# Re-running with higher limit of 5000000
+#  Successfully trapped malloc-limit infringement with $ECODE=",Z150383096," even after raising the limit
+# Now trying to create fatal memory error by exceeding the limit again without increasing it
+##TEST_AWK%GTM-F-MEMORY, Central memory exhausted during request for [0-9]+ bytes from 0x[0-9A-F]+
+%SYSTEM-E-ENO12, Cannot allocate memory
