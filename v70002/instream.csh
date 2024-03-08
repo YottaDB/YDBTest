@@ -18,6 +18,7 @@
 # load_binary-gtmde201381	[pooh]		MUPIP LOAD -FORMAT=BINARY uses only data length in checking for maximum length
 # zchar_length-gtmde201378	[pooh]		Prevent $[Z]CHAR() representions from generating results longer than the maximum string length
 # backup_env-gtmde201305	[pooh]		MUPIP BACKUP works if environment variables used in segment to database file mapping are not defined
+# sock_devparam-gtmde201380	[pooh]		SOCKET device commands defend against large deviceparameter arguments
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v70002 test starts..."
@@ -25,6 +26,7 @@ echo "v70002 test starts..."
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
 setenv subtest_list_non_replic	"backup_order-gtmf135842 load_binary-gtmde20138 zchar_length-gtmde201378 backup_env-gtmde201305"
+setenv subtest_list_non_replic	"$subtest_list_non_replic sock_devparam-gtmde201380"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then

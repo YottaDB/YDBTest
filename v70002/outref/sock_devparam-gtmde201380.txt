@@ -1,0 +1,60 @@
+# ********************************************************************************************
+# GTM-DE201380 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-002_Release_Notes.html#GTM-DE197637457)
+# 
+# USE SOCKET handles the ATTACH, DETACH, CONNECT, SOCKET and ZLISTEN deviceparameters appropriately; previously, certain arguments
+# for these deviceparameters could cause a segmentation violation(SIG-11). (GTM-DE201380)
+# 
+
+deviceparameter longer than 127 will cause a %GTM-F-KILLBYSIGSINFO1 error (killed by a signal 6) except for ZLISTEN on
+release build and will cause %GTM-F-ASSERT error on debug build in version prior to V7.0-002
+
+For ZLISTEN, deviceparameter longer than 127 will will cause a %GTM-E-ADDRTOOLONG with garbage output on release build
+and will cause %GTM-F-ASSERT error on debug build in version prior to V7.0-002 like the others.
+
+Test for ATTACH
+
+GTM>
+%GTM-E-SOCKNOTFND, Socket Bitzp4SXlljTzhQwA7Io8RcH8iMjTjQ5TJiujOtBlKwomHIYZo4pRsF57IwbtXSmAOjIONc4FuVv5usbpftPCAyIQhFpOOVSL65KAV4yWQhUF2IymzZFvkxqRAcUMrbi not found
+		At M source location ATTACH128+3^gtmde201380
+%GTM-W-NOTPRINCIO, Output currently directed to device server
+
+GTM>
+
+Test for DETACH
+
+GTM>
+%GTM-E-SOCKNOTFND, Socket Bitzp4SXlljTzhQwA7Io8RcH8iMjTjQ5TJiujOtBlKwomHIYZo4pRsF57IwbtXSmAOjIONc4FuVv5usbpftPCAyIQhFpOOVSL65KAV4yWQhUF2IymzZFvkxqRAcUMrbi not found
+		At M source location DETACH128+3^gtmde201380
+%GTM-W-NOTPRINCIO, Output currently directed to device server
+
+GTM>
+
+Test for CONNECT
+
+GTM>
+%GTM-E-ADDRTOOLONG, Socket address Bitzp4SXlljTzhQwA7Io8RcH8iMjTjQ5TJiujOtBlKwomHIYZo4pRsF57IwbtXSmAOjIONc4FuVv5usbpftPCAyIQhFpOOVSL65KAV4yWQhUF2IymzZFvkxqRAcUMrbi of length 128 is longer than the maximum permissible length 127
+		At M source location CONNECT128+3^gtmde201380
+%GTM-W-NOTPRINCIO, Output currently directed to device server
+
+GTM>
+
+Test for SOCKET
+
+GTM>
+%GTM-E-SOCKNOTFND, Socket Bitzp4SXlljTzhQwA7Io8RcH8iMjTjQ5TJiujOtBlKwomHIYZo4pRsF57IwbtXSmAOjIONc4FuVv5usbpftPCAyIQhFpOOVSL65KAV4yWQhUF2IymzZFvkxqRAcUMrbi not found
+		At M source location SOCKET128+3^gtmde201380
+%GTM-W-NOTPRINCIO, Output currently directed to device server
+
+GTM>
+
+Test for ZLISTEN
+
+GTM>
+%GTM-E-ADDRTOOLONG, Socket address Bitzp4SXlljTzhQwA7Io8RcH8iMjTjQ5TJiujOtBlKwomHIYZo4pRsF57IwbtXSmAOjIONc4FuVv5usbpftPCAyIQhFpOOVSL65KAV4yWQhUF2IymzZFvkxqRAcUMrbi of length 128 is longer than the maximum permissible length 127
+		At M source location ZLISTEN128+3^gtmde201380
+%GTM-W-NOTPRINCIO, Output currently directed to device server
+
+GTM>
