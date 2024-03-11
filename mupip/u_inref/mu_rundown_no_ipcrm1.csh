@@ -15,6 +15,19 @@
 #################################################################
 #
 
+# ------------------------------------------------------------
+## !!! NOTE !!! ##
+# This test is an exact copy of rundown_argless/u_inref/mu_rundown_no_ipcrm1.csh
+# The only difference being "set movefiles = 0" vs "set movefiles = 1" below.
+# This makes it an argumentless rundown vs rundown -reg "*".
+# The argumentless rundown version stays in the rundown_argless test.
+# The rundown -reg "*" version stays in the mupip test.
+# A change made to one test should immediately be duplicated to the other.
+## !!! NOTE !!! ##
+# ------------------------------------------------------------
+
+source $gtm_tst/com/set_crash_test.csh	# sets YDBTest and YDB-white-box env vars to indicate this is a crash test
+
 # With a 8K or 16K counter semaphore bump, the 32K counter overflow happens with just 4 processes whereas with
 # a 4K value, we need 8 processes. Since this is a replication test, the 5 imptp children processes along with
 # the parent imptp and the source server together are 7 processes which exceed the 32K counter limit for 8K or 16K
@@ -27,15 +40,6 @@ unsetenv gtm_db_counter_sem_incr
 # Turn off statshare related env var as it affects test output and is not considered worth the trouble to maintain
 # the reference file with SUSPEND/ALLOW macros for STATSHARE and NON_STATSHARE
 source $gtm_tst/com/unset_ydb_env_var.csh ydb_statshare gtm_statshare
-
-#
-## !!! NOTE !!! ##
-# This test is an exact copy of rundown_argless/u_inref/mu_rundown_no_ipcrm1.csh
-# The only difference being "set move = 0" vs "set move = 1" below. This makes it an argumentless rundown vs rundown -reg "*"
-# argumentless rundown version stays in rundown_argless test, rundown -reg "*" version stays in mupip test.
-# A change made to one test should immediately be duplicated to the other.
-## !!! NOTE !!! ##
-source $gtm_tst/com/set_crash_test.csh # sets YDBTest and YDB-white-box env vars to indicate this is a crash test
 
 # Below is needed since this test does a "NO_IPCRM" and we do not want DBDANGER messages from freezing the instance
 source $gtm_tst/com/adjust_custom_errors_for_no_ipcrm_test.csh
