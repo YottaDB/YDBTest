@@ -1,0 +1,37 @@
+# *****************************************************************
+# GTMDE-222430 - Test the following release note
+# *****************************************************************
+#
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-002_Release_Notes.html#GTM-DE197637998)
+#
+# GT.M handles SIGHUP appropriately when $PRINCIPAL has HUPENABLE set; in V7.0-001 due to changes in deferred event handling,
+# error handing could encounter a GTMASSERT2. In addition, a TERMHANGUP error implicitly sets the device to NOHUPENABLE,
+# so should a process anticipate multiple disconnects/hangups, it should explicitly issue a USE $PRINCIPAL:HUPENABLE. Also,
+# ZSHOW "D" displays the HUPENABLE state for $PRINCIPAL. (GTM-DE222430)
+#
+
+# Test #1 : ZSHOW "D"
+# ZSHOW should "D" displays the HUPENABLE state for $PRINCIPAL
+
+spawn /usr/local/bin/tcsh -f
+> stty cols 132
+> set shellprompt=SHELL
+> set prompt=$shellprompt
+SHELLsetenv term_env `tty`; echo $term_env > term_env.txt
+SHELL$gtm_exe/mumps -run gtmde222430A^gtmde222430
+##TEST_AWK[a-zA-Z0-9/]* OPEN TERMINAL NOPAST NOESCA NOREADONLY TYPE WIDTH=.* LENG=[1-9][0-9]* HUPENABLE.*
+
+# Test #2 : E-TERMHANGUP
+# in V7.0-001 due to changes in deferred event handling, error handing could encounter a GTMASSERT2.
+# But in V7.0-002 it should be E-TERMHANGUP
+
+spawn /usr/local/bin/tcsh -f
+> stty cols 132
+> set shellprompt=SHELL
+> set prompt=$shellprompt
+SHELLsetenv term_env `tty`; echo $term_env > term_env.txt
+SHELL$gtm_exe/mumps -run gtmde222430B^gtmde222430
+SHELL$ZSTATUS="150384594,gtmde222430B+10^gtmde222430,%GTM-E-TERMHANGUP, Terminal has disconnected"
+
+##TEST_PATH##/gtmde222430b_exception.log
+$ZSTATUS="150384594,gtmde222430B+10^gtmde222430,%GTM-E-TERMHANGUP, Terminal has disconnected"
