@@ -74,7 +74,7 @@ record("sgmnt_data.last_start_backup")="Never"
 # this command to fail.
 Simulated mv returns an error.
 ##TEST_AWKsystem : (Invalid argument|No such file or directory)
-##TEST_AWKError executing command : unalias -a; (/usr|)/bin/mv ##TEST_PATH##/DEFAULT_[0-9]*_0.tmp/mumps.dat ##TEST_PATH##/mumps_backup.dat
+##TEST_AWKError executing command : unalias -a; (/usr|)/bin/mv '##TEST_PATH##/DEFAULT_[0-9]*_0.tmp/mumps.dat' '##TEST_PATH##/mumps_backup.dat'
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 
 # Now that the backup failed, verify that MUPIP DUMPFHEAD value for "sgmnt_data.last_start_backup",

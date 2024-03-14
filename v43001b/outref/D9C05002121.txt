@@ -80,9 +80,9 @@ $grep -vE '^$|cp --sparse=always' backup1.logx | sort -f
 MUPIP INFO:   Temp file name: ##TEST_PATH##/bak/bak//AREG_YYYY_ZZZZZZ
 MUPIP INFO:   Temp file name: ##TEST_PATH##/bak/bak//BREG_YYYY_ZZZZZZ
 MUPIP INFO:   Temp file name: ##TEST_PATH##/bak/bak//DEFAULT_YYYY_ZZZZZZ
-##TEST_AWKMUPIP INFO:   unalias -a; .*/mv .*/bak/AREG_YYYY_ZZZZZZa.dat .*/bak/a.dat
-##TEST_AWKMUPIP INFO:   unalias -a; .*/mv .*/bak/BREG_YYYY_ZZZZZZb.dat .*/bak/b.dat
-##TEST_AWKMUPIP INFO:   unalias -a; .*/mv .*/bak/DEFAULT_YYYY_ZZZZZZmumps.dat .*/bak/mumps.dat
+##TEST_AWKMUPIP INFO:   unalias -a; .*/mv .*/bak/AREG_YYYY_ZZZZZZa.dat' .*/bak/a.dat'
+##TEST_AWKMUPIP INFO:   unalias -a; .*/mv .*/bak/BREG_YYYY_ZZZZZZb.dat' .*/bak/b.dat'
+##TEST_AWKMUPIP INFO:   unalias -a; .*/mv .*/bak/DEFAULT_YYYY_ZZZZZZmumps.dat' .*/bak/mumps.dat'
 $MUPIP integ -noonline -reg "*" >> & integ.log
 ls ./bak/*
 ./bak/a.dat
@@ -132,9 +132,9 @@ $grep -vE '^$|cp --sparse=always' backup3.logx | sort -f
 MUPIP INFO:   Temp file name: ##TEST_PATH##/bak/baktmp/AREG_YYYY_ZZZZZZ
 MUPIP INFO:   Temp file name: ##TEST_PATH##/bak/baktmp/BREG_YYYY_ZZZZZZ
 MUPIP INFO:   Temp file name: ##TEST_PATH##/bak/baktmp/DEFAULT_YYYY_ZZZZZZ
-##TEST_AWKMUPIP INFO:   unalias -a; .*/mv .*/bak/AREG_YYYY_ZZZZZZa.dat .*/bak/a.dat
-##TEST_AWKMUPIP INFO:   unalias -a; .*/mv .*/bak/BREG_YYYY_ZZZZZZb.dat .*/bak/b.dat
-##TEST_AWKMUPIP INFO:   unalias -a; .*/mv .*/bak/DEFAULT_YYYY_ZZZZZZmumps.dat .*/bak/mumps.dat
+##TEST_AWKMUPIP INFO:   unalias -a; .*/mv .*/bak/AREG_YYYY_ZZZZZZa.dat' .*/bak/a.dat'
+##TEST_AWKMUPIP INFO:   unalias -a; .*/mv .*/bak/BREG_YYYY_ZZZZZZb.dat' .*/bak/b.dat'
+##TEST_AWKMUPIP INFO:   unalias -a; .*/mv .*/bak/DEFAULT_YYYY_ZZZZZZmumps.dat' .*/bak/mumps.dat'
 $MUPIP integ -noonline -reg "*" >> & integ.log
 ls ./bak/*
 ./bak/a.dat
@@ -278,9 +278,9 @@ And on the secondary side:
 MUPIP INFO:   Temp file name: ##REMOTE_TEST_PATH##/bak/bak//AREG_YYYY_ZZZZZZ
 MUPIP INFO:   Temp file name: ##REMOTE_TEST_PATH##/bak/bak//BREG_YYYY_ZZZZZZ
 MUPIP INFO:   Temp file name: ##REMOTE_TEST_PATH##/bak/bak//DEFAULT_YYYY_ZZZZZZ
-##TEST_AWKMUPIP INFO:   unalias -a; .*/mv .*/bak/AREG_YYYY_ZZZZZZa.dat .*/bak/a.dat
-##TEST_AWKMUPIP INFO:   unalias -a; .*/mv .*/bak/BREG_YYYY_ZZZZZZb.dat .*/bak/b.dat
-##TEST_AWKMUPIP INFO:   unalias -a; .*/mv .*/bak/DEFAULT_YYYY_ZZZZZZmumps.dat .*/bak/mumps.dat
+##TEST_AWKMUPIP INFO:   unalias -a; .*/mv .*/bak/AREG_YYYY_ZZZZZZa.dat' .*/bak/a.dat'
+##TEST_AWKMUPIP INFO:   unalias -a; .*/mv .*/bak/BREG_YYYY_ZZZZZZb.dat' .*/bak/b.dat'
+##TEST_AWKMUPIP INFO:   unalias -a; .*/mv .*/bak/DEFAULT_YYYY_ZZZZZZmumps.dat' .*/bak/mumps.dat'
 ./bak/a.dat
 ./bak/b.dat
 ./bak/mumps.dat
@@ -314,9 +314,9 @@ gtm_baktmpdir: ##REMOTE_TEST_PATH##/bak/baktmp
 MUPIP INFO:   Temp file name: ##REMOTE_TEST_PATH##/bak/baktmp/AREG_YYYY_ZZZZZZ
 MUPIP INFO:   Temp file name: ##REMOTE_TEST_PATH##/bak/baktmp/BREG_YYYY_ZZZZZZ
 MUPIP INFO:   Temp file name: ##REMOTE_TEST_PATH##/bak/baktmp/DEFAULT_YYYY_ZZZZZZ
-##TEST_AWKMUPIP INFO:   unalias -a; .*/mv .*/bak/AREG_YYYY_ZZZZZZa.dat .*/bak/a.dat
-##TEST_AWKMUPIP INFO:   unalias -a; .*/mv .*/bak/BREG_YYYY_ZZZZZZb.dat .*/bak/b.dat
-##TEST_AWKMUPIP INFO:   unalias -a; .*/mv .*/bak/DEFAULT_YYYY_ZZZZZZmumps.dat .*/bak/mumps.dat
+##TEST_AWKMUPIP INFO:   unalias -a; .*/mv .*/bak/AREG_YYYY_ZZZZZZa.dat' .*/bak/a.dat'
+##TEST_AWKMUPIP INFO:   unalias -a; .*/mv .*/bak/BREG_YYYY_ZZZZZZb.dat' .*/bak/b.dat'
+##TEST_AWKMUPIP INFO:   unalias -a; .*/mv .*/bak/DEFAULT_YYYY_ZZZZZZmumps.dat' .*/bak/mumps.dat'
 ./bak/a.dat
 ./bak/b.dat
 ./bak/mumps.dat
