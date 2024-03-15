@@ -1,0 +1,28 @@
+# Multiple signals to a process in readline mode causes loss of stack.
+# This is a whitebox test that only runs in debug mode.
+# The following expect script will fail with cores on the whitebox test WBTEST_YDB_RLSIGLONGJMP
+# when run without the YDB#1065 fixes.
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+spawn ##SOURCE_PATH##/mumps -direct
+
+YDB>set ^pid=$job
+
+YDB>spawn /usr/local/bin/tcsh -f
+> stty cols 132
+> set shellprompt=SHELL
+> set prompt=$shellprompt
+SHELLsetenv term_env `tty`; echo $term_env > term_env.txt
+SHELL$gtm_dist/mumps -run %XCMD 'if $zsigproc(^pid,"SIGUSR1")'
+SHELLexit
+exit
+
+##TEST_AWK.ZYRELEASE="YottaDB r.*"
+
+YDB>halt
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

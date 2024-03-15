@@ -14,13 +14,14 @@
 #----------------------------------------------------------------------------------------------------------------------------------
 # List of subtests of the form "subtestname [author] description"
 #----------------------------------------------------------------------------------------------------------------------------------
+# rlsiglongjmp-ydb1065		[sam]	Multiple signals to a process in readline mode causes loss of stack
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r202 test starts..."
 
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
-setenv subtest_list_non_replic	""
+setenv subtest_list_non_replic	"rlsiglongjmp-ydb1065"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
@@ -33,7 +34,7 @@ setenv subtest_exclude_list ""
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
 if ("pro" == "$tst_image") then
-	setenv subtest_exclude_list "$subtest_exclude_list"
+	setenv subtest_exclude_list "$subtest_exclude_list rlsiglongjmp-ydb1065"
 endif
 
 if ("dbg" == "$tst_image") then

@@ -1,0 +1,33 @@
+#################################################################
+#								#
+# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
+#	This source code contains the intellectual property	#
+#	of its copyright holder(s), and is made available	#
+#	under a license.  If you do not know the terms of	#
+#	the license, please stop and do not read further.	#
+#								#
+#################################################################
+#
+set timeout 60
+
+spawn $env(gtm_dist)/mumps -direct
+set ydb $spawn_id
+
+expect -i ydb "YDB>"
+send -i ydb -- "set ^pid=\$job\r"
+expect -i ydb "YDB>"
+sleep 1
+
+spawn /usr/local/bin/tcsh -f
+source $::env(gtm_tst)/com/expectinit.exp
+set shell $spawn_id
+send -i shell -- "\$gtm_dist/mumps -run %XCMD 'if \$zsigproc(^pid,\"SIGUSR1\")'\r"
+send -i shell -- "exit\r"
+expect -i shell eof
+
+send -i ydb -- "zwrite \$zyrelease\r"
+expect -i ydb "YDB>"
+send -i ydb -- "halt\r"
+expect -i ydb eof
