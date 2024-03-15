@@ -1,0 +1,33 @@
+########################################################################################
+# Test that new function $VIEW("DEVICE",<device>) retuns the specified device status
+########################################################################################
+
+# test1: Print status of split $ZPIN and $ZPOUT device type TERMINAL as OPEN.
+#        Does not test CLOSE as it is impossible to close $principal.
+TERMINAL:OPEN
+RMS:OPEN
+
+# test2: Print status of open and closed regular (RMS) file.
+RMS:OPEN
+RMS:CLOSED
+
+# test3: Print status of open and closed FIFO.
+#        Prints nothing after CLOSE because it is impossible to close FIFO without it disappearing
+FIFO:OPEN
+
+
+# test4: Print status of open and closed PIPE.
+#        Prints nothing after CLOSE because it is impossible to close PIPE without it disappearing
+PIPE:OPEN
+
+
+# test5: Print status of open and closed SOCKET.
+##TEST_AWK\[1\] [0-9]+
+SOCKET:OPEN
+SOCKET:CLOSED
+##TEST_AWK\[1\]  \+ Done.*
+
+# test6: Print status of open and closed NULL device.
+NULL:OPEN
+NULL:CLOSED
+
