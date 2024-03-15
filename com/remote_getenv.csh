@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -74,3 +74,14 @@ source $gtm_tst/com/set_ydb_build_env_vars.csh
 
 # override machtype environment from primary
 source $gtm_tst/com/set_gtm_machtype.csh
+
+# This script is called to set env vars on the remote side of a multi-host test. But for multi-host tests,
+# "com/do_random_settings.csh" disables "gtm_statshare" (see reasoning in a comment there). So do the same
+# here now that we are setting up the remote host env vars. Note that in addition to setting "gtm_statshare" to 0,
+# we need to ensure "gtm_statsdir" is unset too as the update process and helpers now record statistics in a
+# STATSDB database (since GTM-F132372 in GT.M V7.0-002). This is because "gtm_statsdir" comes in set to point
+# to a local host test path in "com/submit_subtest.csh" and it is possible that path does not exist in the remote
+# host (in which case the update process/helpers would encounter errors at startup trying to create the statsdb).
+setenv gtm_statshare 0
+unsetenv gtm_statsdir
+
