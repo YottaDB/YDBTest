@@ -3,7 +3,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -323,6 +323,16 @@ function print_block(segname,regname){
           # for value["access_method"] below.
           if (("-asyncio" == value["asyncio"]) && ("MM" != value["access_method"]) && (0 == (value["block_size"] % 4096)))
               print "change -segment " segname " " value["asyncio"]
+      }
+      if ((0 != ENVIRON["ydb_test_4g_db_blks"]) && ((1 == ENVIRON["test_replic"]) || ("MULTISITE" == ENVIRON["test_replic"])))
+      {       # The "ydb_test_4g_db_blks" env var implies db files would be huge (with holes) with sizes in Terabyte range.
+              # But the update process and helpers now record statistics in a STATSDB database (as part of GTM-F132372
+	      # in GT.M V7.0-002). And since -stats is turned on by default in the gld (region-level property), and since
+	      # the .gst statsdb that gets created is an MM access method database, we could run into system ram/swap space
+	      # issues when trying to mmap() this huge .gst file (e.g. "%SYSTEM-E-ENO12, Cannot allocate memory" error).
+	      # Therefore, disable statistics sharing for this database by setting "-nostats" for all regions in case
+	      # this is a replication test (identified by the "test_replic" env var being 1 or MULTISITE).
+              print "change -region " regname " -nostats"
       }
       if  ("NULL" == value["null_subscripts"]) # this NULL has nothing to do with "NULL"_subscripts, it is dbcreate_multi.awk's "NULL"
 		value["null_subscripts"]="ALWAYS"
