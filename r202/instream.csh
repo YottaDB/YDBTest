@@ -41,6 +41,13 @@ if ("dbg" == "$tst_image") then
 	setenv subtest_exclude_list "$subtest_exclude_list"
 endif
 
+# This test is a readline specific test. Exclude if readline is disabled.
+if ($?ydb_readline) then
+	if ( "0" == $ydb_readline ) then
+		setenv subtest_exclude_list "$subtest_exclude_list rlsiglongjmp-ydb1065"
+	endif
+endif
+
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh
 

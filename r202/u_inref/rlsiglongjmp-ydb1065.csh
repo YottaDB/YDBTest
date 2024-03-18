@@ -16,7 +16,6 @@ echo "# This is a whitebox test that only runs in debug mode."
 echo "# The following expect script will fail with cores on the whitebox test WBTEST_YDB_RLSIGLONGJMP"
 echo "# when run without the YDB#1065 fixes."
 
-setenv ydb_readline 1
 setenv gtm_white_box_test_case_enable 1
 setenv gtm_white_box_test_case_number 206 # WBTEST_YDB_RLSIGLONGJMP
 

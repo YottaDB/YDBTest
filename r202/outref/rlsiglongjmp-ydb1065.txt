@@ -19,7 +19,9 @@ SHELLsetenv term_env `tty`; echo $term_env > term_env.txt
 SHELL$gtm_dist/mumps -run %XCMD 'if $zsigproc(^pid,"SIGUSR1")'
 SHELLexit
 exit
+##SUSPEND_OUTPUT YDB_READLINE8_OR_MORE
 
+##ALLOW_OUTPUT YDB_READLINE8_OR_MORE
 ##TEST_AWK.ZYRELEASE="YottaDB r.*"
 
 YDB>halt
