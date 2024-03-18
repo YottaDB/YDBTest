@@ -33,10 +33,11 @@
 # olderversion		[sam]		Test to see if ydbinstall can successfully install older versions
 # gtm9324		[estess]	Test ZSTEP restored/continues after $ZINTERRUPT or $ZTIMEOUT, also restrict.txt treats ZBREAK like ZSTEP
 # gtm9408		[nars]		Test that HANG command does not hang indefinitely if system date is reset back in time
+# configure_rmfile-gtmde201825		[pooh]		Test that the configure script removes semstat2, ftok, and geteuid in GT.M V7.0-002 and later
 
 setenv subtest_list_common "sourceInstall diffDir ydb306 gtm9116 plugins ydb783"
 setenv subtest_list_non_replic "gtm7759 ydb894 ydb880 ydb910 ydb924 gtm8517"
-setenv subtest_list_non_replic "$subtest_list_non_replic olderversion gtm9324 gtm9408"
+setenv subtest_list_non_replic "$subtest_list_non_replic olderversion gtm9324 gtm9408 configure_rmfile-gtmde201825"
 setenv subtest_list_replic ""
 
 if ($?test_replic == 1) then
@@ -66,7 +67,7 @@ else if ("rhel" == $gtm_test_linux_distrib) then
 	endif
 else if (("ubuntu" == $gtm_test_linux_distrib) && ("20.04" == $gtm_test_linux_version)) then
         # olderversion disabled since no binaries for Ubuntu 20.04 (not all versions supported)
-	setenv subtest_exclude_list "$subtest_exclude_list olderversion"
+	setenv subtest_exclude_list "$subtest_exclude_list olderversion configure_rmfile-gtmde201825"
 else if ("suse" == $gtm_test_linux_distrib) then
         # olderversion disabled since no binaries for Opensuse Tumbleweed (not supported)
         if ("opensuse-tumbleweed" == $gtm_test_linux_suse_distro) then
