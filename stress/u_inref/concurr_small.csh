@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2020 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2020-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -99,6 +99,11 @@ $MSR STARTRCV INST1 INST3 helper
 setenv test_replic_suppl_type 2
 $MSR START INST2 INST4
 #
+# We have seen sporadic TRANS2BIG errors due to PROBLKSPLIT changes in GT.M V7.0-002. So disable PROBLKSPLIT
+# optimization temporarily. It is possible this can be reverted once GT.M V7.1-001 is merged.
+foreach instance (INST1 INST2)
+	$MSR RUN $instance 'set msr_dont_trace ; $MUPIP set -problksplit=0 -reg "*" >& mupip_set_problksplit.out'
+end
 ##
 $MSR RUN INST1 "set msr_dont_trace ; $gtm_tst/$tst/u_inref/callstress.csh init 'lsmall^initdat' 'INST1'" > init_callstress_inst1.out
 #

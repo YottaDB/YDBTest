@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -61,6 +61,11 @@ else
 	$sec_shell "$sec_getenv; cd $SEC_SIDE; setenv gtm_test_sec_sprgde_id_different 1 ; setenv gtm_test_sprgde_id ${gtm_test_sprgde_id}_sec ; $gtm_tst/com/dbcreate_base.csh stress"
 endif
 #
+
+# We have seen sporadic TRANS2BIG errors due to PROBLKSPLIT changes in GT.M V7.0-002. So disable PROBLKSPLIT
+# optimization temporarily. It is possible this can be reverted once GT.M V7.1-001 is merged.
+$MUPIP set -problksplit=0 -reg "*" >& mupip_set_problksplit.out
+
 unsetenv gtm_repl_instance
 $MUPIP set -replication=on $tst_jnl_str -REG "*" >>& jnl.log
 $sec_shell "$sec_getenv; cd $SEC_SIDE; unsetenv gtm_repl_instance ; $MUPIP set -replication=on $tst_jnl_str -REG '*' >>& jnl.log"
