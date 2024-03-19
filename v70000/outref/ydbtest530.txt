@@ -26,8 +26,8 @@ Dumping contents of x.bin
 ##TEST_AWKBlock 3   Size 18   Level 0   TN [0-9,A-F]* V[6,7]
 
 Rec:1  Blk 3  Off 10  Size 8  Cmpc 0  Key ^x
-##TEST_AWK      10 : |  8  0  0  [0,DE] 78  0  0 31                                    |
-           |  .  .  .  .  x  .  .  1                                    |
+##TEST_AWK      10 : |  8  0  0  .. 78  0  0 31                                    |
+##TEST_AWK           |  \.  \.  \.  .  x  \.  \.  1                                    |
 
 
 # Verify database
