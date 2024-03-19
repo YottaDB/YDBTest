@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -15,7 +15,7 @@ echo "# Create MSR framework test environment"
 $MULTISITE_REPLIC_PREPARE 2
 
 echo "# Create database files on source and receiver side"
-$gtm_tst/com/dbcreate.csh mumps
+$gtm_tst/com/dbcreate.csh mumps -nostats
 
 echo "# Start replication servers on source and receiver side"
 $MSR START INST1 INST2
