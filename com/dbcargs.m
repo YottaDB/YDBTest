@@ -2,7 +2,7 @@
 ;								;
 ; Copyright 2012, 2013 Fidelity Information Services, Inc	;
 ;								;
-; Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -66,6 +66,8 @@ parseargs
 	.	if (key?1"test_gtcm".e)&($length(value)) set args("test_gtcm")=value quit
 	.	if (key?1"tem".e)&($length(value)) set args("template")=value quit
 	.	if (key?1"test_collation".e)&($length(value)) set args("test_collation")=value quit
+	.	if (key?1"stats".e) set args("test_stats")="-stats" quit
+	.	if (key?1"nostats".e) set args("test_stats")="-nostats" quit
 	.	if (key?1"stdnull".e) set args("test_stdnull_collation")="-stdnull" quit
 	.	if (key?1"nostdnull".e) set args("test_stdnull_collation")="-nostdnull" quit
 	.	if (key?1"n".e) set args("null_subscripts")=$select($length(value):value,1:"NOVAL") quit  ; this is what dbcreate_multi.awk does

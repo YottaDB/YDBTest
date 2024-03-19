@@ -12,7 +12,7 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
-BEGIN { split("file_name n_regions key_size record_size block_size allocation global_buffer_count extension_count reserved_bytes collation_default null_subscripts access_method acc_meth_env journal test_collation test_stdnull_collation test_gtcm qdbrundown freeze defer_allocate epoch_taper lock_space asyncio", argmnts, " ")
+BEGIN { split("file_name n_regions key_size record_size block_size allocation global_buffer_count extension_count reserved_bytes collation_default null_subscripts access_method acc_meth_env journal test_collation test_stats test_stdnull_collation test_gtcm qdbrundown freeze defer_allocate epoch_taper lock_space asyncio", argmnts, " ")
 	# name_override is an argument disguised from the user, used to take the $gtmgbldir definition from the shell if it exists
 	# -different_gld is useful on replication tests with multi-region databases:
 	#  	instead of a*, b*, c*, d* going to different regions, on the remote directories, they go in pairs: a* and b* to areg, c* and d* to creg, e* and f* to ereg, ...
@@ -62,6 +62,8 @@ BEGIN { split("file_name n_regions key_size record_size block_size allocation gl
 	    else if ($i ~/^-name_override/) value["filename_override"]=tmp
 	    else if ($i ~/^-test_gtcm/)  value["test_gtcm"]=tmp
 	    else if ($i ~/^-t/)  value["template"]=tmp #template
+	    else if ($i ~/^-stats/) value["test_stats"]="-stats"
+	    else if ($i ~/^-nostats/) value["test_stats"]="-nostats"
 	    else if ($i ~/^-stdnull/) value["test_stdnull_collation"]="-stdnull"
 	    else if ($i ~/^-nostdnull/) value["test_stdnull_collation"]="-nostdnull"
 	    else if ($i ~/^-different_gld/) value["different_gld"]=1
@@ -297,6 +299,8 @@ function print_block(segname,regname){
       print_out("collation_default","region",regname)
       if (value["test_stdnull_collation"])
 		print "change -region " regname " " value["test_stdnull_collation"]
+      if (value["test_stats"])
+		print "change -region " regname " " value["test_stats"]
       major_ver = gensub(/^.*V([0-9])[0-9]+.*/,"\\1","g",ENVIRON["gtm_dist"])
       # QDBRUNDOWN and INST_FREEZE_ON_ERROR options are not available for versions older than V60000
       if (6 <= major_ver)
