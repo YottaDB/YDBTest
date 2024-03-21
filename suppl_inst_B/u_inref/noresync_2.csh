@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -33,7 +33,10 @@ $MULTISITE_REPLIC_PREPARE 2 2
 echo
 echo "Check the output of dbcreate in dbcreate.log"
 setenv gtm_test_sprgde_id "ID${db_num}"	# to create/use different .sprgde files based on # of regions
-$gtm_tst/com/dbcreate.csh mumps $db_num 125 1000 1024 4096 1024 4096 >&! dbcreate.log
+# Use "-nostats" below to avoid statsdb from being opened by update process (which in turn would cause extra
+# SHMREMOVED/SEMREMOVED messages in backward rollback command and affect a diff of the backward rollback output
+# with the forward rollback output (same reason mentioned above where "ydb_statshare" env var is disabled).
+$gtm_tst/com/dbcreate.csh mumps $db_num 125 1000 1024 4096 1024 4096 -nostats >&! dbcreate.log
 
 echo
 echo "===>Start replication A->B, P->Q and A->P"
