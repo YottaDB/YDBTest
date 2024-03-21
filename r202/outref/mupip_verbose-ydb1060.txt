@@ -1,0 +1,137 @@
+# This test is to test functionality of -VERBOSE flag in MUPIP BACKUP, MUPIP FREEZE and MUPIP INTEG
+
+# Create database file
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+# Create backup path for -dbg
+
+# Set kill_in_prog=1 in DEFAULT region
+# This is for making MUPIP INFO appear when we use -DBG or -VERBOSE as an option
+
+# Test MUPIP BACKUP with -dbg flag
+
+# Test MUPIP FREEZE with -dbg flag
+
+# Test MUPIP INTEG with -dbg flag
+
+# set kill_in_prog=0
+
+
+# Result from MUPIP BACKUP with -dbg flag
+##TEST_AWKMUPIP INFO:   Temp file name: ##TEST_PATH##/bak_dbg//DEFAULT_.*
+##TEST_AWKMUPIP INFO: .* : Start kill-in-prog wait for database ##TEST_PATH##/mumps.dat
+##TEST_AWKMUPIP INFO: .* : Done with kill-in-prog wait on ##TEST_PATH##/mumps.dat
+##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
+##TEST_AWKMUPIP INFO:   unalias -a; .*/mv '.*/bak_dbg/.*' '.*/bak_dbg/mumps.dat'
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/bak_dbg/mumps.dat
+##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x.* to 0x.* are backed up
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
+
+# Result from MUPIP FREEZE with -dbg flag
+
+##TEST_AWKMUPIP INFO: .* : Start kill-in-prog wait for database ##TEST_PATH##/mumps.dat
+
+##TEST_AWKMUPIP INFO: .* : Done with kill-in-prog wait on region
+Region DEFAULT is now FROZEN
+All requested regions frozen
+
+# Result from MUPIP INTEG with -dbg flag
+
+
+Integ of region DEFAULT
+
+##TEST_AWKMUPIP INFO: Successfully created the shadow file: ##TEST_PATH##/./ydb_snapshot_DEFAULT_.*
+
+##TEST_AWKMUPIP INFO: Shared memory created. SHMID = .*
+
+##TEST_AWKMUPIP INFO: .* : Start kill-in-prog wait for database ##TEST_PATH##/mumps.dat
+
+##TEST_AWKMUPIP INFO: .* : Done with kill-in-prog wait on ##TEST_PATH##/mumps.dat
+
+##TEST_AWKMUPIP INFO: Successfully created shared memory. SHMID = .*
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+##TEST_AWKDirectory.*
+##TEST_AWKIndex.*
+##TEST_AWKData.*
+##TEST_AWKFree.*
+##TEST_AWKTotal.*
+
+# Unfreeze database file to do dbcheck.csh
+
+# Check for database integrity
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+
+# Create backup path for -verbose
+
+# Set kill_in_prog=1 in DEFAULT region
+# This is for making MUPIP INFO appear when we use -DBG or -VERBOSE as an option
+
+# Test MUPIP BACKUP with -verbose flag
+
+# Test MUPIP FREEZE with -verbose flag
+
+# Test MUPIP INTEG with -verbose flag
+
+# set kill_in_prog=0
+
+
+# Result from MUPIP BACKUP with -verbose flag
+##TEST_AWKMUPIP INFO:   Temp file name: ##TEST_PATH##/bak_verbose//DEFAULT_.*
+##TEST_AWKMUPIP INFO: .* : Start kill-in-prog wait for database ##TEST_PATH##/mumps.dat
+##TEST_AWKMUPIP INFO: .* : Done with kill-in-prog wait on ##TEST_PATH##/mumps.dat
+##TEST_AWKMUPIP INFO:   Current Transaction # at end of backup is 0x.*
+##TEST_AWKMUPIP INFO:   unalias -a; .*/mv '.*/bak_verbose/.*' '.*/bak_verbose/mumps.dat'
+%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file ##TEST_PATH##/bak_verbose/mumps.dat
+##TEST_AWK%YDB-I-BACKUPTN, Transactions from 0x.* to 0x.* are backed up
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
+
+# Result from MUPIP FREEZE with -verbose flag
+
+##TEST_AWKMUPIP INFO: .* : Start kill-in-prog wait for database ##TEST_PATH##/mumps.dat
+
+##TEST_AWKMUPIP INFO: .* : Done with kill-in-prog wait on region
+Region DEFAULT is now FROZEN
+All requested regions frozen
+
+# Result from MUPIP INTEG with -verbose flag
+
+
+Integ of region DEFAULT
+
+##TEST_AWKMUPIP INFO: Successfully created the shadow file: ##TEST_PATH##/./ydb_snapshot_DEFAULT_.*
+
+##TEST_AWKMUPIP INFO: Shared memory created. SHMID = .*
+
+##TEST_AWKMUPIP INFO: .* : Start kill-in-prog wait for database ##TEST_PATH##/mumps.dat
+
+##TEST_AWKMUPIP INFO: .* : Done with kill-in-prog wait on ##TEST_PATH##/mumps.dat
+
+##TEST_AWKMUPIP INFO: Successfully created shared memory. SHMID = .*
+
+No errors detected by integ.
+
+Type           Blocks         Records          % Used      Adjacent
+
+##TEST_AWKDirectory.*
+##TEST_AWKIndex.*
+##TEST_AWKData.*
+##TEST_AWKFree.*
+##TEST_AWKTotal.*
+
+# Unfreeze database file to do dbcheck.csh
+
+# Check for database integrity
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.
+

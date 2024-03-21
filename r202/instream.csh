@@ -15,13 +15,14 @@
 # List of subtests of the form "subtestname [author] description"
 #----------------------------------------------------------------------------------------------------------------------------------
 # rlsiglongjmp-ydb1065		[sam]	Multiple signals to a process in readline mode causes loss of stack
+# mupip_verbose-ydb1060		[pooh]	Test functionality of MUPIP BACKUP, MUPIP FREEZE and MUPIP INTEG with option -DBG and -VERBOSE
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r202 test starts..."
 
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
-setenv subtest_list_non_replic	"rlsiglongjmp-ydb1065"
+setenv subtest_list_non_replic	"rlsiglongjmp-ydb1065 mupip_verbose-ydb1060"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
