@@ -1,0 +1,33 @@
+# ********************************************************************************************
+# GTM-F135292 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-002_Release_Notes.html#GTM-DE197637151)
+# 
+# $ZJOBEXAM() recognizes an optional second argument of an expr that evaluates to a string as described for the argument of ZSHOW
+# specifying one or more codes determining the nature of the information produced by the function. If the argument is missing
+# or empty, GT.M operates as if it was a "*" and produces the associated context. This provides a way to suppress content
+# that might contain PNI. Previously, $ZJOBEXAM() always produced a full context. (GTM-F135292)
+# 
+
+# Create database file
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+
+# Prepare routines for using "zshow "a"
+
+# This routine will generate random combination & length for 2nd argument in $ZJOBEXAM.
+# And check if generated combination & length produced correct output and correct order.
+# This will run 5 times in total.
+
+# Run the program
+Iteration 1: PASS
+Iteration 2: PASS
+Iteration 3: PASS
+Iteration 4: PASS
+Iteration 5: PASS
+
