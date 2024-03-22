@@ -4,7 +4,7 @@
 # Copyright (c) 2003-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -22,7 +22,10 @@
 # worth the effort to support.
 source $gtm_tst/com/unset_ydb_env_var.csh ydb_statshare gtm_statshare
 
-$gtm_tst/com/dbcreate.csh mumps
+# Use "-nostats" below to avoid statsdb from being opened by update process (default is "-stats"). Opening statsdb can
+# cause problems since the test does "cp" and "rm". Same reason mentioned above where "ydb_statshare" env var is disabled).
+$gtm_tst/com/dbcreate.csh mumps -nostats
+
 setenv portno `$sec_shell "$sec_getenv; cat $SEC_SIDE/portno"`
 setenv start_time `cat start_time`
 echo "Start M process"
