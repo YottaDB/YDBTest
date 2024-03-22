@@ -36,38 +36,32 @@ YDB>
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 Journal AutoSwitchLimit 17096
   Journal Allocation                           4096  Journal Extension                      200
-  StatsDB Allocation                           2050
 ##SOURCE_PATH##/mupip set -journal=enable,on,[no]before,alloc=16384,extension=0,auto=16384 -reg DEFAULT
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
 Journal AutoSwitchLimit 16384
   Journal Allocation                          16384  Journal Extension                        0
-  StatsDB Allocation                           2050
 ##SOURCE_PATH##/mupip set -journal=enable,on,[no]before,alloc=2048,extension=10,auto=20 -reg DEFAULT
 %YDB-E-JNLINVSWITCHLMT, Journal AUTOSWITCHLIMIT [20] falls outside of allowed limits [16384] and [8388607]
 %YDB-E-MUPCLIERR, Action not taken due to CLI errors
 Journal AutoSwitchLimit 16384
   Journal Allocation                          16384  Journal Extension                        0
-  StatsDB Allocation                           2050
 ##SOURCE_PATH##/mupip set -journal=enable,on,[no]before,alloc=16584,extension=200,auto=16384 -reg DEFAULT
 %YDB-E-JNLSWITCHTOOSM, Journal AUTOSWITCHLIMIT [16384 blocks] is less than Journal ALLOCATION [16584 blocks] for database file ##TEST_PATH##/mumps.dat
 %YDB-E-JNLNOCREATE, Journal file ##TEST_PATH##/mumps.mjl not created
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 Journal AutoSwitchLimit 16384
   Journal Allocation                          16384  Journal Extension                        0
-  StatsDB Allocation                           2050
 ##SOURCE_PATH##/mupip set -journal=enable,on,[no]before,alloc=4096,extension=200,auto=8400000 -reg DEFAULT
 %YDB-E-JNLINVSWITCHLMT, Journal AUTOSWITCHLIMIT [8400000] falls outside of allowed limits [16384] and [8388607]
 %YDB-E-MUPCLIERR, Action not taken due to CLI errors
 Journal AutoSwitchLimit 16384
   Journal Allocation                          16384  Journal Extension                        0
-  StatsDB Allocation                           2050
 ##SOURCE_PATH##/mupip set -journal=enable,on,[no]before,alloc=2048,extension=0,auto=16384 -reg DEFAULT
 %YDB-I-JNLSWITCHSZCHG, Journal AUTOSWITCHLIMIT [16384 blocks] is rounded down to [2048 blocks] to equal the sum of Journal ALLOCATION [2048 blocks] and a multiple of Journal EXTENSION [0 blocks] for database file ##TEST_PATH##/mumps.dat
 %YDB-E-JNLINVSWITCHLMT, Journal AUTOSWITCHLIMIT [2048] falls outside of allowed limits [16384] and [8388607]
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 Journal AutoSwitchLimit 16384
   Journal Allocation                          16384  Journal Extension                        0
-  StatsDB Allocation                           2050
 ##SUSPEND_OUTPUT  NON_REPLIC
 Secondary :
 %YDB-I-JNLSTATE, Journaling state for region DEFAULT is now ON
