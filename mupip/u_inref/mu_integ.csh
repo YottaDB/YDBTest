@@ -3,7 +3,7 @@
 #								#
 # Copyright 2002, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -13,6 +13,13 @@
 #								#
 #################################################################
 setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode due to differences in MUPIP INTEG and DSE DUMP -FILEHEADER output
+
+if ($?test_replic) then
+	# With -replic, if "ydb_test_4g_db_blks" env var is set, dbcreate_multi.awk would pass "-nostats" for the region
+	# which would cause the output to be different and make for a complicated reference file (due to "DB shares gvstats"
+	# output in "dse dump -file" differing for various conditions). Therefore disable this env var in that case.
+	setenv ydb_test_4g_db_blks 0
+endif
 #
 ######################################
 # mu_integ.csh  test for mupip integ #
