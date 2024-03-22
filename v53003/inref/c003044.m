@@ -3,7 +3,7 @@
 ; Copyright (c) 2008-2015 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
-; Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	;
+; Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	;
 ; All rights reserved.						;
 ;								;
 ;	This source code contains the intellectual property	;
@@ -608,13 +608,18 @@ togglestats
 	; Below is pasted from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V6.3-014_Release_Notes.html#GTM-8863
 	;     ... toggle statistics designated DEXA, GLB, JNL, MLK, PRC, TRX, ZAD, JOPA, AFRA, BREA, MLBA & TRGA
 	for stat="DEXA","GLB","JNL","MLK","PRC","TRX","ZAD","JOPA","AFRA","BREA","MLBA","TRGA" kill var(stat)
+	; Additionally 4 statistics were introduced in V7.0-002 which are zero in this non-replication test.
+	; But tests will expect them to be non-zero so filter these out too.
+	for stat="WRL","PRG","WFL","WHE" kill var(stat)
 	quit
 
 zshowgfilter(zshvar,str)
 	; What used to be called "toggle statistics" in V6.3-014 (and renamed as counter statistics in V7.0-001)
 	; can have non-deterministic values therefore filter those out.
+	; Additionally 4 statistics were introduced in V7.0-002 which can also be non-deterministic. They are
+	; WRL,PRG,WFL,WHE. So filter those out too.
 	new filterstats
-	set filterstats=",DEXA,GLB,JNL,MLK,PRC,TRX,ZAD,JOPA,AFRA,BREA,MLBA,TRGA"
+	set filterstats=",DEXA,GLB,JNL,MLK,PRC,TRX,ZAD,JOPA,AFRA,BREA,MLBA,TRGA,WRL,PRG,WFL,WHE"
 	do out^zshowgfilter(.zshvar,str_filterstats)
 	quit
 
