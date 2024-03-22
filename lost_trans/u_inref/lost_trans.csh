@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -51,7 +51,11 @@ if (0 == $rollback_rand) then
 	setenv gtm_test_mupip_set_version "disable"	# ONLINE ROLLBACK cannot work with V4 format databases
 endif
 
-$gtm_tst/com/dbcreate.csh mumps 4 125 1000 -allocation=2048 -extension_count=2048
+# Pass "-nostats" to dbcreate.csh to keep things in sync with the previous lines where "ydb_statshare"/"gtm_statshare"
+# env var is unset. Not passing "-nostats" causes the update process to open the statsdb on the receiver side causing
+# the `Current Transaction` for those statsdb files to be 1 whereas the Zqgblmod Trans is 0 resulting in a test failure.
+$gtm_tst/com/dbcreate.csh mumps 4 125 1000 -allocation=2048 -extension_count=2048 -nostats
+
 setenv portno `$sec_shell 'cat $SEC_DIR/portno'`
 setenv start_time `cat start_time`
 if ($LFE == "E") then
