@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 # Portions Copyright (c) Fidelity National Information		#
@@ -81,6 +81,14 @@ GTMEND
 if (0 != $bkuppid) then
 	$gtm_tst/com/wait_for_proc_to_die.csh $bkuppid 120
 endif
+
+# Unset KIP before calling dbcheck.csh
+echo "# Unset kill_in_prog=1 for second region : GTM_TEST_DEBUGINFO $reg2"
+$DSE << DSE_EOF >&! dse_change_kip2.out
+find -reg="$reg2"
+change -file -kill_in_prog=0
+exit
+DSE_EOF
 
 echo "# LEAVING D9H12002672"
 $gtm_tst/com/dbcheck.csh

@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 # Portions Copyright (c) Fidelity National			#
@@ -21,24 +21,30 @@
 # We create variables dbname1 dbname2 dbname3 with database file names in ftok order. E.g. a b mumps
 mkdir dummybackup
 chmod 777 dummybackup
-$MUPIP backup '*' dummybackup >& dummybackup.log
+$MUPIP backup -dbg '*' dummybackup >& dummybackup.log
 set count=1
-set dblist = `grep BACKUPDBFILE dummybackup.log | sed 's,.*dummybackup/,,;'`
-foreach i ( $dblist )
-	set name="db""$count"
-	set $name=$i
-	set name="dbname""$count"
-	set $name=$i:r
-	set tr="$i:r"
-	set name1="reg""$count"
-	if ("$tr" == "a") then
-		set $name1=AREG
-	else
-		if ("$tr" == "b") then
-			set $name1=BREG
-		else
-			set $name1=DEFAULT
-		endif
-	endif
+set reglist = `grep "Temp file name" dummybackup.log | sed 's,.*//,,;s/_.*//;'`
+foreach i ( $reglist )
+	set var1 = "reg$count"
+	set var2 = "db$count"
+	set var3 = "dbname$count"
+	switch ($i)
+	case "AREG":
+		set $var1 = "AREG"
+		set $var2 = "a.dat"
+		set $var3 = "a"
+		breaksw
+	case "BREG":
+		set $var1 = "BREG"
+		set $var2 = "b.dat"
+		set $var3 = "b"
+		breaksw
+	case "DEFAULT":
+	default:
+		set $var1 = "DEFAULT"
+		set $var2 = "mumps.dat"
+		set $var3 = "mumps"
+		breaksw
+	endsw
 	@ count++
 end
