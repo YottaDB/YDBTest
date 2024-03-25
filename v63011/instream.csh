@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2021-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2021-2022 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -36,11 +36,6 @@ else
 endif
 
 setenv subtest_exclude_list ""
-
-# The gtm9036 subtest needs to be disabled due to a regression in GT.M V7.0-001.
-# It can be renabled when GT.M V7.0-002 is merged.
-# See https://gitlab.com/YottaDB/DB/YDB/-/issues/863#note_1570216484 for more details.
-setenv subtest_exclude_list "$subtest_exclude_list gtm9036"
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
 if ("pro" == "$tst_image") then
