@@ -45,7 +45,16 @@ endif
 if ($?ydb_readline) then
 	if ( "0" == $ydb_readline ) then
 		setenv subtest_exclude_list "$subtest_exclude_list rlsiglongjmp-ydb1065"
+	else
+		# Readline is enabled.
+		# This test fails on SUSE Tumbleweed where its readline behaves as if it's readline 7
+		# whereas it reports itself to be readline 8. Rather than try to figure out why,
+		# just disable this test on SUSE Tumbleweed as we have good coverage on other SUSE systems.
+		if ( "opensuse-tumbleweed" == $gtm_test_linux_suse_distro ) then
+			setenv subtest_exclude_list "$subtest_exclude_list rlsiglongjmp-ydb1065"
+		endif
 	endif
+
 endif
 
 # Submit the list of subtests
