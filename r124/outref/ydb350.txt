@@ -5,8 +5,8 @@ spawn /usr/local/bin/tcsh -f
 SHELLsetenv term_env `tty`; echo $term_env > term_env.txt
 SHELL
 # Record initial terminal ECHO setting
-stty -a | grep -w echo
-isig icanon iexten echo echoe echok -echonl -noflsh -xcase -tostop -echoprt
+stty -a | sed 's/ /\n/g;' | grep -w echo
+echo
 SHELL
 ----------------------------------------------------------------------------------------
 # Test that terminal still has ECHO characteristics after WRITE command
@@ -14,10 +14,10 @@ SHELL
 ----------------------------------------------------------------------------------------
 strace -o trace1.outx $ydb_dist/mumps -run writecmd^ydb350
 ; Below are terminal settings BEFORE WRITE command
-isig icanon iexten echo echoe echok -echonl -noflsh -xcase -tostop -echoprt
+echo
 dummy
 ; Below are terminal settings AFTER  WRITE command
-isig icanon iexten echo echoe echok -echonl -noflsh -xcase -tostop -echoprt
+echo
 SHELL
 # Expecting 1 line below : 1 tcsetattr call in op_use (init_gtm -> gtm_startup -> cenable -> op_use) and 0 calls due to WRITE
 grep ioctl trace1.outx | grep TCSETS | sed 's/{.*}//g;s/SNDCTL_TMR_START or TCSETS/TCSETS/;'
@@ -29,9 +29,9 @@ SHELL
 -------------------------------------------------------------------------------------------------------
 strace -o trace2.outx $ydb_dist/mumps -run readcmd^ydb350
 ; Below are terminal settings BEFORE READ command
-isig icanon iexten echo echoe echok -echonl -noflsh -xcase -tostop -echoprt
+echo
 1; Below are terminal settings AFTER  READ command
-isig icanon iexten echo echoe echok -echonl -noflsh -xcase -tostop -echoprt
+echo
 SHELL
 # Expecting 3 lines below : 1 tcsetattr call in op_use and 2 tcsetattr calls in iott_readfl (one to set -echo and one to set echo)
 grep ioctl trace2.outx | grep TCSETS | sed 's/{.*}//g;s/SNDCTL_TMR_START or TCSETS/TCSETS/;'
@@ -45,9 +45,9 @@ SHELL
 -------------------------------------------------------------------------------------------------------
 strace -o trace3.outx $ydb_dist/mumps -run readstarcmd^ydb350
 ; Below are terminal settings BEFORE READ * command
-isig icanon iexten echo echoe echok -echonl -noflsh -xcase -tostop -echoprt
+echo
 1; Below are terminal settings AFTER  READ * command
-isig icanon iexten echo echoe echok -echonl -noflsh -xcase -tostop -echoprt
+echo
 SHELL
 # Expecting 3 lines below : 1 tcsetattr call in op_use and 2 tcsetattr calls in iott_rdone (one to set -echo and one to set echo)
 grep ioctl trace3.outx | grep TCSETS | sed 's/{.*}//g;s/SNDCTL_TMR_START or TCSETS/TCSETS/;'
@@ -61,17 +61,7 @@ SHELL
 strace -o trace4.outx $ydb_dist/mumps -direct
 
 YDB>use $principal do &sttydisp
-##SUSPEND_OUTPUT YDB_READLINE
-isig icanon iexten echo echoe echok -echonl -noflsh -xcase -tostop -echoprt
-##ALLOW_OUTPUT YDB_READLINE
-##SUSPEND_OUTPUT NON_YDB_READLINE
-##SUSPEND_OUTPUT YDB_READLINE6_OR_LESS
-isig icanon iexten echo echoe echok -echonl -noflsh -xcase -tostop -echoprt echoctl echoke -flusho -extproc
-##ALLOW_OUTPUT YDB_READLINE6_OR_LESS
-##SUSPEND_OUTPUT YDB_READLINE7_OR_MORE
-isig icanon iexten echo echoe echok -echonl -noflsh -xcase -tostop -echoprt echoctl echoke
-##ALLOW_OUTPUT YDB_READLINE7_OR_MORE
-##ALLOW_OUTPUT NON_YDB_READLINE
+echo
 
 YDB>halt
 SHELL

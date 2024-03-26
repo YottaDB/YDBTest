@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	*
+ * Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	*
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -15,5 +15,5 @@
 /* Helper external call that displays current terminal characteristics. Used by ydb350.m as "do &sttydisp" */
 void	ydb350_sttydisp(void)
 {
-        system("stty -a -F $term_env | grep -w echo");
+        system("stty -a -F $term_env | sed 's/ /\\n/g;' | grep -w echo");
 }
