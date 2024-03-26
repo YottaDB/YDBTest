@@ -1,6 +1,6 @@
 /****************************************************************
  *								*
- * Copyright (c) 2017-2020 YottaDB LLC and/or its subsidiaries. *
+ * Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries. *
  * All rights reserved.						*
  *								*
  *	This source code contains the intellectual property	*
@@ -171,6 +171,7 @@ int gvnincr(uint64_t tptoken, ydb_buffer_t *errstr, int *i)	/* $tlevel = 1 TP */
 		if (YDB_ERR_GVUNDEF != status)
 		{
 			YDB_ASSERT(YDB_OK == status);
+			value.buf_addr[value.len_used] = '\0';
 			result = strtoul(value.buf_addr, NULL, 10);
 			result++;
 		} else
