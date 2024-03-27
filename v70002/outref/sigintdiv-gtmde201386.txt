@@ -1,0 +1,16 @@
+# *****************************************************************
+# GTMDE-201386 - Test the following release note
+# *****************************************************************
+#
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-002_Release_Notes.html#GTM-DE197637465)
+#
+# > GT.M appropriately detects divide by zero; previously
+# > there were some unusual combinations of calculations
+# > which produced a SIGINTDIV (SIG-8), which could not
+# > be trapped and therefore terminated the process.
+#
+# See also:
+#   https://gitlab.com/YottaDB/DB/YDBTest/-/issues/580
+
+# perform tricky calculation
+error caught: %GTM-E-DIVZERO, Attempt to divide by zero
