@@ -116,6 +116,7 @@ setenv gtm_endian `echo -n A | od -h | awk '{if ($2 == "0041") {print "LITTLE_EN
 # It will be set to "" on other servers
 setenv gtm_test_ubuntu_2310_plus 0
 setenv gtm_test_rhel9_plus 0
+setenv gtm_test_linux_suse_distro ""
 if (-f /etc/os-release) then
 	setenv gtm_test_linux_distrib `grep -w ID /etc/os-release | cut -d= -f2 | cut -d'"' -f2`
 	# For now, treat all of the following as "suse".
