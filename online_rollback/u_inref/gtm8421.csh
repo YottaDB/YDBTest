@@ -3,7 +3,7 @@
 #								#
 #	Copyright 2015 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2021-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -37,6 +37,12 @@ $MSR RUN INST2 '$MUPIP replicate -source -freeze=on -nocomment'
 
 # Do some updates
 $gtm_dist/mumps -run %XCMD 'for i=1:1:10 set (^a(i),^b(i),^c(i))=i'
+
+# Wait for all the updates to be sent across to the receiver side
+# Note: They will not be processed on the receiver side due to the freeze=on done above but at least they
+# would be sent across and be ready to be processed. That is enough to ensure an online rollback kicks in on
+# the receiver side too thereby ensuring an ORLBKCMPLT message is seen in the receiver server log file later.
+$gtm_tst/com/wait_until_src_backlog_below.csh 0
 
 # Now rollback all data. The Receiver Server on INST2 should remain active. If it does not, the MSR scripts will
 # time out at the end while shutting down the Receiver side
