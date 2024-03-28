@@ -2,6 +2,9 @@
 ;								;
 ;	Copyright 2014 Fidelity Information Services, Inc	;
 ;								;
+; Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -75,7 +78,10 @@ zsocket(host,port)	; check using $zsocket
 	if ($zver'["VMS")&($zver'["Solaris") do  ; setsockopt SO_RCVBUF is privileged on OpenVMS and Solaris zones
 	. use c:zibfsize=(zcibfszb4+1024)
 	. set zcibfsz=$zsocket(c,"zibfsize",)
-	. if zcibfsz'=(zcibfszb4+1024) set errors=$i(errors) do
+	. ; Note that "zcibfsz" may contain the system value for SO_RCVBUF in addition to the ZIBFSIZE device parameter.
+	. ; In that case, the value would be "ZIBFSIZE;SO_RCVBUF". But what we are interested in here is the ZIBFSIZE
+	. ; value. Therefore extract that out using the "$piece" below and use that for the remainder of the comparison.
+	. if $piece(zcibfsz,";",1)'=(zcibfszb4+1024) set errors=$i(errors) do
 	. . use 0 write "TEST-E-FAIL $zsocket connect mismatch ZIBFSIZE before("_zcibfszb4+1024_") and after("_zcibfsz_")",!
 	use s write /wait
 	set key=$key,handle=$piece(key,"|",2)
