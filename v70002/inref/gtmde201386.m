@@ -23,3 +23,49 @@ sigintdiv ;
 e01     ;
         write "error caught: ",$piece($zstatus,",",3,4),!
         quit
+
+vatl1   ; malformed
+        ;
+        set $etrap="goto errvatl1"
+        write "# Perform a VIEW/NOISOLATION command with malformed global name",!
+        ;
+        set name="glb"
+        for i=1:1:32 set name=name_(i#10)
+        write "global name: ",name,!
+        view "NOISOLATION":name
+        ;
+        write "# no error, test failed",!
+        quit
+errvatl1  ;
+        set $etrap=""
+        set error=$piece($zstatus,",",3,4)
+        write "# catch VIEWGVN",!
+        write "error caught: ",error,!
+        halt
+
+vatl2   ; too long
+        ;
+        set $etrap="goto errvatl2"
+        write "# Perform a VIEW/NOISOLATION command with arg too long",!
+        ;
+        set list=""
+        for i=1:1:126 do
+        .if i>1 set list=list_","
+        .set list=list_"^glob"_i
+        .xecute "set ^glob"_i_"(1)=2"
+        write "arg length: ",$length(list),!
+        view "NOISOLATION":list
+        ;
+        ; YDB produces no error, if no SIGSEGV, test is passed
+        do vatlokay
+        quit
+        ;
+errvatl2 ;
+        ; GT.M produces VIEWARGTOOLONG, if caught, test is passed
+        if $zstatus["VIEWARGTOOLONG" do vatlokay quit
+        write "unexpected error: ",$zstatus,!
+        quit
+        ;
+vatlokay ;
+        write "No SIGSEGV, test passed",!
+        quit
