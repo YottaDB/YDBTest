@@ -69,3 +69,27 @@ errvatl2 ;
 vatlokay ;
         write "No SIGSEGV, test passed",!
         quit
+
+fnum    ;
+        write "# $fnumber() should produce MAXSTRLEN",!
+        set $etrap="goto errfnumjust"
+        ;
+        set fmt=$fnumber(-1E10,"-",1E40)
+        ;
+        write "# no error, test failed"
+        quit
+
+just    ;
+        write "# $justify() should return 1",!
+        set $etrap="goto errfnumjust"
+        ;
+        set fmt=$justify(1,-1E10)
+        write $zlength(fmt),!
+        ;
+        write "# no segfault, test passed"
+        quit
+
+errfnumjust ;
+        set error=$piece($zstatus,",",3,4)
+        write "error caught: ",error,!
+        halt
