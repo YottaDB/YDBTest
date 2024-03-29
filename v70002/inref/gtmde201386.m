@@ -93,3 +93,16 @@ errfnumjust ;
         set error=$piece($zstatus,",",3,4)
         write "error caught: ",error,!
         halt
+
+zsyslogfao  ;
+        set unique=$zcmdline
+        for i=0:1:6 do
+        . set value=10**i
+        . set fao="!"_value_"UL"
+        . set cmd="write $zsyslog("";uniq;"_fao_";"_i_";""),!"
+        . write "performing: ",cmd,!
+        . set $piece(cmd,";",2)=unique
+        . xecute cmd
+        ;
+        write "# no segfault, almost done"
+        quit

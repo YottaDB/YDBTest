@@ -1,0 +1,37 @@
+# *****************************************************************
+# GTMDE-201386 - Test the following release note
+# *****************************************************************
+#
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-002_Release_Notes.html#GTM-DE197637465)
+#
+# > $ZSYSLOG() ignores Format Ascii Output (FAO) directives.
+# > Previously, $ZSYSLOG() did not ignore such directives
+# > resulting in a segmentation violation (SIG-11).
+#
+# See also:
+#   https://gitlab.com/YottaDB/DB/YDBTest/-/issues/580
+
+performing: write $zsyslog(";uniq;!1UL;0;"),!
+1
+performing: write $zsyslog(";uniq;!10UL;1;"),!
+1
+performing: write $zsyslog(";uniq;!100UL;2;"),!
+1
+performing: write $zsyslog(";uniq;!1000UL;3;"),!
+1
+performing: write $zsyslog(";uniq;!10000UL;4;"),!
+1
+performing: write $zsyslog(";uniq;!100000UL;5;"),!
+1
+performing: write $zsyslog(";uniq;!1000000UL;6;"),!
+1
+# no segfault, almost done
+
+# Output of $ZSYSLOG() messages, extract, FAO and index:
+!1UL;0
+!10UL;1
+!100UL;2
+!1000UL;3
+!10000UL;4
+!100000UL;5
+!1000000UL;6

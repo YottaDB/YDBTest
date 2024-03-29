@@ -25,6 +25,7 @@
 # ctrap_acsii-gtmde201390	[pooh]		CTRAP only recognizes characters with ASCII codes 0-31 inclusive
 # view_arg_too_long-gtmde201386	[ern0]		Verify that VIEW "NOISOLATION" does not produce SIGSEGV on malformed or too long args
 # fnum_just-gtmde201386 	[ern0] 		Verify that strange parameters in $FNUMBER() and $JUSTIFY() functions do not cause SIGSEGV
+# zsyslog_fao-gtmde201386	[ern0] 		Verify that $ZSYSLOG() ignores Format Ascii Output (FAO) directives, no SEGSIGV
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v70002 test starts..."
@@ -34,7 +35,7 @@ setenv subtest_list_common	""
 setenv subtest_list_non_replic	"backup_order-gtmf135842 load_binary-gtmde201381 zchar_length-gtmde201378 backup_env-gtmde201305"
 setenv subtest_list_non_replic	"$subtest_list_non_replic sock_devparam-gtmde201380 sighup_error-gtmde222430"
 setenv subtest_list_non_replic	"$subtest_list_non_replic block_split-gtmf135414 sigintdiv-gtmde201386 ctrap_acsii-gtmde201390"
-setenv subtest_list_non_replic	"$subtest_list_non_replic view_arg_too_long-gtmde201386 fnum_just-gtmde201386 "
+setenv subtest_list_non_replic	"$subtest_list_non_replic view_arg_too_long-gtmde201386 fnum_just-gtmde201386 zsyslog_fao-gtmde201386"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
