@@ -1,0 +1,39 @@
+# ********************************************************************************************
+# GTM-F135435 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-002_Release_Notes.html#GTM-DE197637482)
+# 
+# GT.M detects and recovers from certain integrity errors in the auto-relink control structures. GT.M also issues RLNKRECNFL
+# and RLNKINTEGINFO messages to the system log to report an integrity check. Previously, GT.M terminated with an
+# segmentation violation (SIG-11) or a GT.M assert when it encountered such integrity errors. (GTM-F135435)
+# 
+
+# This is a whitebox test that only runs in debug mode.
+
+# Create database file
+Files Created in ##TEST_PATH##:
+Using: ##SOURCE_PATH##/mumps -run GDE
+mumps.gld
+Using: ##SOURCE_PATH##/mupip
+mumps.dat
+
+# Create 2 different routines in same name
+
+# Run the routine
+# WBTEST_RTNOBJ_INTEG will be triggered when numvers >= 2. So purpose of this routine is for make numvers=2
+# and that will print out RLNKRECNFL and RLNKINTEGINFO in syslog.
+# (numvers is the counter for number of version for routine in relinkctl file when enabled autorelink)
+# First, we set $zroutines to "obj*(src1)" and compile rtn.m in src1 to obj/rtn.o in Process A.
+# This will increase numvers to 1. After that, we start Process B and let process B set $zroutines to "obj*"
+# Then, we proceed to compile different rtn.m in src2 to obj/rtn.o.
+# Now numvers will increase to 2 and this will trigger the WBTEST_RTNOBJ_INTEG and
+# will print out RLNKRECNFL and RLNKINTEGINFO in syslog
+
+# Check if RLNKRECNFL and RLNKINTEGINFO exist in syslog
+##TEST_AWK.* YDB-MUMPS\[.*\]: %GTM-W-RLNKRECNFL, Conflict on relinkctl file /tmp/relinkdir/[0-9a-zA-Z]*/ydb-relinkctl-[0-9a-f]* for \$ZROUTINES directory ##TEST_PATH##/obj, running an integrity check -- generated from 0x.*.
+##TEST_AWK.* YDB-MUMPS\[.*\]: %GTM-I-RLNKINTEGINFO, Integrity check completed successfully: a loop to the start of linkctl was detected and fixed -- called from module .*/rtnobj.c at line .* -- generated from 0x.*
+
+##SOURCE_PATH##/mupip
+##SOURCE_PATH##/mupip integ -REG *
+No errors detected by integ.

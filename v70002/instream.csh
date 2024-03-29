@@ -31,6 +31,7 @@
 # zjobexam_2ndargs-gtmf135292    [pooh]    Optional second argument to $ZJOBEXAM() to control its output
 # malloc_limit-gtmf135393        [berwyn]  test trappable high-memory usage warning
 # stp_gcol_src_assert-gtmf135393 [berwyn]  Test assert failure in sr_port/stp_gcol_src.h line 932 in GT.M V7.0-002
+# rctl_integ-gtmf135435          [pooh]    Routine shared object integrity check & repair
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v70002 test starts..."
@@ -43,6 +44,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic block_split-gtmf135414 
 setenv subtest_list_non_replic	"$subtest_list_non_replic view_arg_too_long-gtmde201386 fnum_just-gtmde201386 zsyslog_fao-gtmde201386"
 setenv subtest_list_non_replic	"$subtest_list_non_replic ygblstat-gtmf132372 indirection-gtmde201393 zjobexam_2ndargs-gtmf135292"
 setenv subtest_list_non_replic	"$subtest_list_non_replic malloc_limit-gtmf135393 stp_gcol_src_assert-gtmf135393"
+setenv subtest_list_non_replic	"$subtest_list_non_replic rctl_integ-gtmf135435"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
@@ -55,7 +57,8 @@ setenv subtest_exclude_list ""
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
 if ("pro" == "$tst_image") then
-	setenv subtest_exclude_list "$subtest_exclude_list"
+	# This is a white-box test case and is why needs to be disabled for PRO builds.
+	setenv subtest_exclude_list "$subtest_exclude_list rctl_integ-gtmf135435"
 endif
 
 if ("dbg" == "$tst_image") then
