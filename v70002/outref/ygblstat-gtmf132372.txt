@@ -1,0 +1,24 @@
+# *****************************************************************
+# GTM-F132372 - Test the following release note
+# *****************************************************************
+#
+# > The replication update process and its helper processes record
+# > statistics using the STATSDB facility for reporting using
+# > ^%YGBLSTAT. GT.M reports the WRL, PRG, WFL, and WHE statistics
+# > as part of the YGBLSTAT output. See the GT.M Administration &
+# > Operations Guide for more details. Previously, the replication
+# > update process and its helper processes did not record
+# > statistics for STATSDB. (GTM-F132372)
+#
+# Note that we are only testing the appearance, and not verifying
+# specific, or even non-zero values of these new stats.
+
+# Create database
+# Enable stats
+# Execute ^%YGBLSTAT
+# Check variables
+ WRL:0
+ PRG:0
+ WFL:0
+ WHE:0
+4/4 variables found
