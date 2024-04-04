@@ -3,7 +3,7 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -1058,8 +1058,14 @@ echo "$testname	$st_passed	$st_failed	$st_disabled" >> $gtm_test_local_debugdir/
 ############# Routine to display failed subtest diff files ############
 if ($tst_stdout == 2 || $tst_stdout == 3) then
 	foreach file (`$tst_awk '/^FAIL from / { print $6}' $tst_general_dir/outstream.log` )
+		set failedtestname = `echo $file | $tst_awk -F "/" '{print $1}'`
+		echo "# Diff of $failedtestname follows"
 		cat $tst_general_dir/$file
 	end
+	if (-f $tst_general_dir/diff.log && ! -z $tst_general_dir/diff.log) then
+		echo "# diff.log contents follow"
+		cat $tst_general_dir/diff.log
+	endif
 endif
 
 ################	Routine to send mail 	##############
