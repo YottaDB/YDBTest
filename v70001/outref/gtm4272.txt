@@ -49,6 +49,8 @@ YDB>
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with (NO|)BEFORE_IMAGES
 %YDB-E-BKUPFILEPERM, Backup file ##TEST_PATH##/mumps_backup.dat does not have write permission
+%YDB-I-BKUPRETRY, Retrying MUPIP BACKUP for region: DEFAULT (database file: ##TEST_PATH##/mumps.dat). Attempt: #2 of 2
+%YDB-E-BKUPFILEPERM, Backup file ##TEST_PATH##/mumps_backup.dat does not have write permission
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 ##SUSPEND_OUTPUT NO_COPYFILERANGE_AVAIL ARMVXL AARCH64
 
@@ -69,7 +71,11 @@ YDB>
 Simulated mv returns an error.
 ##TEST_AWKsystem : (Invalid argument|No such file or directory)
 ##TEST_AWKError executing command : unalias -a; (/usr|)/bin/mv '##TEST_PATH##/DEFAULT_[0-9]*_0.tmp/mumps.dat' '##TEST_PATH##/mumps_backup.dat'
-%YDB-I-BKUPRETRY, Retrying MUPIP BACKUP for region: DEFAULT (database file: ##TEST_PATH##/mumps.dat). Attempt: #2 of 2
+%YDB-I-BKUPRETRY, Retrying MUPIP BACKUP for region: DEFAULT (database file: ##TEST_PATH##/mumps.dat). Attempt: #2 of 3
+Simulated mv returns an error.
+##TEST_AWKsystem : (Invalid argument|No such file or directory)
+##TEST_AWKError executing command : unalias -a; (/usr|)/bin/mv '##TEST_PATH##/DEFAULT_[0-9]*_0.tmp/mumps.dat' '##TEST_PATH##/mumps_backup.dat'
+%YDB-I-BKUPRETRY, Retrying MUPIP BACKUP for region: DEFAULT (database file: ##TEST_PATH##/mumps.dat). Attempt: #3 of 3
 Simulated mv returns an error.
 ##TEST_AWKsystem : (Invalid argument|No such file or directory)
 ##TEST_AWKError executing command : unalias -a; (/usr|)/bin/mv '##TEST_PATH##/DEFAULT_[0-9]*_0.tmp/mumps.dat' '##TEST_PATH##/mumps_backup.dat'
