@@ -88,7 +88,7 @@ if (($ydb_test_copy_file_range_avail) && (("ubuntu" != $gtm_test_linux_distrib) 
 		echo "# Test (1c) : EXDEV error code from MUPIP BACKUP"
 		echo "# ------------------------------"
 		echo "# Try running mupip backup with target directory of /tmp (which is different mount point)"
-		echo "# Expect to see [Error code: 18, Invalid cross-device link] error."
+		echo "# Expect to see EXDEV error"
 		set targetfile = "/tmp/mumps_${user}_$$.dat"	# pick unique name that will not collide with other users/tests
 		$MUPIP backup "*" $targetfile
 		echo "# ------------------------------"
@@ -102,7 +102,11 @@ if (($ydb_test_copy_file_range_avail) && (("ubuntu" != $gtm_test_linux_distrib) 
 		echo "# Note that Test (1c) did not run backup with [-retry] and therefore also tested the following line"
 		echo "# of the 3rd paragraph of the GT.M release note. The output there would not have had any BKUPRETRY messages."
 		echo "#     If -RETRY is not specified, GT.M defaults -RETRY to zero (0)"
+		echo "# Note though that this behavior was changed in GT.M V7.0-004 by GTM-F166755 so -RETRY defaults to 1."
+		echo "# Therefore, Test (1c) would have retried and successfully created the target backup file."
+		echo "# Therefore, move that file out of the way before trying another mupip backup."
 		echo "# ------------------------------"
+		rm -f $targetfile
 		$MUPIP backup -retry=2 "*" $targetfile
 		rm -f $targetfile
 	endif

@@ -51,14 +51,17 @@
 # Test (1c) : EXDEV error code from MUPIP BACKUP
 # ------------------------------
 # Try running mupip backup with target directory of /tmp (which is different mount point)
-# Expect to see [Error code: 18, Invalid cross-device link] error.
+# Expect to see EXDEV error
 ##SUSPEND_OUTPUT JNL_OFF
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with (|NO)BEFORE_IMAGES
 ##ALLOW_OUTPUT JNL_OFF
 %YDB-I-TEXT, Error occurred during the copy phase of MUPIP BACKUP
-%YDB-I-TEXT, Error code: 18, Invalid cross-device link
-%YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
+%YDB-I-TEXT, EXDEV, Invalid cross-device link for backing up region DEFAULT
+%YDB-I-BKUPRETRY, Retrying MUPIP BACKUP for region: DEFAULT (database file: ##TEST_PATH##/mumps.dat). Attempt: #2 of 2
+##TEST_AWK%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file /tmp/mumps_.*.dat
+%YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
+%YDB-I-BACKUPSUCCESS, Backup completed successfully
 # ------------------------------
 # Test the following line of the 3rd paragraph of the GT.M release note
 #     In case of an error, retry attempts are always based on cp or pax.
@@ -70,14 +73,17 @@
 # Note that Test (1c) did not run backup with [-retry] and therefore also tested the following line
 # of the 3rd paragraph of the GT.M release note. The output there would not have had any BKUPRETRY messages.
 #     If -RETRY is not specified, GT.M defaults -RETRY to zero (0)
+# Note though that this behavior was changed in GT.M V7.0-004 by GTM-F166755 so -RETRY defaults to 1.
+# Therefore, Test (1c) would have retried and successfully created the target backup file.
+# Therefore, move that file out of the way before trying another mupip backup.
 # ------------------------------
 ##SUSPEND_OUTPUT JNL_OFF
 ##FILTERED##%YDB-I-FILERENAME, File ##TEST_PATH##/mumps.mjl is renamed to ##TEST_PATH##/mumps.mjl_##TIMESTAMP##
 ##TEST_AWK%YDB-I-JNLCREATE, Journal file ##TEST_PATH##/mumps.mjl created for region DEFAULT with (|NO)BEFORE_IMAGES
 ##ALLOW_OUTPUT JNL_OFF
 %YDB-I-TEXT, Error occurred during the copy phase of MUPIP BACKUP
-%YDB-I-TEXT, Error code: 18, Invalid cross-device link
-%YDB-I-BKUPRETRY, Retrying MUPIP BACKUP for region: DEFAULT (database file: ##TEST_PATH##/mumps.dat). Attempt: #2 of 2
+%YDB-I-TEXT, EXDEV, Invalid cross-device link for backing up region DEFAULT
+%YDB-I-BKUPRETRY, Retrying MUPIP BACKUP for region: DEFAULT (database file: ##TEST_PATH##/mumps.dat). Attempt: #2 of 3
 ##TEST_AWK%YDB-I-BACKUPDBFILE, DB file ##TEST_PATH##/mumps.dat backed up in file /tmp/mumps_.*.dat
 %YDB-I-BACKUPTN, Transactions from 0x0000000000000001 to 0x0000000000000001 are backed up
 %YDB-I-BACKUPSUCCESS, Backup completed successfully
@@ -111,6 +117,8 @@ total 0
 # Need to use [-noonline] to avoid a FILEEXISTS error that shows up before the BKUPFILPERM code path in the -online case
 # Expect to see BKUPFILEPERM and MUNOFINISH errors below
 %YDB-E-BKUPFILEPERM, Backup file ##TEST_PATH##/bak1/mumps.dat does not have write permission
+%YDB-I-BKUPRETRY, Retrying MUPIP BACKUP for region: DEFAULT (database file: ##TEST_PATH##/mumps.dat). Attempt: #2 of 2
+%YDB-E-BKUPFILEPERM, Backup file ##TEST_PATH##/bak1/mumps.dat does not have write permission
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 # ------------------------------
 # Test the following line of the 3rd paragraph of the GT.M release note
@@ -121,9 +129,11 @@ total 0
 # Run [mupip backup -replace -noonline -retry=3 * bak1/mumps.dat]
 # ------------------------------
 %YDB-E-BKUPFILEPERM, Backup file ##TEST_PATH##/bak1/mumps.dat does not have write permission
-%YDB-I-BKUPRETRY, Retrying MUPIP BACKUP for region: DEFAULT (database file: ##TEST_PATH##/mumps.dat). Attempt: #2 of 3
+%YDB-I-BKUPRETRY, Retrying MUPIP BACKUP for region: DEFAULT (database file: ##TEST_PATH##/mumps.dat). Attempt: #2 of 4
 %YDB-E-BKUPFILEPERM, Backup file ##TEST_PATH##/bak1/mumps.dat does not have write permission
-%YDB-I-BKUPRETRY, Retrying MUPIP BACKUP for region: DEFAULT (database file: ##TEST_PATH##/mumps.dat). Attempt: #3 of 3
+%YDB-I-BKUPRETRY, Retrying MUPIP BACKUP for region: DEFAULT (database file: ##TEST_PATH##/mumps.dat). Attempt: #3 of 4
+%YDB-E-BKUPFILEPERM, Backup file ##TEST_PATH##/bak1/mumps.dat does not have write permission
+%YDB-I-BKUPRETRY, Retrying MUPIP BACKUP for region: DEFAULT (database file: ##TEST_PATH##/mumps.dat). Attempt: #4 of 4
 %YDB-E-BKUPFILEPERM, Backup file ##TEST_PATH##/bak1/mumps.dat does not have write permission
 %YDB-E-MUNOFINISH, MUPIP unable to finish all requested actions
 # Do dbcheck on database
