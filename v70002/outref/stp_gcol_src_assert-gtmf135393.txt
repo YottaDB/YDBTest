@@ -1,0 +1,11 @@
+
+# This is an automated test of https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/1909#note_1830824327
+
+# Limit vmemoryuse to 200,000 for this test
+# Run [mumps -run stpgcolsrcAssert]
+# When run with GT.M V7.0-002 Debug build, we have seen this test fail an assert in stp_gcol_src.h
+# When run with YottaDB, we have not seen this test fail. But since this test seems to be exercising
+# an assert in a pure GT.M build, it is considered good enough to be included as an automated test case.
+##TEST_AWKZSTATUS=helper\+1\^stpgcolsrcAssert,%GTM-W-MALLOCCRIT, Memory allocation critical due to request for [0-9]+ bytes from 0x[0-9A-F]+
+##TEST_AWK%GTM-F-MEMORY, Central memory exhausted during request for [0-9]+ bytes from 0x[0-9A-F]+
+%SYSTEM-E-ENO12, Cannot allocate memory

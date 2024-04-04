@@ -14,22 +14,23 @@
 #----------------------------------------------------------------------------------------------------------------------------------
 # List of subtests of the form "subtestname [author] description"
 #----------------------------------------------------------------------------------------------------------------------------------
-# backup_order-gtmf135842	[pooh]		MUPIP BACKUP supports user specified order
-# load_binary-gtmde201381	[pooh]		MUPIP LOAD -FORMAT=BINARY uses only data length in checking for maximum length
-# zchar_length-gtmde201378	[pooh]		Prevent $[Z]CHAR() representions from generating results longer than the maximum string length
-# backup_env-gtmde201305	[pooh]		MUPIP BACKUP works if environment variables used in segment to database file mapping are not defined
-# sock_devparam-gtmde201380	[pooh]		SOCKET device commands defend against large deviceparameter arguments
-# sighup_error-gtmde222430	[pooh]		Prevent fatal errors from disconnect/hangup
-# block_split-gtmf135414	[pooh]		Test Proactive Database Block Splitting
-# sigintdiv-gtmde201386 	[ern0] 		Verify that unusual combination of calculation does not produce SIGINTDIV/asserts
-# ctrap_acsii-gtmde201390	[pooh]		CTRAP only recognizes characters with ASCII codes 0-31 inclusive
-# view_arg_too_long-gtmde201386	[ern0]	Verify that VIEW "NOISOLATION" does not produce SIGSEGV on malformed or too long args
-# fnum_just-gtmde201386 	[ern0] 		Verify that strange parameters in $FNUMBER() and $JUSTIFY() functions do not cause SIGSEGV
-# zsyslog_fao-gtmde201386	[ern0] 		Verify that $ZSYSLOG() ignores Format Ascii Output (FAO) directives, no SEGSIGV
-# ygblstat-gtmf132372		[ern0] 		Check if YGBLSTAT reports WRL, PRG, WFL, and WHE fields in statistics
-# indirection-gtmde201393	[berwyn]    @x@y indirection correctly handles comments in x
-# zjobexam_2ndargs-gtmf135292 [pooh]	Optional second argument to $ZJOBEXAM() to control its output
-# malloc_limit-gtmf135393   [berwyn]    test trappable high-memory usage warning
+# backup_order-gtmf135842        [pooh]    MUPIP BACKUP supports user specified order
+# load_binary-gtmde201381        [pooh]    MUPIP LOAD -FORMAT=BINARY uses only data length in checking for maximum length
+# zchar_length-gtmde201378       [pooh]    Prevent $[Z]CHAR() representions from generating results longer than the maximum string length
+# backup_env-gtmde201305         [pooh]    MUPIP BACKUP works if environment variables used in segment to database file mapping are not defined
+# sock_devparam-gtmde201380      [pooh]    SOCKET device commands defend against large deviceparameter arguments
+# sighup_error-gtmde222430       [pooh]    Prevent fatal errors from disconnect/hangup
+# block_split-gtmf135414         [pooh]    Test Proactive Database Block Splitting
+# sigintdiv-gtmde201386          [ern0]    Verify that unusual combination of calculation does not produce SIGINTDIV/asserts
+# ctrap_acsii-gtmde201390        [pooh]    CTRAP only recognizes characters with ASCII codes 0-31 inclusive
+# view_arg_too_long-gtmde201386  [ern0]    Verify that VIEW "NOISOLATION" does not produce SIGSEGV on malformed or too long args
+# fnum_just-gtmde201386          [ern0]    Verify that strange parameters in $FNUMBER() and $JUSTIFY() functions do not cause SIGSEGV
+# zsyslog_fao-gtmde201386        [ern0]    Verify that $ZSYSLOG() ignores Format Ascii Output (FAO) directives, no SEGSIGV
+# ygblstat-gtmf132372            [ern0]    Check if YGBLSTAT reports WRL, PRG, WFL, and WHE fields in statistics
+# indirection-gtmde201393        [berwyn]  @x@y indirection correctly handles comments in x
+# zjobexam_2ndargs-gtmf135292    [pooh]    Optional second argument to $ZJOBEXAM() to control its output
+# malloc_limit-gtmf135393        [berwyn]  test trappable high-memory usage warning
+# stp_gcol_src_assert-gtmf135393 [berwyn]  Test assert failure in sr_port/stp_gcol_src.h line 932 in GT.M V7.0-002
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v70002 test starts..."
@@ -41,7 +42,7 @@ setenv subtest_list_non_replic	"$subtest_list_non_replic sock_devparam-gtmde2013
 setenv subtest_list_non_replic	"$subtest_list_non_replic block_split-gtmf135414 sigintdiv-gtmde201386 ctrap_acsii-gtmde201390"
 setenv subtest_list_non_replic	"$subtest_list_non_replic view_arg_too_long-gtmde201386 fnum_just-gtmde201386 zsyslog_fao-gtmde201386"
 setenv subtest_list_non_replic	"$subtest_list_non_replic ygblstat-gtmf132372 indirection-gtmde201393 zjobexam_2ndargs-gtmf135292"
-setenv subtest_list_non_replic	"$subtest_list_non_replic malloc_limit-gtmf135393"
+setenv subtest_list_non_replic	"$subtest_list_non_replic malloc_limit-gtmf135393 stp_gcol_src_assert-gtmf135393"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
@@ -66,7 +67,7 @@ if ($gtm_test_libyottadb_asan_enabled) then
 	# libyottadb.so was built with address sanitizer (which also includes the leak sanitizer)
 	# That creates shadow memory to keep track of memory leaks and allocates that at a very big address.
 	# That fails with tests that limit virtual memory. Therefore disable such subtests when ASAN is enabled.
-	setenv subtest_exclude_list "$subtest_exclude_list malloc_limit-gtmf135393"
+	setenv subtest_exclude_list "$subtest_exclude_list malloc_limit-gtmf135393 stp_gcol_src_assert-gtmf135393"
 endif
 
 # Submit the list of subtests
