@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -284,25 +284,29 @@ source $gtm_tst/$tst/u_inref/filter_TLSHANDSHAKE.csh $time_src $time_rcvr "ALLOW
 $MSR STOP INST1 INST2
 
 echo
-echo "TEST CASE 6: Test that specifying only one of dh* parameters issues an appropriate error."
+echo "TEST CASE 6: Test that not specifying both dh512 and dh1024 parameters does NOT issue any error."
+echo "This used to issue a TLSCONVSOCK error but that stopped after GTM-F158404 in GT.M V7.0-004"
 echo
 # First fix the config file containing the expired certificate.
 cp $gtmcrypt_config $gtmcrypt_config.bad3
 cp $gtmcrypt_config.good $gtmcrypt_config
 
-# If we wipe of dh512 from the config file, that would cause both the replication servers to error out with TLSCONVSOCK. But,
-# sometimes, if the timing is right, only one of them would fail and the other would just experience connection reset. To test
-# this deterministically, let's trigger the error only on INSTANCE1 by having a different config file for INSTANCE1.
-sed 's/dh512.*//' $gtmcrypt_config.good >&! $gtmcrypt_config
-$MSR STARTSRC INST1 INST2 RP
-$MSR STARTRCV INST1 INST2
-get_msrtime
-set rcv_logfile = RCVR_${time_msr}.log
-
-$MSR RUN INST2 "set msr_dont_trace; $gtm_tst/com/wait_for_log.csh -log $rcv_logfile -message TLSCONVSOCK"
-$MSR RUN INST2 "set msr_dont_trace; $msr_err_chk $rcv_logfile 'W-TLSCONVSOCK' 'YDB-I-TEXT'"
-$gtm_tst/com/knownerror.csh $msr_execute_last_out "YDB-W-TLSCONVSOCK"
-
+echo "# Randomly remove dh512 OR dh1024 OR both from the config file."
+echo "# We expect the source and receiver server to still connect fine."
+set rand = `$gtm_tst/com/genrandnumbers.csh 1 0 2`      # choose 1 random number between 0 and 2 (both included)
+if (0 == $rand) then
+	# Remove just dh512
+	sed 's/dh512.*//;' $gtmcrypt_config.good >&! $gtmcrypt_config
+else if (1 == $rand) then
+	# Remove just dh1024
+	sed 's/dh1024.*//;' $gtmcrypt_config.good >&! $gtmcrypt_config
+else
+	# Remove BOTH dh512 and dh1024
+	sed 's/dh512.*//;s/dh1024.*//;' $gtmcrypt_config.good >&! $gtmcrypt_config
+endif
+$MSR START INST1 INST2 RP
+$MSR RUN INST1 "$gtm_tst/com/simpleinstanceupdate.csh 10"
+$MSR SYNC INST1 INST2	# to ensure replication works fine
 $MSR STOP INST1 INST2
 
 echo

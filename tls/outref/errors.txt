@@ -127,18 +127,24 @@ TEST-I-PASSED, TLSHANDSHAKE is found in replication logs as expected.
 Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
 Shutting down Primary Source Server Server in ##TEST_PATH##
 
-TEST CASE 6: Test that specifying only one of dh* parameters issues an appropriate error.
+TEST CASE 6: Test that not specifying both dh512 and dh1024 parameters does NOT issue any error.
+This used to issue a TLSCONVSOCK error but that stopped after GTM-F158404 in GT.M V7.0-004
 
-==Executing MULTISITE_REPLIC 'STARTSRC INST1 INST2 RP'==
-==Executing MULTISITE_REPLIC 'STARTRCV INST1 INST2'==
-----------
-Error W-TLSCONVSOCK seen in ##FILTERED##RCVR_##TIMESTAMP##.log as expected:
-%YDB-W-TLSCONVSOCK, Failed to convert Unix TCP/IP socket to TLS/SSL aware socket
-----------
-----------
-Error YDB-I-TEXT seen in ##FILTERED##RCVR_##TIMESTAMP##.log as expected:
-%YDB-I-TEXT, Configuration parameter `tls.dh512' not specified.
-----------
+# Randomly remove dh512 OR dh1024 OR both from the config file.
+# We expect the source and receiver server to still connect fine.
+==Executing MULTISITE_REPLIC 'START INST1 INST2 RP'==
+Starting Primary Source Server in ##TEST_PATH##
+Starting Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
+==Executing MULTISITE_REPLIC 'RUN INST1 ##TEST_COM_PATH##/simpleinstanceupdate.csh 10'==
+
+YDB>
+
+YDB>
+
+YDB>
+
+YDB>
+==Executing MULTISITE_REPLIC 'SYNC INST1 INST2'==
 ==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
 Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
 Shutting down Primary Source Server Server in ##TEST_PATH##
