@@ -1,0 +1,56 @@
+# This test is to test output of ZSHOW "D" for TTSYNC, HOSTSYNC and CONVERT
+
+spawn /usr/local/bin/tcsh -f
+> stty cols 132
+> set shellprompt=SHELL
+> set prompt=$shellprompt
+SHELLsetenv term_env `tty`; echo $term_env > term_env.txt
+SHELL$gtm_exe/mumps -run ydb1068^ydb1068
+# Test 1 : DEFAULT ZSHOW "D"
+##TEST_AWK.* OPEN TERMINAL NOPAST NOESCA NOREADONLY TYPE WIDTH=[0-9]* LENG=[0-9]* TTSYNC NOHOSTSYNC 
+# Test 2 : Randomized option
+# This test will pick one value from each group {TTSYNC,NOTTSYNC}, {HOSTSYNC,NOHOSTSYNC}
+# and {CONVERT,NOCONVERT} then applying it.
+# After that, run ZSHOW "D" and check if output correct or not.
+# Then test it for 10 times.
+Iteration: 1
+PASS for TTSYNC
+PASS for HOSTSYNC
+PASS for CONVERT
+Iteration: 2
+PASS for TTSYNC
+PASS for HOSTSYNC
+PASS for CONVERT
+Iteration: 3
+PASS for TTSYNC
+PASS for HOSTSYNC
+PASS for CONVERT
+Iteration: 4
+PASS for TTSYNC
+PASS for HOSTSYNC
+PASS for CONVERT
+Iteration: 5
+PASS for TTSYNC
+PASS for HOSTSYNC
+PASS for CONVERT
+Iteration: 6
+PASS for TTSYNC
+PASS for HOSTSYNC
+PASS for CONVERT
+Iteration: 7
+PASS for TTSYNC
+PASS for HOSTSYNC
+PASS for CONVERT
+Iteration: 8
+PASS for TTSYNC
+PASS for HOSTSYNC
+PASS for CONVERT
+Iteration: 9
+PASS for TTSYNC
+PASS for HOSTSYNC
+PASS for CONVERT
+Iteration: 10
+PASS for TTSYNC
+PASS for HOSTSYNC
+PASS for CONVERT
+SHELL
