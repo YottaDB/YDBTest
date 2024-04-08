@@ -283,31 +283,35 @@ source $gtm_tst/$tst/u_inref/filter_TLSHANDSHAKE.csh $time_src $time_rcvr "ALLOW
 
 $MSR STOP INST1 INST2
 
-echo
-echo "TEST CASE 6: Test that not specifying both dh512 and dh1024 parameters does NOT issue any error."
-echo "This used to issue a TLSCONVSOCK error but that stopped after GTM-F158404 in GT.M V7.0-004"
-echo
-# First fix the config file containing the expired certificate.
-cp $gtmcrypt_config $gtmcrypt_config.bad3
-cp $gtmcrypt_config.good $gtmcrypt_config
+# TEST CASE 6 requires an OpenSSL 3.0+ system (TLSCONVSOCK error is issued otherwise)
+# So run this stage of the test only if YottaDB TLS plugin was built with OpenSSL 3.0 or higher.
+if ($ydb_test_openssl3_plus) then
+	echo
+	echo "TEST CASE 6: Test that not specifying both dh512 and dh1024 parameters does NOT issue any error."
+	echo "This used to issue a TLSCONVSOCK error but that stopped after GTM-F158404 in GT.M V7.0-004"
+	echo
+	# First fix the config file containing the expired certificate.
+	cp $gtmcrypt_config $gtmcrypt_config.bad3
+	cp $gtmcrypt_config.good $gtmcrypt_config
 
-echo "# Randomly remove dh512 OR dh1024 OR both from the config file."
-echo "# We expect the source and receiver server to still connect fine."
-set rand = `$gtm_tst/com/genrandnumbers.csh 1 0 2`      # choose 1 random number between 0 and 2 (both included)
-if (0 == $rand) then
-	# Remove just dh512
-	sed 's/dh512.*//;' $gtmcrypt_config.good >&! $gtmcrypt_config
-else if (1 == $rand) then
-	# Remove just dh1024
-	sed 's/dh1024.*//;' $gtmcrypt_config.good >&! $gtmcrypt_config
-else
-	# Remove BOTH dh512 and dh1024
-	sed 's/dh512.*//;s/dh1024.*//;' $gtmcrypt_config.good >&! $gtmcrypt_config
+	echo "# Randomly remove dh512 OR dh1024 OR both from the config file."
+	echo "# We expect the source and receiver server to still connect fine."
+	set rand = `$gtm_tst/com/genrandnumbers.csh 1 0 2`      # choose 1 random number between 0 and 2 (both included)
+	if (0 == $rand) then
+		# Remove just dh512
+		sed 's/dh512.*//;' $gtmcrypt_config.good >&! $gtmcrypt_config
+	else if (1 == $rand) then
+		# Remove just dh1024
+		sed 's/dh1024.*//;' $gtmcrypt_config.good >&! $gtmcrypt_config
+	else
+		# Remove BOTH dh512 and dh1024
+		sed 's/dh512.*//;s/dh1024.*//;' $gtmcrypt_config.good >&! $gtmcrypt_config
+	endif
+	$MSR START INST1 INST2 RP
+	$MSR RUN INST1 "$gtm_tst/com/simpleinstanceupdate.csh 10"
+	$MSR SYNC INST1 INST2	# to ensure replication works fine
+	$MSR STOP INST1 INST2
 endif
-$MSR START INST1 INST2 RP
-$MSR RUN INST1 "$gtm_tst/com/simpleinstanceupdate.csh 10"
-$MSR SYNC INST1 INST2	# to ensure replication works fine
-$MSR STOP INST1 INST2
 
 echo
 echo "TEST CASE 7: Test that revoked certificates issues appropriate errors."

@@ -375,6 +375,12 @@ BEGIN {
 	else
 		envir[no_options] = "TLS1.3MINUS"
 	#
+	option_names[++no_options] = "ydb_test_openssl3_plus"
+	if (1 == ENVIRON["ydb_test_openssl3_plus"])
+		envir[no_options] = "OPENSSL3PLUS"
+	else
+		envir[no_options] = "OPENSSL3MINUS"
+	#
 	option_names[++no_options] = "gtm_test_dynamic_literals"
 	if ("DYNAMIC_LITERALS" == ENVIRON["gtm_test_dynamic_literals"])
 		envir[no_options] = "DYNAMIC_LITERALS"

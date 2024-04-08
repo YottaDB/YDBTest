@@ -196,6 +196,8 @@ endif
 # If $ydb_dist/plugin/libgtmtls.so is not present, then assume openssl version is < 1.1.1 (i.e. not tls 1.3).
 # Note use '|&' coming out of ldd because on Alpine, ldd generates extra warning messages about gtm_malloc/free not
 # being satisfied.
+setenv ydb_test_openssl3_plus 0
+setenv ydb_test_tls13_plus 0
 if (-e $ydb_dist/plugin/libgtmtls.so) then
 	# Previously we used to do "strings libssl.so" and search for OpenSSL version number.
 	# But that did not work on Ubuntu 21.04 where OpenSSL version was 1.1.1j.
@@ -207,11 +209,11 @@ if (-e $ydb_dist/plugin/libgtmtls.so) then
 	set opensslver = `strings $libcryptopath | grep -w '^OpenSSL [0-9]' | awk '{print $2}' | sort -r | head -1`
 	if ( `expr "$opensslver" \>= "1.1.1"` ) then
 		setenv ydb_test_tls13_plus 1
-	else
-		setenv ydb_test_tls13_plus 0
 	endif
-else
-	setenv ydb_test_tls13_plus 0
+	set opensslmajorver = `echo $opensslver | sed 's/\..*//;'`
+	if ( `expr "$opensslmajorver" \>= "3"` ) then
+		setenv ydb_test_openssl3_plus 1
+	endif
 endif
 set anyerror
 ##### HOST SPECIFIC FUNNIES ####

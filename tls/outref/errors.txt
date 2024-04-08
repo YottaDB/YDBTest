@@ -126,6 +126,7 @@ TEST-I-PASSED, TLSHANDSHAKE is found in replication logs as expected.
 ==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
 Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
 Shutting down Primary Source Server Server in ##TEST_PATH##
+##SUSPEND_OUTPUT OPENSSL3MINUS
 
 TEST CASE 6: Test that not specifying both dh512 and dh1024 parameters does NOT issue any error.
 This used to issue a TLSCONVSOCK error but that stopped after GTM-F158404 in GT.M V7.0-004
@@ -148,6 +149,7 @@ YDB>
 ==Executing MULTISITE_REPLIC 'STOP INST1 INST2'==
 Shutting down Passive Source Server and Receiver Server in ##FILTERED##_REMOTE_TEST_PATH_/instance2
 Shutting down Primary Source Server Server in ##TEST_PATH##
+##ALLOW_OUTPUT OPENSSL3MINUS
 
 TEST CASE 7: Test that revoked certificates issues appropriate errors.
 
