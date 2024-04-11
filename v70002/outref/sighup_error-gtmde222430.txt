@@ -19,8 +19,7 @@ spawn /usr/local/bin/tcsh -f
 > set prompt=$shellprompt
 SHELLsetenv term_env `tty`; echo $term_env > term_env.txt
 SHELL$gtm_exe/mumps -run gtmde222430A^gtmde222430
-##TEST_AWK.* OPEN TERMINAL NOPAST NOESCA NOREADONLY TYPE WIDTH=[0-9]* LENG=[0-9]* HUPENABLE TTSYNC NOHOSTSYNC EXCE="do exception\^gtmde222430
-"
+##TEST_AWK.* OPEN TERMINAL NOPAST NOESCA NOREADONLY TYPE WIDTH=[0-9]* LENG=[0-9]* HUPENABLE TTSYNC NOHOSTSYNC EXCE="do exception\^gtmde222430"
 SHELL
 # Test #2 : E-TERMHANGUP
 # in V7.0-001 due to changes in deferred event handling, error handing could encounter a GTMASSERT2.
