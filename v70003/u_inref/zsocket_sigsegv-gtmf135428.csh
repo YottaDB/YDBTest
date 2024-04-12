@@ -69,6 +69,7 @@ The version v70002 should produce no errors.
 CAT_EOF
 echo ""
 
+setenv ydb_msgprefix "GTM"
 source $gtm_tst/com/portno_acquire.csh >& portno.out
 $gtm_tst/com/dbcreate.csh mumps >& dbcreate.log
 
