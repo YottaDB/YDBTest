@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -95,9 +95,7 @@ setenv gtm_white_box_test_case_number 86
 setenv gtm_white_box_test_case_count 1
 
 # Since the huge pages library is unloadable, disable the huge page settings.
-unsetenv HUGETLB_MORECORE
-unsetenv HUGETLB_SHM
-unsetenv HUGETLB_VERBOSE
+source $gtm_tst/com/disable_hugepages.csh
 
 # Fail shmget() on the first attempt.
 setenv gtm_test_shmget_count 1

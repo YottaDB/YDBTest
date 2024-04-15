@@ -701,38 +701,27 @@ else
 endif
 
 if ($gtm_test_hugepages) then
-	setenv HUGETLB_SHM yes	# 50% chance
+	source $gtm_tst/com/set_ydb_env_var_random.csh ydb_hugetlb_shm gtm_hugetlb_shm "yes"
 	set rand = `expr $randnumbers[28] % 5`
 	if ( $rand == 0 ) then
-		unsetenv HUGETLB_SHM	# 10% chance
+		source $gtm_tst/com/unset_ydb_env_var.csh ydb_hugetlb_shm gtm_hugetlb_shm	# 10% chance
 	endif
-	# HUGETLB_MORECORE needs LD_PRELOAD, so set the latter if we are testing the former
-	set rand = `expr $randnumbers[28] % 2`
-	if ( ( $rand == 0 ) || $?HUGETLB_MORECORE) then
-		if (-e /usr/lib64/libhugetlbfs.so) then
-			setenv LD_PRELOAD /usr/lib64/libhugetlbfs.so
-		else if (-e /usr/lib/libhugetlbfs.so) then
-			setenv LD_PRELOAD /usr/lib/libhugetlbfs.so
-		endif
-	endif
+else
+	source $gtm_tst/com/unset_ydb_env_var.csh ydb_hugetlb_shm gtm_hugetlb_shm
 endif
+
 # We dlopen() libhugetlbfs.so on supported systems regardless of test options, so keep it quiet.
 setenv HUGETLB_VERBOSE 0
 echo "setenv gtm_test_hugepages $gtm_test_hugepages"							>>&! $settingsfile
-if ($?HUGETLB_MORECORE) then
-	echo "setenv HUGETLB_MORECORE $HUGETLB_MORECORE"						>>&! $settingsfile
+if ($?ydb_hugetlb_shm) then
+	echo "setenv ydb_hugetlb_shm $ydb_hugetlb_shm"							>>&! $settingsfile
+	echo "unsetenv gtm_hugetlb_shm"									>>&! $settingsfile
+else if ($?gtm_hugetlb_shm) then
+	echo "setenv gtm_hugetlb_shm $gtm_hugetlb_shm"							>>&! $settingsfile
+	echo "unsetenv ydb_hugetlb_shm"									>>&! $settingsfile
 else
-	echo "unsetenv HUGETLB_MORECORE"								>>&! $settingsfile
-endif
-if ($?HUGETLB_SHM) then
-	echo "setenv HUGETLB_SHM $HUGETLB_SHM"								>>&! $settingsfile
-else
-	echo "unsetenv HUGETLB_SHM"									>>&! $settingsfile
-endif
-if ($?LD_PRELOAD) then
-	echo "setenv LD_PRELOAD $LD_PRELOAD"								>>&! $settingsfile
-else
-	echo "unsetenv LD_PRELOAD"									>>&! $settingsfile
+	echo "unsetenv ydb_hugetlb_shm"									>>&! $settingsfile
+	echo "unsetenv gtm_hugetlb_shm"									>>&! $settingsfile
 endif
 echo "setenv HUGETLB_VERBOSE $HUGETLB_VERBOSE"								>>&! $settingsfile
 

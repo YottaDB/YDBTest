@@ -4,6 +4,9 @@
 # Copyright (c) 2002-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -29,9 +32,7 @@ setenv gtm_test_plaintext_fallback
 setenv test_replic_suppl_type 0
 # The test uses prior versions of GT.M. Disable huge pages for versions prior to V60001
 if ( (`expr "V60001" \> "$tst_ver"`) || (`expr "V60001" \> "$remote_ver"`) ) then
-	foreach envvar (gtm_test_hugepages HUGETLB_MORECORE HUGETLB_SHM HUGETLB_VERBOSE LD_PRELOAD)
-		unsetenv $envvar
-	end
+	source $gtm_tst/com/disable_hugepages.csh
 endif
 setenv gtm_test_tptype "ONLINE"
 setenv tst_buffsize 33000000

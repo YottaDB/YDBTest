@@ -3,7 +3,7 @@
 # Copyright (c) 2004-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -30,17 +30,12 @@ setenv gtm_ver_noecho
 set gtm_ver_save = "$gtm_exe:h:t"
 # Some environment variables have to be disabled for prior versions, as they might have issues in the past.
 set envlist_to_save = (gtmdbglvl gtmcompile)
-set hugepages_env = (HUGETLB_MORECORE HUGETLB_SHM HUGETLB_VERBOSE LD_PRELOAD)
 set disable_custom_errors = (gtm_custom_errors gtm_test_fake_enospc)
 set set_to_empty_vars = (gtm_test_qdbrundown_parms)
 if (("$ver_to_switch" != "$tst_ver") && ("$gtm_ver_save" == "$tst_ver")) then
 	# if switching to versions prior to V6.0-002 unset custom errors settings (MREP GTM-7622_priorver_no_custom_errors)
 	if (`expr "V60002" \> "$ver_to_switch"`) then
 		set envlist_to_save = ($envlist_to_save $disable_custom_errors)
-	endif
-	# if switching to versions prior to V6.0-001 unset huge pages related environment variables
-	if (`expr "V60001" \> "$ver_to_switch"`) then
-		set envlist_to_save = ($envlist_to_save $hugepages_env)
 	endif
 	# if switching to versions prior to V6.3-000 set gtm_test_qdbrundown_parms to ""
 	# since $gtm_test_qdbrundown_parms is used directly in scripts
@@ -65,7 +60,7 @@ if (("$ver_to_switch" != "$tst_ver") && ("$gtm_ver_save" == "$tst_ver")) then
 	end
 else if (("$ver_to_switch" == "$tst_ver") && ("$gtm_ver_save" != "$tst_ver")) then
 	# i.e switching from old -> current. If the saved version of the environment variable is existing restore.
-	foreach envvar ($envlist_to_save $hugepages_env $disable_custom_errors $set_to_empty_vars)
+	foreach envvar ($envlist_to_save $disable_custom_errors $set_to_empty_vars)
 		printenv tst_save_$envvar >&! /dev/null
 		if ( ! $status) then
 			setenv $envvar `printenv tst_save_$envvar`
