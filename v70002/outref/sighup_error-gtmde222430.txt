@@ -18,6 +18,7 @@ spawn /usr/local/bin/tcsh -f
 > set shellprompt=SHELL
 > set prompt=$shellprompt
 SHELLsetenv term_env `tty`; echo $term_env > term_env.txt
+SHELLstty cols 256
 SHELL$gtm_exe/mumps -run gtmde222430A^gtmde222430
 ##TEST_AWK.* OPEN TERMINAL NOPAST NOESCA NOREADONLY TYPE WIDTH=[0-9]* LENG=[0-9]* HUPENABLE TTSYNC NOHOSTSYNC EXCE="do exception\^gtmde222430"
 SHELL

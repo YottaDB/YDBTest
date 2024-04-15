@@ -14,5 +14,14 @@
 spawn /usr/local/bin/tcsh -f
 source $::env(gtm_tst)/com/expectinit.exp
 
+# Note that the below output would be 132 columns (the terminal width set in "com/expectinit.exp" above)
+# if the terminal name is "/dev/pts/0" to "/dev/pts/9" (i.e. 1-digit number) and would be 133 columns if
+# the terminal name is "/dev/pts/10" to "/dev/pts/99" (i.e. 2-digit number) and so on. Since we don't have
+# control of the terminal name that gets assigned to us, if a 2-digit number gets assigned (e.g. "/dev/pts/30")
+# the 133 column output would wrap into 2 lines (due to the 132 column terminal width) causing a test failure.
+# To avoid such failures, set the terminal width to a value much higher than 132.
+send -- "stty cols 256\r"
+expect "SHELL"
+
 send -- "\$gtm_exe/mumps -run gtmde222430A^gtmde222430\r"
 expect "SHELL"
