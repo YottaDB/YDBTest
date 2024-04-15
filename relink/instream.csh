@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2021 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -128,7 +128,7 @@ EOF
 
 # Find out the minimum shared memory allocation based on huge page setting.
 @ huge_page_alloc_mb = 0
-if ((-e /usr/lib64/libhugetlbfs.so) || (-e /usr/lib/libhugetlbfs.so)) then
+if ($gtm_test_hugepages) then
 	if ("Linux" == $HOSTOS) then
 		set huge_page_size = `$grep Hugepagesize /proc/meminfo | $tst_awk '{print $2" "$3}'`
 	else

@@ -702,10 +702,6 @@ endif
 
 if ($gtm_test_hugepages) then
 	source $gtm_tst/com/set_ydb_env_var_random.csh ydb_hugetlb_shm gtm_hugetlb_shm "yes"
-	set rand = `expr $randnumbers[28] % 5`
-	if ( $rand == 0 ) then
-		source $gtm_tst/com/unset_ydb_env_var.csh ydb_hugetlb_shm gtm_hugetlb_shm	# 10% chance
-	endif
 else
 	source $gtm_tst/com/unset_ydb_env_var.csh ydb_hugetlb_shm gtm_hugetlb_shm
 endif
