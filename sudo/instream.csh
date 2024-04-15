@@ -63,7 +63,11 @@ else if ("rhel" == $gtm_test_linux_distrib) then
 		#
 		setenv subtest_exclude_list "$subtest_exclude_list plugins"
 		# olderversion disabled since no binaries for RHEL 7 (it's not supported) since r1.36
-		setenv subtest_exclude_list "$subtest_exclude_list olderversion"
+		setenv subtest_exclude_list "$subtest_exclude_list olderversion configure_rmfile-gtmde201825"
+	endif
+	if ($gtm_test_rhel9_plus) then
+		# RHEL 9 does not have a r1.38 tarball (which the below subtest relies on) so skip in that case
+		setenv subtest_exclude_list "$subtest_exclude_list configure_rmfile-gtmde201825"
 	endif
 else if (("ubuntu" == $gtm_test_linux_distrib) && ("20.04" == $gtm_test_linux_version)) then
         # olderversion disabled since no binaries for Ubuntu 20.04 (not all versions supported)
@@ -71,7 +75,7 @@ else if (("ubuntu" == $gtm_test_linux_distrib) && ("20.04" == $gtm_test_linux_ve
 else if ("suse" == $gtm_test_linux_distrib) then
         # olderversion disabled since no binaries for Opensuse Tumbleweed (not supported)
         if ("opensuse-tumbleweed" == $gtm_test_linux_suse_distro) then
-		setenv subtest_exclude_list "$subtest_exclude_list olderversion"
+		setenv subtest_exclude_list "$subtest_exclude_list olderversion configure_rmfile-gtmde201825"
 	endif
 endif
 
