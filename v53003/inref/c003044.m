@@ -558,7 +558,7 @@ viewgvstats(type);
 	.	kill var("NR3")
 	.	kill var("TC3"),var("TC4")
 	.	kill var("TR3"),var("TR4")
-	.	kill var("CFE"),var("CFS"),var("CFT"),var("CQS"),var("CQT"),var("CYS"),var("CYT"),var("BTD"),var("WFR"),var("BUS"),var("BTS")
+	.	kill var("CFE"),var("CFS"),var("CFT"),var("CQS"),var("CQT"),var("CYS"),var("CYT"),var("BTD"),var("WFR"),var("BUS"),var("BTS"),var("STG"),var("KTG"),var("ZTG")
 	.	kill var("ZTR")	; no ztrigger commands in this test
 	.	; if running with MM, the DWT and DRD counters will be 0 always so skip them from the nonzero check as well
 	.	if $ztrnlnm("acc_meth")="MM" kill var("DWT")
@@ -574,7 +574,7 @@ viewgvstats(type);
 	.	;
 	if "READONLY"=type do
 	.	; the following indices are exempt from the check for this type
-	.	kill var("CAT"),var("CFE"),var("CFS"),var("CFT"),var("CQS"),var("CQT"),var("CYS"),var("CYT"),var("BTD"),var("WFR"),var("BUS"),var("BTS")
+	.	kill var("CAT"),var("CFE"),var("CFS"),var("CFT"),var("CQS"),var("CQT"),var("CYS"),var("CYT"),var("BTD"),var("WFR"),var("BUS"),var("BTS"),var("STG"),var("KTG"),var("ZTG")
 	.	kill var("SET"),var("KIL")
 	.	kill var("LKS"),var("LKF")
 	.	kill var("CTN")
