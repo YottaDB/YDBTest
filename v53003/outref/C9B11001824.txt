@@ -17,7 +17,9 @@ DSE> DSE> # Do journal forward recovery (expect it to fail with TPFAIL error)
 ##FILTERED##%YDB-I-MUJNLSTAT, Initial processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Backward processing started at ... ... .. ..:..:.. 20..
 ##FILTERED##%YDB-I-MUJNLSTAT, Forward processing started at ... ... .. ..:..:.. 20..
-%YDB-E-TPFAIL, Transaction COMMIT failed.  Failure code: 000L.
+%YDB-E-TPFAIL, Transaction COMMIT failed.
+%YDB-E-GVGETFAIL, Global variable retrieval failed.  Failure code: 000L.
+%YDB-I-GVIS, 		Global variable: x
 %YDB-E-MUNOACTION, MUPIP unable to perform requested action
 ##FILTERED##%YDB-I-MUJNLSTAT, End processing at ... ... .. ..:..:.. 20..
 exit_status = 154
