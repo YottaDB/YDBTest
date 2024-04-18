@@ -1,0 +1,8 @@
+# This test is for testing if empty host string in socket connection parameter causes assertion failure in debug build.
+# This should issue YDB-E-GETADDRINFO instead of assert failure.
+
+YDB>
+%YDB-E-GETADDRINFO, Error in getting address info,%YDB-I-TEXT, Name or service not known
+		At M source location socket+1^ydb1076
+
+YDB>
