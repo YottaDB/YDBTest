@@ -1,0 +1,9 @@
+Access a variable on condition of a false postconditional,
+then access that variable again later in the same line.
+Ensure that it causes an error rather than a segfault
+as it did in v70002
+
+GTM>
+##TEST_AWK%GTM-E-L?V?UNDEF, Undefined local variable: x
+
+GTM>
