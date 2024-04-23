@@ -1,0 +1,11 @@
+In NOUNDEF mode, access a FOR loop variable that doesn't exist
+to ensure that FOR increments the empty string to 1 rather than
+producing UNDEF error like it did in versions prior to v70003.
+This should print 5 and then break
+
+GTM>
+5 1 
+%GTM-I-BREAK, Break instruction encountered
+		At M source location +1^GTM$DMOD
+
+GTM>
