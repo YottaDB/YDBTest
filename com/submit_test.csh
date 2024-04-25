@@ -118,6 +118,8 @@ setenv ydb_allow64GB_jnlpool `free -g | $tst_awk -f $gtm_tst/com/jnlpool_64GB_OK
 # execution to be done with those, so we unset & re-set them once we are done.
 unset echo
 unset verbose
+setenv switch_chset "source $gtm_tst/com/switch_chset.csh"	# this needs to be done BEFORE the do_random_settings.csh call
+								# as that might need this variable defined in some cases.
 if !($?test_norandomsettings) then
 	source $gtm_tst/com/do_random_settings.csh
 else
@@ -558,7 +560,6 @@ if ($?gtm_chset) then
 		\rm *.o >&! rm_chsetobjs_subtest.log # remove all objs that are compiled under M mode till this point from the test directory
 	endif
 endif
-setenv switch_chset "source $gtm_tst/com/switch_chset.csh"
 # add for the logs directory
 setenv gtm_test_log_dir  $ggdata/tests/timinginfo/$tst_src/$tst
 if ($?test_replic) then
