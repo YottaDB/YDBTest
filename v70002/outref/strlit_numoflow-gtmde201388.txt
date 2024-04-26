@@ -1,0 +1,16 @@
+# ********************************************************************************************
+# GTM-DE201388 - Test the following release note
+# ********************************************************************************************
+# 
+# Release note (from http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-002_Release_Notes.html#GTM-DE197637468)
+# 
+# $[Z]CHAR(1E48) and similar numeric literal overflows produce a NUMOFLOW error at compile time;
+# previously an optimization inappropriately treated this as $[Z]CHAR(0). (GTM-DE201388)
+# 
+
+# GT.M release note is inaccurate. It needs to say "1E48" instead of 1E48.
+# Discussion in https://gitlab.com/YottaDB/DB/YDBTest/-/issues/581#note_1881352659
+# This test used to fail in GT.M version prior to V7.0-002 with wrong output "x=$C(0)"
+# GT.M Version after V7.0-002 and later will issue NUMOFLOW error.
+
+%GTM-E-NUMOFLOW, Numeric overflow
