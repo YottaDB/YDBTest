@@ -3,6 +3,9 @@
 #								#
 #	Copyright 2013 Fidelity Information Services, Inc	#
 #								#
+# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -26,7 +29,7 @@ if ( "sunos" == "$gtm_test_osname" ) then
 endif
 
 
-expect -f $gtm_tst/$tst/inref/d002548.exp $gtm_verno $tst_image $gtm_tst >&! d002548.logx
+(expect -d -f $gtm_tst/$tst/inref/d002548.exp $gtm_verno $tst_image $gtm_tst > d002548.logx) >& expect.dbg
 cat d002548.logx | $gtm_exe/mumps -run LOOP^%XCMD --xec='/set FAIL=$get(FAIL)+$length(%l,"FAIL")-1,PASS=$get(PASS)+$length(%l,"REGION")-1+$length(%l,"PASS")-1/' --after='/zwrite PASS,FAIL/'
 $grep -vE 'KEYWRDBAD|ILLCHAR' d002548.logx >&! d002548.log
 

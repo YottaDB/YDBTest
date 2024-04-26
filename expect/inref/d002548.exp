@@ -1,7 +1,7 @@
 #!/usr/bin/expect -f
 #################################################################
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 # Portions Copyright (c) Fidelity National Information 		#
@@ -449,27 +449,32 @@ expect "GDE>"
 send -- "we\025wuit\033OHq\r"
 expect "GDE-I-NOACTION" {puts "\rEXPECT GDE PASS\r"}
 
-# in case of failure, we have to wait for the timeout
+# GDE NOEDITING
 expect "GDE>"
 send -- "quit\001\005\002\r"
 expect {
-	-re "GDE-E-(ILLCHAR|KEYWRDBAD)"
-	{
-		puts "\rEXPECT GDE PASS\r"
-		send -- "quit\r"
-	}
 	"GDE-I-NOACTION"
 	{
-		puts "\rEXPECT GDE FAIL\r"
+		puts "\rEXPECT GDE PASS\r"
 	}
-	-re "GDE-E-\[A-HJL-Z]"
-	{
+	timeout {
 		puts "\rEXPECT GDE FAIL\r"
-		send -- "quit\r"
 	}
 }
-expect "GDE-I-NOACTION"
+# Repeat test with HOME/END instead of CTRL-A/CTRL-E
+expect "GDE>"
+send -- "quit\033OH\033OF\002\r"
+expect {
+	"GDE-I-NOACTION"
+	{
+		puts "\rEXPECT GDE PASS\r"
+	}
+	timeout {
+		puts "\rEXPECT GDE FAIL\r"
+	}
+}
 
+# Testing [NO]ESCAPE
 expect "Input asdfg*
 "
 send -- "asdfg\033\[20~"

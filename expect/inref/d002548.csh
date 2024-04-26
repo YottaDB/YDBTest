@@ -3,7 +3,7 @@
 #								#
 # Copyright 2013 Fidelity Information Services, Inc		#
 #								#
-# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -166,13 +166,13 @@ source $gtm_tst/com/set_ydb_env_var_random.csh ydb_principal_editing gtm_princip
 echo "#### Testing for gtm_principal_editing : $gtm_principal_editing ####"
 echo "**************************************"
 echo "Input the following in the GDE> prompt"
-echo "quit<ctrl-A><ctrl-E><ctrl-B>"
-echo "None of the above EDITING Characters should work. Press <ret>"
-echo "GDE-E-ILLCHAR Should be displayed. Now input quit<ret>"
+echo "quit<ctrl-A><ctrl-E><ctrl-B><ret>"
+echo "All the above EDITING Characters should work fine, with no errors, even though env vars are set to NOEDITING."
+echo "This is because GDE internally sets EDITING in case of a terminal (YDB#1032)."
 echo "**************************************"
 $GDE
 # Repeat test with HOME/END instead of CTRL-A/CTRL-E
-# Turns out cannot repeat as ESC terminates reads. Not an issue with the new commit that adds support for HOME/END.
+$GDE
 
 echo "*** Now Testing [NO]ESCAPE ***"
 source $gtm_tst/com/unset_ydb_env_var.csh ydb_principal_editing gtm_principal_editing
