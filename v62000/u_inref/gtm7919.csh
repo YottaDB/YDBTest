@@ -3,7 +3,7 @@
 #								#
 # Copyright 2014 Fidelity Information Services, Inc		#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -64,6 +64,24 @@ while ($i <= $num_of_cases)
 
 		# Save the generated syslog messages in a local file.
 		$gtm_tst/com/getoper.csh "$time_before" "" ${logFileName}.outx.tmp
+
+		if ($gtm_test_hugepages) then
+			# If huge pages have been turned on randomly by test framework, it is possible that
+			# there is not enough memory to allocate huge pages for shared memory in the current
+			# system. In that case, we would see messages of the following form
+			#	YDB-MUMPS[91661]: %YDB-W-SHMHUGETLB, Could not back shared memory with huge pages,
+			#		using base pages instead, %SYSTEM-E-ENO12, Cannot allocate memory
+			# We should not count these messages as part of the syslog messages that this test intends
+			# to see so filter those out. Note though that the test does generate a %YDB-W-SHMHUGETLB
+			# syslog message too later (while generating all possible messages) and so that message
+			# should not be filtered out. Such messages are of the following form
+			#	YDB-MUMPS[91661]: %YDB-W-SHMHUGETLB, Could not back shared memory with huge pages,
+			#		using base pages instead
+			# The difference is the lack of the "%SYSTEM-E-ENO12, Cannot allocate memory" secondary
+			# error. So that is what we use to do the filtering.
+			mv ${logFileName}.outx.tmp ${logFileName}.outx.tmp.orig
+			$grep -v 'SHMHUGETLB.*, %SYSTEM-E-ENO12, Cannot allocate memory' ${logFileName}.outx.tmp.orig > ${logFileName}.outx.tmp
+		endif
 
 		# Grep out only the messages that originated from our process.
 		$grep "\[$pid\]" ${logFileName}.outx.tmp > ${logFileName}.outx
