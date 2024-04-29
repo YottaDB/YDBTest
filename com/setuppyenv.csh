@@ -1,6 +1,6 @@
 #################################################################
 #								#
-# Copyright (c) 2022-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2022-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -29,6 +29,11 @@ cd $pypath
 python3 -m venv .venv
 # Activate virtual environment
 source .venv/bin/activate.csh
+# setuptools is no longer pre-installed in virtual environments created with venv from Python 3.12
+# This means that it is no longer available by default. But since setup.py needs it, run the
+# following in the activated virtual environment. See https://docs.python.org/3/whatsnew/3.12.html
+# for more details (search for "gh-95299").
+pip install setuptools
 # Install into venv: `python setup.py install`
 python setup.py install
 cd ..
