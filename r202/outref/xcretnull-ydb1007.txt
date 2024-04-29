@@ -1,0 +1,31 @@
+# Test that external commands returning a NULL pointer instead of a string raise XCRETNULLREF errors.
+
+GTM>
+Returning NULL char*: 
+%GTM-E-XCRETNULLREF, Returned null reference from external call nullptr
+
+GTM>
+Returning NULL in char**: 
+%GTM-E-XCRETNULLREF, Returned null reference from external call nullptrptr
+
+GTM>
+Returning NULL in ydb_string_t: 
+%GTM-E-XCRETNULLREF, Returned null reference from external call nullstring
+
+GTM>
+Returning NULL in ydb_buffer_t: 
+%GTM-E-XCRETNULLREF, Returned null reference from external call nullbuffer
+
+GTM>
+
+# Test that external commands returning a negative string length raise ZCCONVERT errors.
+
+GTM>
+Returning negative ydb_string_t length: 
+%GTM-E-ZCCONVERT, External call: error converting output argument from external call negstring
+
+GTM>
+Returning negative ydb_buffer_t length: 
+%GTM-E-MAXSTRLEN, Maximum string length exceeded
+
+GTM>

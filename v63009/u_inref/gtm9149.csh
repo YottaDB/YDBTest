@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh
 #################################################################
 #                                                               #
-# Copyright (c) 2021 YottaDB LLC and/or its subsidiaries.       #
+# Copyright (c) 2021-2024 YottaDB LLC and/or its subsidiaries.  #
 # All rights reserved.                                          #
 #                                                               #
 #       This source code contains the intellectual property     #
@@ -29,13 +29,6 @@ cat >> gtm9149M.m << xxx
 	write x
 xxx
 
-echo "# This test is making the external call that will return a negative length string expecting to output an empty string"
+echo "# This test makes an external call that returns a negative length string which should produce a ZCCONVERT error"
 
 $ydb_dist/mumps -run ^gtm9149M
-
-set syslog_after = `date +"%b %e %H:%M:%S"`
-
-echo "# Check the syslog for an %YDB-E-ZCCONVERT error. If not found, this will time out."
-
-$gtm_tst/com/getoper.csh "$syslog_begin" "$syslog_after" syslog_xcret.txt "" "ZCCONVERT"
-

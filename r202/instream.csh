@@ -18,6 +18,7 @@
 # mupip_verbose-ydb1060		[pooh]	Test functionality of MUPIP BACKUP, MUPIP FREEZE and MUPIP INTEG with option -DBG and -VERBOSE
 # zshow_tt_host_conv-ydb1068	[pooh]	Test ZSHOW "D" output for TTSYNC, NOTTSYNC, HOSTSYNC, NOHOSTSYNC, CONVERT and NOCONVERT
 # empty_socket_assert-ydb1076	[pooh]	Test if empty host string in socket connection parameter causing assertion failure
+# xcretnull-ydb1007		[berwyn] Ensure that external calls that return invalid values produce errors
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "r202 test starts..."
@@ -25,7 +26,7 @@ echo "r202 test starts..."
 # List the subtests seperated by spaces under the appropriate environment variable name
 setenv subtest_list_common	""
 setenv subtest_list_non_replic	"rlsiglongjmp-ydb1065 mupip_verbose-ydb1060 zshow_tt_host_conv-ydb1068"
-setenv subtest_list_non_replic	"$subtest_list_non_replic empty_socket_assert-ydb1076"
+setenv subtest_list_non_replic	"$subtest_list_non_replic empty_socket_assert-ydb1076 xcretnull-ydb1007"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
