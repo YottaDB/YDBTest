@@ -234,7 +234,9 @@ if ($?test_gtm_gtcm_one) then
 	end
 else if ($?test_replic) then
 	if ("MULTISITE" == "$test_replic") then
-		set serverstocheck = "$tst_other_servers_list_ms"
+		# Note: We are going to later use $serverstocheck[1] and $serverstocheck[2]. In order for that
+		# to work, we need to use backquotes with echo (csh/tcsh limitation). Hence the usage below.
+		set serverstocheck = `echo $tst_other_servers_list_ms`
 	else if ($tst_org_host != $tst_remote_host) then
 		set serverstocheck = "$tst_remote_host"
 	endif
@@ -506,7 +508,7 @@ set hostn = $HOST:r:r:r
 if ($?test_replic) then
 	if ("MULTISITE" == $test_replic) then
 		# make sure tool exists on remote host first
-		setenv h1_check `$rsh $tst_other_servers_list_ms[1] file $gtm_exe $gtm_tools/check_utf8_support.csh |& $grep -E 'cannot open|Connection'`
+		setenv h1_check `$rsh $serverstocheck[1] file $gtm_exe $gtm_tools/check_utf8_support.csh |& $grep -E 'cannot open|Connection'`
 		if ( "" != "$h1_check" ) then
 			# output the actual error found first
 			echo $h1_check >>! $tst_general_dir/diff.log
@@ -518,10 +520,10 @@ if ($?test_replic) then
 			endif
 			exit 2
 		endif
-		set cmd1=`$rsh $tst_other_servers_list_ms[1] "$gtm_tools/check_utf8_support.csh"`
+		set cmd1=`$rsh $serverstocheck[1] "$gtm_tools/check_utf8_support.csh"`
 		setenv h1_utf8 "$cmd1"
 		# make sure tool exists on remote host first
-		setenv h2_check `$rsh $tst_other_servers_list_ms[2] file $gtm_exe $gtm_tools/check_utf8_support.csh |& $grep -E 'cannot open|Connection'`
+		setenv h2_check `$rsh $serverstocheck[2] file $gtm_exe $gtm_tools/check_utf8_support.csh |& $grep -E 'cannot open|Connection'`
 		if ( "" != "$h2_check" ) then
 			# output the actual error found first
 			echo $h2_check >>! $tst_general_dir/diff.log
@@ -533,7 +535,7 @@ if ($?test_replic) then
 			endif
 			exit 2
 		endif
-		set cmd2=`$rsh $tst_other_servers_list_ms[2] "$gtm_tools/check_utf8_support.csh"`
+		set cmd2=`$rsh $serverstocheck[2] "$gtm_tools/check_utf8_support.csh"`
 		setenv h2_utf8 "$cmd2"
 
 		if ( "FALSE" == "$h1_utf8" || "FALSE" == "$h2_utf8" ) setenv tst_remote_nonunicode
