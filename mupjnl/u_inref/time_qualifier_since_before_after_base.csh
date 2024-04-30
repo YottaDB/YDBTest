@@ -3,7 +3,7 @@
 #								#
 # Copyright 2003, 2014 Fidelity Information Services, Inc	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -51,7 +51,7 @@ unset echo
 
 #set time3x = `grep '^03' total.mjf_date | $tail -n 1 | sed 's/.* //g;s/#.*//g;s/:/./g'`
 set time3x = `$grep '^03' total.mjf_date | $tail -n 1 | sed 's/.* //g;s/#.*//g'`
-set time3 = `date +'%Y.%m.%d.'``echo $time3x | sed 's/:/./g'``date +'.%Z'`
+set time3 = `date +'%Y.%m.%d.'``echo $time3x | sed 's/:/./g'``date +'.%:::z'`
 echo $time3 > time3
 #delta0=time3-time0
 #delta1=time3-time1
