@@ -30,7 +30,7 @@
 # Verify that not only did we see the GETADDRINFO message but this came out as a 3 message bundle with the secondary
 # system name mentioned in this bundle of messages.
 %YDB-E-GETADDRINFO, Error in getting address info
-##TEST_AWK(%YDB-I-TEXT, Temporary failure in name resolution|%YDB-I-TEXT, Name or service not known)
+##TEST_AWK%YDB-I-TEXT, (Temporary failure in name resolution|Name or service not known|No address associated with hostname)
 ##TEST_AWK%YDB-I-TEXT, Failure in resolving bogushost:[1-9][0-9]*
 
 # We know we have at least one GETADDRINFO message to indicate the condition has been detected. Now wait for
