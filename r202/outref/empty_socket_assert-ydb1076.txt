@@ -2,7 +2,7 @@
 # This should issue YDB-E-GETADDRINFO instead of assert failure.
 
 YDB>
-%YDB-E-GETADDRINFO, Error in getting address info,%YDB-I-TEXT, Name or service not known
+##TEST_AWK%YDB-E-GETADDRINFO, Error in getting address info,%YDB-I-TEXT, (Name or service not known|No address associated with hostname)
 		At M source location socket+1^ydb1076
 
 YDB>
