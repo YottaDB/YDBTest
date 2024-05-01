@@ -4,7 +4,7 @@
 # Copyright (c) 2002-2015 Fidelity National Information 	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -110,9 +110,16 @@ if ($gtm_test_dbfill == "IMPTP" || $gtm_test_dbfill == "IMPZTP") then
 			# python3 regression that will be fixed in a later version. The python version then was 3.11.2
 			# Later we saw a similar failure in a OpenSUSE Tumbleweed system where the python3 version was
 			# 3.11.4 so we disable YDBPython testing if python version is 3.11.*.
+			#
+			# With python3 3.12.*, we have seen the following symptom when building imptp.py
+			#	SIG-11 in _PyEval_EvalFrameDefault()
+			# This was seen on an Ubuntu 24.04 system and the current suspicion is that it is a
+			# python3 regression that will be fixed in a later version.
+			#
+			# Therefore disable YDBPython random choice in com/imptp.csh if python3 version is 3.11.* or 3.12.*
 			set python3ver = `python3 --version | cut -d" " -f2 | cut -d. -f1,2`
-			if ("3.11" == $python3ver) then
-				echo "# Disabling ydb_imptp_flavor=3 (YDBPython) due to python3 3.11.*"
+			if (("3.11" == $python3ver) || ("3.12" == $python3ver)) then
+				echo "# Disabling ydb_imptp_flavor=3 (YDBPython) due to python3 3.11.* or 3.12.*"
 				set disable_imptp_flavor_list = "$disable_imptp_flavor_list 3"
 			endif
 			# Disable Python testing if ASAN is enabled and Rust version is 1.58.* or 1.59.*
