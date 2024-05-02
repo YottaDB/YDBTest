@@ -22,8 +22,11 @@ python3 -m venv .venv
 set prompt=""
 source .venv/bin/activate.csh
 
+# See comment in com/setuppyenv.csh for why this step is needed
+pip install setuptools >& setup.txt
+
 # Install into venv: `python setup.py install`
-python setup.py install >&  setup.txt
+python setup.py install >>&  setup.txt
 pip3 install flask      >>& setup.txt
 
 # Make sure that the ldd linkage is right
