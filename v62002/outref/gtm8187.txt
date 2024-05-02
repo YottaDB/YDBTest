@@ -49,7 +49,7 @@ Blocks freed        : 526
 Blocks reused       : 263 
 Blocks extended     : 0 
 Total root blocks moved: 2
-%YDB-I-MUTRUNCNOSPACE, Region AREG has insufficient space to meet truncate target percentage of 0
+%YDB-I-MUTRUNCALREADY, Region AREG: no further truncation possible
 ##SUSPEND_OUTPUT 4G_ABOVE_DB_BLKS
 Truncated region: DEFAULT. Reduced total blocks from [602] to [512]. Reduced free blocks from [328] to [239].
 ##ALLOW_OUTPUT 4G_ABOVE_DB_BLKS
@@ -96,8 +96,8 @@ Blocks freed        : 13
 Blocks reused       : 12 
 Blocks extended     : 0 
 Total root blocks moved: 1
-%YDB-I-MUTRUNCNOSPACE, Region AREG has insufficient space to meet truncate target percentage of 0
-%YDB-I-MUTRUNCNOSPACE, Region DEFAULT has insufficient space to meet truncate target percentage of 0
+%YDB-I-MUTRUNCALREADY, Region AREG: no further truncation possible
+%YDB-I-MUTRUNCALREADY, Region DEFAULT: no further truncation possible
 
 Remove write permissions on a.dat and redo MUPIP reorg -truncate to ensure it does not SIG-11 etc. on a read-only database file
 Fill Factor:: Index blocks 100%: Data blocks 100%
