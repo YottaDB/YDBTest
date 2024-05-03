@@ -19,6 +19,7 @@
 # zsocket_sigsegv-gtmf135428 	[ern0] 		$ZSOCKET() returns an empty string when given an out of range index
 # postconditional-gtmde276621	[berwyn]	Verify fix for v70002 regression where false postconditional could cause segfault
 # empty_loop_var-gtmf135424	[berwyn]	Empty string rather than UNDEF error when lost FOR control variable in NOUNDEF mode
+# dlr_zkey_sig11-gtmde294187    [nars]          Test $ZKEY does not result in SIG-11 or heap-use-after-free error (in ASAN build)
 #----------------------------------------------------------------------------------------------------------------------------------
 
 echo "v70003 test starts..."
@@ -27,6 +28,7 @@ echo "v70003 test starts..."
 setenv subtest_list_common	""
 setenv subtest_list_non_replic	"view_device-gtmf157495 integ_dumpfh_order-gtmf134692 zsocket_sigsegv-gtmf135428"
 setenv subtest_list_non_replic	"$subtest_list_non_replic postconditional-gtmde276621 empty_loop_var-gtmf135424"
+setenv subtest_list_non_replic	"$subtest_list_non_replic dlr_zkey_sig11-gtmde294187"
 setenv subtest_list_replic	""
 
 if ($?test_replic == 1) then
