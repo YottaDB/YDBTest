@@ -5,10 +5,10 @@
 ##TEST_AWK(Skipping YottaDB pkg-config file install for r.* as newer version r.* exists|YottaDB pkg-config file installed successfully) at /usr/share/pkgconfig/yottadb.pc
 ##TEST_AWKYottaDB version r.* installed successfully at ##TEST_PATH##/r2.00
 ##TEST_AWK(Skipping YottaDB pkg-config file install for r.* as newer version r.* exists|YottaDB pkg-config file installed successfully) at /usr/share/pkgconfig/yottadb.pc
-##SUSPEND_OUTPUT RHEL_9.3
+##SUSPEND_OUTPUT RHEL_9_PLUS
 ##TEST_AWKYottaDB version r.* installed successfully at ##TEST_PATH##/r1.38
 ##TEST_AWK(Skipping YottaDB pkg-config file install for r.* as newer version r.* exists|YottaDB pkg-config file installed successfully) at /usr/share/pkgconfig/yottadb.pc
-##ALLOW_OUTPUT RHEL_9.3
+##ALLOW_OUTPUT RHEL_9_PLUS
 
 # Testing M Mode
 setenv gtm_chset M
@@ -21,12 +21,12 @@ $ZCHSET="M"
 $ZROUTINES="##TEST_PATH##/r2.00/libyottadbutil##TEST_SHL_SUFFIX##"
 $ZCHSET="M"
 ##TEST_AWK\$ZYRELEASE="YottaDB r.* Linux .*"
-##SUSPEND_OUTPUT RHEL_9.3
+##SUSPEND_OUTPUT RHEL_9_PLUS
 # r1.38
 $ZROUTINES="##TEST_PATH##/r1.38/libyottadbutil##TEST_SHL_SUFFIX##"
 $ZCHSET="M"
 ##TEST_AWK\$ZYRELEASE="YottaDB r.* Linux .*"
-##ALLOW_OUTPUT RHEL_9.3
+##ALLOW_OUTPUT RHEL_9_PLUS
 
 # Testing UTF-8 Mode
 setenv gtm_chset UTF-8
@@ -39,9 +39,9 @@ $ZCHSET="UTF-8"
 $ZROUTINES="##TEST_PATH##/r2.00/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
 $ZCHSET="UTF-8"
 ##TEST_AWK\$ZYRELEASE="YottaDB r.* Linux .*"
-##SUSPEND_OUTPUT RHEL_9.3
+##SUSPEND_OUTPUT RHEL_9_PLUS
 # r1.38
 $ZROUTINES="##TEST_PATH##/r1.38/utf8/libyottadbutil##TEST_SHL_SUFFIX##"
 $ZCHSET="UTF-8"
 ##TEST_AWK\$ZYRELEASE="YottaDB r.* Linux .*"
-##ALLOW_OUTPUT RHEL_9.3
+##ALLOW_OUTPUT RHEL_9_PLUS
