@@ -4,7 +4,7 @@
 # Copyright (c) 2006, 2015 Fidelity National Information	#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -58,12 +58,6 @@ endif
 setenv subtest_exclude_list ""
 # If the platform/host does not have prior GT.M versions, disable tests that require them
 if ($?gtm_test_nopriorgtmver) then
-	setenv subtest_exclude_list "$subtest_exclude_list C9D08002387"
-else if ($?ydb_environment_init) then
-	# We are in a YDB environment (i.e. non-GG setup)
-	# Disable C9D08002387 subtest until V63002 is available as it needs a version with VERMISMATCH abilities
-	# and we currently only have V63000A_R100 and V63000A both of which are identical relative to VERMISMATCH.
-	# And V63001A is unusable until T63001A is available.
 	setenv subtest_exclude_list "$subtest_exclude_list C9D08002387"
 endif
 # Disable certain timing-sensitive tests on slower single-cpu systems

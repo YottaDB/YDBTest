@@ -1,4 +1,4 @@
-##TEST_AWKRandomly chosen prior V5 version is : \[##FILTERED##PRIORVER##\]
+##TEST_AWKRandomly chosen prior version is : \[##FILTERED##PRIORVER##\]
 ----------------------------------------------------------------------
 # Switch to prior version
 # Start a background job that accesses the db and randomly choose to kill it
@@ -9,38 +9,38 @@ mumps.gld
 ##TEST_AWKUsing: ##GTM_LIBRARY_PATH##/.*
 mumps.dat
 
-YDB>
+GTM>
 ##TEST_AWKRandom choice to kill child process is : [01]
 
-YDB>
+GTM>
 ----------------------------------------------------------------------
 # Check if jobbed off child has to be killed (written to the file killchild.choice)
 # If yes, kill the child and wait for it to die
 
 ----------------------------------------------------------------------
 # Switch to current version
-# Start a foreground job that accesses the db using the new GT.M version
-# Starting GT.M. Expect a VERMISMATCH error
+# Start a foreground job that accesses the db using the new YottaDB version
+# Starting YottaDB. Expect a VERMISMATCH error
 
 
-YDB>
-##TEST_AWK%YDB-E-VERMISMATCH, Attempt to access ##TEST_PATH##/mumps.dat with version GT.M V.*
+GTM>
+##TEST_AWK%YDB-E-VERMISMATCH, Attempt to access ##TEST_PATH##/mumps.dat with version .*
 		At M source location newver+1^c002387
 
-YDB>
+GTM>
 ----------------------------------------------------------------------
 # Starting LKE. Expect a VERMISMATCH error
 
-##TEST_AWK%YDB-E-VERMISMATCH, Attempt to access ##TEST_PATH##/mumps.dat with version GT.M V.*
+##TEST_AWK%YDB-E-VERMISMATCH, Attempt to access ##TEST_PATH##/mumps.dat with version .*
 %YDB-E-DBNOREGION, None of the database regions accessible
 ----------------------------------------------------------------------
 # Starting DSE. Expect a VERMISMATCH error
 
-##TEST_AWK%YDB-E-VERMISMATCH, Attempt to access ##TEST_PATH##/mumps.dat with version GT.M V.*
+##TEST_AWK%YDB-E-VERMISMATCH, Attempt to access ##TEST_PATH##/mumps.dat with version .*
 ----------------------------------------------------------------------
 # Starting MUPIP BACKUP. Expect a VERMISMATCH error
 
-##TEST_AWK%YDB-E-VERMISMATCH, Attempt to access ##TEST_PATH##/mumps.dat with version GT.M V.*
+##TEST_AWK%YDB-E-VERMISMATCH, Attempt to access ##TEST_PATH##/mumps.dat with version .*
 ----------------------------------------------------------------------
 # Switch back to prior version
 # Stop background job and cleanup shared memory

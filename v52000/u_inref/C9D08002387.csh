@@ -4,7 +4,7 @@
 # Copyright (c) 2006-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -32,7 +32,7 @@ source $gtm_tst/com/ydb_temporary_disable.csh
 echo "$prior_ver" > priorver.txt
 \rm -f rand.o	# rand.o created by current version might have incompatible object format for older version in dbcreate.csh below
 
-echo "Randomly chosen prior V5 version is : [$prior_ver]"
+echo "Randomly chosen prior version is : [$prior_ver]"
 set linestr = "----------------------------------------------------------------------"
 set newline = ""
 echo $linestr
@@ -44,9 +44,12 @@ source $gtm_tst/com/set_crash_test.csh	# sets YDBTest and YDB-white-box env vars
 					# Also signals job.m to write script to kill the jobbed off child
 		# Note this needs to be done before the dbcreate.csh call in case of a -replic test so receiver side also
 		# inherits this env var. But this is not a -replic test. Nevertheless, we do it before for consistency sake.
+
+setenv gtm_test_use_V6_DBs 0	# Disable using V6 versions for dbcreate.csh calls as the random prior version could be V5 too.
 $gtm_tst/com/dbcreate.csh mumps
 \rm -f rand.o	# rand.o created by older version might have incompatible object format for newer version in case it is
 		# accessed later in this script so be safe and delete it
+setenv ydb_prompt 'GTM>' # to ensure deterministic prompt by random older version and current version
 $GTM << GTM_EOF
 	do oldverstart^c002387
 GTM_EOF
@@ -75,13 +78,13 @@ if ("$test_encryption" == "ENCRYPT") then
 		unsetenv gtmcrypt_config
 	endif
 endif
-echo "# Start a foreground job that accesses the db using the new GT.M version"
-echo "# Starting GT.M. Expect a VERMISMATCH error"
+echo "# Start a foreground job that accesses the db using the new YottaDB version"
+echo "# Starting YottaDB. Expect a VERMISMATCH error"
 echo $newline
 #Backup the prior version gld. Also upgrade the prior version gld to the new version gld. This is done because the encryption
 #versions will have 106 as GDE label instead of 105. Not doing so will cause GDINVALID error instead of the expected VERMISMATCH error.
-cp mumps.gld mumps_prior.gld >&! /dev/null
-$GDE EXIT >&! /dev/null
+cp mumps.gld mumps_prior.gld
+$GDE EXIT >&! gde_exit.log
 $GTM << GTM_EOF
 	do newver^c002387
 GTM_EOF
