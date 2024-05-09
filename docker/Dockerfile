@@ -74,6 +74,7 @@ RUN apt-get update && \
                     iproute2 \
                     openjdk-17-jdk \
                     golang \
+		    screen \
                     && \
                     apt-get clean
 
