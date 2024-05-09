@@ -4,7 +4,7 @@
 # Copyright (c) 2011-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -152,13 +152,6 @@ if ($?ydb_environment_init) then
 	# Temporarily disable below subtest as it requires "gld_mismatch" prior version which will be there once T63002 is released.
 	setenv subtest_exclude_list "$subtest_exclude_list D9I08002697"
 endif
-
-if ($?gtm_test_temporary_disable) then
-	# We have seen the below test hang with V63000A_R100/T63000. And hope this will not happen with
-	# V63001A_R100/T63001A or V63002_R100/T63002. So disabling this until then.
-	setenv subtest_exclude_list "$subtest_exclude_list D9L04002809"
-endif
-
 
 # The below subtest uses MUPIP SET -VERSION which is not supported in GT.M V7.0-000 (YottaDB r2.00). Therefore disable it for now.
 setenv subtest_exclude_list "$subtest_exclude_list C9K12003344"	# [UPGRADE_DOWNGRADE_UNSUPPORTED]
