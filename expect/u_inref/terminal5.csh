@@ -4,7 +4,7 @@
 # Copyright (c) 2015 Fidelity National Information 		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2022 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -32,12 +32,6 @@ unsetenv LD_LIBRARY_PATH
 
 $echoline
 echo "Step 5 - verify that the screen redraw works with using screen since the output contains terminal characters"
-
-# If there is no screen, skip the test
-if ( ! -X screen ) then
-	echo No hay screen
-	exit 0
-endif
 
 expect -f $gtm_tst/$tst/inref/terminal5.exp >& terminal5_expect.log
 $echoline

@@ -4,7 +4,7 @@
 # Copyright (c) 2012-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -71,10 +71,6 @@ endif
 # filter out white box tests that cannot run in pro
 if ("pro" == "$tst_image") then
         setenv subtest_exclude_list "$subtest_exclude_list contjnlbufwriter"
-endif
-
-if ($?gtm_test_temporary_disable) then
-	setenv subtest_exclude_list "$subtest_exclude_list terminal5"
 endif
 
 if ($?ydb_readline) then
