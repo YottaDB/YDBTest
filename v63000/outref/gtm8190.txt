@@ -16,9 +16,9 @@ mumps.dat
 # Show the messages
 ----------
 Error NONTPRESTART seen in syslog2.txt as expected:
-##TEST_AWK[^%]*%YDB-I-NONTPRESTART, Database ##TEST_PATH##/mumps.dat; code: [A-Z]*; blk: 0x[0-9A-F]* in glbl: \^((\*DIR)|[a-c]\([1-3]\)); blklvl: 0, type: [0-9]*, zpos: setglobals\+[0-9]*\^setglobals
-##TEST_AWK[^%]*%YDB-I-NONTPRESTART, Database ##TEST_PATH##/mumps.dat; code: [A-Z]*; blk: 0x[0-9A-F]* in glbl: \^((\*DIR)|[a-c]\([1-3]\)); blklvl: 0, type: [0-9]*, zpos: setglobals\+[0-9]*\^setglobals
-##TEST_AWK[^%]*%YDB-I-NONTPRESTART, Database ##TEST_PATH##/mumps.dat; code: [A-Z]*; blk: 0x[0-9A-F]* in glbl: \^((\*DIR)|[a-c]\([1-3]\)); blklvl: 0, type: [0-9]*, zpos: setglobals\+[0-9]*\^setglobals
+##TEST_AWK[^%]*%YDB-I-NONTPRESTART, Database ##TEST_PATH##/([0-f]*.|)mumps.dat(|.gst); code: [A-Z]*; blk: 0x[0-9A-F]* in glbl: \^(%YGS\(.*\)|[a-c]\([1-3]\)); blklvl: 0, type: [0-9]*, zpos: setglobals\+[0-9]*\^setglobals.*
+##TEST_AWK[^%]*%YDB-I-NONTPRESTART, Database ##TEST_PATH##/([0-f]*.|)mumps.dat(|.gst); code: [A-Z]*; blk: 0x[0-9A-F]* in glbl: \^(%YGS\(.*\)|[a-c]\([1-3]\)); blklvl: 0, type: [0-9]*, zpos: setglobals\+[0-9]*\^setglobals.*
+##TEST_AWK[^%]*%YDB-I-NONTPRESTART, Database ##TEST_PATH##/([0-f]*.|)mumps.dat(|.gst); code: [A-Z]*; blk: 0x[0-9A-F]* in glbl: \^(%YGS\(.*\)|[a-c]\([1-3]\)); blklvl: 0, type: [0-9]*, zpos: setglobals\+[0-9]*\^setglobals.*
 ----------
 # Waiting for processes to quit
 ## ROUND 3 ##

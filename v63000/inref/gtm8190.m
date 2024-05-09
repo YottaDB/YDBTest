@@ -3,6 +3,9 @@
 ; Copyright (c) 2015-2016 Fidelity National Information		;
 ; Services, Inc. and/or its subsidiaries. All rights reserved.	;
 ;								;
+; Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	;
+; All rights reserved.						;
+;								;
 ;	This source code contains the intellectual property	;
 ;	of its copyright holder(s), and is made available	;
 ;	under a license.  If you do not know the terms of	;
@@ -37,7 +40,8 @@ gtm8190
 ; the conflict in different lines within the function
 child(jobindex)
 	if $ztrnlnm("useviewcommand") view "LOGNONTP"
-	else  if $ztrnlnm("gtm_nontprestart_log_delta")'=$view("LOGNONTP") write "TEST-E-FAIL $VIEW does not match env var",! halt
+	else  if ($ztrnlnm("gtm_nontprestart_log_delta")'=$view("LOGNONTP"))&($ztrnlnm("ydb_nontprestart_log_delta")'=$view("LOGNONTP")) do
+	. write "TEST-E-FAIL $VIEW does not match env var",! halt
 	for i=1:1 do ^setglobals  quit:^end
 	quit
 
@@ -46,7 +50,7 @@ waitrestartaction
 	set timeout=60
 	set tdelta=0.5 ; the wait duration between PEEKBYNAME checks
 	set timecnt=timeout/tdelta
-	for i=1:1:timecnt quit:$$^%PEEKBYNAME("node_local.gvstats_rec.n_nontp_retries_0","DEFAULT")  hang tdelta
+	for i=1:1:timecnt quit:$$FUNC^%HD($$^%PEEKBYNAME("node_local.gvstats_rec.n_nontp_retries_0","DEFAULT"))  hang tdelta
 	write:i=timecnt "TEST-E-FAIL No retries occurred in "_(timeout)_" seconds",!
 	set ^end=1
 	quit

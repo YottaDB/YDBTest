@@ -4,7 +4,7 @@
 # Copyright (c) 2015-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -80,7 +80,7 @@ $gtm_tst/com/getoper.csh "$syslog_start" "" "syslog2.txt" "" "$regexp" 3
 $gtm_tst/com/check_error_exist.csh syslog2.txt NONTPRESTART
 
 # The following grep should not find code L and 0 block number at the same time
-$grep -q 'code: [^L]*L[^;]*; blk: 0x00000000' syslog2.txtx
+$grep -q 'code: [^L]*L[^;]*; blk: 0x0000000000000000' syslog2.txtx
 if (0 == $status) then
     echo "TEST-E-FAIL The block number can not be 0 if the error code is L. See syslog2.txtx"
 endif
@@ -114,11 +114,11 @@ $gtm_tst/com/wait_for_log.csh -log pids.txt -message NONTPRESTART
 
 set regexp=`cat pids.txt`
 
-# There are 3 processes each of which can issue at most $gtm_nontprestart_log_first messages
-set msgcount = `expr 3 \* $gtm_nontprestart_log_first`
+# There are 3 processes each of which can issue at most $random_gtm_nontprestart_log_first messages
+set msgcount = `expr 3 \* $random_gtm_nontprestart_log_first`
 
 echo "# Looking for NONTPRESTART messages in the syslog"
-if ($gtm_nontprestart_log_first > 0) then
+if ($random_gtm_nontprestart_log_first > 0) then
 	$gtm_tst/com/getoper.csh "$syslog_start" "" "syslog3.txt" "" "$regexp" $msgcount
 	if ($status) then
 		$grep 'last message repeated' syslog3.txt
