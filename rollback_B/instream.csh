@@ -4,7 +4,7 @@
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #################################################################
 #								#
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -62,10 +62,6 @@ endif
 
 # Use $subtest_exclude_list to remove subtests that are to be disabled on a particular host or OS
 setenv subtest_exclude_list	""
-
-if ($?gtm_test_temporary_disable) then
-	setenv subtest_exclude_list	"$subtest_exclude_list repl_nonrepl_crash repeat_rollback_after_crash "
-endif
 
 # Submit the list of subtests
 $gtm_tst/com/submit_subtest.csh
