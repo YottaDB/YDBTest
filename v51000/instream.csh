@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 # Portions Copyright (c) Fidelity National			#
@@ -51,9 +51,6 @@ if ($?test_replic == 1) then
 	setenv subtest_list "$subtest_list_common $subtest_list_replic"
 else
 	setenv subtest_list "$subtest_list_common $subtest_list_non_replic"
-endif
-if ($?gtm_test_temporary_disable) then
-	setenv subtest_exclude_list "mu_bkup_stop"
 endif
 $gtm_tst/com/submit_subtest.csh
 echo "V51000 test DONE."
