@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh
 #################################################################
 #								#
-# Copyright (c) 2021-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2021-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -11,7 +11,7 @@
 #								#
 #################################################################
 echo "# This tests that ydbinstall successfully installs plugins for a "
-echo "# random set of plugs-in (--octo --gui --aim --encplugin --posix --zlib --sodium --allplugins --syslog --webserver),"
+echo "# random set of plugs-in (--octo --gui --aim --encplugin --posix --zlib --sodium --allplugins --syslog --webserver --support),"
 echo "# and randomly picking --plugins-only and --utf8."
 
 # Set the chset to UTF-8. We need to do this to ensure the locale is set correctly
@@ -19,7 +19,7 @@ echo "# and randomly picking --plugins-only and --utf8."
 $switch_chset "UTF-8"
 
 # Possible options being used in the test
-set arr = ( "--octo" "--gui" "--aim" "--encplugin" "--posix" "--zlib" "--plugins-only" "--utf8" "--sodium" "--allplugins" "--syslog" "--webserver" )
+set arr = ( "--octo" "--gui" "--aim" "--encplugin" "--posix" "--zlib" "--plugins-only" "--utf8" "--sodium" "--allplugins" "--syslog" "--webserver" "--support" )
 
 # 8 runs
 set run_count = 1
