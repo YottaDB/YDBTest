@@ -4,7 +4,7 @@
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #################################################################
 #								#
-# Copyright (c) 2017 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -54,10 +54,6 @@ endif
 #
 setenv subtest_list "C9901000794 full_qual virtual_end seqno_chk D9D12002408 D9E02002426 C9E03002539"
 setenv subtest_list "$subtest_list D9E04002440 D9E04002447"
-
-if ($?gtm_test_temporary_disable) then
-	setenv subtest_exclude_list "D9D12002408 seqno_chk"
-endif
 #
 $gtm_tst/com/submit_subtest.csh
 #

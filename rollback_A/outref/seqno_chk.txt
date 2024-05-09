@@ -31,6 +31,17 @@ Simulating crash on receiver in ##REMOTE_TEST_PATH##
 Receiver crashed!
 Simulating crash on primary in ##TEST_PATH##
 Primary crashed!
+##SUSPEND_OUTPUT NON_STATSHARE
+##TEST_AWK%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/.*.a.dat.gst successfully rundown
+##TEST_AWK%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/.*.b.dat.gst successfully rundown
+##TEST_AWK%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/.*.c.dat.gst successfully rundown
+##TEST_AWK%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/.*.d.dat.gst successfully rundown
+##TEST_AWK%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/.*.e.dat.gst successfully rundown
+##TEST_AWK%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/.*.f.dat.gst successfully rundown
+##TEST_AWK%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/.*.g.dat.gst successfully rundown
+##TEST_AWK%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/.*.h.dat.gst successfully rundown
+##TEST_AWK%YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/.*.mumps.dat.gst successfully rundown
+##ALLOW_OUTPUT NON_STATSHARE
 %YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/a.dat successfully rundown
 %YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/b.dat successfully rundown
 %YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/c.dat successfully rundown
@@ -40,6 +51,26 @@ Primary crashed!
 %YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/g.dat successfully rundown
 %YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/h.dat successfully rundown
 %YDB-I-MUFILRNDWNSUC, File ##TEST_PATH##/mumps.dat successfully rundown
+##SUSPEND_OUTPUT NON_STATSHARE
+##TEST_AWK%YDB-I-SEMREMOVED, Semaphore id [0-9][0-9]* removed from the system
+##TEST_AWK%YDB-I-SEMREMOVED, Semaphore id [0-9][0-9]* removed from the system
+##TEST_AWK%YDB-I-SEMREMOVED, Semaphore id [0-9][0-9]* removed from the system
+##TEST_AWK%YDB-I-SEMREMOVED, Semaphore id [0-9][0-9]* removed from the system
+##TEST_AWK%YDB-I-SEMREMOVED, Semaphore id [0-9][0-9]* removed from the system
+##TEST_AWK%YDB-I-SEMREMOVED, Semaphore id [0-9][0-9]* removed from the system
+##TEST_AWK%YDB-I-SEMREMOVED, Semaphore id [0-9][0-9]* removed from the system
+##TEST_AWK%YDB-I-SEMREMOVED, Semaphore id [0-9][0-9]* removed from the system
+##TEST_AWK%YDB-I-SEMREMOVED, Semaphore id [0-9][0-9]* removed from the system
+##TEST_AWK%YDB-I-SHMREMOVED, Removed Shared Memory id [0-9][0-9]* corresponding to file ##TEST_PATH##/.*.a.dat.gst
+##TEST_AWK%YDB-I-SHMREMOVED, Removed Shared Memory id [0-9][0-9]* corresponding to file ##TEST_PATH##/.*.b.dat.gst
+##TEST_AWK%YDB-I-SHMREMOVED, Removed Shared Memory id [0-9][0-9]* corresponding to file ##TEST_PATH##/.*.c.dat.gst
+##TEST_AWK%YDB-I-SHMREMOVED, Removed Shared Memory id [0-9][0-9]* corresponding to file ##TEST_PATH##/.*.d.dat.gst
+##TEST_AWK%YDB-I-SHMREMOVED, Removed Shared Memory id [0-9][0-9]* corresponding to file ##TEST_PATH##/.*.e.dat.gst
+##TEST_AWK%YDB-I-SHMREMOVED, Removed Shared Memory id [0-9][0-9]* corresponding to file ##TEST_PATH##/.*.f.dat.gst
+##TEST_AWK%YDB-I-SHMREMOVED, Removed Shared Memory id [0-9][0-9]* corresponding to file ##TEST_PATH##/.*.g.dat.gst
+##TEST_AWK%YDB-I-SHMREMOVED, Removed Shared Memory id [0-9][0-9]* corresponding to file ##TEST_PATH##/.*.h.dat.gst
+##TEST_AWK%YDB-I-SHMREMOVED, Removed Shared Memory id [0-9][0-9]* corresponding to file ##TEST_PATH##/.*.mumps.dat.gst
+##ALLOW_OUTPUT NON_STATSHARE
 Journal extract on primary side before rollback ......
  
 ********** a.mjf **********
