@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh -f
 #################################################################
 #								#
-# Copyright (c) 2019 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2019-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -12,15 +12,19 @@
 #################################################################
 
 #
-# $1 - vmemoryuse setting to use
+# $1 - vmemoryuse setting to use; If it is 0, it implies set to unlimited
 #
+if ($1 == 0) then
+	unlimit stacksize
+	unlimit vmemoryuse
+else
+	# Tests that limit the "vmemoryuse" setting (virtual memory limit for a process) are sensitive to changes in
+	# the "stacksize" setting. For example, we have seen a "stacksize" setting of "32Mb" cause the subtests
+	# v63000/gtm8394, simpleapi/fatalerror1, simpleapi/fatalerror2, simplethreadapi/fatalerror1 and simplethreadapi/fatalerror2
+	# to fail. What we do know is that a "stacksize" setting of 8Mb enables those subtests to pass. So set the "stacksize"
+	# to the safe value whenever this script is called (callers are only one of the above affected subtests who do not care
+	# about the "stacksize" setting but do care about the "vmemoryuse" setting).
+	limit stacksize 8192 kbytes
 
-# Tests that limit the "vmemoryuse" setting (virtual memory limit for a process) are sensitive to changes in
-# the "stacksize" setting. For example, we have seen a "stacksize" setting of "32Mb" cause the subtests
-# v63000/gtm8394, simpleapi/fatalerror1, simpleapi/fatalerror2, simplethreadapi/fatalerror1 and simplethreadapi/fatalerror2
-# to fail. What we do know is that a "stacksize" setting of 8Mb enables those subtests to pass. So set the "stacksize"
-# to the safe value whenever this script is called (callers are only one of the above affected subtests who do not care
-# about the "stacksize" setting but do care about the "vmemoryuse" setting).
-limit stacksize 8192 kbytes
-
-limit vmemoryuse $1
+	limit vmemoryuse $1
+endif

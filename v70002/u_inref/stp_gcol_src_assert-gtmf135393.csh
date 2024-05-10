@@ -29,6 +29,10 @@ echo "# When run with YottaDB, we have not seen this test fail. But since this t
 echo "# an assert in a pure GT.M build, it is considered good enough to be included as an automated test case".
 $gtm_dist/mumps -run stpgcolsrcAssert
 
+source $gtm_tst/com/limit_vmemoryuse.csh 0	# reset memory limits before "find" command below as otherwise on
+						# RHEL 9, we have seen "find: No match" error from tcsh due to running
+						# into memory limits while trying to expand the "*" in "find *".
+
 # If there are any YDB_FATAL_ERROR* or GTM_FATAL_ERROR* files, move them away so test framework does not flag a false failure.
 find * -type f -name "YDB_FATAL_ERROR.*.txt" -exec mv '{}' orig_'{}' \;
 find * -type f -name "GTM_FATAL_ERROR.*.txt" -exec mv '{}' orig_'{}' \;
