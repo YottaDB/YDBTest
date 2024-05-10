@@ -1,0 +1,150 @@
+# *****************************************************************
+# GTM-DE270421 - Test the following release note
+# *****************************************************************
+#
+# Release note (http://tinco.pair.com/bhaskar/gtm/doc/articles/GTM_V7.0-004_Release_Notes.html#GTM-DE270421) says:
+#
+# > GT.M handles $ORDER(), $ZPREVIOUS(), $QUERY(), $NEXT(),
+# > and MERGE operations which traverse subscript-level mappings
+# > correctly. Previously, these operations could return gvns
+# > which should have been excluded by the global directory. In
+# > the case of MERGE, the target could contain data from excluded
+# > subtrees. (GTM-DE270421)
+#
+# The tests create 2 glds, one with one region, anther one with
+# two regions and subscript-level mapping. The M program generates
+# some data for mixed glds, then iterates over all nodes, using
+# different iterator instructions, listed in Release Notes. This
+# test prints the test database, and some meta values:
+# - enumerated: number of nodes enumerated by the tested command
+#   (under certain circumstances, some nodes may be skipped),
+# - has_value: enumerated nodes with valid values (under some
+#   circustances, some enumerated nodes report UNDEF error
+#   with V70003 and earlier versions),
+# - total_count: the number of data items set (constant value).
+#
+# The second part of the test runs the MERGE command, it copies
+# the values from the test global to a target one, which has no
+# mappings set.
+#
+# Both part of the tests executed two times. The first round is
+# using 1reg.gld for generating data and 2reg.gld for walk tests.
+# This is the scenario, which previous versions failed, so it
+# needs testing.
+#
+# The second round is using 2reg.gld for both data generation and
+# walk tests. This setup has never failed, so it's unnecessary to
+# test it, but it's a good explanation of how mapping tests works.
+
+# ---- Create databases ----
+# Run dbcreate.csh
+# Set up 1reg.gld
+# Set up 2reg.gld with subscript level mapping
+
+# ==== Round 1: create data: 1reg.gld, walk: 2reg.gld ====
+
+# ---- Execute walk tests (round 1) ----
+# Create some test data
+  $ZGBLDIR=1reg.gld
+# Set $ZGBLDIR for the rest of the test
+  $ZGBLDIR=2reg.gld
+# Display regions for root level
+  regions=DEFAULT,AREG
+# Display region for each sublevel
+  global=^t1,  index= 1,  region=DEFAULT
+  global=^t1,  index= 2,  region=AREG
+  global=^t1,  index= 3,  region=DEFAULT
+  global=^t1,  index= 4,  region=AREG
+  global=^t1,  index= 5,  region=DEFAULT
+# Test result for $NEXT(), enumerated=3, has_value=3, total_count=5
+  global: ^t1,  numero:  1,  index= 1,  value=  1
+  global: ^t1,  numero:  2,  index= 3,  value=  9
+  global: ^t1,  numero:  3,  index= 5,  value= 25
+# Test result for $ORDER(direction: +1), enumerated=3, has_value=3, total_count=5
+  global: ^t1,  numero:  1,  index= 1,  value=  1
+  global: ^t1,  numero:  2,  index= 3,  value=  9
+  global: ^t1,  numero:  3,  index= 5,  value= 25
+# Test result for $ORDER(direction: -1), enumerated=3, has_value=3, total_count=5
+  global: ^t1,  numero:  1,  index= 5,  value= 25
+  global: ^t1,  numero:  2,  index= 3,  value=  9
+  global: ^t1,  numero:  3,  index= 1,  value=  1
+# Test result for $QUERY(), enumerated=3, has_value=3, total_count=5
+  global: ^t1,  numero:  1,  index=^t1(1),  value=  1
+  global: ^t1,  numero:  2,  index=^t1(3),  value=  9
+  global: ^t1,  numero:  3,  index=^t1(5),  value= 25
+# Test result for $ZPREVIOUS(), enumerated=3, has_value=3, total_count=5
+  global: ^t1,  numero:  1,  index= 5,  value= 25
+  global: ^t1,  numero:  2,  index= 3,  value=  9
+  global: ^t1,  numero:  3,  index= 1,  value=  1
+
+# ---- Execute MERGE test (round 1) ----
+# Create some test data
+  $ZGBLDIR=1reg.gld
+# Set $ZGBLDIR for the rest of the test
+  $ZGBLDIR=2reg.gld
+# Kill target global ^merge
+# Execute MERGE command
+# Test result for MERGE, enumerated=3, has_value=3, total_count=5
+  numero:  1,  index= 1,  value=  1
+  numero:  2,  index= 3,  value=  9
+  numero:  3,  index= 5,  value= 25
+
+# ==== Round 2: create data: 2reg.gld, walk: 2reg.gld (1reg.gld is not used) ====
+
+# ---- Execute walk tests (round 2) ----
+# Create some test data
+  $ZGBLDIR=2reg.gld
+# Set $ZGBLDIR for the rest of the test
+  $ZGBLDIR=2reg.gld
+# Display regions for root level
+  regions=DEFAULT,AREG
+# Display region for each sublevel
+  global=^t3,  index= 1,  region=DEFAULT
+  global=^t3,  index= 2,  region=AREG
+  global=^t3,  index= 3,  region=DEFAULT
+  global=^t3,  index= 4,  region=AREG
+  global=^t3,  index= 5,  region=DEFAULT
+# Test result for $NEXT(), enumerated=5, has_value=5, total_count=5
+  global: ^t3,  numero:  1,  index= 1,  value=  1
+  global: ^t3,  numero:  2,  index= 2,  value=  4
+  global: ^t3,  numero:  3,  index= 3,  value=  9
+  global: ^t3,  numero:  4,  index= 4,  value= 16
+  global: ^t3,  numero:  5,  index= 5,  value= 25
+# Test result for $ORDER(direction: +1), enumerated=5, has_value=5, total_count=5
+  global: ^t3,  numero:  1,  index= 1,  value=  1
+  global: ^t3,  numero:  2,  index= 2,  value=  4
+  global: ^t3,  numero:  3,  index= 3,  value=  9
+  global: ^t3,  numero:  4,  index= 4,  value= 16
+  global: ^t3,  numero:  5,  index= 5,  value= 25
+# Test result for $ORDER(direction: -1), enumerated=5, has_value=5, total_count=5
+  global: ^t3,  numero:  1,  index= 5,  value= 25
+  global: ^t3,  numero:  2,  index= 4,  value= 16
+  global: ^t3,  numero:  3,  index= 3,  value=  9
+  global: ^t3,  numero:  4,  index= 2,  value=  4
+  global: ^t3,  numero:  5,  index= 1,  value=  1
+# Test result for $QUERY(), enumerated=5, has_value=5, total_count=5
+  global: ^t3,  numero:  1,  index=^t3(1),  value=  1
+  global: ^t3,  numero:  2,  index=^t3(2),  value=  4
+  global: ^t3,  numero:  3,  index=^t3(3),  value=  9
+  global: ^t3,  numero:  4,  index=^t3(4),  value= 16
+  global: ^t3,  numero:  5,  index=^t3(5),  value= 25
+# Test result for $ZPREVIOUS(), enumerated=5, has_value=5, total_count=5
+  global: ^t3,  numero:  1,  index= 5,  value= 25
+  global: ^t3,  numero:  2,  index= 4,  value= 16
+  global: ^t3,  numero:  3,  index= 3,  value=  9
+  global: ^t3,  numero:  4,  index= 2,  value=  4
+  global: ^t3,  numero:  5,  index= 1,  value=  1
+
+# ---- Execute MERGE test (round 2) ----
+# Create some test data
+  $ZGBLDIR=2reg.gld
+# Set $ZGBLDIR for the rest of the test
+  $ZGBLDIR=2reg.gld
+# Kill target global ^merge
+# Execute MERGE command
+# Test result for MERGE, enumerated=5, has_value=5, total_count=5
+  numero:  1,  index= 1,  value=  1
+  numero:  2,  index= 2,  value=  4
+  numero:  3,  index= 3,  value=  9
+  numero:  4,  index= 4,  value= 16
+  numero:  5,  index= 5,  value= 25
