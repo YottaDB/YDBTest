@@ -41,24 +41,18 @@ SelectBooleanAssertSubr results:
   expected result (V70004 and later):
     > write ((\$\$RetSame(\$select(false:1,1:0),4)!\$random(((\$select(false:1,1:\$zysqlnull)!('\$select(true:1)))'&(((('@inull)'?1""0"")'&(((^false&(\$test&'null))'!((@^itrue'=('@ifalse))'[(@itrue]]@^ifalse)))?1""1""))=((0='\$test)'[((('@itrue)&@inull)?1""0""))))))'&(((\$\$Always0)'!^false)'=(@^ifalse'!(null'&\$test))))
     > 		                                                                                                                                                                                                                                                          ^-----
-    > At column 73, line 27, source module /usr/library/gtm_test/T993/v70004/inref/SelectBooleanAssertSubr.m
+    > At column 73, line 27, source module v70004/inref/SelectBooleanAssertSubr.m
     > %GTM-E-INVSVN, Invalid special variable name
     > %GTM-E-FMLLSTMISSING, The formal list is absent from a label called with an actual list: Always0
-    > %GTM-I-SRCNAM, in source module /usr/library/gtm_test/T993/v70004/inref/SelectBooleanAssertSubr.m
-    > %GTM-E-LABELMISSING, Label referenced but not defined: zero
-    > %GTM-I-SRCNAM, in source module /usr/library/gtm_test/T993/v70004/inref/SelectBooleanAssertSubr.m
-    > %GTM-E-LABELMISSING, Label referenced but not defined: one
-    > %GTM-I-SRCNAM, in source module /usr/library/gtm_test/T993/v70004/inref/SelectBooleanAssertSubr.m
-    > %GTM-E-LABELMISSING, Label referenced but not defined: null
-    > %GTM-I-SRCNAM, in source module /usr/library/gtm_test/T993/v70004/inref/SelectBooleanAssertSubr.m
+    > %GTM-I-SRCNAM, in source module v70004/inref/SelectBooleanAssertSubr.m
   wrong result (before V70004), dbg mode:
-    > At column 73, line 27, source module /usr/library/gtm_test/T993/v70004/inref/SelectBooleanAssertSubr.m
+    > At column 73, line 27, source module v70004/inref/SelectBooleanAssertSubr.m
     > %GTM-E-INVSVN, Invalid special variable name
     > %GTM-F-ASSERT, Assert failed in /Distrib/YottaDB/V70003/sr_port/bx_boolop.c line 195 for expression (OCT_JUMP & oc_tab[t1->opcode].octype)
   wrong result (before V70004), pro mode:
     > write ((\$\$RetSame(\$select(false:1,1:0),4)!\$random(((\$select(false:1,1:\$zysqlnull)!('\$select(true:1)))'&(((('@inull)'?1""0"")'&(((^false&(\$test&'null))'!((@^itrue'=('@ifalse))'[(@itrue]]@^ifalse)))?1""1""))=((0='\$test)'[((('@itrue)&@inull)?1""0""))))))'&(((\$\$Always0)'!^false)'=(@^ifalse'!(null'&\$test))))
     > 		                                                                                                                                                                                                                                                          ^-----
-    > At column 73, line 27, source module /usr/library/gtm_test/T993/v70004/inref/SelectBooleanAssertSubr.m
+    > At column 73, line 27, source module v70004/inref/SelectBooleanAssertSubr.m
     > %GTM-E-INVSVN, Invalid special variable name
     > %GTM-F-GTMASSERT2, GT.M V7.0-003 Linux x86_64 - Assert failed /Distrib/YottaDB/V70003/sr_port/bx_tail.c line 117 for expression (FALSE && t)
   see also:

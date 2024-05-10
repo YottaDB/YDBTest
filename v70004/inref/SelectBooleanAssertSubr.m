@@ -31,10 +31,4 @@ test	; Expression from:
 Always0	; quit 0
 	;
 RetSame(boolvalue,depth) ;
-	quit:$random(8) boolvalue	; return boolean value as is from function call 87.5% of the time
-	; 12.5% of the time, evaluate a boolean expression inside a function call that is already inside a boolean expression
-	new xstr,boolret,boolexpr
-	set boolexpr=$select(0=boolvalue:$$zero(depth),1=boolvalue:$$one(depth),1:$$null(depth))
-	set xstr="set boolret="_boolexpr
-	xecute xstr
-	quit boolret
+	quit boolvalue	; return boolean value as is from function call
