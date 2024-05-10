@@ -4,7 +4,7 @@
 # Copyright (c) 2003-2015 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2023-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -38,6 +38,12 @@ setenv gtm_test_tp 1
 setenv gtm_test_mupip_set_version "disable"
 setenv gtm_test_disable_randomdbtn
 setenv test_specific_trig_file $gtm_tst/com/imptp.trg
+
+# This test sets "test_specific_trig_file" env var which causes triggers to be created on both primary and secondary
+# so "-trigupdate" won't work with that (would cause `%YDB-E-NULSUBSC` error in update process as described at
+# https://gitlab.com/YottaDB/DB/YDB/-/issues/722#note_1283543204). Hence disable that.
+source $gtm_tst/com/gtm_test_trigupdate_disabled.csh
+
 setenv gtm_test_sprgde_exclude_reglist HREG	# Since HREG has replication turned off
 $gtm_tst/com/dbcreate.csh mumps 9 125-325 900-1150 512,1024,4096 1024 1024 1024
 setenv portno `$sec_shell '$sec_getenv; cat $SEC_DIR/portno'`
