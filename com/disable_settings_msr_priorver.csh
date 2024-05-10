@@ -4,6 +4,9 @@
 # Copyright (c) 2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -81,3 +84,10 @@ endif
 if ( "$*" !~ "*spanning_regions*" ) then
 	setenv gtm_test_spanreg 0
 endif
+
+# Disable V6 DB mode as this can cause issues with the version switching done in this script
+# If dbcreate.csh calls happen using the older version, we don't want that to in turn use a random
+# V6 version which is potentially a future version compared to the random old version chosen by
+# the caller subtest script.
+setenv gtm_test_use_V6_DBs 0
+

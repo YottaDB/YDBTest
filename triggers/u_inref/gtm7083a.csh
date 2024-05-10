@@ -4,7 +4,7 @@
 # Copyright (c) 2014-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -13,9 +13,6 @@
 #	the license, please stop and do not read further.	#
 #								#
 #################################################################
-#
-# Disable use of V6 DB mode using random V6 versions to create DBs as this test already switches versions
-setenv gtm_test_use_V6_DBs 0
 #
 # GTM-7083 replic test cases
 

@@ -4,7 +4,7 @@
 # Copyright (c) 2011-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2017-2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -24,8 +24,8 @@ $switch_chset "M" >&! switch_chset1.out
 
 $MULTISITE_REPLIC_PREPARE 3
 
-set prior_ver2 = `$MSR RUN INST2 "set msr_dont_trace ; $gtm_tst/com/random_ver.csh -type ms"`
-set prior_ver3 = `$MSR RUN INST3 "set msr_dont_trace ; $gtm_tst/com/random_ver.csh -type ms"`
+set prior_ver2 = `$MSR RUN INST2 "set msr_dont_trace ; $gtm_tst/com/random_ver.csh -gt V63005"`
+set prior_ver3 = `$MSR RUN INST3 "set msr_dont_trace ; $gtm_tst/com/random_ver.csh -gt V63005"`
 if ( "${prior_ver2}" =~ "*-E-*" || "${prior_ver3}" =~ "*-E-*" ) then
 	echo "Either prior_ver2 or prior_ver3 is bad"
 	echo "prior_ver2 : '${prior_ver2}'"

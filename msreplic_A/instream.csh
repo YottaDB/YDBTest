@@ -4,7 +4,7 @@
 # Copyright (c) 2006-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #                                                               #
-# Copyright (c) 2017-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2017-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -69,12 +69,6 @@ endif
 # If the platform/host does not have prior GT.M versions, disable tests that require them
 if ($?gtm_test_nopriorgtmver) then
 	setenv subtest_exclude_list "$subtest_exclude_list updateproc_nohang"
-else if ($?gtm_test_temporary_disable) then
-	# We have seen the below test hang with V63000A_R100/T63000. And hope this will not happen with
-	# V63001A_R100/T63001A or V63002_R100/T63002. So disabling this until then.
-	setenv subtest_exclude_list "$subtest_exclude_list updateproc_nohang"
-endif
-
 endif
 
 # Filter out tests requiring specific gg-user setup, if the setup is not available
