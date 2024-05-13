@@ -4,7 +4,7 @@
 # Copyright (c) 2013-2016 Fidelity National Information		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
-# Copyright (c) 2018-2023 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -206,6 +206,13 @@ if ($?test_specific_gde) then
 		if ($gtm_test_qdbrundown) then
 			echo "template -region -qdbrundown"		>> tmp.tmp.tmp
 			echo "change -region DEFAULT -qdbrundown"	>> tmp.tmp.tmp
+		endif
+		if ((0 != $ydb_test_4g_db_blks) && ($?test_replic)) then
+			# Search for "ydb_test_4g_db_blks" in "com/dbcreate_multi.awk". Comment there explains
+			# why we need the "-nostats" for each region. Note that DEFAULT region already exists
+			# whereas template command only applies to newly created regions hence the need for 2 commands.
+			echo "template -region -nostats"		>> tmp.tmp.tmp
+			echo "change -region DEFAULT -nostats"		>> tmp.tmp.tmp
 		endif
 		cat $test_specific_gde					>> tmp.tmp.tmp
 		echo "\_GDE_EOF"					>> tmp.tmp.tmp
