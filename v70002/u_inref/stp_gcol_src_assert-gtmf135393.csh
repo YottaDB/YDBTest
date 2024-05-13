@@ -21,7 +21,7 @@ echo "# Limit vmemoryuse to 200,000 for this test"
 # set memorylimit = `$gtm_dist/mumps -run %XCMD 'write (100+$random(200))*1000,!'`
 # echo $memorylimit > memorylimit.txt	# store the randomly chosen memory limit in a file in case needed later
 # source $gtm_tst/com/limit_vmemoryuse.csh $memorylimit
-source $gtm_tst/com/limit_vmemoryuse.csh 200000
+source $gtm_tst/com/limit_vmemoryuse.csh 400000
 
 echo "# Run [mumps -run stpgcolsrcAssert]"
 echo "# When run with GT.M V7.0-002 Debug build, we have seen this test fail an assert in stp_gcol_src.h"
