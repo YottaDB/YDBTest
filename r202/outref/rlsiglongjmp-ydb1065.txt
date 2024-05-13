@@ -8,9 +8,7 @@ mumps.gld
 Using: ##SOURCE_PATH##/mupip
 mumps.dat
 spawn ##SOURCE_PATH##/mumps -direct
-
 YDB>set ^pid=$job
-
 YDB>spawn /usr/local/bin/tcsh -f
 > stty cols 132
 > set shellprompt=SHELL
@@ -19,11 +17,10 @@ SHELLsetenv term_env `tty`; echo $term_env > term_env.txt
 SHELL$gtm_dist/mumps -run %XCMD 'if $zsigproc(^pid,"SIGUSR1")'
 SHELLexit
 exit
-##SUSPEND_OUTPUT YDB_READLINE8_OR_MORE
-
-##ALLOW_OUTPUT YDB_READLINE8_OR_MORE
-##TEST_AWK.ZYRELEASE="YottaDB r.*"
-
+##SUSPEND_OUTPUT YDB_READLINE
+zwrite $zyrelease
+##ALLOW_OUTPUT YDB_READLINE
+##TEST_AWK\$ZYRELEASE="YottaDB r.*"
 YDB>halt
 ##SOURCE_PATH##/mupip
 ##SOURCE_PATH##/mupip integ -REG *

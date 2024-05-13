@@ -23,6 +23,12 @@ $gtm_tst/com/dbcreate.csh mumps
 
 (expect -d $gtm_tst/$tst/inref/rlsiglongjmp-ydb1065.exp > expect.out) >& expect.dbg
 perl $gtm_tst/com/expectsanitize.pl expect.out > expect_sanitized.out
-cat expect_sanitized.out
+
+# We occasionally see an empty line in the output. Originally we thought it was a libreadline 7 vs 8 issue
+# But we have since seen failures of this kind even on libreadline 8 systems (Ubuntu 24.04) and so suspect
+# it is a test timing issue. Instead of spending time analyzing/fixing it, we work around it by filtering all
+# empty lines in the output thereby removing any non-deterministic output and letting this subtest run on all
+# distributions. See https://gitlab.com/YottaDB/DB/YDBTest/-/merge_requests/1919#note_1903056143 for more details.
+grep -v '^$' expect_sanitized.out
 
 $gtm_tst/com/dbcheck.csh

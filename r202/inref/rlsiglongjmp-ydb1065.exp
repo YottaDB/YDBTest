@@ -24,6 +24,7 @@ spawn /usr/local/bin/tcsh -f
 source $::env(gtm_tst)/com/expectinit.exp
 set shell $spawn_id
 send -i shell -- "\$gtm_dist/mumps -run %XCMD 'if \$zsigproc(^pid,\"SIGUSR1\")'\r"
+expect -i shell "SHELL"
 send -i shell -- "exit\r"
 expect -i shell eof
 
