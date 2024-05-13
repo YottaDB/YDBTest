@@ -1,7 +1,7 @@
 #!/usr/local/bin/tcsh
 #################################################################
 #								#
-# Copyright (c) 2018 YottaDB LLC and/or its subsidiaries.	#
+# Copyright (c) 2018-2024 YottaDB LLC and/or its subsidiaries.	#
 # All rights reserved.						#
 #								#
 #	This source code contains the intellectual property	#
@@ -22,5 +22,5 @@ unsetenv gtm_chset
 
 mkdir -p chset_m_obj
 
-setenv gtmroutines "chset_m_obj($gtm_tst/$tst/inref $gtm_tst/com .) $gtmroutines"
+setenv gtmroutines "chset_m_obj($gtm_tst/$tst/inref $gtm_tst/com $gtm_dist .) $gtmroutines"
 setenv ydb_routines "$gtmroutines"
