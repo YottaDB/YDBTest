@@ -4,6 +4,9 @@
 # Copyright (c) 2015 Fidelity National Information 		#
 # Services, Inc. and/or its subsidiaries. All rights reserved.	#
 #								#
+# Copyright (c) 2024 YottaDB LLC and/or its subsidiaries.	#
+# All rights reserved.						#
+#								#
 #	This source code contains the intellectual property	#
 #	of its copyright holder(s), and is made available	#
 #	under a license.  If you do not know the terms of	#
@@ -20,7 +23,13 @@ source $gtm_tst/com/gtm_test_disable_autorelink.csh
 # Make sure only the current directory is autorelink-enabled, on both sides.
 set gtmroutines_noautorelink = "$gtmroutines"
 setenv gtmroutines ".* $gtmroutines"
-setenv test_gtmroutines_preset "$gtmroutines"
+setenv test_gtmroutines_preset "$gtmroutines"	# set this env var to indicate to test framework that "gtmroutines"
+						# is a special value that needs to be restored as part of version switching.
+
+setenv gtm_test_use_V6_DBs 0	# Disable V6 DB mode in dbcreate.csh as this test sets "test_gtmroutines_preset" and that
+				# causes trouble with version switching that happens in V6 DB mode (inside dbcreate.csh).
+source $gtm_tst/com/gtm_test_trigupdate_disabled.csh	# this test relies on M trigger code on secondary side to be executed
+							# so disable "-trigupdate".
 
 # Set things up.
 $MULTISITE_REPLIC_PREPARE 2
