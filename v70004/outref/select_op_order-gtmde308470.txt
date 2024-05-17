@@ -1,0 +1,7 @@
+# Check left-to-right evaluation within $SELECT() when using FULL_BOOLEAN compilation
+# This will print 0 on success or 1 if the side effect ($increment) is evaluated before it should be.
+GTM>view "FULL_BOOLEAN" xecute "set x=0 w (x=1)!$select($increment(x)=0:0,1:0)"
+
+GTM>
+0
+GTM>
